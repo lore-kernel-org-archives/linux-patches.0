@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EB61A01B5;
-	Thu, 15 Aug 2024 14:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD541A01B5;
+	Thu, 15 Aug 2024 14:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730576; cv=none; b=MHr4kmU5cpuckGELuBkuwf3W+z2HEe57E496HotFPmMjjm/JzhqX+yUGGIA3HnBkHIUcfbECu5HVUzxLruiDVI5VlObsHSwIZqVuhhQ8lraRGhSAokYSR631V2AVnfytkXa5vMZL3LOnMZSnHYwo22Get+0Td83xJ63axcOsHLo=
+	t=1723730579; cv=none; b=ha8OQ3ARngUKYtHpntBip585fIFL7IwH6VPSdQMo2x/T0kZKM6F1lBj6WbJSfaTVpORmNimVLKZMtGXkkxb5ihnbOUnjX87idFR5tBEOS84/2hjnN/yny/r/RuTxDnhIsKo/radtEOpemokV2M8IlIi+w6m5dtzoIkPjJQ3h1jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730576; c=relaxed/simple;
-	bh=/iv4cy2wfcUXKcWnFXj5juwCMUo/8yBFSvDyBCt7fg4=;
+	s=arc-20240116; t=1723730579; c=relaxed/simple;
+	bh=9MxRyBJHtS9XPl5RrvWyhKDzUU/IyAK91wdIybdWDdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEd0LMljRWfPMfO4WYGJaBBFpSs2IH81cyYd6mWI29ATk2gW5EPrAex9ldyXYb89zRXyjCOhqyGLbmjt49/bENIxhWeUe34D5/tYRwlSnQJxwCof5EL9YOQYkFN0tGROO4X45Itf9TrIuinfiWtF0v6DyRywBJAxfcPbD+LnHYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvoZMs37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUFUWtZ5AsdYFBFay+pBN/zAEI9QXEJzYtAMQJMvmdQ1YNN4eajZnA/SJ4RQ4SVVsYOu6PyHgc0tnk2+kw+3jGirjwWRSNQP+SNglwKwtX6cinBabQCRfSA+OksqBskn8c8hSpD8+wo9+DahAp7nkqcGFKI167hWR3S7I09vnhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTftuAfl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvoZMs37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0F1C4AF12;
-	Thu, 15 Aug 2024 14:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTftuAfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B012EC32786;
+	Thu, 15 Aug 2024 14:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730576;
-	bh=/iv4cy2wfcUXKcWnFXj5juwCMUo/8yBFSvDyBCt7fg4=;
+	s=korg; t=1723730579;
+	bh=9MxRyBJHtS9XPl5RrvWyhKDzUU/IyAK91wdIybdWDdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvoZMs37i0iqKqkhXk2VPLMHX+ye6TyY2kEjoc6CC5UiGL35hO1lsERz1WB/T7Y4M
-	 FlI55tppvKI4lUPectST1ZHTH9p1A9/g8VmXgV5IuW53gBMx0rJbUmnpGLlX+xFW6H
-	 uiHzf0SLTogr2YQfWddaVYZRdM0myMBumjj4rQmo=
+	b=XTftuAflSP7onjutwV+oB985P0sTiuYRJl3oQn+SrgSJSDH33bS2XsRzNFSpBF3K0
+	 A3Hi5R4xXpVgBu5LA3xL6xn99LOXzD+ZKAVR8PYRG+76OzaKy7Ml19lI6mGjSP2CIT
+	 jiIGuXbvaV8LvyfHUaEz6Fj50FJ8KfcAWU4jxK+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 451/484] mptcp: sched: check both directions for backup
-Date: Thu, 15 Aug 2024 15:25:09 +0200
-Message-ID: <20240815131958.883670694@linuxfoundation.org>
+Subject: [PATCH 5.15 452/484] mptcp: distinguish rcv vs sent backup flag in requests
+Date: Thu, 15 Aug 2024 15:25:10 +0200
+Message-ID: <20240815131958.922738940@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,82 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit b6a66e521a2032f7fcba2af5a9bcbaeaa19b7ca3 upstream.
+commit efd340bf3d7779a3a8ec954d8ec0fb8a10f24982 upstream.
 
-The 'mptcp_subflow_context' structure has two items related to the
-backup flags:
+When sending an MP_JOIN + SYN + ACK, it is possible to mark the subflow
+as 'backup' by setting the flag with the same name. Before this patch,
+the backup was set if the other peer set it in its MP_JOIN + SYN
+request.
 
- - 'backup': the subflow has been marked as backup by the other peer
-
- - 'request_bkup': the backup flag has been set by the host
-
-Before this patch, the scheduler was only looking at the 'backup' flag.
-That can make sense in some cases, but it looks like that's not what we
-wanted for the general use, because either the path-manager was setting
-both of them when sending an MP_PRIO, or the receiver was duplicating
-the 'backup' flag in the subflow request.
-
-Note that the use of these two flags in the path-manager are going to be
-fixed in the next commits, but this change here is needed not to modify
-the behaviour.
+It is not correct: the backup flag should be set in the MPJ+SYN+ACK only
+if the host asks for it, and not mirroring what was done by the other
+peer. It is then required to have a dedicated bit for each direction,
+similar to what is done in the subflow context.
 
 Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Conflicts in protocol.c, because the context has changed in commit
-  3ce0852c86b9 ("mptcp: enforce HoL-blocking estimation"), which is not
-  in this version. This commit is unrelated to this modification. ]
+[ Conflicts in subflow.c, because the context has changed in commit
+  4cf86ae84c71 ("mptcp: strict local address ID selection"), and in
+  commit 967d3c27127e ("mptcp: fix data races on remote_id"), which are
+  not in this version. These commits are unrelated to this
+  modification. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/mptcp.h |    2 +-
- net/mptcp/protocol.c         |   10 ++++++----
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ net/mptcp/options.c  |    2 +-
+ net/mptcp/protocol.h |    1 +
+ net/mptcp/subflow.c  |    1 +
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/trace/events/mptcp.h
-+++ b/include/trace/events/mptcp.h
-@@ -34,7 +34,7 @@ TRACE_EVENT(mptcp_subflow_get_send,
- 		struct sock *ssk;
- 
- 		__entry->active = mptcp_subflow_active(subflow);
--		__entry->backup = subflow->backup;
-+		__entry->backup = subflow->backup || subflow->request_bkup;
- 
- 		if (subflow->tcp_sock && sk_fullsock(subflow->tcp_sock))
- 			__entry->free = sk_stream_memory_free(subflow->tcp_sock);
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1514,13 +1514,15 @@ static struct sock *mptcp_subflow_get_se
- 		send_info[i].ratio = -1;
- 	}
- 	mptcp_for_each_subflow(msk, subflow) {
-+		bool backup = subflow->backup || subflow->request_bkup;
-+
- 		trace_mptcp_subflow_get_send(subflow);
- 		ssk =  mptcp_subflow_tcp_sock(subflow);
- 		if (!mptcp_subflow_active(subflow))
- 			continue;
- 
- 		tout = max(tout, mptcp_timeout_from_subflow(subflow));
--		nr_active += !subflow->backup;
-+		nr_active += !backup;
- 		if (!sk_stream_memory_free(subflow->tcp_sock) || !tcp_sk(ssk)->snd_wnd)
- 			continue;
- 
-@@ -1530,9 +1532,9 @@ static struct sock *mptcp_subflow_get_se
- 
- 		ratio = div_u64((u64)READ_ONCE(ssk->sk_wmem_queued) << 32,
- 				pace);
--		if (ratio < send_info[subflow->backup].ratio) {
--			send_info[subflow->backup].ssk = ssk;
--			send_info[subflow->backup].ratio = ratio;
-+		if (ratio < send_info[backup].ratio) {
-+			send_info[backup].ssk = ssk;
-+			send_info[backup].ratio = ratio;
- 		}
- 	}
- 	__mptcp_set_timeout(sk, tout);
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -877,7 +877,7 @@ bool mptcp_synack_options(const struct r
+ 		return true;
+ 	} else if (subflow_req->mp_join) {
+ 		opts->suboptions = OPTION_MPTCP_MPJ_SYNACK;
+-		opts->backup = subflow_req->backup;
++		opts->backup = subflow_req->request_bkup;
+ 		opts->join_id = subflow_req->local_id;
+ 		opts->thmac = subflow_req->thmac;
+ 		opts->nonce = subflow_req->local_nonce;
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -370,6 +370,7 @@ struct mptcp_subflow_request_sock {
+ 	u16	mp_capable : 1,
+ 		mp_join : 1,
+ 		backup : 1,
++		request_bkup : 1,
+ 		csum_reqd : 1,
+ 		allow_join_id0 : 1;
+ 	u8	local_id;
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1766,6 +1766,7 @@ static void subflow_ulp_clone(const stru
+ 		new_ctx->mp_join = 1;
+ 		new_ctx->fully_established = 1;
+ 		new_ctx->backup = subflow_req->backup;
++		new_ctx->request_bkup = subflow_req->request_bkup;
+ 		new_ctx->local_id = subflow_req->local_id;
+ 		new_ctx->remote_id = subflow_req->remote_id;
+ 		new_ctx->token = subflow_req->token;
 
 
