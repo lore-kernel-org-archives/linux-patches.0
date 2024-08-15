@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108D41714A8;
-	Thu, 15 Aug 2024 13:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FAB1714A8;
+	Thu, 15 Aug 2024 13:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729371; cv=none; b=H2T7xlkxFFBb7r6uQFu+EhU/TRt7sqfN6h3E9PuaJGSQYpHoIhenyBtcbtcUwTwaDjpQpna1zpO7NvSsTilvbvXz9a8hCAmYGjLHye0xqkGPND45aV4KkOfACNEnHItJgtmCZqLRwi6zj8rRHzrPzIJGe50Kr/jOqjWjI+Otv+8=
+	t=1723729374; cv=none; b=ticgSrsjPFFfPnfNxr8jCOCBK5Q4fX+k3e8bDVlPsdQssRqqj6yNdZ0J3YC1RTlQyI10/L7C4C40+qokpk0OueFu/acKKAnQ2KOjgp1sV16o+FcDjj8s1MP4ySBmEv077Bd7oobMSqKEEoTaShfFtCSjqxuhA8v9ZCAGzJ6Uqzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729371; c=relaxed/simple;
-	bh=X2MJJCLNpsZOlqxelRyVSsWYilz1VVXtDrB+kTIj3B0=;
+	s=arc-20240116; t=1723729374; c=relaxed/simple;
+	bh=QxNWEq/4lHir5Ifb1i7Zpcuh7COn7FUEXpUX8OCPAnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TH1djNxcXNkEs/Jc3QrZddtE4z8R7PCFoeFYvpFL4Bu3KGTrWVo41Cg5//QOFiqjZuXUUeSE19v3V86LFmA5n8X8hcjTLucyBymX3F+q+tuEdv2HVT6G2hlbpyxNZ8r6Ug7y2cdtwn4tjuZ0R4fGzyDXWGCzf5GAsthO1CwKKf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XotouH2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZCioedg3m63A92/0liy3Yc/sq1blaFZiPkazmpTlG0WoO1tzepfMeI/M7ECIjuvI/qs7yOdC4xDgUN6C+Ufxdk4KLtkQViDKmPVU4OKpp/fgusG3sAOf1Fhvmq6sMkyvBaL22wbfzrqMGgLWLuPuvtTUDO+97iJ1vA0MwxnDG9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAiMLAb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XotouH2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77822C32786;
-	Thu, 15 Aug 2024 13:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAiMLAb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22B9C32786;
+	Thu, 15 Aug 2024 13:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729370;
-	bh=X2MJJCLNpsZOlqxelRyVSsWYilz1VVXtDrB+kTIj3B0=;
+	s=korg; t=1723729374;
+	bh=QxNWEq/4lHir5Ifb1i7Zpcuh7COn7FUEXpUX8OCPAnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XotouH2SRl20TWF7Xrs6NMa+SIGtApRyYxwX41WtmrUXXj3dK3TOJkfsTLaj3awoh
-	 JCOw+R9V64cSP/Ppa/tYQ/1+10RoGhrtoFBl887E30Vuym6Pi1A7pqWDahFPhwP4sK
-	 cph0ggIh3zkGRS0mAc8CoraKWwTUGG3DIcZYqIUo=
+	b=PAiMLAb/15IXS9/BL4s8gQ6NIOwMUFRzTShRHr7jemXHBosdBLCNCYCsEI4IUQWXe
+	 c5oT67W7v/WN/Y+p5eABnuO9N9mHHsvTy/azhaUXRd2wRebhjMPZ2esJBGv5D2njix
+	 mkpUMzkGdtDSwTlkT5SnytxFxzGxcZV+MVl7I+gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mirsad Todorovac <mtodorovac69@gmail.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/484] bna: adjust name buf size of bna_tcb and bna_ccb structures
-Date: Thu, 15 Aug 2024 15:18:55 +0200
-Message-ID: <20240815131944.260397982@linuxfoundation.org>
+Subject: [PATCH 5.15 078/484] bpf: Eliminate remaining "make W=1" warnings in kernel/bpf/btf.o
+Date: Thu, 15 Aug 2024 15:18:56 +0200
+Message-ID: <20240815131944.298217784@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -46,81 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit c9741a03dc8e491e57b95fba0058ab46b7e506da ]
+[ Upstream commit 2454075f8e2915cebbe52a1195631bc7efe2b7e1 ]
 
-To have enough space to write all possible sprintf() args. Currently
-'name' size is 16, but the first '%s' specifier may already need at
-least 16 characters, since 'bnad->netdev->name' is used there.
+As reported by Mirsad [1] we still see format warnings in kernel/bpf/btf.o
+at W=1 warning level:
 
-For '%d' specifiers, assume that they require:
- * 1 char for 'tx_id + tx_info->tcb[i]->id' sum, BNAD_MAX_TXQ_PER_TX is 8
- * 2 chars for 'rx_id + rx_info->rx_ctrl[i].ccb->id', BNAD_MAX_RXP_PER_RX
-   is 16
+  CC      kernel/bpf/btf.o
+./kernel/bpf/btf.c: In function ‘btf_type_seq_show_flags’:
+./kernel/bpf/btf.c:7553:21: warning: assignment left-hand side might be a candidate for a format attribute [-Wsuggest-attribute=format]
+ 7553 |         sseq.showfn = btf_seq_show;
+      |                     ^
+./kernel/bpf/btf.c: In function ‘btf_type_snprintf_show’:
+./kernel/bpf/btf.c:7604:31: warning: assignment left-hand side might be a candidate for a format attribute [-Wsuggest-attribute=format]
+ 7604 |         ssnprintf.show.showfn = btf_snprintf_show;
+      |                               ^
 
-And replace sprintf with snprintf.
+Combined with CONFIG_WERROR=y these can halt the build.
 
-Detected using the static analysis tool - Svace.
+The fix (annotating the structure field with __printf())
+suggested by Mirsad resolves these. Apologies I missed this last time.
+No other W=1 warnings were observed in kernel/bpf after this fix.
 
-Fixes: 8b230ed8ec96 ("bna: Brocade 10Gb Ethernet device driver")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+[1] https://lore.kernel.org/bpf/92c9d047-f058-400c-9c7d-81d4dc1ef71b@gmail.com/
+
+Fixes: b3470da314fd ("bpf: annotate BTF show functions with __printf")
+Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Suggested-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240712092859.1390960-1-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/brocade/bna/bna_types.h |  2 +-
- drivers/net/ethernet/brocade/bna/bnad.c      | 11 ++++++-----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ kernel/bpf/btf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/brocade/bna/bna_types.h b/drivers/net/ethernet/brocade/bna/bna_types.h
-index 666b6922e24db..ebf54d74c2bbe 100644
---- a/drivers/net/ethernet/brocade/bna/bna_types.h
-+++ b/drivers/net/ethernet/brocade/bna/bna_types.h
-@@ -410,7 +410,7 @@ struct bna_ib {
- /* Tx object */
- 
- /* Tx datapath control structure */
--#define BNA_Q_NAME_SIZE		16
-+#define BNA_Q_NAME_SIZE		(IFNAMSIZ + 6)
- struct bna_tcb {
- 	/* Fast path */
- 	void			**sw_qpt;
-diff --git a/drivers/net/ethernet/brocade/bna/bnad.c b/drivers/net/ethernet/brocade/bna/bnad.c
-index 0347c9d3aff32..a3b6b9af0b057 100644
---- a/drivers/net/ethernet/brocade/bna/bnad.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad.c
-@@ -1535,8 +1535,9 @@ bnad_tx_msix_register(struct bnad *bnad, struct bnad_tx_info *tx_info,
- 
- 	for (i = 0; i < num_txqs; i++) {
- 		vector_num = tx_info->tcb[i]->intr_vector;
--		sprintf(tx_info->tcb[i]->name, "%s TXQ %d", bnad->netdev->name,
--				tx_id + tx_info->tcb[i]->id);
-+		snprintf(tx_info->tcb[i]->name, BNA_Q_NAME_SIZE, "%s TXQ %d",
-+			 bnad->netdev->name,
-+			 tx_id + tx_info->tcb[i]->id);
- 		err = request_irq(bnad->msix_table[vector_num].vector,
- 				  (irq_handler_t)bnad_msix_tx, 0,
- 				  tx_info->tcb[i]->name,
-@@ -1586,9 +1587,9 @@ bnad_rx_msix_register(struct bnad *bnad, struct bnad_rx_info *rx_info,
- 
- 	for (i = 0; i < num_rxps; i++) {
- 		vector_num = rx_info->rx_ctrl[i].ccb->intr_vector;
--		sprintf(rx_info->rx_ctrl[i].ccb->name, "%s CQ %d",
--			bnad->netdev->name,
--			rx_id + rx_info->rx_ctrl[i].ccb->id);
-+		snprintf(rx_info->rx_ctrl[i].ccb->name, BNA_Q_NAME_SIZE,
-+			 "%s CQ %d", bnad->netdev->name,
-+			 rx_id + rx_info->rx_ctrl[i].ccb->id);
- 		err = request_irq(bnad->msix_table[vector_num].vector,
- 				  (irq_handler_t)bnad_msix_rx, 0,
- 				  rx_info->rx_ctrl[i].ccb->name,
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 0c9d93e2c18f0..d3eb75bfd9718 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -349,7 +349,7 @@ const char *btf_type_str(const struct btf_type *t)
+ struct btf_show {
+ 	u64 flags;
+ 	void *target;	/* target of show operation (seq file, buffer) */
+-	void (*showfn)(struct btf_show *show, const char *fmt, va_list args);
++	__printf(2, 0) void (*showfn)(struct btf_show *show, const char *fmt, va_list args);
+ 	const struct btf *btf;
+ 	/* below are used during iteration */
+ 	struct {
 -- 
 2.43.0
 
