@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDAD1A7074;
-	Thu, 15 Aug 2024 14:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53B21AD3EE;
+	Thu, 15 Aug 2024 14:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732874; cv=none; b=jfirIFRYxdqt3wXo6RdIpce4NYmMPK0XIqUAzfjbipKYfNKEiI74uiM0b3Tff6xgbH7g+1Os2EI7ZIUH1Gq3lRuHDhskbjECw9NMSEv+pogXj5bqxfKfRQ+FmkxP3Ggv5ukMcQEPe7L7GYSb9YhdnOJhtQ77HUP3WHf2/fJbGfg=
+	t=1723732876; cv=none; b=ms36ST7KfhEJwrvLXndbINGW13ZRlbWlMHPsvecb/I+kxQhpMkgDVQmOacrgVZivQsTJ/vjLrNlesJn2PnhKGEPyIMO/N4g61dCntnYR/lu4dA9LYqGU7dIEGSFDrwcG6Z7kwcvXN1eGD8RjjR7SAvAwtyPdTg/ZHhU1xFhMQqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732874; c=relaxed/simple;
-	bh=uBBoPTGV2zor8M5mczdfX5GkKdjmWgr4GA5i6DlbJyI=;
+	s=arc-20240116; t=1723732876; c=relaxed/simple;
+	bh=3eZq/xSKiaOEGIvYFV8A1GpTYyZdW8beA58lPVtuwSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJ0rnY66kdULZVcX44eydzED41G9GjSjGedV77VqU2amno5nMbcLnUdhId+vD57Y7bZmvEJVXeVM/mlMFI3K77wTGvnkj6s3PWvG/UwmZJhBWf/LhajQOv5Jo4+OP9kLgNWz/0MpYtwaoumXia0pznJJiEAWlKB2y6zonliIGOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTncUN8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvJXbHudUnvqnG/jiqDMNWBJyxqH8DW5XM90Uwj3PI9eq4OxvEwEHTgydje6rro5KbMTX0oXg14z5HbzOSbnDUMzWW0FeckDRF+9TpqXit1SgmQmCOqKNWQTBfpgxRn4S9HTFP++AaqICLQaWv4rQyePEvcLOJZZUV9dDfPbTnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZECXUUMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTncUN8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35305C4AF0E;
-	Thu, 15 Aug 2024 14:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZECXUUMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5657AC32786;
+	Thu, 15 Aug 2024 14:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732873;
-	bh=uBBoPTGV2zor8M5mczdfX5GkKdjmWgr4GA5i6DlbJyI=;
+	s=korg; t=1723732876;
+	bh=3eZq/xSKiaOEGIvYFV8A1GpTYyZdW8beA58lPVtuwSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTncUN8pGqDPM47vQooJzukepOCt5CDm7yJ2/NLU1NCjPfovWV6kCXV1CTvooahF1
-	 MvEaAiE8TyL5NTayfKlKcm7BLrrI7GipDWzFyPlJoS+4NzBip7M+/XcZ6dD06LEN2Q
-	 vpqILh0NZiqEAn5kJMf+Y1tTbxF8+DNhh66KnvC0=
+	b=ZECXUUMoP/Y8CTXfstmtYJ38VG5uoDbvZrBWYCxyIWiXvrKFR36maSO2zoGtG3UKC
+	 zJLpqUb81V0wwxhqJY/npPa1kYjLFi+LHuQiJljHfx3YeqQ6YAw7HZgffV7pTN/8U+
+	 wuj43FXjx7xNt/jM26HIUo66G30RNNVvc9/bJ9K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 285/352] arm64: errata: Add workaround for Arm errata 3194386 and 3312417
-Date: Thu, 15 Aug 2024 15:25:51 +0200
-Message-ID: <20240815131930.464983587@linuxfoundation.org>
+	syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 5.10 312/352] driver core: Fix uevent_show() vs driver detach race
+Date: Thu, 15 Aug 2024 15:26:18 +0200
+Message-ID: <20240815131931.517345689@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,225 +55,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 7187bb7d0b5c7dfa18ca82e9e5c75e13861b1d88 ]
+commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c upstream.
 
-Cortex-X4 and Neoverse-V3 suffer from errata whereby an MSR to the SSBS
-special-purpose register does not affect subsequent speculative
-instructions, permitting speculative store bypassing for a window of
-time. This is described in their Software Developer Errata Notice (SDEN)
-documents:
+uevent_show() wants to de-reference dev->driver->name. There is no clean
+way for a device attribute to de-reference dev->driver unless that
+attribute is defined via (struct device_driver).dev_groups. Instead, the
+anti-pattern of taking the device_lock() in the attribute handler risks
+deadlocks with code paths that remove device attributes while holding
+the lock.
 
-* Cortex-X4 SDEN v8.0, erratum 3194386:
-  https://developer.arm.com/documentation/SDEN-2432808/0800/
+This deadlock is typically invisible to lockdep given the device_lock()
+is marked lockdep_set_novalidate_class(), but some subsystems allocate a
+local lockdep key for @dev->mutex to reveal reports of the form:
 
-* Neoverse-V3 SDEN v6.0, erratum 3312417:
-  https://developer.arm.com/documentation/SDEN-2891958/0600/
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.10.0-rc7+ #275 Tainted: G           OE    N
+ ------------------------------------------------------
+ modprobe/2374 is trying to acquire lock:
+ ffff8c2270070de0 (kn->active#6){++++}-{0:0}, at: __kernfs_remove+0xde/0x220
 
-To workaround these errata, it is necessary to place a speculation
-barrier (SB) after MSR to the SSBS special-purpose register. This patch
-adds the requisite SB after writes to SSBS within the kernel, and hides
-the presence of SSBS from EL0 such that userspace software which cares
-about SSBS will manipulate this via prctl(PR_GET_SPECULATION_CTRL, ...).
+ but task is already holding lock:
+ ffff8c22016e88f8 (&cxl_root_key){+.+.}-{3:3}, at: device_release_driver_internal+0x39/0x210
 
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20240508081400.235362-5-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[ Mark: fix conflicts & renames, drop unneeded cpucaps.h, fold in user_feature_fixup() ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #1 (&cxl_root_key){+.+.}-{3:3}:
+        __mutex_lock+0x99/0xc30
+        uevent_show+0xac/0x130
+        dev_attr_show+0x18/0x40
+        sysfs_kf_seq_show+0xac/0xf0
+        seq_read_iter+0x110/0x450
+        vfs_read+0x25b/0x340
+        ksys_read+0x67/0xf0
+        do_syscall_64+0x75/0x190
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ -> #0 (kn->active#6){++++}-{0:0}:
+        __lock_acquire+0x121a/0x1fa0
+        lock_acquire+0xd6/0x2e0
+        kernfs_drain+0x1e9/0x200
+        __kernfs_remove+0xde/0x220
+        kernfs_remove_by_name_ns+0x5e/0xa0
+        device_del+0x168/0x410
+        device_unregister+0x13/0x60
+        devres_release_all+0xb8/0x110
+        device_unbind_cleanup+0xe/0x70
+        device_release_driver_internal+0x1c7/0x210
+        driver_detach+0x47/0x90
+        bus_remove_driver+0x6c/0xf0
+        cxl_acpi_exit+0xc/0x11 [cxl_acpi]
+        __do_sys_delete_module.isra.0+0x181/0x260
+        do_syscall_64+0x75/0x190
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The observation though is that driver objects are typically much longer
+lived than device objects. It is reasonable to perform lockless
+de-reference of a @driver pointer even if it is racing detach from a
+device. Given the infrequency of driver unregistration, use
+synchronize_rcu() in module_remove_driver() to close any potential
+races.  It is potentially overkill to suffer synchronize_rcu() just to
+handle the rare module removal racing uevent_show() event.
+
+Thanks to Tetsuo Handa for the debug analysis of the syzbot report [1].
+
+Fixes: c0a40097f0bc ("drivers: core: synchronize really_probe() and dev_uevent()")
+Reported-by: syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Closes: http://lore.kernel.org/5aa5558f-90a4-4864-b1b1-5d6784c5607d@I-love.SAKURA.ne.jp [1]
+Link: http://lore.kernel.org/669073b8ea479_5fffa294c1@dwillia2-xfh.jf.intel.com.notmuch
+Cc: stable@vger.kernel.org
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://lore.kernel.org/r/172081332794.577428.9738802016494057132.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arm64/silicon-errata.rst |  4 +++
- arch/arm64/Kconfig                     | 41 ++++++++++++++++++++++++++
- arch/arm64/include/asm/cpucaps.h       |  3 +-
- arch/arm64/kernel/cpu_errata.c         | 19 ++++++++++++
- arch/arm64/kernel/cpufeature.c         | 12 ++++++++
- arch/arm64/kernel/proton-pack.c        | 12 ++++++++
- 6 files changed, 90 insertions(+), 1 deletion(-)
+ drivers/base/core.c   |   13 ++++++++-----
+ drivers/base/module.c |    4 ++++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index 10a26d44ef4a9..0ecb714b2c426 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -98,12 +98,16 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A510     | #2457168        | ARM64_ERRATUM_2457168       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Cortex-X4       | #3194386        | ARM64_ERRATUM_3194386       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-N1     | #1188873,1418040| ARM64_ERRATUM_1418040       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-N1     | #1349291        | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-N1     | #1542419        | ARM64_ERRATUM_1542419       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Neoverse-V3     | #3312417        | ARM64_ERRATUM_3312417       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | MMU-500         | #841119,826419  | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 13cf137da999a..0d59e8ab27c88 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -691,6 +691,47 @@ config ARM64_ERRATUM_2457168
- 
- 	  If unsure, say Y.
- 
-+config ARM64_WORKAROUND_SPECULATIVE_SSBS
-+	bool
-+
-+config ARM64_ERRATUM_3194386
-+	bool "Cortex-X4: 3194386: workaround for MSR SSBS not self-synchronizing"
-+	select ARM64_WORKAROUND_SPECULATIVE_SSBS
-+	default y
-+	help
-+	  This option adds the workaround for ARM Cortex-X4 erratum 3194386.
-+
-+	  On affected cores "MSR SSBS, #0" instructions may not affect
-+	  subsequent speculative instructions, which may permit unexepected
-+	  speculative store bypassing.
-+
-+	  Work around this problem by placing a speculation barrier after
-+	  kernel changes to SSBS. The presence of the SSBS special-purpose
-+	  register is hidden from hwcaps and EL0 reads of ID_AA64PFR1_EL1, such
-+	  that userspace will use the PR_SPEC_STORE_BYPASS prctl to change
-+	  SSBS.
-+
-+	  If unsure, say Y.
-+
-+config ARM64_ERRATUM_3312417
-+	bool "Neoverse-V3: 3312417: workaround for MSR SSBS not self-synchronizing"
-+	select ARM64_WORKAROUND_SPECULATIVE_SSBS
-+	default y
-+	help
-+	  This option adds the workaround for ARM Neoverse-V3 erratum 3312417.
-+
-+	  On affected cores "MSR SSBS, #0" instructions may not affect
-+	  subsequent speculative instructions, which may permit unexepected
-+	  speculative store bypassing.
-+
-+	  Work around this problem by placing a speculation barrier after
-+	  kernel changes to SSBS. The presence of the SSBS special-purpose
-+	  register is hidden from hwcaps and EL0 reads of ID_AA64PFR1_EL1, such
-+	  that userspace will use the PR_SPEC_STORE_BYPASS prctl to change
-+	  SSBS.
-+
-+	  If unsure, say Y.
-+
- config CAVIUM_ERRATUM_22375
- 	bool "Cavium erratum 22375, 24313"
- 	default y
-diff --git a/arch/arm64/include/asm/cpucaps.h b/arch/arm64/include/asm/cpucaps.h
-index d2080a41f6e6f..931c88182fb8b 100644
---- a/arch/arm64/include/asm/cpucaps.h
-+++ b/arch/arm64/include/asm/cpucaps.h
-@@ -69,7 +69,8 @@
- #define ARM64_SPECTRE_BHB			59
- #define ARM64_WORKAROUND_2457168		60
- #define ARM64_WORKAROUND_1742098		61
-+#define ARM64_WORKAROUND_SPECULATIVE_SSBS	62
- 
--#define ARM64_NCAPS				62
-+#define ARM64_NCAPS				63
- 
- #endif /* __ASM_CPUCAPS_H */
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 5d6f19bc628c2..3eabd809aee4a 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -364,6 +364,18 @@ static struct midr_range broken_aarch32_aes[] = {
- };
- #endif
- 
-+#ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS
-+static const struct midr_range erratum_spec_ssbs_list[] = {
-+#ifdef CONFIG_ARM64_ERRATUM_3194386
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_X4),
-+#endif
-+#ifdef CONFIG_ARM64_ERRATUM_3312417
-+	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
-+#endif
-+	{}
-+};
-+#endif
-+
- const struct arm64_cpu_capabilities arm64_errata[] = {
- #ifdef CONFIG_ARM64_WORKAROUND_CLEAN_CACHE
- 	{
-@@ -570,6 +582,13 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
- 		CAP_MIDR_RANGE_LIST(broken_aarch32_aes),
- 		.type = ARM64_CPUCAP_LOCAL_CPU_ERRATUM,
- 	},
-+#endif
-+#ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS
-+	{
-+		.desc = "ARM errata 3194386, 3312417",
-+		.capability = ARM64_WORKAROUND_SPECULATIVE_SSBS,
-+		ERRATA_MIDR_RANGE_LIST(erratum_spec_ssbs_list),
-+	},
- #endif
- 	{
- 	}
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index 11a42fcf94bfc..dc92fd590f2f9 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -1753,6 +1753,17 @@ static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
- }
- #endif /* CONFIG_ARM64_MTE */
- 
-+static void user_feature_fixup(void)
-+{
-+	if (cpus_have_cap(ARM64_WORKAROUND_SPECULATIVE_SSBS)) {
-+		struct arm64_ftr_reg *regp;
-+
-+		regp = get_arm64_ftr_reg(SYS_ID_AA64PFR1_EL1);
-+		if (regp)
-+			regp->user_mask &= ~GENMASK(7, 4); /* SSBS */
-+	}
-+}
-+
- static void elf_hwcap_fixup(void)
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -25,6 +25,7 @@
+ #include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/netdevice.h>
++#include <linux/rcupdate.h>
+ #include <linux/sched/signal.h>
+ #include <linux/sched/mm.h>
+ #include <linux/sysfs.h>
+@@ -1909,6 +1910,7 @@ static int dev_uevent(struct kset *kset,
+ 		      struct kobj_uevent_env *env)
  {
- #ifdef CONFIG_ARM64_ERRATUM_1742098
-@@ -2764,6 +2775,7 @@ void __init setup_cpu_features(void)
- 	u32 cwg;
+ 	struct device *dev = kobj_to_dev(kobj);
++	struct device_driver *driver;
+ 	int retval = 0;
  
- 	setup_system_capabilities();
-+	user_feature_fixup();
- 	setup_elf_hwcaps(arm64_elf_hwcaps);
+ 	/* add device node properties if present */
+@@ -1937,8 +1939,12 @@ static int dev_uevent(struct kset *kset,
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
  
- 	if (system_supports_32bit_el0()) {
-diff --git a/arch/arm64/kernel/proton-pack.c b/arch/arm64/kernel/proton-pack.c
-index 9c0e9d9eed6e2..b40310e0bdb90 100644
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -574,6 +574,18 @@ static enum mitigation_state spectre_v4_enable_hw_mitigation(void)
+-	if (dev->driver)
+-		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
++	/* Synchronize with module_remove_driver() */
++	rcu_read_lock();
++	driver = READ_ONCE(dev->driver);
++	if (driver)
++		add_uevent_var(env, "DRIVER=%s", driver->name);
++	rcu_read_unlock();
  
- 	/* SCTLR_EL1.DSSBS was initialised to 0 during boot */
- 	asm volatile(SET_PSTATE_SSBS(0));
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
+@@ -2008,11 +2014,8 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
+ 
+-	/* Synchronize with really_probe() */
+-	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(kset, &dev->kobj, env);
+-	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
+ 
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -7,6 +7,7 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
++#include <linux/rcupdate.h>
+ #include "base.h"
+ 
+ static char *make_driver_name(struct device_driver *drv)
+@@ -77,6 +78,9 @@ void module_remove_driver(struct device_
+ 	if (!drv)
+ 		return;
+ 
++	/* Synchronize with dev_uevent() */
++	synchronize_rcu();
 +
-+	/*
-+	 * SSBS is self-synchronizing and is intended to affect subsequent
-+	 * speculative instructions, but some CPUs can speculate with a stale
-+	 * value of SSBS.
-+	 *
-+	 * Mitigate this with an unconditional speculation barrier, as CPUs
-+	 * could mis-speculate branches and bypass a conditional barrier.
-+	 */
-+	if (IS_ENABLED(CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS))
-+		spec_bar();
-+
- 	return SPECTRE_MITIGATED;
- }
+ 	sysfs_remove_link(&drv->p->kobj, "module");
  
--- 
-2.43.0
-
+ 	if (drv->owner)
 
 
