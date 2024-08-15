@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE2918D630;
-	Thu, 15 Aug 2024 13:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D111714A1;
+	Thu, 15 Aug 2024 13:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729788; cv=none; b=CV5ajhEIH5Zqp+j1iHMxzsd7s+gPSfj8l+plyPpmgCGTxObnagFv+hOVts+5fzmc+qg4NRYDaFHWx5UWY2rBCQ6ZEXx8lEaxGRdKRcZmlJdjsggHeuM1NT0utJmBsKtKx0zJ+zociXbdIEtDM9CgA4YxwJqTCqcnjTVcSMDaclw=
+	t=1723729791; cv=none; b=r57/U9/jtXKae5bCdZkS+a7lywMPRQH4qlhn1xmYk6ASOieBXCRaSSATrYMgIYNOpnoVHpo4MHvZQgsR6gMar4tZnOYexyYhse8JAVBTMn2oe80FtXceh1LQVSzk5SuPrKKEqA/5ZJyF172rlAc+pDblJ484o9A8QqWtQ+saV8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729788; c=relaxed/simple;
-	bh=ICNEkUjvbYpkt5MK9rHFCTS36XL/7aik2TAx8k5lKVg=;
+	s=arc-20240116; t=1723729791; c=relaxed/simple;
+	bh=VaO3941LBrJfv1IoMZ2wKWQLTLgMJI9q8Cm4IwsgjV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qENhNvrvIFDDO5PiVS2NgFE+tkTLGzo7P/sj3SSNTCzS/QV+GDr6Khkd63a1WgfL17xidO8JlL+3Ln1gc9IcPpnd8bzAbYPWrgdh5z8RAT1xC4q0S+UJ5eu9dGoO1w5FMhntWA9q1jlrwzey7F3D3yFxacwlrdsA4Dewn3YxitI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfbKPHfV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SmbB2o0EVkX5dBlW3psFD4oCBpqcJeBg/VOv60cuGVYkG0h/GYOLfLX86nENGl3sW/7YDwx7iqjgQTBeLGn1WR0MQ86NjJXDE/FHC8S+0pJZlOTQTJnYSy6sOK1DZzH4L6hBha+ydpAWfakNX5/iWADA+o7R2qlkoDv5eO244K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygpY7fTX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfbKPHfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E68C32786;
-	Thu, 15 Aug 2024 13:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygpY7fTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBDEC32786;
+	Thu, 15 Aug 2024 13:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729788;
-	bh=ICNEkUjvbYpkt5MK9rHFCTS36XL/7aik2TAx8k5lKVg=;
+	s=korg; t=1723729791;
+	bh=VaO3941LBrJfv1IoMZ2wKWQLTLgMJI9q8Cm4IwsgjV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfbKPHfVBWCGbwHS3Bdt7e4UIEEKonCjSm/QsmbNjOMTFNlxeMQKKcTY3yMjrea59
-	 D25NeNL9EuaxCBpqUeB/6Z4SJyXso/a1UpghLuvBNZSZpZqL829y0XIrfgXdzxpTzq
-	 SkVAW2EPJD/YCInO2pnrG75bMvNmYlBTwUf7DbJk=
+	b=ygpY7fTXl7bZx66m1H+DmOmUAMfLAZcNB+nB9rV0FgxOwp0kH4uVjDXKKDi+SdXJV
+	 qzL03GUtxsIL629ub98WgPNrJA2heTs8qqmoXgxI7nDTPEZtgTPrz6dX5oFZeUEgwe
+	 89E2jtMXNDpmm0vK6ZcMPbt3SCMw/IY80uqDyFDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 5.15 208/484] PCI: rockchip: Use GPIOD_OUT_LOW flag while requesting ep_gpio
-Date: Thu, 15 Aug 2024 15:21:06 +0200
-Message-ID: <20240815131949.448498832@linuxfoundation.org>
+	Martijn Coenen <maco@google.com>,
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.15 209/484] binder: fix hang of unregistered readers
+Date: Thu, 15 Aug 2024 15:21:07 +0200
+Message-ID: <20240815131949.487116269@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -54,80 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 840b7a5edf88fe678c60dee88a135647c0ea4375 upstream.
+commit 31643d84b8c3d9c846aa0e20bc033e46c68c7e7d upstream.
 
-Rockchip platforms use 'GPIO_ACTIVE_HIGH' flag in the devicetree definition
-for ep_gpio. This means, whatever the logical value set by the driver for
-the ep_gpio, physical line will output the same logic level.
+With the introduction of binder_available_for_proc_work_ilocked() in
+commit 1b77e9dcc3da ("ANDROID: binder: remove proc waitqueue") a binder
+thread can only "wait_for_proc_work" after its thread->looper has been
+marked as BINDER_LOOPER_STATE_{ENTERED|REGISTERED}.
 
-For instance,
+This means an unregistered reader risks waiting indefinitely for work
+since it never gets added to the proc->waiting_threads. If there are no
+further references to its waitqueue either the task will hang. The same
+applies to readers using the (e)poll interface.
 
-  gpiod_set_value_cansleep(rockchip->ep_gpio, 0); --> Level low
-  gpiod_set_value_cansleep(rockchip->ep_gpio, 1); --> Level high
+I couldn't find the rationale behind this restriction. So this patch
+restores the previous behavior of allowing unregistered threads to
+"wait_for_proc_work". Note that an error message for this scenario,
+which had previously become unreachable, is now re-enabled.
 
-But while requesting the ep_gpio, GPIOD_OUT_HIGH flag is currently used.
-Now, this also causes the physical line to output 'high' creating trouble
-for endpoint devices during host reboot.
-
-When host reboot happens, the ep_gpio will initially output 'low' due to
-the GPIO getting reset to its POR value. Then during host controller probe,
-it will output 'high' due to GPIOD_OUT_HIGH flag. Then during
-rockchip_pcie_host_init_port(), it will first output 'low' and then 'high'
-indicating the completion of controller initialization.
-
-On the endpoint side, each output 'low' of ep_gpio is accounted for PERST#
-assert and 'high' for PERST# deassert. With the above mentioned flow during
-host reboot, endpoint will witness below state changes for PERST#:
-
-  (1) PERST# assert - GPIO POR state
-  (2) PERST# deassert - GPIOD_OUT_HIGH while requesting GPIO
-  (3) PERST# assert - rockchip_pcie_host_init_port()
-  (4) PERST# deassert - rockchip_pcie_host_init_port()
-
-Now the time interval between (2) and (3) is very short as both happen
-during the driver probe(), and this results in a race in the endpoint.
-Because, before completing the PERST# deassertion in (2), endpoint got
-another PERST# assert in (3).
-
-A proper way to fix this issue is to change the GPIOD_OUT_HIGH flag in (2)
-to GPIOD_OUT_LOW. Because the usual convention is to request the GPIO with
-a state corresponding to its 'initial/default' value and let the driver
-change the state of the GPIO when required.
-
-As per that, the ep_gpio should be requested with GPIOD_OUT_LOW as it
-corresponds to the POR value of '0' (PERST# assert in the endpoint). Then
-the driver can change the state of the ep_gpio later in
-rockchip_pcie_host_init_port() as per the initialization sequence.
-
-This fixes the firmware crash issue in Qcom based modems connected to
-Rockpro64 based board.
-
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Closes: https://lore.kernel.org/mhi/20240402045647.GG2933@thinkpad/
-Link: https://lore.kernel.org/linux-pci/20240416-pci-rockchip-perst-fix-v1-1-4800b1d4d954@linaro.org
-Reported-by: Slark Xiao <slark_xiao@163.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Cc: stable@vger.kernel.org	# v4.9
+Fixes: 1b77e9dcc3da ("ANDROID: binder: remove proc waitqueue")
+Cc: stable@vger.kernel.org
+Cc: Martijn Coenen <maco@google.com>
+Cc: Arve Hjønnevåg <arve@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20240711201452.2017543-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip.c
-+++ b/drivers/pci/controller/pcie-rockchip.c
-@@ -120,7 +120,7 @@ int rockchip_pcie_parse_dt(struct rockch
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -542,9 +542,7 @@ static bool binder_has_work(struct binde
+ static bool binder_available_for_proc_work_ilocked(struct binder_thread *thread)
+ {
+ 	return !thread->transaction_stack &&
+-		binder_worklist_empty_ilocked(&thread->todo) &&
+-		(thread->looper & (BINDER_LOOPER_STATE_ENTERED |
+-				   BINDER_LOOPER_STATE_REGISTERED));
++		binder_worklist_empty_ilocked(&thread->todo);
+ }
  
- 	if (rockchip->is_rc) {
- 		rockchip->ep_gpio = devm_gpiod_get_optional(dev, "ep",
--							    GPIOD_OUT_HIGH);
-+							    GPIOD_OUT_LOW);
- 		if (IS_ERR(rockchip->ep_gpio))
- 			return dev_err_probe(dev, PTR_ERR(rockchip->ep_gpio),
- 					     "failed to get ep GPIO\n");
+ static void binder_wakeup_poll_threads_ilocked(struct binder_proc *proc,
 
 
