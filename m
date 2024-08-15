@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3511F1714D0;
-	Thu, 15 Aug 2024 13:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17207DA8A;
+	Thu, 15 Aug 2024 13:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728665; cv=none; b=l8VFPeVUF/SKUgl/v2vKvZXDGIoOYpa3LvSUvJJ15WeVENzX/p2CtbBOmUxiZawUPJr7xxhygtdcgLXux68mbVjd2U0JU6NwXNuX6SiQroLniS7UgIi39Ru0VQUMjMXWGNBRswAbkP9zPM83+qi6YG9wHpko/5s//lOm8rqg3sk=
+	t=1723728668; cv=none; b=uunOXuZ0c5hawY0ebE5wHS7SWqzjDHxnzBEm5wf9EPhM4UqRFtkhc3PFHKZty1NWtiOEdKmSZZOCMNvK+aZjXhyi4hqxDls+ymOHzFqWMOMxbtlZDvXY/pFDZSejARS+pQgLMP0EMoUvmMwXsttzV4ZE5hjjC0gf9VMO81pW0Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728665; c=relaxed/simple;
-	bh=ZR7ngSpaI4tsHDFL5W9NiYkEf6YV9V2B2PzMGm/ZbWk=;
+	s=arc-20240116; t=1723728668; c=relaxed/simple;
+	bh=xgyQ/IXZCl58k07WbhLBBERJjwrraNhmDTc5JRyaHUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wz4zTr0omZN1kPNLHkI0kn6Kr/zb/Rs4aUrJAef/8nMX16qam1C2KLGHi+fseBTBEZRBahmKh7RpQQoCBEwmm/3vwX7Gw/Xm2RuOTxleSPtYBgRx1kN3MID7k1mTIXfb/Q1mmvCq4fXLXs91BCuFyfsQ3KsB54H09bD1P8ui7ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sMBcF++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JCF30wApVPiSj3lnbqAW0MzTR/FtdQMrL9jmFjzZ+7kEe8G5QC9Um2UyAolDg4bBRYwG96gr9JZ4nJggbFwm5mzs2RoC/eY1eX/lrLeUdVUPXNVFPfrcAQLIig8RWTiOiW5eiIDj/NlRvi3GnnVzkdN9/zsZPQ6TzDHx2tj3Ydo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7x56szZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sMBcF++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD407C32786;
-	Thu, 15 Aug 2024 13:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7x56szZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED14C32786;
+	Thu, 15 Aug 2024 13:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728665;
-	bh=ZR7ngSpaI4tsHDFL5W9NiYkEf6YV9V2B2PzMGm/ZbWk=;
+	s=korg; t=1723728668;
+	bh=xgyQ/IXZCl58k07WbhLBBERJjwrraNhmDTc5JRyaHUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sMBcF++ZkyICqXkSnCUziibfDOxU9MGgbfMy6CmmUp/tWW0fMr1+zhBrNhRa1rQo
-	 2GIRaANLKM/liclCzmfRPn4+aoriHFtV8YfwVdLDdbTM6YkMdB1sJblzctz/i4OgfZ
-	 eIpntJ6fUtJtDO6waJfrFJ88cT6iUL0NCPjBeDZs=
+	b=z7x56szZQKVVGp3JEfz8YgwmOUAKQpVRbIDhmRPn8ffXx9JyUAeCnG9PAfDb1D1EE
+	 Rk1Az/31XE8nfrJLJT5gjqAyxdTPDvFAnYRxGbBaqgXhVlAqlLfBV5m3+617TvFAlI
+	 weXmmcthiSPzUbNCxgAy7g/b3QsRmtPsVzybW3CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 044/196] RDMA/mlx4: Fix truncated output warning in mad.c
-Date: Thu, 15 Aug 2024 15:22:41 +0200
-Message-ID: <20240815131853.770150018@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Paolo Pisati <p.pisati@gmail.com>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 4.19 071/196] m68k: amiga: Turn off Warp1260 interrupts during boot
+Date: Thu, 15 Aug 2024 15:23:08 +0200
+Message-ID: <20240815131854.793902302@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -45,86 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Paolo Pisati <p.pisati@gmail.com>
 
-[ Upstream commit 0d2e6992fc956e3308cd5376c18567def4cb3967 ]
+commit 1d8491d3e726984343dd8c3cdbe2f2b47cfdd928 upstream.
 
-Increase size of the name array to avoid truncated output warning.
+On an Amiga 1200 equipped with a Warp1260 accelerator, an interrupt
+storm coming from the accelerator board causes the machine to crash in
+local_irq_enable() or auto_irq_enable().  Disabling interrupts for the
+Warp1260 in amiga_parse_bootinfo() fixes the problem.
 
-drivers/infiniband/hw/mlx4/mad.c: In function ‘mlx4_ib_alloc_demux_ctx’:
-drivers/infiniband/hw/mlx4/mad.c:2197:47: error: ‘%d’ directive output
-may be truncated writing between 1 and 11 bytes into a region of size 4
-[-Werror=format-truncation=]
- 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
-      |                                               ^~
-drivers/infiniband/hw/mlx4/mad.c:2197:38: note: directive argument in
-the range [-2147483645, 2147483647]
- 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
-      |                                      ^~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2197:9: note: ‘snprintf’ output between
-10 and 20 bytes into a destination of size 12
- 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2205:48: error: ‘%d’ directive output
-may be truncated writing between 1 and 11 bytes into a region of size 3
-[-Werror=format-truncation=]
- 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
-      |                                                ^~
-drivers/infiniband/hw/mlx4/mad.c:2205:38: note: directive argument in
-the range [-2147483645, 2147483647]
- 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
-      |                                      ^~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2205:9: note: ‘snprintf’ output between
-11 and 21 bytes into a destination of size 12
- 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2213:48: error: ‘%d’ directive output
-may be truncated writing between 1 and 11 bytes into a region of size 3
-[-Werror=format-truncation=]
- 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
-      |                                                ^~
-drivers/infiniband/hw/mlx4/mad.c:2213:38: note: directive argument in
-the range [-2147483645, 2147483647]
- 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
-      |                                      ^~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2213:9: note: ‘snprintf’ output between
-11 and 21 bytes into a destination of size 12
- 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/hw/mlx4/mad.o] Error 1
-
-Fixes: fc06573dfaf8 ("IB/mlx4: Initialize SR-IOV IB support for slaves in master context")
-Link: https://lore.kernel.org/r/f3798b3ce9a410257d7e1ec7c9e285f1352e256a.1718554569.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/ZkjwzVwYeQtyAPrL@amaterasu.local
+Cc: stable <stable@kernel.org>
+Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
+Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240601153254.186225-1-p.pisati@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/mad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/m68k/amiga/config.c       |    9 +++++++++
+ include/uapi/linux/zorro_ids.h |    3 +++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx4/mad.c b/drivers/infiniband/hw/mlx4/mad.c
-index 418b9312fb2d7..a034cb3fa7cad 100644
---- a/drivers/infiniband/hw/mlx4/mad.c
-+++ b/drivers/infiniband/hw/mlx4/mad.c
-@@ -2158,7 +2158,7 @@ static int mlx4_ib_alloc_demux_ctx(struct mlx4_ib_dev *dev,
- 				       struct mlx4_ib_demux_ctx *ctx,
- 				       int port)
- {
--	char name[12];
-+	char name[21];
- 	int ret = 0;
- 	int i;
+--- a/arch/m68k/amiga/config.c
++++ b/arch/m68k/amiga/config.c
+@@ -181,6 +181,15 @@ int __init amiga_parse_bootinfo(const st
+ 			dev->slotsize = be16_to_cpu(cd->cd_SlotSize);
+ 			dev->boardaddr = be32_to_cpu(cd->cd_BoardAddr);
+ 			dev->boardsize = be32_to_cpu(cd->cd_BoardSize);
++
++			/* CS-LAB Warp 1260 workaround */
++			if (be16_to_cpu(dev->rom.er_Manufacturer) == ZORRO_MANUF(ZORRO_PROD_CSLAB_WARP_1260) &&
++			    dev->rom.er_Product == ZORRO_PROD(ZORRO_PROD_CSLAB_WARP_1260)) {
++
++				/* turn off all interrupts */
++				pr_info("Warp 1260 card detected: applying interrupt storm workaround\n");
++				*(uint32_t *)(dev->boardaddr + 0x1000) = 0xfff;
++			}
+ 		} else
+ 			pr_warn("amiga_parse_bootinfo: too many AutoConfig devices\n");
+ #endif /* CONFIG_ZORRO */
+--- a/include/uapi/linux/zorro_ids.h
++++ b/include/uapi/linux/zorro_ids.h
+@@ -449,6 +449,9 @@
+ #define  ZORRO_PROD_VMC_ISDN_BLASTER_Z2				ZORRO_ID(VMC, 0x01, 0)
+ #define  ZORRO_PROD_VMC_HYPERCOM_4				ZORRO_ID(VMC, 0x02, 0)
  
--- 
-2.43.0
-
++#define ZORRO_MANUF_CSLAB					0x1400
++#define  ZORRO_PROD_CSLAB_WARP_1260				ZORRO_ID(CSLAB, 0x65, 0)
++
+ #define ZORRO_MANUF_INFORMATION					0x157C
+ #define  ZORRO_PROD_INFORMATION_ISDN_ENGINE_I			ZORRO_ID(INFORMATION, 0x64, 0)
+ 
 
 
