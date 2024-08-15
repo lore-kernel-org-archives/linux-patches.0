@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C643C1A706B;
-	Thu, 15 Aug 2024 14:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3159F1A7067;
+	Thu, 15 Aug 2024 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730787; cv=none; b=QHUELwDf/R417w2XPttAhuzjAuLHrXKkQksbseuG+61xvuF07B1Sxt/9JAnJhBxQtaEDgoxglIqbo2kCycKMj5glAH6DUX/vz9/XI9jteh17vdrFFoWq4iZwP0jcG9w+jCpkA8sJwATjTlbfmhWqFpq6Uilu+QsIWCsxfYImqvs=
+	t=1723730791; cv=none; b=b2ERZgA1DeLWfNHO9B92ysovAuKgSrmpD1HElJuce3g0d8G0DLB3/rTWJ8v4ErmNYFv1oTyDPKrbo2ODTJ9siP0qtnrOjkU5hn0YxcamzeSFbQhqv5oCRmg6u41pf+XLFwfT9YlJwDTcl4zmAGaJ/6Qm5+EDXySviZtNhuxc4m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730787; c=relaxed/simple;
-	bh=imSc1p+ZR5fYvYi3MlYFn9+jvvtjiuewHIH/iWDCkOU=;
+	s=arc-20240116; t=1723730791; c=relaxed/simple;
+	bh=h/dlVPt4oD+webp88viMeRjtBVIAYQN3slw7CDTjU0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u37H99E6FonLsPGcIoGwR5bADGM2mFdbrwY6v6AJfgCGn4vmkuusPSOMGEMO82XNxedC5d1MYCi0VhGuG9dBFozEjTyJuMXqPBPYHu7ior6Lij7+6otKFJvhJwvRHVItlxqYEc+zEgapBL007DMwP27eCHL7o2uIONtx9TMG3UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGadEUng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OzBoRTmHwFtUI8oThMKbz5K9i6/+Rw6GW793SVEAig4fmEZKnii7DVLa+UgDoQWE7JGgbfuPswXN9fe+pAcUp53alDetqI5crmgPpOnoF7HUMOid7CIAXhJQnIoFzoxP3BnNGXZ8MVNU00bxi2+lAOvFh0K8aU26DY2rwuWJl54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv6zaYtb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGadEUng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB06C32786;
-	Thu, 15 Aug 2024 14:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv6zaYtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7266CC32786;
+	Thu, 15 Aug 2024 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730787;
-	bh=imSc1p+ZR5fYvYi3MlYFn9+jvvtjiuewHIH/iWDCkOU=;
+	s=korg; t=1723730791;
+	bh=h/dlVPt4oD+webp88viMeRjtBVIAYQN3slw7CDTjU0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGadEUngLdqNpM6UqG9s/KrLrS+W4KSVs6+UIcR06HJfghhx/RE8cKonbH1V6w3Vk
-	 WjAcNr167Pq5w3f+eNpPuR1HCxGZvvFk53MY1+jKGi/2ztOI7G8t4Q+OfTX3KE7vxo
-	 EVz9X5dzCBWIfzXmRIklvwTpMTslgTuVP94LRIss=
+	b=nv6zaYtb4wTTUUTkd6VFOCXJpd7T1fmRNzBv3s0BxgsXYq66kyj2zKrAm+kTU9U0b
+	 rtMXrRpZjm8afE4F+Uo5uEPogoOczhi32IZE7JfVUVBVk046VxcvXDulLC5KpbuCvd
+	 yj1oWvevqa9JUB8InX6HgSOt8/p04s3IlL1WZaMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>
-Subject: [PATCH 6.1 31/38] cgroup: Make operations on the cgroup root_list RCU safe
-Date: Thu, 15 Aug 2024 15:26:05 +0200
-Message-ID: <20240815131834.154399557@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 32/38] drm/i915: Add a function to mmap framebuffer obj
+Date: Thu, 15 Aug 2024 15:26:06 +0200
+Message-ID: <20240815131834.192441999@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -52,123 +56,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-commit d23b5c577715892c87533b13923306acc6243f93 upstream.
+[ Upstream commit eaee1c08586395182e0004b3512a2f83570ea461 ]
 
-At present, when we perform operations on the cgroup root_list, we must
-hold the cgroup_mutex, which is a relatively heavyweight lock. In reality,
-we can make operations on this list RCU-safe, eliminating the need to hold
-the cgroup_mutex during traversal. Modifications to the list only occur in
-the cgroup root setup and destroy paths, which should be infrequent in a
-production environment. In contrast, traversal may occur frequently.
-Therefore, making it RCU-safe would be beneficial.
+Implement i915_gem_fb_mmap() to enable fb_ops.fb_mmap()
+callback for i915's framebuffer objects.
 
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+v2: add a comment why i915_gem_object_get() needed(Andi).
+v3: mmap also ttm objects.
+
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Imre Deak <imre.deak@intel.com>
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230404143100.10452-3-nirmoy.das@intel.com
+Stable-dep-of: 1ac5167b3a90 ("drm/i915/gem: Adjust vma offset for framebuffer mmap offset")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cgroup-defs.h     |    1 +
- kernel/cgroup/cgroup-internal.h |    3 ++-
- kernel/cgroup/cgroup.c          |   23 ++++++++++++++++-------
- 3 files changed, 19 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_mman.c | 137 +++++++++++++++--------
+ drivers/gpu/drm/i915/gem/i915_gem_mman.h |   2 +-
+ 2 files changed, 93 insertions(+), 46 deletions(-)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -540,6 +540,7 @@ struct cgroup_root {
- 
- 	/* A list running through the active hierarchies */
- 	struct list_head root_list;
-+	struct rcu_head rcu;
- 
- 	/* Hierarchy-specific flags */
- 	unsigned int flags;
---- a/kernel/cgroup/cgroup-internal.h
-+++ b/kernel/cgroup/cgroup-internal.h
-@@ -170,7 +170,8 @@ extern struct list_head cgroup_roots;
- 
- /* iterate across the hierarchies */
- #define for_each_root(root)						\
--	list_for_each_entry((root), &cgroup_roots, root_list)
-+	list_for_each_entry_rcu((root), &cgroup_roots, root_list,	\
-+				lockdep_is_held(&cgroup_mutex))
- 
- /**
-  * for_each_subsys - iterate all enabled cgroup subsystems
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1346,7 +1346,7 @@ static void cgroup_exit_root_id(struct c
- 
- void cgroup_free_root(struct cgroup_root *root)
- {
--	kfree(root);
-+	kfree_rcu(root, rcu);
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
+index 1fd704d9cf9a9..180b66f6193cb 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
+@@ -969,53 +969,15 @@ static struct file *mmap_singleton(struct drm_i915_private *i915)
+ 	return file;
  }
  
- static void cgroup_destroy_root(struct cgroup_root *root)
-@@ -1379,7 +1379,7 @@ static void cgroup_destroy_root(struct c
- 	spin_unlock_irq(&css_set_lock);
+-/*
+- * This overcomes the limitation in drm_gem_mmap's assignment of a
+- * drm_gem_object as the vma->vm_private_data. Since we need to
+- * be able to resolve multiple mmap offsets which could be tied
+- * to a single gem object.
+- */
+-int i915_gem_mmap(struct file *filp, struct vm_area_struct *vma)
++static int
++i915_gem_object_mmap(struct drm_i915_gem_object *obj,
++		     struct i915_mmap_offset *mmo,
++		     struct vm_area_struct *vma)
+ {
+-	struct drm_vma_offset_node *node;
+-	struct drm_file *priv = filp->private_data;
+-	struct drm_device *dev = priv->minor->dev;
+-	struct drm_i915_gem_object *obj = NULL;
+-	struct i915_mmap_offset *mmo = NULL;
++	struct drm_i915_private *i915 = to_i915(obj->base.dev);
++	struct drm_device *dev = &i915->drm;
+ 	struct file *anon;
  
- 	if (!list_empty(&root->root_list)) {
--		list_del(&root->root_list);
-+		list_del_rcu(&root->root_list);
- 		cgroup_root_count--;
+-	if (drm_dev_is_unplugged(dev))
+-		return -ENODEV;
+-
+-	rcu_read_lock();
+-	drm_vma_offset_lock_lookup(dev->vma_offset_manager);
+-	node = drm_vma_offset_exact_lookup_locked(dev->vma_offset_manager,
+-						  vma->vm_pgoff,
+-						  vma_pages(vma));
+-	if (node && drm_vma_node_is_allowed(node, priv)) {
+-		/*
+-		 * Skip 0-refcnted objects as it is in the process of being
+-		 * destroyed and will be invalid when the vma manager lock
+-		 * is released.
+-		 */
+-		if (!node->driver_private) {
+-			mmo = container_of(node, struct i915_mmap_offset, vma_node);
+-			obj = i915_gem_object_get_rcu(mmo->obj);
+-
+-			GEM_BUG_ON(obj && obj->ops->mmap_ops);
+-		} else {
+-			obj = i915_gem_object_get_rcu
+-				(container_of(node, struct drm_i915_gem_object,
+-					      base.vma_node));
+-
+-			GEM_BUG_ON(obj && !obj->ops->mmap_ops);
+-		}
+-	}
+-	drm_vma_offset_unlock_lookup(dev->vma_offset_manager);
+-	rcu_read_unlock();
+-	if (!obj)
+-		return node ? -EACCES : -EINVAL;
+-
+ 	if (i915_gem_object_is_readonly(obj)) {
+ 		if (vma->vm_flags & VM_WRITE) {
+ 			i915_gem_object_put(obj);
+@@ -1047,7 +1009,7 @@ int i915_gem_mmap(struct file *filp, struct vm_area_struct *vma)
+ 	if (obj->ops->mmap_ops) {
+ 		vma->vm_page_prot = pgprot_decrypted(vm_get_page_prot(vma->vm_flags));
+ 		vma->vm_ops = obj->ops->mmap_ops;
+-		vma->vm_private_data = node->driver_private;
++		vma->vm_private_data = obj->base.vma_node.driver_private;
+ 		return 0;
  	}
  
-@@ -1419,7 +1419,15 @@ static inline struct cgroup *__cset_cgro
- 		}
- 	}
+@@ -1085,6 +1047,91 @@ int i915_gem_mmap(struct file *filp, struct vm_area_struct *vma)
+ 	return 0;
+ }
  
--	BUG_ON(!res_cgroup);
++/*
++ * This overcomes the limitation in drm_gem_mmap's assignment of a
++ * drm_gem_object as the vma->vm_private_data. Since we need to
++ * be able to resolve multiple mmap offsets which could be tied
++ * to a single gem object.
++ */
++int i915_gem_mmap(struct file *filp, struct vm_area_struct *vma)
++{
++	struct drm_vma_offset_node *node;
++	struct drm_file *priv = filp->private_data;
++	struct drm_device *dev = priv->minor->dev;
++	struct drm_i915_gem_object *obj = NULL;
++	struct i915_mmap_offset *mmo = NULL;
++
++	if (drm_dev_is_unplugged(dev))
++		return -ENODEV;
++
++	rcu_read_lock();
++	drm_vma_offset_lock_lookup(dev->vma_offset_manager);
++	node = drm_vma_offset_exact_lookup_locked(dev->vma_offset_manager,
++						  vma->vm_pgoff,
++						  vma_pages(vma));
++	if (node && drm_vma_node_is_allowed(node, priv)) {
++		/*
++		 * Skip 0-refcnted objects as it is in the process of being
++		 * destroyed and will be invalid when the vma manager lock
++		 * is released.
++		 */
++		if (!node->driver_private) {
++			mmo = container_of(node, struct i915_mmap_offset, vma_node);
++			obj = i915_gem_object_get_rcu(mmo->obj);
++
++			GEM_BUG_ON(obj && obj->ops->mmap_ops);
++		} else {
++			obj = i915_gem_object_get_rcu
++				(container_of(node, struct drm_i915_gem_object,
++					      base.vma_node));
++
++			GEM_BUG_ON(obj && !obj->ops->mmap_ops);
++		}
++	}
++	drm_vma_offset_unlock_lookup(dev->vma_offset_manager);
++	rcu_read_unlock();
++	if (!obj)
++		return node ? -EACCES : -EINVAL;
++
++	return i915_gem_object_mmap(obj, mmo, vma);
++}
++
++int i915_gem_fb_mmap(struct drm_i915_gem_object *obj, struct vm_area_struct *vma)
++{
++	struct drm_i915_private *i915 = to_i915(obj->base.dev);
++	struct drm_device *dev = &i915->drm;
++	struct i915_mmap_offset *mmo = NULL;
++	enum i915_mmap_type mmap_type;
++	struct i915_ggtt *ggtt = to_gt(i915)->ggtt;
++
++	if (drm_dev_is_unplugged(dev))
++		return -ENODEV;
++
++	/* handle ttm object */
++	if (obj->ops->mmap_ops) {
++		/*
++		 * ttm fault handler, ttm_bo_vm_fault_reserved() uses fake offset
++		 * to calculate page offset so set that up.
++		 */
++		vma->vm_pgoff += drm_vma_node_start(&obj->base.vma_node);
++	} else {
++		/* handle stolen and smem objects */
++		mmap_type = i915_ggtt_has_aperture(ggtt) ? I915_MMAP_TYPE_GTT : I915_MMAP_TYPE_WC;
++		mmo = mmap_offset_attach(obj, mmap_type, NULL);
++		if (!mmo)
++			return -ENODEV;
++	}
++
 +	/*
-+	 * If cgroup_mutex is not held, the cgrp_cset_link will be freed
-+	 * before we remove the cgroup root from the root_list. Consequently,
-+	 * when accessing a cgroup root, the cset_link may have already been
-+	 * freed, resulting in a NULL res_cgroup. However, by holding the
-+	 * cgroup_mutex, we ensure that res_cgroup can't be NULL.
-+	 * If we don't hold cgroup_mutex in the caller, we must do the NULL
-+	 * check.
++	 * When we install vm_ops for mmap we are too late for
++	 * the vm_ops->open() which increases the ref_count of
++	 * this obj and then it gets decreased by the vm_ops->close().
++	 * To balance this increase the obj ref_count here.
 +	 */
- 	return res_cgroup;
- }
++	obj = i915_gem_object_get(obj);
++	return i915_gem_object_mmap(obj, mmo, vma);
++}
++
+ #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
+ #include "selftests/i915_gem_mman.c"
+ #endif
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_mman.h b/drivers/gpu/drm/i915/gem/i915_gem_mman.h
+index 1fa91b3033b35..196417fd0f5c4 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_mman.h
++++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.h
+@@ -29,5 +29,5 @@ void i915_gem_object_release_mmap_gtt(struct drm_i915_gem_object *obj);
  
-@@ -1468,7 +1476,6 @@ static struct cgroup *current_cgns_cgrou
- static struct cgroup *cset_cgroup_from_root(struct css_set *cset,
- 					    struct cgroup_root *root)
- {
--	lockdep_assert_held(&cgroup_mutex);
- 	lockdep_assert_held(&css_set_lock);
- 
- 	return __cset_cgroup_from_root(cset, root);
-@@ -1476,7 +1483,9 @@ static struct cgroup *cset_cgroup_from_r
- 
- /*
-  * Return the cgroup for "task" from the given hierarchy. Must be
-- * called with cgroup_mutex and css_set_lock held.
-+ * called with css_set_lock held to prevent task's groups from being modified.
-+ * Must be called with either cgroup_mutex or rcu read lock to prevent the
-+ * cgroup root from being destroyed.
-  */
- struct cgroup *task_cgroup_from_root(struct task_struct *task,
- 				     struct cgroup_root *root)
-@@ -2037,7 +2046,7 @@ void init_cgroup_root(struct cgroup_fs_c
- 	struct cgroup_root *root = ctx->root;
- 	struct cgroup *cgrp = &root->cgrp;
- 
--	INIT_LIST_HEAD(&root->root_list);
-+	INIT_LIST_HEAD_RCU(&root->root_list);
- 	atomic_set(&root->nr_cgrps, 1);
- 	cgrp->root = root;
- 	init_cgroup_housekeeping(cgrp);
-@@ -2120,7 +2129,7 @@ int cgroup_setup_root(struct cgroup_root
- 	 * care of subsystems' refcounts, which are explicitly dropped in
- 	 * the failure exit path.
- 	 */
--	list_add(&root->root_list, &cgroup_roots);
-+	list_add_rcu(&root->root_list, &cgroup_roots);
- 	cgroup_root_count++;
- 
- 	/*
+ void i915_gem_object_runtime_pm_release_mmap_offset(struct drm_i915_gem_object *obj);
+ void i915_gem_object_release_mmap_offset(struct drm_i915_gem_object *obj);
+-
++int i915_gem_fb_mmap(struct drm_i915_gem_object *obj, struct vm_area_struct *vma);
+ #endif
+-- 
+2.43.0
+
 
 
