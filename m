@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607781A76A0;
-	Thu, 15 Aug 2024 14:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E35C1A01D2;
+	Thu, 15 Aug 2024 14:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731478; cv=none; b=TDiK6DBzd/5pY90LHD70DvUiBGE/RbVSyDYVRhvzJfaMSqNztUig0i1X2qBd2/gwUMjy2EbjkR7FQq84pQvxFpUcVHY1ZZ/54aMEOgq99uElH53wqwhAOz1DeTcesvTlQ0JCTe4qoIuIPlhUFU4w1VNwcghbUkfCR9wWq1LvbJA=
+	t=1723731482; cv=none; b=rFyjPyJq3wDr6lEXQIVYe+XJFQA2qBdnsBId11YhnnMx/gM+ptoGs32XztE3xY0b/o3dYnmQ0oWrhON2vfBnswcWoEQER8J9Z1qtzW/L5/p+J3kbm3Uft5RoBV0G32ATOjktw7ZZwkb2P6MUuSoTNTkTDKMqLQpif3pVK1FOtKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731478; c=relaxed/simple;
-	bh=lCwNNj8d0xpr8a7UYEo9kjV8Eg1WuX0cxjiJsMDYn3M=;
+	s=arc-20240116; t=1723731482; c=relaxed/simple;
+	bh=7kcbAlDIyivt9wOjbLGHYv3jN8s5E6gm878BloKlUhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9ipX0uP7sRvIdGmzkGiiLOG2E0NxZ8K4vNYdZ9KA3GMdHKFc/UaTPXdtRN3lg+4TFev72f+Vl7sMdlU7elP1HMbAkWHMdNK3zAsY26ncQ/Attx/YL9FAX220nZtVzSuT9SQ/kdWtOW70hr9cUy3/nCFlrBXh9y+aY6ftTX8fMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wfj01Mmn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r6rQGUcCVgnIi2Vw7y/ALAan2XwYoSMTD4tU90uxm4b9GN3aBEn0GHjBawzq8mjZBVbMsIiDYGZSS20GsfduB+CP6U9atJ1c7qgd6VEdXyDcu3dcLj6C6YgAyQ3k7cmK74YHMW0lf3cHpLOte6NYVytQ2f5RuceTkvyEvaHQLQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQui2Y0+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wfj01Mmn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D477BC32786;
-	Thu, 15 Aug 2024 14:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQui2Y0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92525C4AF0C;
+	Thu, 15 Aug 2024 14:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731478;
-	bh=lCwNNj8d0xpr8a7UYEo9kjV8Eg1WuX0cxjiJsMDYn3M=;
+	s=korg; t=1723731482;
+	bh=7kcbAlDIyivt9wOjbLGHYv3jN8s5E6gm878BloKlUhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wfj01MmnglmRBIPAFT2KGEdLFQlwGZbWG3ov1ddTA4lkUWMy4vdnSbT8zl5pp1GrR
-	 He0xEooCiibw8OAO/MJXsstQbCPw0wVVrlNwNLW0Whf8qwrjlopGGmWYfaFy1JdSI/
-	 1DMj37TYKJju9q/3NmgEatCGMdmzULtB/M78o1b4=
+	b=nQui2Y0+BAEYXp1ilu8sYHP95NSqnIXcArZySDAS9kouL5Na49t+wjEdBu1m5S88u
+	 bQ40/3ABUazZf6nRrQbEmod1BR6KE5go6Ogf5tFOls270RbeERZYxe9AW6j8PRvlcx
+	 /RStotK6adOgepiwlmoONzd61nudM4tbI/6Cu38M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Tung Nguyen <tung.q.nguyen@endava.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 143/259] tipc: Return non-zero value from tipc_udp_addr2str() on error
-Date: Thu, 15 Aug 2024 15:24:36 +0200
-Message-ID: <20240815131908.312525436@linuxfoundation.org>
+Subject: [PATCH 5.4 144/259] net: nexthop: Initialize all fields in dumped nexthops
+Date: Thu, 15 Aug 2024 15:24:37 +0200
+Message-ID: <20240815131908.352623448@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,41 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit fa96c6baef1b5385e2f0c0677b32b3839e716076 ]
+[ Upstream commit 6d745cd0e9720282cd291d36b9db528aea18add2 ]
 
-tipc_udp_addr2str() should return non-zero value if the UDP media
-address is invalid. Otherwise, a buffer overflow access can occur in
-tipc_media_addr_printf(). Fix this by returning 1 on an invalid UDP
-media address.
+struct nexthop_grp contains two reserved fields that are not initialized by
+nla_put_nh_group(), and carry garbage. This can be observed e.g. with
+strace (edited for clarity):
 
-Fixes: d0f91938bede ("tipc: add ip/udp media type")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@endava.com>
+    # ip nexthop add id 1 dev lo
+    # ip nexthop add id 101 group 1
+    # strace -e recvmsg ip nexthop get id 101
+    ...
+    recvmsg(... [{nla_len=12, nla_type=NHA_GROUP},
+                 [{id=1, weight=0, resvd1=0x69, resvd2=0x67}]] ...) = 52
+
+The fields are reserved and therefore not currently used. But as they are, they
+leak kernel memory, and the fact they are not just zero complicates repurposing
+of the fields for new ends. Initialize the full structure.
+
+Fixes: 430a049190de ("nexthop: Add support for nexthop groups")
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv4/nexthop.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 1fb0535e2eb47..4db2185a32aec 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -128,8 +128,11 @@ static int tipc_udp_addr2str(struct tipc_media_addr *a, char *buf, int size)
- 		snprintf(buf, size, "%pI4:%u", &ua->ipv4, ntohs(ua->port));
- 	else if (ntohs(ua->proto) == ETH_P_IPV6)
- 		snprintf(buf, size, "%pI6:%u", &ua->ipv6, ntohs(ua->port));
--	else
-+	else {
- 		pr_err("Invalid UDP media address\n");
-+		return 1;
-+	}
-+
- 	return 0;
- }
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 0137854a7faaa..388f5773b88d2 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -201,9 +201,10 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
  
+ 	p = nla_data(nla);
+ 	for (i = 0; i < nhg->num_nh; ++i) {
+-		p->id = nhg->nh_entries[i].nh->id;
+-		p->weight = nhg->nh_entries[i].weight - 1;
+-		p += 1;
++		*p++ = (struct nexthop_grp) {
++			.id = nhg->nh_entries[i].nh->id,
++			.weight = nhg->nh_entries[i].weight - 1,
++		};
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
