@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A5814AD0A;
-	Thu, 15 Aug 2024 13:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687F1198E78;
+	Thu, 15 Aug 2024 13:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729319; cv=none; b=MU4aekZ1NPFptb0GGJf8MRDnc2tOaDo9iJtX7hPs/bHgzf3d+9Xq5tcb5Sop7mWkHIzwePqTyBmahnNy4EzqaO90YyRcIu5bM1+loDtcwXbdL45VNIKNFgCpsxLoVoZG6mcgVWjmyG7HiaZ7hodRDfLfDW4QtcUjkcjteWseyHc=
+	t=1723729323; cv=none; b=GQdSeFDbSRr+s1i8cvlbkmOy4oHYTD2ufs1CNwvUP5TVC64GO1ApKYHIR+YfZKs/Y3FTzGDU5gMB3hZV8TeePkaLwR+kX1aKjYWLObtZdsYogEUC1kVwVq0S4CufOk5nYDEdIs8aQJ5AJ0H/bocvT1weuFBYqIRczVuJPyTEB7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729319; c=relaxed/simple;
-	bh=Hz+/MGPpy8PF518MS7NJYLrGtwobrFNFsNFFXkaWjTI=;
+	s=arc-20240116; t=1723729323; c=relaxed/simple;
+	bh=hUbJf+DLmgsvFmAZ8B3smHqpU0e7pzMFakW+7ZAL6vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dR0RfEhSyM4JVmQ9Z/cDxVZts/wlcE9M5dERoQgAPtFc4LhhanvDrZ/k72fRx5PaDPqYjOqWsZXaYb0/KpMxk+nzEQD/HrONfxA0uZ1ZgwdvSdDTRTCatGJxSOvHK2zJFmqpRegWSJSY2pcbvUijY7eLx1GWehz+WdNPZT+4cys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXGjRcA+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XPnfewLEWhAyOdMuY327Wi73vwQFkyk63uTdrhwt2aOAS7mwd0WFF9BAsFwvqv3Q4poCoGTkSLta0Wa83UjL6EQyQpI6MOODIbULjzANG3OlWC3ayLrEDctiuBLBZ+MYvb+qly6fiUfp6nkPuIeY7YFDi16WR0S7j1Vk2GzWrK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6yBWNtt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXGjRcA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0AFC32786;
-	Thu, 15 Aug 2024 13:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6yBWNtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FFEC32786;
+	Thu, 15 Aug 2024 13:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729319;
-	bh=Hz+/MGPpy8PF518MS7NJYLrGtwobrFNFsNFFXkaWjTI=;
+	s=korg; t=1723729322;
+	bh=hUbJf+DLmgsvFmAZ8B3smHqpU0e7pzMFakW+7ZAL6vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXGjRcA+Pp5ZlMRpaC4r/6VZRyzIhwKzIiYq+j0vxXdJ6fu9sqjBDnjOEOV3pa0Cd
-	 8JFu+mUlFa6wlFqAdZSo1eKUw5s1Yw3UGsNpuCOaYHInOhuKATaR80ttDt7D7OSFNf
-	 bpVJDyzF8iyTnl69ME/fVtZtrjDrkp+GuvnbGphw=
+	b=b6yBWNttKVY9/UUYCGLRjOwnaD6FmW2WD8ZS4+V1fy7Jm0dDBO1VOjfNy0qCnb6oZ
+	 MSoqfReGdSaOIl4vRs4itiBQvaAsBT0V2VnUmK3P2WqdB2cb8dYkcDO8vnuuPDWezx
+	 GXXy3WQ6+zDe7CuS8svqalNsvjxpQ8yqhw5rh7lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaroslav Isakov <yaroslav.isakov@gmail.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/484] wifi: ath11k: fix wrong handling of CCMP256 and GCMP ciphers
-Date: Thu, 15 Aug 2024 15:18:37 +0200
-Message-ID: <20240815131943.563108961@linuxfoundation.org>
+Subject: [PATCH 5.15 030/484] ARM: dts: imx6qdl-kontron-samx6i: fix SPI0 chip selects
+Date: Thu, 15 Aug 2024 15:18:08 +0200
+Message-ID: <20240815131942.440262154@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,130 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit d2b0ca38d362ebf16ca79cd7f309d5bb8b581deb ]
+[ Upstream commit 74e1c956a68a65d642447d852e95b3fbb69bebaa ]
 
-Currently for CCMP256, GCMP128 and GCMP256 ciphers, in ath11k_install_key()
-IEEE80211_KEY_FLAG_GENERATE_IV_MGMT is not set. And in ath11k_mac_mgmt_tx_wmi()
-a length of IEEE80211_CCMP_MIC_LEN is reserved for all ciphers.
+There is a comment in the imx6q variant dtsi claiming that these
+modules will have one more chip select than the imx6dl variant.
+This is wrong. Ordinary GPIOs are used for chip selects and both
+variants of the module share the very same PCB and both have this
+GPIO routed to the SPI0_CS1# pin of the SMARC connector.
 
-This results in unexpected management frame drop in case either of above 3 ciphers
-is used. The reason is, without IEEE80211_KEY_FLAG_GENERATE_IV_MGMT set, mac80211
-will not generate CCMP/GCMP headers in frame for ath11k. Also MIC length reserved
-is wrong. Such frame is dropped later by hardware:
+Fix it by moving the third chip select description to the common dtsi.
 
-ath11k_pci 0000:5a:00.0: mac tx mgmt frame, buf id 0
-ath11k_pci 0000:5a:00.0: mgmt tx compl ev pdev_id 1, desc_id 0, status 1
-
->From user point of view, we have observed very low throughput due to this issue:
-action frames are all dropped so ADDBA response from DUT never reaches AP. AP
-can not use aggregation thus throughput is low.
-
-Fix this by setting IEEE80211_KEY_FLAG_GENERATE_IV_MGMT flag and by reserving proper
-MIC length for those ciphers.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Reported-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Tested-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Closes: https://lore.kernel.org/all/CADS+iDX5=JtJr0apAtAQ02WWBxgOFEv8G063vuGYwDTC8AVZaw@mail.gmail.com
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240605014826.22498-1-quic_bqiang@quicinc.com
+Fixes: 2125212785c9 ("ARM: dts: imx6qdl-kontron-samx6i: add Kontron SMARC SoM Support")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |  3 +--
- drivers/net/wireless/ath/ath11k/dp_rx.h |  3 +++
- drivers/net/wireless/ath/ath11k/mac.c   | 15 +++++++++++----
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/imx6q-kontron-samx6i.dtsi   | 23 -------------------
+ arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi |  5 +++-
+ 2 files changed, 4 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index dfdb2eeaf040a..6920cce493f69 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -1861,8 +1861,7 @@ static void ath11k_dp_rx_h_csum_offload(struct ath11k *ar, struct sk_buff *msdu)
- 			  CHECKSUM_NONE : CHECKSUM_UNNECESSARY;
- }
+diff --git a/arch/arm/boot/dts/imx6q-kontron-samx6i.dtsi b/arch/arm/boot/dts/imx6q-kontron-samx6i.dtsi
+index 4d6a0c3e8455f..ff062f4fd726e 100644
+--- a/arch/arm/boot/dts/imx6q-kontron-samx6i.dtsi
++++ b/arch/arm/boot/dts/imx6q-kontron-samx6i.dtsi
+@@ -5,31 +5,8 @@
  
--static int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar,
--				       enum hal_encrypt_type enctype)
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype)
- {
- 	switch (enctype) {
- 	case HAL_ENCRYPT_TYPE_OPEN:
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.h b/drivers/net/wireless/ath/ath11k/dp_rx.h
-index 623da3bf9dc81..c322e30caa968 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.h
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #ifndef ATH11K_DP_RX_H
- #define ATH11K_DP_RX_H
-@@ -95,4 +96,6 @@ int ath11k_peer_rx_frag_setup(struct ath11k *ar, const u8 *peer_mac, int vdev_id
- int ath11k_dp_rx_pktlog_start(struct ath11k_base *ab);
- int ath11k_dp_rx_pktlog_stop(struct ath11k_base *ab, bool stop_timer);
+ #include "imx6q.dtsi"
+ #include "imx6qdl-kontron-samx6i.dtsi"
+-#include <dt-bindings/gpio/gpio.h>
  
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype);
-+
- #endif /* ATH11K_DP_RX_H */
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index c58fd836d4ade..81a8e1102d72b 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -2675,6 +2675,7 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
+ / {
+ 	model = "Kontron SMARC sAMX6i Quad/Dual";
+ 	compatible = "kontron,imx6q-samx6i", "fsl,imx6q";
+ };
+-
+-/* Quad/Dual SoMs have 3 chip-select signals */
+-&ecspi4 {
+-	cs-gpios = <&gpio3 24 GPIO_ACTIVE_LOW>,
+-		   <&gpio3 29 GPIO_ACTIVE_LOW>,
+-		   <&gpio3 25 GPIO_ACTIVE_LOW>;
+-};
+-
+-&pinctrl_ecspi4 {
+-	fsl,pins = <
+-		MX6QDL_PAD_EIM_D21__ECSPI4_SCLK 0x100b1
+-		MX6QDL_PAD_EIM_D28__ECSPI4_MOSI 0x100b1
+-		MX6QDL_PAD_EIM_D22__ECSPI4_MISO 0x100b1
+-
+-		/* SPI4_IMX_CS2# - connected to internal flash */
+-		MX6QDL_PAD_EIM_D24__GPIO3_IO24 0x1b0b0
+-		/* SPI4_IMX_CS0# - connected to SMARC SPI0_CS0# */
+-		MX6QDL_PAD_EIM_D29__GPIO3_IO29 0x1b0b0
+-		/* SPI4_CS3# - connected to  SMARC SPI0_CS1# */
+-		MX6QDL_PAD_EIM_D25__GPIO3_IO25 0x1b0b0
+-	>;
+-};
+diff --git a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
+index c420a3b80943e..d9f4321055165 100644
+--- a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
+@@ -244,7 +244,8 @@ &ecspi4 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_ecspi4>;
+ 	cs-gpios = <&gpio3 24 GPIO_ACTIVE_LOW>,
+-		   <&gpio3 29 GPIO_ACTIVE_LOW>;
++		   <&gpio3 29 GPIO_ACTIVE_LOW>,
++		   <&gpio3 25 GPIO_ACTIVE_LOW>;
+ 	status = "okay";
  
- 	switch (key->cipher) {
- 	case WLAN_CIPHER_SUITE_CCMP:
-+	case WLAN_CIPHER_SUITE_CCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_CCM;
- 		/* TODO: Re-check if flag is valid */
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
-@@ -2684,12 +2685,10 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 		arg.key_txmic_len = 8;
- 		arg.key_rxmic_len = 8;
- 		break;
--	case WLAN_CIPHER_SUITE_CCMP_256:
--		arg.key_cipher = WMI_CIPHER_AES_CCM;
--		break;
- 	case WLAN_CIPHER_SUITE_GCMP:
- 	case WLAN_CIPHER_SUITE_GCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_GCM;
-+		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
- 		break;
- 	default:
- 		ath11k_warn(ar->ab, "cipher %d is not supported\n", key->cipher);
-@@ -4204,7 +4203,10 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- {
- 	struct ath11k_base *ab = ar->ab;
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
-+	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB(skb);
- 	struct ieee80211_tx_info *info;
-+	enum hal_encrypt_type enctype;
-+	unsigned int mic_len;
- 	dma_addr_t paddr;
- 	int buf_id;
- 	int ret;
-@@ -4224,7 +4226,12 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- 		     ieee80211_is_deauth(hdr->frame_control) ||
- 		     ieee80211_is_disassoc(hdr->frame_control)) &&
- 		     ieee80211_has_protected(hdr->frame_control)) {
--			skb_put(skb, IEEE80211_CCMP_MIC_LEN);
-+			if (!(skb_cb->flags & ATH11K_SKB_CIPHER_SET))
-+				ath11k_warn(ab, "WMI management tx frame without ATH11K_SKB_CIPHER_SET");
-+
-+			enctype = ath11k_dp_tx_get_encrypt_type(skb_cb->cipher);
-+			mic_len = ath11k_dp_rx_crypto_mic_len(ar, enctype);
-+			skb_put(skb, mic_len);
- 		}
- 	}
+ 	/* default boot source: workaround #1 for errata ERR006282 */
+@@ -464,6 +465,8 @@ MX6QDL_PAD_EIM_D22__ECSPI4_MISO 0x100b1
+ 			MX6QDL_PAD_EIM_D24__GPIO3_IO24 0x1b0b0
+ 			/* SPI_IMX_CS0# - connected to SMARC SPI0_CS0# */
+ 			MX6QDL_PAD_EIM_D29__GPIO3_IO29 0x1b0b0
++			/* SPI4_CS3# - connected to SMARC SPI0_CS1# */
++			MX6QDL_PAD_EIM_D25__GPIO3_IO25 0x1b0b0
+ 		>;
+ 	};
  
 -- 
 2.43.0
