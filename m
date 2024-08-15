@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70F18D630;
-	Thu, 15 Aug 2024 13:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88C818D630;
+	Thu, 15 Aug 2024 13:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729849; cv=none; b=XJv38z/9w7tum4lBEdRc93YBsx4IjD6EBTHH+49XTufVVeO0OoPZ53LFcMgUt4v7B1M1oWA0YPXU9W2otQya/AOJIrJc/iYDB7Q0Wvtn1S3hICXbhbv4jWLVPK6SNZGuXTSdlK9qqIyvNa8ZJoMjuUKQP0+eWjDEoMTApAC/L6U=
+	t=1723729852; cv=none; b=OBPEptowdau1CONltUVg59O9i+3hQX1SdDUbSA7bcIwMDHMnUpojlgJvhBuXMn4AM5JBbpG/ytGtTmSpguZbVlBnNik+O+VGlqk+tBN4VBje1deayPUHREeajiV94o6z8/dyesFJKhpay7NlY2d6QQrUd817v3sZ+ruH55woNiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729849; c=relaxed/simple;
-	bh=FURa9UOPlwdIa3JmD/PhPBb1VqFeZiizjLdYuh5sGC8=;
+	s=arc-20240116; t=1723729852; c=relaxed/simple;
+	bh=J3yX5CK5LqusVqlD9mzCTJ71X4dx5lbs/gm60LyNa/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/e379T6eJO4Y3jmkurcb5uNraN4nuAvE+3O6uk1yRGsTQqmNMLm/cG1nG2a2d7ni1lYDRDl8mJYfHd9V8BlTC/6wE4MiNsktT95xt39bO5ALXv/purrEeBXm4qEmPFcEHuhc3H/AXz4rC9QmMTL5MSWV5YM5lZGD/7mnQe2t7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uN07Jpqa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7V2ZykNeqEniZnjRArvX3ZdIIYcvk0bxVhUqD2HUIt4g0+iIw1SGF9+OT759PE0Rb1C8N5PXdedtMZFIR8xXehlhe8e0kdZWH5H6aTpdTPBZP9o5j5gvz1Hi12ztoXga1xBS72r2EVsveIUd42nXRbuLXbA5ChsOUpNaGKdo1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TorYmn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uN07Jpqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E239C32786;
-	Thu, 15 Aug 2024 13:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TorYmn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290E8C32786;
+	Thu, 15 Aug 2024 13:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729849;
-	bh=FURa9UOPlwdIa3JmD/PhPBb1VqFeZiizjLdYuh5sGC8=;
+	s=korg; t=1723729852;
+	bh=J3yX5CK5LqusVqlD9mzCTJ71X4dx5lbs/gm60LyNa/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uN07JpqagV0gfiTt4Uye4VDmp5jcs/bgvE34Jt9MJ4nEH8JI+rDtn+1DoHql6YLUN
-	 cCjxeiZk3Ap5kcoOvxO/WjMjxJnLkX+DjGVPrpVd9V8x+rxwmGU1U75m8a3gABcRfz
-	 FnUCTiAgoLNHotHc41GVFD6OFDHgaZeve8SrFE1E=
+	b=0TorYmn45NZo8a2ZruiKIHUuYtkTK0G0oJINJDyfAB/81pCo2ZhJqC6RURewcD2k7
+	 cJ9g3MNlP5RBBcZziD2anhFPKL+qtFgi5SFcbtng0Jf+WfY+4uJaG5bgXjHF53j+qg
+	 hI/YQrhEGxjF1zED3NmZQjy+/wnfYrXxZoBK/rRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 5.15 199/484] media: uvcvideo: Fix integer overflow calculating timestamp
-Date: Thu, 15 Aug 2024 15:20:57 +0200
-Message-ID: <20240815131949.098246292@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 226/484] scsi: qla2xxx: Use QP lock to search for bsg
+Date: Thu, 15 Aug 2024 15:21:24 +0200
+Message-ID: <20240815131950.138186107@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,136 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Quinn Tran <qutran@marvell.com>
 
-commit 8676a5e796fa18f55897ca36a94b2adf7f73ebd1 upstream.
+commit c449b4198701d828e40d60a2abd30970b74a1d75 upstream.
 
-The function uvc_video_clock_update() supports a single SOF overflow. Or
-in other words, the maximum difference between the first ant the last
-timestamp can be 4096 ticks or 4.096 seconds.
-
-This results in a maximum value for y2 of: 0x12FBECA00, that overflows
-32bits.
-y2 = (u32)ktime_to_ns(ktime_sub(last->host_time, first->host_time)) + y1;
-
-Extend the size of y2 to u64 to support all its values.
-
-Without this patch:
- # yavta -s 1920x1080 -f YUYV -t 1/5 -c /dev/video0
-Device /dev/v4l/by-id/usb-Shine-Optics_Integrated_Camera_0001-video-index0 opened.
-Device `Integrated Camera: Integrated C' on `usb-0000:00:14.0-6' (driver 'uvcvideo') supports video, capture, without mplanes.
-Video format set: YUYV (56595559) 1920x1080 (stride 3840) field none buffer size 4147200
-Video format: YUYV (56595559) 1920x1080 (stride 3840) field none buffer size 4147200
-Current frame rate: 1/5
-Setting frame rate to: 1/5
-Frame rate set: 1/5
-8 buffers requested.
-length: 4147200 offset: 0 timestamp type/source: mono/SoE
-Buffer 0/0 mapped at address 0x7947ea94c000.
-length: 4147200 offset: 4149248 timestamp type/source: mono/SoE
-Buffer 1/0 mapped at address 0x7947ea557000.
-length: 4147200 offset: 8298496 timestamp type/source: mono/SoE
-Buffer 2/0 mapped at address 0x7947ea162000.
-length: 4147200 offset: 12447744 timestamp type/source: mono/SoE
-Buffer 3/0 mapped at address 0x7947e9d6d000.
-length: 4147200 offset: 16596992 timestamp type/source: mono/SoE
-Buffer 4/0 mapped at address 0x7947e9978000.
-length: 4147200 offset: 20746240 timestamp type/source: mono/SoE
-Buffer 5/0 mapped at address 0x7947e9583000.
-length: 4147200 offset: 24895488 timestamp type/source: mono/SoE
-Buffer 6/0 mapped at address 0x7947e918e000.
-length: 4147200 offset: 29044736 timestamp type/source: mono/SoE
-Buffer 7/0 mapped at address 0x7947e8d99000.
-0 (0) [-] none 0 4147200 B 507.554210 508.874282 242.836 fps ts mono/SoE
-1 (1) [-] none 2 4147200 B 508.886298 509.074289 0.751 fps ts mono/SoE
-2 (2) [-] none 3 4147200 B 509.076362 509.274307 5.261 fps ts mono/SoE
-3 (3) [-] none 4 4147200 B 509.276371 509.474336 5.000 fps ts mono/SoE
-4 (4) [-] none 5 4147200 B 509.476394 509.674394 4.999 fps ts mono/SoE
-5 (5) [-] none 6 4147200 B 509.676506 509.874345 4.997 fps ts mono/SoE
-6 (6) [-] none 7 4147200 B 509.876430 510.074370 5.002 fps ts mono/SoE
-7 (7) [-] none 8 4147200 B 510.076434 510.274365 5.000 fps ts mono/SoE
-8 (0) [-] none 9 4147200 B 510.276421 510.474333 5.000 fps ts mono/SoE
-9 (1) [-] none 10 4147200 B 510.476391 510.674429 5.001 fps ts mono/SoE
-10 (2) [-] none 11 4147200 B 510.676434 510.874283 4.999 fps ts mono/SoE
-11 (3) [-] none 12 4147200 B 510.886264 511.074349 4.766 fps ts mono/SoE
-12 (4) [-] none 13 4147200 B 511.070577 511.274304 5.426 fps ts mono/SoE
-13 (5) [-] none 14 4147200 B 511.286249 511.474301 4.637 fps ts mono/SoE
-14 (6) [-] none 15 4147200 B 511.470542 511.674251 5.426 fps ts mono/SoE
-15 (7) [-] none 16 4147200 B 511.672651 511.874337 4.948 fps ts mono/SoE
-16 (0) [-] none 17 4147200 B 511.873988 512.074462 4.967 fps ts mono/SoE
-17 (1) [-] none 18 4147200 B 512.075982 512.278296 4.951 fps ts mono/SoE
-18 (2) [-] none 19 4147200 B 512.282631 512.482423 4.839 fps ts mono/SoE
-19 (3) [-] none 20 4147200 B 518.986637 512.686333 0.149 fps ts mono/SoE
-20 (4) [-] none 21 4147200 B 518.342709 512.886386 -1.553 fps ts mono/SoE
-21 (5) [-] none 22 4147200 B 517.909812 513.090360 -2.310 fps ts mono/SoE
-22 (6) [-] none 23 4147200 B 517.590775 513.294454 -3.134 fps ts mono/SoE
-23 (7) [-] none 24 4147200 B 513.298465 513.494335 -0.233 fps ts mono/SoE
-24 (0) [-] none 25 4147200 B 513.510273 513.698375 4.721 fps ts mono/SoE
-25 (1) [-] none 26 4147200 B 513.698904 513.902327 5.301 fps ts mono/SoE
-26 (2) [-] none 27 4147200 B 513.895971 514.102348 5.074 fps ts mono/SoE
-27 (3) [-] none 28 4147200 B 514.099091 514.306337 4.923 fps ts mono/SoE
-28 (4) [-] none 29 4147200 B 514.310348 514.510567 4.734 fps ts mono/SoE
-29 (5) [-] none 30 4147200 B 514.509295 514.710367 5.026 fps ts mono/SoE
-30 (6) [-] none 31 4147200 B 521.532513 514.914398 0.142 fps ts mono/SoE
-31 (7) [-] none 32 4147200 B 520.885277 515.118385 -1.545 fps ts mono/SoE
-32 (0) [-] none 33 4147200 B 520.411140 515.318336 -2.109 fps ts mono/SoE
-33 (1) [-] none 34 4147200 B 515.325425 515.522278 -0.197 fps ts mono/SoE
-34 (2) [-] none 35 4147200 B 515.538276 515.726423 4.698 fps ts mono/SoE
-35 (3) [-] none 36 4147200 B 515.720767 515.930373 5.480 fps ts mono/SoE
+On bsg timeout, hardware_lock is used as part of search for the srb.
+Instead, qpair lock should be used to iterate through different qpair.
 
 Cc: stable@vger.kernel.org
-Fixes: 66847ef013cc ("[media] uvcvideo: Add UVC timestamps support")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240610-hwtimestamp-followup-v1-2-f9eaed7be7f0@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-11-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   96 ++++++++++++++++++++++++-----------------
+ 1 file changed, 57 insertions(+), 39 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -697,11 +697,11 @@ void uvc_video_clock_update(struct uvc_s
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -2966,17 +2966,61 @@ skip_chip_chk:
+ 	return ret;
+ }
+ 
+-int
+-qla24xx_bsg_timeout(struct bsg_job *bsg_job)
++static bool qla_bsg_found(struct qla_qpair *qpair, struct bsg_job *bsg_job)
+ {
++	bool found = false;
+ 	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
+ 	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
+ 	struct qla_hw_data *ha = vha->hw;
+-	srb_t *sp;
+-	int cnt, que;
++	srb_t *sp = NULL;
++	int cnt;
  	unsigned long flags;
- 	u64 timestamp;
- 	u32 delta_stc;
--	u32 y1, y2;
-+	u32 y1;
- 	u32 x1, x2;
- 	u32 mean;
- 	u32 sof;
--	u64 y;
-+	u64 y, y2;
+ 	struct req_que *req;
  
- 	if (!uvc_hw_timestamps_param)
- 		return;
-@@ -741,7 +741,7 @@ void uvc_video_clock_update(struct uvc_s
- 	sof = y;
++	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
++	req = qpair->req;
++
++	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
++		sp = req->outstanding_cmds[cnt];
++		if (sp &&
++		    (sp->type == SRB_CT_CMD ||
++		     sp->type == SRB_ELS_CMD_HST ||
++		     sp->type == SRB_ELS_CMD_HST_NOLOGIN) &&
++		    sp->u.bsg_job == bsg_job) {
++			req->outstanding_cmds[cnt] = NULL;
++			spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
++
++			if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
++				ql_log(ql_log_warn, vha, 0x7089,
++						"mbx abort_command failed.\n");
++				bsg_reply->result = -EIO;
++			} else {
++				ql_dbg(ql_dbg_user, vha, 0x708a,
++						"mbx abort_command success.\n");
++				bsg_reply->result = 0;
++			}
++			/* ref: INIT */
++			kref_put(&sp->cmd_kref, qla2x00_sp_release);
++
++			found = true;
++			goto done;
++		}
++	}
++	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
++
++done:
++	return found;
++}
++
++int
++qla24xx_bsg_timeout(struct bsg_job *bsg_job)
++{
++	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
++	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
++	struct qla_hw_data *ha = vha->hw;
++	int i;
++	struct qla_qpair *qpair;
++
+ 	ql_log(ql_log_info, vha, 0x708b, "%s CMD timeout. bsg ptr %p.\n",
+ 	    __func__, bsg_job);
  
- 	uvc_dbg(stream->dev, CLOCK,
--		"%s: PTS %u y %llu.%06llu SOF %u.%06llu (x1 %u x2 %u y1 %u y2 %u SOF offset %u)\n",
-+		"%s: PTS %u y %llu.%06llu SOF %u.%06llu (x1 %u x2 %u y1 %u y2 %llu SOF offset %u)\n",
- 		stream->dev->name, buf->pts,
- 		y >> 16, div_u64((y & 0xffff) * 1000000, 65536),
- 		sof >> 16, div_u64(((u64)sof & 0xffff) * 1000000LLU, 65536),
-@@ -756,7 +756,7 @@ void uvc_video_clock_update(struct uvc_s
- 		goto done;
+@@ -2986,47 +3030,21 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_
+ 		qla_pci_set_eeh_busy(vha);
+ 	}
  
- 	y1 = NSEC_PER_SEC;
--	y2 = (u32)ktime_to_ns(ktime_sub(last->host_time, first->host_time)) + y1;
-+	y2 = ktime_to_ns(ktime_sub(last->host_time, first->host_time)) + y1;
++	if (qla_bsg_found(ha->base_qpair, bsg_job))
++		goto done;
++
+ 	/* find the bsg job from the active list of commands */
+-	spin_lock_irqsave(&ha->hardware_lock, flags);
+-	for (que = 0; que < ha->max_req_queues; que++) {
+-		req = ha->req_q_map[que];
+-		if (!req)
++	for (i = 0; i < ha->max_qpairs; i++) {
++		qpair = vha->hw->queue_pair_map[i];
++		if (!qpair)
+ 			continue;
+-
+-		for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
+-			sp = req->outstanding_cmds[cnt];
+-			if (sp &&
+-			    (sp->type == SRB_CT_CMD ||
+-			     sp->type == SRB_ELS_CMD_HST ||
+-			     sp->type == SRB_ELS_CMD_HST_NOLOGIN ||
+-			     sp->type == SRB_FXIOCB_BCMD) &&
+-			    sp->u.bsg_job == bsg_job) {
+-				req->outstanding_cmds[cnt] = NULL;
+-				spin_unlock_irqrestore(&ha->hardware_lock, flags);
+-
+-				if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
+-					ql_log(ql_log_warn, vha, 0x7089,
+-					    "mbx abort_command failed.\n");
+-					bsg_reply->result = -EIO;
+-				} else {
+-					ql_dbg(ql_dbg_user, vha, 0x708a,
+-					    "mbx abort_command success.\n");
+-					bsg_reply->result = 0;
+-				}
+-				spin_lock_irqsave(&ha->hardware_lock, flags);
+-				goto done;
+-
+-			}
+-		}
++		if (qla_bsg_found(qpair, bsg_job))
++			goto done;
+ 	}
+-	spin_unlock_irqrestore(&ha->hardware_lock, flags);
++
+ 	ql_log(ql_log_info, vha, 0x708b, "SRB not found to abort.\n");
+ 	bsg_reply->result = -ENXIO;
+-	return 0;
  
- 	/* Interpolated and host SOF timestamps can wrap around at slightly
- 	 * different times. Handle this by adding or removing 2048 to or from
-@@ -776,7 +776,7 @@ void uvc_video_clock_update(struct uvc_s
- 	timestamp = ktime_to_ns(first->host_time) + y - y1;
- 
- 	uvc_dbg(stream->dev, CLOCK,
--		"%s: SOF %u.%06llu y %llu ts %llu buf ts %llu (x1 %u/%u/%u x2 %u/%u/%u y1 %u y2 %u)\n",
-+		"%s: SOF %u.%06llu y %llu ts %llu buf ts %llu (x1 %u/%u/%u x2 %u/%u/%u y1 %u y2 %llu)\n",
- 		stream->dev->name,
- 		sof >> 16, div_u64(((u64)sof & 0xffff) * 1000000LLU, 65536),
- 		y, timestamp, vbuf->vb2_buf.timestamp,
+ done:
+-	spin_unlock_irqrestore(&ha->hardware_lock, flags);
+-	/* ref: INIT */
+-	kref_put(&sp->cmd_kref, qla2x00_sp_release);
+ 	return 0;
+ }
 
 
