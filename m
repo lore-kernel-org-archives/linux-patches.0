@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB90176ADE;
-	Thu, 15 Aug 2024 13:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BA719DF9C;
+	Thu, 15 Aug 2024 13:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729469; cv=none; b=aLeI/epKWZPWkhrBUGhN6AkFJKA2sclc3PFl86PmtVp35YnUBBOZmlClwWefnmA0S6tz9FiYxDaMaJi4MnAVPWJpSGUpahRCRAsdTzWtNu1pdgvbbPLGeL4XcXb696Eme5Co6J2qDuKPNdl1xdddfzWRtWeNeCN/Tgf3ktbqdnY=
+	t=1723729472; cv=none; b=lpwJ6tjw5RN7i2BdOWTljdAvgOOSRhkCObOj062seifPh2iaI95Qic6SElMkqCh+2lzyAsMlc8fOWhM2R9gbgmm2XDwfNupT/QgOtKgknQsIoyAQqErQkyzeVg/0vZ4MnUaNT1hfUsi7pcqQreOHbnNtW9Swxc3wCR90XSnfzZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729469; c=relaxed/simple;
-	bh=tyru1aZa9/sHMCx4gTEhchJj304zVc0xrx9Z8xkgmTc=;
+	s=arc-20240116; t=1723729472; c=relaxed/simple;
+	bh=e4yXR1a4FZPY84QbeTe25RsKopmCBuGFVG8KYhQmgP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R73inVEBJnacQSrfjzbU2niJFkXCLzZchgLbbsX/4yJhOMs6YSvhdPYf3VR5vrTBcFP38Om4ViMXh8k8XsGkEbziFhOfcIvk4wP9Z+cVOrZQFvMvw8HTYlXVxOYkq0zYB4I9EWVfp4zD/bmBjL+iZbTCVh4SnTokeuAZzadhfak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZmHGQ/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6PDIisBx0rf7E4u3RF3GbJ9ZhHqP4VhaZ8raMGqSI936VVac4Il17DNVg+HMtKS9segvrVHLXKOTHZ8HtGs01YEOkSWNIICUrL2rXAvoKFDjjIIGlkQMIuvckJgLUqiXFjCivP+EtuX87o2vrY9JwXgVj/GfV+G6u37Uv3FHeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqhL8e5M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZmHGQ/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D92C4AF0A;
-	Thu, 15 Aug 2024 13:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqhL8e5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD395C32786;
+	Thu, 15 Aug 2024 13:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729469;
-	bh=tyru1aZa9/sHMCx4gTEhchJj304zVc0xrx9Z8xkgmTc=;
+	s=korg; t=1723729472;
+	bh=e4yXR1a4FZPY84QbeTe25RsKopmCBuGFVG8KYhQmgP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZmHGQ/53avLvVwGKJvMJmAkNiomQze7mEq5iEF9tNDymEfo6Sfz+lq0oDto6pxn4
-	 mlsdGqDhwKK7E3T/UUJCIGcASfAtUJUAGeuMOOBPtznb1S11hZ+reMqiQTUbZ38kLh
-	 GCKPN5937k+79Y4jotfONPnjyMMCTzfwGf3aCCpk=
+	b=bqhL8e5MWevN4EDeELyRGBFmf2AQe9J9rrvYV2An9WJMCkhAY3RKxSwQpRd0rp43S
+	 hRKR8v94TRJWvg8hN0jgy16bktdjDzCwAz5kclbEkznix3Wb44hYOhhFYQ0vhjL+7k
+	 mWNBICvbzEa6ec9+U2EQP9VNEiyJINUv8crK/rWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/484] perf intel-pt: Fix aux_watermark calculation for 64-bit size
-Date: Thu, 15 Aug 2024 15:19:26 +0200
-Message-ID: <20240815131945.465784161@linuxfoundation.org>
+Subject: [PATCH 5.15 109/484] perf intel-pt: Fix exclude_guest setting
+Date: Thu, 15 Aug 2024 15:19:27 +0200
+Message-ID: <20240815131945.504482319@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,34 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 36b4cd990a8fd3f5b748883050e9d8c69fe6398d ]
+[ Upstream commit b40934ae32232140e85dc7dc1c3ea0e296986723 ]
 
-aux_watermark is a u32. For a 64-bit size, cap the aux_watermark
-calculation at UINT_MAX instead of truncating it to 32-bits.
+In the past, the exclude_guest setting has had no effect on Intel PT
+tracing, but that may not be the case in the future.
 
-Fixes: 874fc35cdd55 ("perf intel-pt: Use aux_watermark")
+Set the flag correctly based upon whether KVM is using Intel PT
+"Host/Guest" mode, which is determined by the kvm_intel module
+parameter pt_mode:
+
+ pt_mode=0	System-wide mode : host and guest output to host buffer
+ pt_mode=1	Host/Guest mode : host/guest output to host/guest
+                buffers respectively
+
+Fixes: 6e86bfdc4a60 ("perf intel-pt: Support decoding of guest kernel")
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240625104532.11990-2-adrian.hunter@intel.com
+Link: https://lore.kernel.org/r/20240625104532.11990-3-adrian.hunter@intel.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/x86/util/intel-pt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/arch/x86/util/intel-pt.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/tools/perf/arch/x86/util/intel-pt.c b/tools/perf/arch/x86/util/intel-pt.c
-index 6df0dc00d73ab..99ae6d4d3ae3c 100644
+index 99ae6d4d3ae3c..7cb21803455a9 100644
 --- a/tools/perf/arch/x86/util/intel-pt.c
 +++ b/tools/perf/arch/x86/util/intel-pt.c
-@@ -777,7 +777,8 @@ static int intel_pt_recording_options(struct auxtrace_record *itr,
- 	}
+@@ -31,6 +31,7 @@
+ #include "../../../util/tsc.h"
+ #include <internal/lib.h> // page_size
+ #include "../../../util/intel-pt.h"
++#include <api/fs/fs.h>
  
- 	if (!opts->auxtrace_snapshot_mode && !opts->auxtrace_sample_mode) {
--		u32 aux_watermark = opts->auxtrace_mmap_pages * page_size / 4;
-+		size_t aw = opts->auxtrace_mmap_pages * (size_t)page_size / 4;
-+		u32 aux_watermark = aw > UINT_MAX ? UINT_MAX : aw;
+ #define KiB(x) ((x) * 1024)
+ #define MiB(x) ((x) * 1024 * 1024)
+@@ -438,6 +439,16 @@ static int intel_pt_track_switches(struct evlist *evlist)
+ 	return 0;
+ }
  
- 		intel_pt_evsel->core.attr.aux_watermark = aux_watermark;
- 	}
++static bool intel_pt_exclude_guest(void)
++{
++	int pt_mode;
++
++	if (sysfs__read_int("module/kvm_intel/parameters/pt_mode", &pt_mode))
++		pt_mode = 0;
++
++	return pt_mode == 1;
++}
++
+ static void intel_pt_valid_str(char *str, size_t len, u64 valid)
+ {
+ 	unsigned int val, last = 0, state = 1;
+@@ -641,6 +652,7 @@ static int intel_pt_recording_options(struct auxtrace_record *itr,
+ 			}
+ 			evsel->core.attr.freq = 0;
+ 			evsel->core.attr.sample_period = 1;
++			evsel->core.attr.exclude_guest = intel_pt_exclude_guest();
+ 			evsel->no_aux_samples = true;
+ 			intel_pt_evsel = evsel;
+ 			opts->full_auxtrace = true;
 -- 
 2.43.0
 
