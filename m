@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC42B1AD9E8;
-	Thu, 15 Aug 2024 14:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB9B1B4C29;
+	Thu, 15 Aug 2024 14:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730963; cv=none; b=TQy+DJN5aKqFkj8IiLKho5O79eH1o0vfAu394As3r1XZevePOjtikWFQoSTEtyLsaMTKhM+dRuL1lXOyFJUwt6ZixZjpPVGTmIGbAciAtBi4N7gq1VePAk6ChKT01zxUs9l5SCoX/oMCbiZQmHsnpBMREk92UcxDXkay5sVB1lA=
+	t=1723730965; cv=none; b=qXMfa88+PMHQqWu5hq5WkeJJouPWemNmklaVSBQWUQPC0u1ZySSKoPCylq/CDyIIDOKZy7ETnUkTsCU/CEpM8GMKWtn945aKA6tl14rpWB0yZCVYJ7wv2LZfO5bgoYf210els5jobZMYXU8CHyUpVJA8snwKkv9nIpqMWUi8Gnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730963; c=relaxed/simple;
-	bh=HvGQJ/J9mLylRVilvVG0RyrxK5M7Q8YWChhvffl4xGc=;
+	s=arc-20240116; t=1723730965; c=relaxed/simple;
+	bh=p2DkVgOFLeFc9+ggu84nZFIoKJbyWxUIw01roJwjJvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5KIR19EIGY37dgEhJIVTIhp+LcFzr0n8d2XDeX7Dcznj/DBmyW6HFJyx+8grcgCrn1vk3j6t8h+Zqa2buMMcni2PqYvYYpXRsl5W53AYqKFfM10VCrk3mQKckUG51BhT9HSRHGEnlx0ur2EHwHIXwEpRV6M9iKEBz1gIbEx/tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2KfEvcu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNtqcfJ73Zc83siVK7ohQz6qbjVMeyfvUHgXzj2aaEVFXb35cJtRHYx7L0x0HGlPaM6hrX6JmeW+IWfKQ1J50AhL0s+7o5KMRjHigP/iM7BO8Cha32gQ2/o4PeM2N9kVRHQO8Tvy/Zyb3BFM6HCFE3BndWYhDY6qU5ZbUqXuB2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4Yp/aEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2KfEvcu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031C3C32786;
-	Thu, 15 Aug 2024 14:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4Yp/aEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CC2C32786;
+	Thu, 15 Aug 2024 14:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730962;
-	bh=HvGQJ/J9mLylRVilvVG0RyrxK5M7Q8YWChhvffl4xGc=;
+	s=korg; t=1723730965;
+	bh=p2DkVgOFLeFc9+ggu84nZFIoKJbyWxUIw01roJwjJvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E2KfEvcuvM7zmAQLnuyxw2xp9zdgiFip65H3cqjBdK8sZ3x08oHKcgFhYLSt7y+QG
-	 dSWMH6ky1PbdlHsQOc/75NbjD2N9wI3kLwEL5D/8zMFh3oZsgweqHn6sYIDi2JCAsw
-	 3+knQvaOK7V4AaNe5k/qNC5Cw2AyJk+Dxu+WFAg4=
+	b=j4Yp/aEAVbTHctOShtczJmjPjjNmtpwOS4y4BnbRanT+jE1CuxrM51L93IHjdYOst
+	 e2cGmdpiSESo39zpVIg+J4r1wwYAFHjbrgAZcWwEBbLhaS49S4BIRIqGeUyrNQq8QI
+	 bSXSHkYWYIbmyur531Cj/r8aAH6tLNBa3zy23Ots=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.6 20/67] genirq/cpuhotplug: Retry with cpu_online_mask when migration fails
-Date: Thu, 15 Aug 2024 15:25:34 +0200
-Message-ID: <20240815131839.111621911@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 47/67] ext4: fold quota accounting into ext4_xattr_inode_lookup_create()
+Date: Thu, 15 Aug 2024 15:26:01 +0200
+Message-ID: <20240815131840.121060391@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -51,66 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 88d724e2301a69c1ab805cd74fc27aa36ae529e0 upstream.
+[ Upstream commit 8208c41c43ad5e9b63dce6c45a73e326109ca658 ]
 
-When a CPU goes offline, the interrupts affine to that CPU are
-re-configured.
+When allocating EA inode, quota accounting is done just before
+ext4_xattr_inode_lookup_create(). Logically these two operations belong
+together so just fold quota accounting into
+ext4_xattr_inode_lookup_create(). We also make
+ext4_xattr_inode_lookup_create() return the looked up / created inode to
+convert the function to a more standard calling convention.
 
-Managed interrupts undergo either migration to other CPUs or shutdown if
-all CPUs listed in the affinity are offline. The migration of managed
-interrupts is guaranteed on x86 because there are interrupt vectors
-reserved.
-
-Regular interrupts are migrated to a still online CPU in the affinity mask
-or if there is no online CPU to any online CPU.
-
-This works as long as the still online CPUs in the affinity mask have
-interrupt vectors available, but in case that none of those CPUs has a
-vector available the migration fails and the device interrupt becomes
-stale.
-
-This is not any different from the case where the affinity mask does not
-contain any online CPU, but there is no fallback operation for this.
-
-Instead of giving up, retry the migration attempt with the online CPU mask
-if the interrupt is not managed, as managed interrupts cannot be affected
-by this problem.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240423073413.79625-1-dongli.zhang@oracle.com
-Cc: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240209112107.10585-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 0a46ef234756 ("ext4: do not create EA inode under buffer lock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/cpuhotplug.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/ext4/xattr.c | 50 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 26 deletions(-)
 
---- a/kernel/irq/cpuhotplug.c
-+++ b/kernel/irq/cpuhotplug.c
-@@ -130,6 +130,22 @@ static bool migrate_one_irq(struct irq_d
- 	 * CPU.
- 	 */
- 	err = irq_do_set_affinity(d, affinity, false);
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index c58cbe9f7809c..f176c4e8fdcb1 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1571,46 +1571,49 @@ ext4_xattr_inode_cache_find(struct inode *inode, const void *value,
+ /*
+  * Add value of the EA in an inode.
+  */
+-static int ext4_xattr_inode_lookup_create(handle_t *handle, struct inode *inode,
+-					  const void *value, size_t value_len,
+-					  struct inode **ret_inode)
++static struct inode *ext4_xattr_inode_lookup_create(handle_t *handle,
++		struct inode *inode, const void *value, size_t value_len)
+ {
+ 	struct inode *ea_inode;
+ 	u32 hash;
+ 	int err;
+ 
++	/* Account inode & space to quota even if sharing... */
++	err = ext4_xattr_inode_alloc_quota(inode, value_len);
++	if (err)
++		return ERR_PTR(err);
 +
-+	/*
-+	 * If there are online CPUs in the affinity mask, but they have no
-+	 * vectors left to make the migration work, try to break the
-+	 * affinity by migrating to any online CPU.
-+	 */
-+	if (err == -ENOSPC && !irqd_affinity_is_managed(d) && affinity != cpu_online_mask) {
-+		pr_debug("IRQ%u: set affinity failed for %*pbl, re-try with online CPUs\n",
-+			 d->irq, cpumask_pr_args(affinity));
-+
-+		affinity = cpu_online_mask;
-+		brokeaff = true;
-+
-+		err = irq_do_set_affinity(d, affinity, false);
+ 	hash = ext4_xattr_inode_hash(EXT4_SB(inode->i_sb), value, value_len);
+ 	ea_inode = ext4_xattr_inode_cache_find(inode, value, value_len, hash);
+ 	if (ea_inode) {
+ 		err = ext4_xattr_inode_inc_ref(handle, ea_inode);
+-		if (err) {
+-			iput(ea_inode);
+-			return err;
+-		}
+-
+-		*ret_inode = ea_inode;
+-		return 0;
++		if (err)
++			goto out_err;
++		return ea_inode;
+ 	}
+ 
+ 	/* Create an inode for the EA value */
+ 	ea_inode = ext4_xattr_inode_create(handle, inode, hash);
+-	if (IS_ERR(ea_inode))
+-		return PTR_ERR(ea_inode);
++	if (IS_ERR(ea_inode)) {
++		ext4_xattr_inode_free_quota(inode, NULL, value_len);
++		return ea_inode;
 +	}
-+
+ 
+ 	err = ext4_xattr_inode_write(handle, ea_inode, value, value_len);
  	if (err) {
- 		pr_warn_ratelimited("IRQ%u: set affinity failed(%d).\n",
- 				    d->irq, err);
+ 		if (ext4_xattr_inode_dec_ref(handle, ea_inode))
+ 			ext4_warning_inode(ea_inode, "cleanup dec ref error %d", err);
+-		iput(ea_inode);
+-		return err;
++		goto out_err;
+ 	}
+ 
+ 	if (EA_INODE_CACHE(inode))
+ 		mb_cache_entry_create(EA_INODE_CACHE(inode), GFP_NOFS, hash,
+ 				      ea_inode->i_ino, true /* reusable */);
+-
+-	*ret_inode = ea_inode;
+-	return 0;
++	return ea_inode;
++out_err:
++	iput(ea_inode);
++	ext4_xattr_inode_free_quota(inode, NULL, value_len);
++	return ERR_PTR(err);
+ }
+ 
+ /*
+@@ -1718,16 +1721,11 @@ static int ext4_xattr_set_entry(struct ext4_xattr_info *i,
+ 	if (i->value && in_inode) {
+ 		WARN_ON_ONCE(!i->value_len);
+ 
+-		ret = ext4_xattr_inode_alloc_quota(inode, i->value_len);
+-		if (ret)
+-			goto out;
+-
+-		ret = ext4_xattr_inode_lookup_create(handle, inode, i->value,
+-						     i->value_len,
+-						     &new_ea_inode);
+-		if (ret) {
++		new_ea_inode = ext4_xattr_inode_lookup_create(handle, inode,
++					i->value, i->value_len);
++		if (IS_ERR(new_ea_inode)) {
++			ret = PTR_ERR(new_ea_inode);
+ 			new_ea_inode = NULL;
+-			ext4_xattr_inode_free_quota(inode, NULL, i->value_len);
+ 			goto out;
+ 		}
+ 	}
+-- 
+2.43.0
+
 
 
