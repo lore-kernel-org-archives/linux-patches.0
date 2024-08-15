@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DF21714A1;
-	Thu, 15 Aug 2024 13:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB361714A1;
+	Thu, 15 Aug 2024 13:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730184; cv=none; b=iq/yiStWlT+GwLLflQezGwsO8yYydzOL7oYsCWzcMTlyUR0pQKu5y1HgvZHcokApe0ukiKuEXiu9Ybk9SOH4nN4jn94aXID1AhaqQUBSz3IJ+X3NWYKUGpenVN3pLnoO3HMnJ2J99SQmQoWGKzuGeuNVucteQdqbhgRyaaXikOg=
+	t=1723730188; cv=none; b=QUnWvCKOJWAxugbBIcsBnlZnMhAFY7pslg6xT4hg5OtP/rWYegP3qHcMYQxX9ZHcduqpeOKGIoip+4ybfBYJMF1+3TBS9lTApH6l0pLGCaELrthUzKi2hWf63NMG25MIo3FpadbPqjhWvtHOZ9R3yLj9gb3OXlqumL8UMcJn6eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730184; c=relaxed/simple;
-	bh=vVB4msi48NoPdZ06PGuMt4xfu0TjupwVz2EWwuQYWOc=;
+	s=arc-20240116; t=1723730188; c=relaxed/simple;
+	bh=yu8aUKE1AfLYw9NsKlBnjAapuDRWByqtwBpIo1pZMt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MgNkKMMBFrBM356nMPm7IHYag5wK1BbwTNFVZRJJmyTR/1qZBJZ/yrAO0dTODiQaLBUoa3deeyEOITQjHwRiMpUhII2tJRKev6/5lZnvCnCenj3pgYFHnTYtmUWImwvaIZRYWzfNk54NO9nAvjvu3zn26z+gxObkVs4akECEOIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDPlg7uD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfNtOE5xg1UHm+xzDvk6mQcFockHu3J+Cj0i9BswPHAL0xXmryEHHyDIYtGfH693fKSy7VdH++t6HWDMKwJDoAO/aDzFYU+BuPDuCIUmNosCmVw3Nt7Z83az29ItsyhUWpQ7LZ3mgzphzh87jEJXG44v8DrkHyIe6pLTZ4Uj4iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEg4rRoz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDPlg7uD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5E0C4AF0D;
-	Thu, 15 Aug 2024 13:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEg4rRoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B585C4AF0A;
+	Thu, 15 Aug 2024 13:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730184;
-	bh=vVB4msi48NoPdZ06PGuMt4xfu0TjupwVz2EWwuQYWOc=;
+	s=korg; t=1723730188;
+	bh=yu8aUKE1AfLYw9NsKlBnjAapuDRWByqtwBpIo1pZMt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDPlg7uDqhS5XoSyoQsLDjGgydBuseyUPOhO2FxF+bUT9odCM8YQx1DFV40zdcnhh
-	 OZd+Lr25Uuq/NMMKWCYAchGkBiEY5lRZ3xJT3pOpp8djyi6M0fQkHbhpuGhNjTsYtY
-	 Pta54k268EDC/ndJOBoeyThNhVOAluyTwL8sI+Q4=
+	b=mEg4rRozDkBql3AjWqnsS0GnqT2gXi7GGr/B+cQkG+ZT89jsZxyOo24MXXSimXWRO
+	 4I6I8L2A000Zc6qYzYQNzjb7A88V5Fbbw3tUvdpp97A0skh2grySeuKBcxVZFtAwnB
+	 iYs33coG+msF2vbHCcNO8WRdSonZ4tTC6nLKW33k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Doug Brown <doug@schmorgal.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 328/484] drm/nouveau: prime: fix refcount underflow
-Date: Thu, 15 Aug 2024 15:23:06 +0200
-Message-ID: <20240815131954.079815818@linuxfoundation.org>
+Subject: [PATCH 5.15 329/484] drm/vmwgfx: Fix overlay when using Screen Targets
+Date: Thu, 15 Aug 2024 15:23:07 +0200
+Message-ID: <20240815131954.119452641@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -46,49 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
+[ Upstream commit cb372a505a994cb39aa75acfb8b3bcf94787cf94 ]
 
-Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
-hence the backing ttm_bo) leads to a refcount underflow.
+This code was never updated to support Screen Targets.
+Fixes a bug where Xv playback displays a green screen instead of actual
+video contents when 3D acceleration is disabled in the guest.
 
-Instead of calling nouveau_bo_ref() in the unwind path of
-drm_gem_object_init(), clean things up manually.
-
-Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
-(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: c8261a961ece ("vmwgfx: Major KMS refactoring / cleanup in preparation of screen targets")
+Reported-by: Doug Brown <doug@schmorgal.com>
+Closes: https://lore.kernel.org/all/bd9cb3c7-90e8-435d-bc28-0e38fee58977@schmorgal.com
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Tested-by: Doug Brown <doug@schmorgal.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240719163627.20888-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
-index 531615719f6da..89fcbfdb5f0af 100644
---- a/drivers/gpu/drm/nouveau/nouveau_prime.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
-@@ -63,7 +63,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
- 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
- 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
- 	if (ret) {
--		nouveau_bo_ref(NULL, &nvbo);
-+		drm_gem_object_release(&nvbo->bo.base);
-+		kfree(nvbo);
- 		obj = ERR_PTR(-ENOMEM);
- 		goto unlock;
- 	}
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
+index 54c5d16eb3b79..ec46b3b70d04d 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
+@@ -98,7 +98,7 @@ static int vmw_overlay_send_put(struct vmw_private *dev_priv,
+ {
+ 	struct vmw_escape_video_flush *flush;
+ 	size_t fifo_size;
+-	bool have_so = (dev_priv->active_display_unit == vmw_du_screen_object);
++	bool have_so = (dev_priv->active_display_unit != vmw_du_legacy);
+ 	int i, num_items;
+ 	SVGAGuestPtr ptr;
+ 
 -- 
 2.43.0
 
