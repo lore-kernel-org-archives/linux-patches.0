@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEA01A7060;
-	Thu, 15 Aug 2024 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8581A7060;
+	Thu, 15 Aug 2024 14:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732985; cv=none; b=i1jZWRyKZ66tLWgAY3L55yuJP49uoayM1l1zJVuyfX0f9mLtK0cWT8AEp7TNMaN+iKrYeJwp44P3OcwihYzu+VnrB34HiZrMBnv5kSFDJ2fXIovGaHmlxgEY9qyzyeleBOl1YjEqBopCd3wU2zocQ5NYchmX7W8+kq01R5MLEPQ=
+	t=1723732988; cv=none; b=U72gvyVUFya/DN9zgYDdY+CpaQhEMLnnWxO3LJRHywwSBkkfdjhVec4vGtkzn3PnX2Wi2whZnrYul/yzGf6tUaxRTyOaL1125zL7UYVVqw4yXo7jDE0w39f3gDe2sgp/P7uKt3qnT7aMJ6D1My802+9IEjFrd/K7LV/iPks48tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732985; c=relaxed/simple;
-	bh=CmsCnkz3N1cTiMe3T30l8Lf7t+Wj6ak8j8baqd2Hsfg=;
+	s=arc-20240116; t=1723732988; c=relaxed/simple;
+	bh=WtWQI+w1eFq+Z1N//QjdDcZ8p/2RspQqQ080TlU4iHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOgkUa08hhb18gm+gixcqv03ZBc2uF4jhvE3ZRMC8fa5F3BoQg+Ln07uqU2OZITVM2ZOr62b3WqzhfxIFAo1ZOBtHRADys5U0UHUcoHdC99l1X9fR3Z5chBoOa/NlIcTqGYn09fZA54kb/P7MM4+pTiT1tmswi9VZdjqwXEeNNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9VXpiY+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7o/C5yTEdUZB+rpu8sB5oDY391i+5BNLE2nBPr9+34Vsy0ckNI0rSXBHRaVA3tLJp6n3ccQx60PgKnkaPRjiVH7KtdIfcjv6teZNXsFzAh77uG4sPsFYNDp72BcY/e/wqza6yfyusBwaBUVUXIMyMqD5oIF8xyeTTsKuh30nQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFhV+3oZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9VXpiY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C35C4AF0D;
-	Thu, 15 Aug 2024 14:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFhV+3oZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940F4C32786;
+	Thu, 15 Aug 2024 14:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732985;
-	bh=CmsCnkz3N1cTiMe3T30l8Lf7t+Wj6ak8j8baqd2Hsfg=;
+	s=korg; t=1723732988;
+	bh=WtWQI+w1eFq+Z1N//QjdDcZ8p/2RspQqQ080TlU4iHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9VXpiY+2U6Y+cUhtebDYwgkcvSdM0KNFh9nnW02HbG9DEedneN5VMPibw2Alrj1/
-	 J6gEkHXzSfbKFxkq5ukGM1XqwQFTzW2DFuROp2xjg8gaIzOd6IGNLWhfDlmYuswNod
-	 mAWlE4/dvTGx/l2HgE4bRs3IzsFABz/IVULRGtHQ=
+	b=WFhV+3oZFAvcb39HIWKqWMINBvLOV0hH1K+3Z1olQZqjcIqP3l6l3pwvjpCgGmqps
+	 FNC4SzDWSBPJXklocfAIaJ0HVnrkKOM5w8A0yUlEOR3MMwb+HUBRrGqRTLteqSb5OI
+	 SBvb5J5kRhGLTfjZoW8rVUcMJjE31dGNktLdDkZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 319/352] irqchip/xilinx: Fix shift out of bounds
-Date: Thu, 15 Aug 2024 15:26:25 +0200
-Message-ID: <20240815131931.785564104@linuxfoundation.org>
+	Yunke Cao <yunkec@google.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 5.10 346/352] media: uvcvideo: Use entity get_cur in uvc_ctrl_set
+Date: Thu, 15 Aug 2024 15:26:52 +0200
+Message-ID: <20240815131932.843065823@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -50,46 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Yunke Cao <yunkec@google.com>
 
-commit d73f0f49daa84176c3beee1606e73c7ffb6af8b2 upstream.
+commit 5f36851c36b30f713f588ed2b60aa7b4512e2c76 upstream.
 
-The device tree property 'xlnx,kind-of-intr' is sanity checked that the
-bitmask contains only set bits which are in the range of the number of
-interrupts supported by the controller.
+Entity controls should get_cur using an entity-defined function
+instead of via a query. Fix this in uvc_ctrl_set.
 
-The check is done by shifting the mask right by the number of supported
-interrupts and checking the result for zero.
-
-The data type of the mask is u32 and the number of supported interrupts is
-up to 32. In case of 32 interrupts the shift is out of bounds, resulting in
-a mismatch warning. The out of bounds condition is also reported by UBSAN:
-
-  UBSAN: shift-out-of-bounds in irq-xilinx-intc.c:332:22
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
-
-Fix it by promoting the mask to u64 for the test.
-
-Fixes: d50466c90724 ("microblaze: intc: Refactor DT sanity check")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/1723186944-3571957-1-git-send-email-radhey.shyam.pandey@amd.com
+Fixes: 65900c581d01 ("media: uvcvideo: Allow entity-defined get_info and get_cur")
+Signed-off-by: Yunke Cao <yunkec@google.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-xilinx-intc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |   83 +++++++++++++++++++++------------------
+ 1 file changed, 46 insertions(+), 37 deletions(-)
 
---- a/drivers/irqchip/irq-xilinx-intc.c
-+++ b/drivers/irqchip/irq-xilinx-intc.c
-@@ -201,7 +201,7 @@ static int __init xilinx_intc_of_init(st
- 		irqc->intr_mask = 0;
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -992,36 +992,56 @@ static s32 __uvc_ctrl_get_value(struct u
+ 	return value;
+ }
+ 
+-static int __uvc_ctrl_get(struct uvc_video_chain *chain,
+-	struct uvc_control *ctrl, struct uvc_control_mapping *mapping,
+-	s32 *value)
++static int __uvc_ctrl_load_cur(struct uvc_video_chain *chain,
++			       struct uvc_control *ctrl)
+ {
++	u8 *data;
+ 	int ret;
+ 
+-	if ((ctrl->info.flags & UVC_CTRL_FLAG_GET_CUR) == 0)
+-		return -EACCES;
++	if (ctrl->loaded)
++		return 0;
+ 
+-	if (!ctrl->loaded) {
+-		if (ctrl->entity->get_cur) {
+-			ret = ctrl->entity->get_cur(chain->dev,
+-				ctrl->entity,
+-				ctrl->info.selector,
+-				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+-				ctrl->info.size);
+-		} else {
+-			ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR,
+-				ctrl->entity->id,
+-				chain->dev->intfnum,
+-				ctrl->info.selector,
+-				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+-				ctrl->info.size);
+-		}
+-		if (ret < 0)
+-			return ret;
++	data = uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT);
+ 
++	if ((ctrl->info.flags & UVC_CTRL_FLAG_GET_CUR) == 0) {
++		memset(data, 0, ctrl->info.size);
+ 		ctrl->loaded = 1;
++
++		return 0;
  	}
  
--	if (irqc->intr_mask >> irqc->nr_irq)
-+	if ((u64)irqc->intr_mask >> irqc->nr_irq)
- 		pr_warn("irq-xilinx: mismatch in kind-of-intr param\n");
++	if (ctrl->entity->get_cur)
++		ret = ctrl->entity->get_cur(chain->dev, ctrl->entity,
++					    ctrl->info.selector, data,
++					    ctrl->info.size);
++	else
++		ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR,
++				     ctrl->entity->id, chain->dev->intfnum,
++				     ctrl->info.selector, data,
++				     ctrl->info.size);
++
++	if (ret < 0)
++		return ret;
++
++	ctrl->loaded = 1;
++
++	return ret;
++}
++
++static int __uvc_ctrl_get(struct uvc_video_chain *chain,
++			  struct uvc_control *ctrl,
++			  struct uvc_control_mapping *mapping,
++			  s32 *value)
++{
++	int ret;
++
++	if ((ctrl->info.flags & UVC_CTRL_FLAG_GET_CUR) == 0)
++		return -EACCES;
++
++	ret = __uvc_ctrl_load_cur(chain, ctrl);
++	if (ret < 0)
++		return ret;
++
+ 	*value = __uvc_ctrl_get_value(mapping,
+ 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT));
  
- 	pr_info("irq-xilinx: %pOF: num_irq=%d, edge=0x%x\n",
+@@ -1675,21 +1695,10 @@ int uvc_ctrl_set(struct uvc_fh *handle,
+ 	 * needs to be loaded from the device to perform the read-modify-write
+ 	 * operation.
+ 	 */
+-	if (!ctrl->loaded && (ctrl->info.size * 8) != mapping->size) {
+-		if ((ctrl->info.flags & UVC_CTRL_FLAG_GET_CUR) == 0) {
+-			memset(uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+-				0, ctrl->info.size);
+-		} else {
+-			ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR,
+-				ctrl->entity->id, chain->dev->intfnum,
+-				ctrl->info.selector,
+-				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+-				ctrl->info.size);
+-			if (ret < 0)
+-				return ret;
+-		}
+-
+-		ctrl->loaded = 1;
++	if ((ctrl->info.size * 8) != mapping->size) {
++		ret = __uvc_ctrl_load_cur(chain, ctrl);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
+ 	/* Backup the current value in case we need to rollback later. */
 
 
