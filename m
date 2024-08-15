@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F7E1714A1;
-	Thu, 15 Aug 2024 13:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F9C1714A1;
+	Thu, 15 Aug 2024 13:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730123; cv=none; b=uacLhdPh7lt/VUvgljctLhi+CxjW100XgXUd6pDGnr1X5fLXU+RwJyJ4s+JwyXxlbfxL9h1z0Yn3MTHcrahyLY5zuVryWdPvfJI6bqU8Cbt41oqHFheXlm9A2CUDIy8m4J//Jr9bFqV8KMBEFvSvWech0rrRf8ftL3JleJy5XTY=
+	t=1723730126; cv=none; b=iYPzFtyoDKrdPkzL+BGQO4edds9FvhST/1erUJCwwmNr3EFf+7axQNy9BoV9tOzhSTvMR/q/17IrbBgYyHVhQ+agIjJvYEvdEFxXcS/2hLzooXeB39ClZSM0PdBRPKOuclMV/AtrzYpQOkKJueFLBOVbsjn2ixmvqUeqXiWMaUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730123; c=relaxed/simple;
-	bh=XqzhuxwM7ozlU/Q20rkoCjO566+KK0bFRvO0uYxTvZY=;
+	s=arc-20240116; t=1723730126; c=relaxed/simple;
+	bh=BPq4nr9MUu734R4K1V3aXiwbCu4B8GK/y6EYxH/oj+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvyxyIGeg46UpA8TcyD2oO92Bl9aIVGAfNXb9tr5pqC8LyM9JvWQwgIkPZy4YxtBVcKkc/CrC/Qt80oga/bXaNjiq4L/sqdhWmiWAT7/xdRJ67+FtMfvtKWlQWDXMpXwv/mPWHxthGZLkFuc9SfkbQEaN40QkbzdfFlYLK3+Ltg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TClAuo2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QIuetHpH8EIJgfzOFRa4tmBENA4K2BBZLVvOkxX3Kkp09dtBR6klpjgPwvo8Y++O61onntpUb6ImrlJHJmjr76BbHYfOgUghXWaLVowGAOVrkIg4O6c/noCNOuWr877czw8kF/KuNnbch4dLL9fYhxElXBlNGEGqPAm0KCTE88s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdjNjYTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TClAuo2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E318FC32786;
-	Thu, 15 Aug 2024 13:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdjNjYTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6455BC32786;
+	Thu, 15 Aug 2024 13:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730123;
-	bh=XqzhuxwM7ozlU/Q20rkoCjO566+KK0bFRvO0uYxTvZY=;
+	s=korg; t=1723730126;
+	bh=BPq4nr9MUu734R4K1V3aXiwbCu4B8GK/y6EYxH/oj+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TClAuo2Rs63CPh81LMIciVLv9Sx/npLVx6+JAFi7D+xO3vJ2s3/vy8+NUWpadshOX
-	 JO832CPapQrKzRXK3VOn3BIo74Ll9DCHCddxDI70Og6T85SZgpgkDZKnpft12Uq2wy
-	 qjbQs1l+7WKAAi5cqvxkKq/m/SI1Be5/Jx/T6LG4=
+	b=EdjNjYTbQjh3PrgCQVFB+eO7TF+xQq/4J5DSK+o8Kd4R/zUnbPL2euhPqxm4/H2lP
+	 2Hc+JRTk40wEF1SmCNWkPi2Lw/q0a1VCyVq/vxiChAB6j+nGljUfJZ6+Iy5ueXovhs
+	 +l4QVaDs8C8YY5oM9GvIObpSXIBysMaUZPssWB+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Pavel Machek <pavel@ucw.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/484] drivers: soc: xilinx: check return status of get_api_version()
-Date: Thu, 15 Aug 2024 15:22:49 +0200
-Message-ID: <20240815131953.419758711@linuxfoundation.org>
+Subject: [PATCH 5.15 312/484] leds: trigger: use RCU to protect the led_cdevs list
+Date: Thu, 15 Aug 2024 15:22:50 +0200
+Message-ID: <20240815131953.458005260@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,51 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9b003e14801cf85a8cebeddc87bc9fc77100fdce ]
+[ Upstream commit 2a5a8fa8b23144d14567d6f8293dd6fbeecee393 ]
 
-Currently return status is not getting checked for get_api_version
-and because of that for x86 arch we are getting below smatch error.
+Even with the previous commit 27af8e2c90fb
+("leds: trigger: fix potential deadlock with libata")
+to this file, we still get lockdep unhappy, and Boqun
+explained the report here:
+https://lore.kernel.org/r/YNA+d1X4UkoQ7g8a@boqun-archlinux
 
-    CC      drivers/soc/xilinx/zynqmp_power.o
-drivers/soc/xilinx/zynqmp_power.c: In function 'zynqmp_pm_probe':
-drivers/soc/xilinx/zynqmp_power.c:295:12: warning: 'pm_api_version' is
-used uninitialized [-Wuninitialized]
-    295 |         if (pm_api_version < ZYNQMP_PM_VERSION)
-        |            ^
-    CHECK   drivers/soc/xilinx/zynqmp_power.c
-drivers/soc/xilinx/zynqmp_power.c:295 zynqmp_pm_probe() error:
-uninitialized symbol 'pm_api_version'.
+Effectively, this means that the read_lock_irqsave() isn't
+enough here because another CPU might be trying to do a
+write lock, and thus block the readers.
 
-So, check return status of pm_get_api_version and return error in case
-of failure to avoid checking uninitialized pm_api_version variable.
+This is all pretty messy, but it doesn't seem right that
+the LEDs framework imposes some locking requirements on
+users, in particular we'd have to make the spinlock in the
+iwlwifi driver always disable IRQs, even if we don't need
+that for any other reason, just to avoid this deadlock.
 
-Fixes: b9b3a8be28b3 ("firmware: xilinx: Remove eemi ops for get_api_version")
-Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240515112345.24673-1-jay.buddhabhatti@amd.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Since writes to the led_cdevs list are rare (and are done
+by userspace), just switch the list to RCU. This costs a
+synchronize_rcu() at removal time so we can ensure things
+are correct, but that seems like a small price to pay for
+getting lock-free iterations and no deadlocks (nor any
+locking requirements imposed on users.)
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Pavel Machek <pavel@ucw.cz>
+Stable-dep-of: ab477b766edd ("leds: triggers: Flush pending brightness before activating trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/zynqmp_power.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/leds/led-triggers.c | 41 +++++++++++++++++++------------------
+ include/linux/leds.h        |  2 +-
+ 2 files changed, 22 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
-index f8c301984d4f9..2653d29ba829b 100644
---- a/drivers/soc/xilinx/zynqmp_power.c
-+++ b/drivers/soc/xilinx/zynqmp_power.c
-@@ -178,7 +178,9 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
- 	u32 pm_api_version;
- 	struct mbox_client *client;
+diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
+index cbe70f38cb572..024b73f84ce0c 100644
+--- a/drivers/leds/led-triggers.c
++++ b/drivers/leds/led-triggers.c
+@@ -157,7 +157,6 @@ EXPORT_SYMBOL_GPL(led_trigger_read);
+ /* Caller must ensure led_cdev->trigger_lock held */
+ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
+ {
+-	unsigned long flags;
+ 	char *event = NULL;
+ 	char *envp[2];
+ 	const char *name;
+@@ -171,10 +170,13 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
  
--	zynqmp_pm_get_api_version(&pm_api_version);
-+	ret = zynqmp_pm_get_api_version(&pm_api_version);
-+	if (ret)
-+		return ret;
+ 	/* Remove any existing trigger */
+ 	if (led_cdev->trigger) {
+-		write_lock_irqsave(&led_cdev->trigger->leddev_list_lock, flags);
+-		list_del(&led_cdev->trig_list);
+-		write_unlock_irqrestore(&led_cdev->trigger->leddev_list_lock,
+-			flags);
++		spin_lock(&led_cdev->trigger->leddev_list_lock);
++		list_del_rcu(&led_cdev->trig_list);
++		spin_unlock(&led_cdev->trigger->leddev_list_lock);
++
++		/* ensure it's no longer visible on the led_cdevs list */
++		synchronize_rcu();
++
+ 		cancel_work_sync(&led_cdev->set_brightness_work);
+ 		led_stop_software_blink(led_cdev);
+ 		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
+@@ -186,9 +188,9 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
+ 		led_set_brightness(led_cdev, LED_OFF);
+ 	}
+ 	if (trig) {
+-		write_lock_irqsave(&trig->leddev_list_lock, flags);
+-		list_add_tail(&led_cdev->trig_list, &trig->led_cdevs);
+-		write_unlock_irqrestore(&trig->leddev_list_lock, flags);
++		spin_lock(&trig->leddev_list_lock);
++		list_add_tail_rcu(&led_cdev->trig_list, &trig->led_cdevs);
++		spin_unlock(&trig->leddev_list_lock);
+ 		led_cdev->trigger = trig;
  
- 	/* Check PM API version number */
- 	if (pm_api_version < ZYNQMP_PM_VERSION)
+ 		if (trig->activate)
+@@ -223,9 +225,10 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
+ 		trig->deactivate(led_cdev);
+ err_activate:
+ 
+-	write_lock_irqsave(&led_cdev->trigger->leddev_list_lock, flags);
+-	list_del(&led_cdev->trig_list);
+-	write_unlock_irqrestore(&led_cdev->trigger->leddev_list_lock, flags);
++	spin_lock(&led_cdev->trigger->leddev_list_lock);
++	list_del_rcu(&led_cdev->trig_list);
++	spin_unlock(&led_cdev->trigger->leddev_list_lock);
++	synchronize_rcu();
+ 	led_cdev->trigger = NULL;
+ 	led_cdev->trigger_data = NULL;
+ 	led_set_brightness(led_cdev, LED_OFF);
+@@ -285,7 +288,7 @@ int led_trigger_register(struct led_trigger *trig)
+ 	struct led_classdev *led_cdev;
+ 	struct led_trigger *_trig;
+ 
+-	rwlock_init(&trig->leddev_list_lock);
++	spin_lock_init(&trig->leddev_list_lock);
+ 	INIT_LIST_HEAD(&trig->led_cdevs);
+ 
+ 	down_write(&triggers_list_lock);
+@@ -378,15 +381,14 @@ void led_trigger_event(struct led_trigger *trig,
+ 			enum led_brightness brightness)
+ {
+ 	struct led_classdev *led_cdev;
+-	unsigned long flags;
+ 
+ 	if (!trig)
+ 		return;
+ 
+-	read_lock_irqsave(&trig->leddev_list_lock, flags);
+-	list_for_each_entry(led_cdev, &trig->led_cdevs, trig_list)
++	rcu_read_lock();
++	list_for_each_entry_rcu(led_cdev, &trig->led_cdevs, trig_list)
+ 		led_set_brightness(led_cdev, brightness);
+-	read_unlock_irqrestore(&trig->leddev_list_lock, flags);
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL_GPL(led_trigger_event);
+ 
+@@ -397,20 +399,19 @@ static void led_trigger_blink_setup(struct led_trigger *trig,
+ 			     int invert)
+ {
+ 	struct led_classdev *led_cdev;
+-	unsigned long flags;
+ 
+ 	if (!trig)
+ 		return;
+ 
+-	read_lock_irqsave(&trig->leddev_list_lock, flags);
+-	list_for_each_entry(led_cdev, &trig->led_cdevs, trig_list) {
++	rcu_read_lock();
++	list_for_each_entry_rcu(led_cdev, &trig->led_cdevs, trig_list) {
+ 		if (oneshot)
+ 			led_blink_set_oneshot(led_cdev, delay_on, delay_off,
+ 					      invert);
+ 		else
+ 			led_blink_set(led_cdev, delay_on, delay_off);
+ 	}
+-	read_unlock_irqrestore(&trig->leddev_list_lock, flags);
++	rcu_read_unlock();
+ }
+ 
+ void led_trigger_blink(struct led_trigger *trig,
+diff --git a/include/linux/leds.h b/include/linux/leds.h
+index a0b730be40ad2..ba4861ec73d30 100644
+--- a/include/linux/leds.h
++++ b/include/linux/leds.h
+@@ -360,7 +360,7 @@ struct led_trigger {
+ 	struct led_hw_trigger_type *trigger_type;
+ 
+ 	/* LEDs under control by this trigger (for simple triggers) */
+-	rwlock_t	  leddev_list_lock;
++	spinlock_t	  leddev_list_lock;
+ 	struct list_head  led_cdevs;
+ 
+ 	/* Link to next registered trigger */
 -- 
 2.43.0
 
