@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B43B7DA78;
-	Thu, 15 Aug 2024 13:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5B47DA78;
+	Thu, 15 Aug 2024 13:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728701; cv=none; b=tqUyNwVwdz4+pTs8Fbzght7SZFJIxCvOnxdWpqH9ToeadZbjFSjZtgwxoY5Es607e5rFpybccMRgaDjqnWNVrW0jnm0A9MXmbQC3Fn++fQnZPowhTFy/9oRzkN3aoSZIoBq3XgsgPVUV34fPNQ/Dg4Fx2daZRFM6YxOAWcr3Igk=
+	t=1723728704; cv=none; b=htf06g4KTfJlKXXCK1wGUTRBt/nLeO4xzQpbst/7llRzUEjY96OB/ZgMCnEnLvnhE6cL+G5adEcC8fJsZoGL7AwQOd/HNdEmq5u/If7vuyWjgWwkqsHuo4uQIfhAFy9HqYpJa8QNgu6q9LkqVctHiLhe4KPJKffwXRM8t3HqypI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728701; c=relaxed/simple;
-	bh=vUMan/4LClaWBGEyjs1tLcUZ3xxDIgJBp0hjIUEnPVY=;
+	s=arc-20240116; t=1723728704; c=relaxed/simple;
+	bh=qcBsBM7TsC2XNkoZd+j+DIf+0hol449Wj14D5h1Cawk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e5n32Plg2D0uub+rQKlSegktWe0x2mDg0l02klBFtc2WGIK4/TPv4tJY53KP4W1ZAliUiD+I6zg02Gci+lpAa/0oEMYKazQP6fje9rx9W7G+6YSM6VOED2ccG1AW4Mzq/UkEY4doYRK7OYDRjRy5x+BHDcLqw8kelkB1WnEPXRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTvxRuxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buq8aKGA/cO9se1Ks+NdaZasu+FTrbnCCjH3Y3tVWc7sByGUiat1YBLVOPakz0ctG5kk4H9+yKSk2gftJOdjI61jpBjRjsj7KRiUKUFgbvHwyn0nVk7UNYi0jCr4RsOMoBx02hxtWMPWRJDstQnpBE6pQsqJV1x6bVKrI11d4V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCf/4Tj1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTvxRuxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36032C32786;
-	Thu, 15 Aug 2024 13:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCf/4Tj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4FFC32786;
+	Thu, 15 Aug 2024 13:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728700;
-	bh=vUMan/4LClaWBGEyjs1tLcUZ3xxDIgJBp0hjIUEnPVY=;
+	s=korg; t=1723728704;
+	bh=qcBsBM7TsC2XNkoZd+j+DIf+0hol449Wj14D5h1Cawk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTvxRuxuCUOmSzjRBzwXSXPmocmzjOZoT899pM+kFiRkNP4K6oSW2rwNih4+Ee57H
-	 /SrwvoBn586ShdWbHeAt05rBhFFHKUT4oOE4+cBAQP6+J2lRc1Il77R6NuyJDDOLcF
-	 vTqK2BpjrA/c8+cgH09wjBKRDlIDb0kqIxEK7Z0g=
+	b=SCf/4Tj1SFQwYUXaOtl4y59j0+9PIvyMX7B6Y04qi1PcwX78FpeU6B3EJnRONL1dR
+	 634WO3AKmbcKZga3IiZ4w6kLeFi8BcK9eF9RScinT6wLk5TfvcexvGThyY7rJEAm5E
+	 q4b8RQvEDpgsbJzF9eX25rccRfegjQAAve8M5UR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Larsson <andreas@gaisler.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 041/196] sparc64: Fix incorrect function signature and add prototype for prom_cif_init
-Date: Thu, 15 Aug 2024 15:22:38 +0200
-Message-ID: <20240815131853.656047146@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 4.19 076/196] tools/memory-model: Fix bug in lock.cat
+Date: Thu, 15 Aug 2024 15:23:13 +0200
+Message-ID: <20240815131854.985632039@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -44,78 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Larsson <andreas@gaisler.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit a6c3ea1ec96307dbfbb2f16d96c674c5cc80f445 ]
+commit 4c830eef806679dc243e191f962c488dd9d00708 upstream.
 
-Remove the unused cif_stack argument and add a protype in oplib_64.h
-Commit ef3e035c3a9b ("sparc64: Fix register corruption in top-most
-kernel stack frame during boot.") removed the cif_stack argument to
-prom_cif init in the declaration at the caller site and the usage of it
-within prom_cif_init, but not in the function signature of the function
-itself.
+Andrea reported that the following innocuous litmus test:
 
-This also fixes the following warning:
-arch/sparc/prom/p1275.c:52:6: warning: no previous prototype for ‘prom_cif_init’
+C T
 
-Fixes: ef3e035c3a9b ("sparc64: Fix register corruption in top-most kernel stack frame during boot.")
-Link: https://lore.kernel.org/r/20240710094155.458731-3-andreas@gaisler.com
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+{}
+
+P0(spinlock_t *x)
+{
+	int r0;
+
+	spin_lock(x);
+	spin_unlock(x);
+	r0 = spin_is_locked(x);
+}
+
+gives rise to a nonsensical empty result with no executions:
+
+$ herd7 -conf linux-kernel.cfg T.litmus
+Test T Required
+States 0
+Ok
+Witnesses
+Positive: 0 Negative: 0
+Condition forall (true)
+Observation T Never 0 0
+Time T 0.00
+Hash=6fa204e139ddddf2cb6fa963bad117c0
+
+The problem is caused by a bug in the lock.cat part of the LKMM.  Its
+computation of the rf relation for RU (read-unlocked) events is
+faulty; it implicitly assumes that every RU event must read from
+either a UL (unlock) event in another thread or from the lock's
+initial state.  Neither is true in the litmus test above, so the
+computation yields no possible executions.
+
+The lock.cat code tries to make up for this deficiency by allowing RU
+events outside of critical sections to read from the last po-previous
+UL event.  But it does this incorrectly, trying to keep these rfi links
+separate from the rfe links that might also be needed, and passing only
+the latter to herd7's cross() macro.
+
+The problem is fixed by merging the two sets of possible rf links for
+RU events and using them all in the call to cross().
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-by: Andrea Parri <parri.andrea@gmail.com>
+Closes: https://lore.kernel.org/linux-arch/ZlC0IkzpQdeGj+a3@andrea/
+Tested-by: Andrea Parri <parri.andrea@gmail.com>
+Acked-by: Andrea Parri <parri.andrea@gmail.com>
+Fixes: 15553dcbca06 ("tools/memory-model: Add model support for spin_is_locked()")
+CC: <stable@vger.kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/include/asm/oplib_64.h | 1 +
- arch/sparc/prom/init_64.c         | 3 ---
- arch/sparc/prom/p1275.c           | 2 +-
- 3 files changed, 2 insertions(+), 4 deletions(-)
+ tools/memory-model/lock.cat |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/sparc/include/asm/oplib_64.h b/arch/sparc/include/asm/oplib_64.h
-index a67abebd43592..1b86d02a84556 100644
---- a/arch/sparc/include/asm/oplib_64.h
-+++ b/arch/sparc/include/asm/oplib_64.h
-@@ -247,6 +247,7 @@ void prom_sun4v_guest_soft_state(void);
- int prom_ihandle2path(int handle, char *buffer, int bufsize);
+--- a/tools/memory-model/lock.cat
++++ b/tools/memory-model/lock.cat
+@@ -105,19 +105,19 @@ let rf-lf = rfe-lf | rfi-lf
+  * within one of the lock's critical sections returns False.
+  *)
  
- /* Client interface level routines. */
-+void prom_cif_init(void *cif_handler);
- void p1275_cmd_direct(unsigned long *);
- 
- #endif /* !(__SPARC64_OPLIB_H) */
-diff --git a/arch/sparc/prom/init_64.c b/arch/sparc/prom/init_64.c
-index 103aa91043185..f7b8a1a865b8f 100644
---- a/arch/sparc/prom/init_64.c
-+++ b/arch/sparc/prom/init_64.c
-@@ -26,9 +26,6 @@ phandle prom_chosen_node;
-  * routines in the prom library.
-  * It gets passed the pointer to the PROM vector.
-  */
+-(* rfi for RU events: an RU may read from the last po-previous UL *)
+-let rfi-ru = ([UL] ; po-loc ; [RU]) \ ([UL] ; po-loc ; [LKW] ; po-loc)
 -
--extern void prom_cif_init(void *);
--
- void __init prom_init(void *cif_handler)
- {
- 	phandle node;
-diff --git a/arch/sparc/prom/p1275.c b/arch/sparc/prom/p1275.c
-index 889aa602f8d86..51c3f984bbf72 100644
---- a/arch/sparc/prom/p1275.c
-+++ b/arch/sparc/prom/p1275.c
-@@ -49,7 +49,7 @@ void p1275_cmd_direct(unsigned long *args)
- 	local_irq_restore(flags);
- }
+-(* rfe for RU events: an RU may read from an external UL or the initial write *)
+-let all-possible-rfe-ru =
+-	let possible-rfe-ru r =
++(*
++ * rf for RU events: an RU may read from an external UL or the initial write,
++ * or from the last po-previous UL
++ *)
++let all-possible-rf-ru =
++	let possible-rf-ru r =
+ 		let pair-to-relation p = p ++ 0
+-		in map pair-to-relation (((UL | IW) * {r}) & loc & ext)
+-	in map possible-rfe-ru RU
++		in map pair-to-relation ((((UL | IW) * {r}) & loc & ext) |
++			(((UL * {r}) & po-loc) \ ([UL] ; po-loc ; [LKW] ; po-loc)))
++	in map possible-rf-ru RU
  
--void prom_cif_init(void *cif_handler, void *cif_stack)
-+void prom_cif_init(void *cif_handler)
- {
- 	p1275buf.prom_cif_handler = (void (*)(long *))cif_handler;
- }
--- 
-2.43.0
-
+ (* Generate all rf relations for RU events *)
+-with rfe-ru from cross(all-possible-rfe-ru)
+-let rf-ru = rfe-ru | rfi-ru
++with rf-ru from cross(all-possible-rf-ru)
+ 
+ (* Final rf relation *)
+ let rf = rf | rf-lf | rf-ru
 
 
