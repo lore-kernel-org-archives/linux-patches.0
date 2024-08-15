@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FA21A706F;
-	Thu, 15 Aug 2024 14:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EE618D64F;
+	Thu, 15 Aug 2024 14:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731373; cv=none; b=TcH0pjnoeVgRddVZakrInK6b1efpkh7KbfCkdat+zyR3VZYxl7AXAbtG877kJZ7TxbHTcaLkb/j52+JNjAXR6ElHwHxjGM9h9iRrrWuBp47ElFp9ipS2a4NjU71WbPINi/6EPXoGjNUrJ5zaT3SuxqxT9RMk+vpOUMQpP7Grm/Y=
+	t=1723731376; cv=none; b=Rjr2ebwmSR62x4BheAIFQoAWlPLSUDONvXL8RPZEnp6pfN4nnhalETGCL4kiS/RSF6y/iUrAqwYNcr9b+gi2O5YUlEmZZpe6OzYsSNKkrF3nUerArjSC+hn608NGKvvu0bj+jfa2UgK+rn90qMLnX7cgVJnU6oPnVXtGz2uLCjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731373; c=relaxed/simple;
-	bh=+Q5vrW/vXQkLpHuHgQ39uG1Yv9mwsIA7Eg+yxE9Gwas=;
+	s=arc-20240116; t=1723731376; c=relaxed/simple;
+	bh=UZcyR9thul5rcQhs7ePrpUQchPOFBFHHFMYVodNNmrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBqlMLnR9PO743Skx2XCjcTAh7jQ2Urfr2wsXHnSdJz720Q/ZIFMwYptbt5W1hH/0eiuQfrG/VwGrQq4j/DWQbBhPOLkCu4UG48cflfshU33PEFSCUJWZmg7dqJxK5cuZr8e+WT1EPhsElz7DrAK9z7qDVROxrLaWX41cmX75rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W42/Syde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFsEAU2tWTaIZGQEozhhH5oSrN6jDQGMLb7jqsFOTQt5Ckgk5QdvLhFTVITO0wN2RhAXKM24zEQpI29aHQdnPCiiWsQRY3YnssGjvLIGuGxcw8NcM9qTNLpUu8d75XgzGS0X+NbjrBZalim6N1EARvhe3UNBQZbJfoKUumlozag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzZHfxPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W42/Syde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE60C4AF0E;
-	Thu, 15 Aug 2024 14:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzZHfxPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4353C4AF12;
+	Thu, 15 Aug 2024 14:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731372;
-	bh=+Q5vrW/vXQkLpHuHgQ39uG1Yv9mwsIA7Eg+yxE9Gwas=;
+	s=korg; t=1723731376;
+	bh=UZcyR9thul5rcQhs7ePrpUQchPOFBFHHFMYVodNNmrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W42/SydeSt8bkzdvC9OchJ6npV9W28GeRjlMAXCCwqLmewo5TrrzA/N9UwccyGG5h
-	 XQShAv/lMZi6B6S1IGM/miS5ehqCTNY2m1bRrHlJ9vIKEM1kUyd7MnU93n41D5gePP
-	 K3YcsL8t/P19RvbNyJy4kGO0QaCp5wiV+NJcLUZg=
+	b=zzZHfxPI9/VGnxN9/n5tpMxIExmO066eMXoj8VwknI88fzQQoE5wCf3BTyEfEnlQO
+	 nFyTRqXOuT/kbT3hVB+RXDr2uUAZA50Otf1f/sQ9VsfU2ESbo/MbfQJ9wMNB19by7T
+	 ZKIwSO0Z531E75SuPokphD+F0L5GJxao9Af8Ca+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 109/259] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
-Date: Thu, 15 Aug 2024 15:24:02 +0200
-Message-ID: <20240815131907.013353067@linuxfoundation.org>
+	syzbot+31e4659a3fe953aec2f4@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.4 110/259] f2fs: fix to dont dirty inode for readonly filesystem
+Date: Thu, 15 Aug 2024 15:24:03 +0200
+Message-ID: <20240815131907.050860530@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,39 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Chao Yu <chao@kernel.org>
 
-commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
+commit 192b8fb8d1c8ca3c87366ebbef599fa80bb626b8 upstream.
 
-Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
-is decided by the SCSI ML. User is not aware of the cause of an acutal
-error.
+syzbot reports f2fs bug as below:
 
-Return the appropriate return code that will be decoded by API and
-application and proper error message will be displayed to user.
+kernel BUG at fs/f2fs/inode.c:933!
+RIP: 0010:f2fs_evict_inode+0x1576/0x1590 fs/f2fs/inode.c:933
+Call Trace:
+ evict+0x2a4/0x620 fs/inode.c:664
+ dispose_list fs/inode.c:697 [inline]
+ evict_inodes+0x5f8/0x690 fs/inode.c:747
+ generic_shutdown_super+0x9d/0x2c0 fs/super.c:675
+ kill_block_super+0x44/0x90 fs/super.c:1667
+ kill_f2fs_super+0x303/0x3b0 fs/f2fs/super.c:4894
+ deactivate_locked_super+0xc1/0x130 fs/super.c:484
+ cleanup_mnt+0x426/0x4c0 fs/namespace.c:1256
+ task_work_run+0x24a/0x300 kernel/task_work.c:180
+ ptrace_notify+0x2cd/0x380 kernel/signal.c:2399
+ ptrace_report_syscall include/linux/ptrace.h:411 [inline]
+ ptrace_report_syscall_exit include/linux/ptrace.h:473 [inline]
+ syscall_exit_work kernel/entry/common.c:251 [inline]
+ syscall_exit_to_user_mode_prepare kernel/entry/common.c:278 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:283 [inline]
+ syscall_exit_to_user_mode+0x15c/0x280 kernel/entry/common.c:296
+ do_syscall_64+0x50/0x110 arch/x86/entry/common.c:88
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
+The root cause is:
+- do_sys_open
+ - f2fs_lookup
+  - __f2fs_find_entry
+   - f2fs_i_depth_write
+    - f2fs_mark_inode_dirty_sync
+     - f2fs_dirty_inode
+      - set_inode_flag(inode, FI_DIRTY_INODE)
+
+- umount
+ - kill_f2fs_super
+  - kill_block_super
+   - generic_shutdown_super
+    - sync_filesystem
+    : sb is readonly, skip sync_filesystem()
+    - evict_inodes
+     - iput
+      - f2fs_evict_inode
+       - f2fs_bug_on(sbi, is_inode_flag_set(inode, FI_DIRTY_INODE))
+       : trigger kernel panic
+
+When we try to repair i_current_depth in readonly filesystem, let's
+skip dirty inode to avoid panic in later f2fs_evict_inode().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+31e4659a3fe953aec2f4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000e890bc0609a55cff@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -297,7 +297,7 @@ qla2x00_process_els(struct bsg_job *bsg_
- 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
- 		    bsg_job->request_payload.sg_cnt,
- 		    bsg_job->reply_payload.sg_cnt);
--		rval = -EPERM;
-+		rval = -ENOBUFS;
- 		goto done;
- 	}
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -23,6 +23,9 @@ void f2fs_mark_inode_dirty_sync(struct i
+ 	if (is_inode_flag_set(inode, FI_NEW_INODE))
+ 		return;
+ 
++	if (f2fs_readonly(F2FS_I_SB(inode)->sb))
++		return;
++
+ 	if (f2fs_inode_dirtied(inode, sync))
+ 		return;
  
 
 
