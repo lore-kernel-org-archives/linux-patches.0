@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D131A0733;
-	Thu, 15 Aug 2024 13:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D436C19E7FA;
+	Thu, 15 Aug 2024 13:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729981; cv=none; b=VTLfcj7GF4j3dk+BNZWLfsb0RKrCxBvTCqR1aPn7+bKs4BCYqlgJTKXeIV4kQwy7Ej+kxD0noT2bFIiTQufqOc8y2Y6LRABCBzkBDfMqZx5EHvCg0nwIUFq3Dq/6PRd7lsFbkM50Z24PXZ668Se23oAj86B0qRAjQDp7mKKX0BE=
+	t=1723729984; cv=none; b=EqXA/4NKDDedQylvm5wiy6XWu9ygFFr0jKtgr527dAlL76mUzqXiZpdT5SSS9Nz9x8+zNZfgzdKcCeTzIT6dR5ARZP7Nn8+DgkpCnvYsg90veeMHwHVE3Qy5a88HWK5oSPXJsXrMYrmNwlgzCWAsULkrCVEc0pa7Yp0A0ACeW9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729981; c=relaxed/simple;
-	bh=vKexqOPRBakwZYGllTaJEtMFpRmF0qqmEEjgesx2kqI=;
+	s=arc-20240116; t=1723729984; c=relaxed/simple;
+	bh=x8yrq+iehWkNChQZ05YWtgnguJUezq8Kd8IBa5E2OO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFP8Tu9286FtYM5zBWXPr5ne/1HutIIEfM9sFjZ6D+RWGIR+BuaoK9/m7yCNCczFJU/HKtsdYojHB2yu5sttmCSAiSSTy+rwCxzoBGaPumnwFXFGAzpFSSj46L/3WjzWtMv3NeQoJpEiSxPy6MBXOQBz2zegT4aZeUeH0WssWwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmZHaY54; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UfXw+WuanuwqgAEzqVH87wS2AQo6gfI8Pb6mZpn6YF1u2yVc//Pods2Zal9ns39C+1jX+l9MaLdr70k0A/nyFx9BqvCYar3UuiFocOcqCM3m4gPJY9htgjMEj4tP1f3JZGvAQ1OrmRSN3+lVB7RHVUB36+vbZsP0hUXYuY4wr6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0PjQfW5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmZHaY54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D51C32786;
-	Thu, 15 Aug 2024 13:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0PjQfW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45784C32786;
+	Thu, 15 Aug 2024 13:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729981;
-	bh=vKexqOPRBakwZYGllTaJEtMFpRmF0qqmEEjgesx2kqI=;
+	s=korg; t=1723729984;
+	bh=x8yrq+iehWkNChQZ05YWtgnguJUezq8Kd8IBa5E2OO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmZHaY54atbxIH9zsnbdYkDhk7ix2c/2kwxWEkipeu0iaEaVsBSPjCE9RQ3GYocay
-	 8G4Wq9O3c7L3mdvWLFbpzedZQHyiwrTpvuhnAGkOTh50mcAtO6CB6gWiFaK+l5iVMS
-	 Wqw84/A+8arjEsZyozUGcMoAJlZ4rAVO+rwK+mKk=
+	b=M0PjQfW5m8iBCbRbfRxDMg9YYJ9DMNKfzH3idpFWFOxFkFJJaLBZNrpihejtgTC6D
+	 WT6APUS/cih/ccfC5PDIqTnB07rdSlFhpHr6WAGqXOb8vmlZrpDBcIE97BA8yzKFB5
+	 3pjLHv8nN5Xo881W+NuQkJYTjQ5D7FJoX6PA8bOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 236/484] drm/amdgpu/sdma5.2: Update wptr registers as well as doorbell
-Date: Thu, 15 Aug 2024 15:21:34 +0200
-Message-ID: <20240815131950.521416419@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 5.15 237/484] drm/i915/dp: Reset intel_dp->link_trained before retraining the link
+Date: Thu, 15 Aug 2024 15:21:35 +0200
+Message-ID: <20240815131950.559258151@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -44,62 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit a03ebf116303e5d13ba9a2b65726b106cb1e96f6 upstream.
+commit d13e2a6e95e6b87f571c837c71a3d05691def9bb upstream.
 
-We seem to have a case where SDMA will sometimes miss a doorbell
-if GFX is entering the powergating state when the doorbell comes in.
-To workaround this, we can update the wptr via MMIO, however,
-this is only safe because we disallow gfxoff in begin_ring() for
-SDMA 5.2 and then allow it again in end_ring().
+Regularly retraining a link during an atomic commit happens with the
+given pipe/link already disabled and hence intel_dp->link_trained being
+false. Ensure this also for retraining a DP SST link via direct calls to
+the link training functions (vs. an actual commit as for DP MST). So far
+nothing depended on this, however the next patch will depend on
+link_trained==false for changing the LTTPR mode to non-transparent.
 
-Enable this workaround while we are root causing the issue with
-the HW team.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/3440
-Tested-by: Friedrich Vock <friedrich.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-(cherry picked from commit f2ac52634963fc38e4935e11077b6f7854e5d700)
+Cc: <stable@vger.kernel.org> # v5.15+
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240708190029.271247-2-imre.deak@intel.com
+(cherry picked from commit a4d5ce61765c08ab364aa4b327f6739b646e6cfa)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-@@ -298,6 +298,14 @@ static void sdma_v5_2_ring_set_wptr(stru
- 		DRM_DEBUG("calling WDOORBELL64(0x%08x, 0x%016llx)\n",
- 				ring->doorbell_index, ring->wptr << 2);
- 		WDOORBELL64(ring->doorbell_index, ring->wptr << 2);
-+		/* SDMA seems to miss doorbells sometimes when powergating kicks in.
-+		 * Updating the wptr directly will wake it. This is only safe because
-+		 * we disallow gfxoff in begin_use() and then allow it again in end_use().
-+		 */
-+		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR),
-+		       lower_32_bits(ring->wptr << 2));
-+		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR_HI),
-+		       upper_32_bits(ring->wptr << 2));
- 	} else {
- 		DRM_DEBUG("Not using doorbell -- "
- 				"mmSDMA%i_GFX_RB_WPTR == 0x%08x "
-@@ -1675,6 +1683,10 @@ static void sdma_v5_2_ring_begin_use(str
- 	 * but it shouldn't hurt for other parts since
- 	 * this GFXOFF will be disallowed anyway when SDMA is
- 	 * active, this just makes it explicit.
-+	 * sdma_v5_2_ring_set_wptr() takes advantage of this
-+	 * to update the wptr because sometimes SDMA seems to miss
-+	 * doorbells when entering PG.  If you remove this, update
-+	 * sdma_v5_2_ring_set_wptr() as well!
- 	 */
- 	amdgpu_gfx_off_ctrl(adev, false);
- }
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -3627,6 +3627,8 @@ int intel_dp_retrain_link(struct intel_e
+ 		    !intel_dp_mst_is_master_trans(crtc_state))
+ 			continue;
+ 
++		intel_dp->link_trained = false;
++
+ 		intel_dp_check_frl_training(intel_dp);
+ 		intel_dp_pcon_dsc_configure(intel_dp, crtc_state);
+ 		intel_dp_start_link_train(intel_dp, crtc_state);
 
 
