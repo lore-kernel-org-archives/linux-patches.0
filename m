@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29969176ADE;
-	Thu, 15 Aug 2024 13:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DB31A00D2;
+	Thu, 15 Aug 2024 13:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729523; cv=none; b=BK+9vTxRmxqV0HGhMpSkoSHCJ33C0b2hjliLgGvMbTNSNBGKzRz8Zv1/nK2KIqGsCqyPpMg3bMPqA2/voTQfd5A2vTS0HwvWgOgw44s160BNjylWWXlV8Ptyn4WlmFOqRCOQS7kUrKU+1bXt6AZyceL7pz4OL3CGDqLr/DsMNNs=
+	t=1723729526; cv=none; b=DEXxky9sQCv5ltVb07rOCMnqhDERoGDTqwF1qOKEw75aQiIBmfwZkfbSTfDmxpSHXbHN685kar0F/CIqtiHAJw7XIke/gjskjVDXZpPRX+naOEgPVCCRYqQYJoa/xkLvmGONXmLvruAc1Do0Fqjv1/kdEu+rUOTJws05Wr5IdI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729523; c=relaxed/simple;
-	bh=i2qjuT4jMrJk4ga+dHJNFhKW5eFD/WqLvNBDC2RVV9g=;
+	s=arc-20240116; t=1723729526; c=relaxed/simple;
+	bh=iIRd+uNiOFLxnuHrrYfeeG3YB4B62uNF8rzsqrR+mbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7R0P8nrCuxfPOVjEMn3Exzu5NmOXx6eVuiox15VV04HKNWoyJdwRx96vJE3oHAqcByG4VDLq7qQvLkAvkIdTvVFOHIxwQtzCch46CSA82JSb2D78BFqIzfxSWCj6T4/f4X96uonQ0hD9cvBhsJ9xHvwIg95fMNQ8JYJp+p13SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fGLaRey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3bJrbu8bT3JnBhV7XHVkOrKRj3rG/WauON26kyM1yU0VpDYBliQfO82xDo3/ddlB1UpwKSyrzpCPxRvfuQeqV+cRC1JjZ6yWoXgAjw1wb3JDkbIOrDau69792W4WtKP9CCvpAV2iE0+fjo0ytMkjWSXnjAZ+Zz4PDCbgmaqWOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNDRsgiJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fGLaRey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1464C32786;
-	Thu, 15 Aug 2024 13:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNDRsgiJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B08C32786;
+	Thu, 15 Aug 2024 13:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729523;
-	bh=i2qjuT4jMrJk4ga+dHJNFhKW5eFD/WqLvNBDC2RVV9g=;
+	s=korg; t=1723729526;
+	bh=iIRd+uNiOFLxnuHrrYfeeG3YB4B62uNF8rzsqrR+mbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fGLaReyygrk4NgNpkhq7fvbd9N3CYEmgHs7LdoL19ivqp0VH15gAPxBJQqYkKdCD
-	 DRh59mhLm5LQDRpj3L9QKxP+SPMmJbyV9NMNowanUnpobwADsNN59MLPzmTqPP9Yyh
-	 rOX68M4Akr/6qCOzQh/vBPFhNLFNDoBfkAZOALQo=
+	b=cNDRsgiJQyAav8lgm9YMtfiiroO8WG/6Ko8VwqYxii+x4dj9rozC8L6CXJ0D+5hSD
+	 +gCcrV3NcO5EZAjI8KJsZYtVVLQ2WthLBllW/HOOFBya1yvkpKHWOPJmZi7RK7937X
+	 t8AzAUUn9fLL9hQNWx13M9wiqB8dN2+a1377Pj+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Chiara Meiohas <cmeiohas@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/484] media: renesas: vsp1: Fix _irqsave and _irq mix
-Date: Thu, 15 Aug 2024 15:19:15 +0200
-Message-ID: <20240815131945.039185882@linuxfoundation.org>
+Subject: [PATCH 5.15 124/484] RDMA/mlx5: Set mkeys for dmabuf at PAGE_SIZE
+Date: Thu, 15 Aug 2024 15:19:42 +0200
+Message-ID: <20240815131946.084351074@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,115 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Chiara Meiohas <cmeiohas@nvidia.com>
 
-[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
+[ Upstream commit a4e540119be565f47c305f295ed43f8e0bc3f5c3 ]
 
-The histogram support mixes _irqsave and _irq, causing the following
-smatch warning:
+Set the mkey for dmabuf at PAGE_SIZE to support any SGL
+after a move operation.
 
-     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
-     warn: mixing irqsave and irq
+ib_umem_find_best_pgsz returns 0 on error, so it is
+incorrect to check the returned page_size against PAGE_SIZE
 
-The histo_stop_streaming() calls spin_lock_irqsave() followed by
-wait_event_lock_irq(). The former hints that interrupts may be disabled
-by the caller, while the latter reenables interrupts unconditionally.
-This doesn't cause any real bug, as the function is always called with
-interrupts enabled, but the pattern is still incorrect.
-
-Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
-in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
-spin_lock() as appropriate elsewhere.
-
-Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Fixes: 90da7dc8206a ("RDMA/mlx5: Support dma-buf based userspace memory region")
+Signed-off-by: Chiara Meiohas <cmeiohas@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://lore.kernel.org/r/1e2289b9133e89f273a4e68d459057d032cbc2ce.1718301631.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/vsp1/vsp1_histo.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h | 13 +++++++++++++
+ drivers/infiniband/hw/mlx5/odp.c     |  6 ++----
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/vsp1/vsp1_histo.c b/drivers/media/platform/vsp1/vsp1_histo.c
-index 5e5013d2cd2ad..897dfe99323af 100644
---- a/drivers/media/platform/vsp1/vsp1_histo.c
-+++ b/drivers/media/platform/vsp1/vsp1_histo.c
-@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
- vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- {
- 	struct vsp1_histogram_buffer *buf = NULL;
--	unsigned long flags;
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index bf20a388eabe1..08c59c5a1e108 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -109,6 +109,19 @@ unsigned long __mlx5_umem_find_best_quantized_pgoff(
+ 		__mlx5_bit_sz(typ, page_offset_fld), 0, scale,                 \
+ 		page_offset_quantized)
  
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
++static inline unsigned long
++mlx5_umem_dmabuf_find_best_pgsz(struct ib_umem_dmabuf *umem_dmabuf)
++{
++	/*
++	 * mkeys used for dmabuf are fixed at PAGE_SIZE because we must be able
++	 * to hold any sgl after a move operation. Ideally the mkc page size
++	 * could be changed at runtime to be optimal, but right now the driver
++	 * cannot do that.
++	 */
++	return ib_umem_find_best_pgsz(&umem_dmabuf->umem, PAGE_SIZE,
++				      umem_dmabuf->umem.iova);
++}
++
+ enum {
+ 	MLX5_IB_MMAP_OFFSET_START = 9,
+ 	MLX5_IB_MMAP_OFFSET_END = 255,
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index fcf6447b4a4e0..66e53e895d341 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -704,10 +704,8 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 		return err;
+ 	}
  
- 	if (list_empty(&histo->irqqueue))
- 		goto done;
-@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- 	histo->readout = true;
- 
- done:
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- 	return buf;
- }
- 
-@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 				    size_t size)
- {
- 	struct vsp1_pipeline *pipe = histo->entity.pipe;
--	unsigned long flags;
- 
- 	/*
- 	 * The pipeline pointer is guaranteed to be valid as this function is
-@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
- 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
- 	histo->readout = false;
- 	wake_up(&histo->wait_queue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- }
- 
- /* -----------------------------------------------------------------------------
-@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
- 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
- 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 	list_add_tail(&buf->queue, &histo->irqqueue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
-@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- {
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
- 	struct vsp1_histogram_buffer *buffer;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 
- 	/* Remove all buffers from the IRQ queue. */
- 	list_for_each_entry(buffer, &histo->irqqueue, queue)
-@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- 	/* Wait for the buffer being read out (if any) to complete. */
- 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
- 
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static const struct vb2_ops histo_video_queue_qops = {
+-	page_size = mlx5_umem_find_best_pgsz(&umem_dmabuf->umem, mkc,
+-					     log_page_size, 0,
+-					     umem_dmabuf->umem.iova);
+-	if (unlikely(page_size < PAGE_SIZE)) {
++	page_size = mlx5_umem_dmabuf_find_best_pgsz(umem_dmabuf);
++	if (!page_size) {
+ 		ib_umem_dmabuf_unmap_pages(umem_dmabuf);
+ 		err = -EINVAL;
+ 	} else {
 -- 
 2.43.0
 
