@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4A71AC8BB;
-	Thu, 15 Aug 2024 14:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1EF1AC8BB;
+	Thu, 15 Aug 2024 14:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730458; cv=none; b=kXZ7FtAz5bRtVHWaSVcLivRMuVHqnLTGCKtvez4IFc6Znsx2Q7MB/pCLcGApxMpoPVSziEPuSmrpAdGGJy04H3Yjho0AqLV8xUNI2i0OJXweAUb1HP4QmHq/RVNSCtKjuiRQyLWiVKoN//8g4F7RSxWktW34KDTOdkQTBxsR2zk=
+	t=1723730461; cv=none; b=QmIeXSu3+3wr5vxo8x14Chd+HLAa0klyl1wt2FjFmjm9MSCBdf63+ZrAUwhUj+mN2mgtaUi8XhJ+e+xpOpXMOGCyuK9faD4PGo1xEi9PgaUeIFnc6aY9Hrh2v5occZRJ9A6UTeiHNGJmB1TRmos8j6PMWxuOT1z4xwAjOSXr3IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730458; c=relaxed/simple;
-	bh=YAc/h1mCbm3ffBIhuyRtW0NrOsk12evT2d2BD1Ksr/c=;
+	s=arc-20240116; t=1723730461; c=relaxed/simple;
+	bh=WpYXaOFN/HNzaG3nSRZM29on0Yc+YFFh/HfSpEp46+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etHUXus7ljpcqPU+jiaFtlaehnU+YYgCuodrrLqe/Lg1krG1AGaPf/JANRnDLVoCiomr2OSpj/vkZGB40Cem7cpB9r592e3o3NPnyVYczIqcn6JejXz1vYZYD+9pIU/0+Tyzf9nDsH4WAAgROoDHN+oFLJV9j2v3bib+/evbupg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1wV2ood; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CLw0eE5FPvZrs+JhR7+b/Upkcm/wU4Adb1zeexuTRJvndJqNTA/PkwDWChtS+j67Jwrohy/PtiDXqz9gBN5+gLvZAYdxJqzeJ9bMXfW1RjVOv1wpH6LWeGautzSpwtNh/n3RwnvxNykT9V9u+WJ74zk34g2e8iGHYyKpMcb9wgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcNpI1R3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1wV2ood"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301B7C32786;
-	Thu, 15 Aug 2024 14:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcNpI1R3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F86C32786;
+	Thu, 15 Aug 2024 14:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730458;
-	bh=YAc/h1mCbm3ffBIhuyRtW0NrOsk12evT2d2BD1Ksr/c=;
+	s=korg; t=1723730461;
+	bh=WpYXaOFN/HNzaG3nSRZM29on0Yc+YFFh/HfSpEp46+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1wV2ood8FKkGKs76IHg+NxArEok4RKbC6a/HeBE6E+Gw4GYdzCwHXJq7OOCnj90U
-	 QyEAdi6yGOMiQha4tT0GEZzA+2FGTW1w4+e85wZjicemayy4vIh98FdAhnFtZggwC8
-	 +vC/OYfVMw5Zv2C45Xclh3v7NEBVRHElQiZICcvA=
+	b=TcNpI1R3n4nXrlRfCrgLAEi3vWtaGAdfybIqe3mPu9e2eJw7xedjnc3i2dOmYaz3f
+	 O9PFZltmP8ZUhE6rLWmIFY3b2qvozWq6IUW/Xk5TTdHRZcWVfUPx62I0tiERrWxND+
+	 tqXRAt2ycviRFh+CbHCBuImzX/14BIqpM3KWLfWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 415/484] ASoC: meson: axg-fifo: fix irq scheduling issue with PREEMPT_RT
-Date: Thu, 15 Aug 2024 15:24:33 +0200
-Message-ID: <20240815131957.483296266@linuxfoundation.org>
+Subject: [PATCH 5.15 398/484] arm64: cputype: Add Cortex-X3 definitions
+Date: Thu, 15 Aug 2024 15:24:16 +0200
+Message-ID: <20240815131956.823469458@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,84 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 5003d0ce5c7da3a02c0aff771f516f99731e7390 ]
+[ Upstream commit be5a6f238700f38b534456608588723fba96c5ab ]
 
-With PREEMPT_RT enabled a spinlock_t becomes a sleeping lock.
+Add cputype definitions for Cortex-X3. These will be used for errata
+detection in subsequent patches.
 
-This is usually not a problem with spinlocks used in IRQ context since
-IRQ handlers get threaded. However, if IRQF_ONESHOT is set, the primary
-handler won't be force-threaded and runs always in hardirq context. This is
-a problem because spinlock_t requires a preemptible context on PREEMPT_RT.
+These values can be found in Table A-263 ("MIDR_EL1 bit descriptions")
+in issue 07 of the Cortex-X3 TRM, which can be found at:
 
-In this particular instance, regmap mmio uses spinlock_t to protect the
-register access and IRQF_ONESHOT is set on the IRQ. In this case, it is
-actually better to do everything in threaded handler and it solves the
-problem with PREEMPT_RT.
+  https://developer.arm.com/documentation/101593/0102/?lang=en
 
-Reported-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Closes: https://lore.kernel.org/linux-amlogic/20240729131652.3012327-1-avkrasnov@salutedevices.com
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Fixes: b11d26660dff ("ASoC: meson: axg-fifo: use threaded irq to check periods")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20240807162705.4024136-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-fifo.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
-index 94b169a5493b5..5218e40aeb1bb 100644
---- a/sound/soc/meson/axg-fifo.c
-+++ b/sound/soc/meson/axg-fifo.c
-@@ -207,25 +207,18 @@ static irqreturn_t axg_fifo_pcm_irq_block(int irq, void *dev_id)
- 	status = FIELD_GET(STATUS1_INT_STS, status);
- 	axg_fifo_ack_irq(fifo, status);
- 
--	/* Use the thread to call period elapsed on nonatomic links */
--	if (status & FIFO_INT_COUNT_REPEAT)
--		return IRQ_WAKE_THREAD;
-+	if (status & ~FIFO_INT_COUNT_REPEAT)
-+		dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
-+			status);
- 
--	dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
--		status);
-+	if (status & FIFO_INT_COUNT_REPEAT) {
-+		snd_pcm_period_elapsed(ss);
-+		return IRQ_HANDLED;
-+	}
- 
- 	return IRQ_NONE;
- }
- 
--static irqreturn_t axg_fifo_pcm_irq_block_thread(int irq, void *dev_id)
--{
--	struct snd_pcm_substream *ss = dev_id;
--
--	snd_pcm_period_elapsed(ss);
--
--	return IRQ_HANDLED;
--}
--
- int axg_fifo_pcm_open(struct snd_soc_component *component,
- 		      struct snd_pcm_substream *ss)
- {
-@@ -251,8 +244,9 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
- 	if (ret)
- 		return ret;
- 
--	ret = request_threaded_irq(fifo->irq, axg_fifo_pcm_irq_block,
--				   axg_fifo_pcm_irq_block_thread,
-+	/* Use the threaded irq handler only with non-atomic links */
-+	ret = request_threaded_irq(fifo->irq, NULL,
-+				   axg_fifo_pcm_irq_block,
- 				   IRQF_ONESHOT, dev_name(dev), ss);
- 	if (ret)
- 		return ret;
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 17fb978191d68..e246d7fad17a9 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -85,6 +85,7 @@
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
++#define ARM_CPU_PART_CORTEX_X3		0xD4E
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+@@ -142,6 +143,7 @@
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+ #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
++#define MIDR_CORTEX_X3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X3)
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
 -- 
 2.43.0
 
