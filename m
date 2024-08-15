@@ -1,54 +1,54 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA45171C9
-	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 00:34:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA17828683
+	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 00:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723682073; cv=none; b=eWFndC1JEmDCvJOH4z8t9efP3XmvnuLv57inWc1jTige3+kwz/HZmwyaP3EcCd9DNtatq/nMqQ4eoRZzHpkHAM8+xOm1FV0MOp7n32kE7q9zMcEWrWpKx8C3kiogSjSnBndCUQOQZm3R654DAaeVsOnHWm4d/Er9rmXh/aUL9WM=
+	t=1723682075; cv=none; b=toydHTOWN1LOABADDBr1O84cjU9IvR8QD47WJ3rKptXFZL/4QDjAhxhsJXyGcjEa7VJ9UnhSy4rxVVr0yBsbz81+oMT2IiwkNPgCUPBXmwqsRw9k6mGDLcZ9V/TtO6T58Fn2RxX+5zkSixP9NGCL1Yqsa2EOUXFz/iuvJ2Fh4J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723682073; c=relaxed/simple;
-	bh=zTeIEewkb693isW8NOwvdmeLRQkQjPtBIKI0+HHAg2E=;
+	s=arc-20240116; t=1723682075; c=relaxed/simple;
+	bh=/jcJ+rI0gKZr/IVP6XjS/Ak4IPjJQVitYadHxzTrZ4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpkmktb4vg3HYQI8H1fKEr1otn2iJxHJm6b/8yJqQVML20zy1ng0tS+9t3oKravsT3JFv/qTDqtw5mataOdnLdU7GgGaqXQ426MrgVD4eQDWd2od/KTyKYTLlvdwTKUZlfkV2QZGfm+8F6kGUSSj0RRTCHTRVO4Kp2W8JfSZLXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=KuZGrxFL; arc=none smtp.client-ip=209.85.210.181
+	 MIME-Version; b=cHL1bhVD2f725nWKTllYwvbMx3TB8nh/7Rjm1de+0ju9NomYqaZHlEobTmHxt3I/dT07QRxleciVUTjuzOVymod+pnx/DTyBoQwmYTT8Em8Cn7GH8dtbQrg8lDdWZ+YQ0eiNQGa/kU5Q8kSIEceaYLwyILuwHkK2uz7YGEIVlYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=A69DsFGd; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="KuZGrxFL"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7104f93a20eso341844b3a.1
-        for <patches@lists.linux.dev>; Wed, 14 Aug 2024 17:34:31 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="A69DsFGd"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-201f2b7fe0dso28725ad.1
+        for <patches@lists.linux.dev>; Wed, 14 Aug 2024 17:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1723682071; x=1724286871; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1723682073; x=1724286873; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LTAqmUB3C74WyCJMJxJLb1pif+r1V9bPB5gyO42OGKo=;
-        b=KuZGrxFLnRRZRp6y6069S9ee/4Xk/j8Q/CFQwiIGPltoE28EX8UragvmrJxe+lah1K
-         1F1VJY8zZ0X7W/CIvocGDie0cRysGLFuxpXtbMf4iBuUWe/LO63XJBiJiAS4l0gw3ev1
-         JqIWS0Yl1Q/qMA6dsZztEaOfB5Qlc0iN18H4I=
+        bh=/yiv0xFPMhU7ZUs+XvuB/ZZA+l47REHWpzG575OPKPI=;
+        b=A69DsFGdMednrGF3pFnSkOQHqKt66AlUBP8RpG7Bf8QF5hyrKqyQ7YNxajAtQanD6u
+         pzdHBFTlQY8XVYgbqoMf+t2XOyXiIaWeux9pFU0wAx7DAnegBnP8Tc6hghS5uG6UpovE
+         6ALKrL7x0YMFhbGJazypRXx9/jAOQOiifqeSY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723682071; x=1724286871;
+        d=1e100.net; s=20230601; t=1723682073; x=1724286873;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LTAqmUB3C74WyCJMJxJLb1pif+r1V9bPB5gyO42OGKo=;
-        b=J3TtgS/tDISwHRYt4u6/HTOKrOfQ83lzDEbeOlZJE2DVUw4KDgzl4NRGkbsN8E7LI5
-         fu18rnQ7/Tfd14T4e5M1GndUGesPu6OFj83FdrCgVyj8Iz42IFPTmvOkAJRaNFp5RhF2
-         VR7ORAa07tkHObPdH+CllFQgXEro0O87CR77HlUUEgY6dZLXE+DUG41SsfBJrH8AB+Hi
-         2MFw/v3EXOPilWWe9S8VbKIPajaxLcECJ1QQT0dAJTx56ICC/6+aZy8QBtItF0qwxp6M
-         XpeJRDGfWGV778CopXU2voca3zn4pzp1vwQ728qlrQ8XHuSW0XZvppOCriicX+X58xYs
-         aGsg==
-X-Forwarded-Encrypted: i=1; AJvYcCULzIm2QkGaCK7mHwWmKN3onhHrcWQU5Mp3cW7up/gwZxwyoGY/1PsK+VpUg0zSKFxPQJUm8jY9XCBnULQyMBQEvgoinXb03Q==
-X-Gm-Message-State: AOJu0Yyn+3/rkJnjoAmQKXT6A4A/tFyZJ8xVXaGo2OehujwUGhwY0Qwo
-	P0x/c0V/EqPjOEgU2fkN/Nu6siCVGM1VO8UfR9w+ychqi8G/6YvsOEI3MQASAg==
-X-Google-Smtp-Source: AGHT+IFi1sUOZeFN/sl/EmCy6pJtHVwtGc94+AhjMPhFgSZ7/Ovt9ABuwlS25ptPfHZRf5MNIAy+Kw==
-X-Received: by 2002:a05:6a21:2d0a:b0:1c6:fa3a:c798 with SMTP id adf61e73a8af0-1c8eaee91ecmr5582828637.32.1723682071315;
-        Wed, 14 Aug 2024 17:34:31 -0700 (PDT)
+        bh=/yiv0xFPMhU7ZUs+XvuB/ZZA+l47REHWpzG575OPKPI=;
+        b=Rchc34XVFsTL4Q8DNpj2O3Zgv5bB6MrmwoRpYJOFFDy2eVjGR94G7Vif6pNGj+58Aw
+         Bsnv+vdVgk1NwNhzYgxCuj3dlBxrOCbmrfm2dUWLF+0xHbcO69DjBXs5OPsr0xzNKFkM
+         xMZCWR2p8l+2l1BJz9tqBYzVoVw5Uz/GI6l9cohIi0ur0gl4PQDQiATTij3ZhxdrXPBj
+         MwZwuwA4+zCUlFb6KR1SmDmyCnazw2E2OrWx0HcHEpEwfLNumhaWR9PICU7AFrBrCLpS
+         5KaP0gu60/5R/ZZhuVXAIL8pmoPOJmKhdjrazg0U2laoe3rFFXjjBPOQcTPJX+TN3iJc
+         /s7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVIOk+rabe7/U+nZwFOcThnql3/+Q0DB0PhVKMvrHtDd24w5B74Jo+CkQNe1bLoiVXEso/g/HyimTE39KeWZsZ++KLOLHFo5A==
+X-Gm-Message-State: AOJu0Yxe/TPyFu/Y4rWVB1YwgXdamQBN5/poelfMg90IBkuJuP5MEo2w
+	N9iEBC/55Y9aAFlfX/UO6Gzzfl+wQMRlwKddFKqoSV8rY2is2wLt8ddJCd9Ujg==
+X-Google-Smtp-Source: AGHT+IHJN+4iBjtg5BFHkoM0j1LHWILoEX4QehkqxO/ua5YPwB+wrtI73F9/wcxBEBcJXyMVg84zJg==
+X-Received: by 2002:a17:902:7c92:b0:1fc:6b8b:4918 with SMTP id d9443c01a7336-201d64b09ddmr38089775ad.41.1723682072985;
+        Wed, 14 Aug 2024 17:34:32 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7127af1999fsm151333b3a.169.2024.08.14.17.34.30
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f03a16b2sm1970445ad.268.2024.08.14.17.34.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 17:34:30 -0700 (PDT)
+        Wed, 14 Aug 2024 17:34:32 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -77,9 +77,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Rob Herring <robh+dt@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH v2 05/11] drm/bridge: dp_typec: Add "no-hpd" support
-Date: Wed, 14 Aug 2024 17:34:10 -0700
-Message-ID: <20240815003417.1175506-6-swboyd@chromium.org>
+Subject: [PATCH v2 06/11] drm/bridge: dp_typec: Allow users to hook hpd notify path
+Date: Wed, 14 Aug 2024 17:34:11 -0700
+Message-ID: <20240815003417.1175506-7-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
 In-Reply-To: <20240815003417.1175506-1-swboyd@chromium.org>
 References: <20240815003417.1175506-1-swboyd@chromium.org>
@@ -91,19 +91,16 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some EC firmwares on Trogdor/Strongbad boards don't properly indicate
-the state of the DP HPD level on a type-c port. The EC only indicates
-that DP mode is entered or exited for a type-c port. The HPD state is
-expressed to the DP controller via a pin on the AP that the EC drives
-high or low when the type-c port partner (i.e. monitor) asserts or
-deasserts HPD.
+The previous patch added support for no-hpd to drm_dp_typec_bridge code.
+Allow users of this bridge to hook the HPD notification path of the
+bridge chain so that they can be made aware of the connector status
+changing. This helps HPD-less users of the bridge inject the HPD state
+into their code by using the connector status as a proxy for HPD being
+asserted or deasserted.
 
-TL;DR: These devices don't support HPD signaling from the type-c code
-paths.
-
-Add support for HPD coming from somewhere else in the bridge chain.
-Callers can set the struct drm_dp_typec_bridge_desc::no_hpd member to
-indicate that HPD shouldn't be signaled from this bridge.
+In particular, this will help Trogdor/Strongbad boards that need to read
+the EC's analog mux which steers the DP signal to one or the other USB
+type-c ports to figure out which type-c port has HPD asserted.
 
 Cc: Prashant Malani <pmalani@chromium.org>
 Cc: Benson Leung <bleung@chromium.org>
@@ -113,99 +110,82 @@ Cc: Pin-yen Lin <treapking@chromium.org>
 Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/gpu/drm/bridge/aux-hpd-bridge.c | 12 +++++++++++-
- include/drm/bridge/aux-bridge.h         |  2 ++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/aux-hpd-bridge.c | 19 +++++++++++++++++++
+ include/drm/bridge/aux-bridge.h         |  5 +++++
+ 2 files changed, 24 insertions(+)
 
 diff --git a/drivers/gpu/drm/bridge/aux-hpd-bridge.c b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-index 79652d27db40..a5a434b7d5ec 100644
+index a5a434b7d5ec..32c0171c512c 100644
 --- a/drivers/gpu/drm/bridge/aux-hpd-bridge.c
 +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-@@ -20,6 +20,7 @@ static DEFINE_IDA(drm_aux_hpd_bridge_ida);
- struct drm_aux_hpd_bridge_data {
- 	struct drm_bridge bridge;
- 	struct device *dev;
-+	bool no_hpd;
- };
- 
- enum dp_lane {
-@@ -54,6 +55,7 @@ to_drm_dp_typec_bridge_data(struct drm_bridge *bridge)
+@@ -55,6 +55,9 @@ to_drm_dp_typec_bridge_data(struct drm_bridge *bridge)
  struct drm_dp_typec_bridge_dev {
  	struct auxiliary_device adev;
  	size_t max_lanes;
-+	bool no_hpd;
++	void (*hpd_notify)(struct drm_dp_typec_bridge_dev *dev,
++			   void *data, enum drm_connector_status status);
++	void *hpd_data;
+ 	bool no_hpd;
  };
  
- static inline struct drm_dp_typec_bridge_dev *
-@@ -232,6 +234,7 @@ devm_drm_dp_typec_bridge_alloc(struct device *parent, const struct drm_dp_typec_
- 	adev->dev.release = drm_dp_typec_bridge_release;
+@@ -235,6 +238,8 @@ devm_drm_dp_typec_bridge_alloc(struct device *parent, const struct drm_dp_typec_
  	adev->dev.platform_data = of_node_get(desc->of_node);
  	typec_bridge_dev->max_lanes = desc->num_dp_lanes;
-+	typec_bridge_dev->no_hpd = desc->no_hpd;
+ 	typec_bridge_dev->no_hpd = desc->no_hpd;
++	typec_bridge_dev->hpd_notify = desc->hpd_notify;
++	typec_bridge_dev->hpd_data = desc->hpd_data;
  
  	ret = auxiliary_device_init(adev);
  	if (ret) {
-@@ -278,6 +281,8 @@ void drm_aux_hpd_bridge_notify(struct device *dev, enum drm_connector_status sta
- 
- 	if (!data)
- 		return;
-+	if (data->no_hpd)
-+		return;
- 
- 	drm_bridge_hpd_notify(&data->bridge, status);
+@@ -305,6 +310,19 @@ void drm_dp_typec_bridge_notify(struct drm_dp_typec_bridge_dev *typec_bridge_dev
  }
-@@ -467,6 +472,7 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
- {
- 	struct device *dev = &auxdev->dev;
- 	struct drm_aux_hpd_bridge_data *hpd_data;
+ EXPORT_SYMBOL_GPL(drm_dp_typec_bridge_notify);
+ 
++static void drm_dp_typec_bridge_hpd_notify(struct drm_bridge *bridge,
++					    enum drm_connector_status status)
++{
++	struct drm_dp_typec_bridge_data *data;
 +	struct drm_dp_typec_bridge_dev *typec_bridge_dev;
- 	struct drm_dp_typec_bridge_data *typec_data;
- 	struct drm_bridge *bridge;
- 	u8 dp_lanes[] = { DP_ML0, DP_ML1, DP_ML2, DP_ML3 };
-@@ -477,6 +483,7 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
- 			return -ENOMEM;
- 		bridge = &hpd_data->bridge;
- 		bridge->funcs = &drm_aux_hpd_bridge_funcs;
-+		bridge->ops = DRM_BRIDGE_OP_HPD;
- 	} else if (id->driver_data == DRM_AUX_TYPEC_BRIDGE) {
- 		typec_data = devm_kzalloc(dev, sizeof(*typec_data), GFP_KERNEL);
- 		if (!typec_data)
-@@ -484,6 +491,10 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
- 		hpd_data = &typec_data->hpd_bridge;
- 		bridge = &hpd_data->bridge;
- 		bridge->funcs = &drm_dp_typec_bridge_funcs;
-+		typec_bridge_dev = to_drm_dp_typec_bridge_dev(dev);
-+		if (!typec_bridge_dev->no_hpd)
-+			bridge->ops = DRM_BRIDGE_OP_HPD;
-+		hpd_data->no_hpd = typec_bridge_dev->no_hpd;
- 		memcpy(typec_data->dp_lanes, dp_lanes, sizeof(typec_data->dp_lanes));
- 	} else {
- 		return -ENODEV;
-@@ -491,7 +502,6 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
++
++	data = to_drm_dp_typec_bridge_data(bridge);
++	typec_bridge_dev = to_drm_dp_typec_bridge_dev(data->hpd_bridge.dev);
++
++	if (typec_bridge_dev->hpd_notify)
++		typec_bridge_dev->hpd_notify(typec_bridge_dev, typec_bridge_dev->hpd_data, status);
++}
++
+ static int drm_aux_hpd_bridge_attach(struct drm_bridge *bridge,
+ 				     enum drm_bridge_attach_flags flags)
+ {
+@@ -460,6 +478,7 @@ static const struct drm_bridge_funcs drm_dp_typec_bridge_funcs = {
+ 	.atomic_reset = drm_atomic_helper_bridge_reset,
+ 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+ 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
++	.hpd_notify = drm_dp_typec_bridge_hpd_notify,
+ };
  
- 	hpd_data->dev = dev;
- 	bridge->of_node = dev_get_platdata(dev);
--	bridge->ops = DRM_BRIDGE_OP_HPD;
- 	bridge->type = DRM_MODE_CONNECTOR_DisplayPort;
- 
- 	auxiliary_set_drvdata(auxdev, hpd_data);
+ enum drm_aux_bridge_type {
 diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
-index 258b87c93623..13f5e98b4d31 100644
+index 13f5e98b4d31..3229f200f0df 100644
 --- a/include/drm/bridge/aux-bridge.h
 +++ b/include/drm/bridge/aux-bridge.h
-@@ -28,10 +28,12 @@ struct drm_dp_typec_bridge_dev;
+@@ -28,11 +28,16 @@ struct drm_dp_typec_bridge_dev;
   * struct drm_dp_typec_bridge_desc - drm_dp_typec_bridge descriptor
   * @of_node: device node pointer corresponding to this bridge instance
   * @num_dp_lanes: number of input DP lanes possible (1, 2 or 4)
-+ * @no_hpd: true if this bridge can't signal HPD state with drm_dp_typec_bridge_notify()
++ * @hpd_notify: callback for bridge hot plug detect events
++ * @hpd_data: data passed to @hpd_notify callback
+  * @no_hpd: true if this bridge can't signal HPD state with drm_dp_typec_bridge_notify()
   */
  struct drm_dp_typec_bridge_desc {
  	struct device_node *of_node;
  	size_t num_dp_lanes;
-+	bool no_hpd;
++	void (*hpd_notify)(struct drm_dp_typec_bridge_dev *typec_bridge_dev,
++			   void *data, enum drm_connector_status status);
++	void *hpd_data;
+ 	bool no_hpd;
  };
  
- enum usb_ss_lane {
 -- 
 https://chromeos.dev
 
