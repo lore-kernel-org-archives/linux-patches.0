@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339291714A1;
-	Thu, 15 Aug 2024 13:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF04819F499;
+	Thu, 15 Aug 2024 13:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729769; cv=none; b=DfFUE7dUD74pNFsWaMG3kx4rmE2Il/T/L056YNXbFJdJfgLZPQcrU5DE7HRo7QLdR4q1PNfn3Mqmbese43aNgXpA+Qdrn7ri8Ax6B3HJmvsv++ieizNLu7pFjkSawkPn4GTj8w5cDTipIWAFOIV04gLyV60PKlZYHCEg4L2kg1Y=
+	t=1723729772; cv=none; b=pzitlHRjacUzJbxZu6fVwz3tJfzv+LPnPT3Z9FIZVkFqtcaw6sx35HmE0RhYJrPI4iuGdSUPx4Wc+4jOeCKVg3a/kllCE7W4XHxXqB82EctxKSj0xPExbJxfJqo+4Z2jWG9w0e8/U1s/XbFGpP6lU3wIu5mdr6Aww+7ylK+cnkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729769; c=relaxed/simple;
-	bh=A0L1BmXOVnZ8BjlR1Es5PhMGhfNxDg/lsc0/PcpoLxA=;
+	s=arc-20240116; t=1723729772; c=relaxed/simple;
+	bh=gDNhebjAcY63RItyjTDhStBq1wLldF4lrFeciyS2EQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Udz73LW4mn4kC8bYgjYTc3CUReM8txbzqmDsuWMYouGoG5YzWeGb4/cTnIYZDDHS+eO+h+B5Ld6Om3tpAXqDJzjmj3+l+ttSkC9EzA5XFdlXMcrBRelom8y/Pki0/17qgqA7F8DTPg7S1b+c7IH2Rk+NTe2jXLqH2IdaURCNgqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nb460b9O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHZYeh0yx6iQ+qdQeeroXnHdZk0JuY6CaNeYjwQw86+/hHnyQbWLGavD6g0ATb5mmwcUlk+fJ7xG7VcZm16rlCNYACgGZfuy6XZU0mSRxyIGKg62SDUzgWmH6qE6AMRLdxOdfQWgamRVoRpRqOYPS/zqHBqZuXRh85+OJElsUjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTKx6sAz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nb460b9O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B135AC32786;
-	Thu, 15 Aug 2024 13:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTKx6sAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A41C4AF0D;
+	Thu, 15 Aug 2024 13:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729769;
-	bh=A0L1BmXOVnZ8BjlR1Es5PhMGhfNxDg/lsc0/PcpoLxA=;
+	s=korg; t=1723729772;
+	bh=gDNhebjAcY63RItyjTDhStBq1wLldF4lrFeciyS2EQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nb460b9OMAzxYZ9qB7dEgBqWmhpEGCuBvhfkmYIdNoMgQZiTJsMxBtk6WpbUcu3Uz
-	 BBuxkZwGuFMvZRiIDINyZn7Ft0wX+sXrQ2kZvj8mFmRzDVeb1w2JKkotchSHakM9no
-	 GffF2t4YK5wtC2eFgu+mMYQNLpnxdbb1xSeGHG1w=
+	b=WTKx6sAzilwmSvGbpmpCs8XE96Y/UscB+MDHtrgn64ElieBkV491yF+IqM618CFcL
+	 xyR5HUeBnLHWfsHAl14yhvYQrq89iFw8OmCMRY6YMi4TWoSUH63iYuV3fLL2nF8PDQ
+	 ZZTMT//1LgWgP+nUpLZKpukGf0JcOiZnwiPr1EAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 5.15 170/484] dt-bindings: thermal: correct thermal zone node name limit
-Date: Thu, 15 Aug 2024 15:20:28 +0200
-Message-ID: <20240815131947.981949848@linuxfoundation.org>
+	Yu Liao <liaoyu15@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 171/484] tick/broadcast: Make takeover of broadcast hrtimer reliable
+Date: Thu, 15 Aug 2024 15:20:29 +0200
+Message-ID: <20240815131948.019471871@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,41 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Yu Liao <liaoyu15@huawei.com>
 
-commit 97e32381d0fc6c2602a767b0c46e15eb2b75971d upstream.
+commit f7d43dd206e7e18c182f200e67a8db8c209907fa upstream.
 
-Linux kernel uses thermal zone node name during registering thermal
-zones and has a hard-coded limit of 20 characters, including terminating
-NUL byte.  The bindings expect node names to finish with '-thermal'
-which is eight bytes long, thus we have only 11 characters for the reset
-of the node name (thus 10 for the pattern after leading fixed character).
+Running the LTP hotplug stress test on a aarch64 machine results in
+rcu_sched stall warnings when the broadcast hrtimer was owned by the
+un-plugged CPU. The issue is the following:
 
-Reported-by: Rob Herring <robh@kernel.org>
-Closes: https://lore.kernel.org/all/CAL_JsqKogbT_4DPd1n94xqeHaU_J8ve5K09WOyVsRX3jxxUW3w@mail.gmail.com/
-Fixes: 1202a442a31f ("dt-bindings: thermal: Add yaml bindings for thermal zones")
+CPU1 (owns the broadcast hrtimer)	CPU2
+
+				tick_broadcast_enter()
+				  // shutdown local timer device
+				  broadcast_shutdown_local()
+				...
+				tick_broadcast_exit()
+				  clockevents_switch_state(dev, CLOCK_EVT_STATE_ONESHOT)
+				  // timer device is not programmed
+				  cpumask_set_cpu(cpu, tick_broadcast_force_mask)
+
+				initiates offlining of CPU1
+take_cpu_down()
+/*
+ * CPU1 shuts down and does not
+ * send broadcast IPI anymore
+ */
+				takedown_cpu()
+				  hotplug_cpu__broadcast_tick_pull()
+				    // move broadcast hrtimer to this CPU
+				    clockevents_program_event()
+				      bc_set_next()
+					hrtimer_start()
+					/*
+					 * timer device is not programmed
+					 * because only the first expiring
+					 * timer will trigger clockevent
+					 * device reprogramming
+					 */
+
+What happens is that CPU2 exits broadcast mode with force bit set, then the
+local timer device is not reprogrammed and CPU2 expects to receive the
+expired event by the broadcast IPI. But this does not happen because CPU1
+is offlined by CPU2. CPU switches the clockevent device to ONESHOT state,
+but does not reprogram the device.
+
+The subsequent reprogramming of the hrtimer broadcast device does not
+program the clockevent device of CPU2 either because the pending expiry
+time is already in the past and the CPU expects the event to be delivered.
+As a consequence all CPUs which wait for a broadcast event to be delivered
+are stuck forever.
+
+Fix this issue by reprogramming the local timer device if the broadcast
+force bit of the CPU is set so that the broadcast hrtimer is delivered.
+
+[ tglx: Massage comment and change log. Add Fixes tag ]
+
+Fixes: 989dcb645ca7 ("tick: Handle broadcast wakeup of multiple cpus")
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240702145248.47184-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20240711124843.64167-1-liaoyu15@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/thermal/thermal-zones.yaml |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/time/tick-broadcast.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-+++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-@@ -49,7 +49,10 @@ properties:
-       to take when the temperature crosses those thresholds.
+--- a/kernel/time/tick-broadcast.c
++++ b/kernel/time/tick-broadcast.c
+@@ -1137,6 +1137,7 @@ void tick_broadcast_switch_to_oneshot(vo
+ #ifdef CONFIG_HOTPLUG_CPU
+ void hotplug_cpu__broadcast_tick_pull(int deadcpu)
+ {
++	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
+ 	struct clock_event_device *bc;
+ 	unsigned long flags;
  
- patternProperties:
--  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
-+  # Node name is limited in size due to Linux kernel requirements - 19
-+  # characters in total (see THERMAL_NAME_LENGTH, including terminating NUL
-+  # byte):
-+  "^[a-zA-Z][a-zA-Z0-9\\-]{1,10}-thermal$":
-     type: object
-     description:
-       Each thermal zone node contains information about how frequently it
+@@ -1144,6 +1145,28 @@ void hotplug_cpu__broadcast_tick_pull(in
+ 	bc = tick_broadcast_device.evtdev;
+ 
+ 	if (bc && broadcast_needs_cpu(bc, deadcpu)) {
++		/*
++		 * If the broadcast force bit of the current CPU is set,
++		 * then the current CPU has not yet reprogrammed the local
++		 * timer device to avoid a ping-pong race. See
++		 * ___tick_broadcast_oneshot_control().
++		 *
++		 * If the broadcast device is hrtimer based then
++		 * programming the broadcast event below does not have any
++		 * effect because the local clockevent device is not
++		 * running and not programmed because the broadcast event
++		 * is not earlier than the pending event of the local clock
++		 * event device. As a consequence all CPUs waiting for a
++		 * broadcast event are stuck forever.
++		 *
++		 * Detect this condition and reprogram the cpu local timer
++		 * device to avoid the starvation.
++		 */
++		if (tick_check_broadcast_expired()) {
++			cpumask_clear_cpu(smp_processor_id(), tick_broadcast_force_mask);
++			tick_program_event(td->evtdev->next_event, 1);
++		}
++
+ 		/* This moves the broadcast assignment to this CPU: */
+ 		clockevents_program_event(bc, bc->next_event, 1);
+ 	}
 
 
