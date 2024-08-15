@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C986C19F473;
-	Thu, 15 Aug 2024 14:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7BD1A01DA;
+	Thu, 15 Aug 2024 14:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731044; cv=none; b=c5BpZuaQuHocod/toMy33+ctDBQMiZz1kABvtK1EWLRL0lmX8Rck1XdssFa2I3p/kAV3H8irPcwc4Y3zX0MD4+wjzB5kz/m7f5heEKSRm/B/yzotCNVuSlGmenIYjEIMiUgLU5T9vifS4obB5JfYT7dShoKw0SauBShFSuBWxGA=
+	t=1723731048; cv=none; b=qqPCYASMhcoswjZ0njbS5Gt5MIZ5br9OF0ejAFXth4tILR5tIJ3RlkGUnqyTdqbome1g/1jiOtvbb17P12Y3WoAdXtiD9SqAORewcSzK8Mmfk2qMcz1rHGETaDQ1PopoLy+k0FNX5gjPYummWv/O2HxA3SkNGS9B4h3hd2N8yms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731044; c=relaxed/simple;
-	bh=HooDz37JxRCXEHMPAWjBUXfwW0PqCD6kIZ+3yMu64zY=;
+	s=arc-20240116; t=1723731048; c=relaxed/simple;
+	bh=4x0JCUKFtqgfLa2PVd7H5vRc/ZMW4gZ7s4tHo9F4hqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBQjxipaVF0r2Ii6EqchD/qUDIl+mNbpGXPzLyKIv4GbVm3yODbO3nfXqkNAlRRzMU2y3XIr8qi8CFIEVVRdVAKeeyHyNGaVBeKN5hBwHyRHVMt2uzVq67rVXdXgbRvtYAcVIFz3OswVRXbFkub/OszAN9S9hS4gXe88eCWyby4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWVSEwxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y7hGQtYqY4VjorSlLB5J1wpYRrKo0+swn4xR02JNoiAfmL+zUvYJ2Jyu/w+3KSqXu/mYlRoHfP52kJimfl25L5DeWhP3LlaJ/6FsRs9Vq+qVjgas+KH5/uSK9tJUc1+kk1iDPkCuqmJT6QNkBEdIzm/3Z/3jW/emEN7yaEFAkK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNEmRCIf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWVSEwxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505D0C4AF0D;
-	Thu, 15 Aug 2024 14:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNEmRCIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601A5C32786;
+	Thu, 15 Aug 2024 14:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731044;
-	bh=HooDz37JxRCXEHMPAWjBUXfwW0PqCD6kIZ+3yMu64zY=;
+	s=korg; t=1723731047;
+	bh=4x0JCUKFtqgfLa2PVd7H5vRc/ZMW4gZ7s4tHo9F4hqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWVSEwxujz/3odMrKZZxvJ7gRQVJFM8gUwUjL92KpnyISdqpftmAdGrwXBI36NtcF
-	 NVY16J4tPdug/2O1d8+8t5NGQojgcKbBrqL5NQy2vldgJCHeKDlAhBbcFM8swpT0KH
-	 I9BXl4M+PBTtxzDpblP3vDvMlpAFpKlT1gGQoxXg=
+	b=yNEmRCIf/3mf619veDDK4DCJZ3Ghw7b0SqM+BMJEanJQIXkek+kiwQb4Bw+Y+cbjh
+	 e7Sbh9v6jO5W7Zsj6+LWPk9hyqzhmDlPyRas497jwMCg8pG4FvU2myCDPOTR9vZ1W4
+	 ylZLZmqzSm2fN2aUiOHENN91d42siV7JGuhIUA20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+36bb70085ef6edc2ebb9@syzkaller.appspotmail.com,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	syzbot+78d5b129a762182225aa@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 59/67] fs/ntfs3: Do copy_to_user out of run_lock
-Date: Thu, 15 Aug 2024 15:26:13 +0200
-Message-ID: <20240815131840.567308176@linuxfoundation.org>
+Subject: [PATCH 6.6 60/67] ALSA: usb: Fix UBSAN warning in parse_audio_unit()
+Date: Thu, 15 Aug 2024 15:26:14 +0200
+Message-ID: <20240815131840.604840529@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -51,143 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d57431c6f511bf020e474026d9f3123d7bfbea8c ]
+[ Upstream commit 2f38cf730caedaeacdefb7ff35b0a3c1168117f9 ]
 
-In order not to call copy_to_user (from fiemap_fill_next_extent)
-we allocate memory in the kernel, fill it and copy it to user memory
-after up_read(run_lock).
+A malformed USB descriptor may pass the lengthy mixer description with
+a lot of channels, and this may overflow the 32bit integer shift
+size, as caught by syzbot UBSAN test.  Although this won't cause any
+real trouble, it's better to address.
 
-Reported-by: syzbot+36bb70085ef6edc2ebb9@syzkaller.appspotmail.com
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+This patch introduces a sanity check of the number of channels to bail
+out the parsing when too many channels are found.
+
+Reported-by: syzbot+78d5b129a762182225aa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/0000000000000adac5061d3c7355@google.com
+Link: https://patch.msgid.link/20240715123619.26612-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 75 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 72 insertions(+), 3 deletions(-)
+ sound/usb/mixer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 424865dfca74b..45b687aff700b 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -1896,6 +1896,47 @@ enum REPARSE_SIGN ni_parse_reparse(struct ntfs_inode *ni, struct ATTRIB *attr,
- 	return REPARSE_LINK;
- }
- 
-+/*
-+ * fiemap_fill_next_extent_k - a copy of fiemap_fill_next_extent
-+ * but it accepts kernel address for fi_extents_start
-+ */
-+static int fiemap_fill_next_extent_k(struct fiemap_extent_info *fieinfo,
-+				     u64 logical, u64 phys, u64 len, u32 flags)
-+{
-+	struct fiemap_extent extent;
-+	struct fiemap_extent __user *dest = fieinfo->fi_extents_start;
-+
-+	/* only count the extents */
-+	if (fieinfo->fi_extents_max == 0) {
-+		fieinfo->fi_extents_mapped++;
-+		return (flags & FIEMAP_EXTENT_LAST) ? 1 : 0;
-+	}
-+
-+	if (fieinfo->fi_extents_mapped >= fieinfo->fi_extents_max)
-+		return 1;
-+
-+	if (flags & FIEMAP_EXTENT_DELALLOC)
-+		flags |= FIEMAP_EXTENT_UNKNOWN;
-+	if (flags & FIEMAP_EXTENT_DATA_ENCRYPTED)
-+		flags |= FIEMAP_EXTENT_ENCODED;
-+	if (flags & (FIEMAP_EXTENT_DATA_TAIL | FIEMAP_EXTENT_DATA_INLINE))
-+		flags |= FIEMAP_EXTENT_NOT_ALIGNED;
-+
-+	memset(&extent, 0, sizeof(extent));
-+	extent.fe_logical = logical;
-+	extent.fe_physical = phys;
-+	extent.fe_length = len;
-+	extent.fe_flags = flags;
-+
-+	dest += fieinfo->fi_extents_mapped;
-+	memcpy(dest, &extent, sizeof(extent));
-+
-+	fieinfo->fi_extents_mapped++;
-+	if (fieinfo->fi_extents_mapped == fieinfo->fi_extents_max)
-+		return 1;
-+	return (flags & FIEMAP_EXTENT_LAST) ? 1 : 0;
-+}
-+
- /*
-  * ni_fiemap - Helper for file_fiemap().
-  *
-@@ -1906,6 +1947,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 	      __u64 vbo, __u64 len)
- {
- 	int err = 0;
-+	struct fiemap_extent __user *fe_u = fieinfo->fi_extents_start;
-+	struct fiemap_extent *fe_k = NULL;
- 	struct ntfs_sb_info *sbi = ni->mi.sbi;
- 	u8 cluster_bits = sbi->cluster_bits;
- 	struct runs_tree *run;
-@@ -1953,6 +1996,18 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 		goto out;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index d1bdb0b93bda0..8cc2d4937f340 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2021,6 +2021,13 @@ static int parse_audio_feature_unit(struct mixer_build *state, int unitid,
+ 		bmaControls = ftr->bmaControls;
  	}
  
-+	/*
-+	 * To avoid lock problems replace pointer to user memory by pointer to kernel memory.
-+	 */
-+	fe_k = kmalloc_array(fieinfo->fi_extents_max,
-+			     sizeof(struct fiemap_extent),
-+			     GFP_NOFS | __GFP_ZERO);
-+	if (!fe_k) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
-+	fieinfo->fi_extents_start = fe_k;
-+
- 	end = vbo + len;
- 	alloc_size = le64_to_cpu(attr->nres.alloc_size);
- 	if (end > alloc_size)
-@@ -2041,8 +2096,9 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 			if (vbo + dlen >= end)
- 				flags |= FIEMAP_EXTENT_LAST;
- 
--			err = fiemap_fill_next_extent(fieinfo, vbo, lbo, dlen,
--						      flags);
-+			err = fiemap_fill_next_extent_k(fieinfo, vbo, lbo, dlen,
-+							flags);
-+
- 			if (err < 0)
- 				break;
- 			if (err == 1) {
-@@ -2062,7 +2118,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 		if (vbo + bytes >= end)
- 			flags |= FIEMAP_EXTENT_LAST;
- 
--		err = fiemap_fill_next_extent(fieinfo, vbo, lbo, bytes, flags);
-+		err = fiemap_fill_next_extent_k(fieinfo, vbo, lbo, bytes,
-+						flags);
- 		if (err < 0)
- 			break;
- 		if (err == 1) {
-@@ -2075,7 +2132,19 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 
- 	up_read(run_lock);
- 
-+	/*
-+	 * Copy to user memory out of lock
-+	 */
-+	if (copy_to_user(fe_u, fe_k,
-+			 fieinfo->fi_extents_max *
-+				 sizeof(struct fiemap_extent))) {
-+		err = -EFAULT;
++	if (channels > 32) {
++		usb_audio_info(state->chip,
++			       "usbmixer: too many channels (%d) in unit %d\n",
++			       channels, unitid);
++		return -EINVAL;
 +	}
 +
- out:
-+	/* Restore original pointer. */
-+	fieinfo->fi_extents_start = fe_u;
-+	kfree(fe_k);
- 	return err;
- }
- 
+ 	/* parse the source unit */
+ 	err = parse_audio_unit(state, hdr->bSourceID);
+ 	if (err < 0)
 -- 
 2.43.0
 
