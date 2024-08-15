@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58927DA9E;
-	Thu, 15 Aug 2024 13:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DDF7DA9E;
+	Thu, 15 Aug 2024 13:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729554; cv=none; b=ZjuLOwjA4u5xHCzAmYVx76ime0tkY8GUD9XukHNHSGxzSheCRUbhhqHoUpEyq2HTYMclu3VuvcKJkNDrOegGJesrHw66vxRbmMhqI+atYEVkFVouoD4SUh8Mds1GN7rn9gotGeXXTsWHMSnE2oQx1OpwisPIRVN+KqjMW2+DdPk=
+	t=1723729557; cv=none; b=M6v8NQ3Rt/PHsnRiGQAAhJV609z+zAqhBcqHI+kiH394iOYYamvrZhe8Bsb2qNqnTT/5dl2FksyXgOSYmpswAoEMLiZRFs+VM1H/g3+E4GTGq9u9H6jvZyjk3zL8NI3+eWHxrn7zTJx19jOAZxuZk7rvuBJ52MRcRvhWI1cCvOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729554; c=relaxed/simple;
-	bh=kg/x57ZofqX2R6YJUgDjkYoCEIVo/94HVnUO6+mQjbQ=;
+	s=arc-20240116; t=1723729557; c=relaxed/simple;
+	bh=Zd3AwQfzP1Jn4wnwqTZOrnwlAlmiFsdHjXJt4JzhEpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blElbKYnDorM4ap3g1yPEGL96V7b2ksDqBa3SBhOM8UUMBWIJoWj1Ji/bWNDsMlgwfqx0YsdoLoKLv/oJn2+V8XdBec3AsxJdQfv6W1IVJd9oryngkv1wLcTkGy/Ygt1DJM+WIbyJyozT5jD7ezNFqg6F/Q+RRKAV2xZd8L32Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skQGCyO7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UhXwS65qCtElLnMLrPGadyFHALhpiMse0lTbTHUANT4PQMwu1bDG86bSn5MhTkSjsfh/47OoS7jf70B0KLR3Yf2hfTprShNBnuLZwnHVg08c9F74yffDozGY0h89R+7BqGAWeba4ILFFegqgNwxN0WXH9oG+wZG18avIfMfrIis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqtDO9az; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skQGCyO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCC9C4AF0A;
-	Thu, 15 Aug 2024 13:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqtDO9az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5E2C32786;
+	Thu, 15 Aug 2024 13:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729553;
-	bh=kg/x57ZofqX2R6YJUgDjkYoCEIVo/94HVnUO6+mQjbQ=;
+	s=korg; t=1723729556;
+	bh=Zd3AwQfzP1Jn4wnwqTZOrnwlAlmiFsdHjXJt4JzhEpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skQGCyO7N1hkwNZDKct0VSmtIEDBNgnXT9rdPTmVI2gHc/GWVv6aaJDg2EHl9FJoq
-	 UsRNHa0YZ/SitkJyPp9PsYGDEK4SoZ8j6mpr0IDLagptbbYx8XM9+v0/ns5jle68Yh
-	 DoAg75y13S557d8DMcU2GSftAQH1vAIsmRCAKbX4=
+	b=tqtDO9azK8w6SUav3Mzr0sdSRQwf9lF+EDTiWmp5u8VlUrKYBtdCmWe5L701AMoGP
+	 m0oFQ3DuaowuM+iPxEi/Xy0l0062f1wMY6mm+iaSdX2jwI47hhnlr1ph/Wxt/BBzJ2
+	 qZLYUCaP11thJlejfx2NXpIv8ptmDQu0zY8ka0B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/484] drm/etnaviv: fix DMA direction handling for cached RW buffers
-Date: Thu, 15 Aug 2024 15:19:21 +0200
-Message-ID: <20240815131945.275200340@linuxfoundation.org>
+Subject: [PATCH 5.15 094/484] s390/uv: Dont call folio_wait_writeback() without a folio reference
+Date: Thu, 15 Aug 2024 15:19:12 +0200
+Message-ID: <20240815131944.922031925@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,40 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 58979ad6330a70450ed78837be3095107d022ea9 ]
+[ Upstream commit 3f29f6537f54d74e64bac0a390fb2e26da25800d ]
 
-The dma sync operation needs to be done with DMA_BIDIRECTIONAL when
-the BO is prepared for both read and write operations.
+folio_wait_writeback() requires that no spinlocks are held and that
+a folio reference is held, as documented. After we dropped the PTL, the
+folio could get freed concurrently. So grab a temporary reference.
 
-Fixes: a8c21a5451d8 ("drm/etnaviv: add initial etnaviv DRM driver")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Fixes: 214d9bbcd3a6 ("s390/mm: provide memory management functions for protected KVM guests")
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20240508182955.358628-2-david@redhat.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/s390/kernel/uv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index f0b2540e60e46..87da2278398ae 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -353,9 +353,11 @@ static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
- 
- static inline enum dma_data_direction etnaviv_op_to_dma_dir(u32 op)
- {
--	if (op & ETNA_PREP_READ)
-+	op &= ETNA_PREP_READ | ETNA_PREP_WRITE;
+diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
+index b54376c658688..4ec467605d328 100644
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -299,6 +299,13 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 			rc = make_folio_secure(folio, uvcb);
+ 			folio_unlock(folio);
+ 		}
 +
-+	if (op == ETNA_PREP_READ)
- 		return DMA_FROM_DEVICE;
--	else if (op & ETNA_PREP_WRITE)
-+	else if (op == ETNA_PREP_WRITE)
- 		return DMA_TO_DEVICE;
- 	else
- 		return DMA_BIDIRECTIONAL;
++		/*
++		 * Once we drop the PTL, the folio may get unmapped and
++		 * freed immediately. We need a temporary reference.
++		 */
++		if (rc == -EAGAIN)
++			folio_get(folio);
+ 	}
+ unlock:
+ 	pte_unmap_unlock(ptep, ptelock);
+@@ -311,6 +318,7 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 		 * completion, this is just a useless check, but it is safe.
+ 		 */
+ 		folio_wait_writeback(folio);
++		folio_put(folio);
+ 	} else if (rc == -EBUSY) {
+ 		/*
+ 		 * If we have tried a local drain and the folio refcount
 -- 
 2.43.0
 
