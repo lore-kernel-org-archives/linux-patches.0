@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C540C1B29C1;
-	Thu, 15 Aug 2024 14:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A181AED5A;
+	Thu, 15 Aug 2024 14:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731157; cv=none; b=aDV6I99CKMSsXXxEneEcKFtzNA7+wbsN2zfu9Ujs33x1K/ZnI3+gE3mV/OceJZ3wEG34hRb7IiqRSLlIfRU5l4n/bhA6xMfnKUrLbKjl3wO7AFqQYntMkSoGehHrwAntrtPJwx+z/g6AmRnegFxBUWSHl4cPGzJPhqPArzoDDYE=
+	t=1723731161; cv=none; b=sWKBJJe1wxi8q3KAOJ7CZ9kzRuXMZE2xtr++ZFl9MVr1M6374XqKhMo4lxTu8/VOzSn+dlXNkQ9+ntjEL5N9a9Nh2DouTOWctddRlY/4E55muMYtJlEL+QXXTwp01E0gs1rnXPci+iDSn+XKOnTR/zRmikHvWWEuz70zNYYdBGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731157; c=relaxed/simple;
-	bh=oOgy9uWBGcogmGnZJdG/omrM7A+W7xNM1fgon1LKar4=;
+	s=arc-20240116; t=1723731161; c=relaxed/simple;
+	bh=oS4Vy+nfgFd1W4krWlU72fbkfxRZnCe25VEAbNR36LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1qGeeRNxFXAmHd3dmCRQLNc1b6VyXJHvxcEpaVSPMzYP02zrcpgP/BonIgFWHS2E5TCWByyebNISlqGaVIj6MUGuc4uUp15+Yz43gOc5sJmQrwA/nzojP3ge60Ioeon+UY+n2BLHIm7tmgLrGnaTLWS7EfeWSSigrImH6T1mcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsFO8C7l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+f//tKSt60+fYqJTu3ywKAwd0jWlzk4uW5e1hG2W1Y89gW17AjB9isTfZXjtTauLhQALAYmKma42KW6uNE2Vd/tFHJPRAPIf1z124FiwO+GKA3mqqYYS7ukNXRQUdczZf2x3W3sMnXIcxxwMyOmZxgZ5+GLaiDypTDHcIZBM2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUpllnre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsFO8C7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE234C4AF0D;
-	Thu, 15 Aug 2024 14:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUpllnre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA6CC32786;
+	Thu, 15 Aug 2024 14:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731157;
-	bh=oOgy9uWBGcogmGnZJdG/omrM7A+W7xNM1fgon1LKar4=;
+	s=korg; t=1723731160;
+	bh=oS4Vy+nfgFd1W4krWlU72fbkfxRZnCe25VEAbNR36LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsFO8C7lmoT89Jg13TN2nj18AFz6ZfpmV3KMA3cckBRQzEXIYzXvTViaXajx6KsVX
-	 d1OuYAQ1VR+dVuEAHxEtu+TijkrCF9eIKetCr/+mJvk7ym3ULrV0k5+uzZzCW6zZzD
-	 0GSVwNFvMS5ET/f8KheloN6BYqxuCGxEWfXDWLvg=
+	b=PUpllnreAfouSAVzKh2kakysSlLeu45EPSveIJBqbH4anRlRnOSbDn80NcN4Kl/P9
+	 XEr9v5Mw7UIza/jhS1jQFL8DZdXVyrDIM2WBpc+5L1CHbmynAprPr48e8sUmW95YBC
+	 g6JaDW4It2KchXhH5G8LxGMPG6yhS3oZJr9JK2a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 041/259] perf/x86/intel/pt: Fix pt_topa_entry_for_page() address calculation
-Date: Thu, 15 Aug 2024 15:22:54 +0200
-Message-ID: <20240815131904.389865165@linuxfoundation.org>
+Subject: [PATCH 5.4 042/259] perf: Fix perf_aux_size() for greater-than 32-bit size
+Date: Thu, 15 Aug 2024 15:22:55 +0200
+Message-ID: <20240815131904.427407808@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,38 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 3520b251dcae2b4a27b95cd6f745c54fd658bda5 ]
+[ Upstream commit 3df94a5b1078dfe2b0c03f027d018800faf44c82 ]
 
-Currently, perf allocates an array of page pointers which is limited in
-size by MAX_PAGE_ORDER. That in turn limits the maximum Intel PT buffer
-size to 2GiB. Should that limitation be lifted, the Intel PT driver can
-support larger sizes, except for one calculation in
-pt_topa_entry_for_page(), which is limited to 32-bits.
+perf_buffer->aux_nr_pages uses a 32-bit type, so a cast is needed to
+calculate a 64-bit size.
 
-Fix pt_topa_entry_for_page() address calculation by adding a cast.
-
-Fixes: 39152ee51b77 ("perf/x86/intel/pt: Get rid of reverse lookup table for ToPA")
+Fixes: 45bfb2e50471 ("perf: Add AUX area to ring buffer for raw data streams")
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240624201101.60186-4-adrian.hunter@intel.com
+Link: https://lore.kernel.org/r/20240624201101.60186-5-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/pt.c | 2 +-
+ kernel/events/internal.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
-index f4d2322f4c629..10ccc30d84638 100644
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -935,7 +935,7 @@ pt_topa_entry_for_page(struct pt_buffer *buf, unsigned int pg)
- 	 * order allocations, there shouldn't be many of these.
- 	 */
- 	list_for_each_entry(topa, &buf->tables, list) {
--		if (topa->offset + topa->size > pg << PAGE_SHIFT)
-+		if (topa->offset + topa->size > (unsigned long)pg << PAGE_SHIFT)
- 			goto found;
- 	}
+diff --git a/kernel/events/internal.h b/kernel/events/internal.h
+index 6e87b358e0826..30218d7c74e66 100644
+--- a/kernel/events/internal.h
++++ b/kernel/events/internal.h
+@@ -122,7 +122,7 @@ static inline unsigned long perf_data_size(struct ring_buffer *rb)
  
+ static inline unsigned long perf_aux_size(struct ring_buffer *rb)
+ {
+-	return rb->aux_nr_pages << PAGE_SHIFT;
++	return (unsigned long)rb->aux_nr_pages << PAGE_SHIFT;
+ }
+ 
+ #define __DEFINE_OUTPUT_COPY_BODY(advance_buf, memcpy_func, ...)	\
 -- 
 2.43.0
 
