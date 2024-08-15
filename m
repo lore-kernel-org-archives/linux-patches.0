@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4A437703;
-	Thu, 15 Aug 2024 00:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A44A39FD9;
+	Thu, 15 Aug 2024 00:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723683326; cv=none; b=fYcftXjAWES/ppjsl/djdmZIhJu25dgOx77hwvdnIyIug+2AvUJGH0N+JlzzSfFWPFNR8uH7KdW3k0zwjRyslrkHFanSHTiuB3dw94/Zrp1fLy1yjH7LJO38cBzvwxWjSYI2ih2MjX4WvzvTE2dkAikRoCSgZ/nysWl7+CgvfQY=
+	t=1723683327; cv=none; b=ipd6mUVx1uGKKI18FZ3bUFBsjWRN2WRgsoPUXk6caEz+AF1B1FJL/uJjF+rRnrBjlWtRcwzJQx+Pnvt5xDSWmobK/G2Yq48FLGNBgKuUKCpxrPqHUO+/P8o00RuT6enqJ+gjKiKYP3ivBrEiwodCbnD4x3wxjBOyn6kEOCqkIUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723683326; c=relaxed/simple;
-	bh=CUXMU5RNONvX+dWQJlri36R6b12h6vceVMEZgEMo35M=;
+	s=arc-20240116; t=1723683327; c=relaxed/simple;
+	bh=k9KZ3KijKptDTCY/wBpiJfZyU6TBgQcQzNu7hWGM2pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g4QTct9VFBoTZXxv4BmL97dtCRlGmgz/JI8j/5vQgD5ZGCltAY2RY6bi+GPkat7erLDgUXQIx7N0i7hTu9eo8CT5pVEG25xnFq+2qSSdbrYQWzvH+Vz2a34tQMDWh9s0wIOGTZYefGLYnexjLXFefCQJOTKtGBvNwTmjpV801nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KOPo9N/W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mv3jx6XzzTsFa2oOwNcwhpuGr3rsB4AULhJn5fMd2pKh/yvT+rsoHgB22wR2Jr9NODpLebF5jD7SbyuSL9roPm+WdtKaYRqDBKfrrc09jODCLbbWmH1zzW+xhrk6DR8Nn5NkVS7+8MgEHSi6v6HhBtwxxZU1YA3ZaOb86CpJjMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sh03+G1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KOPo9N/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216CFC116B1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sh03+G1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A299BC4AF14;
 	Thu, 15 Aug 2024 00:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723683326;
-	bh=CUXMU5RNONvX+dWQJlri36R6b12h6vceVMEZgEMo35M=;
+	s=k20201202; t=1723683327;
+	bh=k9KZ3KijKptDTCY/wBpiJfZyU6TBgQcQzNu7hWGM2pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOPo9N/WtWzGld6aEUf8WUOcFtCMRPcXCsE0cReM6Q0IvgB5ePo0OO6oflHXg7K3N
-	 UsvvK87/zX/X6s50Auff9KsQzAp2vAlQG2F3MrJNt1Xc218SWfXjP5kcJhasuzGmBn
-	 kzcsyr7kyNWS2DBfChx0jRQoGtHTChAZzlybC/7mayZEq3s9AE0OBRLPUYlv+CxkH0
-	 sD8xyWbjaupVRHaN7ybR3GSDRJiIGCXjuz9TESmwyTIbSCXAGQ0axia7cv8lfJUABc
-	 MkCNloXFQnysttX/JpU9TuLFbTfAHDpdSpTiPSSRgPXlcgAZQ1sK1FhRPu0OCakWP0
-	 o+EhI+S5UHccg==
+	b=Sh03+G1ZdJLdkzBfYcM/Kb6gpOa8YcRBMW6rDPGnh7ATu130PitibwbdS6lMytgMv
+	 gkPNDMxsuvSpjmyAOUjeD7LQFgawGDBu3vsNinfRYI9w4hyhgFSOvgTEQfvJl2AkAU
+	 r1jygfZcY2wquBBqsr/SZfFLiXmMriaPVWxrNTwk5+D0Rw+LEQL8Qa7e9zWWzg8CUx
+	 2alHtHEtyVB8bdyf4KmIgZmig20cxGFwdYtTdWFuARt/awHj6Bz2eFQr2Jk8BnmvKK
+	 HPD5QPt2ubMrODOvvAJDZRG0rbHQ9n52UHhl+3YG6NMVHiWFTvgKfxxpdT8EnbTiXo
+	 zu/TTmJ7kjeCQ==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>
 Cc: linux-kernel@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH 09/12] clk: Prevent unregistered clk_hw from being reinserted into clk tree
-Date: Wed, 14 Aug 2024 17:55:15 -0700
-Message-ID: <20240815005520.1192374-10-sboyd@kernel.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>
+Subject: [PATCH 10/12] clk: Test clk_set_parent() behavior after clk_hw is unregistered
+Date: Wed, 14 Aug 2024 17:55:16 -0700
+Message-ID: <20240815005520.1192374-11-sboyd@kernel.org>
 X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
 In-Reply-To: <20240815005520.1192374-1-sboyd@kernel.org>
 References: <20240815005520.1192374-1-sboyd@kernel.org>
@@ -49,49 +48,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The clk framework removes the clk_core from the clk tree by deleting the
-'child_node' hlist for a clk_hw when it is unregistered in
-clk_unregister(). This removes the clk from the clk tree, but a call to
-clk_set_parent() will allow the clk to be added right back into the clk
-tree, undoing all the work done in clk_unregister() to remove it from
-the tree and orphan all descendants. This results in a double hlist
-delete as well, because clk_reparent() deletes the 'child_node' hlist
-before adding the clk to either the orphan list or the clk tree.
-
-The 'clk_nodrv_ops' have a set_parent clk_op that returns failure, but
-that still won't save us even if we fix the clk_reparent() code to
-operate on an empty list. That's because we'll reparent the clk back to
-the original parent when the clk_op returns an error, effectively
-putting the clk back into the clk tree.
-
-Force the number of parents to be zero in clk_unregister() so that
-clk_set_parent() can't get past the part where it figures out which
-index to use to call the clk_op with.
+The previous commit fixed clk_set_parent() so that it returns failure
+after a clk_hw is unregistered. Add a test for that so that stays true.
 
 Cc: Nuno Sá <nuno.sa@analog.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Fixes: fcb0ee6a3d33 ("clk: Implement clk_unregister")
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/clk/clk.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/clk_test.c | 101 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 101 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index a0c275e156ad..d99d2d4dd411 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -4611,6 +4611,11 @@ void clk_unregister(struct clk *clk)
- 	clk_core_evict_parent_cache(clk->core);
+diff --git a/drivers/clk/clk_test.c b/drivers/clk/clk_test.c
+index 1fea29f93b2a..90bd0e0b93d5 100644
+--- a/drivers/clk/clk_test.c
++++ b/drivers/clk/clk_test.c
+@@ -3117,6 +3117,11 @@ struct clk_unregister_consumer_clk_ctx {
+ 	int phase;
+ 	struct clk_duty duty;
+ 	struct clk *clk;
++	struct {
++		struct clk_dummy_context ctx;
++		struct clk *clk;
++	} parents[2];
++	u8 parent;
+ };
  
- 	hlist_del_init(&clk->core->child_node);
-+	/*
-+	 * Prevent clk from being reinserted into the clk tree via
-+	 * clk_set_parent()
-+	 */
-+	clk->core->num_parents = 0;
+ /* Unregister the clk and mark it as unregistered for the tests. */
+@@ -3315,6 +3320,40 @@ static void clk_unregister_consumer_clk_get_duty_cycle_skips(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, num, clk_get_scaled_duty_cycle(ctx->clk, den));
+ }
  
- 	if (clk->core->prepare_count)
- 		pr_warn("%s: unregistering prepared clock: %s\n",
++/*
++ * Test that clk_set_parent() doesn't call the clk_op after the clk_hw has been
++ * unregistered and returns failure.
++ */
++static void clk_unregister_consumer_clk_set_parent_fails(struct kunit *test)
++{
++	struct clk_unregister_consumer_clk_ctx *ctx = test->priv;
++
++	KUNIT_ASSERT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), ctx->parents[0].clk));
++	clk_unregister_consumer_clk_unregister(test);
++
++	/* Setting current parent is a no-op */
++	KUNIT_EXPECT_EQ(test, 0, clk_set_parent(ctx->clk, ctx->parents[0].clk));
++	/* Setting a new parent should fail */
++	KUNIT_EXPECT_GT(test, 0, clk_set_parent(ctx->clk, ctx->parents[1].clk));
++	/* Parent is unchanged */
++	KUNIT_EXPECT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), ctx->parents[0].clk));
++}
++
++/*
++ * Test that clk_get_parent() doesn't call the clk_op after the clk_hw has been
++ * unregistered and returns original parent.
++ */
++static void clk_unregister_consumer_clk_get_parent_skips(struct kunit *test)
++{
++	struct clk_unregister_consumer_clk_ctx *ctx = test->priv;
++
++	KUNIT_ASSERT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), ctx->parents[0].clk));
++	clk_unregister_consumer_clk_unregister(test);
++
++	/* Parent is unchanged */
++	KUNIT_EXPECT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), ctx->parents[0].clk));
++}
++
+ static struct kunit_case clk_unregister_consumer_clk_test_cases[] = {
+ 	KUNIT_CASE(clk_unregister_consumer_clk_prepare_fails),
+ 	KUNIT_CASE(clk_unregister_consumer_clk_unprepare_skips),
+@@ -3328,6 +3367,8 @@ static struct kunit_case clk_unregister_consumer_clk_test_cases[] = {
+ 	KUNIT_CASE(clk_unregister_consumer_clk_get_phase_skips),
+ 	KUNIT_CASE(clk_unregister_consumer_clk_set_duty_cycle_fails),
+ 	KUNIT_CASE(clk_unregister_consumer_clk_get_duty_cycle_skips),
++	KUNIT_CASE(clk_unregister_consumer_clk_set_parent_fails),
++	KUNIT_CASE(clk_unregister_consumer_clk_get_parent_skips),
+ 	KUNIT_CASE(clk_unregister_consumer_clk_put),
+ 	{}
+ };
+@@ -3418,6 +3459,46 @@ clk_unregister_consumer_clk_op_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	return 0;
+ }
+ 
++static int
++clk_unregister_consumer_clk_op_set_parent(struct clk_hw *hw, u8 index)
++{
++	struct clk_unregister_consumer_clk_ctx *ctx;
++
++	ctx = container_of(hw, struct clk_unregister_consumer_clk_ctx, hw);
++	clk_unregister_consumer_clk_clk_op_called(hw, __func__);
++
++	ctx->parent = index;
++
++	return 0;
++}
++
++static u8 clk_unregister_consumer_clk_op_get_parent(struct clk_hw *hw)
++{
++	struct clk_unregister_consumer_clk_ctx *ctx;
++
++	ctx = container_of(hw, struct clk_unregister_consumer_clk_ctx, hw);
++	clk_unregister_consumer_clk_clk_op_called(hw, __func__);
++
++	return ctx->parent;
++}
++
++static int
++clk_unregister_consumer_clk_op_set_rate_and_parent(struct clk_hw *hw,
++						   unsigned long rate,
++						   unsigned long parent_rate,
++						   u8 index)
++{
++	struct clk_unregister_consumer_clk_ctx *ctx;
++
++	ctx = container_of(hw, struct clk_unregister_consumer_clk_ctx, hw);
++	clk_unregister_consumer_clk_clk_op_called(hw, __func__);
++
++	ctx->parent = index;
++	ctx->rate = rate;
++
++	return 0;
++}
++
+ static unsigned long
+ clk_unregister_consumer_clk_op_recalc_accuracy(struct clk_hw *hw,
+ 						unsigned long parent_accuracy)
+@@ -3490,6 +3571,9 @@ static const struct clk_ops clk_unregister_consumer_clk_clk_ops = {
+ 	.round_rate = clk_unregister_consumer_clk_op_round_rate,
+ 	.determine_rate = clk_unregister_consumer_clk_op_determine_rate,
+ 	.set_rate = clk_unregister_consumer_clk_op_set_rate,
++	.set_parent = clk_unregister_consumer_clk_op_set_parent,
++	.get_parent = clk_unregister_consumer_clk_op_get_parent,
++	.set_rate_and_parent = clk_unregister_consumer_clk_op_set_rate_and_parent,
+ 	.recalc_accuracy = clk_unregister_consumer_clk_op_recalc_accuracy,
+ 	.get_phase = clk_unregister_consumer_clk_op_get_phase,
+ 	.set_phase = clk_unregister_consumer_clk_op_set_phase,
+@@ -3502,14 +3586,31 @@ static int clk_unregister_consumer_clk_init(struct kunit *test)
+ 	struct clk *clk;
+ 	struct clk_init_data init = { };
+ 	struct clk_unregister_consumer_clk_ctx *ctx;
++	struct clk_hw *parent0_hw, *parent1_hw;
+ 
+ 	ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
+ 	test->priv = ctx;
+ 	ctx->test = test;
+ 
++	parent0_hw = &ctx->parents[0].ctx.hw;
++	parent0_hw->init = CLK_HW_INIT_NO_PARENT("parent-clk0",
++						&clk_dummy_rate_ops, 0);
++	KUNIT_ASSERT_EQ(test, 0, clk_hw_register_kunit(test, NULL, parent0_hw));
++	ctx->parents[0].clk = clk_hw_get_clk_kunit(test, parent0_hw, "p0");
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx->parents[0].clk);
++
++	parent1_hw = &ctx->parents[1].ctx.hw;
++	parent1_hw->init = CLK_HW_INIT_NO_PARENT("parent-clk1",
++						&clk_dummy_rate_ops, 0);
++	KUNIT_ASSERT_EQ(test, 0, clk_hw_register_kunit(test, NULL, parent1_hw));
++	ctx->parents[1].clk = clk_hw_get_clk_kunit(test, parent1_hw, "p1");
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx->parents[1].clk);
++
+ 	init.name = "unregister_consumer_clk_test_clk";
+ 	init.ops = &clk_unregister_consumer_clk_clk_ops;
++	init.parent_hws = (const struct clk_hw *[]){ parent0_hw, parent1_hw };
++	init.num_parents = ARRAY_SIZE(ctx->parents);
+ 	ctx->hw.init = &init;
+ 
+ 	ctx->rate = 42;
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
