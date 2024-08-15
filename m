@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B651A00CF;
-	Thu, 15 Aug 2024 14:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C494E1A00CF;
+	Thu, 15 Aug 2024 14:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730674; cv=none; b=W4Vt5lvhg9xwmoLQGTE08p1yHMgBOxwqS8aa51QjwYyRemLIz1JXolDv+avtvloK1wOJFfIXGI/6gqjUrihKb7YSbxtZkB2JE0DWU/DFUqB63MywddJZOeg1BEFb5UuCbrqnlw7447TOf+Gy9OSUaRwqi9mJQhrq6JD6QXArpWk=
+	t=1723730677; cv=none; b=sUurpIuCy8fl0pIPv1tD7Ko+OrbOQGeIT9d3mIj3GgCqrYnBRzNfc2zs7OJTWrznI+aZ+n3EVaOLZtfyLzZiBdoGwwj+gdRApO3j0ySbwZsr+OgSvb3yINGvtoR5V6a9FHxxAsM1Iscm+cvM+zXPdp+emXRgdJS5DCKz1NMg+RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730674; c=relaxed/simple;
-	bh=YMyzEVdxAKPqqOPFMtvtEkZP/+/fKBFJqiKCG3IKnCA=;
+	s=arc-20240116; t=1723730677; c=relaxed/simple;
+	bh=jgTLgYSgSKxUsYpJYwEpkpnclye5UzwvtyeIyP0RG9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSgaaECtZFocyn8ANIRubUVvGc/DHCGezN6iXpAVcYlWX4ZneqP4rTSk+qYztKVsA3qXsv/GsltSYu3mkYPgA2u4dGsLhfpVV1xCcnHZpQ75aCwzfJCu5tyAP11vMCLyEU/CKwPr7r6D1TvDWbn+QQfuRZbsfZnvZokLkAhUgg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cIC9TVH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JaDAEf/UgerF+8zDTmNrXxOBaJZSfpviXZM1FovsP7FWvILKbzChvIbeU6VRfsabRFourhLigsGvelPtSb7w39ZmCl9ZmnI/0/ZOS4XlPOsOxBp52gbY/SErqiOYqAutDGUxgQHnTMJPoiFvHMS8QUV4C4XV4AbrA4kBvOtd304=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cda2o6cC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cIC9TVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B39DC32786;
-	Thu, 15 Aug 2024 14:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cda2o6cC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7BFC32786;
+	Thu, 15 Aug 2024 14:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730673;
-	bh=YMyzEVdxAKPqqOPFMtvtEkZP/+/fKBFJqiKCG3IKnCA=;
+	s=korg; t=1723730677;
+	bh=jgTLgYSgSKxUsYpJYwEpkpnclye5UzwvtyeIyP0RG9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cIC9TVHwbxYsiPOIi5wOnZPN2tQQgo5zrYohdlCnB3imRedbKDcL1M8zDU/LBr2V
-	 NiaJL269O3h3eRmHxMPGLZ8U3lcqN516jTLNCNKnuL77srH8knVCLM2HyFVv15sEUa
-	 IhbQvArFWyAQn9fDBZh/OCKWVMw1oNMpD9OG3LAA=
+	b=cda2o6cCKlhNSeKgwUKSwWuZcvJ6Ow69P7+RY7wSCahL89u8Ce3a626ASlhylPSvr
+	 MLblK3uOfhayK9rMRkYTgW6WaqO0BdlxBJ+FJAYon0F+yK2sfY18WS/23QI04Y+6sb
+	 5dGL+EN/ehD8VmdsbxNg/EDwBFWeE/aK8lpZq7xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan ORear <sorear@fastmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Greg Ungerer <gerg@linux-m68k.org>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 482/484] binfmt_flat: Fix corruption when not offsetting data start
-Date: Thu, 15 Aug 2024 15:25:40 +0200
-Message-ID: <20240815132000.101495264@linuxfoundation.org>
+	valis <sec@valis.email>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
+	Lee Jones <lee@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.15 465/484] tls: fix race between tx work scheduling and socket close
+Date: Thu, 15 Aug 2024 15:25:23 +0200
+Message-ID: <20240815131959.438868589@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,60 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 3eb3cd5992f7a0c37edc8d05b4c38c98758d8671 ]
+commit e01e3934a1b2d122919f73bc6ddbe1cdafc4bbdb upstream.
 
-Commit 04d82a6d0881 ("binfmt_flat: allow not offsetting data start")
-introduced a RISC-V specific variant of the FLAT format which does
-not allocate any space for the (obsolete) array of shared library
-pointers. However, it did not disable the code which initializes the
-array, resulting in the corruption of sizeof(long) bytes before the DATA
-segment, generally the end of the TEXT segment.
+Similarly to previous commit, the submitting thread (recvmsg/sendmsg)
+may exit as soon as the async crypto handler calls complete().
+Reorder scheduling the work before calling complete().
+This seems more logical in the first place, as it's
+the inverse order of what the submitting thread will do.
 
-Introduce MAX_SHARED_LIBS_UPDATE which depends on the state of
-CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET to guard the initialization of
-the shared library pointer region so that it will only be initialized
-if space is reserved for it.
-
-Fixes: 04d82a6d0881 ("binfmt_flat: allow not offsetting data start")
-Co-developed-by: Stefan O'Rear <sorear@fastmail.com>
-Signed-off-by: Stefan O'Rear <sorear@fastmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Acked-by: Greg Ungerer <gerg@linux-m68k.org>
-Link: https://lore.kernel.org/r/20240807195119.it.782-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: valis <sec@valis.email>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ Lee: Fixed merge-conflict in Stable branches linux-6.1.y and older ]
+Signed-off-by: Lee Jones <lee@kernel.org>
+[ Harshit: bp to 5.15.y, minor conflict resolutin due to missing commit:
+  8ae187386420 ("tls: Only use data field in crypto completion function")
+  in 5.15.y]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_flat.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/fs/binfmt_flat.c b/fs/binfmt_flat.c
-index 7ca3e0db06ffa..250651cdce0a6 100644
---- a/fs/binfmt_flat.c
-+++ b/fs/binfmt_flat.c
-@@ -76,8 +76,10 @@
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -468,7 +468,6 @@ static void tls_encrypt_done(struct cryp
+ 	struct scatterlist *sge;
+ 	struct sk_msg *msg_en;
+ 	struct tls_rec *rec;
+-	bool ready = false;
  
- #ifdef CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET
- #define DATA_START_OFFSET_WORDS		(0)
-+#define MAX_SHARED_LIBS_UPDATE		(0)
- #else
- #define DATA_START_OFFSET_WORDS		(MAX_SHARED_LIBS)
-+#define MAX_SHARED_LIBS_UPDATE		(MAX_SHARED_LIBS)
- #endif
+ 	if (err == -EINPROGRESS) /* see the comment in tls_decrypt_done() */
+ 		return;
+@@ -502,19 +501,16 @@ static void tls_encrypt_done(struct cryp
+ 		/* If received record is at head of tx_list, schedule tx */
+ 		first_rec = list_first_entry(&ctx->tx_list,
+ 					     struct tls_rec, list);
+-		if (rec == first_rec)
+-			ready = true;
++		if (rec == first_rec) {
++			/* Schedule the transmission */
++			if (!test_and_set_bit(BIT_TX_SCHEDULED,
++					      &ctx->tx_bitmask))
++				schedule_delayed_work(&ctx->tx_work.work, 1);
++		}
+ 	}
  
- struct lib_info {
-@@ -991,7 +993,7 @@ static int load_flat_binary(struct linux_binprm *bprm)
- 		return res;
+ 	if (atomic_dec_and_test(&ctx->encrypt_pending))
+ 		complete(&ctx->async_wait.completion);
+-
+-	if (!ready)
+-		return;
+-
+-	/* Schedule the transmission */
+-	if (!test_and_set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask))
+-		schedule_delayed_work(&ctx->tx_work.work, 1);
+ }
  
- 	/* Update data segment pointers for all libraries */
--	for (i = 0; i < MAX_SHARED_LIBS; i++) {
-+	for (i = 0; i < MAX_SHARED_LIBS_UPDATE; i++) {
- 		if (!libinfo.lib_list[i].loaded)
- 			continue;
- 		for (j = 0; j < MAX_SHARED_LIBS; j++) {
--- 
-2.43.0
-
+ static int tls_encrypt_async_wait(struct tls_sw_context_tx *ctx)
 
 
