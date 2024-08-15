@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4791919F49A;
-	Thu, 15 Aug 2024 14:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36C817C9A9;
+	Thu, 15 Aug 2024 14:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730439; cv=none; b=hfzaCU1M4+GbkOHCO7nDsExXd/F1laeaxjeyF7bXjmT+zmLcVHRtJNc8XeSMn7jUvFfSGW7hkSDeDVjGAVMaP2o0iiEMaVFUe+CX2WpStO3Zq23I9l0MT4NAaQduLgHii2VPCbCgn/Z7rYmhdLLoeH57Iq+GhYOhAUUxXu7z1ro=
+	t=1723730443; cv=none; b=d5Pj+9G2P6+CQBXPilGNzUnSolN4j/rKipaeHQTlxmeBqPg/SN5T0d/KgvU47lzoKhqecGuXn1G2eZBSnXPhL5Uw20UEU7Jc7fW79NoJyxIJAwyfiqiHsC3rqBzEst0oSiVU2AG4WLkNfp71ZViVBz7Lzdi4CA8o/WN3WPRs8AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730439; c=relaxed/simple;
-	bh=4DckLGljM6cplnp+Qb+e2mW1bH8km3HXxGRlqPwD8YE=;
+	s=arc-20240116; t=1723730443; c=relaxed/simple;
+	bh=MzdbLg9dYCOI9L8xeuq+xS+xMgpg9ghHe/6giusxeHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JvbKv1fX17OnwMZ7zfz/ycxQoqvZA/cPX1XSBeiEDJ3Xr7rmgmYXTDjzCkvrB9W9ukPkaz/Z87TdG5mfoBugAWkxcbnOFd+iD2gflqdawpCN/IOpUDviFYQKkN+HNbnRe+wCxEQosYHat/8zMIUnnL23sbAUiuCrepU4DuQVLvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVxQjHB4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=srllQg3OtvK4OdA/be14d2k4n2hKmUOtJolOvzb1Eygzt/Dwmyijs6+stBfikvUIb3qXnppPB3mOW1PNCfeagGe7EGKs6mNrPLOgnOGJyFt/AfBo5ZKVKG6LvyTH8/7fk7zlo7cDaVLjKREfeN4+lbsAuLesHxFC3ekWHSSfrTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHXr9qSd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVxQjHB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F4EC32786;
-	Thu, 15 Aug 2024 14:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHXr9qSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0510C32786;
+	Thu, 15 Aug 2024 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730439;
-	bh=4DckLGljM6cplnp+Qb+e2mW1bH8km3HXxGRlqPwD8YE=;
+	s=korg; t=1723730442;
+	bh=MzdbLg9dYCOI9L8xeuq+xS+xMgpg9ghHe/6giusxeHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVxQjHB462iXgsgKp6SqyUb/pkMU7tOyoudC1IqTM883iCLq8/d58z3m/M2wP/hPW
-	 JTIc3SSro9tDFxB7gF239S3l6dHrareLJRH0xIvSUMB74pUyBPdcgkYYZOm9esdiUl
-	 8h9q8PaMtkgyCGWSoVvF0NJnFjeB8NlO2aGSw04Y=
+	b=KHXr9qSdcrYGh1irQ/IBmg3xaQH7VsfhujYerE0Eq2T0E8nzjccPtM3LY03HI3Hrm
+	 f+d0e+ChhlRELAz79fsOShhQu66N4DfK6/ZAAuei3afxQboyajFU1X+LxyabC2zXsD
+	 d4sNIRCFNrl5XOu5u8BH4IN8kaUuLhRMJ0sH8H1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 409/484] spi: spidev: Add missing spi_device_id for bh2228fv
-Date: Thu, 15 Aug 2024 15:24:27 +0200
-Message-ID: <20240815131957.247622597@linuxfoundation.org>
+Subject: [PATCH 5.15 410/484] i2c: smbus: Send alert notifications to all devices if source not found
+Date: Thu, 15 Aug 2024 15:24:28 +0200
+Message-ID: <20240815131957.287326410@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,40 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e4c4638b6a10427d30e29d22351c375886025f47 ]
+[ Upstream commit f6c29f710c1ff2590109f83be3e212b86c01e0f3 ]
 
-When the of_device_id entry for "rohm,bh2228fv" was added, the
-corresponding spi_device_id was forgotten, causing a warning message
-during boot-up:
+If a SMBus alert is received and the originating device is not found,
+the reason may be that the address reported on the SMBus alert address
+is corrupted, for example because multiple devices asserted alert and
+do not correctly implement SMBus arbitration.
 
-    SPI driver spidev has no spi_device_id for rohm,bh2228fv
+If this happens, call alert handlers on all devices connected to the
+given I2C bus, in the hope that this cleans up the situation.
 
-Fix module autoloading and shut up the warning by adding the missing
-entry.
+This change reliably fixed the problem on a system with multiple devices
+on a single bus. Example log where the device on address 0x18 (ADM1021)
+and on address 0x4c (ADT7461A) both had the alert line asserted:
 
-Fixes: fc28d1c1fe3b3e2f ("spi: spidev: add correct compatible for Rohm BH2228FV")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/cb571d4128f41175f31319cd9febc829417ea167.1722346539.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+lm90 3-0018: temp1 out of range, please check!
+lm90 3-0018: Disabling ALERT#
+lm90 3-0029: Everything OK
+lm90 3-002a: Everything OK
+lm90 3-004c: temp1 out of range, please check!
+lm90 3-004c: temp2 out of range, please check!
+lm90 3-004c: Disabling ALERT#
+
+Fixes: b5527a7766f0 ("i2c: Add SMBus alert support")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[wsa: fixed a typo in the commit message]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/i2c-smbus.c | 38 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 99bdbc040d1ae..0b97e5b97a018 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -682,6 +682,7 @@ static const struct file_operations spidev_fops = {
- static struct class *spidev_class;
+diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
+index dcbc4b29aa729..44582cf29e162 100644
+--- a/drivers/i2c/i2c-smbus.c
++++ b/drivers/i2c/i2c-smbus.c
+@@ -65,6 +65,32 @@ static int smbus_do_alert(struct device *dev, void *addrp)
+ 	return ret;
+ }
  
- static const struct spi_device_id spidev_spi_ids[] = {
-+	{ .name = "bh2228fv" },
- 	{ .name = "dh2228fv" },
- 	{ .name = "ltc2488" },
- 	{ .name = "sx1301" },
++/* Same as above, but call back all drivers with alert handler */
++
++static int smbus_do_alert_force(struct device *dev, void *addrp)
++{
++	struct i2c_client *client = i2c_verify_client(dev);
++	struct alert_data *data = addrp;
++	struct i2c_driver *driver;
++
++	if (!client || (client->flags & I2C_CLIENT_TEN))
++		return 0;
++
++	/*
++	 * Drivers should either disable alerts, or provide at least
++	 * a minimal handler. Lock so the driver won't change.
++	 */
++	device_lock(dev);
++	if (client->dev.driver) {
++		driver = to_i2c_driver(client->dev.driver);
++		if (driver->alert)
++			driver->alert(client, data->type, data->data);
++	}
++	device_unlock(dev);
++
++	return 0;
++}
++
+ /*
+  * The alert IRQ handler needs to hand work off to a task which can issue
+  * SMBus calls, because those sleeping calls can't be made in IRQ context.
+@@ -106,13 +132,19 @@ static irqreturn_t smbus_alert(int irq, void *d)
+ 		/*
+ 		 * If we read the same address more than once, and the alert
+ 		 * was not handled by a driver, it won't do any good to repeat
+-		 * the loop because it will never terminate.
+-		 * Bail out in this case.
++		 * the loop because it will never terminate. Try again, this
++		 * time calling the alert handlers of all devices connected to
++		 * the bus, and abort the loop afterwards. If this helps, we
++		 * are all set. If it doesn't, there is nothing else we can do,
++		 * so we might as well abort the loop.
+ 		 * Note: This assumes that a driver with alert handler handles
+ 		 * the alert properly and clears it if necessary.
+ 		 */
+-		if (data.addr == prev_addr && status != -EBUSY)
++		if (data.addr == prev_addr && status != -EBUSY) {
++			device_for_each_child(&ara->adapter->dev, &data,
++					      smbus_do_alert_force);
+ 			break;
++		}
+ 		prev_addr = data.addr;
+ 	}
+ 
 -- 
 2.43.0
 
