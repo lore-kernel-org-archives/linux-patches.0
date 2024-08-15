@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5013819D89D;
-	Thu, 15 Aug 2024 14:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C3319D89D;
+	Thu, 15 Aug 2024 14:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732978; cv=none; b=GBDwLKQuHL7G6Pr+FxBDvWJqgbKmrLYZXgWHVjLv2hGQ7H2tO1ZxhrH6GWPHfy9PDNatMgDYOUEIiPgtxmwdRT048m9f+tQnSU2cCLvf8Y3V4nZonYvLIpaA9Ywp5osiSgsDaFnbpzTyfvOnUIF/DbeKhUkJt03OvfAMgl6qU+Y=
+	t=1723732981; cv=none; b=RBJC1f+Mnn6t5imgimZEp5cxP1dtA3HVY51QiYGSkTmGdHCE3ayj6h94w+NM8jrdvNkLZtCh0GPYXx2E7lkafWBxEX/SrW/PrwFASUKjNWwUkac9CcFQoN7v4DjkW9ktEANK3hqgDAmM/sPVV1alF3R2gk8K8F3cndmK9qvtf+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732978; c=relaxed/simple;
-	bh=KN1mNFjO9FLxhEmwvziHsx3l/y4ghnMwhO/Dr45u7l8=;
+	s=arc-20240116; t=1723732981; c=relaxed/simple;
+	bh=B+kQoamu4rpbz77SVLLBj7+QoqrJN61betPBpFVxR2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkG/vpDWSF46tQcbZph2FoQt4l4ISFjNIdUHT/F2sBLKiiRaX1SLh01RvuoUU0TzISif4werV7qhXXBxG9iO8qynb+kIOjA1RhnMze2KcM1g+w1d8UB05uU1dqp5k/aCueam/WIyOt+FnhWvWwcC/hbnC44D+vL3v/P0d2cwj7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vi/FH+gU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUsv3I/vAaQVawFbm0kkP/yr8AgbN8QGHPafjxmNohbJ992Z8FeUL1FEN6niKPw/6c+Ws85SUHn2Ioj7DTaU1qe4pxIj4cWc2G3dbYDoB7dMJ8fgqg6hk9F6NbsV6BiWSpHdpF5J58GQNELhpHHe3WkjigOptbkWMBpXzE2BEIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgjuJ7+a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vi/FH+gU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41798C32786;
-	Thu, 15 Aug 2024 14:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgjuJ7+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A54C32786;
+	Thu, 15 Aug 2024 14:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732978;
-	bh=KN1mNFjO9FLxhEmwvziHsx3l/y4ghnMwhO/Dr45u7l8=;
+	s=korg; t=1723732981;
+	bh=B+kQoamu4rpbz77SVLLBj7+QoqrJN61betPBpFVxR2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vi/FH+gU80bRxkvf/HwoPxPThuX+lIEjICoJcsInLQfIPO9gmuxI4FNMBMYOC7U9T
-	 t7y32Mjd8CRwEMOSH8WSQ0STEhA7VUSHLYq8FvumqnXUyGOO1cHcHgdEVJmm2NnYJh
-	 4P/AOVC9sGUw+y13ZFJdFQGLwXtctayJtxZG50Vs=
+	b=cgjuJ7+aawaW9T0t1ojWFK6avYXarHgDTX29qqp8wSGowkIUd0W9+YpB+Od8c5edr
+	 prHur2ZhVgCQIYSR7mhaOTmlfXF6NShgUZHJkxmEpeB7zceQzEAlzqOi5G7FFF/3lL
+	 d47hWg1kDLfuR0IvIk1V4ZCxq3pLaRyEByw2NUvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Shirisha Ganta <shirisha@linux.ibm.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Jinjie Ruan <ruanjinjie@huawei.com>
-Subject: [PATCH 5.10 344/352] powerpc: Avoid nmi_enter/nmi_exit in real mode interrupt.
-Date: Thu, 15 Aug 2024 15:26:50 +0200
-Message-ID: <20240815131932.763970286@linuxfoundation.org>
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Amit Daniel Kachhap <amit.kachhap@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.10 345/352] arm64: cpufeature: Fix the visibility of compat hwcaps
+Date: Thu, 15 Aug 2024 15:26:51 +0200
+Message-ID: <20240815131932.803201181@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,134 +52,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+From: Amit Daniel Kachhap <amit.kachhap@arm.com>
 
-commit 0db880fc865ffb522141ced4bfa66c12ab1fbb70 upstream.
+commit 85f1506337f0c79a4955edfeee86a18628e3735f upstream.
 
-nmi_enter()/nmi_exit() touches per cpu variables which can lead to kernel
-crash when invoked during real mode interrupt handling (e.g. early HMI/MCE
-interrupt handler) if percpu allocation comes from vmalloc area.
+Commit 237405ebef58 ("arm64: cpufeature: Force HWCAP to be based on the
+sysreg visible to user-space") forced the hwcaps to use sanitised
+user-space view of the id registers. However, the ID register structures
+used to select few compat cpufeatures (vfp, crc32, ...) are masked and
+hence such hwcaps do not appear in /proc/cpuinfo anymore for PER_LINUX32
+personality.
 
-Early HMI/MCE handlers are called through DEFINE_INTERRUPT_HANDLER_NMI()
-wrapper which invokes nmi_enter/nmi_exit calls. We don't see any issue when
-percpu allocation is from the embedded first chunk. However with
-CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled there are chances where percpu
-allocation can come from the vmalloc area.
+Add the ID register structures explicitly and set the relevant entry as
+visible. As these ID registers are now of type visible so make them
+available in 64-bit userspace by making necessary changes in register
+emulation logic and documentation.
 
-With kernel command line "percpu_alloc=page" we can force percpu allocation
-to come from vmalloc area and can see kernel crash in machine_check_early:
+While at it, update the comment for structure ftr_generic_32bits[] which
+lists the ID register that use it.
 
-[    1.215714] NIP [c000000000e49eb4] rcu_nmi_enter+0x24/0x110
-[    1.215717] LR [c0000000000461a0] machine_check_early+0xf0/0x2c0
-[    1.215719] --- interrupt: 200
-[    1.215720] [c000000fffd73180] [0000000000000000] 0x0 (unreliable)
-[    1.215722] [c000000fffd731b0] [0000000000000000] 0x0
-[    1.215724] [c000000fffd73210] [c000000000008364] machine_check_early_common+0x134/0x1f8
-
-Fix this by avoiding use of nmi_enter()/nmi_exit() in real mode if percpu
-first chunk is not embedded.
-
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Tested-by: Shirisha Ganta <shirisha@linux.ibm.com>
-Signed-off-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240410043006.81577-1-mahesh@linux.ibm.com
-[ Conflicts in arch/powerpc/include/asm/interrupt.h
-  because machine_check_early() and machine_check_exception()
-  has been refactored. ]
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Fixes: 237405ebef58 ("arm64: cpufeature: Force HWCAP to be based on the sysreg visible to user-space")
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: James Morse <james.morse@arm.com>
+Signed-off-by: Amit Daniel Kachhap <amit.kachhap@arm.com>
+Link: https://lore.kernel.org/r/20221103082232.19189-1-amit.kachhap@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/percpu.h |   10 ++++++++++
- arch/powerpc/kernel/mce.c         |   14 +++++++++++---
- arch/powerpc/kernel/setup_64.c    |    2 ++
- arch/powerpc/kernel/traps.c       |    8 +++++++-
- 4 files changed, 30 insertions(+), 4 deletions(-)
+ Documentation/arm64/cpu-feature-registers.rst |   38 ++++++++++++++++++++++-
+ arch/arm64/kernel/cpufeature.c                |   42 ++++++++++++++++++++------
+ 2 files changed, 70 insertions(+), 10 deletions(-)
 
---- a/arch/powerpc/include/asm/percpu.h
-+++ b/arch/powerpc/include/asm/percpu.h
-@@ -15,6 +15,16 @@
- #endif /* CONFIG_SMP */
- #endif /* __powerpc64__ */
+--- a/Documentation/arm64/cpu-feature-registers.rst
++++ b/Documentation/arm64/cpu-feature-registers.rst
+@@ -92,7 +92,7 @@ operation if the source belongs to the s
  
-+#if defined(CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK) && defined(CONFIG_SMP)
-+#include <linux/jump_label.h>
-+DECLARE_STATIC_KEY_FALSE(__percpu_first_chunk_is_paged);
+ The infrastructure emulates only the following system register space::
+ 
+-	Op0=3, Op1=0, CRn=0, CRm=0,4,5,6,7
++	Op0=3, Op1=0, CRn=0, CRm=0,2,3,4,5,6,7
+ 
+ (See Table C5-6 'System instruction encodings for non-Debug System
+ register accesses' in ARMv8 ARM DDI 0487A.h, for the list of
+@@ -291,6 +291,42 @@ infrastructure:
+      | RPRES                        | [7-4]   |    y    |
+      +------------------------------+---------+---------+
+ 
++  10) MVFR0_EL1 - AArch32 Media and VFP Feature Register 0
 +
-+#define percpu_first_chunk_is_paged	\
-+		(static_key_enabled(&__percpu_first_chunk_is_paged.key))
-+#else
-+#define percpu_first_chunk_is_paged	false
-+#endif /* CONFIG_PPC64 && CONFIG_SMP */
++     +------------------------------+---------+---------+
++     | Name                         |  bits   | visible |
++     +------------------------------+---------+---------+
++     | FPDP                         | [11-8]  |    y    |
++     +------------------------------+---------+---------+
 +
- #include <asm-generic/percpu.h>
++  11) MVFR1_EL1 - AArch32 Media and VFP Feature Register 1
++
++     +------------------------------+---------+---------+
++     | Name                         |  bits   | visible |
++     +------------------------------+---------+---------+
++     | SIMDFMAC                     | [31-28] |    y    |
++     +------------------------------+---------+---------+
++     | SIMDSP                       | [19-16] |    y    |
++     +------------------------------+---------+---------+
++     | SIMDInt                      | [15-12] |    y    |
++     +------------------------------+---------+---------+
++     | SIMDLS                       | [11-8]  |    y    |
++     +------------------------------+---------+---------+
++
++  12) ID_ISAR5_EL1 - AArch32 Instruction Set Attribute Register 5
++
++     +------------------------------+---------+---------+
++     | Name                         |  bits   | visible |
++     +------------------------------+---------+---------+
++     | CRC32                        | [19-16] |    y    |
++     +------------------------------+---------+---------+
++     | SHA2                         | [15-12] |    y    |
++     +------------------------------+---------+---------+
++     | SHA1                         | [11-8]  |    y    |
++     +------------------------------+---------+---------+
++     | AES                          | [7-4]   |    y    |
++     +------------------------------+---------+---------+
++
  
- #include <asm/paca.h>
---- a/arch/powerpc/kernel/mce.c
-+++ b/arch/powerpc/kernel/mce.c
-@@ -594,8 +594,15 @@ long notrace machine_check_early(struct
- 	u8 ftrace_enabled = this_cpu_get_ftrace_enabled();
+ Appendix I: Example
+ -------------------
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -399,6 +399,30 @@ static const struct arm64_ftr_bits ftr_i
+ 	ARM64_FTR_END,
+ };
  
- 	this_cpu_set_ftrace_enabled(0);
--	/* Do not use nmi_enter/exit for pseries hpte guest */
--	if (radix_enabled() || !firmware_has_feature(FW_FEATURE_LPAR))
-+	/*
-+	 * Do not use nmi_enter/exit for pseries hpte guest
-+	 *
-+	 * Likewise, do not use it in real mode if percpu first chunk is not
-+	 * embedded. With CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled there
-+	 * are chances where percpu allocation can come from vmalloc area.
-+	 */
-+	if ((radix_enabled() || !firmware_has_feature(FW_FEATURE_LPAR)) &&
-+	    !percpu_first_chunk_is_paged)
- 		nmi_enter();
++static const struct arm64_ftr_bits ftr_mvfr0[] = {
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPROUND_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPSHVEC_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPSQRT_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPDIVIDE_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPTRAP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPDP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPSP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_SIMD_SHIFT, 4, 0),
++	ARM64_FTR_END,
++};
++
++static const struct arm64_ftr_bits ftr_mvfr1[] = {
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDFMAC_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_FPHP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDHP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDSP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDINT_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDLS_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_FPDNAN_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_FPFTZ_SHIFT, 4, 0),
++	ARM64_FTR_END,
++};
++
+ static const struct arm64_ftr_bits ftr_mvfr2[] = {
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR2_FPMISC_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR2_SIMDMISC_SHIFT, 4, 0),
+@@ -424,10 +448,10 @@ static const struct arm64_ftr_bits ftr_i
  
- 	hv_nmi_check_nonrecoverable(regs);
-@@ -606,7 +613,8 @@ long notrace machine_check_early(struct
- 	if (ppc_md.machine_check_early)
- 		handled = ppc_md.machine_check_early(regs);
+ static const struct arm64_ftr_bits ftr_id_isar5[] = {
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_RDM_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_CRC32_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA2_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA1_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_AES_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_CRC32_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA2_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA1_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_AES_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SEVL_SHIFT, 4, 0),
+ 	ARM64_FTR_END,
+ };
+@@ -534,7 +558,7 @@ static const struct arm64_ftr_bits ftr_z
+  * Common ftr bits for a 32bit register with all hidden, strict
+  * attributes, with 4bit feature fields and a default safe value of
+  * 0. Covers the following 32bit registers:
+- * id_isar[1-4], id_mmfr[1-3], id_pfr1, mvfr[0-1]
++ * id_isar[1-3], id_mmfr[1-3]
+  */
+ static const struct arm64_ftr_bits ftr_generic_32bits[] = {
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, 28, 4, 0),
+@@ -590,8 +614,8 @@ static const struct __ftr_reg_entry {
+ 	ARM64_FTR_REG(SYS_ID_ISAR6_EL1, ftr_id_isar6),
  
--	if (radix_enabled() || !firmware_has_feature(FW_FEATURE_LPAR))
-+	if ((radix_enabled() || !firmware_has_feature(FW_FEATURE_LPAR)) &&
-+	    !percpu_first_chunk_is_paged)
- 		nmi_exit();
+ 	/* Op1 = 0, CRn = 0, CRm = 3 */
+-	ARM64_FTR_REG(SYS_MVFR0_EL1, ftr_generic_32bits),
+-	ARM64_FTR_REG(SYS_MVFR1_EL1, ftr_generic_32bits),
++	ARM64_FTR_REG(SYS_MVFR0_EL1, ftr_mvfr0),
++	ARM64_FTR_REG(SYS_MVFR1_EL1, ftr_mvfr1),
+ 	ARM64_FTR_REG(SYS_MVFR2_EL1, ftr_mvfr2),
+ 	ARM64_FTR_REG(SYS_ID_PFR2_EL1, ftr_id_pfr2),
+ 	ARM64_FTR_REG(SYS_ID_DFR1_EL1, ftr_id_dfr1),
+@@ -2814,7 +2838,7 @@ static void __maybe_unused cpu_enable_cn
  
- 	this_cpu_set_ftrace_enabled(ftrace_enabled);
---- a/arch/powerpc/kernel/setup_64.c
-+++ b/arch/powerpc/kernel/setup_64.c
-@@ -824,6 +824,7 @@ static int pcpu_cpu_distance(unsigned in
+ /*
+  * We emulate only the following system register space.
+- * Op0 = 0x3, CRn = 0x0, Op1 = 0x0, CRm = [0, 4 - 7]
++ * Op0 = 0x3, CRn = 0x0, Op1 = 0x0, CRm = [0, 2 - 7]
+  * See Table C5-6 System instruction encodings for System register accesses,
+  * ARMv8 ARM(ARM DDI 0487A.f) for more details.
+  */
+@@ -2824,7 +2848,7 @@ static inline bool __attribute_const__ i
+ 		sys_reg_CRn(id) == 0x0 &&
+ 		sys_reg_Op1(id) == 0x0 &&
+ 		(sys_reg_CRm(id) == 0 ||
+-		 ((sys_reg_CRm(id) >= 4) && (sys_reg_CRm(id) <= 7))));
++		 ((sys_reg_CRm(id) >= 2) && (sys_reg_CRm(id) <= 7))));
+ }
  
- unsigned long __per_cpu_offset[NR_CPUS] __read_mostly;
- EXPORT_SYMBOL(__per_cpu_offset);
-+DEFINE_STATIC_KEY_FALSE(__percpu_first_chunk_is_paged);
- 
- static void __init pcpu_populate_pte(unsigned long addr)
- {
-@@ -903,6 +904,7 @@ void __init setup_per_cpu_areas(void)
- 	if (rc < 0)
- 		panic("cannot initialize percpu area (err=%d)", rc);
- 
-+	static_key_enable(&__percpu_first_chunk_is_paged.key);
- 	delta = (unsigned long)pcpu_base_addr - (unsigned long)__per_cpu_start;
- 	for_each_possible_cpu(cpu) {
-                 __per_cpu_offset[cpu] = delta + pcpu_unit_offsets[cpu];
---- a/arch/powerpc/kernel/traps.c
-+++ b/arch/powerpc/kernel/traps.c
-@@ -835,8 +835,14 @@ void machine_check_exception(struct pt_r
- 	 * This is silly. The BOOK3S_64 should just call a different function
- 	 * rather than expecting semantics to magically change. Something
- 	 * like 'non_nmi_machine_check_exception()', perhaps?
-+	 *
-+	 * Do not use nmi_enter/exit in real mode if percpu first chunk is
-+	 * not embedded. With CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled
-+	 * there are chances where percpu allocation can come from
-+	 * vmalloc area.
- 	 */
--	const bool nmi = !IS_ENABLED(CONFIG_PPC_BOOK3S_64);
-+	const bool nmi = !IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&
-+			 !percpu_first_chunk_is_paged;
- 
- 	if (nmi) nmi_enter();
- 
+ /*
 
 
