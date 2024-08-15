@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C41519FA99;
-	Thu, 15 Aug 2024 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DAF14AD0A;
+	Thu, 15 Aug 2024 14:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732274; cv=none; b=eiAJumxEVdiYHRaIsVcd+KalVuPueIJs0wXKRbJkCHnb/cMHz2Mw3VWKIoxmlUAPGU82cVBeMWXWEDmgUQEbvjEt9JvQXxV/KDZ5yzRs/hqZMpyA28C8aGu9kPopxeSXB0Nl5ERqjPqEZWTuLeQIBJjOFoFayJq6LSvDpn2hKQg=
+	t=1723732277; cv=none; b=GWoC04AvbesaZ0nRO1gaVDDlwHkVYDrDPaDXAckRkHHLb7SoDd7fDgZgKYA7hfjQh2E90xDngU5l19bsamRLR0i1VoQCsCfVXAf2pmfci9k2fhm4JrCwgLf9NLdRaSqBb8LKzOUa2EVhMdWtQFV6MSKdE467xI47WviF6N6cHEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732274; c=relaxed/simple;
-	bh=MQOBFzygx2yi4JEjBD5NvZkXzd/p7acyVSIcgA9SVic=;
+	s=arc-20240116; t=1723732277; c=relaxed/simple;
+	bh=+QOiAUjNmffHVZG8O0QE42q3QlgprsKOwQSffyOODOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ThwN+yuZ+gQEHTRSJWuRtb1N83Ff3MbvDzxsTh7cqXuCdOcDfafflmlNyv1kgUQBzXWXWmhuNmtEpDwCY/8i0Fi3ezaj5WEMBQ0bhhlZ+nolIi7V7nRevlg3hdrKVnbPc3jFb8EZCT+j0EE5Ndyn/SzxpS3abeF7t4guuHsckUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQkVlbpi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kux5cGZm+fl+XFQHnVh0QK0T3qinfJo4GWE74f2djzxXYTuXlckzdqvPegpEYl2vXDk8wA3wt25WoahOi2LC9CLgBec7EwT7MVLyNtbs1owLYvRq1KVRVc/IiIw54c1/UrFF9F9iyC10GduR2eElz7lkTM6n8KETImGL+X2UH5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0lHcrZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQkVlbpi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC50FC32786;
-	Thu, 15 Aug 2024 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0lHcrZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0633AC4AF0D;
+	Thu, 15 Aug 2024 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732274;
-	bh=MQOBFzygx2yi4JEjBD5NvZkXzd/p7acyVSIcgA9SVic=;
+	s=korg; t=1723732277;
+	bh=+QOiAUjNmffHVZG8O0QE42q3QlgprsKOwQSffyOODOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQkVlbpicd0J9cGYQgOEDlOlOIYJczZYWP/PJyrKVy/ZxujCo5QwTbx+UEFXT0Tm8
-	 4Ie+WPn03Oxr2M3AfIqMUMcI/gJ74aOmbli4mvf2S5zy7tRf88V/WvmRiOMXKCht+e
-	 iYvUqaYF2JwL5+WhqxyDXt0pmJP22blK/56H6YlA=
+	b=B0lHcrZXEhtA80LmX5sawb+O1lg1hemjuX0r+MU7RT2DX1IXsX/hSiVPyAnyy47Ho
+	 XMesbD8d6l8ZOzVkrj79VDaGcMhCQI4vK03lYMuJgGPOMp2UF0Ul0Xu7sdASyeQMgC
+	 m0ETqgYhnQUuj9xteAWcRTs04CS/4UU2r+AEgylw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.10 129/352] sched/fair: set_load_weight() must also call reweight_task() for SCHED_IDLE tasks
-Date: Thu, 15 Aug 2024 15:23:15 +0200
-Message-ID: <20240815131924.240080424@linuxfoundation.org>
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.10 130/352] char: tpm: Fix possible memory leak in tpm_bios_measurements_open()
+Date: Thu, 15 Aug 2024 15:23:16 +0200
+Message-ID: <20240815131924.279330319@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -50,107 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit d329605287020c3d1c3b0dadc63d8208e7251382 upstream.
+commit 5d8e2971e817bb64225fc0b6327a78752f58a9aa upstream.
 
-When a task's weight is being changed, set_load_weight() is called with
-@update_load set. As weight changes aren't trivial for the fair class,
-set_load_weight() calls fair.c::reweight_task() for fair class tasks.
+In tpm_bios_measurements_open(), get_device() is called on the device
+embedded in struct tpm_chip. In the error path, however, put_device() is
+not called. This results in a reference count leak, which prevents the
+device from being properly released. This commit makes sure to call
+put_device() when the seq_open() call fails.
 
-However, set_load_weight() first tests task_has_idle_policy() on entry and
-skips calling reweight_task() for SCHED_IDLE tasks. This is buggy as
-SCHED_IDLE tasks are just fair tasks with a very low weight and they would
-incorrectly skip load, vlag and position updates.
-
-Fix it by updating reweight_task() to take struct load_weight as idle weight
-can't be expressed with prio and making set_load_weight() call
-reweight_task() for SCHED_IDLE tasks too when @update_load is set.
-
-Fixes: 9059393e4ec1 ("sched/fair: Use reweight_entity() for set_user_nice()")
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org # v4.15+
-Link: http://lkml.kernel.org/r/20240624102331.GI31592@noisy.programming.kicks-ass.net
+Cc: stable@vger.kernel.org # +v4.18
+Fixes: 9b01b5356629 ("tpm: Move shared eventlog functions to common.c")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c  |   23 ++++++++++-------------
- kernel/sched/fair.c  |    7 +++----
- kernel/sched/sched.h |    2 +-
- 3 files changed, 14 insertions(+), 18 deletions(-)
+ drivers/char/tpm/eventlog/common.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -848,27 +848,24 @@ static void set_load_weight(struct task_
- {
- 	bool update_load = !(READ_ONCE(p->state) & TASK_NEW);
- 	int prio = p->static_prio - MAX_RT_PRIO;
--	struct load_weight *load = &p->se.load;
-+	struct load_weight lw;
- 
--	/*
--	 * SCHED_IDLE tasks get minimal weight:
--	 */
- 	if (task_has_idle_policy(p)) {
--		load->weight = scale_load(WEIGHT_IDLEPRIO);
--		load->inv_weight = WMULT_IDLEPRIO;
--		return;
-+		lw.weight = scale_load(WEIGHT_IDLEPRIO);
-+		lw.inv_weight = WMULT_IDLEPRIO;
+--- a/drivers/char/tpm/eventlog/common.c
++++ b/drivers/char/tpm/eventlog/common.c
+@@ -47,6 +47,8 @@ static int tpm_bios_measurements_open(st
+ 	if (!err) {
+ 		seq = file->private_data;
+ 		seq->private = chip;
 +	} else {
-+		lw.weight = scale_load(sched_prio_to_weight[prio]);
-+		lw.inv_weight = sched_prio_to_wmult[prio];
++		put_device(&chip->dev);
  	}
  
- 	/*
- 	 * SCHED_OTHER tasks have to update their load when changing their
- 	 * weight
- 	 */
--	if (update_load && p->sched_class == &fair_sched_class) {
--		reweight_task(p, prio);
--	} else {
--		load->weight = scale_load(sched_prio_to_weight[prio]);
--		load->inv_weight = sched_prio_to_wmult[prio];
--	}
-+	if (update_load && p->sched_class == &fair_sched_class)
-+		reweight_task(p, &lw);
-+	else
-+		p->se.load = lw;
- }
- 
- #ifdef CONFIG_UCLAMP_TASK
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3119,15 +3119,14 @@ static void reweight_entity(struct cfs_r
- 
- }
- 
--void reweight_task(struct task_struct *p, int prio)
-+void reweight_task(struct task_struct *p, const struct load_weight *lw)
- {
- 	struct sched_entity *se = &p->se;
- 	struct cfs_rq *cfs_rq = cfs_rq_of(se);
- 	struct load_weight *load = &se->load;
--	unsigned long weight = scale_load(sched_prio_to_weight[prio]);
- 
--	reweight_entity(cfs_rq, se, weight);
--	load->inv_weight = sched_prio_to_wmult[prio];
-+	reweight_entity(cfs_rq, se, lw->weight);
-+	load->inv_weight = lw->inv_weight;
- }
- 
- #ifdef CONFIG_FAIR_GROUP_SCHED
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1938,7 +1938,7 @@ extern void init_sched_dl_class(void);
- extern void init_sched_rt_class(void);
- extern void init_sched_fair_class(void);
- 
--extern void reweight_task(struct task_struct *p, int prio);
-+extern void reweight_task(struct task_struct *p, const struct load_weight *lw);
- 
- extern void resched_curr(struct rq *rq);
- extern void resched_cpu(int cpu);
+ 	return err;
 
 
