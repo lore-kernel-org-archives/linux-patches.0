@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2C13214;
-	Thu, 15 Aug 2024 14:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D9114AD0A;
+	Thu, 15 Aug 2024 14:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731432; cv=none; b=Sby+dpiT9on5pB0hvxVcqD/1JSTK/w12A+OcL2j0H7mtnLNWHZYom9XK2yesifqm/iG/IUKkthcbxd+qAjkmBIFPpAOLJrOOHdi/bVZKBVU+1GHfiNsuuazK41bIyB/tRpPbGEIcNgNCtzSF9uwKKFk/iIw3RqNYfJeiZoigiNg=
+	t=1723731435; cv=none; b=K+TKbv7df2IoE5P4nS4jn+flZvFlwOK3CfRZnGIbuUn4VAUrscAW/Zojli75+Wl1XJmCcykd8HPdEhypsbXqC5BK4q7oTrmdrmlAGoqWh/YLso8cnSUc+g5+BI0mOjl2W4Ze5iHvjFlUd6gGop2TO+QRc8rXZasDHiWGo93UNQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731432; c=relaxed/simple;
-	bh=7+Tg8p3rHpDOF7b2TPN6Y9wsfESHkWCx9q2izqWuUrg=;
+	s=arc-20240116; t=1723731435; c=relaxed/simple;
+	bh=mdit0r/eklCCkjoPzQJH29MnH8XHEhpQCqRTW37DDfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lr6AepioeygErB1FNiRPKwXT6uFvk0Uk/541VpkuhRXanTsNTAB3oQ5AUtBKVZAUfKnuI3ClHPEDKT1FbW3diptHzJP9i0BvHaBLDOEDHZQ7h85Y2IA/FK8Eote4XtnMMBY/6unNOM4mThRhK5DPDvArLutD5qSmTOMgc8LwNvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdJTTIZ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXmnlirBDIoboiqCIiuomQ/z9qA8JhRerQAUkgL3eZUbpiXUNo74uR/EI8vXE23eKwb9Lb5of6cHHLETjUqYdFZb3FBYM+KhmTJqw7HrmCWcsNGJhf9AFWC5feCXzVzP9kNcYLuuQSxkypN/0ABXH+OF5BOJr/7OxCOsoACyfs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUH+UzQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdJTTIZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08357C32786;
-	Thu, 15 Aug 2024 14:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUH+UzQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB867C32786;
+	Thu, 15 Aug 2024 14:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731432;
-	bh=7+Tg8p3rHpDOF7b2TPN6Y9wsfESHkWCx9q2izqWuUrg=;
+	s=korg; t=1723731435;
+	bh=mdit0r/eklCCkjoPzQJH29MnH8XHEhpQCqRTW37DDfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdJTTIZ/XIMppOk3lxTo6z9ofGfxFQc/4wHPqEoo+zHOqGa4sKo/p2HIE9UJisa+4
-	 XkuBfWVH8UqOGOq3wDxpZ5TIlFQKNgTuSfqm5FMmNPs5+kh4vHIJUG++QZvrhUIkq2
-	 ohpwNypJng4TPldqemr7i01nf0GH4WiAvyC1GGLk=
+	b=qUH+UzQM6ria/BM/NuRuAqQuxdYKon/EoS3rgJCpPJkxx3GsJIu2OzrkBShG91V/0
+	 Jl8Vvq7jCddcJN7wxqo83OPSXy7T6OaOMsMKmv73GW3gU5WwsInUsNmkTfl7XsvxNW
+	 MCD1n+U2XsNaziWOmGnHkF1RH6G7ClQtsUhyvHQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.4 126/259] selftests/sigaltstack: Fix ppc64 GCC build
-Date: Thu, 15 Aug 2024 15:24:19 +0200
-Message-ID: <20240815131907.660258530@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.4 127/259] rbd: dont assume rbd_is_lock_owner() for exclusive mappings
+Date: Thu, 15 Aug 2024 15:24:20 +0200
+Message-ID: <20240815131907.698930138@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -43,52 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 17c743b9da9e0d073ff19fd5313f521744514939 upstream.
+commit 3ceccb14f5576e02b81cc8b105ab81f224bd87f6 upstream.
 
-Building the sigaltstack test with GCC on 64-bit powerpc errors with:
+Expanding on the previous commit, assuming that rbd_is_lock_owner()
+always returns true (i.e. that we are either in RBD_LOCK_STATE_LOCKED
+or RBD_LOCK_STATE_QUIESCING) if the mapping is exclusive is wrong too.
+In case ceph_cls_set_cookie() fails, the lock would be temporarily
+released even if the mapping is exclusive, meaning that we can end up
+even in RBD_LOCK_STATE_UNLOCKED.
 
-  gcc -Wall     sas.c  -o /home/michael/linux/.build/kselftest/sigaltstack/sas
-  In file included from sas.c:23:
-  current_stack_pointer.h:22:2: error: #error "implement current_stack_pointer equivalent"
-     22 | #error "implement current_stack_pointer equivalent"
-        |  ^~~~~
-  sas.c: In function ‘my_usr1’:
-  sas.c:50:13: error: ‘sp’ undeclared (first use in this function); did you mean ‘p’?
-     50 |         if (sp < (unsigned long)sstack ||
-        |             ^~
+IOW, exclusive mappings are really "just" about disabling automatic
+lock transitions (as documented in the man page), not about grabbing
+the lock and holding on to it whatever it takes.
 
-This happens because GCC doesn't define __ppc__ for 64-bit builds, only
-32-bit builds. Instead use __powerpc__ to detect powerpc builds, which
-is defined by clang and GCC for 64-bit and 32-bit builds.
-
-Fixes: 05107edc9101 ("selftests: sigaltstack: fix -Wuninitialized")
-Cc: stable@vger.kernel.org # v6.3+
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240520062647.688667-1-mpe@ellerman.id.au
+Cc: stable@vger.kernel.org
+Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/sigaltstack/current_stack_pointer.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/rbd.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/tools/testing/selftests/sigaltstack/current_stack_pointer.h
-+++ b/tools/testing/selftests/sigaltstack/current_stack_pointer.h
-@@ -8,7 +8,7 @@ register unsigned long sp asm("sp");
- register unsigned long sp asm("esp");
- #elif __loongarch64
- register unsigned long sp asm("$sp");
--#elif __ppc__
-+#elif __powerpc__
- register unsigned long sp asm("r1");
- #elif __s390x__
- register unsigned long sp asm("%15");
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -6618,11 +6618,6 @@ static int rbd_add_acquire_lock(struct r
+ 		return ret;
+ 	}
+ 
+-	/*
+-	 * The lock may have been released by now, unless automatic lock
+-	 * transitions are disabled.
+-	 */
+-	rbd_assert(!rbd_dev->opts->exclusive || rbd_is_lock_owner(rbd_dev));
+ 	return 0;
+ }
+ 
 
 
