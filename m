@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665E61AC8AE;
-	Thu, 15 Aug 2024 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A17544376;
+	Thu, 15 Aug 2024 13:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729645; cv=none; b=F0qAZuNttDYm/ULgJyMmnaUw79csStbxav07uR7Qi//a4awyjPpFOYNzsadVOQSE3zXxTxrjrR6j+H2mgHrWWmLgpuHDCt9B9GsqQ0dR143kwuhXfnWRlNOIEzRE2fcRilYbZNRdYfSizJ1GV6HSXaXhpgMCYiHwWMcoTk+0ZcY=
+	t=1723729648; cv=none; b=WPSZd8CJn86snCTNfPzt6lJMXrTk76e6Rrc0u9VQaFwFtzp8p5n9ztJmicaiKepfffz6EWhATV83Ng21I0jZznc4asbvJAODyqfeyohpJ9GRqsP1NaT1r0fHndWTp6/HNE6UnXfy8WP18XN/sfP3+hCh2ErZ+Chu/zsExM6Fo6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729645; c=relaxed/simple;
-	bh=9DqzkG0nIHpfaBo0AqMBMqL/Ry10sW9U4v2KSJosmkE=;
+	s=arc-20240116; t=1723729648; c=relaxed/simple;
+	bh=Mfvrx7i0l5aeuW48kQTX5N5ibXvvazA6JM7fv/m2RbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tigGfsMT2yIyul+TXxZXsYkhHlpuUV+1ouiFf7c4s5MRlh0tvAt42rArSo6cXLhJZQJ2KDO5hHRamCDg/RjkSxeHbMoC//ZdHV0vaicM6deHYGHmXCZlwN3piGlu4TUnS2APYm9REvAJ/HXZPdgy7qz7cA02BE2dxXo1bOhHP2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bd3/bJvy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pvfpwUIeiBWmXMRjsL8WSh4YQLoXXDuzaS9A1yHP6IT3iREJw9reEfG/lYphTtBQPEcOOmRu88Im080ZPBT7jusqNkSdb7xB3RibDxqJv1KT7GpGt9EgeFg9ktLimYBVUoEDiBsKx7vHLz03ksWj7tj3H1ZDRggK8ZM1cND/y3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEdxR0b+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bd3/bJvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CDDC4AF0C;
-	Thu, 15 Aug 2024 13:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEdxR0b+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F381DC32786;
+	Thu, 15 Aug 2024 13:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729645;
-	bh=9DqzkG0nIHpfaBo0AqMBMqL/Ry10sW9U4v2KSJosmkE=;
+	s=korg; t=1723729648;
+	bh=Mfvrx7i0l5aeuW48kQTX5N5ibXvvazA6JM7fv/m2RbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bd3/bJvyIwI8UQe8NAmqnID/REFJfcuk7lwZ+PPU7zcu4lJSts4H6wHiCCz/sD5uO
-	 2+fzEUJZlqpevuMmAi7d/ESvoI6dXI6f8yhBaQ3EEY1Pu1sAZBMLRUy+5OoYo0I5RF
-	 /yRqhjkQoy8uAP2B5NJ2jq5ocBdmlToPqMvGaXn0=
+	b=IEdxR0b+vUvcez3MtpW58Alhjaax6YuleWeGwQHxvomHCQdzTn7r1Iu2QtupLcZQT
+	 zGuluKXaDs11DIuJQUdRQSZjFPMId1kmysqzGLONG8XICBWRjyBqEywKgBYZ72heTy
+	 cTLX0lEk3EoulRlfG2WisvEBfM5+glWzFvxtXuXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/484] RDMA/device: Return error earlier if port in not valid
-Date: Thu, 15 Aug 2024 15:19:50 +0200
-Message-ID: <20240815131946.505607646@linuxfoundation.org>
+Subject: [PATCH 5.15 133/484] Input: elan_i2c - do not leave interrupt disabled on suspend failure
+Date: Thu, 15 Aug 2024 15:19:51 +0200
+Message-ID: <20240815131946.543575748@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,44 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 917918f57a7b139c043e78c502876f2c286f4f0a ]
+[ Upstream commit 5f82c1e04721e7cd98e604eb4e58f0724d8e5a65 ]
 
-There is no need to allocate port data if port provided is not valid.
+Make sure interrupts are not left disabled when we fail to suspend the
+touch controller.
 
-Fixes: c2261dd76b54 ("RDMA/device: Add ib_device_set_netdev() as an alternative to get_netdev")
-Link: https://lore.kernel.org/r/022047a8b16988fc88d4426da50bf60a4833311b.1719235449.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 6696777c6506 ("Input: add driver for Elan I2C/SMbus touchpad")
+Link: https://lore.kernel.org/r/ZmKiiL-1wzKrhqBj@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/input/mouse/elan_i2c_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 725f2719132fb..5d1ce55fda71e 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2145,6 +2145,9 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
- 	unsigned long flags;
- 	int ret;
+diff --git a/drivers/input/mouse/elan_i2c_core.c b/drivers/input/mouse/elan_i2c_core.c
+index e1758d5ffe421..a5f067b93ab9a 100644
+--- a/drivers/input/mouse/elan_i2c_core.c
++++ b/drivers/input/mouse/elan_i2c_core.c
+@@ -1378,6 +1378,8 @@ static int __maybe_unused elan_suspend(struct device *dev)
+ 	}
  
-+	if (!rdma_is_port_valid(ib_dev, port))
-+		return -EINVAL;
-+
- 	/*
- 	 * Drivers wish to call this before ib_register_driver, so we have to
- 	 * setup the port data early.
-@@ -2153,9 +2156,6 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
- 	if (ret)
- 		return ret;
- 
--	if (!rdma_is_port_valid(ib_dev, port))
--		return -EINVAL;
--
- 	pdata = &ib_dev->port_data[port];
- 	spin_lock_irqsave(&pdata->netdev_lock, flags);
- 	old_ndev = rcu_dereference_protected(
+ err:
++	if (ret)
++		enable_irq(client->irq);
+ 	mutex_unlock(&data->sysfs_mutex);
+ 	return ret;
+ }
 -- 
 2.43.0
 
