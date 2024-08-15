@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22C519E7F6;
-	Thu, 15 Aug 2024 13:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B37DA9E;
+	Thu, 15 Aug 2024 13:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729750; cv=none; b=QYkJLXpWXrY2Bbo1aFV+qTycrt9yJ5/ZFey092qRKczjeys1vHqL0B5lYNy26ROwPQ5UQT+fqaOU7a3svtGr0Q0QvdbyT/dXXa2J1frN3HmLmJ+UckwScz/VYfaP1eVpW/qQnZytnQ5YYyoYbo1v/JViHeiSECgwUjYypcVWZhI=
+	t=1723729752; cv=none; b=orhdfjUaVmT2VXqB0Fp7MLpmPjvHdBf6wbF7NCYqMBGZfEaRfyH0Sf2ZmggapwW8pajcmpyPRSTshBJq8l0ZkE10/zV4QdQdwNqghNYF2YvNlp381Sw5lOQEfebGbd0ocWu2DnC/iJXF8flI47U8jyI55jMpDEzDFq8tks/LwbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729750; c=relaxed/simple;
-	bh=aVpoIqL53eqHeIijD+lDBWN8l1Qq8FQ/m9u1U12dSJ0=;
+	s=arc-20240116; t=1723729752; c=relaxed/simple;
+	bh=7pDCy+58oo3CS/Jbq5zqsf2f7wjINT9IHSLFkf9tJ08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hn/1QeMDWRBxDmJBjdaTPJjSzIAAjj4LchtGQW6Nfu3gaW2OjzbZfXgCh8Fgnw+JUdAtbr/SC170sRek7dbW8V+OvDGECmCOJHtnIyPO+H2pVYTg2O1KAMiWfMSpw8aJXJn1Db61WsFEDP5hYZ+Kk/I9X67cShkSiKpWRsCOw7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EftYF0mQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VqjU1cACJDh9txI5/nd55HRnz7XJZ03fDhI0b+vp+IUm8wPJgQYutZ6YCOhd3JfkdSnQDiyahmAj8gEWju1UqoRQrW83M+vXyOE2WScAwg+2WSX/Yi62n2+Hy79AtYH8HKFWXwm7Al1fH5YX1p2HIJITmcPK9AzpB1kFzrMOWVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z70/R6lU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EftYF0mQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F12C32786;
-	Thu, 15 Aug 2024 13:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z70/R6lU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48740C32786;
+	Thu, 15 Aug 2024 13:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729749;
-	bh=aVpoIqL53eqHeIijD+lDBWN8l1Qq8FQ/m9u1U12dSJ0=;
+	s=korg; t=1723729752;
+	bh=7pDCy+58oo3CS/Jbq5zqsf2f7wjINT9IHSLFkf9tJ08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EftYF0mQOg1FztBoJ/Af5rfto4QFOOz7GqTpyo0MtWpET69SzMQlhMqWSFx3NMVku
-	 UFPFfMYAUEzO/DWMTc8zWQPcxj7+A3o8LndEQL1/ehinzDLrNg651EHT/HJUq4zKhP
-	 x21obQnmU6YgmyY6on4vjgy1gJi+SoUOKXjQGlk4=
+	b=Z70/R6lUy2NdTI72TO4iPm+Jxu2W7ao3oEYxJ8SxseAds6OyhOwAa7cFTPRwBserk
+	 Vk3rV4J9NapQkceNgNTXAvx1e+QmIkGO/ESn9dOUXUH/prY2F9VOxZxn8/zoQrI36C
+	 h4hFXXWlDx5CknsJQ4gFq8qM2ppFfniUDiIrPfsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 194/484] io_uring: tighten task exit cancellations
-Date: Thu, 15 Aug 2024 15:20:52 +0200
-Message-ID: <20240815131948.908251359@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 5.15 195/484] selftests/landlock: Add cred_transfer test
+Date: Thu, 15 Aug 2024 15:20:53 +0200
+Message-ID: <20240815131948.945925591@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -44,57 +44,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit f8b632e89a101dae349a7b212c1771d7925f441b upstream.
+commit cc374782b6ca0fd634482391da977542443d3368 upstream.
 
-io_uring_cancel_generic() should retry if any state changes like a
-request is completed, however in case of a task exit it only goes for
-another loop and avoids schedule() if any tracked (i.e. REQ_F_INFLIGHT)
-request got completed.
+Check that keyctl(KEYCTL_SESSION_TO_PARENT) preserves the parent's
+restrictions.
 
-Let's assume we have a non-tracked request executing in iowq and a
-tracked request linked to it. Let's also assume
-io_uring_cancel_generic() fails to find and cancel the request, i.e.
-via io_run_local_work(), which may happen as io-wq has gaps.
-Next, the request logically completes, io-wq still hold a ref but queues
-it for completion via tw, which happens in
-io_uring_try_cancel_requests(). After, right before prepare_to_wait()
-io-wq puts the request, grabs the linked one and tries executes it, e.g.
-arms polling. Finally the cancellation loop calls prepare_to_wait(),
-there are no tw to run, no tracked request was completed, so the
-tctx_inflight() check passes and the task is put to indefinite sleep.
-
-Cc: stable@vger.kernel.org
-Fixes: 3f48cf18f886c ("io_uring: unify files and task cancel")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/acac7311f4e02ce3c43293f8f1fda9c705d158f1.1721819383.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: e1199815b47b ("selftests/landlock: Add user space tests")
+Co-developed-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20240724.Ood5aige9she@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/landlock/base_test.c |   74 +++++++++++++++++++++++++++
+ tools/testing/selftests/landlock/config      |    5 +
+ 2 files changed, 77 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -9856,8 +9856,11 @@ static void io_uring_cancel_generic(bool
- 	atomic_inc(&tctx->in_idle);
- 	do {
- 		io_uring_drop_tctx_refs(current);
-+		if (!tctx_inflight(tctx, !cancel_all))
-+			break;
-+
- 		/* read completions before cancelations */
--		inflight = tctx_inflight(tctx, !cancel_all);
-+		inflight = tctx_inflight(tctx, false);
- 		if (!inflight)
- 			break;
+--- a/tools/testing/selftests/landlock/base_test.c
++++ b/tools/testing/selftests/landlock/base_test.c
+@@ -9,6 +9,7 @@
+ #define _GNU_SOURCE
+ #include <errno.h>
+ #include <fcntl.h>
++#include <linux/keyctl.h>
+ #include <linux/landlock.h>
+ #include <string.h>
+ #include <sys/prctl.h>
+@@ -356,4 +357,77 @@ TEST(ruleset_fd_transfer)
+ 	ASSERT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
+ }
  
++TEST(cred_transfer)
++{
++	struct landlock_ruleset_attr ruleset_attr = {
++		.handled_access_fs = LANDLOCK_ACCESS_FS_READ_DIR,
++	};
++	int ruleset_fd, dir_fd;
++	pid_t child;
++	int status;
++
++	drop_caps(_metadata);
++
++	dir_fd = open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
++	EXPECT_LE(0, dir_fd);
++	EXPECT_EQ(0, close(dir_fd));
++
++	/* Denies opening directories. */
++	ruleset_fd =
++		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
++	ASSERT_LE(0, ruleset_fd);
++	EXPECT_EQ(0, prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0));
++	ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
++	EXPECT_EQ(0, close(ruleset_fd));
++
++	/* Checks ruleset enforcement. */
++	EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++	EXPECT_EQ(EACCES, errno);
++
++	/* Needed for KEYCTL_SESSION_TO_PARENT permission checks */
++	EXPECT_NE(-1, syscall(__NR_keyctl, KEYCTL_JOIN_SESSION_KEYRING, NULL, 0,
++			      0, 0))
++	{
++		TH_LOG("Failed to join session keyring: %s", strerror(errno));
++	}
++
++	child = fork();
++	ASSERT_LE(0, child);
++	if (child == 0) {
++		/* Checks ruleset enforcement. */
++		EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++		EXPECT_EQ(EACCES, errno);
++
++		/*
++		 * KEYCTL_SESSION_TO_PARENT is a no-op unless we have a
++		 * different session keyring in the child, so make that happen.
++		 */
++		EXPECT_NE(-1, syscall(__NR_keyctl, KEYCTL_JOIN_SESSION_KEYRING,
++				      NULL, 0, 0, 0));
++
++		/*
++		 * KEYCTL_SESSION_TO_PARENT installs credentials on the parent
++		 * that never go through the cred_prepare hook, this path uses
++		 * cred_transfer instead.
++		 */
++		EXPECT_EQ(0, syscall(__NR_keyctl, KEYCTL_SESSION_TO_PARENT, 0,
++				     0, 0, 0));
++
++		/* Re-checks ruleset enforcement. */
++		EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++		EXPECT_EQ(EACCES, errno);
++
++		_exit(_metadata->passed ? EXIT_SUCCESS : EXIT_FAILURE);
++		return;
++	}
++
++	EXPECT_EQ(child, waitpid(child, &status, 0));
++	EXPECT_EQ(1, WIFEXITED(status));
++	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
++
++	/* Re-checks ruleset enforcement. */
++	EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++	EXPECT_EQ(EACCES, errno);
++}
++
+ TEST_HARNESS_MAIN
+--- a/tools/testing/selftests/landlock/config
++++ b/tools/testing/selftests/landlock/config
+@@ -1,7 +1,8 @@
++CONFIG_KEYS=y
+ CONFIG_OVERLAY_FS=y
++CONFIG_SECURITY=y
+ CONFIG_SECURITY_LANDLOCK=y
+ CONFIG_SECURITY_PATH=y
+-CONFIG_SECURITY=y
+ CONFIG_SHMEM=y
+-CONFIG_TMPFS_XATTR=y
+ CONFIG_TMPFS=y
++CONFIG_TMPFS_XATTR=y
 
 
