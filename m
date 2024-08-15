@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798261A7061;
-	Thu, 15 Aug 2024 14:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD01714DD;
+	Thu, 15 Aug 2024 14:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730493; cv=none; b=kBeG3S0qWrYwReJQYfZTX+fpFPccrn5k3uo4xAg5qOu8LCCvfWDmchoJUJHCBOVGjVAeThYZPtDwFI8XBfvHn0YUQmAKvt5ZiQfhN1bZH8a6tma8HMSZAxymivLI2gMtkHkLBXqJyw9S/M9r26IYosqrmZ0pZ/CSrAxHBSopdhA=
+	t=1723730497; cv=none; b=GRECu39GbjGGS32+RycLZ52efPxUmCLhBfM+SmBzJ2wRowEg84CwHjqpmel/PWgow4xYZ0P42XUhw6OTm+NGrpeFNE5+sdTlhpJ+mJ8a0pZPBgwAqW4e7QPFTZB8h60JUejVxjKYGFKqARWAbbgmCW/fekPp7VVAhTw9dDAyD3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730493; c=relaxed/simple;
-	bh=mCY/7e1ockswfPh8bNn7rLpD4hkt2TK5J3txCwDcDK0=;
+	s=arc-20240116; t=1723730497; c=relaxed/simple;
+	bh=f1BX3UcMfjAcfNivEBOgiUfI0m27PZCkwlTdrcE+51Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwwNYmDQAcukAr7p2pyBTJssYiOjTzG6ThaUrZPiAN+1sS1ODxMc1bNWc0QBV6ugzTtWeHsqbe+I5i3lIJ5/WVhK4j6lw3LJQtaOW51qnpBAIIeFALQrghlLhcaLufsWyWt5ZgxmeS1wmQA0MpiaxVuy23FWJTaZwTo6cIs3QME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XC5EJAel; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwQTgYj+C/8yXrtEA/PLn0yog77uJxTWJJa3NqjFtTqzP4fBdGvg1bvvoffbwyQyEsJzFqQvKQDSYFBlyDbQMBdf+dIu8hHJbO0mF6pfF6BjWSLn5kmXM090f1JCzsvhdknP98jY4pRZGL8hEkJpzsnyX4Qn9b0Eq3LaIRsO0Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmuPKVoz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XC5EJAel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D886FC4AF0E;
-	Thu, 15 Aug 2024 14:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmuPKVoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16471C32786;
+	Thu, 15 Aug 2024 14:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730493;
-	bh=mCY/7e1ockswfPh8bNn7rLpD4hkt2TK5J3txCwDcDK0=;
+	s=korg; t=1723730496;
+	bh=f1BX3UcMfjAcfNivEBOgiUfI0m27PZCkwlTdrcE+51Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XC5EJAelBUhmW/ZbMCD1HDWADiCL5EZgV82+p565yRnnZ+Z8X2ReMjG1w/cbs5QCa
-	 /BRULrYJ/6T4ZjfGwv7Bq9lToy6gQUomTz8UbqVN9DQ6kNWYKi9RSDrSw2CKy/8j5F
-	 r0rF1aFRNj5TmxYHwadmHxH2VzInxnziq4VnFWQo=
+	b=gmuPKVoz+dLmcIKS9U2VwdI4fiS8cr0rtYznPW9n2sp4NHfOuP592QAk0us7S7lCZ
+	 qzmucyaDjMSICG8umPxQp7XIqSd6PbpZhguJjno0Bk6H9XMDoRKt2hyhz5gPrtta2+
+	 wxMd19PyMXbKcUUvFX7gsE6VcQBMs6QQK0Br3LgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vamshi Gajjela <vamshigajjela@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 425/484] scsi: ufs: core: Fix hba->last_dme_cmd_tstamp timestamp updating logic
-Date: Thu, 15 Aug 2024 15:24:43 +0200
-Message-ID: <20240815131957.870454091@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 399/484] arm64: cputype: Add Cortex-A720 definitions
+Date: Thu, 15 Aug 2024 15:24:17 +0200
+Message-ID: <20240815131956.862532954@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,54 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vamshi Gajjela <vamshigajjela@google.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit ab9fd06cb8f0db0854291833fc40c789e43a361f upstream.
+[ Upstream commit add332c40328cf06fe35e4b3cde8ec315c4629e5 ]
 
-The ufshcd_add_delay_before_dme_cmd() always introduces a delay of
-MIN_DELAY_BEFORE_DME_CMDS_US between DME commands even when it's not
-required. The delay is added when the UFS host controller supplies the
-quirk UFSHCD_QUIRK_DELAY_BEFORE_DME_CMDS.
+Add cputype definitions for Cortex-A720. These will be used for errata
+detection in subsequent patches.
 
-Fix the logic to update hba->last_dme_cmd_tstamp to ensure subsequent DME
-commands have the correct delay in the range of 0 to
-MIN_DELAY_BEFORE_DME_CMDS_US.
+These values can be found in Table A-186 ("MIDR_EL1 bit descriptions")
+in issue 0002-05 of the Cortex-A720 TRM, which can be found at:
 
-Update the timestamp at the end of the function to ensure it captures the
-latest time after any necessary delay has been applied.
+  https://developer.arm.com/documentation/102530/0002/?lang=en
 
-Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
-Link: https://lore.kernel.org/r/20240724135126.1786126-1-vamshigajjela@google.com
-Fixes: cad2e03d8607 ("ufs: add support to allow non standard behaviours (quirks)")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-3-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -3795,11 +3795,16 @@ static inline void ufshcd_add_delay_befo
- 			min_sleep_time_us =
- 				MIN_DELAY_BEFORE_DME_CMDS_US - delta;
- 		else
--			return; /* no more delay required */
-+			min_sleep_time_us = 0; /* no more delay required */
- 	}
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index e246d7fad17a9..edfd6ac14a127 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -87,6 +87,7 @@
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
+ #define ARM_CPU_PART_CORTEX_X3		0xD4E
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
++#define ARM_CPU_PART_CORTEX_A720	0xD81
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
  
--	/* allow sleep for extra 50us if needed */
--	usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
-+	if (min_sleep_time_us > 0) {
-+		/* allow sleep for extra 50us if needed */
-+		usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
-+	}
-+
-+	/* update the last_dme_cmd_tstamp */
-+	hba->last_dme_cmd_tstamp = ktime_get();
- }
- 
- /**
+@@ -145,6 +146,7 @@
+ #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
+ #define MIDR_CORTEX_X3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X3)
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
++#define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+-- 
+2.43.0
+
 
 
