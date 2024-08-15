@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53C43214;
-	Thu, 15 Aug 2024 14:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FD53214;
+	Thu, 15 Aug 2024 14:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732700; cv=none; b=kbpl3+5nt0UF+LFedc9QqMgAWhxC0gaSIyFGkE56+8uWfrf4da3ANuFbaLrkkgK9empPEoWEkWs9yhQlqaIozvgSL952HslnvGT88w/shk3082PpK85Yew0474/0Lp26qFqamFYpEwQxQ8mt1byH/vbxySeSG2Dn8DB/VWZcsEs=
+	t=1723732703; cv=none; b=m8AgpmlnglmXMCjhu6YEx3QcV/EWP7eW7kEkmbSOKrEGTMDY+GTsLXXq0Dxo24M974A00K/rM1OZHsD9iL5cZroy/KtsbdiTFoL2ITRmJXn1vVmLJqCVy50ptHnVuYZTgAKeBDXbFmHGG1jgNHWJK9ZwToTlKzWrtrERCWm1pPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732700; c=relaxed/simple;
-	bh=xmFxvgNsBGl9XAAmLNyZIygJv7OZtA/11YAuNYS1FkE=;
+	s=arc-20240116; t=1723732703; c=relaxed/simple;
+	bh=SEZeZcGDfxufyOpqQDNSoebr1aSptnBMhVa61sr83ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dEBW7iZM3NrJpIpNz1LJHZc9UgOY1lWmXoRJ+bzHw32qAMpiEo9mq9xrf76D1GdXk8kee4daik8RxU6bCwFhHe+uBlVWx8zCnQTagzGEfJuUpx/eIZIHUXWujuOde3PpnZ4Gg2Fytlfo8LQp+t9RYPlI/0bAuj3yBvnrRXOXz+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mc1N3COb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzLOJHYXbBVp0PAojSoHqt4ynR1rMQmUXTgqr7mmnt0SpesEYcF08DX1zC5WYPQsDtZBPlt9GR/c3uSR2rDdmlqX09EIYxhAMhhOrQEpVYN8PpMfcT3GaMW8JKvTSwvjVrGoo8xJ0MP5pyUuxHJwsmGpyZvSOKSFkebzCfxBBO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4S/LXyJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc1N3COb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BF9C32786;
-	Thu, 15 Aug 2024 14:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4S/LXyJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E88C32786;
+	Thu, 15 Aug 2024 14:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732699;
-	bh=xmFxvgNsBGl9XAAmLNyZIygJv7OZtA/11YAuNYS1FkE=;
+	s=korg; t=1723732702;
+	bh=SEZeZcGDfxufyOpqQDNSoebr1aSptnBMhVa61sr83ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mc1N3CObGIwAp+yFWo32c5cm2+kViO33ox6csFpzJnXW1GbRyTfHDQtUIvMQrBhU+
-	 boeCYB+XZlNH5bUD4I3MaUZT+ui2IKo+Lnl5oK2JMn2A8mzKyQBeR5jsWYspWJNDXP
-	 nwgJifAz0uawmHba28y8ofzuNZ7JXQajB8q84qC8=
+	b=k4S/LXyJqmFk/XT2b/zq4ZJ5IQTUU9grNNb0rxJL9efLyBWWg7BzxbSWiu3pTfGQI
+	 gEonbAGZU+wESs1l82HyBUIFpoD+SIJphGVVbw1w+WG/BcO6dHBS+0BK1v54rmNDmX
+	 YTcM2TtithjBEd3wIMA0iVIaakVb/5aNAEWbKhBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Frank Li <Frank.Li@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	kasan-dev@googlegroups.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 260/352] net: fec: Stop PPS on driver remove
-Date: Thu, 15 Aug 2024 15:25:26 +0200
-Message-ID: <20240815131929.493421595@linuxfoundation.org>
+Subject: [PATCH 5.10 261/352] rcutorture: Fix rcu_torture_fwd_cb_cr() data race
+Date: Thu, 15 Aug 2024 15:25:27 +0200
+Message-ID: <20240815131929.532094273@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -49,48 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 8fee6d5ad5fa18c270eedb2a2cdf58dbadefb94b ]
+[ Upstream commit 6040072f4774a575fa67b912efe7722874be337b ]
 
-PPS was not stopped in `fec_ptp_stop()`, called when
-the adapter was removed. Consequentially, you couldn't
-safely reload the driver with the PPS signal on.
+On powerpc systems, spinlock acquisition does not order prior stores
+against later loads.  This means that this statement:
 
-Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/netdev/CAOMZO5BzcZR8PwKKwBssQq_wAGzVgf1ffwe_nhpQJjviTdxy-w@mail.gmail.com/T/#m01dcb810bfc451a492140f6797ca77443d0cb79f
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20240807080956.2556602-1-csokas.bence@prolan.hu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	rfcp->rfc_next = NULL;
+
+Can be reordered to follow this statement:
+
+	WRITE_ONCE(*rfcpp, rfcp);
+
+Which is then a data race with rcu_torture_fwd_prog_cr(), specifically,
+this statement:
+
+	rfcpn = READ_ONCE(rfcp->rfc_next)
+
+KCSAN located this data race, which represents a real failure on powerpc.
+
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Marco Elver <elver@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: <kasan-dev@googlegroups.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/rcu/rcutorture.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 780fbb3e1ed06..84e0855069a84 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -640,6 +640,9 @@ void fec_ptp_stop(struct platform_device *pdev)
- 	struct net_device *ndev = platform_get_drvdata(pdev);
- 	struct fec_enet_private *fep = netdev_priv(ndev);
- 
-+	if (fep->pps_enable)
-+		fec_ptp_enable_pps(fep, 0);
-+
- 	cancel_delayed_work_sync(&fep->time_keep);
- 	if (fep->ptp_clock)
- 		ptp_clock_unregister(fep->ptp_clock);
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index 9f505688291e5..5c4bdbe76df04 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -1867,7 +1867,7 @@ static void rcu_torture_fwd_cb_cr(struct rcu_head *rhp)
+ 	spin_lock_irqsave(&rfp->rcu_fwd_lock, flags);
+ 	rfcpp = rfp->rcu_fwd_cb_tail;
+ 	rfp->rcu_fwd_cb_tail = &rfcp->rfc_next;
+-	WRITE_ONCE(*rfcpp, rfcp);
++	smp_store_release(rfcpp, rfcp);
+ 	WRITE_ONCE(rfp->n_launders_cb, rfp->n_launders_cb + 1);
+ 	i = ((jiffies - rfp->rcu_fwd_startat) / (HZ / FWD_CBS_HIST_DIV));
+ 	if (i >= ARRAY_SIZE(rfp->n_launders_hist))
 -- 
 2.43.0
 
