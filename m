@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A51419F462;
-	Thu, 15 Aug 2024 14:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2016E176AD7;
+	Thu, 15 Aug 2024 14:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731218; cv=none; b=fBbzDIq+bl8bhAv2CzNRCUALjw0+UZ/8Ig+uyWnKNBmIvsVDvtbgwO8JXcX0sQ+jSbGzwaTpk1NrWftlNQkRY13G3NrxHYchQCwCGqAmuE7m9myPAtkHo49nqats45TJRpXMbSYuQlC7GpXBAesptKChRiDVqYBQkHAywzuv6hU=
+	t=1723731221; cv=none; b=gbfMJM3HKJ+oKDrwdNOjbnC77khAwn/sCPIDWXUAt3nCJJmn/nYsty6RDlTYPvgxxe3y9YMrS57QxHBeioZr/DgJEyfSONh3Q+iiK47cEs7suFsOpNAeml0nb3LVouOU3NM4K8/g3tw2ZPZm8S95W5SDAw649cvL9u9x60xZwo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731218; c=relaxed/simple;
-	bh=vc0MgZO1opdaT3XiPgA86lxi++nwfxj9PByFKK0DLUs=;
+	s=arc-20240116; t=1723731221; c=relaxed/simple;
+	bh=kAU7IqNFO9G4g2XaPreZ2SXOi8/oNHi2B0xdLNt5P1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HpCtcZnr0fnnK8c0VrLIrguw3FgzJ+xK5xVZMFTBy7fUifjHrPUbag7/XAmH4ccYCUjWdWSx9fpA86A3r19cUt7lopqm8rSES+enlYuW4D4Ntgdx8PyEdmgSsbucKs+cG7Ag6DuLwlLn+jFlfBFZ3I5kbMlNuY3CC8zQW38I2N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1/K7aM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OW/uUUv2rLlLxSSNt28TOWH+6w7acuk1NPcN2mDLqDs/wTinF0oJ4ypG1QC/tFvUossmLINICpwdEYUN+t3c8s+oa09VZuzlUgnhHcwUZCGODwyaapuxfJENY4wYWRAK1KT9h8XT3IVLWNQPvREfEomap//RejCcf8jK0smSRAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzgxqhIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1/K7aM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0A0C32786;
-	Thu, 15 Aug 2024 14:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzgxqhIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6DC32786;
+	Thu, 15 Aug 2024 14:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731217;
-	bh=vc0MgZO1opdaT3XiPgA86lxi++nwfxj9PByFKK0DLUs=;
+	s=korg; t=1723731221;
+	bh=kAU7IqNFO9G4g2XaPreZ2SXOi8/oNHi2B0xdLNt5P1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1/K7aM9g5amNoWp7XI9RxtiepZxKPX6KvqH9nKn+KJbz0s98mYtMN7CweoQWilIJ
-	 oS9TW+Oo8rQj50G88vLFKW80eMjaMKlNtLJ5ekI8+oUL5mkRJo2RJBK1fTb9jl/0dk
-	 ZtPnVc80cwu3+xUa8M5jOvGwws4TG5BRq/qM+WRw=
+	b=OzgxqhITfbOt05VuKq/N03QoC+5WGawAOkT7JfpHEc/kFofhhSoytIcN+IoHh9DoX
+	 a7dn8v3RG3Pg0LDcM3gzf+Eqh7UNW0rESD+tSyF0Ik7wbp07NB2EnCEc80v9T+HHFV
+	 oLDJFUQ9jSYMP7TAvHja+C/8b2OCCBxbUebB1LBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lee Jones <lee@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 058/259] leds: trigger: Unregister sysfs attributes before calling deactivate()
-Date: Thu, 15 Aug 2024 15:23:11 +0200
-Message-ID: <20240815131905.051494910@linuxfoundation.org>
+Subject: [PATCH 5.4 059/259] perf report: Fix condition in sort__sym_cmp()
+Date: Thu, 15 Aug 2024 15:23:12 +0200
+Message-ID: <20240815131905.089640790@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -46,58 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit c0dc9adf9474ecb7106e60e5472577375aedaed3 ]
+[ Upstream commit cb39d05e67dc24985ff9f5150e71040fa4d60ab8 ]
 
-Triggers which have trigger specific sysfs attributes typically store
-related data in trigger-data allocated by the activate() callback and
-freed by the deactivate() callback.
+It's expected that both hist entries are in the same hists when
+comparing two.  But the current code in the function checks one without
+dso sort key and other with the key.  This would make the condition true
+in any case.
 
-Calling device_remove_groups() after calling deactivate() leaves a window
-where the sysfs attributes show/store functions could be called after
-deactivation and then operate on the just freed trigger-data.
+I guess the intention of the original commit was to add '!' for the
+right side too.  But as it should be the same, let's just remove it.
 
-Move the device_remove_groups() call to before deactivate() to close
-this race window.
-
-This also makes the deactivation path properly do things in reverse order
-of the activation path which calls the activate() callback before calling
-device_add_groups().
-
-Fixes: a7e7a3156300 ("leds: triggers: add device attribute support")
-Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20240504162533.76780-1-hdegoede@redhat.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 69849fc5d2119 ("perf hists: Move sort__has_dso into struct perf_hpp_list")
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240621170528.608772-2-namhyung@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-triggers.c | 2 +-
+ tools/perf/util/sort.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
-index 0d59763e40de1..3ec9629a1b002 100644
---- a/drivers/leds/led-triggers.c
-+++ b/drivers/leds/led-triggers.c
-@@ -121,9 +121,9 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
- 			flags);
- 		cancel_work_sync(&led_cdev->set_brightness_work);
- 		led_stop_software_blink(led_cdev);
-+		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
- 		if (led_cdev->trigger->deactivate)
- 			led_cdev->trigger->deactivate(led_cdev);
--		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
- 		led_cdev->trigger = NULL;
- 		led_cdev->trigger_data = NULL;
- 		led_cdev->activated = false;
+diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
+index baf73ca66a2bd..d2d149966acc8 100644
+--- a/tools/perf/util/sort.c
++++ b/tools/perf/util/sort.c
+@@ -269,7 +269,7 @@ sort__sym_cmp(struct hist_entry *left, struct hist_entry *right)
+ 	 * comparing symbol address alone is not enough since it's a
+ 	 * relative address within a dso.
+ 	 */
+-	if (!hists__has(left->hists, dso) || hists__has(right->hists, dso)) {
++	if (!hists__has(left->hists, dso)) {
+ 		ret = sort__dso_cmp(left, right);
+ 		if (ret != 0)
+ 			return ret;
 -- 
 2.43.0
 
