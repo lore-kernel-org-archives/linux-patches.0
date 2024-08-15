@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB071714A8;
-	Thu, 15 Aug 2024 13:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44977DA9E;
+	Thu, 15 Aug 2024 13:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729263; cv=none; b=dqUONE5rdHKr2gMw9Oj5DLJU8iZXYDYSatIvE6LEK9/2bOadqgNEoKPgQiFzgkC2YQF9kgDUfufe4xoJZoizuMK8Ik8zumOwZfvNjGtduLEkKLaAZ4umW4eBrrsBqOzCfqzSinAawNLmtttM96KLHcbsBBwVCxxBaQIGda/mmwI=
+	t=1723729266; cv=none; b=L7YuOALTbuWFmvkEjk8U8ZByPvQF+Qxwb7L5GDM4mODbymegj5XhvvAcQIEM3pZlPfLEYrZHwML6SDTutkwu4eOEQspNl56VbSxHmwmTNyUZO7DDecM2Jfvh6GfYBfl4a+Pobq8qnPgSYv7TpX6IMjXFtduthLhSdgVsmctqQaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729263; c=relaxed/simple;
-	bh=0P+8pQXtwfBmhgWgv2HpV6XB7Pcyk7rlxl2RLNucYJM=;
+	s=arc-20240116; t=1723729266; c=relaxed/simple;
+	bh=btCLhqanD33i1W3LS+OIp3KxnKQFTGbWHuqM9E7REi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QAIMZEA1U8pG6QRdXUJs+HAYCgXgXN7tfcmmroIHygOkDPTFFgdV5YKdWOOTlJ13gq0Q5fcKUj78SkRCvFT+NSodt7F95fBXcMnI6U1N5d584zlFPh9gyGcrlCqtltr4XTDEeqy6D66VR0YxFxyWJbK3oUri1v6ZluR7sUH07ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00GRCytL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g6UHOQSif0GTTD2LF0lN2rLS9BiecJHHCQLea56MUOeIsf299Zc7VQtbNMbjSV3LIPxXn8Et8RLzb8jiwivWmUuU2OE/JMiHl+5b51TrTH/dD4ZpRL2CEH1URcyFxHmRaewcmp4gKKQ25aCzR9nbpEM5Ee/kUJ3GGJnvRu5qeqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTRvOb8Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00GRCytL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45BBC32786;
-	Thu, 15 Aug 2024 13:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTRvOb8Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D471AC32786;
+	Thu, 15 Aug 2024 13:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729263;
-	bh=0P+8pQXtwfBmhgWgv2HpV6XB7Pcyk7rlxl2RLNucYJM=;
+	s=korg; t=1723729266;
+	bh=btCLhqanD33i1W3LS+OIp3KxnKQFTGbWHuqM9E7REi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00GRCytLXo5T6Ctd5+Kr3aIQyjWj5Y/0NKht6aFNvpQB/O6Ysq/F6S51wOaHTQYbm
-	 pnJPh5rmneUgrHSA94hOrg+l3y/BC5qBzJ1nwWuljMWUYcJu3u5xq6CadgW+Bf6wMA
-	 JB1If8rvnBsgKAeHNteHW0kzD/7PTtwFaQgjqteM=
+	b=sTRvOb8QogS9AuJ7RL9GvWvM6gfSAbHeR7jS45w481TabMKyWDzID/kA8PiZDDAZ5
+	 Bt9vauz4QCiFn7txXAQOI+KzqCt+YMOGWMNmAmIzZ+cbBsqJXjFvNM1iz7ao3kYrDA
+	 SaEN86Wuh3bvdv44XFcxVmKMAzypgkoYyPVN1XeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Andy Shevchenko <andy@kernel.org>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/484] firmware: turris-mox-rwtm: Fix checking return value of wait_for_completion_timeout()
-Date: Thu, 15 Aug 2024 15:18:21 +0200
-Message-ID: <20240815131942.945887951@linuxfoundation.org>
+Subject: [PATCH 5.15 044/484] firmware: turris-mox-rwtm: Initialize completion before mailbox
+Date: Thu, 15 Aug 2024 15:18:22 +0200
+Message-ID: <20240815131942.983716882@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -56,62 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 8467cfe821ac3526f7598682ad5f90689fa8cc49 ]
+[ Upstream commit 49e24c80d3c81c43e2a56101449e1eea32fcf292 ]
 
-The wait_for_completion_timeout() function returns 0 if timed out, and a
-positive value if completed. Fix the usage of this function.
+Initialize the completion before the mailbox channel is requested.
 
 Fixes: 389711b37493 ("firmware: Add Turris Mox rWTM firmware driver")
-Fixes: 2eab59cf0d20 ("firmware: turris-mox-rwtm: fail probing when firmware does not support hwrng")
 Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andy@kernel.org>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/turris-mox-rwtm.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/firmware/turris-mox-rwtm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/firmware/turris-mox-rwtm.c b/drivers/firmware/turris-mox-rwtm.c
-index fa4b904d74df1..98bdfadfa1d9e 100644
+index 98bdfadfa1d9e..c3d49fcc53305 100644
 --- a/drivers/firmware/turris-mox-rwtm.c
 +++ b/drivers/firmware/turris-mox-rwtm.c
-@@ -202,9 +202,8 @@ static int mox_get_board_info(struct mox_rwtm *rwtm)
+@@ -499,6 +499,7 @@ static int turris_mox_rwtm_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, rwtm);
+ 
+ 	mutex_init(&rwtm->busy);
++	init_completion(&rwtm->cmd_done);
+ 
+ 	rwtm->mbox_client.dev = dev;
+ 	rwtm->mbox_client.rx_callback = mox_rwtm_rx_callback;
+@@ -512,8 +513,6 @@ static int turris_mox_rwtm_probe(struct platform_device *pdev)
+ 		goto remove_files;
+ 	}
+ 
+-	init_completion(&rwtm->cmd_done);
+-
+ 	ret = mox_get_board_info(rwtm);
  	if (ret < 0)
- 		return ret;
- 
--	ret = wait_for_completion_timeout(&rwtm->cmd_done, HZ / 2);
--	if (ret < 0)
--		return ret;
-+	if (!wait_for_completion_timeout(&rwtm->cmd_done, HZ / 2))
-+		return -ETIMEDOUT;
- 
- 	ret = mox_get_status(MBOX_CMD_BOARD_INFO, reply->retval);
- 	if (ret == -ENODATA) {
-@@ -238,9 +237,8 @@ static int mox_get_board_info(struct mox_rwtm *rwtm)
- 	if (ret < 0)
- 		return ret;
- 
--	ret = wait_for_completion_timeout(&rwtm->cmd_done, HZ / 2);
--	if (ret < 0)
--		return ret;
-+	if (!wait_for_completion_timeout(&rwtm->cmd_done, HZ / 2))
-+		return -ETIMEDOUT;
- 
- 	ret = mox_get_status(MBOX_CMD_ECDSA_PUB_KEY, reply->retval);
- 	if (ret == -ENODATA) {
-@@ -277,9 +275,8 @@ static int check_get_random_support(struct mox_rwtm *rwtm)
- 	if (ret < 0)
- 		return ret;
- 
--	ret = wait_for_completion_timeout(&rwtm->cmd_done, HZ / 2);
--	if (ret < 0)
--		return ret;
-+	if (!wait_for_completion_timeout(&rwtm->cmd_done, HZ / 2))
-+		return -ETIMEDOUT;
- 
- 	return mox_get_status(MBOX_CMD_GET_RANDOM, rwtm->reply.retval);
- }
+ 		dev_warn(dev, "Cannot read board information: %i\n", ret);
 -- 
 2.43.0
 
