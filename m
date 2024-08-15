@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F36918D627;
-	Thu, 15 Aug 2024 13:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEA218D627;
+	Thu, 15 Aug 2024 13:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729292; cv=none; b=it1nHWeA7UkXahudsqD+FYB4kPPP2O6HcxR1xJFxAxK3htzBBl4oJ8nZL2H1D4GwK2tPQiamAQhdwT0WI1pamHncuYcU13G15TqOSxdXLBW9cQmku6ZNLk+wsm3LGt7VEdEOPmixkWkKaejNkNvhX6Ub8YDdzKVMayHhpNCTdNw=
+	t=1723729295; cv=none; b=eLy2JRx205bVq8zfeCQ0GQvwL0KfaumqWNNl93ClqEHgqObi8uKD4lJgUFcSCTQgwg4uEr39RMbO00K6MbP8PFg5kxpWTg5uMvVrtPpb0dJe6im7ke2gKpYIZ4nst19vkUwRqghyjdyYljI3/PehFfSlPJIrvKKGIlJNwrlM47M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729292; c=relaxed/simple;
-	bh=mGVLiYAbiU9dWDQvopC2SQsDaSFZAfKcnFHo3dWSDUA=;
+	s=arc-20240116; t=1723729295; c=relaxed/simple;
+	bh=70aId82YrltLrsM+2MdArZt9T1h/aiQ/ECBYDm7HskI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQz3b3MKIwWQxV7yKNYT5uEuFgeNhEaV+BIXt/uqmJ6ZE/smAthZ4kdDqpGlPSn8y3cC+Bjw2gtrqd22/SptT0LTde2fwMdI3DZlxFqc2G3Scmw+SKsBCebVNGA1BDZnprZHDDR1FzKD8QugYzibetUc0g50I0MFzFdlwW20P60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NP1nH3Qj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1ub1RZLQ5NwPP/oAyyNoVDQuiMMa1/EZGk9MaVbJ4qUg5uHO+ShsbqkW5mZEqLBY3955ia/H2Ks47tvh1difKsYREwm7iGTkO+LdBwlp/8N1c0i76FcGukbdeklnkuXtYQ0CGtw/ZJQyVShTtYtilV26ZrklLN0P/+Qcc+6zXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FthvWmK/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NP1nH3Qj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B46C32786;
-	Thu, 15 Aug 2024 13:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FthvWmK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1851C32786;
+	Thu, 15 Aug 2024 13:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729292;
-	bh=mGVLiYAbiU9dWDQvopC2SQsDaSFZAfKcnFHo3dWSDUA=;
+	s=korg; t=1723729295;
+	bh=70aId82YrltLrsM+2MdArZt9T1h/aiQ/ECBYDm7HskI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NP1nH3QjZeATp8+2lE2BC5xP1Tkro6naepD+2zwIs4fLIrZMgXG0uT5BD+10GFmrn
-	 ++x+fRn67OgZc/pJcj7+ewZftlhZHgB0ROj95xIZUsECx5IMUoErY8K1Tqmia4oSCI
-	 jfkDwtMMr8jmLyvy26d12o/eCZ0dbX485RIe6LAA=
+	b=FthvWmK/dgh2pSWmPqv30oaHN0t6uu7nrJAEzTFt5zaNQgGlfLCeBddcxST9vVtgH
+	 fRIgowrJfyYAbtzTsqDAc0HCaNcOra1bGv4Oybdx4SkjYxwR7Bst8mawpGMC26jO1S
+	 S7RhHi7fliyiwKhxZNmvjOF4HL7ciRhcM7vD2kQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neal Cardwell <ncardwell@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/484] tcp: fix race in tcp_write_err()
-Date: Thu, 15 Aug 2024 15:18:29 +0200
-Message-ID: <20240815131943.254329296@linuxfoundation.org>
+Subject: [PATCH 5.15 052/484] tcp: fix races in tcp_v[46]_err()
+Date: Thu, 15 Aug 2024 15:18:30 +0200
+Message-ID: <20240815131943.292954333@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -54,60 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 853c3bd7b7917670224c9fe5245bd045cac411dd ]
+[ Upstream commit fde6f897f2a184546bf5516ac736523ef24dc6a7 ]
 
-I noticed flakes in a packetdrill test, expecting an epoll_wait()
-to return EPOLLERR | EPOLLHUP on a failed connect() attempt,
-after multiple SYN retransmits. It sometimes return EPOLLERR only.
+These functions have races when they:
 
-The issue is that tcp_write_err():
- 1) writes an error in sk->sk_err,
- 2) calls sk_error_report(),
- 3) then calls tcp_done().
+1) Write sk->sk_err
+2) call sk_error_report(sk)
+3) call tcp_done(sk)
 
-tcp_done() is writing SHUTDOWN_MASK into sk->sk_shutdown,
-among other things.
+As described in prior patches in this series:
 
-Problem is that the awaken user thread (from 2) sk_error_report())
-might call tcp_poll() before tcp_done() has written sk->sk_shutdown.
+An smp_wmb() is missing.
+We should call tcp_done() before sk_error_report(sk)
+to have consistent tcp_poll() results on SMP hosts.
 
-tcp_poll() only sees a non zero sk->sk_err and returns EPOLLERR.
-
-This patch fixes the issue by making sure to call sk_error_report()
-after tcp_done().
-
-tcp_write_err() also lacks an smp_wmb().
-
-We can reuse tcp_done_with_error() to factor out the details,
-as Neal suggested.
+Use tcp_done_with_error() where we centralized the
+correct sequence.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240528125253.1966136-3-edumazet@google.com
+Link: https://lore.kernel.org/r/20240528125253.1966136-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/ipv4/tcp_ipv4.c | 11 +++--------
+ net/ipv6/tcp_ipv6.c | 10 +++-------
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index ed01b775b8947..1a3a84992b9be 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -67,11 +67,7 @@ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index a1ed81ff9a81d..44a9fa957301b 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -592,15 +592,10 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
  
- static void tcp_write_err(struct sock *sk)
- {
--	WRITE_ONCE(sk->sk_err, READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT);
--	sk_error_report(sk);
+ 		ip_icmp_error(sk, skb, err, th->dest, info, (u8 *)th);
+ 
+-		if (!sock_owned_by_user(sk)) {
+-			WRITE_ONCE(sk->sk_err, err);
 -
--	tcp_write_queue_purge(sk);
--	tcp_done(sk);
-+	tcp_done_with_error(sk, READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT);
- 	__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONTIMEOUT);
- }
+-			sk_error_report(sk);
+-
+-			tcp_done(sk);
+-		} else {
++		if (!sock_owned_by_user(sk))
++			tcp_done_with_error(sk, err);
++		else
+ 			WRITE_ONCE(sk->sk_err_soft, err);
+-		}
+ 		goto out;
+ 	}
  
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index c9aee34ae469f..fedbce7ed853e 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -485,14 +485,10 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 
+ 		ipv6_icmp_error(sk, skb, err, th->dest, ntohl(info), (u8 *)th);
+ 
+-		if (!sock_owned_by_user(sk)) {
+-			WRITE_ONCE(sk->sk_err, err);
+-			sk_error_report(sk);		/* Wake people up to see the error (see connect in sock.c) */
+-
+-			tcp_done(sk);
+-		} else {
++		if (!sock_owned_by_user(sk))
++			tcp_done_with_error(sk, err);
++		else
+ 			WRITE_ONCE(sk->sk_err_soft, err);
+-		}
+ 		goto out;
+ 	case TCP_LISTEN:
+ 		break;
 -- 
 2.43.0
 
