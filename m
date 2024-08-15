@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE32762D2;
-	Thu, 15 Aug 2024 14:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E80A762D2;
+	Thu, 15 Aug 2024 14:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730755; cv=none; b=VLOPV5U9MJMrnvlvPW/pG981fkVVjLB+Zb1mmJl81qkpisZ3rUJ1F3fnuIY7zcXIjvyidu/70MVmB/lP8tQYGeJ2wWKwjceaaQ58H6MBkvdWVZREDOvUSwCEwfOmOwYtylY5jqDQn7A257dRAfps+2NaMeYrd4VXi5Oy+3CHIyU=
+	t=1723730759; cv=none; b=DRyLme69u+/ac9FI9vdTtyfbW/Z6/ZXKxSS34ti5FdtudtrzFBUEusYU0bNlMNUcYoPq6X9kmSk5O5829ZNAaacU7EYySGlgyYJJmItWo9J92+sD3BqygvGMC5ho+jweL+1QpAJRitps54nfEdCkskPa/LqBbbLDJ/mod43uNjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730755; c=relaxed/simple;
-	bh=SlcaWm6mVHXofjUM5Mwcz4Eqcjbt/z7sAtzHEy7zDoM=;
+	s=arc-20240116; t=1723730759; c=relaxed/simple;
+	bh=oQ0Njouh99ayXOAO0ZjTwnuf8tOTu+gcQEEVcfrv65k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPvVtGuWJ7qFxT/RZfqXvbKyuTta48oEkhxW7NtjVfZQokr3uptGFHdGPEgtH9/C4JLvoT2XYkwUMMwXIBVbvDN8d/f33WgDDfNnz6ApvPFnBxk+HPNOcvKJcFJsA8ghAiR+ZBxLZEn5W2K6cr8YPM3cDbZXfzq4Qy6X8ETlu0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOhQImHq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z47QgfbPEUdTYSz7cL3o8USDDapJKKu6Fu3KtOaZmmwM+tr5n/yDSnW+tt8C2937fOOTqrzyAqGMrhGBM/nTxPK6TpV62WJtAadxvBuPSpCRAl3DI4lktM/i5StEmWf/jH/SMUgbwflP9k8dE7HFn7p8c/wvyaVbezG+PqdWBnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hg4Z3rR8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOhQImHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1F0C32786;
-	Thu, 15 Aug 2024 14:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hg4Z3rR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F87C32786;
+	Thu, 15 Aug 2024 14:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730755;
-	bh=SlcaWm6mVHXofjUM5Mwcz4Eqcjbt/z7sAtzHEy7zDoM=;
+	s=korg; t=1723730758;
+	bh=oQ0Njouh99ayXOAO0ZjTwnuf8tOTu+gcQEEVcfrv65k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOhQImHq6WG36kSyrZGMEVUsAcKnbb8wyMliFr3pDxVBE5ue/bTl9KVC8wfErDX31
-	 DzQ13v90t9vh0tBgmAv7I7RWiersFAbX/PkX2WPwQhVLtTMq86NjqpFgvDq1yUnkil
-	 JqR7fXIH0rnbwE2k/SrN7z//nG/1jC/y6tVAlToQ=
+	b=Hg4Z3rR8q1yWYn42rtaJuySzZbLSb6yMiKVCkqkWv6cx9MD5kZ6WC8wQaO78IDQI3
+	 CS0MCNttzqxWt+U8T3PIzAazDClS4/X/AOHFmItz9xKDdcCyDoC/14M2pR5F4vmwyW
+	 BiAlM6YN6yBHp8K09aQWBlmvPn0ZXo/jVcXJWD3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 22/38] sunrpc: use the struct net as the svc proc private
-Date: Thu, 15 Aug 2024 15:25:56 +0200
-Message-ID: <20240815131833.807902638@linuxfoundation.org>
+Subject: [PATCH 6.1 23/38] nfsd: rename NFSD_NET_* to NFSD_STATS_*
+Date: Thu, 15 Aug 2024 15:25:57 +0200
+Message-ID: <20240815131833.847683892@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -53,31 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 418b9687dece5bd763c09b5c27a801a7e3387be9 ]
+[ Upstream commit d98416cc2154053950610bb6880911e3dcbdf8c5 ]
 
-nfsd is the only thing using this helper, and it doesn't use the private
-currently.  When we switch to per-network namespace stats we will need
-the struct net * in order to get to the nfsd_net.  Use the net as the
-proc private so we can utilize this when we make the switch over.
+We're going to merge the stats all into per network namespace in
+subsequent patches, rename these nn counters to be consistent with the
+rest of the stats.
 
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/stats.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/netns.h    |    4 ++--
+ fs/nfsd/nfscache.c |    4 ++--
+ fs/nfsd/stats.h    |    6 +++---
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/net/sunrpc/stats.c
-+++ b/net/sunrpc/stats.c
-@@ -309,7 +309,7 @@ EXPORT_SYMBOL_GPL(rpc_proc_unregister);
- struct proc_dir_entry *
- svc_proc_register(struct net *net, struct svc_stat *statp, const struct proc_ops *proc_ops)
- {
--	return do_register(net, statp->program->pg_name, statp, proc_ops);
-+	return do_register(net, statp->program->pg_name, net, proc_ops);
- }
- EXPORT_SYMBOL_GPL(svc_proc_register);
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -25,9 +25,9 @@ struct nfsd4_client_tracking_ops;
  
+ enum {
+ 	/* cache misses due only to checksum comparison failures */
+-	NFSD_NET_PAYLOAD_MISSES,
++	NFSD_STATS_PAYLOAD_MISSES,
+ 	/* amount of memory (in bytes) currently consumed by the DRC */
+-	NFSD_NET_DRC_MEM_USAGE,
++	NFSD_STATS_DRC_MEM_USAGE,
+ 	NFSD_NET_COUNTERS_NUM
+ };
+ 
+--- a/fs/nfsd/nfscache.c
++++ b/fs/nfsd/nfscache.c
+@@ -696,7 +696,7 @@ int nfsd_reply_cache_stats_show(struct s
+ 		   atomic_read(&nn->num_drc_entries));
+ 	seq_printf(m, "hash buckets:          %u\n", 1 << nn->maskbits);
+ 	seq_printf(m, "mem usage:             %lld\n",
+-		   percpu_counter_sum_positive(&nn->counter[NFSD_NET_DRC_MEM_USAGE]));
++		   percpu_counter_sum_positive(&nn->counter[NFSD_STATS_DRC_MEM_USAGE]));
+ 	seq_printf(m, "cache hits:            %lld\n",
+ 		   percpu_counter_sum_positive(&nfsdstats.counter[NFSD_STATS_RC_HITS]));
+ 	seq_printf(m, "cache misses:          %lld\n",
+@@ -704,7 +704,7 @@ int nfsd_reply_cache_stats_show(struct s
+ 	seq_printf(m, "not cached:            %lld\n",
+ 		   percpu_counter_sum_positive(&nfsdstats.counter[NFSD_STATS_RC_NOCACHE]));
+ 	seq_printf(m, "payload misses:        %lld\n",
+-		   percpu_counter_sum_positive(&nn->counter[NFSD_NET_PAYLOAD_MISSES]));
++		   percpu_counter_sum_positive(&nn->counter[NFSD_STATS_PAYLOAD_MISSES]));
+ 	seq_printf(m, "longest chain len:     %u\n", nn->longest_chain);
+ 	seq_printf(m, "cachesize at longest:  %u\n", nn->longest_chain_cachesize);
+ 	return 0;
+--- a/fs/nfsd/stats.h
++++ b/fs/nfsd/stats.h
+@@ -80,17 +80,17 @@ static inline void nfsd_stats_io_write_a
+ 
+ static inline void nfsd_stats_payload_misses_inc(struct nfsd_net *nn)
+ {
+-	percpu_counter_inc(&nn->counter[NFSD_NET_PAYLOAD_MISSES]);
++	percpu_counter_inc(&nn->counter[NFSD_STATS_PAYLOAD_MISSES]);
+ }
+ 
+ static inline void nfsd_stats_drc_mem_usage_add(struct nfsd_net *nn, s64 amount)
+ {
+-	percpu_counter_add(&nn->counter[NFSD_NET_DRC_MEM_USAGE], amount);
++	percpu_counter_add(&nn->counter[NFSD_STATS_DRC_MEM_USAGE], amount);
+ }
+ 
+ static inline void nfsd_stats_drc_mem_usage_sub(struct nfsd_net *nn, s64 amount)
+ {
+-	percpu_counter_sub(&nn->counter[NFSD_NET_DRC_MEM_USAGE], amount);
++	percpu_counter_sub(&nn->counter[NFSD_STATS_DRC_MEM_USAGE], amount);
+ }
+ 
+ #endif /* _NFSD_STATS_H */
 
 
