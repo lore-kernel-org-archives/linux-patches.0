@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57B629CE6;
-	Thu, 15 Aug 2024 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407481AC896;
+	Thu, 15 Aug 2024 14:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731753; cv=none; b=nWZwUrLGequKchMQBvk4b5Yde6A2iPDN780YQ7A8XNtJagNwNIv2sPeiJPze5YmkYg4iZx1hrCWgCetSus/MbBXTbQb2huLXyIBBY356Rht8AuaOtu48nEEwLUC05uvsOK5Ruv67YhbAUs3W9GG0S4f8oKovKa8aovNp471DJDI=
+	t=1723731757; cv=none; b=T69lqWBZCTyCydkqgCLtjqLdyjTorcdzXxz178WNzHgjQ92/BnVitAxoQquDUjgckNqZ6oasZ83csOiQnOKAXQUyvKtUxGsMvmSCxqYqZFdN/ZuE79Lqz0Pz4wUh4DuzV9S7XmNpGH8qY7qg7gOIuHOCDc0I2rBCeX2MLbRQFE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731753; c=relaxed/simple;
-	bh=C+eu428rsEMNSXX2YlEu8DoJuHJsKPrQfRW4ZunyHzg=;
+	s=arc-20240116; t=1723731757; c=relaxed/simple;
+	bh=TGr3xFLJGydlOPQM906cuid03lA00r3SurCZsOXr3gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZOaLnggcyBkwF8GXJv9nNmuax61/zbraxBrqduP/4tBQt1deJjm2sR1iksA8o2D9W4xkkjae6UUyGP1JzXuBAhpAsuJ63cH+cCeBugOIB1H2/qdzSHJMl660G9H/AHr9Rcd/MMP/iMTnhEhJoNRLKD29CXf4Ia6vioGZNFipeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t10yUc5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P65SOudPngyVZ18JCqEjuu3byILoCQ4GT9hvdisNqo5tx64ZPfuq+pqdByDlGXnE2cllWPHpFB2oJvDJK4VDIy+q/S1ojQTxFIVJBIv25iUXP+fkgnYShc1UzRxBar3PUFUAJBdYm9ps6xOsfpxFbuSyqBAdnm9RlX3kNaAAyX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svGqThm/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t10yUc5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351BEC32786;
-	Thu, 15 Aug 2024 14:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svGqThm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEECC4AF0C;
+	Thu, 15 Aug 2024 14:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731753;
-	bh=C+eu428rsEMNSXX2YlEu8DoJuHJsKPrQfRW4ZunyHzg=;
+	s=korg; t=1723731756;
+	bh=TGr3xFLJGydlOPQM906cuid03lA00r3SurCZsOXr3gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t10yUc5AoQn7bKoi9WvA78nof3Wwy1CH/ZPmVi9fvrJfvNs+2ZyyP5qXY9Q2RHdHp
-	 KedsNXW65xh8XIAEe/5UAEvbQIFrLeb8EKTPUBsgtFTCYWc5IH5b5zkoZYOTyU7leo
-	 gfyPkbYIckKXJBAcczkOmEoDb8Q6l266Bnt5VifY=
+	b=svGqThm/dY1SwAC71eWElNCGYt9ltm4XF5432V3f1bPrRaehVZnM+M5SkTE5fYyjR
+	 w7KuHOSEYmUDEuA97beAYlP6HnWUD0x69cxyrp0uhrQjBhgDjEl24qGWwwFt+KzsYa
+	 n/edZhyEuh2QvgptWjgZS282wA3jE0T2FLFyEc0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 226/259] spi: spi-fsl-lpspi: Fix scldiv calculation
-Date: Thu, 15 Aug 2024 15:25:59 +0200
-Message-ID: <20240815131911.509082955@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 5.4 227/259] drm/client: fix null pointer dereference in drm_client_modeset_probe
+Date: Thu, 15 Aug 2024 15:26:00 +0200
+Message-ID: <20240815131911.546893917@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -51,57 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 730bbfaf7d4890bd99e637db7767dc68cfeb24e7 ]
+commit 113fd6372a5bb3689aba8ef5b8a265ed1529a78f upstream.
 
-The effective SPI clock frequency should never exceed speed_hz
-otherwise this might result in undefined behavior of the SPI device.
+In drm_client_modeset_probe(), the return value of drm_mode_duplicate() is
+assigned to modeset->mode, which will lead to a possible NULL pointer
+dereference on failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-Currently the scldiv calculation could violate this constraint.
-For the example parameters perclk_rate = 24 MHz and speed_hz = 7 MHz,
-the function fsl_lpspi_set_bitrate will determine perscale = 0 and
-scldiv = 1, which is a effective SPI clock of 8 MHz.
-
-So fix this by rounding up the quotient of perclk_rate and speed_hz.
-While this never change within the loop, we can pull this out.
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20240804113611.83613-1-wahrenst@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: cf13909aee05 ("drm/fb-helper: Move out modeset config code")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240802044736.1570345-1-make24@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_client_modeset.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 5351185fd9af7..2708bf15e1263 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -317,7 +317,7 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
- static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- {
- 	struct lpspi_config config = fsl_lpspi->config;
--	unsigned int perclk_rate, scldiv;
-+	unsigned int perclk_rate, scldiv, div;
- 	u8 prescale;
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -792,6 +792,11 @@ int drm_client_modeset_probe(struct drm_
  
- 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
-@@ -328,8 +328,10 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 		return -EINVAL;
- 	}
- 
-+	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
+ 			kfree(modeset->mode);
+ 			modeset->mode = drm_mode_duplicate(dev, mode);
++			if (!modeset->mode) {
++				ret = -ENOMEM;
++				break;
++			}
 +
- 	for (prescale = 0; prescale < 8; prescale++) {
--		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
-+		scldiv = div / (1 << prescale) - 2;
- 		if (scldiv < 256) {
- 			fsl_lpspi->config.prescale = prescale;
- 			break;
--- 
-2.43.0
-
+ 			drm_connector_get(connector);
+ 			modeset->connectors[modeset->num_connectors++] = connector;
+ 			modeset->x = offset->x;
 
 
