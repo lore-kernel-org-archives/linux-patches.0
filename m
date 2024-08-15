@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F807210FB;
-	Thu, 15 Aug 2024 14:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2B01DFFB;
+	Thu, 15 Aug 2024 14:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732421; cv=none; b=cLCzomCV/FtKS6TVnigzBvF5bh5b3pMHRwjLTwAsR2qsoMWdKVLM4HjpbMJxp6/QJ062ssq1k52lyMj8P0bGNuLVlxv7jJ3AY5OZOZMSRA37DP/do9I53Ms90/wFjXB854RNcoGsTj/PfKcAHv1r85XvylBIVQDD1gmLr+hikn0=
+	t=1723732425; cv=none; b=LGnew9CZZNtGiT0h0cpvygB6ClsBoySs2wMvUv8J3RTxrOaQvYWHRKB/+mCgZA83rM5PtIoBetqsS9eAWNMfPq5gZ305pShUMtPlauSIUojaR2P2t0DvZ1h2tkSLB+1jYxo8hR5BNE3HGNVMy+4kDH2J5leksFoNcbtUdVxx3xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732421; c=relaxed/simple;
-	bh=eGp2SLQCLMEoaXlBue1qlmI6ODmY43tfWmLXL/yO2fA=;
+	s=arc-20240116; t=1723732425; c=relaxed/simple;
+	bh=QhA/jbdh2LSkUfsqiKrtQ6nDtZc0z7hudPf/pxz2JY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDImQT/LNxRV9KM7V4xt0Pa1etgyzBUhhF4lOxRkEd7/ur0XwrdRVnWWUd0Wm52+sjSG0kGIzCkk0vJXV3IK+wYMzD65R87ikmwUtq4CiO3F3EL2LqiFd+1AHYhACs3QYCULlf1lds14+6bHl93BHbI5N35sfaW2jw+9hOd2WBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQxM66nd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c8DZ1TpRKEclN3BdG0EzJLu+yXMnMhHQdN9TkjxmmQXXYahhhdjMWtuKU6AITfOmOfw2n0l1VHSCl/NfNXwy8F4WFCAYHTJSEdcweOP9CG+H8AYuSYbqqdqmWydSI5fzyBRXeEcPz/4B6Fxg72nZcS5z5c8usNqe0LcRAwaSi6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDceCCS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQxM66nd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0B0C32786;
-	Thu, 15 Aug 2024 14:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDceCCS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F19C32786;
+	Thu, 15 Aug 2024 14:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732421;
-	bh=eGp2SLQCLMEoaXlBue1qlmI6ODmY43tfWmLXL/yO2fA=;
+	s=korg; t=1723732425;
+	bh=QhA/jbdh2LSkUfsqiKrtQ6nDtZc0z7hudPf/pxz2JY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQxM66nd5M9u0eLlhDOy6/W8cQNmkrAwGwOS5rNe89mfCMFWt/TxQwJ7Dn5yQlVJR
-	 QQbWXk4UPXRALZ3iDm2Hl9EMmn8ShBDDQ6NYW6RGUP7VNjhdUCK879FsgqsdpyiB7A
-	 5AJzmxrc75vpBbTXTKEEszx1CeK/Eo2Szx787Ycw=
+	b=YDceCCS/lVWD9wn58QOpUi4X9g830K74dp52rkFJhirXP6XQV2Yw9842Ti3fjTq/n
+	 tsNMhKSmurOnQBmbUxLkv4MfIOD3h6JuLCNRegL6F2+Z3aO522mfJ3snuO1qV2ea3+
+	 PZKZQf4vI5ceGIpEoYQRSLdpYgJ65SLHBFCrKUQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 174/352] platform: mips: cpu_hwmon: Disable driver on unsupported hardware
-Date: Thu, 15 Aug 2024 15:24:00 +0200
-Message-ID: <20240815131925.999523168@linuxfoundation.org>
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 5.10 175/352] RDMA/iwcm: Fix a use-after-free related to destroying CM IDs
+Date: Thu, 15 Aug 2024 15:24:01 +0200
+Message-ID: <20240815131926.038742863@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -50,32 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit f4d430db17b4ef4e9c3c352a04b2fe3c93011978 upstream.
+commit aee2424246f9f1dadc33faa78990c1e2eb7826e4 upstream.
 
-cpu_hwmon is unsupported on CPUs without loongson_chiptemp
-register and csr.
+iw_conn_req_handler() associates a new struct rdma_id_private (conn_id) with
+an existing struct iw_cm_id (cm_id) as follows:
+
+        conn_id->cm_id.iw = cm_id;
+        cm_id->context = conn_id;
+        cm_id->cm_handler = cma_iw_handler;
+
+rdma_destroy_id() frees both the cm_id and the struct rdma_id_private. Make
+sure that cm_work_handler() does not trigger a use-after-free by only
+freeing of the struct rdma_id_private after all pending work has finished.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240605145117.397751-6-bvanassche@acm.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/mips/cpu_hwmon.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/iwcm.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/mips/cpu_hwmon.c
-+++ b/drivers/platform/mips/cpu_hwmon.c
-@@ -139,6 +139,9 @@ static int __init loongson_hwmon_init(vo
- 		csr_temp_enable = csr_readl(LOONGSON_CSR_FEATURES) &
- 				  LOONGSON_CSRF_TEMP;
+--- a/drivers/infiniband/core/iwcm.c
++++ b/drivers/infiniband/core/iwcm.c
+@@ -370,8 +370,10 @@ EXPORT_SYMBOL(iw_cm_disconnect);
+  *
+  * Clean up all resources associated with the connection and release
+  * the initial reference taken by iw_create_cm_id.
++ *
++ * Returns true if and only if the last cm_id_priv reference has been dropped.
+  */
+-static void destroy_cm_id(struct iw_cm_id *cm_id)
++static bool destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+ 	struct iwcm_id_private *cm_id_priv;
+ 	struct ib_qp *qp;
+@@ -441,7 +443,7 @@ static void destroy_cm_id(struct iw_cm_i
+ 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
+ 	}
  
-+	if (!csr_temp_enable && !loongson_chiptemp[0])
-+		return -ENODEV;
-+
- 	nr_packages = loongson_sysconf.nr_cpus /
- 		loongson_sysconf.cores_per_package;
+-	(void)iwcm_deref_id(cm_id_priv);
++	return iwcm_deref_id(cm_id_priv);
+ }
  
+ /*
+@@ -452,7 +454,8 @@ static void destroy_cm_id(struct iw_cm_i
+  */
+ void iw_destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+-	destroy_cm_id(cm_id);
++	if (!destroy_cm_id(cm_id))
++		flush_workqueue(iwcm_wq);
+ }
+ EXPORT_SYMBOL(iw_destroy_cm_id);
+ 
+@@ -1036,7 +1039,7 @@ static void cm_work_handler(struct work_
+ 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
+ 			ret = process_event(cm_id_priv, &levent);
+ 			if (ret)
+-				destroy_cm_id(&cm_id_priv->id);
++				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
+ 		} else
+ 			pr_debug("dropping event %d\n", levent.event);
+ 		if (iwcm_deref_id(cm_id_priv))
 
 
