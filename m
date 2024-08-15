@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3894A1B3753;
-	Thu, 15 Aug 2024 14:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC42B1AD9E8;
+	Thu, 15 Aug 2024 14:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730959; cv=none; b=Bm9YNupxbxZHhAVlJXg/nAnkOY0gNsI829Syp07fZGYfwl5LFQOY9Hawe9cM/DFPLXsOAH1VacQDYBU+BjKNjyjHou/rZlbTquVDRJD0FZYY6mQT6T/OPXuxLnCv0uJ8LsliQiSQZOUM3oPqHMApQp0fR8cint2vN1UkVT9830Y=
+	t=1723730963; cv=none; b=TQy+DJN5aKqFkj8IiLKho5O79eH1o0vfAu394As3r1XZevePOjtikWFQoSTEtyLsaMTKhM+dRuL1lXOyFJUwt6ZixZjpPVGTmIGbAciAtBi4N7gq1VePAk6ChKT01zxUs9l5SCoX/oMCbiZQmHsnpBMREk92UcxDXkay5sVB1lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730959; c=relaxed/simple;
-	bh=nh0BvCUVkXpkZzetoN6eb4roRoHkR+yc+6cukihhySs=;
+	s=arc-20240116; t=1723730963; c=relaxed/simple;
+	bh=HvGQJ/J9mLylRVilvVG0RyrxK5M7Q8YWChhvffl4xGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5VNsiv+PQdv/ZRNms3Bx0e50Ih1KkL0nOxt7IkZ//4m1DIPmb5AjoGjJ5HfcWWcEqVtCPpwJ/smT4cUYAGraYu8GXlGsewTBYqMSYAsnMc1Z1X+iNlkm5IZpHVSksdBYRGCQFZIjZFKehDLl5JNt5Ac7N4wAkIH+Kr4ogGFXfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWXWjm0k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B5KIR19EIGY37dgEhJIVTIhp+LcFzr0n8d2XDeX7Dcznj/DBmyW6HFJyx+8grcgCrn1vk3j6t8h+Zqa2buMMcni2PqYvYYpXRsl5W53AYqKFfM10VCrk3mQKckUG51BhT9HSRHGEnlx0ur2EHwHIXwEpRV6M9iKEBz1gIbEx/tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2KfEvcu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWXWjm0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4489C4AF0A;
-	Thu, 15 Aug 2024 14:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2KfEvcu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031C3C32786;
+	Thu, 15 Aug 2024 14:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730959;
-	bh=nh0BvCUVkXpkZzetoN6eb4roRoHkR+yc+6cukihhySs=;
+	s=korg; t=1723730962;
+	bh=HvGQJ/J9mLylRVilvVG0RyrxK5M7Q8YWChhvffl4xGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWXWjm0k/8keYIlluZOuQSQY+5bDtMqlyBrEqZpGl2xTTQFLJlCsJGfBpjgB4WHsW
-	 xyVsuYfEnlI8nXycYqgcDl8MhV6o2g6wyPR8qs6F8aTwNWscUL5zr/ODXh8cOQycMU
-	 Q3WEgqnEmGCQkj/vOBzeX2FJSmkXPBdflKKFiDj4=
+	b=E2KfEvcuvM7zmAQLnuyxw2xp9zdgiFip65H3cqjBdK8sZ3x08oHKcgFhYLSt7y+QG
+	 dSWMH6ky1PbdlHsQOc/75NbjD2N9wI3kLwEL5D/8zMFh3oZsgweqHn6sYIDi2JCAsw
+	 3+knQvaOK7V4AaNe5k/qNC5Cw2AyJk+Dxu+WFAg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 46/67] Bluetooth: RFCOMM: Fix not validating setsockopt user input
-Date: Thu, 15 Aug 2024 15:26:00 +0200
-Message-ID: <20240815131840.083071569@linuxfoundation.org>
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 6.6 20/67] genirq/cpuhotplug: Retry with cpu_online_mask when migration fails
+Date: Thu, 15 Aug 2024 15:25:34 +0200
+Message-ID: <20240815131839.111621911@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -52,83 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit a97de7bff13b1cc825c1b1344eaed8d6c2d3e695 ]
+commit 88d724e2301a69c1ab805cd74fc27aa36ae529e0 upstream.
 
-syzbot reported rfcomm_sock_setsockopt_old() is copying data without
-checking user input length.
+When a CPU goes offline, the interrupts affine to that CPU are
+re-configured.
 
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset
-include/linux/sockptr.h:49 [inline]
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr
-include/linux/sockptr.h:55 [inline]
-BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt_old
-net/bluetooth/rfcomm/sock.c:632 [inline]
-BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt+0x893/0xa70
-net/bluetooth/rfcomm/sock.c:673
-Read of size 4 at addr ffff8880209a8bc3 by task syz-executor632/5064
+Managed interrupts undergo either migration to other CPUs or shutdown if
+all CPUs listed in the affinity are offline. The migration of managed
+interrupts is guaranteed on x86 because there are interrupt vectors
+reserved.
 
-Fixes: 9f2c8a03fbb3 ("Bluetooth: Replace RFCOMM link mode with security level")
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Regular interrupts are migrated to a still online CPU in the affinity mask
+or if there is no online CPU to any online CPU.
+
+This works as long as the still online CPUs in the affinity mask have
+interrupt vectors available, but in case that none of those CPUs has a
+vector available the migration fails and the device interrupt becomes
+stale.
+
+This is not any different from the case where the affinity mask does not
+contain any online CPU, but there is no fallback operation for this.
+
+Instead of giving up, retry the migration attempt with the online CPU mask
+if the interrupt is not managed, as managed interrupts cannot be affected
+by this problem.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240423073413.79625-1-dongli.zhang@oracle.com
+Cc: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ kernel/irq/cpuhotplug.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index b54e8a530f55a..29aa07e9db9d7 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -629,7 +629,7 @@ static int rfcomm_sock_setsockopt_old(struct socket *sock, int optname,
- 
- 	switch (optname) {
- 	case RFCOMM_LM:
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
-+		if (bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen)) {
- 			err = -EFAULT;
- 			break;
- 		}
-@@ -664,7 +664,6 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
- 	struct sock *sk = sock->sk;
- 	struct bt_security sec;
- 	int err = 0;
--	size_t len;
- 	u32 opt;
- 
- 	BT_DBG("sk %p", sk);
-@@ -686,11 +685,9 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		sec.level = BT_SECURITY_LOW;
- 
--		len = min_t(unsigned int, sizeof(sec), optlen);
--		if (copy_from_sockptr(&sec, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (sec.level > BT_SECURITY_HIGH) {
- 			err = -EINVAL;
-@@ -706,10 +703,9 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt)
- 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
--- 
-2.43.0
-
+--- a/kernel/irq/cpuhotplug.c
++++ b/kernel/irq/cpuhotplug.c
+@@ -130,6 +130,22 @@ static bool migrate_one_irq(struct irq_d
+ 	 * CPU.
+ 	 */
+ 	err = irq_do_set_affinity(d, affinity, false);
++
++	/*
++	 * If there are online CPUs in the affinity mask, but they have no
++	 * vectors left to make the migration work, try to break the
++	 * affinity by migrating to any online CPU.
++	 */
++	if (err == -ENOSPC && !irqd_affinity_is_managed(d) && affinity != cpu_online_mask) {
++		pr_debug("IRQ%u: set affinity failed for %*pbl, re-try with online CPUs\n",
++			 d->irq, cpumask_pr_args(affinity));
++
++		affinity = cpu_online_mask;
++		brokeaff = true;
++
++		err = irq_do_set_affinity(d, affinity, false);
++	}
++
+ 	if (err) {
+ 		pr_warn_ratelimited("IRQ%u: set affinity failed(%d).\n",
+ 				    d->irq, err);
 
 
