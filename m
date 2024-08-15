@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448DC63D5;
-	Thu, 15 Aug 2024 14:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBD863D5;
+	Thu, 15 Aug 2024 14:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732511; cv=none; b=Maxu/GC64C4qgCY5fSnnsNrx0LoCwqRphnVQeJT9/uGCzhIOzP2hyFF0djgVAdIG3iwIUwYdJQbXDiMaPzL6IUmQm05rK+UDyoADw4iGVILTrIYDiz2js6dNkcqsBFRKMfXpWfHwbQb/vcsSS7JLJ8dN0J3Np2rE0NebuJR0ZL0=
+	t=1723732514; cv=none; b=WhmohiT05N5S7m/hbTkYZu73NdsDyfF3wx9yH0qlmlAAa0n0CYoJoWmiMbBhhWwaYbLneCnCgT6Iuk3PfWpFOr1rvkzoiv41lh683MN7+0gqIol8XuVeGfpQ5mbADULk5ZzNcEUsTBBA3NuUucWy7YFCFRYMduVpZXULH3w2wCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732511; c=relaxed/simple;
-	bh=efAejBIREQyy/P54z5EliFlt82pOs0fUeE3zLidgpT4=;
+	s=arc-20240116; t=1723732514; c=relaxed/simple;
+	bh=hCZWnv2VRiFIOcffyFD0O/V5KSlgEGLIaIFXLmj0JYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZhcU20S/qtyfqj4cyyqEHrjN3VjlmFNmEpKFjvJu0wku9VrlRbjPAX1xfx/FXamVRMczxZmU3QJ6TtdFa8JfGjLyE4r81eh+T+esxbcW91zFBHQVoCERlPr1AMNGyRy4yhH9RNAGIkg+Ahwcv8KjNDC9SdzlfT9M7sQ+4TQp/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBRmqAPV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baWUnMJ1qEyLDlBaWi6rAJdVO2zTd241+5U8EJ8VuwWqp/Ktt+JAEMqmqddyLOzCC/8tbQ+TjRzMcNbOu8DFxhhSSLHDP447ZFTV2FRm5qUeR0OBJok5tN8KHpM+iXj00uS9BdYA61FE/uOaeg3ARKpfqH8YHZN6xYldMAH2HEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdisjM8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBRmqAPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3DBC32786;
-	Thu, 15 Aug 2024 14:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdisjM8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1ED8C32786;
+	Thu, 15 Aug 2024 14:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732511;
-	bh=efAejBIREQyy/P54z5EliFlt82pOs0fUeE3zLidgpT4=;
+	s=korg; t=1723732514;
+	bh=hCZWnv2VRiFIOcffyFD0O/V5KSlgEGLIaIFXLmj0JYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBRmqAPVzfDLS71dWFxGHIE0r0n0Lnr3dypCTgofahaFtHoKI/YiHXxpboMT8ZOZq
-	 1/42JBNPUm0r51PZRh84Pv1St2lMoIzXMgjfs1ib7Gb+y65LaxWKs/27nTGTftIKWP
-	 UHnub0xAq2JuQAuwcjTn3OCu33pfqjnxRxBixa0E=
+	b=zdisjM8RfdoMvMx/ZRWrA/Bwv9FnuzJ2f1lK5gxDfmJ13+ROhy0ybZEHM5xMZkRC8
+	 dyeoUZppko0zgp3X0Ed7EYRK5+grBpJlZCAhItigxnlr6IxdMw4Gd16f4YA0YIXnPA
+	 hUvHN+l8lbwEiuq+hOPxwI3TWjkYbDx9Qf3uo0No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Fred Li <dracodingfly@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Willem de Bruijn <willemb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 201/352] net: nexthop: Initialize all fields in dumped nexthops
-Date: Thu, 15 Aug 2024 15:24:27 +0200
-Message-ID: <20240815131927.046232786@linuxfoundation.org>
+Subject: [PATCH 5.10 202/352] bpf: Fix a segment issue when downgrading gso_size
+Date: Thu, 15 Aug 2024 15:24:28 +0200
+Message-ID: <20240815131927.083419460@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,50 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Fred Li <dracodingfly@gmail.com>
 
-[ Upstream commit 6d745cd0e9720282cd291d36b9db528aea18add2 ]
+[ Upstream commit fa5ef655615a01533035c6139248c5b33aa27028 ]
 
-struct nexthop_grp contains two reserved fields that are not initialized by
-nla_put_nh_group(), and carry garbage. This can be observed e.g. with
-strace (edited for clarity):
+Linearize the skb when downgrading gso_size because it may trigger a
+BUG_ON() later when the skb is segmented as described in [1,2].
 
-    # ip nexthop add id 1 dev lo
-    # ip nexthop add id 101 group 1
-    # strace -e recvmsg ip nexthop get id 101
-    ...
-    recvmsg(... [{nla_len=12, nla_type=NHA_GROUP},
-                 [{id=1, weight=0, resvd1=0x69, resvd2=0x67}]] ...) = 52
-
-The fields are reserved and therefore not currently used. But as they are, they
-leak kernel memory, and the fact they are not just zero complicates repurposing
-of the fields for new ends. Initialize the full structure.
-
-Fixes: 430a049190de ("nexthop: Add support for nexthop groups")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2be7e212d5419 ("bpf: add bpf_skb_adjust_room helper")
+Signed-off-by: Fred Li <dracodingfly@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/all/20240626065555.35460-2-dracodingfly@gmail.com [1]
+Link: https://lore.kernel.org/all/668d5cf1ec330_1c18c32947@willemb.c.googlers.com.notmuch [2]
+Link: https://lore.kernel.org/bpf/20240719024653.77006-1-dracodingfly@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/core/filter.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 7a0102a4b1de7..a508fd94b8be0 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -210,9 +210,10 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
+diff --git a/net/core/filter.c b/net/core/filter.c
+index a3101cdfd47b9..99fdd8afeeda3 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3535,13 +3535,20 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
+ 	if (skb_is_gso(skb)) {
+ 		struct skb_shared_info *shinfo = skb_shinfo(skb);
  
- 	p = nla_data(nla);
- 	for (i = 0; i < nhg->num_nh; ++i) {
--		p->id = nhg->nh_entries[i].nh->id;
--		p->weight = nhg->nh_entries[i].weight - 1;
--		p += 1;
-+		*p++ = (struct nexthop_grp) {
-+			.id = nhg->nh_entries[i].nh->id,
-+			.weight = nhg->nh_entries[i].weight - 1,
-+		};
+-		/* Due to header grow, MSS needs to be downgraded. */
+-		if (!(flags & BPF_F_ADJ_ROOM_FIXED_GSO))
+-			skb_decrease_gso_size(shinfo, len_diff);
+-
+ 		/* Header must be checked, and gso_segs recomputed. */
+ 		shinfo->gso_type |= gso_type;
+ 		shinfo->gso_segs = 0;
++
++		/* Due to header growth, MSS needs to be downgraded.
++		 * There is a BUG_ON() when segmenting the frag_list with
++		 * head_frag true, so linearize the skb after downgrading
++		 * the MSS.
++		 */
++		if (!(flags & BPF_F_ADJ_ROOM_FIXED_GSO)) {
++			skb_decrease_gso_size(shinfo, len_diff);
++			if (shinfo->frag_list)
++				return skb_linearize(skb);
++		}
  	}
  
  	return 0;
