@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09B91AC451;
-	Thu, 15 Aug 2024 14:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBE61B3F22;
+	Thu, 15 Aug 2024 14:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732924; cv=none; b=Qet/vB/sq+vz6TWMMKPasJQ9E4M93AqKbnVIuK3fottftVX+vXvBRpGYhRhLC8gdcoPXW10hySUo91OAeSmKyin/wUzB1sSBXPvzIJtBJIRgQeFOXBthufqKg8PlE0pw+qtC0XNy4ab0OnU3Xop5ECtmxsS9Us9GaykxHTPoS9o=
+	t=1723732928; cv=none; b=ScyBcrkve/5HGMzk7obWOIPQWlzZ/me6WRob7bxUUmEXvSJXgWfhlMFtTcaV0VE+4ArC2hUPh5hH3sRu2J9h0S7a3Fx3MxmcFuZmr5kC8fVwij2BLLz0wEbeGWMKqNbtM0t0tRJcBn/gZcnjNGOGrS/cva02mGdX7Jd44AoN1dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732924; c=relaxed/simple;
-	bh=fGbj16/OHpTdMBMmlFrrXFd6M+hERiC5CMJHk0y9LTk=;
+	s=arc-20240116; t=1723732928; c=relaxed/simple;
+	bh=1B/PtJ2D3X6yblwAGos++OgzkpjXugU/bzhLUvzUvmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItKmap5OXmtkkfHnIK88VFMLODeSSt33l9tbiSFs0o15rWNs2mA/k33MHG3LGQBzBSUwHxNaSNN3+O92iwSEELocFqcv5Qcj1FuUCAMpqeYxzPSHYQdR/VziVMa29b/5hD3Yx7v53WsrvAuycPcF9nR0Y4zKqO3cVcnL8qV2Dvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzjqZ9aL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQsd4toyIqlWS9n4VLOddJ9dMtJ5ZE6hYyGABOKQivi89W1YAmHz9+dd0Bn1NtEvdTpbgJTaB8nYdcn04N/GXl5USCDDSIeckiZI0+/wqg4KZOX/pfGkA+BrAIYfYF7MHhLtNyANn+tf5L8gH24MmOshkFuL+I53oYROYhIVdy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwWqQpTX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzjqZ9aL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2117AC4AF0D;
-	Thu, 15 Aug 2024 14:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwWqQpTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77085C32786;
+	Thu, 15 Aug 2024 14:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732924;
-	bh=fGbj16/OHpTdMBMmlFrrXFd6M+hERiC5CMJHk0y9LTk=;
+	s=korg; t=1723732928;
+	bh=1B/PtJ2D3X6yblwAGos++OgzkpjXugU/bzhLUvzUvmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzjqZ9aLEssCj7VVSYX3ZeYrN9J4eTaIVl8Zjs+QyAJNFcT9x042kdWB+lpEwH5C5
-	 whFeSaf6EZWkyE3L8x0EJ5cKZK8ZrzLMR6xhZrS9ImGu5bUdGGot9Ne3ZVVxdlHhuI
-	 KWIiYn7H8RnFSN6Ihu0w5i/ZMZpx+Xrni3k1sS/w=
+	b=YwWqQpTXt8Sq98DggXz9RUROwOO1nwkIUrsnjAiQNripG6O3Cr1q/Rl8b5e5xLwRv
+	 tWsdUqBbx+HR4pz5x71CsltaKei1lAVAvSHf/k/xQrK2h9O63XJBKFL5D3F8aMUuC/
+	 +G95ZKvRU+d6a7741JdVbOkXSf9Ru9RjzwnYV6S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 329/352] mptcp: distinguish rcv vs sent backup flag in requests
-Date: Thu, 15 Aug 2024 15:26:35 +0200
-Message-ID: <20240815131932.170696829@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 330/352] mptcp: fix NL PM announced address accounting
+Date: Thu, 15 Aug 2024 15:26:36 +0200
+Message-ID: <20240815131932.211300978@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,72 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit efd340bf3d7779a3a8ec954d8ec0fb8a10f24982 upstream.
+commit 4b317e0eb287bd30a1b329513531157c25e8b692 upstream.
 
-When sending an MP_JOIN + SYN + ACK, it is possible to mark the subflow
-as 'backup' by setting the flag with the same name. Before this patch,
-the backup was set if the other peer set it in its MP_JOIN + SYN
-request.
+Currently the per connection announced address counter is never
+decreased. As a consequence, after connection establishment, if
+the NL PM deletes an endpoint and adds a new/different one, no
+additional subflow is created for the new endpoint even if the
+current limits allow that.
 
-It is not correct: the backup flag should be set in the MPJ+SYN+ACK only
-if the host asks for it, and not mirroring what was done by the other
-peer. It is then required to have a dedicated bit for each direction,
-similar to what is done in the subflow context.
+Address the issue properly updating the signaled address counter
+every time the NL PM removes such addresses.
 
-Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Conflicts in subflow.c, because the context has changed in commit
-  4cf86ae84c71 ("mptcp: strict local address ID selection"), and in
-  commit 967d3c27127e ("mptcp: fix data races on remote_id"), which are
-  not in this version. These commits are unrelated to this
-  modification.
-  Same in protocol.h, with commit bab6b88e0560 ("mptcp: add
-  allow_join_id0 in mptcp_out_options"). ]
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ Conflicts in pm_netlink.c, because the commit 06faa2271034 ("mptcp:
+  remove multi addresses and subflows in PM") is not in this version.
+  Only the modification in mptcp_pm_remove_anno_addr() is then needed. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |    2 +-
- net/mptcp/protocol.h |    3 ++-
- net/mptcp/subflow.c  |    1 +
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ net/mptcp/pm_netlink.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -708,7 +708,7 @@ bool mptcp_synack_options(const struct r
- 		return true;
- 	} else if (subflow_req->mp_join) {
- 		opts->suboptions = OPTION_MPTCP_MPJ_SYNACK;
--		opts->backup = subflow_req->backup;
-+		opts->backup = subflow_req->request_bkup;
- 		opts->join_id = subflow_req->local_id;
- 		opts->thmac = subflow_req->thmac;
- 		opts->nonce = subflow_req->local_nonce;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -261,7 +261,8 @@ struct mptcp_subflow_request_sock {
- 	struct	tcp_request_sock sk;
- 	u16	mp_capable : 1,
- 		mp_join : 1,
--		backup : 1;
-+		backup : 1,
-+		request_bkup : 1;
- 	u8	local_id;
- 	u8	remote_id;
- 	u64	local_key;
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1395,6 +1395,7 @@ static void subflow_ulp_clone(const stru
- 		new_ctx->mp_join = 1;
- 		new_ctx->fully_established = 1;
- 		new_ctx->backup = subflow_req->backup;
-+		new_ctx->request_bkup = subflow_req->request_bkup;
- 		new_ctx->local_id = subflow_req->local_id;
- 		new_ctx->remote_id = subflow_req->remote_id;
- 		new_ctx->token = subflow_req->token;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -759,6 +759,7 @@ static bool mptcp_pm_remove_anno_addr(st
+ 	ret = remove_anno_list_by_saddr(msk, addr);
+ 	if (ret || force) {
+ 		spin_lock_bh(&msk->pm.lock);
++		msk->pm.add_addr_signaled -= ret;
+ 		mptcp_pm_remove_addr(msk, addr->id);
+ 		spin_unlock_bh(&msk->pm.lock);
+ 	}
 
 
