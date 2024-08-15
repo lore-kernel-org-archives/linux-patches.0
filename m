@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14E044376;
-	Thu, 15 Aug 2024 14:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F61A00F5;
+	Thu, 15 Aug 2024 14:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730710; cv=none; b=htsN4GtWqHj8nH8/c8hU1dgR7kvjwqwlATjKV1lyetzZgsvXsAjPMUVgC4UVraFJkBthsxXHesUD1Q4DegZGxVsB9EUMCjiDCdBZOhhiZ4rbng61bPuI5qbRy7oAdYFiY0wL1w3nxubiFPNrzaS9fKwwFKI1ZwQDCwhHhHwQgtY=
+	t=1723730713; cv=none; b=dmfF6c9HdW8pNzmqLmaUMQPqY+LYfrMDDPTmGpGYtfRliJOiz2o9dXhubH7eS/GHb6wtKZrZCP7MSemCcjiOfsF/NnJUG6YT4hUgVwiidFkwf/8CBAC4mLf8Owlpef0GFFa1rBvoJYE2TD+HOt4S0ibTSSdC9Rhbc/A1ZeOj3+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730710; c=relaxed/simple;
-	bh=LZBVgxTukcRAI/MF/uftCkgLYeQ/2fOXZUR7ovrztHs=;
+	s=arc-20240116; t=1723730713; c=relaxed/simple;
+	bh=fsy3qJFMATI9LqKH4/i1OFCurY/A3Nb2Ngi2uSeK5Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7bSLXQbdj/VbZwiFlc/jVWQ5HrNvZRYqX1RoHw4PSkASWenndnA/je/qhkjcexJuc5cKN4uwybKVrKVYAcDAWvbgvNVy9+n4Nw+6PEY/Z3Iia4c7MzhHp3349GquaNbfSIXT9QKWhqwo/nodXC/RQBzbE/UnCaZcQhMuCf0dVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ml1q9bfz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oj9IEzOpSsFaDUIPuJIR4vaeL4S7fwpr0ujv6RV/tftRyEKdHJXSKB6+lU+T8q/eOp1ifUCPNGLhoFxQGfYuoMqwo9yzHOE1QSZq000iliJg/ByboYJHLuv93DwrFUf2xDC4wKwsi6MXqtWIU0jS6M/Fl+wOOWfd2Gr3RpNM9Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agP4OXU6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ml1q9bfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAABC32786;
-	Thu, 15 Aug 2024 14:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agP4OXU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706C4C4AF0C;
+	Thu, 15 Aug 2024 14:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730709;
-	bh=LZBVgxTukcRAI/MF/uftCkgLYeQ/2fOXZUR7ovrztHs=;
+	s=korg; t=1723730713;
+	bh=fsy3qJFMATI9LqKH4/i1OFCurY/A3Nb2Ngi2uSeK5Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ml1q9bfz7bembGyVt7AiHcTTx9e/F896hJL4UeulAQ1kGMJ5bUlzoH+SgKYPQ+m+H
-	 UNee1St5RVB/cdI/03Q93No18OHDf6ThLNQV1qVBCzCqtYIxQRJRLRgDQN1pBUKpBO
-	 pt52jtenOLY40MLGhoMLlkf+s1IeSH/Rm+1alnVk=
+	b=agP4OXU6rzURubm4QrB6nJ+0TR0Yr9QuQhCUomFlayg9YnBNhXK4TS3buQl5skK9H
+	 48QGWBUGEt5tH2Onj1Kw2kTZ322xNvmAQeceoc6t93eQU4WGh7Tt+7uRRQ7o8ZS5PW
+	 gG8utg6L65UMQjQqMu+KbUuebDHjnxq8r3ik2KFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 463/484] btrfs: fix double inode unlock for direct IO sync writes
-Date: Thu, 15 Aug 2024 15:25:21 +0200
-Message-ID: <20240815131959.359683022@linuxfoundation.org>
+	Geliang Tang <geliang.tang@suse.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.1 01/38] mptcp: pass addr to mptcp_pm_alloc_anno_list
+Date: Thu, 15 Aug 2024 15:25:35 +0200
+Message-ID: <20240815131833.005686056@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
-References: <20240815131941.255804951@linuxfoundation.org>
+In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
+References: <20240815131832.944273699@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Geliang Tang <geliang.tang@suse.com>
 
-commit e0391e92f9ab4fb3dbdeb139c967dcfa7ac4b115 upstream.
+commit 528cb5f2a1e859522f36f091f29f5c81ec6d4a4c upstream.
 
-If we do a direct IO sync write, at btrfs_sync_file(), and we need to skip
-inode logging or we get an error starting a transaction or an error when
-flushing delalloc, we end up unlocking the inode when we shouldn't under
-the 'out_release_extents' label, and then unlock it again at
-btrfs_direct_write().
+Pass addr parameter to mptcp_pm_alloc_anno_list() instead of entry. We
+can reduce the scope, e.g. in mptcp_pm_alloc_anno_list(), we only access
+"entry->addr", we can then restrict to the pointer to "addr" then.
 
-Fix that by checking if we have to skip inode unlocking under that label.
-
-Reported-by: syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/000000000000dfd631061eaeb4bc@google.com/
-Fixes: 939b656bc8ab ("btrfs: fix corruption after buffer fault in during direct IO append write")
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c95eb32ced82 ("mptcp: pm: reduce indentation blocks")
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c   |    8 ++++----
+ net/mptcp/pm_userspace.c |    2 +-
+ net/mptcp/protocol.h     |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -2433,7 +2433,10 @@ out:
- 
- out_release_extents:
- 	btrfs_release_log_ctx_extents(&ctx);
--	btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
-+	if (skip_ilock)
-+		up_write(&BTRFS_I(inode)->i_mmap_lock);
-+	else
-+		btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
- 	goto out;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -352,7 +352,7 @@ mptcp_pm_del_add_timer(struct mptcp_sock
  }
  
+ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+-			      const struct mptcp_pm_addr_entry *entry)
++			      const struct mptcp_addr_info *addr)
+ {
+ 	struct mptcp_pm_add_entry *add_entry = NULL;
+ 	struct sock *sk = (struct sock *)msk;
+@@ -360,7 +360,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 
+ 	lockdep_assert_held(&msk->pm.lock);
+ 
+-	add_entry = mptcp_lookup_anno_list_by_saddr(msk, &entry->addr);
++	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
+ 
+ 	if (add_entry) {
+ 		if (mptcp_pm_is_kernel(msk))
+@@ -377,7 +377,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 
+ 	list_add(&add_entry->list, &msk->pm.anno_list);
+ 
+-	add_entry->addr = entry->addr;
++	add_entry->addr = *addr;
+ 	add_entry->sock = msk;
+ 	add_entry->retrans_times = 0;
+ 
+@@ -580,7 +580,7 @@ static void mptcp_pm_create_subflow_or_s
+ 			return;
+ 
+ 		if (local) {
+-			if (mptcp_pm_alloc_anno_list(msk, local)) {
++			if (mptcp_pm_alloc_anno_list(msk, &local->addr)) {
+ 				__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
+ 				msk->pm.add_addr_signaled++;
+ 				mptcp_pm_announce_addr(msk, &local->addr, false);
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -225,7 +225,7 @@ int mptcp_nl_cmd_announce(struct sk_buff
+ 	lock_sock((struct sock *)msk);
+ 	spin_lock_bh(&msk->pm.lock);
+ 
+-	if (mptcp_pm_alloc_anno_list(msk, &addr_val)) {
++	if (mptcp_pm_alloc_anno_list(msk, &addr_val.addr)) {
+ 		msk->pm.add_addr_signaled++;
+ 		mptcp_pm_announce_addr(msk, &addr_val.addr, false);
+ 		mptcp_pm_nl_addr_send_ack(msk);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -812,7 +812,7 @@ int mptcp_pm_nl_mp_prio_send_ack(struct
+ 				 struct mptcp_addr_info *rem,
+ 				 u8 bkup);
+ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+-			      const struct mptcp_pm_addr_entry *entry);
++			      const struct mptcp_addr_info *addr);
+ void mptcp_pm_free_anno_list(struct mptcp_sock *msk);
+ bool mptcp_pm_sport_in_anno_list(struct mptcp_sock *msk, const struct sock *sk);
+ struct mptcp_pm_add_entry *
 
 
