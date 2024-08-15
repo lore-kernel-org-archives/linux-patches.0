@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2B01DFFB;
-	Thu, 15 Aug 2024 14:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A130A1DFFB;
+	Thu, 15 Aug 2024 14:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732425; cv=none; b=LGnew9CZZNtGiT0h0cpvygB6ClsBoySs2wMvUv8J3RTxrOaQvYWHRKB/+mCgZA83rM5PtIoBetqsS9eAWNMfPq5gZ305pShUMtPlauSIUojaR2P2t0DvZ1h2tkSLB+1jYxo8hR5BNE3HGNVMy+4kDH2J5leksFoNcbtUdVxx3xY=
+	t=1723732428; cv=none; b=X3yafnjrjiveNC8y1dJ1062IAUv53l43UhpL5cDVSVfQ8ThNZWPSnJKrH6zNs2aqhkTwpq1c/8MYbHJNuGve827dmypMzB04mmSMSIgWcdxiujbXVpjPfUluo4u6zQ7GB7+F/yKKE2c97+wVfpGVYR1eNkteI04z+uyP52NjDU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732425; c=relaxed/simple;
-	bh=QhA/jbdh2LSkUfsqiKrtQ6nDtZc0z7hudPf/pxz2JY4=;
+	s=arc-20240116; t=1723732428; c=relaxed/simple;
+	bh=fWyb+YmGtKzPKS3XW+xnr/r2FzIbOxcnyTmXCuZv3+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8DZ1TpRKEclN3BdG0EzJLu+yXMnMhHQdN9TkjxmmQXXYahhhdjMWtuKU6AITfOmOfw2n0l1VHSCl/NfNXwy8F4WFCAYHTJSEdcweOP9CG+H8AYuSYbqqdqmWydSI5fzyBRXeEcPz/4B6Fxg72nZcS5z5c8usNqe0LcRAwaSi6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDceCCS/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Phq/VBZWeZFKW114Dy8Gj1Zocbb6Xzo28R5q/Yy9wOEXmB/+mav9OvkIukNl2D8avQGs99H3hvXh4d9axQkkFBkXjiSXe7yglt95i+rGXIJeJ0rg6hJkzCzy2jxSbFUFZ4zXOBDQ/LlpfHqYBm2GnkWpFlHa4GRJQ7p0MUGTnL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijvg73vV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDceCCS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F19C32786;
-	Thu, 15 Aug 2024 14:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijvg73vV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180CEC32786;
+	Thu, 15 Aug 2024 14:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732425;
-	bh=QhA/jbdh2LSkUfsqiKrtQ6nDtZc0z7hudPf/pxz2JY4=;
+	s=korg; t=1723732428;
+	bh=fWyb+YmGtKzPKS3XW+xnr/r2FzIbOxcnyTmXCuZv3+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDceCCS/lVWD9wn58QOpUi4X9g830K74dp52rkFJhirXP6XQV2Yw9842Ti3fjTq/n
-	 tsNMhKSmurOnQBmbUxLkv4MfIOD3h6JuLCNRegL6F2+Z3aO522mfJ3snuO1qV2ea3+
-	 PZKZQf4vI5ceGIpEoYQRSLdpYgJ65SLHBFCrKUQY=
+	b=ijvg73vVAsozxApb7OuDW5uru2veijZfYhRTfVV4c6hcGcYVOAShdL3SWtD0k+2wG
+	 VPxJkeP0b8lLTtLopC90jEWqbRRKup9otrwdxlLBFj1n2/HbdD+TRr+u9/GGjeVfJz
+	 SF+vr1U6vAm1bM/E5zOKXzcSoFJ7ZpvehHCzcmEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 175/352] RDMA/iwcm: Fix a use-after-free related to destroying CM IDs
-Date: Thu, 15 Aug 2024 15:24:01 +0200
-Message-ID: <20240815131926.038742863@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 176/352] selftests/sigaltstack: Fix ppc64 GCC build
+Date: Thu, 15 Aug 2024 15:24:02 +0200
+Message-ID: <20240815131926.079041523@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -46,80 +43,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit aee2424246f9f1dadc33faa78990c1e2eb7826e4 upstream.
+commit 17c743b9da9e0d073ff19fd5313f521744514939 upstream.
 
-iw_conn_req_handler() associates a new struct rdma_id_private (conn_id) with
-an existing struct iw_cm_id (cm_id) as follows:
+Building the sigaltstack test with GCC on 64-bit powerpc errors with:
 
-        conn_id->cm_id.iw = cm_id;
-        cm_id->context = conn_id;
-        cm_id->cm_handler = cma_iw_handler;
+  gcc -Wall     sas.c  -o /home/michael/linux/.build/kselftest/sigaltstack/sas
+  In file included from sas.c:23:
+  current_stack_pointer.h:22:2: error: #error "implement current_stack_pointer equivalent"
+     22 | #error "implement current_stack_pointer equivalent"
+        |  ^~~~~
+  sas.c: In function ‘my_usr1’:
+  sas.c:50:13: error: ‘sp’ undeclared (first use in this function); did you mean ‘p’?
+     50 |         if (sp < (unsigned long)sstack ||
+        |             ^~
 
-rdma_destroy_id() frees both the cm_id and the struct rdma_id_private. Make
-sure that cm_work_handler() does not trigger a use-after-free by only
-freeing of the struct rdma_id_private after all pending work has finished.
+This happens because GCC doesn't define __ppc__ for 64-bit builds, only
+32-bit builds. Instead use __powerpc__ to detect powerpc builds, which
+is defined by clang and GCC for 64-bit and 32-bit builds.
 
-Cc: stable@vger.kernel.org
-Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240605145117.397751-6-bvanassche@acm.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 05107edc9101 ("selftests: sigaltstack: fix -Wuninitialized")
+Cc: stable@vger.kernel.org # v6.3+
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240520062647.688667-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iwcm.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ tools/testing/selftests/sigaltstack/current_stack_pointer.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -370,8 +370,10 @@ EXPORT_SYMBOL(iw_cm_disconnect);
-  *
-  * Clean up all resources associated with the connection and release
-  * the initial reference taken by iw_create_cm_id.
-+ *
-+ * Returns true if and only if the last cm_id_priv reference has been dropped.
-  */
--static void destroy_cm_id(struct iw_cm_id *cm_id)
-+static bool destroy_cm_id(struct iw_cm_id *cm_id)
- {
- 	struct iwcm_id_private *cm_id_priv;
- 	struct ib_qp *qp;
-@@ -441,7 +443,7 @@ static void destroy_cm_id(struct iw_cm_i
- 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
- 	}
- 
--	(void)iwcm_deref_id(cm_id_priv);
-+	return iwcm_deref_id(cm_id_priv);
- }
- 
- /*
-@@ -452,7 +454,8 @@ static void destroy_cm_id(struct iw_cm_i
-  */
- void iw_destroy_cm_id(struct iw_cm_id *cm_id)
- {
--	destroy_cm_id(cm_id);
-+	if (!destroy_cm_id(cm_id))
-+		flush_workqueue(iwcm_wq);
- }
- EXPORT_SYMBOL(iw_destroy_cm_id);
- 
-@@ -1036,7 +1039,7 @@ static void cm_work_handler(struct work_
- 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
- 			ret = process_event(cm_id_priv, &levent);
- 			if (ret)
--				destroy_cm_id(&cm_id_priv->id);
-+				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
- 		} else
- 			pr_debug("dropping event %d\n", levent.event);
- 		if (iwcm_deref_id(cm_id_priv))
+--- a/tools/testing/selftests/sigaltstack/current_stack_pointer.h
++++ b/tools/testing/selftests/sigaltstack/current_stack_pointer.h
+@@ -8,7 +8,7 @@ register unsigned long sp asm("sp");
+ register unsigned long sp asm("esp");
+ #elif __loongarch64
+ register unsigned long sp asm("$sp");
+-#elif __ppc__
++#elif __powerpc__
+ register unsigned long sp asm("r1");
+ #elif __s390x__
+ register unsigned long sp asm("%15");
 
 
