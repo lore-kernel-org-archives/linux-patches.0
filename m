@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618971DDF5;
-	Thu, 15 Aug 2024 13:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EE31DDF5;
+	Thu, 15 Aug 2024 13:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728545; cv=none; b=Vtekq8hyRCfSSkeqCb6qyP5xCBqbsv2O9H/2ppXIetWFiYJT61IX7fxwR9MJFy3BdGYzne5+SLq7WZ44kC2sc38sUDWcH7Wd9uV7fni3v20sXp2onFrC4sgS1n6a559LGM3OxO/rtkCeyWeE21/NQcpoaKLdQDmW8nY93eJdyUA=
+	t=1723728548; cv=none; b=lMLHFSlQ6nqhtzBfAdtBjO0TwcWZbYflrj9JXnCeyQRbDq+vPRStke3g6b7DDApgU9MOfi0Wc8kLMKC0VEvcFMMOCJbCFbuhEfTU5wqL5O2wGy9K4W5M5VoUD5ENkzda2pTt5FPMAODHUcYsAI096dtOWizUkKmhZdf0lV+y6ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728545; c=relaxed/simple;
-	bh=PwnBFNHdYiPlABp79dMHF3dgviJgkHcMh686jfInHd8=;
+	s=arc-20240116; t=1723728548; c=relaxed/simple;
+	bh=GKthvC6bh5LShMOM61iJ5mxl06EZ3YsxODG/K3zBCnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anQwxrqwN4E8PUT1nSx3ZzPlkE1OKTCjSU5X249RcE6iuO2ZbGs/U6IAZro+bl2a1k1cUy+L+QGarkuXCnTwtaEPTgyTS4j2WP/nGKNF/LjcBNSQZ2ivecUpLMpvj18XVYWn6L7lJLIggk5IW5+xcrE1DAgVZ0nQ3Y3yBBfCU1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJECwFLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTo/6/kf0nkcjclQvYO1g/NHpDrtnImBh+lhOeRNfRK6Yl2Ynaw3Jy6EDTwQ0nGKnA7ipAqTFlhlnV9QIE7upcErk53C3vR+WvkSreCTB3p7fAio48JaWONvcLne8TSXEnJy1pSDCQi9URUjhkHs0Emqc3tXLxQnQHwOzDPDErQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2s7n/q96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJECwFLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80632C32786;
-	Thu, 15 Aug 2024 13:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2s7n/q96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9028BC32786;
+	Thu, 15 Aug 2024 13:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728544;
-	bh=PwnBFNHdYiPlABp79dMHF3dgviJgkHcMh686jfInHd8=;
+	s=korg; t=1723728548;
+	bh=GKthvC6bh5LShMOM61iJ5mxl06EZ3YsxODG/K3zBCnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJECwFLxKMtbiD1zcCJFWlVSIBxXXY0J2gc/9Hk4o2pDYA27LsPTdK3kw19aRR5d0
-	 XetIq9Y/P7w8Y1zkXKeit7R2uUu33TI8CyPJqwsTjvwIRJQVkvfKLVU6VRceFtslyO
-	 akzpYNOe6CdHqWx8OjaYjlahUPe3xJcLsrNeoqLo=
+	b=2s7n/q96zRAKnV4LbY4Sgs9pEwJqovmGOxA6Us2HymFXodFakQqcUClJmpZHvkav5
+	 ITGCz/SEwoJdMkFZsBswsbbxqOiZri3HkpXfi9OF+qewcGrBqkHMXO7/ns9Axaq7Mj
+	 vT+Brh3aT5wUbN5JyUtM4m8/lhroZ8BrUj0ZFy7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Schaefer <dhs@frame.work>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 033/196] media: uvcvideo: Override default flags
-Date: Thu, 15 Aug 2024 15:22:30 +0200
-Message-ID: <20240815131853.355979591@linuxfoundation.org>
+Subject: [PATCH 4.19 034/196] media: renesas: vsp1: Fix _irqsave and _irq mix
+Date: Thu, 15 Aug 2024 15:22:31 +0200
+Message-ID: <20240815131853.394061622@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,66 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
+[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
 
-When the UVC device has a control that is readonly it doesn't set the
-SET_CUR flag. For example the privacy control has SET_CUR flag set in
-the defaults in the `uvc_ctrls` variable. Even if the device does not
-have it set, it's not cleared by uvc_ctrl_get_flags().
+The histogram support mixes _irqsave and _irq, causing the following
+smatch warning:
 
-Originally written with assignment in commit 859086ae3636 ("media:
-uvcvideo: Apply flags from device to actual properties"). But changed to
-|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
-flags"). It would not clear the default flags.
+     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
+     warn: mixing irqsave and irq
 
-With this patch applied the correct flags are reported to user space.
-Tested with:
+The histo_stop_streaming() calls spin_lock_irqsave() followed by
+wait_event_lock_irq(). The former hints that interrupts may be disabled
+by the caller, while the latter reenables interrupts unconditionally.
+This doesn't cause any real bug, as the function is always called with
+interrupts enabled, but the pattern is still incorrect.
 
-```
-> v4l2-ctl --list-ctrls | grep privacy
-privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
-```
+Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
+in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
+spin_lock() as appropriate elsewhere.
 
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
-Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/platform/vsp1/vsp1_histo.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 5d437e33c5902..dee07b0572c6f 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1739,7 +1739,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 	else
- 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
- 				     dev->intfnum, info->selector, data, 1);
--	if (!ret)
-+
-+	if (!ret) {
-+		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
-+				 UVC_CTRL_FLAG_SET_CUR |
-+				 UVC_CTRL_FLAG_AUTO_UPDATE |
-+				 UVC_CTRL_FLAG_ASYNCHRONOUS);
-+
- 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
- 				UVC_CTRL_FLAG_GET_CUR : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
-@@ -1748,6 +1754,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
- 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
-+	}
+diff --git a/drivers/media/platform/vsp1/vsp1_histo.c b/drivers/media/platform/vsp1/vsp1_histo.c
+index 5e15c8ff88d99..d1942163e650d 100644
+--- a/drivers/media/platform/vsp1/vsp1_histo.c
++++ b/drivers/media/platform/vsp1/vsp1_histo.c
+@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
+ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
+ {
+ 	struct vsp1_histogram_buffer *buf = NULL;
+-	unsigned long flags;
  
- 	kfree(data);
- 	return ret;
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock(&histo->irqlock);
+ 
+ 	if (list_empty(&histo->irqqueue))
+ 		goto done;
+@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
+ 	histo->readout = true;
+ 
+ done:
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock(&histo->irqlock);
+ 	return buf;
+ }
+ 
+@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
+ 				    size_t size)
+ {
+ 	struct vsp1_pipeline *pipe = histo->entity.pipe;
+-	unsigned long flags;
+ 
+ 	/*
+ 	 * The pipeline pointer is guaranteed to be valid as this function is
+@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
+ 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
+ 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock(&histo->irqlock);
+ 	histo->readout = false;
+ 	wake_up(&histo->wait_queue);
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock(&histo->irqlock);
+ }
+ 
+ /* -----------------------------------------------------------------------------
+@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
+ 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock_irq(&histo->irqlock);
+ 	list_add_tail(&buf->queue, &histo->irqqueue);
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock_irq(&histo->irqlock);
+ }
+ 
+ static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
+@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
+ {
+ 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
+ 	struct vsp1_histogram_buffer *buffer;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock_irq(&histo->irqlock);
+ 
+ 	/* Remove all buffers from the IRQ queue. */
+ 	list_for_each_entry(buffer, &histo->irqqueue, queue)
+@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
+ 	/* Wait for the buffer being read out (if any) to complete. */
+ 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
+ 
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock_irq(&histo->irqlock);
+ }
+ 
+ static const struct vb2_ops histo_video_queue_qops = {
 -- 
 2.43.0
 
