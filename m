@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8051ABED3;
-	Thu, 15 Aug 2024 14:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E5319DF85;
+	Thu, 15 Aug 2024 14:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731792; cv=none; b=Q2GnpNnsEk58/w0bdm8eKCimvWqJd7PlOqB+dOR5xeqczJOKDcGgm1WW5UGm3mP5Js/AdP1mJoOtS17QrSf8eT7YQ3cV7Isld7zVb5qA4NwIvAvHVKYBYzd4m23SD7lgZq4Ki5dlOZdGXqdPzf8WaosCRTJAb0n/Ihmkn7klIOQ=
+	t=1723731795; cv=none; b=jpesdsEE739evvSZ1ty40NXZDFsWH8R9ZqESZJbIdHNf6l9vP3tYqG3GZnCfn+RpjHxjWda1IEOQH/wVHZJtxcqvxhgdnKcYgKj3cusyYx9oIrOrsptFfyfWmPoyASPUdIRd/R2TasErsTzHSjIQtW/GwrYu6FjFncM38GlxCjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731792; c=relaxed/simple;
-	bh=XLl9PlepAm/h6B9VNZncIcwl6uryvU4WtAMb9oQT+xo=;
+	s=arc-20240116; t=1723731795; c=relaxed/simple;
+	bh=DEAG6efu7DHLg4yj/IwsRX8F0/AL9+/YF7BaQMEOZjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgHqBaCFLCORdy0k3PM/mKNxdoLzUYQVk3DaXGt8D1pWrZyxhKTnBUavHCfqDoLA4VKfKUpDDCaVWVExYC0PCAWff4m7CMtZHSwHhgmKP3eDl7//n+OTb6neB6diyGKhbkmIeqMj6kq37PuiruipL6d8xwH2HumKiFDnofcT54Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0uL15hs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LOyP5NaFuhWzqhzx577yVOmvAP5lVpWy3Clrwb+pXksuftql7pgien37jbLBkfvsZOtuw6sXLdgcoTWoQMUaY+Zcq6MN+Hh9+bX5cSq/r4JDOZjJzTuY46YW11zQG8sNIEHmSt65J+MsIRIUsnMlZAZLuWGKm6E9ghuVy2JAuYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKSsARXv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0uL15hs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86176C4AF0C;
-	Thu, 15 Aug 2024 14:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKSsARXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C722BC4AF0F;
+	Thu, 15 Aug 2024 14:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731791;
-	bh=XLl9PlepAm/h6B9VNZncIcwl6uryvU4WtAMb9oQT+xo=;
+	s=korg; t=1723731795;
+	bh=DEAG6efu7DHLg4yj/IwsRX8F0/AL9+/YF7BaQMEOZjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0uL15hsZGt0322VcBv5aJpYLnx5yGj7u3l7BtKD9N7KJz7Fl4lRaubpdO35SGFYB
-	 /hBYjNwROKea6xt8yEUeEOB0TasbjexlCPcGoc/IVcU8TbYIqgZgqKpvM/BUzU6Gn2
-	 k0zj82j0RG2SEu+Ipo3FTH/Jd2KeQBb8ilVFiCks=
+	b=bKSsARXvR/52DgiQHlTQ6we52ulvZyg4JB8sHAMcpqo1VW15Qgwm6pb9m00JQjHJv
+	 s0GNRlLChVRXOmlmN9CBX5/Ux5TtZ1chbxQ1swvbUNFiJoTGmTffZHYeUhV7xU7Ro5
+	 JyW8qcJvLN8MGgh/ZLUz3S8uy7VFHj/6+lFZHsqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 240/259] scsi: mpt3sas: Avoid IOMMU page faults on REPORT ZONES
-Date: Thu, 15 Aug 2024 15:26:13 +0200
-Message-ID: <20240815131912.040286210@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>
+Subject: [PATCH 5.4 241/259] serial: core: check uartclk for zero to avoid divide by zero
+Date: Thu, 15 Aug 2024 15:26:14 +0200
+Message-ID: <20240815131912.078173241@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,101 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit 82dbb57ac8d06dfe8227ba9ab11a49de2b475ae5 ]
+commit 6eabce6608d6f3440f4c03aa3d3ef50a47a3d193 upstream.
 
-Some firmware versions of the 9600 series SAS HBA byte-swap the REPORT
-ZONES command reply buffer from ATA-ZAC devices by directly accessing the
-buffer in the host memory. This does not respect the default command DMA
-direction and causes IOMMU page faults on architectures with an IOMMU
-enforcing write-only mappings for DMA_FROM_DEVICE DMA driection (e.g. AMD
-hosts).
+Calling ioctl TIOCSSERIAL with an invalid baud_base can
+result in uartclk being zero, which will result in a
+divide by zero error in uart_get_divisor(). The check for
+uartclk being zero in uart_set_info() needs to be done
+before other settings are made as subsequent calls to
+ioctl TIOCSSERIAL for the same port would be impacted if
+the uartclk check was done where uartclk gets set.
 
-scsi 18:0:0:0: Direct-Access-ZBC ATA      WDC  WSH722020AL W870 PQ: 0 ANSI: 6
-scsi 18:0:0:0: SATA: handle(0x0027), sas_addr(0x300062b2083e7c40), phy(0), device_name(0x5000cca29dc35e11)
-scsi 18:0:0:0: enclosure logical id (0x300062b208097c40), slot(0)
-scsi 18:0:0:0: enclosure level(0x0000), connector name( C0.0)
-scsi 18:0:0:0: atapi(n), ncq(y), asyn_notify(n), smart(y), fua(y), sw_preserve(y)
-scsi 18:0:0:0: qdepth(32), tagged(1), scsi_level(7), cmd_que(1)
-sd 18:0:0:0: Attached scsi generic sg2 type 20
-sd 18:0:0:0: [sdc] Host-managed zoned block device
-mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b200 flags=0x0050]
-mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b300 flags=0x0050]
-mpt3sas_cm0: mpt3sas_ctl_pre_reset_handler: Releasing the trace buffer due to adapter reset.
-mpt3sas_cm0 fault info from func: mpt3sas_base_make_ioc_ready
-mpt3sas_cm0: fault_state(0x2666)!
-mpt3sas_cm0: sending diag reset !!
-mpt3sas_cm0: diag reset: SUCCESS
-sd 18:0:0:0: [sdc] REPORT ZONES start lba 0 failed
-sd 18:0:0:0: [sdc] REPORT ZONES: Result: hostbyte=DID_RESET driverbyte=DRIVER_OK
-sd 18:0:0:0: [sdc] 0 4096-byte logical blocks: (0 B/0 B)
+Oops: divide error: 0000  PREEMPT SMP KASAN PTI
+RIP: 0010:uart_get_divisor (drivers/tty/serial/serial_core.c:580)
+Call Trace:
+ <TASK>
+serial8250_get_divisor (drivers/tty/serial/8250/8250_port.c:2576
+    drivers/tty/serial/8250/8250_port.c:2589)
+serial8250_do_set_termios (drivers/tty/serial/8250/8250_port.c:502
+    drivers/tty/serial/8250/8250_port.c:2741)
+serial8250_set_termios (drivers/tty/serial/8250/8250_port.c:2862)
+uart_change_line_settings (./include/linux/spinlock.h:376
+    ./include/linux/serial_core.h:608 drivers/tty/serial/serial_core.c:222)
+uart_port_startup (drivers/tty/serial/serial_core.c:342)
+uart_startup (drivers/tty/serial/serial_core.c:368)
+uart_set_info (drivers/tty/serial/serial_core.c:1034)
+uart_set_info_user (drivers/tty/serial/serial_core.c:1059)
+tty_set_serial (drivers/tty/tty_io.c:2637)
+tty_ioctl (drivers/tty/tty_io.c:2647 drivers/tty/tty_io.c:2791)
+__x64_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:907
+    fs/ioctl.c:893 fs/ioctl.c:893)
+do_syscall_64 (arch/x86/entry/common.c:52
+    (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
 
-Avoid such issue by always mapping the buffer of REPORT ZONES commands
-using DMA_BIDIRECTIONAL (read+write IOMMU mapping). This is done by
-introducing the helper function _base_scsi_dma_map() and using this helper
-in _base_build_sg_scmd() and _base_build_sg_scmd_ieee() instead of calling
-directly scsi_dma_map().
-
-Fixes: 471ef9d4e498 ("mpt3sas: Build MPI SGL LIST on GEN2 HBAs and IEEE SGL LIST on GEN3 HBAs")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240719073913.179559-3-dlemoal@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Rule: add
+Link: https://lore.kernel.org/stable/1721148848-9784-1-git-send-email-george.kennedy%40oracle.com
+Link: https://lore.kernel.org/r/1721219078-3209-1-git-send-email-george.kennedy@oracle.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/tty/serial/serial_core.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
-index 8d161d6075b78..1bc23e8ee748a 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -2371,6 +2371,22 @@ _base_build_zero_len_sge_ieee(struct MPT3SAS_ADAPTER *ioc, void *paddr)
- 	_base_add_sg_single_ieee(paddr, sgl_flags, 0, 0, -1);
- }
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -854,6 +854,14 @@ static int uart_set_info(struct tty_stru
+ 	new_flags = (__force upf_t)new_info->flags;
+ 	old_custom_divisor = uport->custom_divisor;
  
-+static inline int _base_scsi_dma_map(struct scsi_cmnd *cmd)
-+{
-+	/*
-+	 * Some firmware versions byte-swap the REPORT ZONES command reply from
-+	 * ATA-ZAC devices by directly accessing in the host buffer. This does
-+	 * not respect the default command DMA direction and causes IOMMU page
-+	 * faults on some architectures with an IOMMU enforcing write mappings
-+	 * (e.g. AMD hosts). Avoid such issue by making the report zones buffer
-+	 * mapping bi-directional.
-+	 */
-+	if (cmd->cmnd[0] == ZBC_IN && cmd->cmnd[1] == ZI_REPORT_ZONES)
-+		cmd->sc_data_direction = DMA_BIDIRECTIONAL;
-+
-+	return scsi_dma_map(cmd);
-+}
-+
- /**
-  * _base_build_sg_scmd - main sg creation routine
-  *		pcie_device is unused here!
-@@ -2417,7 +2433,7 @@ _base_build_sg_scmd(struct MPT3SAS_ADAPTER *ioc,
- 	sgl_flags = sgl_flags << MPI2_SGE_FLAGS_SHIFT;
- 
- 	sg_scmd = scsi_sglist(scmd);
--	sges_left = scsi_dma_map(scmd);
-+	sges_left = _base_scsi_dma_map(scmd);
- 	if (sges_left < 0)
- 		return -ENOMEM;
- 
-@@ -2561,7 +2577,7 @@ _base_build_sg_scmd_ieee(struct MPT3SAS_ADAPTER *ioc,
- 	}
- 
- 	sg_scmd = scsi_sglist(scmd);
--	sges_left = scsi_dma_map(scmd);
-+	sges_left = _base_scsi_dma_map(scmd);
- 	if (sges_left < 0)
- 		return -ENOMEM;
- 
--- 
-2.43.0
-
++	if (!(uport->flags & UPF_FIXED_PORT)) {
++		unsigned int uartclk = new_info->baud_base * 16;
++		/* check needs to be done here before other settings made */
++		if (uartclk == 0) {
++			retval = -EINVAL;
++			goto exit;
++		}
++	}
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		retval = -EPERM;
+ 		if (change_irq || change_port ||
 
 
