@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF9B7DA78;
-	Thu, 15 Aug 2024 13:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F767DA78;
+	Thu, 15 Aug 2024 13:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728974; cv=none; b=ghAH2Uw9qGU5XKaU/Y2RWuiZYMUgwBNHdpxW59G0EiayWPy2lcBLr3qdzz8sLxoK8l4gwXmfQFDaFnwQbBt0d2NRb308Faj44tIrCamGYo5jiu5GKOPzrn2aQ5iUEsp6UHRhLVUSToE9AHr21fplfcfMNmuv32NN/4FI4TkA0tk=
+	t=1723728977; cv=none; b=MlYVpH+5/LxBpwCMhZPCuSfVq+sm96D7vzpQq4mBo2VZGDgTnIouUTd9W4tUsN4q5HNRq3DR4i0iUhS1vPWa+wIyZ73Gr2k/FSHHh0RNnY27auSDnEbWXN/WoBR5tRmFianzzS943C6YecWjnWdFpFgSTZFN/2C6bx5qPIGF/LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728974; c=relaxed/simple;
-	bh=6IiyBH8b9u3M6I/iaQYfgfCVX6ECxKAn7G6haKDCSEY=;
+	s=arc-20240116; t=1723728977; c=relaxed/simple;
+	bh=1hRREk6sC5zGfmOFWpNj6dKZwZZ34Ls6VabanM7VH5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3bZhc6veCr1mFgaK1wSqNwylGqlMK+A9Mxq78CzbLBozwAnoWK0y+/Ss26mip+Xgc7MekJS3dk1DfvoLj+WCt8/TqEzVvmw3hyZEktB/bHuIrD+dLMUSCB7XqeQOCGpsQax/vk3gTWia6Au2wfkbIIFq8lfK625kopBvFhMrIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vG68T85O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjHqzEz7p9zJsxxIrYU6B5aiXbtFOfVNhY+8cyBuzgtUcNcsQ95ajdWLsTMA4/3EPHe20Hpc+om8VGmF2rqg9YTDLTEuKyDgHlKpqdKIe7KJkJrmLqkzsedNzkHnK9VFdERfokDXrMtxqm/rLLTQ9ydPoYM3ioS6pewlBvmxWkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKGwy9J0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG68T85O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40B9C32786;
-	Thu, 15 Aug 2024 13:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKGwy9J0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE95C32786;
+	Thu, 15 Aug 2024 13:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728974;
-	bh=6IiyBH8b9u3M6I/iaQYfgfCVX6ECxKAn7G6haKDCSEY=;
+	s=korg; t=1723728977;
+	bh=1hRREk6sC5zGfmOFWpNj6dKZwZZ34Ls6VabanM7VH5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vG68T85OnoUGlBRjCyPK/IQ4V78/jqAwezb0c1njVxOZoCUNRBEtkaKiBh+v3Ri8l
-	 G9gRM+chH1G5P72D81IJylBPMXI0GzakqWdkGYu8iHZwRqZ1yw5EXhahXDZTwS2LXl
-	 EBJeOyNqIHnPj7gGFhb+UIlvrkQIvqdfe1vEi4GI=
+	b=NKGwy9J0xDfAuta2nBcZ4vjyhxxCqSSxvNwh+qpKVHjZLkTJ5N4Q1RuP7pR3rGUGz
+	 iGcOiq5+pVYBnnDZ1huIFtc8V8rME7K2U1teIfwsgphZaSEi1ymRNyijNdUNgA2TNi
+	 rTVNnDGc70F+uvwkd4LjbRItx7XTxMkjjMJ5MJL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Suvorov <oleksandr.suvorov@toradex.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 170/196] spi: fsl-lpspi: remove unneeded array
-Date: Thu, 15 Aug 2024 15:24:47 +0200
-Message-ID: <20240815131858.575215374@linuxfoundation.org>
+Subject: [PATCH 4.19 171/196] spi: spi-fsl-lpspi: Fix scldiv calculation
+Date: Thu, 15 Aug 2024 15:24:48 +0200
+Message-ID: <20240815131858.613083596@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -51,55 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 2fa98705a9289c758b6154a22174aa8d4041a285 ]
+[ Upstream commit 730bbfaf7d4890bd99e637db7767dc68cfeb24e7 ]
 
-- replace the array with the shift operation
-- remove the extra comparing operation.
+The effective SPI clock frequency should never exceed speed_hz
+otherwise this might result in undefined behavior of the SPI device.
 
-Signed-off-by: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
-Link: https://lore.kernel.org/r/20200220141143.3902922-2-oleksandr.suvorov@toradex.com
+Currently the scldiv calculation could violate this constraint.
+For the example parameters perclk_rate = 24 MHz and speed_hz = 7 MHz,
+the function fsl_lpspi_set_bitrate will determine perscale = 0 and
+scldiv = 1, which is a effective SPI clock of 8 MHz.
+
+So fix this by rounding up the quotient of perclk_rate and speed_hz.
+While this never change within the loop, we can pull this out.
+
+Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20240804113611.83613-1-wahrenst@gmx.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 730bbfaf7d48 ("spi: spi-fsl-lpspi: Fix scldiv calculation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 8e1f6ee0a7993..21c8866ebbd12 100644
 --- a/drivers/spi/spi-fsl-lpspi.c
 +++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -67,8 +67,6 @@
- #define TCR_RXMSK	BIT(19)
- #define TCR_TXMSK	BIT(18)
+@@ -257,7 +257,7 @@ static void fsl_lpspi_set_watermark(stru
+ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ {
+ 	struct lpspi_config config = fsl_lpspi->config;
+-	unsigned int perclk_rate, scldiv;
++	unsigned int perclk_rate, scldiv, div;
+ 	u8 prescale;
  
--static int clkdivs[] = {1, 2, 4, 8, 16, 32, 64, 128};
--
- struct lpspi_config {
- 	u8 bpw;
- 	u8 chip_select;
-@@ -271,15 +269,14 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
+@@ -268,8 +268,10 @@ static int fsl_lpspi_set_bitrate(struct
+ 		return -EINVAL;
  	}
  
++	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
++
  	for (prescale = 0; prescale < 8; prescale++) {
--		scldiv = perclk_rate /
--			 (clkdivs[prescale] * config.speed_hz) - 2;
-+		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
+-		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
++		scldiv = div / (1 << prescale) - 2;
  		if (scldiv < 256) {
  			fsl_lpspi->config.prescale = prescale;
  			break;
- 		}
- 	}
- 
--	if (prescale == 8 && scldiv >= 256)
-+	if (scldiv >= 256)
- 		return -EINVAL;
- 
- 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
--- 
-2.43.0
-
 
 
