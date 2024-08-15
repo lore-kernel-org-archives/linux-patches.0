@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6291A08C6;
-	Thu, 15 Aug 2024 14:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C22D19DF6A;
+	Thu, 15 Aug 2024 14:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732041; cv=none; b=oPIi2QyK6ex+hcC/bryFuVKGAljqcsYzJU2cGu6QZ+fuT7VGN4gu9qVaeJJmr33PAySEQmjyjtfAo5hPR8Fb75m4FbxxObK3voQ4jPESy9Rbwlvp2WKtZbA3/p05v+y8NPovmZByBEfEy6g4Kdyz5n8CbJ3US1lfwp+vKYx6RE0=
+	t=1723732044; cv=none; b=RookYr3ctuqbayI4r6lVMB5Su5X0M5l5AfgeoJYdH/1DQ5zchmGh9B4kE7Sro+xdn0H9SW/cF5FiqQr0Ka/f2H5gjVcuv6hD/YiGnEKvVFft2OHyhyu3OjtRBYYFcOOyLejnDGvrfIz+ludhD+WkhuAe/ZscOEh/odGg67HG1a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732041; c=relaxed/simple;
-	bh=c2B6RFwRtDnmZYJhuqHJ9Cjy+1Ml0wi896KgXNQ+TZM=;
+	s=arc-20240116; t=1723732044; c=relaxed/simple;
+	bh=FgcTwjVLA917bG0WE5CkEo10Yt5O/3MifG+4FCyjWb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIauhIMtnBfPF0lKF43F6QsJfrU4rlub7Z9xqyougXg7qDQDdFU2alVfibzSZCm7gA/NE2ox5yUX4GKp6kkM4AwWgiabH39VXi42/eIHJwXtdOFmkAdK7rryEA7QeB6qr59Uf+og4SmXxC0Eg397RMXPIdNXChlrEggknLYAPkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygf6s4U5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+4l46cA0Ra83zdIBHNU6NdcFkrl++YTyf1eAVrYLG6FhINHy0Gmsf8ISDwUWcN3tRETAbT35jO+Vvy4Hc/pdzfhe+Ad1HRYklTDr+cvQbz07q8sHY6TYVieywTGKr115fLFQKRReNTuxaR2QW3P9jSDX/K2AU/208IZAHiYV0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqeLqaDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygf6s4U5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6780C32786;
-	Thu, 15 Aug 2024 14:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqeLqaDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDB5C32786;
+	Thu, 15 Aug 2024 14:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732041;
-	bh=c2B6RFwRtDnmZYJhuqHJ9Cjy+1Ml0wi896KgXNQ+TZM=;
+	s=korg; t=1723732044;
+	bh=FgcTwjVLA917bG0WE5CkEo10Yt5O/3MifG+4FCyjWb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygf6s4U593lK+S6Xr4Cv/R04aA/oXhW55BpaVy1rb56XVHAb1MjqkBgVd52kPxFpI
-	 NMgilqP9u3tqceASh47UWwnPsjhUNEUdHa80JjS1a/ob9TMJ3XzjKfpBin+SxA6BXR
-	 WvDLuG6436KGT4R2euCh6/KBHbrTI5gc1hWdPfgg=
+	b=sqeLqaDzQDjpn1MoYzmropc9F6ry0NTg6J0X2XQz6tK4K1bQ82D+dKYA6ocO5hI/I
+	 XEIWeYybMMnI8camYTjfkvrOgV2SXpri85auHcNIPshem1NfLjvG91ue/ogs4MQcGM
+	 037A/KhbwCrNVG7XfsbVpw3zZb0zuI8HokTn01Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/352] wifi: virt_wifi: avoid reporting connection success with wrong SSID
-Date: Thu, 15 Aug 2024 15:22:03 +0200
-Message-ID: <20240815131921.443953927@linuxfoundation.org>
+Subject: [PATCH 5.10 058/352] gss_krb5: Fix the error handling path for crypto_sync_skcipher_setkey
+Date: Thu, 15 Aug 2024 15:22:04 +0200
+Message-ID: <20240815131921.483633410@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,96 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit b5d14b0c6716fad7f0c94ac6e1d6f60a49f985c7 ]
+[ Upstream commit a3123341dc358952ce2bf8067fbdfb7eaadf71bb ]
 
-When user issues a connection with a different SSID than the one
-virt_wifi has advertised, the __cfg80211_connect_result() will
-trigger the warning: WARN_ON(bss_not_found).
+If we fail to call crypto_sync_skcipher_setkey, we should free the
+memory allocation for cipher, replace err_return with err_free_cipher
+to free the memory of cipher.
 
-The issue is because the connection code in virt_wifi does not
-check the SSID from user space (it only checks the BSSID), and
-virt_wifi will call cfg80211_connect_result() with WLAN_STATUS_SUCCESS
-even if the SSID is different from the one virt_wifi has advertised.
-Eventually cfg80211 won't be able to find the cfg80211_bss and generate
-the warning.
-
-Fixed it by checking the SSID (from user space) in the connection code.
-
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Reported-by: syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
-Link: https://patch.msgid.link/20240705023756.10954-1-en-wei.wu@canonical.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 4891f2d008e4 ("gss_krb5: import functionality to derive keys into the kernel")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virt_wifi.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ net/sunrpc/auth_gss/gss_krb5_keys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
-index 514f2c1124b61..ec730bc44adc1 100644
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -136,6 +136,8 @@ static struct ieee80211_supported_band band_5ghz = {
- /* Assigned at module init. Guaranteed locally-administered and unicast. */
- static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
+diff --git a/net/sunrpc/auth_gss/gss_krb5_keys.c b/net/sunrpc/auth_gss/gss_krb5_keys.c
+index 726c076950c04..fc4639687c0fd 100644
+--- a/net/sunrpc/auth_gss/gss_krb5_keys.c
++++ b/net/sunrpc/auth_gss/gss_krb5_keys.c
+@@ -161,7 +161,7 @@ u32 krb5_derive_key(const struct gss_krb5_enctype *gk5e,
+ 	if (IS_ERR(cipher))
+ 		goto err_return;
+ 	if (crypto_sync_skcipher_setkey(cipher, inkey->data, inkey->len))
+-		goto err_return;
++		goto err_free_cipher;
  
-+#define VIRT_WIFI_SSID "VirtWifi"
-+
- static void virt_wifi_inform_bss(struct wiphy *wiphy)
- {
- 	u64 tsf = div_u64(ktime_get_boottime_ns(), 1000);
-@@ -146,8 +148,8 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
- 		u8 ssid[8];
- 	} __packed ssid = {
- 		.tag = WLAN_EID_SSID,
--		.len = 8,
--		.ssid = "VirtWifi",
-+		.len = strlen(VIRT_WIFI_SSID),
-+		.ssid = VIRT_WIFI_SSID,
- 	};
+ 	/* allocate and set up buffers */
  
- 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
-@@ -213,6 +215,8 @@ struct virt_wifi_netdev_priv {
- 	struct net_device *upperdev;
- 	u32 tx_packets;
- 	u32 tx_failed;
-+	u32 connect_requested_ssid_len;
-+	u8 connect_requested_ssid[IEEE80211_MAX_SSID_LEN];
- 	u8 connect_requested_bss[ETH_ALEN];
- 	bool is_up;
- 	bool is_connected;
-@@ -229,6 +233,12 @@ static int virt_wifi_connect(struct wiphy *wiphy, struct net_device *netdev,
- 	if (priv->being_deleted || !priv->is_up)
- 		return -EBUSY;
- 
-+	if (!sme->ssid)
-+		return -EINVAL;
-+
-+	priv->connect_requested_ssid_len = sme->ssid_len;
-+	memcpy(priv->connect_requested_ssid, sme->ssid, sme->ssid_len);
-+
- 	could_schedule = schedule_delayed_work(&priv->connect, HZ * 2);
- 	if (!could_schedule)
- 		return -EBUSY;
-@@ -252,12 +262,15 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
- 	u8 *requested_bss = priv->connect_requested_bss;
- 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
-+	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
-+			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
-+				  priv->connect_requested_ssid_len);
- 	u16 status = WLAN_STATUS_SUCCESS;
- 
- 	if (is_zero_ether_addr(requested_bss))
- 		requested_bss = NULL;
- 
--	if (!priv->is_up || (requested_bss && !right_addr))
-+	if (!priv->is_up || (requested_bss && !right_addr) || !right_ssid)
- 		status = WLAN_STATUS_UNSPECIFIED_FAILURE;
- 	else
- 		priv->is_connected = true;
 -- 
 2.43.0
 
