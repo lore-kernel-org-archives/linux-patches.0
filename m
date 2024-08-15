@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E91D1AC43B;
-	Thu, 15 Aug 2024 14:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C540C1B29C1;
+	Thu, 15 Aug 2024 14:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731154; cv=none; b=Goiq5VXntyFLFak13MOsiL5UuKCnkRnrUJ1PciRGPDYzCZnWKQcBvw/lNO1h4C1iHrinkdi+5I8yF1CdhYKD5HVM2wF6nxwflYJTHndLLWC8os5zoAh07maJBUN8ctwW5arXuvWiD71/fSnOVXg97iznF0CeXZZ15yLzonZBTFQ=
+	t=1723731157; cv=none; b=aDV6I99CKMSsXXxEneEcKFtzNA7+wbsN2zfu9Ujs33x1K/ZnI3+gE3mV/OceJZ3wEG34hRb7IiqRSLlIfRU5l4n/bhA6xMfnKUrLbKjl3wO7AFqQYntMkSoGehHrwAntrtPJwx+z/g6AmRnegFxBUWSHl4cPGzJPhqPArzoDDYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731154; c=relaxed/simple;
-	bh=q0mOrHt6fvpfSDVH61HRC8fr3/i3RLUUo0ZQWa6BqNw=;
+	s=arc-20240116; t=1723731157; c=relaxed/simple;
+	bh=oOgy9uWBGcogmGnZJdG/omrM7A+W7xNM1fgon1LKar4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zo1vrMuZKe3wWYp7JpJ35jPkGJ5vf8y3BUtb1i8/ApQs9UDoouX2sobKgEzaTw15JVkQtWk0kXmsiML7G7gDfpUgP88vzM58Vtwf/s8cWIanSV41p2dXUoDmMEMpX4ICuzGAUtHe0tBhfc6Pu0mSbZtNGPj9BbjxH0nzeGA/mQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2tA6/Kk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P1qGeeRNxFXAmHd3dmCRQLNc1b6VyXJHvxcEpaVSPMzYP02zrcpgP/BonIgFWHS2E5TCWByyebNISlqGaVIj6MUGuc4uUp15+Yz43gOc5sJmQrwA/nzojP3ge60Ioeon+UY+n2BLHIm7tmgLrGnaTLWS7EfeWSSigrImH6T1mcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsFO8C7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2tA6/Kk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABC4C32786;
-	Thu, 15 Aug 2024 14:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsFO8C7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE234C4AF0D;
+	Thu, 15 Aug 2024 14:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731154;
-	bh=q0mOrHt6fvpfSDVH61HRC8fr3/i3RLUUo0ZQWa6BqNw=;
+	s=korg; t=1723731157;
+	bh=oOgy9uWBGcogmGnZJdG/omrM7A+W7xNM1fgon1LKar4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2tA6/KkjWbyTvdSZRRX/3PP937En3Pq4MyARi833Ndnj/5hRJwoeButEPWCJgeFv
-	 Il9FqEiVGoVVj9i0LlMFH5syjlAeB8m5XRaNMZANufq4CcF8Oa+Y+8zY66+WfBIQS+
-	 GALLToGdHyIYDhV3tIBi0Yfl9Palplm0TFouoz1s=
+	b=bsFO8C7lmoT89Jg13TN2nj18AFz6ZfpmV3KMA3cckBRQzEXIYzXvTViaXajx6KsVX
+	 d1OuYAQ1VR+dVuEAHxEtu+TijkrCF9eIKetCr/+mJvk7ym3ULrV0k5+uzZzCW6zZzD
+	 0GSVwNFvMS5ET/f8KheloN6BYqxuCGxEWfXDWLvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 040/259] netfilter: nf_tables: rise cap on SELinux secmark context
-Date: Thu, 15 Aug 2024 15:22:53 +0200
-Message-ID: <20240815131904.350154462@linuxfoundation.org>
+Subject: [PATCH 5.4 041/259] perf/x86/intel/pt: Fix pt_topa_entry_for_page() address calculation
+Date: Thu, 15 Aug 2024 15:22:54 +0200
+Message-ID: <20240815131904.389865165@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -50,32 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit e29630247be24c3987e2b048f8e152771b32d38b ]
+[ Upstream commit 3520b251dcae2b4a27b95cd6f745c54fd658bda5 ]
 
-secmark context is artificially limited 256 bytes, rise it to 4Kbytes.
+Currently, perf allocates an array of page pointers which is limited in
+size by MAX_PAGE_ORDER. That in turn limits the maximum Intel PT buffer
+size to 2GiB. Should that limitation be lifted, the Intel PT driver can
+support larger sizes, except for one calculation in
+pt_topa_entry_for_page(), which is limited to 32-bits.
 
-Fixes: fb961945457f ("netfilter: nf_tables: add SECMARK support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix pt_topa_entry_for_page() address calculation by adding a cast.
+
+Fixes: 39152ee51b77 ("perf/x86/intel/pt: Get rid of reverse lookup table for ToPA")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240624201101.60186-4-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/netfilter/nf_tables.h | 2 +-
+ arch/x86/events/intel/pt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
-index bc70d580e8d65..3e6c61d026e35 100644
---- a/include/uapi/linux/netfilter/nf_tables.h
-+++ b/include/uapi/linux/netfilter/nf_tables.h
-@@ -1213,7 +1213,7 @@ enum nft_secmark_attributes {
- #define NFTA_SECMARK_MAX	(__NFTA_SECMARK_MAX - 1)
+diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
+index f4d2322f4c629..10ccc30d84638 100644
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -935,7 +935,7 @@ pt_topa_entry_for_page(struct pt_buffer *buf, unsigned int pg)
+ 	 * order allocations, there shouldn't be many of these.
+ 	 */
+ 	list_for_each_entry(topa, &buf->tables, list) {
+-		if (topa->offset + topa->size > pg << PAGE_SHIFT)
++		if (topa->offset + topa->size > (unsigned long)pg << PAGE_SHIFT)
+ 			goto found;
+ 	}
  
- /* Max security context length */
--#define NFT_SECMARK_CTX_MAXLEN		256
-+#define NFT_SECMARK_CTX_MAXLEN		4096
- 
- /**
-  * enum nft_reject_types - nf_tables reject expression reject types
 -- 
 2.43.0
 
