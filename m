@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9060B7DA8C;
-	Thu, 15 Aug 2024 14:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D9C1A00D1;
+	Thu, 15 Aug 2024 14:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732317; cv=none; b=Fw1yqRPZabcm5X7B7V/eWu4UUux0w2OuK0k566kE8woyi86cI3xwWUfaLgKGw0OW0kdFKby3M+ZqAdnu9n/xUPs5bsSJgTNV2Wpr9vzglV35bmX/7XGYJ6tCC5lENfyz0esDDZZlHLesKwG9t9SMOHRkwvvam1u6VW66IOuaRXY=
+	t=1723732320; cv=none; b=nvhrLT1jeuBu7lDUhj8ds1So+bbrvq5atChcFFTDSDg+1PtmQcYkya07P1P+oWIuy1qyRYT2yJfJs0f7SNTiEr3iUXHkoBB+0bBZ4rxYoXPQWZHlsEUnbMK5bxKJYUReywD6/33VLLgGLtV1Yo+eaEsdoKZhbnBEIXjdp6FPUdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732317; c=relaxed/simple;
-	bh=H9JHaQcy5vgwRBGKoTTrx5FBYtEYD0XZFyp6JKAVqK0=;
+	s=arc-20240116; t=1723732320; c=relaxed/simple;
+	bh=/QbhHnkUiS47F3OC4pI4DdX3rhlzrckdEVsu9jJBhUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3pqOiTlXDS0Tfs7Q9xWXQKrL5eXI95QgzTSpMX4c7GnnmhzeylBeuThmGvTFIoQCXbfihF+agoTk9tIsM/wjWTuMkZKZsYa6W2dyN4TIanjWRhJ6UDn5eNSauPvlK03zu7IfpnfHi34gIMyRiW/Nu1ORZhJmHUdhlL48FDzXV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIGVatQe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oa9+pKNDBk90RfSpm0w8qCL6jESzHeRUBIghj5sefyp7M8D1OUCTrBB6MvZeck3r3DZKuco/6O6WPiuJu3M1/rTje1LSOpgoOs2lR5TB0O4kt0Ff+jm3O9uUtQXdznWW97fflW+9L9n9iJrBjA6kJlimUXc5DlghthBV50pz+Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcmVXAAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIGVatQe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6EFC4AF0D;
-	Thu, 15 Aug 2024 14:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcmVXAAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63C4C32786;
+	Thu, 15 Aug 2024 14:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732317;
-	bh=H9JHaQcy5vgwRBGKoTTrx5FBYtEYD0XZFyp6JKAVqK0=;
+	s=korg; t=1723732320;
+	bh=/QbhHnkUiS47F3OC4pI4DdX3rhlzrckdEVsu9jJBhUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIGVatQewPugek5/Ulh+bweoa7t1haSodTt/wnM3Qvxr4CgMF9lg5EasHntNVdMuT
-	 Vlv7CARg/5uuNLp2diGiCnp2mRg1o3ujEulz+Z5hGtDRVoGdl+K9lvZpvZDrGz/bg+
-	 zsygFpG+nV/akRTq3q1e+wpumI6A64rbYm7KD+L0=
+	b=hcmVXAAuGWqQFngSbhrN8MHMnwMlBKMTdQHeI09GpEbZC2z8qXMdGZDfd1SkYO100
+	 pRkAZaJbWnjBn76ng4b+0/6O6yAPVmkXkaBrhPiTDsS79P0hujN9Kef9zIuM5ihvj0
+	 KbtqTKZv0baHtWRb0Y9QGUSRliThTy4rKs7ueXxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f682cd029581f9edfd1@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 142/352] udf: Avoid using corrupted block bitmap buffer
-Date: Thu, 15 Aug 2024 15:23:28 +0200
-Message-ID: <20240815131924.749129107@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 116/352] pinctrl: single: fix possible memory leak when pinctrl_enable() fails
+Date: Thu, 15 Aug 2024 15:23:02 +0200
+Message-ID: <20240815131923.738003930@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -50,73 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit a90d4471146de21745980cba51ce88e7926bcc4f upstream.
+[ Upstream commit 8f773bfbdd428819328a2d185976cfc6ae811cd3 ]
 
-When the filesystem block bitmap is corrupted, we detect the corruption
-while loading the bitmap and fail the allocation with error. However the
-next allocation from the same bitmap will notice the bitmap buffer is
-already loaded and tries to allocate from the bitmap with mixed results
-(depending on the exact nature of the bitmap corruption). Fix the
-problem by using BH_verified bit to indicate whether the bitmap is valid
-or not.
+This driver calls pinctrl_register_and_init() which is not
+devm_ managed, it will leads memory leak if pinctrl_enable()
+fails. Replace it with devm_pinctrl_register_and_init().
+And call pcs_free_resources() if pinctrl_enable() fails.
 
-Reported-by: syzbot+5f682cd029581f9edfd1@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/20240617154201.29512-2-jack@suse.cz
-Fixes: 1e0d4adf17e7 ("udf: Check consistency of Space Bitmap Descriptor")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240606023704.3931561-3-yangyingliang@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/balloc.c |   15 +++++++++++++--
- fs/udf/super.c  |    3 ++-
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-single.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -68,8 +68,12 @@ static int read_block_bitmap(struct supe
- 	}
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 22e471933b373..4860c4dd853f3 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1332,7 +1332,6 @@ static void pcs_irq_free(struct pcs_device *pcs)
+ static void pcs_free_resources(struct pcs_device *pcs)
+ {
+ 	pcs_irq_free(pcs);
+-	pinctrl_unregister(pcs->pctl);
  
- 	for (i = 0; i < count; i++)
--		if (udf_test_bit(i + off, bh->b_data))
-+		if (udf_test_bit(i + off, bh->b_data)) {
-+			bitmap->s_block_bitmap[bitmap_nr] =
-+							ERR_PTR(-EFSCORRUPTED);
-+			brelse(bh);
- 			return -EFSCORRUPTED;
-+		}
- 	return 0;
- }
+ #if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
+ 	if (pcs->missing_nr_pinctrl_cells)
+@@ -1889,7 +1888,7 @@ static int pcs_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto free;
  
-@@ -85,8 +89,15 @@ static int __load_block_bitmap(struct su
- 			  block_group, nr_groups);
- 	}
+-	ret = pinctrl_register_and_init(&pcs->desc, pcs->dev, pcs, &pcs->pctl);
++	ret = devm_pinctrl_register_and_init(pcs->dev, &pcs->desc, pcs, &pcs->pctl);
+ 	if (ret) {
+ 		dev_err(pcs->dev, "could not register single pinctrl driver\n");
+ 		goto free;
+@@ -1922,8 +1921,10 @@ static int pcs_probe(struct platform_device *pdev)
  
--	if (bitmap->s_block_bitmap[block_group])
-+	if (bitmap->s_block_bitmap[block_group]) {
-+		/*
-+		 * The bitmap failed verification in the past. No point in
-+		 * trying again.
-+		 */
-+		if (IS_ERR(bitmap->s_block_bitmap[block_group]))
-+			return PTR_ERR(bitmap->s_block_bitmap[block_group]);
- 		return block_group;
-+	}
+ 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
  
- 	retval = read_block_bitmap(sb, bitmap, block_group, block_group);
- 	if (retval < 0)
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -266,7 +266,8 @@ static void udf_sb_free_bitmap(struct ud
- 	int nr_groups = bitmap->s_nr_groups;
+-	return pinctrl_enable(pcs->pctl);
++	if (pinctrl_enable(pcs->pctl))
++		goto free;
  
- 	for (i = 0; i < nr_groups; i++)
--		brelse(bitmap->s_block_bitmap[i]);
-+		if (!IS_ERR_OR_NULL(bitmap->s_block_bitmap[i]))
-+			brelse(bitmap->s_block_bitmap[i]);
++	return 0;
+ free:
+ 	pcs_free_resources(pcs);
  
- 	kvfree(bitmap);
- }
+-- 
+2.43.0
+
 
 
