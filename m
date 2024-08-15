@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645CB19AA53;
-	Thu, 15 Aug 2024 13:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E25B19AA53;
+	Thu, 15 Aug 2024 13:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729942; cv=none; b=ke2WNJiNKoR2Z0uoUz7IKt57Wgc2Z2SFU+sMHBSncvxDXyRLMAcbs8HvGLqJhGO/q+n5FxypxA9p8qrwCUWo7SA0n4u7C8fwjrEQ1BH6w8pXTuqO12FyaQ7eZ7yh2T7R/GQvOcqUPL3yDh/ItCjrvdN0W2BByEcKKSWFezBiTnU=
+	t=1723729945; cv=none; b=KZiBSCpa8ToV+vfN0VA1516oO5B+Kgv3zehT8WjU72X7ffIFQXIezRMC4cCmXE/Da7RGeq39C4Y/ZnGqy7wlAaNhfj4hVfHdW9pmC13SjYHtgSWMXH2ssc3Dm3kV3KdB4BKCNopPw+BM1DiafP9pqqcpheBS+j06kLOcFRxc7q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729942; c=relaxed/simple;
-	bh=FUCJSLBpmQXsg/Cu+yUJdrF9L1WYlXujtST6ilMMPgo=;
+	s=arc-20240116; t=1723729945; c=relaxed/simple;
+	bh=sVWNRdRUNQBwHbT9spgB6h1HE9jySFhfMPg0aGyJtgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifjMWMBOrFnXoe4PAkZ85+vBgE1TIwOBFKoJMBlP4fDeCtkWfxkthX8KADJ9XtB9CzYbpFAsEvnpCkbI/WAD+Oy3dXDoww/ClIQKE4rTw8N3nMc8HfJJvsjkznBQ45Jk04/bX7aiu83/1T+pXG0vSsSW+PI38iovzdFCCdxWxEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVLrm6oh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9ji8P+kQ5tk00YmZZP9HmbFvdugE6txRAzPHtfhjvNkS3NemipYUL4mVYVp/rS0OHvCsBZGoL4xxK0xaH2axgFOmwGhEhmsVa/b+/pOip5OXN1SojOfNBfSBoq4aWOVw7kNwBekLKcEtzvm0yP3NXtTKXLXBvjaBFaVhzgRE/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vW6FO1EL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVLrm6oh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFEDC32786;
-	Thu, 15 Aug 2024 13:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vW6FO1EL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253F0C32786;
+	Thu, 15 Aug 2024 13:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729942;
-	bh=FUCJSLBpmQXsg/Cu+yUJdrF9L1WYlXujtST6ilMMPgo=;
+	s=korg; t=1723729945;
+	bh=sVWNRdRUNQBwHbT9spgB6h1HE9jySFhfMPg0aGyJtgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVLrm6oh9zq6pkspZPUnAGi+suwQcQzdqabsO7XQWnbiXwLxIMSSHYt3C/GFgg3pE
-	 LqmsgMPYqW14Zp1HqAQgdroDlVZ00W3BEA1S9u1n5b+bNZKICyrEHFMFQRNUTEj1Yh
-	 ZYysCYrv9zxTabMd1wcZ0tVzMB3nyTIWB1cKjVhw=
+	b=vW6FO1ELj1OJOO/CmcOj/nGzIVRUUQ1IzspXIEU4ule0YG4Ukil+a8O3LXqICyfaZ
+	 EZIzwgaUG6ZgArTs78oy4GUplwpeovimI0MQWxbRteP3L5ydOTrujFTO0Zs6WnueqK
+	 9dyCjU5wkLaFhJjfhbpJMcmOioTjDpzyu5tIuAv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hilda Wu <hildawu@realtek.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Erpeng Xu <xuerpeng@uniontech.com>
-Subject: [PATCH 5.15 255/484] Bluetooth: btusb: Add RTL8852BE device 0489:e125 to device tables
-Date: Thu, 15 Aug 2024 15:21:53 +0200
-Message-ID: <20240815131951.252654660@linuxfoundation.org>
+Subject: [PATCH 5.15 256/484] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x13d3:0x3591
+Date: Thu, 15 Aug 2024 15:21:54 +0200
+Message-ID: <20240815131951.290737601@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,18 +52,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hilda Wu <hildawu@realtek.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit 295ef07a9dae6182ad4b689aa8c6a7dbba21474c upstream.
+commit 473a89b4ed7fd52a419340f7c540d5c8fc96fc75 upstream.
 
-Add the support ID 0489:e125 to usb_device_id table for
-Realtek RTL8852B chip.
+Add the support ID(0x13d3, 0x3591) to usb_device_id table for
+Realtek RTL8852BE.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+The device table is as follows:
 
-T:  Bus=01 Lev=01 Prnt=01 Port=07 Cnt=03 Dev#=  5 Spd=12   MxCh= 0
+T:  Bus=01 Lev=02 Prnt=03 Port=00 Cnt=01 Dev#=  5 Spd=12   MxCh= 0
 D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e125 Rev= 0.00
+P:  Vendor=13d3 ProdID=3591 Rev= 0.00
 S:  Manufacturer=Realtek
 S:  Product=Bluetooth Radio
 S:  SerialNumber=00e04c000001
@@ -90,7 +91,9 @@ I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
 E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Signed-off-by: Hilda Wu <hildawu@realtek.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -104,10 +107,10 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  						     BTUSB_WIDEBAND_SPEECH },
  	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
++	{ USB_DEVICE(0x13d3, 0x3591), .driver_info = BTUSB_REALTEK |
 +						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
- 	/* Silicon Wave based devices */
- 	{ USB_DEVICE(0x0c10, 0x0000), .driver_info = BTUSB_SWAVE },
 
 
