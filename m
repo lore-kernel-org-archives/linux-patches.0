@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83A17DA6C;
-	Thu, 15 Aug 2024 14:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34741AC896;
+	Thu, 15 Aug 2024 14:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732065; cv=none; b=hoD166P8y1iOaN4hF6rzmIe1KCKC5x34neFpbDhYlk6cIVXpajwn31Cy5lhmpklokVjhCFmY7Pr5892goP02DOrCSeVIXN8w0cXSSIKXUvF11dkuIw7UbULhtDG+1XWQ4BQddypkgkC5cMpdokbGGujtw+DI/Kt/5iOsBfgsZAM=
+	t=1723732068; cv=none; b=X7L8seiM2kTdrQ5H4PTaXtT8u6Swi935SagQPULxbpDS6y5kLF+YXoSPtdti/Uyw6AHoqalyuRYDahUPIAEBtEcZ5CM8ZJt+PXeYpDhXhwFadqhD+h+snaWGa8L9/idHb+muvH7Tjq8uYvK52acFljEpA7iglEMr4rMx45Q77J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732065; c=relaxed/simple;
-	bh=o/dQE6uWZeX6edn2BjtBVy7yTgMvL/KT286LolW6uss=;
+	s=arc-20240116; t=1723732068; c=relaxed/simple;
+	bh=rCy2+TkYpd6ncSxJ6nBCAwoyL9hmhQGn6I9bykqGhGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=muy6P5uIod+d71Q8ocRwUEyLLNUWn0ajgb1UuMSCPXX0sQFvHJ5wB5OjYj4jds24EfYojRV2bGUNxHNtx82TkmvilOsefxFENvtbY0YvpmomkL2LSCW5sZXjgxAcfNkZCG8ETdEM60xOM6J4uVFHUa01o+yFCqmo2jLBnpIBZ/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r43sf3LV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXeMA0b72oalLIkNgMerJlGC6JZ8F7OyZaO897cm7zDZ9lDpfQ+pOshhBtGPpHoWl9JQSHhxn7APrA5LNy9AsH494zInQKfeM6mXM9FAWWxTLqAviKIrolWoI4HMWt364/T7QjUzefJ8baDKhgtmjv3Cb1gL09OgPrSTAzhoXZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jamIaLza; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r43sf3LV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714F8C32786;
-	Thu, 15 Aug 2024 14:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jamIaLza"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B77AC32786;
+	Thu, 15 Aug 2024 14:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732064;
-	bh=o/dQE6uWZeX6edn2BjtBVy7yTgMvL/KT286LolW6uss=;
+	s=korg; t=1723732067;
+	bh=rCy2+TkYpd6ncSxJ6nBCAwoyL9hmhQGn6I9bykqGhGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r43sf3LV7EpEdfdgAP+HNjumPXginm8IDFHr/r/PVNZOQLBq9iZ9gbiITkdZIlLi6
-	 Fbq6AilQ1RbtJALmnjW0eQBjmSJsueuL6ue9YR0OjOdN1rBWKl1zK473NBW5U+6mkZ
-	 tSLaY+QnG8EbkMyzVY+cTMrwz3jXCsi6FHMdtZbA=
+	b=jamIaLzaZLFb7b2bPbhBSci16q/eEJh4oaTv4cG8ExsOZZ0ltV9BH21oOcCJP5BJx
+	 x661CgH9vAezD/DK+la0qrrePxjWQgjs3sGENcPcIM+8aHIqlIev400o0xP6dRJJ9O
+	 sfXH9VQrBB1JPb8yIGrGpppujQ8ujcNzrKRaxwYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/352] selftests: forwarding: devlink_lib: Wait for udev events after reloading
-Date: Thu, 15 Aug 2024 15:22:10 +0200
-Message-ID: <20240815131921.716608793@linuxfoundation.org>
+Subject: [PATCH 5.10 047/352] wifi: cfg80211: fix typo in cfg80211_calculate_bitrate_he()
+Date: Thu, 15 Aug 2024 15:21:53 +0200
+Message-ID: <20240815131921.057644607@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,74 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
+[ Upstream commit 9ee0d44f055276fe2802b2f65058e920853f4f99 ]
 
-Lately, an additional locking was added by commit c0a40097f0bc
-("drivers: core: synchronize really_probe() and dev_uevent()"). The
-locking protects dev_uevent() calling. This function is used to send
-messages from the kernel to user space. Uevent messages notify user space
-about changes in device states, such as when a device is added, removed,
-or changed. These messages are used by udev (or other similar user-space
-tools) to apply device-specific rules.
+rates_996 is mistakenly written as rates_969, fix it.
 
-After reloading devlink instance, udev events should be processed. This
-locking causes a short delay of udev events handling.
-
-One example for useful udev rule is renaming ports. 'forwading.config'
-can be configured to use names after udev rules are applied. Some tests run
-devlink_reload() and immediately use the updated names. This worked before
-the above mentioned commit was pushed, but now the delay of uevent messages
-causes that devlink_reload() returns before udev events are handled and
-tests fail.
-
-Adjust devlink_reload() to not assume that udev events are already
-processed when devlink reload is done, instead, wait for udev events to
-ensure they are processed before returning from the function.
-
-Without this patch:
-TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-Cannot find device "swp1"
-Cannot find device "swp2"
-TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
-
-With this patch:
-$ TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
-
-This is relevant not only for this test.
-
-Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://msgid.link/20240606020653.33205-2-quic_bqiang@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ net/wireless/util.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-index 9c12c4fd3afc9..6edfd207e3240 100644
---- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
-+++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-@@ -113,6 +113,8 @@ devlink_reload()
- 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
- 			grep -c "size_new")
- 	check_err $still_pending "Failed reload - There are still unset sizes"
-+
-+	udevadm settle
- }
- 
- declare -A DEVLINK_ORIG
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 4b32e85c2d9a1..0d5b1c18d62f2 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1334,7 +1334,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 		 2048, /*  1.000000... */
+ 	};
+ 	u32 rates_160M[3] = { 960777777, 907400000, 816666666 };
+-	u32 rates_969[3] =  { 480388888, 453700000, 408333333 };
++	u32 rates_996[3] =  { 480388888, 453700000, 408333333 };
+ 	u32 rates_484[3] =  { 229411111, 216666666, 195000000 };
+ 	u32 rates_242[3] =  { 114711111, 108333333,  97500000 };
+ 	u32 rates_106[3] =  {  40000000,  37777777,  34000000 };
+@@ -1359,7 +1359,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	else if (rate->bw == RATE_INFO_BW_80 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+ 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_996))
+-		result = rates_969[rate->he_gi];
++		result = rates_996[rate->he_gi];
+ 	else if (rate->bw == RATE_INFO_BW_40 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+ 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_484))
 -- 
 2.43.0
 
