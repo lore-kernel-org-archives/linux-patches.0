@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141B044376;
-	Thu, 15 Aug 2024 14:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77FB44376;
+	Thu, 15 Aug 2024 14:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730876; cv=none; b=PGN6Nvxj1BoGXGvFiBMW2Y+GKrX0pA4Q70LcEXuqAbR5Y0IZGawAa197oXOrdBuwDOxMJvOGF39pqlK46iLYNTGzCLevLg5zHKiO3rWmEqqALqRyjQQojm1Ez4f4gPzlFwrhpU1ZXBGlIl1KSABA2bpYFRbxW79LSU0luRaVd6k=
+	t=1723730878; cv=none; b=op4kOeXtlOLM7yHZe3SFSEwAJ24r6tdUO35RvoSLUYApFuoHrD2ZuKsccwkBwIaBkzSBLVuAXB+ttFoEwK0E69swNQhjqVRlndyHwGCEXRlBYOtnigMpiiC/0Au9PBSCMNW+Cb06YkPkUYYV5YRb28FuvfySYvWKzXUuhQW5Yl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730876; c=relaxed/simple;
-	bh=6lpGLSoZGlgKZBpimTz03TSBAOfu81ZZ7Wzzvisj4LY=;
+	s=arc-20240116; t=1723730878; c=relaxed/simple;
+	bh=iIfBBTsl5LscD6MkBMyOGk3jET6AQ5ozsUjGsok8Cgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmqNHvzm5uVB4bMKCVDZQGCos+jWJiSUgEPX/Ic7YFj/KZsyNVQU86aEWZzY+F4GW6jGd3fHWuS9H8Z8S3g3P6/2byQk3BGUKigBdGKmmatXKEciAqy1/ph4E1JS8E9oMVsmE+hX1/1TiA3gDVsy84iY2+sOOf3A1dONM8PTU4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mADAuw7I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CX5+jbk7P4HG65LWomGMC84ja5xcISX7Bi892jdZEqJHdLry5+9aHj6aqWPXjy4xugyOefok8TXDVBQ/QmNtFXCXoTAvdERcpi1Z5EJLt4YOUxmp34MfJ1uMhzHSek2Omjblk1a3KlFHcnKhut5OsBVyWuwBJX+2YkEKxJCPsVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtN7Y1k/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mADAuw7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EBAC32786;
-	Thu, 15 Aug 2024 14:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtN7Y1k/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55264C32786;
+	Thu, 15 Aug 2024 14:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730875;
-	bh=6lpGLSoZGlgKZBpimTz03TSBAOfu81ZZ7Wzzvisj4LY=;
+	s=korg; t=1723730878;
+	bh=iIfBBTsl5LscD6MkBMyOGk3jET6AQ5ozsUjGsok8Cgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mADAuw7IcWUj1DZmKLQYptkj4gpQj7V7RIVNH/UX+2uLVPp+KMHKxhlcC974Bj/GF
-	 bXFskwIa/cEx4NSMrqXfUaYCpChiz9ap/mgBxvrEmUYYaXSCK+F/sHuVrWJkqkforF
-	 zm0aRuX7h12W+MFAdGrQywGD8QtjRdYNJ9OU476c=
+	b=HtN7Y1k/tzxUWAZnjxWLoU7SJEyOLitWy4xFN2+uV2/0rY8OB1sVGqvdnwxZiPtnl
+	 LtgqYY1XXg6/AC/LOzQqTgWQEi1Q5PFO+0HTk5P4NIIy02I69MZPVy5ICY+bbxPVVs
+	 tQoMpnpMsnJdfpEN3TT+KIk1nVvpyLqnyKQLjmbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 06/67] NFSD: Fix frame size warning in svc_export_parse()
-Date: Thu, 15 Aug 2024 15:25:20 +0200
-Message-ID: <20240815131838.563402108@linuxfoundation.org>
+Subject: [PATCH 6.6 07/67] sunrpc: dont change ->sv_stats if it doesnt exist
+Date: Thu, 15 Aug 2024 15:25:21 +0200
+Message-ID: <20240815131838.601982028@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -52,164 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 6939ace1f22681fface7841cdbf34d3204cc94b5 ]
+[ Upstream commit ab42f4d9a26f1723dcfd6c93fcf768032b2bb5e7 ]
 
-fs/nfsd/export.c: In function 'svc_export_parse':
-fs/nfsd/export.c:737:1: warning: the frame size of 1040 bytes is larger than 1024 bytes [-Wframe-larger-than=]
-    737 | }
+We check for the existence of ->sv_stats elsewhere except in the core
+processing code.  It appears that only nfsd actual exports these values
+anywhere, everybody else just has a write only copy of sv_stats in their
+svc_program.  Add a check for ->sv_stats before every adjustment to
+allow us to eliminate the stats struct from all the users who don't
+report the stats.
 
-On my systems, svc_export_parse() has a stack frame of over 800
-bytes, not 1040, but nonetheless, it could do with some reduction.
-
-When a struct svc_export is on the stack, it's a temporary structure
-used as an argument, and not visible as an actual exported FS. No
-need to reserve space for export_stats in such cases.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310012359.YEw5IrK6-lkp@intel.com/
-Cc: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Stable-dep-of: 4b14885411f7 ("nfsd: make all of the nfsd stats per-network namespace")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |   32 +++++++++++++++++++++++---------
- fs/nfsd/export.h |    4 ++--
- fs/nfsd/stats.h  |   12 ++++++------
- 3 files changed, 31 insertions(+), 17 deletions(-)
+ net/sunrpc/svc.c |   27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -339,12 +339,16 @@ static int export_stats_init(struct expo
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -1377,7 +1377,8 @@ svc_process_common(struct svc_rqst *rqst
+ 		goto err_bad_proc;
  
- static void export_stats_reset(struct export_stats *stats)
- {
--	nfsd_percpu_counters_reset(stats->counter, EXP_STATS_COUNTERS_NUM);
-+	if (stats)
-+		nfsd_percpu_counters_reset(stats->counter,
-+					   EXP_STATS_COUNTERS_NUM);
+ 	/* Syntactic check complete */
+-	serv->sv_stats->rpccnt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpccnt++;
+ 	trace_svc_process(rqstp, progp->pg_name);
+ 
+ 	aoffset = xdr_stream_pos(xdr);
+@@ -1429,7 +1430,8 @@ err_short_len:
+ 	goto close_xprt;
+ 
+ err_bad_rpc:
+-	serv->sv_stats->rpcbadfmt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadfmt++;
+ 	xdr_stream_encode_u32(xdr, RPC_MSG_DENIED);
+ 	xdr_stream_encode_u32(xdr, RPC_MISMATCH);
+ 	/* Only RPCv2 supported */
+@@ -1440,7 +1442,8 @@ err_bad_rpc:
+ err_bad_auth:
+ 	dprintk("svc: authentication failed (%d)\n",
+ 		be32_to_cpu(rqstp->rq_auth_stat));
+-	serv->sv_stats->rpcbadauth++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadauth++;
+ 	/* Restore write pointer to location of reply status: */
+ 	xdr_truncate_encode(xdr, XDR_UNIT * 2);
+ 	xdr_stream_encode_u32(xdr, RPC_MSG_DENIED);
+@@ -1450,7 +1453,8 @@ err_bad_auth:
+ 
+ err_bad_prog:
+ 	dprintk("svc: unknown program %d\n", rqstp->rq_prog);
+-	serv->sv_stats->rpcbadfmt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadfmt++;
+ 	*rqstp->rq_accept_statp = rpc_prog_unavail;
+ 	goto sendit;
+ 
+@@ -1458,7 +1462,8 @@ err_bad_vers:
+ 	svc_printk(rqstp, "unknown version (%d for prog %d, %s)\n",
+ 		       rqstp->rq_vers, rqstp->rq_prog, progp->pg_name);
+ 
+-	serv->sv_stats->rpcbadfmt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadfmt++;
+ 	*rqstp->rq_accept_statp = rpc_prog_mismatch;
+ 
+ 	/*
+@@ -1472,19 +1477,22 @@ err_bad_vers:
+ err_bad_proc:
+ 	svc_printk(rqstp, "unknown procedure (%d)\n", rqstp->rq_proc);
+ 
+-	serv->sv_stats->rpcbadfmt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadfmt++;
+ 	*rqstp->rq_accept_statp = rpc_proc_unavail;
+ 	goto sendit;
+ 
+ err_garbage_args:
+ 	svc_printk(rqstp, "failed to decode RPC header\n");
+ 
+-	serv->sv_stats->rpcbadfmt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadfmt++;
+ 	*rqstp->rq_accept_statp = rpc_garbage_args;
+ 	goto sendit;
+ 
+ err_system_err:
+-	serv->sv_stats->rpcbadfmt++;
++	if (serv->sv_stats)
++		serv->sv_stats->rpcbadfmt++;
+ 	*rqstp->rq_accept_statp = rpc_system_err;
+ 	goto sendit;
  }
- 
- static void export_stats_destroy(struct export_stats *stats)
- {
--	nfsd_percpu_counters_destroy(stats->counter, EXP_STATS_COUNTERS_NUM);
-+	if (stats)
-+		nfsd_percpu_counters_destroy(stats->counter,
-+					     EXP_STATS_COUNTERS_NUM);
+@@ -1536,7 +1544,8 @@ void svc_process(struct svc_rqst *rqstp)
+ out_baddir:
+ 	svc_printk(rqstp, "bad direction 0x%08x, dropping request\n",
+ 		   be32_to_cpu(*p));
+-	rqstp->rq_server->sv_stats->rpcbadfmt++;
++	if (rqstp->rq_server->sv_stats)
++		rqstp->rq_server->sv_stats->rpcbadfmt++;
+ out_drop:
+ 	svc_drop(rqstp);
  }
- 
- static void svc_export_put(struct kref *ref)
-@@ -353,7 +357,8 @@ static void svc_export_put(struct kref *
- 	path_put(&exp->ex_path);
- 	auth_domain_put(exp->ex_client);
- 	nfsd4_fslocs_free(&exp->ex_fslocs);
--	export_stats_destroy(&exp->ex_stats);
-+	export_stats_destroy(exp->ex_stats);
-+	kfree(exp->ex_stats);
- 	kfree(exp->ex_uuid);
- 	kfree_rcu(exp, ex_rcu);
- }
-@@ -767,13 +772,15 @@ static int svc_export_show(struct seq_fi
- 	seq_putc(m, '\t');
- 	seq_escape(m, exp->ex_client->name, " \t\n\\");
- 	if (export_stats) {
--		seq_printf(m, "\t%lld\n", exp->ex_stats.start_time);
-+		struct percpu_counter *counter = exp->ex_stats->counter;
-+
-+		seq_printf(m, "\t%lld\n", exp->ex_stats->start_time);
- 		seq_printf(m, "\tfh_stale: %lld\n",
--			   percpu_counter_sum_positive(&exp->ex_stats.counter[EXP_STATS_FH_STALE]));
-+			   percpu_counter_sum_positive(&counter[EXP_STATS_FH_STALE]));
- 		seq_printf(m, "\tio_read: %lld\n",
--			   percpu_counter_sum_positive(&exp->ex_stats.counter[EXP_STATS_IO_READ]));
-+			   percpu_counter_sum_positive(&counter[EXP_STATS_IO_READ]));
- 		seq_printf(m, "\tio_write: %lld\n",
--			   percpu_counter_sum_positive(&exp->ex_stats.counter[EXP_STATS_IO_WRITE]));
-+			   percpu_counter_sum_positive(&counter[EXP_STATS_IO_WRITE]));
- 		seq_putc(m, '\n');
- 		return 0;
- 	}
-@@ -819,7 +826,7 @@ static void svc_export_init(struct cache
- 	new->ex_layout_types = 0;
- 	new->ex_uuid = NULL;
- 	new->cd = item->cd;
--	export_stats_reset(&new->ex_stats);
-+	export_stats_reset(new->ex_stats);
- }
- 
- static void export_update(struct cache_head *cnew, struct cache_head *citem)
-@@ -856,7 +863,14 @@ static struct cache_head *svc_export_all
- 	if (!i)
- 		return NULL;
- 
--	if (export_stats_init(&i->ex_stats)) {
-+	i->ex_stats = kmalloc(sizeof(*(i->ex_stats)), GFP_KERNEL);
-+	if (!i->ex_stats) {
-+		kfree(i);
-+		return NULL;
-+	}
-+
-+	if (export_stats_init(i->ex_stats)) {
-+		kfree(i->ex_stats);
- 		kfree(i);
- 		return NULL;
- 	}
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -64,10 +64,10 @@ struct svc_export {
- 	struct cache_head	h;
- 	struct auth_domain *	ex_client;
- 	int			ex_flags;
-+	int			ex_fsid;
- 	struct path		ex_path;
- 	kuid_t			ex_anon_uid;
- 	kgid_t			ex_anon_gid;
--	int			ex_fsid;
- 	unsigned char *		ex_uuid; /* 16 byte fsid */
- 	struct nfsd4_fs_locations ex_fslocs;
- 	uint32_t		ex_nflavors;
-@@ -76,8 +76,8 @@ struct svc_export {
- 	struct nfsd4_deviceid_map *ex_devid_map;
- 	struct cache_detail	*cd;
- 	struct rcu_head		ex_rcu;
--	struct export_stats	ex_stats;
- 	unsigned long		ex_xprtsec_modes;
-+	struct export_stats	*ex_stats;
- };
- 
- /* an "export key" (expkey) maps a filehandlefragement to an
---- a/fs/nfsd/stats.h
-+++ b/fs/nfsd/stats.h
-@@ -61,22 +61,22 @@ static inline void nfsd_stats_rc_nocache
- static inline void nfsd_stats_fh_stale_inc(struct svc_export *exp)
- {
- 	percpu_counter_inc(&nfsdstats.counter[NFSD_STATS_FH_STALE]);
--	if (exp)
--		percpu_counter_inc(&exp->ex_stats.counter[EXP_STATS_FH_STALE]);
-+	if (exp && exp->ex_stats)
-+		percpu_counter_inc(&exp->ex_stats->counter[EXP_STATS_FH_STALE]);
- }
- 
- static inline void nfsd_stats_io_read_add(struct svc_export *exp, s64 amount)
- {
- 	percpu_counter_add(&nfsdstats.counter[NFSD_STATS_IO_READ], amount);
--	if (exp)
--		percpu_counter_add(&exp->ex_stats.counter[EXP_STATS_IO_READ], amount);
-+	if (exp && exp->ex_stats)
-+		percpu_counter_add(&exp->ex_stats->counter[EXP_STATS_IO_READ], amount);
- }
- 
- static inline void nfsd_stats_io_write_add(struct svc_export *exp, s64 amount)
- {
- 	percpu_counter_add(&nfsdstats.counter[NFSD_STATS_IO_WRITE], amount);
--	if (exp)
--		percpu_counter_add(&exp->ex_stats.counter[EXP_STATS_IO_WRITE], amount);
-+	if (exp && exp->ex_stats)
-+		percpu_counter_add(&exp->ex_stats->counter[EXP_STATS_IO_WRITE], amount);
- }
- 
- static inline void nfsd_stats_payload_misses_inc(struct nfsd_net *nn)
 
 
