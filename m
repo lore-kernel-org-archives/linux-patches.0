@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B5F1A706F;
-	Thu, 15 Aug 2024 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F70419FA7E;
+	Thu, 15 Aug 2024 14:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731017; cv=none; b=NTuks1UlC9SlXpciBslYKTeQqoGbduuBI5+2weKF5Ol6kA6yywHf+wKWEvE6u8arYwP1TmHn7YlW7q1foE+yBxscWAfuQ7I9l18J6dGNevCmZAkWwRFgnmAMl+yxHPBrPTQPcVBPADi05qrXwK2KAJ4LoLo24QUR5ONqstN5hGs=
+	t=1723731020; cv=none; b=RZZDo9+p9EU1xqZve0w/ns7l/aD7977MEZSob6BPMvuA6Svzy8KJZKU4x94IcKWvJl9xGlG3oGW6TH/PrjtJ+n6jUYNZHu2AQ7ALpW7XmW4ZRSH40PgCQ3lDDJEp0YzxZoJYsBmUtBD2IIT8rrqk5qXkVIRGcjSmVJczMFNciYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731017; c=relaxed/simple;
-	bh=FLwvPU3ZZz87k5vWRG67+AE3xF38rcIudKklg/2zeP4=;
+	s=arc-20240116; t=1723731020; c=relaxed/simple;
+	bh=ugS3K1+nnHkdh08wZUprrJqiLw3HyRIRjsHehbaUJXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qTOnZWedNPplXo6jRhJ996OdGmZ7x6Q/fAfHKHkCZI6jvdbfhSKI3Q1pDEAU38LD83kEkmQ56UFvvrMnACzFGbeTaR3Fg2gG1NxG/FJQ5NUwH6gH9CljyZZ65SQokEJaziR0rdDjX29NCFXHRx0QBMwC51egajruS1QQ99I671A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaprgw5P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWwxNjaeHgh8QZtfGjn1O1dqiFJx9DRQWrNyubx89f+Jyn0ntwUuUTnoINEdjnw1zjnd21A1Hldi0dKH+2rLUh88zsvBNlc5skcwpwCxj519iupRMoBh36khQHtw/HANlHzw4VjRsrqdK32Xl311cjs7qQNVDG3KJpDa3K30oRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fhn67ybl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaprgw5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A3BC4AF0C;
-	Thu, 15 Aug 2024 14:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fhn67ybl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2CBC4AF0C;
+	Thu, 15 Aug 2024 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731016;
-	bh=FLwvPU3ZZz87k5vWRG67+AE3xF38rcIudKklg/2zeP4=;
+	s=korg; t=1723731019;
+	bh=ugS3K1+nnHkdh08wZUprrJqiLw3HyRIRjsHehbaUJXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaprgw5PDG3R5mGRV++sY30dlXQqW9vOOxRYQ++VWvOxIpZKB24riEXf23pqFCXE9
-	 2uA2UZxSuKIVok5JGnBmNsndO5v4/hMXFa0bJdwdald0N6BsLREZU5QZvWzw04DfPf
-	 e9M93WCw7/3WyykMHD81WcZB7OTAa8nt9X1RAIRk=
+	b=Fhn67yblE7jUojzvtiosBcO6jyEmKdc2EeblfRQ98OuuGQXSp8UI0xqtCyLSz4jrh
+	 wKHcHGGQuuTbHG4BCw0e9tUijYOvXepm7NFSsnyMDVCaFUyPY12tZ4/vOmlMWHauz5
+	 FKb4c455GEfx7pw6CzbdAJxLHbX6VbOcS7mPmlN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Waiman Long <longman@redhat.com>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 65/67] cgroup: Move rcu_head up near the top of cgroup_root
-Date: Thu, 15 Aug 2024 15:26:19 +0200
-Message-ID: <20240815131840.794789323@linuxfoundation.org>
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 66/67] KVM: arm64: Dont defer TLB invalidation when zapping table entries
+Date: Thu, 15 Aug 2024 15:26:20 +0200
+Message-ID: <20240815131840.831660720@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -48,70 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Will Deacon <will@kernel.org>
 
-commit a7fb0423c201ba12815877a0b5a68a6a1710b23a upstream.
+commit f62d4c3eb687d87b616b4279acec7862553bda77 upstream.
 
-Commit d23b5c577715 ("cgroup: Make operations on the cgroup root_list RCU
-safe") adds a new rcu_head to the cgroup_root structure and kvfree_rcu()
-for freeing the cgroup_root.
+Commit 7657ea920c54 ("KVM: arm64: Use TLBI range-based instructions for
+unmap") introduced deferred TLB invalidation for the stage-2 page-table
+so that range-based invalidation can be used for the accumulated
+addresses. This works fine if the structure of the page-tables remains
+unchanged, but if entire tables are zapped and subsequently freed then
+we transiently leave the hardware page-table walker with a reference
+to freed memory thanks to the translation walk caches. For example,
+stage2_unmap_walker() will free page-table pages:
 
-The current implementation of kvfree_rcu(), however, has the limitation
-that the offset of the rcu_head structure within the larger data
-structure must be less than 4096 or the compilation will fail. See the
-macro definition of __is_kvfree_rcu_offset() in include/linux/rcupdate.h
-for more information.
+	if (childp)
+		mm_ops->put_page(childp);
 
-By putting rcu_head below the large cgroup structure, any change to the
-cgroup structure that makes it larger run the risk of causing build
-failure under certain configurations. Commit 77070eeb8821 ("cgroup:
-Avoid false cacheline sharing of read mostly rstat_cpu") happens to be
-the last straw that breaks it. Fix this problem by moving the rcu_head
-structure up before the cgroup structure.
+and issue the TLB invalidation later in kvm_pgtable_stage2_unmap():
 
-Fixes: d23b5c577715 ("cgroup: Make operations on the cgroup root_list RCU safe")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/lkml/20231207143806.114e0a74@canb.auug.org.au/
-Signed-off-by: Waiman Long <longman@redhat.com>
-Acked-by: Yafang Shao <laoar.shao@gmail.com>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+	if (stage2_unmap_defer_tlb_flush(pgt))
+		/* Perform the deferred TLB invalidations */
+		kvm_tlb_flush_vmid_range(pgt->mmu, addr, size);
+
+For now, take the conservative approach and invalidate the TLB eagerly
+when we clear a table entry. Note, however, that the existing level
+hint passed to __kvm_tlb_flush_vmid_ipa() is incorrect and will be
+fixed in a subsequent patch.
+
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Cc: Shaoqin Huang <shahuang@redhat.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240327124853.11206-2-will@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Cc: <stable@vger.kernel.org> # 6.6.y only
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/kvm/hyp/pgtable.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -543,6 +543,10 @@ struct cgroup_root {
- 	/* Unique id for this hierarchy. */
- 	int hierarchy_id;
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -861,9 +861,11 @@ static void stage2_unmap_put_pte(const s
+ 	if (kvm_pte_valid(ctx->old)) {
+ 		kvm_clear_pte(ctx->ptep);
  
-+	/* A list running through the active hierarchies */
-+	struct list_head root_list;
-+	struct rcu_head rcu;	/* Must be near the top */
-+
- 	/*
- 	 * The root cgroup. The containing cgroup_root will be destroyed on its
- 	 * release. cgrp->ancestors[0] will be used overflowing into the
-@@ -556,10 +560,6 @@ struct cgroup_root {
- 	/* Number of cgroups in the hierarchy, used only for /proc/cgroups */
- 	atomic_t nr_cgrps;
+-		if (!stage2_unmap_defer_tlb_flush(pgt))
++		if (!stage2_unmap_defer_tlb_flush(pgt) ||
++		    kvm_pte_table(ctx->old, ctx->level)) {
+ 			kvm_call_hyp(__kvm_tlb_flush_vmid_ipa, mmu,
+ 					ctx->addr, ctx->level);
++		}
+ 	}
  
--	/* A list running through the active hierarchies */
--	struct list_head root_list;
--	struct rcu_head rcu;
--
- 	/* Hierarchy-specific flags */
- 	unsigned int flags;
- 
+ 	mm_ops->put_page(ctx->ptep);
 
 
