@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743AA1BB69B;
-	Thu, 15 Aug 2024 14:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822D51BB6B4;
+	Thu, 15 Aug 2024 14:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731001; cv=none; b=pGb36ASXhBKhNwRrot7yK+9re/CWC8nnEcpBNeQvqsyWXGkU8f5LDx+9yjuiddKfpbJGn0qzuQjgjb6oX2kDJ9lfeFC6CDhmGxpRvl5vrvI+Iz5U6L+GkDU9Sol+6NM+kRtlBuu/yJgNxFnQ5N71r55MytmGgKe/j13rY348oLU=
+	t=1723731004; cv=none; b=bL0DwQ3JtB5zdtIhs9Vij1BPHh8zBcwrL0TC0TxiUL0DcGhpD/JORUy5RZcjmMQkSO5XMURBHsmM6fWrRFPcSGhprUawy6Jy6TqwT1fRvBEVcw5w6uDyARopkhAV6RFZF31cfPH4yr3dmju526Yu9oWfMADqONzx1mM7GJW3rEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731001; c=relaxed/simple;
-	bh=RlYlK7jAqVlqNsjwItJvekmLfVlWIESu6B/yRcmg75c=;
+	s=arc-20240116; t=1723731004; c=relaxed/simple;
+	bh=3wcse9R1u6p0nRAHZozFronHV/EOOJRLhSveaREiuOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SctdlH4DFnXvEv7hSKaPk8dsW0T7LdN+EpwtEZHW4qA8HUfxP6DvxBDHpBTrnhItx0A7H1/LHkkd/zI+RtHlIH/IF8MGTePznKbkCEoqWhoS1gyu1RoeovNPFxtRPjCeV2OZfyqalTQ8PMHqUEpB1jyU7IowmdPZyrwR7iV+5Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WviYV3P4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVzb02b0QeRu6+Lsfz33AfN+SpQfe5I88NQRdy5jze4pA9es6Sdd9q07pcFn6UacWH3oJ9xyEz3Z5lP4phkFxobWqsoYIMapWGmSjaGMcelYXsjs7OksU1han0Tf45IS4E+gwA0hrq/y7vzJu7krBBPi4ANSzmJbUl8VDZM0XKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfau0JmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WviYV3P4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E08C32786;
-	Thu, 15 Aug 2024 14:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfau0JmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BDBC4AF0A;
+	Thu, 15 Aug 2024 14:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731001;
-	bh=RlYlK7jAqVlqNsjwItJvekmLfVlWIESu6B/yRcmg75c=;
+	s=korg; t=1723731004;
+	bh=3wcse9R1u6p0nRAHZozFronHV/EOOJRLhSveaREiuOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WviYV3P4466304fRt00HO6DAjbo1xJCRYaOmsexFMe76lfY2OXhhzUSaBGC6AVvq2
-	 yQMssD2N4qdI0Rv9zpZDeYMdLm6YoLDbSc8PnqTjXeMwZ6XFO1xGlJc69T77N5a8hg
-	 X5zuh/M8Cq30l0r35UqJKI0nqvnQwENg4FhmXVts=
+	b=Gfau0JmPfW+EgKU4jJwxGusxGQgGwPqzYvfbIEnTCUc8eB5tfayuo/rWfsMdzrEYN
+	 knEuEe1nJjTfK4+EkPoa6j9LmuIlQD5e7aCS7ymgpWgrTEMV1wsGrKIYKDnPq+8SLZ
+	 0haKXk3R9+MlV4S5oKUMO9KQerHvtnzpF7l8wxEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+18df508cf00a0598d9a6@syzkaller.appspotmail.com,
-	=?UTF-8?q?Wojciech=20G=C5=82adysz?= <wojciech.gladysz@infogain.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Stefan ORear <sorear@fastmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Greg Ungerer <gerg@linux-m68k.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 52/67] ext4: sanity check for NULL pointer after ext4_force_shutdown
-Date: Thu, 15 Aug 2024 15:26:06 +0200
-Message-ID: <20240815131840.308126728@linuxfoundation.org>
+Subject: [PATCH 6.6 61/67] binfmt_flat: Fix corruption when not offsetting data start
+Date: Thu, 15 Aug 2024 15:26:15 +0200
+Message-ID: <20240815131840.643145788@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -46,137 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojciech Gładysz <wojciech.gladysz@infogain.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 83f4414b8f84249d538905825b088ff3ae555652 ]
+[ Upstream commit 3eb3cd5992f7a0c37edc8d05b4c38c98758d8671 ]
 
-Test case: 2 threads write short inline data to a file.
-In ext4_page_mkwrite the resulting inline data is converted.
-Handling ext4_grp_locked_error with description "block bitmap
-and bg descriptor inconsistent: X vs Y free clusters" calls
-ext4_force_shutdown. The conversion clears
-EXT4_STATE_MAY_INLINE_DATA but fails for
-ext4_destroy_inline_data_nolock and ext4_mark_iloc_dirty due
-to ext4_forced_shutdown. The restoration of inline data fails
-for the same reason not setting EXT4_STATE_MAY_INLINE_DATA.
-Without the flag set a regular process path in ext4_da_write_end
-follows trying to dereference page folio private pointer that has
-not been set. The fix calls early return with -EIO error shall the
-pointer to private be NULL.
+Commit 04d82a6d0881 ("binfmt_flat: allow not offsetting data start")
+introduced a RISC-V specific variant of the FLAT format which does
+not allocate any space for the (obsolete) array of shared library
+pointers. However, it did not disable the code which initializes the
+array, resulting in the corruption of sizeof(long) bytes before the DATA
+segment, generally the end of the TEXT segment.
 
-Sample crash report:
+Introduce MAX_SHARED_LIBS_UPDATE which depends on the state of
+CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET to guard the initialization of
+the shared library pointer region so that it will only be initialized
+if space is reserved for it.
 
-Unable to handle kernel paging request at virtual address dfff800000000004
-KASAN: null-ptr-deref in range [0x0000000000000020-0x0000000000000027]
-Mem abort info:
-  ESR = 0x0000000096000005
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x05: level 1 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[dfff800000000004] address between user and kernel address ranges
-Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 1 PID: 20274 Comm: syz-executor185 Not tainted 6.9.0-rc7-syzkaller-gfda5695d692c #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __block_commit_write+0x64/0x2b0 fs/buffer.c:2167
-lr : __block_commit_write+0x3c/0x2b0 fs/buffer.c:2160
-sp : ffff8000a1957600
-x29: ffff8000a1957610 x28: dfff800000000000 x27: ffff0000e30e34b0
-x26: 0000000000000000 x25: dfff800000000000 x24: dfff800000000000
-x23: fffffdffc397c9e0 x22: 0000000000000020 x21: 0000000000000020
-x20: 0000000000000040 x19: fffffdffc397c9c0 x18: 1fffe000367bd196
-x17: ffff80008eead000 x16: ffff80008ae89e3c x15: 00000000200000c0
-x14: 1fffe0001cbe4e04 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000001 x10: 0000000000ff0100 x9 : 0000000000000000
-x8 : 0000000000000004 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : fffffdffc397c9c0 x4 : 0000000000000020 x3 : 0000000000000020
-x2 : 0000000000000040 x1 : 0000000000000020 x0 : fffffdffc397c9c0
-Call trace:
- __block_commit_write+0x64/0x2b0 fs/buffer.c:2167
- block_write_end+0xb4/0x104 fs/buffer.c:2253
- ext4_da_do_write_end fs/ext4/inode.c:2955 [inline]
- ext4_da_write_end+0x2c4/0xa40 fs/ext4/inode.c:3028
- generic_perform_write+0x394/0x588 mm/filemap.c:3985
- ext4_buffered_write_iter+0x2c0/0x4ec fs/ext4/file.c:299
- ext4_file_write_iter+0x188/0x1780
- call_write_iter include/linux/fs.h:2110 [inline]
- new_sync_write fs/read_write.c:497 [inline]
- vfs_write+0x968/0xc3c fs/read_write.c:590
- ksys_write+0x15c/0x26c fs/read_write.c:643
- __do_sys_write fs/read_write.c:655 [inline]
- __se_sys_write fs/read_write.c:652 [inline]
- __arm64_sys_write+0x7c/0x90 fs/read_write.c:652
- __invoke_syscall arch/arm64/kernel/syscall.c:34 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:48
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:133
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:152
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
- el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
-Code: 97f85911 f94002da 91008356 d343fec8 (38796908)
----[ end trace 0000000000000000 ]---
-----------------
-Code disassembly (best guess):
-   0:	97f85911 	bl	0xffffffffffe16444
-   4:	f94002da 	ldr	x26, [x22]
-   8:	91008356 	add	x22, x26, #0x20
-   c:	d343fec8 	lsr	x8, x22, #3
-* 10:	38796908 	ldrb	w8, [x8, x25] <-- trapping instruction
-
-Reported-by: syzbot+18df508cf00a0598d9a6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=18df508cf00a0598d9a6
-Link: https://lore.kernel.org/all/000000000000f19a1406109eb5c5@google.com/T/
-Signed-off-by: Wojciech Gładysz <wojciech.gladysz@infogain.com>
-Link: https://patch.msgid.link/20240703070112.10235-1-wojciech.gladysz@infogain.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 04d82a6d0881 ("binfmt_flat: allow not offsetting data start")
+Co-developed-by: Stefan O'Rear <sorear@fastmail.com>
+Signed-off-by: Stefan O'Rear <sorear@fastmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Greg Ungerer <gerg@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240807195119.it.782-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/buffer.c     | 2 ++
- fs/ext4/inode.c | 5 +++++
- 2 files changed, 7 insertions(+)
+ fs/binfmt_flat.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 12e9a71c693d7..ecd8b47507ff8 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -2179,6 +2179,8 @@ static void __block_commit_write(struct folio *folio, size_t from, size_t to)
- 	struct buffer_head *bh, *head;
+diff --git a/fs/binfmt_flat.c b/fs/binfmt_flat.c
+index c26545d71d39a..cd6d5bbb4b9df 100644
+--- a/fs/binfmt_flat.c
++++ b/fs/binfmt_flat.c
+@@ -72,8 +72,10 @@
  
- 	bh = head = folio_buffers(folio);
-+	if (!bh)
-+		return;
- 	blocksize = bh->b_size;
+ #ifdef CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET
+ #define DATA_START_OFFSET_WORDS		(0)
++#define MAX_SHARED_LIBS_UPDATE		(0)
+ #else
+ #define DATA_START_OFFSET_WORDS		(MAX_SHARED_LIBS)
++#define MAX_SHARED_LIBS_UPDATE		(MAX_SHARED_LIBS)
+ #endif
  
- 	block_start = 0;
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index e24afb80c0f6b..a4ffd1acac651 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -2973,6 +2973,11 @@ static int ext4_da_do_write_end(struct address_space *mapping,
- 	bool disksize_changed = false;
- 	loff_t new_i_size;
+ struct lib_info {
+@@ -880,7 +882,7 @@ static int load_flat_binary(struct linux_binprm *bprm)
+ 		return res;
  
-+	if (unlikely(!folio_buffers(folio))) {
-+		folio_unlock(folio);
-+		folio_put(folio);
-+		return -EIO;
-+	}
- 	/*
- 	 * block_write_end() will mark the inode as dirty with I_DIRTY_PAGES
- 	 * flag, which all that's needed to trigger page writeback.
+ 	/* Update data segment pointers for all libraries */
+-	for (i = 0; i < MAX_SHARED_LIBS; i++) {
++	for (i = 0; i < MAX_SHARED_LIBS_UPDATE; i++) {
+ 		if (!libinfo.lib_list[i].loaded)
+ 			continue;
+ 		for (j = 0; j < MAX_SHARED_LIBS; j++) {
 -- 
 2.43.0
 
