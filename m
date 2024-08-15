@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396803214;
-	Thu, 15 Aug 2024 14:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB63C3214;
+	Thu, 15 Aug 2024 14:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732571; cv=none; b=sk6JsUsB/om1K8C2NpRyQaTw+aWeCIlcP4RemYXkU02KVsse1vBBv/zR1f/07v+HNprKK3PdSnRxJDkEA/X5wP3DXt0C5BAqi+GDuGfRr4alYKyW25bSQY90qg19uO7GsPRI5zwWWl2zrMUuGT4npb6v3fWGWb5F3rHxRCir6QY=
+	t=1723732574; cv=none; b=S0OQcl7Fw39bxMXUlWCTu9xOj4mBi7PgbUEBivKrdZ3mbAt6EUwBMfdWF/tsXTwYE/0JzbCSzcTUT5IwnOH9oUadiqULgZe7fnL5p9Vr/4NGUd5tOoarUR1taOoe6/me7bJ8DPfAUYJ5gD34woLpDVC3HfJji1sEZm7faQgDPyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732571; c=relaxed/simple;
-	bh=5Hy08ythieFxvsSo0sScw1TPQFQ9tv5dRlunpLSGhK8=;
+	s=arc-20240116; t=1723732574; c=relaxed/simple;
+	bh=tKBibiv2OzTRqYjpanX6PPGxqaviteWUpYidhcXMrIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQkFzOBGgqZ+HlkzNB1txjQW6USzX1V/j7aNOAIn+elpVRREexKn6nU+EwYqwSMizhedwspYST29vJjMJRBglkFRPD4xdB/EX7/BThCm8mh19MVfQgfE5e3YZztb+gBrinrytrx8zFPqXJowgFFGOW+uISPu+7YV5kW3pWuL360=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKRwNXou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSfmptkIDjUaNcM/qyAatisKSfZbgPPcdJpIy96w+QaXu4YGzTYOy4BmboDVQnB8xjOTMKKdxuMULvnAHloCgs28jT3N2GtrnyOxXMdRx9ATPwbL3/kksZh6iaxoULI3eQW7nXudYtIFg2VzvF/9YvXc/xOT049RVNw50cWFZPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6M+RB5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKRwNXou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3741C32786;
-	Thu, 15 Aug 2024 14:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6M+RB5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ED4C32786;
+	Thu, 15 Aug 2024 14:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732571;
-	bh=5Hy08ythieFxvsSo0sScw1TPQFQ9tv5dRlunpLSGhK8=;
+	s=korg; t=1723732574;
+	bh=tKBibiv2OzTRqYjpanX6PPGxqaviteWUpYidhcXMrIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKRwNXouXAeX4c17+1hPQ3VlUnj1gui3XdQv+QW127EsiBROBytobGlVw6zxkP/TB
-	 NvcZxPNLgkzeWw/+TRW+aYhCFbeO6oR2qG3ZS363oagGd2NSz8VV76ujddmmPAB5qL
-	 AHFhErPaJibp00ZNKLcsMI62VHs8IVJ3kGaCjG/I=
+	b=M6M+RB5x2oA6Q8Nhrcn1OgmlTGDXHfM6BCNqhlMrZpx32spRxeTKUm44F4n88gmwd
+	 E2aMlGzoxIHCFwPN1IAqEjghrrZ/Bq8Qt8vbD/WDymvl84Vr3phqNxgLjOh8nc7Tey
+	 lyI4CkBvd+ZS67HUSjyd4POtALZ+atWgpFN+P6+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/352] kdb: Use the passed prompt in kdb_position_cursor()
-Date: Thu, 15 Aug 2024 15:24:15 +0200
-Message-ID: <20240815131926.582801879@linuxfoundation.org>
+	Diederik de Haas <didi.debian@cknow.org>,
+	Furkan Kardame <f.kardame@manjaro.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>
+Subject: [PATCH 5.10 180/352] drm/panfrost: Mark simple_ondemand governor as softdep
+Date: Thu, 15 Aug 2024 15:24:06 +0200
+Message-ID: <20240815131926.234580851@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,42 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit e2e821095949cde46256034975a90f88626a2a73 ]
+commit 80f4e62730a91572b7fdc657f7bb747e107ae308 upstream.
 
-The function kdb_position_cursor() takes in a "prompt" parameter but
-never uses it. This doesn't _really_ matter since all current callers
-of the function pass the same value and it's a global variable, but
-it's a bit ugly. Let's clean it up.
+Panfrost DRM driver uses devfreq to perform DVFS, while using simple_ondemand
+devfreq governor by default.  This causes driver initialization to fail on
+boot when simple_ondemand governor isn't built into the kernel statically,
+as a result of the missing module dependency and, consequently, the required
+governor module not being included in the initial ramdisk.  Thus, let's mark
+simple_ondemand governor as a softdep for Panfrost, to have its kernel module
+included in the initial ramdisk.
 
-Found by code inspection. This patch is expected to functionally be a
-no-op.
+This is a rather longstanding issue that has forced distributions to build
+devfreq governors statically into their kernels, [1][2] or has forced users
+to introduce some unnecessary workarounds. [3]
 
-Fixes: 09b35989421d ("kdb: Use format-strings rather than '\0' injection in kdb_read()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240528071144.1.I0feb49839c6b6f4f2c4bf34764f5e95de3f55a66@changeid
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For future reference, not having support for the simple_ondemand governor in
+the initial ramdisk produces errors in the kernel log similar to these below,
+which were taken from a Pine64 RockPro64:
+
+  panfrost ff9a0000.gpu: [drm:panfrost_devfreq_init [panfrost]] *ERROR* Couldn't initialize GPU devfreq
+  panfrost ff9a0000.gpu: Fatal error during GPU init
+  panfrost: probe of ff9a0000.gpu failed with error -22
+
+Having simple_ondemand marked as a softdep for Panfrost may not resolve this
+issue for all Linux distributions.  In particular, it will remain unresolved
+for the distributions whose utilities for the initial ramdisk generation do
+not handle the available softdep information [4] properly yet.  However, some
+Linux distributions already handle softdeps properly while generating their
+initial ramdisks, [5] and this is a prerequisite step in the right direction
+for the distributions that don't handle them properly yet.
+
+[1] https://gitlab.manjaro.org/manjaro-arm/packages/core/linux/-/blob/linux61/config?ref_type=heads#L8180
+[2] https://salsa.debian.org/kernel-team/linux/-/merge_requests/1066
+[3] https://forum.pine64.org/showthread.php?tid=15458
+[4] https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/commit/?id=49d8e0b59052999de577ab732b719cfbeb89504d
+[5] https://github.com/archlinux/mkinitcpio/commit/97ac4d37aae084a050be512f6d8f4489054668ad
+
+Cc: Diederik de Haas <didi.debian@cknow.org>
+Cc: Furkan Kardame <f.kardame@manjaro.org>
+Cc: stable@vger.kernel.org
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/4e1e00422a14db4e2a80870afb704405da16fd1b.1718655077.git.dsimic@manjaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/debug/kdb/kdb_io.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panfrost/panfrost_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
-index a4256e558a701..b28b8a5ef6381 100644
---- a/kernel/debug/kdb/kdb_io.c
-+++ b/kernel/debug/kdb/kdb_io.c
-@@ -194,7 +194,7 @@ char kdb_getchar(void)
-  */
- static void kdb_position_cursor(char *prompt, char *buffer, char *cp)
- {
--	kdb_printf("\r%s", kdb_prompt_str);
-+	kdb_printf("\r%s", prompt);
- 	if (cp > buffer)
- 		kdb_printf("%.*s", (int)(cp - buffer), buffer);
- }
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/panfrost/panfrost_drv.c
++++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+@@ -681,3 +681,4 @@ module_platform_driver(panfrost_driver);
+ MODULE_AUTHOR("Panfrost Project Developers");
+ MODULE_DESCRIPTION("Panfrost DRM Driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_SOFTDEP("pre: governor_simpleondemand");
 
 
