@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929CC7DA8A;
-	Thu, 15 Aug 2024 13:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE8319EED7;
+	Thu, 15 Aug 2024 13:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728707; cv=none; b=ZIfvIikKssTa5AIkahRkTtrkM4M/jP/lnrc5kjO0ByOy3Nl0tXADVjSFM1HzhYsDmo0cFMCQHoVsWqxYJzDWtD2kYqbkKvhxwQ0Lq8Cbv08315iQ5M6NCVDTfS5b8yGa0DtSoPEZvQANmWQqKN/GYFn3nqHbKJfSEj3/7BrjEno=
+	t=1723728711; cv=none; b=jd9IXb3rX42r5869n5zaFSr5PC/ATtKRhbUPc1ZAFWgaSlbOowZLR/GVZE8FCeFYTxr8jNxn4Bd+1a8LSgbCgEgCKA7RyJQLioOKdG8C5VX0R+d2n6JFjreZBu+INK0d7JNYlUvK18XmzUYZ2WKeEZr6J+ULIYPUW2pm97x6pV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728707; c=relaxed/simple;
-	bh=WserUgcT2x1XldaT6vEgamkqyAQYbT0lZfFOKdJ5AyU=;
+	s=arc-20240116; t=1723728711; c=relaxed/simple;
+	bh=hFc0rCr7gGLM7yFH/GFkZio0y0IBbAVKjGuaPs0XpjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PqVJFb3ZU/aq2z81mbWx+xEpGZO8UDAYZ0ZaCN+J2wSKFnnIn8JQm8G1/OHPQ1OiJEhDbA6yDKZWhC+3Vd3N7OgtPnu8Zhkn0rIYeaG+KuPdFnZDgnMYdVFJlvSNh35OgS0jR0X06ZhMcAqW4Z/yUtru2ECsJIgf7hFCP21C1vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4jj4+Gr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkJq8+VESaAFjJrFB68ds++LbLZdbIVcZiCdo2ibsAvv4vBGQzLfsg4NIinpxm4Yh5xR+JjYyfSWkU6bDUVHAbhVTNy+FUM5xVQO61PYk8mhjieW+NYGZVs53g2aQcQ1jEeedaLZJHbo8R3z4m0+FGFrIT6B4CS52R4McIXbmKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCi0U7CF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4jj4+Gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156A9C4AF0C;
-	Thu, 15 Aug 2024 13:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCi0U7CF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97484C32786;
+	Thu, 15 Aug 2024 13:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728707;
-	bh=WserUgcT2x1XldaT6vEgamkqyAQYbT0lZfFOKdJ5AyU=;
+	s=korg; t=1723728711;
+	bh=hFc0rCr7gGLM7yFH/GFkZio0y0IBbAVKjGuaPs0XpjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4jj4+GrrsF+3S3/neVjdasgHE/BOitT7x965W800xvf9HGT4eFTk/2HiN3DMCo+c
-	 HFKPnn3HLvdVJ64OphOLalSBbE10+11tTQwqZrGRMI7mKp/Jq2ES8ZchovRwsF9F7b
-	 SrRla920rmwkaBZCw3wwk7wzN6sSGfH3C3V3fXNU=
+	b=hCi0U7CFPAni9HpGlfoMg1hh7t2w9wX0YjBgU34JKCTy8GJ4D/t3T3yax6521+cw3
+	 iCWZDWR+aYFN27EJLrmwHlGBhqo60ieT/n7lORkb1zlV1Z9bUtIQSgxj/UW+6yUlmV
+	 1lN+hF4BoTJ7Gh+HqHZ16XK7YMeoeiE0lmJHR/44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Lk Sii <lk_sii@163.com>
-Subject: [PATCH 4.19 085/196] kobject_uevent: Fix OOB access within zap_modalias_env()
-Date: Thu, 15 Aug 2024 15:23:22 +0200
-Message-ID: <20240815131855.333393132@linuxfoundation.org>
+	Joy Chakraborty <joychakr@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 4.19 086/196] rtc: cmos: Fix return value of nvmem callbacks
+Date: Thu, 15 Aug 2024 15:23:23 +0200
+Message-ID: <20240815131855.371981840@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -50,50 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Joy Chakraborty <joychakr@google.com>
 
-commit dd6e9894b451e7c85cceb8e9dc5432679a70e7dc upstream.
+commit 1c184baccf0d5e2ef4cc1562261d0e48508a1c2b upstream.
 
-zap_modalias_env() wrongly calculates size of memory block to move, so
-will cause OOB memory access issue if variable MODALIAS is not the last
-one within its @env parameter, fixed by correcting size to memmove.
+Read/write callbacks registered with nvmem core expect 0 to be returned
+on success and a negative value to be returned on failure.
 
-Fixes: 9b3fa47d4a76 ("kobject: fix suppressing modalias in uevents delivered over netlink")
+cmos_nvram_read()/cmos_nvram_write() currently return the number of
+bytes read or written, fix to return 0 on success and -EIO incase number
+of bytes requested was not read or written.
+
+Fixes: 8b5b7958fd1c ("rtc: cmos: use generic nvmem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Lk Sii <lk_sii@163.com>
-Link: https://lore.kernel.org/r/1717074877-11352-1-git-send-email-quic_zijuhu@quicinc.com
+Signed-off-by: Joy Chakraborty <joychakr@google.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240612083635.1253039-1-joychakr@google.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/kobject_uevent.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/lib/kobject_uevent.c
-+++ b/lib/kobject_uevent.c
-@@ -430,8 +430,23 @@ static void zap_modalias_env(struct kobj
- 		len = strlen(env->envp[i]) + 1;
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -601,11 +601,10 @@ static int cmos_nvram_read(void *priv, u
+ 			   size_t count)
+ {
+ 	unsigned char *buf = val;
+-	int	retval;
  
- 		if (i != env->envp_idx - 1) {
-+			/* @env->envp[] contains pointers to @env->buf[]
-+			 * with @env->buflen chars, and we are removing
-+			 * variable MODALIAS here pointed by @env->envp[i]
-+			 * with length @len as shown below:
-+			 *
-+			 * 0               @env->buf[]      @env->buflen
-+			 * ---------------------------------------------
-+			 * ^             ^              ^              ^
-+			 * |             |->   @len   <-| target block |
-+			 * @env->envp[0] @env->envp[i]  @env->envp[i + 1]
-+			 *
-+			 * so the "target block" indicated above is moved
-+			 * backward by @len, and its right size is
-+			 * @env->buflen - (@env->envp[i + 1] - @env->envp[0]).
-+			 */
- 			memmove(env->envp[i], env->envp[i + 1],
--				env->buflen - len);
-+				env->buflen - (env->envp[i + 1] - env->envp[0]));
+ 	off += NVRAM_OFFSET;
+ 	spin_lock_irq(&rtc_lock);
+-	for (retval = 0; count; count--, off++, retval++) {
++	for (; count; count--, off++) {
+ 		if (off < 128)
+ 			*buf++ = CMOS_READ(off);
+ 		else if (can_bank2)
+@@ -615,7 +614,7 @@ static int cmos_nvram_read(void *priv, u
+ 	}
+ 	spin_unlock_irq(&rtc_lock);
  
- 			for (j = i; j < env->envp_idx - 1; j++)
- 				env->envp[j] = env->envp[j + 1] - len;
+-	return retval;
++	return count ? -EIO : 0;
+ }
+ 
+ static int cmos_nvram_write(void *priv, unsigned int off, void *val,
+@@ -623,7 +622,6 @@ static int cmos_nvram_write(void *priv,
+ {
+ 	struct cmos_rtc	*cmos = priv;
+ 	unsigned char	*buf = val;
+-	int		retval;
+ 
+ 	/* NOTE:  on at least PCs and Ataris, the boot firmware uses a
+ 	 * checksum on part of the NVRAM data.  That's currently ignored
+@@ -632,7 +630,7 @@ static int cmos_nvram_write(void *priv,
+ 	 */
+ 	off += NVRAM_OFFSET;
+ 	spin_lock_irq(&rtc_lock);
+-	for (retval = 0; count; count--, off++, retval++) {
++	for (; count; count--, off++) {
+ 		/* don't trash RTC registers */
+ 		if (off == cmos->day_alrm
+ 				|| off == cmos->mon_alrm
+@@ -647,7 +645,7 @@ static int cmos_nvram_write(void *priv,
+ 	}
+ 	spin_unlock_irq(&rtc_lock);
+ 
+-	return retval;
++	return count ? -EIO : 0;
+ }
+ 
+ /*----------------------------------------------------------------*/
 
 
