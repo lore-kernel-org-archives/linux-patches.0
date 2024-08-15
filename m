@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893417BEC0;
-	Thu, 15 Aug 2024 14:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B471A01D2;
+	Thu, 15 Aug 2024 14:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732611; cv=none; b=hrlWidfCKiGujDFNreY+VX37e4fDI4SAJtLdisLDua/iu1Gx3FUqVw3/73HeBWGdClQM/lD5IG/gJ2icrgP7rBJaXmUGIbqBTG2aX39R0HYF1LXNkyqGoqykAxtk3asEMe34+FHsyFflyWhtHatpjJKuGweqxNi728SDGADcxAg=
+	t=1723732614; cv=none; b=YBaWnMAqRl4WeRoDCHomfhgOeCfX8cazoX6jFCUZIyiWZQ2uX8qkCW7MAJXyaxGPF5UlBT7uQu6h8F1doHb7ZgCKw9jQxgZBsl2rI65/nFUOJpyO2I3MVl5D4lPk2wXPPbS1M4MKmr0HitMOxYwPLOth2pikl3Bdvp+P5m3twS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732611; c=relaxed/simple;
-	bh=D4OK5lfSo+QMAaRd5VJDUl9KtM+GO9fwrgccBX6JV4o=;
+	s=arc-20240116; t=1723732614; c=relaxed/simple;
+	bh=/kYK6IZU6os24KGZoHjiLprMZUgdT9LWjXR0Y/yUrMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C+Sdm8ecCx6WI+2trtwz+rUS5KC5KsS3tp/X6aWLATxpwW1RU3kA65XQvlOrjeSovvXN0FgBtvclZ24bH+pzTKQxhvcc1xj9UgO42lHHKdl+/IR+7Z9Oy0T3ZetuL61EeTaGch8LhvHAnRnOoXaBP+B8q0HlGnEhAodMSepXxM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hh1+eX3A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=utaXhnunXxxp5Zy87mRiANxXbnioAXNnsAoDVKDgGwAei3PUCPJG3TS7oqUhcMKulsHZw5tEw2hwckezeNjdYSmM0BvqPlH2nUXnTKlSlXO9CJrMTxl36UBT99C1xcMQPQxZCy9GrVjzsywl1RriNYYedtbv67UACyttgWUsfRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UivNbO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hh1+eX3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44C6C4AF0D;
-	Thu, 15 Aug 2024 14:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UivNbO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2400DC4AF0C;
+	Thu, 15 Aug 2024 14:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732611;
-	bh=D4OK5lfSo+QMAaRd5VJDUl9KtM+GO9fwrgccBX6JV4o=;
+	s=korg; t=1723732614;
+	bh=/kYK6IZU6os24KGZoHjiLprMZUgdT9LWjXR0Y/yUrMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hh1+eX3AtBm/ALVIOvhgLyvbA4cbCEt4M+PdtrWQGHGD/Uccx4tZFrUXTGBzOgY2r
-	 ZsxPkuOFErH9qvyC3K029fVbE70MVkF5PdwX2S9dUtODg55Ydkd0njbflIbBGpgGP3
-	 KNETl2Spg4gcWyzQ/JeEwwmp5/sleU5sb/9oqjcU=
+	b=0UivNbO7F5JilX+hxtxjpBALY9lqr9rdrS9Rr4H7SXJxqUB//u1hGNG0bfeHDKJ+y
+	 HAg7jL3s3zJDHUqnpTI3BG3p3r9glP0pCc1RRcT32c+PYe1BdUlmjRKGot91XRGTCJ
+	 tq6fCnrPegECX46i2CbfNAE+CfkBZZyCJ1kH2yco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 233/352] drm/nouveau: prime: fix refcount underflow
-Date: Thu, 15 Aug 2024 15:24:59 +0200
-Message-ID: <20240815131928.442365707@linuxfoundation.org>
+	Esben Haabendal <esben@geanix.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 216/352] powerpc/configs: Update defconfig with now user-visible CONFIG_FSL_IFC
+Date: Thu, 15 Aug 2024 15:24:42 +0200
+Message-ID: <20240815131927.638563668@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -46,51 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
+commit 45547a0a93d85f704b49788cde2e1d9ab9cd363b upstream.
 
-Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
-hence the backing ttm_bo) leads to a refcount underflow.
+With CONFIG_FSL_IFC now being user-visible, and thus changed from a select
+to depends in CONFIG_MTD_NAND_FSL_IFC, the dependencies needs to be
+selected in defconfigs.
 
-Instead of calling nouveau_bo_ref() in the unwind path of
-drm_gem_object_init(), clean things up manually.
-
-Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
-(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Depends-on: 9ba0cae3cac0 ("memory: fsl_ifc: Make FSL_IFC config visible and selectable")
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240530-fsl-ifc-config-v3-2-1fd2c3d233dd@geanix.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/configs/85xx-hw.config |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
-index f08bda533bd94..65874a48dc807 100644
---- a/drivers/gpu/drm/nouveau/nouveau_prime.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
-@@ -81,7 +81,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
- 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
- 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
- 	if (ret) {
--		nouveau_bo_ref(NULL, &nvbo);
-+		drm_gem_object_release(&nvbo->bo.base);
-+		kfree(nvbo);
- 		obj = ERR_PTR(-ENOMEM);
- 		goto unlock;
- 	}
--- 
-2.43.0
-
+--- a/arch/powerpc/configs/85xx-hw.config
++++ b/arch/powerpc/configs/85xx-hw.config
+@@ -24,6 +24,7 @@ CONFIG_FS_ENET=y
+ CONFIG_FSL_CORENET_CF=y
+ CONFIG_FSL_DMA=y
+ CONFIG_FSL_HV_MANAGER=y
++CONFIG_FSL_IFC=y
+ CONFIG_FSL_PQ_MDIO=y
+ CONFIG_FSL_RIO=y
+ CONFIG_FSL_XGMAC_MDIO=y
+@@ -58,6 +59,7 @@ CONFIG_INPUT_FF_MEMLESS=m
+ CONFIG_MARVELL_PHY=y
+ CONFIG_MDIO_BUS_MUX_GPIO=y
+ CONFIG_MDIO_BUS_MUX_MMIOREG=y
++CONFIG_MEMORY=y
+ CONFIG_MMC_SDHCI_OF_ESDHC=y
+ CONFIG_MMC_SDHCI_PLTFM=y
+ CONFIG_MMC_SDHCI=y
 
 
