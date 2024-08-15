@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA5717C9A9;
-	Thu, 15 Aug 2024 13:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E31714A1;
+	Thu, 15 Aug 2024 13:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730162; cv=none; b=HO2yeP/21CF/otBwR4ylD1i0CcVFVcPVSMHy87JUQNcLrkF9upcEvvHlMskPz3j/lODpCe0PcNL+6QsVfuskDG6Z0q8KeQ79iOkxIrxlaf0dcWbuXfSkDezKutUvtDgNOpka7jv14zva3CA4xSML970ejbRQm3b/UEnsCyIN+tU=
+	t=1723730165; cv=none; b=b5hNVKLhH/h21IlDmDIhYE3edUVU/mQcgWNYVZd3RvoH/hhhp4PBCGTNI7+W5l948Z0QCZ5qHwrIaxInsQIC/YqeNgCfSsYuEW/1Ybk3AMdKvOp0rQ0b6K8sXZQAaZrVm93iV6hcc6wPhz9S/dOaqsmywZrot9vOyos1c1FjFD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730162; c=relaxed/simple;
-	bh=LUgA+1lR9RH3Y2vlRbhomDpLeIv2heOszqRdtfcjtl4=;
+	s=arc-20240116; t=1723730165; c=relaxed/simple;
+	bh=ROx8+wGuyQclItzIlv0GSuOAocojXKOrNqix/5OW8yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IO5jVQoQnB1lwRqLQBbYd/ut5ZO1ybpZJn92X86WW0emIL34+UXVM4r7IW1JnHIDMp77/HdAoPItnSmtASay8+5JtU9FrIBiEzZvnNsXlZg55pvT3CHUauxij0sI6ttU1ceF5E5urS3tU2PIdfa0FQjQZ1iDtuohDV1JpRLhLfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9QcKr5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBBM0v6Z/afo89Je0rzEh6FpmE01td4N3g3ND0ZE0AcfO1U9bjOM1qIE2+mysEkjwEq0ZhBNeY03pM89ExpVDrD2JlzQx943E7rm+PPVdBldL3bmtb3tE3gu7s7V/6M7NotupRsSxftcrJGSYUGbqE+wtzmmTPkP0WqR6ZWPOTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2caVNrpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9QcKr5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1607C32786;
-	Thu, 15 Aug 2024 13:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2caVNrpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B12C32786;
+	Thu, 15 Aug 2024 13:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730162;
-	bh=LUgA+1lR9RH3Y2vlRbhomDpLeIv2heOszqRdtfcjtl4=;
+	s=korg; t=1723730165;
+	bh=ROx8+wGuyQclItzIlv0GSuOAocojXKOrNqix/5OW8yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e9QcKr5ER7mxNAqjnu979ANSQNsA/XZTAWPfPgnv53wnmIj68O9J5+thvsikUHyXx
-	 okSYWTZpd2q46yS9cBB5qwpCuP/iSXaBRgAh29wxO/psx2rAqdwsgv0KdAuZ2pfG7K
-	 +1RZs9vjhJ3NT7EJld5jphwdxSc4DYZTN+8izwDs=
+	b=2caVNrpO2QYE3Cfy/yxC3rNMvKCn9faeYdYEa4d6S5Na38ZwPnulVAuzqyIS5l5bD
+	 tBajC9oe7nmZaVpNSp/ki9Kbbunu1KegWvyuR7oQG9HE6zXi3e4Ii85jGD1YM6Z9gf
+	 FxFUu6XX4f1DIfxLzL0Vfw4f3EhLxW4RGSwYmLZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Harry Wentland <hwentlan@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Wayne Lin <Wayne.Lin@amd.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 322/484] drm/dp_mst: Fix all mstb marked as not probed after suspend/resume
-Date: Thu, 15 Aug 2024 15:23:00 +0200
-Message-ID: <20240815131953.847056686@linuxfoundation.org>
+Subject: [PATCH 5.15 323/484] remoteproc: imx_rproc: Fix refcount mistake in imx_rproc_addr_init
+Date: Thu, 15 Aug 2024 15:23:01 +0200
+Message-ID: <20240815131953.885934043@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -55,59 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit d63d81094d208abb20fc444514b2d9ec2f4b7c4e ]
+[ Upstream commit dce68a49be26abf52712e0ee452a45fa01ab4624 ]
 
-[Why]
-After supend/resume, with topology unchanged, observe that
-link_address_sent of all mstb are marked as false even the topology probing
-is done without any error.
+In imx_rproc_addr_init() strcmp() is performed over the node after the
+of_node_put() is performed over it.
+Fix this error by moving of_node_put() calls.
 
-It is caused by wrongly also include "ret == 0" case as a probing failure
-case.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-[How]
-Remove inappropriate checking conditions.
-
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Harry Wentland <hwentlan@amd.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
+Fixes: 5e4c1243071d ("remoteproc: imx_rproc: support remote cores booted before Linux Kernel")
 Cc: stable@vger.kernel.org
-Fixes: 37dfdc55ffeb ("drm/dp_mst: Cleanup drm_dp_send_link_address() a bit")
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240626084825.878565-2-Wayne.Lin@amd.com
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://lore.kernel.org/r/20240612131714.12907-1-amishin@t-argos.ru
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_dp_mst_topology.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/imx_rproc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
-index 865c7f39143ec..f24667a003a2b 100644
---- a/drivers/gpu/drm/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/drm_dp_mst_topology.c
-@@ -2974,7 +2974,7 @@ static int drm_dp_send_link_address(struct drm_dp_mst_topology_mgr *mgr,
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index cfdb96cafc7b9..d5ce97e75f027 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -596,25 +596,29 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
+ 			continue;
+ 		}
+ 		err = of_address_to_resource(node, 0, &res);
+-		of_node_put(node);
+ 		if (err) {
+ 			dev_err(dev, "unable to resolve memory region\n");
++			of_node_put(node);
+ 			return err;
+ 		}
  
- 	/* FIXME: Actually do some real error handling here */
- 	ret = drm_dp_mst_wait_tx_reply(mstb, txmsg);
--	if (ret <= 0) {
-+	if (ret < 0) {
- 		drm_err(mgr->dev, "Sending link address failed with %d\n", ret);
- 		goto out;
+-		if (b >= IMX_RPROC_MEM_MAX)
++		if (b >= IMX_RPROC_MEM_MAX) {
++			of_node_put(node);
+ 			break;
++		}
+ 
+ 		/* Not use resource version, because we might share region */
+ 		priv->mem[b].cpu_addr = devm_ioremap(&pdev->dev, res.start, resource_size(&res));
+ 		if (!priv->mem[b].cpu_addr) {
+ 			dev_err(dev, "failed to remap %pr\n", &res);
++			of_node_put(node);
+ 			return -ENOMEM;
+ 		}
+ 		priv->mem[b].sys_addr = res.start;
+ 		priv->mem[b].size = resource_size(&res);
+ 		if (!strcmp(node->name, "rsc-table"))
+ 			priv->rsc_table = priv->mem[b].cpu_addr;
++		of_node_put(node);
+ 		b++;
  	}
-@@ -3026,7 +3026,7 @@ static int drm_dp_send_link_address(struct drm_dp_mst_topology_mgr *mgr,
- 	mutex_unlock(&mgr->lock);
  
- out:
--	if (ret <= 0)
-+	if (ret < 0)
- 		mstb->link_address_sent = false;
- 	kfree(txmsg);
- 	return ret < 0 ? ret : changed;
 -- 
 2.43.0
 
