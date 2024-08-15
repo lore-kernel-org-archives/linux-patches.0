@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF911A00E7;
-	Thu, 15 Aug 2024 14:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A5E1A01B5;
+	Thu, 15 Aug 2024 14:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732549; cv=none; b=fWmv6jsishvcacbrKSdQbWO5VsKqDedZPfA6R0U/J2Ea4qveTsioq138NOcJqK3jw1bEVZhDZesrCMatazVkPN43IrnBz6vTLMlAHDaAAbkMoqv00jRwH9vRMxmKfJJC1z4wnG0EU/KHjfgYWg2Jio2E1h9J4B1EOOwT0ZZFFDs=
+	t=1723732552; cv=none; b=KZrNxB1Sehx726+Hi19Wi+9Ulyk1LgF2RxiFbEAUTlk/2QbQE+Rd9ShRqqBR7zaRQH0SRJTVfCyCwQmnNBLkFnSnvkLo+FsxrxYbRcneKlk0YZX6b5NLDe44VfvNKVQjW/CV7tcBG0aE2PRwtcOFnXZzOaQGNV+c45VY3Dc4MFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732549; c=relaxed/simple;
-	bh=BS3CNXMfO70eQyZBqIZpkpb2fVWWU8hpig3GaalZsm0=;
+	s=arc-20240116; t=1723732552; c=relaxed/simple;
+	bh=gsXg4gmZUJtUANxElKVSnuziQ73uStvnFo5M5QIKYGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGJrymcuiHjpH/JSEyU8FJ7LH1TL0wyuODlLiawirunQUXh/HXkNNqpz3I/Z8rP3CtdIckpH7wPm93mUbibTrcErwpas0hBkEWWj7mCDt3+oDdBo7ZfeTahVSHp7rCiqV0MDezI47q+DBY/HGvFYbL8Vy6X6nfr2igwp/6bCKsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs7ag6GS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JTaCOWnftgIjgfxLPWpyKLblNpgwp1QDuo/xZ1cbQBYICAUh8MkSi7L690Olqf8goFqb7JTRwNPJxawbjmJQ7qeK7lpIBf/5vrSBDYXYC7j8SU2ouIu/Oy8s+DrDZpZYrmAx0qACr3a/X9S+5Prd7Iqj661P9OeNMAn27N3JV+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlOJcvpZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs7ag6GS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4EFC32786;
-	Thu, 15 Aug 2024 14:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlOJcvpZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72079C32786;
+	Thu, 15 Aug 2024 14:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732548;
-	bh=BS3CNXMfO70eQyZBqIZpkpb2fVWWU8hpig3GaalZsm0=;
+	s=korg; t=1723732551;
+	bh=gsXg4gmZUJtUANxElKVSnuziQ73uStvnFo5M5QIKYGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cs7ag6GScMpeuqkXfYPaKQXjMk0gbrF1E8KtiIW1HAjWN5S82YI0ZIIMSjf6NNnu4
-	 QweVFN3NksHRbXmf9G9fg3rfZjHB24ggUPpwsXgLyTYc0Yl2XMkHdX+iF3adbdRjns
-	 J2Tn5npf0G42Lbez8/1nzYk+ne/Y8iRLhbdFHEUA=
+	b=JlOJcvpZokt8CpLotULAy7D+MGehBX0wE8xWqU2R0OqR6XN7QjmipHyLbHtxAoSJv
+	 weRbnV/Bw+U4wDYwMT+oQYpa6X57e2g4V1GwDr6Umw3RJFFJcSPywqtR/ehTnJP1Xg
+	 1iNx8dXI0+2nuPzJhMOpyV7pK8OYsDyWrXTzhbzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/352] s390/pci: Allow allocation of more than 1 MSI interrupt
-Date: Thu, 15 Aug 2024 15:24:38 +0200
-Message-ID: <20240815131927.483343739@linuxfoundation.org>
+Subject: [PATCH 5.10 213/352] nvme: split command copy into a helper
+Date: Thu, 15 Aug 2024 15:24:39 +0200
+Message-ID: <20240815131927.521161891@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,168 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit ab42fcb511fd9d241bbab7cc3ca04e34e9fc0666 ]
+[ Upstream commit 3233b94cf842984ea7e208d5be1ad2f2af02d495 ]
 
-On a PCI adapter that provides up to 8 MSI interrupt sources the s390
-implementation of PCI interrupts rejected to accommodate them, although
-the underlying hardware is able to support that.
+We'll need it for batched submit as well. Since we now have a copy
+helper, get rid of the nvme_submit_cmd() wrapper.
 
-For MSI-X it is sufficient to allocate a single irq_desc per msi_desc,
-but for MSI multiple irq descriptors are attached to and controlled by
-a single msi descriptor. Add the appropriate loops to maintain multiple
-irq descriptors and tie/untie them to/from the appropriate AIBV bit, if
-a device driver allocates more than 1 MSI interrupt.
-
-Common PCI code passes on requests to allocate a number of interrupt
-vectors based on the device drivers' demand and the PCI functions'
-capabilities. However, the root-complex of s390 systems support just a
-limited number of interrupt vectors per PCI function.
-Produce a kernel log message to inform about any architecture-specific
-capping that might be done.
-
-With this change, we had a PCI adapter successfully raising
-interrupts to its device driver via all 8 sources.
-
-Fixes: a384c8924a8b ("s390/PCI: Fix single MSI only check")
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: c31fad147038 ("nvme-pci: add missing condition check for existence of mapped data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_irq.c | 62 ++++++++++++++++++++++++++++-------------
- 1 file changed, 42 insertions(+), 20 deletions(-)
+ drivers/nvme/host/pci.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index b36f5ef34a6c1..690f6999287bc 100644
---- a/arch/s390/pci/pci_irq.c
-+++ b/arch/s390/pci/pci_irq.c
-@@ -262,8 +262,8 @@ static int __alloc_airq(struct zpci_dev *zdev, int msi_vecs,
- 
- int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- {
-+	unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
- 	struct zpci_dev *zdev = to_zpci(pdev);
--	unsigned int hwirq, msi_vecs, cpu;
- 	struct msi_desc *msi;
- 	struct msi_msg msg;
- 	unsigned long bit;
-@@ -273,30 +273,46 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 	zdev->aisb = -1UL;
- 	zdev->msi_first_bit = -1U;
- 
--	if (type == PCI_CAP_ID_MSI && nvec > 1)
--		return 1;
- 	msi_vecs = min_t(unsigned int, nvec, zdev->max_msi);
-+	if (msi_vecs < nvec) {
-+		pr_info("%s requested %d irqs, allocate system limit of %d",
-+			pci_name(pdev), nvec, zdev->max_msi);
-+	}
- 
- 	rc = __alloc_airq(zdev, msi_vecs, &bit);
- 	if (rc < 0)
- 		return rc;
- 
--	/* Request MSI interrupts */
-+	/*
-+	 * Request MSI interrupts:
-+	 * When using MSI, nvec_used interrupt sources and their irq
-+	 * descriptors are controlled through one msi descriptor.
-+	 * Thus the outer loop over msi descriptors shall run only once,
-+	 * while two inner loops iterate over the interrupt vectors.
-+	 * When using MSI-X, each interrupt vector/irq descriptor
-+	 * is bound to exactly one msi descriptor (nvec_used is one).
-+	 * So the inner loops are executed once, while the outer iterates
-+	 * over the MSI-X descriptors.
-+	 */
- 	hwirq = bit;
- 	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
--		rc = -EIO;
- 		if (hwirq - bit >= msi_vecs)
- 			break;
--		irq = __irq_alloc_descs(-1, 0, 1, 0, THIS_MODULE,
--				(irq_delivery == DIRECTED) ?
--				msi->affinity : NULL);
-+		irqs_per_msi = min_t(unsigned int, msi_vecs, msi->nvec_used);
-+		irq = __irq_alloc_descs(-1, 0, irqs_per_msi, 0, THIS_MODULE,
-+					(irq_delivery == DIRECTED) ?
-+					msi->affinity : NULL);
- 		if (irq < 0)
- 			return -ENOMEM;
--		rc = irq_set_msi_desc(irq, msi);
--		if (rc)
--			return rc;
--		irq_set_chip_and_handler(irq, &zpci_irq_chip,
--					 handle_percpu_irq);
-+
-+		for (i = 0; i < irqs_per_msi; i++) {
-+			rc = irq_set_msi_desc_off(irq, i, msi);
-+			if (rc)
-+				return rc;
-+			irq_set_chip_and_handler(irq + i, &zpci_irq_chip,
-+						 handle_percpu_irq);
-+		}
-+
- 		msg.data = hwirq - bit;
- 		if (irq_delivery == DIRECTED) {
- 			if (msi->affinity)
-@@ -309,19 +325,22 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 			msg.address_lo |= (cpu_addr << 8);
- 
- 			for_each_possible_cpu(cpu) {
--				airq_iv_set_data(zpci_ibv[cpu], hwirq, irq);
-+				for (i = 0; i < irqs_per_msi; i++)
-+					airq_iv_set_data(zpci_ibv[cpu],
-+							 hwirq + i, irq + i);
- 			}
- 		} else {
- 			msg.address_lo = zdev->msi_addr & 0xffffffff;
--			airq_iv_set_data(zdev->aibv, hwirq, irq);
-+			for (i = 0; i < irqs_per_msi; i++)
-+				airq_iv_set_data(zdev->aibv, hwirq + i, irq + i);
- 		}
- 		msg.address_hi = zdev->msi_addr >> 32;
- 		pci_write_msi_msg(irq, &msg);
--		hwirq++;
-+		hwirq += irqs_per_msi;
- 	}
- 
- 	zdev->msi_first_bit = bit;
--	zdev->msi_nr_irqs = msi_vecs;
-+	zdev->msi_nr_irqs = hwirq - bit;
- 
- 	if (irq_delivery == DIRECTED)
- 		rc = zpci_set_directed_irq(zdev);
-@@ -330,13 +349,14 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 	if (rc)
- 		return rc;
- 
--	return (msi_vecs == nvec) ? 0 : msi_vecs;
-+	return (zdev->msi_nr_irqs == nvec) ? 0 : zdev->msi_nr_irqs;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index a7131f4752e28..1436aee1f861d 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -486,22 +486,13 @@ static inline void nvme_write_sq_db(struct nvme_queue *nvmeq, bool write_sq)
+ 	nvmeq->last_sq_tail = nvmeq->sq_tail;
  }
  
- void arch_teardown_msi_irqs(struct pci_dev *pdev)
+-/**
+- * nvme_submit_cmd() - Copy a command into a queue and ring the doorbell
+- * @nvmeq: The queue to use
+- * @cmd: The command to send
+- * @write_sq: whether to write to the SQ doorbell
+- */
+-static void nvme_submit_cmd(struct nvme_queue *nvmeq, struct nvme_command *cmd,
+-			    bool write_sq)
++static inline void nvme_sq_copy_cmd(struct nvme_queue *nvmeq,
++				    struct nvme_command *cmd)
  {
- 	struct zpci_dev *zdev = to_zpci(pdev);
- 	struct msi_desc *msi;
-+	unsigned int i;
- 	int rc;
+-	spin_lock(&nvmeq->sq_lock);
+ 	memcpy(nvmeq->sq_cmds + (nvmeq->sq_tail << nvmeq->sqes),
+-	       cmd, sizeof(*cmd));
++		absolute_pointer(cmd), sizeof(*cmd));
+ 	if (++nvmeq->sq_tail == nvmeq->q_depth)
+ 		nvmeq->sq_tail = 0;
+-	nvme_write_sq_db(nvmeq, write_sq);
+-	spin_unlock(&nvmeq->sq_lock);
+ }
  
- 	/* Disable interrupts */
-@@ -349,8 +369,10 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
+ static void nvme_commit_rqs(struct blk_mq_hw_ctx *hctx)
+@@ -945,7 +936,10 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	}
  
- 	/* Release MSI interrupts */
- 	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
--		irq_set_msi_desc(msi->irq, NULL);
--		irq_free_desc(msi->irq);
-+		for (i = 0; i < msi->nvec_used; i++) {
-+			irq_set_msi_desc(msi->irq + i, NULL);
-+			irq_free_desc(msi->irq + i);
-+		}
- 		msi->msg.address_lo = 0;
- 		msi->msg.address_hi = 0;
- 		msi->msg.data = 0;
+ 	blk_mq_start_request(req);
+-	nvme_submit_cmd(nvmeq, cmnd, bd->last);
++	spin_lock(&nvmeq->sq_lock);
++	nvme_sq_copy_cmd(nvmeq, &iod->cmd);
++	nvme_write_sq_db(nvmeq, bd->last);
++	spin_unlock(&nvmeq->sq_lock);
+ 	return BLK_STS_OK;
+ out_unmap_data:
+ 	nvme_unmap_data(dev, req);
+@@ -1120,7 +1114,11 @@ static void nvme_pci_submit_async_event(struct nvme_ctrl *ctrl)
+ 	memset(&c, 0, sizeof(c));
+ 	c.common.opcode = nvme_admin_async_event;
+ 	c.common.command_id = NVME_AQ_BLK_MQ_DEPTH;
+-	nvme_submit_cmd(nvmeq, &c, true);
++
++	spin_lock(&nvmeq->sq_lock);
++	nvme_sq_copy_cmd(nvmeq, &c);
++	nvme_write_sq_db(nvmeq, true);
++	spin_unlock(&nvmeq->sq_lock);
+ }
+ 
+ static int adapter_delete_queue(struct nvme_dev *dev, u8 opcode, u16 id)
 -- 
 2.43.0
 
