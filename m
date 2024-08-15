@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1F91AC896;
-	Thu, 15 Aug 2024 14:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1450B1EA80;
+	Thu, 15 Aug 2024 14:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731584; cv=none; b=oH40ws93Z52DsjNnSlZk/AkqS/dqmAE6NvH3e9K5Rkuam7TXILMSTNU0/8pBtxWZfyayOhXc2n1JEnXiHRvgg9yvirSi/wTgQ2QyowiG45EKVyvkbT6BrSkSygNqCCcr/Q7dL8jWQySEFb7dxT+uXd8HZ4UvjPXcY6hyXdugFKY=
+	t=1723731588; cv=none; b=DQZq4pFmPkZWHCdNDJTCKYmL0tshfLTCESMhQ2Jp2O9gUMsDhy4jJx3SUwDoqqXaSC8nIF6sXfGVFRoNsM94DAV1trZ+WoMXafvRv/pxSvciH3kUfI+iZhzq17i6RB75m+zjMuDysoVGvUGc3S38q8eJ6GRg2n4iflmrnv+mb+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731584; c=relaxed/simple;
-	bh=2gJSEu+6NZjD5ldX9BrLA2OisxGmYPCOJhKRY8YfKmk=;
+	s=arc-20240116; t=1723731588; c=relaxed/simple;
+	bh=Mh2EHOszsZ/N5EQ7y1MVEH3OElDF+75XU58lpooqA6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1bQGavuGaOk0FHJXkNmqpXDxeaghGL4WxdBL3tXxXqcJH6IKjlDGiPcyYz5h+hMnL4wkDopFl6fx2LfPPQ3QGnwz0Rm1cnyFOiIe66aIR6MyMZXG0ne2AdGX+DiBvqCzzVhrtDkorKG3ZQHKkp3HM7mm1g05hleynKOLUFMm8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4WiEpbo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=StMno+dbG48MV04XiliTZwYfLwJZy1UHtGzwlSkqwzL4VCh+U3v+MKtcIV6awmCs9APBVyiEW8Fxr10nWtUnsAtmdI2TTy2OHwqq4TnP0VCUnZLHIca4UhbkmN4VMWEvuaB+IWzZ/zND1qpt+Uh9dZayETri2Gwfp2QWtg7sluE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DY11pM56; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4WiEpbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A015C32786;
-	Thu, 15 Aug 2024 14:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY11pM56"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E793C32786;
+	Thu, 15 Aug 2024 14:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731584;
-	bh=2gJSEu+6NZjD5ldX9BrLA2OisxGmYPCOJhKRY8YfKmk=;
+	s=korg; t=1723731588;
+	bh=Mh2EHOszsZ/N5EQ7y1MVEH3OElDF+75XU58lpooqA6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4WiEpbofs023fU4BABu5OGl31ZLaNyB7tl5tQCIB2YPCWoCukcpLyZGKIEMBn71k
-	 U4AQAQGpFd7EtcM9ptHN5eg3GqlzniDAGUHDM2g2NMNMzDJHRXgePZIv4tFlXiSSE0
-	 T8whN1SbjSlKNih9WGQkU2JJXL80K0Qnh/rqMq7c=
+	b=DY11pM56uykBV4Oa0LEXHXYsFtQTpnwZsHiSrpqXNcizFTA62sHS4LSahIpRTxxvR
+	 331Gf9ZycTyA5m14VgFhfjMsVzZkLzx9AFK7HYJQjB4dU+Ky8K4TO2bN3H562kZmWs
+	 dEnOKX7uEnX+B8VKq78NfnS9o7xbrnT9CU3eR9i0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jen Linkova <furry@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Patrick Rohr <prohr@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
 	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 176/259] net/mlx5e: Add a check for the return value from mlx5_port_set_eth_ptys
-Date: Thu, 15 Aug 2024 15:25:09 +0200
-Message-ID: <20240815131909.575858221@linuxfoundation.org>
+Subject: [PATCH 5.4 177/259] ipv6: fix ndisc_is_useropt() handling for PIO
+Date: Thu, 15 Aug 2024 15:25:10 +0200
+Message-ID: <20240815131909.614873148@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -48,51 +51,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit 3f8e82a020a5c22f9b791f4ac499b8e18007fbda ]
+[ Upstream commit a46c68debf3be3a477a69ccbf0a1d050df841676 ]
 
-Since the documentation for mlx5_toggle_port_link states that it should
-only be used after setting the port register, we add a check for the
-return value from mlx5_port_set_eth_ptys to ensure the register was
-successfully set before calling it.
+The current logic only works if the PIO is between two
+other ND user options.  This fixes it so that the PIO
+can also be either before or after other ND user options
+(for example the first or last option in the RA).
 
-Fixes: 667daedaecd1 ("net/mlx5e: Toggle link only after modifying port parameters")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://patch.msgid.link/20240730061638.1831002-9-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+side note: there's actually Android tests verifying
+a portion of the old broken behaviour, so:
+  https://android-review.googlesource.com/c/kernel/tests/+/3196704
+fixes those up.
+
+Cc: Jen Linkova <furry@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: Patrick Rohr <prohr@google.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Fixes: 048c796beb6e ("ipv6: adjust ndisc_is_useropt() to also return true for PIO")
+Link: https://patch.msgid.link/20240730001748.147636-1-maze@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv6/ndisc.c | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 18e0cb02aee18..10411ab89e1cf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -1104,7 +1104,12 @@ int mlx5e_ethtool_set_link_ksettings(struct mlx5e_priv *priv,
- 	if (!an_changes && link_modes == eproto.admin)
- 		goto out;
- 
--	mlx5_port_set_eth_ptys(mdev, an_disable, link_modes, ext);
-+	err = mlx5_port_set_eth_ptys(mdev, an_disable, link_modes, ext);
-+	if (err) {
-+		netdev_err(priv->netdev, "%s: failed to set ptys reg: %d\n", __func__, err);
-+		goto out;
-+	}
-+
- 	mlx5_toggle_port_link(mdev);
- 
- out:
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 74977ec77c576..64729e7e6a866 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -225,6 +225,7 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
+ 		return NULL;
+ 	memset(ndopts, 0, sizeof(*ndopts));
+ 	while (opt_len) {
++		bool unknown = false;
+ 		int l;
+ 		if (opt_len < sizeof(struct nd_opt_hdr))
+ 			return NULL;
+@@ -260,22 +261,23 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
+ 			break;
+ #endif
+ 		default:
+-			if (ndisc_is_useropt(dev, nd_opt)) {
+-				ndopts->nd_useropts_end = nd_opt;
+-				if (!ndopts->nd_useropts)
+-					ndopts->nd_useropts = nd_opt;
+-			} else {
+-				/*
+-				 * Unknown options must be silently ignored,
+-				 * to accommodate future extension to the
+-				 * protocol.
+-				 */
+-				ND_PRINTK(2, notice,
+-					  "%s: ignored unsupported option; type=%d, len=%d\n",
+-					  __func__,
+-					  nd_opt->nd_opt_type,
+-					  nd_opt->nd_opt_len);
+-			}
++			unknown = true;
++		}
++		if (ndisc_is_useropt(dev, nd_opt)) {
++			ndopts->nd_useropts_end = nd_opt;
++			if (!ndopts->nd_useropts)
++				ndopts->nd_useropts = nd_opt;
++		} else if (unknown) {
++			/*
++			 * Unknown options must be silently ignored,
++			 * to accommodate future extension to the
++			 * protocol.
++			 */
++			ND_PRINTK(2, notice,
++				  "%s: ignored unsupported option; type=%d, len=%d\n",
++				  __func__,
++				  nd_opt->nd_opt_type,
++				  nd_opt->nd_opt_len);
+ 		}
+ next_opt:
+ 		opt_len -= l;
 -- 
 2.43.0
 
