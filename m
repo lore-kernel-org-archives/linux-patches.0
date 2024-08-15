@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F901AC896;
-	Thu, 15 Aug 2024 14:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ADD1AC896;
+	Thu, 15 Aug 2024 14:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731572; cv=none; b=pcUIduSmkrZynFV/RRzhZZVt7JUz5UQw2x07d5HJuI263TWPrpC6HKwNYM/hG+e2s1vCq+3b/P9qw7va9rbVuW7wYuDxzynJp3DEtKmyJ1r7EL8NevGRpG8MoLAh+DwAyTwmdqrzEL/5yL1AWPQB6aFDu2QwaOwqgRsII5uAZhE=
+	t=1723731575; cv=none; b=gIHRrlDVRvQgUSR/2g6gUAtINAYdamhRPVSxORsKyorV5RWXWZYG9bjZFyB1NsQgSep6Dwp6KhkC0klhgHOIx3uFqP0XBOz9P8aVoGsC7pMmCZaIlp+yOc1h74UiYPQvAf8QKcVcqL66YqBeXHPRmo6qUArJyySrqG+m1bdjyeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731572; c=relaxed/simple;
-	bh=L8PEQhtErBdbM9sTHmGaD+0/WhjpoVxbtDRBlm/zbys=;
+	s=arc-20240116; t=1723731575; c=relaxed/simple;
+	bh=cwbMljZC8LdXJwRMhd6WEpyNTK9735YULmfFgu+drnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMZdjKGOtxc3ZB/rupEnsqLY2UvIqh1HenbKI9ibPEX+hR7qPI1jo5pUQI293ud80djo7l5zWbmleEnzS3JotMEUJnIjCQbh919WBh07HL7Tuj4wkq2n3b7shBlPMJ9JRJTBoH9n0r6aj0czJSJu6UbDyrcbXvcidzigkauD8Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSWJ/eSt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eVLF+KAK07clr1lcPPyHWHpxMCoNLaB1oKivkOvg4jJC88h9cpgwEQrlYBIEaqWVBN5kvnpvbtGAdKZ7I2mad4v11N81rEadsSKllm6QGmJUEAZlcISHs7Gpz+bRJ2Eu74z86StdJOGfIOtrcJ684AtVx2MCs6yRFnAlkkt7Nzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHjacXmt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSWJ/eSt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA5DC32786;
-	Thu, 15 Aug 2024 14:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHjacXmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3C6C32786;
+	Thu, 15 Aug 2024 14:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731571;
-	bh=L8PEQhtErBdbM9sTHmGaD+0/WhjpoVxbtDRBlm/zbys=;
+	s=korg; t=1723731575;
+	bh=cwbMljZC8LdXJwRMhd6WEpyNTK9735YULmfFgu+drnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSWJ/eStOL7WCyupIRXQuzSzENkOagwOAvW2u/WFdurdSvgrdFrN9LpLABQntCxYe
-	 qlpom5Qep2FQh+vhsWVLwyS4eLcnwZ6GH67Iq3GUTpt66SgDAXccy5sH605j1sii13
-	 EhrLZfouZFV8KfoUL3PvcE9u/KJCRJbtXdA9JKaw=
+	b=KHjacXmtWAX1noLFFfe/GOpxJVytojIZ0vhfqHw1IjK1fo+VyD8QlhN+dT07AhTPm
+	 81uU2J8sfW9C/VXegGB4ErqJOflI2jr9wE7Lc66hf8vDsdqtJHuptwlJVoocHp1DW3
+	 B3/pFwcNaI87z6hCgWZSBTIJD4vqjwqde7TpgK2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 172/259] remoteproc: imx_rproc: Skip over memory region when node value is NULL
-Date: Thu, 15 Aug 2024 15:25:05 +0200
-Message-ID: <20240815131909.420731402@linuxfoundation.org>
+Subject: [PATCH 5.4 173/259] drm/nouveau: prime: fix refcount underflow
+Date: Thu, 15 Aug 2024 15:25:06 +0200
+Message-ID: <20240815131909.457857417@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -46,48 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 2fa26ca8b786888673689ccc9da6094150939982 ]
+[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
 
-In imx_rproc_addr_init() "nph = of_count_phandle_with_args()" just counts
-number of phandles. But phandles may be empty. So of_parse_phandle() in
-the parsing loop (0 < a < nph) may return NULL which is later dereferenced.
-Adjust this issue by adding NULL-return check.
+Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
+hence the backing ttm_bo) leads to a refcount underflow.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Instead of calling nouveau_bo_ref() in the unwind path of
+drm_gem_object_init(), clean things up manually.
 
-Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240606075204.12354-1-amishin@t-argos.ru
-[Fixed title to fit within the prescribed 70-75 charcters]
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
+(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 0e6246678bc2b..3f3d1eb94e6fa 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -286,6 +286,8 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
- 		struct resource res;
- 
- 		node = of_parse_phandle(np, "memory-region", a);
-+		if (!node)
-+			continue;
- 		/* Not map vdevbuffer, vdevring region */
- 		if (!strncmp(node->name, "vdev", strlen("vdev")))
- 			continue;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
+index 25cbe4ef383bd..ea7cd8aee68f6 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_prime.c
++++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
+@@ -83,7 +83,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
+ 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
+ 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
+ 	if (ret) {
+-		nouveau_bo_ref(NULL, &nvbo);
++		drm_gem_object_release(&nvbo->bo.base);
++		kfree(nvbo);
+ 		obj = ERR_PTR(-ENOMEM);
+ 		goto unlock;
+ 	}
 -- 
 2.43.0
 
