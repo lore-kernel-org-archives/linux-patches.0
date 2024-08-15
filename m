@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B9263C;
-	Thu, 15 Aug 2024 14:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A26163C;
+	Thu, 15 Aug 2024 14:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732153; cv=none; b=QVSFSuj49rX+SAMpzrnYAzAZq0qyGUjHkmqKPpjkp5M13MIPh61ry7HLYSPbLmMky+aVsBiOlHP2bF/ACCxvZAWtB3b0Ha8y7MM96yG2zHABMunhwWHUVeW/hOR2oHmeePIT2rHPK+ZWriGF6fyefMI/J+Mk+SqHDOoZe5R3Q8s=
+	t=1723732156; cv=none; b=HoLxq2Z+iO6gsA6DYfJa/qgPz89KbjcI+cGiPhcfmZ0tRHxDRKezAgh2x18XOyXpzJiQw7PqzyTyf7wa8+EVDg+KitoO6/C/y51TR0zgiC7DTUkNdPQAPsipzISt+3TEQU4AgC7gwnEqD0sBrkU8nOSveayzvRZOfGHn5qVLCMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732153; c=relaxed/simple;
-	bh=SV1ffZ7l5sqQEcN9Vg4A1+asyPmrSrBxQLbywwqVddQ=;
+	s=arc-20240116; t=1723732156; c=relaxed/simple;
+	bh=aLjXMN7kAbbs291EvCNvqsC+jAyMAu14NcA8vfU+Sro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9ceA88Fih39TyO1k7Y0R1aw/VYgqbK/zdHo2yHppRN+ilSQWchq+qf0tIhMaiTvfki4JPZt+PZy9cYbs4th+wFMzZx1CG/xSFwVMJC3roAZGZtYtRhVR/YMSCn3Muu6abKunSxQIwzp8LHzI8lqTYW7v0TasWReqh4bDUC3r0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8miOc+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Urw1kUmtQcBur04XhrgCQjB3ovjtMLCtYvkd6FBFU5CM9D8sR9YoApSxCszufBQcRxKSdsS93w8FDd9nO0Fk68q14uUPOsiH08kiIvrGP6flgCXIjMtFqvWYBNXXxhs5vA3XTA4Y28qGEmExr5FyQ3gL/Z2a3QDTV+X23w3eEqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNLriY6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8miOc+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B318EC32786;
-	Thu, 15 Aug 2024 14:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNLriY6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD57BC32786;
+	Thu, 15 Aug 2024 14:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732153;
-	bh=SV1ffZ7l5sqQEcN9Vg4A1+asyPmrSrBxQLbywwqVddQ=;
+	s=korg; t=1723732156;
+	bh=aLjXMN7kAbbs291EvCNvqsC+jAyMAu14NcA8vfU+Sro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8miOc+YsgvzhCNGxKpwjV4F38YX2QCsTw7KutOOJW0TRQdaOWakNP7gvn1exdFVO
-	 vdBGbattD65QFgxHtTJsN8aqQlSjPfTr0aO2CGLdRAxuIrQbHf0DOg/g8ZS3NwNsMh
-	 5qaCheUOwRhROYjU47xyV8RhxdwVA7YUoIgMhyPE=
+	b=ZNLriY6dyHML4XSgpnmW0DmUvIkR0kFq2BvgkgVvfA1fHSVh2gQCWG4edNbqGR5lp
+	 /ewbWN4HGqSH1iASrM+5NiJmval4Tdc5XapK8o6YNPqEoET6PVlQSzLWiPEU8Scchr
+	 OtJUkVHeBU2DcfxIAuWEFw2SyK3WmAA5SzZzTtlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	NeilBrown <neilb@suse.de>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/352] xprtrdma: Fix rpcrdma_reqs_reset()
-Date: Thu, 15 Aug 2024 15:22:37 +0200
-Message-ID: <20240815131922.778308665@linuxfoundation.org>
+Subject: [PATCH 5.10 092/352] SUNRPC: avoid soft lockup when transmitting UDP to reachable server.
+Date: Thu, 15 Aug 2024 15:22:38 +0200
+Message-ID: <20240815131922.817856198@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,83 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit acd9f2dd23c632568156217aac7a05f5a0313152 ]
+[ Upstream commit 6258cf25d5e3155c3219ab5a79b970eef7996356 ]
 
-Avoid FastReg operations getting MW_BIND_ERR after a reconnect.
+Prior to the commit identified below, call_transmit_status() would
+handle -EPERM and other errors related to an unreachable server by
+falling through to call_status() which added a 3-second delay and
+handled the failure as a timeout.
 
-rpcrdma_reqs_reset() is called on transport tear-down to get each
-rpcrdma_req back into a clean state.
+Since that commit, call_transmit_status() falls through to
+handle_bind().  For UDP this moves straight on to handle_connect() and
+handle_transmit() so we immediately retransmit - and likely get the same
+error.
 
-MRs on req->rl_registered are waiting for a FastReg, are already
-registered, or are waiting for invalidation. If the transport is
-being torn down when reqs_reset() is called, the matching LocalInv
-might never be posted. That leaves these MR registered /and/ on
-req->rl_free_mrs, where they can be re-used for the next
-connection.
+This results in an indefinite loop in __rpc_execute() which triggers a
+soft-lockup warning.
 
-Since xprtrdma does not keep specific track of the MR state, it's
-not possible to know what state these MRs are in, so the only safe
-thing to do is release them immediately.
+For the errors that indicate an unreachable server,
+call_transmit_status() should fall back to call_status() as it did
+before.  This cannot cause the thundering herd that the previous patch
+was avoiding, as the call_status() will insert a delay.
 
-Fixes: 5de55ce951a1 ("xprtrdma: Release in-flight MRs on disconnect")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: ed7dc973bd91 ("SUNRPC: Prevent thundering herd when the socket is not connected")
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/frwr_ops.c |  3 ++-
- net/sunrpc/xprtrdma/verbs.c    | 16 +++++++++++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ net/sunrpc/clnt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/frwr_ops.c b/net/sunrpc/xprtrdma/frwr_ops.c
-index 177099f6ae182..2035d748d923c 100644
---- a/net/sunrpc/xprtrdma/frwr_ops.c
-+++ b/net/sunrpc/xprtrdma/frwr_ops.c
-@@ -86,7 +86,8 @@ static void frwr_mr_recycle(struct rpcrdma_mr *mr)
- 	frwr_mr_release(mr);
- }
- 
--/* frwr_reset - Place MRs back on the free list
-+/**
-+ * frwr_reset - Place MRs back on @req's free list
-  * @req: request to reset
-  *
-  * Used after a failed marshal. For FRWR, this means the MRs
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 167f0d99b8580..9262c94a13c1d 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -932,6 +932,8 @@ static int rpcrdma_reqs_setup(struct rpcrdma_xprt *r_xprt)
- 
- static void rpcrdma_req_reset(struct rpcrdma_req *req)
- {
-+	struct rpcrdma_mr *mr;
-+
- 	/* Credits are valid for only one connection */
- 	req->rl_slot.rq_cong = 0;
- 
-@@ -941,7 +943,19 @@ static void rpcrdma_req_reset(struct rpcrdma_req *req)
- 	rpcrdma_regbuf_dma_unmap(req->rl_sendbuf);
- 	rpcrdma_regbuf_dma_unmap(req->rl_recvbuf);
- 
--	frwr_reset(req);
-+	/* The verbs consumer can't know the state of an MR on the
-+	 * req->rl_registered list unless a successful completion
-+	 * has occurred, so they cannot be re-used.
-+	 */
-+	while ((mr = rpcrdma_mr_pop(&req->rl_registered))) {
-+		struct rpcrdma_buffer *buf = &mr->mr_xprt->rx_buf;
-+
-+		spin_lock(&buf->rb_lock);
-+		list_del(&mr->mr_all);
-+		spin_unlock(&buf->rb_lock);
-+
-+		frwr_mr_release(mr);
-+	}
- }
- 
- /* ASSUMPTION: the rb_allreqs list is stable for the duration,
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 196a3b11d1509..86397f9c4bc83 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2188,12 +2188,13 @@ call_transmit_status(struct rpc_task *task)
+ 		task->tk_action = call_transmit;
+ 		task->tk_status = 0;
+ 		break;
+-	case -ECONNREFUSED:
+ 	case -EHOSTDOWN:
+ 	case -ENETDOWN:
+ 	case -EHOSTUNREACH:
+ 	case -ENETUNREACH:
+ 	case -EPERM:
++		break;
++	case -ECONNREFUSED:
+ 		if (RPC_IS_SOFTCONN(task)) {
+ 			if (!task->tk_msg.rpc_proc->p_proc)
+ 				trace_xprt_ping(task->tk_xprt,
 -- 
 2.43.0
 
