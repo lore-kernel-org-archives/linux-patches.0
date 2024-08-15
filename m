@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660CF1DFFB;
-	Thu, 15 Aug 2024 14:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A931DFFB;
+	Thu, 15 Aug 2024 14:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732491; cv=none; b=hVYVpFvCJgen8sNCmK/ujr/rM7wGH13HCZlrsS8Td7z5XXFHbXb/iQSo2g+nW10PNljzE1R5H0g9PZlX1IefrC+nI7XDAwhmYmvqBTmS3gsaQDQ6viJWh/d8Ma0XMR+nLbCc16G6/l/RjGMBJdL1pQOc/tHp1ZANXphDrI0iXiE=
+	t=1723732494; cv=none; b=goaZVuy1N4jSsZjeUvFz88CUb9QwnxnuIAGPd+J8JN4/HlUsRer/e4BlzEsqGkRKDh+bRVchODH6CwZLmIuzFjK5AjIkUUHKzFuFVTmscFWIbJjgnGL6bUNw3P+KbdbETdtHmvsSnUhzyPBc9byOVJmE9tD51EakSbKczRZDfnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732491; c=relaxed/simple;
-	bh=leA0ExVy0qN8VkZyvN8CbqN3f6TBH4BECu1ArKBVSSM=;
+	s=arc-20240116; t=1723732494; c=relaxed/simple;
+	bh=SvFodh5QtVJNV4C8No1bXIiWbvlqVynv4Kiu1V7h92I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MseJD+8X10zcNunIjUsuqWnfE4Dt8GME8lO3Lt0Hwy8m1TXz7yLvc6SIUM5n8XblGaRo/dqFeA0lPDlBm5CxWc1UEOp0rTBX+OgyihkAB2IWrHHCQkrTbvShBDPURyUUHgFWwmLed6UD0rA9CIy47Hoq8oXpMim3K53OFigIYP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFCK+u+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrvd+bAtqRRJzmbLdMt03CGVl88DaID5xxV+uJfQFuWdTweRNkWVGzdq1OA089fQJ/zN5zhTGbDoc0iJWU/BJIDJqKNU9lsAFlyFHg1tm7WlNnprixYYtvxioLPwbf8K7YNZgjt0exp5Kfjc3o8VpafsV7gtOndm2XJi1EylxSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTtcE55N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFCK+u+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E55CC32786;
-	Thu, 15 Aug 2024 14:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTtcE55N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACB7C32786;
+	Thu, 15 Aug 2024 14:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732490;
-	bh=leA0ExVy0qN8VkZyvN8CbqN3f6TBH4BECu1ArKBVSSM=;
+	s=korg; t=1723732494;
+	bh=SvFodh5QtVJNV4C8No1bXIiWbvlqVynv4Kiu1V7h92I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFCK+u+jLsg+fRXrNSHRN+V9YL2Rp+nY98Kin6P9Heo+rBA3B1M/ePjY8UkA+ys/x
-	 JaXQM/840yg6KqMDHmg04KSxcVV7AsU1SqHJCrQQC+XDmxIK9uIIwHYOHqo0yiM14w
-	 YFzBG42uR2XvBHcs3XA3ATX/lD1Sl3VYMUixU3xI=
+	b=QTtcE55Nc6T793IFl66CwW3dpuGbK1+YbVI3FiyAsT3FJ9lnCMUSKwTgB0+dwx30X
+	 5B9yKBXYh0ux9eRgj4ATJpb/NrdB9R73DeDiFuq7lAdyn3ec35GN85/ylJlVVWJZfO
+	 5dZNvLJVtyCtZ2rRaI+3hM/6HRfzS1VrS0MWkuqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Guillaume Nault <gnault@redhat.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 196/352] ipv4: Fix incorrect source address in Record Route option
-Date: Thu, 15 Aug 2024 15:24:22 +0200
-Message-ID: <20240815131926.853945362@linuxfoundation.org>
+Subject: [PATCH 5.10 197/352] net: bonding: correctly annotate RCU in bond_should_notify_peers()
+Date: Thu, 15 Aug 2024 15:24:23 +0200
+Message-ID: <20240815131926.893644815@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,47 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit cc73bbab4b1fb8a4f53a24645871dafa5f81266a ]
+[ Upstream commit 3ba359c0cd6eb5ea772125a7aededb4a2d516684 ]
 
-The Record Route IP option records the addresses of the routers that
-routed the packet. In the case of forwarded packets, the kernel performs
-a route lookup via fib_lookup() and fills in the preferred source
-address of the matched route.
+RCU use in bond_should_notify_peers() looks wrong, since it does
+rcu_dereference(), leaves the critical section, and uses the
+pointer after that.
 
-The lookup is performed with the DS field of the forwarded packet, but
-using the RT_TOS() macro which only masks one of the two ECN bits. If
-the packet is ECT(0) or CE, the matched route might be different than
-the route via which the packet was forwarded as the input path masks
-both of the ECN bits, resulting in the wrong address being filled in the
-Record Route option.
+Luckily, it's called either inside a nested RCU critical section
+or with the RTNL held.
 
-Fix by masking both of the ECN bits.
+Annotate it with rcu_dereference_rtnl() instead, and remove the
+inner RCU critical section.
 
-Fixes: 8e36360ae876 ("ipv4: Remove route key identity dependencies in ip_rt_get_source().")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20240718123407.434778-1-idosch@nvidia.com
+Fixes: 4cb4f97b7e36 ("bonding: rebuild the lock use for bond_mii_monitor()")
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20240719094119.35c62455087d.I68eb9c0f02545b364b79a59f2110f2cf5682a8e2@changeid
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index b3b49d8b386d8..1eb1e4316ed6d 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1302,7 +1302,7 @@ void ip_rt_get_source(u8 *addr, struct sk_buff *skb, struct rtable *rt)
- 		struct flowi4 fl4 = {
- 			.daddr = iph->daddr,
- 			.saddr = iph->saddr,
--			.flowi4_tos = RT_TOS(iph->tos),
-+			.flowi4_tos = iph->tos & IPTOS_RT_MASK,
- 			.flowi4_oif = rt->dst.dev->ifindex,
- 			.flowi4_iif = skb->dev->ifindex,
- 			.flowi4_mark = skb->mark,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 50fabba042488..c07b9bac1a6a0 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1052,13 +1052,10 @@ static struct slave *bond_find_best_slave(struct bonding *bond)
+ 	return bestslave;
+ }
+ 
++/* must be called in RCU critical section or with RTNL held */
+ static bool bond_should_notify_peers(struct bonding *bond)
+ {
+-	struct slave *slave;
+-
+-	rcu_read_lock();
+-	slave = rcu_dereference(bond->curr_active_slave);
+-	rcu_read_unlock();
++	struct slave *slave = rcu_dereference_rtnl(bond->curr_active_slave);
+ 
+ 	if (!slave || !bond->send_peer_notif ||
+ 	    bond->send_peer_notif %
 -- 
 2.43.0
 
