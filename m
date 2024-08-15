@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8185919FA89;
-	Thu, 15 Aug 2024 13:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0286B1A7074;
+	Thu, 15 Aug 2024 13:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728861; cv=none; b=MSMmXSHgaM0n2XKddZUnF73olWId7CctlO7w9HvQrusq/Ew2mCGK6NUNOUu6LCEchSgT+sYPdj7SA2z4LE2BNO193/rPDDWuVdx+2y2dQdsh5eDAPq0gwFeypo5XMAiNUY8gbHlU4iZcT5OHqbXNBiI0v/JLrRFtlgDpo5XyQd8=
+	t=1723728866; cv=none; b=ocLuqS4rd4nSFNg9Fqr3AmndEABqcU1VuZZG/vH3uyDL5Cpp4hAu9B6oj/nGjngrGTWQ/eqEdLLt8TChWVIQYanW9BpB7fbG+UwRzMwnKxCCIS+8bI2ZB5dBVyWGOJaTkuJFshdavfZKmGvGJh5MunT6+ztnylXgvFZ3TMVYCFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728861; c=relaxed/simple;
-	bh=m2TC03FeHyh2vO0dT4glFcMpGlmttuCElWZ74wA3xDw=;
+	s=arc-20240116; t=1723728866; c=relaxed/simple;
+	bh=mbsfryQJx3oYlze74Z4zeab6HJnRBs3ZqmRFolBFqi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4nIvdbqGGgXAwcXq0ihEzB7XGs+/Tqm2eowMoPc29MG1dq2O6TYMHvqoZmu/1CCgkKSpU+i/h/+tmtIuDhYTbX/YMtNvL/s2ZmoT/MCJBK8jmUf2PwWSh9HlpnzQ5gZShKNLmeUxxRLwC/q3W+8fkwrYOMn9NEzJwuk3AzfocA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrkwHph7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=i0cQdx0ZnCNJcxdj7Qq8/haRglybiLXwrkNtGscGAcjLpIyxBfs4c0iqlUzoGhwOHtb5RmhPJH/TIITy41hlpjOZPqguSJ+MNyCpijQbdM47vn9rBOJfxHfj++wFkLo39YCV7TNTxMV+qdmRimMgp0HIui2ADM3Plw6SjEFlpng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUWP6gZZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrkwHph7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DBFC4AF11;
-	Thu, 15 Aug 2024 13:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUWP6gZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319EAC32786;
+	Thu, 15 Aug 2024 13:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728861;
-	bh=m2TC03FeHyh2vO0dT4glFcMpGlmttuCElWZ74wA3xDw=;
+	s=korg; t=1723728864;
+	bh=mbsfryQJx3oYlze74Z4zeab6HJnRBs3ZqmRFolBFqi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrkwHph7GT0aCtpNUhniT0SIpCJwTKTvSrXPNgVV4EFi70uYR6iAQAUsV+pd7sdYo
-	 7J2o+05pzrrwFiatBFT0YTcAjDcI1Sz4lZbRvtkwajiGECW+JrM/Dv2K6NtOq4ZkwJ
-	 yiZgpnTSakTumASx2kxpn70Ygx2A7u45RRaUeMyg=
+	b=HUWP6gZZGdPgWm79vbYJ76krwVZyFTZ0IweDLouGlYmMr+758MHn5Ndx529Z8EEbE
+	 egJi6DVSlhODr3URES2tTlJbwXWAoieziK5WFRDuc4qn6jdMkWzvTcGZ5VF+65BagX
+	 yzXrREKbCcaoJxh8SHwLEkA0T3SCsF6Mbd9GRAHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Frank Li <Frank.Li@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 133/196] Bluetooth: l2cap: always unlock channel in l2cap_conless_channel()
-Date: Thu, 15 Aug 2024 15:24:10 +0200
-Message-ID: <20240815131857.163126390@linuxfoundation.org>
+Subject: [PATCH 4.19 134/196] net: fec: Stop PPS on driver remove
+Date: Thu, 15 Aug 2024 15:24:11 +0200
+Message-ID: <20240815131857.201800197@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -46,41 +49,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit c531e63871c0b50c8c4e62c048535a08886fba3e ]
+[ Upstream commit 8fee6d5ad5fa18c270eedb2a2cdf58dbadefb94b ]
 
-Add missing call to 'l2cap_chan_unlock()' on receive error handling
-path in 'l2cap_conless_channel()'.
+PPS was not stopped in `fec_ptp_stop()`, called when
+the adapter was removed. Consequentially, you couldn't
+safely reload the driver with the PPS signal on.
 
-Fixes: a24cce144b98 ("Bluetooth: Fix reference counting of global L2CAP channels")
-Reported-by: syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=45ac74737e866894acb0
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/netdev/CAOMZO5BzcZR8PwKKwBssQq_wAGzVgf1ffwe_nhpQJjviTdxy-w@mail.gmail.com/T/#m01dcb810bfc451a492140f6797ca77443d0cb79f
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20240807080956.2556602-1-csokas.bence@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/freescale/fec_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 3f9b2b4a62ffd..ca225c1325237 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7055,6 +7055,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
- 	bt_cb(skb)->l2cap.psm = psm;
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index abf0b6cddf204..a5d693f51d2b1 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -635,6 +635,9 @@ void fec_ptp_stop(struct platform_device *pdev)
+ 	struct net_device *ndev = platform_get_drvdata(pdev);
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
  
- 	if (!chan->ops->recv(chan, skb)) {
-+		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
- 	}
++	if (fep->pps_enable)
++		fec_ptp_enable_pps(fep, 0);
++
+ 	cancel_delayed_work_sync(&fep->time_keep);
+ 	if (fep->ptp_clock)
+ 		ptp_clock_unregister(fep->ptp_clock);
 -- 
 2.43.0
 
