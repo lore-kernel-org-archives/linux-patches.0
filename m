@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A131DFFB;
-	Thu, 15 Aug 2024 14:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9585019FA7A;
+	Thu, 15 Aug 2024 14:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732634; cv=none; b=AwAXXhc1+XWisbV6flFi17UkipBtwPPjlQQodxtHQil9aWLlElFb0evTZ+u4LcCEX3vh0IWZjy9NbWDRpiSOsqWt0Jn8AhJzPNWAZq/Jsjk8gWyl5zdE0NRqqDteFPNDEU1Hik7AWmTq9Q04jXshCx9RNrwrIfT0sKiMkhwe11c=
+	t=1723732637; cv=none; b=R7acHpX9xMXmQaG5UtWM9C7NdBrMmAJau6cexpqNWQwDQHjHhQ9d1ULuBko8iJbAzjBI/WJR2qySRU92vejyMgIoY7IWNjqrndhFCx6kmuBixqx+xBPpC4cKUDzhvgd3p9V9+XsSPwrLJ/WDg0c8TpieQjVYMf6Ar2ldy09QrQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732634; c=relaxed/simple;
-	bh=V5vVn+W0Va2APEE3Zj9ZSpHpRLQdV0L5tWf3FTWG+n4=;
+	s=arc-20240116; t=1723732637; c=relaxed/simple;
+	bh=umC9I5Vc8JKPiyf9AtrCNvEtqqR3T2TGCDvAg2lhFBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EWBTY/XN3zmZIqeobLD2uFgTtDjt9YY2DdzeAyL7M0lZGIEyB+JEKdV82njAAsLau/y774FAq+bWuk+7l3tJizo+Tbm/gsfpCZ3j3OZ7OtCYRmdmlXiHqF8lIP12ZlAzwL/gcXBVFkk55pdYZCLsJ+2b/f/HCS95QZ6U5yswX4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEnRxvKU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgwc8D7yb8WbKeRc+TLwLTsjIRBlKbO2on6H7Tgd/RPVJBuDsQNL8BInD5jsnBAZOTKBHv9IFoafy/VbEbbajUUWnjhEyQLpj0FfQl9jS/E9WZpO0/PZcwfCpG3eGPq9sOnRQ3Ku2JVDHgFInsYt4VOCgqbVYTZ99qDwEg1fDj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJGcPnxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEnRxvKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEADEC32786;
-	Thu, 15 Aug 2024 14:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJGcPnxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1871AC32786;
+	Thu, 15 Aug 2024 14:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732634;
-	bh=V5vVn+W0Va2APEE3Zj9ZSpHpRLQdV0L5tWf3FTWG+n4=;
+	s=korg; t=1723732637;
+	bh=umC9I5Vc8JKPiyf9AtrCNvEtqqR3T2TGCDvAg2lhFBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEnRxvKUFGJLqHn4seTTHgH5pAoOJqr/aSbegY95yH9zdpNtuIO1QWTH1Zu2Cwpzl
-	 J4Z0sgxvNPXG76SgKv75WCu68tC9em2PAru3vIXXrauquDvVFyPMuE0AQTIDsuQey0
-	 LcdUecCdv5gwmm6gfKT4CZ5EZpXUG/pfX+LVoBo0=
+	b=qJGcPnxS6Ocswr2QGElh9+axT1HF9du6B/Ttq94drh0fP4eYY94aPyi/9YUm2Zosy
+	 gy/Hs5xAxvo75jAcZ2oOnumnKtpx5VnMvHUyTujPuLWGd/S43J/tVHmF8QZAqjY0YC
+	 48+GJS/wijFhrNtALejhNmFPL+T3R9ZKSwT6WlOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhe Qiao <qiaozhe@iscas.ac.cn>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 239/352] riscv/mm: Add handling for VM_FAULT_SIGSEGV in mm_fault_error()
-Date: Thu, 15 Aug 2024 15:25:05 +0200
-Message-ID: <20240815131928.674448483@linuxfoundation.org>
+	Patryk Duda <patrykd@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 5.10 240/352] platform/chrome: cros_ec_proto: Lock device when updating MKBP version
+Date: Thu, 15 Aug 2024 15:25:06 +0200
+Message-ID: <20240815131928.713536149@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,65 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhe Qiao <qiaozhe@iscas.ac.cn>
+From: Patryk Duda <patrykd@google.com>
 
-[ Upstream commit 0c710050c47d45eb77b28c271cddefc5c785cb40 ]
+commit df615907f1bf907260af01ccb904d0e9304b5278 upstream.
 
-Handle VM_FAULT_SIGSEGV in the page fault path so that we correctly
-kill the process and we don't BUG() the kernel.
+The cros_ec_get_host_command_version_mask() function requires that the
+caller must have ec_dev->lock mutex before calling it. This requirement
+was not met and as a result it was possible that two commands were sent
+to the device at the same time.
 
-Fixes: 07037db5d479 ("RISC-V: Paging and MMU")
-Signed-off-by: Zhe Qiao <qiaozhe@iscas.ac.cn>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240731084547.85380-1-qiaozhe@iscas.ac.cn
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The problem was observed while using UART backend which doesn't use any
+additional locks, unlike SPI backend which locks the controller until
+response is received.
+
+Fixes: f74c7557ed0d ("platform/chrome: cros_ec_proto: Update version on GET_NEXT_EVENT failure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Patryk Duda <patrykd@google.com>
+Link: https://lore.kernel.org/r/20240730104425.607083-1-patrykd@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/fault.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/platform/chrome/cros_ec_proto.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/mm/fault.c b/arch/riscv/mm/fault.c
-index 54b12943cc7b0..9bed320891974 100644
---- a/arch/riscv/mm/fault.c
-+++ b/arch/riscv/mm/fault.c
-@@ -39,26 +39,27 @@ static inline void no_context(struct pt_regs *regs, unsigned long addr)
- 
- static inline void mm_fault_error(struct pt_regs *regs, unsigned long addr, vm_fault_t fault)
- {
-+	if (!user_mode(regs)) {
-+		no_context(regs, addr);
-+		return;
-+	}
-+
- 	if (fault & VM_FAULT_OOM) {
- 		/*
- 		 * We ran out of memory, call the OOM killer, and return the userspace
- 		 * (which will retry the fault, or kill us if we got oom-killed).
- 		 */
--		if (!user_mode(regs)) {
--			no_context(regs, addr);
--			return;
--		}
- 		pagefault_out_of_memory();
- 		return;
- 	} else if (fault & VM_FAULT_SIGBUS) {
- 		/* Kernel mode? Handle exceptions or die */
--		if (!user_mode(regs)) {
--			no_context(regs, addr);
--			return;
--		}
- 		do_trap(regs, SIGBUS, BUS_ADRERR, addr);
- 		return;
-+	} else if (fault & VM_FAULT_SIGSEGV) {
-+		do_trap(regs, SIGSEGV, SEGV_MAPERR, addr);
-+		return;
- 	}
-+
- 	BUG();
- }
- 
--- 
-2.43.0
-
+--- a/drivers/platform/chrome/cros_ec_proto.c
++++ b/drivers/platform/chrome/cros_ec_proto.c
+@@ -780,9 +780,11 @@ int cros_ec_get_next_event(struct cros_e
+ 	if (ret == -ENOPROTOOPT) {
+ 		dev_dbg(ec_dev->dev,
+ 			"GET_NEXT_EVENT returned invalid version error.\n");
++		mutex_lock(&ec_dev->lock);
+ 		ret = cros_ec_get_host_command_version_mask(ec_dev,
+ 							EC_CMD_GET_NEXT_EVENT,
+ 							&ver_mask);
++		mutex_unlock(&ec_dev->lock);
+ 		if (ret < 0 || ver_mask == 0)
+ 			/*
+ 			 * Do not change the MKBP supported version if we can't
 
 
