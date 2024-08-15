@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9088319FA90;
-	Thu, 15 Aug 2024 14:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4791919F49A;
+	Thu, 15 Aug 2024 14:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730436; cv=none; b=gGgL7MJZoVdaQFNdi7F2rAPKmInudXEnYFlgfBjkTnSy0pJDUVe2BVXvYRXYWZqeNK44C6z9GoYeWDTBgIQGUmGy3IFlfX0idcv6s/mJWuZUGZDbZO2uRUSEX9FdvZi4N4mrYh22V0KB5aDsVmODWin47PD8XaK8gf7kdaaVZ9I=
+	t=1723730439; cv=none; b=hfzaCU1M4+GbkOHCO7nDsExXd/F1laeaxjeyF7bXjmT+zmLcVHRtJNc8XeSMn7jUvFfSGW7hkSDeDVjGAVMaP2o0iiEMaVFUe+CX2WpStO3Zq23I9l0MT4NAaQduLgHii2VPCbCgn/Z7rYmhdLLoeH57Iq+GhYOhAUUxXu7z1ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730436; c=relaxed/simple;
-	bh=TWGlmdt/sipPhXsPbkg8zuCYYqB9LF6axRwgcuz52gk=;
+	s=arc-20240116; t=1723730439; c=relaxed/simple;
+	bh=4DckLGljM6cplnp+Qb+e2mW1bH8km3HXxGRlqPwD8YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbbYnk1fBVoCiaWSEFWx67H8FgfKGNNCvVZ+lzVamypsTG3TBiyUS3K44mRAlWtndatASNsaJHWVIbLE1gGQuShwDSa3ujOoE51yPOO7G4NYFeEfHfI0SjfHheWMLj6ZopYpX4bOewdOpL20Os6I2i+E54WyzOSaaoBfu1tYn3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bd6M3l+2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JvbKv1fX17OnwMZ7zfz/ycxQoqvZA/cPX1XSBeiEDJ3Xr7rmgmYXTDjzCkvrB9W9ukPkaz/Z87TdG5mfoBugAWkxcbnOFd+iD2gflqdawpCN/IOpUDviFYQKkN+HNbnRe+wCxEQosYHat/8zMIUnnL23sbAUiuCrepU4DuQVLvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVxQjHB4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bd6M3l+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BD4C4AF0C;
-	Thu, 15 Aug 2024 14:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVxQjHB4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F4EC32786;
+	Thu, 15 Aug 2024 14:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730436;
-	bh=TWGlmdt/sipPhXsPbkg8zuCYYqB9LF6axRwgcuz52gk=;
+	s=korg; t=1723730439;
+	bh=4DckLGljM6cplnp+Qb+e2mW1bH8km3HXxGRlqPwD8YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bd6M3l+2oxDTmiL0ZWijp4WQyj60Gzd6/7vCpEbvWzbW0wHGI/HeiHw6An/tEFJy9
-	 2D3wvHZYhMgubiau5bDPUlyyA5KEu5kQVw8CqNequks47IuhImxzE8WsnUpOB4Mmyy
-	 g3X4k278k8dgWTWpTVvp4iKHCXtZoQMCvNuZkC60=
+	b=XVxQjHB462iXgsgKp6SqyUb/pkMU7tOyoudC1IqTM883iCLq8/d58z3m/M2wP/hPW
+	 JTIc3SSro9tDFxB7gF239S3l6dHrareLJRH0xIvSUMB74pUyBPdcgkYYZOm9esdiUl
+	 8h9q8PaMtkgyCGWSoVvF0NJnFjeB8NlO2aGSw04Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 408/484] ASoC: codecs: wsa881x: Correct Soundwire ports mask
-Date: Thu, 15 Aug 2024 15:24:26 +0200
-Message-ID: <20240815131957.209739796@linuxfoundation.org>
+Subject: [PATCH 5.15 409/484] spi: spidev: Add missing spi_device_id for bh2228fv
+Date: Thu, 15 Aug 2024 15:24:27 +0200
+Message-ID: <20240815131957.247622597@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,42 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit eb11c3bb64ad0a05aeacdb01039863aa2aa3614b ]
+[ Upstream commit e4c4638b6a10427d30e29d22351c375886025f47 ]
 
-Device has up to WSA881X_MAX_SWR_PORTS number of ports and the array
-assigned to prop.sink_dpn_prop has 0..WSA881X_MAX_SWR_PORTS-1 elements.
-On the other hand, GENMASK(high, low) creates an inclusive mask between
-<high, low>, so we need the mask from 0 up to WSA881X_MAX_SWR_PORTS-1.
+When the of_device_id entry for "rohm,bh2228fv" was added, the
+corresponding spi_device_id was forgotten, causing a warning message
+during boot-up:
 
-Theoretically, too wide mask could cause an out of bounds read in
-sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
-driver, e.g. adding incorrect number of ports via
-sdw_stream_add_slave().
+    SPI driver spidev has no spi_device_id for rohm,bh2228fv
 
-Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-4-d4d7a8b56f05@linaro.org
+Fix module autoloading and shut up the warning by adding the missing
+entry.
+
+Fixes: fc28d1c1fe3b3e2f ("spi: spidev: add correct compatible for Rohm BH2228FV")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/cb571d4128f41175f31319cd9febc829417ea167.1722346539.git.geert+renesas@glider.be
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa881x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spidev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
-index 8559047694873..c8d3dc6341037 100644
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -1120,7 +1120,7 @@ static int wsa881x_probe(struct sdw_slave *pdev,
- 	wsa881x->sconfig.frame_rate = 48000;
- 	wsa881x->sconfig.direction = SDW_DATA_DIR_RX;
- 	wsa881x->sconfig.type = SDW_STREAM_PDM;
--	pdev->prop.sink_ports = GENMASK(WSA881X_MAX_SWR_PORTS, 0);
-+	pdev->prop.sink_ports = GENMASK(WSA881X_MAX_SWR_PORTS - 1, 0);
- 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
- 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
- 	gpiod_direction_output(wsa881x->sd_n, 1);
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 99bdbc040d1ae..0b97e5b97a018 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -682,6 +682,7 @@ static const struct file_operations spidev_fops = {
+ static struct class *spidev_class;
+ 
+ static const struct spi_device_id spidev_spi_ids[] = {
++	{ .name = "bh2228fv" },
+ 	{ .name = "dh2228fv" },
+ 	{ .name = "ltc2488" },
+ 	{ .name = "sx1301" },
 -- 
 2.43.0
 
