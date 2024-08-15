@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F06B19F473;
-	Thu, 15 Aug 2024 14:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3706119F473;
+	Thu, 15 Aug 2024 14:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730807; cv=none; b=bUauKgx5f3IipK4jQgMPFDf1a3x5R/VBPcQJxmWQNoEhY/jpri9oUkyLoy+E+0KbDJnGKuN5s29VWQIKBsl9rZXFJfH7Iibz0XjlxX7FokElhrZKAcKvd0z3+Wx7nNodwasZozpiHAR4QgqNT8cT+7mosDgkvHccqpsw63tuwAI=
+	t=1723730810; cv=none; b=EXpHPGtcEhtoUNcw8ZtYrDKG9jTMlrrX0RxT7P4YjyxPZKdW5hlydyD3sjkAcIHzDWvvS+ZYLEk8jFnlrT6hbU0BkUVERdnkwPc8tUq6xQXnLBhz69I3Pvi/W1S+uuT77FC3F2AKOg/mlr4Z1QFSP+KvPjPXoDBDsn/c7Koe2qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730807; c=relaxed/simple;
-	bh=jr39QDXgwB3npO4sf7Md/WRToGIRzZwOBt+vS19+dy0=;
+	s=arc-20240116; t=1723730810; c=relaxed/simple;
+	bh=GAWNmtLWXjZYiBq850ZwAjYo0BPI1OypsiI894aOTKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XdtbJCqyG4SplchMlvSFQDSGQ1myqJEvOdOWWjl/zsDa2ZiMR8a7IwPOzOas/4UlugX4E++NPN93Iq6OI9em0WrKwfbX+fEEFBFxcWvBGBzD+vmMO6PQ5fDNKKix55OWV+QaVJXP2pt58LZDsa6g3ZEnZ4QKAz1lLbi+J4FjWx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml4jFpu2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijObXs2g2eTViAJnYOELIRJtvGqhOc0PA5t4gP+pyosRPIG/K4nIfAhJaFNq/st2oGaQdfvx0cL7T0K1gciXWuklXx+MEIRfrzrHRadZrcM6TjdHceaXgy+T2TffndRWNq8rzF8xcv3AQgG99OdslvvzWlsyfFJkU5cFnoQCMwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTCYaeX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml4jFpu2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A373CC32786;
-	Thu, 15 Aug 2024 14:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTCYaeX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF919C4AF0A;
+	Thu, 15 Aug 2024 14:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730807;
-	bh=jr39QDXgwB3npO4sf7Md/WRToGIRzZwOBt+vS19+dy0=;
+	s=korg; t=1723730810;
+	bh=GAWNmtLWXjZYiBq850ZwAjYo0BPI1OypsiI894aOTKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ml4jFpu2WHzQ1k0HhgvxPMaeQnRXO9Qzkg0+mTIuVpJqbcs1tsmO0Ji0ivDafOS+O
-	 miijbeWMrGHBt+JukCmd8oCMLXepQa8s6USfu11Rw3QUe7xE8LLNyF/bFkQiLPQCFo
-	 +FibWuHNouSulME6qm/b/zR6lTd++4LNYahlW3u4=
+	b=MTCYaeX5fC7ZbuKcTI5990m+Il0O4OEsRMFdVJ92zHWHja9LU6X48Cv0zngpi27SU
+	 LfdontvBk3XKKTv7KwpJe8FEAoQSJUub4ZwlYNY4y+EMsTRnSPCVlqDTIea3UHV3nS
+	 xlsqfxK4ehKC1yVHb7su6UJgWM9/rDkx8VRLqxgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Waiman Long <longman@redhat.com>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.1 36/38] cgroup: Move rcu_head up near the top of cgroup_root
-Date: Thu, 15 Aug 2024 15:26:10 +0200
-Message-ID: <20240815131834.342572161@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 37/38] wifi: cfg80211: restrict NL80211_ATTR_TXQ_QUANTUM values
+Date: Thu, 15 Aug 2024 15:26:11 +0200
+Message-ID: <20240815131834.380356813@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -48,70 +45,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a7fb0423c201ba12815877a0b5a68a6a1710b23a upstream.
+[ Upstream commit d1cba2ea8121e7fdbe1328cea782876b1dd80993 ]
 
-Commit d23b5c577715 ("cgroup: Make operations on the cgroup root_list RCU
-safe") adds a new rcu_head to the cgroup_root structure and kvfree_rcu()
-for freeing the cgroup_root.
+syzbot is able to trigger softlockups, setting NL80211_ATTR_TXQ_QUANTUM
+to 2^31.
 
-The current implementation of kvfree_rcu(), however, has the limitation
-that the offset of the rcu_head structure within the larger data
-structure must be less than 4096 or the compilation will fail. See the
-macro definition of __is_kvfree_rcu_offset() in include/linux/rcupdate.h
-for more information.
+We had a similar issue in sch_fq, fixed with commit
+d9e15a273306 ("pkt_sched: fq: do not accept silly TCA_FQ_QUANTUM")
 
-By putting rcu_head below the large cgroup structure, any change to the
-cgroup structure that makes it larger run the risk of causing build
-failure under certain configurations. Commit 77070eeb8821 ("cgroup:
-Avoid false cacheline sharing of read mostly rstat_cpu") happens to be
-the last straw that breaks it. Fix this problem by moving the rcu_head
-structure up before the cgroup structure.
+watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [kworker/1:0:24]
+Modules linked in:
+irq event stamp: 131135
+ hardirqs last  enabled at (131134): [<ffff80008ae8778c>] __exit_to_kernel_mode arch/arm64/kernel/entry-common.c:85 [inline]
+ hardirqs last  enabled at (131134): [<ffff80008ae8778c>] exit_to_kernel_mode+0xdc/0x10c arch/arm64/kernel/entry-common.c:95
+ hardirqs last disabled at (131135): [<ffff80008ae85378>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
+ hardirqs last disabled at (131135): [<ffff80008ae85378>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
+ softirqs last  enabled at (125892): [<ffff80008907e82c>] neigh_hh_init net/core/neighbour.c:1538 [inline]
+ softirqs last  enabled at (125892): [<ffff80008907e82c>] neigh_resolve_output+0x268/0x658 net/core/neighbour.c:1553
+ softirqs last disabled at (125896): [<ffff80008904166c>] local_bh_disable+0x10/0x34 include/linux/bottom_half.h:19
+CPU: 1 PID: 24 Comm: kworker/1:0 Not tainted 6.9.0-rc7-syzkaller-gfda5695d692c #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Workqueue: mld mld_ifc_work
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __list_del include/linux/list.h:195 [inline]
+ pc : __list_del_entry include/linux/list.h:218 [inline]
+ pc : list_move_tail include/linux/list.h:310 [inline]
+ pc : fq_tin_dequeue include/net/fq_impl.h:112 [inline]
+ pc : ieee80211_tx_dequeue+0x6b8/0x3b4c net/mac80211/tx.c:3854
+ lr : __list_del_entry include/linux/list.h:218 [inline]
+ lr : list_move_tail include/linux/list.h:310 [inline]
+ lr : fq_tin_dequeue include/net/fq_impl.h:112 [inline]
+ lr : ieee80211_tx_dequeue+0x67c/0x3b4c net/mac80211/tx.c:3854
+sp : ffff800093d36700
+x29: ffff800093d36a60 x28: ffff800093d36960 x27: dfff800000000000
+x26: ffff0000d800ad50 x25: ffff0000d800abe0 x24: ffff0000d800abf0
+x23: ffff0000e0032468 x22: ffff0000e00324d4 x21: ffff0000d800abf0
+x20: ffff0000d800abf8 x19: ffff0000d800abf0 x18: ffff800093d363c0
+x17: 000000000000d476 x16: ffff8000805519dc x15: ffff7000127a6cc8
+x14: 1ffff000127a6cc8 x13: 0000000000000004 x12: ffffffffffffffff
+x11: ffff7000127a6cc8 x10: 0000000000ff0100 x9 : 0000000000000000
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : ffff80009287aa08 x4 : 0000000000000008 x3 : ffff80008034c7fc
+x2 : ffff0000e0032468 x1 : 00000000da0e46b8 x0 : ffff0000e0032470
+Call trace:
+  __list_del include/linux/list.h:195 [inline]
+  __list_del_entry include/linux/list.h:218 [inline]
+  list_move_tail include/linux/list.h:310 [inline]
+  fq_tin_dequeue include/net/fq_impl.h:112 [inline]
+  ieee80211_tx_dequeue+0x6b8/0x3b4c net/mac80211/tx.c:3854
+  wake_tx_push_queue net/mac80211/util.c:294 [inline]
+  ieee80211_handle_wake_tx_queue+0x118/0x274 net/mac80211/util.c:315
+  drv_wake_tx_queue net/mac80211/driver-ops.h:1350 [inline]
+  schedule_and_wake_txq net/mac80211/driver-ops.h:1357 [inline]
+  ieee80211_queue_skb+0x18e8/0x2244 net/mac80211/tx.c:1664
+  ieee80211_tx+0x260/0x400 net/mac80211/tx.c:1966
+  ieee80211_xmit+0x278/0x354 net/mac80211/tx.c:2062
+  __ieee80211_subif_start_xmit+0xab8/0x122c net/mac80211/tx.c:4338
+  ieee80211_subif_start_xmit+0xe0/0x438 net/mac80211/tx.c:4532
+  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
+  xmit_one net/core/dev.c:3531 [inline]
+  dev_hard_start_xmit+0x27c/0x938 net/core/dev.c:3547
+  __dev_queue_xmit+0x1678/0x33fc net/core/dev.c:4341
+  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
+  neigh_resolve_output+0x558/0x658 net/core/neighbour.c:1563
+  neigh_output include/net/neighbour.h:542 [inline]
+  ip6_finish_output2+0x104c/0x1ee8 net/ipv6/ip6_output.c:137
+  ip6_finish_output+0x428/0x7a0 net/ipv6/ip6_output.c:222
+  NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+  ip6_output+0x270/0x594 net/ipv6/ip6_output.c:243
+  dst_output include/net/dst.h:450 [inline]
+  NF_HOOK+0x160/0x4f0 include/linux/netfilter.h:314
+  mld_sendpack+0x7b4/0x10f4 net/ipv6/mcast.c:1818
+  mld_send_cr net/ipv6/mcast.c:2119 [inline]
+  mld_ifc_work+0x840/0xd0c net/ipv6/mcast.c:2650
+  process_one_work+0x7b8/0x15d4 kernel/workqueue.c:3267
+  process_scheduled_works kernel/workqueue.c:3348 [inline]
+  worker_thread+0x938/0xef4 kernel/workqueue.c:3429
+  kthread+0x288/0x310 kernel/kthread.c:388
+  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
 
-Fixes: d23b5c577715 ("cgroup: Make operations on the cgroup root_list RCU safe")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/lkml/20231207143806.114e0a74@canb.auug.org.au/
-Signed-off-by: Waiman Long <longman@redhat.com>
-Acked-by: Yafang Shao <laoar.shao@gmail.com>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 52539ca89f36 ("cfg80211: Expose TXQ stats and parameters to userspace")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240615160800.250667-1-edumazet@google.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/wireless/nl80211.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -525,6 +525,10 @@ struct cgroup_root {
- 	/* Unique id for this hierarchy. */
- 	int hierarchy_id;
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -463,6 +463,10 @@ nl80211_sta_wme_policy[NL80211_STA_WME_M
+ 	[NL80211_STA_WME_MAX_SP] = { .type = NLA_U8 },
+ };
  
-+	/* A list running through the active hierarchies */
-+	struct list_head root_list;
-+	struct rcu_head rcu;	/* Must be near the top */
++static struct netlink_range_validation q_range = {
++	.max = INT_MAX,
++};
 +
- 	/*
- 	 * The root cgroup. The containing cgroup_root will be destroyed on its
- 	 * release. cgrp->ancestors[0] will be used overflowing into the
-@@ -538,10 +542,6 @@ struct cgroup_root {
- 	/* Number of cgroups in the hierarchy, used only for /proc/cgroups */
- 	atomic_t nr_cgrps;
+ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
+ 	[0] = { .strict_start_type = NL80211_ATTR_HE_OBSS_PD },
+ 	[NL80211_ATTR_WIPHY] = { .type = NLA_U32 },
+@@ -745,7 +749,7 @@ static const struct nla_policy nl80211_p
  
--	/* A list running through the active hierarchies */
--	struct list_head root_list;
--	struct rcu_head rcu;
--
- 	/* Hierarchy-specific flags */
- 	unsigned int flags;
- 
+ 	[NL80211_ATTR_TXQ_LIMIT] = { .type = NLA_U32 },
+ 	[NL80211_ATTR_TXQ_MEMORY_LIMIT] = { .type = NLA_U32 },
+-	[NL80211_ATTR_TXQ_QUANTUM] = { .type = NLA_U32 },
++	[NL80211_ATTR_TXQ_QUANTUM] = NLA_POLICY_FULL_RANGE(NLA_U32, &q_range),
+ 	[NL80211_ATTR_HE_CAPABILITY] =
+ 		NLA_POLICY_VALIDATE_FN(NLA_BINARY, validate_he_capa,
+ 				       NL80211_HE_MAX_CAPABILITY_LEN),
 
 
