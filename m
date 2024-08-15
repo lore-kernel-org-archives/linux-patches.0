@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E17A1AC8BB;
-	Thu, 15 Aug 2024 14:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943D11AC8BB;
+	Thu, 15 Aug 2024 14:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731672; cv=none; b=nRdVMJIws+Z2OAmVEIAP+14bpJMWvjLmSXea3lq/NTwI/5oyGt/qsLydALemDoXEvR5QCLDq9R2zfdKo+Vm0xvj9afUT9N+D4KmHpGQ334R2NbGDxjYB7eJzRBk/eS1XJPUPxIpdQx2UYB3kZRFwDGlu7WZf0DcyDIFQNbwI1PI=
+	t=1723731675; cv=none; b=unRmr5nY+9wtGfdN1vv6GWnzjb+Xc60lPHrMKCyeQODjaeF6X1kMxStZbVFH9K8hGZ7z5Mmi3hdsf8imUT2GeKY3q5xaP7S2eU4ESBs7fjJF58jFhA5ay7Fe8Uo+aKpr/jDmtqTVSHvJDgPna0FxQ6QI0pb+g79OM83Pxz2gfBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731672; c=relaxed/simple;
-	bh=S+6xZkbpntIQHOqOwL7fVnucWCzIgiYAmxDNhr1igKk=;
+	s=arc-20240116; t=1723731675; c=relaxed/simple;
+	bh=ybZAu8PIbEplAixliZVH9Oo88vB0p5hBXUOY/eVuq90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xyj6sfVWgUjCETeML4CybyIvJjnNGVj0kJtcPcKazQQ6/8VoGJy4JG4VuTelG81D+AS+gfrBqlG98xcvINyNin47YigpsADxRaIZhdwyizM4itE/OchI/o3RBfrqJ7hJLXoA0AraMnPrfSAf4Sonndzt+uElmJBYYbItCdU+iLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSnmNX7n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxtPK8XdM/LmzYZPy0IkyhFCBrZAAT/JHgPXpILRgBNRpYQ/xolqxEi4qWQi56qZVQWEAauSi9GrhFp5BvGScXuOig6Eq/YS+s78YMAlqIPE3Hl7oRwCp0ZdOg3xY/rz/eKwMevknI5htCvAU7x4sgujltX4Qy3E7J6/LDnhp3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiLbVwuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSnmNX7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C06C32786;
-	Thu, 15 Aug 2024 14:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiLbVwuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0699FC32786;
+	Thu, 15 Aug 2024 14:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731672;
-	bh=S+6xZkbpntIQHOqOwL7fVnucWCzIgiYAmxDNhr1igKk=;
+	s=korg; t=1723731675;
+	bh=ybZAu8PIbEplAixliZVH9Oo88vB0p5hBXUOY/eVuq90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OSnmNX7n/2QlwYVIM1gnbY9ZzCgKLrd0v0kZElsFXphaRFsYjpULNc4rbUIeTTHOr
-	 fDKoJUFX8/TXQYeMEB6rYw/yBOr0/UA155lMXz/E3r1wQHxwMwD2OWu10F0G5RMOkT
-	 eiO+jVuD2kpVhMzW1P8MxivAQZiSP2KjJZx9H1Qk=
+	b=BiLbVwuD7iD2FAGwzdCZ2ecV34PK0aoZcGhCZ9EYhYt+7kR80M2+LJbEngJM2JtW8
+	 dYmJ6h4rEDpKzVv5pnEG9JjcA3Br413u5tpa8sM2zK96eIz5QZS/qbKB67ojljRh31
+	 VTYCe/RNRGTAzshits86YoDF6Kkz21sOgRAw2ZOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dong Aisheng <aisheng.dong@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 170/259] remoteproc: imx_rproc: ignore mapping vdev regions
-Date: Thu, 15 Aug 2024 15:25:03 +0200
-Message-ID: <20240815131909.345570897@linuxfoundation.org>
+Subject: [PATCH 5.4 171/259] remoteproc: imx_rproc: Fix ignoring mapping vdev regions
+Date: Thu, 15 Aug 2024 15:25:04 +0200
+Message-ID: <20240815131909.382627321@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Dong Aisheng <aisheng.dong@nxp.com>
 
-[ Upstream commit 8f2d8961640f0346cbe892273c3260a0d30c1931 ]
+[ Upstream commit afe670e23af91d8a74a8d7049f6e0984bbf6ea11 ]
 
-vdev regions are vdev0vring0, vdev0vring1, vdevbuffer and similar.
-They are handled by remoteproc common code, no need to map in imx
-rproc driver.
+vdev regions are typically named vdev0buffer, vdev0ring0, vdev0ring1 and
+etc. Change to strncmp to cover them all.
 
+Fixes: 8f2d8961640f ("remoteproc: imx_rproc: ignore mapping vdev regions")
+Reviewed-and-tested-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Link: https://lore.kernel.org/r/1615029865-23312-10-git-send-email-peng.fan@oss.nxp.com
+Cc: stable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20210910090621.3073540-5-peng.fan@oss.nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Stable-dep-of: 2fa26ca8b786 ("remoteproc: imx_rproc: Skip over memory region when node value is NULL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/remoteproc/imx_rproc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 3e72b6f38d4bc..05b724fdca591 100644
+index 05b724fdca591..0e6246678bc2b 100644
 --- a/drivers/remoteproc/imx_rproc.c
 +++ b/drivers/remoteproc/imx_rproc.c
-@@ -286,6 +286,9 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
+@@ -286,8 +286,8 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
  		struct resource res;
  
  		node = of_parse_phandle(np, "memory-region", a);
-+		/* Not map vdev region */
-+		if (!strcmp(node->name, "vdev"))
-+			continue;
+-		/* Not map vdev region */
+-		if (!strcmp(node->name, "vdev"))
++		/* Not map vdevbuffer, vdevring region */
++		if (!strncmp(node->name, "vdev", strlen("vdev")))
+ 			continue;
  		err = of_address_to_resource(node, 0, &res);
  		if (err) {
- 			dev_err(dev, "unable to resolve memory region\n");
 -- 
 2.43.0
 
