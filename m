@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B10419DF92;
-	Thu, 15 Aug 2024 14:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C521A7068;
+	Thu, 15 Aug 2024 14:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731747; cv=none; b=Iiz8yrBAi5Z8AC00VjrTSv3kyGO4YEQXTbAOZs1/3knW1mG/PMXyIptejv9loC7Mfk7vc4ntOrXIQI7ZYwozqsZE9FQXJ0BEX7cFTKkRrMyYcdaDbWODBwlg6Cxu0twZFurSdMI+K0N2dGMNAjyxBlpgvs0dCjfnwsWmwzXSnew=
+	t=1723731750; cv=none; b=n9gnc4aZZP0TNfftF4u4JDHyNnx+tACt+9kua24dG5czjU2q64ngqMWu9MBx3430k3x+ZT0fYG/Q4KfIKrynPwDBw1EplBMzwrRmFMoO14bB+O1RVTEFuz/5dTatuqA/klbeY8qx1mx1HQ1kjgMF5FVmQ1vWt5DZMeA2XdtL9qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731747; c=relaxed/simple;
-	bh=3NLqioVRavUotdvV8xxvUxdNXfoHZeXXKyzQvGTzV90=;
+	s=arc-20240116; t=1723731750; c=relaxed/simple;
+	bh=Cra+QBo703scIMkRQsp7zftBWVbtSDEvn+Vf6IzyjZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NS/+vViLmn6vGtvBESA197Er2LR80ebEtFkeJyVVKMVH+YcuhHKubGa23yynJKlp4RnE6PRgNhoDDrbmDykoHeldgTWXT6FnZcB4cCsK/pXESp8O/P6G0QB51ecw6zCp0T9fHPYybQc+eK6cuDitldl+5axKKZJPkX6KW6hDy6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTSSF2tn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lNNrUAAF6D6eeoA2v5LmHMopXI08wLrvanoSQ2cGzK06tV2YiHtMuw+8QimwZUMiMSoepAFv/v0HhYBNP/85ix4fP2IYp98e9xGn8CWyaL4S5Iq9E+3R1Zfgo818PXOOpVJ1yDmyAKcDzMdYiXF6IuJCeVarzmSrpa0G3TdgDzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=144/u83V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTSSF2tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE095C4AF0C;
-	Thu, 15 Aug 2024 14:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="144/u83V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179F5C32786;
+	Thu, 15 Aug 2024 14:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731747;
-	bh=3NLqioVRavUotdvV8xxvUxdNXfoHZeXXKyzQvGTzV90=;
+	s=korg; t=1723731750;
+	bh=Cra+QBo703scIMkRQsp7zftBWVbtSDEvn+Vf6IzyjZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTSSF2tnFOeoXh1rErwjuUkfLLuzrhuvv52TGgaeQH+j91TLmqkNTAx35tTOpsU7V
-	 0lQc3QaeLpIF/MzQgR/jCY+8AwtJNnSAWKYXeFdt6rzaMWLZA0WJBNyAwI0nYl2qMl
-	 SK1a0js5VpGoZFVPsfhHJJ52XMxII4tmzD/oYLOY=
+	b=144/u83VBOOEXJwThaaqP7oDL3hojc646EpbmpKK0zX3fgSqyn1Sf/+AH+GHMrGCN
+	 c+7kDksNkfOhyW0dFvaKD+t7yofRCT9MScbdII+TSkVSd08lgU9gJ2pw5conINfP7V
+	 /pOJYxCVf9GtE7tWT+EtabGLm5jXL+A4+hZLSihY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Suvorov <oleksandr.suvorov@toradex.com>,
-	Mark Brown <broonie@kernel.org>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 225/259] spi: fsl-lpspi: remove unneeded array
-Date: Thu, 15 Aug 2024 15:25:58 +0200
-Message-ID: <20240815131911.463275579@linuxfoundation.org>
+Subject: [PATCH 5.4 199/259] wifi: nl80211: dont give key data to userspace
+Date: Thu, 15 Aug 2024 15:25:32 +0200
+Message-ID: <20240815131910.459824997@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -51,53 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2fa98705a9289c758b6154a22174aa8d4041a285 ]
+[ Upstream commit a7e5793035792cc46a1a4b0a783655ffa897dfe9 ]
 
-- replace the array with the shift operation
-- remove the extra comparing operation.
+When a key is requested by userspace, there's really no need
+to include the key data, the sequence counter is really what
+userspace needs in this case. The fact that it's included is
+just a historic quirk.
 
-Signed-off-by: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
-Link: https://lore.kernel.org/r/20200220141143.3902922-2-oleksandr.suvorov@toradex.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 730bbfaf7d48 ("spi: spi-fsl-lpspi: Fix scldiv calculation")
+Remove the key data.
+
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240627104411.b6a4f097e4ea.I7e6cc976cb9e8a80ef25a3351330f313373b4578@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/wireless/nl80211.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 58b2da91be1c0..5351185fd9af7 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -86,8 +86,6 @@
- #define TCR_RXMSK	BIT(19)
- #define TCR_TXMSK	BIT(18)
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 0d15dd68565cb..e85e8f7b48f92 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -3723,10 +3723,7 @@ static void get_key_callback(void *c, struct key_params *params)
+ 	struct nlattr *key;
+ 	struct get_key_cookie *cookie = c;
  
--static int clkdivs[] = {1, 2, 4, 8, 16, 32, 64, 128};
--
- struct lpspi_config {
- 	u8 bpw;
- 	u8 chip_select;
-@@ -331,15 +329,14 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 	}
+-	if ((params->key &&
+-	     nla_put(cookie->msg, NL80211_ATTR_KEY_DATA,
+-		     params->key_len, params->key)) ||
+-	    (params->seq &&
++	if ((params->seq &&
+ 	     nla_put(cookie->msg, NL80211_ATTR_KEY_SEQ,
+ 		     params->seq_len, params->seq)) ||
+ 	    (params->cipher &&
+@@ -3738,10 +3735,7 @@ static void get_key_callback(void *c, struct key_params *params)
+ 	if (!key)
+ 		goto nla_put_failure;
  
- 	for (prescale = 0; prescale < 8; prescale++) {
--		scldiv = perclk_rate /
--			 (clkdivs[prescale] * config.speed_hz) - 2;
-+		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
- 		if (scldiv < 256) {
- 			fsl_lpspi->config.prescale = prescale;
- 			break;
- 		}
- 	}
- 
--	if (prescale == 8 && scldiv >= 256)
-+	if (scldiv >= 256)
- 		return -EINVAL;
- 
- 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
+-	if ((params->key &&
+-	     nla_put(cookie->msg, NL80211_KEY_DATA,
+-		     params->key_len, params->key)) ||
+-	    (params->seq &&
++	if ((params->seq &&
+ 	     nla_put(cookie->msg, NL80211_KEY_SEQ,
+ 		     params->seq_len, params->seq)) ||
+ 	    (params->cipher &&
 -- 
 2.43.0
 
