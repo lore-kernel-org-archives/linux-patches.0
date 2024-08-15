@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6551AAE38;
-	Thu, 15 Aug 2024 14:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E74D1B32CC;
+	Thu, 15 Aug 2024 14:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730947; cv=none; b=pNUkU/bIJQsDXTt3aIISgj2kmDyS/lsabrj3hf8ocEL8IraDWlLE0DwWG/ItCzN6kcniY4STjQmVo7W/wDlxDaNpPWMkOp8AHT553PjhgGbjJHi5S3pOtscZhv3Y80Rr/OTGtcoC7IWYUqYHT7f1n+gud9zo1QrKkUxi1qTa0/w=
+	t=1723730950; cv=none; b=dOWKh9y4OR+hGNuG5wsd/uBH0iVz7mbQN2/axYjuZ5DulPJ4q0X0QSGu0NkP5WgosclwfH9Gj97GKMIb9KWcS9X7XjnDH8ClHaNR9TJ5Bo0Jq9mEVzu1k565UuCQpDla99lFvu2D3YtU6Lh1jol/pUTORUdGC865Ey7eF3pW3dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730947; c=relaxed/simple;
-	bh=2YwUS8tsC2XSBmWKSfgW8NRL+tT/EaHHtoJzLZzArps=;
+	s=arc-20240116; t=1723730950; c=relaxed/simple;
+	bh=0mMiLw0YFV2JxaVl9+l2SjQdhHznQ8rqy3Okee10wFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4P+dmQtyjaTMuWA4FnhS6WMwwYdeENHs7xPqMDTkgMVYy/0lN5dI8jiXPpyJhmQ/vfa9C2wh1tO9EpEql8o9bUEwwLjjWzVINBUvyy8NlFkdtFAteTj5UFhKNkSPnFiSI1cZ74RRSqe46JDh3rr5QQLus6gL4qLRoVQoFWRgnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SszHka/C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uc5LPGHuz0VFhXZSeI14RQDeXLeu5tLATVLx+r4H16+evlVDp7ML2snthxD91uk2i9qXX2+rcFdEg6HyvPKFs3H0OrrLbmvmu1BkzgrOKuVoY6UNjHKO/QHelnC3twLwdyutjRTGUjyse2XOw9Bm01yfbR/aYXZMgvLwXFbsZTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKNpGQmw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SszHka/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4B7C32786;
-	Thu, 15 Aug 2024 14:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKNpGQmw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87380C4AF0C;
+	Thu, 15 Aug 2024 14:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730946;
-	bh=2YwUS8tsC2XSBmWKSfgW8NRL+tT/EaHHtoJzLZzArps=;
+	s=korg; t=1723730949;
+	bh=0mMiLw0YFV2JxaVl9+l2SjQdhHznQ8rqy3Okee10wFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SszHka/CiAcAX4uyhaaOs1Oy2InIDbZKrd7UGh1eAUkchYLnllHCNbLkYjrtRwAlg
-	 dP/iGAQ0LkiYw1u9xdJ/qPt7ggIHj1XhD9Cp4Cne6RTR/WzPRVKIbdiEckVx7q7P0D
-	 nO67HTBbdpc1F1Te3UtD/YL+6KD14v6B7y2f6FA0=
+	b=YKNpGQmw/XVH1VjIEEH6kWItEILDpvmelfKiYadAlX2vbSEaGGU2vsx6qE61y+V3B
+	 NC5P3l4lR19TFnhyp+Hco7vjWVzVCUMFZUJR7x72aPTsSPoRvN4SVngKWkznkFzk1x
+	 xebOruJQBQ1WwJZ+XRFUZ3iCuSQgp05ioaUY88cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4139435cb1b34cf759c2@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Karsten Keil <isdn@linux-pingi.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 42/67] fs: Annotate struct file_handle with __counted_by() and use struct_size()
-Date: Thu, 15 Aug 2024 15:25:56 +0200
-Message-ID: <20240815131839.932956707@linuxfoundation.org>
+Subject: [PATCH 6.6 43/67] mISDN: fix MISDN_TIME_STAMP handling
+Date: Thu, 15 Aug 2024 15:25:57 +0200
+Message-ID: <20240815131839.971205627@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -54,77 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 68d6f4f3fbd9b1baae53e7cf33fb3362b5a21494 ]
+[ Upstream commit 138b787804f4a10417618e8d1e6e2700539fd88c ]
 
-Prepare for the coming implementation by GCC and Clang of the __counted_by
-attribute. Flexible array members annotated with __counted_by can have
-their accesses bounds-checked at run-time via CONFIG_UBSAN_BOUNDS (for
-array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-functions).
+syzbot reports one unsafe call to copy_from_sockptr() [1]
 
-While there, use struct_size() helper, instead of the open-coded
-version.
+Use copy_safe_from_sockptr() instead.
 
-[brauner@kernel.org: contains a fix by Edward for an OOB access]
-Reported-by: syzbot+4139435cb1b34cf759c2@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://lore.kernel.org/r/tencent_A7845DD769577306D813742365E976E3A205@qq.com
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/ZgImCXTdGDTeBvSS@neat
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+[1]
+
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
+ BUG: KASAN: slab-out-of-bounds in data_sock_setsockopt+0x46c/0x4cc drivers/isdn/mISDN/socket.c:417
+Read of size 4 at addr ffff0000c6d54083 by task syz-executor406/6167
+
+CPU: 1 PID: 6167 Comm: syz-executor406 Not tainted 6.8.0-rc7-syzkaller-g707081b61156 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Call trace:
+  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:291
+  show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:298
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x178/0x518 mm/kasan/report.c:488
+  kasan_report+0xd8/0x138 mm/kasan/report.c:601
+  __asan_report_load_n_noabort+0x1c/0x28 mm/kasan/report_generic.c:391
+  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+  copy_from_sockptr include/linux/sockptr.h:55 [inline]
+  data_sock_setsockopt+0x46c/0x4cc drivers/isdn/mISDN/socket.c:417
+  do_sock_setsockopt+0x2a0/0x4e0 net/socket.c:2311
+  __sys_setsockopt+0x128/0x1a8 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __arm64_sys_setsockopt+0xb8/0xd4 net/socket.c:2340
+  __invoke_syscall arch/arm64/kernel/syscall.c:34 [inline]
+  invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:48
+  el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:133
+  do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:152
+  el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
+  el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
+  el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+
+Fixes: 1b2b03f8e514 ("Add mISDN core files")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Cc: Karsten Keil <isdn@linux-pingi.de>
+Link: https://lore.kernel.org/r/20240408082845.3957374-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fhandle.c       | 6 +++---
- include/linux/fs.h | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/isdn/mISDN/socket.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/fhandle.c b/fs/fhandle.c
-index 99dcf07cfecfe..c361d7ff1b88d 100644
---- a/fs/fhandle.c
-+++ b/fs/fhandle.c
-@@ -40,7 +40,7 @@ static long do_sys_name_to_handle(const struct path *path,
- 	if (f_handle.handle_bytes > MAX_HANDLE_SZ)
- 		return -EINVAL;
+diff --git a/drivers/isdn/mISDN/socket.c b/drivers/isdn/mISDN/socket.c
+index 2776ca5fc33f3..b215b28cad7b7 100644
+--- a/drivers/isdn/mISDN/socket.c
++++ b/drivers/isdn/mISDN/socket.c
+@@ -401,23 +401,23 @@ data_sock_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ }
  
--	handle = kzalloc(sizeof(struct file_handle) + f_handle.handle_bytes,
-+	handle = kzalloc(struct_size(handle, f_handle, f_handle.handle_bytes),
- 			 GFP_KERNEL);
- 	if (!handle)
- 		return -ENOMEM;
-@@ -75,7 +75,7 @@ static long do_sys_name_to_handle(const struct path *path,
- 	/* copy the mount id */
- 	if (put_user(real_mount(path->mnt)->mnt_id, mnt_id) ||
- 	    copy_to_user(ufh, handle,
--			 sizeof(struct file_handle) + handle_bytes))
-+			 struct_size(handle, f_handle, handle_bytes)))
- 		retval = -EFAULT;
- 	kfree(handle);
- 	return retval;
-@@ -196,7 +196,7 @@ static int handle_to_path(int mountdirfd, struct file_handle __user *ufh,
- 		retval = -EINVAL;
- 		goto out_err;
- 	}
--	handle = kmalloc(sizeof(struct file_handle) + f_handle.handle_bytes,
-+	handle = kmalloc(struct_size(handle, f_handle, f_handle.handle_bytes),
- 			 GFP_KERNEL);
- 	if (!handle) {
- 		retval = -ENOMEM;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 5ca9e859c042b..43e640fb4a7f7 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1036,7 +1036,7 @@ struct file_handle {
- 	__u32 handle_bytes;
- 	int handle_type;
- 	/* file identifier */
--	unsigned char f_handle[];
-+	unsigned char f_handle[] __counted_by(handle_bytes);
- };
+ static int data_sock_setsockopt(struct socket *sock, int level, int optname,
+-				sockptr_t optval, unsigned int len)
++				sockptr_t optval, unsigned int optlen)
+ {
+ 	struct sock *sk = sock->sk;
+ 	int err = 0, opt = 0;
  
- static inline struct file *get_file(struct file *f)
+ 	if (*debug & DEBUG_SOCKET)
+ 		printk(KERN_DEBUG "%s(%p, %d, %x, optval, %d)\n", __func__, sock,
+-		       level, optname, len);
++		       level, optname, optlen);
+ 
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+ 	case MISDN_TIME_STAMP:
+-		if (copy_from_sockptr(&opt, optval, sizeof(int))) {
+-			err = -EFAULT;
++		err = copy_safe_from_sockptr(&opt, sizeof(opt),
++					     optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt)
+ 			_pms(sk)->cmask |= MISDN_TIME_STAMP;
 -- 
 2.43.0
 
