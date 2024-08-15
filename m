@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A031218D630;
-	Thu, 15 Aug 2024 13:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8AA1714A8;
+	Thu, 15 Aug 2024 13:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729358; cv=none; b=ukXgguZmDOpIVJbbKT+R3VSx9aLN6Pd43K8f/1BNXVaxZpAnlEr8jP2BEUP94sKt3M4E3nO/rADV9qSdHhwR8S1EhAO0yOxutrPfu3UM7oFLybCUgjj8rSb5iYXSZxdNViZXB2DJh/dpOio0g2Syj09arhVd37kQguvSGibmt1w=
+	t=1723729361; cv=none; b=tXL2iOAEFl/M1WvEjMVYTqxAbuiNiz28Sdv4JUM9dBQ67uTamCWWmS+wuYLlEIzTJoXeHcUcsVSKAUHotPQFhHSEv4m0f9+XchJ/p2T28PZxF/k61EkumrBggIvflEWCev5uAGuDHoOBAheohbFCiAyuuENkq/6SvhhRrClGduY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729358; c=relaxed/simple;
-	bh=5HvrtVKuYSuvMB8GiZJJW0JI6MScNN4KX9MimJ7eEOI=;
+	s=arc-20240116; t=1723729361; c=relaxed/simple;
+	bh=9MdWd0wq9rT3ugdEjBimjWQXaoIC1vLItGT+N1UFWfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NuDrGFVzsQPL4fEIqbLyhrnUmtkN2fb7famh6fb3PQ1Tz1+RlZO04sDUO+v6H/XsYNOtaxC4k8NAiRHTKFaCW/kzVj5zJwE5baehC3DLki8f7+aTxbOmxNjJNRHaHiIWMyvk5kGfMbZy6I7e0IYb3egXdSvglkFBebc/MWhA7tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqdt0XBy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFZ57/5doNOKZ1AUcFq8pucxtrNzgq2Fat5gWOX3nksGATY1/RRzYmzpsTdsD9kT5kP23SqXpUeGP1LSA7n1oi20zh/Ix89rB1oMMTnfYZHAkP3M+V5NhxX1LX+JDZcRQ7bRz4IOBDr5PA2YlSKbCwtT2ni0ozDBsvRKVg1Tsdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzJjL7zE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqdt0XBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6967C32786;
-	Thu, 15 Aug 2024 13:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzJjL7zE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23732C32786;
+	Thu, 15 Aug 2024 13:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729358;
-	bh=5HvrtVKuYSuvMB8GiZJJW0JI6MScNN4KX9MimJ7eEOI=;
+	s=korg; t=1723729361;
+	bh=9MdWd0wq9rT3ugdEjBimjWQXaoIC1vLItGT+N1UFWfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqdt0XBy0O0fMj0HTuRqWzTxZExa5WyQ3sk0DSS1SSvt4PGcYHwpjAFhXXC9hYVEP
-	 M4Ob3sOWiR4T4XyFuRjgIdNcVDAcw3hgETuz6TAdaAi/ilB078nNv3nczT1D14Ov3L
-	 xe9oWCIQjFj1BQ3klCdMlqFPPyo5Dt1NDSjp0xq0=
+	b=UzJjL7zE0i5b11UlFVx6mv6T6lE5lR/e3ZZdHkg/ZvsT6AqNOdhsvk21eBTsFP4d0
+	 RTYlzHR/kjar14cS4p7qwteWuA6C6PKhq8GVOOfHNX7e5VJEzVJ493oqST2Hve5jhm
+	 TZsQ7NmU95jpj12GB9aV1yE+xgn8X1R7ZSv2cIu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tim Murray <timmurray@google.com>,
+	John Stultz <jstultz@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/484] wifi: virt_wifi: dont use strlen() in const context
-Date: Thu, 15 Aug 2024 15:18:51 +0200
-Message-ID: <20240815131944.105318514@linuxfoundation.org>
+Subject: [PATCH 5.15 074/484] locking/rwsem: Add __always_inline annotation to __down_write_common() and inlined callers
+Date: Thu, 15 Aug 2024 15:18:52 +0200
+Message-ID: <20240815131944.143208335@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,54 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 6e909f489191b365364e9d636dec33b5dfd4e5eb ]
+[ Upstream commit e81859fe64ad42dccefe134d1696e0635f78d763 ]
 
-Looks like not all compilers allow strlen(constant) as
-a constant, so don't do that. Instead, revert back to
-defining the length as the first submission had it.
+Apparently despite it being marked inline, the compiler
+may not inline __down_write_common() which makes it difficult
+to identify the cause of lock contention, as the wchan of the
+blocked function will always be listed as __down_write_common().
 
-Fixes: b5d14b0c6716 ("wifi: virt_wifi: avoid reporting connection success with wrong SSID")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202407090934.NnR1TUbW-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202407090944.mpwLHGt9-lkp@intel.com/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So add __always_inline annotation to the common function (as
+well as the inlined helper callers) to force it to be inlined
+so a more useful blocking function will be listed (via wchan).
+
+This mirrors commit 92cc5d00a431 ("locking/rwsem: Add
+__always_inline annotation to __down_read_common() and inlined
+callers") which did the same for __down_read_common.
+
+I sort of worry that I'm playing wack-a-mole here, and talking
+with compiler people, they tell me inline means nothing, which
+makes me want to cry a little. So I'm wondering if we need to
+replace all the inlines with __always_inline, or remove them
+because either we mean something by it, or not.
+
+Fixes: c995e638ccbb ("locking/rwsem: Fold __down_{read,write}*()")
+Reported-by: Tim Murray <timmurray@google.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Waiman Long <longman@redhat.com>
+Link: https://lkml.kernel.org/r/20240709060831.495366-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virt_wifi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/locking/rwsem.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
-index ec730bc44adc1..dd6675436bda6 100644
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -137,6 +137,7 @@ static struct ieee80211_supported_band band_5ghz = {
- static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
- 
- #define VIRT_WIFI_SSID "VirtWifi"
-+#define VIRT_WIFI_SSID_LEN 8
- 
- static void virt_wifi_inform_bss(struct wiphy *wiphy)
+diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
+index 4a38d32b89fa3..eca42c14ec09a 100644
+--- a/kernel/locking/rwsem.c
++++ b/kernel/locking/rwsem.c
+@@ -1286,7 +1286,7 @@ static inline int __down_read_trylock(struct rw_semaphore *sem)
+ /*
+  * lock for writing
+  */
+-static inline int __down_write_common(struct rw_semaphore *sem, int state)
++static __always_inline int __down_write_common(struct rw_semaphore *sem, int state)
  {
-@@ -148,7 +149,7 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
- 		u8 ssid[8];
- 	} __packed ssid = {
- 		.tag = WLAN_EID_SSID,
--		.len = strlen(VIRT_WIFI_SSID),
-+		.len = VIRT_WIFI_SSID_LEN,
- 		.ssid = VIRT_WIFI_SSID,
- 	};
+ 	if (unlikely(!rwsem_write_trylock(sem))) {
+ 		if (IS_ERR(rwsem_down_write_slowpath(sem, state)))
+@@ -1296,12 +1296,12 @@ static inline int __down_write_common(struct rw_semaphore *sem, int state)
+ 	return 0;
+ }
  
-@@ -262,7 +263,7 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
- 	u8 *requested_bss = priv->connect_requested_bss;
- 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
--	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
-+	bool right_ssid = priv->connect_requested_ssid_len == VIRT_WIFI_SSID_LEN &&
- 			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
- 				  priv->connect_requested_ssid_len);
- 	u16 status = WLAN_STATUS_SUCCESS;
+-static inline void __down_write(struct rw_semaphore *sem)
++static __always_inline void __down_write(struct rw_semaphore *sem)
+ {
+ 	__down_write_common(sem, TASK_UNINTERRUPTIBLE);
+ }
+ 
+-static inline int __down_write_killable(struct rw_semaphore *sem)
++static __always_inline int __down_write_killable(struct rw_semaphore *sem)
+ {
+ 	return __down_write_common(sem, TASK_KILLABLE);
+ }
 -- 
 2.43.0
 
