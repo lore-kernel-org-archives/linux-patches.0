@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8602A19EED0;
-	Thu, 15 Aug 2024 13:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF44D1A00D6;
+	Thu, 15 Aug 2024 13:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729450; cv=none; b=pNMYao8+4+JJQOVo3UsjdGpAwNW0uqjG3fxtMYeAfyd6X5SbKYY2CMx6K5w3J+SdDjQcAl0mSttUoCyYLS6TS/MnVb8m15sEWx4BEO8Amm5qUdW/hyxAJRLCBdTLb3/iBF5yGqj/pjp9oha2YTXpPjzfUj+oRpf60NRlvJYwJxo=
+	t=1723729454; cv=none; b=DuZrn9UhiiIrlGjwN/xAlgPSyR8smMlJ72UCrfMmZpCnFRvFSyfRmf2SIh3MRlSrcyE4I3yVqkVZT67VyLxRFuOeiep7g4mA31YMq8egHL/17cbGV9R9FK/9+zjdQn+XvuLXAf3i45RZxG8q/vo0qp7tgCfuMJ51+xi+d6VNNL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729450; c=relaxed/simple;
-	bh=6atr6dNWt0jLluxGjMuV7KrvxKADM0YWkQXe64uNCh0=;
+	s=arc-20240116; t=1723729454; c=relaxed/simple;
+	bh=lH/KDhJuJ5dH3O1SZt2EqRUp0JvSIVw3iEyBneIWBxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTfBK2BcRFXaexn8aUIYfufhrHXLCeoN7u+klvOaYKxGXge7OI69elJ5KP/w9cw1xMjCoUMRtvQPYOXNmSLKblmKWO1UZZnWUG53bA0Qjvi9Gue5XcSBglt4fKezTzJ5M8EjSUb6eLgDyL3L94KSVZVUfpv3TVLFSOuuIv3upLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMMYIP8E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OXY3Lmx6bBZjex1rNGysjT0MVReyjvtOyJn7R/3yP8gBGQz3AbveL3tXYYmvwIq1tMZ1Fo2CPbkicZi3XLngNLclusEeelCJNP0nn4UbPpjopxyXpvjPhPN2A+xUaNowawpBSbHUsFkcj67ITHaTUgy0h2KRYVlTZH2ioCOjMdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaeQreE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMMYIP8E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0219EC32786;
-	Thu, 15 Aug 2024 13:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaeQreE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150ABC32786;
+	Thu, 15 Aug 2024 13:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729450;
-	bh=6atr6dNWt0jLluxGjMuV7KrvxKADM0YWkQXe64uNCh0=;
+	s=korg; t=1723729453;
+	bh=lH/KDhJuJ5dH3O1SZt2EqRUp0JvSIVw3iEyBneIWBxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMMYIP8ES0Ay7ydADq4uUTJ2XjW2mOiKuebbqdpSJo6UjpPAqoYQvv69/XAzyH9F4
-	 bC4AtzN3DYKgOSE36qurcbh+xCwl/m150YvIlHM7BFyIVnU88OheNgqdinjsYW1wIz
-	 uZog33u8/yC1ivPe2sD1kUOdc0N/N+SnHJBc8f1M=
+	b=ZaeQreE0SBPrxBSVStbxbWFhdM2YWwM3VCvb3w30r47wtVgH4ySX6Dd1oTYnNGSta
+	 UVoPKsqqXAjRotMZY4sDx40tMqiwfI4+IMsyzdjr856NgzP552cwHg+95jxeMxk7zq
+	 FfS7/TgW6FPtYakkRgHpAIX7uG2M3u4ftPlwLtuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/484] wifi: cfg80211: fix typo in cfg80211_calculate_bitrate_he()
-Date: Thu, 15 Aug 2024 15:18:38 +0200
-Message-ID: <20240815131943.602217026@linuxfoundation.org>
+Subject: [PATCH 5.15 095/484] saa7134: Unchecked i2c_transfer function result fixed
+Date: Thu, 15 Aug 2024 15:19:13 +0200
+Message-ID: <20240815131944.961726368@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Aleksandr Burakov <a.burakov@rosalinux.ru>
 
-[ Upstream commit 9ee0d44f055276fe2802b2f65058e920853f4f99 ]
+[ Upstream commit 9d8683b3fd93f0e378f24dc3d9604e5d7d3e0a17 ]
 
-rates_996 is mistakenly written as rates_969, fix it.
+Return value of function 'i2c_transfer' is not checked that
+may cause undefined behaviour.
 
-Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://msgid.link/20240606020653.33205-2-quic_bqiang@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 2cf36ac44730 ("[PATCH] v4l: 656: added support for the following cards")
+Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/pci/saa7134/saa7134-dvb.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index d40c2cf777dc0..a879d6b310a90 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -1363,7 +1363,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
- 		  5120, /*  0.833333... */
- 	};
- 	u32 rates_160M[3] = { 960777777, 907400000, 816666666 };
--	u32 rates_969[3] =  { 480388888, 453700000, 408333333 };
-+	u32 rates_996[3] =  { 480388888, 453700000, 408333333 };
- 	u32 rates_484[3] =  { 229411111, 216666666, 195000000 };
- 	u32 rates_242[3] =  { 114711111, 108333333,  97500000 };
- 	u32 rates_106[3] =  {  40000000,  37777777,  34000000 };
-@@ -1388,7 +1388,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
- 	else if (rate->bw == RATE_INFO_BW_80 ||
- 		 (rate->bw == RATE_INFO_BW_HE_RU &&
- 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_996))
--		result = rates_969[rate->he_gi];
-+		result = rates_996[rate->he_gi];
- 	else if (rate->bw == RATE_INFO_BW_40 ||
- 		 (rate->bw == RATE_INFO_BW_HE_RU &&
- 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_484))
+diff --git a/drivers/media/pci/saa7134/saa7134-dvb.c b/drivers/media/pci/saa7134/saa7134-dvb.c
+index f359cd5c006a7..c786b83a69d2b 100644
+--- a/drivers/media/pci/saa7134/saa7134-dvb.c
++++ b/drivers/media/pci/saa7134/saa7134-dvb.c
+@@ -466,7 +466,9 @@ static int philips_europa_tuner_sleep(struct dvb_frontend *fe)
+ 	/* switch the board to analog mode */
+ 	if (fe->ops.i2c_gate_ctrl)
+ 		fe->ops.i2c_gate_ctrl(fe, 1);
+-	i2c_transfer(&dev->i2c_adap, &analog_msg, 1);
++	if (i2c_transfer(&dev->i2c_adap, &analog_msg, 1) != 1)
++		return -EIO;
++
+ 	return 0;
+ }
+ 
+@@ -1018,7 +1020,9 @@ static int md8800_set_voltage2(struct dvb_frontend *fe,
+ 	else
+ 		wbuf[1] = rbuf & 0xef;
+ 	msg[0].len = 2;
+-	i2c_transfer(&dev->i2c_adap, msg, 1);
++	if (i2c_transfer(&dev->i2c_adap, msg, 1) != 1)
++		return -EIO;
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
