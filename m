@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37881A7068;
-	Thu, 15 Aug 2024 14:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0DB1A08C6;
+	Thu, 15 Aug 2024 14:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732047; cv=none; b=pT9GGup1od8TLcl5tDDvOaKoDe/QgOqJTtznaK0+Y6K+JYDWtJzSApJ0atRPjazYuEvBFNzu3+1cbQmesw0oqTPIuoF/IsoMLx0VWRLTWqdUGrLdE4wJ+L6ffKeGgQcvEBaEvjCNxcgH7N5EM1uPp8tXawinriQ0rWLecr+bU/Y=
+	t=1723732053; cv=none; b=jhEXkVyT0LlDXAIGZF5I+HKpnrYoPCRYknpBAFKvluZBioBhnTF/iOGdvSZ5tnvSM1nEZbiodxI2QqcyhscJyZfHKAYJhKcaCOUVVqjIYBwB2tZCMHfQGjXPIn5fG9IU1voX+0ncQdADPMsMDGvrIdiEV7SzEmkKQgJSy8EhZBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732047; c=relaxed/simple;
-	bh=uVykLrzmSHnx6WVosBnGDThZ3i1vqZaATH2+LRHfhas=;
+	s=arc-20240116; t=1723732053; c=relaxed/simple;
+	bh=3XFOCrld2/LjmfPRdmZLc5xBymC7hyGQDOx7L4uP4XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2/1IQ1AeaiM4HJsV50+u7WfPD8dlxyqriFKJfTBUbIp7BPRJQqEo3PuP7Mi9x3Q0r76OOqj/sKvLj6LFvSd9ptWXfP6scWaY7gfraZlaUE3rJTjvhkIIz/lICfdO1/er8ntAL+If5FjPou+5oN3ws9WSwaX4hld4jx7gMNfqHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0akDgWB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OcMx1P7cDpAM/43XJe1mjiaxQPO8PTguO2aSFSdluiK9H3+wIvPvZggSHz/k0cVxBaefsttUvD/IDzj+5NDUSWhQtxwn02DZc9HBrykX+0kDu295/3+at6EyQtnrnPxp2/wp1G+vAHkfeYcBojpW7jwirwm5WeBAEIGhFs8XtFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQhGFrB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0akDgWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568B1C32786;
-	Thu, 15 Aug 2024 14:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQhGFrB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59E2C32786;
+	Thu, 15 Aug 2024 14:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732047;
-	bh=uVykLrzmSHnx6WVosBnGDThZ3i1vqZaATH2+LRHfhas=;
+	s=korg; t=1723732052;
+	bh=3XFOCrld2/LjmfPRdmZLc5xBymC7hyGQDOx7L4uP4XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0akDgWBOANCSAds+ZAU/nIaHv9It2sOsIxq6gewKjIw0UVNT3ASFnEkUq3bmjJ3g
-	 /mRvT/twQZgeeJJMiJcGfYR6TWXbNiTfnrCSklslMMoGYd5UxBLZK+nammjwQ70OT3
-	 2i0/gGuxDNw6gyxeUy4vuLap0TmNoELb6sXXmJlw=
+	b=HQhGFrB6mBBJ1GgCd/JjNMSYbotjv+ep/T3AlnvHuqAGhns1osU2FMEia/vkZhryK
+	 m+bMlgR2WBEkB8VoUMQw9a9HRO9gDK7bz4fqwLYAmAyZEIQazRW3ZWPC1l50j09thB
+	 82NODrUW+N4S0WhzM8hG57heliJ1GmYSHBSIMKKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/352] wifi: virt_wifi: dont use strlen() in const context
-Date: Thu, 15 Aug 2024 15:22:05 +0200
-Message-ID: <20240815131921.522479857@linuxfoundation.org>
+Subject: [PATCH 5.10 060/352] selftests/bpf: Close fd in error path in drop_on_reuseport
+Date: Thu, 15 Aug 2024 15:22:06 +0200
+Message-ID: <20240815131921.562588398@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,54 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 6e909f489191b365364e9d636dec33b5dfd4e5eb ]
+[ Upstream commit adae187ebedcd95d02f045bc37dfecfd5b29434b ]
 
-Looks like not all compilers allow strlen(constant) as
-a constant, so don't do that. Instead, revert back to
-defining the length as the first submission had it.
+In the error path when update_lookup_map() fails in drop_on_reuseport in
+prog_tests/sk_lookup.c, "server1", the fd of server 1, should be closed.
+This patch fixes this by using "goto close_srv1" lable instead of "detach"
+to close "server1" in this case.
 
-Fixes: b5d14b0c6716 ("wifi: virt_wifi: avoid reporting connection success with wrong SSID")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202407090934.NnR1TUbW-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202407090944.mpwLHGt9-lkp@intel.com/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 0ab5539f8584 ("selftests/bpf: Tests for BPF_SK_LOOKUP attach point")
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Link: https://lore.kernel.org/r/86aed33b4b0ea3f04497c757845cff7e8e621a2d.1720515893.git.tanggeliang@kylinos.cn
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virt_wifi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/sk_lookup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
-index ec730bc44adc1..dd6675436bda6 100644
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -137,6 +137,7 @@ static struct ieee80211_supported_band band_5ghz = {
- static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
+diff --git a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
+index b4c9f4a96ae4d..95a1d3ee55a78 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
++++ b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
+@@ -964,7 +964,7 @@ static void drop_on_reuseport(const struct test *t)
  
- #define VIRT_WIFI_SSID "VirtWifi"
-+#define VIRT_WIFI_SSID_LEN 8
+ 	err = update_lookup_map(t->sock_map, SERVER_A, server1);
+ 	if (err)
+-		goto detach;
++		goto close_srv1;
  
- static void virt_wifi_inform_bss(struct wiphy *wiphy)
- {
-@@ -148,7 +149,7 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
- 		u8 ssid[8];
- 	} __packed ssid = {
- 		.tag = WLAN_EID_SSID,
--		.len = strlen(VIRT_WIFI_SSID),
-+		.len = VIRT_WIFI_SSID_LEN,
- 		.ssid = VIRT_WIFI_SSID,
- 	};
- 
-@@ -262,7 +263,7 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
- 	u8 *requested_bss = priv->connect_requested_bss;
- 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
--	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
-+	bool right_ssid = priv->connect_requested_ssid_len == VIRT_WIFI_SSID_LEN &&
- 			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
- 				  priv->connect_requested_ssid_len);
- 	u16 status = WLAN_STATUS_SUCCESS;
+ 	/* second server on destination address we should never reach */
+ 	server2 = make_server(t->sotype, t->connect_to.ip, t->connect_to.port,
 -- 
 2.43.0
 
