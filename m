@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6918D630;
-	Thu, 15 Aug 2024 13:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE44F18D630;
+	Thu, 15 Aug 2024 13:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730101; cv=none; b=J8jgcy7ZSSkSwBX5RYhOfpph1QtHXN6tSgtx4JJSnTJvEw0pMRDs4vHX0is1QmmuL6NmO1I9e2NOiidP2Wf2IrIpXzIGL9M7DQjISYqC9Ki09icfMwnyk/9wEGQq9n3rM9SPQm//lY3txHv4jiWNgm1nw9LgNQZwr0tuiAotdfI=
+	t=1723730104; cv=none; b=aSo4WZhsXvfNrLmpV2HiC4I9QsfM+KeM62qsk3JbXE+lHfjzX6fSr6h9K7Zh10FmOwtJa7YLVyZaAnP6T9uSnIiNl5iQrfJRaN/uk56m2A9jpIrCG1n/ZpeXWENhC8xss8sttMosEjDO6X4AH1a7EP1jNLz/iUr7HqyWfbeAz1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730101; c=relaxed/simple;
-	bh=3o9kaZXZecxFVM+eadTESP3bdRyuBt6EWU59TVw3kw4=;
+	s=arc-20240116; t=1723730104; c=relaxed/simple;
+	bh=p7ur+wTVLgIFDagZMzc+hVpjsdgp1Kys7XZBxNcZmMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ast+igD1eRYQ8QD0UkHYg66bb1HlYmt5vnwoD5kFI5bPTWmAY1ob+UaiPEOozGmSt/qurpl85fEyIEpX795HtWxpUt799vERRXKXeE6n4XhRJcGxvVk3x+NvXEMx8utvEjHQZD6rHflGx6LA1K0N39hmloFjSDO6SuA522fZX2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foKvLrok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eur3CVyTbIGVq8XdCw7Gc3ZW6OSmm0z9B0BGdX+lPXKI1fGg+i508XWdGptLwV0Hx50GnSdCF3Q4ZVNz+PwuT+VFf3ZbORqw9rvaE6XL0YGZfba2WBZrThIrVHMb1g6a9uxfzZqpAWCNODsT2p3YTMixI7DXxXJmem3M8LrQeqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yT5oaaQs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foKvLrok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29DDC32786;
-	Thu, 15 Aug 2024 13:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yT5oaaQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3005EC32786;
+	Thu, 15 Aug 2024 13:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730101;
-	bh=3o9kaZXZecxFVM+eadTESP3bdRyuBt6EWU59TVw3kw4=;
+	s=korg; t=1723730104;
+	bh=p7ur+wTVLgIFDagZMzc+hVpjsdgp1Kys7XZBxNcZmMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=foKvLrokCF1X3U8WU8DBseUSsyrx1lQGX0jwWOaB05wsIPJIGWV/TCisijOQcQKYU
-	 wuuGIuLUoTMq3kiBB8oJKZHPKLZcgp2CyclRRIlfWul73ncfjy1Eeot9qHGVuuFeFj
-	 w3i1KNJtsN355ypYYF3zCJrxIqI/9zdkwV7l76jE=
+	b=yT5oaaQsZZ0j/EemjJRGgfndlb6oV7q85lev7LPd4Kf4MqeIJ0qAXCFagVSc5szw7
+	 R2DF7ajqIazt97wljcc2ghW3G9dumLYoZI8zhyxGquSV9xHOkDMnBeRLZZ9BKt2NXZ
+	 HF3+4UTtUKY0dRY7i4GdpF2NC3o8QYolR9q/ZF5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Roger Quadros <rogerq@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/484] phy: cadence-torrent: Check return value on register read
-Date: Thu, 15 Aug 2024 15:22:02 +0200
-Message-ID: <20240815131951.598991517@linuxfoundation.org>
+Subject: [PATCH 5.15 297/484] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
+Date: Thu, 15 Aug 2024 15:22:35 +0200
+Message-ID: <20240815131952.876637392@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,38 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
 
-[ Upstream commit 967969cf594ed3c1678a9918d6e9bb2d1591cbe9 ]
+[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
 
-cdns_torrent_dp_set_power_state() does not consider that ret might be
-overwritten. Add return value check of regmap_read_poll_timeout() after
-register read in cdns_torrent_dp_set_power_state().
+Christian noticed that it is possible for a privileged user to mount
+most filesystems with a non-initial user namespace in sb->s_user_ns.
+When fsopen() is called in a non-init namespace the caller's namespace
+is recorded in fs_context->user_ns. If the returned file descriptor is
+then passed to a process priviliged in init_user_ns, that process can
+call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
+with sb->s_user_ns set to the namespace of the process which called
+fsopen().
 
-Fixes: 5b16a790f18d ("phy: cadence-torrent: Reorder few functions to remove function declarations")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20240702032042.3993031-1-make24@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This is problematic. We cannot assume that any filesystem which does not
+set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
+mind, increasing the risk for bugs and security issues.
+
+Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
+not set for the filesystem and a non-initial user namespace will be
+used. sget() does not need to be updated as it always uses the user
+namespace of the current context, or the initial user namespace if
+SB_SUBMOUNT is set.
+
+Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
+Reported-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/cadence/phy-cadence-torrent.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/super.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/phy/cadence/phy-cadence-torrent.c b/drivers/phy/cadence/phy-cadence-torrent.c
-index 415ace64adc5c..8f23146d62bf0 100644
---- a/drivers/phy/cadence/phy-cadence-torrent.c
-+++ b/drivers/phy/cadence/phy-cadence-torrent.c
-@@ -1056,6 +1056,9 @@ static int cdns_torrent_dp_set_power_state(struct cdns_torrent_phy *cdns_phy,
- 	ret = regmap_read_poll_timeout(regmap, PHY_PMA_XCVR_POWER_STATE_ACK,
- 				       read_val, (read_val & mask) == value, 0,
- 				       POLL_TIMEOUT_US);
-+	if (ret)
-+		return ret;
-+
- 	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, 0x00000000);
- 	ndelay(100);
+diff --git a/fs/super.c b/fs/super.c
+index 048576b19af63..39d866f7d7c6b 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -528,6 +528,17 @@ struct super_block *sget_fc(struct fs_context *fc,
+ 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
+ 	int err;
  
++	/*
++	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
++	 * not set, as the filesystem is likely unprepared to handle it.
++	 * This can happen when fsconfig() is called from init_user_ns with
++	 * an fs_fd opened in another user namespace.
++	 */
++	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
++		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
++		return ERR_PTR(-EPERM);
++	}
++
+ retry:
+ 	spin_lock(&sb_lock);
+ 	if (test) {
 -- 
 2.43.0
 
