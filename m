@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887F919DF6A;
-	Thu, 15 Aug 2024 14:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABAC19F470;
+	Thu, 15 Aug 2024 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731208; cv=none; b=pnVrKkxrrOaafXIQkB4W4HtZRSuo3+89eFmHJNx+t9CkTA9Y3faBCLcS5ImMkt3svIs214v7fng/6tx7Cm5Ajsm7F03UNJlIVeMbBlzj4V+BymXe0uLl/nrgJJArX8mTszJDgSjKnSKgCEqHpeg8U5hAaFZyZuoQZIae7/iy1nc=
+	t=1723731211; cv=none; b=XSd9/zztSK+pPlFgExheatCUB0nvRny/pWegCi2TyByRPysVR1SEiTln02OAXHFGdmjkwwqLoPpU7Jlp97gTRmzmCBt2OpF70QS6aanssbRCBC2D87dxovXZkei9zLcLC1cJVwidwrBx3coTLVb0eUUQWAE8LMaxVxA3f2ulBlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731208; c=relaxed/simple;
-	bh=gWBtgBc26if/16DxhWEyYFbg4v+ulOBeMTRbT9jjZ2Q=;
+	s=arc-20240116; t=1723731211; c=relaxed/simple;
+	bh=MdrU9OOf0TGZp1RNMMESTS+OxHt0EnkTLknJ7UACMGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQpIjDDPuXVkeDvhAHsklq+E4syuMbVymC8ZNlpYrZqK0VSIOROghwVAfBhQkKU+GLDBRiELYvSH9ulZBd/cF2nyk9J5H4gbsJN1L5CzMc3owazWan+RKDBMiR2BlVDs6iRpYO57tIhr9xZRlW+VhuNwWxyiZMC1gLWzGzg0APM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHrIt3dy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ShVQX2hR1mlHtI6JBoXPTnNyywvhSKYhEq74XW0H3JjcgbxrlfrZ/yspBexeR9T4CFgvEcQ8k2RywUqlKmbFbq+YAueRRkX9ggxQn1nhav7Qe4ayng5uhZRKQ11z9Pp0a952kLLLFeTyNk3cZy40FgHfGBB44XVGgyWmN83UuCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZM74Bjm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHrIt3dy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0179C32786;
-	Thu, 15 Aug 2024 14:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZM74Bjm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C462C32786;
+	Thu, 15 Aug 2024 14:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731208;
-	bh=gWBtgBc26if/16DxhWEyYFbg4v+ulOBeMTRbT9jjZ2Q=;
+	s=korg; t=1723731211;
+	bh=MdrU9OOf0TGZp1RNMMESTS+OxHt0EnkTLknJ7UACMGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHrIt3dyDdjMw80l8ulpCQnnWL7u2YsJ+/olcnm0E2DVfuI3DZaNu5pIniJnUVykq
-	 3s/25huqCEW0NpfmLW1LFnd5Xx/d7RXCFXroASXCaXZ8QmpD8sE2oFxs5txXFEAYrw
-	 2kTm27t2GuSUZkLiphxZk29zlnV67i0RyaeYtvNY=
+	b=mZM74BjmVM0w45wMuAs4y58POsKhUv9UGEHiTxwXYl4q094+5NR7P+AN5iP/etzFS
+	 luAmAytSCM2SHStr/Ldl5akoNz5IhujKcSEdeaVtiPJhZeOBNzYFLWI+JelGTXl6A4
+	 O2G7InGd6crbHATj80sp7ZEPDQCCbF6EYqShjS5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/259] wifi: brcmsmac: LCN PHY code is used for BCM4313 2G-only device
-Date: Thu, 15 Aug 2024 15:22:42 +0200
-Message-ID: <20240815131903.924074158@linuxfoundation.org>
+Subject: [PATCH 5.4 056/259] media: renesas: vsp1: Fix _irqsave and _irq mix
+Date: Thu, 15 Aug 2024 15:23:09 +0200
+Message-ID: <20240815131904.974582572@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,73 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit c636fa85feb450ca414a10010ed05361a73c93a6 ]
+[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
 
-The band_idx variable in the function wlc_lcnphy_tx_iqlo_cal() will
-never be set to 1 as BCM4313 is the only device for which the LCN PHY
-code is used. This is a 2G-only device.
+The histogram support mixes _irqsave and _irq, causing the following
+smatch warning:
 
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240509231037.2014109-1-samasth.norway.ananda@oracle.com
+     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
+     warn: mixing irqsave and irq
+
+The histo_stop_streaming() calls spin_lock_irqsave() followed by
+wait_event_lock_irq(). The former hints that interrupts may be disabled
+by the caller, while the latter reenables interrupts unconditionally.
+This doesn't cause any real bug, as the function is always called with
+interrupts enabled, but the pattern is still incorrect.
+
+Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
+in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
+spin_lock() as appropriate elsewhere.
+
+Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmsmac/phy/phy_lcn.c  | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/media/platform/vsp1/vsp1_histo.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-index 66797dc5e90d5..1e597e5de5f1e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-@@ -2625,7 +2625,6 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
+diff --git a/drivers/media/platform/vsp1/vsp1_histo.c b/drivers/media/platform/vsp1/vsp1_histo.c
+index 30d751f2cccf1..83c50628926ba 100644
+--- a/drivers/media/platform/vsp1/vsp1_histo.c
++++ b/drivers/media/platform/vsp1/vsp1_histo.c
+@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
+ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
+ {
+ 	struct vsp1_histogram_buffer *buf = NULL;
+-	unsigned long flags;
  
- 	struct lcnphy_txgains cal_gains, temp_gains;
- 	u16 hash;
--	u8 band_idx;
- 	int j;
- 	u16 ncorr_override[5];
- 	u16 syst_coeffs[] = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-@@ -2657,6 +2656,9 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
- 	u16 *values_to_save;
- 	struct brcms_phy_lcnphy *pi_lcn = pi->u.pi_lcnphy;
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock(&histo->irqlock);
  
-+	if (WARN_ON(CHSPEC_IS5G(pi->radio_chanspec)))
-+		return;
-+
- 	values_to_save = kmalloc_array(20, sizeof(u16), GFP_ATOMIC);
- 	if (NULL == values_to_save)
- 		return;
-@@ -2720,20 +2722,18 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
- 	hash = (target_gains->gm_gain << 8) |
- 	       (target_gains->pga_gain << 4) | (target_gains->pad_gain);
+ 	if (list_empty(&histo->irqqueue))
+ 		goto done;
+@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
+ 	histo->readout = true;
  
--	band_idx = (CHSPEC_IS5G(pi->radio_chanspec) ? 1 : 0);
--
- 	cal_gains = *target_gains;
- 	memset(ncorr_override, 0, sizeof(ncorr_override));
--	for (j = 0; j < iqcal_gainparams_numgains_lcnphy[band_idx]; j++) {
--		if (hash == tbl_iqcal_gainparams_lcnphy[band_idx][j][0]) {
-+	for (j = 0; j < iqcal_gainparams_numgains_lcnphy[0]; j++) {
-+		if (hash == tbl_iqcal_gainparams_lcnphy[0][j][0]) {
- 			cal_gains.gm_gain =
--				tbl_iqcal_gainparams_lcnphy[band_idx][j][1];
-+				tbl_iqcal_gainparams_lcnphy[0][j][1];
- 			cal_gains.pga_gain =
--				tbl_iqcal_gainparams_lcnphy[band_idx][j][2];
-+				tbl_iqcal_gainparams_lcnphy[0][j][2];
- 			cal_gains.pad_gain =
--				tbl_iqcal_gainparams_lcnphy[band_idx][j][3];
-+				tbl_iqcal_gainparams_lcnphy[0][j][3];
- 			memcpy(ncorr_override,
--			       &tbl_iqcal_gainparams_lcnphy[band_idx][j][3],
-+			       &tbl_iqcal_gainparams_lcnphy[0][j][3],
- 			       sizeof(ncorr_override));
- 			break;
- 		}
+ done:
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock(&histo->irqlock);
+ 	return buf;
+ }
+ 
+@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
+ 				    size_t size)
+ {
+ 	struct vsp1_pipeline *pipe = histo->entity.pipe;
+-	unsigned long flags;
+ 
+ 	/*
+ 	 * The pipeline pointer is guaranteed to be valid as this function is
+@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
+ 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
+ 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock(&histo->irqlock);
+ 	histo->readout = false;
+ 	wake_up(&histo->wait_queue);
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock(&histo->irqlock);
+ }
+ 
+ /* -----------------------------------------------------------------------------
+@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
+ 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock_irq(&histo->irqlock);
+ 	list_add_tail(&buf->queue, &histo->irqqueue);
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock_irq(&histo->irqlock);
+ }
+ 
+ static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
+@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
+ {
+ 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
+ 	struct vsp1_histogram_buffer *buffer;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock_irq(&histo->irqlock);
+ 
+ 	/* Remove all buffers from the IRQ queue. */
+ 	list_for_each_entry(buffer, &histo->irqqueue, queue)
+@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
+ 	/* Wait for the buffer being read out (if any) to complete. */
+ 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
+ 
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock_irq(&histo->irqlock);
+ }
+ 
+ static const struct vb2_ops histo_video_queue_qops = {
 -- 
 2.43.0
 
