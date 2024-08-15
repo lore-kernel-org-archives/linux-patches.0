@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE91714A1;
-	Thu, 15 Aug 2024 13:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F751714A1;
+	Thu, 15 Aug 2024 13:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729920; cv=none; b=Jr2earafgaKVGcB/Tzd/zTFoLRGCxwZff5Xp7U8mE+6z+UfbqiBqQbZry1qPQEger+U1UmbkdP2/iXGgGtmwtbeXTDg+0NSG+Rb7EcpAigbx6xfqCTzZlv2ThNmGMmvMOLFol8OTEmqdc0g0r9mfa3y5bIRAg7H7ihlc7sr4N/M=
+	t=1723729923; cv=none; b=LQ3l69cvWmCIz2DR58syGQ3Tp3QSHka9UKC8KZ6fpWpzcP3DPOutg1wtSuIKi5kygPxj+XFNqvUX7KoBicjVnTf4GTV8RAx2YNGNtahEsoq0QK6URtjtui3IUoZb99oMKrelE/IOHjrsVvg7Zi1MLK2hyyyGaVcw6wuFHRyI/3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729920; c=relaxed/simple;
-	bh=AlSi/MaBItUvEpvtObuVL6xoSlF5Vrs7s5orFYyMcc8=;
+	s=arc-20240116; t=1723729923; c=relaxed/simple;
+	bh=1BhXfw4V41YwiEd/yrwkH01fY808g7qFeXeaLpLQPnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaGNau3P6M/plR0qnGB3RZQQmhZVEOQdiFX/9SArcU+CQ0Fxv6GUj9oPu+qxTBmfbbf4Jt4oIa15M6RITy/wMAgFTOzI6qpPxgwFPtFi0vwE72LzIfDXkONWrH+PyeNoyxK4E4+MTONOQiybYeIJHi6/VEFB8UyztXCbWfjdbwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACbg+gSw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOK2AmXh+ESHG/UwvXlGHZBCWMZi7GN8/gwQAXz+A4KynsLkXnzIMooq4LEZARCk2n4LDPqQubDSMK467gONhHLcdKf9QKDhIB3vO2guf3xSl0Re4E+Jz60lsi//l551H7zIC+pe4T/VGOidbYrx/cO5c8YL+wCT8KSwIQHIi1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/Wnc6Dr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACbg+gSw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58152C4AF0A;
-	Thu, 15 Aug 2024 13:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/Wnc6Dr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839A3C32786;
+	Thu, 15 Aug 2024 13:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729919;
-	bh=AlSi/MaBItUvEpvtObuVL6xoSlF5Vrs7s5orFYyMcc8=;
+	s=korg; t=1723729922;
+	bh=1BhXfw4V41YwiEd/yrwkH01fY808g7qFeXeaLpLQPnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACbg+gSwu4yYtmMeZdQyS9WaIVpQnAocbW3e0X9COAwG2L5hwQtvui853S0UQLaK5
-	 Eu2txhElttt8z/55bYi1hx0MdpJPpZLB7OOIu3AtmEPe9edifCwNP8NbamM7YJ1EFn
-	 CRMXUb30oIggUFSg1pe+xtpMO1M5/MNzD6xVRPL8=
+	b=r/Wnc6DreLGClalaeSQr0KhYMj9knF0Sz0lsjJo2CYNdW1SmJ6+D8x9Jf24zKhwVY
+	 gECPjhEF3GmFHWWdubTGfwPolQiWgLo9s6rHGBKRwPUyNcTK1QCuZ3JkiDtz0WKGrR
+	 GgreJKw24P5WzRnCboo+3k3fPimmly8404TejjB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.15 249/484] MIPS: Loongson64: Remove memory node for builtin-dtb
-Date: Thu, 15 Aug 2024 15:21:47 +0200
-Message-ID: <20240815131951.016477722@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>
+Subject: [PATCH 5.15 232/484] perf/x86/intel/uncore: Fix the bits of the CHA extended umask for SPR
+Date: Thu, 15 Aug 2024 15:21:30 +0200
+Message-ID: <20240815131950.367588895@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,40 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit b81656c37acf1e682dde02f3e07987784b0f3634 upstream.
+commit a5a6ff3d639d088d4af7e2935e1ee0d8b4e817d4 upstream.
 
-Builtin DTBS should never contain memory node as memory is
-going to be managed by LEFI interface.
+The perf stat errors out with UNC_CHA_TOR_INSERTS.IA_HIT_CXL_ACC_LOCAL
+event.
 
-Remove memory node to prevent confliction.
+ $perf stat -e uncore_cha_55/event=0x35,umask=0x10c0008101/ -a -- ls
+    event syntax error: '..0x35,umask=0x10c0008101/'
+                                      \___ Bad event or PMU
 
-Fixes: b1a792601f26 ("MIPS: Loongson64: DeviceTree for Loongson-2K1000")
+The definition of the CHA umask is config:8-15,32-55, which is 32bit.
+However, the umask of the event is bigger than 32bit.
+This is an error in the original uncore spec.
+
+Add a new umask_ext5 for the new CHA umask range.
+
+Fixes: 949b11381f81 ("perf/x86/intel/uncore: Add Sapphire Rapids server CHA support")
+Closes: https://lore.kernel.org/linux-perf-users/alpine.LRH.2.20.2401300733310.11354@Diego/
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://lkml.kernel.org/r/20240708185524.1185505-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi |    8 --------
- 1 file changed, 8 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-+++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-@@ -23,14 +23,6 @@
- 		};
- 	};
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -459,6 +459,7 @@
+ #define SPR_RAW_EVENT_MASK_EXT			0xffffff
  
--	memory@200000 {
--		compatible = "memory";
--		device_type = "memory";
--		reg = <0x00000000 0x00200000 0x00000000 0x0ee00000>, /* 238 MB at 2 MB */
--			<0x00000000 0x20000000 0x00000000 0x1f000000>, /* 496 MB at 512 MB */
--			<0x00000001 0x10000000 0x00000001 0xb0000000>; /* 6912 MB at 4352MB */
--	};
--
- 	cpu_clk: cpu_clk {
- 		#clock-cells = <0>;
- 		compatible = "fixed-clock";
+ /* SPR CHA */
++#define SPR_CHA_EVENT_MASK_EXT			0xffffffff
+ #define SPR_CHA_PMON_CTL_TID_EN			(1 << 16)
+ #define SPR_CHA_PMON_EVENT_MASK			(SNBEP_PMON_RAW_EVENT_MASK | \
+ 						 SPR_CHA_PMON_CTL_TID_EN)
+@@ -475,6 +476,7 @@ DEFINE_UNCORE_FORMAT_ATTR(umask_ext, uma
+ DEFINE_UNCORE_FORMAT_ATTR(umask_ext2, umask, "config:8-15,32-57");
+ DEFINE_UNCORE_FORMAT_ATTR(umask_ext3, umask, "config:8-15,32-39");
+ DEFINE_UNCORE_FORMAT_ATTR(umask_ext4, umask, "config:8-15,32-55");
++DEFINE_UNCORE_FORMAT_ATTR(umask_ext5, umask, "config:8-15,32-63");
+ DEFINE_UNCORE_FORMAT_ATTR(qor, qor, "config:16");
+ DEFINE_UNCORE_FORMAT_ATTR(edge, edge, "config:18");
+ DEFINE_UNCORE_FORMAT_ATTR(tid_en, tid_en, "config:19");
+@@ -5648,7 +5650,7 @@ static struct intel_uncore_ops spr_uncor
+ 
+ static struct attribute *spr_uncore_cha_formats_attr[] = {
+ 	&format_attr_event.attr,
+-	&format_attr_umask_ext4.attr,
++	&format_attr_umask_ext5.attr,
+ 	&format_attr_tid_en2.attr,
+ 	&format_attr_edge.attr,
+ 	&format_attr_inv.attr,
+@@ -5684,7 +5686,7 @@ ATTRIBUTE_GROUPS(uncore_alias);
+ static struct intel_uncore_type spr_uncore_chabox = {
+ 	.name			= "cha",
+ 	.event_mask		= SPR_CHA_PMON_EVENT_MASK,
+-	.event_mask_ext		= SPR_RAW_EVENT_MASK_EXT,
++	.event_mask_ext		= SPR_CHA_EVENT_MASK_EXT,
+ 	.num_shared_regs	= 1,
+ 	.constraints		= skx_uncore_chabox_constraints,
+ 	.ops			= &spr_uncore_chabox_ops,
 
 
