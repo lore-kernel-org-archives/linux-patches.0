@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B950210FB;
-	Thu, 15 Aug 2024 14:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6E463D5;
+	Thu, 15 Aug 2024 14:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732343; cv=none; b=MKGCq5OCdF0GGEEd8SilcFEQO6gI8CHgRAtXXGV8pODh3RaEk6gMbahJ7QQGiqGMbQOwv6ZmGjBrF9lUUyXKVKwr7QGzPWVLVjQ0Fe6Zq+IVegCiyUrojHpRqHnzgTyEjPyHvxBHn1EHVLMn5rhzngnUTqw8tM5mijQD/dXQM+U=
+	t=1723732346; cv=none; b=g1F1UqOmP6TM1WqlavhGU8E0xrcnW2FWbNmV7dy9jZ6x1jGKxnqdN7BVjHDCZeldBrVFGDR8dD4/OlpXCR9cEfrJSSN1fMaNTkNcKKHCJ7yvOdcJFAQMsdP8d3EtmE1wkbOHXBwwhydxW/kyJfyIewumc5XGp6eQFmQRLTveAqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732343; c=relaxed/simple;
-	bh=Tu9MRo3PHV3rwQwgDzfqbvIL3kFX31j/g25oEmuMa1A=;
+	s=arc-20240116; t=1723732346; c=relaxed/simple;
+	bh=WR9MClY/hGyRgRVeacXAyx96sViRYNE6baxO7vN/CmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nktFga3lJK1rMl3TkXiDWOk9r9mwoGIv6DHXdtgn1Rgb0SawsSVAXKOZclO6xPiohIA13mTJ6OrWXvWgR55sgGsyzSMPt77vABBnMrh/dYogqTgTNOIf6GgN5dNshAySBfx3NQrbtBzYYs2J2IDjSPYZPPOLTtfQepoKAwHKsSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlFt7UGz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1ds3UTAP1cXqxsOAhj9VXj6QqtPYJDl2kF7Ywk3GdV6OTWB+VQ7pVjredNJCWA2FV4+ccPWec6egswMaMd1Llzolkz1bFzzxf2gsxoD3oFmY/7QB12E6gk9osz0hwNPd+DYP2r8M63OPgrhGYWfBhrP9qJ9WL9YRVZUzr7CjOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwO07DjB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlFt7UGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763DAC32786;
-	Thu, 15 Aug 2024 14:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwO07DjB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FB7C32786;
+	Thu, 15 Aug 2024 14:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732342;
-	bh=Tu9MRo3PHV3rwQwgDzfqbvIL3kFX31j/g25oEmuMa1A=;
+	s=korg; t=1723732346;
+	bh=WR9MClY/hGyRgRVeacXAyx96sViRYNE6baxO7vN/CmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AlFt7UGzNeTmfqYtOk7W0LQvSFWVyte0yK0p6AWhu+F8W/nnPduPllaNCYRJijLmG
-	 m0fyXBrdBBqpgGU54DxuScfu3js3z799BQg1kKGdSYYfnOgecV6j1y3Fl0Ws/xQWvq
-	 HZ0vk4qs0VfqSsCqSSOjYo7yyoj0usdnUNKbPnxE=
+	b=gwO07DjBlXnkVAqG4KU/Tp3VJ2Ii+TRzaJFhLjrDjL0fVEpk5Fu8mFHF7wSydX63j
+	 dSIUr9XKryyEHxOTmhFPD6hjn1rI6URJK2WgrldydE95NI694X8eh6od1sq/gtiihg
+	 I1SRfXbhJJff6bIBCPwAz7brTI+U9vrTEHJsJ+Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	David Hildenbrand <david@redhat.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/352] pinctrl: freescale: mxs: Fix refcount of child
-Date: Thu, 15 Aug 2024 15:23:05 +0200
-Message-ID: <20240815131923.852409671@linuxfoundation.org>
+Subject: [PATCH 5.10 120/352] fs/proc/task_mmu: indicate PM_FILE for PMD-mapped file THP
+Date: Thu, 15 Aug 2024 15:23:06 +0200
+Message-ID: <20240815131923.890372142@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,41 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 7f500f2011c0bbb6e1cacab74b4c99222e60248e ]
+[ Upstream commit 3f9f022e975d930709848a86a1c79775b0585202 ]
 
-of_get_next_child() will increase refcount of the returned node, need
-use of_node_put() on it when done.
+Patch series "fs/proc: move page_mapcount() to fs/proc/internal.h".
 
-Per current implementation, 'child' will be override by
-for_each_child_of_node(np, child), so use of_get_child_count to avoid
-refcount leakage.
+With all other page_mapcount() users in the tree gone, move
+page_mapcount() to fs/proc/internal.h, rename it and extend the
+documentation to prevent future (ab)use.
 
-Fixes: 17723111e64f ("pinctrl: add pinctrl-mxs support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/20240504-pinctrl-cleanup-v2-18-26c5f2dc1181@nxp.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+... of course, I find some issues while working on that code that I sort
+first ;)
+
+We'll now only end up calling page_mapcount() [now
+folio_precise_page_mapcount()] on pages mapped via present page table
+entries.  Except for /proc/kpagecount, that still does questionable
+things, but we'll leave that legacy interface as is for now.
+
+Did a quick sanity check.  Likely we would want some better selfestest for
+/proc/$/pagemap + smaps.  I'll see if I can find some time to write some
+more.
+
+This patch (of 6):
+
+Looks like we never taught pagemap_pmd_range() about the existence of
+PMD-mapped file THPs.  Seems to date back to the times when we first added
+support for non-anon THPs in the form of shmem THP.
+
+Link: https://lkml.kernel.org/r/20240607122357.115423-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20240607122357.115423-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Fixes: 800d8c63b2e9 ("shmem: add huge pages support")
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Lance Yang <ioworker0@gmail.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/pinctrl-mxs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/proc/task_mmu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-mxs.c b/drivers/pinctrl/freescale/pinctrl-mxs.c
-index 735cedd0958a2..5b0fcf15f2804 100644
---- a/drivers/pinctrl/freescale/pinctrl-mxs.c
-+++ b/drivers/pinctrl/freescale/pinctrl-mxs.c
-@@ -405,8 +405,8 @@ static int mxs_pinctrl_probe_dt(struct platform_device *pdev,
- 	int ret;
- 	u32 val;
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index 39b1038076c3e..97023c0dca60a 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1468,6 +1468,8 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 		}
+ #endif
  
--	child = of_get_next_child(np, NULL);
--	if (!child) {
-+	val = of_get_child_count(np);
-+	if (val == 0) {
- 		dev_err(&pdev->dev, "no group is defined\n");
- 		return -ENOENT;
- 	}
++		if (page && !PageAnon(page))
++			flags |= PM_FILE;
+ 		if (page && !migration && page_mapcount(page) == 1)
+ 			flags |= PM_MMAP_EXCLUSIVE;
+ 
 -- 
 2.43.0
 
