@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1815F7DA9E;
-	Thu, 15 Aug 2024 13:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936631714D9;
+	Thu, 15 Aug 2024 13:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729623; cv=none; b=K2mbnlx3LllWa0SJyXPYDfyA+pOtCiu2FuvzrewD+NXh44Fw1iZCGum73dadvxJc0uE301O1+AiGn5pmx2JWH92vKddGi/Gr9Aq/LXputTTMuL3u0bO0BIhZ1n37Mx10jUW6EkbRrA0hE+YmlKzofyNkyCSUebk7mve3+Os48AE=
+	t=1723729626; cv=none; b=GTG/YK5tVdyeR0PhnWMADfFONZ12V7JcT4MgeMigfhcxrlPFc4ih0YTdOC9/W5nBIz6a609OVTTI1Va9cdNbE619ZSIwoqiQg7HExCfxpwQhG3/gIAYjKDTo2ycAhdXL5tcLPoO/ILMIZJmzykppHyIwCvyhnP8jQUheofvHZuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729623; c=relaxed/simple;
-	bh=QkCVi2sT4cprScdYOFUfGoaZdYwrSFyGhlXH4g/iEkM=;
+	s=arc-20240116; t=1723729626; c=relaxed/simple;
+	bh=zKc69SdGdt06k5Ma1gvSURb6CWEZh/CPD6RNTYREIrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0KjQIvarFuab9IbWQyTWoTEyKgpbIkfEDQBdicf8mOCZJR3aWwcf4rANUqaqN80hcpUOFnLAQjY7l2eqRqBQBuzrCNY5dLFuLLtrviaQvN0eQBJaHfhF6qXEKcCRXHEa9620fuCehbXtU16e/h7PyTHE6es/JlMrzv/OgSQLPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOk6tndK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jl4KIH61EZilP4dx59yeAWOd3Z14sTlE6tQfzbld7DN6TqPXsNcwDTlSNYAG/MbVXNdriXOdG5qfHlZQqbBs9m2YAdaktbxh8HJ/Y/LlV3tGCs8JqHKklFKh+jPDYN0QUwwaRnr1O2l4An+ipoadlgbOTy1bOR9rnzcjfsgBu7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0k7Nah+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOk6tndK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AA1C32786;
-	Thu, 15 Aug 2024 13:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0k7Nah+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC068C32786;
+	Thu, 15 Aug 2024 13:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729623;
-	bh=QkCVi2sT4cprScdYOFUfGoaZdYwrSFyGhlXH4g/iEkM=;
+	s=korg; t=1723729626;
+	bh=zKc69SdGdt06k5Ma1gvSURb6CWEZh/CPD6RNTYREIrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOk6tndKuvdRhPkYmaxrC9AfC8hLsDyipd8FpgrDKr6rymLI6noR2FBbjp+7MgWhP
-	 javcPIkEZYmWu34yHl7TyK3eGK6kW/UZ+fMUVCeejiKyuXimDHD4nIvcnY2IH+sdNM
-	 CntF1WgAUIJaUdw/br48iBUuGi0TjWO4nmpW2BvM=
+	b=k0k7Nah+6QuJx1+10lS3CeIZekzgLIMJVVUoejUOAXZ882IIjbUSA0LC8ykxW7a9S
+	 lO6dBA0gWHK1qA5ndMkpqAnciUkg3oxxSpfiNNA62PvxewGo/VsqL82dhc25A1kxOh
+	 uh9QzYEB3pfqKYVc3cV26hdGdH8btAo9qwH1F2nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 156/484] pinctrl: single: fix possible memory leak when pinctrl_enable() fails
-Date: Thu, 15 Aug 2024 15:20:14 +0200
-Message-ID: <20240815131947.440049463@linuxfoundation.org>
+Subject: [PATCH 5.15 157/484] pinctrl: ti: ti-iodelay: Drop if block with always false condition
+Date: Thu, 15 Aug 2024 15:20:15 +0200
+Message-ID: <20240815131947.478990299@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -46,63 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 8f773bfbdd428819328a2d185976cfc6ae811cd3 ]
+[ Upstream commit 88b3f108502bc45e6ebd005702add46759f3f45a ]
 
-This driver calls pinctrl_register_and_init() which is not
-devm_ managed, it will leads memory leak if pinctrl_enable()
-fails. Replace it with devm_pinctrl_register_and_init().
-And call pcs_free_resources() if pinctrl_enable() fails.
+ti_iodelay_remove() is only called after ti_iodelay_probe() completed
+successfully. In this case platform_set_drvdata() was called with a
+non-NULL argument and so platform_get_drvdata() won't return NULL.
 
-Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240606023704.3931561-3-yangyingliang@huawei.com
+Simplify by removing the if block with the always false condition.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231009083856.222030-4-u.kleine-koenig@pengutronix.de
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 9b401f4a7170 ("pinctrl: ti: ti-iodelay: fix possible memory leak when pinctrl_enable() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 9ad8f70206142..cd23479f352a2 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -1328,7 +1328,6 @@ static void pcs_irq_free(struct pcs_device *pcs)
- static void pcs_free_resources(struct pcs_device *pcs)
+diff --git a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+index 4e2382778d38f..75a2243ee87cc 100644
+--- a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
++++ b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+@@ -908,9 +908,6 @@ static int ti_iodelay_remove(struct platform_device *pdev)
  {
- 	pcs_irq_free(pcs);
--	pinctrl_unregister(pcs->pctl);
+ 	struct ti_iodelay_device *iod = platform_get_drvdata(pdev);
  
- #if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
- 	if (pcs->missing_nr_pinctrl_cells)
-@@ -1885,7 +1884,7 @@ static int pcs_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto free;
- 
--	ret = pinctrl_register_and_init(&pcs->desc, pcs->dev, pcs, &pcs->pctl);
-+	ret = devm_pinctrl_register_and_init(pcs->dev, &pcs->desc, pcs, &pcs->pctl);
- 	if (ret) {
- 		dev_err(pcs->dev, "could not register single pinctrl driver\n");
- 		goto free;
-@@ -1918,8 +1917,10 @@ static int pcs_probe(struct platform_device *pdev)
- 
- 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
- 
--	return pinctrl_enable(pcs->pctl);
-+	if (pinctrl_enable(pcs->pctl))
-+		goto free;
- 
-+	return 0;
- free:
- 	pcs_free_resources(pcs);
+-	if (!iod)
+-		return 0;
+-
+ 	if (iod->pctl)
+ 		pinctrl_unregister(iod->pctl);
  
 -- 
 2.43.0
