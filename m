@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7D563C;
-	Thu, 15 Aug 2024 14:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D68063C;
+	Thu, 15 Aug 2024 14:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732185; cv=none; b=MaqzJDP65pzpBbNsmxEcJZ7UFlbnVhmEcobm4D72GBLlsnvTcCzh4RigA84CJ71QV0kp3lIn08Yu2mYOeb9YniGBAd6MKZvGoom/AdObnm5YRGNATZcyU5vmLgD9moXPTGc2559roxjS37sXOJfC2B7R4fvL89cQcT/zvs219js=
+	t=1723732188; cv=none; b=tHyBJxXzr6H0ZE3hHZobVAUN2HKemzQa/4zOvlPepTBIAydQ/7pkJ/S7w5iCgeW7IZzSFxUZGDpdidvZUZyUF3X7/b2+Tys74qNpRUyjuZ0yZ9aRHOQ0OHHxfMgCdZMHpgQItE496ipITF4tErGuL+EfZPOKo6pI2GwDpO5C0dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732185; c=relaxed/simple;
-	bh=YKGBfvLU9u/4QofxO4HLySEXvO41IxTlNqT//PB826M=;
+	s=arc-20240116; t=1723732188; c=relaxed/simple;
+	bh=KBv0fFuNJmkR0lucH3Xg7dbpy5VD4Qs8YdUUx8uH70c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YfQ5iHIQtt3HWah+YyFzkjoC3ibS8I+pruLycrXYep9LSuUo8dadExcqZ/XOglCkaS+nCrwxZo39pvAetpKMxUDDGnnqwYN8tdxcvQCvw1tepy5RtkYO5aw6vCaKXYgMLymhYPy5WX7s8d7D5LvBHqxCkwoYxwB5Iguljfm9O04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAwPb9sD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FsqikKalltg1AdOhM9eksfs1W2oMP8KbSC0eqUiSgt/2DSr5rdLihbpLkyLIRjuob9GhOUXKoqi4jFZJ5Qf9KQvYVLAIe8V9/59sIB8kE/Nm54FDlRQM2k7nnnRvp635DNMnAhKPAQQjiC/PX3d6BeYQ8Mr1j/Y4sySUag5qeKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3yHSRFj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAwPb9sD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7F9C32786;
-	Thu, 15 Aug 2024 14:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3yHSRFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E537AC32786;
+	Thu, 15 Aug 2024 14:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732184;
-	bh=YKGBfvLU9u/4QofxO4HLySEXvO41IxTlNqT//PB826M=;
+	s=korg; t=1723732188;
+	bh=KBv0fFuNJmkR0lucH3Xg7dbpy5VD4Qs8YdUUx8uH70c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAwPb9sDPh0mGYw/m1xywFNpf6jIL/dsdi4wIRUNE6ELeRE9cEi9WzvvuNsyRZsrg
-	 PkNFCZ2Ecv0Ilp3sS5I+DLaC6sxOtdgPSoQhNY5dclAdx9Usem5TqB2kFzIMy29fpK
-	 2xERlU9L7/jBJnIUjoAAL00gYy8x2vio38o+q+io=
+	b=I3yHSRFjys+XgsRd4G+PcForsyDMeO2d6py9Xa4wkM1In6eS3c0MLOqis0bKNdyxM
+	 xn/C9ms9VuLERm/QC/fycTUzQlZHQtRkxPFOKE6shMqSJITSGO09l9WV+yVxOguMSd
+	 RNlnbGB2p+v20TreDhjDpxexJguGjgMsuf2IL9f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Honggang LI <honggangli@163.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 100/352] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
-Date: Thu, 15 Aug 2024 15:22:46 +0200
-Message-ID: <20240815131923.125009460@linuxfoundation.org>
+Subject: [PATCH 5.10 101/352] RDMA/rxe: Dont set BTH_ACK_MASK for UC or UD QPs
+Date: Thu, 15 Aug 2024 15:22:47 +0200
+Message-ID: <20240815131923.163052591@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -45,54 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Honggang LI <honggangli@163.com>
 
-[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
+[ Upstream commit 4adcaf969d77d3d3aa3871bbadc196258a38aec6 ]
 
-drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
-output may be truncated writing between 1 and 11 bytes into a region of
-size 5 [-Werror=format-truncation=]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                                          ^~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                               ^~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
-between 12 and 22 bytes into a destination of size 15
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+BTH_ACK_MASK bit is used to indicate that an acknowledge
+(for this packet) should be scheduled by the responder.
+Both UC and UD QPs are unacknowledged, so don't set
+BTH_ACK_MASK for UC or UD QPs.
 
-Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
-Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Honggang LI <honggangli@163.com>
+Link: https://lore.kernel.org/r/20240624020348.494338-1-honggangli@163.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_req.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
-index cca414ecfcd5a..05420e189ca90 100644
---- a/drivers/infiniband/hw/mlx4/alias_GUID.c
-+++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
-@@ -832,7 +832,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
+diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
+index 69238f856c677..a034aa8fc5ca5 100644
+--- a/drivers/infiniband/sw/rxe/rxe_req.c
++++ b/drivers/infiniband/sw/rxe/rxe_req.c
+@@ -362,7 +362,7 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
+ 	int			solicited;
+ 	u16			pkey;
+ 	u32			qp_num;
+-	int			ack_req;
++	int			ack_req = 0;
  
- int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
- {
--	char alias_wq_name[15];
-+	char alias_wq_name[22];
- 	int ret = 0;
- 	int i, j;
- 	union ib_gid gid;
+ 	/* length from start of bth to end of icrc */
+ 	paylen = rxe_opcode[opcode].length + payload + pad + RXE_ICRC_SIZE;
+@@ -396,8 +396,9 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
+ 	qp_num = (pkt->mask & RXE_DETH_MASK) ? ibwr->wr.ud.remote_qpn :
+ 					 qp->attr.dest_qp_num;
+ 
+-	ack_req = ((pkt->mask & RXE_END_MASK) ||
+-		(qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
++	if (qp_type(qp) != IB_QPT_UD && qp_type(qp) != IB_QPT_UC)
++		ack_req = ((pkt->mask & RXE_END_MASK) ||
++			   (qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
+ 	if (ack_req)
+ 		qp->req.noack_pkts = 0;
+ 
 -- 
 2.43.0
 
