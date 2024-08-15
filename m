@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B861AD3EE;
-	Thu, 15 Aug 2024 14:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADB619DF85;
+	Thu, 15 Aug 2024 14:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731882; cv=none; b=MlnRI32VsGMBN6gC6KKIJmmrRJIEra0TWk3Dm5NHfqL9vuOtLwwsiAvJvOeQLnbVA2bkY6+0C8G8mKmiL9gDPKf7LCfs71sNw2oMrbHeDV2okjxDKrUROuju527m1oMKNHfOYdwYa4hMFQpsgdYksV0jaWsqjO34sWyzi4KVnQg=
+	t=1723731885; cv=none; b=faoNVbgzGy9lGTGVkxqqkvCkl5XkmnoW+JAZuySx9YDvqjDdASqx+GjTPmMFJeKtpeRPGrOQC/JNrn8m/Ymd+gVRyFRkbW54yj3ClJy0CgBEqFkZPfg+pJu6SpLoYvLc6QYw5tEAPMvRYq9qzwp4i6f2lbYZKgVIgvoskqMZllc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731882; c=relaxed/simple;
-	bh=1z/lcSM3VHw7+nIJJu8OzwtnelPaGjhmFkIaIZOFMDA=;
+	s=arc-20240116; t=1723731885; c=relaxed/simple;
+	bh=GnC6FigxygLuXiw7A4JxutTn7jH7BKst+WboPnoFd/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFGTI9V7CbEycJVtmkVcAHnpLD2/1aX8eRmO2eejbyl6d1LcTL2fB2Z625YJ/GGU1Q9nxE+g1S0F6+zZGtJ1ILAxCuQ8hWE8aeegrBg1Hws7KMu6ep08dNtsudYAn1KjYa7TfSpUEK2P7rTaQsGmuVlbdjVLJJdnuVUCNRnWreQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SH9cg4/Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bf/wd2PjMldPYCCuo4O3mQsEmMGMYhidET7RuTKyrzgb4qkciuEaqYq6ThkEzsHHLWTHtXScfLBELA7tCQ5YOj4h/6qYihIaiga0o/2E7znvCIWnhzwf+L/0HtJh7xRN9SeorJY7UnDvD9Yp5NWqSsa5lJkopEhHxbfhQszHMiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tqw+LJZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SH9cg4/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17742C32786;
-	Thu, 15 Aug 2024 14:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tqw+LJZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53789C32786;
+	Thu, 15 Aug 2024 14:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731881;
-	bh=1z/lcSM3VHw7+nIJJu8OzwtnelPaGjhmFkIaIZOFMDA=;
+	s=korg; t=1723731884;
+	bh=GnC6FigxygLuXiw7A4JxutTn7jH7BKst+WboPnoFd/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SH9cg4/ZxaOcRb5IcLI/DO5QzkbBOg3ZwecQZm1dKRPN6B3EucKwK4dEioaUqa1WW
-	 nrZAFDj3xZq/PGKbKZp0q5BpvHLOodmY/Ecqs2zf1MIHwP0riLpH/GngYo4TgiPppO
-	 /CBTBeAnY7bBfAGboUJg0K7msgWzxsZa99FlKQ9s=
+	b=Tqw+LJZTdBFRwU1wxHmvnurbswo3Huzno84r+BNoyfTLOo9IDrENFiU/IxC8IaU9z
+	 pLPe1Ob2919i3s4V18cbh06cYt/4hHXiUSf8tIYpH1cnO7GoP7ErFPDVEeCq6zRFLT
+	 IsJ/ai4TocUHStoDuLgp62vxpZyJWdOsXRg0SwKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Miroslav Lichvar <mlichvar@redhat.com>
-Subject: [PATCH 5.4 238/259] ntp: Safeguard against time_constant overflow
-Date: Thu, 15 Aug 2024 15:26:11 +0200
-Message-ID: <20240815131911.964329038@linuxfoundation.org>
+	Steven Steve Kendall <skend@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 229/259] ALSA: hda: Add HP MP9 G4 Retail System AMS to force connect list
+Date: Thu, 15 Aug 2024 15:26:02 +0200
+Message-ID: <20240815131911.622585330@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -51,64 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Steven 'Steve' Kendall <skend@chromium.org>
 
-commit 06c03c8edce333b9ad9c6b207d93d3a5ae7c10c0 upstream.
+commit 7e1e206b99f4b3345aeb49d94584a420b7887f1d upstream.
 
-Using syzkaller with the recently reintroduced signed integer overflow
-sanitizer produces this UBSAN report:
+In recent HP UEFI firmware (likely v2.15 and above, tested on 2.27),
+these pins are incorrectly set for HDMI/DP audio. Tested on
+HP MP9 G4 Retail System AMS. Tested audio with two monitors connected
+via DisplayPort.
 
-UBSAN: signed-integer-overflow in ../kernel/time/ntp.c:738:18
-9223372036854775806 + 4 cannot be represented in type 'long'
-Call Trace:
- handle_overflow+0x171/0x1b0
- __do_adjtimex+0x1236/0x1440
- do_adjtimex+0x2be/0x740
-
-The user supplied time_constant value is incremented by four and then
-clamped to the operating range.
-
-Before commit eea83d896e31 ("ntp: NTP4 user space bits update") the user
-supplied value was sanity checked to be in the operating range. That change
-removed the sanity check and relied on clamping after incrementing which
-does not work correctly when the user supplied value is in the overflow
-zone of the '+ 4' operation.
-
-The operation requires CAP_SYS_TIME and the side effect of the overflow is
-NTP getting out of sync.
-
-Similar to the fixups for time_maxerror and time_esterror, clamp the user
-space supplied value to the operating range.
-
-[ tglx: Switch to clamping ]
-
-Fixes: eea83d896e31 ("ntp: NTP4 user space bits update")
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Miroslav Lichvar <mlichvar@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240517-b4-sio-ntp-c-v2-1-f3a80096f36f@google.com
-Closes: https://github.com/KSPP/linux/issues/352
+Link: https://forum.manjaro.org/t/intel-cannon-lake-pch-cavs-conexant-cx20632-no-sound-at-hdmi-or-displayport/133494
+Link: https://bbs.archlinux.org/viewtopic.php?id=270523
+Signed-off-by: Steven 'Steve' Kendall <skend@chromium.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240806-hdmi-audio-hp-wrongpins-v2-1-d9eb4ad41043@chromium.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/ntp.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/time/ntp.c
-+++ b/kernel/time/ntp.c
-@@ -685,11 +685,10 @@ static inline void process_adjtimex_mode
- 		time_esterror = clamp(txc->esterror, (long long)0, (long long)NTP_PHASE_LIMIT);
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1818,6 +1818,7 @@ static int hdmi_add_cvt(struct hda_codec
+ }
  
- 	if (txc->modes & ADJ_TIMECONST) {
--		time_constant = txc->constant;
-+		time_constant = clamp(txc->constant, (long long)0, (long long)MAXTC);
- 		if (!(time_status & STA_NANO))
- 			time_constant += 4;
--		time_constant = min(time_constant, (long)MAXTC);
--		time_constant = max(time_constant, 0l);
-+		time_constant = clamp(time_constant, (long)0, (long)MAXTC);
- 	}
- 
- 	if (txc->modes & ADJ_TAI &&
+ static const struct snd_pci_quirk force_connect_list[] = {
++	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
 
 
