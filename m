@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A2818D627;
-	Thu, 15 Aug 2024 13:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A5814AD0A;
+	Thu, 15 Aug 2024 13:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729317; cv=none; b=b9ATXnI5ehRxrXYP0J53xNAyy3SnDV7uMMa6wzx/WHZBqjxzqdPoLmBsDh+vDiBZJwyh4D59dabn83G7HypW/zyggwonmcHsH0iH9a6H5I0/bYSF1jtNDxXYIg//hYWHFk9YGHDm0cRTxSYwdU2Uw6LwGewwDeoTWTyIXh6OStE=
+	t=1723729319; cv=none; b=MU4aekZ1NPFptb0GGJf8MRDnc2tOaDo9iJtX7hPs/bHgzf3d+9Xq5tcb5Sop7mWkHIzwePqTyBmahnNy4EzqaO90YyRcIu5bM1+loDtcwXbdL45VNIKNFgCpsxLoVoZG6mcgVWjmyG7HiaZ7hodRDfLfDW4QtcUjkcjteWseyHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729317; c=relaxed/simple;
-	bh=ZgYK4b45bTMsxEsKb6tg+r2BVG4NuWeTpDp/EjqZH74=;
+	s=arc-20240116; t=1723729319; c=relaxed/simple;
+	bh=Hz+/MGPpy8PF518MS7NJYLrGtwobrFNFsNFFXkaWjTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+eOL5HSl5AsbZS6LVEu/siNQrBTMXL2Kycxwrj9wCrJRjsAOlUNHaKQMvLlt7pBJcbRqSX5nG6flQtTpkoOsFNHTKvn8jEzv8Ezv3ePrEXhv7nRiWzySnpUtYHVH7PePBMESHGxKxhm54J36zcPeixSf/kM6TUUQjUx7nfFE8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOm1ZIsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dR0RfEhSyM4JVmQ9Z/cDxVZts/wlcE9M5dERoQgAPtFc4LhhanvDrZ/k72fRx5PaDPqYjOqWsZXaYb0/KpMxk+nzEQD/HrONfxA0uZ1ZgwdvSdDTRTCatGJxSOvHK2zJFmqpRegWSJSY2pcbvUijY7eLx1GWehz+WdNPZT+4cys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXGjRcA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOm1ZIsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67563C32786;
-	Thu, 15 Aug 2024 13:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXGjRcA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0AFC32786;
+	Thu, 15 Aug 2024 13:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729316;
-	bh=ZgYK4b45bTMsxEsKb6tg+r2BVG4NuWeTpDp/EjqZH74=;
+	s=korg; t=1723729319;
+	bh=Hz+/MGPpy8PF518MS7NJYLrGtwobrFNFsNFFXkaWjTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOm1ZIsKd1KX5O2CyGUq92NamekpFzT7s3plbvYOZO4OJKfmWWhFHP+0EEufPWVlO
-	 WP51lGY/8+xx3Rxf/j/2XMuKYNzhTyw980lTSX0fAr/6oExAWoqu3thrgsKUzyFzeg
-	 O1fBwi2hSbvxOQnXDGNXGMpymkdEWYwvLXKYkA9I=
+	b=WXGjRcA+Pp5ZlMRpaC4r/6VZRyzIhwKzIiYq+j0vxXdJ6fu9sqjBDnjOEOV3pa0Cd
+	 8JFu+mUlFa6wlFqAdZSo1eKUw5s1Yw3UGsNpuCOaYHInOhuKATaR80ttDt7D7OSFNf
+	 bpVJDyzF8iyTnl69ME/fVtZtrjDrkp+GuvnbGphw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Zubkov <green@qrator.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yaroslav Isakov <yaroslav.isakov@gmail.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/484] mlxsw: spectrum_acl: Fix ACL scale regression and firmware errors
-Date: Thu, 15 Aug 2024 15:18:36 +0200
-Message-ID: <20240815131943.524383363@linuxfoundation.org>
+Subject: [PATCH 5.15 059/484] wifi: ath11k: fix wrong handling of CCMP256 and GCMP ciphers
+Date: Thu, 15 Aug 2024 15:18:37 +0200
+Message-ID: <20240815131943.563108961@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -55,250 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 75d8d7a63065b18df9555dbaab0b42d4c6f20943 ]
+[ Upstream commit d2b0ca38d362ebf16ca79cd7f309d5bb8b581deb ]
 
-ACLs that reside in the algorithmic TCAM (A-TCAM) in Spectrum-2 and
-newer ASICs can share the same mask if their masks only differ in up to
-8 consecutive bits. For example, consider the following filters:
+Currently for CCMP256, GCMP128 and GCMP256 ciphers, in ath11k_install_key()
+IEEE80211_KEY_FLAG_GENERATE_IV_MGMT is not set. And in ath11k_mac_mgmt_tx_wmi()
+a length of IEEE80211_CCMP_MIC_LEN is reserved for all ciphers.
 
- # tc filter add dev swp1 ingress pref 1 proto ip flower dst_ip 192.0.2.0/24 action drop
- # tc filter add dev swp1 ingress pref 1 proto ip flower dst_ip 198.51.100.128/25 action drop
+This results in unexpected management frame drop in case either of above 3 ciphers
+is used. The reason is, without IEEE80211_KEY_FLAG_GENERATE_IV_MGMT set, mac80211
+will not generate CCMP/GCMP headers in frame for ath11k. Also MIC length reserved
+is wrong. Such frame is dropped later by hardware:
 
-The second filter can use the same mask as the first (dst_ip/24) with a
-delta of 1 bit.
+ath11k_pci 0000:5a:00.0: mac tx mgmt frame, buf id 0
+ath11k_pci 0000:5a:00.0: mgmt tx compl ev pdev_id 1, desc_id 0, status 1
 
-However, the above only works because the two filters have different
-values in the common unmasked part (dst_ip/24). When entries have the
-same value in the common unmasked part they create undesired collisions
-in the device since many entries now have the same key. This leads to
-firmware errors such as [1] and to a reduced scale.
+>From user point of view, we have observed very low throughput due to this issue:
+action frames are all dropped so ADDBA response from DUT never reaches AP. AP
+can not use aggregation thus throughput is low.
 
-Fix by adjusting the hash table key to only include the value in the
-common unmasked part. That is, without including the delta bits. That
-way the driver will detect the collision during filter insertion and
-spill the filter into the circuit TCAM (C-TCAM).
+Fix this by setting IEEE80211_KEY_FLAG_GENERATE_IV_MGMT flag and by reserving proper
+MIC length for those ciphers.
 
-Add a test case that fails without the fix and adjust existing cases
-that check C-TCAM spillage according to the above limitation.
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
 
-[1]
-mlxsw_spectrum2 0000:06:00.0: EMAD reg access failed (tid=3379b18a00003394,reg_id=3027(ptce3),type=write,status=8(resource not available))
-
-Fixes: c22291f7cf45 ("mlxsw: spectrum: acl: Implement delta for ERP")
-Reported-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Amit Cohen <amcohen@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Reported-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
+Tested-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
+Closes: https://lore.kernel.org/all/CADS+iDX5=JtJr0apAtAQ02WWBxgOFEv8G063vuGYwDTC8AVZaw@mail.gmail.com
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240605014826.22498-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxsw/spectrum_acl_atcam.c       | 18 +++---
- .../mlxsw/spectrum_acl_bloom_filter.c         |  2 +-
- .../mellanox/mlxsw/spectrum_acl_tcam.h        |  9 +--
- .../drivers/net/mlxsw/spectrum-2/tc_flower.sh | 55 +++++++++++++++++--
- 4 files changed, 63 insertions(+), 21 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c |  3 +--
+ drivers/net/wireless/ath/ath11k/dp_rx.h |  3 +++
+ drivers/net/wireless/ath/ath11k/mac.c   | 15 +++++++++++----
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-index 4b713832fdd55..f5c0a4214c4e5 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-@@ -391,7 +391,8 @@ mlxsw_sp_acl_atcam_region_entry_insert(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		return err;
- 
--	lkey_id = aregion->ops->lkey_id_get(aregion, aentry->enc_key, erp_id);
-+	lkey_id = aregion->ops->lkey_id_get(aregion, aentry->ht_key.enc_key,
-+					    erp_id);
- 	if (IS_ERR(lkey_id))
- 		return PTR_ERR(lkey_id);
- 	aentry->lkey_id = lkey_id;
-@@ -399,7 +400,7 @@ mlxsw_sp_acl_atcam_region_entry_insert(struct mlxsw_sp *mlxsw_sp,
- 	kvdl_index = mlxsw_afa_block_first_kvdl_index(rulei->act_block);
- 	mlxsw_reg_ptce3_pack(ptce3_pl, true, MLXSW_REG_PTCE3_OP_WRITE_WRITE,
- 			     priority, region->tcam_region_info,
--			     aentry->enc_key, erp_id,
-+			     aentry->ht_key.enc_key, erp_id,
- 			     aentry->delta_info.start,
- 			     aentry->delta_info.mask,
- 			     aentry->delta_info.value,
-@@ -428,7 +429,7 @@ mlxsw_sp_acl_atcam_region_entry_remove(struct mlxsw_sp *mlxsw_sp,
- 
- 	mlxsw_reg_ptce3_pack(ptce3_pl, false, MLXSW_REG_PTCE3_OP_WRITE_WRITE, 0,
- 			     region->tcam_region_info,
--			     aentry->enc_key, erp_id,
-+			     aentry->ht_key.enc_key, erp_id,
- 			     aentry->delta_info.start,
- 			     aentry->delta_info.mask,
- 			     aentry->delta_info.value,
-@@ -457,7 +458,7 @@ mlxsw_sp_acl_atcam_region_entry_action_replace(struct mlxsw_sp *mlxsw_sp,
- 	kvdl_index = mlxsw_afa_block_first_kvdl_index(rulei->act_block);
- 	mlxsw_reg_ptce3_pack(ptce3_pl, true, MLXSW_REG_PTCE3_OP_WRITE_UPDATE,
- 			     priority, region->tcam_region_info,
--			     aentry->enc_key, erp_id,
-+			     aentry->ht_key.enc_key, erp_id,
- 			     aentry->delta_info.start,
- 			     aentry->delta_info.mask,
- 			     aentry->delta_info.value,
-@@ -480,15 +481,13 @@ __mlxsw_sp_acl_atcam_entry_add(struct mlxsw_sp *mlxsw_sp,
- 	int err;
- 
- 	mlxsw_afk_encode(afk, region->key_info, &rulei->values,
--			 aentry->ht_key.full_enc_key, mask);
-+			 aentry->ht_key.enc_key, mask);
- 
- 	erp_mask = mlxsw_sp_acl_erp_mask_get(aregion, mask, false);
- 	if (IS_ERR(erp_mask))
- 		return PTR_ERR(erp_mask);
- 	aentry->erp_mask = erp_mask;
- 	aentry->ht_key.erp_id = mlxsw_sp_acl_erp_mask_erp_id(erp_mask);
--	memcpy(aentry->enc_key, aentry->ht_key.full_enc_key,
--	       sizeof(aentry->enc_key));
- 
- 	/* Compute all needed delta information and clear the delta bits
- 	 * from the encrypted key.
-@@ -497,9 +496,8 @@ __mlxsw_sp_acl_atcam_entry_add(struct mlxsw_sp *mlxsw_sp,
- 	aentry->delta_info.start = mlxsw_sp_acl_erp_delta_start(delta);
- 	aentry->delta_info.mask = mlxsw_sp_acl_erp_delta_mask(delta);
- 	aentry->delta_info.value =
--		mlxsw_sp_acl_erp_delta_value(delta,
--					     aentry->ht_key.full_enc_key);
--	mlxsw_sp_acl_erp_delta_clear(delta, aentry->enc_key);
-+		mlxsw_sp_acl_erp_delta_value(delta, aentry->ht_key.enc_key);
-+	mlxsw_sp_acl_erp_delta_clear(delta, aentry->ht_key.enc_key);
- 
- 	/* Add rule to the list of A-TCAM rules, assuming this
- 	 * rule is intended to A-TCAM. In case this rule does
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-index 2d2e29c202770..3ab87db83b7fc 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-@@ -136,7 +136,7 @@ __mlxsw_sp_acl_bf_key_encode(struct mlxsw_sp_acl_atcam_region *aregion,
- 		memcpy(chunk + pad_bytes, &erp_region_id,
- 		       sizeof(erp_region_id));
- 		memcpy(chunk + key_offset,
--		       &aentry->enc_key[chunk_key_offsets[chunk_index]],
-+		       &aentry->ht_key.enc_key[chunk_key_offsets[chunk_index]],
- 		       chunk_key_len);
- 		chunk += chunk_len;
- 	}
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-index a41df10ade9bf..f28c47ae54880 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-@@ -171,9 +171,9 @@ struct mlxsw_sp_acl_atcam_region {
- };
- 
- struct mlxsw_sp_acl_atcam_entry_ht_key {
--	char full_enc_key[MLXSW_REG_PTCEX_FLEX_KEY_BLOCKS_LEN]; /* Encoded
--								 * key.
--								 */
-+	char enc_key[MLXSW_REG_PTCEX_FLEX_KEY_BLOCKS_LEN]; /* Encoded key, minus
-+							    * delta bits.
-+							    */
- 	u8 erp_id;
- };
- 
-@@ -185,9 +185,6 @@ struct mlxsw_sp_acl_atcam_entry {
- 	struct rhash_head ht_node;
- 	struct list_head list; /* Member in entries_list */
- 	struct mlxsw_sp_acl_atcam_entry_ht_key ht_key;
--	char enc_key[MLXSW_REG_PTCEX_FLEX_KEY_BLOCKS_LEN]; /* Encoded key,
--							    * minus delta bits.
--							    */
- 	struct {
- 		u16 start;
- 		u8 mask;
-diff --git a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
-index 616d3581419ca..21d0f419cc6d7 100755
---- a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
-+++ b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
-@@ -11,7 +11,7 @@ ALL_TESTS="single_mask_test identical_filters_test two_masks_test \
- 	multiple_masks_test ctcam_edge_cases_test delta_simple_test \
- 	delta_two_masks_one_key_test delta_simple_rehash_test \
- 	bloom_simple_test bloom_complex_test bloom_delta_test \
--	max_erp_entries_test max_group_size_test"
-+	max_erp_entries_test max_group_size_test collision_test"
- NUM_NETIFS=2
- source $lib_dir/lib.sh
- source $lib_dir/tc_common.sh
-@@ -457,7 +457,7 @@ delta_two_masks_one_key_test()
- {
- 	# If 2 keys are the same and only differ in mask in a way that
- 	# they belong under the same ERP (second is delta of the first),
--	# there should be no C-TCAM spill.
-+	# there should be C-TCAM spill.
- 
- 	RET=0
- 
-@@ -474,8 +474,8 @@ delta_two_masks_one_key_test()
- 	tp_record "mlxsw:*" "tc filter add dev $h2 ingress protocol ip \
- 		   pref 2 handle 102 flower $tcflags dst_ip 192.0.2.2 \
- 		   action drop"
--	tp_check_hits "mlxsw:mlxsw_sp_acl_atcam_entry_add_ctcam_spill" 0
--	check_err $? "incorrect C-TCAM spill while inserting the second rule"
-+	tp_check_hits "mlxsw:mlxsw_sp_acl_atcam_entry_add_ctcam_spill" 1
-+	check_err $? "C-TCAM spill did not happen while inserting the second rule"
- 
- 	$MZ $h1 -c 1 -p 64 -a $h1mac -b $h2mac -A 192.0.2.1 -B 192.0.2.2 \
- 		-t ip -q
-@@ -1087,6 +1087,53 @@ max_group_size_test()
- 	log_test "max ACL group size test ($tcflags). max size $max_size"
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index dfdb2eeaf040a..6920cce493f69 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -1861,8 +1861,7 @@ static void ath11k_dp_rx_h_csum_offload(struct ath11k *ar, struct sk_buff *msdu)
+ 			  CHECKSUM_NONE : CHECKSUM_UNNECESSARY;
  }
  
-+collision_test()
-+{
-+	# Filters cannot share an eRP if in the common unmasked part (i.e.,
-+	# without the delta bits) they have the same values. If the driver does
-+	# not prevent such configuration (by spilling into the C-TCAM), then
-+	# multiple entries will be present in the device with the same key,
-+	# leading to collisions and a reduced scale.
-+	#
-+	# Create such a scenario and make sure all the filters are successfully
-+	# added.
-+
-+	RET=0
-+
-+	local ret
-+
-+	if [[ "$tcflags" != "skip_sw" ]]; then
-+		return 0;
-+	fi
-+
-+	# Add a single dst_ip/24 filter and multiple dst_ip/32 filters that all
-+	# have the same values in the common unmasked part (dst_ip/24).
-+
-+	tc filter add dev $h2 ingress pref 1 proto ipv4 handle 101 \
-+		flower $tcflags dst_ip 198.51.100.0/24 \
-+		action drop
-+
-+	for i in {0..255}; do
-+		tc filter add dev $h2 ingress pref 2 proto ipv4 \
-+			handle $((102 + i)) \
-+			flower $tcflags dst_ip 198.51.100.${i}/32 \
-+			action drop
-+		ret=$?
-+		[[ $ret -ne 0 ]] && break
-+	done
-+
-+	check_err $ret "failed to add all the filters"
-+
-+	for i in {255..0}; do
-+		tc filter del dev $h2 ingress pref 2 proto ipv4 \
-+			handle $((102 + i)) flower
-+	done
-+
-+	tc filter del dev $h2 ingress pref 1 proto ipv4 handle 101 flower
-+
-+	log_test "collision test ($tcflags)"
-+}
-+
- setup_prepare()
+-static int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar,
+-				       enum hal_encrypt_type enctype)
++int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype)
  {
- 	h1=${NETIFS[p1]}
+ 	switch (enctype) {
+ 	case HAL_ENCRYPT_TYPE_OPEN:
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.h b/drivers/net/wireless/ath/ath11k/dp_rx.h
+index 623da3bf9dc81..c322e30caa968 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.h
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ #ifndef ATH11K_DP_RX_H
+ #define ATH11K_DP_RX_H
+@@ -95,4 +96,6 @@ int ath11k_peer_rx_frag_setup(struct ath11k *ar, const u8 *peer_mac, int vdev_id
+ int ath11k_dp_rx_pktlog_start(struct ath11k_base *ab);
+ int ath11k_dp_rx_pktlog_stop(struct ath11k_base *ab, bool stop_timer);
+ 
++int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype);
++
+ #endif /* ATH11K_DP_RX_H */
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index c58fd836d4ade..81a8e1102d72b 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -2675,6 +2675,7 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
+ 
+ 	switch (key->cipher) {
+ 	case WLAN_CIPHER_SUITE_CCMP:
++	case WLAN_CIPHER_SUITE_CCMP_256:
+ 		arg.key_cipher = WMI_CIPHER_AES_CCM;
+ 		/* TODO: Re-check if flag is valid */
+ 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
+@@ -2684,12 +2685,10 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
+ 		arg.key_txmic_len = 8;
+ 		arg.key_rxmic_len = 8;
+ 		break;
+-	case WLAN_CIPHER_SUITE_CCMP_256:
+-		arg.key_cipher = WMI_CIPHER_AES_CCM;
+-		break;
+ 	case WLAN_CIPHER_SUITE_GCMP:
+ 	case WLAN_CIPHER_SUITE_GCMP_256:
+ 		arg.key_cipher = WMI_CIPHER_AES_GCM;
++		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
+ 		break;
+ 	default:
+ 		ath11k_warn(ar->ab, "cipher %d is not supported\n", key->cipher);
+@@ -4204,7 +4203,10 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
+ {
+ 	struct ath11k_base *ab = ar->ab;
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
++	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB(skb);
+ 	struct ieee80211_tx_info *info;
++	enum hal_encrypt_type enctype;
++	unsigned int mic_len;
+ 	dma_addr_t paddr;
+ 	int buf_id;
+ 	int ret;
+@@ -4224,7 +4226,12 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
+ 		     ieee80211_is_deauth(hdr->frame_control) ||
+ 		     ieee80211_is_disassoc(hdr->frame_control)) &&
+ 		     ieee80211_has_protected(hdr->frame_control)) {
+-			skb_put(skb, IEEE80211_CCMP_MIC_LEN);
++			if (!(skb_cb->flags & ATH11K_SKB_CIPHER_SET))
++				ath11k_warn(ab, "WMI management tx frame without ATH11K_SKB_CIPHER_SET");
++
++			enctype = ath11k_dp_tx_get_encrypt_type(skb_cb->cipher);
++			mic_len = ath11k_dp_rx_crypto_mic_len(ar, enctype);
++			skb_put(skb, mic_len);
+ 		}
+ 	}
+ 
 -- 
 2.43.0
 
