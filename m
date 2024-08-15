@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198CF3214;
-	Thu, 15 Aug 2024 14:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426F73214;
+	Thu, 15 Aug 2024 14:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732664; cv=none; b=X6FCmwx7k7QoD7Earzh2OmYmJdYbB3elZrrrZjaTqXvLZPoBu1k93EX2tjBrgN3EcgJUnuIi4CQuOjsR3pmx/FuAIBqoAFh6XP0eGPaRhGKbCm1YH8QVhGPEm3Gc2XIHl2/ODOYn+9+K992FMxpguzlKzHX4u6TnAGHf5np66BA=
+	t=1723732667; cv=none; b=PrLYPORwSnEHrTGnwqrL5TWak1uhypNf58PoylUKOuPZtmSpLdpLRUeYJpyPBZS2yANzcu0s77ai8Q1dsItt8qvccn95c+Z8uFq7xEz4wvAK5hwOL5ZBvc2mJD5n1vUM1CT4+trdrQ13dqbN45axZL+9Nmxm5h0lJOkYU/Z30kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732664; c=relaxed/simple;
-	bh=zogJCYDhq16CHU6ojYro5f4X8782hpQ9D3L9kEgIjG0=;
+	s=arc-20240116; t=1723732667; c=relaxed/simple;
+	bh=N4HgJq0sBNLZOnHnewma1SkZfYzk3tkisEePXjT6D2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGVLOGb1Kpj+ruoqsMAt6HFC6kctxAuQTG2Q8bx1tNeJdf82FHb1rvbkdGiqQ+TLmh5fnEsKB2mYy4I4MPwMqKvr/R3NLmUdT1FklG04DDrsne+p4Vzi9MWW8aNWdNUuDJHjsyiV4F+J1fbVipoUpNRN4SME/ATf0IQn+Szlu0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDkLxzcK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YLl7gQU9NIgwMioTNByNNjVsLwCO+1c43FmQOD+QuAPAiFBee9qS9SpALCA1Og1lRxzgJPww9zsB8FuIwGqCJtePaKGgy7Cgf2/Uo9+6Bs2qJE9buLk7rVylatFkppEMU7v4DQvlh1pk3kgdueEgowD8An33etPmh1HsLVyr344=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5k/HcKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDkLxzcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9BDC4AF0C;
-	Thu, 15 Aug 2024 14:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5k/HcKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF165C32786;
+	Thu, 15 Aug 2024 14:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732664;
-	bh=zogJCYDhq16CHU6ojYro5f4X8782hpQ9D3L9kEgIjG0=;
+	s=korg; t=1723732667;
+	bh=N4HgJq0sBNLZOnHnewma1SkZfYzk3tkisEePXjT6D2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDkLxzcKoPlN3asgVOWosOuLAWntEGLYpVoy2dOYGYcVdlu7/1JffrQ0S57Z8JU9C
-	 el0ATW2Jt+FdIrSG1EmKJ6QpEPGFjAH4/J5KG3Axy7OeNvT99R/zE6Nh8lY+nrpvHq
-	 9Yye1B9lDFCNqYgUNamxJk/xdkUNCodtaKY0rPMk=
+	b=h5k/HcKqSRI0zuX6Sb4TL+OtkyrISQh+pHkp5PGlhqNtw57c3Z6ynT9kSCnQxUIIQ
+	 56IM4gtXrkMoDbfLms4xGZ9kLvZeJgwUbPracPVIQZ1Ovx7cfpayX0TYJwrWq1Cg8G
+	 jBRuy9VKR3y3IfxR7o6a+XZwWTLGK+K8IMc/Qf7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 5.10 247/352] mptcp: fix duplicate data handling
-Date: Thu, 15 Aug 2024 15:25:13 +0200
-Message-ID: <20240815131928.985734907@linuxfoundation.org>
+	Eric Sandeen <sandeen@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 218/352] fuse: verify {g,u}id mount options correctly
+Date: Thu, 15 Aug 2024 15:24:44 +0200
+Message-ID: <20240815131927.715606774@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,62 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-commit 68cc924729ffcfe90d0383177192030a9aeb2ee4 upstream.
+[ Upstream commit 525bd65aa759ec320af1dc06e114ed69733e9e23 ]
 
-When a subflow receives and discards duplicate data, the mptcp
-stack assumes that the consumed offset inside the current skb is
-zero.
+As was done in
+0200679fc795 ("tmpfs: verify {g,u}id mount options correctly")
+we need to validate that the requested uid and/or gid is representable in
+the filesystem's idmapping.
 
-With multiple subflows receiving data simultaneously such assertion
-does not held true. As a result the subflow-level copied_seq will
-be incorrectly increased and later on the same subflow will observe
-a bad mapping, leading to subflow reset.
+Cribbing from the above commit log,
 
-Address the issue taking into account the skb consumed offset in
-mptcp_subflow_discard_data().
+The contract for {g,u}id mount options and {g,u}id values in general set
+from userspace has always been that they are translated according to the
+caller's idmapping. In so far, fuse has been doing the correct thing.
+But since fuse is mountable in unprivileged contexts it is also
+necessary to verify that the resulting {k,g}uid is representable in the
+namespace of the superblock.
 
-Fixes: 04e4cd4f7ca4 ("mptcp: cleanup mptcp_subflow_discard_data()")
-Cc: stable@vger.kernel.org
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/501
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c30da2e981a7 ("fuse: convert to use the new mount API")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Link: https://lore.kernel.org/r/8f07d45d-c806-484d-a2e3-7a2199df1cd2@redhat.com
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/subflow.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/fuse/inode.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -863,14 +863,22 @@ static void mptcp_subflow_discard_data(s
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
- 	bool fin = TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN;
--	u32 incr;
-+	struct tcp_sock *tp = tcp_sk(ssk);
-+	u32 offset, incr, avail_len;
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index 5f9b2dc59135b..a5d1eb0bc5214 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -540,6 +540,8 @@ static int fuse_parse_param(struct fs_context *fsc, struct fs_parameter *param)
+ 	struct fs_parse_result result;
+ 	struct fuse_fs_context *ctx = fsc->fs_private;
+ 	int opt;
++	kuid_t kuid;
++	kgid_t kgid;
  
--	incr = limit >= skb->len ? skb->len + fin : limit;
-+	offset = tp->copied_seq - TCP_SKB_CB(skb)->seq;
-+	if (WARN_ON_ONCE(offset > skb->len))
-+		goto out;
+ 	if (fsc->purpose == FS_CONTEXT_FOR_RECONFIGURE) {
+ 		/*
+@@ -584,16 +586,30 @@ static int fuse_parse_param(struct fs_context *fsc, struct fs_parameter *param)
+ 		break;
  
--	pr_debug("discarding=%d len=%d seq=%d", incr, skb->len,
--		 subflow->map_subflow_seq);
-+	avail_len = skb->len - offset;
-+	incr = limit >= avail_len ? avail_len + fin : limit;
-+
-+	pr_debug("discarding=%d len=%d offset=%d seq=%d", incr, skb->len,
-+		 offset, subflow->map_subflow_seq);
- 	MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_DUPDATA);
- 	tcp_sk(ssk)->copied_seq += incr;
-+
-+out:
- 	if (!before(tcp_sk(ssk)->copied_seq, TCP_SKB_CB(skb)->end_seq))
- 		sk_eat_skb(ssk, skb);
- 	if (mptcp_subflow_get_map_offset(subflow) >= subflow->map_data_len)
+ 	case OPT_USER_ID:
+-		ctx->user_id = make_kuid(fsc->user_ns, result.uint_32);
+-		if (!uid_valid(ctx->user_id))
++		kuid =  make_kuid(fsc->user_ns, result.uint_32);
++		if (!uid_valid(kuid))
+ 			return invalfc(fsc, "Invalid user_id");
++		/*
++		 * The requested uid must be representable in the
++		 * filesystem's idmapping.
++		 */
++		if (!kuid_has_mapping(fsc->user_ns, kuid))
++			return invalfc(fsc, "Invalid user_id");
++		ctx->user_id = kuid;
+ 		ctx->user_id_present = true;
+ 		break;
+ 
+ 	case OPT_GROUP_ID:
+-		ctx->group_id = make_kgid(fsc->user_ns, result.uint_32);
+-		if (!gid_valid(ctx->group_id))
++		kgid = make_kgid(fsc->user_ns, result.uint_32);;
++		if (!gid_valid(kgid))
++			return invalfc(fsc, "Invalid group_id");
++		/*
++		 * The requested gid must be representable in the
++		 * filesystem's idmapping.
++		 */
++		if (!kgid_has_mapping(fsc->user_ns, kgid))
+ 			return invalfc(fsc, "Invalid group_id");
++		ctx->group_id = kgid;
+ 		ctx->group_id_present = true;
+ 		break;
+ 
+-- 
+2.43.0
+
 
 
