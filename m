@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A6B1714AE;
-	Thu, 15 Aug 2024 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFD87DA78;
+	Thu, 15 Aug 2024 13:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728674; cv=none; b=iloDeXw088ZsDQIQFMAE4Wsmv705fMKicLrYV4TR2FSLhm7Az34g46rtv1i4cBiVDSkvi0IRAASDklgdgRDO2VVAf1QjKrNtDCDpaMr059OMeBXiDt9COBOkRlBp4SqtnbkrMTxBYTwMKTtq6VRcDpE1jFwjCu4g11ka0VNeAKQ=
+	t=1723728677; cv=none; b=VAJfzeV6WzWu3/rmFXKbhNF8Orn3Kx6hPtg52dGiD+oyF8hCDaiv6SjbVwEkCeYuq9BkTVB85h1gz9VRsDt7S8mYHc6Czu5atvp0RgyMhry0FLx1XiggcE24rSlSxvu2XgD4xIttt76M2Vy3RLMMPgqq++jtxOdtBC4nzcYcmAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728674; c=relaxed/simple;
-	bh=SONZvqMMuruNkWuIawfgJvHAZpDZXrHT+ghTLoPeVKY=;
+	s=arc-20240116; t=1723728677; c=relaxed/simple;
+	bh=usukGFcMiEHLaFfhD4Tg6RnGiwXlydHJGX6u9qwBWKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxs917MqAEz5gIHy8LPbX0yo4lcQpo1+bd6TQ6A+1PzKjmKyKLHcPRXQpk6coZOgkUciOI9pqpU4Jk2PChtnhN4ohRemUalk520S26jI6LVKMPg2ex3OpWZNOfGZbaGyo/V5OBCHQ5MdlVxbGxkWrm0iQCEn4q9rsPytoyYDfNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scXIKevQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntor0yvGJXIJ4XkuMCPfCCp79XnTJCJc3rhAyMKkI5lz3Kqoze8hDgYk9cIoUPLWQ2rTMkXktWqDbjY0U0tL4V3duLfRG1VKJ8X+uH09wI38Y28CKsKtHIdd0tHnp13W37yPa+ixAz3fxDfobj6A4roDezBV3DicP21FP+7/UdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOjnnE8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scXIKevQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D6AC32786;
-	Thu, 15 Aug 2024 13:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOjnnE8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D60C32786;
+	Thu, 15 Aug 2024 13:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728674;
-	bh=SONZvqMMuruNkWuIawfgJvHAZpDZXrHT+ghTLoPeVKY=;
+	s=korg; t=1723728677;
+	bh=usukGFcMiEHLaFfhD4Tg6RnGiwXlydHJGX6u9qwBWKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scXIKevQKYx5/QalayMoHe5XniR2p7gshVowuh/eaDbXDBRvAhC6UroHdjEsMBX2T
-	 iVNfcTUt/k1vW2AiScGUksr+FhCgWyoBs/XfVOPeewbIn1ZTkkpBL6mcB3D8BNDUzB
-	 lgZWyOrttexd3pEV5hNIxPxcDeGws3W4ZeN5mUyQ=
+	b=cOjnnE8YV9f9XzuEpotlq0fLluyRttXktaxBWXEQdlgiaLVJCPK2dYkFxJ42l0y3j
+	 wAihjt6ZILp18z9MRh/K81bqhjIDb+BpovQtIYCZTNnjtFFQwQr34Cyz/eeI0Mb1HI
+	 YxYhWtuKoCJ0b1pbs0+xLMKxaQQnDooIliDpfWTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.19 073/196] ext4: make sure the first directory block is not a hole
-Date: Thu, 15 Aug 2024 15:23:10 +0200
-Message-ID: <20240815131854.872039764@linuxfoundation.org>
+	Rafael Beims <rafael.beims@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.19 074/196] wifi: mwifiex: Fix interface type change
+Date: Thu, 15 Aug 2024 15:23:11 +0200
+Message-ID: <20240815131854.910206795@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -53,85 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Rafael Beims <rafael.beims@toradex.com>
 
-commit f9ca51596bbfd0f9c386dd1c613c394c78d9e5e6 upstream.
+commit a17b9f590f6ec2b9f1b12b1db3bf1d181de6b272 upstream.
 
-The syzbot constructs a directory that has no dirblock but is non-inline,
-i.e. the first directory block is a hole. And no errors are reported when
-creating files in this directory in the following flow.
+When changing the interface type we also need to update the bss_num, the
+driver private data is searched based on a unique (bss_type, bss_num)
+tuple, therefore every time bss_type changes, bss_num must also change.
 
-    ext4_mknod
-     ...
-      ext4_add_entry
-        // Read block 0
-        ext4_read_dirblock(dir, block, DIRENT)
-          bh = ext4_bread(NULL, inode, block, 0)
-          if (!bh && (type == INDEX || type == DIRENT_HTREE))
-          // The first directory block is a hole
-          // But type == DIRENT, so no error is reported.
+This fixes for example an issue in which, after the mode changed, a
+wireless scan on the changed interface would not finish, leading to
+repeated -EBUSY messages to userspace when other scan requests were
+sent.
 
-After that, we get a directory block without '.' and '..' but with a valid
-dentry. This may cause some code that relies on dot or dotdot (such as
-make_indexed_dir()) to crash.
-
-Therefore when ext4_read_dirblock() finds that the first directory block
-is a hole report that the filesystem is corrupted and return an error to
-avoid loading corrupted data from disk causing something bad.
-
-Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
-Fixes: 4e19d6b65fb4 ("ext4: allow directory holes")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240702132349.2600605-3-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: c606008b7062 ("mwifiex: Properly initialize private structure on interface type changes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240510110458.15475-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -134,10 +134,11 @@ static struct buffer_head *__ext4_read_d
- 
- 		return bh;
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -934,6 +934,8 @@ mwifiex_init_new_priv_params(struct mwif
+ 		return -EOPNOTSUPP;
  	}
--	if (!bh && (type == INDEX || type == DIRENT_HTREE)) {
-+	/* The first directory block must not be a hole. */
-+	if (!bh && (type == INDEX || type == DIRENT_HTREE || block == 0)) {
- 		ext4_error_inode(inode, func, line, block,
--				 "Directory hole found for htree %s block",
--				 (type == INDEX) ? "index" : "leaf");
-+				 "Directory hole found for htree %s block %u",
-+				 (type == INDEX) ? "index" : "leaf", block);
- 		return ERR_PTR(-EFSCORRUPTED);
- 	}
- 	if (!bh)
-@@ -2850,10 +2851,7 @@ bool ext4_empty_dir(struct inode *inode)
- 		EXT4_ERROR_INODE(inode, "invalid size");
- 		return true;
- 	}
--	/* The first directory block must not be a hole,
--	 * so treat it as DIRENT_HTREE
--	 */
--	bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
-+	bh = ext4_read_dirblock(inode, 0, EITHER);
- 	if (IS_ERR(bh))
- 		return true;
  
-@@ -3425,10 +3423,7 @@ static struct buffer_head *ext4_get_firs
- 		struct ext4_dir_entry_2 *de;
- 		unsigned int offset;
- 
--		/* The first directory block must not be a hole, so
--		 * treat it as DIRENT_HTREE
--		 */
--		bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
-+		bh = ext4_read_dirblock(inode, 0, EITHER);
- 		if (IS_ERR(bh)) {
- 			*retval = PTR_ERR(bh);
- 			return NULL;
++	priv->bss_num = mwifiex_get_unused_bss_num(adapter, priv->bss_type);
++
+ 	spin_lock_irqsave(&adapter->main_proc_lock, flags);
+ 	adapter->main_locked = false;
+ 	spin_unlock_irqrestore(&adapter->main_proc_lock, flags);
 
 
