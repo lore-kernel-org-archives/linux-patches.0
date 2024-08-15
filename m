@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86F119E825;
-	Thu, 15 Aug 2024 13:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C127E19E825;
+	Thu, 15 Aug 2024 13:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728496; cv=none; b=fcP/qqTQ/5wV5LcmO3HWMTOx8ymwRo4SzNeJYFNClI01U8C5E6AqJCTPZEwxVygrK8LJUzyPdalwdVc5ghkyH1VrNXemmbyiem5MBPZs366AUtVO19wSdR7ZdAGVt/Klv+IaR6NJG51zC7pwRZyfvWI40EgnP8xrjWQYdtzw6ys=
+	t=1723728499; cv=none; b=NFmzQNDbSckuFbgYXjmFEM8eHn081o3ArtACyUu2SIJwyppFmQ2ByDEx4C6KAzN+V/OfxfB6KeWUjxONDdtrPzq13caucCGvI0ISfuToB8cclKffzwUFXr6bo1/pvSSpUss563xfyuX5VyBC8smy9F+V6gPhqhsE/oiiujq8pjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728496; c=relaxed/simple;
-	bh=VFu/EBzrLRQ7bApp6xjLzV7Waq7KoTr985HxSAVBxS4=;
+	s=arc-20240116; t=1723728499; c=relaxed/simple;
+	bh=0PlMFdAZC/qvK5JC37rs+P4Tr2+r2GYa2JzjHw2vF7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abLPPepcStFeeiDxxP+v7Yfz5WWMKkycjojkyyxs6+ZBReBD7rOYuU3CGi6MPtbNW1YqgnSoPW2u2Pnk7TFN2NRPuS6YxHjPfFJIFlvb30d9YaIQ0LRX/Ag/cTvck+Dxih4+ztyvgCEjMF/oMWbz9UIxlJOyjSB0fa7CdI5SqS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkkda+9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GyrwIotcA/Xvx8GrabhNZ0cFWPR+DzaLosF3rgjR5Ww/YtQQNCEIvIqJiFoJ5PLJjQG2rfuxUBe/+sjZryFH02MY2zNswy/9G5bUv4tOFF/8nZ05YgZ+qywP8Uaf8+9uUNfkl2m4QVGCLjc/l8eK4qzLQWHrbg6d2oroGYyImX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr9H7t0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkkda+9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E54C32786;
-	Thu, 15 Aug 2024 13:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr9H7t0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37745C32786;
+	Thu, 15 Aug 2024 13:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728496;
-	bh=VFu/EBzrLRQ7bApp6xjLzV7Waq7KoTr985HxSAVBxS4=;
+	s=korg; t=1723728499;
+	bh=0PlMFdAZC/qvK5JC37rs+P4Tr2+r2GYa2JzjHw2vF7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkkda+9eVXWCW8FDCybURhBSMWuU5WlO3lYpRyNZW3F72cSTCzWVeMsiP54zV0xDD
-	 tugkrBtUcx4iWRVhrA/7Sj5OJj3Dg1GUQFP50XMsKdAm3hqshd5TmdBlzU26B2CJN/
-	 lroLRIFC/ZEFA8SsW1EVBzitJtKRVEZo5rigWFPY=
+	b=vr9H7t0A8ilkh6jN7oiRvr48AP2Bzw9j1ypU7Qh+0Y4vdvImr9RYzxrZ83sMV1+cW
+	 kkewfIOl6CZcIK6yyreKaTifk2bRT1sYmia+3HOgOqWewpM/nkf60VlsRJec4FEVB4
+	 BrMmGkA+kFzvZ+KtLsuur9xOSTIRhtome+DSRBV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 019/196] net/smc: set rmbs SG_MAX_SINGLE_ALLOC limitation only when CONFIG_ARCH_NO_SG_CHAIN is defined
-Date: Thu, 15 Aug 2024 15:22:16 +0200
-Message-ID: <20240815131852.813292256@linuxfoundation.org>
+Subject: [PATCH 4.19 020/196] selftests/bpf: Check length of recv in test_sockmap
+Date: Thu, 15 Aug 2024 15:22:17 +0200
+Message-ID: <20240815131852.854144504@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,54 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 3ac14b9dfbd345e891d48d89f6c2fa519848f0f4 ]
+[ Upstream commit de1b5ea789dc28066cc8dc634b6825bd6148f38b ]
 
-SG_MAX_SINGLE_ALLOC is used to limit maximum number of entries that
-will be allocated in one piece of scatterlist. When the entries of
-scatterlist exceeds SG_MAX_SINGLE_ALLOC, sg chain will be used. From
-commit 7c703e54cc71 ("arch: switch the default on ARCH_HAS_SG_CHAIN"),
-we can know that the macro CONFIG_ARCH_NO_SG_CHAIN is used to identify
-whether sg chain is supported. So, SMC-R's rmb buffer should be limited
-by SG_MAX_SINGLE_ALLOC only when the macro CONFIG_ARCH_NO_SG_CHAIN is
-defined.
+The value of recv in msg_loop may be negative, like EWOULDBLOCK, so it's
+necessary to check if it is positive before accumulating it to bytes_recvd.
 
-Fixes: a3fe3d01bd0d ("net/smc: introduce sg-logic for RMBs")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Co-developed-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 16962b2404ac ("bpf: sockmap, add selftests")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/5172563f7c7b2a2e953cef02e89fc34664a7b190.1716446893.git.tanggeliang@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index 691c1d9c4c560..6c19cc805abc1 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -666,7 +666,6 @@ int smc_conn_create(struct smc_sock *smc, bool is_smcd, int srv_first_contact,
-  */
- static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
- {
--	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
- 	u8 compressed;
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index a7fc91bb9119c..b9deed81656ba 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -395,7 +395,8 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
+ 				}
+ 			}
  
- 	if (size <= SMC_BUF_MIN_SIZE)
-@@ -676,9 +675,11 @@ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
- 	compressed = min_t(u8, ilog2(size) + 1,
- 			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
+-			s->bytes_recvd += recv;
++			if (recv > 0)
++				s->bytes_recvd += recv;
  
-+#ifdef CONFIG_ARCH_NO_SG_CHAIN
- 	if (!is_smcd && is_rmb)
- 		/* RMBs are backed by & limited to max size of scatterlists */
--		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
-+		compressed = min_t(u8, compressed, ilog2((SG_MAX_SINGLE_ALLOC * PAGE_SIZE) >> 14));
-+#endif
- 
- 	return compressed;
- }
+ 			if (data_test) {
+ 				int j;
 -- 
 2.43.0
 
