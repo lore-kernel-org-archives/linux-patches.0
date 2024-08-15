@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4164D1AE845;
-	Thu, 15 Aug 2024 14:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C061AC432;
+	Thu, 15 Aug 2024 14:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731183; cv=none; b=fSxZzgv/U5lmCAtyg7d006A7He7ivpdEYo2hWyDULUmFpthAt4CasiIl/IpoVcHgvhH1pND09/OsjNuRRgSlFD653UtKAMO3FM6DVuSLZ1iVrvwct+goIaJkWvMp2Q1z0O5F2Wh6E0VjtRaZjwoyrHGGn+UIn91mYbwSzv6YNc4=
+	t=1723731186; cv=none; b=PeGNAUU29oxPESFaqODJwbn9nYeBWodWQ1huyWxEwI6j5ijV4BEkbBeL5dhvwvCkEz+RKFM2+Ml3wgv64PCLwbdd2iBUyka4NZEZldzkeyv4OMn+Eq1kPUk+9DFujmazb98PqbyuFZS/VPBC51EN2Swvzr6VsI2AhCurPOZyOn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731183; c=relaxed/simple;
-	bh=YirkVDMeIGfEmdAb8EalmP5aJ83YnXOF0m8b2rVHBhc=;
+	s=arc-20240116; t=1723731186; c=relaxed/simple;
+	bh=LhS83TKx5iyV6evjA1hhLMCoaYqy4PWIYmoxXqNURH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VA+c883gZqFXq5Puu5KuHspNTQZEbi8h6TPB1omVpDjgI98iB7Zf2JQAJc7NVyMaX1ZR2PIF4esp/jAXNM50bU/UauYk2hqsyXP0sL3h4kMykmLv6RHgCct/uG8SJjPiw5LavT6L07rRgqEtWBheWpthb9S6Mm5T8F9Wnp1URI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=io/V5I4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDieLXI4l682pwonmuExW93TkJ9YBnEP/rLFdi0aXtyhFBANNHLXXo8yNS5+cM0B+GRAHMXyQ3EepHXQx8j89kFqE8dOWL7JVQMCp21v+2nk2hhZIq+uT9QA+kzhxYGYoc26HmYX1UqZTDFxBx6f/aukDePrisG5Qn+n+38lMEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZA3AQC4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="io/V5I4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A82C32786;
-	Thu, 15 Aug 2024 14:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZA3AQC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAA2C32786;
+	Thu, 15 Aug 2024 14:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731183;
-	bh=YirkVDMeIGfEmdAb8EalmP5aJ83YnXOF0m8b2rVHBhc=;
+	s=korg; t=1723731186;
+	bh=LhS83TKx5iyV6evjA1hhLMCoaYqy4PWIYmoxXqNURH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=io/V5I4zeDG38i7u2sKq/zK4+GK5nVqltQQtcRawjyupk3vjOP8w1azT2tYOmHEHB
-	 q7iQc2O8x3D9WY2BXBEjwDqXAZLOc02uDzW2/aswxy9liGQdQowO8IQGawFlzgYnlm
-	 5zTMz8E5+AppP9fgpHH5V3L6f7EZts3+tXyluSkk=
+	b=rZA3AQC4Tai9glyztCUIdkYP8MPLwzXFtvrxfgiJpB9s8zP6ST3eI1RjSdAaifXVX
+	 wz+s/etujWuk9s+vq9/2lvyL6F++J2ccKycPGv5PcPh+cK7ue1jIJuM4VMsH3ZvOap
+	 p9hKDH5bEeQ/UFaNlZCZSo9PAuXm9qyqvIbg5U74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 048/259] bna: adjust name buf size of bna_tcb and bna_ccb structures
-Date: Thu, 15 Aug 2024 15:23:01 +0200
-Message-ID: <20240815131904.660026192@linuxfoundation.org>
+Subject: [PATCH 5.4 049/259] selftests: forwarding: devlink_lib: Wait for udev events after reloading
+Date: Thu, 15 Aug 2024 15:23:02 +0200
+Message-ID: <20240815131904.698384432@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,75 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit c9741a03dc8e491e57b95fba0058ab46b7e506da ]
+[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
 
-To have enough space to write all possible sprintf() args. Currently
-'name' size is 16, but the first '%s' specifier may already need at
-least 16 characters, since 'bnad->netdev->name' is used there.
+Lately, an additional locking was added by commit c0a40097f0bc
+("drivers: core: synchronize really_probe() and dev_uevent()"). The
+locking protects dev_uevent() calling. This function is used to send
+messages from the kernel to user space. Uevent messages notify user space
+about changes in device states, such as when a device is added, removed,
+or changed. These messages are used by udev (or other similar user-space
+tools) to apply device-specific rules.
 
-For '%d' specifiers, assume that they require:
- * 1 char for 'tx_id + tx_info->tcb[i]->id' sum, BNAD_MAX_TXQ_PER_TX is 8
- * 2 chars for 'rx_id + rx_info->rx_ctrl[i].ccb->id', BNAD_MAX_RXP_PER_RX
-   is 16
+After reloading devlink instance, udev events should be processed. This
+locking causes a short delay of udev events handling.
 
-And replace sprintf with snprintf.
+One example for useful udev rule is renaming ports. 'forwading.config'
+can be configured to use names after udev rules are applied. Some tests run
+devlink_reload() and immediately use the updated names. This worked before
+the above mentioned commit was pushed, but now the delay of uevent messages
+causes that devlink_reload() returns before udev events are handled and
+tests fail.
 
-Detected using the static analysis tool - Svace.
+Adjust devlink_reload() to not assume that udev events are already
+processed when devlink reload is done, instead, wait for udev events to
+ensure they are processed before returning from the function.
 
-Fixes: 8b230ed8ec96 ("bna: Brocade 10Gb Ethernet device driver")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Without this patch:
+TESTS='rif_mac_profile' ./resource_scale.sh
+TEST: 'rif_mac_profile' 4                                           [ OK ]
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
+Cannot find device "swp1"
+Cannot find device "swp2"
+TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
+
+With this patch:
+$ TESTS='rif_mac_profile' ./resource_scale.sh
+TEST: 'rif_mac_profile' 4                                           [ OK ]
+TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
+
+This is relevant not only for this test.
+
+Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/brocade/bna/bna_types.h |  2 +-
- drivers/net/ethernet/brocade/bna/bnad.c      | 11 ++++++-----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/brocade/bna/bna_types.h b/drivers/net/ethernet/brocade/bna/bna_types.h
-index 666b6922e24db..ebf54d74c2bbe 100644
---- a/drivers/net/ethernet/brocade/bna/bna_types.h
-+++ b/drivers/net/ethernet/brocade/bna/bna_types.h
-@@ -410,7 +410,7 @@ struct bna_ib {
- /* Tx object */
+diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
+index 13d03a6d85ba9..dd9a856318588 100644
+--- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
++++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
+@@ -102,6 +102,8 @@ devlink_reload()
+ 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
+ 			grep -c "size_new")
+ 	check_err $still_pending "Failed reload - There are still unset sizes"
++
++	udevadm settle
+ }
  
- /* Tx datapath control structure */
--#define BNA_Q_NAME_SIZE		16
-+#define BNA_Q_NAME_SIZE		(IFNAMSIZ + 6)
- struct bna_tcb {
- 	/* Fast path */
- 	void			**sw_qpt;
-diff --git a/drivers/net/ethernet/brocade/bna/bnad.c b/drivers/net/ethernet/brocade/bna/bnad.c
-index 94e87e7f277bb..838fa3a2700ab 100644
---- a/drivers/net/ethernet/brocade/bna/bnad.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad.c
-@@ -1535,8 +1535,9 @@ bnad_tx_msix_register(struct bnad *bnad, struct bnad_tx_info *tx_info,
- 
- 	for (i = 0; i < num_txqs; i++) {
- 		vector_num = tx_info->tcb[i]->intr_vector;
--		sprintf(tx_info->tcb[i]->name, "%s TXQ %d", bnad->netdev->name,
--				tx_id + tx_info->tcb[i]->id);
-+		snprintf(tx_info->tcb[i]->name, BNA_Q_NAME_SIZE, "%s TXQ %d",
-+			 bnad->netdev->name,
-+			 tx_id + tx_info->tcb[i]->id);
- 		err = request_irq(bnad->msix_table[vector_num].vector,
- 				  (irq_handler_t)bnad_msix_tx, 0,
- 				  tx_info->tcb[i]->name,
-@@ -1586,9 +1587,9 @@ bnad_rx_msix_register(struct bnad *bnad, struct bnad_rx_info *rx_info,
- 
- 	for (i = 0; i < num_rxps; i++) {
- 		vector_num = rx_info->rx_ctrl[i].ccb->intr_vector;
--		sprintf(rx_info->rx_ctrl[i].ccb->name, "%s CQ %d",
--			bnad->netdev->name,
--			rx_id + rx_info->rx_ctrl[i].ccb->id);
-+		snprintf(rx_info->rx_ctrl[i].ccb->name, BNA_Q_NAME_SIZE,
-+			 "%s CQ %d", bnad->netdev->name,
-+			 rx_id + rx_info->rx_ctrl[i].ccb->id);
- 		err = request_irq(bnad->msix_table[vector_num].vector,
- 				  (irq_handler_t)bnad_msix_rx, 0,
- 				  rx_info->rx_ctrl[i].ccb->name,
+ declare -A DEVLINK_ORIG
 -- 
 2.43.0
 
