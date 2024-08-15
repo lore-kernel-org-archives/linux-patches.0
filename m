@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAFB1EB44;
-	Thu, 15 Aug 2024 13:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070211DFFB;
+	Thu, 15 Aug 2024 13:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728464; cv=none; b=SBP1laA7E0MsrEZL7DpQOPCBj9xW3rMjn3z7tg8zervmb5GYM1HCQ/MyNeXMfnnn8bcoJkEqArNVEhDkautYGG+AoQIDXPJwbNaxYVo77o8B0qRWpIn1eSuaJBDBhYGLYLXO09lwyeSwY8kuOxzAXdSdkCe7L3rScxQpfFu76nQ=
+	t=1723728468; cv=none; b=VMuHrgfwCk120WnM7JbRksc3Z3Cn2AMyn0F4DAQ98ox9cf+PjXL9s8oPDR0JWzp2LHNPjGYE2sv9sdJHt8CNejQ9KrL0E0Ce3/opTRJAqLk9DrdYAP2fcpR6b1Na2uwEvuv9Ai9z6vSoPhpNlULJU/lrIkpQyDZb4KvcRufbVI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728464; c=relaxed/simple;
-	bh=vYlab+8dQFwv6sM0k5+1kv1q56dEpKGrrSy9GoVaulA=;
+	s=arc-20240116; t=1723728468; c=relaxed/simple;
+	bh=XMVF9/mGhL5G1EstsphV77lz+iQAys9T/yTD/nvzShI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XipJWm0hucaLEdo7RCi8M4F145kv5U8+qJNxlyJGA5NfsgFg5xARThwqOz0ryje5beR9aJiyY3AMnTHnyBv96cI4P21vZu4CYgZjXAfPCEhfXqXM34L1M2wyQKnN+u4bP8P2I6W2FaS1s5kcqs9xtIkGuXyGhOEbGZdKg77mqL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tux6XfXL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LaHtGPK2JeVq0zFlp85xnnQ03N8lmjM9HKzNi/3Ir6ZFZeL6nhMx6cozwpIJJ3BHH1zbkLNgb+3gfwSq4Mbdgz6PGyNzNX8HaJc7xJ2fDFh1SLXPw/B9fn6gFOaBXa1lpsZhrDe2kyRYNtShjYKcm1nL21hMwfOZdb0Nj9rJZKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlUbF16M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tux6XfXL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DC9C32786;
-	Thu, 15 Aug 2024 13:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlUbF16M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14714C32786;
+	Thu, 15 Aug 2024 13:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728464;
-	bh=vYlab+8dQFwv6sM0k5+1kv1q56dEpKGrrSy9GoVaulA=;
+	s=korg; t=1723728467;
+	bh=XMVF9/mGhL5G1EstsphV77lz+iQAys9T/yTD/nvzShI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tux6XfXL+UAEPA9YjJWgtFCyuWQFUr4DapKxB5oJyT2rsIIkFp5UxtiBBHl1Ukz1g
-	 H3FZTC77/Ntxy8TkSGTrlIe0OKY41kwsGlMpbWHa8SDp47akL32wQyxlZkc8hIVrg6
-	 Op3EyAifPk1A0Yqns/s9d4W/4gqC+ljQI/j1LQ80=
+	b=vlUbF16MP7RC1/KP4P1rOOpF1/NC0533o5F152DSVRLRvs6MgE0r1Acg+GbBpglOS
+	 JeJ7SB1JNog7ZR2Lud2lCJbExAfFEVf57dax6ybqVnv2eY/f//M/hnoPLlg9lgV/cz
+	 X9jcx6OpYF3NSTJmxuzRNg+CdGCj96EcPhantYtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	syzbot+6030b3b1b9bf70e538c4@syzkaller.appspotmail.com,
+	"=?UTF-8?q?Ernesto=20A . =20Fern=C3=A1ndez?=" <ernesto.mnd.fernandez@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 001/196] platform/chrome: cros_ec_debugfs: fix wrong EC message version
-Date: Thu, 15 Aug 2024 15:21:58 +0200
-Message-ID: <20240815131852.124828489@linuxfoundation.org>
+Subject: [PATCH 4.19 002/196] hfsplus: fix to avoid false alarm of circular locking
+Date: Thu, 15 Aug 2024 15:21:59 +0200
+Message-ID: <20240815131852.162593042@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -45,42 +47,213 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit c2a28647bbb4e0894e8824362410f72b06ac57a4 ]
+[ Upstream commit be4edd1642ee205ed7bbf66edc0453b1be1fb8d7 ]
 
-ec_read_version_supported() uses ec_params_get_cmd_versions_v1 but it
-wrongly uses message version 0.
+Syzbot report potential ABBA deadlock as below:
 
-Fix it.
+loop0: detected capacity change from 0 to 1024
+======================================================
+WARNING: possible circular locking dependency detected
+6.9.0-syzkaller-10323-g8f6a15f095a6 #0 Not tainted
+------------------------------------------------------
+syz-executor171/5344 is trying to acquire lock:
+ffff88807cb980b0 (&tree->tree_lock){+.+.}-{3:3}, at: hfsplus_file_truncate+0x811/0xb50 fs/hfsplus/extents.c:595
 
-Fixes: e86264595225 ("mfd: cros_ec: add debugfs, console log file")
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Link: https://lore.kernel.org/r/20240611113110.16955-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+but task is already holding lock:
+ffff88807a930108 (&HFSPLUS_I(inode)->extents_lock){+.+.}-{3:3}, at: hfsplus_file_truncate+0x2da/0xb50 fs/hfsplus/extents.c:576
+
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #1 (&HFSPLUS_I(inode)->extents_lock){+.+.}-{3:3}:
+       lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+       __mutex_lock_common kernel/locking/mutex.c:608 [inline]
+       __mutex_lock+0x136/0xd70 kernel/locking/mutex.c:752
+       hfsplus_file_extend+0x21b/0x1b70 fs/hfsplus/extents.c:457
+       hfsplus_bmap_reserve+0x105/0x4e0 fs/hfsplus/btree.c:358
+       hfsplus_rename_cat+0x1d0/0x1050 fs/hfsplus/catalog.c:456
+       hfsplus_rename+0x12e/0x1c0 fs/hfsplus/dir.c:552
+       vfs_rename+0xbdb/0xf00 fs/namei.c:4887
+       do_renameat2+0xd94/0x13f0 fs/namei.c:5044
+       __do_sys_rename fs/namei.c:5091 [inline]
+       __se_sys_rename fs/namei.c:5089 [inline]
+       __x64_sys_rename+0x86/0xa0 fs/namei.c:5089
+       do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+       do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+-> #0 (&tree->tree_lock){+.+.}-{3:3}:
+       check_prev_add kernel/locking/lockdep.c:3134 [inline]
+       check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+       validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+       __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+       lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+       __mutex_lock_common kernel/locking/mutex.c:608 [inline]
+       __mutex_lock+0x136/0xd70 kernel/locking/mutex.c:752
+       hfsplus_file_truncate+0x811/0xb50 fs/hfsplus/extents.c:595
+       hfsplus_setattr+0x1ce/0x280 fs/hfsplus/inode.c:265
+       notify_change+0xb9d/0xe70 fs/attr.c:497
+       do_truncate+0x220/0x310 fs/open.c:65
+       handle_truncate fs/namei.c:3308 [inline]
+       do_open fs/namei.c:3654 [inline]
+       path_openat+0x2a3d/0x3280 fs/namei.c:3807
+       do_filp_open+0x235/0x490 fs/namei.c:3834
+       do_sys_openat2+0x13e/0x1d0 fs/open.c:1406
+       do_sys_open fs/open.c:1421 [inline]
+       __do_sys_creat fs/open.c:1497 [inline]
+       __se_sys_creat fs/open.c:1491 [inline]
+       __x64_sys_creat+0x123/0x170 fs/open.c:1491
+       do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+       do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&HFSPLUS_I(inode)->extents_lock);
+                               lock(&tree->tree_lock);
+                               lock(&HFSPLUS_I(inode)->extents_lock);
+  lock(&tree->tree_lock);
+
+This is a false alarm as tree_lock mutex are different, one is
+from sbi->cat_tree, and another is from sbi->ext_tree:
+
+Thread A			Thread B
+- hfsplus_rename
+ - hfsplus_rename_cat
+  - hfs_find_init
+   - mutext_lock(cat_tree->tree_lock)
+				- hfsplus_setattr
+				 - hfsplus_file_truncate
+				  - mutex_lock(hip->extents_lock)
+				  - hfs_find_init
+				   - mutext_lock(ext_tree->tree_lock)
+  - hfs_bmap_reserve
+   - hfsplus_file_extend
+    - mutex_lock(hip->extents_lock)
+
+So, let's call mutex_lock_nested for tree_lock mutex lock, and pass
+correct lock class for it.
+
+Fixes: 31651c607151 ("hfsplus: avoid deadlock on file truncation")
+Reported-by: syzbot+6030b3b1b9bf70e538c4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-fsdevel/000000000000e37a4005ef129563@google.com
+Cc: Ernesto A. Fernández <ernesto.mnd.fernandez@gmail.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20240607142304.455441-1-chao@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_debugfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/hfsplus/bfind.c      | 15 ++-------------
+ fs/hfsplus/extents.c    |  9 ++++++---
+ fs/hfsplus/hfsplus_fs.h | 21 +++++++++++++++++++++
+ 3 files changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
-index c62ee8e610a0f..5aed088371a72 100644
---- a/drivers/platform/chrome/cros_ec_debugfs.c
-+++ b/drivers/platform/chrome/cros_ec_debugfs.c
-@@ -292,6 +292,7 @@ static int ec_read_version_supported(struct cros_ec_dev *ec)
- 	if (!msg)
- 		return 0;
+diff --git a/fs/hfsplus/bfind.c b/fs/hfsplus/bfind.c
+index ca2ba8c9f82ef..901e83d65d202 100644
+--- a/fs/hfsplus/bfind.c
++++ b/fs/hfsplus/bfind.c
+@@ -25,19 +25,8 @@ int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
+ 	fd->key = ptr + tree->max_key_len + 2;
+ 	hfs_dbg(BNODE_REFS, "find_init: %d (%p)\n",
+ 		tree->cnid, __builtin_return_address(0));
+-	switch (tree->cnid) {
+-	case HFSPLUS_CAT_CNID:
+-		mutex_lock_nested(&tree->tree_lock, CATALOG_BTREE_MUTEX);
+-		break;
+-	case HFSPLUS_EXT_CNID:
+-		mutex_lock_nested(&tree->tree_lock, EXTENTS_BTREE_MUTEX);
+-		break;
+-	case HFSPLUS_ATTR_CNID:
+-		mutex_lock_nested(&tree->tree_lock, ATTR_BTREE_MUTEX);
+-		break;
+-	default:
+-		BUG();
+-	}
++	mutex_lock_nested(&tree->tree_lock,
++			hfsplus_btree_lock_class(tree));
+ 	return 0;
+ }
  
-+	msg->version = 1;
- 	msg->command = EC_CMD_GET_CMD_VERSIONS + ec->cmd_offset;
- 	msg->outsize = sizeof(*params);
- 	msg->insize = sizeof(*response);
+diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
+index 7054a542689f9..c95a2f0ed4a74 100644
+--- a/fs/hfsplus/extents.c
++++ b/fs/hfsplus/extents.c
+@@ -430,7 +430,8 @@ int hfsplus_free_fork(struct super_block *sb, u32 cnid,
+ 		hfsplus_free_extents(sb, ext_entry, total_blocks - start,
+ 				     total_blocks);
+ 		total_blocks = start;
+-		mutex_lock(&fd.tree->tree_lock);
++		mutex_lock_nested(&fd.tree->tree_lock,
++			hfsplus_btree_lock_class(fd.tree));
+ 	} while (total_blocks > blocks);
+ 	hfs_find_exit(&fd);
+ 
+@@ -592,7 +593,8 @@ void hfsplus_file_truncate(struct inode *inode)
+ 					     alloc_cnt, alloc_cnt - blk_cnt);
+ 			hfsplus_dump_extent(hip->first_extents);
+ 			hip->first_blocks = blk_cnt;
+-			mutex_lock(&fd.tree->tree_lock);
++			mutex_lock_nested(&fd.tree->tree_lock,
++				hfsplus_btree_lock_class(fd.tree));
+ 			break;
+ 		}
+ 		res = __hfsplus_ext_cache_extent(&fd, inode, alloc_cnt);
+@@ -606,7 +608,8 @@ void hfsplus_file_truncate(struct inode *inode)
+ 		hfsplus_free_extents(sb, hip->cached_extents,
+ 				     alloc_cnt - start, alloc_cnt - blk_cnt);
+ 		hfsplus_dump_extent(hip->cached_extents);
+-		mutex_lock(&fd.tree->tree_lock);
++		mutex_lock_nested(&fd.tree->tree_lock,
++				hfsplus_btree_lock_class(fd.tree));
+ 		if (blk_cnt > start) {
+ 			hip->extent_state |= HFSPLUS_EXT_DIRTY;
+ 			break;
+diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
+index db2e1c750199a..e9b13f771990b 100644
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -537,6 +537,27 @@ int hfsplus_read_wrapper(struct super_block *sb);
+ #define __hfsp_mt2ut(t)		(be32_to_cpu(t) - 2082844800U)
+ #define __hfsp_ut2mt(t)		(cpu_to_be32(t + 2082844800U))
+ 
++static inline enum hfsplus_btree_mutex_classes
++hfsplus_btree_lock_class(struct hfs_btree *tree)
++{
++	enum hfsplus_btree_mutex_classes class;
++
++	switch (tree->cnid) {
++	case HFSPLUS_CAT_CNID:
++		class = CATALOG_BTREE_MUTEX;
++		break;
++	case HFSPLUS_EXT_CNID:
++		class = EXTENTS_BTREE_MUTEX;
++		break;
++	case HFSPLUS_ATTR_CNID:
++		class = ATTR_BTREE_MUTEX;
++		break;
++	default:
++		BUG();
++	}
++	return class;
++}
++
+ /* compatibility */
+ #define hfsp_mt2ut(t)		(struct timespec){ .tv_sec = __hfsp_mt2ut(t) }
+ #define hfsp_ut2mt(t)		__hfsp_ut2mt((t).tv_sec)
 -- 
 2.43.0
 
