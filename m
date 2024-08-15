@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5033618D630;
-	Thu, 15 Aug 2024 13:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C99417C9A9;
+	Thu, 15 Aug 2024 13:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730234; cv=none; b=NZqtPgZbB+zJNouoduwqNv9XdBrwNhOiqJG5Qo9iCqWvVnKFC9jESmaoGO73VjbinwEKrS74T919RZ5gSTHYGGVtxzX+vPBGzQIK6V2NWFoBBE3d4noN7LAm8vUTfG3TzSN+DLTaVMpm8wtJz055Y3otTu3Ck8zcJYX3E67w+c4=
+	t=1723730237; cv=none; b=VnXNKCaCzg3OQ6Q+74ovvmisBaj3ST0+aieqUlMCaOCcjLYCtn6vooRvF8aXw7dtj2G5mEpnpULgyyxhW0f5AmAckE0sMqr6A3z4gATA43jgo9cLbrDfSmIi7RaVBs0OhO2sxwtUnLJgixRV4H6+86EfA6mDkSQrERrSTxDxHWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730234; c=relaxed/simple;
-	bh=FCaLqliKHeN8EHThxugciVZEWIYP1VueF7Uszz+urt0=;
+	s=arc-20240116; t=1723730237; c=relaxed/simple;
+	bh=QGWYtf8B+9jLbqXYjLIknWRilpGaWJi/J6r1eueTpX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CtcUI4+TnN9mGj00n3+pWFfzHJ+eULCB1CJ3gTsbAQyNFaeizmsk0UgQR8r90JEzJ1YspSWQ7OIYOXNkFOLmsB+vIvgcLRD0Dref44qIGguKfbVuVd4vF7owz+68QzoEz/uO5uKHQ3XTco68p2e8f1U7l32jR/1Q66q0x6F+lW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDoj0BXU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hf+uFPB+trtx/aIjrl51RuLfE8hSLCAKw0jugfiFpKuZrW1hb71/KaKF3BimLWXDaLuQ0l0/IaOL67tS/jpiGuI4LM/UCHzptf3I/Af/viT6CB/1ia5LEdAHmFo7fTlUZsBLew95KKguWfvqaY8Ch4sAzdoLwqWbAnxe8A8qSwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ie467Zu8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDoj0BXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC152C32786;
-	Thu, 15 Aug 2024 13:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ie467Zu8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D308BC4AF0C;
+	Thu, 15 Aug 2024 13:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730234;
-	bh=FCaLqliKHeN8EHThxugciVZEWIYP1VueF7Uszz+urt0=;
+	s=korg; t=1723730237;
+	bh=QGWYtf8B+9jLbqXYjLIknWRilpGaWJi/J6r1eueTpX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDoj0BXUCF4btRiwqB1PmR5Mdu3Q/Q27nVjgLSwAnUSY/kKtNMjOfmOBGNoNuaFHv
-	 0+bziXCQYwxUuKLRj2OfufhBBfEA85xMLL5QxBUb0yEC4+2MbL1aCRD+Ob7tksX4HL
-	 teLjMgVWezbbzOqe4oUcj4IP0jf8CTsF/z1utDZI=
+	b=Ie467Zu8RBrj68ax1Qx35MaF5pkRSfUTVj38NVbDVVwmzzUgWXuArD6m8KHFEuFjt
+	 /jv3TJeyzsgM+bzhni5N3Nzh925MMtjv0xLfQHDJ3pvtUXO1VU/O/xHKw/PYdaOo3t
+	 9cMhf503AXRzkWmFLEg1va5+EMePZjWUzcBZCGI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mavroudis Chatzilazaridis <mavchatz@protonmail.com>,
+	Edmund Raile <edmund.raile@protonmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 346/484] ALSA: hda/realtek: Add quirk for Acer Aspire E5-574G
-Date: Thu, 15 Aug 2024 15:23:24 +0200
-Message-ID: <20240815131954.786528128@linuxfoundation.org>
+Subject: [PATCH 5.15 347/484] Revert "ALSA: firewire-lib: obsolete workqueue for period update"
+Date: Thu, 15 Aug 2024 15:23:25 +0200
+Message-ID: <20240815131954.824584008@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,31 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mavroudis Chatzilazaridis <mavchatz@protonmail.com>
+From: Edmund Raile <edmund.raile@protonmail.com>
 
-commit 3c0b6f924e1259ade38587ea719b693f6f6f2f3e upstream.
+commit 6ccf9984d6be3c2f804087b736db05c2ec42664b upstream.
 
-ALC255_FIXUP_ACER_LIMIT_INT_MIC_BOOST fixes combo jack detection and
-limits the internal microphone boost that causes clipping on this model.
+prepare resolution of AB/BA deadlock competition for substream lock:
+restore workqueue previously used for process context:
 
-Signed-off-by: Mavroudis Chatzilazaridis <mavchatz@protonmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240728123601.144017-1-mavchatz@protonmail.com
+revert commit b5b519965c4c ("ALSA: firewire-lib: obsolete workqueue
+for period update")
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/kwryofzdmjvzkuw6j3clftsxmoolynljztxqwg76hzeo4simnl@jn3eo7pe642q/
+Signed-off-by: Edmund Raile <edmund.raile@protonmail.com>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20240730195318.869840-2-edmund.raile@protonmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/firewire/amdtp-stream.c |   15 +++++++++++++++
+ sound/firewire/amdtp-stream.h |    1 +
+ 2 files changed, 16 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8958,6 +8958,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1025, 0x079b, "Acer Aspire V5-573G", ALC282_FIXUP_ASPIRE_V5_PINS),
- 	SND_PCI_QUIRK(0x1025, 0x080d, "Acer Aspire V5-122P", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x0840, "Acer Aspire E1", ALC269VB_FIXUP_ASPIRE_E1_COEF),
-+	SND_PCI_QUIRK(0x1025, 0x100c, "Acer Aspire E5-574G", ALC255_FIXUP_ACER_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x1025, 0x101c, "Acer Veriton N2510G", ALC269_FIXUP_LIFEBOOK),
- 	SND_PCI_QUIRK(0x1025, 0x102b, "Acer Aspire C24-860", ALC286_FIXUP_ACER_AIO_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1065, "Acer Aspire C20-820", ALC269VC_FIXUP_ACER_HEADSET_MIC),
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -77,6 +77,8 @@
+ // overrun. Actual device can skip more, then this module stops the packet streaming.
+ #define IR_JUMBO_PAYLOAD_MAX_SKIP_CYCLES	5
+ 
++static void pcm_period_work(struct work_struct *work);
++
+ /**
+  * amdtp_stream_init - initialize an AMDTP stream structure
+  * @s: the AMDTP stream to initialize
+@@ -105,6 +107,7 @@ int amdtp_stream_init(struct amdtp_strea
+ 	s->flags = flags;
+ 	s->context = ERR_PTR(-1);
+ 	mutex_init(&s->mutex);
++	INIT_WORK(&s->period_work, pcm_period_work);
+ 	s->packet_index = 0;
+ 
+ 	init_waitqueue_head(&s->ready_wait);
+@@ -343,6 +346,7 @@ EXPORT_SYMBOL(amdtp_stream_get_max_paylo
+  */
+ void amdtp_stream_pcm_prepare(struct amdtp_stream *s)
+ {
++	cancel_work_sync(&s->period_work);
+ 	s->pcm_buffer_pointer = 0;
+ 	s->pcm_period_pointer = 0;
+ }
+@@ -622,6 +626,16 @@ static void update_pcm_pointers(struct a
+ 	}
+ }
+ 
++static void pcm_period_work(struct work_struct *work)
++{
++	struct amdtp_stream *s = container_of(work, struct amdtp_stream,
++					      period_work);
++	struct snd_pcm_substream *pcm = READ_ONCE(s->pcm);
++
++	if (pcm)
++		snd_pcm_period_elapsed(pcm);
++}
++
+ static int queue_packet(struct amdtp_stream *s, struct fw_iso_packet *params,
+ 			bool sched_irq)
+ {
+@@ -1798,6 +1812,7 @@ static void amdtp_stream_stop(struct amd
+ 		return;
+ 	}
+ 
++	cancel_work_sync(&s->period_work);
+ 	fw_iso_context_stop(s->context);
+ 	fw_iso_context_destroy(s->context);
+ 	s->context = ERR_PTR(-1);
+--- a/sound/firewire/amdtp-stream.h
++++ b/sound/firewire/amdtp-stream.h
+@@ -190,6 +190,7 @@ struct amdtp_stream {
+ 
+ 	/* For a PCM substream processing. */
+ 	struct snd_pcm_substream *pcm;
++	struct work_struct period_work;
+ 	snd_pcm_uframes_t pcm_buffer_pointer;
+ 	unsigned int pcm_period_pointer;
+ 
 
 
