@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7E819FA99;
-	Thu, 15 Aug 2024 14:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8D619DF6A;
+	Thu, 15 Aug 2024 14:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731524; cv=none; b=N0DxD7km6rBs/h3Ub15KZu7ASgkFaC8sFH4YxYG0qzMXNwcdIoDgjmp10dxYND+jSduSdI7jcp7UrsKOPdP21pgHIZQBSvvUZ4blTQq8opXtFuIsEQcWNdBK5MdgoCg5HgP6tN8nP3V4mAwAhXQfADmiTQosJmHUIRR0bLGv00Y=
+	t=1723731526; cv=none; b=XTIb5okOXClVO6zA2xRgltT8l82YTyru5m2zu8a/LyM/gpsP8EeEgdnLrWRc55NUDg6lnIxNthWDvF5RjOG26FAMEfYMLxLS937DWIj3I4HAJq4o1C2gY5OrCG0F+j7atLSwAM33ZXlWom3f3qwE2XUsCV1upxQJa7x3R8ZHLRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731524; c=relaxed/simple;
-	bh=mcv/3Oxo5VtpslgiriHXlZqgt2w6I4ANWF9lpf/5SkM=;
+	s=arc-20240116; t=1723731526; c=relaxed/simple;
+	bh=yRkne1UKBNX4G3LBa/fYDxRaV1K+KUGsjDaThHndTt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8khQUxYuL+G1Uz3uUdV1wweDaZPGsXzxrjOtkzjshPuPd/XKxzjuRGZqo9n7n6TzTixVoqoNhyw+WYZt26ZrJhpiB/UytXUllx8LwcthsHNpO8T8QqdPTi85bCwlFqdCh59T77jPhayao2zRsOD3aK5tjNb4Gu6vAmlnNRnGmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeZNoo/s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmWAk7RB0TdI28RFMazAvowBzA2MAGx8oE/mJUoHnj4N90LYrazKJV8jY94s5ASCsq1jhnOamRD/owlCM53dAlUuIuL/GpAW+ktt2XihQ8K0/+J1xE30CxhrGW4n1pzrYAPCg01Dae0zhJip9dpFUJ57EeBuX2fs1dhvHGZeA5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Phojto5j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeZNoo/s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353A1C4AF0A;
-	Thu, 15 Aug 2024 14:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Phojto5j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263FFC32786;
+	Thu, 15 Aug 2024 14:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731523;
-	bh=mcv/3Oxo5VtpslgiriHXlZqgt2w6I4ANWF9lpf/5SkM=;
+	s=korg; t=1723731526;
+	bh=yRkne1UKBNX4G3LBa/fYDxRaV1K+KUGsjDaThHndTt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeZNoo/sjBotzoYV6xdRr+mBDbMr4jZu5u33xV6zkxzhnln49xEYlon0g/3QfytK1
-	 +r5jPrp1xQ/PiL+591p3J/DCPBdl3uzWAmRsfTyKr0sUvt7wYRb9tQiOREvUkJ7+fx
-	 CCs61ykD9ZdEzVdL28QuYrT28mdsSIH5XFnPJVYw=
+	b=Phojto5jIhpdnDk7uJhArnNUa6ZSzilUOfZ1KUevksqIoJAH5wSXhHmPv5l9WNkl8
+	 pmaRNVb7ifPuFLRwnf66UFG92G1QV+YmqrXmD4W/UwDZwfhcQol9YnTW2/iWYDiQSV
+	 EouXJH8P+99lX1IfpapjYCzTR25GRbHa0BE52UU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 156/259] s390/pci: Allow allocation of more than 1 MSI interrupt
-Date: Thu, 15 Aug 2024 15:24:49 +0200
-Message-ID: <20240815131908.809930401@linuxfoundation.org>
+Subject: [PATCH 5.4 157/259] nvme-pci: add missing condition check for existence of mapped data
+Date: Thu, 15 Aug 2024 15:24:50 +0200
+Message-ID: <20240815131908.847868593@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,168 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit ab42fcb511fd9d241bbab7cc3ca04e34e9fc0666 ]
+[ Upstream commit c31fad1470389666ac7169fe43aa65bf5b7e2cfd ]
 
-On a PCI adapter that provides up to 8 MSI interrupt sources the s390
-implementation of PCI interrupts rejected to accommodate them, although
-the underlying hardware is able to support that.
+nvme_map_data() is called when request has physical segments, hence
+the nvme_unmap_data() should have same condition to avoid dereference.
 
-For MSI-X it is sufficient to allocate a single irq_desc per msi_desc,
-but for MSI multiple irq descriptors are attached to and controlled by
-a single msi descriptor. Add the appropriate loops to maintain multiple
-irq descriptors and tie/untie them to/from the appropriate AIBV bit, if
-a device driver allocates more than 1 MSI interrupt.
-
-Common PCI code passes on requests to allocate a number of interrupt
-vectors based on the device drivers' demand and the PCI functions'
-capabilities. However, the root-complex of s390 systems support just a
-limited number of interrupt vectors per PCI function.
-Produce a kernel log message to inform about any architecture-specific
-capping that might be done.
-
-With this change, we had a PCI adapter successfully raising
-interrupts to its device driver via all 8 sources.
-
-Fixes: a384c8924a8b ("s390/PCI: Fix single MSI only check")
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 4aedb705437f ("nvme-pci: split metadata handling from nvme_map_data / nvme_unmap_data")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_irq.c | 62 ++++++++++++++++++++++++++++-------------
- 1 file changed, 42 insertions(+), 20 deletions(-)
+ drivers/nvme/host/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index b36f5ef34a6c1..690f6999287bc 100644
---- a/arch/s390/pci/pci_irq.c
-+++ b/arch/s390/pci/pci_irq.c
-@@ -262,8 +262,8 @@ static int __alloc_airq(struct zpci_dev *zdev, int msi_vecs,
- 
- int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- {
-+	unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
- 	struct zpci_dev *zdev = to_zpci(pdev);
--	unsigned int hwirq, msi_vecs, cpu;
- 	struct msi_desc *msi;
- 	struct msi_msg msg;
- 	unsigned long bit;
-@@ -273,30 +273,46 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 	zdev->aisb = -1UL;
- 	zdev->msi_first_bit = -1U;
- 
--	if (type == PCI_CAP_ID_MSI && nvec > 1)
--		return 1;
- 	msi_vecs = min_t(unsigned int, nvec, zdev->max_msi);
-+	if (msi_vecs < nvec) {
-+		pr_info("%s requested %d irqs, allocate system limit of %d",
-+			pci_name(pdev), nvec, zdev->max_msi);
-+	}
- 
- 	rc = __alloc_airq(zdev, msi_vecs, &bit);
- 	if (rc < 0)
- 		return rc;
- 
--	/* Request MSI interrupts */
-+	/*
-+	 * Request MSI interrupts:
-+	 * When using MSI, nvec_used interrupt sources and their irq
-+	 * descriptors are controlled through one msi descriptor.
-+	 * Thus the outer loop over msi descriptors shall run only once,
-+	 * while two inner loops iterate over the interrupt vectors.
-+	 * When using MSI-X, each interrupt vector/irq descriptor
-+	 * is bound to exactly one msi descriptor (nvec_used is one).
-+	 * So the inner loops are executed once, while the outer iterates
-+	 * over the MSI-X descriptors.
-+	 */
- 	hwirq = bit;
- 	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
--		rc = -EIO;
- 		if (hwirq - bit >= msi_vecs)
- 			break;
--		irq = __irq_alloc_descs(-1, 0, 1, 0, THIS_MODULE,
--				(irq_delivery == DIRECTED) ?
--				msi->affinity : NULL);
-+		irqs_per_msi = min_t(unsigned int, msi_vecs, msi->nvec_used);
-+		irq = __irq_alloc_descs(-1, 0, irqs_per_msi, 0, THIS_MODULE,
-+					(irq_delivery == DIRECTED) ?
-+					msi->affinity : NULL);
- 		if (irq < 0)
- 			return -ENOMEM;
--		rc = irq_set_msi_desc(irq, msi);
--		if (rc)
--			return rc;
--		irq_set_chip_and_handler(irq, &zpci_irq_chip,
--					 handle_percpu_irq);
-+
-+		for (i = 0; i < irqs_per_msi; i++) {
-+			rc = irq_set_msi_desc_off(irq, i, msi);
-+			if (rc)
-+				return rc;
-+			irq_set_chip_and_handler(irq + i, &zpci_irq_chip,
-+						 handle_percpu_irq);
-+		}
-+
- 		msg.data = hwirq - bit;
- 		if (irq_delivery == DIRECTED) {
- 			if (msi->affinity)
-@@ -309,19 +325,22 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 			msg.address_lo |= (cpu_addr << 8);
- 
- 			for_each_possible_cpu(cpu) {
--				airq_iv_set_data(zpci_ibv[cpu], hwirq, irq);
-+				for (i = 0; i < irqs_per_msi; i++)
-+					airq_iv_set_data(zpci_ibv[cpu],
-+							 hwirq + i, irq + i);
- 			}
- 		} else {
- 			msg.address_lo = zdev->msi_addr & 0xffffffff;
--			airq_iv_set_data(zdev->aibv, hwirq, irq);
-+			for (i = 0; i < irqs_per_msi; i++)
-+				airq_iv_set_data(zdev->aibv, hwirq + i, irq + i);
- 		}
- 		msg.address_hi = zdev->msi_addr >> 32;
- 		pci_write_msi_msg(irq, &msg);
--		hwirq++;
-+		hwirq += irqs_per_msi;
- 	}
- 
- 	zdev->msi_first_bit = bit;
--	zdev->msi_nr_irqs = msi_vecs;
-+	zdev->msi_nr_irqs = hwirq - bit;
- 
- 	if (irq_delivery == DIRECTED)
- 		rc = zpci_set_directed_irq(zdev);
-@@ -330,13 +349,14 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 	if (rc)
- 		return rc;
- 
--	return (msi_vecs == nvec) ? 0 : msi_vecs;
-+	return (zdev->msi_nr_irqs == nvec) ? 0 : zdev->msi_nr_irqs;
- }
- 
- void arch_teardown_msi_irqs(struct pci_dev *pdev)
- {
- 	struct zpci_dev *zdev = to_zpci(pdev);
- 	struct msi_desc *msi;
-+	unsigned int i;
- 	int rc;
- 
- 	/* Disable interrupts */
-@@ -349,8 +369,10 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
- 
- 	/* Release MSI interrupts */
- 	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
--		irq_set_msi_desc(msi->irq, NULL);
--		irq_free_desc(msi->irq);
-+		for (i = 0; i < msi->nvec_used; i++) {
-+			irq_set_msi_desc(msi->irq + i, NULL);
-+			irq_free_desc(msi->irq + i);
-+		}
- 		msi->msg.address_lo = 0;
- 		msi->msg.address_hi = 0;
- 		msi->msg.data = 0;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 486e44d20b430..1a6a628bb6f9f 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -938,7 +938,8 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	nvme_submit_cmd(nvmeq, &cmnd, bd->last);
+ 	return BLK_STS_OK;
+ out_unmap_data:
+-	nvme_unmap_data(dev, req);
++	if (blk_rq_nr_phys_segments(req))
++		nvme_unmap_data(dev, req);
+ out_free_cmd:
+ 	nvme_cleanup_cmd(req);
+ 	return ret;
 -- 
 2.43.0
 
