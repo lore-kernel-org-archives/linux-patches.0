@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A8B1A7060;
-	Thu, 15 Aug 2024 14:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F131A00CF;
+	Thu, 15 Aug 2024 14:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730651; cv=none; b=VFLwNIHdVbSAnhZ7hTvm6DeDuwFJw2pKm1ZaEAxffEHcGWueZNXcsFLFA0O/xCvRvmCJkptCJUhzORPqwQyW+Ds8UdJFInP5I6Ex5csX3WKiNSUlW+PJc3lsOJP3tM48eQeMiLFatyzxThPP8pQGTRh+kuUUdtKYugSy8hb/GTw=
+	t=1723730655; cv=none; b=BmRNot2DnDuJoGvI+BVL4C9x8erSuu/I7zfU5MFp37WqC+rbrPd7r6202+6+5xEGvXi2Vr+WhPNQoajzOOfgmb2dHy/u5gYASmEviC/vGfF/AXqr55ZJ3CRlVS6k9lF8gnmMLdTtEOpZ6lPERaoTxg9x9SBEqvwimclWU8+gSI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730651; c=relaxed/simple;
-	bh=9ATMyHnP5pVIdhXNmz8kbczuVUgzMJNc9JvsAINgza0=;
+	s=arc-20240116; t=1723730655; c=relaxed/simple;
+	bh=I3r3kucNWisc3NV7gTE4UdQAXbXDnla7pQ6HlK98H1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVjBHgf8LwG2Ul8QuC67cPgTYgPgoSyP3oeEDGjJhVsrE3OTXRve+Fp91BtamoML92tDxRwb6IK0WOYMA7i80kUrjVtAyjM5RdFti6Ghc7CmrOlCwWOMG9dU7nNLhNOBQ4bpQjWXJaB1OcEngS/JSGHwv5DRaBeKPFSzcgzQt4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh3ityFa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZ1kR0bE19UnqrWk+z03jO+bNzSqcJFh8qj6EKMfbdT/8tQVrWyX6LKxUZoN2FLGfbzv/GcFUA51nhnFLXa2VzoY518wVQBuCUtEB0IRz71rzDXkl7U1MNXM2UEDHbvcHnVNdnkr7qgBRtBov9S7HsoM6O8tQzVjPnjeJKLDFz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnx6b0k2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh3ityFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E95C4AF0A;
-	Thu, 15 Aug 2024 14:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnx6b0k2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8CEC32786;
+	Thu, 15 Aug 2024 14:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730651;
-	bh=9ATMyHnP5pVIdhXNmz8kbczuVUgzMJNc9JvsAINgza0=;
+	s=korg; t=1723730654;
+	bh=I3r3kucNWisc3NV7gTE4UdQAXbXDnla7pQ6HlK98H1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fh3ityFa/0CenRKxoijf82XWLVFzPoA9wP++poMZl14tYbmm3DVbgXK3YuK4e+ak6
-	 ufECFSonJii6ICe7NJo8ft6uuLXMuN9YD5wZgj0AW2cx5/+4uKqN0seyhehbTwy0Og
-	 C3TvJSF5X5QPVmDtVfOMz4VcgOvuc5O38H/vY3eo=
+	b=Wnx6b0k2+ousMoTs30LnBAI71GJoOQjqgUSmYeirwvB4QCM9TclYdEyJdKH1JXYZw
+	 Pvf8WZMax8zabTbn24V0wUv80GUOGXv664gnT9tvX92/PSPrJP9izBmYvbQkkOpS6w
+	 0IjgvARY/LhZERFSaO78ckfjuRR3ZXMjcZPI5vTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Jonathan Cavitt <Jonathan.cavitt@intel.com>
-Subject: [PATCH 5.15 475/484] drm/i915/gem: Fix Virtual Memory mapping boundaries calculation
-Date: Thu, 15 Aug 2024 15:25:33 +0200
-Message-ID: <20240815131959.826627740@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Shirisha Ganta <shirisha@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Jinjie Ruan <ruanjinjie@huawei.com>
+Subject: [PATCH 5.15 476/484] powerpc: Avoid nmi_enter/nmi_exit in real mode interrupt.
+Date: Thu, 15 Aug 2024 15:25:34 +0200
+Message-ID: <20240815131959.866659132@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -55,126 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Mahesh Salgaonkar <mahesh@linux.ibm.com>
 
-commit 8bdd9ef7e9b1b2a73e394712b72b22055e0e26c3 upstream.
+commit 0db880fc865ffb522141ced4bfa66c12ab1fbb70 upstream.
 
-Calculating the size of the mapped area as the lesser value
-between the requested size and the actual size does not consider
-the partial mapping offset. This can cause page fault access.
+nmi_enter()/nmi_exit() touches per cpu variables which can lead to kernel
+crash when invoked during real mode interrupt handling (e.g. early HMI/MCE
+interrupt handler) if percpu allocation comes from vmalloc area.
 
-Fix the calculation of the starting and ending addresses, the
-total size is now deduced from the difference between the end and
-start addresses.
+Early HMI/MCE handlers are called through DEFINE_INTERRUPT_HANDLER_NMI()
+wrapper which invokes nmi_enter/nmi_exit calls. We don't see any issue when
+percpu allocation is from the embedded first chunk. However with
+CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled there are chances where percpu
+allocation can come from the vmalloc area.
 
-Additionally, the calculations have been rewritten in a clearer
-and more understandable form.
+With kernel command line "percpu_alloc=page" we can force percpu allocation
+to come from vmalloc area and can see kernel crash in machine_check_early:
 
-Fixes: c58305af1835 ("drm/i915: Use remap_io_mapping() to prefault all PTE in a single pass")
-Reported-by: Jann Horn <jannh@google.com>
-Co-developed-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: <stable@vger.kernel.org> # v4.9+
-Reviewed-by: Jann Horn <jannh@google.com>
-Reviewed-by: Jonathan Cavitt <Jonathan.cavitt@intel.com>
-[Joonas: Add Requires: tag]
-Requires: 60a2066c5005 ("drm/i915/gem: Adjust vma offset for framebuffer mmap offset")
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240802083850.103694-3-andi.shyti@linux.intel.com
-(cherry picked from commit 97b6784753da06d9d40232328efc5c5367e53417)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[    1.215714] NIP [c000000000e49eb4] rcu_nmi_enter+0x24/0x110
+[    1.215717] LR [c0000000000461a0] machine_check_early+0xf0/0x2c0
+[    1.215719] --- interrupt: 200
+[    1.215720] [c000000fffd73180] [0000000000000000] 0x0 (unreliable)
+[    1.215722] [c000000fffd731b0] [0000000000000000] 0x0
+[    1.215724] [c000000fffd73210] [c000000000008364] machine_check_early_common+0x134/0x1f8
+
+Fix this by avoiding use of nmi_enter()/nmi_exit() in real mode if percpu
+first chunk is not embedded.
+
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Tested-by: Shirisha Ganta <shirisha@linux.ibm.com>
+Signed-off-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240410043006.81577-1-mahesh@linux.ibm.com
+[ Conflicts in arch/powerpc/include/asm/interrupt.h
+  because interrupt_nmi_enter_prepare() and interrupt_nmi_exit_prepare()
+  has been refactored. ]
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_mman.c |   53 +++++++++++++++++++++++++++----
- 1 file changed, 47 insertions(+), 6 deletions(-)
+ arch/powerpc/include/asm/interrupt.h |   14 ++++++++++----
+ arch/powerpc/include/asm/percpu.h    |   10 ++++++++++
+ arch/powerpc/kernel/setup_64.c       |    2 ++
+ 3 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-@@ -286,6 +286,41 @@ out:
- 	return i915_error_to_vmf_fault(err);
+--- a/arch/powerpc/include/asm/interrupt.h
++++ b/arch/powerpc/include/asm/interrupt.h
+@@ -285,18 +285,24 @@ static inline void interrupt_nmi_enter_p
+ 	/*
+ 	 * Do not use nmi_enter() for pseries hash guest taking a real-mode
+ 	 * NMI because not everything it touches is within the RMA limit.
++	 *
++	 * Likewise, do not use it in real mode if percpu first chunk is not
++	 * embedded. With CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled there
++	 * are chances where percpu allocation can come from vmalloc area.
+ 	 */
+-	if (!IS_ENABLED(CONFIG_PPC_BOOK3S_64) ||
++	if ((!IS_ENABLED(CONFIG_PPC_BOOK3S_64) ||
+ 			!firmware_has_feature(FW_FEATURE_LPAR) ||
+-			radix_enabled() || (mfmsr() & MSR_DR))
++			radix_enabled() || (mfmsr() & MSR_DR)) &&
++			!percpu_first_chunk_is_paged)
+ 		nmi_enter();
  }
  
-+static void set_address_limits(struct vm_area_struct *area,
-+			       struct i915_vma *vma,
-+			       unsigned long obj_offset,
-+			       unsigned long *start_vaddr,
-+			       unsigned long *end_vaddr)
-+{
-+	unsigned long vm_start, vm_end, vma_size; /* user's memory parameters */
-+	long start, end; /* memory boundaries */
-+
-+	/*
-+	 * Let's move into the ">> PAGE_SHIFT"
-+	 * domain to be sure not to lose bits
-+	 */
-+	vm_start = area->vm_start >> PAGE_SHIFT;
-+	vm_end = area->vm_end >> PAGE_SHIFT;
-+	vma_size = vma->size >> PAGE_SHIFT;
-+
-+	/*
-+	 * Calculate the memory boundaries by considering the offset
-+	 * provided by the user during memory mapping and the offset
-+	 * provided for the partial mapping.
-+	 */
-+	start = vm_start;
-+	start -= obj_offset;
-+	start += vma->ggtt_view.partial.offset;
-+	end = start + vma_size;
-+
-+	start = max_t(long, start, vm_start);
-+	end = min_t(long, end, vm_end);
-+
-+	/* Let's move back into the "<< PAGE_SHIFT" domain */
-+	*start_vaddr = (unsigned long)start << PAGE_SHIFT;
-+	*end_vaddr = (unsigned long)end << PAGE_SHIFT;
-+}
-+
- static vm_fault_t vm_fault_gtt(struct vm_fault *vmf)
+ static inline void interrupt_nmi_exit_prepare(struct pt_regs *regs, struct interrupt_nmi_state *state)
  {
- #define MIN_CHUNK_PAGES (SZ_1M >> PAGE_SHIFT)
-@@ -298,14 +333,18 @@ static vm_fault_t vm_fault_gtt(struct vm
- 	struct i915_ggtt *ggtt = &i915->ggtt;
- 	bool write = area->vm_flags & VM_WRITE;
- 	struct i915_gem_ww_ctx ww;
-+	unsigned long obj_offset;
-+	unsigned long start, end; /* memory boundaries */
- 	intel_wakeref_t wakeref;
- 	struct i915_vma *vma;
- 	pgoff_t page_offset;
-+	unsigned long pfn;
- 	int srcu;
- 	int ret;
+-	if (!IS_ENABLED(CONFIG_PPC_BOOK3S_64) ||
++	if ((!IS_ENABLED(CONFIG_PPC_BOOK3S_64) ||
+ 			!firmware_has_feature(FW_FEATURE_LPAR) ||
+-			radix_enabled() || (mfmsr() & MSR_DR))
++			radix_enabled() || (mfmsr() & MSR_DR)) &&
++			!percpu_first_chunk_is_paged)
+ 		nmi_exit();
  
--	/* We don't use vmf->pgoff since that has the fake offset */
-+	obj_offset = area->vm_pgoff - drm_vma_node_start(&mmo->vma_node);
- 	page_offset = (vmf->address - area->vm_start) >> PAGE_SHIFT;
-+	page_offset += obj_offset;
+ 	/*
+--- a/arch/powerpc/include/asm/percpu.h
++++ b/arch/powerpc/include/asm/percpu.h
+@@ -15,6 +15,16 @@
+ #endif /* CONFIG_SMP */
+ #endif /* __powerpc64__ */
  
- 	trace_i915_gem_object_fault(obj, page_offset, true, write);
- 
-@@ -376,12 +415,14 @@ retry:
- 	if (ret)
- 		goto err_unpin;
- 
-+	set_address_limits(area, vma, obj_offset, &start, &end);
++#if defined(CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK) && defined(CONFIG_SMP)
++#include <linux/jump_label.h>
++DECLARE_STATIC_KEY_FALSE(__percpu_first_chunk_is_paged);
 +
-+	pfn = (ggtt->gmadr.start + i915_ggtt_offset(vma)) >> PAGE_SHIFT;
-+	pfn += (start - area->vm_start) >> PAGE_SHIFT;
-+	pfn += obj_offset - vma->ggtt_view.partial.offset;
++#define percpu_first_chunk_is_paged	\
++		(static_key_enabled(&__percpu_first_chunk_is_paged.key))
++#else
++#define percpu_first_chunk_is_paged	false
++#endif /* CONFIG_PPC64 && CONFIG_SMP */
 +
- 	/* Finally, remap it using the new GTT offset */
--	ret = remap_io_mapping(area,
--			       area->vm_start + (vma->ggtt_view.partial.offset << PAGE_SHIFT),
--			       (ggtt->gmadr.start + vma->node.start) >> PAGE_SHIFT,
--			       min_t(u64, vma->size, area->vm_end - area->vm_start),
--			       &ggtt->iomap);
-+	ret = remap_io_mapping(area, start, pfn, end - start, &ggtt->iomap);
- 	if (ret)
- 		goto err_fence;
+ #include <asm-generic/percpu.h>
  
+ #include <asm/paca.h>
+--- a/arch/powerpc/kernel/setup_64.c
++++ b/arch/powerpc/kernel/setup_64.c
+@@ -825,6 +825,7 @@ static int pcpu_cpu_distance(unsigned in
+ 
+ unsigned long __per_cpu_offset[NR_CPUS] __read_mostly;
+ EXPORT_SYMBOL(__per_cpu_offset);
++DEFINE_STATIC_KEY_FALSE(__percpu_first_chunk_is_paged);
+ 
+ static void __init pcpu_populate_pte(unsigned long addr)
+ {
+@@ -904,6 +905,7 @@ void __init setup_per_cpu_areas(void)
+ 	if (rc < 0)
+ 		panic("cannot initialize percpu area (err=%d)", rc);
+ 
++	static_key_enable(&__percpu_first_chunk_is_paged.key);
+ 	delta = (unsigned long)pcpu_base_addr - (unsigned long)__per_cpu_start;
+ 	for_each_possible_cpu(cpu) {
+                 __per_cpu_offset[cpu] = delta + pcpu_unit_offsets[cpu];
 
 
