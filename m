@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A9D19D89D;
-	Thu, 15 Aug 2024 13:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB971714AE;
+	Thu, 15 Aug 2024 13:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729169; cv=none; b=MrqXbcWBOgOfb38DSotSAJYcqmwUJbsUz4u/Kvh2Lu4jWz/Zx2dcoc4MnpaaiDtRcw4bbpFTFBQ6AChhBoSAyclfmaprLLgwcT9XWITwNW0WEo7CoaBdoG/VfbHrOKa/91HHIIYsBypwBLDpUKRjA7nj6OH414Ot3M0OXmHHBak=
+	t=1723729173; cv=none; b=bOyLZR9wbdZrLetNVi03SIZCzJI6Tice711tmxVXWsS7MtwMjuFhn0O7m5Scutr15t6P1TZVIydtT5mhcO4Ev84/8CfhX+6n9Pt+TRdTMwu4B2VgpSKItEZGVvhn+ppQe2q6Y3QcDW/iHbaaIer7qzfdLurbufFzhHtU62uRFHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729169; c=relaxed/simple;
-	bh=3H1kbqTI0MLVsEFGsKVtMNdTMt6TEmQqx99T49FC4fg=;
+	s=arc-20240116; t=1723729173; c=relaxed/simple;
+	bh=iFg60npSixi/mjytIceVN6W3j0KmTCOncMF7FJ1rva0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2ttQt2/0BRbkahINa9dI5IpBzqFYN0hriYZM7RpdOxzS3H6TemtjSs1x2P+zCe8TjW7a7asY1yE2/+vFFl0JwcdkxFImH+bBIx0r0oJaOEgUp4M/J8bfUetbf9M87SRt+pihT07A4nccrRE8BiTOVoZjF3cD1CO3sYeDVGZqDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Z2bspLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lk7v9mMiIlT5pNYYbvrZddUESAzlA6LLUn/SK34oP+VbTR96D7lCnFAbyxZ+4iYe4/Q2b/wUC9D1Dr04bIt6Xu1iRKXIjTXyOsl1MWqUN21wkT/s2bdhMYh9iz1Y1FO6c4glvGiu1tqY7bnOQGx6UQupy8etDjePJ9+pl4AyFAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQPiUI0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Z2bspLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1E0C32786;
-	Thu, 15 Aug 2024 13:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQPiUI0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF38C32786;
+	Thu, 15 Aug 2024 13:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729169;
-	bh=3H1kbqTI0MLVsEFGsKVtMNdTMt6TEmQqx99T49FC4fg=;
+	s=korg; t=1723729172;
+	bh=iFg60npSixi/mjytIceVN6W3j0KmTCOncMF7FJ1rva0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Z2bspLMCysqFLt3FqbqmrnU/+goH0C1FQQxob7y79PJ3Zp58cQcDgp0W5PEYu4fy
-	 SRxHPBM+BR/xwsE02djTe3i55WDuxOCHTo0BvaXn65j3hG7eVmu0hnVlUXskssPVH1
-	 67fx+C2Gvy45Ha7irWPpwcDoTqFqzlCm/gHDKSns=
+	b=wQPiUI0QIBciLJImRNZB3HE5/xLk2EeAAk+x0i+ogdZ0pZJpSLM1j73e4NXg2oD5u
+	 WaZYDan2luGvwpHMiEhgKpcr1IiqPcrzZtSDOmpTxqZwZhP4oz7bSIygJdDl/qYpxy
+	 Nqe0/rxc20kjdL1oBgLxul3er7ul4YYj3Org5yDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Tung <chineweff@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/484] hwmon: (adt7475) Fix default duty on fan is disabled
-Date: Thu, 15 Aug 2024 15:17:51 +0200
-Message-ID: <20240815131941.781377950@linuxfoundation.org>
+Subject: [PATCH 5.15 014/484] pwm: stm32: Always do lazy disabling
+Date: Thu, 15 Aug 2024 15:17:52 +0200
+Message-ID: <20240815131941.820155717@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -45,42 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayne Tung <chineweff@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 39b24cced70fdc336dbc0070f8b3bde61d8513a8 ]
+[ Upstream commit 7346e7a058a2c9aa9ff1cc699c7bf18a402d9f84 ]
 
-According to the comments on fan is disabled, we change to manual mode
-and set the duty cycle to 0.
-For setting the duty cycle part, the register is wrong. Fix it.
+When the state changes from enabled to disabled, polarity, duty_cycle
+and period are not configured in hardware and TIM_CCER_CCxE is just
+cleared. However if the state changes from one disabled state to
+another, all parameters are written to hardware because the early exit
+from stm32_pwm_apply() is only taken if the pwm is currently enabled.
 
-Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
-Signed-off-by: Wayne Tung <chineweff@gmail.com>
-Link: https://lore.kernel.org/r/20240701073252.317397-1-chineweff@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This yields surprises like: Applying
+
+	{ .period = 1, .duty_cycle = 0, .enabled = false }
+
+succeeds if the pwm is initially on, but fails if it's already off
+because 1 is a too small period.
+
+Update the check for lazy disable to always exit early if the target
+state is disabled, no matter what is currently configured.
+
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20240703110010.672654-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7475.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-stm32.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
-index 22e314725def0..b4c0f01f52c4f 100644
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -1770,7 +1770,7 @@ static void adt7475_read_pwm(struct i2c_client *client, int index)
- 		data->pwm[CONTROL][index] &= ~0xE0;
- 		data->pwm[CONTROL][index] |= (7 << 5);
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index c40a6548ce7d4..2070d107c6328 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -452,8 +452,9 @@ static int stm32_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
  
--		i2c_smbus_write_byte_data(client, PWM_CONFIG_REG(index),
-+		i2c_smbus_write_byte_data(client, PWM_REG(index),
- 					  data->pwm[INPUT][index]);
+ 	enabled = pwm->state.enabled;
  
- 		i2c_smbus_write_byte_data(client, PWM_CONFIG_REG(index),
+-	if (enabled && !state->enabled) {
+-		stm32_pwm_disable(priv, pwm->hwpwm);
++	if (!state->enabled) {
++		if (enabled)
++			stm32_pwm_disable(priv, pwm->hwpwm);
+ 		return 0;
+ 	}
+ 
 -- 
 2.43.0
 
