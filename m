@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7037DA78;
-	Thu, 15 Aug 2024 13:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86557DA78;
+	Thu, 15 Aug 2024 13:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728621; cv=none; b=PBhIOAHzbXqVgZtlj86bkGrKKrWshr0FS+dXupNZ0zZEMSORsZ6KjiX37gYqG0o2e/llyK+NiF7M00ZBpcGyN1uH0bIACWkJL8dEzY5yb94gEaL9fnCmYvx3qOVZM/rAqADi+cJNG5hd9tex0bkMe3xOu/rUKWUwMyrJfBkUmNY=
+	t=1723728624; cv=none; b=g3/gVb93NHf+xpeFjQaA2J9bCFF1aFxz3e6+467DhjLm7laS6LV0Ze2r61ZApuyYH6pDB4jK0hmLHav6pslPkNetlFqVTm476b3I4OISb1ae6k6Db5SI8eQFXOCbjI992R6On083CwRKfDeox2/g9QSDZ93+XfFma9zOr9ftbeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728621; c=relaxed/simple;
-	bh=mzoDpbZUQxVCuuBAZRYXs1QGmW1V4tXRd40KqccMzbo=;
+	s=arc-20240116; t=1723728624; c=relaxed/simple;
+	bh=p4cjXYmh3uv3pIvNz2I+SomcSbll7QlIz8qFfgpdG9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXBHQliFoMPVDUn4v6HGImlfIxUZePGaRBC8JQ/FNEXKor4YvAtpBc8XUOwGgazszoFXVw2EKe3p0GwfUnWkUyjLcnIs0FG6mBgLHrt1I1BRJYX4DTOmaELoNvRpoIi+0ATpTA/MzaxIQqGE+VGn08YDnPqz0oka2CJ2lHutrEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly45wLt3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IiJCrsLjeSD11sLz71V6dxvHLQVKb6ssqDz1ZNjCljI8f8ESzuDIeDfYRUq4I+cuzvIInJLt2CSK4uBxw5cMTZOAyyvoeaPYDyzsv3aJWoxWpabO5DKeM15ojqHmheoA0N0Iy2K0cbURGF0pCnAOVoFXzqs2mnRYiasx9AO0Hlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA7t+421; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly45wLt3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB9FC32786;
-	Thu, 15 Aug 2024 13:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA7t+421"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6F0C4AF0C;
+	Thu, 15 Aug 2024 13:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728621;
-	bh=mzoDpbZUQxVCuuBAZRYXs1QGmW1V4tXRd40KqccMzbo=;
+	s=korg; t=1723728624;
+	bh=p4cjXYmh3uv3pIvNz2I+SomcSbll7QlIz8qFfgpdG9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ly45wLt3LZcKQJ0qw8/j33hWAweNhBAEwg1Pqgc2i8BpKCv7St/P4F8jr02dDja8a
-	 dhO73GKo3bW11+SMBbkkyxjOftFj1oiZ7MhHoujNjAaPKyGySAUGKz4mQw5nVczVqy
-	 QFvAtkH0vQ26dhBtcjBGQv6s+TYAjX9BFtY4frGQ=
+	b=TA7t+421uvnRyBK+Kr1/pOHWMiuC8MzBxWpgEoR0dnpSxXx214Y8C/XfBG48Nvqox
+	 Bp5QYMc6Ml1hh/XQf3k/SfBrbBg3REIc1ojugl/1w7NuPxvCMKPtpjUceWQbwb2F/c
+	 U+aBisPxG+kUH7EkWSUrwqX/CYEBiz2FMDblSOVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 058/196] pinctrl: ti: ti-iodelay: fix possible memory leak when pinctrl_enable() fails
-Date: Thu, 15 Aug 2024 15:22:55 +0200
-Message-ID: <20240815131854.297483291@linuxfoundation.org>
+Subject: [PATCH 4.19 059/196] pinctrl: freescale: mxs: Fix refcount of child
+Date: Thu, 15 Aug 2024 15:22:56 +0200
+Message-ID: <20240815131854.335141864@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,61 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 9b401f4a7170125365160c9af267a41ff6b39001 ]
+[ Upstream commit 7f500f2011c0bbb6e1cacab74b4c99222e60248e ]
 
-This driver calls pinctrl_register_and_init() which is not
-devm_ managed, it will leads memory leak if pinctrl_enable()
-fails. Replace it with devm_pinctrl_register_and_init().
-And add missing of_node_put() in the error path.
+of_get_next_child() will increase refcount of the returned node, need
+use of_node_put() on it when done.
 
-Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240606023704.3931561-4-yangyingliang@huawei.com
+Per current implementation, 'child' will be override by
+for_each_child_of_node(np, child), so use of_get_child_count to avoid
+refcount leakage.
+
+Fixes: 17723111e64f ("pinctrl: add pinctrl-mxs support")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/20240504-pinctrl-cleanup-v2-18-26c5f2dc1181@nxp.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pinctrl/freescale/pinctrl-mxs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
-index 1c4196f40e8d6..e86b765141a63 100644
---- a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
-+++ b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
-@@ -881,7 +881,7 @@ static int ti_iodelay_probe(struct platform_device *pdev)
- 	iod->desc.name = dev_name(dev);
- 	iod->desc.owner = THIS_MODULE;
+diff --git a/drivers/pinctrl/freescale/pinctrl-mxs.c b/drivers/pinctrl/freescale/pinctrl-mxs.c
+index a612e46ca51c0..c48b6fb5e8fe7 100644
+--- a/drivers/pinctrl/freescale/pinctrl-mxs.c
++++ b/drivers/pinctrl/freescale/pinctrl-mxs.c
+@@ -405,8 +405,8 @@ static int mxs_pinctrl_probe_dt(struct platform_device *pdev,
+ 	int ret;
+ 	u32 val;
  
--	ret = pinctrl_register_and_init(&iod->desc, dev, iod, &iod->pctl);
-+	ret = devm_pinctrl_register_and_init(dev, &iod->desc, iod, &iod->pctl);
- 	if (ret) {
- 		dev_err(dev, "Failed to register pinctrl\n");
- 		goto exit_out;
-@@ -889,7 +889,11 @@ static int ti_iodelay_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, iod);
- 
--	return pinctrl_enable(iod->pctl);
-+	ret = pinctrl_enable(iod->pctl);
-+	if (ret)
-+		goto exit_out;
-+
-+	return 0;
- 
- exit_out:
- 	of_node_put(np);
-@@ -906,9 +910,6 @@ static int ti_iodelay_remove(struct platform_device *pdev)
- {
- 	struct ti_iodelay_device *iod = platform_get_drvdata(pdev);
- 
--	if (iod->pctl)
--		pinctrl_unregister(iod->pctl);
--
- 	ti_iodelay_pinconf_deinit_dev(iod);
- 
- 	/* Expect other allocations to be freed by devm */
+-	child = of_get_next_child(np, NULL);
+-	if (!child) {
++	val = of_get_child_count(np);
++	if (val == 0) {
+ 		dev_err(&pdev->dev, "no group is defined\n");
+ 		return -ENOENT;
+ 	}
 -- 
 2.43.0
 
