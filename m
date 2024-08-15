@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9073019EEBD;
-	Thu, 15 Aug 2024 13:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B118A198E78;
+	Thu, 15 Aug 2024 13:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729071; cv=none; b=c57WKBEsj5patZORc0V3Am9WVCYLR8V4NEKQwRi79ubH2lsd3jQvzb5NVwM/QRh0rQ6UynAHfFnotyKsea+GWuvvJ/r2bCBe9qRTMCkjORnQSRYKQJa5rV42dElkk9eXn06/fIhl73xzixR1CmIFHbkcHnlnddQ7fUns/RN9zuk=
+	t=1723729074; cv=none; b=N+fxt5GkgGoscxhUjsh1gyEoS/Kl0nKJxLOZByzrZ+GtN8rBLId5xiofzJsYr3AlY8C2t9Q2EVaawASzkJHQFYFGfZBN9wpZbaFG4eJNM9bCMmYMfNwgsE6v9QZdiJ/2vXl6D9RfDdpM4CR9HW///h8KkOWP6b9zWYqk1ZbgGok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729071; c=relaxed/simple;
-	bh=5NDKDeQxFglbNAlFB3+llv98d0O3zbMQY8E+BGzllPQ=;
+	s=arc-20240116; t=1723729074; c=relaxed/simple;
+	bh=1onvOKeowLl+6R9ZRF0Oql2ZziK6EJlq+NDJdOBF7Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1srE5K/Y1Jp2a1TihJk0nbmUfNkKJao+tgNXT0fV1q2cjMBqFOqbpYc/v8KMCpGekL/0qBnvRvYnRxTy9DhgZumBCbCJx5+Usa6UkxQcYAkG3fJEQuDeuFC4SNHcbUSNaTlINAZ34YTrFj6d1zKA2jNVfh+K6o0/QQJwi2TR6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g//JBcCU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GGhM6hnZs4eqVrkDGYjZWEI7pwWs2YE093hJxqw/S+F0OUyjpVM0ylwUKNEET/JFJDBOG3zrN3aO7fDU6nCtBxZj5VTqqFljrRg/JFKgOYisi1Q7p3hBd2PQLW7CaraxSgkuYePHLetr9jtSZm0Ud5+/zOVHSqPW/hvShbYQZA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxF4FCWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g//JBcCU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061C1C32786;
-	Thu, 15 Aug 2024 13:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxF4FCWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D94C32786;
+	Thu, 15 Aug 2024 13:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729071;
-	bh=5NDKDeQxFglbNAlFB3+llv98d0O3zbMQY8E+BGzllPQ=;
+	s=korg; t=1723729074;
+	bh=1onvOKeowLl+6R9ZRF0Oql2ZziK6EJlq+NDJdOBF7Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g//JBcCUvHI3HdNRAQg6LUrOokMALOpDIzd7ymaGBhx2eHVtc08+ZAOAnARs6Z/Wi
-	 1VHty6W61srqdJwbWbbuak+7zYDx/sQti63z9XkC/YO/waV/ufTHhGQKaygR7j3/qY
-	 dPLazk1hCOD0A7ZB+v2YxsWtvD9pS3DBuHQziKvE=
+	b=FxF4FCWXcWqzXRFoo2jMWXgSv7zFdcNM0aHvaQsAV2VlPHSrR1uP+b+2LGMi6547W
+	 ZaNCpnyHuoxqbuKSlGlkoX0cndhj+5UL7E7dKxh0d944G3TlNOHiRSPUGBKChEW+fO
+	 bhrW0ibLJJ9FYuiAQf/RsYZMV5d+/SmSjnb7pfdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 184/196] tracing: Fix overflow in get_free_elt()
-Date: Thu, 15 Aug 2024 15:25:01 +0200
-Message-ID: <20240815131859.110116554@linuxfoundation.org>
+	Andi Kleen <ak@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 4.19 185/196] x86/mtrr: Check if fixed MTRRs exist before saving them
+Date: Thu, 15 Aug 2024 15:25:02 +0200
+Message-ID: <20240815131859.148176794@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,65 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Andi Kleen <ak@linux.intel.com>
 
-commit bcf86c01ca4676316557dd482c8416ece8c2e143 upstream.
+commit 919f18f961c03d6694aa726c514184f2311a4614 upstream.
 
-"tracing_map->next_elt" in get_free_elt() is at risk of overflowing.
+MTRRs have an obsolete fixed variant for fine grained caching control
+of the 640K-1MB region that uses separate MSRs. This fixed variant has
+a separate capability bit in the MTRR capability MSR.
 
-Once it overflows, new elements can still be inserted into the tracing_map
-even though the maximum number of elements (`max_elts`) has been reached.
-Continuing to insert elements after the overflow could result in the
-tracing_map containing "tracing_map->max_size" elements, leaving no empty
-entries.
-If any attempt is made to insert an element into a full tracing_map using
-`__tracing_map_insert()`, it will cause an infinite loop with preemption
-disabled, leading to a CPU hang problem.
+So far all x86 CPUs which support MTRR have this separate bit set, so it
+went unnoticed that mtrr_save_state() does not check the capability bit
+before accessing the fixed MTRR MSRs.
 
-Fix this by preventing any further increments to "tracing_map->next_elt"
-once it reaches "tracing_map->max_elt".
+Though on a CPU that does not support the fixed MTRR capability this
+results in a #GP.  The #GP itself is harmless because the RDMSR fault is
+handled gracefully, but results in a WARN_ON().
 
+Add the missing capability check to prevent this.
+
+Fixes: 2b1f6278d77c ("[PATCH] x86: Save the MTRRs of the BSP before booting an AP")
+Signed-off-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 08d43a5fa063e ("tracing: Add lock-free tracing_map")
-Co-developed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Link: https://lore.kernel.org/20240805055922.6277-1-Tze-nan.Wu@mediatek.com
-Signed-off-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/20240808000244.946864-1-ak@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/mtrr/mtrr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -454,7 +454,7 @@ static struct tracing_map_elt *get_free_
- 	struct tracing_map_elt *elt = NULL;
- 	int idx;
- 
--	idx = atomic_inc_return(&map->next_elt);
-+	idx = atomic_fetch_add_unless(&map->next_elt, 1, map->max_elts);
- 	if (idx < map->max_elts) {
- 		elt = *(TRACING_MAP_ELT(map->elts, idx));
- 		if (map->ops && map->ops->elt_init)
-@@ -699,7 +699,7 @@ void tracing_map_clear(struct tracing_ma
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.c
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
+@@ -819,7 +819,7 @@ void mtrr_save_state(void)
  {
- 	unsigned int i;
+ 	int first_cpu;
  
--	atomic_set(&map->next_elt, -1);
-+	atomic_set(&map->next_elt, 0);
- 	atomic64_set(&map->hits, 0);
- 	atomic64_set(&map->drops, 0);
+-	if (!mtrr_enabled())
++	if (!mtrr_enabled() || !mtrr_state.have_fixed)
+ 		return;
  
-@@ -783,7 +783,7 @@ struct tracing_map *tracing_map_create(u
- 
- 	map->map_bits = map_bits;
- 	map->max_elts = (1 << map_bits);
--	atomic_set(&map->next_elt, -1);
-+	atomic_set(&map->next_elt, 0);
- 
- 	map->map_size = (1 << (map_bits + 1));
- 	map->ops = ops;
+ 	first_cpu = cpumask_first(cpu_online_mask);
 
 
