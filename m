@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4551AC8AE;
-	Thu, 15 Aug 2024 14:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335711AC8AE;
+	Thu, 15 Aug 2024 14:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731713; cv=none; b=RB0gdalOWR4QjnYFTOsi/iz/zUD9uVScpGzC+jtuLEVEAroShDTXrb14oDGqI9WMGVYUHx/R+9WAjSYHRc2wv6V20WReBnZkv3qRw2TO5+/drTiHVjgZtrzK1y2vAawkjV7iGunrcbg45a7vDGv3XTX1N9tYzEO+EuMfjS5JjzM=
+	t=1723731716; cv=none; b=b2Tih+x5Q4fnsBPHY8n8CeofEJ0yeT0PhJTQ0kuOKPAUrqEE0T/m5E7KyNN8qBQgz9vapgIq3CYGyzPNI9Ocr6XZ/esO7uIg8Vo1YD/iUItHShincpXFMU+HnO0z/2jVnXxxXe9D03eIgzkilrSC3shM1Pa180bArOu5W5wZuBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731713; c=relaxed/simple;
-	bh=WElfT2VasCjsbhUXHlsZhfxEoz/D0KIgELzr9YOv/Is=;
+	s=arc-20240116; t=1723731716; c=relaxed/simple;
+	bh=N8rBfg/TFXNE+9SoQdAzpJV5IErdgIQkbXYa9ZwZGj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5EZIFYfX3FTfqLJQ/VoOmaR1t9dj8V2Oj0PVZBUbwDo6KKM5mhnEq9PzOsmQnEGuOozWSQPHRLggARFCS8BbxIDr1JN60mjoQJo/ZQhV+rObfDnK3PlBWSPhKl71+T3HFcOZab8BLELEyqdDhD+MPvmBkr4EJjPvBm09nk8Bjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Voo222Cs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klwq/udgg7+OfYxpMbpF1wx/zdmXj3g/Nae1X39DIU1a7PMb7GI7a86qMk/XwsOYXxoCBCXkwfW3zxg3Oc/wnkvkmUkZ+NsqoOXowaVu+LpyHr52FdWy+0HWB+2aVT6zwsh9FNo2EjeKaol/WVFysqphY057q1m4gUIBYc8eFsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NerKOvF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Voo222Cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63360C32786;
-	Thu, 15 Aug 2024 14:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NerKOvF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D12C32786;
+	Thu, 15 Aug 2024 14:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731713;
-	bh=WElfT2VasCjsbhUXHlsZhfxEoz/D0KIgELzr9YOv/Is=;
+	s=korg; t=1723731716;
+	bh=N8rBfg/TFXNE+9SoQdAzpJV5IErdgIQkbXYa9ZwZGj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Voo222CsJnjYogrUme5r62LeOCAk608rglsk0PqZWnSZmDhdWqGKavKs9ik/dX8f6
-	 Wqpa4Fg4HImqJx62Z4iT30SyCoz3gD5Ot4o39LQugNc8UtQK/je+GYQ0bKmU19JmBg
-	 M19/a5skfNdHKx0utRAMFd5ZIWSzLWLbRYLxiFvo=
+	b=2NerKOvFp1Z2CMP+yLkHZgFHNgm8lVU/RN49m5ZRPMYjXMCXG+0ihWoY3keAcr88+
+	 OYPRDoF29IadEBbyEYljxuLRFaG6PYtufKGe6x9712m4alxrq/09/GOV/upNughIye
+	 EuEGpkDYc2llbQcGI79uDaKxD58wz8PgAbvEPOXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Jan Kara <jack@suse.com>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 215/259] arm64: cputype: Add Cortex-X925 definitions
-Date: Thu, 15 Aug 2024 15:25:48 +0200
-Message-ID: <20240815131911.074491899@linuxfoundation.org>
+Subject: [PATCH 5.4 198/259] udf: prevent integer overflow in udf_bitmap_free_blocks()
+Date: Thu, 15 Aug 2024 15:25:31 +0200
+Message-ID: <20240815131910.422079165@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,50 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit fd2ff5f0b320f418288e7a1f919f648fbc8a0dfc ]
+[ Upstream commit 56e69e59751d20993f243fb7dd6991c4e522424c ]
 
-Add cputype definitions for Cortex-X925. These will be used for errata
-detection in subsequent patches.
+An overflow may occur if the function is called with the last
+block and an offset greater than zero. It is necessary to add
+a check to avoid this.
 
-These values can be found in Table A-285 ("MIDR_EL1 bit descriptions")
-in issue 0001-05 of the Cortex-X925 TRM, which can be found at:
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-  https://developer.arm.com/documentation/102807/0001/?lang=en
+[JK: Make test cover also unalloc table freeing]
 
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20240603111812.1514101-4-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ Mark: trivial backport ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://patch.msgid.link/20240620072413.7448-1-r.smirnov@omp.ru
+Suggested-by: Jan Kara <jack@suse.com>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/udf/balloc.c | 36 +++++++++++++-----------------------
+ 1 file changed, 13 insertions(+), 23 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index 540c25014c9de..6322263063887 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -85,6 +85,7 @@
- #define ARM_CPU_PART_CORTEX_A720	0xD81
- #define ARM_CPU_PART_CORTEX_X4		0xD82
- #define ARM_CPU_PART_NEOVERSE_V3	0xD84
-+#define ARM_CPU_PART_CORTEX_X925	0xD85
+diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
+index c4c18eeacb60c..aa73ab1b50a52 100644
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -22,6 +22,7 @@
+ #include "udfdecl.h"
  
- #define APM_CPU_PART_POTENZA		0x000
+ #include <linux/bitops.h>
++#include <linux/overflow.h>
  
-@@ -131,6 +132,7 @@
- #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
- #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
- #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
-+#define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
- #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
- #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
- #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
+ #include "udf_i.h"
+ #include "udf_sb.h"
+@@ -144,7 +145,6 @@ static void udf_bitmap_free_blocks(struct super_block *sb,
+ {
+ 	struct udf_sb_info *sbi = UDF_SB(sb);
+ 	struct buffer_head *bh = NULL;
+-	struct udf_part_map *partmap;
+ 	unsigned long block;
+ 	unsigned long block_group;
+ 	unsigned long bit;
+@@ -153,19 +153,9 @@ static void udf_bitmap_free_blocks(struct super_block *sb,
+ 	unsigned long overflow;
+ 
+ 	mutex_lock(&sbi->s_alloc_mutex);
+-	partmap = &sbi->s_partmaps[bloc->partitionReferenceNum];
+-	if (bloc->logicalBlockNum + count < count ||
+-	    (bloc->logicalBlockNum + count) > partmap->s_partition_len) {
+-		udf_debug("%u < %d || %u + %u > %u\n",
+-			  bloc->logicalBlockNum, 0,
+-			  bloc->logicalBlockNum, count,
+-			  partmap->s_partition_len);
+-		goto error_return;
+-	}
+-
++	/* We make sure this cannot overflow when mounting the filesystem */
+ 	block = bloc->logicalBlockNum + offset +
+ 		(sizeof(struct spaceBitmapDesc) << 3);
+-
+ 	do {
+ 		overflow = 0;
+ 		block_group = block >> (sb->s_blocksize_bits + 3);
+@@ -395,7 +385,6 @@ static void udf_table_free_blocks(struct super_block *sb,
+ 				  uint32_t count)
+ {
+ 	struct udf_sb_info *sbi = UDF_SB(sb);
+-	struct udf_part_map *partmap;
+ 	uint32_t start, end;
+ 	uint32_t elen;
+ 	struct kernel_lb_addr eloc;
+@@ -404,16 +393,6 @@ static void udf_table_free_blocks(struct super_block *sb,
+ 	struct udf_inode_info *iinfo;
+ 
+ 	mutex_lock(&sbi->s_alloc_mutex);
+-	partmap = &sbi->s_partmaps[bloc->partitionReferenceNum];
+-	if (bloc->logicalBlockNum + count < count ||
+-	    (bloc->logicalBlockNum + count) > partmap->s_partition_len) {
+-		udf_debug("%u < %d || %u + %u > %u\n",
+-			  bloc->logicalBlockNum, 0,
+-			  bloc->logicalBlockNum, count,
+-			  partmap->s_partition_len);
+-		goto error_return;
+-	}
+-
+ 	iinfo = UDF_I(table);
+ 	udf_add_free_space(sb, sbi->s_partition, count);
+ 
+@@ -688,6 +667,17 @@ void udf_free_blocks(struct super_block *sb, struct inode *inode,
+ {
+ 	uint16_t partition = bloc->partitionReferenceNum;
+ 	struct udf_part_map *map = &UDF_SB(sb)->s_partmaps[partition];
++	uint32_t blk;
++
++	if (check_add_overflow(bloc->logicalBlockNum, offset, &blk) ||
++	    check_add_overflow(blk, count, &blk) ||
++	    bloc->logicalBlockNum + count > map->s_partition_len) {
++		udf_debug("Invalid request to free blocks: (%d, %u), off %u, "
++			  "len %u, partition len %u\n",
++			  partition, bloc->logicalBlockNum, offset, count,
++			  map->s_partition_len);
++		return;
++	}
+ 
+ 	if (map->s_partition_flags & UDF_PART_FLAG_UNALLOC_BITMAP) {
+ 		udf_bitmap_free_blocks(sb, map->s_uspace.s_bitmap,
 -- 
 2.43.0
 
