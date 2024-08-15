@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0FF1DDF5;
-	Thu, 15 Aug 2024 13:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFAF1DDF5;
+	Thu, 15 Aug 2024 13:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728570; cv=none; b=kVcCzmEzhbAsGqkkaN12PQ7UevW4kOYbs18+zQCiqmy2tfEwXgdJ6tzx2cwIcpQ/4ufWUC6PBCp+MiXFtsr+PJapB3mCQcn880YFLz38P9Nzp7rqqb3RXqMsp6OlvI61AtAPX3CERin/rgn6dghD1Enj71WD8mJJI0NbYGOaSkI=
+	t=1723728573; cv=none; b=pY75ee+j2v7ksJEBaTb38zYv71g+OPWBe61HHUT4g5WBdRsv7PPXZkEkKZjyjfiEbgxvm+8hDSOu9SHuDQoc6wGpsx2PyGRQ0foeCleTWuoVC3jtfbiAD4OjWpE0bOgD5w9CS2dYnJ73bdYqwzvQdxfIwn/YBK/6WoaG51v9bwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728570; c=relaxed/simple;
-	bh=R6q2mV44HDeLwUFgsSLweWfuVtA0119Tebh7ZlkWor8=;
+	s=arc-20240116; t=1723728573; c=relaxed/simple;
+	bh=yJLpZIpegTTCny5cMvp1eKVP3r9uU7jwKlOf2nKcrMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qisKNqRHCXX7uRssUHzzYOj3zGepiQijS+SbmbJlkjdqm9hVY31TrGTGDlvB00O2typPJqXijlXvOO1mIbXbz8A38IxhMn4Kk/qIcWYDYf/46vZOnmGqUS/9DqQQFD370veHgamIJVNUE5AGWccmOcsaXYF+8cCCJ9Ac5lyGGf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDTZ+yGg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmywEceRZRePyVwUb/U23K1IPqvahKI39bJMZQsYZB9undqTlVZVtO9fGOg+nQvnLWhfdHEWbR/FnBvXixz7uoSqB7N+9+4K7uVpmQ9uT982jmK8i/Gl88GjyWnUeTfAsbyq4BrSVmUdk9em5Ni8tTQyWrJWKNjhWP+3eE5kPBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11h0h435; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDTZ+yGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF77DC32786;
-	Thu, 15 Aug 2024 13:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11h0h435"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F17C32786;
+	Thu, 15 Aug 2024 13:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728570;
-	bh=R6q2mV44HDeLwUFgsSLweWfuVtA0119Tebh7ZlkWor8=;
+	s=korg; t=1723728573;
+	bh=yJLpZIpegTTCny5cMvp1eKVP3r9uU7jwKlOf2nKcrMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDTZ+yGgMprHG2ny2S9HH8AzQL4AQBf6ffiuwBiLZBUFVGMIhjBpC0riLiVwNsnss
-	 7ZOuwnvC8Rb2lgFKe+APM9qqDdj0EI2A2TvVNGsVEfqI1f9gP8BjXTI10O95ZPUCxo
-	 bkGzrAZ79BYlQGr6ltjuDAeOA6YqiAW36ZFoNDa0=
+	b=11h0h435vVFsCR3Yk6zyjizx8gk+eO6M4jGF/ZlQWB9okZjUZt+0AVjA/m3/kZG1I
+	 PPjrnkXkb4fKiLsN3VGeZqQRWGp+Ff8Ye3BcEvdj4w1WJ9qFkZ3dAwNMDbpCZU3s09
+	 p96D/SI98VMTQhaiStS/ECk/3gXr+iy/69RHeXs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com,
-	Hugh Dickins <hughd@google.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 040/196] ext4: avoid writing unitialized memory to disk in EA inodes
-Date: Thu, 15 Aug 2024 15:22:37 +0200
-Message-ID: <20240815131853.619190700@linuxfoundation.org>
+Subject: [PATCH 4.19 012/196] hwmon: (max6697) Fix swapped temp{1,8} critical alarms
+Date: Thu, 15 Aug 2024 15:22:09 +0200
+Message-ID: <20240815131852.544250473@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -53,44 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 65121eff3e4c8c90f8126debf3c369228691c591 ]
+[ Upstream commit 1ea3fd1eb9869fcdcbc9c68f9728bfc47b9503f1 ]
 
-If the extended attribute size is not a multiple of block size, the last
-block in the EA inode will have uninitialized tail which will get
-written to disk. We will never expose the data to userspace but still
-this is not a good practice so just zero out the tail of the block as it
-isn't going to cause a noticeable performance overhead.
+The critical alarm bit for the local temperature sensor (temp1) is in
+bit 7 of register 0x45 (not bit 6), and the critical alarm bit for remote
+temperature sensor 7 (temp8) is in bit 6 (not bit 7).
 
-Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
-Reported-by: syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com
-Reported-by: Hugh Dickins <hughd@google.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240613150234.25176-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This only affects MAX6581 since all other chips supported by this driver
+do not support those critical alarms.
+
+Fixes: 5372d2d71c46 ("hwmon: Driver for Maxim MAX6697 and compatibles")
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hwmon/max6697.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index dc42a8fba0d22..e9299f769dbfe 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1420,6 +1420,12 @@ static int ext4_xattr_inode_write(handle_t *handle, struct inode *ea_inode,
- 			goto out;
+diff --git a/drivers/hwmon/max6697.c b/drivers/hwmon/max6697.c
+index 2103ba45de745..14c34a2d36af3 100644
+--- a/drivers/hwmon/max6697.c
++++ b/drivers/hwmon/max6697.c
+@@ -368,14 +368,14 @@ static SENSOR_DEVICE_ATTR_RO(temp6_max_alarm, alarm, 20);
+ static SENSOR_DEVICE_ATTR_RO(temp7_max_alarm, alarm, 21);
+ static SENSOR_DEVICE_ATTR_RO(temp8_max_alarm, alarm, 23);
  
- 		memcpy(bh->b_data, buf, csize);
-+		/*
-+		 * Zero out block tail to avoid writing uninitialized memory
-+		 * to disk.
-+		 */
-+		if (csize < blocksize)
-+			memset(bh->b_data + csize, 0, blocksize - csize);
- 		set_buffer_uptodate(bh);
- 		ext4_handle_dirty_metadata(handle, ea_inode, bh);
+-static SENSOR_DEVICE_ATTR_RO(temp1_crit_alarm, alarm, 14);
++static SENSOR_DEVICE_ATTR_RO(temp1_crit_alarm, alarm, 15);
+ static SENSOR_DEVICE_ATTR_RO(temp2_crit_alarm, alarm, 8);
+ static SENSOR_DEVICE_ATTR_RO(temp3_crit_alarm, alarm, 9);
+ static SENSOR_DEVICE_ATTR_RO(temp4_crit_alarm, alarm, 10);
+ static SENSOR_DEVICE_ATTR_RO(temp5_crit_alarm, alarm, 11);
+ static SENSOR_DEVICE_ATTR_RO(temp6_crit_alarm, alarm, 12);
+ static SENSOR_DEVICE_ATTR_RO(temp7_crit_alarm, alarm, 13);
+-static SENSOR_DEVICE_ATTR_RO(temp8_crit_alarm, alarm, 15);
++static SENSOR_DEVICE_ATTR_RO(temp8_crit_alarm, alarm, 14);
  
+ static SENSOR_DEVICE_ATTR_RO(temp2_fault, alarm, 1);
+ static SENSOR_DEVICE_ATTR_RO(temp3_fault, alarm, 2);
 -- 
 2.43.0
 
