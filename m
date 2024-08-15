@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A13D18D630;
-	Thu, 15 Aug 2024 13:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCC219FA7E;
+	Thu, 15 Aug 2024 13:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730203; cv=none; b=AORkvkbNvGH28h6WJ16SsJIIP/yJ7hsrKTnphmxzlWlPHCpFnJecHRslV92dYrMs25wajOftpXWD15EspcqgY0G5x5yRDPgR6YFgfZ5uyrSkkogISnJ1+0EH51TQjYbPEQ7oHfdliZAvsne3KxgS9s4CRic+XEn459KoGozatZs=
+	t=1723730206; cv=none; b=G8ptaVpA01hXPvQ3azCCO6Pj1LJdrynMigrWLuv9J3mGpgaKf/VMbzwkhED/jFBQpMuc62kqgyFm+vvsXzMFG4FF41zR3kucMEIw4aAdZ1HEIRijtP+0mxvu17Gu3Is1Ex07xKv3UASPJqE/Lj/bwJ6uyEXDzO/jSq21xceJhXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730203; c=relaxed/simple;
-	bh=P43HW83HjFttXGwSFqkENGv7sJajTzOCVk4KCalrFOo=;
+	s=arc-20240116; t=1723730206; c=relaxed/simple;
+	bh=byGt94+Jlib/K9BbGGt5ysOAz7sDK65C0l6JxDrSqzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfmsYJUFPMr6BdT2RGv0ceU3XJu6Tfc+Lpq92xCjQRCDANMSgeKAYnpH+naWPv8VavoQoUn6Pqgj25ImiQ/sprLgPKxOGyqbya4HjutNGZDkqPmZmjvZqfYJGYeJLp2EA1q6Uo63ZI9Bioc1Qq3nBrrwbzK61TGdMhLnTNXgCVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9seXVwG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XJmKGVb2x/awMu30iXjcB94ZRYv4s1Hp3KupaD0IBxc83MWCBLjeQWwQRpqsNa5LrpN56v1DWwmm4uJbIlmtQruENxTPtc7c3mDyo9jl8NbHsmE+VJdunALEuSboWNRW9WIZE9ub+9zQnY8ERKaWBVI4N/cLyp/SWnt7PEBkgrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGbXBE++; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9seXVwG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996F9C32786;
-	Thu, 15 Aug 2024 13:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGbXBE++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFF9C4AF0C;
+	Thu, 15 Aug 2024 13:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730203;
-	bh=P43HW83HjFttXGwSFqkENGv7sJajTzOCVk4KCalrFOo=;
+	s=korg; t=1723730206;
+	bh=byGt94+Jlib/K9BbGGt5ysOAz7sDK65C0l6JxDrSqzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9seXVwGAKsGiZ27k1DkjqaHkyhxLvP6Y2tm6Yikeqy0whsEn+A9CXL3jbnYfvIM3
-	 ++qHLvqTddo+2Vzf9dyypUD5S7z21BtmN9I7YQ3bp+BWJqd/4EeBa7EnyezxxTFEKm
-	 wy2QRKbKRnVPCAvCpxUQqgc09mK8WztUXXVyV138=
+	b=jGbXBE++IsOSWqPwTBzOs/Vf6sSRvjV/H6Y3GAe9iCgw2ZNSDccmI2jaxP2evccDt
+	 +BeRDz7urMppOfcIvsurXk96XOK0XUcJoDszVXzkRzW/RFASkR65jgDYOsQ+69TD3K
+	 C9qYn72IO5C4bqcbmfCOXiS0f3PQ+HEeSdzTwlvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Joel Granados <j.granados@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 303/484] arm64: dts: qcom: ipq8074: Disable SS instance in Parkmode for USB
-Date: Thu, 15 Aug 2024 15:22:41 +0200
-Message-ID: <20240815131953.109675103@linuxfoundation.org>
+Subject: [PATCH 5.15 304/484] sysctl: always initialize i_uid/i_gid
+Date: Thu, 15 Aug 2024 15:22:42 +0200
+Message-ID: <20240815131953.148941968@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -46,59 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit dc6ba95c6c4400a84cca5b419b34ae852a08cfb5 ]
+[ Upstream commit 98ca62ba9e2be5863c7d069f84f7166b45a5b2f4 ]
 
-For Gen-1 targets like IPQ8074, it is seen that stressing out the
-controller in host mode results in HC died error:
+Always initialize i_uid/i_gid inside the sysfs core so set_ownership()
+can safely skip setting them.
 
- xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
- xhci-hcd.12.auto: xHCI host controller not responding, assume dead
- xhci-hcd.12.auto: HC died; cleaning up
+Commit 5ec27ec735ba ("fs/proc/proc_sysctl.c: fix the default values of
+i_uid/i_gid on /proc/sys inodes.") added defaults for i_uid/i_gid when
+set_ownership() was not implemented. It also missed adjusting
+net_ctl_set_ownership() to use the same default values in case the
+computation of a better value failed.
 
-And at this instant only restarting the host mode fixes it. Disable
-SuperSpeed instance in park mode for IPQ8074 to mitigate this issue.
-
+Fixes: 5ec27ec735ba ("fs/proc/proc_sysctl.c: fix the default values of i_uid/i_gid on /proc/sys inodes.")
 Cc: stable@vger.kernel.org
-Fixes: 5e09bc51d07b ("arm64: dts: ipq8074: enable USB support")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240704152848.3380602-3-quic_kriskura@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Joel Granados <j.granados@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/proc/proc_sysctl.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 0a4c5b847ddd5..384904344baf0 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -514,6 +514,7 @@ dwc_0: dwc3@8a00000 {
- 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&qusb_phy_0>, <&usb0_ssphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
-+				snps,parkmode-disable-ss-quirk;
- 				snps,is-utmi-l1-suspend;
- 				snps,hird-threshold = /bits/ 8 <0x0>;
- 				snps,dis_u2_susphy_quirk;
-@@ -554,6 +555,7 @@ dwc_1: dwc3@8c00000 {
- 				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&qusb_phy_1>, <&usb1_ssphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
-+				snps,parkmode-disable-ss-quirk;
- 				snps,is-utmi-l1-suspend;
- 				snps,hird-threshold = /bits/ 8 <0x0>;
- 				snps,dis_u2_susphy_quirk;
--- 
-2.43.0
-
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -466,12 +466,10 @@ static struct inode *proc_sys_make_inode
+ 			make_empty_dir_inode(inode);
+ 	}
+ 
++	inode->i_uid = GLOBAL_ROOT_UID;
++	inode->i_gid = GLOBAL_ROOT_GID;
+ 	if (root->set_ownership)
+ 		root->set_ownership(head, table, &inode->i_uid, &inode->i_gid);
+-	else {
+-		inode->i_uid = GLOBAL_ROOT_UID;
+-		inode->i_gid = GLOBAL_ROOT_GID;
+-	}
+ 
+ 	return inode;
+ }
 
 
