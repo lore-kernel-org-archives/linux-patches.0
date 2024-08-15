@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4569B1714AE;
-	Thu, 15 Aug 2024 13:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF9B7DA78;
+	Thu, 15 Aug 2024 13:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728971; cv=none; b=nVUNpnVJrJOSaYg3biZsYRx379+ZXymRVXP8sJhZB3IT21Nq+Uw7JDh5iP9/CmRojVJKBc4tQlW7iryhNUSAjoBrq/c1H+Aoi796qb9JBkiWcPAfrshEFEp8uekV4Y37kQdFmjl40IwAB1g7ew5bgpxaQh/0wMvE4hhZR5tgULo=
+	t=1723728974; cv=none; b=ghAH2Uw9qGU5XKaU/Y2RWuiZYMUgwBNHdpxW59G0EiayWPy2lcBLr3qdzz8sLxoK8l4gwXmfQFDaFnwQbBt0d2NRb308Faj44tIrCamGYo5jiu5GKOPzrn2aQ5iUEsp6UHRhLVUSToE9AHr21fplfcfMNmuv32NN/4FI4TkA0tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728971; c=relaxed/simple;
-	bh=s0CMQjUiaJ+GfRkv2/1QIHH4SxmvwpSiz/bM9XqjxJA=;
+	s=arc-20240116; t=1723728974; c=relaxed/simple;
+	bh=6IiyBH8b9u3M6I/iaQYfgfCVX6ECxKAn7G6haKDCSEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvPHPcU2liJFzdMVF1UH3DUNZLi51R+NHmwnSFcqCACmPMjPv0VA3CZ/k/jjFIfXm8byh39Ty+DM27vMS1dkgQ7QPp+rlfBPQPZgpTF0FfQVTol0Pyg4HFli0xdjo8N7ZltFOBrRvEB071dD3XYP10uVyCt5uSim8wEYhayS0Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aasf5l2A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3bZhc6veCr1mFgaK1wSqNwylGqlMK+A9Mxq78CzbLBozwAnoWK0y+/Ss26mip+Xgc7MekJS3dk1DfvoLj+WCt8/TqEzVvmw3hyZEktB/bHuIrD+dLMUSCB7XqeQOCGpsQax/vk3gTWia6Au2wfkbIIFq8lfK625kopBvFhMrIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vG68T85O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aasf5l2A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3112C32786;
-	Thu, 15 Aug 2024 13:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG68T85O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40B9C32786;
+	Thu, 15 Aug 2024 13:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728971;
-	bh=s0CMQjUiaJ+GfRkv2/1QIHH4SxmvwpSiz/bM9XqjxJA=;
+	s=korg; t=1723728974;
+	bh=6IiyBH8b9u3M6I/iaQYfgfCVX6ECxKAn7G6haKDCSEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aasf5l2AKJDlMBKYrUs+so8ulsIMm1yXQPJPtDc2/NH8qcr14jir/RDV9rlwQy4Xk
-	 qjqSOskvrj+WrkqkE6jCNSdOzLMJEtosn64xPRmO5SN+4LFXqDhVom4zb3XVgKJTH7
-	 O0LiScUAIUM7f8hcWtzGeneE4dBVCwyLKpeKUkAo=
+	b=vG68T85OnoUGlBRjCyPK/IQ4V78/jqAwezb0c1njVxOZoCUNRBEtkaKiBh+v3Ri8l
+	 G9gRM+chH1G5P72D81IJylBPMXI0GzakqWdkGYu8iHZwRqZ1yw5EXhahXDZTwS2LXl
+	 EBJeOyNqIHnPj7gGFhb+UIlvrkQIvqdfe1vEi4GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
+	Oleksandr Suvorov <oleksandr.suvorov@toradex.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 169/196] spi: lpspi: add the error info of transfer speed setting
-Date: Thu, 15 Aug 2024 15:24:46 +0200
-Message-ID: <20240815131858.537741172@linuxfoundation.org>
+Subject: [PATCH 4.19 170/196] spi: fsl-lpspi: remove unneeded array
+Date: Thu, 15 Aug 2024 15:24:47 +0200
+Message-ID: <20240815131858.575215374@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -51,72 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
 
-[ Upstream commit 77736a98b859e2c64aebbd0f90b2ce4b17682396 ]
+[ Upstream commit 2fa98705a9289c758b6154a22174aa8d4041a285 ]
 
-Add a error info when set a speed which greater than half of per-clk of
-spi module.
+- replace the array with the shift operation
+- remove the extra comparing operation.
 
-The minimum SCK period is 2 cycles(CCR[SCKDIV]). So the maximum transfer
-speed is half of spi per-clk.
-
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Signed-off-by: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
+Link: https://lore.kernel.org/r/20200220141143.3902922-2-oleksandr.suvorov@toradex.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 730bbfaf7d48 ("spi: spi-fsl-lpspi: Fix scldiv calculation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 5802f188051b8..8e1f6ee0a7993 100644
+index 8e1f6ee0a7993..21c8866ebbd12 100644
 --- a/drivers/spi/spi-fsl-lpspi.c
 +++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -263,6 +263,13 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 	u8 prescale;
+@@ -67,8 +67,6 @@
+ #define TCR_RXMSK	BIT(19)
+ #define TCR_TXMSK	BIT(18)
  
- 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
-+
-+	if (config.speed_hz > perclk_rate / 2) {
-+		dev_err(fsl_lpspi->dev,
-+		      "per-clk should be at least two times of transfer speed");
-+		return -EINVAL;
-+	}
-+
+-static int clkdivs[] = {1, 2, 4, 8, 16, 32, 64, 128};
+-
+ struct lpspi_config {
+ 	u8 bpw;
+ 	u8 chip_select;
+@@ -271,15 +269,14 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ 	}
+ 
  	for (prescale = 0; prescale < 8; prescale++) {
- 		scldiv = perclk_rate /
- 			 (clkdivs[prescale] * config.speed_hz) - 2;
-@@ -316,7 +323,7 @@ static int fsl_lpspi_config(struct fsl_lpspi_data *fsl_lpspi)
- 	return 0;
- }
+-		scldiv = perclk_rate /
+-			 (clkdivs[prescale] * config.speed_hz) - 2;
++		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
+ 		if (scldiv < 256) {
+ 			fsl_lpspi->config.prescale = prescale;
+ 			break;
+ 		}
+ 	}
  
--static void fsl_lpspi_setup_transfer(struct spi_device *spi,
-+static int fsl_lpspi_setup_transfer(struct spi_device *spi,
- 				     struct spi_transfer *t)
- {
- 	struct fsl_lpspi_data *fsl_lpspi =
-@@ -349,7 +356,7 @@ static void fsl_lpspi_setup_transfer(struct spi_device *spi,
- 	else
- 		fsl_lpspi->watermark = fsl_lpspi->txfifosize;
+-	if (prescale == 8 && scldiv >= 256)
++	if (scldiv >= 256)
+ 		return -EINVAL;
  
--	fsl_lpspi_config(fsl_lpspi);
-+	return fsl_lpspi_config(fsl_lpspi);
- }
- 
- static int fsl_lpspi_slave_abort(struct spi_controller *controller)
-@@ -428,7 +435,10 @@ static int fsl_lpspi_transfer_one_msg(struct spi_controller *controller,
- 	msg->actual_length = 0;
- 
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
--		fsl_lpspi_setup_transfer(spi, xfer);
-+		ret = fsl_lpspi_setup_transfer(spi, xfer);
-+		if (ret < 0)
-+			goto complete;
-+
- 		fsl_lpspi_set_cmd(fsl_lpspi, is_first_xfer);
- 
- 		is_first_xfer = false;
+ 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
 -- 
 2.43.0
 
