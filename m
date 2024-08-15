@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A931AC893;
-	Thu, 15 Aug 2024 14:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AD617C995;
+	Thu, 15 Aug 2024 14:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723733012; cv=none; b=f8l01pjTqKk1N9PAj0+/SHyvGdt3Wx+yeYEQPb+2dCeCRmaTT8TGVj1tm4TDErPj2Qegre9dRNeDMV8yxG4vgPTcVMFI2UB3NF/nl7PvwjzjA1v4zOiL632uIBL4ZRFq7gUOWU3xk65jQKHBqHNL0MUzrAKKqGlllpnzmvVhJGs=
+	t=1723733015; cv=none; b=FF/BQLlXxFfXjqG8gAWJLu9vQW3PQQR+AEIPkqZt3TpUa95RUHZd3yCIg10n6Tm7cpUxPpnWMqv2JU5Zz9aEjXkWC9XlN/y7wPK838BX01OYXGnvYfsRA68POE46QM2olfB43akWrtLqyJGIDDug88g2VuFAoAatcwn8Kg2htjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723733012; c=relaxed/simple;
-	bh=jdEmxlVoL/wcfzzDxzlkTAO0AOJ9KcxMlH5tyKBC8Ng=;
+	s=arc-20240116; t=1723733015; c=relaxed/simple;
+	bh=GFde3IDjYJ7KwEuM9LyY8JLGav+Hx2cKw8f/V4fVptA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdRo80sAy9/ok+Rea6Zx1DLHJ3kJqL3AAMY3ikbGz9JuCw1grKiTyIBI779vFYODdnbBdb7EdYGkYvtZ6BFKlw6wgFVlkLna9a2/p69y6LoDUE68sFjYRPSiYBYMn5ZBWi6k8mCeIh1urmd56MuKC7rRwjyfjZAgsFcKAJOcOdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1/akCrr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EfjXaiKl0XZiB/LAyrdhFYr0qlNzWdsIdRexz9I9QOzfw2dPxSmES6I79AKl2ze/5V1B1ZHGFIMIjDsAdRBhgvO9pmdzzakv4R2DOkHlQD64Ksa1xvXt4OG008GS/0yAQWG6IrBY6sL29I2ueukypUJm/wk86UMrIbisp9LNiaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WnhD5yL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1/akCrr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40398C32786;
-	Thu, 15 Aug 2024 14:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WnhD5yL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AAD6C32786;
+	Thu, 15 Aug 2024 14:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723733011;
-	bh=jdEmxlVoL/wcfzzDxzlkTAO0AOJ9KcxMlH5tyKBC8Ng=;
+	s=korg; t=1723733014;
+	bh=GFde3IDjYJ7KwEuM9LyY8JLGav+Hx2cKw8f/V4fVptA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1/akCrrrce0kxNdmUXBsbxbjYgJGgJFdB3a0RWtQ7qZX9ao5I03oBhLp1ryAxpkW
-	 RTdn+r10awEd9dCLIp9To1VgLIfF8w37Yh/DBNcty80d60cyYJRRQt2PEflrjqKWXf
-	 FV26MT2ECP9C3jPQW35ifHQmDqNicHYxzdgDhRaA=
+	b=0WnhD5yLEA+YH8sWj5M5+T6tJGTD+tPmwVRPRi2kN5/e9zkPYuSpdHv0IfjKdbYm/
+	 BbF7miIu3+MvoiEdFv9zbiYoVHTY5EGklDB1PWm8j0hpFZ3EWAo8oRLCND6aNlOT90
+	 DZmm/TC/22oMpVd9H9fapXOoOSQ9DnVdBzgckoLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 323/352] tracing: Fix overflow in get_free_elt()
-Date: Thu, 15 Aug 2024 15:26:29 +0200
-Message-ID: <20240815131931.938303644@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 324/352] padata: Fix possible divide-by-0 panic in padata_mt_helper()
+Date: Thu, 15 Aug 2024 15:26:30 +0200
+Message-ID: <20240815131931.976294445@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,65 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Waiman Long <longman@redhat.com>
 
-commit bcf86c01ca4676316557dd482c8416ece8c2e143 upstream.
+commit 6d45e1c948a8b7ed6ceddb14319af69424db730c upstream.
 
-"tracing_map->next_elt" in get_free_elt() is at risk of overflowing.
+We are hit with a not easily reproducible divide-by-0 panic in padata.c at
+bootup time.
 
-Once it overflows, new elements can still be inserted into the tracing_map
-even though the maximum number of elements (`max_elts`) has been reached.
-Continuing to insert elements after the overflow could result in the
-tracing_map containing "tracing_map->max_size" elements, leaving no empty
-entries.
-If any attempt is made to insert an element into a full tracing_map using
-`__tracing_map_insert()`, it will cause an infinite loop with preemption
-disabled, leading to a CPU hang problem.
+  [   10.017908] Oops: divide error: 0000 1 PREEMPT SMP NOPTI
+  [   10.017908] CPU: 26 PID: 2627 Comm: kworker/u1666:1 Not tainted 6.10.0-15.el10.x86_64 #1
+  [   10.017908] Hardware name: Lenovo ThinkSystem SR950 [7X12CTO1WW]/[7X12CTO1WW], BIOS [PSE140J-2.30] 07/20/2021
+  [   10.017908] Workqueue: events_unbound padata_mt_helper
+  [   10.017908] RIP: 0010:padata_mt_helper+0x39/0xb0
+    :
+  [   10.017963] Call Trace:
+  [   10.017968]  <TASK>
+  [   10.018004]  ? padata_mt_helper+0x39/0xb0
+  [   10.018084]  process_one_work+0x174/0x330
+  [   10.018093]  worker_thread+0x266/0x3a0
+  [   10.018111]  kthread+0xcf/0x100
+  [   10.018124]  ret_from_fork+0x31/0x50
+  [   10.018138]  ret_from_fork_asm+0x1a/0x30
+  [   10.018147]  </TASK>
 
-Fix this by preventing any further increments to "tracing_map->next_elt"
-once it reaches "tracing_map->max_elt".
+Looking at the padata_mt_helper() function, the only way a divide-by-0
+panic can happen is when ps->chunk_size is 0.  The way that chunk_size is
+initialized in padata_do_multithreaded(), chunk_size can be 0 when the
+min_chunk in the passed-in padata_mt_job structure is 0.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 08d43a5fa063e ("tracing: Add lock-free tracing_map")
-Co-developed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Link: https://lore.kernel.org/20240805055922.6277-1-Tze-nan.Wu@mediatek.com
-Signed-off-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fix this divide-by-0 panic by making sure that chunk_size will be at least
+1 no matter what the input parameters are.
+
+Link: https://lkml.kernel.org/r/20240806174647.1050398-1-longman@redhat.com
+Fixes: 004ed42638f4 ("padata: add basic support for multithreaded jobs")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Waiman Long <longman@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/padata.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -454,7 +454,7 @@ static struct tracing_map_elt *get_free_
- 	struct tracing_map_elt *elt = NULL;
- 	int idx;
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -521,6 +521,13 @@ void __init padata_do_multithreaded(stru
+ 	ps.chunk_size = max(ps.chunk_size, job->min_chunk);
+ 	ps.chunk_size = roundup(ps.chunk_size, job->align);
  
--	idx = atomic_inc_return(&map->next_elt);
-+	idx = atomic_fetch_add_unless(&map->next_elt, 1, map->max_elts);
- 	if (idx < map->max_elts) {
- 		elt = *(TRACING_MAP_ELT(map->elts, idx));
- 		if (map->ops && map->ops->elt_init)
-@@ -699,7 +699,7 @@ void tracing_map_clear(struct tracing_ma
- {
- 	unsigned int i;
++	/*
++	 * chunk_size can be 0 if the caller sets min_chunk to 0. So force it
++	 * to at least 1 to prevent divide-by-0 panic in padata_mt_helper().`
++	 */
++	if (!ps.chunk_size)
++		ps.chunk_size = 1U;
++
+ 	list_for_each_entry(pw, &works, pw_list)
+ 		queue_work(system_unbound_wq, &pw->pw_work);
  
--	atomic_set(&map->next_elt, -1);
-+	atomic_set(&map->next_elt, 0);
- 	atomic64_set(&map->hits, 0);
- 	atomic64_set(&map->drops, 0);
- 
-@@ -783,7 +783,7 @@ struct tracing_map *tracing_map_create(u
- 
- 	map->map_bits = map_bits;
- 	map->max_elts = (1 << map_bits);
--	atomic_set(&map->next_elt, -1);
-+	atomic_set(&map->next_elt, 0);
- 
- 	map->map_size = (1 << (map_bits + 1));
- 	map->ops = ops;
 
 
