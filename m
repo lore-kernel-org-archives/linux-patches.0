@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFC8189BB5;
-	Thu, 15 Aug 2024 13:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFE9189BB5;
+	Thu, 15 Aug 2024 13:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729636; cv=none; b=U4UhxH5Yft1j+1s2CzOh5C8c887DTJ0L5Lb9KUoufXZRwl/rV8H9+ii16p7A+L9VzNz37lwVvoEaej54fGxgLR6DkYVs4+KWpPkdLAYpytjoeKzhPREoXUNUOmEVUaiu++iMczNCwiNO3JL6fRwzgPklUvaYc1hWY8S7mwzld2c=
+	t=1723729639; cv=none; b=Mj5O64xBe/ZoJf40joulNTmaCzERhBZ79WcHQkZzKeVrfh5d84gi00/NfxEQMF87fOg+DHPyCh4X13c5aFVQMjGxA0w6DiS134dj//cKHjn2T5iv0xwwXATaBtGCfop1a9hxXTTRFGZpkm6ZGumJkFAUSbrSKoi+sl1TqJ5TQ8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729636; c=relaxed/simple;
-	bh=ko8Jk6FVEmmYkztUQn1hUKz+D8KNKvyNqt03NWDbYXU=;
+	s=arc-20240116; t=1723729639; c=relaxed/simple;
+	bh=OdPN/IPtC1DIe/hG3GquMuyfHz4+k7LhdNF9MAefGgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yh7xXSYr6afCzKEU3gSRe3bilv60vPiugesf3KrwrddxSSQNNBPOvdfcZ6ec3fVWgd465J8Wo0m/lWvnaUGJSxe0jbKuLyTIjSo9SVLCRaAPoTpaUkoJj7GcddDjsygDKxGyMwgcBTTrSSTXRXs97UUHVeJGqb1JqsJD25fHqNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLCiWK/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hUGK2kua0f0NZeluYr4yGwgKcpriii/GN0NltkD4edg6a9NTLWFGAjbXofe5VXGoQcVcNfWMdMqaB/BWHkiazCOgtZL0LOgh37eHLSO7oa1Q8t3n0EEHox/cBJVMueByenwKRPilNRS5B6dvJ/L3dPffI7wFY2bsXN1PXYJIu/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gm4Ad4id; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLCiWK/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6191FC32786;
-	Thu, 15 Aug 2024 13:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gm4Ad4id"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B2FC4AF0A;
+	Thu, 15 Aug 2024 13:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729635;
-	bh=ko8Jk6FVEmmYkztUQn1hUKz+D8KNKvyNqt03NWDbYXU=;
+	s=korg; t=1723729638;
+	bh=OdPN/IPtC1DIe/hG3GquMuyfHz4+k7LhdNF9MAefGgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLCiWK/ubJEcx5AWbSVYeJegGRPTs9hm+0bziHqvOrOGiuIQVtmtAY12pBa80SyXB
-	 QXThDbrz4ymPNdmQNQMrpN8uefjB7ZSjMV5K9hIPxiyGMC+LYlweIVMIzCI9ppub1t
-	 5dMsjmc9oHnO2Z8q7twvMl+Vz1VYnW/JmtxzqtBw=
+	b=gm4Ad4idxxZetwNtwuOACQXkKAAjKHVu0x9OjRGytizgpQMFFw3UBJPaRXOHgsUHZ
+	 3x8N98S60SKgp0Eq70B7cJagYMmQ+7DynVg/wLz8QxZi5bJVJO+lgwPQrUS6SlCoQq
+	 IfanGurHnJ7TZpQeH+mkpa1xnLuJgdURL3iohs7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 159/484] pinctrl: freescale: mxs: Fix refcount of child
-Date: Thu, 15 Aug 2024 15:20:17 +0200
-Message-ID: <20240815131947.554874840@linuxfoundation.org>
+Subject: [PATCH 5.15 160/484] fs/ntfs3: Replace inode_trylock with inode_lock
+Date: Thu, 15 Aug 2024 15:20:18 +0200
+Message-ID: <20240815131947.592753372@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,41 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 7f500f2011c0bbb6e1cacab74b4c99222e60248e ]
+[ Upstream commit 69505fe98f198ee813898cbcaf6770949636430b ]
 
-of_get_next_child() will increase refcount of the returned node, need
-use of_node_put() on it when done.
+The issue was detected due to xfstest 465 failing.
 
-Per current implementation, 'child' will be override by
-for_each_child_of_node(np, child), so use of_get_child_count to avoid
-refcount leakage.
-
-Fixes: 17723111e64f ("pinctrl: add pinctrl-mxs support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/20240504-pinctrl-cleanup-v2-18-26c5f2dc1181@nxp.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/pinctrl-mxs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs3/file.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-mxs.c b/drivers/pinctrl/freescale/pinctrl-mxs.c
-index 735cedd0958a2..5b0fcf15f2804 100644
---- a/drivers/pinctrl/freescale/pinctrl-mxs.c
-+++ b/drivers/pinctrl/freescale/pinctrl-mxs.c
-@@ -405,8 +405,8 @@ static int mxs_pinctrl_probe_dt(struct platform_device *pdev,
- 	int ret;
- 	u32 val;
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 6d4f3431bc75a..af7e138064624 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -398,10 +398,7 @@ static int ntfs_file_mmap(struct file *file, struct vm_area_struct *vma)
+ 		}
  
--	child = of_get_next_child(np, NULL);
--	if (!child) {
-+	val = of_get_child_count(np);
-+	if (val == 0) {
- 		dev_err(&pdev->dev, "no group is defined\n");
- 		return -ENOENT;
- 	}
+ 		if (ni->i_valid < to) {
+-			if (!inode_trylock(inode)) {
+-				err = -EAGAIN;
+-				goto out;
+-			}
++			inode_lock(inode);
+ 			err = ntfs_extend_initialized_size(file, ni,
+ 							   ni->i_valid, to);
+ 			inode_unlock(inode);
 -- 
 2.43.0
 
