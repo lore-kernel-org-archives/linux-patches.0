@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530C619DF9C;
-	Thu, 15 Aug 2024 13:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7842F1494C5;
+	Thu, 15 Aug 2024 13:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729965; cv=none; b=isnvipod52mbhZ7w+8BATXP2zyROGDBFQPxf2aZD7Gl2xEk0bGjKxlt9xDtcT0GLgl0HVG2r6rbbxU/UG4XU7H3dqoFZBLmKnxayfPmT4iiZV+2Tmbp27Yju+07Emes6HOEdDYP0dvL+6FRSeekwsGDvk1ykN9VyC1uTn/mGwqk=
+	t=1723729968; cv=none; b=oyOiLiAfR8Vq6kBkaeClBZ85jrdZhhsiiCnjxHwnugrqBagvoutZLwydFZC6y5tggBQl3lerk6J9OyLCCe4ianNRGzIGRtfbGvt0KInjRtmbRBoX+q9exAYqz0aKmEqW4IemCYd9wzjH3+bNcUedbWhQmQd69/jl1QrRNUvQlyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729965; c=relaxed/simple;
-	bh=WdcVYcTrow0OLqLF0c+DI567Trjtuiyt4bbcG0fscXo=;
+	s=arc-20240116; t=1723729968; c=relaxed/simple;
+	bh=6RgZOTvIq6Oy2xw1nrFZ7YTwzCDLHEncWR3Fzi6PBcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puph2Ivq5EiX2cSU8qUdt+NOk/VOwsLYkcFjhBtJbR+jXKV9PS1f/RUZNehnQL4qntWJ+atiCf5zRqNGlIYmwZAEi1ACW6K0CtkhSPVc127qqYJ9hkPo9t9t2GIS/xc2Wf54dxOBN7x3x0OC+Lui/Mmaf0iHtKNWoZjq90624Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AucyLxrR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4FC2W1MOVp/V3gNKZnWR/Vr29mpmU1QWlg64CF+rJ1d59GBPtTOPJxVRTG+ev4ickt/o0nHbYNILgqfsIswfD3dq7Kd1S7UTV4aicQyspYxM3Os0NNweuwUaW9BtaaY9e2meVj7LTjSRwuZvJO3MqAPrDo1ibDwtdcGrlVv+Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwkQe+Ui; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AucyLxrR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA41BC4AF0A;
-	Thu, 15 Aug 2024 13:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwkQe+Ui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010F8C32786;
+	Thu, 15 Aug 2024 13:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729965;
-	bh=WdcVYcTrow0OLqLF0c+DI567Trjtuiyt4bbcG0fscXo=;
+	s=korg; t=1723729968;
+	bh=6RgZOTvIq6Oy2xw1nrFZ7YTwzCDLHEncWR3Fzi6PBcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AucyLxrR9i/OMARNONhePyPi0ctbSmvUui5zTUzVmyrbiE1iboKxuqLKKUYYOItcV
-	 pIwNzucx4tMb7mH3cCbHgBWH1eCs2fluVXppjVXFbp4qxee0/yPtjAnHc0b1Rdnglc
-	 UoaRWVEUs1h6AvoOS+d4q7h7YXcRrr50+du2spnU=
+	b=LwkQe+UiS+Gr5oGRPzjEi0rEtULj85JYxFxhp/R/AVx4YuWFfB7SNKjGtjB2d/yvl
+	 CDRD9X/zipFGJ2xySeM7RUU8MDQGcV7UyN1Cd+dlgPc0weWOyy80671qrBaslpWII6
+	 g+G26U6IoCO9Gg06VCE74FUKYax7DoY87Fxiq+0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
+	syzbot+241c815bda521982cb49@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/484] kdb: Use the passed prompt in kdb_position_cursor()
-Date: Thu, 15 Aug 2024 15:21:59 +0200
-Message-ID: <20240815131951.483179933@linuxfoundation.org>
+Subject: [PATCH 5.15 262/484] jfs: Fix array-index-out-of-bounds in diFree
+Date: Thu, 15 Aug 2024 15:22:00 +0200
+Message-ID: <20240815131951.521571752@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,40 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit e2e821095949cde46256034975a90f88626a2a73 ]
+[ Upstream commit f73f969b2eb39ad8056f6c7f3a295fa2f85e313a ]
 
-The function kdb_position_cursor() takes in a "prompt" parameter but
-never uses it. This doesn't _really_ matter since all current callers
-of the function pass the same value and it's a global variable, but
-it's a bit ugly. Let's clean it up.
-
-Found by code inspection. This patch is expected to functionally be a
-no-op.
-
-Fixes: 09b35989421d ("kdb: Use format-strings rather than '\0' injection in kdb_read()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240528071144.1.I0feb49839c6b6f4f2c4bf34764f5e95de3f55a66@changeid
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Reported-by: syzbot+241c815bda521982cb49@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/kdb/kdb_io.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_imap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
-index a4256e558a701..b28b8a5ef6381 100644
---- a/kernel/debug/kdb/kdb_io.c
-+++ b/kernel/debug/kdb/kdb_io.c
-@@ -194,7 +194,7 @@ char kdb_getchar(void)
-  */
- static void kdb_position_cursor(char *prompt, char *buffer, char *cp)
+diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
+index ac42f8ee553fc..ba6f28521360b 100644
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -290,7 +290,7 @@ int diSync(struct inode *ipimap)
+ int diRead(struct inode *ip)
  {
--	kdb_printf("\r%s", kdb_prompt_str);
-+	kdb_printf("\r%s", prompt);
- 	if (cp > buffer)
- 		kdb_printf("%.*s", (int)(cp - buffer), buffer);
- }
+ 	struct jfs_sb_info *sbi = JFS_SBI(ip->i_sb);
+-	int iagno, ino, extno, rc;
++	int iagno, ino, extno, rc, agno;
+ 	struct inode *ipimap;
+ 	struct dinode *dp;
+ 	struct iag *iagp;
+@@ -339,8 +339,11 @@ int diRead(struct inode *ip)
+ 
+ 	/* get the ag for the iag */
+ 	agstart = le64_to_cpu(iagp->agstart);
++	agno = BLKTOAG(agstart, JFS_SBI(ip->i_sb));
+ 
+ 	release_metapage(mp);
++	if (agno >= MAXAG || agno < 0)
++		return -EIO;
+ 
+ 	rel_inode = (ino & (INOSPERPAGE - 1));
+ 	pageno = blkno >> sbi->l2nbperpage;
 -- 
 2.43.0
 
