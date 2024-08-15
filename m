@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577F01714A8;
-	Thu, 15 Aug 2024 13:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4011714A8;
+	Thu, 15 Aug 2024 13:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729377; cv=none; b=AgJ8mwyQ0WvS1q0G3VTfJFk3eGmmdPjLE0woTvwJ7VK2cVIWsA38oEaufG4/vVLiQBtSAXVz/2zzU4aScnmOtihCfiqZWjbKJ7yVCvw2YE6eBjVgcMaT2hYY4ySC+a1Y/D/1nnXjEzUPcntNZ6CiQp2E+4hFV+CqsMWr/3FC8uA=
+	t=1723729380; cv=none; b=EZ/4lJOUwEiPYsrXWAmltHcnNKc4oDEdp6EfbAQZ0IfXFc6BXGLGVmul9PA5BmOda93pDm2CCaUVkF+1PXg0k+pXjfcX0y7phlyZsgthAx5G/AHZRKe8Oin0tWY60q6M+Q0mzez/0BFNmBmBkEq5kZnD2V/01pSzYjifvnPV/UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729377; c=relaxed/simple;
-	bh=gWjVIuMRBLDed0YsS5lOWJANS7mFHN9z5z16ZjpV4/k=;
+	s=arc-20240116; t=1723729380; c=relaxed/simple;
+	bh=h47hcM3zCAHAYkKglPZX9ej+6ElzSg3SIu4t4U8GU18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ksz32vN62aBh/XF0vvJMfKlCLKWNXBIgiXwReQ6tf1Q1xEzJEulJcphc1+3bM/LtU6EbykgDsWxp4g+TRomckqRkNrmDkforrvfK1+sKUpOksPssRexUI4Gy7LDzlmwV1b6H6kLol1n/qcnp7pjiCTfO++0E4UQn7gNzvtRAy8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgaJeJ4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WlPVGMEemeOTJCBHIzSMrZFj4t/TNnFUXPhE68Rg5l/NOCwKt8+mCotB/S8aywEg+82UAMBYnSugzImo/daUT9Q68/4Uy654ijXXGT4yL4GGK/ZhVReu8akr9ul9GESSm+u0qP+3II54cBZu4LWcexFcgil/Zz7FBWO8OWgMPH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va2wsSsQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgaJeJ4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E6EC32786;
-	Thu, 15 Aug 2024 13:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va2wsSsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDF3C32786;
+	Thu, 15 Aug 2024 13:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729377;
-	bh=gWjVIuMRBLDed0YsS5lOWJANS7mFHN9z5z16ZjpV4/k=;
+	s=korg; t=1723729380;
+	bh=h47hcM3zCAHAYkKglPZX9ej+6ElzSg3SIu4t4U8GU18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgaJeJ4++6+V6bQ+zE+v++Cr1D6Do0bVLLl4qVn3GEsCXWwg1ndW39SouGQ4Bv36r
-	 2uN4kjc4n5K6c2rO30Jjve6wqNMJ3nGXIDPlF6kJaXQGNBhFEySu/8AlOMxeQAKa6C
-	 OBfVC/YRREu8xSelrzO8flLi5GX7ETjmVWNZrmrw=
+	b=Va2wsSsQlE/R9EfxfozmKuRrWqmibtV76ULM4BC0gcRmaq3i9rW6FbIzLgO6FpoCt
+	 zvbpTuQxVUgQrICWg841HEDrCixgQ0DJsrwSC017m6gjjJepDAcgdcIRCDLI+84iP9
+	 fMFYzkKEsMHv69HZ/fKzKv18WHAufNJ7Gfe4RWQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/484] selftests: forwarding: devlink_lib: Wait for udev events after reloading
-Date: Thu, 15 Aug 2024 15:18:57 +0200
-Message-ID: <20240815131944.335796146@linuxfoundation.org>
+Subject: [PATCH 5.15 062/484] net: fec: Refactor: #define magic constants
+Date: Thu, 15 Aug 2024 15:18:40 +0200
+Message-ID: <20240815131943.679358682@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -47,80 +46,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Csókás Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
+[ Upstream commit ff049886671ccd4e624a30ec464cb20e4c39a313 ]
 
-Lately, an additional locking was added by commit c0a40097f0bc
-("drivers: core: synchronize really_probe() and dev_uevent()"). The
-locking protects dev_uevent() calling. This function is used to send
-messages from the kernel to user space. Uevent messages notify user space
-about changes in device states, such as when a device is added, removed,
-or changed. These messages are used by udev (or other similar user-space
-tools) to apply device-specific rules.
+Add defines for bits of ECR, RCR control registers, TX watermark etc.
 
-After reloading devlink instance, udev events should be processed. This
-locking causes a short delay of udev events handling.
-
-One example for useful udev rule is renaming ports. 'forwading.config'
-can be configured to use names after udev rules are applied. Some tests run
-devlink_reload() and immediately use the updated names. This worked before
-the above mentioned commit was pushed, but now the delay of uevent messages
-causes that devlink_reload() returns before udev events are handled and
-tests fail.
-
-Adjust devlink_reload() to not assume that udev events are already
-processed when devlink reload is done, instead, wait for udev events to
-ensure they are processed before returning from the function.
-
-Without this patch:
-TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-Cannot find device "swp1"
-Cannot find device "swp2"
-TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
-
-With this patch:
-$ TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
-
-This is relevant not only for this test.
-
-Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
+Signed-off-by: Csókás Bence <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240212153717.10023-1-csokas.bence@prolan.hu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c32fe1986f27 ("net: fec: Fix FEC_ECR_EN1588 being cleared on link-down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 46 +++++++++++++++--------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-index 2c14a86adaaae..6bb0f929dad78 100644
---- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
-+++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-@@ -122,6 +122,8 @@ devlink_reload()
- 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
- 			grep -c "size_new")
- 	check_err $still_pending "Failed reload - There are still unset sizes"
-+
-+	udevadm settle
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index f02376555ed45..722810ce4068f 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -252,8 +252,8 @@ MODULE_PARM_DESC(macaddr, "FEC Ethernet MAC address");
+ #define PKT_MINBUF_SIZE		64
+ 
+ /* FEC receive acceleration */
+-#define FEC_RACC_IPDIS		(1 << 1)
+-#define FEC_RACC_PRODIS		(1 << 2)
++#define FEC_RACC_IPDIS		BIT(1)
++#define FEC_RACC_PRODIS		BIT(2)
+ #define FEC_RACC_SHIFT16	BIT(7)
+ #define FEC_RACC_OPTIONS	(FEC_RACC_IPDIS | FEC_RACC_PRODIS)
+ 
+@@ -285,8 +285,23 @@ MODULE_PARM_DESC(macaddr, "FEC Ethernet MAC address");
+ #define FEC_MMFR_TA		(2 << 16)
+ #define FEC_MMFR_DATA(v)	(v & 0xffff)
+ /* FEC ECR bits definition */
+-#define FEC_ECR_MAGICEN		(1 << 2)
+-#define FEC_ECR_SLEEP		(1 << 3)
++#define FEC_ECR_RESET           BIT(0)
++#define FEC_ECR_ETHEREN         BIT(1)
++#define FEC_ECR_MAGICEN         BIT(2)
++#define FEC_ECR_SLEEP           BIT(3)
++#define FEC_ECR_EN1588          BIT(4)
++#define FEC_ECR_BYTESWP         BIT(8)
++/* FEC RCR bits definition */
++#define FEC_RCR_LOOP            BIT(0)
++#define FEC_RCR_HALFDPX         BIT(1)
++#define FEC_RCR_MII             BIT(2)
++#define FEC_RCR_PROMISC         BIT(3)
++#define FEC_RCR_BC_REJ          BIT(4)
++#define FEC_RCR_FLOWCTL         BIT(5)
++#define FEC_RCR_RMII            BIT(8)
++#define FEC_RCR_10BASET         BIT(9)
++/* TX WMARK bits */
++#define FEC_TXWMRK_STRFWD       BIT(8)
+ 
+ #define FEC_MII_TIMEOUT		30000 /* us */
+ 
+@@ -981,7 +996,7 @@ fec_restart(struct net_device *ndev)
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+ 	u32 temp_mac[2];
+ 	u32 rcntl = OPT_FRAME_SIZE | 0x04;
+-	u32 ecntl = 0x2; /* ETHEREN */
++	u32 ecntl = FEC_ECR_ETHEREN;
+ 
+ 	/* Whack a reset.  We should wait for this.
+ 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
+@@ -1059,18 +1074,18 @@ fec_restart(struct net_device *ndev)
+ 		    fep->phy_interface == PHY_INTERFACE_MODE_RGMII_TXID)
+ 			rcntl |= (1 << 6);
+ 		else if (fep->phy_interface == PHY_INTERFACE_MODE_RMII)
+-			rcntl |= (1 << 8);
++			rcntl |= FEC_RCR_RMII;
+ 		else
+-			rcntl &= ~(1 << 8);
++			rcntl &= ~FEC_RCR_RMII;
+ 
+ 		/* 1G, 100M or 10M */
+ 		if (ndev->phydev) {
+ 			if (ndev->phydev->speed == SPEED_1000)
+ 				ecntl |= (1 << 5);
+ 			else if (ndev->phydev->speed == SPEED_100)
+-				rcntl &= ~(1 << 9);
++				rcntl &= ~FEC_RCR_10BASET;
+ 			else
+-				rcntl |= (1 << 9);
++				rcntl |= FEC_RCR_10BASET;
+ 		}
+ 	} else {
+ #ifdef FEC_MIIGSK_ENR
+@@ -1129,13 +1144,13 @@ fec_restart(struct net_device *ndev)
+ 
+ 	if (fep->quirks & FEC_QUIRK_ENET_MAC) {
+ 		/* enable ENET endian swap */
+-		ecntl |= (1 << 8);
++		ecntl |= FEC_ECR_BYTESWP;
+ 		/* enable ENET store and forward mode */
+-		writel(1 << 8, fep->hwp + FEC_X_WMRK);
++		writel(FEC_TXWMRK_STRFWD, fep->hwp + FEC_X_WMRK);
+ 	}
+ 
+ 	if (fep->bufdesc_ex)
+-		ecntl |= (1 << 4);
++		ecntl |= FEC_ECR_EN1588;
+ 
+ 	if (fep->quirks & FEC_QUIRK_DELAYED_CLKS_SUPPORT &&
+ 	    fep->rgmii_txc_dly)
+@@ -1189,7 +1204,7 @@ static void
+ fec_stop(struct net_device *ndev)
+ {
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+-	u32 rmii_mode = readl(fep->hwp + FEC_R_CNTRL) & (1 << 8);
++	u32 rmii_mode = readl(fep->hwp + FEC_R_CNTRL) & FEC_RCR_RMII;
+ 	u32 val;
+ 
+ 	/* We cannot expect a graceful transmit stop without link !!! */
+@@ -1208,7 +1223,7 @@ fec_stop(struct net_device *ndev)
+ 		if (fep->quirks & FEC_QUIRK_HAS_MULTI_QUEUES) {
+ 			writel(0, fep->hwp + FEC_ECNTRL);
+ 		} else {
+-			writel(1, fep->hwp + FEC_ECNTRL);
++			writel(FEC_ECR_RESET, fep->hwp + FEC_ECNTRL);
+ 			udelay(10);
+ 		}
+ 		writel(FEC_DEFAULT_IMASK, fep->hwp + FEC_IMASK);
+@@ -1224,12 +1239,11 @@ fec_stop(struct net_device *ndev)
+ 	/* We have to keep ENET enabled to have MII interrupt stay working */
+ 	if (fep->quirks & FEC_QUIRK_ENET_MAC &&
+ 		!(fep->wol_flag & FEC_WOL_FLAG_SLEEP_ON)) {
+-		writel(2, fep->hwp + FEC_ECNTRL);
++		writel(FEC_ECR_ETHEREN, fep->hwp + FEC_ECNTRL);
+ 		writel(rmii_mode, fep->hwp + FEC_R_CNTRL);
+ 	}
  }
  
- declare -A DEVLINK_ORIG
+-
+ static void
+ fec_timeout(struct net_device *ndev, unsigned int txqueue)
+ {
 -- 
 2.43.0
 
