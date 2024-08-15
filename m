@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F9C1714A1;
-	Thu, 15 Aug 2024 13:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113481714A1;
+	Thu, 15 Aug 2024 13:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730126; cv=none; b=iYPzFtyoDKrdPkzL+BGQO4edds9FvhST/1erUJCwwmNr3EFf+7axQNy9BoV9tOzhSTvMR/q/17IrbBgYyHVhQ+agIjJvYEvdEFxXcS/2hLzooXeB39ClZSM0PdBRPKOuclMV/AtrzYpQOkKJueFLBOVbsjn2ixmvqUeqXiWMaUs=
+	t=1723730130; cv=none; b=BW6gQmqfhz9d9zXzlZTMEwATkOC8CMH9sbQcsCK4EjxxD++5c8O4zIadeF2F1uckEnY3A/HyZ9+YIKyxtEy6xrhXkE4VOq3gjQDpbBeIZp6H/MtKOT9IqtDTGJUdg00CPvKRU22FL9hgMkaqv4LL/oy68bvWu6sb4bVm7pTxn+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730126; c=relaxed/simple;
-	bh=BPq4nr9MUu734R4K1V3aXiwbCu4B8GK/y6EYxH/oj+o=;
+	s=arc-20240116; t=1723730130; c=relaxed/simple;
+	bh=XaTPKSdlxnLUzi/0dMZIFxSC8luhyzcgMjv18M5Hyj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIuetHpH8EIJgfzOFRa4tmBENA4K2BBZLVvOkxX3Kkp09dtBR6klpjgPwvo8Y++O61onntpUb6ImrlJHJmjr76BbHYfOgUghXWaLVowGAOVrkIg4O6c/noCNOuWr877czw8kF/KuNnbch4dLL9fYhxElXBlNGEGqPAm0KCTE88s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdjNjYTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJPthC9ZGd++jiigIlXUiz9jtXVVZQGr4eo9xUyAwLSCNg1OMomxvo+R8EJ+r2hxMU1iqGa5aTTwVrtFSnGCVzD6UtIcZlUNKfVTl76on70UCx72pCcwICv6kA+ZaTD6UYfHaN51M6TX+6qaAUwPnr6LBCAw7LDVAkVEhnfw0dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+HwOHJK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdjNjYTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6455BC32786;
-	Thu, 15 Aug 2024 13:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+HwOHJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87530C32786;
+	Thu, 15 Aug 2024 13:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730126;
-	bh=BPq4nr9MUu734R4K1V3aXiwbCu4B8GK/y6EYxH/oj+o=;
+	s=korg; t=1723730129;
+	bh=XaTPKSdlxnLUzi/0dMZIFxSC8luhyzcgMjv18M5Hyj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdjNjYTbQjh3PrgCQVFB+eO7TF+xQq/4J5DSK+o8Kd4R/zUnbPL2euhPqxm4/H2lP
-	 2Hc+JRTk40wEF1SmCNWkPi2Lw/q0a1VCyVq/vxiChAB6j+nGljUfJZ6+Iy5ueXovhs
-	 +l4QVaDs8C8YY5oM9GvIObpSXIBysMaUZPssWB+M=
+	b=N+HwOHJKJyOC9g9NOFgcWQmqEG7qg5Qcq7jot5rlWJj08KN7TwvC8VXjh+Pgrg+7q
+	 COZBWp+34DnGSU/ssjohKZKn7N9ECeKyHs4soy07YYF6Ey4UmpWJNWXoXfSR10BpaW
+	 FFyjjFYvCJOXcEpKe6Kc+9x6gft72QvTqoqG0eIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Pavel Machek <pavel@ucw.cz>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 312/484] leds: trigger: use RCU to protect the led_cdevs list
-Date: Thu, 15 Aug 2024 15:22:50 +0200
-Message-ID: <20240815131953.458005260@linuxfoundation.org>
+Subject: [PATCH 5.15 313/484] leds: trigger: Remove unused function led_trigger_rename_static()
+Date: Thu, 15 Aug 2024 15:22:51 +0200
+Message-ID: <20240815131953.495400773@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,164 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 2a5a8fa8b23144d14567d6f8293dd6fbeecee393 ]
+[ Upstream commit c82a1662d4548c454de5343b88f69b9fc82266b3 ]
 
-Even with the previous commit 27af8e2c90fb
-("leds: trigger: fix potential deadlock with libata")
-to this file, we still get lockdep unhappy, and Boqun
-explained the report here:
-https://lore.kernel.org/r/YNA+d1X4UkoQ7g8a@boqun-archlinux
+This function was added with a8df7b1ab70b ("leds: add led_trigger_rename
+function") 11 yrs ago, but it has no users. So remove it.
 
-Effectively, this means that the read_lock_irqsave() isn't
-enough here because another CPU might be trying to do a
-write lock, and thus block the readers.
-
-This is all pretty messy, but it doesn't seem right that
-the LEDs framework imposes some locking requirements on
-users, in particular we'd have to make the spinlock in the
-iwlwifi driver always disable IRQs, even if we don't need
-that for any other reason, just to avoid this deadlock.
-
-Since writes to the led_cdevs list are rare (and are done
-by userspace), just switch the list to RCU. This costs a
-synchronize_rcu() at removal time so we can ensure things
-are correct, but that seems like a small price to pay for
-getting lock-free iterations and no deadlocks (nor any
-locking requirements imposed on users.)
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Pavel Machek <pavel@ucw.cz>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/d90f30be-f661-4db7-b0b5-d09d07a78a68@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Stable-dep-of: ab477b766edd ("leds: triggers: Flush pending brightness before activating trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-triggers.c | 41 +++++++++++++++++++------------------
- include/linux/leds.h        |  2 +-
- 2 files changed, 22 insertions(+), 21 deletions(-)
+ drivers/leds/led-triggers.c | 13 -------------
+ include/linux/leds.h        | 17 -----------------
+ 2 files changed, 30 deletions(-)
 
 diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
-index cbe70f38cb572..024b73f84ce0c 100644
+index 024b73f84ce0c..dddfc301d3414 100644
 --- a/drivers/leds/led-triggers.c
 +++ b/drivers/leds/led-triggers.c
-@@ -157,7 +157,6 @@ EXPORT_SYMBOL_GPL(led_trigger_read);
- /* Caller must ensure led_cdev->trigger_lock held */
- int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
- {
--	unsigned long flags;
- 	char *event = NULL;
- 	char *envp[2];
- 	const char *name;
-@@ -171,10 +170,13 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
- 
- 	/* Remove any existing trigger */
- 	if (led_cdev->trigger) {
--		write_lock_irqsave(&led_cdev->trigger->leddev_list_lock, flags);
--		list_del(&led_cdev->trig_list);
--		write_unlock_irqrestore(&led_cdev->trigger->leddev_list_lock,
--			flags);
-+		spin_lock(&led_cdev->trigger->leddev_list_lock);
-+		list_del_rcu(&led_cdev->trig_list);
-+		spin_unlock(&led_cdev->trigger->leddev_list_lock);
-+
-+		/* ensure it's no longer visible on the led_cdevs list */
-+		synchronize_rcu();
-+
- 		cancel_work_sync(&led_cdev->set_brightness_work);
- 		led_stop_software_blink(led_cdev);
- 		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
-@@ -186,9 +188,9 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
- 		led_set_brightness(led_cdev, LED_OFF);
- 	}
- 	if (trig) {
--		write_lock_irqsave(&trig->leddev_list_lock, flags);
--		list_add_tail(&led_cdev->trig_list, &trig->led_cdevs);
--		write_unlock_irqrestore(&trig->leddev_list_lock, flags);
-+		spin_lock(&trig->leddev_list_lock);
-+		list_add_tail_rcu(&led_cdev->trig_list, &trig->led_cdevs);
-+		spin_unlock(&trig->leddev_list_lock);
- 		led_cdev->trigger = trig;
- 
- 		if (trig->activate)
-@@ -223,9 +225,10 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
- 		trig->deactivate(led_cdev);
- err_activate:
- 
--	write_lock_irqsave(&led_cdev->trigger->leddev_list_lock, flags);
--	list_del(&led_cdev->trig_list);
--	write_unlock_irqrestore(&led_cdev->trigger->leddev_list_lock, flags);
-+	spin_lock(&led_cdev->trigger->leddev_list_lock);
-+	list_del_rcu(&led_cdev->trig_list);
-+	spin_unlock(&led_cdev->trigger->leddev_list_lock);
-+	synchronize_rcu();
- 	led_cdev->trigger = NULL;
- 	led_cdev->trigger_data = NULL;
- 	led_set_brightness(led_cdev, LED_OFF);
-@@ -285,7 +288,7 @@ int led_trigger_register(struct led_trigger *trig)
- 	struct led_classdev *led_cdev;
- 	struct led_trigger *_trig;
- 
--	rwlock_init(&trig->leddev_list_lock);
-+	spin_lock_init(&trig->leddev_list_lock);
- 	INIT_LIST_HEAD(&trig->led_cdevs);
- 
- 	down_write(&triggers_list_lock);
-@@ -378,15 +381,14 @@ void led_trigger_event(struct led_trigger *trig,
- 			enum led_brightness brightness)
- {
- 	struct led_classdev *led_cdev;
--	unsigned long flags;
- 
- 	if (!trig)
- 		return;
- 
--	read_lock_irqsave(&trig->leddev_list_lock, flags);
--	list_for_each_entry(led_cdev, &trig->led_cdevs, trig_list)
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(led_cdev, &trig->led_cdevs, trig_list)
- 		led_set_brightness(led_cdev, brightness);
--	read_unlock_irqrestore(&trig->leddev_list_lock, flags);
-+	rcu_read_unlock();
+@@ -268,19 +268,6 @@ void led_trigger_set_default(struct led_classdev *led_cdev)
  }
- EXPORT_SYMBOL_GPL(led_trigger_event);
+ EXPORT_SYMBOL_GPL(led_trigger_set_default);
  
-@@ -397,20 +399,19 @@ static void led_trigger_blink_setup(struct led_trigger *trig,
- 			     int invert)
- {
- 	struct led_classdev *led_cdev;
--	unsigned long flags;
+-void led_trigger_rename_static(const char *name, struct led_trigger *trig)
+-{
+-	/* new name must be on a temporary string to prevent races */
+-	BUG_ON(name == trig->name);
+-
+-	down_write(&triggers_list_lock);
+-	/* this assumes that trig->name was originaly allocated to
+-	 * non constant storage */
+-	strcpy((char *)trig->name, name);
+-	up_write(&triggers_list_lock);
+-}
+-EXPORT_SYMBOL_GPL(led_trigger_rename_static);
+-
+ /* LED Trigger Interface */
  
- 	if (!trig)
- 		return;
- 
--	read_lock_irqsave(&trig->leddev_list_lock, flags);
--	list_for_each_entry(led_cdev, &trig->led_cdevs, trig_list) {
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(led_cdev, &trig->led_cdevs, trig_list) {
- 		if (oneshot)
- 			led_blink_set_oneshot(led_cdev, delay_on, delay_off,
- 					      invert);
- 		else
- 			led_blink_set(led_cdev, delay_on, delay_off);
- 	}
--	read_unlock_irqrestore(&trig->leddev_list_lock, flags);
-+	rcu_read_unlock();
- }
- 
- void led_trigger_blink(struct led_trigger *trig,
+ int led_trigger_register(struct led_trigger *trig)
 diff --git a/include/linux/leds.h b/include/linux/leds.h
-index a0b730be40ad2..ba4861ec73d30 100644
+index ba4861ec73d30..2bbff7519b731 100644
 --- a/include/linux/leds.h
 +++ b/include/linux/leds.h
-@@ -360,7 +360,7 @@ struct led_trigger {
- 	struct led_hw_trigger_type *trigger_type;
+@@ -409,23 +409,6 @@ static inline void *led_get_trigger_data(struct led_classdev *led_cdev)
+ 	return led_cdev->trigger_data;
+ }
  
- 	/* LEDs under control by this trigger (for simple triggers) */
--	rwlock_t	  leddev_list_lock;
-+	spinlock_t	  leddev_list_lock;
- 	struct list_head  led_cdevs;
- 
- 	/* Link to next registered trigger */
+-/**
+- * led_trigger_rename_static - rename a trigger
+- * @name: the new trigger name
+- * @trig: the LED trigger to rename
+- *
+- * Change a LED trigger name by copying the string passed in
+- * name into current trigger name, which MUST be large
+- * enough for the new string.
+- *
+- * Note that name must NOT point to the same string used
+- * during LED registration, as that could lead to races.
+- *
+- * This is meant to be used on triggers with statically
+- * allocated name.
+- */
+-void led_trigger_rename_static(const char *name, struct led_trigger *trig);
+-
+ #define module_led_trigger(__led_trigger) \
+ 	module_driver(__led_trigger, led_trigger_register, \
+ 		      led_trigger_unregister)
 -- 
 2.43.0
 
