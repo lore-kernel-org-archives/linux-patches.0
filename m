@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D0C17C995;
-	Thu, 15 Aug 2024 14:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E3C1A00F8;
+	Thu, 15 Aug 2024 14:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732286; cv=none; b=VzBZVngI2cmPWq2m2S0/ctdQeAgD1yoDcwx96fo5tQBYEy6zuhXxeQLuQ5Er9+V8EIWh6zyioRrZho3R3SYIXzxro0nXRoSkuE1HZHgdTJwjoZVB7JDOvldsJnrKfh79J+XOoXInYAb/B9LmNriUfYqQHskXJJC1BXlyu8PHHrM=
+	t=1723732289; cv=none; b=ul1mLdFgpYGpvyaWU2jjjgu9JyN92UBGMD+i1Wy1tOJ+mx74qJ37EJ3nNFEU7I39QSsXLj6dwldAfpUWsAYBalWcAbAanSmz7UnuhHszDgQ0nAhrHLOgmnG/AWLBoHaaz79DTcDaXCujltxH/oyK5ZqkdURCb7VOdEHjb0Tz9ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732286; c=relaxed/simple;
-	bh=JZWiOiv+Qr9Cenb11AD5dhsCVaNusFEe0kWdNzv5Fh4=;
+	s=arc-20240116; t=1723732289; c=relaxed/simple;
+	bh=V6Ai6/yIK+CekMjuyEwgcJotEfcWiBoFtodwXQ7Z7bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BQ4OznsXyEwB0w9WP1PMiF9Zu3xP9VrLt21SOfatpe/UMnpblnYv1cSbOH7k7Th/l3sr0+IEx6JP3RV7M7BKn6H0GRfS72DYG2dSKTLurF/EIZt6/JevPhhxbSOiNTJs/m8t3TmKjPEWaDXf4xlZHyAtst80c2kOZiB0qmAvymQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmg2suun; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSyiR/w+fVYI3IGV/2LvAZiSDaeGdNm5iG7Sg0M4JXefVt4B28vZqnM+0bdIR7wDMbiZPzhVuVNgjbktJzzepc1YaEz7ijMVXO3ujjqnqH4cF8bR9zQPpOnW24iuycIoDI7RMzIZuEqo04Q9UhIiMSnc0/vF0pVud5fNBg08Duk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/d8n3Ll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmg2suun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17ADFC32786;
-	Thu, 15 Aug 2024 14:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/d8n3Ll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20694C32786;
+	Thu, 15 Aug 2024 14:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732286;
-	bh=JZWiOiv+Qr9Cenb11AD5dhsCVaNusFEe0kWdNzv5Fh4=;
+	s=korg; t=1723732289;
+	bh=V6Ai6/yIK+CekMjuyEwgcJotEfcWiBoFtodwXQ7Z7bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmg2suun++XWFygZpTBHriO5D0VaBTkb4M3aeCCcWyCZTysMfoU23Zvg5j9m6gcwN
-	 Kj/mWA7bvXooQbEEGZOPwB0dBNJicwSejWCRfAqzdzDpXKJev6OvVpX7lI2AGHKou0
-	 Y+buh6P27/HFM3Jos3RqPQKjvKVhOIIPGdQ8NxLY=
+	b=e/d8n3LlP7glkK8PhFKlKaNWb6CEwltEckJrQe8mfJJNZflDT+QX7gmxpY4n+nZzn
+	 R7jn1Ip89vEgD8L8sYwIPwf1YTSS3cORtG6+DnP+BfR5LmllW2zvjyWsjhY7+nkqXw
+	 78dTAsUfhAfa4S2qBGWIXPd5ZSC6qrLeQQclkTOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/352] pinctrl: core: fix possible memory leak when pinctrl_enable() fails
-Date: Thu, 15 Aug 2024 15:23:01 +0200
-Message-ID: <20240815131923.700062869@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.10 133/352] ext2: Verify bitmap and itable block numbers before using them
+Date: Thu, 15 Aug 2024 15:23:19 +0200
+Message-ID: <20240815131924.396664356@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,59 +49,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit ae1cf4759972c5fe665ee4c5e0c29de66fe3cf4a ]
+commit 322a6aff03937aa1ece33b4e46c298eafaf9ac41 upstream.
 
-In devm_pinctrl_register(), if pinctrl_enable() fails in pinctrl_register(),
-the "pctldev" has not been added to dev resources, so devm_pinctrl_dev_release()
-can not be called, it leads memory leak.
+Verify bitmap block numbers and inode table blocks are sane before using
+them for checking bits in the block bitmap.
 
-Introduce pinctrl_uninit_controller(), call it in the error path to free memory.
-
-Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240606023704.3931561-2-yangyingliang@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/core.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/ext2/balloc.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
-index 3d44d6f48cc4c..8152d24e128a3 100644
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -2039,6 +2039,14 @@ pinctrl_init_controller(struct pinctrl_desc *pctldesc, struct device *dev,
- 	return ERR_PTR(ret);
- }
+--- a/fs/ext2/balloc.c
++++ b/fs/ext2/balloc.c
+@@ -79,26 +79,33 @@ static int ext2_valid_block_bitmap(struc
+ 	ext2_grpblk_t next_zero_bit;
+ 	ext2_fsblk_t bitmap_blk;
+ 	ext2_fsblk_t group_first_block;
++	ext2_grpblk_t max_bit;
  
-+static void pinctrl_uninit_controller(struct pinctrl_dev *pctldev, struct pinctrl_desc *pctldesc)
-+{
-+	pinctrl_free_pindescs(pctldev, pctldesc->pins,
-+			      pctldesc->npins);
-+	mutex_destroy(&pctldev->mutex);
-+	kfree(pctldev);
-+}
-+
- static int pinctrl_claim_hogs(struct pinctrl_dev *pctldev)
- {
- 	pctldev->p = create_pinctrl(pctldev->dev, pctldev);
-@@ -2119,8 +2127,10 @@ struct pinctrl_dev *pinctrl_register(struct pinctrl_desc *pctldesc,
- 		return pctldev;
+ 	group_first_block = ext2_group_first_block_no(sb, block_group);
++	max_bit = ext2_group_last_block_no(sb, block_group) - group_first_block;
  
- 	error = pinctrl_enable(pctldev);
--	if (error)
-+	if (error) {
-+		pinctrl_uninit_controller(pctldev, pctldesc);
- 		return ERR_PTR(error);
-+	}
+ 	/* check whether block bitmap block number is set */
+ 	bitmap_blk = le32_to_cpu(desc->bg_block_bitmap);
+ 	offset = bitmap_blk - group_first_block;
+-	if (!ext2_test_bit(offset, bh->b_data))
++	if (offset < 0 || offset > max_bit ||
++	    !ext2_test_bit(offset, bh->b_data))
+ 		/* bad block bitmap */
+ 		goto err_out;
  
- 	return pctldev;
- }
--- 
-2.43.0
-
+ 	/* check whether the inode bitmap block number is set */
+ 	bitmap_blk = le32_to_cpu(desc->bg_inode_bitmap);
+ 	offset = bitmap_blk - group_first_block;
+-	if (!ext2_test_bit(offset, bh->b_data))
++	if (offset < 0 || offset > max_bit ||
++	    !ext2_test_bit(offset, bh->b_data))
+ 		/* bad block bitmap */
+ 		goto err_out;
+ 
+ 	/* check whether the inode table block number is set */
+ 	bitmap_blk = le32_to_cpu(desc->bg_inode_table);
+ 	offset = bitmap_blk - group_first_block;
++	if (offset < 0 || offset > max_bit ||
++	    offset + EXT2_SB(sb)->s_itb_per_group - 1 > max_bit)
++		goto err_out;
+ 	next_zero_bit = ext2_find_next_zero_bit(bh->b_data,
+ 				offset + EXT2_SB(sb)->s_itb_per_group,
+ 				offset);
 
 
