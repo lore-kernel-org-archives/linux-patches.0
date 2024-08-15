@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E907DA7D;
-	Thu, 15 Aug 2024 13:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD24A7DA7D;
+	Thu, 15 Aug 2024 13:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730358; cv=none; b=WH7VhqXrXkhXZWfQZf2XLSXF7Gzh4kmQFZ2b77NGBsBd0gU/bm3G71dTYOK6cmkX/MRBmqhIzFB1DhkRd54EpBhr84Yxol+PfxojeZ4bttlKadCwuc8X/MOdx/KnuFGqOsA8kv/im5gjkjSwsifruP1vJi2C+irEV0pvhpmpMBo=
+	t=1723730361; cv=none; b=V1+l1mtIBYhBQihLt32fMEIsYUZFbsR9NNFB3HEvhaU3v/hpW1/rMojvdysJZIFK5GNwchtvsW0My/zp72COskofneG10ePxvKUWvnl/LsQJU0JP6jSROTZR6rCi2+Vw3DWAH9wUfbtDbhIR5iUNrmqI16RmJa2kigqKfaEADMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730358; c=relaxed/simple;
-	bh=bfOmWdTIbsWq6AFxuhnX+T/ccgOz5cb41ep7xrtip2Q=;
+	s=arc-20240116; t=1723730361; c=relaxed/simple;
+	bh=pyTuzs/8WZmtwopkCixkrsuyk10ZM78evxe5k3WDQkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ePMUsXUo9xYh6J9RMtXoB2r6EeXLmZu9CjedLPaQQ9Ts/5Jq9ozFCdBFooRkEhbedQq/gRhBWOYMIBfWUgfzFYAC+fkXGYGoby5W6JZ8x6Rroh7yGWVvbA+LgExAcSNoiDKjNj+zPXNV7pnuh24qhJAPRdKnUUp2q5IhiLe/s4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BycRs+sP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDL3aw7fd1qfcl0DNRNJDDdQppUeYrN6jUZI+dW0ioVa/VjPb8lgp3NLvZB/QBSuzOfFISFMrGKhy3SlViq6pGD5LA7McP5nHNBf8sMjUl6mpcqc8sXfQ4QUgnasvfpjtBNzHGY1illD3GTfTxU0w1oAye1PDMuJXR53T/tTcow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Za+2gpxB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BycRs+sP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F1EC32786;
-	Thu, 15 Aug 2024 13:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Za+2gpxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327F5C32786;
+	Thu, 15 Aug 2024 13:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730358;
-	bh=bfOmWdTIbsWq6AFxuhnX+T/ccgOz5cb41ep7xrtip2Q=;
+	s=korg; t=1723730361;
+	bh=pyTuzs/8WZmtwopkCixkrsuyk10ZM78evxe5k3WDQkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BycRs+sPOG1I8CnxwyaHZqCUStULe2+w4BVlUWkXI7NflaKkkfeiKtkSel7Q+WBaB
-	 UiY8HXZ+2fLxhtNPfeckdZ4xH4kYIH5x2odi1RVq+msDZZg5kzePd6otQwAIXSJjuN
-	 HzZY6QRGMcUSrTIo8h6mGjpII5lOye+/UMziRTHM=
+	b=Za+2gpxBV6Avi4V8/MwtutnTh7iv5oL9asGF0IDJn04yvzQBtpdVNbStY1N4y9MTe
+	 VPulJSQKY5WfWDgTfisJDjLzypfsULowZU/1DKuXZid77G0E8G+78l9zLnZBMelzX2
+	 Rop22GQz1Kb/XrUo82+aN5wGoWHWFi40sv6AF5OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Frank Li <Frank.Li@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 366/484] net: fec: Stop PPS on driver remove
-Date: Thu, 15 Aug 2024 15:23:44 +0200
-Message-ID: <20240815131955.571671978@linuxfoundation.org>
+	Xiaxi Shen <shenxiaxi26@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+eaba5abe296837a640c0@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 384/484] ext4: fix uninitialized variable in ext4_inlinedir_to_tree
+Date: Thu, 15 Aug 2024 15:24:02 +0200
+Message-ID: <20240815131956.279422513@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -49,48 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Xiaxi Shen <shenxiaxi26@gmail.com>
 
-[ Upstream commit 8fee6d5ad5fa18c270eedb2a2cdf58dbadefb94b ]
+[ Upstream commit 8dc9c3da79c84b13fdb135e2fb0a149a8175bffe ]
 
-PPS was not stopped in `fec_ptp_stop()`, called when
-the adapter was removed. Consequentially, you couldn't
-safely reload the driver with the PPS signal on.
+Syzbot has found an uninit-value bug in ext4_inlinedir_to_tree
 
-Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/netdev/CAOMZO5BzcZR8PwKKwBssQq_wAGzVgf1ffwe_nhpQJjviTdxy-w@mail.gmail.com/T/#m01dcb810bfc451a492140f6797ca77443d0cb79f
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20240807080956.2556602-1-csokas.bence@prolan.hu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This error happens because ext4_inlinedir_to_tree does not
+handle the case when ext4fs_dirhash returns an error
+
+This can be avoided by checking the return value of ext4fs_dirhash
+and propagating the error,
+similar to how it's done with ext4_htree_store_dirent
+
+Signed-off-by: Xiaxi Shen <shenxiaxi26@gmail.com>
+Reported-and-tested-by: syzbot+eaba5abe296837a640c0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=eaba5abe296837a640c0
+Link: https://patch.msgid.link/20240501033017.220000-1-shenxiaxi26@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/inline.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 780fbb3e1ed06..84e0855069a84 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -640,6 +640,9 @@ void fec_ptp_stop(struct platform_device *pdev)
- 	struct net_device *ndev = platform_get_drvdata(pdev);
- 	struct fec_enet_private *fep = netdev_priv(ndev);
- 
-+	if (fep->pps_enable)
-+		fec_ptp_enable_pps(fep, 0);
-+
- 	cancel_delayed_work_sync(&fep->time_keep);
- 	if (fep->ptp_clock)
- 		ptp_clock_unregister(fep->ptp_clock);
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index 6fe665de1b203..bc7f6417888dc 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -1446,7 +1446,11 @@ int ext4_inlinedir_to_tree(struct file *dir_file,
+ 			hinfo->hash = EXT4_DIRENT_HASH(de);
+ 			hinfo->minor_hash = EXT4_DIRENT_MINOR_HASH(de);
+ 		} else {
+-			ext4fs_dirhash(dir, de->name, de->name_len, hinfo);
++			err = ext4fs_dirhash(dir, de->name, de->name_len, hinfo);
++			if (err) {
++				ret = err;
++				goto out;
++			}
+ 		}
+ 		if ((hinfo->hash < start_hash) ||
+ 		    ((hinfo->hash == start_hash) &&
 -- 
 2.43.0
 
