@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643227DA78;
-	Thu, 15 Aug 2024 13:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449E319EECF;
+	Thu, 15 Aug 2024 13:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728846; cv=none; b=V8kZUFMkY3XT8m9y45D6EiIrXtFWK2OeON2Qtyb/6JusIHqy3wMH7qlmhkhN9toExBLehk+BPUcUVts0do6TAQkNX+UoQq+WWzdB0joACnaPOwfGSMS1y93kTqSZ9Dj4ST8LSjp0QwCrBqodrdzhjojdqFnBNpjCBbSmoQfjy8E=
+	t=1723728849; cv=none; b=JEXlM9+sqDD0WP3HFH1x/3q5dhvXYXkczo8iZqCVTHJICjSIlTvfVXtGabBexpsSeaIdoGZWFAVXu21VtwwK0d+lxp/hFUc/KBhLuNpBaNUVXpiwc4uzJejw1BT6hxSsVocTxXb12hCMRNXMxMbn7pbl6N3IO19CfCeJ8ndxEfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728846; c=relaxed/simple;
-	bh=CVjWmUfWJXiOiU3h/vU5V8Z37XCli6WBSovmA40Ut74=;
+	s=arc-20240116; t=1723728849; c=relaxed/simple;
+	bh=rszRp1NhMiUiH14DYGApzeQyS0SF2fr+V5XIYqjcHDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJzSVQlaLDrWz27zfDdSpRG0YU03Tt3yhf67fe/N4CkvxIOK43J+BMS8JH9yDgh4c0flmIh8oIA3DBJLfva/h7urf7KVDnrkyr71C5f6zkZWcXzT963wwBH5+CJGhp9ShEQZbjc/K7MbEBJJzI4xo2Hf6Stb9hwKXDjI2PIDCuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vm9eP1Iw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFAXsjwmAW+ltOZX2j7KrvwzQkH5o0xW/2VxyV+WAh6M+ZHMfdclnH326qS6qnkYG5DBVqh1TALmYCxrIOvz1X2rwXEUcWJ79EG9Gobl3pWKx7SY+zGDtjKVYUznrtuEgbnOqIXeO1azZz4q6ITEcnKq7B3sjaghCXtgnn6yiYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDNJe2oZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vm9eP1Iw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31A6C32786;
-	Thu, 15 Aug 2024 13:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDNJe2oZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3ABC32786;
+	Thu, 15 Aug 2024 13:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728846;
-	bh=CVjWmUfWJXiOiU3h/vU5V8Z37XCli6WBSovmA40Ut74=;
+	s=korg; t=1723728849;
+	bh=rszRp1NhMiUiH14DYGApzeQyS0SF2fr+V5XIYqjcHDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vm9eP1Iw7Jr9cIGTLJq4AB7ER/y4jxcx3n9nTlmhIjMf78L/yDFyYS05BDd/e+yMD
-	 RZaA+5I/l1bngbJuDIrKNj7pfLDYpatIILqwNHYcsR2YwPrnHuZEP21F2S7r4OGVcX
-	 mtCc5VccCw5qwS1zDvbp9PTEGhkj478EHgiHFZWc=
+	b=YDNJe2oZKLdnyVQ++eHYoyNcO33gpnGMn+M+txLi+5NLyS6Vm6gF0ZOzgLDC/pXwR
+	 OoJtIabSob0WTfQJZ/xb+m/BN6FGHibY5YE4adpSKVq75U/1ZSzUdk+w/Lkze9G4ze
+	 SWAUjjQTkd8FcZvzoi9TTzsSh/FTu5h+XoP7Ge7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Perches <joe@perches.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 111/196] parport: Standardize use of printmode
-Date: Thu, 15 Aug 2024 15:23:48 +0200
-Message-ID: <20240815131856.327161760@linuxfoundation.org>
+Subject: [PATCH 4.19 129/196] irqchip/mbigen: Fix mbigen node address layout
+Date: Thu, 15 Aug 2024 15:24:06 +0200
+Message-ID: <20240815131857.010901857@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,99 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Perches <joe@perches.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit a6abfdff4fe5dd19d1f1b37d72ba34cd4492fd4d ]
+[ Upstream commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ]
 
-Standardize the define and the uses of printmode.
+The mbigen interrupt chip has its per node registers located in a
+contiguous region of page sized chunks. The code maps them into virtual
+address space as a contiguous region and determines the address of a node
+by using the node ID as index.
 
-Miscellanea:
+                    mbigen chip
+       |-----------------|------------|--------------|
+   mgn_node_0         mgn_node_1     ...         mgn_node_i
+|--------------|   |--------------|       |----------------------|
+[0x0000, 0x0x0FFF] [0x1000, 0x1FFF]    [i*0x1000, (i+1)*0x1000 - 1]
 
-o Add missing statement termination ; where necessary
+This works correctly up to 10 nodes, but then fails because the 11th's
+array slot is used for the MGN_CLEAR registers.
 
-Signed-off-by: Joe Perches <joe@perches.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/20200403134325.11523-8-sudipm.mukherjee@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: ab11dac93d2d ("dev/parport: fix the array out-of-bounds risk")
+                         mbigen chip
+    |-----------|--------|--------|---------------|--------|
+mgn_node_0  mgn_node_1  ...  mgn_clear_register  ...   mgn_node_i
+                            |-----------------|
+                             [0xA000, 0xAFFF]
+
+Skip the MGN_CLEAR register space when calculating the offset for node IDs
+greater than or equal to ten.
+
+Fixes: a6c2f87b8820 ("irqchip/mbigen: Implement the mbigen irq chip operation functions")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240730014400.1751530-1-zouyipeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/parport_gsc.c |  8 ++++++--
- drivers/parport/parport_pc.c  | 14 ++++++--------
- drivers/parport/procfs.c      |  6 +++++-
- 3 files changed, 17 insertions(+), 11 deletions(-)
+ drivers/irqchip/irq-mbigen.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/parport/parport_gsc.c b/drivers/parport/parport_gsc.c
-index 7e2dd330831cf..467bc0ab95ec1 100644
---- a/drivers/parport/parport_gsc.c
-+++ b/drivers/parport/parport_gsc.c
-@@ -304,12 +304,16 @@ struct parport *parport_gsc_probe_port(unsigned long base,
- 		p->dma = PARPORT_DMA_NONE;
+diff --git a/drivers/irqchip/irq-mbigen.c b/drivers/irqchip/irq-mbigen.c
+index c98358be0bc8b..19cf1239c7d3b 100644
+--- a/drivers/irqchip/irq-mbigen.c
++++ b/drivers/irqchip/irq-mbigen.c
+@@ -75,6 +75,20 @@ struct mbigen_device {
+ 	void __iomem		*base;
+ };
  
- 	pr_cont(" [");
--#define printmode(x) {if(p->modes&PARPORT_MODE_##x){pr_cont("%s%s",f?",":"",#x);f++;}}
-+#define printmode(x)							\
-+do {									\
-+	if (p->modes & PARPORT_MODE_##x)				\
-+		pr_cont("%s%s", f++ ? "," : "", #x);			\
-+} while (0)
- 	{
- 		int f = 0;
- 		printmode(PCSPP);
- 		printmode(TRISTATE);
--		printmode(COMPAT)
-+		printmode(COMPAT);
- 		printmode(EPP);
- //		printmode(ECP);
- //		printmode(DMA);
-diff --git a/drivers/parport/parport_pc.c b/drivers/parport/parport_pc.c
-index 2bc5593b76067..ad2acafb68506 100644
---- a/drivers/parport/parport_pc.c
-+++ b/drivers/parport/parport_pc.c
-@@ -2142,19 +2142,17 @@ struct parport *parport_pc_probe_port(unsigned long int base,
++static inline unsigned int get_mbigen_node_offset(unsigned int nid)
++{
++	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
++
++	/*
++	 * To avoid touched clear register in unexpected way, we need to directly
++	 * skip clear register when access to more than 10 mbigen nodes.
++	 */
++	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
++		offset += MBIGEN_NODE_OFFSET;
++
++	return offset;
++}
++
+ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ {
+ 	unsigned int nid, pin;
+@@ -83,8 +97,7 @@ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
+ 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
  
- 	pr_cont(" [");
+-	return pin * 4 + nid * MBIGEN_NODE_OFFSET
+-			+ REG_MBIGEN_VEC_OFFSET;
++	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
+ }
  
--#define printmode(x) \
--	{\
--		if (p->modes & PARPORT_MODE_##x) {\
--			pr_cont("%s%s", f ? "," : "", #x);	\
--			f++;\
--		} \
--	}
-+#define printmode(x)							\
-+do {									\
-+	if (p->modes & PARPORT_MODE_##x)				\
-+		pr_cont("%s%s", f++ ? "," : "", #x);			\
-+} while (0)
+ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+@@ -99,8 +112,7 @@ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+ 	*mask = 1 << (irq_ofst % 32);
+ 	ofst = irq_ofst / 32 * 4;
  
- 	{
- 		int f = 0;
- 		printmode(PCSPP);
- 		printmode(TRISTATE);
--		printmode(COMPAT)
-+		printmode(COMPAT);
- 		printmode(EPP);
- 		printmode(ECP);
- 		printmode(DMA);
-diff --git a/drivers/parport/procfs.c b/drivers/parport/procfs.c
-index 48804049d6972..e957beb94f142 100644
---- a/drivers/parport/procfs.c
-+++ b/drivers/parport/procfs.c
-@@ -213,7 +213,11 @@ static int do_hardware_modes(struct ctl_table *table, int write,
- 		return -EACCES;
+-	*addr = ofst + nid * MBIGEN_NODE_OFFSET
+-		+ REG_MBIGEN_TYPE_OFFSET;
++	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
+ }
  
- 	{
--#define printmode(x) {if(port->modes&PARPORT_MODE_##x){len+=sprintf(buffer+len,"%s%s",f?",":"",#x);f++;}}
-+#define printmode(x)							\
-+do {									\
-+	if (port->modes & PARPORT_MODE_##x)				\
-+		len += sprintf(buffer + len, "%s%s", f++ ? "," : "", #x); \
-+} while (0)
- 		int f = 0;
- 		printmode(PCSPP);
- 		printmode(TRISTATE);
+ static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
 -- 
 2.43.0
 
