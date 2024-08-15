@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79C119E7EF;
-	Thu, 15 Aug 2024 13:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70DD19F460;
+	Thu, 15 Aug 2024 13:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728755; cv=none; b=rDOsKCD8yP5ofgF1UdkvxUKVlScX3N+Oc+HYtDfU0GG/4jhF6K1CQqkta8srvJDGbcSWpHzAnt8kMLKy/xcIIneDG55BKoXC1ZGHeaZO0vUCg/1XdWFyvS4jrvOLuJDPXgnq42+C+qi6u1bImlHkYnQto26dSXZC3KNilsST6yk=
+	t=1723728758; cv=none; b=PSEIMvZDERkAEdX2DXNpsrLzgJLT4c8W2436MudTbmm8cX9T+HPYWUgGHBuOlUIpk0owdA0+B880sq7DLqWKU6mdgA9+v+jBaIGZHqAroUsnEu7l4Ggi0PjhMGG4wl8hGFoT0ZEDKWv3yRrZVTMtriDeYNR0pLdk4sV5rlPtijc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728755; c=relaxed/simple;
-	bh=B6vDsUjZGW4Giujcm/NI/RuEcq06uD66gMNFA26osWY=;
+	s=arc-20240116; t=1723728758; c=relaxed/simple;
+	bh=jQv7VBnAZ4AkFd8Te7yARLH/YvmHBOFZT3okMAt3BA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rI9qkycKGpkC0lgWZ/bTN9BNfUAt6rGuksv0Pvzahm/r+cK2Hh30uQyBTHrjRSWd9d5GLPbN7VzUztwyD47R8OEULxlubgOWZK8p9j6M9y3kO6aWal3axzSm055DMd8dnb/X/BIlH0mqgMfqFmtvhjk4MYpJpK/MtUKsFAR/2i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiOMDDi/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=agEhqw+DmeMk2IVqUvIEW0W7KaVvNLnsBUPP/uTNKJFQESkqGBEGbas64N1G2NXDPhBfDZR6/260MiHXAJECK9wZDOEtyOLAUiwW9iGE8WMw67WfoH9JXjLFVig8OMUcaAo0SZWOunm/dQ/mOQ29bMGEWDN6g3ci1TWApTJWCmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iD8Dm2H8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiOMDDi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A4FC4AF0A;
-	Thu, 15 Aug 2024 13:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iD8Dm2H8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D20EC4AF0A;
+	Thu, 15 Aug 2024 13:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728755;
-	bh=B6vDsUjZGW4Giujcm/NI/RuEcq06uD66gMNFA26osWY=;
+	s=korg; t=1723728758;
+	bh=jQv7VBnAZ4AkFd8Te7yARLH/YvmHBOFZT3okMAt3BA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiOMDDi/0k5dRAn3qyMHFPXoiGUmkfyH/IsRcQq+WUPnvE/WiJvgh7HfdDAyah68V
-	 d9nSCq6m9lRKz8nAwZjR6dE3roGEROAhcNgOV0Nvljoh4OeARYHknYZjY9M4FMNEuO
-	 iDWCurci9KpQIEosTimOAKJmOGtEvlvPnJIuPRjs=
+	b=iD8Dm2H8ES1W9liMoy+tQSWqe9ykyXj3z+sqS/cJIdNAFHJsigUcNgQfV+puKppm+
+	 EEt4/l4wx2HzbsQ4SswpURh88p4jwhHdX2eZtCQr7C96bp2ezJqIa2q6vgGRrxkXoT
+	 ll21j161oTFJAx1ECkcNG6VffRl+bIvQf/0ceM9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Richardson <rlance@google.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 099/196] dma: fix call order in dmam_free_coherent
-Date: Thu, 15 Aug 2024 15:23:36 +0200
-Message-ID: <20240815131855.871072119@linuxfoundation.org>
+Subject: [PATCH 4.19 100/196] MIPS: SMP-CPS: Fix address for GCR_ACCESS register for CM3 and later
+Date: Thu, 15 Aug 2024 15:23:37 +0200
+Message-ID: <20240815131855.910154325@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -51,50 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Richardson <rlance@google.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit 28e8b7406d3a1f5329a03aa25a43aa28e087cb20 ]
+[ Upstream commit a263e5f309f32301e1f3ad113293f4e68a82a646 ]
 
-dmam_free_coherent() frees a DMA allocation, which makes the
-freed vaddr available for reuse, then calls devres_destroy()
-to remove and free the data structure used to track the DMA
-allocation. Between the two calls, it is possible for a
-concurrent task to make an allocation with the same vaddr
-and add it to the devres list.
+When the CM block migrated from CM2.5 to CM3.0, the address offset for
+the Global CSR Access Privilege register was modified. We saw this in
+the "MIPS64 I6500 Multiprocessing System Programmer's Guide," it is
+stated that "the Global CSR Access Privilege register is located at
+offset 0x0120" in section 5.4. It is at least the same for I6400.
 
-If this happens, there will be two entries in the devres list
-with the same vaddr and devres_destroy() can free the wrong
-entry, triggering the WARN_ON() in dmam_match.
+This fix allows to use the VP cores in SMP mode if the reset values
+were modified by the bootloader.
 
-Fix by destroying the devres entry before freeing the DMA
-allocation.
+Based on the work of Vladimir Kondratiev
+<vladimir.kondratiev@mobileye.com> and the feedback from Jiaxun Yang
+<jiaxun.yang@flygoat.com>.
 
-Tested:
-  kokonut //net/encryption
-    http://sponge2/b9145fe6-0f72-4325-ac2f-a84d81075b03
-
-Fixes: 9ac7849e35f7 ("devres: device resource management")
-Signed-off-by: Lance Richardson <rlance@google.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 197e89e0984a ("MIPS: mips-cm: Implement mips_cm_revision")
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/mapping.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/include/asm/mips-cm.h | 4 ++++
+ arch/mips/kernel/smp-cps.c      | 5 ++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index d2a92ddaac4d1..34edceed643d3 100644
---- a/kernel/dma/mapping.c
-+++ b/kernel/dma/mapping.c
-@@ -97,8 +97,8 @@ void dmam_free_coherent(struct device *dev, size_t size, void *vaddr,
- {
- 	struct dma_devres match_data = { size, vaddr, dma_handle };
+diff --git a/arch/mips/include/asm/mips-cm.h b/arch/mips/include/asm/mips-cm.h
+index 890e51b159e06..11a3d5120e2b5 100644
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -232,6 +232,10 @@ GCR_ACCESSOR_RO(32, 0x0d0, gic_status)
+ GCR_ACCESSOR_RO(32, 0x0f0, cpc_status)
+ #define CM_GCR_CPC_STATUS_EX			BIT(0)
  
--	dma_free_coherent(dev, size, vaddr, dma_handle);
- 	WARN_ON(devres_destroy(dev, dmam_release, dmam_match, &match_data));
-+	dma_free_coherent(dev, size, vaddr, dma_handle);
- }
- EXPORT_SYMBOL(dmam_free_coherent);
++/* GCR_ACCESS - Controls core/IOCU access to GCRs */
++GCR_ACCESSOR_RW(32, 0x120, access_cm3)
++#define CM_GCR_ACCESS_ACCESSEN			GENMASK(7, 0)
++
+ /* GCR_L2_CONFIG - Indicates L2 cache configuration when Config5.L2C=1 */
+ GCR_ACCESSOR_RW(32, 0x130, l2_config)
+ #define CM_GCR_L2_CONFIG_BYPASS			BIT(20)
+diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+index 03f1026ad1484..1861b20e978d0 100644
+--- a/arch/mips/kernel/smp-cps.c
++++ b/arch/mips/kernel/smp-cps.c
+@@ -233,7 +233,10 @@ static void boot_core(unsigned int core, unsigned int vpe_id)
+ 	write_gcr_co_reset_ext_base(CM_GCR_Cx_RESET_EXT_BASE_UEB);
  
+ 	/* Ensure the core can access the GCRs */
+-	set_gcr_access(1 << core);
++	if (mips_cm_revision() < CM_REV_CM3)
++		set_gcr_access(1 << core);
++	else
++		set_gcr_access_cm3(1 << core);
+ 
+ 	if (mips_cpc_present()) {
+ 		/* Reset the core */
 -- 
 2.43.0
 
