@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267D61714A1;
-	Thu, 15 Aug 2024 13:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEE319DFAE;
+	Thu, 15 Aug 2024 13:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729798; cv=none; b=UI0hRddpPF0tpaLFUNF6YHxRyQobuVK55KaFLGGIy7JI4n7AmRMVI2NRvgAlSpqJ8oovD7siDp+CJvgPgNS3azCEVUz74Nsrw12cEfnU7MmpYEktaK5TYAHp3iaMmItjlAiq6J1YSF2w0O3S1ae32R9JOiqfSDH08kSNL+rqHDk=
+	t=1723729801; cv=none; b=blHs5UW4ANZpj4kn7Fr22KGNk2j5u6nKor+cWgMflLN1aJUmokAF/mERLpTqHvBVtw1kAvQY91yu+8FWW+UbE+PLklvUwB4htoMd7b/F9Hx1ZLPVbz4Ktio15K0JVxB1Q+bPQlbyN4AKuS1NtburwXG4cjYkmD3S32ePIHnqz6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729798; c=relaxed/simple;
-	bh=FYG4DCLTdWqt+fsZ3I1eWnW6e9lS/0WkpTtAbpRHRYE=;
+	s=arc-20240116; t=1723729801; c=relaxed/simple;
+	bh=92xs46+fCvlK0mbJBOHXmF9xXqSzU+SMFIetFJem1Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IUn3OXA5vs1KCgnkDi35c+iv75qYOmu5DfNz/7v/P1uVyJJW65GQ/aJ7iNm9sHGc9hOHc8IpORn6/7RQxL318kTysHiw9XgdrGqI5QopFEIlZ8+wa9LdFT5flu2kf9MMxcUOoMEED9hUfOGm3xfQQOxCTZBGg8HxZT9OLOnOApA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1b2FsLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qz8tdXqoJD1U2bYRfS2dASuBKm+JfPhQ08LoYx4Jt+Vi54aouv3eu9L4G9zaWUPsQmY/VK6j4AoYRTWOVsSrtvL6VFU1pjVwmkK8qnLpyVBNnIpHEPd7VCVtvmMhi1MT0+V3lIjnHEBzZIUxldMVuyAYzDMbD0WadY2KdihNfgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdLPpePU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1b2FsLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DF0C4AF0F;
-	Thu, 15 Aug 2024 13:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdLPpePU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C653C32786;
+	Thu, 15 Aug 2024 13:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729797;
-	bh=FYG4DCLTdWqt+fsZ3I1eWnW6e9lS/0WkpTtAbpRHRYE=;
+	s=korg; t=1723729801;
+	bh=92xs46+fCvlK0mbJBOHXmF9xXqSzU+SMFIetFJem1Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1b2FsLexHeV6rXNHRtCHkMI/xHX4ZMZyoSYw3uwxt76peB38ft6Mztq5vgyo1cut
-	 KU6ZXXIQNuDv/9GK3O2Es4QXZh7Z9DHH4vPQARaoOOjwjcQ9Djym9PgADR9k1SWYup
-	 srmPt5bH6nYniuorrbEF5et1fcwx13vbw1sJQJHM=
+	b=NdLPpePUBrV4ObYiTUD9pT+oPkn4a0ORZvQc2BtXPBFLRv0vuv8iBUlgltd5HG6gA
+	 BzZBE4Nt5Oh447i4BQsX8CFnpdzluDlwH5vcs+CNymTQJURyTr2O/26YVKCmaivvP5
+	 F6nwsa4lzUk42A/UtSve+yAlBbAIKMXK1+bOOCeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 211/484] fs/ntfs3: Update log->page_{mask,bits} if log->page_size changed
-Date: Thu, 15 Aug 2024 15:21:09 +0200
-Message-ID: <20240815131949.562188595@linuxfoundation.org>
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 212/484] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
+Date: Thu, 15 Aug 2024 15:21:10 +0200
+Message-ID: <20240815131949.599706568@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-commit 2fef55d8f78383c8e6d6d4c014b9597375132696 upstream.
+commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
 
-If an NTFS file system is mounted to another system with different
-PAGE_SIZE from the original system, log->page_size will change in
-log_replay(), but log->page_{mask,bits} don't change correspondingly.
-This will cause a panic because "u32 bytes = log->page_size - page_off"
-will get a negative value in the later read_log_page().
+Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
+is decided by the SCSI ML. User is not aware of the cause of an acutal
+error.
 
+Return the appropriate return code that will be decoded by API and
+application and proper error message will be displayed to user.
+
+Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
 Cc: stable@vger.kernel.org
-Fixes: b46acd6a6a627d876898e ("fs/ntfs3: Add NTFS journal")
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -3935,6 +3935,9 @@ init_log_instance:
- 		goto out;
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -324,7 +324,7 @@ qla2x00_process_els(struct bsg_job *bsg_
+ 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
+ 		    bsg_job->request_payload.sg_cnt,
+ 		    bsg_job->reply_payload.sg_cnt);
+-		rval = -EPERM;
++		rval = -ENOBUFS;
+ 		goto done;
  	}
  
-+	log->page_mask = log->page_size - 1;
-+	log->page_bits = blksize_bits(log->page_size);
-+
- 	/* If the file size has shrunk then we won't mount it. */
- 	if (l_size < le64_to_cpu(ra2->l_size)) {
- 		err = -EINVAL;
 
 
