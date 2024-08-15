@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE96B3214;
-	Thu, 15 Aug 2024 14:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5AC3214;
+	Thu, 15 Aug 2024 14:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732564; cv=none; b=IVXNCHGcOpVRk0CfcRcwgsmf8TgPrrTFfNaKXjxSp7a2knEmSo6f5f2Vv5zKcjg3DejxWGsuD0LbxsDwNHRkVtlUNF74SG/nsWEy2+Q8J7edSEcNcbkVUsLh6vUNVCCaMvUYV9M5cbp4YVRgfEjoNG7jqMN0PDgSl33icao8DCU=
+	t=1723732568; cv=none; b=BZEy8gIH8lVtksyPzV02Mq2ujbSiUBcsge+fdX83Kwgwr3VFb/YVYOyH9l+UwVjWtRw27clyh+/cZMow3u1p8uwWsK6Xs+MBAXxajMEPSrZgFt1m7ISBYeX+61lqlRvlxPcDMh/wDKZUDtJpV31cC7kUuamXkXuoJb9cU4/zWdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732564; c=relaxed/simple;
-	bh=Ogy14Yz6DfqCoppIIv60HC9IqLt1aRitBP6nfuHcTvI=;
+	s=arc-20240116; t=1723732568; c=relaxed/simple;
+	bh=Kg6UMRjwe2p6jmd0Cnpuv60SXW9Ov0PgW2F9O7oHPt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRNTzoQpDaAj3+yRAKVSLnRgbjxIYJV14qwdNgOoxKZU06VisKp2inQhbFGHYPhBLpaAuI8FMtKB5megmuXlrjWJETYclvh0qYbG79Pmo40fUMeW8cuAPBJHK0M4dl84fOs6BxOtwhBqSGFT9ihFhEpo9muTd/Fp9qhMyum54yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNfM60d/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TO9M43/kjN7QE/Gn49AYKqtm80/4rsGtvTr/M5WXvloy/RpXhyYeqM2TZ3IrJmT13hj0MfZOmSNSb9PxFThg2ibjkjhy6QuCgyEhdALT+h/55uPrW06Tb7hpxqhiWHW7vDmww2IX+ElAHUfYhFFcTRYcU8ysuH8yVDCqz2KaYaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbemyE4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNfM60d/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CD5C32786;
-	Thu, 15 Aug 2024 14:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbemyE4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A8CC32786;
+	Thu, 15 Aug 2024 14:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732564;
-	bh=Ogy14Yz6DfqCoppIIv60HC9IqLt1aRitBP6nfuHcTvI=;
+	s=korg; t=1723732567;
+	bh=Kg6UMRjwe2p6jmd0Cnpuv60SXW9Ov0PgW2F9O7oHPt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNfM60d/Ndtn6kabp7B2iSggR0fI80NHtdf+0mrbIKbrwpr8oua35RcwW86M8MvbO
-	 IXumBszmAMszxDIgNtdLyj92ElhTgBG7h0rj8I52qVKykfRksYSHGViZo+fyCdAA2M
-	 0PANUkRU44otxFf4nBzO1dF8vqXnkIVMO1TceXZY=
+	b=wbemyE4RVF2yw5OCyNa2n0ydPl4Jn+O8zxv2sO2KXf9rw8GxjjK0cJkASlFW2chDi
+	 LuCQh/9oC4f9v6+S1V0J7wR/XcGXoWKUp3di/QuyI42lC6fvALbHaRAv9q0c2qS84J
+	 FkvDWL94NYJB4KqakRok1B4ds9hLuM3B2X/FSs1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Orth <ju.orth@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 187/352] kernel: rerun task_work while freezing in get_signal()
-Date: Thu, 15 Aug 2024 15:24:13 +0200
-Message-ID: <20240815131926.506539730@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 188/352] kdb: address -Wformat-security warnings
+Date: Thu, 15 Aug 2024 15:24:14 +0200
+Message-ID: <20240815131926.544943339@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,66 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 943ad0b62e3c21f324c4884caa6cb4a871bca05c upstream.
+[ Upstream commit 70867efacf4370b6c7cdfc7a5b11300e9ef7de64 ]
 
-io_uring can asynchronously add a task_work while the task is getting
-freezed. TIF_NOTIFY_SIGNAL will prevent the task from sleeping in
-do_freezer_trap(), and since the get_signal()'s relock loop doesn't
-retry task_work, the task will spin there not being able to sleep
-until the freezing is cancelled / the task is killed / etc.
+When -Wformat-security is not disabled, using a string pointer
+as a format causes a warning:
 
-Run task_works in the freezer path. Keep the patch small and simple
-so it can be easily back ported, but we might need to do some cleaning
-after and look if there are other places with similar problems.
+kernel/debug/kdb/kdb_io.c: In function 'kdb_read':
+kernel/debug/kdb/kdb_io.c:365:36: error: format not a string literal and no format arguments [-Werror=format-security]
+  365 |                         kdb_printf(kdb_prompt_str);
+      |                                    ^~~~~~~~~~~~~~
+kernel/debug/kdb/kdb_io.c: In function 'kdb_getstr':
+kernel/debug/kdb/kdb_io.c:456:20: error: format not a string literal and no format arguments [-Werror=format-security]
+  456 |         kdb_printf(kdb_prompt_str);
+      |                    ^~~~~~~~~~~~~~
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/systemd/systemd/issues/33626
-Fixes: 12db8b690010c ("entry: Add support for TIF_NOTIFY_SIGNAL")
-Reported-by: Julian Orth <ju.orth@gmail.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/89ed3a52933370deaaf61a0a620a6ac91f1e754d.1720634146.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use an explcit "%s" format instead.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240528121154.3662553-1-arnd@kernel.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/signal.h |    6 ++++++
- kernel/signal.c              |    8 ++++++++
- 2 files changed, 14 insertions(+)
+ kernel/debug/kdb/kdb_io.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -348,6 +348,12 @@ extern void sigqueue_free(struct sigqueu
- extern int send_sigqueue(struct sigqueue *, struct pid *, enum pid_type);
- extern int do_sigaction(int, struct k_sigaction *, struct k_sigaction *);
- 
-+static inline void clear_notify_signal(void)
-+{
-+	clear_thread_flag(TIF_NOTIFY_SIGNAL);
-+	smp_mb__after_atomic();
-+}
-+
- static inline int restart_syscall(void)
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index a3b4b55d2e2e1..a4256e558a701 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -358,7 +358,7 @@ static char *kdb_read(char *buffer, size_t bufsize)
+ 			if (i >= dtab_count)
+ 				kdb_printf("...");
+ 			kdb_printf("\n");
+-			kdb_printf(kdb_prompt_str);
++			kdb_printf("%s",  kdb_prompt_str);
+ 			kdb_printf("%s", buffer);
+ 			if (cp != lastchar)
+ 				kdb_position_cursor(kdb_prompt_str, buffer, cp);
+@@ -450,7 +450,7 @@ char *kdb_getstr(char *buffer, size_t bufsize, const char *prompt)
  {
- 	set_tsk_thread_flag(current, TIF_SIGPENDING);
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -2464,6 +2464,14 @@ static void do_freezer_trap(void)
- 	spin_unlock_irq(&current->sighand->siglock);
- 	cgroup_enter_frozen();
- 	freezable_schedule();
-+
-+	/*
-+	 * We could've been woken by task_work, run it to clear
-+	 * TIF_NOTIFY_SIGNAL. The caller will retry if necessary.
-+	 */
-+	clear_notify_signal();
-+	if (unlikely(READ_ONCE(current->task_works)))
-+		task_work_run();
+ 	if (prompt && kdb_prompt_str != prompt)
+ 		strscpy(kdb_prompt_str, prompt, CMD_BUFLEN);
+-	kdb_printf(kdb_prompt_str);
++	kdb_printf("%s", kdb_prompt_str);
+ 	kdb_nextline = 1;	/* Prompt and input resets line number */
+ 	return kdb_read(buffer, bufsize);
  }
- 
- static int ptrace_signal(int signr, kernel_siginfo_t *info)
+-- 
+2.43.0
+
 
 
