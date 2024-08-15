@@ -1,176 +1,176 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2045.outbound.protection.outlook.com [40.107.243.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C20B149C6F
-	for <patches@lists.linux.dev>; Wed, 14 Aug 2024 22:20:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723674061; cv=fail; b=q9R0R5On96xnxPIqKu/zI3Rx6u3OtENpQOND8NWnkONQkMdSEQ1F3d2ZdxWEbkGbN/vrfc1KQbuxQlRwRrhvJvoCpCjpDXFmbnkknSc6AR/5Q+Op9JH8lKg3abNqvayYQUU24WX5C3yHY4FvoIGAkhwBtgwPN9GPhlzcwYoO9Mk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723674061; c=relaxed/simple;
-	bh=XaeRHewIOdHSizo4YU6HUaVuKGMys0Yl1us2H9I2G8A=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=SJMl+X++f65ELZUnLYUAE0VscKCnVOWtnay4/Mn4hU2dvIeBTt46z3eikHh2YsoHEJgYx29MsP8mBdgkp0yllqrIH0JLkPaeEzbK+FWa5NJgemqJmf6Jh5Ldjq8i88ZqBJVhPrQ8lWXEsEdau90SWFwqZSkw450vMlf1EEbte7o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=aV7GENJ5; arc=fail smtp.client-ip=40.107.243.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE1315C3
+	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 00:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723682063; cv=none; b=Fgrf1+1wb3HoXtbIOQQnDXhZKTRk2XwusxSOZHISUmMc31X56KGcrN/MuKNBDQeASVlr3/tX5BKMVDwDzMLacDB7ICnUcktK1JpK34ryG1rBMLZ0ldrxd+NsFlbeH7oLWdH9kEbyC9KnaLd3n3VjN11vY0+aJKVrvWH5qi8xl8o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723682063; c=relaxed/simple;
+	bh=DFPCRiDrYN9gMgynhNybIaf7YYqIrgvnTEdSjM1E6Ko=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HObITj+3kwGV9JXy1w6txoOu2iF7qZ7/l3V7VTgNaFfGT6UBwz8buSweUekeBuJCBKi2tKfxsFQptDBvag5sw1/neP98Skx6jD2bVFQk86mQcx46f62QncxzFaBsqfWnv8LjPGJfp61cVOVPVMVi+up9ErgYMAhuE1XJFZAZHeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=EO5tDosd; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="aV7GENJ5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iMNnth83k6pGKwEY0Ig2g3R8dyO+HbzGgyWVsbFvPn7dr9Vz3piXH+Bge6539PM9oBXKkHRnGc56jY2Ls/fXYG7iI2z616Yq/b+pSvWgFXBBIE9xZGyTs6Kyh7MBcqDrrt83mF4UMI96sTgW1U10LGPCTSwDkHa10DsY4vOOEuhHxZcpf4cJ1SF7MR7P8I2gRB3JpfekR07s0jEc0ULGqfyKin5BPxVH9mS5ylxOq4TG3Rh41V7kD9Jojs+HpCoh6RKcsldoS8LVhTZ8vJ5B9hu3ALzUJ4lUU0Kl+hcEqikHJg9nRqiPfwlJWcsHP3EidWrEmbMO1SpxWgAXrOLGDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EA3GZfMmYw1Bn3OoJ6lWCnIQtRBti7fhqiurhSmVJ2U=;
- b=wxf5yebyPwmu/8O7DWRmZ9DRhhLv+4Su37TbW1GLh6iOOzVOVUMHM0p8ftz3mr3tlVb0Eyh/jI5RlvVOT9KNQ0bSuC8vCiyA0PBopMhk2FI7P4yLrZngLJl8xBbN+3B4uASW4l3uKkCkTWkCLov0qwvm7MDJ7sukBEZmTE4+TIwm5xx4aqB4WEXuSTtpScE4RGKLxDfTt7Lk54cyB7B3d9TdQ7yYRYAWeeCUCB1ydSi25fD04G4jOKYZ3I0SysWPGS21QR8Q7ZGTNh5NRSYKZltMzM+m/ioRwQQkqj+W3o/EFKt25B47sB9VXpqPuimC+SJJrQovJu6JonvwHjDJFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EA3GZfMmYw1Bn3OoJ6lWCnIQtRBti7fhqiurhSmVJ2U=;
- b=aV7GENJ5STJii65sRtLaWmItAErccOoX5XbWZuar8FZwymDh+kGTzm1S6wUSwac/UOU3L2PvYvZBHEXtNkQ43RDNpgSvQS/tWzr1ebvVcPm9hJrA4gKsEUAiCsyz73wJd9o11OCzZ5A+uwTHb5GdkSyyMRuES+7F/SfIT6OfRkDSJA32w+Z8/QCFnQfTmKlS5RM/NK9G09qM54KrMjq/V4XAuvU3oryeTiYJqcxXmlp8YJFH5ooQQrctBbGfxDA/VRbWT2SQjulL5bw4/OwRsPdX5KeDAxNdKrG78bd1BpMyachl79WJK2Xc40tctkERhdLMUp9ZXGnnE8HzhSHRbg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
- by SJ2PR12MB9007.namprd12.prod.outlook.com (2603:10b6:a03:541::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.22; Wed, 14 Aug
- 2024 22:20:53 +0000
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7875.016; Wed, 14 Aug 2024
- 22:20:53 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: linux-pci@vger.kernel.org,
-	Joerg Roedel <jroedel@suse.de>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	patches@lists.linux.dev
-Subject: [PATCH] PCI/ATS: Add missing pci_prepare_ats() stub
-Date: Wed, 14 Aug 2024 19:20:52 -0300
-Message-ID: <0-v1-3ff295fa1528+d7-pci_prepare_ats_proto_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BLAPR05CA0048.namprd05.prod.outlook.com
- (2603:10b6:208:335::29) To CH3PR12MB7763.namprd12.prod.outlook.com
- (2603:10b6:610:145::10)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="EO5tDosd"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fc5296e214so4555075ad.0
+        for <patches@lists.linux.dev>; Wed, 14 Aug 2024 17:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1723682061; x=1724286861; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+xjN9kIEu5wH5/2WbxCA/p/bZEADNVbfHtt+xxi3fKI=;
+        b=EO5tDosdrNkWbyWwOWxg/UMnPXwNKA+K1MTnhpMKuc7dGvpRDvLvmiVthuURybng4h
+         whpLRRRbwWt3nPBbZaBHpfKWl6tCGTjETJD/o8voX7BaQrG96hBKJcX2v3tqN0mCk7b2
+         zXNsXnm2QO5BGIREH7H8PjL9VjNFY8WxwU0Lk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723682061; x=1724286861;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+xjN9kIEu5wH5/2WbxCA/p/bZEADNVbfHtt+xxi3fKI=;
+        b=D2xYgZGRqtYACk4McdkSAtr5mKL7Q1URUNYKij4j+dK7ZhYgEBMt2NhyGV4Cr1jhmF
+         tLFSavx0y0eyNqVDUQ0v16RFnmnwhDMZdsEl60nURF7HD63Umd1FhQVFXBcgnr6mGRQ/
+         PZpPJjG8gLgmRNGPcbkhJaOpcyqRxctZON/lkVxiwiT9FMr4w9Oc8vYtJNIVILZ8kC++
+         5PbAZUPtd1zrrkqI47vHBAqAh5vjr1KAMudfaEHyRuL/7cUqImFxZm8evahaIVqHdlNV
+         jGwdamy3+dm6tlldO6cbNntujYbYR/17v7HXNjMk2czDd1AKTPpF4UTtGMWC7BC5LO9R
+         UasA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+3iQH13NZddByp82iG/LX7xSl8rwJ2BccHy/CRFHXwI5hWTMVO7MQ7eQ/P1l2x7wHWg7DHSBvqtZO6A0GVaWOpgLHTxWPyw==
+X-Gm-Message-State: AOJu0YxCLA253fTHV1H8f6Hmcc3KSawxAEEvbWUTrY05sxXl4B4ELsVQ
+	EZDqlv94z44UtiSf+sR5kZzcY/K6H7vw2jhArcK4yN74viJjc5WIspB9DhlM4g==
+X-Google-Smtp-Source: AGHT+IEjqvtfOX9G1jrFlNd9tSXOoFbJa4G48NKyJpa5AH9EMXwfrR+9p7yCc2aO3g9MrGDIaHGkdg==
+X-Received: by 2002:a17:903:32d1:b0:201:e7e6:acb1 with SMTP id d9443c01a7336-201e7e6b02dmr31351645ad.59.1723682061223;
+        Wed, 14 Aug 2024 17:34:21 -0700 (PDT)
+Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f038b4c1sm1983875ad.207.2024.08.14.17.34.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Aug 2024 17:34:20 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: chrome-platform@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Benson Leung <bleung@chromium.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	Guenter Roeck <groeck@chromium.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH v2 00/11] platform/chrome: Add DT USB/DP muxing/topology support
+Date: Wed, 14 Aug 2024 17:34:05 -0700
+Message-ID: <20240815003417.1175506-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|SJ2PR12MB9007:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8ffb2c28-a8fe-4298-abdf-08dcbcaf5c61
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?AyTX9gjbfANdEXKYP0QLPdWynEQHaztxgYA4FYJxYTsbxyxNIcfICaY5aoph?=
- =?us-ascii?Q?td/bKMuxjXy5zWMukwScpsbuOsqGmKMYdhNnZGLxFOOc9gXYDMshCwP1lhgh?=
- =?us-ascii?Q?xWw6PtCvuGLIXHgqqKQCAQLqPyqWbfcwrrk8eZgV3ha/9+jVKv1kAumYFZ4T?=
- =?us-ascii?Q?tQG4bRAepQNawAz8WuWx3LehN9yjaM+zIX1PEzNR38u4FkauitlKMcrhA9+W?=
- =?us-ascii?Q?V9rqc88pKH1LrkIV4zFffMg1UhuLy5ZPZWV8RJFdPPdAXPSrm2GRHDx+1scR?=
- =?us-ascii?Q?oG9hAiB9AQw6EF5hhmYnVm73f/ejo+FL6xYPlPe0RtE9cO+djlB6wi+b7X5q?=
- =?us-ascii?Q?udICWcdTor6kWuCxzRQlnG6T1PeG+IJuh+CrXwxZ9y1+7Dt4dVELsiE+BeXN?=
- =?us-ascii?Q?6bhBFstp6msF9Yxuu+eTql1eft06ey7oOQM9pRZ3TVabdWCmx75KgGk1xtod?=
- =?us-ascii?Q?9XXzjr36NOBZLOwS+ur7TvPtQHsaxRTGz4aY48B0zKt4fYaQW0T5s00Z0yYq?=
- =?us-ascii?Q?2XWFshqc5IiBChow9UufFGMqHVi0X92fUN2P4Fd7GOJnFaBFgSNAGIYaJMnb?=
- =?us-ascii?Q?GR0z5A1k6+gTnpsi6QzxbUI+7fp9syvz3eN14DcUKYHMKsw+cXhdSjxNdjtq?=
- =?us-ascii?Q?TbaTMKwYXDrw7fityxLowH75gCHNcg0VGqk5UoEMqhdPyULFb5SOMFqVW6a4?=
- =?us-ascii?Q?b4eLWbX9Cnd8MOBGKcKM2Lbrn1VETSDX/ExzY0fDcm08Sl6+DfRvKY5/G7bt?=
- =?us-ascii?Q?uoYWwm1/T0/t2tjMVoBr+btQN2BAFUn6K9Fiz+l+NmsDToD0yr5s1Tt44d/O?=
- =?us-ascii?Q?RGzCTXGLRgFaHeR7b+pR1zh27Te0DQEmoJq/QJnneIokKM0Mn+cfFcniNeru?=
- =?us-ascii?Q?JN7CBdtf7PeWsoqwlUHvFjGhZZczPR/klK2shvHOAwwow/JUWQ8GoQ236O6v?=
- =?us-ascii?Q?uGEXY+jCnSg16sPmy5iGn6d2GmOX0elSn1qaRr/aD+wcoJwtiZXg4/HSsvnW?=
- =?us-ascii?Q?gWb6mbOGvL7P9lk0rFtpsk7FSHzcts1+BKEbMf0MjpjkgOHO/LIr8QSWtkOf?=
- =?us-ascii?Q?uyPJdYIMNR15ha9bBXBzkNgMN5YUXtnwpXxJ5sp6e5iZsUZdH0N1SGfZaOuE?=
- =?us-ascii?Q?06i3dMZtLo2X1LMED/SLqXIxxW8qAOA8RL7AWm84/QNzZV4610Y8qCeBhgk9?=
- =?us-ascii?Q?N4IZVejvD2jfQjCFVSbpEATh8u8mp5nzH5QBHvbF/dlvwhRrGt1LrMSETdIe?=
- =?us-ascii?Q?JgPKE8QK5Tp3Gz0TtzcqITPAGRNethRsHllhsMrLIHZOMg8cjmZuK9r8EpjB?=
- =?us-ascii?Q?52if2On37kvry6EPlhKYni/RhmKG4TZuztWDcaIG0q1LEM0QcVfs7Xp2j3qx?=
- =?us-ascii?Q?sIrkUfs=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?XKxqFdrzCeA/YIUruMjaBC+XHfZkM2XdlV1xagXGs/xFLcji83OV/GiZYNsS?=
- =?us-ascii?Q?EXrdiBvfYvx6r39/zyJxERMFvhf16eEBVYeyToDkTFL64QXsPo+S7y3i4Lb2?=
- =?us-ascii?Q?l0Wur0PA+8glGptIkIkkcnGhhp5ZkmDtN53tqWYv3w0wnNWNwPqOBenmqV0q?=
- =?us-ascii?Q?3cknaM76SOGmDEy8Fn8pb26vkqXVprZjlNQZ64JiQYbjMmz8+I/GNbU4mTWU?=
- =?us-ascii?Q?mRlhpoxfBNR/00XP2BAcz+Gqfv0R4wEmsIM72a3sqML/vbwMQVEFSXuKaO+P?=
- =?us-ascii?Q?+n2KbQdWs1MupkgJoLo/g0QQse7/j/HMKrsOJgkj6EtrDdvUwptxS+VWwMdm?=
- =?us-ascii?Q?zuBSKrqGtxPFdqrSxqoyj26mrA2wpdzhPoFOG0fXvXI4yrePZwrPL0mZgLsZ?=
- =?us-ascii?Q?soJ1fKPRbSKF16LSksWLAuSKo92vwmRKYms6mMYdW3cxWjCVJj7Y1Bo+6k8A?=
- =?us-ascii?Q?TiNYz6vNPHMkhDq4GNebNVjXRhYzSjYjEag7LCmGAGgh8WqgOI9jbSXQfEFZ?=
- =?us-ascii?Q?fj+Tf2V3mKDBfsZvE7UWdn/fiKawgRZ+ZT36AKvkq70vKikSjjIon8DUgv5K?=
- =?us-ascii?Q?xwOdXl0sr2yDrkz4D9YyITaeXLxpnXd9s/ZRFFZi6Sd5PKsT7lVkwErjy48z?=
- =?us-ascii?Q?YqggqMpn0VwTV5f+YSBvRH+1IE11ZK9JCQ70OzU8g64KevhnCMzdsvuasNZb?=
- =?us-ascii?Q?ajNpegz19K+QcxjgEaeMyV1sQkUDOMXTHBn0RGzrhxjz/D+584sNjOhU0lpb?=
- =?us-ascii?Q?F7/M/vY9QsjUYGeiIjClsoMDond/gbBGZ/jFw5DeI6rUQQPvzbvgdEiCrdSZ?=
- =?us-ascii?Q?biW+s2lG8yHspPTjjck/LXs6e/aq09v+UKz4AMJnqV1QrTeomX62BfBdO5MX?=
- =?us-ascii?Q?dx5hIt4WymVwhWHd3YIgV4YrrNLBi/4YQDsd8qPT4l1CNItgXVakSAxRm9KJ?=
- =?us-ascii?Q?OwzSCkGwwtnKhiutfb+cnbusmoWPxgOFAmgK17BqAysaxSWeN1/Hf1QHjCbY?=
- =?us-ascii?Q?XiW+iQOSt5dvPIIFYibw3GnztqKreo+ijnOcdSEgdCDar2M/cm0UYRShQltb?=
- =?us-ascii?Q?cNeWLrkhVHltc1bzNoE7/vMSlvYsoFLmEQk0NGbkPdEUVdl6wDI6ingM3dI6?=
- =?us-ascii?Q?CAd+PNrjcANsiApuEBRak9SGp9Bmf5sqgCNrqbCu8udZzQBl8FRSeweO4OAV?=
- =?us-ascii?Q?SxHwaMxw6hQjT0wBCCbuD16h8drms5AQUKlUP5g6Q9GmO0wAzgCBwxU3D8AH?=
- =?us-ascii?Q?IVox/FZ8sxfq/sEHCTA+3FBEijIkbTJxPRG5KXbF2DwO9NHYjrAokden0c7l?=
- =?us-ascii?Q?aOzEzUy7v975ND1e97o1XRPNWObF+f8bonsmA28NvTd+dQFD46G/DxfEZ5Z8?=
- =?us-ascii?Q?AnAxneD8Nnqtv2uucufUfNNADusc4f8qxjq74Amu1inecYHdc1JLzq/pPgm4?=
- =?us-ascii?Q?kEzCY2Odjap+E+B+Bqt/RsIPVHwgRTEx5jFtS/sE+XqtyxL0XDrpQ3GP6j4Y?=
- =?us-ascii?Q?yAmMbjCSyQXDlHg90KtlOgyijOrL8e27ffJrlXmMWOiAJQcXXStgLneZLSsX?=
- =?us-ascii?Q?K+AUib+d9uHk1KlAdqA=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ffb2c28-a8fe-4298-abdf-08dcbcaf5c61
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2024 22:20:53.7033
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MiFC1xdBo3WL4IQiOcVuHk126x+cYXk1iln855NhICcBxqXgjyxMKLAetX++ftxy
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9007
+Content-Transfer-Encoding: 8bit
 
-build bots report that CONFIG_PCI_ATS=n compilation fails, the stub was
-missed, add it back.
+This series adds support for fully describing the USB/DP topology on
+ChromeOS Trogdor devices in DT. Trogdor devices have a single DP phy in
+the AP that is muxed to one of two usb type-c connectors depending on
+which port asserts HPD first to the EC. We'd like to know which port is
+connected to an external monitor to provide a better experience to the
+user about things like which type-c port is displaying DP or which
+type-c hub is acting up, etc. Describing the connection all the way from
+the source to the connector will allow us to do this.
 
-Fixes: 2665d975db35 ("iommu: Allow ATS to work on VFs when the PF uses IDENTITY")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408150626.4kndgpL3-lkp@intel.com/
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- include/linux/pci-ats.h | 2 ++
- 1 file changed, 2 insertions(+)
+DRM core patches: These are used to implement lane assignment for DP
+altmode configurations through the drm_bridge code. The typec code will
+use this to tell the DP phy how many lanes of DP to drive and which
+lanes to drive out to the USB type-c connector. Adding support for lane
+assignment allows us to implement DP muxing as well, physically
+splitting the DP lanes on the DP phy so that hardware doesn't have to
+use an analog mux to steer two DP lanes to one or the other type-c port.
 
-Surprised 0-day didn't catch this before it made it to linux-next, but here it
-is..
+DRM aux hpd patches: These implement an auxiliary device for USB type-c
+DP alternate mode. I took Dmitry's suggestion and moved the code that
+does the remapping into this driver. The existing hpd bridge is wrapped
+so as to avoid changing the current users.
 
-Joerg if you can squash it that would be great.
+Cros EC typec patches: This ties together everything that comes before it in
+this series. The EC typec driver registers the drm_dp_typec_bridge that
+can signal HPD from the type-c connector through the bridge chain, mux
+the DP phy in software so that we don't have to use an analog mux, and
+implement orientation control for boards like Kukui that directly
+connect the DP phy to the type-c port, necessitating lane assignment to
+flip the lanes to match the cable orientation.
 
-Thanks,
-Jason
+I'm thinking of working in changes so that the drm_dp_typec_bridge
+registers a 'struct typec_mux_dev' as well. If that is done then we can
+register a drm_dp_typec_bridge from the port manager and let the type-c
+framework drive the pin assignment and orientation directly instead of
+calling it from the port manager layer. To get there I need to add the
+ability for a 'struct typec_mux_dev' to associate with more than one
+typec_port (technically already done) and then make sure that the
+cros_ec_typec driver doesn't try to enable DP altmode on the type-c port
+that isn't muxed for DP. I'm working on this now but I'm sending this
+out to get some feedback because I've reached a good stopping place.
 
-diff --git a/include/linux/pci-ats.h b/include/linux/pci-ats.h
-index d98929c86991be..0e8b74e63767a6 100644
---- a/include/linux/pci-ats.h
-+++ b/include/linux/pci-ats.h
-@@ -17,6 +17,8 @@ static inline bool pci_ats_supported(struct pci_dev *d)
- { return false; }
- static inline int pci_enable_ats(struct pci_dev *d, int ps)
- { return -ENODEV; }
-+static inline int pci_prepare_ats(struct pci_dev *dev, int ps)
-+{ return -ENODEV; }
- static inline void pci_disable_ats(struct pci_dev *d) { }
- static inline int pci_ats_queue_depth(struct pci_dev *d)
- { return -ENODEV; }
+Changes from v1: https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
+ * Too many to count!
+ * Split out the DRM bits into this series
+ * Moved the logic into dp-aux-hpd bridge driver
+ * Drive the bridge from cros_ec_typec driver instead of globbing onto
+   the ACPI centric cros-typec-switch driver
+ * During that process drop a lot of patches that aren't needed anymore
+ * Move the DT graph and other properties to the cros-ec-typec binding
+ * Skip mode-switch/orientation-switch properties because we're not
+   registering typec structs anymore
 
-base-commit: 0fb4d2ab67703caed2b909d4b4f95d3afc56baf3
+Stephen Boyd (11):
+  drm/atomic-helper: Introduce lane remapping support to bridges
+  drm/bridge: Verify lane assignment is going to work during
+    atomic_check
+  drm/bridge: aux-hpd: Support USB Type-C DP altmodes via DRM lane
+    assignment
+  drm/bridge: dp_typec: Support USB Type-C orientation
+  drm/bridge: dp_typec: Add "no-hpd" support
+  drm/bridge: dp_typec: Allow users to hook hpd notify path
+  dt-bindings: chrome: Add ports to google,cros-ec-typec for DP altmode
+  platform/chrome: cros_ec_typec: Add support for signaling DP HPD via
+    drm_bridge
+  platform/chrome: cros_ec_typec: Support DP muxing via DRM lane
+    assignment
+  platform/chrome: cros_ec_typec: Support DP orientation
+  platform/chrome: cros_ec_typec: Handle lack of HPD information
+
+ .../bindings/chrome/google,cros-ec-typec.yaml | 260 +++++++++++++
+ .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+ drivers/gpu/drm/bridge/aux-hpd-bridge.c       | 368 +++++++++++++++++-
+ drivers/gpu/drm/drm_atomic_state_helper.c     |   2 +
+ drivers/gpu/drm/drm_bridge.c                  |  50 +++
+ drivers/platform/chrome/Kconfig               |   1 +
+ drivers/platform/chrome/cros_ec_typec.c       | 208 +++++++++-
+ drivers/platform/chrome/cros_ec_typec.h       |   8 +-
+ include/drm/bridge/aux-bridge.h               |  62 +++
+ include/drm/drm_atomic.h                      |  31 ++
+ include/drm/drm_bridge.h                      |   4 +
+ 11 files changed, 983 insertions(+), 18 deletions(-)
+
+
+base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
 -- 
-2.46.0
+https://chromeos.dev
 
