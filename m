@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87781DA4E;
-	Thu, 15 Aug 2024 13:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC6E1DA4E;
+	Thu, 15 Aug 2024 13:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728931; cv=none; b=Jz1tV6zVM1Og+zQE1Q2bOqp7V9+nrS3ZGOEwKKapq3vWeCcwdpx4DoQgZ49wNKkWtfh/InlAtguoj2y/+OThkEyXFvc7R5M/RsafaHLsEn0h0C6Pbm7X2i10wKVmbmj4L0O8typ6BuC+e/4Yp0c1Zdi3Rpn/owPjBQFYlaoWJVY=
+	t=1723728934; cv=none; b=GfCpX2OY+ANSJMi778Q/JvVB1NvyGcFON2oLVDiaIERSCh6ActXIgWPVnpqZ+WsLlqVVPC2suOOp13y947TowX/QdqPKKbSYyTxedIzmIzAn4z8FKM/oZpJGqc+O2ZZEaaGnx8Q3D//CqAL0JP74uUz52Y8MP2aaFgEiSqSCLZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728931; c=relaxed/simple;
-	bh=f1KrxnsmAx32rQfbF5ndHZTWqIl+MDZMkZRXZj6qP14=;
+	s=arc-20240116; t=1723728934; c=relaxed/simple;
+	bh=00FmnMQ3+wBcUIZZ78+S/Dti1+Jwqo0okl1pDJvmB2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/2zUuLRLDQ9WTsytToUxJFbnK7XZDNBRPiPWkLpmuMg3RfivHRp4PJj6t/zJtIXYctfFfm6DdIfuKzSFVxpymtggndOnTx9Pafcgtmucajkwj3QiU/OsaD3keET9x9P5qu5BDBJTie3GmKH0nKwpe2y/qIMvaCBi4Q5bq26r0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mN6j9kCw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJtXk1xtO1ma0j/uhGlGhQU/SZljwPxHdTy4jr380fyaUW5kaIuE5jfdWgTwuvcFGKTjmtQ86Oa+CDCqB5ahW3gYGIhgsH5FaORn0SRGSgTpoy7DdvCAE6CqchtrItnF0pGh77R/un9pCWGyId4l5MNomqeAzTbXcLjmv6PKOMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uV12Gp2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mN6j9kCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEEFC32786;
-	Thu, 15 Aug 2024 13:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uV12Gp2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58476C4AF0A;
+	Thu, 15 Aug 2024 13:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728931;
-	bh=f1KrxnsmAx32rQfbF5ndHZTWqIl+MDZMkZRXZj6qP14=;
+	s=korg; t=1723728934;
+	bh=00FmnMQ3+wBcUIZZ78+S/Dti1+Jwqo0okl1pDJvmB2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mN6j9kCwgLRk4W5h7o29jRqr7MN3/HNQ5l+vO9wK2RAb/0WHgpXHajfn7g8pvn1Pa
-	 xBJ4/JGV7yAj8Y3++Pk5neufYh2EjfWb+M90K4nV+S4yFhXDpCAC4Kt5Md2b7ibUaN
-	 jKA3iyXBHbi7MCZ5L0ZAfUmtSCiU7snfDX8gmi5c=
+	b=uV12Gp2moFJ8+6w5iMfPfAyh2RwTrTbYD+D1Hb11KxGO4OEwtuAK+xdZu+MKndt+1
+	 CutdTVIoJigELwWC1SzECXMGuJY2EbvaUPrBcaiCmPtx6CQiQ4aMJNdgo3H5yHvKwy
+	 JaSCnllSgnKTyAyo2jXKpSbwN1la3jIqcdP1z9AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	James Morse <james.morse@arm.com>,
 	Will Deacon <will@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 157/196] arm64: errata: Expand speculative SSBS workaround
-Date: Thu, 15 Aug 2024 15:24:34 +0200
-Message-ID: <20240815131858.080911705@linuxfoundation.org>
+Subject: [PATCH 4.19 158/196] arm64: cputype: Add Cortex-X1C definitions
+Date: Thu, 15 Aug 2024 15:24:35 +0200
+Message-ID: <20240815131858.120615908@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -55,149 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 75b3c43eab594bfbd8184ec8ee1a6b820950819a ]
+[ Upstream commit 58d245e03c324d083a0ec3b9ab8ebd46ec9848d7 ]
 
-A number of Arm Ltd CPUs suffer from errata whereby an MSR to the SSBS
-special-purpose register does not affect subsequent speculative
-instructions, permitting speculative store bypassing for a window of
-time.
+Add cputype definitions for Cortex-X1C. These will be used for errata
+detection in subsequent patches.
 
-We worked around this for Cortex-X4 and Neoverse-V3, in commit:
+These values can be found in the Cortex-X1C TRM:
 
-  7187bb7d0b5c7dfa ("arm64: errata: Add workaround for Arm errata 3194386 and 3312417")
+  https://developer.arm.com/documentation/101968/0002/
 
-... as per their Software Developer Errata Notice (SDEN) documents:
-
-* Cortex-X4 SDEN v8.0, erratum 3194386:
-  https://developer.arm.com/documentation/SDEN-2432808/0800/
-
-* Neoverse-V3 SDEN v6.0, erratum 3312417:
-  https://developer.arm.com/documentation/SDEN-2891958/0600/
-
-Since then, similar errata have been published for a number of other Arm Ltd
-CPUs, for which the mitigation is the same. This is described in their
-respective SDEN documents:
-
-* Cortex-A710 SDEN v19.0, errataum 3324338
-  https://developer.arm.com/documentation/SDEN-1775101/1900/?lang=en
-
-* Cortex-A720 SDEN v11.0, erratum 3456091
-  https://developer.arm.com/documentation/SDEN-2439421/1100/?lang=en
-
-* Cortex-X2 SDEN v19.0, erratum 3324338
-  https://developer.arm.com/documentation/SDEN-1775100/1900/?lang=en
-
-* Cortex-X3 SDEN v14.0, erratum 3324335
-  https://developer.arm.com/documentation/SDEN-2055130/1400/?lang=en
-
-* Cortex-X925 SDEN v8.0, erratum 3324334
-  https://developer.arm.com/documentation/109108/800/?lang=en
-
-* Neoverse-N2 SDEN v17.0, erratum 3324339
-  https://developer.arm.com/documentation/SDEN-1982442/1700/?lang=en
-
-* Neoverse-V2 SDEN v9.0, erratum 3324336
-  https://developer.arm.com/documentation/SDEN-2332927/900/?lang=en
-
-Note that due to shared design lineage, some CPUs share the same erratum
-number.
-
-Add these to the existing mitigation under CONFIG_ARM64_ERRATUM_3194386.
-As listing all of the erratum IDs in the runtime description would be
-unwieldy, this is reduced to:
-
-	"SSBS not fully self-synchronizing"
-
-... matching the description of the errata in all of the SDENs.
+... in section B2.107 ("MIDR_EL1, Main ID Register, EL1").
 
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Cc: James Morse <james.morse@arm.com>
 Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20240603111812.1514101-6-mark.rutland@arm.com
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20240801101803.1982459-2-mark.rutland@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ Mark: fix conflicts and renames ]
+[ Mark: trivial backport ]
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.txt | 7 +++++++
- arch/arm64/Kconfig                     | 9 ++++++++-
- arch/arm64/kernel/cpu_errata.c         | 9 ++++++++-
- 3 files changed, 23 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/arm64/silicon-errata.txt b/Documentation/arm64/silicon-errata.txt
-index c7bdac13e3071..8e978776f799e 100644
---- a/Documentation/arm64/silicon-errata.txt
-+++ b/Documentation/arm64/silicon-errata.txt
-@@ -61,8 +61,15 @@ stable kernels.
- | ARM            | Cortex-A73      | #858921         | ARM64_ERRATUM_858921        |
- | ARM            | Cortex-A55      | #1024718        | ARM64_ERRATUM_1024718       |
- | ARM            | Cortex-A76      | #1463225        | ARM64_ERRATUM_1463225       |
-+| ARM            | Cortex-A710     | #3324338        | ARM64_ERRATUM_3194386       |
-+| ARM            | Cortex-A720     | #3456091        | ARM64_ERRATUM_3194386       |
-+| ARM            | Cortex-X2       | #3324338        | ARM64_ERRATUM_3194386       |
-+| ARM            | Cortex-X3       | #3324335        | ARM64_ERRATUM_3194386       |
- | ARM            | Cortex-X4       | #3194386        | ARM64_ERRATUM_3194386       |
-+| ARM            | Cortex-X925     | #3324334        | ARM64_ERRATUM_3194386       |
- | ARM            | Neoverse-N1     | #1542419        | ARM64_ERRATUM_1542419       |
-+| ARM            | Neoverse-N2     | #3324339        | ARM64_ERRATUM_3194386       |
-+| ARM            | Neoverse-V2     | #3324336        | ARM64_ERRATUM_3194386       |
- | ARM            | Neoverse-V3     | #3312417        | ARM64_ERRATUM_3194386       |
- | ARM            | MMU-500         | #841119,#826419 | N/A                         |
- |                |                 |                 |                             |
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 747d055627362..a46fe8d14e56d 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -532,12 +532,19 @@ config ARM64_ERRATUM_1742098
- 	  If unsure, say Y.
- 
- config ARM64_ERRATUM_3194386
--	bool "Cortex-X4/Neoverse-V3: workaround for MSR SSBS not self-synchronizing"
-+	bool "Cortex-{A720,X4,X925}/Neoverse-V3: workaround for MSR SSBS not self-synchronizing"
- 	default y
- 	help
- 	  This option adds the workaround for the following errata:
- 
-+	  * ARM Cortex-A710 erratam 3324338
-+	  * ARM Cortex-A720 erratum 3456091
-+	  * ARM Cortex-X2 erratum 3324338
-+	  * ARM Cortex-X3 erratum 3324335
- 	  * ARM Cortex-X4 erratum 3194386
-+	  * ARM Cortex-X925 erratum 3324334
-+	  * ARM Neoverse N2 erratum 3324339
-+	  * ARM Neoverse V2 erratum 3324336
- 	  * ARM Neoverse-V3 erratum 3312417
- 
- 	  On affected cores "MSR SSBS, #0" instructions may not affect
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 61d3929fafae4..487bab3948f8f 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -709,8 +709,15 @@ static struct midr_range broken_aarch32_aes[] = {
- 
- #ifdef CONFIG_ARM64_ERRATUM_3194386
- static const struct midr_range erratum_spec_ssbs_list[] = {
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_X3),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X4),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_X925),
-+	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
-+	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
- 	{}
- };
- #endif
-@@ -926,7 +933,7 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
- #endif
- #ifdef CONFIG_ARM64_ERRATUM_3194386
- 	{
--		.desc = "ARM errata 3194386, 3312417",
-+		.desc = "SSBS not fully self-synchronizing",
- 		.capability = ARM64_WORKAROUND_SPECULATIVE_SSBS,
- 		ERRATA_MIDR_RANGE_LIST(erratum_spec_ssbs_list),
- 	},
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 304e634c64a05..ad054869acf6b 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -89,6 +89,7 @@
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
++#define ARM_CPU_PART_CORTEX_X1C		0xD4C
+ #define ARM_CPU_PART_CORTEX_X3		0xD4E
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_A720	0xD81
+@@ -131,6 +132,7 @@
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+ #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
++#define MIDR_CORTEX_X1C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
+ #define MIDR_CORTEX_X3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X3)
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
 -- 
 2.43.0
 
