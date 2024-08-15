@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4011714A8;
-	Thu, 15 Aug 2024 13:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955E51714A8;
+	Thu, 15 Aug 2024 13:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729380; cv=none; b=EZ/4lJOUwEiPYsrXWAmltHcnNKc4oDEdp6EfbAQZ0IfXFc6BXGLGVmul9PA5BmOda93pDm2CCaUVkF+1PXg0k+pXjfcX0y7phlyZsgthAx5G/AHZRKe8Oin0tWY60q6M+Q0mzez/0BFNmBmBkEq5kZnD2V/01pSzYjifvnPV/UY=
+	t=1723729383; cv=none; b=Wc+GpeUiZi2jszs4G187CvXYqcmwOKZn9697lC4blHDGp2P/tQ2onxIw2bsQ/yvYWbONSuHFUL8W5AYcIqarpYHjw9JDExbfNyp2IGxwTYcGtn+FfdVrr06OBeGzzGZp1udNtHHlKVBY3EX12aAy/xIFSyRW0rVKXEwA4/1uaAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729380; c=relaxed/simple;
-	bh=h47hcM3zCAHAYkKglPZX9ej+6ElzSg3SIu4t4U8GU18=;
+	s=arc-20240116; t=1723729383; c=relaxed/simple;
+	bh=RjIFiRbMonqthMEJEw/jGOILaRdN1ik58RpZ5XuOaj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WlPVGMEemeOTJCBHIzSMrZFj4t/TNnFUXPhE68Rg5l/NOCwKt8+mCotB/S8aywEg+82UAMBYnSugzImo/daUT9Q68/4Uy654ijXXGT4yL4GGK/ZhVReu8akr9ul9GESSm+u0qP+3II54cBZu4LWcexFcgil/Zz7FBWO8OWgMPH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va2wsSsQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CVf4cz4SysDg8OT+XhZmFArN1nhTfkilT+GyTG4GcBnOIecB0hQvQsBYQsGcoqpMFAriMiLAa4JwHhM8xVOJXR+1anGVGUSA9FIdsNlfPr3PtVT2cWsNjYE3BqNQ4Gt5kNzO1csMjknXP97JiDfWuZbbu8sGHHg7/nddvW1MUCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntuEcycJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va2wsSsQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDF3C32786;
-	Thu, 15 Aug 2024 13:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntuEcycJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AFA3C32786;
+	Thu, 15 Aug 2024 13:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729380;
-	bh=h47hcM3zCAHAYkKglPZX9ej+6ElzSg3SIu4t4U8GU18=;
+	s=korg; t=1723729383;
+	bh=RjIFiRbMonqthMEJEw/jGOILaRdN1ik58RpZ5XuOaj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Va2wsSsQlE/R9EfxfozmKuRrWqmibtV76ULM4BC0gcRmaq3i9rW6FbIzLgO6FpoCt
-	 zvbpTuQxVUgQrICWg841HEDrCixgQ0DJsrwSC017m6gjjJepDAcgdcIRCDLI+84iP9
-	 fMFYzkKEsMHv69HZ/fKzKv18WHAufNJ7Gfe4RWQo=
+	b=ntuEcycJAxjJlH5qbYOW3vAgbcRI05iyzJxz7ckb31pXwnool+QytLpeJil09L9Re
+	 AwI9BVBwpQEdKXo0HmiaI5Inek/ZgE8RLJV08kj61p6jgd5Cz1WWL0hGN9+I2blU3b
+	 kce1yUvc34mngUb+MCPBjLW7RPbp1UAKlKh9giqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Taehee Yoo <ap420073@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/484] net: fec: Refactor: #define magic constants
-Date: Thu, 15 Aug 2024 15:18:40 +0200
-Message-ID: <20240815131943.679358682@linuxfoundation.org>
+Subject: [PATCH 5.15 080/484] xdp: fix invalid wait context of page_pool_destroy()
+Date: Thu, 15 Aug 2024 15:18:58 +0200
+Message-ID: <20240815131944.373933267@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -46,151 +45,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás Bence <csokas.bence@prolan.hu>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit ff049886671ccd4e624a30ec464cb20e4c39a313 ]
+[ Upstream commit 59a931c5b732ca5fc2ca727f5a72aeabaafa85ec ]
 
-Add defines for bits of ECR, RCR control registers, TX watermark etc.
+If the driver uses a page pool, it creates a page pool with
+page_pool_create().
+The reference count of page pool is 1 as default.
+A page pool will be destroyed only when a reference count reaches 0.
+page_pool_destroy() is used to destroy page pool, it decreases a
+reference count.
+When a page pool is destroyed, ->disconnect() is called, which is
+mem_allocator_disconnect().
+This function internally acquires mutex_lock().
 
-Signed-off-by: Csókás Bence <csokas.bence@prolan.hu>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240212153717.10023-1-csokas.bence@prolan.hu
+If the driver uses XDP, it registers a memory model with
+xdp_rxq_info_reg_mem_model().
+The xdp_rxq_info_reg_mem_model() internally increases a page pool
+reference count if a memory model is a page pool.
+Now the reference count is 2.
+
+To destroy a page pool, the driver should call both page_pool_destroy()
+and xdp_unreg_mem_model().
+The xdp_unreg_mem_model() internally calls page_pool_destroy().
+Only page_pool_destroy() decreases a reference count.
+
+If a driver calls page_pool_destroy() then xdp_unreg_mem_model(), we
+will face an invalid wait context warning.
+Because xdp_unreg_mem_model() calls page_pool_destroy() with
+rcu_read_lock().
+The page_pool_destroy() internally acquires mutex_lock().
+
+Splat looks like:
+=============================
+[ BUG: Invalid wait context ]
+6.10.0-rc6+ #4 Tainted: G W
+-----------------------------
+ethtool/1806 is trying to lock:
+ffffffff90387b90 (mem_id_lock){+.+.}-{4:4}, at: mem_allocator_disconnect+0x73/0x150
+other info that might help us debug this:
+context-{5:5}
+3 locks held by ethtool/1806:
+stack backtrace:
+CPU: 0 PID: 1806 Comm: ethtool Tainted: G W 6.10.0-rc6+ #4 f916f41f172891c800f2fed
+Hardware name: ASUS System Product Name/PRIME Z690-P D4, BIOS 0603 11/01/2021
+Call Trace:
+<TASK>
+dump_stack_lvl+0x7e/0xc0
+__lock_acquire+0x1681/0x4de0
+? _printk+0x64/0xe0
+? __pfx_mark_lock.part.0+0x10/0x10
+? __pfx___lock_acquire+0x10/0x10
+lock_acquire+0x1b3/0x580
+? mem_allocator_disconnect+0x73/0x150
+? __wake_up_klogd.part.0+0x16/0xc0
+? __pfx_lock_acquire+0x10/0x10
+? dump_stack_lvl+0x91/0xc0
+__mutex_lock+0x15c/0x1690
+? mem_allocator_disconnect+0x73/0x150
+? __pfx_prb_read_valid+0x10/0x10
+? mem_allocator_disconnect+0x73/0x150
+? __pfx_llist_add_batch+0x10/0x10
+? console_unlock+0x193/0x1b0
+? lockdep_hardirqs_on+0xbe/0x140
+? __pfx___mutex_lock+0x10/0x10
+? tick_nohz_tick_stopped+0x16/0x90
+? __irq_work_queue_local+0x1e5/0x330
+? irq_work_queue+0x39/0x50
+? __wake_up_klogd.part.0+0x79/0xc0
+? mem_allocator_disconnect+0x73/0x150
+mem_allocator_disconnect+0x73/0x150
+? __pfx_mem_allocator_disconnect+0x10/0x10
+? mark_held_locks+0xa5/0xf0
+? rcu_is_watching+0x11/0xb0
+page_pool_release+0x36e/0x6d0
+page_pool_destroy+0xd7/0x440
+xdp_unreg_mem_model+0x1a7/0x2a0
+? __pfx_xdp_unreg_mem_model+0x10/0x10
+? kfree+0x125/0x370
+? bnxt_free_ring.isra.0+0x2eb/0x500
+? bnxt_free_mem+0x5ac/0x2500
+xdp_rxq_info_unreg+0x4a/0xd0
+bnxt_free_mem+0x1356/0x2500
+bnxt_close_nic+0xf0/0x3b0
+? __pfx_bnxt_close_nic+0x10/0x10
+? ethnl_parse_bit+0x2c6/0x6d0
+? __pfx___nla_validate_parse+0x10/0x10
+? __pfx_ethnl_parse_bit+0x10/0x10
+bnxt_set_features+0x2a8/0x3e0
+__netdev_update_features+0x4dc/0x1370
+? ethnl_parse_bitset+0x4ff/0x750
+? __pfx_ethnl_parse_bitset+0x10/0x10
+? __pfx___netdev_update_features+0x10/0x10
+? mark_held_locks+0xa5/0xf0
+? _raw_spin_unlock_irqrestore+0x42/0x70
+? __pm_runtime_resume+0x7d/0x110
+ethnl_set_features+0x32d/0xa20
+
+To fix this problem, it uses rhashtable_lookup_fast() instead of
+rhashtable_lookup() with rcu_read_lock().
+Using xa without rcu_read_lock() here is safe.
+xa is freed by __xdp_mem_allocator_rcu_free() and this is called by
+call_rcu() of mem_xa_remove().
+The mem_xa_remove() is called by page_pool_destroy() if a reference
+count reaches 0.
+The xa is already protected by the reference count mechanism well in the
+control plane.
+So removing rcu_read_lock() for page_pool_destroy() is safe.
+
+Fixes: c3f812cea0d7 ("page_pool: do not release pool until inflight == 0.")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20240712095116.3801586-1-ap420073@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c32fe1986f27 ("net: fec: Fix FEC_ECR_EN1588 being cleared on link-down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 46 +++++++++++++++--------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+ net/core/xdp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index f02376555ed45..722810ce4068f 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -252,8 +252,8 @@ MODULE_PARM_DESC(macaddr, "FEC Ethernet MAC address");
- #define PKT_MINBUF_SIZE		64
+diff --git a/net/core/xdp.c b/net/core/xdp.c
+index e9a9694c4fdcc..4a9c2f4eceda8 100644
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -124,10 +124,8 @@ void xdp_unreg_mem_model(struct xdp_mem_info *mem)
+ 		return;
  
- /* FEC receive acceleration */
--#define FEC_RACC_IPDIS		(1 << 1)
--#define FEC_RACC_PRODIS		(1 << 2)
-+#define FEC_RACC_IPDIS		BIT(1)
-+#define FEC_RACC_PRODIS		BIT(2)
- #define FEC_RACC_SHIFT16	BIT(7)
- #define FEC_RACC_OPTIONS	(FEC_RACC_IPDIS | FEC_RACC_PRODIS)
- 
-@@ -285,8 +285,23 @@ MODULE_PARM_DESC(macaddr, "FEC Ethernet MAC address");
- #define FEC_MMFR_TA		(2 << 16)
- #define FEC_MMFR_DATA(v)	(v & 0xffff)
- /* FEC ECR bits definition */
--#define FEC_ECR_MAGICEN		(1 << 2)
--#define FEC_ECR_SLEEP		(1 << 3)
-+#define FEC_ECR_RESET           BIT(0)
-+#define FEC_ECR_ETHEREN         BIT(1)
-+#define FEC_ECR_MAGICEN         BIT(2)
-+#define FEC_ECR_SLEEP           BIT(3)
-+#define FEC_ECR_EN1588          BIT(4)
-+#define FEC_ECR_BYTESWP         BIT(8)
-+/* FEC RCR bits definition */
-+#define FEC_RCR_LOOP            BIT(0)
-+#define FEC_RCR_HALFDPX         BIT(1)
-+#define FEC_RCR_MII             BIT(2)
-+#define FEC_RCR_PROMISC         BIT(3)
-+#define FEC_RCR_BC_REJ          BIT(4)
-+#define FEC_RCR_FLOWCTL         BIT(5)
-+#define FEC_RCR_RMII            BIT(8)
-+#define FEC_RCR_10BASET         BIT(9)
-+/* TX WMARK bits */
-+#define FEC_TXWMRK_STRFWD       BIT(8)
- 
- #define FEC_MII_TIMEOUT		30000 /* us */
- 
-@@ -981,7 +996,7 @@ fec_restart(struct net_device *ndev)
- 	struct fec_enet_private *fep = netdev_priv(ndev);
- 	u32 temp_mac[2];
- 	u32 rcntl = OPT_FRAME_SIZE | 0x04;
--	u32 ecntl = 0x2; /* ETHEREN */
-+	u32 ecntl = FEC_ECR_ETHEREN;
- 
- 	/* Whack a reset.  We should wait for this.
- 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
-@@ -1059,18 +1074,18 @@ fec_restart(struct net_device *ndev)
- 		    fep->phy_interface == PHY_INTERFACE_MODE_RGMII_TXID)
- 			rcntl |= (1 << 6);
- 		else if (fep->phy_interface == PHY_INTERFACE_MODE_RMII)
--			rcntl |= (1 << 8);
-+			rcntl |= FEC_RCR_RMII;
- 		else
--			rcntl &= ~(1 << 8);
-+			rcntl &= ~FEC_RCR_RMII;
- 
- 		/* 1G, 100M or 10M */
- 		if (ndev->phydev) {
- 			if (ndev->phydev->speed == SPEED_1000)
- 				ecntl |= (1 << 5);
- 			else if (ndev->phydev->speed == SPEED_100)
--				rcntl &= ~(1 << 9);
-+				rcntl &= ~FEC_RCR_10BASET;
- 			else
--				rcntl |= (1 << 9);
-+				rcntl |= FEC_RCR_10BASET;
- 		}
- 	} else {
- #ifdef FEC_MIIGSK_ENR
-@@ -1129,13 +1144,13 @@ fec_restart(struct net_device *ndev)
- 
- 	if (fep->quirks & FEC_QUIRK_ENET_MAC) {
- 		/* enable ENET endian swap */
--		ecntl |= (1 << 8);
-+		ecntl |= FEC_ECR_BYTESWP;
- 		/* enable ENET store and forward mode */
--		writel(1 << 8, fep->hwp + FEC_X_WMRK);
-+		writel(FEC_TXWMRK_STRFWD, fep->hwp + FEC_X_WMRK);
- 	}
- 
- 	if (fep->bufdesc_ex)
--		ecntl |= (1 << 4);
-+		ecntl |= FEC_ECR_EN1588;
- 
- 	if (fep->quirks & FEC_QUIRK_DELAYED_CLKS_SUPPORT &&
- 	    fep->rgmii_txc_dly)
-@@ -1189,7 +1204,7 @@ static void
- fec_stop(struct net_device *ndev)
- {
- 	struct fec_enet_private *fep = netdev_priv(ndev);
--	u32 rmii_mode = readl(fep->hwp + FEC_R_CNTRL) & (1 << 8);
-+	u32 rmii_mode = readl(fep->hwp + FEC_R_CNTRL) & FEC_RCR_RMII;
- 	u32 val;
- 
- 	/* We cannot expect a graceful transmit stop without link !!! */
-@@ -1208,7 +1223,7 @@ fec_stop(struct net_device *ndev)
- 		if (fep->quirks & FEC_QUIRK_HAS_MULTI_QUEUES) {
- 			writel(0, fep->hwp + FEC_ECNTRL);
- 		} else {
--			writel(1, fep->hwp + FEC_ECNTRL);
-+			writel(FEC_ECR_RESET, fep->hwp + FEC_ECNTRL);
- 			udelay(10);
- 		}
- 		writel(FEC_DEFAULT_IMASK, fep->hwp + FEC_IMASK);
-@@ -1224,12 +1239,11 @@ fec_stop(struct net_device *ndev)
- 	/* We have to keep ENET enabled to have MII interrupt stay working */
- 	if (fep->quirks & FEC_QUIRK_ENET_MAC &&
- 		!(fep->wol_flag & FEC_WOL_FLAG_SLEEP_ON)) {
--		writel(2, fep->hwp + FEC_ECNTRL);
-+		writel(FEC_ECR_ETHEREN, fep->hwp + FEC_ECNTRL);
- 		writel(rmii_mode, fep->hwp + FEC_R_CNTRL);
+ 	if (type == MEM_TYPE_PAGE_POOL) {
+-		rcu_read_lock();
+-		xa = rhashtable_lookup(mem_id_ht, &id, mem_id_rht_params);
++		xa = rhashtable_lookup_fast(mem_id_ht, &id, mem_id_rht_params);
+ 		page_pool_destroy(xa->page_pool);
+-		rcu_read_unlock();
  	}
  }
- 
--
- static void
- fec_timeout(struct net_device *ndev, unsigned int txqueue)
- {
+ EXPORT_SYMBOL_GPL(xdp_unreg_mem_model);
 -- 
 2.43.0
 
