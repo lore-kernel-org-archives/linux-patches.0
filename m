@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBD019DF58;
-	Thu, 15 Aug 2024 13:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D8A7DA9E;
+	Thu, 15 Aug 2024 13:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729723; cv=none; b=EVbPTDl4xRt4GH2itKHzZV1/mPY+mOQk/k1mtiINiB1vOSjjpHCmrhfVQnVJjYodN8QczaOUUQkM8c2CqxfqIQNe5pWFQUEEmyLO4gOcSuFfe+yafu0OB/ectZzBskIpllPbMKU8elIscqe+rm6tGMbT16hX3v2dkpcgTq2esjs=
+	t=1723729726; cv=none; b=qMBf/HsoaTwzaCFvpPn1XYAiKcLruJdBQC3qJbUHZez1zm/XFKV+Nb1HoqbqpV5+GjV4p/YZ2Jq9yIKomIVlXSYRLkVCAWvMqBb5+ShvsGAOQiSidVASzAcunV9tWSHXpU/BX3YKZ5QCGMvM1+6Z9RPkdU05iLcVx/OOYYpq8Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729723; c=relaxed/simple;
-	bh=fwz2vCyUG5RXf4T4Qison5hMhD2pQcy7U1XxXJJqc88=;
+	s=arc-20240116; t=1723729726; c=relaxed/simple;
+	bh=tUA4HSJ/fCeJr8Y68NozHG+Y/vGog+mcst38qenhz/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Im2+HqkD3tcTqf/N5b4DcnRHZfHogLzjV0yOU3ro+b6dcjBuGemanPxahIAqNcpUDiJdzY/cKRGc8SHAIdAtK96mG4lJNj0QqhjJvGpGIEyWpp4qaJdUHUCyVSYjR4/3E0FG6mm9dCGKo5H0uvvpcdsM6rbT4TBdJIfmQo1O6lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGNvGlmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kXAzLh6jglVDgTWsItUWRKLoKqD/VYxaows32IFCAC1vAuEFyH1aldXjYZTzli2aDJG3HYScKWZet3+CDuhTANE0C2Cx5vC4a0ULY9gAcU8mD0DGcRFGagA+MetGo4irHFFnw2vStGyGKdwy6bxB6VKYMUBVMcUP5VsmZVfzl8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAoFJ5d4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGNvGlmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2F3C32786;
-	Thu, 15 Aug 2024 13:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAoFJ5d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B61C32786;
+	Thu, 15 Aug 2024 13:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729723;
-	bh=fwz2vCyUG5RXf4T4Qison5hMhD2pQcy7U1XxXJJqc88=;
+	s=korg; t=1723729726;
+	bh=tUA4HSJ/fCeJr8Y68NozHG+Y/vGog+mcst38qenhz/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xGNvGlmPF1zHOtFpviTEkPOKcytoZXJAMT9gKR5CpK5TpSWqGoMpdmu0RYY6QxPrr
-	 7mG5I3jrflx+Yw27V32fjw/qrnkDiAAVkpirrvGVoNtCKoovyQ2hJfMu8bVxSXNve7
-	 GmncaJmQKjb07QILdoKnyQqPBNdCCEN54YoVaxoI=
+	b=gAoFJ5d4uDasbC0ovZpNg647j8ff6Nku5QHKaTKI2zSPnFmmsGyE3VaaiCE/gYN/3
+	 JHVM+7wWtJu7YW2xtqQMBmvmuFkeaA9AgRGyWopsTYVhrvQB1CNELoRMEw0J+EuHZr
+	 EkpBEePCY+3cVjbTS7uNRDG3hlew1KuNlb9V+hjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 5.15 187/484] apparmor: use kvfree_sensitive to free data->data
-Date: Thu, 15 Aug 2024 15:20:45 +0200
-Message-ID: <20240815131948.639242959@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 188/484] task_work: s/task_work_cancel()/task_work_cancel_func()/
+Date: Thu, 15 Aug 2024 15:20:46 +0200
+Message-ID: <20240815131948.676491732@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,48 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 2bc73505a5cd2a18a7a542022722f136c19e3b87 upstream.
+commit 68cbd415dd4b9c5b9df69f0f091879e56bf5907a upstream.
 
-Inside unpack_profile() data->data is allocated using kvmemdup() so it
-should be freed with the corresponding kvfree_sensitive().
+A proper task_work_cancel() API that actually cancels a callback and not
+*any* callback pointing to a given function is going to be needed for
+perf events event freeing. Do the appropriate rename to prepare for
+that.
 
-Also add missing data->data release for rhashtable insertion failure path
-in unpack_profile().
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: e025be0f26d5 ("apparmor: support querying extended trusted helper extra data")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Link: https://lore.kernel.org/r/20240621091601.18227-2-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/policy.c        |    2 +-
- security/apparmor/policy_unpack.c |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ include/linux/task_work.h |    2 +-
+ kernel/irq/manage.c       |    2 +-
+ kernel/task_work.c        |   10 +++++-----
+ security/keys/keyctl.c    |    2 +-
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -187,7 +187,7 @@ static void aa_free_data(void *ptr, void
- {
- 	struct aa_data *data = ptr;
+--- a/include/linux/task_work.h
++++ b/include/linux/task_work.h
+@@ -24,7 +24,7 @@ int task_work_add(struct task_struct *ta
  
--	kfree_sensitive(data->data);
-+	kvfree_sensitive(data->data, data->size);
- 	kfree_sensitive(data->key);
- 	kfree_sensitive(data);
+ struct callback_head *task_work_cancel_match(struct task_struct *task,
+ 	bool (*match)(struct callback_head *, void *data), void *data);
+-struct callback_head *task_work_cancel(struct task_struct *, task_work_func_t);
++struct callback_head *task_work_cancel_func(struct task_struct *, task_work_func_t);
+ void task_work_run(void);
+ 
+ static inline void exit_task_work(struct task_struct *task)
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1330,7 +1330,7 @@ static int irq_thread(void *data)
+ 	 * synchronize_hardirq(). So neither IRQTF_RUNTHREAD nor the
+ 	 * oneshot mask bit can be set.
+ 	 */
+-	task_work_cancel(current, irq_thread_dtor);
++	task_work_cancel_func(current, irq_thread_dtor);
+ 	return 0;
  }
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -915,6 +915,7 @@ static struct aa_profile *unpack_profile
  
- 			if (rhashtable_insert_fast(profile->data, &data->head,
- 						   profile->data->p)) {
-+				kvfree_sensitive(data->data, data->size);
- 				kfree_sensitive(data->key);
- 				kfree_sensitive(data);
- 				info = "failed to insert data to table";
+--- a/kernel/task_work.c
++++ b/kernel/task_work.c
+@@ -104,9 +104,9 @@ static bool task_work_func_match(struct
+ }
+ 
+ /**
+- * task_work_cancel - cancel a pending work added by task_work_add()
+- * @task: the task which should execute the work
+- * @func: identifies the work to remove
++ * task_work_cancel_func - cancel a pending work matching a function added by task_work_add()
++ * @task: the task which should execute the func's work
++ * @func: identifies the func to match with a work to remove
+  *
+  * Find the last queued pending work with ->func == @func and remove
+  * it from queue.
+@@ -115,7 +115,7 @@ static bool task_work_func_match(struct
+  * The found work or NULL if not found.
+  */
+ struct callback_head *
+-task_work_cancel(struct task_struct *task, task_work_func_t func)
++task_work_cancel_func(struct task_struct *task, task_work_func_t func)
+ {
+ 	return task_work_cancel_match(task, task_work_func_match, func);
+ }
+@@ -152,7 +152,7 @@ void task_work_run(void)
+ 		if (!work)
+ 			break;
+ 		/*
+-		 * Synchronize with task_work_cancel(). It can not remove
++		 * Synchronize with task_work_cancel_match(). It can not remove
+ 		 * the first entry == work, cmpxchg(task_works) must fail.
+ 		 * But it can remove another entry from the ->next list.
+ 		 */
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -1694,7 +1694,7 @@ long keyctl_session_to_parent(void)
+ 		goto unlock;
+ 
+ 	/* cancel an already pending keyring replacement */
+-	oldwork = task_work_cancel(parent, key_change_session_keyring);
++	oldwork = task_work_cancel_func(parent, key_change_session_keyring);
+ 
+ 	/* the replacement session keyring is applied just prior to userspace
+ 	 * restarting */
 
 
