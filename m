@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3115219F47A;
-	Thu, 15 Aug 2024 13:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D2E17C9A9;
+	Thu, 15 Aug 2024 13:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730264; cv=none; b=apVRkwaU08lj4Tnda2t45dVg61N2Ftjk7LCarTjqFcPcoZTamvZljILs7ph6WArDkXjHaNMBvmhgjYhrbCnNvQhMPL46aF/LCzx2puaknOdCbKkVNyEr1KL/Ud9T73kEyhGNZQt3BkFNRxxwH6kOVtqXckc53PdXfNfHvkUBhqU=
+	t=1723730267; cv=none; b=HcA4WfFV602JL9UJi88+wNWu1vS6RgFQzB27WFsl5NH7yKqjKdRMjgmnZuCrdguv/eMH0TNfx1VBn+ktyJzze1tJmhThaBcd2wYMknqa5KcYwhz8oQpSTWcdzsS8vg8RXJxCseopnFmsoE7Sf2YSg/3oeJSDv5ystDa9QoM6FbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730264; c=relaxed/simple;
-	bh=WF8zw4iQ9ad+Aj2yuZI7PjkyM51jXSzIiBrHIDTwixI=;
+	s=arc-20240116; t=1723730267; c=relaxed/simple;
+	bh=ycqxk+gTWNOkC3tyLRydiOdDrHK7oxSv9k8faG0rqlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajjCUjGnOsaI+DtV32rZo5v1iU/ytmgKb2mOiBxR+zHnsrUG0e1GBJiFD8hLf/8gFONT0aW6m/lbM+NFFmKOCsLpYUdixiEFCg7009HvLNwiDkgtfuz3ZAkIeM7E7cSp32INKZvei/pJI0TOivCQdS1S7+pW0yBzIk+yvVB5rJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SAs9HH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8/0QdPk1t23hIzAM6XDPJeUrbGbpXoN/lIb/1a0fleJQ/brnmjSNFJY/tBwq0pBuh8bmH5wlNnfR8C6kVRbBD7YXIVJyyiLRsJViv01VhOp+gy3dsYfz8myq4PS+kMEfGbGIbCvriehsZ3igHsWahoPBHPWN3TxOzQMLNR1w5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfA+PBmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SAs9HH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D82C32786;
-	Thu, 15 Aug 2024 13:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfA+PBmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE5FC4AF0C;
+	Thu, 15 Aug 2024 13:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730264;
-	bh=WF8zw4iQ9ad+Aj2yuZI7PjkyM51jXSzIiBrHIDTwixI=;
+	s=korg; t=1723730267;
+	bh=ycqxk+gTWNOkC3tyLRydiOdDrHK7oxSv9k8faG0rqlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SAs9HH7GKxfvgPlwjyRllQ3XG7DIJhHCUqnFL3238h+YUBoiyllajqMjcjVcydwZ
-	 DozLElFXwngUaa/jAFgiQdW8Q0jjOPetv+S3XPbEBMNR2tkEn9RdSJdPNGgwpKewOh
-	 1rpfKRPKfV3EMEZbusGiO3KVAGmNAwwpFYX34UAo=
+	b=mfA+PBmcxMU4nhx5t7FX7aXpNVWhJxafAfsm2V/RrcnBauMWGB4O4YnLhjvGO5ZGY
+	 k1npHGVIGjA1xBTRMjyfWQ+Sos1XNOyq1ow+Rd/pykdhGANIB1aL7CZhvyJKLF9Bxa
+	 dxumEg8vr0N76Mb6fQISQ4LYTaENXLwz3SfakAf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 354/484] genirq: Allow irq_chip registration functions to take a const irq_chip
-Date: Thu, 15 Aug 2024 15:23:32 +0200
-Message-ID: <20240815131955.100470699@linuxfoundation.org>
+Subject: [PATCH 5.15 355/484] irqchip/mbigen: Fix mbigen node address layout
+Date: Thu, 15 Aug 2024 15:23:33 +0200
+Message-ID: <20240815131955.140046122@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,84 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit 393e1280f765661cf39785e967676a4e57324126 ]
+[ Upstream commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ]
 
-In order to let a const irqchip be fed to the irqchip layer, adjust
-the various prototypes. An extra cast in irq_set_chip()() is required
-to avoid a warning.
+The mbigen interrupt chip has its per node registers located in a
+contiguous region of page sized chunks. The code maps them into virtual
+address space as a contiguous region and determines the address of a node
+by using the node ID as index.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20220209162607.1118325-3-maz@kernel.org
+                    mbigen chip
+       |-----------------|------------|--------------|
+   mgn_node_0         mgn_node_1     ...         mgn_node_i
+|--------------|   |--------------|       |----------------------|
+[0x0000, 0x0x0FFF] [0x1000, 0x1FFF]    [i*0x1000, (i+1)*0x1000 - 1]
+
+This works correctly up to 10 nodes, but then fails because the 11th's
+array slot is used for the MGN_CLEAR registers.
+
+                         mbigen chip
+    |-----------|--------|--------|---------------|--------|
+mgn_node_0  mgn_node_1  ...  mgn_clear_register  ...   mgn_node_i
+                            |-----------------|
+                             [0xA000, 0xAFFF]
+
+Skip the MGN_CLEAR register space when calculating the offset for node IDs
+greater than or equal to ten.
+
+Fixes: a6c2f87b8820 ("irqchip/mbigen: Implement the mbigen irq chip operation functions")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240730014400.1751530-1-zouyipeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/irq.h | 7 ++++---
- kernel/irq/chip.c   | 9 +++------
- 2 files changed, 7 insertions(+), 9 deletions(-)
+ drivers/irqchip/irq-mbigen.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/irq.h b/include/linux/irq.h
-index f9e6449fbbbae..4fd8d900a1b86 100644
---- a/include/linux/irq.h
-+++ b/include/linux/irq.h
-@@ -709,10 +709,11 @@ extern struct irq_chip no_irq_chip;
- extern struct irq_chip dummy_irq_chip;
+diff --git a/drivers/irqchip/irq-mbigen.c b/drivers/irqchip/irq-mbigen.c
+index 12df2162108eb..e6f824a2ee510 100644
+--- a/drivers/irqchip/irq-mbigen.c
++++ b/drivers/irqchip/irq-mbigen.c
+@@ -64,6 +64,20 @@ struct mbigen_device {
+ 	void __iomem		*base;
+ };
  
- extern void
--irq_set_chip_and_handler_name(unsigned int irq, struct irq_chip *chip,
-+irq_set_chip_and_handler_name(unsigned int irq, const struct irq_chip *chip,
- 			      irq_flow_handler_t handle, const char *name);
- 
--static inline void irq_set_chip_and_handler(unsigned int irq, struct irq_chip *chip,
-+static inline void irq_set_chip_and_handler(unsigned int irq,
-+					    const struct irq_chip *chip,
- 					    irq_flow_handler_t handle)
++static inline unsigned int get_mbigen_node_offset(unsigned int nid)
++{
++	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
++
++	/*
++	 * To avoid touched clear register in unexpected way, we need to directly
++	 * skip clear register when access to more than 10 mbigen nodes.
++	 */
++	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
++		offset += MBIGEN_NODE_OFFSET;
++
++	return offset;
++}
++
+ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
  {
- 	irq_set_chip_and_handler_name(irq, chip, handle, NULL);
-@@ -802,7 +803,7 @@ static inline void irq_set_percpu_devid_flags(unsigned int irq)
+ 	unsigned int nid, pin;
+@@ -72,8 +86,7 @@ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
+ 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ 
+-	return pin * 4 + nid * MBIGEN_NODE_OFFSET
+-			+ REG_MBIGEN_VEC_OFFSET;
++	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
  }
  
- /* Set/get chip/data for an IRQ: */
--extern int irq_set_chip(unsigned int irq, struct irq_chip *chip);
-+extern int irq_set_chip(unsigned int irq, const struct irq_chip *chip);
- extern int irq_set_handler_data(unsigned int irq, void *data);
- extern int irq_set_chip_data(unsigned int irq, void *data);
- extern int irq_set_irq_type(unsigned int irq, unsigned int type);
-diff --git a/kernel/irq/chip.c b/kernel/irq/chip.c
-index 7ea66e55ef86b..0a893df1b8099 100644
---- a/kernel/irq/chip.c
-+++ b/kernel/irq/chip.c
-@@ -38,7 +38,7 @@ struct irqaction chained_action = {
-  *	@irq:	irq number
-  *	@chip:	pointer to irq chip description structure
-  */
--int irq_set_chip(unsigned int irq, struct irq_chip *chip)
-+int irq_set_chip(unsigned int irq, const struct irq_chip *chip)
- {
- 	unsigned long flags;
- 	struct irq_desc *desc = irq_get_desc_lock(irq, &flags, 0);
-@@ -46,10 +46,7 @@ int irq_set_chip(unsigned int irq, struct irq_chip *chip)
- 	if (!desc)
- 		return -EINVAL;
+ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+@@ -88,8 +101,7 @@ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+ 	*mask = 1 << (irq_ofst % 32);
+ 	ofst = irq_ofst / 32 * 4;
  
--	if (!chip)
--		chip = &no_irq_chip;
--
--	desc->irq_data.chip = chip;
-+	desc->irq_data.chip = (struct irq_chip *)(chip ?: &no_irq_chip);
- 	irq_put_desc_unlock(desc, flags);
- 	/*
- 	 * For !CONFIG_SPARSE_IRQ make the irq show up in
-@@ -1075,7 +1072,7 @@ irq_set_chained_handler_and_data(unsigned int irq, irq_flow_handler_t handle,
- EXPORT_SYMBOL_GPL(irq_set_chained_handler_and_data);
+-	*addr = ofst + nid * MBIGEN_NODE_OFFSET
+-		+ REG_MBIGEN_TYPE_OFFSET;
++	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
+ }
  
- void
--irq_set_chip_and_handler_name(unsigned int irq, struct irq_chip *chip,
-+irq_set_chip_and_handler_name(unsigned int irq, const struct irq_chip *chip,
- 			      irq_flow_handler_t handle, const char *name)
- {
- 	irq_set_chip(irq, chip);
+ static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
 -- 
 2.43.0
 
