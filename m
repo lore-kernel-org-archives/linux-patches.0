@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD6519FA9D;
-	Thu, 15 Aug 2024 14:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3921D1A0712;
+	Thu, 15 Aug 2024 14:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730509; cv=none; b=OMd6t512jySywtki3JQz+9Nes1+MG/iTSriSD/MxVPS08z01/iUFVdij/ilS4WWZXvBo55sGtMcJWLh8cRKCVtO8He+0aIAP4sm0HI6lo8eoKPHg/sqoCztfL4XrNQUE0layJsPSarMIy316xMLIFmODuQS4IrdqbH2U/n0RK9Y=
+	t=1723730512; cv=none; b=Yalb84SMofgzujSmNHPz7C0KkPyfhReQl/0XcPrFflKCJ73br3fGCYvtfG2Dc3TEh7CK9ijaZ7BKCurK2zd2NzpvB5binE+BbsRI/YTBseA24B+tWqECMI/s4nyvUCi528AAZB38TFsIHAANhWyE7SFRPH7HlsQY3OrpKVzJdHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730509; c=relaxed/simple;
-	bh=WeQlKytbYjG/ce8RDe0fJs9FdTZLoaNldIEE/rx7S3g=;
+	s=arc-20240116; t=1723730512; c=relaxed/simple;
+	bh=TYI+38Rh1DmCuvewgWdbFyBxBpf1QOUzIxRzdzZbd6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhWYEh+4QzqzHmGdABRDC09QGCzyhDEmpTB8Mn+BZfpuZG1hQIhcCtEvHjpyhbeTiyk0TXm3Vn1W/6/x+5NBk2bVbxQd7tYykxJjH4pGiCOixwrlYCHhNwOYwjy/t38rJrwtM3e6d5NUom6/VreIzf3wo6wlU68ofNZ5iBQU6h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMgTtJBr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MLsNp5CQ3yBr3Hy0eFAHoavA7OD/L7MN8qCSwziNvqhzwiQlUOjA9rQPnNEIKKY6L2OoYc2WtCOHVYIO8aBNM3lrDvlQ42AbHtvgPW9KmBhTfSwSS6i8n5JYKkF0iI0OvyFA7tXRTS8xc6TCn9pZdIdglV1tOvtEQ628Cn/0MFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ok/jEzmf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMgTtJBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B649C4AF0C;
-	Thu, 15 Aug 2024 14:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ok/jEzmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697F8C4AF0A;
+	Thu, 15 Aug 2024 14:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730508;
-	bh=WeQlKytbYjG/ce8RDe0fJs9FdTZLoaNldIEE/rx7S3g=;
+	s=korg; t=1723730511;
+	bh=TYI+38Rh1DmCuvewgWdbFyBxBpf1QOUzIxRzdzZbd6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMgTtJBr5h743OTVhXVJJnH0XDVsihr5rP36e7McrtfYnxQoS5Cxdi/CblmH1dZSz
-	 UriwW70QYJgTJJiGyx7E05xkfqfbNVX00xP7LKGNJb5JiEgYkytXFCWNvL+7VALr2z
-	 qodwuei+egPcD+k3meYFlydQi/fRe1ak6v/tKv3o=
+	b=ok/jEzmfrXp9ZrE9uU+0CPe5vkCgdK/LrT1qYgAanOdnxZ1wmvze2ct6cA9dzrfbm
+	 qPNrSbuUHkGJiJDxfdwE1mrz+UcfUIhy35TXJ9Lywxq2KJMVmqmUYMfWkgvd1qUls3
+	 BduTKmSWrOMeEW1mhAqi1hMsM4bILdaumrU0K4fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Waiman Long <longman@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 429/484] clocksource: Reduce the default clocksource_watchdog() retries to 2
-Date: Thu, 15 Aug 2024 15:24:47 +0200
-Message-ID: <20240815131958.028128688@linuxfoundation.org>
+Subject: [PATCH 5.15 400/484] arm64: cputype: Add Cortex-X925 definitions
+Date: Thu, 15 Aug 2024 15:24:18 +0200
+Message-ID: <20240815131956.900787284@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,54 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 1a5620671a1b6fd9cc08761677d050f1702f910c ]
+[ Upstream commit fd2ff5f0b320f418288e7a1f919f648fbc8a0dfc ]
 
-With the previous patch, there is an extra watchdog read in each retry.
-Now the total number of clocksource reads is increased to 4 per iteration.
-In order to avoid increasing the clock skew check overhead, the default
-maximum number of retries is reduced from 3 to 2 to maintain the same 12
-clocksource reads in the worst case.
+Add cputype definitions for Cortex-X925. These will be used for errata
+detection in subsequent patches.
 
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: f2655ac2c06a ("clocksource: Fix brown-bag boolean thinko in cs_watchdog_read()")
+These values can be found in Table A-285 ("MIDR_EL1 bit descriptions")
+in issue 0001-05 of the Cortex-X925 TRM, which can be found at:
+
+  https://developer.arm.com/documentation/102807/0001/?lang=en
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-4-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt | 4 ++--
- kernel/time/clocksource.c                       | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index d49e11962333c..2db3d5b6fc038 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -603,8 +603,8 @@
- 	clocksource.max_cswd_read_retries= [KNL]
- 			Number of clocksource_watchdog() retries due to
- 			external delays before the clock will be marked
--			unstable.  Defaults to three retries, that is,
--			four attempts to read the clock under test.
-+			unstable.  Defaults to two retries, that is,
-+			three attempts to read the clock under test.
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index edfd6ac14a127..95492fa88a244 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -90,6 +90,7 @@
+ #define ARM_CPU_PART_CORTEX_A720	0xD81
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
++#define ARM_CPU_PART_CORTEX_X925	0xD85
  
- 	clocksource.verify_n_cpus= [KNL]
- 			Limit the number of CPUs checked for clocksources
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index 7d6d87a22ad55..38bb654d2a7e1 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -201,7 +201,7 @@ void clocksource_mark_unstable(struct clocksource *cs)
- 	spin_unlock_irqrestore(&watchdog_lock, flags);
- }
+ #define APM_CPU_PART_POTENZA		0x000
  
--ulong max_cswd_read_retries = 3;
-+ulong max_cswd_read_retries = 2;
- module_param(max_cswd_read_retries, ulong, 0644);
- EXPORT_SYMBOL_GPL(max_cswd_read_retries);
- static int verify_n_cpus = 8;
+@@ -149,6 +150,7 @@
+ #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
++#define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+ #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
+ #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
 -- 
 2.43.0
 
