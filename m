@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505C72772A;
-	Thu, 15 Aug 2024 14:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE1E14AD0A;
+	Thu, 15 Aug 2024 14:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732379; cv=none; b=BpQrrI/FMnsm93rCi2etUZW9ZRvWelzCsOWSFBpKo13qmpfGDnH67+0l9M9GWlMgg1/G8hNlMufC7v2AzHo+sPoi4KBhklQ1ty94YY7bmKY83BpUbLIMxgFqcNCvp2vTmTNfjTTatZmpl7atjO3kDch29zER5z8mdMyhCLtDE0E=
+	t=1723732382; cv=none; b=XcrldDhQPzghs2+8asGY0aaU/uybj0smLeMyJIi0g3ywNjWpVrMpWy+Po8XQRn93dOCw85DWgtRUn1wHFUV2gpk6072amGQ8x7eS4zZa5yYkMnQ9pza8+AhFZIWmq5+ZY+q/3t6VTw4ipeHArxkjsI0AF9RqjXqwLQZhQ0pB1Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732379; c=relaxed/simple;
-	bh=HkPYrUVtCEzsEOwtXSbFA6JFI3PkiR3YpqiurIDKhkM=;
+	s=arc-20240116; t=1723732382; c=relaxed/simple;
+	bh=t+LkI0Dx+H+a+oOofr4H2IPAUi+hlbjZE74ZjO0nciE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krJuy2Z/ygKHIE2R7szqRIfP/1zkZLABrGoPSVyOLAcsDEffU6ampyYCtUzRjzGYbnTJDjp5eEq1uKGZj3mg4rIgZhojj5ajY78/YDypuJZPVY5Dmlh9IwbM0mvsK59LOJIO1QmFk+upgRd6CqxDrJS+uJ5f+tPfgTOiPc7LaYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=td05HDm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNhp0WtP9ZpVf5jTeP6eYuO9obsKSoajY43L7m9WI4opJ/S6JgJ1BEMskVeWpq4qHCC5JO27mv+z1nj4R0pVNmDDx33Z6oVdGkYfegmMEjOw+zwiXf7nZjFa5RVTKloECasKK4G+tBD3T1ePGKopwtZ0/bDuWSjQ9q/E8DokcbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DU/TovHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="td05HDm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67C2C32786;
-	Thu, 15 Aug 2024 14:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DU/TovHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34795C32786;
+	Thu, 15 Aug 2024 14:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732379;
-	bh=HkPYrUVtCEzsEOwtXSbFA6JFI3PkiR3YpqiurIDKhkM=;
+	s=korg; t=1723732382;
+	bh=t+LkI0Dx+H+a+oOofr4H2IPAUi+hlbjZE74ZjO0nciE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=td05HDm0EkpAiTnnQAkY478mx+kL29QKQ+phnokbQHqpK8xKh+a7ml8VyyruxNG0M
-	 J7FM/manl9a3CTxA5IwiqzWwRei3BA3xbVTSSkapsIQU/ptoyfg1CNyU76yY0hWCe3
-	 5o/8B5E8sp8UhLiSfu9EtKwEFBkDQL1SFEs8wne4=
+	b=DU/TovHPNxwo5MFRvMy/spJ2zPuXEdooUVci9q8RnmoKTnZCHeg+wL2386HII3fxG
+	 y0kc8nsxj46F4UFt0CCKYP6WBzxAXhH7UOnsL1w072gHbdjjZKwxqpEnr0rWDKoc8h
+	 8s2xi7x4/cBzOAATozcw++ZOG5a81brIpTpGMGqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Lk Sii <lk_sii@163.com>
-Subject: [PATCH 5.10 162/352] kobject_uevent: Fix OOB access within zap_modalias_env()
-Date: Thu, 15 Aug 2024 15:23:48 +0200
-Message-ID: <20240815131925.532798227@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 5.10 163/352] devres: Fix devm_krealloc() wasting memory
+Date: Thu, 15 Aug 2024 15:23:49 +0200
+Message-ID: <20240815131925.572066732@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit dd6e9894b451e7c85cceb8e9dc5432679a70e7dc upstream.
+commit c884e3249f753dcef7a2b2023541ac1dc46b318e upstream.
 
-zap_modalias_env() wrongly calculates size of memory block to move, so
-will cause OOB memory access issue if variable MODALIAS is not the last
-one within its @env parameter, fixed by correcting size to memmove.
+Driver API devm_krealloc() calls alloc_dr() with wrong argument
+@total_new_size, so causes more memory to be allocated than required
+fix this memory waste by using @new_size as the argument for alloc_dr().
 
-Fixes: 9b3fa47d4a76 ("kobject: fix suppressing modalias in uevents delivered over netlink")
+Fixes: f82485722e5d ("devres: provide devm_krealloc()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Lk Sii <lk_sii@163.com>
-Link: https://lore.kernel.org/r/1717074877-11352-1-git-send-email-quic_zijuhu@quicinc.com
+Link: https://lore.kernel.org/r/1719931914-19035-2-git-send-email-quic_zijuhu@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/kobject_uevent.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/base/devres.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/lib/kobject_uevent.c
-+++ b/lib/kobject_uevent.c
-@@ -432,8 +432,23 @@ static void zap_modalias_env(struct kobj
- 		len = strlen(env->envp[i]) + 1;
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -901,9 +901,12 @@ void *devm_krealloc(struct device *dev,
+ 	/*
+ 	 * Otherwise: allocate new, larger chunk. We need to allocate before
+ 	 * taking the lock as most probably the caller uses GFP_KERNEL.
++	 * alloc_dr() will call check_dr_size() to reserve extra memory
++	 * for struct devres automatically, so size @new_size user request
++	 * is delivered to it directly as devm_kmalloc() does.
+ 	 */
+ 	new_dr = alloc_dr(devm_kmalloc_release,
+-			  total_new_size, gfp, dev_to_node(dev));
++			  new_size, gfp, dev_to_node(dev));
+ 	if (!new_dr)
+ 		return NULL;
  
- 		if (i != env->envp_idx - 1) {
-+			/* @env->envp[] contains pointers to @env->buf[]
-+			 * with @env->buflen chars, and we are removing
-+			 * variable MODALIAS here pointed by @env->envp[i]
-+			 * with length @len as shown below:
-+			 *
-+			 * 0               @env->buf[]      @env->buflen
-+			 * ---------------------------------------------
-+			 * ^             ^              ^              ^
-+			 * |             |->   @len   <-| target block |
-+			 * @env->envp[0] @env->envp[i]  @env->envp[i + 1]
-+			 *
-+			 * so the "target block" indicated above is moved
-+			 * backward by @len, and its right size is
-+			 * @env->buflen - (@env->envp[i + 1] - @env->envp[0]).
-+			 */
- 			memmove(env->envp[i], env->envp[i + 1],
--				env->buflen - len);
-+				env->buflen - (env->envp[i + 1] - env->envp[0]));
- 
- 			for (j = i; j < env->envp_idx - 1; j++)
- 				env->envp[j] = env->envp[j + 1] - len;
 
 
