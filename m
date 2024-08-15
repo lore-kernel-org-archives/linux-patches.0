@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627DE19EED0;
-	Thu, 15 Aug 2024 14:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5572719E808;
+	Thu, 15 Aug 2024 14:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731637; cv=none; b=nRXBVNC6lSGd2tc1A1yUSgOcWdrJOaE/Az5w3YvgqTdTQvxeLlCrH0I+U6eCelYBhFMbwtvAJ55uXYOKl78Ke4Bwqpou4iv9vGWUnepdhFscS5P4HSSX1BNHmrlbFg+sxA/eBblQq2RTFn+A0VwXcQtA9VIW35pavubIYoJEsg8=
+	t=1723731640; cv=none; b=dGJhGQKmrS+2jM9jZTIgRNdqBGanPw2eR4kHkIFmQylzzbKoCg4nKb5Ib1yqPZEhOPceAWDghw17pwrg3zaGU4uJC0Bu6HLRWdWyUgYTpFRzAncahLil1tfY0MJZWEcB4S/r6H0MDlnnWGHhpg9wPY7MClF3KuOo3DMOBKbmZzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731637; c=relaxed/simple;
-	bh=PZjAbw1nlau2qL13gnKfz82pQHKGUYFFZ0He5MFf/Cs=;
+	s=arc-20240116; t=1723731640; c=relaxed/simple;
+	bh=l1hIH9Yd09Tq+5hQd0PNLJQNU5QTXS7PbEIkqnoBqEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qFkBNQU1khIx6OZojtL1cKGI7uDroNk6qf/fOAnFQmFOOYV94X4+6fX29Q1fMUeQnxrCKeScxdlCcMXAjhpH0qvQA5mURPE7/EakkxlaLSIbWq+56g64TE672fXo9Ij1th+zWAQPJBmzdY20ZnpDOljSfnUMUHGmEjQa85Pq+AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nMRMW+g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=botGy+HrkTFa+Zbmk2JGGL9V3nDtPE6Q3BKEXEf/bTBcAEomV9j1SvFq349z3mVCaCvV4cD0bd8Wyusi8HfqFRG2u4Ri/RQRhC2sXZHpywFFOU1uAVk2SXbcIGf3c0eOkpKKwF2rp64naT78Qi3BrNdGVRLW0l6f27eDFaqPSa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLJIt54S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nMRMW+g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9698BC32786;
-	Thu, 15 Aug 2024 14:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLJIt54S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7036C32786;
+	Thu, 15 Aug 2024 14:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731637;
-	bh=PZjAbw1nlau2qL13gnKfz82pQHKGUYFFZ0He5MFf/Cs=;
+	s=korg; t=1723731640;
+	bh=l1hIH9Yd09Tq+5hQd0PNLJQNU5QTXS7PbEIkqnoBqEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1nMRMW+gqn39mgozAnTfFHXCah/BwpxFRqYBqpBZS3zei/msrHkjUORaLldNTMiZe
-	 cQ80qyVcjf/jAvHtjpG1HakCFnmFGFzGL+c/D616jIOpbyhEUXYFKYXht7kyAd6+U6
-	 DwGCL0W/6E6rAfpEA8IptQNaFnSn/ZIYFV/sSYmU=
+	b=SLJIt54S4Am6fYffQZTm0Z1cEx0kbxf9r65SGp0IgXxX52KKuyfFeEWUQhPe4engf
+	 9tABjZoinev+B8KCSXj1wRD7uec0VcuO/fJArFvmOFNbSwy0+/C4PvRJLXyZU0u3jP
+	 hEeFk6au9irh4gL15pMoE1z9wRjpLxgMz4aDxSs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Frank Li <Frank.Li@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 191/259] net: fec: Stop PPS on driver remove
-Date: Thu, 15 Aug 2024 15:25:24 +0200
-Message-ID: <20240815131910.155249242@linuxfoundation.org>
+Subject: [PATCH 5.4 165/259] devres: Fix memory leakage caused by driver API devm_free_percpu()
+Date: Thu, 15 Aug 2024 15:24:58 +0200
+Message-ID: <20240815131909.155058835@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -49,48 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 8fee6d5ad5fa18c270eedb2a2cdf58dbadefb94b ]
+[ Upstream commit bd50a974097bb82d52a458bd3ee39fb723129a0c ]
 
-PPS was not stopped in `fec_ptp_stop()`, called when
-the adapter was removed. Consequentially, you couldn't
-safely reload the driver with the PPS signal on.
+It will cause memory leakage when use driver API devm_free_percpu()
+to free memory allocated by devm_alloc_percpu(), fixed by using
+devres_release() instead of devres_destroy() within devm_free_percpu().
 
-Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/netdev/CAOMZO5BzcZR8PwKKwBssQq_wAGzVgf1ffwe_nhpQJjviTdxy-w@mail.gmail.com/T/#m01dcb810bfc451a492140f6797ca77443d0cb79f
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20240807080956.2556602-1-csokas.bence@prolan.hu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ff86aae3b411 ("devres: add devm_alloc_percpu()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/1719931914-19035-3-git-send-email-quic_zijuhu@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/base/devres.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 37b8ad29b5b30..c5af845b1b253 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -635,6 +635,9 @@ void fec_ptp_stop(struct platform_device *pdev)
- 	struct net_device *ndev = platform_get_drvdata(pdev);
- 	struct fec_enet_private *fep = netdev_priv(ndev);
- 
-+	if (fep->pps_enable)
-+		fec_ptp_enable_pps(fep, 0);
-+
- 	cancel_delayed_work_sync(&fep->time_keep);
- 	if (fep->ptp_clock)
- 		ptp_clock_unregister(fep->ptp_clock);
+diff --git a/drivers/base/devres.c b/drivers/base/devres.c
+index e8ad6a41ad4ce..5a84bafae3288 100644
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -1111,7 +1111,11 @@ EXPORT_SYMBOL_GPL(__devm_alloc_percpu);
+  */
+ void devm_free_percpu(struct device *dev, void __percpu *pdata)
+ {
+-	WARN_ON(devres_destroy(dev, devm_percpu_release, devm_percpu_match,
++	/*
++	 * Use devres_release() to prevent memory leakage as
++	 * devm_free_pages() does.
++	 */
++	WARN_ON(devres_release(dev, devm_percpu_release, devm_percpu_match,
+ 			       (__force void *)pdata));
+ }
+ EXPORT_SYMBOL_GPL(devm_free_percpu);
 -- 
 2.43.0
 
