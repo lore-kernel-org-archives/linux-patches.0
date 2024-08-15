@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E6E762D2;
-	Thu, 15 Aug 2024 14:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FAA762D2;
+	Thu, 15 Aug 2024 14:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731202; cv=none; b=uKMaUZacBJ92MrrlY+bXi7Q/xO4dF6pzd7/RoU8qmSPwu+URiGJdbSvNgvxujbdPxlpobfX7DqXzq5uTEFXoL3ZqQlDIclmSRFX05peY1U26C4etvmTk5qTQseGdeuRvg8gZam5ToQ8OlJQSGfMFXvdJ2dlllKKHFS3GYz2x6SQ=
+	t=1723731205; cv=none; b=d+NcSXOKkdoX2EQqS0JJELICyt2ygjjV5zPp3dGh+SGvdl1HVKzeG0RbDaFmMJzxsiKHjFT/I74+XR595NlfyrANaX0Mhi95cVOvg1Jn3fHth7Oekd/e18xx8KvDtFbRYGssSh99AcO3dzM8U3YZc2cZqiao90+TPkq1XQQ67T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731202; c=relaxed/simple;
-	bh=7dUvPe+tN6riJuw+Ar7vQpWvt9Fzdd6PJRsotdcqlZM=;
+	s=arc-20240116; t=1723731205; c=relaxed/simple;
+	bh=UdCInjsp1FGBFSkKFcfC+G9+BUfp1gWVI6NtJHbofws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLIaE8amhYKUqBcgTtb926m+iO0ElZ6i6ZvBeaQP12HBgNk+6AkLraIP7B/BHfECSwGZXKvjgHDuzxvv1eTdhRunpHwDfsP1YHanP6kPyJMFk/+sEhhF6tDzZwUfhMsXgvaznAs7MLuVMZQYmf/XHFlPGLRd+s6DqBL5jEpx2cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJZ0kSHz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxKYOw+vVa7TS7N/cmz/IYe4089O8HOWFyHGWpjSQomgL2t8SCqNN7a+TWfTJKFjB2gr+DHNAOVywEmSNQpbnbnahytqH9JEV5+et6SWELIbFGT9k5hCWAKf4uWaJjJDFo4WnHJGgizsCqxrAQ7nQ7wBV4kVIwnuwzWZ7ovuswU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtZ9IzVZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJZ0kSHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8110BC32786;
-	Thu, 15 Aug 2024 14:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtZ9IzVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E38C32786;
+	Thu, 15 Aug 2024 14:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731202;
-	bh=7dUvPe+tN6riJuw+Ar7vQpWvt9Fzdd6PJRsotdcqlZM=;
+	s=korg; t=1723731205;
+	bh=UdCInjsp1FGBFSkKFcfC+G9+BUfp1gWVI6NtJHbofws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJZ0kSHzh09h6FhuzgXo4c9bGm64Cpkxyw6Ro/3BaC4952ezJe9NnBYTqTPDOlWmh
-	 4klogsopYPMYDmjHrPsZXsu/5wu8tkbwnSeMOD9tVSmvsB/6g95T+sJ3LrQOKt3q5u
-	 YFzD4RbW/TaxR/U0/o0aMCWKi7ghTrqpy2OlJsIE=
+	b=LtZ9IzVZ00wHMc96Y6bPBIeKf/ROxbngUGn8SXhX+Gc9OC4upEWjdYv3JBV6RGMHu
+	 j/ONBjl0QMSwA6b4ZwnLoyzeAQBpV3+B+lwLsxVBRupgWnmo6f8caST+j0RYZQHeGt
+	 GEoF7EBoTtHvMyIqSl3tqhLncXiP47QS008kP7QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daniel Schaefer <dhs@frame.work>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 054/259] media: uvcvideo: Allow entity-defined get_info and get_cur
-Date: Thu, 15 Aug 2024 15:23:07 +0200
-Message-ID: <20240815131904.896837568@linuxfoundation.org>
+Subject: [PATCH 5.4 055/259] media: uvcvideo: Override default flags
+Date: Thu, 15 Aug 2024 15:23:08 +0200
+Message-ID: <20240815131904.936082043@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,82 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit 65900c581d014499f0f8ceabfc02c652e9a88771 ]
+[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
 
-Allows controls to get their properties and current value
-from an entity-defined function instead of via a query to the USB
-device.
+When the UVC device has a control that is readonly it doesn't set the
+SET_CUR flag. For example the privacy control has SET_CUR flag set in
+the defaults in the `uvc_ctrls` variable. Even if the device does not
+have it set, it's not cleared by uvc_ctrl_get_flags().
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Originally written with assignment in commit 859086ae3636 ("media:
+uvcvideo: Apply flags from device to actual properties"). But changed to
+|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
+flags"). It would not clear the default flags.
+
+With this patch applied the correct flags are reported to user space.
+Tested with:
+
+```
+> v4l2-ctl --list-ctrls | grep privacy
+privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
+```
+
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: 86419686e66d ("media: uvcvideo: Override default flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 22 ++++++++++++++++++----
- drivers/media/usb/uvc/uvcvideo.h |  5 +++++
- 2 files changed, 23 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index e0d894c61f4b7..13723fccb9000 100644
+index 13723fccb9000..c8d9f0df3f03d 100644
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1002,10 +1002,20 @@ static int __uvc_ctrl_get(struct uvc_video_chain *chain,
- 		return -EACCES;
- 
- 	if (!ctrl->loaded) {
--		ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR, ctrl->entity->id,
--				chain->dev->intfnum, ctrl->info.selector,
-+		if (ctrl->entity->get_cur) {
-+			ret = ctrl->entity->get_cur(chain->dev,
-+				ctrl->entity,
-+				ctrl->info.selector,
- 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 				ctrl->info.size);
-+		} else {
-+			ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR,
-+				ctrl->entity->id,
-+				chain->dev->intfnum,
-+				ctrl->info.selector,
-+				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
-+				ctrl->info.size);
-+		}
- 		if (ret < 0)
- 			return ret;
- 
-@@ -1718,8 +1728,12 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 	if (data == NULL)
- 		return -ENOMEM;
- 
--	ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id, dev->intfnum,
--			     info->selector, data, 1);
-+	if (ctrl->entity->get_info)
-+		ret = ctrl->entity->get_info(dev, ctrl->entity,
-+					     ctrl->info.selector, data);
-+	else
-+		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
-+				     dev->intfnum, info->selector, data, 1);
- 	if (!ret)
+@@ -1734,7 +1734,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 	else
+ 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
+ 				     dev->intfnum, info->selector, data, 1);
+-	if (!ret)
++
++	if (!ret) {
++		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
++				 UVC_CTRL_FLAG_SET_CUR |
++				 UVC_CTRL_FLAG_AUTO_UPDATE |
++				 UVC_CTRL_FLAG_ASYNCHRONOUS);
++
  		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
  				UVC_CTRL_FLAG_GET_CUR : 0)
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 9f5b9601eadcf..97817b350f988 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -350,6 +350,11 @@ struct uvc_entity {
- 	u8 bNrInPins;
- 	u8 *baSourceID;
+ 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
+@@ -1743,6 +1749,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
+ 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
+ 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
++	}
  
-+	int (*get_info)(struct uvc_device *dev, struct uvc_entity *entity,
-+			u8 cs, u8 *caps);
-+	int (*get_cur)(struct uvc_device *dev, struct uvc_entity *entity,
-+		       u8 cs, void *data, u16 size);
-+
- 	unsigned int ncontrols;
- 	struct uvc_control *controls;
- };
+ 	kfree(data);
+ 	return ret;
 -- 
 2.43.0
 
