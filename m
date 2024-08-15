@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D9114AD0A;
-	Thu, 15 Aug 2024 14:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D9A14AD0A;
+	Thu, 15 Aug 2024 14:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731435; cv=none; b=K+TKbv7df2IoE5P4nS4jn+flZvFlwOK3CfRZnGIbuUn4VAUrscAW/Zojli75+Wl1XJmCcykd8HPdEhypsbXqC5BK4q7oTrmdrmlAGoqWh/YLso8cnSUc+g5+BI0mOjl2W4Ze5iHvjFlUd6gGop2TO+QRc8rXZasDHiWGo93UNQg=
+	t=1723731438; cv=none; b=SIPXSZ3ohmegfzfI241rMBz4KR0u7hwZEqSULtsvFdxhGL/FVZKg3R5gahR6D6thDt+WQe3FEtO1tLiP4gCJjn1SuMKAizR8uQP6hlN3jxNfCGlRs28/mTc1Ia42UdH/blc6YmUxGNG3GqUXk1fYHNWaLc0ZFmExoZcZqBiKJuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731435; c=relaxed/simple;
-	bh=mdit0r/eklCCkjoPzQJH29MnH8XHEhpQCqRTW37DDfw=;
+	s=arc-20240116; t=1723731438; c=relaxed/simple;
+	bh=+6JVi+zpOdtS3Id/GVq3/s6GA96juu78Nx+JvIGOMCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXmnlirBDIoboiqCIiuomQ/z9qA8JhRerQAUkgL3eZUbpiXUNo74uR/EI8vXE23eKwb9Lb5of6cHHLETjUqYdFZb3FBYM+KhmTJqw7HrmCWcsNGJhf9AFWC5feCXzVzP9kNcYLuuQSxkypN/0ABXH+OF5BOJr/7OxCOsoACyfs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUH+UzQM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpdk6GffDVMEZ8+cz1InMHAvg3nflkkjQ83ukyVouoXIWvx9zaxymoYzPJuqahIQ0WcmyL43gnu4OW5Mv1jGsMbkpuH9OyX4lOwjCNMdzftpF4nQ9wLfNwjoUuunREyL5XdQZK2WCUISVv3G14HW1MZ8DwB9inVkGs3rq7YDK6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1HSQxVI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUH+UzQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB867C32786;
-	Thu, 15 Aug 2024 14:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1HSQxVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0534C4AF0C;
+	Thu, 15 Aug 2024 14:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731435;
-	bh=mdit0r/eklCCkjoPzQJH29MnH8XHEhpQCqRTW37DDfw=;
+	s=korg; t=1723731438;
+	bh=+6JVi+zpOdtS3Id/GVq3/s6GA96juu78Nx+JvIGOMCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qUH+UzQM6ria/BM/NuRuAqQuxdYKon/EoS3rgJCpPJkxx3GsJIu2OzrkBShG91V/0
-	 Jl8Vvq7jCddcJN7wxqo83OPSXy7T6OaOMsMKmv73GW3gU5WwsInUsNmkTfl7XsvxNW
-	 MCD1n+U2XsNaziWOmGnHkF1RH6G7ClQtsUhyvHQo=
+	b=d1HSQxVI0a7S/soj1jBVDxRjDbYiFRJSZzVLdUuSM13XNJr8b9QTCu6kCEjRyXfMw
+	 T8ajiiLV2z9oXQZFHlUF9+sPKiMN3QGCpgQayp6s58P4oGkpfJvW7Q8h67JQQ9gRgQ
+	 xGoyKMjgXY9725KQDST+SaV19Lxzj1bA9E6SLEps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 5.4 127/259] rbd: dont assume rbd_is_lock_owner() for exclusive mappings
-Date: Thu, 15 Aug 2024 15:24:20 +0200
-Message-ID: <20240815131907.698930138@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Xi (Alex) Liu" <xi.liu@amd.com>,
+	Sung Joon Kim <sungjoon.kim@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>
+Subject: [PATCH 5.4 098/259] drm/amd/display: Check for NULL pointer
+Date: Thu, 15 Aug 2024 15:23:51 +0200
+Message-ID: <20240815131906.585194433@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -50,43 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Sung Joon Kim <sungjoon.kim@amd.com>
 
-commit 3ceccb14f5576e02b81cc8b105ab81f224bd87f6 upstream.
+commit 4ab68e168ae1695f7c04fae98930740aaf7c50fa upstream.
 
-Expanding on the previous commit, assuming that rbd_is_lock_owner()
-always returns true (i.e. that we are either in RBD_LOCK_STATE_LOCKED
-or RBD_LOCK_STATE_QUIESCING) if the mapping is exclusive is wrong too.
-In case ceph_cls_set_cookie() fails, the lock would be temporarily
-released even if the mapping is exclusive, meaning that we can end up
-even in RBD_LOCK_STATE_UNLOCKED.
+[why & how]
+Need to make sure plane_state is initialized
+before accessing its members.
 
-IOW, exclusive mappings are really "just" about disabling automatic
-lock transitions (as documented in the man page), not about grabbing
-the lock and holding on to it whatever it takes.
-
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Reviewed-by: Xi (Alex) Liu <xi.liu@amd.com>
+Signed-off-by: Sung Joon Kim <sungjoon.kim@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 295d91cbc700651782a60572f83c24861607b648)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_surface.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -6618,11 +6618,6 @@ static int rbd_add_acquire_lock(struct r
- 		return ret;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_surface.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_surface.c
+@@ -165,7 +165,8 @@ const struct dc_plane_status *dc_plane_g
+ 		if (pipe_ctx->plane_state != plane_state)
+ 			continue;
+ 
+-		pipe_ctx->plane_state->status.is_flip_pending = false;
++		if (pipe_ctx->plane_state)
++			pipe_ctx->plane_state->status.is_flip_pending = false;
+ 
+ 		break;
  	}
- 
--	/*
--	 * The lock may have been released by now, unless automatic lock
--	 * transitions are disabled.
--	 */
--	rbd_assert(!rbd_dev->opts->exclusive || rbd_is_lock_owner(rbd_dev));
- 	return 0;
- }
- 
 
 
