@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943D11AC8BB;
-	Thu, 15 Aug 2024 14:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98DB1E526;
+	Thu, 15 Aug 2024 14:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731675; cv=none; b=unRmr5nY+9wtGfdN1vv6GWnzjb+Xc60lPHrMKCyeQODjaeF6X1kMxStZbVFH9K8hGZ7z5Mmi3hdsf8imUT2GeKY3q5xaP7S2eU4ESBs7fjJF58jFhA5ay7Fe8Uo+aKpr/jDmtqTVSHvJDgPna0FxQ6QI0pb+g79OM83Pxz2gfBc=
+	t=1723731678; cv=none; b=LJGWSlXAu+F+SG2dI8TpR4OcWsoIN3hd2v8yhEgTiFyk3Q4FMvGqaNWUC6+1BXNsoBcBBOBDImlrZljXrPgCAcc94Dcx7dDDT1Nj+jGSOyQM4nK93kkg7Ts/FCH5F/J5NR5lwcG4IgDU395hBno7LJu5uQ2N/9/QJ16KQkA80xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731675; c=relaxed/simple;
-	bh=ybZAu8PIbEplAixliZVH9Oo88vB0p5hBXUOY/eVuq90=;
+	s=arc-20240116; t=1723731678; c=relaxed/simple;
+	bh=pZC5wPhF3I/gAXK1F+L3x9mUAMdgbzRhjGpgSrO5duk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxtPK8XdM/LmzYZPy0IkyhFCBrZAAT/JHgPXpILRgBNRpYQ/xolqxEi4qWQi56qZVQWEAauSi9GrhFp5BvGScXuOig6Eq/YS+s78YMAlqIPE3Hl7oRwCp0ZdOg3xY/rz/eKwMevknI5htCvAU7x4sgujltX4Qy3E7J6/LDnhp3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiLbVwuD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IC0h52ziO8oaqBzhneBIkF+a3i875sXKWtxZWPj6s7e23tUQGXiyAl590peevsgDetu8borQUSnfJxF1hhpJibHwaADb+0wJ4tXeCD3RbeaP1Q2Rpq0aqU8tkJsJTo+RnY/2l8BQsARNsM8aTUwKDCKy/v/gRZrvr5NaziCMZ9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYB/AEcc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiLbVwuD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0699FC32786;
-	Thu, 15 Aug 2024 14:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYB/AEcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1800DC32786;
+	Thu, 15 Aug 2024 14:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731675;
-	bh=ybZAu8PIbEplAixliZVH9Oo88vB0p5hBXUOY/eVuq90=;
+	s=korg; t=1723731678;
+	bh=pZC5wPhF3I/gAXK1F+L3x9mUAMdgbzRhjGpgSrO5duk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiLbVwuD7iD2FAGwzdCZ2ecV34PK0aoZcGhCZ9EYhYt+7kR80M2+LJbEngJM2JtW8
-	 dYmJ6h4rEDpKzVv5pnEG9JjcA3Br413u5tpa8sM2zK96eIz5QZS/qbKB67ojljRh31
-	 VTYCe/RNRGTAzshits86YoDF6Kkz21sOgRAw2ZOk=
+	b=yYB/AEccilOgykwRDmygaIHqEQZWAiVlZEw4Kzy0IhMwQsPcGCFe7vJYni1fCh2l+
+	 /2uv2bFPkcFtgzHzsUWGI4LrTUQhcMs6U4UvN8zEU0r+RuuwQxlj9NtG48bXGXRMKE
+	 JrCXWlMB4xtcwoDhLGtB9e9tq+hKaAUust0vocWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Joe Perches <joe@perches.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 171/259] remoteproc: imx_rproc: Fix ignoring mapping vdev regions
-Date: Thu, 15 Aug 2024 15:25:04 +0200
-Message-ID: <20240815131909.382627321@linuxfoundation.org>
+Subject: [PATCH 5.4 162/259] parport: Standardize use of printmode
+Date: Thu, 15 Aug 2024 15:24:55 +0200
+Message-ID: <20240815131909.040606805@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,42 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Aisheng <aisheng.dong@nxp.com>
+From: Joe Perches <joe@perches.com>
 
-[ Upstream commit afe670e23af91d8a74a8d7049f6e0984bbf6ea11 ]
+[ Upstream commit a6abfdff4fe5dd19d1f1b37d72ba34cd4492fd4d ]
 
-vdev regions are typically named vdev0buffer, vdev0ring0, vdev0ring1 and
-etc. Change to strncmp to cover them all.
+Standardize the define and the uses of printmode.
 
-Fixes: 8f2d8961640f ("remoteproc: imx_rproc: ignore mapping vdev regions")
-Reviewed-and-tested-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Cc: stable <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20210910090621.3073540-5-peng.fan@oss.nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Stable-dep-of: 2fa26ca8b786 ("remoteproc: imx_rproc: Skip over memory region when node value is NULL")
+Miscellanea:
+
+o Add missing statement termination ; where necessary
+
+Signed-off-by: Joe Perches <joe@perches.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://lore.kernel.org/r/20200403134325.11523-8-sudipm.mukherjee@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ab11dac93d2d ("dev/parport: fix the array out-of-bounds risk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/parport/parport_gsc.c |  8 ++++++--
+ drivers/parport/parport_pc.c  | 14 ++++++--------
+ drivers/parport/procfs.c      |  6 +++++-
+ 3 files changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 05b724fdca591..0e6246678bc2b 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -286,8 +286,8 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
- 		struct resource res;
+diff --git a/drivers/parport/parport_gsc.c b/drivers/parport/parport_gsc.c
+index 81082d5899b06..54963f5033fab 100644
+--- a/drivers/parport/parport_gsc.c
++++ b/drivers/parport/parport_gsc.c
+@@ -299,12 +299,16 @@ struct parport *parport_gsc_probe_port(unsigned long base,
+ 		p->dma = PARPORT_DMA_NONE;
  
- 		node = of_parse_phandle(np, "memory-region", a);
--		/* Not map vdev region */
--		if (!strcmp(node->name, "vdev"))
-+		/* Not map vdevbuffer, vdevring region */
-+		if (!strncmp(node->name, "vdev", strlen("vdev")))
- 			continue;
- 		err = of_address_to_resource(node, 0, &res);
- 		if (err) {
+ 	pr_cont(" [");
+-#define printmode(x) {if(p->modes&PARPORT_MODE_##x){pr_cont("%s%s",f?",":"",#x);f++;}}
++#define printmode(x)							\
++do {									\
++	if (p->modes & PARPORT_MODE_##x)				\
++		pr_cont("%s%s", f++ ? "," : "", #x);			\
++} while (0)
+ 	{
+ 		int f = 0;
+ 		printmode(PCSPP);
+ 		printmode(TRISTATE);
+-		printmode(COMPAT)
++		printmode(COMPAT);
+ 		printmode(EPP);
+ //		printmode(ECP);
+ //		printmode(DMA);
+diff --git a/drivers/parport/parport_pc.c b/drivers/parport/parport_pc.c
+index 4acf3d017a187..bf9fe2c025490 100644
+--- a/drivers/parport/parport_pc.c
++++ b/drivers/parport/parport_pc.c
+@@ -2143,19 +2143,17 @@ struct parport *parport_pc_probe_port(unsigned long int base,
+ 
+ 	pr_cont(" [");
+ 
+-#define printmode(x) \
+-	{\
+-		if (p->modes & PARPORT_MODE_##x) {\
+-			pr_cont("%s%s", f ? "," : "", #x);	\
+-			f++;\
+-		} \
+-	}
++#define printmode(x)							\
++do {									\
++	if (p->modes & PARPORT_MODE_##x)				\
++		pr_cont("%s%s", f++ ? "," : "", #x);			\
++} while (0)
+ 
+ 	{
+ 		int f = 0;
+ 		printmode(PCSPP);
+ 		printmode(TRISTATE);
+-		printmode(COMPAT)
++		printmode(COMPAT);
+ 		printmode(EPP);
+ 		printmode(ECP);
+ 		printmode(DMA);
+diff --git a/drivers/parport/procfs.c b/drivers/parport/procfs.c
+index 48804049d6972..e957beb94f142 100644
+--- a/drivers/parport/procfs.c
++++ b/drivers/parport/procfs.c
+@@ -213,7 +213,11 @@ static int do_hardware_modes(struct ctl_table *table, int write,
+ 		return -EACCES;
+ 
+ 	{
+-#define printmode(x) {if(port->modes&PARPORT_MODE_##x){len+=sprintf(buffer+len,"%s%s",f?",":"",#x);f++;}}
++#define printmode(x)							\
++do {									\
++	if (port->modes & PARPORT_MODE_##x)				\
++		len += sprintf(buffer + len, "%s%s", f++ ? "," : "", #x); \
++} while (0)
+ 		int f = 0;
+ 		printmode(PCSPP);
+ 		printmode(TRISTATE);
 -- 
 2.43.0
 
