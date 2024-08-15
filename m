@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2265B1DFFB;
-	Thu, 15 Aug 2024 14:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E5263D5;
+	Thu, 15 Aug 2024 14:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732227; cv=none; b=A4XihtzNwaZwnXif9Fu5R7txtwSHVcdUD6e5PqluAGwsoekAFu//IaOZA5x7ZBbS3+2QgshrvV/cgRsVQ7/Ljmfv6VVLN4H3ClGbE+cAWVS3uvEWDKWz14j9rmd5cQXvigt8ORE5taztMifwQxMeCdedBJAytskqmQNJ07Oja6o=
+	t=1723732230; cv=none; b=VXQo4eQlOlC8AQQqV4zqIaYu90zr8FtweiWPuo86tSAwjMPlx4ClM2Smupii7fba1az7XU79egfM1JsS9PGWOgOOAsAJ3CJdb0bJG2sRPIwEMcMUesTTjurrVURtNIvv0qD9ZNNDagLBXWAIaNVI4eFaopITU7ZlHg7Gg4doXAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732227; c=relaxed/simple;
-	bh=RLzzB7ShZEKRUeCh9DaoVxphfcYkBgRyqe5Unr6b1Yk=;
+	s=arc-20240116; t=1723732230; c=relaxed/simple;
+	bh=KjZTHbZMkmSxzeDiWiipFrP0m705ML2UBWSbq56PwXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McF5ewIdBfpKdBwt17E1XQ/Hpd9HnPUz9Kjkajm/79m7a0npB3UAxx6XZk2Q3VgiGKnHuYCiJN6GzC0UKXc0aXBnoJ1O85lnEdKrAhGFAMQVVI4pJRubNJurMjQ3tUnydHTCEaEu2+oJ5oxzTHq6vDTMNcqLhMXH/UCIW1cXPwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3jLG+Pz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZfggxTOWSZQZ0+8ovMr0ceMrqIs3oKbO7buiZAR7JqrGUNuVKmKkP/LP/Cj3Z3fGKY046y4E8/cvyGvZfx4HjjLliYtNo0roFvRmBCqEVFjSfMP5jiUw/UiyZI1JRW0rPoNSjri8pWF3MmCdLcS0OHx3NDOyfZ5D3t9bUN1Oy0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8D9z8xE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3jLG+Pz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2E3C32786;
-	Thu, 15 Aug 2024 14:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8D9z8xE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15149C4AF0F;
+	Thu, 15 Aug 2024 14:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732227;
-	bh=RLzzB7ShZEKRUeCh9DaoVxphfcYkBgRyqe5Unr6b1Yk=;
+	s=korg; t=1723732230;
+	bh=KjZTHbZMkmSxzeDiWiipFrP0m705ML2UBWSbq56PwXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3jLG+PziU90mFoWw8j1E4yA79mkEwyUozNL3rDvKsfyqs5TwElNdbJI7Xtm1kWym
-	 ohKlPsXl/rHE2O9sNXhqJmJiWxAbhvn3B6eHN0M8X2RlqHbE2MniZiCfMEBRARrMCC
-	 i3UchF9h/KmfZv+7LB2L9VBUhfhhIVvY3/uJSWI8=
+	b=R8D9z8xED6iA+d/62cshbe+82HZaR+jX0RrrEspprn8xFfL0nCTqg0jpMibwlDv2y
+	 H/cLzLDyfYw32bP4Jk5IqP+98GnUZUQN3zNXVFa1cZGuOPSFu1LbEvzzgki+Hg248e
+	 ehKhXQyXNbAvycwBI6RidEGLbJGRtSmcToQ0LF/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Martin Willi <martin@strongswan.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/352] net: dsa: mv88e6xxx: Limit chip-wide frame size config to CPU ports
-Date: Thu, 15 Aug 2024 15:22:58 +0200
-Message-ID: <20240815131923.585140801@linuxfoundation.org>
+Subject: [PATCH 5.10 083/352] perf report: Fix condition in sort__sym_cmp()
+Date: Thu, 15 Aug 2024 15:22:29 +0200
+Message-ID: <20240815131922.455622531@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,48 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Willi <martin@strongswan.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 66b6095c264e1b4e0a441c6329861806504e06c6 ]
+[ Upstream commit cb39d05e67dc24985ff9f5150e71040fa4d60ab8 ]
 
-Marvell chips not supporting per-port jumbo frame size configurations use
-a chip-wide frame size configuration. In the commit referenced with the
-Fixes tag, the setting is applied just for the last port changing its MTU.
+It's expected that both hist entries are in the same hists when
+comparing two.  But the current code in the function checks one without
+dso sort key and other with the key.  This would make the condition true
+in any case.
 
-While configuring CPU ports accounts for tagger overhead, user ports do
-not. When setting the MTU for a user port, the chip-wide setting is
-reduced to not include the tagger overhead, resulting in an potentially
-insufficient maximum frame size for the CPU port. Specifically, sending
-full-size frames from the CPU port on a MV88E6097 having a user port MTU
-of 1500 bytes results in dropped frames.
+I guess the intention of the original commit was to add '!' for the
+right side too.  But as it should be the same, let's just remove it.
 
-As, by design, the CPU port MTU is adjusted for any user port change,
-apply the chip-wide setting only for CPU ports.
-
-Fixes: 1baf0fac10fb ("net: dsa: mv88e6xxx: Use chip-wide max frame size for MTU")
-Suggested-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Martin Willi <martin@strongswan.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 69849fc5d2119 ("perf hists: Move sort__has_dso into struct perf_hpp_list")
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240621170528.608772-2-namhyung@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/sort.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 6a1ae774cfe99..c7f93329ae753 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2774,7 +2774,8 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 	mv88e6xxx_reg_lock(chip);
- 	if (chip->info->ops->port_set_jumbo_size)
- 		ret = chip->info->ops->port_set_jumbo_size(chip, port, new_mtu);
--	else if (chip->info->ops->set_max_frame_size)
-+	else if (chip->info->ops->set_max_frame_size &&
-+		 dsa_is_cpu_port(ds, port))
- 		ret = chip->info->ops->set_max_frame_size(chip, new_mtu);
- 	mv88e6xxx_reg_unlock(chip);
- 
+diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
+index 42806102010bb..bbebb1e51b88f 100644
+--- a/tools/perf/util/sort.c
++++ b/tools/perf/util/sort.c
+@@ -272,7 +272,7 @@ sort__sym_cmp(struct hist_entry *left, struct hist_entry *right)
+ 	 * comparing symbol address alone is not enough since it's a
+ 	 * relative address within a dso.
+ 	 */
+-	if (!hists__has(left->hists, dso) || hists__has(right->hists, dso)) {
++	if (!hists__has(left->hists, dso)) {
+ 		ret = sort__dso_cmp(left, right);
+ 		if (ret != 0)
+ 			return ret;
 -- 
 2.43.0
 
