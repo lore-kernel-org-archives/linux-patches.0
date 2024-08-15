@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEA218D627;
-	Thu, 15 Aug 2024 13:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723D214AD0A;
+	Thu, 15 Aug 2024 13:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729295; cv=none; b=eLy2JRx205bVq8zfeCQ0GQvwL0KfaumqWNNl93ClqEHgqObi8uKD4lJgUFcSCTQgwg4uEr39RMbO00K6MbP8PFg5kxpWTg5uMvVrtPpb0dJe6im7ke2gKpYIZ4nst19vkUwRqghyjdyYljI3/PehFfSlPJIrvKKGIlJNwrlM47M=
+	t=1723729298; cv=none; b=VmjeeVYFmuS9drHdXrzM15AW/UYDgI/xK08ZDu5dpCWOFsbiqPZPW6R1u8bMliVHWbcBoZbBTZetd1s4GQ3r2z/izgKPuE0nJ3uFGGgngNddaa4FBRzwwCZPRrPxynrdVp679dq+F4X28tKHcKmuaDiOBH5L/tx7Babb2KSKtJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729295; c=relaxed/simple;
-	bh=70aId82YrltLrsM+2MdArZt9T1h/aiQ/ECBYDm7HskI=;
+	s=arc-20240116; t=1723729298; c=relaxed/simple;
+	bh=xAGJbZAx4vCD3qquBSfmjcfLhVRwJTSZM8MnSh++qPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1ub1RZLQ5NwPP/oAyyNoVDQuiMMa1/EZGk9MaVbJ4qUg5uHO+ShsbqkW5mZEqLBY3955ia/H2Ks47tvh1difKsYREwm7iGTkO+LdBwlp/8N1c0i76FcGukbdeklnkuXtYQ0CGtw/ZJQyVShTtYtilV26ZrklLN0P/+Qcc+6zXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FthvWmK/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJARfUla++WH+yTtiOTrayPPf9fUG0ksTeDc0PiSpTg+NlsmvuAOHdgNSQ6gT8JNvV2unsuxv1Wbq1ztERHmm24C16Kk2MkiUok9XK8IV95ka2LrB008R9U/xcRf9sUasS7F3mbyPVv5rR+Iegj7+4S1mUc8Q798RQHb/p3MKPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oW+4lUTc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FthvWmK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1851C32786;
-	Thu, 15 Aug 2024 13:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW+4lUTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E3EC32786;
+	Thu, 15 Aug 2024 13:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729295;
-	bh=70aId82YrltLrsM+2MdArZt9T1h/aiQ/ECBYDm7HskI=;
+	s=korg; t=1723729298;
+	bh=xAGJbZAx4vCD3qquBSfmjcfLhVRwJTSZM8MnSh++qPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FthvWmK/dgh2pSWmPqv30oaHN0t6uu7nrJAEzTFt5zaNQgGlfLCeBddcxST9vVtgH
-	 fRIgowrJfyYAbtzTsqDAc0HCaNcOra1bGv4Oybdx4SkjYxwR7Bst8mawpGMC26jO1S
-	 S7RhHi7fliyiwKhxZNmvjOF4HL7ciRhcM7vD2kQw=
+	b=oW+4lUTcqVM2O/UJMqqvB0HunpJzVruU2d2ecPBZvH4/m/zkOiKZv66y/9uvFpfcC
+	 bboAv59874dBB0ilv2CsHQ+0wGdD3CDaiteqbBNja23LILFHLD9Lg+hqeJpAh6XKby
+	 uhe+d4VnRy3bs/TN78me1iWzue8P33deuoZJ9mn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/484] tcp: fix races in tcp_v[46]_err()
-Date: Thu, 15 Aug 2024 15:18:30 +0200
-Message-ID: <20240815131943.292954333@linuxfoundation.org>
+Subject: [PATCH 5.15 053/484] net/smc: set rmbs SG_MAX_SINGLE_ALLOC limitation only when CONFIG_ARCH_NO_SG_CHAIN is defined
+Date: Thu, 15 Aug 2024 15:18:31 +0200
+Message-ID: <20240815131943.330945534@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,81 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit fde6f897f2a184546bf5516ac736523ef24dc6a7 ]
+[ Upstream commit 3ac14b9dfbd345e891d48d89f6c2fa519848f0f4 ]
 
-These functions have races when they:
+SG_MAX_SINGLE_ALLOC is used to limit maximum number of entries that
+will be allocated in one piece of scatterlist. When the entries of
+scatterlist exceeds SG_MAX_SINGLE_ALLOC, sg chain will be used. From
+commit 7c703e54cc71 ("arch: switch the default on ARCH_HAS_SG_CHAIN"),
+we can know that the macro CONFIG_ARCH_NO_SG_CHAIN is used to identify
+whether sg chain is supported. So, SMC-R's rmb buffer should be limited
+by SG_MAX_SINGLE_ALLOC only when the macro CONFIG_ARCH_NO_SG_CHAIN is
+defined.
 
-1) Write sk->sk_err
-2) call sk_error_report(sk)
-3) call tcp_done(sk)
-
-As described in prior patches in this series:
-
-An smp_wmb() is missing.
-We should call tcp_done() before sk_error_report(sk)
-to have consistent tcp_poll() results on SMP hosts.
-
-Use tcp_done_with_error() where we centralized the
-correct sequence.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240528125253.1966136-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a3fe3d01bd0d ("net/smc: introduce sg-logic for RMBs")
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Co-developed-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 11 +++--------
- net/ipv6/tcp_ipv6.c | 10 +++-------
- 2 files changed, 6 insertions(+), 15 deletions(-)
+ net/smc/smc_core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index a1ed81ff9a81d..44a9fa957301b 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -592,15 +592,10 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index b84896acd4732..0b32612b86aa2 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1772,7 +1772,6 @@ int smc_conn_create(struct smc_sock *smc, struct smc_init_info *ini)
+  */
+ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
+ {
+-	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
+ 	u8 compressed;
  
- 		ip_icmp_error(sk, skb, err, th->dest, info, (u8 *)th);
+ 	if (size <= SMC_BUF_MIN_SIZE)
+@@ -1782,9 +1781,11 @@ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
+ 	compressed = min_t(u8, ilog2(size) + 1,
+ 			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
  
--		if (!sock_owned_by_user(sk)) {
--			WRITE_ONCE(sk->sk_err, err);
--
--			sk_error_report(sk);
--
--			tcp_done(sk);
--		} else {
-+		if (!sock_owned_by_user(sk))
-+			tcp_done_with_error(sk, err);
-+		else
- 			WRITE_ONCE(sk->sk_err_soft, err);
--		}
- 		goto out;
- 	}
++#ifdef CONFIG_ARCH_NO_SG_CHAIN
+ 	if (!is_smcd && is_rmb)
+ 		/* RMBs are backed by & limited to max size of scatterlists */
+-		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
++		compressed = min_t(u8, compressed, ilog2((SG_MAX_SINGLE_ALLOC * PAGE_SIZE) >> 14));
++#endif
  
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index c9aee34ae469f..fedbce7ed853e 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -485,14 +485,10 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 
- 		ipv6_icmp_error(sk, skb, err, th->dest, ntohl(info), (u8 *)th);
- 
--		if (!sock_owned_by_user(sk)) {
--			WRITE_ONCE(sk->sk_err, err);
--			sk_error_report(sk);		/* Wake people up to see the error (see connect in sock.c) */
--
--			tcp_done(sk);
--		} else {
-+		if (!sock_owned_by_user(sk))
-+			tcp_done_with_error(sk, err);
-+		else
- 			WRITE_ONCE(sk->sk_err_soft, err);
--		}
- 		goto out;
- 	case TCP_LISTEN:
- 		break;
+ 	return compressed;
+ }
 -- 
 2.43.0
 
