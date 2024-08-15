@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F081ABEC0;
-	Thu, 15 Aug 2024 14:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5DC1684AC;
+	Thu, 15 Aug 2024 14:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730618; cv=none; b=R/I7cuYrHy10mocDG2XfphDCokgeaymnBPK/znFnc5WgDPNX9wf8atLdx/U8EA1XV4RbNAIrtdCwz7SrbIHqZ7NAbNJgusX4HNkJQQLB7QmKxjE13ePc/6yPosjtDr17o54kki9Ns3whrVMhRUaI7bZHZg8V57gntNehUF7XMNk=
+	t=1723730623; cv=none; b=BLy60CRR0n1u0CcCg+VXoo7epIG1DruW9aj/L2wgMz+gCuKO1WogJGBZ1g6vz7jqGfOBzBNZTpy7p6CnKH+fhy9TEqZXvUZ3IgmsQ6lXrMClVSEsyKCSxNDriYxSUn3McpqSGhDvw6QU2SIDLLatfL1cs3qmezlJBAIFPEKfX98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730618; c=relaxed/simple;
-	bh=8fPWL+HUA9CweTFaIa/iTrJEAYZWTdZrOnNCKitCYYo=;
+	s=arc-20240116; t=1723730623; c=relaxed/simple;
+	bh=qMM7Sw2b2tWrMxBG5WWGv/xJ1C6JZsuWKdZmPSJdRmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV2bWaRfhX3tfENjBisv9Gg23h9E8kb0gFkLhO4D6/mdrkP5BKnZXWyoJC47q+75bLhJ06l6oHEhryd97Doq9LT04Ec5bNFu/cKzF59aGr350abTyPbTvaWu1Tfu9PLphVHxBxolD2aPQlsbWjDJfxZBpesJBYiq3Wmx0JsYTgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UN3C1Mz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QgicVkpbreKjO8bhQSaFSFS9v5ZUyB4SqAsSNeqgj+insnjlfMpC1g+J7rBCSb4QoqNATuTbKNOwlu1F9jb4r9/6Q3lZjeAr1/X07yKMv08w1bX2splqQTyMTDW28JuQa7BcHzLrBJ7e+v+AjQE3u+xoZvJMxIZWOVSdJg98f0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrG5XjpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UN3C1Mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D45C32786;
-	Thu, 15 Aug 2024 14:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrG5XjpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136F2C32786;
+	Thu, 15 Aug 2024 14:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730618;
-	bh=8fPWL+HUA9CweTFaIa/iTrJEAYZWTdZrOnNCKitCYYo=;
+	s=korg; t=1723730622;
+	bh=qMM7Sw2b2tWrMxBG5WWGv/xJ1C6JZsuWKdZmPSJdRmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UN3C1MzbWsGNxyW3LA5GYCIxT9Gd/ibgEMmIkOyanvu6Yz47vlp0h4Pdq2zOne9q
-	 FAZVaBb3m4gZ7DQV6UAy8nc05+Hy/cLZWeN/i+xIZGVYRQJUIGvDB/AMAhIuBJc5Py
-	 xW4ouupwC8K5eHn0kkqMVoTLVFXdElmm4ygYpClI=
+	b=BrG5XjpS7RthmDOIIzHCy5QIEqjzbpCnYsc4hdTnYs7mIauwqsL8aplWG1BP6qgxb
+	 NXGK+EjaNQj7BPNcysO69CxeRTliFi0LBh3dGNfbxbZrjdWC/qNNCg5t0W4O5f1Fhy
+	 5Zy/17DYQGfC0V6FKmcKKMrF3oG85fu9qX2zoHw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 434/484] irqchip/meson-gpio: Convert meson_gpio_irq_controller::lock to raw_spinlock_t
-Date: Thu, 15 Aug 2024 15:24:52 +0200
-Message-ID: <20240815131958.223287288@linuxfoundation.org>
+	syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 5.15 435/484] driver core: Fix uevent_show() vs driver detach race
+Date: Thu, 15 Aug 2024 15:24:53 +0200
+Message-ID: <20240815131958.261600937@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,110 +55,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit f872d4af79fe8c71ae291ce8875b477e1669a6c7 ]
+commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c upstream.
 
-This lock is acquired under irq_desc::lock with interrupts disabled.
+uevent_show() wants to de-reference dev->driver->name. There is no clean
+way for a device attribute to de-reference dev->driver unless that
+attribute is defined via (struct device_driver).dev_groups. Instead, the
+anti-pattern of taking the device_lock() in the attribute handler risks
+deadlocks with code paths that remove device attributes while holding
+the lock.
 
-When PREEMPT_RT is enabled, 'spinlock_t' becomes preemptible, which results
-in invalid lock acquire context;
+This deadlock is typically invisible to lockdep given the device_lock()
+is marked lockdep_set_novalidate_class(), but some subsystems allocate a
+local lockdep key for @dev->mutex to reveal reports of the form:
 
-  [ BUG: Invalid wait context ]
-  swapper/0/1 is trying to lock:
-  ffff0000008fed30 (&ctl->lock){....}-{3:3}, at: meson_gpio_irq_update_bits0
-  other info that might help us debug this:
-  context-{5:5}
-  3 locks held by swapper/0/1:
-   #0: ffff0000003cd0f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0x90c
-   #1: ffff000004714650 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq0
-   #2: ffff0000047144c8 (&irq_desc_lock_class){-.-.}-{2:2}, at: __setup_irq0
-  stack backtrace:
-  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.9-sdkernel #1
-  Call trace:
-   _raw_spin_lock_irqsave+0x60/0x88
-   meson_gpio_irq_update_bits+0x34/0x70
-   meson8_gpio_irq_set_type+0x78/0xc4
-   meson_gpio_irq_set_type+0x30/0x60
-   __irq_set_trigger+0x60/0x180
-   __setup_irq+0x30c/0x6e0
-   request_threaded_irq+0xec/0x1a4
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.10.0-rc7+ #275 Tainted: G           OE    N
+ ------------------------------------------------------
+ modprobe/2374 is trying to acquire lock:
+ ffff8c2270070de0 (kn->active#6){++++}-{0:0}, at: __kernfs_remove+0xde/0x220
 
-Fixes: 215f4cc0fb20 ("irqchip/meson: Add support for gpio interrupt controller")
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+ but task is already holding lock:
+ ffff8c22016e88f8 (&cxl_root_key){+.+.}-{3:3}, at: device_release_driver_internal+0x39/0x210
+
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #1 (&cxl_root_key){+.+.}-{3:3}:
+        __mutex_lock+0x99/0xc30
+        uevent_show+0xac/0x130
+        dev_attr_show+0x18/0x40
+        sysfs_kf_seq_show+0xac/0xf0
+        seq_read_iter+0x110/0x450
+        vfs_read+0x25b/0x340
+        ksys_read+0x67/0xf0
+        do_syscall_64+0x75/0x190
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ -> #0 (kn->active#6){++++}-{0:0}:
+        __lock_acquire+0x121a/0x1fa0
+        lock_acquire+0xd6/0x2e0
+        kernfs_drain+0x1e9/0x200
+        __kernfs_remove+0xde/0x220
+        kernfs_remove_by_name_ns+0x5e/0xa0
+        device_del+0x168/0x410
+        device_unregister+0x13/0x60
+        devres_release_all+0xb8/0x110
+        device_unbind_cleanup+0xe/0x70
+        device_release_driver_internal+0x1c7/0x210
+        driver_detach+0x47/0x90
+        bus_remove_driver+0x6c/0xf0
+        cxl_acpi_exit+0xc/0x11 [cxl_acpi]
+        __do_sys_delete_module.isra.0+0x181/0x260
+        do_syscall_64+0x75/0x190
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The observation though is that driver objects are typically much longer
+lived than device objects. It is reasonable to perform lockless
+de-reference of a @driver pointer even if it is racing detach from a
+device. Given the infrequency of driver unregistration, use
+synchronize_rcu() in module_remove_driver() to close any potential
+races.  It is potentially overkill to suffer synchronize_rcu() just to
+handle the rare module removal racing uevent_show() event.
+
+Thanks to Tetsuo Handa for the debug analysis of the syzbot report [1].
+
+Fixes: c0a40097f0bc ("drivers: core: synchronize really_probe() and dev_uevent()")
+Reported-by: syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Closes: http://lore.kernel.org/5aa5558f-90a4-4864-b1b1-5d6784c5607d@I-love.SAKURA.ne.jp [1]
+Link: http://lore.kernel.org/669073b8ea479_5fffa294c1@dwillia2-xfh.jf.intel.com.notmuch
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240729131850.3015508-1-avkrasnov@salutedevices.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://lore.kernel.org/r/172081332794.577428.9738802016494057132.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-meson-gpio.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/base/core.c   |   13 ++++++++-----
+ drivers/base/module.c |    4 ++++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
-index 89dab14406e69..6a3d18d5ba2f0 100644
---- a/drivers/irqchip/irq-meson-gpio.c
-+++ b/drivers/irqchip/irq-meson-gpio.c
-@@ -141,7 +141,7 @@ struct meson_gpio_irq_controller {
- 	void __iomem *base;
- 	u32 channel_irqs[MAX_NUM_CHANNEL];
- 	DECLARE_BITMAP(channel_map, MAX_NUM_CHANNEL);
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- };
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -25,6 +25,7 @@
+ #include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/netdevice.h>
++#include <linux/rcupdate.h>
+ #include <linux/sched/signal.h>
+ #include <linux/sched/mm.h>
+ #include <linux/swiotlb.h>
+@@ -2305,6 +2306,7 @@ static int dev_uevent(struct kset *kset,
+ 		      struct kobj_uevent_env *env)
+ {
+ 	struct device *dev = kobj_to_dev(kobj);
++	struct device_driver *driver;
+ 	int retval = 0;
  
- static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
-@@ -150,14 +150,14 @@ static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
- 	unsigned long flags;
- 	u32 tmp;
+ 	/* add device node properties if present */
+@@ -2333,8 +2335,12 @@ static int dev_uevent(struct kset *kset,
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
  
--	spin_lock_irqsave(&ctl->lock, flags);
-+	raw_spin_lock_irqsave(&ctl->lock, flags);
+-	if (dev->driver)
+-		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
++	/* Synchronize with module_remove_driver() */
++	rcu_read_lock();
++	driver = READ_ONCE(dev->driver);
++	if (driver)
++		add_uevent_var(env, "DRIVER=%s", driver->name);
++	rcu_read_unlock();
  
- 	tmp = readl_relaxed(ctl->base + reg);
- 	tmp &= ~mask;
- 	tmp |= val;
- 	writel_relaxed(tmp, ctl->base + reg);
- 
--	spin_unlock_irqrestore(&ctl->lock, flags);
-+	raw_spin_unlock_irqrestore(&ctl->lock, flags);
- }
- 
- static void meson_gpio_irq_init_dummy(struct meson_gpio_irq_controller *ctl)
-@@ -207,12 +207,12 @@ meson_gpio_irq_request_channel(struct meson_gpio_irq_controller *ctl,
- 	unsigned long flags;
- 	unsigned int idx;
- 
--	spin_lock_irqsave(&ctl->lock, flags);
-+	raw_spin_lock_irqsave(&ctl->lock, flags);
- 
- 	/* Find a free channel */
- 	idx = find_first_zero_bit(ctl->channel_map, ctl->params->nr_channels);
- 	if (idx >= ctl->params->nr_channels) {
--		spin_unlock_irqrestore(&ctl->lock, flags);
-+		raw_spin_unlock_irqrestore(&ctl->lock, flags);
- 		pr_err("No channel available\n");
- 		return -ENOSPC;
- 	}
-@@ -220,7 +220,7 @@ meson_gpio_irq_request_channel(struct meson_gpio_irq_controller *ctl,
- 	/* Mark the channel as used */
- 	set_bit(idx, ctl->channel_map);
- 
--	spin_unlock_irqrestore(&ctl->lock, flags);
-+	raw_spin_unlock_irqrestore(&ctl->lock, flags);
- 
- 	/*
- 	 * Setup the mux of the channel to route the signal of the pad
-@@ -488,7 +488,7 @@ static int __init meson_gpio_irq_of_init(struct device_node *node,
- 	if (!ctl)
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
+@@ -2404,11 +2410,8 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
  		return -ENOMEM;
  
--	spin_lock_init(&ctl->lock);
-+	raw_spin_lock_init(&ctl->lock);
+-	/* Synchronize with really_probe() */
+-	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(kset, &dev->kobj, env);
+-	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
  
- 	ctl->base = of_iomap(node, 0);
- 	if (!ctl->base) {
--- 
-2.43.0
-
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -7,6 +7,7 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
++#include <linux/rcupdate.h>
+ #include "base.h"
+ 
+ static char *make_driver_name(struct device_driver *drv)
+@@ -77,6 +78,9 @@ void module_remove_driver(struct device_
+ 	if (!drv)
+ 		return;
+ 
++	/* Synchronize with dev_uevent() */
++	synchronize_rcu();
++
+ 	sysfs_remove_link(&drv->p->kobj, "module");
+ 
+ 	if (drv->owner)
 
 
