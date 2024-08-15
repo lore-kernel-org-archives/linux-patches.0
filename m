@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A645963D5;
-	Thu, 15 Aug 2024 14:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E27F1A2564;
+	Thu, 15 Aug 2024 14:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732539; cv=none; b=EOtkRI45oBXMHDXmz3KCdakmQHfIm6eHRPBrXlUIdH7kA6g9UWivCsU8tP6TF9uW/IrJBw+eJJHeooOWIkRJmaFTMsvUoVTQ9f9oKBsP0aHKe93RaGMHXVwUaxSvv795nE6aG1G7/sYsUHifW0MtZ7/pbf0kfMsbt3P8QBhFK1U=
+	t=1723732542; cv=none; b=sfp7UDPFPDH/SWeTnjEe6Qe4Ri+HXvZqNUzEQoenyedt9kKuFJMHItJ+n+cg/lhRfWGIHFrQKOTZYI7CfS62Ur+g3Gmkvz4+yrlI+V5aoxbwopve/53pWD9qymSwQIcksCgWtYYycMKaK6LDKG3czr1N+6rIEvHnumZBuMAmhl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732539; c=relaxed/simple;
-	bh=BxHGMSI3d51aIW1JmuQgnclq4yKrXVEo1MJCFEHEYnE=;
+	s=arc-20240116; t=1723732542; c=relaxed/simple;
+	bh=GaM1tb27/KiwRK0V1hqZO6Pej3W0N4NrhDVwzaCLUl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwRpC5RGm+hl+Xegy0UTATa0VNaWsrinR96KJ7fEJxTw9TrxIFcp9JV+MUhocUxSuWvayISldUoCvRoOtCIh0cU88FcAEL7NvWxHEfbRYfp1H44W9V/nOZqWMp3p/dNruxHM/o4L74pwUCr+4OEN3lyQRFtTMRZkPGEN2awPJ/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJiRh5F3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bta1zEZ7DrGE/DRe710uLxfRvRSpfcKNpmFUaak0ahuM5eZZVImOzOdTtS3YGypffAk6G3knMHW/OSecUHxsSmxYFPjC16wpG4IFUpcsp4+krwBcMQ+vNT+TgJPxWEzHkBSNPUaXtWCPUS/DNkgnUzcxEDLTXmIr29vdSfqa+IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfFAKbpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJiRh5F3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A0BC32786;
-	Thu, 15 Aug 2024 14:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfFAKbpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CD9C4AF0D;
+	Thu, 15 Aug 2024 14:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732539;
-	bh=BxHGMSI3d51aIW1JmuQgnclq4yKrXVEo1MJCFEHEYnE=;
+	s=korg; t=1723732542;
+	bh=GaM1tb27/KiwRK0V1hqZO6Pej3W0N4NrhDVwzaCLUl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJiRh5F3F6NEBDhLXpurstO/QqMZ0Q4f/MbfLdmK5BHkISz53Ej5Qdy77zjU6P3V0
-	 t4CnyC3IzwSB0wmf0VJqMTmXdm5m9hU16wXUYbp0ofEkzdTP/GeLzYGhZfmo6rUWYk
-	 6annNfe6TLuLyldLLpA23vXsRIk+88EmA4QgpGwQ=
+	b=vfFAKbppJlChVFMc1xKSPfQuj+sJ8qGOVjS8pDtlrEeQLdrSJBXm2Tp10811ARgDw
+	 Hua5eQt6TL8+npQdPkI87GBWf1FOSa+51FYo1viPukVVu/u14hRTiessT7EjdYD8Rh
+	 SKhAucf+QOG0FvgIScMjIpg3U+pEZMYWstJavNYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hilda Wu <hildawu@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Erpeng Xu <xuerpeng@uniontech.com>
-Subject: [PATCH 5.10 183/352] Bluetooth: btusb: Add RTL8852BE device 0489:e125 to device tables
-Date: Thu, 15 Aug 2024 15:24:09 +0200
-Message-ID: <20240815131926.351259971@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 210/352] s390/pci: Rework MSI descriptor walk
+Date: Thu, 15 Aug 2024 15:24:36 +0200
+Message-ID: <20240815131927.403698704@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,63 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hilda Wu <hildawu@realtek.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 295ef07a9dae6182ad4b689aa8c6a7dbba21474c upstream.
+[ Upstream commit 2ca5e908d0f4cde61d9d3595e8314adca5d914a1 ]
 
-Add the support ID 0489:e125 to usb_device_id table for
-Realtek RTL8852B chip.
+Replace the about to vanish iterators and make use of the filtering.
 
-The device info from /sys/kernel/debug/usb/devices as below.
-
-T:  Bus=01 Lev=01 Prnt=01 Port=07 Cnt=03 Dev#=  5 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e125 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-
-Signed-off-by: Hilda Wu <hildawu@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Link: https://lore.kernel.org/r/20211206210748.305656158@linutronix.de
+Stable-dep-of: ab42fcb511fd ("s390/pci: Allow allocation of more than 1 MSI interrupt")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/pci/pci_irq.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -428,6 +428,8 @@ static const struct usb_device_id blackl
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
+index 5036e00b7ec1b..9ed76fa9391cb 100644
+--- a/arch/s390/pci/pci_irq.c
++++ b/arch/s390/pci/pci_irq.c
+@@ -273,7 +273,7 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
  
- 	/* Realtek Bluetooth devices */
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x0bda, 0xe0, 0x01, 0x01),
+ 	/* Request MSI interrupts */
+ 	hwirq = bit;
+-	for_each_pci_msi_entry(msi, pdev) {
++	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
+ 		rc = -EIO;
+ 		if (hwirq - bit >= msi_vecs)
+ 			break;
+@@ -338,9 +338,7 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
+ 		return;
+ 
+ 	/* Release MSI interrupts */
+-	for_each_pci_msi_entry(msi, pdev) {
+-		if (!msi->irq)
+-			continue;
++	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
+ 		irq_set_msi_desc(msi->irq, NULL);
+ 		irq_free_desc(msi->irq);
+ 		msi->msg.address_lo = 0;
+-- 
+2.43.0
+
 
 
