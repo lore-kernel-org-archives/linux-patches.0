@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEDA1714A1;
-	Thu, 15 Aug 2024 13:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CFF19EECF;
+	Thu, 15 Aug 2024 13:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730013; cv=none; b=P4b6mRGb4e0r0FmnZslygU5z29KAQ4Yyx5/w2iZ7s4ZO7KQot1kPbuVt2OHEFdso4jEV6YfvSGUfFXOBstJkzAn3YFp6zzm9Y5rLvEO4AYZdOjq27CkEbP0egcgSGIGidC+oONCVoN7mbpAelresr0oIDWj8HJVHjQyzhQfSCEk=
+	t=1723730015; cv=none; b=TMKKGrVdOwcg/Zg9lssbt94sK9XdZFRACzX6syVKEDSUJOuCt4pcWjcAm4eTQ6K4yE0q6O0+gDGi1pbMwv9qgKW7IszGnsGgtNPYC4rlrQHmBElHJzW0Kte1yr0zwsIBLeR54N1ihuVzaJbvpo3tFUCr2XFG5z/dX1goUjkN/as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730013; c=relaxed/simple;
-	bh=b0NivchqFeJFU8NTtcadKbEtCOFWz0Tjeo0oRSltDI0=;
+	s=arc-20240116; t=1723730015; c=relaxed/simple;
+	bh=3pinJL67Ff2+lLLUL9+ZHqLt7TeGA+YCP3esFUO/P8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+24o7MUiCUk2Y3Yc9ryZZo3RrtrCI5ZNbDtOXpzfqEOw//XQAUEXEH0bR1/V8u+BZnfE9YfdtKdLnqNyzE0LKoMSEWv0nbe4pRKlwXt5AE1GQwdbMDA/UdobSD+jwvV/uE5LR/tB8KajgssRgjPmYJV24eewoYZYYkKsNBNJ24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKQm7TA3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEesTWuc44RGGSfVYA+4KJSK1i9ma4Id4V33MgZS5VyTpPlybIG+q9LyOUd/NuD8wmNCiPxHcMXIcnAk+dpELpyiWx+qDmNeTHQE6eBf7GmMuHX03YZFee4FYf0BzPgRGys6nsL3+Y7JtNhRC/a+OW5Jqq/kBbX1AQ8ULbivXDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqH6X4in; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKQm7TA3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33210C32786;
-	Thu, 15 Aug 2024 13:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqH6X4in"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7800BC32786;
+	Thu, 15 Aug 2024 13:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730011;
-	bh=b0NivchqFeJFU8NTtcadKbEtCOFWz0Tjeo0oRSltDI0=;
+	s=korg; t=1723730014;
+	bh=3pinJL67Ff2+lLLUL9+ZHqLt7TeGA+YCP3esFUO/P8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKQm7TA3PJR+a4/pOBqRcyWIW6aNx0UQgK2wwWF/4vbsceLhdDsET9GyLUdLiFuM4
-	 Apyp1DQPaQY9/Hej9Shmf+TY2vPDboVLMkrueZNSA63e6ItETqX38JE1KrjY1i6IKV
-	 YWK4lDLW6EvpRYh5yWTmAzpo7vMFPII5r2oBhzSU=
+	b=nqH6X4inN4LYC7wJ/6WoPduyYZOTiTg0DTL3nWHeEJst1tXg4CvXARq4HlEK+sZiI
+	 ZS3s4qMQnshoqhTTk3kcVIuWWgmHHY5wD9Nyggifmbra24r3x1poNOBafESB1j0DXO
+	 LzQk8suqIUKtkhHOWQoLqCLuOSbAWt1QJUKVF+5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fred Li <dracodingfly@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 277/484] bpf: Fix a segment issue when downgrading gso_size
-Date: Thu, 15 Aug 2024 15:22:15 +0200
-Message-ID: <20240815131952.106448525@linuxfoundation.org>
+Subject: [PATCH 5.15 278/484] mISDN: Fix a use after free in hfcmulti_tx()
+Date: Thu, 15 Aug 2024 15:22:16 +0200
+Message-ID: <20240815131952.145321802@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,55 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fred Li <dracodingfly@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit fa5ef655615a01533035c6139248c5b33aa27028 ]
+[ Upstream commit 61ab751451f5ebd0b98e02276a44e23a10110402 ]
 
-Linearize the skb when downgrading gso_size because it may trigger a
-BUG_ON() later when the skb is segmented as described in [1,2].
+Don't dereference *sp after calling dev_kfree_skb(*sp).
 
-Fixes: 2be7e212d5419 ("bpf: add bpf_skb_adjust_room helper")
-Signed-off-by: Fred Li <dracodingfly@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/all/20240626065555.35460-2-dracodingfly@gmail.com [1]
-Link: https://lore.kernel.org/all/668d5cf1ec330_1c18c32947@willemb.c.googlers.com.notmuch [2]
-Link: https://lore.kernel.org/bpf/20240719024653.77006-1-dracodingfly@gmail.com
+Fixes: af69fb3a8ffa ("Add mISDN HFC multiport driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/8be65f5a-c2dd-4ba0-8a10-bfe5980b8cfb@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/isdn/hardware/mISDN/hfcmulti.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index a873c8fd51b67..a92a35c0f1e72 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3507,13 +3507,20 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
- 	if (skb_is_gso(skb)) {
- 		struct skb_shared_info *shinfo = skb_shinfo(skb);
- 
--		/* Due to header grow, MSS needs to be downgraded. */
--		if (!(flags & BPF_F_ADJ_ROOM_FIXED_GSO))
--			skb_decrease_gso_size(shinfo, len_diff);
--
- 		/* Header must be checked, and gso_segs recomputed. */
- 		shinfo->gso_type |= gso_type;
- 		shinfo->gso_segs = 0;
-+
-+		/* Due to header growth, MSS needs to be downgraded.
-+		 * There is a BUG_ON() when segmenting the frag_list with
-+		 * head_frag true, so linearize the skb after downgrading
-+		 * the MSS.
-+		 */
-+		if (!(flags & BPF_F_ADJ_ROOM_FIXED_GSO)) {
-+			skb_decrease_gso_size(shinfo, len_diff);
-+			if (shinfo->frag_list)
-+				return skb_linearize(skb);
-+		}
+diff --git a/drivers/isdn/hardware/mISDN/hfcmulti.c b/drivers/isdn/hardware/mISDN/hfcmulti.c
+index e840609c50eb7..2063afffd0853 100644
+--- a/drivers/isdn/hardware/mISDN/hfcmulti.c
++++ b/drivers/isdn/hardware/mISDN/hfcmulti.c
+@@ -1931,7 +1931,7 @@ hfcmulti_dtmf(struct hfc_multi *hc)
+ static void
+ hfcmulti_tx(struct hfc_multi *hc, int ch)
+ {
+-	int i, ii, temp, len = 0;
++	int i, ii, temp, tmp_len, len = 0;
+ 	int Zspace, z1, z2; /* must be int for calculation */
+ 	int Fspace, f1, f2;
+ 	u_char *d;
+@@ -2152,14 +2152,15 @@ hfcmulti_tx(struct hfc_multi *hc, int ch)
+ 		HFC_wait_nodebug(hc);
  	}
  
- 	return 0;
++	tmp_len = (*sp)->len;
+ 	dev_kfree_skb(*sp);
+ 	/* check for next frame */
+ 	if (bch && get_next_bframe(bch)) {
+-		len = (*sp)->len;
++		len = tmp_len;
+ 		goto next_frame;
+ 	}
+ 	if (dch && get_next_dframe(dch)) {
+-		len = (*sp)->len;
++		len = tmp_len;
+ 		goto next_frame;
+ 	}
+ 
 -- 
 2.43.0
 
