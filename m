@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9291A1714A1;
-	Thu, 15 Aug 2024 13:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A821714A1;
+	Thu, 15 Aug 2024 13:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730094; cv=none; b=pEKFEIDtQ4AwJevNVz5FLX+AwKjjGIIkE4E85xSwEH/uYPiQnVW0Krfe5r9boqcCJRwGQU78Grx6Csh1nyYgjmlwoUnc6PvezrWQxMhUD2d/gVOljKXNMDPuZLZuUO1N6AaAh5YwLIXQO5XX/TmeyqkkAVY+WZy1VNZJOMbb5jc=
+	t=1723730098; cv=none; b=UVDpzwvTWTSfFyBaJOn0f9NU+ffCS5UZLQ+BnMftHZOXj0Lh+paINIKfLfbFLuAgFx7kiRg93Ps8xtMh3BUOUdAa2ywcEWgKP1shEofYb1u8eApZpojWLToYCE97tOpdSz5Ay8WMz88HWhOx0TwqK29R5GDVpjGbWzd3B4kw1kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730094; c=relaxed/simple;
-	bh=wWA7NN+YEOqZu5of8kvKN5GnfEVP7cBMU21FQO+ETwQ=;
+	s=arc-20240116; t=1723730098; c=relaxed/simple;
+	bh=Z1zHJnzleCfK0aHFkrF/IqOTtqvfv2oma25sK+UDGfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szAC18GyruX8vSX5yCFjMj3bo/hEjI7oDTvs5vAluGXEHaLr4cjpXyEfRERb/W2cBCF3y5FGPOkicNFGegiFl1LSAxI8LAng513ZZZWDAKwZgun3NsisDUdrCShpNKPNpBE2EAxdkP4N5iPVTmh+0smwrLIzFRJZ64v/HGDSiDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKrPV+ud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBdTAtfTm7uaM5l7DL2xX4tT6CMInwHZt2w8wLOJE0tLq22HzcdHXmJpdyKwwVsQa8GZgbHTBvkoVhcX/UCIwSbsLXSKDAptvJUyfjzG6GzMlGu1uN1gyeL7+/12BXlO8y6jIB9nVPqj0/RJk8u0AlNxFALi8gUxpRkdqkE++Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0uV5lAf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKrPV+ud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2BBC32786;
-	Thu, 15 Aug 2024 13:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0uV5lAf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF593C4AF0A;
+	Thu, 15 Aug 2024 13:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730094;
-	bh=wWA7NN+YEOqZu5of8kvKN5GnfEVP7cBMU21FQO+ETwQ=;
+	s=korg; t=1723730098;
+	bh=Z1zHJnzleCfK0aHFkrF/IqOTtqvfv2oma25sK+UDGfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKrPV+udxtCehqbnPtvMyA5l7NKzV68fM1gpbgQino+s2gCZ0EyKgz8In4cebQTaR
-	 XPEn4wSruyuhwQNOh1aWbYbK+bm9+TG78pvUAu9CwzVqWyfW1E54eddMnSmDLWE4eF
-	 nThh1z1ko60/uP0hR0Zaj7OB9jucG8lQAk0JUehQ=
+	b=D0uV5lAfMMsuBRcOnR1cPwuGUV+7tZCTb/NBbs6955PkXLhPOBzJZd/ZLS1rApekf
+	 xBI9+JKwd1TZ98dH3tnnNi3H0LoJm3gb14sl90z3TKkjMnqf57jticKmbADFmBCds2
+	 L/8L/bWjwiX6F2kDOlDnnnwgJiVkBBKS0m2bRwr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/484] net: bonding: correctly annotate RCU in bond_should_notify_peers()
-Date: Thu, 15 Aug 2024 15:22:10 +0200
-Message-ID: <20240815131951.913251746@linuxfoundation.org>
+Subject: [PATCH 5.15 273/484] netfilter: nft_set_pipapo_avx2: disable softinterrupts
+Date: Thu, 15 Aug 2024 15:22:11 +0200
+Message-ID: <20240815131951.951074727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,51 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3ba359c0cd6eb5ea772125a7aededb4a2d516684 ]
+[ Upstream commit a16909ae9982e931841c456061cb57fbaec9c59e ]
 
-RCU use in bond_should_notify_peers() looks wrong, since it does
-rcu_dereference(), leaves the critical section, and uses the
-pointer after that.
+We need to disable softinterrupts, else we get following problem:
 
-Luckily, it's called either inside a nested RCU critical section
-or with the RTNL held.
+1. pipapo_avx2 called from process context; fpu usable
+2. preempt_disable() called, pcpu scratchmap in use
+3. softirq handles rx or tx, we re-enter pipapo_avx2
+4. fpu busy, fallback to generic non-avx version
+5. fallback reuses scratch map and index, which are in use
+   by the preempted process
 
-Annotate it with rcu_dereference_rtnl() instead, and remove the
-inner RCU critical section.
+Handle this same way as generic version by first disabling
+softinterrupts while the scratchmap is in use.
 
-Fixes: 4cb4f97b7e36 ("bonding: rebuild the lock use for bond_mii_monitor()")
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20240719094119.35c62455087d.I68eb9c0f02545b364b79a59f2110f2cf5682a8e2@changeid
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f0b3d338064e ("netfilter: nft_set_pipapo_avx2: Add irq_fpu_usable() check, fallback to non-AVX2 version")
+Cc: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/netfilter/nft_set_pipapo_avx2.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 9aed194d308d6..6a91229b0e05b 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1087,13 +1087,10 @@ static struct slave *bond_find_best_slave(struct bonding *bond)
- 	return bestslave;
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index 295406cf63672..dfae90cd34939 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -1141,8 +1141,14 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 	bool map_index;
+ 	int i, ret = 0;
+ 
+-	if (unlikely(!irq_fpu_usable()))
+-		return nft_pipapo_lookup(net, set, key, ext);
++	local_bh_disable();
++
++	if (unlikely(!irq_fpu_usable())) {
++		bool fallback_res = nft_pipapo_lookup(net, set, key, ext);
++
++		local_bh_enable();
++		return fallback_res;
++	}
+ 
+ 	m = rcu_dereference(priv->match);
+ 
+@@ -1157,6 +1163,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 	scratch = *raw_cpu_ptr(m->scratch);
+ 	if (unlikely(!scratch)) {
+ 		kernel_fpu_end();
++		local_bh_enable();
+ 		return false;
+ 	}
+ 
+@@ -1237,6 +1244,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 	if (i % 2)
+ 		scratch->map_index = !map_index;
+ 	kernel_fpu_end();
++	local_bh_enable();
+ 
+ 	return ret >= 0;
  }
- 
-+/* must be called in RCU critical section or with RTNL held */
- static bool bond_should_notify_peers(struct bonding *bond)
- {
--	struct slave *slave;
--
--	rcu_read_lock();
--	slave = rcu_dereference(bond->curr_active_slave);
--	rcu_read_unlock();
-+	struct slave *slave = rcu_dereference_rtnl(bond->curr_active_slave);
- 
- 	if (!slave || !bond->send_peer_notif ||
- 	    bond->send_peer_notif %
 -- 
 2.43.0
 
