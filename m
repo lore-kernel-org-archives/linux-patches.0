@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B516312BF32;
-	Fri, 16 Aug 2024 06:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D85213B5B3;
+	Fri, 16 Aug 2024 08:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723791595; cv=none; b=V9BmremdWMIaZjT7tYbPMQwZB124QoAg4rGrce18FroOyauRL7MHF18rbix38mdt8QLlvC6O2LMKjADLXexLUcL9ber9gAsLhB+2u57jUFNBPsT7ksw0xUN+PbCJA+xmEiswe+viMNj3lJFUNZeSmL7uSwo50p301N0vov/LxGk=
+	t=1723797491; cv=none; b=hwtcIDfb0cUIAZKDyo0+tdtX6E+H1hDMoUFTJGInLcDZU8H19b5qjcCoizPoRWydKMJnaFKlNmhCtVP/oasJE/l97lsnSsjwYP4V8grpjZfzt17piDmYSmjld1pWNf3ZKvkVjgOwJ+Twr+3/xMjQ++v6+td2Y+ugSPzqKeDm+MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723791595; c=relaxed/simple;
-	bh=c9qjvaCZ3rWJBJoQ/7K8V+WWEa6BGO4bo2bBNUJWGPI=;
+	s=arc-20240116; t=1723797491; c=relaxed/simple;
+	bh=UwX6lsj6hDoBBoVbcK6B2glmGl8VcKwym+q5wj1XHlk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eH3Hbat1viPZ5RnmFSRYLx7pyFuNM0yqXdLVCljhgldlBYMe3nExcoHrKYafB39u/2qks02cA5jpha8Am1MjvCjmzPpw1Ctcu2Me46evSBAQFT/hQ888gxRG732W5Rs4Pa9SucmNnT8iSiouWkuHgAMzIPB/u2YBEvn4sOLSKg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8fPlNKY; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=CzmoQrMg6ntf83zU39r1EfTVJ777LKKOmAD9bDlehGvPslJKUYRBaOTT02Sipu/DmcDueSwM0GtU6Y81RDpN/mKPZz3820zZAJpjdo9nQqeNH2+smJvGjc+sqKvvz1hSIEVurxFAnFGyPZ9t0wILMNboADinqHEuF39Ma7mQwPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qC+XBRuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8fPlNKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D836EC4AF10;
-	Fri, 16 Aug 2024 06:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qC+XBRuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAB2C4AF0C;
+	Fri, 16 Aug 2024 08:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723791595;
-	bh=c9qjvaCZ3rWJBJoQ/7K8V+WWEa6BGO4bo2bBNUJWGPI=;
+	s=korg; t=1723797491;
+	bh=UwX6lsj6hDoBBoVbcK6B2glmGl8VcKwym+q5wj1XHlk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E8fPlNKYu6nqvZLkWu722ucdFQQkgXs5BFTNNitfx5wNP3sGxQl2hejr4E0exb/GO
-	 roHAFNVpm+ABx4woTnAiQOadBzAdOrqQVR+TLi6Aq7PGuS2w+jkfBMdjlPeMVBj88W
-	 x+gBpmVqiL3qALTypswe5FbgRfKBdchUZkC1IQxU=
-Date: Fri, 16 Aug 2024 08:59:52 +0200
+	b=qC+XBRuhBvE3DyBB3DSS0IhO8pmSSmntHeuH+Q+OmHadHYG942cXiK/qfniTqZ5Z7
+	 p4YilCWb65NJ6RmzdvLMbLgKcxr38uWh47Uv5aVQWc6go7s2uOrzZ/hakQYsypeRH5
+	 GcFg4uo87CX/cCeE6OfJ8Jh6ezglmxYFtKJ3YsDY=
+Date: Fri, 16 Aug 2024 10:38:08 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Niklas Cassel <cassel@kernel.org>
+To: Guenter Roeck <linux@roeck-us.net>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>, Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: Re: [PATCH 5.15 179/484] ata: libata-scsi: Honor the D_SENSE bit for
- CK_COND=1 and no error
-Message-ID: <2024081642-eggbeater-unbeaten-f46d@gregkh>
-References: <20240815131941.255804951@linuxfoundation.org>
- <20240815131948.331340891@linuxfoundation.org>
- <Zr4Jr520dIGvkIN6@ryzen.lan>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.10 000/263] 6.10.5-rc1 review
+Message-ID: <2024081616-gents-snowcap-0e5f@gregkh>
+References: <20240812160146.517184156@linuxfoundation.org>
+ <8852e518-3867-4802-adea-0c0ee68d1010@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,89 +45,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zr4Jr520dIGvkIN6@ryzen.lan>
+In-Reply-To: <8852e518-3867-4802-adea-0c0ee68d1010@roeck-us.net>
 
-On Thu, Aug 15, 2024 at 03:59:11PM +0200, Niklas Cassel wrote:
-> On Thu, Aug 15, 2024 at 03:20:37PM +0200, Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Aug 15, 2024 at 07:21:00AM -0700, Guenter Roeck wrote:
+> On 8/12/24 09:00, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.10.5 release.
+> > There are 263 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > ------------------
-> > 
-> > From: Igor Pylypiv <ipylypiv@google.com>
-> > 
-> > commit 28ab9769117ca944cb6eb537af5599aa436287a4 upstream.
-> > 
-> > SAT-5 revision 8 specification removed the text about the ANSI INCITS
-> > 431-2007 compliance which was requiring SCSI/ATA Translation (SAT) to
-> > return descriptor format sense data for the ATA PASS-THROUGH commands
-> > regardless of the setting of the D_SENSE bit.
-> > 
-> > Let's honor the D_SENSE bit for ATA PASS-THROUGH commands while
-> > generating the "ATA PASS-THROUGH INFORMATION AVAILABLE" sense data.
-> > 
-> > SAT-5 revision 7
-> > ================
-> > 
-> > 12.2.2.8 Fixed format sense data
-> > 
-> > Table 212 shows the fields returned in the fixed format sense data
-> > (see SPC-5) for ATA PASS-THROUGH commands. SATLs compliant with ANSI
-> > INCITS 431-2007, SCSI/ATA Translation (SAT) return descriptor format
-> > sense data for the ATA PASS-THROUGH commands regardless of the setting
-> > of the D_SENSE bit.
-> > 
-> > SAT-5 revision 8
-> > ================
-> > 
-> > 12.2.2.8 Fixed format sense data
-> > 
-> > Table 211 shows the fields returned in the fixed format sense data
-> > (see SPC-5) for ATA PASS-THROUGH commands.
-> > 
-> > Cc: stable@vger.kernel.org # 4.19+
-> > Reported-by: Niklas Cassel <cassel@kernel.org>
-> > Closes: https://lore.kernel.org/linux-ide/Zn1WUhmLglM4iais@ryzen.lan
-> > Reviewed-by: Niklas Cassel <cassel@kernel.org>
-> > Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-> > Reviewed-by: Hannes Reinecke <hare@suse.de>
-> > Link: https://lore.kernel.org/r/20240702024735.1152293-4-ipylypiv@google.com
-> > Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  drivers/ata/libata-scsi.c |    7 ++-----
-> >  1 file changed, 2 insertions(+), 5 deletions(-)
-> > 
-> > --- a/drivers/ata/libata-scsi.c
-> > +++ b/drivers/ata/libata-scsi.c
-> > @@ -872,11 +872,8 @@ static void ata_gen_passthru_sense(struc
-> >  				   &sense_key, &asc, &ascq, verbose);
-> >  		ata_scsi_set_sense(qc->dev, cmd, sense_key, asc, ascq);
-> >  	} else {
-> > -		/*
-> > -		 * ATA PASS-THROUGH INFORMATION AVAILABLE
-> > -		 * Always in descriptor format sense.
-> > -		 */
-> > -		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
-> > +		/* ATA PASS-THROUGH INFORMATION AVAILABLE */
-> > +		ata_scsi_set_sense(qc->dev, cmd, RECOVERED_ERROR, 0, 0x1D);
-> >  	}
-> >  
-> >  	if ((cmd->sense_buffer[0] & 0x7f) >= 0x72) {
-> > 
+> > Responses should be made by Wed, 14 Aug 2024 16:00:26 +0000.
+> > Anything received after that time might be too late.
 > > 
 > 
-> Hello Greg,
+> I see various allmodconfig build failures on v6.10.5.
 > 
-> This commit unfortunately breaks hdparm, hddtemp and udisks,
-> and I have just sent a PR to Linus that reverts this commit, see:
-> https://lore.kernel.org/linux-ide/20240815124310.1349324-1-cassel@kernel.org/T/#u
-> and
-> https://git.kernel.org/pub/scm/linux/kernel/git/libata/linux.git/commit/?h=ata-6.11-rc4
+> Example from arm:
 > 
-> So it might be a good idea to not include this patch in v5.15.x in the
-> first place, so that we avoid having a v5.15.x release that will be broken
-> until the revert gets backported (in v5.15.x+1).
+> Building arm:allmodconfig ... failed
+> --------------
+> Error log:
+> drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_mst_types.c:1581:13: error: 'is_dsc_common_config_possible' defined but not used [-Werror=unused-function]
+>  1581 | static bool is_dsc_common_config_possible(struct dc_stream_state *stream,
+>       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_mst_types.c:1569:21: error: 'kbps_from_pbn' defined but not used [-Werror=unused-function]
+>  1569 | static unsigned int kbps_from_pbn(unsigned int pbn)
+> 
+> The functions are built and used conditionally in mainline, behind CONFIG_DRM_AMD_DC_FP.
+> The conditional is missing in v6.10.5 (and v6.10.6-rc1).
 
-I've taken the revert now, thanks!
+Odd that other allmodconfig builds passed :(
+
+I'll dig up where that conditional showed up, thanks for letting us
+know....
+
+Ah, looks like it showed up in 00c391102abc ("drm/amd/display: Add misc
+DC changes for DCN401"), gotta love "fix a bunch of things" type of
+commits...
+
+{sigh}
 
 greg k-h
