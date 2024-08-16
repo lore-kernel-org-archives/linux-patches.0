@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B48CA957;
-	Fri, 16 Aug 2024 06:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B516312BF32;
+	Fri, 16 Aug 2024 06:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723791559; cv=none; b=LVxW7jM01oYTyVuAVml7yfAiHlUXMODhF3TgA9ccSPBEKd5tXDtUxzGBRMHoOQt0oMH3K25HwxYcIhf/I4U2M2YJUvWuft1aR85iMgt9I/uqECw45L1lLQef36wJfEV4Xjt3gJ1THpy3sTVsUXulKE5XXiAt49RN6oR2D7L9ZKU=
+	t=1723791595; cv=none; b=V9BmremdWMIaZjT7tYbPMQwZB124QoAg4rGrce18FroOyauRL7MHF18rbix38mdt8QLlvC6O2LMKjADLXexLUcL9ber9gAsLhB+2u57jUFNBPsT7ksw0xUN+PbCJA+xmEiswe+viMNj3lJFUNZeSmL7uSwo50p301N0vov/LxGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723791559; c=relaxed/simple;
-	bh=LcIaxyPtrIg1O9JSLvHRZDGuueVXtwZD3+fWFiec1xk=;
+	s=arc-20240116; t=1723791595; c=relaxed/simple;
+	bh=c9qjvaCZ3rWJBJoQ/7K8V+WWEa6BGO4bo2bBNUJWGPI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QJcEeHFQinMR9DWMmOiZR43hW0ANBVQ8nPRNB1m36aLO3J6N/Vi1brX8E64M4wGqoTcj9MEm0624JKySbUzQA2ydEtBcrLMDn8QTsvfoXPT6LtqthBlr5925cG7EBYFCL68jb0oYkurXf/Y7ndOPm6tDJjh858ENHmetgo/dxss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M09ztrJL; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=eH3Hbat1viPZ5RnmFSRYLx7pyFuNM0yqXdLVCljhgldlBYMe3nExcoHrKYafB39u/2qks02cA5jpha8Am1MjvCjmzPpw1Ctcu2Me46evSBAQFT/hQ888gxRG732W5Rs4Pa9SucmNnT8iSiouWkuHgAMzIPB/u2YBEvn4sOLSKg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8fPlNKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M09ztrJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0905FC32782;
-	Fri, 16 Aug 2024 06:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8fPlNKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D836EC4AF10;
+	Fri, 16 Aug 2024 06:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723791558;
-	bh=LcIaxyPtrIg1O9JSLvHRZDGuueVXtwZD3+fWFiec1xk=;
+	s=korg; t=1723791595;
+	bh=c9qjvaCZ3rWJBJoQ/7K8V+WWEa6BGO4bo2bBNUJWGPI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=M09ztrJL9XQLpXtbq4oTyP52kRJphtRZzYbPdjBp7DkiEXbSBpZAAJikJatp9PnoE
-	 v6yS4PwtpDzT6P3useE7voxf5zG5A1nsqQDaz5dnpT53r0lsnmTbTkh4d4sAuTA0lm
-	 UUR070iVoxuFR2rrUo8MDlA3pt+b3SSup20i5QRI=
-Date: Fri, 16 Aug 2024 08:59:15 +0200
+	b=E8fPlNKYu6nqvZLkWu722ucdFQQkgXs5BFTNNitfx5wNP3sGxQl2hejr4E0exb/GO
+	 roHAFNVpm+ABx4woTnAiQOadBzAdOrqQVR+TLi6Aq7PGuS2w+jkfBMdjlPeMVBj88W
+	 x+gBpmVqiL3qALTypswe5FbgRfKBdchUZkC1IQxU=
+Date: Fri, 16 Aug 2024 08:59:52 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sean Young <sean@mess.org>
+To: Niklas Cassel <cassel@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 085/484] media: dvb-usb: Fix unexpected infinite
- loop in dvb_usb_read_remote_control()
-Message-ID: <2024081604-backlands-outskirts-81ec@gregkh>
+	Igor Pylypiv <ipylypiv@google.com>, Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH 5.15 179/484] ata: libata-scsi: Honor the D_SENSE bit for
+ CK_COND=1 and no error
+Message-ID: <2024081642-eggbeater-unbeaten-f46d@gregkh>
 References: <20240815131941.255804951@linuxfoundation.org>
- <20240815131944.570292721@linuxfoundation.org>
- <Zr4MX0elvdkuHZ8j@gofer.mess.org>
- <2024081526-amusement-saddlebag-c622@gregkh>
+ <20240815131948.331340891@linuxfoundation.org>
+ <Zr4Jr520dIGvkIN6@ryzen.lan>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,46 +43,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2024081526-amusement-saddlebag-c622@gregkh>
+In-Reply-To: <Zr4Jr520dIGvkIN6@ryzen.lan>
 
-On Thu, Aug 15, 2024 at 04:20:53PM +0200, Greg Kroah-Hartman wrote:
-> On Thu, Aug 15, 2024 at 03:10:39PM +0100, Sean Young wrote:
-> > On Thu, Aug 15, 2024 at 03:19:03PM +0200, Greg Kroah-Hartman wrote:
-> > > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Zheng Yejian <zhengyejian1@huawei.com>
-> > > 
-> > > [ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
-> > > 
-> > > Infinite log printing occurs during fuzz test:
-> > > 
-> > >   rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
-> > >   ...
-> > >   dvb-usb: schedule remote query interval to 100 msecs.
-> > >   dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
-> > >   dvb-usb: bulk message failed: -22 (1/0)
-> > >   dvb-usb: bulk message failed: -22 (1/0)
-> > >   dvb-usb: bulk message failed: -22 (1/0)
-> > >   ...
-> > >   dvb-usb: bulk message failed: -22 (1/0)
-> > > 
-> > > Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
-> > > that is in rc_core_dvb_usb_remote_init() create a work that will call
-> > > dvb_usb_read_remote_control(), and this work will reschedule itself at
-> > > 'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
-> > > see following code snippet:
+On Thu, Aug 15, 2024 at 03:59:11PM +0200, Niklas Cassel wrote:
+> On Thu, Aug 15, 2024 at 03:20:37PM +0200, Greg Kroah-Hartman wrote:
+> > 5.15-stable review patch.  If anyone has any objections, please let me know.
 > > 
-> > This commit causes problems and has been reverted upstream.
+> > ------------------
 > > 
-> > https://git.linuxtv.org/media_stage.git/commit/?h=fixes&id=0c84bde4f37ba27d50e4c70ecacd33fe4a57030d
+> > From: Igor Pylypiv <ipylypiv@google.com>
 > > 
-> > Please don't apply.
+> > commit 28ab9769117ca944cb6eb537af5599aa436287a4 upstream.
+> > 
+> > SAT-5 revision 8 specification removed the text about the ANSI INCITS
+> > 431-2007 compliance which was requiring SCSI/ATA Translation (SAT) to
+> > return descriptor format sense data for the ATA PASS-THROUGH commands
+> > regardless of the setting of the D_SENSE bit.
+> > 
+> > Let's honor the D_SENSE bit for ATA PASS-THROUGH commands while
+> > generating the "ATA PASS-THROUGH INFORMATION AVAILABLE" sense data.
+> > 
+> > SAT-5 revision 7
+> > ================
+> > 
+> > 12.2.2.8 Fixed format sense data
+> > 
+> > Table 212 shows the fields returned in the fixed format sense data
+> > (see SPC-5) for ATA PASS-THROUGH commands. SATLs compliant with ANSI
+> > INCITS 431-2007, SCSI/ATA Translation (SAT) return descriptor format
+> > sense data for the ATA PASS-THROUGH commands regardless of the setting
+> > of the D_SENSE bit.
+> > 
+> > SAT-5 revision 8
+> > ================
+> > 
+> > 12.2.2.8 Fixed format sense data
+> > 
+> > Table 211 shows the fields returned in the fixed format sense data
+> > (see SPC-5) for ATA PASS-THROUGH commands.
+> > 
+> > Cc: stable@vger.kernel.org # 4.19+
+> > Reported-by: Niklas Cassel <cassel@kernel.org>
+> > Closes: https://lore.kernel.org/linux-ide/Zn1WUhmLglM4iais@ryzen.lan
+> > Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> > Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+> > Reviewed-by: Hannes Reinecke <hare@suse.de>
+> > Link: https://lore.kernel.org/r/20240702024735.1152293-4-ipylypiv@google.com
+> > Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >  drivers/ata/libata-scsi.c |    7 ++-----
+> >  1 file changed, 2 insertions(+), 5 deletions(-)
+> > 
+> > --- a/drivers/ata/libata-scsi.c
+> > +++ b/drivers/ata/libata-scsi.c
+> > @@ -872,11 +872,8 @@ static void ata_gen_passthru_sense(struc
+> >  				   &sense_key, &asc, &ascq, verbose);
+> >  		ata_scsi_set_sense(qc->dev, cmd, sense_key, asc, ascq);
+> >  	} else {
+> > -		/*
+> > -		 * ATA PASS-THROUGH INFORMATION AVAILABLE
+> > -		 * Always in descriptor format sense.
+> > -		 */
+> > -		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
+> > +		/* ATA PASS-THROUGH INFORMATION AVAILABLE */
+> > +		ata_scsi_set_sense(qc->dev, cmd, RECOVERED_ERROR, 0, 0x1D);
+> >  	}
+> >  
+> >  	if ((cmd->sense_buffer[0] & 0x7f) >= 0x72) {
+> > 
+> > 
 > 
-> When will that land in Linus's tree?  Currently this commit is already
-> in released 6.1, 6.6, and 6.10 kernels :(
+> Hello Greg,
+> 
+> This commit unfortunately breaks hdparm, hddtemp and udisks,
+> and I have just sent a PR to Linus that reverts this commit, see:
+> https://lore.kernel.org/linux-ide/20240815124310.1349324-1-cassel@kernel.org/T/#u
+> and
+> https://git.kernel.org/pub/scm/linux/kernel/git/libata/linux.git/commit/?h=ata-6.11-rc4
+> 
+> So it might be a good idea to not include this patch in v5.15.x in the
+> first place, so that we avoid having a v5.15.x release that will be broken
+> until the revert gets backported (in v5.15.x+1).
 
-I've queued up the revert everywhere now, thanks!
+I've taken the revert now, thanks!
 
 greg k-h
