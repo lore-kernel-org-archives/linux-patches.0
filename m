@@ -1,66 +1,66 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF44677F10
-	for <patches@lists.linux.dev>; Fri, 16 Aug 2024 09:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58647127B57
+	for <patches@lists.linux.dev>; Fri, 16 Aug 2024 09:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723798929; cv=none; b=NxEh4NaGYocL55s3BlH14et7YiTjtgrorHyau9zqeNxNRxWDWVci2g13QIYJbMx9+VyJd91bk3akNCvO/m8MY8BQnE9aUmPeWIez1bit1vDnMgFxfjYx6yd3+dWPNH7MQ6IfKwAtU6buH7DT2yRDn8Cnbc2Z5S3uQEEzJUt7PbE=
+	t=1723799231; cv=none; b=VRh8QXNnsc2Bb9LXiJCylQnjuiPio0XPWEpxDhnXcJH2lkTH32FZ8H8vgTEYz5bOst8cysXdHfBLGWMY5mSs5TGvxWoHciWDhDyWgThWW2upEJ06vZaBLRdPEvrkqGgxHKAHTsON/8S+tXadBhDOWwFSQVrz1xB+bK4Rf8GolG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723798929; c=relaxed/simple;
-	bh=3LtfzWnjqE34FcAojC1Q2ohWMYNdJZLQOkB/Q2NvThY=;
+	s=arc-20240116; t=1723799231; c=relaxed/simple;
+	bh=lkyJn6apocNRqoC0TKeOfnk/JcUHx29C9iaDYTve8QI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FFnlvWU5JrMm9y8YXWfXp9ooHJOdOn0utxK5HKqHyLzF0Mrew2Tls9JAq1shoYYilBB636SdcRTe3xJjxUiqkJWJyhZZ+EmA0QPr0OzwbschsAQpWv2MznZYCeV3qug9p7hmZS01OSRJHph9MTgLn4PdBCciyFBPou8lkALW9qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DdB6zHJJ; arc=none smtp.client-ip=209.85.218.53
+	 To:Cc:Content-Type; b=k2rCDlu3k73pmTAzRGvF5XHap4k36kNsLgK5n19xQNwc3amxsy8vkqENb+1nLKTUMjlLqNg4W58qE7eMT+Sp26c2qAx8fSJD01xqRv8IgvwK3G8R1UJpMUtqMTowH7Jh0bGIXjhzxOXiOH//PsrWwfbvxNMosC+seniGSr6r1E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NnEvnCH/; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DdB6zHJJ"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a83869373b6so145115666b.2
-        for <patches@lists.linux.dev>; Fri, 16 Aug 2024 02:02:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NnEvnCH/"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52f025ab3a7so2461443e87.2
+        for <patches@lists.linux.dev>; Fri, 16 Aug 2024 02:07:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723798925; x=1724403725; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1723799227; x=1724404027; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NINSdRBEfEpSn8l43T3fPW1cepVfujVcuIvvr607qdk=;
-        b=DdB6zHJJCTzQVW6jgzASU889dews5n6p0vY6qCpEekDX/PMXDEOzwsuyHgPORJWLIz
-         0G0c6PpNSnxbdq/MEAnQhIGR4Pf+O4uQvx7rmLnX4lbIMOS63ZRRsoMKSN8TlhJxokbo
-         +aJUaQ0gV4OrMn5qqFV8RWM5NjW7BHVDvc+mUchtgvidwnZ213JFoiiIAhMz0qdtpESn
-         EGt02JclQJy/YhlXxPSnFMMYBn8bcmDDXxT0lK+QbN8dxG0mCZ5ZZXdlcIw2IlVh0OZq
-         DRJHPStsFN/aPCN76dpGpp/aEZPYEnFYXB31gYRBEJjsImBj2rR5aah3jN6w04/T6WFn
-         H0hw==
+        bh=r8a6uIKT4Rr2w50lue0Kw27dst3+ON0jeMNQJhegGkc=;
+        b=NnEvnCH/s2JVGtZxcJqwIXUN2S3D0LopOx7YKOWDMr+Wooeokzh/IT2vG6W878A7J3
+         MlHwW8s/mo43kCJrI1g6nyaoKMPa+7IwRPLZRViKqvIRO/4XQ3/mYITABjAaJwhdZFpi
+         lmkirmHNumaTuf/8tTNuvDvyl4JcsRTcb9Hn7mXhJjHAYq3cBeYVkpa66i3do4T0MQZN
+         iPckxAIBSfgT2JdUbp6xY8QreXvRoDL5yGuyQFWljaFOawDOzYgVfclzhs4saUAXitmT
+         v0Q+WjrgfLbCz0f3DGYJyBC7lFUt4/daajrxDCTOCljjF9mZtqFqYa01PBbU0iaC0Wos
+         2r0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723798925; x=1724403725;
+        d=1e100.net; s=20230601; t=1723799227; x=1724404027;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NINSdRBEfEpSn8l43T3fPW1cepVfujVcuIvvr607qdk=;
-        b=R1RrqIpYoWh9B0ot46J5Uu20nDlmT3eHY9q6AHc668H7qM5fEtbqCusC+TKy1kWZSb
-         6MA8aVtCRRgpP7qnWFQ8aWV1GFtA/BDY2aiJoFMAWAM0dUgPTX+/zYQah/gev9XJAMQb
-         2J764r07qG9l2zrwJaC+qwhAEHlDUdLZua6qtnQ7hyHfYpo6c+hxtVj9iuRU2AL29QcK
-         XWjUNNDzSS5ShKuzuJY/DWkZ2dGGtakLd+D+j8ODxyYmVWc7uwYkTxwiZyqRajvvXbzt
-         ucJ9DUtqoPvat3bdFBYI3GMkKoEAX0SQqbHw10Ms2Jk7K+R5n8wuunHdaybBQWOzIs1K
-         BHRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV9rLUqAX21vjhkp8GVRKGcb5a/jJkCg6YN2E4ZV0Y2KNB5ZhrP4RHxasdScMSW9y1g5qcthYizEdVwFq/cvdPul9+D85eK7A==
-X-Gm-Message-State: AOJu0YxWGE7Mga5dTYk11z3V/Q2WrobhxH61RTlxXXBf/CGbo21G0rpG
-	00VC1eKWq7SZU0Usch1YLmduV72SyrudJaHPEL6Yieaiw2HAcAqIc8tbP9Ytvz5LBBsYsrgezd2
-	iYMqXcDKkoi6rRhwYIliSnsgvyKPJoSS/CQV1ow==
-X-Google-Smtp-Source: AGHT+IFYkVm58QtdBkqONHO8uNxRKVcpOAMTPyGL/U9cyg/WodG+YdFS9p37rlkb4Y+aVtiHQPGiZIw3wBKNOsSZx6U=
-X-Received: by 2002:a17:907:e2a3:b0:a7a:b977:4c9e with SMTP id
- a640c23a62f3a-a839292f21bmr182899166b.21.1723798924923; Fri, 16 Aug 2024
- 02:02:04 -0700 (PDT)
+        bh=r8a6uIKT4Rr2w50lue0Kw27dst3+ON0jeMNQJhegGkc=;
+        b=VQmhavr7ur6MmOjHz9AQYtrdDmWng5NuThm+8xRdrwexy1rns5Tij3+ejoVV90LKnR
+         lX+KJdhPh/xbcrYCL0gWl372u+ASBbFUx8JQWwbmGO02GO7T58koUyJ6DWnGi+Yhzf+1
+         rovf9ozrrk+Gt4MXflOCJiPHrvQXTKZwiJVeKxVcitIQgMAa2DOH6iPyS573tst4W7JO
+         8kEj1CdiWkxIR5ZLQ5mh+t5eoYAkueLrUkshkdFboK9W1KnPyqwTHH7wF/YqckYecSgN
+         iVAFJWJGwYTgTxJdpgL2rgVqcT5sbnumic1LBqPnIetTT3ysdUckPq9a6IbOanidPhpi
+         W4Mg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmhC7dSYpxSvqJtEXf2IVRbXa42R9+nOEXVmHSMXctfaWMQacGYuJg77iGv0I0xqMbsPz1lqfB@lists.linux.dev
+X-Gm-Message-State: AOJu0YxxsPMbJIZIO/AIWQ/7Vdx8qzKegUBZnvYKSOSnLUKQbV/C5REx
+	PWLcaKggYYg7lUIhTIJifGm1Pukg2lr0VjHSFcUinaQ+yuTifRncI8B1lUKDT2hnTN3XR7Ld10y
+	I9Jy1EJijGiLHf5i30b+idRryhzWm1V+XwNB80Q==
+X-Google-Smtp-Source: AGHT+IExrDK8l70AX+TCsQlgMhHX3ojaFYwD9nWp2Z8ttk+cGYowBZSokG/ezQyoGwvYDsImwDZUYnBTBP4yJisocVw=
+X-Received: by 2002:a05:6512:4015:b0:52c:812b:6e72 with SMTP id
+ 2adb3069b0e04-5331c691b75mr1404510e87.1.1723799227229; Fri, 16 Aug 2024
+ 02:07:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240815131902.779125794@linuxfoundation.org>
-In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
+References: <20240815131852.063866671@linuxfoundation.org>
+In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 From: Anders Roxell <anders.roxell@linaro.org>
-Date: Fri, 16 Aug 2024 11:01:53 +0200
-Message-ID: <CADYN=9+zo=R7jFdHGps0YedBqGzhjm7xeOZLsaR_E7-b0Y_CMQ@mail.gmail.com>
-Subject: Re: [PATCH 5.4 000/259] 5.4.282-rc1 review
+Date: Fri, 16 Aug 2024 11:06:55 +0200
+Message-ID: <CADYN=9+4TcfTeCqpH6dZtV5ry6wPOzyR13xSYDN=i29-XWxcUA@mail.gmail.com>
+Subject: Re: [PATCH 4.19 000/196] 4.19.320-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -68,14 +68,14 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
+	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 15 Aug 2024 at 16:12, Greg Kroah-Hartman
+On Thu, 15 Aug 2024 at 15:28, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.4.282 release.
-> There are 259 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 4.19.320 release.
+> There are 196 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -83,77 +83,81 @@ On Thu, 15 Aug 2024 at 16:12, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.282-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.320-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-The following S390 build failed on stable-rc 5.4.y with gcc-12 due
-to following warnings and errors [1].
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64 and i386.
 
-s390:
-  build:
-    * gcc-8-defconfig-fe40093d
-    * gcc-12-defconfig
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Bisect point to deb23146ba03 ("s390/pci: fix CPU address in MSI for
-directed IRQ")
-as the problematic commit [ Upstream commit
-a2bd4097b3ec242f4de4924db463a9c94530e03a ].
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-Build log:
-------
-/builds/linux/arch/s390/pci/pci_irq.c: In function 'zpci_set_irq_affinity':
-/builds/linux/arch/s390/pci/pci_irq.c:106:17: error: implicit
-declaration of function 'smp_cpu_get_cpu_address'; did you mean
-'device_get_mac_address'? [-Werror=implicit-function-declaration]
-  int cpu_addr = smp_cpu_get_cpu_address(cpumask_first(dest));
-                 ^~~~~~~~~~~~~~~~~~~~~~~
-                 device_get_mac_address
-/builds/linux/arch/s390/pci/pci_irq.c: In function 'arch_setup_msi_irqs':
-/builds/linux/arch/s390/pci/pci_irq.c:298:2: error: implicit
-declaration of function 'msi_for_each_desc'; did you mean
-'bus_for_each_dev'? [-Werror=implicit-function-declaration]
-  msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
-  ^~~~~~~~~~~~~~~~~
-  bus_for_each_dev
-/builds/linux/arch/s390/pci/pci_irq.c:298:37: error:
-'MSI_DESC_NOTASSOCIATED' undeclared (first use in this function)
-  msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
-                                     ^~~~~~~~~~~~~~~~~~~~~~
-/builds/linux/arch/s390/pci/pci_irq.c:298:37: note: each undeclared
-identifier is reported only once for each function it appears in
-/builds/linux/arch/s390/pci/pci_irq.c:298:60: error: expected ';'
-before '{' token
-  msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
-                                                            ^~
-                                                            ;
-
-
-Build log link:
--------
- [1] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.281-260-g95ce4659a81b/testrun/24873581/suite/build/test/gcc-12-defconfig/log
-
-metadata:
---------
-* kernel: 5.4.282-rc1
+## Build
+* kernel: 4.19.320-rc1
 * git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 95ce4659a81b365646fc35fdd6678a62f8c02256
-* git describe: v5.4.281-260-g95ce4659a81b
+* git commit: ed3349953afb1f3fbd768757830f73586cee3375
+* git describe: v4.19.319-197-ged3349953afb
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.281-260-g95ce4659a81b
-* arch: s390
-* toolchain: gcc-12
-* config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2khPUOCfrk64PMmp7nyDUvvt9j6/config
-* download_url:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2khPUOCfrk64PMmp7nyDUvvt9j6/
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.319-197-ged3349953afb
 
+## Test Regressions (compared to v4.19.318-33-g0a1a65dc05b2)
+
+## Metric Regressions (compared to v4.19.318-33-g0a1a65dc05b2)
+
+## Test Fixes (compared to v4.19.318-33-g0a1a65dc05b2)
+
+## Metric Fixes (compared to v4.19.318-33-g0a1a65dc05b2)
+
+## Test result summary
+total: 58550, pass: 51683, fail: 321, skip: 6498, xfail: 48
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 102 total, 96 passed, 6 failed
+* arm64: 27 total, 22 passed, 5 failed
+* i386: 15 total, 12 passed, 3 failed
+* mips: 20 total, 20 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 24 total, 24 passed, 0 failed
+* s390: 6 total, 6 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 23 total, 18 passed, 5 failed
+
+## Test suites summary
+* boot
+* kunit
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* rcutorture
 
 --
 Linaro LKFT
