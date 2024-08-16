@@ -1,164 +1,201 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58647127B57
-	for <patches@lists.linux.dev>; Fri, 16 Aug 2024 09:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A2F15B137;
+	Fri, 16 Aug 2024 09:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723799231; cv=none; b=VRh8QXNnsc2Bb9LXiJCylQnjuiPio0XPWEpxDhnXcJH2lkTH32FZ8H8vgTEYz5bOst8cysXdHfBLGWMY5mSs5TGvxWoHciWDhDyWgThWW2upEJ06vZaBLRdPEvrkqGgxHKAHTsON/8S+tXadBhDOWwFSQVrz1xB+bK4Rf8GolG4=
+	t=1723801343; cv=none; b=YimcGqD3V9odnVapQEm4RT70pHmzpDh5EiCBZJoP6wMe02E5svEnbKI1sfhKJYJINougLs6ZkhCmOYs6ndvXwiCupdgWYSIn/M0P1j1gXFoz2Pef6YHiy+AFVk6L6CgpE5HaSL3lnPUVY3KWrDzjlTKwjZlpo5XVg19Xs1Am62g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723799231; c=relaxed/simple;
-	bh=lkyJn6apocNRqoC0TKeOfnk/JcUHx29C9iaDYTve8QI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k2rCDlu3k73pmTAzRGvF5XHap4k36kNsLgK5n19xQNwc3amxsy8vkqENb+1nLKTUMjlLqNg4W58qE7eMT+Sp26c2qAx8fSJD01xqRv8IgvwK3G8R1UJpMUtqMTowH7Jh0bGIXjhzxOXiOH//PsrWwfbvxNMosC+seniGSr6r1E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NnEvnCH/; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1723801343; c=relaxed/simple;
+	bh=OYqwcZqnZpNks8CzBZ7ajhgFTlIh+5nhXDp5hCIfGNc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LrqsZ8HGJQVly+d7wA8oCErMBxIhp7qT7i4OT+FOp/E2Kj4fEZb4O8pA7u+f3/I0pZFHxgFH93f4a7J/9AAw4ZIN4zBXWh/oVePt63J/Fmpw/V9ZYB92EKkNHA2/rVqi0P4Q4aRexcTXJLydQKWq2Hogp8q/IrhdYfCaK3dvVTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+d7xG9e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NnEvnCH/"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52f025ab3a7so2461443e87.2
-        for <patches@lists.linux.dev>; Fri, 16 Aug 2024 02:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723799227; x=1724404027; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=r8a6uIKT4Rr2w50lue0Kw27dst3+ON0jeMNQJhegGkc=;
-        b=NnEvnCH/s2JVGtZxcJqwIXUN2S3D0LopOx7YKOWDMr+Wooeokzh/IT2vG6W878A7J3
-         MlHwW8s/mo43kCJrI1g6nyaoKMPa+7IwRPLZRViKqvIRO/4XQ3/mYITABjAaJwhdZFpi
-         lmkirmHNumaTuf/8tTNuvDvyl4JcsRTcb9Hn7mXhJjHAYq3cBeYVkpa66i3do4T0MQZN
-         iPckxAIBSfgT2JdUbp6xY8QreXvRoDL5yGuyQFWljaFOawDOzYgVfclzhs4saUAXitmT
-         v0Q+WjrgfLbCz0f3DGYJyBC7lFUt4/daajrxDCTOCljjF9mZtqFqYa01PBbU0iaC0Wos
-         2r0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723799227; x=1724404027;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=r8a6uIKT4Rr2w50lue0Kw27dst3+ON0jeMNQJhegGkc=;
-        b=VQmhavr7ur6MmOjHz9AQYtrdDmWng5NuThm+8xRdrwexy1rns5Tij3+ejoVV90LKnR
-         lX+KJdhPh/xbcrYCL0gWl372u+ASBbFUx8JQWwbmGO02GO7T58koUyJ6DWnGi+Yhzf+1
-         rovf9ozrrk+Gt4MXflOCJiPHrvQXTKZwiJVeKxVcitIQgMAa2DOH6iPyS573tst4W7JO
-         8kEj1CdiWkxIR5ZLQ5mh+t5eoYAkueLrUkshkdFboK9W1KnPyqwTHH7wF/YqckYecSgN
-         iVAFJWJGwYTgTxJdpgL2rgVqcT5sbnumic1LBqPnIetTT3ysdUckPq9a6IbOanidPhpi
-         W4Mg==
-X-Forwarded-Encrypted: i=1; AJvYcCXmhC7dSYpxSvqJtEXf2IVRbXa42R9+nOEXVmHSMXctfaWMQacGYuJg77iGv0I0xqMbsPz1lqfB@lists.linux.dev
-X-Gm-Message-State: AOJu0YxxsPMbJIZIO/AIWQ/7Vdx8qzKegUBZnvYKSOSnLUKQbV/C5REx
-	PWLcaKggYYg7lUIhTIJifGm1Pukg2lr0VjHSFcUinaQ+yuTifRncI8B1lUKDT2hnTN3XR7Ld10y
-	I9Jy1EJijGiLHf5i30b+idRryhzWm1V+XwNB80Q==
-X-Google-Smtp-Source: AGHT+IExrDK8l70AX+TCsQlgMhHX3ojaFYwD9nWp2Z8ttk+cGYowBZSokG/ezQyoGwvYDsImwDZUYnBTBP4yJisocVw=
-X-Received: by 2002:a05:6512:4015:b0:52c:812b:6e72 with SMTP id
- 2adb3069b0e04-5331c691b75mr1404510e87.1.1723799227229; Fri, 16 Aug 2024
- 02:07:07 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+d7xG9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B80BC4AF0E;
+	Fri, 16 Aug 2024 09:42:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1723801342;
+	bh=OYqwcZqnZpNks8CzBZ7ajhgFTlIh+5nhXDp5hCIfGNc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=j+d7xG9eJiw8fNq2+w+a+XmxxOgbloU4quQskdNHj6sxhi4Gbzo/SDN+yWniGRd6a
+	 j/QWQ78aei4KqLC0bFD60g1Vhog+atHBpN+LF/NTwZu7jT7KkZPeHQ/INxI1pHvyh7
+	 VtLhyzTyl0VdiWlLdGJiDw0dEdY9CU1gQ9sP14yY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org
+Subject: [PATCH 6.10 00/25] 6.10.6-rc2 review
+Date: Fri, 16 Aug 2024 11:42:18 +0200
+Message-ID: <20240816085226.888902473@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240815131852.063866671@linuxfoundation.org>
-In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
-From: Anders Roxell <anders.roxell@linaro.org>
-Date: Fri, 16 Aug 2024 11:06:55 +0200
-Message-ID: <CADYN=9+4TcfTeCqpH6dZtV5ry6wPOzyR13xSYDN=i29-XWxcUA@mail.gmail.com>
-Subject: Re: [PATCH 4.19 000/196] 4.19.320-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.6-rc2.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.10.6-rc2
+X-KernelTest-Deadline: 2024-08-18T08:52+00:00
+Content-Transfer-Encoding: 8bit
 
-On Thu, 15 Aug 2024 at 15:28, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 4.19.320 release.
-> There are 196 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 17 Aug 2024 13:18:17 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.320-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+This is the start of the stable review cycle for the 6.10.6 release.
+There are 25 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Results from Linaro's test farm.
-No regressions on arm64, arm, x86_64 and i386.
+Responses should be made by Sun, 18 Aug 2024 08:52:13 +0000.
+Anything received after that time might be too late.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.6-rc2.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+and the diffstat can be found below.
 
-## Build
-* kernel: 4.19.320-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: ed3349953afb1f3fbd768757830f73586cee3375
-* git describe: v4.19.319-197-ged3349953afb
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.319-197-ged3349953afb
+thanks,
 
-## Test Regressions (compared to v4.19.318-33-g0a1a65dc05b2)
+greg k-h
 
-## Metric Regressions (compared to v4.19.318-33-g0a1a65dc05b2)
+-------------
+Pseudo-Shortlog of commits:
 
-## Test Fixes (compared to v4.19.318-33-g0a1a65dc05b2)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.10.6-rc2
 
-## Metric Fixes (compared to v4.19.318-33-g0a1a65dc05b2)
+Aurabindo Pillai <aurabindo.pillai@amd.com>
+    drm/amd/display: Add misc DC changes for DCN401
 
-## Test result summary
-total: 58550, pass: 51683, fail: 321, skip: 6498, xfail: 48
+Niklas Cassel <cassel@kernel.org>
+    Revert "ata: libata-scsi: Honor the D_SENSE bit for CK_COND=1 and no error"
 
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 102 total, 96 passed, 6 failed
-* arm64: 27 total, 22 passed, 5 failed
-* i386: 15 total, 12 passed, 3 failed
-* mips: 20 total, 20 passed, 0 failed
-* parisc: 3 total, 0 passed, 3 failed
-* powerpc: 24 total, 24 passed, 0 failed
-* s390: 6 total, 6 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 23 total, 18 passed, 5 failed
+Sean Young <sean@mess.org>
+    media: Revert "media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()"
 
-## Test suites summary
-* boot
-* kunit
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-smoketest
-* ltp-syscalls
-* ltp-tracing
-* rcutorture
+Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+    drm/amdgpu/display: Fix null pointer dereference in dc_stream_program_cursor_position
 
---
-Linaro LKFT
-https://lkft.linaro.org
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Solve mst monitors blank out problem after resume
+
+Kees Cook <kees@kernel.org>
+    binfmt_flat: Fix corruption when not offsetting data start
+
+Gergo Koteles <soyer@irl.hu>
+    platform/x86: ideapad-laptop: add a mutex to synchronize VPC commands
+
+Gergo Koteles <soyer@irl.hu>
+    platform/x86: ideapad-laptop: move ymc_trigger_ec from lenovo-ymc
+
+Gergo Koteles <soyer@irl.hu>
+    platform/x86: ideapad-laptop: introduce a generic notification chain
+
+Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+    platform/x86/amd/pmf: Fix to Update HPD Data When ALS is Disabled
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: usb: Fix UBSAN warning in parse_audio_unit()
+
+Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+    fs/ntfs3: Do copy_to_user out of run_lock
+
+Pei Li <peili.dev@gmail.com>
+    jfs: Fix shift-out-of-bounds in dbDiscardAG
+
+Edward Adam Davis <eadavis@qq.com>
+    jfs: fix null ptr deref in dtInsertEntry
+
+Willem de Bruijn <willemb@google.com>
+    fou: remove warn in gue_gro_receive on unsupported protocol
+
+Chao Yu <chao@kernel.org>
+    f2fs: fix to cover read extent cache access with lock
+
+Chao Yu <chao@kernel.org>
+    f2fs: fix to do sanity check on F2FS_INLINE_DATA flag in inode during GC
+
+yunshui <jiangyunshui@kylinos.cn>
+    bpf, net: Use DEV_STAT_INC()
+
+Simon Trimmer <simont@opensource.cirrus.com>
+    ASoC: cs35l56: Patch CS35L56_IRQ1_MASK_18 to the default value
+
+WangYuli <wangyuli@uniontech.com>
+    nvme/pci: Add APST quirk for Lenovo N60z laptop
+
+Huacai Chen <chenhuacai@kernel.org>
+    LoongArch: Define __ARCH_WANT_NEW_STAT in unistd.h
+
+Fangzhi Zuo <jerry.zuo@amd.com>
+    drm/amd/display: Prevent IPX From Link Detect and Set Mode
+
+Harry Wentland <harry.wentland@amd.com>
+    drm/amd/display: Separate setting and programming of cursor
+
+Wayne Lin <wayne.lin@amd.com>
+    drm/amd/display: Defer handling mst up request in resume
+
+Kees Cook <kees@kernel.org>
+    exec: Fix ToCToU between perm check and set-uid/gid usage
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/loongarch/include/uapi/asm/unistd.h           |   1 +
+ drivers/ata/libata-scsi.c                          |  15 ++-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  14 +-
+ .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |   6 +
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c    |   6 +-
+ drivers/gpu/drm/amd/display/dc/core/dc_stream.c    |  94 ++++++++-----
+ drivers/gpu/drm/amd/display/dc/dc_stream.h         |   8 ++
+ .../drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c    |   2 +-
+ drivers/media/usb/dvb-usb/dvb-usb-init.c           |  35 +----
+ drivers/nvme/host/pci.c                            |   7 +
+ drivers/platform/x86/Kconfig                       |   1 +
+ drivers/platform/x86/amd/pmf/spc.c                 |  32 ++---
+ drivers/platform/x86/ideapad-laptop.c              | 148 ++++++++++++++++++---
+ drivers/platform/x86/ideapad-laptop.h              |   9 ++
+ drivers/platform/x86/lenovo-ymc.c                  |  60 +--------
+ fs/binfmt_flat.c                                   |   4 +-
+ fs/exec.c                                          |   8 +-
+ fs/f2fs/extent_cache.c                             |  50 +++----
+ fs/f2fs/f2fs.h                                     |   2 +-
+ fs/f2fs/gc.c                                       |  10 ++
+ fs/f2fs/inode.c                                    |  10 +-
+ fs/jfs/jfs_dmap.c                                  |   2 +
+ fs/jfs/jfs_dtree.c                                 |   2 +
+ fs/ntfs3/frecord.c                                 |  75 ++++++++++-
+ net/core/filter.c                                  |   8 +-
+ net/ipv4/fou_core.c                                |   2 +-
+ sound/soc/codecs/cs35l56-shared.c                  |   1 +
+ sound/usb/mixer.c                                  |   7 +
+ 29 files changed, 411 insertions(+), 212 deletions(-)
+
+
