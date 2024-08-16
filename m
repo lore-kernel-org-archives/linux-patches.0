@@ -1,103 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964351BF32C;
-	Fri, 16 Aug 2024 18:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90321BF32F
+	for <patches@lists.linux.dev>; Fri, 16 Aug 2024 19:34:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723832163; cv=none; b=fdMr68sdHmZuqOcqYyOvLAq6CxSgDj7dAvoub6Ur/pnd8N2VFZWuX1MEKypGtG695+qDt3lglY0rY+qKKMEW9M+30jgxHqKIB0HYO1usCN+EM54dnRrXeYTLTcD/2WlVCCO+Fwc8NsI019SWGsYO0T8usCx5dkBDjaplcqFBK3A=
+	t=1723836888; cv=none; b=qf1rZpfuXCtYTgTkTqePaNQcf0pQU1YUYvJC2x7f9PiXOEmplB6E3AxTxJvMxU0Bz8XC/bMtAx8g9K8bE3GSw7aSnYeGMVAJFpUcrrZRaqs4IbvmG3iBJsWsmnDjX06luQU909L9UQKQk+iEoPfyxbJ18KMEXUMEEFSPgA3BErY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723832163; c=relaxed/simple;
-	bh=s13dFs+2zXKyXsfVO3/wT4TtdOpwfmNUKmCcTjIlGKk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tzKA3BQG5yxv1Xghpt2C/cicjeGYwSF7sHAh+M/aiChkG3N3Zatj6megne5ToqphUMlbkB9ftFOEJwF8H3P9EOdmkI3Xvkk2WZ8M5VyeLUCgrnFUfn6kmXXt2JiStWkFyfWywW/W1b1lxExBcPcdDDUvjjn5ekACUWoCZnlYDUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SVycFNK8; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SVycFNK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8D2C32782;
-	Fri, 16 Aug 2024 18:15:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723832163;
-	bh=s13dFs+2zXKyXsfVO3/wT4TtdOpwfmNUKmCcTjIlGKk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=SVycFNK8rNFB0ited7aUBZ0GFv7uMM71RSmL1X5INtj3zCzCRMYN1QeoKCdFzjsXD
-	 FnbjCxDyHEl0OPq2vxraMuW8Jm7E8rt2aeuiP66KirlMHtdNFCzDeHQ7GEPGiMkz6y
-	 /5bCKgosMJrg8TbifmyX0V7zh67Cf2Jy4lj9r5J+ikOFitL8yTr1uAClQau9Yw2G7q
-	 poUuD9sVbFBikHvvIOgA7DPWvSgO9a1RIO/iDoDGNg4dPPS/Izolqlbdg6mdhXN31V
-	 6bid/Mia8aQnTkHNgPgeCAqtkQ4PUSPK6nnLa3qtWMyQjY2WYYNNmqzkhrEFKYbZlZ
-	 FEUgrKWz9sLxQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Zixing Liu <zixing.liu@canonical.com>,
-	William Grant <wgrant@ubuntu.com>,
-	Kees Cook <kees@kernel.org>
-Subject: [RFC PATCH] docs: rust: quick-start: add Ubuntu
-Date: Fri, 16 Aug 2024 20:15:45 +0200
-Message-ID: <20240816181545.45789-1-ojeda@kernel.org>
+	s=arc-20240116; t=1723836888; c=relaxed/simple;
+	bh=cG9IFK24Xt85Di46e93qIxn3NtGFyMASqg7UK3yFink=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eHPUPQCpMJN2ylk/nM2YNfR+vyuu0w1bGkG34v79QvAKv73ZISJyVUiSMB+7E/gNsA/Txav1PALdwY9wA3mK3uDB1KBgPOCbPJ2D4CBOijWo7q8l8EoL6qoQjzL+tSxZAPuxK1dP6Cdawoih4xQIHFLhkhqkoobkZvxdhCQ6GVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 3D3531C00A1; Fri, 16 Aug 2024 21:34:38 +0200 (CEST)
+Date: Fri, 16 Aug 2024 21:34:37 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/350] 5.10.224-rc2 review
+Message-ID: <Zr+pzUSX97GvJEyG@duo.ucw.cz>
+References: <20240816101509.001640500@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-Ubuntu has changed their maintenance model for Rust toolchains and is
-now providing recent Rust releases in their releases, including both
-LTS and non-LTS (interim) releases.
-
-Therefore, add instructions to the Quick Start guide for Ubuntu like
-for the other distributions.
-
-Cc: Zixing Liu <zixing.liu@canonical.com>
-Cc: William Grant <wgrant@ubuntu.com>
-Cc: Kees Cook <kees@kernel.org>
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-This is a potential patch for the future -- Ubuntu Oracular (future
-release) works today, but the Rust versioned releases are not backported
-(yet?). If Ubuntu ends up deciding to backport them, which would be
-amazing, or at least when they start to appear in an actual release,
-then we can apply this. Thanks William & Zixing!
-
- Documentation/rust/quick-start.rst | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
-index d06a36106cd4..af39c8e13558 100644
---- a/Documentation/rust/quick-start.rst
-+++ b/Documentation/rust/quick-start.rst
-@@ -87,6 +87,19 @@ they should generally work out of the box, e.g.::
- 	zypper install rust rust1.79-src rust-bindgen clang
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UdEPW0NgBQK0hZOt"
+Content-Disposition: inline
+In-Reply-To: <20240816101509.001640500@linuxfoundation.org>
 
 
-+Ubuntu
-+******
-+
-+Ubuntu LTS and non-LTS (interim) releases provide recent Rust releases and thus
-+they should generally work out of the box, e.g.::
-+
-+	apt install rustc-1.80 rust-1.80-src bindgen-0.65 rustfmt-1.80 rust-1.80-clippy
-+
-+``RUST_LIB_SRC`` needs to be set when using the versioned packages, e.g.::
-+
-+	RUST_LIB_SRC=/usr/src/rustc-$(rustc-1.80 --version | cut -d' ' -f2)/library
-+
-+
- Requirements: Building
- ----------------------
+--UdEPW0NgBQK0hZOt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Hi!
 
-base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
---
-2.46.0
+> This is the start of the stable review cycle for the 5.10.224 release.
+> There are 350 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
+
+(5.15.165-rc2 (aff234a5be72) passes test, too)
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--UdEPW0NgBQK0hZOt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZr+pzQAKCRAw5/Bqldv6
+8vfQAJ449THy2kV2W5zR8B5nbVSpzoJh1wCfcPp7Bmvk3m3QuS/EVGUvYKkvw2o=
+=Quay
+-----END PGP SIGNATURE-----
+
+--UdEPW0NgBQK0hZOt--
