@@ -1,201 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A2F15B137;
-	Fri, 16 Aug 2024 09:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FA213B593;
+	Fri, 16 Aug 2024 09:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723801343; cv=none; b=YimcGqD3V9odnVapQEm4RT70pHmzpDh5EiCBZJoP6wMe02E5svEnbKI1sfhKJYJINougLs6ZkhCmOYs6ndvXwiCupdgWYSIn/M0P1j1gXFoz2Pef6YHiy+AFVk6L6CgpE5HaSL3lnPUVY3KWrDzjlTKwjZlpo5XVg19Xs1Am62g=
+	t=1723801702; cv=none; b=gsCTld6dJWhMhuoUbMN7kh1b4oArgGTbEzlCTLjtLpGLxGTKQV5ozgvqKawehNy7ajZrRchunQhTtei7+XPXxAmUEWlqbem0hYh3gosL9KL1MIeJd9MmmuvYAlosxsUFRmVGV3zh8HNKXcfZY9YQWvhsKxcXZcfwPDyt2EJhhdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723801343; c=relaxed/simple;
-	bh=OYqwcZqnZpNks8CzBZ7ajhgFTlIh+5nhXDp5hCIfGNc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LrqsZ8HGJQVly+d7wA8oCErMBxIhp7qT7i4OT+FOp/E2Kj4fEZb4O8pA7u+f3/I0pZFHxgFH93f4a7J/9AAw4ZIN4zBXWh/oVePt63J/Fmpw/V9ZYB92EKkNHA2/rVqi0P4Q4aRexcTXJLydQKWq2Hogp8q/IrhdYfCaK3dvVTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+d7xG9e; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1723801702; c=relaxed/simple;
+	bh=a0uI29Rrg46AFPMyjA/f3FnswrQyuxSGeP9ofblJ61U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m8fh49e+cHtVylJ2SUuKKPO48umUd8sG12KHm9a74BskrqhwEHj1KWhD1Mybz7I3wvZtlgvrNNjZFskdhcr2hDtqtks2inszCJH5osdNkS/dFbEbGFoeDz0yxU+GPMyZ54/NQG4T9EhgR2HiJN73xEIu2dycCRDiywy3e6qDZfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYmpYN9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+d7xG9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B80BC4AF0E;
-	Fri, 16 Aug 2024 09:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYmpYN9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0062C32782;
+	Fri, 16 Aug 2024 09:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723801342;
-	bh=OYqwcZqnZpNks8CzBZ7ajhgFTlIh+5nhXDp5hCIfGNc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=j+d7xG9eJiw8fNq2+w+a+XmxxOgbloU4quQskdNHj6sxhi4Gbzo/SDN+yWniGRd6a
-	 j/QWQ78aei4KqLC0bFD60g1Vhog+atHBpN+LF/NTwZu7jT7KkZPeHQ/INxI1pHvyh7
-	 VtLhyzTyl0VdiWlLdGJiDw0dEdY9CU1gQ9sP14yY=
+	s=korg; t=1723801701;
+	bh=a0uI29Rrg46AFPMyjA/f3FnswrQyuxSGeP9ofblJ61U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SYmpYN9DN9WPHu7GpCHhVgyQlurMGL5MANDjELdjZL1RLER4I5YutkHhNdQFaQo+d
+	 icVUPO2FMiBZU5I3tRRwjvDoUcq7+6zfH4anDw0r1fbA7FkufGOF+YwTXG/yTPI8VT
+	 pJ8WX5ad1epE2m7vFfS/wk9pUyW2/iCk+d39P+u0=
+Date: Fri, 16 Aug 2024 11:48:17 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.10 00/25] 6.10.6-rc2 review
-Date: Fri, 16 Aug 2024 11:42:18 +0200
-Message-ID: <20240816085226.888902473@linuxfoundation.org>
-X-Mailer: git-send-email 2.46.0
+To: Anders Roxell <anders.roxell@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	linux-s390@vger.kernel.org
+Subject: Re: [PATCH 5.15 000/484] 5.15.165-rc1 review
+Message-ID: <2024081650-smashup-botch-95ea@gregkh>
+References: <20240815131941.255804951@linuxfoundation.org>
+ <CADYN=9LRUpKMbBebjkcy3qo3O_1UFevA=x90SGZQ7ja5FXHG3w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.6-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.10.6-rc2
-X-KernelTest-Deadline: 2024-08-18T08:52+00:00
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADYN=9LRUpKMbBebjkcy3qo3O_1UFevA=x90SGZQ7ja5FXHG3w@mail.gmail.com>
 
-This is the start of the stable review cycle for the 6.10.6 release.
-There are 25 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+On Fri, Aug 16, 2024 at 10:52:35AM +0200, Anders Roxell wrote:
+> On Thu, 15 Aug 2024 at 15:40, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 5.15.165 release.
+> > There are 484 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sat, 17 Aug 2024 13:18:17 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.165-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> The following S390 build failed on stable-rc 5.15.y with gcc-12 and clang due
+> to following warnings and errors [1].
+> 
+> s390:
+>   build:
+>     * gcc-8-defconfig-fe40093d
+>     * gcc-12-defconfig
+>     * clang-18-defconfig
+> 
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Bisect point to 85cf9455e504 ("KVM: s390: pv: avoid stalls when making
+> pages secure")
+> as the problematic commit [ Upstream commit
+> f0a1a0615a6ff6d38af2c65a522698fb4bb85df6 ].
+> 
+> Build log:
+> ------
+> arch/s390/kernel/uv.c: In function 'expected_folio_refs':
+> arch/s390/kernel/uv.c:184:15: error: implicit declaration of function
+> 'folio_mapcount'; did you mean 'total_mapcount'?
+> [-Werror=implicit-function-declaration]
+>   184 |         res = folio_mapcount(folio);
+>       |               ^~~~~~~~~~~~~~
+>       |               total_mapcount
+> arch/s390/kernel/uv.c:185:13: error: implicit declaration of function
+> 'folio_test_swapcache' [-Werror=implicit-function-declaration]
+>   185 |         if (folio_test_swapcache(folio)) {
+>       |             ^~~~~~~~~~~~~~~~~~~~
+> arch/s390/kernel/uv.c:187:20: error: implicit declaration of function
+> 'folio_mapping'; did you mean 'no_idmapping'?
+> [-Werror=implicit-function-declaration]
+>   187 |         } else if (folio_mapping(folio)) {
+>       |                    ^~~~~~~~~~~~~
+>       |                    no_idmapping
+> arch/s390/kernel/uv.c:189:26: error: invalid use of undefined type
+> 'struct folio'
+>   189 |                 if (folio->private)
+>       |                          ^~
+> 
 
-Responses should be made by Sun, 18 Aug 2024 08:52:13 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.6-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-and the diffstat can be found below.
-
-thanks,
+Oops, no folio support in 5.10.y or 5.15.y, I'll go drop these patches
+and push out -rc2 releases, thanks for the report!
 
 greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.10.6-rc2
-
-Aurabindo Pillai <aurabindo.pillai@amd.com>
-    drm/amd/display: Add misc DC changes for DCN401
-
-Niklas Cassel <cassel@kernel.org>
-    Revert "ata: libata-scsi: Honor the D_SENSE bit for CK_COND=1 and no error"
-
-Sean Young <sean@mess.org>
-    media: Revert "media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()"
-
-Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-    drm/amdgpu/display: Fix null pointer dereference in dc_stream_program_cursor_position
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Solve mst monitors blank out problem after resume
-
-Kees Cook <kees@kernel.org>
-    binfmt_flat: Fix corruption when not offsetting data start
-
-Gergo Koteles <soyer@irl.hu>
-    platform/x86: ideapad-laptop: add a mutex to synchronize VPC commands
-
-Gergo Koteles <soyer@irl.hu>
-    platform/x86: ideapad-laptop: move ymc_trigger_ec from lenovo-ymc
-
-Gergo Koteles <soyer@irl.hu>
-    platform/x86: ideapad-laptop: introduce a generic notification chain
-
-Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-    platform/x86/amd/pmf: Fix to Update HPD Data When ALS is Disabled
-
-Takashi Iwai <tiwai@suse.de>
-    ALSA: usb: Fix UBSAN warning in parse_audio_unit()
-
-Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-    fs/ntfs3: Do copy_to_user out of run_lock
-
-Pei Li <peili.dev@gmail.com>
-    jfs: Fix shift-out-of-bounds in dbDiscardAG
-
-Edward Adam Davis <eadavis@qq.com>
-    jfs: fix null ptr deref in dtInsertEntry
-
-Willem de Bruijn <willemb@google.com>
-    fou: remove warn in gue_gro_receive on unsupported protocol
-
-Chao Yu <chao@kernel.org>
-    f2fs: fix to cover read extent cache access with lock
-
-Chao Yu <chao@kernel.org>
-    f2fs: fix to do sanity check on F2FS_INLINE_DATA flag in inode during GC
-
-yunshui <jiangyunshui@kylinos.cn>
-    bpf, net: Use DEV_STAT_INC()
-
-Simon Trimmer <simont@opensource.cirrus.com>
-    ASoC: cs35l56: Patch CS35L56_IRQ1_MASK_18 to the default value
-
-WangYuli <wangyuli@uniontech.com>
-    nvme/pci: Add APST quirk for Lenovo N60z laptop
-
-Huacai Chen <chenhuacai@kernel.org>
-    LoongArch: Define __ARCH_WANT_NEW_STAT in unistd.h
-
-Fangzhi Zuo <jerry.zuo@amd.com>
-    drm/amd/display: Prevent IPX From Link Detect and Set Mode
-
-Harry Wentland <harry.wentland@amd.com>
-    drm/amd/display: Separate setting and programming of cursor
-
-Wayne Lin <wayne.lin@amd.com>
-    drm/amd/display: Defer handling mst up request in resume
-
-Kees Cook <kees@kernel.org>
-    exec: Fix ToCToU between perm check and set-uid/gid usage
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/loongarch/include/uapi/asm/unistd.h           |   1 +
- drivers/ata/libata-scsi.c                          |  15 ++-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  14 +-
- .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |   6 +
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c    |   6 +-
- drivers/gpu/drm/amd/display/dc/core/dc_stream.c    |  94 ++++++++-----
- drivers/gpu/drm/amd/display/dc/dc_stream.h         |   8 ++
- .../drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c    |   2 +-
- drivers/media/usb/dvb-usb/dvb-usb-init.c           |  35 +----
- drivers/nvme/host/pci.c                            |   7 +
- drivers/platform/x86/Kconfig                       |   1 +
- drivers/platform/x86/amd/pmf/spc.c                 |  32 ++---
- drivers/platform/x86/ideapad-laptop.c              | 148 ++++++++++++++++++---
- drivers/platform/x86/ideapad-laptop.h              |   9 ++
- drivers/platform/x86/lenovo-ymc.c                  |  60 +--------
- fs/binfmt_flat.c                                   |   4 +-
- fs/exec.c                                          |   8 +-
- fs/f2fs/extent_cache.c                             |  50 +++----
- fs/f2fs/f2fs.h                                     |   2 +-
- fs/f2fs/gc.c                                       |  10 ++
- fs/f2fs/inode.c                                    |  10 +-
- fs/jfs/jfs_dmap.c                                  |   2 +
- fs/jfs/jfs_dtree.c                                 |   2 +
- fs/ntfs3/frecord.c                                 |  75 ++++++++++-
- net/core/filter.c                                  |   8 +-
- net/ipv4/fou_core.c                                |   2 +-
- sound/soc/codecs/cs35l56-shared.c                  |   1 +
- sound/usb/mixer.c                                  |   7 +
- 29 files changed, 411 insertions(+), 212 deletions(-)
-
-
