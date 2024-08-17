@@ -1,109 +1,103 @@
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA7511187;
-	Sat, 17 Aug 2024 13:04:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300DB14F12F
+	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 13:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723899895; cv=none; b=VIt+zLTCYl/LVLb7hPO6gtsymsQ+YO0/oBiHBCD+QsWD9gMci/pY0MLLLd6HRePLm9H8Vtxk0HrPrzv4Vnw/cNt3LOuOYg34O98d4dj32lkg6syvqLUH37nCyyCnU/Smhr1MnNfZNZuZGQEE8dCOWBU9sglJ+yVhcVh+NYOwEZQ=
+	t=1723901313; cv=none; b=oZbeSFvp1qe4+A9oV4EV3ky8f5AZL3hZ7VJTBuATDi9S506ZpOr03kQasU0EUcH7n7zfsYh1+ltkgErPahlFDcDDydwMHnhhZHP1RY7Y2WLGIqw4jvMIKje9kDQWds0tAak8eSuNGkZybYQd9zB60RMAHpe4WhU0NF6CmNiQGQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723899895; c=relaxed/simple;
-	bh=JZM8n8x+g7qMtmOd0SazR3cDaPmkuaJQzeNaeIE0dq8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=twQjXTaSDbsFsuGEjyiw7qSqU+yKJeW4/zK4wQJviO+m/iAclgEksvwu/n7xELw3v1ZzOjOJFu9nq4jHsP+AzAzd0FOkBFUcVLDMAYe6DVK2IlG6t7+r30VEVZ4zo8POmuEfXln0Ad46fdu7m0eT+NRzjtBfNQcRloXOSWYhwXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=o7bH7Vwh; arc=none smtp.client-ip=194.63.252.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
+	s=arc-20240116; t=1723901313; c=relaxed/simple;
+	bh=bG7amRFd1SeXww/sW3fHII8B50Zcx0B+0CeTFObVS5k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CxzqggWvxoZa4Bas48ixeZy2zwZ43Oj9YqvD0J1AR4Um8dVdKbmLP24uaDBmXsc8f+0csJVy+jgOJ2Mfy6qbG8ZW5WvsXlsUs3/ctCRREbjZ7U2Z3V/hrDEfCcpYA2KPPEDIAA3MZM7du9kXqwrFYtfZX7FB/d9N3QeYGi2MQ4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T65b1/Xe; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="o7bH7Vwh"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
-	s=ds202307; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:
-	MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=/Dt+vJQWOKJTjuhMKbvYgOKGXnEc+DToKh1gi8tXf1U=; b=o7bH7Vwh5q/EcfqpCJwKbpjXIk
-	7fUra0YsHU5cLrF2PCDtdo7rwnboFRQ1PHxUxZ9DxJcR5nFW4K2q8wGyrdDL2K/g1VfYzK7CvUrjz
-	6qGx/aaER4duegBZr9KYzTYam1AS2l5OKzC5vQ4nErpWAV6t3sCMcNzHODyPpS80j6kuheQKJ65em
-	jo6BVpz5+dENNmxBJ8ulptaM+zftmhcSJb73SQeGrbg4iwXeQ4tk+OkUX8KlQPV2xy9As3RlZ9XPk
-	l5LIjgQ/h4uSCX+ahueSXjNsIm+PWoJJeiwU2a2kc/ZQi18fJLgZjN5Rwp405y36Wq76OvGyFRaJz
-	Td3QW+xA==;
-Received: from [2001:9e8:9db:8201:3235:adff:fed0:37e6] (port=53842 helo=lindesnes.fjasle.eu)
-	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <nicolas@fjasle.eu>)
-	id 1sfJ6p-00DWQe-Oa;
-	Sat, 17 Aug 2024 15:04:43 +0200
-Date: Sat, 17 Aug 2024 15:04:39 +0200
-From: Nicolas Schier <nicolas@fjasle.eu>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 4/6] kbuild: rust: rebuild if the version text changes
-Message-ID: <20240817-cute-doberman-from-shambhala-6f42db@lindesnes>
-References: <20240808221138.873750-1-ojeda@kernel.org>
- <20240808221138.873750-5-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T65b1/Xe"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-7a103ac7be3so2034763a12.3
+        for <patches@lists.linux.dev>; Sat, 17 Aug 2024 06:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723901309; x=1724506109; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w46CrKlXMkRvz2M8MkwLOk4U12EJHFtMw4PTZouv2zI=;
+        b=T65b1/XeJ1fSfoPJFhwhIpsGWk9SHwz83W37Y07gU0Alrk3gFN0QFOyzGBtc37vGjI
+         ApCBhBNor7dD3DpKTsTnYT5BGm1yWRTUVahaWpj7vzM0V1ezErTkzGgAKfVRu0fCUAP2
+         7hPmImkaQA5UE2ICflkfHNfEqen4/6WvfYDiirg4wVkZBJduIWxQqI6TIc+u4j9LtNWY
+         Oozrg4QjoUS70073p+oMh6uR3H5fmAWVF9J1m8/dUz2h/T0ilXF3doVBNbUAlP4VLpqP
+         2USHUnLs9qHS06QWNBI/VjjtTw/ajHsgcWICR1gf52sNWDqKoQAtSScCXdHEUQQJib0R
+         HxFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723901309; x=1724506109;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w46CrKlXMkRvz2M8MkwLOk4U12EJHFtMw4PTZouv2zI=;
+        b=KxuGunOdwyvXcIqR7CQRS/Ke9dJwEfkg/3WQwJJs9PlblP9BoQzGA02OLBkyK2IExx
+         HZFfaJEAb3/S9xLArVIZ/u2t8RaNpGpHKBh+SZHBQt46oO6Q8cYO9Cg6Z+bvqaQGD1tt
+         jFIGH+PhKkhF9pQySdrqJBsyRW/qd7jDhguWrmbjSTJxA/JYT9o/Uc9PekI9Tpxea4b5
+         YmogkUiRQ92nOIAkQbpF5W8eCmgZ72ro/vKJWbkMESSH2JfpqHNvNVWrMXu4l7iH3seE
+         ug4VJXzEfLAt0xaSrP6yuY4cRqbuKt9MaPmUOITjunhgqZ75g7Ykoo1pHfsPpjl1ohWZ
+         r/AA==
+X-Forwarded-Encrypted: i=1; AJvYcCWHKVOOvbRK/Ao8/Xf0lbmhQmzLzi9G3dN8P+5x587jWQuq97rEu22s/aVGXxbA9CJcUeZ3iQUj4Mz4onhslhdwpG6yNJME5Q==
+X-Gm-Message-State: AOJu0YwS8u1TFgHRniaxgC4Ve5huFmVLIQy7bugeMVlqhVtF8P6bNw4U
+	JE3TFEIG3qV0+kM1x2laQ72aanBAjsznG63ZzBjc9WO1T3+zJ3nJ2C7Ea2YXi0nE8vrd2a2vAyY
+	x0eiPvA+Klr7TmFfZg6PcosLgHyI=
+X-Google-Smtp-Source: AGHT+IGkwUrq5cvtbg90rMni5kEuQpodzfRuOoYIc/r9GruV5MgAJHDJJ62APn+dxgexiydViJ0S2Xi0JWt3Vguy0T0=
+X-Received: by 2002:a17:90a:ad93:b0:2c9:b72:7a1f with SMTP id
+ 98e67ed59e1d1-2d3e00f324cmr5497946a91.28.1723901309226; Sat, 17 Aug 2024
+ 06:28:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240808221138.873750-5-ojeda@kernel.org>
+References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-4-ojeda@kernel.org>
+ <20240817-heavy-dancing-whale-6ae13d@lindesnes>
+In-Reply-To: <20240817-heavy-dancing-whale-6ae13d@lindesnes>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 17 Aug 2024 15:28:16 +0200
+Message-ID: <CANiq72n60=dKdsu0X3CWLaCkEhnAHMuwRZZpwhiJMGkt0aGyUw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] kbuild: rust: re-run Kconfig if the version text changes
+To: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 09, 2024 at 12:11:36AM +0200, Miguel Ojeda wrote:
-> Now that `RUSTC_VERSION_TEXT` exists, use it to rebuild `core` when the
-> version text changes (which in turn will trigger a rebuild of all the
-> kernel Rust code).
-> 
-> This also applies to proc macros (which only work with the `rustc` that
-> compiled them), via the already existing dependency on `core.o`. That
-> is cleaned up in the next commit.
-> 
-> However, this does not cover host programs written in Rust, which is
-> the same case in the C side.
-> 
-> This is accomplished by referencing directly the generated file, instead
-> of using the `fixdep` header trick, since we cannot change the Rust
-> standard library sources. This is not too much of a burden, since it
-> only needs to be done for `core`.
-> 
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> Masahiro: I used `$(objtree)` here since we still use it in the rest of
-> this `Makefile`, but please let me know if you prefer otherwise. Thanks!
-> 
->  rust/Makefile | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/rust/Makefile b/rust/Makefile
-> index 6c0644b6090c..966743a9ee25 100644
-> --- a/rust/Makefile
-> +++ b/rust/Makefile
-> @@ -370,7 +370,8 @@ $(obj)/core.o: private skip_clippy = 1
->  $(obj)/core.o: private skip_flags = -Wunreachable_pub
->  $(obj)/core.o: private rustc_objcopy = $(foreach sym,$(redirect-intrinsics),--redefine-sym $(sym)=__rust$(sym))
->  $(obj)/core.o: private rustc_target_flags = $(core-cfgs)
-> -$(obj)/core.o: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
-> +$(obj)/core.o: $(RUST_LIB_SRC)/core/src/lib.rs \
-> +    $(wildcard $(objtree)/include/config/RUSTC_VERSION_TEXT) FORCE
->  	+$(call if_changed_dep,rustc_library)
->  ifneq ($(or $(CONFIG_X86_64),$(CONFIG_X86_32)),)
->  $(obj)/core.o: scripts/target.json
-> --
-> 2.46.0
+On Sat, Aug 17, 2024 at 2:58=E2=80=AFPM Nicolas Schier <nicolas@fjasle.eu> =
+wrote:
+>
+> If you send a v2, mind you consider reformatting so that this comment
+> block stays <=3D 80 chars?
 
-Looks good to me, but I'd prefer something like the suggestion from
-Masahiro:
-https://lore.kernel.org/linux-kbuild/CAK7LNAQBG0nDupXSgAAk-6nOqeqGVkr3H1RjYaqRJ1OxmLm6xA@mail.gmail.com/
+Sure.
+
+> Do we already support rust in external kernel modules?  In top-level
+
+If you mean out-of-tree modules, then yeah, they should generally work
+(at least I test the build with a trivial one regularly, but perhaps
+it is missing something), although they are not the highest priority.
+
+> Makefile's oot-kmod 'prepare' target we check that the compiler
+> (version) is the same as when the kernel itself was built.  If rust
+> modules are supported, adding a similar check might be helpful.
+
+That is a good point, I will take a look.
+
+> Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+
+Thanks!
+
+Cheers,
+Miguel
