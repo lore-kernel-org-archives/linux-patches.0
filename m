@@ -1,66 +1,66 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411498F40
-	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 15:38:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA62B66E
+	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 15:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723909139; cv=none; b=EQtHDX0AY2eijhaIZ7R4aVycbGwtWMVNSux43FvnPakermNlpYo6oVQNEB5JPxmkEPDmitUojxluJDIbYEmKesQtb/GsSXznTNZkGXMRFMDNLRyEk0mnTZpPMl+XdxtcHgkkLzLMZ+QVNsv5MlsCWSWiGI6NbJ5NxH7V3H6WWhk=
+	t=1723909203; cv=none; b=OCmPPBiiMkbFro1lyBmomtK5aMnL6iEv37UvHtmOWtWzXAc4VNjsYboQKmO/ZL2h+kJH1l2Pv+68vMPoJPIbCWy4uXUUKXFW9i89XlKi3E5SfdFoBvCAOS0HtCqlYVCWvgwc9rzyrlZuWUPW3U0OqIe+wF5jk/10Yk8yjZkPFBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723909139; c=relaxed/simple;
-	bh=wfAAaM0jmClhgcfNpIqUuc7ylHCMJJf9rVgMANon+bw=;
+	s=arc-20240116; t=1723909203; c=relaxed/simple;
+	bh=+tzeaKbZ3wXqBh2YX5z2yPeSMdZb1tAgkHcCAOIOSOs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cr99m+f0IUq1tKtb3IHNGnGl+jMDqpRxajXMNXXN5+ADmne/wAFRWEEIVUtOBTqDjbf5sF2QSTMCJIHpeD6/3HyGGpjDcSRExRVTz/A7i/fAx54DaV/jekqk9obz+pGYin+F9YaCOqdkvyiE2KvF0db50/pPIPuV53tCMaPH4Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FjkhuFco; arc=none smtp.client-ip=209.85.219.52
+	 To:Cc:Content-Type; b=O69raeyfkaYPSoTzTknlszgQK6heD5OW2EdfaoaXOSBODq8jSPrH4TBhlhV43Lav7R+vw7wip2yGiyCU7niwlMGlej49H/u7di+PE4/pkYrs43yLqgFzF+zBKyt2YzvUUgjiHwlL66SnOCqJ6aW5LXOQhEt3c2JJsNdynyGJDac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=syS2v/UN; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FjkhuFco"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6bf7b48d2feso11947446d6.0
-        for <patches@lists.linux.dev>; Sat, 17 Aug 2024 08:38:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="syS2v/UN"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6bf6e17cc2bso15717686d6.1
+        for <patches@lists.linux.dev>; Sat, 17 Aug 2024 08:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723909136; x=1724513936; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1723909200; x=1724514000; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZoUZ7+obYFa+U1vF9E6Yb2bjaEAB/EzTa0GZe5T7Ig8=;
-        b=FjkhuFco1fkTf8jaBk1Pe2MdxiFWMJyIY5aEtt/Uneb5uSs4Dzhr+Ui6Sd4adaI5RM
-         /hzW6olE5IyVvtZm/UDtRApc/peLqYXYJwgihfi+nXKwjFYMkaZhdug63p28KIuyhKer
-         rkluIiry+RkBkNP6evkkGDzhFmR7MB7HtsB/voyejJT0d/zBtByyTPGZW9q7j2aKEjfC
-         dnjEKAvONyJk9qBGLda+Q1tUq9TYxY4FkEwbFBXiYuI31a+sUMJpk9moR2pxLt7FXfxW
-         I8jTYvlTylQ1FbEusRcTX5Wn4gRYTabqRwHKPSpYTMQp4aIzKsdwGYPUW0/0di93pMBl
-         3YGg==
+        bh=CNBm3qjSy5qMMK53bE87AwOPaQn+kCh2D9IAJ17szRY=;
+        b=syS2v/UN+GRbFqbv2OslaZn8zk1em0SGcdwEFfSIFzgCEjjZIDHaNj5sbx/vrQL6Sk
+         GfsbxuCbt/QLY+HMZJ4a6MH0+RGIP/eNWh5E+aHFicXy8rrRMZTJYR47nTxTtC11uW6Y
+         S72AkoewcbM9IuyFwPPiUG12u9Z743cRJM4LJo+oMLpU6B3ArXChHwRDVo1PRJd6y2qT
+         t/gwt2roa8jUh/7HwqS86L1KbbwS2UgZC85wcZp1Ys84/tYvJFKpvcKsoX2nifT89rnS
+         6P4ocquuvBZmtkN/qZuv/x6Jk37DmZpQZLUs8OVVWwpEE3MaSH9Kilea7ySUuR/nv/bB
+         NBhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723909136; x=1724513936;
+        d=1e100.net; s=20230601; t=1723909200; x=1724514000;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZoUZ7+obYFa+U1vF9E6Yb2bjaEAB/EzTa0GZe5T7Ig8=;
-        b=wFiCgOAGPAew1TlK2XsGmwqyLSISYKUdKduhxq4CsI+7xfgXgoPabQZirRoCOFmdeG
-         pHInmKKD2w+Yk5tGaQVzgpJLjxxhWRUgV+RfrR3JftMw3KJEXw6IXKi9TFEL+yRUVwlq
-         AORQap79weOPRNd1bjxlSPy/KF7t1OS+mIEERFY0PStwPhIbkMfwlfCtytViKMUBoPIY
-         8ErCruYtYNdQgivC1wT+zL/kLmQ44qtCZoVrmRBXqBQLHdwGh/I2B8pTBhSaJviOJY5G
-         HU/Mv9d4qJYMRWzBvpuEOheRfCxSA31MoUVpZI611Y3U8H/yj/qut3kWI7uKWSzyZWim
-         EMag==
-X-Forwarded-Encrypted: i=1; AJvYcCVYQaJ1qVg7FtFmUvBKahVgBV/3Z9GPGUzgHxGEWqxmmKwjDTEoH9k1CD+zp86tmohbLR19WxmMBYQqg1iXlycmtwqU49Rn2Q==
-X-Gm-Message-State: AOJu0YyiUPxoMFB5p8Lg6WpKcZe2IFv451Zm7nyCmDBHkQpcIF+pW8N3
-	lHKeqE1m8B6xCzEDJM9vz4H+SVZ7qw+9tTOJaSDMTfY8mMSpC3/RloTCi7ipSOZR0Sa0/Lgh7kO
-	buhcRs3He7uVwCteQaU8ZDfel3BGxdukSFiWh7g==
-X-Google-Smtp-Source: AGHT+IGWz/aKYGezzhbX6UXoOIF2JUqK+K21v1uQbtz1JesDM2Ox49UG4VMgItHLMr5GzA1WLluSrMoJtabTMk3wpwI=
-X-Received: by 2002:a05:6214:469f:b0:6bf:7aa3:84ac with SMTP id
- 6a1803df08f44-6bf7cd86401mr77277006d6.9.1723909136016; Sat, 17 Aug 2024
- 08:38:56 -0700 (PDT)
+        bh=CNBm3qjSy5qMMK53bE87AwOPaQn+kCh2D9IAJ17szRY=;
+        b=PcsM0GfzsPMuB9hgIkVNI28vAw7gX7xBtci4V4U7OkZ6M5wobDUpdK8ERf6vW+xijz
+         DFSyL0d5lbRLzBW2o4JKTGD2HpaDOBmT7pY2YQ32Y0fCq1JTAPK7JbkHQelBF3hYjJOH
+         8sn6f3hyqXrEBqRS+TX4I7XKnl34a2cs8toRzQLNpOT9WiHRmA2sou+ULoDHZkHwttz3
+         prH8onCdQICnlKzymjAv8IeFQX3ciJGzbtLF7VmY9PA5DttHsz3bvSYcc7RWfAEzqPia
+         1oxCiQEBY4Spup8SA0esjhiQB7UwUrQb7gZPs9jOpu0DqQlglHoUlEPsgrJbbZmIcG7N
+         0IWg==
+X-Forwarded-Encrypted: i=1; AJvYcCUMmmPbUEUv0PPXxBD2vhZeQs0iY3AAJ+BnMUSK+MLKDRbKq1EhO4om0f7MSK6r8NTRM9dcZkZwlRqzzLvaWahSionXqvtJig==
+X-Gm-Message-State: AOJu0YyhFGkcE7ognPSt9CdDc0kFyicUzXZFXu4u6fZVejItPX8Nfndp
+	GaRrao/YG37DiE0qQn489FXZXddGsACaW4hTrI33aG30sORl5I8BUDAJNY7qMvo+KQmWLKq5Pho
+	zc8FIvNnoooXIaD2JbeOMXILdvWpwpE9XEcjb7w==
+X-Google-Smtp-Source: AGHT+IEadpRL8Jv6RZt+8WVKsffMlrSHeIJHNVZpBdeFc3pSSRb+C20YqvoECyKpXKPIZnw7z37bSTAoeYIB6ZLpoTA=
+X-Received: by 2002:a05:6214:498d:b0:6b5:4aa9:9686 with SMTP id
+ 6a1803df08f44-6bf7ced6631mr86203366d6.42.1723909199600; Sat, 17 Aug 2024
+ 08:39:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240817075228.220424500@linuxfoundation.org>
-In-Reply-To: <20240817075228.220424500@linuxfoundation.org>
+References: <20240817074737.217182940@linuxfoundation.org>
+In-Reply-To: <20240817074737.217182940@linuxfoundation.org>
 From: Anders Roxell <anders.roxell@linaro.org>
-Date: Sat, 17 Aug 2024 17:38:44 +0200
-Message-ID: <CADYN=9J-7HS62eKTgda-kU=JCz3ck=UXfaYk1XTK5jXuybpo7A@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/479] 5.15.165-rc3 review
+Date: Sat, 17 Aug 2024 17:39:48 +0200
+Message-ID: <CADYN=9++QDcougZ_xJOLf8otPOrrFcwaJe_gL7ZYmmw6gDXWmg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/345] 5.10.224-rc3 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -71,28 +71,28 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 17 Aug 2024 at 10:00, Greg Kroah-Hartman
+On Sat, 17 Aug 2024 at 09:51, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.15.165 release.
-> There are 479 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.224 release.
+> There are 345 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Mon, 19 Aug 2024 07:51:05 +0000.
+> Responses should be made by Mon, 19 Aug 2024 07:46:32 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.165-rc3.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.224-rc3.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-The following S390 build failed on stable-rc 5.15.y with gcc-12 and clang due
+The following S390 build failed on stable-rc 5.10.y with gcc-12 and clang due
 to following warnings and errors [1].
 
 s390:
@@ -104,88 +104,89 @@ s390:
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-The bisect points to 5af75585e330 ("s390/pci: Rework MSI descriptor walk")
+The bisect points to 34a325f5a22f ("s390/pci: Do not mask MSI[-X]
+entries on teardown")
 as the problematic commit [ Upstream commit
 2ca5e908d0f4cde61d9d3595e8314adca5d914a1 ].
 
 Build log:
 --------
 /builds/linux/arch/s390/pci/pci_irq.c: In function 'arch_setup_msi_irqs':
-/builds/linux/arch/s390/pci/pci_irq.c:328:9: error: implicit
+/builds/linux/arch/s390/pci/pci_irq.c:298:9: error: implicit
 declaration of function 'msi_for_each_desc'; did you mean
 'bus_for_each_dev'? [-Werror=implicit-function-declaration]
-  328 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
+  298 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
       |         ^~~~~~~~~~~~~~~~~
       |         bus_for_each_dev
-/builds/linux/arch/s390/pci/pci_irq.c:328:44: error:
+/builds/linux/arch/s390/pci/pci_irq.c:298:44: error:
 'MSI_DESC_NOTASSOCIATED' undeclared (first use in this function)
-  328 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
+  298 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
       |                                            ^~~~~~~~~~~~~~~~~~~~~~
-/builds/linux/arch/s390/pci/pci_irq.c:328:44: note: each undeclared
+/builds/linux/arch/s390/pci/pci_irq.c:298:44: note: each undeclared
 identifier is reported only once for each function it appears in
-/builds/linux/arch/s390/pci/pci_irq.c:328:67: error: expected ';'
+/builds/linux/arch/s390/pci/pci_irq.c:298:67: error: expected ';'
 before '{' token
-  328 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
+  298 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
       |                                                                   ^~
       |                                                                   ;
-/builds/linux/arch/s390/pci/pci_irq.c:301:17: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:271:17: warning: unused variable
 'irq' [-Wunused-variable]
-  301 |         int rc, irq;
+  271 |         int rc, irq;
       |                 ^~~
-/builds/linux/arch/s390/pci/pci_irq.c:300:13: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:270:13: warning: unused variable
 'cpu_addr' [-Wunused-variable]
-  300 |         int cpu_addr;
+  270 |         int cpu_addr;
       |             ^~~~~~~~
-/builds/linux/arch/s390/pci/pci_irq.c:298:24: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:268:24: warning: unused variable
 'msg' [-Wunused-variable]
-  298 |         struct msi_msg msg;
+  268 |         struct msi_msg msg;
       |                        ^~~
-/builds/linux/arch/s390/pci/pci_irq.c:295:56: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:265:56: warning: unused variable
 'cpu' [-Wunused-variable]
-  295 |         unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
+  265 |         unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
       |                                                        ^~~
-/builds/linux/arch/s390/pci/pci_irq.c:295:53: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:265:53: warning: unused variable
 'i' [-Wunused-variable]
-  295 |         unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
+  265 |         unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
       |                                                     ^
-/builds/linux/arch/s390/pci/pci_irq.c:295:39: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:265:39: warning: unused variable
 'irqs_per_msi' [-Wunused-variable]
-  295 |         unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
+  265 |         unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
       |                                       ^~~~~~~~~~~~
 /builds/linux/arch/s390/pci/pci_irq.c: In function 'arch_teardown_msi_irqs':
-/builds/linux/arch/s390/pci/pci_irq.c:395:44: error:
+/builds/linux/arch/s390/pci/pci_irq.c:371:44: error:
 'MSI_DESC_ASSOCIATED' undeclared (first use in this function)
-  395 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
+  371 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
       |                                            ^~~~~~~~~~~~~~~~~~~
-/builds/linux/arch/s390/pci/pci_irq.c:395:64: error: expected ';'
+/builds/linux/arch/s390/pci/pci_irq.c:371:64: error: expected ';'
 before '{' token
-  395 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
+  371 |         msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
       |                                                                ^~
       |                                                                ;
-/builds/linux/arch/s390/pci/pci_irq.c:386:22: warning: unused variable
+/builds/linux/arch/s390/pci/pci_irq.c:359:22: warning: unused variable
 'i' [-Wunused-variable]
-  386 |         unsigned int i;
+  359 |         unsigned int i;
       |                      ^
 cc1: some warnings being treated as errors
 
 
 Build log link:
 --------
-[1] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.164-480-g2a66d0cb3772/testrun/24903946/suite/build/test/gcc-12-defconfig/log
+[1] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.223-346-g2810e3a9f5d6/testrun/24902188/suite/build/test/gcc-12-defconfig/log
 
 metadata:
 --------
-* kernel: 5.15.165-rc3
+* kernel: 5.10.224-rc3
 * git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 2a66d0cb377282f04abd41b09fbbbdebdf39e5ea
-* git describe: v5.15.164-480-g2a66d0cb3772
+* git commit: 2810e3a9f5d69d54c8932173cfbd380f16d36b5a
+* git describe: v5.10.223-346-g2810e3a9f5d6
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.164-480-g2a66d0cb3772
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.223-346-g2810e3a9f5d6
 * arch: s390
 * toolchain: gcc-12, clang
-* config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2kmLyVVnghC9nRUIBEQn4Vg2fzy/config
+* config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2kmIhNosE42gaZLyeRO6utnwevO/config
 * download_url:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2kmLyVVnghC9nRUIBEQn4Vg2fzy/
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2kmIhNosE42gaZLyeRO6utnwevO/
 
 --
 Linaro LKFT
