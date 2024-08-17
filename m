@@ -1,68 +1,68 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300DB14F12F
-	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 13:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB67714B07E
+	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 13:36:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723901313; cv=none; b=oZbeSFvp1qe4+A9oV4EV3ky8f5AZL3hZ7VJTBuATDi9S506ZpOr03kQasU0EUcH7n7zfsYh1+ltkgErPahlFDcDDydwMHnhhZHP1RY7Y2WLGIqw4jvMIKje9kDQWds0tAak8eSuNGkZybYQd9zB60RMAHpe4WhU0NF6CmNiQGQ8=
+	t=1723901804; cv=none; b=lXGGpgGecTZBlP1ROa/EhVDvjX6tPzzdLj0lpi7EV9G3xaUaMQox94/tEW8P90HrYzKPi+iLkgw1c+EgYeU2QbgQUfLPXDWnhx+zLrDbm72QtqiMJP8o2zyvQzW8X2BMbiouyrFDqKmtRppgz4mFOYv5qfb00YgVdyAHLpmaM6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723901313; c=relaxed/simple;
-	bh=bG7amRFd1SeXww/sW3fHII8B50Zcx0B+0CeTFObVS5k=;
+	s=arc-20240116; t=1723901804; c=relaxed/simple;
+	bh=sy0AB5iz17nq7kNmhns+GwjqlSVrmhHMr067N4apBBQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CxzqggWvxoZa4Bas48ixeZy2zwZ43Oj9YqvD0J1AR4Um8dVdKbmLP24uaDBmXsc8f+0csJVy+jgOJ2Mfy6qbG8ZW5WvsXlsUs3/ctCRREbjZ7U2Z3V/hrDEfCcpYA2KPPEDIAA3MZM7du9kXqwrFYtfZX7FB/d9N3QeYGi2MQ4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T65b1/Xe; arc=none smtp.client-ip=209.85.215.180
+	 To:Cc:Content-Type; b=U0ccxOYczSVSRosDYdJ7UKK3ddbtY98AMKqU867kx/Zd5YQV8VKRV6NcZz/cZDqktivn9pPmr+Bmx19x+h6cQvY61uhnF6yMS/4Nzn+uHASTpiNlnoDGq/Wre+lw+1EucMEOvVy3pTgR3mflZ3J7lGLIPHKxkB8cKR+v4E84/AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CF/xLvQC; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T65b1/Xe"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-7a103ac7be3so2034763a12.3
-        for <patches@lists.linux.dev>; Sat, 17 Aug 2024 06:28:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CF/xLvQC"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-70f5ef740b7so2577077b3a.2
+        for <patches@lists.linux.dev>; Sat, 17 Aug 2024 06:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723901309; x=1724506109; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1723901802; x=1724506602; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w46CrKlXMkRvz2M8MkwLOk4U12EJHFtMw4PTZouv2zI=;
-        b=T65b1/XeJ1fSfoPJFhwhIpsGWk9SHwz83W37Y07gU0Alrk3gFN0QFOyzGBtc37vGjI
-         ApCBhBNor7dD3DpKTsTnYT5BGm1yWRTUVahaWpj7vzM0V1ezErTkzGgAKfVRu0fCUAP2
-         7hPmImkaQA5UE2ICflkfHNfEqen4/6WvfYDiirg4wVkZBJduIWxQqI6TIc+u4j9LtNWY
-         Oozrg4QjoUS70073p+oMh6uR3H5fmAWVF9J1m8/dUz2h/T0ilXF3doVBNbUAlP4VLpqP
-         2USHUnLs9qHS06QWNBI/VjjtTw/ajHsgcWICR1gf52sNWDqKoQAtSScCXdHEUQQJib0R
-         HxFw==
+        bh=sy0AB5iz17nq7kNmhns+GwjqlSVrmhHMr067N4apBBQ=;
+        b=CF/xLvQCd8vmLrxSm/6XWjOZqM/t5lWXFEWYc1ljapYJdjzzdelCVHgQBcCrZL3h38
+         +QbZrBmF9fyLq1vFPxK5CdQuDoJHXHwb5btMhQRKvd69UwKIem2wdicDj+3W5GuyjsBp
+         ILsTTmn3zJwekyVu+RFP/z2EM8ctAkLglQGfMEdVplOsX/lk2vgzjmaa8agDafhjFqWC
+         R1KIBEVAe2R9u4Zbb1bJtBXnC/PIOK3qCNm22rss/ZY6EMNppXcDS87VmMWTkqZL+iSN
+         bFaf9lMfkymzLvN7S1TA8h1NZv/4qkQLlr1ljKCBhWejnNnUnuweXSv/5OLHYCB0Y6DA
+         sT9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723901309; x=1724506109;
+        d=1e100.net; s=20230601; t=1723901802; x=1724506602;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w46CrKlXMkRvz2M8MkwLOk4U12EJHFtMw4PTZouv2zI=;
-        b=KxuGunOdwyvXcIqR7CQRS/Ke9dJwEfkg/3WQwJJs9PlblP9BoQzGA02OLBkyK2IExx
-         HZFfaJEAb3/S9xLArVIZ/u2t8RaNpGpHKBh+SZHBQt46oO6Q8cYO9Cg6Z+bvqaQGD1tt
-         jFIGH+PhKkhF9pQySdrqJBsyRW/qd7jDhguWrmbjSTJxA/JYT9o/Uc9PekI9Tpxea4b5
-         YmogkUiRQ92nOIAkQbpF5W8eCmgZ72ro/vKJWbkMESSH2JfpqHNvNVWrMXu4l7iH3seE
-         ug4VJXzEfLAt0xaSrP6yuY4cRqbuKt9MaPmUOITjunhgqZ75g7Ykoo1pHfsPpjl1ohWZ
-         r/AA==
-X-Forwarded-Encrypted: i=1; AJvYcCWHKVOOvbRK/Ao8/Xf0lbmhQmzLzi9G3dN8P+5x587jWQuq97rEu22s/aVGXxbA9CJcUeZ3iQUj4Mz4onhslhdwpG6yNJME5Q==
-X-Gm-Message-State: AOJu0YwS8u1TFgHRniaxgC4Ve5huFmVLIQy7bugeMVlqhVtF8P6bNw4U
-	JE3TFEIG3qV0+kM1x2laQ72aanBAjsznG63ZzBjc9WO1T3+zJ3nJ2C7Ea2YXi0nE8vrd2a2vAyY
-	x0eiPvA+Klr7TmFfZg6PcosLgHyI=
-X-Google-Smtp-Source: AGHT+IGkwUrq5cvtbg90rMni5kEuQpodzfRuOoYIc/r9GruV5MgAJHDJJ62APn+dxgexiydViJ0S2Xi0JWt3Vguy0T0=
-X-Received: by 2002:a17:90a:ad93:b0:2c9:b72:7a1f with SMTP id
- 98e67ed59e1d1-2d3e00f324cmr5497946a91.28.1723901309226; Sat, 17 Aug 2024
- 06:28:29 -0700 (PDT)
+        bh=sy0AB5iz17nq7kNmhns+GwjqlSVrmhHMr067N4apBBQ=;
+        b=QU+tUTJdlUk2Bc/6k1JH/UL0aNEJD0yGFFEOXIi7mbkKkuDgEHC9cV2V+2qEuhchJO
+         n/az0VP8h+EodGBVEfWTAWpzprEdtd7lQYkkcUwJTQdCJhVWT6PIKAGBloGfCYDfzSgV
+         iF26+8Dz2nd+ZHSO48ule7VuYexWuEh97g0jSEAPjZh905/lH8RnA0exZW+MZvmLoJ3e
+         XRqhreIiMhvRRbShh37ENZbeBozGKrhHJQTZpCdtwZZUXTo32JV8byTuyvn0Z9aXI/7V
+         BAN7eAMm8ds2id73IRjXz7vkJVvmAI0IvgjwtzfkcDTCNv4N59EOvCPpBM+zefxXLI9v
+         IEUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXvO5FtyL1DbhyiIeilwAQQn6PnFE+9zMELklCihT4oXOX4aOW6fK9obQe7UXUK3gsxH2SLV19U6OaudiFBSlF09GcZ12jhnQ==
+X-Gm-Message-State: AOJu0YzuEFn0iTcDGBHrNd99kRujU+377LVMquiUgKzMM/G4hVaoCNR5
+	nkiV5AJ06bPoI2i+HXP/DyAhW2pRJokuF3Zv7DdP0H0sPdDII19HKF8G22rbJEaMLgCXBZesYKm
+	UwOblW3hYpu/9uhKQstB8LikLI+Y=
+X-Google-Smtp-Source: AGHT+IH/hAp1t7BLkopNdMC3iXYCzXWGKQyV4QJtUVk6UoW9M5nliQEfLvAArDP6hc6F2iZYvVyk4QhK2eWdtQtYbpo=
+X-Received: by 2002:a05:6a20:c88a:b0:1c8:92ed:7c5c with SMTP id
+ adf61e73a8af0-1c905027bafmr7184681637.35.1723901801891; Sat, 17 Aug 2024
+ 06:36:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-4-ojeda@kernel.org>
- <20240817-heavy-dancing-whale-6ae13d@lindesnes>
-In-Reply-To: <20240817-heavy-dancing-whale-6ae13d@lindesnes>
+References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-5-ojeda@kernel.org>
+ <20240817-cute-doberman-from-shambhala-6f42db@lindesnes>
+In-Reply-To: <20240817-cute-doberman-from-shambhala-6f42db@lindesnes>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 17 Aug 2024 15:28:16 +0200
-Message-ID: <CANiq72n60=dKdsu0X3CWLaCkEhnAHMuwRZZpwhiJMGkt0aGyUw@mail.gmail.com>
-Subject: Re: [PATCH 3/6] kbuild: rust: re-run Kconfig if the version text changes
+Date: Sat, 17 Aug 2024 15:36:30 +0200
+Message-ID: <CANiq72nkBoiLUDQjBZi57OYwMpnH8D5Q4wR7XKWMry+mdwFOHw@mail.gmail.com>
+Subject: Re: [PATCH 4/6] kbuild: rust: rebuild if the version text changes
 To: Nicolas Schier <nicolas@fjasle.eu>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Wedson Almeida Filho <wedsonaf@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
@@ -75,29 +75,18 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 17, 2024 at 2:58=E2=80=AFPM Nicolas Schier <nicolas@fjasle.eu> =
+On Sat, Aug 17, 2024 at 3:04=E2=80=AFPM Nicolas Schier <nicolas@fjasle.eu> =
 wrote:
 >
-> If you send a v2, mind you consider reformatting so that this comment
-> block stays <=3D 80 chars?
+> Looks good to me, but I'd prefer something like the suggestion from
+> Masahiro:
+> https://lore.kernel.org/linux-kbuild/CAK7LNAQBG0nDupXSgAAk-6nOqeqGVkr3H1R=
+jYaqRJ1OxmLm6xA@mail.gmail.com/
 
-Sure.
+Do you mean for `core` (here), or for `macros` (in the next commit)?
+(if you mean for `core`, please see my reply to Masahiro there).
 
-> Do we already support rust in external kernel modules?  In top-level
-
-If you mean out-of-tree modules, then yeah, they should generally work
-(at least I test the build with a trivial one regularly, but perhaps
-it is missing something), although they are not the highest priority.
-
-> Makefile's oot-kmod 'prepare' target we check that the compiler
-> (version) is the same as when the kernel itself was built.  If rust
-> modules are supported, adding a similar check might be helpful.
-
-That is a good point, I will take a look.
-
-> Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-
-Thanks!
+Thanks for taking a look!
 
 Cheers,
 Miguel
