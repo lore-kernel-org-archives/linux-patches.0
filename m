@@ -1,164 +1,186 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8940012CDB6
-	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 05:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A4F20E6;
+	Sat, 17 Aug 2024 07:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723874273; cv=none; b=PJshbA44KNXNEOScg4J1WGncFuXXx7+BNVeuCL7g5q3JcCyfkTZKZbCKPYdfBr3+AbzLl1RafdO8Bv3EXOyLBeH9qF4P1XdaAfMdEbErFnsugDb5+kq03sgn8Y5Q5+U387TFVKEimuc6HuazBFSbNYnhEW+Owow29M1s7WXUXx0=
+	t=1723878609; cv=none; b=QaOnqOcSJMT2IK+A8AqoWNf603iq85tT/lGn/6XpidVK9XGBOhulCkuCyY70+Szcdz+aL48DlXurxDX52c/Ij44FVbyTgxr4t77nZCKVYZqaKk7hAxUShP5A/2zCaGG6UTbm/IiBwvLu48l8wZ2KhvNA5DJF8tl7Vpl4TbUh5GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723874273; c=relaxed/simple;
-	bh=L6/kkT9rKApXwS91JQDNsORr/X1GI+rDEPlBF/B/ELo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MJKRo/dlQxuhB5hjk3DXTBZ7v5b7WgcncctfhuSllg8Q+odQHk+RTWUrH55O5RGF+vTo0pWqNYR8MhbygINO7/3nCNkrtC3Vc2LztjmmGUzan74HmuXD1eAK6y3oEQyu2lnBReTWzYGYMDENNEeBCtGvJG01IHbpPQ2nSFsw9RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=npmGRmUE; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1723878609; c=relaxed/simple;
+	bh=tIqCjtm+/HuN2gETnbefaJy4X5JoZecAjfCwKAX8KZQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JKGAW2Ozz3vi6QZdJ4QVMebmZakCnWUxKH3gq0YkZ2ElTmLwXtneJtX8H04blwhdBw4XR0gkoLyDWfThAGGwPUhxI3RtQnybzb4Uxk1F81FHPc0cfnLbx+YPfaz4i6/u5tHdmwJyGzA/zN/3JHcVp/KbREmdBgMqhtrJMLRzFQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ojTOqX66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="npmGRmUE"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6bf7a2035d9so18376386d6.1
-        for <patches@lists.linux.dev>; Fri, 16 Aug 2024 22:57:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723874270; x=1724479070; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lu4Nl0GB1iED2MWCr04OB+Jfo3hv8Ww3jPrNd67fLNQ=;
-        b=npmGRmUEEYm0uv2cw/QZ+CWcB4TpGc8mfgGuKGraf5pYiq53hoawg/oxeaDHUABSmu
-         ExWq9QMNXLlH/lUleKn2kp3JcnCvU2jUalOp3jgxW4yNuVwf8z5SQMq6S+oe2TlmFE8q
-         XRE4TYcAmc1vzx3BeBqIEgV5DBl5QdHPA6czrQ5y/aar6uaYs8YrMhLh/VkZLvb13Q7c
-         S8K6j1dn7Jtbf12EWyZs1wyYIC9fEMsmOHsQMGJX8qqthuOdZoHujUSwh+5rmQh14oap
-         rSYu1FsxaRoL7wC/4ETcTLasvkyJD8Ne4PISXiq7r64Z8P4huHtXhMkTrzBYuxb4W2qJ
-         uwag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723874270; x=1724479070;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lu4Nl0GB1iED2MWCr04OB+Jfo3hv8Ww3jPrNd67fLNQ=;
-        b=Is9QFLOhJkw93lgQelcD99us0/iesTs4IPaSsS7dETv55eV+NVjgMvUxEMJL2y2Fv9
-         gIHZMKCI0+5UPelo9givfIZwJpY2nJ4RfvwL13Sv4J2YLcWUmhS6C22oEp2DdZwZLMw8
-         x2lGPCw+OeC4RvF7o07EPCDFIgZSTZO3ainDNlJnNW+05niPXE+3JITK0x18oIz8rDLK
-         aKlEwvXZPuye6yr7sluYUUdU1UxXI5SAU3hpFUKV5xg7X53oQu7tWuFhwR4CZoP/VFb7
-         ec1ZFAsB0WWdog5tM6aoNo/agdZkI81tz7hZNR9Kb5+aI8Pglb0/W5rXepAr6CEg43ka
-         0PhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVAJgHeSNasz/sqopv6BirnhkgrADc6tvzWMBqBJjcvdrdfZrGSg+OnlLuguac7e7obew5jXfNmmfHHDh18v91GWdES1hnLjQ==
-X-Gm-Message-State: AOJu0YwUyaHZDvV64Q/6NTmkpQz3LXxEprWD+ngofwr+9XD8ranXh59V
-	esrWfCG+1GqW5km5geAIAs4bYjRBadUNwRp+7C+DOLPHZV8S4PTDFLi0BHD/adABWSz/oCo/ESv
-	OAuTa3YNz6adM1a3okUHR9kH/Gof63dIHudKP1aETk1QDvAVhePJXKw==
-X-Google-Smtp-Source: AGHT+IE+sUu9pWEuBlQvuPiIymkPTnth27ELlW5XvrnyJPCs70aN5KVC2LtEGJ+bMm2rNvH1MKufn+f3an7JwP3laYM=
-X-Received: by 2002:a05:6214:1c48:b0:6b5:2062:dd5c with SMTP id
- 6a1803df08f44-6bf6dd61a57mr140443316d6.8.1723874270359; Fri, 16 Aug 2024
- 22:57:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ojTOqX66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32824C116B1;
+	Sat, 17 Aug 2024 07:10:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723878608;
+	bh=tIqCjtm+/HuN2gETnbefaJy4X5JoZecAjfCwKAX8KZQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ojTOqX66Z8jB8mmsfZqdgbj8FuEDxLkczwk27xkChaO7KbKMLY50m0xV6lNNjh3UA
+	 WfadxEb7KQrZB0dW1pIrH6Zi4d7B3dNPRUD7b2apezmSrL0qDj7oUdwa7P3hLAQNeg
+	 X4SAClVqyKRBpN+w9gn7BjWWvhf4DljsK5xsh7arFoBs+XXQo+hOFJAFVEFGJaf7um
+	 6Pm41d7WRqZGG1N7BPmmNkrWZ6jQNztqQivjW3r7/RTMD3+etTMz0o4rfW+F5sNK+A
+	 gnoZdsmTfiljMCMcNSpBKEHxXYrXUUSw/+wpDbapwAZQMwef931TWevZYR5zBWb+ke
+	 d2f7bG8JFxM0g==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Ali Bektas <bektasali@protonmail.com>,
+	Lukas Wirth <lukastw97@gmail.com>
+Subject: [RFC PATCH] rust: use the hidden variant of `rust-project.json`
+Date: Sat, 17 Aug 2024 09:09:55 +0200
+Message-ID: <20240817070955.75717-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240816101509.001640500@linuxfoundation.org>
-In-Reply-To: <20240816101509.001640500@linuxfoundation.org>
-From: Anders Roxell <anders.roxell@linaro.org>
-Date: Sat, 17 Aug 2024 07:57:39 +0200
-Message-ID: <CADYN=9+gT_me8D_+KtWqmS9_vZg7=dTat90dPCNSieSjq9sFXg@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/350] 5.10.224-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Claudio Imbrenda <imbrenda@linux.ibm.com>, linux-s390@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, 16 Aug 2024 at 12:22, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.224 release.
-> There are 350 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 18 Aug 2024 10:14:04 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.224-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Very soon after we requested it [1], `rust-analyzer` added support for
+`.rust-project.json` [2], i.e. the hidden variant of `.rust-project.json`.
 
-The following S390 build failed on stable-rc 5.10.y with gcc-12 and clang due
-to following warnings and errors [1].
+While this is only a (tiny) issue for kernel developers that use Rust
+(i.e. so far a very small number compared to the total), the file is not
+really something most kernel developers need to see, care or modify while
+working, so it is not really needed to show it by default in listings.
 
-s390:
-  build:
-    * gcc-8-defconfig-fe40093d
-    * gcc-12-defconfig
-    * clang-18-defconfig
+It also follows the pattern of other files that are not directly related
+to the project (unlike e.g. a `Kconfig` file).
 
+Thus migrate to it.
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Cc: Ali Bektas <bektasali@protonmail.com>
+Cc: Lukas Wirth <lukastw97@gmail.com>
+Link: https://github.com/rust-lang/rust-analyzer/issues/17816 [1]
+Link: https://github.com/rust-lang/rust-analyzer/pull/17818 [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+This is a patch for the future -- we need to wait until most Rust kernel
+developers are using a new enough version of rust-analyzer. Thanks Ali
+& Lukas!
 
-The bisect points to 0fbb54ce4bff ("KVM: s390: pv: avoid stalls when
-making pages secure")
-as the problematic commit [ Upstream commit
-f0a1a0615a6ff6d38af2c65a522698fb4bb85df6 ].
+ .gitignore                         | 2 +-
+ Documentation/rust/quick-start.rst | 2 +-
+ Makefile                           | 8 ++++----
+ rust/Makefile                      | 2 +-
+ scripts/generate_rust_analyzer.py  | 2 +-
+ scripts/remove-stale-files         | 2 ++
+ 6 files changed, 10 insertions(+), 8 deletions(-)
 
-Build log:
---------
-/builds/linux/arch/s390/kernel/uv.c: In function 'make_page_secure':
-/builds/linux/arch/s390/kernel/uv.c:240:19: error: 'UVC_CC_OK'
-undeclared (first use in this function)
-  240 |         if (cc == UVC_CC_OK)
-      |                   ^~~~~~~~~
-/builds/linux/arch/s390/kernel/uv.c:240:19: note: each undeclared
-identifier is reported only once for each function it appears in
-/builds/linux/arch/s390/kernel/uv.c:242:24: error: 'UVC_CC_BUSY'
-undeclared (first use in this function); did you mean 'SIGP_CC_BUSY'?
-  242 |         else if (cc == UVC_CC_BUSY || cc == UVC_CC_PARTIAL)
-      |                        ^~~~~~~~~~~
-      |                        SIGP_CC_BUSY
-/builds/linux/arch/s390/kernel/uv.c:242:45: error: 'UVC_CC_PARTIAL'
-undeclared (first use in this function)
-  242 |         else if (cc == UVC_CC_BUSY || cc == UVC_CC_PARTIAL)
-      |                                             ^~~~~~~~~~~~~~
-/builds/linux/arch/s390/kernel/uv.c: In function 'should_export_before_import':
-/builds/linux/arch/s390/kernel/uv.c:270:40: error: 'mm_context_t' has
-no member named 'protected_count'
-  270 |         return atomic_read(&mm->context.protected_count) > 1;
-      |                                        ^
-/builds/linux/arch/s390/kernel/uv.c:271:1: error: control reaches end
-of non-void function [-Werror=return-type]
-  271 | }
-      | ^
-cc1: some warnings being treated as errors
-make[3]: *** [/builds/linux/scripts/Makefile.build:286:
-arch/s390/kernel/uv.o] Error 1
+diff --git a/.gitignore b/.gitignore
+index 7902adf4f7f1..a79fc2a71c62 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -176,4 +176,4 @@ x509.genkey
+ sphinx_*/
 
+ # Rust analyzer configuration
+-/rust-project.json
++/.rust-project.json
+diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
+index d06a36106cd4..02f9dee6d236 100644
+--- a/Documentation/rust/quick-start.rst
++++ b/Documentation/rust/quick-start.rst
+@@ -259,7 +259,7 @@ The `rust-analyzer <https://rust-analyzer.github.io/>`_ language server can
+ be used with many editors to enable syntax highlighting, completion, go to
+ definition, and other features.
 
-Build log link:
---------
-[1] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.223-351-g470450f8c61c/testrun/24890569/suite/build/test/gcc-12-defconfig/log
+-``rust-analyzer`` needs a configuration file, ``rust-project.json``, which
++``rust-analyzer`` needs a configuration file, ``.rust-project.json``, which
+ can be generated by the ``rust-analyzer`` Make target::
 
-metadata:
---------
-* kernel: 5.10.224-rc2
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 470450f8c61c0d2248174891cb188c5378eb5d22
-* git describe: v5.10.223-351-g470450f8c61c
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.223-351-g470450f8c61c
-* arch: s390
-* toolchain: gcc-12, clang
-* config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2kjlITR0fntaWX0F0o4bJ62HPb6/config
-* download_url:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2kjlITR0fntaWX0F0o4bJ62HPb6/
+ 	make LLVM=1 rust-analyzer
+diff --git a/Makefile b/Makefile
+index 0a364e34f50b..9ef90963330c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1483,7 +1483,7 @@ endif # CONFIG_MODULES
+ CLEAN_FILES += vmlinux.symvers modules-only.symvers \
+ 	       modules.builtin modules.builtin.modinfo modules.nsdeps \
+ 	       compile_commands.json rust/test \
+-	       rust-project.json .vmlinux.objs .vmlinux.export.c
++	       .rust-project.json .vmlinux.objs .vmlinux.export.c
 
+ # Directories & files removed with 'make mrproper'
+ MRPROPER_FILES += include/config include/generated          \
+@@ -1621,7 +1621,7 @@ help:
+ 	@echo  '		    (requires kernel .config)'
+ 	@echo  '  rusttest        - Runs the Rust tests'
+ 	@echo  '                    (requires kernel .config; downloads external repos)'
+-	@echo  '  rust-analyzer	  - Generate rust-project.json rust-analyzer support file'
++	@echo  '  rust-analyzer	  - Generate .rust-project.json rust-analyzer support file'
+ 	@echo  '		    (requires kernel .config)'
+ 	@echo  '  dir/file.[os]   - Build specified target only'
+ 	@echo  '  dir/file.rsi    - Build macro expanded source, similar to C preprocessing.'
+@@ -1809,7 +1809,7 @@ help:
+ 	@echo  '  modules         - default target, build the module(s)'
+ 	@echo  '  modules_install - install the module'
+ 	@echo  '  clean           - remove generated files in module directory only'
+-	@echo  '  rust-analyzer	  - generate rust-project.json rust-analyzer support file'
++	@echo  '  rust-analyzer	  - generate .rust-project.json rust-analyzer support file'
+ 	@echo  ''
+
+ ifndef CONFIG_MODULES
+@@ -1958,7 +1958,7 @@ quiet_cmd_tags = GEN     $@
+ tags TAGS cscope gtags: FORCE
+ 	$(call cmd,tags)
+
+-# Generate rust-project.json (a file that describes the structure of non-Cargo
++# Generate .rust-project.json (a file that describes the structure of non-Cargo
+ # Rust projects) for rust-analyzer (an implementation of the Language Server
+ # Protocol).
+ PHONY += rust-analyzer
+diff --git a/rust/Makefile b/rust/Makefile
+index 1f10f92737f2..311675e97332 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -351,7 +351,7 @@ rust-analyzer:
+ 		--cfgs='core=$(core-cfgs)' --cfgs='alloc=$(alloc-cfgs)' \
+ 		$(realpath $(srctree)) $(realpath $(objtree)) \
+ 		$(RUST_LIB_SRC) $(KBUILD_EXTMOD) > \
+-		$(if $(KBUILD_EXTMOD),$(extmod_prefix),$(objtree))/rust-project.json
++		$(if $(KBUILD_EXTMOD),$(extmod_prefix),$(objtree))/.rust-project.json
+
+ redirect-intrinsics = \
+ 	__addsf3 __eqsf2 __gesf2 __lesf2 __ltsf2 __mulsf3 __nesf2 __unordsf2 \
+diff --git a/scripts/generate_rust_analyzer.py b/scripts/generate_rust_analyzer.py
+index f270c7b0cf34..8b3a063b7c34 100755
+--- a/scripts/generate_rust_analyzer.py
++++ b/scripts/generate_rust_analyzer.py
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+-"""generate_rust_analyzer - Generates the `rust-project.json` file for `rust-analyzer`.
++"""generate_rust_analyzer - Generates the `.rust-project.json` file for `rust-analyzer`.
+ """
+
+ import argparse
+diff --git a/scripts/remove-stale-files b/scripts/remove-stale-files
+index f38d26b78c2a..1e8c3278a133 100755
+--- a/scripts/remove-stale-files
++++ b/scripts/remove-stale-files
+@@ -21,3 +21,5 @@ set -e
+ # then will be really dead and removed from the code base entirely.
+
+ rm -f *.spec
++
++rm -f rust-project.json
+
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
 --
-Linaro LKFT
-https://lkft.linaro.org
+2.46.0
