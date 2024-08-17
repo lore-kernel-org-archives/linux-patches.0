@@ -1,81 +1,96 @@
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1323B66E;
-	Sat, 17 Aug 2024 15:50:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9A88BE8
+	for <patches@lists.linux.dev>; Sat, 17 Aug 2024 16:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723909816; cv=none; b=NDv+OoUnIhhimVG3LCluy9QqurM3U5tG2QSptkRNq+Mz80apTIXp1g7mgnt4Th89XmDBxnZyNa4MScf2d6QiqyMW2R1r4HPnPk8Zntu868ea4MI6yPqZ2nki8Xg4D5hq+6xJycOgIFnjM/l2RExJs+NPTQZUiKsfMujvNMpDvMo=
+	t=1723911743; cv=none; b=kDollRGYOwOgdYu5S8za7XgXpA0UbTsTdR7oZgoU0Je03REC2lvCxubzuU4vZdaRD//hiaYVRZ94uQybBlz1QoUabB/6b8jYEbhRZJuVezML3Bvm5J6lMgbjKjkGsZGtGTTYL3MePfC6Mc9B3xarTtdOzaoRHHfHHU9lHNtiUn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723909816; c=relaxed/simple;
-	bh=Zl0ChTncPMNN6mk6yeaJjrVWBKqPdcuuKU+3vckHno4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rxUeIrDiR1jSPh7oB/QIj3z+ds6YZVSz50p5z3XduLx54wE7jJublReJax49qZ9oQGrfQmPe93QYJd0yltQg5v4IwCa/RrphFeQN+ERwTbY+F0fgc6NQZR7bCX62vh8a5jsczpuTZQ+woczB5ONHm3LAMOCwh0hXwIiPnAExKEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=COPnU63L; arc=none smtp.client-ip=194.63.252.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
+	s=arc-20240116; t=1723911743; c=relaxed/simple;
+	bh=eHPTgf5wRj1IVdjxkVYmpqaT5IAXgAF4Sg/kOLkGvXk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LsmHmZxD4Wa1cfE0DUesZIr2O+hNNQuJLCm0Oc2KAOgShrBRwxYkiIVpXWdjBi60biiiT4/+4cTyJ2K4gcfa3TsfepZPi1rQhr36GCi4S5hv+4Kl5d80XS1tr2bgg/Qv/6p4WPFPg9HoBqO8ttkCqT4LxwUUHMgqsb9vatOPWrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hLkWIOcF; arc=none smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="COPnU63L"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
-	s=ds202307; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=N0nHQd2qcdVDpmiUaUdSsKPxa/AL8k1EyCsqP9bD/9o=; b=COPnU63L9IYgDxhVeEGTvKfbJZ
-	f2dHftrv8PwXzZrtfOEslnCZ2kVxkTtWVsUQa/6gT4pqcGPWXiullIJzi8IXmJwRA9tRvztdFFcSo
-	m2WmvTrcIV5FIX+lbFlzNvfGyCiKJDiOW0ZEXfeBNIxQJ9ESCCokH8c304HjVo4WcMWAJBP2zUtZJ
-	pIDLnvxYOiJqEaHD/CU9r6KkXjmPPqa7fv+8kNNawNCHiQQrvpj5UF1ADdvS94Eg095x7URM4X/WR
-	t5X/sGLjrc9a8CodtkfsKqp2zMlk9AO1Ck3m0JHWqJ+QxYEdv1x37KCdxhkndIndXNjBkEMhPOgPY
-	+TGs9UQw==;
-Received: from [2001:9e8:9db:8201:3235:adff:fed0:37e6] (port=60180 helo=lindesnes.fjasle.eu)
-	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <nicolas@fjasle.eu>)
-	id 1sfLgp-00E17M-Aj;
-	Sat, 17 Aug 2024 17:50:03 +0200
-Date: Sat, 17 Aug 2024 17:49:58 +0200
-From: Nicolas Schier <nicolas@fjasle.eu>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 4/6] kbuild: rust: rebuild if the version text changes
-Message-ID: <20240817-ambrosial-zealous-reindeer-de0f25@lindesnes>
-References: <20240808221138.873750-1-ojeda@kernel.org>
- <20240808221138.873750-5-ojeda@kernel.org>
- <20240817-cute-doberman-from-shambhala-6f42db@lindesnes>
- <CANiq72nkBoiLUDQjBZi57OYwMpnH8D5Q4wR7XKWMry+mdwFOHw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hLkWIOcF"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-842f1dd60deso974164241.2
+        for <patches@lists.linux.dev>; Sat, 17 Aug 2024 09:22:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723911741; x=1724516541; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=t12/vKBQ+BTOwmEU28CoMcUpgMEMzkHiojh3S4o8A64=;
+        b=hLkWIOcFFiYtgpeJ0JYPjePp1i2rB/tW5L8OlmRp5jU0qCUlG9+PTPLXUX2LQ/PqTj
+         uLxG7Hkv5/5vhxUmZNKXEWrBMy5+mVs1GZILpP3jB0fz1QP2f8r7L9hrL0U0fzbiSYwx
+         AXrFPtt7vDJo2SsPHoLVY4KPAE3FvBKg1S3aYrbBUKm1E3yxlxklNOE98kS01HyHnLkb
+         zF+/7fRWfW7hTBT8Loj5TuDhQwlQ9MVTcOu6vgxFeMgX5t8h25nour15GVmopaISKuSW
+         6aaS4cuaXmk6938CVz+v9pkNtf/eCSBheoV9d0CWfhTq1UZH4xYX628HCTO01uaxjWFm
+         kiog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723911741; x=1724516541;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t12/vKBQ+BTOwmEU28CoMcUpgMEMzkHiojh3S4o8A64=;
+        b=uXmZzd88ZN8CshTax0t6eCRciVQuip/DIWQa7BP98ySiV6SF2KbGQ0Na3Z1n1yBZ1X
+         tyyVwXkZ54KQC0jebb8b77p7DVMYMf8li1cUMRzJiRXPSFXHn9FkuzEN7dKCp5rJ7c5l
+         VBhhcHJW4dyBr8hi0zz3Rt6poInoTsxt2VPD4eEGpABtCfFTHLPfca3AJvBd+YaxLaIP
+         KPyGY/+lxvT9oA57OWWYb88wCWNegJKTWm2r25IDwpDYJDnuFc+ptr83yyiYpQz0+8ZU
+         31hoaYplnRhdStg65XJmo3+cw0+oNxD30EAPdIS5wc6bdbENkpR7lXJCheW8tlgK31Ym
+         1QCA==
+X-Forwarded-Encrypted: i=1; AJvYcCXtwhqe5F0zqY4dsK6Bg//+JO/MlQlfJr03RA5CG5V1letp/fSRbJQ02+wjAjoMUSl9kJ5tqQ8reiXbPMkKl4D7g+vM5o4cZg==
+X-Gm-Message-State: AOJu0YwweZcFwkcqjAIJQZ08glU+6ZsCOeKlyIP/MPjn34p6TCdHewS5
+	D87IWa38bJ2V/UQ6s3xwFKg2qy7ggvhvzHS1lm2rU+b5LZ9o56TDaOqj3P1xyg5GtbdsWXeNavZ
+	0bajot8rvYrKL6xe3Cl7epxj5e34=
+X-Google-Smtp-Source: AGHT+IGGYMDNINV6tzu1edYqfq60zKD89vxmcioB62e6R3vGJZzREKM2WCQ8g+oP+MeoG5ozLwEKe/lqkBgOUSJnSSE=
+X-Received: by 2002:a05:6102:5487:b0:48f:e57a:e2f6 with SMTP id
+ ada2fe7eead31-4977989a328mr7027949137.1.1723911740752; Sat, 17 Aug 2024
+ 09:22:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72nkBoiLUDQjBZi57OYwMpnH8D5Q4wR7XKWMry+mdwFOHw@mail.gmail.com>
+References: <20240812160132.135168257@linuxfoundation.org>
+In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
+From: Allen <allen.lkml@gmail.com>
+Date: Sat, 17 Aug 2024 09:22:09 -0700
+Message-ID: <CAOMdWS+OiSaHXQsChisvGJAJSAi4b6A2BcAVECXFdkjiK-yOfw@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/189] 6.6.46-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Aug 17, 2024 at 03:36:30PM +0200, Miguel Ojeda wrote:
-> On Sat, Aug 17, 2024 at 3:04 PM Nicolas Schier <nicolas@fjasle.eu> wrote:
-> >
-> > Looks good to me, but I'd prefer something like the suggestion from
-> > Masahiro:
-> > https://lore.kernel.org/linux-kbuild/CAK7LNAQBG0nDupXSgAAk-6nOqeqGVkr3H1RjYaqRJ1OxmLm6xA@mail.gmail.com/
-> 
-> Do you mean for `core` (here), or for `macros` (in the next commit)?
-> (if you mean for `core`, please see my reply to Masahiro there).
+> This is the start of the stable review cycle for the 6.6.46 release.
+> There are 189 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 14 Aug 2024 16:00:26 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.46-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-oops, I missed that 'core' is delivered external.  Sorry for the noise.
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Kind regards,
-Nicolas
+Tested-by: Allen Pais <apais@linux.microsoft.com>
+
+Thanks.
