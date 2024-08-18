@@ -1,100 +1,213 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97653101E6;
-	Sun, 18 Aug 2024 08:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D754DA1F
+	for <patches@lists.linux.dev>; Sun, 18 Aug 2024 12:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723971322; cv=none; b=djEvE2LAmNVOU6P8w69U1xCM+74X0/y7L8BZoq3OiQeOy5Ggr3S2Ds2q0r2v71DNYS5NGteKvviNTByRlhUNkOOoDqTao54b0uHCI/1tKWp5zvgc+QBCX70IZHPMtqoODDLFBYigSvaUzhegBg2ivy4hCdYDy7eLkxaQ60fSfPY=
+	t=1723985454; cv=none; b=CjPi3YMYRM7RiW3cLRtvIY+vFFYKKKjDCPzyUQyGWIlsT6+WeFUh6WQqzM6a5ur2SJjoXdydau8iMQTgwItH1ZDC0Y5vR5cWviDlB//v7yD5J30o/vm7PfR+V3ENBJx+4Vw2BJZlnR/eVxZEwXjOVE4kE+NFaUDrTKp33LQfdyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723971322; c=relaxed/simple;
-	bh=pPv6ETlZaKlCB45ZA2czhva+WhqswiAldgD9gR2ihEU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UjVdae44Sl8BQa6+QhZRCMxuNJRxFmaFmV66HnTqayJH6ip9PmWp6t/Em4MAVtFZaf67l/Xf5NhZzuBRgm+rbCYYLnTSCXYWw7JBy0sn0zke7SeOx7xFLdcsG6BdJOzzwvAQ/2xXp6dfmKVjK/e9EqU54yILIVJsFXBsf1rSyco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKaivLmh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1723985454; c=relaxed/simple;
+	bh=6k/nrxNRQYfDatfuMr52qkEL9QAA3K48UsYpREl+ahs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HD1Y9Ss10koAlCQav1RTR8BzlusTs/YmUHItzgW/ZWTAvas4cOoLzGWDVxlgA72aXA0T0+Nv8daFDtGA4hCaU0ZjEanjmsfvQ89idN6D0NZW7aey8Pvh1sHS+XlyVtfqOnW7f0YJqXMHvSJs7W5yfTZFSbsGhsAyf+2fFAp/jrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DIckoKQG; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKaivLmh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4BBC32786;
-	Sun, 18 Aug 2024 08:55:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723971322;
-	bh=pPv6ETlZaKlCB45ZA2czhva+WhqswiAldgD9gR2ihEU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jKaivLmhtt7olUKvu0DXw2JdZX2uEtAnj1anJV63lYbu8mdtqtirCu0wljsf8hNtl
-	 IZtHc5HgGK7yJF7kw6Z6arpPY63oM42xljpWk710CO61/tV6QN/C50JQA8mni4b3Cc
-	 RwkBZ/9UCsjZpkrkfG6FEOtnsF9bkw0w5swnJ2JU=
-Date: Sun, 18 Aug 2024 10:55:19 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Anders Roxell <anders.roxell@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 000/345] 5.10.224-rc3 review
-Message-ID: <2024081846-sequester-pull-4183@gregkh>
-References: <20240817074737.217182940@linuxfoundation.org>
- <CADYN=9++QDcougZ_xJOLf8otPOrrFcwaJe_gL7ZYmmw6gDXWmg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DIckoKQG"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6bf99fee82aso2214306d6.2
+        for <patches@lists.linux.dev>; Sun, 18 Aug 2024 05:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723985452; x=1724590252; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gO3USRcIBFbvufvA0QxGEC0Lsqb5pWiQNJAPyiLyCGM=;
+        b=DIckoKQGtx9p/klaXfWDDMrgmA5Yw+T7ueA54tjuAQxiJp6kX8kQLET9DbckdxMBo8
+         Qi5dOSwRVKRHl4gBJp/OsPxXgGSOOkxqU0ZuX7li4+70dFOf1fhSqEmzwLZHh640yE7D
+         LmHisd+IWCdOtNWj85Q//6GZErPkR/5wls8vElpFQ1LYcCLPEaxnEkIGfvMYiyBWbFCc
+         +rHcMmh9nuqN0oK6/q9ab/IRGoBNjFFSozeV9UAKgaKDwK3DWk2GMtTftmFuQpyN4A4A
+         31uZTflHzrxkrEF+TfdWMUBNShXlzpr8NuBn2sLMmRvJK1NUAyz7IzGs3B5wuhcS36/5
+         SVIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723985452; x=1724590252;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gO3USRcIBFbvufvA0QxGEC0Lsqb5pWiQNJAPyiLyCGM=;
+        b=kZzXh9AvGH6zB3ZVVruNAnyGxAC9dAry7pv9sMZd+e/45CNMprNUnKsnBR6kp8VDcU
+         IsNodHG9OCkbv5/+KY3hQRS8QV2Mlv6+YimBBg43lAQWterUCLC+xm5rxUMG3VKaYqrh
+         4+IUIUlgoXML7oiIDvqxurnYDvTj6mMn72fZmtizRBXJgNnirIpp8D3vXjLEIX2dfb66
+         zLCUNT9wRgZRCSqee8j84yEYoEL/rIklQ2Nbx9FuYInNsYdjIn/jsUc5fX4S6F1I/prj
+         wtWoaRHerZzyig9zdaj/lQaNk7m7k0wVwWjCRrmQbFd6ncJvVyRJdungoflyFUrkn9gH
+         TCLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWKXUncC5efIcjjxL8psymJQzHne+z6CGXoCoTyHzvw4FBAOCwWNa0FQtiyqdsxUe7q5+ON28ZiLkB8mKpfpSlaVeX43Q9P/A==
+X-Gm-Message-State: AOJu0YxYOOMSHh6JH8pSnCmCVLZ/1d8a/wNUY9t5Iowfe41KITWm6Tko
+	VWfF4U0AiaC00ucdL9k+RBb3ExBM9Wz5E2fihNKLVlNt/ugcrDSRSMYZRtcGlADXQ8UqROqjWb6
+	gSZcRd2UDC6YesWlAyD7kBFfD/qjvJFW9rxDPFw==
+X-Google-Smtp-Source: AGHT+IHIJHY396OL0+RWO2HF9DVJxRjKkKnTwZ3oDw+BFc1rTmcvFgdPNyduAAKuTif6jcwt46IXp2mY4eSG5AW9Es8=
+X-Received: by 2002:ad4:434b:0:b0:6bf:8128:5a48 with SMTP id
+ 6a1803df08f44-6bf81286396mr68955066d6.24.1723985451988; Sun, 18 Aug 2024
+ 05:50:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADYN=9++QDcougZ_xJOLf8otPOrrFcwaJe_gL7ZYmmw6gDXWmg@mail.gmail.com>
+References: <20240817085406.129098889@linuxfoundation.org>
+In-Reply-To: <20240817085406.129098889@linuxfoundation.org>
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Sun, 18 Aug 2024 14:50:40 +0200
+Message-ID: <CADYN=9JBg6MikjzmiZboKNXviRLpV7v7fwTg4fvXDwkok9+gTQ@mail.gmail.com>
+Subject: Re: [PATCH 6.10 00/25] 6.10.6-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Aug 17, 2024 at 05:39:48PM +0200, Anders Roxell wrote:
-> On Sat, 17 Aug 2024 at 09:51, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 5.10.224 release.
-> > There are 345 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Mon, 19 Aug 2024 07:46:32 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.224-rc3.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> The following S390 build failed on stable-rc 5.10.y with gcc-12 and clang due
-> to following warnings and errors [1].
-> 
-> s390:
->   build:
->     * gcc-8-defconfig-fe40093d
->     * gcc-12-defconfig
->     * clang-18-defconfig
-> 
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> The bisect points to 34a325f5a22f ("s390/pci: Do not mask MSI[-X]
-> entries on teardown")
-> as the problematic commit [ Upstream commit
-> 2ca5e908d0f4cde61d9d3595e8314adca5d914a1 ].
-> 
-> Build log:
-> --------
-> /builds/linux/arch/s390/pci/pci_irq.c: In function 'arch_setup_msi_irqs':
-> /builds/linux/arch/s390/pci/pci_irq.c:298:9: error: implicit
+On Sun, 18 Aug 2024 at 10:53, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.10.6 release.
+> There are 25 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 19 Aug 2024 08:53:52 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.6-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Wow, s390 builds just don't work at all.  I'm going to go drop all s390
-changes from 5.10 and 5.15 now, I doubt anyone for those arches is
-really using those older kernels these days anyway.
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64 and i386.
 
-thanks,
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-greg k-h
+## Build
+* kernel: 6.10.6-rc3
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git commit: a522cad0641894f57925563b4eade679b6d1deb0
+* git describe: v6.10.5-26-ga522cad06418
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.10.y/build/v6.10.5-26-ga522cad06418
+
+## Test Regressions (compared to v6.10.4-264-gb18fc76fca1a)
+
+## Metric Regressions (compared to v6.10.4-264-gb18fc76fca1a)
+
+## Test Fixes (compared to v6.10.4-264-gb18fc76fca1a)
+
+## Metric Fixes (compared to v6.10.4-264-gb18fc76fca1a)
+
+## Test result summary
+total: 177818, pass: 157089, fail: 1802, skip: 18688, xfail: 239
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 129 total, 128 passed, 1 failed
+* arm64: 39 total, 39 passed, 0 failed
+* i386: 28 total, 28 passed, 0 failed
+* mips: 26 total, 25 passed, 1 failed
+* parisc: 4 total, 3 passed, 1 failed
+* powerpc: 36 total, 35 passed, 1 failed
+* riscv: 19 total, 19 passed, 0 failed
+* s390: 14 total, 13 passed, 1 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 7 total, 6 passed, 1 failed
+* x86_64: 33 total, 33 passed, 0 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
