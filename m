@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7418D8F66;
-	Sun, 18 Aug 2024 14:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6534450E2;
+	Sun, 18 Aug 2024 14:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723990340; cv=none; b=tjLjeL3GPLWeEAPJODZoym6VPDqdvsDV6ZqomFDIHPx78fZg7xA7R+/slhL28ErUCtjbGeGQczIe1jdKDlEUjw117Gvr8iHfiiXgvEFZ0trg8jP1Wc3Z4+DT1eM1QSqcD/MpS3Qr5S2OuYrX1vrdGab11WNBitOhtTdka+/Zttg=
+	t=1723990380; cv=none; b=ewSALmNUEGSfEcpUGkDBz7foa5GqVr7mD2EYBTd9lmHevh3id8D5qDAR03eLq256IxdmjlJniNVSpJozop40Eer1DmkM3uZ9gfuibGMFRo/GLkaK3z8soPv1ouPdfmbMEi+De2HzwSzeEszAO6K93Y1+Djj27cbcbgSmg9z85vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723990340; c=relaxed/simple;
-	bh=yz2o5dNGK6ftsUgbLKxuKrLyioWcjS160l4A5ZnuwHo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGiCPKkzfoHVXtg524ct3sX+GXMshonlmsnDFUuMt6uS6eNyGs7EFyO/5M00Kwjif2/mYqXmoUmuA24ywDpjLvd3ogQ2MwAGke1R8Cf/gglkFwX+LhL+m2/HWdQfIcWfKzgmn2JCGp77EvaDujqf8X3us5oX6NMGja3yqxAGBEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pg5yU4CZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1723990380; c=relaxed/simple;
+	bh=zGM+UT9oq8bGJfotirHww7TPVe1zVtlsHDkNzKJAFOM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hwXQ2bp/oQ8F4qQvQ58OYUI6+viJFyg95gp4ghCMBY4gb5mN5QhNMIBJBZKtcsSvY+X8zfJdncVpBjpWvB0LMy9q8eJ9ylMrAiml5ZL3GRgqI1hZI3NhpPJY/qYplBpMzK85dlw0I7ik8AcyM9wpBx1CN4XVOHDeH0noqDY0oRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JnhGZKb1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pg5yU4CZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77420C4AF0B;
-	Sun, 18 Aug 2024 14:12:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JnhGZKb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B497C32786;
+	Sun, 18 Aug 2024 14:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723990340;
-	bh=yz2o5dNGK6ftsUgbLKxuKrLyioWcjS160l4A5ZnuwHo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pg5yU4CZOfCOSzOTS/TXP/A6MV8ThsGmWPHNoIWpN84901otcCeWbJfntNAgThu/Z
-	 IM0pbk/kjlGDzAV1y8tqL3MHBas6Vnl180gp871xVdq/7YklVUrvaPTwD2zRpDhiG/
-	 FGpeMIr9CukSPgqN2/CkLQfQ4cWx/WGZwpINs4uyNZOz0Us3JeCY3ILyBXZ59lO2n0
-	 eGhCZ8SoS9FIWsidYQEHn95LbD1y4S5Zc9WKFvqWy7LnXSr+EPjxkinKfmc2qiQeyl
-	 /jcAPRy/vBWfvMJEhd0Vrk/pmTiGJVpAP7yYckUNo/d3qtd/3UIirdGXXt2DMTPhCb
-	 /+cx6+LUTsf5g==
+	s=k20201202; t=1723990380;
+	bh=zGM+UT9oq8bGJfotirHww7TPVe1zVtlsHDkNzKJAFOM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=JnhGZKb1bZ+07HabqiKsINDcZMO50BhBTq510XovrEs5Gy3huTk7cVmTCGoOPcclL
+	 kdwKyTGu7NaEvErBVXe7pPOgig0BCtHfJy07KsZCbei/4xMefrE/+BYcGaz8f1AFB5
+	 OC4ou2dBwxYy+E0Ig0Q8py9NkV7r8Hj5SMlscoyluzVkU6Z9K74ib71NrFt1TTceSB
+	 WNS84Yz82K932qw0WhxvmLE5qhL1n9yIWZ+E4GyMCweayQptt2blRLLxpwEd4c6e+j
+	 0s0kXcZRoD+VvgdAqKi4eXopwyKBQpy8kWhxsTL2d8id9Qu9Hdl8YZaSWRQN/KlyQ2
+	 oVNzA5o6x6/WA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -41,12 +40,11 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [PATCH 2/2] docs: rust: improve main page introducing a "Code documentation" section
-Date: Sun, 18 Aug 2024 16:12:00 +0200
-Message-ID: <20240818141200.386899-2-ojeda@kernel.org>
-In-Reply-To: <20240818141200.386899-1-ojeda@kernel.org>
-References: <20240818141200.386899-1-ojeda@kernel.org>
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Guillaume Gomez <guillaume1.gomez@gmail.com>
+Subject: [RFC PATCH] rust: enable rustdoc's `--generate-link-to-definition`
+Date: Sun, 18 Aug 2024 16:12:49 +0200
+Message-ID: <20240818141249.387166-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,86 +53,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Clean the "Rust" main page by introducing a 'Code documentation" section
-to separate it from the rest of the text above.
+In Rust 1.56.0 [1], rustdoc introduced the "jump to definition"
+feature [2], i.e. the unstable flag `--generate-link-to-definition`.
+It adds links to the source view of the documentation.
 
-In addition, introduce the "Rust code documentation" term, which may be
-clearer than referring to a potentially unknown tool.
+For instance, in the source view of `rust/kernel/sync.rs`, for this code:
 
-Furthermore, for the HTML case, homogenize both `rustdoc` and
-non-`rustdoc` cases and use the term introduced above instead.
+    impl Default for LockClassKey {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
 
-Then, always generate the pregenerated version part, since now there
-is a section that is always generated and thus makes sense to do so.
+It will add three hyperlinks:
 
-Finally, finish the new section with a link to more details about the
-Rust code documentation.
+  - `Default` points to the rendered "Trait `core::default::Default`"
+    page (not the source view, since it goes to another crate, though
+    this may change).
 
-The intention is that:
+  - `LockClassKey` points to the `pub struct LockClassKey(...);` line
+    in the same page, highlighting the line number.
 
-  - The non-HTML case mentions the code documentation too, making it
-    more prominent for readers of non-HTML docs.
+  - `Self::new()` points to the `pub const fn new() -> Self { ... }`
+    associated function, highlighting its line numbers (i.e. for the
+    full function).
 
-  - Both HTML cases read more naturally.
+This makes the source view more useful and a bit closer to the experience
+in e.g. the Elixir Cross Referencer [3].
 
-  - The pregenerated version is always mentioned, since it is likely
-    useful for readers of non-HTML docs.
+I have provisionally enabled it for rust.docs.kernel.org [4] -- one can
+take a look at the source view there for an example of how it looks like.
 
+Thus enable it.
+
+Cc: Guillaume Gomez <guillaume1.gomez@gmail.com>
+Link: https://github.com/rust-lang/rust/pull/84176 [1]
+Link: https://github.com/rust-lang/rust/issues/89095 [2]
+Link: https://elixir.bootlin.com [3]
+Link: https://rust.docs.kernel.org [4]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- Documentation/rust/general-information.rst |  2 ++
- Documentation/rust/index.rst               | 19 +++++++++++++++----
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ rust/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/rust/general-information.rst b/Documentation/rust/general-information.rst
-index e174327ad361..357793f83c28 100644
---- a/Documentation/rust/general-information.rst
-+++ b/Documentation/rust/general-information.rst
-@@ -15,6 +15,8 @@ but not `std <https://doc.rust-lang.org/std/>`_. Crates for use in the
- kernel must opt into this behavior using the ``#![no_std]`` attribute.
- 
- 
-+.. _rust_code_documentation:
-+
- Code documentation
- ------------------
- 
-diff --git a/Documentation/rust/index.rst b/Documentation/rust/index.rst
-index 5e51bfb248a4..55dcde9e9e7e 100644
---- a/Documentation/rust/index.rst
-+++ b/Documentation/rust/index.rst
-@@ -25,16 +25,27 @@ support is still in development/experimental, especially for certain kernel
- configurations.
- 
- 
-+Code documentation
-+------------------
-+
-+Given a kernel configuration, the kernel may generate Rust code documentation,
-+i.e. HTML rendered by the ``rustdoc`` tool.
-+
- .. only:: rustdoc and html
- 
--	You can also browse `rustdoc documentation <rustdoc/kernel/index.html>`_.
-+	This kernel documentation was built with `Rust code documentation
-+	<rustdoc/kernel/index.html>`_.
- 
- .. only:: not rustdoc and html
- 
--	This documentation does not include rustdoc generated information.
--	A pregenerated version is provided at:
-+	This kernel documentation was not built with Rust code documentation.
-+
-+A pregenerated version is provided at:
-+
-+	https://rust.docs.kernel.org
- 
--		https://rust.docs.kernel.org
-+Please see the :ref:`Code documentation <rust_code_documentation>` section for
-+more details.
- 
- .. toctree::
-     :maxdepth: 1
+diff --git a/rust/Makefile b/rust/Makefile
+index 1f10f92737f2..d311bcc30226 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -63,6 +63,7 @@ quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
+ 	OBJTREE=$(abspath $(objtree)) \
+ 	$(RUSTDOC) $(if $(rustdoc_host),$(rust_common_flags),$(rust_flags)) \
+ 		$(rustc_target_flags) -L$(objtree)/$(obj) \
++		-Zunstable-options --generate-link-to-definition \
+ 		--output $(rustdoc_output) \
+ 		--crate-name $(subst rustdoc-,,$@) \
+ 		$(if $(rustdoc_host),,--sysroot=/dev/null) \
+
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
 -- 
 2.46.0
 
