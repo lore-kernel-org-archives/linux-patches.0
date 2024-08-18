@@ -1,128 +1,90 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56119154C14
-	for <patches@lists.linux.dev>; Sun, 18 Aug 2024 21:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB3514831F
+	for <patches@lists.linux.dev>; Sun, 18 Aug 2024 21:56:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724016854; cv=none; b=kCpjBWB7JmW44xLYDPBF5doeNh9imASZxhto7rqWeq7KIsh79UZVAZzkODiyjFDyxnbBRUo1ZF5S5Dnf1DNu5rl8wn2XCn0nd6Oh//9jn42LnX7KDSfF6YmXJkov/Jei3PESCA5zd958tmRqXgYIjWcSl+9QRyoHBa+8M3ADRQw=
+	t=1724018168; cv=none; b=RrfApqzszDrGXHgParJmstMyw5blxAuCwR+ynib3bSpfhAPWSVPAjQ6vldgzqeMWKIB+mUffgcmpmuqYQyUCxkHMXI4ByxvJJlz0WwKnqQFy9G5jcyYpgKYR+krvdXTOGTIKW2Y1tcg9ypVkMYYaQa7cjLxI+kbEYAq79WTX3X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724016854; c=relaxed/simple;
-	bh=co0ZFxYWxEgyO/etORsMhQApUZ9masoa0CJYA7UyUFk=;
+	s=arc-20240116; t=1724018168; c=relaxed/simple;
+	bh=7XQrBstONpqqg5tBlz3FmFfN5Ko3xGJY1McB5aTD4Yo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FrH9QHvX2UH+sG1396RfqYTFqsxwyPt0OAcgkklPqXHz+nMKZFdTq6GfLPbTkhqCF10oXtWNBPmkSgzOZYbjVEmbLHBRwBNht2tS8RmN+4aPtIuEDYUGTC6q0OOM99JWhCVTu0l/8KA96s4AKZiIbwvJ5SRvKfMfoYFa0r2q1RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I0a3Oz53; arc=none smtp.client-ip=209.85.210.179
+	 To:Cc:Content-Type; b=HXTRlxulu8CJjsQzABprWLZ70+pDtstuDyEazLSzGX8vYnAT1J1ml5PIdNjMKzr+TBJFItB4eQJ+GLOVs1F30a4DwUjmYYL6tU4cmWFeYV3dhapuihG1vnHcU//zdryDN5nsO4fkKvM6587Bi6jIwl+wTmPimAxMcto7KNpOiv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E066flYB; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I0a3Oz53"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-710d0995e21so2667794b3a.1
-        for <patches@lists.linux.dev>; Sun, 18 Aug 2024 14:34:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E066flYB"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2d3da6d3f22so2278881a91.0
+        for <patches@lists.linux.dev>; Sun, 18 Aug 2024 14:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724016853; x=1724621653; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1724018166; x=1724622966; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8xB9N2CyUP/tubBRh3HVqclY1aMiqp9wGW1/E9J9qt0=;
-        b=I0a3Oz53F6GapeKgEvLv+6Y+TT4wZrzL8tLtOnzqLIRAScxfFJu+GuY909WCpF5c6p
-         kj7CFrQxIFD218GiFU/OdlGXWfIg9YA6CsPJTZUWO686qW6tWXW7RlsUoiITF9jWZvdz
-         ACvTwsxgxi0t6waZIuQVX8X+waSknD0xW19CeLHOTwmF57lh409JBimJzM3+E3kK+jIj
-         +sagsZNEpnKMKfzrOsV7bPbnHZBJGkncTqYr8QqBeV25E/BiJJsr7CR9jcYatGY9avSt
-         dwbv3PRz35KvYErPTP5YR96dxiumqxJYz81Ripq2KugfML2gHcGiS9I159PoCQRJBr5a
-         bq2A==
+        bh=7XQrBstONpqqg5tBlz3FmFfN5Ko3xGJY1McB5aTD4Yo=;
+        b=E066flYBiI4P4JlGZfbbVCSthwcFI+ZsOSFjApgw5OuVMReRr0yJzkWkOmuqvS4SsB
+         oFlX3xGKCCj5cxVWCw9U1d0hboZZxUZ//kAvPzfwEC2zFf26WeD+E4gRF3ipCOMQ61Kp
+         kDHL8e+SMo/vmiLSr+U9Hv6R7fcqQUyTCGUbTnfd5T2SLEY7Zq1BdXU59MZCbeFp9Hjk
+         kBsl7UnDizhMBs6DIoTaQ5jeLiP9TZ6j+mwsBUEtVv5dX3OJpxYfEBU3g3mkPbJyKqe2
+         RACSJaEZmSK7xePUvjS3r2k4qpyvsuz9beBUbNMHatgGfMmtXH9SwmLDGpSeon7n3N0s
+         r7TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724016853; x=1724621653;
+        d=1e100.net; s=20230601; t=1724018166; x=1724622966;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8xB9N2CyUP/tubBRh3HVqclY1aMiqp9wGW1/E9J9qt0=;
-        b=CCmZhEiJR3883DBuuGxvUz32CPgzuCT1dJqwsLYWGVoUw99PbUEoM4lnE987+XfqiZ
-         ba/vvkAOfyBbZSN94oxwM++D+1FgO2sVAmxs3G9R5SKYzcr/xRBYuSGVuWvdsG4Ziazz
-         OnbcrjvYL6CC6mOq+vWShIno7brmt7U9AMNfObE72g4oB91U2qzgsk1bPMdT9c21PLHx
-         7mm8CHmKuIfPZjTu+OOXT90c23zyJ9hANpWyzd7felQE9ns1KSWLAoyd39Fp3qtyN5sq
-         NpvvXDIHRefNPPpq8xIBxd96cviIEScu/oIxIJtj5d04Lc/H7mW51qq8wxSWqSHYik6U
-         83Mw==
-X-Forwarded-Encrypted: i=1; AJvYcCXdC6IHNvl4ymNj1kuTh/HqE33drsz4CFMtvifAdUypOyd8NDlSGVodAljm8FeFLiE4UOWIHP826hxN1/UQBZE80ALQm3lKYg==
-X-Gm-Message-State: AOJu0YxBf3SOmrlEB4C9M+pyiAzIdyj7pBehyu4kzKDwH3mXKIW/OhWf
-	fi/aQcMEhtDsqJCpwHnl1uLM+Q+EepXwSVtTfcK1WeoRU9yH+bzRIGOEkPH9lZ9bWLlceFILH8E
-	/m/b/vjYR3Vjjj1r9W2n9+IDXkKVSahKQ
-X-Google-Smtp-Source: AGHT+IE2oB/OF35u00ICOXXfqe7uDqKEOVBsN3Q+lxAijVdFjL04veni/mfqZNesLIhpDWgJ77HfYSdRLvo4mJfnTb4=
-X-Received: by 2002:a05:6a00:1404:b0:70d:262e:7279 with SMTP id
- d2e1a72fcca58-713c4dfbb8cmr9273590b3a.3.1724016852546; Sun, 18 Aug 2024
- 14:34:12 -0700 (PDT)
+        bh=7XQrBstONpqqg5tBlz3FmFfN5Ko3xGJY1McB5aTD4Yo=;
+        b=aDKS5tzqR7bArK4uY6PhlymC0QcpgvmfbfYKJFGM/pTTAbmJ2FKZCkwBLwq/z44+nB
+         AlkpRR9fNI0M+FL5eWxEvkWTt3cVvXAIMwhDX8OudgmIKymejbobWxlsgnwrFERu5dN/
+         jSmQijiSK9W66TJnNV1XF5eyIcWjZ0ZvN2VGUnxRsby/KWYuCwwOvs1lIvUA6Vq9jwh7
+         O3LB2neO0uwl5ufIkduZs4nLusxRj+PLn1Hb85BzPybvuAn9TL4vD4Sa66grs+Tnh3Y/
+         gXnTV3yTt72EN5+VW7oGFq5J1TFyfLpbuRnYIhEwb6CWeg6GL2xGDR++8nihcGT0RIBk
+         oxDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjbllxDIRw93r94Qn3oOQUeHoQsOif8/hmBi0qT6jI8SaiCWv48VdTn3S04wJD3KvKPefK4fDc@lists.linux.dev
+X-Gm-Message-State: AOJu0YzVkSgQxWALmWT7FeIGCJSB29tEBbQZLFEknEXsiSHsehWY5Sly
+	quijj4yKhbDKtH0JKhuSIVVQzSHoh3SvYSLw0kj3SxzGphEv02QzqhSqbk+18wb3yacbEezAZah
+	c/dGX9PXXvHQe2G5v9geI7RLxRkM=
+X-Google-Smtp-Source: AGHT+IEZ4gT6nABs/K41mitZD0wdXrUuQ4YqCSCqh1GuMK83jxlywWLfsBWcImdS1SuTQf9stCTv0wBYynhUq+X4s0Q=
+X-Received: by 2002:a17:90a:1f81:b0:2c9:80cd:86b4 with SMTP id
+ 98e67ed59e1d1-2d3dffc0f90mr9173142a91.11.1724018166043; Sun, 18 Aug 2024
+ 14:56:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240725183325.122827-1-ojeda@kernel.org>
-In-Reply-To: <20240725183325.122827-1-ojeda@kernel.org>
+References: <20240818141249.387166-1-ojeda@kernel.org> <20240818191938.20ee1766.gary@garyguo.net>
+In-Reply-To: <20240818191938.20ee1766.gary@garyguo.net>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 18 Aug 2024 23:34:00 +0200
-Message-ID: <CANiq72mCuPNK4ZRDvvpCz1_=OfSU+ek=ami1auypbnehcfruuQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Rust: support `CPU_MITIGATIONS` and enable `objtool`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, Masahiro Yamada <masahiroy@kernel.org>, x86@kernel.org, 
-	"H. Peter Anvin" <hpa@zytor.com>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+Date: Sun, 18 Aug 2024 23:55:53 +0200
+Message-ID: <CANiq72mF4=o82Ju7y8wrq+5fCVbungWf2iry2S=1McQ03DJOSQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] rust: enable rustdoc's `--generate-link-to-definition`
+To: Gary Guo <gary@garyguo.net>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Jonathan Corbet <corbet@lwn.net>, Boqun Feng <boqun.feng@gmail.com>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
 	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kbuild@vger.kernel.org
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+	Guillaume Gomez <guillaume1.gomez@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 25, 2024 at 8:35=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On Sun, Aug 18, 2024 at 8:19=E2=80=AFPM Gary Guo <gary@garyguo.net> wrote:
 >
-> Miguel Ojeda (6):
->   rust: module: add static pointer to `{init,cleanup}_module()`
->   x86/rust: support MITIGATION_RETPOLINE
->   x86/rust: support MITIGATION_RETHUNK
->   x86/rust: support MITIGATION_SLS
->   objtool/rust: list `noreturn` Rust functions
->   objtool/kbuild/rust: enable objtool for Rust
+> Thanks for doing this! When I visited rust.docs.kernel.org yesterday I
+> noticed that the definition links already existed, and it was very
+> useful.
 >
->  arch/x86/Makefile               |  7 ++++-
->  rust/Makefile                   | 22 +++++++++------
->  rust/macros/module.rs           | 12 +++++++++
->  scripts/Makefile.build          |  9 +++++--
->  scripts/generate_rust_target.rs | 15 +++++++++++
->  tools/objtool/check.c           | 48 ++++++++++++++++++++++++++++++++-
->  tools/objtool/noreturns.h       |  2 ++
->  7 files changed, 103 insertions(+), 12 deletions(-)
+> Reviewed-by: Gary Guo <gary@garyguo.net>
 
-Applied to `rust-next` -- thanks everyone!
-
-In the `noreturn` patch:
-
-    [ Kees agrees this should be automated and Peter says:
-
-        So it would be fairly simple to make objtool consume a magic sectio=
-n
-        emitted by the compiler.. I think we've asked the compiler folks
-        for that at some point even, but I don't have clear recollections.
-
-      We will ask upstream Rust about it. And if they agree, then perhaps
-      we can get Clang/GCC to implement something similar too -- for this
-      sort of thing we can take advantage of the shorter cycles of `rustc`
-      as well as their unstable features concept to experiment.
-
-      Gary proposed using DWARF (though it would need to be available), and
-      wrote a proof of concept script using the `object` and `gimli` crates=
-:
-      https://gist.github.com/nbdd0121/449692570622c2f46a29ad9f47c3379a
-
-        - Miguel ]
-
-    [ Added `len_mismatch_fail` symbol for new `kernel` crate code merged
-      since then as well as 3 more `core::panicking` symbols that appear
-      in `RUST_DEBUG_ASSERTIONS=3Dy` builds.  - Miguel ]
+Thanks Gary, I appreciate that. Yeah, you caught me, I enabled it a
+week or two ago. I am very glad you already found it useful :)
 
 Cheers,
 Miguel
