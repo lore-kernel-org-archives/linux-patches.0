@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6EFD531;
-	Mon, 19 Aug 2024 18:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E372F26AD3;
+	Mon, 19 Aug 2024 19:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724091380; cv=none; b=ssf5umVNXw3tyMbWRVO+HG67GWAmyThQQc0sx/xzSnjFwlPgVo4XXvYXU42xGXp63XfnOqsl0l2X1saLhHV3txDnrTXY+Ja6+eEIOJm/0k5Ws4dwCXi/D/n47wX1l7UHKzxzQ1UODBjEr9CP0+YmmMOz/7GvBJ3HTm2KxRpBy80=
+	t=1724094572; cv=none; b=EjVJs8S6g3rnAkS9OmGqEpo9G4UgwjVhipqPP0thyHyOnv+PNYmEfFIZDq5TLuopCBgGP/BdpTml5Sh+qa5AS1A5a+5VXo4mLOUm8mVkGVLr5EAIMirRfgFPLqoGX2/rEZY9U5aAQKOnfZOf4Z/Td/eFsIfvFGQrpY/CmWua8ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724091380; c=relaxed/simple;
-	bh=fb00pKGHuPVAd6R+bBKI9YbKJHWC6vDu6M1kpq90BNI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LdajDQ9DJ9VgdWEIgYiVHIMba8qiX86ADNhoCYGAOG42JunhUo7jvTDqlVyfh+RYAcXKHUChbN6iuNlZTxot3EeBSK+EFrAHuNoajhiAT56xlyCIvcV9G7GJwMn0n2HG7epvuGTKHMMmJmVuQi75aafXQcVaTCgm0nDjDIzMqo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a2bKTOay; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724094572; c=relaxed/simple;
+	bh=l1fQ+yTpICnSE9dSKG3BDMX4w4n0NCxmJvBhJmEGqB4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YfmKR2vLYolwXbpssIP3hMZZMPEeluOd9BbKrl035u+OkzhFo6MH/X9ts4aXofWzqL9FYe06vrDqP87jrvFJ02sZUP1N656SOlDGnAFyhUv2e2zlTQEDqpURSLsgwrvK5LJ+w/2iG2EYcn2Dd1yrP6pXLnN9TaIl2E01l/ZRQlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K23Tcdhw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a2bKTOay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48938C32782;
-	Mon, 19 Aug 2024 18:16:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K23Tcdhw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA725C32782;
+	Mon, 19 Aug 2024 19:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724091378;
-	bh=fb00pKGHuPVAd6R+bBKI9YbKJHWC6vDu6M1kpq90BNI=;
+	s=k20201202; t=1724094570;
+	bh=l1fQ+yTpICnSE9dSKG3BDMX4w4n0NCxmJvBhJmEGqB4=;
 	h=From:Date:Subject:To:Cc:From;
-	b=a2bKTOayeGxT9txXl0p2QfIs+0+ooPeZ3R1BUzJurol/l/bWbm3SeCFs0BDdpavCI
-	 L0G5tJZNBWkB3Go/tqdyqIsA+1qPQwgeFWWUl8/zDu+8JSgqYW06uOIcbw6UH6tisq
-	 6ZL7DIQ7TF3rlLHVxdJOQ4+XtEPRBt3OPuD6LEEBheGpQQPeMG8fATHqmiXe0ZF6aT
-	 p82IZGaRamGwk8D9k3z5pABbmbkMRGmYgAHkZCIsjGLCdf6BrC2oo2ucAq0gef341r
-	 kySNb+yfU8AW/GfwDeZWqxseqJJfa6h3uOyThcm7eLctXNp6wTobKVXTZGZTF7mg/9
-	 cxVsuisV9TadA==
+	b=K23Tcdhww1EkxB49+rm3W650EQEZDN1DZ4pOCr70a90bg1W+mWxNTIBGEWrzOsxdQ
+	 /EMvooiFf+IIqBl8ZSoQCK8gk7stYV/9fyjK02RANiVANd/6bgf7+Q5IrHJjrna605
+	 3sfHSfexgVMRk/2N4SkoZbxhj8+tC6DqFIWHxeBXqQycXeOOgo/FgAXugNSB5QqnQd
+	 BGm7TQf7Psk8yCRfi2AJ47B1ggcOG9vOBhF0CqU7QPKErO3V2LFOMe5HDklGyEDSNZ
+	 eDL8qvPfw/Z5Alg22hFsgjYJiusCxk9w5Ue/Q5gJ7AZag2sYHD3Sl9TdjiH5tIFs9a
+	 1v5qjV10mlL+A==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 19 Aug 2024 11:16:10 -0700
-Subject: [PATCH] hexagon: Disable constant extender optimization for LLVM
- prior to 19.1.0
+Date: Mon, 19 Aug 2024 12:09:22 -0700
+Subject: [PATCH] ACPI: platform-profile: Fix CFI violation when accessing
+ sysfs files
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,68 +37,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240819-hexagon-disable-constant-expander-pass-v1-1-36a734e9527d@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOmLw2YC/x3NwQrDIAyA4VcpOS9gZUjZq4wdoqZtYEQxZQil7
- 17Z8bv8/wnGTdjgNZ3Q+CcmRQfmxwRpJ90YJQ+Dd/7pFudx505bUcxiFL+MqagdpAdyr6SZG1Y
- ywyWGGOYcA60JRqw2XqX/R+/Pdd0ysIyIeAAAAA==
-To: Brian Cain <bcain@quicinc.com>, 
- Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-hexagon@vger.kernel.org, patches@lists.linux.dev, 
- llvm@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+Message-Id: <20240819-acpi-platform_profile-fix-cfi-violation-v1-1-479365d848f6@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAGGYw2YC/x2N0QqDMAxFf0XyvIB2E52/Msbo2sQF1JZ0iCD+u
+ 8HHw7mcu0MhFSowVDsorVIkLQbNrYLw88tIKNEYXO0edd880YcsmCf/56TzJ2timQhZNgwsuEo
+ yZQ2M5Lq+a+/f2DJYLSvZ6Hp6vY/jBPDv3sd5AAAA
+To: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>, 
+ Mark Pearson <markpearson@lenovo.com>, Kees Cook <kees@kernel.org>, 
+ Sami Tolvanen <samitolvanen@google.com>, linux-acpi@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, John Rowley <lkml@johnrowley.me>, 
+ Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2213; i=nathan@kernel.org;
- h=from:subject:message-id; bh=fb00pKGHuPVAd6R+bBKI9YbKJHWC6vDu6M1kpq90BNI=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGmHuz/G/v0qeqNNUfTjg4NWXpL9NRUbBAXiX8yMD37x9
- 4jew49XO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBE1q9m+J+8+OlTJv6F164H
- fJh55Pv2rYFbNYoVkvZ1JdseeGB65P52hv9Zm+prlguIJp8SDy3ne2d14Yo216lOYYn5KqKcs9M
- C7/MCAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3849; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=l1fQ+yTpICnSE9dSKG3BDMX4w4n0NCxmJvBhJmEGqB4=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGmHZ2T2TtC8LPzCnU3tVVZbYM1K5QeVO3XXH7z8tl5qm
+ ZXRmVnrO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEToQzMlzhUrrvE5x5tJHp
+ V6pu56JiJXVdg/zMql8a0md81XYt+M/IsLj3AuOdt5MmRYmFBQg+OKRncsTvgeXsCesluSUjrvv
+ P4AQA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-The Hexagon-specific constant extender optimization in LLVM may crash on
-Linux kernel code [1] (such as with a bcachefs change in -next):
+When an attribute group is created with sysfs_create_group(), the
+->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
+and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
+respectively. These functions use container_of() to get the respective
+callback from the passed attribute, meaning that these callbacks need to
+be the same type as the callbacks in 'struct kobj_attribute'.
 
-  clang: llvm/lib/Target/Hexagon/HexagonConstExtenders.cpp:745: bool (anonymous namespace)::HexagonConstExtenders::ExtRoot::operator<(const HCE::ExtRoot &) const: Assertion `ThisB->getParent() == OtherB->getParent()' failed.
-  Stack dump:
-  0.      Program arguments: clang --target=hexagon-linux-musl ... fs/bcachefs/btree_io.c
-  1.      <eof> parser at end of file
-  2.      Code generation
-  3.      Running pass 'Function Pass Manager' on module 'fs/bcachefs/btree_io.c'.
-  4.      Running pass 'Hexagon constant-extender optimization' on function '@__btree_node_lock_nopath'
+However, the platform_profile sysfs functions have the type of the
+->show() and ->store() callbacks in 'struct device_attribute', which
+results a CFI violation when accessing platform_profile or
+platform_profile_choices under /sys/firmware/acpi because the types do
+not match:
 
-Without assertions enabled, there is just a hang during compilation.
+  CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choices_show+0x0/0x140; expected type: 0x7a69590c)
 
-This has been resolved in LLVM main (20.0.0) [2] and backported to LLVM
-19.1.0 but the kernel supports LLVM 13.0.1 and newer, so disable the
-constant expander optimization using the '-mllvm' option when using a
-toolchain that is not fixed.
+This happens to work because the layout of 'struct kobj_attribute' and
+'struct device_attribute' are the same, so the container_of() cast
+happens to allow the callbacks to still work.
 
-Link: https://github.com/llvm/llvm-project/issues/99714 [1]
-Link: https://github.com/llvm/llvm-project/commit/68df06a0b2998765cb0a41353fcf0919bbf57ddb [2]
-Link: https://github.com/llvm/llvm-project/commit/2ab8d93061581edad3501561722ebd5632d73892 [3]
+Change the type of platform_profile_choices_show() and
+platform_profile_{show,store}() to match the callbacks in
+'struct kobj_attribute' and update the attribute variables to match,
+which resolves the CFI violation.
+
+Cc: stable@vger.kernel.org
+Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
+Reported-by: John Rowley <lkml@johnrowley.me>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
+Tested-by: John Rowley <lkml@johnrowley.me>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/hexagon/Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/platform_profile.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/hexagon/Makefile b/arch/hexagon/Makefile
-index 92d005958dfb..ff172cbe5881 100644
---- a/arch/hexagon/Makefile
-+++ b/arch/hexagon/Makefile
-@@ -32,3 +32,9 @@ KBUILD_LDFLAGS += $(ldflags-y)
- TIR_NAME := r19
- KBUILD_CFLAGS += -ffixed-$(TIR_NAME) -DTHREADINFO_REG=$(TIR_NAME) -D__linux__
- KBUILD_AFLAGS += -DTHREADINFO_REG=$(TIR_NAME)
-+
-+# Disable HexagonConstExtenders pass for LLVM versions prior to 19.1.0
-+# https://github.com/llvm/llvm-project/issues/99714
-+ifneq ($(call clang-min-version, 190100),y)
-+KBUILD_CFLAGS += -mllvm -hexagon-cext=false
-+endif
+diff --git a/drivers/acpi/platform_profile.c b/drivers/acpi/platform_profile.c
+index d2f7fd7743a1..11278f785526 100644
+--- a/drivers/acpi/platform_profile.c
++++ b/drivers/acpi/platform_profile.c
+@@ -22,8 +22,8 @@ static const char * const profile_names[] = {
+ };
+ static_assert(ARRAY_SIZE(profile_names) == PLATFORM_PROFILE_LAST);
+ 
+-static ssize_t platform_profile_choices_show(struct device *dev,
+-					struct device_attribute *attr,
++static ssize_t platform_profile_choices_show(struct kobject *kobj,
++					struct kobj_attribute *attr,
+ 					char *buf)
+ {
+ 	int len = 0;
+@@ -49,8 +49,8 @@ static ssize_t platform_profile_choices_show(struct device *dev,
+ 	return len;
+ }
+ 
+-static ssize_t platform_profile_show(struct device *dev,
+-					struct device_attribute *attr,
++static ssize_t platform_profile_show(struct kobject *kobj,
++					struct kobj_attribute *attr,
+ 					char *buf)
+ {
+ 	enum platform_profile_option profile = PLATFORM_PROFILE_BALANCED;
+@@ -77,8 +77,8 @@ static ssize_t platform_profile_show(struct device *dev,
+ 	return sysfs_emit(buf, "%s\n", profile_names[profile]);
+ }
+ 
+-static ssize_t platform_profile_store(struct device *dev,
+-			    struct device_attribute *attr,
++static ssize_t platform_profile_store(struct kobject *kobj,
++			    struct kobj_attribute *attr,
+ 			    const char *buf, size_t count)
+ {
+ 	int err, i;
+@@ -115,12 +115,12 @@ static ssize_t platform_profile_store(struct device *dev,
+ 	return count;
+ }
+ 
+-static DEVICE_ATTR_RO(platform_profile_choices);
+-static DEVICE_ATTR_RW(platform_profile);
++static struct kobj_attribute attr_platform_profile_choices = __ATTR_RO(platform_profile_choices);
++static struct kobj_attribute attr_platform_profile = __ATTR_RW(platform_profile);
+ 
+ static struct attribute *platform_profile_attrs[] = {
+-	&dev_attr_platform_profile_choices.attr,
+-	&dev_attr_platform_profile.attr,
++	&attr_platform_profile_choices.attr,
++	&attr_platform_profile.attr,
+ 	NULL
+ };
+ 
 
 ---
 base-commit: 47ac09b91befbb6a235ab620c32af719f8208399
-change-id: 20240802-hexagon-disable-constant-expander-pass-8b6b61db6afc
+change-id: 20240819-acpi-platform_profile-fix-cfi-violation-de278753bd5f
 
 Best regards,
 -- 
