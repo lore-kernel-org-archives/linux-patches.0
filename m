@@ -1,54 +1,54 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58291DF681
-	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 22:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFE9200101
+	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 22:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724107141; cv=none; b=AsiuL/glALwlOZQcdqtoOK9VDUM/aR5+ZT3V1J87rIF6GAZcLpgjrHqqbKklGLF08kB8/PLDY6AdNaNfeRTtJ86TXt/tJHxIrBlot+ntG8MUcvKCASH+/1YwCGNPn6ZI5Qiz+1ImEy1v5bnvH+DlxmkbMa/ohDC39XNt/6mfrYk=
+	t=1724107143; cv=none; b=csERSZ9UXHgz1yPBdVOJQ9WARx8LQUq13viWeW7C8sYA1g7GXbOJ/bA+6Jud54v6EmoSzM+VYH7R54pWhtgelQk9yuRUQF+H/cOW0CisARhh7pMIgbmhv3DiwqI5Efm/pgshMVx4o78L1LnsJCQRQ5CY3U4wvFfXJ4PAhnQXrfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724107141; c=relaxed/simple;
-	bh=mxX0zurMaqjFAvwPTAYvbkHJDOrh+ogY61LYBsDimY4=;
+	s=arc-20240116; t=1724107143; c=relaxed/simple;
+	bh=8tqmUj+sdPUk4dj2c30W8lWQ9x5+wvhFnf8zSNBC8MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THKRtzp2JK7N09xnW9qAZImdKUkdtlibNAQEt1ecU77StIgtbqG6/ahk0Q9IJvz1RAiE0IJCAHMwGmeo0UutI/opXvDr44eimk5oMCRibsp2NK4E+NtTCWeD7SqEDO0VENoB2vk9aCeQ1GG0TLnyEKq/g/XRa17yfk411WkQu+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=hz97sn0h; arc=none smtp.client-ip=209.85.214.178
+	 MIME-Version; b=fvnMG/PvAVOdfgJ18/sRcurloYVEzQqScIzY8qqiQwd9B2chm7W74slze76WPyKbhwaN/0zmMiCw9DY8DSGB6GHz55hizoY+MoU0wZX6LBt0aR4c4j05V9pqXaq1scaDqDKIvwKg+03iqPo1eenqkGCEvLaJsMk7D6BPZrKwZ2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=CEI3RWe6; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hz97sn0h"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20231aa8908so13930365ad.0
-        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 15:38:59 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="CEI3RWe6"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1fec34f94abso42165005ad.2
+        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 15:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724107139; x=1724711939; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1724107141; x=1724711941; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hC911fBOHCsJMM7xcu9tR0EWsA9wFiTFaVVHtkvUAjk=;
-        b=hz97sn0hFWpew1TjDi2Ki98NR/TpFh9Lf4dqyyerFr87LhqH+69iEu6MIqHRiExBSA
-         0ULD/Vhxyy9GOFPuPH6TC+sILKWtMoiZIlK94m325UPGcDq58QULP47REC+ZY+llrwlJ
-         WIwhaWDNrXa4unJcBFmqteJvy2Pcau6YSqlPU=
+        bh=MEGuE2jPeE6QbHnwj3cv7uloVpjVvE++iKPlChg2NtM=;
+        b=CEI3RWe6D2p3WqtccZ4dGHTe1oWnQM+3CNNHA1wtMmJLzZ5S8s6totq01mt3xHzuH7
+         cFPaL0u4kEx8AE8gKe2PjCobtWGATImwXMRuOUbnIu1Hlw5Vq+SEoD6fFzh0tMVMN3az
+         GbkNrUYVtTYLRABM+ez26OV/atZJWl+pVnxnQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724107139; x=1724711939;
+        d=1e100.net; s=20230601; t=1724107141; x=1724711941;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hC911fBOHCsJMM7xcu9tR0EWsA9wFiTFaVVHtkvUAjk=;
-        b=RGmPEVLQQ0dWVdnF8RXiPSte92QPa0RSX+KsNBcf2Vjj9WWiN1+h8rXkIOQRLACENd
-         +MokPfWNE4wvcQMvufpW6IG3ueYsPvb7E7EfakTuqeaSSWNg/Qbl39rula4NGGcpVrqB
-         hJzhvVtA/75GitJyuoTM6+9gUO5gZUemWNlr5ZBcAjLniS/9Tn/epYZ3m47enbB7WaPA
-         m2qnGj1OvnvRK2UrIuwtKaKUzVP16IYLjvNln4ATfthOUNqSNhhB0TQuneW5qNfqE3Jl
-         BaqiLvLxIAItd0sIG9Mi9icJlQ+m/BTu0wEQAMtLZ9Uh8m3JLkTiQJeRPZOOu800FgI5
-         FwzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVVCsAFmd/h9v+c20VDXz3LPHqGmjeV4BMqYqQZgynT7mxVypJ6mcQuRzeoc5BjA/8EC6PPQGgO@lists.linux.dev
-X-Gm-Message-State: AOJu0YwY82jUZQZTCfXe4y7s4ohiQENY9IUSy4aH8gkiUD/AOE3oXBEj
-	kIzrxBVNSADmDv4xh4o3B7ZjuoGlE0Dl1DSwl2h08gN8pJf8lx3LV9MALeTFpQ==
-X-Google-Smtp-Source: AGHT+IGLjuWtpZx7vqGNlEmVLbw+/jbA0jrqk36BQ9obYmr0oT4bTrUtSNP+SOsQgfFW6VfGITSwMw==
-X-Received: by 2002:a17:903:4345:b0:201:f8b4:3e3c with SMTP id d9443c01a7336-20203e49439mr92807475ad.12.1724107138748;
-        Mon, 19 Aug 2024 15:38:58 -0700 (PDT)
+        bh=MEGuE2jPeE6QbHnwj3cv7uloVpjVvE++iKPlChg2NtM=;
+        b=qvO2WyiATo66hG8o2rZp9C7FaQ5NpLt7RV3pmUz1/Mwj3dPDkq564gLp0khEcZP0ui
+         AQz3IudlzSZmgyrL5OigUPDEvnG1Ix7TzPZxzsaMgVHrekBm5njWkBvs3HPwYz522FlW
+         7CyzaTbZd/vljZZvZ0Fwoe+e84vJlkaSVaGUE2wp/bAW9E1xK3J9Q/3ALF0hwJN1imUD
+         9zxywhnwselpBQJyR6Io5yYHCiMTAyBDOIIbCxqLFNSw5CLuSnldPflz3rEPg2vmLHoP
+         G0GiCQy3WBZ2KG83o5OD4tADRT2PMtB/CSNSTSDxQfNiCPTxK5Oa1+1W+QmLXo3XH5jz
+         p0Gw==
+X-Forwarded-Encrypted: i=1; AJvYcCXG0fI8gPM/0XnZXYuiw95NOPQB9kOW1/vmaV/2dpeQt5D2KFCaIFfeZ9QMTPnVVOouSFFuYCNL@lists.linux.dev
+X-Gm-Message-State: AOJu0YxLu+prD5iYdvH/YW6EBh988P8T2R7sLLTaw0Fan7/q7Fyls7qM
+	5vvDNW+cOXhJbUiVDwchbZBONqZMLQFyitX9mACrMiMi6S/EYk1NY2ZU36ymPQ==
+X-Google-Smtp-Source: AGHT+IE9StWMBY/V2J5PvOnUgBdk52braBes3M3nIXsSIZjwGAz5lGGOgioaoZfLakp02OBmpgHzZg==
+X-Received: by 2002:a17:902:e74b:b0:202:348d:4e85 with SMTP id d9443c01a7336-202348d51eemr70659895ad.39.1724107141155;
+        Mon, 19 Aug 2024 15:39:01 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f038b4e9sm66612995ad.209.2024.08.19.15.38.57
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f03a3607sm67131795ad.250.2024.08.19.15.38.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 15:38:58 -0700 (PDT)
+        Mon, 19 Aug 2024 15:39:00 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -89,9 +89,9 @@ Cc: linux-kernel@vger.kernel.org,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 10/17] device property: Add remote endpoint to devcon matcher
-Date: Mon, 19 Aug 2024 15:38:24 -0700
-Message-ID: <20240819223834.2049862-11-swboyd@chromium.org>
+Subject: [PATCH v3 11/17] dt-bindings: usb-switch: Extract endpoints to defs
+Date: Mon, 19 Aug 2024 15:38:25 -0700
+Message-ID: <20240819223834.2049862-12-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
 In-Reply-To: <20240819223834.2049862-1-swboyd@chromium.org>
 References: <20240819223834.2049862-1-swboyd@chromium.org>
@@ -103,175 +103,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When a single DT node has a graph connected to more than one
-usb-c-connector node we can't differentiate which typec switch
-registered for the device is associated with the USB connector because
-the devcon matcher code assumes a 1:1 relationship between remote node
-and typec switch. Furthermore, we don't have a #typec-switch-cells
-property so there can only be one node per typec switch.
+Move the usb-switch endpoint bindings to defs so that they can be reused
+by other bindings. Future users of this binding will have more than one
+type-c output node when they're muxing a single DP signal to more than
+one usb-c-connector. Add an example to show how this binding can be used
+and accelerate binding checks.
 
-Support multiple USB typec switches exposed by one node by passing the
-remote endpoint node in addition to the remote node to the devcon
-matcher function (devcon_match_fn_t). With this change, typec switch
-drivers can register switches with the device node pointer for a graph
-endpoint so that they can support more than one typec switch if
-necessary. Either way, a DT property like 'mode-switch' is always in the
-graph's parent node and not in the endpoint node.
-
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Daniel Scally <djrscally@gmail.com>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Ivan Orlov <ivan.orlov0322@gmail.com>
 Cc: Rob Herring <robh+dt@kernel.org>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Prashant Malani <pmalani@chromium.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>
 Cc: <devicetree@vger.kernel.org>
-Cc: <linux-usb@vger.kernel.org>
-Cc: <linux-acpi@vger.kernel.org>
+Cc: <chrome-platform@lists.linux.dev>
 Cc: Pin-yen Lin <treapking@chromium.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/base/property.c     | 7 +++++--
- drivers/usb/roles/class.c   | 4 ++--
- drivers/usb/typec/mux.c     | 8 ++++++++
- drivers/usb/typec/retimer.c | 7 ++++++-
- include/linux/property.h    | 5 +++--
- 5 files changed, 24 insertions(+), 7 deletions(-)
+ .../devicetree/bindings/usb/usb-switch.yaml   | 74 ++++++++++++++++---
+ 1 file changed, 62 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 837d77e3af2b..621de33f2956 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -1284,6 +1284,7 @@ static unsigned int fwnode_graph_devcon_matches(const struct fwnode_handle *fwno
- {
- 	struct fwnode_handle *node;
- 	struct fwnode_handle *ep;
-+	struct fwnode_handle *remote_ep;
- 	unsigned int count = 0;
- 	void *ret;
+diff --git a/Documentation/devicetree/bindings/usb/usb-switch.yaml b/Documentation/devicetree/bindings/usb/usb-switch.yaml
+index da76118e73a5..5fc031b56fad 100644
+--- a/Documentation/devicetree/bindings/usb/usb-switch.yaml
++++ b/Documentation/devicetree/bindings/usb/usb-switch.yaml
+@@ -35,9 +35,13 @@ properties:
+     $ref: /schemas/graph.yaml#/properties/ports
+     properties:
+       port@0:
+-        $ref: /schemas/graph.yaml#/properties/port
+-        description:
+-          Super Speed (SS) Output endpoint to the Type-C connector
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++
++        properties:
++          endpoint:
++            $ref: '#/$defs/usbc-out-endpoint'
++            unevaluatedProperties: false
  
-@@ -1299,7 +1300,9 @@ static unsigned int fwnode_graph_devcon_matches(const struct fwnode_handle *fwno
- 			continue;
- 		}
+       port@1:
+         $ref: /schemas/graph.yaml#/$defs/port-base
+@@ -47,16 +51,8 @@ properties:
  
--		ret = match(node, con_id, data);
-+		remote_ep = fwnode_graph_get_remote_endpoint(ep);
-+		ret = match(node, remote_ep, con_id, data);
-+		fwnode_handle_put(remote_ep);
- 		fwnode_handle_put(node);
- 		if (ret) {
- 			if (matches)
-@@ -1329,7 +1332,7 @@ static unsigned int fwnode_devcon_matches(const struct fwnode_handle *fwnode,
- 		if (IS_ERR(node))
- 			break;
+         properties:
+           endpoint:
+-            $ref: /schemas/graph.yaml#/$defs/endpoint-base
++            $ref: '#/$defs/usbc-in-endpoint'
+             unevaluatedProperties: false
+-            properties:
+-              data-lanes:
+-                $ref: /schemas/types.yaml#/definitions/uint32-array
+-                minItems: 1
+-                maxItems: 8
+-                uniqueItems: true
+-                items:
+-                  maximum: 8
  
--		ret = match(node, NULL, data);
-+		ret = match(node, NULL, NULL, data);
- 		fwnode_handle_put(node);
- 		if (ret) {
- 			if (matches)
-diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
-index d7aa913ceb8a..d8bd5071d9d8 100644
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -121,8 +121,8 @@ enum usb_role usb_role_switch_get_role(struct usb_role_switch *sw)
- }
- EXPORT_SYMBOL_GPL(usb_role_switch_get_role);
+ oneOf:
+   - required:
+@@ -65,3 +61,57 @@ oneOf:
+       - ports
  
--static void *usb_role_switch_match(const struct fwnode_handle *fwnode, const char *id,
--				   void *data)
-+static void *usb_role_switch_match(const struct fwnode_handle *fwnode, const struct fwnode_handle *endpoint,
-+				   const char *id, void *data)
- {
- 	struct device *dev;
- 
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index 3531ab03bac4..ab53532282ff 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -33,6 +33,7 @@ static int switch_fwnode_match(struct device *dev, const void *fwnode)
- }
- 
- static void *typec_switch_match(const struct fwnode_handle *fwnode,
-+				const struct fwnode_handle *endpoint,
- 				const char *id, void *data)
- {
- 	struct device *dev;
-@@ -55,6 +56,9 @@ static void *typec_switch_match(const struct fwnode_handle *fwnode,
- 	 */
- 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
- 				switch_fwnode_match);
-+	if (!dev)
-+		dev = class_find_device(&typec_mux_class, NULL, endpoint,
-+				switch_fwnode_match);
- 
- 	return dev ? to_typec_switch_dev(dev) : ERR_PTR(-EPROBE_DEFER);
- }
-@@ -290,6 +294,7 @@ static int mux_fwnode_match(struct device *dev, const void *fwnode)
- }
- 
- static void *typec_mux_match(const struct fwnode_handle *fwnode,
-+			     const struct fwnode_handle *endpoint,
- 			     const char *id, void *data)
- {
- 	struct device *dev;
-@@ -307,6 +312,9 @@ static void *typec_mux_match(const struct fwnode_handle *fwnode,
- 
- 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
- 				mux_fwnode_match);
-+	if (!dev)
-+		dev = class_find_device(&typec_mux_class, NULL, endpoint,
-+					mux_fwnode_match);
- 
- 	return dev ? to_typec_mux_dev(dev) : ERR_PTR(-EPROBE_DEFER);
- }
-diff --git a/drivers/usb/typec/retimer.c b/drivers/usb/typec/retimer.c
-index b519fcf358ca..ee4e6312c2d9 100644
---- a/drivers/usb/typec/retimer.c
-+++ b/drivers/usb/typec/retimer.c
-@@ -22,7 +22,9 @@ static int retimer_fwnode_match(struct device *dev, const void *fwnode)
- 	return is_typec_retimer(dev) && device_match_fwnode(dev, fwnode);
- }
- 
--static void *typec_retimer_match(const struct fwnode_handle *fwnode, const char *id, void *data)
-+static void *typec_retimer_match(const struct fwnode_handle *fwnode,
-+				 const struct fwnode_handle *endpoint,
-+				 const char *id, void *data)
- {
- 	struct device *dev;
- 
-@@ -31,6 +33,9 @@ static void *typec_retimer_match(const struct fwnode_handle *fwnode, const char
- 
- 	dev = class_find_device(&retimer_class, NULL, fwnode,
- 				retimer_fwnode_match);
-+	if (!dev)
-+		dev = class_find_device(&retimer_class, NULL, endpoint,
-+					retimer_fwnode_match);
- 
- 	return dev ? to_typec_retimer(dev) : ERR_PTR(-EPROBE_DEFER);
- }
-diff --git a/include/linux/property.h b/include/linux/property.h
-index 61fc20e5f81f..3e27d7b76db9 100644
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -507,8 +507,9 @@ unsigned int fwnode_graph_get_endpoint_count(const struct fwnode_handle *fwnode,
- int fwnode_graph_parse_endpoint(const struct fwnode_handle *fwnode,
- 				struct fwnode_endpoint *endpoint);
- 
--typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode, const char *id,
--				   void *data);
-+typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode,
-+				   const struct fwnode_handle *endpoint,
-+				   const char *id, void *data);
- 
- void *fwnode_connection_find_match(const struct fwnode_handle *fwnode,
- 				   const char *con_id, void *data,
+ additionalProperties: true
++
++$defs:
++  usbc-out-endpoint:
++    $ref: /schemas/graph.yaml#/$defs/endpoint-base
++    description: Super Speed (SS) output endpoint to a type-c connector
++    unevaluatedProperties: false
++
++  usbc-in-endpoint:
++    $ref: /schemas/graph.yaml#/$defs/endpoint-base
++    description: Super Speed (SS) input endpoint from the Super Speed PHY
++    unevaluatedProperties: false
++    properties:
++      data-lanes:
++        $ref: /schemas/types.yaml#/definitions/uint32-array
++        minItems: 1
++        maxItems: 8
++        uniqueItems: true
++        items:
++          maximum: 8
++
++examples:
++  # A USB orientation switch which flips the pin orientation
++  # for a usb-c-connector node.
++  - |
++    device {
++      orientation-switch;
++
++      ports {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        port@0 {
++          reg = <0>;
++          #address-cells = <1>;
++          #size-cells = <0>;
++
++          endpoint {
++            remote-endpoint = <&usb_c_connector>;
++          };
++        };
++
++        port@1 {
++          reg = <1>;
++          #address-cells = <1>;
++          #size-cells = <0>;
++
++          endpoint {
++            remote-endpoint = <&usb_ss_phy>;
++          };
++        };
++      };
++    };
++
++...
 -- 
 https://chromeos.dev
 
