@@ -1,119 +1,210 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD08BEEA5
-	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 21:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4801815B547
+	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 22:38:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724102670; cv=none; b=IjsDdfBlRt5yty6gBFwhK4xSafPwAXMKeZgn/mD8/OyiwSh7+cEGmgVi6Djlk+CZZEnR3AEMvEjn3PMD7a2K6qpE9dy0ypy85kvJfRP8xL81B7HQY/kqcMe407AMHSJDC0bXu+7KRYV+dx3J8FHhsb4Ztts+Aj7+0RO3iyzWxso=
+	t=1724107120; cv=none; b=EzJMOW53rTGff63dzoHrMpEJwS461xv2FglhAL8fumiLimOtm2Qh96rjvDebK2qgL0eIsdPzeM1nfdNBQp8P54r1YahQT8kDHxaSVI9yvRtU5XiaIryLc83niDSlDVDmUxqYDw4homet8Hx3LitknaORzStxugmSPDCbQBTNp3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724102670; c=relaxed/simple;
-	bh=u+0m0US3QFw84sTqEbjna9w6FE0gpMTeeaVLynF5j9c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MajA5CgaLZm6mxghF0qnZcTxA90pFhjUFbop+JEUIv/zwRbmcxSbstSrdmqDloAHf8SG+Hd2Fj0J0PPWXq0SQQdyTmIrt3WL0u8I+eNsnZUpcDVbm1EBhAxKkB/rwER5B3xZ2sr5HLyxeMJPXNiqSivrNxEHfA4pHzbY3YWjT5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PEPKdMmo; arc=none smtp.client-ip=209.85.217.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1724107120; c=relaxed/simple;
+	bh=QsFhJr+Mi50WviHZp89d1dhCotm3INj2CPs+HkvFqHg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cA4Vl+ehDcVCoBxo6BUH2IaUzKCHLGOw7nSvHSkog+Zs0PzuT3CB47VaN16xUDA6kjv/6ITjIajq46dcbe0Oelfky79kwEjzggLE2xW+7LDrd2fSLBA3RxK8XiJXucMi4D2KT6R0vb+L0jEJzad+aSIdOMg08YntdhusPoGLzqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ixHK+KoZ; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PEPKdMmo"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-495d1a6db75so1596472137.1
-        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 14:24:28 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ixHK+KoZ"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-26fde6117cfso2873652fac.1
+        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 15:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1724102668; x=1724707468; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JiPuVEIARbs7nZfPRgac3ucMDQpztOtq3lJp2GBYRco=;
-        b=PEPKdMmo42W5efSa5F1qlUHwK5DHGXmXJrPrhqa6h0g1146kkJQmX6SQKtDO1VWgy1
-         wgfKBHD3v6FSeL3An8B5+IM3YmbJxRKFFHti7mzMDf+JjR9jQrYNgHNF/8nrxG2sYxcZ
-         ABiDdK0kUHH7oufOGvJpjfR7NEiMgwHqFs9FrmVahVM6CeiY4ICcwMD8uzdER64IIu9E
-         VM6AwRHRAqya+ZFn6JK2QZUJ/g4eHRHycgKUrc9d9Q2ARelh5PE4gb3Fxz7QjV8odVM7
-         qa2TmbpXOWzFOOf8i+cTz6hEMHAZKW2kE+mCceP714M6xIDHj1LcsAff9Z5jT6Z1aBa+
-         AhqQ==
+        d=chromium.org; s=google; t=1724107117; x=1724711917; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=egAdoVbV7ERufO80VgquGHc5WhyUKfKkzhFmhTHzm2Y=;
+        b=ixHK+KoZu7s2u8YSw3idjDplcPo92XQPH37qzrDJYmNau4WaWDOI+Y0aRCbj7sRFdh
+         KywXmfVCkgdvCxyCKqkRaZrZAB3FOGqMugXghxRqZlF8HURF/YecmDQDrCHkG0+Bvh08
+         PHyBdVmmQKwGA2IB/XguGvyL3tl5uIEKYAxO8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724102668; x=1724707468;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JiPuVEIARbs7nZfPRgac3ucMDQpztOtq3lJp2GBYRco=;
-        b=kJJLnnOXiSwNLx/S0e9d7gtz0tKmaqGv+sI8N8izH3ADNDmcec0x6BmkHdKGKK0/IR
-         l5kRNLN1f6JI6/oDJMyVxgzD4dVhUM+H4X8Eg+HtkpufNSOpDlDd6O8xOQ+nRx7dSPz3
-         3SZECCdnZEmOxUMwfclglMbes24LM/ddmYMd7YhUJ5FJbQEo2y7JNb3FJzLi22OcK2xZ
-         FiRb6loHoJ0Sdzm+Vd+0SjL5QwHOj6sj0dPQYGn4qIkRU5Fe5vJTwoTFOP8pE6tOUJz2
-         JR0m5rjo2ONx14MjFyaI3BLRMjzOYHyMaLVzxSgrKbI9UseKGGWNG8KqHRdM6N59ZOvd
-         MkAA==
-X-Forwarded-Encrypted: i=1; AJvYcCWb5QwNLYLf/XlY/tCKKOSQijiYEW2eYd9PUZTTREj031RssPs+pZ4T62iagZyspS+1cSthC36UvDNpIYqaGzgdLHiR6GcEeQ==
-X-Gm-Message-State: AOJu0YyZ8GdeLtCFJ22ugfHYK7gj7mnuDGnDSs4H9sdTh6gzrI5x0/Ui
-	772yN6gdBCZq/rzlfkPafORz72/qp7UgHUkcLkl6rZXOEqK/GRydNvSb0HhEMncU0ci4YwZt9ep
-	5CM3PlOMKPIjjsEh239aoxRWb4UfUpyKrPJcD
-X-Google-Smtp-Source: AGHT+IE+E6VJ5JvA7Lqq7iQmAIRzeQu5arI3TDl9cLtuS06laSaYx2Gcf5jbf18gxD5V1/WytLtXiNijQYFV+DdrRxA=
-X-Received: by 2002:a05:6102:304d:b0:48f:8ead:7b7 with SMTP id
- ada2fe7eead31-4977997fc1fmr14487889137.21.1724102667560; Mon, 19 Aug 2024
- 14:24:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724107117; x=1724711917;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=egAdoVbV7ERufO80VgquGHc5WhyUKfKkzhFmhTHzm2Y=;
+        b=svypCKyBCyF47vNVQ4V+DrHWihVhj17D35+/QkYRbhk0cVSxVd5lLEFEhPjo4YsRQj
+         qbYrdHpHMjlC93lGnvRFGj0WlIxt2ZdUM+CcECTQoSnN3zksDvtdX8s7fVVjs9hxAkYS
+         yjrjwEzh7jGNaIXychweVHytL6QPVv60VsBs+a5lda4ZTw99q673o5uvefDg2lLm1S3n
+         B7M3ztZ6oRty09txHKW1ft7vqqG2ovLufqwk+KcU2svF/3JkPWNw2UYkgLWQU8FlXHwp
+         ajTBhRJ3u9V2B+v1uyINH47LRowQV7nvqigOGiACkWnt12BFOWZxgLTpcR3lK1FgLh5r
+         YqUw==
+X-Forwarded-Encrypted: i=1; AJvYcCVLRKTK8xdbGqGpK8GpM3DoEJuQ7mEA8dRqRdZ35Ja2npuIW5LOE6dJuEqXihOuIprnUOOO6DfZ@lists.linux.dev
+X-Gm-Message-State: AOJu0YyyVdhIBX/UaOyeGTkTLVbxzvc6hXmC6+rXFCwTMuNL/wlbqy2p
+	MRghR2r5o2JBeqRO0epeJv3/Yp5KW1FV2yNAoLSF2d5bEfhQaItr0qmvYVdCMQ==
+X-Google-Smtp-Source: AGHT+IFAcbhHFe8aOSpI2piH+wrMiBNFMeaVyEVhtEX5wNgd3YUCRbcPot5Saf5/lMntwLHP0R5X3g==
+X-Received: by 2002:a05:6871:723:b0:25e:fb:af8c with SMTP id 586e51a60fabf-2708136ae73mr506166fac.18.1724107117189;
+        Mon, 19 Aug 2024 15:38:37 -0700 (PDT)
+Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-7cc41530bc0sm2722444a12.63.2024.08.19.15.38.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Aug 2024 15:38:36 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: chrome-platform@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Benson Leung <bleung@chromium.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	Guenter Roeck <groeck@chromium.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	linux-acpi@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v3 00/17] platform/chrome: Add DT USB/DP muxing/topology support
+Date: Mon, 19 Aug 2024 15:38:14 -0700
+Message-ID: <20240819223834.2049862-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240819-acpi-platform_profile-fix-cfi-violation-v1-1-479365d848f6@kernel.org>
-In-Reply-To: <20240819-acpi-platform_profile-fix-cfi-violation-v1-1-479365d848f6@kernel.org>
-From: Sami Tolvanen <samitolvanen@google.com>
-Date: Mon, 19 Aug 2024 14:23:49 -0700
-Message-ID: <CABCJKue4NgOVxfjcU=oE23rogqgfiiJMqLHp-NSoSs=o1=22kg@mail.gmail.com>
-Subject: Re: [PATCH] ACPI: platform-profile: Fix CFI violation when accessing
- sysfs files
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, 
-	Hans de Goede <hdegoede@redhat.com>, Mark Pearson <markpearson@lenovo.com>, 
-	Kees Cook <kees@kernel.org>, linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
-	John Rowley <lkml@johnrowley.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Nathan,
+This series adds support for fully describing the USB/DP topology on
+ChromeOS Trogdor devices in DT. Trogdor devices have a single DP phy in
+the AP that is muxed to one of two usb type-c connectors depending on
+which port asserts HPD first to the EC. We'd like to know which port is
+connected to an external monitor to provide a better experience to the
+user about things like which type-c port is displaying DP or which
+type-c hub is acting up, etc. Describing the connection all the way from
+the source to the connector will allow us to do this.
 
-On Mon, Aug 19, 2024 at 12:09=E2=80=AFPM Nathan Chancellor <nathan@kernel.o=
-rg> wrote:
->
-> When an attribute group is created with sysfs_create_group(), the
-> ->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
-> and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
-> respectively. These functions use container_of() to get the respective
-> callback from the passed attribute, meaning that these callbacks need to
-> be the same type as the callbacks in 'struct kobj_attribute'.
->
-> However, the platform_profile sysfs functions have the type of the
-> ->show() and ->store() callbacks in 'struct device_attribute', which
-> results a CFI violation when accessing platform_profile or
-> platform_profile_choices under /sys/firmware/acpi because the types do
-> not match:
->
->   CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choic=
-es_show+0x0/0x140; expected type: 0x7a69590c)
->
-> This happens to work because the layout of 'struct kobj_attribute' and
-> 'struct device_attribute' are the same, so the container_of() cast
-> happens to allow the callbacks to still work.
->
-> Change the type of platform_profile_choices_show() and
-> platform_profile_{show,store}() to match the callbacks in
-> 'struct kobj_attribute' and update the attribute variables to match,
-> which resolves the CFI violation.
->
-> Cc: stable@vger.kernel.org
-> Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
-> Reported-by: John Rowley <lkml@johnrowley.me>
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
-> Tested-by: John Rowley <lkml@johnrowley.me>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/acpi/platform_profile.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+DRM core patches: These are used to implement lane assignment for DP
+altmode configurations through the drm_bridge code. The typec code will
+use this to tell the DP phy how many lanes of DP to drive and which
+lanes to drive out to the USB type-c connector. Adding support for lane
+assignment allows us to implement DP muxing as well, physically
+splitting the DP lanes on the DP phy so that hardware doesn't have to
+use an analog mux to steer two DP lanes to one or the other type-c port.
 
-Looks good to me, thanks for fixing this!
+Type-c core patches: These add some devm helpers so that the next
+patches in the series can skip open-coding devres helpers for
+unregistering typec switches and muxes.
 
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+DRM aux hpd patches: These implement an auxiliary device for USB type-c
+DP alternate mode. I took Dmitry's suggestion and moved the code that
+does the remapping into this driver. The existing hpd bridge is wrapped
+so as to avoid changing the current users. It also registers a typec mux
+and switch (if applicable) so that the DP altmode pin assignment and
+port orientation can be passed to the switch callbacks. We'll still need
+to implement logic in the phy layer to handle configuration.
 
-Sami
+Cros EC typec patches: This ties together everything that comes before it in
+this series. The EC typec driver registers the drm_dp_typec_bridge that
+can signal HPD from the type-c connector through the bridge chain, mux
+the DP phy in software so that we don't have to use an analog mux, and
+implement orientation control for boards like Kukui that directly
+connect the DP phy to the type-c port, necessitating lane assignment to
+flip the lanes to match the cable orientation.
+
+Changes from v2: https://lore.kernel.org/r/20240815003417.1175506-1-swboyd@chromium.org
+ * Move most of the binding bits to usb-switch.yaml
+ * Move google,cros-ec-typec binding to usb/
+ * Implement mode-switch and orientation-switch typec controls in
+   drm_dp_typec_bridge driver
+ * Get rid of public APIs that would be used to assign pins or
+   orientation of the port
+ * Add devm helpers for typec mux and switch registration
+ * Add a way to match fwnodes while walking the graph based on the
+   endpoint
+
+Changes from v1: https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
+ * Too many to count!
+ * Split out the DRM bits into this series
+ * Moved the logic into dp-aux-hpd bridge driver
+ * Drive the bridge from cros_ec_typec driver instead of globbing onto
+   the ACPI centric cros-typec-switch driver
+ * During that process drop a lot of patches that aren't needed anymore
+ * Move the DT graph and other properties to the cros-ec-typec binding
+ * Skip mode-switch/orientation-switch properties because we're not
+   registering typec structs anymore
+
+Stephen Boyd (17):
+  drm/atomic-helper: Introduce lane remapping support to bridges
+  drm/bridge: Verify lane assignment is going to work during
+    atomic_check
+  usb: typec: Stub out typec_switch APIs when CONFIG_TYPEC=n
+  usb: typec: Add device managed typec_mux_register()
+  usb: typec: Add device managed typec_switch_register()
+  drm/bridge: aux-hpd: Support USB Type-C DP altmodes via DRM lane
+    assignment
+  drm/bridge: dp_typec: Support USB Type-C orientation
+  drm/bridge: dp_typec: Add "no-hpd" support
+  drm/bridge: dp_typec: Allow users to hook hpd notify path
+  device property: Add remote endpoint to devcon matcher
+  dt-bindings: usb-switch: Extract endpoints to defs
+  dt-bindings: usb-switch: Extend for DisplayPort altmode
+  dt-bindings: Move google,cros-ec-typec binding to usb
+  dt-bindings: usb: Add ports to google,cros-ec-typec for DP altmode
+  platform/chrome: cros_ec_typec: Add support for signaling DP HPD via
+    drm_bridge
+  platform/chrome: cros_ec_typec: Support DP muxing
+  platform/chrome: cros_ec_typec: Handle lack of HPD information
+
+ .../bindings/chrome/google,cros-ec-typec.yaml |  66 --
+ .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+ .../bindings/usb/google,cros-ec-typec.yaml    | 295 +++++++++
+ .../devicetree/bindings/usb/usb-switch.yaml   | 164 ++++-
+ drivers/base/property.c                       |   7 +-
+ drivers/gpu/drm/bridge/aux-hpd-bridge.c       | 564 +++++++++++++++++-
+ drivers/gpu/drm/drm_atomic_state_helper.c     |   2 +
+ drivers/gpu/drm/drm_bridge.c                  |  50 ++
+ drivers/platform/chrome/Kconfig               |   1 +
+ drivers/platform/chrome/cros_ec_typec.c       | 149 ++++-
+ drivers/platform/chrome/cros_ec_typec.h       |   3 +
+ drivers/usb/roles/class.c                     |   4 +-
+ drivers/usb/typec/mux.c                       |  72 +++
+ drivers/usb/typec/retimer.c                   |   7 +-
+ include/drm/bridge/aux-bridge.h               |  26 +
+ include/drm/drm_atomic.h                      |  31 +
+ include/drm/drm_bridge.h                      |   4 +
+ include/linux/property.h                      |   5 +-
+ include/linux/usb/typec_mux.h                 |  58 +-
+ 19 files changed, 1408 insertions(+), 107 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+
+
+base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+-- 
+https://chromeos.dev
+
