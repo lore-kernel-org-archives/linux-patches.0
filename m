@@ -1,126 +1,106 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E100418A959
-	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 17:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6EFD531;
+	Mon, 19 Aug 2024 18:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724087041; cv=none; b=PLPfy0Jg8+oAQE3KQqd7QTyosnkeZOv2Zhyh9fZMZ/OGCQXZPszE7rJ0j4cy097myDMCcZw4jG5KB21I8i8lWklS/2Vb412tT9YE888r6hVgyOjHbX5HUHT5vRdcMDeurwey5b88TszWggRi1Cp/DLuhk/H+VIdlw6+ytCBigaQ=
+	t=1724091380; cv=none; b=ssf5umVNXw3tyMbWRVO+HG67GWAmyThQQc0sx/xzSnjFwlPgVo4XXvYXU42xGXp63XfnOqsl0l2X1saLhHV3txDnrTXY+Ja6+eEIOJm/0k5Ws4dwCXi/D/n47wX1l7UHKzxzQ1UODBjEr9CP0+YmmMOz/7GvBJ3HTm2KxRpBy80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724087041; c=relaxed/simple;
-	bh=JgmieXg4Iblau/5Q/kxt2DnEgSgVYdSGYAbJ5VjaqKY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IjlqhnyeFPTYY5T+16Y1VMZdflu2EH+pRJZOjrORU3BOs6/B4/THIYgJ90zhFdSzcW2ynGlF4Aqj52duPFEIDx1cuyL2jtTx2U55YVbB/65oW+T5d3u6UVrdj7xZ23zwIWzv4GwLF/Nxnfqk4yPMKu21aUzDoh4OlyvcfL3JWXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UlPU64+Q; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724091380; c=relaxed/simple;
+	bh=fb00pKGHuPVAd6R+bBKI9YbKJHWC6vDu6M1kpq90BNI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LdajDQ9DJ9VgdWEIgYiVHIMba8qiX86ADNhoCYGAOG42JunhUo7jvTDqlVyfh+RYAcXKHUChbN6iuNlZTxot3EeBSK+EFrAHuNoajhiAT56xlyCIvcV9G7GJwMn0n2HG7epvuGTKHMMmJmVuQi75aafXQcVaTCgm0nDjDIzMqo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a2bKTOay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UlPU64+Q"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7a1d6f4714bso451938685a.1
-        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 10:03:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724087039; x=1724691839; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a3BIaVWnwxuWR27UJ/fveub/Cw3H6dA+grq2xxd+b3c=;
-        b=UlPU64+Qh0BI3KB2ePhAwilUpSDGvnBOM+dzrOAFCHH9MFzXUQTgRgrOgFpMXkswqd
-         YBF/cYLVePgTQFNFpwiWDrq2VwcfQLt2TceQNhoBYMYjQ39b+UE9tdAi1dVyq/dW/Wqd
-         4s9zOdezdpGEqq6awLPuoHEUM2245y29ntHAWrJndoprl6ZKQcHLgbg8b9e5mrIW2y40
-         ZNCD51WQVCUhPA8G9lr51KvRQxq6+/fwJzXmjm6Qgvr3Ih9s4VAWQW3cd4mLPwU9ZX4V
-         3IhbNx8hUOX0pboh0qs+SWA7btVdWbAgYVvwFM4kF13hNaJf9E+wJfppj7CEes8EOdhG
-         fyIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724087039; x=1724691839;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a3BIaVWnwxuWR27UJ/fveub/Cw3H6dA+grq2xxd+b3c=;
-        b=d1uwXOYPQvCwo3i5n9ppiFrRMz7H3ObmR+0jRqawfxc6c3IZ2hejCwN7i/wrNL9URz
-         lK9AUaL9c4K64ezrdS1NTgF5SfejPFKs34VFIeRhF5kdI+4GvecnpRGYlY9ITa/tp/dY
-         7Iz8PKdCJPYJPvUrCcUfmDLz3CxRlzdk9vX7DthfZYkxsfwk1ccOjZspSNN63un1Zqtf
-         Qi8d5SkjG8ybDd4H23E1w1K8GaycXiYc4L9Y88qr3BsEdBPAdkks30TgISTMIsqTldRZ
-         JZGtwHiieDkyj/1XFdYyhYoKDvHaDGGL7bjrBRcVwtVruf0OvBoX2SzxHaSKzgEf5Y8A
-         ybxA==
-X-Gm-Message-State: AOJu0YySFz8YWYoVBnbdzuDfacmcYBmVsR9bYhE6Y1GRg9hXwKafx6JO
-	icZZtXQZ5lKzAXlr3+TykqKUss68tOH3+ZFDYxJZ8M5jHydq+W+XMT/zFg==
-X-Google-Smtp-Source: AGHT+IFbUhEcPgxK/XfmNoG6Hn+cKrtm8a4uxXkzp4ZBuOe/ugGXCGOPKI+bgtCqYGHfkyGl+yVDfQ==
-X-Received: by 2002:a05:620a:24cb:b0:7a2:1bc:be05 with SMTP id af79cd13be357-7a667c53723mr46511485a.31.1724087038449;
-        Mon, 19 Aug 2024 10:03:58 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id af79cd13be357-7a4ff0faec2sm444637185a.105.2024.08.19.10.03.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 10:03:55 -0700 (PDT)
-Message-ID: <96ad9bc6-1cac-4ebf-8385-661c0d4f1b99@gmail.com>
-Date: Mon, 19 Aug 2024 10:03:51 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a2bKTOay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48938C32782;
+	Mon, 19 Aug 2024 18:16:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724091378;
+	bh=fb00pKGHuPVAd6R+bBKI9YbKJHWC6vDu6M1kpq90BNI=;
+	h=From:Date:Subject:To:Cc:From;
+	b=a2bKTOayeGxT9txXl0p2QfIs+0+ooPeZ3R1BUzJurol/l/bWbm3SeCFs0BDdpavCI
+	 L0G5tJZNBWkB3Go/tqdyqIsA+1qPQwgeFWWUl8/zDu+8JSgqYW06uOIcbw6UH6tisq
+	 6ZL7DIQ7TF3rlLHVxdJOQ4+XtEPRBt3OPuD6LEEBheGpQQPeMG8fATHqmiXe0ZF6aT
+	 p82IZGaRamGwk8D9k3z5pABbmbkMRGmYgAHkZCIsjGLCdf6BrC2oo2ucAq0gef341r
+	 kySNb+yfU8AW/GfwDeZWqxseqJJfa6h3uOyThcm7eLctXNp6wTobKVXTZGZTF7mg/9
+	 cxVsuisV9TadA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 19 Aug 2024 11:16:10 -0700
+Subject: [PATCH] hexagon: Disable constant extender optimization for LLVM
+ prior to 19.1.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: 5.10.225-rc1 [Was: Re: [PATCH 5.10 000/345] 5.10.224-rc3 review]
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240817074737.217182940@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240817074737.217182940@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240819-hexagon-disable-constant-expander-pass-v1-1-36a734e9527d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOmLw2YC/x3NwQrDIAyA4VcpOS9gZUjZq4wdoqZtYEQxZQil7
+ 17Z8bv8/wnGTdjgNZ3Q+CcmRQfmxwRpJ90YJQ+Dd/7pFudx505bUcxiFL+MqagdpAdyr6SZG1Y
+ ywyWGGOYcA60JRqw2XqX/R+/Pdd0ysIyIeAAAAA==
+To: Brian Cain <bcain@quicinc.com>, 
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-hexagon@vger.kernel.org, patches@lists.linux.dev, 
+ llvm@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2213; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=fb00pKGHuPVAd6R+bBKI9YbKJHWC6vDu6M1kpq90BNI=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGmHuz/G/v0qeqNNUfTjg4NWXpL9NRUbBAXiX8yMD37x9
+ 4jew49XO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBE1q9m+J+8+OlTJv6F164H
+ fJh55Pv2rYFbNYoVkvZ1JdseeGB65P52hv9Zm+prlguIJp8SDy3ne2d14Yo216lOYYn5KqKcs9M
+ C7/MCAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 8/17/24 00:51, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.224 release.
-> There are 345 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 19 Aug 2024 07:46:32 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.224-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+The Hexagon-specific constant extender optimization in LLVM may crash on
+Linux kernel code [1] (such as with a bcachefs change in -next):
 
-perf fails to build on ARM/ARM64/MIPS with:
+  clang: llvm/lib/Target/Hexagon/HexagonConstExtenders.cpp:745: bool (anonymous namespace)::HexagonConstExtenders::ExtRoot::operator<(const HCE::ExtRoot &) const: Assertion `ThisB->getParent() == OtherB->getParent()' failed.
+  Stack dump:
+  0.      Program arguments: clang --target=hexagon-linux-musl ... fs/bcachefs/btree_io.c
+  1.      <eof> parser at end of file
+  2.      Code generation
+  3.      Running pass 'Function Pass Manager' on module 'fs/bcachefs/btree_io.c'.
+  4.      Running pass 'Hexagon constant-extender optimization' on function '@__btree_node_lock_nopath'
 
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
-in function `bitmap_zero':
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/../include/linux/bitmap.h:40: 
-undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
-in function `bitmap_alloc':
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/../include/linux/bitmap.h:126: 
-undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/../include/linux/bitmap.h:126: 
-undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/../include/linux/bitmap.h:126: 
-undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/../include/linux/bitmap.h:126: 
-undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o:/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/../include/linux/bitmap.h:40: 
-more undefined references to `ALIGN' follow
-collect2: error: ld returned 1 exit status
+Without assertions enabled, there is just a hang during compilation.
 
-this is coming from "bitmap: introduce generic optimized bitmap_size()".
+This has been resolved in LLVM main (20.0.0) [2] and backported to LLVM
+19.1.0 but the kernel supports LLVM 13.0.1 and newer, so disable the
+constant expander optimization using the '-mllvm' option when using a
+toolchain that is not fixed.
+
+Link: https://github.com/llvm/llvm-project/issues/99714 [1]
+Link: https://github.com/llvm/llvm-project/commit/68df06a0b2998765cb0a41353fcf0919bbf57ddb [2]
+Link: https://github.com/llvm/llvm-project/commit/2ab8d93061581edad3501561722ebd5632d73892 [3]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/hexagon/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/hexagon/Makefile b/arch/hexagon/Makefile
+index 92d005958dfb..ff172cbe5881 100644
+--- a/arch/hexagon/Makefile
++++ b/arch/hexagon/Makefile
+@@ -32,3 +32,9 @@ KBUILD_LDFLAGS += $(ldflags-y)
+ TIR_NAME := r19
+ KBUILD_CFLAGS += -ffixed-$(TIR_NAME) -DTHREADINFO_REG=$(TIR_NAME) -D__linux__
+ KBUILD_AFLAGS += -DTHREADINFO_REG=$(TIR_NAME)
++
++# Disable HexagonConstExtenders pass for LLVM versions prior to 19.1.0
++# https://github.com/llvm/llvm-project/issues/99714
++ifneq ($(call clang-min-version, 190100),y)
++KBUILD_CFLAGS += -mllvm -hexagon-cext=false
++endif
+
+---
+base-commit: 47ac09b91befbb6a235ab620c32af719f8208399
+change-id: 20240802-hexagon-disable-constant-expander-pass-8b6b61db6afc
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
 
