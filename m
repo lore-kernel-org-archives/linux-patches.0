@@ -1,54 +1,54 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004E820012E
-	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 22:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741EC201256
+	for <patches@lists.linux.dev>; Mon, 19 Aug 2024 22:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724107147; cv=none; b=UnPoheIIVvqIupcH8hOgoJEFBrnd1rF/xbMD4/2/4XBt6W3X7CPDHlIM9Teh4f5waFCA/G2jLtOKrAZ9owJ0TiCa+iZOakAz65ydNbCAsuj9bkh4TKeqUUCwdlcTNpeAF0RlfNL+lGcazV4qrGMquVtZs0snKtT0n0eE8hpgy44=
+	t=1724107150; cv=none; b=ka2TvigQ7juBgUx7Xpf3ylay3hVsUXc/ONOAb2tt6h7ui97rsIvahn1r3ZtN8ybWCh6rgdEOYs6B84TZCJqtCmFWTI+x2gCdSfA0rKo9gQVJJES0d0spt7/T1btVlXJ9AdXY43P2bfZkS/zOksV6BpIdzSueKxymLrxJetKk1aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724107147; c=relaxed/simple;
-	bh=Ti4xspzmJb0dyaL6KteaBPQDBI0NpBagPW8WNKTO9c4=;
+	s=arc-20240116; t=1724107150; c=relaxed/simple;
+	bh=/dI7MR+2Xs16wfk9NVoRInRnpjgI0wsZ+hkJsjkYxjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJ6LluWgma2vhfPf6ivRS5yFwgwWn5NgdIOl4OEYBf/LLdojqk7IIrVFaGniuhkRYBnQtG50maeKkoTkd1zK+Zvc2+K45fx35AR/O/hX9LtmXEbykVQ+MmvLcsGLkC93wdo8IlZ34D0lB1+9zJ9r6qLC27mFLtvMNew41WzbC8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=TyPJYB4g; arc=none smtp.client-ip=209.85.210.175
+	 MIME-Version; b=QHcOA9AatNWRqroqqQb7A7LIkpFo2egisR22XPF1gldSkIX36SkeRuiq2qbuCtlh75pRiE/9XBqw+nt0Zdj6eatE5z2+uTmIRBoSWWBrZmq1usgAPAJQmo9Rn3lMNjyf08vBYIyBBmWosIk6eNBWFLTLTkmk4xxTku4XrpKbOPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ek7jjFxX; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="TyPJYB4g"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-713dc00ce9dso2138414b3a.0
-        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 15:39:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ek7jjFxX"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70d1d6369acso3763511b3a.0
+        for <patches@lists.linux.dev>; Mon, 19 Aug 2024 15:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724107145; x=1724711945; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1724107148; x=1724711948; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T31q96nI7HTHANhAbPDLeTjBqmklGP7ssi3aURXB78Y=;
-        b=TyPJYB4gjbQCz4c0F4dHRYCYjpgurwJTXFZZNb8lreAHyp6MYH4WfpK9UkzhBgVmLZ
-         I6HsEivpZTKaWkpkklB3CZAUyFzN/8ODivslbQ+M+Y9gmD0QMrirXPe9z9zrRSQJq8Z9
-         Xy9Uwe2hDSXa894s2/1djEY9OFeWBSqilezDs=
+        bh=3olKCNMmm+bbLjPBrj+yuwpy+tnEYS3+fqAauOCcd9s=;
+        b=ek7jjFxXq0KjLDux1KxcQDya63NVzjF9XTCb/HrNG873yWOm+FEPMlxg692Al1jote
+         gEp2aL6ckMvaM4U9Ha3szCAblLWBWDc8ts/MS5Ex6EU5yVMc/WDMnYjvtTtyGcw3jfvK
+         rH9dOcR9Oi6VF8gkBcKwXmelqdIdoSL6eirwQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724107145; x=1724711945;
+        d=1e100.net; s=20230601; t=1724107148; x=1724711948;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=T31q96nI7HTHANhAbPDLeTjBqmklGP7ssi3aURXB78Y=;
-        b=n/VzetYyGkZeEzbhHGIhgdjhwX8RdfqUyxIy7zAKo7I7blGH5Qbbv+o2jA/8VIz36R
-         npdttOa/Ho9emHfhd8uCY9ut/nKL5QBcwtf8D5kmcwdBe/vli74I5TEk0R58YQybNlMu
-         IjQBaL+M8wO9Mt+AXu3/dpakbJnF6dhK/Ak6N+ksF47j1lrUWSVdabn3E2d/9Rsn8ZR2
-         3kt5ywL4BJh++WruY4FoeUMLHDrKcIoC5/A4m45XSYficjCX5SlcZBX2/6d7PueV1Jy2
-         78Xj9zzRgiciVldCF7yg0UnqeCrcQyqydlmlaI8KAMDUXqb0KD1d9Mjdcm6yuqQW2NTT
-         GDNg==
-X-Forwarded-Encrypted: i=1; AJvYcCUNQS40pZY6Z2dFU7qWRQeKu9ECRQF5RmwX8zcpfMCY4HtwvMtcsM9M3shynvtyhICMu7uX+2knvJZCSF/L3JNNtw0ONTRQLg==
-X-Gm-Message-State: AOJu0Yxkw2GzVDyCC2b/cTmLGRPhmB2qDWa9zjjf1WmQfqOHmMZCzIjk
-	pgAVkyQ3txlybAWQEK+QyYY3gE5Ztl7SyGV4NT6UcYY6qEfen7hcoN9KSax4/Q==
-X-Google-Smtp-Source: AGHT+IGkbe8vELlVZVdfm7iYACRe3TPZ4k2lnZ7T8LU4DsUAYy70X4jlTSj4PuE13uFvl6Gg6qUx3g==
-X-Received: by 2002:a05:6a00:6f68:b0:70d:2556:2b1 with SMTP id d2e1a72fcca58-713c4e73cccmr14140075b3a.13.1724107145269;
-        Mon, 19 Aug 2024 15:39:05 -0700 (PDT)
+        bh=3olKCNMmm+bbLjPBrj+yuwpy+tnEYS3+fqAauOCcd9s=;
+        b=utE1Gt8rMa5s216iaq4r9wXoj/7u1VvGfKz6bVaDPDSqAJixbvK+k/1Z5nbpb5PkwH
+         nvflyEB3gj2UBoyKkZo1rN4HKWu00mDO6D1xqCDMNykcoyF6NH0bJtQ3mPUtkdhJE/LQ
+         L6F9cPSQDbSYtiTWeNasx3M/lDiJ4zQXrzVE2fx+IcizZrMhiAxrmovitEOUs26Lumnb
+         zRuXAgGijzXV2qhL0ze+jeoyVbTBZrSqQ6bYey+aicHu1pUSe4KJYgSoBM1JaY7m3+/W
+         IEXjPYZm1MznwSNstlCwZ1YPKEJXT7IpQxUMgssQmlhm2k6eUr+Pv7ySJThvfGzSIYPj
+         PcNA==
+X-Forwarded-Encrypted: i=1; AJvYcCUEL/4RzCv8N5xFBAEmGmgUZugb+R1tMSPsfG6ZphudVDxz75+d1B2W054JLi4Vbl23BKPCWXymiFNk7ws03bFqBPImX504Uw==
+X-Gm-Message-State: AOJu0YxZVYuXEK+aShMmRd2glaJMpaoLupegvTnPto7sTDXHam6SQEBn
+	sFComdeHYClWPC6FmEieC4u/fxOGlQrwmmUA/OU26BOBblv6I449vUM6HpKlsg==
+X-Google-Smtp-Source: AGHT+IFuHobXwMpayN/T3l++MLdpiZSou9JMIsZXu7qiGwNDrozpjaxioFvym1cbtCUJdc/lyGhU6w==
+X-Received: by 2002:a05:6a21:3409:b0:1c0:f114:100c with SMTP id adf61e73a8af0-1cac701c654mr1375044637.17.1724107147591;
+        Mon, 19 Aug 2024 15:39:07 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7127add7660sm7040208b3a.38.2024.08.19.15.39.03
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7127add6de9sm7314417b3a.12.2024.08.19.15.39.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 15:39:04 -0700 (PDT)
+        Mon, 19 Aug 2024 15:39:07 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -88,11 +88,10 @@ Cc: linux-kernel@vger.kernel.org,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 13/17] dt-bindings: Move google,cros-ec-typec binding to usb
-Date: Mon, 19 Aug 2024 15:38:27 -0700
-Message-ID: <20240819223834.2049862-14-swboyd@chromium.org>
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v3 14/17] dt-bindings: usb: Add ports to google,cros-ec-typec for DP altmode
+Date: Mon, 19 Aug 2024 15:38:28 -0700
+Message-ID: <20240819223834.2049862-15-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
 In-Reply-To: <20240819223834.2049862-1-swboyd@chromium.org>
 References: <20240819223834.2049862-1-swboyd@chromium.org>
@@ -104,8 +103,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This binding is about USB type-c control. Move the binding to the usb
-directory as it's a better home than chrome.
+Add a DT graph binding to google,cros-ec-typec so that it can combine
+DisplayPort (DP) and USB SuperSpeed (SS) data into a USB type-c endpoint
+that is connected to the usb-c-connector node's SS endpoint. This also
+allows us to connect the DP and USB nodes in the graph to the USB type-c
+connectors, providing the full picture of the USB type-c data flows in
+the system.
+
+Allow there to be multiple typec nodes underneath the EC node so that
+one DT graph exists per DP bridge. The EC is actually controlling TCPCs
+and redrivers that combine the DP and USB signals together so this more
+accurately reflects the hardware design without introducing yet another
+DT node underneath the EC for USB type-c.
+
+If the type-c ports are being shared between a single DP controller then
+the ports need to know about each other and determine a policy to drive
+DP to one type-c port. If the type-c ports each have their own dedicated
+DP controller then they're able to operate independently and enter/exit
+DP altmode independently as well. We can't connect the DP controller's
+endpoint to one usb-c-connector port@1 endpoint and the USB controller's
+endpoint to another usb-c-connector port@1 endpoint either because the
+DP muxing case would have DP connected to two usb-c-connector endpoints
+which the graph binding doesn't support.
+
+Therefore, one typec node is required per the capabilities of the type-c
+port(s) being managed. This also lets us indicate which type-c ports the
+DP controller is wired to. For example, if DP was connected to ports 0
+and 2, while port 1 was connected to another DP controller we wouldn't
+be able to implement that without having some other DT property to
+indicate which output ports are connected to the DP endpoint.
 
 Cc: Rob Herring <robh+dt@kernel.org>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
@@ -118,47 +144,298 @@ Cc: Tzung-Bi Shih <tzungbi@kernel.org>
 Cc: <devicetree@vger.kernel.org>
 Cc: <chrome-platform@lists.linux.dev>
 Cc: Pin-yen Lin <treapking@chromium.org>
-Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- Documentation/devicetree/bindings/mfd/google,cros-ec.yaml     | 2 +-
- .../bindings/{chrome => usb}/google,cros-ec-typec.yaml        | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
- rename Documentation/devicetree/bindings/{chrome => usb}/google,cros-ec-typec.yaml (90%)
+ .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+ .../bindings/usb/google,cros-ec-typec.yaml    | 229 ++++++++++++++++++
+ 2 files changed, 233 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-index aac8819bd00b..c991626dc22b 100644
+index c991626dc22b..bbe28047d0c0 100644
 --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
 +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-@@ -99,7 +99,7 @@ properties:
+@@ -98,9 +98,6 @@ properties:
+ 
    gpio-controller: true
  
-   typec:
--    $ref: /schemas/chrome/google,cros-ec-typec.yaml#
-+    $ref: /schemas/usb/google,cros-ec-typec.yaml#
- 
+-  typec:
+-    $ref: /schemas/usb/google,cros-ec-typec.yaml#
+-
    ec-pwm:
      $ref: /schemas/pwm/google,cros-ec-pwm.yaml#
-diff --git a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-similarity index 90%
-rename from Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
-rename to Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-index 9f9816fbecbc..5ec4a9777ea1 100644
---- a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
+     deprecated: true
+@@ -166,6 +163,10 @@ patternProperties:
+     type: object
+     $ref: /schemas/extcon/extcon-usbc-cros-ec.yaml#
+ 
++  "^typec(-[0-9])*$":
++    type: object
++    $ref: /schemas/usb/google,cros-ec-typec.yaml#
++
+ required:
+   - compatible
+ 
+diff --git a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+index 5ec4a9777ea1..d4c5c92c78ce 100644
+--- a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
 +++ b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-@@ -1,10 +1,10 @@
- # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/chrome/google,cros-ec-typec.yaml#
-+$id: http://devicetree.org/schemas/usb/google,cros-ec-typec.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
+@@ -26,6 +26,106 @@ properties:
+   '#size-cells':
+     const: 0
  
--title: Google Chrome OS EC(Embedded Controller) Type C port driver.
-+title: Google Chrome OS Embedded Controller (EC) USB type-c port driver
++  mux-gpios:
++    description: GPIOs indicating which way the DP mux is steered
++    maxItems: 1
++
++  no-hpd:
++    description: Indicates this endpoint doesn't signal HPD for DisplayPort
++    type: boolean
++
++  mode-switch:
++    $ref: usb-switch.yaml#properties/mode-switch
++
++  orientation-switch:
++    $ref: usb-switch.yaml#properties/orientation-switch
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description: Output ports for combined DP and USB SS data
++        patternProperties:
++          "^endpoint@([0-8])$":
++            $ref: usb-switch.yaml#/$defs/usbc-out-endpoint
++            unevaluatedProperties: false
++
++        anyOf:
++          - required:
++              - endpoint@0
++          - required:
++              - endpoint@1
++          - required:
++              - endpoint@2
++          - required:
++              - endpoint@3
++          - required:
++              - endpoint@4
++          - required:
++              - endpoint@5
++          - required:
++              - endpoint@6
++          - required:
++              - endpoint@7
++          - required:
++              - endpoint@8
++
++      port@1:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port to receive USB SuperSpeed (SS) data
++        patternProperties:
++          "^endpoint@([0-8])$":
++            $ref: usb-switch.yaml#/$defs/usbc-in-endpoint
++            unevaluatedProperties: false
++
++        anyOf:
++          - required:
++              - endpoint@0
++          - required:
++              - endpoint@1
++          - required:
++              - endpoint@2
++          - required:
++              - endpoint@3
++          - required:
++              - endpoint@4
++          - required:
++              - endpoint@5
++          - required:
++              - endpoint@6
++          - required:
++              - endpoint@7
++          - required:
++              - endpoint@8
++
++      port@2:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        description:
++          Input port to receive DisplayPort (DP) data
++        unevaluatedProperties: false
++
++        properties:
++          endpoint:
++            $ref: usb-switch.yaml#/$defs/dp-endpoint
++            unevaluatedProperties: false
++
++        required:
++          - endpoint
++
++    required:
++      - port@0
++
++    anyOf:
++      - required:
++          - port@1
++      - required:
++          - port@2
++
+ patternProperties:
+   '^connector@[0-9a-f]+$':
+     $ref: /schemas/connector/usb-connector.yaml#
+@@ -35,6 +135,40 @@ patternProperties:
+ required:
+   - compatible
  
- maintainers:
-   - Benson Leung <bleung@chromium.org>
++allOf:
++  - if:
++      required:
++        - no-hpd
++    then:
++      properties:
++        ports:
++          required:
++            - port@2
++  - if:
++      required:
++        - mux-gpios
++    then:
++      properties:
++        ports:
++          required:
++            - port@2
++  - if:
++      required:
++        - orientation-switch
++    then:
++      properties:
++        ports:
++          required:
++            - port@2
++  - if:
++      required:
++        - mode-switch
++    then:
++      properties:
++        ports:
++          required:
++            - port@2
++
+ additionalProperties: false
+ 
+ examples:
+@@ -50,6 +184,8 @@ examples:
+ 
+         typec {
+           compatible = "google,cros-ec-typec";
++          orientation-switch;
++          mode-switch;
+ 
+           #address-cells = <1>;
+           #size-cells = <0>;
+@@ -60,6 +196,99 @@ examples:
+             power-role = "dual";
+             data-role = "dual";
+             try-power-role = "source";
++
++            ports {
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              port@0 {
++                reg = <0>;
++                usb_c0_hs: endpoint {
++                  remote-endpoint = <&usb_hub_dfp3_hs>;
++                };
++              };
++
++              port@1 {
++                reg = <1>;
++                usb_c0_ss: endpoint {
++                  remote-endpoint = <&cros_typec_c0_ss>;
++                };
++              };
++            };
++          };
++
++          connector@1 {
++            compatible = "usb-c-connector";
++            reg = <1>;
++            power-role = "dual";
++            data-role = "dual";
++            try-power-role = "source";
++
++            ports {
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              port@0 {
++                reg = <0>;
++                usb_c1_hs: endpoint {
++                  remote-endpoint = <&usb_hub_dfp2_hs>;
++                };
++              };
++
++              port@1 {
++                reg = <1>;
++                usb_c1_ss: endpoint {
++                  remote-endpoint = <&cros_typec_c1_ss>;
++                };
++              };
++            };
++          };
++
++          ports {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            port@0 {
++              reg = <0>;
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              cros_typec_c0_ss: endpoint@0 {
++                reg = <0>;
++                remote-endpoint = <&usb_c0_ss>;
++                data-lanes = <0 1 2 3>;
++              };
++
++              cros_typec_c1_ss: endpoint@1 {
++                reg = <1>;
++                remote-endpoint = <&usb_c1_ss>;
++                data-lanes = <2 3 0 1>;
++              };
++            };
++
++            port@1 {
++              reg = <1>;
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              usb_in_0: endpoint@0 {
++                reg = <0>;
++                remote-endpoint = <&usb_ss_0_out>;
++              };
++
++              usb_in_1: endpoint@1 {
++                reg = <1>;
++                remote-endpoint = <&usb_ss_1_out>;
++              };
++            };
++
++            port@2 {
++              reg = <2>;
++              dp_in: endpoint {
++                remote-endpoint = <&dp_phy>;
++                data-lanes = <0 1>;
++              };
++            };
+           };
+         };
+       };
 -- 
 https://chromeos.dev
 
