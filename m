@@ -1,102 +1,82 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0645C18A928
-	for <patches@lists.linux.dev>; Tue, 20 Aug 2024 17:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7215910A24;
+	Tue, 20 Aug 2024 18:04:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724175258; cv=none; b=JeaHaKYyUAhYKFXbiapszHb7KxTdXJED6ogG5NWpeevymaBY11aYQYWgyCidbiPkEpuVnguk3Xoyx0piYqAxMRkvJeSiU+EgONbTF/bKvZ7I6KgkwbHp40wXZzSy48TunMFpRnwe94MpHgp7qbN++RL8RC9VN+FLQvLO1+4fEVU=
+	t=1724177079; cv=none; b=LpOR5IsjQrmDyb0xas+llpXLCEnYcLHErEpGgb/iGVf6mc109/tPiCNMzHoWjaV7NTnThFaQrpM3+HuhQiEQiIQFQAcI4oG1q3FYKYqriAz6hfytgy76QZzb5KlxVPGJCsXPPpQw7btX/zblCDZqMCiDWO/5bMoSVPYvzp7Np2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724175258; c=relaxed/simple;
-	bh=+BGxKuXy5yuaKLKpL+P0IynbzYCeuLCHjDjm+SqrANU=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QKpCdbxIGeNRq5Mc7MVmzijm8BmuYkKuEqmfrxZck/U6TqzYmh8Vl0E3WU8yK6FLa73gs/NSYZl0e2s3ZFOTeu661iC/uws+4zTu2hlLUEbfWcal82vb/zWwGg9dZcSMdhqWFz8EeRakq/PCE7o+0N8RGm9js5tp4lEqPtjE0gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=iUnj4ltB; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1724177079; c=relaxed/simple;
+	bh=utxJ+2eCJj9Yna0s4EpYW2QqkPU5ieoaQRJYmJW2V34=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gr/7xoqO85lg5kehr4c9OwT8UwOPR2ujvuMCCceMKLOD52JXEqmvBPvjKD7yDbtRT5+2uPDUkoHrCH4vCTRnjlMw3XNLFMhfx/HZANDOJrg/JBwxDgqoKJ9DfC2Bx8sTILUPvlFD524A0oDPwOMNYCVZoTyLGS9OI7zaB3SgrZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jE0dEnNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="iUnj4ltB"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7a66b813781so56367385a.1
-        for <patches@lists.linux.dev>; Tue, 20 Aug 2024 10:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724175255; x=1724780055; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sT8btaeVFgKiZIC2/bVrNe0cKcp239nORrve01JKc1Q=;
-        b=iUnj4ltBRN6/zIwXXwuWub+BZZq05egzTTIfK/96iDOtYvW1vezgcR51Yvq0m9rai4
-         nStPjEl+iIo+R8EiuKv99N1SlePrA0mTmbm3mdI3DsH0fFQSa7lpzzCirgYt43GR8sas
-         0j/0+3fGsgVaNEglZUm7X1OyvDQEMZeRVC27E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724175255; x=1724780055;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sT8btaeVFgKiZIC2/bVrNe0cKcp239nORrve01JKc1Q=;
-        b=qD8Fuou5O8HEkk9BsTSxlzB6KeKu3d9bfd+RsiQUm2t5Lk2W0fSxiqWKGDrQQZwXUy
-         VRsEcu3W3df1L8FcP4LUjKo2BePMJ6FiDPt5SAYqKyzk821wzxtlpk8vUJPpRHPufkEg
-         n9XjYjMOixdVK2KFOZ193BghEiuiTks/W+0fXuc/IJ3fUzB9Hga/Gv8n9jIurxAbPJXc
-         SKzy308V+u8hERhq1Wb3rTCF/z/crFwiDEwjZrTMF0uRNcR/WxJpqQ6hsrFQFSE03KyJ
-         wp0h9qCv2xzbwQsdrHIxvUJTv+YslYpXGO3QcpjyJ8tqEytfMrDpd+jW5thol2/83vVv
-         yMiw==
-X-Forwarded-Encrypted: i=1; AJvYcCUl96rWqCqGghW6cLmoalzDZXpXbw5377/44qVefgyARQUoMbUww5BxYH0M+o3itVi0AzsoG+Av4m7q95zP5w83hBxy+dU3sg==
-X-Gm-Message-State: AOJu0YzuELDg4CtswEQR1pZDvsGxwz9fC89LbPhh5UZ2Vqm4ubqV2uvr
-	htTGGJkk6NDVy5Xw46veSeP6YSMdUCThRCkV21AiQDlxLqsMyxaHLqp3/D+ZpEcCHdFT5Z+Huz9
-	zZAGkmj8vpIq/Bd+Exdy3ZX69BIT/56SCl485
-X-Google-Smtp-Source: AGHT+IGGJj/BEL1gcz7E4TOfNemZPl2ZAZ1e0Im3r9+oB7B/patnof4GuWnoFzCxo19sTL6oKp0QcBKMjKB8KkoFPP4=
-X-Received: by 2002:a05:620a:2453:b0:79f:8f3:6ad4 with SMTP id
- af79cd13be357-7a6740028d4mr2801085a.1.1724175254910; Tue, 20 Aug 2024
- 10:34:14 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Aug 2024 10:34:13 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jE0dEnNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB2CC4AF0B;
+	Tue, 20 Aug 2024 18:04:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724177079;
+	bh=utxJ+2eCJj9Yna0s4EpYW2QqkPU5ieoaQRJYmJW2V34=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jE0dEnNAAdN2WXJ0fP1gZH3ATQ2pFKgurNcVv6Wrg6Gku3Qr6VPn2hU28IJJ1ut/i
+	 M2qwSJRASGd1z+SWfAs44eGQemPQAjvClmH+9HVxWHb33/0vG13HQFW92w4RLxsw1V
+	 rJ1QxTVUgAtNE9iHn80l56oAocT1GQsUZXmuJYscuqFtrEJm71+qerpVmCAsrcjt9f
+	 dmfr/LqrdmmUy2QMKV52y2BLQ3UYQdzitcmnF97Cc6IRue+V0UBH0MP7QKxs00A627
+	 21zzFqdMEdQ2G4mHoj+sSibPumEUrvcGMRRb7shYweR4m9O6Vxvd/7/q2Es+YrzksS
+	 eFqPKZwN5Zi9g==
+Date: Tue, 20 Aug 2024 19:04:32 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.10 00/25] 6.10.6-rc3 review
+Message-ID: <38b0451c-8cbd-4542-b778-6521bd94bc05@sirena.org.uk>
+References: <20240817085406.129098889@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZsRt_I6y9MfWLawy@smile.fi.intel.com>
-References: <20240819223834.2049862-1-swboyd@chromium.org> <20240819223834.2049862-11-swboyd@chromium.org>
- <ZsRt_I6y9MfWLawy@smile.fi.intel.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Tue, 20 Aug 2024 10:34:13 -0700
-Message-ID: <CAE-0n516QBSg-ODNjaM-q52UtU17DJ45VC-pov+1oSfm2E_9Sg@mail.gmail.com>
-Subject: Re: [PATCH v3 10/17] device property: Add remote endpoint to devcon matcher
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, dri-devel@lists.freedesktop.org, 
-	Guenter Roeck <groeck@chromium.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Daniel Scally <djrscally@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
-	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
-	Vinod Koul <vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BOdFR9S5y4v3cz5b"
+Content-Disposition: inline
+In-Reply-To: <20240817085406.129098889@linuxfoundation.org>
+X-Cookie: You are false data.
 
-Quoting Andy Shevchenko (2024-08-20 03:20:44)
-> On Mon, Aug 19, 2024 at 03:38:24PM -0700, Stephen Boyd wrote:
-> >  include/linux/property.h    | 5 +++--
->
-> > -typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode, const char *id,
-> > -                                void *data);
-> > +typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode,
-> > +                                const struct fwnode_handle *endpoint,
-> > +                                const char *id, void *data);
->
-> Seems there is no explanation of the parameters here, can we add a kernel-doc
-> to this typedef (may be a separate patch)?
 
-Sure. I'll throw in another patch.
+--BOdFR9S5y4v3cz5b
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Sun, Aug 18, 2024 at 10:53:45AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.6 release.
+> There are 25 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Tested-by: Mark Brown <broonie@kernel.org>
+
+--BOdFR9S5y4v3cz5b
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbE2rAACgkQJNaLcl1U
+h9A5AAf9F60oLX1oQwM2HO9wEd8ZVzAauI9tdX53sUvHIw5gMZSbjBuSzB+5LQxu
+hid2NfId7S6B4zYVUzvPR9HJTPvoyvOJ/uS0vXf3B0qlQtNqE0NpippphPskkLMC
+wwxc0SPPyLtppqEwv6CkaNTluFpcqqK/zPEsIzfxar+CS3BecvZTB7hjU8crSSkg
+EyZjYeIj9VcsFFiMgRwxLbX7Xyltkky/jmp6Tz5JzmcjTX91AKDNCTcdCdiW+jfE
+vGpulftaFWFa9jVrVxr/RgK1dKOnDKuGw+kVbpkzKy540pHhSy5JLGkFLlKx/GZY
+i4KwiHY6XrbflkiVs+6yzxGIFIQq4Q==
+=iXLt
+-----END PGP SIGNATURE-----
+
+--BOdFR9S5y4v3cz5b--
