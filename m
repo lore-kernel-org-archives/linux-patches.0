@@ -1,136 +1,140 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D67192B6B
-	for <patches@lists.linux.dev>; Tue, 20 Aug 2024 17:12:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9741D101C4;
+	Tue, 20 Aug 2024 17:16:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724173979; cv=none; b=RNjWt6/PCNYV7gYXEnM96HqnOYnp0vpKPglzKGfSLqdJ9z3AFrdpi/7HaRtp3LiKxGwjvhu9LNNcHZXAC3v/+5AkWP2uThfLMWxDTe6gtaPupP+QS0rFz8hCjd2O6G1hT5/kGzcPkOmAEtl9dKSUbABhY2pDJi+uO4ecK4DHZIc=
+	t=1724174215; cv=none; b=GTgAHGj9NLJZm4Ms3yIgJeXCDGc2SK6CWVNcj+UxWaTsrg5hf+H1IzIs51sqZ+s3aPJxsAODxxg90+OmqAr/BhwDYaR+zrDrEWvgbsOLYStAVggzzKRT3dKxu1yQdn145MedA3/TFwgDP4GYmbake1xpJQoXxOc9NcLoDvxl7M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724173979; c=relaxed/simple;
-	bh=XdOxPTcpa9GhR0x1RxpvIyQuwRfTAKkoPNe3BAG2ReM=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TpX47XSZ/wh7m5jH0RsC0zybwu7sD4UOjVolWHkuk6r4H6piMRmCOOwH9cTy8wuFZj6g1z1Rf7UVqyM3b7TyRBeuiF1dpNg5pG8F56bgywhgQCAU/RA5ZEOrpu+iy4wmBU150u0MOgVKThApzVCrFaZexsDQg9YcgPiYjuIcJhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=NbL90SX/; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1724174215; c=relaxed/simple;
+	bh=1WOCN1hQxUm1krY7hl5MD+NIzVYaTnsupZFCAJLrYTs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PJh4rMjGwg90GHvlV2MaA+RexSmO0W+6tSJKX+mOqGOCSnrYmy0+8vU/X+uVeS9K8aMea1LRxBgSNxaV0FzoKbP25V/ubyy4PeBA5oq5hR7LxlSjvXUhrGF/GGEGCJpqzyfrkA2NWRdXKNq+382x8PW5KyYMjHpL4z+hhzvFCDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aDgDPDlG; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="NbL90SX/"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7a1e4c75488so351167385a.0
-        for <patches@lists.linux.dev>; Tue, 20 Aug 2024 10:12:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724173976; x=1724778776; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Az1A9NMBsWL3/7vKt/sApr3R4UF7scT2PZ3fQljPcaU=;
-        b=NbL90SX/wkCXybG6xdl+bu9tZ0MG7mCneIYjL1/fU7HIt7wBCFwxXAWvHlI6CfmD8J
-         GK+LD4DQdfljztFWMjbh0pIe8MI9m/m4OWcPBtfr3Cy6b3uK45aGSXsIBbkOBEVmSbAL
-         TfgatL53ZVYE9BrN6LS0SKC687JM29EfnJbno=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724173976; x=1724778776;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Az1A9NMBsWL3/7vKt/sApr3R4UF7scT2PZ3fQljPcaU=;
-        b=Fha38xHOnLEpw7pbjz8zQ4/lE5XZs7WR4gvKmXD1nO4hJoWQ8p2N8mgeoTYQwILXZE
-         Sm1KOAGYRFJGUYGbQzDYj3l052DTfPHWoE7C8+fv9G6WCJNrQdn90zl9u7vkyTTlj0jA
-         RlLCJWqIPPRAdSL+EUOE/u58TpAuOdfTSXwJQw9AZwMVHfRt1zH/zcNaMpsqckrlSED7
-         srMtMM3SByGylxDlZkoOK8Fdr4mRPsZ5OqNmdhi+eq/whxU0TC9neDsbRgSuaJOth/UV
-         c4rdty/+pwP6uU9kqvaQHvO6ZNXUyEtHgI9oKvM2RBsLIky2n/FGnFvTIxSs4zD+aMj1
-         CkYg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4d3W9pMxTq/og+2TNHEawK/MbMV+XFkHPEz1BgF3mF3/F0902GSCeK402w09cEfo8MMijBIaOWXyWSzmmri6cikp3cBir2Q==
-X-Gm-Message-State: AOJu0YycxjsVu18Ex4s4d2pb4LkHowiggJSMPC6KNcrShH6v9nh8EzzV
-	DEiRoSGqKQ4J34PFcu17SuMlmWNGVneH+ltWOxPgyuKkvK+TGhWf8VTmBbizaQRez2OEw4XQKoa
-	cuL38+0qxYicP572PhNyDllw6HeX5fGzaNN57
-X-Google-Smtp-Source: AGHT+IFkHKjFejZjAs941sgh7G6biMuTuBjyP76WiW4rgqwMwtsqslDT56RN+7cjrZMCdxIwmDbG7BvU7jfkGLOLSTI=
-X-Received: by 2002:a05:620a:4245:b0:79f:5d5:1bc1 with SMTP id
- af79cd13be357-7a669685ff7mr335452285a.58.1724173976423; Tue, 20 Aug 2024
- 10:12:56 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Aug 2024 10:12:55 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aDgDPDlG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724174214; x=1755710214;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=1WOCN1hQxUm1krY7hl5MD+NIzVYaTnsupZFCAJLrYTs=;
+  b=aDgDPDlGBOBVdExNqWfPQoUWA10BQbJwJu3meocUxnJ+DUn8wtf60SdT
+   4uzqA6rDnVIxXKbnES5lI2kLDNbwwXMa8tO6HSO2wNsNhfdUkfxrx9qp8
+   WKnm0KJTPhvM7SZ4V0ckZLgyU7/BFu0OldlO3FXnEza6n30q32btnI/wA
+   zxmWgfSFazTwjb1inhFdJ2Jj47CUqI6NLlwMJW+6QAIsn10j4Tmu+3tVZ
+   4r5e+/QaAhrfsorGFa6qdDvfHuR95ktF5cP8MuoinkYr44SsJRgQ2467t
+   thTeLjIvs0T/0Vyxrn0rso60UtGOSUrgZAYW/rbGZ9AEtPHWHfEFUyFqb
+   A==;
+X-CSE-ConnectionGUID: FWCrTE1HTJCWkB/XSOnfcQ==
+X-CSE-MsgGUID: IGZ0mD9mRDGBgD2zGvPBxQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11170"; a="26363979"
+X-IronPort-AV: E=Sophos;i="6.10,162,1719903600"; 
+   d="scan'208";a="26363979"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Aug 2024 10:16:53 -0700
+X-CSE-ConnectionGUID: 9kKj3Zq/Rcak+WCW+VHNBQ==
+X-CSE-MsgGUID: YxLX6qvOT+uBQrS9ly4vBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,162,1719903600"; 
+   d="scan'208";a="65650227"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Aug 2024 10:16:44 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1sgSTI-0000000HNl0-2L24;
+	Tue, 20 Aug 2024 20:16:40 +0300
+Date: Tue, 20 Aug 2024 20:16:40 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, devicetree@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Benson Leung <bleung@chromium.org>,
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	Guenter Roeck <groeck@chromium.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v3 05/17] usb: typec: Add device managed
+ typec_switch_register()
+Message-ID: <ZsTPeEsS1m4Y8imq@smile.fi.intel.com>
+References: <20240819223834.2049862-1-swboyd@chromium.org>
+ <20240819223834.2049862-6-swboyd@chromium.org>
+ <ZsRs6d6uOMb4DqQQ@smile.fi.intel.com>
+ <CAE-0n52O01UgrDT2=-JJpZj39BOJNyyQC4w_pgDUmKDmcN=8Yw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZsRrWfoPPVGC4Dqy@smile.fi.intel.com>
-References: <20240819223834.2049862-1-swboyd@chromium.org> <20240819223834.2049862-3-swboyd@chromium.org>
- <ZsRrWfoPPVGC4Dqy@smile.fi.intel.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Tue, 20 Aug 2024 10:12:55 -0700
-Message-ID: <CAE-0n536OWtoOoRSM=6u=wA75A+0WtBktiY=6Y6VjKKTQWPcNw@mail.gmail.com>
-Subject: Re: [PATCH v3 02/17] drm/bridge: Verify lane assignment is going to
- work during atomic_check
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, dri-devel@lists.freedesktop.org, 
-	Guenter Roeck <groeck@chromium.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Daniel Scally <djrscally@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
-	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
-	Vinod Koul <vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n52O01UgrDT2=-JJpZj39BOJNyyQC4w_pgDUmKDmcN=8Yw@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-Quoting Andy Shevchenko (2024-08-20 03:09:29)
-> On Mon, Aug 19, 2024 at 03:38:16PM -0700, Stephen Boyd wrote:
-> > Verify during drm_atomic_bridge_check() that the lane assignment set in
-> > a bridge's atomic_check() callback is going to be satisfied by the
-> > previous bridge. If the next bridge is requiring something besides the
-> > default 1:1 lane assignment on its input then there must be an output
-> > lane assignment on the previous bridge's output. Otherwise the next
-> > bridge won't get the lanes assigned that it needs.
->
-> > Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-> > Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> > Cc: Robert Foss <rfoss@kernel.org>
-> > Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-> > Cc: Jonas Karlman <jonas@kwiboo.se>
-> > Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
-> > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> > Cc: Maxime Ripard <mripard@kernel.org>
-> > Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> > Cc: David Airlie <airlied@gmail.com>
-> > Cc: Daniel Vetter <daniel@ffwll.ch>
-> > Cc: <dri-devel@lists.freedesktop.org>
-> > Cc: Pin-yen Lin <treapking@chromium.org>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Yeah, I really think that the appearance of this thousandth time in the Git
-> history has almost no value and just pollutes the commit message makes it not
-> very well readable. The only outcome is exercising the compression algo used
-> by Git.
+On Tue, Aug 20, 2024 at 10:01:07AM -0700, Stephen Boyd wrote:
+> Quoting Andy Shevchenko (2024-08-20 03:16:09)
+> > On Mon, Aug 19, 2024 at 03:38:19PM -0700, Stephen Boyd wrote:
+> > > +     ptr = devres_alloc(devm_typec_switch_unregister, sizeof(*ptr), GFP_KERNEL);
+> > > +     if (!ptr)
+> > > +             return ERR_PTR(-ENOMEM);
+> > > +
+> > > +     switch_dev = typec_switch_register(parent ,desc);
 
-I'll leave the decision up to the maintainers.
+(Side note: wrong location of the white space)
 
->
-> ...
->
-> > +     /*
-> > +      * Ensure this bridge is aware that the next bridge wants to
-> > +      * reassign lanes.
-> > +      */
-> > +     for (i = 0; i < num_input_lanes; i++)
-> > +             if (i != input_lanes[i].logical && !num_output_lanes)
-> > +                     return -ENOTSUPP;
->
-> Besides missing {} this code is internal to the Linux kernel. Is it okay?
->
+> > > +     if (!IS_ERR(switch_dev)) {
 
-ENOTSUPP is used by select_bus_fmt_recursive() so I simply followed that
-style.
+(Side note: positive conditional is okay)
+
+> > > +             *ptr = switch_dev;
+> > > +             devres_add(parent, ptr);
+> > > +     } else {
+> > > +             devres_free(ptr);
+> > > +     }
+> >
+> > devm_add_action_or_reset() ?
+> 
+> No. We don't want to call the 'action' devm_typec_switch_unregister()
+> when it fails because that would unregister a switch that has never been
+> registered.
+
+Hmm... With devm_add_action_or_reset() we first do things and then try to add
+them to the managed resources. In that case it won't be like you described.
+
+What do I miss?
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
