@@ -1,120 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2085.outbound.protection.outlook.com [40.107.237.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A3C192B83;
-	Tue, 20 Aug 2024 14:43:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724165035; cv=none; b=rnH/ioEp6gptKjnXBYyQpEwCLvailIplXZfCi4kFaudcVAXXSRGLAfCxV/vzxpcnrrRoyPk+oN7XvecJjxXhNxvf/qprwy6YZn35u13+AoW2uaP6JLa12AKOQKUnDkytAm19AfXCqT53+NpuVHIUe6SSqV7Er0I+sMg0PXLFuZE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724165035; c=relaxed/simple;
-	bh=W7ZCCtqep2N7YC84maFuRBR9W86xcb4AH8v0dpyHReY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H42yMD3B1e1ZT8IWW9Qm6XlxeXO+3IDv6hAGeflWhZjh0dhmo93AflxXuvhdPtEtJepa4Tsu50MKUicRT/+Z1EKfWrJbgvzciKmVBA4eONui+9x7kszf2FFFgAl8F0+OXvIfvfj+A7cNbnwiiEAPWEN0BnJA0Bqa1od2tz4D4m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3JD8ob4; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A997194AFA;
+	Tue, 20 Aug 2024 15:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.85
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724167491; cv=fail; b=gk6fcj66V1bDcgAuVYH29DSKjJulD5nw+ivOcQvtL0jnn+gbqU1mVOlwuB5/9xwlxxG7RTDTNmTBQDr10GBN5565Pxw7c+7ldJAeKhKROYIbPVDDaSXQKiNOqEQ0vySbSVzxuvbeYesNYsPJuduVSVD+RQGtqEZHDtR48ek2k+A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724167491; c=relaxed/simple;
+	bh=CHApj+NsBDBGlhR+rA2Fen91D0NPeqkhvzBg2tUP+VM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gMVU76O9Xvt1jEJIG0c1N+P8EHIWjFmXX4Dqeif3wtRY1Ux+d2powieBXZvNsXkBVdb0pTC307xwx/uMFTixDNCXDBuMXkN2awJ60xyF24zQ28kmdqZrJfWzysbtqIjnCjnujZtcy+Zp1HOm4LH5P80geUb9ZLc/I0veusYFPL4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Nlxq7flw; arc=fail smtp.client-ip=40.107.237.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3JD8ob4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AE0C4AF0B;
-	Tue, 20 Aug 2024 14:43:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724165034;
-	bh=W7ZCCtqep2N7YC84maFuRBR9W86xcb4AH8v0dpyHReY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d3JD8ob4MFmPvROFWu7vomdTt+bpkgPEBjVHYFCugq+o29YVB5yuKcb7kVUXO/sFU
-	 WPbweC5GTT0Vo/r3ac/F3TiRl79x+U7fn8nGMW+jRb9uItHUq79ox1zMuCws7IcfVK
-	 Y1KuN1eQGEY8Qky4IdSiivliWdiJ17tiHpFetmqB+V9rnpQg598RQOuQE7YG2GLSK3
-	 wVxqhtaCD9CluazTHG1KD3hiDHGYaG7kXSYDEjPlD60Pk0XiS3lzMH+fsdB0tfRXsa
-	 BZIaDl8xsn0UwxMNM+b4EHe8lh1zVXDtTlbUwj/7hvi9EF2cqwWi5RVtgwib0kf1l8
-	 lmBmUQZBW1uUg==
-Date: Tue, 20 Aug 2024 15:43:44 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 5.15 000/479] 5.15.165-rc3 review
-Message-ID: <1c83d94d-1b56-4bd9-8a96-c5062c238c06@sirena.org.uk>
-References: <20240817075228.220424500@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Nlxq7flw"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VmUUs5A0LsyhLmiBjNKidwfKarZYy5hzcGCD4rQ6Upwsb8/BG3MbMhryu7Aw8M/uDZlF8MM6MZT6mB58HZJFRdpgXfgPrgXMXmCkrNXFk8GrEPK/uWQD551UTPI889OsSjXg+lPDCZBm1fLAXP45hBxzqOZgOtDdoz67rXB/bFuwtuNEZ3yBpZLcF+UK3eakSZCjB55JZeW1T1Q9Ho0NMCWWWP/bm0tT1DUgHxIhQkeHBLPP8ZFwrWIucTwOMwSJr+zQa/OjdVhFP2QOKUJzY0H9dow/OD1QfCIFfBZ49H1iWFNVxvONfFAesVYybfBHG4MaeRsKe/CrVjgRX/oF9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OkYHJ+mPRtYm3B59wrDzysbRo9Q3GZfAi30cd56mtGg=;
+ b=Tv9ZpBuIsqjlKH8PZSX6F+VbtyN8JMYyJob9mbO2f8R/wZwYOzzH66R6j7zdnZEc+L9yaUtszY8NEaNmz3/H+G0pRDz9YdouX+Z5hMCFdScZiDH07dzCcqP6gHX7xDcRHXsjKr6En/ltZfMd3UqYZv8SyWUq02hcxyLreNjOWJsNhFf+5geYF4gb3AlTkEOPvCoG90TZvSXLYdWTeiONvnnV+gkOg6G/jVD6NkLf6NMxD2mgZqBQMtzHwXdGKph/HgyJJU8IQmXQojv38dOzRWfZoD1TXJM3GuzoKUyizelbsTuEIkaZeKakYqxi6kj7SIWBdO9/ZA2F6iI7bokYlg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=google.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OkYHJ+mPRtYm3B59wrDzysbRo9Q3GZfAi30cd56mtGg=;
+ b=Nlxq7flw4hpTYFUu3b9ggwaBy25czMVD16sf4xKWYfzUooPA4e9z81342nDNteb2F1XHDS0rKLcszTL5cEtbZUqD0SnFdHk2L+iShVbtal+NPtl2VXMdwvw17VIOl9uUR5ez9b18JdTkev751JyvTtL13cpsoiFUYRe8+C98ujEr9FPlwtSHbVxdfaj+m452XAxg0VaSpTNw1hkyil5awZRJsee12ejEN59iNi7a8cQY7GV6WP3dA0ss7GvvutNRFB4DLZruNVoi8sxN81fduiLueoN4lx/Jls0/u8cYlDbE+pA/hAxgcqFY5/6YoYN8AGbX396kmE2MblAknThhzQ==
+Received: from DS7PR05CA0009.namprd05.prod.outlook.com (2603:10b6:5:3b9::14)
+ by CY8PR12MB7435.namprd12.prod.outlook.com (2603:10b6:930:51::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.16; Tue, 20 Aug
+ 2024 15:24:43 +0000
+Received: from DS1PEPF00017099.namprd05.prod.outlook.com
+ (2603:10b6:5:3b9:cafe::14) by DS7PR05CA0009.outlook.office365.com
+ (2603:10b6:5:3b9::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.13 via Frontend
+ Transport; Tue, 20 Aug 2024 15:24:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ DS1PEPF00017099.mail.protection.outlook.com (10.167.18.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7897.11 via Frontend Transport; Tue, 20 Aug 2024 15:24:43 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 20 Aug
+ 2024 08:24:33 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 20 Aug 2024 08:24:32 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 20 Aug 2024 08:24:31 -0700
+Date: Tue, 20 Aug 2024 08:24:30 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Mostafa Saleh <smostafa@google.com>
+CC: Jason Gunthorpe <jgg@nvidia.com>, <acpica-devel@lists.linux.dev>, "Alex
+ Williamson" <alex.williamson@redhat.com>, Hanjun Guo <guohanjun@huawei.com>,
+	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
+	<kevin.tian@intel.com>, <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	"Lorenzo Pieralisi" <lpieralisi@kernel.org>, "Rafael J. Wysocki"
+	<rafael@kernel.org>, Robert Moore <robert.moore@intel.com>, Robin Murphy
+	<robin.murphy@arm.com>, Sudeep Holla <sudeep.holla@arm.com>, Will Deacon
+	<will@kernel.org>, "Eric Auger" <eric.auger@redhat.com>, Jean-Philippe
+ Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael
+ Shavit <mshavit@google.com>, <patches@lists.linux.dev>, Shameerali Kolothum
+ Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH 0/8] Initial support for SMMUv3 nested translation
+Message-ID: <ZsS1Lsd5ORJOlRJQ@Asurada-Nvidia>
+References: <0-v1-54e734311a7f+14f72-smmuv3_nesting_jgg@nvidia.com>
+ <ZsRR0MUHPz23zxu3@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PfIcW7SysGFheIkL"
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240817075228.220424500@linuxfoundation.org>
-X-Cookie: You are false data.
+In-Reply-To: <ZsRR0MUHPz23zxu3@google.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF00017099:EE_|CY8PR12MB7435:EE_
+X-MS-Office365-Filtering-Correlation-Id: a4ce7730-607d-4695-b882-08dcc12c3789
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|7416014|376014|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Ysgs677FBIKJ3kF2J6Wcd+XnIPCbURPbVPVb4hb0jhyli3eMh0kdIrCIGdLm?=
+ =?us-ascii?Q?6/CMT9BFLn38jHh1dOhxkf4TmpKOB3dWL7BdyqKzqmt5Pn/1Bxyy/GGTft9e?=
+ =?us-ascii?Q?mfM7KbHqZGrUiqDr5gHtJByKso/OEEgWdlBW04FaL2WwUKG9KPwEigR4eWuS?=
+ =?us-ascii?Q?gdy5Hm/Ropnu9B4T3UIx9rfq26JrNGRbukqmTPD3TmhGpFJhPQEqeK4nJk+E?=
+ =?us-ascii?Q?dnveeRHeI4F7g2kq6zSib7S9nM6R293qQl2iGw4PMpLzyYblLiigbA9jS3mB?=
+ =?us-ascii?Q?7CzZZUUv2CzBhI3SZqgziE0+aDYV5acAh4BnJOXMoiZ8wnWbtTz2Q3pLbkd2?=
+ =?us-ascii?Q?t0rfXF7NDqy9MClvKj/zzNAt1TdI/ksvVaRakwQJDAA6rqNSMRl/Z5loViij?=
+ =?us-ascii?Q?ecDqeVYU/uEapeYCOVetDFsCG6s8fHhLiOoLr1yroP+60eXrkGh1UknbZRdC?=
+ =?us-ascii?Q?0a2j2GUr3gwhpKrTYqTm50lUDP0cn8nkYWoGKKkfID15XgJ6CacepMGD9Z8M?=
+ =?us-ascii?Q?YJ3eUmLbZinoYq482B0jpu0a2ip6eJcscW8O3nZzUJfEe7G7ul5TK+KSRitf?=
+ =?us-ascii?Q?QNlhmF1KhtKw7OKrHO23eys0kjXMZRl83iCsei8KpG2iJsyKha0ZFtyxn2RR?=
+ =?us-ascii?Q?O5D+gOJA0BABZ1dQqtLv/hhmQIGQAySpR1ek2wm0+dFsKYQHunoPsYMuNVGG?=
+ =?us-ascii?Q?lRkWEsjo678jSdLboCAmQGk95CntOmbejooCO5bGheai0BELpj6D4LIbkGLp?=
+ =?us-ascii?Q?UgWP8zb5ZSuMFpPcWhkJjLvZ+zTQn7S2uAeosk1PU1YkBKFjD8k5HhnLW07N?=
+ =?us-ascii?Q?ZwJiMr7F+Z/QdXMmTBrjEF7Q7YQ7EXMaUJ8Qy7ASLxUui9J6udt7xgu5kGoc?=
+ =?us-ascii?Q?OqlPCS80+vRBUvh4D6Rqc9+Uxg7nWG0M4kfyqLgLrYkmIzxFQ0Ycd9OZyi9M?=
+ =?us-ascii?Q?+OR3f7QnRJCIBwDqWx4b7h8WvLWfaKBl/66r1QqDhN0dV87ZomTJZ4fK3unH?=
+ =?us-ascii?Q?u2DtHeVwdJ+5e1DxOc79j+iguRVeUCKtQxjsyLgmKrDyxhzn+AwOnNZSuQvH?=
+ =?us-ascii?Q?WTAe9YO2ZYHUqDGT+q/RjQt9U2MzUpA9yWx+lFgIttZC++Q73kWJFmdKlgXx?=
+ =?us-ascii?Q?ubTinpod29avs/E/T7dcrnhbE+324RwiIQo/v6xv40Kr+BaZflJpgWRPnWH8?=
+ =?us-ascii?Q?cVObn2/n+uQr5mw6bv16wKt2yRqqcNZ7xEqnea/IgixjTkQERE7flp8YaRwx?=
+ =?us-ascii?Q?YOlR6uaJTggmTNaJWbHdZzrYxRux7ahKXSE2tpkelLsSh/3JbZ2QVPvYyR81?=
+ =?us-ascii?Q?9zoWV9/rbJijBnFxLNnT4eGCjmYxh9daPUmCCwnJzAf1ZNIFJKVo/3a1P1zR?=
+ =?us-ascii?Q?cE1xsBSdQT6cCqEItMi1Kml4UtmFP9Y0uS7cqhn+jKX/w+qseEtdPpfYR1ba?=
+ =?us-ascii?Q?0V4kZ8rzgzsVnIy/+tLUWvTEWIfuM9mm?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(376014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2024 15:24:43.2855
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4ce7730-607d-4695-b882-08dcc12c3789
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS1PEPF00017099.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7435
 
+On Tue, Aug 20, 2024 at 08:20:32AM +0000, Mostafa Saleh wrote:
+> > This is the first series in what will be several to complete nesting
+> > support. At least:
+> >  - IOMMU_RESV_SW_MSI related fixups
+> >  - VIOMMU object support to allow ATS invalidations
+> >  - vCMDQ hypervisor support for direct invalidation queue assignment
+> >  - KVM pinned VMID using VIOMMU for vBTM
+> >  - Cross instance S2 sharing
+> >  - Virtual Machine Structure using VIOMMU (for vMPAM?)
+> >  - Fault forwarding support through IOMMUFD's fault fd for vSVA
+> >
+> > It is enough to allow significant amounts of qemu work to progress.
+> >
 
---PfIcW7SysGFheIkL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Are there any qemu patches to tests this?
+> As I am confused with some of the user space bits and that would help.
 
-On Sat, Aug 17, 2024 at 10:00:38AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.165 release.
-> There are 479 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+I have the qemu patches, but am running some backlogs to keep it
+updated, and don't have one exactly fitting to test this series.
 
-This breaks the build of at least the KVM selftests on arm64 for me:
+I collected a few remarks from Jason regarding the VIOMMU series.
+And I am reworking on it. I plan to post a testable QEMU branch
+with the next VIOMMU version. Will CC you and more folks.
 
-In file included from dirty_log_test.c:15:
-=2E./../../../tools/include/linux/bitmap.h: In function =E2=80=98bitmap_zer=
-o=E2=80=99:
-=2E./../../../tools/include/linux/bitmap.h:33:34: warning: implicit declara=
-tion of
- function =E2=80=98ALIGN=E2=80=99 [-Wimplicit-function-declaration]
-   33 | #define bitmap_size(nbits)      (ALIGN(nbits, BITS_PER_LONG) / BITS=
-_PER_
-BYTE)
-      |                                  ^~~~~
-=2E./../../../tools/include/linux/bitmap.h:40:32: note: in expansion of mac=
-ro =E2=80=98bit
-map_size=E2=80=99
-   40 |                 memset(dst, 0, bitmap_size(nbits));
-      |                                ^~~~~~~~~~~
-/usr/bin/ld: /tmp/cc4JPVlx.o: in function `bitmap_alloc':
-/build/stage/linux/tools/testing/selftests/kvm/../../../../tools/include/li=
-nux/b
-itmap.h:126: undefined reference to `ALIGN'
-/usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/../../../../too=
-ls/in
-clude/linux/bitmap.h:126: undefined reference to `ALIGN'
-collect2: error: ld returned 1 exit status
-
-This bisects down to:
-
-9853a5bed65d507048dbe772bb84e6f905b772a3 is the first bad commit
-commit 9853a5bed65d507048dbe772bb84e6f905b772a3
-Author: Alexander Lobakin <aleksander.lobakin@intel.com>
-Date:   Wed Mar 27 16:23:49 2024 +0100
-
-    bitmap: introduce generic optimized bitmap_size()
-   =20
-    commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
-
-A similar issue appears to affect at least the 5.10 -rc.
-
---PfIcW7SysGFheIkL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbEq6AACgkQJNaLcl1U
-h9BewQf/UoUrlE9AVYbakAIiMPXctHgee/yuja880P8DisjuiAd0s5VWr3sLfQc/
-QYm7Y/xQwso2hl1e8+8MvTUL0/EPVwSRYGTvhHvPFP/qIN/mUe/ED8Kyzh7xNay+
-PfOqs/PyPzIoLGmkzAHfhB4nl3LrBqkl4cRqrJlXA3K4mY72esYHgU9Vpmc4k5I0
-lAKCW2eSNaGeqCrOC0oq3PTQjj2rsdHmie4CCe7tH+UT2+5LLXHPMjlFuXtrvK3I
-twUZG0hD9Ylnl8TI87QtO6A7JnyMiVrvfdEpGthlLiAmhCH4fGUhK++XzZ20HQMR
-iFykVdY8WTr7bv2pfQC5cLAmzEJ2hA==
-=9GlQ
------END PGP SIGNATURE-----
-
---PfIcW7SysGFheIkL--
+Thanks
+Nicolin
