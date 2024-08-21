@@ -1,36 +1,36 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2062.outbound.protection.outlook.com [40.107.94.62])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2072.outbound.protection.outlook.com [40.107.93.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0921B3B22;
-	Wed, 21 Aug 2024 17:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5A41B3B28;
+	Wed, 21 Aug 2024 17:37:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.72
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724261859; cv=fail; b=rm+YL3e9TtjSqFwTlMzJOhdh2yNtq5mBwm3VCwd5mT/bYyMb+FZ+0Mxik9bo5P+s7Kt76QfBG/4WxwizVIcHPuMqflrh/GNEXOpBMOIqrtJlx+Dex6rsO0Zy2Pt+VLfoDLTfTu4EBCrB99kSbek/tCoXFBuj6RjqU8U81TzFgqI=
+	t=1724261860; cv=fail; b=TLXneRpaORJJOR6iKKF+gdy1qgWPhJwZJ0tKanEQhyUa+IxTDKZ+/MqbitkEPGPVjQEL9RjJPkB4PsYXbJUZpzLWCupvJdLZWt2x3WPBmqvIRYW8T43e9t5635s/X04KnRrSnzMETsN3UmWrblz5F/R5PZBEeeB9r7rUW1Rrkgo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724261859; c=relaxed/simple;
-	bh=SA5h6P8bENou/EYzAxI6b5/xZ4UmX0VHLBXjtwDIP8Q=;
+	s=arc-20240116; t=1724261860; c=relaxed/simple;
+	bh=JGFVuvlMw2Onwv4KeWy5tIE11O5R3RqTuaaOoZCzZYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=fdunEbj9kuJqYnYnCxyPIM3DpkmtKq/b6DtxO4Xtu0XTHdu5aKn4X9oU7AYN330ZtA3kBkleXV/kfdVe1X1Tc5vaxjdug60qed/moAkhn4bhhpZGjhRj2VgPR29Q7SZr3vrrZ3W7qijJTw62hyunQqWLmQG6qqeyTuejIKPEcfg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Mnb3/7nR; arc=fail smtp.client-ip=40.107.94.62
+	 Content-Type:MIME-Version; b=bbbKXBUPSivs5ww+XVU4c12Hjb9VG2rGEJfi7yeqf6RxvNQQAXLqgWtcWeyOvxaXl/jLmvoPeZh7trgt3Yl5SATSUlJJfot7ErXr4fc5QkucPdvwHZq/DoxswoeHC/BbOHqLOEKhcf8babygdgIMYeSBeqWa0xnrTBDaboep2Gk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tUmU5Wms; arc=fail smtp.client-ip=40.107.93.72
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Mnb3/7nR"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tUmU5Wms"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=d1w18ej9fHar44LLxR97Kqqey6qWdC/myQgz4EtEP2h7jhDeubhO+A6iEiZYcJwi2P3NbvclAp/41yygW/gfDusoDULcgKP0ioaKR0bbu7XKTTPLcWhlrDOKaG38rgJOWg/DMrIYViXP7CN4zGHTY/zRpvEWy2Fhnpvp8Azf6pMZFanXLZlOsO/uHe64a+uQQHthPlVMO0cGg9nodZz4E+WmJvsuaO7/DasEZeB2CTWx9fZhsvnItrK2AqD0RTgSTWlQluKkj4syvlKMNohqIxDulhI2yFHWxlgXQPjJq3zHxvRbKMxHPhqvfmqyVbHP5wcR+m/HKHZ5vtaHAY46PQ==
+ b=dpYRg+kSZlZYaCTVLnUQJgpg73hd0fzddi6xjYS/KokveJx+yzpEXkSsxJB8U8NhOq9MORWNdGJ81H/I1ye6t4za5WwRj24oykulbZNtCClc1hfRT5JFstipUpyy3e1QV4lNQc426nxG87/5QBQp8i1VMmOlc+uH1RuUPK/MWRhz9bGU/BmJibWI01sqje4SBUEhDolR0rqA8HJMYL9HhI01wKJ317jnTfq2qvQ3kjVZxR4ZOst+XQ/chLDLHRJ5ATLXLK6J0xRulmPutz6vcLY3m7owwz70dncJgB2yyvLUFUotWtGkQRO++rLUK4fjvDmf5njwq4F4KkQOmidL9g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9uwM3JUN9iQM/GtNPFKpJvV40ATKTCl0snU8AFMro8c=;
- b=hmZLZFtQLOyivmz8JXBiAXpFqJo7b+x/KAL1jGyPibrrVBh1DQ/S0SF/RywdUCoR4ehMi42uhkhd9yWeSqSMy4EZBEoNOlONMRSc8TOszOoC7Rp74ATE9b0Q6K6icH+PGvQVdROkHYxpTDV8FeVlv1VajKm/ltiQGKWauA8g/FeWVaJQtdllIFKXifiRiflZ7yfrNtxje3rWGQaFkwthKZyWctLa7VUfxd7A3NPBmcC5wDzEeiu0X+VT9fFRBH5bDX/Eu8BeMMQ/qU8vCTjbus+I/yqNXq/le2yaxtjQ7pIW9unW8TUxnbAisLqMR/iX3fLfU4TR7CJEp9PM86Z8NQ==
+ bh=Y5WRlcb89hk/94zOJfMEnrhhi7qoUMZpBWqx9XBw3B0=;
+ b=spsSfzLA+sIjv1MZJ1Wb4C+Fj6B442aZCa989Wgtfy2vzI9kPS98YHu88bO6aTMG4mJ11PsD5p4pyvT9vw50ZESusPSCWdmFXc6Krx3I8X2Uxmy6WPArYz8XAtzu9OhNBVW/CUWvVPoI8BnKKZ4+mvM0devop2acJzl7+fGynY+LxqAju0dK0X/0NNxR7hIQOGn0X+ituSVjbB+j8ug9LnMKs11qUabSm7/mNbvLLXh3ukx/QtuuvJ/TpvBKwT/L2kEO/FhnYPT67dstc5VUuO8t+hreyW+gJhC5FZUFlHRINlksS1s6tquE6JUySfcJWG/YTHAOQGM4eVIWSyJgDw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9uwM3JUN9iQM/GtNPFKpJvV40ATKTCl0snU8AFMro8c=;
- b=Mnb3/7nRDFU8JvH6YHt1JEwFK1Rg5hNv9WCyQZ+Y/b9kxZBxZ69CJkhsG0n6/csmuVlhNox8BhaW2Drj6m4RHD22HysTJSjnzAgVs2lAuWxp3I9NM1eb+9uA/x4Qsp305QY7C7E1mgw1gOy1Xp3dvvy5Ke6gDKLpKUgUjfQUI1cw9CsyY2LVcKaydfZoXszk715R/0RBwNsL4nmqnneQmEEpt98ZiZLePvyv2lpf5k+3dIaO6FqQzr3Q5p8jBndwSq4ScSbtmSBY7nUD4OEFDCO28OlLgjhgCF/Xz400gK+dI0xgvfx0g4JJ0gLdH00paD0bzsIcGL/3dqOc3JHP/Q==
+ bh=Y5WRlcb89hk/94zOJfMEnrhhi7qoUMZpBWqx9XBw3B0=;
+ b=tUmU5WmsmZYal22ZhkyClUHhZQ0je+/IoDf2cmvD6Q9tNiOAyZo13sfX0QIPzoimtalmOrHDwczXrKDRwI58Zeswi6Gx0lJOJXHKF4jaFQwk4fA7c9g9uSoZUNbY6gTB3mPvlK4ciETSL8oValHcr3sO7NAG2/jTb0Znpf3niI5Nt3xTfJvp8uypotgwA9cNTTaZbkrmeucBlUIu7tLWQf9ADeAjPasFbFsRQ4A77Yh/o1iQsxvbRa8LO/xRyx4EH95uK3DFaPZmkywK+qSpBLk1b0lKXMBEvSJddCzDmj3sgdzi4cgj9aXUc/lfxb0Md8PoylQoEHy0PKZzhqV3GA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
@@ -53,15 +53,15 @@ Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	patches@lists.linux.dev,
 	Vasant Hegde <vasant.hegde@amd.com>
-Subject: [PATCH 07/14] iommu/amd: Remove amd_io_pgtable::pgtbl_cfg
-Date: Wed, 21 Aug 2024 14:37:13 -0300
-Message-ID: <7-v1-cdaaddf80abb+14190-amd_iopgtbl_jgg@nvidia.com>
+Subject: [PATCH 06/14] iommu/amd: Rename struct amd_io_pgtable iopt to pgtbl
+Date: Wed, 21 Aug 2024 14:37:12 -0300
+Message-ID: <6-v1-cdaaddf80abb+14190-amd_iopgtbl_jgg@nvidia.com>
 In-Reply-To: <0-v1-cdaaddf80abb+14190-amd_iopgtbl_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BL6PEPF00016417.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:22e:400:0:1004:0:5) To CH3PR12MB7763.namprd12.prod.outlook.com
+X-ClientProxiedBy: BLAPR05CA0017.namprd05.prod.outlook.com
+ (2603:10b6:208:36e::29) To CH3PR12MB7763.namprd12.prod.outlook.com
  (2603:10b6:610:145::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,134 +71,265 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|CH3PR12MB9098:EE_
-X-MS-Office365-Filtering-Correlation-Id: c2ad8e8c-b117-41ae-b03b-08dcc207e9d1
+X-MS-Office365-Filtering-Correlation-Id: 1e13e2d8-76ba-478b-a2e8-08dcc207e9c6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Ma2pwy2v1YpPn4c5XHOxunhUUHumo7yl9wNDxUGdZ8rYYia55vkHILdT2N3d?=
- =?us-ascii?Q?Z2tX3YVcmHMDV4jPo1v5KNL704viQd8Wlhq41G2ALOd3rNWedhJkElNPxn1R?=
- =?us-ascii?Q?cXm8TKsvPTsjs1BJu/IrVKRskXITwIXgzNFgqVPgrbNVXo+jAuMkXzMmJsyP?=
- =?us-ascii?Q?8gsLIWhOQrFW4bRCCT9I9OOcp7ppxIh4uQTYx5cgvZEUzKLGVO8Gz44bDEJn?=
- =?us-ascii?Q?fpkhjVKTkQ5drT5h+KHhZEUk7xBu30tnGT9csXXmqGTthDaLdSWhNK5auXTS?=
- =?us-ascii?Q?R1rWNw5d7wfcCHlqZH6WTzsFpNjPE0nQVmTj4WY+oqYbL0EwhLu+w6si5thh?=
- =?us-ascii?Q?TA/2J7Gtnzbb1FktoIwAJhMrYkc5+AoqrtKw9Ut/8LLOzFiV6fhLts8cRNb8?=
- =?us-ascii?Q?Wi8kWyHfa0MWvfQ7SA8BVjvuXzI/FcMYtF5ri00sJsu/jxtOib/7Sm6b8lbx?=
- =?us-ascii?Q?/iWsAy8LHfIOEa50hS8tB/oN0ngMYLZZUrrnqfW4PlNoriADKslZQpU/qUOY?=
- =?us-ascii?Q?MxmdAjSpKTR1ij/ra5J6wcsltVdX2iYX7KEcyec7rF34yj5CerSG8KP/H3El?=
- =?us-ascii?Q?nLPr/OGLs8XLg7MikZHgISggsqUSaJzomqEw+ONQk29hOjW9IbbQAZEjdwoB?=
- =?us-ascii?Q?8ywHhUruyX+G2VKBCwBKLIeQJw0modhq1Bby81d7qW9HlBkFO3Y1ruBoo+iq?=
- =?us-ascii?Q?hbUZlhsIlSUcwD/FrSQnD14vgk2lNaWGl/vskifByBJQpo144f2ToWn1skpA?=
- =?us-ascii?Q?ApskdO9U7xSBjG1QHqRH+XHMsM5h4lU2mPKg1huGfQ6LPBbqvcb5b18LM/tx?=
- =?us-ascii?Q?rV8xO8Ve8ouzhvxhlgq81Ehn6576rfqtNT1KbCiLT5/pxHwV6ekk3/4j3Jtv?=
- =?us-ascii?Q?7Vw2LQ2X82NLolUfunJ3NYOz5UCrxvEj3j8gttA0OrkSnwrc0536Z3JNdR6i?=
- =?us-ascii?Q?clof/BzDEhPpJkcRBrJinBri0g6tlo2orO0ifs4TMuxaKdm90Dwy9xb3WCWs?=
- =?us-ascii?Q?Su6BZL9XJCESn/VdXR4rX+q/JJ38V7eGdKCOW0aI58h2m8oFkerSI811qIgY?=
- =?us-ascii?Q?sU/lglWUChrrKi3/2qyhmNVwf8US5Z7zxAUKqU1AnE4IyrAKgO1s0xHV0e4+?=
- =?us-ascii?Q?qmp9IDxaqhXXOHE+9l0XQ+c2lP9DsfUJYwrgsTSOdCXFOMDZ6rDxdBNSVZ6r?=
- =?us-ascii?Q?JkOyulRO7hFAJ3l9i24sGVZyN+rIb46pxWfEz9rVwQ077X8CtUYsnOB9T8md?=
- =?us-ascii?Q?ozA2ghuUrL9dADVUd90f50qSyh9fw0yjLCI8jeTxiTrUwWhyEw+fruUgFGTk?=
- =?us-ascii?Q?BIiYZUAcKiQXobYenN1giwLOMoXMZZrIZoNEVJQQFeGTvA=3D=3D?=
+	=?us-ascii?Q?OpIiPBshcGWmt0kgyXBGcJlRiagHT896IZUF4pTbLSyL5nhshKa5iL/Uy2JF?=
+ =?us-ascii?Q?TRCJATMRZSyRHeycGtxYNP8GxoxLD7MOTxGheYXDu/O6EmCajryhM+Av7bfr?=
+ =?us-ascii?Q?ggRHQyxv1zgzhtyJC7AJR2oPuDqILI6s+X6sv7/6oiwtWqIk94anzWJ03gON?=
+ =?us-ascii?Q?fBk2z/kqhOYAFMB19z2DJRxtd0X1cznW92VEvBA/iD089/9Zgt8+08P0Hp52?=
+ =?us-ascii?Q?qT3O6WygERfzRgh5UfYKpmPISXC9YhYznI69erey0D/eBR8p7XqGf3nYfIa+?=
+ =?us-ascii?Q?mhnlhMG49NcYntomU/KIpgRMKpejbLfx46YGF0+0yzUMhB43o76mT7VEqj8q?=
+ =?us-ascii?Q?9weoaD0ycXtOHIoKMunleXlicsuPNOJG53L9qokSddVtkWbbY/hQyaTnfsDj?=
+ =?us-ascii?Q?ApRH/ke9BW0u3dVoThZjBPazZFQmUWMVDnhjLxpNu3Yhn8HQgjgM5ejA2l8k?=
+ =?us-ascii?Q?3+pZYalw6xm90EnovBNVzQid85G08jTFhT29SKGFv2kvQELT2Ise4n67S3EH?=
+ =?us-ascii?Q?N/SszDUmRFVW6HOMvBucwyAiZA93HRbgrB+qqxwyHs963Bm+8mN55cJRQqmy?=
+ =?us-ascii?Q?b//Fr4XBfHirYLi1PvilRdinK+ic2HMLsgxTUfbpo/dH7fRwAKiycQSJBhoL?=
+ =?us-ascii?Q?RmImRD4AzS/VUw24RDNtvoaJZo65MhBV0C5pGrBgH8VEa00nHBsLhXzArYya?=
+ =?us-ascii?Q?nfKH2+3y5bbQA597BHPJvocCw/JgG0Jd9fftIOVvahaN1CENiZncjk+rmiF0?=
+ =?us-ascii?Q?PoRoBKw2N52jwMdkCR4nACNFOWjxy/Lt5iQFYImpKnp12VcS5ccMVgJ5Pegi?=
+ =?us-ascii?Q?HSfaZ2ERg2qhAhEgyY8FHac3FFQLX23HHlsrqpgW2r4feT+cZnkXHcfG63iE?=
+ =?us-ascii?Q?y4GoGMzs7LsHgLN4INtpMXHyWuQvsqUUkYnLcgShTOVf2/nhMLzI/ayCiFAM?=
+ =?us-ascii?Q?0J4RLQQmrtdWNt+O8NvHZabZSHWBLg+3RTiAp6dqZsFBZ+DmD3Ftdyw0qKgJ?=
+ =?us-ascii?Q?+hW70A37iHjznQ/cheZqrz2ahPI00kKCd6Pcv4XtxhVuWm3J/bE1UzvBDZlk?=
+ =?us-ascii?Q?AA2MHEwkJO2g1pxja+SR32HkUhS93qlKb0Q8MFbvKTOXQ3gbK7RKGdLDQ89p?=
+ =?us-ascii?Q?A8E5hOEy+1sEUvS8PkHT+C9mtiqP5uKEV0xpV7C3bI7ltu7Wk8HoHooP0v0n?=
+ =?us-ascii?Q?fLzfdwavK0kVHxikaEa55T8QcA+JLGj+Ydc2QlSTq1BUBpOWE3C4fCDnPTek?=
+ =?us-ascii?Q?gSYG7G1OPTiVWwKcs8GD3INtkdocEDg3rJuxErHDGHujFnRv5pp0eL5nPVwU?=
+ =?us-ascii?Q?SjH3DqqrO0o3c+Af0lz4qM7Llvx6ErFjzLYEAXiqLEWZAA=3D=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?QhaEIG0hEG88Z4XzHNsq0shEurUNL+1E7hFvxv5Gwp0VUKh8tT/h37keo7mg?=
- =?us-ascii?Q?xVLlpg33AOv844WGmc4n3ZFCLi5Fu/FXDkaO8swkCPuNUDHTH8txvzlWXZB3?=
- =?us-ascii?Q?rI3Gw9WTlefKCXqgcKzsFmDdhq4d57Edq3xLI09Z3X6/KFe114Kg4CWHZpYq?=
- =?us-ascii?Q?otTQ6+GgsHIeNH9NgY1SdWP4LjWpqO7pEj8z2h9US3blfjB7dXhupCfrEQFI?=
- =?us-ascii?Q?JW2yvpCHTzvlD9jeX5eTjjDeMzkMis2M1XTWpmpB/nS44rK27OPjdmQ8TnAm?=
- =?us-ascii?Q?NfysX0RfQ+SJJ2zO6m2QOPrHfjoTrP12deIDKLListj0mSpQR7IfzwNkHq9h?=
- =?us-ascii?Q?HZLpBQiYPQ1Ps/OCC0l4MJeXybvve+PjbroO+vri57vT40xZCd+f4oscNxkJ?=
- =?us-ascii?Q?SYoEYph2Wcx8xgM+u5EPLmTFwS1O039VghL55Wh3L7Ox944tmNg13xtNgYKB?=
- =?us-ascii?Q?wJCHcVIkcASe99VELsxBAsQJjdhPppMCzRMAYEKCEP9o/qF+ye6ZzCRjivZb?=
- =?us-ascii?Q?oHNoUiioVMrRDhInzsAyIv+2yL3a3w5g1Fsg/fmFg3wJ+t2U7WKufB7OfPM2?=
- =?us-ascii?Q?J5pG8q/gomV1+gYj1qZPJr5WbVwae9WOzn4x+zjmuLIITrrePFA2iobjJuFK?=
- =?us-ascii?Q?AqIQtMyPQtSF7mtJPRkL2b6ZS+tsfAM+rmETF5xcZXmj7DnwG6a8SqbATyiW?=
- =?us-ascii?Q?MuZU+4cm8gHqDKauAA9PsxrlzWLiik3TE6HKtlrILJNi14NjX9YXywfQGs3a?=
- =?us-ascii?Q?tAJCcFL5EdPqqa7913VRTbgueGGqIQFciVU5xqid7JVw1Dshxw2FStWj3Myk?=
- =?us-ascii?Q?a+TnDfeZNA4yf2g9eceWUMw31nezF7n7unKlNoj/hI8dbbBVGDzMDKaqFwhJ?=
- =?us-ascii?Q?pnQ5mAYeWvqnU62810Nmt7g/ZXs4UDdj+UHVTb2AtuiHwpjNkKtwimq/ujDu?=
- =?us-ascii?Q?cIHcIEkdhCDfIfx1xA81AfF5ZzRHjbeHuJpxGlCmO6i8OtMukp73Tl6wa2cB?=
- =?us-ascii?Q?8KjYQ/gKuqd0rM3Wg1c4S26ne1c/nZije0LF1Bx3VCRNH8N64Zh0r5TIUKDN?=
- =?us-ascii?Q?afOZn5NPTQPQlYC0cwtiE+xOL6k04ZHjh1wwdBHFjEpyLFYtUGM86+FIdgPR?=
- =?us-ascii?Q?n3RcO7y4//yITe0udIm/8KJnFK8xwP03lYICyQczYS+whOkLR8wcVHDtixxx?=
- =?us-ascii?Q?Z2QxCBLKFZ6yLvO1u6ISsRxxv91B2m3+jZSSrHk2VyEohiGhDPDPvUPGFoYY?=
- =?us-ascii?Q?dg7CgcT+g/J6/K4lQFMEbl1W4/ILXvDmhqvLAhVGxqdNEl8Ux76NKJLXCTDa?=
- =?us-ascii?Q?chsCql3+L/wMvLcDTvHimx6VSYrxGwpsM7MTU1Pk3PcK/MgD6awVrJV2rrSW?=
- =?us-ascii?Q?HB0IQqybU0BGXPegtut0C7WMWpQc4zYibv/HRKSkezSUKu3b+eETqr7kXkPa?=
- =?us-ascii?Q?GSSpLjcbsAhe0E0f9MGTDvG7BW9201ofYSx7EI4uyDneCXbz/kIbmaHy5hAX?=
- =?us-ascii?Q?/zd02wIu629kDvbCZn22kgT/AKqaVwEjaZhNz//kBYUGpu8ID8S3Nlt2KZZ9?=
- =?us-ascii?Q?Km6uxKpXgfENI+hzypkFK6c07oh2rmiKmsUIamZ4?=
+	=?us-ascii?Q?gH2dAeh78baEDpOLGW4JqlJQIhi6AdtT1ttD8BbmJIdtNS82up4G7RBM4dN/?=
+ =?us-ascii?Q?6OJ/LlCbSwTXoKJjiHIS1yigbnqWwF5kH8OthyeEfXvgqXy9nPg9fYbiHgnZ?=
+ =?us-ascii?Q?ca3mkxLJoBbwNuLl+d613wvKlf1+eOEzLnXfBZSm9aCWb1Au3Ake9Iue5fz/?=
+ =?us-ascii?Q?hBSpsEK7dTJPiXBokRiNyeVSr4v2b3gvAUBW0Xs74KdY0YxTIVTEl/uSKVxn?=
+ =?us-ascii?Q?+Rt70P9Hz4+gV5DUf0guunUUd9LnN5NOXB0haHmvsWRf3m6dJfvqgiLkwURJ?=
+ =?us-ascii?Q?ho44w6EegEgE1FwMQvEbW8xnRyRI4TIUGe994nS+OFC1tVxyA9HYmTUZFEgV?=
+ =?us-ascii?Q?e/o+3BOKjwTixRTOqQAYwnybO6uHoMBdpUvbvXjBs4zDh+01eRJPSic4TE3d?=
+ =?us-ascii?Q?+eRofsDWS6W50kGRFmFc0EnPwDbUB0GoZeB4m1MZ0oLSkePtyi6zFxZRflhp?=
+ =?us-ascii?Q?IWu8iZ0ar0o4mNyPt1KCsz4M/A3LpMlLEK2MbXC9P0MJnqdeBZ37ewLFp0hK?=
+ =?us-ascii?Q?Xllmcm+OUvn1cUhtr47heywd4vp86Ys92fM6sLfkZEhY3c/ktyZTTXmGdhW0?=
+ =?us-ascii?Q?vm+gU6rKBGCS200w4xbwaHOOoztQdjqQjRPvPz/l6XlbowkzM3Ok6p2iltVI?=
+ =?us-ascii?Q?K8DxTaC5vIujWfY5KbUeHDOFfp4cKdFchjjf4E8RzKha8ZTqkYUYE6RDJ1pR?=
+ =?us-ascii?Q?USq6wL8XfE4wgKK/EqTILg67SkormIRh3wPsJdZHi6Q0X8xKwXk+M/OVfAjM?=
+ =?us-ascii?Q?YlaZUxiTgeGJi/kv47c4DsOH641OWL08CngJClL3BOcCZYayWfEiEkh356jw?=
+ =?us-ascii?Q?LlBjMomySeOHeZ+e9y5ScrzND1Qplaqhs00adOJePo7d6dlUUWE80Fp93BRs?=
+ =?us-ascii?Q?93uMXXNRe7btqqbJI/KNiVIHd51QLULESd4GLKi9jESIA0aH8OKrnK2VQWyl?=
+ =?us-ascii?Q?e2Qc5sdSom0eM/tZjah8MmIhCtFrW9GGCrT2GqyNRka6s2XckGhcmj4Kef/Q?=
+ =?us-ascii?Q?euQECcmJZTco6uvW6vAST8xEqVxLiuS/Zmr9Z1kW0sBTsl3Mt60AxDLA62ap?=
+ =?us-ascii?Q?wGBKYGeAgBMmsEiCWedgHoZpxjjMzgJ2MRJ+DsmKqZsvd1yqBeAnY+OMIhYg?=
+ =?us-ascii?Q?z+U1fHat7ldMzgwiwtt55f92cVAOO3Fjo0HZnDCjox76zkcwgj9DLA/7J+GC?=
+ =?us-ascii?Q?dVfvVm53kFtLH16QEs9V7LNoMUxS4SPjU0oJPkYEug+tkBYWTHPHz14Ka31A?=
+ =?us-ascii?Q?wBqR+wS5KmjQiXpR7fXJhp1Lvm7gyXLxPngHJQM6q5xTO3HFGumup9btFhh2?=
+ =?us-ascii?Q?qVcrHOqylRTtxSxHvgAJ2qsIOf5ifvDI8ROo+3cVdtIl02M51RCLmDRGC3SI?=
+ =?us-ascii?Q?lUTc17pNThPO9n3/SS28pe9OJ2BpNKa75QM50Ssl2gqXScv7MRhynAX9uevF?=
+ =?us-ascii?Q?MuaUV1gsXE24uksX1akIo/LP5frIEmVMG41F1lbrQU0ol6Fwr1/gdKab2dgR?=
+ =?us-ascii?Q?MRhGuiaS0CdmOD976W/wt1LP16Yjmw+27iabUsQOQC9hi1O6A8sBYkfKVZph?=
+ =?us-ascii?Q?/tOJ4xG30li+FDednfil6pbXFaNwuv+SjGtQsbp9?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c2ad8e8c-b117-41ae-b03b-08dcc207e9d1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e13e2d8-76ba-478b-a2e8-08dcc207e9c6
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2024 17:37:22.4107
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2024 17:37:22.3858
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WE5Yz36GHWRmnQxTTCIGC6+eTwcaoq7odpPMYHPIDGY7qH1CCBP+a1hCujMv6nny
+X-MS-Exchange-CrossTenant-UserPrincipalName: J3RazQ092kj/Zk0Yo/e8WxHp1FIwphCv2Pc36W/s+6JyeO72ds1ls8bW64k8rfbT
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9098
 
-This struct is already in iop.cfg, we don't need two.
+There is struct protection_domain iopt and struct amd_io_pgtable iopt.
+Next patches are going to want to write domain.iopt.iopt.xx which is quite
+unnatural to read.
 
-AMD is using this API sort of wrong, the cfg is supposed to be passed in
-and then the allocation function will allocate ops memory and copy the
-passed config into the new memory. Keep it kind of wrong and pass in the
-cfg memory that is already part of the pagetable struct.
+Give one of them a different name, amd_io_pgtable has fewer references so
+call it pgtbl, to match pgtbl_cfg, instead.
 
+Suggested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/amd/amd_iommu_types.h | 3 +--
- drivers/iommu/amd/iommu.c           | 5 +++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h |  4 ++--
+ drivers/iommu/amd/io_pgtable.c      | 12 ++++++------
+ drivers/iommu/amd/io_pgtable_v2.c   | 14 +++++++-------
+ drivers/iommu/amd/iommu.c           | 14 +++++++-------
+ 4 files changed, 22 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index 90a2e4790bffdf..ef4c4887cbbbd5 100644
+index 2b76b5dedc1d9b..90a2e4790bffdf 100644
 --- a/drivers/iommu/amd/amd_iommu_types.h
 +++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -537,7 +537,7 @@ struct amd_irte_ops;
- 		     struct protection_domain, iop)
+@@ -527,7 +527,7 @@ struct amd_irte_ops;
+ #define AMD_IOMMU_FLAG_TRANS_PRE_ENABLED      (1 << 0)
  
- #define io_pgtable_cfg_to_data(x) \
--	container_of((x), struct amd_io_pgtable, pgtbl_cfg)
-+	container_of((x), struct amd_io_pgtable, pgtbl.cfg)
+ #define io_pgtable_to_data(x) \
+-	container_of((x), struct amd_io_pgtable, iop)
++	container_of((x), struct amd_io_pgtable, pgtbl)
  
- struct gcr3_tbl_info {
- 	u64	*gcr3_tbl;	/* Guest CR3 table */
-@@ -547,7 +547,6 @@ struct gcr3_tbl_info {
- };
+ #define io_pgtable_ops_to_data(x) \
+ 	io_pgtable_to_data(io_pgtable_ops_to_pgtable(x))
+@@ -548,7 +548,7 @@ struct gcr3_tbl_info {
  
  struct amd_io_pgtable {
--	struct io_pgtable_cfg	pgtbl_cfg;
- 	struct io_pgtable	pgtbl;
+ 	struct io_pgtable_cfg	pgtbl_cfg;
+-	struct io_pgtable	iop;
++	struct io_pgtable	pgtbl;
  	int			mode;
  	u64			*root;
+ 	u64			*pgd;		/* v2 pgtable pgd pointer */
+diff --git a/drivers/iommu/amd/io_pgtable.c b/drivers/iommu/amd/io_pgtable.c
+index 5278ba3f676c45..dab1cf53b1f3ff 100644
+--- a/drivers/iommu/amd/io_pgtable.c
++++ b/drivers/iommu/amd/io_pgtable.c
+@@ -542,7 +542,7 @@ static int iommu_v1_read_and_clear_dirty(struct io_pgtable_ops *ops,
+  */
+ static void v1_free_pgtable(struct io_pgtable *iop)
+ {
+-	struct amd_io_pgtable *pgtable = container_of(iop, struct amd_io_pgtable, iop);
++	struct amd_io_pgtable *pgtable = container_of(iop, struct amd_io_pgtable, pgtbl);
+ 	LIST_HEAD(freelist);
+ 
+ 	if (pgtable->mode == PAGE_MODE_NONE)
+@@ -570,12 +570,12 @@ static struct io_pgtable *v1_alloc_pgtable(struct io_pgtable_cfg *cfg, void *coo
+ 	cfg->oas            = IOMMU_OUT_ADDR_BIT_SIZE;
+ 	cfg->tlb            = &v1_flush_ops;
+ 
+-	pgtable->iop.ops.map_pages    = iommu_v1_map_pages;
+-	pgtable->iop.ops.unmap_pages  = iommu_v1_unmap_pages;
+-	pgtable->iop.ops.iova_to_phys = iommu_v1_iova_to_phys;
+-	pgtable->iop.ops.read_and_clear_dirty = iommu_v1_read_and_clear_dirty;
++	pgtable->pgtbl.ops.map_pages    = iommu_v1_map_pages;
++	pgtable->pgtbl.ops.unmap_pages  = iommu_v1_unmap_pages;
++	pgtable->pgtbl.ops.iova_to_phys = iommu_v1_iova_to_phys;
++	pgtable->pgtbl.ops.read_and_clear_dirty = iommu_v1_read_and_clear_dirty;
+ 
+-	return &pgtable->iop;
++	return &pgtable->pgtbl;
+ }
+ 
+ struct io_pgtable_init_fns io_pgtable_amd_iommu_v1_init_fns = {
+diff --git a/drivers/iommu/amd/io_pgtable_v2.c b/drivers/iommu/amd/io_pgtable_v2.c
+index 6088822180e1e4..45a6bc3326397f 100644
+--- a/drivers/iommu/amd/io_pgtable_v2.c
++++ b/drivers/iommu/amd/io_pgtable_v2.c
+@@ -234,7 +234,7 @@ static int iommu_v2_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+ 			      int prot, gfp_t gfp, size_t *mapped)
+ {
+ 	struct protection_domain *pdom = io_pgtable_ops_to_domain(ops);
+-	struct io_pgtable_cfg *cfg = &pdom->iop.iop.cfg;
++	struct io_pgtable_cfg *cfg = &pdom->iop.pgtbl.cfg;
+ 	u64 *pte;
+ 	unsigned long map_size;
+ 	unsigned long mapped_size = 0;
+@@ -281,7 +281,7 @@ static unsigned long iommu_v2_unmap_pages(struct io_pgtable_ops *ops,
+ 					  struct iommu_iotlb_gather *gather)
+ {
+ 	struct amd_io_pgtable *pgtable = io_pgtable_ops_to_data(ops);
+-	struct io_pgtable_cfg *cfg = &pgtable->iop.cfg;
++	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
+ 	unsigned long unmap_size;
+ 	unsigned long unmapped = 0;
+ 	size_t size = pgcount << __ffs(pgsize);
+@@ -346,7 +346,7 @@ static const struct iommu_flush_ops v2_flush_ops = {
+ 
+ static void v2_free_pgtable(struct io_pgtable *iop)
+ {
+-	struct amd_io_pgtable *pgtable = container_of(iop, struct amd_io_pgtable, iop);
++	struct amd_io_pgtable *pgtable = container_of(iop, struct amd_io_pgtable, pgtbl);
+ 
+ 	if (!pgtable || !pgtable->pgd)
+ 		return;
+@@ -369,16 +369,16 @@ static struct io_pgtable *v2_alloc_pgtable(struct io_pgtable_cfg *cfg, void *coo
+ 	if (get_pgtable_level() == PAGE_MODE_5_LEVEL)
+ 		ias = 57;
+ 
+-	pgtable->iop.ops.map_pages    = iommu_v2_map_pages;
+-	pgtable->iop.ops.unmap_pages  = iommu_v2_unmap_pages;
+-	pgtable->iop.ops.iova_to_phys = iommu_v2_iova_to_phys;
++	pgtable->pgtbl.ops.map_pages    = iommu_v2_map_pages;
++	pgtable->pgtbl.ops.unmap_pages  = iommu_v2_unmap_pages;
++	pgtable->pgtbl.ops.iova_to_phys = iommu_v2_iova_to_phys;
+ 
+ 	cfg->pgsize_bitmap = AMD_IOMMU_PGSIZES_V2,
+ 	cfg->ias           = ias,
+ 	cfg->oas           = IOMMU_OUT_ADDR_BIT_SIZE,
+ 	cfg->tlb           = &v2_flush_ops;
+ 
+-	return &pgtable->iop;
++	return &pgtable->pgtbl;
+ }
+ 
+ struct io_pgtable_init_fns io_pgtable_amd_iommu_v2_init_fns = {
 diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index e3e935b0fdf637..3840b3ede65d32 100644
+index 426aecacc63009..e3e935b0fdf637 100644
 --- a/drivers/iommu/amd/iommu.c
 +++ b/drivers/iommu/amd/iommu.c
-@@ -2262,7 +2262,7 @@ void protection_domain_free(struct protection_domain *domain)
- 
+@@ -2263,7 +2263,7 @@ void protection_domain_free(struct protection_domain *domain)
  	WARN_ON(!list_empty(&domain->dev_list));
  
--	if (domain->iop.pgtbl_cfg.tlb)
-+	if (domain->iop.pgtbl.cfg.tlb)
- 		free_io_pgtable_ops(&domain->iop.pgtbl.ops);
+ 	if (domain->iop.pgtbl_cfg.tlb)
+-		free_io_pgtable_ops(&domain->iop.iop.ops);
++		free_io_pgtable_ops(&domain->iop.pgtbl.ops);
  
  	if (domain->id)
-@@ -2320,7 +2320,8 @@ struct protection_domain *protection_domain_alloc(unsigned int type)
- 		goto out_err;
- 	}
+ 		domain_id_free(domain->id);
+@@ -2371,7 +2371,7 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
+ 	domain->domain.geometry.aperture_start = 0;
+ 	domain->domain.geometry.aperture_end   = dma_max_address();
+ 	domain->domain.geometry.force_aperture = true;
+-	domain->domain.pgsize_bitmap = domain->iop.iop.cfg.pgsize_bitmap;
++	domain->domain.pgsize_bitmap = domain->iop.pgtbl.cfg.pgsize_bitmap;
  
--	pgtbl_ops = alloc_io_pgtable_ops(pgtable, &domain->iop.pgtbl_cfg, domain);
-+	pgtbl_ops =
-+		alloc_io_pgtable_ops(pgtable, &domain->iop.pgtbl.cfg, domain);
- 	if (!pgtbl_ops)
- 		goto out_err;
+ 	if (iommu) {
+ 		domain->domain.type = type;
+@@ -2492,7 +2492,7 @@ static int amd_iommu_iotlb_sync_map(struct iommu_domain *dom,
+ 				    unsigned long iova, size_t size)
+ {
+ 	struct protection_domain *domain = to_pdomain(dom);
+-	struct io_pgtable_ops *ops = &domain->iop.iop.ops;
++	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
  
+ 	if (ops->map_pages)
+ 		domain_flush_np_cache(domain, iova, size);
+@@ -2504,7 +2504,7 @@ static int amd_iommu_map_pages(struct iommu_domain *dom, unsigned long iova,
+ 			       int iommu_prot, gfp_t gfp, size_t *mapped)
+ {
+ 	struct protection_domain *domain = to_pdomain(dom);
+-	struct io_pgtable_ops *ops = &domain->iop.iop.ops;
++	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
+ 	int prot = 0;
+ 	int ret = -EINVAL;
+ 
+@@ -2551,7 +2551,7 @@ static size_t amd_iommu_unmap_pages(struct iommu_domain *dom, unsigned long iova
+ 				    struct iommu_iotlb_gather *gather)
+ {
+ 	struct protection_domain *domain = to_pdomain(dom);
+-	struct io_pgtable_ops *ops = &domain->iop.iop.ops;
++	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
+ 	size_t r;
+ 
+ 	if ((domain->pd_mode == PD_MODE_V1) &&
+@@ -2570,7 +2570,7 @@ static phys_addr_t amd_iommu_iova_to_phys(struct iommu_domain *dom,
+ 					  dma_addr_t iova)
+ {
+ 	struct protection_domain *domain = to_pdomain(dom);
+-	struct io_pgtable_ops *ops = &domain->iop.iop.ops;
++	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
+ 
+ 	return ops->iova_to_phys(ops, iova);
+ }
+@@ -2648,7 +2648,7 @@ static int amd_iommu_read_and_clear_dirty(struct iommu_domain *domain,
+ 					  struct iommu_dirty_bitmap *dirty)
+ {
+ 	struct protection_domain *pdomain = to_pdomain(domain);
+-	struct io_pgtable_ops *ops = &pdomain->iop.iop.ops;
++	struct io_pgtable_ops *ops = &pdomain->iop.pgtbl.ops;
+ 	unsigned long lflags;
+ 
+ 	if (!ops || !ops->read_and_clear_dirty)
 -- 
 2.46.0
 
