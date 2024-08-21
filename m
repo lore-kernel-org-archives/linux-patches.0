@@ -1,108 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE78165EF0;
-	Wed, 21 Aug 2024 20:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8473117B500
+	for <patches@lists.linux.dev>; Wed, 21 Aug 2024 22:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724273059; cv=none; b=fQuUJDLSSOHkZmGvQTvVMkUd00FTVkr9mA8c5BsQ/Fjplaslu3RrzWVDrd5KuOCmovMCWaRR/TLtzTCLMv2qBUQJ7riGotjT2UcM/rJ4+ENsr4K4lFxmGVZ5v0SZalc54SAld11Tx1AViMCHYkjWkTJvdbuqIcIse0K2ZBfmnPw=
+	t=1724278428; cv=none; b=WT4UfXwJ8uVip64thbu7iZdFYnMb2FYInw/g8ez2M8UEuiozbThDqINaOA8rfQm8jTZtH6ftCnazt4k03lqXZudaw5AMe5cWq9K4ZO52gj0vWIGtu9RbnQHPTbKHw71RyXvQy8i5gnqUx+z7IWtJ8Td4tgjHi2L2r3USxBqbmYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724273059; c=relaxed/simple;
-	bh=vbKtOxGHPdiSOdlRhANh9cXvjlpO9vMygiRN7n2CKs4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=e9Tpwoa3bFrhpueuqv+hhaGXq0i2wvy9F15lHGvHAZm9vnkRxd4s65a95t95Ry/QUb0eLIuWnI9fsoNk1l1yR9wI5K3G+9sPEQk6oHWVvXp3786Z2ao3UVHJGE1jyUPIQ6ioF6syvDGSllIks4Axl5UcJ10MV6T+JnAAajCwLeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJLflqKP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724278428; c=relaxed/simple;
+	bh=QhXejlXvAomkFd8EP61NJGFSBPRUcQ/txFYLGv+s3pk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o4BeiveP222nTal3T9Hn+q7XCLilWndiofjBrNv77NNV4wjXjyybLF+AJCeJUGX+Y13apw3bp8MRj8qs02+409PVQJ84nwquV8itEunjj55LQ+ac+zbqZF9RFa7n7vuwm0Step40heXr3MDaJoDHeV7NScwcOJ8Jxqjh7Jpn08c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JdoPnSB4; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJLflqKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99A5C32781;
-	Wed, 21 Aug 2024 20:44:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724273059;
-	bh=vbKtOxGHPdiSOdlRhANh9cXvjlpO9vMygiRN7n2CKs4=;
-	h=From:Date:Subject:To:Cc:From;
-	b=LJLflqKPxeuvl2xqVI7LyMuQ4lg0lJz9MlD3K47NHav5XLwSPl9l7gYKAkOQsiXXv
-	 Cieq4CY74PJaUjEIH4zK3q8bY2YQXPxD8Te9yxuf2MJdjCfPV2ht0+u5bY+PH/nDge
-	 kN3/xvxTYv6E+rdKsOOsyMNq2QAHb0xvJ9a8vcjUtx6Df348rzkteW/WpDfN6TEyfg
-	 XF3yoQ9hKGFnUPHmS7jGuFGD/i2Q7s2EgfjmOW83DOJ4tJddKIdAtrUcsW/VLNCGl/
-	 KtvshIaKQay7G6sbJiZf3yNuhHbJ9tD4PMWmtoxTmDCK21xkTj8i2k1Xg6eEXzKH7k
-	 /RXutTTjxVPEA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 21 Aug 2024 13:43:03 -0700
-Subject: [PATCH] bcachefs: Fix format specifier in
- bch2_btree_key_cache_to_text()
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JdoPnSB4"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70d2ff38af8so22446b3a.2
+        for <patches@lists.linux.dev>; Wed, 21 Aug 2024 15:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724278427; x=1724883227; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pgTqsnBM9O5JTCZtnF9wRMYwA4akEnvManPLStJFabI=;
+        b=JdoPnSB4LbwEdKD0rEMh6f0n/BUD+cgTup19dahg7cO5KIIADcqNrEEvXmSa13yvzk
+         Vmjrdre//MF7uZ0yMDjaJMg+RCSH+WyxYgGTkbqNwUummeEeho2Hqf7B5kZIsUVQuWaX
+         FcscjO0Ph84MUpkmnwSeC31RK6LhtP+JFskQpZVDZoHXLzj2NM/5479nStZgRO4wbyMw
+         TpgbW3N9Axuko5ulEwfK3YYTZPQmIGqCEB++ajtjuSlwgEZWWYYsnfptzGJXEV/fK6I8
+         PC8a4OFK99C34TfuhTrKVaXhOAkHl2Ng/NJfp5kCjfYyDTKUjkrVkcih+0Vbs6CpE86y
+         Fj2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724278427; x=1724883227;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pgTqsnBM9O5JTCZtnF9wRMYwA4akEnvManPLStJFabI=;
+        b=I0MJB1QMU62oFhGcEijTOqlDx6uA0Wxd0eFLOJmdKdeyoS3Rli6kxBc1KDcLi88l5t
+         fHMxAyCNtC711/eHgt/ukl7tf+EQR6OOZsgs67UON/qc2ob7PUcQg93x+VOGrKGK0kZ2
+         h6oWaS/DvMG2RztLZklZQKXuyCwTwCl2dbXfOkqsKsieSZKOwWjxJK4PjcQF5yCsT3WV
+         P/1pUwsCIQEuketqhal1/VWtWeiC6D2YL58Xb3txHHPCEEcnDR1gk3s5UcVuEqbJaKky
+         HMGhcDMd703M5iB1mlWIM5DiSZqmQj1d5npp2zGeti3NL+qCD23r5TwZrzpw8TkgTOs+
+         KZpA==
+X-Forwarded-Encrypted: i=1; AJvYcCWPYC+L5GXfIk/ugTc5AuQ1FPb42ndMwuRymq6zV8ACJ4al6JLEPpsyBejlnliU9zgLjDj8HYzV@lists.linux.dev
+X-Gm-Message-State: AOJu0YxmKXAozJFaDBQKmI/WL9VtVXciNPP3RrUTWQbxtdAnbL1AQQDf
+	hcy0zzsRizL/zoyyyqJVGldqzNZZ8/vwDv8kHmsCboqt6FTtK9YocFdsEHiOMrKCwl6E3vg5ttZ
+	63nG5GHhwID03IKltzWs9f+128/s=
+X-Google-Smtp-Source: AGHT+IFt49kL1Ixsc3kRci9+nRnfWm7P1N0g0CNp61ltVH4fSelwuKgrdRmJAH6JtYIjIvS6h/bvJPl/72+LTfQImeI=
+X-Received: by 2002:a05:6a20:2588:b0:1c3:b106:d293 with SMTP id
+ adf61e73a8af0-1cada0422f6mr2590110637.3.1724278426631; Wed, 21 Aug 2024
+ 15:13:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240821-bch2_btree_key_cache_to_text-fix-specifier-v1-1-2d9b89b15fdd@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAFZRxmYC/x2NUQqDMBAFryL73UASRGyvUkpI1mezFFQ2oVjEu
- xv6OTDMHFSggkKP7iDFV4qsSwN364hzXN4wMjUmb31vR+9M4uxDqgqED36BI2eEuoaKvZpZdlM
- 2sMwCNYN1PEzj3buYqAU3RRP+s+frPC9uoQ1VfAAAAA==
-To: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: linux-bcachefs@vger.kernel.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2571; i=nathan@kernel.org;
- h=from:subject:message-id; bh=vbKtOxGHPdiSOdlRhANh9cXvjlpO9vMygiRN7n2CKs4=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGnHAhc5PBM73D23av1E9amWvOsuRl/Je6O1XWBNaNglg
- 76tAleXdpSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJpLkyMjyO8L9Sc3un8o09
- 69wXTUje97jW07y8eIfG4Z55HaWa8nsYGWZ+MrqiKJ3dsXRTaNkpq5LSJQdNWvVCdvu+rLzkvtS
- ggBcA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20240814163722.1550064-1-ojeda@kernel.org>
+In-Reply-To: <20240814163722.1550064-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 22 Aug 2024 00:13:33 +0200
+Message-ID: <CANiq72k435QRB1ZGLTaf-yPgGZ4br5UZCrCDx3TWZxDavAbJgA@mail.gmail.com>
+Subject: Re: [PATCH] rust: enable bindgen's `--enable-function-attribute-detection`
+ flag
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When building for a 32-bit architecture, for which 'size_t' is
-'unsigned int', there is a compiler warning due to use of '%lu':
+On Wed, Aug 14, 2024 at 6:37=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> `bindgen` is able to detect certain function attributes and annotate
+> functions correspondingly in its output for the Rust side, when the
+> `--enable-function-attribute-detection` is passed.
+>
+> In particular, it is currently able to use `__must_check` in C
+> (`#[must_use]` in Rust), which give us a bunch of annotations that are
+> nice to have to prevent possible issues in Rust abstractions, e.g.:
+>
+>      extern "C" {
+>     +    #[must_use]
+>          pub fn kobject_add(
+>              kobj: *mut kobject,
+>              parent: *mut kobject,
+>              fmt: *const core::ffi::c_char,
+>              ...
+>          ) -> core::ffi::c_int;
+>      }
+>
+> Apparently, there are edge cases where this can make generation very slow=
+,
+> which is why it is behind a flag [1], but it does not seem to affect us
+> in any major way at the moment.
+>
+> Link: https://github.com/rust-lang/rust-bindgen/issues/1465 [1]
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72=3Du5Nrz_NW3U3_VqywJk=
+D8pECA07q2pFDd1wjtXOWdkAQ@mail.gmail.com/
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-  In file included from fs/bcachefs/vstructs.h:5,
-                   from fs/bcachefs/bcachefs_format.h:80,
-                   from fs/bcachefs/bcachefs.h:207,
-                   from fs/bcachefs/btree_key_cache.c:3:
-  fs/bcachefs/btree_key_cache.c: In function 'bch2_btree_key_cache_to_text':
-  fs/bcachefs/btree_key_cache.c:795:25: error: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'size_t' {aka 'unsigned int'} [-Werror=format=]
-    795 |         prt_printf(out, "pending:\t%lu\r\n",            per_cpu_sum(bc->nr_pending));
-        |                         ^~~~~~~~~~~~~~~~~~~
-  fs/bcachefs/util.h:78:63: note: in definition of macro 'prt_printf'
-     78 | #define prt_printf(_out, ...)           bch2_prt_printf(_out, __VA_ARGS__)
-        |                                                               ^~~~~~~~~~~
-  fs/bcachefs/btree_key_cache.c:795:38: note: format string is defined here
-    795 |         prt_printf(out, "pending:\t%lu\r\n",            per_cpu_sum(bc->nr_pending));
-        |                                    ~~^
-        |                                      |
-        |                                      long unsigned int
-        |                                    %u
-  cc1: all warnings being treated as errors
+Applied to `rust-next` -- thanks everyone!
 
-Use the proper specifier, '%zu', to resolve the warning.
-
-Fixes: e447e49977b8 ("bcachefs: key cache can now allocate from pending")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- fs/bcachefs/btree_key_cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fs/bcachefs/btree_key_cache.c b/fs/bcachefs/btree_key_cache.c
-index caddda160a23..5f479cb8ae5a 100644
---- a/fs/bcachefs/btree_key_cache.c
-+++ b/fs/bcachefs/btree_key_cache.c
-@@ -792,7 +792,7 @@ void bch2_btree_key_cache_to_text(struct printbuf *out, struct btree_key_cache *
- 	prt_printf(out, "skipped_accessed:\t%lu\r\n",	bc->skipped_accessed);
- 	prt_printf(out, "skipped_lock_fail:\t%lu\r\n",	bc->skipped_lock_fail);
- 	prt_newline(out);
--	prt_printf(out, "pending:\t%lu\r\n",		per_cpu_sum(bc->nr_pending));
-+	prt_printf(out, "pending:\t%zu\r\n",		per_cpu_sum(bc->nr_pending));
- }
- 
- void bch2_btree_key_cache_exit(void)
-
----
-base-commit: 8ff69508bbd974755240b30307fc95904cb8c17d
-change-id: 20240821-bch2_btree_key_cache_to_text-fix-specifier-601c6d8921ab
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Cheers,
+Miguel
