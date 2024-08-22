@@ -1,110 +1,112 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8473117B500
-	for <patches@lists.linux.dev>; Wed, 21 Aug 2024 22:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0763F6FB9;
+	Thu, 22 Aug 2024 00:24:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724278428; cv=none; b=WT4UfXwJ8uVip64thbu7iZdFYnMb2FYInw/g8ez2M8UEuiozbThDqINaOA8rfQm8jTZtH6ftCnazt4k03lqXZudaw5AMe5cWq9K4ZO52gj0vWIGtu9RbnQHPTbKHw71RyXvQy8i5gnqUx+z7IWtJ8Td4tgjHi2L2r3USxBqbmYM=
+	t=1724286275; cv=none; b=JhhVsRLlOl+drKpSZZzrTkbhpmMJHsAe9zIVA95O52ZX5BZ5rwKyYgDwJMzcNYApvxB6Fa0XcWGeCvHERyPjo4swnq/hzV08/pkslJlgo93Aw2+ENIcUhiR9cmHqt5J1olJm71rDGQXZszl1WcN/KRko7kdZkGKIEyHcEC2DUuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724278428; c=relaxed/simple;
-	bh=QhXejlXvAomkFd8EP61NJGFSBPRUcQ/txFYLGv+s3pk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o4BeiveP222nTal3T9Hn+q7XCLilWndiofjBrNv77NNV4wjXjyybLF+AJCeJUGX+Y13apw3bp8MRj8qs02+409PVQJ84nwquV8itEunjj55LQ+ac+zbqZF9RFa7n7vuwm0Step40heXr3MDaJoDHeV7NScwcOJ8Jxqjh7Jpn08c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JdoPnSB4; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724286275; c=relaxed/simple;
+	bh=8ZtfgYLUKOcsfIJw9GLcrjUrcszWoLOa8hE3abm8uEE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tQS8v0TVkarflJeCNXYv9hUmWRrg9hi48OyXO2Y2GY3cUd8/Av+Cu6KaFv+2qLVrA3U0hIIlUT/SOfQ0hItrRDKaGwCD+upgTDjm4+iqtX2Yf+KiObHeFEZxqJPZyIkoHr3MrqC7uBwZp5VlCXnnVZyY6JO0prFQM2ve9ivirrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtwlE1mz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JdoPnSB4"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70d2ff38af8so22446b3a.2
-        for <patches@lists.linux.dev>; Wed, 21 Aug 2024 15:13:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724278427; x=1724883227; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pgTqsnBM9O5JTCZtnF9wRMYwA4akEnvManPLStJFabI=;
-        b=JdoPnSB4LbwEdKD0rEMh6f0n/BUD+cgTup19dahg7cO5KIIADcqNrEEvXmSa13yvzk
-         Vmjrdre//MF7uZ0yMDjaJMg+RCSH+WyxYgGTkbqNwUummeEeho2Hqf7B5kZIsUVQuWaX
-         FcscjO0Ph84MUpkmnwSeC31RK6LhtP+JFskQpZVDZoHXLzj2NM/5479nStZgRO4wbyMw
-         TpgbW3N9Axuko5ulEwfK3YYTZPQmIGqCEB++ajtjuSlwgEZWWYYsnfptzGJXEV/fK6I8
-         PC8a4OFK99C34TfuhTrKVaXhOAkHl2Ng/NJfp5kCjfYyDTKUjkrVkcih+0Vbs6CpE86y
-         Fj2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724278427; x=1724883227;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pgTqsnBM9O5JTCZtnF9wRMYwA4akEnvManPLStJFabI=;
-        b=I0MJB1QMU62oFhGcEijTOqlDx6uA0Wxd0eFLOJmdKdeyoS3Rli6kxBc1KDcLi88l5t
-         fHMxAyCNtC711/eHgt/ukl7tf+EQR6OOZsgs67UON/qc2ob7PUcQg93x+VOGrKGK0kZ2
-         h6oWaS/DvMG2RztLZklZQKXuyCwTwCl2dbXfOkqsKsieSZKOwWjxJK4PjcQF5yCsT3WV
-         P/1pUwsCIQEuketqhal1/VWtWeiC6D2YL58Xb3txHHPCEEcnDR1gk3s5UcVuEqbJaKky
-         HMGhcDMd703M5iB1mlWIM5DiSZqmQj1d5npp2zGeti3NL+qCD23r5TwZrzpw8TkgTOs+
-         KZpA==
-X-Forwarded-Encrypted: i=1; AJvYcCWPYC+L5GXfIk/ugTc5AuQ1FPb42ndMwuRymq6zV8ACJ4al6JLEPpsyBejlnliU9zgLjDj8HYzV@lists.linux.dev
-X-Gm-Message-State: AOJu0YxmKXAozJFaDBQKmI/WL9VtVXciNPP3RrUTWQbxtdAnbL1AQQDf
-	hcy0zzsRizL/zoyyyqJVGldqzNZZ8/vwDv8kHmsCboqt6FTtK9YocFdsEHiOMrKCwl6E3vg5ttZ
-	63nG5GHhwID03IKltzWs9f+128/s=
-X-Google-Smtp-Source: AGHT+IFt49kL1Ixsc3kRci9+nRnfWm7P1N0g0CNp61ltVH4fSelwuKgrdRmJAH6JtYIjIvS6h/bvJPl/72+LTfQImeI=
-X-Received: by 2002:a05:6a20:2588:b0:1c3:b106:d293 with SMTP id
- adf61e73a8af0-1cada0422f6mr2590110637.3.1724278426631; Wed, 21 Aug 2024
- 15:13:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtwlE1mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271C1C32781;
+	Thu, 22 Aug 2024 00:24:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724286274;
+	bh=8ZtfgYLUKOcsfIJw9GLcrjUrcszWoLOa8hE3abm8uEE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=RtwlE1mzYPZ+lF43mWERnPpsGlNpwJ4aTHXUbJIR6PkOAOHkxtSvk/YgNXFvIIv4C
+	 cLuCzNOp6SkrFxjGxjCbe8cypHzsRDGHm7BxHlFKFSx3HGWcFtMnrg7e7YTap1xNT5
+	 J2lsMHTL2r+bpWiVzlrdkbcVcJY/GsA1zoJJ7Hk7yk6osIip5vEdSHVJ18yXBNXby/
+	 QHQpVSiA904US7xkyp82nCMkgQGTOqTMS3hnh8dP5QEanoydk0/IAOdeKEB02ZVtZB
+	 cDU5RD0GlTpAZqLlN6+L4VOuQ7GLdfStps8MIXhSONdmjWwktWVDlMQJrBbjcZ7HQw
+	 +Tbm4xw6jZdzA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
+	Peng Fan <peng.fan@nxp.com>
+Subject: [PATCH 0/3] clk: test: Test clock-assigned-rates{-u64}
+Date: Wed, 21 Aug 2024 17:24:27 -0700
+Message-ID: <20240822002433.1163814-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240814163722.1550064-1-ojeda@kernel.org>
-In-Reply-To: <20240814163722.1550064-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 22 Aug 2024 00:13:33 +0200
-Message-ID: <CANiq72k435QRB1ZGLTaf-yPgGZ4br5UZCrCDx3TWZxDavAbJgA@mail.gmail.com>
-Subject: Re: [PATCH] rust: enable bindgen's `--enable-function-attribute-detection`
- flag
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 14, 2024 at 6:37=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> `bindgen` is able to detect certain function attributes and annotate
-> functions correspondingly in its output for the Rust side, when the
-> `--enable-function-attribute-detection` is passed.
->
-> In particular, it is currently able to use `__must_check` in C
-> (`#[must_use]` in Rust), which give us a bunch of annotations that are
-> nice to have to prevent possible issues in Rust abstractions, e.g.:
->
->      extern "C" {
->     +    #[must_use]
->          pub fn kobject_add(
->              kobj: *mut kobject,
->              parent: *mut kobject,
->              fmt: *const core::ffi::c_char,
->              ...
->          ) -> core::ffi::c_int;
->      }
->
-> Apparently, there are edge cases where this can make generation very slow=
-,
-> which is why it is behind a flag [1], but it does not seem to affect us
-> in any major way at the moment.
->
-> Link: https://github.com/rust-lang/rust-bindgen/issues/1465 [1]
-> Link: https://lore.kernel.org/rust-for-linux/CANiq72=3Du5Nrz_NW3U3_VqywJk=
-D8pECA07q2pFDd1wjtXOWdkAQ@mail.gmail.com/
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Add some kunit tests for the clock-assigned-rates and
+clock-assigned-rates-64 DT properties. I think it may be possible to
+crush this down into more carefully chosen DT overlay applications of
+properties but this works for now.
 
-Applied to `rust-next` -- thanks everyone!
+This is based on a merge of the clk-assigned-rates and clk-kunit
+branches in clk.git
 
-Cheers,
-Miguel
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@google.com>
+Cc: Rae Moar <rmoar@google.com>
+Cc: Peng Fan <peng.fan@nxp.com>
+
+Stephen Boyd (3):
+  clk: test: Add test managed of_clk_add_hw_provider()
+  of: kunit: Extract some overlay boiler plate into macros
+  clk: test: Add KUnit tests for clock-assigned-rates{-u64} DT
+    properties
+
+ drivers/clk/Makefile                          |  14 +
+ drivers/clk/clk_kunit_helpers.c               |  30 ++
+ drivers/clk/clk_test.c                        | 321 ++++++++++++++++++
+ drivers/clk/kunit_clk_assigned_rates.h        |   8 +
+ .../kunit_clk_assigned_rates_multiple.dtso    |  16 +
+ ..._clk_assigned_rates_multiple_consumer.dtso |  20 ++
+ .../clk/kunit_clk_assigned_rates_null.dtso    |  14 +
+ ...unit_clk_assigned_rates_null_consumer.dtso |  18 +
+ drivers/clk/kunit_clk_assigned_rates_one.dtso |  14 +
+ ...kunit_clk_assigned_rates_one_consumer.dtso |  18 +
+ ...kunit_clk_assigned_rates_u64_multiple.dtso |  16 +
+ ..._assigned_rates_u64_multiple_consumer.dtso |  20 ++
+ .../clk/kunit_clk_assigned_rates_u64_one.dtso |  14 +
+ ...t_clk_assigned_rates_u64_one_consumer.dtso |  18 +
+ .../clk/kunit_clk_assigned_rates_without.dtso |  13 +
+ ...t_clk_assigned_rates_without_consumer.dtso |  17 +
+ .../clk/kunit_clk_assigned_rates_zero.dtso    |  12 +
+ ...unit_clk_assigned_rates_zero_consumer.dtso |  16 +
+ include/kunit/clk.h                           |   4 +
+ include/kunit/of.h                            |  14 +-
+ 20 files changed, 613 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates.h
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_multiple.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_multiple_consumer.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_null.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_null_consumer.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_one.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_one_consumer.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_u64_multiple.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_u64_multiple_consumer.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_u64_one.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_u64_one_consumer.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_without.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_without_consumer.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_zero.dtso
+ create mode 100644 drivers/clk/kunit_clk_assigned_rates_zero_consumer.dtso
+
+
+base-commit: 76eb1b6085c2dbae07d584536fe6b1e06245da6a
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
