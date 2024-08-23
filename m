@@ -1,180 +1,119 @@
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3FA194125;
-	Fri, 23 Aug 2024 14:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EAF18B48B;
+	Fri, 23 Aug 2024 16:18:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724421766; cv=none; b=oZwlgX/hUL86LTfG+ihJ5+h2toyurHJA4Bw25Cu1cwWkamrAPXDDUf76CC3stE1KqJF8B7k0BTogJc99AmRt0EjR1+nrRZNP2fGlbKftmatg9Y4L+qEOVJ4jfQ5VWRMZE4FqOL5qhYBmNhqub8Wq2/mNf777wTQ2jv93aMgikXE=
+	t=1724429927; cv=none; b=nCAZTRDYSlrz+OEiz+IPO6GsvHcgCXJhrL30Eixuh8/53HZPN/pK2ASoSagL6FodO5wRSL5c/0AiLqv43uZS0ncpFKsMYRkGcvuNpb0OUK9ARwE3LPX8OwM5PngEBBVuu1XOMITNwGD8hrPbo02jP5R+Mvvbxx6K4/8TVsB1hvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724421766; c=relaxed/simple;
-	bh=M/+JW3B4fr1FmeAODEX3e/e8p10B2hMp1V9Fr4Rz+m8=;
+	s=arc-20240116; t=1724429927; c=relaxed/simple;
+	bh=V7w6aGTup4dZWLJ3lbkIBCj/3TjsCtqRiayesmQ4l9o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gEkKThaWTeQXAxKhrEkn97f3g+gOlXTHUSHQ6ILz9FaFqVqFQvBhZgtqL4wYgNCHEgONhpj1gk6mVhSIumt/xeHx9M/Fo6Cqfp6tjGbfRxqGBgv3gB3Z7A+jbahve2vIu2atD45UJH1OWgTCy8tAy7OHFFVAEOKNySPs1I5SzPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=jlaDrOju; arc=none smtp.client-ip=194.63.252.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
+	 Content-Type:Content-Disposition:In-Reply-To; b=IxQvWl+bHPTmNoIwYynyXDxkv49RbQZOijC/gjBELi346zqXKKNFsyYc16uFw8MfyMglPBz4dNCGg4LxVaPek2FQge0aBT7eZ4bsvnd1SuU4dAaXCEqKUGhGhHzqM6n2d/LAujg9/LtogGSqGZ7sKRi1kuAE/P2tePM6YM1ko58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hl4Ccear; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="jlaDrOju"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
-	s=ds202307; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:
-	MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=GxF+gOMi88g9BBo9JOx0m3wME02pBHhU7ugsa7eOpAg=; b=jlaDrOjuTijwmuVnD8iWgRrncU
-	6yxUlbz5CLacwjZ/oDiZadhRopTWse3LShl6LJNsxsgLSFr0zGrM3Hkq5Zk0hjA4XzEqXkWjWGBHU
-	StiWyIjZnctjVoag7pCR5VuNRVG6gN7Z1nLNe1lakLkpkNfawtrRzvOvFJW6EOJBhzCQDoqM+T6jn
-	DDRX/xlE56lRGtQrcKP/M23Ce9q1hLSNiCoAU8GMrtSw3AQ5pVgNSH//3CrYKjfQqRviXTr972oQA
-	qtclx9AEU/BInPyQEzE88xiZ3RMPMpD2mGWgavURamvAV9llfwL87qE4uXgFx1QlPs79MMA2AsAtY
-	feutIWwQ==;
-Received: from [2001:9e8:9f5:ff01:6f0:21ff:fe91:394] (port=45454 helo=bergen)
-	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <nicolas@fjasle.eu>)
-	id 1shUpT-000BrH-4G;
-	Fri, 23 Aug 2024 15:59:51 +0200
-Date: Fri, 23 Aug 2024 15:59:46 +0200
-From: Nicolas Schier <nicolas@fjasle.eu>
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>,
-	Hao Luo <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>,
-	bpf@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] kbuild: pahole-version: avoid errors if executing fails
-Message-ID: <ZsiV0V5-UYFGkxPE@bergen>
-References: <20240728125527.690726-1-ojeda@kernel.org>
- <CAK7LNARhR=GGZ2Vr-SSog1yjnjh6iT7cCEe4mpYg889GhJnO9g@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hl4Ccear"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3579C32786;
+	Fri, 23 Aug 2024 16:18:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724429926;
+	bh=V7w6aGTup4dZWLJ3lbkIBCj/3TjsCtqRiayesmQ4l9o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Hl4CcearRTaFkPghMd1rFPfpULG941By0O8p+4GbLxtwSgRZju5BERuyx7kUKUIwE
+	 RCnTGkOJX3UOPMBlRjlUw+hSgL809L/ZmqWHs4Ht8JPskNBE+Tecg7UDTawg4w6gT3
+	 p24apZM9ndAGKQA6dTed7iO82mq5Def0LjCAExXd1WQcv8kRfs6St4A05HgXfjI1KD
+	 XjpRZdVaZDM2Ba+C8kRc4dmGKtikWqdYa4JBCP1WxBKyxUDfkWE9M3NvSx2bL+bn7z
+	 SVpzakj6Xrn7dJypEOFkC7WBgFibHO14/6U0QOUHUmJjy2aPG9+4cUcJx6jJSFi88s
+	 Dt6GeRk7EZPLQ==
+Date: Fri, 23 Aug 2024 17:18:39 +0100
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alyssa Rosenzweig <alyssa@rosenzweig.io>, asahi@lists.linux.dev,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kselftest@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>, Janne Grunau <j@jannau.net>,
+	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Lixiao Yang <lixiao.yang@intel.com>,
+	Hector Martin <marcan@marcan.st>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Sven Peter <sven@svenpeter.dev>, Will Deacon <will.deacon@arm.com>,
+	Yi Liu <yi.l.liu@intel.com>, Yong Wu <yong.wu@mediatek.com>
+Subject: Re: [PATCH rc 2/2] iommu: Do not return 0 from map_pages if it
+ doesn't do anything
+Message-ID: <20240823161839.GC851@willie-the-truck>
+References: <0-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com>
+ <2-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yO3YVrUfbWxrxaQH"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAK7LNARhR=GGZ2Vr-SSog1yjnjh6iT7cCEe4mpYg889GhJnO9g@mail.gmail.com>
-X-Operating-System: Debian GNU/Linux 12.6
-Jabber-ID: nicolas@jabber.no
+In-Reply-To: <2-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
+On Thu, Aug 22, 2024 at 11:45:55AM -0300, Jason Gunthorpe wrote:
+> These three implementations of map_pages() all succeed if a mapping is
+> requested with no read or write. Since they return back to __iommu_map()
+> leaving the mapped output as 0 it triggers an infinite loop. Therefore
+> nothing is using no-access protection bits.
+> 
+> Further, VFIO and iommufd rely on iommu_iova_to_phys() to get back PFNs
+> stored by map, if iommu_map() succeeds but iommu_iova_to_phys() fails that
+> will create serious bugs.
+> 
+> Thus remove this never used "nothing to do" concept and just fail map
+> immediately.
+> 
+> Fixes: e5fc9753b1a8 ("iommu/io-pgtable: Add ARMv7 short descriptor support")
+> Fixes: e1d3c0fd701d ("iommu: add ARM LPAE page table allocator")
+> Fixes: 745ef1092bcf ("iommu/io-pgtable: Move Apple DART support to its own file")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/io-pgtable-arm-v7s.c | 3 +--
+>  drivers/iommu/io-pgtable-arm.c     | 3 +--
+>  drivers/iommu/io-pgtable-dart.c    | 3 +--
+>  3 files changed, 3 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/iommu/io-pgtable-arm-v7s.c b/drivers/iommu/io-pgtable-arm-v7s.c
+> index 75f244a3e12df6..06ffc683b28fee 100644
+> --- a/drivers/iommu/io-pgtable-arm-v7s.c
+> +++ b/drivers/iommu/io-pgtable-arm-v7s.c
+> @@ -552,9 +552,8 @@ static int arm_v7s_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+>  		    paddr >= (1ULL << data->iop.cfg.oas)))
+>  		return -ERANGE;
+>  
+> -	/* If no access, then nothing to do */
+>  	if (!(prot & (IOMMU_READ | IOMMU_WRITE)))
+> -		return 0;
+> +		return -EINVAL;
+>  
+>  	while (pgcount--) {
+>  		ret = __arm_v7s_map(data, iova, paddr, pgsize, prot, 1, data->pgd,
+> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+> index f5d9fd1f45bf49..ff4149ae1751d4 100644
+> --- a/drivers/iommu/io-pgtable-arm.c
+> +++ b/drivers/iommu/io-pgtable-arm.c
+> @@ -515,9 +515,8 @@ static int arm_lpae_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+>  	if (WARN_ON(iaext || paddr >> cfg->oas))
+>  		return -ERANGE;
+>  
+> -	/* If no access, then nothing to do */
+>  	if (!(iommu_prot & (IOMMU_READ | IOMMU_WRITE)))
+> -		return 0;
+> +		return -EINVAL;
 
---yO3YVrUfbWxrxaQH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think just removing this hunk altogether would get us the right semantics
+for stage-2 mappings, but it's esoteric and not used so -EINVAL is probably
+better:
 
-On Fri 23 Aug 2024 02:28:28 GMT, Masahiro Yamada wrote:
-> Date: Fri, 23 Aug 2024 02:28:28 +0900
-> From: Masahiro Yamada <masahiroy@kernel.org>
-> To: Miguel Ojeda <ojeda@kernel.org>
-> Cc: Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann
->  <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, Martin KaFai
->  Lau <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>, Song L=
-iu
->  <song@kernel.org>, Yonghong Song <yonghong.song@linux.dev>, John Fastabe=
-nd
->  <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>, Stanislav
->  Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>, Jiri Olsa
->  <jolsa@kernel.org>, bpf@vger.kernel.org, Nathan Chancellor
->  <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>,
->  linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
->  patches@lists.linux.dev
-> Subject: Re: [PATCH] kbuild: pahole-version: avoid errors if executing fa=
-ils
-> X-Mailing-List: linux-kbuild@vger.kernel.org
-> Message-ID: <CAK7LNARhR=3DGGZ2Vr-SSog1yjnjh6iT7cCEe4mpYg889GhJnO9g@mail.g=
-mail.com>
->=20
-> On Sun, Jul 28, 2024 at 9:55=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> w=
-rote:
-> >
-> > Like patch "rust: suppress error messages from
-> > CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT" [1], do not assume the file existi=
-ng
-> > and being executable implies executing it will succeed. Instead, bail
-> > out if executing it fails for any reason.
-> >
-> > For instance, `pahole` may be built for another architecture, may be a
-> > program we do not expect or may be completely broken:
-> >
-> >     $ echo 'bad' > bad-pahole
-> >     $ chmod u+x bad-pahole
-> >     $ make PAHOLE=3D./bad-pahole defconfig
-> >     ...
-> >     ./bad-pahole: 1: bad: not found
-> >     init/Kconfig:112: syntax error
-> >     init/Kconfig:112: invalid statement
->=20
->=20
->=20
-> Even with this patch applied, a syntax error can happen.
->=20
-> $ git log --oneline -1
-> dd1c54d77f11 kbuild: pahole-version: avoid errors if executing fails
-> $ echo 'echo' > bad-pahole
-> $ chmod u+x bad-pahole
-> $ make PAHOLE=3D./bad-pahole defconfig
-> *** Default configuration is based on 'x86_64_defconfig'
-> init/Kconfig:114: syntax error
-> init/Kconfig:114: invalid statement
-> make[2]: *** [scripts/kconfig/Makefile:95: defconfig] Error 1
-> make[1]: *** [/home/masahiro/workspace/linux-kbuild/Makefile:680:
-> defconfig] Error 2
-> make: *** [Makefile:224: __sub-make] Error 2
->=20
+Acked-by: Will Deacon <will@kernel.org>
 
-Do we have to catch all possibilities?  Then, what about this:
-
-
-#!/bin/sh
-trap "echo 0; exit 1" EXIT
-set -e
-
-output=3D$("$@" --version 2>/dev/null)
-
-output=3D$(echo "${output}" |  sed -nE 's/^v([0-9]+)\.([0-9][0-9])$/\1\2/p')
-if [ -z "${output}" ]; then
-	echo "warning: pahole binary '$1' outputs incompatible version number, pah=
-ole will not be used." >&2
-	exit 1
-fi
-
-echo "${output}"
-trap EXIT
-
-
-
-Kind regards,
-Nicolas
-
---yO3YVrUfbWxrxaQH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEh0E3p4c3JKeBvsLGB1IKcBYmEmkFAmbIlcYACgkQB1IKcBYm
-EmlIXhAAw5al6h44X2UnA31bKgo8H+OA3wzHIF1UTZOMe02NkAtVFidcpkKqxLih
-n5bOp6VjVr5KRcp7O45TAIWJ4Bm3G4PHX52MrohtW5GXABeoVRQTsCTdS1BB1PTh
-9nZZIvKF3ONqHGDSfYXHP72bfW1bVn1pzgMj/FA6GhRkv1n4AQVfO1Ohyacrn4go
-AT+6hu3gWwtj0CqeYJVBJ66GNDBCC9eoc++79WB0BQipZRNr3sHHznb7pOA+3M57
-iRhDdiVDIwmUcQTfj7oS/H/hlTLW5BeYhmXUyLDQaq3yAgcnKyQPCfdftVNmlmyN
-hI+jPJKnhYLGvB8UPj63GJudRqW/RNqE7ewZF2aOvC7+IaZwdRhaduOrCkBU+pNY
-/YYDOkEElGNRKHW9J5zFDuPQwlFDaLfCZ4hezgXYpiZTN7NggYKHa/ba32BgGPjr
-DR7OPk+lR2FArLTbzJa9I0KYmPdrKi6KNE0loghDcnLXySLHCStwahKwg7BZ+/US
-o5hgWMaeeNw9NuuscNYmHryKzKMAhGjtEE5wWJfdpyyOsqyiohCI/Mx0jKSOysGW
-mhgOynT2Tnq8sOPYg3vbIjYECabONecL1Q79TeJGVV5e879B3nTkZVAgV6cX5xP5
-6rZK7XWdqSaR/RxNulPl3wy+eJIEWI1D4j4ogbGfm0xWNmqr1TI=
-=aokD
------END PGP SIGNATURE-----
-
---yO3YVrUfbWxrxaQH--
+Will
