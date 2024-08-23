@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CCE17C;
-	Fri, 23 Aug 2024 00:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA0C63A;
+	Fri, 23 Aug 2024 00:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724371525; cv=none; b=guYrpq3M4NRo896Rb185yG2j2TjnUWwbq2nP5sj04XRKnvhRdSFpRZ9VtTsnEIHOf/UI698UTilSVzKVv3JJarKhzoEsxL7mK3V3tTenton915MYyX4EPb+U1QsHrGypNsQte8NZB56qgLUJviR2wEGAa78j6kPahIzxCMeKhNY=
+	t=1724371937; cv=none; b=SIperVK4gAo6Kl62x9sU0gLHsjaemfAe4T7FiAcpbycCYlBunqLtdHBxGc1TPTKAfw9bj7RF8nSpgeVSnX3ZQMwcQCUOmQhBo3wuK+hI6KA9ZMybI3NxE/EaT41U020ZMxyXdj1qyGLETxLn29xjhYMVPzCwmcHWmZMurWmhOvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724371525; c=relaxed/simple;
-	bh=vXoCjmpAz9/mZBkhiiu2lMYzNQWeQcsKbtbhcAOPHo8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HgfThaedAoaxazPN/Jb6fI5h9lCPSsHPzhewvRc8tuexPolYvGA/+Una13TSi/z9H9LyQrvGpLtCL3Ajd+lZW1s+plkZ3qgdOO+u9OCmz1159WDE6UQsZ+Yi744Nq4azLdl1VVy+daLhUsS4QzFdliwT/dFAZzhBaHV26zmlNvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4c9ax7g; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724371937; c=relaxed/simple;
+	bh=hR348iFeerciLqBqWHS3fQeIxVKDvQfpmtUSU4LpnR4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=M+zvhRD2ZEAZNYaVQw7ZaD++EF2vDQFUJtSQ9UV9MU1M9AuQbTShrfEZDbUwce7bl2Xb29xmpv3lNl0sV6XPj0ulhAl/+xMCdjccf+cpM9ImQkmaNC3d/BaS8hUIn5guzd2somNixLKMOqE0e4rt1Eq9AP4DBSmbB2KglrvNSeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U56DRAnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4c9ax7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A13C32782;
-	Fri, 23 Aug 2024 00:05:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U56DRAnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E629C32782;
+	Fri, 23 Aug 2024 00:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724371525;
-	bh=vXoCjmpAz9/mZBkhiiu2lMYzNQWeQcsKbtbhcAOPHo8=;
+	s=k20201202; t=1724371937;
+	bh=hR348iFeerciLqBqWHS3fQeIxVKDvQfpmtUSU4LpnR4=;
 	h=From:Date:Subject:To:Cc:From;
-	b=U4c9ax7gbfsZ32xF6t+gKLL2KoHjCG/821DDfaIgRjZwMulBwgZA8Y0KKNDMpXF9C
-	 geOvQ1B299lvQZhXa9uYBdh+oqK24i9+3wj1XMpIneqYZDbuPraCJ94S5Fp7MzEsxK
-	 Xm8uT5vaf2UF8zUIUxDLzJKKRIu01KdS9WbmGmGADXy3UkNsZDd77uLGwOznh9O40G
-	 9XvNoVAOvwb3SeGa6t4/Bxi7xxrF3fEz7mIWcx4tPTT3MVQJgZo8YNnMH3VJXiY5Zy
-	 gs9zOJ/YrKtnMUONls47P6OGEVYvPpXuyHXHOKGNfFo5uUa6fa4wfrDcjvuupKTOmU
-	 0aoY4Js4pYdFQ==
+	b=U56DRAnAIl4WrFQvlPLEWvV4zoUhuOOkJnrxO8Hrdfui+dr0sRNl1mMqFuoLQcljh
+	 KpaGDfWV3W7UT6+WTf8lHFJV606WPyn6rohpw6VWdO5a9DAGGr+bR6+/zIM3ThKcyQ
+	 y4axf3sIzkn6GgsuLgASAbD863nuHlvPEG60F0y3k1TEDGjHpEXqL+0DpRDTtG58ED
+	 K+43zzwYZQ/shBs996oZhSYhuICZShrlXWldSyJSe0ZPz2g4r5lSDFKl4WCXwId6u5
+	 a3mSVGUx6iqtTNtqOVVgJFhrNIN7n9/+2zocDa9sltXiqviKQwbiEbNLzqDMN1Y+tl
+	 pdopWggV/qNqw==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 22 Aug 2024 17:05:17 -0700
-Subject: [PATCH] ARM: imx: Annotate imx7d_enet_init() as __init
+Date: Thu, 22 Aug 2024 17:12:13 -0700
+Subject: [PATCH] x86/resctrl: Annotate __get_mem_config_intel() as __init
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,60 +36,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240822-imx7d-mark-imx7d_enet_init-as-init-v1-1-8dfadee3bed4@kernel.org>
-X-B4-Tracking: v=1; b=H4sIADzSx2YC/yWNSwqAMAwFryJZG+hHsHgVESk2apBWaUUE6d0tu
- po3mzcPJIpMCbrqgUgXJ95DEVlXMK02LITsioMSqhFGKWR/tw69jds/Rwp0jhz4RJvwo9BOTNq
- QltJAOToizXx/kX7I+QXqg7YSdAAAAA==
-To: Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
+Message-Id: <20240822-x86-restctrl-get_mem_config_intel-init-v1-1-8b0a68a8731a@kernel.org>
+X-B4-Tracking: v=1; b=H4sIANzTx2YC/x3N0QqDMAxA0V+RPC9Q4zZkvzJG6WraBTSONgxB/
+ PcVH8/LvTtULsIVHt0OhX9SZdWG/tJB/ATNjDI1Azm6upEIt/GOhatFKzNmNr/w4uOqSbIXNZ5
+ RVAyHkByFWz+4d4AW+xZOsp2j5+s4/kyu4AV4AAAA
+To: Fenghua Yu <fenghua.yu@intel.com>, 
+ Reinette Chatre <reinette.chatre@intel.com>, x86@kernel.org, 
+ Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>
+Cc: linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1431; i=nathan@kernel.org;
- h=from:subject:message-id; bh=vXoCjmpAz9/mZBkhiiu2lMYzNQWeQcsKbtbhcAOPHo8=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGnHL7lsVpRbXGxxtEnqkrBgxYdJy9UXLb60imni45N/D
- xp77t2t1FHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmIjOB4X+B1aG1uxdNPS9k
- przRSzzXpI/v/u3ly//JfT93lOmG/vM7DP8DFmbPqIvv9CsJ4D+YtqHb6vm02EX5+qJ/D9b8/Gt
- uzsANAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1536; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=hR348iFeerciLqBqWHS3fQeIxVKDvQfpmtUSU4LpnR4=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGnHLz84X8XOkPy4bFNjt9SaiQ2m505eE87olbG6ornn6
+ O0O09sHO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBETBYyMjTbcSZfv2xycsGG
+ s269Plctyva2Js2Ydalc9ErK2ujC75qMDBNjrlZ+2iawbS2bp4klV/6xd9pq7+eWb3ln96D/cOI
+ hbX4A
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
 After a recent LLVM change [1] that deduces __cold on functions that
 only call cold code (such as __init functions), there is a section
-mismatch warning from imx7d_enet_init(), which got moved to
+mismatch warning from __get_mem_config_intel(), which got moved to
 .text.unlikely. as a result of that optimization:
 
-  WARNING: modpost: vmlinux: section mismatch in reference: imx7d_enet_init+0x20 (section: .text.unlikely.) -> imx7d_enet_clk_sel (section: .init.text)
+  WARNING: modpost: vmlinux: section mismatch in reference: __get_mem_config_intel+0x77 (section: .text.unlikely.) -> thread_throttle_mode_init (section: .init.text)
 
-Drop the inline keyword (which does not guarantee inlining) and replace
-it with __init, as imx7d_enet_init() is only called from __init code,
-which clears up the warning.
+Mark __get_mem_config_intel() as __init as well since it is only called
+from __init code, which clears up the warning.
 
 Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/arm/mach-imx/mach-imx7d.c | 2 +-
+ arch/x86/kernel/cpu/resctrl/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-imx/mach-imx7d.c b/arch/arm/mach-imx/mach-imx7d.c
-index 9587885fb1ac..87632ae0201c 100644
---- a/arch/arm/mach-imx/mach-imx7d.c
-+++ b/arch/arm/mach-imx/mach-imx7d.c
-@@ -48,7 +48,7 @@ static void __init imx7d_enet_clk_sel(void)
- 	}
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 1930fce9dfe9..b28646f1d9d6 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -199,7 +199,7 @@ static inline bool rdt_get_mb_table(struct rdt_resource *r)
+ 	return false;
  }
  
--static inline void imx7d_enet_init(void)
-+static void __init imx7d_enet_init(void)
+-static bool __get_mem_config_intel(struct rdt_resource *r)
++static bool __init __get_mem_config_intel(struct rdt_resource *r)
  {
- 	imx7d_enet_phy_init();
- 	imx7d_enet_clk_sel();
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+ 	union cpuid_0x10_3_eax eax;
 
 ---
-base-commit: 47ac09b91befbb6a235ab620c32af719f8208399
-change-id: 20240822-imx7d-mark-imx7d_enet_init-as-init-03d0c38e3118
+base-commit: 7424fc6b86c8980a87169e005f5cd4438d18efe6
+change-id: 20240822-x86-restctrl-get_mem_config_intel-init-3af02a5130ba
 
 Best regards,
 -- 
