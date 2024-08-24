@@ -1,97 +1,117 @@
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B28F1C6F7D
-	for <patches@lists.linux.dev>; Fri, 23 Aug 2024 20:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB31E3214;
+	Sat, 24 Aug 2024 03:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724446078; cv=none; b=GpQKdygWPA1sDR6aS/RVtLHDBo74/7f7ttVqopu4tfD/dmgvXW4af1wqfzeSlIfcfkTreh2tkM6NySGLIlMS/Rz4Gb1yFEr2sjyIq9eRW8MJAcI+BziQojDu0MfBUFEO7CDL1AafJuhKN8yGmh1O01/YdTRCJdR+WjdlyTD4alM=
+	t=1724471239; cv=none; b=iH+uT7i9V6HZbgeS8TFon54OnOpB7ccaqdpvsrMHJnrXYfvRZYzx9g2oIjriqBlXkbiaIJ5seU8iFZ57Rnsin4WYNBeyNLRxKmCwr0IL+A36m1g1rX9nMyoSBqRxZOio0SNQqCN7BoGMRPR6xwr0o0Syjg1iBsLdN5OvX4KozXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724446078; c=relaxed/simple;
-	bh=id4PXH6g6b5ygcEfz+3/ImyFmiTcss8b3qGEx/u76XI=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S9GHDgj6lmhF5JxoO/a4yvniZCEkbci9x6PIagAavgNCvjvE48EecGJFcLm/Qk1Bf9kx9asxAGyp/Z/lGKjNmRMWuvXPajAzO4S1OzNIONBMhqRwdrplhOPSSV7aBvnuWI8B4vQzpSe4bQp24frpthKFH6+KMXRXj1d0HUzzww8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=igIf95L6; arc=none smtp.client-ip=209.85.160.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1724471239; c=relaxed/simple;
+	bh=9hvQeS0ngXVdosBqKG7tf+RduULcEVupa0NszXQJR7E=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Var9g3bYHURGI+T4QRsb9ngBqzA3xJa3SZ7+axwtTPWqoiCr128ax6iNp/fQXcPrsfQqx0fNp4UqZL9BweXBvxnUg6RJGf7ZyLn1TIIk9yLiM7OY7fJYI88zKsYmpvFs4eOfryljTm7PvwTplI2Zh/70V7nwnKiScdF+TCexoAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=adOncbTw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="igIf95L6"
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-26fde6117cfso1836718fac.1
-        for <patches@lists.linux.dev>; Fri, 23 Aug 2024 13:47:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724446076; x=1725050876; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=id4PXH6g6b5ygcEfz+3/ImyFmiTcss8b3qGEx/u76XI=;
-        b=igIf95L6Q0RqkeCjPoaTwCHD8rmvbB9sHs0BpME1k7jm70e2k5a8xjILb7E61HwNZs
-         4b3S6/gaPtSs3jA7iG0JkfJDvom4hFgoZ7ALlRVYf2fpp37Lry8/sJag7aNfhdVQM63T
-         lNQ2B+WqMIabqofxATSkOSj81xI0FCvEGsGgA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724446076; x=1725050876;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=id4PXH6g6b5ygcEfz+3/ImyFmiTcss8b3qGEx/u76XI=;
-        b=UlsxDHgEj0e4FwyyWB+s67+ARfcvfYy/QbFLrln3QP2r/irLIVTjsCTqw0RES/T8wh
-         r/H5XCngbDPnPQzN6NS2siNk6kCqzQhCPnMrbLH6ZbMqs9ycDLFHZ4fQ6f7GW73uhNN4
-         ur7dJWLB94tfrRezzfRNLFgOSckUoxbsjmK/iWb3mt/B/mddBknfF+nhO7I33KPYZOmM
-         wvSAr/ZOAm2C8ghuHKw+k2S7W92a2Xt1jVZJrLmRYFbwcRMz+q1v5Z4TnZxM0EPgWGFp
-         mnDvTGwVa50B0Gy2aluv3bJFjbT3BuNX+yTLUTPlsd67PaiKmVKQ7sAP9zCq/uDbfsif
-         LqKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUuKWcdYULoXCmo3950l6bycGVHJzmAF5lN5lX7aRxV1UcG6GOBwRlgxCOZH73/NmNoGKktcQ/A@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywm1CIG3Wyi65hJyhl6N9dUGwdlUy7AQWpl1C64iqpJTB5E0wG5
-	axzUg3PzKL4GX/dZKzt96rDf5zQX+lEft/Lsp6fI5OvF0Jq49L3LwqXmxFRA7VTIna65q4kaUEI
-	prl9/s2R9sZ7y2yX0acriUWJutq1l3LT7YPL+
-X-Google-Smtp-Source: AGHT+IFTlK1vgqPsQn2j9voF5J39I5gTTTzWpu4wouRlEDJLxZNqlw4ZgBfIqTn3IqcZNBM8n7tlqF0zt3kueWkW4Ac=
-X-Received: by 2002:a05:687c:2be9:b0:265:b32b:c45f with SMTP id
- 586e51a60fabf-273e60835d0mr3142337fac.0.1724446075865; Fri, 23 Aug 2024
- 13:47:55 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 23 Aug 2024 13:47:55 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adOncbTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A377EC32781;
+	Sat, 24 Aug 2024 03:47:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724471239;
+	bh=9hvQeS0ngXVdosBqKG7tf+RduULcEVupa0NszXQJR7E=;
+	h=From:Date:Subject:To:Cc:From;
+	b=adOncbTwURvRgjY1LZgDiwhlMCAZV/hWtxyHUuLYbmNudJXeTYti7ELfIIj3rgNSG
+	 TrUdh43mvCLZQnroaA4BDSaymfdi4fFiWBnc6Sx+X1vloMhe2/tyChICI2ZVrWnckx
+	 QZP077mGelqsOESHNt1l/iYRjVuNAZ8JyOTiSwH+DjdXiAq0CejZFomv9e9eBhUZo6
+	 gcY8uOcGR9qCDbywgqxuwa5EfT4H2mWX6hus81z7p4wyV5ycKIx0uoTyr+owsCtL5r
+	 3Gj94NHyqCJzUeV/0M+qX7KsqrSV7JSrId+LnIPfWqiCD2NPqFuZl/7+zWShmgH2Jh
+	 bXPnXsona51mw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 23 Aug 2024 20:47:13 -0700
+Subject: [PATCH] drm/xe: Fix total initialization in xe_ggtt_print_holes()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZsdMd7Ywa2b-GDT6@tzungbi-laptop>
-References: <20240819223834.2049862-1-swboyd@chromium.org> <20240819223834.2049862-14-swboyd@chromium.org>
- <ZsdMd7Ywa2b-GDT6@tzungbi-laptop>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 23 Aug 2024 13:47:55 -0700
-Message-ID: <CAE-0n53zPV8QHf7DxSDO8E4-kvsP=unFvevjo7i1ZjE1v6UgAA@mail.gmail.com>
-Subject: Re: [PATCH v3 13/17] dt-bindings: Move google,cros-ec-typec binding
- to usb
-To: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, dri-devel@lists.freedesktop.org, 
-	Guenter Roeck <groeck@chromium.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
-	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
-	Vinod Koul <vkoul@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240823-drm-xe-fix-total-in-xe_ggtt_print_holes-v1-1-12b02d079327@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAMBXyWYC/x3NQQqDMBCF4avIrDuQji60VyklhDjGAZvIJIgg3
+ r1Dl9/if++Cyipc4dVdoHxIlZINz0cHcQ05McpsBnI0uJF6nPWLJ+MiJ7bSwoaSzT6l1vyukpt
+ fy8YVXVwo9tMUAgWwtV3Zmv/T+3PfP+WWHHh5AAAA
+To: Lucas De Marchi <lucas.demarchi@intel.com>, 
+ =?utf-8?q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>, 
+ intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2190; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=9hvQeS0ngXVdosBqKG7tf+RduULcEVupa0NszXQJR7E=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGknw49prXzD4iFidfWUy5+3BzlrvVifzfv6oUksQHgLJ
+ 6fxxB+hHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiZ10Z/hk/3OlUfbvLSSLE
+ uf7jLLbpa7f9lng6b92knNd7Pui5S61j+Cs3ZdNeSa/vJz5IZTa7bT0/3e7pWZPP0/lX3+/cbnB
+ rPg8/AA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Quoting Tzung-Bi Shih (2024-08-22 07:34:31)
-> On Mon, Aug 19, 2024 at 03:38:27PM -0700, Stephen Boyd wrote:
-> > -title: Google Chrome OS EC(Embedded Controller) Type C port driver.
-> > +title: Google Chrome OS Embedded Controller (EC) USB type-c port driver
->
-> Given that it gets chance to modify, how about s/Chrome OS/ChromeOS/?
+Clang warns (or errors with CONFIG_DRM_WERROR or CONFIG_WERROR):
 
-Sure!
+  drivers/gpu/drm/xe/xe_ggtt.c:810:3: error: variable 'total' is uninitialized when used here [-Werror,-Wuninitialized]
+    810 |                 total += hole_size;
+        |                 ^~~~~
+  drivers/gpu/drm/xe/xe_ggtt.c:798:11: note: initialize the variable 'total' to silence this warning
+    798 |         u64 total;
+        |                  ^
+        |                   = 0
+  1 error generated.
+
+Move the zero initialization of total from
+xe_gt_sriov_pf_config_print_available_ggtt() to xe_ggtt_print_holes() to
+resolve the warning.
+
+Fixes: 136367290ea5 ("drm/xe: Introduce xe_ggtt_print_holes")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/xe/xe_ggtt.c               | 2 +-
+ drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_ggtt.c b/drivers/gpu/drm/xe/xe_ggtt.c
+index a3ce91decdce..86fc6afa43bd 100644
+--- a/drivers/gpu/drm/xe/xe_ggtt.c
++++ b/drivers/gpu/drm/xe/xe_ggtt.c
+@@ -795,7 +795,7 @@ u64 xe_ggtt_print_holes(struct xe_ggtt *ggtt, u64 alignment, struct drm_printer
+ 	const struct drm_mm_node *entry;
+ 	u64 hole_min_start = xe_wopcm_size(tile_to_xe(ggtt->tile));
+ 	u64 hole_start, hole_end, hole_size;
+-	u64 total;
++	u64 total = 0;
+ 	char buf[10];
+ 
+ 	mutex_lock(&ggtt->lock);
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
+index c8835d9eead6..41ed07b153b5 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
+@@ -2110,7 +2110,7 @@ int xe_gt_sriov_pf_config_print_available_ggtt(struct xe_gt *gt, struct drm_prin
+ {
+ 	struct xe_ggtt *ggtt = gt_to_tile(gt)->mem.ggtt;
+ 	u64 alignment = pf_get_ggtt_alignment(gt);
+-	u64 spare, avail, total = 0;
++	u64 spare, avail, total;
+ 	char buf[10];
+ 
+ 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
+
+---
+base-commit: 66a0f6b9f5fc205272035b6ffa4830be51e3f787
+change-id: 20240823-drm-xe-fix-total-in-xe_ggtt_print_holes-0cf2c399aa2a
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
