@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600B01C4EEA;
-	Tue, 27 Aug 2024 15:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E227E1C8FC4;
+	Tue, 27 Aug 2024 15:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771790; cv=none; b=QfbR6Ry56FxXavClA5naUEs8d7D/suHv432ZzNmVyF4aRDnDroCXhKbVjGIbNNIgxq6szDdSpnlucFW09WfXQMM2cPxdM9AB5vg+Vmsv/wecT9OG5VD/z/gNyjPgTv7FGwFq0QcfC9aLJo96pYv1kEhqEL3KlbYwgsIq//Nlcb0=
+	t=1724771794; cv=none; b=F454aR5jgZBeOHiTaAXwtBvYulFfIjxRkR+hLBNcEmxHpNLQzmT62oMfNHseJ4UjKtWCx9yU9ilahNUU2tERR8/k1sft53UndUJ8zs5dCBhTyu+tYk0xokCkfI7FSl8JuYnSkFq76ekk6fhCFihw5XsDHb29vjJpDUL+DyDVdkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771790; c=relaxed/simple;
-	bh=loFSn5+7Ie3T8VGMLxhoivz1l6l7uBgc/fY39ay9EbM=;
+	s=arc-20240116; t=1724771794; c=relaxed/simple;
+	bh=n28mZzZLRSASG3EFkrKENjPfcCNpurvWmcf/hadaLag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULA4mXqq9Th1bodYXvc14JIcMwHQuW+UadvFf/4ms2iGxph7harsmalDNSAoDhl3RbdL9mT7qV2uRi6FMv/rwVwRAPivxbNza+NdvfIE6d2yfxRwWrQkfwXYnm5mdmyLBvvmTeHLlZ/mgsDwK3c+b07FTA4Iw+mN8k4dpmMBO9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCsdwD8f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlGL6myeugSsk601XlKjyn02p7tr5OW1VtJuaUuNaleP5sEs1NotKHxhWvRgE3+gIjd14S4cvzFrBy18PEyrexSRIfdT/O7QCoO2/LzNlQuc0PsfAoFCr5TKt5PsLeh3z8Yu59BihldpFTzL1mHbq6Xk7WZC8bf8JD9e8/26vs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9/YPWzG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCsdwD8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F82C4DE10;
-	Tue, 27 Aug 2024 15:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9/YPWzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AC8C4DE16;
+	Tue, 27 Aug 2024 15:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771790;
-	bh=loFSn5+7Ie3T8VGMLxhoivz1l6l7uBgc/fY39ay9EbM=;
+	s=korg; t=1724771793;
+	bh=n28mZzZLRSASG3EFkrKENjPfcCNpurvWmcf/hadaLag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCsdwD8fuUYSA07MDfoxhwMvam4oggYEzOAyGABuI44ap1PfepQxlkR+0EF+tXw2j
-	 ZdIefCwxo1/R3Wn3YZefh+ldXlOCfbhOn8uq2VpmsOzSoOVi4QtBtvXkU2zSM5fom9
-	 2R9NuM31wBPRKvQ9hCb0n/ykf81gnReFLloNL+AU=
+	b=V9/YPWzGI+qlloZscZVcRFi0RhibpxJTeB9hgs/CKTecYulK6AZat8fLFNmVbZtjQ
+	 duxdbYBTk86NGy1XRAXrgCmQyn1Gqx9gPA6Xv9+M4A3zCFjc0J+DrtL+Y2mlTTwBzl
+	 LSuxmH2fZkd9xIKejGVCseiADrARYETbMzl4WLPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 021/321] i2c: qcom-geni: Add missing geni_icc_disable in geni_i2c_runtime_resume
-Date: Tue, 27 Aug 2024 16:35:29 +0200
-Message-ID: <20240827143839.017273039@linuxfoundation.org>
+	John Kacur <jkacur@redhat.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 022/321] rtla/osnoise: Prevent NULL dereference in error handling
+Date: Tue, 27 Aug 2024 16:35:30 +0200
+Message-ID: <20240827143839.056124610@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,39 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 4e91fa1ef3ce6290b4c598e54b5eb6cf134fbec8 upstream.
+commit 90574d2a675947858b47008df8d07f75ea50d0d0 upstream.
 
-Add the missing geni_icc_disable() call before returning in the
-geni_i2c_runtime_resume() function.
+If the "tool->data" allocation fails then there is no need to call
+osnoise_free_top() and, in fact, doing so will lead to a NULL dereference.
 
-Commit 9ba48db9f77c ("i2c: qcom-geni: Add missing
-geni_icc_disable in geni_i2c_runtime_resume") by Gaosheng missed
-disabling the interconnect in one case.
-
-Fixes: bf225ed357c6 ("i2c: i2c-qcom-geni: Add interconnect support")
-Cc: Gaosheng Cui <cuigaosheng1@huawei.com>
-Cc: stable@vger.kernel.org # v5.9+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: John Kacur <jkacur@redhat.com>
+Cc: "Luis Claudio R. Goncalves" <lgoncalv@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Fixes: 1eceb2fc2ca5 ("rtla/osnoise: Add osnoise top mode")
+Link: https://lore.kernel.org/f964ed1f-64d2-4fde-ad3e-708331f8f358@stanley.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/tracing/rtla/src/osnoise_top.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -990,8 +990,10 @@ static int __maybe_unused geni_i2c_runti
- 		return ret;
+--- a/tools/tracing/rtla/src/osnoise_top.c
++++ b/tools/tracing/rtla/src/osnoise_top.c
+@@ -520,8 +520,10 @@ struct osnoise_tool *osnoise_init_top(st
+ 		return NULL;
  
- 	ret = clk_prepare_enable(gi2c->core_clk);
--	if (ret)
-+	if (ret) {
-+		geni_icc_disable(&gi2c->se);
- 		return ret;
+ 	tool->data = osnoise_alloc_top(nr_cpus);
+-	if (!tool->data)
+-		goto out_err;
++	if (!tool->data) {
++		osnoise_destroy_tool(tool);
++		return NULL;
 +	}
  
- 	ret = geni_se_resources_on(&gi2c->se);
- 	if (ret) {
+ 	tool->params = params;
+ 
+@@ -529,11 +531,6 @@ struct osnoise_tool *osnoise_init_top(st
+ 				   osnoise_top_handler, NULL);
+ 
+ 	return tool;
+-
+-out_err:
+-	osnoise_free_top(tool->data);
+-	osnoise_destroy_tool(tool);
+-	return NULL;
+ }
+ 
+ static int stop_tracing;
 
 
