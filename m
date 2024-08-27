@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11B017C96;
-	Tue, 27 Aug 2024 15:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C56217C96;
+	Tue, 27 Aug 2024 15:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771745; cv=none; b=E0rLV4A6OoBilW8bV4g5gUho3rIndj4b3/9Rny9gSZmsVeNk/CCoDLqTWY8asM9SV9gE2Ro+sRX4J1t49THaXzru+h9leDNHxyOmgDt9HTcX1DA92C4xys+cjA9CJPHaURyX70BPS2ljVAdV8NWRtoKuudDldIeceXLzjgyo9Uc=
+	t=1724771748; cv=none; b=L76gn1tky+B/nXtplIm0FOHNq+Ksz3JEb49WbWfzbQ7qZkQGCIuuFzAfnu4lgf+hZixRcTMcBnrTn+dOzDIgCKA51zP5zDh8uwwsKStSpy5AZYdTCfyPWJWfEtbWQJ8a5V/Y4D6Mz5t1t61l6269mdRcf6hphrWKo45mFGSY+Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771745; c=relaxed/simple;
-	bh=jvgPA/DpyW3ospZNhxocN0nolptpNCZUXx4d18jKlVI=;
+	s=arc-20240116; t=1724771748; c=relaxed/simple;
+	bh=zc1KL3F3E/GjN+ofvNoLMsqvV3sOwVZOd/D0VYhe1Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9VP11q1sdDwK83Et2RhiEa0q0dlBk1uLqvNR84XdXXMkv2CHOAPkbS0VZOE+MYNkx8YmIa3LhPSyeXZ296laKu6m8PMdUxbHtlOY5cZMzLjJHwZVvckdOnCW/egrGQm1A6Lk9yY660tbJdnAfIwFu3550mc6V18zlCtTuqlY2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGvF+w5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V7/DJWVYvFB81qNGcXR+zk/m/7fHf9rfQIvUxwmEQMp9DXgs5g6yV8CnUPO2aaOivgwmEDcx6HxtHx/fjf58SaD4ioP+xrQ3dz7/81HnRUIkW9sL8832FMNiMSI4cNUCY4YGsPMIbeULRukicvy+LGj/OQSxntzbP/ejFf0gyv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtF3Xv7d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGvF+w5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EC5C4AF50;
-	Tue, 27 Aug 2024 15:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtF3Xv7d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC18C4AF50;
+	Tue, 27 Aug 2024 15:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771745;
-	bh=jvgPA/DpyW3ospZNhxocN0nolptpNCZUXx4d18jKlVI=;
+	s=korg; t=1724771748;
+	bh=zc1KL3F3E/GjN+ofvNoLMsqvV3sOwVZOd/D0VYhe1Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGvF+w5Q3SwqxQZ0NuNVqWL3uugXmRacpbdmZKostznYDPIdrQgPComd3wIgqsfVV
-	 oHsTXFcSa6wdkqZmCgqu02XYWcSwCjglgfzzeNnf2jADX7kIBHK1drK7rh5lL8Oe/t
-	 CYvw9CIyXrtvDqBEXCCKqf+iwAgQep+l2RucfDxE=
+	b=AtF3Xv7dIgWMKm/tQJHou9LP1MlR/zfF3wjGofFznwAj37u1DS3ArBFjieKv0ZSAH
+	 hT0agzqNWQhW+QSKzyDXB2tUaaF/TqX2dYertmKMSOpGyAwWwKCkblxB3xAMW6UiVr
+	 JEv8rG2AKboxYBYf9w1nUeQ/PKXL3FljZwqJpRIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 265/273] selftests: mptcp: join: validate fullmesh endp on 1st sf
-Date: Tue, 27 Aug 2024 16:39:49 +0200
-Message-ID: <20240827143843.483948057@linuxfoundation.org>
+	Mathieu Othacehe <othacehe@gnu.org>,
+	stable <stable@kernel.org>,
+	Alexander Dahl <ada@thorsis.com>
+Subject: [PATCH 6.1 001/321] tty: atmel_serial: use the correct RTS flag.
+Date: Tue, 27 Aug 2024 16:35:09 +0200
+Message-ID: <20240827143838.251444197@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
-References: <20240827143833.371588371@linuxfoundation.org>
+In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
+References: <20240827143838.192435816@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Mathieu Othacehe <othacehe@gnu.org>
 
-commit 4878f9f8421f4587bee7b232c1c8a9d3a7d4d782 upstream.
+commit c9f6613b16123989f2c3bd04b1d9b2365d6914e7 upstream.
 
-This case was not covered, and the wrong ID was set before the previous
-commit.
+In RS485 mode, the RTS pin is driven high by hardware when the transmitter
+is operating. This behaviour cannot be changed. This means that the driver
+should claim that it supports SER_RS485_RTS_ON_SEND and not
+SER_RS485_RTS_AFTER_SEND.
 
-The rest is not modified, it is just that it will increase the code
-coverage.
+Otherwise, when configuring the port with the SER_RS485_RTS_ON_SEND, one
+get the following warning:
 
-The right address ID can be verified by looking at the packet traces. We
-could automate that using Netfilter with some cBPF code for example, but
-that's always a bit cryptic. Packetdrill seems better fitted for that.
+kern.warning kernel: atmel_usart_serial atmel_usart_serial.2.auto:
+ttyS1 (1): invalid RTS setting, using RTS_AFTER_SEND instead
 
-Fixes: 4f49d63352da ("selftests: mptcp: add fullmesh testcases")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-13-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+which is contradictory with what's really happening.
+
+Signed-off-by: Mathieu Othacehe <othacehe@gnu.org>
+Cc: stable <stable@kernel.org>
+Tested-by: Alexander Dahl <ada@thorsis.com>
+Fixes: af47c491e3c7 ("serial: atmel: Fill in rs485_supported")
+Link: https://lore.kernel.org/r/20240808060637.19886-1-othacehe@gnu.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/atmel_serial.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3058,6 +3058,7 @@ fullmesh_tests()
- 		pm_nl_set_limits $ns1 1 3
- 		pm_nl_set_limits $ns2 1 3
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,fullmesh
- 		fullmesh=1 speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 3 3 3
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -2539,7 +2539,7 @@ static const struct uart_ops atmel_pops
+ };
+ 
+ static const struct serial_rs485 atmel_rs485_supported = {
+-	.flags = SER_RS485_ENABLED | SER_RS485_RTS_AFTER_SEND | SER_RS485_RX_DURING_TX,
++	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RX_DURING_TX,
+ 	.delay_rts_before_send = 1,
+ 	.delay_rts_after_send = 1,
+ };
 
 
