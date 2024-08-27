@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5467A1CCB3B;
-	Tue, 27 Aug 2024 15:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C341CDA39;
+	Tue, 27 Aug 2024 15:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771820; cv=none; b=qgALJgrBRyNd1o+5Mwq29sGHm3VBb7oJnqEzslKe5BtUORhCLubz7Vu5XAMi9smHROrbN4fqduNC+nQZfUvu87tqJXlSF8aS5ScE2fmwP3vDwRiFlxZE4ARzRERLbQnD1252PlrmbcueDY5N8E1fj3/D/Tn2QNPkYKgU/dEu4VU=
+	t=1724771823; cv=none; b=ld0T2LiR2NXXFe559J+paBBhNYQfrZms5hEZkqXmiWwkmQJlIojlaBlvN0xzfUrFw7lsR+Jx0b119W5e3QvWtFZo94QYDzWEC/St4i9A7sbUkoeGJPjV98uYPEHjs1g1o4ZR+zqLvZI8GRR4hkigJz01i++gmkvobTo+ysT1QKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771820; c=relaxed/simple;
-	bh=2asxtuaQkk1JFveIkkiEswvJhzOv1q6l9k+NHi3Wkx8=;
+	s=arc-20240116; t=1724771823; c=relaxed/simple;
+	bh=E2Usd9Yuisdsb6tB0KAPXkEGyZdAr11AKcmiRQGZzoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLpMctVtG+XQBalmM6okjrhqImvSuctuAQGYcIoYp+1J9+c5HpV5UnjUbjd/OcmlZZHwwHJN3Vibhp6eqGef1byOmKIcky0sGVdXcta7SLCKhTzPTFuCAsW/u/uOsratcqNdFa5M4rl4H2qOxtYF7naiF4HVixygmyNM9tWKFws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iROi49XM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZzdDKdyRGix7AtdTOP9xtVC6nE025PxmSCF46mBg8vVjk8WFxjXCUpNf8pHaVXXc8mOrnWC0qOsbXNH0IpMhUaqrXN+3H5y3KbzTM22MjzhihbgFGPHMJQciiiCKy9JANYH+KC8/befEkmr5cjMuElzbayyfqQiVhiRflvBSxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmJK6FZ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iROi49XM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8B4C4DE1F;
-	Tue, 27 Aug 2024 15:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmJK6FZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C32C4DE1C;
+	Tue, 27 Aug 2024 15:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771820;
-	bh=2asxtuaQkk1JFveIkkiEswvJhzOv1q6l9k+NHi3Wkx8=;
+	s=korg; t=1724771823;
+	bh=E2Usd9Yuisdsb6tB0KAPXkEGyZdAr11AKcmiRQGZzoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iROi49XMJbydYqFuipKRwvrNMYJcMjTbzyWUP7lT0eoTGT58kVBMfHhA5Ct/5IJ1/
-	 5pq29vVIgvJNeeUOv++EqsARD4021iwTVUD3rxPTKS5wj+RPQt+ROF/xGmqIoGwrGV
-	 jASi1UbiYHiIxXhGuMzzrcMM9ONZclnNi5Gzig4k=
+	b=JmJK6FZ72GxDDICgfo6q/6fvUrE2N2/4ZrbCXWNb3bGYUZU8aKxTyp1I7RX4/4xcy
+	 Be/PCpBs/qalymW8YC8SlqpH5heNL9mBldjaU584DUncAmhZVKpsc+ssbtHnC8Tf5P
+	 ByfOwntJfS1FQBtimlY8pTs0Jwyxd/8w8/3TaRU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+91dbdfecdd3287734d8e@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Eli Billauer <eli.billauer@gmail.com>
-Subject: [PATCH 6.1 003/321] char: xillybus: Dont destroy workqueue from work item running on it
-Date: Tue, 27 Aug 2024 16:35:11 +0200
-Message-ID: <20240827143838.327338953@linuxfoundation.org>
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 030/321] drm/amdgpu/jpeg2: properly set atomics vmid field
+Date: Tue, 27 Aug 2024 16:35:38 +0200
+Message-ID: <20240827143839.363775416@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,83 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eli Billauer <eli.billauer@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ccbde4b128ef9c73d14d0d7817d68ef795f6d131 upstream.
+commit e414a304f2c5368a84f03ad34d29b89f965a33c9 upstream.
 
-Triggered by a kref decrement, destroy_workqueue() may be called from
-within a work item for destroying its own workqueue. This illegal
-situation is averted by adding a module-global workqueue for exclusive
-use of the offending work item. Other work items continue to be queued
-on per-device workqueues to ensure performance.
+This needs to be set as well if the IB uses atomics.
 
-Reported-by: syzbot+91dbdfecdd3287734d8e@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/lkml/0000000000000ab25a061e1dfe9f@google.com/
-Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
-Link: https://lore.kernel.org/r/20240801121126.60183-1-eli.billauer@gmail.com
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 35c628774e50b3784c59e8ca7973f03bcb067132)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/xillybus/xillyusb.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/char/xillybus/xillyusb.c
-+++ b/drivers/char/xillybus/xillyusb.c
-@@ -50,6 +50,7 @@ MODULE_LICENSE("GPL v2");
- static const char xillyname[] = "xillyusb";
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
+@@ -541,11 +541,11 @@ void jpeg_v2_0_dec_ring_emit_ib(struct a
  
- static unsigned int fifo_buf_order;
-+static struct workqueue_struct *wakeup_wq;
+ 	amdgpu_ring_write(ring, PACKETJ(mmUVD_LMI_JRBC_IB_VMID_INTERNAL_OFFSET,
+ 		0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
++	amdgpu_ring_write(ring, (vmid | (vmid << 4) | (vmid << 8)));
  
- #define USB_VENDOR_ID_XILINX		0x03fd
- #define USB_VENDOR_ID_ALTERA		0x09fb
-@@ -561,10 +562,6 @@ static void cleanup_dev(struct kref *kre
-  * errors if executed. The mechanism relies on that xdev->error is assigned
-  * a non-zero value by report_io_error() prior to queueing wakeup_all(),
-  * which prevents bulk_in_work() from calling process_bulk_in().
-- *
-- * The fact that wakeup_all() and bulk_in_work() are queued on the same
-- * workqueue makes their concurrent execution very unlikely, however the
-- * kernel's API doesn't seem to ensure this strictly.
-  */
+ 	amdgpu_ring_write(ring, PACKETJ(mmUVD_LMI_JPEG_VMID_INTERNAL_OFFSET,
+ 		0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
++	amdgpu_ring_write(ring, (vmid | (vmid << 4) | (vmid << 8)));
  
- static void wakeup_all(struct work_struct *work)
-@@ -619,7 +616,7 @@ static void report_io_error(struct xilly
- 
- 	if (do_once) {
- 		kref_get(&xdev->kref); /* xdev is used by work item */
--		queue_work(xdev->workq, &xdev->wakeup_workitem);
-+		queue_work(wakeup_wq, &xdev->wakeup_workitem);
- 	}
- }
- 
-@@ -2242,6 +2239,10 @@ static int __init xillyusb_init(void)
- {
- 	int rc = 0;
- 
-+	wakeup_wq = alloc_workqueue(xillyname, 0, 0);
-+	if (!wakeup_wq)
-+		return -ENOMEM;
-+
- 	if (LOG2_INITIAL_FIFO_BUF_SIZE > PAGE_SHIFT)
- 		fifo_buf_order = LOG2_INITIAL_FIFO_BUF_SIZE - PAGE_SHIFT;
- 	else
-@@ -2249,11 +2250,16 @@ static int __init xillyusb_init(void)
- 
- 	rc = usb_register(&xillyusb_driver);
- 
-+	if (rc)
-+		destroy_workqueue(wakeup_wq);
-+
- 	return rc;
- }
- 
- static void __exit xillyusb_exit(void)
- {
-+	destroy_workqueue(wakeup_wq);
-+
- 	usb_deregister(&xillyusb_driver);
- }
- 
+ 	amdgpu_ring_write(ring,	PACKETJ(mmUVD_LMI_JRBC_IB_64BIT_BAR_LOW_INTERNAL_OFFSET,
+ 		0, 0, PACKETJ_TYPE0));
 
 
