@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06CC1BC073;
-	Tue, 27 Aug 2024 15:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A221C7B9D;
+	Tue, 27 Aug 2024 15:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772237; cv=none; b=S/kmF69tflsKmJG8PoPvamsxGbI0HKMrgX5GdIsKGJV7sZ9MIaCA81ugEx9nfi+e5PXtGSSKpudGStQtKkpUfgygcqn7p5Nq2hMHtpf2u6DN3Y6/JPqWVvPVKeMpguqu438HFM/IEoboaWdKbMmqqbsy407oVcJZG42oh1MgQOY=
+	t=1724772241; cv=none; b=VmVKBo3YWoarf7ykEczLRGoYVG87h1gJRAsy6egssfCTrhwyJegia3UZ365BHYuC5OnjidPf0STqS0MhFFgic6KKs18EjfOCNsDy5yixzLFCO/Rougc0SlenZ3aEJyYNDo1jAvwm2x5JL8yDR5/fHhZOj/One2b9pdi24UZhYlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772237; c=relaxed/simple;
-	bh=NpIXwWfO3vTOMhKP07i5uJz/kib9KeVx8tKhpwWkkDI=;
+	s=arc-20240116; t=1724772241; c=relaxed/simple;
+	bh=CcBanGG4zmLAbuMqW+S4zCevLlqJ9FRO5h9RYrtWuIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwbFSXcPUh03VsXGmpUC3zDrpvcJ/1BD0P+4AxCvdvE//KOsY/q9sGM0hfGCH+ivmijprgP42Yv6iiDtv46MJ4On83MfUjP31ayFdlk+6mOvNw+8/1i+4rAyyNVaQ1cLYiza9i1O/PibDkdCCaU2qdKra8GiL86E7gGX5jfyfAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbeWisLO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p0s+Ah5ATI3EA1/UETJXE6hxNGpEcEegD6hnc+u4P4KzbNLi8SQ5RhdAEeqQDIgng+g0/tkIK7Ir9waFggXpP8I/37s+/BL+ezgBLfSU2GTkYnepaGIENc3fgXYIsl+tad6moLA8QXdpITdajOGVdehGTkzenstlVcIDBy2brnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=he+3y/gr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbeWisLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E074C61062;
-	Tue, 27 Aug 2024 15:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he+3y/gr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AF8C61064;
+	Tue, 27 Aug 2024 15:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772237;
-	bh=NpIXwWfO3vTOMhKP07i5uJz/kib9KeVx8tKhpwWkkDI=;
+	s=korg; t=1724772240;
+	bh=CcBanGG4zmLAbuMqW+S4zCevLlqJ9FRO5h9RYrtWuIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbeWisLO0ZZMTy50gACRdQ3e3E7kVtHV6dKQpKJ/kcz053/FBAhTWq+Vbcjikwi0Z
-	 Gwh4sSrr+1WOdYAdF1ow9okvznMYSXGoNj2HCcOqE1xbR7h5AJIwjkxPd6nt64JLjb
-	 w0WtMDoZQ812ukxA2Smwtpv1EHJucSPOBd5qfc28=
+	b=he+3y/grTM5Gm75kec9nb3DAj6h4D/sPzsFJPS0/bc0yEx3iwEOfftz69uOIUAt5v
+	 Jdx4GldZyQMYX88YzikUR47vqIQC61WQULkmbW4CeDq5a4TgzlZkmbQgsQYdAIUxKc
+	 GkILLdUlnPoQd3ZpJM7WnhFUPw2936+zNVRARihg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Cromie <jim.cromie@gmail.com>,
-	Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	linux-hwmon@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/321] hwmon: (pc87360) Bounds check data->innr usage
-Date: Tue, 27 Aug 2024 16:37:42 +0200
-Message-ID: <20240827143844.095930313@linuxfoundation.org>
+Subject: [PATCH 6.1 155/321] drm/rockchip: vop2: clear afbc en and transform bit for cluster window at linear mode
+Date: Tue, 27 Aug 2024 16:37:43 +0200
+Message-ID: <20240827143844.133700501@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -55,58 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 4265eb062a7303e537ab3792ade31f424c3c5189 ]
+[ Upstream commit 20529a68307feed00dd3d431d3fff0572616b0f2 ]
 
-Without visibility into the initializers for data->innr, GCC suspects
-using it as an index could walk off the end of the various 14-element
-arrays in data. Perform an explicit clamp to the array size. Silences
-the following warning with GCC 12+:
+The enable bit and transform offset of cluster windows should be
+cleared when it work at linear mode, or we may have a iommu fault
+issue on rk3588 which cluster windows switch between afbc and linear
+mode.
 
-../drivers/hwmon/pc87360.c: In function 'pc87360_update_device':
-../drivers/hwmon/pc87360.c:341:49: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
-  341 |                                 data->in_max[i] = pc87360_read_value(data,
-      |                                 ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
-  342 |                                                   LD_IN, i,
-      |                                                   ~~~~~~~~~
-  343 |                                                   PC87365_REG_IN_MAX);
-      |                                                   ~~~~~~~~~~~~~~~~~~~
-../drivers/hwmon/pc87360.c:209:12: note: at offset 255 into destination object 'in_max' of size 14
-  209 |         u8 in_max[14];          /* Register value */
-      |            ^~~~~~
+As the cluster windows of rk3568 only supports afbc format
+so is therefore not affected.
 
-Cc: Jim Cromie <jim.cromie@gmail.com>
-Cc: Jean Delvare <jdelvare@suse.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Cc: linux-hwmon@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20231130200207.work.679-kees@kernel.org
-[groeck: Added comment into code clarifying context]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231211115741.1784954-1-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pc87360.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwmon/pc87360.c b/drivers/hwmon/pc87360.c
-index a4adc8bd531ff..534a6072036c9 100644
---- a/drivers/hwmon/pc87360.c
-+++ b/drivers/hwmon/pc87360.c
-@@ -323,7 +323,11 @@ static struct pc87360_data *pc87360_update_device(struct device *dev)
- 		}
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 80b8c83342840..a6071464a543f 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1258,6 +1258,11 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
+ 		vop2_win_write(win, VOP2_WIN_AFBC_ROTATE_270, rotate_270);
+ 		vop2_win_write(win, VOP2_WIN_AFBC_ROTATE_90, rotate_90);
+ 	} else {
++		if (vop2_cluster_window(win)) {
++			vop2_win_write(win, VOP2_WIN_AFBC_ENABLE, 0);
++			vop2_win_write(win, VOP2_WIN_AFBC_TRANSFORM_OFFSET, 0);
++		}
++
+ 		vop2_win_write(win, VOP2_WIN_YRGB_VIR, DIV_ROUND_UP(fb->pitches[0], 4));
+ 	}
  
- 		/* Voltages */
--		for (i = 0; i < data->innr; i++) {
-+		/*
-+		 * The min() below does not have any practical meaning and is
-+		 * only needed to silence a warning observed with gcc 12+.
-+		 */
-+		for (i = 0; i < min(data->innr, ARRAY_SIZE(data->in)); i++) {
- 			data->in_status[i] = pc87360_read_value(data, LD_IN, i,
- 					     PC87365_REG_IN_STATUS);
- 			/* Clear bits */
 -- 
 2.43.0
 
