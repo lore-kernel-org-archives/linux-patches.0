@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E060C1C57B5;
-	Tue, 27 Aug 2024 14:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4AF1C0DE7;
+	Tue, 27 Aug 2024 14:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769718; cv=none; b=aKTNWxaYjnQQ/YZH0S5fNQD0GqM/yvHg6ayXDaoNuuJlydsWkt6cwzS7IMRAsti/v+yTZOdcuzyx7xxXcVAn1DRIe8aZGdt9T0APayRM05bl748bBwm0wypFVq4Ct4FT1KDNiyontqi5EjuR8SeoX1QE6wMqzZ/t/CADTLs8SIs=
+	t=1724769720; cv=none; b=L06djGdznXAWd0dplcbqLBjn8M8GxP976e4pcXsP6GyU2+6SocQtsmOTptkgNXND6ZTXIBVPXSx4djets/0Yuybvj5I4miX3kBXUSPcjv2CgJj8O7zlazbCoP0j8TbR8CWp1vpFRmLwyOfZtofPImCuxKlZn1bzjZ4q0Av+BQbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769718; c=relaxed/simple;
-	bh=H8eyLxXrjmlbLX+X04vNKgeGbsaNh23JQMr7z/2Z9jI=;
+	s=arc-20240116; t=1724769720; c=relaxed/simple;
+	bh=u+yRiao40uebT82Ebady7enYk7/SuZxsMQKF2lxPo+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siFEmiAyLRlDEee8iT42i1bDvmTSF9pNPepF6WezmH/kGZww6wKGD2YN5EBZ451nOKbsfcjwLqOYA0TPSDMOmMnv34NXcGHRdd5u95o9L+HEnJKPSDjlWm7/Md/QhGl6thNJPPtNcuEcDdnkTWyiY99p2S0Rs2kqhp5AJ7Uw2aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv3Eip+t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nor6dhJbsXgNDhRWpprE/qC+UxP9+DbsPqffaw6M9InTrqEIZcKXHKot1aqSWEtWyooyqr0IrFv1JVoJZq2nrt8wo9+w2LbP0P7KV+qrh11JY7Zk0Q4CKqf2k8MIGBgCxPro4phhuWD0qaH8kWqtDjXQjJ9sEFYYEQe42v0j9lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgJFwo3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv3Eip+t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C5BC4AF15;
-	Tue, 27 Aug 2024 14:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgJFwo3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E6C4AF1C;
+	Tue, 27 Aug 2024 14:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769717;
-	bh=H8eyLxXrjmlbLX+X04vNKgeGbsaNh23JQMr7z/2Z9jI=;
+	s=korg; t=1724769720;
+	bh=u+yRiao40uebT82Ebady7enYk7/SuZxsMQKF2lxPo+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dv3Eip+tc+0TORt1SsKP2UzxOPJoKEAQBlPuXUS4RCWqp7e9KknLVEMnGop4a/+8S
-	 012/2/VClmOsWzIy7KUZu5pO+ItGkbLoST67URXacAEaM5jTcD8wc9sLe4u09QcPIo
-	 eLU87tHCz+b+t9ijhc9GKHCubDFIvA89Ug/hPURA=
+	b=pgJFwo3KV/oePMUdq2jIC+Q3wOkyUo7Fps3m4NBX+atfDfOYQ8n0Rxdc12yCI4x7S
+	 9fEhe6IAkDyM3+IAjT3cwBKM7Tb2DKcFMBbReMinKChZtfGfZHESUCzEXGWjoysKuy
+	 6M2unbXFRgRUoifrPCNfzRzLd8eF7PNuWd338SlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.6 004/341] Revert "misc: fastrpc: Restrict untrusted app to attach to privileged PD"
-Date: Tue, 27 Aug 2024 16:33:55 +0200
-Message-ID: <20240827143843.571792961@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 005/341] Revert "usb: typec: tcpm: clear pd_event queue in PORT_RESET"
+Date: Tue, 27 Aug 2024 16:33:56 +0200
+Message-ID: <20240827143843.610380475@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -54,88 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 9bb5e74b2bf88fbb024bb15ded3b011e02c673be upstream.
+commit 21ea1ce37fc267dc45fe27517bbde926211683df upstream.
 
-This reverts commit bab2f5e8fd5d2f759db26b78d9db57412888f187.
+This reverts commit bf20c69cf3cf9c6445c4925dd9a8a6ca1b78bfdf.
 
-Joel reported that this commit breaks userspace and stops sensors in
-SDM845 from working. Also breaks other qcom SoC devices running postmarketOS.
+During tcpm_init() stage, if the VBUS is still present after
+tcpm_reset_port(), then we assume that VBUS will off and goto safe0v
+after a specific discharge time. Following a TCPM_VBUS_EVENT event if
+VBUS reach to off state. TCPM_VBUS_EVENT event may be set during
+PORT_RESET handling stage. If pd_events reset to 0 after TCPM_VBUS_EVENT
+set, we will lost this VBUS event. Then the port state machine may stuck
+at one state.
 
-Cc: stable <stable@kernel.org>
-Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Link: https://lore.kernel.org/r/9a9f5646-a554-4b65-8122-d212bb665c81@umsystem.edu
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: bab2f5e8fd5d ("misc: fastrpc: Restrict untrusted app to attach to privileged PD")
-Link: https://lore.kernel.org/r/20240815094920.8242-1-griffin@kroah.com
+Before:
+
+[    2.570172] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
+[    2.570179] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[    2.570182] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
+[    3.490213] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [delayed 920 ms]
+[    3.490220] Start toggling
+[    3.546050] CC1: 0 -> 0, CC2: 0 -> 2 [state TOGGLING, polarity 0, connected]
+[    3.546057] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
+
+After revert this patch, we can see VBUS off event and the port will goto
+expected state.
+
+[    2.441992] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
+[    2.441999] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[    2.442002] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
+[    2.442122] VBUS off
+[    2.442125] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev1 NONE_AMS]
+[    2.442127] VBUS VSAFE0V
+[    2.442351] CC1: 0 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
+[    2.442357] Start toggling
+[    2.491850] CC1: 0 -> 0, CC2: 0 -> 2 [state TOGGLING, polarity 0, connected]
+[    2.491858] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
+[    2.491863] pending state change SRC_ATTACH_WAIT -> SNK_TRY @ 200 ms [rev1 NONE_AMS]
+[    2.691905] state change SRC_ATTACH_WAIT -> SNK_TRY [delayed 200 ms]
+
+Fixes: bf20c69cf3cf ("usb: typec: tcpm: clear pd_event queue in PORT_RESET")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240809112901.535072-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c      |   22 +++-------------------
- include/uapi/misc/fastrpc.h |    3 ---
- 2 files changed, 3 insertions(+), 22 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2087,16 +2087,6 @@ err_invoke:
- 	return err;
- }
- 
--static int is_attach_rejected(struct fastrpc_user *fl)
--{
--	/* Check if the device node is non-secure */
--	if (!fl->is_secure_dev) {
--		dev_dbg(&fl->cctx->rpdev->dev, "untrusted app trying to attach to privileged DSP PD\n");
--		return -EACCES;
--	}
--	return 0;
--}
--
- static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
- 				 unsigned long arg)
- {
-@@ -2109,19 +2099,13 @@ static long fastrpc_device_ioctl(struct
- 		err = fastrpc_invoke(fl, argp);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -4880,7 +4880,6 @@ static void run_state_machine(struct tcp
  		break;
- 	case FASTRPC_IOCTL_INIT_ATTACH:
--		err = is_attach_rejected(fl);
--		if (!err)
--			err = fastrpc_init_attach(fl, ROOT_PD);
-+		err = fastrpc_init_attach(fl, ROOT_PD);
- 		break;
- 	case FASTRPC_IOCTL_INIT_ATTACH_SNS:
--		err = is_attach_rejected(fl);
--		if (!err)
--			err = fastrpc_init_attach(fl, SENSORS_PD);
-+		err = fastrpc_init_attach(fl, SENSORS_PD);
- 		break;
- 	case FASTRPC_IOCTL_INIT_CREATE_STATIC:
--		err = is_attach_rejected(fl);
--		if (!err)
--			err = fastrpc_init_create_static_process(fl, argp);
-+		err = fastrpc_init_create_static_process(fl, argp);
- 		break;
- 	case FASTRPC_IOCTL_INIT_CREATE:
- 		err = fastrpc_init_create_process(fl, argp);
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -8,14 +8,11 @@
- #define FASTRPC_IOCTL_ALLOC_DMA_BUFF	_IOWR('R', 1, struct fastrpc_alloc_dma_buf)
- #define FASTRPC_IOCTL_FREE_DMA_BUFF	_IOWR('R', 2, __u32)
- #define FASTRPC_IOCTL_INVOKE		_IOWR('R', 3, struct fastrpc_invoke)
--/* This ioctl is only supported with secure device nodes */
- #define FASTRPC_IOCTL_INIT_ATTACH	_IO('R', 4)
- #define FASTRPC_IOCTL_INIT_CREATE	_IOWR('R', 5, struct fastrpc_init_create)
- #define FASTRPC_IOCTL_MMAP		_IOWR('R', 6, struct fastrpc_req_mmap)
- #define FASTRPC_IOCTL_MUNMAP		_IOWR('R', 7, struct fastrpc_req_munmap)
--/* This ioctl is only supported with secure device nodes */
- #define FASTRPC_IOCTL_INIT_ATTACH_SNS	_IO('R', 8)
--/* This ioctl is only supported with secure device nodes */
- #define FASTRPC_IOCTL_INIT_CREATE_STATIC _IOWR('R', 9, struct fastrpc_init_create_static)
- #define FASTRPC_IOCTL_MEM_MAP		_IOWR('R', 10, struct fastrpc_mem_map)
- #define FASTRPC_IOCTL_MEM_UNMAP		_IOWR('R', 11, struct fastrpc_mem_unmap)
+ 	case PORT_RESET:
+ 		tcpm_reset_port(port);
+-		port->pd_events = 0;
+ 		if (port->self_powered)
+ 			tcpm_set_cc(port, TYPEC_CC_OPEN);
+ 		else
 
 
