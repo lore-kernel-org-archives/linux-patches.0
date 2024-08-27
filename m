@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D287F1C7B71;
-	Tue, 27 Aug 2024 15:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690941BDA93;
+	Tue, 27 Aug 2024 15:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772543; cv=none; b=Pg3GlK2DkDNhnxDHdu3sltoQuZHt0rTU0L/pctGyQcNZoYKWSUFcbBnmznL0lb5sU819QiQOzCqcLym4hR//xuVIL9mEsX3JK7hKFFvPYvZinnVd9Nm6ndI3NY+uEPo++kMZg1exLPu46ub7QSKegt7au81wb+MXxxDFXlQk+q8=
+	t=1724772547; cv=none; b=kf6A81SElcxnvk6952C14sLtgko10xUzXIcGNUhX9GrgJD5MCwg+wXOpvnQydAMR34obZGXqQOc0OoNKBxAGSNHaUnnZYR+zlKuQbs/PCke56OwdkSer2YacNfIJHHS1rPJTEjC957sTFklfQoVtS/1U9aIFzZ5T8EPPokfsbSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772543; c=relaxed/simple;
-	bh=US9yxCtA29eySGRsx+D+axg/ZQOuLr+bdxYS7dx2JkI=;
+	s=arc-20240116; t=1724772547; c=relaxed/simple;
+	bh=gaCZIbqAE1S2By3yLRxYM/KgIZTSaq0jcqOZa7evgqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGJsbn+Gk2dd2xlQu78a6plCsCKu2D6baD4ui2gtZNfDN+wqoqeIMFDzIIwQiLn7YI12S/3MAZj4a1MQMOSIwXZZh+8ZLZ0Gf0xunItkZGFVuUVxWt0YcGIrL/533zYPwmIlmCQsmHA1mQ1nsQdwjWlJWiqovzu6FsnOzczxoHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXtjUl/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lzioU3zBzmTaZVlDFXL+BQixNrgczhplDfLtv7IXlfDzmwGjTLKrsNFNUHEpFq73vuh4ZoqJMj1qUUBOD9RPu38Cuz4DA4Y6UAwAlaCYZ5wsG2pZP/fdRt3opuoE9PbpX7gPJPt7k+zA+22mVLu0raMxmffqce6fIbS5qx6dEqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHBlE2MA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXtjUl/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39958C4AF15;
-	Tue, 27 Aug 2024 15:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHBlE2MA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C917FC6107E;
+	Tue, 27 Aug 2024 15:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772543;
-	bh=US9yxCtA29eySGRsx+D+axg/ZQOuLr+bdxYS7dx2JkI=;
+	s=korg; t=1724772547;
+	bh=gaCZIbqAE1S2By3yLRxYM/KgIZTSaq0jcqOZa7evgqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXtjUl/BNs7QadChdfeQsULvLKB4KYqzihFNwYGyWe03BsZAl9NlfdKTXNk++9VU4
-	 JjYc6df0wLOOZVdlPRvv8bnPfI5cXbNFf1RAqCLKLXaVlaqg6yRzb1ipCQ+rGfIeC+
-	 c83eSfFwXUxGxF8EedOGxeIw0fSywD9Z9pcRynhw=
+	b=cHBlE2MAie7p8cbno9ujAUFa0br+Kgv1RwbwMvTkhDHyeurDrXmRzeNdrmrQqWbJ4
+	 tQ6CMgEyYg+FZCBgCzq7HOU1eoXzAQr8Jgj811e6UPCBI+qrqpTpAlETFrt+cmtHTq
+	 dCncSP+ANGfQuf6+vsEYaaDUYxm8XsQ3Hk15SYx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Capitulino <luizcap@redhat.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.1 247/321] ice: fix ICE_LAST_OFFSET formula
-Date: Tue, 27 Aug 2024 16:39:15 +0200
-Message-ID: <20240827143847.647081168@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 248/321] dpaa2-switch: Fix error checking in dpaa2_switch_seed_bp()
+Date: Tue, 27 Aug 2024 16:39:16 +0200
+Message-ID: <20240827143847.685752301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,37 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit b966ad832942b5a11e002f9b5ef102b08425b84a ]
+[ Upstream commit c50e7475961c36ec4d21d60af055b32f9436b431 ]
 
-For bigger PAGE_SIZE archs, ice driver works on 3k Rx buffers.
-Therefore, ICE_LAST_OFFSET should take into account ICE_RXBUF_3072, not
-ICE_RXBUF_2048.
+The dpaa2_switch_add_bufs() function returns the number of bufs that it
+was able to add.  It returns BUFS_PER_CMD (7) for complete success or a
+smaller number if there are not enough pages available.  However, the
+error checking is looking at the total number of bufs instead of the
+number which were added on this iteration.  Thus the error checking
+only works correctly for the first iteration through the loop and
+subsequent iterations are always counted as a success.
 
-Fixes: 7237f5b0dba4 ("ice: introduce legacy Rx flag")
-Suggested-by: Luiz Capitulino <luizcap@redhat.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fix this by checking only the bufs added in the current iteration.
+
+Fixes: 0b1b71370458 ("staging: dpaa2-switch: handle Rx path on control interface")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/eec27f30-b43f-42b6-b8ee-04a6f83423b6@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 6ad4bdb0124e7..8577bf0ed5402 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -812,7 +812,7 @@ ice_can_reuse_rx_page(struct ice_rx_buf *rx_buf)
- 		return false;
- #if (PAGE_SIZE >= 8192)
- #define ICE_LAST_OFFSET \
--	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_2048)
-+	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_3072)
- 	if (rx_buf->page_offset > ICE_LAST_OFFSET)
- 		return false;
- #endif /* PAGE_SIZE >= 8192) */
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index b98ef4ba172f6..d6c871f227947 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -2583,13 +2583,14 @@ static int dpaa2_switch_refill_bp(struct ethsw_core *ethsw)
+ 
+ static int dpaa2_switch_seed_bp(struct ethsw_core *ethsw)
+ {
+-	int *count, i;
++	int *count, ret, i;
+ 
+ 	for (i = 0; i < DPAA2_ETHSW_NUM_BUFS; i += BUFS_PER_CMD) {
++		ret = dpaa2_switch_add_bufs(ethsw, ethsw->bpid);
+ 		count = &ethsw->buf_count;
+-		*count += dpaa2_switch_add_bufs(ethsw, ethsw->bpid);
++		*count += ret;
+ 
+-		if (unlikely(*count < BUFS_PER_CMD))
++		if (unlikely(ret < BUFS_PER_CMD))
+ 			return -ENOMEM;
+ 	}
+ 
 -- 
 2.43.0
 
