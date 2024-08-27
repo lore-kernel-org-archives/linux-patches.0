@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CAD1A072D;
-	Tue, 27 Aug 2024 14:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1FB44C8C;
+	Tue, 27 Aug 2024 14:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770204; cv=none; b=B7U0hl3EGQNwf2E/A3Pi7YH/Ywt/eipZpqgaCvkDQykI/2hsVoBDNaspKN+hp6tTzOKscrwVUYlTSBLqmNO4Uyw4sk4rcco0BDe/XSG9beIYR2Hh465bL+cyOFvQ1oeD7j8sfX60pqguOIfVe3TNpLEt1i/mNXpeADlLK3PvhZA=
+	t=1724770208; cv=none; b=oeyckkQZ0U+/lWoV226byXwuKSIiUOE4oTmO1uOUdIX5mS1rrF3uUw+qX8DqR6mANtvGSf12O9iCbZEB7ouUVmIllY70tX+e4G8dnTixjGXhmX5SRfdh/LDqWVSgU+/R/xigCmbjLZchHIug1dT+MHI1JdkARIYLVoDLOr6LzOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770204; c=relaxed/simple;
-	bh=ZO86yeuV8FHPBdGdb2Glq41NOPt2V0Eif4hcb+k/n5Y=;
+	s=arc-20240116; t=1724770208; c=relaxed/simple;
+	bh=Pg8sDlpUhcqrodSYrPPMiInw37CyOWc/5IE4NasnOXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7YsapeU3aBIv24zkUQdnGTZ2um8gFoPkMXUdIbtXGy+skkROJFH2J8OuhfIQfakykDMwLVuGXZ9tdUIkzFC44ZdtTUC8kQZGrNvFSjfDRmQFBSFbzp584rnYj34m3m49L+0x8PCXxYqSYD4wp4kqOGQANosREK6rtp6wCM6XFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsTEYJoy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpMT7g1UxVmUn2xX7Brh1tnmq0t4F3eBd4K2B+rEK3qUa8XA2tUkVQwNw+OAmoNIWA1G2g9CJO5cMB04d6c1DHCpM0cjUWIt5ZuYxK5oT5VMsR9+NSkG+SIegpScEETtgVe/OdyegJqN18A+nseTN7zeNmEfTLp6HeJLpi/xWnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niKTM7dL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsTEYJoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F140C4DDEB;
-	Tue, 27 Aug 2024 14:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niKTM7dL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEC0C4DDF3;
+	Tue, 27 Aug 2024 14:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770204;
-	bh=ZO86yeuV8FHPBdGdb2Glq41NOPt2V0Eif4hcb+k/n5Y=;
+	s=korg; t=1724770207;
+	bh=Pg8sDlpUhcqrodSYrPPMiInw37CyOWc/5IE4NasnOXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsTEYJoyA7IVStc722/DKkmF9bsvbxO8QW7yn6rkvQrxLBYEvQCez+kGAByf2oJej
-	 0Caq1y1hJdLWvDqBZcl/SegrGdNK3cI1XOtGI0NQGRZ3Hf6SKEDiE7EX2tEsyEmYx2
-	 zn50hMu2iq7zqbPtTS7gSOm0yxeVs0ibd1oVX3tY=
+	b=niKTM7dLyM6SEkIWNZrY/Iqmn0rMcABXcE05ukJ2TBHzhen+amw8w6/oow39rywm5
+	 7E6KPveyQ5o/JRRAXKvzuUofT613ldcBj6r4csx+R2c2wWECKnq6CxQBnvi/6twnD2
+	 j1f3DfW3P0kLllIs+0TyJfigCzhPAit3OXQ9hEnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	farah kassabri <fkassabri@habana.ai>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/341] accel/habanalabs: fix bug in timestamp interrupt handling
-Date: Tue, 27 Aug 2024 16:35:48 +0200
-Message-ID: <20240827143847.865844688@linuxfoundation.org>
+Subject: [PATCH 6.6 152/341] EDAC/skx_common: Filter out the invalid address
+Date: Tue, 27 Aug 2024 16:36:23 +0200
+Message-ID: <20240827143849.202278154@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,41 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: farah kassabri <fkassabri@habana.ai>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 0165994c215f321e2d055368f89b424756e340eb ]
+[ Upstream commit 1e92af09fab1b5589f3a7ae68109e3c6a5ca6c6e ]
 
-There is a potential race between user thread seeking to re-use
-a timestamp record with new interrupt id, while this record is still
-in the middle of interrupt handling and it is about to be freed.
-Imagine the driver set the record in_use to 0 and only then fill the
-free_node information. This might lead to unpleasant scenario where
-the new registration thread detects the record as free to use, and
-change the cq buff address. That will cause the free_node to get
-the wrong buffer address to put refcount to.
+Decoding an invalid address with certain firmware decoders could
+cause a #PF (Page Fault) in the EFI runtime context, which could
+subsequently hang the system. To make {i10nm,skx}_edac more robust
+against such bogus firmware decoders, filter out invalid addresses
+before allowing the firmware decoder to process them.
 
-Signed-off-by: farah kassabri <fkassabri@habana.ai>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Suggested-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20231207014512.78564-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/common/irq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/edac/skx_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/accel/habanalabs/common/irq.c b/drivers/accel/habanalabs/common/irq.c
-index b1010d206c2ef..813315cea4a7b 100644
---- a/drivers/accel/habanalabs/common/irq.c
-+++ b/drivers/accel/habanalabs/common/irq.c
-@@ -271,6 +271,9 @@ static int handle_registration_node(struct hl_device *hdev, struct hl_user_pendi
- 	free_node->cq_cb = pend->ts_reg_info.cq_cb;
- 	list_add(&free_node->free_objects_node, *free_list);
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index 03d7a74ca22dc..f4b192420be47 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -659,6 +659,10 @@ int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
+ 	memset(&res, 0, sizeof(res));
+ 	res.mce  = mce;
+ 	res.addr = mce->addr & MCI_ADDR_PHYSADDR;
++	if (!pfn_to_online_page(res.addr >> PAGE_SHIFT)) {
++		pr_err("Invalid address 0x%llx in IA32_MC%d_ADDR\n", mce->addr, mce->bank);
++		return NOTIFY_DONE;
++	}
  
-+	/* Mark TS record as free */
-+	pend->ts_reg_info.in_use = false;
-+
- 	return 0;
- }
- 
+ 	/* Try driver decoder first */
+ 	if (!(driver_decode && driver_decode(&res))) {
 -- 
 2.43.0
 
