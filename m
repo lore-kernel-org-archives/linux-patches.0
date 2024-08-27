@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B50B1C871E;
-	Tue, 27 Aug 2024 15:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140B11C6F55;
+	Tue, 27 Aug 2024 15:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771928; cv=none; b=Uka5hqjL1AYle0aB2WljpjRHukaBVZkUoUKPgG1yMHFQSXCRpeuiRr4Q8OZkDZIROluRteOmPFOrslLLf92NarWkz3nEm5815Jpbo1BaI28lhsVZIKycpDwXWjDzeFchbaRl5S7D0o9Sv018E+SV6K/u8RtI63HWqHtem18TG/8=
+	t=1724771932; cv=none; b=OxMVdu70JE2oYWjw13erusNYQ+9YBnsxkk0O9Orf91EObEulJOLCfNdP0JtBSKmS9Y4GM6qKu8BQhcyhZBGwuj8Qi3uv7sJoSOSPO/mIzkYi8gTplHWaFjV1P8DIjFewi08TdnseJpZE9cCVR7aiVKytri3hQyGqUWlY8vyoVe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771928; c=relaxed/simple;
-	bh=lwqtUqikA00akbWUxBTEcJ9rgiEMZys0KQAYxgftQPY=;
+	s=arc-20240116; t=1724771932; c=relaxed/simple;
+	bh=5WWOconbX6jJZCVnuAhw+VuL7VjuaCaALN6/UtKzB20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETGCgCv7H5X+i3YPjNpQiFOyc8zUfrz4YLFud2FEzW8b9rqrjpTmxBQQwft0ZLh4K+rB2OyOOVK1OjKjsrLzCqnb1eKYauUf0tFhDLeCc8Njdt0UcRjBImHlck35eQTTvwDF4IgwjaWBGGJh86W1v5gYVlv+bRGTaJvvkN6itAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bt2bSGjd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZADO3eANthRCv0jhcfqFFr5463y8mVClZq/7QhXb+ZsE1Bl1d0VA+Lzso096/SQIhVFA+9/c6eycyvG+vEAkvc4vv97pmmZmAQ6rNJgZ0BcPELZtJ9sfQ3r5ol7on0aANq5fbqYd1C8LRkUnHWLIBboCs7v6+Bee/aa5LXeLcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8I2hQiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bt2bSGjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC81C61067;
-	Tue, 27 Aug 2024 15:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8I2hQiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15187C61067;
+	Tue, 27 Aug 2024 15:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771928;
-	bh=lwqtUqikA00akbWUxBTEcJ9rgiEMZys0KQAYxgftQPY=;
+	s=korg; t=1724771931;
+	bh=5WWOconbX6jJZCVnuAhw+VuL7VjuaCaALN6/UtKzB20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bt2bSGjdkTr1FC7ts51yK7UPaesdz/brcHnfPgZPAdYXuaW1vhG2wbcPuSkgqocY9
-	 CkO3df83LdLqOWygE+hRg/1cmiZSPk8iU5coBQ3ZRtydx3/B/lEAvNTGZQr0TGbm9B
-	 yyJJQ5RNRQ0/hBGT6yfk1z4vMRiW58+qH5onRfjw=
+	b=v8I2hQiqmw9G2JtGbN2mS3DzWdPAWUWO2ShIbQHHfan6o2iPZSZJQyL4948WA5vhN
+	 Ixw1bhW4HuB5maMO4qp1JKZ2PwOfZwU0w4KOo//9vpVMdwceWGJTWGdpeXbQRPsBxL
+	 8CpD5rOYR8ZlWNLatMyCD83WfbJE1sHq2qfPUFW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6bdfd184eac7709e5cc9@syzkaller.appspotmail.com,
-	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
-	Guillaume Nault <gnault@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/321] pppoe: Fix memory leak in pppoe_sendmsg()
-Date: Tue, 27 Aug 2024 16:36:09 +0200
-Message-ID: <20240827143840.560005336@linuxfoundation.org>
+Subject: [PATCH 6.1 062/321] wifi: mac80211: fix and simplify unencrypted drop check for mesh
+Date: Tue, 27 Aug 2024 16:36:10 +0200
+Message-ID: <20240827143840.597294089@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,83 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit dc34ebd5c018b0edf47f39d11083ad8312733034 ]
+[ Upstream commit 94b9b9de05b62ac54d8766caa9865fb4d82cc47e ]
 
-syzbot reports a memory leak in pppoe_sendmsg [1].
+ieee80211_drop_unencrypted is called from ieee80211_rx_h_mesh_fwding and
+ieee80211_frame_allowed.
 
-The problem is in the pppoe_recvmsg() function that handles errors
-in the wrong order. For the skb_recv_datagram() function, check
-the pointer to skb for NULL first, and then check the 'error' variable,
-because the skb_recv_datagram() function can set 'error'
-to -EAGAIN in a loop but return a correct pointer to socket buffer
-after a number of attempts, though 'error' remains set to -EAGAIN.
+Since ieee80211_rx_h_mesh_fwding can forward packets for other mesh nodes
+and is called earlier, it needs to check the decryptions status and if the
+packet is using the control protocol on its own, instead of deferring to
+the later call from ieee80211_frame_allowed.
 
-skb_recv_datagram
-      __skb_recv_datagram          // Loop. if (err == -EAGAIN) then
-                                   // go to the next loop iteration
-          __skb_try_recv_datagram  // if (skb != NULL) then return 'skb'
-                                   // else if a signal is received then
-                                   // return -EAGAIN
+Because of that, ieee80211_drop_unencrypted has a mesh specific check
+that skips over the mesh header in order to check the payload protocol.
+This code is invalid when called from ieee80211_frame_allowed, since that
+happens after the 802.11->802.3 conversion.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with Syzkaller.
+Fix this by moving the mesh specific check directly into
+ieee80211_rx_h_mesh_fwding.
 
-Link: https://syzkaller.appspot.com/bug?extid=6bdfd184eac7709e5cc9 [1]
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+6bdfd184eac7709e5cc9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6bdfd184eac7709e5cc9
-Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://lore.kernel.org/r/20240214085814.3894917-1-Ilia.Gavrilov@infotecs.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20221201135730.19723-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 9ad797485692 ("wifi: cfg80211: check A-MSDU format more carefully")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pppoe.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ net/mac80211/rx.c | 38 ++++++++++----------------------------
+ 1 file changed, 10 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
-index ce2cbb5903d7b..c6f44af35889d 100644
---- a/drivers/net/ppp/pppoe.c
-+++ b/drivers/net/ppp/pppoe.c
-@@ -1007,26 +1007,21 @@ static int pppoe_recvmsg(struct socket *sock, struct msghdr *m,
- 	struct sk_buff *skb;
- 	int error = 0;
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index c4c80037df91d..b68a9200403e7 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -2408,7 +2408,6 @@ static int ieee80211_802_1x_port_control(struct ieee80211_rx_data *rx)
  
--	if (sk->sk_state & PPPOX_BOUND) {
--		error = -EIO;
--		goto end;
+ static int ieee80211_drop_unencrypted(struct ieee80211_rx_data *rx, __le16 fc)
+ {
+-	struct ieee80211_hdr *hdr = (void *)rx->skb->data;
+ 	struct sk_buff *skb = rx->skb;
+ 	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(skb);
+ 
+@@ -2419,31 +2418,6 @@ static int ieee80211_drop_unencrypted(struct ieee80211_rx_data *rx, __le16 fc)
+ 	if (status->flag & RX_FLAG_DECRYPTED)
+ 		return 0;
+ 
+-	/* check mesh EAPOL frames first */
+-	if (unlikely(rx->sta && ieee80211_vif_is_mesh(&rx->sdata->vif) &&
+-		     ieee80211_is_data(fc))) {
+-		struct ieee80211s_hdr *mesh_hdr;
+-		u16 hdr_len = ieee80211_hdrlen(fc);
+-		u16 ethertype_offset;
+-		__be16 ethertype;
+-
+-		if (!ether_addr_equal(hdr->addr1, rx->sdata->vif.addr))
+-			goto drop_check;
+-
+-		/* make sure fixed part of mesh header is there, also checks skb len */
+-		if (!pskb_may_pull(rx->skb, hdr_len + 6))
+-			goto drop_check;
+-
+-		mesh_hdr = (struct ieee80211s_hdr *)(skb->data + hdr_len);
+-		ethertype_offset = hdr_len + ieee80211_get_mesh_hdrlen(mesh_hdr) +
+-				   sizeof(rfc1042_header);
+-
+-		if (skb_copy_bits(rx->skb, ethertype_offset, &ethertype, 2) == 0 &&
+-		    ethertype == rx->sdata->control_port_protocol)
+-			return 0;
 -	}
-+	if (sk->sk_state & PPPOX_BOUND)
-+		return -EIO;
+-
+-drop_check:
+ 	/* Drop unencrypted frames if key is set. */
+ 	if (unlikely(!ieee80211_has_protected(fc) &&
+ 		     !ieee80211_is_any_nullfunc(fc) &&
+@@ -2897,8 +2871,16 @@ ieee80211_rx_h_mesh_fwding(struct ieee80211_rx_data *rx)
+ 	hdr = (struct ieee80211_hdr *) skb->data;
+ 	mesh_hdr = (struct ieee80211s_hdr *) (skb->data + hdrlen);
  
- 	skb = skb_recv_datagram(sk, flags, &error);
--	if (error < 0)
--		goto end;
-+	if (!skb)
-+		return error;
+-	if (ieee80211_drop_unencrypted(rx, hdr->frame_control))
+-		return RX_DROP_MONITOR;
++	if (ieee80211_drop_unencrypted(rx, hdr->frame_control)) {
++		int offset = hdrlen + ieee80211_get_mesh_hdrlen(mesh_hdr) +
++			     sizeof(rfc1042_header);
++		__be16 ethertype;
++
++		if (!ether_addr_equal(hdr->addr1, rx->sdata->vif.addr) ||
++		    skb_copy_bits(rx->skb, offset, &ethertype, 2) != 0 ||
++		    ethertype != rx->sdata->control_port_protocol)
++			return RX_DROP_MONITOR;
++	}
  
--	if (skb) {
--		total_len = min_t(size_t, total_len, skb->len);
--		error = skb_copy_datagram_msg(skb, 0, m, total_len);
--		if (error == 0) {
--			consume_skb(skb);
--			return total_len;
--		}
-+	total_len = min_t(size_t, total_len, skb->len);
-+	error = skb_copy_datagram_msg(skb, 0, m, total_len);
-+	if (error == 0) {
-+		consume_skb(skb);
-+		return total_len;
- 	}
- 
- 	kfree_skb(skb);
--end:
- 	return error;
- }
- 
+ 	/* frame is in RMC, don't forward */
+ 	if (ieee80211_is_data(hdr->frame_control) &&
 -- 
 2.43.0
 
