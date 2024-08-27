@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6161C4EE2;
-	Tue, 27 Aug 2024 14:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8601494AC;
+	Tue, 27 Aug 2024 14:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769695; cv=none; b=GREVZcAjTMkatgjBNnt6+Q4VM70Q8/5Tte3EkuP09PbQfQlyUw4xYchMCsMTjtliEb9UjnZOVGlcxLAHU8WLmiRyCjIKYh9p756Lb0tENxMOfanx0VDeiQXWjqH7arIfaMyaHSDyy7Em4HrTsDHWtSRwyYOPqrHBXqMvf39Pm7c=
+	t=1724769698; cv=none; b=GejqQYSWbNusCx5AjUuOBWPAqIDzf7/EQA1aI5KE0lhb0xeKZVrwbeOQY7bmHU+yoSllJrjTBWP+bj6LJ9dByuRnUuybkJ4/SzGGsevDtvKwsDqSOCBHhtetPVbKJACUFM+qTHzCQ8HW/yQKBVKJo5oU0OhoWfSNp3VpyCGiq2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769695; c=relaxed/simple;
-	bh=ExHEnE6gqtWYnrlxe9U9sg22iLReDE9YP1uSm9hv30U=;
+	s=arc-20240116; t=1724769698; c=relaxed/simple;
+	bh=a70w3VvkHA3REk9KiobLXLu4EsHpONrPE2AjrdPpzDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFEPLpZBoKXq29EoM7ab4BKG+5RLbKz6O7Hm7dHbbKeO/Z4tXI8uj4ILm+NxUA2lLQL36vWs29wvAL0ALCKosXzuyDCqkhOQYRkEjNauBjl2C1S2Pxm3vB9bjtrYEVgRPJ0Q7GSuiAdqEwX7NiOULDXJ6wpW5/Jl7olasWjG3Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4BYEE9p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sja9bq6NZ9llETXlQyPlYB/8pj5OiRm2TnzmdqMamgmlU79vlualIqQn4JP7ZcKoFWTDDa5htL5ufedbX3juNxfolkD9YJkgkEj1EB3UKNamCXlR4XILsptB6Z/gBMtMdufXX7beHqu+pjNiKVUhC7i+2rYj8IMrEsZgSJzolBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjB2cUkn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4BYEE9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B773C6107F;
-	Tue, 27 Aug 2024 14:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjB2cUkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD866C6107F;
+	Tue, 27 Aug 2024 14:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769694;
-	bh=ExHEnE6gqtWYnrlxe9U9sg22iLReDE9YP1uSm9hv30U=;
+	s=korg; t=1724769698;
+	bh=a70w3VvkHA3REk9KiobLXLu4EsHpONrPE2AjrdPpzDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4BYEE9pTRrpkn+5jkTPPnLo3p1QI1i9Au721jOsJ1N5EEMWql27AqsAcyYD+WBEt
-	 aNXULCnpdO9OS6fDU/FJP/qXKZXv3TSmVdSCQqSzvHwlhQKXkwElBFpgF1d16EMR8w
-	 XBlmCE+8BnMKpqSijnjtdS2VmyepCGLAuO/TaeSs=
+	b=MjB2cUkn+pbfktXJl0Gr+G//kPuxAtpU6ND1W83v5cs4F4FbfJJVneaBha8LJs3WY
+	 pAswaBviilfIAOOAXl5+FYAsmFra79GAvi0rLaLp9iq7Mb1rFB9+5WSaHUop2/KKSw
+	 nmPaMOTF9xGc6EZBJCcsHHoF7IAbx/5okC76TUl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH 6.6 001/341] tty: serial: fsl_lpuart: mark last busy before uart_add_one_port
-Date: Tue, 27 Aug 2024 16:33:52 +0200
-Message-ID: <20240827143843.459430626@linuxfoundation.org>
+	Eli Billauer <eli.billauer@gmail.com>
+Subject: [PATCH 6.6 010/341] char: xillybus: Check USB endpoints when probing device
+Date: Tue, 27 Aug 2024 16:34:01 +0200
+Message-ID: <20240827143843.797468683@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,52 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Eli Billauer <eli.billauer@gmail.com>
 
-commit dc98d76a15bc29a9a4e76f2f65f39f3e590fb15c upstream.
+commit 2374bf7558de915edc6ec8cb10ec3291dfab9594 upstream.
 
-With "earlycon initcall_debug=1 loglevel=8" in bootargs, kernel
-sometimes boot hang. It is because normal console still is not ready,
-but runtime suspend is called, so early console putchar will hang
-in waiting TRDE set in UARTSTAT.
+Ensure, as the driver probes the device, that all endpoints that the
+driver may attempt to access exist and are of the correct type.
 
-The lpuart driver has auto suspend delay set to 3000ms, but during
-uart_add_one_port, a child device serial ctrl will added and probed with
-its pm runtime enabled(see serial_ctrl.c).
-The runtime suspend call path is:
-device_add
-     |-> bus_probe_device
-           |->device_initial_probe
-	           |->__device_attach
-                         |-> pm_runtime_get_sync(dev->parent);
-			 |-> pm_request_idle(dev);
-			 |-> pm_runtime_put(dev->parent);
+All XillyUSB devices must have a Bulk IN and Bulk OUT endpoint at
+address 1. This is verified in xillyusb_setup_base_eps().
 
-So in the end, before normal console ready, the lpuart get runtime
-suspended. And earlycon putchar will hang.
+On top of that, a XillyUSB device may have additional Bulk OUT
+endpoints. The information about these endpoints' addresses is deduced
+from a data structure (the IDT) that the driver fetches from the device
+while probing it. These endpoints are checked in setup_channels().
 
-To address the issue, mark last busy just after pm_runtime_enable,
-three seconds is long enough to switch from bootconsole to normal
-console.
+A XillyUSB device never has more than one IN endpoint, as all data
+towards the host is multiplexed in this single Bulk IN endpoint. This is
+why setup_channels() only checks OUT endpoints.
 
-Fixes: 43543e6f539b ("tty: serial: fsl_lpuart: Add runtime pm support")
+Reported-by: syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com
 Cc: stable <stable@kernel.org>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20240808140325.580105-1-peng.fan@oss.nxp.com
+Closes: https://lore.kernel.org/all/0000000000001d44a6061f7a54ee@google.com/T/
+Fixes: a53d1202aef1 ("char: xillybus: Add driver for XillyUSB (Xillybus variant for USB)").
+Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
+Link: https://lore.kernel.org/r/20240816070200.50695-2-eli.billauer@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/xillybus/xillyusb.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2930,6 +2930,7 @@ static int lpuart_probe(struct platform_
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, UART_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
-+	pm_runtime_mark_last_busy(&pdev->dev);
+--- a/drivers/char/xillybus/xillyusb.c
++++ b/drivers/char/xillybus/xillyusb.c
+@@ -1903,6 +1903,13 @@ static const struct file_operations xill
  
- 	ret = lpuart_global_reset(sport);
- 	if (ret)
+ static int xillyusb_setup_base_eps(struct xillyusb_dev *xdev)
+ {
++	struct usb_device *udev = xdev->udev;
++
++	/* Verify that device has the two fundamental bulk in/out endpoints */
++	if (usb_pipe_type_check(udev, usb_sndbulkpipe(udev, MSG_EP_NUM)) ||
++	    usb_pipe_type_check(udev, usb_rcvbulkpipe(udev, IN_EP_NUM)))
++		return -ENODEV;
++
+ 	xdev->msg_ep = endpoint_alloc(xdev, MSG_EP_NUM | USB_DIR_OUT,
+ 				      bulk_out_work, 1, 2);
+ 	if (!xdev->msg_ep)
+@@ -1932,14 +1939,15 @@ static int setup_channels(struct xillyus
+ 			  __le16 *chandesc,
+ 			  int num_channels)
+ {
+-	struct xillyusb_channel *chan;
++	struct usb_device *udev = xdev->udev;
++	struct xillyusb_channel *chan, *new_channels;
+ 	int i;
+ 
+ 	chan = kcalloc(num_channels, sizeof(*chan), GFP_KERNEL);
+ 	if (!chan)
+ 		return -ENOMEM;
+ 
+-	xdev->channels = chan;
++	new_channels = chan;
+ 
+ 	for (i = 0; i < num_channels; i++, chan++) {
+ 		unsigned int in_desc = le16_to_cpu(*chandesc++);
+@@ -1968,6 +1976,15 @@ static int setup_channels(struct xillyus
+ 		 */
+ 
+ 		if ((out_desc & 0x80) && i < 14) { /* Entry is valid */
++			if (usb_pipe_type_check(udev,
++						usb_sndbulkpipe(udev, i + 2))) {
++				dev_err(xdev->dev,
++					"Missing BULK OUT endpoint %d\n",
++					i + 2);
++				kfree(new_channels);
++				return -ENODEV;
++			}
++
+ 			chan->writable = 1;
+ 			chan->out_synchronous = !!(out_desc & 0x40);
+ 			chan->out_seekable = !!(out_desc & 0x20);
+@@ -1977,6 +1994,7 @@ static int setup_channels(struct xillyus
+ 		}
+ 	}
+ 
++	xdev->channels = new_channels;
+ 	return 0;
+ }
+ 
 
 
