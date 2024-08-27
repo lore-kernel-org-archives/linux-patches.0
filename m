@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4646B1C4ED4;
-	Tue, 27 Aug 2024 15:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D471BC9E3;
+	Tue, 27 Aug 2024 15:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771548; cv=none; b=PKNDw198iNUfKUwHLerlTHyJwsAYz/cz6S3ZLvMwv+d9fVBORBAH4zlbWY1QKHpIiH1ATkBzngksbC3ZB0p985BnxUI+RTbOr6zTdLZBRc0JnuiTaYWs0WmBuvz73HNCG3DgKwbGnylTX6D0KO5w+YOQY6It+aC605CZqQC0VNo=
+	t=1724771551; cv=none; b=MsMPde5rNRuXGxSSKL7k5GXiDIgvWQyHMQmNUzXVxu86+0Ulzue62gFregW7gzVz7LCC0mcA+r+3zE914AR6EdGST18xrRiVQC3UBNbt32HfS3fpT5tvtzt4n3ZlBQSaqaKM/sLJAoyGMeN+Uq6Y823127itWwJAYNp8i+FBMZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771548; c=relaxed/simple;
-	bh=bCsV9W7Qr7s2XhCouGwJXm4ytRRDCZE0vWvWt/xmQr4=;
+	s=arc-20240116; t=1724771551; c=relaxed/simple;
+	bh=y4uJCYzgPyY4CvCJs05ZoSEbXUwT1hSiMDKPWkgY0dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnyYY63q495gzumsKmgDqHaZypTuwUZpD93j0cgC8x9XICC7E8cykmyEGuXkhNEc8PzLUjhwTs7sLF6eQE0rGhcSaZb/xNF4cRn+kjc3W1MvKlm1l04utC6ZMMG2CIk9BcDdMZs7lcjGyRIekn1gtvPUSEvbqYDpjr4FiOFnjVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Sw9c56H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmX64Dw59Oi8yHfaUKRHRIEm+4oNNRp0kGsyp8mSga7GtD1/DDQAgrbvBAogGKJkohlfQKf+e9xbdey9Y7NVT/s8Xu1dfwnh4vntxiehwE8BmPCy6Mun4M7vXqDqh7ymTJ9TOaakQXFimzW9qr75HX6E6O5zC3BlixrZZE9UuBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=figUWUO9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Sw9c56H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C165CC61042;
-	Tue, 27 Aug 2024 15:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="figUWUO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132D6C61042;
+	Tue, 27 Aug 2024 15:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771548;
-	bh=bCsV9W7Qr7s2XhCouGwJXm4ytRRDCZE0vWvWt/xmQr4=;
+	s=korg; t=1724771551;
+	bh=y4uJCYzgPyY4CvCJs05ZoSEbXUwT1hSiMDKPWkgY0dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Sw9c56HNJeP7lJXgpF+//+xbNcHv9eT8Srb08rmwyiokeveqbuuYSuMZ0zq2PRA2
-	 2v525MXFwoMX6YXOcEpvvnUBVFOYk9DbMRp+/W7gv98NQnn318cPCkJ+PPK8GqZQd+
-	 rroRmqfHlzzo7yGG33f4IPiLeRCRzOYkDu3LL06A=
+	b=figUWUO9vXt2/yw0KeSUiy5hOGYqsAKEHaj7jo7fN6Ae5/uYZwUW/Vp1KOFAg6l/t
+	 WmY1bKlymPQKBAY/alFwPNTJRTrf2nxMeB+V73/eVEqwKCnymBaLfYa25moYYa6dBA
+	 N+2YC3ITOYqngJLYGyW4X2lZSE3ASaAJ7DwdvRE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc <1marc1@gmail.com>,
-	"Anthony Nandaa (Microsoft)" <profnandaa@gmail.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Mark ODonovan <shiftee@posteo.net>,
+	Changhui Zhong <czhong@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Ming Lei <ming.lei@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 221/273] smb: client: ignore unhandled reparse tags
-Date: Tue, 27 Aug 2024 16:39:05 +0200
-Message-ID: <20240827143841.816554040@linuxfoundation.org>
+Subject: [PATCH 6.10 222/273] nvme: move stopping keep-alive into nvme_uninit_ctrl()
+Date: Tue, 27 Aug 2024 16:39:06 +0200
+Message-ID: <20240827143841.853911982@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,55 +56,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit ec686804117a0421cf31d54427768aaf93aa0069 ]
+[ Upstream commit a54a93d0e3599b05856971734e15418ac551a14c ]
 
-Just ignore reparse points that the client can't parse rather than
-bailing out and not opening the file or directory.
+Commit 4733b65d82bd ("nvme: start keep-alive after admin queue setup")
+moves starting keep-alive from nvme_start_ctrl() into
+nvme_init_ctrl_finish(), but don't move stopping keep-alive into
+nvme_uninit_ctrl(), so keep-alive work can be started and keep pending
+after failing to start controller, finally use-after-free is triggered if
+nvme host driver is unloaded.
 
-Reported-by: Marc <1marc1@gmail.com>
-Closes: https://lore.kernel.org/r/CAMHwNVv-B+Q6wa0FEXrAuzdchzcJRsPKDDRrNaYZJd6X-+iJzw@mail.gmail.com
-Fixes: 539aad7f14da ("smb: client: introduce ->parse_reparse_point()")
-Tested-by: Anthony Nandaa (Microsoft) <profnandaa@gmail.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This patch fixes kernel panic when running nvme/004 in case that connection
+failure is triggered, by moving stopping keep-alive into nvme_uninit_ctrl().
+
+This way is reasonable because keep-alive is now started in
+nvme_init_ctrl_finish().
+
+Fixes: 3af755a46881 ("nvme: move nvme_stop_keep_alive() back to original position")
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Mark O'Donovan <shiftee@posteo.net>
+Reported-by: Changhui Zhong <czhong@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 689d8a506d459..48c27581ec511 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -378,6 +378,8 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 			u32 plen, struct cifs_sb_info *cifs_sb,
- 			bool unicode, struct cifs_open_info_data *data)
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 782090ce0bc10..d973d063bbf50 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4522,7 +4522,6 @@ void nvme_stop_ctrl(struct nvme_ctrl *ctrl)
  {
-+	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
-+
- 	data->reparse.buf = buf;
+ 	nvme_mpath_stop(ctrl);
+ 	nvme_auth_stop(ctrl);
+-	nvme_stop_keep_alive(ctrl);
+ 	nvme_stop_failfast_work(ctrl);
+ 	flush_work(&ctrl->async_event_work);
+ 	cancel_work_sync(&ctrl->fw_act_work);
+@@ -4558,6 +4557,7 @@ EXPORT_SYMBOL_GPL(nvme_start_ctrl);
  
- 	/* See MS-FSCC 2.1.2 */
-@@ -394,12 +396,13 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 	case IO_REPARSE_TAG_LX_FIFO:
- 	case IO_REPARSE_TAG_LX_CHR:
- 	case IO_REPARSE_TAG_LX_BLK:
--		return 0;
-+		break;
- 	default:
--		cifs_dbg(VFS, "%s: unhandled reparse tag: 0x%08x\n",
--			 __func__, le32_to_cpu(buf->ReparseTag));
--		return -EOPNOTSUPP;
-+		cifs_tcon_dbg(VFS | ONCE, "unhandled reparse tag: 0x%08x\n",
-+			      le32_to_cpu(buf->ReparseTag));
-+		break;
- 	}
-+	return 0;
- }
- 
- int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
+ void nvme_uninit_ctrl(struct nvme_ctrl *ctrl)
+ {
++	nvme_stop_keep_alive(ctrl);
+ 	nvme_hwmon_exit(ctrl);
+ 	nvme_fault_inject_fini(&ctrl->fault_inject);
+ 	dev_pm_qos_hide_latency_tolerance(ctrl->device);
 -- 
 2.43.0
 
