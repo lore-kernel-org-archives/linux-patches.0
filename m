@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E491BC073;
-	Tue, 27 Aug 2024 15:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF2E1C57A0;
+	Tue, 27 Aug 2024 15:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771813; cv=none; b=Hd0Y6z5Pv1GHexi2tt0vXL4iZvMiK+09vQW3V07OAFBKry63Kf8LHzvtZHidDvjgQbYVUX0lTell5TvDvaHlvI/2q5z3PfvA0TLggPr4OkQeorO26Xau5QGhIJFkD6Sd7EXMwZkSHHJqa+PQx8L/e30b2marYvB/KFmqG8n04oU=
+	t=1724771817; cv=none; b=lhuEjZGy2PJbK3XWhGsaNSEJTo4TvcMhhiUHHClv7GyPdyDxje1GUd16nT6QUF+i/ifn9li1zpPnHMmRXv1EaIBqKHVq+A+cZwxyn7USYuslQWaStvz+sm0wr4h8cmPip/PoR6dYJH0QTqS8miv7BLBtdCLUaU9M3ATbXhLR8T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771813; c=relaxed/simple;
-	bh=cd/AVjZ49/6TZHlnk2zoCT2Tb1xmRVCWFGdo2fU0aNQ=;
+	s=arc-20240116; t=1724771817; c=relaxed/simple;
+	bh=UP/AzkAM6aCAVFgvER3BCA2HP/uyACkM8mCjg9SLEwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drtqyg+xetsxVtaWsscoglt/6XfJK4mEGrkGecF28RL+eSiPUthHic+6cwAz9Vf3FXe66cK1RWv4SJYJI39jOTmWci6jTNpD44ryaNFyTIz4zvFeVbfE2GQzaZkq7gSrgdsuCJf11SWQe7Jx3VigElZafpvVxc+K8amU3lDymIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAQnbJR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTZpiVTbH6aIVzxAiXcFx2WBQeGVvE9hQ68S91fhWhjS6+PNmaWewKlKW1WL0inOXYas9SWJKbjplDKeyBU9qUYwS7mZ3BrYt1cWLxHCccfMKdO1WPz9ib2TjlzdDJxMb4VI0RoWOFBjP+Y5uSo/t3Eo/6U8IeT/87cxY8p/VS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzwub8p2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAQnbJR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF474C4DE1F;
-	Tue, 27 Aug 2024 15:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzwub8p2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BC6C4DE1D;
+	Tue, 27 Aug 2024 15:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771813;
-	bh=cd/AVjZ49/6TZHlnk2zoCT2Tb1xmRVCWFGdo2fU0aNQ=;
+	s=korg; t=1724771816;
+	bh=UP/AzkAM6aCAVFgvER3BCA2HP/uyACkM8mCjg9SLEwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAQnbJR9RDMPR/b3kAdRZjckit/e1H2U2w9cdQrobQ6ggo5b4yw86qpBxAMoWXQ51
-	 VEIkNB/jNa1uaU7VAYM2z703JMIGc9bCoc7H8a1LLwaVPmhBdznmbWfzpJcc3ESmrd
-	 tZaVgvmKS/RHvwvRaU0bHI3PKQH6871rQROGtKUM=
+	b=mzwub8p2ULWvsoMdqD9svK8qfQFl3t3nhBJuOVZaoaEgyypU9fjHmsUU2RA9S50UY
+	 4go9BFZlK97aCrEKndZqX4IZvnk+yo04/OcBkWsFxRGlZ7PjysFBemLRyY3jAHBIfX
+	 HzRRDMC1wxGgWDZIDP6obF7Yy0FmFJ+Lmkc8YtN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 028/321] drm/amdgpu: Actually check flags for all context ops.
-Date: Tue, 27 Aug 2024 16:35:36 +0200
-Message-ID: <20240827143839.287780840@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.1 029/321] memcg_write_event_control(): fix a user-triggerable oops
+Date: Tue, 27 Aug 2024 16:35:37 +0200
+Message-ID: <20240827143839.325890308@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 0573a1e2ea7e35bff08944a40f1adf2bb35cea61 upstream.
+commit 046667c4d3196938e992fba0dfcde570aa85cd0e upstream.
 
-Missing validation ...
+we are *not* guaranteed that anything past the terminating NUL
+is mapped (let alone initialized with anything sane).
 
-Checked libdrm and it clears all the structs, so we should be
-safe to just check everything.
-
-Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c6b86421f1f9ddf9d706f2453159813ee39d0cf9)
+Fixes: 0dea116876ee ("cgroup: implement eventfd-based generic API for notifications")
 Cc: stable@vger.kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ mm/memcontrol.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-@@ -656,16 +656,24 @@ int amdgpu_ctx_ioctl(struct drm_device *
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4857,9 +4857,12 @@ static ssize_t memcg_write_event_control
+ 	buf = endp + 1;
  
- 	switch (args->in.op) {
- 	case AMDGPU_CTX_OP_ALLOC_CTX:
-+		if (args->in.flags)
-+			return -EINVAL;
- 		r = amdgpu_ctx_alloc(adev, fpriv, filp, priority, &id);
- 		args->out.alloc.ctx_id = id;
- 		break;
- 	case AMDGPU_CTX_OP_FREE_CTX:
-+		if (args->in.flags)
-+			return -EINVAL;
- 		r = amdgpu_ctx_free(fpriv, id);
- 		break;
- 	case AMDGPU_CTX_OP_QUERY_STATE:
-+		if (args->in.flags)
-+			return -EINVAL;
- 		r = amdgpu_ctx_query(adev, fpriv, id, &args->out);
- 		break;
- 	case AMDGPU_CTX_OP_QUERY_STATE2:
-+		if (args->in.flags)
-+			return -EINVAL;
- 		r = amdgpu_ctx_query2(adev, fpriv, id, &args->out);
- 		break;
- 	case AMDGPU_CTX_OP_GET_STABLE_PSTATE:
+ 	cfd = simple_strtoul(buf, &endp, 10);
+-	if ((*endp != ' ') && (*endp != '\0'))
++	if (*endp == '\0')
++		buf = endp;
++	else if (*endp == ' ')
++		buf = endp + 1;
++	else
+ 		return -EINVAL;
+-	buf = endp + 1;
+ 
+ 	event = kzalloc(sizeof(*event), GFP_KERNEL);
+ 	if (!event)
 
 
