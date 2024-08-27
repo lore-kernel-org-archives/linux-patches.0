@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824F61C6F76;
-	Tue, 27 Aug 2024 15:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0C01C6F47;
+	Tue, 27 Aug 2024 15:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770896; cv=none; b=ReZ/gF/fLUkCpyeJ89JN/G/rRBYPQiSVZIVfEllFlAUedTy1mM+CeyiQ1cqM4ccfS+IQZAQKYtpa1+dIbW4B4SXuqgoKQqTyN/3xdC/fubhwBkR2u+MJUr7NPfpE2HTfS/XaK+LP12uZvnt3Yvg0mD5B8kVqF8bP8XXB1QxeQo0=
+	t=1724770899; cv=none; b=g+6N0aaeohYYOoRyDiglqvoIpp3bu3FWqdKdQXpsUkfDXV85Pq2901x8z/hEbJtJhcoNvWrMTys0RZ6JYV2FZSHsfE3k5jjxYemE6KyNRNnXER0IBNrGXLqLKEkRYVM9p5OTOfga4LpLjNoOF5iWL/QANxAnrM0lVPSZXM6VI1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770896; c=relaxed/simple;
-	bh=rbDQzMb8H5X+vCwv8rsMkcoLBa+kCPMgY9agJZa/068=;
+	s=arc-20240116; t=1724770899; c=relaxed/simple;
+	bh=8hB33dh6H/HYlwMHO3FhwT3ZxfMKMg5PTn/UVBXWK9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDHtghrbxVpb9eyw/K6TADYjt3chYBjtOpxswiyHg2PZ33BEkdyztG29WPLZR3cbQu1+IVV+OkjjQI2ymdYa81JDJvzr4vE9MY0k7kwX9B2j3Gg4BFHZFnmy71RIbpuF1c9i1TkpA/IPz+qT/rKEk/7u9k3NWJ+BtGdezbnnBD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMiQDSOC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tSGDt//AJRO5E3nk2tsO4vvehLUcLMrT5PFKQFdU+TSqpChBgMGFSPB+S8DnUiR2Q6YLHgbYHErJHpMFX9yOfAQ+RnE32AwOQ2WrBv5OZ2BhRr2dUISGrpLZWfWKMKZfgj1fwJhzWRDefP93MvOGD82Mm3zg6BD/7QqYb3/b+TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VtSldgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMiQDSOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03606C4DDEF;
-	Tue, 27 Aug 2024 15:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VtSldgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09650C4AF1C;
+	Tue, 27 Aug 2024 15:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770896;
-	bh=rbDQzMb8H5X+vCwv8rsMkcoLBa+kCPMgY9agJZa/068=;
+	s=korg; t=1724770899;
+	bh=8hB33dh6H/HYlwMHO3FhwT3ZxfMKMg5PTn/UVBXWK9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMiQDSOCgVIoquMnf5AZrUUKQh9Gpo92o/lcveiGdwekpeMT6IkwWQJDSAMetW9gQ
-	 BCEtdAPtRVQ5LKwnIjWoYvc/El8TNATbnUzVmHQW8ccx6hB70X1/zZNyf+Ucx7B0jK
-	 aUmYl9LkXHkcaMwSrF8iFsNNcl++y+oteMNFV98E=
+	b=2VtSldgOKPfTa3iF4Pq5kE7XcsBToD92HgLI4CxwuBCzAtFEbL5Dd3siRHHmitEhb
+	 ql5Zkc2Fkgs67oJQdm12CarB23g634/8fKThZpCI+0s8Z1tTRmAId/IhWOep++bWVc
+	 rSunpdNNwm+YjcDQH4fR6RcZeWmW4hv0d4fcHLJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Weinberger <richard@nod.at>,
-	kernel test robot <lkp@intel.com>,
 	David Gstir <david@sigma-star.at>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.10 025/273] KEYS: trusted: fix DCP blob payload length assignment
-Date: Tue, 27 Aug 2024 16:35:49 +0200
-Message-ID: <20240827143834.347793319@linuxfoundation.org>
+Subject: [PATCH 6.10 026/273] KEYS: trusted: dcp: fix leak of blob encryption key
+Date: Tue, 27 Aug 2024 16:35:50 +0200
+Message-ID: <20240827143834.386892058@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -54,40 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 From: David Gstir <david@sigma-star.at>
 
-commit 6486cad00a8b7f8585983408c152bbe33dda529b upstream.
+commit 0e28bf61a5f9ab30be3f3b4eafb8d097e39446bb upstream.
 
-The DCP trusted key type uses the wrong helper function to store
-the blob's payload length which can lead to the wrong byte order
-being used in case this would ever run on big endian architectures.
+Trusted keys unseal the key blob on load, but keep the sealed payload in
+the blob field so that every subsequent read (export) will simply
+convert this field to hex and send it to userspace.
 
-Fix by using correct helper function.
+With DCP-based trusted keys, we decrypt the blob encryption key (BEK)
+in the Kernel due hardware limitations and then decrypt the blob payload.
+BEK decryption is done in-place which means that the trusted key blob
+field is modified and it consequently holds the BEK in plain text.
+Every subsequent read of that key thus send the plain text BEK instead
+of the encrypted BEK to userspace.
+
+This issue only occurs when importing a trusted DCP-based key and
+then exporting it again. This should rarely happen as the common use cases
+are to either create a new trusted key and export it, or import a key
+blob and then just use it without exporting it again.
+
+Fix this by performing BEK decryption and encryption in a dedicated
+buffer. Further always wipe the plain text BEK buffer to prevent leaking
+the key via uninitialized memory.
 
 Cc: stable@vger.kernel.org # v6.10+
 Fixes: 2e8a0f40a39c ("KEYS: trusted: Introduce NXP DCP-backed trusted keys")
-Suggested-by: Richard Weinberger <richard@nod.at>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202405240610.fj53EK0q-lkp@intel.com/
 Signed-off-by: David Gstir <david@sigma-star.at>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_dcp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/keys/trusted-keys/trusted_dcp.c | 33 +++++++++++++++---------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
 diff --git a/security/keys/trusted-keys/trusted_dcp.c b/security/keys/trusted-keys/trusted_dcp.c
-index b5f81a05be36..b0947f072a98 100644
+index b0947f072a98..4edc5bbbcda3 100644
 --- a/security/keys/trusted-keys/trusted_dcp.c
 +++ b/security/keys/trusted-keys/trusted_dcp.c
-@@ -222,7 +222,7 @@ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
- 		return ret;
+@@ -186,20 +186,21 @@ static int do_aead_crypto(u8 *in, u8 *out, size_t len, u8 *key, u8 *nonce,
+ 	return ret;
+ }
+ 
+-static int decrypt_blob_key(u8 *key)
++static int decrypt_blob_key(u8 *encrypted_key, u8 *plain_key)
+ {
+-	return do_dcp_crypto(key, key, false);
++	return do_dcp_crypto(encrypted_key, plain_key, false);
+ }
+ 
+-static int encrypt_blob_key(u8 *key)
++static int encrypt_blob_key(u8 *plain_key, u8 *encrypted_key)
+ {
+-	return do_dcp_crypto(key, key, true);
++	return do_dcp_crypto(plain_key, encrypted_key, true);
+ }
+ 
+ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
+ {
+ 	struct dcp_blob_fmt *b = (struct dcp_blob_fmt *)p->blob;
+ 	int blen, ret;
++	u8 plain_blob_key[AES_KEYSIZE_128];
+ 
+ 	blen = calc_blob_len(p->key_len);
+ 	if (blen > MAX_BLOB_SIZE)
+@@ -207,30 +208,36 @@ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
+ 
+ 	b->fmt_version = DCP_BLOB_VERSION;
+ 	get_random_bytes(b->nonce, AES_KEYSIZE_128);
+-	get_random_bytes(b->blob_key, AES_KEYSIZE_128);
++	get_random_bytes(plain_blob_key, AES_KEYSIZE_128);
+ 
+-	ret = do_aead_crypto(p->key, b->payload, p->key_len, b->blob_key,
++	ret = do_aead_crypto(p->key, b->payload, p->key_len, plain_blob_key,
+ 			     b->nonce, true);
+ 	if (ret) {
+ 		pr_err("Unable to encrypt blob payload: %i\n", ret);
+-		return ret;
++		goto out;
  	}
  
--	b->payload_len = get_unaligned_le32(&p->key_len);
-+	put_unaligned_le32(p->key_len, &b->payload_len);
+-	ret = encrypt_blob_key(b->blob_key);
++	ret = encrypt_blob_key(plain_blob_key, b->blob_key);
+ 	if (ret) {
+ 		pr_err("Unable to encrypt blob key: %i\n", ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	put_unaligned_le32(p->key_len, &b->payload_len);
  	p->blob_len = blen;
- 	return 0;
+-	return 0;
++	ret = 0;
++
++out:
++	memzero_explicit(plain_blob_key, sizeof(plain_blob_key));
++
++	return ret;
  }
+ 
+ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ {
+ 	struct dcp_blob_fmt *b = (struct dcp_blob_fmt *)p->blob;
+ 	int blen, ret;
++	u8 plain_blob_key[AES_KEYSIZE_128];
+ 
+ 	if (b->fmt_version != DCP_BLOB_VERSION) {
+ 		pr_err("DCP blob has bad version: %i, expected %i\n",
+@@ -248,14 +255,14 @@ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ 		goto out;
+ 	}
+ 
+-	ret = decrypt_blob_key(b->blob_key);
++	ret = decrypt_blob_key(b->blob_key, plain_blob_key);
+ 	if (ret) {
+ 		pr_err("Unable to decrypt blob key: %i\n", ret);
+ 		goto out;
+ 	}
+ 
+ 	ret = do_aead_crypto(b->payload, p->key, p->key_len + DCP_BLOB_AUTHLEN,
+-			     b->blob_key, b->nonce, false);
++			     plain_blob_key, b->nonce, false);
+ 	if (ret) {
+ 		pr_err("Unwrap of DCP payload failed: %i\n", ret);
+ 		goto out;
+@@ -263,6 +270,8 @@ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ 
+ 	ret = 0;
+ out:
++	memzero_explicit(plain_blob_key, sizeof(plain_blob_key));
++
+ 	return ret;
+ }
+ 
 -- 
 2.46.0
 
