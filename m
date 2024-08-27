@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09461CE701;
-	Tue, 27 Aug 2024 15:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1041C6F65;
+	Tue, 27 Aug 2024 15:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771851; cv=none; b=I2D+lWCb5cMGY1pVcWlKOD9S2YzSwe8QoGmQc7oQcNmu8K0SZW01UJB5pE0dXwKo2um+aPzPeLZuGkydOhDxjHfCs9A22Wkr3sCpCL6oCE/s/4q/OcbgORV5V533kxvebQ4gr3Xx7HX1ZtMU1z03dqDQCy56FLTPfP5QG/xBC3o=
+	t=1724771854; cv=none; b=LUf9+4M3QgQ1Y1Rz8WxGbXHBM4y4zdsMRD5KdlY4MK7gfvfIwjLXv1qHm+52NdcPrrmI8uIEIMaVGNDvYgBSuxRuWVkf7xhZ8iAULli6gMIQJnK6zOZNQqOzC1GFtQSGgEbi73SN/aLyz+31Zg0O/Z29aqzDBLoBy5kbmVnmrW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771851; c=relaxed/simple;
-	bh=jmRx+2VgslOmfNRh5XvIAkvPJY0V3pZQH9U8h4cfPDM=;
+	s=arc-20240116; t=1724771854; c=relaxed/simple;
+	bh=A1UGIdtskHirueZ2AkZUieyBWTPngsvdlvxaOrNwCrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jWyPoW6M4l9J/Oh6uPgdmthHSqWF5ci3YmaYv4QmjjUOx7SYwIXs3RXpG1gJCpNqPUQROr5mPA1br3gOvzx0EyGNQAm2cyCcJwW1Hws5W6d/uMeFedzm4/0G/xmZ9GoRhUt7cvYAz06G1/ASi01pO7xITXuUISraVIRE9H+FkIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=locIy7iW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3rSZ5xM5+zbHI2sFPiObmrTrsjHn4NSvnDFexnMv68HE6NIZb6pZgLpz037MCZBmcKDJ1d5+4EiAw5SD6BScMuYwiwjji9VHzrFnW+p4Im10VYGpOMDrBo/kW8cKgnR4aBQ/H4gYXVNFoe3y9/SyUEU5msSCJMKWlXXyFpp2zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdfm+abX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="locIy7iW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4275AC61068;
-	Tue, 27 Aug 2024 15:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdfm+abX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C319C61040;
+	Tue, 27 Aug 2024 15:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771850;
-	bh=jmRx+2VgslOmfNRh5XvIAkvPJY0V3pZQH9U8h4cfPDM=;
+	s=korg; t=1724771854;
+	bh=A1UGIdtskHirueZ2AkZUieyBWTPngsvdlvxaOrNwCrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=locIy7iWSq0Fqq0bgznl4foLOfUcfDclX93vVlbB59YI4YAGuBjVSHSfZ812sil9I
-	 eFlisxopzIlsPfHn9xK3SSUJWk28kBwv3+nDGtFS97gBIMQEy4tiCtXFZuPYdxIBnA
-	 wG5pp6hTgp3GZQxANjalacgubWxDEL/jDFTnV2cI=
+	b=bdfm+abXMqW4DsXVdr4tJnV0xQO3jW4DIIbQb+yvGXaod8ZuHMdKmXV/2VeoKsl40
+	 nQLZKVLQyqV9YxuATTkEwhwNopfcr1EGhkb/yrtynWzQyfkfZJuoHD+wXy1Lzmu/hv
+	 wrSO10oAplkcxwqgvoncgUxotA+FkNyfqGBiLvXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Jeff Xu <jeffxu@google.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Daniel Verkamp <dverkamp@chromium.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	syzbot+ac3b41786a2d0565b6d5@syzkaller.appspotmail.com,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/321] bpf: Fix updating attached freplace prog in prog_array map
-Date: Tue, 27 Aug 2024 16:35:40 +0200
-Message-ID: <20240827143839.441232641@linuxfoundation.org>
+Subject: [PATCH 6.1 041/321] pid: Replace struct pid 1-element array with flex-array
+Date: Tue, 27 Aug 2024 16:35:49 +0200
+Message-ID: <20240827143839.790192652@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -48,63 +56,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit fdad456cbcca739bae1849549c7a999857c56f88 ]
+[ Upstream commit b69f0aeb068980af983d399deafc7477cec8bc04 ]
 
-The commit f7866c358733 ("bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT")
-fixed a NULL pointer dereference panic, but didn't fix the issue that
-fails to update attached freplace prog to prog_array map.
+For pid namespaces, struct pid uses a dynamically sized array member,
+"numbers".  This was implemented using the ancient 1-element fake
+flexible array, which has been deprecated for decades.
 
-Since commit 1c123c567fb1 ("bpf: Resolve fext program type when checking map compatibility"),
-freplace prog and its target prog are able to tail call each other.
+Replace it with a C99 flexible array, refactor the array size
+calculations to use struct_size(), and address elements via indexes.
+Note that the static initializer (which defines a single element) works
+as-is, and requires no special handling.
 
-And the commit 3aac1ead5eb6 ("bpf: Move prog->aux->linked_prog and trampoline into bpf_link on attach")
-sets prog->aux->dst_prog as NULL after attaching freplace prog to its
-target prog.
+Without this, CONFIG_UBSAN_BOUNDS (and potentially
+CONFIG_FORTIFY_SOURCE) will trigger bounds checks:
 
-After loading freplace the prog_array's owner type is BPF_PROG_TYPE_SCHED_CLS.
-Then, after attaching freplace its prog->aux->dst_prog is NULL.
-Then, while updating freplace in prog_array the bpf_prog_map_compatible()
-incorrectly returns false because resolve_prog_type() returns
-BPF_PROG_TYPE_EXT instead of BPF_PROG_TYPE_SCHED_CLS.
-After this patch the resolve_prog_type() returns BPF_PROG_TYPE_SCHED_CLS
-and update to prog_array can succeed.
+  https://lore.kernel.org/lkml/20230517-bushaltestelle-super-e223978c1ba6@brauner
 
-Fixes: f7866c358733 ("bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT")
-Cc: Toke Høiland-Jørgensen <toke@redhat.com>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/r/20240728114612.48486-2-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jeff Xu <jeffxu@google.com>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Daniel Verkamp <dverkamp@chromium.org>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Jeff Xu <jeffxu@google.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Reported-by: syzbot+ac3b41786a2d0565b6d5@syzkaller.appspotmail.com
+[brauner: dropped unrelated changes and remove 0 with NULL cast]
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/pid.h    | 2 +-
+ kernel/pid.c           | 7 +++++--
+ kernel/pid_namespace.c | 2 +-
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 6a524c5462a6f..131adc98080b8 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -645,8 +645,8 @@ static inline u32 type_flag(u32 type)
- /* only use after check_attach_btf_id() */
- static inline enum bpf_prog_type resolve_prog_type(const struct bpf_prog *prog)
- {
--	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->dst_prog) ?
--		prog->aux->dst_prog->type : prog->type;
-+	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->saved_dst_prog_type) ?
-+		prog->aux->saved_dst_prog_type : prog->type;
+diff --git a/include/linux/pid.h b/include/linux/pid.h
+index 343abf22092e6..bf3af54de6165 100644
+--- a/include/linux/pid.h
++++ b/include/linux/pid.h
+@@ -67,7 +67,7 @@ struct pid
+ 	/* wait queue for pidfd notifications */
+ 	wait_queue_head_t wait_pidfd;
+ 	struct rcu_head rcu;
+-	struct upid numbers[1];
++	struct upid numbers[];
+ };
+ 
+ extern struct pid init_struct_pid;
+diff --git a/kernel/pid.c b/kernel/pid.c
+index 3fbc5e46b7217..74834c04a0818 100644
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -661,8 +661,11 @@ void __init pid_idr_init(void)
+ 
+ 	idr_init(&init_pid_ns.idr);
+ 
+-	init_pid_ns.pid_cachep = KMEM_CACHE(pid,
+-			SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT);
++	init_pid_ns.pid_cachep = kmem_cache_create("pid",
++			struct_size((struct pid *)NULL, numbers, 1),
++			__alignof__(struct pid),
++			SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT,
++			NULL);
  }
  
- static inline bool bpf_prog_check_recur(const struct bpf_prog *prog)
+ static struct file *__pidfd_fget(struct task_struct *task, int fd)
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index 1daadbefcee3a..a575fabf697eb 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -47,7 +47,7 @@ static struct kmem_cache *create_pid_cachep(unsigned int level)
+ 		return kc;
+ 
+ 	snprintf(name, sizeof(name), "pid_%u", level + 1);
+-	len = sizeof(struct pid) + level * sizeof(struct upid);
++	len = struct_size((struct pid *)NULL, numbers, level + 1);
+ 	mutex_lock(&pid_caches_mutex);
+ 	/* Name collision forces to do allocation under mutex. */
+ 	if (!*pkc)
 -- 
 2.43.0
 
