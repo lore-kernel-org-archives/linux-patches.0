@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382C31BC9E3;
-	Tue, 27 Aug 2024 15:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240801C3F19;
+	Tue, 27 Aug 2024 15:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771129; cv=none; b=fR9OoI5Vl50l+W3wAn+JlmV+Eh5CsXKwMxhiiaH8UAffPrNxQ7Wt5MOoknGgZe92ovOO1hOA29caproXRhu5g8wDb0omOWm5izhL1DgT6zz/kcNDORMzO1cexSqOuqCfd4y/Tk2QZeSfFkdOQnzpGMtLx4K9JOYu9v3gs3r/0g8=
+	t=1724771132; cv=none; b=dQU+1ZFWpGUterMAgKrEFb4wjo4FUnlYXqip5+syhOXNFnPwh6kuvl96chpiJHiLqMd6rJoPD4KwcXJ8Q7kPDQF8XLWHFC0Ce8fj4ChOrn+FyK8nGTH4xaVzpHghlcaORZwoFBNNqwnCBTRvIXGQoZlGHoXazVqgSBj5+3j1HIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771129; c=relaxed/simple;
-	bh=RPkQulpKIYakRivXehERTB1OyNiWTuDvySgvcsq1apw=;
+	s=arc-20240116; t=1724771132; c=relaxed/simple;
+	bh=W5yJ21I6Pk46QjznJYfhnZ2U315wEPxsa2qfFJxieFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9aI34gtOAwDoGmNV4qqi+RcPtgtwndB45EWPw6WNg7c8rE9g2R2K2HrGwxCeVoKa9otOpwaTYGwlrhmoamD4rc01PZURmivRrPW4Ro20K5TkVyrKiellTrbxc1rLO7FenHfGN9bgKU9advWNB/fAlz+vA6qVwHYM9UIcyrwp+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nxa4Vvtv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qc3Qg9Id4qkRvcf5nbQcc/IJb+wZXfskf9nn9YTcUVI+tY1lCZTE1+88dHTxM4up24Nmwqr6PI8y74poXP1HXHoFQ8pJhSI1+fRqGtm3LaNqvY86ALJ7kYwmzoMkeRG8pkpt91XqKwoNp7Sn6zGvKZtETGfe1JJZf8Lwf5bZp6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAm4FFf6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nxa4Vvtv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EAEC6106C;
-	Tue, 27 Aug 2024 15:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAm4FFf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C296C6106C;
+	Tue, 27 Aug 2024 15:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771128;
-	bh=RPkQulpKIYakRivXehERTB1OyNiWTuDvySgvcsq1apw=;
+	s=korg; t=1724771132;
+	bh=W5yJ21I6Pk46QjznJYfhnZ2U315wEPxsa2qfFJxieFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nxa4Vvtvy//prNRoh/dXqKJobRLnkE3ISCBWD9Eg5xpGct8EYceBCO+uvxsqXDL0t
-	 V8jkX0KNvYT/viWp98OscKlJeAUzV+KDOj73q8Ct1+SmTzbS65i5nQwdya0wkGGnvV
-	 oeYDR4SH3ykHNdKtg/f1D4nwyiS6ULixGnPVZ6HI=
+	b=RAm4FFf6ZLLEylhBDcNqwQv4EY7XkNfYmpslFwWzE8lbJZJcFonZXN8N7cC/1bK13
+	 ndvBJ+5Gozi6ViMaHeqdvIi2oVOkP0FkFOgPzWhaPKpyW3eaosEyO920KjK4Ai+L8n
+	 dME2gUDECMbDlDnpRK5FNKr+/htPqP+8IyoXT2BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 094/273] net: axienet: Fix register defines comment description
-Date: Tue, 27 Aug 2024 16:36:58 +0200
-Message-ID: <20240827143836.989476893@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.10 065/273] btrfs: tree-checker: add dev extent item checks
+Date: Tue, 27 Aug 2024 16:36:29 +0200
+Message-ID: <20240827143835.884595034@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,62 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 9ff2f816e2aa65ca9a1cdf0954842f8173c0f48d ]
+commit 008e2512dc5696ab2dc5bf264e98a9fe9ceb830e upstream.
 
-In axiethernet header fix register defines comment description to be
-inline with IP documentation. It updates MAC configuration register,
-MDIO configuration register and frame filter control description.
+[REPORT]
+There is a corruption report that btrfs refused to mount a fs that has
+overlapping dev extents:
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BTRFS error (device sdc): dev extent devid 4 physical offset 14263979671552 overlap with previous dev extent end 14263980982272
+  BTRFS error (device sdc): failed to verify dev extents against chunks: -117
+  BTRFS error (device sdc): open_ctree failed
+
+[CAUSE]
+The direct cause is very obvious, there is a bad dev extent item with
+incorrect length.
+
+With btrfs check reporting two overlapping extents, the second one shows
+some clue on the cause:
+
+  ERROR: dev extent devid 4 offset 14263979671552 len 6488064 overlap with previous dev extent end 14263980982272
+  ERROR: dev extent devid 13 offset 2257707008000 len 6488064 overlap with previous dev extent end 2257707270144
+  ERROR: errors found in extent allocation tree or chunk allocation
+
+The second one looks like a bitflip happened during new chunk
+allocation:
+hex(2257707008000) = 0x20da9d30000
+hex(2257707270144) = 0x20da9d70000
+diff               = 0x00000040000
+
+So it looks like a bitflip happened during new dev extent allocation,
+resulting the second overlap.
+
+Currently we only do the dev-extent verification at mount time, but if the
+corruption is caused by memory bitflip, we really want to catch it before
+writing the corruption to the storage.
+
+Furthermore the dev extent items has the following key definition:
+
+	(<device id> DEV_EXTENT <physical offset>)
+
+Thus we can not just rely on the generic key order check to make sure
+there is no overlapping.
+
+[ENHANCEMENT]
+Introduce dedicated dev extent checks, including:
+
+- Fixed member checks
+  * chunk_tree should always be BTRFS_CHUNK_TREE_OBJECTID (3)
+  * chunk_objectid should always be
+    BTRFS_FIRST_CHUNK_CHUNK_TREE_OBJECTID (256)
+
+- Alignment checks
+  * chunk_offset should be aligned to sectorsize
+  * length should be aligned to sectorsize
+  * key.offset should be aligned to sectorsize
+
+- Overlap checks
+  If the previous key is also a dev-extent item, with the same
+  device id, make sure we do not overlap with the previous dev extent.
+
+Reported: Stefan N <stefannnau@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CA+W5K0rSO3koYTo=nzxxTm1-Pdu1HYgVxEpgJ=aGc7d=E8mGEg@mail.gmail.com/
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/btrfs/tree-checker.c |   69 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index fa5500decc960..c7d9221fafdcb 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -160,16 +160,16 @@
- #define XAE_RCW1_OFFSET		0x00000404 /* Rx Configuration Word 1 */
- #define XAE_TC_OFFSET		0x00000408 /* Tx Configuration */
- #define XAE_FCC_OFFSET		0x0000040C /* Flow Control Configuration */
--#define XAE_EMMC_OFFSET		0x00000410 /* EMAC mode configuration */
--#define XAE_PHYC_OFFSET		0x00000414 /* RGMII/SGMII configuration */
-+#define XAE_EMMC_OFFSET		0x00000410 /* MAC speed configuration */
-+#define XAE_PHYC_OFFSET		0x00000414 /* RX Max Frame Configuration */
- #define XAE_ID_OFFSET		0x000004F8 /* Identification register */
--#define XAE_MDIO_MC_OFFSET	0x00000500 /* MII Management Config */
--#define XAE_MDIO_MCR_OFFSET	0x00000504 /* MII Management Control */
--#define XAE_MDIO_MWD_OFFSET	0x00000508 /* MII Management Write Data */
--#define XAE_MDIO_MRD_OFFSET	0x0000050C /* MII Management Read Data */
-+#define XAE_MDIO_MC_OFFSET	0x00000500 /* MDIO Setup */
-+#define XAE_MDIO_MCR_OFFSET	0x00000504 /* MDIO Control */
-+#define XAE_MDIO_MWD_OFFSET	0x00000508 /* MDIO Write Data */
-+#define XAE_MDIO_MRD_OFFSET	0x0000050C /* MDIO Read Data */
- #define XAE_UAW0_OFFSET		0x00000700 /* Unicast address word 0 */
- #define XAE_UAW1_OFFSET		0x00000704 /* Unicast address word 1 */
--#define XAE_FMI_OFFSET		0x00000708 /* Filter Mask Index */
-+#define XAE_FMI_OFFSET		0x00000708 /* Frame Filter Control */
- #define XAE_AF0_OFFSET		0x00000710 /* Address Filter 0 */
- #define XAE_AF1_OFFSET		0x00000714 /* Address Filter 1 */
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1718,6 +1718,72 @@ static int check_raid_stripe_extent(cons
+ 	return 0;
+ }
  
-@@ -308,7 +308,7 @@
++static int check_dev_extent_item(const struct extent_buffer *leaf,
++				 const struct btrfs_key *key,
++				 int slot,
++				 struct btrfs_key *prev_key)
++{
++	struct btrfs_dev_extent *de;
++	const u32 sectorsize = leaf->fs_info->sectorsize;
++
++	de = btrfs_item_ptr(leaf, slot, struct btrfs_dev_extent);
++	/* Basic fixed member checks. */
++	if (unlikely(btrfs_dev_extent_chunk_tree(leaf, de) !=
++		     BTRFS_CHUNK_TREE_OBJECTID)) {
++		generic_err(leaf, slot,
++			    "invalid dev extent chunk tree id, has %llu expect %llu",
++			    btrfs_dev_extent_chunk_tree(leaf, de),
++			    BTRFS_CHUNK_TREE_OBJECTID);
++		return -EUCLEAN;
++	}
++	if (unlikely(btrfs_dev_extent_chunk_objectid(leaf, de) !=
++		     BTRFS_FIRST_CHUNK_TREE_OBJECTID)) {
++		generic_err(leaf, slot,
++			    "invalid dev extent chunk objectid, has %llu expect %llu",
++			    btrfs_dev_extent_chunk_objectid(leaf, de),
++			    BTRFS_FIRST_CHUNK_TREE_OBJECTID);
++		return -EUCLEAN;
++	}
++	/* Alignment check. */
++	if (unlikely(!IS_ALIGNED(key->offset, sectorsize))) {
++		generic_err(leaf, slot,
++			    "invalid dev extent key.offset, has %llu not aligned to %u",
++			    key->offset, sectorsize);
++		return -EUCLEAN;
++	}
++	if (unlikely(!IS_ALIGNED(btrfs_dev_extent_chunk_offset(leaf, de),
++				 sectorsize))) {
++		generic_err(leaf, slot,
++			    "invalid dev extent chunk offset, has %llu not aligned to %u",
++			    btrfs_dev_extent_chunk_objectid(leaf, de),
++			    sectorsize);
++		return -EUCLEAN;
++	}
++	if (unlikely(!IS_ALIGNED(btrfs_dev_extent_length(leaf, de),
++				 sectorsize))) {
++		generic_err(leaf, slot,
++			    "invalid dev extent length, has %llu not aligned to %u",
++			    btrfs_dev_extent_length(leaf, de), sectorsize);
++		return -EUCLEAN;
++	}
++	/* Overlap check with previous dev extent. */
++	if (slot && prev_key->objectid == key->objectid &&
++	    prev_key->type == key->type) {
++		struct btrfs_dev_extent *prev_de;
++		u64 prev_len;
++
++		prev_de = btrfs_item_ptr(leaf, slot - 1, struct btrfs_dev_extent);
++		prev_len = btrfs_dev_extent_length(leaf, prev_de);
++		if (unlikely(prev_key->offset + prev_len > key->offset)) {
++			generic_err(leaf, slot,
++		"dev extent overlap, prev offset %llu len %llu current offset %llu",
++				    prev_key->objectid, prev_len, key->offset);
++			return -EUCLEAN;
++		}
++	}
++	return 0;
++}
++
+ /*
+  * Common point to switch the item-specific validation.
   */
- #define XAE_UAW1_UNICASTADDR_MASK	0x0000FFFF
- 
--/* Bit masks for Axi Ethernet FMI register */
-+/* Bit masks for Axi Ethernet FMC register */
- #define XAE_FMI_PM_MASK			0x80000000 /* Promis. mode enable */
- #define XAE_FMI_IND_MASK		0x00000003 /* Index Mask */
- 
--- 
-2.43.0
-
+@@ -1754,6 +1820,9 @@ static enum btrfs_tree_block_status chec
+ 	case BTRFS_DEV_ITEM_KEY:
+ 		ret = check_dev_item(leaf, key, slot);
+ 		break;
++	case BTRFS_DEV_EXTENT_KEY:
++		ret = check_dev_extent_item(leaf, key, slot, prev_key);
++		break;
+ 	case BTRFS_INODE_ITEM_KEY:
+ 		ret = check_inode_item(leaf, key, slot);
+ 		break;
 
 
