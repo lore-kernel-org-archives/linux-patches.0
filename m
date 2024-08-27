@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772A81BC9F1;
-	Tue, 27 Aug 2024 15:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F601B4C4E;
+	Tue, 27 Aug 2024 15:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771005; cv=none; b=iaj7QLHDLDiKTxzMIZqCiYFgraxU0h8PGyf2nKd32qr435TiHp0Zswhis5S/1pf+GTeXIrF8uO1Eo0eDLSSh1HlB5fgk9WbqA3hFZkODOHNChk0TsKEa1cbathbgZskP30LU6VDWZsEAhmUP877o25lVDXPmBdeZ4zbRF1cURuE=
+	t=1724771008; cv=none; b=tEpNDWT5Wk2spvxmhLqxkUCn8JQZ5sbLfwCwuM4NOF2Mgx9BvcVsvLJNXUCabTUuBF7uDK/9Mp2U2oM9wDux9Bknxzx/H9nL/2OFt9J5F02I2NbsFrcnUnxO6XONFYzcXB7aoWZPP58OYE8+cfr/0ZcwF/B3I2z0/aySm8PSw5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771005; c=relaxed/simple;
-	bh=lJRy8kIatNM+8ckHAtvsFKISzE5bcZmkuKrAvlkq0JU=;
+	s=arc-20240116; t=1724771008; c=relaxed/simple;
+	bh=a3vOO7cFRI7UcjixrsHuy9zSUUIuvFRRoYwtqB3VCYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmZTHv+TgypoxGHIHxNQ+4NGf3iVuVA4XMAT/FHA9uIgu/Ppzs6RReHG5nSG7gpjvR5C3smLpyxL+XSbWXMHAFTg5zWMQb9Btf+fsPAPwmBuLx7f6BWVRopu61Pmys90RNq/iQo95Xf9iH6jqWdmRhDGMRwckMKYz8uy7lSSIB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnrAgYBi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUfEkQPcTMwRX6ZWjCL+DbEzZ+2GzitERnTziTglA+vSQjd3mKK+cSx87CrMM0MXJx53AZIYVLQT5pfqNrbWoOz3+ISMjx6EBfxmIB6sKK6zEPjoEx28DFV/5Gm3LLh4qgcnsMUsTcWaxMrxQNnO6SRXGlW5z2gYWOPhOFIIdJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiwC7igO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnrAgYBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885BEC61049;
-	Tue, 27 Aug 2024 15:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiwC7igO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0109DC61049;
+	Tue, 27 Aug 2024 15:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771005;
-	bh=lJRy8kIatNM+8ckHAtvsFKISzE5bcZmkuKrAvlkq0JU=;
+	s=korg; t=1724771008;
+	bh=a3vOO7cFRI7UcjixrsHuy9zSUUIuvFRRoYwtqB3VCYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnrAgYBispTEpuxIQkgOEMEMxiXtMF6G5yspc6ZyLs9e+ZOdIKlhRgPlb0OfhKCXb
-	 rxnqNnI8e8EZHq7Amk5ubSAx16nJ5J55oYQ7hdzCLl0Qg0t53/CaVQQzFHPHrMmMvF
-	 ebRDCuJ+fpvyp6L7u5PCsGDRpgjKlBDLyZqsD0Ls=
+	b=KiwC7igOoud1ZxoxO+rJD67Od4cPa3UeRv0ep+DRwZjEdGgN/SEazpqZEjksU3ZYd
+	 P7pXqllsLfKFstKJRhIYiPE4/wIwsEYo2x3xF4gAEHXz4c0r6tbWaMLvlKB67XiJ8y
+	 4sEFQKVRGOnLcpBxefnTACmXihqtURp/mKJ14KhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Yang Shi <shy828301@gmail.com>,
+	Hailong Liu <hailong.liu@oppo.com>,
+	Tangquan Zheng <zhengtangquan@oppo.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Barry Song <baohua@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Matthew Wilcox <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 057/273] mm/numa: no task_numa_fault() call if PMD is changed
-Date: Tue, 27 Aug 2024 16:36:21 +0200
-Message-ID: <20240827143835.572540490@linuxfoundation.org>
+Subject: [PATCH 6.10 058/273] mm/vmalloc: fix page mapping if vm_area_alloc_pages() with high order fallback to order 0
+Date: Tue, 27 Aug 2024 16:36:22 +0200
+Message-ID: <20240827143835.610491487@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -56,93 +56,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Hailong Liu <hailong.liu@oppo.com>
 
-commit fd8c35a92910f4829b7c99841f39b1b952c259d5 upstream.
+commit 61ebe5a747da649057c37be1c37eb934b4af79ca upstream.
 
-When handling a numa page fault, task_numa_fault() should be called by a
-process that restores the page table of the faulted folio to avoid
-duplicated stats counting.  Commit c5b5a3dd2c1f ("mm: thp: refactor NUMA
-fault handling") restructured do_huge_pmd_numa_page() and did not avoid
-task_numa_fault() call in the second page table check after a numa
-migration failure.  Fix it by making all !pmd_same() return immediately.
+The __vmap_pages_range_noflush() assumes its argument pages** contains
+pages with the same page shift.  However, since commit e9c3cda4d86e ("mm,
+vmalloc: fix high order __GFP_NOFAIL allocations"), if gfp_flags includes
+__GFP_NOFAIL with high order in vm_area_alloc_pages() and page allocation
+failed for high order, the pages** may contain two different page shifts
+(high order and order-0).  This could lead __vmap_pages_range_noflush() to
+perform incorrect mappings, potentially resulting in memory corruption.
 
-This issue can cause task_numa_fault() being called more than necessary
-and lead to unexpected numa balancing results (It is hard to tell whether
-the issue will cause positive or negative performance impact due to
-duplicated numa fault counting).
+Users might encounter this as follows (vmap_allow_huge = true, 2M is for
+PMD_SIZE):
 
-Link: https://lkml.kernel.org/r/20240809145906.1513458-3-ziy@nvidia.com
-Fixes: c5b5a3dd2c1f ("mm: thp: refactor NUMA fault handling")
-Reported-by: "Huang, Ying" <ying.huang@intel.com>
-Closes: https://lore.kernel.org/linux-mm/87zfqfw0yw.fsf@yhuang6-desk2.ccr.corp.intel.com/
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Yang Shi <shy828301@gmail.com>
+kvmalloc(2M, __GFP_NOFAIL|GFP_X)
+    __vmalloc_node_range_noprof(vm_flags=VM_ALLOW_HUGE_VMAP)
+        vm_area_alloc_pages(order=9) ---> order-9 allocation failed and fallback to order-0
+            vmap_pages_range()
+                vmap_pages_range_noflush()
+                    __vmap_pages_range_noflush(page_shift = 21) ----> wrong mapping happens
+
+We can remove the fallback code because if a high-order allocation fails,
+__vmalloc_node_range_noprof() will retry with order-0.  Therefore, it is
+unnecessary to fallback to order-0 here.  Therefore, fix this by removing
+the fallback code.
+
+Link: https://lkml.kernel.org/r/20240808122019.3361-1-hailong.liu@oppo.com
+Fixes: e9c3cda4d86e ("mm, vmalloc: fix high order __GFP_NOFAIL allocations")
+Signed-off-by: Hailong Liu <hailong.liu@oppo.com>
+Reported-by: Tangquan Zheng <zhengtangquan@oppo.com>
+Reviewed-by: Baoquan He <bhe@redhat.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Acked-by: Barry Song <baohua@kernel.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Matthew Wilcox <willy@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   29 +++++++++++++----------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+ mm/vmalloc.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1672,7 +1672,7 @@ vm_fault_t do_huge_pmd_numa_page(struct
- 	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
- 	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
- 		spin_unlock(vmf->ptl);
--		goto out;
-+		return 0;
- 	}
- 
- 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
-@@ -1715,22 +1715,16 @@ vm_fault_t do_huge_pmd_numa_page(struct
- 	if (!migrate_misplaced_folio(folio, vma, target_nid)) {
- 		flags |= TNF_MIGRATED;
- 		nid = target_nid;
--	} else {
--		flags |= TNF_MIGRATE_FAIL;
--		vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
--		if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
--			spin_unlock(vmf->ptl);
--			goto out;
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -3583,15 +3583,8 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
+ 			page = alloc_pages_noprof(alloc_gfp, order);
+ 		else
+ 			page = alloc_pages_node_noprof(nid, alloc_gfp, order);
+-		if (unlikely(!page)) {
+-			if (!nofail)
+-				break;
+-
+-			/* fall back to the zero order allocations */
+-			alloc_gfp |= __GFP_NOFAIL;
+-			order = 0;
+-			continue;
 -		}
--		goto out_map;
--	}
--
--out:
--	if (nid != NUMA_NO_NODE)
- 		task_numa_fault(last_cpupid, nid, HPAGE_PMD_NR, flags);
-+		return 0;
-+	}
++		if (unlikely(!page))
++			break;
  
--	return 0;
--
-+	flags |= TNF_MIGRATE_FAIL;
-+	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
-+	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
-+		spin_unlock(vmf->ptl);
-+		return 0;
-+	}
- out_map:
- 	/* Restore the PMD */
- 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
-@@ -1740,7 +1734,10 @@ out_map:
- 	set_pmd_at(vma->vm_mm, haddr, vmf->pmd, pmd);
- 	update_mmu_cache_pmd(vma, vmf->address, vmf->pmd);
- 	spin_unlock(vmf->ptl);
--	goto out;
-+
-+	if (nid != NUMA_NO_NODE)
-+		task_numa_fault(last_cpupid, nid, HPAGE_PMD_NR, flags);
-+	return 0;
- }
- 
- /*
+ 		/*
+ 		 * Higher order allocations must be able to be treated as
 
 
