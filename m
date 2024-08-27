@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA9F73466;
-	Tue, 27 Aug 2024 14:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272551C57B1;
+	Tue, 27 Aug 2024 14:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769919; cv=none; b=o7LZQr0l3Cj19E2QCbhYlxsagXH+vIizUCplVWPI4QnnAP/VMcCtbRUBmfjY3uxQmF7QmQD9cGqHwrzIsD14AZGvztHYjT0CwtZ2GwBRazgGai5lhsJIVFonevpAoOSvt7xIud+fNuAFogymlJfdwkHT5uZZl3pxBopjuZJPQv8=
+	t=1724769922; cv=none; b=Xd3ug04FtzFA7JkJkBRub/BHoGn4OPXus8MsFWcRLnltl0prx1CgBNRyHIdp3LAGAJqd2kN+x25/bD0byO6OoBMLCneosJDW2Mw60w+YlNfHzbwgUo/OEQ/7aOc2Ox5FXlniELFGnKaXw5CejEXGitytcDSe//nyZ88oyHeI7/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769919; c=relaxed/simple;
-	bh=2vb4KZFNxPx1vKhB8+koLTuzY/MvY6OmUnZwtbvX7Uw=;
+	s=arc-20240116; t=1724769922; c=relaxed/simple;
+	bh=T0P6DAwTt8ugxtuEFrg6TWaJtEZOXOMVi9LA5Ud+Low=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOVeFu9Qc4nXndnPU3L1zXEzZY0EvHbNfJeYLtsBEnMVVxrYFgDqJA35Vy/qfBMRRWnY82seJnEEt2ilxHzye2z/ya65+NVAWo48HLK6o7g0sXHOZvXqNsgxxzStm39sJZofZx9UFVGsgvo6B9rd/pMyYS9AIEa9t+fGz/5f0DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtS231eR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sEEbtl9hjhbqiT6Hdm/g4XvHg4/f73D/rpORdwZncxD+gsEanOjuGVK2E+6qvnoY2ehklS9/ihsXqhms0i+2W+aUJteh0yHJYemC7XXhp7um6M3JeJjdAvACujARj7n143nEmpAdmzKU+rhYhoX2r/otYBI3Dj8ulu0UPQ3IXaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYXJSvLh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtS231eR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22883C6106D;
-	Tue, 27 Aug 2024 14:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYXJSvLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57559C61063;
+	Tue, 27 Aug 2024 14:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769918;
-	bh=2vb4KZFNxPx1vKhB8+koLTuzY/MvY6OmUnZwtbvX7Uw=;
+	s=korg; t=1724769921;
+	bh=T0P6DAwTt8ugxtuEFrg6TWaJtEZOXOMVi9LA5Ud+Low=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtS231eRw8BGX3qA9pnLj8vwHcSTm7yjMI3FEciq9w3/9XhUtVvosJDVWmV1b+Aqw
-	 CUnGOP18mfvSLCSLJ4YVDiyNyzquuVqvPTDn8KhngQyM0lF884X093sNVghT0eh5QT
-	 5co+ogofWz/YRWdlFNf3Is1f14YJ5AOiYRai3JX8=
+	b=VYXJSvLhHL1PX/bYgYuJXjrDGu8wD68a/z5OPGO8xNbW9xWV3HnqgZmQH363GzdaW
+	 qc58WkkWiq6rn7XKagFpLzjS/UJpfqdVC9wBRoz4Rp1PTIv0kzBbOnRjDBqmLwCHVl
+	 oeI0wGWdX2XVU97OrJ1r80vXaIUvvxVxLwWr9Btg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+bdb4bd87b5e22058e2a4@syzkaller.appspotmail.com,
+	Bobby Eshleman <bobby.eshleman@bytedance.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/341] netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests
-Date: Tue, 27 Aug 2024 16:35:05 +0200
-Message-ID: <20240827143846.226455124@linuxfoundation.org>
+Subject: [PATCH 6.6 075/341] vsock: fix recursive ->recvmsg calls
+Date: Tue, 27 Aug 2024 16:35:06 +0200
+Message-ID: <20240827143846.263998896@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,153 +55,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit bd662c4218f9648e888bebde9468146965f3f8a0 ]
+[ Upstream commit 69139d2919dd4aa9a553c8245e7c63e82613e3fc ]
 
-Objects' dump callbacks are not concurrency-safe per-se with reset bit
-set. If two CPUs perform a reset at the same time, at least counter and
-quota objects suffer from value underrun.
+After a vsock socket has been added to a BPF sockmap, its prot->recvmsg
+has been replaced with vsock_bpf_recvmsg(). Thus the following
+recursiion could happen:
 
-Prevent this by introducing dedicated locking callbacks for nfnetlink
-and the asynchronous dump handling to serialize access.
+vsock_bpf_recvmsg()
+ -> __vsock_recvmsg()
+  -> vsock_connectible_recvmsg()
+   -> prot->recvmsg()
+    -> vsock_bpf_recvmsg() again
 
-Fixes: 43da04a593d8 ("netfilter: nf_tables: atomic dump and reset for stateful objects")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+We need to fix it by calling the original ->recvmsg() without any BPF
+sockmap logic in __vsock_recvmsg().
+
+Fixes: 634f1a7110b4 ("vsock: support sockmap")
+Reported-by: syzbot+bdb4bd87b5e22058e2a4@syzkaller.appspotmail.com
+Tested-by: syzbot+bdb4bd87b5e22058e2a4@syzkaller.appspotmail.com
+Cc: Bobby Eshleman <bobby.eshleman@bytedance.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20240812022153.86512-1-xiyou.wangcong@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 72 ++++++++++++++++++++++++++++-------
- 1 file changed, 59 insertions(+), 13 deletions(-)
+ include/net/af_vsock.h    |  4 ++++
+ net/vmw_vsock/af_vsock.c  | 50 +++++++++++++++++++++++----------------
+ net/vmw_vsock/vsock_bpf.c |  4 ++--
+ 3 files changed, 35 insertions(+), 23 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a3ed9437e21b4..fc99a5e91829d 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7783,6 +7783,19 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- 	return skb->len;
+diff --git a/include/net/af_vsock.h b/include/net/af_vsock.h
+index dc3cb16835b63..f8b09a82f62e1 100644
+--- a/include/net/af_vsock.h
++++ b/include/net/af_vsock.h
+@@ -227,8 +227,12 @@ struct vsock_tap {
+ int vsock_add_tap(struct vsock_tap *vt);
+ int vsock_remove_tap(struct vsock_tap *vt);
+ void vsock_deliver_tap(struct sk_buff *build_skb(void *opaque), void *opaque);
++int __vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
++				int flags);
+ int vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 			      int flags);
++int __vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
++			  size_t len, int flags);
+ int vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			size_t len, int flags);
+ 
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 4afb6a541cf38..f5eb737a677d9 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1270,25 +1270,28 @@ static int vsock_dgram_connect(struct socket *sock,
+ 	return err;
  }
  
-+static int nf_tables_dumpreset_obj(struct sk_buff *skb,
-+				   struct netlink_callback *cb)
++int __vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
++			  size_t len, int flags)
 +{
-+	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
-+	int ret;
++	struct sock *sk = sock->sk;
++	struct vsock_sock *vsk = vsock_sk(sk);
 +
-+	mutex_lock(&nft_net->commit_mutex);
-+	ret = nf_tables_dump_obj(skb, cb);
-+	mutex_unlock(&nft_net->commit_mutex);
-+
-+	return ret;
++	return vsk->transport->dgram_dequeue(vsk, msg, len, flags);
 +}
 +
- static int nf_tables_dump_obj_start(struct netlink_callback *cb)
+ int vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			size_t len, int flags)
  {
- 	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
-@@ -7799,12 +7812,18 @@ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
- 	if (nla[NFTA_OBJ_TYPE])
- 		ctx->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
+ #ifdef CONFIG_BPF_SYSCALL
++	struct sock *sk = sock->sk;
+ 	const struct proto *prot;
+-#endif
+-	struct vsock_sock *vsk;
+-	struct sock *sk;
  
--	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
--		ctx->reset = true;
+-	sk = sock->sk;
+-	vsk = vsock_sk(sk);
 -
- 	return 0;
+-#ifdef CONFIG_BPF_SYSCALL
+ 	prot = READ_ONCE(sk->sk_prot);
+ 	if (prot != &vsock_proto)
+ 		return prot->recvmsg(sk, msg, len, flags, NULL);
+ #endif
+ 
+-	return vsk->transport->dgram_dequeue(vsk, msg, len, flags);
++	return __vsock_dgram_recvmsg(sock, msg, len, flags);
+ }
+ EXPORT_SYMBOL_GPL(vsock_dgram_recvmsg);
+ 
+@@ -2124,15 +2127,12 @@ static int __vsock_seqpacket_recvmsg(struct sock *sk, struct msghdr *msg,
  }
  
-+static int nf_tables_dumpreset_obj_start(struct netlink_callback *cb)
-+{
-+	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
-+
-+	ctx->reset = true;
-+
-+	return nf_tables_dump_obj_start(cb);
-+}
-+
- static int nf_tables_dump_obj_done(struct netlink_callback *cb)
+ int
+-vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+-			  int flags)
++__vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
++			    int flags)
  {
- 	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
-@@ -7863,18 +7882,43 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
+ 	struct sock *sk;
+ 	struct vsock_sock *vsk;
+ 	const struct vsock_transport *transport;
+-#ifdef CONFIG_BPF_SYSCALL
+-	const struct proto *prot;
+-#endif
+ 	int err;
  
- static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
- 			    const struct nlattr * const nla[])
-+{
-+	u32 portid = NETLINK_CB(skb).portid;
-+	struct sk_buff *skb2;
-+
-+	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
-+		struct netlink_dump_control c = {
-+			.start = nf_tables_dump_obj_start,
-+			.dump = nf_tables_dump_obj,
-+			.done = nf_tables_dump_obj_done,
-+			.module = THIS_MODULE,
-+			.data = (void *)nla,
-+		};
-+
-+		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
-+	}
-+
-+	skb2 = nf_tables_getobj_single(portid, info, nla, false);
-+	if (IS_ERR(skb2))
-+		return PTR_ERR(skb2);
-+
-+	return nfnetlink_unicast(skb2, info->net, portid);
-+}
-+
-+static int nf_tables_getobj_reset(struct sk_buff *skb,
-+				  const struct nfnl_info *info,
-+				  const struct nlattr * const nla[])
- {
- 	struct nftables_pernet *nft_net = nft_pernet(info->net);
- 	u32 portid = NETLINK_CB(skb).portid;
- 	struct net *net = info->net;
- 	struct sk_buff *skb2;
--	bool reset = false;
- 	char *buf;
- 
- 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
- 		struct netlink_dump_control c = {
--			.start = nf_tables_dump_obj_start,
--			.dump = nf_tables_dump_obj,
-+			.start = nf_tables_dumpreset_obj_start,
-+			.dump = nf_tables_dumpreset_obj,
- 			.done = nf_tables_dump_obj_done,
- 			.module = THIS_MODULE,
- 			.data = (void *)nla,
-@@ -7883,16 +7927,18 @@ static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
- 		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+ 	sk = sock->sk;
+@@ -2183,14 +2183,6 @@ vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		goto out;
  	}
  
--	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
--		reset = true;
-+	if (!try_module_get(THIS_MODULE))
-+		return -EINVAL;
-+	rcu_read_unlock();
-+	mutex_lock(&nft_net->commit_mutex);
-+	skb2 = nf_tables_getobj_single(portid, info, nla, true);
-+	mutex_unlock(&nft_net->commit_mutex);
-+	rcu_read_lock();
-+	module_put(THIS_MODULE);
- 
--	skb2 = nf_tables_getobj_single(portid, info, nla, reset);
- 	if (IS_ERR(skb2))
- 		return PTR_ERR(skb2);
- 
--	if (!reset)
--		return nfnetlink_unicast(skb2, net, NETLINK_CB(skb).portid);
+-#ifdef CONFIG_BPF_SYSCALL
+-	prot = READ_ONCE(sk->sk_prot);
+-	if (prot != &vsock_proto) {
+-		release_sock(sk);
+-		return prot->recvmsg(sk, msg, len, flags, NULL);
+-	}
+-#endif
 -
- 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
- 			nla_len(nla[NFTA_OBJ_TABLE]),
- 			(char *)nla_data(nla[NFTA_OBJ_TABLE]),
-@@ -9179,7 +9225,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
- 		.policy		= nft_obj_policy,
- 	},
- 	[NFT_MSG_GETOBJ_RESET] = {
--		.call		= nf_tables_getobj,
-+		.call		= nf_tables_getobj_reset,
- 		.type		= NFNL_CB_RCU,
- 		.attr_count	= NFTA_OBJ_MAX,
- 		.policy		= nft_obj_policy,
+ 	if (sk->sk_type == SOCK_STREAM)
+ 		err = __vsock_stream_recvmsg(sk, msg, len, flags);
+ 	else
+@@ -2200,6 +2192,22 @@ vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	release_sock(sk);
+ 	return err;
+ }
++
++int
++vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
++			  int flags)
++{
++#ifdef CONFIG_BPF_SYSCALL
++	struct sock *sk = sock->sk;
++	const struct proto *prot;
++
++	prot = READ_ONCE(sk->sk_prot);
++	if (prot != &vsock_proto)
++		return prot->recvmsg(sk, msg, len, flags, NULL);
++#endif
++
++	return __vsock_connectible_recvmsg(sock, msg, len, flags);
++}
+ EXPORT_SYMBOL_GPL(vsock_connectible_recvmsg);
+ 
+ static int vsock_set_rcvlowat(struct sock *sk, int val)
+diff --git a/net/vmw_vsock/vsock_bpf.c b/net/vmw_vsock/vsock_bpf.c
+index a3c97546ab84a..c42c5cc18f324 100644
+--- a/net/vmw_vsock/vsock_bpf.c
++++ b/net/vmw_vsock/vsock_bpf.c
+@@ -64,9 +64,9 @@ static int __vsock_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int
+ 	int err;
+ 
+ 	if (sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET)
+-		err = vsock_connectible_recvmsg(sock, msg, len, flags);
++		err = __vsock_connectible_recvmsg(sock, msg, len, flags);
+ 	else if (sk->sk_type == SOCK_DGRAM)
+-		err = vsock_dgram_recvmsg(sock, msg, len, flags);
++		err = __vsock_dgram_recvmsg(sock, msg, len, flags);
+ 	else
+ 		err = -EPROTOTYPE;
+ 
 -- 
 2.43.0
 
