@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82931C8FCF;
-	Tue, 27 Aug 2024 15:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C61D0493;
+	Tue, 27 Aug 2024 15:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772510; cv=none; b=h3EN8e8Gew+zdftnImUqieG+dtGZrhdANRry0yQWSuZBsKn6Ilnu7c8ILMJFZ1OVAJdQQaNT4cvvFrQrQtCYKIS0OxZDDQibQd7UzfqmO3nV4KAYUUds45/pgJj3n3c6Z5aWEf7Sg8ZX1apnYwNtac7Ow9pT8R60k3KvnSlw/iU=
+	t=1724772513; cv=none; b=QKogOhZqG91jP4bQZqRVLLfD0pJ0yEhGHW4xjX9TdP7rZV+Fl8G5ivhDqRr4xDWnJH6/lNntScbOW+3NMGKSY/NkKoeTTF2e/IDs8yfHdV/n1xdduEoQbqO25Y4Xu/y7kXnWfNhUkMq3z3Hszz3pWeFlm1VOghrThJ3aj8TZCb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772510; c=relaxed/simple;
-	bh=15ND0/OmnlhDWZQU/Pfj1+qXlnppLPNQlonez7Tw9QQ=;
+	s=arc-20240116; t=1724772513; c=relaxed/simple;
+	bh=GjVgfnSslwzAfoHYFQ4Q4vbKcmN4031ZHE7z3AFSyEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJSkaX+wJUvx/6vekYqGxZnHyB6tuAUbPtGv1B9EP7Ra+ixpivqBq5BHcdHmxYgIwBfCzVIs8G/FGWT/3RlSCS9h/If/ISRg+ZjmnxMYDTlHl9tZHh6VUrfJF1O5yET0Rl7rqXX3SFcaFUxZmKI10+mLayO29rO+1vSSsdJEWBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5qLgZLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k94hyAuU7bfmv6iyWmNueQz8KMhPfMh+klPWTJDwEWUSirnbkE4RFCve2N7mo0K0i6Ao5wS9XTZR9WWFEdI5E+F3EpRTJvWL0Oe1pekXaIas6rMr+wn/ncs7YlEae7gJsFl3W05aPuHd1JwkZsqnqKRuyTHcI+mIOmUo25BJ35A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZ0dLtiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5qLgZLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D85C6104E;
-	Tue, 27 Aug 2024 15:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZ0dLtiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE027C6107B;
+	Tue, 27 Aug 2024 15:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772509;
-	bh=15ND0/OmnlhDWZQU/Pfj1+qXlnppLPNQlonez7Tw9QQ=;
+	s=korg; t=1724772513;
+	bh=GjVgfnSslwzAfoHYFQ4Q4vbKcmN4031ZHE7z3AFSyEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O5qLgZLCPHgHdE9/ZcSmICGbQyFCaAxfLcrRosKz/3yjJ+pUU2MVAF1tYXTOusBj8
-	 Q2BH1xtMO+Iels9cB223SdHL8mtZY+a1rnyQAdQ4PZ+0LKwfcVOZcvlTIB/oYlgwLT
-	 S843TIhCG1QVg2P6lJL8pS8/PgMxZ+h92b/tsK+E=
+	b=TZ0dLtiIkEheYCc9V1195OjHUJRAWOpG1F48CnLzqZa8b1q18xLD9zk+1udoYi0WL
+	 E2QDuyI3LT4a9nL9URJeoPZY/EbnxjkLJI0Bv5AE+2UAALYYwk3RjVK+Cd1JVlNRNI
+	 8YMWQvniBxqGnRJ02zF/8HhUdQ8p+aBYsG+Tig/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/321] nvmet-rdma: fix possible bad dereference when freeing rsps
-Date: Tue, 27 Aug 2024 16:38:33 +0200
-Message-ID: <20240827143846.037511249@linuxfoundation.org>
+Subject: [PATCH 6.1 206/321] drm/amdgpu: fix dereference null return value for the function amdgpu_vm_pt_parent
+Date: Tue, 27 Aug 2024 16:38:34 +0200
+Message-ID: <20240827143846.075307838@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -46,88 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 73964c1d07c054376f1b32a62548571795159148 ]
+[ Upstream commit 511a623fb46a6cf578c61d4f2755783c48807c77 ]
 
-It is possible that the host connected and saw a cm established
-event and started sending nvme capsules on the qp, however the
-ctrl did not yet see an established event. This is why the
-rsp_wait_list exists (for async handling of these cmds, we move
-them to a pending list).
+The pointer parent may be NULLed by the function amdgpu_vm_pt_parent.
+To make the code more robust, check the pointer parent.
 
-Furthermore, it is possible that the ctrl cm times out, resulting
-in a connect-error cm event. in this case we hit a bad deref [1]
-because in nvmet_rdma_free_rsps we assume that all the responses
-are in the free list.
-
-We are freeing the cmds array anyways, so don't even bother to
-remove the rsp from the free_list. It is also guaranteed that we
-are not racing anything when we are releasing the queue so no
-other context accessing this array should be running.
-
-[1]:
---
-Workqueue: nvmet-free-wq nvmet_rdma_free_queue_work [nvmet_rdma]
-[...]
-pc : nvmet_rdma_free_rsps+0x78/0xb8 [nvmet_rdma]
-lr : nvmet_rdma_free_queue_work+0x88/0x120 [nvmet_rdma]
- Call trace:
- nvmet_rdma_free_rsps+0x78/0xb8 [nvmet_rdma]
- nvmet_rdma_free_queue_work+0x88/0x120 [nvmet_rdma]
- process_one_work+0x1ec/0x4a0
- worker_thread+0x48/0x490
- kthread+0x158/0x160
- ret_from_fork+0x10/0x18
---
-
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 4597bca43a6d8..a6d55ebb82382 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -473,12 +473,8 @@ nvmet_rdma_alloc_rsps(struct nvmet_rdma_queue *queue)
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index 69b3829bbe53f..370d02bdde862 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -754,11 +754,15 @@ int amdgpu_vm_pde_update(struct amdgpu_vm_update_params *params,
+ 			 struct amdgpu_vm_bo_base *entry)
+ {
+ 	struct amdgpu_vm_bo_base *parent = amdgpu_vm_pt_parent(entry);
+-	struct amdgpu_bo *bo = parent->bo, *pbo;
++	struct amdgpu_bo *bo, *pbo;
+ 	struct amdgpu_vm *vm = params->vm;
+ 	uint64_t pde, pt, flags;
+ 	unsigned int level;
  
- out_free:
--	while (--i >= 0) {
--		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
--
--		list_del(&rsp->free_list);
--		nvmet_rdma_free_rsp(ndev, rsp);
--	}
-+	while (--i >= 0)
-+		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
- 	kfree(queue->rsps);
- out:
- 	return ret;
-@@ -489,12 +485,8 @@ static void nvmet_rdma_free_rsps(struct nvmet_rdma_queue *queue)
- 	struct nvmet_rdma_device *ndev = queue->dev;
- 	int i, nr_rsps = queue->recv_queue_size * 2;
- 
--	for (i = 0; i < nr_rsps; i++) {
--		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
--
--		list_del(&rsp->free_list);
--		nvmet_rdma_free_rsp(ndev, rsp);
--	}
-+	for (i = 0; i < nr_rsps; i++)
-+		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
- 	kfree(queue->rsps);
- }
++	if (WARN_ON(!parent))
++		return -EINVAL;
++
++	bo = parent->bo;
+ 	for (level = 0, pbo = bo->parent; pbo; ++level)
+ 		pbo = pbo->parent;
  
 -- 
 2.43.0
