@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DD81C57B3;
-	Tue, 27 Aug 2024 15:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DEA1BA294;
+	Tue, 27 Aug 2024 15:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771450; cv=none; b=cPL2p6ezPAprtY0wpMoVll+Sop63MqML4NWVpnkbdbQvLwzoSQXHHhSk4p0RghVdNF0+DMHhYKSIaZDhm3x74mjZU1u78Z01Rp7i0KyF9rNhDEnW0ft46j2F0NuFuFiHeyhHdgOCHrfYv3bXGVxeBEJCQ7wStw3VMuXxuZeIV88=
+	t=1724771454; cv=none; b=QVeDWxAeifXxzb6q0hStIMRLqza4F7S3/qfFmEVUbOcejCdL1SOa1WQhidMxNIxM0LRACHzYjw0Ig0Nd+Gf50yF+snTLLGvJiIxxXcttRL3Sy5gjn3C7RdnzqQ7vCCZwa10X1ECrURYVzeIezoJgbC0AOWBUUWCkWJs1GYn3QF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771450; c=relaxed/simple;
-	bh=udcUllFi1qsojGYREb32bn70LQzVwyzjJnW/X2snJWE=;
+	s=arc-20240116; t=1724771454; c=relaxed/simple;
+	bh=54uBBLcJZIg1yA4wfMFUYcR6vF6a0iwRhF9xj5sUJ/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVPRMGQ6hYene+4FSB+42RPL3hGdGZzvKjvU0lPKVytModm8OacufYd/9DB7QUUwJ3+/YOFvUmB34C0YQ6z9Kb0mGIjA6euaYsg37mmR2OswcLFq3k9JjoaXjQK3WGotyNUl6/f+5A3om+S3Yhm9IkKY9OJygmmvuBZlGKNj6uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPrNbpeN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgOO0ofCMOaLPInHUsX5jNOPRbe5+3J08RL6dYnGF7mlgw9mbl7hahmyrbq1Af7JA2Y3tcX6UDql00HDVHfH5fkbXvuyH1Qmy/KUzLwdAK5GWRYyFdLNvf7cWrhQEg7psgYCEM13Y8ZCPlIplpiFRxLxNYhE7d/O4+K+Z6hDgxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faXafezB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPrNbpeN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A066C4AF67;
-	Tue, 27 Aug 2024 15:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faXafezB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B96C4AF67;
+	Tue, 27 Aug 2024 15:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771450;
-	bh=udcUllFi1qsojGYREb32bn70LQzVwyzjJnW/X2snJWE=;
+	s=korg; t=1724771453;
+	bh=54uBBLcJZIg1yA4wfMFUYcR6vF6a0iwRhF9xj5sUJ/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPrNbpeNBiWDr2maFlJ6SqNhZhzfN40eCsobnRMyyTXFlzaYIFtSb84dQxO3con8d
-	 IZgJe6ZV4451MsBeEwLJka8nIogd29NxalXPrHVpOAbL9f/ZuQmpe3H6J9zWW9S1H/
-	 GVEcqPobnl9/Ayfkux80eLBJBU7fh9UYkrak9xzs=
+	b=faXafezB5dMrXuQXtM+9QSPbgOWSwADUYoFFFJFA+VvrzIC+Q09f6MDNSJJcIGG92
+	 G8NMZcpuj2cNJeK72Ds/eEK+oWYUw/eiFx+c29SUcZtkAZWefwg/0PdXcrhvmgpy76
+	 5bopEaXpHLqW1it7moG/KKhsaEDpSWu4i6WC2nRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Thorsten Winkler <twinkler@linux.ibm.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 191/273] s390/iucv: Fix vargs handling in iucv_alloc_device()
-Date: Tue, 27 Aug 2024 16:38:35 +0200
-Message-ID: <20240827143840.675640948@linuxfoundation.org>
+Subject: [PATCH 6.10 192/273] drm/msm/dpu: dont play tricks with debug macros
+Date: Tue, 27 Aug 2024 16:38:36 +0200
+Message-ID: <20240827143840.713386067@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,52 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 0124fb0ebf3b0ef89892d42147c9387be3105318 ]
+[ Upstream commit df24373435f5899a2a98b7d377479c8d4376613b ]
 
-iucv_alloc_device() gets a format string and a varying number of
-arguments. This is incorrectly forwarded by calling dev_set_name() with
-the format string and a va_list, while dev_set_name() expects also a
-varying number of arguments.
+DPU debugging macros need to be converted to a proper drm_debug_*
+macros, however this is a going an intrusive patch, not suitable for a
+fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+to make sure that DPU debugging messages always end up in the drm debug
+messages and are controlled via the usual drm.debug mask.
 
-Symptoms:
-Corrupted iucv device names, which can result in log messages like:
-sysfs: cannot create duplicate filename '/devices/iucv/hvc_iucv1827699952'
+I don't think that it is a good idea for a generic DPU_DEBUG macro to be
+tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
+default it should go to the DRM_UT_DRIVER channel. While refactoring
+debug macros later on we might end up with particular messages going to
+ATOMIC or KMS, but DRIVER should be the default.
 
-Fixes: 4452e8ef8c36 ("s390/iucv: Provide iucv_alloc_device() / iucv_release_device()")
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1228425
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Thorsten Winkler <twinkler@linux.ibm.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/20240821091337.3627068-1-wintera@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/606932/
+Link: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/iucv.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
-index b7bf34a5eb37a..1235307020075 100644
---- a/net/iucv/iucv.c
-+++ b/net/iucv/iucv.c
-@@ -86,13 +86,15 @@ struct device *iucv_alloc_device(const struct attribute_group **attrs,
- {
- 	struct device *dev;
- 	va_list vargs;
-+	char buf[20];
- 	int rc;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index e2adc937ea63b..935ff6fd172c4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -31,24 +31,14 @@
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG(fmt, ...)                                                \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_KMS))                         \
+-			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
  
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
- 	if (!dev)
- 		goto out_error;
- 	va_start(vargs, fmt);
--	rc = dev_set_name(dev, fmt, vargs);
-+	vsnprintf(buf, sizeof(buf), fmt, vargs);
-+	rc = dev_set_name(dev, "%s", buf);
- 	va_end(vargs);
- 	if (rc)
- 		goto out_error;
+ /**
+  * DPU_DEBUG_DRIVER - macro for hardware driver logging
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+-			DRM_ERROR(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+ 
+ #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+ #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
 -- 
 2.43.0
 
