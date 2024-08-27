@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBB92FB2;
-	Tue, 27 Aug 2024 15:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE601C68BD;
+	Tue, 27 Aug 2024 15:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770959; cv=none; b=ujpAQFThU45eQmsvmL/nv9P63Lrl5YggwmiGNOuRMG7z9MGZMgw0rptijoS2DgIqXt50jleN5vY2ft2Pi40Xe4Pqi2bquJ9JiBzaHbP800tSv9DrkaA3M22RKgA3nvZVc5WE61DyTgI/Fc786bJAnOR6xC6pAGYQwM6yytDSNxM=
+	t=1724770962; cv=none; b=GIRV2nh7unt73gz2ACrrEyCmULYEHTGmSR3P0if0GQcSjz+IbhyRW5Vg3i87pyXYif0WYaNd00sLHYmBVXtI9KX9n6zLYyaKU5w0wpQRf+3qZVBdC17oA5Qf7HEG92iEOk44gV1GZZfkM229kK1YsX/ErGF3q1+3zYEUIbVV14c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770959; c=relaxed/simple;
-	bh=Rva2fDtDVeYe2uM/04nUeHAXWMQuPFVTFF9yck/0hFA=;
+	s=arc-20240116; t=1724770962; c=relaxed/simple;
+	bh=u10Jrvd+VvSiusOjyPkjAsKNiADXCFWDRkBco1WBA/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u64X5/V7DwOC1HAAxWd+ZV6VDac096C+pDlSa4BORUZcV7Lmqh+CyKje6X6X3HbRPIGW5LddVOSdZtSMYbbOCCxX4P1I5iUQPYph/ZuttLCzqVsx91Y8zhkG8rfd1nqaW+JRbB8DbOQpj9I5Je15e6+mSINRK/TzgDRJtbX8f7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiSDmAyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dm5Zo5qcCT/C/VVcqPfQOA2oeB4retleVrVT5t2l1a2pojp/wllOEMm+T9tbzUzWkCG9Jn8d12rd/ihVTL2xdywKPTs2XNoRyTzEFGTQld5PYhjoP3iZwXJ5ytzGppFnnH+kp5EsHLEwdmL55pVkNAhv18YSKRklJ8qwOscjZzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLvZWwyb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiSDmAyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE39C61042;
-	Tue, 27 Aug 2024 15:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLvZWwyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E529C61043;
+	Tue, 27 Aug 2024 15:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770959;
-	bh=Rva2fDtDVeYe2uM/04nUeHAXWMQuPFVTFF9yck/0hFA=;
+	s=korg; t=1724770962;
+	bh=u10Jrvd+VvSiusOjyPkjAsKNiADXCFWDRkBco1WBA/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiSDmAyYSjlz9R40qz6Wnv4p52pCqDDGaR5BEKggGA2QpuJNL7Bp7BODelYKSb4KU
-	 u222UVQu8edQlQHIt0rBWsYyT9MMi6VdbS0WfamU4hHWZqY4GzeL64vUZHn+vT4DZj
-	 /Pd0kht2ORa1MGgKIKn44jzo+x9TQ2e6HZ10vh2A=
+	b=uLvZWwyb1d6azv0gVjyPB4nvWO/0AUJeZNmVbf+jLC1QScSei076P/AITTRyG9a9P
+	 y9UAnVoW8/Wgyke0rJpQdlCg5LNRjjs1lzwpefhRgtHVf7LuMn9UA6jv8btmeFZAFf
+	 lF2HH5IJDvZKBqteuKANrFzqmrY8gNSWqjJ03cHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
-Subject: [PATCH 6.10 045/273] md/raid1: Fix data corruption for degraded array with slow disk
-Date: Tue, 27 Aug 2024 16:36:09 +0200
-Message-ID: <20240827143835.112709105@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.10 046/273] net: mana: Fix RX buf alloc_size alignment and atomic op panic
+Date: Tue, 27 Aug 2024 16:36:10 +0200
+Message-ID: <20240827143835.150832042@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -45,97 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit c916ca35308d3187c9928664f9be249b22a3a701 upstream.
+commit 32316f676b4ee87c0404d333d248ccf777f739bc upstream.
 
-read_balance() will avoid reading from slow disks as much as possible,
-however, if valid data only lands in slow disks, and a new normal disk
-is still in recovery, unrecovered data can be read:
+The MANA driver's RX buffer alloc_size is passed into napi_build_skb() to
+create SKB. skb_shinfo(skb) is located at the end of skb, and its alignment
+is affected by the alloc_size passed into napi_build_skb(). The size needs
+to be aligned properly for better performance and atomic operations.
+Otherwise, on ARM64 CPU, for certain MTU settings like 4000, atomic
+operations may panic on the skb_shinfo(skb)->dataref due to alignment fault.
 
-raid1_read_request
- read_balance
-  raid1_should_read_first
-  -> return false
-  choose_best_rdev
-  -> normal disk is not recovered, return -1
-  choose_bb_rdev
-  -> missing the checking of recovery, return the normal disk
- -> read unrecovered data
+To fix this bug, add proper alignment to the alloc_size calculation.
 
-Root cause is that the checking of recovery is missing in
-choose_bb_rdev(). Hence add such checking to fix the problem.
-
-Also fix similar problem in choose_slow_rdev().
+Sample panic info:
+[  253.298819] Unable to handle kernel paging request at virtual address ffff000129ba5cce
+[  253.300900] Mem abort info:
+[  253.301760]   ESR = 0x0000000096000021
+[  253.302825]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  253.304268]   SET = 0, FnV = 0
+[  253.305172]   EA = 0, S1PTW = 0
+[  253.306103]   FSC = 0x21: alignment fault
+Call trace:
+ __skb_clone+0xfc/0x198
+ skb_clone+0x78/0xe0
+ raw6_local_deliver+0xfc/0x228
+ ip6_protocol_deliver_rcu+0x80/0x500
+ ip6_input_finish+0x48/0x80
+ ip6_input+0x48/0xc0
+ ip6_sublist_rcv_finish+0x50/0x78
+ ip6_sublist_rcv+0x1cc/0x2b8
+ ipv6_list_rcv+0x100/0x150
+ __netif_receive_skb_list_core+0x180/0x220
+ netif_receive_skb_list_internal+0x198/0x2a8
+ __napi_poll+0x138/0x250
+ net_rx_action+0x148/0x330
+ handle_softirqs+0x12c/0x3a0
 
 Cc: stable@vger.kernel.org
-Fixes: 9f3ced792203 ("md/raid1: factor out choose_bb_rdev() from read_balance()")
-Fixes: dfa8ecd167c1 ("md/raid1: factor out choose_slow_rdev() from read_balance()")
-Reported-and-tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Closes: https://lore.kernel.org/all/9952f532-2554-44bf-b906-4880b2e88e3a@o2.pl/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240803091137.3197008-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 80f6215b450e ("net: mana: Add support for jumbo frame")
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 7acfe7c9dc8d..761989d67906 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -617,6 +617,12 @@ static int choose_first_rdev(struct r1conf *conf, struct r1bio *r1_bio,
- 	return -1;
- }
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -599,7 +599,11 @@ static void mana_get_rxbuf_cfg(int mtu,
+ 	else
+ 		*headroom = XDP_PACKET_HEADROOM;
  
-+static bool rdev_in_recovery(struct md_rdev *rdev, struct r1bio *r1_bio)
-+{
-+	return !test_bit(In_sync, &rdev->flags) &&
-+	       rdev->recovery_offset < r1_bio->sector + r1_bio->sectors;
-+}
+-	*alloc_size = mtu + MANA_RXBUF_PAD + *headroom;
++	*alloc_size = SKB_DATA_ALIGN(mtu + MANA_RXBUF_PAD + *headroom);
 +
- static int choose_bb_rdev(struct r1conf *conf, struct r1bio *r1_bio,
- 			  int *max_sectors)
- {
-@@ -635,6 +641,7 @@ static int choose_bb_rdev(struct r1conf *conf, struct r1bio *r1_bio,
++	/* Using page pool in this case, so alloc_size is PAGE_SIZE */
++	if (*alloc_size < PAGE_SIZE)
++		*alloc_size = PAGE_SIZE;
  
- 		rdev = conf->mirrors[disk].rdev;
- 		if (!rdev || test_bit(Faulty, &rdev->flags) ||
-+		    rdev_in_recovery(rdev, r1_bio) ||
- 		    test_bit(WriteMostly, &rdev->flags))
- 			continue;
- 
-@@ -673,7 +680,8 @@ static int choose_slow_rdev(struct r1conf *conf, struct r1bio *r1_bio,
- 
- 		rdev = conf->mirrors[disk].rdev;
- 		if (!rdev || test_bit(Faulty, &rdev->flags) ||
--		    !test_bit(WriteMostly, &rdev->flags))
-+		    !test_bit(WriteMostly, &rdev->flags) ||
-+		    rdev_in_recovery(rdev, r1_bio))
- 			continue;
- 
- 		/* there are no bad blocks, we can use this disk */
-@@ -733,9 +741,7 @@ static bool rdev_readable(struct md_rdev *rdev, struct r1bio *r1_bio)
- 	if (!rdev || test_bit(Faulty, &rdev->flags))
- 		return false;
- 
--	/* still in recovery */
--	if (!test_bit(In_sync, &rdev->flags) &&
--	    rdev->recovery_offset < r1_bio->sector + r1_bio->sectors)
-+	if (rdev_in_recovery(rdev, r1_bio))
- 		return false;
- 
- 	/* don't read from slow disk unless have to */
--- 
-2.46.0
-
+ 	*datasize = mtu + ETH_HLEN;
+ }
 
 
