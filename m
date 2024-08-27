@@ -1,349 +1,112 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61411D460C
-	for <patches@lists.linux.dev>; Tue, 27 Aug 2024 23:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A9519DF66;
+	Tue, 27 Aug 2024 23:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724800366; cv=none; b=MfWR0giC5cZtIa4Zf1s0ZSc822a79ejppkf0k8/DQP64pKjFbWerJXHqtw9zCgV9vX/sbZfKQH3Ywwd0KPB3XWeEOVspzfVDNrx/VU/zrK/PX32xqu5bS3QFfxhLZ6FJM+9+c+ytZWzUyZW/yHTr8VtK7Uz444cLPO67tormQy0=
+	t=1724800510; cv=none; b=sBTb0FtiXvYDJ6C+KmK2NIim19V9u6hqhx8YpFN7qkk8Poz6rhZbebrvOmQjXnrA+N36UcD7772GW0h/IwPleXOWT9eRFCKp9I+BgFHdDTtBN2w/5tANSeTAGF0byZTKfhq3gKUfX/VEuf5j0crix8nOs6h7Tdk0MxeoazY30Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724800366; c=relaxed/simple;
-	bh=pydQzqttrobXPxYrV9xD01A2kGsR6s/mRdxcFVeZq1I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONnT8bGVAb8FjSEvNlSG/NMYFBIStAlZw3sR0ytBMHpe657du9aXXRG7a96+sLpZnIlS9OFBNxB3uR/KJb2WVNpDjfLg29dNTpw2ZpY33FzkArlHsSSrcpdcaJC0cnLfQSDTwrHAaBo6vMdscNNe+lUpG9TbfnZ9L+fOX4d0Heg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=aEJkFWgx; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1724800510; c=relaxed/simple;
+	bh=OLsfW6fvwwy8Dz9CLI7k9MJrb2Yd+U5ZRIOjzC6OmmU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ATQw0wirYlZjuD6v1LUkKTGMIUt7JJ6C/i1nyHPpFQFoUijDb1xS59id4YxExcuDQXWNtYTg+vExc/6qsDatz5hIwIv4dFwMDFEgaP1ekkQ7cya/p1k+OP66q0+Ecl+lfMgQfBcGrJb2sD1gu9VYucLL/h+KiLcZEKxwmjPviPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TFY6UqET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="aEJkFWgx"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-7cd895682fcso2269645a12.0
-        for <patches@lists.linux.dev>; Tue, 27 Aug 2024 16:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724800364; x=1725405164; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xt7PVUozcOkVti6ZjAPf01OtJ5FVQQk6eXc9L78hY64=;
-        b=aEJkFWgxSVra4EDa18Xx4K/YE+VGNNQziyDIfUkLn+d4ukoAbQeQwJwRQCpiQBCh6i
-         2pIA5bQcFCm3ZACLEMnVY/c4wHjXZR3rF1GuB4jAr2d2U7bqLdwZl0RNqGHZXxemSVpz
-         XaFr6/uxY8wj7LIi7BU6n/xK0DSDPJBMJmSe8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724800364; x=1725405164;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xt7PVUozcOkVti6ZjAPf01OtJ5FVQQk6eXc9L78hY64=;
-        b=O8egYALZewyvupOIOCLlrQ3mEPnkV51srPlR4zQ15LrrXFKFOZGFufzD+wnSqQu9P4
-         YqBjXFtFHZ50TugGuTo+6Hv6eQgS6oRQnNsZCkKbYTvCIdBvPuht8hxXzCRGyZdUh+7r
-         mHgOosZHboz6QbQHUW0sJTxC/aGBBzCAAku2VkLu/nzTkHn339qnnKNJCaAb+TmrZPeY
-         ipI7P8arjlyDjhfYGP184TvadBi9BVM9dHSblpTNZGwh+9xjs0dOsATcmo3TQDwfNiLQ
-         rieTcibJLVj3wYBgIZcah/RQv8BTKa4Yj503wxSQ0x1nOJJUEQFsTXoqIynHuWWgvusf
-         XuMg==
-X-Forwarded-Encrypted: i=1; AJvYcCUEqY2msEtMiDeCVD1NCX12eMP5SglN4Fkrgqjlx3Sn00R0+yZm48MS38ClRqyXE9xfzIn3ENIg@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxq90qhAiWT7oUJ7IRGf9qs0hqK1mLdnhatzCTZNhqxdqCCoQCN
-	zYDNBf6vp9J0M+i9onpRTxVIqUf1c1MogBzX+ZN0ZeSYB8AqPhdOSQLCjdqUaQ==
-X-Google-Smtp-Source: AGHT+IEAI3xuv6/Qc0Gz02PFmfkKy+Fs/Aoolbg8k5nMPrctpU+khEs9Ayty8BQqGwyTqGxBdT+KlQ==
-X-Received: by 2002:a17:90b:4f83:b0:2c9:80fd:a111 with SMTP id 98e67ed59e1d1-2d646bf2bd3mr14758133a91.18.1724800363982;
-        Tue, 27 Aug 2024 16:12:43 -0700 (PDT)
-Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2d83f695e06sm240164a91.1.2024.08.27.16.12.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 16:12:43 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-clk@vger.kernel.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH v2 2/2] clk: qcom: gcc-sm8550: Don't use shared clk_ops for QUPs
-Date: Tue, 27 Aug 2024 16:12:35 -0700
-Message-ID: <20240827231237.1014813-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-In-Reply-To: <20240827231237.1014813-1-swboyd@chromium.org>
-References: <20240827231237.1014813-1-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TFY6UqET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04113C4AF10;
+	Tue, 27 Aug 2024 23:15:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724800509;
+	bh=OLsfW6fvwwy8Dz9CLI7k9MJrb2Yd+U5ZRIOjzC6OmmU=;
+	h=From:Date:Subject:To:Cc:From;
+	b=TFY6UqET2jHW3ySVqDhEZpJzR66XB3sJupscP3rEtROgdVefIKZF1xc/SfVlHKVNA
+	 kvI6Jv8XUNBT2fk2Uu1/8cPadOxpSTbVL7PyhPBq8bg9C9/zRSszjHtxYs43eKv6/A
+	 p/ZPDsQ1xtYNGdaHMNN+VRfmNtLdmfqp8mlTW39gez5uutvUeb1wkbsrnwThzQh3f/
+	 Zf1+WlgAGpez9f1E2NbO95nx7uddQfXDRZnLMmo3G7Ea/3g0sbfcuZIiiHfhcg2EUd
+	 RQk03FwrVLPWqO9mqWGZhuIFhxlyaN5NyV8R4KGR4rP3ydLIB9T1lJisYCsPVwyP0A
+	 d3M7GKKUkEhNg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 27 Aug 2024 16:15:05 -0700
+Subject: [PATCH] xfs: Fix format specifier for max_folio_size in
+ xfs_fs_fill_super()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240827-xfs-fix-wformat-bs-gt-ps-v1-1-aec6717609e0@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAPhdzmYC/x2MSQqAMAwAvyI5G7BV3L4iHmpNNQetNEUF8e8Wj
+ wMz84BQYBLoswcCnSzs9wQqz8CuZl8IeU4MutBV0eoGbyfo+MbL+bCZiJPgEvEQ7OrGlcYoqyo
+ NKT8CJe9fD+P7ftdr63NqAAAA
+To: Christian Brauner <brauner@kernel.org>
+Cc: Chandan Babu R <chandan.babu@oracle.com>, 
+ "Darrick J. Wong" <djwong@kernel.org>, Pankaj Raghav <p.raghav@samsung.com>, 
+ Luis Chamberlain <mcgrof@kernel.org>, Dave Chinner <dchinner@redhat.com>, 
+ linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2458; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=OLsfW6fvwwy8Dz9CLI7k9MJrb2Yd+U5ZRIOjzC6OmmU=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGnnYv9s2PmAqbtcZ97m+919PNYzbW88KWd5eLrNVq3+x
+ CRNJruCjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRxjaGX0xiz8s/VAgtig3O
+ r+d6cfOKtGn88uAd4TZeh3hWfJef+4Phr2i6Q+LqhyG/VZMF7Pemf9ri6CjrZHtN4bqti5lOT/J
+ kZgA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-The QUPs aren't shared in a way that requires parking the RCG at an
-always on parent in case some other entity turns on the clk. The
-hardware is capable of setting a new frequency itself with the DFS mode,
-so parking is unnecessary. Furthermore, there aren't any GDSCs for these
-devices, so there isn't a possibility of the GDSC turning on the clks
-for housekeeping purposes.
+When building for a 32-bit architecture, where 'size_t' is 'unsigned
+int', there is a warning due to use of '%ld', the specifier for a 'long
+int':
 
-This wasn't a problem to mark these clks shared until we started parking
-shared RCGs at clk registration time in commit 01a0a6cc8cfd ("clk: qcom:
-Park shared RCGs upon registration"). Parking at init is actually
-harmful to the UART when earlycon is used. If the device is pumping out
-data while the frequency changes you'll see garbage on the serial
-console until the driver can probe and actually set a proper frequency.
+  In file included from fs/xfs/xfs_linux.h:82,
+                   from fs/xfs/xfs.h:26,
+                   from fs/xfs/xfs_super.c:7:
+  fs/xfs/xfs_super.c: In function 'xfs_fs_fill_super':
+  fs/xfs/xfs_super.c:1654:1: error: format '%ld' expects argument of type 'long int', but argument 5 has type 'size_t' {aka 'unsigned int'} [-Werror=format=]
+   1654 | "block size (%u bytes) not supported; Only block size (%ld) or less is supported",
+        | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1655 |                                 mp->m_sb.sb_blocksize, max_folio_size);
+        |                                                        ~~~~~~~~~~~~~~
+        |                                                        |
+        |                                                        size_t {aka unsigned int}
+  ...
+  fs/xfs/xfs_super.c:1654:58: note: format string is defined here
+   1654 | "block size (%u bytes) not supported; Only block size (%ld) or less is supported",
+        |                                                        ~~^
+        |                                                          |
+        |                                                          long int
+        |                                                        %d
 
-Revert the QUP part of commit 929c75d57566 ("clk: qcom: gcc-sm8550: Mark
-RCGs shared where applicable") so that the QUPs don't get parked during
-clk registration and break UART operations.
+Use the proper 'size_t' specifier, '%zu', to resolve the warning.
 
-Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Reported-by: Amit Pundir <amit.pundir@linaro.org>
-Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 0ab3ca31b012 ("xfs: enable block size larger than page size support")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 52 +++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ fs/xfs/xfs_super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 7944ddb4b47d..0244a05866b8 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -536,7 +536,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s0_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
+diff --git a/fs/xfs/xfs_super.c b/fs/xfs/xfs_super.c
+index 242271298a33..e8cc7900911e 100644
+--- a/fs/xfs/xfs_super.c
++++ b/fs/xfs/xfs_super.c
+@@ -1651,7 +1651,7 @@ xfs_fs_fill_super(
  
-@@ -551,7 +551,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s1_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -566,7 +566,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s2_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s3_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -596,7 +596,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s4_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -611,7 +611,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s5_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -626,7 +626,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s6_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -641,7 +641,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s7_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -656,7 +656,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s8_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -671,7 +671,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s9_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -700,7 +700,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-@@ -717,7 +717,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-@@ -750,7 +750,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-@@ -767,7 +767,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-@@ -784,7 +784,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-@@ -801,7 +801,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-@@ -818,7 +818,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-@@ -835,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
-@@ -852,7 +852,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s0_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s0_clk_src = {
-@@ -869,7 +869,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s1_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s1_clk_src = {
-@@ -886,7 +886,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s2_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s2_clk_src = {
-@@ -903,7 +903,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s3_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s3_clk_src = {
-@@ -920,7 +920,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s4_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s4_clk_src = {
-@@ -937,7 +937,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s5_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s5_clk_src = {
-@@ -975,7 +975,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s6_clk_src_init = {
- 	.parent_data = gcc_parent_data_8,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_8),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s6_clk_src = {
-@@ -992,7 +992,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s7_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s7_clk_src = {
+ 		if (mp->m_sb.sb_blocksize > max_folio_size) {
+ 			xfs_warn(mp,
+-"block size (%u bytes) not supported; Only block size (%ld) or less is supported",
++"block size (%u bytes) not supported; Only block size (%zu) or less is supported",
+ 				mp->m_sb.sb_blocksize, max_folio_size);
+ 			error = -ENOSYS;
+ 			goto out_free_sb;
+
+---
+base-commit: f143d1a48d6ecce12f5bced0d18a10a0294726b5
+change-id: 20240827-xfs-fix-wformat-bs-gt-ps-967f3aa1c142
+
+Best regards,
 -- 
-https://chromeos.dev
+Nathan Chancellor <nathan@kernel.org>
 
