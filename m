@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD01A08A3;
-	Tue, 27 Aug 2024 14:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474CD1C578D;
+	Tue, 27 Aug 2024 14:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769855; cv=none; b=GojPUscG3MZL8x8z+zgk/QDaotFeYPcUPDtMo3vKw9ViEuMVxR39hNq706jdFnspxDhgtmCcEmxgWRnNYLNtdQx4sbIa0SwkTqaJzE+lYzq1X4rX8SEfGqcW8lE4Goci5vA0M3X1OLQ/QI9X+go7SomwMHH97aG5aBDAedw5Y5g=
+	t=1724769858; cv=none; b=IrAcOdq8aOyOpqHYUKhgqtBYu13WPrBjYcxGWFJeEXcusdAoTtI6piW1g66QcXV5MG9AWQo4Yj9I53NN/A+Kecx6GPijIi5rQElrCHTiKgzGxwCbBpj4+IabQB+Rqg7KZteswsKUDUqGf4djFzXhCUpaP8UJrgGdY16h4K6atbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769855; c=relaxed/simple;
-	bh=uUgdvIdbr4Mixhpf85cR/Og9ML2jc/51LNLb+mlo/as=;
+	s=arc-20240116; t=1724769858; c=relaxed/simple;
+	bh=RO4cYfFdaXSZ5swIzcdP7jvt2Esc/qC3xLrgEu47AuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHIpeK19ZX3TAWqaKEGFm4A5/AT1tzdUr/kUpS9Bt841Q6DlTBIsRol7OIe8Hh9fdYIcVyjQyi4GltKJHZgYHghAk/hbpqyO0gEVo0lau1EBu07lkcuSMnfpoI8gKiYEnb9W0x6Bsm/DD4u7sYP0iMKcFiUeYIZzAAdl5lx9zfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqqkULZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJ8xQoS7ztlGKus8/wgzsgkGKmpV3HVZ9FCoMd9XGcZaRq7kVFiGn4KBInWEEvIZbrLE/E6GluoEpiAf8awDp2f2xJItoe4RI1O8Dv+1zkM0Mb31gIM+mw+XnhIN2FjEPBF5yMkKWpM4ATUd2/LNnA0vm3mdX+EoLOJBsCUpTuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWxDJMtA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqqkULZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6E6C6105D;
-	Tue, 27 Aug 2024 14:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWxDJMtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05F0C6105D;
+	Tue, 27 Aug 2024 14:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769854;
-	bh=uUgdvIdbr4Mixhpf85cR/Og9ML2jc/51LNLb+mlo/as=;
+	s=korg; t=1724769858;
+	bh=RO4cYfFdaXSZ5swIzcdP7jvt2Esc/qC3xLrgEu47AuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqqkULZD9SoR+NVH+GkXicpJzOfHoPspfuIveAHwEicQDS5V59UijBTkJs5Zt9xfX
-	 A8CDliW1mtLv1J4hFDmxymBXXAsNp05ZSdMh1hPB3Yv8ZeG8C9RuMhAeSD4Iw7ZMwI
-	 NXWbt5iZuiBnetTBoGwCVtAIAmGCNt30P5ezn7n0=
+	b=sWxDJMtAMhmQRL0yoAMPGTuNSdIfD7lVRRmI4e+SGr7RguVG8boGmlb1aCk2PzHS6
+	 NvPyVVLGTkmgQN8f+HUL2By+EDP8+jM6F9MciBPs/EH+hIjFr4jmImpzyn6NFi4pQP
+	 /cQHbanLvrOYBU/6ZuBTYi23y0kYep1ABkB3cOos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.6 014/341] thunderbolt: Mark XDomain as unplugged when router is removed
-Date: Tue, 27 Aug 2024 16:34:05 +0200
-Message-ID: <20240827143843.947936784@linuxfoundation.org>
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 049/341] igc: Fix packet still tx after gate close by reducing i226 MAC retry buffer
+Date: Tue, 27 Aug 2024 16:34:40 +0200
+Message-ID: <20240827143845.283837322@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -49,39 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
 
-commit e2006140ad2e01a02ed0aff49cc2ae3ceeb11f8d upstream.
+[ Upstream commit e037a26ead187901f83cad9c503ccece5ff6817a ]
 
-I noticed that when we do discrete host router NVM upgrade and it gets
-hot-removed from the PCIe side as a result of NVM firmware authentication,
-if there is another host connected with enabled paths we hang in tearing
-them down. This is due to fact that the Thunderbolt networking driver
-also tries to cleanup the paths and ends up blocking in
-tb_disconnect_xdomain_paths() waiting for the domain lock.
+Testing uncovered that even when the taprio gate is closed, some packets
+still transmit.
 
-However, at this point we already cleaned the paths in tb_stop() so
-there is really no need for tb_disconnect_xdomain_paths() to do that
-anymore. Furthermore it already checks if the XDomain is unplugged and
-bails out early so take advantage of that and mark the XDomain as
-unplugged when we remove the parent router.
+According to i225/6 hardware errata [1], traffic might overflow the
+planned QBV window. This happens because MAC maintains an internal buffer,
+primarily for supporting half duplex retries. Therefore, even when the
+gate closes, residual MAC data in the buffer may still transmit.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To mitigate this for i226, reduce the MAC's internal buffer from 192 bytes
+to the recommended 88 bytes by modifying the RETX_CTL register value.
+
+This follows guidelines from:
+[1] Ethernet Controller I225/I22 Spec Update Rev 2.1 Errata Item 9:
+    TSN: Packet Transmission Might Cross Qbv Window
+[2] I225/6 SW User Manual Rev 1.2.4: Section 8.11.5 Retry Buffer Control
+
+Note that the RETX_CTL register can't be used in TSN mode because half
+duplex feature cannot coexist with TSN.
+
+Test Steps:
+1.  Send taprio cmd to board A:
+    tc qdisc replace dev enp1s0 parent root handle 100 taprio \
+    num_tc 4 \
+    map 3 2 1 0 3 3 3 3 3 3 3 3 3 3 3 3 \
+    queues 1@0 1@1 1@2 1@3 \
+    base-time 0 \
+    sched-entry S 0x07 500000 \
+    sched-entry S 0x0f 500000 \
+    flags 0x2 \
+    txtime-delay 0
+
+    Note that for TC3, gate should open for 500us and close for another
+    500us.
+
+3.  Take tcpdump log on Board B.
+
+4.  Send udp packets via UDP tai app from Board A to Board B.
+
+5.  Analyze tcpdump log via wireshark log on Board B. Ensure that the
+    total time from the first to the last packet received during one cycle
+    for TC3 does not exceed 500us.
+
+Fixes: 43546211738e ("igc: Add new device ID's")
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/switch.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/igc/igc_defines.h |  6 ++++
+ drivers/net/ethernet/intel/igc/igc_tsn.c     | 34 ++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -3159,6 +3159,7 @@ void tb_switch_remove(struct tb_switch *
- 			tb_switch_remove(port->remote->sw);
- 			port->remote = NULL;
- 		} else if (port->xdomain) {
-+			port->xdomain->is_unplugged = true;
- 			tb_xdomain_remove(port->xdomain);
- 			port->xdomain = NULL;
- 		}
+diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
+index b3037016f31d2..a18af5c87cde4 100644
+--- a/drivers/net/ethernet/intel/igc/igc_defines.h
++++ b/drivers/net/ethernet/intel/igc/igc_defines.h
+@@ -402,6 +402,12 @@
+ #define IGC_DTXMXPKTSZ_TSN	0x19 /* 1600 bytes of max TX DMA packet size */
+ #define IGC_DTXMXPKTSZ_DEFAULT	0x98 /* 9728-byte Jumbo frames */
+ 
++/* Retry Buffer Control */
++#define IGC_RETX_CTL			0x041C
++#define IGC_RETX_CTL_WATERMARK_MASK	0xF
++#define IGC_RETX_CTL_QBVFULLTH_SHIFT	8 /* QBV Retry Buffer Full Threshold */
++#define IGC_RETX_CTL_QBVFULLEN	0x1000 /* Enable QBV Retry Buffer Full Threshold */
++
+ /* Transmit Scheduling Latency */
+ /* Latency between transmission scheduling (LaunchTime) and the time
+  * the packet is transmitted to the network in nanosecond.
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 22cefb1eeedfa..46d4c3275bbb5 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -78,6 +78,15 @@ void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
+ 	wr32(IGC_GTXOFFSET, txoffset);
+ }
+ 
++static void igc_tsn_restore_retx_default(struct igc_adapter *adapter)
++{
++	struct igc_hw *hw = &adapter->hw;
++	u32 retxctl;
++
++	retxctl = rd32(IGC_RETX_CTL) & IGC_RETX_CTL_WATERMARK_MASK;
++	wr32(IGC_RETX_CTL, retxctl);
++}
++
+ /* Returns the TSN specific registers to their default values after
+  * the adapter is reset.
+  */
+@@ -91,6 +100,9 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
+ 	wr32(IGC_TXPBS, I225_TXPBSIZE_DEFAULT);
+ 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_DEFAULT);
+ 
++	if (igc_is_device_id_i226(hw))
++		igc_tsn_restore_retx_default(adapter);
++
+ 	tqavctrl = rd32(IGC_TQAVCTRL);
+ 	tqavctrl &= ~(IGC_TQAVCTRL_TRANSMIT_MODE_TSN |
+ 		      IGC_TQAVCTRL_ENHANCED_QAV | IGC_TQAVCTRL_FUTSCDDIS);
+@@ -111,6 +123,25 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
+ 	return 0;
+ }
+ 
++/* To partially fix i226 HW errata, reduce MAC internal buffering from 192 Bytes
++ * to 88 Bytes by setting RETX_CTL register using the recommendation from:
++ * a) Ethernet Controller I225/I226 Specification Update Rev 2.1
++ *    Item 9: TSN: Packet Transmission Might Cross the Qbv Window
++ * b) I225/6 SW User Manual Rev 1.2.4: Section 8.11.5 Retry Buffer Control
++ */
++static void igc_tsn_set_retx_qbvfullthreshold(struct igc_adapter *adapter)
++{
++	struct igc_hw *hw = &adapter->hw;
++	u32 retxctl, watermark;
++
++	retxctl = rd32(IGC_RETX_CTL);
++	watermark = retxctl & IGC_RETX_CTL_WATERMARK_MASK;
++	/* Set QBVFULLTH value using watermark and set QBVFULLEN */
++	retxctl |= (watermark << IGC_RETX_CTL_QBVFULLTH_SHIFT) |
++		   IGC_RETX_CTL_QBVFULLEN;
++	wr32(IGC_RETX_CTL, retxctl);
++}
++
+ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ {
+ 	struct igc_hw *hw = &adapter->hw;
+@@ -123,6 +154,9 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_TSN);
+ 	wr32(IGC_TXPBS, IGC_TXPBSIZE_TSN);
+ 
++	if (igc_is_device_id_i226(hw))
++		igc_tsn_set_retx_qbvfullthreshold(adapter);
++
+ 	for (i = 0; i < adapter->num_tx_queues; i++) {
+ 		struct igc_ring *ring = adapter->tx_ring[i];
+ 		u32 txqctl = 0;
+-- 
+2.43.0
+
 
 
