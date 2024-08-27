@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29C0DDC1;
-	Tue, 27 Aug 2024 14:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDDD1C824B;
+	Tue, 27 Aug 2024 14:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770552; cv=none; b=K0a+siALYhKW0rNTULiKaG6Vl10HUOP/Xk57bBbD9OG9YZXzIn8dSXKjVHRT3vQ+0pyt5eTmZ+cG4HX22vxIejUHnJoNk+EDsrwAN6QHxVftnMB5VdmWj5VfBLdrbz8j7u/4j+XM5Leh7lxV/mdYByohjqQiwwtjePsFY29+FLM=
+	t=1724770555; cv=none; b=EziTv+LgkKSYiu3sfREe2OcxZouQhGEeo7RDr4gIIQfzJFrqgF0WOUMWkVZ7BWCuLvQo5QACurMuVy/GDmaK1C18o7SBU6LkTBFcoLbnaOJZdsMPtK8zRsbobzMRWRDx8XuacqfgP/bLNIH+wo+vE+h318ooiTIMBc2ZLnifVJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770552; c=relaxed/simple;
-	bh=q3XeGpHgydLyySxrLnOfmNx2bhTe0wNyb7H7oNbibNY=;
+	s=arc-20240116; t=1724770555; c=relaxed/simple;
+	bh=fn739rP3weeLsGsdEDnhWrSSiYk6+D9r9GiyiyLY7ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PE8zOdoA6wxSZUXRQ9+vQ+6ePoVlqtRp+Kl2vhCo/ssp4swPTIYUHhDC2aRhlHxQs1nx6rVsTt3rDU0DIIdGHgVrshKs7s0v/mdl/Crfyni+8v703FfHvyhoFo5e/WC24DAZpMhUc8Grtzi1siuxiGCXL9HTeI+zE2p2HWg/Vi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvWqCWCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ld3xUiycr8tMSxLJhDkZs/FfxGDpRn9XstUIviJRIOSsZPFm2JCD3vmWUgiDmxt16bhHIXrX8f68/ADCnH+U36nnqZ5lnBqtchqG4EKc50lZFukwa85wIkoxTtdp0yWI/PDcK2jTV1z3nMLhYlETYueMhwX5TWpDxATRtRJ8+iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUZB/y9d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvWqCWCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A6CC4FDF5;
-	Tue, 27 Aug 2024 14:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUZB/y9d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8A7C4FDE1;
+	Tue, 27 Aug 2024 14:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770551;
-	bh=q3XeGpHgydLyySxrLnOfmNx2bhTe0wNyb7H7oNbibNY=;
+	s=korg; t=1724770555;
+	bh=fn739rP3weeLsGsdEDnhWrSSiYk6+D9r9GiyiyLY7ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BvWqCWCJoP1Emdt8CSJnHwb2u1Ea6oad8vQZi9SjH5bY8eu+tZqZnWMz8r0hxfiv0
-	 ikLPgKcxqhf/yD0sU0omOjJ5mj/MqWTI38RM4FX+F+OpS8cKgNYqW0uaVeFSxHQzWs
-	 Zv1Ey8A2PHml80CMulW2X1aIv1LJZPv/PhRf3Ofo=
+	b=WUZB/y9de6qMBAC7FBPiOvUAk1Z/DFfbBXDKpzAWJ4mJtybD4aqR01rr1VBzwRvk1
+	 phgV8VPzr5pfLSd+Ydtj9TDTZC/rEnrV1hrYlbEHp5ncEX391BtIlmIosDvEWDf8LC
+	 p9qjZjFW804fUXgjjSiZimEyO9lGfICIPGoIZwMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jan Tluka <jtluka@redhat.com>,
+	Jirka Hladky <jhladky@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/341] dpaa2-switch: Fix error checking in dpaa2_switch_seed_bp()
-Date: Tue, 27 Aug 2024 16:38:14 +0200
-Message-ID: <20240827143853.415071660@linuxfoundation.org>
+Subject: [PATCH 6.6 264/341] igb: cope with large MAX_SKB_FRAGS
+Date: Tue, 27 Aug 2024 16:38:15 +0200
+Message-ID: <20240827143853.453249887@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,54 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit c50e7475961c36ec4d21d60af055b32f9436b431 ]
+[ Upstream commit 8aba27c4a5020abdf60149239198297f88338a8d ]
 
-The dpaa2_switch_add_bufs() function returns the number of bufs that it
-was able to add.  It returns BUFS_PER_CMD (7) for complete success or a
-smaller number if there are not enough pages available.  However, the
-error checking is looking at the total number of bufs instead of the
-number which were added on this iteration.  Thus the error checking
-only works correctly for the first iteration through the loop and
-subsequent iterations are always counted as a success.
+Sabrina reports that the igb driver does not cope well with large
+MAX_SKB_FRAG values: setting MAX_SKB_FRAG to 45 causes payload
+corruption on TX.
 
-Fix this by checking only the bufs added in the current iteration.
+An easy reproducer is to run ssh to connect to the machine.  With
+MAX_SKB_FRAGS=17 it works, with MAX_SKB_FRAGS=45 it fails.  This has
+been reported originally in
+https://bugzilla.redhat.com/show_bug.cgi?id=2265320
 
-Fixes: 0b1b71370458 ("staging: dpaa2-switch: handle Rx path on control interface")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/eec27f30-b43f-42b6-b8ee-04a6f83423b6@stanley.mountain
+The root cause of the issue is that the driver does not take into
+account properly the (possibly large) shared info size when selecting
+the ring layout, and will try to fit two packets inside the same 4K
+page even when the 1st fraglist will trump over the 2nd head.
+
+Address the issue by checking if 2K buffers are insufficient.
+
+Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
+Reported-by: Jan Tluka <jtluka@redhat.com>
+Reported-by: Jirka Hladky <jhladky@redhat.com>
+Reported-by: Sabrina Dubroca <sd@queasysnail.net>
+Tested-by: Sabrina Dubroca <sd@queasysnail.net>
+Tested-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
+Link: https://patch.msgid.link/20240816152034.1453285-1-vinschen@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index e01a246124ac6..a05a8525caa45 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -2603,13 +2603,14 @@ static int dpaa2_switch_refill_bp(struct ethsw_core *ethsw)
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 4431e7693d45f..8c8894ef33886 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -4833,6 +4833,7 @@ static void igb_set_rx_buffer_len(struct igb_adapter *adapter,
  
- static int dpaa2_switch_seed_bp(struct ethsw_core *ethsw)
- {
--	int *count, i;
-+	int *count, ret, i;
- 
- 	for (i = 0; i < DPAA2_ETHSW_NUM_BUFS; i += BUFS_PER_CMD) {
-+		ret = dpaa2_switch_add_bufs(ethsw, ethsw->bpid);
- 		count = &ethsw->buf_count;
--		*count += dpaa2_switch_add_bufs(ethsw, ethsw->bpid);
-+		*count += ret;
- 
--		if (unlikely(*count < BUFS_PER_CMD))
-+		if (unlikely(ret < BUFS_PER_CMD))
- 			return -ENOMEM;
- 	}
- 
+ #if (PAGE_SIZE < 8192)
+ 	if (adapter->max_frame_size > IGB_MAX_FRAME_BUILD_SKB ||
++	    IGB_2K_TOO_SMALL_WITH_PADDING ||
+ 	    rd32(E1000_RCTL) & E1000_RCTL_SBP)
+ 		set_ring_uses_large_buffer(rx_ring);
+ #endif
 -- 
 2.43.0
 
