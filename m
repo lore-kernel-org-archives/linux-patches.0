@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9B41C5783;
-	Tue, 27 Aug 2024 15:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E4A1C6886;
+	Tue, 27 Aug 2024 15:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771646; cv=none; b=s9yFEGGdvqEhdRUR1ldYLqzj7OIhV4y4coQIG1FeTi3EeOVo/TqSDcVCag7soxu6sCGnIBZr1JguW5mzFWXnAw/HfArE36czdNnS3Zye257maadFzscs8iio36g9ilsLgfiKKY+CQcfuqSVH3B0wNPMNMkNnmK76cyw7s7hbW/s=
+	t=1724771649; cv=none; b=r3oZOkFHleCitYE+XViW8juQWgxA9AqfFY7NBWhY51j12G1OSSoIH5p8tyMZWQvE9O+cc2z9hbihzmk9MNTGafQa6FcgBQMpTqqMOTHUnlKs34h37pe1mvthp8992aerk+gJtujZqrTL5Lxl2MsFSJStLYRGbu+Mue2Hj7DwNYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771646; c=relaxed/simple;
-	bh=YhDdmzIds/CkaSM7d3CCTGz6UqA/1K7e7HSyNZGAWH4=;
+	s=arc-20240116; t=1724771649; c=relaxed/simple;
+	bh=xnNZcJQ9Sc3hZvvFIQb37tNMkjSsieqmipTan+Jvcnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQ/0T7128mYXGkyi2a1tvHf6m4DF546Z3LACP6gW2+V2HJvP8JJWaK65n4dZwjyirIZO15/eaqE1Lh8LXZriyr2PPN4t8TuuhIksJFskG5kkAmILlgZtuDZ3IasF91F1aJ+GnYbJLfh3IxftR512PY99jTNsz4lv6bQUqwbB5HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JozmiFkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkNr2YArFHlTE4PTm8WUQyL4YOKHFuHBCwFQF6eYWF7KlbhFnL1iZHzzCoUc39AygSyZi7ZSwHxgELwUDvrGyzpzNMSy+GQ8jOn25LLrRzH7azVn2QqhBiIYsmXd1O2ktfTVKgXC07HAVNcp5wben3RHYKDk6K3OyP54l0yLMMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jL01VAT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JozmiFkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A37C61064;
-	Tue, 27 Aug 2024 15:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jL01VAT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5EEC6106B;
+	Tue, 27 Aug 2024 15:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771646;
-	bh=YhDdmzIds/CkaSM7d3CCTGz6UqA/1K7e7HSyNZGAWH4=;
+	s=korg; t=1724771649;
+	bh=xnNZcJQ9Sc3hZvvFIQb37tNMkjSsieqmipTan+Jvcnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JozmiFkUpy7eNMSQOq3vTMXK5PDCSflWOaLOwpbR795EJSh8nXIuYl2/ZhXLqmCzR
-	 X1l90jenD1WXZOdutpgVCplX106jr2vpJB4s1lwX9leCxv0MwIaTD/JmX1P5ovNelK
-	 msHdJEkyy+Fsy72MvororE3VlFdCoKeWxkZPdqi8=
+	b=jL01VAT36b5+VJRvMkoesUVwWJgmS5AHPbMSVvS+tWH62JVFneqpiO2UvFSix0o70
+	 YBw7RY20IDE5IL118RvtoktKQryEKs7fz6bFPl7ETOJiaIHjha9mmg2bT3RfDCZuRp
+	 w2MjsxhqUnl6RfIGNLvCDUuW54d+LP/gatqA7b8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.10 251/273] nouveau/firmware: use dma non-coherent allocator
-Date: Tue, 27 Aug 2024 16:39:35 +0200
-Message-ID: <20240827143842.954036326@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.10 252/273] thermal: of: Fix OF node leak in thermal_of_trips_init() error path
+Date: Tue, 27 Aug 2024 16:39:36 +0200
+Message-ID: <20240827143842.991316499@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,108 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 9b340aeb26d50e9a9ec99599e2a39b035fac978e upstream.
+commit afc954fd223ded70b1fa000767e2531db55cce58 upstream.
 
-Currently, enabling SG_DEBUG in the kernel will cause nouveau to hit a
-BUG() on startup, when the iommu is enabled:
+Terminating for_each_child_of_node() loop requires dropping OF node
+reference, so bailing out after thermal_of_populate_trip() error misses
+this.  Solve the OF node reference leak with scoped
+for_each_child_of_node_scoped().
 
-kernel BUG at include/linux/scatterlist.h:187!
-invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 7 PID: 930 Comm: (udev-worker) Not tainted 6.9.0-rc3Lyude-Test+ #30
-Hardware name: MSI MS-7A39/A320M GAMING PRO (MS-7A39), BIOS 1.I0 01/22/2019
-RIP: 0010:sg_init_one+0x85/0xa0
-Code: 69 88 32 01 83 e1 03 f6 c3 03 75 20 a8 01 75 1e 48 09 cb 41 89 54
-24 08 49 89 1c 24 41 89 6c 24 0c 5b 5d 41 5c e9 7b b9 88 00 <0f> 0b 0f 0b
-0f 0b 48 8b 05 5e 46 9a 01 eb b2 66 66 2e 0f 1f 84 00
-RSP: 0018:ffffa776017bf6a0 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffa77600d87000 RCX: 000000000000002b
-RDX: 0000000000000001 RSI: 0000000000000000 RDI: ffffa77680d87000
-RBP: 000000000000e000 R08: 0000000000000000 R09: 0000000000000000
-R10: ffff98f4c46aa508 R11: 0000000000000000 R12: ffff98f4c46aa508
-R13: ffff98f4c46aa008 R14: ffffa77600d4a000 R15: ffffa77600d4a018
-FS:  00007feeb5aae980(0000) GS:ffff98f5c4dc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f22cb9a4520 CR3: 00000001043ba000 CR4: 00000000003506f0
-Call Trace:
- <TASK>
- ? die+0x36/0x90
- ? do_trap+0xdd/0x100
- ? sg_init_one+0x85/0xa0
- ? do_error_trap+0x65/0x80
- ? sg_init_one+0x85/0xa0
- ? exc_invalid_op+0x50/0x70
- ? sg_init_one+0x85/0xa0
- ? asm_exc_invalid_op+0x1a/0x20
- ? sg_init_one+0x85/0xa0
- nvkm_firmware_ctor+0x14a/0x250 [nouveau]
- nvkm_falcon_fw_ctor+0x42/0x70 [nouveau]
- ga102_gsp_booter_ctor+0xb4/0x1a0 [nouveau]
- r535_gsp_oneinit+0xb3/0x15f0 [nouveau]
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? nvkm_udevice_new+0x95/0x140 [nouveau]
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? ktime_get+0x47/0xb0
-
-Fix this by using the non-coherent allocator instead, I think there
-might be a better answer to this, but it involve ripping up some of
-APIs using sg lists.
-
-Cc: stable@vger.kernel.org
-Fixes: 2541626cfb79 ("drm/nouveau/acr: use common falcon HS FW code for ACR FWs")
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240815201923.632803-1-airlied@gmail.com
+Fixes: d0c75fa2c17f ("thermal/of: Initialize trip points separately")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://patch.msgid.link/20240814195823.437597-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/core/firmware.c |    9 ++++++---
- drivers/gpu/drm/nouveau/nvkm/falcon/fw.c     |    6 ++++++
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/thermal/thermal_of.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/core/firmware.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/firmware.c
-@@ -205,7 +205,8 @@ nvkm_firmware_dtor(struct nvkm_firmware
- 		break;
- 	case NVKM_FIRMWARE_IMG_DMA:
- 		nvkm_memory_unref(&memory);
--		dma_free_coherent(fw->device->dev, sg_dma_len(&fw->mem.sgl), fw->img, fw->phys);
-+		dma_free_noncoherent(fw->device->dev, sg_dma_len(&fw->mem.sgl),
-+				     fw->img, fw->phys, DMA_TO_DEVICE);
- 		break;
- 	case NVKM_FIRMWARE_IMG_SGT:
- 		nvkm_memory_unref(&memory);
-@@ -236,10 +237,12 @@ nvkm_firmware_ctor(const struct nvkm_fir
- 		break;
- 	case NVKM_FIRMWARE_IMG_DMA: {
- 		dma_addr_t addr;
--
- 		len = ALIGN(fw->len, PAGE_SIZE);
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -125,7 +125,7 @@ static int thermal_of_populate_trip(stru
+ static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *ntrips)
+ {
+ 	struct thermal_trip *tt;
+-	struct device_node *trips, *trip;
++	struct device_node *trips;
+ 	int ret, count;
  
--		fw->img = dma_alloc_coherent(fw->device->dev, len, &addr, GFP_KERNEL);
-+		fw->img = dma_alloc_noncoherent(fw->device->dev,
-+						len, &addr,
-+						DMA_TO_DEVICE,
-+						GFP_KERNEL);
- 		if (fw->img) {
- 			memcpy(fw->img, src, fw->len);
- 			fw->phys = addr;
---- a/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
-@@ -89,6 +89,12 @@ nvkm_falcon_fw_boot(struct nvkm_falcon_f
- 		nvkm_falcon_fw_dtor_sigs(fw);
- 	}
+ 	trips = of_get_child_by_name(np, "trips");
+@@ -150,7 +150,7 @@ static struct thermal_trip *thermal_of_t
+ 	*ntrips = count;
  
-+	/* after last write to the img, sync dma mappings */
-+	dma_sync_single_for_device(fw->fw.device->dev,
-+				   fw->fw.phys,
-+				   sg_dma_len(&fw->fw.mem.sgl),
-+				   DMA_TO_DEVICE);
-+
- 	FLCNFW_DBG(fw, "resetting");
- 	fw->func->reset(fw);
- 
+ 	count = 0;
+-	for_each_child_of_node(trips, trip) {
++	for_each_child_of_node_scoped(trips, trip) {
+ 		ret = thermal_of_populate_trip(trip, &tt[count++]);
+ 		if (ret)
+ 			goto out_kfree;
 
 
