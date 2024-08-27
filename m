@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813E51C7B92;
-	Tue, 27 Aug 2024 14:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32571BFE06;
+	Tue, 27 Aug 2024 14:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770312; cv=none; b=qVNNW9mH2E5rBlA03uuQA5uPrkBV7jQWdgPnguUDh85yBRrXzgybYolpMYvJtLtiMZM0kbt4JiRjobr8nDYZtbVRarz8LJhvOOUHlPdQ0+W7mtEzNRCH43QP4Zff3auVheK3KI5MFC7XHQVVU4wYbZfWBtUSaRSjjofKzAOGseU=
+	t=1724770316; cv=none; b=S45qru7o614BE6Asm7Yh5SiCcEfbwIfUpvD0TdCM+Azhr1FkaVKb47BZKTxoCZDvwDONXmAGrjEYLvRAdfkxkj7UWUXZ5KTYK/5J6/+DfjvK/fd0HOyYV0mK6OO7bXLHjdaw+iijsxCR1BKItK1yaLROACr5sgx3bajhq1p3eZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770312; c=relaxed/simple;
-	bh=wVTSHXcjhM1RR8VqmByMHMJdgMVcR3p3nsjJ0BPD+gs=;
+	s=arc-20240116; t=1724770316; c=relaxed/simple;
+	bh=uNXHDFxRWk+ZIlCuA+YxIwo+XuLlo+B/9twsmqn7zHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xxyb59HNOw6zjHeLTbeQLxFbkwseS90Wu7B/v3F77C7iiKd+4Kjtb9IyseFqotjygf6N38xfUTWjS46y8F0ePov/cXoWFZldOrc0f3t7LWcUbViOQZREe3ZTcLBhFbSscfp8Rc5fhHoWerO8xZXMG+f0j9mDaU1E4TtNmHUGpCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9PZ+HYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUBdwDkTgc20PRUPmx0jLlSiiI14QywGl6wNgwOe0zO2t+ejWzN2GFph0kuxuhN9wGREbhIytpJMn8IKnaxTy1wlP5+DaxGBGVf+rFF7A80HPgMiBpyNl4dojSrjlmivws172T5uGAE8v3eS+mquB4O1JzIhQysdFwKwIFW4BeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+d8Q5dg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9PZ+HYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA808C4DE0F;
-	Tue, 27 Aug 2024 14:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+d8Q5dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6093FC4DE06;
+	Tue, 27 Aug 2024 14:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770312;
-	bh=wVTSHXcjhM1RR8VqmByMHMJdgMVcR3p3nsjJ0BPD+gs=;
+	s=korg; t=1724770315;
+	bh=uNXHDFxRWk+ZIlCuA+YxIwo+XuLlo+B/9twsmqn7zHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9PZ+HYRfkYxhCINbp6TMjOJvmwmJvJUEi4320yIXbxjbazIgeXrfHnhOdHUj3K6y
-	 jesl6eb6MSjICOQzpKCY1OUwRQPVOv6FBPFUJLNhEjr1otbnLYIP8MGlaUhuTZBeWF
-	 CESoJAIayRHmDXwj7e+tURihkXniyy4LQqdVruMY=
+	b=C+d8Q5dg0AthsXUDZ5nDKQD/FyTjgsk/ZVohFZrnRRScLB0z7bIqaUniBbdH3ba9I
+	 R9k6Q4fNTiI6pecul8Mhs7jnzBpzMWbpiHfNUJ7wBRB+l9xObUW47CREyuo072gsrF
+	 ur50or5Mf+qAofvDtdm2m2G2vBEhwPI66IG8zcns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 160/341] riscv: blacklist assembly symbols for kprobe
-Date: Tue, 27 Aug 2024 16:36:31 +0200
-Message-ID: <20240827143849.504335749@linuxfoundation.org>
+Subject: [PATCH 6.6 151/341] gfs2: Refcounting fix in gfs2_thaw_super
+Date: Tue, 27 Aug 2024 16:36:22 +0200
+Message-ID: <20240827143849.164517534@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -46,85 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 5014396af9bbac0f28d9afee7eae405206d01ee7 ]
+[ Upstream commit 4e58543e7da4859c4ba61d15493e3522b6ad71fd ]
 
-Adding kprobes on some assembly functions (mainly exception handling)
-will result in crashes (either recursive trap or panic). To avoid such
-errors, add ASM_NOKPROBE() macro which allow adding specific symbols
-into the __kprobe_blacklist section and use to blacklist the following
-symbols that showed to be problematic:
-- handle_exception()
-- ret_from_exception()
-- handle_kernel_stack_overflow()
+It turns out that the .freeze_super and .thaw_super operations require
+the filesystem to manage the superblock refcount itself.  We are using
+the freeze_super() and thaw_super() helpers to mostly take care of that
+for us, but this means that the superblock may no longer be around by
+when thaw_super() returns, and gfs2_thaw_super() will then access freed
+memory.  Take an extra superblock reference in gfs2_thaw_super() to fix
+that.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20231004131009.409193-1-cleger@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/asm.h | 10 ++++++++++
- arch/riscv/kernel/entry.S    |  3 +++
- 2 files changed, 13 insertions(+)
+ fs/gfs2/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/include/asm/asm.h b/arch/riscv/include/asm/asm.h
-index bfb4c26f113c4..b5b84c6be01e1 100644
---- a/arch/riscv/include/asm/asm.h
-+++ b/arch/riscv/include/asm/asm.h
-@@ -164,6 +164,16 @@
- 	REG_L x31, PT_T6(sp)
- 	.endm
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 8b34c6cf9293f..1200cb8059995 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -819,6 +819,7 @@ static int gfs2_thaw_super(struct super_block *sb, enum freeze_holder who)
+ 	if (!test_bit(SDF_FREEZE_INITIATOR, &sdp->sd_flags))
+ 		goto out;
  
-+/* Annotate a function as being unsuitable for kprobes. */
-+#ifdef CONFIG_KPROBES
-+#define ASM_NOKPROBE(name)				\
-+	.pushsection "_kprobe_blacklist", "aw";		\
-+	RISCV_PTR name;					\
-+	.popsection
-+#else
-+#define ASM_NOKPROBE(name)
-+#endif
-+
- #endif /* __ASSEMBLY__ */
++	atomic_inc(&sb->s_active);
+ 	gfs2_freeze_unlock(&sdp->sd_freeze_gh);
  
- #endif /* _ASM_RISCV_ASM_H */
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index 278d01d2911fd..ed7baf2cf7e87 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -105,6 +105,7 @@ _save_context:
- 1:
- 	tail do_trap_unknown
- SYM_CODE_END(handle_exception)
-+ASM_NOKPROBE(handle_exception)
+ 	error = gfs2_do_thaw(sdp);
+@@ -829,6 +830,7 @@ static int gfs2_thaw_super(struct super_block *sb, enum freeze_holder who)
+ 	}
+ out:
+ 	mutex_unlock(&sdp->sd_freeze_mutex);
++	deactivate_super(sb);
+ 	return error;
+ }
  
- /*
-  * The ret_from_exception must be called with interrupt disabled. Here is the
-@@ -171,6 +172,7 @@ SYM_CODE_START_NOALIGN(ret_from_exception)
- 	sret
- #endif
- SYM_CODE_END(ret_from_exception)
-+ASM_NOKPROBE(ret_from_exception)
- 
- #ifdef CONFIG_VMAP_STACK
- SYM_CODE_START_LOCAL(handle_kernel_stack_overflow)
-@@ -206,6 +208,7 @@ SYM_CODE_START_LOCAL(handle_kernel_stack_overflow)
- 	move a0, sp
- 	tail handle_bad_stack
- SYM_CODE_END(handle_kernel_stack_overflow)
-+ASM_NOKPROBE(handle_kernel_stack_overflow)
- #endif
- 
- SYM_CODE_START(ret_from_fork)
 -- 
 2.43.0
 
