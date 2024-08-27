@@ -1,47 +1,47 @@
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2089.outbound.protection.outlook.com [40.107.212.89])
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2042.outbound.protection.outlook.com [40.107.95.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2A11CC8AE;
-	Tue, 27 Aug 2024 15:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF4F1CE71E;
+	Tue, 27 Aug 2024 15:51:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.95.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724773916; cv=fail; b=CwjPN6rD4LWbUMzJ0uf1KrVFEe9+MG++dB/J62aQkb4UbpF6opzdww4GHIEu+jVYW2laQWeZ3ysfYyyINNsl0l7E1k3XhSr0R6ngz8mkBp3hh5+M1inSECoDGXMC5TUKIt+Mxiasb5oL3q378XjQ9btu9JqvgV5vVfAFQMsnJac=
+	t=1724773918; cv=fail; b=cvTp6NadcA11q8Pqrb8weOMygaQ+XFygqM8j6f8+S++KPvmEpTztSzjP0RvIiztN5uyW4wKsP728GpQpu+Fd/aoQFRvzNEj/kV8I1tiD0kAnh2PDbjTGb9/m/KrYCisjzW1byU06a+kzns26UlyR3blF+3JH2jzrQWZHOv/NZSg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724773916; c=relaxed/simple;
-	bh=MF/khwL0nYiPRs9CasA+VdkJRC8nWlv1Y3lZTBslSCk=;
+	s=arc-20240116; t=1724773918; c=relaxed/simple;
+	bh=HeFIv0oNDQoWR7S7W805V7J8yMY8RmolvArjw97BQbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=PC19OnZDPJgjzBMWwyMeIcVX9fiFDXNrMsPZr8NUzMeQqSsOQvXnLvyzfjhveWSCFEpG+RbH5Ondjc9G5FnaGaEJfVovqp7u6qeBf5w2PZAetxREBrNgKG/cC3FzF501y5bDxEPIEmWR3Jm4iZvSN2LVq9UK5xMbubY532OOH0g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dGy3tQDc; arc=fail smtp.client-ip=40.107.212.89
+	 Content-Type:MIME-Version; b=m+vHzIVteWyIm81jhx2n3jfgHboyoEXAOWpNVHndfwKy4OPHAIdU1UovStS7m+SDsfxgdGFE0wigRVZ/e60PxtZ3CmTQPUU3Vt0KekVptrddaHhh2QRVmre426dfiOGA/5xugIqtG+GmkAUVAdFp0njZCSXivlepwpCmVLyWWNg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tvlkB2cL; arc=fail smtp.client-ip=40.107.95.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dGy3tQDc"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tvlkB2cL"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iWgbnSEfqf2ZlsTsoYQx4B129x5SGcXqbmZEAmKZZ/hwo0RCwwUDLBgovc3nAkyNWecpfT4FB4Kyw69QgswW6YahdcGKuaPqmtXefRKPFdlMPIv5SIKtqha0IMJUU6G0ajEaUoaarVdhYJeHexH40ycb/fPQydhGBld4RAn/mBU3IG8MfeMjTOxf/TGX5T4o1Pu7RgBxFZ3tV2FwpXbT2HJwJ9LSeGarQgQLwMOrI4AIhyUz4ki/9bAnGpPvvvPAaGQ3kI4ZefpAxm3eFgmwhjEUUGD5tMY3PoIhZ6l5tR0YiQ94U1fwE3LCIwX+qgZEyOgYrzayzL3zzSsnX8+YrQ==
+ b=KF7fxDDerVSIwglNDARPh3nTuX9sy3UTEHbQR7S5m3IuN9c3qiW2gcUGd0S0MBG6wmGOW5zNOIWIHuYkar6wb5My7JEa6SbP0BmaizyfnkONtIKAGA5ggIotx91ok7gYBsaTIaur3S/Mc2M/t5Pforsl2ptLGIPWF43S7IS4gDy4DJuEUQGu02lCdCdYg1ZXUSrI0A6vD0AMlMGxCVFTumCAjz20OhKdHsJNdJ2150LCcrCIxPZfhWZ5D8WYQwsHi9tV3yt2Ap8bJY0D9OurrtdpKeZLwTt8oZ8UN/CWI1BNgjzPegGvx8SHg38SbIyLQPLgfs0kx8wxUhlzIm4VeQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rRUyuzV0hhDxGQJiQHZpwajgRGE/E6DK8zboc2gejXc=;
- b=gbeeVFh1a6sqCRi8tcQPFD94vJVpJI+Wb4/62xveVzz1EGVGLK/4zg8LFGLHTSoDdeFbE2CiYC3G5My5TD6uMNf3YP3Z7Imf2TsX7QnG25rIpuI70jYArZ1tcantTusOHaFLyr9O8tIl3U+c2KcobPmzs5B87e+mNgFZUdkfY+TqcuyHg+aamE5wWzsB31gXYB0lOA+ZmDIxG8vebcX/Bid5ICWbtQVBVConW6d552DEOxpx85fYw1XHi8jHiSggtPrHpgmInuw3vPU4IB84UgZTFkuBZxFj/cOWYqMlEQmuedWMjY4HGgIXmKGgKKi0dNubJJrg7mU/ijagM6Zd/g==
+ bh=MTEAzwifAPFD26IA6itYKo5ysivjMYWPhikwJ+7Gtyc=;
+ b=MD4qBfqHmgT9JPvm6PA0z4pyaimVcRHr1wlNVHvSyV5x9gbBOCEiC0UujsHRTUs0dY2OwLfqM+9RyqrUi/n0Zubg3y2dDBNsDCqQLAsEZJ07NTQ7mFtgPId/wd5UfPGE5n6tTs+dPPqXebLJHEgGYKXqb1bfk1J5hFBg0JLs3/FEetKoogQOUCPWr/GOKj0fQQcNeKcZCScoRnC7mzKHd1fT2G1MUrW6vblEZnyH4SQzanRvxRRtd563yiFz75YHQ31bHIouwa4FfuCIg9YsVYcwQhvYnTt1CQt/wX3dWSqBsOpbDcRfCQpRglcFEEJ+qzDDthz2vMI3zbCOSnAvVQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rRUyuzV0hhDxGQJiQHZpwajgRGE/E6DK8zboc2gejXc=;
- b=dGy3tQDcB1dskk3RkVxNeCIg87qbELzSCHn0x6R2FUoCxDXuGOc3Fa+PpeUfr/ER0F/J5uPSNu36YuV9d387l53wI893UeVBkx11hV7u7CA5cEE5VnLhKaHNEt2Dgniv1JxZ5OJb5K4AC3Pyg6IMeAl1fUOpSPdHtDnyFETGPkoCLwN4lntPhxBWPrLkLNmmcnwptqMXjWL+f6mu9W6DLLkQyc5tVP7XLxTnBUKOPt69L9tX3BV+HyiG0Niuv8NzWEMxeqJ4ELwwjx1pJDBp5sWnX88PcN4eArIIaWXsU4/x+7WruqEaMf9eOCVPXFCicAVR/VvtsiDctIhMLE+ZBA==
+ bh=MTEAzwifAPFD26IA6itYKo5ysivjMYWPhikwJ+7Gtyc=;
+ b=tvlkB2cLKzwM7X3wlC5WW9lOubMu1o8E4FGRAuam1g/baWQu/WFH07pnTJR5QEQYBkNd3DSMHZic2ms+2GiRLxiekjWGjL6X7xwIfFzSx/9iaFXxpONLPGftneWdVsKSFv/pvYI4A6ZHPYpdzvKRM7HFqEEFsd2Kdv0zGB3Pk80UDhjWI5WsfIuquNsTnBninlnwSS3cPe8sqNOiII2gIsrwMAwU7QkpzsH1NBrKoFSRUJ8aYPvsuyD8LWNZ56Sg9BOB4+Sgyd/9LbxjCjQs6OPJjaGVyh+PLj3p3T577YDs8hrfwZdAAri1JFvZ/6TuOwDxieH0xWbUj5XSXT+f+g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
  by SN7PR12MB6790.namprd12.prod.outlook.com (2603:10b6:806:269::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.24; Tue, 27 Aug
- 2024 15:51:45 +0000
+ 2024 15:51:46 +0000
 Received: from CH3PR12MB7763.namprd12.prod.outlook.com
  ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
  ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7897.021; Tue, 27 Aug 2024
- 15:51:45 +0000
+ 15:51:46 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: acpica-devel@lists.linux.dev,
 	Hanjun Guo <guohanjun@huawei.com>,
@@ -67,15 +67,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
 	patches@lists.linux.dev,
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
 	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Date: Tue, 27 Aug 2024 12:51:32 -0300
-Message-ID: <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+Subject: [PATCH v2 5/8] iommu/arm-smmu-v3: Report IOMMU_CAP_ENFORCE_CACHE_COHERENCY for CANWBS
+Date: Tue, 27 Aug 2024 12:51:35 -0300
+Message-ID: <5-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
 In-Reply-To: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BN9P220CA0029.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:408:13e::34) To CH3PR12MB7763.namprd12.prod.outlook.com
+X-ClientProxiedBy: BN9PR03CA0114.namprd03.prod.outlook.com
+ (2603:10b6:408:fd::29) To CH3PR12MB7763.namprd12.prod.outlook.com
  (2603:10b6:610:145::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -85,243 +85,168 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|SN7PR12MB6790:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff8b5b8f-d858-480e-e780-08dcc6b023fd
+X-MS-Office365-Filtering-Correlation-Id: 48b96551-a508-4ad5-efd8-08dcc6b024a8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|366016|1800799024|7416014|376014|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?QUAwtOXYLjV0c1Uy525qzDqNwsshyPmPJDfxVoWRmhnbk6qeUoH24u9F4RCo?=
- =?us-ascii?Q?8he/miUw78DNgQjB9c+ZLy3WbUi4t+xtIpSz2TJ3pK2QPITnmrjyliQ5ToXh?=
- =?us-ascii?Q?ANyGTSrHWkOmGgl6MUXZxUEJkn75qLLXYMVHx8PjNbsllysKnluHEMjxcumq?=
- =?us-ascii?Q?vaNN9J6cgkusxlEoNXsD8H20DPzGHxTO4nYGjpUkKmxiEVqOxqXttdDnls9n?=
- =?us-ascii?Q?R95ZsGpEc8jNUvy2lqrDjgkQyqOwq1S6agJe61XXalMON4/ZOd92HBRGKk8U?=
- =?us-ascii?Q?Hj7AmvP7olIcQiBTPazdz2BT9K/+Gkoy3GoBg57aQrTJWUjDgU5buYV+blmC?=
- =?us-ascii?Q?HY6oLrFxH3GX80RO4r4d8X52GzgAgnBQzNYDfCs4qH/SL9lNRrPI7G/c24Up?=
- =?us-ascii?Q?Xgq3txXlgVf+Z/vDOFfYwgHZQ3ClhNplkKjvanpBtkAYo6c0Y7YVt00xuk50?=
- =?us-ascii?Q?cwu5fMt3OxNq/5ajyPmta2ZY7yK0vdNpof4+0IjDcw4QZa3Yi48uqaIrWtEC?=
- =?us-ascii?Q?Lm4zYXR7GV/l9ujrGKPA81Uus9w094AXQgtgo6GqXTH4w0u/A62ZAKIo5jN9?=
- =?us-ascii?Q?E9g8OVF+T/49S5fR3QskxkESK71BD6ebJORUvb1hnVZCr0BTdcQgOzne814y?=
- =?us-ascii?Q?QbuFaZXYHX0FqtAIxEP5lS05xY7D7cNYm/6kMDOVArWjVSddDSNefHD6zNAx?=
- =?us-ascii?Q?j7ppsXIRg/5axWI34bEAKMmVvP8wt9tel8qGfykB5tM02K6PkCwjOW9sGKiw?=
- =?us-ascii?Q?0MAMCPETQSstBUxj2rLszuJK9OuCWw+2wPl2AMTXdn5QcqQ14z/0DBliENUv?=
- =?us-ascii?Q?b4k1uDdE6VEf+7yl1uK6Rs2QxtYuzh2Mz9sNYu8YDVXhuinJLb1c58xornSg?=
- =?us-ascii?Q?NpaZpgndeWiAQbNkrZv6c9C4AR1yMZqd7y5kszu+5OLgCIfSZN8BlTe9Tn6z?=
- =?us-ascii?Q?VNakC7pFmMliRTw79gEDrkmPQtOwGrvUYcUF4FHbKv3uLhzdjQrEnDyJ3iQm?=
- =?us-ascii?Q?GH8m93b8rlZMvbHLbxT2JKbNyK4f7MQu20AITb84t8eqMp+1lkP8fPMDDC19?=
- =?us-ascii?Q?SEd9bWE/yfV93gOGxQISrK3p+7dECVHGlrmvSsbRPQbpJdk6Ahs9rp+CfjrX?=
- =?us-ascii?Q?yE+R6/qvWYjcbMscZXClm9u2tNscrp+PmofCcm+IfHo6DqjiVHB2oVjGez3e?=
- =?us-ascii?Q?wnU5lzkRZ7KglRI+KZE71WXku/pjzH6CLfBQ7Pye9QzrpnShhohj40YIbsgv?=
- =?us-ascii?Q?jta/bmWI564ijvxZZwWlHmGJKyQQYq56EqK/mPatAn1pfGPi2H1BrHsYTHs2?=
- =?us-ascii?Q?RT1vJJ6iMHbOE8f0USSUMuxwrJHsV920OQRUvsTwbv5B17i1y5syZrZQFeKM?=
- =?us-ascii?Q?ufGTyBKUEbroXj3IYYrfQxQnM1yj?=
+	=?us-ascii?Q?cXZXD+6VGBu01YIf84EfHXKS++Pys3BsQ3+4jI9ghLEzHnnrJFJoHy4pBdf1?=
+ =?us-ascii?Q?NubHmi2dQMAnZtSuRrXGEJmoRnQxIh0+6damDSQxLVSL0eJCGucIpfxqmkS8?=
+ =?us-ascii?Q?A491ESsjyyxZ35YbayYoLPvYm4hyNyhOGA/LLJLnh7+9/k44T9af0I7QYT5X?=
+ =?us-ascii?Q?LMfW86x1Sq4lhD/web29adKD1Ur/YPcusA0/3rLtCmwshSUtQBk4Sh7UDckB?=
+ =?us-ascii?Q?f+iBPNuU+1+afmBJzpUaEsAdjvvD6v3/tMHQgixnL3RwJ/SHrbKyqMNl25rE?=
+ =?us-ascii?Q?cbLvGpkYyjgLB1cfldhkU93TUfGsfUO313DTk2eQahdenLtRMXPKum3TcT/s?=
+ =?us-ascii?Q?aEJc3IOM6sYF7sYepVaNOrN3P7oqfpA7QMuDJjHK+Bm69/IRucG8FUZ+5dPz?=
+ =?us-ascii?Q?Qml1Ff/op2bmdMTTncTzGLUKsZK0ghUhkVdLd18SX0utCS2ewvnv8df9ShSP?=
+ =?us-ascii?Q?vpYJED1wQbD7CVV2X2YZJ9ZJRkfbH4d67EpLKFboNXMDJg1H2TXSwq2sVDGi?=
+ =?us-ascii?Q?PDVO2mMMbSdYZgXX+K/7+A7h2aAmR02SSffSt5R8IoyDxelPAdK+tmmQ0nc9?=
+ =?us-ascii?Q?LzvxnSGrjFjeEOcKh3PQ3m0k+QAC87l9fNhcX0n01n52gXVoAw2fkF+XkcWL?=
+ =?us-ascii?Q?9KxlkgjFRrfIJVAKfCUNOifgtf9igxbUQhdftJMCh8K4epVExo1A85VDkUVk?=
+ =?us-ascii?Q?rOeYZGRHdBQWJpswHDJvzP9QuVZoegGpA4ZawAqmLcS0HhDL/H4l88U0ZMGm?=
+ =?us-ascii?Q?4qM9NohzzwV0jePTp7vzCvwXSISDKRFNaGObDRY+mfSj7r7bdoqrhUKMJ0Pk?=
+ =?us-ascii?Q?JIsvkd7wKGftGpjl/A9Y/63AGjH7Cx8OVbUPYtc4iy0Hjo8kHMBQSSi9h+DR?=
+ =?us-ascii?Q?5Ioe5LWq85exTYZx0J9/dkRzs8mHFxb8G6rG4tFBQezIVE8lxg9fmF/5L2Su?=
+ =?us-ascii?Q?vqjvNtHGODwrccTq8hst4prrHgXXze96dsIhWx1zEBpQbN07fOcQW9+6mAq/?=
+ =?us-ascii?Q?G5NOsStPTQ9sBdDtIQaRm9xSeMak8GzwCg/pFIv85UOH3hgYsKrgl02UUFqF?=
+ =?us-ascii?Q?1RxEHQj741GMOuoPy6OGPn51GJmN+TBeT40DM9FSke0JFSP9+GScxAOJG1hp?=
+ =?us-ascii?Q?oNIu9P2p+TwAACH+mma6pFZbAi+VVqVHL6/pnqIrKK2Nbz5BIj5z7ZNvtFIA?=
+ =?us-ascii?Q?r0ewkTLiywoXZiRLIY0gQEUPRAVaXQ6XahKJtkDCiZchUwj6ES+ku86rGwlY?=
+ =?us-ascii?Q?Q2W5dH7RLkuRtO38jTOpLqsG97s8NMT3KkLrqVOe4c1Dt/WXxb1l5I/eBQy4?=
+ =?us-ascii?Q?gTcnSUJ09iaBQi8YveSLvAA+tkpLerhuZiHOxNgaF3iulVMiTzcldwQHNcTb?=
+ =?us-ascii?Q?xnH4iCbXiIgdCkzAdAke3R4+2YxB?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?lN2bytnekIgEu3q8wDbRVBZQyUH5pfrfHn23qkOejmrUKe6ZlSCGPxgWI+0A?=
- =?us-ascii?Q?cbClP8spkpDCoE5HDA1xgSU2QG0xij4/SDefPKMeHZzrtsva1uEsuGQeRkNL?=
- =?us-ascii?Q?tiMExpGSej1E4mrqQ583XC3w2ABzS9rxcYHvInc11jvrdMK+q1pFeSaOor4J?=
- =?us-ascii?Q?xyEi5Mfnb7eAsucXxekvEWVIQGxRczW+DUdKFtRS91evY3+TdTnpEHUeMQVA?=
- =?us-ascii?Q?Q2SADUVrqHOvX2WrpjsY+CVpV/mWeCqv/WNAIoVDBg+vyXRhCDgkhTQTsOXb?=
- =?us-ascii?Q?xaBNfSig3Wym197FNIfzbzx0TEfWYNB08X2DP/2zaBYIFXBNWEAMnJQQZhIP?=
- =?us-ascii?Q?35lw+nSZeQJ3dqDE7uvNec/xRjOLCaU3DhcrJZnqdNuk1kHFSUi4I7mTziCb?=
- =?us-ascii?Q?4SUzlwyn8EQ97hwJR7vonOnHtHh4pjGs51KQJBBwYoaCex047tGOBUCsF18q?=
- =?us-ascii?Q?H+xPv8x5RjehnyUWCWsw7gxI4lEwEYth0aV7rnPMBa97EV5Becq8kxc/i8lJ?=
- =?us-ascii?Q?aU6TpzJDAl+WCCe4WtUxMrg7BiatZ5TRmbu0VUUiolBExmE5OcYNvGF4zzti?=
- =?us-ascii?Q?TXv/R47xsaQOB00o3aX4JEWOaOci/M4x3XGLDhCgRYHwuCBEB29EXRor2Z8n?=
- =?us-ascii?Q?os7lxdn0SEL8XvyqfDQSM6toG5kJNxi0r6gBxO/PC0TxfmZlgx9R1WsoxKDr?=
- =?us-ascii?Q?NhuKGLd6X37FE5WOrIL0NMmFyc+axOyHrxWaSMp2/y+4K+s1ywOiVrpiQ8oG?=
- =?us-ascii?Q?eNqimvZYb7KH5z7YMth3ZijngQn8l+9+hKbTz/+OTNhZN5uaSErtbdPCaSNh?=
- =?us-ascii?Q?cRxdyKRO9UNwQQcOgfxpoDVPh6yQaqLfYVc9DBF6yWoPGgTL9BK5D1u3SqV8?=
- =?us-ascii?Q?YC7zGsHq4ETtlzrORRbmSNPzz5KBWCc8K9vtI+olU7CWIin1AtQeB/IOhJ2m?=
- =?us-ascii?Q?i7lQ5PdbAGsdVue24PyNZoV07GL5I673hQS/yYUY0yY10yWTEtpA8D0OZznx?=
- =?us-ascii?Q?rpR8o7KN5Gumu5+phgMdehxp9pkVD7mNMy4psU+LPgip0n8QmBLm34lkZU1a?=
- =?us-ascii?Q?Sm0pSKcgQq2oVdE4cxh+sIdRr5hLSLrm0d3xXd1sTo8eXrHO/iSLdFhZUPSl?=
- =?us-ascii?Q?/F1aUI+ccQvuTPp1NdFrEsNjEWie6JuWgdDeSCWk/Tw1q2GEWoA0kf6q6r+r?=
- =?us-ascii?Q?Eg1MVaRRvjkWockrMv1HdTrpyDLsNYjzudagdpcD1AXvHRjZYnVjVgFzUeBI?=
- =?us-ascii?Q?xyJgGbHIw7cwoWwj4+mwRkEAULwcKCwJRkdSJ/o2/PnfwDtke6cnJRGTHDE0?=
- =?us-ascii?Q?vGW4p3K/ZpoqRod5wuNnzbgawAHZCZZFh0OwO4/RMNQ0Zx4OcRI1Qf18p8Cj?=
- =?us-ascii?Q?+vuf19+H69pKxubYKaOzpkkEbBi+AxcRBJysTBokwEDfVWIoIg2ZEIUbyGHe?=
- =?us-ascii?Q?FkdJ9vZBaCr5w4iO1R6c3qlJQlPB2SWrLr/967RY5fnbBJV//FDTWurSjgEd?=
- =?us-ascii?Q?bYUKR+pQqWOfEHIIvIgOe82l2bUJRoR6wcs4OcewntK+5XEwuYyeOKWlV8go?=
- =?us-ascii?Q?Uik3XdJP+AJURvolqmSGqMut4sA31aUciOwlTwOD?=
+	=?us-ascii?Q?6gietZMWsw+PGzqTyf9837iy8wgehwLmkjzqpYPVOFvJO7YQt/TK3jfxO1Oh?=
+ =?us-ascii?Q?Wx8H4VBeRXwOA4hPZCK4x+sYtNd6lGZbo8QSW0K+/lkSLoz7hw0B0+rpBbSI?=
+ =?us-ascii?Q?Xcg+jpitHfrCW4zfSFW86fB6fIC5DtZWL2tzxar3e4z1Z71c2dWRWYPmQ0Yh?=
+ =?us-ascii?Q?k+Gb3UVXcV3ZXYxLjvg/KlsxFEX2UnlkT5OEkDCf0chrfWXYs6C8fEpfuEUg?=
+ =?us-ascii?Q?rLzLs5V5pwy26/mZtstzxAzPEJPHdIwPLexmhSawABjlPctVrl82R76AFNgv?=
+ =?us-ascii?Q?0tRiYky4X6pLkIhNeyr+odrZExYKpVVkc25bLvrNq7ANx/ma/dM84HIJbUoE?=
+ =?us-ascii?Q?pZsG3cAWcGfzyHThm+qomZwuHtYS56Iri6HgSfPmPYdDEDfaAEOhY2P8ZjQi?=
+ =?us-ascii?Q?mH9aMyEXBzaH8QLgLM+YIp+7F+mTYvgYgrZGig/wkcwePNz5TXf3N0G2MmDE?=
+ =?us-ascii?Q?UR9FsBKUaRZiUsJOdEi6S0pdGSsM3Jh+3HdtAx13EcVVBlRSWmNRKeN7A6hr?=
+ =?us-ascii?Q?QgxwO6BxOY2SWJiRUIpIUoeeCtFF5kbz4R+nTkP/rz193BPSVvpmV5q8XGbY?=
+ =?us-ascii?Q?l8gaeUBQQ+dXCifgpzuO9Fp81Eux4s6xb4kipzPJyN9oriqUk5olGe8pmbOa?=
+ =?us-ascii?Q?hGLH067B6K7BCXpVo46riNPn1e/kgz1nqL1wwB/Ka/bHFizZghdaaliDI09h?=
+ =?us-ascii?Q?GTXD1dbez5FDeoQ4TCoXVYg3fN5muLCsqTPQ0UBGIFGwY6AeyHgJTwCi5n9a?=
+ =?us-ascii?Q?PPq729+bkrO4HinaNW+k2vtJXcD56y2GFYLR9iBO0S+3mm5Wn2aFVRYIn1mr?=
+ =?us-ascii?Q?VYFBf1CkVyaOAy/WFzJdHBm7sEWlgCN6BZAEfFWQAEwzzGGP83Ddbf42JviC?=
+ =?us-ascii?Q?x9Y8pVCsy2wGQZOIJ4Xz+99/zcZihO9P9SYejz5QdlkDtbRYKSJlwKJ1/LpP?=
+ =?us-ascii?Q?/BYfOzhCUQSv6x6pK38MgZdvHahi8fpge6KKQL9LSgcXSDH2BKC3pPJsNxP+?=
+ =?us-ascii?Q?5NV9qR9JbE55cuVCAAxOzSy+vQ/aZBQ5s871gVj7gAoTlQpY/naTxnQM5cU6?=
+ =?us-ascii?Q?eNpP162pcXunYwj/TsMAE4gHgB8jYyxzv1gTyiMMWbQo+Oo2LVwrM3LuwoPs?=
+ =?us-ascii?Q?J2hkvRGkvKbPI3uL2zHkY0RMKnEwA8mociag9mpForjYz1xoeCECj+NC9wa2?=
+ =?us-ascii?Q?kLe75jBr3SNdy1EoN00jU6MzY6hdu1WKImlNFW9Wu1TkXpPA4dIDflc7GqIX?=
+ =?us-ascii?Q?aKjQxTaKf2Iew0Okw6KDZzHci2dUBgaARLQVBXaSa1O9rntF4uiN3h9TB0SS?=
+ =?us-ascii?Q?/QgDMbw3/q4Oa4YqPnNvIR4FMiWX4w/qvJ0nuDbtQdxt3piOdRcbE+6Ih/tm?=
+ =?us-ascii?Q?KjmJVnSqwqG3T8GAYdyk86voMmE5xe/NVmIdV4kRzugaaLUffQA4poP6Xkbz?=
+ =?us-ascii?Q?+F+ROsEq+w4N8br+vCkKjqCRVyGMpgG4AglDnNLEXwY3geFm2Bh7WFe67y6s?=
+ =?us-ascii?Q?OHetwfQM5K+45qNQyKfBl2tzp5GPF7rbFzvTJ3bS0iNMaHkfM+k3yPCu1MvD?=
+ =?us-ascii?Q?A/GsupG7UfXizbHVKPnUz7qwTEVVEcMAPhs+oICK?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff8b5b8f-d858-480e-e780-08dcc6b023fd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 48b96551-a508-4ad5-efd8-08dcc6b024a8
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2024 15:51:40.4587
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2024 15:51:41.2450
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Y4fWn0Si0w994NAoYaDZ/S/IfMQfqmfY0+AHtSo12aTzl5Ft3dHDbFvK07ltpOVJ
+X-MS-Exchange-CrossTenant-UserPrincipalName: TdWwNA075Pvqu/TW5w/sVWolm5U13jua6Vzjimz5cWpwhu4pYEeuvpeg73AoHMsh
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6790
 
-Force Write Back (FWB) changes how the S2 IOPTE's MemAttr field
-works. When S2FWB is supported and enabled the IOPTE will force cachable
-access to IOMMU_CACHE memory when nesting with a S1 and deny cachable
-access otherwise.
-
-When using a single stage of translation, a simple S2 domain, it doesn't
-change anything as it is just a different encoding for the exsting mapping
-of the IOMMU protection flags to cachability attributes.
-
-However, when used with a nested S1, FWB has the effect of preventing the
-guest from choosing a MemAttr in it's S1 that would cause ordinary DMA to
-bypass the cache. Consistent with KVM we wish to deny the guest the
-ability to become incoherent with cached memory the hypervisor believes is
-cachable so we don't have to flush it.
-
-Turn on S2FWB whenever the SMMU supports it and use it for all S2
-mappings.
+HW with CANWBS is always cache coherent and ignores PCI No Snoop requests
+as well. This meets the requirement for IOMMU_CAP_ENFORCE_CACHE_COHERENCY,
+so let's return it.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 11 +++++++++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  3 +++
- drivers/iommu/io-pgtable-arm.c              | 27 +++++++++++++++++----
- include/linux/io-pgtable.h                  |  2 ++
- 4 files changed, 38 insertions(+), 5 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 35 +++++++++++++++++++++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 +
+ 2 files changed, 36 insertions(+)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 531125f231b662..e2b97ad6d74b03 100644
+index e2b97ad6d74b03..c2021e821e5cb6 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1612,6 +1612,8 @@ void arm_smmu_make_s2_domain_ste(struct arm_smmu_ste *target,
- 		FIELD_PREP(STRTAB_STE_1_EATS,
- 			   ats_enabled ? STRTAB_STE_1_EATS_TRANS : 0));
+@@ -2253,6 +2253,9 @@ static bool arm_smmu_capable(struct device *dev, enum iommu_cap cap)
+ 	case IOMMU_CAP_CACHE_COHERENCY:
+ 		/* Assume that a coherent TCU implies coherent TBUs */
+ 		return master->smmu->features & ARM_SMMU_FEAT_COHERENCY;
++	case IOMMU_CAP_ENFORCE_CACHE_COHERENCY:
++		return dev_iommu_fwspec_get(dev)->flags &
++		       IOMMU_FWSPEC_PCI_RC_CANWBS;
+ 	case IOMMU_CAP_NOEXEC:
+ 	case IOMMU_CAP_DEFERRED_FLUSH:
+ 		return true;
+@@ -2263,6 +2266,28 @@ static bool arm_smmu_capable(struct device *dev, enum iommu_cap cap)
+ 	}
+ }
  
-+	if (smmu->features & ARM_SMMU_FEAT_S2FWB)
-+		target->data[1] |= cpu_to_le64(STRTAB_STE_1_S2FWB);
- 	if (smmu->features & ARM_SMMU_FEAT_ATTR_TYPES_OVR)
- 		target->data[1] |= cpu_to_le64(FIELD_PREP(STRTAB_STE_1_SHCFG,
- 							  STRTAB_STE_1_SHCFG_INCOMING));
-@@ -2400,6 +2402,8 @@ static int arm_smmu_domain_finalise(struct arm_smmu_domain *smmu_domain,
- 		pgtbl_cfg.oas = smmu->oas;
- 		fmt = ARM_64_LPAE_S2;
- 		finalise_stage_fn = arm_smmu_domain_finalise_s2;
-+		if (smmu->features & ARM_SMMU_FEAT_S2FWB)
-+			pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_ARM_S2FWB;
- 		break;
- 	default:
- 		return -EINVAL;
-@@ -4189,6 +4193,13 @@ static int arm_smmu_device_hw_probe(struct arm_smmu_device *smmu)
- 
- 	/* IDR3 */
- 	reg = readl_relaxed(smmu->base + ARM_SMMU_IDR3);
-+	/*
-+	 * If for some reason the HW does not support DMA coherency then using
-+	 * S2FWB won't work. This will also disable nesting support.
-+	 */
-+	if (FIELD_GET(IDR3_FWB, reg) &&
-+	    (smmu->features & ARM_SMMU_FEAT_COHERENCY))
-+		smmu->features |= ARM_SMMU_FEAT_S2FWB;
- 	if (FIELD_GET(IDR3_RIL, reg))
- 		smmu->features |= ARM_SMMU_FEAT_RANGE_INV;
- 
++static bool arm_smmu_enforce_cache_coherency(struct iommu_domain *domain)
++{
++	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
++	struct arm_smmu_master_domain *master_domain;
++	unsigned long flags;
++	bool ret = false;
++
++	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
++	list_for_each_entry(master_domain, &smmu_domain->devices,
++			    devices_elm) {
++		if (!(dev_iommu_fwspec_get(master_domain->master->dev)->flags &
++		      IOMMU_FWSPEC_PCI_RC_CANWBS))
++			goto out;
++	}
++
++	smmu_domain->enforce_cache_coherency = true;
++	ret = true;
++out:
++	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
++	return ret;
++}
++
+ struct arm_smmu_domain *arm_smmu_domain_alloc(void)
+ {
+ 	struct arm_smmu_domain *smmu_domain;
+@@ -2693,6 +2718,15 @@ static int arm_smmu_attach_prepare(struct arm_smmu_attach_state *state,
+ 		 * one of them.
+ 		 */
+ 		spin_lock_irqsave(&smmu_domain->devices_lock, flags);
++		if (smmu_domain->enforce_cache_coherency &&
++		    !(dev_iommu_fwspec_get(master->dev)->flags &
++		      IOMMU_FWSPEC_PCI_RC_CANWBS)) {
++			kfree(master_domain);
++			spin_unlock_irqrestore(&smmu_domain->devices_lock,
++					       flags);
++			return -EINVAL;
++		}
++
+ 		if (state->ats_enabled)
+ 			atomic_inc(&smmu_domain->nr_ats_masters);
+ 		list_add(&master_domain->devices_elm, &smmu_domain->devices);
+@@ -3450,6 +3484,7 @@ static struct iommu_ops arm_smmu_ops = {
+ 	.owner			= THIS_MODULE,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
+ 		.attach_dev		= arm_smmu_attach_dev,
++		.enforce_cache_coherency = arm_smmu_enforce_cache_coherency,
+ 		.set_dev_pasid		= arm_smmu_s1_set_dev_pasid,
+ 		.map_pages		= arm_smmu_map_pages,
+ 		.unmap_pages		= arm_smmu_unmap_pages,
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 8851a7abb5f0f3..7e8d2f36faebf3 100644
+index 7e8d2f36faebf3..45882f65bfcad0 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -55,6 +55,7 @@
- #define IDR1_SIDSIZE			GENMASK(5, 0)
+@@ -787,6 +787,7 @@ struct arm_smmu_domain {
+ 	/* List of struct arm_smmu_master_domain */
+ 	struct list_head		devices;
+ 	spinlock_t			devices_lock;
++	bool				enforce_cache_coherency : 1;
  
- #define ARM_SMMU_IDR3			0xc
-+#define IDR3_FWB			(1 << 8)
- #define IDR3_RIL			(1 << 10)
- 
- #define ARM_SMMU_IDR5			0x14
-@@ -258,6 +259,7 @@ static inline u32 arm_smmu_strtab_l2_idx(u32 sid)
- #define STRTAB_STE_1_S1CSH		GENMASK_ULL(7, 6)
- 
- #define STRTAB_STE_1_S1STALLD		(1UL << 27)
-+#define STRTAB_STE_1_S2FWB		(1UL << 25)
- 
- #define STRTAB_STE_1_EATS		GENMASK_ULL(29, 28)
- #define STRTAB_STE_1_EATS_ABT		0UL
-@@ -700,6 +702,7 @@ struct arm_smmu_device {
- #define ARM_SMMU_FEAT_ATTR_TYPES_OVR	(1 << 20)
- #define ARM_SMMU_FEAT_HA		(1 << 21)
- #define ARM_SMMU_FEAT_HD		(1 << 22)
-+#define ARM_SMMU_FEAT_S2FWB		(1 << 23)
- 	u32				features;
- 
- #define ARM_SMMU_OPT_SKIP_PREFETCH	(1 << 0)
-diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index f5d9fd1f45bf49..9b3658aae21005 100644
---- a/drivers/iommu/io-pgtable-arm.c
-+++ b/drivers/iommu/io-pgtable-arm.c
-@@ -106,6 +106,18 @@
- #define ARM_LPAE_PTE_HAP_FAULT		(((arm_lpae_iopte)0) << 6)
- #define ARM_LPAE_PTE_HAP_READ		(((arm_lpae_iopte)1) << 6)
- #define ARM_LPAE_PTE_HAP_WRITE		(((arm_lpae_iopte)2) << 6)
-+/*
-+ * For !FWB these code to:
-+ *  1111 = Normal outer write back cachable / Inner Write Back Cachable
-+ *         Permit S1 to override
-+ *  0101 = Normal Non-cachable / Inner Non-cachable
-+ *  0001 = Device / Device-nGnRE
-+ * For S2FWB these code:
-+ *  0110 Force Normal Write Back
-+ *  0101 Normal* is forced Normal-NC, Device unchanged
-+ *  0001 Force Device-nGnRE
-+ */
-+#define ARM_LPAE_PTE_MEMATTR_FWB_WB	(((arm_lpae_iopte)0x6) << 2)
- #define ARM_LPAE_PTE_MEMATTR_OIWB	(((arm_lpae_iopte)0xf) << 2)
- #define ARM_LPAE_PTE_MEMATTR_NC		(((arm_lpae_iopte)0x5) << 2)
- #define ARM_LPAE_PTE_MEMATTR_DEV	(((arm_lpae_iopte)0x1) << 2)
-@@ -458,12 +470,16 @@ static arm_lpae_iopte arm_lpae_prot_to_pte(struct arm_lpae_io_pgtable *data,
- 	 */
- 	if (data->iop.fmt == ARM_64_LPAE_S2 ||
- 	    data->iop.fmt == ARM_32_LPAE_S2) {
--		if (prot & IOMMU_MMIO)
-+		if (prot & IOMMU_MMIO) {
- 			pte |= ARM_LPAE_PTE_MEMATTR_DEV;
--		else if (prot & IOMMU_CACHE)
--			pte |= ARM_LPAE_PTE_MEMATTR_OIWB;
--		else
-+		} else if (prot & IOMMU_CACHE) {
-+			if (data->iop.cfg.quirks & IO_PGTABLE_QUIRK_ARM_S2FWB)
-+				pte |= ARM_LPAE_PTE_MEMATTR_FWB_WB;
-+			else
-+				pte |= ARM_LPAE_PTE_MEMATTR_OIWB;
-+		} else {
- 			pte |= ARM_LPAE_PTE_MEMATTR_NC;
-+		}
- 	} else {
- 		if (prot & IOMMU_MMIO)
- 			pte |= (ARM_LPAE_MAIR_ATTR_IDX_DEV
-@@ -932,7 +948,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
- 	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
- 			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
- 			    IO_PGTABLE_QUIRK_ARM_OUTER_WBWA |
--			    IO_PGTABLE_QUIRK_ARM_HD))
-+			    IO_PGTABLE_QUIRK_ARM_HD |
-+			    IO_PGTABLE_QUIRK_ARM_S2FWB))
- 		return NULL;
- 
- 	data = arm_lpae_alloc_pgtable(cfg);
-diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-index f9a81761bfceda..aff9b020b6dcc7 100644
---- a/include/linux/io-pgtable.h
-+++ b/include/linux/io-pgtable.h
-@@ -87,6 +87,7 @@ struct io_pgtable_cfg {
- 	 *	attributes set in the TCR for a non-coherent page-table walker.
- 	 *
- 	 * IO_PGTABLE_QUIRK_ARM_HD: Enables dirty tracking in stage 1 pagetable.
-+	 * IO_PGTABLE_QUIRK_ARM_S2FWB: Use the FWB format for the MemAttrs bits
- 	 */
- 	#define IO_PGTABLE_QUIRK_ARM_NS			BIT(0)
- 	#define IO_PGTABLE_QUIRK_NO_PERMS		BIT(1)
-@@ -95,6 +96,7 @@ struct io_pgtable_cfg {
- 	#define IO_PGTABLE_QUIRK_ARM_TTBR1		BIT(5)
- 	#define IO_PGTABLE_QUIRK_ARM_OUTER_WBWA		BIT(6)
- 	#define IO_PGTABLE_QUIRK_ARM_HD			BIT(7)
-+	#define IO_PGTABLE_QUIRK_ARM_S2FWB		BIT(8)
- 	unsigned long			quirks;
- 	unsigned long			pgsize_bitmap;
- 	unsigned int			ias;
+ 	struct mmu_notifier		mmu_notifier;
+ };
 -- 
 2.46.0
 
