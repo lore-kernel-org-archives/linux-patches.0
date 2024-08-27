@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370421C3F0D;
-	Tue, 27 Aug 2024 15:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F03A1C4ED4;
+	Tue, 27 Aug 2024 15:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771633; cv=none; b=klMNCJlb+DmluvAemiOhZj1pSNB2cX1F7bzjqwYQYnnBud8GnkIuNYKZoUt2UPlE5gVJVD2zXAkosWYc4GRFNYsNArKOPpyYnhNwi5kkSA0yrrgajq1SnQ3+MVQ9dQAWZKtO4js7FkHh1IKQWqI7sQ6Wz9CnZLmfqe/aGfrj9uI=
+	t=1724771636; cv=none; b=mC19kOgIYyN5lM4tidOLTxWNVYAohV0KubQyWk83NPZzzb9TkzO08CtWG9Cep+2Jf0Y9OAhS+fP1hstz1/X0KQcrGQe3ROUk80YHLwlB+ZhQRQIWt8oVUbEc3NTgco/Ew4pc6UHjpHtsVlhEP1kfnRKK6sCgKwBMT0+9oiJJ4XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771633; c=relaxed/simple;
-	bh=9F3i0rzty8ZoTdaXLEnuqvdul1NxGvBjoRiJgMBqaec=;
+	s=arc-20240116; t=1724771636; c=relaxed/simple;
+	bh=cOrjI6X10IM8sen43U46YfQNcVbSxXG1x2hu0TDt654=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDaOy7M1AifclpLSiZkBF7zRBe9d3V6Qpw16kDWcAwpf8RBgabnNuXA3USZ0c5Uk9yw/NLgQ1qvwOLeTHBZxs0ZK+kQT01VeTDKw3qoYEAkcsUR6MBlTvAWpZ5P2RqJ1NznzqEa0H4aivORBOK5b2Jgqsa90Ep7MiTGXtG9TYbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l++xFsYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kzxHK1JedX9TamV3OJ3mE6LbhAqZLsDm/FDy2v3ZEFjwQoaszhqEJSpH6buhug2kmAGMa91EBocm6t/Z0xq7mJY+byDtJXHktBP5ULz3SWD41bHeJz5EpfQjMijdWr5pZmmNWlsPC5Spa8UFvoFRjgw2bzZlfN9CrvveKjCYol8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNc2Dbq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l++xFsYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD18C61070;
-	Tue, 27 Aug 2024 15:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNc2Dbq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1987C61064;
+	Tue, 27 Aug 2024 15:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771632;
-	bh=9F3i0rzty8ZoTdaXLEnuqvdul1NxGvBjoRiJgMBqaec=;
+	s=korg; t=1724771636;
+	bh=cOrjI6X10IM8sen43U46YfQNcVbSxXG1x2hu0TDt654=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l++xFsYQGHjaFjH//4q3Xl5UM8PfjG5AXEzZp1LtV5LVzIe8Zd/KCDviJEtVLpniM
-	 Jsv6ofvdoPJ4HvfUFpCPuwRDPbK99iGdF+ofvqFc5NIrnrWBkLSF6woTk60moD/6lS
-	 NYiYA0P2J/grkco5r/hxLFrfNZT6T04gOx2bS+vs=
+	b=VNc2Dbq3myQ5iiDzqw7jO0QZwXhebI3VskWy1yn16dncnqzQpChmNpgUmYxjI1G7g
+	 z3fB2U/8F0/DihjSPG+33R7IjSFjCwGZKDwSNzRQO3gkFrYR38lF2ncg1CVKlepskA
+	 sUW3UXBWRKnyI33i2y/l6JwogkzoLGj2zBBSKGxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Shilovsky <piastryyy@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	abartlet@samba.org,
-	Kevin Ottens <kevin.ottens@enioka.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 248/273] smb3: fix broken cached reads when posix locks
-Date: Tue, 27 Aug 2024 16:39:32 +0200
-Message-ID: <20240827143842.840603689@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.10 249/273] pmdomain: imx: scu-pd: Remove duplicated clocks
+Date: Tue, 27 Aug 2024 16:39:33 +0200
+Message-ID: <20240827143842.878585927@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,50 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit e4be320eeca842a3d7648258ee3673f1755a5a59 upstream.
+commit 50359c9c3cb3e55e840e3485f5ee37da5b2b16b6 upstream.
 
-Mandatory locking is enforced for cached reads, which violates
-default posix semantics, and also it is enforced inconsistently.
-This affected recent versions of libreoffice, and can be
-demonstrated by opening a file twice from the same client,
-locking it from handle one and trying to read from it from
-handle two (which fails, returning EACCES).
+These clocks are already added to the list. Remove the duplicates ones.
 
-There is already a mount option "forcemandatorylock"
-(which defaults to off), so with this change only when the user
-intentionally specifies "forcemandatorylock" on mount will we
-break posix semantics on read to a locked range (ie we will
-only fail in this case, if the user mounts with
-"forcemandatorylock").
-
-An earlier patch fixed the write path.
-
-Fixes: 85160e03a79e ("CIFS: Implement caching mechanism for mandatory brlocks")
+Fixes: a67d780720ff ("genpd: imx: scu-pd: add more PDs")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Cc: stable@vger.kernel.org
-Cc: Pavel Shilovsky <piastryyy@gmail.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reported-by: abartlet@samba.org
-Reported-by: Kevin Ottens <kevin.ottens@enioka.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/r/20240717080334.2210988-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/pmdomain/imx/scu-pd.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2912,9 +2912,7 @@ cifs_strict_readv(struct kiocb *iocb, st
- 	if (!CIFS_CACHE_READ(cinode))
- 		return netfs_unbuffered_read_iter(iocb, to);
+--- a/drivers/pmdomain/imx/scu-pd.c
++++ b/drivers/pmdomain/imx/scu-pd.c
+@@ -223,11 +223,6 @@ static const struct imx_sc_pd_range imx8
+ 	{ "lvds1-pwm", IMX_SC_R_LVDS_1_PWM_0, 1, false, 0 },
+ 	{ "lvds1-lpi2c", IMX_SC_R_LVDS_1_I2C_0, 2, true, 0 },
  
--	if (cap_unix(tcon->ses) &&
--	    (CIFS_UNIX_FCNTL_CAP & le64_to_cpu(tcon->fsUnixInfo.Capability)) &&
--	    ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NOPOSIXBRL) == 0)) {
-+	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NOPOSIXBRL) == 0) {
- 		if (iocb->ki_flags & IOCB_DIRECT)
- 			return netfs_unbuffered_read_iter(iocb, to);
- 		return netfs_buffered_read_iter(iocb, to);
+-	{ "mipi1", IMX_SC_R_MIPI_1, 1, 0 },
+-	{ "mipi1-pwm0", IMX_SC_R_MIPI_1_PWM_0, 1, 0 },
+-	{ "mipi1-i2c", IMX_SC_R_MIPI_1_I2C_0, 2, 1 },
+-	{ "lvds1", IMX_SC_R_LVDS_1, 1, 0 },
+-
+ 	/* DC SS */
+ 	{ "dc0", IMX_SC_R_DC_0, 1, false, 0 },
+ 	{ "dc0-pll", IMX_SC_R_DC_0_PLL_0, 2, true, 0 },
 
 
