@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DE71C2DB1;
-	Tue, 27 Aug 2024 15:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574AE1E520;
+	Tue, 27 Aug 2024 15:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771065; cv=none; b=Oyy19NeXUPY9u3KaaPUBmjGlSwQ8wbp0MS4tCf29Rxz0I8rc+Ovu2ozIzrUv5qplt1OtE7hWCpeYOKXt/Lzrd6t2I/D13dBFg4Lx/IjMzUZlQO+P4S0E9BRj+KmpU+o30ODM6ZDHJ30sE5FxeCGPA4f4qvjbwEvPsYZD2Tm27CE=
+	t=1724771069; cv=none; b=jnRiMXLVjaAUEg6+ilvAtKHdGU9YE6ko69C5u1JBbyrnu/mATQB8O8Zd7t9fS2Fo56zcrce6+XRoUl5xTOsy3Y75ICuxq8KHMV7mE4PSNMOYsmfwF8aPTTSpm0yY31E0I+Ye4e/tY2bx8//i0meP8mxAa7eB+LLZ1ABgweeRqMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771065; c=relaxed/simple;
-	bh=VyQ8j96z/tpAjIdS5DuXKrloN1KJHdkbg5wG1f6qeI8=;
+	s=arc-20240116; t=1724771069; c=relaxed/simple;
+	bh=5XMbVOnzvnFnjc8IUewAj+HEz2XTgcny9Y7EqFV5mCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3QEEeNJFzBM9WK7WcDjsGqH0YkJUaO0WDArAU8bmIWCUXX3noKHdGG/S7njx3CVJLPVTVtB82SMoGzc/cIwH17FX20l3sWhZrnLT5JCFqBVa5LJv6BotN89SbZrMWj1V6hZhqt2sQnK8/d+W4eHVRduVfMgh7v53d+HqZ1sKuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p22GUbIx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4t0hcf8POBwbiu1fK2rYwCZTYsD9/5XPs0/lV827Cr/jb61Amb3YSp3ziRPA+ycnG1Id2muKlPXmEjWbuUETpmQ3EduH9LI4W7M5jdGG0/yXtfEBCTYiUKzRaINWfofR1sLIb5beUpTQkmKlZIJEgCeC4RnjzWRLDE/HyIecQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jwg+UwCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p22GUbIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1E4C61056;
-	Tue, 27 Aug 2024 15:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jwg+UwCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFA7C6105B;
+	Tue, 27 Aug 2024 15:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771065;
-	bh=VyQ8j96z/tpAjIdS5DuXKrloN1KJHdkbg5wG1f6qeI8=;
+	s=korg; t=1724771069;
+	bh=5XMbVOnzvnFnjc8IUewAj+HEz2XTgcny9Y7EqFV5mCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p22GUbIxNbS8D04i0ChbHJEIFc/u4D9DqmojfIM3hM61ncDviHdRKtKab4oxAemuq
-	 QF4HshulgmhCsd9OVpeNt4M3OhgQcooSwja6fO0P2KGpXXsBEAiV2cPPyWgiGzr9qY
-	 6Xztql292rMepiR/6RYCr5uyOIUgpMuhluwiDUz0=
+	b=Jwg+UwCG2BK+KAbt+51WBL59XfBokIYJsCMJWmT+2f3PMbvfhL5fSdTMPzNSkdCTq
+	 YhxpWmluRJzPSdB7tayyv4iKaBTEYVSesLzoCgjGd4CcYCljDIx2NqX8t+QwOR9q3e
+	 IH2eIO2IXq2E+0cgAe0ibJ/oUHWVqpXUJGCnaro4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Steffen Eiden <seiden@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 077/273] s390/uv: Panic for set and remove shared access UVC errors
-Date: Tue, 27 Aug 2024 16:36:41 +0200
-Message-ID: <20240827143836.344030991@linuxfoundation.org>
+Subject: [PATCH 6.10 078/273] netfs: Fault in smaller chunks for non-large folio mappings
+Date: Tue, 27 Aug 2024 16:36:42 +0200
+Message-ID: <20240827143836.382152347@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,58 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit cff59d8631e1409ffdd22d9d717e15810181b32c ]
+[ Upstream commit 98055bc3595500bcf2126b93b1595354bdb86a66 ]
 
-The return value uv_set_shared() and uv_remove_shared() (which are
-wrappers around the share() function) is not always checked. The system
-integrity of a protected guest depends on the Share and Unshare UVCs
-being successful. This means that any caller that fails to check the
-return value will compromise the security of the protected guest.
+As in commit 4e527d5841e2 ("iomap: fault in smaller chunks for non-large
+folio mappings"), we can see a performance loss for filesystems
+which have not yet been converted to large folios.
 
-No code path that would lead to such violation of the security
-guarantees is currently exercised, since all the areas that are shared
-never get unshared during the lifetime of the system. This might
-change and become an issue in the future.
-
-The Share and Unshare UVCs can only fail in case of hypervisor
-misbehaviour (either a bug or malicious behaviour). In such cases there
-is no reasonable way forward, and the system needs to panic.
-
-This patch replaces the return at the end of the share() function with
-a panic, to guarantee system integrity.
-
-Fixes: 5abb9351dfd9 ("s390/uv: introduce guest side ultravisor code")
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240801112548.85303-1-imbrenda@linux.ibm.com
-Message-ID: <20240801112548.85303-1-imbrenda@linux.ibm.com>
-[frankja@linux.ibm.com: Fixed up patch subject]
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Fixes: c38f4e96e605 ("netfs: Provide func to copy data to pagecache for buffered write")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20240527201735.1898381-1-willy@infradead.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/uv.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/netfs/buffered_write.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/uv.h b/arch/s390/include/asm/uv.h
-index 0e7bd3873907f..b2e2f9a4163c5 100644
---- a/arch/s390/include/asm/uv.h
-+++ b/arch/s390/include/asm/uv.h
-@@ -442,7 +442,10 @@ static inline int share(unsigned long addr, u16 cmd)
+diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
+index ecbc99ec7d367..18055c1e01835 100644
+--- a/fs/netfs/buffered_write.c
++++ b/fs/netfs/buffered_write.c
+@@ -184,7 +184,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 	unsigned int bdp_flags = (iocb->ki_flags & IOCB_NOWAIT) ? BDP_ASYNC : 0;
+ 	ssize_t written = 0, ret, ret2;
+ 	loff_t i_size, pos = iocb->ki_pos, from, to;
+-	size_t max_chunk = PAGE_SIZE << MAX_PAGECACHE_ORDER;
++	size_t max_chunk = mapping_max_folio_size(mapping);
+ 	bool maybe_trouble = false;
  
- 	if (!uv_call(0, (u64)&uvcb))
- 		return 0;
--	return -EINVAL;
-+	pr_err("%s UVC failed (rc: 0x%x, rrc: 0x%x), possible hypervisor bug.\n",
-+	       uvcb.header.cmd == UVC_CMD_SET_SHARED_ACCESS ? "Share" : "Unshare",
-+	       uvcb.header.rc, uvcb.header.rrc);
-+	panic("System security cannot be guaranteed unless the system panics now.\n");
- }
- 
- /*
+ 	if (unlikely(test_bit(NETFS_ICTX_WRITETHROUGH, &ctx->flags) ||
 -- 
 2.43.0
 
