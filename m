@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BD71C57A9;
-	Tue, 27 Aug 2024 15:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10DC1C4ED4;
+	Tue, 27 Aug 2024 15:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771580; cv=none; b=hgfeqQI64VX2WlpGccOQ4UxZCVVwOJycd3uBX1wO0iJT+iEEpbwt6tDNBQJiYJY0dK/llQF/aSVMz9FTrHRm2O5e/9Q8Lx4+FecMKRDtfd+u2IZgBQxk30uABXl2vYl0IDXMkbsZDmRWwS8NwePPVGW3BRGhqjzcbGFxyjTzgP4=
+	t=1724771583; cv=none; b=BMIkV79rEhrJvvI3wQq3f7Mn90wZFZGd5Fuwcwj6f0HmLilamhVJxJeOucQLETrS/NxdFrCxSUFDuZeg0M9fW0MRMien4wz4SLie2UDFapnsPp+uZ7Ro8NknkyRe8Tjs3OMDdDh9C5/ARIT4v233Ja9AQJB/biYhWhEKvOTt0FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771580; c=relaxed/simple;
-	bh=Clnx2dh9HWv8prf7MEQxTzQlMub05nvXVxfVaQYw+VA=;
+	s=arc-20240116; t=1724771583; c=relaxed/simple;
+	bh=aEEO0acm+otKyM4T6X0KzvwTh8rEc04PaWRBuxEX8h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVr2l8vs5RFbM4RVYSAFmrLHkl7wOC3Sjo4FLRoxIJLcVgxpb2BIDSSJPb8EthBnFHascc1/S1UnSkRKnpV6f7LZuMYBQp5LTS9XyD56oJMZM0MsDreXXbG64f9njgoD1b99Vk8MC2OvKEqfGz1c+bX8whn03w8pXsD/cSz+BQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xf4qYtwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFu0TtNumAQQtGRF2C4CojyGGk2/BRh5KDm1wgPqmv0z0ns1LuDdeme8K5IxWNHCD/Ly1inm4QJcVF3isflyj0F3TPwGQ9sDcbrfNWmAOpran7oLQH5q6aodMTYmMyFuUStmS/4FoANFpO/WSwI8G2/J4HiJvkVenb94tWjblWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2y/XB28; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xf4qYtwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C749C61043;
-	Tue, 27 Aug 2024 15:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2y/XB28"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56862C61048;
+	Tue, 27 Aug 2024 15:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771580;
-	bh=Clnx2dh9HWv8prf7MEQxTzQlMub05nvXVxfVaQYw+VA=;
+	s=korg; t=1724771583;
+	bh=aEEO0acm+otKyM4T6X0KzvwTh8rEc04PaWRBuxEX8h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xf4qYtwdPvZhLwL6kbzpx2dsCicNmk0kHZ+w+S6wS/CsEcwM5mQwzJdDiFrji47nG
-	 B1TmDC57cCxCm+lslTEwQHuImto3Vt6T4HqNK9Av8M7bwiVKtPSg/D54QmypRbR9I8
-	 4an7bOfN/PavRfxdJX8Xqodyd9LatZPzyMzUaFSk=
+	b=W2y/XB28WhY5Ox/8GCbS8baJ4qoUd62hTWygvBOXzSKuM9X0mvJ0YT3iVXXLkORTW
+	 czwU+5ALyLK7Wx+TaSDjMRq9c7ukTA3csRjhjy5aZaSyKcBp+8ZD9DhSQw1GGrUlEP
+	 580saGPqpJQIW6YshJBdmRQG0jXH8VGw4L9DpZsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.10 230/273] platform/x86: dell-uart-backlight: Use acpi_video_get_backlight_type()
-Date: Tue, 27 Aug 2024 16:39:14 +0200
-Message-ID: <20240827143842.158761557@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	syzbot+b3e4f2f51ed645fd5df2@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 201/273] workqueue: Fix spruious data race in __flush_work()
+Date: Tue, 27 Aug 2024 16:38:45 +0200
+Message-ID: <20240827143841.058564614@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,76 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit b5f0943001339c4d324a1af10470ce0bdd79f966 upstream.
+[ Upstream commit 8bc35475ef1a23b0e224f3242eb11c76cab0ea88 ]
 
-The dell-uart-backlight driver supports backlight control on Dell All In
-One (AIO) models using a backlight controller board connected to an UART.
+When flushing a work item for cancellation, __flush_work() knows that it
+exclusively owns the work item through its PENDING bit. 134874e2eee9
+("workqueue: Allow cancel_work_sync() and disable_work() from atomic
+contexts on BH work items") added a read of @work->data to determine whether
+to use busy wait for BH work items that are being canceled. While the read
+is safe when @from_cancel, @work->data was read before testing @from_cancel
+to simplify code structure:
 
-In DSDT this uart port will be defined as:
+	data = *work_data_bits(work);
+	if (from_cancel &&
+	    !WARN_ON_ONCE(data & WORK_STRUCT_PWQ) && (data & WORK_OFFQ_BH)) {
 
-   Name (_HID, "DELL0501")
-   Name (_CID, EisaId ("PNP0501")
+While the read data was never used if !@from_cancel, this could trigger
+KCSAN data race detection spuriously:
 
-Now the first AIO has turned up which has not only the DSDT bits for this,
-but also an actual controller attached to the UART, yet it is not using
-this controller for backlight control.
+  ==================================================================
+  BUG: KCSAN: data-race in __flush_work / __flush_work
 
-Use the acpi_video_get_backlight_type() function from the ACPI video-detect
-code to check if the dell-uart-backlight driver should actually be used.
-This allows reusing the existing ACPI video-detect infra to override
-the backlight control method on the commandline or with DMI quirks.
+  write to 0xffff8881223aa3e8 of 8 bytes by task 3998 on cpu 0:
+   instrument_write include/linux/instrumented.h:41 [inline]
+   ___set_bit include/asm-generic/bitops/instrumented-non-atomic.h:28 [inline]
+   insert_wq_barrier kernel/workqueue.c:3790 [inline]
+   start_flush_work kernel/workqueue.c:4142 [inline]
+   __flush_work+0x30b/0x570 kernel/workqueue.c:4178
+   flush_work kernel/workqueue.c:4229 [inline]
+   ...
 
-Fixes: 484bae9e4d6a ("platform/x86: Add new Dell UART backlight driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20240814190159.15650-3-hdegoede@redhat.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  read to 0xffff8881223aa3e8 of 8 bytes by task 50 on cpu 1:
+   __flush_work+0x42a/0x570 kernel/workqueue.c:4188
+   flush_work kernel/workqueue.c:4229 [inline]
+   flush_delayed_work+0x66/0x70 kernel/workqueue.c:4251
+   ...
+
+  value changed: 0x0000000000400000 -> 0xffff88810006c00d
+
+Reorganize the code so that @from_cancel is tested before @work->data is
+accessed. The only problem is triggering KCSAN detection spuriously. This
+shouldn't need READ_ONCE() or other access qualifiers.
+
+No functional changes.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: syzbot+b3e4f2f51ed645fd5df2@syzkaller.appspotmail.com
+Fixes: 134874e2eee9 ("workqueue: Allow cancel_work_sync() and disable_work() from atomic contexts on BH work items")
+Link: http://lkml.kernel.org/r/000000000000ae429e061eea2157@google.com
+Cc: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/Kconfig               |    1 +
- drivers/platform/x86/dell/dell-uart-backlight.c |    8 ++++++++
- 2 files changed, 9 insertions(+)
+ kernel/workqueue.c | 45 +++++++++++++++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
---- a/drivers/platform/x86/dell/Kconfig
-+++ b/drivers/platform/x86/dell/Kconfig
-@@ -148,6 +148,7 @@ config DELL_SMO8800
- config DELL_UART_BACKLIGHT
- 	tristate "Dell AIO UART Backlight driver"
- 	depends on ACPI
-+	depends on ACPI_VIDEO
- 	depends on BACKLIGHT_CLASS_DEVICE
- 	depends on SERIAL_DEV_BUS
- 	help
---- a/drivers/platform/x86/dell/dell-uart-backlight.c
-+++ b/drivers/platform/x86/dell/dell-uart-backlight.c
-@@ -20,6 +20,7 @@
- #include <linux/string.h>
- #include <linux/types.h>
- #include <linux/wait.h>
-+#include <acpi/video.h>
- #include "../serdev_helpers.h"
- 
- /* The backlight controller must respond within 1 second */
-@@ -332,10 +333,17 @@ struct serdev_device_driver dell_uart_bl
- 
- static int dell_uart_bl_pdev_probe(struct platform_device *pdev)
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index c8687c0ab3645..c970eec25c5a0 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -4190,7 +4190,6 @@ static bool start_flush_work(struct work_struct *work, struct wq_barrier *barr,
+ static bool __flush_work(struct work_struct *work, bool from_cancel)
  {
-+	enum acpi_backlight_type bl_type;
- 	struct serdev_device *serdev;
- 	struct device *ctrl_dev;
- 	int ret;
+ 	struct wq_barrier barr;
+-	unsigned long data;
  
-+	bl_type = acpi_video_get_backlight_type();
-+	if (bl_type != acpi_backlight_dell_uart) {
-+		dev_dbg(&pdev->dev, "Not loading (ACPI backlight type = %d)\n", bl_type);
-+		return -ENODEV;
-+	}
+ 	if (WARN_ON(!wq_online))
+ 		return false;
+@@ -4208,29 +4207,35 @@ static bool __flush_work(struct work_struct *work, bool from_cancel)
+ 	 * was queued on a BH workqueue, we also know that it was running in the
+ 	 * BH context and thus can be busy-waited.
+ 	 */
+-	data = *work_data_bits(work);
+-	if (from_cancel &&
+-	    !WARN_ON_ONCE(data & WORK_STRUCT_PWQ) && (data & WORK_OFFQ_BH)) {
+-		/*
+-		 * On RT, prevent a live lock when %current preempted soft
+-		 * interrupt processing or prevents ksoftirqd from running by
+-		 * keeping flipping BH. If the BH work item runs on a different
+-		 * CPU then this has no effect other than doing the BH
+-		 * disable/enable dance for nothing. This is copied from
+-		 * kernel/softirq.c::tasklet_unlock_spin_wait().
+-		 */
+-		while (!try_wait_for_completion(&barr.done)) {
+-			if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
+-				local_bh_disable();
+-				local_bh_enable();
+-			} else {
+-				cpu_relax();
++	if (from_cancel) {
++		unsigned long data = *work_data_bits(work);
 +
- 	ctrl_dev = get_serdev_controller("DELL0501", NULL, 0, "serial0");
- 	if (IS_ERR(ctrl_dev))
- 		return PTR_ERR(ctrl_dev);
++		if (!WARN_ON_ONCE(data & WORK_STRUCT_PWQ) &&
++		    (data & WORK_OFFQ_BH)) {
++			/*
++			 * On RT, prevent a live lock when %current preempted
++			 * soft interrupt processing or prevents ksoftirqd from
++			 * running by keeping flipping BH. If the BH work item
++			 * runs on a different CPU then this has no effect other
++			 * than doing the BH disable/enable dance for nothing.
++			 * This is copied from
++			 * kernel/softirq.c::tasklet_unlock_spin_wait().
++			 */
++			while (!try_wait_for_completion(&barr.done)) {
++				if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
++					local_bh_disable();
++					local_bh_enable();
++				} else {
++					cpu_relax();
++				}
+ 			}
++			goto out_destroy;
+ 		}
+-	} else {
+-		wait_for_completion(&barr.done);
+ 	}
+ 
++	wait_for_completion(&barr.done);
++
++out_destroy:
+ 	destroy_work_on_stack(&barr.work);
+ 	return true;
+ }
+-- 
+2.43.0
+
 
 
