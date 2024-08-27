@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0016A1BDA93;
-	Tue, 27 Aug 2024 15:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E8C1BDA93;
+	Tue, 27 Aug 2024 15:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772693; cv=none; b=m20Nl+jxqFVbIfq0OWO6jpQJV0wbTFd9bNxsK/CNH/W6r49xPWqAsZlY8fAWQgVFP5hJzr0BfDizkUhYc8A1LkLwiC9C7GAcyqSYCh326Y3mWtEh9A/+j5eyg7DLZ2FkUMWWB9KUQjunnSla1zh/Jlgx5/9YUn2/GCV69bQMXw8=
+	t=1724772694; cv=none; b=WRNc844Z/jZL5xQdpKqQ6mAo7gu1DNsXzgtBQQJoXvUEguJhp54nCOCeF6286JuU2QjuGatEBGwvjFvUBNehNRUPcE1Ov0jkz+PUbf3i4GShIEaG1BUyUj37Foy9pAoHm/fffVJmF7pt5ShsbqnZ/OnYPsi2uyxBlXkFMrczHl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772693; c=relaxed/simple;
-	bh=WYl5D7kudtSY/Spg5xZbl9A5zYradtf1O+E5B9Ni5lk=;
+	s=arc-20240116; t=1724772694; c=relaxed/simple;
+	bh=C7Wv5tbGi9CateHaer3OKf+++uORwOtKrAFsv1VjJ2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOmznuMV7FNhG56Mea3yfS3t/m+oCgYSZX0I53yNhhitd/EqcZQDlWsX+haE2OMfJENZIHs0BnPWxqfh1KTwfLJ9evCy3VFwg5TyrW8dWjCsPZTyPI2lha2YojRZ2UibclfGlXSLs1H/kMnnrZZAorSl27TpSkkYYd5FWlO/Xvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feOr6mmO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b2ahbhmtw0sDame3HCvCp5M5pzfVHNayVI+ZaZO+LbzTTTbXQPL93g9Q+Q9+b08jER7Xvb6208BrwOJ0i2aRHcxxxUYD2kr41L0F7hFIsmRbMJ5ppgQ53SjsC+o3M0mYESx6xxvoEdBZ2NT5Aak0AXmPP3RPpmS80AeH9m4KMRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuwjLrCJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feOr6mmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C82CC4DDF0;
-	Tue, 27 Aug 2024 15:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuwjLrCJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A7BC4DDF1;
+	Tue, 27 Aug 2024 15:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772690;
-	bh=WYl5D7kudtSY/Spg5xZbl9A5zYradtf1O+E5B9Ni5lk=;
+	s=korg; t=1724772693;
+	bh=C7Wv5tbGi9CateHaer3OKf+++uORwOtKrAFsv1VjJ2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feOr6mmOZs5pVnObhRlKSudgDHvhHrOxzIcV3eb9XO3/18AN4Sz5aLL2Du2wOWsaV
-	 ui7dFG+L2dNJeNGaxKy7+CkMg+A/EnGl+xrH0u+i8wVIveeuqffUooDpps1XxyZ8BU
-	 x4P5H0VSPWBvASqn7AX/DC/tTmyuDhsRJntuK4zI=
+	b=xuwjLrCJTEm4MyoZ3Ig9BxXsVNbfyZH2Z9Zih6dnF/OS2Ny8KenB2XfL/aIB8YaPN
+	 DDUxfFh0Gq1LYL6iKsOh5gHN4R2oPozbO3GqI5jSBE2waxREBQzKDzklcR6BQi9DK0
+	 inX6sKIDywu+/Aey9EMDus5VMoAVVVw1R8u0U/xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	NeilBrown <neilb@suse.de>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 290/321] NFSD: simplify error paths in nfsd_svc()
-Date: Tue, 27 Aug 2024 16:39:58 +0200
-Message-ID: <20240827143849.290509824@linuxfoundation.org>
+Subject: [PATCH 6.1 291/321] nfsd: call nfsd_last_thread() before final nfsd_put()
+Date: Tue, 27 Aug 2024 16:39:59 +0200
+Message-ID: <20240827143849.329146888@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,83 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit bf32075256e9dd9c6b736859e2c5813981339908 ]
+[ Upstream commit 2a501f55cd641eb4d3c16a2eab0d678693fac663 ]
 
-The error paths in nfsd_svc() are needlessly complex and can result in a
-final call to svc_put() without nfsd_last_thread() being called.  This
-results in the listening sockets not being closed properly.
+If write_ports_addfd or write_ports_addxprt fail, they call nfsd_put()
+without calling nfsd_last_thread().  This leaves nn->nfsd_serv pointing
+to a structure that has been freed.
 
-The per-netns setup provided by nfsd_startup_new() and removed by
-nfsd_shutdown_net() is needed precisely when there are running threads.
-So we don't need nfsd_up_before.  We don't need to know if it *was* up.
-We only need to know if any threads are left.  If none are, then we must
-call nfsd_shutdown_net().  But we don't need to do that explicitly as
-nfsd_last_thread() does that for us.
+So remove 'static' from nfsd_last_thread() and call it when the
+nfsd_serv is about to be destroyed.
 
-So simply call nfsd_last_thread() before the last svc_put() if there are
-no running threads.  That will always do the right thing.
-
-Also discard:
- pr_info("nfsd: last server has exited, flushing export cache\n");
-It may not be true if an attempt to start the first server failed, and
-it isn't particularly helpful and it simply reports normal behaviour.
-
+Fixes: ec52361df99b ("SUNRPC: stop using ->sv_nrthreads as a refcount")
 Signed-off-by: NeilBrown <neilb@suse.de>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfssvc.c |   14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ fs/nfsd/nfsctl.c |    9 +++++++--
+ fs/nfsd/nfsd.h   |    1 +
+ fs/nfsd/nfssvc.c |    2 +-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -720,8 +720,10 @@ static ssize_t __write_ports_addfd(char
+ 
+ 	err = svc_addsock(nn->nfsd_serv, net, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
+ 
+-	if (err >= 0 &&
+-	    !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
++	if (err < 0 && !nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
++		nfsd_last_thread(net);
++	else if (err >= 0 &&
++		 !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
+ 		svc_get(nn->nfsd_serv);
+ 
+ 	nfsd_put(net);
+@@ -771,6 +773,9 @@ out_close:
+ 		svc_xprt_put(xprt);
+ 	}
+ out_err:
++	if (!nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
++		nfsd_last_thread(net);
++
+ 	nfsd_put(net);
+ 	return err;
+ }
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -139,6 +139,7 @@ int nfsd_vers(struct nfsd_net *nn, int v
+ int nfsd_minorversion(struct nfsd_net *nn, u32 minorversion, enum vers_op change);
+ void nfsd_reset_versions(struct nfsd_net *nn);
+ int nfsd_create_serv(struct net *net);
++void nfsd_last_thread(struct net *net);
+ 
+ extern int nfsd_max_blksize;
+ 
 --- a/fs/nfsd/nfssvc.c
 +++ b/fs/nfsd/nfssvc.c
-@@ -562,7 +562,6 @@ static void nfsd_last_thread(struct net
- 		return;
+@@ -532,7 +532,7 @@ static struct notifier_block nfsd_inet6a
+ /* Only used under nfsd_mutex, so this atomic may be overkill: */
+ static atomic_t nfsd_notifier_refcount = ATOMIC_INIT(0);
  
- 	nfsd_shutdown_net(net);
--	pr_info("nfsd: last server has exited, flushing export cache\n");
- 	nfsd_export_flush(net);
- }
- 
-@@ -778,7 +777,6 @@ int
- nfsd_svc(int nrservs, struct net *net, const struct cred *cred)
+-static void nfsd_last_thread(struct net *net)
++void nfsd_last_thread(struct net *net)
  {
- 	int	error;
--	bool	nfsd_up_before;
  	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 	struct svc_serv *serv;
- 
-@@ -798,8 +796,6 @@ nfsd_svc(int nrservs, struct net *net, c
- 	error = nfsd_create_serv(net);
- 	if (error)
- 		goto out;
--
--	nfsd_up_before = nn->nfsd_net_up;
- 	serv = nn->nfsd_serv;
- 
- 	error = nfsd_startup_net(net, cred);
-@@ -807,17 +803,15 @@ nfsd_svc(int nrservs, struct net *net, c
- 		goto out_put;
- 	error = svc_set_num_threads(serv, NULL, nrservs);
- 	if (error)
--		goto out_shutdown;
-+		goto out_put;
- 	error = serv->sv_nrthreads;
--	if (error == 0)
--		nfsd_last_thread(net);
--out_shutdown:
--	if (error < 0 && !nfsd_up_before)
--		nfsd_shutdown_net(net);
- out_put:
- 	/* Threads now hold service active */
- 	if (xchg(&nn->keep_active, 0))
- 		svc_put(serv);
-+
-+	if (serv->sv_nrthreads == 0)
-+		nfsd_last_thread(net);
- 	svc_put(serv);
- out:
- 	mutex_unlock(&nfsd_mutex);
+ 	struct svc_serv *serv = nn->nfsd_serv;
 
 
