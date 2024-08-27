@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982691A072D;
-	Tue, 27 Aug 2024 15:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BB41C57AB;
+	Tue, 27 Aug 2024 15:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772304; cv=none; b=RPzhWsJHCNl79OvTtn23Wx3r8l8QLaxDfG8e9NIukcDXBK3G65Kxu01pcxunrkXDPQ1GySudbp/+GEHchfXejpWZmNvRldA5y7WJCz0WLYUpZHzHfbu95UHq3g92k+XqluDk12gqxYzrDukOd58STniOtfXSmn3WZbQr0lk8ucs=
+	t=1724772307; cv=none; b=Kp+k3mCNBzioDZ3XN71JdVIcIuUMkO6aEJhlKJpL3GucqFTqJw/ygHVKa+xQvA31RYrw6NAkU42PvM17YjnjR1J7GBJE9fCU69kSgSOkO1whjaxa9wws85k2k37UNA9ewhWwfcuokK3MI1eG0D8/x+RiDobOma1F1yWRYUHjslA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772304; c=relaxed/simple;
-	bh=A5YIl5fVS/cOGGeXQrUS2ETiJxBTbUHRyKTWPJM30og=;
+	s=arc-20240116; t=1724772307; c=relaxed/simple;
+	bh=AKLHcfFQkS8XFOB1Q2jI4OdvLf3i3XPDpeJcDGr1d/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ipwnyi7riiS8SnCh+iqtGPBYpd4iNS459Q4IcpJUiWUEglrYHJ0lXDM7xkR5ackEadczJG5cvG3hD7NHBeZfAYnDdh+ftIKN7E0/o/4v2sG4vODXM9hR9vxgMz7WyXVm5zIQCK3SoUtlAXHbMK6cJbLHYOdqO7Peg8jItl95cdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohqxaCW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nsFoGmisPLz4WHP/VH5o1FD0pr0e0j+KP5ZEznBNrh0mj9+Biy/qc35d+NuZJOMVua80YzO/45ig0pqKAJMKMb8c8aVcCgGNHgDhPacoH3XS3K6tWyOyv0nSoQt6qljKF8uE789picjpMiO3PUY5iy+hCeAw4tEOxD3l4qW2w/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yq+SnZly; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohqxaCW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07936C61071;
-	Tue, 27 Aug 2024 15:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yq+SnZly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBD2C61071;
+	Tue, 27 Aug 2024 15:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772304;
-	bh=A5YIl5fVS/cOGGeXQrUS2ETiJxBTbUHRyKTWPJM30og=;
+	s=korg; t=1724772307;
+	bh=AKLHcfFQkS8XFOB1Q2jI4OdvLf3i3XPDpeJcDGr1d/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohqxaCW/4Cs3wufFVB/+JI42fpkOzHJ+Tz+f+F4RIhxMme2a0M7sLJ0v2Zhcqg6Rv
-	 8Xnpk67Q6AxPF8Gc5hr52Q2IYMBu1AkFv8J0dh1W81c+A+Q2IxxqHCnnUUyEhkpMrn
-	 gyGKn0Ne+4aCf6mpyuAZTVBUau5x1FIzzqeoUzk4=
+	b=yq+SnZlyr6GEUpBxLFmAg+cSfet9tnCSxHuZ01GjL0tiMMa1lc55W/ArdOFZBUHGV
+	 LHRheio43OUQN35WxO6Z9OA+/wQ8rhp6N8CGKWyUyj7FK8+HU+xeZcyIeI9g5jiq+r
+	 +eZnMJt2UgOkOMayMUV2I25Em2tNhBwGRcinCcxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/321] media: drivers/media/dvb-core: copy user arrays safely
-Date: Tue, 27 Aug 2024 16:37:55 +0200
-Message-ID: <20240827143844.587518518@linuxfoundation.org>
+Subject: [PATCH 6.1 176/321] memory: stm32-fmc2-ebi: check regmap_read return value
+Date: Tue, 27 Aug 2024 16:38:04 +0200
+Message-ID: <20240827143844.929164501@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,68 +51,281 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Christophe Kerello <christophe.kerello@foss.st.com>
 
-[ Upstream commit 102fb77c2deb0df3683ef8ff7a6f4cf91dc456e2 ]
+[ Upstream commit 722463f73bcf65a8c818752a38c14ee672c77da1 ]
 
-At several positions in dvb_frontend.c, memdup_user() is utilized to
-copy userspace arrays. This is done without overflow checks.
+Check regmap_read return value to avoid to use uninitialized local
+variables.
 
-Use the new wrapper memdup_array_user() to copy the arrays more safely.
-
-Link: https://lore.kernel.org/linux-media/20231102191633.52592-2-pstanner@redhat.com
-Suggested-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Link: https://lore.kernel.org/r/20240226101428.37791-3-christophe.kerello@foss.st.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_frontend.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/memory/stm32-fmc2-ebi.c | 122 +++++++++++++++++++++++---------
+ 1 file changed, 88 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index fce0e20940780..a1a3dbb0e7388 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -2160,7 +2160,8 @@ static int dvb_frontend_handle_compat_ioctl(struct file *file, unsigned int cmd,
- 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
- 			return -EINVAL;
+diff --git a/drivers/memory/stm32-fmc2-ebi.c b/drivers/memory/stm32-fmc2-ebi.c
+index ffec26a99313b..5c387d32c078f 100644
+--- a/drivers/memory/stm32-fmc2-ebi.c
++++ b/drivers/memory/stm32-fmc2-ebi.c
+@@ -179,8 +179,11 @@ static int stm32_fmc2_ebi_check_mux(struct stm32_fmc2_ebi *ebi,
+ 				    int cs)
+ {
+ 	u32 bcr;
++	int ret;
  
--		tvp = memdup_user(compat_ptr(tvps->props), tvps->num * sizeof(*tvp));
-+		tvp = memdup_array_user(compat_ptr(tvps->props),
-+					tvps->num, sizeof(*tvp));
- 		if (IS_ERR(tvp))
- 			return PTR_ERR(tvp);
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
  
-@@ -2191,7 +2192,8 @@ static int dvb_frontend_handle_compat_ioctl(struct file *file, unsigned int cmd,
- 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
- 			return -EINVAL;
+ 	if (bcr & FMC2_BCR_MTYP)
+ 		return 0;
+@@ -193,8 +196,11 @@ static int stm32_fmc2_ebi_check_waitcfg(struct stm32_fmc2_ebi *ebi,
+ 					int cs)
+ {
+ 	u32 bcr, val = FIELD_PREP(FMC2_BCR_MTYP, FMC2_BCR_MTYP_NOR);
++	int ret;
  
--		tvp = memdup_user(compat_ptr(tvps->props), tvps->num * sizeof(*tvp));
-+		tvp = memdup_array_user(compat_ptr(tvps->props),
-+					tvps->num, sizeof(*tvp));
- 		if (IS_ERR(tvp))
- 			return PTR_ERR(tvp);
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
  
-@@ -2368,7 +2370,8 @@ static int dvb_get_property(struct dvb_frontend *fe, struct file *file,
- 	if (!tvps->num || tvps->num > DTV_IOCTL_MAX_MSGS)
- 		return -EINVAL;
+ 	if ((bcr & FMC2_BCR_MTYP) == val && bcr & FMC2_BCR_BURSTEN)
+ 		return 0;
+@@ -207,8 +213,11 @@ static int stm32_fmc2_ebi_check_sync_trans(struct stm32_fmc2_ebi *ebi,
+ 					   int cs)
+ {
+ 	u32 bcr;
++	int ret;
  
--	tvp = memdup_user((void __user *)tvps->props, tvps->num * sizeof(*tvp));
-+	tvp = memdup_array_user((void __user *)tvps->props,
-+				tvps->num, sizeof(*tvp));
- 	if (IS_ERR(tvp))
- 		return PTR_ERR(tvp);
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
  
-@@ -2446,7 +2449,8 @@ static int dvb_frontend_handle_ioctl(struct file *file,
- 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
- 			return -EINVAL;
+ 	if (bcr & FMC2_BCR_BURSTEN)
+ 		return 0;
+@@ -221,8 +230,11 @@ static int stm32_fmc2_ebi_check_async_trans(struct stm32_fmc2_ebi *ebi,
+ 					    int cs)
+ {
+ 	u32 bcr;
++	int ret;
  
--		tvp = memdup_user((void __user *)tvps->props, tvps->num * sizeof(*tvp));
-+		tvp = memdup_array_user((void __user *)tvps->props,
-+					tvps->num, sizeof(*tvp));
- 		if (IS_ERR(tvp))
- 			return PTR_ERR(tvp);
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
  
+ 	if (!(bcr & FMC2_BCR_BURSTEN) || !(bcr & FMC2_BCR_CBURSTRW))
+ 		return 0;
+@@ -235,8 +247,11 @@ static int stm32_fmc2_ebi_check_cpsize(struct stm32_fmc2_ebi *ebi,
+ 				       int cs)
+ {
+ 	u32 bcr, val = FIELD_PREP(FMC2_BCR_MTYP, FMC2_BCR_MTYP_PSRAM);
++	int ret;
+ 
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
+ 
+ 	if ((bcr & FMC2_BCR_MTYP) == val && bcr & FMC2_BCR_BURSTEN)
+ 		return 0;
+@@ -249,12 +264,18 @@ static int stm32_fmc2_ebi_check_address_hold(struct stm32_fmc2_ebi *ebi,
+ 					     int cs)
+ {
+ 	u32 bcr, bxtr, val = FIELD_PREP(FMC2_BXTR_ACCMOD, FMC2_BXTR_EXTMOD_D);
++	int ret;
++
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
+ 
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
+ 	if (prop->reg_type == FMC2_REG_BWTR)
+-		regmap_read(ebi->regmap, FMC2_BWTR(cs), &bxtr);
++		ret = regmap_read(ebi->regmap, FMC2_BWTR(cs), &bxtr);
+ 	else
+-		regmap_read(ebi->regmap, FMC2_BTR(cs), &bxtr);
++		ret = regmap_read(ebi->regmap, FMC2_BTR(cs), &bxtr);
++	if (ret)
++		return ret;
+ 
+ 	if ((!(bcr & FMC2_BCR_BURSTEN) || !(bcr & FMC2_BCR_CBURSTRW)) &&
+ 	    ((bxtr & FMC2_BXTR_ACCMOD) == val || bcr & FMC2_BCR_MUXEN))
+@@ -268,12 +289,19 @@ static int stm32_fmc2_ebi_check_clk_period(struct stm32_fmc2_ebi *ebi,
+ 					   int cs)
+ {
+ 	u32 bcr, bcr1;
++	int ret;
+ 
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
+-	if (cs)
+-		regmap_read(ebi->regmap, FMC2_BCR1, &bcr1);
+-	else
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
++
++	if (cs) {
++		ret = regmap_read(ebi->regmap, FMC2_BCR1, &bcr1);
++		if (ret)
++			return ret;
++	} else {
+ 		bcr1 = bcr;
++	}
+ 
+ 	if (bcr & FMC2_BCR_BURSTEN && (!cs || !(bcr1 & FMC2_BCR1_CCLKEN)))
+ 		return 0;
+@@ -305,12 +333,18 @@ static u32 stm32_fmc2_ebi_ns_to_clk_period(struct stm32_fmc2_ebi *ebi,
+ {
+ 	u32 nb_clk_cycles = stm32_fmc2_ebi_ns_to_clock_cycles(ebi, cs, setup);
+ 	u32 bcr, btr, clk_period;
++	int ret;
++
++	ret = regmap_read(ebi->regmap, FMC2_BCR1, &bcr);
++	if (ret)
++		return ret;
+ 
+-	regmap_read(ebi->regmap, FMC2_BCR1, &bcr);
+ 	if (bcr & FMC2_BCR1_CCLKEN || !cs)
+-		regmap_read(ebi->regmap, FMC2_BTR1, &btr);
++		ret = regmap_read(ebi->regmap, FMC2_BTR1, &btr);
+ 	else
+-		regmap_read(ebi->regmap, FMC2_BTR(cs), &btr);
++		ret = regmap_read(ebi->regmap, FMC2_BTR(cs), &btr);
++	if (ret)
++		return ret;
+ 
+ 	clk_period = FIELD_GET(FMC2_BTR_CLKDIV, btr) + 1;
+ 
+@@ -569,11 +603,16 @@ static int stm32_fmc2_ebi_set_address_setup(struct stm32_fmc2_ebi *ebi,
+ 	if (ret)
+ 		return ret;
+ 
+-	regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++	if (ret)
++		return ret;
++
+ 	if (prop->reg_type == FMC2_REG_BWTR)
+-		regmap_read(ebi->regmap, FMC2_BWTR(cs), &bxtr);
++		ret = regmap_read(ebi->regmap, FMC2_BWTR(cs), &bxtr);
+ 	else
+-		regmap_read(ebi->regmap, FMC2_BTR(cs), &bxtr);
++		ret = regmap_read(ebi->regmap, FMC2_BTR(cs), &bxtr);
++	if (ret)
++		return ret;
+ 
+ 	if ((bxtr & FMC2_BXTR_ACCMOD) == val || bcr & FMC2_BCR_MUXEN)
+ 		val = clamp_val(setup, 1, FMC2_BXTR_ADDSET_MAX);
+@@ -691,11 +730,14 @@ static int stm32_fmc2_ebi_set_max_low_pulse(struct stm32_fmc2_ebi *ebi,
+ 					    int cs, u32 setup)
+ {
+ 	u32 old_val, new_val, pcscntr;
++	int ret;
+ 
+ 	if (setup < 1)
+ 		return 0;
+ 
+-	regmap_read(ebi->regmap, FMC2_PCSCNTR, &pcscntr);
++	ret = regmap_read(ebi->regmap, FMC2_PCSCNTR, &pcscntr);
++	if (ret)
++		return ret;
+ 
+ 	/* Enable counter for the bank */
+ 	regmap_update_bits(ebi->regmap, FMC2_PCSCNTR,
+@@ -942,17 +984,20 @@ static void stm32_fmc2_ebi_disable_bank(struct stm32_fmc2_ebi *ebi, int cs)
+ 	regmap_update_bits(ebi->regmap, FMC2_BCR(cs), FMC2_BCR_MBKEN, 0);
+ }
+ 
+-static void stm32_fmc2_ebi_save_setup(struct stm32_fmc2_ebi *ebi)
++static int stm32_fmc2_ebi_save_setup(struct stm32_fmc2_ebi *ebi)
+ {
+ 	unsigned int cs;
++	int ret;
+ 
+ 	for (cs = 0; cs < FMC2_MAX_EBI_CE; cs++) {
+-		regmap_read(ebi->regmap, FMC2_BCR(cs), &ebi->bcr[cs]);
+-		regmap_read(ebi->regmap, FMC2_BTR(cs), &ebi->btr[cs]);
+-		regmap_read(ebi->regmap, FMC2_BWTR(cs), &ebi->bwtr[cs]);
++		ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &ebi->bcr[cs]);
++		ret |= regmap_read(ebi->regmap, FMC2_BTR(cs), &ebi->btr[cs]);
++		ret |= regmap_read(ebi->regmap, FMC2_BWTR(cs), &ebi->bwtr[cs]);
++		if (ret)
++			return ret;
+ 	}
+ 
+-	regmap_read(ebi->regmap, FMC2_PCSCNTR, &ebi->pcscntr);
++	return regmap_read(ebi->regmap, FMC2_PCSCNTR, &ebi->pcscntr);
+ }
+ 
+ static void stm32_fmc2_ebi_set_setup(struct stm32_fmc2_ebi *ebi)
+@@ -981,22 +1026,29 @@ static void stm32_fmc2_ebi_disable_banks(struct stm32_fmc2_ebi *ebi)
+ }
+ 
+ /* NWAIT signal can not be connected to EBI controller and NAND controller */
+-static bool stm32_fmc2_ebi_nwait_used_by_ctrls(struct stm32_fmc2_ebi *ebi)
++static int stm32_fmc2_ebi_nwait_used_by_ctrls(struct stm32_fmc2_ebi *ebi)
+ {
++	struct device *dev = ebi->dev;
+ 	unsigned int cs;
+ 	u32 bcr;
++	int ret;
+ 
+ 	for (cs = 0; cs < FMC2_MAX_EBI_CE; cs++) {
+ 		if (!(ebi->bank_assigned & BIT(cs)))
+ 			continue;
+ 
+-		regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++		ret = regmap_read(ebi->regmap, FMC2_BCR(cs), &bcr);
++		if (ret)
++			return ret;
++
+ 		if ((bcr & FMC2_BCR_WAITEN || bcr & FMC2_BCR_ASYNCWAIT) &&
+-		    ebi->bank_assigned & BIT(FMC2_NAND))
+-			return true;
++		    ebi->bank_assigned & BIT(FMC2_NAND)) {
++			dev_err(dev, "NWAIT signal connected to EBI and NAND controllers\n");
++			return -EINVAL;
++		}
+ 	}
+ 
+-	return false;
++	return 0;
+ }
+ 
+ static void stm32_fmc2_ebi_enable(struct stm32_fmc2_ebi *ebi)
+@@ -1083,10 +1135,9 @@ static int stm32_fmc2_ebi_parse_dt(struct stm32_fmc2_ebi *ebi)
+ 		return -ENODEV;
+ 	}
+ 
+-	if (stm32_fmc2_ebi_nwait_used_by_ctrls(ebi)) {
+-		dev_err(dev, "NWAIT signal connected to EBI and NAND controllers\n");
+-		return -EINVAL;
+-	}
++	ret = stm32_fmc2_ebi_nwait_used_by_ctrls(ebi);
++	if (ret)
++		return ret;
+ 
+ 	stm32_fmc2_ebi_enable(ebi);
+ 
+@@ -1131,7 +1182,10 @@ static int stm32_fmc2_ebi_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_release;
+ 
+-	stm32_fmc2_ebi_save_setup(ebi);
++	ret = stm32_fmc2_ebi_save_setup(ebi);
++	if (ret)
++		goto err_release;
++
+ 	platform_set_drvdata(pdev, ebi);
+ 
+ 	return 0;
 -- 
 2.43.0
 
