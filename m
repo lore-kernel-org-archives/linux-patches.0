@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BE919F485;
-	Tue, 27 Aug 2024 15:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ED519F485;
+	Tue, 27 Aug 2024 15:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772117; cv=none; b=iY6+/Yd7HLWum8xzViCA+p8KhHQavwYXlDXv4j9VcyWRokl+27Lc9a0o3wWZQXCk6sGldoFmibpWA+SD5oPJx07yRnGrCbvNn7M0vYiMPH0JeJVdCoOkB57U21d6j4rfHwx8jvqSjVKa+Es2YcsZzXZ22CoNta0nGHMM7P72CWs=
+	t=1724772121; cv=none; b=iE1aLpu8wok/ePx+dCRfmMbHJ9Pvbr99hK1p1xdzAYMhPGSJ9yvb09IwPKWwkcodsGFs/aAZU5YvgzxAcKRDkj3YgflXL9IETrVXlZlN0EcRz2TMuIQaLDUjuqZiNvvAuC29R4kV4wpP5RvYQhiBGNdE7imhL9Hp03WqLiZf0Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772117; c=relaxed/simple;
-	bh=1JmpI9zJHzv7oRJ5RCNwNnCuY1GrpE1SkMN9zOcP7pQ=;
+	s=arc-20240116; t=1724772121; c=relaxed/simple;
+	bh=Pygm6PpR1+Phjpd3Pya3Yid+V4A+8Vs2QLfYbaeDyAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaNtEB4nOUIJkrYkCpDHZ67gZMADyatmUgCP8aaQz9SfiA7xtYZFCdVykoAc2xa/HYAT+uvxHXYiCuKtIEOeTzJdUr5F2HXZ0LFRqv18Rx5VulcjkU/R8K2vcqnidwjTW3lb0fUWo+TdcBNxb5/i5nLkAwUeG8yyQTPWUQKktH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmQlAETP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpiNxYYzotWCp4rmml2a8DNgVQnjE4e8F8mV6pQ6KFWsFqoM8kuiAKxJNVY0qQR2Ntk/5oIi5al+Lki23uoamh2Ha0DFLq96IKCCbkENYbz+Bys9T0BeEhsSacOW8FKIWCO6fjTxiV8njzh4rWrU+/N4ckuA8ajyh7v82BEAVGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUcmgmP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmQlAETP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B282C4FE09;
-	Tue, 27 Aug 2024 15:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUcmgmP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D09C4FE08;
+	Tue, 27 Aug 2024 15:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772117;
-	bh=1JmpI9zJHzv7oRJ5RCNwNnCuY1GrpE1SkMN9zOcP7pQ=;
+	s=korg; t=1724772120;
+	bh=Pygm6PpR1+Phjpd3Pya3Yid+V4A+8Vs2QLfYbaeDyAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmQlAETPPn6RsgGKWO3NWZ+JQ3kHGGrRChcg1j2fHlqi+ecMtyi6juj6Yi0VVhtaS
-	 FgeJOEFGryVgXwqpZ/xEnymMYL1QQE6X8l28KLqQZnMyZhVlNryOjewkgm7A9OT5en
-	 Har/g3IGjKIS3ChJeefDDBSzpAaPPZOZKRKZX7cM=
+	b=cUcmgmP2wyKSGxdWnOGb+h0QGneeKF5UhDDQhbBTFO/OwXsWd651Kpd+8FBS/d0Vn
+	 gSeAKcMeH88OUqvk39l+8FoYyhq+20IV7NojlvBDh8ylA2ff/3+DDb7xwLPzNLWig3
+	 Z5fGOCTby2q9vWQpTC8GRgxjkBy9gnssIz20dn1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/321] netfilter: nf_tables: A better name for nft_obj_filter
-Date: Tue, 27 Aug 2024 16:36:49 +0200
-Message-ID: <20240827143842.093783206@linuxfoundation.org>
+Subject: [PATCH 6.1 119/321] i2c: riic: avoid potential division by zero
+Date: Tue, 27 Aug 2024 16:37:07 +0200
+Message-ID: <20240827143842.772813277@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,102 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ecf49cad807061d880bea27a5da8e0114ddc7690 ]
+[ Upstream commit 7890fce6201aed46d3576e3d641f9ee5c1f0e16f ]
 
-Name it for what it is supposed to become, a real nft_obj_dump_ctx. No
-functional change intended.
+Value comes from DT, so it could be 0. Unlikely, but could be.
 
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/i2c/busses/i2c-riic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 07140899a8d1d..f4bdfd5dd319a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7416,7 +7416,7 @@ static void audit_log_obj_reset(const struct nft_table *table,
- 	kfree(buf);
- }
+diff --git a/drivers/i2c/busses/i2c-riic.c b/drivers/i2c/busses/i2c-riic.c
+index 849848ccb0802..b9959621cc5d7 100644
+--- a/drivers/i2c/busses/i2c-riic.c
++++ b/drivers/i2c/busses/i2c-riic.c
+@@ -314,7 +314,7 @@ static int riic_init_hw(struct riic_dev *riic, struct i2c_timings *t)
+ 	 * frequency with only 62 clock ticks max (31 high, 31 low).
+ 	 * Aim for a duty of 60% LOW, 40% HIGH.
+ 	 */
+-	total_ticks = DIV_ROUND_UP(rate, t->bus_freq_hz);
++	total_ticks = DIV_ROUND_UP(rate, t->bus_freq_hz ?: 1);
  
--struct nft_obj_filter {
-+struct nft_obj_dump_ctx {
- 	char		*table;
- 	u32		type;
- };
-@@ -7426,7 +7426,7 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- 	const struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
- 	const struct nft_table *table;
- 	unsigned int idx = 0, s_idx = cb->args[0];
--	struct nft_obj_filter *filter = cb->data;
-+	struct nft_obj_dump_ctx *ctx = cb->data;
- 	struct net *net = sock_net(skb->sk);
- 	int family = nfmsg->nfgen_family;
- 	struct nftables_pernet *nft_net;
-@@ -7452,10 +7452,10 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- 				goto cont;
- 			if (idx < s_idx)
- 				goto cont;
--			if (filter->table && strcmp(filter->table, table->name))
-+			if (ctx->table && strcmp(ctx->table, table->name))
- 				goto cont;
--			if (filter->type != NFT_OBJECT_UNSPEC &&
--			    obj->ops->type->type != filter->type)
-+			if (ctx->type != NFT_OBJECT_UNSPEC &&
-+			    obj->ops->type->type != ctx->type)
- 				goto cont;
- 
- 			rc = nf_tables_fill_obj_info(skb, net,
-@@ -7487,33 +7487,33 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- static int nf_tables_dump_obj_start(struct netlink_callback *cb)
- {
- 	const struct nlattr * const *nla = cb->data;
--	struct nft_obj_filter *filter = NULL;
-+	struct nft_obj_dump_ctx *ctx = NULL;
- 
--	filter = kzalloc(sizeof(*filter), GFP_ATOMIC);
--	if (!filter)
-+	ctx = kzalloc(sizeof(*ctx), GFP_ATOMIC);
-+	if (!ctx)
- 		return -ENOMEM;
- 
- 	if (nla[NFTA_OBJ_TABLE]) {
--		filter->table = nla_strdup(nla[NFTA_OBJ_TABLE], GFP_ATOMIC);
--		if (!filter->table) {
--			kfree(filter);
-+		ctx->table = nla_strdup(nla[NFTA_OBJ_TABLE], GFP_ATOMIC);
-+		if (!ctx->table) {
-+			kfree(ctx);
- 			return -ENOMEM;
- 		}
- 	}
- 
- 	if (nla[NFTA_OBJ_TYPE])
--		filter->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
-+		ctx->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
- 
--	cb->data = filter;
-+	cb->data = ctx;
- 	return 0;
- }
- 
- static int nf_tables_dump_obj_done(struct netlink_callback *cb)
- {
--	struct nft_obj_filter *filter = cb->data;
-+	struct nft_obj_dump_ctx *ctx = cb->data;
- 
--	kfree(filter->table);
--	kfree(filter);
-+	kfree(ctx->table);
-+	kfree(ctx);
- 
- 	return 0;
- }
+ 	for (cks = 0; cks < 7; cks++) {
+ 		/*
 -- 
 2.43.0
 
