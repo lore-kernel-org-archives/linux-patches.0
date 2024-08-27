@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401231C68A6;
-	Tue, 27 Aug 2024 14:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C2B1C6F4D;
+	Tue, 27 Aug 2024 14:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769973; cv=none; b=rB56xJSokGL7Nop+9l/B/UaZN12BcLE+FrbFIP5Kk8GlXYMMsHAmzcTQ7Z3mQgofG9BaosxbdAFbM1xVYxnOmfAeE9epzFR0YP7zSWBoQnha3fCNp7HINvrSPxcAWBmFT2c811Elb5BeR02GKQuJiP3nzjm/8ReFpIB7E5qyxb8=
+	t=1724769976; cv=none; b=I82k9U0WpHLYEW0NZF0STOgqimOvo5lgqCZ4hTBYWNNYj8uMAxnhwtmR6TYaaD58qPJ99UYLW+MzeV0g2n6CuUm2QFq2/0eTTBiCajZvAGooe5GbfXScrGx0IGPYYBGi+vBFXP5lz1wKUILQrROEOUdtqlcX1txX2D3bPsHt67E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769973; c=relaxed/simple;
-	bh=A/fh8h9ETBZp7RMP5YYPXgFFxQwG28yOfab7U2pHRXM=;
+	s=arc-20240116; t=1724769976; c=relaxed/simple;
+	bh=U9+esCb/u9IY1x3BSHWadh3GfB4y8SFSWdcQWHyn2zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kOPzpPeQP3tEdna4araE/zRLQIwu9JEoLTZATLjCladrZrENlvhoNUk8rjKYYhmwEOsWu6pCIOND0agfdIz8Vm192mzN6/cav490hWlFXNPFmIFllSXpo2mVwKHKQWDhEEk3SFlU63XyVwlOFzbeO3ND+x31zG0nQt/a02TK+es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esKrBdLz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i06TrvKTdqKcxQcsL8+1tv0jR9ivQP/FOuP+AT2szoezh/Ju8AEhaYdINUllJBuk5vfuJNdYABkJUbk/jtYVvyB8sIw+Q+pfTq5p2bAdL5O1+G7y+239rMjG3BBNqCr0EoJ16O9M1qKhIFVf+EFyUMqe4WQS25fR4M9x6NY8CK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IusOTxk7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esKrBdLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA77AC61063;
-	Tue, 27 Aug 2024 14:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IusOTxk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D5CC61063;
+	Tue, 27 Aug 2024 14:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769973;
-	bh=A/fh8h9ETBZp7RMP5YYPXgFFxQwG28yOfab7U2pHRXM=;
+	s=korg; t=1724769976;
+	bh=U9+esCb/u9IY1x3BSHWadh3GfB4y8SFSWdcQWHyn2zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esKrBdLzXn5H95LhF8JCwG8nMxTDWVMjor8jEmXs4NYAbV6VOd14uDBczbXDTeaBU
-	 Z6C7D8/luEvHpLld0YEbs9N84mog+rBPZ0CDuLb6NLst0J7Sgs+E6ts8gOG8dFiZs9
-	 dQZdxnOsRKyDS2uCft+9reM5atuLGdD2f/CPTQf8=
+	b=IusOTxk7z6Yvv2BxPzZ9H5J05Kw6xD/kbiXxylVlLJfzw0n1+sl2edpKvs7S/4oW5
+	 QUhkiUyveXi2tI7LqjxHYOQTlB8DT6O1bepHS4ZUC7/TYFfl9ecIS4WAjCwbIVnMUV
+	 C3wrVHTcWrR5x3BGxNUuTZqW/pZxLt/kL8KXkoAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/341] bpf: Fix updating attached freplace prog in prog_array map
-Date: Tue, 27 Aug 2024 16:34:39 +0200
-Message-ID: <20240827143845.243027593@linuxfoundation.org>
+Subject: [PATCH 6.6 083/341] drm/amd/pm: fix error flow in sensor fetching
+Date: Tue, 27 Aug 2024 16:35:14 +0200
+Message-ID: <20240827143846.568254634@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -48,63 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit fdad456cbcca739bae1849549c7a999857c56f88 ]
+[ Upstream commit a5600853167aeba5cade81f184a382a0d1b14641 ]
 
-The commit f7866c358733 ("bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT")
-fixed a NULL pointer dereference panic, but didn't fix the issue that
-fails to update attached freplace prog to prog_array map.
+Sensor fetching functions should return an signed int to
+handle errors properly.
 
-Since commit 1c123c567fb1 ("bpf: Resolve fext program type when checking map compatibility"),
-freplace prog and its target prog are able to tail call each other.
-
-And the commit 3aac1ead5eb6 ("bpf: Move prog->aux->linked_prog and trampoline into bpf_link on attach")
-sets prog->aux->dst_prog as NULL after attaching freplace prog to its
-target prog.
-
-After loading freplace the prog_array's owner type is BPF_PROG_TYPE_SCHED_CLS.
-Then, after attaching freplace its prog->aux->dst_prog is NULL.
-Then, while updating freplace in prog_array the bpf_prog_map_compatible()
-incorrectly returns false because resolve_prog_type() returns
-BPF_PROG_TYPE_EXT instead of BPF_PROG_TYPE_SCHED_CLS.
-After this patch the resolve_prog_type() returns BPF_PROG_TYPE_SCHED_CLS
-and update to prog_array can succeed.
-
-Fixes: f7866c358733 ("bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT")
-Cc: Toke Høiland-Jørgensen <toke@redhat.com>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/r/20240728114612.48486-2-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reported-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index b62535fd8de5f..92919d52f7e1b 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -760,8 +760,8 @@ static inline u32 type_flag(u32 type)
- /* only use after check_attach_btf_id() */
- static inline enum bpf_prog_type resolve_prog_type(const struct bpf_prog *prog)
- {
--	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->dst_prog) ?
--		prog->aux->dst_prog->type : prog->type;
-+	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->saved_dst_prog_type) ?
-+		prog->aux->saved_dst_prog_type : prog->type;
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+index 7372eae0b0ef8..babb73147adfb 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -1471,9 +1471,9 @@ static ssize_t amdgpu_set_pp_power_profile_mode(struct device *dev,
+ 	return -EINVAL;
  }
  
- static inline bool bpf_prog_check_recur(const struct bpf_prog *prog)
+-static unsigned int amdgpu_hwmon_get_sensor_generic(struct amdgpu_device *adev,
+-						    enum amd_pp_sensors sensor,
+-						    void *query)
++static int amdgpu_hwmon_get_sensor_generic(struct amdgpu_device *adev,
++					   enum amd_pp_sensors sensor,
++					   void *query)
+ {
+ 	int r, size = sizeof(uint32_t);
+ 
+@@ -2787,8 +2787,8 @@ static ssize_t amdgpu_hwmon_show_vddnb_label(struct device *dev,
+ 	return sysfs_emit(buf, "vddnb\n");
+ }
+ 
+-static unsigned int amdgpu_hwmon_get_power(struct device *dev,
+-					   enum amd_pp_sensors sensor)
++static int amdgpu_hwmon_get_power(struct device *dev,
++				  enum amd_pp_sensors sensor)
+ {
+ 	struct amdgpu_device *adev = dev_get_drvdata(dev);
+ 	unsigned int uw;
+@@ -2809,7 +2809,7 @@ static ssize_t amdgpu_hwmon_show_power_avg(struct device *dev,
+ 					   struct device_attribute *attr,
+ 					   char *buf)
+ {
+-	unsigned int val;
++	int val;
+ 
+ 	val = amdgpu_hwmon_get_power(dev, AMDGPU_PP_SENSOR_GPU_AVG_POWER);
+ 	if (val < 0)
+@@ -2822,7 +2822,7 @@ static ssize_t amdgpu_hwmon_show_power_input(struct device *dev,
+ 					     struct device_attribute *attr,
+ 					     char *buf)
+ {
+-	unsigned int val;
++	int val;
+ 
+ 	val = amdgpu_hwmon_get_power(dev, AMDGPU_PP_SENSOR_GPU_INPUT_POWER);
+ 	if (val < 0)
 -- 
 2.43.0
 
