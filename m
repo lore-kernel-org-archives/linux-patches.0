@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0B81C3F0D;
-	Tue, 27 Aug 2024 15:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380FC1C57AB;
+	Tue, 27 Aug 2024 15:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771955; cv=none; b=DJBWM3EnCqgPJLAN2WE7EzFkZ6X/6i4SHJ6umN1vbK5F61zNSnrM+VQBPZxSYap3qgOx+zhxyPR/CCFr0HM7Xxho+ueYzeSJ6jTfyEBwjUuJn7o7UCc4An00FulH2fAVPC507Jlx2MH3FkOnSKrSMRTJ0Y4aXYd5E6AGdDuH+PU=
+	t=1724771959; cv=none; b=ARkHoTJyejdKiVNUHOKowAgLvbn1n4SYSyFsdCRCSgTV8C2lZVLQ+Qbox0ZiDna4+AZhkQVdXf4MpMDKTLpARghBIyWUgUOyMquSqfWUOFuxk41GxExWWsxHOd3fRzIBOvwDMRoR1vqJW7a8lKduP1IfuiknghqFyA8cvxnLMTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771955; c=relaxed/simple;
-	bh=YOMNdysQyuOo4iurfCdMXj7XTY5r+t+sDlFgrAaKUoI=;
+	s=arc-20240116; t=1724771959; c=relaxed/simple;
+	bh=tsf1BNFPr62pomYwlHg5aRTxLSkgkdPeYa3trQwuHRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbhZDfEfZUKd+utlaFdLYMXmsLszraVePO86Sf0cU+lsjwguxHrLHC3anpIGPkgo+2sfESsJn3MibMvBVXo20rVJdgRCQ9jpqEgK06voqsuRNa5ys/5ds3Wcpw+epqJZNBxHlouPgjC4da8FyfKBC4bgYjr9rsYEo00FraA50i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKgPbK9h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AesPmbIygutaIAawbD2OuL9Axh19t6XUA8yrpH0BePjFBC6BMcvNK3tp3y/lNUeRw2ZDr01ynHn0icbhFx4Xbq+Iii5AdA8OmS6FT9rkujo0HOoSwx+kZwhHtsrhEa13rlwD+XNU/9cQyJ3LzPkXzFAwMNxUse1dQpR4IjkIAEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLt6+i4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKgPbK9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D8CC61067;
-	Tue, 27 Aug 2024 15:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLt6+i4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A95BC61067;
+	Tue, 27 Aug 2024 15:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771955;
-	bh=YOMNdysQyuOo4iurfCdMXj7XTY5r+t+sDlFgrAaKUoI=;
+	s=korg; t=1724771959;
+	bh=tsf1BNFPr62pomYwlHg5aRTxLSkgkdPeYa3trQwuHRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKgPbK9hjJ6iaI9H8dZXYNu1s2DZzwiTDra+a6XEfVZ5Bl7OC/bYoJ704sCsWEhxy
-	 43kzmNcpj/jlzuyYhSAILyRG2jKXHsZfUofKhNhrUzjXnt4PPy5bsVpzRpglHv419e
-	 z6WAhIK6TRxCxMTXLYqOxeXoz61E7kdjPaxYTYPw=
+	b=pLt6+i4V4RS2kPQAhHHLFXlc/QTzdzoBaN+3Rpv0x0EE2mJHPwkMLfSUtv3RDjvyZ
+	 0bn4zN1PjUWgPW6T9ZTuUvdiFhCix17eMSf7z7cXCzGP1XV5zrZHTeihshPnjrz9GY
+	 evXBU1KUOvxmZysOzhtpMftFDiXSNo6B3t2i5JQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Steffen Eiden <seiden@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/321] posix-timers: Ensure timer ID search-loop limit is valid
-Date: Tue, 27 Aug 2024 16:35:48 +0200
-Message-ID: <20240827143839.751969536@linuxfoundation.org>
+Subject: [PATCH 6.1 031/321] s390/uv: Panic for set and remove shared access UVC errors
+Date: Tue, 27 Aug 2024 16:35:39 +0200
+Message-ID: <20240827143839.402420050@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,113 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 8ce8849dd1e78dadcee0ec9acbd259d239b7069f ]
+[ Upstream commit cff59d8631e1409ffdd22d9d717e15810181b32c ]
 
-posix_timer_add() tries to allocate a posix timer ID by starting from the
-cached ID which was stored by the last successful allocation.
+The return value uv_set_shared() and uv_remove_shared() (which are
+wrappers around the share() function) is not always checked. The system
+integrity of a protected guest depends on the Share and Unshare UVCs
+being successful. This means that any caller that fails to check the
+return value will compromise the security of the protected guest.
 
-This is done in a loop searching the ID space for a free slot one by
-one. The loop has to terminate when the search wrapped around to the
-starting point.
+No code path that would lead to such violation of the security
+guarantees is currently exercised, since all the areas that are shared
+never get unshared during the lifetime of the system. This might
+change and become an issue in the future.
 
-But that's racy vs. establishing the starting point. That is read out
-lockless, which leads to the following problem:
+The Share and Unshare UVCs can only fail in case of hypervisor
+misbehaviour (either a bug or malicious behaviour). In such cases there
+is no reasonable way forward, and the system needs to panic.
 
-CPU0	  	      	     	   CPU1
-posix_timer_add()
-  start = sig->posix_timer_id;
-  lock(hash_lock);
-  ...				   posix_timer_add()
-  if (++sig->posix_timer_id < 0)
-      			             start = sig->posix_timer_id;
-     sig->posix_timer_id = 0;
+This patch replaces the return at the end of the share() function with
+a panic, to guarantee system integrity.
 
-So CPU1 can observe a negative start value, i.e. -1, and the loop break
-never happens because the condition can never be true:
-
-  if (sig->posix_timer_id == start)
-     break;
-
-While this is unlikely to ever turn into an endless loop as the ID space is
-huge (INT_MAX), the racy read of the start value caught the attention of
-KCSAN and Dmitry unearthed that incorrectness.
-
-Rewrite it so that all id operations are under the hash lock.
-
-Reported-by: syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com
-Reported-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/87bkhzdn6g.ffs@tglx
+Fixes: 5abb9351dfd9 ("s390/uv: introduce guest side ultravisor code")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240801112548.85303-1-imbrenda@linux.ibm.com
+Message-ID: <20240801112548.85303-1-imbrenda@linux.ibm.com>
+[frankja@linux.ibm.com: Fixed up patch subject]
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/signal.h |  2 +-
- kernel/time/posix-timers.c   | 31 ++++++++++++++++++-------------
- 2 files changed, 19 insertions(+), 14 deletions(-)
+ arch/s390/include/asm/uv.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
-index 20099268fa257..669e8cff40c74 100644
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -135,7 +135,7 @@ struct signal_struct {
- #ifdef CONFIG_POSIX_TIMERS
+diff --git a/arch/s390/include/asm/uv.h b/arch/s390/include/asm/uv.h
+index be3ef9dd69726..6abcb46a8dfe2 100644
+--- a/arch/s390/include/asm/uv.h
++++ b/arch/s390/include/asm/uv.h
+@@ -387,7 +387,10 @@ static inline int share(unsigned long addr, u16 cmd)
  
- 	/* POSIX.1b Interval Timers */
--	int			posix_timer_id;
-+	unsigned int		next_posix_timer_id;
- 	struct list_head	posix_timers;
- 
- 	/* ITIMER_REAL timer for the process */
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index ed3c4a9543982..2d6cf93ca370a 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -140,25 +140,30 @@ static struct k_itimer *posix_timer_by_id(timer_t id)
- static int posix_timer_add(struct k_itimer *timer)
- {
- 	struct signal_struct *sig = current->signal;
--	int first_free_id = sig->posix_timer_id;
- 	struct hlist_head *head;
--	int ret = -ENOENT;
-+	unsigned int cnt, id;
- 
--	do {
-+	/*
-+	 * FIXME: Replace this by a per signal struct xarray once there is
-+	 * a plan to handle the resulting CRIU regression gracefully.
-+	 */
-+	for (cnt = 0; cnt <= INT_MAX; cnt++) {
- 		spin_lock(&hash_lock);
--		head = &posix_timers_hashtable[hash(sig, sig->posix_timer_id)];
--		if (!__posix_timers_find(head, sig, sig->posix_timer_id)) {
-+		id = sig->next_posix_timer_id;
-+
-+		/* Write the next ID back. Clamp it to the positive space */
-+		sig->next_posix_timer_id = (id + 1) & INT_MAX;
-+
-+		head = &posix_timers_hashtable[hash(sig, id)];
-+		if (!__posix_timers_find(head, sig, id)) {
- 			hlist_add_head_rcu(&timer->t_hash, head);
--			ret = sig->posix_timer_id;
-+			spin_unlock(&hash_lock);
-+			return id;
- 		}
--		if (++sig->posix_timer_id < 0)
--			sig->posix_timer_id = 0;
--		if ((sig->posix_timer_id == first_free_id) && (ret == -ENOENT))
--			/* Loop over all possible ids completed */
--			ret = -EAGAIN;
- 		spin_unlock(&hash_lock);
--	} while (ret == -ENOENT);
--	return ret;
-+	}
-+	/* POSIX return code when no timer ID could be allocated */
-+	return -EAGAIN;
+ 	if (!uv_call(0, (u64)&uvcb))
+ 		return 0;
+-	return -EINVAL;
++	pr_err("%s UVC failed (rc: 0x%x, rrc: 0x%x), possible hypervisor bug.\n",
++	       uvcb.header.cmd == UVC_CMD_SET_SHARED_ACCESS ? "Share" : "Unshare",
++	       uvcb.header.rc, uvcb.header.rrc);
++	panic("System security cannot be guaranteed unless the system panics now.\n");
  }
  
- static inline void unlock_timer(struct k_itimer *timr, unsigned long flags)
+ /*
 -- 
 2.43.0
 
