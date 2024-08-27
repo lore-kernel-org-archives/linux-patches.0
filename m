@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084901BA87C;
-	Tue, 27 Aug 2024 14:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0E21BFE06;
+	Tue, 27 Aug 2024 14:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770277; cv=none; b=h3PA7vtM1j4oGa6NSrZLKIaAB9Ui2dHVpB2edrEwz4sLfZ5i4iBknEhOnPqfUVFGGoLTmpdNX5vrGR+Lh+qVdAWUChlJiWaawplP/3el+BfMLfdrHb0PdTBjFls83uucewciWc4YKhHMy1Y9IcwBbVb0TG+JjthjM6k7KBVmDeI=
+	t=1724770280; cv=none; b=QIVe+b/ODWQXQHP2awhgDcymAZ1gEFyuOAwzUBh9w2iTMj1F/tmTcpeoReXpnGhmKOUlaEWPHrCqc+HobKNyFTSs0JWd7FtHvUUp6Y29/QGE68sbfLIXJ0U9j0t9DMuIa+bYZw3ESrQcc5iwQmPqg1vBbyOpH9Touq6YiiqunGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770277; c=relaxed/simple;
-	bh=Vet9b+lsNKJwPdpWDAWmfJ5URJFxnjvzYZL2r9cjkBk=;
+	s=arc-20240116; t=1724770280; c=relaxed/simple;
+	bh=n6Eg2WJHGTpnRBevrxN6JH4f0pJVOK1OLQDXA2t++AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXLwdxSUYPZXC6auGR/q+E5r/cRSKp+ohPJTwgq5DxFVYLpSkej4cNHTCpbOJ4jxs1IIR+V/qN4idklCWtwuRo1InyljTkVPf8azx8t5oZutNF67pjdG0J2W2BrXlY9CWEW3bLFAkuS3/U3dSVso7Ujkge0nJ2hAiaMxK+mo8Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoGpFsKW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXIGLaxNFD+pkzB6qxbgMbc2Wt8kFHM1FUHgn7jKD6O03i2a7DCHO+HH/EduS26RxaC8xLJPjqYfdGCnqFxqoEXz0AITVAf5coSbd0iAmpWsXJ8xFUvBmNHFCaz3h9XM3AwThtYmOE2lRjO1eHzs1ZwPFnu5ufu5rB8iI9fPrhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi9TeXuz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoGpFsKW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0D6C4DDFF;
-	Tue, 27 Aug 2024 14:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi9TeXuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CABC4DDFF;
+	Tue, 27 Aug 2024 14:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770276;
-	bh=Vet9b+lsNKJwPdpWDAWmfJ5URJFxnjvzYZL2r9cjkBk=;
+	s=korg; t=1724770280;
+	bh=n6Eg2WJHGTpnRBevrxN6JH4f0pJVOK1OLQDXA2t++AM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoGpFsKW7kw95nu3gvTUey58F/+/Q5idOsjxz48rCCxF70SvI4VaDyf5RmdLULw4z
-	 Glc36u/pi01A/LMTzpJC9dMgIMy+jkMHbDpAgu09GcpPd1eT8/4nU30lOFCH3bKAFz
-	 bVxlYG/9F/sZTG9ms00spPQed3JDtDYko00Kvu2g=
+	b=Gi9TeXuzxaxPadHgCvhzU1Vzj0wRKNqZvLW3Kn9D6y7xSVo6dkE/yAO0sJ7ePKtk3
+	 lgdURJCKwqjyIOq4DKIKLoyCx62Io0MFbSRt4SIxwUgXBnVk2EG0ibvm3C3wtydSUA
+	 n8go87O8xwEGJDB7lwK1KQpQlqz1VPY2dPm2pyEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 180/341] rxrpc: Dont pick values out of the wire header when setting up security
-Date: Tue, 27 Aug 2024 16:36:51 +0200
-Message-ID: <20240827143850.263530780@linuxfoundation.org>
+Subject: [PATCH 6.6 154/341] ext4: do not trim the group with corrupted block bitmap
+Date: Tue, 27 Aug 2024 16:36:25 +0200
+Message-ID: <20240827143849.277345965@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -57,61 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit a1c9af4d4467354132417c2d8db10d6e928a7f77 ]
+[ Upstream commit 172202152a125955367393956acf5f4ffd092e0d ]
 
-Don't pick values out of the wire header in rxkad when setting up DATA
-packet security, but rather use other sources.  This makes it easier to get
-rid of txb->wire.
+Otherwise operating on an incorrupted block bitmap can lead to all sorts
+of unknown problems.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/rxkad.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
-index 6b32d61d4cdc4..ad6c57a9f27c7 100644
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -259,7 +259,7 @@ static int rxkad_secure_packet_auth(const struct rxrpc_call *call,
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index f55ab800a7539..870397f3de559 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6953,6 +6953,9 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
+ 	bool set_trimmed = false;
+ 	void *bitmap;
  
- 	_enter("");
- 
--	check = txb->seq ^ ntohl(txb->wire.callNumber);
-+	check = txb->seq ^ call->call_id;
- 	hdr->data_size = htonl((u32)check << 16 | txb->len);
- 
- 	txb->len += sizeof(struct rxkad_level1_hdr);
-@@ -302,7 +302,7 @@ static int rxkad_secure_packet_encrypt(const struct rxrpc_call *call,
- 
- 	_enter("");
- 
--	check = txb->seq ^ ntohl(txb->wire.callNumber);
-+	check = txb->seq ^ call->call_id;
- 
- 	rxkhdr->data_size = htonl(txb->len | (u32)check << 16);
- 	rxkhdr->checksum = 0;
-@@ -362,9 +362,9 @@ static int rxkad_secure_packet(struct rxrpc_call *call, struct rxrpc_txbuf *txb)
- 	memcpy(&iv, call->conn->rxkad.csum_iv.x, sizeof(iv));
- 
- 	/* calculate the security checksum */
--	x = (ntohl(txb->wire.cid) & RXRPC_CHANNELMASK) << (32 - RXRPC_CIDSHIFT);
-+	x = (call->cid & RXRPC_CHANNELMASK) << (32 - RXRPC_CIDSHIFT);
- 	x |= txb->seq & 0x3fffffff;
--	crypto.buf[0] = txb->wire.callNumber;
-+	crypto.buf[0] = htonl(call->call_id);
- 	crypto.buf[1] = htonl(x);
- 
- 	sg_init_one(&sg, crypto.buf, 8);
++	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
++		return 0;
++
+ 	last = ext4_last_grp_cluster(sb, e4b->bd_group);
+ 	bitmap = e4b->bd_bitmap;
+ 	if (start == 0 && max >= last)
 -- 
 2.43.0
 
