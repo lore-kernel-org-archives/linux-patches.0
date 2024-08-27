@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4D71C6890;
-	Tue, 27 Aug 2024 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B171C57BC;
+	Tue, 27 Aug 2024 15:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771489; cv=none; b=PvubMzITPK4fgodRUkPvqxlX53yu4l/cckpzTVf9XK9lnWJCEiRpXJX4Q+raNa4vs3V+MLMlWVhmeuszT+EjuFwGWRSYQRccaWj3jTEVyOqH+SzMnJ+ksQqDEO7WiZ0z65jYC8G4Et1CREoOJeK3C0hhmj89GDEt4TS97bINopk=
+	t=1724771493; cv=none; b=TghWZhlleBr4t/ltuVUw7eJKtYytn9HaC0WEki+qZySqMKfmWvYSTe8E3r/lZ+D7f4kGK0T46bqnMMJuEVMGGRMPtvJap7njVo1AJsVJxR2JjF8zpxrNpeHcQvnEpanf6GvfcWK7VfdXq4mp45npCJnrUzk/xa0dJAlXYs6ofbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771489; c=relaxed/simple;
-	bh=uwJStzhAFhtzb+T/leMICQxaSpR1Hp+hjSlwJ9faghE=;
+	s=arc-20240116; t=1724771493; c=relaxed/simple;
+	bh=7Exdw7mq41xZhCTgGsxCR0ep5l+qSbcyrMYtvSz1Eyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTWqWa2dbVf/grLpQVyj2JGtnJWD0c4Tlqnqua/M6EpwcJDe7hpSg8yWm8BoKktLVaTpvqRm0WgQtTJPcibFHNvjriaupupl3GyHPvE1JDHkvDhQLO/35J/D1pBLOMb2L3u/zFIiBSGGkpCOXfPmn7ItXE9kLALwGlisCj4whcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REIxCs3b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i7yxYgnWegUBfUwPhmOsgdp1vrBMNSL+wQRsIIbGXuSINOTCI8DZPlysDFR2TRdjh76SHGww+ZcKVNJkVgFN/oziS/rCWzyE9EBelM4vmJ5SvIIQUjVMQ5aoxpZbqf4RD6iyG2ys07yelDsg5Sirh2/MPUEC7/Y5l3zsn778YSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2inAAVVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REIxCs3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF2EC4DDED;
-	Tue, 27 Aug 2024 15:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2inAAVVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4D3C4DDED;
+	Tue, 27 Aug 2024 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771489;
-	bh=uwJStzhAFhtzb+T/leMICQxaSpR1Hp+hjSlwJ9faghE=;
+	s=korg; t=1724771492;
+	bh=7Exdw7mq41xZhCTgGsxCR0ep5l+qSbcyrMYtvSz1Eyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REIxCs3bkK7G1gQcZ5zfnG98TfwqaAIYTqPrTta8N0++Dw21204uLTObnRsRp5LfF
-	 HAoosXK7e0cn00aPdqZFiZxxbjmrwlcAx6oHlSPw8NEVUGfgugyChK1ZPCF3aIftuj
-	 VkhWH+kNIaHiqmOsA64c/HHCmthfJ4pEp1aqBoeo=
+	b=2inAAVVD3kewq1xpNW4b/95RFBi3g51+hnB2SmDqzdCG2GhH9Fkr3tBU0GDPUSb/E
+	 4PWGO3TaHCJ6nft5Zsxn9dMRwtygH42GxIikC7icG94VCOz96FB3DV1tMYskX7FjPf
+	 ZpQzgpP3TiRZVuVQDn3bjde9RQGwZNRjUmWn6qZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.10 172/273] ice: fix page reuse when PAGE_SIZE is over 8k
-Date: Tue, 27 Aug 2024 16:38:16 +0200
-Message-ID: <20240827143839.953142977@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 163/273] net: mctp: test: Use correct skb for route input check
+Date: Tue, 27 Aug 2024 16:38:07 +0200
+Message-ID: <20240827143839.611026899@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,65 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit 50b2143356e888777fc5bca023c39f34f404613a ]
+[ Upstream commit ce335db0621648472f9bb4b7191eb2e13a5793cf ]
 
-Architectures that have PAGE_SIZE >= 8192 such as arm64 should act the
-same as x86 currently, meaning reuse of a page should only take place
-when no one else is busy with it.
+In the MCTP route input test, we're routing one skb, then (when delivery
+is expected) checking the resulting routed skb.
 
-Do two things independently of underlying PAGE_SIZE:
-- store the page count under ice_rx_buf::pgcnt
-- then act upon its value vs ice_rx_buf::pagecnt_bias when making the
-  decision regarding page reuse
+However, we're currently checking the original skb length, rather than
+the routed skb. Check the routed skb instead; the original will have
+been freed at this point.
 
-Fixes: 2b245cb29421 ("ice: Implement transmit and NAPI support")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 8892c0490779 ("mctp: Add route input to socket tests")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/kernel-janitors/4ad204f0-94cf-46c5-bdab-49592addf315@kili.mountain/
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240816-mctp-kunit-skb-fix-v1-1-3c367ac89c27@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ net/mctp/test/route-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 8d25b69812698..50211188c1a7a 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -837,16 +837,15 @@ ice_can_reuse_rx_page(struct ice_rx_buf *rx_buf)
- 	if (!dev_page_is_reusable(page))
- 		return false;
+diff --git a/net/mctp/test/route-test.c b/net/mctp/test/route-test.c
+index 77e5dd4222580..8551dab1d1e69 100644
+--- a/net/mctp/test/route-test.c
++++ b/net/mctp/test/route-test.c
+@@ -366,7 +366,7 @@ static void mctp_test_route_input_sk(struct kunit *test)
  
--#if (PAGE_SIZE < 8192)
- 	/* if we are only owner of page we can reuse it */
- 	if (unlikely(rx_buf->pgcnt - pagecnt_bias > 1))
- 		return false;
--#else
-+#if (PAGE_SIZE >= 8192)
- #define ICE_LAST_OFFSET \
- 	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_2048)
- 	if (rx_buf->page_offset > ICE_LAST_OFFSET)
- 		return false;
--#endif /* PAGE_SIZE < 8192) */
-+#endif /* PAGE_SIZE >= 8192) */
+ 		skb2 = skb_recv_datagram(sock->sk, MSG_DONTWAIT, &rc);
+ 		KUNIT_EXPECT_NOT_ERR_OR_NULL(test, skb2);
+-		KUNIT_EXPECT_EQ(test, skb->len, 1);
++		KUNIT_EXPECT_EQ(test, skb2->len, 1);
  
- 	/* If we have drained the page fragment pool we need to update
- 	 * the pagecnt_bias and page count so that we fully restock the
-@@ -949,12 +948,7 @@ ice_get_rx_buf(struct ice_rx_ring *rx_ring, const unsigned int size,
- 	struct ice_rx_buf *rx_buf;
+ 		skb_free_datagram(sock->sk, skb2);
  
- 	rx_buf = &rx_ring->rx_buf[ntc];
--	rx_buf->pgcnt =
--#if (PAGE_SIZE < 8192)
--		page_count(rx_buf->page);
--#else
--		0;
--#endif
-+	rx_buf->pgcnt = page_count(rx_buf->page);
- 	prefetchw(rx_buf->page);
- 
- 	if (!size)
 -- 
 2.43.0
 
