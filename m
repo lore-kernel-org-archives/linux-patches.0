@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1FB44C8C;
-	Tue, 27 Aug 2024 14:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC651BA87C;
+	Tue, 27 Aug 2024 14:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770208; cv=none; b=oeyckkQZ0U+/lWoV226byXwuKSIiUOE4oTmO1uOUdIX5mS1rrF3uUw+qX8DqR6mANtvGSf12O9iCbZEB7ouUVmIllY70tX+e4G8dnTixjGXhmX5SRfdh/LDqWVSgU+/R/xigCmbjLZchHIug1dT+MHI1JdkARIYLVoDLOr6LzOM=
+	t=1724770211; cv=none; b=Ibcal5nmYSxXY0e7ItpUmgmB8r1rmXrZ/PfUX7ui57GcQpurXH8kRNNLOQNpkpEDyY/RnBdLUfw8psQe+hJe+/eIqb6wy/yoVfv8sdfp6jO1C/Of+d2VjZTCTunjkBfsH/2Exdi6Xj2mNWMD83Qa0fgjdOXkfspFLKVRstcTxK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770208; c=relaxed/simple;
-	bh=Pg8sDlpUhcqrodSYrPPMiInw37CyOWc/5IE4NasnOXY=;
+	s=arc-20240116; t=1724770211; c=relaxed/simple;
+	bh=l0my1M8ei7B8IhnfpK7GZGvbB59FsSZTy2NMY1w/Nlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpMT7g1UxVmUn2xX7Brh1tnmq0t4F3eBd4K2B+rEK3qUa8XA2tUkVQwNw+OAmoNIWA1G2g9CJO5cMB04d6c1DHCpM0cjUWIt5ZuYxK5oT5VMsR9+NSkG+SIegpScEETtgVe/OdyegJqN18A+nseTN7zeNmEfTLp6HeJLpi/xWnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niKTM7dL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azvlNkksQeWoGujfSyp/iHDu8O0SUaFSYvU3d4o9RV5VCWoC8JkCdmtCQatLXeDLiNFPUCO0OcVBqfUpYkpidkTA2Ux48IYuKssAO2w6YTTiEEAYQUggiFKOYEThmRIA+5att0J/vkW/SifchpAJ1xaRW1q2ntoaTKHmsgmFL/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCJFefNr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niKTM7dL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEC0C4DDF3;
-	Tue, 27 Aug 2024 14:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCJFefNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE15AC4DDF5;
+	Tue, 27 Aug 2024 14:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770207;
-	bh=Pg8sDlpUhcqrodSYrPPMiInw37CyOWc/5IE4NasnOXY=;
+	s=korg; t=1724770211;
+	bh=l0my1M8ei7B8IhnfpK7GZGvbB59FsSZTy2NMY1w/Nlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niKTM7dLyM6SEkIWNZrY/Iqmn0rMcABXcE05ukJ2TBHzhen+amw8w6/oow39rywm5
-	 7E6KPveyQ5o/JRRAXKvzuUofT613ldcBj6r4csx+R2c2wWECKnq6CxQBnvi/6twnD2
-	 j1f3DfW3P0kLllIs+0TyJfigCzhPAit3OXQ9hEnc=
+	b=eCJFefNrdJOFZY6ikVR6asNrpOK6zRW8K8CnI/DxgikTg7+nfcArqvyXtH4T2T86W
+	 xERnuQPjHU/J9m8bki06mvxZrFBohGtImpJQ6qL6QylH39fpz3TYD76Kt3a2CVKqne
+	 qUGoeHjpW/F3UyTQ6xg8ShPKFG4vCN4z1JPwabAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Neel Natu <neelnatu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/341] EDAC/skx_common: Filter out the invalid address
-Date: Tue, 27 Aug 2024 16:36:23 +0200
-Message-ID: <20240827143849.202278154@linuxfoundation.org>
+Subject: [PATCH 6.6 161/341] kernfs: fix false-positive WARN(nr_mmapped) in kernfs_drain_open_files
+Date: Tue, 27 Aug 2024 16:36:32 +0200
+Message-ID: <20240827143849.542168638@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,40 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Neel Natu <neelnatu@google.com>
 
-[ Upstream commit 1e92af09fab1b5589f3a7ae68109e3c6a5ca6c6e ]
+[ Upstream commit 05d8f255867e3196565bb31a911a437697fab094 ]
 
-Decoding an invalid address with certain firmware decoders could
-cause a #PF (Page Fault) in the EFI runtime context, which could
-subsequently hang the system. To make {i10nm,skx}_edac more robust
-against such bogus firmware decoders, filter out invalid addresses
-before allowing the firmware decoder to process them.
+Prior to this change 'on->nr_mmapped' tracked the total number of
+mmaps across all of its associated open files via kernfs_fop_mmap().
+Thus if the file descriptor associated with a kernfs_open_file was
+mmapped 10 times then we would have: 'of->mmapped = true' and
+'of_on(of)->nr_mmapped = 10'.
 
-Suggested-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20231207014512.78564-1-qiuxu.zhuo@intel.com
+The problem is that closing or draining a 'of->mmapped' file would
+only decrement one from the 'of_on(of)->nr_mmapped' counter.
+
+For e.g. we have this from kernfs_unlink_open_file():
+        if (of->mmapped)
+                on->nr_mmapped--;
+
+The WARN_ON_ONCE(on->nr_mmapped) in kernfs_drain_open_files() is
+easy to reproduce by:
+1. opening a (mmap-able) kernfs file.
+2. mmap-ing that file more than once (mapping just once masks the issue).
+3. trigger a drain of that kernfs file.
+
+Modulo out-of-tree patches I was able to trigger this reliably by
+identifying pci device nodes in sysfs that have resource regions
+that are mmap-able and that don't have any driver attached to them
+(steps 1 and 2). For step 3 we can "echo 1 > remove" to trigger a
+kernfs_drain.
+
+Signed-off-by: Neel Natu <neelnatu@google.com>
+Link: https://lore.kernel.org/r/20240127234636.609265-1-neelnatu@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/kernfs/file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 03d7a74ca22dc..f4b192420be47 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -659,6 +659,10 @@ int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
- 	memset(&res, 0, sizeof(res));
- 	res.mce  = mce;
- 	res.addr = mce->addr & MCI_ADDR_PHYSADDR;
-+	if (!pfn_to_online_page(res.addr >> PAGE_SHIFT)) {
-+		pr_err("Invalid address 0x%llx in IA32_MC%d_ADDR\n", mce->addr, mce->bank);
-+		return NOTIFY_DONE;
-+	}
+diff --git a/fs/kernfs/file.c b/fs/kernfs/file.c
+index 180906c36f515..332d08d2fe0d5 100644
+--- a/fs/kernfs/file.c
++++ b/fs/kernfs/file.c
+@@ -532,9 +532,11 @@ static int kernfs_fop_mmap(struct file *file, struct vm_area_struct *vma)
+ 		goto out_put;
  
- 	/* Try driver decoder first */
- 	if (!(driver_decode && driver_decode(&res))) {
+ 	rc = 0;
+-	of->mmapped = true;
+-	of_on(of)->nr_mmapped++;
+-	of->vm_ops = vma->vm_ops;
++	if (!of->mmapped) {
++		of->mmapped = true;
++		of_on(of)->nr_mmapped++;
++		of->vm_ops = vma->vm_ops;
++	}
+ 	vma->vm_ops = &kernfs_vm_ops;
+ out_put:
+ 	kernfs_put_active(of->kn);
 -- 
 2.43.0
 
