@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49EE2FB2;
-	Tue, 27 Aug 2024 15:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926851BC9E3;
+	Tue, 27 Aug 2024 15:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770854; cv=none; b=lIDURhsIjqJ94d4RxYsaqM0afsv/+QLhR25rm7EJXaFN8VVWjz3itaHrUxjVrksnAa0jWJSdgMIlwa81LGn9dg3ZJh6eoyn4+K4ll6HXvvicd4ENsVACsKtoJM4xTaNm6KqZaC9nxhFLPe8CHPGVfn2eMehIXb7HdPK5G1Ipv/c=
+	t=1724770857; cv=none; b=U7sbDeyJYuI/giYEFSDgTvR3Za7DvK/W6ajrOsRKMaS26yrqWEFvyBAJaqKASSG+U+UkucH/T5oh4UoH0ArCwijXw3dIJYrTRw5d7gTHvwNTGTiUQ4djaskBslDUhi5MQD6SNrlhGJIE11+gAeOqTYq+je5m9WlRpcVN7NMi0hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770854; c=relaxed/simple;
-	bh=DhQeX+z589qlAfqJgxfD9Q1XGAC4z1xwAMrpLJ05iu8=;
+	s=arc-20240116; t=1724770857; c=relaxed/simple;
+	bh=uGO517zlueyrLdcs0rUjSDJDgu4/WyQh5wtNi7KQmOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dCOcTytMKQjcUe4svnSZMoMgMY5H8pmXHmBOz8ptZMFqWW8e7zcggqnfV2EOgbuol8SbCrJr058CnuwkQe5SViEfR8iE5YSQfEZObBgaC3xOlHtjOzm9ATTSqi0KeKUnb/M4HS4rEUzojGmkb8OfkGxp9z0rDNrE6mj1VxnsLgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLawY+Ma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtwXVyqz8jsmMhp0jUR9NUGHRjVWAVmsLsE3584sWCQdWakjcNZwihTDx5qTD5XqutDvH9a9P1j+f1febIptOAVYPs418Upt/EiD1kBVZaMLg3GXCRPZEdF6dmdaqx92kuvO0Bar3vsMXNxbOuw3LzFTg/Ybxff85ftrUw/1QT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5OrRH2+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLawY+Ma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF71C4AF1C;
-	Tue, 27 Aug 2024 15:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5OrRH2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D7EC4AF1C;
+	Tue, 27 Aug 2024 15:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770854;
-	bh=DhQeX+z589qlAfqJgxfD9Q1XGAC4z1xwAMrpLJ05iu8=;
+	s=korg; t=1724770857;
+	bh=uGO517zlueyrLdcs0rUjSDJDgu4/WyQh5wtNi7KQmOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLawY+MafOruXc9WP6CxTfBTwXFU7F5DHwgUTvTaAvcW/3jK4cdZhBomOK9iBEZLF
-	 RqUjaTy738XnoxLqvJCxVAQ9SCp4/LgmxgBHE+nJ9JjiCMw/DVcu6pFXGAEirJRHM9
-	 sMZqhXL7LRcQdTaUvdiMTIXyJ0K1UV+hQhiIZAT4=
+	b=v5OrRH2+pA8fxxhME71qucOKpJ3CRemU61a/IJ3H2G+5C1Io6KytiYS4AFI4HGGrq
+	 THhH4czcL4haIyfDrFQe0NPgi/zh9gTyJK6OyfBwq0cz4hyIqtcMPncBDlxtwgBVhW
+	 8FIKB7MYiEfnIyX9DWlVstG4f2Gwqm3UOjrpCSLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Eli Billauer <eli.billauer@gmail.com>
-Subject: [PATCH 6.10 013/273] char: xillybus: Check USB endpoints when probing device
-Date: Tue, 27 Aug 2024 16:35:37 +0200
-Message-ID: <20240827143833.890727135@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 014/273] ALSA: usb-audio: Add delay quirk for VIVO USB-C-XE710 HEADSET
+Date: Tue, 27 Aug 2024 16:35:38 +0200
+Message-ID: <20240827143833.928862283@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,93 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eli Billauer <eli.billauer@gmail.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit 2374bf7558de915edc6ec8cb10ec3291dfab9594 upstream.
+commit 004eb8ba776ccd3e296ea6f78f7ae7985b12824e upstream.
 
-Ensure, as the driver probes the device, that all endpoints that the
-driver may attempt to access exist and are of the correct type.
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
 
-All XillyUSB devices must have a Bulk IN and Bulk OUT endpoint at
-address 1. This is verified in xillyusb_setup_base_eps().
-
-On top of that, a XillyUSB device may have additional Bulk OUT
-endpoints. The information about these endpoints' addresses is deduced
-from a data structure (the IDT) that the driver fetches from the device
-while probing it. These endpoints are checked in setup_channels().
-
-A XillyUSB device never has more than one IN endpoint, as all data
-towards the host is multiplexed in this single Bulk IN endpoint. This is
-why setup_channels() only checks OUT endpoints.
-
-Reported-by: syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/all/0000000000001d44a6061f7a54ee@google.com/T/
-Fixes: a53d1202aef1 ("char: xillybus: Add driver for XillyUSB (Xillybus variant for USB)").
-Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
-Link: https://lore.kernel.org/r/20240816070200.50695-2-eli.billauer@gmail.com
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/TYUPR06MB6217FF67076AF3E49E12C877D2842@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/xillybus/xillyusb.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/char/xillybus/xillyusb.c
-+++ b/drivers/char/xillybus/xillyusb.c
-@@ -1903,6 +1903,13 @@ static const struct file_operations xill
- 
- static int xillyusb_setup_base_eps(struct xillyusb_dev *xdev)
- {
-+	struct usb_device *udev = xdev->udev;
-+
-+	/* Verify that device has the two fundamental bulk in/out endpoints */
-+	if (usb_pipe_type_check(udev, usb_sndbulkpipe(udev, MSG_EP_NUM)) ||
-+	    usb_pipe_type_check(udev, usb_rcvbulkpipe(udev, IN_EP_NUM)))
-+		return -ENODEV;
-+
- 	xdev->msg_ep = endpoint_alloc(xdev, MSG_EP_NUM | USB_DIR_OUT,
- 				      bulk_out_work, 1, 2);
- 	if (!xdev->msg_ep)
-@@ -1932,14 +1939,15 @@ static int setup_channels(struct xillyus
- 			  __le16 *chandesc,
- 			  int num_channels)
- {
--	struct xillyusb_channel *chan;
-+	struct usb_device *udev = xdev->udev;
-+	struct xillyusb_channel *chan, *new_channels;
- 	int i;
- 
- 	chan = kcalloc(num_channels, sizeof(*chan), GFP_KERNEL);
- 	if (!chan)
- 		return -ENOMEM;
- 
--	xdev->channels = chan;
-+	new_channels = chan;
- 
- 	for (i = 0; i < num_channels; i++, chan++) {
- 		unsigned int in_desc = le16_to_cpu(*chandesc++);
-@@ -1968,6 +1976,15 @@ static int setup_channels(struct xillyus
- 		 */
- 
- 		if ((out_desc & 0x80) && i < 14) { /* Entry is valid */
-+			if (usb_pipe_type_check(udev,
-+						usb_sndbulkpipe(udev, i + 2))) {
-+				dev_err(xdev->dev,
-+					"Missing BULK OUT endpoint %d\n",
-+					i + 2);
-+				kfree(new_channels);
-+				return -ENODEV;
-+			}
-+
- 			chan->writable = 1;
- 			chan->out_synchronous = !!(out_desc & 0x40);
- 			chan->out_seekable = !!(out_desc & 0x20);
-@@ -1977,6 +1994,7 @@ static int setup_channels(struct xillyus
- 		}
- 	}
- 
-+	xdev->channels = new_channels;
- 	return 0;
- }
- 
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2221,6 +2221,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0031, /* Fiero SC-01 (firmware v1.1.0) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
++	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
 
 
