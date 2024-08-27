@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9C0DDC1;
-	Tue, 27 Aug 2024 15:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28704DDC1;
+	Tue, 27 Aug 2024 15:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770828; cv=none; b=o1jZ+Y9wtFuuAg78ZHKchYJlJ1i/Lz04ymSNsAoWFYitPF5r6oTE6d9uYmwXi/YJ8UKQRvYlhxiuBBdB7PMKGK9kaY+AXPhCoCb4R0Zq+UtgnIxYoo7muGHYnjz3UkLISAlF423rP8JDXu38QJoJkx5qEzud3jBP6VGJb3+5bNY=
+	t=1724770831; cv=none; b=BnRCIqgL6h7J3vypyAfo3aWtEgh6o0PVwsWJzHPR64hGx1Lr7Qq5XlhIU7hKmVNACOIZ9vOXpd9MrLfqtcQLNeEQRMlGO0riKvIgShzI9Q3wNB7gRl8PrrJslmIFBR4sN1NXAFyvJoA89LmMe65pX3RrfeD/Wk1PoR+W6SI0EqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770828; c=relaxed/simple;
-	bh=5bfum5RmnohhU6L2FbvT94JC4mEa8nBhO/Mwh13CzZo=;
+	s=arc-20240116; t=1724770831; c=relaxed/simple;
+	bh=bvfY/1KC/AAlRInQb48DMX6rOsxJ+OGFa0M/98UoXVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKGy+KOzUS5JIjci/EuQkW3KQFjhUIUMrm75yO71fHqegOIZjUisjYTh/+fkvteiTD0C454LwuExpk84/tG2OEpZAMkX8Z0HMtHAP/5uzKEarMBLsNHG1lcRKSlFKoRYZEvFiwLWL1pGszC9e8EVyNEOpGadmodyZ7MxggHBTu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4tFaeMn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFpep8l7rPboeGry0iGleIBkxG2MKv2haH0l9RLuF36u0DXoui5ONchatspzGp+7Ma6KPxGk6IplGRDD0jEZ93A2gia6YNrR/NFbTyskHX8G663VG88mXLLGBe7bhuTuJNQM4sQ0A65zp8lPEoq9zcczeaLddvyogxAFWQfA/Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpBJ7mHU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4tFaeMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC721C4AF1C;
-	Tue, 27 Aug 2024 15:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpBJ7mHU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B1BC4AF1C;
+	Tue, 27 Aug 2024 15:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770828;
-	bh=5bfum5RmnohhU6L2FbvT94JC4mEa8nBhO/Mwh13CzZo=;
+	s=korg; t=1724770831;
+	bh=bvfY/1KC/AAlRInQb48DMX6rOsxJ+OGFa0M/98UoXVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4tFaeMnZJVbNkphT4aBAWx6/7+f3Ol8WIHW5MkWo96G9DVGVhLZ1/m8fpcukH6cz
-	 N2XC5gPTsApJNbY7aG0Jn5oY2/ozYUtP6SJL9+qN2z1th5nPj3fmbv3a3u0Ymppt7z
-	 7tHkpuwkvHBJ/hclX/I+I1Pcm0WxB6et5Sze5+Xk=
+	b=tpBJ7mHUvfnM9YjZzEiuZ0M/Ve1elizxFqAKYtzCMUtaDOEqJruREvGdtcqkEZwqg
+	 dtAPnl1tptddLN4Kz4Z5E0t7Kz7Lw0e8BRfBlAExKQ2FSXCU1Mo7b6mQ3gJaF+0Dow
+	 U/fVmThAb0/eMPAb6omo5IzK5VKxFWsiGe4/UJIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 6.6 327/341] drm/msm/mdss: specify cfg bandwidth for SDM670
-Date: Tue, 27 Aug 2024 16:39:18 +0200
-Message-ID: <20240827143855.840630373@linuxfoundation.org>
+	Jianhua Lu <lujianhua000@gmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.6 328/341] drm/panel: nt36523: Set 120Hz fps for xiaomi,elish panels
+Date: Tue, 27 Aug 2024 16:39:19 +0200
+Message-ID: <20240827143855.877666868@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,35 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jianhua Lu <lujianhua000@gmail.com>
 
-commit 8d35217149daa33358c284aca6a56d5ab92cfc6c upstream.
+commit de8ac5696ebc3a2d89c88b70aa3996ee112e76ef upstream.
 
-Lower the requested CFG bus bandwidth for the SDM670 platform. The
-default value is 153600 kBps, which is twice as big as required by the
-platform according to the vendor kernel.
+After commit e6c0de5f4450 ("drm/msm/dpu: try multirect based on mdp clock limits")
+merged, 120Hz is working on xiaomi,elish panels, so feature it.
 
-Fixes: a55c8ff252d3 ("drm/msm/mdss: Handle the reg bus ICC path")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Tested-by: Richard Acayan <mailingradian@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/572182/
-Link: https://lore.kernel.org/r/20231215013222.827975-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240112140047.18123-1-lujianhua000@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240112140047.18123-1-lujianhua000@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_mdss.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-novatek-nt36523.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -600,6 +600,7 @@ static const struct msm_mdss_data sm6125
- 	.ubwc_dec_version = UBWC_3_0,
- 	.ubwc_swizzle = 1,
- 	.highest_bank_bit = 1,
-+	.reg_bus_bw = 76800,
- };
+--- a/drivers/gpu/drm/panel/panel-novatek-nt36523.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt36523.c
+@@ -935,8 +935,7 @@ static int j606f_boe_init_sequence(struc
  
- static const struct msm_mdss_data sm8250_data = {
+ static const struct drm_display_mode elish_boe_modes[] = {
+ 	{
+-		/* There is only one 120 Hz timing, but it doesn't work perfectly, 104 Hz preferred */
+-		.clock = (1600 + 60 + 8 + 60) * (2560 + 26 + 4 + 168) * 104 / 1000,
++		.clock = (1600 + 60 + 8 + 60) * (2560 + 26 + 4 + 168) * 120 / 1000,
+ 		.hdisplay = 1600,
+ 		.hsync_start = 1600 + 60,
+ 		.hsync_end = 1600 + 60 + 8,
+@@ -950,8 +949,7 @@ static const struct drm_display_mode eli
+ 
+ static const struct drm_display_mode elish_csot_modes[] = {
+ 	{
+-		/* There is only one 120 Hz timing, but it doesn't work perfectly, 104 Hz preferred */
+-		.clock = (1600 + 200 + 40 + 52) * (2560 + 26 + 4 + 168) * 104 / 1000,
++		.clock = (1600 + 200 + 40 + 52) * (2560 + 26 + 4 + 168) * 120 / 1000,
+ 		.hdisplay = 1600,
+ 		.hsync_start = 1600 + 200,
+ 		.hsync_end = 1600 + 200 + 40,
 
 
