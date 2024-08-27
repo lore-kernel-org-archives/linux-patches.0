@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B4F73466;
-	Tue, 27 Aug 2024 14:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64071C68A6;
+	Tue, 27 Aug 2024 14:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770597; cv=none; b=bYUV3zqLQNxFpTBu4Ieygq+2qWRgy0MjD4PprtIyd+NljqNC6iK/tfjbNyLUEbcarrbZAKi7a46Gq1crE+kLTjnL4Jw6DGATp+PUBynSSTwjXYctxKxNtQGriaSgR51Ibxl5oiDdGoEm2KuwCf4/0dnyzIReZFoSk8X1qARWupE=
+	t=1724770600; cv=none; b=E4qlBm/xDL+cpvtjrfT/TqXE4fZpheNDRL9nVZZkfwcggh4/kb0Z/Wek5rlAlJg0606O5QF8bSEi4z1YDcqpZFDoIcP9IHxwM9Gp0vI3QvGYDeOuJmyA9K4QUpmU6x9gMWxIk6Rv6SCJB6nqfyLY02UA4pRgO60ZBW7vS9N5mZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770597; c=relaxed/simple;
-	bh=F17fGsknjvZCzxIciYeHBtbtDx5gZlW8eq+FdgyISbo=;
+	s=arc-20240116; t=1724770600; c=relaxed/simple;
+	bh=gUd9ayelm0oUEE//Sm6H1uWT66+kwp2JbBAGcYIuVgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkcedTf7dLHs7H3DkuEnoau/dq9JJbCcecS7tquNnfGVwxkqxDT6d3/AU3y6aNFXJcFWhQ5ROJvyHf9Q5KUXCHclUHVjNXltoIrXywREEWZOLNUpWFM1O6uQqYDLTV8WkKa+iIyjiVWvDASjpqiyFh2hyAEPVYBORy430EPH3Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6gSKCpW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOG3hK3upjV634iKi7FvTzPYAQMjKN6hy9MWtHSTW3ioevcY9a9n1uLDGTpXFRoUFEtbDqxLur+cTsemiugjbNaiXEkPNqG8/p16YHGvBjoOYwMnLy3FK66bnnt7SUlEpFVhi0h5thsgS0/NTKBnWxKUwWG4ykJbjKLt7tuaR5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtMn9Z1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6gSKCpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D31C4FE02;
-	Tue, 27 Aug 2024 14:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtMn9Z1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF4BC4FE02;
+	Tue, 27 Aug 2024 14:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770597;
-	bh=F17fGsknjvZCzxIciYeHBtbtDx5gZlW8eq+FdgyISbo=;
+	s=korg; t=1724770600;
+	bh=gUd9ayelm0oUEE//Sm6H1uWT66+kwp2JbBAGcYIuVgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6gSKCpWhYzgjiDEWahjHZHj1k+R05gtWFnJ7ymWdk8N1HijlfVPB9Ozh2DXoODMV
-	 O9EUL420WVqkIPt/dcKHw03dnGIPj7CkJ7vfPw7mTzsF5Mxu8PF3bG/ePRDJOBGDi4
-	 NhXBYHidCfmZUXCuGz+qL/qzAzvmr5vRjrJhsTIc=
+	b=MtMn9Z1/ayQZB01MBkWjr05CdmtjVAKksKfMtS4v1uD+fcR/GtwhrNIqtBkHnb3qk
+	 lzc+0FJj9ktp+w0awR5hnoeDh8A+2Bl0f1T2tGG8h/FWSnxQiw/EjOumqhgXxZN5qP
+	 6R5D7vcfVrX5XQsIfbFVkQ6qttX2H1GpcituWG+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Adrian Moreno <amorenoz@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 276/341] net: ovs: fix ovs_drop_reasons error
-Date: Tue, 27 Aug 2024 16:38:27 +0200
-Message-ID: <20240827143853.902658375@linuxfoundation.org>
+Subject: [PATCH 6.6 277/341] drm/msm/dpu: dont play tricks with debug macros
+Date: Tue, 27 Aug 2024 16:38:28 +0200
+Message-ID: <20240827143853.940100457@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,63 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 57fb67783c4011581882f32e656d738da1f82042 ]
+[ Upstream commit df24373435f5899a2a98b7d377479c8d4376613b ]
 
-There is something wrong with ovs_drop_reasons. ovs_drop_reasons[0] is
-"OVS_DROP_LAST_ACTION", but OVS_DROP_LAST_ACTION == __OVS_DROP_REASON + 1,
-which means that ovs_drop_reasons[1] should be "OVS_DROP_LAST_ACTION".
+DPU debugging macros need to be converted to a proper drm_debug_*
+macros, however this is a going an intrusive patch, not suitable for a
+fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+to make sure that DPU debugging messages always end up in the drm debug
+messages and are controlled via the usual drm.debug mask.
 
-And as Adrian tested, without the patch, adding flow to drop packets
-results in:
+I don't think that it is a good idea for a generic DPU_DEBUG macro to be
+tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
+default it should go to the DRM_UT_DRIVER channel. While refactoring
+debug macros later on we might end up with particular messages going to
+ATOMIC or KMS, but DRIVER should be the default.
 
-drop at: do_execute_actions+0x197/0xb20 [openvsw (0xffffffffc0db6f97)
-origin: software
-input port ifindex: 8
-timestamp: Tue Aug 20 10:19:17 2024 859853461 nsec
-protocol: 0x800
-length: 98
-original length: 98
-drop reason: OVS_DROP_ACTION_ERROR
-
-With the patch, the same results in:
-
-drop at: do_execute_actions+0x197/0xb20 [openvsw (0xffffffffc0db6f97)
-origin: software
-input port ifindex: 8
-timestamp: Tue Aug 20 10:16:13 2024 475856608 nsec
-protocol: 0x800
-length: 98
-original length: 98
-drop reason: OVS_DROP_LAST_ACTION
-
-Fix this by initializing ovs_drop_reasons with index.
-
-Fixes: 9d802da40b7c ("net: openvswitch: add last-action drop reason")
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Tested-by: Adrian Moreno <amorenoz@redhat.com>
-Reviewed-by: Adrian Moreno <amorenoz@redhat.com>
-Link: https://patch.msgid.link/20240821123252.186305-1-dongml2@chinatelecom.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/606932/
+Link: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 11c69415c6052..b7232142c13f8 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -2707,7 +2707,7 @@ static struct pernet_operations ovs_net_ops = {
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index f5473d4dea92f..8cb3cf842c52c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -31,24 +31,14 @@
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG(fmt, ...)                                                \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_KMS))                         \
+-			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
  
- static const char * const ovs_drop_reasons[] = {
--#define S(x)	(#x),
-+#define S(x) [(x) & ~SKB_DROP_REASON_SUBSYS_MASK] = (#x),
- 	OVS_DROP_REASONS(S)
- #undef S
- };
+ /**
+  * DPU_DEBUG_DRIVER - macro for hardware driver logging
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+-			DRM_ERROR(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+ 
+ #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+ #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
 -- 
 2.43.0
 
