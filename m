@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBC71C4EDD;
-	Tue, 27 Aug 2024 15:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D471C4EDC;
+	Tue, 27 Aug 2024 15:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772228; cv=none; b=QX6BpZ/9X2pkeYVFK8G354ePdvCmT6Fh4odhBbyKDDZJY8fZvx892Cn/ZQ3WmnOLjVB1u8JX5KPcfEnIsZEM9hw0xzHJGRhWz9QL3E77LocsFLXvo0GJIwBENajYKAG/Db7aBGUfQGpNDSI7BY9U0SRMO/lQ7xvL77ig2pdNDlk=
+	t=1724772231; cv=none; b=qmRfBgRrbP16xphVBOuORSkDEkZ0q3VJlpphTmW+JcnwXALAKgZ0/kemToPmLjVpg9/Mn126TNIZP2GEal/AhDc3D11ZpcDW/EziX7KbxhoG4YyPhF/h4NdC0aiOxMXLeo5RzaV/7OUeGV9oGHsR5wF9h0+nFpstmKDmAMIvcpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772228; c=relaxed/simple;
-	bh=Yxk2WDclNsLpS1UgMTXXDsOmGvHkAJdAc3+gslvlvp4=;
+	s=arc-20240116; t=1724772231; c=relaxed/simple;
+	bh=PE3pzd7qgkAtVfa012DNc/DLarDGo2dJCu0KSNXxbw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPAPYf3Mg5bq+4pFoZbjtRrH11xyitjifcD0h1fXWUFqDrPFPDou0noNuCek6ZG+BgKuxYcBQJQLkfq2PzMw8OBDRlY1y0YevjGS97I+yAjMNT028LDhG8aIorBHLk5YBdb5u+LiyfjorJGW4BH2+4gcGRRe5SshGhShrRiO8cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1s5J/LP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mcDmNB9Aw8cA053bnD31N6RWjFB3nY7ahPt/AFv1/YRboO1nCpKuQtq99UjkmJII45QX5FeUJeeRfIvd5ahdzf6tuSnXC7KAo1n7tnzervY9lZ2rN8SqmLp+C3D3GJ+OsgwlrNJN5vJBsJzaLe6nTSP2rL8AipD50AMRYri79dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qpa2vUhN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1s5J/LP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51329C61062;
-	Tue, 27 Aug 2024 15:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qpa2vUhN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD2CC61062;
+	Tue, 27 Aug 2024 15:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772227;
-	bh=Yxk2WDclNsLpS1UgMTXXDsOmGvHkAJdAc3+gslvlvp4=;
+	s=korg; t=1724772230;
+	bh=PE3pzd7qgkAtVfa012DNc/DLarDGo2dJCu0KSNXxbw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1s5J/LPR9aBsKolmUV9Mxvd4soVD0sCl6evE/Xt05Vo6UGSQ+/rCYgntmgA7Ad40
-	 HjtyC77ry9WEbzHWdmX+PUQgUoG/2Sk4Ts4+xDJPoHI4LYlOUY7laEIUmh7yb4viV6
-	 dqcLknBPStT4NIX5VtYTevl/XPHoyaaS6psZ8ZsY=
+	b=Qpa2vUhNjp38vVvXEAXwQuYP6fxjW38lTbxdOlMEFNLaquAzcluX2zcgEcMkTTLEj
+	 tN+y7jbpCsJ4qT1ihONHHl5h1Bug/zYannL2V2OyG5hkjwy1vxmbcpSiD567iBWWy1
+	 7MDebX5hklWU3QP+hTTgKADoQqvmlPZOL9cmhR5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Mhetre <amhetre@nvidia.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/321] drm/tegra: Zero-initialize iosys_map
-Date: Tue, 27 Aug 2024 16:37:22 +0200
-Message-ID: <20240827143843.344694229@linuxfoundation.org>
+Subject: [PATCH 6.1 152/321] powerpc/xics: Check return value of kasprintf in icp_native_map_one_cpu
+Date: Tue, 27 Aug 2024 16:37:40 +0200
+Message-ID: <20240827143844.021167879@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,35 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 3868ff006b572cf501a3327832d36c64a9eca86a ]
+[ Upstream commit 45b1ba7e5d1f6881050d558baf9bc74a2ae13930 ]
 
-UBSAN reports an invalid load for bool, as the iosys_map is read
-later without being initialized. Zero-initialize it to avoid this.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-Reported-by: Ashish Mhetre <amhetre@nvidia.com>
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230901115910.701518-2-cyndis@kapsi.fi
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231122030651.3818-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/gem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/sysdev/xics/icp-native.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-index 81991090adcc9..cd06f25499549 100644
---- a/drivers/gpu/drm/tegra/gem.c
-+++ b/drivers/gpu/drm/tegra/gem.c
-@@ -175,7 +175,7 @@ static void tegra_bo_unpin(struct host1x_bo_mapping *map)
- static void *tegra_bo_mmap(struct host1x_bo *bo)
- {
- 	struct tegra_bo *obj = host1x_to_tegra_bo(bo);
--	struct iosys_map map;
-+	struct iosys_map map = { 0 };
- 	int ret;
+diff --git a/arch/powerpc/sysdev/xics/icp-native.c b/arch/powerpc/sysdev/xics/icp-native.c
+index edc17b6b1cc2f..9b2238d73003b 100644
+--- a/arch/powerpc/sysdev/xics/icp-native.c
++++ b/arch/powerpc/sysdev/xics/icp-native.c
+@@ -236,6 +236,8 @@ static int __init icp_native_map_one_cpu(int hw_id, unsigned long addr,
+ 	rname = kasprintf(GFP_KERNEL, "CPU %d [0x%x] Interrupt Presentation",
+ 			  cpu, hw_id);
  
- 	if (obj->vaddr) {
++	if (!rname)
++		return -ENOMEM;
+ 	if (!request_mem_region(addr, size, rname)) {
+ 		pr_warn("icp_native: Could not reserve ICP MMIO for CPU %d, interrupt server #0x%x\n",
+ 			cpu, hw_id);
 -- 
 2.43.0
 
