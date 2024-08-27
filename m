@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8F21CE6F7;
-	Tue, 27 Aug 2024 15:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A99D517;
+	Tue, 27 Aug 2024 15:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772782; cv=none; b=dqJcpwCxzIOGlj3jTOmQNtRdHeXoTLVRrmOxa9myt9gqz313wpQzZ+Xi0j/GNPA7LT+AMYH64xfMLzSu+EQMraDl5P1A2Y0urMB0o1lkt2SThd2e8GOgbaJCGd40z4N1ae86yNvKJk4hA8ioJWDKjsK5YO56WaD8SA2vOPe/Oi8=
+	t=1724772786; cv=none; b=j3PF7vYURMWI9X3qyL8bueq8f/Jr2HjTBywFLDYR9Hti3EHRvR1Np/YVcls7HTRctF1CzG7wsw5/lXL3Xh9pnTRphx9G2oD1Hj2fjJCAKcRRc9VPMZxz9RnqWa6D6komLXIpR9lAd0EK7xZkVzSQ/YFJYQrnEl74IoPLgWH/lMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772782; c=relaxed/simple;
-	bh=npIllw1nxCX7ScM9Q0GJpMrjntKI+/ZuoIRTHwhZE+E=;
+	s=arc-20240116; t=1724772786; c=relaxed/simple;
+	bh=WoUnFhe6DS+tZuSq0bTqhHA30XpnXoA4Fmj2KhmJb8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DyfBGbc1SsOAEDauLQlhLIyCkn0yRYIHyzbVupk6G3r2Mcs64GZ3Sy0e5+x/LMtq+gm4tmHaJhSgyA99RG3SFweUeGbAKqMwGG4QpuizhYnXR8aXpLI7bWCqxqstRe5U9McdZ95+EN7JmooyOfDFNnxkipeK6WNj+VvXzqcy7tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY3x2c2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9kBRj7jrwNNFtcf0fORJoqIpfocSBPpjNnD+Zqy07zb+qBtTaFJBH4ZRcWXW/bT/4q5ut58YeW34roNF2qmBkoGxvO9lu8PazDLnlHSayqwLtVpuBI3s1cSkPLDXSOcJTNnfXBxhB5dc3sGQfMcmkeZSHvA3kY2tw+pmQ+lURs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhtI/hIf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY3x2c2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063FDC61050;
-	Tue, 27 Aug 2024 15:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhtI/hIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8BBC61050;
+	Tue, 27 Aug 2024 15:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772782;
-	bh=npIllw1nxCX7ScM9Q0GJpMrjntKI+/ZuoIRTHwhZE+E=;
+	s=korg; t=1724772785;
+	bh=WoUnFhe6DS+tZuSq0bTqhHA30XpnXoA4Fmj2KhmJb8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PY3x2c2Pb8cv3rQlehl/Y0cZSfMVeTnUc/b0vKXdghPf+arbv4slRAHJYniZV1J4z
-	 hE/FxPslaxw4ZVSPiUQCpNBCNOKhUEQx12eHACZXbq4YmHZqGJiYwio18ju8uasJCY
-	 sWwSxfKCN6Qm+3UkhWLNZu9STMwftpPYL6Gj/xso=
+	b=GhtI/hIf5bJYry2BnFvieJxtkCMndgR4FSJFzVV7bPCw2UoPP6h2l1aSrnyVcvx7f
+	 CXhq2zDVD6xOYHo/I87ziNywOpClT8iCwAi3fLuZ9hWB1FIjPVMNzKXgAi8qcMhqRm
+	 KhYmnsa0gUEHmP9WaWlKAAjGQoVZBjEQpe1VjBkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 6.1 318/321] Revert "jfs: fix shift-out-of-bounds in dbJoin"
-Date: Tue, 27 Aug 2024 16:40:26 +0200
-Message-ID: <20240827143850.362333647@linuxfoundation.org>
+	Yuri Benditovich <yuri.benditovich@daynix.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 319/321] net: change maximum number of UDP segments to 128
+Date: Tue, 27 Aug 2024 16:40:27 +0200
+Message-ID: <20240827143850.401502427@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -49,44 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Kleikamp <dave.kleikamp@oracle.com>
+From: Yuri Benditovich <yuri.benditovich@daynix.com>
 
-commit e42e29cc442395d62f1a8963ec2dfb700ba6a5d7 upstream.
+commit 1382e3b6a3500c245e5278c66d210c02926f804f upstream.
 
-This reverts commit cca974daeb6c43ea971f8ceff5a7080d7d49ee30.
+The commit fc8b2a619469
+("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
+adds check of potential number of UDP segments vs
+UDP_MAX_SEGMENTS in linux/virtio_net.h.
+After this change certification test of USO guest-to-guest
+transmit on Windows driver for virtio-net device fails,
+for example with packet size of ~64K and mss of 536 bytes.
+In general the USO should not be more restrictive than TSO.
+Indeed, in case of unreasonably small mss a lot of segments
+can cause queue overflow and packet loss on the destination.
+Limit of 128 segments is good for any practical purpose,
+with minimal meaningful mss of 536 the maximal UDP packet will
+be divided to ~120 segments.
+The number of segments for UDP packets is validated vs
+UDP_MAX_SEGMENTS also in udp.c (v4,v6), this does not affect
+quest-to-guest path but does affect packets sent to host, for
+example.
+It is important to mention that UDP_MAX_SEGMENTS is kernel-only
+define and not available to user mode socket applications.
+In order to request MSS smaller than MTU the applications
+just uses setsockopt with SOL_UDP and UDP_SEGMENT and there is
+no limitations on socket API level.
 
-The added sanity check is incorrect. BUDMIN is not the wrong value and
-is too small.
-
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: fc8b2a619469 ("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
+Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dmap.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ include/linux/udp.h                  |    2 +-
+ tools/testing/selftests/net/udpgso.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -2765,9 +2765,7 @@ static int dbBackSplit(dmtree_t *tp, int
-  *	leafno	- the number of the leaf to be updated.
-  *	newval	- the new value for the leaf.
-  *
-- * RETURN VALUES:
-- *  0		- success
-- *	-EIO	- i/o error
-+ * RETURN VALUES: none
-  */
- static int dbJoin(dmtree_t *tp, int leafno, int newval, bool is_ctl)
- {
-@@ -2794,10 +2792,6 @@ static int dbJoin(dmtree_t *tp, int leaf
- 		 * get the buddy size (number of words covered) of
- 		 * the new value.
- 		 */
--
--		if ((newval - tp->dmt_budmin) > BUDMIN)
--			return -EIO;
--
- 		budsz = BUDSIZE(newval, tp->dmt_budmin);
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -102,7 +102,7 @@ struct udp_sock {
+ #define udp_assign_bit(nr, sk, val)		\
+ 	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
  
- 		/* try to join.
+-#define UDP_MAX_SEGMENTS	(1 << 6UL)
++#define UDP_MAX_SEGMENTS	(1 << 7UL)
+ 
+ static inline struct udp_sock *udp_sk(const struct sock *sk)
+ {
+--- a/tools/testing/selftests/net/udpgso.c
++++ b/tools/testing/selftests/net/udpgso.c
+@@ -34,7 +34,7 @@
+ #endif
+ 
+ #ifndef UDP_MAX_SEGMENTS
+-#define UDP_MAX_SEGMENTS	(1 << 6UL)
++#define UDP_MAX_SEGMENTS	(1 << 7UL)
+ #endif
+ 
+ #define CONST_MTU_TEST	1500
 
 
