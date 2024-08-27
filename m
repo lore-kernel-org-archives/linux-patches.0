@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A22554648;
-	Tue, 27 Aug 2024 15:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1541C1C57BF;
+	Tue, 27 Aug 2024 15:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772735; cv=none; b=GuiU2cFJp3tcPMJHZu2kiv6qgLGytQXLzAlsJ5rxqdAPvl58ajSucs8LUCvbWh74ArIABc29X/O+wf1LyVggEwQZe6rAEuzwVc5+FAQhg3wxbx5MhkqTMnw0XBAozLdUco52deYJjTfa3YghI2e5VfcrQiI/qyb4INxy5zObiEM=
+	t=1724772739; cv=none; b=Bhky6jTQf7NbYmLBrdQXBqe6EX8Yaf2CwX8i+gd4f0TCapobjuu7JUMSS6kUVt2R5Be9RPXhsRLJGO9CJIu/TWBnFd4Rw3+o0dUbzcmECKMRgcxz/thu0U1Aru4oGBH4f/5OY3ZjcIKuKTXSwliJyQD2/yz7Twe7jpENxjjjEHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772735; c=relaxed/simple;
-	bh=f372yoSnTnRsbINh56tWoDgxgDyEp/fcfKYYL8ou8MY=;
+	s=arc-20240116; t=1724772739; c=relaxed/simple;
+	bh=VNgnaroiB8fdbqo250/Fa41/FBRWlEyTq6OuQ2juA/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBuYajN6mjSYmNbIJcObjFpqZyueTHSwWw34HyMdAwnfX5jr2RdPG3KuP8r2PMxOh5TtJTm83KbhkpLfbKtApKOEIrlVA0gKviGE/KDyPjkK38n0MGfxp9pRA+fWiowk+sRcrDxfJoB1CNTfM0geyE/qK0D6Xpm3mhX2ndcdr1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzMebNSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WcWRP53J+QVUkBfsN1HclN5f0y4IdJvmWht6PANZlbhWhOSZtwGIf8c9Xvy66NGKNeOxRkI5uGpAED0eLQUW7aRa60jzRMxoYsUKmXKkzpV8U95JF3kox8SbrXGBrXAZbPZOmnjPFSXqXzCLER3H/Gwe59B7uTF/Z2dcUhqbo8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsz/E/2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzMebNSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B1DC4DDF0;
-	Tue, 27 Aug 2024 15:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsz/E/2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A911C4DE01;
+	Tue, 27 Aug 2024 15:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772735;
-	bh=f372yoSnTnRsbINh56tWoDgxgDyEp/fcfKYYL8ou8MY=;
+	s=korg; t=1724772738;
+	bh=VNgnaroiB8fdbqo250/Fa41/FBRWlEyTq6OuQ2juA/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzMebNSd5egOVkDdMRodiieqVZh9pQa9kUJYcPKOaCEQUANegaZyc2k/akLhZ6XTI
-	 GtVSLIP/KzJBp+3Fi1BHkktKqqgIr3zlz72X2AOwbG7epJKCZuzJbyPLGCSc26pxpk
-	 OA/IFMbY38oKzrQ6HAJ7MGoLlK+ciTonSEID7IQo=
+	b=vsz/E/2pd80Vf1B12L667L6ORJetPDNpAtFjLx8OS3AdwESng2Gjn+eAURpyVF6tA
+	 pQm4ytk469C2wXDJGx4Qbu/RpX9caQwdmP3cUTyPjuOmeZWVxL0r1JFVlqcn5K4lOe
+	 gI+U7QhMnDErb0oFXRGs+RXgztP6ThsSbb/tkevI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 272/321] cxgb4: add forgotten u64 ivlan cast before shift
-Date: Tue, 27 Aug 2024 16:39:40 +0200
-Message-ID: <20240827143848.604904386@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 273/321] KVM: arm64: Make ICC_*SGI*_EL1 undef in the absence of a vGICv3
+Date: Tue, 27 Aug 2024 16:39:41 +0200
+Message-ID: <20240827143848.643090693@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,38 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 80a1e7b83bb1834b5568a3872e64c05795d88f31 upstream.
+commit 3e6245ebe7ef341639e9a7e402b3ade8ad45a19f upstream.
 
-It is done everywhere in cxgb4 code, e.g. in is_filter_exact_match()
-There is no reason it should not be done here
+On a system with a GICv3, if a guest hasn't been configured with
+GICv3 and that the host is not capable of GICv2 emulation,
+a write to any of the ICC_*SGI*_EL1 registers is trapped to EL2.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
+We therefore try to emulate the SGI access, only to hit a NULL
+pointer as no private interrupt is allocated (no GIC, remember?).
 
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+The obvious fix is to give the guest what it deserves, in the
+shape of a UNDEF exception.
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 12b276fbf6e0 ("cxgb4: add support to create hash filters")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240819075408.92378-1-kniv@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240820100349.3544850-2-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/sys_regs.c  |    6 ++++++
+ arch/arm64/kvm/vgic/vgic.h |    7 +++++++
+ 2 files changed, 13 insertions(+)
 
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c
-@@ -1244,7 +1244,8 @@ static u64 hash_filter_ntuple(struct ch_
- 	 * in the Compressed Filter Tuple.
- 	 */
- 	if (tp->vlan_shift >= 0 && fs->mask.ivlan)
--		ntuple |= (FT_VLAN_VLD_F | fs->val.ivlan) << tp->vlan_shift;
-+		ntuple |= (u64)(FT_VLAN_VLD_F |
-+				fs->val.ivlan) << tp->vlan_shift;
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -30,6 +30,7 @@
+ #include <trace/events/kvm.h>
  
- 	if (tp->port_shift >= 0 && fs->mask.iport)
- 		ntuple |= (u64)fs->val.iport << tp->port_shift;
+ #include "sys_regs.h"
++#include "vgic/vgic.h"
+ 
+ #include "trace.h"
+ 
+@@ -200,6 +201,11 @@ static bool access_gic_sgi(struct kvm_vc
+ {
+ 	bool g1;
+ 
++	if (!kvm_has_gicv3(vcpu->kvm)) {
++		kvm_inject_undefined(vcpu);
++		return false;
++	}
++
+ 	if (!p->is_write)
+ 		return read_from_write_only(vcpu, p, r);
+ 
+--- a/arch/arm64/kvm/vgic/vgic.h
++++ b/arch/arm64/kvm/vgic/vgic.h
+@@ -334,4 +334,11 @@ void vgic_v4_configure_vsgis(struct kvm
+ void vgic_v4_get_vlpi_state(struct vgic_irq *irq, bool *val);
+ int vgic_v4_request_vpe_irq(struct kvm_vcpu *vcpu, int irq);
+ 
++static inline bool kvm_has_gicv3(struct kvm *kvm)
++{
++	return (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif) &&
++		irqchip_in_kernel(kvm) &&
++		kvm->arch.vgic.vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3);
++}
++
+ #endif
 
 
