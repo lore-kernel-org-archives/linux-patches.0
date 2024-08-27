@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FF81BFE04;
-	Tue, 27 Aug 2024 15:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9538D1C86F6;
+	Tue, 27 Aug 2024 15:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770915; cv=none; b=HH8SAU3TnmMjGat1L1HaA1GM4seMDcSRdBVCxK0bK6uH+Sdt9g/fI43444WB9Ns7hv05+SRLARX/7XEnRTET3RZYvQSa24VvDa5+CobuLkEQK2/01fSDB1oB5ESXexaaTF+mqV7E4+g6jmJO2y9mmSyRl34Xz/H6OsYyKaJEmp0=
+	t=1724770919; cv=none; b=sP9FtK34KI5utss61gWDeasmJJBgs632S5R1TIa1VQrW2OMW16P4Fhnk1dXFNZJGR6BMll94FWwIS9o5hwHrh5CsWA4L05VsDIqKM5GE3K+F7lTJeF+hT3odnuz7mz1w30UEtSPp+OQs2nOp+GeSz1XBLijwGXG/wmDTANIpWFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770915; c=relaxed/simple;
-	bh=8nhgT07aqdGVt0XNg0js9di5znO2TjEo6FkUr4ii+mo=;
+	s=arc-20240116; t=1724770919; c=relaxed/simple;
+	bh=3Z+pxQIc8l+WCEucUkd4Rukpr2VOTUn9gba6GtG+UCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOMUf2AhpoFdYNFq/6Q341gWSs+zdq99yWt/dZ0P6qjOg/zwp2nczmXsYilhTFfAlb2+r48doFS01jLSg92JhNpMCWnEdKbWxu4eNMdBs5l5LraKqm5rDhek7k56QjoAb+ESjV3wzR5T1nKjlsZUrc8D9o86VJSwnVTEGLktwgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSnrKgDi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TW1OPU9xTMRfHHqBLVImrVwkKlV6z2J155VxKvhd46quDtZdNVj382j+p9fY97EIg7ykjILtBTOQn9yR23muYvKiulpbnev/mtTc0bTLglL1/w0EubVs3voPcJqsE+5EyZ2JlNf/wvHSjvfsX5B0TweRwiWEQzACaURX7jGu99M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knAU7BXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSnrKgDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF36C4DDF7;
-	Tue, 27 Aug 2024 15:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knAU7BXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD9EC4DDF4;
+	Tue, 27 Aug 2024 15:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770915;
-	bh=8nhgT07aqdGVt0XNg0js9di5znO2TjEo6FkUr4ii+mo=;
+	s=korg; t=1724770919;
+	bh=3Z+pxQIc8l+WCEucUkd4Rukpr2VOTUn9gba6GtG+UCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSnrKgDiyZXsGWTQ+XQGvKntnY2qo534iXe8uEX8uYicIsEeItM1s4Zd1zyZGp3Is
-	 3b2QN/yGgGIYLDXTK/v6f9XZ0kNdqXkbmSqbKH7J7GMJG8dTJUgmG23PdU02gNInE3
-	 9V4bu7+NgkK2gK55q6NdVlOJDWScNPtqLNMRw9eo=
+	b=knAU7BXebnLOjP98jUheDbYSkzU3dY3Fcm3rwhm0gVGyjuVs0euQzmJcmH61Vs74u
+	 H1pNBdLpORXoWjsq9YDJT4wjOAmeEVpC3sda5GyEnzR53NytjKhHMniRlT/0DSSEHT
+	 lOK4frP4rQaSbn88NAPI5MYA7O9jzoLljTcpuub4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.10 007/273] Revert "usb: typec: tcpm: clear pd_event queue in PORT_RESET"
-Date: Tue, 27 Aug 2024 16:35:31 +0200
-Message-ID: <20240827143833.660860444@linuxfoundation.org>
+	Marc Reisner <reisner.marc@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.10 008/273] selinux: revert our use of vma_is_initial_heap()
+Date: Tue, 27 Aug 2024 16:35:32 +0200
+Message-ID: <20240827143833.699427407@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,65 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Paul Moore <paul@paul-moore.com>
 
-commit 21ea1ce37fc267dc45fe27517bbde926211683df upstream.
+commit 05a3d6e9307250a5911d75308e4363466794ab21 upstream.
 
-This reverts commit bf20c69cf3cf9c6445c4925dd9a8a6ca1b78bfdf.
+Unfortunately it appears that vma_is_initial_heap() is currently broken
+for applications that do not currently have any heap allocated, e.g.
+brk == start_brk.  The breakage is such that it will cause SELinux to
+check for the process/execheap permission on memory regions that cross
+brk/start_brk even when there is no heap.
 
-During tcpm_init() stage, if the VBUS is still present after
-tcpm_reset_port(), then we assume that VBUS will off and goto safe0v
-after a specific discharge time. Following a TCPM_VBUS_EVENT event if
-VBUS reach to off state. TCPM_VBUS_EVENT event may be set during
-PORT_RESET handling stage. If pd_events reset to 0 after TCPM_VBUS_EVENT
-set, we will lost this VBUS event. Then the port state machine may stuck
-at one state.
+The proper fix would be to correct vma_is_initial_heap(), but as there
+are multiple callers I am hesitant to unilaterally modify the helper
+out of concern that I would end up breaking some other subsystem.  The
+mm developers have been made aware of the situation and hopefully they
+will have a fix at some point in the future, but we need a fix soon so
+we are simply going to revert our use of vma_is_initial_heap() in favor
+of our old logic/code which works as expected, even in the face of a
+zero size heap.  We can return to using vma_is_initial_heap() at some
+point in the future when it is fixed.
 
-Before:
-
-[    2.570172] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
-[    2.570179] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
-[    2.570182] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
-[    3.490213] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [delayed 920 ms]
-[    3.490220] Start toggling
-[    3.546050] CC1: 0 -> 0, CC2: 0 -> 2 [state TOGGLING, polarity 0, connected]
-[    3.546057] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
-
-After revert this patch, we can see VBUS off event and the port will goto
-expected state.
-
-[    2.441992] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
-[    2.441999] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
-[    2.442002] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
-[    2.442122] VBUS off
-[    2.442125] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev1 NONE_AMS]
-[    2.442127] VBUS VSAFE0V
-[    2.442351] CC1: 0 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
-[    2.442357] Start toggling
-[    2.491850] CC1: 0 -> 0, CC2: 0 -> 2 [state TOGGLING, polarity 0, connected]
-[    2.491858] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
-[    2.491863] pending state change SRC_ATTACH_WAIT -> SNK_TRY @ 200 ms [rev1 NONE_AMS]
-[    2.691905] state change SRC_ATTACH_WAIT -> SNK_TRY [delayed 200 ms]
-
-Fixes: bf20c69cf3cf ("usb: typec: tcpm: clear pd_event queue in PORT_RESET")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240809112901.535072-1-xu.yang_2@nxp.com
+Reported-by: Marc Reisner <reisner.marc@gmail.com>
+Closes: https://lore.kernel.org/all/ZrPmoLKJEf1wiFmM@marcreisner.com
+Fixes: 68df1baf158f ("selinux: use vma_is_initial_stack() and vma_is_initial_heap()")
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    1 -
- 1 file changed, 1 deletion(-)
+ security/selinux/hooks.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5630,7 +5630,6 @@ static void run_state_machine(struct tcp
- 		break;
- 	case PORT_RESET:
- 		tcpm_reset_port(port);
--		port->pd_events = 0;
- 		if (port->self_powered)
- 			tcpm_set_cc(port, TYPEC_CC_OPEN);
- 		else
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -3852,7 +3852,17 @@ static int selinux_file_mprotect(struct
+ 	if (default_noexec &&
+ 	    (prot & PROT_EXEC) && !(vma->vm_flags & VM_EXEC)) {
+ 		int rc = 0;
+-		if (vma_is_initial_heap(vma)) {
++		/*
++		 * We don't use the vma_is_initial_heap() helper as it has
++		 * a history of problems and is currently broken on systems
++		 * where there is no heap, e.g. brk == start_brk.  Before
++		 * replacing the conditional below with vma_is_initial_heap(),
++		 * or something similar, please ensure that the logic is the
++		 * same as what we have below or you have tested every possible
++		 * corner case you can think to test.
++		 */
++		if (vma->vm_start >= vma->vm_mm->start_brk &&
++		    vma->vm_end <= vma->vm_mm->brk) {
+ 			rc = avc_has_perm(sid, sid, SECCLASS_PROCESS,
+ 					  PROCESS__EXECHEAP, NULL);
+ 		} else if (!vma->vm_file && (vma_is_initial_stack(vma) ||
 
 
