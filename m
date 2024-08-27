@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B450D1C5793;
-	Tue, 27 Aug 2024 15:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416231C4ED4;
+	Tue, 27 Aug 2024 15:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771502; cv=none; b=SHSfRl7egc6RuPs2Yc4BayH+dvOVPNSSih0lv+f10u0k8ehViHVJOxRaBqSia7XfvJe6PtH97tNBEqNb2+c+8/gEOQhyzzfvuCO7/8KGytnl449IaHMr1TcWwOLnsPAjBlymya/14XzL5C31E4syAwrIEwHnZK/kvljmd+b7tI8=
+	t=1724771506; cv=none; b=WsaEFRzslnqkv+2eRX7pqx6z/UJ38djqopytFxEKT80OHEp8xIgl/1eMHmSu50CbFj3yRrQmdRs1UOG4r7C8eQ3XBiXHcTpCF2PHN2IYhT9/7eI6zPICsP5Nd45dxzksZ5v2VU8U19gszbj+nnu+mUy2/7JW+JfjSYnu29Qi/7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771502; c=relaxed/simple;
-	bh=u4WYhQEtwmafKO+9Oip/SfE66JqtekS+4w3R5lX32KU=;
+	s=arc-20240116; t=1724771506; c=relaxed/simple;
+	bh=K8hD9zw1Dwxm5UdsEnOSSluA1CfEMrms6R9KSH7wnfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlJF7H7cpOcQLdOn2XAfxLMjuS1C7Lv3KpFR/a9k7K5LFmuNHsUBexFKa6HkWOE6Qxru9zxQpVB0a18bUN5DppCLi70MaoHy+nuU3FlzanQsLwrpyEZdx6ceOM5AZsBFtuAQkjf5z6LxxR7i4A9HJyoIAbPNvbIXAyBvrwBvNmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ma4IfzIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=giTx+89CCWLozpDmt3EXHs5qfsEyQQ6WukkrEaEz8l5QuViwzqUH/sB0cKk0AeKMsgpL5ih/NGPNiXUP5rCJyCZzvWcd8XZJkrd5CUU5yQSBb+fOt7GkE7hLRfIKgv0fIu/tY+EGSc28zKpbphPc0PUOf28PkjMH0s7lCVepcjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9rGMvAA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ma4IfzIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF30C4DE08;
-	Tue, 27 Aug 2024 15:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9rGMvAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5498BC4DDF2;
+	Tue, 27 Aug 2024 15:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771502;
-	bh=u4WYhQEtwmafKO+9Oip/SfE66JqtekS+4w3R5lX32KU=;
+	s=korg; t=1724771505;
+	bh=K8hD9zw1Dwxm5UdsEnOSSluA1CfEMrms6R9KSH7wnfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ma4IfzIf6Z2MRKUOib+/JUMqerF7b8H1hmvl+yIPlQqJC/sx8MkHkTXE+lThyb0Ll
-	 7MBqarJ/mDsZUwMFvfFuzEJWTv+WvbV9/VyDM+Bfr9fuhfD/OkccESjfP/YppMHfkd
-	 nJ4C3JYl/AIyRfpfnUcglANCQ79brhOcAnNPzae0=
+	b=j9rGMvAAvzSblCfpi1aoKbJdAje4EYZ1k4eo+vR3ZTsmqRFVEocthmt571nJpHsLh
+	 l2gGRkzFm/Qde/+GXnAztW1ms+jqloaRfxxen0a3GZ94MqdpB0S5XySpzGflWT31hw
+	 LQo8s8VfY7NRfuTLsZAcr9FBSWYF1/0oQ8SYCx5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 208/273] drm/xe: reset mmio mappings with devm
-Date: Tue, 27 Aug 2024 16:38:52 +0200
-Message-ID: <20240827143841.325306362@linuxfoundation.org>
+Subject: [PATCH 6.10 209/273] drm/xe: Fix tile fini sequence
+Date: Tue, 27 Aug 2024 16:38:53 +0200
+Message-ID: <20240827143841.363115521@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,126 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit c7117419784f612d59ee565145f722e8b5541fe6 ]
+[ Upstream commit 15939ca77d4424f736e1e4953b4da2351cc9689d ]
 
-Set our various mmio mappings to NULL. This should make it easier to
-catch something rogue trying to mess with mmio after device removal. For
-example, we might unmap everything and then start hitting some mmio
-address which has already been unmamped by us and then remapped by
-something else, causing all kinds of carnage.
+Only set tile->mmio.regs to NULL if not the root tile in tile_fini. The
+root tile mmio regs is setup ealier in MMIO init thus it should be set
+to NULL in mmio_fini.
 
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240522102143.128069-33-matthew.auld@intel.com
-Stable-dep-of: 15939ca77d44 ("drm/xe: Fix tile fini sequence")
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240809232830.3302251-1-matthew.brost@intel.com
+(cherry picked from commit 3396900aa273903639a1792afa4d23dc09bec291)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c |  4 +++-
- drivers/gpu/drm/xe/xe_mmio.c   | 35 ++++++++++++++++++++++++++++------
- drivers/gpu/drm/xe/xe_mmio.h   |  2 +-
- 3 files changed, 33 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xe/xe_mmio.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index 5ef9b50a20d01..a1cbdafbff75e 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -551,7 +551,9 @@ int xe_device_probe(struct xe_device *xe)
- 	if (err)
- 		return err;
- 
--	xe_mmio_probe_tiles(xe);
-+	err = xe_mmio_probe_tiles(xe);
-+	if (err)
-+		return err;
- 
- 	xe_ttm_sys_mgr_init(xe);
- 
 diff --git a/drivers/gpu/drm/xe/xe_mmio.c b/drivers/gpu/drm/xe/xe_mmio.c
-index 2ebb2f0d6874e..9d8fafdf51453 100644
+index 9d8fafdf51453..beb4e276ba845 100644
 --- a/drivers/gpu/drm/xe/xe_mmio.c
 +++ b/drivers/gpu/drm/xe/xe_mmio.c
-@@ -254,6 +254,21 @@ static int xe_mmio_tile_vram_size(struct xe_tile *tile, u64 *vram_size,
- 	return xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
+@@ -355,7 +355,8 @@ static void tiles_fini(void *arg)
+ 	int id;
+ 
+ 	for_each_tile(tile, xe, id)
+-		tile->mmio.regs = NULL;
++		if (tile != xe_device_get_root_tile(xe))
++			tile->mmio.regs = NULL;
  }
  
-+static void vram_fini(void *arg)
-+{
-+	struct xe_device *xe = arg;
-+	struct xe_tile *tile;
-+	int id;
-+
-+	if (xe->mem.vram.mapping)
-+		iounmap(xe->mem.vram.mapping);
-+
-+	xe->mem.vram.mapping = NULL;
-+
-+	for_each_tile(tile, xe, id)
-+		tile->mem.vram.mapping = NULL;
-+}
-+
- int xe_mmio_probe_vram(struct xe_device *xe)
- {
- 	struct xe_tile *tile;
-@@ -330,10 +345,20 @@ int xe_mmio_probe_vram(struct xe_device *xe)
- 	drm_info(&xe->drm, "Available VRAM: %pa, %pa\n", &xe->mem.vram.io_start,
- 		 &available_size);
- 
--	return 0;
-+	return devm_add_action_or_reset(xe->drm.dev, vram_fini, xe);
- }
- 
--void xe_mmio_probe_tiles(struct xe_device *xe)
-+static void tiles_fini(void *arg)
-+{
-+	struct xe_device *xe = arg;
-+	struct xe_tile *tile;
-+	int id;
-+
-+	for_each_tile(tile, xe, id)
-+		tile->mmio.regs = NULL;
-+}
-+
-+int xe_mmio_probe_tiles(struct xe_device *xe)
- {
- 	size_t tile_mmio_size = SZ_16M, tile_mmio_ext_size = xe->info.tile_mmio_ext_size;
- 	u8 id, tile_count = xe->info.tile_count;
-@@ -384,6 +409,8 @@ void xe_mmio_probe_tiles(struct xe_device *xe)
- 			regs += tile_mmio_ext_size;
- 		}
- 	}
-+
-+	return devm_add_action_or_reset(xe->drm.dev, tiles_fini, xe);
- }
- 
+ int xe_mmio_probe_tiles(struct xe_device *xe)
+@@ -416,9 +417,11 @@ int xe_mmio_probe_tiles(struct xe_device *xe)
  static void mmio_fini(void *arg)
-@@ -391,10 +418,6 @@ static void mmio_fini(void *arg)
+ {
  	struct xe_device *xe = arg;
++	struct xe_tile *root_tile = xe_device_get_root_tile(xe);
  
  	pci_iounmap(to_pci_dev(xe->drm.dev), xe->mmio.regs);
--	if (xe->mem.vram.mapping)
--		iounmap(xe->mem.vram.mapping);
--
--	xe->mem.vram.mapping = NULL;
  	xe->mmio.regs = NULL;
++	root_tile->mmio.regs = NULL;
  }
  
-diff --git a/drivers/gpu/drm/xe/xe_mmio.h b/drivers/gpu/drm/xe/xe_mmio.h
-index a3cd7b3036c73..a929d090bb2f1 100644
---- a/drivers/gpu/drm/xe/xe_mmio.h
-+++ b/drivers/gpu/drm/xe/xe_mmio.h
-@@ -21,7 +21,7 @@ struct xe_device;
- #define LMEM_BAR		2
- 
- int xe_mmio_init(struct xe_device *xe);
--void xe_mmio_probe_tiles(struct xe_device *xe);
-+int xe_mmio_probe_tiles(struct xe_device *xe);
- 
- u8 xe_mmio_read8(struct xe_gt *gt, struct xe_reg reg);
- u16 xe_mmio_read16(struct xe_gt *gt, struct xe_reg reg);
+ int xe_mmio_init(struct xe_device *xe)
 -- 
 2.43.0
 
