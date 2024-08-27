@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765171C6894;
-	Tue, 27 Aug 2024 14:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0338D1494AC;
+	Tue, 27 Aug 2024 14:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770742; cv=none; b=m1gWpZMEpCPk2tagj53wUBlV0ANcm4JnvCcNeugdqD35jhI3Wsw+nGBnhrZEnczmy1vC/q6C7XSDqhzmyiSdgyPSbOnIXgqhPixrcXFbe22e5Yt87eWj6uJWoQug9uwygqiDTgvG7M71yTcz3KlTM2svWaaSdBhfVvOTZKuTAsY=
+	t=1724770746; cv=none; b=bOPmYYFR9td60qvOdTsdzKVisOGq1ZxgKYPmI13eRTg0ZnIeB/qxFgFCqDrvmklEmC32Px57P03kU1XREMduGEuF8z6a08ErPWD5o/qLFvsbLZkyaSG9Me5Ooea6EchOxENVjBfvZv/riHIU236B9sQVWRx50n6p7FBa6e2AtlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770742; c=relaxed/simple;
-	bh=OkuOhMDBkgzuzW19++d3WBK2XrMF0EK3MYRaVEWyqu4=;
+	s=arc-20240116; t=1724770746; c=relaxed/simple;
+	bh=eOzt/NfIt2r2P+1xQlab1CrQjMG9AcJOios00+n6CxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EigP+qKlKLKEQN826LdFzdJGfRvtv3dQk3yCRwudzUEHKz4WDETJ+K7x/9x1k2nRypzt9IFNSiDqErINcrJvItq0ruo1oqixxBU5CwqqzUg/OCAbIyiAKZRPqU1ZypIOqcNZSJ8Uc5RTquGSWGzFlFUG3mrqGB1fDhblMZghJPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6dSjHbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hj/8rH2SOdofo68KvmyPoGGceO8xksczjNccmoV3/xaD59Irs+Sfcvzr9lOH/lokdkOAYFmyctuW03h9ks54jHmm5tka0JRykWOpRb6GHMGjAhQHEzqtSnsx8wTufMdBNgqvunAVptYSKBUuxQ+VrHOT1hJb8RAkVEej+mKMTQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d78Afmrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6dSjHbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD34C61044;
-	Tue, 27 Aug 2024 14:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d78Afmrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6ABC61044;
+	Tue, 27 Aug 2024 14:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770742;
-	bh=OkuOhMDBkgzuzW19++d3WBK2XrMF0EK3MYRaVEWyqu4=;
+	s=korg; t=1724770745;
+	bh=eOzt/NfIt2r2P+1xQlab1CrQjMG9AcJOios00+n6CxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6dSjHbkMmyxBRzTVasaqmggV0wwWleHICXb4GAB8OmGMNH2OvjDbFNNzh/W7Eeud
-	 OcnnezZWulTLqLdZ2pf2NkmX/zstvRuxppvjbqiZvv6WiPHX3gjz62hCSp9CJWYfLy
-	 XwdEdgWeOTMXBefnUyxqAcS1nO7VVbZkObhmbDjQ=
+	b=d78Afmrduw1Cs+bKV0YCKIDSIo4s5IbwJRrsQIRipm04iQHfz18cBlUxoQsD7cG8g
+	 lp53TQIKLEIfWtbYxYY2mi1UbMGUiSj1YUqsN8Z5N393mCPDIFZdhua/qL+thpRroh
+	 zmTB4Q8IeVCqy7heKT51MJMhADkf4mHwtPN4AzHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 319/341] mptcp: pm: avoid possible UaF when selecting endp
-Date: Tue, 27 Aug 2024 16:39:10 +0200
-Message-ID: <20240827143855.533805810@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 290/341] drm/msm/mdss: Handle the reg bus ICC path
+Date: Tue, 27 Aug 2024 16:38:41 +0200
+Message-ID: <20240827143854.428356538@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,171 +52,247 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 48e50dcbcbaaf713d82bf2da5c16aeced94ad07d upstream.
+[ Upstream commit a55c8ff252d374acb6f78b979cadc38073ce95e8 ]
 
-select_local_address() and select_signal_address() both select an
-endpoint entry from the list inside an RCU protected section, but return
-a reference to it, to be read later on. If the entry is dereferenced
-after the RCU unlock, reading info could cause a Use-after-Free.
+Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
+another path that needs to be handled to ensure MDSS functions properly,
+namely the "reg bus", a.k.a the CPU-MDSS interconnect.
 
-A simple solution is to copy the required info while inside the RCU
-protected section to avoid any risk of UaF later. The address ID might
-need to be modified later to handle the ID0 case later, so a copy seems
-OK to deal with.
+Gating that path may have a variety of effects, from none to otherwise
+inexplicable DSI timeouts.
 
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Closes: https://lore.kernel.org/45cd30d3-7710-491c-ae4d-a1368c00beb1@redhat.com
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-14-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Provide a way for MDSS driver to vote on this bus.
+
+A note regarding vote values. Newer platforms have corresponding
+bandwidth values in the vendor DT files. For the older platforms there
+was a static vote in the mdss_mdp and rotator drivers. I choose to be
+conservative here and choose this value as a default.
+
+Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/570164/
+Link: https://lore.kernel.org/r/20231202224247.1282567-5-dmitry.baryshkov@linaro.org
+Stable-dep-of: 3e30296b374a ("drm/msm: fix the highest_bank_bit for sc7180")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c |   64 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 34 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/msm/msm_mdss.c | 49 +++++++++++++++++++++++++++++++---
+ drivers/gpu/drm/msm/msm_mdss.h |  1 +
+ 2 files changed, 46 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -148,11 +148,13 @@ static bool lookup_subflow_by_daddr(cons
- 	return false;
- }
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index cce3eb505bf46..222b72dc52269 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -28,6 +28,8 @@
  
--static struct mptcp_pm_addr_entry *
-+static bool
- select_local_address(const struct pm_nl_pernet *pernet,
--		     const struct mptcp_sock *msk)
-+		     const struct mptcp_sock *msk,
-+		     struct mptcp_pm_addr_entry *new_entry)
- {
--	struct mptcp_pm_addr_entry *entry, *ret = NULL;
-+	struct mptcp_pm_addr_entry *entry;
-+	bool found = false;
+ #define MIN_IB_BW	400000000UL /* Min ib vote 400MB */
  
- 	msk_owned_by_me(msk);
- 
-@@ -164,17 +166,21 @@ select_local_address(const struct pm_nl_
- 		if (!test_bit(entry->addr.id, msk->pm.id_avail_bitmap))
- 			continue;
- 
--		ret = entry;
-+		*new_entry = *entry;
-+		found = true;
- 		break;
- 	}
- 	rcu_read_unlock();
--	return ret;
++#define DEFAULT_REG_BW	153600 /* Used in mdss fbdev driver */
 +
-+	return found;
- }
+ struct msm_mdss {
+ 	struct device *dev;
  
--static struct mptcp_pm_addr_entry *
--select_signal_address(struct pm_nl_pernet *pernet, const struct mptcp_sock *msk)
-+static bool
-+select_signal_address(struct pm_nl_pernet *pernet, const struct mptcp_sock *msk,
-+		      struct mptcp_pm_addr_entry *new_entry)
+@@ -42,6 +44,7 @@ struct msm_mdss {
+ 	const struct msm_mdss_data *mdss_data;
+ 	struct icc_path *mdp_path[2];
+ 	u32 num_mdp_paths;
++	struct icc_path *reg_bus_path;
+ };
+ 
+ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
+@@ -49,6 +52,7 @@ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
  {
--	struct mptcp_pm_addr_entry *entry, *ret = NULL;
-+	struct mptcp_pm_addr_entry *entry;
-+	bool found = false;
+ 	struct icc_path *path0;
+ 	struct icc_path *path1;
++	struct icc_path *reg_bus_path;
  
- 	rcu_read_lock();
- 	/* do not keep any additional per socket state, just signal
-@@ -189,11 +195,13 @@ select_signal_address(struct pm_nl_perne
- 		if (!(entry->flags & MPTCP_PM_ADDR_FLAG_SIGNAL))
- 			continue;
- 
--		ret = entry;
-+		*new_entry = *entry;
-+		found = true;
- 		break;
+ 	path0 = devm_of_icc_get(dev, "mdp0-mem");
+ 	if (IS_ERR_OR_NULL(path0))
+@@ -63,6 +67,10 @@ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
+ 		msm_mdss->num_mdp_paths++;
  	}
- 	rcu_read_unlock();
--	return ret;
+ 
++	reg_bus_path = of_icc_get(dev, "cpu-cfg");
++	if (!IS_ERR_OR_NULL(reg_bus_path))
++		msm_mdss->reg_bus_path = reg_bus_path;
 +
-+	return found;
+ 	return 0;
  }
  
- unsigned int mptcp_pm_get_add_addr_signal_max(const struct mptcp_sock *msk)
-@@ -520,9 +528,10 @@ __lookup_addr(struct pm_nl_pernet *perne
+@@ -236,6 +244,13 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 	 */
+ 	msm_mdss_icc_request_bw(msm_mdss, MIN_IB_BW);
  
- static void mptcp_pm_create_subflow_or_signal_addr(struct mptcp_sock *msk)
- {
--	struct mptcp_pm_addr_entry *local, *signal_and_subflow = NULL;
- 	struct sock *sk = (struct sock *)msk;
-+	struct mptcp_pm_addr_entry local;
- 	unsigned int add_addr_signal_max;
-+	bool signal_and_subflow = false;
- 	unsigned int local_addr_max;
- 	struct pm_nl_pernet *pernet;
- 	unsigned int subflows_max;
-@@ -573,23 +582,22 @@ static void mptcp_pm_create_subflow_or_s
- 		if (msk->pm.addr_signal & BIT(MPTCP_ADD_ADDR_SIGNAL))
- 			return;
++	if (msm_mdss->mdss_data && msm_mdss->mdss_data->reg_bus_bw)
++		icc_set_bw(msm_mdss->reg_bus_path, 0,
++			   msm_mdss->mdss_data->reg_bus_bw);
++	else
++		icc_set_bw(msm_mdss->reg_bus_path, 0,
++			   DEFAULT_REG_BW);
++
+ 	ret = clk_bulk_prepare_enable(msm_mdss->num_clocks, msm_mdss->clocks);
+ 	if (ret) {
+ 		dev_err(msm_mdss->dev, "clock enable failed, ret:%d\n", ret);
+@@ -289,6 +304,9 @@ static int msm_mdss_disable(struct msm_mdss *msm_mdss)
+ 	clk_bulk_disable_unprepare(msm_mdss->num_clocks, msm_mdss->clocks);
+ 	msm_mdss_icc_request_bw(msm_mdss, 0);
  
--		local = select_signal_address(pernet, msk);
--		if (!local)
-+		if (!select_signal_address(pernet, msk, &local))
- 			goto subflow;
++	if (msm_mdss->reg_bus_path)
++		icc_set_bw(msm_mdss->reg_bus_path, 0, 0);
++
+ 	return 0;
+ }
  
- 		/* If the alloc fails, we are on memory pressure, not worth
- 		 * continuing, and trying to create subflows.
- 		 */
--		if (!mptcp_pm_alloc_anno_list(msk, &local->addr))
-+		if (!mptcp_pm_alloc_anno_list(msk, &local.addr))
- 			return;
+@@ -375,6 +393,8 @@ static struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5
+ 	if (!msm_mdss)
+ 		return ERR_PTR(-ENOMEM);
  
--		__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
-+		__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
- 		msk->pm.add_addr_signaled++;
--		mptcp_pm_announce_addr(msk, &local->addr, false);
-+		mptcp_pm_announce_addr(msk, &local.addr, false);
- 		mptcp_pm_nl_addr_send_ack(msk);
++	msm_mdss->mdss_data = of_device_get_match_data(&pdev->dev);
++
+ 	msm_mdss->mmio = devm_platform_ioremap_resource_byname(pdev, is_mdp5 ? "mdss_phys" : "mdss");
+ 	if (IS_ERR(msm_mdss->mmio))
+ 		return ERR_CAST(msm_mdss->mmio);
+@@ -465,8 +485,6 @@ static int mdss_probe(struct platform_device *pdev)
+ 	if (IS_ERR(mdss))
+ 		return PTR_ERR(mdss);
  
--		if (local->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)
--			signal_and_subflow = local;
-+		if (local.flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)
-+			signal_and_subflow = true;
- 	}
+-	mdss->mdss_data = of_device_get_match_data(&pdev->dev);
+-
+ 	platform_set_drvdata(pdev, mdss);
  
- subflow:
-@@ -600,26 +608,22 @@ subflow:
- 		bool fullmesh;
- 		int i, nr;
+ 	/*
+@@ -500,11 +518,13 @@ static const struct msm_mdss_data msm8998_data = {
+ 	.ubwc_enc_version = UBWC_1_0,
+ 	.ubwc_dec_version = UBWC_1_0,
+ 	.highest_bank_bit = 2,
++	.reg_bus_bw = 76800,
+ };
  
--		if (signal_and_subflow) {
--			local = signal_and_subflow;
--			signal_and_subflow = NULL;
--		} else {
--			local = select_local_address(pernet, msk);
--			if (!local)
--				break;
--		}
-+		if (signal_and_subflow)
-+			signal_and_subflow = false;
-+		else if (!select_local_address(pernet, msk, &local))
-+			break;
+ static const struct msm_mdss_data qcm2290_data = {
+ 	/* no UBWC */
+ 	.highest_bank_bit = 0x2,
++	.reg_bus_bw = 76800,
+ };
  
--		fullmesh = !!(local->flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
-+		fullmesh = !!(local.flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
+ static const struct msm_mdss_data sc7180_data = {
+@@ -512,6 +532,7 @@ static const struct msm_mdss_data sc7180_data = {
+ 	.ubwc_dec_version = UBWC_2_0,
+ 	.ubwc_static = 0x1e,
+ 	.highest_bank_bit = 0x3,
++	.reg_bus_bw = 76800,
+ };
  
- 		msk->pm.local_addr_used++;
--		__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
--		nr = fill_remote_addresses_vec(msk, &local->addr, fullmesh, addrs);
-+		__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
-+		nr = fill_remote_addresses_vec(msk, &local.addr, fullmesh, addrs);
- 		if (nr == 0)
- 			continue;
+ static const struct msm_mdss_data sc7280_data = {
+@@ -521,6 +542,7 @@ static const struct msm_mdss_data sc7280_data = {
+ 	.ubwc_static = 1,
+ 	.highest_bank_bit = 1,
+ 	.macrotile_mode = 1,
++	.reg_bus_bw = 74000,
+ };
  
- 		spin_unlock_bh(&msk->pm.lock);
- 		for (i = 0; i < nr; i++)
--			__mptcp_subflow_connect(sk, &local->addr, &addrs[i]);
-+			__mptcp_subflow_connect(sk, &local.addr, &addrs[i]);
- 		spin_lock_bh(&msk->pm.lock);
- 	}
- 	mptcp_pm_nl_check_work_pending(msk);
+ static const struct msm_mdss_data sc8180x_data = {
+@@ -528,6 +550,7 @@ static const struct msm_mdss_data sc8180x_data = {
+ 	.ubwc_dec_version = UBWC_3_0,
+ 	.highest_bank_bit = 3,
+ 	.macrotile_mode = 1,
++	.reg_bus_bw = 76800,
+ };
+ 
+ static const struct msm_mdss_data sc8280xp_data = {
+@@ -537,12 +560,14 @@ static const struct msm_mdss_data sc8280xp_data = {
+ 	.ubwc_static = 1,
+ 	.highest_bank_bit = 2,
+ 	.macrotile_mode = 1,
++	.reg_bus_bw = 76800,
+ };
+ 
+ static const struct msm_mdss_data sdm845_data = {
+ 	.ubwc_enc_version = UBWC_2_0,
+ 	.ubwc_dec_version = UBWC_2_0,
+ 	.highest_bank_bit = 2,
++	.reg_bus_bw = 76800,
+ };
+ 
+ static const struct msm_mdss_data sm6350_data = {
+@@ -551,12 +576,14 @@ static const struct msm_mdss_data sm6350_data = {
+ 	.ubwc_swizzle = 6,
+ 	.ubwc_static = 0x1e,
+ 	.highest_bank_bit = 1,
++	.reg_bus_bw = 76800,
+ };
+ 
+ static const struct msm_mdss_data sm8150_data = {
+ 	.ubwc_enc_version = UBWC_3_0,
+ 	.ubwc_dec_version = UBWC_3_0,
+ 	.highest_bank_bit = 2,
++	.reg_bus_bw = 76800,
+ };
+ 
+ static const struct msm_mdss_data sm6115_data = {
+@@ -565,6 +592,7 @@ static const struct msm_mdss_data sm6115_data = {
+ 	.ubwc_swizzle = 7,
+ 	.ubwc_static = 0x11f,
+ 	.highest_bank_bit = 0x1,
++	.reg_bus_bw = 76800,
+ };
+ 
+ static const struct msm_mdss_data sm6125_data = {
+@@ -582,6 +610,18 @@ static const struct msm_mdss_data sm8250_data = {
+ 	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
+ 	.highest_bank_bit = 3,
+ 	.macrotile_mode = 1,
++	.reg_bus_bw = 76800,
++};
++
++static const struct msm_mdss_data sm8350_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_0,
++	.ubwc_swizzle = 6,
++	.ubwc_static = 1,
++	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
++	.highest_bank_bit = 3,
++	.macrotile_mode = 1,
++	.reg_bus_bw = 74000,
+ };
+ 
+ static const struct msm_mdss_data sm8550_data = {
+@@ -592,6 +632,7 @@ static const struct msm_mdss_data sm8550_data = {
+ 	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
+ 	.highest_bank_bit = 3,
+ 	.macrotile_mode = 1,
++	.reg_bus_bw = 57000,
+ };
+ static const struct of_device_id mdss_dt_match[] = {
+ 	{ .compatible = "qcom,mdss" },
+@@ -608,8 +649,8 @@ static const struct of_device_id mdss_dt_match[] = {
+ 	{ .compatible = "qcom,sm6375-mdss", .data = &sm6350_data },
+ 	{ .compatible = "qcom,sm8150-mdss", .data = &sm8150_data },
+ 	{ .compatible = "qcom,sm8250-mdss", .data = &sm8250_data },
+-	{ .compatible = "qcom,sm8350-mdss", .data = &sm8250_data },
+-	{ .compatible = "qcom,sm8450-mdss", .data = &sm8250_data },
++	{ .compatible = "qcom,sm8350-mdss", .data = &sm8350_data },
++	{ .compatible = "qcom,sm8450-mdss", .data = &sm8350_data },
+ 	{ .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
+ 	{}
+ };
+diff --git a/drivers/gpu/drm/msm/msm_mdss.h b/drivers/gpu/drm/msm/msm_mdss.h
+index 02bbab42adbc0..3afef4b1786d2 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.h
++++ b/drivers/gpu/drm/msm/msm_mdss.h
+@@ -14,6 +14,7 @@ struct msm_mdss_data {
+ 	u32 ubwc_static;
+ 	u32 highest_bank_bit;
+ 	u32 macrotile_mode;
++	u32 reg_bus_bw;
+ };
+ 
+ #define UBWC_1_0 0x10000000
+-- 
+2.43.0
+
 
 
