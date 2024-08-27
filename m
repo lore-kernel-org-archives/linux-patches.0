@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4A91C57B7;
-	Tue, 27 Aug 2024 14:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E7A1C4EE6;
+	Tue, 27 Aug 2024 14:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769912; cv=none; b=HoDivCkdpncemnPjWsi5xHpaNbuJxqiuJB348d6EwyiTME/p5gGQw3li8ttSQE26Z1rup/Btr4XtZNsoV/g0Kt0c4tWbb0EetTTRE4IGhxlCN27AYnEEdob4uB+y/CJlaDrFFvsu7UyxxH4C2V8LSXmh0OB5OJTogrYeXGZeYzY=
+	t=1724769915; cv=none; b=BOj+2l5lhVFBCwYjZsabc5BNL5VFSuRZiakIehxt7W4O46VZGGn4H29OZhJ+0h46566VzmzyTGQDy0zfFZ2+xBcppg+1HspzDEJ+o/mIIw2dcaqThLDEmrOiRrV3MoNAfJKczedLA2L+a/cWsRdayIPSdruM/aDvDT6oLcUebPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769912; c=relaxed/simple;
-	bh=gedKM8qJqt3Uc3CrTJYVmt/rIGGDfhlgJv4mQGFRp5Y=;
+	s=arc-20240116; t=1724769915; c=relaxed/simple;
+	bh=xYggnPNZnO72M1AfetiMXbjEUQTC1DPmUSzTDLsJZjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDfA25ri90sfKuDCxgfkuhGz7UwHJKXZ3cHXjvEFtNocHqw+PrdWDedVUlGNdudZGHrlggZ7sUWYWoOpwCkIj/E4i+qQvont9UDzBYcYtzh/g6I5vQlHT9It+4aA1KkgFkSura8LA+fqSGJUj4cwBBPSPDpWKKQew6HBwqcXgB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANIPCjE9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c73Qy8YMdNPmQ6fzJRcxAUKqqPU1KhIUgdn5efWvMQQ0HcAO7yFewPX2n4Sz6XkAMBpQ5EPrWx9cq7hLBNOmtz+350JyxtAlK0KKcf1Ki+gUUKbqxcW/WqCoAFymWWpEZuoQh5Ry+0HYX/qacrIfUi2o6K63rUGTNe6hRzXmrrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdNopD7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANIPCjE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C4BC61063;
-	Tue, 27 Aug 2024 14:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdNopD7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC31C6106C;
+	Tue, 27 Aug 2024 14:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769912;
-	bh=gedKM8qJqt3Uc3CrTJYVmt/rIGGDfhlgJv4mQGFRp5Y=;
+	s=korg; t=1724769915;
+	bh=xYggnPNZnO72M1AfetiMXbjEUQTC1DPmUSzTDLsJZjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANIPCjE9Yraprj4RcTA2h0xKda2CRezDMU/0vAkHRRIz+hx9EtBHduqgU27vLsL/H
-	 zPUkSkvIM7XI559qVUR+wxNi2xxXU/CyQRZvaLBLYjZ6xiprvG+hivcNzrO317sC0g
-	 01taR3tzN952vXMxt1W9AohahlIDlEPY3E/Wsq0I=
+	b=UdNopD7NbI++7AyzTY61l2V33sazSkTGnGJkHYkQcKn6aUQGD3NmzPQlWhIzrAalb
+	 g+xy9izptezW98sLFxXPLJYIVND9F1Yuq+hCvrcYdk1rrBOkxhFC/Ge/BxmyFFToPQ
+	 7vdIEYd7qoWekWUck1xc8WOqBingd/A4j63AJ5uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/341] netfilter: nf_tables: Carry reset boolean in nft_obj_dump_ctx
-Date: Tue, 27 Aug 2024 16:35:03 +0200
-Message-ID: <20240827143846.150837567@linuxfoundation.org>
+Subject: [PATCH 6.6 073/341] netfilter: nf_tables: Introduce nf_tables_getobj_single
+Date: Tue, 27 Aug 2024 16:35:04 +0200
+Message-ID: <20240827143846.188503447@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,72 +54,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit a552339063d37b3b1133d9dfc31f851edafb27bb ]
+[ Upstream commit 69fc3e9e90f1afc11f4015e6b75d18ab9acee348 ]
 
-Relieve the dump callback from having to inspect nlmsg_type upon each
-call, just do it once at start of the dump.
+Outsource the reply skb preparation for non-dump getrule requests into a
+distinct function. Prep work for object reset locking.
 
 Signed-off-by: Phil Sutter <phil@nwl.cc>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/netfilter/nf_tables_api.c | 75 ++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 31 deletions(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e3e3ad532ec9f..170f6f624ac16 100644
+index 170f6f624ac16..a3ed9437e21b4 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -7721,6 +7721,7 @@ struct nft_obj_dump_ctx {
- 	unsigned int	s_idx;
- 	char		*table;
- 	u32		type;
-+	bool		reset;
- };
- 
- static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
-@@ -7734,12 +7735,8 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- 	unsigned int entries = 0;
- 	struct nft_object *obj;
- 	unsigned int idx = 0;
--	bool reset = false;
- 	int rc = 0;
- 
--	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
--		reset = true;
--
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
- 	cb->seq = READ_ONCE(nft_net->base_seq);
-@@ -7766,7 +7763,7 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- 						     NFT_MSG_NEWOBJ,
- 						     NLM_F_MULTI | NLM_F_APPEND,
- 						     table->family, table,
--						     obj, reset);
-+						     obj, ctx->reset);
- 			if (rc < 0)
- 				break;
- 
-@@ -7775,7 +7772,7 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- cont:
- 			idx++;
- 		}
--		if (reset && entries)
-+		if (ctx->reset && entries)
- 			audit_log_obj_reset(table, nft_net->base_seq, entries);
- 		if (rc < 0)
- 			break;
-@@ -7802,6 +7799,9 @@ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
- 	if (nla[NFTA_OBJ_TYPE])
- 		ctx->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
- 
-+	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
-+		ctx->reset = true;
-+
- 	return 0;
+@@ -7815,10 +7815,10 @@ static int nf_tables_dump_obj_done(struct netlink_callback *cb)
  }
  
+ /* called with rcu_read_lock held */
+-static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
+-			    const struct nlattr * const nla[])
++static struct sk_buff *
++nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
++			const struct nlattr * const nla[], bool reset)
+ {
+-	const struct nftables_pernet *nft_net = nft_pernet(info->net);
+ 	struct netlink_ext_ack *extack = info->extack;
+ 	u8 genmask = nft_genmask_cur(info->net);
+ 	u8 family = info->nfmsg->nfgen_family;
+@@ -7826,52 +7826,69 @@ static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 	struct net *net = info->net;
+ 	struct nft_object *obj;
+ 	struct sk_buff *skb2;
+-	bool reset = false;
+ 	u32 objtype;
+-	char *buf;
+ 	int err;
+ 
+-	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+-		struct netlink_dump_control c = {
+-			.start = nf_tables_dump_obj_start,
+-			.dump = nf_tables_dump_obj,
+-			.done = nf_tables_dump_obj_done,
+-			.module = THIS_MODULE,
+-			.data = (void *)nla,
+-		};
+-
+-		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+-	}
+-
+ 	if (!nla[NFTA_OBJ_NAME] ||
+ 	    !nla[NFTA_OBJ_TYPE])
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	table = nft_table_lookup(net, nla[NFTA_OBJ_TABLE], family, genmask, 0);
+ 	if (IS_ERR(table)) {
+ 		NL_SET_BAD_ATTR(extack, nla[NFTA_OBJ_TABLE]);
+-		return PTR_ERR(table);
++		return ERR_CAST(table);
+ 	}
+ 
+ 	objtype = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
+ 	obj = nft_obj_lookup(net, table, nla[NFTA_OBJ_NAME], objtype, genmask);
+ 	if (IS_ERR(obj)) {
+ 		NL_SET_BAD_ATTR(extack, nla[NFTA_OBJ_NAME]);
+-		return PTR_ERR(obj);
++		return ERR_CAST(obj);
+ 	}
+ 
+ 	skb2 = alloc_skb(NLMSG_GOODSIZE, GFP_ATOMIC);
+ 	if (!skb2)
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
++
++	err = nf_tables_fill_obj_info(skb2, net, portid,
++				      info->nlh->nlmsg_seq, NFT_MSG_NEWOBJ, 0,
++				      family, table, obj, reset);
++	if (err < 0) {
++		kfree_skb(skb2);
++		return ERR_PTR(err);
++	}
++
++	return skb2;
++}
++
++static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
++			    const struct nlattr * const nla[])
++{
++	struct nftables_pernet *nft_net = nft_pernet(info->net);
++	u32 portid = NETLINK_CB(skb).portid;
++	struct net *net = info->net;
++	struct sk_buff *skb2;
++	bool reset = false;
++	char *buf;
++
++	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
++		struct netlink_dump_control c = {
++			.start = nf_tables_dump_obj_start,
++			.dump = nf_tables_dump_obj,
++			.done = nf_tables_dump_obj_done,
++			.module = THIS_MODULE,
++			.data = (void *)nla,
++		};
++
++		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
++	}
+ 
+ 	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
+ 		reset = true;
+ 
+-	err = nf_tables_fill_obj_info(skb2, net, NETLINK_CB(skb).portid,
+-				      info->nlh->nlmsg_seq, NFT_MSG_NEWOBJ, 0,
+-				      family, table, obj, reset);
+-	if (err < 0)
+-		goto err_fill_obj_info;
++	skb2 = nf_tables_getobj_single(portid, info, nla, reset);
++	if (IS_ERR(skb2))
++		return PTR_ERR(skb2);
+ 
+ 	if (!reset)
+ 		return nfnetlink_unicast(skb2, net, NETLINK_CB(skb).portid);
+@@ -7884,11 +7901,7 @@ static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 			AUDIT_NFT_OP_OBJ_RESET, GFP_ATOMIC);
+ 	kfree(buf);
+ 
+-	return nfnetlink_unicast(skb2, net, NETLINK_CB(skb).portid);
+-
+-err_fill_obj_info:
+-	kfree_skb(skb2);
+-	return err;
++	return nfnetlink_unicast(skb2, net, portid);
+ }
+ 
+ static void nft_obj_destroy(const struct nft_ctx *ctx, struct nft_object *obj)
 -- 
 2.43.0
 
