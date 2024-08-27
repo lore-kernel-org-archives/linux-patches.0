@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039591CFBC;
-	Tue, 27 Aug 2024 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F4A1CFBC;
+	Tue, 27 Aug 2024 15:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772044; cv=none; b=tCsG4Tkm/zInnrgpdUJjtalF7I5d7OZF6+Ut4auVJatIH70ttS+cu/LC/0av6Y4aF+b7+JejsMkLR5rOUNgCNDmCM2glYepltsCTCAy/UEZdKya6ooBLv2f1QBUs9ZqWOI5YJWuXyryAsTq5JSBTGIdpq8ba9GzFW/nZxO6CGgc=
+	t=1724772047; cv=none; b=aE+gpUlQyRZOVyyAVlTFOUWMOiqvu3z4h6U3vnYkDvlBgqOxscKtO6n6sqH+7VZ9AIJP88IL0qK2qaFRb2rXMNpZWMsyKgnMlzz0Noklr6NRXxEEFj7ZV4ZidkmtMzCZ8MZuJWBWnpyZ0bxbUri3hEZ7O9HSlUn2uXC5tBz2PPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772044; c=relaxed/simple;
-	bh=gjZNHRdyFZ79Vy56HjO2/Bu9MjmkR7JQCkMzmVuyx/8=;
+	s=arc-20240116; t=1724772047; c=relaxed/simple;
+	bh=1bJJWE9omHDivhWajsBY2oooY+X6XV/rEREQFxCLMm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DyzT+dWR6/gQjz9F6jcSv4nk5OQiQfu/murT1m0xeyQ9Xq+TCqD+5xMnuSPGnrEyXUWIPMILgapo1kAD2U5qDO2MLilzvUAmlGjrmj8B3y0dbZm29Cg62Q5wn0hFBkQ0YqC7exSevcuibnLW841RznyPFgT4RR/z3f1svnSUYo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCAG1b0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnTJ/+ktw8sedquiTfbCodntSHW/hC57lNreP2Ag+1iLPXEW+ZABADOUjsRhLzPs7gL2in8zEc58Dg2JuL44P+olh6JcXSKeDpnkrpmTVY9p8ycSswfm8qA7YZ7gavKSLIJHnsKFw9GJu+OcQJVBDMxUMFv0hr+6e2oN4flTaYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWU0ptva; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCAG1b0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9CCC4E693;
-	Tue, 27 Aug 2024 15:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWU0ptva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2F6C4E693;
+	Tue, 27 Aug 2024 15:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772043;
-	bh=gjZNHRdyFZ79Vy56HjO2/Bu9MjmkR7JQCkMzmVuyx/8=;
+	s=korg; t=1724772047;
+	bh=1bJJWE9omHDivhWajsBY2oooY+X6XV/rEREQFxCLMm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCAG1b0W8ZHBD1fA1zrop+nDccZd+3yXBTXGgcFQkCMp9rZocjnuOOzUYl7gXDNcW
-	 GiWcUTEkexCxDLA4hFI9HbjUZ8vSGeMUCEKoUxrVcmFgywOflxLBj85tUmKA134AdS
-	 SIfhdxnefEJXNbdvM/exVRtGhRuWpIvku9QP69r0=
+	b=TWU0ptvaoXSUdQfKaDEqC+V3gL1cCjuaEyDw3Vt0a7tF0QSv47Ux0S1IHEpZD8zX8
+	 3PWJzOQQEwRFdraw46avYXveOPd+0tAByez8cRnyu/lHSMIAQ7Uxe1HoNOSU7zY81j
+	 XcBY4YfrS65rB7SR7GWgGfJCqRsZmsoBQXxwDGLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Hughes <tom@compton.nu>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/321] netfilter: allow ipv6 fragments to arrive on different devices
-Date: Tue, 27 Aug 2024 16:36:43 +0200
-Message-ID: <20240827143841.854871935@linuxfoundation.org>
+Subject: [PATCH 6.1 096/321] netfilter: flowtable: initialise extack before use
+Date: Tue, 27 Aug 2024 16:36:44 +0200
+Message-ID: <20240827143841.893712067@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,44 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Hughes <tom@compton.nu>
+From: Donald Hunter <donald.hunter@gmail.com>
 
-[ Upstream commit 3cd740b985963f874a1a094f1969e998b9d05554 ]
+[ Upstream commit e9767137308daf906496613fd879808a07f006a2 ]
 
-Commit 264640fc2c5f4 ("ipv6: distinguish frag queues by device
-for multicast and link-local packets") modified the ipv6 fragment
-reassembly logic to distinguish frag queues by device for multicast
-and link-local packets but in fact only the main reassembly code
-limits the use of the device to those address types and the netfilter
-reassembly code uses the device for all packets.
+Fix missing initialisation of extack in flow offload.
 
-This means that if fragments of a packet arrive on different interfaces
-then netfilter will fail to reassemble them and the fragments will be
-expired without going any further through the filters.
-
-Fixes: 648700f76b03 ("inet: frags: use rhashtables for reassembly units")
-Signed-off-by: Tom Hughes <tom@compton.nu>
+Fixes: c29f74e0df7a ("netfilter: nf_flow_table: hardware offload support")
+Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/nf_conntrack_reasm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nf_flow_table_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
-index 87a394179092c..e4b45db8a3992 100644
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -154,6 +154,10 @@ static struct frag_queue *fq_find(struct net *net, __be32 id, u32 user,
- 	};
- 	struct inet_frag_queue *q;
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index 1c26f03fc6617..1904a4f295d4a 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -841,8 +841,8 @@ static int nf_flow_offload_tuple(struct nf_flowtable *flowtable,
+ 				 struct list_head *block_cb_list)
+ {
+ 	struct flow_cls_offload cls_flow = {};
++	struct netlink_ext_ack extack = {};
+ 	struct flow_block_cb *block_cb;
+-	struct netlink_ext_ack extack;
+ 	__be16 proto = ETH_P_ALL;
+ 	int err, i = 0;
  
-+	if (!(ipv6_addr_type(&hdr->daddr) & (IPV6_ADDR_MULTICAST |
-+					    IPV6_ADDR_LINKLOCAL)))
-+		key.iif = 0;
-+
- 	q = inet_frag_find(nf_frag->fqdir, &key);
- 	if (!q)
- 		return NULL;
 -- 
 2.43.0
 
