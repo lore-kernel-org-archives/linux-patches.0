@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3EE1CCEF3;
-	Tue, 27 Aug 2024 15:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A061CDA37;
+	Tue, 27 Aug 2024 15:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772399; cv=none; b=gcyn/35WTDly34GgBmGC6qdQl/hhYReORXDX/i0FvRi/4F0CJyA21k3g2UDDrPWcF+lAJH3SzI+Cazee0ExcXBnAUoq6u/dWGYvqjpQRdRf4Sqau4AiKkXYqztK7ZpWaj39Gip5OTfHdIumvmb+HTR8cDR2412lVKf6jokZ2b7w=
+	t=1724772402; cv=none; b=DZomxXaikXrk6+CAFP/O7vbfhMJbMrNRJz/vmGBGRBg4bgYMN3yX1+iy1/wBBfb+6nGYcxnqTWtxqtVcufSR++pT8iqGt6ozVC5AcPVmq/m2K2MK21H072hN5Qh7ZOTs57vvMrdWr6YD8JwJcWj8fI5MS9UagZnxJObxgLY2CIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772399; c=relaxed/simple;
-	bh=rFmk9UnZOTwmx7Ba90nzAAa2KGljqqbzXFEFetNhOYo=;
+	s=arc-20240116; t=1724772402; c=relaxed/simple;
+	bh=WgjVbHepYknzpwK4sZnUp9IW/V+S9HuAfwi2QR4C97Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=St6mAteKSIiwSqp0Mhq1Vg6KZBQ/lzWpmKaOjIbN9+hb1gWIUDaVjwMX/u6ACNtFEybux4ETs85GCoKn+xa+UmdvfzPZqBdMj8csEjEeh3X/ifSCMGoHef5avxlIaZaN8kzan7JLAMRgE4r1OH1bYjL7Vyd72uBA+yQHq5B0vSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVUD6DfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kDU1urQh1pUErRoPP4CCSTv/9GOj/8ZvDeUwAaGsJwrR95O3G6wHH6qcojcOtVIPw1D/JzwENK8KLQcGX4pF/OvH/JZMr4l3tp8NuXbqvUEedyqE4T596OF8v0nM+rSSj9MyZnj17KzY3bWoQgQOpFTYjsts0MGKf3clwx/B3tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnP3CcR0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVUD6DfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4369C4DE12;
-	Tue, 27 Aug 2024 15:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnP3CcR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D02C4DE12;
+	Tue, 27 Aug 2024 15:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772399;
-	bh=rFmk9UnZOTwmx7Ba90nzAAa2KGljqqbzXFEFetNhOYo=;
+	s=korg; t=1724772402;
+	bh=WgjVbHepYknzpwK4sZnUp9IW/V+S9HuAfwi2QR4C97Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FVUD6DfP+y/iLusQ3wVFFYYOvvvyNDwo6vhf1u1M2Q2RECYKxA5ki5/BOhZmo9Ob6
-	 L3c3GfiTgq0HbPWpMVDU1EgjOPqG9Sww/jvNfDKyx/J5KW1G5NVpwAZni+eHUZScZN
-	 GAZrJrhq9ez3jI7BJON7J+BYJzTLiPivJ81/kA2k=
+	b=tnP3CcR0zlgllqsMSVHO10tp1UNuefATTokQXPEFddgwoVOOikA7jZwRApRq5oF89
+	 6ARPoi04/vGkeh31ZoVXmnbwACtfYyMtfZgcsixfDN/6DnQV0TIgxTODZAwIltcBJq
+	 MsUUroguspvBJ59yDy1o28Zo8wg22EYyd2gy7eac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/321] clocksource/drivers/arm_global_timer: Guard against division by zero
-Date: Tue, 27 Aug 2024 16:38:00 +0200
-Message-ID: <20240827143844.778997377@linuxfoundation.org>
+Subject: [PATCH 6.1 173/321] netlink: hold nlk->cb_mutex longer in __netlink_dump_start()
+Date: Tue, 27 Aug 2024 16:38:01 +0200
+Message-ID: <20240827143844.817145674@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,54 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e651f2fae33634175fae956d896277cf916f5d09 ]
+[ Upstream commit b5590270068c4324dac4a2b5a4a156e02e21339f ]
 
-The result of the division of new_rate by gt_target_rate can be zero (if
-new_rate is smaller than gt_target_rate). Using that result as divisor
-without checking can result in a division by zero error. Guard against
-this by checking for a zero value earlier.
-While here, also change the psv variable to an unsigned long to make
-sure we don't overflow the datatype as all other types involved are also
-unsiged long.
+__netlink_dump_start() releases nlk->cb_mutex right before
+calling netlink_dump() which grabs it again.
 
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20240225151336.2728533-3-martin.blumenstingl@googlemail.com
+This seems dangerous, even if KASAN did not bother yet.
+
+Add a @lock_taken parameter to netlink_dump() to let it
+grab the mutex if called from netlink_recvmsg() only.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/arm_global_timer.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/netlink/af_netlink.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clocksource/arm_global_timer.c b/drivers/clocksource/arm_global_timer.c
-index e1c773bb55359..22a58d35a41fa 100644
---- a/drivers/clocksource/arm_global_timer.c
-+++ b/drivers/clocksource/arm_global_timer.c
-@@ -290,18 +290,17 @@ static int gt_clk_rate_change_cb(struct notifier_block *nb,
- 	switch (event) {
- 	case PRE_RATE_CHANGE:
- 	{
--		int psv;
-+		unsigned long psv;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index e9b81cba1e2b4..8d26bd2ae3d55 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -130,7 +130,7 @@ static const char *const nlk_cb_mutex_key_strings[MAX_LINKS + 1] = {
+ 	"nlk_cb_mutex-MAX_LINKS"
+ };
  
--		psv = DIV_ROUND_CLOSEST(ndata->new_rate,
--					gt_target_rate);
+-static int netlink_dump(struct sock *sk);
++static int netlink_dump(struct sock *sk, bool lock_taken);
+ 
+ /* nl_table locking explained:
+  * Lookup and traversal are protected with an RCU read-side lock. Insertion
+@@ -1953,7 +1953,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 
+ 	if (READ_ONCE(nlk->cb_running) &&
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
+-		ret = netlink_dump(sk);
++		ret = netlink_dump(sk, false);
+ 		if (ret) {
+ 			WRITE_ONCE(sk->sk_err, -ret);
+ 			sk_error_report(sk);
+@@ -2163,7 +2163,7 @@ static int netlink_dump_done(struct netlink_sock *nlk, struct sk_buff *skb,
+ 	return 0;
+ }
+ 
+-static int netlink_dump(struct sock *sk)
++static int netlink_dump(struct sock *sk, bool lock_taken)
+ {
+ 	struct netlink_sock *nlk = nlk_sk(sk);
+ 	struct netlink_ext_ack extack = {};
+@@ -2175,7 +2175,8 @@ static int netlink_dump(struct sock *sk)
+ 	int alloc_min_size;
+ 	int alloc_size;
+ 
+-	mutex_lock(nlk->cb_mutex);
++	if (!lock_taken)
++		mutex_lock(nlk->cb_mutex);
+ 	if (!nlk->cb_running) {
+ 		err = -EINVAL;
+ 		goto errout_skb;
+@@ -2330,9 +2331,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
+ 	WRITE_ONCE(nlk->cb_running, true);
+ 	nlk->dump_done_errno = INT_MAX;
+ 
+-	mutex_unlock(nlk->cb_mutex);
 -
--		if (abs(gt_target_rate - (ndata->new_rate / psv)) > MAX_F_ERR)
-+		psv = DIV_ROUND_CLOSEST(ndata->new_rate, gt_target_rate);
-+		if (!psv ||
-+		    abs(gt_target_rate - (ndata->new_rate / psv)) > MAX_F_ERR)
- 			return NOTIFY_BAD;
+-	ret = netlink_dump(sk);
++	ret = netlink_dump(sk, true);
  
- 		psv--;
+ 	sock_put(sk);
  
- 		/* prescaler within legal range? */
--		if (psv < 0 || psv > GT_CONTROL_PRESCALER_MAX)
-+		if (psv > GT_CONTROL_PRESCALER_MAX)
- 			return NOTIFY_BAD;
- 
- 		/*
 -- 
 2.43.0
 
