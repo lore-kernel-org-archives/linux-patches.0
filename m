@@ -1,103 +1,102 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB37E1CDFC4
-	for <patches@lists.linux.dev>; Tue, 27 Aug 2024 18:03:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B9D1D278E
+	for <patches@lists.linux.dev>; Tue, 27 Aug 2024 18:04:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724781783; cv=none; b=huKdFZ49D/WG15g02tNCChKCTuqh0OE9fawwX92Opu1R/fTeIUD3WTtmM0IFAL3D98COL8kLm1kkFVilkBqrjQqtU8rX8j9yErJ3m5u+zlVnlQXv2aTZIuM8oJCOKJlVLikudg4Yd8uP3h0dt0Hev4VmuX6BTyiXHH2igb0QTr0=
+	t=1724781845; cv=none; b=fDNYaahCUfR2wM91VJGcIcH8zg0+dOKjhRmeHBJs2u2i6iI2pUz2IpP702pbhMi9pn3/JCrBCi4NuGTleWnqruPe4xj+/0rdSdRMonS68z/cBnI2xBX05Pw4TyIsZClEU+tQcrXVDsCCSHOFhkN5Esy397PnWyaaEPCN357K6p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724781783; c=relaxed/simple;
-	bh=uDSRe4+ypz3TK5ICKGKQf7MdUR2fS3TzFqfb5D8FN50=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l7DbqNqJPqKmLuEZeOiDZWYwd/QkDHyN96t1uF6QcLfu7SpE6+t31nNU1jowcOjNJc/K5KBsjrt7IkjaBRfKO/RJ4BiWWgQIVMLUxYBHVMHD+g3wR8QMmOiUau+hIHWPyKNkwZb7TAquwE7ZGnz6Kv9qNQ1HDmWDCVVqUABMwQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kIg2kg0A; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724781845; c=relaxed/simple;
+	bh=ljNQ7arYgd97/fkr6o6r79Qw0skRIiKXIc+DDFjF02k=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r+fqbFm7oGbSus4tphnt2Xan1NGc5JUeBTpDz7RpApZGCvqVEK2smd8u6EivEVsmKq786TJX7pp50S8IDx4CMSgxM9tMz4zbQfAlnE/KdFAp696dz2n9vCYeswjxnB+7/2GUai7yXyy1+BVxbTN2r8+Va8i7V4AP2ZIjJfE010s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=PDG6bYgu; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kIg2kg0A"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-71433cba1b7so4328510b3a.0
-        for <patches@lists.linux.dev>; Tue, 27 Aug 2024 11:03:01 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="PDG6bYgu"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3db18102406so635287b6e.1
+        for <patches@lists.linux.dev>; Tue, 27 Aug 2024 11:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724781781; x=1725386581; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FZcFyZyRdSFfHxupkjJyrWOtZv+pT4JWFFLO3DW9kp4=;
-        b=kIg2kg0AihJc9CNvS3I5Fh670Uje+cFokG2TZaXuf0rx6sG1hfGfFwDrk1N/vBL3mc
-         wCyuYkmj3cyKAjJ6ZhkbrDaV46n3mGXY1KN2J+j3M9zBMJJyRyDmtEGwvly4wAhCfCny
-         CZnoH97pMIqRZYKltBdLPstfjB4r9NxHYbtNpQ0R/JkMLRtwBd9AVqdnjnw3wWuTJnf8
-         aP0fyJd5yuFGtlUlvNinBzmH9wFmq5B8XcALUs4OdXezSTEUmgPTXtduh6MwVSCpiD8n
-         ymRhXZaEPJm+Ai+CK0tTx5kS+XVJSz14TEFAoApuRtzZR8WsTZPL7ci0mwAUKwEzcxGS
-         sVeg==
+        d=chromium.org; s=google; t=1724781842; x=1725386642; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ljNQ7arYgd97/fkr6o6r79Qw0skRIiKXIc+DDFjF02k=;
+        b=PDG6bYgusyAaEnxV75rRBlz/RauGoi5RqSXihAP3JFVfARwPLEuhaxAvOWekrdVHYt
+         aSAdKBtB+I0En6LoRtFI9ob+M4eLb7FWgDbayb4e5qXUaSqXxOy2Hgu1py2QBluDqHar
+         UI10AUGZTyHmGUADkg/19M2MuBuaZTyGpFH/E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724781781; x=1725386581;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FZcFyZyRdSFfHxupkjJyrWOtZv+pT4JWFFLO3DW9kp4=;
-        b=d3aqGYT2HhW0So4pOZQ0xah4w01iyREFiqkxPy8Liia6STfmyzP9DFur9h4b2bLL1o
-         8eAduCAd/ShTG0SK+ERYo6rrUpjobXmtN95GrAQCzUo61ulp0agheORe/U60oW9xIL88
-         6avRk7Nrm10SmTnjdQDiVJJhzbwKib5Bh2od5fcPr/UVFO6l2TVSeyZFpMxz/y+ml/Ju
-         sq/m7o2QDUbGplvHOnzlnFqcNEJPM+urJyDvQkf2Lg0JmQNNrCE8Vw7R1FG/xA7gDhxk
-         UDGEuTmb0xU6W/MxoIadcDXNe9eOgYMhCzbRaE3SRUoUdc1pHIznaqjiZgNv7Yh9E3Gh
-         fCfA==
-X-Gm-Message-State: AOJu0YyHvQYQ3JCxdkeS8SfpDjp0p1o3RiLrX5bThw861IU9o67ixHkn
-	hqcryuS7bKbD4clAUpP9QWxRYPLhDnoHuXw+Sc1NsxglxQ6qmzDYXlskyQ==
-X-Google-Smtp-Source: AGHT+IEm2yR2cpxVil+mWKoSNbqIrjenA9TLxT322rLBAqYECbuk0pTTEPLg5nnyzwL7snZPOq8AYA==
-X-Received: by 2002:a05:6a20:9c8f:b0:1c4:bbb8:4d02 with SMTP id adf61e73a8af0-1ccc099746bmr3997304637.37.1724781780891;
-        Tue, 27 Aug 2024 11:03:00 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-714342e2194sm8827604b3a.126.2024.08.27.11.02.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 11:03:00 -0700 (PDT)
-Message-ID: <cca42eba-8b09-4552-ab2a-395cf28a6b24@gmail.com>
-Date: Tue, 27 Aug 2024 11:02:58 -0700
+        d=1e100.net; s=20230601; t=1724781842; x=1725386642;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ljNQ7arYgd97/fkr6o6r79Qw0skRIiKXIc+DDFjF02k=;
+        b=OlBlJG6mnOjmdyK1bYb7rTCVHmQ/0FsG4zVzkUGBNnDKCJJy+1rzBmGM57PaLZ7dXc
+         yFOfmOoIFIRFvqlQmF2/s+Y+GLR4ExT7Ml7iIrdhSZlW4appI4H1Z4jWl/LUQ9xv3MVG
+         rmtFKPIrUx1TYcW3P/x92YRpvT4O9zS0iP9+fC0uqWbPBKGKlu7mE2U/a6nmkSISB4K9
+         lRRXwhLDs7yJg6X+c/AwihjNoUHMAlCE0lI6NYz+t+ZLf4z9RJ0aLqDjt0Bw0mb0nWhV
+         c3HP82dmby4aXRddj40c5d2Ph6JKiOgDaKEJcLzPtyizfzj4/hfpVqAe2TcXEwf1GvZO
+         6Cmg==
+X-Forwarded-Encrypted: i=1; AJvYcCXw8oe3HJavTJbE0YxbLy8rALS47TSlYCGdh7I6N6bivJrHv6RQNpQ1sL1uxMEtY10A/a956wah@lists.linux.dev
+X-Gm-Message-State: AOJu0YzWThNSlOJoJ+Q650vZzI1/Ooj0LMhEFiMs7omfgGvjmCUOCWkW
+	yLvC1eVWSKcOdrhkEjvf/fpT0ji34PJwL6s0+Q3m3lgH+oeMu+Fz1bcMKKUgQHJ+gkrZcRD3U71
+	0YKRIRgcjgeDPJsHlPSgmK1cQrCcklZrzhQRQ
+X-Google-Smtp-Source: AGHT+IGb5F/ggcI3jz1RUx44031WcBMTlky7xP6DWT8xj1loQKewOpYzcoFYeVm5Bcffm7Nj9lhcl1vtTTW4UO2x4wE=
+X-Received: by 2002:a05:6870:970a:b0:268:2efa:2de0 with SMTP id
+ 586e51a60fabf-273e6469d6dmr16662999fac.13.1724781842495; Tue, 27 Aug 2024
+ 11:04:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 27 Aug 2024 13:04:01 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.10 000/273] 6.10.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240827143833.371588371@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20240819233628.2074654-2-swboyd@chromium.org>
+References: <20240819233628.2074654-1-swboyd@chromium.org> <20240819233628.2074654-2-swboyd@chromium.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 27 Aug 2024 13:04:01 -0500
+Message-ID: <CAE-0n51fjJ8QO2eAy5ZbQOwo9Urzrv1NnXw6KzB=mwHoVoJKzw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sm8550: Don't use parking clk_ops for QUPs
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
+	Konrad Dybcio <konradybcio@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	Amit Pundir <amit.pundir@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 8/27/24 07:35, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.7 release.
-> There are 273 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Quoting Stephen Boyd (2024-08-19 16:36:26)
+> The QUPs aren't shared in a way that requires parking the RCG at an
+> always on parent in case some other entity turns on the clk. The
+> hardware is capable of setting a new frequency itself with the DFS mode,
+> so parking is unnecessary. Furthermore, there aren't any GDSCs for these
+> devices, so there isn't a possibility of the GDSC turning on the clks
+> for housekeeping purposes.
+>
+> This wasn't a problem to mark these clks shared until we started parking
+> shared RCGs at clk registration time in commit 01a0a6cc8cfd ("clk: qcom:
+> Park shared RCGs upon registration"). Parking at init is actually
+> harmful to the UART when earlycon is used. If the device is pumping out
+> data while the frequency changes you'll see garbage on the serial
+> console until the driver can probe and actually set a proper frequency.
+>
+> Revert the QUP part of commit 929c75d57566 ("clk: qcom: gcc-sm8550: Mark
+> RCGs shared where applicable") so that the QUPs don't get parked during
+> clk registration and break UART operations.
+>
+> Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+> Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
+> Cc: Konrad Dybcio <konradybcio@kernel.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-o--
-Florian
-
+Applied to clk-fixes
