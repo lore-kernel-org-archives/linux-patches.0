@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D84DDC1;
-	Tue, 27 Aug 2024 14:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4567538DC7;
+	Tue, 27 Aug 2024 14:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770118; cv=none; b=oxhM0+CmQN5EWd/urAdXxIGuzl8yB7NTg/waqw3uc+8v6Gt/MKL9TV5I5i0rVIla7fSyZKAIZE+P3SE4qLsQQnd1SLv5ytIdIB6EFFZ2Wg+NbfkKk1DXjic5bTzE7q1Yh3lX3omiByZR5UZDjNtEt4RUddbrR8YA3s6sUIWizBI=
+	t=1724770121; cv=none; b=mN7gczYguKO5YDk4ZnAMurIwaf8hefMKGtEMTLyGJqNa5OZoZ+ReT4HFtlw9K6MhmepFJr3ADxUxzcQfFj9RxWgW56UO8w95P9mclyty6Vb9id9HbfH52im4lHA1B+X/qP0hyrEFRqIp7mxCfv5Mpl3V6Ah07JGIGdFgq+5vss4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770118; c=relaxed/simple;
-	bh=tDi14tmJw+BAMVmquumWWE/SRWrRemWDdOvStwA5qJg=;
+	s=arc-20240116; t=1724770121; c=relaxed/simple;
+	bh=PtlrwdTXBHZ7WdmeFVbfLnm9DzGRQotquQz67hU3/iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzI3EGbVLtmuGARD/5sY65qHCI5gEY5IP052ESvadMtoJHY74dfqheHnNSONxdnO/1kvwK1uO9cG85Cqye/Nesw3yjDxGHG8FaOcxR3PJjFOxLvtJQffQuRQ3h+UXIv79zE+JpBwqb1ahZQWtE7ZlCthAQAPSi0GzacMX8xwNPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWUDheso; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MEQKe4CF3irKj2xf/S3b7TM7eK98642xNM6/D0CL8Rz38PmhOgaHoQkOWfUdHeCur6fXpeT6sG/ySiUxF+MuwYXJi4Z9S3dEDcQLc6+ep6BBuY3LQmC76FIb7szDqGwtGGK/MT245ae+k6uPtg0JTcqvfKmPJG3qa0uBuJMKDeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQs4cDb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWUDheso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3922C61047;
-	Tue, 27 Aug 2024 14:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQs4cDb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD344C61047;
+	Tue, 27 Aug 2024 14:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770117;
-	bh=tDi14tmJw+BAMVmquumWWE/SRWrRemWDdOvStwA5qJg=;
+	s=korg; t=1724770121;
+	bh=PtlrwdTXBHZ7WdmeFVbfLnm9DzGRQotquQz67hU3/iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWUDhesobqM6x0GaYj/08FDjlalzH4b6A2n5Of/6wOk58xA9LCKzGTXc/KXYXA1CH
-	 UR4ZHRYO3sEgEhEWdPHMi/Jw39ePac3JJvzZl4Izct8T2t0Nm1TZAYCcTihWn+7QDu
-	 VnfjJ6MtjUxB7d4ZPgcXzHEhLGaj/b/6MkbpQMHc=
+	b=pQs4cDb6BS5ExGHtrok//7yTktERSpJtCwGYzOKt6VHsDrPzAWmMqZMX/LGJ0mhWX
+	 nU95Tip1L9tF9eM3fjBk6MlJCYC8VPPbnk1elqeNnKXPl1csSkRR7EA49Mk2JbHsTS
+	 UxSmcX23E2odCioEwdLPxaJ56/MlgeHn1TAERnDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Behrens <me@kloenk.dev>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/341] rust: work around `bindgen` 0.69.0 issue
-Date: Tue, 27 Aug 2024 16:36:04 +0200
-Message-ID: <20240827143848.480055718@linuxfoundation.org>
+Subject: [PATCH 6.6 134/341] rust: suppress error messages from CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT
+Date: Tue, 27 Aug 2024 16:36:05 +0200
+Message-ID: <20240827143848.517913587@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,70 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 9e98db17837093cb0f4dcfcc3524739d93249c45 ]
+[ Upstream commit 5ce86c6c861352c9346ebb5c96ed70cb67414aa3 ]
 
-`bindgen` 0.69.0 contains a bug: `--version` does not work without
-providing a header [1]:
+While this is a somewhat unusual case, I encountered odd error messages
+when I ran Kconfig in a foreign architecture chroot.
 
-    error: the following required arguments were not provided:
-      <HEADER>
+  $ make allmodconfig
+  sh: 1: rustc: not found
+  sh: 1: bindgen: not found
+  #
+  # configuration written to .config
+  #
 
-    Usage: bindgen <FLAGS> <OPTIONS> <HEADER> -- <CLANG_ARGS>...
+The successful execution of 'command -v rustc' does not necessarily mean
+that 'rustc --version' will succeed.
 
-Thus, in preparation for supporting several `bindgen` versions, work
-around the issue by passing a dummy argument.
+  $ sh -c 'command -v rustc'
+  /home/masahiro/.cargo/bin/rustc
+  $ sh -c 'rustc --version'
+  sh: 1: rustc: not found
 
-Include a comment so that we can remove the workaround in the future.
+Here, 'rustc' is built for x86, and I ran it in an arm64 system.
 
-Link: https://github.com/rust-lang/rust-bindgen/pull/2678 [1]
-Reviewed-by: Finn Behrens <me@kloenk.dev>
-Tested-by: Benno Lossin <benno.lossin@proton.me>
-Tested-by: Andreas Hindborg <a.hindborg@samsung.com>
-Link: https://lore.kernel.org/r/20240709160615.998336-9-ojeda@kernel.org
+The current code:
+
+  command -v $(RUSTC) >/dev/null 2>&1 && $(RUSTC) --version || echo n
+
+can be turned into:
+
+  command -v $(RUSTC) >/dev/null 2>&1 && $(RUSTC) --version 2>/dev/null || echo n
+
+However, I did not understand the necessity of 'command -v $(RUSTC)'.
+
+I simplified it to:
+
+  $(RUSTC) --version 2>/dev/null || echo n
+
+Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20240727140302.1806011-1-masahiroy@kernel.org
+[ Rebased on top of v6.11-rc1. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Stable-dep-of: 5ce86c6c8613 ("rust: suppress error messages from CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/Kconfig                 | 5 ++++-
- scripts/rust_is_available.sh | 6 +++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ init/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index e173364abd6c0..777113dceca55 100644
+index 777113dceca55..b5bcc863bf608 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1921,7 +1921,10 @@ config RUSTC_VERSION_TEXT
- config BINDGEN_VERSION_TEXT
+@@ -1916,7 +1916,7 @@ config RUST
+ config RUSTC_VERSION_TEXT
  	string
  	depends on RUST
--	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version || echo n)
-+	# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
-+	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
-+	# the minimum version is upgraded past that (0.69.1 already fixed the issue).
-+	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version workaround-for-0.69.0 || echo n)
+-	default $(shell,command -v $(RUSTC) >/dev/null 2>&1 && $(RUSTC) --version || echo n)
++	default $(shell,$(RUSTC) --version 2>/dev/null || echo n)
+ 
+ config BINDGEN_VERSION_TEXT
+ 	string
+@@ -1924,7 +1924,7 @@ config BINDGEN_VERSION_TEXT
+ 	# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
+ 	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
+ 	# the minimum version is upgraded past that (0.69.1 already fixed the issue).
+-	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version workaround-for-0.69.0 || echo n)
++	default $(shell,$(BINDGEN) --version workaround-for-0.69.0 2>/dev/null || echo n)
  
  #
  # Place an empty function call at each tracepoint site. Can be
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 117018946b577..a6fdcf13e0e53 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -129,8 +129,12 @@ fi
- # Check that the Rust bindings generator is suitable.
- #
- # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
-+#
-+# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
-+# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
-+# the minimum version is upgraded past that (0.69.1 already fixed the issue).
- rust_bindings_generator_output=$( \
--	LC_ALL=C "$BINDGEN" --version 2>/dev/null
-+	LC_ALL=C "$BINDGEN" --version workaround-for-0.69.0 2>/dev/null
- ) || rust_bindings_generator_code=$?
- if [ -n "$rust_bindings_generator_code" ]; then
- 	echo >&2 "***"
 -- 
 2.43.0
 
