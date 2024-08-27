@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008891C6881;
-	Tue, 27 Aug 2024 15:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBB92FB2;
+	Tue, 27 Aug 2024 15:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770956; cv=none; b=CXZ+gzQadEclSbgYuggvIDZJrxmKBpK1fxbrzahAw4mGDO4ZOoBASZe1Zv+CzyVFzvBDU2GiO98F4UBnl7wfNO+c1ruR0PNKIN93iAO5BbcG2OUjVvhuCY0xvE2fAVwJ1BIkmlx03bN3iB1ALEdaZd23Qf8g2FdH4fzcLVKOCCE=
+	t=1724770959; cv=none; b=ujpAQFThU45eQmsvmL/nv9P63Lrl5YggwmiGNOuRMG7z9MGZMgw0rptijoS2DgIqXt50jleN5vY2ft2Pi40Xe4Pqi2bquJ9JiBzaHbP800tSv9DrkaA3M22RKgA3nvZVc5WE61DyTgI/Fc786bJAnOR6xC6pAGYQwM6yytDSNxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770956; c=relaxed/simple;
-	bh=eqWdNclRKx6Dc77uNNcN4+/X78K3NZDGrE8q0v7kDm4=;
+	s=arc-20240116; t=1724770959; c=relaxed/simple;
+	bh=Rva2fDtDVeYe2uM/04nUeHAXWMQuPFVTFF9yck/0hFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FjVGWVNsYLCyUPeu7dq/xEivhFRTEDDOgzHT2uD76EKSadGtbe01mIKKbwVh9fe7KejJ7SvFruNtGGO2vafpk8KZyQQkIP+ur4VcTqRy1dIwPcHF0OBlBGa7SEwzb2Gk6Sa6rVPWrPPuC79103328Bl5nlOSo3Pha27Sg3KI1+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMneXS5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u64X5/V7DwOC1HAAxWd+ZV6VDac096C+pDlSa4BORUZcV7Lmqh+CyKje6X6X3HbRPIGW5LddVOSdZtSMYbbOCCxX4P1I5iUQPYph/ZuttLCzqVsx91Y8zhkG8rfd1nqaW+JRbB8DbOQpj9I5Je15e6+mSINRK/TzgDRJtbX8f7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiSDmAyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMneXS5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638C1C61042;
-	Tue, 27 Aug 2024 15:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiSDmAyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE39C61042;
+	Tue, 27 Aug 2024 15:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770955;
-	bh=eqWdNclRKx6Dc77uNNcN4+/X78K3NZDGrE8q0v7kDm4=;
+	s=korg; t=1724770959;
+	bh=Rva2fDtDVeYe2uM/04nUeHAXWMQuPFVTFF9yck/0hFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMneXS5ubJq7AaPTauU/XnZ/lePznqXWj7HT6Ye6BatuPCso6pI103a/G8mzQRo+A
-	 oEAevbfSz2mjg6cvKLuurVTOIuq2q/TVhcnI7YS1lON5xXWtfNumDbRExd69tMKias
-	 mWkL0dnSMiFpBejoutlJntY8aH3ldcpD/ZCaAmiQ=
+	b=JiSDmAyYSjlz9R40qz6Wnv4p52pCqDDGaR5BEKggGA2QpuJNL7Bp7BODelYKSb4KU
+	 u222UVQu8edQlQHIt0rBWsYyT9MMi6VdbS0WfamU4hHWZqY4GzeL64vUZHn+vT4DZj
+	 /Pd0kht2ORa1MGgKIKn44jzo+x9TQ2e6HZ10vh2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Peter Xu <peterx@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 044/273] mm/hugetlb: fix hugetlb vs. core-mm PT locking
-Date: Tue, 27 Aug 2024 16:36:08 +0200
-Message-ID: <20240827143835.074665158@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
+Subject: [PATCH 6.10 045/273] md/raid1: Fix data corruption for degraded array with slow disk
+Date: Tue, 27 Aug 2024 16:36:09 +0200
+Message-ID: <20240827143835.112709105@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -48,167 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 5f75cfbd6bb02295ddaed48adf667b6c828ce07b upstream.
+commit c916ca35308d3187c9928664f9be249b22a3a701 upstream.
 
-We recently made GUP's common page table walking code to also walk hugetlb
-VMAs without most hugetlb special-casing, preparing for the future of
-having less hugetlb-specific page table walking code in the codebase.
-Turns out that we missed one page table locking detail: page table locking
-for hugetlb folios that are not mapped using a single PMD/PUD.
+read_balance() will avoid reading from slow disks as much as possible,
+however, if valid data only lands in slow disks, and a new normal disk
+is still in recovery, unrecovered data can be read:
 
-Assume we have hugetlb folio that spans multiple PTEs (e.g., 64 KiB
-hugetlb folios on arm64 with 4 KiB base page size).  GUP, as it walks the
-page tables, will perform a pte_offset_map_lock() to grab the PTE table
-lock.
+raid1_read_request
+ read_balance
+  raid1_should_read_first
+  -> return false
+  choose_best_rdev
+  -> normal disk is not recovered, return -1
+  choose_bb_rdev
+  -> missing the checking of recovery, return the normal disk
+ -> read unrecovered data
 
-However, hugetlb that concurrently modifies these page tables would
-actually grab the mm->page_table_lock: with USE_SPLIT_PTE_PTLOCKS, the
-locks would differ.  Something similar can happen right now with hugetlb
-folios that span multiple PMDs when USE_SPLIT_PMD_PTLOCKS.
+Root cause is that the checking of recovery is missing in
+choose_bb_rdev(). Hence add such checking to fix the problem.
 
-This issue can be reproduced [1], for example triggering:
+Also fix similar problem in choose_slow_rdev().
 
-[ 3105.936100] ------------[ cut here ]------------
-[ 3105.939323] WARNING: CPU: 31 PID: 2732 at mm/gup.c:142 try_grab_folio+0x11c/0x188
-[ 3105.944634] Modules linked in: [...]
-[ 3105.974841] CPU: 31 PID: 2732 Comm: reproducer Not tainted 6.10.0-64.eln141.aarch64 #1
-[ 3105.980406] Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-4.fc40 05/24/2024
-[ 3105.986185] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ 3105.991108] pc : try_grab_folio+0x11c/0x188
-[ 3105.994013] lr : follow_page_pte+0xd8/0x430
-[ 3105.996986] sp : ffff80008eafb8f0
-[ 3105.999346] x29: ffff80008eafb900 x28: ffffffe8d481f380 x27: 00f80001207cff43
-[ 3106.004414] x26: 0000000000000001 x25: 0000000000000000 x24: ffff80008eafba48
-[ 3106.009520] x23: 0000ffff9372f000 x22: ffff7a54459e2000 x21: ffff7a546c1aa978
-[ 3106.014529] x20: ffffffe8d481f3c0 x19: 0000000000610041 x18: 0000000000000001
-[ 3106.019506] x17: 0000000000000001 x16: ffffffffffffffff x15: 0000000000000000
-[ 3106.024494] x14: ffffb85477fdfe08 x13: 0000ffff9372ffff x12: 0000000000000000
-[ 3106.029469] x11: 1fffef4a88a96be1 x10: ffff7a54454b5f0c x9 : ffffb854771b12f0
-[ 3106.034324] x8 : 0008000000000000 x7 : ffff7a546c1aa980 x6 : 0008000000000080
-[ 3106.038902] x5 : 00000000001207cf x4 : 0000ffff9372f000 x3 : ffffffe8d481f000
-[ 3106.043420] x2 : 0000000000610041 x1 : 0000000000000001 x0 : 0000000000000000
-[ 3106.047957] Call trace:
-[ 3106.049522]  try_grab_folio+0x11c/0x188
-[ 3106.051996]  follow_pmd_mask.constprop.0.isra.0+0x150/0x2e0
-[ 3106.055527]  follow_page_mask+0x1a0/0x2b8
-[ 3106.058118]  __get_user_pages+0xf0/0x348
-[ 3106.060647]  faultin_page_range+0xb0/0x360
-[ 3106.063651]  do_madvise+0x340/0x598
-
-Let's make huge_pte_lockptr() effectively use the same PT locks as any
-core-mm page table walker would.  Add ptep_lockptr() to obtain the PTE
-page table lock using a pte pointer -- unfortunately we cannot convert
-pte_lockptr() because virt_to_page() doesn't work with kmap'ed page tables
-we can have with CONFIG_HIGHPTE.
-
-Handle CONFIG_PGTABLE_LEVELS correctly by checking in reverse order, such
-that when e.g., CONFIG_PGTABLE_LEVELS==2 with
-PGDIR_SIZE==P4D_SIZE==PUD_SIZE==PMD_SIZE will work as expected.  Document
-why that works.
-
-There is one ugly case: powerpc 8xx, whereby we have an 8 MiB hugetlb
-folio being mapped using two PTE page tables.  While hugetlb wants to take
-the PMD table lock, core-mm would grab the PTE table lock of one of both
-PTE page tables.  In such corner cases, we have to make sure that both
-locks match, which is (fortunately!) currently guaranteed for 8xx as it
-does not support SMP and consequently doesn't use split PT locks.
-
-[1] https://lore.kernel.org/all/1bbfcc7f-f222-45a5-ac44-c5a1381c596d@redhat.com/
-
-Link: https://lkml.kernel.org/r/20240801204748.99107-1-david@redhat.com
-Fixes: 9cb28da54643 ("mm/gup: handle hugetlb in the generic follow_page_mask code")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 9f3ced792203 ("md/raid1: factor out choose_bb_rdev() from read_balance()")
+Fixes: dfa8ecd167c1 ("md/raid1: factor out choose_slow_rdev() from read_balance()")
+Reported-and-tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Closes: https://lore.kernel.org/all/9952f532-2554-44bf-b906-4880b2e88e3a@o2.pl/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240803091137.3197008-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb.h |   33 ++++++++++++++++++++++++++++++---
- include/linux/mm.h      |   11 +++++++++++
- 2 files changed, 41 insertions(+), 3 deletions(-)
+ drivers/md/raid1.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -967,10 +967,37 @@ static inline bool htlb_allow_alloc_fall
- static inline spinlock_t *huge_pte_lockptr(struct hstate *h,
- 					   struct mm_struct *mm, pte_t *pte)
- {
--	if (huge_page_size(h) == PMD_SIZE)
-+	const unsigned long size = huge_page_size(h);
-+
-+	VM_WARN_ON(size == PAGE_SIZE);
-+
-+	/*
-+	 * hugetlb must use the exact same PT locks as core-mm page table
-+	 * walkers would. When modifying a PTE table, hugetlb must take the
-+	 * PTE PT lock, when modifying a PMD table, hugetlb must take the PMD
-+	 * PT lock etc.
-+	 *
-+	 * The expectation is that any hugetlb folio smaller than a PMD is
-+	 * always mapped into a single PTE table and that any hugetlb folio
-+	 * smaller than a PUD (but at least as big as a PMD) is always mapped
-+	 * into a single PMD table.
-+	 *
-+	 * If that does not hold for an architecture, then that architecture
-+	 * must disable split PT locks such that all *_lockptr() functions
-+	 * will give us the same result: the per-MM PT lock.
-+	 *
-+	 * Note that with e.g., CONFIG_PGTABLE_LEVELS=2 where
-+	 * PGDIR_SIZE==P4D_SIZE==PUD_SIZE==PMD_SIZE, we'd use pud_lockptr()
-+	 * and core-mm would use pmd_lockptr(). However, in such configurations
-+	 * split PMD locks are disabled -- they don't make sense on a single
-+	 * PGDIR page table -- and the end result is the same.
-+	 */
-+	if (size >= PUD_SIZE)
-+		return pud_lockptr(mm, (pud_t *) pte);
-+	else if (size >= PMD_SIZE || IS_ENABLED(CONFIG_HIGHPTE))
- 		return pmd_lockptr(mm, (pmd_t *) pte);
--	VM_BUG_ON(huge_page_size(h) == PAGE_SIZE);
--	return &mm->page_table_lock;
-+	/* pte_alloc_huge() only applies with !CONFIG_HIGHPTE */
-+	return ptep_lockptr(mm, pte);
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 7acfe7c9dc8d..761989d67906 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -617,6 +617,12 @@ static int choose_first_rdev(struct r1conf *conf, struct r1bio *r1_bio,
+ 	return -1;
  }
  
- #ifndef hugepages_supported
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -2960,6 +2960,13 @@ static inline spinlock_t *pte_lockptr(st
- 	return ptlock_ptr(page_ptdesc(pmd_page(*pmd)));
- }
- 
-+static inline spinlock_t *ptep_lockptr(struct mm_struct *mm, pte_t *pte)
++static bool rdev_in_recovery(struct md_rdev *rdev, struct r1bio *r1_bio)
 +{
-+	BUILD_BUG_ON(IS_ENABLED(CONFIG_HIGHPTE));
-+	BUILD_BUG_ON(MAX_PTRS_PER_PTE * sizeof(pte_t) > PAGE_SIZE);
-+	return ptlock_ptr(virt_to_ptdesc(pte));
++	return !test_bit(In_sync, &rdev->flags) &&
++	       rdev->recovery_offset < r1_bio->sector + r1_bio->sectors;
 +}
 +
- static inline bool ptlock_init(struct ptdesc *ptdesc)
+ static int choose_bb_rdev(struct r1conf *conf, struct r1bio *r1_bio,
+ 			  int *max_sectors)
  {
- 	/*
-@@ -2984,6 +2991,10 @@ static inline spinlock_t *pte_lockptr(st
- {
- 	return &mm->page_table_lock;
- }
-+static inline spinlock_t *ptep_lockptr(struct mm_struct *mm, pte_t *pte)
-+{
-+	return &mm->page_table_lock;
-+}
- static inline void ptlock_cache_init(void) {}
- static inline bool ptlock_init(struct ptdesc *ptdesc) { return true; }
- static inline void ptlock_free(struct ptdesc *ptdesc) {}
+@@ -635,6 +641,7 @@ static int choose_bb_rdev(struct r1conf *conf, struct r1bio *r1_bio,
+ 
+ 		rdev = conf->mirrors[disk].rdev;
+ 		if (!rdev || test_bit(Faulty, &rdev->flags) ||
++		    rdev_in_recovery(rdev, r1_bio) ||
+ 		    test_bit(WriteMostly, &rdev->flags))
+ 			continue;
+ 
+@@ -673,7 +680,8 @@ static int choose_slow_rdev(struct r1conf *conf, struct r1bio *r1_bio,
+ 
+ 		rdev = conf->mirrors[disk].rdev;
+ 		if (!rdev || test_bit(Faulty, &rdev->flags) ||
+-		    !test_bit(WriteMostly, &rdev->flags))
++		    !test_bit(WriteMostly, &rdev->flags) ||
++		    rdev_in_recovery(rdev, r1_bio))
+ 			continue;
+ 
+ 		/* there are no bad blocks, we can use this disk */
+@@ -733,9 +741,7 @@ static bool rdev_readable(struct md_rdev *rdev, struct r1bio *r1_bio)
+ 	if (!rdev || test_bit(Faulty, &rdev->flags))
+ 		return false;
+ 
+-	/* still in recovery */
+-	if (!test_bit(In_sync, &rdev->flags) &&
+-	    rdev->recovery_offset < r1_bio->sector + r1_bio->sectors)
++	if (rdev_in_recovery(rdev, r1_bio))
+ 		return false;
+ 
+ 	/* don't read from slow disk unless have to */
+-- 
+2.46.0
+
 
 
