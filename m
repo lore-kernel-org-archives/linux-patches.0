@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA6D1BA88C;
-	Tue, 27 Aug 2024 14:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2491C8FBD;
+	Tue, 27 Aug 2024 14:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770782; cv=none; b=CxsdZMpP95gVGsLFy5xNteWAQYB/49IcbP5V7l+AD5vBsB33bU4kirgJh1xIr87sWxufPEfBqFRCk+830gOBvVvN83ijULTg7WVPL9l7+IdGUeR0B1qZV2qDYeSf2ybWw/MmPFlU9mdeivG3jC8RpLbQxR4FwgPDCMQjVm8YOOM=
+	t=1724770785; cv=none; b=TrUqYY2pKinwpU+b7XCQ5Jwa7/rSYFsOC57QO0VWUqLmlg6Cyl67uIj+x6rA1LvXU1QEt5PNR5AWxLP4UVfiS19cQN0ozQmE8f0xs8+9rySTkuLlP4JFOAPwM2UEv+z5SaNKXS+tyeRAnglYApUxkWhM04xu/ku8+DQViTBw4eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770782; c=relaxed/simple;
-	bh=z+6VEaaQBH86POJbyor8o9NmUZWVxpcxbj8tc46pdok=;
+	s=arc-20240116; t=1724770785; c=relaxed/simple;
+	bh=/OUrT9Wdn2UOUE8T2NWO+ZOwsAGyhy04axXk+pF1XZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1fhzNlgfTDeVI3M+EdJXZWlVcwqLJ7Kx3GDfyx1o/wqoqpRjiiNLcPDC6YBFIImyfb9DqcWEHnVpB8aCNRoUVNozHb4LcyZ+xtyWFT1CR/qaMbQjAR/DmyCBT3M43e1yj3u7P3owh+yJrR2MoFRieSSupwBe/TP8ov8edbSOIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcEbJbeR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+okdpdKpOwwLzpm5uvLHvKHZNa9N2aqRV0l06m7w5uH1Sms9lMkdHQzj1xf5seuD1xvDEmW3fkxUIhUOXYtsmWoPecrUU0HiBRh2NDytDawlaQv/hWoenlBj+J3nHWCyEXBJSBJmv8NVhnPzJSUTTP0yf2Iy12fI2KuDmuoL1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0uXkrDL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcEbJbeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0BBC4AF1A;
-	Tue, 27 Aug 2024 14:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0uXkrDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B008FC4AF5F;
+	Tue, 27 Aug 2024 14:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770781;
-	bh=z+6VEaaQBH86POJbyor8o9NmUZWVxpcxbj8tc46pdok=;
+	s=korg; t=1724770785;
+	bh=/OUrT9Wdn2UOUE8T2NWO+ZOwsAGyhy04axXk+pF1XZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcEbJbeRu1WZBSnnm8gLgUVQRZIes7Buc5WScjLwqFBxS1z9iTzUZg8FBAJ20ciIH
-	 frBXHcY7HTiiOoH7sXAXBUltocVi/J841C+n92Mo/QV5GoBAhfwEkHpNG2GdDvjD9W
-	 UsGLNzOXrFPd4qZBB2aRCtqk2I/mq+1mnnu6oeGA=
+	b=v0uXkrDLQQ7jitwLi3rBHRmJCZtY9sxGF54CE/CMgMLTXy9YYGoPjAXXv95Hnp1fi
+	 ayqIx1RvPu1YbViEJyrh+rG6SRFF4Dnga59Na7gK8Hcv23YY63rANr1X3w6ptUK6NJ
+	 gGmf28589AGoz+ax0LbmbE7NgPJysRMKYC81dIMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Daniel Hodges <hodgesd@meta.com>,
 	Yonghong Song <yonghong.song@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.6 333/341] bpf: Fix a kernel verifier crash in stacksafe()
-Date: Tue, 27 Aug 2024 16:39:24 +0200
-Message-ID: <20240827143856.067340828@linuxfoundation.org>
+Subject: [PATCH 6.6 334/341] selftests/bpf: Add a test to verify previous stacksafe() fix
+Date: Tue, 27 Aug 2024 16:39:25 +0200
+Message-ID: <20240827143856.104495082@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -55,54 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Yonghong Song <yonghong.song@linux.dev>
 
-commit bed2eb964c70b780fb55925892a74f26cb590b25 upstream.
+commit 662c3e2db00f92e50c26e9dc4fe47c52223d9982 upstream.
 
-Daniel Hodges reported a kernel verifier crash when playing with sched-ext.
-Further investigation shows that the crash is due to invalid memory access
-in stacksafe(). More specifically, it is the following code:
+A selftest is added such that without the previous patch,
+a crash can happen. With the previous patch, the test can
+run successfully. The new test is written in a way which
+mimics original crash case:
+  main_prog
+    static_prog_1
+      static_prog_2
+where static_prog_1 has different paths to static_prog_2
+and some path has stack allocated and some other path
+does not. A stacksafe() checking in static_prog_2()
+triggered the crash.
 
-    if (exact != NOT_EXACT &&
-        old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
-        cur->stack[spi].slot_type[i % BPF_REG_SIZE])
-            return false;
-
-The 'i' iterates old->allocated_stack.
-If cur->allocated_stack < old->allocated_stack the out-of-bound
-access will happen.
-
-To fix the issue add 'i >= cur->allocated_stack' check such that if
-the condition is true, stacksafe() should fail. Otherwise,
-cur->stack[spi].slot_type[i % BPF_REG_SIZE] memory access is legal.
-
-Fixes: 2793a8b015f7 ("bpf: exact states comparison for iterator convergence checks")
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Reported-by: Daniel Hodges <hodgesd@meta.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20240812214847.213612-1-yonghong.song@linux.dev
+Link: https://lore.kernel.org/r/20240812214852.214037-1-yonghong.song@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ shung-hsi.yu: "exact" variable is bool instead enum because commit
-  4f81c16f50ba ("bpf: Recognize that two registers are safe when their
-  ranges match") is not present. ]
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/progs/iters.c |   54 ++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -16124,8 +16124,9 @@ static bool stacksafe(struct bpf_verifie
- 		spi = i / BPF_REG_SIZE;
+--- a/tools/testing/selftests/bpf/progs/iters.c
++++ b/tools/testing/selftests/bpf/progs/iters.c
+@@ -1411,4 +1411,58 @@ __naked int checkpoint_states_deletion(v
+ 	);
+ }
  
- 		if (exact &&
--		    old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
--		    cur->stack[spi].slot_type[i % BPF_REG_SIZE])
-+		    (i >= cur->allocated_stack ||
-+		     old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
-+		     cur->stack[spi].slot_type[i % BPF_REG_SIZE]))
- 			return false;
- 
- 		if (!(old->stack[spi].spilled_ptr.live & REG_LIVE_READ) && !exact) {
++__u32 upper, select_n, result;
++__u64 global;
++
++static __noinline bool nest_2(char *str)
++{
++	/* some insns (including branch insns) to ensure stacksafe() is triggered
++	 * in nest_2(). This way, stacksafe() can compare frame associated with nest_1().
++	 */
++	if (str[0] == 't')
++		return true;
++	if (str[1] == 'e')
++		return true;
++	if (str[2] == 's')
++		return true;
++	if (str[3] == 't')
++		return true;
++	return false;
++}
++
++static __noinline bool nest_1(int n)
++{
++	/* case 0: allocate stack, case 1: no allocate stack */
++	switch (n) {
++	case 0: {
++		char comm[16];
++
++		if (bpf_get_current_comm(comm, 16))
++			return false;
++		return nest_2(comm);
++	}
++	case 1:
++		return nest_2((char *)&global);
++	default:
++		return false;
++	}
++}
++
++SEC("raw_tp")
++__success
++int iter_subprog_check_stacksafe(const void *ctx)
++{
++	long i;
++
++	bpf_for(i, 0, upper) {
++		if (!nest_1(select_n)) {
++			result = 1;
++			return 0;
++		}
++	}
++
++	result = 2;
++	return 0;
++}
++
+ char _license[] SEC("license") = "GPL";
 
 
