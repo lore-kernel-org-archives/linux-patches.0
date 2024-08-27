@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CC7DDC1;
-	Tue, 27 Aug 2024 14:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7CDDDC1;
+	Tue, 27 Aug 2024 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770087; cv=none; b=EQOylDid/fDE+cgJ94L1intIv6QdNz5iKMLssVpSrypvjJi8HoQFPKClbz239Kj2xOOc0nLV+WYLmobXNyIjGcY6HApYOdrOZbjzvCj5feFVVjjjan9TwGBpUpWnAmb5UIWuI7daAW/uQqzRJmJIzX0tsPdUfkK+RaQNjh5Nepw=
+	t=1724770090; cv=none; b=T1mVNgjlGmCdQ6GMSxkTRLmkmDQhs7tLiFypryAEjUwx9dxQVnlJxf3qSS9Fwqi18CWSquQqXJXpoAogDNNzUq1lRIO+KtxbOAeBtyFggyT5ZeOLtTOsVjW9NxAK+45wte4LF5d/pcPJLKBqulz1iLMmAuWCs/4BdnnXI8EnsJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770087; c=relaxed/simple;
-	bh=G2jv5jc705zai/WJ+gVSV6W4NhsbFL1Fx0hwE8FHkbQ=;
+	s=arc-20240116; t=1724770090; c=relaxed/simple;
+	bh=c56uplUqgZSZ16N+6d8/3c0iZfWKVha6eAobwiFPrwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GueNA4/cwd0s/CrGd3LFRnuhcLdTQ63u1RIdXJ1Egk35O8o3djSgzudtPRXfLYFHDNk8rQ1DyXinO6kO7AbLHRkLrV0lMmAlPj1otSFcihWRk+26bKJn55NO+rOd0S66KTPtkNpdQIeYvyZ4TGNUU6bOaiic8UNZinsn24e2PpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBGo4neY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMxassQO5yR1FRpJkHp2VVBdHEAKubIYew0fBm6hN/mvAW2IDDWA26titz3oM5lpfci5C+tHKLR3ZfKkLwmO5N+QnJKjgKhxrvmu4BHHDAXVFlsUaHZAtLd3LsYnpLHji4DsbdVYsP/U6FR1Ee4koz4KVJL10zfqGTe+pvhKw2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVRtr7c+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBGo4neY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4984EC61046;
-	Tue, 27 Aug 2024 14:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVRtr7c+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937EBC61047;
+	Tue, 27 Aug 2024 14:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770086;
-	bh=G2jv5jc705zai/WJ+gVSV6W4NhsbFL1Fx0hwE8FHkbQ=;
+	s=korg; t=1724770090;
+	bh=c56uplUqgZSZ16N+6d8/3c0iZfWKVha6eAobwiFPrwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zBGo4neYLBQuxZxVkmfRhqmfOlwo/RFic/P1DyAwoe5GTE+xnWeVzkXKPCJbOSnxz
-	 mC6trGubGlbZQu5AdkYC0kcuDYBB/7Mf1U44YiA+dHARtjq/jsrI1NnxXBDKBZeOYv
-	 3AJ04XbraQlv0OEzQafBtBDkB5e96jhthjfKmp5A=
+	b=bVRtr7c+o+72LHFDdz6hAo+ZzIK8ClC5myyu9qUMhUkYgjzVbVudptrJ1B3vmSqCM
+	 VdnMv6JSimPBobr13Bsz9IGqix+BL+33c+zaur+ALD49x8QcLE9YR6A0hbJkwiF7qr
+	 4fAbEAAuxRmw58JdYpp+ur1E3DKZKEVIoo3N+63c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Parsa Poorshikhian <parsa.poorsh@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/341] wifi: iwlwifi: mvm: fix recovery flow in CSA
-Date: Tue, 27 Aug 2024 16:35:22 +0200
-Message-ID: <20240827143846.870033792@linuxfoundation.org>
+Subject: [PATCH 6.6 082/341] ALSA: hda/realtek: Fix noise from speakers on Lenovo IdeaPad 3 15IAU7
+Date: Tue, 27 Aug 2024 16:35:13 +0200
+Message-ID: <20240827143846.530444346@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Parsa Poorshikhian <parsa.poorsh@gmail.com>
 
-[ Upstream commit 828c79d9feb000acbd9c15bd1ed7e0914473b363 ]
+[ Upstream commit ef9718b3d54e822de294351251f3a574f8a082ce ]
 
-If the firmware crashes in the de-activation / re-activation
-of the link during CSA, we will not have a valid phy_ctxt
-pointer in mvmvif. This is a legit case, but when mac80211
-removes the station to cleanup our state during the
-re-configuration, we need to make sure we clear ap_sta
-otherwise we won't re-add the station after the firmware has
-been restarted. Later on, we'd activate the link, try to send
-a TLC command crash again on ASSERT 3508.
+Fix noise from speakers connected to AUX port when no sound is playing.
+The problem occurs because the `alc_shutup_pins` function includes
+a 0x10ec0257 vendor ID, which causes noise on Lenovo IdeaPad 3 15IAU7 with
+Realtek ALC257 codec when no sound is playing.
+Removing this vendor ID from the function fixes the bug.
 
-Fix this by properly cleaning up our state.
-
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230913145231.2651e6f6a55a.I4cd50e88ee5c23c1c8dd5b157a800e4b4c96f236@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 70794b9563fe ("ALSA: hda/realtek: Add more codec ID to no shutup pins list")
+Signed-off-by: Parsa Poorshikhian <parsa.poorsh@gmail.com>
+Link: https://patch.msgid.link/20240810150939.330693-1-parsa.poorsh@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 8f49de1206e03..f973efbbc3795 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -1035,6 +1035,7 @@ static void iwl_mvm_cleanup_iterator(void *data, u8 *mac,
- 	spin_unlock_bh(&mvm->time_event_lock);
- 
- 	memset(&mvmvif->bf_data, 0, sizeof(mvmvif->bf_data));
-+	mvmvif->ap_sta = NULL;
- 
- 	for_each_mvm_vif_valid_link(mvmvif, link_id) {
- 		mvmvif->link[link_id]->ap_sta_id = IWL_MVM_INVALID_STA;
-@@ -3934,7 +3935,11 @@ int iwl_mvm_mac_sta_state_common(struct ieee80211_hw *hw,
- 
- 	mutex_lock(&mvm->mutex);
- 
--	/* this would be a mac80211 bug ... but don't crash */
-+	/* this would be a mac80211 bug ... but don't crash, unless we had a
-+	 * firmware crash while we were activating a link, in which case it is
-+	 * legit to have phy_ctxt = NULL. Don't bother not to WARN if we are in
-+	 * recovery flow since we spit tons of error messages anyway.
-+	 */
- 	for_each_sta_active_link(vif, sta, link_sta, link_id) {
- 		if (WARN_ON_ONCE(!mvmvif->link[link_id]->phy_ctxt)) {
- 			mutex_unlock(&mvm->mutex);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 82dcea2b78000..5736516275a34 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -585,7 +585,6 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ 	switch (codec->core.vendor_id) {
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
+-	case 0x10ec0257:
+ 	case 0x19e58326:
+ 	case 0x10ec0283:
+ 	case 0x10ec0285:
 -- 
 2.43.0
 
