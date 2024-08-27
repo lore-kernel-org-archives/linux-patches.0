@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344761C2DB1;
-	Tue, 27 Aug 2024 15:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0F91CEAC8;
+	Tue, 27 Aug 2024 15:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772772; cv=none; b=nmR9wcp2CHz/Qla4/ChS/A1sdf26jFjbd4lzVo068zF6GvGCovkNV4VsoEUow9g1tE9l7Ra8dD2+LGue1VOa06V2nJSd0zFDfisMTORAaDs9SFPSLgIJOW4HOdZh29lzjpE5pMcLFHCNeTxVhEISZwP9rksBZJAva0Tu9lRTQB4=
+	t=1724772775; cv=none; b=omMBt9MhgKRWG8BAQt3tc3bIs+sG/2D5wgUJoZleLDGuir7mlgsNB29N+N33/zUHMkkID8ItjCNIXOhsCZJagRABI7PVk0QY5cphjjBz9wWSH/NHryeZFK4SS+cGwjtRCwKiM4ab/jH4xRjCkW35us5IC4eTEYq+7XxrvVQcUwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772772; c=relaxed/simple;
-	bh=1/01EInRKEJkEUtI2WMk1EsfaUOsOXcOAlu2VmniP4g=;
+	s=arc-20240116; t=1724772775; c=relaxed/simple;
+	bh=qaBQCUu3FDUB+fYDXNOCtl3+JxS69aRyzQxyP2vFYXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVDdxJAmNtzWOmtkKI4pdzeiZIDiAcKmLtkNqCmLS2C1ykKH889B+SfWvwoz0r5cRzRGQXEJjTf0CG8l1nwM1NmG4dvcRMMz41p2HRGuCJPK/umWN5EJdlCyjJnqf4QK0gaSx8iTGg4Tlv09L0a7R24MlAMeLEm/BANq1W1I10g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhsVP6Tv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ka/s46cjixRSgU2m+oVTflarxndQCnn7x2dxVYyGspKAC7pK96YdI/h/w+S4/8aky/GdGajXYDvNgtt0AUbNSmBQhSDyfQEFsgBuNepTI1aILc3Nh/JplBBjyzW6+Dczgz8V6oOU4zjO+SRKk1dkKYd7hMEnCTP5hQpviYuoUkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otPBC6rC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhsVP6Tv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C8EC61043;
-	Tue, 27 Aug 2024 15:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otPBC6rC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2C1C61043;
+	Tue, 27 Aug 2024 15:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772772;
-	bh=1/01EInRKEJkEUtI2WMk1EsfaUOsOXcOAlu2VmniP4g=;
+	s=korg; t=1724772775;
+	bh=qaBQCUu3FDUB+fYDXNOCtl3+JxS69aRyzQxyP2vFYXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NhsVP6TvJl13BmirTRm7QOOHrH7SWl8poa0ZzBvuUWsav4dfyw3pUJLef6DcjLVDJ
-	 P81ThTkYS+lN3eIAIhzP/wNuIo/l0rbcABAAw8tk2LtxbLvgIU1lUvb4ttMBty7nq/
-	 czQqv472X7HY9H76xqe/R6WXNy7AF3Oodq9nqp1I=
+	b=otPBC6rC3L9qe2MSaVZtJbGg4yc4Kwk3y0+u4MJLEUXvpjDiQTBGxxtaANIoLJ5Ho
+	 0BL6s8tjuVD0Yopp5f1SOPw6elUOQTTs5tAbZPR2+lNDOJSmjZw3Ra+zO51Pi4UcoE
+	 vDqPg0+EcEZlXHXzRJ0CA3ar1p2r3e2w3mQPzDvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>
-Subject: [PATCH 6.1 315/321] gfs2: Remove freeze_go_demote_ok
-Date: Tue, 27 Aug 2024 16:40:23 +0200
-Message-ID: <20240827143850.248444333@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 316/321] udp: fix receiving fraglist GSO packets
+Date: Tue, 27 Aug 2024 16:40:24 +0200
+Message-ID: <20240827143850.287114897@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -49,55 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit bbacb395ac5c57290cdfd02389788cbce64c237e upstream.
+commit b128ed5ab27330deeeaf51ea8bb69f1442a96f7f upstream.
 
-Before commit b77b4a4815a9 ("gfs2: Rework freeze / thaw logic"), the
-freeze glock was kept around in the glock cache in shared mode without
-being actively held while a filesystem is in thawed state.  In that
-state, memory pressure could have eventually evicted the freeze glock,
-and the freeze_go_demote_ok callback was needed to prevent that from
-happening.
+When assembling fraglist GSO packets, udp4_gro_complete does not set
+skb->csum_start, which makes the extra validation in __udp_gso_segment fail.
 
-With the freeze / thaw rework, the freeze glock is now always actively
-held in shared mode while a filesystem is thawed, and the
-freeze_go_demote_ok hack is no longer needed.
-
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 89add40066f9 ("net: drop bad gso csum_start and offset in virtio_net_hdr")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240819150621.59833-1-nbd@nbd.name
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/glops.c |   13 -------------
- 1 file changed, 13 deletions(-)
+ net/ipv4/udp_offload.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -613,18 +613,6 @@ static int freeze_go_xmote_bh(struct gfs
- }
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -278,7 +278,8 @@ struct sk_buff *__udp_gso_segment(struct
+ 		return ERR_PTR(-EINVAL);
  
- /**
-- * freeze_go_demote_ok
-- * @gl: the glock
-- *
-- * Always returns 0
-- */
--
--static int freeze_go_demote_ok(const struct gfs2_glock *gl)
--{
--	return 0;
--}
--
--/**
-  * iopen_go_callback - schedule the dcache entry for the inode to be deleted
-  * @gl: the glock
-  * @remote: true if this came from a different cluster node
-@@ -748,7 +736,6 @@ const struct gfs2_glock_operations gfs2_
+ 	if (unlikely(skb_checksum_start(gso_skb) !=
+-		     skb_transport_header(gso_skb)))
++		     skb_transport_header(gso_skb) &&
++		     !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)))
+ 		return ERR_PTR(-EINVAL);
  
- const struct gfs2_glock_operations gfs2_freeze_glops = {
- 	.go_xmote_bh = freeze_go_xmote_bh,
--	.go_demote_ok = freeze_go_demote_ok,
- 	.go_callback = freeze_go_callback,
- 	.go_type = LM_TYPE_NONDISK,
- 	.go_flags = GLOF_NONDISK,
+ 	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
 
 
