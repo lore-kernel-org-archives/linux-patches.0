@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9601C4EE2;
-	Tue, 27 Aug 2024 14:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319FE1C6897;
+	Tue, 27 Aug 2024 14:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769725; cv=none; b=cUni9gZXZE6ETr2nr/S/Yt6hZwpNRQzIURGw7kXUTB+GMy4YlhT6eGgbYLwh/En3pV40sOLpc0dEKjS121oDEHjoqj/oODTg8cUC6E6iEhxLokZYiU4xrgTWh31clqYlNWq4W02IQlV/EJXVBZxn2rq7k9x9bX+NduEHRV4jFkI=
+	t=1724769729; cv=none; b=YADq6ggwBNFuydhRXEesJOSMWtql1vxWJsQ9ZH3j/V9bfH3n5dw9SLBLR/T5OUVCvrD9cN1jATHKTnfX4bU6MTeHp5pz9CBr4s7xAl8Az/S/7XZo2KGnG3JMvKRM4NDUny/ehIRqjszshkegEZBuJqGGksb04oXCX9C1jaZkmcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769725; c=relaxed/simple;
-	bh=7UsyHrCxwEWLgp95q/1iIjZYsP0IpZ4SPgOYfY3GJJ0=;
+	s=arc-20240116; t=1724769729; c=relaxed/simple;
+	bh=M6JvdIi8AqnXR9tXa4wTCsP7wjtC4Ojr3jTzzGUgXcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8LvOMLLfFfRv0+/QUHEhS25rxV2smcmPqRUlXWtlf0skc08w/4L0nSC7KYBkxLPYJ2R7/acBpRIyHjATGLz/f2K2j8WzuqCqU0LI3WyNjOFK5b+vkhtpdQBJ5kmL2iCpHS5tr0VFbTCEKkIhDH1oShKSiEPKI+8uGCkGyy09lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8Szf7Ky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUjSi59liViLQ5lMd02Fta1rBL/zkgdkvt8XVLDuiRRv4Rr5s/TQevzGDWQp83towNWr70F5rIVBkfg6Z8QSHojLwdf6InIu5TukEmaXwS7ZFesO872AnNphlElUJNqbxxDPsWtM1m+MdsfvtP2sqppxFEsE93+WiBABvLXola4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WVUBldh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8Szf7Ky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F02FC4AF15;
-	Tue, 27 Aug 2024 14:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WVUBldh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650CFC4AF15;
+	Tue, 27 Aug 2024 14:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769725;
-	bh=7UsyHrCxwEWLgp95q/1iIjZYsP0IpZ4SPgOYfY3GJJ0=;
+	s=korg; t=1724769728;
+	bh=M6JvdIi8AqnXR9tXa4wTCsP7wjtC4Ojr3jTzzGUgXcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8Szf7Kyw7oiw9oywfC4ph3WvmP4hSO38tQ7gaprVqvUBO32iSTiClU+uPD/Alyre
-	 0xqZxgL5qyUoLb8Cju6hMtr0VKsDhqJfbOQ5Fu1E5mzUA+MMytezw+ktO++ILrgzm6
-	 S1AfuZe3QW+AveBR6WCaKFzrTjYbKWDJxkWxDQwg=
+	b=1WVUBldhzeRWBIH0hXCwPayQ+hq1bt3laMDy0TXRP7pdeAt++7Cn/RjTaxXWenDPl
+	 6TRZVbVDtQ/SoaTZy+HA1pPO3oBh1SpN129LkjEuRgf/Ib5l5ZNwNFFMTub42i23e+
+	 c4beL8b7U+z/h3JEImqriWrFUbI0oPAPh0HmXIWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Reisner <reisner.marc@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 006/341] selinux: revert our use of vma_is_initial_heap()
-Date: Tue, 27 Aug 2024 16:33:57 +0200
-Message-ID: <20240827143843.647654407@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 007/341] fuse: Initialize beyond-EOF page contents before setting uptodate
+Date: Tue, 27 Aug 2024 16:33:58 +0200
+Message-ID: <20240827143843.684695212@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moore <paul@paul-moore.com>
+From: Jann Horn <jannh@google.com>
 
-commit 05a3d6e9307250a5911d75308e4363466794ab21 upstream.
+commit 3c0da3d163eb32f1f91891efaade027fa9b245b9 upstream.
 
-Unfortunately it appears that vma_is_initial_heap() is currently broken
-for applications that do not currently have any heap allocated, e.g.
-brk == start_brk.  The breakage is such that it will cause SELinux to
-check for the process/execheap permission on memory regions that cross
-brk/start_brk even when there is no heap.
+fuse_notify_store(), unlike fuse_do_readpage(), does not enable page
+zeroing (because it can be used to change partial page contents).
 
-The proper fix would be to correct vma_is_initial_heap(), but as there
-are multiple callers I am hesitant to unilaterally modify the helper
-out of concern that I would end up breaking some other subsystem.  The
-mm developers have been made aware of the situation and hopefully they
-will have a fix at some point in the future, but we need a fix soon so
-we are simply going to revert our use of vma_is_initial_heap() in favor
-of our old logic/code which works as expected, even in the face of a
-zero size heap.  We can return to using vma_is_initial_heap() at some
-point in the future when it is fixed.
+So fuse_notify_store() must be more careful to fully initialize page
+contents (including parts of the page that are beyond end-of-file)
+before marking the page uptodate.
 
-Cc: stable@vger.kernel.org
-Reported-by: Marc Reisner <reisner.marc@gmail.com>
-Closes: https://lore.kernel.org/all/ZrPmoLKJEf1wiFmM@marcreisner.com
-Fixes: 68df1baf158f ("selinux: use vma_is_initial_stack() and vma_is_initial_heap()")
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+The current code can leave beyond-EOF page contents uninitialized, which
+makes these uninitialized page contents visible to userspace via mmap().
+
+This is an information leak, but only affects systems which do not
+enable init-on-alloc (via CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y or the
+corresponding kernel command line parameter).
+
+Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2574
+Cc: stable@kernel.org
+Fixes: a1d75f258230 ("fuse: add store request")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/fuse/dev.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -3835,7 +3835,17 @@ static int selinux_file_mprotect(struct
- 	if (default_noexec &&
- 	    (prot & PROT_EXEC) && !(vma->vm_flags & VM_EXEC)) {
- 		int rc = 0;
--		if (vma_is_initial_heap(vma)) {
-+		/*
-+		 * We don't use the vma_is_initial_heap() helper as it has
-+		 * a history of problems and is currently broken on systems
-+		 * where there is no heap, e.g. brk == start_brk.  Before
-+		 * replacing the conditional below with vma_is_initial_heap(),
-+		 * or something similar, please ensure that the logic is the
-+		 * same as what we have below or you have tested every possible
-+		 * corner case you can think to test.
-+		 */
-+		if (vma->vm_start >= vma->vm_mm->start_brk &&
-+		    vma->vm_end <= vma->vm_mm->brk) {
- 			rc = avc_has_perm(sid, sid, SECCLASS_PROCESS,
- 					  PROCESS__EXECHEAP, NULL);
- 		} else if (!vma->vm_file && (vma_is_initial_stack(vma) ||
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1618,9 +1618,11 @@ static int fuse_notify_store(struct fuse
+ 
+ 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
+ 		err = fuse_copy_page(cs, &page, offset, this_num, 0);
+-		if (!err && offset == 0 &&
+-		    (this_num == PAGE_SIZE || file_size == end))
++		if (!PageUptodate(page) && !err && offset == 0 &&
++		    (this_num == PAGE_SIZE || file_size == end)) {
++			zero_user_segment(page, this_num, PAGE_SIZE);
+ 			SetPageUptodate(page);
++		}
+ 		unlock_page(page);
+ 		put_page(page);
+ 
 
 
