@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E501C4EE8;
-	Tue, 27 Aug 2024 14:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECAC1C57A6;
+	Tue, 27 Aug 2024 14:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769780; cv=none; b=jKzSqs+aFLMi4ZZaxAb4Zb29PkWdC84E/fJoKMhgO8ZeKR0KA76HRSAJap73gYtqL9yFhmgzKUq9jmKg61vLPUjUbg6dXwjgxczujXyFqGyrxQJeZnlkbmz/xJ33lB2eVuE6aUI2hqEVJazDoi/owEz3v2bduO+P7RSgXO0fyhQ=
+	t=1724769784; cv=none; b=b90XXfouaWgmWl3TTNfIcKXb+zNqqwEYcnZOAAIGWWgrdWYH9s9MlqfYZc33KRz3BHERhC23W7A4VzEJsejg4+H6ByFtRLlXDA8gQnfz+H4ZmV+o7l3U/5yC4yQMoSTXCDrtyINkttXJ9SDg9AKVfBHBvM35xOzO3GTF3y9861I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769780; c=relaxed/simple;
-	bh=QLM+QZQIGXDh0jxpri9zMrNjDu0pgCaeYDzzOTKIdiw=;
+	s=arc-20240116; t=1724769784; c=relaxed/simple;
+	bh=4Uufag33SRdq930koZmnvG1BheY2GMhJxamfQwPpeR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATBwDDfbZjXMzu9Ykb75ZV1F506y+G0+iB+4F/Le39GReoTehMkYfr7bL//+mD6pWi6BpJSLT8krB5X86C6iylL5cOX5akNFd4g5iipVp3uNJ11y6oDz0YgyvUrMUdRWmtxFrUeUGRRAmiKCuxaN9oa3zvTts0IYM8tkXr+RlDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7uSXT+h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WYeYpzncQw8mPwehMhOlzT5514CpjiDYk7iET7tfoGRSfkxZZ4ZzKQz/UL6Bc3xW/WvQrNcR+k3q5sOzKEeG3RA8ijnUCup761MbOlOcS5Vb7ois9sxOA4xdWz4hk4I15am0scAeYX6UGbbp5gChoYldlhLrR/9VqqaqOpmZVVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvyOcuJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7uSXT+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2E5C6104E;
-	Tue, 27 Aug 2024 14:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvyOcuJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805A1C6104E;
+	Tue, 27 Aug 2024 14:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769780;
-	bh=QLM+QZQIGXDh0jxpri9zMrNjDu0pgCaeYDzzOTKIdiw=;
+	s=korg; t=1724769784;
+	bh=4Uufag33SRdq930koZmnvG1BheY2GMhJxamfQwPpeR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7uSXT+hn1YE/UNENoLqULIkAhagFFWyXZW5niSr6zApOFr1p2q2lYDhVskYht7ZX
-	 kj31ulmOwMHZ8JLJSK5ZzsEuJ8SsKAqZnUoxsZSUkFnPt/D0ozNbcXzRHkgy9GBT3B
-	 0xguxNcT7ZwheQZ5k14A9+X6i8kwm6EDhsteTBdU=
+	b=RvyOcuJUnk1VvUplyl4fUuBbpVF2Ov7hQ3+sxOwgMVVvEcEpcNE/sktnUDlypvvj7
+	 vB/ptRcGF8TdYgmlSy6zzN6L5L0xOthZKIIUB4j1u20WicNNGmYlw3Io/Y3z5d13WS
+	 N1BdvC9K5CH5MfohhryCCfCj00vp2ZWSFQFErQv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 016/341] s390/dasd: fix error recovery leading to data corruption on ESE devices
-Date: Tue, 27 Aug 2024 16:34:07 +0200
-Message-ID: <20240827143844.022359701@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 034/341] net: mana: Fix doorbell out of order violation and avoid unnecessary doorbell rings
+Date: Tue, 27 Aug 2024 16:34:25 +0200
+Message-ID: <20240827143844.710388190@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,242 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Long Li <longli@microsoft.com>
 
-commit 7db4042336580dfd75cb5faa82c12cd51098c90b upstream.
+commit 58a63729c957621f1990c3494c702711188ca347 upstream.
 
-Extent Space Efficient (ESE) or thin provisioned volumes need to be
-formatted on demand during usual IO processing.
+After napi_complete_done() is called when NAPI is polling in the current
+process context, another NAPI may be scheduled and start running in
+softirq on another CPU and may ring the doorbell before the current CPU
+does. When combined with unnecessary rings when there is no need to arm
+the CQ, it triggers error paths in the hardware.
 
-The dasd_ese_needs_format function checks for error codes that signal
-the non existence of a proper track format.
+This patch fixes this by calling napi_complete_done() after doorbell
+rings. It limits the number of unnecessary rings when there is
+no need to arm. MANA hardware specifies that there must be one doorbell
+ring every 8 CQ wraparounds. This driver guarantees one doorbell ring as
+soon as the number of consumed CQEs exceeds 4 CQ wraparounds. In practical
+workloads, the 4 CQ wraparounds proves to be big enough that it rarely
+exceeds this limit before all the napi weight is consumed.
 
-The check for incorrect length is to imprecise since other error cases
-leading to transport of insufficient data also have this flag set.
-This might lead to data corruption in certain error cases for example
-during a storage server warmstart.
+To implement this, add a per-CQ counter cq->work_done_since_doorbell,
+and make sure the CQ is armed as soon as passing 4 wraparounds of the CQ.
 
-Fix by removing the check for incorrect length and replacing by
-explicitly checking for invalid track format in transport mode.
-
-Also remove the check for file protected since this is not a valid
-ESE handling case.
-
-Cc: stable@vger.kernel.org # 5.3+
-Fixes: 5e2b17e712cf ("s390/dasd: Add dynamic formatting support for ESE volumes")
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240812125733.126431-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Fixes: e1b5683ff62e ("net: mana: Move NAPI from EQ to CQ")
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://patch.msgid.link/1723219138-29887-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c          |   36 +++++++++++++++---------
- drivers/s390/block/dasd_3990_erp.c |   10 +-----
- drivers/s390/block/dasd_eckd.c     |   55 ++++++++++++++++---------------------
- drivers/s390/block/dasd_int.h      |    2 -
- 4 files changed, 50 insertions(+), 53 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   22 ++++++++++++++--------
+ include/net/mana/mana.h                       |    1 +
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -1599,9 +1599,15 @@ static int dasd_ese_needs_format(struct
- 	if (!sense)
- 		return 0;
- 
--	return !!(sense[1] & SNS1_NO_REC_FOUND) ||
--		!!(sense[1] & SNS1_FILE_PROTECTED) ||
--		scsw_cstat(&irb->scsw) == SCHN_STAT_INCORR_LEN;
-+	if (sense[1] & SNS1_NO_REC_FOUND)
-+		return 1;
-+
-+	if ((sense[1] & SNS1_INV_TRACK_FORMAT) &&
-+	    scsw_is_tm(&irb->scsw) &&
-+	    !(sense[2] & SNS2_ENV_DATA_PRESENT))
-+		return 1;
-+
-+	return 0;
- }
- 
- static int dasd_ese_oos_cond(u8 *sense)
-@@ -1622,7 +1628,7 @@ void dasd_int_handler(struct ccw_device
- 	struct dasd_device *device;
- 	unsigned long now;
- 	int nrf_suppressed = 0;
--	int fp_suppressed = 0;
-+	int it_suppressed = 0;
- 	struct request *req;
- 	u8 *sense = NULL;
- 	int expires;
-@@ -1677,8 +1683,9 @@ void dasd_int_handler(struct ccw_device
- 		 */
- 		sense = dasd_get_sense(irb);
- 		if (sense) {
--			fp_suppressed = (sense[1] & SNS1_FILE_PROTECTED) &&
--				test_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
-+			it_suppressed =	(sense[1] & SNS1_INV_TRACK_FORMAT) &&
-+				!(sense[2] & SNS2_ENV_DATA_PRESENT) &&
-+				test_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
- 			nrf_suppressed = (sense[1] & SNS1_NO_REC_FOUND) &&
- 				test_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
- 
-@@ -1693,7 +1700,7 @@ void dasd_int_handler(struct ccw_device
- 				return;
- 			}
- 		}
--		if (!(fp_suppressed || nrf_suppressed))
-+		if (!(it_suppressed || nrf_suppressed))
- 			device->discipline->dump_sense_dbf(device, irb, "int");
- 
- 		if (device->features & DASD_FEATURE_ERPLOG)
-@@ -2465,14 +2472,17 @@ retry:
- 	rc = 0;
- 	list_for_each_entry_safe(cqr, n, ccw_queue, blocklist) {
- 		/*
--		 * In some cases the 'File Protected' or 'Incorrect Length'
--		 * error might be expected and error recovery would be
--		 * unnecessary in these cases.	Check if the according suppress
--		 * bit is set.
-+		 * In some cases certain errors might be expected and
-+		 * error recovery would be unnecessary in these cases.
-+		 * Check if the according suppress bit is set.
- 		 */
- 		sense = dasd_get_sense(&cqr->irb);
--		if (sense && sense[1] & SNS1_FILE_PROTECTED &&
--		    test_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags))
-+		if (sense && (sense[1] & SNS1_INV_TRACK_FORMAT) &&
-+		    !(sense[2] & SNS2_ENV_DATA_PRESENT) &&
-+		    test_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags))
-+			continue;
-+		if (sense && (sense[1] & SNS1_NO_REC_FOUND) &&
-+		    test_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags))
- 			continue;
- 		if (scsw_cstat(&cqr->irb.scsw) == 0x40 &&
- 		    test_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags))
---- a/drivers/s390/block/dasd_3990_erp.c
-+++ b/drivers/s390/block/dasd_3990_erp.c
-@@ -1406,14 +1406,8 @@ dasd_3990_erp_file_prot(struct dasd_ccw_
- 
- 	struct dasd_device *device = erp->startdev;
- 
--	/*
--	 * In some cases the 'File Protected' error might be expected and
--	 * log messages shouldn't be written then.
--	 * Check if the according suppress bit is set.
--	 */
--	if (!test_bit(DASD_CQR_SUPPRESS_FP, &erp->flags))
--		dev_err(&device->cdev->dev,
--			"Accessing the DASD failed because of a hardware error\n");
-+	dev_err(&device->cdev->dev,
-+		"Accessing the DASD failed because of a hardware error\n");
- 
- 	return dasd_3990_erp_cleanup(erp, DASD_CQR_FAILED);
- 
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -2289,6 +2289,7 @@ dasd_eckd_analysis_ccw(struct dasd_devic
- 	cqr->status = DASD_CQR_FILLED;
- 	/* Set flags to suppress output for expected errors */
- 	set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
-+	set_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
- 
- 	return cqr;
- }
-@@ -2570,7 +2571,6 @@ dasd_eckd_build_check_tcw(struct dasd_de
- 	cqr->buildclk = get_tod_clock();
- 	cqr->status = DASD_CQR_FILLED;
- 	/* Set flags to suppress output for expected errors */
--	set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
- 	set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
- 
- 	return cqr;
-@@ -4146,8 +4146,6 @@ static struct dasd_ccw_req *dasd_eckd_bu
- 
- 	/* Set flags to suppress output for expected errors */
- 	if (dasd_eckd_is_ese(basedev)) {
--		set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
--		set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
- 		set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
- 	}
- 
-@@ -4649,9 +4647,8 @@ static struct dasd_ccw_req *dasd_eckd_bu
- 
- 	/* Set flags to suppress output for expected errors */
- 	if (dasd_eckd_is_ese(basedev)) {
--		set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
--		set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
- 		set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
-+		set_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
- 	}
- 
- 	return cqr;
-@@ -5820,36 +5817,32 @@ static void dasd_eckd_dump_sense(struct
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1778,7 +1778,6 @@ static void mana_poll_rx_cq(struct mana_
+ static int mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
  {
- 	u8 *sense = dasd_get_sense(irb);
+ 	struct mana_cq *cq = context;
+-	u8 arm_bit;
+ 	int w;
  
--	if (scsw_is_tm(&irb->scsw)) {
--		/*
--		 * In some cases the 'File Protected' or 'Incorrect Length'
--		 * error might be expected and log messages shouldn't be written
--		 * then. Check if the according suppress bit is set.
--		 */
--		if (sense && (sense[1] & SNS1_FILE_PROTECTED) &&
--		    test_bit(DASD_CQR_SUPPRESS_FP, &req->flags))
--			return;
--		if (scsw_cstat(&irb->scsw) == 0x40 &&
--		    test_bit(DASD_CQR_SUPPRESS_IL, &req->flags))
--			return;
-+	/*
-+	 * In some cases certain errors might be expected and
-+	 * log messages shouldn't be written then.
-+	 * Check if the according suppress bit is set.
-+	 */
-+	if (sense && (sense[1] & SNS1_INV_TRACK_FORMAT) &&
-+	    !(sense[2] & SNS2_ENV_DATA_PRESENT) &&
-+	    test_bit(DASD_CQR_SUPPRESS_IT, &req->flags))
-+		return;
+ 	WARN_ON_ONCE(cq->gdma_cq != gdma_queue);
+@@ -1789,16 +1788,23 @@ static int mana_cq_handler(void *context
+ 		mana_poll_tx_cq(cq);
  
--		dasd_eckd_dump_sense_tcw(device, req, irb);
+ 	w = cq->work_done;
++	cq->work_done_since_doorbell += w;
+ 
+-	if (w < cq->budget &&
+-	    napi_complete_done(&cq->napi, w)) {
+-		arm_bit = SET_ARM_BIT;
 -	} else {
--		/*
--		 * In some cases the 'Command Reject' or 'No Record Found'
--		 * error might be expected and log messages shouldn't be
--		 * written then. Check if the according suppress bit is set.
--		 */
--		if (sense && sense[0] & SNS0_CMD_REJECT &&
--		    test_bit(DASD_CQR_SUPPRESS_CR, &req->flags))
--			return;
-+	if (sense && sense[0] & SNS0_CMD_REJECT &&
-+	    test_bit(DASD_CQR_SUPPRESS_CR, &req->flags))
-+		return;
+-		arm_bit = 0;
++	if (w < cq->budget) {
++		mana_gd_ring_cq(gdma_queue, SET_ARM_BIT);
++		cq->work_done_since_doorbell = 0;
++		napi_complete_done(&cq->napi, w);
++	} else if (cq->work_done_since_doorbell >
++		   cq->gdma_cq->queue_size / COMP_ENTRY_SIZE * 4) {
++		/* MANA hardware requires at least one doorbell ring every 8
++		 * wraparounds of CQ even if there is no need to arm the CQ.
++		 * This driver rings the doorbell as soon as we have exceeded
++		 * 4 wraparounds.
++		 */
++		mana_gd_ring_cq(gdma_queue, 0);
++		cq->work_done_since_doorbell = 0;
+ 	}
  
--		if (sense && sense[1] & SNS1_NO_REC_FOUND &&
--		    test_bit(DASD_CQR_SUPPRESS_NRF, &req->flags))
--			return;
-+	if (sense && sense[1] & SNS1_NO_REC_FOUND &&
-+	    test_bit(DASD_CQR_SUPPRESS_NRF, &req->flags))
-+		return;
- 
-+	if (scsw_cstat(&irb->scsw) == 0x40 &&
-+	    test_bit(DASD_CQR_SUPPRESS_IL, &req->flags))
-+		return;
-+
-+	if (scsw_is_tm(&irb->scsw))
-+		dasd_eckd_dump_sense_tcw(device, req, irb);
-+	else
- 		dasd_eckd_dump_sense_ccw(device, req, irb);
--	}
+-	mana_gd_ring_cq(gdma_queue, arm_bit);
+-
+ 	return w;
  }
  
- static int dasd_eckd_reload_device(struct dasd_device *device)
---- a/drivers/s390/block/dasd_int.h
-+++ b/drivers/s390/block/dasd_int.h
-@@ -225,7 +225,7 @@ struct dasd_ccw_req {
-  * The following flags are used to suppress output of certain errors.
-  */
- #define DASD_CQR_SUPPRESS_NRF	4	/* Suppress 'No Record Found' error */
--#define DASD_CQR_SUPPRESS_FP	5	/* Suppress 'File Protected' error*/
-+#define DASD_CQR_SUPPRESS_IT	5	/* Suppress 'Invalid Track' error*/
- #define DASD_CQR_SUPPRESS_IL	6	/* Suppress 'Incorrect Length' error */
- #define DASD_CQR_SUPPRESS_CR	7	/* Suppress 'Command Reject' error */
+--- a/include/net/mana/mana.h
++++ b/include/net/mana/mana.h
+@@ -274,6 +274,7 @@ struct mana_cq {
+ 	/* NAPI data */
+ 	struct napi_struct napi;
+ 	int work_done;
++	int work_done_since_doorbell;
+ 	int budget;
+ };
  
 
 
