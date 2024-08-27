@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB041C86F4;
-	Tue, 27 Aug 2024 15:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9991C68B1;
+	Tue, 27 Aug 2024 15:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770965; cv=none; b=RlEMZfjnxBGlW7SY4Tb90IhqT+IQHELo+8S97c0/r30AatlzCvHOM2kQW27u82vvSkKcSYmtgsEGphuts4QxAj0gq8PVSeupJ/hsFM3Z1NclRjsRtiZCDnNxMj4xGw4oRReVxO+56DVOItYnTt6g6QBpfB8EYOzby43GEt2+z9w=
+	t=1724770969; cv=none; b=sOcOZo/zrJw+GY0Uecf0KOxARJR4Lu8p3TvSoO1KrW4NYTFVWjh1MUGJ/lUYhOblHwIYJNTkVGTvabCQrN8MO8ptIN1Kkv/4Avmwz+LunegrloADV2tFzYiCS6Fl1DlxTbj/q3GxK/6AK2IC7vNWMdiCyW1dphUaNIzidMQqVHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770965; c=relaxed/simple;
-	bh=8OdmjgS0OJ52j3qO34VIevUUEuOOUUbODjNVErG7icY=;
+	s=arc-20240116; t=1724770969; c=relaxed/simple;
+	bh=AJG7MIXzwFc9igr6NqUgNQNbDESdJ8/bn3bSE+qQlgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJ3TQDInXw6rMX6KLqOYXkwaW8PgT0y1G4yGIkuLZ6T+hfB4FmFosWO84bd6KLbYI3ckrgJ31y183LF+zxYCCuow6giw/GxM7IT4Ip5Pe1S8Sgr4Rw2/KAG4vcgvHbUcBKnSQrrixaM7xf6yRpsRgqcybczGzC7yObJk9Gy4T7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xs4RSgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HU+w7HrKPdmjy36j2bQ10fqtYYLhF4UmrSo4T49zpdEuwWnwqCAJYS2qfcdo7D+o3bZ71xABf2/S6pFYvo9Rj6tLGT0t7Q6DF/XQzZLzg4NVRzwdaM+1aSmyVZzSCcGKWKKhhduIKIt78hN1sh9nJApgVSImRPbGRWBb1/VKjQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAPP5z5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xs4RSgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A27FC61042;
-	Tue, 27 Aug 2024 15:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAPP5z5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959D8C61042;
+	Tue, 27 Aug 2024 15:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770965;
-	bh=8OdmjgS0OJ52j3qO34VIevUUEuOOUUbODjNVErG7icY=;
+	s=korg; t=1724770969;
+	bh=AJG7MIXzwFc9igr6NqUgNQNbDESdJ8/bn3bSE+qQlgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xs4RSgJMDL/zlSocxLWAaBzyt3yzkJBFiHky6WtXjJ0/KnQW8DZER8n91ucAGwSP
-	 xZ/IAM3xtjfHHSjtQj8d4erzMTKtfRJ5cGSSa5L92U5DOLrfNV3Ex2WemSXslz2/hh
-	 4Ho8I2LqA9edw5xAGT8w6pgMHkXjnZh/MLztpCU8=
+	b=lAPP5z5xFFBj56T+RsnCD79fYN8NN2pRINI1k79zrsrr/1LlpO9+VUyRh0eON7EnR
+	 UxYY3mCsoqxDDluMpaxAfv0TxxYWyOoHy0DTCPiP5d+u3JAjKJUEiGmVoLdaxfzIvZ
+	 8sv3wuMG7EPLZWX3E4KQTjh86vGdpTn6XUlhyiW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Shilovsky <piastryyy@gmail.com>,
-	abartlet@samba.org,
-	Kevin Ottens <kevin.ottens@enioka.com>,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 029/273] smb3: fix lock breakage for cached writes
-Date: Tue, 27 Aug 2024 16:35:53 +0200
-Message-ID: <20240827143834.501950354@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.10 047/273] media: atomisp: Fix streaming no longer working on BYT / ISP2400 devices
+Date: Tue, 27 Aug 2024 16:36:11 +0200
+Message-ID: <20240827143835.188966668@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,66 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 836bb3268db405cf9021496ac4dbc26d3e4758fe upstream.
+commit 63de936b513f7a9ce559194d3269ac291f4f4662 upstream.
 
-Mandatory locking is enforced for cached writes, which violates
-default posix semantics, and also it is enforced inconsistently.
-This apparently breaks recent versions of libreoffice, but can
-also be demonstrated by opening a file twice from the same
-client, locking it from handle one and writing to it from
-handle two (which fails, returning EACCES).
+Commit a0821ca14bb8 ("media: atomisp: Remove test pattern generator (TPG)
+support") broke BYT support because it removed a seemingly unused field
+from struct sh_css_sp_config and a seemingly unused value from enum
+ia_css_input_mode.
 
-Since there was already a mount option "forcemandatorylock"
-(which defaults to off), with this change only when the user
-intentionally specifies "forcemandatorylock" on mount will we
-break posix semantics on write to a locked range (ie we will
-only fail the write in this case, if the user mounts with
-"forcemandatorylock").
+But these are part of the ABI between the kernel and firmware on ISP2400
+and this part of the TPG support removal changes broke ISP2400 support.
 
-Fixes: 85160e03a79e ("CIFS: Implement caching mechanism for mandatory brlocks")
+ISP2401 support was not affected because on ISP2401 only a part of
+struct sh_css_sp_config is used.
+
+Restore the removed field and enum value to fix this.
+
+Fixes: a0821ca14bb8 ("media: atomisp: Remove test pattern generator (TPG) support")
 Cc: stable@vger.kernel.org
-Cc: Pavel Shilovsky <piastryyy@gmail.com>
-Reported-by: abartlet@samba.org
-Reported-by: Kevin Ottens <kevin.ottens@enioka.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/staging/media/atomisp/pci/ia_css_stream_public.h |    8 ++++--
+ drivers/staging/media/atomisp/pci/sh_css_internal.h      |   19 ++++++++++++---
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2719,6 +2719,7 @@ cifs_writev(struct kiocb *iocb, struct i
- 	struct inode *inode = file->f_mapping->host;
- 	struct cifsInodeInfo *cinode = CIFS_I(inode);
- 	struct TCP_Server_Info *server = tlink_tcon(cfile->tlink)->ses->server;
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	ssize_t rc;
+--- a/drivers/staging/media/atomisp/pci/ia_css_stream_public.h
++++ b/drivers/staging/media/atomisp/pci/ia_css_stream_public.h
+@@ -27,12 +27,16 @@
+ #include "ia_css_prbs.h"
+ #include "ia_css_input_port.h"
  
- 	rc = netfs_start_io_write(inode);
-@@ -2735,12 +2736,16 @@ cifs_writev(struct kiocb *iocb, struct i
- 	if (rc <= 0)
- 		goto out;
+-/* Input modes, these enumerate all supported input modes.
+- *  Note that not all ISP modes support all input modes.
++/*
++ * Input modes, these enumerate all supported input modes.
++ * This enum is part of the atomisp firmware ABI and must
++ * NOT be changed!
++ * Note that not all ISP modes support all input modes.
+  */
+ enum ia_css_input_mode {
+ 	IA_CSS_INPUT_MODE_SENSOR, /** data from sensor */
+ 	IA_CSS_INPUT_MODE_FIFO,   /** data from input-fifo */
++	IA_CSS_INPUT_MODE_TPG,    /** data from test-pattern generator */
+ 	IA_CSS_INPUT_MODE_PRBS,   /** data from pseudo-random bit stream */
+ 	IA_CSS_INPUT_MODE_MEMORY, /** data from a frame in memory */
+ 	IA_CSS_INPUT_MODE_BUFFERED_SENSOR /** data is sent through mipi buffer */
+--- a/drivers/staging/media/atomisp/pci/sh_css_internal.h
++++ b/drivers/staging/media/atomisp/pci/sh_css_internal.h
+@@ -341,7 +341,14 @@ struct sh_css_sp_input_formatter_set {
  
--	if (!cifs_find_lock_conflict(cfile, iocb->ki_pos, iov_iter_count(from),
-+	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NOPOSIXBRL) &&
-+	    (cifs_find_lock_conflict(cfile, iocb->ki_pos, iov_iter_count(from),
- 				     server->vals->exclusive_lock_type, 0,
--				     NULL, CIFS_WRITE_OP))
--		rc = netfs_buffered_write_iter_locked(iocb, from, NULL);
--	else
-+				     NULL, CIFS_WRITE_OP))) {
- 		rc = -EACCES;
-+		goto out;
-+	}
-+
-+	rc = netfs_buffered_write_iter_locked(iocb, from, NULL);
-+
- out:
- 	up_read(&cinode->lock_sem);
- 	netfs_end_io_write(inode);
+ #define IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT (3)
+ 
+-/* SP configuration information */
++/*
++ * SP configuration information
++ *
++ * This struct is part of the atomisp firmware ABI and is directly copied
++ * to ISP DRAM by sh_css_store_sp_group_to_ddr()
++ *
++ * Do NOT change this struct's layout or remove seemingly unused fields!
++ */
+ struct sh_css_sp_config {
+ 	u8			no_isp_sync; /* Signal host immediately after start */
+ 	u8			enable_raw_pool_locking; /** Enable Raw Buffer Locking for HALv3 Support */
+@@ -351,6 +358,10 @@ struct sh_css_sp_config {
+ 	     host (true) or when they are passed to the preview/video pipe
+ 	     (false). */
+ 
++	 /*
++	  * Note the fields below are only used on the ISP2400 not on the ISP2401,
++	  * sh_css_store_sp_group_to_ddr() skip copying these when run on the ISP2401.
++	  */
+ 	struct {
+ 		u8					a_changed;
+ 		u8					b_changed;
+@@ -360,11 +371,13 @@ struct sh_css_sp_config {
+ 	} input_formatter;
+ 
+ 	sync_generator_cfg_t	sync_gen;
++	tpg_cfg_t		tpg;
+ 	prbs_cfg_t		prbs;
+ 	input_system_cfg_t	input_circuit;
+ 	u8			input_circuit_cfg_changed;
+-	u32		mipi_sizes_for_check[N_CSI_PORTS][IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT];
+-	u8                 enable_isys_event_queue;
++	u32			mipi_sizes_for_check[N_CSI_PORTS][IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT];
++	/* These last 2 fields are used on both the ISP2400 and the ISP2401 */
++	u8			enable_isys_event_queue;
+ 	u8			disable_cont_vf;
+ };
+ 
 
 
