@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B5B1D04AE;
-	Tue, 27 Aug 2024 15:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268591D174F;
+	Tue, 27 Aug 2024 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772526; cv=none; b=gGzPFx9+IRPKe/W4T4UcEZRYtQJmRLVZhRn08wL+ifBJ2VmEzm0SmEWf5nnMvjglDQ8YI0eIcQsioF0HtOojxdkbQsbd1iKG/vRQas60O+hj1B0fcvsfPD3VUlgpZIN5zGFdiNaRvyTfTZAfgcGmgrDuRh5tHInkYtopaKPMn2I=
+	t=1724772530; cv=none; b=r8iTB3J3O8fzKyiHueKt3F78U4KzT2Hn0GLJa9D6SXu5ahx0Dc/5C4j2ydXfwLnA8lzZ4lj/7WXr4ONitvpNgrQjLE+lttZTAhxAECxqmPmYpr6p0Dy83PrRWhGbRXWamGWpCgf9SRK1Cz4+Dgmp0z9NdhXHSrGL6JNjR7ZZxa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772526; c=relaxed/simple;
-	bh=E+GV7bs9PTfa8BuuWM0UILBVBVNCM2U1tXo96F7SEH0=;
+	s=arc-20240116; t=1724772530; c=relaxed/simple;
+	bh=3tacsCwSmjYxUWHEK3OC51OjppYtl7Trjc5sPmSGynI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uJ5QcA8w7Z8SyvTQZC5On4Lm71lAKqgOGIfQULuAtABMNv2JC3FaVAIqsqsq/SPytmxaiR0jIHRmfBFCKvLQt2BvBPsP1z9x0xAmWcNFPFSRtYN1XB2kyu7405kN5Fo0PrTKUdpNWEeIQuLwl5j14UmMq+rd9sBIfaCJ5y8Bipg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkKCxOKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9TCUDClJ10DvBtAjXCJhUVmcdoPlGll5XvDGbniLoiCBABUQO3/AnlcUR+y9SfRSaY+uX9vEWmnm0HfJk/XjsVGinWzZHdshu+aPS5UWNz751BTuO/h3pyyZQ9KmTdOB4RmNLqGewZWnh7H44QfYnqvh79Jzkbi7JYuybOBoUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdN6liC2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkKCxOKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4719C6107E;
-	Tue, 27 Aug 2024 15:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdN6liC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97439C6107E;
+	Tue, 27 Aug 2024 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772526;
-	bh=E+GV7bs9PTfa8BuuWM0UILBVBVNCM2U1tXo96F7SEH0=;
+	s=korg; t=1724772530;
+	bh=3tacsCwSmjYxUWHEK3OC51OjppYtl7Trjc5sPmSGynI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GkKCxOKErOecPT/OEBZyI26ftEgoxPacHu8iYVjLXGlYKyjeU3HXGu8WXWEzcW+RE
-	 uE9/hV9EFcpy0nNl38ptkR0yvY8P4HsKjqDncfKLaBizpNDnBvFPLO0WQF+9kszv7M
-	 GpCySYr8/l+3I4Bg8JFrQ22ARUZSCWMmTItWWNUE=
+	b=rdN6liC2gZBCTTyuB30c0MdoHUJyVtq1RiMR9ckNjJyE9wFxlZT6xz4JqIB+Oy9V3
+	 2j59xjmZ8TkJu59M8/B1G5W+GPsdo2QXHGV8eFPttZoCrcV1FFGLjvlTf7UJegAp0i
+	 HUfsHfoxQRmDnNmAkzIX1/jl/oR9ZoFA8sEJBk6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 200/321] platform/x86: lg-laptop: fix %s null argument warning
-Date: Tue, 27 Aug 2024 16:38:28 +0200
-Message-ID: <20240827143845.845776252@linuxfoundation.org>
+Subject: [PATCH 6.1 235/321] netfilter: nft_counter: Disable BH in nft_counter_offload_stats().
+Date: Tue, 27 Aug 2024 16:39:03 +0200
+Message-ID: <20240827143847.182030879@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -46,46 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit e71c8481692582c70cdfd0996c20cdcc71e425d3 ]
+[ Upstream commit 1eacdd71b3436b54d5fc8218c4bb0187d92a6892 ]
 
-W=1 warns about null argument to kprintf:
-warning: ‘%s’ directive argument is null [-Wformat-overflow=]
-pr_info("product: %s  year: %d\n", product, year);
+The sequence counter nft_counter_seq is a per-CPU counter. There is no
+lock associated with it. nft_counter_do_eval() is using the same counter
+and disables BH which suggest that it can be invoked from a softirq.
+This in turn means that nft_counter_offload_stats(), which disables only
+preemption, can be interrupted by nft_counter_do_eval() leading to two
+writer for one seqcount_t.
+This can lead to loosing stats or reading statistics while they are
+updated.
 
-Use "unknown" instead of NULL.
+Disable BH during stats update in nft_counter_offload_stats() to ensure
+one writer at a time.
 
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Link: https://lore.kernel.org/r/33d40e976f08f82b9227d0ecae38c787fcc0c0b2.1712154684.git.soyer@irl.hu
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: b72920f6e4a9d ("netfilter: nftables: counter hardware offload support")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lg-laptop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_counter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
-index 2e1dc91bfc764..5704981d18487 100644
---- a/drivers/platform/x86/lg-laptop.c
-+++ b/drivers/platform/x86/lg-laptop.c
-@@ -715,7 +715,7 @@ static int acpi_add(struct acpi_device *device)
- 		default:
- 			year = 2019;
- 		}
--	pr_info("product: %s  year: %d\n", product, year);
-+	pr_info("product: %s  year: %d\n", product ?: "unknown", year);
+diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
+index b5fe7fe4b60db..73e4d278d6c13 100644
+--- a/net/netfilter/nft_counter.c
++++ b/net/netfilter/nft_counter.c
+@@ -264,7 +264,7 @@ static void nft_counter_offload_stats(struct nft_expr *expr,
+ 	struct nft_counter *this_cpu;
+ 	seqcount_t *myseq;
  
- 	if (year >= 2019)
- 		battery_limit_use_wmbb = 1;
+-	preempt_disable();
++	local_bh_disable();
+ 	this_cpu = this_cpu_ptr(priv->counter);
+ 	myseq = this_cpu_ptr(&nft_counter_seq);
+ 
+@@ -272,7 +272,7 @@ static void nft_counter_offload_stats(struct nft_expr *expr,
+ 	this_cpu->packets += stats->pkts;
+ 	this_cpu->bytes += stats->bytes;
+ 	write_seqcount_end(myseq);
+-	preempt_enable();
++	local_bh_enable();
+ }
+ 
+ void nft_counter_init_seqcount(void)
 -- 
 2.43.0
 
