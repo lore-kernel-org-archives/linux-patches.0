@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DF41C68A6;
-	Tue, 27 Aug 2024 15:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0496B1BDA93;
+	Tue, 27 Aug 2024 15:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772697; cv=none; b=TfybOeWZLmSmNTMBDm1lglGt+Q2NmEQRNQziXmCVt/+1UMIJgfKDmcU5eXVjf05hkkYkvXBzBYUqEPm2/lZU6dnsOPLzECh2poFTJx4lfsUkDCHdjvUoNkxdN6QHW88RyypTslBkLwsBDG9UtDDgOWpjRtI2sKoVvuNKI8QjKIA=
+	t=1724772701; cv=none; b=YUjED2tI+tOa4JO4Dn8t5yC50QcYElutKt7Rv43ihwYSksfhpRixRTEsCyUSFgBvQACrbLpKj2KZU+1z5pG740N6OMLVCCTSySJDRoa8u3SCWU8WnK6s17eXAoE1LBsCJEC0ViyS+gpufZ0o5lo6/KKP0etWPU8Zdpg/Crrs6YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772697; c=relaxed/simple;
-	bh=LIVDikt6JIbMst/xFQBoAGJRjwRO1NeoGT9WDGoF0AA=;
+	s=arc-20240116; t=1724772701; c=relaxed/simple;
+	bh=yFIFIkPMHdZvvMdAASEezNJIWeZM5T/Fr0Hx9BVtz5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CexH9H886sLJb7RQOy4D8G10dtRcJ+/mRaIJdrSVOdGv5yTj5IU2nHIdt6BkAEVVCHKy8d7pAAERuGmBg3z1OYhjDw1EpzPmwiNvCQc0VvHIkDvPGHSJcj3hsGXmwFKf84/T5ID7MjybjekhVSLX+TM13HET5LKsqz+sZc4CFgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxeLheUS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rIx2+EERHvzf6TCo5hiPkCuAescNbyQDgrEjD3aQndvPArjNFAgAbPCDKmgpwq3e9Q5VHr0KOEM9zjCQugeMcKl3GcRqJpDdZKX/0OvZCP/U2N/CxFyauhmHBFwXY9gVkAgsCwPDVh6bcLAY1IS2RiO0VgF4izSLkfPJ2LnCO0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcumT58D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxeLheUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF69C4DDF1;
-	Tue, 27 Aug 2024 15:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcumT58D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D36C4DDF1;
+	Tue, 27 Aug 2024 15:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772697;
-	bh=LIVDikt6JIbMst/xFQBoAGJRjwRO1NeoGT9WDGoF0AA=;
+	s=korg; t=1724772700;
+	bh=yFIFIkPMHdZvvMdAASEezNJIWeZM5T/Fr0Hx9BVtz5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PxeLheUSEkBtCC447bKsEubQRD4LQB0uLFK/1LDNqTxxhd8EbXRtuBSN4nfKcceNy
-	 60L07J81lnm7rcuWo845Tm8SaHNMdTq0sACPTQz4N2VdW6gbT7dXc7rsZfun8N/Z3/
-	 Q1rYDh3fgq17OYUPKg0KQAH09skT7Rqz3/qvDz5o=
+	b=NcumT58D9izpLtwitM2vVK85ZswESTAtmypBY5oWjEMxSC/wE9viQcS9QAshkAOwy
+	 7Ep7QWH5wPHNfkHfZoBDkvB5PVq8y0dT2IpdeUsJqvzKV79+oC6R5u3lrVd9CfGhe5
+	 4mod0Ohsi++/m5sq5sQYvtMolC9eXH1woZYBVv1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
 	NeilBrown <neilb@suse.de>,
-	Jeffrey Layton <jlayton@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 292/321] nfsd: drop the nfsd_put helper
-Date: Tue, 27 Aug 2024 16:40:00 +0200
-Message-ID: <20240827143849.368691965@linuxfoundation.org>
+Subject: [PATCH 6.1 293/321] nfsd: dont call locks_release_private() twice concurrently
+Date: Tue, 27 Aug 2024 16:40:01 +0200
+Message-ID: <20240827143849.407616737@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,125 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 64e6304169f1e1f078e7f0798033f80a7fb0ea46 ]
+[ Upstream commit 05eda6e75773592760285e10ac86c56d683be17f ]
 
-It's not safe to call nfsd_put once nfsd_last_thread has been called, as
-that function will zero out the nn->nfsd_serv pointer.
+It is possible for free_blocked_lock() to be called twice concurrently,
+once from nfsd4_lock() and once from nfsd4_release_lockowner() calling
+remove_blocked_locks().  This is why a kref was added.
 
-Drop the nfsd_put helper altogether and open-code the svc_put in its
-callers instead. That allows us to not be reliant on the value of that
-pointer when handling an error.
+It is perfectly safe for locks_delete_block() and kref_put() to be
+called in parallel as they use locking or atomicity respectively as
+protection.  However locks_release_private() has no locking.  It is
+safe for it to be called twice sequentially, but not concurrently.
 
-Fixes: 2a501f55cd64 ("nfsd: call nfsd_last_thread() before final nfsd_put()")
-Reported-by: Zhi Li <yieli@redhat.com>
-Cc: NeilBrown <neilb@suse.de>
-Signed-off-by: Jeffrey Layton <jlayton@redhat.com>
+This patch moves that call from free_blocked_lock() where it could race
+with itself, to free_nbl() where it cannot.  This will slightly delay
+the freeing of private info or release of the owner - but not by much.
+It is arguably more natural for this freeing to happen in free_nbl()
+where the structure itself is freed.
+
+This bug was found by code inspection - it has not been seen in practice.
+
+Fixes: 47446d74f170 ("nfsd4: add refcount for nfsd4_blocked_lock")
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   31 +++++++++++++++++--------------
- fs/nfsd/nfsd.h   |    7 -------
- 2 files changed, 17 insertions(+), 21 deletions(-)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -709,6 +709,7 @@ static ssize_t __write_ports_addfd(char
- 	char *mesg = buf;
- 	int fd, err;
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+	struct svc_serv *serv;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -318,6 +318,7 @@ free_nbl(struct kref *kref)
+ 	struct nfsd4_blocked_lock *nbl;
  
- 	err = get_int(&mesg, &fd);
- 	if (err != 0 || fd < 0)
-@@ -718,15 +719,15 @@ static ssize_t __write_ports_addfd(char
- 	if (err != 0)
- 		return err;
- 
--	err = svc_addsock(nn->nfsd_serv, net, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
-+	serv = nn->nfsd_serv;
-+	err = svc_addsock(serv, net, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
- 
--	if (err < 0 && !nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
-+	if (err < 0 && !serv->sv_nrthreads && !nn->keep_active)
- 		nfsd_last_thread(net);
--	else if (err >= 0 &&
--		 !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
--		svc_get(nn->nfsd_serv);
-+	else if (err >= 0 && !serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
-+		svc_get(serv);
- 
--	nfsd_put(net);
-+	svc_put(serv);
- 	return err;
+ 	nbl = container_of(kref, struct nfsd4_blocked_lock, nbl_kref);
++	locks_release_private(&nbl->nbl_lock);
+ 	kfree(nbl);
  }
  
-@@ -740,6 +741,7 @@ static ssize_t __write_ports_addxprt(cha
- 	struct svc_xprt *xprt;
- 	int port, err;
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+	struct svc_serv *serv;
- 
- 	if (sscanf(buf, "%15s %5u", transport, &port) != 2)
- 		return -EINVAL;
-@@ -751,32 +753,33 @@ static ssize_t __write_ports_addxprt(cha
- 	if (err != 0)
- 		return err;
- 
--	err = svc_xprt_create(nn->nfsd_serv, transport, net,
-+	serv = nn->nfsd_serv;
-+	err = svc_xprt_create(serv, transport, net,
- 			      PF_INET, port, SVC_SOCK_ANONYMOUS, cred);
- 	if (err < 0)
- 		goto out_err;
- 
--	err = svc_xprt_create(nn->nfsd_serv, transport, net,
-+	err = svc_xprt_create(serv, transport, net,
- 			      PF_INET6, port, SVC_SOCK_ANONYMOUS, cred);
- 	if (err < 0 && err != -EAFNOSUPPORT)
- 		goto out_close;
- 
--	if (!nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
--		svc_get(nn->nfsd_serv);
-+	if (!serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
-+		svc_get(serv);
- 
--	nfsd_put(net);
-+	svc_put(serv);
- 	return 0;
- out_close:
--	xprt = svc_find_xprt(nn->nfsd_serv, transport, net, PF_INET, port);
-+	xprt = svc_find_xprt(serv, transport, net, PF_INET, port);
- 	if (xprt != NULL) {
- 		svc_xprt_close(xprt);
- 		svc_xprt_put(xprt);
- 	}
- out_err:
--	if (!nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
-+	if (!serv->sv_nrthreads && !nn->keep_active)
- 		nfsd_last_thread(net);
- 
--	nfsd_put(net);
-+	svc_put(serv);
- 	return err;
+@@ -325,7 +326,6 @@ static void
+ free_blocked_lock(struct nfsd4_blocked_lock *nbl)
+ {
+ 	locks_delete_block(&nbl->nbl_lock);
+-	locks_release_private(&nbl->nbl_lock);
+ 	kref_put(&nbl->nbl_kref, free_nbl);
  }
  
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -97,13 +97,6 @@ int		nfsd_pool_stats_open(struct inode *
- int		nfsd_pool_stats_release(struct inode *, struct file *);
- void		nfsd_shutdown_threads(struct net *net);
- 
--static inline void nfsd_put(struct net *net)
--{
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--
--	svc_put(nn->nfsd_serv);
--}
--
- bool		i_am_nfsd(void);
- 
- struct nfsdfs_client {
 
 
