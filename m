@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2241C6887;
-	Tue, 27 Aug 2024 14:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E51C578E;
+	Tue, 27 Aug 2024 14:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770423; cv=none; b=PR0KMFe66Z9uHnuo9r981k5P28ls/NsFNGhIcEpS2+5wCiV/Aksk3CeUSIENii92HUocfeO8ma1XuqzpsVFWC7y50cGuk9kLKJ64Mqld7+9oy9yYdh9UoRY07iY/Cc6DM3eTEEinn3TIJTHoWcVB9158pwxcgMkJfyY2ddMpB5k=
+	t=1724770426; cv=none; b=oV1rIirs/CPjfPsCouWZkJ0s4c2SptlqCG9tLmWuKqhMawaCjzMLXeVfTqXDQjeiml4IMf0FBifqyGrKRrqxxuLUJ1IBLKyu2eyMQaMLT+WjVND+a56Rwnwm97B1M5ICYnVu7WG8cJtVGOOfi3qWHDh2waCXC1oi57Ww61Ed1hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770423; c=relaxed/simple;
-	bh=EHAGfcXZ4LCYIR5iEfhvGMpmV7n92mNnZa0geDYrDqw=;
+	s=arc-20240116; t=1724770426; c=relaxed/simple;
+	bh=vtzgXNNNCcCiJDUwoj/jS5pt+AWLONQM49lyjcD60wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=menjDG4T4zBrfzHpnhaQ3LK9OoewGaPn+msVJiHPkz2B4P2f03O7xkIvN3ydn56F2/vDNYhBdRIQ9Gll2raYy3O3eynuzHHdU9MCoGSWZx/goLtRcHt03UcmNbszGLZCQvukOFOvxvmM3lcjXe/4EwJG6t1m3Yg+9EjcbXGbCvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYhrILHU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gihqu7TUb4xghMVFBunwXg+Ju7l5Q+lwvGldDsuL8jE/G2cG0Kpf3DdNndpfpA1OzghGrlsC9NQVBD7yKfKiko8kPT/+p+CTIpD0/r3duxxp5iYcB7r2XSZCK0a3ZGFm9Y/jajiQBigPXGt0FDNiiF0yMdr9bIR9mnFQiJX7SN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/tLHZLv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYhrILHU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96316C61053;
-	Tue, 27 Aug 2024 14:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/tLHZLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA64C61053;
+	Tue, 27 Aug 2024 14:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770423;
-	bh=EHAGfcXZ4LCYIR5iEfhvGMpmV7n92mNnZa0geDYrDqw=;
+	s=korg; t=1724770426;
+	bh=vtzgXNNNCcCiJDUwoj/jS5pt+AWLONQM49lyjcD60wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JYhrILHU9ubgh6xxRy5pVzq5ym3mVNlFUiKCp6Sng0mRV0XapP0wMuNDDPDlaeu4m
-	 DNAqf1V3dKYj2A4KcnPnseuhPO+05ocVvCPQu2gPeBLjwAYEZazAOurjGIkNcODwfy
-	 6rzGImO/dWXZ8hEKfS5hjrN/3ovD/0NzjqDYj3xg=
+	b=h/tLHZLv/9uqWzIQORwBR/SMXPJiBirKVIQy1ex+eJgd5UXc0B5iaOK0Qc94S7JlC
+	 O5LI6kTsYsy6wFMDcxUWFKk+O07ZkMO6gxEq5JZ48p3DfkIFfo3w5wm4kkLX4obWe2
+	 Ftu2UgMHqyKBM0QrTIM1JOCGlJLeDOTUNSD+d7yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Sterba <dsterba@suse.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 193/341] btrfs: delete pointless BUG_ON check on quota root in btrfs_qgroup_account_extent()
-Date: Tue, 27 Aug 2024 16:37:04 +0200
-Message-ID: <20240827143850.756571096@linuxfoundation.org>
+Subject: [PATCH 6.6 194/341] f2fs: fix to do sanity check in update_sit_entry
+Date: Tue, 27 Aug 2024 16:37:05 +0200
+Message-ID: <20240827143850.793413263@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,37 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit f40a3ea94881f668084f68f6b9931486b1606db0 ]
+[ Upstream commit 36959d18c3cf09b3c12157c6950e18652067de77 ]
 
-The BUG_ON is deep in the qgroup code where we can expect that it
-exists. A NULL pointer would cause a crash.
+If GET_SEGNO return NULL_SEGNO for some unecpected case,
+update_sit_entry will access invalid memory address,
+cause system crash. It is better to do sanity check about
+GET_SEGNO just like update_segment_mtime & locate_dirty_segment.
 
-It was added long ago in 550d7a2ed5db35 ("btrfs: qgroup: Add new qgroup
-calculation function btrfs_qgroup_account_extents()."). It maybe made
-sense back then as the quota enable/disable state machine was not that
-robust as it is nowadays, so we can just delete it.
+Also remove some redundant judgment code.
 
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/f2fs/segment.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 223dfbf009938..efe84be65a440 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -2725,8 +2725,6 @@ int btrfs_qgroup_account_extent(struct btrfs_trans_handle *trans, u64 bytenr,
- 	if (nr_old_roots == 0 && nr_new_roots == 0)
- 		goto out_free;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 50c7537eb2250..e3e2c0b2f4959 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2398,6 +2398,8 @@ static void update_sit_entry(struct f2fs_sb_info *sbi, block_t blkaddr, int del)
+ #endif
  
--	BUG_ON(!fs_info->quota_root);
--
- 	trace_btrfs_qgroup_account_extent(fs_info, trans->transid, bytenr,
- 					num_bytes, nr_old_roots, nr_new_roots);
+ 	segno = GET_SEGNO(sbi, blkaddr);
++	if (segno == NULL_SEGNO)
++		return;
  
+ 	se = get_seg_entry(sbi, segno);
+ 	new_vblocks = se->valid_blocks + del;
+@@ -3481,8 +3483,7 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
+ 	 * since SSR needs latest valid block information.
+ 	 */
+ 	update_sit_entry(sbi, *new_blkaddr, 1);
+-	if (GET_SEGNO(sbi, old_blkaddr) != NULL_SEGNO)
+-		update_sit_entry(sbi, old_blkaddr, -1);
++	update_sit_entry(sbi, old_blkaddr, -1);
+ 
+ 	/*
+ 	 * If the current segment is full, flush it out and replace it with a
 -- 
 2.43.0
 
