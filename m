@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665EB1C4EE8;
-	Tue, 27 Aug 2024 14:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB56673466;
+	Tue, 27 Aug 2024 14:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769801; cv=none; b=Aq5okmyH2XUnriSrFvy0NCJ5Mw43zlQre90sW1fcXxQt/2F7rTzAYAAWH70yuFgLuiYLdEJUHfDmyW5G2vfERuxGcxJCOZEF4BBmT/+C5SqKCvVcaLyDRRRdqooswKGgR1E4HudZe7cXYmiZxvaR6Xhw1AT8MkjBloB+ykJg4MM=
+	t=1724769804; cv=none; b=kpIDP/R9xL/yBVo4fJxQt8meNtOy65OrTenUDyz3xW6kEFoaMkWEUHNCR/enKKVJPeGgatlcc25ghUw1XgLadivrElqcbitCI585JD5+0Sw8FfE1wzYxSp6oit7ROUgc1Al15zIZOuZxrHjt3PByhV4W7jKH5ZCQ1b+agkc6bMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769801; c=relaxed/simple;
-	bh=pios9mFspg8IJ3rNrhtv52aMVtx+asNf1mVWhftTooU=;
+	s=arc-20240116; t=1724769804; c=relaxed/simple;
+	bh=HpG711cAxszgdcYZnLOgF41D/JU8kB/nElqAn6/d5z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoaOLgtYBl3+0V9jx202H9ATo2Pitt1joDBfyEPZLzY/amumsbBgCE1hdXlNorZ+kH8ldqraMhO7VQD4sceMk3qlULtGXFJOXQepkMG/LtsSbfP7uCclHd89PUWP68D7ivvXfecTYYXBbjPQV7f6O/jcLKZJkSpZHKaobgXCcBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfWcxwI6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lK8o6u1OPtxtWYtWvDK7AfPkmwKmKTMo9V1usWQuFrLZmO6l+R2+cL1z/Fszlak5rioY3Vmi9t4WIAe7GW208kNuyBDYorUfEVa1paBDb/VbG3m44BDjmE6fr2czAgjZcfS+LBR83kNfzR49X1KkwapwjlMVCEwxMC5edsWm2k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCnx1MtP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfWcxwI6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC3CC6104E;
-	Tue, 27 Aug 2024 14:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCnx1MtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F2AC61052;
+	Tue, 27 Aug 2024 14:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769801;
-	bh=pios9mFspg8IJ3rNrhtv52aMVtx+asNf1mVWhftTooU=;
+	s=korg; t=1724769804;
+	bh=HpG711cAxszgdcYZnLOgF41D/JU8kB/nElqAn6/d5z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfWcxwI6/C0ZnJcwmT4DIRg3aqWX/71py9rw5QtWlzTZWqVTC9/HltWN2jLyzMPIC
-	 sd88YO0Lk79pyO+llFNwviFEqrHOuisI9KSSa3hSVoPYSTRho/1Ro9FdTN7eBYTez0
-	 CMDSEI0hGXDOwVBhgbT5WOoSX4OnpORWEZK/WkNw=
+	b=zCnx1MtPL5h2ZwffPuLkEvFzX0twUUxg464XIUBdnrDUN/kibqux9ygmbB5Tvlwzs
+	 erQJU+gMllamqGi6L6YGsKtN+Q0Os5XyTxnTuqdT72xSOCMbvIdVVGQD3VN6eSnBvb
+	 uG+NRL0kTe97PB1kibwNXiFWXYLrc0mviDFTM6oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Len Brown <len.brown@intel.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 039/341] mm/memory-failure: use raw_spinlock_t in struct memory_failure_cpu
-Date: Tue, 27 Aug 2024 16:34:30 +0200
-Message-ID: <20240827143844.900307219@linuxfoundation.org>
+	Kota <nospam@kota.moe>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 040/341] btrfs: tree-checker: reject BTRFS_FT_UNKNOWN dir type
+Date: Tue, 27 Aug 2024 16:34:31 +0200
+Message-ID: <20240827143844.938083769@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -55,129 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit d75abd0d0bc29e6ebfebbf76d11b4067b35844af upstream.
+commit 31723c9542dba1681cc3720571fdf12ffe0eddd9 upstream.
 
-The memory_failure_cpu structure is a per-cpu structure.  Access to its
-content requires the use of get_cpu_var() to lock in the current CPU and
-disable preemption.  The use of a regular spinlock_t for locking purpose
-is fine for a non-RT kernel.
+[REPORT]
+There is a bug report that kernel is rejecting a mismatching inode mode
+and its dir item:
 
-Since the integration of RT spinlock support into the v5.15 kernel, a
-spinlock_t in a RT kernel becomes a sleeping lock and taking a sleeping
-lock in a preemption disabled context is illegal resulting in the
-following kind of warning.
+  [ 1881.553937] BTRFS critical (device dm-0): inode mode mismatch with
+  dir: inode mode=040700 btrfs type=2 dir type=0
 
-  [12135.732244] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-  [12135.732248] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 270076, name: kworker/0:0
-  [12135.732252] preempt_count: 1, expected: 0
-  [12135.732255] RCU nest depth: 2, expected: 2
-    :
-  [12135.732420] Hardware name: Dell Inc. PowerEdge R640/0HG0J8, BIOS 2.10.2 02/24/2021
-  [12135.732423] Workqueue: kacpi_notify acpi_os_execute_deferred
-  [12135.732433] Call Trace:
-  [12135.732436]  <TASK>
-  [12135.732450]  dump_stack_lvl+0x57/0x81
-  [12135.732461]  __might_resched.cold+0xf4/0x12f
-  [12135.732479]  rt_spin_lock+0x4c/0x100
-  [12135.732491]  memory_failure_queue+0x40/0xe0
-  [12135.732503]  ghes_do_memory_failure+0x53/0x390
-  [12135.732516]  ghes_do_proc.constprop.0+0x229/0x3e0
-  [12135.732575]  ghes_proc+0xf9/0x1a0
-  [12135.732591]  ghes_notify_hed+0x6a/0x150
-  [12135.732602]  notifier_call_chain+0x43/0xb0
-  [12135.732626]  blocking_notifier_call_chain+0x43/0x60
-  [12135.732637]  acpi_ev_notify_dispatch+0x47/0x70
-  [12135.732648]  acpi_os_execute_deferred+0x13/0x20
-  [12135.732654]  process_one_work+0x41f/0x500
-  [12135.732695]  worker_thread+0x192/0x360
-  [12135.732715]  kthread+0x111/0x140
-  [12135.732733]  ret_from_fork+0x29/0x50
-  [12135.732779]  </TASK>
+[CAUSE]
+It looks like the inode mode is correct, while the dir item type
+0 is BTRFS_FT_UNKNOWN, which should not be generated by btrfs at all.
 
-Fix it by using a raw_spinlock_t for locking instead.
+This may be caused by a memory bit flip.
 
-Also move the pr_err() out of the lock critical section and after
-put_cpu_ptr() to avoid indeterminate latency and the possibility of sleep
-with this call.
+[ENHANCEMENT]
+Although tree-checker is not able to do any cross-leaf verification, for
+this particular case we can at least reject any dir type with
+BTRFS_FT_UNKNOWN.
 
-[longman@redhat.com: don't hold percpu ref across pr_err(), per Miaohe]
-  Link: https://lkml.kernel.org/r/20240807181130.1122660-1-longman@redhat.com
-Link: https://lkml.kernel.org/r/20240806164107.1044956-1-longman@redhat.com
-Fixes: 0f383b6dc96e ("locking/spinlock: Provide RT variant")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Len Brown <len.brown@intel.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+So here we enhance the dir type check from [0, BTRFS_FT_MAX), to
+(0, BTRFS_FT_MAX).
+Although the existing corruption can not be fixed just by such enhanced
+checking, it should prevent the same 0x2->0x0 bitflip for dir type to
+reach disk in the future.
+
+Reported-by: Kota <nospam@kota.moe>
+Link: https://lore.kernel.org/linux-btrfs/CACsxjPYnQF9ZF-0OhH16dAx50=BXXOcP74MxBc3BG+xae4vTTw@mail.gmail.com/
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ fs/btrfs/tree-checker.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -2395,7 +2395,7 @@ struct memory_failure_entry {
- struct memory_failure_cpu {
- 	DECLARE_KFIFO(fifo, struct memory_failure_entry,
- 		      MEMORY_FAILURE_FIFO_SIZE);
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	struct work_struct work;
- };
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -548,9 +548,10 @@ static int check_dir_item(struct extent_
  
-@@ -2421,20 +2421,22 @@ void memory_failure_queue(unsigned long
- {
- 	struct memory_failure_cpu *mf_cpu;
- 	unsigned long proc_flags;
-+	bool buffer_overflow;
- 	struct memory_failure_entry entry = {
- 		.pfn =		pfn,
- 		.flags =	flags,
- 	};
- 
- 	mf_cpu = &get_cpu_var(memory_failure_cpu);
--	spin_lock_irqsave(&mf_cpu->lock, proc_flags);
--	if (kfifo_put(&mf_cpu->fifo, entry))
-+	raw_spin_lock_irqsave(&mf_cpu->lock, proc_flags);
-+	buffer_overflow = !kfifo_put(&mf_cpu->fifo, entry);
-+	if (!buffer_overflow)
- 		schedule_work_on(smp_processor_id(), &mf_cpu->work);
--	else
-+	raw_spin_unlock_irqrestore(&mf_cpu->lock, proc_flags);
-+	put_cpu_var(memory_failure_cpu);
-+	if (buffer_overflow)
- 		pr_err("buffer overflow when queuing memory failure at %#lx\n",
- 		       pfn);
--	spin_unlock_irqrestore(&mf_cpu->lock, proc_flags);
--	put_cpu_var(memory_failure_cpu);
- }
- EXPORT_SYMBOL_GPL(memory_failure_queue);
- 
-@@ -2447,9 +2449,9 @@ static void memory_failure_work_func(str
- 
- 	mf_cpu = container_of(work, struct memory_failure_cpu, work);
- 	for (;;) {
--		spin_lock_irqsave(&mf_cpu->lock, proc_flags);
-+		raw_spin_lock_irqsave(&mf_cpu->lock, proc_flags);
- 		gotten = kfifo_get(&mf_cpu->fifo, &entry);
--		spin_unlock_irqrestore(&mf_cpu->lock, proc_flags);
-+		raw_spin_unlock_irqrestore(&mf_cpu->lock, proc_flags);
- 		if (!gotten)
- 			break;
- 		if (entry.flags & MF_SOFT_OFFLINE)
-@@ -2479,7 +2481,7 @@ static int __init memory_failure_init(vo
- 
- 	for_each_possible_cpu(cpu) {
- 		mf_cpu = &per_cpu(memory_failure_cpu, cpu);
--		spin_lock_init(&mf_cpu->lock);
-+		raw_spin_lock_init(&mf_cpu->lock);
- 		INIT_KFIFO(mf_cpu->fifo);
- 		INIT_WORK(&mf_cpu->work, memory_failure_work_func);
- 	}
+ 		/* dir type check */
+ 		dir_type = btrfs_dir_ftype(leaf, di);
+-		if (unlikely(dir_type >= BTRFS_FT_MAX)) {
++		if (unlikely(dir_type <= BTRFS_FT_UNKNOWN ||
++			     dir_type >= BTRFS_FT_MAX)) {
+ 			dir_item_err(leaf, slot,
+-			"invalid dir item type, have %u expect [0, %u)",
++			"invalid dir item type, have %u expect (0, %u)",
+ 				dir_type, BTRFS_FT_MAX);
+ 			return -EUCLEAN;
+ 		}
 
 
