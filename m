@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18992DDC1;
-	Tue, 27 Aug 2024 14:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7026438DC7;
+	Tue, 27 Aug 2024 14:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770003; cv=none; b=nsotbe9JJYNenXqOThj9buAZ7IKp6vEJ6L/tRU4Gep+NNhhuB39MVxX5Rw1X+OvUHfRBihDRIvmvxNiuL0kdLRyi7UBc4AYbcONid5XPvqvGDno6kb1c06kJ3wuTPxpZ51ujQwYKuIezwa98My8cTfvO2q4nPCfd4/kIzLRnDeA=
+	t=1724770006; cv=none; b=hJ1gyAcwlSR29dZzLaT/mY9joKaopPzJPiM3sHovxBCcgTX6gDIquEaHFSeRVCnE78nMrOqRzxbRbV+MbMBx7cQ+9SUZHxhqq3IZVZLQxB88nfDlWA19gRZHCIGpoccPa4zwlosEgRJBRMQ7L5xcu1H6XI6zOMbRkxQxHC8KZKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770003; c=relaxed/simple;
-	bh=RA4o3+UUCNrZV0R3Lk9SitGzEGR1YZCWFJxwdWSqfSc=;
+	s=arc-20240116; t=1724770006; c=relaxed/simple;
+	bh=EMWaCqbfAoknWUVHmJbKyDyJgfBUDARTpjaX/7rrRmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBRzKrPrnTpZAqmFBKdRsufKyzmfr0dJhU/Raj0ueCc1o8GqxXmnO4nNpRHBVoaTYqV+rTzrvVwm9mg4b7YxNWHTz7XrBF0i6/h+iHH98Ru7Vhq6PZpaEAmwqJW2++wnXCYg5JWzxp3Lnk5YNbGS3NjgtgV6A+Sa+3ICerIvEFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaSTVgSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6zgHrTjxOAZsLr6rHhvE+DwWJpBQ6GJzNeYdumK8L9NEZ4R5xOznH3suyUt7QZ5sDju3NCM1fHFDAqMaSRmtsYhWz3ppc9oXpNCRmJCAzDzjTe9VnyicVRE7RChKwB8Uyl49MYKjlZcfVpLorgf9wNYoxg5L1i7/DUOzb56zB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzCCyxOZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaSTVgSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251E9C6106D;
-	Tue, 27 Aug 2024 14:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzCCyxOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B62C6106D;
+	Tue, 27 Aug 2024 14:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770002;
-	bh=RA4o3+UUCNrZV0R3Lk9SitGzEGR1YZCWFJxwdWSqfSc=;
+	s=korg; t=1724770006;
+	bh=EMWaCqbfAoknWUVHmJbKyDyJgfBUDARTpjaX/7rrRmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaSTVgSmF1+VeYWd0MvaVsI9comGaOrs0ZF0lAzCiWrZIoxkRlZ0vxvXdNUtn1sd+
-	 Nxl+8SY0MATfW7V3XoOls4jqq07/vHlAS/wLEXRK8vzhRXDzoFhW54f/AijRe9AzEt
-	 5Eo5vbd36UM5voE+s8pmJb11RBAXnMntmW8bTTv0=
+	b=BzCCyxOZx1EUJO0iIgcKoJK+/pCqSWRqZkIZ0lPk832dqMmtQfxTN93AA7k3i8Mg7
+	 8vSyxxW1a9AKHO5ccWkGJJQ45y25CL6geiDhESN3RUbnD2GoQqdzgdCcR+V6xUUS4W
+	 e4PiAPcY3+8ctJQ7OElm6eAA7N7XBxyvQAHQl7dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/341] RDMA/rtrs: Fix the problem of variable not initialized fully
-Date: Tue, 27 Aug 2024 16:35:30 +0200
-Message-ID: <20240827143847.174117273@linuxfoundation.org>
+Subject: [PATCH 6.6 100/341] s390/smp,mcck: fix early IPI handling
+Date: Tue, 27 Aug 2024 16:35:31 +0200
+Message-ID: <20240827143847.211145998@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,34 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit c5930a1aa08aafe6ffe15b5d28fe875f88f6ac86 ]
+[ Upstream commit 4a1725281fc5b0009944b1c0e1d2c1dc311a09ec ]
 
-No functionality change. The variable which is not initialized fully
-will introduce potential risks.
+Both the external call as well as the emergency signal submask bits in
+control register 0 are set before any interrupt handler is registered.
 
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://lore.kernel.org/r/20230919020806.534183-1-yanjun.zhu@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Change the order and first register the interrupt handler and only then
+enable the interrupts by setting the corresponding bits in control
+register 0.
+
+This prevents that the second part of the machine check handler for
+early machine check handling is not executed: the machine check handler
+sends an IPI to the CPU it runs on. If the corresponding interrupts are
+enabled, but no interrupt handler is present, the interrupt is ignored.
+
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/early.c | 12 +++---------
+ arch/s390/kernel/smp.c   |  4 ++--
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
-index 3696f367ff515..d80edfffd2e49 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs.c
-@@ -255,7 +255,7 @@ static int create_cq(struct rtrs_con *con, int cq_vector, int nr_cqe,
- static int create_qp(struct rtrs_con *con, struct ib_pd *pd,
- 		     u32 max_send_wr, u32 max_recv_wr, u32 max_sge)
- {
--	struct ib_qp_init_attr init_attr = {NULL};
-+	struct ib_qp_init_attr init_attr = {};
- 	struct rdma_cm_id *cm_id = con->cm_id;
- 	int ret;
+diff --git a/arch/s390/kernel/early.c b/arch/s390/kernel/early.c
+index 442ce0489e1a1..3a54733e4fc65 100644
+--- a/arch/s390/kernel/early.c
++++ b/arch/s390/kernel/early.c
+@@ -258,15 +258,9 @@ static inline void save_vector_registers(void)
+ #endif
+ }
  
+-static inline void setup_control_registers(void)
++static inline void setup_low_address_protection(void)
+ {
+-	unsigned long reg;
+-
+-	__ctl_store(reg, 0, 0);
+-	reg |= CR0_LOW_ADDRESS_PROTECTION;
+-	reg |= CR0_EMERGENCY_SIGNAL_SUBMASK;
+-	reg |= CR0_EXTERNAL_CALL_SUBMASK;
+-	__ctl_load(reg, 0, 0);
++	__ctl_set_bit(0, 28);
+ }
+ 
+ static inline void setup_access_registers(void)
+@@ -314,7 +308,7 @@ void __init startup_init(void)
+ 	save_vector_registers();
+ 	setup_topology();
+ 	sclp_early_detect();
+-	setup_control_registers();
++	setup_low_address_protection();
+ 	setup_access_registers();
+ 	lockdep_on();
+ }
+diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
+index a4edb7ea66ea7..c63be2efd6895 100644
+--- a/arch/s390/kernel/smp.c
++++ b/arch/s390/kernel/smp.c
+@@ -1013,12 +1013,12 @@ void __init smp_fill_possible_mask(void)
+ 
+ void __init smp_prepare_cpus(unsigned int max_cpus)
+ {
+-	/* request the 0x1201 emergency signal external interrupt */
+ 	if (register_external_irq(EXT_IRQ_EMERGENCY_SIG, do_ext_call_interrupt))
+ 		panic("Couldn't request external interrupt 0x1201");
+-	/* request the 0x1202 external call external interrupt */
++	ctl_set_bit(0, 14);
+ 	if (register_external_irq(EXT_IRQ_EXTERNAL_CALL, do_ext_call_interrupt))
+ 		panic("Couldn't request external interrupt 0x1202");
++	ctl_set_bit(0, 13);
+ }
+ 
+ void __init smp_prepare_boot_cpu(void)
 -- 
 2.43.0
 
