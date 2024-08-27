@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197F71C3F19;
-	Tue, 27 Aug 2024 15:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5760F1E520;
+	Tue, 27 Aug 2024 15:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771352; cv=none; b=fgSwdf9icnHfL8KnwxRf4/y3rDpONJIjHlc/7shcoNuD/FXdbXV3zM21dRc5rx+isNY06/HpORIKZ1LE2pRj24cRoS1l3LOQ9RzAfSBCizpuZF2uCLsycDNXKXaZOgucGGysyZUtsEzvRjgd2AOva31J32037ovvEM/47YncphI=
+	t=1724771355; cv=none; b=N/hnT2BBgcalrpGz7CRbUYDsqamcoDvV3hW1k8cwfMlCXC7KZjGb7yawR/JtjMx9XRxfF77zxS5YyENtB7SoH/uJGhY5NlAkuF04EB+1S68aJoh+vvJDtNHl40rYH9IHBKCliz4/Ak8YmkhTOvLvq5WMyiCAjLBkREFE0JI146I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771352; c=relaxed/simple;
-	bh=3dsUEz3Pr7fd3giI9nf0Rhq7H8st9sTxUMkyQlUvC+g=;
+	s=arc-20240116; t=1724771355; c=relaxed/simple;
+	bh=Igobry/o23257iE/8om2OqOLwOwjlt/y2F86BOU7u14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R8T8LM26p1vGokL6gJwErvjcY5bPRZ3IqRlojkYRAhqhk7vWwZo0nDN/DVADfCIV2O0qWJGyfxhYAhZlOloXs06qWnI6vgbAMQq02GRxWP9r5xTRxmjMWvulsqKfb2ZPrx9nVaKsLYZeF/lLjUweLHMVVJ2Ql7vj+gd9ZL6Atvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kp4be8/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+1U9NVfELTrhB8EINDfyNdK+RBiUiTc8eAVC3mOUizH4Sqn9ErdDgPDRGvkpg0IugOaWWnPe+rZs9H8AkKnj+Wr+QL1KXgzGcqTCaEJMZ2nvFWg8IQg9DbZvk5SmcfDue/IO4PFsX9cwFDUYG5bPb8lRl2BLFMoLJoQFeVVFl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAEWSZud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kp4be8/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A34C4AF1D;
-	Tue, 27 Aug 2024 15:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAEWSZud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC277C4AF1A;
+	Tue, 27 Aug 2024 15:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771352;
-	bh=3dsUEz3Pr7fd3giI9nf0Rhq7H8st9sTxUMkyQlUvC+g=;
+	s=korg; t=1724771355;
+	bh=Igobry/o23257iE/8om2OqOLwOwjlt/y2F86BOU7u14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kp4be8/wba1z3wudZLX0QzyOCJE2Yw61gg+E1lgHBzQ1vBVpk3t36RRDNT3WYFcpN
-	 /bfjPBC7+sYg5wpz18OaU5+xkY4RdfO+Zmc9lWUKtow4CYaJvZO3q6nvix/A5C/J45
-	 bbEmf6z9RsLeW/IYYgGTqc2TUVdtxodeaSvy4DtQ=
+	b=yAEWSZudE1Jsp4QnQjrW1VyVF7gHkyJWdIN9/yjpgXgN+F90HxczADaXxXXgY87Ly
+	 Oii+apd+/2L9vNd1t7fl0HRQl3PmLagOFRWjK82xRHkJSYQoO5hRHE+ZF/Of5/QY1d
+	 KHK63LkhUxXbf9HYUp1FKZ4/JxIRukB5XY2jnKfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Chen <yiche@redhat.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+8ea26396ff85d23a8929@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 161/273] selftests: udpgro: no need to load xdp for gro
-Date: Tue, 27 Aug 2024 16:38:05 +0200
-Message-ID: <20240827143839.532313202@linuxfoundation.org>
+Subject: [PATCH 6.10 162/273] tcp: prevent concurrent execution of tcp_sk_exit_batch
+Date: Tue, 27 Aug 2024 16:38:06 +0200
+Message-ID: <20240827143839.571523842@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -48,93 +49,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d7818402b1d80347c764001583f6d63fa68c2e1a ]
+[ Upstream commit 565d121b69980637f040eb4d84289869cdaabedf ]
 
-After commit d7db7775ea2e ("net: veth: do not manipulate GRO when using
-XDP"), there is no need to load XDP program to enable GRO. On the other
-hand, the current test is failed due to loading the XDP program. e.g.
+Its possible that two threads call tcp_sk_exit_batch() concurrently,
+once from the cleanup_net workqueue, once from a task that failed to clone
+a new netns.  In the latter case, error unwinding calls the exit handlers
+in reverse order for the 'failed' netns.
 
- # selftests: net: udpgro.sh
- # ipv4
- #  no GRO              ok
- #  no GRO chk cmsg     ok
- #  GRO                 ./udpgso_bench_rx: recv: bad packet len, got 1472, expected 14720
- #
- # failed
+tcp_sk_exit_batch() calls tcp_twsk_purge().
+Problem is that since commit b099ce2602d8 ("net: Batch inet_twsk_purge"),
+this function picks up twsk in any dying netns, not just the one passed
+in via exit_batch list.
 
- [...]
+This means that the error unwind of setup_net() can "steal" and destroy
+timewait sockets belonging to the exiting netns.
 
- #  bad GRO lookup      ok
- #  multiple GRO socks  ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
- #
- # ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
- #
- # failed
- ok 1 selftests: net: udpgro.sh
+This allows the netns exit worker to proceed to call
 
-After fix, all the test passed.
+WARN_ON_ONCE(!refcount_dec_and_test(&net->ipv4.tcp_death_row.tw_refcount));
 
- # ./udpgro.sh
- ipv4
-  no GRO                                  ok
-  [...]
-  multiple GRO socks                      ok
+without the expected 1 -> 0 transition, which then splats.
 
-Fixes: d7db7775ea2e ("net: veth: do not manipulate GRO when using XDP")
-Reported-by: Yi Chen <yiche@redhat.com>
-Closes: https://issues.redhat.com/browse/RHEL-53858
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+At same time, error unwind path that is also running inet_twsk_purge()
+will splat as well:
+
+WARNING: .. at lib/refcount.c:31 refcount_warn_saturate+0x1ed/0x210
+...
+ refcount_dec include/linux/refcount.h:351 [inline]
+ inet_twsk_kill+0x758/0x9c0 net/ipv4/inet_timewait_sock.c:70
+ inet_twsk_deschedule_put net/ipv4/inet_timewait_sock.c:221
+ inet_twsk_purge+0x725/0x890 net/ipv4/inet_timewait_sock.c:304
+ tcp_sk_exit_batch+0x1c/0x170 net/ipv4/tcp_ipv4.c:3522
+ ops_exit_list+0x128/0x180 net/core/net_namespace.c:178
+ setup_net+0x714/0xb40 net/core/net_namespace.c:375
+ copy_net_ns+0x2f0/0x670 net/core/net_namespace.c:508
+ create_new_namespaces+0x3ea/0xb10 kernel/nsproxy.c:110
+
+... because refcount_dec() of tw_refcount unexpectedly dropped to 0.
+
+This doesn't seem like an actual bug (no tw sockets got lost and I don't
+see a use-after-free) but as erroneous trigger of debug check.
+
+Add a mutex to force strict ordering: the task that calls tcp_twsk_purge()
+blocks other task from doing final _dec_and_test before mutex-owner has
+removed all tw sockets of dying netns.
+
+Fixes: e9bd0cca09d1 ("tcp: Don't allocate tcp_death_row outside of struct netns_ipv4.")
+Reported-by: syzbot+8ea26396ff85d23a8929@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/0000000000003a5292061f5e4e19@google.com/
+Link: https://lore.kernel.org/netdev/20240812140104.GA21559@breakpoint.cc/
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240812222857.29837-1-fw@strlen.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgro.sh | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ net/ipv4/tcp_ipv4.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
-index 4659cf01e4384..d5ffd8c9172e1 100755
---- a/tools/testing/selftests/net/udpgro.sh
-+++ b/tools/testing/selftests/net/udpgro.sh
-@@ -7,8 +7,6 @@ source net_helper.sh
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index a541659b6562b..8f8f93716ff85 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -95,6 +95,8 @@ EXPORT_SYMBOL(tcp_hashinfo);
  
- readonly PEER_NS="ns-peer-$(mktemp -u XXXXXX)"
+ static DEFINE_PER_CPU(struct sock *, ipv4_tcp_sk);
  
--BPF_FILE="xdp_dummy.bpf.o"
--
- # set global exit status, but never reset nonzero one.
- check_err()
++static DEFINE_MUTEX(tcp_exit_batch_mutex);
++
+ static u32 tcp_v4_init_seq(const struct sk_buff *skb)
  {
-@@ -38,7 +36,7 @@ cfg_veth() {
- 	ip -netns "${PEER_NS}" addr add dev veth1 192.168.1.1/24
- 	ip -netns "${PEER_NS}" addr add dev veth1 2001:db8::1/64 nodad
- 	ip -netns "${PEER_NS}" link set dev veth1 up
--	ip -n "${PEER_NS}" link set veth1 xdp object ${BPF_FILE} section xdp
-+	ip netns exec "${PEER_NS}" ethtool -K veth1 gro on
+ 	return secure_tcp_seq(ip_hdr(skb)->daddr,
+@@ -3509,6 +3511,16 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+ {
+ 	struct net *net;
+ 
++	/* make sure concurrent calls to tcp_sk_exit_batch from net_cleanup_work
++	 * and failed setup_net error unwinding path are serialized.
++	 *
++	 * tcp_twsk_purge() handles twsk in any dead netns, not just those in
++	 * net_exit_list, the thread that dismantles a particular twsk must
++	 * do so without other thread progressing to refcount_dec_and_test() of
++	 * tcp_death_row.tw_refcount.
++	 */
++	mutex_lock(&tcp_exit_batch_mutex);
++
+ 	tcp_twsk_purge(net_exit_list);
+ 
+ 	list_for_each_entry(net, net_exit_list, exit_list) {
+@@ -3516,6 +3528,8 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+ 		WARN_ON_ONCE(!refcount_dec_and_test(&net->ipv4.tcp_death_row.tw_refcount));
+ 		tcp_fastopen_ctx_destroy(net);
+ 	}
++
++	mutex_unlock(&tcp_exit_batch_mutex);
  }
  
- run_one() {
-@@ -206,11 +204,6 @@ run_all() {
- 	return $ret
- }
- 
--if [ ! -f ${BPF_FILE} ]; then
--	echo "Missing ${BPF_FILE}. Run 'make' first"
--	exit -1
--fi
--
- if [[ $# -eq 0 ]]; then
- 	run_all
- elif [[ $1 == "__subprocess" ]]; then
+ static struct pernet_operations __net_initdata tcp_sk_ops = {
 -- 
 2.43.0
 
