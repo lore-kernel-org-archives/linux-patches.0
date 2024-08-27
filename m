@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584532FB2;
-	Tue, 27 Aug 2024 15:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712681A08A3;
+	Tue, 27 Aug 2024 15:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770890; cv=none; b=hPeqJzX/4a88W4eTmQCxkNb61my1OWbnjkJYy/oJT8LuAOh96BSBaFxSWAoHdTaeB6d/TTGugNiaZwBE6k40YEUDR52zXaNDfje3g9GoF0gX7UnpzYg1w0IcjBiQtINgetxEKO8e7YA9iJfRchIBkgiRT3mzMLiAmQ6ey07Ql48=
+	t=1724770893; cv=none; b=OIzEXnYIAHt4UlsSF+tMZTRBVU1+DVHoRBJLDYTTRdLtEoQRvCyJXouWRXA8CBjWl1YOQ5z8eazPE+hxMRCEQh50Xo+aysJbvPLzrINt/3WXDf48AtQ5SEE0wx7y3fo4QDFxGb5MLlFEo3NmZ2cyDLOjxaxKQ3YNbYxxtV7juf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770890; c=relaxed/simple;
-	bh=hPsGJyCYasHZSKU9t47CXQWJCZr2V8GbGf+s7FvT7vQ=;
+	s=arc-20240116; t=1724770893; c=relaxed/simple;
+	bh=tM8Yf03nqhb473X/a3vR2NvB/U2YLRex7KccIZlFVuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAnB13oU7QtVdqZbRdB6y0xRnFYNyTTX9CIQ/aM7TBkqTURAshX63MaBNr/lX5UqzdMX0qith/FE7rooe0IWW8P3BOg0OU7ALY45M9NNfMMzCRttYZb5kefpcfXKd9iQBjYiUrwu+hxr2zgL6/TnHG6WkS9EMAzvP+5M6dCAgnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mh1QTFu7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u1w+ViEMv5LfG9axobdfXrRuR23aBVp+raKTRdKwEBPQNycSTu3ZepwjuKHHYtdf3LMeDzf+VEXlTdYvCTNwQrhNHV6wo9dMqF53VxvSVIqqdLhD6+frOvJ0OAF3SXHOwSYKgq2yGqOTH4NEqPq9ZjHj8VzmRAlBpgDxdwBh+MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtbGFxcq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mh1QTFu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA853C4AF1C;
-	Tue, 27 Aug 2024 15:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtbGFxcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BBDC4DDEF;
+	Tue, 27 Aug 2024 15:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770890;
-	bh=hPsGJyCYasHZSKU9t47CXQWJCZr2V8GbGf+s7FvT7vQ=;
+	s=korg; t=1724770893;
+	bh=tM8Yf03nqhb473X/a3vR2NvB/U2YLRex7KccIZlFVuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mh1QTFu7+vs6q/3BZ1rkekCBktIrLsvSllYpDuV+4HtM44EZNuGbm+tZgT8HREz5G
-	 VL8u0CK6qpEzvWNSS5JYe9aFn9X9F9nJfYW+caItkOTbF6oTSUQBQNKx3ngGeAeJk2
-	 mzTjiUgb1buXUTq174LQsAtClRObRB2ahz3wEuA0=
+	b=wtbGFxcq0CZD9x00Cw2v1Mv2h7vzU84CmhgMMDlMuybRZ9A5a2hsx6isWtAYfV59G
+	 gqeJKOWwQ9yj7sXOWvMDUzk1rQKVSQEZcKp+k0MlJt3q4kT6+uvwkCmtDaQ7BhtZGD
+	 kcJbNBjBW6yPeepFxiOJEp+Ckus0/lQaXAXoaSkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Michael Mueller <mimu@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH 6.10 023/273] KVM: s390: fix validity interception issue when gisa is switched off
-Date: Tue, 27 Aug 2024 16:35:47 +0200
-Message-ID: <20240827143834.272121911@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Peter=20K=C3=A4stle?= <peter@piie.net>,
+	Zhang Rui <rui.zhang@intel.com>
+Subject: [PATCH 6.10 024/273] thermal: gov_bang_bang: Call __thermal_cdev_update() directly
+Date: Tue, 27 Aug 2024 16:35:48 +0200
+Message-ID: <20240827143834.309705472@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -45,94 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Mueller <mimu@linux.ibm.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 5a44bb061d04b0306f2aa8add761d86d152b9377 upstream.
+commit b9b6ee6fe258ce4d89592593efcd3d798c418859 upstream.
 
-We might run into a SIE validity if gisa has been disabled either via using
-kernel parameter "kvm.use_gisa=0" or by setting the related sysfs
-attribute to N (echo N >/sys/module/kvm/parameters/use_gisa).
+Instead of clearing the "updated" flag for each cooling device
+affected by the trip point crossing in bang_bang_control() and
+walking all thermal instances to run thermal_cdev_update() for all
+of the affected cooling devices, call __thermal_cdev_update()
+directly for each of them.
 
-The validity is caused by an invalid value in the SIE control block's
-gisa designation. That happens because we pass the uninitialized gisa
-origin to virt_to_phys() before writing it to the gisa designation.
+No intentional functional impact.
 
-To fix this we return 0 in kvm_s390_get_gisa_desc() if the origin is 0.
-kvm_s390_get_gisa_desc() is used to determine which gisa designation to
-set in the SIE control block. A value of 0 in the gisa designation disables
-gisa usage.
-
-The issue surfaces in the host kernel with the following kernel message as
-soon a new kvm guest start is attemted.
-
-kvm: unhandled validity intercept 0x1011
-WARNING: CPU: 0 PID: 781237 at arch/s390/kvm/intercept.c:101 kvm_handle_sie_intercept+0x42e/0x4d0 [kvm]
-Modules linked in: vhost_net tap tun xt_CHECKSUM xt_MASQUERADE xt_conntrack ipt_REJECT xt_tcpudp nft_compat x_tables nf_nat_tftp nf_conntrack_tftp vfio_pci_core irqbypass vhost_vsock vmw_vsock_virtio_transport_common vsock vhost vhost_iotlb kvm nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set nf_tables sunrpc mlx5_ib ib_uverbs ib_core mlx5_core uvdevice s390_trng eadm_sch vfio_ccw zcrypt_cex4 mdev vfio_iommu_type1 vfio sch_fq_codel drm i2c_core loop drm_panel_orientation_quirks configfs nfnetlink lcs ctcm fsm dm_service_time ghash_s390 prng chacha_s390 libchacha aes_s390 des_s390 libdes sha3_512_s390 sha3_256_s390 sha512_s390 sha256_s390 sha1_s390 sha_common dm_mirror dm_region_hash dm_log zfcp scsi_transport_fc scsi_dh_rdac scsi_dh_emc scsi_dh_alua pkey zcrypt dm_multipath rng_core autofs4 [last unloaded: vfio_pci]
-CPU: 0 PID: 781237 Comm: CPU 0/KVM Not tainted 6.10.0-08682-gcad9f11498ea #6
-Hardware name: IBM 3931 A01 701 (LPAR)
-Krnl PSW : 0704c00180000000 000003d93deb0122 (kvm_handle_sie_intercept+0x432/0x4d0 [kvm])
-           R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:0 PM:0 RI:0 EA:3
-Krnl GPRS: 000003d900000027 000003d900000023 0000000000000028 000002cd00000000
-           000002d063a00900 00000359c6daf708 00000000000bebb5 0000000000001eff
-           000002cfd82e9000 000002cfd80bc000 0000000000001011 000003d93deda412
-           000003ff8962df98 000003d93de77ce0 000003d93deb011e 00000359c6daf960
-Krnl Code: 000003d93deb0112: c020fffe7259	larl	%r2,000003d93de7e5c4
-           000003d93deb0118: c0e53fa8beac	brasl	%r14,000003d9bd3c7e70
-          #000003d93deb011e: af000000		mc	0,0
-          >000003d93deb0122: a728ffea		lhi	%r2,-22
-           000003d93deb0126: a7f4fe24		brc	15,000003d93deafd6e
-           000003d93deb012a: 9101f0b0		tm	176(%r15),1
-           000003d93deb012e: a774fe48		brc	7,000003d93deafdbe
-           000003d93deb0132: 40a0f0ae		sth	%r10,174(%r15)
-Call Trace:
- [<000003d93deb0122>] kvm_handle_sie_intercept+0x432/0x4d0 [kvm]
-([<000003d93deb011e>] kvm_handle_sie_intercept+0x42e/0x4d0 [kvm])
- [<000003d93deacc10>] vcpu_post_run+0x1d0/0x3b0 [kvm]
- [<000003d93deaceda>] __vcpu_run+0xea/0x2d0 [kvm]
- [<000003d93dead9da>] kvm_arch_vcpu_ioctl_run+0x16a/0x430 [kvm]
- [<000003d93de93ee0>] kvm_vcpu_ioctl+0x190/0x7c0 [kvm]
- [<000003d9bd728b4e>] vfs_ioctl+0x2e/0x70
- [<000003d9bd72a092>] __s390x_sys_ioctl+0xc2/0xd0
- [<000003d9be0e9222>] __do_syscall+0x1f2/0x2e0
- [<000003d9be0f9a90>] system_call+0x70/0x98
-Last Breaking-Event-Address:
- [<000003d9bd3c7f58>] __warn_printk+0xe8/0xf0
-
-Cc: stable@vger.kernel.org
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Fixes: fe0ef0030463 ("KVM: s390: sort out physical vs virtual pointers usage")
-Signed-off-by: Michael Mueller <mimu@linux.ibm.com>
-Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240801123109.2782155-1-mimu@linux.ibm.com
-Message-ID: <20240801123109.2782155-1-mimu@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Peter Kästle <peter@piie.net>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Cc: 6.10+ <stable@vger.kernel.org> # 6.10+
+Link: https://patch.msgid.link/13583081.uLZWGnKmhe@rjwysocki.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/kvm-s390.h |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/thermal/gov_bang_bang.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/arch/s390/kvm/kvm-s390.h
-+++ b/arch/s390/kvm/kvm-s390.h
-@@ -267,7 +267,12 @@ static inline unsigned long kvm_s390_get
+--- a/drivers/thermal/gov_bang_bang.c
++++ b/drivers/thermal/gov_bang_bang.c
+@@ -79,12 +79,9 @@ static void bang_bang_control(struct the
+ 		dev_dbg(&instance->cdev->device, "target=%ld\n", instance->target);
  
- static inline u32 kvm_s390_get_gisa_desc(struct kvm *kvm)
- {
--	u32 gd = virt_to_phys(kvm->arch.gisa_int.origin);
-+	u32 gd;
-+
-+	if (!kvm->arch.gisa_int.origin)
-+		return 0;
-+
-+	gd = virt_to_phys(kvm->arch.gisa_int.origin);
+ 		mutex_lock(&instance->cdev->lock);
+-		instance->cdev->updated = false; /* cdev needs update */
++		__thermal_cdev_update(instance->cdev);
+ 		mutex_unlock(&instance->cdev->lock);
+ 	}
+-
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node)
+-		thermal_cdev_update(instance->cdev);
+ }
  
- 	if (gd && sclp.has_gisaf)
- 		gd |= GISA_FORMAT1;
+ static struct thermal_governor thermal_gov_bang_bang = {
 
 
