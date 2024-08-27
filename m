@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB56673466;
-	Tue, 27 Aug 2024 14:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02B51C4EF9;
+	Tue, 27 Aug 2024 14:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769804; cv=none; b=kpIDP/R9xL/yBVo4fJxQt8meNtOy65OrTenUDyz3xW6kEFoaMkWEUHNCR/enKKVJPeGgatlcc25ghUw1XgLadivrElqcbitCI585JD5+0Sw8FfE1wzYxSp6oit7ROUgc1Al15zIZOuZxrHjt3PByhV4W7jKH5ZCQ1b+agkc6bMw=
+	t=1724769808; cv=none; b=YJ+1kmUfWDrJN72gABaw3FKVEsrtJvjQPBh+kfZOonZ2QVtjspp1r+DJJ8iTIdk7bsE+8SgrGRJvwSbyzBYPlhtyDByvcxHEOuxut35WY7TJ3qz9xmOa5vMQ3PLfGVThVZ4qX8v/1VWG7rEKD+zYCDAvthSZgsdktUrJ0rBbwPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769804; c=relaxed/simple;
-	bh=HpG711cAxszgdcYZnLOgF41D/JU8kB/nElqAn6/d5z0=;
+	s=arc-20240116; t=1724769808; c=relaxed/simple;
+	bh=pzDHxjvmilqVgrkfeg2DjaBBkgLaU3mGc3Xar36wZ8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lK8o6u1OPtxtWYtWvDK7AfPkmwKmKTMo9V1usWQuFrLZmO6l+R2+cL1z/Fszlak5rioY3Vmi9t4WIAe7GW208kNuyBDYorUfEVa1paBDb/VbG3m44BDjmE6fr2czAgjZcfS+LBR83kNfzR49X1KkwapwjlMVCEwxMC5edsWm2k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCnx1MtP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DD0+hEIK1mQFqpf/jA0iaOGHtI7tYtC9rVpTYQcvQfxgTeJ5xBtZ6axgHJ6I8EgVHpIzii399wmKz5V0JNqcmAMkD71qXS0egC63htIUanIJOUMC+Y4DtjAzXPXjr9EOmdTvCWVcaVNUlqfPPBtWUa+cmzQLKITthcsYN0rVSWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fF8QsUzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCnx1MtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F2AC61052;
-	Tue, 27 Aug 2024 14:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fF8QsUzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76092C61053;
+	Tue, 27 Aug 2024 14:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769804;
-	bh=HpG711cAxszgdcYZnLOgF41D/JU8kB/nElqAn6/d5z0=;
+	s=korg; t=1724769807;
+	bh=pzDHxjvmilqVgrkfeg2DjaBBkgLaU3mGc3Xar36wZ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCnx1MtPL5h2ZwffPuLkEvFzX0twUUxg464XIUBdnrDUN/kibqux9ygmbB5Tvlwzs
-	 erQJU+gMllamqGi6L6YGsKtN+Q0Os5XyTxnTuqdT72xSOCMbvIdVVGQD3VN6eSnBvb
-	 uG+NRL0kTe97PB1kibwNXiFWXYLrc0mviDFTM6oU=
+	b=fF8QsUzmiWhpe5LGSqScY7THcXWSeswHt2hoW/VkZ3glTyFYlUvzIOMp5DFOMIBni
+	 CdmUipXG7Xo7D7liEzZG7jWKn4gQW/VpRCUXF3Qw2ajDfE+Ex5G8wR2MMh1swOOs8Z
+	 hs9iXaKVh8waFxDBF5zsdqaS0ScMQZwVrJmK05VY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kota <nospam@kota.moe>,
-	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 040/341] btrfs: tree-checker: reject BTRFS_FT_UNKNOWN dir type
-Date: Tue, 27 Aug 2024 16:34:31 +0200
-Message-ID: <20240827143844.938083769@linuxfoundation.org>
+Subject: [PATCH 6.6 041/341] btrfs: zoned: properly take lock to read/update block groups zoned variables
+Date: Tue, 27 Aug 2024 16:34:32 +0200
+Message-ID: <20240827143844.977521416@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,58 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 31723c9542dba1681cc3720571fdf12ffe0eddd9 upstream.
+commit e30729d4bd4001881be4d1ad4332a5d4985398f8 upstream.
 
-[REPORT]
-There is a bug report that kernel is rejecting a mismatching inode mode
-and its dir item:
+__btrfs_add_free_space_zoned() references and modifies bg's alloc_offset,
+ro, and zone_unusable, but without taking the lock. It is mostly safe
+because they monotonically increase (at least for now) and this function is
+mostly called by a transaction commit, which is serialized by itself.
 
-  [ 1881.553937] BTRFS critical (device dm-0): inode mode mismatch with
-  dir: inode mode=040700 btrfs type=2 dir type=0
+Still, taking the lock is a safer and correct option and I'm going to add a
+change to reset zone_unusable while a block group is still alive. So, add
+locking around the operations.
 
-[CAUSE]
-It looks like the inode mode is correct, while the dir item type
-0 is BTRFS_FT_UNKNOWN, which should not be generated by btrfs at all.
-
-This may be caused by a memory bit flip.
-
-[ENHANCEMENT]
-Although tree-checker is not able to do any cross-leaf verification, for
-this particular case we can at least reject any dir type with
-BTRFS_FT_UNKNOWN.
-
-So here we enhance the dir type check from [0, BTRFS_FT_MAX), to
-(0, BTRFS_FT_MAX).
-Although the existing corruption can not be fixed just by such enhanced
-checking, it should prevent the same 0x2->0x0 bitflip for dir type to
-reach disk in the future.
-
-Reported-by: Kota <nospam@kota.moe>
-Link: https://lore.kernel.org/linux-btrfs/CACsxjPYnQF9ZF-0OhH16dAx50=BXXOcP74MxBc3BG+xae4vTTw@mail.gmail.com/
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Fixes: 169e0da91a21 ("btrfs: zoned: track unusable bytes for zones")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/free-space-cache.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -548,9 +548,10 @@ static int check_dir_item(struct extent_
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -2696,15 +2696,16 @@ static int __btrfs_add_free_space_zoned(
+ 	u64 offset = bytenr - block_group->start;
+ 	u64 to_free, to_unusable;
+ 	int bg_reclaim_threshold = 0;
+-	bool initial = ((size == block_group->length) && (block_group->alloc_offset == 0));
++	bool initial;
+ 	u64 reclaimable_unusable;
  
- 		/* dir type check */
- 		dir_type = btrfs_dir_ftype(leaf, di);
--		if (unlikely(dir_type >= BTRFS_FT_MAX)) {
-+		if (unlikely(dir_type <= BTRFS_FT_UNKNOWN ||
-+			     dir_type >= BTRFS_FT_MAX)) {
- 			dir_item_err(leaf, slot,
--			"invalid dir item type, have %u expect [0, %u)",
-+			"invalid dir item type, have %u expect (0, %u)",
- 				dir_type, BTRFS_FT_MAX);
- 			return -EUCLEAN;
- 		}
+-	WARN_ON(!initial && offset + size > block_group->zone_capacity);
++	spin_lock(&block_group->lock);
+ 
++	initial = ((size == block_group->length) && (block_group->alloc_offset == 0));
++	WARN_ON(!initial && offset + size > block_group->zone_capacity);
+ 	if (!initial)
+ 		bg_reclaim_threshold = READ_ONCE(sinfo->bg_reclaim_threshold);
+ 
+-	spin_lock(&ctl->tree_lock);
+ 	if (!used)
+ 		to_free = size;
+ 	else if (initial)
+@@ -2717,7 +2718,9 @@ static int __btrfs_add_free_space_zoned(
+ 		to_free = offset + size - block_group->alloc_offset;
+ 	to_unusable = size - to_free;
+ 
++	spin_lock(&ctl->tree_lock);
+ 	ctl->free_space += to_free;
++	spin_unlock(&ctl->tree_lock);
+ 	/*
+ 	 * If the block group is read-only, we should account freed space into
+ 	 * bytes_readonly.
+@@ -2726,11 +2729,8 @@ static int __btrfs_add_free_space_zoned(
+ 		block_group->zone_unusable += to_unusable;
+ 		WARN_ON(block_group->zone_unusable > block_group->length);
+ 	}
+-	spin_unlock(&ctl->tree_lock);
+ 	if (!used) {
+-		spin_lock(&block_group->lock);
+ 		block_group->alloc_offset -= size;
+-		spin_unlock(&block_group->lock);
+ 	}
+ 
+ 	reclaimable_unusable = block_group->zone_unusable -
+@@ -2744,6 +2744,8 @@ static int __btrfs_add_free_space_zoned(
+ 		btrfs_mark_bg_to_reclaim(block_group);
+ 	}
+ 
++	spin_unlock(&block_group->lock);
++
+ 	return 0;
+ }
+ 
 
 
