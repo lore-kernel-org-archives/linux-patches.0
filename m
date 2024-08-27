@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C57344C8C;
-	Tue, 27 Aug 2024 14:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EED19F485;
+	Tue, 27 Aug 2024 14:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770218; cv=none; b=CnpEw/SecEF8FY8P/bdjWIUPLHB7w9Z9n8Z6czuKLgcgVrPxOuuYxEDIrBAk1GJy7SS/jziAtpgSAfN9/Gpa9Li6LWyNESOQe5sPsq70pdy4FgjJFrA5C34UOyAHktm6c5piz3qXLjc/kJrVVm6ErskYVAr2693gXFFBIRLmReU=
+	t=1724770221; cv=none; b=s0d+PWx9/GiYOmPWl5Sz36b5+TRcyUIMyq8as8WgT9bDYcnpPagj/guHEDRY/J/7oB2FjNnagZPTQAPZOCXF4E9aw+0CZdaL03bO2CJlh5A2FV4dKNRK3M9+YbU+leMg6GNh4IynP4lkRDkTUTSUZWIm/F10jewrRwkD0Vup83M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770218; c=relaxed/simple;
-	bh=09YV7xuHPPZXF2GUsAYeuKexKRXS6Jsr3sCmCEyt0hs=;
+	s=arc-20240116; t=1724770221; c=relaxed/simple;
+	bh=84gKEwTgPBFji81vOGX0RCT/t4fty+mfkNmv97U3Ipc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVE4KViVcGQT2OPbqFY/NOkic1i8JY8GyldAqSyzlPhPX/L51eELEJ9N3qxA5nsU3CyvHYXEl68nuP8V6KOkcfMSe8nPouj7nfsgegxayYrmBQtq3yNPV0n/w7uDXtykD+y+4OG6HHpZeDVPQOS21cC08PyHTQfiDSfkObat6TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nukhPI0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X4tgBDVgvcjPWFk4fg2DF9dysPiBdFGtXRvIfPiB00ycT9i9NowFmEm6XuBnQPaOlbuJfkxvjH5mKK7C3U5cukEgbcuvo6XzKO06LHvASRlfF5g7xJ50SbvhYaBD+C8AfoBmxOL/bd4QdmFx5S2ZaPLJHOS7I0fExioeNyLWKJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJHyr7Mf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nukhPI0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94416C4DDEF;
-	Tue, 27 Aug 2024 14:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJHyr7Mf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41C6C4DDF5;
+	Tue, 27 Aug 2024 14:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770218;
-	bh=09YV7xuHPPZXF2GUsAYeuKexKRXS6Jsr3sCmCEyt0hs=;
+	s=korg; t=1724770221;
+	bh=84gKEwTgPBFji81vOGX0RCT/t4fty+mfkNmv97U3Ipc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nukhPI0xRo4f8xv+c/nc0DRIthLhbHux5bU+QlI+ynGp3T4HFIiZQ0ltLgkEFzcVZ
-	 8MgwaFUcTQO6zMSTYW8ZDO/nuDoOwPKamtiwuPaDekMVxqmxgX317+r4vG/iJxJFwT
-	 HdztUTWotJTlGcK9mkE6/gbGLBQquyNxdSz+llYk=
+	b=UJHyr7MfmmcWye6UxIYfEM2uEIuJiWdJWlDS1Oprx+cFeOuHStsPkvX48iey8LK5L
+	 wrvnuuJFToLNeOShDhF18x+W/3UniQakmLFFRfgr/v9Z0AmIeAnj8WWLqqN8dJAhlr
+	 Gi39z7kMNcr/EPCSzojkooWhvDuJAfDSCtCJjf44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/341] fs: binfmt_elf_efpic: dont use missing interpreters properties
-Date: Tue, 27 Aug 2024 16:36:34 +0200
-Message-ID: <20240827143849.615922598@linuxfoundation.org>
+Subject: [PATCH 6.6 164/341] scsi: lpfc: Initialize status local variable in lpfc_sli4_repost_sgl_list()
+Date: Tue, 27 Aug 2024 16:36:35 +0200
+Message-ID: <20240827143849.653140572@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,41 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 15fd1dc3dadb4268207fa6797e753541aca09a2a ]
+[ Upstream commit 3d0f9342ae200aa1ddc4d6e7a573c6f8f068d994 ]
 
-Static FDPIC executable may get an executable stack even when it has
-non-executable GNU_STACK segment. This happens when STACK segment has rw
-permissions, but does not specify stack size. In that case FDPIC loader
-uses permissions of the interpreter's stack, and for static executables
-with no interpreter it results in choosing the arch-default permissions
-for the stack.
+A static code analyzer tool indicates that the local variable called status
+in the lpfc_sli4_repost_sgl_list() routine could be used to print garbage
+uninitialized values in the routine's log message.
 
-Fix that by using the interpreter's properties only when the interpreter
-is actually used.
+Fix by initializing to zero.
 
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-Link: https://lore.kernel.org/r/20240118150637.660461-1-jcmvbkbc@gmail.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240131185112.149731-2-justintee8345@gmail.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_elf_fdpic.c | 2 +-
+ drivers/scsi/lpfc/lpfc_sli.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/binfmt_elf_fdpic.c b/fs/binfmt_elf_fdpic.c
-index 206812ce544ae..96a8b13b57d96 100644
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -320,7 +320,7 @@ static int load_elf_fdpic_binary(struct linux_binprm *bprm)
- 	else
- 		executable_stack = EXSTACK_DEFAULT;
- 
--	if (stack_size == 0) {
-+	if (stack_size == 0 && interp_params.flags & ELF_FDPIC_FLAG_PRESENT) {
- 		stack_size = interp_params.stack_size;
- 		if (interp_params.flags & ELF_FDPIC_FLAG_EXEC_STACK)
- 			executable_stack = EXSTACK_ENABLE_X;
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 5af669b930193..9cd22588c8eb3 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -7577,7 +7577,7 @@ lpfc_sli4_repost_sgl_list(struct lpfc_hba *phba,
+ 	struct lpfc_sglq *sglq_entry = NULL;
+ 	struct lpfc_sglq *sglq_entry_next = NULL;
+ 	struct lpfc_sglq *sglq_entry_first = NULL;
+-	int status, total_cnt;
++	int status = 0, total_cnt;
+ 	int post_cnt = 0, num_posted = 0, block_cnt = 0;
+ 	int last_xritag = NO_XRI;
+ 	LIST_HEAD(prep_sgl_list);
 -- 
 2.43.0
 
