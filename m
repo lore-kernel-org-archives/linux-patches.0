@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AF81C578E;
-	Tue, 27 Aug 2024 14:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94161C57A3;
+	Tue, 27 Aug 2024 14:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769937; cv=none; b=C0YlYRwYdsSRakav8Z4+kC5cxfoTEiZy6ydjHq7J9Pr9S3z7GQuhzytyIYteEG/yC/Va/Yignl5/Je/S5Lqd5t+bmjI9+sv4/XtYa1nOG94rF3yHRBzO1m26ojIRDVnYTQ8BeeM9pTeXPTws82S/wP28KVsidu+IxvMlr6HSyNo=
+	t=1724769941; cv=none; b=rrRlm1kl64wGnBWeMAeuuT8nOQ3NyYAg1tVAeOB/QibUWVB5yfUWGGsQjhW1xs9V3nMS9J24qYSVeDQiK+geVDmKEcll8HOT95HpIWauuB68jq7HBslS0jXBH2N7O2bHGVa5+SGhh3zQXa7o4m6xC3OQgP5f0aRLQB2TjxUxM30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769937; c=relaxed/simple;
-	bh=XZEsibTtekLbj7UHYwn1KpEl7pnS0XFxCSqRnXUocZ0=;
+	s=arc-20240116; t=1724769941; c=relaxed/simple;
+	bh=PKJ8Arhwpey/JU2wtZcfGobKhRazGc5xeoc/6pfeQUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqN2JTHW2+qvpzJmRd6KVSCQm2Q7BzovuQCr5BITHpm6sTy4IC7HzTqcuRNoO6RJum6tQGA3MZU6McwAGAVWyc33MlP6ZuPdw94FHEXJrdlnfc4NtS77oyHhFZoCOvlD26f13dqVaiHIQem/IuQK6YzhWw6DuBvTXew9r9d9D4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptW5DgTP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fx9GvN/kxN4Q+F8POuIQZhBawBXxRQ7e3L5AYR/h1DEpWCjuxao92KxGOhEJwNzxBv9LQmg1yDi+xiw06LD0/JSsYNytEOY6H5OFVv6zwhxtAclKYRCSgfkjkYbQDNcNe2FRf9uv3/6Cj6+Mzmfhh+p4SglhSpVucyP/CteRAY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvWkF5g3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptW5DgTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403EEC61063;
-	Tue, 27 Aug 2024 14:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvWkF5g3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE72C6106D;
+	Tue, 27 Aug 2024 14:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769937;
-	bh=XZEsibTtekLbj7UHYwn1KpEl7pnS0XFxCSqRnXUocZ0=;
+	s=korg; t=1724769941;
+	bh=PKJ8Arhwpey/JU2wtZcfGobKhRazGc5xeoc/6pfeQUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptW5DgTPcp29/EGOiVHCun1VkDPnee546EM9acQo+KyVY9q04pnOETMvEpVwNJnTO
-	 +xn1dKRcKKNsc1EAgDKOokYiT0PYBuue6n/qke5S5BpM/RaNfAXAHJFICD7DCm7YNZ
-	 yKzl9EMnwWnMBEXkLv2uO5AvmtRHUBC1btreH/S4=
+	b=FvWkF5g3OrTY5tnIc/uZ3KkbdNH3wo+p7scEEh5ZwpV8j0cPOHFGmefBOFiyYia78
+	 AOEXCvxbccqL1+xTYpBfp47adUaPZNibZygZ3OHDd6xb3e/FJ1qvrrUyU3tsk/MyJx
+	 iwhDE556Fl8+G18lYo+chmSBZKZW9XVeiHO41BmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/341] igc: Fix reset adapter logics when tx mode change
-Date: Tue, 27 Aug 2024 16:34:42 +0200
-Message-ID: <20240827143845.360929510@linuxfoundation.org>
+Subject: [PATCH 6.6 078/341] net: hns3: fix wrong use of semaphore up
+Date: Tue, 27 Aug 2024 16:35:09 +0200
+Message-ID: <20240827143846.379899155@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -54,103 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit 0afeaeb5dae86aceded0d5f0c3a54d27858c0c6f ]
+[ Upstream commit 8445d9d3c03101859663d34fda747f6a50947556 ]
 
-Following the "igc: Fix TX Hang issue when QBV Gate is close" changes,
-remaining issues with the reset adapter logic in igc_tsn_offload_apply()
-have been observed:
+Currently, if hns3 PF or VF FLR reset failed after five times retry,
+the reset done process will directly release the semaphore
+which has already released in hclge_reset_prepare_general.
+This will cause down operation fail.
 
-1. The reset adapter logics for i225 and i226 differ, although they should
-   be the same according to the guidelines in I225/6 HW Design Section
-   7.5.2.1 on software initialization during tx mode changes.
-2. The i225 resets adapter every time, even though tx mode doesn't change.
-   This occurs solely based on the condition  igc_is_device_id_i225() when
-   calling schedule_work().
-3. i226 doesn't reset adapter for tsn->legacy tx mode changes. It only
-   resets adapter for legacy->tsn tx mode transitions.
-4. qbv_count introduced in the patch is actually not needed; in this
-   context, a non-zero value of qbv_count is used to indicate if tx mode
-   was unconditionally set to tsn in igc_tsn_enable_offload(). This could
-   be replaced by checking the existing register
-   IGC_TQAVCTRL_TRANSMIT_MODE_TSN bit.
+So this patch fixes it by adding reset state judgement. The up operation is
+only called after successful PF FLR reset.
 
-This patch resolves all issues and enters schedule_work() to reset the
-adapter only when changing tx mode. It also removes reliance on qbv_count.
-
-qbv_count field will be removed in a future patch.
-
-Test ran:
-
-1. Verify reset adapter behaviour in i225/6:
-   a) Enrol a new GCL
-      Reset adapter observed (tx mode change legacy->tsn)
-   b) Enrol a new GCL without deleting qdisc
-      No reset adapter observed (tx mode remain tsn->tsn)
-   c) Delete qdisc
-      Reset adapter observed (tx mode change tsn->legacy)
-
-2. Tested scenario from "igc: Fix TX Hang issue when QBV Gate is closed"
-   to confirm it remains resolved.
-
-Fixes: 175c241288c0 ("igc: Fix TX Hang issue when QBV Gate is closed")
-Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 8627bdedc435 ("net: hns3: refactor the precedure of PF FLR")
+Fixes: f28368bb4542 ("net: hns3: refactor the procedure of VF FLR")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 4 ++--
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 8ed7b965484da..ada7514305171 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -49,6 +49,13 @@ static unsigned int igc_tsn_new_flags(struct igc_adapter *adapter)
- 	return new_flags;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index c8059d96f64be..ad8e56234b284 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -11430,8 +11430,8 @@ static void hclge_reset_done(struct hnae3_ae_dev *ae_dev)
+ 		dev_err(&hdev->pdev->dev, "fail to rebuild, ret=%d\n", ret);
+ 
+ 	hdev->reset_type = HNAE3_NONE_RESET;
+-	clear_bit(HCLGE_STATE_RST_HANDLING, &hdev->state);
+-	up(&hdev->reset_sem);
++	if (test_and_clear_bit(HCLGE_STATE_RST_HANDLING, &hdev->state))
++		up(&hdev->reset_sem);
  }
  
-+static bool igc_tsn_is_tx_mode_in_tsn(struct igc_adapter *adapter)
-+{
-+	struct igc_hw *hw = &adapter->hw;
-+
-+	return !!(rd32(IGC_TQAVCTRL) & IGC_TQAVCTRL_TRANSMIT_MODE_TSN);
-+}
-+
- void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
- {
- 	struct igc_hw *hw = &adapter->hw;
-@@ -365,15 +372,22 @@ int igc_tsn_reset(struct igc_adapter *adapter)
- 	return err;
+ static void hclge_clear_resetting_state(struct hclge_dev *hdev)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 43ee20eb03d1f..affdd9d70549a 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -1710,8 +1710,8 @@ static void hclgevf_reset_done(struct hnae3_ae_dev *ae_dev)
+ 			 ret);
+ 
+ 	hdev->reset_type = HNAE3_NONE_RESET;
+-	clear_bit(HCLGEVF_STATE_RST_HANDLING, &hdev->state);
+-	up(&hdev->reset_sem);
++	if (test_and_clear_bit(HCLGEVF_STATE_RST_HANDLING, &hdev->state))
++		up(&hdev->reset_sem);
  }
  
--int igc_tsn_offload_apply(struct igc_adapter *adapter)
-+static bool igc_tsn_will_tx_mode_change(struct igc_adapter *adapter)
- {
--	struct igc_hw *hw = &adapter->hw;
-+	bool any_tsn_enabled = !!(igc_tsn_new_flags(adapter) &
-+				  IGC_FLAG_TSN_ANY_ENABLED);
-+
-+	return (any_tsn_enabled && !igc_tsn_is_tx_mode_in_tsn(adapter)) ||
-+	       (!any_tsn_enabled && igc_tsn_is_tx_mode_in_tsn(adapter));
-+}
- 
--	/* Per I225/6 HW Design Section 7.5.2.1, transmit mode
--	 * cannot be changed dynamically. Require reset the adapter.
-+int igc_tsn_offload_apply(struct igc_adapter *adapter)
-+{
-+	/* Per I225/6 HW Design Section 7.5.2.1 guideline, if tx mode change
-+	 * from legacy->tsn or tsn->legacy, then reset adapter is needed.
- 	 */
- 	if (netif_running(adapter->netdev) &&
--	    (igc_is_device_id_i225(hw) || !adapter->qbv_count)) {
-+	    igc_tsn_will_tx_mode_change(adapter)) {
- 		schedule_work(&adapter->reset_task);
- 		return 0;
- 	}
+ static u32 hclgevf_get_fw_version(struct hnae3_handle *handle)
 -- 
 2.43.0
 
