@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6288073466;
-	Tue, 27 Aug 2024 14:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B4F73466;
+	Tue, 27 Aug 2024 14:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770594; cv=none; b=UQlmv+FqO5B/q4gA5giKBaEbqZ90H/UfVpSoYsn9L/mOt6uKX3MunU+Cal29SL8wfnsGbrOfnS0duh611K+iYasQjBgp0J+my4y9cEMY4yZBy6Gqw3Un7WGzmJFspRBDYB9AGHSQrQ7t8vFgtJMIim/+VRym9Hu2VZLxsZ+y8Bk=
+	t=1724770597; cv=none; b=bYUV3zqLQNxFpTBu4Ieygq+2qWRgy0MjD4PprtIyd+NljqNC6iK/tfjbNyLUEbcarrbZAKi7a46Gq1crE+kLTjnL4Jw6DGATp+PUBynSSTwjXYctxKxNtQGriaSgR51Ibxl5oiDdGoEm2KuwCf4/0dnyzIReZFoSk8X1qARWupE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770594; c=relaxed/simple;
-	bh=dbP2hSCUi4zr/ohACVfTzeFNN9ydKcm4jgB+ZNu7MeE=;
+	s=arc-20240116; t=1724770597; c=relaxed/simple;
+	bh=F17fGsknjvZCzxIciYeHBtbtDx5gZlW8eq+FdgyISbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gInV7u5unz4O2x3IpCW4cet65Vg5H7lt8IgYAPK4F1Xo9oe6bslymZXC1gj+KQGkB6YgJaFqA5YoOuvml9yYZDcYEomEovJzlbY0CG93DDQ1iUXdG5kJcsiakKLnvC3W1Rp4ebf0+2OyazTzVoQQ+h7zNhkYibZ9JjV8lmw6ebw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHUssLUT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TkcedTf7dLHs7H3DkuEnoau/dq9JJbCcecS7tquNnfGVwxkqxDT6d3/AU3y6aNFXJcFWhQ5ROJvyHf9Q5KUXCHclUHVjNXltoIrXywREEWZOLNUpWFM1O6uQqYDLTV8WkKa+iIyjiVWvDASjpqiyFh2hyAEPVYBORy430EPH3Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6gSKCpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHUssLUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642D4C4FE01;
-	Tue, 27 Aug 2024 14:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6gSKCpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D31C4FE02;
+	Tue, 27 Aug 2024 14:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770593;
-	bh=dbP2hSCUi4zr/ohACVfTzeFNN9ydKcm4jgB+ZNu7MeE=;
+	s=korg; t=1724770597;
+	bh=F17fGsknjvZCzxIciYeHBtbtDx5gZlW8eq+FdgyISbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHUssLUTyGxMfdaus3UJyaB3A+JFyXnBka9YN1ujKub7Ta4+7Xz+XxPkZyqTxHsVL
-	 RcYJb1IkwCpmk+wOvbDrTBuU5KmTPaaDoZYHWOYm2pJDHKbLfCYY/Zh3FSgTRvdW3a
-	 2EDDnNUC2SplKg5rvyVWs/FkAhN5bGUCZa1i9HLA=
+	b=b6gSKCpWhYzgjiDEWahjHZHj1k+R05gtWFnJ7ymWdk8N1HijlfVPB9Ozh2DXoODMV
+	 O9EUL420WVqkIPt/dcKHw03dnGIPj7CkJ7vfPw7mTzsF5Mxu8PF3bG/ePRDJOBGDi4
+	 NhXBYHidCfmZUXCuGz+qL/qzAzvmr5vRjrJhsTIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Simon Horman <horms@kernel.org>,
+	Menglong Dong <dongml2@chinatelecom.cn>,
+	Adrian Moreno <amorenoz@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 275/341] net: xilinx: axienet: Fix dangling multicast addresses
-Date: Tue, 27 Aug 2024 16:38:26 +0200
-Message-ID: <20240827143853.862771441@linuxfoundation.org>
+Subject: [PATCH 6.6 276/341] net: ovs: fix ovs_drop_reasons error
+Date: Tue, 27 Aug 2024 16:38:27 +0200
+Message-ID: <20240827143853.902658375@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,92 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-[ Upstream commit 797a68c9de0f5a5447baf4bd3bb9c10a3993435b ]
+[ Upstream commit 57fb67783c4011581882f32e656d738da1f82042 ]
 
-If a multicast address is removed but there are still some multicast
-addresses, that address would remain programmed into the frame filter.
-Fix this by explicitly setting the enable bit for each filter.
+There is something wrong with ovs_drop_reasons. ovs_drop_reasons[0] is
+"OVS_DROP_LAST_ACTION", but OVS_DROP_LAST_ACTION == __OVS_DROP_REASON + 1,
+which means that ovs_drop_reasons[1] should be "OVS_DROP_LAST_ACTION".
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240822154059.1066595-3-sean.anderson@linux.dev
+And as Adrian tested, without the patch, adding flow to drop packets
+results in:
+
+drop at: do_execute_actions+0x197/0xb20 [openvsw (0xffffffffc0db6f97)
+origin: software
+input port ifindex: 8
+timestamp: Tue Aug 20 10:19:17 2024 859853461 nsec
+protocol: 0x800
+length: 98
+original length: 98
+drop reason: OVS_DROP_ACTION_ERROR
+
+With the patch, the same results in:
+
+drop at: do_execute_actions+0x197/0xb20 [openvsw (0xffffffffc0db6f97)
+origin: software
+input port ifindex: 8
+timestamp: Tue Aug 20 10:16:13 2024 475856608 nsec
+protocol: 0x800
+length: 98
+original length: 98
+drop reason: OVS_DROP_LAST_ACTION
+
+Fix this by initializing ovs_drop_reasons with index.
+
+Fixes: 9d802da40b7c ("net: openvswitch: add last-action drop reason")
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
+Tested-by: Adrian Moreno <amorenoz@redhat.com>
+Reviewed-by: Adrian Moreno <amorenoz@redhat.com>
+Link: https://patch.msgid.link/20240821123252.186305-1-dongml2@chinatelecom.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h  |  1 +
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 21 ++++++++-----------
- 2 files changed, 10 insertions(+), 12 deletions(-)
+ net/openvswitch/datapath.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index a62c2b4c6b2f2..f09f10f17d7ea 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -169,6 +169,7 @@
- #define XAE_UAW0_OFFSET		0x00000700 /* Unicast address word 0 */
- #define XAE_UAW1_OFFSET		0x00000704 /* Unicast address word 1 */
- #define XAE_FMI_OFFSET		0x00000708 /* Frame Filter Control */
-+#define XAE_FFE_OFFSET		0x0000070C /* Frame Filter Enable */
- #define XAE_AF0_OFFSET		0x00000710 /* Address Filter 0 */
- #define XAE_AF1_OFFSET		0x00000714 /* Address Filter 1 */
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 11c69415c6052..b7232142c13f8 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -2707,7 +2707,7 @@ static struct pernet_operations ovs_net_ops = {
+ };
  
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 9afd9b7f3044e..144feb7a2fdac 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -412,7 +412,7 @@ static int netdev_set_mac_address(struct net_device *ndev, void *p)
-  */
- static void axienet_set_multicast_list(struct net_device *ndev)
- {
--	int i;
-+	int i = 0;
- 	u32 reg, af0reg, af1reg;
- 	struct axienet_local *lp = netdev_priv(ndev);
- 
-@@ -434,7 +434,6 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 		reg &= ~XAE_FMI_PM_MASK;
- 		axienet_iow(lp, XAE_FMI_OFFSET, reg);
- 
--		i = 0;
- 		netdev_for_each_mc_addr(ha, ndev) {
- 			if (i >= XAE_MULTICAST_CAM_TABLE_NUM)
- 				break;
-@@ -453,6 +452,7 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 			axienet_iow(lp, XAE_FMI_OFFSET, reg);
- 			axienet_iow(lp, XAE_AF0_OFFSET, af0reg);
- 			axienet_iow(lp, XAE_AF1_OFFSET, af1reg);
-+			axienet_iow(lp, XAE_FFE_OFFSET, 1);
- 			i++;
- 		}
- 	} else {
-@@ -460,18 +460,15 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 		reg &= ~XAE_FMI_PM_MASK;
- 
- 		axienet_iow(lp, XAE_FMI_OFFSET, reg);
--
--		for (i = 0; i < XAE_MULTICAST_CAM_TABLE_NUM; i++) {
--			reg = axienet_ior(lp, XAE_FMI_OFFSET) & 0xFFFFFF00;
--			reg |= i;
--
--			axienet_iow(lp, XAE_FMI_OFFSET, reg);
--			axienet_iow(lp, XAE_AF0_OFFSET, 0);
--			axienet_iow(lp, XAE_AF1_OFFSET, 0);
--		}
--
- 		dev_info(&ndev->dev, "Promiscuous mode disabled.\n");
- 	}
-+
-+	for (; i < XAE_MULTICAST_CAM_TABLE_NUM; i++) {
-+		reg = axienet_ior(lp, XAE_FMI_OFFSET) & 0xFFFFFF00;
-+		reg |= i;
-+		axienet_iow(lp, XAE_FMI_OFFSET, reg);
-+		axienet_iow(lp, XAE_FFE_OFFSET, 0);
-+	}
- }
- 
- /**
+ static const char * const ovs_drop_reasons[] = {
+-#define S(x)	(#x),
++#define S(x) [(x) & ~SKB_DROP_REASON_SUBSYS_MASK] = (#x),
+ 	OVS_DROP_REASONS(S)
+ #undef S
+ };
 -- 
 2.43.0
 
