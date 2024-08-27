@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592B31C578D;
-	Tue, 27 Aug 2024 14:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C7815F41B;
+	Tue, 27 Aug 2024 14:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770144; cv=none; b=uqrpqmu2c6nuanRVuYkCLQXLb+IxTqLRDbfMjJV+a9C7Gtp5MKXs23pEww3kOlsdXSmSCM84zg9xEXrWYreEso8aA+68SI4pKaCcXSMPguveUk+mCN1xXSuC2d97+6IQSr3ru8HpOUHNL18Np4WhwOPRKAva9toFwGJ5+YmcMFg=
+	t=1724770147; cv=none; b=H9556xCmIppVfHBa2D8nNMxp6Ci8iuxPG39iWg2hL++xpROQ8rixk1947tLwT3wcggTDOyMlt1pbr+XMuoxzNFJNe2+YdzgyKXDfCkLlhKtVEQ5/MuZ2s54UI+39YUgnplE1Uav5r2eWBGQm09XuGLdluc1wcLW/JH++NK6VzTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770144; c=relaxed/simple;
-	bh=ATtyuePT89OZPPFD5WAwa5dYeDiQw+wZZGFdIfBwXuU=;
+	s=arc-20240116; t=1724770147; c=relaxed/simple;
+	bh=lU7YCi8sa+I4NQOSH7v7ssjPGu0TtAxCDRbU9BbvREc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqPwzzM+L9WcSQDFTUb7kuswwMcLkTNjqZmF2K6ylpREsnu+W3/56Lc3s4fX+tilOIElj1IOlJoaTCwk7pUaOGL6Sk+RjjHxGT6eqbzAP/69XbPVV0rgI26GTWx9ppOBXfCgZKkNoOLE3JhHaAX95ipX03q7fy4oaL60ZNeGUfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyvQbgQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gHBdRdqCy+1v4ooyofSYNopSx1d/DvZGAvUFNKwIxMtoGPH0vyLh8b5Jpiw4jIUw4XXKXY5IaSaR6j1x687HaWNyF6wLBceD3goGLQ+J0ySjHWTuWSRgV+HcQ6jX166avF8tHAoXYJJydI3F2Ah4Yr3+1Zn7ySqYUaM7YQDvAk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDJXDE+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyvQbgQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC72C4AF0E;
-	Tue, 27 Aug 2024 14:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDJXDE+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A0CC4AF10;
+	Tue, 27 Aug 2024 14:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770144;
-	bh=ATtyuePT89OZPPFD5WAwa5dYeDiQw+wZZGFdIfBwXuU=;
+	s=korg; t=1724770147;
+	bh=lU7YCi8sa+I4NQOSH7v7ssjPGu0TtAxCDRbU9BbvREc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FyvQbgQ+xTREptzJDUmtLURGCloLA1SdXEXwUKKQupAS8vR/ku0ACydaltEUoJKcB
-	 K2A5d7Mzj8jB1WhDNt4IdI0FO/y2GS/MuJPxuc7wW2nSYLtCdkJlylMUVTd6J3LCTR
-	 jU3zsc4tYEoR1mgoNF8j/vum9VuNvS4LAC3jGS44=
+	b=kDJXDE+orRMJ7TRFgv3jS6HjOldlWzlPNQS54o+xT/Iy6B40ISLuvaq0nc/EuIzNV
+	 E+yz/+VHfGtjKu5UQkCSAt9AGtUfKaU8Cq8lQquCtM+A+wLBSVE/rJx4J7OsF+50O8
+	 OH8J1glM3rmdZR62DyD5tVYSqRj4eRXPDdWBO7pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
+	Ashish Mhetre <amhetre@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/341] drm/msm: Reduce fallout of fence signaling vs reclaim hangs
-Date: Tue, 27 Aug 2024 16:36:11 +0200
-Message-ID: <20240827143848.747180385@linuxfoundation.org>
+Subject: [PATCH 6.6 141/341] memory: tegra: Skip SID programming if SID registers arent set
+Date: Tue, 27 Aug 2024 16:36:12 +0200
+Message-ID: <20240827143848.785279232@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Ashish Mhetre <amhetre@nvidia.com>
 
-[ Upstream commit 4bea53b9c7c72fd12a0ceebe88a71723c0a514b8 ]
+[ Upstream commit 0d6c918011ce4764ed277de4726a468b7ffe5fed ]
 
-Until various PM devfreq/QoS and interconnect patches land, we could
-potentially trigger reclaim from gpu scheduler thread, and under enough
-memory pressure that could trigger a sort of deadlock.  Eventually the
-wait will timeout and we'll move on to consider other GEM objects.  But
-given that there is still a potential for deadlock/stalling, we should
-reduce the timeout to contain the damage.
+There are few MC clients where SID security and override register
+offsets are not specified like "sw_cluster0" in tegra234. Don't program
+SID override for such clients because it leads to access to invalid
+addresses.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/568031/
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Link: https://lore.kernel.org/r/20231107112713.21399-2-amhetre@nvidia.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memory/tegra/tegra186.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index f38296ad87434..0641f5bb8649a 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -76,7 +76,7 @@ static bool
- wait_for_idle(struct drm_gem_object *obj)
+diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
+index 533f85a4b2bdb..7633481e547d2 100644
+--- a/drivers/memory/tegra/tegra186.c
++++ b/drivers/memory/tegra/tegra186.c
+@@ -75,6 +75,9 @@ static void tegra186_mc_client_sid_override(struct tegra_mc *mc,
  {
- 	enum dma_resv_usage usage = dma_resv_usage_rw(true);
--	return dma_resv_wait_timeout(obj->resv, usage, false, 1000) > 0;
-+	return dma_resv_wait_timeout(obj->resv, usage, false, 10) > 0;
- }
+ 	u32 value, old;
  
- static bool
++	if (client->regs.sid.security == 0 && client->regs.sid.override == 0)
++		return;
++
+ 	value = readl(mc->regs + client->regs.sid.security);
+ 	if ((value & MC_SID_STREAMID_SECURITY_OVERRIDE) == 0) {
+ 		/*
 -- 
 2.43.0
 
