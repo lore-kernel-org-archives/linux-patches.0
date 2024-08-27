@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2F01C6881;
-	Tue, 27 Aug 2024 15:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E684B1C6881;
+	Tue, 27 Aug 2024 15:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772809; cv=none; b=oySynY0N49Id38X7flktSx7hWRsSwDcLrNCng/7e6Vg56Hc5PupfRRzndqXnwV92wMuEe4/0+3ekyygqo/UrUzt4cb2PgImNoCL39mr0Qnsv0cG8oNYrxPZ9LNvV0EFqS7XZAA2YasqUtd/AWnEy998yY4+QXRitH5+hQuB+qaw=
+	t=1724772813; cv=none; b=qE4j8KrbHaBQu4yY1XhkW8608TZm6mPuH+LtKN1G9sg9R6qSMLHZ1vBvvUM5IzVlu3BERofhtUWyunnOZbdiQdB9QG3mas9DfZtai5ELfSc+5PcOIVX8zyJLN0X0NazQnrjTQO7G4OHS1PJ97CAkopqOQIbF+z7UGT02cVihrQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772809; c=relaxed/simple;
-	bh=IzzHiOllqwOsViX8uIsVTFo1i3CPPim8gVAy8EOj/l4=;
+	s=arc-20240116; t=1724772813; c=relaxed/simple;
+	bh=2qtbzOXbyITtVG5OmkK0xLp/pQ8Nt04H4+J27xFUJDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LMKYj2N7//7PA9qVI9bBQt65rqSXQ9BihlfhPrn1anKBVGo30FI5pBS5g7vt/PAfrR34nKSSi/IRb350ftTM9t7O0+ToXx6TRc47xZUc86KLuez2IAdu8KSVb1oyOeP1KjMls97oAPfvAxdqSF2eaZvAfTGl98EL+AglVGU2sUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWe1kh6i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Peu4F2N8XaNXd03055dVQf9NaPpsC6oD5rIeYe8XovToLO9mrTt2gTc1z8HI8RyPSaq9hZOJjoXx99AthGVo812lT28zyyc5iXwJK6XWcHxHzx8bZtIrzRCUXx7+VdOh7wLjGC+iVZBrR6zDht0upQx/1W00/MFnLK13D1TOZYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHCMz/mj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWe1kh6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9DCC61050;
-	Tue, 27 Aug 2024 15:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHCMz/mj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559D7C61050;
+	Tue, 27 Aug 2024 15:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772809;
-	bh=IzzHiOllqwOsViX8uIsVTFo1i3CPPim8gVAy8EOj/l4=;
+	s=korg; t=1724772812;
+	bh=2qtbzOXbyITtVG5OmkK0xLp/pQ8Nt04H4+J27xFUJDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xWe1kh6i+naFEO0Wo6mJVTRE3jO9dIHZL+dw+cwicFbm+5MJCWPP4KtKTABNv5z3O
-	 PQbzMFlor9+TohU4pT11uT81BjAwW8T3Kkzgvf8tjRORJJFP0N/3yEIbF4F/GTXfxK
-	 sLc8LNtQQ5IwIWlrnuqM4ATeJHKpzajtLWkAow2s=
+	b=yHCMz/mjIxZChfM7ki69yC3Sg9baQy+eguTNDtcSnLisJ+ZDMbaqMFF45mp1nQMgd
+	 57FFBJgHrFQpQU110BJhRxTTdsuwAW7kHRBJ24JCS+qD7jH2P4WponMuyIJ+dcX+AB
+	 Azg2K1346S28XbVihVO7qYpAu+y5x1Ns3N6hzPIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20H=C3=BChn?= <thomas.huehn@hs-nordhausen.de>,
-	Nick Hainke <vincent@systemli.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 308/321] wifi: mac80211: fix receiving mesh packets in forwarding=0 networks
-Date: Tue, 27 Aug 2024 16:40:16 +0200
-Message-ID: <20240827143849.980689391@linuxfoundation.org>
+Subject: [PATCH 6.1 309/321] wifi: mac80211: drop bogus static keywords in A-MSDU rx
+Date: Tue, 27 Aug 2024 16:40:17 +0200
+Message-ID: <20240827143850.019243665@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -46,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -55,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-commit e26c0946a5c1aa4d27f8dfe78f2a72b4550df91f upstream.
+commit 4d78e032fee5d532e189cdb2c3c76112094e9751 upstream.
 
-When forwarding is set to 0, frames are typically sent with ttl=1.
-Move the ttl decrement check below the check for local receive in order to
-fix packet drops.
+These were unintentional copy&paste mistakes.
 
-Reported-by: Thomas Hühn <thomas.huehn@hs-nordhausen.de>
-Reported-by: Nick Hainke <vincent@systemli.org>
+Cc: stable@vger.kernel.org
 Fixes: 986e43b19ae9 ("wifi: mac80211: fix receiving A-MSDU frames on mesh interfaces")
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20230326151709.17743-1-nbd@nbd.name
+Link: https://lore.kernel.org/r/20230330090001.60750-1-nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/mac80211/rx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/net/mac80211/rx.c
 +++ b/net/mac80211/rx.c
-@@ -2774,14 +2774,6 @@ ieee80211_rx_mesh_data(struct ieee80211_
- 	if (sdata->crypto_tx_tailroom_needed_cnt)
- 		tailroom = IEEE80211_ENCRYPT_TAILROOM;
+@@ -2904,7 +2904,7 @@ __ieee80211_rx_h_amsdu(struct ieee80211_
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
+ 	__le16 fc = hdr->frame_control;
+ 	struct sk_buff_head frame_list;
+-	static ieee80211_rx_result res;
++	ieee80211_rx_result res;
+ 	struct ethhdr ethhdr;
+ 	const u8 *check_da = ethhdr.h_dest, *check_sa = ethhdr.h_source;
  
--	if (!--mesh_hdr->ttl) {
--		if (multicast)
--			goto rx_accept;
--
--		IEEE80211_IFSTA_MESH_CTR_INC(ifmsh, dropped_frames_ttl);
--		return RX_DROP_MONITOR;
--	}
--
- 	if (mesh_hdr->flags & MESH_FLAGS_AE) {
- 		struct mesh_path *mppath;
- 		char *proxied_addr;
-@@ -2812,6 +2804,14 @@ ieee80211_rx_mesh_data(struct ieee80211_
- 	if (ether_addr_equal(sdata->vif.addr, eth->h_dest))
- 		goto rx_accept;
+@@ -3045,7 +3045,7 @@ ieee80211_rx_h_data(struct ieee80211_rx_
+ 	struct net_device *dev = sdata->dev;
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)rx->skb->data;
+ 	__le16 fc = hdr->frame_control;
+-	static ieee80211_rx_result res;
++	ieee80211_rx_result res;
+ 	bool port_control;
+ 	int err;
  
-+	if (!--mesh_hdr->ttl) {
-+		if (multicast)
-+			goto rx_accept;
-+
-+		IEEE80211_IFSTA_MESH_CTR_INC(ifmsh, dropped_frames_ttl);
-+		return RX_DROP_MONITOR;
-+	}
-+
- 	if (!ifmsh->mshcfg.dot11MeshForwarding) {
- 		if (is_multicast_ether_addr(eth->h_dest))
- 			goto rx_accept;
 
 
