@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0044A1A01C8;
-	Tue, 27 Aug 2024 14:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735171BC097;
+	Tue, 27 Aug 2024 14:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770393; cv=none; b=lJcprlizplijVJD+7Cre1G04FpvjBQywvS/X0ZNY8hX4hlSRwn/7I6P+/JoPhVfL7Lg7uDz4+27QxRonzbq9LXK+0PE17h3rsnQZvwqcz1VVzQskQXTe525TK3QQ2ztcWzGQXp+i+Kj9BpCf+1FS2UY8N21NOxdb8dI/K6LTpKA=
+	t=1724770396; cv=none; b=UH/N8bvyw4sNvQiTQxNHrn7SuK1zDHRQIfyk/5OWI9X9g+5SkXZ/vNUSPX9Vjmq0kV06GceRS3IWF8/bxOHgUOlOWyqM6EgH7BCeT16CXDKmgBu/6jGmArpb9uEguDd4QucjO9/mCN1QqCpWRae/cW9fMV8MW/EOScVnQY5MSSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770393; c=relaxed/simple;
-	bh=8NmlGVFtyUJ7mzV/51trY5/0ai2tX/VrbWWQwvyLH7U=;
+	s=arc-20240116; t=1724770396; c=relaxed/simple;
+	bh=QQTIBRJtemn34QAnXkZK2w3/MaTiMrbNkiShI7skNjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jN+cSAcLlXE3jpzXQ7fNR3SgqGmPRjRZlJaQyi5SgE3h3DG6q2OMoiiHWP4T9O+dIE7aZ2gV0MCGdQZeYR4bX6Sh5bFP26AshXSiEyMcWQxRZY8EvTbHUcJwQ6qAM/emnJTtNrTGTZwE0XZNEhoefigIiJLSsX7qpVYK3MRQb00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPxJX/7Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bHNXLqWyxr9agziqVLYcSUlSFD3QQYrP+lWn5J0H7/Z/KOGBpqaZ4S++impsRLsKD79Ag5JEW0KJfAQfl+ow81/jDLzhNxmABf3Pe/rVGJHye7pugzZJtFADBFaaAIrNX3KofDaZN27dII0nRplu191qFbITs9P/GkgkCns6SQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Krc4rheu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPxJX/7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FFBC61042;
-	Tue, 27 Aug 2024 14:53:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Krc4rheu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B1BC61042;
+	Tue, 27 Aug 2024 14:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770392;
-	bh=8NmlGVFtyUJ7mzV/51trY5/0ai2tX/VrbWWQwvyLH7U=;
+	s=korg; t=1724770396;
+	bh=QQTIBRJtemn34QAnXkZK2w3/MaTiMrbNkiShI7skNjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPxJX/7ZnaAW0LHwC9Vr8d8g+FGxh2UiRtFaavbh176TY7zCCQZOm5E7uOQXwqr5I
-	 jUA1wh7tVPvGNFBoanARFRNBg/PzketFHfuUCpV74AUifUhEMu2ZDkJY95/utwj/34
-	 DukRQ5QJKxfkZ0n2LECWAGXtcN9wkOfJYwwlPbPE=
+	b=Krc4rheuiV2UixW/Df1kIJNirvWn98RnrT/BzS47MbPN5Cr4A3LMSVRSM0KgCv/uv
+	 bYLN4waLxEycI9/mihIId2Ib2q/Kl3gr9Hn/KtxM6jrpllH4RzLSAmdTb9vskuHgDL
+	 I4Icx86WqqZAvE8iGm2jfRLJz7gYf0VoE9a2B2/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Sterba <dsterba@suse.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 188/341] btrfs: push errors up from add_async_extent()
-Date: Tue, 27 Aug 2024 16:36:59 +0200
-Message-ID: <20240827143850.565896162@linuxfoundation.org>
+Subject: [PATCH 6.6 215/341] drm/amdgpu: fix dereference null return value for the function amdgpu_vm_pt_parent
+Date: Tue, 27 Aug 2024 16:37:26 +0200
+Message-ID: <20240827143851.591718503@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -44,64 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit dbe6cda68f0e1be269e6509c8bf3d8d89089c1c4 ]
+[ Upstream commit 511a623fb46a6cf578c61d4f2755783c48807c77 ]
 
-The memory allocation error in add_async_extent() is not handled
-properly, return an error and push the BUG_ON to the caller. Handling it
-there is not trivial so at least make it visible.
+The pointer parent may be NULLed by the function amdgpu_vm_pt_parent.
+To make the code more robust, check the pointer parent.
 
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 5ddee801a8303..dff47ba858a0a 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -730,7 +730,8 @@ static noinline int add_async_extent(struct async_chunk *cow,
- 	struct async_extent *async_extent;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index 0d51222f6f8eb..026a3db947298 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -766,11 +766,15 @@ int amdgpu_vm_pde_update(struct amdgpu_vm_update_params *params,
+ 			 struct amdgpu_vm_bo_base *entry)
+ {
+ 	struct amdgpu_vm_bo_base *parent = amdgpu_vm_pt_parent(entry);
+-	struct amdgpu_bo *bo = parent->bo, *pbo;
++	struct amdgpu_bo *bo, *pbo;
+ 	struct amdgpu_vm *vm = params->vm;
+ 	uint64_t pde, pt, flags;
+ 	unsigned int level;
  
- 	async_extent = kmalloc(sizeof(*async_extent), GFP_NOFS);
--	BUG_ON(!async_extent); /* -ENOMEM */
-+	if (!async_extent)
-+		return -ENOMEM;
- 	async_extent->start = start;
- 	async_extent->ram_size = ram_size;
- 	async_extent->compressed_size = compressed_size;
-@@ -1017,8 +1018,9 @@ static void compress_file_range(struct btrfs_work *work)
- 	 * The async work queues will take care of doing actual allocation on
- 	 * disk for these compressed pages, and will submit the bios.
- 	 */
--	add_async_extent(async_chunk, start, total_in, total_compressed, pages,
--			 nr_pages, compress_type);
-+	ret = add_async_extent(async_chunk, start, total_in, total_compressed, pages,
-+			       nr_pages, compress_type);
-+	BUG_ON(ret);
- 	if (start + total_in < end) {
- 		start += total_in;
- 		cond_resched();
-@@ -1030,8 +1032,9 @@ static void compress_file_range(struct btrfs_work *work)
- 	if (!btrfs_test_opt(fs_info, FORCE_COMPRESS) && !inode->prop_compress)
- 		inode->flags |= BTRFS_INODE_NOCOMPRESS;
- cleanup_and_bail_uncompressed:
--	add_async_extent(async_chunk, start, end - start + 1, 0, NULL, 0,
--			 BTRFS_COMPRESS_NONE);
-+	ret = add_async_extent(async_chunk, start, end - start + 1, 0, NULL, 0,
-+			       BTRFS_COMPRESS_NONE);
-+	BUG_ON(ret);
- free_pages:
- 	if (pages) {
- 		for (i = 0; i < nr_pages; i++) {
++	if (WARN_ON(!parent))
++		return -EINVAL;
++
++	bo = parent->bo;
+ 	for (level = 0, pbo = bo->parent; pbo; ++level)
+ 		pbo = pbo->parent;
+ 
 -- 
 2.43.0
 
