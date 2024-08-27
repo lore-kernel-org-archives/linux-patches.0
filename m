@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A331BA87C;
-	Tue, 27 Aug 2024 14:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B851BFE06;
+	Tue, 27 Aug 2024 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770251; cv=none; b=Y40/jAQUCnC+OW+mfOI6p2s7sjeS0JBrnxWE70BUL9T9IeB/W6NnjzPCsAZQ8KioC8zs+MnoRSLNC1b3kCpc12m/Y0KOWZMzDQ09moVjUOUrKyM0l0POXSx6ze/34qHtM9Fo8r7evw9sJ/+9ZpwtfKGn9o7Nrjpu399bqHRBcmE=
+	t=1724770255; cv=none; b=a4naCRcrp2DIv3/8JjU3kE70NtRBJiO9FBHGMOKlZVdvi0/QhPjS+L/NiroG704qijA+rvSG2aedsrTuPWMBHXctdX/f9DDfYaspCQaEuumgdPQDIE9TletZ9nLchGy+mz0gzqCOrtcud9Ao49ALYvO+3iw8oRUH0rgoEJ1ordY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770251; c=relaxed/simple;
-	bh=1CPqs1mdqXc83cI5WwRRHFsBlCmGzUbQIEXfojLKeR8=;
+	s=arc-20240116; t=1724770255; c=relaxed/simple;
+	bh=liy07P7h9/HoONRzuNApgpPUNTc29OsjRQCo4tRqrqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pL0tovU3yBZdTPnF7GZaivrrJAFs7xEHn27xPsxDvKS9ZeCLFq3XUbUiYtnb3dhqupKylAXFMAPvgBaPUCW9VV+xRRfjARPl9WCmJIXAVK5kHtZcZahfDS4k1fTWRe5QIr6V3wS4G31khNmzfwbokO3dgJh+DQZBSql5P8xwcoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXtwbq4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u06+BRH/liXSgv5cfWRY5JkeCs1Gg71guIAQOT6Ngg5EfAn+etxDeSLl+H+EByb76TdQzFkV+LCqTW3dD0yhjQcxVkUmV2D3Xf6o8G48z2svGEz0THGsIBDfdZnOblq/ohPB+qah8h4mzf86JkNDZPLpobuJ7mXzm7Gu2+3gQTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujCG/pQd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXtwbq4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D20C4DDFB;
-	Tue, 27 Aug 2024 14:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujCG/pQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB1BC4DDFF;
+	Tue, 27 Aug 2024 14:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770251;
-	bh=1CPqs1mdqXc83cI5WwRRHFsBlCmGzUbQIEXfojLKeR8=;
+	s=korg; t=1724770254;
+	bh=liy07P7h9/HoONRzuNApgpPUNTc29OsjRQCo4tRqrqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXtwbq4xHccCLE8LfbCuocYXCLQwEJ60Ls4xOpt8z4mbU+zMT1FWs6X3jDhzlVtNU
-	 /QtE0ckdY+TqtRzdKetjqZRpxS46b35xGdVjW5ApIhft2kxlLqWZtHWv4OAvaMnoBz
-	 tnuUnvDxMF24RaD4Ha/yYKrj6h3QjG/xIjdHUYwo=
+	b=ujCG/pQdkkFe+FFJ9IcyfMfaAOoy/2mtubje8yjs/de3nIkfAecaVcKdZeyC8+xKq
+	 8uDwDiNu8ZgjcPzzPHBDt4JI+tKPNv7W20prRAgxyykUDehQL/eeKIhisryh8NG+11
+	 70nmvsmfUgVLy+Ijv4827C592ajnRvK9zwi9lP2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Kehat <akehat@habana.ai>,
-	Oded Gabbay <ogabbay@kernel.org>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/341] accel/habanalabs: fix debugfs files permissions
-Date: Tue, 27 Aug 2024 16:36:43 +0200
-Message-ID: <20240827143849.959162960@linuxfoundation.org>
+Subject: [PATCH 6.6 173/341] clocksource/drivers/arm_global_timer: Guard against division by zero
+Date: Tue, 27 Aug 2024 16:36:44 +0200
+Message-ID: <20240827143849.997585874@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,83 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Kehat <akehat@habana.ai>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 0b105a2a7225f2736bd07aca0538cd67f09bfa20 ]
+[ Upstream commit e651f2fae33634175fae956d896277cf916f5d09 ]
 
-debugfs files are created with permissions that don't align
-with the access requirements.
+The result of the division of new_rate by gt_target_rate can be zero (if
+new_rate is smaller than gt_target_rate). Using that result as divisor
+without checking can result in a division by zero error. Guard against
+this by checking for a zero value earlier.
+While here, also change the psv variable to an unsigned long to make
+sure we don't overflow the datatype as all other types involved are also
+unsiged long.
 
-Signed-off-by: Avri Kehat <akehat@habana.ai>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20240225151336.2728533-3-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/common/debugfs.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/clocksource/arm_global_timer.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/accel/habanalabs/common/debugfs.c b/drivers/accel/habanalabs/common/debugfs.c
-index 9e84a47a21dcf..7d733e4d50611 100644
---- a/drivers/accel/habanalabs/common/debugfs.c
-+++ b/drivers/accel/habanalabs/common/debugfs.c
-@@ -1645,19 +1645,19 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
- 				&hl_data64b_fops);
+diff --git a/drivers/clocksource/arm_global_timer.c b/drivers/clocksource/arm_global_timer.c
+index e1c773bb55359..22a58d35a41fa 100644
+--- a/drivers/clocksource/arm_global_timer.c
++++ b/drivers/clocksource/arm_global_timer.c
+@@ -290,18 +290,17 @@ static int gt_clk_rate_change_cb(struct notifier_block *nb,
+ 	switch (event) {
+ 	case PRE_RATE_CHANGE:
+ 	{
+-		int psv;
++		unsigned long psv;
  
- 	debugfs_create_file("set_power_state",
--				0200,
-+				0644,
- 				root,
- 				dev_entry,
- 				&hl_power_fops);
+-		psv = DIV_ROUND_CLOSEST(ndata->new_rate,
+-					gt_target_rate);
+-
+-		if (abs(gt_target_rate - (ndata->new_rate / psv)) > MAX_F_ERR)
++		psv = DIV_ROUND_CLOSEST(ndata->new_rate, gt_target_rate);
++		if (!psv ||
++		    abs(gt_target_rate - (ndata->new_rate / psv)) > MAX_F_ERR)
+ 			return NOTIFY_BAD;
  
- 	debugfs_create_file("device",
--				0200,
-+				0644,
- 				root,
- 				dev_entry,
- 				&hl_device_fops);
+ 		psv--;
  
- 	debugfs_create_file("clk_gate",
--				0200,
-+				0644,
- 				root,
- 				dev_entry,
- 				&hl_clk_gate_fops);
-@@ -1669,13 +1669,13 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
- 				&hl_stop_on_err_fops);
+ 		/* prescaler within legal range? */
+-		if (psv < 0 || psv > GT_CONTROL_PRESCALER_MAX)
++		if (psv > GT_CONTROL_PRESCALER_MAX)
+ 			return NOTIFY_BAD;
  
- 	debugfs_create_file("dump_security_violations",
--				0644,
-+				0400,
- 				root,
- 				dev_entry,
- 				&hl_security_violations_fops);
- 
- 	debugfs_create_file("dump_razwi_events",
--				0644,
-+				0400,
- 				root,
- 				dev_entry,
- 				&hl_razwi_check_fops);
-@@ -1708,7 +1708,7 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
- 				&hdev->reset_info.skip_reset_on_timeout);
- 
- 	debugfs_create_file("state_dump",
--				0600,
-+				0644,
- 				root,
- 				dev_entry,
- 				&hl_state_dump_fops);
-@@ -1726,7 +1726,7 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
- 
- 	for (i = 0, entry = dev_entry->entry_arr ; i < count ; i++, entry++) {
- 		debugfs_create_file(hl_debugfs_list[i].name,
--					0444,
-+					0644,
- 					root,
- 					entry,
- 					&hl_debugfs_fops);
+ 		/*
 -- 
 2.43.0
 
