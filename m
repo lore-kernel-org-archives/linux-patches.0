@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8702BDDC1;
-	Tue, 27 Aug 2024 14:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CC7DDC1;
+	Tue, 27 Aug 2024 14:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770083; cv=none; b=sKQLGKijlbFlRmFf9w4gPo1zUwBfUHrdCOjlJRmr4OZbCuoYgdqdlHyKRICN0rC6M5IydkqV1g+iRtHEwkl02zURRyTXb2/ULnygEhquF2OUNUf2WSP3sXm2WDUzdPoXeHN85EyYq8w7/eTfuTn9BrpaUAtL7pmIwvqLiPAuCeI=
+	t=1724770087; cv=none; b=EQOylDid/fDE+cgJ94L1intIv6QdNz5iKMLssVpSrypvjJi8HoQFPKClbz239Kj2xOOc0nLV+WYLmobXNyIjGcY6HApYOdrOZbjzvCj5feFVVjjjan9TwGBpUpWnAmb5UIWuI7daAW/uQqzRJmJIzX0tsPdUfkK+RaQNjh5Nepw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770083; c=relaxed/simple;
-	bh=DblUwTZHduc8GMlU2FnAzJ+vw18ThkAkRj+AKztI75w=;
+	s=arc-20240116; t=1724770087; c=relaxed/simple;
+	bh=G2jv5jc705zai/WJ+gVSV6W4NhsbFL1Fx0hwE8FHkbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndFTmRFXe6EICvi6wtfzX8d8R9qmbGQDzDd2JmiR2++hA53SLTobGy17CiueTmQ92UlZ75rgbt37zJYmKeRiu5IwXATiPh45XUPApcsPDcHZ9nIuwyM06DAJOCFMi35F1CQKn78X+Lq/hJbtNlCHb80QEW1OJ4Rwphb1Grq9v2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMGBV6Yd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GueNA4/cwd0s/CrGd3LFRnuhcLdTQ63u1RIdXJ1Egk35O8o3djSgzudtPRXfLYFHDNk8rQ1DyXinO6kO7AbLHRkLrV0lMmAlPj1otSFcihWRk+26bKJn55NO+rOd0S66KTPtkNpdQIeYvyZ4TGNUU6bOaiic8UNZinsn24e2PpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBGo4neY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMGBV6Yd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CA3C61046;
-	Tue, 27 Aug 2024 14:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBGo4neY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4984EC61046;
+	Tue, 27 Aug 2024 14:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770083;
-	bh=DblUwTZHduc8GMlU2FnAzJ+vw18ThkAkRj+AKztI75w=;
+	s=korg; t=1724770086;
+	bh=G2jv5jc705zai/WJ+gVSV6W4NhsbFL1Fx0hwE8FHkbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMGBV6YdyJvWNFxuhEVFrgvcYnb5v8tA9Ca9aK6TaZ56FlmJwI0wEzNlow1haQdBC
-	 SrbvqaDeQAU/RamVzW92bKlrRUfvuXuTdk6pJhWCms5kMpVFozOClvjamBSsf/vv3i
-	 007QUrbBuTJiJynODULGbACNOMIJB9g4uWPJmgB0=
+	b=zBGo4neYLBQuxZxVkmfRhqmfOlwo/RFic/P1DyAwoe5GTE+xnWeVzkXKPCJbOSnxz
+	 mC6trGubGlbZQu5AdkYC0kcuDYBB/7Mf1U44YiA+dHARtjq/jsrI1NnxXBDKBZeOYv
+	 3AJ04XbraQlv0OEzQafBtBDkB5e96jhthjfKmp5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/341] wifi: mac80211: fix BA session teardown race
-Date: Tue, 27 Aug 2024 16:35:21 +0200
-Message-ID: <20240827143846.831832636@linuxfoundation.org>
+Subject: [PATCH 6.6 091/341] wifi: iwlwifi: mvm: fix recovery flow in CSA
+Date: Tue, 27 Aug 2024 16:35:22 +0200
+Message-ID: <20240827143846.870033792@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,111 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 05f136220d17839eb7c155f015ace9152f603225 ]
+[ Upstream commit 828c79d9feb000acbd9c15bd1ed7e0914473b363 ]
 
-As previously reported by Alexander, whose commit 69403bad97aa
-("wifi: mac80211: sdata can be NULL during AMPDU start") I'm
-reverting as part of this commit, there's a race between station
-destruction and aggregation setup, where the aggregation setup
-can happen while the station is being removed and queue the work
-after ieee80211_sta_tear_down_BA_sessions() has already run in
-__sta_info_destroy_part1(), and thus the worker will run with a
-now freed station. In his case, this manifested in a NULL sdata
-pointer, but really there's no guarantee whatsoever.
+If the firmware crashes in the de-activation / re-activation
+of the link during CSA, we will not have a valid phy_ctxt
+pointer in mvmvif. This is a legit case, but when mac80211
+removes the station to cleanup our state during the
+re-configuration, we need to make sure we clear ap_sta
+otherwise we won't re-add the station after the firmware has
+been restarted. Later on, we'd activate the link, try to send
+a TLC command crash again on ASSERT 3508.
 
-The real issue seems to be that it's possible at all to have a
-situation where this occurs - we want to stop the BA sessions
-when doing _part1, but we cannot be sure, and WLAN_STA_BLOCK_BA
-isn't necessarily effective since we don't know that the setup
-isn't concurrently running and already got past the check.
+Fix this by properly cleaning up our state.
 
-Simply call ieee80211_sta_tear_down_BA_sessions() again in the
-second part of station destruction, since at that point really
-nothing else can hold a reference to the station any more.
-
-Also revert the sdata checks since those are just misleading at
-this point.
-
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230913145231.2651e6f6a55a.I4cd50e88ee5c23c1c8dd5b157a800e4b4c96f236@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/agg-tx.c     |  6 +-----
- net/mac80211/driver-ops.c |  3 ---
- net/mac80211/sta_info.c   | 14 ++++++++++++++
- 3 files changed, 15 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/agg-tx.c b/net/mac80211/agg-tx.c
-index b6b7726858815..0a69e47f1c55f 100644
---- a/net/mac80211/agg-tx.c
-+++ b/net/mac80211/agg-tx.c
-@@ -497,7 +497,7 @@ void ieee80211_tx_ba_session_handle_start(struct sta_info *sta, int tid)
- {
- 	struct tid_ampdu_tx *tid_tx;
- 	struct ieee80211_local *local = sta->local;
--	struct ieee80211_sub_if_data *sdata;
-+	struct ieee80211_sub_if_data *sdata = sta->sdata;
- 	struct ieee80211_ampdu_params params = {
- 		.sta = &sta->sta,
- 		.action = IEEE80211_AMPDU_TX_START,
-@@ -525,7 +525,6 @@ void ieee80211_tx_ba_session_handle_start(struct sta_info *sta, int tid)
- 	 */
- 	synchronize_net();
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 8f49de1206e03..f973efbbc3795 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1035,6 +1035,7 @@ static void iwl_mvm_cleanup_iterator(void *data, u8 *mac,
+ 	spin_unlock_bh(&mvm->time_event_lock);
  
--	sdata = sta->sdata;
- 	params.ssn = sta->tid_seq[tid] >> 4;
- 	ret = drv_ampdu_action(local, sdata, &params);
- 	tid_tx->ssn = params.ssn;
-@@ -539,9 +538,6 @@ void ieee80211_tx_ba_session_handle_start(struct sta_info *sta, int tid)
- 		 */
- 		set_bit(HT_AGG_STATE_DRV_READY, &tid_tx->state);
- 	} else if (ret) {
--		if (!sdata)
--			return;
--
- 		ht_dbg(sdata,
- 		       "BA request denied - HW unavailable for %pM tid %d\n",
- 		       sta->sta.addr, tid);
-diff --git a/net/mac80211/driver-ops.c b/net/mac80211/driver-ops.c
-index f8af0c3d405ae..d6478fd00badf 100644
---- a/net/mac80211/driver-ops.c
-+++ b/net/mac80211/driver-ops.c
-@@ -393,9 +393,6 @@ int drv_ampdu_action(struct ieee80211_local *local,
+ 	memset(&mvmvif->bf_data, 0, sizeof(mvmvif->bf_data));
++	mvmvif->ap_sta = NULL;
  
- 	might_sleep();
+ 	for_each_mvm_vif_valid_link(mvmvif, link_id) {
+ 		mvmvif->link[link_id]->ap_sta_id = IWL_MVM_INVALID_STA;
+@@ -3934,7 +3935,11 @@ int iwl_mvm_mac_sta_state_common(struct ieee80211_hw *hw,
  
--	if (!sdata)
--		return -EIO;
--
- 	sdata = get_bss_sdata(sdata);
- 	if (!check_sdata_in_driver(sdata))
- 		return -EIO;
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 984f8f67492fd..42ba51a9700f2 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1402,6 +1402,20 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
- 	 *	 after _part1 and before _part2!
- 	 */
+ 	mutex_lock(&mvm->mutex);
  
-+	/*
-+	 * There's a potential race in _part1 where we set WLAN_STA_BLOCK_BA
-+	 * but someone might have just gotten past a check, and not yet into
-+	 * queuing the work/creating the data/etc.
-+	 *
-+	 * Do another round of destruction so that the worker is certainly
-+	 * canceled before we later free the station.
-+	 *
-+	 * Since this is after synchronize_rcu()/synchronize_net() we're now
-+	 * certain that nobody can actually hold a reference to the STA and
-+	 * be calling e.g. ieee80211_start_tx_ba_session().
+-	/* this would be a mac80211 bug ... but don't crash */
++	/* this would be a mac80211 bug ... but don't crash, unless we had a
++	 * firmware crash while we were activating a link, in which case it is
++	 * legit to have phy_ctxt = NULL. Don't bother not to WARN if we are in
++	 * recovery flow since we spit tons of error messages anyway.
 +	 */
-+	ieee80211_sta_tear_down_BA_sessions(sta, AGG_STOP_DESTROY_STA);
-+
- 	might_sleep();
- 	lockdep_assert_held(&local->sta_mtx);
- 
+ 	for_each_sta_active_link(vif, sta, link_sta, link_id) {
+ 		if (WARN_ON_ONCE(!mvmvif->link[link_id]->phy_ctxt)) {
+ 			mutex_unlock(&mvm->mutex);
 -- 
 2.43.0
 
