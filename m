@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E4F1E487;
-	Tue, 27 Aug 2024 15:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009611E487;
+	Tue, 27 Aug 2024 15:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770837; cv=none; b=th2KA5Y1w33ojijl1XSgbZWkTgySnsc8NOOGJwrSRJGUFGLjoVoR/vQMfImgV3RNYqo1FBXn+bNSTBCWOqTh9DZDa6WFofLw8MeZc/2sJJunICz0qcryLLUp5KPd5Ty2+2b5VTYTomZ+D3abXtIU4TsW/ZeXMJOMV4R1na3EDXw=
+	t=1724770841; cv=none; b=X7DUWBWVOWc6smn67bKjkfmJLW/crFWbIbePUO1dXK/oVF7h+AAC7bWs07KjqSwZXLDxJF9kMTRkzgSWpCoSgNAOfrSqAjG0q1Xo4RF/nmj+WGO9x78JdUJjnWLd6+PKeLc+VSUrfxLUBh1uehTfdfR8To8DT+FbJ+XncyL+u7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770837; c=relaxed/simple;
-	bh=uV8v/bUYZCcKrSYnINsz4sB99F9PbAhyWOa493ymxBQ=;
+	s=arc-20240116; t=1724770841; c=relaxed/simple;
+	bh=q+Det+yOpmVrU8s1u0JlkfJUWkAkJbqJxM9vaerIZUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZYLWWHRniCKd4FBeAt1UvMR4WLZr1M5kPsHjDEw/vsY7OTt6m72AAtdPzUVllStLCHuSYGPicIWZbizYoVQ1w7l8e5IUS8s3akAUrVcHRlPBELJi9wCXiuLuxptlwvaI/a0hE8JddCvZiC2NM/qAdDdbCCnEN7plfssveIIwTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSDVHrXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXdXmbklFpxGEXlvHOIgM5YJhRqOz6sZoiFqvQd5VLtrSrK+lnHg69zhsZ3KAEd8FyY7DTBE+/7Qh0m3ni9XSv8h8fA32uc0lWFp3sLwSATewvpSCYdiNJbiFIcpItcaC2XY2RzUW/fGh53Np6A+F9Dhfh6QcjElhAu5+kSsfUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQISOpGk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSDVHrXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAFAC4AF1C;
-	Tue, 27 Aug 2024 15:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQISOpGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9CFC4AF1C;
+	Tue, 27 Aug 2024 15:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770837;
-	bh=uV8v/bUYZCcKrSYnINsz4sB99F9PbAhyWOa493ymxBQ=;
+	s=korg; t=1724770840;
+	bh=q+Det+yOpmVrU8s1u0JlkfJUWkAkJbqJxM9vaerIZUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSDVHrXmFnof3iSLjKkrHfR98qzRDrat4aw1QCjzLvatH6pO+k2zhGEmu8y0MTUS5
-	 ptAns4vC+9kenhOHdNzldM+R9nnbr9B99bdYYP0JoU9H/FGaMF80BTCQPhKtO4nmt9
-	 MYz3pD9oDxS/E6olFVPeFXfB1IR7jpgL9Q3+yaC4=
+	b=RQISOpGkNY5ClnhP6J1rDZ7Ap7mHSWQcXBiYnN2HTtsHLM9LrLaqIUDlAzh/HaBBV
+	 FNm0G1kBweC8we4vNSuNEj44XHqG6wbRHgI+6P9TKhP8+hu4rOzXpWQxuAJh3qJXbh
+	 MNEhjk+RK1ZeZJUBmWOIxWj2wH4hhzcbQkTrynT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 320/341] selftests: mptcp: join: validate fullmesh endp on 1st sf
-Date: Tue, 27 Aug 2024 16:39:11 +0200
-Message-ID: <20240827143855.571598140@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.10 001/273] tty: vt: conmakehash: remove non-portable code printing comment header
+Date: Tue, 27 Aug 2024 16:35:25 +0200
+Message-ID: <20240827143833.431480608@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
-References: <20240827143843.399359062@linuxfoundation.org>
+In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
+References: <20240827143833.371588371@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 4878f9f8421f4587bee7b232c1c8a9d3a7d4d782 upstream.
+commit 7258fdd7d7459616b3fe1a603e33900584b10c13 upstream.
 
-This case was not covered, and the wrong ID was set before the previous
-commit.
+Commit 6e20753da6bc ("tty: vt: conmakehash: cope with abs_srctree no
+longer in env") included <linux/limits.h>, which invoked another
+(wrong) patch that tried to address a build error on macOS.
 
-The rest is not modified, it is just that it will increase the code
-coverage.
+According to the specification [1], the correct header to use PATH_MAX
+is <limits.h>.
 
-The right address ID can be verified by looking at the packet traces. We
-could automate that using Netfilter with some cBPF code for example, but
-that's always a bit cryptic. Packetdrill seems better fitted for that.
+The minimal fix would be to replace <linux/limits.h> with <limits.h>.
 
-Fixes: 4f49d63352da ("selftests: mptcp: add fullmesh testcases")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-13-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, the following commits seem questionable to me:
+
+ - 3bd85c6c97b2 ("tty: vt: conmakehash: Don't mention the full path of the input in output")
+ - 6e20753da6bc ("tty: vt: conmakehash: cope with abs_srctree no longer in env")
+
+These commits made too many efforts to cope with a comment header in
+drivers/tty/vt/consolemap_deftbl.c:
+
+  /*
+   * Do not edit this file; it was automatically generated by
+   *
+   * conmakehash drivers/tty/vt/cp437.uni > [this file]
+   *
+   */
+
+With this commit, the header part of the generate C file will be
+simplified as follows:
+
+  /*
+   * Automatically generated file; Do not edit.
+   */
+
+BTW, another series of excessive efforts for a comment header can be
+seen in the following:
+
+ - 5ef6dc08cfde ("lib/build_OID_registry: don't mention the full path of the script in output")
+ - 2fe29fe94563 ("lib/build_OID_registry: avoid non-destructive substitution for Perl < 5.13.2 compat")
+
+[1]: https://pubs.opengroup.org/onlinepubs/009695399/basedefs/limits.h.html
+
+Fixes: 6e20753da6bc ("tty: vt: conmakehash: cope with abs_srctree no longer in env")
+Cc: stable <stable@kernel.org>
+Reported-by: Daniel Gomez <da.gomez@samsung.com>
+Closes: https://lore.kernel.org/all/20240807-macos-build-support-v1-11-4cd1ded85694@samsung.com/
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20240809160853.1269466-1-masahiroy@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/vt/conmakehash.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3220,6 +3220,7 @@ fullmesh_tests()
- 		pm_nl_set_limits $ns1 1 3
- 		pm_nl_set_limits $ns2 1 3
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,fullmesh
- 		fullmesh=1 speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 3 3 3
+diff --git a/drivers/tty/vt/conmakehash.c b/drivers/tty/vt/conmakehash.c
+index 82d9db68b2ce..a931fcde7ad9 100644
+--- a/drivers/tty/vt/conmakehash.c
++++ b/drivers/tty/vt/conmakehash.c
+@@ -11,8 +11,6 @@
+  * Copyright (C) 1995-1997 H. Peter Anvin
+  */
+ 
+-#include <libgen.h>
+-#include <linux/limits.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <sysexits.h>
+@@ -79,7 +77,6 @@ int main(int argc, char *argv[])
+ {
+   FILE *ctbl;
+   const char *tblname;
+-  char base_tblname[PATH_MAX];
+   char buffer[65536];
+   int fontlen;
+   int i, nuni, nent;
+@@ -245,20 +242,15 @@ int main(int argc, char *argv[])
+   for ( i = 0 ; i < fontlen ; i++ )
+     nuni += unicount[i];
+ 
+-  strncpy(base_tblname, tblname, PATH_MAX);
+-  base_tblname[PATH_MAX - 1] = 0;
+   printf("\
+ /*\n\
+- * Do not edit this file; it was automatically generated by\n\
+- *\n\
+- * conmakehash %s > [this file]\n\
+- *\n\
++ * Automatically generated file; Do not edit.\n\
+  */\n\
+ \n\
+ #include <linux/types.h>\n\
+ \n\
+ u8 dfont_unicount[%d] = \n\
+-{\n\t", basename(base_tblname), fontlen);
++{\n\t", fontlen);
+ 
+   for ( i = 0 ; i < fontlen ; i++ )
+     {
+-- 
+2.46.0
+
 
 
