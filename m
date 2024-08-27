@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F801C68AE;
-	Tue, 27 Aug 2024 15:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10ADF19F485;
+	Tue, 27 Aug 2024 15:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772060; cv=none; b=nr1ccpSgcfNewDqGtm3RUCirIp04Dko4qdq1RcLylnfxCBr0wBkezN17awqToGIi/v/IOk+tOvV2jlvm+l6p3+gjVyObso1vPTsnT/CDs7CxcAKIJ4xUKVU0zCQjpn1X8ILJk78ggmd0PltHOr0jRyv86VppfGM6hc9/8+PxJHc=
+	t=1724772064; cv=none; b=MeVsDSnWHUtr4BqrcQJwFVoLwNyR7+ge0gpsagATwABiD18PzLmt0R2M+0OUfqpyJPTBWoCp1wXG2VgFc+Ru+XhFqiqItQ7IVWUB4hcn6/3FLSt06ozUG+85yrnp2XM2roERYrDizl62/TMsKWg4bCkKujEKYHtP0kasuAwWhKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772060; c=relaxed/simple;
-	bh=9HTtO9Wo99P6IKcTT3JqsxXC6wClCyPJBymDEo8D4QY=;
+	s=arc-20240116; t=1724772064; c=relaxed/simple;
+	bh=4x2E113EWDwshWX1ZmkIBOnSl+7sqeJnAGDQ3Uo95Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mL3FXrx4+Hfx+a20tTtAeBp5e+W5pNk+NNueDr+s0IPc//3p9yJ9WxQcxu7T1wL7vhDZWyiVKXX0ep6Cm3SNeEX69iY4Amte3P6DsSRYnDM0qbP76zTnbAmdlpQjgI9M9DcAhL2sbkK7QNrPCipIRnf9hTzYW6+aHHXIUbWTp2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jARut/kD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zv3v7xSxogadDRg6bTyp0FRi4kmevhlMiifW5uUc0Vx4Qr4ErEsxtf47VBDOh7aZCgn5k+BcCVohtMh5A2/gnlxT53DQeEMRcpYBBGVe58/RiuCfJOf4OkhDyGSjGxXaJt7uvgb811FLE2wCwRXhJAsy8Oh6UVjgdg3RqtZlcQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0uJKLYP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jARut/kD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A918C4E66E;
-	Tue, 27 Aug 2024 15:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0uJKLYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868ADC4FDFA;
+	Tue, 27 Aug 2024 15:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772060;
-	bh=9HTtO9Wo99P6IKcTT3JqsxXC6wClCyPJBymDEo8D4QY=;
+	s=korg; t=1724772063;
+	bh=4x2E113EWDwshWX1ZmkIBOnSl+7sqeJnAGDQ3Uo95Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jARut/kD3CxQIt5tnPjwwU7zqmILu04krxH4O9aULBuqhJhJ7DzhyH0g2u6GGwoKN
-	 9BEX5Sv3s/hqfy/QiVxafs3Ut+rR7ubH6mOAXhi16YzWNsp+aG8qV0zRDTgjJe5Q6S
-	 /6+RTep9Zc4uz5C4x8VpguApVAmyd8smCenow9uE=
+	b=j0uJKLYP72ZxlJx2LYgvxlgfIwXWeyKQZ44REBROWOv1RkMsDxuGliFbZqTzel8rm
+	 ZN3k06dbTA7cPg/nPYa7pC/xPXboGcSKz7EHeTut/ZqEqavvbbZoV0R8kpEdoVDNY/
+	 26VcScQYihlKq1X77W1XYcnAkQgWKWpAiVNo/Qo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Kees Cook <keescook@chromium.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/321] docs/bpf: Document BPF_MAP_TYPE_LPM_TRIE map
-Date: Tue, 27 Aug 2024 16:36:17 +0200
-Message-ID: <20240827143840.868364776@linuxfoundation.org>
+Subject: [PATCH 6.1 070/321] bpf: Replace bpf_lpm_trie_key 0-length array with flexible array
+Date: Tue, 27 Aug 2024 16:36:18 +0200
+Message-ID: <20240827143840.906417674@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,210 +53,378 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donald Hunter <donald.hunter@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 83177c0dca3811faa051124731a692609caee7c7 ]
+[ Upstream commit 896880ff30866f386ebed14ab81ce1ad3710cfc4 ]
 
-Add documentation for BPF_MAP_TYPE_LPM_TRIE including kernel
-BPF helper usage, userspace usage and examples.
+Replace deprecated 0-length array in struct bpf_lpm_trie_key with
+flexible array. Found with GCC 13:
 
-Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20221101114542.24481-2-donald.hunter@gmail.com
+../kernel/bpf/lpm_trie.c:207:51: warning: array subscript i is outside array bounds of 'const __u8[0]' {aka 'const unsigned char[]'} [-Warray-bounds=]
+  207 |                                        *(__be16 *)&key->data[i]);
+      |                                                   ^~~~~~~~~~~~~
+../include/uapi/linux/swab.h:102:54: note: in definition of macro '__swab16'
+  102 | #define __swab16(x) (__u16)__builtin_bswap16((__u16)(x))
+      |                                                      ^
+../include/linux/byteorder/generic.h:97:21: note: in expansion of macro '__be16_to_cpu'
+   97 | #define be16_to_cpu __be16_to_cpu
+      |                     ^~~~~~~~~~~~~
+../kernel/bpf/lpm_trie.c:206:28: note: in expansion of macro 'be16_to_cpu'
+  206 |                 u16 diff = be16_to_cpu(*(__be16 *)&node->data[i]
+^
+      |                            ^~~~~~~~~~~
+In file included from ../include/linux/bpf.h:7:
+../include/uapi/linux/bpf.h:82:17: note: while referencing 'data'
+   82 |         __u8    data[0];        /* Arbitrary size */
+      |                 ^~~~
+
+And found at run-time under CONFIG_FORTIFY_SOURCE:
+
+  UBSAN: array-index-out-of-bounds in kernel/bpf/lpm_trie.c:218:49
+  index 0 is out of range for type '__u8 [*]'
+
+Changing struct bpf_lpm_trie_key is difficult since has been used by
+userspace. For example, in Cilium:
+
+	struct egress_gw_policy_key {
+	        struct bpf_lpm_trie_key lpm_key;
+	        __u32 saddr;
+	        __u32 daddr;
+	};
+
+While direct references to the "data" member haven't been found, there
+are static initializers what include the final member. For example,
+the "{}" here:
+
+        struct egress_gw_policy_key in_key = {
+                .lpm_key = { 32 + 24, {} },
+                .saddr   = CLIENT_IP,
+                .daddr   = EXTERNAL_SVC_IP & 0Xffffff,
+        };
+
+To avoid the build time and run time warnings seen with a 0-sized
+trailing array for struct bpf_lpm_trie_key, introduce a new struct
+that correctly uses a flexible array for the trailing bytes,
+struct bpf_lpm_trie_key_u8. As part of this, include the "header"
+portion (which is just the "prefixlen" member), so it can be used
+by anything building a bpf_lpr_trie_key that has trailing members that
+aren't a u8 flexible array (like the self-test[1]), which is named
+struct bpf_lpm_trie_key_hdr.
+
+Unfortunately, C++ refuses to parse the __struct_group() helper, so
+it is not possible to define struct bpf_lpm_trie_key_hdr directly in
+struct bpf_lpm_trie_key_u8, so we must open-code the union directly.
+
+Adjust the kernel code to use struct bpf_lpm_trie_key_u8 through-out,
+and for the selftest to use struct bpf_lpm_trie_key_hdr. Add a comment
+to the UAPI header directing folks to the two new options.
+
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Closes: https://paste.debian.net/hidden/ca500597/
+Link: https://lore.kernel.org/all/202206281009.4332AA33@keescook/ [1]
+Link: https://lore.kernel.org/bpf/20240222155612.it.533-kees@kernel.org
 Stable-dep-of: 59f2f841179a ("bpf: Avoid kfree_rcu() under lock in bpf_lpm_trie.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/bpf/map_lpm_trie.rst | 181 +++++++++++++++++++++++++++++
- 1 file changed, 181 insertions(+)
- create mode 100644 Documentation/bpf/map_lpm_trie.rst
+ Documentation/bpf/map_lpm_trie.rst            |  2 +-
+ include/uapi/linux/bpf.h                      | 19 +++++++++++++++++-
+ kernel/bpf/lpm_trie.c                         | 20 +++++++++----------
+ samples/bpf/map_perf_test_user.c              |  2 +-
+ samples/bpf/xdp_router_ipv4_user.c            |  2 +-
+ tools/include/uapi/linux/bpf.h                | 19 +++++++++++++++++-
+ .../selftests/bpf/progs/map_ptr_kern.c        |  2 +-
+ tools/testing/selftests/bpf/test_lpm_map.c    | 18 ++++++++---------
+ 8 files changed, 59 insertions(+), 25 deletions(-)
 
 diff --git a/Documentation/bpf/map_lpm_trie.rst b/Documentation/bpf/map_lpm_trie.rst
-new file mode 100644
-index 0000000000000..31be1aa7ba2cb
---- /dev/null
+index 31be1aa7ba2cb..b4fce3f7c98ff 100644
+--- a/Documentation/bpf/map_lpm_trie.rst
 +++ b/Documentation/bpf/map_lpm_trie.rst
-@@ -0,0 +1,181 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+.. Copyright (C) 2022 Red Hat, Inc.
+@@ -17,7 +17,7 @@ significant byte.
+ 
+ LPM tries may be created with a maximum prefix length that is a multiple
+ of 8, in the range from 8 to 2048. The key used for lookup and update
+-operations is a ``struct bpf_lpm_trie_key``, extended by
++operations is a ``struct bpf_lpm_trie_key_u8``, extended by
+ ``max_prefixlen/8`` bytes.
+ 
+ - For IPv4 addresses the data length is 4 bytes
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index a17688011440e..58c7fc75da752 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -76,12 +76,29 @@ struct bpf_insn {
+ 	__s32	imm;		/* signed immediate constant */
+ };
+ 
+-/* Key of an a BPF_MAP_TYPE_LPM_TRIE entry */
++/* Deprecated: use struct bpf_lpm_trie_key_u8 (when the "data" member is needed for
++ * byte access) or struct bpf_lpm_trie_key_hdr (when using an alternative type for
++ * the trailing flexible array member) instead.
++ */
+ struct bpf_lpm_trie_key {
+ 	__u32	prefixlen;	/* up to 32 for AF_INET, 128 for AF_INET6 */
+ 	__u8	data[0];	/* Arbitrary size */
+ };
+ 
++/* Header for bpf_lpm_trie_key structs */
++struct bpf_lpm_trie_key_hdr {
++	__u32	prefixlen;
++};
 +
-+=====================
-+BPF_MAP_TYPE_LPM_TRIE
-+=====================
++/* Key of an a BPF_MAP_TYPE_LPM_TRIE entry, with trailing byte array. */
++struct bpf_lpm_trie_key_u8 {
++	union {
++		struct bpf_lpm_trie_key_hdr	hdr;
++		__u32				prefixlen;
++	};
++	__u8	data[];		/* Arbitrary size */
++};
 +
-+.. note::
-+   - ``BPF_MAP_TYPE_LPM_TRIE`` was introduced in kernel version 4.11
+ struct bpf_cgroup_storage_key {
+ 	__u64	cgroup_inode_id;	/* cgroup inode id */
+ 	__u32	attach_type;		/* program attach type (enum bpf_attach_type) */
+diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
+index ce3a091d52e89..b80bffc59e5fb 100644
+--- a/kernel/bpf/lpm_trie.c
++++ b/kernel/bpf/lpm_trie.c
+@@ -164,13 +164,13 @@ static inline int extract_bit(const u8 *data, size_t index)
+  */
+ static size_t longest_prefix_match(const struct lpm_trie *trie,
+ 				   const struct lpm_trie_node *node,
+-				   const struct bpf_lpm_trie_key *key)
++				   const struct bpf_lpm_trie_key_u8 *key)
+ {
+ 	u32 limit = min(node->prefixlen, key->prefixlen);
+ 	u32 prefixlen = 0, i = 0;
+ 
+ 	BUILD_BUG_ON(offsetof(struct lpm_trie_node, data) % sizeof(u32));
+-	BUILD_BUG_ON(offsetof(struct bpf_lpm_trie_key, data) % sizeof(u32));
++	BUILD_BUG_ON(offsetof(struct bpf_lpm_trie_key_u8, data) % sizeof(u32));
+ 
+ #if defined(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS) && defined(CONFIG_64BIT)
+ 
+@@ -229,7 +229,7 @@ static void *trie_lookup_elem(struct bpf_map *map, void *_key)
+ {
+ 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
+ 	struct lpm_trie_node *node, *found = NULL;
+-	struct bpf_lpm_trie_key *key = _key;
++	struct bpf_lpm_trie_key_u8 *key = _key;
+ 
+ 	if (key->prefixlen > trie->max_prefixlen)
+ 		return NULL;
+@@ -309,7 +309,7 @@ static int trie_update_elem(struct bpf_map *map,
+ 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
+ 	struct lpm_trie_node *node, *im_node = NULL, *new_node = NULL;
+ 	struct lpm_trie_node __rcu **slot;
+-	struct bpf_lpm_trie_key *key = _key;
++	struct bpf_lpm_trie_key_u8 *key = _key;
+ 	unsigned long irq_flags;
+ 	unsigned int next_bit;
+ 	size_t matchlen = 0;
+@@ -437,7 +437,7 @@ static int trie_update_elem(struct bpf_map *map,
+ static int trie_delete_elem(struct bpf_map *map, void *_key)
+ {
+ 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
+-	struct bpf_lpm_trie_key *key = _key;
++	struct bpf_lpm_trie_key_u8 *key = _key;
+ 	struct lpm_trie_node __rcu **trim, **trim2;
+ 	struct lpm_trie_node *node, *parent;
+ 	unsigned long irq_flags;
+@@ -536,7 +536,7 @@ static int trie_delete_elem(struct bpf_map *map, void *_key)
+ 				 sizeof(struct lpm_trie_node))
+ #define LPM_VAL_SIZE_MIN	1
+ 
+-#define LPM_KEY_SIZE(X)		(sizeof(struct bpf_lpm_trie_key) + (X))
++#define LPM_KEY_SIZE(X)		(sizeof(struct bpf_lpm_trie_key_u8) + (X))
+ #define LPM_KEY_SIZE_MAX	LPM_KEY_SIZE(LPM_DATA_SIZE_MAX)
+ #define LPM_KEY_SIZE_MIN	LPM_KEY_SIZE(LPM_DATA_SIZE_MIN)
+ 
+@@ -568,7 +568,7 @@ static struct bpf_map *trie_alloc(union bpf_attr *attr)
+ 	/* copy mandatory map attributes */
+ 	bpf_map_init_from_attr(&trie->map, attr);
+ 	trie->data_size = attr->key_size -
+-			  offsetof(struct bpf_lpm_trie_key, data);
++			  offsetof(struct bpf_lpm_trie_key_u8, data);
+ 	trie->max_prefixlen = trie->data_size * 8;
+ 
+ 	spin_lock_init(&trie->lock);
+@@ -619,7 +619,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
+ {
+ 	struct lpm_trie_node *node, *next_node = NULL, *parent, *search_root;
+ 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
+-	struct bpf_lpm_trie_key *key = _key, *next_key = _next_key;
++	struct bpf_lpm_trie_key_u8 *key = _key, *next_key = _next_key;
+ 	struct lpm_trie_node **node_stack = NULL;
+ 	int err = 0, stack_ptr = -1;
+ 	unsigned int next_bit;
+@@ -706,7 +706,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
+ 	}
+ do_copy:
+ 	next_key->prefixlen = next_node->prefixlen;
+-	memcpy((void *)next_key + offsetof(struct bpf_lpm_trie_key, data),
++	memcpy((void *)next_key + offsetof(struct bpf_lpm_trie_key_u8, data),
+ 	       next_node->data, trie->data_size);
+ free_stack:
+ 	kfree(node_stack);
+@@ -718,7 +718,7 @@ static int trie_check_btf(const struct bpf_map *map,
+ 			  const struct btf_type *key_type,
+ 			  const struct btf_type *value_type)
+ {
+-	/* Keys must have struct bpf_lpm_trie_key embedded. */
++	/* Keys must have struct bpf_lpm_trie_key_u8 embedded. */
+ 	return BTF_INFO_KIND(key_type->info) != BTF_KIND_STRUCT ?
+ 	       -EINVAL : 0;
+ }
+diff --git a/samples/bpf/map_perf_test_user.c b/samples/bpf/map_perf_test_user.c
+index 1bb53f4b29e11..cb5c776103b99 100644
+--- a/samples/bpf/map_perf_test_user.c
++++ b/samples/bpf/map_perf_test_user.c
+@@ -370,7 +370,7 @@ static void run_perf_test(int tasks)
+ 
+ static void fill_lpm_trie(void)
+ {
+-	struct bpf_lpm_trie_key *key;
++	struct bpf_lpm_trie_key_u8 *key;
+ 	unsigned long value = 0;
+ 	unsigned int i;
+ 	int r;
+diff --git a/samples/bpf/xdp_router_ipv4_user.c b/samples/bpf/xdp_router_ipv4_user.c
+index 683913bbf2797..28bae295d0ed1 100644
+--- a/samples/bpf/xdp_router_ipv4_user.c
++++ b/samples/bpf/xdp_router_ipv4_user.c
+@@ -91,7 +91,7 @@ static int recv_msg(struct sockaddr_nl sock_addr, int sock)
+ static void read_route(struct nlmsghdr *nh, int nll)
+ {
+ 	char dsts[24], gws[24], ifs[16], dsts_len[24], metrics[24];
+-	struct bpf_lpm_trie_key *prefix_key;
++	struct bpf_lpm_trie_key_u8 *prefix_key;
+ 	struct rtattr *rt_attr;
+ 	struct rtmsg *rt_msg;
+ 	int rtm_family;
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index a17688011440e..58c7fc75da752 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -76,12 +76,29 @@ struct bpf_insn {
+ 	__s32	imm;		/* signed immediate constant */
+ };
+ 
+-/* Key of an a BPF_MAP_TYPE_LPM_TRIE entry */
++/* Deprecated: use struct bpf_lpm_trie_key_u8 (when the "data" member is needed for
++ * byte access) or struct bpf_lpm_trie_key_hdr (when using an alternative type for
++ * the trailing flexible array member) instead.
++ */
+ struct bpf_lpm_trie_key {
+ 	__u32	prefixlen;	/* up to 32 for AF_INET, 128 for AF_INET6 */
+ 	__u8	data[0];	/* Arbitrary size */
+ };
+ 
++/* Header for bpf_lpm_trie_key structs */
++struct bpf_lpm_trie_key_hdr {
++	__u32	prefixlen;
++};
 +
-+``BPF_MAP_TYPE_LPM_TRIE`` provides a longest prefix match algorithm that
-+can be used to match IP addresses to a stored set of prefixes.
-+Internally, data is stored in an unbalanced trie of nodes that uses
-+``prefixlen,data`` pairs as its keys. The ``data`` is interpreted in
-+network byte order, i.e. big endian, so ``data[0]`` stores the most
-+significant byte.
++/* Key of an a BPF_MAP_TYPE_LPM_TRIE entry, with trailing byte array. */
++struct bpf_lpm_trie_key_u8 {
++	union {
++		struct bpf_lpm_trie_key_hdr	hdr;
++		__u32				prefixlen;
++	};
++	__u8	data[];		/* Arbitrary size */
++};
 +
-+LPM tries may be created with a maximum prefix length that is a multiple
-+of 8, in the range from 8 to 2048. The key used for lookup and update
-+operations is a ``struct bpf_lpm_trie_key``, extended by
-+``max_prefixlen/8`` bytes.
-+
-+- For IPv4 addresses the data length is 4 bytes
-+- For IPv6 addresses the data length is 16 bytes
-+
-+The value type stored in the LPM trie can be any user defined type.
-+
-+.. note::
-+   When creating a map of type ``BPF_MAP_TYPE_LPM_TRIE`` you must set the
-+   ``BPF_F_NO_PREALLOC`` flag.
-+
-+Usage
-+=====
-+
-+Kernel BPF
-+----------
-+
-+.. c:function::
-+   void *bpf_map_lookup_elem(struct bpf_map *map, const void *key)
-+
-+The longest prefix entry for a given data value can be found using the
-+``bpf_map_lookup_elem()`` helper. This helper returns a pointer to the
-+value associated with the longest matching ``key``, or ``NULL`` if no
-+entry was found.
-+
-+The ``key`` should have ``prefixlen`` set to ``max_prefixlen`` when
-+performing longest prefix lookups. For example, when searching for the
-+longest prefix match for an IPv4 address, ``prefixlen`` should be set to
-+``32``.
-+
-+.. c:function::
-+   long bpf_map_update_elem(struct bpf_map *map, const void *key, const void *value, u64 flags)
-+
-+Prefix entries can be added or updated using the ``bpf_map_update_elem()``
-+helper. This helper replaces existing elements atomically.
-+
-+``bpf_map_update_elem()`` returns ``0`` on success, or negative error in
-+case of failure.
-+
-+ .. note::
-+    The flags parameter must be one of BPF_ANY, BPF_NOEXIST or BPF_EXIST,
-+    but the value is ignored, giving BPF_ANY semantics.
-+
-+.. c:function::
-+   long bpf_map_delete_elem(struct bpf_map *map, const void *key)
-+
-+Prefix entries can be deleted using the ``bpf_map_delete_elem()``
-+helper. This helper will return 0 on success, or negative error in case
-+of failure.
-+
-+Userspace
-+---------
-+
-+Access from userspace uses libbpf APIs with the same names as above, with
-+the map identified by ``fd``.
-+
-+.. c:function::
-+   int bpf_map_get_next_key (int fd, const void *cur_key, void *next_key)
-+
-+A userspace program can iterate through the entries in an LPM trie using
-+libbpf's ``bpf_map_get_next_key()`` function. The first key can be
-+fetched by calling ``bpf_map_get_next_key()`` with ``cur_key`` set to
-+``NULL``. Subsequent calls will fetch the next key that follows the
-+current key. ``bpf_map_get_next_key()`` returns ``0`` on success,
-+``-ENOENT`` if ``cur_key`` is the last key in the trie, or negative
-+error in case of failure.
-+
-+``bpf_map_get_next_key()`` will iterate through the LPM trie elements
-+from leftmost leaf first. This means that iteration will return more
-+specific keys before less specific ones.
-+
-+Examples
-+========
-+
-+Please see ``tools/testing/selftests/bpf/test_lpm_map.c`` for examples
-+of LPM trie usage from userspace. The code snippets below demonstrate
-+API usage.
-+
-+Kernel BPF
-+----------
-+
-+The following BPF code snippet shows how to declare a new LPM trie for IPv4
-+address prefixes:
-+
-+.. code-block:: c
-+
-+    #include <linux/bpf.h>
-+    #include <bpf/bpf_helpers.h>
-+
-+    struct ipv4_lpm_key {
-+            __u32 prefixlen;
-+            __u32 data;
-+    };
-+
-+    struct {
-+            __uint(type, BPF_MAP_TYPE_LPM_TRIE);
-+            __type(key, struct ipv4_lpm_key);
-+            __type(value, __u32);
-+            __uint(map_flags, BPF_F_NO_PREALLOC);
-+            __uint(max_entries, 255);
-+    } ipv4_lpm_map SEC(".maps");
-+
-+The following BPF code snippet shows how to lookup by IPv4 address:
-+
-+.. code-block:: c
-+
-+    void *lookup(__u32 ipaddr)
-+    {
-+            struct ipv4_lpm_key key = {
-+                    .prefixlen = 32,
-+                    .data = ipaddr
-+            };
-+
-+            return bpf_map_lookup_elem(&ipv4_lpm_map, &key);
-+    }
-+
-+Userspace
-+---------
-+
-+The following snippet shows how to insert an IPv4 prefix entry into an
-+LPM trie:
-+
-+.. code-block:: c
-+
-+    int add_prefix_entry(int lpm_fd, __u32 addr, __u32 prefixlen, struct value *value)
-+    {
-+            struct ipv4_lpm_key ipv4_key = {
-+                    .prefixlen = prefixlen,
-+                    .data = addr
-+            };
-+            return bpf_map_update_elem(lpm_fd, &ipv4_key, value, BPF_ANY);
-+    }
-+
-+The following snippet shows a userspace program walking through the entries
-+of an LPM trie:
-+
-+
-+.. code-block:: c
-+
-+    #include <bpf/libbpf.h>
-+    #include <bpf/bpf.h>
-+
-+    void iterate_lpm_trie(int map_fd)
-+    {
-+            struct ipv4_lpm_key *cur_key = NULL;
-+            struct ipv4_lpm_key next_key;
-+            struct value value;
-+            int err;
-+
-+            for (;;) {
-+                    err = bpf_map_get_next_key(map_fd, cur_key, &next_key);
-+                    if (err)
-+                            break;
-+
-+                    bpf_map_lookup_elem(map_fd, &next_key, &value);
-+
-+                    /* Use key and value here */
-+
-+                    cur_key = &next_key;
-+            }
-+    }
+ struct bpf_cgroup_storage_key {
+ 	__u64	cgroup_inode_id;	/* cgroup inode id */
+ 	__u32	attach_type;		/* program attach type (enum bpf_attach_type) */
+diff --git a/tools/testing/selftests/bpf/progs/map_ptr_kern.c b/tools/testing/selftests/bpf/progs/map_ptr_kern.c
+index db388f593d0a2..96eed198af361 100644
+--- a/tools/testing/selftests/bpf/progs/map_ptr_kern.c
++++ b/tools/testing/selftests/bpf/progs/map_ptr_kern.c
+@@ -311,7 +311,7 @@ struct lpm_trie {
+ } __attribute__((preserve_access_index));
+ 
+ struct lpm_key {
+-	struct bpf_lpm_trie_key trie_key;
++	struct bpf_lpm_trie_key_hdr trie_key;
+ 	__u32 data;
+ };
+ 
+diff --git a/tools/testing/selftests/bpf/test_lpm_map.c b/tools/testing/selftests/bpf/test_lpm_map.c
+index c028d621c744d..d98c72dc563ea 100644
+--- a/tools/testing/selftests/bpf/test_lpm_map.c
++++ b/tools/testing/selftests/bpf/test_lpm_map.c
+@@ -211,7 +211,7 @@ static void test_lpm_map(int keysize)
+ 	volatile size_t n_matches, n_matches_after_delete;
+ 	size_t i, j, n_nodes, n_lookups;
+ 	struct tlpm_node *t, *list = NULL;
+-	struct bpf_lpm_trie_key *key;
++	struct bpf_lpm_trie_key_u8 *key;
+ 	uint8_t *data, *value;
+ 	int r, map;
+ 
+@@ -331,8 +331,8 @@ static void test_lpm_map(int keysize)
+ static void test_lpm_ipaddr(void)
+ {
+ 	LIBBPF_OPTS(bpf_map_create_opts, opts, .map_flags = BPF_F_NO_PREALLOC);
+-	struct bpf_lpm_trie_key *key_ipv4;
+-	struct bpf_lpm_trie_key *key_ipv6;
++	struct bpf_lpm_trie_key_u8 *key_ipv4;
++	struct bpf_lpm_trie_key_u8 *key_ipv6;
+ 	size_t key_size_ipv4;
+ 	size_t key_size_ipv6;
+ 	int map_fd_ipv4;
+@@ -423,7 +423,7 @@ static void test_lpm_ipaddr(void)
+ static void test_lpm_delete(void)
+ {
+ 	LIBBPF_OPTS(bpf_map_create_opts, opts, .map_flags = BPF_F_NO_PREALLOC);
+-	struct bpf_lpm_trie_key *key;
++	struct bpf_lpm_trie_key_u8 *key;
+ 	size_t key_size;
+ 	int map_fd;
+ 	__u64 value;
+@@ -532,7 +532,7 @@ static void test_lpm_delete(void)
+ static void test_lpm_get_next_key(void)
+ {
+ 	LIBBPF_OPTS(bpf_map_create_opts, opts, .map_flags = BPF_F_NO_PREALLOC);
+-	struct bpf_lpm_trie_key *key_p, *next_key_p;
++	struct bpf_lpm_trie_key_u8 *key_p, *next_key_p;
+ 	size_t key_size;
+ 	__u32 value = 0;
+ 	int map_fd;
+@@ -693,9 +693,9 @@ static void *lpm_test_command(void *arg)
+ {
+ 	int i, j, ret, iter, key_size;
+ 	struct lpm_mt_test_info *info = arg;
+-	struct bpf_lpm_trie_key *key_p;
++	struct bpf_lpm_trie_key_u8 *key_p;
+ 
+-	key_size = sizeof(struct bpf_lpm_trie_key) + sizeof(__u32);
++	key_size = sizeof(*key_p) + sizeof(__u32);
+ 	key_p = alloca(key_size);
+ 	for (iter = 0; iter < info->iter; iter++)
+ 		for (i = 0; i < MAX_TEST_KEYS; i++) {
+@@ -717,7 +717,7 @@ static void *lpm_test_command(void *arg)
+ 				ret = bpf_map_lookup_elem(info->map_fd, key_p, &value);
+ 				assert(ret == 0 || errno == ENOENT);
+ 			} else {
+-				struct bpf_lpm_trie_key *next_key_p = alloca(key_size);
++				struct bpf_lpm_trie_key_u8 *next_key_p = alloca(key_size);
+ 				ret = bpf_map_get_next_key(info->map_fd, key_p, next_key_p);
+ 				assert(ret == 0 || errno == ENOENT || errno == ENOMEM);
+ 			}
+@@ -752,7 +752,7 @@ static void test_lpm_multi_thread(void)
+ 
+ 	/* create a trie */
+ 	value_size = sizeof(__u32);
+-	key_size = sizeof(struct bpf_lpm_trie_key) + value_size;
++	key_size = sizeof(struct bpf_lpm_trie_key_hdr) + value_size;
+ 	map_fd = bpf_map_create(BPF_MAP_TYPE_LPM_TRIE, NULL, key_size, value_size, 100, &opts);
+ 
+ 	/* create 4 threads to test update, delete, lookup and get_next_key */
 -- 
 2.43.0
 
