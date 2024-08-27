@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2061C4EE6;
-	Tue, 27 Aug 2024 15:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25991E520;
+	Tue, 27 Aug 2024 15:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771342; cv=none; b=LWmqhuC6uGtZ8Yk1AQYX0j1oq+N/f1dIQCQTxgmFRdgeLhEUg5Stj/4YomujvGk8t3XEbSE89r3wTSrIAe7jacar1ZM2ClfZs4+yU0Y8CWbQT2OYH22zkvHiuOiAdM0nVfQcXkHTnQkYdk9+Nuo5DOTTfqiVmdFA7GLULOL3OOQ=
+	t=1724771345; cv=none; b=aU1qYA4vXYz15rxMVPRbbGA/Be6XmjY1LmPMO67jaDBocf0Kzh5G7RoggkNxfXpAdzjFeyJ9+imrTqSSQ3VjKyy1L+ENZRqtGxQ/qM5t/s/H9kkKJOhIAuEM1lRNArK0eaIGlUfMvvqdzZviUP61nhm+wCWJX8t67FS64bgPI3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771342; c=relaxed/simple;
-	bh=YNQIPByZ/cguTmZSTuLJfS7Ntb1XsLVQU95AyV2bHsU=;
+	s=arc-20240116; t=1724771345; c=relaxed/simple;
+	bh=V1FUd26nazDBcKrfJL/qVRL4/lX84TcxmDbssdEZatg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfEOapAP+tk1ydsqExADt+akWDrgkuNzY4gXcC+v3/lJix8E7jkAwzctoq+1AZKg1+b7YvmwO4t3VGbfNAYbNOxs7Zb/bLc+nfop2UfCnJTDIc0/pBCi34u0zgrLo+a5woylcn/gy3tdqCk+AqHcyUXGvxm/V5Cvmhy0CyGz1BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eg17jndt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYBXTlV4+DxkjYhZoAD3+33Ug1ErhT3bD24Uqkytg2gchBobsL4C/EgHtUPCMWdQhIA0uuRzxUiYG1E99SY8QKfublfq9RItu1vSQsYldeuo4ky5BvgYscJOZqYJV73fyhG27gw2x+5nhcd/nWMgvXzEzwDTM/5VdogItbl7Fdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dni6B9c6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eg17jndt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB02C4AF18;
-	Tue, 27 Aug 2024 15:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dni6B9c6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3AAC4AF1A;
+	Tue, 27 Aug 2024 15:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771341;
-	bh=YNQIPByZ/cguTmZSTuLJfS7Ntb1XsLVQU95AyV2bHsU=;
+	s=korg; t=1724771345;
+	bh=V1FUd26nazDBcKrfJL/qVRL4/lX84TcxmDbssdEZatg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eg17jndtst8Cf8jPhPlD7ehmQU8AwcTxIEo9UUgDZT9hIaAUL/X9zgjNE1zwcPOym
-	 IMFwmsCHrQTIT/n4lSgMuCFF21v4kKvfPd1kn9T57DHShLio00+YFpIeKRE3YXiFzf
-	 yvpEb5vMO9TC/hA3he4GkavsdZSPGl2QtJr/ziBI=
+	b=dni6B9c6Sw7OCSPzFVN3xhPDpbs7obvGyF8MM2jrzHDudZEy6Yk0plHLwZw8qXM7R
+	 +SHPM6s0nBWIgkbiJyTegKCArn+vcF4zp3G9gmkQAmaFUYl+42rnMOs5VEDFRkF5wa
+	 TNg22Ujl89zMQOZ4jOdf/FFtMwrDfzMfSaeYHufQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	"Nysal Jan K.A" <nysal@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 132/273] cpu/SMT: Enable SMT only if a core is online
-Date: Tue, 27 Aug 2024 16:37:36 +0200
-Message-ID: <20240827143838.426901716@linuxfoundation.org>
+Subject: [PATCH 6.10 159/273] tc-testing: dont access non-existent variable on exception
+Date: Tue, 27 Aug 2024 16:38:03 +0200
+Message-ID: <20240827143839.454784658@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -54,86 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nysal Jan K.A <nysal@linux.ibm.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 6c17ea1f3eaa330d445ac14a9428402ce4e3055e ]
+[ Upstream commit a0c9fe5eecc97680323ee83780ea3eaf440ba1b7 ]
 
-If a core is offline then enabling SMT should not online CPUs of
-this core. By enabling SMT, what is intended is either changing the SMT
-value from "off" to "on" or setting the SMT level (threads per core) from a
-lower to higher value.
+Since commit 255c1c7279ab ("tc-testing: Allow test cases to be skipped")
+the variable test_ordinal doesn't exist in call_pre_case().
+So it should not be accessed when an exception occurs.
 
-On PowerPC the ppc64_cpu utility can be used, among other things, to
-perform the following functions:
+This resolves the following splat:
 
-ppc64_cpu --cores-on                # Get the number of online cores
-ppc64_cpu --cores-on=X              # Put exactly X cores online
-ppc64_cpu --offline-cores=X[,Y,...] # Put specified cores offline
-ppc64_cpu --smt={on|off|value}      # Enable, disable or change SMT level
+  ...
+  During handling of the above exception, another exception occurred:
 
-If the user has decided to offline certain cores, enabling SMT should
-not online CPUs in those cores. This patch fixes the issue and changes
-the behaviour as described, by introducing an arch specific function
-topology_is_core_online(). It is currently implemented only for PowerPC.
+  Traceback (most recent call last):
+    File ".../tdc.py", line 1028, in <module>
+      main()
+    File ".../tdc.py", line 1022, in main
+      set_operation_mode(pm, parser, args, remaining)
+    File ".../tdc.py", line 966, in set_operation_mode
+      catresults = test_runner_serial(pm, args, alltests)
+    File ".../tdc.py", line 642, in test_runner_serial
+      (index, tsr) = test_runner(pm, args, alltests)
+    File ".../tdc.py", line 536, in test_runner
+      res = run_one_test(pm, args, index, tidx)
+    File ".../tdc.py", line 419, in run_one_test
+      pm.call_pre_case(tidx)
+    File ".../tdc.py", line 146, in call_pre_case
+      print('test_ordinal is {}'.format(test_ordinal))
+  NameError: name 'test_ordinal' is not defined
 
-Fixes: 73c58e7e1412 ("powerpc: Add HOTPLUG_SMT support")
-Reported-by: Tyrel Datwyler <tyreld@linux.ibm.com>
-Closes: https://groups.google.com/g/powerpc-utils-devel/c/wrwVzAAnRlI/m/5KJSoqP4BAAJ
-Signed-off-by: Nysal Jan K.A <nysal@linux.ibm.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240731030126.956210-2-nysal@linux.ibm.com
+Fixes: 255c1c7279ab ("tc-testing: Allow test cases to be skipped")
+Signed-off-by: Simon Horman <horms@kernel.org>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20240815-tdc-test-ordinal-v1-1-0255c122a427@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-devices-system-cpu |  3 ++-
- kernel/cpu.c                                       | 12 +++++++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ tools/testing/selftests/tc-testing/tdc.py | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-devices-system-cpu b/Documentation/ABI/testing/sysfs-devices-system-cpu
-index e7e160954e798..0579860b55299 100644
---- a/Documentation/ABI/testing/sysfs-devices-system-cpu
-+++ b/Documentation/ABI/testing/sysfs-devices-system-cpu
-@@ -562,7 +562,8 @@ Description:	Control Symmetric Multi Threading (SMT)
- 			 ================ =========================================
+diff --git a/tools/testing/selftests/tc-testing/tdc.py b/tools/testing/selftests/tc-testing/tdc.py
+index ee349187636fc..4f255cec0c22e 100755
+--- a/tools/testing/selftests/tc-testing/tdc.py
++++ b/tools/testing/selftests/tc-testing/tdc.py
+@@ -143,7 +143,6 @@ class PluginMgr:
+             except Exception as ee:
+                 print('exception {} in call to pre_case for {} plugin'.
+                       format(ee, pgn_inst.__class__))
+-                print('test_ordinal is {}'.format(test_ordinal))
+                 print('testid is {}'.format(caseinfo['id']))
+                 raise
  
- 			 If control status is "forceoff" or "notsupported" writes
--			 are rejected.
-+			 are rejected. Note that enabling SMT on PowerPC skips
-+			 offline cores.
- 
- What:		/sys/devices/system/cpu/cpuX/power/energy_perf_bias
- Date:		March 2019
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 3d2bf1d50a0c4..6dee328bfe6fd 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2679,6 +2679,16 @@ int cpuhp_smt_disable(enum cpuhp_smt_control ctrlval)
- 	return ret;
- }
- 
-+/**
-+ * Check if the core a CPU belongs to is online
-+ */
-+#if !defined(topology_is_core_online)
-+static inline bool topology_is_core_online(unsigned int cpu)
-+{
-+	return true;
-+}
-+#endif
-+
- int cpuhp_smt_enable(void)
- {
- 	int cpu, ret = 0;
-@@ -2689,7 +2699,7 @@ int cpuhp_smt_enable(void)
- 		/* Skip online CPUs and CPUs on offline nodes */
- 		if (cpu_online(cpu) || !node_online(cpu_to_node(cpu)))
- 			continue;
--		if (!cpu_smt_thread_allowed(cpu))
-+		if (!cpu_smt_thread_allowed(cpu) || !topology_is_core_online(cpu))
- 			continue;
- 		ret = _cpu_up(cpu, 0, CPUHP_ONLINE);
- 		if (ret)
 -- 
 2.43.0
 
