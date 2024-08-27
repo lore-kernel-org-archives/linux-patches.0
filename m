@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8911A01D0;
-	Tue, 27 Aug 2024 14:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CAD1A072D;
+	Tue, 27 Aug 2024 14:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770201; cv=none; b=WpQC1S9FZT+tjYQ7+E4V384n4Mevku0ZFMj3fau63Zjwj/ZPgwikZqRGW2Ri1quTwpn+MMyKiAY3YMR7Vfahj1y6dvjgKSu0SANKHEmvefjVviL+wyMa+XEZuDFphlwfkLVyQ08c3VoKOOQGx2YjnaGb70iNhvzj0qtHKeuicQM=
+	t=1724770204; cv=none; b=B7U0hl3EGQNwf2E/A3Pi7YH/Ywt/eipZpqgaCvkDQykI/2hsVoBDNaspKN+hp6tTzOKscrwVUYlTSBLqmNO4Uyw4sk4rcco0BDe/XSG9beIYR2Hh465bL+cyOFvQ1oeD7j8sfX60pqguOIfVe3TNpLEt1i/mNXpeADlLK3PvhZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770201; c=relaxed/simple;
-	bh=yloia8llL2goUJ9gW1UCvKGvqZbkFkJxGW8RXsLOhKk=;
+	s=arc-20240116; t=1724770204; c=relaxed/simple;
+	bh=ZO86yeuV8FHPBdGdb2Glq41NOPt2V0Eif4hcb+k/n5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9pOrdL+HR1wFaSQUnLwPRbZ6mvY+EcUcjhMWsSW7gEH+2ajLVBGe5yOJ11jfi54IhD7upHJ5bWLnUSokYGtMRamBJgR46HGLDHULkunoCTUBzkdNVHB6k5HANH5Uj4yAvfOpY8nJDp31PTgvqqrcT9ppwx5J28eUJT2Kop2LCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqapO737; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7YsapeU3aBIv24zkUQdnGTZ2um8gFoPkMXUdIbtXGy+skkROJFH2J8OuhfIQfakykDMwLVuGXZ9tdUIkzFC44ZdtTUC8kQZGrNvFSjfDRmQFBSFbzp584rnYj34m3m49L+0x8PCXxYqSYD4wp4kqOGQANosREK6rtp6wCM6XFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsTEYJoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqapO737"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72AFC4DDEA;
-	Tue, 27 Aug 2024 14:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsTEYJoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F140C4DDEB;
+	Tue, 27 Aug 2024 14:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770201;
-	bh=yloia8llL2goUJ9gW1UCvKGvqZbkFkJxGW8RXsLOhKk=;
+	s=korg; t=1724770204;
+	bh=ZO86yeuV8FHPBdGdb2Glq41NOPt2V0Eif4hcb+k/n5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MqapO737zc/DjXNID+P8KWpFMjSb9MyhD04aLHmH2wSs44+9J/G27qxsaHuoS2PeI
-	 8NCab194z5rIkggMBddiqG0EQf1EYrkNyiL6DnJYQhIMVqbU+S/xcaOEYK91z1jYkQ
-	 v5ftFGah5v26J+jXm0NxBJP4FU5sgUDhepA53eRI=
+	b=NsTEYJoyA7IVStc722/DKkmF9bsvbxO8QW7yn6rkvQrxLBYEvQCez+kGAByf2oJej
+	 0Caq1y1hJdLWvDqBZcl/SegrGdNK3cI1XOtGI0NQGRZ3Hf6SKEDiE7EX2tEsyEmYx2
+	 zn50hMu2iq7zqbPtTS7gSOm0yxeVs0ibd1oVX3tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	farah kassabri <fkassabri@habana.ai>,
+	Oded Gabbay <ogabbay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/341] gfs2: setattr_chown: Add missing initialization
-Date: Tue, 27 Aug 2024 16:35:57 +0200
-Message-ID: <20240827143848.210209381@linuxfoundation.org>
+Subject: [PATCH 6.6 117/341] accel/habanalabs: fix bug in timestamp interrupt handling
+Date: Tue, 27 Aug 2024 16:35:48 +0200
+Message-ID: <20240827143847.865844688@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,32 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: farah kassabri <fkassabri@habana.ai>
 
-[ Upstream commit 2d8d7990619878a848b1d916c2f936d3012ee17d ]
+[ Upstream commit 0165994c215f321e2d055368f89b424756e340eb ]
 
-Add a missing initialization of variable ap in setattr_chown().
-Without, chown() may be able to bypass quotas.
+There is a potential race between user thread seeking to re-use
+a timestamp record with new interrupt id, while this record is still
+in the middle of interrupt handling and it is about to be freed.
+Imagine the driver set the record in_use to 0 and only then fill the
+free_node information. This might lead to unpleasant scenario where
+the new registration thread detects the record as free to use, and
+change the cq buff address. That will cause the free_node to get
+the wrong buffer address to put refcount to.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: farah kassabri <fkassabri@habana.ai>
+Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
+Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/habanalabs/common/irq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 3de0d8ab42eaf..29085643ad104 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1929,7 +1929,7 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
- 	kuid_t ouid, nuid;
- 	kgid_t ogid, ngid;
- 	int error;
--	struct gfs2_alloc_parms ap;
-+	struct gfs2_alloc_parms ap = {};
+diff --git a/drivers/accel/habanalabs/common/irq.c b/drivers/accel/habanalabs/common/irq.c
+index b1010d206c2ef..813315cea4a7b 100644
+--- a/drivers/accel/habanalabs/common/irq.c
++++ b/drivers/accel/habanalabs/common/irq.c
+@@ -271,6 +271,9 @@ static int handle_registration_node(struct hl_device *hdev, struct hl_user_pendi
+ 	free_node->cq_cb = pend->ts_reg_info.cq_cb;
+ 	list_add(&free_node->free_objects_node, *free_list);
  
- 	ouid = inode->i_uid;
- 	ogid = inode->i_gid;
++	/* Mark TS record as free */
++	pend->ts_reg_info.in_use = false;
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
