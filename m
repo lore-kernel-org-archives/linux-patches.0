@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B5B12E4D;
-	Tue, 27 Aug 2024 15:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FCE1BC9E3;
+	Tue, 27 Aug 2024 15:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771457; cv=none; b=WDCkZ9gb4cGy5Y+o+cDKNIg7LIr/dRjGqc3Om0T+k0yEdLOmL0iQXvlP9cYbaTSmmqy4XvqUu4B9wzZLwh/stQhaSu5NmM0GDJqjNLVSliLOeKmyEx8F3iANTHKBw38s6hcc03LHKvvcE6dpjts+i7jWCKFP44AHZOQ0LXw0D8k=
+	t=1724771461; cv=none; b=QxlvUkhYEazWZhJQED10if8hW1DmK0GquYEVq2NUzPYLA5dAOk0D2eTsxsi95RT9pp4iqBNS/h49Xxbl7EVeLBB/CnZYgpj8KjoIlYkr1QUqcfkggtk2AkfULbsDBOie3qDHzj8TjOlFhanWKAWlzKELKCSt5Sj/Hov5OxnfNuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771457; c=relaxed/simple;
-	bh=nWcu2xGcmh8DYWsZ39T/L+9xqL1wD8o39s7GMa86Vdk=;
+	s=arc-20240116; t=1724771461; c=relaxed/simple;
+	bh=a3O8Bru38vOwflVN4Uid/NEGw51WV9uIF70Atx2Qs6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SV395s1/zGgD5FQ7cCwUjtJdVkYsxSjrCqrOgvBob+tzeOWv/C1vdr394oLaz3fhOW1oZc6AiZRIIJhCDDFlydeIz+36KPH+0Vj6a3RSmktDjwoXmQ9pnMAdaf/06E+oNfVIdhAjqaUX58HygP9O8JlrYU5prm9nUPb4ZJrfEF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSZcC2mH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzpnkKRcxSUK/Gmti+KYrjmZylhlCTH1oag0W6ql+1JxCwFW8tp3DSPj+tbB3LVIGmAuZ+6dLg3+WFkM038DO03pjWO0G50d2p5vZ3hdRjBGzN7HEx7IVPXZcZdwHm4iJnEzdIP40KaZu3U2t7qXpAWat7nMJ4nJQVOWkX/My4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7nVWwTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSZcC2mH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B77C4DDE8;
-	Tue, 27 Aug 2024 15:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7nVWwTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4852C4DDED;
+	Tue, 27 Aug 2024 15:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771457;
-	bh=nWcu2xGcmh8DYWsZ39T/L+9xqL1wD8o39s7GMa86Vdk=;
+	s=korg; t=1724771460;
+	bh=a3O8Bru38vOwflVN4Uid/NEGw51WV9uIF70Atx2Qs6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSZcC2mHFPzjLVYzibvIV3J1AutvC3KtYa6bEIPWIvYGAtay+KJP48fJAzg9NCyt4
-	 ThfBsTn8v+h1SwS9MHZjO61yaEMy1IgDq5pjA0QdM0HqGij6gSNZex5vlzauri3Wyj
-	 2AZNwpLQ/pn6jIPM8xdXAC8oTTjOL48KXtEuPnlU=
+	b=X7nVWwTzC7SS8eZQCBB6tJKub05/XRidUfHriBS6C8PtKXrRgtOoHrKEXQ721rUV5
+	 UnlQnTgICvIFNgZ3cpwmxvRk7RbZEidnuBPHB7czeWNAyvWUKVzJAmUCRB4FSzn0g9
+	 7d7Ekqef3xW0Pbtw3AxNl6Gp9L89CmbZRG/D1e3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 166/273] netfilter: nft_counter: Synchronize nft_counter_reset() against reader.
-Date: Tue, 27 Aug 2024 16:38:10 +0200
-Message-ID: <20240827143839.726975638@linuxfoundation.org>
+Subject: [PATCH 6.10 193/273] drm/msm/dp: fix the max supported bpp logic
+Date: Tue, 27 Aug 2024 16:38:37 +0200
+Message-ID: <20240827143840.751278505@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,46 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit a0b39e2dc7017ac667b70bdeee5293e410fab2fb ]
+[ Upstream commit d19d5b8d8f6dab942ce5ddbcf34bf7275e778250 ]
 
-nft_counter_reset() resets the counter by subtracting the previously
-retrieved value from the counter. This is a write operation on the
-counter and as such it requires to be performed with a write sequence of
-nft_counter_seq to serialize against its possible reader.
+Fix the dp_panel_get_supported_bpp() API to return the minimum
+supported bpp correctly for relevant cases and use this API
+to correct the behavior of DP driver which hard-codes the max supported
+bpp to 30.
 
-Update the packets/ bytes within write-sequence of nft_counter_seq.
+This is incorrect because the number of lanes and max data rate
+supported by the lanes need to be taken into account.
 
-Fixes: d84701ecbcd6a ("netfilter: nft_counter: rework atomic dump and reset")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Replace the hardcoded limit with the appropriate math which accounts
+for the accurate number of lanes and max data rate.
+
+changes in v2:
+	- Fix the dp_panel_get_supported_bpp() and use it
+	- Drop the max_t usage as dp_panel_get_supported_bpp() already
+	  returns the min_bpp correctly now
+
+changes in v3:
+	- replace min_t with just min as all params are u32
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/43
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/607073/
+Link: https://lore.kernel.org/r/20240805202009.1120981-1-quic_abhinavk@quicinc.com
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_counter.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_panel.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
-index 16f40b503d379..eab0dc66bee6b 100644
---- a/net/netfilter/nft_counter.c
-+++ b/net/netfilter/nft_counter.c
-@@ -107,11 +107,16 @@ static void nft_counter_reset(struct nft_counter_percpu_priv *priv,
- 			      struct nft_counter *total)
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 07db8f37cd06a..017fb8cc8ab67 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -90,22 +90,22 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ static u32 dp_panel_get_supported_bpp(struct dp_panel *dp_panel,
+ 		u32 mode_edid_bpp, u32 mode_pclk_khz)
  {
- 	struct nft_counter *this_cpu;
-+	seqcount_t *myseq;
+-	struct dp_link_info *link_info;
++	const struct dp_link_info *link_info;
+ 	const u32 max_supported_bpp = 30, min_supported_bpp = 18;
+-	u32 bpp = 0, data_rate_khz = 0;
++	u32 bpp, data_rate_khz;
  
- 	local_bh_disable();
- 	this_cpu = this_cpu_ptr(priv->counter);
-+	myseq = this_cpu_ptr(&nft_counter_seq);
-+
-+	write_seqcount_begin(myseq);
- 	this_cpu->packets -= total->packets;
- 	this_cpu->bytes -= total->bytes;
-+	write_seqcount_end(myseq);
- 	local_bh_enable();
+-	bpp = min_t(u32, mode_edid_bpp, max_supported_bpp);
++	bpp = min(mode_edid_bpp, max_supported_bpp);
+ 
+ 	link_info = &dp_panel->link_info;
+ 	data_rate_khz = link_info->num_lanes * link_info->rate * 8;
+ 
+-	while (bpp > min_supported_bpp) {
++	do {
+ 		if (mode_pclk_khz * bpp <= data_rate_khz)
+-			break;
++			return bpp;
+ 		bpp -= 6;
+-	}
++	} while (bpp > min_supported_bpp);
+ 
+-	return bpp;
++	return min_supported_bpp;
  }
+ 
+ static int dp_panel_update_modes(struct drm_connector *connector,
+@@ -442,8 +442,9 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+ 				drm_mode->clock);
+ 	drm_dbg_dp(panel->drm_dev, "bpp = %d\n", dp_panel->dp_mode.bpp);
+ 
+-	dp_panel->dp_mode.bpp = max_t(u32, 18,
+-				min_t(u32, dp_panel->dp_mode.bpp, 30));
++	dp_panel->dp_mode.bpp = dp_panel_get_mode_bpp(dp_panel, dp_panel->dp_mode.bpp,
++						      dp_panel->dp_mode.drm_mode.clock);
++
+ 	drm_dbg_dp(panel->drm_dev, "updated bpp = %d\n",
+ 				dp_panel->dp_mode.bpp);
  
 -- 
 2.43.0
