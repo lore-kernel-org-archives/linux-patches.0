@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E6F19EEDB;
-	Tue, 27 Aug 2024 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85F01C5783;
+	Tue, 27 Aug 2024 14:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770523; cv=none; b=MTJTZ68tU/MVgv6GRV5JB28Z0obrlij+0P1OTh1EoT8t2jQt9jeu1tiWHHx7Hy1KBmeYLuilCO7wZhqFQthOFAR7AKPL6afPZY6ZfIaoW9ahxxpUs/5Ia679xBG3EPraOczdMM0+O/VJm2bcjpFjSxxJear34ykHNdh7Zd6Psgs=
+	t=1724770526; cv=none; b=MtM6gH2R+ATMKYPEPYHcD7lcveoSBO9jvChi/7nGvuPr9a3ZqejW6ytAyTDswBEvf0Fh/zluYVGf1Z58eTtXFivmcZwL/B9HSrv6s+Yv164NB9HPo4Gn5ARP37BaEuR6a+vtixU+Z0IABXG5b2sDB4Phfy4MjR/WZh6bjTYgKgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770523; c=relaxed/simple;
-	bh=jQTQ7DkM3iX9u2YC0Rj7LgztclmoJLnNLGn6HdYXv68=;
+	s=arc-20240116; t=1724770526; c=relaxed/simple;
+	bh=nTphnBLXs/DuwIUbGPNlDGtyvJsutCk2ds8VAehEOJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O/7pokfQV/fAZIdsHEi5N+o0l42Z5qyR4tDvZJE5t7jp57YE1obyjscUX7QtVCnfVgJKxhK+H9tspHcfgkqveQamfBgRm3Jy5/XA7X15E3rBTuZgIRVzrpTiwcqDYZ7XatcYl9lf8frgzNgwl+n1p19lA0aDU60VBOwiFXMqhKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mviBEPgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffqQ1aNynGPcdaB9crMHcstSvy/ZMSBNhrjLsCXgGXAchSji5jJi7F70HL4prRAqLacqf+KzwN2lbCAQBfiX7dOfcrTnUR4k6wppawPfIcT5ElkTW/C9onJYYhyT72G94kvaC080Dl3oaT3lQtNvBRoXrniT1ZtAtHN4k8GX51U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvF9ZORq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mviBEPgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAE6C4E691;
-	Tue, 27 Aug 2024 14:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvF9ZORq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E47C4E691;
+	Tue, 27 Aug 2024 14:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770523;
-	bh=jQTQ7DkM3iX9u2YC0Rj7LgztclmoJLnNLGn6HdYXv68=;
+	s=korg; t=1724770526;
+	bh=nTphnBLXs/DuwIUbGPNlDGtyvJsutCk2ds8VAehEOJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mviBEPghsRw2oQ8j6BDsakBnY38VtVafqSokYbzs/0Kwa3ltLBLD2p+qBM5+NQFlm
-	 NdnNJiwsUE+65yCc0wYPYNgQgGjf+5ghYDJl/8857K1gxq/DqQHO4bDpmuSwA/YXXD
-	 HEXisGqOq4T3XQkasxR9Z0hQCmk4iu6DyjvhLG2M=
+	b=TvF9ZORqGt5ECl84RPXdktTrnotb2wpL9gwhvvTFaoItFHpC5Em3VkgOyzfk6grxk
+	 dREtVvSLBJlO2WanRJGJFMkAytOKsgjVW78M/WLeeYecGDp9RFGaKeL5Kfcwc3Ampg
+	 t1t3bGNCs4ZjkwcUmv4JVLf1JFVG3BVisLyYQWGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dmitry V. Levin" <ldv@strace.io>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Celeste Liu <CoelacanthusHex@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 224/341] riscv: entry: always initialize regs->a0 to -ENOSYS
-Date: Tue, 27 Aug 2024 16:37:35 +0200
-Message-ID: <20240827143851.936180385@linuxfoundation.org>
+Subject: [PATCH 6.6 225/341] dm suspend: return -ERESTARTSYS instead of -EINTR
+Date: Tue, 27 Aug 2024 16:37:36 +0200
+Message-ID: <20240827143851.974987078@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -47,55 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Celeste Liu <coelacanthushex@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 61119394631f219e23ce98bcc3eb993a64a8ea64 ]
+[ Upstream commit 1e1fd567d32fcf7544c6e09e0e5bc6c650da6e23 ]
 
-Otherwise when the tracer changes syscall number to -1, the kernel fails
-to initialize a0 with -ENOSYS and subsequently fails to return the error
-code of the failed syscall to userspace. For example, it will break
-strace syscall tampering.
+This commit changes device mapper, so that it returns -ERESTARTSYS
+instead of -EINTR when it is interrupted by a signal (so that the ioctl
+can be restarted).
 
-Fixes: 52449c17bdd1 ("riscv: entry: set a0 = -ENOSYS only when syscall != -1")
-Reported-by: "Dmitry V. Levin" <ldv@strace.io>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+The manpage signal(7) says that the ioctl function should be restarted if
+the signal was handled with SA_RESTART.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
-Link: https://lore.kernel.org/r/20240627142338.5114-2-CoelacanthusHex@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/md/dm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 67d0073fb624d..2158b7a65d74f 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -311,6 +311,7 @@ asmlinkage __visible __trap_section void do_trap_ecall_u(struct pt_regs *regs)
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index f945ee453457b..8ec0a263744a5 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2531,7 +2531,7 @@ static int dm_wait_for_bios_completion(struct mapped_device *md, unsigned int ta
+ 			break;
  
- 		regs->epc += 4;
- 		regs->orig_a0 = regs->a0;
-+		regs->a0 = -ENOSYS;
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
  
- 		riscv_v_vstate_discard(regs);
+@@ -2556,7 +2556,7 @@ static int dm_wait_for_completion(struct mapped_device *md, unsigned int task_st
+ 			break;
  
-@@ -318,8 +319,6 @@ asmlinkage __visible __trap_section void do_trap_ecall_u(struct pt_regs *regs)
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
  
- 		if (syscall >= 0 && syscall < NR_syscalls)
- 			syscall_handler(regs, syscall);
--		else if (syscall != -1)
--			regs->a0 = -ENOSYS;
- 
- 		syscall_exit_to_user_mode(regs);
- 	} else {
 -- 
 2.43.0
 
