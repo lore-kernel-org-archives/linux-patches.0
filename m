@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC8C1CB126;
-	Tue, 27 Aug 2024 15:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48931CFEBC;
+	Tue, 27 Aug 2024 15:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772496; cv=none; b=gVTgLrFqSC/f700Npm1ilRUWgjsqErIxIAnBNiFCAztnNy4dGzcAyuwEJF8Sji8yL+0+PUB28P17wpJmMbHDsEw9YxKr1aZzgCOCW0DzKI9EvNtNrsrktEzQSVTMMdcfxC555ZxjlW0xqIGLWMSbWMqB/4gEaHuJi1dLNGwdg8E=
+	t=1724772499; cv=none; b=kyk+PovY7fOesnEc5MH4bxt8siDpPckfduSx4BMF803bhmKdRwTk2WCQoePIweGMyRUz1MRBdUP08Ner8RtnYgvFBjaMPzlcyLZg575CO4PaoY1o/ngxJvabUj4Pd0BdWMExqOIakihcUVmu98As7d21LgadUcTR54cCHk0aB2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772496; c=relaxed/simple;
-	bh=QmWfzQphO7UR/u2c13Ld5o9yJpTWXvBzcu4hJ/J6Ewo=;
+	s=arc-20240116; t=1724772499; c=relaxed/simple;
+	bh=x8wGCYmN2ReGqhmFMLLx/38GjZQx5gDVOryzbRrhJNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=of2/8XJuowrKRmUlZ2t6UrSJSXL3MdTbOiyO4e4lgRgEDfFmqFCHMudceOHajPiPgUipBnslxqN9SwPjuYyGxLCt/GyvfFpEvt4w+1FzHSU6spRtcexh49myL2pqdBt9dBk3QOEAxP5vVyKTfMl0hxZzW/1HHcorA9Hf5hBaTzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/yEDKym; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lt0ii8WvTDtowpt4sX2aOfMFX/wELmpX1nQgehSaWDxVdrY1Cg+ANXXPfHJY4CxdaQogqqF5A0bbDCOI4t+8zbXUdXeUPd3r1bFFN6nt4xL0Ul6Nn1U0dltWq9FoYbniQ41v6KA1Qbw+6uoi9nZ6LEkzYHA0UI/KzZF0pYsXbM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnQU1ZNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/yEDKym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE4FC61047;
-	Tue, 27 Aug 2024 15:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnQU1ZNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A40BC61047;
+	Tue, 27 Aug 2024 15:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772496;
-	bh=QmWfzQphO7UR/u2c13Ld5o9yJpTWXvBzcu4hJ/J6Ewo=;
+	s=korg; t=1724772499;
+	bh=x8wGCYmN2ReGqhmFMLLx/38GjZQx5gDVOryzbRrhJNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/yEDKymC6XzRHsnIUfn6GG4rm0dzD7oXu9rVlhy50KKXOcOH35ypWLTEIgmeyHgU
-	 E8crOifzgoNkceG4yFoXSm4VfT6gBrvsDZGqW9unidYKUmvebfHNlMkkpujfVxs/zt
-	 4TQlzFvxOaqjuWCTpVjElqRI31LN7jJa8i9x1JVg=
+	b=FnQU1ZNNMm6IyqCTt3z11VeG9M4G3eUvrHo0xlyhkjFcaFg5V9vO+nsoWWlLlWQ7g
+	 73wSbZEtXStOWJf2MqGlR0rGs079M3yxj3RL6ZGvuobhU01yKQjQlf6VqAeZssfoKS
+	 22mT+Jpm8AVDaCeCT3dZD0YbWhpDmL4WK0bmb/1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+8ea26396ff85d23a8929@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 231/321] tcp/dccp: do not care about families in inet_twsk_purge()
-Date: Tue, 27 Aug 2024 16:38:59 +0200
-Message-ID: <20240827143847.031097280@linuxfoundation.org>
+Subject: [PATCH 6.1 232/321] tcp: prevent concurrent execution of tcp_sk_exit_batch
+Date: Tue, 27 Aug 2024 16:39:00 +0200
+Message-ID: <20240827143847.068990799@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,192 +55,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 1eeb5043573981f3a1278876515851b7f6b1df1b ]
+[ Upstream commit 565d121b69980637f040eb4d84289869cdaabedf ]
 
-We lost ability to unload ipv6 module a long time ago.
+Its possible that two threads call tcp_sk_exit_batch() concurrently,
+once from the cleanup_net workqueue, once from a task that failed to clone
+a new netns.  In the latter case, error unwinding calls the exit handlers
+in reverse order for the 'failed' netns.
 
-Instead of calling expensive inet_twsk_purge() twice,
-we can handle all families in one round.
+tcp_sk_exit_batch() calls tcp_twsk_purge().
+Problem is that since commit b099ce2602d8 ("net: Batch inet_twsk_purge"),
+this function picks up twsk in any dying netns, not just the one passed
+in via exit_batch list.
 
-Also remove an extra line added in my prior patch,
-per Kuniyuki Iwashima feedback.
+This means that the error unwind of setup_net() can "steal" and destroy
+timewait sockets belonging to the exiting netns.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/netdev/20240327192934.6843-1-kuniyu@amazon.com/
+This allows the netns exit worker to proceed to call
+
+WARN_ON_ONCE(!refcount_dec_and_test(&net->ipv4.tcp_death_row.tw_refcount));
+
+without the expected 1 -> 0 transition, which then splats.
+
+At same time, error unwind path that is also running inet_twsk_purge()
+will splat as well:
+
+WARNING: .. at lib/refcount.c:31 refcount_warn_saturate+0x1ed/0x210
+...
+ refcount_dec include/linux/refcount.h:351 [inline]
+ inet_twsk_kill+0x758/0x9c0 net/ipv4/inet_timewait_sock.c:70
+ inet_twsk_deschedule_put net/ipv4/inet_timewait_sock.c:221
+ inet_twsk_purge+0x725/0x890 net/ipv4/inet_timewait_sock.c:304
+ tcp_sk_exit_batch+0x1c/0x170 net/ipv4/tcp_ipv4.c:3522
+ ops_exit_list+0x128/0x180 net/core/net_namespace.c:178
+ setup_net+0x714/0xb40 net/core/net_namespace.c:375
+ copy_net_ns+0x2f0/0x670 net/core/net_namespace.c:508
+ create_new_namespaces+0x3ea/0xb10 kernel/nsproxy.c:110
+
+... because refcount_dec() of tw_refcount unexpectedly dropped to 0.
+
+This doesn't seem like an actual bug (no tw sockets got lost and I don't
+see a use-after-free) but as erroneous trigger of debug check.
+
+Add a mutex to force strict ordering: the task that calls tcp_twsk_purge()
+blocks other task from doing final _dec_and_test before mutex-owner has
+removed all tw sockets of dying netns.
+
+Fixes: e9bd0cca09d1 ("tcp: Don't allocate tcp_death_row outside of struct netns_ipv4.")
+Reported-by: syzbot+8ea26396ff85d23a8929@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/0000000000003a5292061f5e4e19@google.com/
+Link: https://lore.kernel.org/netdev/20240812140104.GA21559@breakpoint.cc/
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240329153203.345203-1-edumazet@google.com
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240812222857.29837-1-fw@strlen.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 565d121b6998 ("tcp: prevent concurrent execution of tcp_sk_exit_batch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_timewait_sock.h | 2 +-
- include/net/tcp.h                | 2 +-
- net/dccp/ipv4.c                  | 2 +-
- net/dccp/ipv6.c                  | 6 ------
- net/ipv4/inet_timewait_sock.c    | 9 +++------
- net/ipv4/tcp_ipv4.c              | 2 +-
- net/ipv4/tcp_minisocks.c         | 6 +++---
- net/ipv6/tcp_ipv6.c              | 6 ------
- 8 files changed, 10 insertions(+), 25 deletions(-)
+ net/ipv4/tcp_ipv4.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/include/net/inet_timewait_sock.h b/include/net/inet_timewait_sock.h
-index 4a8e578405cb3..9365e5af8d6da 100644
---- a/include/net/inet_timewait_sock.h
-+++ b/include/net/inet_timewait_sock.h
-@@ -114,7 +114,7 @@ static inline void inet_twsk_reschedule(struct inet_timewait_sock *tw, int timeo
- 
- void inet_twsk_deschedule_put(struct inet_timewait_sock *tw);
- 
--void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family);
-+void inet_twsk_purge(struct inet_hashinfo *hashinfo);
- 
- static inline
- struct net *twsk_net(const struct inet_timewait_sock *twsk)
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index cc314c383c532..c7501ca66dd34 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -352,7 +352,7 @@ void tcp_rcv_established(struct sock *sk, struct sk_buff *skb);
- void tcp_rcv_space_adjust(struct sock *sk);
- int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp);
- void tcp_twsk_destructor(struct sock *sk);
--void tcp_twsk_purge(struct list_head *net_exit_list, int family);
-+void tcp_twsk_purge(struct list_head *net_exit_list);
- ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
- 			struct pipe_inode_info *pipe, size_t len,
- 			unsigned int flags);
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index f4a2dce3e1048..db8d54fb88060 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -1042,7 +1042,7 @@ static void __net_exit dccp_v4_exit_net(struct net *net)
- 
- static void __net_exit dccp_v4_exit_batch(struct list_head *net_exit_list)
- {
--	inet_twsk_purge(&dccp_hashinfo, AF_INET);
-+	inet_twsk_purge(&dccp_hashinfo);
- }
- 
- static struct pernet_operations dccp_v4_ops = {
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 016af0301366d..d90bb941f2ada 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -1121,15 +1121,9 @@ static void __net_exit dccp_v6_exit_net(struct net *net)
- 	inet_ctl_sock_destroy(pn->v6_ctl_sk);
- }
- 
--static void __net_exit dccp_v6_exit_batch(struct list_head *net_exit_list)
--{
--	inet_twsk_purge(&dccp_hashinfo, AF_INET6);
--}
--
- static struct pernet_operations dccp_v6_ops = {
- 	.init   = dccp_v6_init_net,
- 	.exit   = dccp_v6_exit_net,
--	.exit_batch = dccp_v6_exit_batch,
- 	.id	= &dccp_v6_pernet_id,
- 	.size   = sizeof(struct dccp_v6_pernet),
- };
-diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
-index 15d6ce41e5de7..6356a8a47b345 100644
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -282,7 +282,7 @@ void __inet_twsk_schedule(struct inet_timewait_sock *tw, int timeo, bool rearm)
- EXPORT_SYMBOL_GPL(__inet_twsk_schedule);
- 
- /* Remove all non full sockets (TIME_WAIT and NEW_SYN_RECV) for dead netns */
--void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
-+void inet_twsk_purge(struct inet_hashinfo *hashinfo)
- {
- 	struct inet_ehash_bucket *head = &hashinfo->ehash[0];
- 	unsigned int ehash_mask = hashinfo->ehash_mask;
-@@ -291,7 +291,6 @@ void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
- 	struct sock *sk;
- 
- 	for (slot = 0; slot <= ehash_mask; slot++, head++) {
--
- 		if (hlist_nulls_empty(&head->chain))
- 			continue;
- 
-@@ -306,15 +305,13 @@ void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
- 					     TCPF_NEW_SYN_RECV))
- 				continue;
- 
--			if (sk->sk_family != family ||
--			    refcount_read(&sock_net(sk)->ns.count))
-+			if (refcount_read(&sock_net(sk)->ns.count))
- 				continue;
- 
- 			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
- 				continue;
- 
--			if (unlikely(sk->sk_family != family ||
--				     refcount_read(&sock_net(sk)->ns.count))) {
-+			if (refcount_read(&sock_net(sk)->ns.count)) {
- 				sock_gen_put(sk);
- 				goto restart;
- 			}
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index c64ba4f8ddaa9..167de693981a8 100644
+index 167de693981a8..1327447a3aade 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -3242,7 +3242,7 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+@@ -93,6 +93,8 @@ EXPORT_SYMBOL(tcp_hashinfo);
+ 
+ static DEFINE_PER_CPU(struct sock *, ipv4_tcp_sk);
+ 
++static DEFINE_MUTEX(tcp_exit_batch_mutex);
++
+ static u32 tcp_v4_init_seq(const struct sk_buff *skb)
+ {
+ 	return secure_tcp_seq(ip_hdr(skb)->daddr,
+@@ -3242,6 +3244,16 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
  {
  	struct net *net;
  
--	tcp_twsk_purge(net_exit_list, AF_INET);
-+	tcp_twsk_purge(net_exit_list);
++	/* make sure concurrent calls to tcp_sk_exit_batch from net_cleanup_work
++	 * and failed setup_net error unwinding path are serialized.
++	 *
++	 * tcp_twsk_purge() handles twsk in any dead netns, not just those in
++	 * net_exit_list, the thread that dismantles a particular twsk must
++	 * do so without other thread progressing to refcount_dec_and_test() of
++	 * tcp_death_row.tw_refcount.
++	 */
++	mutex_lock(&tcp_exit_batch_mutex);
++
+ 	tcp_twsk_purge(net_exit_list);
  
  	list_for_each_entry(net, net_exit_list, exit_list) {
- 		inet_pernet_hashinfo_free(net->ipv4.tcp_death_row.hashinfo);
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index b3bfa1a09df68..000dce7d0e2d0 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -347,7 +347,7 @@ void tcp_twsk_destructor(struct sock *sk)
- }
- EXPORT_SYMBOL_GPL(tcp_twsk_destructor);
- 
--void tcp_twsk_purge(struct list_head *net_exit_list, int family)
-+void tcp_twsk_purge(struct list_head *net_exit_list)
- {
- 	bool purged_once = false;
- 	struct net *net;
-@@ -355,9 +355,9 @@ void tcp_twsk_purge(struct list_head *net_exit_list, int family)
- 	list_for_each_entry(net, net_exit_list, exit_list) {
- 		if (net->ipv4.tcp_death_row.hashinfo->pernet) {
- 			/* Even if tw_refcount == 1, we must clean up kernel reqsk */
--			inet_twsk_purge(net->ipv4.tcp_death_row.hashinfo, family);
-+			inet_twsk_purge(net->ipv4.tcp_death_row.hashinfo);
- 		} else if (!purged_once) {
--			inet_twsk_purge(&tcp_hashinfo, family);
-+			inet_twsk_purge(&tcp_hashinfo);
- 			purged_once = true;
- 		}
+@@ -3249,6 +3261,8 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+ 		WARN_ON_ONCE(!refcount_dec_and_test(&net->ipv4.tcp_death_row.tw_refcount));
+ 		tcp_fastopen_ctx_destroy(net);
  	}
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index eb6fc0e2a4533..06b4acbfd314b 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -2217,15 +2217,9 @@ static void __net_exit tcpv6_net_exit(struct net *net)
- 	inet_ctl_sock_destroy(net->ipv6.tcp_sk);
++
++	mutex_unlock(&tcp_exit_batch_mutex);
  }
  
--static void __net_exit tcpv6_net_exit_batch(struct list_head *net_exit_list)
--{
--	tcp_twsk_purge(net_exit_list, AF_INET6);
--}
--
- static struct pernet_operations tcpv6_net_ops = {
- 	.init	    = tcpv6_net_init,
- 	.exit	    = tcpv6_net_exit,
--	.exit_batch = tcpv6_net_exit_batch,
- };
- 
- int __init tcpv6_init(void)
+ static struct pernet_operations __net_initdata tcp_sk_ops = {
 -- 
 2.43.0
 
