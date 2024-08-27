@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B501C9DF1;
-	Tue, 27 Aug 2024 15:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1461C6F65;
+	Tue, 27 Aug 2024 15:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770936; cv=none; b=q0EATypEqSrdTWss4DW5E24yVJaXk8TLrNtkstwaIn6ltUHTqy0s1a5zac7rnyxck0ZbMFV7pp4ZC+Q+Vlvbm2bZEtYRM8eOQYci+k6Yc45M1EwUjQmc2Kt5wGoIXuourMETaNNb/9MhiZSjn1OJuS9chpdz4+UBCaWV9E4/ADE=
+	t=1724770939; cv=none; b=CfhZ//ob/+n4GcllqtWDY0kSLSQNcrLmDc0+5PoFPIFj+MlrreE/83vouWdB2zvTKjL3NAQGNTQle9/kXASDfvEKqltG/F342WILRlCSG7hZkxXWTagZlnrdmCBo778CYupQFOmL36UWcIdHwQuITqqPUm0tcIz4Q6MxYCtUpU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770936; c=relaxed/simple;
-	bh=Mvuzoh5C3ZnMP+UwxMGabHp0rpX1efSkQquxDV7ms8c=;
+	s=arc-20240116; t=1724770939; c=relaxed/simple;
+	bh=bUG0G0lZN93kdBjbdRjhl+P5OjQO3MwVn+6SnyAHz20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxpG/d8FIQjuinjnjRXsWsTkwJRZZgCnT6VB49zkDldohYgs+yV3HplZbgDsef5sdf0LZx7HY8eaes5OgVYQcSUadrvmEmCxnLdn+ZgSXL+wMKpZDjR7F4yHhmLeJm2AVegHXSIlgQcO1PJG8YpUbY/PEBefZ9Gb4kvWraDWqaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlctolpJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeUCFRRx7KJwxmnDePvG/0kdoqLFBpWYxFIufqmC0vcL4SNyB6NwYQ8ZewHm34S+hidDxzS9s1rJO/wFlw24ZGisIGR69WazP8qW9mIVxQ7CNx0ebaULi1JW6B4seWzfwf9/SoEA7GBQVXEC+3bwJrKorWcxIEpGeW2CDbntDyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHZrHAlH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlctolpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B516C4DDFC;
-	Tue, 27 Aug 2024 15:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHZrHAlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE21BC4DDF7;
+	Tue, 27 Aug 2024 15:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770935;
-	bh=Mvuzoh5C3ZnMP+UwxMGabHp0rpX1efSkQquxDV7ms8c=;
+	s=korg; t=1724770939;
+	bh=bUG0G0lZN93kdBjbdRjhl+P5OjQO3MwVn+6SnyAHz20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlctolpJOXgVJDy4cUIW48jDg2utiNqj/dwddI2vWT231NDdR2X7k4W4qX4JCRwS1
-	 bro+Mol9au3KoDTaYHPC+uICry22eUrFQ/UJHyy1VDuqF8CNzZFa6dl0kNwObNqlUX
-	 qbyxEsoTCooNNgk+9j9PL6mKWCdSRIUlRtmIcwHg=
+	b=nHZrHAlHUfrf/20oiyjHRnqngbMBARru5ryS1FEoOKHEb1u501QELe0kWvGxsyI3L
+	 nhiibJhlKYZY6EySYDLhYeJgFEVC4/QF3GffUkDKK/faPgjKEZXy49vNSEwsMAD9gx
+	 IZBr3CJfaQqGtoq+ZJ1ZY6A/RyVS2aDrDKers7+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.10 038/273] i2c: qcom-geni: Add missing geni_icc_disable in geni_i2c_runtime_resume
-Date: Tue, 27 Aug 2024 16:36:02 +0200
-Message-ID: <20240827143834.845491381@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.10 039/273] tracing: Return from tracing_buffers_read() if the file has been closed
+Date: Tue, 27 Aug 2024 16:36:03 +0200
+Message-ID: <20240827143834.884418382@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,39 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 4e91fa1ef3ce6290b4c598e54b5eb6cf134fbec8 upstream.
+commit d0949cd44a62c4c41b30ea7ae94d8c887f586882 upstream.
 
-Add the missing geni_icc_disable() call before returning in the
-geni_i2c_runtime_resume() function.
+When running the following:
 
-Commit 9ba48db9f77c ("i2c: qcom-geni: Add missing
-geni_icc_disable in geni_i2c_runtime_resume") by Gaosheng missed
-disabling the interconnect in one case.
+ # cd /sys/kernel/tracing/
+ # echo 1 > events/sched/sched_waking/enable
+ # echo 1 > events/sched/sched_switch/enable
+ # echo 0 > tracing_on
+ # dd if=per_cpu/cpu0/trace_pipe_raw of=/tmp/raw0.dat
 
-Fixes: bf225ed357c6 ("i2c: i2c-qcom-geni: Add interconnect support")
-Cc: Gaosheng Cui <cuigaosheng1@huawei.com>
-Cc: stable@vger.kernel.org # v5.9+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+The dd task would get stuck in an infinite loop in the kernel. What would
+happen is the following:
+
+When ring_buffer_read_page() returns -1 (no data) then a check is made to
+see if the buffer is empty (as happens when the page is not full), it will
+call wait_on_pipe() to wait until the ring buffer has data. When it is it
+will try again to read data (unless O_NONBLOCK is set).
+
+The issue happens when there's a reader and the file descriptor is closed.
+The wait_on_pipe() will return when that is the case. But this loop will
+continue to try again and wait_on_pipe() will again return immediately and
+the loop will continue and never stop.
+
+Simply check if the file was closed before looping and exit out if it is.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20240808235730.78bf63e5@rorschach.local.home
+Fixes: 2aa043a55b9a7 ("tracing/ring-buffer: Fix wait_on_pipe() race")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -986,8 +986,10 @@ static int __maybe_unused geni_i2c_runti
- 		return ret;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 10cd38bce2f1..ebe7ce2f5f4a 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7956,7 +7956,7 @@ tracing_buffers_read(struct file *filp, char __user *ubuf,
+ 	trace_access_unlock(iter->cpu_file);
  
- 	ret = clk_prepare_enable(gi2c->core_clk);
--	if (ret)
-+	if (ret) {
-+		geni_icc_disable(&gi2c->se);
- 		return ret;
-+	}
+ 	if (ret < 0) {
+-		if (trace_empty(iter)) {
++		if (trace_empty(iter) && !iter->closed) {
+ 			if ((filp->f_flags & O_NONBLOCK))
+ 				return -EAGAIN;
  
- 	ret = geni_se_resources_on(&gi2c->se);
- 	if (ret) {
+-- 
+2.46.0
+
 
 
