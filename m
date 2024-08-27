@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7561C5783;
-	Tue, 27 Aug 2024 14:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC801C68B9;
+	Tue, 27 Aug 2024 14:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770399; cv=none; b=kF3Axc7ND41xd5BEL+FDtzDTGYTxbe8EhIwGHs5BvhpukBLnItbGNIbPUh87MW3AGsJ04BX0JaSYkeILme/2Wy7mK+zw0wE+fsvCuj5Ebrb+4hRq3IFT1cLvtoz6LKASarfDvW/hdQL1FzGqoAS2kRnYEfoEVXbDcvIX37NFSvo=
+	t=1724770403; cv=none; b=CdRJSU4JSbE1F8gns8dg8WXzrZGr0r+xJRFYLsWWk0iCeNYeFpDAEYVCM4/A2V+A+/ycE3aAPWXl9nkovsBiUTWDi+m9U+aOC6H2OkMQfHl8MEhCOhHDQqIe82K12VALvRs8gdpPPYPC+FMWGPUUJ7LO6rvPfWisw4MBq3B4nss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770399; c=relaxed/simple;
-	bh=eIFyzoRTECRsNPE+ln2r6FM4f1nA/rwhduzA8Tu0cEM=;
+	s=arc-20240116; t=1724770403; c=relaxed/simple;
+	bh=1inr30y1vMcQIZHQEhNxtGpNoO6NUvvjmUWKTlxIG/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmA2pEH751wFVHFrkZf0Yp1ySW8qsFP9xncem1eKb/DpDU6cNoxl23wbJ6Bm57yL//YPFqNnNZ4+IiKN1RCPE05ZqWf5LEe6Ktt3c7FebK9EuMZSA9fG9Ic7neV9uYzqhpzV6d5CsDr5akLTi7L3+bHTX4RBUxNHOq9E/zL/Ffk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xj6vAKRF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ail9u5BOSPcYsG/oaYtH55+nl9w/CvCCrqlVCsTdNj+XyUdhvyoF4LsjS7RVvd+u0jckSeYa56ICy5o+L4i+toLpjYKx9irh1ME06vW8XKc/yora1jQe5EwA8vP33YRsxyMWyJTQ/k58j7KrvoP4vdT1N+ubG6uFbhzChRHvcYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPxi+FNU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xj6vAKRF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F507C61050;
-	Tue, 27 Aug 2024 14:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPxi+FNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A897C61050;
+	Tue, 27 Aug 2024 14:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770399;
-	bh=eIFyzoRTECRsNPE+ln2r6FM4f1nA/rwhduzA8Tu0cEM=;
+	s=korg; t=1724770402;
+	bh=1inr30y1vMcQIZHQEhNxtGpNoO6NUvvjmUWKTlxIG/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xj6vAKRFzYKCx02C8fHlUbef+jMHNIBlpRQcE9Olp3mZNt0UBP0hnXJoIZ4niwNMj
-	 WMTOYd+riVWhNXisvf6qSHhoh206pQnfGfTIkhTub9tMIj8IUkkHu2lOWh9wuPvzAd
-	 uxODp0Y5wUfO0mmE6/BsxeabpBhS+TDfgk05jMJM=
+	b=CPxi+FNU64bYk2lZZWD2EWAkdCW/fV6gCuJ0jY5r5CVifPWaJ2cHuqzUYX73jS032
+	 6Rw38ED9eKIJBAAKuAA8/AoTrN7/zhfsqKq/M/KmHNFKXAYWii0CKm8VE2eBWpWGWb
+	 oq4MBjS+Pj5wud3vmfjZKyTrvoT/0b5cOMqhyFgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Chang <phil.chang@mediatek.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/341] hrtimer: Prevent queuing of hrtimer without a function callback
-Date: Tue, 27 Aug 2024 16:37:27 +0200
-Message-ID: <20240827143851.629573102@linuxfoundation.org>
+Subject: [PATCH 6.6 217/341] ionic: use pci_is_enabled not open code
+Date: Tue, 27 Aug 2024 16:37:28 +0200
+Message-ID: <20240827143851.669381437@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,42 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Chang <phil.chang@mediatek.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 5a830bbce3af16833fe0092dec47b6dd30279825 ]
+[ Upstream commit 121e4dcba3700b30e63f25203d09ddfccbab4a09 ]
 
-The hrtimer function callback must not be NULL. It has to be specified by
-the call side but it is not validated by the hrtimer code. When a hrtimer
-is queued without a function callback, the kernel crashes with a null
-pointer dereference when trying to execute the callback in __run_hrtimer().
+Since there is a utility available for this, use
+the API rather than open code.
 
-Introduce a validation before queuing the hrtimer in
-hrtimer_start_range_ns().
-
-[anna-maria: Rephrase commit message]
-
-Signed-off-by: Phil Chang <phil.chang@mediatek.com>
-Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Fixes: 13943d6c8273 ("ionic: prevent pci disable of already disabled device")
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 6057fe2e179b0..57e5cb36f1bc9 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1288,6 +1288,8 @@ void hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
- 	struct hrtimer_clock_base *base;
- 	unsigned long flags;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+index a5fa49fd21390..35099ad5eccc8 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+@@ -223,7 +223,7 @@ static void ionic_clear_pci(struct ionic *ionic)
+ 	ionic_unmap_bars(ionic);
+ 	pci_release_regions(ionic->pdev);
  
-+	if (WARN_ON_ONCE(!timer->function))
-+		return;
- 	/*
- 	 * Check whether the HRTIMER_MODE_SOFT bit and hrtimer.is_soft
- 	 * match on CONFIG_PREEMPT_RT = n. With PREEMPT_RT check the hard
+-	if (atomic_read(&ionic->pdev->enable_cnt) > 0)
++	if (pci_is_enabled(ionic->pdev))
+ 		pci_disable_device(ionic->pdev);
+ }
+ 
 -- 
 2.43.0
 
