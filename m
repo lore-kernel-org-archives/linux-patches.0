@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E231E487;
-	Tue, 27 Aug 2024 14:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22EE1E487;
+	Tue, 27 Aug 2024 14:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770755; cv=none; b=SYlUchEijDyj5HieKwdeYKj7xAftjLWZU01t+7Ugn3mX3KwYluIEih35IcszyeNQeBE0V/H/ubaQ4nGiSWi/8OEv+PS4JRfvr0AKr2SpwXS9zcSZwEvR0nL6EgYriUJEtRSJN8rjGsZp+Ops9b5TnvEJIbmkaKYdcFyiFVWBv0Y=
+	t=1724770759; cv=none; b=rJx+6FEfdTl3po/sd7f3FX9PGrJAnNAaO79MRtuEZqr7XcaXiVL5igem1okDEmww1fSVa4dvGP8V5hTRRRTHFizF7OzahLy1P7fUc/EwZBux4yvN/3AqzVmMNwljQJ8W0DrjaPSz3aZb8jDL+/JTH47mXNiN+/Ls9zJX9Tr5JZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770755; c=relaxed/simple;
-	bh=DKHb/M8cjhzi4aImefk/VZ098wKlO10CQKjBW8KEos4=;
+	s=arc-20240116; t=1724770759; c=relaxed/simple;
+	bh=MwprgtIIWcX9JmsHl0e1s+iEdkiXDrBvIo6xgshPaz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2mXkKPE2XLR83Xrb7l0yF1jAN33HeDYGfhvRlF9b3aiCGMtEc7eAfdYg/83H/st65feP3fQf1fS0dvQWCy7qUDaS0AcvWfSuEQUqS0hNmKsWqlXrRLK2zKBGwxQFaidoDg8/Yq/JGPkH09u5ByCXeh4+fvkMljY33J9KhhIJL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpTIHsht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XMmTmbS4rzu/Q7wHlXehOXScEeWuYE2zlnCScCsFm6bpGHUbRXqzmSFw4uTuZxd93x+EaPmT4JAL+Pe2B43GgRI5Y5kkChripZS+siWQyNacTxZzAejM8lutaiyMMoLQbe4OzBj1357cTtm4bEHgmIPTrWU9kY3p0mKeDqvke7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2aRs0Re; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpTIHsht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF2AC61044;
-	Tue, 27 Aug 2024 14:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2aRs0Re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7225CC61044;
+	Tue, 27 Aug 2024 14:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770755;
-	bh=DKHb/M8cjhzi4aImefk/VZ098wKlO10CQKjBW8KEos4=;
+	s=korg; t=1724770758;
+	bh=MwprgtIIWcX9JmsHl0e1s+iEdkiXDrBvIo6xgshPaz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KpTIHshtnSq1jf/SL+nEqD0zWoZy05tIHS8HS/vS7DW/PvoOhceKMJcD7I5kHErnO
-	 IyDVEd4c1y9+xOlGuTrcwVGFm2SQq0ZwZMN42iqnhFRdcXGcVtR876YVDuiFmeq8Xx
-	 poD8XYuVcLQe00O0mUOpeT8cExj7NjwNHyBa4Hog=
+	b=E2aRs0RefCgq4SRlcnTn4Cul0EXuJpliQI5u+UZSfW8H+ERkaoYGgw6EA5BKJO2Cn
+	 yF174KVakWqrtDDogrMkjIXAMKjYEaSq+U5VmpvUq6dUzcUPWi78dR/JzghRSC60cl
+	 6ugBmkZ6Bh09yD9JhsrM5r3w4YoQnDDuZVUVYl3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc <1marc1@gmail.com>,
-	"Anthony Nandaa (Microsoft)" <profnandaa@gmail.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/341] smb: client: ignore unhandled reparse tags
-Date: Tue, 27 Aug 2024 16:38:44 +0200
-Message-ID: <20240827143854.544475757@linuxfoundation.org>
+	Stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Yiwei Zhang <zhan4630@purdue.edu>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 294/341] Bluetooth: MGMT: Add error handling to pair_device()
+Date: Tue, 27 Aug 2024 16:38:45 +0200
+Message-ID: <20240827143854.581548881@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,57 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit ec686804117a0421cf31d54427768aaf93aa0069 ]
+commit 538fd3921afac97158d4177139a0ad39f056dbb2 upstream.
 
-Just ignore reparse points that the client can't parse rather than
-bailing out and not opening the file or directory.
+hci_conn_params_add() never checks for a NULL value and could lead to a NULL
+pointer dereference causing a crash.
 
-Reported-by: Marc <1marc1@gmail.com>
-Closes: https://lore.kernel.org/r/CAMHwNVv-B+Q6wa0FEXrAuzdchzcJRsPKDDRrNaYZJd6X-+iJzw@mail.gmail.com
-Fixes: 539aad7f14da ("smb: client: introduce ->parse_reparse_point()")
-Tested-by: Anthony Nandaa (Microsoft) <profnandaa@gmail.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixed by adding error handling in the function.
+
+Cc: Stable <stable@kernel.org>
+Fixes: 5157b8a503fa ("Bluetooth: Fix initializing conn_params in scan phase")
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Reported-by: Yiwei Zhang <zhan4630@purdue.edu>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/bluetooth/mgmt.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 689d8a506d459..48c27581ec511 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -378,6 +378,8 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 			u32 plen, struct cifs_sb_info *cifs_sb,
- 			bool unicode, struct cifs_open_info_data *data)
- {
-+	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
-+
- 	data->reparse.buf = buf;
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3449,6 +3449,10 @@ static int pair_device(struct sock *sk,
+ 		 * will be kept and this function does nothing.
+ 		 */
+ 		p = hci_conn_params_add(hdev, &cp->addr.bdaddr, addr_type);
++		if (!p) {
++			err = -EIO;
++			goto unlock;
++		}
  
- 	/* See MS-FSCC 2.1.2 */
-@@ -394,12 +396,13 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 	case IO_REPARSE_TAG_LX_FIFO:
- 	case IO_REPARSE_TAG_LX_CHR:
- 	case IO_REPARSE_TAG_LX_BLK:
--		return 0;
-+		break;
- 	default:
--		cifs_dbg(VFS, "%s: unhandled reparse tag: 0x%08x\n",
--			 __func__, le32_to_cpu(buf->ReparseTag));
--		return -EOPNOTSUPP;
-+		cifs_tcon_dbg(VFS | ONCE, "unhandled reparse tag: 0x%08x\n",
-+			      le32_to_cpu(buf->ReparseTag));
-+		break;
- 	}
-+	return 0;
- }
- 
- int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
--- 
-2.43.0
-
+ 		if (p->auto_connect == HCI_AUTO_CONN_EXPLICIT)
+ 			p->auto_connect = HCI_AUTO_CONN_DISABLED;
 
 
