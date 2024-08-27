@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E2B1C8FCF;
-	Tue, 27 Aug 2024 15:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFA21C6F49;
+	Tue, 27 Aug 2024 15:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772354; cv=none; b=LIbWqUls98Bip7FoQOIZJIdHqrPX1AOXjPiQ+f4dXas3tSgM2ERU1hD7hiDQ5zT94n5dnJOhhP2AeyFj2q8hlu49sp6oJpgAQ0xusqSr0QFQUcK/Bxb43v4vqrtp2ZpugME9urxhL/XVtKN+IGUVyiFRDfd4IlknSG1+CH2HjB8=
+	t=1724772357; cv=none; b=daUjdowcPVzEji3QamvRBCVByevMHFR+EMcovW+fyWbdN3fTvFLndnZG6f6iAUkMrGtA5yw37OEC5ZJ189Dsnm6ryS1hZi3RepViOnMkS8ExbZKsVGSy0GeEzlrVtiSGx/AzQK62TtPwXsGxvMKfsSBjqMS9ix1Dto8JInSjUNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772354; c=relaxed/simple;
-	bh=+8OAtwLBzPKmzxBskXsSJB9kMTswL47AfFCOyzp+4x8=;
+	s=arc-20240116; t=1724772357; c=relaxed/simple;
+	bh=i8TSW8Won1WFBCTEpZQwalgDy+DBvpkqIU6RX17hbpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgPtqMD2nBU+qO8h9View4y0vuQVsvCsn2hZJVyzUxcpiGDNGNwxGtgZU0y4dsACLIuAgY4vFjRuM7Yuh7n5/xv3hH76jbUsd+FOYkKJJLxOYN5I8l0y7v2iuoaExeQrgRUQx0RtQZs3zndhw0HuQvufK0p8KPeRx8YBTBnZ2w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc7MpV4O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lxif2t1coRvv2q+JJUDOhjvWuBGEVS2Tr6sGcZy+WJWV3T5J1DLfvrqcUA6nV74UB6jltc5831vIAPxTH5R9MDhlA4jsPjTIRcEvjXjX5wAljnhztOb+nzuTVa00pbTctW+Op1AVbZN4BnC+Gv4FkeadFyBDa8GO/tC7O+wh4+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZkrYswM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc7MpV4O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777CEC61071;
-	Tue, 27 Aug 2024 15:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZkrYswM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5BEC61071;
+	Tue, 27 Aug 2024 15:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772354;
-	bh=+8OAtwLBzPKmzxBskXsSJB9kMTswL47AfFCOyzp+4x8=;
+	s=korg; t=1724772357;
+	bh=i8TSW8Won1WFBCTEpZQwalgDy+DBvpkqIU6RX17hbpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uc7MpV4OfyV6By1W8u2nicfVR1usH1IoWDQryq5QeR/RVRVubPLbntyVMYAfzdYVe
-	 aGKpO9tAH9J3GfZHkNGQ2yJzuR46VmIMUL1mk8gQKacjlkAdrwW03L9ZlnJkO0haoh
-	 S4atoaCgKIuC9Y9L2XJruzCsplBuwlQcZ88b2EHY=
+	b=RZkrYswMxNr3ldhX9BvbBDOv33AzzKI0yYxOHkwYNRtuS2nG1jnXjMuRfXOmSWQtD
+	 0EjPDMVto3l4d1kChv0nGfvokrrhX8tTy9/rBaSJ0EWYGgUN2lCfsyRNcWwXXLZur0
+	 hV/RvJooC34cPkR5TSYIKvyAHUMrR+dFIrvNrm8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/321] nvme: clear caller pointer on identify failure
-Date: Tue, 27 Aug 2024 16:38:17 +0200
-Message-ID: <20240827143845.426402818@linuxfoundation.org>
+Subject: [PATCH 6.1 190/321] Bluetooth: bnep: Fix out-of-bound access
+Date: Tue, 27 Aug 2024 16:38:18 +0200
+Message-ID: <20240827143845.463713931@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,44 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 7e80eb792bd7377a20f204943ac31c77d859be89 ]
+[ Upstream commit 0f0639b4d6f649338ce29c62da3ec0787fa08cd1 ]
 
-The memory allocated for the identification is freed on failure. Set
-it to NULL so the caller doesn't have a pointer to that freed address.
+This fixes attempting to access past ethhdr.h_source, although it seems
+intentional to copy also the contents of h_proto this triggers
+out-of-bound access problems with the likes of static analyzer, so this
+instead just copy ETH_ALEN and then proceed to use put_unaligned to copy
+h_proto separetely.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/bnep/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 1aff793a1d77e..0729ab5430725 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1366,8 +1366,10 @@ static int nvme_identify_ctrl(struct nvme_ctrl *dev, struct nvme_id_ctrl **id)
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index 5a6a49885ab66..a660c428e2207 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -385,7 +385,8 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
  
- 	error = nvme_submit_sync_cmd(dev->admin_q, &c, *id,
- 			sizeof(struct nvme_id_ctrl));
--	if (error)
-+	if (error) {
- 		kfree(*id);
-+		*id = NULL;
-+	}
- 	return error;
- }
+ 	case BNEP_COMPRESSED_DST_ONLY:
+ 		__skb_put_data(nskb, skb_mac_header(skb), ETH_ALEN);
+-		__skb_put_data(nskb, s->eh.h_source, ETH_ALEN + 2);
++		__skb_put_data(nskb, s->eh.h_source, ETH_ALEN);
++		put_unaligned(s->eh.h_proto, (__be16 *)__skb_put(nskb, 2));
+ 		break;
  
-@@ -1496,6 +1498,7 @@ static int nvme_identify_ns(struct nvme_ctrl *ctrl, unsigned nsid,
- 	if (error) {
- 		dev_warn(ctrl->device, "Identify namespace failed (%d)\n", error);
- 		kfree(*id);
-+		*id = NULL;
- 	}
- 	return error;
- }
+ 	case BNEP_GENERAL:
 -- 
 2.43.0
 
