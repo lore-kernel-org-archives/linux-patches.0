@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDDD1C824B;
-	Tue, 27 Aug 2024 14:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6F81C4601;
+	Tue, 27 Aug 2024 14:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770555; cv=none; b=EziTv+LgkKSYiu3sfREe2OcxZouQhGEeo7RDr4gIIQfzJFrqgF0WOUMWkVZ7BWCuLvQo5QACurMuVy/GDmaK1C18o7SBU6LkTBFcoLbnaOJZdsMPtK8zRsbobzMRWRDx8XuacqfgP/bLNIH+wo+vE+h318ooiTIMBc2ZLnifVJI=
+	t=1724770558; cv=none; b=O7YfWZhr4m6YU5zPPHrGAyDRKzfaIUSKwBcO8MU2wwryur//IgYBr4pz0PGeSEpM31Qh4ZWtGGaBen0VdCQC209yb6qsCHC31+ZfB1hziJertt/99jf5uPp4qRXP+/jfOrwAFJhjGaQzd+wD34+IkMNsw8zFcUzBD0Dq6tjJAx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770555; c=relaxed/simple;
-	bh=fn739rP3weeLsGsdEDnhWrSSiYk6+D9r9GiyiyLY7ms=;
+	s=arc-20240116; t=1724770558; c=relaxed/simple;
+	bh=6Mq2D+wQ1OuhftmFRp9lD8out6l5yAhyUIommGXiXt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ld3xUiycr8tMSxLJhDkZs/FfxGDpRn9XstUIviJRIOSsZPFm2JCD3vmWUgiDmxt16bhHIXrX8f68/ADCnH+U36nnqZ5lnBqtchqG4EKc50lZFukwa85wIkoxTtdp0yWI/PDcK2jTV1z3nMLhYlETYueMhwX5TWpDxATRtRJ8+iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUZB/y9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gc57dZ+aUOiaURGds59CnyP/TmoiXNSFWY0wYoqykb2V+PRYIxE4Wf4olYckd0ZQlgFqHlkD9D48PLbbuFtor66voncddeEiGy+bGvMSmfgQ2FmR6E1uwrnN1S0FIayTqWiL3BLsOKyBAI8FVtNQ3W36lVMB2QKHtgodIseq3/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kToLhfhu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUZB/y9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8A7C4FDE1;
-	Tue, 27 Aug 2024 14:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kToLhfhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A54C4E699;
+	Tue, 27 Aug 2024 14:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770555;
-	bh=fn739rP3weeLsGsdEDnhWrSSiYk6+D9r9GiyiyLY7ms=;
+	s=korg; t=1724770558;
+	bh=6Mq2D+wQ1OuhftmFRp9lD8out6l5yAhyUIommGXiXt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUZB/y9de6qMBAC7FBPiOvUAk1Z/DFfbBXDKpzAWJ4mJtybD4aqR01rr1VBzwRvk1
-	 phgV8VPzr5pfLSd+Ydtj9TDTZC/rEnrV1hrYlbEHp5ncEX391BtIlmIosDvEWDf8LC
-	 p9qjZjFW804fUXgjjSiZimEyO9lGfICIPGoIZwMM=
+	b=kToLhfhukIgimr6Jcg/fsAUL+4+zdonftVpeoARgwYeHnV/nlDh4jwdmfPjgMijEK
+	 0jxdaLA6GLxq8sfIYFTNqx4lG4U9wRoD1toTVZcUQw6mHIZN/Kha5ba8euE2A0Ormk
+	 jLlQaTaFpxOBWogfhjIdKmpsqmwZ8fRMfu7McfG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Tluka <jtluka@redhat.com>,
-	Jirka Hladky <jhladky@redhat.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Joseph Huang <Joseph.Huang@garmin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/341] igb: cope with large MAX_SKB_FRAGS
-Date: Tue, 27 Aug 2024 16:38:15 +0200
-Message-ID: <20240827143853.453249887@linuxfoundation.org>
+Subject: [PATCH 6.6 265/341] net: dsa: mv88e6xxx: Fix out-of-bound access
+Date: Tue, 27 Aug 2024 16:38:16 +0200
+Message-ID: <20240827143853.490130442@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -55,53 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Joseph Huang <Joseph.Huang@garmin.com>
 
-[ Upstream commit 8aba27c4a5020abdf60149239198297f88338a8d ]
+[ Upstream commit 528876d867a23b5198022baf2e388052ca67c952 ]
 
-Sabrina reports that the igb driver does not cope well with large
-MAX_SKB_FRAG values: setting MAX_SKB_FRAG to 45 causes payload
-corruption on TX.
+If an ATU violation was caused by a CPU Load operation, the SPID could
+be larger than DSA_MAX_PORTS (the size of mv88e6xxx_chip.ports[] array).
 
-An easy reproducer is to run ssh to connect to the machine.  With
-MAX_SKB_FRAGS=17 it works, with MAX_SKB_FRAGS=45 it fails.  This has
-been reported originally in
-https://bugzilla.redhat.com/show_bug.cgi?id=2265320
-
-The root cause of the issue is that the driver does not take into
-account properly the (possibly large) shared info size when selecting
-the ring layout, and will try to fit two packets inside the same 4K
-page even when the 1st fraglist will trump over the 2nd head.
-
-Address the issue by checking if 2K buffers are insufficient.
-
-Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
-Reported-by: Jan Tluka <jtluka@redhat.com>
-Reported-by: Jirka Hladky <jhladky@redhat.com>
-Reported-by: Sabrina Dubroca <sd@queasysnail.net>
-Tested-by: Sabrina Dubroca <sd@queasysnail.net>
-Tested-by: Corinna Vinschen <vinschen@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
-Link: https://patch.msgid.link/20240816152034.1453285-1-vinschen@redhat.com
+Fixes: 75c05a74e745 ("net: dsa: mv88e6xxx: Fix counting of ATU violations")
+Signed-off-by: Joseph Huang <Joseph.Huang@garmin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240819235251.1331763-1-Joseph.Huang@garmin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/mv88e6xxx/global1_atu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 4431e7693d45f..8c8894ef33886 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -4833,6 +4833,7 @@ static void igb_set_rx_buffer_len(struct igb_adapter *adapter,
+diff --git a/drivers/net/dsa/mv88e6xxx/global1_atu.c b/drivers/net/dsa/mv88e6xxx/global1_atu.c
+index ce3b3690c3c05..c47f068f56b32 100644
+--- a/drivers/net/dsa/mv88e6xxx/global1_atu.c
++++ b/drivers/net/dsa/mv88e6xxx/global1_atu.c
+@@ -457,7 +457,8 @@ static irqreturn_t mv88e6xxx_g1_atu_prob_irq_thread_fn(int irq, void *dev_id)
+ 		trace_mv88e6xxx_atu_full_violation(chip->dev, spid,
+ 						   entry.portvec, entry.mac,
+ 						   fid);
+-		chip->ports[spid].atu_full_violation++;
++		if (spid < ARRAY_SIZE(chip->ports))
++			chip->ports[spid].atu_full_violation++;
+ 	}
  
- #if (PAGE_SIZE < 8192)
- 	if (adapter->max_frame_size > IGB_MAX_FRAME_BUILD_SKB ||
-+	    IGB_2K_TOO_SMALL_WITH_PADDING ||
- 	    rd32(E1000_RCTL) & E1000_RCTL_SBP)
- 		set_ring_uses_large_buffer(rx_ring);
- #endif
+ 	return IRQ_HANDLED;
 -- 
 2.43.0
 
