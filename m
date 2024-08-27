@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BD944C8C;
-	Tue, 27 Aug 2024 14:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768B51C57BD;
+	Tue, 27 Aug 2024 14:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770019; cv=none; b=IQ2YX1t0IDIAehzr/UuWZC8rLkItHZQUEs7fu3c2/NOXPnMcG+EkC5CCwBwkErhFz4J4oooHNTW8wKXCmWTnPWxdoR/7irTaspjnkY8lGQiK7DVNMP9APmCUfMNudWJQs5Ud7wUQpug1BAMwthXo9LrORuYya7kzuFHtkZEWlJ0=
+	t=1724770023; cv=none; b=OMzbumPhMHmU9q0B0ROE/PDV1dHJz+Nd9gdzgTMEfNo5nDqOmW0VN0aGYROdtiSB10EF8s6BXGDCpGHfy8wxVxW5tkCa6s4izQKJwkh+e29WOcLuy5utQFw9FFNF0Z3XOOD9jga6l8plWxeVJzOU+IvN9HmbWvOcchWoAA2Axh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770019; c=relaxed/simple;
-	bh=WVPXzaoEjWRpi99ksEl59J9/UzpHEe0QRHXs0CID0fs=;
+	s=arc-20240116; t=1724770023; c=relaxed/simple;
+	bh=mSGf9Pw80X4T6/EystohwKCTrjjK5xoDBAXc0kmpPss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0e+4VVAAYwYrgW9E0ITSl826B+DeliWiAmMjstI/xP5YbPO7PjdWPQ6KRTr1VdyCk/GzYSRvqAOeou+El8ptIlFnElFqqP8G6mMEbqyMqFZKNEdfpwtbKJrqUoUGczGq59ezZz2dyk6LT32jp0m/vEySaKfcjMtgHpiKzRdcjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUoUHlFN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQU/OclIKvIfmLEyzAzY4ekuQDRdK+hcHYS0ZhOpO3+XZf/0NAe+yT3h0+kFJyc9m3xFNVmQgn9mhfwRRaHrKcYED1uK4HbUcOhuJTRl/TB+C7XboH65jUOJfBhHCJy5qZ5rRuSV4fHPTY8EeoTDr8ScudCgelF4Z0pz2dPtZS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQBchLxt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUoUHlFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DB5C6106D;
-	Tue, 27 Aug 2024 14:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQBchLxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6858EC6106D;
+	Tue, 27 Aug 2024 14:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770019;
-	bh=WVPXzaoEjWRpi99ksEl59J9/UzpHEe0QRHXs0CID0fs=;
+	s=korg; t=1724770023;
+	bh=mSGf9Pw80X4T6/EystohwKCTrjjK5xoDBAXc0kmpPss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUoUHlFNAavo693Vb8Ax6ci5fgAjwY2sras7Z6nOiVf2LJGnh9jHxgfje3s22V+0q
-	 wnKUrkeluyDVT9TYTekiKscVNPaQGz1X4tXDn7RqhunAncCNaHC6YGB5Q4xghZ/Ejh
-	 RznndzA1U3ac7SQS9dTzdfeXRUWteiy9URr3a6d0=
+	b=OQBchLxtjKNJ20pUpeKYoy8U0ZtqYRYrJEu0L6suSdnrU5zW3fcIayWwmQ0boiva6
+	 FGHFKd+p2DZ49JbkQqv7259vZbvFYckhBR4xo/C+se7ESXHTpK+FS8Nqevc7WjBSFJ
+	 iLtqOz8M+w/FcnGuRiTwMUIAUSWVl2Xfy7gwSqi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/341] i3c: mipi-i3c-hci: Remove BUG() when Ring Abort request times out
-Date: Tue, 27 Aug 2024 16:35:34 +0200
-Message-ID: <20240827143847.328664676@linuxfoundation.org>
+Subject: [PATCH 6.6 104/341] i3c: mipi-i3c-hci: Do not unmap region not mapped for transfer
+Date: Tue, 27 Aug 2024 16:35:35 +0200
+Message-ID: <20240827143847.366279457@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,38 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 361acacaf7c706223968c8186f0d3b6e214e7403 ]
+[ Upstream commit b8806e0c939f168237593af0056c309bf31022b0 ]
 
-Ring Abort request will timeout in case there is an error in the Host
-Controller interrupt delivery or Ring Header configuration. Using BUG()
-makes hard to debug those cases.
+Fix following warning (with CONFIG_DMA_API_DEBUG) which happens with a
+transfer without a data buffer.
 
-Make it less severe and turn BUG() to WARN_ON().
+	DMA-API: i3c mipi-i3c-hci.0: device driver tries to free DMA memory it has not allocated [device address=0x0000000000000000] [size=0 bytes]
+
+For those transfers the hci_dma_queue_xfer() doesn't create a mapping and
+the DMA address pointer xfer->data_dma is not set.
 
 Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230921055704.1087277-6-jarkko.nikula@linux.intel.com
+Link: https://lore.kernel.org/r/20230921055704.1087277-10-jarkko.nikula@linux.intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 71b5dbe45c45c..a28ff177022ce 100644
+index a28ff177022ce..337c95d43f3f6 100644
 --- a/drivers/i3c/master/mipi-i3c-hci/dma.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -450,10 +450,9 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
- 		/*
- 		 * We're deep in it if ever this condition is ever met.
- 		 * Hardware might still be writing to memory, etc.
--		 * Better suspend the world than risking silent corruption.
- 		 */
- 		dev_crit(&hci->master.dev, "unable to abort the ring\n");
--		BUG();
-+		WARN_ON(1);
- 	}
+@@ -345,6 +345,8 @@ static void hci_dma_unmap_xfer(struct i3c_hci *hci,
  
  	for (i = 0; i < n; i++) {
+ 		xfer = xfer_list + i;
++		if (!xfer->data)
++			continue;
+ 		dma_unmap_single(&hci->master.dev,
+ 				 xfer->data_dma, xfer->data_len,
+ 				 xfer->rnw ? DMA_FROM_DEVICE : DMA_TO_DEVICE);
 -- 
 2.43.0
 
