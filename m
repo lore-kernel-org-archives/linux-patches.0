@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078A61CF298;
-	Tue, 27 Aug 2024 15:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650FC1C93A3;
+	Tue, 27 Aug 2024 15:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772638; cv=none; b=FItcEPbSkKowVRsbeUWpPed6Ncl+BlbPLTEUTtmoUZ8UV0kuU11flXwhhddVyM5WALkY31gvI1PR5+s02UjqxFG/GCXTwmA4OQWfYsQthW0mbOWaI67xJzENBfkMHe5EC339WEAn9jbNXyvGqp5KIy414i+uTxzLWlVTbCUNfAU=
+	t=1724772641; cv=none; b=Um549sehTARibzqJz6ugX+eB8bCex7soJyWO7YZsLZatjoBrFBVtVuq6fzt4Y3p8Lb0DWbQlStJxgULUKis3wJxvPFtm7fVqSSBGRwZThCzXrt1lS2MF5eRRkD6O69JZ+xwGSDEWAlyTcEa5pyRxuTDFbgsPzF8NZhzaej+/aGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772638; c=relaxed/simple;
-	bh=9xYuzmqMbenzy0wQJmGbDia3mFcCP0oPwcSWz/XbhSY=;
+	s=arc-20240116; t=1724772641; c=relaxed/simple;
+	bh=skISXA1n0/AxAGsZVdu5bJeHr8TBH0X11y9AxHmecuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMW5XzpcBVoKKbGBcvOOlVct86hH++G2gOgQiRe43L4uxkd/3Ye7boN8fsn3N2lCjDNtnhHHGPKdJbm9nUpCzrKcDFMMYIExQ9mB2TtFku8P6FjK6HhJ9PzixDwFInv60oNRN/qMqm8UlpzdI9lK62W1TW1dZvYv+1ZPMZNNqmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7Kb9jYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oFD+wIvzsnU/BBS9DlrnOW1EvVTA94gQ3tP/LEsme1fChLbbAQeYjLjFttsme911f1BY99ekAx0eadVXG03PZh2HnChsqYBtsxT3KxkYjN5ks3vi3sko2ru2lBn0VaOuQAy8Bm4+0YY77NMQhRzCqeo0Xq1HL1XVAhaOU4Dze9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJ2BPm7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7Kb9jYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837A3C4AF68;
-	Tue, 27 Aug 2024 15:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJ2BPm7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB010C4DDE3;
+	Tue, 27 Aug 2024 15:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772637;
-	bh=9xYuzmqMbenzy0wQJmGbDia3mFcCP0oPwcSWz/XbhSY=;
+	s=korg; t=1724772641;
+	bh=skISXA1n0/AxAGsZVdu5bJeHr8TBH0X11y9AxHmecuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K7Kb9jYJ6p6yRTK0Sd1psuC+VQkudkyEKE45XmzuLLXhuoD2uGSAEdgDwdxPayCPJ
-	 89rQYPdtungBCDo2KWl4TvyczgX6lzjrnb1KsfgFRJjTg9SROfR6WiSgwfnRIcXhwe
-	 NzJ1SVsxtLMMS+tewifMKtZxpE8FYig+HD9sMEF4=
+	b=yJ2BPm7YQus5YsQ825iZw+lwYk3+Ens4+Kj6oF0+zq3o6adKpQDO8VYsS0OtNZw27
+	 JWli9Gtk5Uf2WBHpVPdBNdiWgc/gqlvY/mjOKGMxxIBhY5zwNG1C/60i2rr+uWJx05
+	 OM6PntByW7/KLQNoHC8quzV15PXd/5bybCv70S6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	syzbot+b72d86aa5df17ce74c60@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/321] ice: Add xdp_buff to ice_rx_ring struct
-Date: Tue, 27 Aug 2024 16:39:11 +0200
-Message-ID: <20240827143847.491519402@linuxfoundation.org>
+Subject: [PATCH 6.1 234/321] kcm: Serialise kcm_sendmsg() for the same socket.
+Date: Tue, 27 Aug 2024 16:39:02 +0200
+Message-ID: <20240827143847.144994394@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,155 +53,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit cb0473e0e9dccaa0ddafb252f2c3ef943b86bb56 ]
+[ Upstream commit 807067bf014d4a3ae2cc55bd3de16f22a01eb580 ]
 
-In preparation for XDP multi-buffer support, let's store xdp_buff on
-Rx ring struct. This will allow us to combine fragmented frames across
-separate NAPI cycles in the same way as currently skb fragments are
-handled. This means that skb pointer on Rx ring will become redundant
-and will be removed. For now it is kept and layout of Rx ring struct was
-not inspected, some member movement will be needed later on so that will
-be the time to take care of it.
+syzkaller reported UAF in kcm_release(). [0]
 
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Link: https://lore.kernel.org/bpf/20230131204506.219292-3-maciej.fijalkowski@intel.com
-Stable-dep-of: 50b2143356e8 ("ice: fix page reuse when PAGE_SIZE is over 8k")
+The scenario is
+
+  1. Thread A builds a skb with MSG_MORE and sets kcm->seq_skb.
+
+  2. Thread A resumes building skb from kcm->seq_skb but is blocked
+     by sk_stream_wait_memory()
+
+  3. Thread B calls sendmsg() concurrently, finishes building kcm->seq_skb
+     and puts the skb to the write queue
+
+  4. Thread A faces an error and finally frees skb that is already in the
+     write queue
+
+  5. kcm_release() does double-free the skb in the write queue
+
+When a thread is building a MSG_MORE skb, another thread must not touch it.
+
+Let's add a per-sk mutex and serialise kcm_sendmsg().
+
+[0]:
+BUG: KASAN: slab-use-after-free in __skb_unlink include/linux/skbuff.h:2366 [inline]
+BUG: KASAN: slab-use-after-free in __skb_dequeue include/linux/skbuff.h:2385 [inline]
+BUG: KASAN: slab-use-after-free in __skb_queue_purge_reason include/linux/skbuff.h:3175 [inline]
+BUG: KASAN: slab-use-after-free in __skb_queue_purge include/linux/skbuff.h:3181 [inline]
+BUG: KASAN: slab-use-after-free in kcm_release+0x170/0x4c8 net/kcm/kcmsock.c:1691
+Read of size 8 at addr ffff0000ced0fc80 by task syz-executor329/6167
+
+CPU: 1 PID: 6167 Comm: syz-executor329 Tainted: G    B              6.8.0-rc5-syzkaller-g9abbc24128bc #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
+Call trace:
+ dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:291
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:298
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x178/0x518 mm/kasan/report.c:488
+ kasan_report+0xd8/0x138 mm/kasan/report.c:601
+ __asan_report_load8_noabort+0x20/0x2c mm/kasan/report_generic.c:381
+ __skb_unlink include/linux/skbuff.h:2366 [inline]
+ __skb_dequeue include/linux/skbuff.h:2385 [inline]
+ __skb_queue_purge_reason include/linux/skbuff.h:3175 [inline]
+ __skb_queue_purge include/linux/skbuff.h:3181 [inline]
+ kcm_release+0x170/0x4c8 net/kcm/kcmsock.c:1691
+ __sock_release net/socket.c:659 [inline]
+ sock_close+0xa4/0x1e8 net/socket.c:1421
+ __fput+0x30c/0x738 fs/file_table.c:376
+ ____fput+0x20/0x30 fs/file_table.c:404
+ task_work_run+0x230/0x2e0 kernel/task_work.c:180
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x618/0x1f64 kernel/exit.c:871
+ do_group_exit+0x194/0x22c kernel/exit.c:1020
+ get_signal+0x1500/0x15ec kernel/signal.c:2893
+ do_signal+0x23c/0x3b44 arch/arm64/kernel/signal.c:1249
+ do_notify_resume+0x74/0x1f4 arch/arm64/kernel/entry-common.c:148
+ exit_to_user_mode_prepare arch/arm64/kernel/entry-common.c:169 [inline]
+ exit_to_user_mode arch/arm64/kernel/entry-common.c:178 [inline]
+ el0_svc+0xac/0x168 arch/arm64/kernel/entry-common.c:713
+ el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
+ el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+
+Allocated by task 6166:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x40/0x78 mm/kasan/common.c:68
+ kasan_save_alloc_info+0x70/0x84 mm/kasan/generic.c:626
+ unpoison_slab_object mm/kasan/common.c:314 [inline]
+ __kasan_slab_alloc+0x74/0x8c mm/kasan/common.c:340
+ kasan_slab_alloc include/linux/kasan.h:201 [inline]
+ slab_post_alloc_hook mm/slub.c:3813 [inline]
+ slab_alloc_node mm/slub.c:3860 [inline]
+ kmem_cache_alloc_node+0x204/0x4c0 mm/slub.c:3903
+ __alloc_skb+0x19c/0x3d8 net/core/skbuff.c:641
+ alloc_skb include/linux/skbuff.h:1296 [inline]
+ kcm_sendmsg+0x1d3c/0x2124 net/kcm/kcmsock.c:783
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg net/socket.c:745 [inline]
+ sock_sendmsg+0x220/0x2c0 net/socket.c:768
+ splice_to_socket+0x7cc/0xd58 fs/splice.c:889
+ do_splice_from fs/splice.c:941 [inline]
+ direct_splice_actor+0xec/0x1d8 fs/splice.c:1164
+ splice_direct_to_actor+0x438/0xa0c fs/splice.c:1108
+ do_splice_direct_actor fs/splice.c:1207 [inline]
+ do_splice_direct+0x1e4/0x304 fs/splice.c:1233
+ do_sendfile+0x460/0xb3c fs/read_write.c:1295
+ __do_sys_sendfile64 fs/read_write.c:1362 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1348 [inline]
+ __arm64_sys_sendfile64+0x160/0x3b4 fs/read_write.c:1348
+ __invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
+ el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
+ el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+
+Freed by task 6167:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x40/0x78 mm/kasan/common.c:68
+ kasan_save_free_info+0x5c/0x74 mm/kasan/generic.c:640
+ poison_slab_object+0x124/0x18c mm/kasan/common.c:241
+ __kasan_slab_free+0x3c/0x78 mm/kasan/common.c:257
+ kasan_slab_free include/linux/kasan.h:184 [inline]
+ slab_free_hook mm/slub.c:2121 [inline]
+ slab_free mm/slub.c:4299 [inline]
+ kmem_cache_free+0x15c/0x3d4 mm/slub.c:4363
+ kfree_skbmem+0x10c/0x19c
+ __kfree_skb net/core/skbuff.c:1109 [inline]
+ kfree_skb_reason+0x240/0x6f4 net/core/skbuff.c:1144
+ kfree_skb include/linux/skbuff.h:1244 [inline]
+ kcm_release+0x104/0x4c8 net/kcm/kcmsock.c:1685
+ __sock_release net/socket.c:659 [inline]
+ sock_close+0xa4/0x1e8 net/socket.c:1421
+ __fput+0x30c/0x738 fs/file_table.c:376
+ ____fput+0x20/0x30 fs/file_table.c:404
+ task_work_run+0x230/0x2e0 kernel/task_work.c:180
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x618/0x1f64 kernel/exit.c:871
+ do_group_exit+0x194/0x22c kernel/exit.c:1020
+ get_signal+0x1500/0x15ec kernel/signal.c:2893
+ do_signal+0x23c/0x3b44 arch/arm64/kernel/signal.c:1249
+ do_notify_resume+0x74/0x1f4 arch/arm64/kernel/entry-common.c:148
+ exit_to_user_mode_prepare arch/arm64/kernel/entry-common.c:169 [inline]
+ exit_to_user_mode arch/arm64/kernel/entry-common.c:178 [inline]
+ el0_svc+0xac/0x168 arch/arm64/kernel/entry-common.c:713
+ el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
+ el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+
+The buggy address belongs to the object at ffff0000ced0fc80
+ which belongs to the cache skbuff_head_cache of size 240
+The buggy address is located 0 bytes inside of
+ freed 240-byte region [ffff0000ced0fc80, ffff0000ced0fd70)
+
+The buggy address belongs to the physical page:
+page:00000000d35f4ae4 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10ed0f
+flags: 0x5ffc00000000800(slab|node=0|zone=2|lastcpupid=0x7ff)
+page_type: 0xffffffff()
+raw: 05ffc00000000800 ffff0000c1cbf640 fffffdffc3423100 dead000000000004
+raw: 0000000000000000 00000000000c000c 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff0000ced0fb80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff0000ced0fc00: fb fb fb fb fb fb fc fc fc fc fc fc fc fc fc fc
+>ffff0000ced0fc80: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                   ^
+ ffff0000ced0fd00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc
+ ffff0000ced0fd80: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot+b72d86aa5df17ce74c60@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b72d86aa5df17ce74c60
+Tested-by: syzbot+b72d86aa5df17ce74c60@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240815220437.69511-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_base.c |  1 +
- drivers/net/ethernet/intel/ice/ice_txrx.c | 39 +++++++++++++----------
- drivers/net/ethernet/intel/ice/ice_txrx.h |  1 +
- 3 files changed, 25 insertions(+), 16 deletions(-)
+ include/net/kcm.h | 1 +
+ net/kcm/kcmsock.c | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
-index c7c6f01538e0d..4db4ec4b8857a 100644
---- a/drivers/net/ethernet/intel/ice/ice_base.c
-+++ b/drivers/net/ethernet/intel/ice/ice_base.c
-@@ -534,6 +534,7 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 		}
- 	}
+diff --git a/include/net/kcm.h b/include/net/kcm.h
+index 2d704f8f49059..8e8252e08a9ce 100644
+--- a/include/net/kcm.h
++++ b/include/net/kcm.h
+@@ -70,6 +70,7 @@ struct kcm_sock {
+ 	struct work_struct tx_work;
+ 	struct list_head wait_psock_list;
+ 	struct sk_buff *seq_skb;
++	struct mutex tx_mutex;
+ 	u32 tx_stopped : 1;
  
-+	xdp_init_buff(&ring->xdp, ice_rx_pg_size(ring) / 2, &ring->xdp_rxq);
- 	err = ice_setup_rx_ctx(ring);
- 	if (err) {
- 		dev_err(dev, "ice_setup_rx_ctx failed for RxQ %d, err %d\n",
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 2db20263420d8..d3411170f3eaf 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -523,8 +523,16 @@ int ice_setup_rx_ring(struct ice_rx_ring *rx_ring)
- 	return -ENOMEM;
+ 	/* Don't use bit fields here, these are set under different locks */
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index 7d37bf4334d26..462bdb6bfa4d8 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -912,6 +912,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 		  !(msg->msg_flags & MSG_MORE) : !!(msg->msg_flags & MSG_EOR);
+ 	int err = -EPIPE;
+ 
++	mutex_lock(&kcm->tx_mutex);
+ 	lock_sock(sk);
+ 
+ 	/* Per tcp_sendmsg this should be in poll */
+@@ -1060,6 +1061,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 	KCM_STATS_ADD(kcm->stats.tx_bytes, copied);
+ 
+ 	release_sock(sk);
++	mutex_unlock(&kcm->tx_mutex);
+ 	return copied;
+ 
+ out_error:
+@@ -1085,6 +1087,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 		sk->sk_write_space(sk);
+ 
+ 	release_sock(sk);
++	mutex_unlock(&kcm->tx_mutex);
+ 	return err;
  }
  
-+/**
-+ * ice_rx_frame_truesize
-+ * @rx_ring: ptr to Rx ring
-+ * @size: size
-+ *
-+ * calculate the truesize with taking into the account PAGE_SIZE of
-+ * underlying arch
-+ */
- static unsigned int
--ice_rx_frame_truesize(struct ice_rx_ring *rx_ring, unsigned int __maybe_unused size)
-+ice_rx_frame_truesize(struct ice_rx_ring *rx_ring, const unsigned int size)
- {
- 	unsigned int truesize;
+@@ -1325,6 +1328,7 @@ static void init_kcm_sock(struct kcm_sock *kcm, struct kcm_mux *mux)
+ 	spin_unlock_bh(&mux->lock);
  
-@@ -1103,21 +1111,20 @@ ice_is_non_eop(struct ice_rx_ring *rx_ring, union ice_32b_rx_flex_desc *rx_desc)
-  */
- int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- {
--	unsigned int total_rx_bytes = 0, total_rx_pkts = 0, frame_sz = 0;
-+	unsigned int total_rx_bytes = 0, total_rx_pkts = 0;
- 	u16 cleaned_count = ICE_DESC_UNUSED(rx_ring);
- 	unsigned int offset = rx_ring->rx_offset;
-+	struct xdp_buff *xdp = &rx_ring->xdp;
- 	struct ice_tx_ring *xdp_ring = NULL;
- 	unsigned int xdp_res, xdp_xmit = 0;
- 	struct sk_buff *skb = rx_ring->skb;
- 	struct bpf_prog *xdp_prog = NULL;
--	struct xdp_buff xdp;
- 	bool failure;
+ 	INIT_WORK(&kcm->tx_work, kcm_tx_work);
++	mutex_init(&kcm->tx_mutex);
  
- 	/* Frame size depend on rx_ring setup when PAGE_SIZE=4K */
- #if (PAGE_SIZE < 8192)
--	frame_sz = ice_rx_frame_truesize(rx_ring, 0);
-+	xdp->frame_sz = ice_rx_frame_truesize(rx_ring, 0);
- #endif
--	xdp_init_buff(&xdp, frame_sz, &rx_ring->xdp_rxq);
- 
- 	xdp_prog = READ_ONCE(rx_ring->xdp_prog);
- 	if (xdp_prog)
-@@ -1171,30 +1178,30 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- 		rx_buf = ice_get_rx_buf(rx_ring, size, &rx_buf_pgcnt);
- 
- 		if (!size) {
--			xdp.data = NULL;
--			xdp.data_end = NULL;
--			xdp.data_hard_start = NULL;
--			xdp.data_meta = NULL;
-+			xdp->data = NULL;
-+			xdp->data_end = NULL;
-+			xdp->data_hard_start = NULL;
-+			xdp->data_meta = NULL;
- 			goto construct_skb;
- 		}
- 
- 		hard_start = page_address(rx_buf->page) + rx_buf->page_offset -
- 			     offset;
--		xdp_prepare_buff(&xdp, hard_start, offset, size, !!offset);
-+		xdp_prepare_buff(xdp, hard_start, offset, size, !!offset);
- #if (PAGE_SIZE > 4096)
- 		/* At larger PAGE_SIZE, frame_sz depend on len size */
--		xdp.frame_sz = ice_rx_frame_truesize(rx_ring, size);
-+		xdp->frame_sz = ice_rx_frame_truesize(rx_ring, size);
- #endif
- 
- 		if (!xdp_prog)
- 			goto construct_skb;
- 
--		xdp_res = ice_run_xdp(rx_ring, &xdp, xdp_prog, xdp_ring);
-+		xdp_res = ice_run_xdp(rx_ring, xdp, xdp_prog, xdp_ring);
- 		if (!xdp_res)
- 			goto construct_skb;
- 		if (xdp_res & (ICE_XDP_TX | ICE_XDP_REDIR)) {
- 			xdp_xmit |= xdp_res;
--			ice_rx_buf_adjust_pg_offset(rx_buf, xdp.frame_sz);
-+			ice_rx_buf_adjust_pg_offset(rx_buf, xdp->frame_sz);
- 		} else {
- 			rx_buf->pagecnt_bias++;
- 		}
-@@ -1207,11 +1214,11 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- construct_skb:
- 		if (skb) {
- 			ice_add_rx_frag(rx_ring, rx_buf, skb, size);
--		} else if (likely(xdp.data)) {
-+		} else if (likely(xdp->data)) {
- 			if (ice_ring_uses_build_skb(rx_ring))
--				skb = ice_build_skb(rx_ring, rx_buf, &xdp);
-+				skb = ice_build_skb(rx_ring, rx_buf, xdp);
- 			else
--				skb = ice_construct_skb(rx_ring, rx_buf, &xdp);
-+				skb = ice_construct_skb(rx_ring, rx_buf, xdp);
- 		}
- 		/* exit if we failed to retrieve a buffer */
- 		if (!skb) {
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.h b/drivers/net/ethernet/intel/ice/ice_txrx.h
-index bfbe4b16df96a..ef8245f795c5b 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.h
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.h
-@@ -295,6 +295,7 @@ struct ice_rx_ring {
- 	struct bpf_prog *xdp_prog;
- 	struct ice_tx_ring *xdp_ring;
- 	struct xsk_buff_pool *xsk_pool;
-+	struct xdp_buff xdp;
- 	struct sk_buff *skb;
- 	dma_addr_t dma;			/* physical address of ring */
- 	u64 cached_phctime;
+ 	spin_lock_bh(&mux->rx_lock);
+ 	kcm_rcv_ready(kcm);
 -- 
 2.43.0
 
