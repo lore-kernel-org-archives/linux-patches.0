@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C29C1C4EEC;
-	Tue, 27 Aug 2024 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F741C7B67;
+	Tue, 27 Aug 2024 15:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771657; cv=none; b=SHIhiIKPzKO2ZYVbVKX1Ou6E+rfG23mIwQNGjEjSt7Q9pN9QzHGfQvqBLj9zf/TgAZeUfwOCxYNpy3bIuE6C+CfCP5OYw2Ols5eC/rm6IKA4h80HO/yrmbkzLYcrxkIergwBo+2kINQpWPHUW/kbVV8u1cw6GTira/7vS0u2uLw=
+	t=1724771660; cv=none; b=mUAhXixOcBvPHNBe9v8Bqle3UFdcLNc4BR+3+d5XpL9EEnZAPhFaWfve2v67OYJDVF3s5O3+6bzfj7Kp09DQ3ULDcfnZbfe9HKfqnyCiudf83Akd0zX32Db8p3ue1DH097fB3Cbl2U5rrLXoB94SSnB71Tou+QYR1S0tbybE9Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771657; c=relaxed/simple;
-	bh=v6esvDpBgAHQQvWnGGIXp1aXUDlDY+j2wSt+L8VdDkQ=;
+	s=arc-20240116; t=1724771660; c=relaxed/simple;
+	bh=SG0p9F0Qs0z39m5S/pcOQ6wg3ok5eYs+5mCzJTIkQhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFL5YSut74s7i6HaTGuUic0mAOkgofJlanmDhzHKRGutBAhu1Ym2QP5CkfRkzB3ErO+bgU8yFNgvXBONw1mY6eKvPc6/YuxolGrtoLTK/LrIKmEsQWqCm3y/Zj7nYtap0QdP8DnCP0GocnSoAV53KNrL0DiVHwBWWFlTEM+c830=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAq67la2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jBqpSt585KSth4srjFIsRtQHM5MHwMOsG6pGTz8Db1kgs9aCVqRhodXY8BiyDsdBwSlR9M6Y/CNfPQOfOF5aoKiHiQT0DVKf7jbXUcAs0GdG5GbI90WYBgnNfJ2Ayl0LBkYUu2ATWFYVB2y+9anUKy4S1nGI4upUPB0HImx5eXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTETuWK5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAq67la2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391F4C6106E;
-	Tue, 27 Aug 2024 15:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTETuWK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F148C4AF09;
+	Tue, 27 Aug 2024 15:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771656;
-	bh=v6esvDpBgAHQQvWnGGIXp1aXUDlDY+j2wSt+L8VdDkQ=;
+	s=korg; t=1724771660;
+	bh=SG0p9F0Qs0z39m5S/pcOQ6wg3ok5eYs+5mCzJTIkQhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KAq67la25gQdQ4P8Fxlma5PHwPQcalE0Fx8KyunabIJne3XbuyQmhPTPPbnF+Z6uo
-	 VVBxjt9XmkeYwp+Q8Nq/QRZ73xdRB9othsq/faRxylA3AAtd/WJzCCk17lf+9ijprT
-	 GtH1AbCtos6yr4o/H+AMIaPTLR6sH9oXYolZFNog=
+	b=nTETuWK5ZADG8RxQSi1vNnIovPUbWDxoQCmqrnopBiVxDrif7A6IagECgAJSwA4NF
+	 Z7aZ/oQcM9/FwbltpYqeYRcsf/RcdsHZJbGH56CRBl+IOowrmZ7CrQ7e4Q7H7NXPWt
+	 /AJJLidxlka40gW7QnDyXYddBx9h3dTLRs2Dj71Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.10 254/273] thermal: of: Fix OF node leak in of_thermal_zone_find() error paths
-Date: Tue, 27 Aug 2024 16:39:38 +0200
-Message-ID: <20240827143843.067344664@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 255/273] mptcp: pm: re-using ID of unused removed ADD_ADDR
+Date: Tue, 27 Aug 2024 16:39:39 +0200
+Message-ID: <20240827143843.104709435@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,68 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit c0a1ef9c5be72ff28a5413deb1b3e1a066593c13 upstream.
+commit e255683c06df572ead96db5efb5d21be30c0efaa upstream.
 
-Terminating for_each_available_child_of_node() loop requires dropping OF
-node reference, so bailing out on errors misses this.  Solve the OF node
-reference leak with scoped for_each_available_child_of_node_scoped().
+If no subflow is attached to the 'signal' endpoint that is being
+removed, the addr ID will not be marked as available again.
 
-Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20240814195823.437597-3-krzysztof.kozlowski@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Mark the linked ID as available when removing the address entry from the
+list to cover this case.
+
+Fixes: b6c08380860b ("mptcp: remove addr and subflow in PM netlink")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-1-38035d40de5b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_of.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/mptcp/pm_netlink.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/thermal_of.c
-+++ b/drivers/thermal/thermal_of.c
-@@ -184,14 +184,14 @@ static struct device_node *of_thermal_zo
- 	 * Search for each thermal zone, a defined sensor
- 	 * corresponding to the one passed as parameter
- 	 */
--	for_each_available_child_of_node(np, tz) {
-+	for_each_available_child_of_node_scoped(np, child) {
- 
- 		int count, i;
- 
--		count = of_count_phandle_with_args(tz, "thermal-sensors",
-+		count = of_count_phandle_with_args(child, "thermal-sensors",
- 						   "#thermal-sensor-cells");
- 		if (count <= 0) {
--			pr_err("%pOFn: missing thermal sensor\n", tz);
-+			pr_err("%pOFn: missing thermal sensor\n", child);
- 			tz = ERR_PTR(-EINVAL);
- 			goto out;
- 		}
-@@ -200,18 +200,19 @@ static struct device_node *of_thermal_zo
- 
- 			int ret;
- 
--			ret = of_parse_phandle_with_args(tz, "thermal-sensors",
-+			ret = of_parse_phandle_with_args(child, "thermal-sensors",
- 							 "#thermal-sensor-cells",
- 							 i, &sensor_specs);
- 			if (ret < 0) {
--				pr_err("%pOFn: Failed to read thermal-sensors cells: %d\n", tz, ret);
-+				pr_err("%pOFn: Failed to read thermal-sensors cells: %d\n", child, ret);
- 				tz = ERR_PTR(ret);
- 				goto out;
- 			}
- 
- 			if ((sensor == sensor_specs.np) && id == (sensor_specs.args_count ?
- 								  sensor_specs.args[0] : 0)) {
--				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, tz);
-+				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, child);
-+				tz = no_free_ptr(child);
- 				goto out;
- 			}
- 		}
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1431,7 +1431,10 @@ static bool mptcp_pm_remove_anno_addr(st
+ 	ret = remove_anno_list_by_saddr(msk, addr);
+ 	if (ret || force) {
+ 		spin_lock_bh(&msk->pm.lock);
+-		msk->pm.add_addr_signaled -= ret;
++		if (ret) {
++			__set_bit(addr->id, msk->pm.id_avail_bitmap);
++			msk->pm.add_addr_signaled--;
++		}
+ 		mptcp_pm_remove_addr(msk, &list);
+ 		spin_unlock_bh(&msk->pm.lock);
+ 	}
 
 
