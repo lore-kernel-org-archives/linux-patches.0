@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037B138DC7;
-	Tue, 27 Aug 2024 14:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB781C68A5;
+	Tue, 27 Aug 2024 14:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770013; cv=none; b=Tvo++cOSaGiJErRnkC2fGeOyyOPsvon6csIFFj2V/es9lD7wSWI7qovyRGT6rwlLPYO7zdJMyCfGFO/Jr6yZYqWzGMyeISNEfRJryLpvV7hZiX1hI2qsbOsmzVeQVJgX9T8HpSonGcGS1h65IiXHS9RRedJJMbhGTF+1kEw/KHM=
+	t=1724770016; cv=none; b=SmI2dPdFEQ1XON1mgwlPuYcZ4qjinv6Jdd6xhTsDmSgD32UlUQKBDTTsCvdIIasldcMGjMJVVuLEC/AgNhQSp7wELNjpdYtJgFSSQmjF5N85cx1GFpSiX5oL4UvRfwp27lyCAgS/xJQ0vCCfv5kE1VqDoPNKpoEKWMW/ZIWu5G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770013; c=relaxed/simple;
-	bh=9HfUdQB6o993RiWH3a79V45LOVnry8BhhCvjacL8gQw=;
+	s=arc-20240116; t=1724770016; c=relaxed/simple;
+	bh=6/m4olA2rTfA5/UYD3cOY5nDQxYPvcgcl8m/lI8luUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YPWb8tzPdx6YdfGU1giSwmgLYDAghqkRX5l0EchnnkprxdXaz2pG5jtmMsyDsttToJqHBi4KYz5zW3jZ3L///J1Mjfnr+44QOjFs/keyAjHNbvn5ORmj3BTQnlGVe722u5ZSB/I3gBIsNqy/Ogk2f4G9GhAzq2SO/wDrB3MxZdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foQZRtt2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEibaqMEKizI463u2KY5ko7wISUeryftcnAmvPnTUoFaVV7bZhEjefa2DU8EBKgQqwkbl65pnkBel8BZPM9MI4fLRsUOJuI2e8Xllux+KlwbbR1riT7JWNfrJq2iT4CqaysnOcpzQ6wPxvYjcTytfWHkEXdU/8la8x4XtQpdlzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PdIEgi3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foQZRtt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78988C6106D;
-	Tue, 27 Aug 2024 14:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PdIEgi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB77FC6106D;
+	Tue, 27 Aug 2024 14:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770012;
-	bh=9HfUdQB6o993RiWH3a79V45LOVnry8BhhCvjacL8gQw=;
+	s=korg; t=1724770016;
+	bh=6/m4olA2rTfA5/UYD3cOY5nDQxYPvcgcl8m/lI8luUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=foQZRtt2WduE5YozBWkT1e8hC/2kgiZFHdu9yC3axdVym00Otl12ntYPuWXL1OaQ+
-	 i9b8gi0iZqv2HhGbwQKmkMpQ44zUH/oty9WVl/KMVbXRz5kTmnBxk4iy9VxD4mJqUg
-	 gCpOg2apAEsY4dPo8JKSxVDkSkIwLZNUtCESOgBY=
+	b=0PdIEgi3Xg5Khi9bt6evn9GD9I2C2lKG1qmyQouo+6HQKVWnOXJhzBIq4NOAqyGjS
+	 eWHQQ1Ix0fkDHchGP4mDeAv678CBbeRMXNeLUBGdZCqy9YGqK4IOHGW2y9hq6dgLhf
+	 ySAmirWrbCGVbd1i/U2Bdz+c7Cin27K9xCcwkpNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Manish Dharanenthiran <quic_mdharane@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/341] drm/amd/amdgpu/imu_v11_0: Increase buffer size to ensure all possible values can be stored
-Date: Tue, 27 Aug 2024 16:35:15 +0200
-Message-ID: <20240827143846.605665287@linuxfoundation.org>
+Subject: [PATCH 6.6 102/341] wifi: ath12k: fix WARN_ON during ath12k_mac_update_vif_chan
+Date: Tue, 27 Aug 2024 16:35:33 +0200
+Message-ID: <20240827143847.288786052@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -45,43 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Manish Dharanenthiran <quic_mdharane@quicinc.com>
 
-[ Upstream commit a728342ae4ec2a7fdab0038b11427579424f133e ]
+[ Upstream commit 8b8b990fe495e9be057249e1651b59b5ebacf2ef ]
 
-Fixes the following W=1 kernel build warning(s):
+Fix WARN_ON() from ath12k_mac_update_vif_chan() if vdev is not up.
+Since change_chanctx can be called even before vdev_up.
 
- drivers/gpu/drm/amd/amdgpu/imu_v11_0.c: In function ‘imu_v11_0_init_microcode’:
- drivers/gpu/drm/amd/amdgpu/imu_v11_0.c:52:54: warning: ‘_imu.bin’ directive output may be truncated writing 8 bytes into a region of size between 4 and 33 [-Wformat-truncation=]
- drivers/gpu/drm/amd/amdgpu/imu_v11_0.c:52:9: note: ‘snprintf’ output between 16 and 45 bytes into a destination of size 40
+Do vdev stop followed by a vdev start in case of vdev is down.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0-02903-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Manish Dharanenthiran <quic_mdharane@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230802085852.19821-2-quic_mdharane@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/imu_v11_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/imu_v11_0.c b/drivers/gpu/drm/amd/amdgpu/imu_v11_0.c
-index 4ab90c7852c3e..ca123ff553477 100644
---- a/drivers/gpu/drm/amd/amdgpu/imu_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/imu_v11_0.c
-@@ -39,7 +39,7 @@ MODULE_FIRMWARE("amdgpu/gc_11_0_4_imu.bin");
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 61435e4489b9f..ba6fc27f4a1a1 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -6039,13 +6039,28 @@ ath12k_mac_update_vif_chan(struct ath12k *ar,
+ 		if (WARN_ON(!arvif->is_started))
+ 			continue;
  
- static int imu_v11_0_init_microcode(struct amdgpu_device *adev)
- {
--	char fw_name[40];
-+	char fw_name[45];
- 	char ucode_prefix[30];
- 	int err;
- 	const struct imu_firmware_header_v1_0 *imu_hdr;
+-		if (WARN_ON(!arvif->is_up))
+-			continue;
++		/* Firmware expect vdev_restart only if vdev is up.
++		 * If vdev is down then it expect vdev_stop->vdev_start.
++		 */
++		if (arvif->is_up) {
++			ret = ath12k_mac_vdev_restart(arvif, &vifs[i].new_ctx->def);
++			if (ret) {
++				ath12k_warn(ab, "failed to restart vdev %d: %d\n",
++					    arvif->vdev_id, ret);
++				continue;
++			}
++		} else {
++			ret = ath12k_mac_vdev_stop(arvif);
++			if (ret) {
++				ath12k_warn(ab, "failed to stop vdev %d: %d\n",
++					    arvif->vdev_id, ret);
++				continue;
++			}
+ 
+-		ret = ath12k_mac_vdev_restart(arvif, &vifs[i].new_ctx->def);
+-		if (ret) {
+-			ath12k_warn(ab, "failed to restart vdev %d: %d\n",
+-				    arvif->vdev_id, ret);
++			ret = ath12k_mac_vdev_start(arvif, &vifs[i].new_ctx->def);
++			if (ret)
++				ath12k_warn(ab, "failed to start vdev %d: %d\n",
++					    arvif->vdev_id, ret);
+ 			continue;
+ 		}
+ 
 -- 
 2.43.0
 
