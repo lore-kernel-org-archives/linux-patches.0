@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B331CE703;
-	Tue, 27 Aug 2024 15:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF1D517;
+	Tue, 27 Aug 2024 15:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772793; cv=none; b=JVGKdGIUbEfoEWzoWjpN3DMQBlJsXDTKLcGYRb8Z78o+JoWGULCqnd0vwfOoI0SlXo+sJrr7GRQX/tOoihIfOLKShw6MQvuYCXnKl+uQ/ANzPHfy9nMEsE5x4DowVxyAI41/c3nMohmuGIN6wY/BcC9ALL6V35zWdqrBKgNFO+U=
+	t=1724772796; cv=none; b=oH7dOOKHcZtrFwU2k+wtVniDqayzTBvuUljAlIr0BDGNsL0kVYEL3UVXmy21k3jhj8LnD8tfUkr+Oy67cYCmJb8EqmZxtWsAI1e7Qz/S4zqxubZ3l1TFR18gf4+f/mUS8t3CRCnwGRSyYLX4425zHmjxdbZk55jivlV813bFgQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772793; c=relaxed/simple;
-	bh=YvBQiEO1w6D90K1dE4Qq1o7pKV5GPzysW7aWF/JNejE=;
+	s=arc-20240116; t=1724772796; c=relaxed/simple;
+	bh=b+Ix5Y51hiF4qP9XNMLC+HlklOan+Hio8apxDUAEXk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvV+NmP+kNiU+t23Fhcbvu9nrLldlvxoRXDIxEcQaRWCRJd3BJpbodpW21J37SoP8aAEGTi7T/IWIPcjXuWeZ3QJQcoNl7JHHbmV9Q/8JlAq+bUVLRnkT5rHjFfh9+BR0Tgi8kwl4B08eTTeXz+uZm6cr87bR9j0tHcJnU6wm74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH7Ljgej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3htWA+z3Y6PD1s2MLLZNXxmPX/V7VK4Gr1Yq2VkiI7aJRn1F0Tm4JXYdzwNDKqdNTYvFUOtlcEzr4feuiwbU57W5jtkxuE81fnReXBinpq31FxNMPyCt0iwKj1ySHvGyj66b20upBrABW8atmgaechRQvPUrY+Nh3Dk339dwSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKAI3Hte; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH7Ljgej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7E2C61050;
-	Tue, 27 Aug 2024 15:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKAI3Hte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF5CC61050;
+	Tue, 27 Aug 2024 15:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772792;
-	bh=YvBQiEO1w6D90K1dE4Qq1o7pKV5GPzysW7aWF/JNejE=;
+	s=korg; t=1724772796;
+	bh=b+Ix5Y51hiF4qP9XNMLC+HlklOan+Hio8apxDUAEXk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GH7Ljgej+TeJW9nVVgIk9AbM7Pe3wJPNBmcGZmkrFdmXPagEMjkxZrHdy2i3/mEug
-	 kY021aHCh+/4zAk2ugkK6KfL/S2WKMfEaFSD6ASPphIZX2fCoBq2efOZtA+M4Hq5m3
-	 +50BoBXmDhmH1ZyJ/vLiKEqSjCloIRJZK/9BQfnU=
+	b=SKAI3HteXW/mYNC7TdpavuE3rj9x5xS35QZL1tCvtTnrfbI7Ln/zuGliQoKqmo8sj
+	 9V1JUUbfZItAJgqxs/7YtW7emGc2zMZaODOBX+8AJw6Hmk9hA9EY5ePTUhnyqwNlU7
+	 G/JR8TeL2L/ODAzrhxtscOzH3JJaaKYvl4nXyI18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	George Kennedy <george.kennedy@oracle.com>
-Subject: [PATCH 6.1 321/321] Input: MT - limit max slots
-Date: Tue, 27 Aug 2024 16:40:29 +0200
-Message-ID: <20240827143850.478100588@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 304/321] wifi: mac80211: add documentation for amsdu_mesh_control
+Date: Tue, 27 Aug 2024 16:40:12 +0200
+Message-ID: <20240827143849.827588377@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,37 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 99d3bf5f7377d42f8be60a6b9cb60fb0be34dceb upstream.
+commit 3caf31e7b18a90b74a2709d761a0dfa423f2c2e4 upstream.
 
-syzbot is reporting too large allocation at input_mt_init_slots(), for
-num_slots is supplied from userspace using ioctl(UI_DEV_CREATE).
+This documentation wasn't added in the original patch,
+add it now.
 
-Since nobody knows possible max slots, this patch chose 1024.
-
-Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: George Kennedy <george.kennedy@oracle.com>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Fixes: 6e4c0d0460bd ("wifi: mac80211: add a workaround for receiving non-standard mesh A-MSDU")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/input-mt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/sta_info.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/input/input-mt.c
-+++ b/drivers/input/input-mt.c
-@@ -46,6 +46,9 @@ int input_mt_init_slots(struct input_dev
- 		return 0;
- 	if (mt)
- 		return mt->num_slots != num_slots ? -EINVAL : 0;
-+	/* Arbitrary limit for avoiding too large memory allocation. */
-+	if (num_slots > 1024)
-+		return -EINVAL;
- 
- 	mt = kzalloc(struct_size(mt, slots, num_slots), GFP_KERNEL);
- 	if (!mt)
+--- a/net/mac80211/sta_info.h
++++ b/net/mac80211/sta_info.h
+@@ -621,6 +621,8 @@ struct link_sta_info {
+  *	taken from HT/VHT capabilities or VHT operating mode notification
+  * @cparams: CoDel parameters for this station.
+  * @reserved_tid: reserved TID (if any, otherwise IEEE80211_TID_UNRESERVED)
++ * @amsdu_mesh_control: track the mesh A-MSDU format used by the peer
++ *	(-1: not yet known, 0: non-standard [without mesh header], 1: standard)
+  * @fast_tx: TX fastpath information
+  * @fast_rx: RX fastpath information
+  * @tdls_chandef: a TDLS peer can have a wider chandef that is compatible to
 
 
