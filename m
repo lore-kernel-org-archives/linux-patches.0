@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C60B1C4603;
-	Tue, 27 Aug 2024 14:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8929C1C4603;
+	Tue, 27 Aug 2024 14:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770640; cv=none; b=TZaO6porv/5Al4BuAr74vpggeX8sJzdWqosGiRWT4EfCxKmgK0rOn4WetqnDpq3PaTCgORMnuu/hZTnREK2Hfx15lmBXVdIi42z6qoRQ8ZIV6fqBMswmfCz3K4ZpJm0OEDh+aH3gTNIo9G6sFce0bXbgpzhLbonbNwvxeZACIcI=
+	t=1724770643; cv=none; b=WOttGBPYTNruw6G2VPK+sOwP9TavPU8pqVR/3i0vAc3Mox+xLUD3lE36KeeiC6YMjkP0mZf3tkxQa/yljatyrSSHFGloZZAIUq7ya6umRToGyGZ2+ScVdpipGvF3RvhQKWemi+scAfFVwyfg1heF2ZvWp2ijzNkxBZGlDYu5zCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770640; c=relaxed/simple;
-	bh=D2jJ1GOU9+VAY5Q7rKuK7LufFAnHjjsdXgQihhJr6fk=;
+	s=arc-20240116; t=1724770643; c=relaxed/simple;
+	bh=UK/5d0cKP7Yxrlg+saywix3XZAevuvRfgK3gJqg31DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNV6QB7dSEj6+Bg1xfpBff6PjHWPT5tUhd9wFJDGTnM65UZy2tmgBq2wFFGCiA23NaIh+MsWiCos9grcG1ge3iMniehoUGrLd8XxIOk5l0YJY+EwSX9rxRVyxJuHkd8G6/+tBDkCURXBJvv0XSrgRGtT+XPSrEkaB3/A+CHLRoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OywqUxZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRHcqImadcvpNdqaoNif5lPf2d8P/cIuj3NzDBM7xH/CCxY1VoXR3m9163cv6qWHJZIPt4XOmBzFqJJTnTyxVDsIh1S5Ieah2xO6t7iuVAYC2cH+4uV/5dRJs4SqLa3JhV1luABw7qySoQgH4XtLnWhNNZNNS/lNP0raQB0Pn0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3RhRLBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OywqUxZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BB9C4FE01;
-	Tue, 27 Aug 2024 14:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3RhRLBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BBFC61044;
+	Tue, 27 Aug 2024 14:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770640;
-	bh=D2jJ1GOU9+VAY5Q7rKuK7LufFAnHjjsdXgQihhJr6fk=;
+	s=korg; t=1724770643;
+	bh=UK/5d0cKP7Yxrlg+saywix3XZAevuvRfgK3gJqg31DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OywqUxZUKawSiXT3kDeJyBdrAUTrZPo8nSeHMfpembmGKk64cU+oR92ezM9czW1LS
-	 u13aKqxneaV1eoc3+DR2r82XSUloUC/n4Gkm5KWCTtsXTKjHESHBTQ7E5SNaPGrDR7
-	 bhVjN35IMjOjBDoTK0FPi2+km3mLEczlyjtMyV+0=
+	b=s3RhRLBwAyIDEwOiUtR25Fxf90tQHH8T562esIIZO+dNcQP7zJGtE7BLKlQSSapZC
+	 9oMmpwmtWMYHQFF81YGBwPUwY9RltK3GS7XQkvgfNB/4wjfg2km6k09sqTEkBmMhTs
+	 iJnnOMXS96RV6jvGFZgnNVG77LLVRrTCb/N8zi60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hangbin Liu <liuhangbin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 258/341] bonding: fix xfrm real_dev null pointer dereference
-Date: Tue, 27 Aug 2024 16:38:09 +0200
-Message-ID: <20240827143853.223569802@linuxfoundation.org>
+Subject: [PATCH 6.6 259/341] bonding: fix xfrm state handling when clearing active slave
+Date: Tue, 27 Aug 2024 16:38:10 +0200
+Message-ID: <20240827143853.261233382@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -54,55 +54,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit f8cde9805981c50d0c029063dc7d82821806fc44 ]
+[ Upstream commit c4c5c5d2ef40a9f67a9241dc5422eac9ffe19547 ]
 
-We shouldn't set real_dev to NULL because packets can be in transit and
-xfrm might call xdo_dev_offload_ok() in parallel. All callbacks assume
-real_dev is set.
-
- Example trace:
- kernel: BUG: unable to handle page fault for address: 0000000000001030
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel: #PF: supervisor write access in kernel mode
- kernel: #PF: error_code(0x0002) - not-present page
- kernel: PGD 0 P4D 0
- kernel: Oops: 0002 [#1] PREEMPT SMP
- kernel: CPU: 4 PID: 2237 Comm: ping Not tainted 6.7.7+ #12
- kernel: Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
- kernel: RIP: 0010:nsim_ipsec_offload_ok+0xc/0x20 [netdevsim]
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel: Code: e0 0f 0b 48 83 7f 38 00 74 de 0f 0b 48 8b 47 08 48 8b 37 48 8b 78 40 e9 b2 e5 9a d7 66 90 0f 1f 44 00 00 48 8b 86 80 02 00 00 <83> 80 30 10 00 00 01 b8 01 00 00 00 c3 0f 1f 80 00 00 00 00 0f 1f
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel: RSP: 0018:ffffabde81553b98 EFLAGS: 00010246
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:
- kernel: RAX: 0000000000000000 RBX: ffff9eb404e74900 RCX: ffff9eb403d97c60
- kernel: RDX: ffffffffc090de10 RSI: ffff9eb404e74900 RDI: ffff9eb3c5de9e00
- kernel: RBP: ffff9eb3c0a42000 R08: 0000000000000010 R09: 0000000000000014
- kernel: R10: 7974203030303030 R11: 3030303030303030 R12: 0000000000000000
- kernel: R13: ffff9eb3c5de9e00 R14: ffffabde81553cc8 R15: ffff9eb404c53000
- kernel: FS:  00007f2a77a3ad00(0000) GS:ffff9eb43bd00000(0000) knlGS:0000000000000000
- kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- kernel: CR2: 0000000000001030 CR3: 00000001122ab000 CR4: 0000000000350ef0
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel: Call Trace:
- kernel:  <TASK>
- kernel:  ? __die+0x1f/0x60
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:  ? page_fault_oops+0x142/0x4c0
- kernel:  ? do_user_addr_fault+0x65/0x670
- kernel:  ? kvm_read_and_reset_apf_flags+0x3b/0x50
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel:  ? exc_page_fault+0x7b/0x180
- kernel:  ? asm_exc_page_fault+0x22/0x30
- kernel:  ? nsim_bpf_uninit+0x50/0x50 [netdevsim]
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:  ? nsim_ipsec_offload_ok+0xc/0x20 [netdevsim]
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel:  bond_ipsec_offload_ok+0x7b/0x90 [bonding]
- kernel:  xfrm_output+0x61/0x3b0
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:  ip_push_pending_frames+0x56/0x80
+If the active slave is cleared manually the xfrm state is not flushed.
+This leads to xfrm add/del imbalance and adding the same state multiple
+times. For example when the device cannot handle anymore states we get:
+ [ 1169.884811] bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
+because it's filled with the same state after multiple active slave
+clearings. This change also has a few nice side effects: user-space
+gets a notification for the change, the old device gets its mac address
+and promisc/mcast adjusted properly.
 
 Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
 Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
@@ -110,21 +71,22 @@ Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/bonding/bond_options.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index a6eb907a9a273..566b02ca78261 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -582,7 +582,6 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
- 		} else {
- 			slave->dev->xfrmdev_ops->xdo_dev_state_delete(ipsec->xs);
- 		}
--		ipsec->xs->xso.real_dev = NULL;
- 	}
- 	spin_unlock_bh(&bond->ipsec_lock);
- 	rcu_read_unlock();
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index 00a662f8edd6b..d1208d058eea1 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -920,7 +920,7 @@ static int bond_option_active_slave_set(struct bonding *bond,
+ 	/* check to see if we are clearing active */
+ 	if (!slave_dev) {
+ 		netdev_dbg(bond->dev, "Clearing current active slave\n");
+-		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
++		bond_change_active_slave(bond, NULL);
+ 		bond_select_active_slave(bond);
+ 	} else {
+ 		struct slave *old_active = rtnl_dereference(bond->curr_active_slave);
 -- 
 2.43.0
 
