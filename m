@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A291C5788;
-	Tue, 27 Aug 2024 15:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E8812E4D;
+	Tue, 27 Aug 2024 15:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771362; cv=none; b=NwcTCBi6QNM8T5jEWx3c3O+VW31kLn7qyKmhbo/ULByEqwW4VgOlLVtGNakTn0EMRxyP/Z2qscUsyU/QfztKyHawKyLULu8rqpTo78uHnqVTkq0mr393Eh/WdQdLxRElmVT0etoiwynE/XFo7NwPdU0NcW9fI5lWx8wEdSQ0H2k=
+	t=1724771365; cv=none; b=dj11drkV6fx2msiwJpvGfI2Dad+NxUbMLqbmSxNXju4CjZEh1ersZZEhcmXtW28bNyrjcGzpGstuuUELkDtlGyK32NIIevtFEpByJk8qjpYR0iCz3IudlVsMFBjI8K9lH4ItW1NCucVUDLRfk0qpyxZbhvqFzdW3lm4VY+E0c6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771362; c=relaxed/simple;
-	bh=STbPJtgCURfIw83XG/Nm4vkV6Bz5lpuGQ0Ddgujpj5M=;
+	s=arc-20240116; t=1724771365; c=relaxed/simple;
+	bh=QX+j5OUAKcyG07OrXWic3Mz1KLm5Sj20U3BPlnfHrBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBfWjgwoMqkMS+Iyb3mtM0J6hPa0HBVDB5QKUtGBd/m/6mDvRydcHxOGajwQ5KP+q3khqm4e86q9VtdaWu10msYdfcLWsSUOQl57cL8K5DzHLI7nnjCUUt6zXJCPSJBtOOuRTt/iGxnWNR1YEP60/SsmtGRuALTdK+8HB3OQSXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygLOO1T5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5Qzw2yoMAyJXWk3NKRv47ZPHPGh/Spy2ZhmxvHIGw0SQYVpIM3HRhB9BNOy0FOASaKbtraMpgDBlcN0oNFoJTuOLPUkaAY0yvv4HoAIfhwQUpT8/5FBZ2TNPCRCSOImfERP8BFKY5pz36jCbitXWeRZf04svZCxictItTsIIXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EI0Sbv0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygLOO1T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682B0C4AF1A;
-	Tue, 27 Aug 2024 15:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EI0Sbv0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE659C4AF18;
+	Tue, 27 Aug 2024 15:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771361;
-	bh=STbPJtgCURfIw83XG/Nm4vkV6Bz5lpuGQ0Ddgujpj5M=;
+	s=korg; t=1724771365;
+	bh=QX+j5OUAKcyG07OrXWic3Mz1KLm5Sj20U3BPlnfHrBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygLOO1T5UDqaFEYlKkG9I3QQefY+RjVgIWs9fsUh+CjWhUYcKxzNR+QAmYBzDWR4d
-	 bbwlpsd+xmRBS9gALGA7PkL8F1TgT5k5WHXEYd8KvSq93PC8AksdyfSyeRg8evAtHc
-	 PKNkARAmSNbskTuyDGzitIDQXsMWgj4zwKzLH5AU=
+	b=EI0Sbv0B+pkwAK3nUi0tf4pYZfs6hgvv2/mGhMlCQPC/770APwKExMim0B5u2RIfA
+	 YqysnVDdE3wf3OjtenVklWkqZ8V65U7IETsvMrgsXaEzh7pw5N2YCO1c25pbo2MSGK
+	 89tfvQ0z3ZfBAsCl1iN74MmBPr/uyyxiAss310m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryo Takakura <takakura@valinux.co.jp>,
-	Petr Mladek <pmladek@suse.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 134/273] printk/panic: Allow cpu backtraces to be written into ringbuffer during panic
-Date: Tue, 27 Aug 2024 16:37:38 +0200
-Message-ID: <20240827143838.502993950@linuxfoundation.org>
+Subject: [PATCH 6.10 135/273] arm64: Fix KASAN random tag seed initialization
+Date: Tue, 27 Aug 2024 16:37:39 +0200
+Message-ID: <20240827143838.540692801@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,86 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryo Takakura <takakura@valinux.co.jp>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit bcc954c6caba01fca143162d5fbb90e46aa1ad80 ]
+[ Upstream commit f75c235565f90c4a17b125e47f1c68ef6b8c2bce ]
 
-commit 779dbc2e78d7 ("printk: Avoid non-panic CPUs writing
-to ringbuffer") disabled non-panic CPUs to further write messages to
-ringbuffer after panicked.
+Currently, kasan_init_sw_tags() is called before setup_per_cpu_areas(),
+so per_cpu(prng_state, cpu) accesses the same address regardless of the
+value of "cpu", and the same seed value gets copied to the percpu area
+for every CPU. Fix this by moving the call to smp_prepare_boot_cpu(),
+which is the first architecture hook after setup_per_cpu_areas().
 
-Since the commit, non-panicked CPU's are not allowed to write to
-ring buffer after panicked and CPU backtrace which is triggered
-after panicked to sample non-panicked CPUs' backtrace no longer
-serves its function as it has nothing to print.
-
-Fix the issue by allowing non-panicked CPUs to write into ringbuffer
-while CPU backtrace is in flight.
-
-Fixes: 779dbc2e78d7 ("printk: Avoid non-panic CPUs writing to ringbuffer")
-Signed-off-by: Ryo Takakura <takakura@valinux.co.jp>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20240812072703.339690-1-takakura@valinux.co.jp
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: 3c9e3aa11094 ("kasan: add tag related helper functions")
+Fixes: 3f41b6093823 ("kasan: fix random seed generation for tag-based mode")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://lore.kernel.org/r/20240814091005.969756-1-samuel.holland@sifive.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/panic.h  | 1 +
- kernel/panic.c         | 8 +++++++-
- kernel/printk/printk.c | 2 +-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/setup.c | 3 ---
+ arch/arm64/kernel/smp.c   | 2 ++
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/panic.h b/include/linux/panic.h
-index 6717b15e798c3..556b4e2ad9aa5 100644
---- a/include/linux/panic.h
-+++ b/include/linux/panic.h
-@@ -16,6 +16,7 @@ extern void oops_enter(void);
- extern void oops_exit(void);
- extern bool oops_may_print(void);
+diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+index a096e2451044d..b22d28ec80284 100644
+--- a/arch/arm64/kernel/setup.c
++++ b/arch/arm64/kernel/setup.c
+@@ -355,9 +355,6 @@ void __init __no_sanitize_address setup_arch(char **cmdline_p)
+ 	smp_init_cpus();
+ 	smp_build_mpidr_hash();
  
-+extern bool panic_triggering_all_cpu_backtrace;
- extern int panic_timeout;
- extern unsigned long panic_print;
- extern int panic_on_oops;
-diff --git a/kernel/panic.c b/kernel/panic.c
-index 8bff183d6180e..30342568e935f 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -63,6 +63,8 @@ unsigned long panic_on_taint;
- bool panic_on_taint_nousertaint = false;
- static unsigned int warn_limit __read_mostly;
- 
-+bool panic_triggering_all_cpu_backtrace;
-+
- int panic_timeout = CONFIG_PANIC_TIMEOUT;
- EXPORT_SYMBOL_GPL(panic_timeout);
- 
-@@ -252,8 +254,12 @@ void check_panic_on_warn(const char *origin)
-  */
- static void panic_other_cpus_shutdown(bool crash_kexec)
- {
--	if (panic_print & PANIC_PRINT_ALL_CPU_BT)
-+	if (panic_print & PANIC_PRINT_ALL_CPU_BT) {
-+		/* Temporary allow non-panic CPUs to write their backtraces. */
-+		panic_triggering_all_cpu_backtrace = true;
- 		trigger_all_cpu_backtrace();
-+		panic_triggering_all_cpu_backtrace = false;
-+	}
- 
+-	/* Init percpu seeds for random tags after cpus are set up. */
+-	kasan_init_sw_tags();
+-
+ #ifdef CONFIG_ARM64_SW_TTBR0_PAN
  	/*
- 	 * Note that smp_send_stop() is the usual SMP shutdown function,
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index dddb15f48d595..c5d844f727f63 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -2316,7 +2316,7 @@ asmlinkage int vprintk_emit(int facility, int level,
- 	 * non-panic CPUs are generating any messages, they will be
- 	 * silently dropped.
- 	 */
--	if (other_cpu_in_panic())
-+	if (other_cpu_in_panic() && !panic_triggering_all_cpu_backtrace)
- 		return 0;
+ 	 * Make sure init_thread_info.ttbr0 always generates translation
+diff --git a/arch/arm64/kernel/smp.c b/arch/arm64/kernel/smp.c
+index 5de85dccc09cd..05688f6a275f1 100644
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -469,6 +469,8 @@ void __init smp_prepare_boot_cpu(void)
+ 		init_gic_priority_masking();
  
- 	if (level == LOGLEVEL_SCHED) {
+ 	kasan_init_hw_tags();
++	/* Init percpu seeds for random tags after cpus are set up. */
++	kasan_init_sw_tags();
+ }
+ 
+ /*
 -- 
 2.43.0
 
