@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB01BD514;
-	Tue, 27 Aug 2024 15:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCA51BC9E3;
+	Tue, 27 Aug 2024 15:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771509; cv=none; b=gtwyIiAVdI83qe9os3WrJZDD7q6eK2Kq9m+qdgKANPDrsLXHO9CTjR3wrmkhZhkvknXtg6Y5kezJVMlZ4bjHtf2TGTb6dnZwK38cQLgYllOEDNnp2NERPpK9yR2dIzP8A7iZvhcjeInSMOIUHgJbCtXO1cz3AB99boAerxI213U=
+	t=1724771512; cv=none; b=XMtkgeFxtiWc8VKZ0/2Sfmribmd7mSay0d6aP5CD2wlMIDq/uWeQ/6QjuDjKpdj2wPXhIMNi+La0hw4Lbkihn2v88PV5TIIiCdLb9mwpYpfzgOOYxP9vz6EN+Unr0sXH0NlFWGuUj+pYYOK+tHHrx2516uz9OzL9mEsyL+fZuHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771509; c=relaxed/simple;
-	bh=yu2A8gX9B/Jx4T91PAEdCtuvrk/KpkXjpnV64czQDhI=;
+	s=arc-20240116; t=1724771512; c=relaxed/simple;
+	bh=MnxJ7H2fZOcLTdXbYnJjytAhLg1IfqNI/GJDW15gDeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lv0u0QE14RdUURWrT4Skl2EceX4E8Hkfd3YBD78yRpkMUhLNGKXdQgEJpEwdkSJrecnH+AIBbT3AR8jv9TTZSUQzl8oR36FFOF3LMgtSOV+UPLZQTYbN8aLK2vx3XLfm+ledSv1p/tTM5J2nQKQFfI3nLHwodmP1My3k3JeyO0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMThWGvf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amQvk1JjAbdMRsQDGRmP+aUVpITt3usTI8rbvFvobtUT1QqWRR46P2lW76/qmgRpIsAmFD57/0TEWqo710qFb7WqjbHcbjMxrItOQdN466PaKqzq/gvwz+ACSOQNONHMO6Io6mBdEXF51+BAP6Lpx9vSt1LuUAZHcCatuy4BeFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSAZHyKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMThWGvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56A3C4DDF2;
-	Tue, 27 Aug 2024 15:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSAZHyKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0573C4DDEE;
+	Tue, 27 Aug 2024 15:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771509;
-	bh=yu2A8gX9B/Jx4T91PAEdCtuvrk/KpkXjpnV64czQDhI=;
+	s=korg; t=1724771512;
+	bh=MnxJ7H2fZOcLTdXbYnJjytAhLg1IfqNI/GJDW15gDeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMThWGvfm/4M+ybO+TXuSFE3OW/oWZm/hPzJLgAIaso9lIxY7mMyo+9pr51JtwJbR
-	 mXvcIPnWOPiVnXMQiirlj5bP54zGnr2rVH97cB2cPl6LkaqTVpKYpK4Nha034gMcOb
-	 zVHuNsrnat9f2NYKRaaEoXWbpLjdszDOG8HjhBls=
+	b=TSAZHyKBthyJVliNrh1LuC4eBIt2V6Mfxfh0/QwJBuD/3bHLdtXXhF4p4KTuH1wlS
+	 /BhSuHgtGSEO4GCynJ0SLMG0mYs4jIe9a2JzEIUnRQ6l5bgfhTOJo/VojMc20dUWUw
+	 3ESTOk4KgxjW2jPWU9zq5Rk+N2vjVLmPRcpev2V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 210/273] mmc: mmc_test: Fix NULL dereference on allocation failure
-Date: Tue, 27 Aug 2024 16:38:54 +0200
-Message-ID: <20240827143841.401908583@linuxfoundation.org>
+Subject: [PATCH 6.10 211/273] io_uring/kbuf: sanitize peek buffer setup
+Date: Tue, 27 Aug 2024 16:38:55 +0200
+Message-ID: <20240827143841.440223688@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,53 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit a1e627af32ed60713941cbfc8075d44cad07f6dd ]
+[ Upstream commit e0ee967630c8ee67bb47a5b38d235cd5a8789c48 ]
 
-If the "test->highmem = alloc_pages()" allocation fails then calling
-__free_pages(test->highmem) will result in a NULL dereference.  Also
-change the error code to -ENOMEM instead of returning success.
+Harden the buffer peeking a bit, by adding a sanity check for it having
+a valid size. Outside of that, arg->max_len is a size_t, though it's
+only ever set to a 32-bit value (as it's governed by MAX_RW_COUNT).
+Bump our needed check to a size_t so we know it fits. Finally, cap the
+calculated needed iov value to the PEEK_MAX_IMPORT, which is the
+maximum number of segments that should be peeked.
 
-Fixes: 2661081f5ab9 ("mmc_test: highmem tests")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/8c90be28-67b4-4b0d-a105-034dc72a0b31@stanley.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/mmc_test.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ io_uring/kbuf.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
-index 8f7f587a0025b..b7f627a9fdeab 100644
---- a/drivers/mmc/core/mmc_test.c
-+++ b/drivers/mmc/core/mmc_test.c
-@@ -3125,13 +3125,13 @@ static ssize_t mtf_test_write(struct file *file, const char __user *buf,
- 	test->buffer = kzalloc(BUFFER_SIZE, GFP_KERNEL);
- #ifdef CONFIG_HIGHMEM
- 	test->highmem = alloc_pages(GFP_KERNEL | __GFP_HIGHMEM, BUFFER_ORDER);
-+	if (!test->highmem) {
-+		count = -ENOMEM;
-+		goto free_test_buffer;
-+	}
- #endif
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index c95dc1736dd93..1af2bd56af44a 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -218,10 +218,13 @@ static int io_ring_buffers_peek(struct io_kiocb *req, struct buf_sel_arg *arg,
  
--#ifdef CONFIG_HIGHMEM
--	if (test->buffer && test->highmem) {
--#else
- 	if (test->buffer) {
--#endif
- 		mutex_lock(&mmc_test_lock);
- 		mmc_test_run(test, testcase);
- 		mutex_unlock(&mmc_test_lock);
-@@ -3139,6 +3139,7 @@ static ssize_t mtf_test_write(struct file *file, const char __user *buf,
+ 	buf = io_ring_head_to_buf(br, head, bl->mask);
+ 	if (arg->max_len) {
+-		int needed;
++		u32 len = READ_ONCE(buf->len);
++		size_t needed;
  
- #ifdef CONFIG_HIGHMEM
- 	__free_pages(test->highmem, BUFFER_ORDER);
-+free_test_buffer:
- #endif
- 	kfree(test->buffer);
- 	kfree(test);
+-		needed = (arg->max_len + buf->len - 1) / buf->len;
+-		needed = min(needed, PEEK_MAX_IMPORT);
++		if (unlikely(!len))
++			return -ENOBUFS;
++		needed = (arg->max_len + len - 1) / len;
++		needed = min_not_zero(needed, (size_t) PEEK_MAX_IMPORT);
+ 		if (nr_avail > needed)
+ 			nr_avail = needed;
+ 	}
 -- 
 2.43.0
 
