@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5862054648;
-	Tue, 27 Aug 2024 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045001C8FB0;
+	Tue, 27 Aug 2024 15:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772745; cv=none; b=llkVGnP/zZ5pasNCCJRCgbIjN5v7rNtqWo5mnvmxxiDEPvduRIeMnPeb0JL2VStzCv7mKuB2mxvNjTJk5YKZrVglAdbcjIwMMPQktD4yevn4Ir+2HOQEpOTfp39tKA/1ZE+lFSEsknoGDcxwiu82DCE3zj1dkNTz+u9WTTbmPCQ=
+	t=1724772749; cv=none; b=rfB94xXjPmw7SK4WgfaD5ekAJ6jc6CBMJ9485Gvb4nsF0TDE4mya+P2f8ymyAIN7TK/yG/8rK+k5mBz4KnWuhKK9OllG+5UsRuUrMWpsAVlUR+SEljy/n24dxrqcI3oWrQIuoxBvCpbqInFFKVKFnCNgEXdhmD2B9lU/+EWrJpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772745; c=relaxed/simple;
-	bh=Eo6uCYLw400DjkWQNLNJZFw4MJu/ABGgftC6a2OlMj8=;
+	s=arc-20240116; t=1724772749; c=relaxed/simple;
+	bh=j+ESb0S8Fvgu22ucOHlOeEm6ZNjFi5pfXkxDLajVA5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GN4SsIl51+rJm7bjHPgGmgEcZseYQUquJWGdvEwYDwhsKfaxKtXVpGTgDqKutjBROmQxMvaa32ZcgE2et5bhHa0rdNf/XLkO/+pFH5K/blQqndZdRDuWhyyPZVYA3PKFT4oRX4FXntr/N93ZsDmo4f+TE+GcCqw6rjX6sdrr1Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDssdvqi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2AAYCK/BoBgajBf0C5bX0PfRXyuDF8rw7zXAM8/I8gxG+WewEGjay5wM3Vl44DaDh+eLN3kQeqtoylwNath4/Wqw24nNBdGp8rwfW6yS0kUrnbvSdvbmxUyDqUKhV3zh3jC2G9W1B4R/MYdNsLlK6riaqncbynzkabv6pByi+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih0UIvzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDssdvqi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAECAC61041;
-	Tue, 27 Aug 2024 15:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih0UIvzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5A8C61041;
+	Tue, 27 Aug 2024 15:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772745;
-	bh=Eo6uCYLw400DjkWQNLNJZFw4MJu/ABGgftC6a2OlMj8=;
+	s=korg; t=1724772748;
+	bh=j+ESb0S8Fvgu22ucOHlOeEm6ZNjFi5pfXkxDLajVA5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDssdvqiGxlWenHNJ/WwWEO0RAOh+4lji8e/mhnaOQVqSMacVO82kVtewwTDL6PRR
-	 FtDa2f1gAsnROhsxL3K/+yl1C2dJhAZmPuy8GETLPmuXUV1r5Jwe7wobAqZynikxuC
-	 qfPMk8wKTQCXy+jHLQIfArJiKyzsvf8QcZ5F56NU=
+	b=ih0UIvzuzrrmFTh1rMFRzH9xxVdkP+atHdLrgB1V/xX36t0tEFFDc2pO6IkzNvxLR
+	 uBd6v2XGaS6Vp8vSrFUDyXT+Nm3b52jfirFwGCMaCPDRMN1a5e8a4ZvvNIYUQ9oPj2
+	 4okLcLXlZG9B832DCJ3btgw6H+Wyrb1JE5VOQr/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 275/321] pmdomain: imx: wait SSAR when i.MX93 power domain on
-Date: Tue, 27 Aug 2024 16:39:43 +0200
-Message-ID: <20240827143848.720547229@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 276/321] mptcp: pm: re-using ID of unused removed ADD_ADDR
+Date: Tue, 27 Aug 2024 16:39:44 +0200
+Message-ID: <20240827143848.757846072@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,62 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 52dd070c62e4ae2b5e7411b920e3f7a64235ecfb upstream.
+commit e255683c06df572ead96db5efb5d21be30c0efaa upstream.
 
-With "quiet" set in bootargs, there is power domain failure:
-"imx93_power_domain 44462400.power-domain: pd_off timeout: name:
- 44462400.power-domain, stat: 4"
+If no subflow is attached to the 'signal' endpoint that is being
+removed, the addr ID will not be marked as available again.
 
-The current power on opertation takes ISO state as power on finished
-flag, but it is wrong. Before powering on operation really finishes,
-powering off comes and powering off will never finish because the last
-powering on still not finishes, so the following powering off actually
-not trigger hardware state machine to run. SSAR is the last step when
-powering on a domain, so need to wait SSAR done when powering on.
+Mark the linked ID as available when removing the address entry from the
+list to cover this case.
 
-Since EdgeLock Enclave(ELE) handshake is involved in the flow, enlarge
-the waiting time to 10ms for both on and off to avoid timeout.
-
+Fixes: b6c08380860b ("mptcp: remove addr and subflow in PM netlink")
 Cc: stable@vger.kernel.org
-Fixes: 0a0f7cc25d4a ("soc: imx: add i.MX93 SRC power domain driver")
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20240814124740.2778952-1-peng.fan@oss.nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-1-38035d40de5b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/imx/imx93-pd.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mptcp/pm_netlink.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/imx/imx93-pd.c
-+++ b/drivers/soc/imx/imx93-pd.c
-@@ -20,6 +20,7 @@
- #define FUNC_STAT_PSW_STAT_MASK		BIT(0)
- #define FUNC_STAT_RST_STAT_MASK		BIT(2)
- #define FUNC_STAT_ISO_STAT_MASK		BIT(4)
-+#define FUNC_STAT_SSAR_STAT_MASK	BIT(8)
- 
- struct imx93_power_domain {
- 	struct generic_pm_domain genpd;
-@@ -50,7 +51,7 @@ static int imx93_pd_on(struct generic_pm
- 	writel(val, addr + MIX_SLICE_SW_CTRL_OFF);
- 
- 	ret = readl_poll_timeout(addr + MIX_FUNC_STAT_OFF, val,
--				 !(val & FUNC_STAT_ISO_STAT_MASK), 1, 10000);
-+				 !(val & FUNC_STAT_SSAR_STAT_MASK), 1, 10000);
- 	if (ret) {
- 		dev_err(domain->dev, "pd_on timeout: name: %s, stat: %x\n", genpd->name, val);
- 		return ret;
-@@ -72,7 +73,7 @@ static int imx93_pd_off(struct generic_p
- 	writel(val, addr + MIX_SLICE_SW_CTRL_OFF);
- 
- 	ret = readl_poll_timeout(addr + MIX_FUNC_STAT_OFF, val,
--				 val & FUNC_STAT_PSW_STAT_MASK, 1, 1000);
-+				 val & FUNC_STAT_PSW_STAT_MASK, 1, 10000);
- 	if (ret) {
- 		dev_err(domain->dev, "pd_off timeout: name: %s, stat: %x\n", genpd->name, val);
- 		return ret;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1474,7 +1474,10 @@ static bool mptcp_pm_remove_anno_addr(st
+ 	ret = remove_anno_list_by_saddr(msk, addr);
+ 	if (ret || force) {
+ 		spin_lock_bh(&msk->pm.lock);
+-		msk->pm.add_addr_signaled -= ret;
++		if (ret) {
++			__set_bit(addr->id, msk->pm.id_avail_bitmap);
++			msk->pm.add_addr_signaled--;
++		}
+ 		mptcp_pm_remove_addr(msk, &list);
+ 		spin_unlock_bh(&msk->pm.lock);
+ 	}
 
 
