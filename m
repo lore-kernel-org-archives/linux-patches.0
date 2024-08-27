@@ -1,126 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F9517D2;
-	Tue, 27 Aug 2024 03:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA6D2FB2;
+	Tue, 27 Aug 2024 10:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724729166; cv=none; b=qrAys8ux8SnSqxPfv4GU5SzORiNzh/k2wCQsdu6K7YUSl8QncdTcn0y33YGDNqZ1k0XJi9FY+C47U/9QWwtQ63z3QK7sWu2bfDxUj4IuHvKuAy0D2+9T664cUDBKXfXTcQMQjV9wCnn1gk/UfO69v1t66PMNW4CkBQMJtQLPu9g=
+	t=1724753081; cv=none; b=MevtfRjhQ+i+ZaBnHxoW1I1B1BYR6YRxZXt/LHUzSugUg+9U+Z6ibC++V3VULA7JaL2nOSn/UTfo61gaNOyso1pjWMMFgM+wsl8o9IC99xIwI6mbLS97YP/0N1MC4v0hUfMa2rRI4Eju3aVJIEPXGa0JWxIqXw+VQv+UuGfDZso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724729166; c=relaxed/simple;
-	bh=P3O3alY1dOWsnBgRxMhJRgQyWOYsqQUpM59bPHtbPjc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X7+Ytuv4yUWsvlgLUBH6PP5wXyzoOkr2KpzQGctpT8UlX3OMBppUxD9PejkgQutE15G4zOHhw+OJs4TX9yBWIgGQb2P1VTL6js+XFdNu1+w44uDXWPgBOcie9uBnCz2SvCNZwJ5ofjSzRMrlcfqL/fZyVYWqswEpS7pSgroRuF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VOn1wGVY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724753081; c=relaxed/simple;
+	bh=zfJAOzZN27Amn0QuamIFpL8ZwKJw/PPvyF+8IyGpYIw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N8+UD0A+4N7YpkN4GHBzAiriBPreR4TnPOYrlfeiFLzQ2cGEufYW/QoWQZRr+FWatayPP79UdCHv8z6+q8uRgI40nt78xSzTBmTCgHGXSpPTOcVgznjzY0IY450LwrCoPAOeda4I9M+LkaIDqWfhXbGtG6MkMxDKgwEQ+to5I7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G7tXtm/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VOn1wGVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C1BC8B7A9;
-	Tue, 27 Aug 2024 03:26:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G7tXtm/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B27C8B7AC;
+	Tue, 27 Aug 2024 10:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724729166;
-	bh=P3O3alY1dOWsnBgRxMhJRgQyWOYsqQUpM59bPHtbPjc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VOn1wGVYWxDe/+cBrO7rnjlhZ4SckN/0/Weo/9m7YtiJc5WIsv8XnimZjLrwczA0R
-	 J9JjajHqHP56SId9uRHq/KwbOfwaSH1+mFuyZXWdiM9mJk+GtX1CG58p3y+cvwO+0w
-	 GLCiZypGUmm9XNayBpWahGBM7w6O1e7KjOS0AucLr3RZZJpugZfv+BkhCM/uXJUtSL
-	 rdW/+sSUU6jh6/PLJ3TyTvebP6A6AtXe4Ek4lLpDZMG2R/uGRWM+L+iuWnj69TmX2X
-	 v9SQriQJbAK8qNWcEYag6uH5urWlzesH3Iy5oaqHZ1mltRXDd4UH2+TEqcO0iv6SGi
-	 bMfz8sUI7D5HA==
-Date: Tue, 27 Aug 2024 03:25:58 +0000
-From: Tzung-Bi Shih <tzungbi@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	dri-devel@lists.freedesktop.org,
-	Guenter Roeck <groeck@chromium.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v3 15/17] platform/chrome: cros_ec_typec: Add support for
- signaling DP HPD via drm_bridge
-Message-ID: <Zs1HRtTWlxFdSNdJ@google.com>
-References: <20240819223834.2049862-1-swboyd@chromium.org>
- <20240819223834.2049862-16-swboyd@chromium.org>
- <ZsdMoRpwv5twOwqx@tzungbi-laptop>
- <CAE-0n50MVaU2dmRLdLVFWT9KWPO_BK-L7eEqGRSb8TKm1KtPNQ@mail.gmail.com>
+	s=k20201202; t=1724753080;
+	bh=zfJAOzZN27Amn0QuamIFpL8ZwKJw/PPvyF+8IyGpYIw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=G7tXtm/JGcswk7WzftJ5CUcDOEjQJZ0tr1eYw9s3YJj3PCK6XTqBGxqux2qk28Cmo
+	 pl7yyULUURN6XABHXIUa7FVpSM/+6PL/1NNwYzNiSsXRAQ7vtu+lfuLxNmIMmtkOTK
+	 FJvYPZGMmeypdcFabfr/1JqWbtQJpHAp35GqRFzXp7YzPaCDJRlEanpfIwD5X4Mcg5
+	 VgplYS72dmNVX5Ns3AKx3Oi1281vF2qS3IQd9MfhNpu9GudhDS9Tt5DfqlHQLBOv/H
+	 nW0lUiYIiFMvFc3eb7G984VcK0MDxyP619F98kc4hZQHVK+IKEJXeXsEYKgJbLcb4F
+	 c6ZmmCL9karxg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: allow `stable_features` lint
+Date: Tue, 27 Aug 2024 12:04:03 +0200
+Message-ID: <20240827100403.376389-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n50MVaU2dmRLdLVFWT9KWPO_BK-L7eEqGRSb8TKm1KtPNQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 23, 2024 at 01:47:23PM -0700, Stephen Boyd wrote:
-> Quoting Tzung-Bi Shih (2024-08-22 07:35:13)
-> > On Mon, Aug 19, 2024 at 03:38:29PM -0700, Stephen Boyd wrote:
-> > > +struct cros_typec_dp_bridge {
-> > > +     struct cros_typec_data *typec_data;
-> > > +     struct drm_dp_typec_bridge_dev *dev;
-> > > +};
-> >
-> > It looks like structs are all defined in cros_ec_typec.h.  I think this struct
-> > definition can be also moved there.
-> 
-> I put it here because it wasn't used by any other driver. Maybe I can
-> skip the entire struct though and add what I need directly to 'struct
-> cros_typec_data'.
+Support for several Rust compiler versions started in commit 63b27f4a0074
+("rust: start supporting several compiler versions"). Since we currently
+need to use a number of unstable features in the kernel, it is a matter
+of time until one gets stabilized and the `stable_features` lint warns.
 
-I see.
+For instance, the `new_uninit` feature may become stable soon, which
+would give us multiple warnings like the following:
 
-* struct cros_typec_altmode_node, used by cros_ec_typec.c.
-* struct cros_typec_data, used by cros_ec_typec.c and cros_typec_vdm.c.
-* struct cros_typec_port, used by cros_ec_typec.c and cros_typec_vdm.c.
-  cros_typec_switch.c has another struct cros_typec_port.
+    warning: the feature `new_uninit` has been stable since 1.82.0-dev
+    and no longer requires an attribute to enable
+      --> rust/kernel/lib.rs:17:12
+       |
+    17 | #![feature(new_uninit)]
+       |            ^^^^^^^^^^
+       |
+       = note: `#[warn(stable_features)]` on by default
 
-To simplify, I'm not sure whether we should merge cros_ec_typec.h,
-cros_typec_vdm.c, and cros_typec_vdm.h into cros_ec_typec.c.
+Thus allow the `stable_features` lint to avoid such warnings. This is
+the simplest approach -- we do not have that many cases (and the goal
+is to stop using unstable features anyway) and cleanups can be easily
+done when we decide to update the minimum version.
 
-Back to struct cros_typec_dp_bridge, I think it's fine to keep it as is.
+An alternative would be to conditionally enable them based on the
+compiler version (with the upcoming `RUSTC_VERSION` or maybe with the
+unstable `cfg(version(...))`, but that one apparently will not work for
+the nightly case). However, doing so is more complex and may not work
+well for different nightlies of the same version, unless we do not care
+about older nightlies.
 
-> 
-> >
-> > > diff --git a/drivers/platform/chrome/cros_ec_typec.h b/drivers/platform/chrome/cros_ec_typec.h
-> > > index deda180a646f..73d300427140 100644
-> > > --- a/drivers/platform/chrome/cros_ec_typec.h
-> > > +++ b/drivers/platform/chrome/cros_ec_typec.h
-> > > @@ -27,6 +27,8 @@ struct cros_typec_altmode_node {
-> > >       struct list_head list;
-> > >  };
-> > >
-> > > +struct cros_typec_dp_bridge;
-> >
-> > If the struct definition moves here, it doesn't need to declare forward.
-> 
-> But then we have to forward declare 'struct cros_typec_data'? There's no
-> escape.
+Another alternative is using explicit tests of the feature calling
+`rustc`, but that is also more complex and slower.
 
-I see.
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+I may take this through `rust-fixes` too, since it is straightfoward and
+it could help some developers/CIs if something gets stabilized soon.
+
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index 68ebd6d6b444..cf1111476f46 100644
+--- a/Makefile
++++ b/Makefile
+@@ -445,6 +445,7 @@ KBUILD_USERLDFLAGS := $(USERLDFLAGS)
+ # host programs.
+ export rust_common_flags := --edition=2021 \
+ 			    -Zbinary_dep_depinfo=y \
++			    -Astable_features \
+ 			    -Dunsafe_op_in_unsafe_fn \
+ 			    -Dnon_ascii_idents \
+ 			    -Wrust_2018_idioms \
+--
+2.46.0
