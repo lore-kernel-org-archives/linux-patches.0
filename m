@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858ED1BA88C;
-	Tue, 27 Aug 2024 14:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA6D1BA88C;
+	Tue, 27 Aug 2024 14:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770778; cv=none; b=X0AQn6LJ2KA8saIo/a0blm84LlBM5mQVEwhZvyBgiecte2lzN5DtnJUg/Rg/m8q3+hmugf5YqeuYqZxEd7eVe4PPuJ+0WmkVgcV1EirQv3ER/c00mEz6Z5Wi8tVD87apH50NS5COdZHjz6ipzn4zrwdgTouqAcafKQcafiuf9Vs=
+	t=1724770782; cv=none; b=CxsdZMpP95gVGsLFy5xNteWAQYB/49IcbP5V7l+AD5vBsB33bU4kirgJh1xIr87sWxufPEfBqFRCk+830gOBvVvN83ijULTg7WVPL9l7+IdGUeR0B1qZV2qDYeSf2ybWw/MmPFlU9mdeivG3jC8RpLbQxR4FwgPDCMQjVm8YOOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770778; c=relaxed/simple;
-	bh=ckCds5YXTqSll9moIUQHSrzqqGCaelLu2exf3ba32q8=;
+	s=arc-20240116; t=1724770782; c=relaxed/simple;
+	bh=z+6VEaaQBH86POJbyor8o9NmUZWVxpcxbj8tc46pdok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7agd4LERoyEx1BN92zoZcXvaBKHUydjtjxBSqXftVo/tedRu+istV+gAIfv7rixpG/1u+B81bQ2xCHgUvsUeK3Ol5b7ch6sYoVDnTB1ADYEWUNnWTjwkNS7GlViBXyutHD5w1h9BlfQYQKjbfioGOlj/v46j/V8Gyo3eK9PAok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZZJRYIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1fhzNlgfTDeVI3M+EdJXZWlVcwqLJ7Kx3GDfyx1o/wqoqpRjiiNLcPDC6YBFIImyfb9DqcWEHnVpB8aCNRoUVNozHb4LcyZ+xtyWFT1CR/qaMbQjAR/DmyCBT3M43e1yj3u7P3owh+yJrR2MoFRieSSupwBe/TP8ov8edbSOIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcEbJbeR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZZJRYIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40EFC4AF1C;
-	Tue, 27 Aug 2024 14:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcEbJbeR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0BBC4AF1A;
+	Tue, 27 Aug 2024 14:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770778;
-	bh=ckCds5YXTqSll9moIUQHSrzqqGCaelLu2exf3ba32q8=;
+	s=korg; t=1724770781;
+	bh=z+6VEaaQBH86POJbyor8o9NmUZWVxpcxbj8tc46pdok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZZJRYImX+agFl4E5MRhgWSg98iDGtjHLWnWCgCBFKURWlsiUVFfaSrn4vOoSQ6f4
-	 PcglB5weyZMIuFojxK9RhcMmeVm+cH5DCehLay/tHIMJ/x+8NF0YPa7tBsHsLBaf7h
-	 7f92AiJnUaCFrrQFoY3wzhkpksHfkw6LHNidsa84=
+	b=vcEbJbeRu1WZBSnnm8gLgUVQRZIes7Buc5WScjLwqFBxS1z9iTzUZg8FBAJ20ciIH
+	 frBXHcY7HTiiOoH7sXAXBUltocVi/J841C+n92Mo/QV5GoBAhfwEkHpNG2GdDvjD9W
+	 UsGLNzOXrFPd4qZBB2aRCtqk2I/mq+1mnnu6oeGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	David Hildenbrand <david@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 332/341] mm/numa: no task_numa_fault() call if PTE is changed
-Date: Tue, 27 Aug 2024 16:39:23 +0200
-Message-ID: <20240827143856.027636153@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Daniel Hodges <hodgesd@meta.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.6 333/341] bpf: Fix a kernel verifier crash in stacksafe()
+Date: Tue, 27 Aug 2024 16:39:24 +0200
+Message-ID: <20240827143856.067340828@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -56,97 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-commit 40b760cfd44566bca791c80e0720d70d75382b84 upstream.
+commit bed2eb964c70b780fb55925892a74f26cb590b25 upstream.
 
-When handling a numa page fault, task_numa_fault() should be called by a
-process that restores the page table of the faulted folio to avoid
-duplicated stats counting.  Commit b99a342d4f11 ("NUMA balancing: reduce
-TLB flush via delaying mapping on hint page fault") restructured
-do_numa_page() and did not avoid task_numa_fault() call in the second page
-table check after a numa migration failure.  Fix it by making all
-!pte_same() return immediately.
+Daniel Hodges reported a kernel verifier crash when playing with sched-ext.
+Further investigation shows that the crash is due to invalid memory access
+in stacksafe(). More specifically, it is the following code:
 
-This issue can cause task_numa_fault() being called more than necessary
-and lead to unexpected numa balancing results (It is hard to tell whether
-the issue will cause positive or negative performance impact due to
-duplicated numa fault counting).
+    if (exact != NOT_EXACT &&
+        old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
+        cur->stack[spi].slot_type[i % BPF_REG_SIZE])
+            return false;
 
-Link: https://lkml.kernel.org/r/20240809145906.1513458-2-ziy@nvidia.com
-Fixes: b99a342d4f11 ("NUMA balancing: reduce TLB flush via delaying mapping on hint page fault")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reported-by: "Huang, Ying" <ying.huang@intel.com>
-Closes: https://lore.kernel.org/linux-mm/87zfqfw0yw.fsf@yhuang6-desk2.ccr.corp.intel.com/
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The 'i' iterates old->allocated_stack.
+If cur->allocated_stack < old->allocated_stack the out-of-bound
+access will happen.
+
+To fix the issue add 'i >= cur->allocated_stack' check such that if
+the condition is true, stacksafe() should fail. Otherwise,
+cur->stack[spi].slot_type[i % BPF_REG_SIZE] memory access is legal.
+
+Fixes: 2793a8b015f7 ("bpf: exact states comparison for iterator convergence checks")
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Reported-by: Daniel Hodges <hodgesd@meta.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20240812214847.213612-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ shung-hsi.yu: "exact" variable is bool instead enum because commit
+  4f81c16f50ba ("bpf: Recognize that two registers are safe when their
+  ranges match") is not present. ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ kernel/bpf/verifier.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -4775,7 +4775,7 @@ static vm_fault_t do_numa_page(struct vm
- 	spin_lock(vmf->ptl);
- 	if (unlikely(!pte_same(ptep_get(vmf->pte), vmf->orig_pte))) {
- 		pte_unmap_unlock(vmf->pte, vmf->ptl);
--		goto out;
-+		return 0;
- 	}
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -16124,8 +16124,9 @@ static bool stacksafe(struct bpf_verifie
+ 		spi = i / BPF_REG_SIZE;
  
- 	/* Get the normal PTE  */
-@@ -4840,23 +4840,19 @@ static vm_fault_t do_numa_page(struct vm
- 	if (migrate_misplaced_page(page, vma, target_nid)) {
- 		page_nid = target_nid;
- 		flags |= TNF_MIGRATED;
--	} else {
--		flags |= TNF_MIGRATE_FAIL;
--		vmf->pte = pte_offset_map_lock(vma->vm_mm, vmf->pmd,
--					       vmf->address, &vmf->ptl);
--		if (unlikely(!vmf->pte))
--			goto out;
--		if (unlikely(!pte_same(ptep_get(vmf->pte), vmf->orig_pte))) {
--			pte_unmap_unlock(vmf->pte, vmf->ptl);
--			goto out;
--		}
--		goto out_map;
-+		task_numa_fault(last_cpupid, page_nid, 1, flags);
-+		return 0;
- 	}
+ 		if (exact &&
+-		    old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
+-		    cur->stack[spi].slot_type[i % BPF_REG_SIZE])
++		    (i >= cur->allocated_stack ||
++		     old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
++		     cur->stack[spi].slot_type[i % BPF_REG_SIZE]))
+ 			return false;
  
--out:
--	if (page_nid != NUMA_NO_NODE)
--		task_numa_fault(last_cpupid, page_nid, 1, flags);
--	return 0;
-+	flags |= TNF_MIGRATE_FAIL;
-+	vmf->pte = pte_offset_map_lock(vma->vm_mm, vmf->pmd,
-+				       vmf->address, &vmf->ptl);
-+	if (unlikely(!vmf->pte))
-+		return 0;
-+	if (unlikely(!pte_same(ptep_get(vmf->pte), vmf->orig_pte))) {
-+		pte_unmap_unlock(vmf->pte, vmf->ptl);
-+		return 0;
-+	}
- out_map:
- 	/*
- 	 * Make it present again, depending on how arch implements
-@@ -4870,7 +4866,10 @@ out_map:
- 	ptep_modify_prot_commit(vma, vmf->address, vmf->pte, old_pte, pte);
- 	update_mmu_cache_range(vmf, vma, vmf->address, vmf->pte, 1);
- 	pte_unmap_unlock(vmf->pte, vmf->ptl);
--	goto out;
-+
-+	if (page_nid != NUMA_NO_NODE)
-+		task_numa_fault(last_cpupid, page_nid, 1, flags);
-+	return 0;
- }
- 
- static inline vm_fault_t create_huge_pmd(struct vm_fault *vmf)
+ 		if (!(old->stack[spi].spilled_ptr.live & REG_LIVE_READ) && !exact) {
 
 
