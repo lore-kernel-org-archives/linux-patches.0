@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9881A072D;
-	Tue, 27 Aug 2024 15:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654FB1A072D;
+	Tue, 27 Aug 2024 15:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771623; cv=none; b=A/VcZwowK5wfz4iz9Y0asP68sxyLIyT6rgygSND1ch8M5pwniKv7iKHEqcaZ1qvti2n/bNcyS8PBobEpsn6Cwn3fI9BkAdcwQ63zQFQQnKRrKGZJNouZrwD6CgsoFbpmA/M1tiKR/QFAlwNLlWAXGUzz4xjsaOWvs7PYoA+011A=
+	t=1724771626; cv=none; b=rlP+W2G8LPev4cTWVd4Pg0DA4PlOv7AiEBM72rqVn4Mfl+roR9Eg9wyy78hIVb2UsE32mT43k/r6au4jAcsgm2zJdbC4nj4RyQKN2FJxNe5RbOB4dpitoCe9K7IPRKKjpkQ4vGoNa8WycGzbfL4C0QH1CcO2Oq5c0qC7T6d8a0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771623; c=relaxed/simple;
-	bh=rxfhOWx1NWaVkZwHrk+0fQes72/CrAtaVMVHeoVYXOQ=;
+	s=arc-20240116; t=1724771626; c=relaxed/simple;
+	bh=8pSx9FrY4vV0MXxEi7SztM2F7cCdpK3M+bnUVISUv58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jm08lgPEbVZv4FBKkSOExEKoUuGXnSNnTTw5aEImVWEBffU8jAkOi3hc7zv3IcF2vDqVK94Od1mbLkFfWWNsfeRRIth0dIeDgrgpCC5g8pnLLSkyN3xRQJy+U5694C/v/ZtSlrzB5WhBwIaGe8xq7lE1TG7rPU2V+brBh6JtYUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmM3NS/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tmIE85fAyHeIEPex7IGXkQwrRMpe2VxsB7tKlknIegu+i7NU4RCQxmgCV5rxd0A4+0wZ4sGzD/qNJBo+5M1NYCZ8bIDLgP5LsQGtRlkR5cMNhR0oTewqzteciqHqqOgufggYu0cOUG89HPV5dmftJKT73MxTuKcIAHjot9eiQS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCTBIAKF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmM3NS/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5A9C6105F;
-	Tue, 27 Aug 2024 15:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCTBIAKF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C572FC61064;
+	Tue, 27 Aug 2024 15:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771622;
-	bh=rxfhOWx1NWaVkZwHrk+0fQes72/CrAtaVMVHeoVYXOQ=;
+	s=korg; t=1724771626;
+	bh=8pSx9FrY4vV0MXxEi7SztM2F7cCdpK3M+bnUVISUv58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmM3NS/QS8g6MY+Hiy2I2pEBGRF67iQXXLopIS7dgguBWyoNtmGGbZL8d3lEc7wGn
-	 a+1vEOu7aATrl/Yr2xH81efIcXD2p5d7SMyNMqkVzKdA+c8tjPYm2wGFsei5fvRRpW
-	 GnrzfbFMR+CGf8V11Tk8Y9L5DReWguHi20L8d1no=
+	b=RCTBIAKF9Qc3dkUWbvZ8osSdMQ/M48Fs9uS9uId47Y4LqmXBR6w1NIrmalcl/hJ+L
+	 UwTT93gtdITLaQ1sSSXnWlEDILi3/Pe06vtTZdzSo1xdqWUk0EhXzG4rU6795Cwdid
+	 EZ4/Q9Oy8MM0u2q+YNBj0+Uh7ZztUcXveGZmDjfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.10 245/273] cgroup/cpuset: Clear effective_xcpus on cpus_allowed clearing only if cpus.exclusive not set
-Date: Tue, 27 Aug 2024 16:39:29 +0200
-Message-ID: <20240827143842.726795656@linuxfoundation.org>
+	Mengqi Zhang <mengqi.zhang@mediatek.com>,
+	stable@vger.stable.com,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.10 246/273] mmc: mtk-sd: receive cmd8 data when hs400 tuning fail
+Date: Tue, 27 Aug 2024 16:39:30 +0200
+Message-ID: <20240827143842.765652097@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,57 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Mengqi Zhang <mengqi.zhang@mediatek.com>
 
-commit 311a1bdc44a8e06024df4fd3392be0dfc8298655 upstream.
+commit 9374ae912dbb1eed8139ed75fd2c0f1b30ca454d upstream.
 
-Commit e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for
-v2") adds a user writable cpuset.cpus.exclusive file for setting
-exclusive CPUs to be used for the creation of partitions. Since then
-effective_xcpus depends on both the cpuset.cpus and cpuset.cpus.exclusive
-setting. If cpuset.cpus.exclusive is set, effective_xcpus will depend
-only on cpuset.cpus.exclusive.  When it is not set, effective_xcpus
-will be set according to the cpuset.cpus value when the cpuset becomes
-a valid partition root.
+When we use cmd8 as the tuning command in hs400 mode, the command
+response sent back by some eMMC devices cannot be correctly sampled
+by MTK eMMC controller at some weak sample timing. In this case,
+command timeout error may occur. So we must receive the following
+data to make sure the next cmd8 send correctly.
 
-When cpuset.cpus is being cleared by the user, effective_xcpus should
-only be cleared when cpuset.cpus.exclusive is not set. However, that
-is not currently the case.
-
-  # cd /sys/fs/cgroup/
-  # mkdir test
-  # echo +cpuset > cgroup.subtree_control
-  # cd test
-  # echo 3 > cpuset.cpus.exclusive
-  # cat cpuset.cpus.exclusive.effective
-  3
-  # echo > cpuset.cpus
-  # cat cpuset.cpus.exclusive.effective // was cleared
-
-Fix it by clearing effective_xcpus only if cpuset.cpus.exclusive is
-not set.
-
-Fixes: e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for v2")
-Cc: stable@vger.kernel.org # v6.7+
-Reported-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Mengqi Zhang <mengqi.zhang@mediatek.com>
+Fixes: c4ac38c6539b ("mmc: mtk-sd: Add HS400 online tuning support")
+Cc: stable@vger.stable.com
+Link: https://lore.kernel.org/r/20240716013704.10578-1-mengqi.zhang@mediatek.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2474,7 +2474,8 @@ static int update_cpumask(struct cpuset
- 	 */
- 	if (!*buf) {
- 		cpumask_clear(trialcs->cpus_allowed);
--		cpumask_clear(trialcs->effective_xcpus);
-+		if (cpumask_empty(trialcs->exclusive_cpus))
-+			cpumask_clear(trialcs->effective_xcpus);
- 	} else {
- 		retval = cpulist_parse(buf, trialcs->cpus_allowed);
- 		if (retval < 0)
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -1230,7 +1230,7 @@ static bool msdc_cmd_done(struct msdc_ho
+ 	}
+ 
+ 	if (!sbc_error && !(events & MSDC_INT_CMDRDY)) {
+-		if (events & MSDC_INT_CMDTMO ||
++		if ((events & MSDC_INT_CMDTMO && !host->hs400_tuning) ||
+ 		    (!mmc_op_tuning(cmd->opcode) && !host->hs400_tuning))
+ 			/*
+ 			 * should not clear fifo/interrupt as the tune data
+@@ -1323,9 +1323,9 @@ static void msdc_start_command(struct ms
+ static void msdc_cmd_next(struct msdc_host *host,
+ 		struct mmc_request *mrq, struct mmc_command *cmd)
+ {
+-	if ((cmd->error &&
+-	    !(cmd->error == -EILSEQ &&
+-	      (mmc_op_tuning(cmd->opcode) || host->hs400_tuning))) ||
++	if ((cmd->error && !host->hs400_tuning &&
++	     !(cmd->error == -EILSEQ &&
++	     mmc_op_tuning(cmd->opcode))) ||
+ 	    (mrq->sbc && mrq->sbc->error))
+ 		msdc_request_done(host, mrq);
+ 	else if (cmd == mrq->sbc)
 
 
