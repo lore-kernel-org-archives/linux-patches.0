@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BBE1CFEBC;
-	Tue, 27 Aug 2024 15:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0ABC1CFEC6;
+	Tue, 27 Aug 2024 15:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772660; cv=none; b=jkqFIsKicn2Wxux3wCRO6RvbfXujs0mu1lYmtZpOFrCCY5Vwqs+SuV+5AIDVr3vo2I2IaJThQFVxLmcYqqIRjnjYyw1Y8iyVXUlGx98HB4xFpUaBJL/HkytroRC1i7QG5Mw9OaM9M8e+HYCLyzbZdmTeP5GYCiRSHd/oMlIovnM=
+	t=1724772663; cv=none; b=ddLjYk2Ir9jXaBH4Pl+uEGWkNnrXQOvG6ZJmmc3tGBsyHhWluOuu6ZGp0xu8nXXUPCkXDfN/PgVbyfg4e176Ge2UJsb+Fwi/Zj65DK6AcxwaZl/OKE+NiKeWA3pAicW3nHAPgrK0v2TB16S91Zt/SloF+HKg6hh/0Xtst6CsFVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772660; c=relaxed/simple;
-	bh=+BN+vr3oU8RUomEsL9BttEL86ECDdB38eJVFYwpvlGM=;
+	s=arc-20240116; t=1724772663; c=relaxed/simple;
+	bh=cWuotUulsNg36i7bDONr3yG5JkKHAsqru0xj6C2sa+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LT+M5breT2eme9py7onQ0/bgCYC+IzmEj31qKS0uNnxRyExTExYvqS9g0u6i20gFl85kfKfFEuN1Y8AzzFieTVZQADZxtRhF6Ge9QTIMZ0c1i1d/53JrmUEVYlkEYbZ+Hdlqas18N4WUYGrgnJQVVHAG2v/Bl8yXlxAKgKHJDSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ceb5myww; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwLYw2wNgQ1W7pz2v6/pnhz/K6/vKoXS/yIcpoJMEpf2xwu2Pfhhn7fta3qeX5vF54G0pPXXPthmvM75Rz68fV53ZR9WCjaObV1qa4l573fGms5+R/lKhCAArqmNLs1mAcgXwllOWkR++7JcGhtfNmEDfVvFDYofzpw3cFBUMao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTHXkEuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ceb5myww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D74C4DDE4;
-	Tue, 27 Aug 2024 15:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTHXkEuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD4AC4DDE4;
+	Tue, 27 Aug 2024 15:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772660;
-	bh=+BN+vr3oU8RUomEsL9BttEL86ECDdB38eJVFYwpvlGM=;
+	s=korg; t=1724772663;
+	bh=cWuotUulsNg36i7bDONr3yG5JkKHAsqru0xj6C2sa+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ceb5mywwNK2V+EL36pmm4hINu8bWd/SlGQ3BxvLEX8pk47UDH4eLplvNEi1nfOp9t
-	 tJHGuHca8yrGy5/K72q9/roO3PKfdrk21k3y7ajXOPFp9kkpvRYev+0EOGJFfY9CpF
-	 CdipvNh1hFl7R3w0MiqNykU1HeXkuemVC8OxQV6U=
+	b=mTHXkEuo1W8bRAQjf/ca0Yj1VxOwiRH7Ziug9vSjL96uoxePq1xMi7Nzs4/uBk98n
+	 195nSNHje775uidlPRzRXT9rK/2bythV2LzwYANilWSHzpKpfryliwSi3Fa3SYfvKi
+	 kFV/+VhCRV2MFxsRjKOyhKf4xQ4VhUCGZNMlTdk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 282/321] tcp: do not export tcp_twsk_purge()
-Date: Tue, 27 Aug 2024 16:39:50 +0200
-Message-ID: <20240827143848.983304855@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 283/321] hwmon: (ltc2992) Fix memory leak in ltc2992_parse_dt()
+Date: Tue, 27 Aug 2024 16:39:51 +0200
+Message-ID: <20240827143849.021222693@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,32 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit c51db4ac10d57c366f9a92121e3889bfc6c324cd upstream.
+commit a94ff8e50c20bde6d50864849a98b106e45d30c6 upstream.
 
-After commit 1eeb50435739 ("tcp/dccp: do not care about
-families in inet_twsk_purge()") tcp_twsk_purge() is
-no longer potentially called from a module.
+A new error path was added to the fwnode_for_each_available_node() loop
+in ltc2992_parse_dt(), which leads to an early return that requires a
+call to fwnode_handle_put() to avoid a memory leak in that case.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add the missing fwnode_handle_put() in the error path from a zero value
+shunt resistor.
+
+Cc: stable@vger.kernel.org
+Fixes: 10b029020487 ("hwmon: (ltc2992) Avoid division by zero")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20240523-fwnode_for_each_available_child_node_scoped-v2-1-701f3a03f2fb@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_minisocks.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/hwmon/ltc2992.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -362,7 +362,6 @@ void tcp_twsk_purge(struct list_head *ne
+--- a/drivers/hwmon/ltc2992.c
++++ b/drivers/hwmon/ltc2992.c
+@@ -876,9 +876,11 @@ static int ltc2992_parse_dt(struct ltc29
+ 
+ 		ret = fwnode_property_read_u32(child, "shunt-resistor-micro-ohms", &val);
+ 		if (!ret) {
+-			if (!val)
++			if (!val) {
++				fwnode_handle_put(child);
+ 				return dev_err_probe(&st->client->dev, -EINVAL,
+ 						     "shunt resistor value cannot be zero\n");
++			}
+ 			st->r_sense_uohm[addr] = val;
  		}
  	}
- }
--EXPORT_SYMBOL_GPL(tcp_twsk_purge);
- 
- /* Warning : This function is called without sk_listener being locked.
-  * Be sure to read socket fields once, as their value could change under us.
 
 
