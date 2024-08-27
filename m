@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CF41C57AB;
-	Tue, 27 Aug 2024 14:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894881C57BF;
+	Tue, 27 Aug 2024 14:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770581; cv=none; b=g/LcJPVYf18nKlRVX/WqCtDa/QidZyLu8fvSzNP4d/39y+Z/79BVOms/lb09nvOPZ51st1K/k9JzY+FBTtpioc57UANi/urVHiyU2x11x000UJypBcTEABNc5n2tuEgseKfCz5Yryxi8v8V1mvyVzg4bo/aOgfVxraZ9bWcwvwo=
+	t=1724770584; cv=none; b=U7OTL3ad+c5bTatVnS6BX3TnmtMPEl/jUOqmBaPBqxmbiZJlscIlGu20cnUFAWAuPgIOOIFiijz8U76Bjcqxa2NqgSmOZHBo85nOW/m9ezN/Sq++V+DlEcSPToncob0pCUlcKSNsmWAv6h0my4VJ9oKA/hgMI6xscRHuS/X/BO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770581; c=relaxed/simple;
-	bh=EoGlUHIKDqUApWOTiUerancCUCcZ2MmNRlF604BE8U4=;
+	s=arc-20240116; t=1724770584; c=relaxed/simple;
+	bh=9b9DJIGrJHj2lJLx9kyUhAHWaaxZZyfHb4NlhUN4MT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mc4jn5GCmU1+s8V41f8EFfQSLeqQblDy51zSnn+JuE/1Uks5c0UFbAi/QFCGDPm3SdNKHMHxA/ysUIyVY5TALeNye0rN1tosUxpLFE4ATfYCFRvEEXwL/20/g4KTeBIhupVBkYwBml8yN3oZhLenG/WlSs++GhQ7XbVy5Bfxo3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikYM7vcc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OcPhnv98Y9TSERNiEvQhAI4E2ZutY0JeYmSni+LQZg92ggtwCXlLbQzbPs5umF9By+ROs/qZrLrL2x53t2G/t3NcVopXAhd5SHJGuCnnMiHn6ijSG/pyI9vKlmHgp7s2QnPhPtZUnwf6+VZRSyxF4ofZcCExkHfuufIK2fc7TVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwR0WYOi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikYM7vcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBD6C4E699;
-	Tue, 27 Aug 2024 14:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwR0WYOi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD543C4FDFB;
+	Tue, 27 Aug 2024 14:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770580;
-	bh=EoGlUHIKDqUApWOTiUerancCUCcZ2MmNRlF604BE8U4=;
+	s=korg; t=1724770584;
+	bh=9b9DJIGrJHj2lJLx9kyUhAHWaaxZZyfHb4NlhUN4MT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikYM7vccubpqt9+WKEsCWS16NS8+V3zY2lxV8KX+dbC3HhYeYtv00u71QkgvpRX9T
-	 cscHdwoXw/igob6ntgk5Wj835ejJPbqTFpTPfP2vDNXdPGuxNsEJAt1UuS3zDnnCYt
-	 BYzROrBsQwNOt4Pwtq+s3x2vHarnzeCCX9X7FTno=
+	b=qwR0WYOikmQM5y9oBL/j1aLoOTd2AGi0DP26yZh9Ui/+ecS8hezt0WJrtfV4PUEjQ
+	 Zb1djpQYTjF8/+7antXjyMD1i+UbE6vriXedaidrkYHoTkHYjebX2fGNK/VFZEx1yK
+	 46yDujxAfDf/EU7iyjHRkcwc0/60ObL5g14HLgv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Florian Westphal <fw@strlen.de>,
+	syzbot+8407d9bb88cd4c6bf61a@syzkaller.appspotmail.com,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/341] netfilter: nft_counter: Synchronize nft_counter_reset() against reader.
-Date: Tue, 27 Aug 2024 16:38:05 +0200
-Message-ID: <20240827143853.075091036@linuxfoundation.org>
+Subject: [PATCH 6.6 272/341] netfilter: flowtable: validate vlan header
+Date: Tue, 27 Aug 2024 16:38:23 +0200
+Message-ID: <20240827143853.750847684@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,47 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a0b39e2dc7017ac667b70bdeee5293e410fab2fb ]
+[ Upstream commit 6ea14ccb60c8ab829349979b22b58a941ec4a3ee ]
 
-nft_counter_reset() resets the counter by subtracting the previously
-retrieved value from the counter. This is a write operation on the
-counter and as such it requires to be performed with a write sequence of
-nft_counter_seq to serialize against its possible reader.
+Ensure there is sufficient room to access the protocol field of the
+VLAN header, validate it once before the flowtable lookup.
 
-Update the packets/ bytes within write-sequence of nft_counter_seq.
+=====================================================
+BUG: KMSAN: uninit-value in nf_flow_offload_inet_hook+0x45a/0x5f0 net/netfilter/nf_flow_table_inet.c:32
+ nf_flow_offload_inet_hook+0x45a/0x5f0 net/netfilter/nf_flow_table_inet.c:32
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_ingress include/linux/netfilter_netdev.h:34 [inline]
+ nf_ingress net/core/dev.c:5440 [inline]
 
-Fixes: d84701ecbcd6a ("netfilter: nft_counter: rework atomic dump and reset")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Florian Westphal <fw@strlen.de>
+Fixes: 4cd91f7c290f ("netfilter: flowtable: add vlan support")
+Reported-by: syzbot+8407d9bb88cd4c6bf61a@syzkaller.appspotmail.com
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_counter.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/nf_flow_table_inet.c | 3 +++
+ net/netfilter/nf_flow_table_ip.c   | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
-index 5a90c3c7268bf..b7aa4d2c8c22f 100644
---- a/net/netfilter/nft_counter.c
-+++ b/net/netfilter/nft_counter.c
-@@ -107,11 +107,16 @@ static void nft_counter_reset(struct nft_counter_percpu_priv *priv,
- 			      struct nft_counter *total)
- {
- 	struct nft_counter *this_cpu;
-+	seqcount_t *myseq;
+diff --git a/net/netfilter/nf_flow_table_inet.c b/net/netfilter/nf_flow_table_inet.c
+index 6eef15648b7b0..b0f1991719324 100644
+--- a/net/netfilter/nf_flow_table_inet.c
++++ b/net/netfilter/nf_flow_table_inet.c
+@@ -17,6 +17,9 @@ nf_flow_offload_inet_hook(void *priv, struct sk_buff *skb,
  
- 	local_bh_disable();
- 	this_cpu = this_cpu_ptr(priv->counter);
-+	myseq = this_cpu_ptr(&nft_counter_seq);
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_8021Q):
++		if (!pskb_may_pull(skb, skb_mac_offset(skb) + sizeof(*veth)))
++			return NF_ACCEPT;
 +
-+	write_seqcount_begin(myseq);
- 	this_cpu->packets -= total->packets;
- 	this_cpu->bytes -= total->bytes;
-+	write_seqcount_end(myseq);
- 	local_bh_enable();
- }
+ 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
+ 		proto = veth->h_vlan_encapsulated_proto;
+ 		break;
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index 5383bed3d3e00..846fa2ad7c858 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -281,6 +281,9 @@ static bool nf_flow_skb_encap_protocol(struct sk_buff *skb, __be16 proto,
  
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_8021Q):
++		if (!pskb_may_pull(skb, skb_mac_offset(skb) + sizeof(*veth)))
++			return false;
++
+ 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
+ 		if (veth->h_vlan_encapsulated_proto == proto) {
+ 			*offset += VLAN_HLEN;
 -- 
 2.43.0
 
