@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30D112E4D;
-	Tue, 27 Aug 2024 15:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197F71C3F19;
+	Tue, 27 Aug 2024 15:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771349; cv=none; b=IYYTR17BSY2X3w5r2JNrVsoMVh/XJw09iffTBG4JqV2f8qNEze6g8aPeB1uhos7dN/CurId0f+cfZnZjIL8qtKNppRSVhk5PX0lW9DcwnWmeW1hRRPZhJzYJ55TXdJtn0qol0VBqH2mpSgekfZj4/wGznhTVkklarFUOv/R/jkI=
+	t=1724771352; cv=none; b=fgSwdf9icnHfL8KnwxRf4/y3rDpONJIjHlc/7shcoNuD/FXdbXV3zM21dRc5rx+isNY06/HpORIKZ1LE2pRj24cRoS1l3LOQ9RzAfSBCizpuZF2uCLsycDNXKXaZOgucGGysyZUtsEzvRjgd2AOva31J32037ovvEM/47YncphI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771349; c=relaxed/simple;
-	bh=RLyWu4ZjPPDP0DzMIMCKaAzkEwMyH60tBPDjz+y+LUo=;
+	s=arc-20240116; t=1724771352; c=relaxed/simple;
+	bh=3dsUEz3Pr7fd3giI9nf0Rhq7H8st9sTxUMkyQlUvC+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDqRPBwHSXbWZGOXcJkSdc/hM5ReYt4LJGWpsOG9kCigJ+WJJEEVMjxXNTkpIX+Ts9akDMRpk3SRhiXPd8WM8Fp8zLDOyrGagD1GcoJF/uTWmdB3qDrtI2ToTw7b6cZgzSY1synWUwhQC31ShHleawUFb1uGIyxid4w/aUK5lD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX9R2Yuv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R8T8LM26p1vGokL6gJwErvjcY5bPRZ3IqRlojkYRAhqhk7vWwZo0nDN/DVADfCIV2O0qWJGyfxhYAhZlOloXs06qWnI6vgbAMQq02GRxWP9r5xTRxmjMWvulsqKfb2ZPrx9nVaKsLYZeF/lLjUweLHMVVJ2Ql7vj+gd9ZL6Atvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kp4be8/w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX9R2Yuv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C716C4AF18;
-	Tue, 27 Aug 2024 15:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kp4be8/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A34C4AF1D;
+	Tue, 27 Aug 2024 15:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771348;
-	bh=RLyWu4ZjPPDP0DzMIMCKaAzkEwMyH60tBPDjz+y+LUo=;
+	s=korg; t=1724771352;
+	bh=3dsUEz3Pr7fd3giI9nf0Rhq7H8st9sTxUMkyQlUvC+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX9R2YuvooISE8gN7Ji6NTZWp2gcIQDSfELPR3bf3HkdYEjjeC1xU54T1olJHLtSg
-	 KJqFh8V74aAcF8hBE+FWrKSFOPzDnmqAPCKC0nVPmYp2otNsdgzAt6Y3jrM1Sz8iKb
-	 eXosfS51EYg2BCXqZqU6tRRjkpM8pXBEIZnCuQak=
+	b=kp4be8/wba1z3wudZLX0QzyOCJE2Yw61gg+E1lgHBzQ1vBVpk3t36RRDNT3WYFcpN
+	 /bfjPBC7+sYg5wpz18OaU5+xkY4RdfO+Zmc9lWUKtow4CYaJvZO3q6nvix/A5C/J45
+	 bbEmf6z9RsLeW/IYYgGTqc2TUVdtxodeaSvy4DtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yi Chen <yiche@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Hangbin Liu <liuhangbin@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 160/273] selftests: udpgro: report error when receive failed
-Date: Tue, 27 Aug 2024 16:38:04 +0200
-Message-ID: <20240827143839.493168913@linuxfoundation.org>
+Subject: [PATCH 6.10 161/273] selftests: udpgro: no need to load xdp for gro
+Date: Tue, 27 Aug 2024 16:38:05 +0200
+Message-ID: <20240827143839.532313202@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -46,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
@@ -54,135 +57,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 7167395a4be7930ecac6a33b4e54d7e3dd9ee209 ]
+[ Upstream commit d7818402b1d80347c764001583f6d63fa68c2e1a ]
 
-Currently, we only check the latest senders's exit code. If the receiver
-report failed, it is not recoreded. Fix it by checking the exit code
-of all the involved processes.
+After commit d7db7775ea2e ("net: veth: do not manipulate GRO when using
+XDP"), there is no need to load XDP program to enable GRO. On the other
+hand, the current test is failed due to loading the XDP program. e.g.
 
-Before:
-  bad GRO lookup       ok
-  multiple GRO socks   ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
+ # selftests: net: udpgro.sh
+ # ipv4
+ #  no GRO              ok
+ #  no GRO chk cmsg     ok
+ #  GRO                 ./udpgso_bench_rx: recv: bad packet len, got 1472, expected 14720
+ #
+ # failed
 
- ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
+ [...]
 
- failed
- $ echo $?
- 0
+ #  bad GRO lookup      ok
+ #  multiple GRO socks  ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
+ #
+ # ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
+ #
+ # failed
+ ok 1 selftests: net: udpgro.sh
 
-After:
-  bad GRO lookup       ok
-  multiple GRO socks   ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
+After fix, all the test passed.
 
- ./udpgso_bench_rx: recv: bad packet len, got 1452, expected 14520
+ # ./udpgro.sh
+ ipv4
+  no GRO                                  ok
+  [...]
+  multiple GRO socks                      ok
 
- failed
- $ echo $?
- 1
-
-Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d7db7775ea2e ("net: veth: do not manipulate GRO when using XDP")
+Reported-by: Yi Chen <yiche@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-53858
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgro.sh | 44 ++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 17 deletions(-)
+ tools/testing/selftests/net/udpgro.sh | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
-index 11a1ebda564fd..4659cf01e4384 100755
+index 4659cf01e4384..d5ffd8c9172e1 100755
 --- a/tools/testing/selftests/net/udpgro.sh
 +++ b/tools/testing/selftests/net/udpgro.sh
-@@ -46,17 +46,19 @@ run_one() {
- 	local -r all="$@"
- 	local -r tx_args=${all%rx*}
- 	local -r rx_args=${all#*rx}
-+	local ret=0
+@@ -7,8 +7,6 @@ source net_helper.sh
  
- 	cfg_veth
+ readonly PEER_NS="ns-peer-$(mktemp -u XXXXXX)"
  
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} && \
--		echo "ok" || \
--		echo "failed" &
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} &
-+	local PID1=$!
+-BPF_FILE="xdp_dummy.bpf.o"
+-
+ # set global exit status, but never reset nonzero one.
+ check_err()
+ {
+@@ -38,7 +36,7 @@ cfg_veth() {
+ 	ip -netns "${PEER_NS}" addr add dev veth1 192.168.1.1/24
+ 	ip -netns "${PEER_NS}" addr add dev veth1 2001:db8::1/64 nodad
+ 	ip -netns "${PEER_NS}" link set dev veth1 up
+-	ip -n "${PEER_NS}" link set veth1 xdp object ${BPF_FILE} section xdp
++	ip netns exec "${PEER_NS}" ethtool -K veth1 gro on
+ }
  
- 	wait_local_port_listen ${PEER_NS} 8000 udp
- 	./udpgso_bench_tx ${tx_args}
--	ret=$?
--	wait $(jobs -p)
-+	check_err $?
-+	wait ${PID1}
-+	check_err $?
-+	[ "$ret" -eq 0 ] && echo "ok" || echo "failed"
+ run_one() {
+@@ -206,11 +204,6 @@ run_all() {
  	return $ret
  }
  
-@@ -73,6 +75,7 @@ run_one_nat() {
- 	local -r all="$@"
- 	local -r tx_args=${all%rx*}
- 	local -r rx_args=${all#*rx}
-+	local ret=0
- 
- 	if [[ ${tx_args} = *-4* ]]; then
- 		ipt_cmd=iptables
-@@ -93,16 +96,17 @@ run_one_nat() {
- 	# ... so that GRO will match the UDP_GRO enabled socket, but packets
- 	# will land on the 'plain' one
- 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -G ${family} -b ${addr1} -n 0 &
--	pid=$!
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} && \
--		echo "ok" || \
--		echo "failed"&
-+	local PID1=$!
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} &
-+	local PID2=$!
- 
- 	wait_local_port_listen "${PEER_NS}" 8000 udp
- 	./udpgso_bench_tx ${tx_args}
--	ret=$?
--	kill -INT $pid
--	wait $(jobs -p)
-+	check_err $?
-+	kill -INT ${PID1}
-+	wait ${PID2}
-+	check_err $?
-+	[ "$ret" -eq 0 ] && echo "ok" || echo "failed"
- 	return $ret
- }
- 
-@@ -111,20 +115,26 @@ run_one_2sock() {
- 	local -r all="$@"
- 	local -r tx_args=${all%rx*}
- 	local -r rx_args=${all#*rx}
-+	local ret=0
- 
- 	cfg_veth
- 
- 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} -p 12345 &
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} && \
--		echo "ok" || \
--		echo "failed" &
-+	local PID1=$!
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} &
-+	local PID2=$!
- 
- 	wait_local_port_listen "${PEER_NS}" 12345 udp
- 	./udpgso_bench_tx ${tx_args} -p 12345
-+	check_err $?
- 	wait_local_port_listen "${PEER_NS}" 8000 udp
- 	./udpgso_bench_tx ${tx_args}
--	ret=$?
--	wait $(jobs -p)
-+	check_err $?
-+	wait ${PID1}
-+	check_err $?
-+	wait ${PID2}
-+	check_err $?
-+	[ "$ret" -eq 0 ] && echo "ok" || echo "failed"
- 	return $ret
- }
- 
+-if [ ! -f ${BPF_FILE} ]; then
+-	echo "Missing ${BPF_FILE}. Run 'make' first"
+-	exit -1
+-fi
+-
+ if [[ $# -eq 0 ]]; then
+ 	run_all
+ elif [[ $1 == "__subprocess" ]]; then
 -- 
 2.43.0
 
