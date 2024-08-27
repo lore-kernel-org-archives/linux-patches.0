@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAC71C6F51;
-	Tue, 27 Aug 2024 15:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFF817C96;
+	Tue, 27 Aug 2024 15:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771733; cv=none; b=S2J0YfTwas4uTxJ7aESBnRfmuKO5eGLGjH0ypG3jxUgMozaeer+sLso7nTN51elp9cfjvErH+kSuYTWztUUSUOn9s5wCfXfl9iNMg68Fs3Gt83kXVeXqW46Qe5XlyAUpsXazgFx9o5jMdQuEiosKd/+2dUbIQb5hUt/EQTKfnrE=
+	t=1724771736; cv=none; b=rRVuipoHx8ustbkHqSolBz4Lm77Veb7F9s302wYWEtrNuHFkWH3b9zzmoOD047U1UH5Z7C8AkrRJOLBJY9DjV+g504OF9JYiHhDHIK5/JoF9pM/7bs8PPvFDcUn/pwgG3219t1zDVk9CkHcII7DgnbakofGID0t8cRZtdou814M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771733; c=relaxed/simple;
-	bh=GbehYxQN3TerK1eCeo/Vzx5cXzjcwRI8gdeuU84wLSs=;
+	s=arc-20240116; t=1724771736; c=relaxed/simple;
+	bh=NYnfVfCQ8Elh8+H0M34oNGS5GJI3J4KE/8xn/AlM09Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNxCszlZEhMEbpasmapI3baRHloM7UgE/TS7TqUu9iHa81UtKX42udWKQlsTDwfLT+ZYt3XOlnV+2LwNB9ujfNyEK6pOZl2q6BNyAOSMvEkTp2qdo7aRYETdI7Zj/Ol8uxqKEsxQ8pXe8x2OYIstawyKNRus/YdA46gD6zsWe20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GB9mDcwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rnl1XMd8EejzPsvcpWplVe0WCxohynJyP8+qDYQRKj9/KFLrN3W/XDzwTWQ5yaQIRKzUjo0+Zt9Fmd3u3X5g13j4MMmcTuf1UhhFR8vCGV0VThSqUAHi+wc9/sgWbf0vgS4r+BWJEAx2nXhQlz/1I7+qV8kUv4NCrT07QK28P0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaYAmR+L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GB9mDcwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCBDC4DDFF;
-	Tue, 27 Aug 2024 15:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaYAmR+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52971C4AF50;
+	Tue, 27 Aug 2024 15:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771732;
-	bh=GbehYxQN3TerK1eCeo/Vzx5cXzjcwRI8gdeuU84wLSs=;
+	s=korg; t=1724771735;
+	bh=NYnfVfCQ8Elh8+H0M34oNGS5GJI3J4KE/8xn/AlM09Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GB9mDcwd/pEGjcFucbpaUku+au9xk0tiA15r6GHPG3qCT058kqzx1VAvCVd2A1by3
-	 e3TRuApkMi898PSOAGiWuqI9bofi57f5WRr/A0knwno56rQ1N+b26hTkNSlaXwOkZY
-	 e/Smec+sIQWgXKHO309Y9XQl9gGCJam9NiGgDt+0=
+	b=RaYAmR+LcRRO94/4fZfsH0FQLpQiC+3UCwlPaQJcMR07tlevpTpdXcLZ1tRVVzA0/
+	 4YQ0kPLJRCCuFKk6aPNT4/CtMpeiVDsCM8kxquZ/0KjdBqlIMXSIaOJS8oszCPbfju
+	 s/uuC30wTZuKlmwOr/GEnp5TMDbl9rATXej9C07g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.10 270/273] drm/amdgpu/vcn: not pause dpg for unified queue
-Date: Tue, 27 Aug 2024 16:39:54 +0200
-Message-ID: <20240827143843.673056202@linuxfoundation.org>
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.10 271/273] selftests/bpf: Add a test to verify previous stacksafe() fix
+Date: Tue, 27 Aug 2024 16:39:55 +0200
+Message-ID: <20240827143843.710397045@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,65 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-commit 7d75ef3736a025db441be652c8cc8e84044a215f upstream.
+commit 662c3e2db00f92e50c26e9dc4fe47c52223d9982 upstream.
 
-For unified queue, DPG pause for encoding is done inside VCN firmware,
-so there is no need to pause dpg based on ring type in kernel.
+A selftest is added such that without the previous patch,
+a crash can happen. With the previous patch, the test can
+run successfully. The new test is written in a way which
+mimics original crash case:
+  main_prog
+    static_prog_1
+      static_prog_2
+where static_prog_1 has different paths to static_prog_2
+and some path has stack allocated and some other path
+does not. A stacksafe() checking in static_prog_2()
+triggered the crash.
 
-For VCN3 and below, pausing DPG for encoding in kernel is still needed.
-
-v2: add more comments
-v3: update commit message
-
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20240812214852.214037-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/progs/iters.c |   54 ++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-@@ -393,7 +393,9 @@ static void amdgpu_vcn_idle_work_handler
- 		for (i = 0; i < adev->vcn.num_enc_rings; ++i)
- 			fence[j] += amdgpu_fence_count_emitted(&adev->vcn.inst[j].ring_enc[i]);
+--- a/tools/testing/selftests/bpf/progs/iters.c
++++ b/tools/testing/selftests/bpf/progs/iters.c
+@@ -1434,4 +1434,58 @@ int iter_arr_with_actual_elem_count(cons
+ 	return sum;
+ }
  
--		if (adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)	{
-+		/* Only set DPG pause for VCN3 or below, VCN4 and above will be handled by FW */
-+		if (adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG &&
-+		    !adev->vcn.using_unified_queue) {
- 			struct dpg_pause_state new_state;
- 
- 			if (fence[j] ||
-@@ -439,7 +441,9 @@ void amdgpu_vcn_ring_begin_use(struct am
- 	amdgpu_device_ip_set_powergating_state(adev, AMD_IP_BLOCK_TYPE_VCN,
- 	       AMD_PG_STATE_UNGATE);
- 
--	if (adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG)	{
-+	/* Only set DPG pause for VCN3 or below, VCN4 and above will be handled by FW */
-+	if (adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG &&
-+	    !adev->vcn.using_unified_queue) {
- 		struct dpg_pause_state new_state;
- 
- 		if (ring->funcs->type == AMDGPU_RING_TYPE_VCN_ENC) {
-@@ -465,8 +469,12 @@ void amdgpu_vcn_ring_begin_use(struct am
- 
- void amdgpu_vcn_ring_end_use(struct amdgpu_ring *ring)
- {
-+	struct amdgpu_device *adev = ring->adev;
++__u32 upper, select_n, result;
++__u64 global;
 +
-+	/* Only set DPG pause for VCN3 or below, VCN4 and above will be handled by FW */
- 	if (ring->adev->pg_flags & AMD_PG_SUPPORT_VCN_DPG &&
--		ring->funcs->type == AMDGPU_RING_TYPE_VCN_ENC)
-+	    ring->funcs->type == AMDGPU_RING_TYPE_VCN_ENC &&
-+	    !adev->vcn.using_unified_queue)
- 		atomic_dec(&ring->adev->vcn.inst[ring->me].dpg_enc_submission_cnt);
- 
- 	atomic_dec(&ring->adev->vcn.total_submission_cnt);
++static __noinline bool nest_2(char *str)
++{
++	/* some insns (including branch insns) to ensure stacksafe() is triggered
++	 * in nest_2(). This way, stacksafe() can compare frame associated with nest_1().
++	 */
++	if (str[0] == 't')
++		return true;
++	if (str[1] == 'e')
++		return true;
++	if (str[2] == 's')
++		return true;
++	if (str[3] == 't')
++		return true;
++	return false;
++}
++
++static __noinline bool nest_1(int n)
++{
++	/* case 0: allocate stack, case 1: no allocate stack */
++	switch (n) {
++	case 0: {
++		char comm[16];
++
++		if (bpf_get_current_comm(comm, 16))
++			return false;
++		return nest_2(comm);
++	}
++	case 1:
++		return nest_2((char *)&global);
++	default:
++		return false;
++	}
++}
++
++SEC("raw_tp")
++__success
++int iter_subprog_check_stacksafe(const void *ctx)
++{
++	long i;
++
++	bpf_for(i, 0, upper) {
++		if (!nest_1(select_n)) {
++			result = 1;
++			return 0;
++		}
++	}
++
++	result = 2;
++	return 0;
++}
++
+ char _license[] SEC("license") = "GPL";
 
 
