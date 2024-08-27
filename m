@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790961CEAC8;
-	Tue, 27 Aug 2024 15:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B331CE703;
+	Tue, 27 Aug 2024 15:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772789; cv=none; b=l4dWn1ogvA9+wA6dH30CrukejWEiwsjeJvKaOoobPx9uLxqU95ePCR0rVivULCTxgQaoRLEXF8aHowfSE26Ypit6OJ91GphAbKoUSv207D4vm3o1fqsaY5/Yy9ivPWZ+wvD7ORil72qddl8I6mFHHtvMBjQqAoEh1IMTsAvBZJs=
+	t=1724772793; cv=none; b=JVGKdGIUbEfoEWzoWjpN3DMQBlJsXDTKLcGYRb8Z78o+JoWGULCqnd0vwfOoI0SlXo+sJrr7GRQX/tOoihIfOLKShw6MQvuYCXnKl+uQ/ANzPHfy9nMEsE5x4DowVxyAI41/c3nMohmuGIN6wY/BcC9ALL6V35zWdqrBKgNFO+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772789; c=relaxed/simple;
-	bh=EmLn3JA/M7gr9KlHKV3Fx77kiADaQQEi/yLp+BbJQ/4=;
+	s=arc-20240116; t=1724772793; c=relaxed/simple;
+	bh=YvBQiEO1w6D90K1dE4Qq1o7pKV5GPzysW7aWF/JNejE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8HaBTQSvbaqBhQS49glSKuCZ/4/Ml/ZOIzWJWeHgDF4498kCmmhHLgkDwyNLVJUsqQRSHsK/dkBHDojSRXkOPR/8EaxeBsQ3K2R/ybCsLC6plL4LPEXZiRzv1wrgGeUktU9p0URe7e+IO5U+hEis91BVN3jbolCNc0jFmFzaHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJOCcOiA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VvV+NmP+kNiU+t23Fhcbvu9nrLldlvxoRXDIxEcQaRWCRJd3BJpbodpW21J37SoP8aAEGTi7T/IWIPcjXuWeZ3QJQcoNl7JHHbmV9Q/8JlAq+bUVLRnkT5rHjFfh9+BR0Tgi8kwl4B08eTTeXz+uZm6cr87bR9j0tHcJnU6wm74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH7Ljgej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJOCcOiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE340C61050;
-	Tue, 27 Aug 2024 15:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH7Ljgej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7E2C61050;
+	Tue, 27 Aug 2024 15:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772789;
-	bh=EmLn3JA/M7gr9KlHKV3Fx77kiADaQQEi/yLp+BbJQ/4=;
+	s=korg; t=1724772792;
+	bh=YvBQiEO1w6D90K1dE4Qq1o7pKV5GPzysW7aWF/JNejE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJOCcOiAZ34d0qRtFSGfpcj3dw4USn145ITSYhH+8JpOJAH/J+eW5A6fWQzjzrnts
-	 XwSdwN6EO47JrnuRNuoG+1T74pm2lhCAIeIuIbo6jEWfvwhLLBFnGkB6dP9JQpUQDj
-	 Uf82OAAH5T+aLHhSitSz7/mxNJuHPPwiathi9cmM=
+	b=GH7Ljgej+TeJW9nVVgIk9AbM7Pe3wJPNBmcGZmkrFdmXPagEMjkxZrHdy2i3/mEug
+	 kY021aHCh+/4zAk2ugkK6KfL/S2WKMfEaFSD6ASPphIZX2fCoBq2efOZtA+M4Hq5m3
+	 +50BoBXmDhmH1ZyJ/vLiKEqSjCloIRJZK/9BQfnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 320/321] selftests: net: more strict check in net_helper
-Date: Tue, 27 Aug 2024 16:40:28 +0200
-Message-ID: <20240827143850.440458698@linuxfoundation.org>
+	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	George Kennedy <george.kennedy@oracle.com>
+Subject: [PATCH 6.1 321/321] Input: MT - limit max slots
+Date: Tue, 27 Aug 2024 16:40:29 +0200
+Message-ID: <20240827143850.478100588@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,57 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit a71d0908e32f3dd41e355d83eeadd44d94811fd6 upstream.
+commit 99d3bf5f7377d42f8be60a6b9cb60fb0be34dceb upstream.
 
-The helper waiting for a listener port can match any socket whose
-hexadecimal representation of source or destination addresses
-matches that of the given port.
+syzbot is reporting too large allocation at input_mt_init_slots(), for
+num_slots is supplied from userspace using ioctl(UI_DEV_CREATE).
 
-Additionally, any socket state is accepted.
+Since nobody knows possible max slots, this patch chose 1024.
 
-All the above can let the helper return successfully before the
-relevant listener is actually ready, with unexpected results.
-
-So far I could not find any related failure in the netdev CI, but
-the next patch is going to make the critical event more easily
-reproducible.
-
-Address the issue matching the port hex only vs the relevant socket
-field and additionally checking the socket state for TCP sockets.
-
-Fixes: 3bdd9fd29cb0 ("selftests/net: synchronize udpgro tests' tx and rx connection")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/192b3dbc443d953be32991d1b0ca432bd4c65008.1707731086.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
+Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: George Kennedy <george.kennedy@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/net_helper.sh |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/input/input-mt.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/testing/selftests/net/net_helper.sh
-+++ b/tools/testing/selftests/net/net_helper.sh
-@@ -8,13 +8,16 @@ wait_local_port_listen()
- 	local listener_ns="${1}"
- 	local port="${2}"
- 	local protocol="${3}"
--	local port_hex
-+	local pattern
- 	local i
+--- a/drivers/input/input-mt.c
++++ b/drivers/input/input-mt.c
+@@ -46,6 +46,9 @@ int input_mt_init_slots(struct input_dev
+ 		return 0;
+ 	if (mt)
+ 		return mt->num_slots != num_slots ? -EINVAL : 0;
++	/* Arbitrary limit for avoiding too large memory allocation. */
++	if (num_slots > 1024)
++		return -EINVAL;
  
--	port_hex="$(printf "%04X" "${port}")"
-+	pattern=":$(printf "%04X" "${port}") "
-+
-+	# for tcp protocol additionally check the socket state
-+	[ ${protocol} = "tcp" ] && pattern="${pattern}0A"
- 	for i in $(seq 10); do
--		if ip netns exec "${listener_ns}" cat /proc/net/"${protocol}"* | \
--		   grep -q "${port_hex}"; then
-+		if ip netns exec "${listener_ns}" awk '{print $2" "$4}' \
-+		   /proc/net/"${protocol}"* | grep -q "${pattern}"; then
- 			break
- 		fi
- 		sleep 0.1
+ 	mt = kzalloc(struct_size(mt, slots, num_slots), GFP_KERNEL);
+ 	if (!mt)
 
 
