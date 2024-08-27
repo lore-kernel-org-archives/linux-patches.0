@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9621C93C8;
-	Tue, 27 Aug 2024 15:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D6DD517;
+	Tue, 27 Aug 2024 15:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772614; cv=none; b=qPkicX17G8ACo/b/XIGHtwFjUk+f/lcwRIyuY+VuWHobkJjQCbeu96iU2YZvXBkiNsk4WYNlSW2RtVwxTwDaK6xt8SoYHT50xH906wihOk4xFQpK6rp8Y4iPldDUDsPGR0R1fX2o3/GOsi4enKsIbuMV/NbfmJAENqDmD6GcgV4=
+	t=1724772617; cv=none; b=uoUeYF11t4edT9A99ZH1/EHp9VqjPl3pC7O+la3pwy36Xr44mT7PAC0vVlqU9BVAX3lqb/6tt/JqoaS//JavDjFZSyvwP5uQzB0YO00b+h14OIYpxxgqwTBxJ+AmgiPhena4Gb+QS++9XCKpefb2nwz17KLB7YMTFIHg4ISh9Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772614; c=relaxed/simple;
-	bh=aI+GoCYHkMcYRBjoMOxjpTgbRCCaJN+fJNBh6m+MQdo=;
+	s=arc-20240116; t=1724772617; c=relaxed/simple;
+	bh=HhKGzgy+cVa4kgMw/YXbfcUM94Kn1uEJjdSHKXmRDi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dr0YVM+zjjPu9SUEr4FKlfbi5yED+qRa8hB8+Miw27yayJxnHMU5W2eifFa69aBu+7ur6LE1Y0QmJUZS/lmHly4PFWzUqcfJlr1VzD6UJyvddnYnZJ1gh/JBa3sEplJ633YS81KUnF2pNm5Wz/i2+pyekBj+gNBhB5/y9YIqF2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APoNNDKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oeFEk3eLJBxT0vC72KPvbhxhCxLMYUFGLxcX7U7hMA1a4tzM1LMidl2RWRjtlyXlIpeb9MVpQJfgD26GIfiL3XHcJZOb3JpnFOXSE0XqH56iaGoXf5tiB0Bo3/s/B98/ayOO7m8LbFotUnnDZL7L16qGjGg8D2xIf6P+LtIa45o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koTEZkxf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APoNNDKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68114C4AF65;
-	Tue, 27 Aug 2024 15:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koTEZkxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFFEC4AF65;
+	Tue, 27 Aug 2024 15:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772613;
-	bh=aI+GoCYHkMcYRBjoMOxjpTgbRCCaJN+fJNBh6m+MQdo=;
+	s=korg; t=1724772617;
+	bh=HhKGzgy+cVa4kgMw/YXbfcUM94Kn1uEJjdSHKXmRDi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APoNNDKALR2Bgo2qRLvHYDHrtubC+aYJVQyDDQlcDbkU90SoEPZp994NT19ZNM1MX
-	 u/7zeVtll3uOp28+f9mweML9nGgqs0/VPvNmyb5XubS1JjDj/jM41ipIjXrCJ3ekhb
-	 +l5d0Ok9OruX6auq7UiK/J60EIhso7/uBY8Ot/vg=
+	b=koTEZkxfpxi6FrtSgzfmj99oAE2/mAoDBNDZM4fKPaspDfySlgDhsF2IwfYVHkznI
+	 7zLHZDkNTRDKTqNTyJY6n3NVGwNvPgv3g/TEEeR30+cx3uBmiyOFp4uxhQBcv5oIEH
+	 kj1wTeGDOU7/dEsDNtSfAVESuYesvzHopdrw6GMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 266/321] drm/amdgpu: Validate TA binary size
-Date: Tue, 27 Aug 2024 16:39:34 +0200
-Message-ID: <20240827143848.378115873@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 267/321] MIPS: Loongson64: Set timer mode in cpu-probe
+Date: Tue, 27 Aug 2024 16:39:35 +0200
+Message-ID: <20240827143848.416378818@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,33 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit c99769bceab4ecb6a067b9af11f9db281eea3e2a upstream.
+commit 1cb6ab446424649f03c82334634360c2e3043684 upstream.
 
-Add TA binary size validation to avoid OOB write.
+Loongson64 C and G processors have EXTIMER feature which
+is conflicting with CP0 counter.
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c0a04e3570d72aaf090962156ad085e37c62e442)
+Although the processor resets in EXTIMER disabled & INTIMER
+enabled mode, which is compatible with MIPS CP0 compare, firmware
+may attempt to enable EXTIMER and interfere CP0 compare.
+
+Set timer mode back to MIPS compatible mode to fix booting on
+systems with such firmware before we have an actual driver for
+EXTIMER.
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/mips/kernel/cpu-probe.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-@@ -148,6 +148,9 @@ static ssize_t ta_if_load_debugfs_write(
- 	if (ret)
- 		return -EINVAL;
- 
-+	if (ta_bin_len > PSP_1_MEG)
-+		return -EINVAL;
-+
- 	copy_pos += sizeof(uint32_t);
- 
- 	ta_bin = kzalloc(ta_bin_len, GFP_KERNEL);
+--- a/arch/mips/kernel/cpu-probe.c
++++ b/arch/mips/kernel/cpu-probe.c
+@@ -1723,12 +1723,16 @@ static inline void cpu_probe_loongson(st
+ 		c->ases |= (MIPS_ASE_LOONGSON_MMI | MIPS_ASE_LOONGSON_CAM |
+ 			MIPS_ASE_LOONGSON_EXT | MIPS_ASE_LOONGSON_EXT2);
+ 		c->ases &= ~MIPS_ASE_VZ; /* VZ of Loongson-3A2000/3000 is incomplete */
++		change_c0_config6(LOONGSON_CONF6_EXTIMER | LOONGSON_CONF6_INTIMER,
++				  LOONGSON_CONF6_INTIMER);
+ 		break;
+ 	case PRID_IMP_LOONGSON_64G:
+ 		__cpu_name[cpu] = "ICT Loongson-3";
+ 		set_elf_platform(cpu, "loongson3a");
+ 		set_isa(c, MIPS_CPU_ISA_M64R2);
+ 		decode_cpucfg(c);
++		change_c0_config6(LOONGSON_CONF6_EXTIMER | LOONGSON_CONF6_INTIMER,
++				  LOONGSON_CONF6_INTIMER);
+ 		break;
+ 	default:
+ 		panic("Unknown Loongson Processor ID!");
 
 
