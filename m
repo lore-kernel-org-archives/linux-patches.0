@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2491C8FBD;
-	Tue, 27 Aug 2024 14:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D1B1C4EF9;
+	Tue, 27 Aug 2024 14:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770785; cv=none; b=TrUqYY2pKinwpU+b7XCQ5Jwa7/rSYFsOC57QO0VWUqLmlg6Cyl67uIj+x6rA1LvXU1QEt5PNR5AWxLP4UVfiS19cQN0ozQmE8f0xs8+9rySTkuLlP4JFOAPwM2UEv+z5SaNKXS+tyeRAnglYApUxkWhM04xu/ku8+DQViTBw4eo=
+	t=1724770788; cv=none; b=K+Y3GBd7whXqHlJ3LWJIAyLLc/fUFCah3FHjqegVN8MMk55IelER8XDnv6Vppzi60OUvWKt7EJ40Xr+gk7riDYloATevtJ6dfX0bnrBAFx5pnJDIJ2cUalbyUDfO4qotqIy/kgHK/RmNT8LtM/YHHY1Kfr78s6jKSsdVAoIuhmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770785; c=relaxed/simple;
-	bh=/OUrT9Wdn2UOUE8T2NWO+ZOwsAGyhy04axXk+pF1XZc=;
+	s=arc-20240116; t=1724770788; c=relaxed/simple;
+	bh=fmthrTYexew87ihGTxc4eo6dp2jE/KEKEoSyJi5h0mE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+okdpdKpOwwLzpm5uvLHvKHZNa9N2aqRV0l06m7w5uH1Sms9lMkdHQzj1xf5seuD1xvDEmW3fkxUIhUOXYtsmWoPecrUU0HiBRh2NDytDawlaQv/hWoenlBj+J3nHWCyEXBJSBJmv8NVhnPzJSUTTP0yf2Iy12fI2KuDmuoL1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0uXkrDL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uXRyPRsT89JX2rAjyZdrKyCi4T/RNN6jAEw5Y1CZK2j98PFknsUm00ORPCjKDDmpMX3rW4mKSc6Ki0NiDdQZNypj43Kh/7aKKdhhbykXqQGRfmphw0Uy7E9NoQ4tN8j9EQV5CfBtzWu77CBeNPKzBznHrtwHnTsYDYHrn+ZWoEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjzx6ROx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0uXkrDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B008FC4AF5F;
-	Tue, 27 Aug 2024 14:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjzx6ROx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40800C4AF1C;
+	Tue, 27 Aug 2024 14:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770785;
-	bh=/OUrT9Wdn2UOUE8T2NWO+ZOwsAGyhy04axXk+pF1XZc=;
+	s=korg; t=1724770788;
+	bh=fmthrTYexew87ihGTxc4eo6dp2jE/KEKEoSyJi5h0mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0uXkrDLQQ7jitwLi3rBHRmJCZtY9sxGF54CE/CMgMLTXy9YYGoPjAXXv95Hnp1fi
-	 ayqIx1RvPu1YbViEJyrh+rG6SRFF4Dnga59Na7gK8Hcv23YY63rANr1X3w6ptUK6NJ
-	 gGmf28589AGoz+ax0LbmbE7NgPJysRMKYC81dIMo=
+	b=kjzx6ROxsDrvhKh8MuTzAk198Mv+oEYSoG0GThKROEKLSe5lY1q/Eh4YQVFLlfQH1
+	 7lkVffUlG/bHe/dZjIF/50uOjbvmKqA/n6J9tQZXZlz247xgAZR4AqgccEevmA+3YL
+	 gmanHkbXR9Rb18C7mjQG8T7tYp0ZVpr35rivKkbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.6 334/341] selftests/bpf: Add a test to verify previous stacksafe() fix
-Date: Tue, 27 Aug 2024 16:39:25 +0200
-Message-ID: <20240827143856.104495082@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>
+Subject: [PATCH 6.6 335/341] NFSD: simplify error paths in nfsd_svc()
+Date: Tue, 27 Aug 2024 16:39:26 +0200
+Message-ID: <20240827143856.141540017@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,91 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: NeilBrown <neilb@suse.de>
 
-commit 662c3e2db00f92e50c26e9dc4fe47c52223d9982 upstream.
+commit bf32075256e9dd9c6b736859e2c5813981339908 upstream.
 
-A selftest is added such that without the previous patch,
-a crash can happen. With the previous patch, the test can
-run successfully. The new test is written in a way which
-mimics original crash case:
-  main_prog
-    static_prog_1
-      static_prog_2
-where static_prog_1 has different paths to static_prog_2
-and some path has stack allocated and some other path
-does not. A stacksafe() checking in static_prog_2()
-triggered the crash.
+The error paths in nfsd_svc() are needlessly complex and can result in a
+final call to svc_put() without nfsd_last_thread() being called.  This
+results in the listening sockets not being closed properly.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20240812214852.214037-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+The per-netns setup provided by nfsd_startup_new() and removed by
+nfsd_shutdown_net() is needed precisely when there are running threads.
+So we don't need nfsd_up_before.  We don't need to know if it *was* up.
+We only need to know if any threads are left.  If none are, then we must
+call nfsd_shutdown_net().  But we don't need to do that explicitly as
+nfsd_last_thread() does that for us.
+
+So simply call nfsd_last_thread() before the last svc_put() if there are
+no running threads.  That will always do the right thing.
+
+Also discard:
+ pr_info("nfsd: last server has exited, flushing export cache\n");
+It may not be true if an attempt to start the first server failed, and
+it isn't particularly helpful and it simply reports normal behaviour.
+
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
+Suggested-by: Li Lingfeng <lilingfeng3@huawei.com>
+Tested-by: Li Lingfeng <lilingfeng3@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/iters.c |   54 ++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ fs/nfsd/nfssvc.c |   14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/tools/testing/selftests/bpf/progs/iters.c
-+++ b/tools/testing/selftests/bpf/progs/iters.c
-@@ -1411,4 +1411,58 @@ __naked int checkpoint_states_deletion(v
- 	);
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -567,7 +567,6 @@ void nfsd_last_thread(struct net *net)
+ 		return;
+ 
+ 	nfsd_shutdown_net(net);
+-	pr_info("nfsd: last server has exited, flushing export cache\n");
+ 	nfsd_export_flush(net);
  }
  
-+__u32 upper, select_n, result;
-+__u64 global;
+@@ -783,7 +782,6 @@ int
+ nfsd_svc(int nrservs, struct net *net, const struct cred *cred)
+ {
+ 	int	error;
+-	bool	nfsd_up_before;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct svc_serv *serv;
+ 
+@@ -803,8 +801,6 @@ nfsd_svc(int nrservs, struct net *net, c
+ 	error = nfsd_create_serv(net);
+ 	if (error)
+ 		goto out;
+-
+-	nfsd_up_before = nn->nfsd_net_up;
+ 	serv = nn->nfsd_serv;
+ 
+ 	error = nfsd_startup_net(net, cred);
+@@ -812,17 +808,15 @@ nfsd_svc(int nrservs, struct net *net, c
+ 		goto out_put;
+ 	error = svc_set_num_threads(serv, NULL, nrservs);
+ 	if (error)
+-		goto out_shutdown;
++		goto out_put;
+ 	error = serv->sv_nrthreads;
+-	if (error == 0)
+-		nfsd_last_thread(net);
+-out_shutdown:
+-	if (error < 0 && !nfsd_up_before)
+-		nfsd_shutdown_net(net);
+ out_put:
+ 	/* Threads now hold service active */
+ 	if (xchg(&nn->keep_active, 0))
+ 		svc_put(serv);
 +
-+static __noinline bool nest_2(char *str)
-+{
-+	/* some insns (including branch insns) to ensure stacksafe() is triggered
-+	 * in nest_2(). This way, stacksafe() can compare frame associated with nest_1().
-+	 */
-+	if (str[0] == 't')
-+		return true;
-+	if (str[1] == 'e')
-+		return true;
-+	if (str[2] == 's')
-+		return true;
-+	if (str[3] == 't')
-+		return true;
-+	return false;
-+}
-+
-+static __noinline bool nest_1(int n)
-+{
-+	/* case 0: allocate stack, case 1: no allocate stack */
-+	switch (n) {
-+	case 0: {
-+		char comm[16];
-+
-+		if (bpf_get_current_comm(comm, 16))
-+			return false;
-+		return nest_2(comm);
-+	}
-+	case 1:
-+		return nest_2((char *)&global);
-+	default:
-+		return false;
-+	}
-+}
-+
-+SEC("raw_tp")
-+__success
-+int iter_subprog_check_stacksafe(const void *ctx)
-+{
-+	long i;
-+
-+	bpf_for(i, 0, upper) {
-+		if (!nest_1(select_n)) {
-+			result = 1;
-+			return 0;
-+		}
-+	}
-+
-+	result = 2;
-+	return 0;
-+}
-+
- char _license[] SEC("license") = "GPL";
++	if (serv->sv_nrthreads == 0)
++		nfsd_last_thread(net);
+ 	svc_put(serv);
+ out:
+ 	mutex_unlock(&nfsd_mutex);
 
 
