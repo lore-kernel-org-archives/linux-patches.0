@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2109A1A072D;
-	Tue, 27 Aug 2024 14:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5336A44C8C;
+	Tue, 27 Aug 2024 14:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770195; cv=none; b=Eoh6ydkkoO2qEcBPhTI0OAPr5uHngDIjlkkYw2ZUh3/28TjAeqJQCycFt+1pMgCBmYTJokx50R3+/y4hdkn73J7UNM/94mBzMVi4bIFuEKlpO1Yri6C4G26QMBRP691eOlShd/FpDvgzm8ABVqgVRyP0NUr4xaA3vrq/MDy9aAc=
+	t=1724770198; cv=none; b=TtRzRXn1OSXFozmek1xG2qXYIg5Z61Indiage6GsuUGzNhdYpgyKgOsruAy6L/EsjAHncJyo7AYlkvzsnRG157Upzc5gXDJHiJLnccqegn+DorjX6KClBlkT0altek96DCUI2Fma51FzWoQMAmjhuA2YpKP55B6MqWjRcKB8svE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770195; c=relaxed/simple;
-	bh=FISunt2bYraKNIX1iczucc51zlV8cBiqxgNCm9zPvRM=;
+	s=arc-20240116; t=1724770198; c=relaxed/simple;
+	bh=yeUd57RHLgAHOGJBe0L604qJm8wW3U2iUw81g32w6dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/5M4QNkyY1Je5XAsuyWLbkNbSZhIE2uD7lbInNRbyITJgJ6IGN6LaAeqf4g18iUfNlNBuT3CW7gHxLJt519xFFvrkG/bApTL7avCJWJUBsb3bxVyPJUw9mJZx0Lyjdi5AmtA2brXjxxm4TzDgqBS3NpbMcNkFTnblkj+jnkNbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6VoQl12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mq/ciCVIl52EGQ/ej6t0laBe7/h4/r8vytdPV4h1aD1WJbzdwm8DK/IWSiGUxVeMLDg2X8uwr3ZGi0LoKKi0kTB5fjoQ3mcVM3UBhSyOD3fBbmffiTedpUPytkjXJRYVcVuJVJww6Ry4dtDzbarqE5ZfOhYkzO3cEdf9h7LQvtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc1YjiRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6VoQl12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251DEC4DDEA;
-	Tue, 27 Aug 2024 14:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc1YjiRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E24C4DDEA;
+	Tue, 27 Aug 2024 14:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770194;
-	bh=FISunt2bYraKNIX1iczucc51zlV8cBiqxgNCm9zPvRM=;
+	s=korg; t=1724770197;
+	bh=yeUd57RHLgAHOGJBe0L604qJm8wW3U2iUw81g32w6dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6VoQl12kOeG8SDemy0pH1bH31IoowhI5/4idcexapRjyI+8oaOQ3WsQfJ3Fq41/q
-	 akwvzSMZcipo+5gQfZ4ZQE3yHrHhxhRc4I4OyjHqKmSyoZwM+7hkqFJ+2vUwjJQRpX
-	 uakxfskZzcp/bvgzuiXjVxoYlbp9FQskpLf9omh4=
+	b=vc1YjiRG/V/Vp7FF2JXyJBfoWO+TCjH/CPTUxXM++Hfq0xP67dj2GXs1u2xrP53qe
+	 bkri66G19wqMKn5un1LAedEsMRDCU3LNt4Ad2PDrW4WeSbkzxfZJX8BeVQNRyFd5xI
+	 kw2oBR16o3rgOw2fKM7wO7GNYZ1dBrUZ0QkyJw3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Martin Wilck <mwilck@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/341] scsi: spi: Fix sshdr use
-Date: Tue, 27 Aug 2024 16:35:55 +0200
-Message-ID: <20240827143848.134926351@linuxfoundation.org>
+Subject: [PATCH 6.6 125/341] wifi: mac80211: flush STA queues on unauthorization
+Date: Tue, 27 Aug 2024 16:35:56 +0200
+Message-ID: <20240827143848.172666021@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -54,43 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 0b149cee836aa53989ea089af1cb9d90d7c6ac9e ]
+[ Upstream commit 06d6af4e1223339bb597b02fa8ad3f979ddb5511 ]
 
-If scsi_execute_cmd returns < 0, it doesn't initialize the sshdr, so we
-shouldn't access the sshdr. If it returns 0, then the cmd executed
-successfully, so there is no need to check the sshdr. This has us access
-the sshdr when we get a return value > 0.
+When the station is marked as no longer authorized, we shouldn't
+transmit to it any longer, but in particular we shouldn't be able
+to transmit to it after removing keys, which might lead to frames
+being sent out unencrypted depending on the exact hardware offload
+mechanism. Thus, instead of flushing only on station destruction,
+which covers only some cases, always flush on unauthorization.
 
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20231004210013.5601-7-michael.christie@oracle.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin Wilck <mwilck@suse.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230928172905.d47f528829e7.I96903652c7ee0c5c66891f8b2364383da8e45a1f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_spi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/sta_info.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/scsi/scsi_transport_spi.c b/drivers/scsi/scsi_transport_spi.c
-index 2442d4d2e3f38..f668c1c0a98f2 100644
---- a/drivers/scsi/scsi_transport_spi.c
-+++ b/drivers/scsi/scsi_transport_spi.c
-@@ -676,10 +676,10 @@ spi_dv_device_echo_buffer(struct scsi_device *sdev, u8 *buffer,
- 	for (r = 0; r < retries; r++) {
- 		result = spi_execute(sdev, spi_write_buffer, REQ_OP_DRV_OUT,
- 				     buffer, len, &sshdr);
--		if(result || !scsi_device_online(sdev)) {
-+		if (result || !scsi_device_online(sdev)) {
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 42ba51a9700f2..5d71e8d084c45 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -1284,6 +1284,8 @@ static int _sta_info_move_state(struct sta_info *sta,
+ 				enum ieee80211_sta_state new_state,
+ 				bool recalc)
+ {
++	struct ieee80211_local *local = sta->local;
++
+ 	might_sleep();
  
- 			scsi_device_set_state(sdev, SDEV_QUIESCE);
--			if (scsi_sense_valid(&sshdr)
-+			if (result > 0 && scsi_sense_valid(&sshdr)
- 			    && sshdr.sense_key == ILLEGAL_REQUEST
- 			    /* INVALID FIELD IN CDB */
- 			    && sshdr.asc == 0x24 && sshdr.ascq == 0x00)
+ 	if (sta->sta_state == new_state)
+@@ -1359,6 +1361,24 @@ static int _sta_info_move_state(struct sta_info *sta,
+ 		} else if (sta->sta_state == IEEE80211_STA_AUTHORIZED) {
+ 			ieee80211_vif_dec_num_mcast(sta->sdata);
+ 			clear_bit(WLAN_STA_AUTHORIZED, &sta->_flags);
++
++			/*
++			 * If we have encryption offload, flush (station) queues
++			 * (after ensuring concurrent TX completed) so we won't
++			 * transmit anything later unencrypted if/when keys are
++			 * also removed, which might otherwise happen depending
++			 * on how the hardware offload works.
++			 */
++			if (local->ops->set_key) {
++				synchronize_net();
++				if (local->ops->flush_sta)
++					drv_flush_sta(local, sta->sdata, sta);
++				else
++					ieee80211_flush_queues(local,
++							       sta->sdata,
++							       false);
++			}
++
+ 			ieee80211_clear_fast_xmit(sta);
+ 			ieee80211_clear_fast_rx(sta);
+ 		}
+@@ -1424,18 +1444,6 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
+ 		WARN_ON_ONCE(ret);
+ 	}
+ 
+-	/* Flush queues before removing keys, as that might remove them
+-	 * from hardware, and then depending on the offload method, any
+-	 * frames sitting on hardware queues might be sent out without
+-	 * any encryption at all.
+-	 */
+-	if (local->ops->set_key) {
+-		if (local->ops->flush_sta)
+-			drv_flush_sta(local, sta->sdata, sta);
+-		else
+-			ieee80211_flush_queues(local, sta->sdata, false);
+-	}
+-
+ 	/* now keys can no longer be reached */
+ 	ieee80211_free_sta_keys(local, sta);
+ 
 -- 
 2.43.0
 
