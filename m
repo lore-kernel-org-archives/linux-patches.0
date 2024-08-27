@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9202773466;
-	Tue, 27 Aug 2024 15:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6556A73466;
+	Tue, 27 Aug 2024 15:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771530; cv=none; b=tzExzWX7ZGUNq+D9A80sGlIw6fy1K5GcweJtPfK9y5gVp9+cA0NDtAo32/ypo9MkRYxf2QwxlM/KBK3pin4ZOMWzsY0LwHnPtXzqFKrjv9jNSFnKlj7qo8U9ywQdXqOMEroQqIPeuhSIQjIxpGYaCOE1wkKHmSnMy05DBDi9MpQ=
+	t=1724771532; cv=none; b=mafBCyCZMPro930Q34wiNGI8q9gon9Om1hdIPTqljKk636T35IdGaB5dJXOZhRNe4i20aL0olp/5Y4OIPsDox3ybRjtUUVIN2DzjOtCo6osJRLEr3svlsuBua8CVTeT8y+//tg9npfw3ORXpjfWWU61WU8jPlCYguPB7XqJnTjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771530; c=relaxed/simple;
-	bh=0S11KY+RA0yLmZyiLiAxFGC1hm9h6QdY5JT35YFI6bU=;
+	s=arc-20240116; t=1724771532; c=relaxed/simple;
+	bh=PNdGVN5NIUGUeRlbOEXlxWPBS/QVJB7jXjnou6BMA7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HKuQIkMRdR/d/cE/h9oc6XC1rRUWMeTMXXrsVgegY1GcKKI+f/+WYV9hjre+DIcDWIhrnuzFAm2n3R3tZ3yK0NVFAzW3kpMrB6QwFrctjy2hqGwsoz+ii/+Cbs6cb7XbrU5bOKl9qbr/k5OejPq+ZCU6cxAso3zuJEThKqw8rDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHHXHH5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g2wtC/mL42xpHuEvCodwUZsj1VvmE1mF9tY3Olrl60wgWLPL6mSQWTkgn3+oR3aqDx94XoZEt+UwRlTTT/MYCy1Grh4ro/LE0Q+o05ZmXDTlR3P5siaSOcvZ8i+fxDHcg7N2StcKmQ0gsaFOKkCB+C5hDCSfLZKl1qhaPsjYKTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oavU/PZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHHXHH5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CB5C4DDF2;
-	Tue, 27 Aug 2024 15:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oavU/PZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02C4C4DDF2;
+	Tue, 27 Aug 2024 15:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771528;
-	bh=0S11KY+RA0yLmZyiLiAxFGC1hm9h6QdY5JT35YFI6bU=;
+	s=korg; t=1724771532;
+	bh=PNdGVN5NIUGUeRlbOEXlxWPBS/QVJB7jXjnou6BMA7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wHHXHH5JaxGKtAAqNpeEqTRO6NCpplzpVtryHMHWhPKA+iU5E7QE3PJL9+1TqHHWa
-	 2I/xxWMxlBK5pOLjjwtxcOLO6dYtRyi7heSafcnp9QR+dWohm+oHKtaO9WHgsqNlkS
-	 O/ZoFit78j/pSQDfWA75ZR6xRbVq2evpmkL8KOfM=
+	b=oavU/PZ6QYD7Nd5QCzbl3U5MiE8J/ZOUCWDF4ANQ68tB0xIH7+fJWnQ417k2VHD6T
+	 pc5pHCT9rgPu4uyrIgA72WsKCoO+S6D9s5yxNEk9IVQ4G11AG3jLtVPBHIP2M7icx+
+	 3jYHK1KfKFTzWh8HJ4bGls8la2OeDX6+g8oXA+Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.10 216/273] drm/xe: Dont initialize fences at xe_sched_job_create()
-Date: Tue, 27 Aug 2024 16:39:00 +0200
-Message-ID: <20240827143841.627900992@linuxfoundation.org>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 199/273] drm/msm/dpu: take plane rotation into account for wide planes
+Date: Tue, 27 Aug 2024 16:38:43 +0200
+Message-ID: <20240827143840.982993046@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -46,479 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 0ac7a2c745e8a42803378b944fa0f4455b7240f6 ]
+[ Upstream commit d3a785e4f983f523380e023d8a05fb6d04402957 ]
 
-Pre-allocate but don't initialize fences at xe_sched_job_create(),
-and initialize / arm them instead at xe_sched_job_arm(). This
-makes it possible to move xe_sched_job_create() with its memory
-allocation out of any lock that is required for fence
-initialization, and that may not allow memory allocation under it.
+Take into account the plane rotation and flipping when calculating src
+positions for the wide plane parts.
 
-Replaces the struct dma_fence_array for parallell jobs with a
-struct dma_fence_chain, since the former doesn't allow
-a split-up between allocation and initialization.
+This is not an issue yet, because rotation is only supported for the
+UBWC planes and wide UBWC planes are rejected anyway because in parallel
+multirect case only the half of the usual width is supported for tiled
+formats. However it's better to fix this now rather than stumbling upon
+it later.
 
-v2:
-- Rebase.
-- Don't always use the first lrc when initializing parallel
-  lrc fences.
-- Use dma_fence_chain_contained() to access the lrc fences.
-
-v4:
-- Add an assert that job->lrc_seqno == fence->seqno.
-  (Matthew Brost)
-
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com> #v2
-Link: https://patchwork.freedesktop.org/patch/msgid/20240527135912.152156-4-thomas.hellstrom@linux.intel.com
-Stable-dep-of: 9e7f30563677 ("drm/xe: Free job before xe_exec_queue_put")
+Fixes: 80e8ae3b38ab ("drm/msm/dpu: add support for wide planes")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/601059/
+Link: https://lore.kernel.org/r/20240627-dpu-virtual-wide-v5-3-5efb90cbb8be@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec_queue.c       |   5 -
- drivers/gpu/drm/xe/xe_exec_queue_types.h |  10 --
- drivers/gpu/drm/xe/xe_ring_ops.c         |  12 +-
- drivers/gpu/drm/xe/xe_sched_job.c        | 161 +++++++++++++----------
- drivers/gpu/drm/xe/xe_sched_job_types.h  |  18 ++-
- drivers/gpu/drm/xe/xe_trace.h            |   2 +-
- 6 files changed, 115 insertions(+), 93 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
-index 79d099e054916..2ae4420e29353 100644
---- a/drivers/gpu/drm/xe/xe_exec_queue.c
-+++ b/drivers/gpu/drm/xe/xe_exec_queue.c
-@@ -96,11 +96,6 @@ static struct xe_exec_queue *__xe_exec_queue_alloc(struct xe_device *xe,
- 		}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index cbdb9628d962d..c31d283d1c6c1 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -865,6 +865,10 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 
+ 	max_linewidth = pdpu->catalog->caps->max_linewidth;
+ 
++	drm_rect_rotate(&pipe_cfg->src_rect,
++			new_plane_state->fb->width, new_plane_state->fb->height,
++			new_plane_state->rotation);
++
+ 	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+ 	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
+ 		/*
+@@ -914,6 +918,14 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
  	}
  
--	if (xe_exec_queue_is_parallel(q)) {
--		q->parallel.composite_fence_ctx = dma_fence_context_alloc(1);
--		q->parallel.composite_fence_seqno = 0;
--	}
--
- 	return q;
- }
- 
-diff --git a/drivers/gpu/drm/xe/xe_exec_queue_types.h b/drivers/gpu/drm/xe/xe_exec_queue_types.h
-index ee78d497d838a..f0c40e8ad80a1 100644
---- a/drivers/gpu/drm/xe/xe_exec_queue_types.h
-+++ b/drivers/gpu/drm/xe/xe_exec_queue_types.h
-@@ -103,16 +103,6 @@ struct xe_exec_queue {
- 		struct xe_guc_exec_queue *guc;
- 	};
- 
--	/**
--	 * @parallel: parallel submission state
--	 */
--	struct {
--		/** @parallel.composite_fence_ctx: context composite fence */
--		u64 composite_fence_ctx;
--		/** @parallel.composite_fence_seqno: seqno for composite fence */
--		u32 composite_fence_seqno;
--	} parallel;
--
- 	/** @sched_props: scheduling properties */
- 	struct {
- 		/** @sched_props.timeslice_us: timeslice period in micro-seconds */
-diff --git a/drivers/gpu/drm/xe/xe_ring_ops.c b/drivers/gpu/drm/xe/xe_ring_ops.c
-index 3b6aad8dea99a..c59c4373aefad 100644
---- a/drivers/gpu/drm/xe/xe_ring_ops.c
-+++ b/drivers/gpu/drm/xe/xe_ring_ops.c
-@@ -380,7 +380,7 @@ static void emit_migration_job_gen12(struct xe_sched_job *job,
- 
- 	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE; /* Enabled again below */
- 
--	i = emit_bb_start(job->batch_addr[0], BIT(8), dw, i);
-+	i = emit_bb_start(job->ptrs[0].batch_addr, BIT(8), dw, i);
- 
- 	if (!IS_SRIOV_VF(gt_to_xe(job->q->gt))) {
- 		/* XXX: Do we need this? Leaving for now. */
-@@ -389,7 +389,7 @@ static void emit_migration_job_gen12(struct xe_sched_job *job,
- 		dw[i++] = preparser_disable(false);
- 	}
- 
--	i = emit_bb_start(job->batch_addr[1], BIT(8), dw, i);
-+	i = emit_bb_start(job->ptrs[1].batch_addr, BIT(8), dw, i);
- 
- 	dw[i++] = MI_FLUSH_DW | MI_INVALIDATE_TLB | job->migrate_flush_flags |
- 		MI_FLUSH_DW_OP_STOREDW | MI_FLUSH_IMM_DW;
-@@ -411,7 +411,7 @@ static void emit_job_gen12_gsc(struct xe_sched_job *job)
- 	xe_gt_assert(gt, job->q->width <= 1); /* no parallel submission for GSCCS */
- 
- 	__emit_job_gen12_simple(job, job->q->lrc,
--				job->batch_addr[0],
-+				job->ptrs[0].batch_addr,
- 				xe_sched_job_lrc_seqno(job));
- }
- 
-@@ -427,7 +427,7 @@ static void emit_job_gen12_copy(struct xe_sched_job *job)
- 
- 	for (i = 0; i < job->q->width; ++i)
- 		__emit_job_gen12_simple(job, job->q->lrc + i,
--					job->batch_addr[i],
-+					job->ptrs[i].batch_addr,
- 					xe_sched_job_lrc_seqno(job));
- }
- 
-@@ -438,7 +438,7 @@ static void emit_job_gen12_video(struct xe_sched_job *job)
- 	/* FIXME: Not doing parallel handshake for now */
- 	for (i = 0; i < job->q->width; ++i)
- 		__emit_job_gen12_video(job, job->q->lrc + i,
--				       job->batch_addr[i],
-+				       job->ptrs[i].batch_addr,
- 				       xe_sched_job_lrc_seqno(job));
- }
- 
-@@ -448,7 +448,7 @@ static void emit_job_gen12_render_compute(struct xe_sched_job *job)
- 
- 	for (i = 0; i < job->q->width; ++i)
- 		__emit_job_gen12_render_compute(job, job->q->lrc + i,
--						job->batch_addr[i],
-+						job->ptrs[i].batch_addr,
- 						xe_sched_job_lrc_seqno(job));
- }
- 
-diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
-index 874450be327ec..29f3201d7dfac 100644
---- a/drivers/gpu/drm/xe/xe_sched_job.c
-+++ b/drivers/gpu/drm/xe/xe_sched_job.c
-@@ -6,7 +6,7 @@
- #include "xe_sched_job.h"
- 
- #include <drm/xe_drm.h>
--#include <linux/dma-fence-array.h>
-+#include <linux/dma-fence-chain.h>
- #include <linux/slab.h>
- 
- #include "xe_device.h"
-@@ -29,7 +29,7 @@ int __init xe_sched_job_module_init(void)
- 	xe_sched_job_slab =
- 		kmem_cache_create("xe_sched_job",
- 				  sizeof(struct xe_sched_job) +
--				  sizeof(u64), 0,
-+				  sizeof(struct xe_job_ptrs), 0,
- 				  SLAB_HWCACHE_ALIGN, NULL);
- 	if (!xe_sched_job_slab)
- 		return -ENOMEM;
-@@ -37,7 +37,7 @@ int __init xe_sched_job_module_init(void)
- 	xe_sched_job_parallel_slab =
- 		kmem_cache_create("xe_sched_job_parallel",
- 				  sizeof(struct xe_sched_job) +
--				  sizeof(u64) *
-+				  sizeof(struct xe_job_ptrs) *
- 				  XE_HW_ENGINE_MAX_INSTANCE, 0,
- 				  SLAB_HWCACHE_ALIGN, NULL);
- 	if (!xe_sched_job_parallel_slab) {
-@@ -79,26 +79,33 @@ static struct xe_device *job_to_xe(struct xe_sched_job *job)
- 	return gt_to_xe(job->q->gt);
- }
- 
-+/* Free unused pre-allocated fences */
-+static void xe_sched_job_free_fences(struct xe_sched_job *job)
-+{
-+	int i;
++	drm_rect_rotate_inv(&pipe_cfg->src_rect,
++			    new_plane_state->fb->width, new_plane_state->fb->height,
++			    new_plane_state->rotation);
++	if (r_pipe->sspp)
++		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
++				    new_plane_state->fb->width, new_plane_state->fb->height,
++				    new_plane_state->rotation);
 +
-+	for (i = 0; i < job->q->width; ++i) {
-+		struct xe_job_ptrs *ptrs = &job->ptrs[i];
-+
-+		if (ptrs->lrc_fence)
-+			xe_lrc_free_seqno_fence(ptrs->lrc_fence);
-+		if (ptrs->chain_fence)
-+			dma_fence_chain_free(ptrs->chain_fence);
-+	}
-+}
-+
- struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
- 					 u64 *batch_addr)
- {
--	struct xe_sched_job *job;
--	struct dma_fence **fences;
- 	bool is_migration = xe_sched_job_is_migration(q);
-+	struct xe_sched_job *job;
- 	int err;
--	int i, j;
-+	int i;
- 	u32 width;
- 
- 	/* only a kernel context can submit a vm-less job */
- 	XE_WARN_ON(!q->vm && !(q->flags & EXEC_QUEUE_FLAG_KERNEL));
- 
--	/* Migration and kernel engines have their own locking */
--	if (!(q->flags & (EXEC_QUEUE_FLAG_KERNEL | EXEC_QUEUE_FLAG_VM))) {
--		lockdep_assert_held(&q->vm->lock);
--		if (!xe_vm_in_lr_mode(q->vm))
--			xe_vm_assert_held(q->vm);
--	}
--
- 	job = job_alloc(xe_exec_queue_is_parallel(q) || is_migration);
- 	if (!job)
- 		return ERR_PTR(-ENOMEM);
-@@ -111,43 +118,25 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
- 	if (err)
- 		goto err_free;
- 
--	if (!xe_exec_queue_is_parallel(q)) {
--		job->fence = xe_lrc_create_seqno_fence(q->lrc);
--		if (IS_ERR(job->fence)) {
--			err = PTR_ERR(job->fence);
--			goto err_sched_job;
--		}
--		job->lrc_seqno = job->fence->seqno;
--	} else {
--		struct dma_fence_array *cf;
-+	for (i = 0; i < q->width; ++i) {
-+		struct dma_fence *fence = xe_lrc_alloc_seqno_fence();
-+		struct dma_fence_chain *chain;
- 
--		fences = kmalloc_array(q->width, sizeof(*fences), GFP_KERNEL);
--		if (!fences) {
--			err = -ENOMEM;
-+		if (IS_ERR(fence)) {
-+			err = PTR_ERR(fence);
- 			goto err_sched_job;
- 		}
-+		job->ptrs[i].lrc_fence = fence;
- 
--		for (j = 0; j < q->width; ++j) {
--			fences[j] = xe_lrc_create_seqno_fence(q->lrc + j);
--			if (IS_ERR(fences[j])) {
--				err = PTR_ERR(fences[j]);
--				goto err_fences;
--			}
--			if (!j)
--				job->lrc_seqno = fences[0]->seqno;
--		}
-+		if (i + 1 == q->width)
-+			continue;
- 
--		cf = dma_fence_array_create(q->width, fences,
--					    q->parallel.composite_fence_ctx,
--					    q->parallel.composite_fence_seqno++,
--					    false);
--		if (!cf) {
--			--q->parallel.composite_fence_seqno;
-+		chain = dma_fence_chain_alloc();
-+		if (!chain) {
- 			err = -ENOMEM;
--			goto err_fences;
-+			goto err_sched_job;
- 		}
--
--		job->fence = &cf->base;
-+		job->ptrs[i].chain_fence = chain;
- 	}
- 
- 	width = q->width;
-@@ -155,19 +144,14 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
- 		width = 2;
- 
- 	for (i = 0; i < width; ++i)
--		job->batch_addr[i] = batch_addr[i];
-+		job->ptrs[i].batch_addr = batch_addr[i];
- 
- 	xe_pm_runtime_get_noresume(job_to_xe(job));
- 	trace_xe_sched_job_create(job);
- 	return job;
- 
--err_fences:
--	for (j = j - 1; j >= 0; --j) {
--		--q->lrc[j].fence_ctx.next_seqno;
--		dma_fence_put(fences[j]);
--	}
--	kfree(fences);
- err_sched_job:
-+	xe_sched_job_free_fences(job);
- 	drm_sched_job_cleanup(&job->drm);
- err_free:
- 	xe_exec_queue_put(q);
-@@ -188,6 +172,7 @@ void xe_sched_job_destroy(struct kref *ref)
- 		container_of(ref, struct xe_sched_job, refcount);
- 	struct xe_device *xe = job_to_xe(job);
- 
-+	xe_sched_job_free_fences(job);
- 	xe_exec_queue_put(job->q);
- 	dma_fence_put(job->fence);
- 	drm_sched_job_cleanup(&job->drm);
-@@ -195,27 +180,32 @@ void xe_sched_job_destroy(struct kref *ref)
- 	xe_pm_runtime_put(xe);
- }
- 
--void xe_sched_job_set_error(struct xe_sched_job *job, int error)
-+/* Set the error status under the fence to avoid racing with signaling */
-+static bool xe_fence_set_error(struct dma_fence *fence, int error)
- {
--	if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &job->fence->flags))
--		return;
-+	unsigned long irq_flags;
-+	bool signaled;
-+
-+	spin_lock_irqsave(fence->lock, irq_flags);
-+	signaled = test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags);
-+	if (!signaled)
-+		dma_fence_set_error(fence, error);
-+	spin_unlock_irqrestore(fence->lock, irq_flags);
- 
--	dma_fence_set_error(job->fence, error);
-+	return signaled;
-+}
- 
--	if (dma_fence_is_array(job->fence)) {
--		struct dma_fence_array *array =
--			to_dma_fence_array(job->fence);
--		struct dma_fence **child = array->fences;
--		unsigned int nchild = array->num_fences;
-+void xe_sched_job_set_error(struct xe_sched_job *job, int error)
-+{
-+	if (xe_fence_set_error(job->fence, error))
-+		return;
- 
--		do {
--			struct dma_fence *current_fence = *child++;
-+	if (dma_fence_is_chain(job->fence)) {
-+		struct dma_fence *iter;
- 
--			if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT,
--				     &current_fence->flags))
--				continue;
--			dma_fence_set_error(current_fence, error);
--		} while (--nchild);
-+		dma_fence_chain_for_each(iter, job->fence)
-+			xe_fence_set_error(dma_fence_chain_contained(iter),
-+					   error);
- 	}
- 
- 	trace_xe_sched_job_set_error(job);
-@@ -230,7 +220,7 @@ bool xe_sched_job_started(struct xe_sched_job *job)
- 
- 	return !__dma_fence_is_later(xe_sched_job_lrc_seqno(job),
- 				     xe_lrc_start_seqno(lrc),
--				     dma_fence_array_first(job->fence)->ops);
-+				     dma_fence_chain_contained(job->fence)->ops);
- }
- 
- bool xe_sched_job_completed(struct xe_sched_job *job)
-@@ -244,13 +234,24 @@ bool xe_sched_job_completed(struct xe_sched_job *job)
- 
- 	return !__dma_fence_is_later(xe_sched_job_lrc_seqno(job),
- 				     xe_lrc_seqno(lrc),
--				     dma_fence_array_first(job->fence)->ops);
-+				     dma_fence_chain_contained(job->fence)->ops);
- }
- 
- void xe_sched_job_arm(struct xe_sched_job *job)
- {
- 	struct xe_exec_queue *q = job->q;
-+	struct dma_fence *fence, *prev;
- 	struct xe_vm *vm = q->vm;
-+	u64 seqno = 0;
-+	int i;
-+
-+	/* Migration and kernel engines have their own locking */
-+	if (IS_ENABLED(CONFIG_LOCKDEP) &&
-+	    !(q->flags & (EXEC_QUEUE_FLAG_KERNEL | EXEC_QUEUE_FLAG_VM))) {
-+		lockdep_assert_held(&q->vm->lock);
-+		if (!xe_vm_in_lr_mode(q->vm))
-+			xe_vm_assert_held(q->vm);
-+	}
- 
- 	if (vm && !xe_sched_job_is_migration(q) && !xe_vm_in_lr_mode(vm) &&
- 	    (vm->batch_invalidate_tlb || vm->tlb_flush_seqno != q->tlb_flush_seqno)) {
-@@ -259,6 +260,27 @@ void xe_sched_job_arm(struct xe_sched_job *job)
- 		job->ring_ops_flush_tlb = true;
- 	}
- 
-+	/* Arm the pre-allocated fences */
-+	for (i = 0; i < q->width; prev = fence, ++i) {
-+		struct dma_fence_chain *chain;
-+
-+		fence = job->ptrs[i].lrc_fence;
-+		xe_lrc_init_seqno_fence(&q->lrc[i], fence);
-+		job->ptrs[i].lrc_fence = NULL;
-+		if (!i) {
-+			job->lrc_seqno = fence->seqno;
-+			continue;
-+		} else {
-+			xe_assert(gt_to_xe(q->gt), job->lrc_seqno == fence->seqno);
-+		}
-+
-+		chain = job->ptrs[i - 1].chain_fence;
-+		dma_fence_chain_init(chain, prev, fence, seqno++);
-+		job->ptrs[i - 1].chain_fence = NULL;
-+		fence = &chain->base;
-+	}
-+
-+	job->fence = fence;
- 	drm_sched_job_arm(&job->drm);
- }
- 
-@@ -318,7 +340,8 @@ xe_sched_job_snapshot_capture(struct xe_sched_job *job)
- 
- 	snapshot->batch_addr_len = q->width;
- 	for (i = 0; i < q->width; i++)
--		snapshot->batch_addr[i] = xe_device_uncanonicalize_addr(xe, job->batch_addr[i]);
-+		snapshot->batch_addr[i] =
-+			xe_device_uncanonicalize_addr(xe, job->ptrs[i].batch_addr);
- 
- 	return snapshot;
- }
-diff --git a/drivers/gpu/drm/xe/xe_sched_job_types.h b/drivers/gpu/drm/xe/xe_sched_job_types.h
-index 990ddac55ed62..0d3f76fb05cea 100644
---- a/drivers/gpu/drm/xe/xe_sched_job_types.h
-+++ b/drivers/gpu/drm/xe/xe_sched_job_types.h
-@@ -11,6 +11,20 @@
- #include <drm/gpu_scheduler.h>
- 
- struct xe_exec_queue;
-+struct dma_fence;
-+struct dma_fence_chain;
-+
-+/**
-+ * struct xe_job_ptrs - Per hw engine instance data
-+ */
-+struct xe_job_ptrs {
-+	/** @lrc_fence: Pre-allocated uinitialized lrc fence.*/
-+	struct dma_fence *lrc_fence;
-+	/** @chain_fence: Pre-allocated ninitialized fence chain node. */
-+	struct dma_fence_chain *chain_fence;
-+	/** @batch_addr: Batch buffer address. */
-+	u64 batch_addr;
-+};
- 
- /**
-  * struct xe_sched_job - XE schedule job (batch buffer tracking)
-@@ -43,8 +57,8 @@ struct xe_sched_job {
- 	u32 migrate_flush_flags;
- 	/** @ring_ops_flush_tlb: The ring ops need to flush TLB before payload. */
- 	bool ring_ops_flush_tlb;
--	/** @batch_addr: batch buffer address of job */
--	u64 batch_addr[];
-+	/** @ptrs: per instance pointers. */
-+	struct xe_job_ptrs ptrs[];
- };
- 
- struct xe_sched_job_snapshot {
-diff --git a/drivers/gpu/drm/xe/xe_trace.h b/drivers/gpu/drm/xe/xe_trace.h
-index 6c6cecc58f63b..450f407c66e8f 100644
---- a/drivers/gpu/drm/xe/xe_trace.h
-+++ b/drivers/gpu/drm/xe/xe_trace.h
-@@ -272,7 +272,7 @@ DECLARE_EVENT_CLASS(xe_sched_job,
- 			   __entry->flags = job->q->flags;
- 			   __entry->error = job->fence->error;
- 			   __entry->fence = job->fence;
--			   __entry->batch_addr = (u64)job->batch_addr[0];
-+			   __entry->batch_addr = (u64)job->ptrs[0].batch_addr;
- 			   ),
- 
- 		    TP_printk("fence=%p, seqno=%u, lrc_seqno=%u, guc_id=%d, batch_addr=0x%012llx, guc_state=0x%x, flags=0x%x, error=%d",
+ 	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
