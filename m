@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F3219F485;
-	Tue, 27 Aug 2024 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D6F1BC9E3;
+	Tue, 27 Aug 2024 15:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771122; cv=none; b=HdynUJXlRso5QbU3TSmj0K/Bs3H4bhtBzRj51Clj7nlrvIyD/vRDPIZ5q2s4VAYgwGs2yaKvelvGtLwpaAoDiirIwhl+Utv7EGHTO3mgKsnxYB2oYtcrWYVAr5vYaGlZ2YwSG+BMlgW7+4xsD938oj5XRCFV/EwLphBb3VT+B/Q=
+	t=1724771125; cv=none; b=IKm63KqddLeQ7d7wbQ8QjyhQ5vfETmCpKkvte7/OMc8WyMnIkVsGOt9a/XaBg0pieqpmzszpBTrhGVISS6Bzldlzpi9hyN0TLK6mS5umqQiB5/szPNrNVXPejEuCSaTNBnrEGMt4Mxl/R+qGlTylM0rjtmw/c/URYGh87GMrCos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771122; c=relaxed/simple;
-	bh=F3CCdZZFApMxztZ0qBhLp4u4lzJzkgtGETBc+HTtiaY=;
+	s=arc-20240116; t=1724771125; c=relaxed/simple;
+	bh=6s+TVL6QrCvUI24uxB7FDtqaBItX/a57yQTIuj9HfOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHHOvDP3W6H57AKbku+BI/8RAMEDQcFPaVRjqBRBhbK9wACDnucmFkWQTpG6RTLkcudQmyPXXOPRGtVeif+CnHlGDPPZ1ILIy/JFEu3nGLyKUfz5Q50DW6E3U92PRSZZvihG5MCunQbprcktnjRhzCg8PDJ2DmcOuFjsnClTdGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQRHtyCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIbyc9pzS4ySUomRqkbafdFwwUMPfhEbEX5wW9EhybfPfIYBmahZ9fvze0DxkciWE0qvzvSbFBvL/wqXMcBnfM/p6fNZXbckiryYIYX+x21DAR+Pez2ctStCzNfi/QGRfTtVncIUyI/+GcOIM5MxnyDdWdKxhbpba3KKUcVj87Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0wIapqS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQRHtyCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3643EC6105F;
-	Tue, 27 Aug 2024 15:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0wIapqS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D5DC6106C;
+	Tue, 27 Aug 2024 15:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771122;
-	bh=F3CCdZZFApMxztZ0qBhLp4u4lzJzkgtGETBc+HTtiaY=;
+	s=korg; t=1724771125;
+	bh=6s+TVL6QrCvUI24uxB7FDtqaBItX/a57yQTIuj9HfOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQRHtyCCpXuFdihgd8myYBc9+LisKnEhXCYY1usroPAVTX9YN+dMaMxC0oKxTyw7L
-	 Y4X2MuCqHjxLGAJxEUIH+X4/2/QGLH+3IfBnc8sBu0m4eByjlD2C6Hu7LdWpsQT/lF
-	 G2uarD8gsFqApXjURp+yNQ3EC+OMrnGfdW5uw0jQ=
+	b=P0wIapqSq3iKqjDKfAuRFF8sMISIdCGhjZaCL0EyxQd3QYitMfxFuyHqYy0PQjRWv
+	 K1SRUpl9Hd37upJtQcp9SoUFc0RlBMI3kpnO4sNhAzyYLYtbjlHcb0pTBaoiAhyTlb
+	 LSeMIp3hzvU05+Ls8eGIjuUcDlMWSD5NrdePnrTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 092/273] net/mlx5e: Correctly report errors for ethtool rx flows
-Date: Tue, 27 Aug 2024 16:36:56 +0200
-Message-ID: <20240827143836.914149763@linuxfoundation.org>
+Subject: [PATCH 6.10 093/273] atm: idt77252: prevent use after free in dequeue_rx()
+Date: Tue, 27 Aug 2024 16:36:57 +0200
+Message-ID: <20240827143836.951802493@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -54,44 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit cbc796be1779c4dbc9a482c7233995e2a8b6bfb3 ]
+[ Upstream commit a9a18e8f770c9b0703dab93580d0b02e199a4c79 ]
 
-Previously, an ethtool rx flow with no attrs would not be added to the
-NIC as it has no rules to configure the hw with, but it would be
-reported as successful to the caller (return code 0). This is confusing
-for the user as ethtool then reports "Added rule $num", but no rule was
-actually added.
+We can't dereference "skb" after calling vcc->push() because the skb
+is released.
 
-This change corrects that by instead reporting these wrong rules as
--EINVAL.
-
-Fixes: b29c61dac3a2 ("net/mlx5e: Ethtool steering flow validation refactoring")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20240808144107.2095424-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/atm/idt77252.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c
-index 3eccdadc03578..773624bb2c5d5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c
-@@ -734,7 +734,7 @@ mlx5e_ethtool_flow_replace(struct mlx5e_priv *priv,
- 	if (num_tuples <= 0) {
- 		netdev_warn(priv->netdev, "%s: flow is not valid %d\n",
- 			    __func__, num_tuples);
--		return num_tuples;
-+		return num_tuples < 0 ? num_tuples : -EINVAL;
- 	}
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index e7f713cd70d3f..a876024d8a05f 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -1118,8 +1118,8 @@ dequeue_rx(struct idt77252_dev *card, struct rsq_entry *rsqe)
+ 	rpp->len += skb->len;
  
- 	eth_ft = get_flow_table(priv, fs, num_tuples);
+ 	if (stat & SAR_RSQE_EPDU) {
++		unsigned int len, truesize;
+ 		unsigned char *l1l2;
+-		unsigned int len;
+ 
+ 		l1l2 = (unsigned char *) ((unsigned long) skb->data + skb->len - 6);
+ 
+@@ -1189,14 +1189,15 @@ dequeue_rx(struct idt77252_dev *card, struct rsq_entry *rsqe)
+ 		ATM_SKB(skb)->vcc = vcc;
+ 		__net_timestamp(skb);
+ 
++		truesize = skb->truesize;
+ 		vcc->push(vcc, skb);
+ 		atomic_inc(&vcc->stats->rx);
+ 
+-		if (skb->truesize > SAR_FB_SIZE_3)
++		if (truesize > SAR_FB_SIZE_3)
+ 			add_rx_skb(card, 3, SAR_FB_SIZE_3, 1);
+-		else if (skb->truesize > SAR_FB_SIZE_2)
++		else if (truesize > SAR_FB_SIZE_2)
+ 			add_rx_skb(card, 2, SAR_FB_SIZE_2, 1);
+-		else if (skb->truesize > SAR_FB_SIZE_1)
++		else if (truesize > SAR_FB_SIZE_1)
+ 			add_rx_skb(card, 1, SAR_FB_SIZE_1, 1);
+ 		else
+ 			add_rx_skb(card, 0, SAR_FB_SIZE_0, 1);
 -- 
 2.43.0
 
