@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8F41C6881;
-	Tue, 27 Aug 2024 15:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B092A1C3F19;
+	Tue, 27 Aug 2024 15:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771473; cv=none; b=mfCg9doJFO0PvSmEG0PvSOGgDrlTLWJ83GvlZWdsnlMv9d30pWl1EWgkcfLExeHOy0Xl5c9aOcxeqoEMIeULYBPWlhkqG6cYAPM3Jt7dyMR2wvZD4QZe2yG6Bn8hMvXhY/hG0P92w5esYpg60FzexX650NFTsiEs1w+COVVQFbs=
+	t=1724771476; cv=none; b=QomI77B+KnxbuA0atEk8cCYEtAWP5ruSAvxAMtZGKilrpk5usAnxcO7rnGI7nSo/390lcDw63A42GgoLy1DdFgrwl8icf/IBeEYELE7ZZIxzC/WEAAkxmWK6prUuhPdPd1X3vTb7qDpx5zJtooBsNauimmhfadQVKibjEOh8lu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771473; c=relaxed/simple;
-	bh=04L+D9jArrrlnYWljTwMt9fWdMjedjP73Z1jGJiypcQ=;
+	s=arc-20240116; t=1724771476; c=relaxed/simple;
+	bh=UX2ow45SWD55L8hVvXK+LEfckR1xm5R4l3dlpiBDsi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrzdPY9jlpV+14/49wrUHbGRbohCLyS2ocdu0MVDwp8e3SC7Yc0Zqa+YEpGx9zyK4MO/9cs5WOefGGL+od+8L3uq5xDmwtj8SZP2b71Kvhu3LddLPuW5GsK7HK/D+P1fJHvi+hTz4AvPZlza6TqwHkzcyoO1aK1CRBPLSUyL27c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/sxVoxp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYctcG51fZTnYQe95buzrSQ/MM4ZgPXfoWT2NTffRgiUSoNoMDM5ou2qXtcqq0KolRooFQQGvpC2WXrkAK77RiuTxtOeuOsOO8gW2M+rzgw5xZWiAnS+bV8+ESuoV9b0Gs74epS8Gt3ekNHV25NaCRTU4EwMNdOMdBiQh+j4vDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWBVjnPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/sxVoxp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7DEC4DDF2;
-	Tue, 27 Aug 2024 15:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWBVjnPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE09C4DDF2;
+	Tue, 27 Aug 2024 15:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771473;
-	bh=04L+D9jArrrlnYWljTwMt9fWdMjedjP73Z1jGJiypcQ=;
+	s=korg; t=1724771476;
+	bh=UX2ow45SWD55L8hVvXK+LEfckR1xm5R4l3dlpiBDsi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/sxVoxpBUdIDY/udlNFxSOlYylQOx+e6yzY3EyjJE8sJ/rWgSxJkJoijdPtSttNm
-	 h5WWSExbYUPcCqOPU525AyBQN3lSoC8HaM2F5aorZu9PaWvoaq0KHCYqtDEix17nnS
-	 yoKZKXIqG7wtybM2prHD2/dnOhv7gGxUqyuaSGjs=
+	b=dWBVjnPiEL36axWEmyUh8On/Xv5SdAxN4Wx42OCkDj/VysRFXzgFEwhBVxECFLnRD
+	 YT3iHgLZy+ZSvsRHY07bBUbQ5oIqY0+nG82eLHhFmN89oB3IgmWE/1QP3cSnFwW99A
+	 1wagKmHrx6V2QdvZq0RAiZIDpmKwHjNu40EeuAEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 167/273] ip6_tunnel: Fix broken GRO
-Date: Tue, 27 Aug 2024 16:38:11 +0200
-Message-ID: <20240827143839.764135272@linuxfoundation.org>
+Subject: [PATCH 6.10 168/273] bonding: fix bond_ipsec_offload_ok return type
+Date: Tue, 27 Aug 2024 16:38:12 +0200
+Message-ID: <20240827143839.801874401@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,76 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 4b3e33fcc38f7750604b065c55a43e94c5bc3145 ]
+[ Upstream commit fc59b9a5f7201b9f7272944596113a82cc7773d5 ]
 
-GRO code checks for matching layer 2 headers to see, if packet belongs
-to the same flow and because ip6 tunnel set dev->hard_header_len
-this check fails in cases, where it shouldn't. To fix this don't
-set hard_header_len, but use needed_headroom like ipv4/ip_tunnel.c
-does.
+Fix the return type which should be bool.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Link: https://patch.msgid.link/20240815151419.109864-1-tbogendoerfer@suse.de
+Fixes: 955b785ec6b3 ("bonding: fix suspicious RCU usage in bond_ipsec_offload_ok()")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_tunnel.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/bonding/bond_main.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 9dee0c1279554..87dfb565a9f81 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1507,7 +1507,8 @@ static void ip6_tnl_link_config(struct ip6_tnl *t)
- 			tdev = __dev_get_by_index(t->net, p->link);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 2ed0da0684906..2370da4632149 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -599,34 +599,28 @@ static bool bond_ipsec_offload_ok(struct sk_buff *skb, struct xfrm_state *xs)
+ 	struct net_device *real_dev;
+ 	struct slave *curr_active;
+ 	struct bonding *bond;
+-	int err;
++	bool ok = false;
  
- 		if (tdev) {
--			dev->hard_header_len = tdev->hard_header_len + t_hlen;
-+			dev->needed_headroom = tdev->hard_header_len +
-+				tdev->needed_headroom + t_hlen;
- 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 	bond = netdev_priv(bond_dev);
+ 	rcu_read_lock();
+ 	curr_active = rcu_dereference(bond->curr_active_slave);
+ 	real_dev = curr_active->dev;
  
- 			mtu = mtu - t_hlen;
-@@ -1731,7 +1732,9 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
- int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
- {
- 	struct ip6_tnl *tnl = netdev_priv(dev);
-+	int t_hlen;
+-	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP) {
+-		err = false;
++	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP)
+ 		goto out;
+-	}
  
-+	t_hlen = tnl->hlen + sizeof(struct ipv6hdr);
- 	if (tnl->parms.proto == IPPROTO_IPV6) {
- 		if (new_mtu < IPV6_MIN_MTU)
- 			return -EINVAL;
-@@ -1740,10 +1743,10 @@ int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
- 			return -EINVAL;
- 	}
- 	if (tnl->parms.proto == IPPROTO_IPV6 || tnl->parms.proto == 0) {
--		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len)
-+		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len - t_hlen)
- 			return -EINVAL;
- 	} else {
--		if (new_mtu > IP_MAX_MTU - dev->hard_header_len)
-+		if (new_mtu > IP_MAX_MTU - dev->hard_header_len - t_hlen)
- 			return -EINVAL;
- 	}
- 	WRITE_ONCE(dev->mtu, new_mtu);
-@@ -1887,12 +1890,11 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
- 	t_hlen = t->hlen + sizeof(struct ipv6hdr);
+-	if (!xs->xso.real_dev) {
+-		err = false;
++	if (!xs->xso.real_dev)
+ 		goto out;
+-	}
  
- 	dev->type = ARPHRD_TUNNEL6;
--	dev->hard_header_len = LL_MAX_HEADER + t_hlen;
- 	dev->mtu = ETH_DATA_LEN - t_hlen;
- 	if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
- 		dev->mtu -= 8;
- 	dev->min_mtu = ETH_MIN_MTU;
--	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len;
-+	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len - t_hlen;
+ 	if (!real_dev->xfrmdev_ops ||
+ 	    !real_dev->xfrmdev_ops->xdo_dev_offload_ok ||
+-	    netif_is_bond_master(real_dev)) {
+-		err = false;
++	    netif_is_bond_master(real_dev))
+ 		goto out;
+-	}
  
- 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
- 	netdev_lockdep_set_classes(dev);
+-	err = real_dev->xfrmdev_ops->xdo_dev_offload_ok(skb, xs);
++	ok = real_dev->xfrmdev_ops->xdo_dev_offload_ok(skb, xs);
+ out:
+ 	rcu_read_unlock();
+-	return err;
++	return ok;
+ }
+ 
+ static const struct xfrmdev_ops bond_xfrmdev_ops = {
 -- 
 2.43.0
 
