@@ -1,44 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682911A08A3;
-	Tue, 27 Aug 2024 14:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46721C578B;
+	Tue, 27 Aug 2024 14:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770436; cv=none; b=rzoyxRwRCHTLBW2cl0SFjl2XawzJmIubVUZVBUBpcSfA90QAJJPy3puGW8bkjg3PHd6mH8jirXLqnsFp72DmkQUZ1zZATI6bQSyxWvRmXanv0usLxmOyO0a5u9aCi6mcahbQlYWoMBSEbGKKo7JCl2Q2XLdObzkETuvBDwioQUo=
+	t=1724770439; cv=none; b=tcW9WdGlmOJdfR3t/B9rUexgx5Lyrh2ujJ/z1YJ7VMzRZOc7OlJ2s2smy+V/j53trpYN+28EVtWfCnMymSR1G2CChRrIPqSmTQR6AUoZcnYeCoXFN26pu115pbkYv4qEbhwBrPWbkz931SRz2YyUcjDBNoulRxiSYMeTmAuEbag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770436; c=relaxed/simple;
-	bh=ItnV7OVJnE/qSWuzkYFR40gQcYeJXoOfA56uWPTxtp8=;
+	s=arc-20240116; t=1724770439; c=relaxed/simple;
+	bh=zrvzYPS64IbfvHb/JpK+SV/8bxlYYQdK9qNiioO6XZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmJnklAffzhFLpR/u0rzOsXSqA329MKqwD9bufJDD/ErY/JbqkLycmqscOINpsb/ZEk05l+MM/YX/0C8eNy8Dtvawl1Kf6rVe1Zfu2LstBI13FGbdo69w23541+xMVS1zLv0W/Cg3rA89ZswDOk9umwJ/C0rCjhTtGNoXZdHPBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijWe5gCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TFuSV+WVA54iWk1w+CD5eIwbqscaKkc2zy8e2YMtqAUKVMAnZ1BlavkkfdiuvWQFtBhEkAUvaSgFr49ZNAmGVpleh+Ol8RcSyY541ykFCecoVRsN+jtbmJGRy3BfctEbkeP8B6WwVHk7U/rJuzzRveJyWrTLL7E4qfJBajA+9FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyut4s8o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijWe5gCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD1CC6106F;
-	Tue, 27 Aug 2024 14:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyut4s8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E39C6106F;
+	Tue, 27 Aug 2024 14:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770436;
-	bh=ItnV7OVJnE/qSWuzkYFR40gQcYeJXoOfA56uWPTxtp8=;
+	s=korg; t=1724770439;
+	bh=zrvzYPS64IbfvHb/JpK+SV/8bxlYYQdK9qNiioO6XZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijWe5gCqq4w2v7LKoQqSx293Lz2B5KXwbxWGFxuRvanHNpw8L7MTK0MeiOHohoKEW
-	 7Fy6ModrEIfeH/tz4LfeBBkguZWDItuc5pVTqHAqThLDIxIy5/IF76Lg3wJTdVA1BJ
-	 PLtlEeKKVG775DdcU99VCVPOYcnS/f8kUaG+6cC0=
+	b=iyut4s8o4B8hFNgvTrkNQvvTeh7nGpR81QUCkNwep14MmBiVLBCBUmm9QzME9VgxZ
+	 tR2sygs3WA+6eCjK3rkj6es7DB02L6SCN2HloXrJqlJbJEeAVnK7ucZMbe+9s39zPX
+	 BquAgztxo4pH2/rTmYAfJOpIYtsH5DoKtYzSzbUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	James Bottomley <James.Bottomley@HansenPartnership.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Christoph Lameter <cl@linux.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 229/341] selftests: memfd_secret: dont build memfd_secret test on unsupported arches
-Date: Tue, 27 Aug 2024 16:37:40 +0200
-Message-ID: <20240827143852.125252731@linuxfoundation.org>
+Subject: [PATCH 6.6 230/341] change alloc_pages name in dma_map_ops to avoid name conflicts
+Date: Tue, 27 Aug 2024 16:37:41 +0200
+Message-ID: <20240827143852.163123189@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,84 +63,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-[ Upstream commit 7c5e8d212d7d81991a580e7de3904ea213d9a852 ]
+[ Upstream commit 8a2f11878771da65b8ac135c73b47dae13afbd62 ]
 
-[1] mentions that memfd_secret is only supported on arm64, riscv, x86 and
-x86_64 for now.  It doesn't support other architectures.  I found the
-build error on arm and decided to send the fix as it was creating noise on
-KernelCI:
+After redefining alloc_pages, all uses of that name are being replaced.
+Change the conflicting names to prevent preprocessor from replacing them
+when it's not intended.
 
-memfd_secret.c: In function 'memfd_secret':
-memfd_secret.c:42:24: error: '__NR_memfd_secret' undeclared (first use in this function);
-did you mean 'memfd_secret'?
-   42 |         return syscall(__NR_memfd_secret, flags);
-      |                        ^~~~~~~~~~~~~~~~~
-      |                        memfd_secret
-
-Hence I'm adding condition that memfd_secret should only be compiled on
-supported architectures.
-
-Also check in run_vmtests script if memfd_secret binary is present before
-executing it.
-
-Link: https://lkml.kernel.org/r/20240812061522.1933054-1-usama.anjum@collabora.com
-Link: https://lore.kernel.org/all/20210518072034.31572-7-rppt@kernel.org/ [1]
-Link: https://lkml.kernel.org/r/20240809075642.403247-1-usama.anjum@collabora.com
-Fixes: 76fe17ef588a ("secretmem: test: add basic selftest for memfd_secret(2)")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20240321163705.3067592-18-surenb@google.com
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Tested-by: Kees Cook <keescook@chromium.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: Andreas Hindborg <a.hindborg@samsung.com>
+Cc: Benno Lossin <benno.lossin@proton.me>
+Cc: "Björn Roy Baron" <bjorn3_gh@protonmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Gary Guo <gary@garyguo.net>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 61ebe5a747da ("mm/vmalloc: fix page mapping if vm_area_alloc_pages() with high order fallback to order 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/Makefile       | 2 ++
- tools/testing/selftests/mm/run_vmtests.sh | 3 +++
- 2 files changed, 5 insertions(+)
+ arch/alpha/kernel/pci_iommu.c           | 2 +-
+ arch/mips/jazz/jazzdma.c                | 2 +-
+ arch/powerpc/kernel/dma-iommu.c         | 2 +-
+ arch/powerpc/platforms/ps3/system-bus.c | 4 ++--
+ arch/powerpc/platforms/pseries/vio.c    | 2 +-
+ arch/x86/kernel/amd_gart_64.c           | 2 +-
+ drivers/iommu/dma-iommu.c               | 2 +-
+ drivers/parisc/ccio-dma.c               | 2 +-
+ drivers/parisc/sba_iommu.c              | 2 +-
+ drivers/xen/grant-dma-ops.c             | 2 +-
+ drivers/xen/swiotlb-xen.c               | 2 +-
+ include/linux/dma-map-ops.h             | 2 +-
+ kernel/dma/mapping.c                    | 4 ++--
+ 13 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/Makefile b/tools/testing/selftests/mm/Makefile
-index 8b2b9bb8bad10..c9fcbc6e5121e 100644
---- a/tools/testing/selftests/mm/Makefile
-+++ b/tools/testing/selftests/mm/Makefile
-@@ -51,7 +51,9 @@ TEST_GEN_FILES += madv_populate
- TEST_GEN_FILES += map_fixed_noreplace
- TEST_GEN_FILES += map_hugetlb
- TEST_GEN_FILES += map_populate
-+ifneq (,$(filter $(ARCH),arm64 riscv riscv64 x86 x86_64))
- TEST_GEN_FILES += memfd_secret
-+endif
- TEST_GEN_FILES += migration
- TEST_GEN_FILES += mkdirty
- TEST_GEN_FILES += mlock-random-test
-diff --git a/tools/testing/selftests/mm/run_vmtests.sh b/tools/testing/selftests/mm/run_vmtests.sh
-index 7fae86e482613..d7b2c9d07eec5 100755
---- a/tools/testing/selftests/mm/run_vmtests.sh
-+++ b/tools/testing/selftests/mm/run_vmtests.sh
-@@ -329,8 +329,11 @@ CATEGORY="hmm" run_test bash ./test_hmm.sh smoke
- # MADV_POPULATE_READ and MADV_POPULATE_WRITE tests
- CATEGORY="madv_populate" run_test ./madv_populate
+diff --git a/arch/alpha/kernel/pci_iommu.c b/arch/alpha/kernel/pci_iommu.c
+index c81183935e970..7fcf3e9b71030 100644
+--- a/arch/alpha/kernel/pci_iommu.c
++++ b/arch/alpha/kernel/pci_iommu.c
+@@ -929,7 +929,7 @@ const struct dma_map_ops alpha_pci_ops = {
+ 	.dma_supported		= alpha_pci_supported,
+ 	.mmap			= dma_common_mmap,
+ 	.get_sgtable		= dma_common_get_sgtable,
+-	.alloc_pages		= dma_common_alloc_pages,
++	.alloc_pages_op		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ };
+ EXPORT_SYMBOL(alpha_pci_ops);
+diff --git a/arch/mips/jazz/jazzdma.c b/arch/mips/jazz/jazzdma.c
+index eabddb89d221f..c97b089b99029 100644
+--- a/arch/mips/jazz/jazzdma.c
++++ b/arch/mips/jazz/jazzdma.c
+@@ -617,7 +617,7 @@ const struct dma_map_ops jazz_dma_ops = {
+ 	.sync_sg_for_device	= jazz_dma_sync_sg_for_device,
+ 	.mmap			= dma_common_mmap,
+ 	.get_sgtable		= dma_common_get_sgtable,
+-	.alloc_pages		= dma_common_alloc_pages,
++	.alloc_pages_op		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ };
+ EXPORT_SYMBOL(jazz_dma_ops);
+diff --git a/arch/powerpc/kernel/dma-iommu.c b/arch/powerpc/kernel/dma-iommu.c
+index 8920862ffd791..f0ae39e77e374 100644
+--- a/arch/powerpc/kernel/dma-iommu.c
++++ b/arch/powerpc/kernel/dma-iommu.c
+@@ -216,6 +216,6 @@ const struct dma_map_ops dma_iommu_ops = {
+ 	.get_required_mask	= dma_iommu_get_required_mask,
+ 	.mmap			= dma_common_mmap,
+ 	.get_sgtable		= dma_common_get_sgtable,
+-	.alloc_pages		= dma_common_alloc_pages,
++	.alloc_pages_op		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ };
+diff --git a/arch/powerpc/platforms/ps3/system-bus.c b/arch/powerpc/platforms/ps3/system-bus.c
+index d6b5f5ecd5152..56dc6b29a3e76 100644
+--- a/arch/powerpc/platforms/ps3/system-bus.c
++++ b/arch/powerpc/platforms/ps3/system-bus.c
+@@ -695,7 +695,7 @@ static const struct dma_map_ops ps3_sb_dma_ops = {
+ 	.unmap_page = ps3_unmap_page,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+-	.alloc_pages = dma_common_alloc_pages,
++	.alloc_pages_op = dma_common_alloc_pages,
+ 	.free_pages = dma_common_free_pages,
+ };
  
-+if [ -x ./memfd_secret ]
-+then
- (echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope 2>&1) | tap_prefix
- CATEGORY="memfd_secret" run_test ./memfd_secret
-+fi
+@@ -709,7 +709,7 @@ static const struct dma_map_ops ps3_ioc0_dma_ops = {
+ 	.unmap_page = ps3_unmap_page,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+-	.alloc_pages = dma_common_alloc_pages,
++	.alloc_pages_op = dma_common_alloc_pages,
+ 	.free_pages = dma_common_free_pages,
+ };
  
- # KSM KSM_MERGE_TIME_HUGE_PAGES test with size of 100
- CATEGORY="ksm" run_test ./ksm_tests -H -s 100
+diff --git a/arch/powerpc/platforms/pseries/vio.c b/arch/powerpc/platforms/pseries/vio.c
+index 2dc9cbc4bcd8f..0c90fc4c37963 100644
+--- a/arch/powerpc/platforms/pseries/vio.c
++++ b/arch/powerpc/platforms/pseries/vio.c
+@@ -611,7 +611,7 @@ static const struct dma_map_ops vio_dma_mapping_ops = {
+ 	.get_required_mask = dma_iommu_get_required_mask,
+ 	.mmap		   = dma_common_mmap,
+ 	.get_sgtable	   = dma_common_get_sgtable,
+-	.alloc_pages	   = dma_common_alloc_pages,
++	.alloc_pages_op	   = dma_common_alloc_pages,
+ 	.free_pages	   = dma_common_free_pages,
+ };
+ 
+diff --git a/arch/x86/kernel/amd_gart_64.c b/arch/x86/kernel/amd_gart_64.c
+index 56a917df410d3..842a0ec5eaa9e 100644
+--- a/arch/x86/kernel/amd_gart_64.c
++++ b/arch/x86/kernel/amd_gart_64.c
+@@ -676,7 +676,7 @@ static const struct dma_map_ops gart_dma_ops = {
+ 	.get_sgtable			= dma_common_get_sgtable,
+ 	.dma_supported			= dma_direct_supported,
+ 	.get_required_mask		= dma_direct_get_required_mask,
+-	.alloc_pages			= dma_direct_alloc_pages,
++	.alloc_pages_op			= dma_direct_alloc_pages,
+ 	.free_pages			= dma_direct_free_pages,
+ };
+ 
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 2da969fc89900..f5eb97726d1bb 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1614,7 +1614,7 @@ static const struct dma_map_ops iommu_dma_ops = {
+ 	.flags			= DMA_F_PCI_P2PDMA_SUPPORTED,
+ 	.alloc			= iommu_dma_alloc,
+ 	.free			= iommu_dma_free,
+-	.alloc_pages		= dma_common_alloc_pages,
++	.alloc_pages_op		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ 	.alloc_noncontiguous	= iommu_dma_alloc_noncontiguous,
+ 	.free_noncontiguous	= iommu_dma_free_noncontiguous,
+diff --git a/drivers/parisc/ccio-dma.c b/drivers/parisc/ccio-dma.c
+index 9ce0d20a6c581..feef537257d05 100644
+--- a/drivers/parisc/ccio-dma.c
++++ b/drivers/parisc/ccio-dma.c
+@@ -1022,7 +1022,7 @@ static const struct dma_map_ops ccio_ops = {
+ 	.map_sg =		ccio_map_sg,
+ 	.unmap_sg =		ccio_unmap_sg,
+ 	.get_sgtable =		dma_common_get_sgtable,
+-	.alloc_pages =		dma_common_alloc_pages,
++	.alloc_pages_op =	dma_common_alloc_pages,
+ 	.free_pages =		dma_common_free_pages,
+ };
+ 
+diff --git a/drivers/parisc/sba_iommu.c b/drivers/parisc/sba_iommu.c
+index 05e7103d1d407..6f5b919280ff0 100644
+--- a/drivers/parisc/sba_iommu.c
++++ b/drivers/parisc/sba_iommu.c
+@@ -1090,7 +1090,7 @@ static const struct dma_map_ops sba_ops = {
+ 	.map_sg =		sba_map_sg,
+ 	.unmap_sg =		sba_unmap_sg,
+ 	.get_sgtable =		dma_common_get_sgtable,
+-	.alloc_pages =		dma_common_alloc_pages,
++	.alloc_pages_op =	dma_common_alloc_pages,
+ 	.free_pages =		dma_common_free_pages,
+ };
+ 
+diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
+index 76f6f26265a3b..29257d2639dbf 100644
+--- a/drivers/xen/grant-dma-ops.c
++++ b/drivers/xen/grant-dma-ops.c
+@@ -282,7 +282,7 @@ static int xen_grant_dma_supported(struct device *dev, u64 mask)
+ static const struct dma_map_ops xen_grant_dma_ops = {
+ 	.alloc = xen_grant_dma_alloc,
+ 	.free = xen_grant_dma_free,
+-	.alloc_pages = xen_grant_dma_alloc_pages,
++	.alloc_pages_op = xen_grant_dma_alloc_pages,
+ 	.free_pages = xen_grant_dma_free_pages,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
+index 0e6c6c25d154f..1c4ef5111651d 100644
+--- a/drivers/xen/swiotlb-xen.c
++++ b/drivers/xen/swiotlb-xen.c
+@@ -403,7 +403,7 @@ const struct dma_map_ops xen_swiotlb_dma_ops = {
+ 	.dma_supported = xen_swiotlb_dma_supported,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+-	.alloc_pages = dma_common_alloc_pages,
++	.alloc_pages_op = dma_common_alloc_pages,
+ 	.free_pages = dma_common_free_pages,
+ 	.max_mapping_size = swiotlb_max_mapping_size,
+ };
+diff --git a/include/linux/dma-map-ops.h b/include/linux/dma-map-ops.h
+index f2fc203fb8a1a..3a8a015fdd2ed 100644
+--- a/include/linux/dma-map-ops.h
++++ b/include/linux/dma-map-ops.h
+@@ -28,7 +28,7 @@ struct dma_map_ops {
+ 			unsigned long attrs);
+ 	void (*free)(struct device *dev, size_t size, void *vaddr,
+ 			dma_addr_t dma_handle, unsigned long attrs);
+-	struct page *(*alloc_pages)(struct device *dev, size_t size,
++	struct page *(*alloc_pages_op)(struct device *dev, size_t size,
+ 			dma_addr_t *dma_handle, enum dma_data_direction dir,
+ 			gfp_t gfp);
+ 	void (*free_pages)(struct device *dev, size_t size, struct page *vaddr,
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index f1d9f01b283d7..2923f3b2dd2c7 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -570,9 +570,9 @@ static struct page *__dma_alloc_pages(struct device *dev, size_t size,
+ 	size = PAGE_ALIGN(size);
+ 	if (dma_alloc_direct(dev, ops))
+ 		return dma_direct_alloc_pages(dev, size, dma_handle, dir, gfp);
+-	if (!ops->alloc_pages)
++	if (!ops->alloc_pages_op)
+ 		return NULL;
+-	return ops->alloc_pages(dev, size, dma_handle, dir, gfp);
++	return ops->alloc_pages_op(dev, size, dma_handle, dir, gfp);
+ }
+ 
+ struct page *dma_alloc_pages(struct device *dev, size_t size,
 -- 
 2.43.0
 
