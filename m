@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40E11BC097;
-	Tue, 27 Aug 2024 14:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48C71BC097;
+	Tue, 27 Aug 2024 14:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770712; cv=none; b=J5pAUC5P1uPwazGlZFUBEY/Fp2aSnMdnq/RO680vG6nPFV1nsEz+/AlaGK2Zx9om5+nIRsQyQQnlwGzuXvcFnahCDs5CnPwksO7sCBU5SJm47ig3ZlHFJFwvJ2zD7S70I6wwfJKWV81mbaHRgkixb3cu7kWbc5C8y5+eG9JgdcE=
+	t=1724770715; cv=none; b=jK8ZptSeeeDDha0jenD0ifvFmiRSs85F7MKzIvjH33EPVNYRiFGUf0DIvc36YZJIJmrytTsu/km5QAOSXlBnEM6KU5A/t8moKkR8geGbK6fSdM++R+rwk5hE/U5RLiQTOgFmxEkwNX4TQGUs5Uf3EEnUbKPdJpWKjOG3Z/RfZE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770712; c=relaxed/simple;
-	bh=O4MU7uFW9Dsdq1ZNZ2jThDH1w+l1EgJhE6uC+xlqObM=;
+	s=arc-20240116; t=1724770715; c=relaxed/simple;
+	bh=o24bC8guVMjSC0cl8eCOAhr9mTLhdrpjnYlTrVOjD8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSvcks6vSD4+PvG272uu+P4RHt1T/gP65pgZKVJ7pdWf47CDX0a6YAb6/ZDQBunAaxpCsF0ZzvnEGs/9NX8dnXfv7/TFYWpdyF+xud1zUZKxqaQENNRtl6byYmEU6gMJ2/JTAkvCewTYNxrI8LuCbvMKMR1pa6mHm8OqhH3sY+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6YZWIDB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6/WEmSRY1t0fFbvcb3+Uybj2UEGLrDHa9KIx3o6nPKEj9/JEOngsqavAA9tMX8FIJ6mmHG01WWigqNgmOhrtDCoWaUsx5T1nLk1v8g2Oq3WPlbTVnhY7maYh+yXsJbxf0ZwdaIlusOa5sQqCnBFRPjWmjBwbiAy7KIjNMSFP/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Om1yF2GK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6YZWIDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196AAC61044;
-	Tue, 27 Aug 2024 14:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Om1yF2GK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FEEC61044;
+	Tue, 27 Aug 2024 14:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770712;
-	bh=O4MU7uFW9Dsdq1ZNZ2jThDH1w+l1EgJhE6uC+xlqObM=;
+	s=korg; t=1724770715;
+	bh=o24bC8guVMjSC0cl8eCOAhr9mTLhdrpjnYlTrVOjD8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6YZWIDBaXVAK3YBT5BbK3oclstj7aMIHTzV3QslJvPm0fBJHsNt/wDu/ZDS0Zu/r
-	 brVdXC2a13VIO4jRrnyMcVqyv6yKDk+IkAgMql3uhbbRkiNk1nuUNnyQKLpMtknCsy
-	 pDFdVsQ3kcFjnHgKWX15L2fNp7caxSkFIKdRxQbU=
+	b=Om1yF2GKm7nA4ltcJ7KaQLPviJYlpGSFGh1VaXjIo7Ohh93eSzCujFt68CUtKxUti
+	 cdza60NTi2wghzm/7rcvPO+ubGCbdtfHMFyyPn8aWOjymxe7Jwn3I8Mww/hzj57tpy
+	 qdk7rn7obCO6efSpWeQnEj1BWooMByqrzTRGkB5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 311/341] mptcp: pm: re-using ID of unused removed subflows
-Date: Tue, 27 Aug 2024 16:39:02 +0200
-Message-ID: <20240827143855.221161197@linuxfoundation.org>
+Subject: [PATCH 6.6 312/341] mptcp: pm: re-using ID of unused flushed subflows
+Date: Tue, 27 Aug 2024 16:39:03 +0200
+Message-ID: <20240827143855.259589142@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,49 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit edd8b5d868a4d459f3065493001e293901af758d upstream.
+commit ef34a6ea0cab1800f4b3c9c3c2cefd5091e03379 upstream.
 
-If no subflow is attached to the 'subflow' endpoint that is being
-removed, the addr ID will not be marked as available again.
+If no subflows are attached to the 'subflow' endpoints that are being
+flushed, the corresponding addr IDs will not be marked as available
+again.
 
-Mark the linked ID as available when removing the 'subflow' endpoint if
-no subflow is attached to it.
+Mark all ID as being available when flushing all the 'subflow'
+endpoints, and reset local_addr_used counter to cover these cases.
 
-While at it, the local_addr_used counter is decremented if the ID was
-marked as being used to reflect the reality, but also to allow adding
-new endpoints after that.
+Note that mptcp_pm_remove_addrs_and_subflows() helper is only called for
+flushing operations, not to remove a specific set of addresses and
+subflows.
 
-Fixes: b6c08380860b ("mptcp: remove addr and subflow in PM netlink")
+Fixes: 06faa2271034 ("mptcp: remove multi addresses and subflows in PM")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-3-38035d40de5b@kernel.org
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-5-38035d40de5b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -1500,8 +1500,17 @@ static int mptcp_nl_remove_subflow_and_s
- 		remove_subflow = lookup_subflow_by_saddr(&msk->conn_list, addr);
- 		mptcp_pm_remove_anno_addr(msk, addr, remove_subflow &&
- 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
--		if (remove_subflow)
+@@ -1654,8 +1654,15 @@ void mptcp_pm_remove_addrs_and_subflows(
+ 		mptcp_pm_remove_addr(msk, &alist);
+ 		spin_unlock_bh(&msk->pm.lock);
+ 	}
 +
-+		if (remove_subflow) {
- 			mptcp_pm_remove_subflow(msk, &list);
-+		} else if (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW) {
-+			/* If the subflow has been used, but now closed */
-+			spin_lock_bh(&msk->pm.lock);
-+			if (!__test_and_set_bit(entry->addr.id, msk->pm.id_avail_bitmap))
-+				msk->pm.local_addr_used--;
-+			spin_unlock_bh(&msk->pm.lock);
-+		}
+ 	if (slist.nr)
+ 		mptcp_pm_remove_subflow(msk, &slist);
 +
- 		release_sock(sk);
++	/* Reset counters: maybe some subflows have been removed before */
++	spin_lock_bh(&msk->pm.lock);
++	bitmap_fill(msk->pm.id_avail_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
++	msk->pm.local_addr_used = 0;
++	spin_unlock_bh(&msk->pm.lock);
+ }
  
- next:
+ static void mptcp_nl_remove_addrs_list(struct net *net,
 
 
