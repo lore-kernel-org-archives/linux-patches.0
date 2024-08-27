@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE601C68BD;
-	Tue, 27 Aug 2024 15:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB041C86F4;
+	Tue, 27 Aug 2024 15:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770962; cv=none; b=GIRV2nh7unt73gz2ACrrEyCmULYEHTGmSR3P0if0GQcSjz+IbhyRW5Vg3i87pyXYif0WYaNd00sLHYmBVXtI9KX9n6zLYyaKU5w0wpQRf+3qZVBdC17oA5Qf7HEG92iEOk44gV1GZZfkM229kK1YsX/ErGF3q1+3zYEUIbVV14c=
+	t=1724770965; cv=none; b=RlEMZfjnxBGlW7SY4Tb90IhqT+IQHELo+8S97c0/r30AatlzCvHOM2kQW27u82vvSkKcSYmtgsEGphuts4QxAj0gq8PVSeupJ/hsFM3Z1NclRjsRtiZCDnNxMj4xGw4oRReVxO+56DVOItYnTt6g6QBpfB8EYOzby43GEt2+z9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770962; c=relaxed/simple;
-	bh=u10Jrvd+VvSiusOjyPkjAsKNiADXCFWDRkBco1WBA/s=;
+	s=arc-20240116; t=1724770965; c=relaxed/simple;
+	bh=8OdmjgS0OJ52j3qO34VIevUUEuOOUUbODjNVErG7icY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dm5Zo5qcCT/C/VVcqPfQOA2oeB4retleVrVT5t2l1a2pojp/wllOEMm+T9tbzUzWkCG9Jn8d12rd/ihVTL2xdywKPTs2XNoRyTzEFGTQld5PYhjoP3iZwXJ5ytzGppFnnH+kp5EsHLEwdmL55pVkNAhv18YSKRklJ8qwOscjZzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLvZWwyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qJ3TQDInXw6rMX6KLqOYXkwaW8PgT0y1G4yGIkuLZ6T+hfB4FmFosWO84bd6KLbYI3ckrgJ31y183LF+zxYCCuow6giw/GxM7IT4Ip5Pe1S8Sgr4Rw2/KAG4vcgvHbUcBKnSQrrixaM7xf6yRpsRgqcybczGzC7yObJk9Gy4T7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xs4RSgJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLvZWwyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E529C61043;
-	Tue, 27 Aug 2024 15:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xs4RSgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A27FC61042;
+	Tue, 27 Aug 2024 15:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770962;
-	bh=u10Jrvd+VvSiusOjyPkjAsKNiADXCFWDRkBco1WBA/s=;
+	s=korg; t=1724770965;
+	bh=8OdmjgS0OJ52j3qO34VIevUUEuOOUUbODjNVErG7icY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLvZWwyb1d6azv0gVjyPB4nvWO/0AUJeZNmVbf+jLC1QScSei076P/AITTRyG9a9P
-	 y9UAnVoW8/Wgyke0rJpQdlCg5LNRjjs1lzwpefhRgtHVf7LuMn9UA6jv8btmeFZAFf
-	 lF2HH5IJDvZKBqteuKANrFzqmrY8gNSWqjJ03cHs=
+	b=0xs4RSgJMDL/zlSocxLWAaBzyt3yzkJBFiHky6WtXjJ0/KnQW8DZER8n91ucAGwSP
+	 xZ/IAM3xtjfHHSjtQj8d4erzMTKtfRJ5cGSSa5L92U5DOLrfNV3Ex2WemSXslz2/hh
+	 4Ho8I2LqA9edw5xAGT8w6pgMHkXjnZh/MLztpCU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.10 046/273] net: mana: Fix RX buf alloc_size alignment and atomic op panic
-Date: Tue, 27 Aug 2024 16:36:10 +0200
-Message-ID: <20240827143835.150832042@linuxfoundation.org>
+	Pavel Shilovsky <piastryyy@gmail.com>,
+	abartlet@samba.org,
+	Kevin Ottens <kevin.ottens@enioka.com>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.10 029/273] smb3: fix lock breakage for cached writes
+Date: Tue, 27 Aug 2024 16:35:53 +0200
+Message-ID: <20240827143834.501950354@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,67 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit 32316f676b4ee87c0404d333d248ccf777f739bc upstream.
+commit 836bb3268db405cf9021496ac4dbc26d3e4758fe upstream.
 
-The MANA driver's RX buffer alloc_size is passed into napi_build_skb() to
-create SKB. skb_shinfo(skb) is located at the end of skb, and its alignment
-is affected by the alloc_size passed into napi_build_skb(). The size needs
-to be aligned properly for better performance and atomic operations.
-Otherwise, on ARM64 CPU, for certain MTU settings like 4000, atomic
-operations may panic on the skb_shinfo(skb)->dataref due to alignment fault.
+Mandatory locking is enforced for cached writes, which violates
+default posix semantics, and also it is enforced inconsistently.
+This apparently breaks recent versions of libreoffice, but can
+also be demonstrated by opening a file twice from the same
+client, locking it from handle one and writing to it from
+handle two (which fails, returning EACCES).
 
-To fix this bug, add proper alignment to the alloc_size calculation.
+Since there was already a mount option "forcemandatorylock"
+(which defaults to off), with this change only when the user
+intentionally specifies "forcemandatorylock" on mount will we
+break posix semantics on write to a locked range (ie we will
+only fail the write in this case, if the user mounts with
+"forcemandatorylock").
 
-Sample panic info:
-[  253.298819] Unable to handle kernel paging request at virtual address ffff000129ba5cce
-[  253.300900] Mem abort info:
-[  253.301760]   ESR = 0x0000000096000021
-[  253.302825]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  253.304268]   SET = 0, FnV = 0
-[  253.305172]   EA = 0, S1PTW = 0
-[  253.306103]   FSC = 0x21: alignment fault
-Call trace:
- __skb_clone+0xfc/0x198
- skb_clone+0x78/0xe0
- raw6_local_deliver+0xfc/0x228
- ip6_protocol_deliver_rcu+0x80/0x500
- ip6_input_finish+0x48/0x80
- ip6_input+0x48/0xc0
- ip6_sublist_rcv_finish+0x50/0x78
- ip6_sublist_rcv+0x1cc/0x2b8
- ipv6_list_rcv+0x100/0x150
- __netif_receive_skb_list_core+0x180/0x220
- netif_receive_skb_list_internal+0x198/0x2a8
- __napi_poll+0x138/0x250
- net_rx_action+0x148/0x330
- handle_softirqs+0x12c/0x3a0
-
+Fixes: 85160e03a79e ("CIFS: Implement caching mechanism for mandatory brlocks")
 Cc: stable@vger.kernel.org
-Fixes: 80f6215b450e ("net: mana: Add support for jumbo frame")
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Pavel Shilovsky <piastryyy@gmail.com>
+Reported-by: abartlet@samba.org
+Reported-by: Kevin Ottens <kevin.ottens@enioka.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/smb/client/file.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -599,7 +599,11 @@ static void mana_get_rxbuf_cfg(int mtu,
- 	else
- 		*headroom = XDP_PACKET_HEADROOM;
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -2719,6 +2719,7 @@ cifs_writev(struct kiocb *iocb, struct i
+ 	struct inode *inode = file->f_mapping->host;
+ 	struct cifsInodeInfo *cinode = CIFS_I(inode);
+ 	struct TCP_Server_Info *server = tlink_tcon(cfile->tlink)->ses->server;
++	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+ 	ssize_t rc;
  
--	*alloc_size = mtu + MANA_RXBUF_PAD + *headroom;
-+	*alloc_size = SKB_DATA_ALIGN(mtu + MANA_RXBUF_PAD + *headroom);
+ 	rc = netfs_start_io_write(inode);
+@@ -2735,12 +2736,16 @@ cifs_writev(struct kiocb *iocb, struct i
+ 	if (rc <= 0)
+ 		goto out;
+ 
+-	if (!cifs_find_lock_conflict(cfile, iocb->ki_pos, iov_iter_count(from),
++	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NOPOSIXBRL) &&
++	    (cifs_find_lock_conflict(cfile, iocb->ki_pos, iov_iter_count(from),
+ 				     server->vals->exclusive_lock_type, 0,
+-				     NULL, CIFS_WRITE_OP))
+-		rc = netfs_buffered_write_iter_locked(iocb, from, NULL);
+-	else
++				     NULL, CIFS_WRITE_OP))) {
+ 		rc = -EACCES;
++		goto out;
++	}
 +
-+	/* Using page pool in this case, so alloc_size is PAGE_SIZE */
-+	if (*alloc_size < PAGE_SIZE)
-+		*alloc_size = PAGE_SIZE;
- 
- 	*datasize = mtu + ETH_HLEN;
- }
++	rc = netfs_buffered_write_iter_locked(iocb, from, NULL);
++
+ out:
+ 	up_read(&cinode->lock_sem);
+ 	netfs_end_io_write(inode);
 
 
