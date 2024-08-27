@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9302D1C4603;
-	Tue, 27 Aug 2024 15:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFCA12E4D;
+	Tue, 27 Aug 2024 15:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771288; cv=none; b=RkMPUxISECFAu52wpJUOFF41olRFpofZpShAppSd8iA3Wx9v9JnfIw/U+lZi2q20awTCzOh9Uw85a0Aie+DfWiqx5kxpgqUspUvsaXwubm103FFcxP3h45t3gTywiAAg5iCHICnnuhE1oFS4xKMqDcL2L3PgZ+84hhvrskc3efY=
+	t=1724771292; cv=none; b=qXCNaLQlUjU2GLQrEoAHYiJPOm2cfqBkeMiZP5yDgEsrtJhdRpUloV84YhhHrSmqXnQC5Y5tWU5lo1jm9JHxCQJIjoHeIgAasZISzbHi5o/1V61Cy5wGwwfR/QQXvXMlycMMlpBr/gD9Bdg95XqN/zzOM1s0P6OewZOTxQT1nsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771288; c=relaxed/simple;
-	bh=HFck/GUtvPPD1UZK01PQl2Ib2QX3uxl28CkrCqCfOlQ=;
+	s=arc-20240116; t=1724771292; c=relaxed/simple;
+	bh=Hjbl1raZC+wVEyc5AW8JiZYJDdHpTxlvpil0oMwb9Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJblap137FH8fmEbi39UxcKKL41vXanDj2RzEZjp0D3IjD/gIr2WrmffsKIyYCAjpp6ufuWs94+T2I6WCIZ05gni49lV1e0mODwNa8jwjqz0MqsTmgTgKcpzuz/aUU8WezG0jXCrk57XscwPe0qyipKl1qCZQrMgGqA1tpj1RcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAXReP/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L246Kg7PXMmN3GWHkTAujb9Ek/MW0AcAS29JK1C7dBvoyZX3crjRhdBMUiLAOpVhSS+K0E0jxUvVY5o1oczIti1o09V2rb4HQSyE5qnDRqSK84P6EYNnogONRlESfF6FkoYc5eaF5yHgOLi2g25QrChBQQzhrvYWOYuWTKQHevw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQTT2tm8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAXReP/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11523C61074;
-	Tue, 27 Aug 2024 15:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQTT2tm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2A3C61074;
+	Tue, 27 Aug 2024 15:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771288;
-	bh=HFck/GUtvPPD1UZK01PQl2Ib2QX3uxl28CkrCqCfOlQ=;
+	s=korg; t=1724771291;
+	bh=Hjbl1raZC+wVEyc5AW8JiZYJDdHpTxlvpil0oMwb9Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAXReP/BBWEf55NEiaSv+RbaWJIhVnbOiiAcdHZ+jNH+CvXQrDtN7XkqrBX1FhVYr
-	 EMB0xw5Ui4oe4MEacqJ2zkqea5b3yVx6mEDmV93KdtuT9wftUMZRoM5+GvGSwfTyp1
-	 e6HvUw3IVLGNZdCNSTyEx3D7T2L5NKRqjfAZG9gA=
+	b=YQTT2tm8QxuM5lr0Dd9bKwAPDT2eOlnem1s0nmoVGRZGuT61bmrpDkl0vlu8ggr+R
+	 YNmDmK6qGdRqTd5cqOpayvTsc4Xp/S6b0QN23zeard3TXUb97bgR72y5iNgu5q8pP0
+	 Bj4ECwqsed02+ihv5B4hc9fUIjtYC8Gz/egZdk6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 144/273] dm suspend: return -ERESTARTSYS instead of -EINTR
-Date: Tue, 27 Aug 2024 16:37:48 +0200
-Message-ID: <20240827143838.887280167@linuxfoundation.org>
+Subject: [PATCH 6.10 145/273] wifi: ath12k: use 128 bytes aligned iova in transmit path for WCN7850
+Date: Tue, 27 Aug 2024 16:37:49 +0200
+Message-ID: <20240827143838.924976567@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,46 +52,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 1e1fd567d32fcf7544c6e09e0e5bc6c650da6e23 ]
+[ Upstream commit 38055789d15155109b41602ad719d770af507030 ]
 
-This commit changes device mapper, so that it returns -ERESTARTSYS
-instead of -EINTR when it is interrupted by a signal (so that the ioctl
-can be restarted).
+In transmit path, it is likely that the iova is not aligned to PCIe TLP
+max payload size, which is 128 for WCN7850. Normally in such cases hardware
+is expected to split the packet into several parts in a manner such that
+they, other than the first one, have aligned iova. However due to hardware
+limitations, WCN7850 does not behave like that properly with some specific
+unaligned iova in transmit path. This easily results in target hang in a
+KPI transmit test: packet send/receive failure, WMI command send timeout
+etc. Also fatal error seen in PCIe level:
 
-The manpage signal(7) says that the ioctl function should be restarted if
-the signal was handled with SA_RESTART.
+	...
+	Capabilities: ...
+		...
+		DevSta: ... FatalErr+ ...
+		...
+	...
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
+Work around this by manually moving/reallocating payload buffer such that
+we can map it to a 128 bytes aligned iova. The moving requires sufficient
+head room or tail room in skb: for the former we can do ourselves a favor
+by asking some extra bytes when registering with mac80211, while for the
+latter we can do nothing.
+
+Moving/reallocating buffer consumes additional CPU cycles, but the good news
+is that an aligned iova increases PCIe efficiency. In my tests on some X86
+platforms the KPI results are almost consistent.
+
+Since this is seen only with WCN7850, add a new hardware parameter to
+differentiate from others.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Cc: <stable@vger.kernel.org>
+Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240715023814.20242-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c | 72 +++++++++++++++++++++++++
+ drivers/net/wireless/ath/ath12k/hw.c    |  6 +++
+ drivers/net/wireless/ath/ath12k/hw.h    |  4 ++
+ drivers/net/wireless/ath/ath12k/mac.c   |  1 +
+ 4 files changed, 83 insertions(+)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 13037d6a6f62a..6e15ac4e0845c 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2594,7 +2594,7 @@ static int dm_wait_for_bios_completion(struct mapped_device *md, unsigned int ta
- 			break;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index a7c7a868c14ce..fca9f7e510b41 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -124,6 +124,60 @@ static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
+ 						 HAL_TX_MSDU_EXT_INFO1_ENCRYPT_TYPE);
+ }
  
- 		if (signal_pending_state(task_state, current)) {
--			r = -EINTR;
-+			r = -ERESTARTSYS;
- 			break;
- 		}
++static void ath12k_dp_tx_move_payload(struct sk_buff *skb,
++				      unsigned long delta,
++				      bool head)
++{
++	unsigned long len = skb->len;
++
++	if (head) {
++		skb_push(skb, delta);
++		memmove(skb->data, skb->data + delta, len);
++		skb_trim(skb, len);
++	} else {
++		skb_put(skb, delta);
++		memmove(skb->data + delta, skb->data, len);
++		skb_pull(skb, delta);
++	}
++}
++
++static int ath12k_dp_tx_align_payload(struct ath12k_base *ab,
++				      struct sk_buff **pskb)
++{
++	u32 iova_mask = ab->hw_params->iova_mask;
++	unsigned long offset, delta1, delta2;
++	struct sk_buff *skb2, *skb = *pskb;
++	unsigned int headroom = skb_headroom(skb);
++	int tailroom = skb_tailroom(skb);
++	int ret = 0;
++
++	offset = (unsigned long)skb->data & iova_mask;
++	delta1 = offset;
++	delta2 = iova_mask - offset + 1;
++
++	if (headroom >= delta1) {
++		ath12k_dp_tx_move_payload(skb, delta1, true);
++	} else if (tailroom >= delta2) {
++		ath12k_dp_tx_move_payload(skb, delta2, false);
++	} else {
++		skb2 = skb_realloc_headroom(skb, iova_mask);
++		if (!skb2) {
++			ret = -ENOMEM;
++			goto out;
++		}
++
++		dev_kfree_skb_any(skb);
++
++		offset = (unsigned long)skb2->data & iova_mask;
++		if (offset)
++			ath12k_dp_tx_move_payload(skb2, offset, true);
++		*pskb = skb2;
++	}
++
++out:
++	return ret;
++}
++
+ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_vif *arvif,
+ 		 struct sk_buff *skb)
+ {
+@@ -145,6 +199,7 @@ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_vif *arvif,
+ 	u8 ring_selector, ring_map = 0;
+ 	bool tcl_ring_retry;
+ 	bool msdu_ext_desc = false;
++	u32 iova_mask = ab->hw_params->iova_mask;
  
-@@ -2619,7 +2619,7 @@ static int dm_wait_for_completion(struct mapped_device *md, unsigned int task_st
- 			break;
+ 	if (test_bit(ATH12K_FLAG_CRASH_FLUSH, &ar->ab->dev_flags))
+ 		return -ESHUTDOWN;
+@@ -240,6 +295,23 @@ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_vif *arvif,
+ 		goto fail_remove_tx_buf;
+ 	}
  
- 		if (signal_pending_state(task_state, current)) {
--			r = -EINTR;
-+			r = -ERESTARTSYS;
- 			break;
- 		}
++	if (iova_mask &&
++	    (unsigned long)skb->data & iova_mask) {
++		ret = ath12k_dp_tx_align_payload(ab, &skb);
++		if (ret) {
++			ath12k_warn(ab, "failed to align TX buffer %d\n", ret);
++			/* don't bail out, give original buffer
++			 * a chance even unaligned.
++			 */
++			goto map;
++		}
++
++		/* hdr is pointing to a wrong place after alignment,
++		 * so refresh it for later use.
++		 */
++		hdr = (void *)skb->data;
++	}
++map:
+ 	ti.paddr = dma_map_single(ab->dev, skb->data, skb->len, DMA_TO_DEVICE);
+ 	if (dma_mapping_error(ab->dev, ti.paddr)) {
+ 		atomic_inc(&ab->soc_stats.tx_err.misc_fail);
+diff --git a/drivers/net/wireless/ath/ath12k/hw.c b/drivers/net/wireless/ath/ath12k/hw.c
+index bff8cf97a18c6..2a92147d15fa1 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.c
++++ b/drivers/net/wireless/ath/ath12k/hw.c
+@@ -922,6 +922,8 @@ static const struct ath12k_hw_params ath12k_hw_params[] = {
+ 		.supports_sta_ps = false,
  
+ 		.acpi_guid = NULL,
++
++		.iova_mask = 0,
+ 	},
+ 	{
+ 		.name = "wcn7850 hw2.0",
+@@ -997,6 +999,8 @@ static const struct ath12k_hw_params ath12k_hw_params[] = {
+ 		.supports_sta_ps = true,
+ 
+ 		.acpi_guid = &wcn7850_uuid,
++
++		.iova_mask = ATH12K_PCIE_MAX_PAYLOAD_SIZE - 1,
+ 	},
+ 	{
+ 		.name = "qcn9274 hw2.0",
+@@ -1067,6 +1071,8 @@ static const struct ath12k_hw_params ath12k_hw_params[] = {
+ 		.supports_sta_ps = false,
+ 
+ 		.acpi_guid = NULL,
++
++		.iova_mask = 0,
+ 	},
+ };
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/hw.h b/drivers/net/wireless/ath/ath12k/hw.h
+index 2a314cfc8cb84..400bda17e02f6 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.h
++++ b/drivers/net/wireless/ath/ath12k/hw.h
+@@ -96,6 +96,8 @@
+ #define ATH12K_M3_FILE			"m3.bin"
+ #define ATH12K_REGDB_FILE_NAME		"regdb.bin"
+ 
++#define ATH12K_PCIE_MAX_PAYLOAD_SIZE	128
++
+ enum ath12k_hw_rate_cck {
+ 	ATH12K_HW_RATE_CCK_LP_11M = 0,
+ 	ATH12K_HW_RATE_CCK_LP_5_5M,
+@@ -214,6 +216,8 @@ struct ath12k_hw_params {
+ 	bool supports_sta_ps;
+ 
+ 	const guid_t *acpi_guid;
++
++	u32 iova_mask;
+ };
+ 
+ struct ath12k_hw_ops {
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index ead37a4e002a2..8474e25d2ac64 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -8737,6 +8737,7 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
+ 
+ 	hw->vif_data_size = sizeof(struct ath12k_vif);
+ 	hw->sta_data_size = sizeof(struct ath12k_sta);
++	hw->extra_tx_headroom = ab->hw_params->iova_mask;
+ 
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_CQM_RSSI_LIST);
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_STA_TX_PWR);
 -- 
 2.43.0
 
