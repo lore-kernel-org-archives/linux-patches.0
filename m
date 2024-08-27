@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655A21C7B7B;
-	Tue, 27 Aug 2024 15:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F1D1C7B9D;
+	Tue, 27 Aug 2024 15:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771861; cv=none; b=mqlCaQ6mr4Sub6qGnwpWK7t69MWh4iSJE/UkJBYRDQ1ritB0tm+uDkwGey0253v8svZ+i918jIegGvesNoCdYw9BmcgqOQ42LkwiKD5cXFd0t4ZDCqJmHED4TaztnkbPRnphJJ4SJ5d6oKvWMT2Eu+ZbXMyIRQYuTHAKPkV6Rck=
+	t=1724771864; cv=none; b=i61rSr3W0RedkfFg54pCmshbwgDF82mXEWcYdv2lnfpV9jtPAySdZ1YMp/5NwFruAAF3rZh+Z2QlmPYJ6GNwVmxjwou8bRZmYMcyFT80+nRSnai1e0choj2WW2I9URhVNEBKzugGFaaOzb+uT5FltkzxSms0GViu/N2MtcsWm5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771861; c=relaxed/simple;
-	bh=TkyGlNsQYwfbHRhftEiYuQf/wHE3Fkl9jQeimIoaJjQ=;
+	s=arc-20240116; t=1724771864; c=relaxed/simple;
+	bh=VdSEvipIU5e0q7V0vbGs1puAnadvbDw94nR4psOr+3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNjhF+7gMaRTFhXIF4pCgpjTu8tF6qHYuWkj6t3qRW7wviUb236FYSik6ayaxk0Kd3VluvVS0Haq1emyQy/PVoxrDMlVQRoHZMkYrezyIHH+hE9bNSs4hutoYwHemwBha/uKcxczczgoMb4HPekMgc3UafqnG7K64QBJP3/18aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4BYTU5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEAUm7QmN76UuU8eiqcMwLvQdbaHoGaGEkilejo+HKRjquT5WnFqmLGI2xLwEYotnKIiB1bX9L+lSNpZKRL5Bi1qfc99XMOJgh0r8UNLhpm784do47fmBLYuC2Ll6CDYb7DnqerT/JHzML9ibQVyAp2BsE4CcJEKtAa6ZDPRBcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSVZUk4r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4BYTU5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CACFC61067;
-	Tue, 27 Aug 2024 15:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSVZUk4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F6AC61040;
+	Tue, 27 Aug 2024 15:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771861;
-	bh=TkyGlNsQYwfbHRhftEiYuQf/wHE3Fkl9jQeimIoaJjQ=;
+	s=korg; t=1724771864;
+	bh=VdSEvipIU5e0q7V0vbGs1puAnadvbDw94nR4psOr+3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4BYTU5Y3p5J2U7O2b4FKdsaHzLHDjdXFCRul8TH9f7KxOZHJQKrMWOlCPCZpuPbX
-	 +5jOO9Y51GgHG0cSZ9oMsYm4vM9nYw3wdIpXZWDFNb+zSUq1kgY5M9Q1mONU3m5go6
-	 O/NTSt5p7dmYJCW/tgIcB+veH6HFxY5hMVU3TxWc=
+	b=DSVZUk4recS38Fn7Bi9JjWE3qsJCQI/Xx8Pd3NCaPEaE7gsEuSYMaEGJM5fldCRD0
+	 b7Yw6MkWD0IpkileK1h3SSDQYoPGkPy0HpTrd8YAX3mbhJoNmev+ObnbFjq37srpwP
+	 VzmygYflNl4HJlAxPE10HYoYHPdGppRqVRkf9jO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/321] gfs2: Rename the {freeze,thaw}_super callbacks
-Date: Tue, 27 Aug 2024 16:35:51 +0200
-Message-ID: <20240827143839.867706907@linuxfoundation.org>
+Subject: [PATCH 6.1 044/321] gfs2: Rename gfs2_freeze_lock{ => _shared }
+Date: Tue, 27 Aug 2024 16:35:52 +0200
+Message-ID: <20240827143839.906015662@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,78 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 097cca525adf10f35c9dac037155564f1b1a688b ]
+[ Upstream commit e392edd5d52a6742595ecaf8270c1af3e96b9a38 ]
 
-Rename gfs2_freeze to gfs2_freeze_super and gfs2_unfreeze to
-gfs2_thaw_super to match the names of the corresponding super
-operations.
+Rename gfs2_freeze_lock to gfs2_freeze_lock_shared to make it a bit more
+obvious that this function establishes the "thawed" state of the freeze
+glock.
 
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Stable-dep-of: f66af88e3321 ("gfs2: Stop using gfs2_make_fs_ro for withdraw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 12 ++++++------
- fs/gfs2/util.c  |  2 +-
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ fs/gfs2/ops_fstype.c |  4 ++--
+ fs/gfs2/recovery.c   |  2 +-
+ fs/gfs2/super.c      |  2 +-
+ fs/gfs2/util.c       | 10 +++++-----
+ fs/gfs2/util.h       |  5 +++--
+ 5 files changed, 12 insertions(+), 11 deletions(-)
 
+diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
+index c7f6208ad98c0..e427fb7fbe998 100644
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -1266,7 +1266,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		}
+ 	}
+ 
+-	error = gfs2_freeze_lock(sdp, &freeze_gh, 0);
++	error = gfs2_freeze_lock_shared(sdp, &freeze_gh, 0);
+ 	if (error)
+ 		goto fail_per_node;
+ 
+@@ -1587,7 +1587,7 @@ static int gfs2_reconfigure(struct fs_context *fc)
+ 	if ((sb->s_flags ^ fc->sb_flags) & SB_RDONLY) {
+ 		struct gfs2_holder freeze_gh;
+ 
+-		error = gfs2_freeze_lock(sdp, &freeze_gh, 0);
++		error = gfs2_freeze_lock_shared(sdp, &freeze_gh, 0);
+ 		if (error)
+ 			return -EINVAL;
+ 
+diff --git a/fs/gfs2/recovery.c b/fs/gfs2/recovery.c
+index d8e522f389aa7..61ef07da40b22 100644
+--- a/fs/gfs2/recovery.c
++++ b/fs/gfs2/recovery.c
+@@ -470,7 +470,7 @@ void gfs2_recover_func(struct work_struct *work)
+ 
+ 		/* Acquire a shared hold on the freeze glock */
+ 
+-		error = gfs2_freeze_lock(sdp, &thaw_gh, LM_FLAG_PRIORITY);
++		error = gfs2_freeze_lock_shared(sdp, &thaw_gh, LM_FLAG_PRIORITY);
+ 		if (error)
+ 			goto fail_gunlock_ji;
+ 
 diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index c87fafbe710a6..d7b3a982552cf 100644
+index d7b3a982552cf..cb05332e473bd 100644
 --- a/fs/gfs2/super.c
 +++ b/fs/gfs2/super.c
-@@ -682,12 +682,12 @@ void gfs2_freeze_func(struct work_struct *work)
- }
+@@ -662,7 +662,7 @@ void gfs2_freeze_func(struct work_struct *work)
+ 	struct super_block *sb = sdp->sd_vfs;
  
- /**
-- * gfs2_freeze - prevent further writes to the filesystem
-+ * gfs2_freeze_super - prevent further writes to the filesystem
-  * @sb: the VFS structure for the filesystem
-  *
-  */
- 
--static int gfs2_freeze(struct super_block *sb)
-+static int gfs2_freeze_super(struct super_block *sb)
- {
- 	struct gfs2_sbd *sdp = sb->s_fs_info;
- 	int error;
-@@ -727,12 +727,12 @@ static int gfs2_freeze(struct super_block *sb)
- }
- 
- /**
-- * gfs2_unfreeze - reallow writes to the filesystem
-+ * gfs2_thaw_super - reallow writes to the filesystem
-  * @sb: the VFS structure for the filesystem
-  *
-  */
- 
--static int gfs2_unfreeze(struct super_block *sb)
-+static int gfs2_thaw_super(struct super_block *sb)
- {
- 	struct gfs2_sbd *sdp = sb->s_fs_info;
- 
-@@ -1499,8 +1499,8 @@ const struct super_operations gfs2_super_ops = {
- 	.evict_inode		= gfs2_evict_inode,
- 	.put_super		= gfs2_put_super,
- 	.sync_fs		= gfs2_sync_fs,
--	.freeze_super		= gfs2_freeze,
--	.thaw_super		= gfs2_unfreeze,
-+	.freeze_super		= gfs2_freeze_super,
-+	.thaw_super		= gfs2_thaw_super,
- 	.statfs			= gfs2_statfs,
- 	.drop_inode		= gfs2_drop_inode,
- 	.show_options		= gfs2_show_options,
+ 	atomic_inc(&sb->s_active);
+-	error = gfs2_freeze_lock(sdp, &freeze_gh, 0);
++	error = gfs2_freeze_lock_shared(sdp, &freeze_gh, 0);
+ 	if (error) {
+ 		gfs2_assert_withdraw(sdp, 0);
+ 	} else {
 diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
-index 86d1415932a43..11cc59ac64fdc 100644
+index 11cc59ac64fdc..1195ea08f9ca4 100644
 --- a/fs/gfs2/util.c
 +++ b/fs/gfs2/util.c
-@@ -188,7 +188,7 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
- 	sdp->sd_jinode_gh.gh_flags |= GL_NOCACHE;
- 	gfs2_glock_dq(&sdp->sd_jinode_gh);
- 	if (test_bit(SDF_FS_FROZEN, &sdp->sd_flags)) {
--		/* Make sure gfs2_unfreeze works if partially-frozen */
-+		/* Make sure gfs2_thaw_super works if partially-frozen */
- 		flush_work(&sdp->sd_freeze_work);
- 		atomic_set(&sdp->sd_freeze_state, SFS_FROZEN);
- 		thaw_super(sdp->sd_vfs);
+@@ -93,13 +93,13 @@ int check_journal_clean(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
+ }
+ 
+ /**
+- * gfs2_freeze_lock - hold the freeze glock
++ * gfs2_freeze_lock_shared - hold the freeze glock
+  * @sdp: the superblock
+  * @freeze_gh: pointer to the requested holder
+  * @caller_flags: any additional flags needed by the caller
+  */
+-int gfs2_freeze_lock(struct gfs2_sbd *sdp, struct gfs2_holder *freeze_gh,
+-		     int caller_flags)
++int gfs2_freeze_lock_shared(struct gfs2_sbd *sdp, struct gfs2_holder *freeze_gh,
++			    int caller_flags)
+ {
+ 	int flags = LM_FLAG_NOEXP | GL_EXACT | caller_flags;
+ 	int error;
+@@ -157,8 +157,8 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
+ 		gfs2_holder_mark_uninitialized(&freeze_gh);
+ 		if (sdp->sd_freeze_gl &&
+ 		    !gfs2_glock_is_locked_by_me(sdp->sd_freeze_gl)) {
+-			ret = gfs2_freeze_lock(sdp, &freeze_gh,
+-				       log_write_allowed ? 0 : LM_FLAG_TRY);
++			ret = gfs2_freeze_lock_shared(sdp, &freeze_gh,
++					log_write_allowed ? 0 : LM_FLAG_TRY);
+ 			if (ret == GLR_TRYFAILED)
+ 				ret = 0;
+ 		}
+diff --git a/fs/gfs2/util.h b/fs/gfs2/util.h
+index 78ec190f4155b..3291e33e81e97 100644
+--- a/fs/gfs2/util.h
++++ b/fs/gfs2/util.h
+@@ -149,8 +149,9 @@ int gfs2_io_error_i(struct gfs2_sbd *sdp, const char *function,
+ 
+ extern int check_journal_clean(struct gfs2_sbd *sdp, struct gfs2_jdesc *jd,
+ 			       bool verbose);
+-extern int gfs2_freeze_lock(struct gfs2_sbd *sdp,
+-			    struct gfs2_holder *freeze_gh, int caller_flags);
++extern int gfs2_freeze_lock_shared(struct gfs2_sbd *sdp,
++				   struct gfs2_holder *freeze_gh,
++				   int caller_flags);
+ extern void gfs2_freeze_unlock(struct gfs2_holder *freeze_gh);
+ 
+ #define gfs2_io_error(sdp) \
 -- 
 2.43.0
 
