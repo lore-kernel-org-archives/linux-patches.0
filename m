@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EA31C4EE8;
-	Tue, 27 Aug 2024 14:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E501C4EE8;
+	Tue, 27 Aug 2024 14:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769777; cv=none; b=WyeVeqR5ZrRl4XzWPsZj0EsJvJGD+NZQNHvVJtiNC6FBNg9QezuI9w3yiTyt2+qoJeQiB8XiRyGuelBNaER84X/x04bOHz5Uxb4GcHjYAdo/4XqreoLgqIqNIH//PhNr7fOTM+zXGle5G/CGc/sC3uUjidyb6hAeK80RARqFMuM=
+	t=1724769780; cv=none; b=jKzSqs+aFLMi4ZZaxAb4Zb29PkWdC84E/fJoKMhgO8ZeKR0KA76HRSAJap73gYtqL9yFhmgzKUq9jmKg61vLPUjUbg6dXwjgxczujXyFqGyrxQJeZnlkbmz/xJ33lB2eVuE6aUI2hqEVJazDoi/owEz3v2bduO+P7RSgXO0fyhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769777; c=relaxed/simple;
-	bh=gH7lZFFGIsy7viyJYe4sfroJGaJo3jnPfjkurQSrmSI=;
+	s=arc-20240116; t=1724769780; c=relaxed/simple;
+	bh=QLM+QZQIGXDh0jxpri9zMrNjDu0pgCaeYDzzOTKIdiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2KR7QXGDun3vRYNhT0ouj6RT4WRS6RIYjkrmhksm3SvkjxWVncJz+JMAXCjDUwTskvrnnUui8JL9Ik2YhXwIGLC5Ihz7BwkQ64wsjgy3Ii+U/iaepaIa3uxd4aO3fJzkqsz1kw6cDvB5zTuQp9HZ6M1l15+7N3UU23fNBNKzNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12KDbHmk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATBwDDfbZjXMzu9Ykb75ZV1F506y+G0+iB+4F/Le39GReoTehMkYfr7bL//+mD6pWi6BpJSLT8krB5X86C6iylL5cOX5akNFd4g5iipVp3uNJ11y6oDz0YgyvUrMUdRWmtxFrUeUGRRAmiKCuxaN9oa3zvTts0IYM8tkXr+RlDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7uSXT+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12KDbHmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9860C6104B;
-	Tue, 27 Aug 2024 14:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7uSXT+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2E5C6104E;
+	Tue, 27 Aug 2024 14:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769777;
-	bh=gH7lZFFGIsy7viyJYe4sfroJGaJo3jnPfjkurQSrmSI=;
+	s=korg; t=1724769780;
+	bh=QLM+QZQIGXDh0jxpri9zMrNjDu0pgCaeYDzzOTKIdiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12KDbHmka4QDc1kdDz0PYLT9jIvBaiokbQlx2SB6zajpvu6dS/UaIAOIusu0yXKI8
-	 CFRaHPBeIFO1mYIwSOLB313ZMMvv8HHMtkpY/B8VzVm4t7gtnz7ND4b9HcZefHEemB
-	 BsIen+y5CNkv4VFLYz48ibiIKUKbs2Y2ggol2smw=
+	b=m7uSXT+hn1YE/UNENoLqULIkAhagFFWyXZW5niSr6zApOFr1p2q2lYDhVskYht7ZX
+	 kj31ulmOwMHZ8JLJSK5ZzsEuJ8SsKAqZnUoxsZSUkFnPt/D0ozNbcXzRHkgy9GBT3B
+	 0xguxNcT7ZwheQZ5k14A9+X6i8kwm6EDhsteTBdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 033/341] net: mana: Fix RX buf alloc_size alignment and atomic op panic
-Date: Tue, 27 Aug 2024 16:34:24 +0200
-Message-ID: <20240827143844.672854640@linuxfoundation.org>
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 016/341] s390/dasd: fix error recovery leading to data corruption on ESE devices
+Date: Tue, 27 Aug 2024 16:34:07 +0200
+Message-ID: <20240827143844.022359701@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,72 +51,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 32316f676b4ee87c0404d333d248ccf777f739bc upstream.
+commit 7db4042336580dfd75cb5faa82c12cd51098c90b upstream.
 
-The MANA driver's RX buffer alloc_size is passed into napi_build_skb() to
-create SKB. skb_shinfo(skb) is located at the end of skb, and its alignment
-is affected by the alloc_size passed into napi_build_skb(). The size needs
-to be aligned properly for better performance and atomic operations.
-Otherwise, on ARM64 CPU, for certain MTU settings like 4000, atomic
-operations may panic on the skb_shinfo(skb)->dataref due to alignment fault.
+Extent Space Efficient (ESE) or thin provisioned volumes need to be
+formatted on demand during usual IO processing.
 
-To fix this bug, add proper alignment to the alloc_size calculation.
+The dasd_ese_needs_format function checks for error codes that signal
+the non existence of a proper track format.
 
-Sample panic info:
-[  253.298819] Unable to handle kernel paging request at virtual address ffff000129ba5cce
-[  253.300900] Mem abort info:
-[  253.301760]   ESR = 0x0000000096000021
-[  253.302825]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  253.304268]   SET = 0, FnV = 0
-[  253.305172]   EA = 0, S1PTW = 0
-[  253.306103]   FSC = 0x21: alignment fault
-Call trace:
- __skb_clone+0xfc/0x198
- skb_clone+0x78/0xe0
- raw6_local_deliver+0xfc/0x228
- ip6_protocol_deliver_rcu+0x80/0x500
- ip6_input_finish+0x48/0x80
- ip6_input+0x48/0xc0
- ip6_sublist_rcv_finish+0x50/0x78
- ip6_sublist_rcv+0x1cc/0x2b8
- ipv6_list_rcv+0x100/0x150
- __netif_receive_skb_list_core+0x180/0x220
- netif_receive_skb_list_internal+0x198/0x2a8
- __napi_poll+0x138/0x250
- net_rx_action+0x148/0x330
- handle_softirqs+0x12c/0x3a0
+The check for incorrect length is to imprecise since other error cases
+leading to transport of insufficient data also have this flag set.
+This might lead to data corruption in certain error cases for example
+during a storage server warmstart.
 
-Cc: stable@vger.kernel.org
-Fixes: 80f6215b450e ("net: mana: Add support for jumbo frame")
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix by removing the check for incorrect length and replacing by
+explicitly checking for invalid track format in transport mode.
+
+Also remove the check for file protected since this is not a valid
+ESE handling case.
+
+Cc: stable@vger.kernel.org # 5.3+
+Fixes: 5e2b17e712cf ("s390/dasd: Add dynamic formatting support for ESE volumes")
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240812125733.126431-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/s390/block/dasd.c          |   36 +++++++++++++++---------
+ drivers/s390/block/dasd_3990_erp.c |   10 +-----
+ drivers/s390/block/dasd_eckd.c     |   55 ++++++++++++++++---------------------
+ drivers/s390/block/dasd_int.h      |    2 -
+ 4 files changed, 50 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index d2f07e179e86..ae717d06e66f 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -599,7 +599,11 @@ static void mana_get_rxbuf_cfg(int mtu, u32 *datasize, u32 *alloc_size,
- 	else
- 		*headroom = XDP_PACKET_HEADROOM;
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -1599,9 +1599,15 @@ static int dasd_ese_needs_format(struct
+ 	if (!sense)
+ 		return 0;
  
--	*alloc_size = mtu + MANA_RXBUF_PAD + *headroom;
-+	*alloc_size = SKB_DATA_ALIGN(mtu + MANA_RXBUF_PAD + *headroom);
+-	return !!(sense[1] & SNS1_NO_REC_FOUND) ||
+-		!!(sense[1] & SNS1_FILE_PROTECTED) ||
+-		scsw_cstat(&irb->scsw) == SCHN_STAT_INCORR_LEN;
++	if (sense[1] & SNS1_NO_REC_FOUND)
++		return 1;
 +
-+	/* Using page pool in this case, so alloc_size is PAGE_SIZE */
-+	if (*alloc_size < PAGE_SIZE)
-+		*alloc_size = PAGE_SIZE;
- 
- 	*datasize = mtu + ETH_HLEN;
++	if ((sense[1] & SNS1_INV_TRACK_FORMAT) &&
++	    scsw_is_tm(&irb->scsw) &&
++	    !(sense[2] & SNS2_ENV_DATA_PRESENT))
++		return 1;
++
++	return 0;
  }
--- 
-2.46.0
-
+ 
+ static int dasd_ese_oos_cond(u8 *sense)
+@@ -1622,7 +1628,7 @@ void dasd_int_handler(struct ccw_device
+ 	struct dasd_device *device;
+ 	unsigned long now;
+ 	int nrf_suppressed = 0;
+-	int fp_suppressed = 0;
++	int it_suppressed = 0;
+ 	struct request *req;
+ 	u8 *sense = NULL;
+ 	int expires;
+@@ -1677,8 +1683,9 @@ void dasd_int_handler(struct ccw_device
+ 		 */
+ 		sense = dasd_get_sense(irb);
+ 		if (sense) {
+-			fp_suppressed = (sense[1] & SNS1_FILE_PROTECTED) &&
+-				test_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
++			it_suppressed =	(sense[1] & SNS1_INV_TRACK_FORMAT) &&
++				!(sense[2] & SNS2_ENV_DATA_PRESENT) &&
++				test_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
+ 			nrf_suppressed = (sense[1] & SNS1_NO_REC_FOUND) &&
+ 				test_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
+ 
+@@ -1693,7 +1700,7 @@ void dasd_int_handler(struct ccw_device
+ 				return;
+ 			}
+ 		}
+-		if (!(fp_suppressed || nrf_suppressed))
++		if (!(it_suppressed || nrf_suppressed))
+ 			device->discipline->dump_sense_dbf(device, irb, "int");
+ 
+ 		if (device->features & DASD_FEATURE_ERPLOG)
+@@ -2465,14 +2472,17 @@ retry:
+ 	rc = 0;
+ 	list_for_each_entry_safe(cqr, n, ccw_queue, blocklist) {
+ 		/*
+-		 * In some cases the 'File Protected' or 'Incorrect Length'
+-		 * error might be expected and error recovery would be
+-		 * unnecessary in these cases.	Check if the according suppress
+-		 * bit is set.
++		 * In some cases certain errors might be expected and
++		 * error recovery would be unnecessary in these cases.
++		 * Check if the according suppress bit is set.
+ 		 */
+ 		sense = dasd_get_sense(&cqr->irb);
+-		if (sense && sense[1] & SNS1_FILE_PROTECTED &&
+-		    test_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags))
++		if (sense && (sense[1] & SNS1_INV_TRACK_FORMAT) &&
++		    !(sense[2] & SNS2_ENV_DATA_PRESENT) &&
++		    test_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags))
++			continue;
++		if (sense && (sense[1] & SNS1_NO_REC_FOUND) &&
++		    test_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags))
+ 			continue;
+ 		if (scsw_cstat(&cqr->irb.scsw) == 0x40 &&
+ 		    test_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags))
+--- a/drivers/s390/block/dasd_3990_erp.c
++++ b/drivers/s390/block/dasd_3990_erp.c
+@@ -1406,14 +1406,8 @@ dasd_3990_erp_file_prot(struct dasd_ccw_
+ 
+ 	struct dasd_device *device = erp->startdev;
+ 
+-	/*
+-	 * In some cases the 'File Protected' error might be expected and
+-	 * log messages shouldn't be written then.
+-	 * Check if the according suppress bit is set.
+-	 */
+-	if (!test_bit(DASD_CQR_SUPPRESS_FP, &erp->flags))
+-		dev_err(&device->cdev->dev,
+-			"Accessing the DASD failed because of a hardware error\n");
++	dev_err(&device->cdev->dev,
++		"Accessing the DASD failed because of a hardware error\n");
+ 
+ 	return dasd_3990_erp_cleanup(erp, DASD_CQR_FAILED);
+ 
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -2289,6 +2289,7 @@ dasd_eckd_analysis_ccw(struct dasd_devic
+ 	cqr->status = DASD_CQR_FILLED;
+ 	/* Set flags to suppress output for expected errors */
+ 	set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
++	set_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
+ 
+ 	return cqr;
+ }
+@@ -2570,7 +2571,6 @@ dasd_eckd_build_check_tcw(struct dasd_de
+ 	cqr->buildclk = get_tod_clock();
+ 	cqr->status = DASD_CQR_FILLED;
+ 	/* Set flags to suppress output for expected errors */
+-	set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
+ 	set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
+ 
+ 	return cqr;
+@@ -4146,8 +4146,6 @@ static struct dasd_ccw_req *dasd_eckd_bu
+ 
+ 	/* Set flags to suppress output for expected errors */
+ 	if (dasd_eckd_is_ese(basedev)) {
+-		set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
+-		set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
+ 		set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
+ 	}
+ 
+@@ -4649,9 +4647,8 @@ static struct dasd_ccw_req *dasd_eckd_bu
+ 
+ 	/* Set flags to suppress output for expected errors */
+ 	if (dasd_eckd_is_ese(basedev)) {
+-		set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
+-		set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
+ 		set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
++		set_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
+ 	}
+ 
+ 	return cqr;
+@@ -5820,36 +5817,32 @@ static void dasd_eckd_dump_sense(struct
+ {
+ 	u8 *sense = dasd_get_sense(irb);
+ 
+-	if (scsw_is_tm(&irb->scsw)) {
+-		/*
+-		 * In some cases the 'File Protected' or 'Incorrect Length'
+-		 * error might be expected and log messages shouldn't be written
+-		 * then. Check if the according suppress bit is set.
+-		 */
+-		if (sense && (sense[1] & SNS1_FILE_PROTECTED) &&
+-		    test_bit(DASD_CQR_SUPPRESS_FP, &req->flags))
+-			return;
+-		if (scsw_cstat(&irb->scsw) == 0x40 &&
+-		    test_bit(DASD_CQR_SUPPRESS_IL, &req->flags))
+-			return;
++	/*
++	 * In some cases certain errors might be expected and
++	 * log messages shouldn't be written then.
++	 * Check if the according suppress bit is set.
++	 */
++	if (sense && (sense[1] & SNS1_INV_TRACK_FORMAT) &&
++	    !(sense[2] & SNS2_ENV_DATA_PRESENT) &&
++	    test_bit(DASD_CQR_SUPPRESS_IT, &req->flags))
++		return;
+ 
+-		dasd_eckd_dump_sense_tcw(device, req, irb);
+-	} else {
+-		/*
+-		 * In some cases the 'Command Reject' or 'No Record Found'
+-		 * error might be expected and log messages shouldn't be
+-		 * written then. Check if the according suppress bit is set.
+-		 */
+-		if (sense && sense[0] & SNS0_CMD_REJECT &&
+-		    test_bit(DASD_CQR_SUPPRESS_CR, &req->flags))
+-			return;
++	if (sense && sense[0] & SNS0_CMD_REJECT &&
++	    test_bit(DASD_CQR_SUPPRESS_CR, &req->flags))
++		return;
+ 
+-		if (sense && sense[1] & SNS1_NO_REC_FOUND &&
+-		    test_bit(DASD_CQR_SUPPRESS_NRF, &req->flags))
+-			return;
++	if (sense && sense[1] & SNS1_NO_REC_FOUND &&
++	    test_bit(DASD_CQR_SUPPRESS_NRF, &req->flags))
++		return;
+ 
++	if (scsw_cstat(&irb->scsw) == 0x40 &&
++	    test_bit(DASD_CQR_SUPPRESS_IL, &req->flags))
++		return;
++
++	if (scsw_is_tm(&irb->scsw))
++		dasd_eckd_dump_sense_tcw(device, req, irb);
++	else
+ 		dasd_eckd_dump_sense_ccw(device, req, irb);
+-	}
+ }
+ 
+ static int dasd_eckd_reload_device(struct dasd_device *device)
+--- a/drivers/s390/block/dasd_int.h
++++ b/drivers/s390/block/dasd_int.h
+@@ -225,7 +225,7 @@ struct dasd_ccw_req {
+  * The following flags are used to suppress output of certain errors.
+  */
+ #define DASD_CQR_SUPPRESS_NRF	4	/* Suppress 'No Record Found' error */
+-#define DASD_CQR_SUPPRESS_FP	5	/* Suppress 'File Protected' error*/
++#define DASD_CQR_SUPPRESS_IT	5	/* Suppress 'Invalid Track' error*/
+ #define DASD_CQR_SUPPRESS_IL	6	/* Suppress 'Incorrect Length' error */
+ #define DASD_CQR_SUPPRESS_CR	7	/* Suppress 'Command Reject' error */
+ 
 
 
