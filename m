@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C2B1C6F4D;
-	Tue, 27 Aug 2024 14:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD291C57BD;
+	Tue, 27 Aug 2024 14:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769976; cv=none; b=I82k9U0WpHLYEW0NZF0STOgqimOvo5lgqCZ4hTBYWNNYj8uMAxnhwtmR6TYaaD58qPJ99UYLW+MzeV0g2n6CuUm2QFq2/0eTTBiCajZvAGooe5GbfXScrGx0IGPYYBGi+vBFXP5lz1wKUILQrROEOUdtqlcX1txX2D3bPsHt67E=
+	t=1724769979; cv=none; b=WYlZh+jpi2wdTtnA7jKVL+F8h0MidqowKmCL8IbWhvT0p5nJMciCCj3RFMwL9gA3NvteB1Lq6/jzeclbuC8TthyfZ9A9/D7vhdg3S+iGM9VZq5gs9X3KztravMA5TmoqXpVbiK4RVIi6xlkv57ef6fcq7wn5T4GiLUc85MrVahU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769976; c=relaxed/simple;
-	bh=U9+esCb/u9IY1x3BSHWadh3GfB4y8SFSWdcQWHyn2zc=;
+	s=arc-20240116; t=1724769979; c=relaxed/simple;
+	bh=D2zNgj9LymxCHkZ8DpXhBfooev9xhtvRhJCFMaw4OEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i06TrvKTdqKcxQcsL8+1tv0jR9ivQP/FOuP+AT2szoezh/Ju8AEhaYdINUllJBuk5vfuJNdYABkJUbk/jtYVvyB8sIw+Q+pfTq5p2bAdL5O1+G7y+239rMjG3BBNqCr0EoJ16O9M1qKhIFVf+EFyUMqe4WQS25fR4M9x6NY8CK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IusOTxk7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MmT2itTFGB703bt42dGlCUyBhwUl/fYW7QDKisHE3Jsi06I+0moIxc3YDfnDLbA41Sywowor/qpTfFxtVk3N03QF1uCVmL3EDe/T2s9LtM3d6rYaRpwZjgvCBV9jo5GHlUI7anY2bZObmmwenLUdu7K8zsbkxrKh6vzdntXbaZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuzJ9zLh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IusOTxk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D5CC61063;
-	Tue, 27 Aug 2024 14:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuzJ9zLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018A6C61077;
+	Tue, 27 Aug 2024 14:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769976;
-	bh=U9+esCb/u9IY1x3BSHWadh3GfB4y8SFSWdcQWHyn2zc=;
+	s=korg; t=1724769979;
+	bh=D2zNgj9LymxCHkZ8DpXhBfooev9xhtvRhJCFMaw4OEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IusOTxk7z6Yvv2BxPzZ9H5J05Kw6xD/kbiXxylVlLJfzw0n1+sl2edpKvs7S/4oW5
-	 QUhkiUyveXi2tI7LqjxHYOQTlB8DT6O1bepHS4ZUC7/TYFfl9ecIS4WAjCwbIVnMUV
-	 C3wrVHTcWrR5x3BGxNUuTZqW/pZxLt/kL8KXkoAs=
+	b=CuzJ9zLhr4NC2vmf+X5iS4DIzfMj9G0whhqCEy2gTVc1g4VpEZnMelRuEco42dWBY
+	 1TG54HiUbFr1axQuwUFbW1UEpXLnPZE98Ef9oxPqqZtjUk0Zae3PnuhPIhmDTdPZST
+	 +pQlFSUeqLLfubgmG36pr6mSi3NVnUr5B89xtNL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/341] drm/amd/pm: fix error flow in sensor fetching
-Date: Tue, 27 Aug 2024 16:35:14 +0200
-Message-ID: <20240827143846.568254634@linuxfoundation.org>
+Subject: [PATCH 6.6 092/341] rcu: Dump memory object info if callback function is invalid
+Date: Tue, 27 Aug 2024 16:35:23 +0200
+Message-ID: <20240827143846.907543843@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,67 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit a5600853167aeba5cade81f184a382a0d1b14641 ]
+[ Upstream commit 2cbc482d325ee58001472c4359b311958c4efdd1 ]
 
-Sensor fetching functions should return an signed int to
-handle errors properly.
+When a structure containing an RCU callback rhp is (incorrectly) freed
+and reallocated after rhp is passed to call_rcu(), it is not unusual for
+rhp->func to be set to NULL. This defeats the debugging prints used by
+__call_rcu_common() in kernels built with CONFIG_DEBUG_OBJECTS_RCU_HEAD=y,
+which expect to identify the offending code using the identity of this
+function.
 
-Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reported-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+And in kernels build without CONFIG_DEBUG_OBJECTS_RCU_HEAD=y, things
+are even worse, as can be seen from this splat:
+
+Unable to handle kernel NULL pointer dereference at virtual address 0
+... ...
+PC is at 0x0
+LR is at rcu_do_batch+0x1c0/0x3b8
+... ...
+ (rcu_do_batch) from (rcu_core+0x1d4/0x284)
+ (rcu_core) from (__do_softirq+0x24c/0x344)
+ (__do_softirq) from (__irq_exit_rcu+0x64/0x108)
+ (__irq_exit_rcu) from (irq_exit+0x8/0x10)
+ (irq_exit) from (__handle_domain_irq+0x74/0x9c)
+ (__handle_domain_irq) from (gic_handle_irq+0x8c/0x98)
+ (gic_handle_irq) from (__irq_svc+0x5c/0x94)
+ (__irq_svc) from (arch_cpu_idle+0x20/0x3c)
+ (arch_cpu_idle) from (default_idle_call+0x4c/0x78)
+ (default_idle_call) from (do_idle+0xf8/0x150)
+ (do_idle) from (cpu_startup_entry+0x18/0x20)
+ (cpu_startup_entry) from (0xc01530)
+
+This commit therefore adds calls to mem_dump_obj(rhp) to output some
+information, for example:
+
+  slab kmalloc-256 start ffff410c45019900 pointer offset 0 size 256
+
+This provides the rough size of the memory block and the offset of the
+rcu_head structure, which as least provides at least a few clues to help
+locate the problem. If the problem is reproducible, additional slab
+debugging can be enabled, for example, CONFIG_DEBUG_SLAB=y, which can
+provide significantly more information.
+
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ kernel/rcu/rcu.h      | 7 +++++++
+ kernel/rcu/srcutiny.c | 1 +
+ kernel/rcu/srcutree.c | 1 +
+ kernel/rcu/tasks.h    | 1 +
+ kernel/rcu/tiny.c     | 1 +
+ kernel/rcu/tree.c     | 1 +
+ 6 files changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-index 7372eae0b0ef8..babb73147adfb 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -1471,9 +1471,9 @@ static ssize_t amdgpu_set_pp_power_profile_mode(struct device *dev,
- 	return -EINVAL;
+diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
+index 3d1851f82dbb6..de0afabfbd440 100644
+--- a/kernel/rcu/rcu.h
++++ b/kernel/rcu/rcu.h
+@@ -10,6 +10,7 @@
+ #ifndef __LINUX_RCU_H
+ #define __LINUX_RCU_H
+ 
++#include <linux/slab.h>
+ #include <trace/events/rcu.h>
+ 
+ /*
+@@ -248,6 +249,12 @@ static inline void debug_rcu_head_unqueue(struct rcu_head *head)
  }
+ #endif	/* #else !CONFIG_DEBUG_OBJECTS_RCU_HEAD */
  
--static unsigned int amdgpu_hwmon_get_sensor_generic(struct amdgpu_device *adev,
--						    enum amd_pp_sensors sensor,
--						    void *query)
-+static int amdgpu_hwmon_get_sensor_generic(struct amdgpu_device *adev,
-+					   enum amd_pp_sensors sensor,
-+					   void *query)
- {
- 	int r, size = sizeof(uint32_t);
++static inline void debug_rcu_head_callback(struct rcu_head *rhp)
++{
++	if (unlikely(!rhp->func))
++		kmem_dump_obj(rhp);
++}
++
+ extern int rcu_cpu_stall_suppress_at_boot;
  
-@@ -2787,8 +2787,8 @@ static ssize_t amdgpu_hwmon_show_vddnb_label(struct device *dev,
- 	return sysfs_emit(buf, "vddnb\n");
- }
+ static inline bool rcu_stall_is_suppressed_at_boot(void)
+diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
+index 336af24e0fe35..c38e5933a5d69 100644
+--- a/kernel/rcu/srcutiny.c
++++ b/kernel/rcu/srcutiny.c
+@@ -138,6 +138,7 @@ void srcu_drive_gp(struct work_struct *wp)
+ 	while (lh) {
+ 		rhp = lh;
+ 		lh = lh->next;
++		debug_rcu_head_callback(rhp);
+ 		local_bh_disable();
+ 		rhp->func(rhp);
+ 		local_bh_enable();
+diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
+index 25285893e44e7..2f770a9a2a13a 100644
+--- a/kernel/rcu/srcutree.c
++++ b/kernel/rcu/srcutree.c
+@@ -1735,6 +1735,7 @@ static void srcu_invoke_callbacks(struct work_struct *work)
+ 	rhp = rcu_cblist_dequeue(&ready_cbs);
+ 	for (; rhp != NULL; rhp = rcu_cblist_dequeue(&ready_cbs)) {
+ 		debug_rcu_head_unqueue(rhp);
++		debug_rcu_head_callback(rhp);
+ 		local_bh_disable();
+ 		rhp->func(rhp);
+ 		local_bh_enable();
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index ff8d539ee22be..df81506cf2bde 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -538,6 +538,7 @@ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu
+ 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
+ 	len = rcl.len;
+ 	for (rhp = rcu_cblist_dequeue(&rcl); rhp; rhp = rcu_cblist_dequeue(&rcl)) {
++		debug_rcu_head_callback(rhp);
+ 		local_bh_disable();
+ 		rhp->func(rhp);
+ 		local_bh_enable();
+diff --git a/kernel/rcu/tiny.c b/kernel/rcu/tiny.c
+index 42f7589e51e09..fec804b790803 100644
+--- a/kernel/rcu/tiny.c
++++ b/kernel/rcu/tiny.c
+@@ -97,6 +97,7 @@ static inline bool rcu_reclaim_tiny(struct rcu_head *head)
  
--static unsigned int amdgpu_hwmon_get_power(struct device *dev,
--					   enum amd_pp_sensors sensor)
-+static int amdgpu_hwmon_get_power(struct device *dev,
-+				  enum amd_pp_sensors sensor)
- {
- 	struct amdgpu_device *adev = dev_get_drvdata(dev);
- 	unsigned int uw;
-@@ -2809,7 +2809,7 @@ static ssize_t amdgpu_hwmon_show_power_avg(struct device *dev,
- 					   struct device_attribute *attr,
- 					   char *buf)
- {
--	unsigned int val;
-+	int val;
+ 	trace_rcu_invoke_callback("", head);
+ 	f = head->func;
++	debug_rcu_head_callback(head);
+ 	WRITE_ONCE(head->func, (rcu_callback_t)0L);
+ 	f(head);
+ 	rcu_lock_release(&rcu_callback_map);
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index 583cc29080764..c7cb465e2e0c7 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -2185,6 +2185,7 @@ static void rcu_do_batch(struct rcu_data *rdp)
+ 		trace_rcu_invoke_callback(rcu_state.name, rhp);
  
- 	val = amdgpu_hwmon_get_power(dev, AMDGPU_PP_SENSOR_GPU_AVG_POWER);
- 	if (val < 0)
-@@ -2822,7 +2822,7 @@ static ssize_t amdgpu_hwmon_show_power_input(struct device *dev,
- 					     struct device_attribute *attr,
- 					     char *buf)
- {
--	unsigned int val;
-+	int val;
+ 		f = rhp->func;
++		debug_rcu_head_callback(rhp);
+ 		WRITE_ONCE(rhp->func, (rcu_callback_t)0L);
+ 		f(rhp);
  
- 	val = amdgpu_hwmon_get_power(dev, AMDGPU_PP_SENSOR_GPU_INPUT_POWER);
- 	if (val < 0)
 -- 
 2.43.0
 
