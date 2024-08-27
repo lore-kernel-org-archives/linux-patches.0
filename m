@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614E51C93A3;
-	Tue, 27 Aug 2024 14:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A381C93C8;
+	Tue, 27 Aug 2024 14:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770504; cv=none; b=A+FnjxbpW4WP8gCWMpmKx7jPH2yhuSHcFEdoPzZaMsjLVzh2XPlLKq0x2up9RMFli47SNA2yaGeGDjIhgQVWjPFdPshyfcs1E656eSI9Uq1aqlNw8e9uT1i//nQ0dnN1XydvtAdogliZ0yHt3kjVU8G/mPasZ3anIOYh5HMMaOA=
+	t=1724770507; cv=none; b=jTUtkAv3+dOF7AJOmA8ZvX9UCuMIjw9xYGAXfP8rPtD+1zY/rYPJhlqOXypg+89u/+4QsN+8sQ0Kn3EKXAYETiLGpSx2DwzQMP14pQFiSJLP5lMvsZWLl95L61yvu7ZMbzGc5EpGrsmKZ+Qr13Kje0eNNfstYAZqk3T+ycZlaX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770504; c=relaxed/simple;
-	bh=l2I0UAtcj2cOZLV2W+oHp5RgElvH6QnPAxkTy6q5N6k=;
+	s=arc-20240116; t=1724770507; c=relaxed/simple;
+	bh=OVEsacFfPq8H3uaSz4X2Tp7jZ30QV5rdlAnGiuGJV94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkM9kWaPPcv8F3xuggIpE9LtV+KdFEcnXbrc9eL0zdS5OMGXQRtjLgYCyr4WqClDnfOe8ZFnRn083Qp51C7tUE2OmJy4vLk/DyZ+HlKYGsiBfIAdNw21MeIRJCKf3GFaj4p6Dq9shIli46uJSoqXBhedHf9FEZQKKGtgURLyzVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChXjHAna; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFah3IF9HIy1/q1fRnAdpkOIvhaYfHyoYsGyA3XCKUwMoeD6ZayUTv/BjGd1MgwtpZImZ0G9zDBc24/H2Dk2o9eHrk9G0qMarf5+Qew8Y178Bx5FVkNgKANaB3nT739d5kFAL22gHsKxeOKdc9HzQRT/BE8TO82qStV4vwblh5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjcn2ADg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChXjHAna"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C765FC4E699;
-	Tue, 27 Aug 2024 14:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjcn2ADg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161D1C4E692;
+	Tue, 27 Aug 2024 14:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770504;
-	bh=l2I0UAtcj2cOZLV2W+oHp5RgElvH6QnPAxkTy6q5N6k=;
+	s=korg; t=1724770507;
+	bh=OVEsacFfPq8H3uaSz4X2Tp7jZ30QV5rdlAnGiuGJV94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ChXjHAnaX+dqeHolsKitJAwefr8K+8lNdlal1o6UXV5vEUXIUUPccSMCqrBQn2WAV
-	 Rc7RbKgqgUkamIVbu088I7O6I7GfcsoXBcQuAnugFfpO7IDRVJrKAQr8mlutELpjtK
-	 JKZZ82/hfFr52YeFUtzRGkxvJk5WGT7QTI5NEfZs=
+	b=xjcn2ADgLVrYsyRAboAbs4yCZ+L2ildX4C+Ccr+br6T0+4l/Ik7buxOFXqvkUQBPZ
+	 tVndsLyTVMjL2m0hwgKheE1+8qteiMkvn3XB0qryjNfEjmFxAtsMm2OjU1WUPaS27o
+	 8EAXaWIHRBbtfGu3AYh/Jz0FFhJT7rqkr9ACV9EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 248/341] tcp/dccp: bypass empty buckets in inet_twsk_purge()
-Date: Tue, 27 Aug 2024 16:37:59 +0200
-Message-ID: <20240827143852.842590370@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Manas Ghandat <ghandatmanas@gmail.com>
+Subject: [PATCH 6.6 222/341] jfs: define xtree root and page independently
+Date: Tue, 27 Aug 2024 16:37:33 +0200
+Message-ID: <20240827143851.860176650@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,52 +50,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-[ Upstream commit 50e2907ef8bb52cf80ecde9eec5c4dac07177146 ]
+commit a779ed754e52d582b8c0e17959df063108bd0656 upstream.
 
-TCP ehash table is often sparsely populated.
+In order to make array bounds checking sane, provide a separate
+definition of the in-inode xtree root and the external xtree page.
 
-inet_twsk_purge() spends too much time calling cond_resched().
-
-This patch can reduce time spent in inet_twsk_purge() by 20x.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240327191206.508114-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 565d121b6998 ("tcp: prevent concurrent execution of tcp_sk_exit_batch")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Tested-by: Manas Ghandat <ghandatmanas@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_timewait_sock.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/jfs/jfs_dinode.h |    2 +-
+ fs/jfs/jfs_imap.c   |    6 +++---
+ fs/jfs/jfs_incore.h |    2 +-
+ fs/jfs/jfs_txnmgr.c |    4 ++--
+ fs/jfs/jfs_xtree.c  |    4 ++--
+ fs/jfs/jfs_xtree.h  |   37 +++++++++++++++++++++++--------------
+ 6 files changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
-index 757ae3a4e2f1a..55f60d1b46f2d 100644
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -281,12 +281,17 @@ EXPORT_SYMBOL_GPL(__inet_twsk_schedule);
- /* Remove all non full sockets (TIME_WAIT and NEW_SYN_RECV) for dead netns */
- void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
- {
-+	struct inet_ehash_bucket *head = &hashinfo->ehash[0];
-+	unsigned int ehash_mask = hashinfo->ehash_mask;
- 	struct hlist_nulls_node *node;
- 	unsigned int slot;
- 	struct sock *sk;
+--- a/fs/jfs/jfs_dinode.h
++++ b/fs/jfs/jfs_dinode.h
+@@ -96,7 +96,7 @@ struct dinode {
+ #define di_gengen	u._file._u1._imap._gengen
  
--	for (slot = 0; slot <= hashinfo->ehash_mask; slot++) {
--		struct inet_ehash_bucket *head = &hashinfo->ehash[slot];
-+	for (slot = 0; slot <= ehash_mask; slot++, head++) {
+ 			union {
+-				xtpage_t _xtroot;
++				xtroot_t _xtroot;
+ 				struct {
+ 					u8 unused[16];	/* 16: */
+ 					dxd_t _dxd;	/* 16: */
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -673,7 +673,7 @@ int diWrite(tid_t tid, struct inode *ip)
+ 		 * This is the special xtree inside the directory for storing
+ 		 * the directory table
+ 		 */
+-		xtpage_t *p, *xp;
++		xtroot_t *p, *xp;
+ 		xad_t *xad;
+ 
+ 		jfs_ip->xtlid = 0;
+@@ -687,7 +687,7 @@ int diWrite(tid_t tid, struct inode *ip)
+ 		 * copy xtree root from inode to dinode:
+ 		 */
+ 		p = &jfs_ip->i_xtroot;
+-		xp = (xtpage_t *) &dp->di_dirtable;
++		xp = (xtroot_t *) &dp->di_dirtable;
+ 		lv = ilinelock->lv;
+ 		for (n = 0; n < ilinelock->index; n++, lv++) {
+ 			memcpy(&xp->xad[lv->offset], &p->xad[lv->offset],
+@@ -716,7 +716,7 @@ int diWrite(tid_t tid, struct inode *ip)
+ 	 *	regular file: 16 byte (XAD slot) granularity
+ 	 */
+ 	if (type & tlckXTREE) {
+-		xtpage_t *p, *xp;
++		xtroot_t *p, *xp;
+ 		xad_t *xad;
+ 
+ 		/*
+--- a/fs/jfs/jfs_incore.h
++++ b/fs/jfs/jfs_incore.h
+@@ -66,7 +66,7 @@ struct jfs_inode_info {
+ 	lid_t	xtlid;		/* lid of xtree lock on directory */
+ 	union {
+ 		struct {
+-			xtpage_t _xtroot;	/* 288: xtree root */
++			xtroot_t _xtroot;	/* 288: xtree root */
+ 			struct inomap *_imap;	/* 4: inode map header	*/
+ 		} file;
+ 		struct {
+--- a/fs/jfs/jfs_txnmgr.c
++++ b/fs/jfs/jfs_txnmgr.c
+@@ -783,7 +783,7 @@ struct tlock *txLock(tid_t tid, struct i
+ 			if (mp->xflag & COMMIT_PAGE)
+ 				p = (xtpage_t *) mp->data;
+ 			else
+-				p = &jfs_ip->i_xtroot;
++				p = (xtpage_t *) &jfs_ip->i_xtroot;
+ 			xtlck->lwm.offset =
+ 			    le16_to_cpu(p->header.nextindex);
+ 		}
+@@ -1676,7 +1676,7 @@ static void xtLog(struct jfs_log * log,
+ 
+ 	if (tlck->type & tlckBTROOT) {
+ 		lrd->log.redopage.type |= cpu_to_le16(LOG_BTROOT);
+-		p = &JFS_IP(ip)->i_xtroot;
++		p = (xtpage_t *) &JFS_IP(ip)->i_xtroot;
+ 		if (S_ISDIR(ip->i_mode))
+ 			lrd->log.redopage.type |=
+ 			    cpu_to_le16(LOG_DIR_XTREE);
+--- a/fs/jfs/jfs_xtree.c
++++ b/fs/jfs/jfs_xtree.c
+@@ -1213,7 +1213,7 @@ xtSplitRoot(tid_t tid,
+ 	struct xtlock *xtlck;
+ 	int rc;
+ 
+-	sp = &JFS_IP(ip)->i_xtroot;
++	sp = (xtpage_t *) &JFS_IP(ip)->i_xtroot;
+ 
+ 	INCREMENT(xtStat.split);
+ 
+@@ -2098,7 +2098,7 @@ int xtAppend(tid_t tid,		/* transaction
+  */
+ void xtInitRoot(tid_t tid, struct inode *ip)
+ {
+-	xtpage_t *p;
++	xtroot_t *p;
+ 
+ 	/*
+ 	 * acquire a transaction lock on the root
+--- a/fs/jfs/jfs_xtree.h
++++ b/fs/jfs/jfs_xtree.h
+@@ -65,24 +65,33 @@ struct xadlist {
+ #define XTPAGEMAXSLOT	256
+ #define XTENTRYSTART	2
+ 
++struct xtheader {
++	__le64 next;	/* 8: */
++	__le64 prev;	/* 8: */
 +
-+		if (hlist_nulls_empty(&head->chain))
-+			continue;
++	u8 flag;	/* 1: */
++	u8 rsrvd1;	/* 1: */
++	__le16 nextindex;	/* 2: next index = number of entries */
++	__le16 maxentry;	/* 2: max number of entries */
++	__le16 rsrvd2;	/* 2: */
 +
- restart_rcu:
- 		cond_resched();
- 		rcu_read_lock();
--- 
-2.43.0
-
++	pxd_t self;	/* 8: self */
++};
++
+ /*
+- *	xtree page:
++ *	xtree root (in inode):
+  */
+ typedef union {
+-	struct xtheader {
+-		__le64 next;	/* 8: */
+-		__le64 prev;	/* 8: */
+-
+-		u8 flag;	/* 1: */
+-		u8 rsrvd1;	/* 1: */
+-		__le16 nextindex;	/* 2: next index = number of entries */
+-		__le16 maxentry;	/* 2: max number of entries */
+-		__le16 rsrvd2;	/* 2: */
+-
+-		pxd_t self;	/* 8: self */
+-	} header;		/* (32) */
+-
++	struct xtheader header;
+ 	xad_t xad[XTROOTMAXSLOT];	/* 16 * maxentry: xad array */
++} xtroot_t;
++
++/*
++ *	xtree page:
++ */
++typedef union {
++	struct xtheader header;
++	xad_t xad[XTPAGEMAXSLOT];	/* 16 * maxentry: xad array */
+ } xtpage_t;
+ 
+ /*
 
 
