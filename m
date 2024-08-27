@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8BF1C57A0;
-	Tue, 27 Aug 2024 14:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F25119EEA2;
+	Tue, 27 Aug 2024 14:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769832; cv=none; b=E0bI9bT7L6DZZS7aE3TAhgAANgHTVSPTKyPx1uS5Ug9UpTXeHQsUC4aQkwIT/0TawcCP+pnpaiBn4GEb2xKaZC3CPCqevRoGDyUxxQzXKG4VZiQBplQ4e3qa6wguFW6soRZBoGPXNm8yaJdConrHaGAsOctkCyv8iMjXqy2fA1c=
+	t=1724769835; cv=none; b=ju1kP8oi+KgKEr3A9W2V6ZkG9/a80hLiN8O5k9OpxqWlRZtcQkemsONfNt5LzCthxnAjA0xWJ2TzBNYEvngIeEC/uPF+/PEndohf6pPlV5oZ+Nz3/HPHG82stW7L6UoFawh0jBXeEGDMzqVKKt4SKqScawoHB5HfEqQ+wx0bKmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769832; c=relaxed/simple;
-	bh=0pxAUy0Ex4tHlzx0AbqgFfBdZeFzIcLUIOe9VeJpukw=;
+	s=arc-20240116; t=1724769835; c=relaxed/simple;
+	bh=VQKeQjGJ39gt29xD3hT00OxW/ZsQ5TEVMF5hZPU7FBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+FE/WFb9ZFrKQdisR9SKmA2WKNaRXpVKFW3iS9YIFOpMLHOFSjgRUjRSi52oUOCrnMS6lAaT9JdJSsolN7HDgJuQrNp9zxYlyE63ALAkYv4zjp8qn+TRb0hGuypZKSTycyyi5g3dK+Vzy8Ed4g2WVNO4LOkP+Pink3jn0fveDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycwlUFK4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WkDmE91ozldTGxDq9KRZJwMWIf9cG7kAFvFZamuvdFwubnnNdDMCsS0qScyoTg2HW8nmwD6cdmFfhW73Q28V/wzEE/iFPM3YaCYi+ob8dW+6VFETf6Z9pcL8wByhxvRc2+yy5Ey6EypCbngqds2RtB/jlulncRI8TABJqpNvfRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ei8ce8fE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycwlUFK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99084C6105A;
-	Tue, 27 Aug 2024 14:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ei8ce8fE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9593AC61053;
+	Tue, 27 Aug 2024 14:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769832;
-	bh=0pxAUy0Ex4tHlzx0AbqgFfBdZeFzIcLUIOe9VeJpukw=;
+	s=korg; t=1724769835;
+	bh=VQKeQjGJ39gt29xD3hT00OxW/ZsQ5TEVMF5hZPU7FBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ycwlUFK4xV12l2Flw084GAEwOOilZwtHOy5oPKx8qxXCr6GTxOtDWJNvi8jpepYX9
-	 i1s2uD//55jBjvyctkIWnAzHz1RRWyOTYxoTynF3hsy1ULEW8ZgoBHMnh22/IcNwPM
-	 8cIBxmi5wag65dBFWWs4ETQgQkAxssP3pLe+n+9g=
+	b=ei8ce8fEmUDhNlrlL55QmF3vW2hdpsb8DvXEuZy6GPP7oW/mgUoL9V292dfVwXV7+
+	 /oCNwu47BpmKMXXN+dgpFiqPXjFEDaza+sI0Axa1zS7bPciZ4sptFX4ntu6QoZUDo7
+	 GYSW6XIwFI0lBpKU5QQkCN0kJ6eVi6j/9CY1dlTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Steffen Eiden <seiden@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/341] s390/uv: Panic for set and remove shared access UVC errors
-Date: Tue, 27 Aug 2024 16:34:38 +0200
-Message-ID: <20240827143845.205322304@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.6 018/341] riscv: change XIPs kernel_map.size to be size of the entire kernel
+Date: Tue, 27 Aug 2024 16:34:09 +0200
+Message-ID: <20240827143844.098458235@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,60 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit cff59d8631e1409ffdd22d9d717e15810181b32c ]
+commit 57d76bc51fd80824bcc0c84a5b5ec944f1b51edd upstream.
 
-The return value uv_set_shared() and uv_remove_shared() (which are
-wrappers around the share() function) is not always checked. The system
-integrity of a protected guest depends on the Share and Unshare UVCs
-being successful. This means that any caller that fails to check the
-return value will compromise the security of the protected guest.
+With XIP kernel, kernel_map.size is set to be only the size of data part of
+the kernel. This is inconsistent with "normal" kernel, who sets it to be
+the size of the entire kernel.
 
-No code path that would lead to such violation of the security
-guarantees is currently exercised, since all the areas that are shared
-never get unshared during the lifetime of the system. This might
-change and become an issue in the future.
+More importantly, XIP kernel fails to boot if CONFIG_DEBUG_VIRTUAL is
+enabled, because there are checks on virtual addresses with the assumption
+that kernel_map.size is the size of the entire kernel (these checks are in
+arch/riscv/mm/physaddr.c).
 
-The Share and Unshare UVCs can only fail in case of hypervisor
-misbehaviour (either a bug or malicious behaviour). In such cases there
-is no reasonable way forward, and the system needs to panic.
+Change XIP's kernel_map.size to be the size of the entire kernel.
 
-This patch replaces the return at the end of the share() function with
-a panic, to guarantee system integrity.
-
-Fixes: 5abb9351dfd9 ("s390/uv: introduce guest side ultravisor code")
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240801112548.85303-1-imbrenda@linux.ibm.com
-Message-ID: <20240801112548.85303-1-imbrenda@linux.ibm.com>
-[frankja@linux.ibm.com: Fixed up patch subject]
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: <stable@vger.kernel.org> # v6.1+
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240508191917.2892064-1-namcao@linutronix.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/uv.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/mm/init.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/include/asm/uv.h b/arch/s390/include/asm/uv.h
-index 0e7bd3873907f..b2e2f9a4163c5 100644
---- a/arch/s390/include/asm/uv.h
-+++ b/arch/s390/include/asm/uv.h
-@@ -442,7 +442,10 @@ static inline int share(unsigned long addr, u16 cmd)
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -912,7 +912,7 @@ static void __init create_kernel_page_ta
+ 				   PMD_SIZE, PAGE_KERNEL_EXEC);
  
- 	if (!uv_call(0, (u64)&uvcb))
- 		return 0;
--	return -EINVAL;
-+	pr_err("%s UVC failed (rc: 0x%x, rrc: 0x%x), possible hypervisor bug.\n",
-+	       uvcb.header.cmd == UVC_CMD_SET_SHARED_ACCESS ? "Share" : "Unshare",
-+	       uvcb.header.rc, uvcb.header.rrc);
-+	panic("System security cannot be guaranteed unless the system panics now.\n");
- }
+ 	/* Map the data in RAM */
+-	end_va = kernel_map.virt_addr + XIP_OFFSET + kernel_map.size;
++	end_va = kernel_map.virt_addr + kernel_map.size;
+ 	for (va = kernel_map.virt_addr + XIP_OFFSET; va < end_va; va += PMD_SIZE)
+ 		create_pgd_mapping(pgdir, va,
+ 				   kernel_map.phys_addr + (va - (kernel_map.virt_addr + XIP_OFFSET)),
+@@ -1081,7 +1081,7 @@ asmlinkage void __init setup_vm(uintptr_
  
- /*
--- 
-2.43.0
-
+ 	phys_ram_base = CONFIG_PHYS_RAM_BASE;
+ 	kernel_map.phys_addr = (uintptr_t)CONFIG_PHYS_RAM_BASE;
+-	kernel_map.size = (uintptr_t)(&_end) - (uintptr_t)(&_sdata);
++	kernel_map.size = (uintptr_t)(&_end) - (uintptr_t)(&_start);
+ 
+ 	kernel_map.va_kernel_xip_pa_offset = kernel_map.virt_addr - kernel_map.xiprom;
+ #else
 
 
