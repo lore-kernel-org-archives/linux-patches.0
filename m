@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009611E487;
-	Tue, 27 Aug 2024 15:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE312FB2;
+	Tue, 27 Aug 2024 15:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770841; cv=none; b=X7DUWBWVOWc6smn67bKjkfmJLW/crFWbIbePUO1dXK/oVF7h+AAC7bWs07KjqSwZXLDxJF9kMTRkzgSWpCoSgNAOfrSqAjG0q1Xo4RF/nmj+WGO9x78JdUJjnWLd6+PKeLc+VSUrfxLUBh1uehTfdfR8To8DT+FbJ+XncyL+u7E=
+	t=1724770844; cv=none; b=fb/JXho6Rz//+3k5eSEIQmcNCiowj+hZNt3Fsz+j3E5OPPxZ57s1JvylwPBRN/DsKJHhmUpARDn7kWEU+J9MrfsHKnzJxo3/hM2fOnBWV9np3vU3CjwuV7V5bGUkEokE/Mu0nw/tt7AemYj+/52WKCIZ3hmdd4iT1WmFtf3mR5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770841; c=relaxed/simple;
-	bh=q+Det+yOpmVrU8s1u0JlkfJUWkAkJbqJxM9vaerIZUE=;
+	s=arc-20240116; t=1724770844; c=relaxed/simple;
+	bh=sFJeuR4sFq/idfHWd5keen4ThVYMYG6XQQzmqc10W4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXdXmbklFpxGEXlvHOIgM5YJhRqOz6sZoiFqvQd5VLtrSrK+lnHg69zhsZ3KAEd8FyY7DTBE+/7Qh0m3ni9XSv8h8fA32uc0lWFp3sLwSATewvpSCYdiNJbiFIcpItcaC2XY2RzUW/fGh53Np6A+F9Dhfh6QcjElhAu5+kSsfUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQISOpGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVS+GkmCMJ/6YKFs4qxbeKOMGKWJhgfSutUF+pUmP/IOZV96kmOhm3LPRVwvs9qko+pXU9PKFCueBNQIG645lBCmBVJK4coKxfl2xCNjyh9sBldDdxq9Ct3KiAdfspccd2BMn0/yY39KgiW8Q8z0jNo3xgAkwOsyefuInGZIQEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQko5P2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQISOpGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9CFC4AF1C;
-	Tue, 27 Aug 2024 15:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQko5P2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFE3C4AF1C;
+	Tue, 27 Aug 2024 15:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770840;
-	bh=q+Det+yOpmVrU8s1u0JlkfJUWkAkJbqJxM9vaerIZUE=;
+	s=korg; t=1724770844;
+	bh=sFJeuR4sFq/idfHWd5keen4ThVYMYG6XQQzmqc10W4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQISOpGkNY5ClnhP6J1rDZ7Ap7mHSWQcXBiYnN2HTtsHLM9LrLaqIUDlAzh/HaBBV
-	 FNm0G1kBweC8we4vNSuNEj44XHqG6wbRHgI+6P9TKhP8+hu4rOzXpWQxuAJh3qJXbh
-	 MNEhjk+RK1ZeZJUBmWOIxWj2wH4hhzcbQkTrynT8=
+	b=yQko5P2DXrMmaMpbGS243JRFRtBRT4EPA28k95okWri0uOc/5ECRm89Ih7whA9Pag
+	 hCi/GwoU7kmqgOEL/PgEOFeik8Yn+Ux7MSJBku/RHiKk7iCdRapnGthWH+LoGvOaYj
+	 eX3cxstHxUPXniXDat91NTOpNNq5Jz6N3tuOEPV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.10 001/273] tty: vt: conmakehash: remove non-portable code printing comment header
-Date: Tue, 27 Aug 2024 16:35:25 +0200
-Message-ID: <20240827143833.431480608@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.10 010/273] fuse: Initialize beyond-EOF page contents before setting uptodate
+Date: Tue, 27 Aug 2024 16:35:34 +0200
+Message-ID: <20240827143833.776213027@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,106 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Jann Horn <jannh@google.com>
 
-commit 7258fdd7d7459616b3fe1a603e33900584b10c13 upstream.
+commit 3c0da3d163eb32f1f91891efaade027fa9b245b9 upstream.
 
-Commit 6e20753da6bc ("tty: vt: conmakehash: cope with abs_srctree no
-longer in env") included <linux/limits.h>, which invoked another
-(wrong) patch that tried to address a build error on macOS.
+fuse_notify_store(), unlike fuse_do_readpage(), does not enable page
+zeroing (because it can be used to change partial page contents).
 
-According to the specification [1], the correct header to use PATH_MAX
-is <limits.h>.
+So fuse_notify_store() must be more careful to fully initialize page
+contents (including parts of the page that are beyond end-of-file)
+before marking the page uptodate.
 
-The minimal fix would be to replace <linux/limits.h> with <limits.h>.
+The current code can leave beyond-EOF page contents uninitialized, which
+makes these uninitialized page contents visible to userspace via mmap().
 
-However, the following commits seem questionable to me:
+This is an information leak, but only affects systems which do not
+enable init-on-alloc (via CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y or the
+corresponding kernel command line parameter).
 
- - 3bd85c6c97b2 ("tty: vt: conmakehash: Don't mention the full path of the input in output")
- - 6e20753da6bc ("tty: vt: conmakehash: cope with abs_srctree no longer in env")
-
-These commits made too many efforts to cope with a comment header in
-drivers/tty/vt/consolemap_deftbl.c:
-
-  /*
-   * Do not edit this file; it was automatically generated by
-   *
-   * conmakehash drivers/tty/vt/cp437.uni > [this file]
-   *
-   */
-
-With this commit, the header part of the generate C file will be
-simplified as follows:
-
-  /*
-   * Automatically generated file; Do not edit.
-   */
-
-BTW, another series of excessive efforts for a comment header can be
-seen in the following:
-
- - 5ef6dc08cfde ("lib/build_OID_registry: don't mention the full path of the script in output")
- - 2fe29fe94563 ("lib/build_OID_registry: avoid non-destructive substitution for Perl < 5.13.2 compat")
-
-[1]: https://pubs.opengroup.org/onlinepubs/009695399/basedefs/limits.h.html
-
-Fixes: 6e20753da6bc ("tty: vt: conmakehash: cope with abs_srctree no longer in env")
-Cc: stable <stable@kernel.org>
-Reported-by: Daniel Gomez <da.gomez@samsung.com>
-Closes: https://lore.kernel.org/all/20240807-macos-build-support-v1-11-4cd1ded85694@samsung.com/
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240809160853.1269466-1-masahiroy@kernel.org
+Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2574
+Cc: stable@kernel.org
+Fixes: a1d75f258230 ("fuse: add store request")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/conmakehash.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ fs/fuse/dev.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/vt/conmakehash.c b/drivers/tty/vt/conmakehash.c
-index 82d9db68b2ce..a931fcde7ad9 100644
---- a/drivers/tty/vt/conmakehash.c
-+++ b/drivers/tty/vt/conmakehash.c
-@@ -11,8 +11,6 @@
-  * Copyright (C) 1995-1997 H. Peter Anvin
-  */
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1618,9 +1618,11 @@ static int fuse_notify_store(struct fuse
  
--#include <libgen.h>
--#include <linux/limits.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <sysexits.h>
-@@ -79,7 +77,6 @@ int main(int argc, char *argv[])
- {
-   FILE *ctbl;
-   const char *tblname;
--  char base_tblname[PATH_MAX];
-   char buffer[65536];
-   int fontlen;
-   int i, nuni, nent;
-@@ -245,20 +242,15 @@ int main(int argc, char *argv[])
-   for ( i = 0 ; i < fontlen ; i++ )
-     nuni += unicount[i];
+ 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
+ 		err = fuse_copy_page(cs, &page, offset, this_num, 0);
+-		if (!err && offset == 0 &&
+-		    (this_num == PAGE_SIZE || file_size == end))
++		if (!PageUptodate(page) && !err && offset == 0 &&
++		    (this_num == PAGE_SIZE || file_size == end)) {
++			zero_user_segment(page, this_num, PAGE_SIZE);
+ 			SetPageUptodate(page);
++		}
+ 		unlock_page(page);
+ 		put_page(page);
  
--  strncpy(base_tblname, tblname, PATH_MAX);
--  base_tblname[PATH_MAX - 1] = 0;
-   printf("\
- /*\n\
-- * Do not edit this file; it was automatically generated by\n\
-- *\n\
-- * conmakehash %s > [this file]\n\
-- *\n\
-+ * Automatically generated file; Do not edit.\n\
-  */\n\
- \n\
- #include <linux/types.h>\n\
- \n\
- u8 dfont_unicount[%d] = \n\
--{\n\t", basename(base_tblname), fontlen);
-+{\n\t", fontlen);
- 
-   for ( i = 0 ; i < fontlen ; i++ )
-     {
--- 
-2.46.0
-
 
 
