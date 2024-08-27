@@ -1,54 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC041B4C4E;
-	Tue, 27 Aug 2024 15:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C574F1C57A9;
+	Tue, 27 Aug 2024 15:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771089; cv=none; b=QrXcFp0n5zRpRzNC+y/UNr1rp0kKHyiXpfjVlX3IeBMev64bvgPQIvpSVhoe5egxi5Z/Jh5kufv2/H58fpjI6fLx2tOUHr4CRhRkLvk4HPYAdryWeq9eLovrsFO4sUD2P6yPasiN493GKtFkoWkWGuX+7nG8n0nt4Pu9xqYK3FA=
+	t=1724771092; cv=none; b=XT12vTZVNIrAng09SKGRTWjG7OdGZiljyOLl4CFVBGGYFq9lMWb7r3CAOeb2ubXy6p9NmEwAOpdKFQLsBW4DagpCwt9AZ2/OnhweG30vn/3v2HLh8Jiw0LUS0q7AsXG88+V0gYZnwbM3FKfzNX9RiuCKe9k4DD8xSDrLeoB86vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771089; c=relaxed/simple;
-	bh=wDYW8gW0iFD4ucJiSk3Ju6zNrQakk8Q6mFCoh2H18vI=;
+	s=arc-20240116; t=1724771092; c=relaxed/simple;
+	bh=HKuDf2tiIjMvubiCm1Cb3RbX+5WVieJBEi6DPmec+Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfuQ8FyABtTiyVqG6mMGNJIkSD0ifg8U3ha5DD9t9k9JM1YH9SLifUtcxl41BrHfsG9kAIMvYVanP/B/RRuQQPo+rwT5DIOhm9YVmeBvgRE+fZCQor2VKWOEPnZhBnZs7eLXcMhXMKyHkg7v9SgbkS432Pc/uv60psQhBelsoLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQjOz17B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YC1G6F7IMxhHzDcwuKl66emZ92sydwYf9y53iEnI9o4AcA+8FGDBIQY08zMxhsma/XJIL733sbPDL+tPEMpuqDUrHQekSPjKhC05H7HWdYUsnAHkyQ3q6mVXDFDk0HL4vcQ9eiRMNTsYCo6ZBDbcZ9m4NfKENgTYwQGZvTQgJ2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZlkh2y4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQjOz17B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B375C6105B;
-	Tue, 27 Aug 2024 15:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZlkh2y4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346D6C6105B;
+	Tue, 27 Aug 2024 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771089;
-	bh=wDYW8gW0iFD4ucJiSk3Ju6zNrQakk8Q6mFCoh2H18vI=;
+	s=korg; t=1724771092;
+	bh=HKuDf2tiIjMvubiCm1Cb3RbX+5WVieJBEi6DPmec+Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQjOz17Bu6fuo1pppSU9uwYM2mRL/QC6yAZDV1PpUywYl2OaRSLOyWaS9sP8AIho5
-	 A73XRUm5zTZPtdjW2poQUXvBUTo074gWdqIW4FQC/a8URx9RVXX41lyAEm3zaYmAUJ
-	 bPwCS8VkPR6+05dwBTzp8K2RCmmlAHc5M1MrCWXg=
+	b=EZlkh2y4ndhomlZ3GiYEUCB7FlzwMD3t/sGUx080sAuLVZeCubjRhqv/raRShLyQ5
+	 Pef6lbOUHuXmUrIIjaU/x4Rg9Dg8/bEAf8Tlq3+zxK6+MNGDPjDrYxac6vYfTKXRmq
+	 8THhWZl7L3GmqSZKa+c9rqctVI3sZFADDfyBmb/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Latchesar Ionkov <lucho@ionkov.net>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	v9fs@lists.linux.dev,
-	linux-afs@lists.infradead.org,
-	ceph-devel@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-nfs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 083/273] 9p: Fix DIO read through netfs
-Date: Tue, 27 Aug 2024 16:36:47 +0200
-Message-ID: <20240827143836.571273512@linuxfoundation.org>
+Subject: [PATCH 6.10 084/273] btrfs: fix invalid mapping of extent xarray state
+Date: Tue, 27 Aug 2024 16:36:48 +0200
+Message-ID: <20240827143836.609839425@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -67,191 +53,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit e3786b29c54cdae3490b07180a54e2461f42144c ]
+[ Upstream commit 6252690f7e1b173b86a4c27dfc046b351ab423e7 ]
 
-If a program is watching a file on a 9p mount, it won't see any change in
-size if the file being exported by the server is changed directly in the
-source filesystem, presumably because 9p doesn't have change notifications,
-and because netfs skips the reads if the file is empty.
+In __extent_writepage_io(), we call btrfs_set_range_writeback() ->
+folio_start_writeback(), which clears PAGECACHE_TAG_DIRTY mark from the
+mapping xarray if the folio is not dirty. This worked fine before commit
+97713b1a2ced ("btrfs: do not clear page dirty inside
+extent_write_locked_range()").
 
-Fix this by attempting to read the full size specified when a DIO read is
-requested (such as when 9p is operating in unbuffered mode) and dealing
-with a short read if the EOF was less than the expected read.
+After the commit, however, the folio is still dirty at this point, so the
+mapping DIRTY tag is not cleared anymore. Then, __extent_writepage_io()
+calls btrfs_folio_clear_dirty() to clear the folio's dirty flag. That
+results in the page being unlocked with a "strange" state. The page is not
+PageDirty, but the mapping tag is set as PAGECACHE_TAG_DIRTY.
 
-To make this work, filesystems using netfslib must not set
-NETFS_SREQ_CLEAR_TAIL if performing a DIO read where that read hit the EOF.
-I don't want to mandatorily clear this flag in netfslib for DIO because,
-say, ceph might make a read from an object that is not completely filled,
-but does not reside at the end of file - and so we need to clear the
-excess.
+This strange state looks like causing a hang with a call trace below when
+running fstests generic/091 on a null_blk device. It is waiting for a folio
+lock.
 
-This can be tested by watching an empty file over 9p within a VM (such as
-in the ktest framework):
+While I don't have an exact relation between this hang and the strange
+state, fixing the state also fixes the hang. And, that state is worth
+fixing anyway.
 
-        while true; do read content; if [ -n "$content" ]; then echo $content; break; fi; done < /host/tmp/foo
+This commit reorders btrfs_folio_clear_dirty() and
+btrfs_set_range_writeback() in __extent_writepage_io(), so that the
+PAGECACHE_TAG_DIRTY tag is properly removed from the xarray.
 
-then writing something into the empty file.  The watcher should immediately
-display the file content and break out of the loop.  Without this fix, it
-remains in the loop indefinitely.
+  [464.274] task:fsx             state:D stack:0     pid:3034  tgid:3034  ppid:2853   flags:0x00004002
+  [464.286] Call Trace:
+  [464.291]  <TASK>
+  [464.295]  __schedule+0x10ed/0x6260
+  [464.301]  ? __pfx___blk_flush_plug+0x10/0x10
+  [464.308]  ? __submit_bio+0x37c/0x450
+  [464.314]  ? __pfx___schedule+0x10/0x10
+  [464.321]  ? lock_release+0x567/0x790
+  [464.327]  ? __pfx_lock_acquire+0x10/0x10
+  [464.334]  ? __pfx_lock_release+0x10/0x10
+  [464.340]  ? __pfx_lock_acquire+0x10/0x10
+  [464.347]  ? __pfx_lock_release+0x10/0x10
+  [464.353]  ? do_raw_spin_lock+0x12e/0x270
+  [464.360]  schedule+0xdf/0x3b0
+  [464.365]  io_schedule+0x8f/0xf0
+  [464.371]  folio_wait_bit_common+0x2ca/0x6d0
+  [464.378]  ? folio_wait_bit_common+0x1cc/0x6d0
+  [464.385]  ? __pfx_folio_wait_bit_common+0x10/0x10
+  [464.392]  ? __pfx_filemap_get_folios_tag+0x10/0x10
+  [464.400]  ? __pfx_wake_page_function+0x10/0x10
+  [464.407]  ? __pfx___might_resched+0x10/0x10
+  [464.414]  ? do_raw_spin_unlock+0x58/0x1f0
+  [464.420]  extent_write_cache_pages+0xe49/0x1620 [btrfs]
+  [464.428]  ? lock_acquire+0x435/0x500
+  [464.435]  ? __pfx_extent_write_cache_pages+0x10/0x10 [btrfs]
+  [464.443]  ? btrfs_do_write_iter+0x493/0x640 [btrfs]
+  [464.451]  ? orc_find.part.0+0x1d4/0x380
+  [464.457]  ? __pfx_lock_release+0x10/0x10
+  [464.464]  ? __pfx_lock_release+0x10/0x10
+  [464.471]  ? btrfs_do_write_iter+0x493/0x640 [btrfs]
+  [464.478]  btrfs_writepages+0x1cc/0x460 [btrfs]
+  [464.485]  ? __pfx_btrfs_writepages+0x10/0x10 [btrfs]
+  [464.493]  ? is_bpf_text_address+0x6e/0x100
+  [464.500]  ? kernel_text_address+0x145/0x160
+  [464.507]  ? unwind_get_return_address+0x5e/0xa0
+  [464.514]  ? arch_stack_walk+0xac/0x100
+  [464.521]  do_writepages+0x176/0x780
+  [464.527]  ? lock_release+0x567/0x790
+  [464.533]  ? __pfx_do_writepages+0x10/0x10
+  [464.540]  ? __pfx_lock_acquire+0x10/0x10
+  [464.546]  ? __pfx_stack_trace_save+0x10/0x10
+  [464.553]  ? do_raw_spin_lock+0x12e/0x270
+  [464.560]  ? do_raw_spin_unlock+0x58/0x1f0
+  [464.566]  ? _raw_spin_unlock+0x23/0x40
+  [464.573]  ? wbc_attach_and_unlock_inode+0x3da/0x7d0
+  [464.580]  filemap_fdatawrite_wbc+0x113/0x180
+  [464.587]  ? prepare_pages.constprop.0+0x13c/0x5c0 [btrfs]
+  [464.596]  __filemap_fdatawrite_range+0xaf/0xf0
+  [464.603]  ? __pfx___filemap_fdatawrite_range+0x10/0x10
+  [464.611]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [464.618]  ? kasan_quarantine_put+0xd7/0x1e0
+  [464.625]  btrfs_start_ordered_extent+0x46f/0x570 [btrfs]
+  [464.633]  ? __pfx_btrfs_start_ordered_extent+0x10/0x10 [btrfs]
+  [464.642]  ? __clear_extent_bit+0x2c0/0x9d0 [btrfs]
+  [464.650]  btrfs_lock_and_flush_ordered_range+0xc6/0x180 [btrfs]
+  [464.659]  ? __pfx_btrfs_lock_and_flush_ordered_range+0x10/0x10 [btrfs]
+  [464.669]  btrfs_read_folio+0x12a/0x1d0 [btrfs]
+  [464.676]  ? __pfx_btrfs_read_folio+0x10/0x10 [btrfs]
+  [464.684]  ? __pfx_filemap_add_folio+0x10/0x10
+  [464.691]  ? __pfx___might_resched+0x10/0x10
+  [464.698]  ? __filemap_get_folio+0x1c5/0x450
+  [464.705]  prepare_uptodate_page+0x12e/0x4d0 [btrfs]
+  [464.713]  prepare_pages.constprop.0+0x13c/0x5c0 [btrfs]
+  [464.721]  ? fault_in_iov_iter_readable+0xd2/0x240
+  [464.729]  btrfs_buffered_write+0x5bd/0x12f0 [btrfs]
+  [464.737]  ? __pfx_btrfs_buffered_write+0x10/0x10 [btrfs]
+  [464.745]  ? __pfx_lock_release+0x10/0x10
+  [464.752]  ? generic_write_checks+0x275/0x400
+  [464.759]  ? down_write+0x118/0x1f0
+  [464.765]  ? up_write+0x19b/0x500
+  [464.770]  btrfs_direct_write+0x731/0xba0 [btrfs]
+  [464.778]  ? __pfx_btrfs_direct_write+0x10/0x10 [btrfs]
+  [464.785]  ? __pfx___might_resched+0x10/0x10
+  [464.792]  ? lock_acquire+0x435/0x500
+  [464.798]  ? lock_acquire+0x435/0x500
+  [464.804]  btrfs_do_write_iter+0x494/0x640 [btrfs]
+  [464.811]  ? __pfx_btrfs_do_write_iter+0x10/0x10 [btrfs]
+  [464.819]  ? __pfx___might_resched+0x10/0x10
+  [464.825]  ? rw_verify_area+0x6d/0x590
+  [464.831]  vfs_write+0x5d7/0xf50
+  [464.837]  ? __might_fault+0x9d/0x120
+  [464.843]  ? __pfx_vfs_write+0x10/0x10
+  [464.849]  ? btrfs_file_llseek+0xb1/0xfb0 [btrfs]
+  [464.856]  ? lock_release+0x567/0x790
+  [464.862]  ksys_write+0xfb/0x1d0
+  [464.867]  ? __pfx_ksys_write+0x10/0x10
+  [464.873]  ? _raw_spin_unlock+0x23/0x40
+  [464.879]  ? btrfs_getattr+0x4af/0x670 [btrfs]
+  [464.886]  ? vfs_getattr_nosec+0x79/0x340
+  [464.892]  do_syscall_64+0x95/0x180
+  [464.898]  ? __do_sys_newfstat+0xde/0xf0
+  [464.904]  ? __pfx___do_sys_newfstat+0x10/0x10
+  [464.911]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [464.918]  ? syscall_exit_to_user_mode+0xac/0x2a0
+  [464.925]  ? do_syscall_64+0xa1/0x180
+  [464.931]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [464.939]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [464.946]  ? syscall_exit_to_user_mode+0xac/0x2a0
+  [464.953]  ? btrfs_file_llseek+0xb1/0xfb0 [btrfs]
+  [464.960]  ? do_syscall_64+0xa1/0x180
+  [464.966]  ? btrfs_file_llseek+0xb1/0xfb0 [btrfs]
+  [464.973]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [464.980]  ? syscall_exit_to_user_mode+0xac/0x2a0
+  [464.987]  ? __pfx_btrfs_file_llseek+0x10/0x10 [btrfs]
+  [464.995]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [465.002]  ? __pfx_btrfs_file_llseek+0x10/0x10 [btrfs]
+  [465.010]  ? do_syscall_64+0xa1/0x180
+  [465.016]  ? lock_release+0x567/0x790
+  [465.022]  ? __pfx_lock_acquire+0x10/0x10
+  [465.028]  ? __pfx_lock_release+0x10/0x10
+  [465.034]  ? trace_irq_enable.constprop.0+0xce/0x110
+  [465.042]  ? syscall_exit_to_user_mode+0xac/0x2a0
+  [465.049]  ? do_syscall_64+0xa1/0x180
+  [465.055]  ? syscall_exit_to_user_mode+0xac/0x2a0
+  [465.062]  ? do_syscall_64+0xa1/0x180
+  [465.068]  ? syscall_exit_to_user_mode+0xac/0x2a0
+  [465.075]  ? do_syscall_64+0xa1/0x180
+  [465.081]  ? clear_bhb_loop+0x25/0x80
+  [465.087]  ? clear_bhb_loop+0x25/0x80
+  [465.093]  ? clear_bhb_loop+0x25/0x80
+  [465.099]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [465.106] RIP: 0033:0x7f093b8ee784
+  [465.111] RSP: 002b:00007ffc29d31b28 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+  [465.122] RAX: ffffffffffffffda RBX: 0000000000006000 RCX: 00007f093b8ee784
+  [465.131] RDX: 000000000001de00 RSI: 00007f093b6ed200 RDI: 0000000000000003
+  [465.141] RBP: 000000000001de00 R08: 0000000000006000 R09: 0000000000000000
+  [465.150] R10: 0000000000023e00 R11: 0000000000000202 R12: 0000000000006000
+  [465.160] R13: 0000000000023e00 R14: 0000000000023e00 R15: 0000000000000001
+  [465.170]  </TASK>
+  [465.174] INFO: lockdep is turned off.
 
-Fixes: 80105ed2fd27 ("9p: Use netfslib read/write_iter")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218916
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/1229195.1723211769@warthog.procyon.org.uk
-cc: Eric Van Hensbergen <ericvh@kernel.org>
-cc: Latchesar Ionkov <lucho@ionkov.net>
-cc: Christian Schoenebeck <linux_oss@crudebyte.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Ilya Dryomov <idryomov@gmail.com>
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.com>
-cc: Trond Myklebust <trond.myklebust@hammerspace.com>
-cc: v9fs@lists.linux.dev
-cc: linux-afs@lists.infradead.org
-cc: ceph-devel@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-nfs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: 97713b1a2ced ("btrfs: do not clear page dirty inside extent_write_locked_range()")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_addr.c     |  3 ++-
- fs/afs/file.c        |  3 ++-
- fs/ceph/addr.c       |  6 ++++--
- fs/netfs/io.c        | 17 +++++++++++------
- fs/nfs/fscache.c     |  3 ++-
- fs/smb/client/file.c |  3 ++-
- 6 files changed, 23 insertions(+), 12 deletions(-)
+ fs/btrfs/extent_io.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/9p/vfs_addr.c b/fs/9p/vfs_addr.c
-index a97ceb105cd8d..24fdc74caeba4 100644
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -75,7 +75,8 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 0486b1f911248..3bad7c0be1f10 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1420,6 +1420,13 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
+ 		free_extent_map(em);
+ 		em = NULL;
  
- 	/* if we just extended the file size, any portion not in
- 	 * cache won't be on server and is zeroes */
--	__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
-+	if (subreq->rreq->origin != NETFS_DIO_READ)
-+		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 
- 	netfs_subreq_terminated(subreq, err ?: total, false);
- }
-diff --git a/fs/afs/file.c b/fs/afs/file.c
-index c3f0c45ae9a9b..ec1be0091fdb5 100644
---- a/fs/afs/file.c
-+++ b/fs/afs/file.c
-@@ -242,7 +242,8 @@ static void afs_fetch_data_notify(struct afs_operation *op)
- 
- 	req->error = error;
- 	if (subreq) {
--		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
-+		if (subreq->rreq->origin != NETFS_DIO_READ)
-+			__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 		netfs_subreq_terminated(subreq, error ?: req->actual_len, false);
- 		req->subreq = NULL;
- 	} else if (req->done) {
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 73b5a07bf94de..d2194022132ec 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -246,7 +246,8 @@ static void finish_netfs_read(struct ceph_osd_request *req)
- 	if (err >= 0) {
- 		if (sparse && err > 0)
- 			err = ceph_sparse_ext_map_end(op);
--		if (err < subreq->len)
-+		if (err < subreq->len &&
-+		    subreq->rreq->origin != NETFS_DIO_READ)
- 			__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 		if (IS_ENCRYPTED(inode) && err > 0) {
- 			err = ceph_fscrypt_decrypt_extents(inode,
-@@ -282,7 +283,8 @@ static bool ceph_netfs_issue_op_inline(struct netfs_io_subrequest *subreq)
- 	size_t len;
- 	int mode;
- 
--	__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
-+	if (rreq->origin != NETFS_DIO_READ)
-+		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 	__clear_bit(NETFS_SREQ_COPY_TO_CACHE, &subreq->flags);
- 
- 	if (subreq->start >= inode->i_size)
-diff --git a/fs/netfs/io.c b/fs/netfs/io.c
-index f3abc5dfdbc0c..19ec6990dc91e 100644
---- a/fs/netfs/io.c
-+++ b/fs/netfs/io.c
-@@ -530,7 +530,8 @@ void netfs_subreq_terminated(struct netfs_io_subrequest *subreq,
- 
- 	if (transferred_or_error == 0) {
- 		if (__test_and_set_bit(NETFS_SREQ_NO_PROGRESS, &subreq->flags)) {
--			subreq->error = -ENODATA;
-+			if (rreq->origin != NETFS_DIO_READ)
-+				subreq->error = -ENODATA;
- 			goto failed;
++		/*
++		 * Although the PageDirty bit might be cleared before entering
++		 * this function, subpage dirty bit is not cleared.
++		 * So clear subpage dirty bit here so next time we won't submit
++		 * page for range already written to disk.
++		 */
++		btrfs_folio_clear_dirty(fs_info, page_folio(page), cur, iosize);
+ 		btrfs_set_range_writeback(inode, cur, cur + iosize - 1);
+ 		if (!PageWriteback(page)) {
+ 			btrfs_err(inode->root->fs_info,
+@@ -1427,13 +1434,6 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
+ 			       page->index, cur, end);
  		}
- 	} else {
-@@ -601,9 +602,14 @@ netfs_rreq_prepare_read(struct netfs_io_request *rreq,
- 			}
- 			if (subreq->len > ictx->zero_point - subreq->start)
- 				subreq->len = ictx->zero_point - subreq->start;
-+
-+			/* We limit buffered reads to the EOF, but let the
-+			 * server deal with larger-than-EOF DIO/unbuffered
-+			 * reads.
-+			 */
-+			if (subreq->len > rreq->i_size - subreq->start)
-+				subreq->len = rreq->i_size - subreq->start;
- 		}
--		if (subreq->len > rreq->i_size - subreq->start)
--			subreq->len = rreq->i_size - subreq->start;
- 		if (rreq->rsize && subreq->len > rreq->rsize)
- 			subreq->len = rreq->rsize;
  
-@@ -739,11 +745,10 @@ int netfs_begin_read(struct netfs_io_request *rreq, bool sync)
- 	do {
- 		kdebug("submit %llx + %llx >= %llx",
- 		       rreq->start, rreq->submitted, rreq->i_size);
--		if (rreq->origin == NETFS_DIO_READ &&
--		    rreq->start + rreq->submitted >= rreq->i_size)
--			break;
- 		if (!netfs_rreq_submit_slice(rreq, &io_iter))
- 			break;
-+		if (test_bit(NETFS_SREQ_NO_PROGRESS, &rreq->flags))
-+			break;
- 		if (test_bit(NETFS_RREQ_BLOCKED, &rreq->flags) &&
- 		    test_bit(NETFS_RREQ_NONBLOCK, &rreq->flags))
- 			break;
-diff --git a/fs/nfs/fscache.c b/fs/nfs/fscache.c
-index ddc1ee0319554..bc20ba50283c8 100644
---- a/fs/nfs/fscache.c
-+++ b/fs/nfs/fscache.c
-@@ -361,7 +361,8 @@ void nfs_netfs_read_completion(struct nfs_pgio_header *hdr)
- 		return;
+-		/*
+-		 * Although the PageDirty bit is cleared before entering this
+-		 * function, subpage dirty bit is not cleared.
+-		 * So clear subpage dirty bit here so next time we won't submit
+-		 * page for range already written to disk.
+-		 */
+-		btrfs_folio_clear_dirty(fs_info, page_folio(page), cur, iosize);
  
- 	sreq = netfs->sreq;
--	if (test_bit(NFS_IOHDR_EOF, &hdr->flags))
-+	if (test_bit(NFS_IOHDR_EOF, &hdr->flags) &&
-+	    sreq->rreq->origin != NETFS_DIO_READ)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &sreq->flags);
- 
- 	if (hdr->error)
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index 2e3c4d0277dbb..9e4f4e67768b9 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -196,7 +196,8 @@ static void cifs_req_issue_read(struct netfs_io_subrequest *subreq)
- 			goto out;
- 	}
- 
--	__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
-+	if (subreq->rreq->origin != NETFS_DIO_READ)
-+		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 
- 	rc = rdata->server->ops->async_readv(rdata);
- out:
+ 		submit_extent_page(bio_ctrl, disk_bytenr, page, iosize,
+ 				   cur - page_offset(page));
 -- 
 2.43.0
 
