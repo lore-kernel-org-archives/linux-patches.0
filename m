@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAE01C5788;
-	Tue, 27 Aug 2024 15:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21751C462B;
+	Tue, 27 Aug 2024 15:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771241; cv=none; b=H4ts/FGCGKPFIo4s+aX+2eetqZvNE6NyhxTFoFPFpv7u+UHiMLIV3lmpYvLFZ4CDhBwGXv3xHmmmlmr/ILKcDntxPJhKS4F5+zrQ+G3j5gQQ9fGz8Z0PAIG0SUFIOp6EVa6w2XkkzS5qz3w/TZlT1DGvnkMrieXo+IwRZL9Eahc=
+	t=1724771244; cv=none; b=hyBE68VPe7cxU35RR0ThLlQU8QJw4WfbfQQeTra48Y6uFEv5Yp2bk6RPVbIaK8oY4Fnctp+r7pWKGM7SKw+0Wjt55ILWPH/L66hCaxw8V00dVL0+/lH9aWajpxzPpXx9kuutEMfJwJRZyxS4pyEPAThYAxLZ4mYJLHOQZVS2Onk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771241; c=relaxed/simple;
-	bh=UqkTVO9gN7t60I0Er88heCdBO17coSu9lm5I/tnNj/g=;
+	s=arc-20240116; t=1724771244; c=relaxed/simple;
+	bh=+o113Q+TzEjYHeejlVzIeq/IDUVkJNmgpDM5mAK7iDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OegZTnVSgE7z0mPQKoy4/VbGisSkrHE5YFosl2YKCODAnc1fZkI76ozm8YMXyHpft1vX7I9hwZiKiZq53O9bEx+35Wl2WHKh+ClxLap/mMQx5ylrUPCxbah4xRb2gsCJrMTeyoYDbQjtSwLMcKYBDe8azfKe+0wvA8EUKWo4264=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJh6odc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jfEHnpmVeAvPRYoy+gYL4ZoL3ocqQgWipKlkoCe8Nd2iS9lvY9Q/GJAaxdyumklSd9jGhXjYi8ulGblQ2K6KFxNi76rfrk/M/hqMmOszTZCc7TY6LaYz7S/KK8BWg6MdlQNXC5LnUXPmlMjHVsNdyxJjHV5oUQlmLQ5XurTiwHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/l67Kbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJh6odc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6F0C4DDF5;
-	Tue, 27 Aug 2024 15:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/l67Kbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366ECC61079;
+	Tue, 27 Aug 2024 15:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771241;
-	bh=UqkTVO9gN7t60I0Er88heCdBO17coSu9lm5I/tnNj/g=;
+	s=korg; t=1724771244;
+	bh=+o113Q+TzEjYHeejlVzIeq/IDUVkJNmgpDM5mAK7iDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJh6odc5jZQidQgHN1Pw0N61smVykshgPABuaj1L9gwFEsB8QFiumBF/Ks93fcQyP
-	 bU5Js2byhW2QG3msG4J1cf6Owvy4bFciiFtXe3MSlzKeycfs1YH9HI0dRlb5oQIY3s
-	 /tsl5A3Z/wMXRBbQjBph0Do7R/m7H0obACTLIcA8=
+	b=c/l67KbvRxvzU+YqsT6fJwA5NQkjVy3XHcG5F0Qgaj9/IjBTu0ItMCY6kWz2F33kP
+	 IyrO9gG01zND2FyrdVBqqZKsUgr/sZ4pgErr9tAurgsyeeZ5BnOU4zCFlfLvCGvPmc
+	 oDpCav1/jubLQuCchjB8LvGKDYOQaBfSX/JPJVt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 128/273] s390/dasd: Remove DMA alignment
-Date: Tue, 27 Aug 2024 16:37:32 +0200
-Message-ID: <20240827143838.276224577@linuxfoundation.org>
+Subject: [PATCH 6.10 099/273] mlxbf_gige: disable RX filters until RX path initialized
+Date: Tue, 27 Aug 2024 16:37:03 +0200
+Message-ID: <20240827143837.178251450@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,93 +53,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 2a07bb64d80152701d507b1498237ed1b8d83866 ]
+[ Upstream commit df934abb185c71c9f2fa07a5013672d0cbd36560 ]
 
-This reverts commit bc792884b76f ("s390/dasd: Establish DMA alignment").
+A recent change to the driver exposed a bug where the MAC RX
+filters (unicast MAC, broadcast MAC, and multicast MAC) are
+configured and enabled before the RX path is fully initialized.
+The result of this bug is that after the PHY is started packets
+that match these MAC RX filters start to flow into the RX FIFO.
+And then, after rx_init() is completed, these packets will go
+into the driver RX ring as well. If enough packets are received
+to fill the RX ring (default size is 128 packets) before the call
+to request_irq() completes, the driver RX function becomes stuck.
 
-Quoting the original commit:
-    linux-next commit bf8d08532bc1 ("iomap: add support for dma aligned
-    direct-io") changes the alignment requirement to come from the block
-    device rather than the block size, and the default alignment
-    requirement is 512-byte boundaries. Since DASD I/O has page
-    alignments for IDAW/TIDAW requests, let's override this value to
-    restore the expected behavior.
+This bug is intermittent but is most likely to be seen where the
+oob_net0 interface is connected to a busy network with lots of
+broadcast and multicast traffic.
 
-I mentioned TIDAW, but that was wrong. TIDAWs have no distinct alignment
-requirement (per p. 15-70 of POPS SA22-7832-13):
+All the MAC RX filters must be disabled until the RX path is ready,
+i.e. all initialization is done and all the IRQs are installed.
 
-   Unless otherwise specified, TIDAWs may designate
-   a block of main storage on any boundary and length
-   up to 4K bytes, provided the specified block does not
-   cross a 4 K-byte boundary.
-
-IDAWs do, but the original commit neglected that while ECKD DASD are
-typically formatted in 4096-byte blocks, they don't HAVE to be. Formatting
-an ECKD volume with smaller blocks is permitted (dasdfmt -b xxx), and the
-problematic commit enforces alignment properties to such a device that
-will result in errors, such as:
-
-   [test@host ~]# lsdasd -l a367 | grep blksz
-     blksz:				512
-   [test@host ~]# mkfs.xfs -f /dev/disk/by-path/ccw-0.0.a367-part1
-   meta-data=/dev/dasdc1            isize=512    agcount=4, agsize=230075 blks
-            =                       sectsz=512   attr=2, projid32bit=1
-            =                       crc=1        finobt=1, sparse=1, rmapbt=1
-            =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
-   data     =                       bsize=4096   blocks=920299, imaxpct=25
-            =                       sunit=0      swidth=0 blks
-   naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
-   log      =internal log           bsize=4096   blocks=16384, version=2
-            =                       sectsz=512   sunit=0 blks, lazy-count=1
-   realtime =none                   extsz=4096   blocks=0, rtextents=0
-   error reading existing superblock: Invalid argument
-   mkfs.xfs: pwrite failed: Invalid argument
-   libxfs_bwrite: write failed on (unknown) bno 0x70565c/0x100, err=22
-   mkfs.xfs: Releasing dirty buffer to free list!
-   found dirty buffer (bulk) on free list!
-   mkfs.xfs: pwrite failed: Invalid argument
-   ...snipped...
-
-The original commit omitted the FBA discipline for just this reason,
-but the formatted block size of the other disciplines was overlooked.
-The solution to all of this is to revert to the original behavior,
-such that the block size can be respected. There were two commits [1]
-that moved this code in the interim, so a straight git-revert is not
-possible, but the change is straightforward.
-
-But what of the original problem? That was manifested with a direct-io
-QEMU guest, where QEMU itself was changed a month or two later with
-commit 25474d90aa ("block: use the request length for iov alignment")
-such that the blamed kernel commit is unnecessary.
-
-[1] commit 0127a47f58c6 ("dasd: move queue setup to common code")
-    commit fde07a4d74e3 ("dasd: use the atomic queue limits API")
-
-Fixes: bc792884b76f ("s390/dasd: Establish DMA alignment")
-Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240812125733.126431-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: f7442a634ac0 ("mlxbf_gige: call request_irq() after NAPI initialized")
+Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240809163612.12852-1-davthompson@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_genhd.c | 1 -
- 1 file changed, 1 deletion(-)
+ .../ethernet/mellanox/mlxbf_gige/mlxbf_gige.h |  8 +++
+ .../mellanox/mlxbf_gige/mlxbf_gige_main.c     | 10 ++++
+ .../mellanox/mlxbf_gige/mlxbf_gige_regs.h     |  2 +
+ .../mellanox/mlxbf_gige/mlxbf_gige_rx.c       | 50 ++++++++++++++++---
+ 4 files changed, 64 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/s390/block/dasd_genhd.c b/drivers/s390/block/dasd_genhd.c
-index 4533dd055ca8e..23d6e638f381d 100644
---- a/drivers/s390/block/dasd_genhd.c
-+++ b/drivers/s390/block/dasd_genhd.c
-@@ -41,7 +41,6 @@ int dasd_gendisk_alloc(struct dasd_block *block)
- 		 */
- 		.max_segment_size = PAGE_SIZE,
- 		.seg_boundary_mask = PAGE_SIZE - 1,
--		.dma_alignment = PAGE_SIZE - 1,
- 		.max_segments = USHRT_MAX,
- 	};
- 	struct gendisk *gdp;
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige.h b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige.h
+index bc94e75a7aebd..e7777700ee18a 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige.h
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige.h
+@@ -40,6 +40,7 @@
+  */
+ #define MLXBF_GIGE_BCAST_MAC_FILTER_IDX 0
+ #define MLXBF_GIGE_LOCAL_MAC_FILTER_IDX 1
++#define MLXBF_GIGE_MAX_FILTER_IDX       3
+ 
+ /* Define for broadcast MAC literal */
+ #define BCAST_MAC_ADDR 0xFFFFFFFFFFFF
+@@ -175,6 +176,13 @@ enum mlxbf_gige_res {
+ int mlxbf_gige_mdio_probe(struct platform_device *pdev,
+ 			  struct mlxbf_gige *priv);
+ void mlxbf_gige_mdio_remove(struct mlxbf_gige *priv);
++
++void mlxbf_gige_enable_multicast_rx(struct mlxbf_gige *priv);
++void mlxbf_gige_disable_multicast_rx(struct mlxbf_gige *priv);
++void mlxbf_gige_enable_mac_rx_filter(struct mlxbf_gige *priv,
++				     unsigned int index);
++void mlxbf_gige_disable_mac_rx_filter(struct mlxbf_gige *priv,
++				      unsigned int index);
+ void mlxbf_gige_set_mac_rx_filter(struct mlxbf_gige *priv,
+ 				  unsigned int index, u64 dmac);
+ void mlxbf_gige_get_mac_rx_filter(struct mlxbf_gige *priv,
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+index b157f0f1c5a88..385a56ac73481 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+@@ -168,6 +168,10 @@ static int mlxbf_gige_open(struct net_device *netdev)
+ 	if (err)
+ 		goto napi_deinit;
+ 
++	mlxbf_gige_enable_mac_rx_filter(priv, MLXBF_GIGE_BCAST_MAC_FILTER_IDX);
++	mlxbf_gige_enable_mac_rx_filter(priv, MLXBF_GIGE_LOCAL_MAC_FILTER_IDX);
++	mlxbf_gige_enable_multicast_rx(priv);
++
+ 	/* Set bits in INT_EN that we care about */
+ 	int_en = MLXBF_GIGE_INT_EN_HW_ACCESS_ERROR |
+ 		 MLXBF_GIGE_INT_EN_TX_CHECKSUM_INPUTS |
+@@ -379,6 +383,7 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	void __iomem *plu_base;
+ 	void __iomem *base;
+ 	int addr, phy_irq;
++	unsigned int i;
+ 	int err;
+ 
+ 	base = devm_platform_ioremap_resource(pdev, MLXBF_GIGE_RES_MAC);
+@@ -423,6 +428,11 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	priv->rx_q_entries = MLXBF_GIGE_DEFAULT_RXQ_SZ;
+ 	priv->tx_q_entries = MLXBF_GIGE_DEFAULT_TXQ_SZ;
+ 
++	for (i = 0; i <= MLXBF_GIGE_MAX_FILTER_IDX; i++)
++		mlxbf_gige_disable_mac_rx_filter(priv, i);
++	mlxbf_gige_disable_multicast_rx(priv);
++	mlxbf_gige_disable_promisc(priv);
++
+ 	/* Write initial MAC address to hardware */
+ 	mlxbf_gige_initial_mac(priv);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_regs.h b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_regs.h
+index 98a8681c21b9c..4d14cb13fd64e 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_regs.h
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_regs.h
+@@ -62,6 +62,8 @@
+ #define MLXBF_GIGE_TX_STATUS_DATA_FIFO_FULL           BIT(1)
+ #define MLXBF_GIGE_RX_MAC_FILTER_DMAC_RANGE_START     0x0520
+ #define MLXBF_GIGE_RX_MAC_FILTER_DMAC_RANGE_END       0x0528
++#define MLXBF_GIGE_RX_MAC_FILTER_GENERAL              0x0530
++#define MLXBF_GIGE_RX_MAC_FILTER_EN_MULTICAST         BIT(1)
+ #define MLXBF_GIGE_RX_MAC_FILTER_COUNT_DISC           0x0540
+ #define MLXBF_GIGE_RX_MAC_FILTER_COUNT_DISC_EN        BIT(0)
+ #define MLXBF_GIGE_RX_MAC_FILTER_COUNT_PASS           0x0548
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
+index 6999843584934..eb62620b63c7f 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
+@@ -11,15 +11,31 @@
+ #include "mlxbf_gige.h"
+ #include "mlxbf_gige_regs.h"
+ 
+-void mlxbf_gige_set_mac_rx_filter(struct mlxbf_gige *priv,
+-				  unsigned int index, u64 dmac)
++void mlxbf_gige_enable_multicast_rx(struct mlxbf_gige *priv)
+ {
+ 	void __iomem *base = priv->base;
+-	u64 control;
++	u64 data;
+ 
+-	/* Write destination MAC to specified MAC RX filter */
+-	writeq(dmac, base + MLXBF_GIGE_RX_MAC_FILTER +
+-	       (index * MLXBF_GIGE_RX_MAC_FILTER_STRIDE));
++	data = readq(base + MLXBF_GIGE_RX_MAC_FILTER_GENERAL);
++	data |= MLXBF_GIGE_RX_MAC_FILTER_EN_MULTICAST;
++	writeq(data, base + MLXBF_GIGE_RX_MAC_FILTER_GENERAL);
++}
++
++void mlxbf_gige_disable_multicast_rx(struct mlxbf_gige *priv)
++{
++	void __iomem *base = priv->base;
++	u64 data;
++
++	data = readq(base + MLXBF_GIGE_RX_MAC_FILTER_GENERAL);
++	data &= ~MLXBF_GIGE_RX_MAC_FILTER_EN_MULTICAST;
++	writeq(data, base + MLXBF_GIGE_RX_MAC_FILTER_GENERAL);
++}
++
++void mlxbf_gige_enable_mac_rx_filter(struct mlxbf_gige *priv,
++				     unsigned int index)
++{
++	void __iomem *base = priv->base;
++	u64 control;
+ 
+ 	/* Enable MAC receive filter mask for specified index */
+ 	control = readq(base + MLXBF_GIGE_CONTROL);
+@@ -27,6 +43,28 @@ void mlxbf_gige_set_mac_rx_filter(struct mlxbf_gige *priv,
+ 	writeq(control, base + MLXBF_GIGE_CONTROL);
+ }
+ 
++void mlxbf_gige_disable_mac_rx_filter(struct mlxbf_gige *priv,
++				      unsigned int index)
++{
++	void __iomem *base = priv->base;
++	u64 control;
++
++	/* Disable MAC receive filter mask for specified index */
++	control = readq(base + MLXBF_GIGE_CONTROL);
++	control &= ~(MLXBF_GIGE_CONTROL_EN_SPECIFIC_MAC << index);
++	writeq(control, base + MLXBF_GIGE_CONTROL);
++}
++
++void mlxbf_gige_set_mac_rx_filter(struct mlxbf_gige *priv,
++				  unsigned int index, u64 dmac)
++{
++	void __iomem *base = priv->base;
++
++	/* Write destination MAC to specified MAC RX filter */
++	writeq(dmac, base + MLXBF_GIGE_RX_MAC_FILTER +
++	       (index * MLXBF_GIGE_RX_MAC_FILTER_STRIDE));
++}
++
+ void mlxbf_gige_get_mac_rx_filter(struct mlxbf_gige *priv,
+ 				  unsigned int index, u64 *dmac)
+ {
 -- 
 2.43.0
 
