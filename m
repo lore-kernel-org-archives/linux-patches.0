@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A310A1C5792;
-	Tue, 27 Aug 2024 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA47E1C3F17;
+	Tue, 27 Aug 2024 15:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772254; cv=none; b=mo22tzTW3Kh9DfRJR9NzhqKDgNDyk84I2JCxldEt9j8/rOB5WgYGgRQrDyVLXKywGocNANI2bSj0JPbyOhvU6BQvEKi7FkgQ4sCL9VQ+4C50qqDUtrGBXtIxZh7nbQzp7lGMWLxgHcAri9hJDmLHaEma1BqQpv99zR5IEN+W+JQ=
+	t=1724772258; cv=none; b=gMOrj/EDckeZymjadGbaE+0r67PhhHZduUobilaWOB+MyC180Z+VR9fzeUQlavR9AdsRmbxR1DLigaSyj7UX4SoA0DlRxnUdHCCUCCZtbSWjV8FyRzTB26dXIVmq1ab/GhvFgPozn1WSgt750TQTMYHHz7hoTdZLRJxDlT76eeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772254; c=relaxed/simple;
-	bh=Bp3lMuKaweEgA8OCc0Ki8L4PeLPiFKNtHJrg0HOQrEA=;
+	s=arc-20240116; t=1724772258; c=relaxed/simple;
+	bh=Mf00OFfW+zeysMJhKy0VkRileOcsjdjg6pEfI+XG9F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGj1yd4G0YzPwqi4mPY8bhgHVBsC2iQtInJtaXzbpsFZGdLSIgfU4LsDsW+sIfFjXAo9qovYEz9xCVCfWo2u/8krXn/MCvpcHluj15+3pzy8octJd89SmlJuSkfvxKmdiH2ZofckotPD7dm7Dbv9upRuizXd5I9P8hsQ9hy7Gck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQx0haCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uC0vIkPVl1HgFcHyYliZl6aia1EpRxInRs4I4q5qKE7tcPmrJ73qkxR1YqtjXLF/D1FZlVEjLyAtB3UM8nupBTcXETRwjfV8EyOJpTKP/0fZ/i/1yvgdLSgjCExZxLdCLQFAZLGqoMu3DUkfcClSP4XfcURN9itaS6QAcDn0PqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snshsirY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQx0haCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB4DC61069;
-	Tue, 27 Aug 2024 15:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snshsirY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DBFC61069;
+	Tue, 27 Aug 2024 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772254;
-	bh=Bp3lMuKaweEgA8OCc0Ki8L4PeLPiFKNtHJrg0HOQrEA=;
+	s=korg; t=1724772257;
+	bh=Mf00OFfW+zeysMJhKy0VkRileOcsjdjg6pEfI+XG9F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQx0haCNHKQ6/noo13Ji4V5vjOupSuggWCoCxOWwB52DXWH1AosMRyVBEDd/fdSdf
-	 +Q7l4CmTNtIfTfx1fS/k+/MOMAcIxq2WZ+Q3w3yhFh4vQsJpjJAiKnrxY48mF0WQ23
-	 YZt1L2SnLqtTvfy582Rp3yhKi00r4+p3poZQs2XY=
+	b=snshsirY07KPYEvXWxA/dao5/0ABfxY/oin2l6FCttKLq3MwU/3v0U9FtHwa/Gd8F
+	 e8BtB2NgLUSmeJKveX3x+wiGn6NOiE/LBAjSYcWMceIA8OHpQ0Sq70Yg49GBxBPEra
+	 AvtRM1HXUUq9nK+N0M/YBiO74MX6L59A95T7k/gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/321] ext4: do not trim the group with corrupted block bitmap
-Date: Tue, 27 Aug 2024 16:37:47 +0200
-Message-ID: <20240827143844.283686736@linuxfoundation.org>
+Subject: [PATCH 6.1 160/321] afs: fix __afs_break_callback() / afs_drop_open_mmap() race
+Date: Tue, 27 Aug 2024 16:37:48 +0200
+Message-ID: <20240827143844.321844622@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,36 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 172202152a125955367393956acf5f4ffd092e0d ]
+[ Upstream commit 275655d3207b9e65d1561bf21c06a622d9ec1d43 ]
 
-Otherwise operating on an incorrupted block bitmap can lead to all sorts
-of unknown problems.
+In __afs_break_callback() we might check ->cb_nr_mmap and if it's non-zero
+do queue_work(&vnode->cb_work).  In afs_drop_open_mmap() we decrement
+->cb_nr_mmap and do flush_work(&vnode->cb_work) if it reaches zero.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+The trouble is, there's nothing to prevent __afs_break_callback() from
+seeing ->cb_nr_mmap before the decrement and do queue_work() after both
+the decrement and flush_work().  If that happens, we might be in trouble -
+vnode might get freed before the queued work runs.
+
+__afs_break_callback() is always done under ->cb_lock, so let's make
+sure that ->cb_nr_mmap can change from non-zero to zero while holding
+->cb_lock (the spinlock component of it - it's a seqlock and we don't
+need to mess with the counter).
+
+Acked-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/afs/file.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 004ad321a45d6..c723ee3e49959 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6483,6 +6483,9 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- 	bool set_trimmed = false;
- 	void *bitmap;
+diff --git a/fs/afs/file.c b/fs/afs/file.c
+index 2eeab57df133a..9051ed0085544 100644
+--- a/fs/afs/file.c
++++ b/fs/afs/file.c
+@@ -525,13 +525,17 @@ static void afs_add_open_mmap(struct afs_vnode *vnode)
  
-+	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
-+		return 0;
-+
- 	last = ext4_last_grp_cluster(sb, e4b->bd_group);
- 	bitmap = e4b->bd_bitmap;
- 	if (start == 0 && max >= last)
+ static void afs_drop_open_mmap(struct afs_vnode *vnode)
+ {
+-	if (!atomic_dec_and_test(&vnode->cb_nr_mmap))
++	if (atomic_add_unless(&vnode->cb_nr_mmap, -1, 1))
+ 		return;
+ 
+ 	down_write(&vnode->volume->cell->fs_open_mmaps_lock);
+ 
+-	if (atomic_read(&vnode->cb_nr_mmap) == 0)
++	read_seqlock_excl(&vnode->cb_lock);
++	// the only place where ->cb_nr_mmap may hit 0
++	// see __afs_break_callback() for the other side...
++	if (atomic_dec_and_test(&vnode->cb_nr_mmap))
+ 		list_del_init(&vnode->cb_mmap_link);
++	read_sequnlock_excl(&vnode->cb_lock);
+ 
+ 	up_write(&vnode->volume->cell->fs_open_mmaps_lock);
+ 	flush_work(&vnode->cb_work);
 -- 
 2.43.0
 
