@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0F91CEAC8;
-	Tue, 27 Aug 2024 15:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D771D1735;
+	Tue, 27 Aug 2024 15:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772775; cv=none; b=omMBt9MhgKRWG8BAQt3tc3bIs+sG/2D5wgUJoZleLDGuir7mlgsNB29N+N33/zUHMkkID8ItjCNIXOhsCZJagRABI7PVk0QY5cphjjBz9wWSH/NHryeZFK4SS+cGwjtRCwKiM4ab/jH4xRjCkW35us5IC4eTEYq+7XxrvVQcUwg=
+	t=1724772780; cv=none; b=Bw8u2HtcVAa10Mm//Ord4iK7bG/DuCoWEGcogY7yFTh8dyKfjjNeB+i97DPCdBAq6NtvzVWF16ySJ0L8dMVRic979k9o39lVLoiIo+jwgeTOgvMkjilsFuNCi0fTXCv7YK800Gzno5LrYwLS/DM/8t3qc15QJ5iRsXjizMWU8Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772775; c=relaxed/simple;
-	bh=qaBQCUu3FDUB+fYDXNOCtl3+JxS69aRyzQxyP2vFYXQ=;
+	s=arc-20240116; t=1724772780; c=relaxed/simple;
+	bh=BKH3iHr8Gho3TbXNduNwgumitGKOPg+uQ6lRUp/bhzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ka/s46cjixRSgU2m+oVTflarxndQCnn7x2dxVYyGspKAC7pK96YdI/h/w+S4/8aky/GdGajXYDvNgtt0AUbNSmBQhSDyfQEFsgBuNepTI1aILc3Nh/JplBBjyzW6+Dczgz8V6oOU4zjO+SRKk1dkKYd7hMEnCTP5hQpviYuoUkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otPBC6rC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mCEukr74EKl8s5ruxqEr+9cxJWZmRBr12pvMWFOdsDjux1e3T9rX5AJRz5KaGuNhgk9LImNW+WIYFHDKDNBXp3nZ3nAFAZec7H2ni0RsJQbg50/Fu7TxSlDwvTGse3ldAEaX9MqRvHLKg+6BeRVABi+W+2E3CqclEsmlkvC8Ebk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08XoWk+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otPBC6rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2C1C61043;
-	Tue, 27 Aug 2024 15:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08XoWk+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C19FC61052;
+	Tue, 27 Aug 2024 15:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772775;
-	bh=qaBQCUu3FDUB+fYDXNOCtl3+JxS69aRyzQxyP2vFYXQ=;
+	s=korg; t=1724772778;
+	bh=BKH3iHr8Gho3TbXNduNwgumitGKOPg+uQ6lRUp/bhzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=otPBC6rC3L9qe2MSaVZtJbGg4yc4Kwk3y0+u4MJLEUXvpjDiQTBGxxtaANIoLJ5Ho
-	 0BL6s8tjuVD0Yopp5f1SOPw6elUOQTTs5tAbZPR2+lNDOJSmjZw3Ra+zO51Pi4UcoE
-	 vDqPg0+EcEZlXHXzRJ0CA3ar1p2r3e2w3mQPzDvc=
+	b=08XoWk+NXXH2ftQSuPyEG2fJxy8Uog+6/TdZ/yqetkgqbI2vJ6XQNeBJjO6rlw24R
+	 nU7+Ua5Xk1vTuNoREgENb+6aefJ6v1s5XPLBqMwNs4KdwXmblQO+U/H5lytAMg1FL1
+	 4vpVj9gTC8XlpmQ/ScHRmNL3z/bhLL8kZDtJ3LQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 316/321] udp: fix receiving fraglist GSO packets
-Date: Tue, 27 Aug 2024 16:40:24 +0200
-Message-ID: <20240827143850.287114897@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Piotr Raczynski <piotr.raczynski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.1 317/321] ice: fix W=1 headers mismatch
+Date: Tue, 27 Aug 2024 16:40:25 +0200
+Message-ID: <20240827143850.324780616@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,34 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-commit b128ed5ab27330deeeaf51ea8bb69f1442a96f7f upstream.
+commit 66ceaa4c4507f2b598d37b528796dd34158d31bf upstream.
 
-When assembling fraglist GSO packets, udp4_gro_complete does not set
-skb->csum_start, which makes the extra validation in __udp_gso_segment fail.
+make modules W=1 returns:
+.../ice/ice_txrx_lib.c:448: warning: Function parameter or member 'first_idx' not described in 'ice_finalize_xdp_rx'
+.../ice/ice_txrx.c:948: warning: Function parameter or member 'ntc' not described in 'ice_get_rx_buf'
+.../ice/ice_txrx.c:1038: warning: Excess function parameter 'rx_buf' description in 'ice_construct_skb'
 
-Fixes: 89add40066f9 ("net: drop bad gso csum_start and offset in virtio_net_hdr")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240819150621.59833-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix these warnings by adding and deleting the deviant arguments.
+
+Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
+Fixes: d7956d81f150 ("ice: Pull out next_to_clean bump out of ice_put_rx_buf()")
+CC: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp_offload.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c     |    2 +-
+ drivers/net/ethernet/intel/ice/ice_txrx_lib.c |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -278,7 +278,8 @@ struct sk_buff *__udp_gso_segment(struct
- 		return ERR_PTR(-EINVAL);
- 
- 	if (unlikely(skb_checksum_start(gso_skb) !=
--		     skb_transport_header(gso_skb)))
-+		     skb_transport_header(gso_skb) &&
-+		     !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)))
- 		return ERR_PTR(-EINVAL);
- 
- 	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -892,6 +892,7 @@ ice_reuse_rx_page(struct ice_rx_ring *rx
+  * ice_get_rx_buf - Fetch Rx buffer and synchronize data for use
+  * @rx_ring: Rx descriptor ring to transact packets on
+  * @size: size of buffer to add to skb
++ * @ntc: index of next to clean element
+  *
+  * This function will pull an Rx buffer from the ring and synchronize it
+  * for use by the CPU.
+@@ -973,7 +974,6 @@ ice_build_skb(struct ice_rx_ring *rx_rin
+ /**
+  * ice_construct_skb - Allocate skb and populate it
+  * @rx_ring: Rx descriptor ring to transact packets on
+- * @rx_buf: Rx buffer to pull data from
+  * @xdp: xdp_buff pointing to the data
+  *
+  * This function allocates an skb. It then populates it with the page
+--- a/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
+@@ -349,6 +349,7 @@ int ice_xmit_xdp_buff(struct xdp_buff *x
+  * ice_finalize_xdp_rx - Bump XDP Tx tail and/or flush redirect map
+  * @xdp_ring: XDP ring
+  * @xdp_res: Result of the receive batch
++ * @first_idx: index to write from caller
+  *
+  * This function bumps XDP Tx tail and/or flush redirect map, and
+  * should be called when a batch of packets has been processed in the
 
 
