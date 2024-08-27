@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CC01C6F5F;
-	Tue, 27 Aug 2024 15:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDDA1B4C4E;
+	Tue, 27 Aug 2024 15:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770877; cv=none; b=T9cIRom+/H4rND1Ff3zLpNPfRYydrRwf4RCREgw1fzRRtlv7PPPtKz3x6WhbQGcDuFo/JtfVcn8Gd3T3n/D4ftv/g2amACmrAZYNjJlpmKPy+RiVO5LEH11OoUSPCBg+LRsn7q8qdIQbQj6QUDgGXs4KQK1GqM3sfpmeec7UCX4=
+	t=1724770880; cv=none; b=bA80LB/oHORVxecou8FBahYcHrhSGV7mF1uilvBhk/lePMOZURiiOhUSvji4AaTYzN9pZF3Dgm9ytMZiJbBlbec48knXkuuAnW4tNZwSTX0YL3/ohZurYopn7g7APChO5fdz40F2pmWslSj2zSAfSf5X23lC3aqUpK1ESB9lJCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770877; c=relaxed/simple;
-	bh=rbOmDiuGbPHOiKL4j72B14iher/rDzfpKyT3yqvRPYA=;
+	s=arc-20240116; t=1724770880; c=relaxed/simple;
+	bh=MNf7lwvlNQ4gJVzSSutSKubcFzku9QwnqfoV12Ah6A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcOwthdV5M4gxg215FzjH3y7N0HzAHADKJ4BXJxi5gISs6m3Whv38dn0ydPmUyvTZcv8TAGwHdqIv9p2tZfAo7cgwnELG9zrqvYSWOKdv3S2uWXFlvfbj16e8ayqKe3oTA/TwdWW679dz646n9kNtUTBAUrkpR74mauE6A3HCOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KC9njsrx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMkI56txpoPQFs8VYJk6lunyfpJAGKvugDvwRnS5qJseIbxZyZeGZoqqNT+Q0jKNdjpuQrQAqnbGxbEr4lpYTyJ8guv/eHt+dknprUNIMTSQH0g4Yc91d5vENvf5kfJdRpijvNX4ypyb7H2lstLcF80bifZ5nK7HvJiM9rP78V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TPVjQal; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KC9njsrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BFCC4AF1C;
-	Tue, 27 Aug 2024 15:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TPVjQal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E97C4AF1C;
+	Tue, 27 Aug 2024 15:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770876;
-	bh=rbOmDiuGbPHOiKL4j72B14iher/rDzfpKyT3yqvRPYA=;
+	s=korg; t=1724770880;
+	bh=MNf7lwvlNQ4gJVzSSutSKubcFzku9QwnqfoV12Ah6A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KC9njsrxrh0MjfZ6BS71BRdU1P7VYnfPUnDrMsaJ3VU+f8aNX6x5NUNE8VYIoz8vW
-	 qz/SDCyUU346G4CJtkA48mOTzNTPFYGPo3ThKCoHp1lq50xx18efXozePmnS9V9OnU
-	 zxRXPqRzYhO4ttOgPwmY9aAMqZsWALZrsDvNnFDY=
+	b=2TPVjQalGM33g7uuR5lVxeJP8odsRGzcW1UFfiE41V479mn5pUmIH/tNk2dhgprdL
+	 tIYiGWnK5Z4mGYRrKlitomiNZKRI+1e99qs/rltPbVVnglC7JDtbjTtojmw/5g5Im5
+	 ylO0bQahY0phQ6a3TjgB3HecCP6xcd8cFJWNL4Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH 6.10 002/273] tty: serial: fsl_lpuart: mark last busy before uart_add_one_port
-Date: Tue, 27 Aug 2024 16:35:26 +0200
-Message-ID: <20240827143833.469662084@linuxfoundation.org>
+	Baojun Xu <baojun.xu@ti.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 020/273] ALSA: hda/tas2781: fix wrong calibrated data order
+Date: Tue, 27 Aug 2024 16:35:44 +0200
+Message-ID: <20240827143834.157099366@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,52 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Baojun Xu <baojun.xu@ti.com>
 
-commit dc98d76a15bc29a9a4e76f2f65f39f3e590fb15c upstream.
+commit 3beddef84d90590270465a907de1cfe2539ac70d upstream.
 
-With "earlycon initcall_debug=1 loglevel=8" in bootargs, kernel
-sometimes boot hang. It is because normal console still is not ready,
-but runtime suspend is called, so early console putchar will hang
-in waiting TRDE set in UARTSTAT.
+Wrong calibration data order cause sound too low in some device.
+Fix wrong calibrated data order, add calibration data converssion
+by get_unaligned_be32() after reading from UEFI.
 
-The lpuart driver has auto suspend delay set to 3000ms, but during
-uart_add_one_port, a child device serial ctrl will added and probed with
-its pm runtime enabled(see serial_ctrl.c).
-The runtime suspend call path is:
-device_add
-     |-> bus_probe_device
-           |->device_initial_probe
-	           |->__device_attach
-                         |-> pm_runtime_get_sync(dev->parent);
-			 |-> pm_request_idle(dev);
-			 |-> pm_runtime_put(dev->parent);
-
-So in the end, before normal console ready, the lpuart get runtime
-suspended. And earlycon putchar will hang.
-
-To address the issue, mark last busy just after pm_runtime_enable,
-three seconds is long enough to switch from bootconsole to normal
-console.
-
-Fixes: 43543e6f539b ("tty: serial: fsl_lpuart: Add runtime pm support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20240808140325.580105-1-peng.fan@oss.nxp.com
+Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Baojun Xu <baojun.xu@ti.com>
+Link: https://patch.msgid.link/20240813043749.108-1-shenghao-ding@ti.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/tas2781_hda_i2c.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2923,6 +2923,7 @@ static int lpuart_probe(struct platform_
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, UART_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
-+	pm_runtime_mark_last_busy(&pdev->dev);
+--- a/sound/pci/hda/tas2781_hda_i2c.c
++++ b/sound/pci/hda/tas2781_hda_i2c.c
+@@ -2,10 +2,12 @@
+ //
+ // TAS2781 HDA I2C driver
+ //
+-// Copyright 2023 Texas Instruments, Inc.
++// Copyright 2023 - 2024 Texas Instruments, Inc.
+ //
+ // Author: Shenghao Ding <shenghao-ding@ti.com>
++// Current maintainer: Baojun Xu <baojun.xu@ti.com>
  
- 	ret = lpuart_global_reset(sport);
- 	if (ret)
++#include <asm/unaligned.h>
+ #include <linux/acpi.h>
+ #include <linux/crc8.h>
+ #include <linux/crc32.h>
+@@ -519,20 +521,22 @@ static void tas2781_apply_calib(struct t
+ 	static const unsigned char rgno_array[CALIB_MAX] = {
+ 		0x74, 0x0c, 0x14, 0x70, 0x7c,
+ 	};
+-	unsigned char *data;
++	int offset = 0;
+ 	int i, j, rc;
++	__be32 data;
+ 
+ 	for (i = 0; i < tas_priv->ndev; i++) {
+-		data = tas_priv->cali_data.data +
+-			i * TASDEVICE_SPEAKER_CALIBRATION_SIZE;
+ 		for (j = 0; j < CALIB_MAX; j++) {
++			data = get_unaligned_be32(
++				&tas_priv->cali_data.data[offset]);
+ 			rc = tasdevice_dev_bulk_write(tas_priv, i,
+ 				TASDEVICE_REG(0, page_array[j], rgno_array[j]),
+-				&(data[4 * j]), 4);
++				(unsigned char *)&data, 4);
+ 			if (rc < 0)
+ 				dev_err(tas_priv->dev,
+ 					"chn %d calib %d bulk_wr err = %d\n",
+ 					i, j, rc);
++			offset += 4;
+ 		}
+ 	}
+ }
 
 
