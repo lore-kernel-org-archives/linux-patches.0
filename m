@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F8A1C6F4D;
-	Tue, 27 Aug 2024 14:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244DA1C6F64;
+	Tue, 27 Aug 2024 14:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770446; cv=none; b=WPFhezEsIBXjCLT+SwIfHvfz59/98asohslgtYO+JD+as6CwlqH40YbmDJ+M1rBZQSqE7t5I2HhZd9KV5VInR4RsyZemy87FWiMDFTV2qwbUxUred0aIQy2u+wpbayDP5Ei6pp53qVUDCz+5ofj7NgnM1VKDel2bu0VzV/9fhOc=
+	t=1724770449; cv=none; b=LgSUe8VtTB2WrSuCcvIj2DebLf5B6mI39dIAul1+kGz0lhxRCfnLHDjb2Jz4xcEB0COtUGESDS/c2yzdcPjPPY4ojWL2z9aWEqYGBsduu/xxQp064ZD7AfvYhFu4xrFZo41y+k/PC8NPhPL4FKj4dBwrODwBF2oY4Md8JIDqF1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770446; c=relaxed/simple;
-	bh=m1w6S7ltCPdjKSgt308fxFS9+h26qmmJA0tykU+6BpI=;
+	s=arc-20240116; t=1724770449; c=relaxed/simple;
+	bh=1nKCylYUdBA3Pj1HIb/ZaotxzOKrwZIwkz04LHzyq1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkzgjAE9cJifB8eBu190OLXuDLyg8sAzq/Vi5ETS/GDs4sJGJvg2gMh69wW9/0HXpge2AkqrE8YghCmmK408eWFMMWwJCV7eK5pXfo1hd5POY2HLyZ7n70wedCQTwO+HTkE44hPiwP9IpDERNVOVNql0EdlP6zTZqt3U1y3gLxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5kuFoLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shJkLZo7WA6xpabL92vz4N9f8TcTkhciqaArz+b6wBLhF2nbXqiZBkW6mn94sl3ocp4q4INthaygg82Lb8Y94FjRbvjG6cpHyvC3olnlt9kLgIDLhoMn+c/KUgStH16qp+YJNdh+5Yz9VfcalT/bVIl88oNN7MjzTQqRvYt896Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkMyw5qB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5kuFoLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4B9C6106F;
-	Tue, 27 Aug 2024 14:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkMyw5qB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD3EC4E66E;
+	Tue, 27 Aug 2024 14:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770446;
-	bh=m1w6S7ltCPdjKSgt308fxFS9+h26qmmJA0tykU+6BpI=;
+	s=korg; t=1724770449;
+	bh=1nKCylYUdBA3Pj1HIb/ZaotxzOKrwZIwkz04LHzyq1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5kuFoLGXKV0N6ydohsxyAg6o6+iTmaPnY76P+VFbd9O58HzNVzWMK/mp5u1R4G+S
-	 7Q8mcQ6RLKOe49qLD2FUcSMJYrQgOJ2oKwUm9cl9uGLoDeRPB3o7urlVURPnZPtZYW
-	 XGr+agwX/g1jPnp7Cs9HK9XLdumiLy3T/bLnxtlM=
+	b=vkMyw5qBIBezdV8Kqj/sUVOR373uSSD7ZuKdL9SnEXnHkUzYqDYKbzUNZSEZ/bm/E
+	 BAw7AM1zEsJ7d6BvbIUjvAVbQSrx7F4rPEeZEi9t5/tCsika2oEt+FGvSzCUrwiPcg
+	 J9nJQZtjMAnJTSRF4keS5xEmJM95d2cBOFP90n0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/341] btrfs: replace sb::s_blocksize by fs_info::sectorsize
-Date: Tue, 27 Aug 2024 16:37:43 +0200
-Message-ID: <20240827143852.237687745@linuxfoundation.org>
+Subject: [PATCH 6.6 233/341] btrfs: send: allow cloning non-aligned extent if it ends at i_size
+Date: Tue, 27 Aug 2024 16:37:44 +0200
+Message-ID: <20240827143852.275617663@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,158 +52,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 4e00422ee62663e31e611d7de4d2c4aa3f8555f2 ]
+[ Upstream commit 46a6e10a1ab16cc71d4a3cab73e79aabadd6b8ea ]
 
-The block size stored in the super block is used by subsystems outside
-of btrfs and it's a copy of fs_info::sectorsize. Unify that to always
-use our sectorsize, with the exception of mount where we first need to
-use fixed values (4K) until we read the super block and can set the
-sectorsize.
+If we a find that an extent is shared but its end offset is not sector
+size aligned, then we don't clone it and issue write operations instead.
+This is because the reflink (remap_file_range) operation does not allow
+to clone unaligned ranges, except if the end offset of the range matches
+the i_size of the source and destination files (and the start offset is
+sector size aligned).
 
-Replace all uses, in most cases it's fewer pointer indirections.
+While this is not incorrect because send can only guarantee that a file
+has the same data in the source and destination snapshots, it's not
+optimal and generates confusion and surprising behaviour for users.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
+For example, running this test:
+
+  $ cat test.sh
+  #!/bin/bash
+
+  DEV=/dev/sdi
+  MNT=/mnt/sdi
+
+  mkfs.btrfs -f $DEV
+  mount $DEV $MNT
+
+  # Use a file size not aligned to any possible sector size.
+  file_size=$((1 * 1024 * 1024 + 5)) # 1MB + 5 bytes
+  dd if=/dev/random of=$MNT/foo bs=$file_size count=1
+  cp --reflink=always $MNT/foo $MNT/bar
+
+  btrfs subvolume snapshot -r $MNT/ $MNT/snap
+  rm -f /tmp/send-test
+  btrfs send -f /tmp/send-test $MNT/snap
+
+  umount $MNT
+  mkfs.btrfs -f $DEV
+  mount $DEV $MNT
+
+  btrfs receive -vv -f /tmp/send-test $MNT
+
+  xfs_io -r -c "fiemap -v" $MNT/snap/bar
+
+  umount $MNT
+
+Gives the following result:
+
+  (...)
+  mkfile o258-7-0
+  rename o258-7-0 -> bar
+  write bar - offset=0 length=49152
+  write bar - offset=49152 length=49152
+  write bar - offset=98304 length=49152
+  write bar - offset=147456 length=49152
+  write bar - offset=196608 length=49152
+  write bar - offset=245760 length=49152
+  write bar - offset=294912 length=49152
+  write bar - offset=344064 length=49152
+  write bar - offset=393216 length=49152
+  write bar - offset=442368 length=49152
+  write bar - offset=491520 length=49152
+  write bar - offset=540672 length=49152
+  write bar - offset=589824 length=49152
+  write bar - offset=638976 length=49152
+  write bar - offset=688128 length=49152
+  write bar - offset=737280 length=49152
+  write bar - offset=786432 length=49152
+  write bar - offset=835584 length=49152
+  write bar - offset=884736 length=49152
+  write bar - offset=933888 length=49152
+  write bar - offset=983040 length=49152
+  write bar - offset=1032192 length=16389
+  chown bar - uid=0, gid=0
+  chmod bar - mode=0644
+  utimes bar
+  utimes
+  BTRFS_IOC_SET_RECEIVED_SUBVOL uuid=06d640da-9ca1-604c-b87c-3375175a8eb3, stransid=7
+  /mnt/sdi/snap/bar:
+   EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+     0: [0..2055]:       26624..28679      2056   0x1
+
+There's no clone operation to clone extents from the file foo into file
+bar and fiemap confirms there's no shared flag (0x2000).
+
+So update send_write_or_clone() so that it proceeds with cloning if the
+source and destination ranges end at the i_size of the respective files.
+
+After this changes the result of the test is:
+
+  (...)
+  mkfile o258-7-0
+  rename o258-7-0 -> bar
+  clone bar - source=foo source offset=0 offset=0 length=1048581
+  chown bar - uid=0, gid=0
+  chmod bar - mode=0644
+  utimes bar
+  utimes
+  BTRFS_IOC_SET_RECEIVED_SUBVOL uuid=582420f3-ea7d-564e-bbe5-ce440d622190, stransid=7
+  /mnt/sdi/snap/bar:
+   EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+     0: [0..2055]:       26624..28679      2056 0x2001
+
+A test case for fstests will also follow up soon.
+
+Link: https://github.com/kdave/btrfs-progs/issues/572#issuecomment-2282841416
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 46a6e10a1ab1 ("btrfs: send: allow cloning non-aligned extent if it ends at i_size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c   | 2 ++
- fs/btrfs/extent_io.c | 4 ++--
- fs/btrfs/inode.c     | 2 +-
- fs/btrfs/ioctl.c     | 2 +-
- fs/btrfs/reflink.c   | 6 +++---
- fs/btrfs/send.c      | 2 +-
- fs/btrfs/super.c     | 2 +-
- 7 files changed, 11 insertions(+), 9 deletions(-)
+ fs/btrfs/send.c | 52 ++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 39 insertions(+), 13 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 1cc7e36c64c49..caedd4460d994 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2800,6 +2800,7 @@ static int init_mount_fs_info(struct btrfs_fs_info *fs_info, struct super_block
- 	int ret;
- 
- 	fs_info->sb = sb;
-+	/* Temporary fixed values for block size until we read the superblock. */
- 	sb->s_blocksize = BTRFS_BDEV_BLOCKSIZE;
- 	sb->s_blocksize_bits = blksize_bits(BTRFS_BDEV_BLOCKSIZE);
- 
-@@ -3339,6 +3340,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 	sb->s_bdi->ra_pages *= btrfs_super_num_devices(disk_super);
- 	sb->s_bdi->ra_pages = max(sb->s_bdi->ra_pages, SZ_4M / PAGE_SIZE);
- 
-+	/* Update the values for the current filesystem. */
- 	sb->s_blocksize = sectorsize;
- 	sb->s_blocksize_bits = blksize_bits(sectorsize);
- 	memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index c6a95dfa59c81..b2ae50dcca0fe 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -974,7 +974,7 @@ static int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
- 	int ret = 0;
- 	size_t pg_offset = 0;
- 	size_t iosize;
--	size_t blocksize = inode->i_sb->s_blocksize;
-+	size_t blocksize = fs_info->sectorsize;
- 	struct extent_io_tree *tree = &BTRFS_I(inode)->io_tree;
- 
- 	ret = set_page_extent_mapped(page);
-@@ -2254,7 +2254,7 @@ int extent_invalidate_folio(struct extent_io_tree *tree,
- 	struct extent_state *cached_state = NULL;
- 	u64 start = folio_pos(folio);
- 	u64 end = start + folio_size(folio) - 1;
--	size_t blocksize = folio->mapping->host->i_sb->s_blocksize;
-+	size_t blocksize = btrfs_sb(folio->mapping->host->i_sb)->sectorsize;
- 
- 	/* This function is only called for the btree inode */
- 	ASSERT(tree->owner == IO_TREE_BTREE_INODE_IO);
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 7071a58e5b9d4..18ce5353092d7 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -8695,7 +8695,7 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
- 	u64 delalloc_bytes;
- 	u64 inode_bytes;
- 	struct inode *inode = d_inode(path->dentry);
--	u32 blocksize = inode->i_sb->s_blocksize;
-+	u32 blocksize = btrfs_sb(inode->i_sb)->sectorsize;
- 	u32 bi_flags = BTRFS_I(inode)->flags;
- 	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
- 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 3f43a08613d8a..d5297523d4977 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -528,7 +528,7 @@ static noinline int btrfs_ioctl_fitrim(struct btrfs_fs_info *fs_info,
- 	 * block group is in the logical address space, which can be any
- 	 * sectorsize aligned bytenr in  the range [0, U64_MAX].
- 	 */
--	if (range.len < fs_info->sb->s_blocksize)
-+	if (range.len < fs_info->sectorsize)
- 		return -EINVAL;
- 
- 	range.minlen = max(range.minlen, minlen);
-diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
-index 65d2bd6910f2c..9f60aa79a8c50 100644
---- a/fs/btrfs/reflink.c
-+++ b/fs/btrfs/reflink.c
-@@ -664,7 +664,7 @@ static int btrfs_extent_same_range(struct inode *src, u64 loff, u64 len,
- 				   struct inode *dst, u64 dst_loff)
- {
- 	struct btrfs_fs_info *fs_info = BTRFS_I(src)->root->fs_info;
--	const u64 bs = fs_info->sb->s_blocksize;
-+	const u64 bs = fs_info->sectorsize;
- 	int ret;
- 
- 	/*
-@@ -731,7 +731,7 @@ static noinline int btrfs_clone_files(struct file *file, struct file *file_src,
- 	int ret;
- 	int wb_ret;
- 	u64 len = olen;
--	u64 bs = fs_info->sb->s_blocksize;
-+	u64 bs = fs_info->sectorsize;
- 
- 	/*
- 	 * VFS's generic_remap_file_range_prep() protects us from cloning the
-@@ -797,7 +797,7 @@ static int btrfs_remap_file_range_prep(struct file *file_in, loff_t pos_in,
- {
- 	struct inode *inode_in = file_inode(file_in);
- 	struct inode *inode_out = file_inode(file_out);
--	u64 bs = BTRFS_I(inode_out)->root->fs_info->sb->s_blocksize;
-+	u64 bs = BTRFS_I(inode_out)->root->fs_info->sectorsize;
- 	u64 wb_len;
- 	int ret;
- 
 diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 163f36eb7491a..633d306933f3f 100644
+index 633d306933f3f..e912d8e411cc4 100644
 --- a/fs/btrfs/send.c
 +++ b/fs/btrfs/send.c
-@@ -6159,7 +6159,7 @@ static int send_write_or_clone(struct send_ctx *sctx,
- 	int ret = 0;
+@@ -6160,25 +6160,51 @@ static int send_write_or_clone(struct send_ctx *sctx,
  	u64 offset = key->offset;
  	u64 end;
--	u64 bs = sctx->send_root->fs_info->sb->s_blocksize;
-+	u64 bs = sctx->send_root->fs_info->sectorsize;
+ 	u64 bs = sctx->send_root->fs_info->sectorsize;
++	struct btrfs_file_extent_item *ei;
++	u64 disk_byte;
++	u64 data_offset;
++	u64 num_bytes;
++	struct btrfs_inode_info info = { 0 };
  
  	end = min_t(u64, btrfs_file_extent_end(path), sctx->cur_inode_size);
  	if (offset >= end)
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index de0bfebce1269..e33587a814098 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2124,7 +2124,7 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 		buf->f_bavail = 0;
+ 		return 0;
  
- 	buf->f_type = BTRFS_SUPER_MAGIC;
--	buf->f_bsize = dentry->d_sb->s_blocksize;
-+	buf->f_bsize = fs_info->sectorsize;
- 	buf->f_namelen = BTRFS_NAME_LEN;
+-	if (clone_root && IS_ALIGNED(end, bs)) {
+-		struct btrfs_file_extent_item *ei;
+-		u64 disk_byte;
+-		u64 data_offset;
++	num_bytes = end - offset;
  
- 	/* We treat it as constant endianness (it doesn't matter _which_)
+-		ei = btrfs_item_ptr(path->nodes[0], path->slots[0],
+-				    struct btrfs_file_extent_item);
+-		disk_byte = btrfs_file_extent_disk_bytenr(path->nodes[0], ei);
+-		data_offset = btrfs_file_extent_offset(path->nodes[0], ei);
+-		ret = clone_range(sctx, path, clone_root, disk_byte,
+-				  data_offset, offset, end - offset);
+-	} else {
+-		ret = send_extent_data(sctx, path, offset, end - offset);
+-	}
++	if (!clone_root)
++		goto write_data;
++
++	if (IS_ALIGNED(end, bs))
++		goto clone_data;
++
++	/*
++	 * If the extent end is not aligned, we can clone if the extent ends at
++	 * the i_size of the inode and the clone range ends at the i_size of the
++	 * source inode, otherwise the clone operation fails with -EINVAL.
++	 */
++	if (end != sctx->cur_inode_size)
++		goto write_data;
++
++	ret = get_inode_info(clone_root->root, clone_root->ino, &info);
++	if (ret < 0)
++		return ret;
++
++	if (clone_root->offset + num_bytes == info.size)
++		goto clone_data;
++
++write_data:
++	ret = send_extent_data(sctx, path, offset, num_bytes);
++	sctx->cur_inode_next_write_offset = end;
++	return ret;
++
++clone_data:
++	ei = btrfs_item_ptr(path->nodes[0], path->slots[0],
++			    struct btrfs_file_extent_item);
++	disk_byte = btrfs_file_extent_disk_bytenr(path->nodes[0], ei);
++	data_offset = btrfs_file_extent_offset(path->nodes[0], ei);
++	ret = clone_range(sctx, path, clone_root, disk_byte, data_offset, offset,
++			  num_bytes);
+ 	sctx->cur_inode_next_write_offset = end;
+ 	return ret;
+ }
 -- 
 2.43.0
 
