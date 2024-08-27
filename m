@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF4F1BA88C;
-	Tue, 27 Aug 2024 15:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772A81BC9F1;
+	Tue, 27 Aug 2024 15:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771002; cv=none; b=M3R7xELmkbqwPjS7kEXnfmq8euJXHIxq0tAtka1y3jSXK1HmhA6IAd2sg7MmJOLKq9FcljJ6MKq8V87i9UGMiITSD/5s+FPAEI0YT6c6P+m6P0D48IqRd6AoPcW5Ohekaar4q4b8g65+H36LgHgw6QX7awuc1v6uhBh+ajPH+eU=
+	t=1724771005; cv=none; b=iaj7QLHDLDiKTxzMIZqCiYFgraxU0h8PGyf2nKd32qr435TiHp0Zswhis5S/1pf+GTeXIrF8uO1Eo0eDLSSh1HlB5fgk9WbqA3hFZkODOHNChk0TsKEa1cbathbgZskP30LU6VDWZsEAhmUP877o25lVDXPmBdeZ4zbRF1cURuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771002; c=relaxed/simple;
-	bh=3RdubchbyW94y9MGHZk1lPMfuojcMBS4679TA7sgwVo=;
+	s=arc-20240116; t=1724771005; c=relaxed/simple;
+	bh=lJRy8kIatNM+8ckHAtvsFKISzE5bcZmkuKrAvlkq0JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZkyNnB5OQQ2vUgQAI77Qu3zBVIGN7iMtFCApUbB4a0tv/A2KaTmtKV//tQgH35+PTmEIeE3b1UGYMk9xYM0w0KHWSvAHKVlu7z4FoajfXxuCZ7bo6nGmcAKz1d00uOnrrkzFf8+nSfqUgyK6v+HtPN9dYEpi6jwtCxHDpJFydE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYT5MW5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmZTHv+TgypoxGHIHxNQ+4NGf3iVuVA4XMAT/FHA9uIgu/Ppzs6RReHG5nSG7gpjvR5C3smLpyxL+XSbWXMHAFTg5zWMQb9Btf+fsPAPwmBuLx7f6BWVRopu61Pmys90RNq/iQo95Xf9iH6jqWdmRhDGMRwckMKYz8uy7lSSIB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnrAgYBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYT5MW5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44955C61049;
-	Tue, 27 Aug 2024 15:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnrAgYBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885BEC61049;
+	Tue, 27 Aug 2024 15:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771001;
-	bh=3RdubchbyW94y9MGHZk1lPMfuojcMBS4679TA7sgwVo=;
+	s=korg; t=1724771005;
+	bh=lJRy8kIatNM+8ckHAtvsFKISzE5bcZmkuKrAvlkq0JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYT5MW5JeQATnqBla5+RBolcoymghvBqud/j5ypcPdkvqAyXpfMbcEuRyzT+vg0Em
-	 k0E/MOeY1HH1nVUeRdurFnoq5MSflf9+tH4FoNiwblC1hk1NSQ+qNUQDLwXOFPrleQ
-	 zX9yPZE87Ko4NupJ0qu+E+Sga+XxbDf/sLRFQIp4=
+	b=EnrAgYBispTEpuxIQkgOEMEMxiXtMF6G5yspc6ZyLs9e+ZOdIKlhRgPlb0OfhKCXb
+	 rxnqNnI8e8EZHq7Amk5ubSAx16nJ5J55oYQ7hdzCLl0Qg0t53/CaVQQzFHPHrMmMvF
+	 ebRDCuJ+fpvyp6L7u5PCsGDRpgjKlBDLyZqsD0Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael van der Westhuizen <rmikey@meta.com>,
-	Breno Leitao <leitao@debian.org>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.10 030/273] i2c: tegra: Do not mark ACPI devices as irq safe
-Date: Tue, 27 Aug 2024 16:35:54 +0200
-Message-ID: <20240827143834.539418545@linuxfoundation.org>
+	"Huang, Ying" <ying.huang@intel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 057/273] mm/numa: no task_numa_fault() call if PMD is changed
+Date: Tue, 27 Aug 2024 16:36:21 +0200
+Message-ID: <20240827143835.572540490@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,58 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 14d069d92951a3e150c0a81f2ca3b93e54da913b upstream.
+commit fd8c35a92910f4829b7c99841f39b1b952c259d5 upstream.
 
-On ACPI machines, the tegra i2c module encounters an issue due to a
-mutex being called inside a spinlock. This leads to the following bug:
+When handling a numa page fault, task_numa_fault() should be called by a
+process that restores the page table of the faulted folio to avoid
+duplicated stats counting.  Commit c5b5a3dd2c1f ("mm: thp: refactor NUMA
+fault handling") restructured do_huge_pmd_numa_page() and did not avoid
+task_numa_fault() call in the second page table check after a numa
+migration failure.  Fix it by making all !pmd_same() return immediately.
 
-	BUG: sleeping function called from invalid context at kernel/locking/mutex.c:585
-	...
+This issue can cause task_numa_fault() being called more than necessary
+and lead to unexpected numa balancing results (It is hard to tell whether
+the issue will cause positive or negative performance impact due to
+duplicated numa fault counting).
 
-	Call trace:
-	__might_sleep
-	__mutex_lock_common
-	mutex_lock_nested
-	acpi_subsys_runtime_resume
-	rpm_resume
-	tegra_i2c_xfer
-
-The problem arises because during __pm_runtime_resume(), the spinlock
-&dev->power.lock is acquired before rpm_resume() is called. Later,
-rpm_resume() invokes acpi_subsys_runtime_resume(), which relies on
-mutexes, triggering the error.
-
-To address this issue, devices on ACPI are now marked as not IRQ-safe,
-considering the dependency of acpi_subsys_runtime_resume() on mutexes.
-
-Fixes: bd2fdedbf2ba ("i2c: tegra: Add the ACPI support")
-Cc: <stable@vger.kernel.org> # v5.17+
-Co-developed-by: Michael van der Westhuizen <rmikey@meta.com>
-Signed-off-by: Michael van der Westhuizen <rmikey@meta.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Dmitry Osipenko <digetx@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lkml.kernel.org/r/20240809145906.1513458-3-ziy@nvidia.com
+Fixes: c5b5a3dd2c1f ("mm: thp: refactor NUMA fault handling")
+Reported-by: "Huang, Ying" <ying.huang@intel.com>
+Closes: https://lore.kernel.org/linux-mm/87zfqfw0yw.fsf@yhuang6-desk2.ccr.corp.intel.com/
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-tegra.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |   29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -1802,9 +1802,9 @@ static int tegra_i2c_probe(struct platfo
- 	 * domain.
- 	 *
- 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
--	 * be used for atomic transfers.
-+	 * be used for atomic transfers. ACPI device is not IRQ safe also.
- 	 */
--	if (!IS_VI(i2c_dev))
-+	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
- 		pm_runtime_irq_safe(i2c_dev->dev);
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1672,7 +1672,7 @@ vm_fault_t do_huge_pmd_numa_page(struct
+ 	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
+ 	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
+ 		spin_unlock(vmf->ptl);
+-		goto out;
++		return 0;
+ 	}
  
- 	pm_runtime_enable(i2c_dev->dev);
+ 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
+@@ -1715,22 +1715,16 @@ vm_fault_t do_huge_pmd_numa_page(struct
+ 	if (!migrate_misplaced_folio(folio, vma, target_nid)) {
+ 		flags |= TNF_MIGRATED;
+ 		nid = target_nid;
+-	} else {
+-		flags |= TNF_MIGRATE_FAIL;
+-		vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
+-		if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
+-			spin_unlock(vmf->ptl);
+-			goto out;
+-		}
+-		goto out_map;
+-	}
+-
+-out:
+-	if (nid != NUMA_NO_NODE)
+ 		task_numa_fault(last_cpupid, nid, HPAGE_PMD_NR, flags);
++		return 0;
++	}
+ 
+-	return 0;
+-
++	flags |= TNF_MIGRATE_FAIL;
++	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
++	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
++		spin_unlock(vmf->ptl);
++		return 0;
++	}
+ out_map:
+ 	/* Restore the PMD */
+ 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
+@@ -1740,7 +1734,10 @@ out_map:
+ 	set_pmd_at(vma->vm_mm, haddr, vmf->pmd, pmd);
+ 	update_mmu_cache_pmd(vma, vmf->address, vmf->pmd);
+ 	spin_unlock(vmf->ptl);
+-	goto out;
++
++	if (nid != NUMA_NO_NODE)
++		task_numa_fault(last_cpupid, nid, HPAGE_PMD_NR, flags);
++	return 0;
+ }
+ 
+ /*
 
 
