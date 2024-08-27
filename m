@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD3E2FB2;
-	Tue, 27 Aug 2024 15:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49EE2FB2;
+	Tue, 27 Aug 2024 15:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770851; cv=none; b=psk0oWC5aGYZnGQVgr6qLUHNLG4Jxgwhe8ZtrqcKyHUxkmTzmYolhDO5N/mtQ7PCxqZYbi23drgUewqLH4fXsYuh7u84YnHjWSnvwzCf2bruk+axqyejKWQrR/ES8sUj/te77O52Fr1Of4751gb4IofOnmVinmNcyDUvhWpm4mw=
+	t=1724770854; cv=none; b=lIDURhsIjqJ94d4RxYsaqM0afsv/+QLhR25rm7EJXaFN8VVWjz3itaHrUxjVrksnAa0jWJSdgMIlwa81LGn9dg3ZJh6eoyn4+K4ll6HXvvicd4ENsVACsKtoJM4xTaNm6KqZaC9nxhFLPe8CHPGVfn2eMehIXb7HdPK5G1Ipv/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770851; c=relaxed/simple;
-	bh=44oT7pECC/MNJDxqoCh5/q+alw7Di+E+tQTwlXZ6t3A=;
+	s=arc-20240116; t=1724770854; c=relaxed/simple;
+	bh=DhQeX+z589qlAfqJgxfD9Q1XGAC4z1xwAMrpLJ05iu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/7o+sJYpbYuTIjYRxzPbZu+Py6n9E8GK/bv8ChLkJT6aJ7dpWgpnL8Z0r0P0Zh9l1LfehtJGATHnujY8R+aOfdUz3lsfUypebsM6+jx25iwZmKGkncp4jO4AIzzJRmvhMqgl6n5iKVZqWlyrN/GBlvpXCqnjHMqv0EZWYLZjZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhVJm0Mo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dCOcTytMKQjcUe4svnSZMoMgMY5H8pmXHmBOz8ptZMFqWW8e7zcggqnfV2EOgbuol8SbCrJr058CnuwkQe5SViEfR8iE5YSQfEZObBgaC3xOlHtjOzm9ATTSqi0KeKUnb/M4HS4rEUzojGmkb8OfkGxp9z0rDNrE6mj1VxnsLgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLawY+Ma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhVJm0Mo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E646C4AF1C;
-	Tue, 27 Aug 2024 15:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLawY+Ma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF71C4AF1C;
+	Tue, 27 Aug 2024 15:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770851;
-	bh=44oT7pECC/MNJDxqoCh5/q+alw7Di+E+tQTwlXZ6t3A=;
+	s=korg; t=1724770854;
+	bh=DhQeX+z589qlAfqJgxfD9Q1XGAC4z1xwAMrpLJ05iu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rhVJm0MoSV8pCdLJUlrAF4rKwAbcOTk7ptijpYAU/Egbz/u3PcRJaLCitjgMdJOhA
-	 mrKKub8tFwYBzDrDeMs2XhAXFHlm7F1LCGLLUMhXbOWlMJ+uVAH/fKe2Pw9/g//V5u
-	 aC/iL0EAoPiWYMwjp+bLDj54GEz4dcMGXQoGQoVM=
+	b=CLawY+MafOruXc9WP6CxTfBTwXFU7F5DHwgUTvTaAvcW/3jK4cdZhBomOK9iBEZLF
+	 RqUjaTy738XnoxLqvJCxVAQ9SCp4/LgmxgBHE+nJ9JjiCMw/DVcu6pFXGAEirJRHM9
+	 sMZqhXL7LRcQdTaUvdiMTIXyJ0K1UV+hQhiIZAT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
 	Eli Billauer <eli.billauer@gmail.com>
-Subject: [PATCH 6.10 012/273] char: xillybus: Refine workqueue handling
-Date: Tue, 27 Aug 2024 16:35:36 +0200
-Message-ID: <20240827143833.852270692@linuxfoundation.org>
+Subject: [PATCH 6.10 013/273] char: xillybus: Check USB endpoints when probing device
+Date: Tue, 27 Aug 2024 16:35:37 +0200
+Message-ID: <20240827143833.890727135@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,50 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Eli Billauer <eli.billauer@gmail.com>
 
-commit ad899c301c880766cc709aad277991b3ab671b66 upstream.
+commit 2374bf7558de915edc6ec8cb10ec3291dfab9594 upstream.
 
-As the wakeup work item now runs on a separate workqueue, it needs to be
-flushed separately along with flushing the device's workqueue.
+Ensure, as the driver probes the device, that all endpoints that the
+driver may attempt to access exist and are of the correct type.
 
-Also, move the destroy_workqueue() call to the end of the exit method,
-so that deinitialization is done in the opposite order of
-initialization.
+All XillyUSB devices must have a Bulk IN and Bulk OUT endpoint at
+address 1. This is verified in xillyusb_setup_base_eps().
 
-Fixes: ccbde4b128ef ("char: xillybus: Don't destroy workqueue from work item running on it")
+On top of that, a XillyUSB device may have additional Bulk OUT
+endpoints. The information about these endpoints' addresses is deduced
+from a data structure (the IDT) that the driver fetches from the device
+while probing it. These endpoints are checked in setup_channels().
+
+A XillyUSB device never has more than one IN endpoint, as all data
+towards the host is multiplexed in this single Bulk IN endpoint. This is
+why setup_channels() only checks OUT endpoints.
+
+Reported-by: syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com
 Cc: stable <stable@kernel.org>
+Closes: https://lore.kernel.org/all/0000000000001d44a6061f7a54ee@google.com/T/
+Fixes: a53d1202aef1 ("char: xillybus: Add driver for XillyUSB (Xillybus variant for USB)").
 Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
-Link: https://lore.kernel.org/r/20240816070200.50695-1-eli.billauer@gmail.com
+Link: https://lore.kernel.org/r/20240816070200.50695-2-eli.billauer@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/xillybus/xillyusb.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/char/xillybus/xillyusb.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
 --- a/drivers/char/xillybus/xillyusb.c
 +++ b/drivers/char/xillybus/xillyusb.c
-@@ -2093,9 +2093,11 @@ static int xillyusb_discovery(struct usb
- 	 * just after responding with the IDT, there is no reason for any
- 	 * work item to be running now. To be sure that xdev->channels
- 	 * is updated on anything that might run in parallel, flush the
--	 * workqueue, which rarely does anything.
-+	 * device's workqueue and the wakeup work item. This rarely
-+	 * does anything.
- 	 */
- 	flush_workqueue(xdev->workq);
-+	flush_work(&xdev->wakeup_workitem);
+@@ -1903,6 +1903,13 @@ static const struct file_operations xill
  
- 	xdev->num_channels = num_channels;
- 
-@@ -2274,9 +2276,9 @@ static int __init xillyusb_init(void)
- 
- static void __exit xillyusb_exit(void)
+ static int xillyusb_setup_base_eps(struct xillyusb_dev *xdev)
  {
--	destroy_workqueue(wakeup_wq);
--
- 	usb_deregister(&xillyusb_driver);
++	struct usb_device *udev = xdev->udev;
 +
-+	destroy_workqueue(wakeup_wq);
++	/* Verify that device has the two fundamental bulk in/out endpoints */
++	if (usb_pipe_type_check(udev, usb_sndbulkpipe(udev, MSG_EP_NUM)) ||
++	    usb_pipe_type_check(udev, usb_rcvbulkpipe(udev, IN_EP_NUM)))
++		return -ENODEV;
++
+ 	xdev->msg_ep = endpoint_alloc(xdev, MSG_EP_NUM | USB_DIR_OUT,
+ 				      bulk_out_work, 1, 2);
+ 	if (!xdev->msg_ep)
+@@ -1932,14 +1939,15 @@ static int setup_channels(struct xillyus
+ 			  __le16 *chandesc,
+ 			  int num_channels)
+ {
+-	struct xillyusb_channel *chan;
++	struct usb_device *udev = xdev->udev;
++	struct xillyusb_channel *chan, *new_channels;
+ 	int i;
+ 
+ 	chan = kcalloc(num_channels, sizeof(*chan), GFP_KERNEL);
+ 	if (!chan)
+ 		return -ENOMEM;
+ 
+-	xdev->channels = chan;
++	new_channels = chan;
+ 
+ 	for (i = 0; i < num_channels; i++, chan++) {
+ 		unsigned int in_desc = le16_to_cpu(*chandesc++);
+@@ -1968,6 +1976,15 @@ static int setup_channels(struct xillyus
+ 		 */
+ 
+ 		if ((out_desc & 0x80) && i < 14) { /* Entry is valid */
++			if (usb_pipe_type_check(udev,
++						usb_sndbulkpipe(udev, i + 2))) {
++				dev_err(xdev->dev,
++					"Missing BULK OUT endpoint %d\n",
++					i + 2);
++				kfree(new_channels);
++				return -ENODEV;
++			}
++
+ 			chan->writable = 1;
+ 			chan->out_synchronous = !!(out_desc & 0x40);
+ 			chan->out_seekable = !!(out_desc & 0x20);
+@@ -1977,6 +1994,7 @@ static int setup_channels(struct xillyus
+ 		}
+ 	}
+ 
++	xdev->channels = new_channels;
+ 	return 0;
  }
  
- module_init(xillyusb_init);
 
 
