@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8929C1C4603;
-	Tue, 27 Aug 2024 14:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D181E487;
+	Tue, 27 Aug 2024 14:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770643; cv=none; b=WOttGBPYTNruw6G2VPK+sOwP9TavPU8pqVR/3i0vAc3Mox+xLUD3lE36KeeiC6YMjkP0mZf3tkxQa/yljatyrSSHFGloZZAIUq7ya6umRToGyGZ2+ScVdpipGvF3RvhQKWemi+scAfFVwyfg1heF2ZvWp2ijzNkxBZGlDYu5zCs=
+	t=1724770647; cv=none; b=XUYnQoGLAQWsYFUW5DqSfaTCGpizWOHbI8P/YT9B7qOBsfgXedf/Npdo0aH5KGVoEtOpIpQsHtv1WKjh7xOkp2uZyl31BlvR8fZxgIp5BRTOE1cehMvayesCf6Gy4xw5b2EtnknS0hlxWSqdrqSv6CdjiRimTk7jRam2hFfZeUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770643; c=relaxed/simple;
-	bh=UK/5d0cKP7Yxrlg+saywix3XZAevuvRfgK3gJqg31DE=;
+	s=arc-20240116; t=1724770647; c=relaxed/simple;
+	bh=vOxDFoOQ7IUCRvcapMi/xNUFwChV9CCfETRn9oB06dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRHcqImadcvpNdqaoNif5lPf2d8P/cIuj3NzDBM7xH/CCxY1VoXR3m9163cv6qWHJZIPt4XOmBzFqJJTnTyxVDsIh1S5Ieah2xO6t7iuVAYC2cH+4uV/5dRJs4SqLa3JhV1luABw7qySoQgH4XtLnWhNNZNNS/lNP0raQB0Pn0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3RhRLBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GlrAn0jx3ICm9jdlBUwgSlTFGeiwhCXDnydk2LMCFcxZT7MG5C27QxhJ5V9p40yTqUGGBjd/5F2Ow94NYyofgndt0YXHo98p8sSBJPorsajNFlOWlVN159Dv5yRMZ5+EfX+i6pdvhbcyHnpr9vEQc2wqaP2OziJd/Q+6ciFX+JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MY0Dz40M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3RhRLBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BBFC61044;
-	Tue, 27 Aug 2024 14:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MY0Dz40M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A86AC61044;
+	Tue, 27 Aug 2024 14:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770643;
-	bh=UK/5d0cKP7Yxrlg+saywix3XZAevuvRfgK3gJqg31DE=;
+	s=korg; t=1724770647;
+	bh=vOxDFoOQ7IUCRvcapMi/xNUFwChV9CCfETRn9oB06dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3RhRLBwAyIDEwOiUtR25Fxf90tQHH8T562esIIZO+dNcQP7zJGtE7BLKlQSSapZC
-	 9oMmpwmtWMYHQFF81YGBwPUwY9RltK3GS7XQkvgfNB/4wjfg2km6k09sqTEkBmMhTs
-	 iJnnOMXS96RV6jvGFZgnNVG77LLVRrTCb/N8zi60=
+	b=MY0Dz40Me55s4kl38JbaQUGy0STWOV90DGhirAlHCcmK1NljGoeLHVnJfu1L5XJDU
+	 OdBFdVl796QUki9pgmcpNPwFotQ3UgzhEKIJEWur4SdO6dMcENWBZUQt9wMcz1B1Er
+	 XuwZIWn7e/oEyKfFrCbN5i7KAX/iNzIHncRA2D7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/341] bonding: fix xfrm state handling when clearing active slave
-Date: Tue, 27 Aug 2024 16:38:10 +0200
-Message-ID: <20240827143853.261233382@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.6 260/341] ice: fix page reuse when PAGE_SIZE is over 8k
+Date: Tue, 27 Aug 2024 16:38:11 +0200
+Message-ID: <20240827143853.298277245@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,41 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit c4c5c5d2ef40a9f67a9241dc5422eac9ffe19547 ]
+[ Upstream commit 50b2143356e888777fc5bca023c39f34f404613a ]
 
-If the active slave is cleared manually the xfrm state is not flushed.
-This leads to xfrm add/del imbalance and adding the same state multiple
-times. For example when the device cannot handle anymore states we get:
- [ 1169.884811] bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
-because it's filled with the same state after multiple active slave
-clearings. This change also has a few nice side effects: user-space
-gets a notification for the change, the old device gets its mac address
-and promisc/mcast adjusted properly.
+Architectures that have PAGE_SIZE >= 8192 such as arm64 should act the
+same as x86 currently, meaning reuse of a page should only take place
+when no one else is busy with it.
 
-Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Do two things independently of underlying PAGE_SIZE:
+- store the page count under ice_rx_buf::pgcnt
+- then act upon its value vs ice_rx_buf::pagecnt_bias when making the
+  decision regarding page reuse
+
+Fixes: 2b245cb29421 ("ice: Implement transmit and NAPI support")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_options.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index 00a662f8edd6b..d1208d058eea1 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -920,7 +920,7 @@ static int bond_option_active_slave_set(struct bonding *bond,
- 	/* check to see if we are clearing active */
- 	if (!slave_dev) {
- 		netdev_dbg(bond->dev, "Clearing current active slave\n");
--		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
-+		bond_change_active_slave(bond, NULL);
- 		bond_select_active_slave(bond);
- 	} else {
- 		struct slave *old_active = rtnl_dereference(bond->curr_active_slave);
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 49b1fa9651161..8e53195df2b1c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -834,16 +834,15 @@ ice_can_reuse_rx_page(struct ice_rx_buf *rx_buf)
+ 	if (!dev_page_is_reusable(page))
+ 		return false;
+ 
+-#if (PAGE_SIZE < 8192)
+ 	/* if we are only owner of page we can reuse it */
+ 	if (unlikely(rx_buf->pgcnt - pagecnt_bias > 1))
+ 		return false;
+-#else
++#if (PAGE_SIZE >= 8192)
+ #define ICE_LAST_OFFSET \
+ 	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_2048)
+ 	if (rx_buf->page_offset > ICE_LAST_OFFSET)
+ 		return false;
+-#endif /* PAGE_SIZE < 8192) */
++#endif /* PAGE_SIZE >= 8192) */
+ 
+ 	/* If we have drained the page fragment pool we need to update
+ 	 * the pagecnt_bias and page count so that we fully restock the
+@@ -946,12 +945,7 @@ ice_get_rx_buf(struct ice_rx_ring *rx_ring, const unsigned int size,
+ 	struct ice_rx_buf *rx_buf;
+ 
+ 	rx_buf = &rx_ring->rx_buf[ntc];
+-	rx_buf->pgcnt =
+-#if (PAGE_SIZE < 8192)
+-		page_count(rx_buf->page);
+-#else
+-		0;
+-#endif
++	rx_buf->pgcnt = page_count(rx_buf->page);
+ 	prefetchw(rx_buf->page);
+ 
+ 	if (!size)
 -- 
 2.43.0
 
