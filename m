@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A2D1C4603;
-	Tue, 27 Aug 2024 15:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9302D1C4603;
+	Tue, 27 Aug 2024 15:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771285; cv=none; b=e5/lVI6VOQDeikW7ETADdZZdaB0OmMbu4jT8BsHJ8bbPQlqAwtcNI5PZ38XPoe9zj1NRMC359JH///CwK6RDRDDhLgAgFK7CESX5GlOvTcFtAW/5Ljz7/qq0/batsh1RN0ZsE7pMm8j3YZVrSkbJtS3ZhX2AAmV0fljvJt3P5c4=
+	t=1724771288; cv=none; b=RkMPUxISECFAu52wpJUOFF41olRFpofZpShAppSd8iA3Wx9v9JnfIw/U+lZi2q20awTCzOh9Uw85a0Aie+DfWiqx5kxpgqUspUvsaXwubm103FFcxP3h45t3gTywiAAg5iCHICnnuhE1oFS4xKMqDcL2L3PgZ+84hhvrskc3efY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771285; c=relaxed/simple;
-	bh=Xz0ugJlz+TlxT71gsJSTlh9PspqV5yxanuYOeGNz4AU=;
+	s=arc-20240116; t=1724771288; c=relaxed/simple;
+	bh=HFck/GUtvPPD1UZK01PQl2Ib2QX3uxl28CkrCqCfOlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WU9Wh/hAZlwmyhJZch0oQwNw2DxXTj4eI25D8M00tzl795hecXVjT5jFWH46xxN5OtF3PMEzn4Gh84y+9spNtZDLapX+nR/fr4od+ump5AXjYlBSM06PVAgYDBAtANlB1d1sK6wBUOro0FuZwT5XjKyV7vgN2SDcWqjsI1ty5L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oftFSZxR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJblap137FH8fmEbi39UxcKKL41vXanDj2RzEZjp0D3IjD/gIr2WrmffsKIyYCAjpp6ufuWs94+T2I6WCIZ05gni49lV1e0mODwNa8jwjqz0MqsTmgTgKcpzuz/aUU8WezG0jXCrk57XscwPe0qyipKl1qCZQrMgGqA1tpj1RcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAXReP/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oftFSZxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F06C61074;
-	Tue, 27 Aug 2024 15:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAXReP/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11523C61074;
+	Tue, 27 Aug 2024 15:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771285;
-	bh=Xz0ugJlz+TlxT71gsJSTlh9PspqV5yxanuYOeGNz4AU=;
+	s=korg; t=1724771288;
+	bh=HFck/GUtvPPD1UZK01PQl2Ib2QX3uxl28CkrCqCfOlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oftFSZxRSd7zWrK7WhZheRAPHeepz7YIqpN56W8Hxdvit7vxgA9kETywxFMhsGPyP
-	 Pc6VkuR7jLH1WN7bZAKFbb8CLOo3e/bEcgIMW9x/g4eREiN9ecLF1s14mZk3AUz0Y4
-	 vTcoF172mMBgpUlglZn9bft5PaFghUfqsIuDVOGw=
+	b=UAXReP/BBWEf55NEiaSv+RbaWJIhVnbOiiAcdHZ+jNH+CvXQrDtN7XkqrBX1FhVYr
+	 EMB0xw5Ui4oe4MEacqJ2zkqea5b3yVx6mEDmV93KdtuT9wftUMZRoM5+GvGSwfTyp1
+	 e6HvUw3IVLGNZdCNSTyEx3D7T2L5NKRqjfAZG9gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Su Hui <suhui@nfschina.com>,
-	Steve French <stfrench@microsoft.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 143/273] smb/client: avoid possible NULL dereference in cifs_free_subrequest()
-Date: Tue, 27 Aug 2024 16:37:47 +0200
-Message-ID: <20240827143838.849466058@linuxfoundation.org>
+Subject: [PATCH 6.10 144/273] dm suspend: return -ERESTARTSYS instead of -EINTR
+Date: Tue, 27 Aug 2024 16:37:48 +0200
+Message-ID: <20240827143838.887280167@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,60 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 74c2ab6d653b4c2354df65a7f7f2df1925a40a51 ]
+[ Upstream commit 1e1fd567d32fcf7544c6e09e0e5bc6c650da6e23 ]
 
-Clang static checker (scan-build) warning:
-	cifsglob.h:line 890, column 3
-	Access to field 'ops' results in a dereference of a null pointer.
+This commit changes device mapper, so that it returns -ERESTARTSYS
+instead of -EINTR when it is interrupted by a signal (so that the ioctl
+can be restarted).
 
-Commit 519be989717c ("cifs: Add a tracepoint to track credits involved in
-R/W requests") adds a check for 'rdata->server', and let clang throw this
-warning about NULL dereference.
+The manpage signal(7) says that the ioctl function should be restarted if
+the signal was handled with SA_RESTART.
 
-When 'rdata->credits.value != 0 && rdata->server == NULL' happens,
-add_credits_and_wake_if() will call rdata->server->ops->add_credits().
-This will cause NULL dereference problem. Add a check for 'rdata->server'
-to avoid NULL dereference.
-
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 69c3c023af25 ("cifs: Implement netfslib hooks")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/file.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/md/dm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index b413cfef05422..1fc66bcf49eb4 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -316,7 +316,7 @@ static void cifs_free_subrequest(struct netfs_io_subrequest *subreq)
- #endif
- 	}
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 13037d6a6f62a..6e15ac4e0845c 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2594,7 +2594,7 @@ static int dm_wait_for_bios_completion(struct mapped_device *md, unsigned int ta
+ 			break;
  
--	if (rdata->credits.value != 0)
-+	if (rdata->credits.value != 0) {
- 		trace_smb3_rw_credits(rdata->rreq->debug_id,
- 				      rdata->subreq.debug_index,
- 				      rdata->credits.value,
-@@ -324,8 +324,12 @@ static void cifs_free_subrequest(struct netfs_io_subrequest *subreq)
- 				      rdata->server ? rdata->server->in_flight : 0,
- 				      -rdata->credits.value,
- 				      cifs_trace_rw_credits_free_subreq);
-+		if (rdata->server)
-+			add_credits_and_wake_if(rdata->server, &rdata->credits, 0);
-+		else
-+			rdata->credits.value = 0;
-+	}
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
  
--	add_credits_and_wake_if(rdata->server, &rdata->credits, 0);
- 	if (rdata->have_xid)
- 		free_xid(rdata->xid);
- }
+@@ -2619,7 +2619,7 @@ static int dm_wait_for_completion(struct mapped_device *md, unsigned int task_st
+ 			break;
+ 
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
+ 
 -- 
 2.43.0
 
