@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A361C4EF6;
-	Tue, 27 Aug 2024 14:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D048D19F485;
+	Tue, 27 Aug 2024 14:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770471; cv=none; b=ovah564StdMAPfvjOrbOHs/fzMUjpGVc09xmJJqwmj+F1B1RHoUQjfAxkAS3j0YxW6c9X/Q1Uv8Uq4pJdY23mpKoGGuKtqCkm98cogpmwSTriRrSaKzOAb0jMRs+qA8PCOr+oGYkfBpfAW94XdLV5EgLWvkAbsk0ucRhSgcOGxE=
+	t=1724770474; cv=none; b=Xbd53AVhzHPxr17PH3ZjzbJ/Yidf+O2tbh0y4xNd7U9SaykdJsed879FtQioNMLBnJf8CfZqag+bRI/DIPwwJk2B/IDgFUIenlFzBdT1oSV84TbVVe1kJ97hzmPbs4G4eK6DENuL9X7B8p9oCsh1pKUSIbUXQ7sRB9OSvadDhxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770471; c=relaxed/simple;
-	bh=k8w3YW3xhErvruaDt7ZwTcYrLbwYYBoP3SCU3N307XE=;
+	s=arc-20240116; t=1724770474; c=relaxed/simple;
+	bh=Rj/i1w5rYgN23w9s7ficaAzG/ykTcfcGFxDCWb6MRD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPoBl59WZM2GEiBjxJvw+JSCh7xT84M9dorynDxtvIcW3QGkRlHYudkJw3vdiN9kot4XA/GclQ8EaerW6v3voDjqBCkNyg4ECmonyWYlgu/Ezw1O/fmBEDR0G8W+8swIRaN34QEUMzukKA7FKuV8KaQpIUmnSMCcSxlS862vkeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqOP69J7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlqMG2RNXfGuhUjYPImsbgFm9vyVCgppEv6ckb/yXZQC6d881ngO1xNc/K70DZPWdwUW2GeTFw0Fk2K5k5dBgicO+uLQ3B3sR4tKQZHFUXm4HCONSanZPXywzSkMqgXsI5VrrQAraRm78OlPlTs/GXXx2IDA3oXfi8j+Vnk/oGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvX4Pl9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqOP69J7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91177C4E675;
-	Tue, 27 Aug 2024 14:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvX4Pl9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06805C4E675;
+	Tue, 27 Aug 2024 14:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770471;
-	bh=k8w3YW3xhErvruaDt7ZwTcYrLbwYYBoP3SCU3N307XE=;
+	s=korg; t=1724770474;
+	bh=Rj/i1w5rYgN23w9s7ficaAzG/ykTcfcGFxDCWb6MRD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PqOP69J7r46XnCl6/9pl3BTqkC768EsGfn3x46Ohs1d/V0IrMEuVmX2/UpxaiK0U/
-	 0rtVYpEWIl/vOe4xg8/a2wsnEtN0PWrujHSe6tJQNpCBHj16QpH0OL/o6Ep1sUZ0Eu
-	 25NPLpIg3ZXEyDfol0RNzr7wxE8zLWvq5gKKEK6k=
+	b=KvX4Pl9ULBo+dZJCMHeUn8Xq4cxKUd4cSKS0Qo8hzQCMw8gvTdo4dn8BF9i6863A/
+	 mvzAzat+Txs8YjOLnoIsN3TCJ5h5GXzb3x9uF09yefkaakmgvK2KapKDI2gsZavXb8
+	 Z9Kf11bR1LuTvpOKB8wkSk3FZsCma6a2j9MWqDWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Harald Welte <laforge@gnumonks.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 221/341] gtp: pull network headers in gtp_dev_xmit()
-Date: Tue, 27 Aug 2024 16:37:32 +0200
-Message-ID: <20240827143851.822421970@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 239/341] ALSA: hda/tas2781: Use correct endian conversion
+Date: Tue, 27 Aug 2024 16:37:50 +0200
+Message-ID: <20240827143852.504015146@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,93 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 3a3be7ff9224f424e485287b54be00d2c6bd9c40 upstream.
+[ Upstream commit 829e2a23121fb36ee30ea5145c2a85199f68e2c8 ]
 
-syzbot/KMSAN reported use of uninit-value in get_dev_xmit() [1]
+The data conversion is done rather by a wrong function.  We convert to
+BE32, not from BE32.  Although the end result must be same, this was
+complained by the compiler.
 
-We must make sure the IPv4 or Ipv6 header is pulled in skb->head
-before accessing fields in them.
+Fix the code again and align with another similar function
+tas2563_apply_calib() that does already right.
 
-Use pskb_inet_may_pull() to fix this issue.
-
-[1]
-BUG: KMSAN: uninit-value in ipv6_pdp_find drivers/net/gtp.c:220 [inline]
- BUG: KMSAN: uninit-value in gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
- BUG: KMSAN: uninit-value in gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
-  ipv6_pdp_find drivers/net/gtp.c:220 [inline]
-  gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
-  gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
-  __netdev_start_xmit include/linux/netdevice.h:4913 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4922 [inline]
-  xmit_one net/core/dev.c:3580 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3596
-  __dev_queue_xmit+0x358c/0x5610 net/core/dev.c:4423
-  dev_queue_xmit include/linux/netdevice.h:3105 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3145 [inline]
-  packet_sendmsg+0x90e3/0xa3a0 net/packet/af_packet.c:3177
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2204
-  __do_sys_sendto net/socket.c:2216 [inline]
-  __se_sys_sendto net/socket.c:2212 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
-  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3994 [inline]
-  slab_alloc_node mm/slub.c:4037 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4080
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:583
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:674
-  alloc_skb include/linux/skbuff.h:1320 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6526
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2815
-  packet_alloc_skb net/packet/af_packet.c:2994 [inline]
-  packet_snd net/packet/af_packet.c:3088 [inline]
-  packet_sendmsg+0x749c/0xa3a0 net/packet/af_packet.c:3177
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2204
-  __do_sys_sendto net/socket.c:2216 [inline]
-  __se_sys_sendto net/socket.c:2212 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
-  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 0 UID: 0 PID: 7115 Comm: syz.1.515 Not tainted 6.11.0-rc1-syzkaller-00043-g94ede2a3e913 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-
-Fixes: 999cb275c807 ("gtp: add IPv6 support")
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Harald Welte <laforge@gnumonks.org>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/20240808132455.3413916-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3beddef84d90 ("ALSA: hda/tas2781: fix wrong calibrated data order")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408141630.DiDUB8Z4-lkp@intel.com/
+Link: https://patch.msgid.link/20240814100500.1944-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/tas2781_hda_i2c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -901,6 +901,9 @@ static netdev_tx_t gtp_dev_xmit(struct s
- 	if (skb_cow_head(skb, dev->needed_headroom))
- 		goto tx_err;
+diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
+index 74d603524fbdb..e5bb1fed26a0c 100644
+--- a/sound/pci/hda/tas2781_hda_i2c.c
++++ b/sound/pci/hda/tas2781_hda_i2c.c
+@@ -433,8 +433,8 @@ static void tas2781_apply_calib(struct tasdevice_priv *tas_priv)
  
-+	if (!pskb_inet_may_pull(skb))
-+		goto tx_err;
-+
- 	skb_reset_inner_headers(skb);
- 
- 	/* PDP context lookups in gtp_build_skb_*() need rcu read-side lock. */
+ 	for (i = 0; i < tas_priv->ndev; i++) {
+ 		for (j = 0; j < CALIB_MAX; j++) {
+-			data = get_unaligned_be32(
+-				&tas_priv->cali_data.data[offset]);
++			data = cpu_to_be32(
++				*(uint32_t *)&tas_priv->cali_data.data[offset]);
+ 			rc = tasdevice_dev_bulk_write(tas_priv, i,
+ 				TASDEVICE_REG(0, page_array[j], rgno_array[j]),
+ 				(unsigned char *)&data, 4);
+-- 
+2.43.0
+
 
 
