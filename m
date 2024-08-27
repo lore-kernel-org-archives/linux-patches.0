@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6803B17C96;
-	Tue, 27 Aug 2024 15:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FF217C96;
+	Tue, 27 Aug 2024 15:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771771; cv=none; b=d7aWzIaZ7tvUYS/v2fF2WUPZ3VB3R9Ax4W8C4CZRj0otTkpeom0o7LHcCYtug7ACFrwmvVtgggQcb833zzxletPxn+C1OUEcvSP60YmJ5KqAdGYE0bQV+YZrTRxPpWRBeX8YxqlIjB8uHY8oUa/xm8UA9nc3w31omDz37R1OsNo=
+	t=1724771774; cv=none; b=SseNdDj03I+wFaquF+rgSpMNetc3frmU5z60Aq9lgFxP4z60wH65ZS3MlOD2IeANFT5o7WLzuyq9hb/dyFQbCp1WQVAvATiUlVcoHFi8v5xkZaOPV3JZRxMkE+kEfec5FhBxbkFAMF/50TXxiIjR7tJWKri11f05sSClPTTyIjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771771; c=relaxed/simple;
-	bh=MjdOwlu8k2m4tMYjc+i3XWkigAF/Oq+43C9dJ8bKPFk=;
+	s=arc-20240116; t=1724771774; c=relaxed/simple;
+	bh=J3JqaYUmku/fDUUtbys62J4TkEIa3WvzuhcGUMCUHKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hh6TC409AfOhRSDCWsVwC/TSFF0cBc8ORkuvRuPhE4HCl0IyItkCwlSVTXLCcUlsV9bsSOILYObiqEgH0I0X1S1Qv5TVvC95ApG3v7nw5Uzx0cB1VxnAk1fx5DsnxF5XTZHhtRvk3bCOGY1q6DDqXI/apS5Ac7/hmRBAmpUbzzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfFAcVpz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/lZhl31S8blEq2cXyI9GZjD1AUSnTbZP9RY90hOA5gHzuQa94AkIz2Sv/gi8hTWuMb9/F4d9ELQUoQUPQqPqzxQmyH3jO/lR4v/pXZZl3h1bgC+3QqBzwjHYiXLUt2olmNnFJr/UW4npiYaXyr66O+vwq6DvLizK+Lvd4M4n2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8vQgcHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfFAcVpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0CFC4AF50;
-	Tue, 27 Aug 2024 15:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8vQgcHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A5C4AF50;
+	Tue, 27 Aug 2024 15:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771771;
-	bh=MjdOwlu8k2m4tMYjc+i3XWkigAF/Oq+43C9dJ8bKPFk=;
+	s=korg; t=1724771774;
+	bh=J3JqaYUmku/fDUUtbys62J4TkEIa3WvzuhcGUMCUHKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfFAcVpzaPCN1abBZ3rcJvDSFlHx91SHe6PY0cMqVlo/GXM/BoP5u8L9eiyMaPB+m
-	 gqzXq7gJYOu1Nql49aWqTu8FVvVd2dnDi/B/6RAyj1HTgeJMXoFelK4C3+QDmf2kBK
-	 wsMfWTEpeO7ksKKu0TLYXk86u6Fup7SjCaoynksA=
+	b=D8vQgcHn3PNqXrNjhkX8m2Jaup5cDvtCzMEggZ00py+INR0mszLpt6bON9dRP/Fts
+	 z6l4iDeSsUgwm+W6CE3J5nep86xqaAQmSwHaNVSgNfuomJ9FcdEVAL2q2F8fbj5hER
+	 ZP0Rnmr1+jWlCNjVKkn8T0qyDUumxrT+pdtgOCzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Yury Norov <yury.norov@gmail.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
 	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 016/321] fs/ntfs3: add prefix to bitmap_size() and use BITS_TO_U64()
-Date: Tue, 27 Aug 2024 16:35:24 +0200
-Message-ID: <20240827143838.824478241@linuxfoundation.org>
+Subject: [PATCH 6.1 017/321] s390/cio: rename bitmap_size() -> idset_bitmap_size()
+Date: Tue, 27 Aug 2024 16:35:25 +0200
+Message-ID: <20240827143838.863519171@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -54,118 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-commit 3f5ef5109f6a054ce58b3bec7214ed76c9cc269f upstream.
+commit c1023f5634b9bfcbfff0dc200245309e3cde9b54 upstream.
 
 bitmap_size() is a pretty generic name and one may want to use it for
-a generic bitmap API function. At the same time, its logic is
-NTFS-specific, as it aligns to the sizeof(u64), not the sizeof(long)
-(although it uses ideologically right ALIGN() instead of division).
-Add the prefix 'ntfs3_' used for that FS (not just 'ntfs_' to not mix
-it with the legacy module) and use generic BITS_TO_U64() while at it.
+a generic bitmap API function. At the same time, its logic is not
+"generic", i.e. it's not just `nbits -> size of bitmap in bytes`
+converter as it would be expected from its name.
+Add the prefix 'idset_' used throughout the file where the function
+resides.
 
-Suggested-by: Yury Norov <yury.norov@gmail.com> # BITS_TO_U64()
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Yury Norov <yury.norov@gmail.com>
+Acked-by: Peter Oberparleiter <oberpar@linux.ibm.com>
 Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/bitmap.c  |    4 ++--
- fs/ntfs3/fsntfs.c  |    2 +-
- fs/ntfs3/index.c   |   11 ++++++-----
- fs/ntfs3/ntfs_fs.h |    4 ++--
- fs/ntfs3/super.c   |    2 +-
- 5 files changed, 12 insertions(+), 11 deletions(-)
+ drivers/s390/cio/idset.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/ntfs3/bitmap.c
-+++ b/fs/ntfs3/bitmap.c
-@@ -656,7 +656,7 @@ int wnd_init(struct wnd_bitmap *wnd, str
- 	wnd->total_zeroes = nbits;
- 	wnd->extent_max = MINUS_ONE_T;
- 	wnd->zone_bit = wnd->zone_end = 0;
--	wnd->nwnd = bytes_to_block(sb, bitmap_size(nbits));
-+	wnd->nwnd = bytes_to_block(sb, ntfs3_bitmap_size(nbits));
- 	wnd->bits_last = nbits & (wbits - 1);
- 	if (!wnd->bits_last)
- 		wnd->bits_last = wbits;
-@@ -1320,7 +1320,7 @@ int wnd_extend(struct wnd_bitmap *wnd, s
- 		return -EINVAL;
+--- a/drivers/s390/cio/idset.c
++++ b/drivers/s390/cio/idset.c
+@@ -16,7 +16,7 @@ struct idset {
+ 	unsigned long bitmap[];
+ };
  
- 	/* Align to 8 byte boundary. */
--	new_wnd = bytes_to_block(sb, bitmap_size(new_bits));
-+	new_wnd = bytes_to_block(sb, ntfs3_bitmap_size(new_bits));
- 	new_last = new_bits & (wbits - 1);
- 	if (!new_last)
- 		new_last = wbits;
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -493,7 +493,7 @@ static int ntfs_extend_mft(struct ntfs_s
- 	ni->mi.dirty = true;
- 
- 	/* Step 2: Resize $MFT::BITMAP. */
--	new_bitmap_bytes = bitmap_size(new_mft_total);
-+	new_bitmap_bytes = ntfs3_bitmap_size(new_mft_total);
- 
- 	err = attr_set_size(ni, ATTR_BITMAP, NULL, 0, &sbi->mft.bitmap.run,
- 			    new_bitmap_bytes, &new_bitmap_bytes, true, NULL);
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1454,8 +1454,8 @@ static int indx_create_allocate(struct n
- 
- 	alloc->nres.valid_size = alloc->nres.data_size = cpu_to_le64(data_size);
- 
--	err = ni_insert_resident(ni, bitmap_size(1), ATTR_BITMAP, in->name,
--				 in->name_len, &bitmap, NULL, NULL);
-+	err = ni_insert_resident(ni, ntfs3_bitmap_size(1), ATTR_BITMAP,
-+				 in->name, in->name_len, &bitmap, NULL, NULL);
- 	if (err)
- 		goto out2;
- 
-@@ -1516,8 +1516,9 @@ static int indx_add_allocate(struct ntfs
- 	if (bmp) {
- 		/* Increase bitmap. */
- 		err = attr_set_size(ni, ATTR_BITMAP, in->name, in->name_len,
--				    &indx->bitmap_run, bitmap_size(bit + 1),
--				    NULL, true, NULL);
-+				    &indx->bitmap_run,
-+				    ntfs3_bitmap_size(bit + 1), NULL, true,
-+				    NULL);
- 		if (err)
- 			goto out1;
- 	}
-@@ -2080,7 +2081,7 @@ static int indx_shrink(struct ntfs_index
- 	if (err)
- 		return err;
- 
--	bpb = bitmap_size(bit);
-+	bpb = ntfs3_bitmap_size(bit);
- 	if (bpb * 8 == nbits)
- 		return 0;
- 
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -951,9 +951,9 @@ static inline bool run_is_empty(struct r
- }
- 
- /* NTFS uses quad aligned bitmaps. */
--static inline size_t bitmap_size(size_t bits)
-+static inline size_t ntfs3_bitmap_size(size_t bits)
+-static inline unsigned long bitmap_size(int num_ssid, int num_id)
++static inline unsigned long idset_bitmap_size(int num_ssid, int num_id)
  {
--	return ALIGN((bits + 7) >> 3, 8);
-+	return BITS_TO_U64(bits) * sizeof(u64);
+ 	return BITS_TO_LONGS(num_ssid * num_id) * sizeof(unsigned long);
+ }
+@@ -25,11 +25,12 @@ static struct idset *idset_new(int num_s
+ {
+ 	struct idset *set;
+ 
+-	set = vmalloc(sizeof(struct idset) + bitmap_size(num_ssid, num_id));
++	set = vmalloc(sizeof(struct idset) +
++		      idset_bitmap_size(num_ssid, num_id));
+ 	if (set) {
+ 		set->num_ssid = num_ssid;
+ 		set->num_id = num_id;
+-		memset(set->bitmap, 0, bitmap_size(num_ssid, num_id));
++		memset(set->bitmap, 0, idset_bitmap_size(num_ssid, num_id));
+ 	}
+ 	return set;
+ }
+@@ -41,7 +42,8 @@ void idset_free(struct idset *set)
+ 
+ void idset_fill(struct idset *set)
+ {
+-	memset(set->bitmap, 0xff, bitmap_size(set->num_ssid, set->num_id));
++	memset(set->bitmap, 0xff,
++	       idset_bitmap_size(set->num_ssid, set->num_id));
  }
  
- #define _100ns2seconds 10000000
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1108,7 +1108,7 @@ static int ntfs_fill_super(struct super_
- 
- 	/* Check bitmap boundary. */
- 	tt = sbi->used.bitmap.nbits;
--	if (inode->i_size < bitmap_size(tt)) {
-+	if (inode->i_size < ntfs3_bitmap_size(tt)) {
- 		err = -EINVAL;
- 		goto put_inode_out;
- 	}
+ static inline void idset_add(struct idset *set, int ssid, int id)
 
 
