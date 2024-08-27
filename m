@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABD71C3F17;
-	Tue, 27 Aug 2024 15:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4FD1C7B9D;
+	Tue, 27 Aug 2024 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772280; cv=none; b=TBWgz32QCwDh29U2voD4p1q6ft7SyaBRYRtrAy+n/3mXxUs+neMewyjB5GvRHwA3tzrYpgTwJnhKq/zdyLq0/4G/ejZKB+QvgH4sxPX467+9upO/hOkUTZsgokQZ/+sourpUkRLyd5v7GgMtiSyKKg2AdWDxW+VmVb5rk54Ogqs=
+	t=1724772284; cv=none; b=VwUg6/q3zu4dcHZlzz9amrNQBMTPt3zwFFEk+igUBsRn4LuqURGNZX+uBG3yx5SmjAyQHJTzGbEsz6xkC1mSLIR7fuKhHirKvbY+euy00i9q9ofbeW3o55eocxaoQuq1N5yX3uyUNcyCEs3zLQUUhktF9uoBUdpAKesPS3/+Wa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772280; c=relaxed/simple;
-	bh=k2W7/NPAGDIL0W9L4n/PnF8fF1QfnNi2rc8f8D1CMes=;
+	s=arc-20240116; t=1724772284; c=relaxed/simple;
+	bh=iteDeW351vigif8/yifKPU6DLf7GxweLG2l8ILaUqAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=donNn+jj9/ARHdZDO2oxx2k99v3MJmSw32hATuWhY1mSWTIHZYOfqL4F4zZt2ATr5UY0PwOjWftM4z1pllQpRt2GOHvv5mvvShBqqEMRnDBFq5lXOeSU2H5RyX85JVgknc5MgWVsFCzxM2QsCI9WLmDEclwkMFfqAeYye/eevak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ispyz4dE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYixckgtldgrVEdU9GPQPYIAWIgOR/XkV8/BpKyRvBYX6fwClR4NiiareK6KfXZBRfZL2K0W5Kxa0FmTLplFqThzHcKChMaaYFuqzft/omn2VuTf9/ymzfgaYxBmdTDCAwAL8vSLmz23Zyyxop4EwrBtRO0XtgQq6a7Eyer3zAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sV8JS2Cp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ispyz4dE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A793C61071;
-	Tue, 27 Aug 2024 15:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sV8JS2Cp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869D6C6107C;
+	Tue, 27 Aug 2024 15:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772280;
-	bh=k2W7/NPAGDIL0W9L4n/PnF8fF1QfnNi2rc8f8D1CMes=;
+	s=korg; t=1724772284;
+	bh=iteDeW351vigif8/yifKPU6DLf7GxweLG2l8ILaUqAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ispyz4dEKn8pKcAda9Jm8nC2HfHCmHhC06aM4FUWr0eZ0oiy2Ep10qkg5nQr2Gx5m
-	 LtNZVBdTwS8GJUiV1p7p84IMDLtxniFrB1J30f1NrZ+EQVAoGq5t9EXRfEZiKB+3qR
-	 4gkuKlOe0pa2WGcICia+J+ietBS/pmmxNuJEgqJ4=
+	b=sV8JS2CpgNNe38BdakzCtR64+obeO+5PCc+gueOHdeyqxB4PgOs+2IDFsnx4YZiYp
+	 b2e8D2aB4yLh5WhC+RTODyMqwtXDZwssM2ZpwTX5AGlIbUqp6xoYSEhIM2+9xNC83v
+	 6X0dRG8+C8WYyPIp+yEClUAWpt/SS5rly1DJjAtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Martin Wilck <mwilck@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 136/321] scsi: spi: Fix sshdr use
-Date: Tue, 27 Aug 2024 16:37:24 +0200
-Message-ID: <20240827143843.421154011@linuxfoundation.org>
+Subject: [PATCH 6.1 137/321] gfs2: setattr_chown: Add missing initialization
+Date: Tue, 27 Aug 2024 16:37:25 +0200
+Message-ID: <20240827143843.458463623@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -54,43 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 0b149cee836aa53989ea089af1cb9d90d7c6ac9e ]
+[ Upstream commit 2d8d7990619878a848b1d916c2f936d3012ee17d ]
 
-If scsi_execute_cmd returns < 0, it doesn't initialize the sshdr, so we
-shouldn't access the sshdr. If it returns 0, then the cmd executed
-successfully, so there is no need to check the sshdr. This has us access
-the sshdr when we get a return value > 0.
+Add a missing initialization of variable ap in setattr_chown().
+Without, chown() may be able to bypass quotas.
 
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20231004210013.5601-7-michael.christie@oracle.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin Wilck <mwilck@suse.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_spi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/gfs2/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_transport_spi.c b/drivers/scsi/scsi_transport_spi.c
-index f569cf0095c28..a95a35635c333 100644
---- a/drivers/scsi/scsi_transport_spi.c
-+++ b/drivers/scsi/scsi_transport_spi.c
-@@ -677,10 +677,10 @@ spi_dv_device_echo_buffer(struct scsi_device *sdev, u8 *buffer,
- 	for (r = 0; r < retries; r++) {
- 		result = spi_execute(sdev, spi_write_buffer, DMA_TO_DEVICE,
- 				     buffer, len, &sshdr);
--		if(result || !scsi_device_online(sdev)) {
-+		if (result || !scsi_device_online(sdev)) {
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 23e6962cdd6e3..04fc3e72a96e4 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1907,7 +1907,7 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
+ 	kuid_t ouid, nuid;
+ 	kgid_t ogid, ngid;
+ 	int error;
+-	struct gfs2_alloc_parms ap;
++	struct gfs2_alloc_parms ap = {};
  
- 			scsi_device_set_state(sdev, SDEV_QUIESCE);
--			if (scsi_sense_valid(&sshdr)
-+			if (result > 0 && scsi_sense_valid(&sshdr)
- 			    && sshdr.sense_key == ILLEGAL_REQUEST
- 			    /* INVALID FIELD IN CDB */
- 			    && sshdr.asc == 0x24 && sshdr.ascq == 0x00)
+ 	ouid = inode->i_uid;
+ 	ogid = inode->i_gid;
 -- 
 2.43.0
 
