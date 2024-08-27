@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687021C57B3;
-	Tue, 27 Aug 2024 14:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBFA1A072D;
+	Tue, 27 Aug 2024 14:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770033; cv=none; b=A5d+je/xaUEaUDPaB5CHcnl2GnfZpkcvyhfTYuwY6IdA7mKtechVBDUCpVwbTzQpTO+U642/t7qfAus8J0WAOdX4mO7xu3C63ruYaBS+0v+bFDPljUwonY6k1sV0IgfovQAYp+f2p+rUp9ygseQVsrwRfElIvDK7K/1q/hXww5o=
+	t=1724770036; cv=none; b=qd9qqFrzVmhad+ZfI1sSMuZs3M4xbV5aa2s31fv/pv9JCbjnTNrFWQO+0Z25InUDPARm0CYimARvAyKNQjFLUKcE+niFLZqZ8gwvetMYCbYD9/e+UlnKQIX3uowk7Zv1v8d2YWdOhsuagYL1Ebk9tECmREJYIGMUZmTYSXtGv5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770033; c=relaxed/simple;
-	bh=cGZ09dkFccZNW4A8hH6WX7I/0OXijXZuOL6ozEkhKeM=;
+	s=arc-20240116; t=1724770036; c=relaxed/simple;
+	bh=TtZGVnd0c5S3ScyYyC499UDRCHul+OF9eGQFUOpYV/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qg+4l5nxfqaSfS6MD9Lkk98KwqGMAJHadimHugdKfhO89FWLQsPfHt8Dkr9VeWH4U1MQGfVpkzIVjGMj5PgVLnAuDFv4uAIIh9+VCKVHrc4sOXwD+T170utXIPCDPifgKH3ldrRnU2hVZLOr8RTSv/CcEj8cXeiOSVJCx15pYZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3by+0Vh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUY2/tej1CCvOmvhtuBMp8JQ8X+dGc5qTgSILcz0g4Tr3QGscmiPeZvBI66ilHAtKSe/k+srpRnyM9I/XSB9YfmOJrvbzDf/GOvwR26ENUpvYh6+Y3+wsyF1W6EgfIWMamui822/BbTc6/9txh14bcTZny/UjYQz6YsKcyJk4Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2l0IGNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3by+0Vh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4CA3C4AF11;
-	Tue, 27 Aug 2024 14:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2l0IGNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9E9C4AF12;
+	Tue, 27 Aug 2024 14:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770033;
-	bh=cGZ09dkFccZNW4A8hH6WX7I/0OXijXZuOL6ozEkhKeM=;
+	s=korg; t=1724770036;
+	bh=TtZGVnd0c5S3ScyYyC499UDRCHul+OF9eGQFUOpYV/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V3by+0VhRqHgaLCXBbTr/VPA0klGYCaVWtFszygcTmksN23chW3CyUpb7kJXBWE22
-	 p1nCqX7fiTx7uNxEvZBEBy3O5KR6+zS2PTECCE8I6ayNu7jmLNTz4mAGOIWbQIOXAw
-	 qdMZEYXae3JhZtsSu+zf/mUFITF+Q+Kz7514p4XA=
+	b=Z2l0IGNoaKwcH7pLd0sczgc5nG1mumZbidR8NlndOeFJwTyUp2AeyYk9PvnFq9gXg
+	 DHIsblj3vseq5fGq64qDqEv+6/wxnrPsf9VOtX30uyi7tKr5a/hVqPM9T3g31UvIu3
+	 5qgCBIQIYWudR1B7Os1sXx2QZwxv9bNSc9eTBxew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/341] wifi: ath11k: fix ath11k_mac_op_remain_on_channel() stack usage
-Date: Tue, 27 Aug 2024 16:35:38 +0200
-Message-ID: <20240827143847.481327133@linuxfoundation.org>
+Subject: [PATCH 6.6 108/341] staging: iio: resolver: ad2s1210: fix use before initialization
+Date: Tue, 27 Aug 2024 16:35:39 +0200
+Message-ID: <20240827143847.520779660@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,104 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 4fd15bb705d3faa7e6adab2daba2e3af80d9b6bd ]
+[ Upstream commit 7fe2d05cee46b1c4d9f1efaeab08cc31a0dfff60 ]
 
-When compiling with clang 16.0.6, I've noticed the following:
+This fixes a use before initialization in ad2s1210_probe(). The
+ad2s1210_setup_gpios() function uses st->sdev but it was being called
+before this field was initialized.
 
-drivers/net/wireless/ath/ath11k/mac.c:8903:12: warning: stack frame
-size (1032) exceeds limit (1024) in 'ath11k_mac_op_remain_on_channel'
-[-Wframe-larger-than]
-static int ath11k_mac_op_remain_on_channel(struct ieee80211_hw *hw,
-           ^
-68/1032 (6.59%) spills, 964/1032 (93.41%) variables
-
-So switch to kzalloc()'ed instance of 'struct scan_req_params' like
-it's done in 'ath11k_mac_op_hw_scan()'. Compile tested only.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230926042906.13725-1-dmantipov@yandex.ru
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20230929-ad2s1210-mainline-v3-2-fa4364281745@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 44 +++++++++++++++------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ drivers/staging/iio/resolver/ad2s1210.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 33f2c189b4d86..4247c0f840a48 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -8910,7 +8910,7 @@ static int ath11k_mac_op_remain_on_channel(struct ieee80211_hw *hw,
- {
- 	struct ath11k *ar = hw->priv;
- 	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
--	struct scan_req_params arg;
-+	struct scan_req_params *arg;
- 	int ret;
- 	u32 scan_time_msec;
+diff --git a/drivers/staging/iio/resolver/ad2s1210.c b/drivers/staging/iio/resolver/ad2s1210.c
+index 06de5823eb8e3..d38c4674cd6d7 100644
+--- a/drivers/staging/iio/resolver/ad2s1210.c
++++ b/drivers/staging/iio/resolver/ad2s1210.c
+@@ -658,9 +658,6 @@ static int ad2s1210_probe(struct spi_device *spi)
+ 	if (!indio_dev)
+ 		return -ENOMEM;
+ 	st = iio_priv(indio_dev);
+-	ret = ad2s1210_setup_gpios(st);
+-	if (ret < 0)
+-		return ret;
  
-@@ -8942,27 +8942,31 @@ static int ath11k_mac_op_remain_on_channel(struct ieee80211_hw *hw,
+ 	spi_set_drvdata(spi, indio_dev);
  
- 	scan_time_msec = ar->hw->wiphy->max_remain_on_channel_duration * 2;
+@@ -671,6 +668,10 @@ static int ad2s1210_probe(struct spi_device *spi)
+ 	st->resolution = 12;
+ 	st->fexcit = AD2S1210_DEF_EXCIT;
  
--	memset(&arg, 0, sizeof(arg));
--	ath11k_wmi_start_scan_init(ar, &arg);
--	arg.num_chan = 1;
--	arg.chan_list = kcalloc(arg.num_chan, sizeof(*arg.chan_list),
--				GFP_KERNEL);
--	if (!arg.chan_list) {
-+	arg = kzalloc(sizeof(*arg), GFP_KERNEL);
-+	if (!arg) {
- 		ret = -ENOMEM;
- 		goto exit;
- 	}
-+	ath11k_wmi_start_scan_init(ar, arg);
-+	arg->num_chan = 1;
-+	arg->chan_list = kcalloc(arg->num_chan, sizeof(*arg->chan_list),
-+				 GFP_KERNEL);
-+	if (!arg->chan_list) {
-+		ret = -ENOMEM;
-+		goto free_arg;
-+	}
- 
--	arg.vdev_id = arvif->vdev_id;
--	arg.scan_id = ATH11K_SCAN_ID;
--	arg.chan_list[0] = chan->center_freq;
--	arg.dwell_time_active = scan_time_msec;
--	arg.dwell_time_passive = scan_time_msec;
--	arg.max_scan_time = scan_time_msec;
--	arg.scan_flags |= WMI_SCAN_FLAG_PASSIVE;
--	arg.scan_flags |= WMI_SCAN_FILTER_PROBE_REQ;
--	arg.burst_duration = duration;
--
--	ret = ath11k_start_scan(ar, &arg);
-+	arg->vdev_id = arvif->vdev_id;
-+	arg->scan_id = ATH11K_SCAN_ID;
-+	arg->chan_list[0] = chan->center_freq;
-+	arg->dwell_time_active = scan_time_msec;
-+	arg->dwell_time_passive = scan_time_msec;
-+	arg->max_scan_time = scan_time_msec;
-+	arg->scan_flags |= WMI_SCAN_FLAG_PASSIVE;
-+	arg->scan_flags |= WMI_SCAN_FILTER_PROBE_REQ;
-+	arg->burst_duration = duration;
++	ret = ad2s1210_setup_gpios(st);
++	if (ret < 0)
++		return ret;
 +
-+	ret = ath11k_start_scan(ar, arg);
- 	if (ret) {
- 		ath11k_warn(ar->ab, "failed to start roc scan: %d\n", ret);
- 
-@@ -8988,7 +8992,9 @@ static int ath11k_mac_op_remain_on_channel(struct ieee80211_hw *hw,
- 	ret = 0;
- 
- free_chan_list:
--	kfree(arg.chan_list);
-+	kfree(arg->chan_list);
-+free_arg:
-+	kfree(arg);
- exit:
- 	mutex_unlock(&ar->conf_mutex);
- 	return ret;
+ 	indio_dev->info = &ad2s1210_info;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->channels = ad2s1210_channels;
 -- 
 2.43.0
 
