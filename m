@@ -1,58 +1,58 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551351D1739
-	for <patches@lists.linux.dev>; Tue, 27 Aug 2024 17:47:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB37E1CDFC4
+	for <patches@lists.linux.dev>; Tue, 27 Aug 2024 18:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724780879; cv=none; b=Cd8sZrBcMb9Xsd2KkpiFM6SQLboRg5U72LwJXDcy/x8r/kA/gxGDF5eo5gNosa9UqWz2hcBqCF/63O7nNerQUfMUT1Q0mUoYIhxrx2t1ZWJe9IcNs+pRzFZNCkvgy6KuFytO7SvyzIk1dhcmoUe8JDaPVWOCOQkEtKZmOhs2FkA=
+	t=1724781783; cv=none; b=huKdFZ49D/WG15g02tNCChKCTuqh0OE9fawwX92Opu1R/fTeIUD3WTtmM0IFAL3D98COL8kLm1kkFVilkBqrjQqtU8rX8j9yErJ3m5u+zlVnlQXv2aTZIuM8oJCOKJlVLikudg4Yd8uP3h0dt0Hev4VmuX6BTyiXHH2igb0QTr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724780879; c=relaxed/simple;
-	bh=dYHoc8tAXja1j/gy+quwz+VAVNvuZkG5hw3yiikQ1eg=;
+	s=arc-20240116; t=1724781783; c=relaxed/simple;
+	bh=uDSRe4+ypz3TK5ICKGKQf7MdUR2fS3TzFqfb5D8FN50=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OB1wfOTCsPQYH0Ci426bO/4mEa1CZ8PJ2+aSjLwDZofMY3vMhAj3VyWyjVNggFGLcf9Bs+t2YUjfoTNbNG6UrExKclH9KGM2thtn89HnF2twoEIvksHHgJbMMHbw3+xzfyD3YHxs0wFferRG6p1hmK86qQQwLqn+1FZI7LdFVy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TzrJi3R0; arc=none smtp.client-ip=209.85.210.171
+	 In-Reply-To:Content-Type; b=l7DbqNqJPqKmLuEZeOiDZWYwd/QkDHyN96t1uF6QcLfu7SpE6+t31nNU1jowcOjNJc/K5KBsjrt7IkjaBRfKO/RJ4BiWWgQIVMLUxYBHVMHD+g3wR8QMmOiUau+hIHWPyKNkwZb7TAquwE7ZGnz6Kv9qNQ1HDmWDCVVqUABMwQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kIg2kg0A; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TzrJi3R0"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-714263cb074so4039533b3a.1
-        for <patches@lists.linux.dev>; Tue, 27 Aug 2024 10:47:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kIg2kg0A"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-71433cba1b7so4328510b3a.0
+        for <patches@lists.linux.dev>; Tue, 27 Aug 2024 11:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724780876; x=1725385676; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1724781781; x=1725386581; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HCUSrgJ+TJUnurxjMntJCkv6+wXwXOpsEspjhz3H0Yw=;
-        b=TzrJi3R0EpiHDDNOsQffbyNuQq48bkq7vtPV3P+dJTYdp+/OsYvMibO4UOveybdKvA
-         Gi3d+yijwInyx6Sj4DAfto5JWG0p6n25YZGRxba8G/43ILbXjkzxm1mpjJrwc2aaxrNW
-         FbSZsNaXVAx5QD91j1+UCZP+dboZfd7u5+ZDguG3GfvzvWygJO671bUxCykDOzsy5Ssu
-         dR10MgQj4bvt0mWXKtlcL2BVx9RwuEr/1lG474G69XQUbWZHEz19fIEnuHWMhf7WsGFH
-         WT9FYly7ShJcYXPwMdGlvFuZm7fNuWR2PiowQYTFzwKOf6GJCKPprtu3h0WTDQV+IcVk
-         LoFg==
+        bh=FZcFyZyRdSFfHxupkjJyrWOtZv+pT4JWFFLO3DW9kp4=;
+        b=kIg2kg0AihJc9CNvS3I5Fh670Uje+cFokG2TZaXuf0rx6sG1hfGfFwDrk1N/vBL3mc
+         wCyuYkmj3cyKAjJ6ZhkbrDaV46n3mGXY1KN2J+j3M9zBMJJyRyDmtEGwvly4wAhCfCny
+         CZnoH97pMIqRZYKltBdLPstfjB4r9NxHYbtNpQ0R/JkMLRtwBd9AVqdnjnw3wWuTJnf8
+         aP0fyJd5yuFGtlUlvNinBzmH9wFmq5B8XcALUs4OdXezSTEUmgPTXtduh6MwVSCpiD8n
+         ymRhXZaEPJm+Ai+CK0tTx5kS+XVJSz14TEFAoApuRtzZR8WsTZPL7ci0mwAUKwEzcxGS
+         sVeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724780876; x=1725385676;
+        d=1e100.net; s=20230601; t=1724781781; x=1725386581;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HCUSrgJ+TJUnurxjMntJCkv6+wXwXOpsEspjhz3H0Yw=;
-        b=O4ZCHCpX56oB6uLCnpr4G6evxql4GkrQqG0WJtGzhI/UbgHq+o3xcuKXGaLA6qpDrl
-         XaSF1mRuYKjxo3uRfhFA/kLFokeIhT7aBGG7oZdK4zzpRFIzUTATOcJE2szD8NPSF8Bm
-         yURv549BYvNkrj3sIkYO1f8prEvC1QFWgoTVYkCat7CIEPBuYjrhlTBl0g3cp+WcePR8
-         HenzBR/VyLq90MTr2csf5YE4TKsBbnjI/UvsCifQlCpA957GgdwBdqGK8mw3vft4S6ME
-         7upm6NrTe17Y+pq5Tgt6lHPyoh8AcgeKjByrEBLs/HSpVrqu4Sm4lrrWEBOcqUivZDfd
-         CeEA==
-X-Gm-Message-State: AOJu0YwVGL6l5N4ebo97l+VdwF9HI2Me/SocmO82PEgepLGiHQpaGnf3
-	re2C5S/U2TnbcV34o3d7ERoHSAE+YfZGytOETu5X6NuItdshARdG
-X-Google-Smtp-Source: AGHT+IES6okLZnfj/yTGFxwPWh7nsD/tI3mz++Ei4dyFWneiXSsFd3im9erE2HEYmM+cxnd9sViCiA==
-X-Received: by 2002:a05:6a20:4f18:b0:1cc:9f24:3d with SMTP id adf61e73a8af0-1cc9f240253mr7540278637.25.1724780876432;
-        Tue, 27 Aug 2024 10:47:56 -0700 (PDT)
+        bh=FZcFyZyRdSFfHxupkjJyrWOtZv+pT4JWFFLO3DW9kp4=;
+        b=d3aqGYT2HhW0So4pOZQ0xah4w01iyREFiqkxPy8Liia6STfmyzP9DFur9h4b2bLL1o
+         8eAduCAd/ShTG0SK+ERYo6rrUpjobXmtN95GrAQCzUo61ulp0agheORe/U60oW9xIL88
+         6avRk7Nrm10SmTnjdQDiVJJhzbwKib5Bh2od5fcPr/UVFO6l2TVSeyZFpMxz/y+ml/Ju
+         sq/m7o2QDUbGplvHOnzlnFqcNEJPM+urJyDvQkf2Lg0JmQNNrCE8Vw7R1FG/xA7gDhxk
+         UDGEuTmb0xU6W/MxoIadcDXNe9eOgYMhCzbRaE3SRUoUdc1pHIznaqjiZgNv7Yh9E3Gh
+         fCfA==
+X-Gm-Message-State: AOJu0YyHvQYQ3JCxdkeS8SfpDjp0p1o3RiLrX5bThw861IU9o67ixHkn
+	hqcryuS7bKbD4clAUpP9QWxRYPLhDnoHuXw+Sc1NsxglxQ6qmzDYXlskyQ==
+X-Google-Smtp-Source: AGHT+IEm2yR2cpxVil+mWKoSNbqIrjenA9TLxT322rLBAqYECbuk0pTTEPLg5nnyzwL7snZPOq8AYA==
+X-Received: by 2002:a05:6a20:9c8f:b0:1c4:bbb8:4d02 with SMTP id adf61e73a8af0-1ccc099746bmr3997304637.37.1724781780891;
+        Tue, 27 Aug 2024 11:03:00 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-2038556686asm86076995ad.40.2024.08.27.10.47.54
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-714342e2194sm8827604b3a.126.2024.08.27.11.02.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 10:47:55 -0700 (PDT)
-Message-ID: <ffd773a0-d71c-4647-b7de-b22a008849ab@gmail.com>
-Date: Tue, 27 Aug 2024 10:47:53 -0700
+        Tue, 27 Aug 2024 11:03:00 -0700 (PDT)
+Message-ID: <cca42eba-8b09-4552-ab2a-395cf28a6b24@gmail.com>
+Date: Tue, 27 Aug 2024 11:02:58 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,7 +60,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
+Subject: Re: [PATCH 6.10 000/273] 6.10.7-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -68,16 +68,16 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
  conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240827143843.399359062@linuxfoundation.org>
+References: <20240827143833.371588371@linuxfoundation.org>
 Content-Language: en-US
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
+In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/27/24 07:33, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.48 release.
-> There are 341 patches in this series, all will be posted as a response
+On 8/27/24 07:35, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.7 release.
+> There are 273 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -85,59 +85,19 @@ On 8/27/24 07:33, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.48-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.7-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-Same problem as with the 6.1-rc, perf fails to build with:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-In file included from ./util/header.h:10,
-                  from pmu-events/pmu-events.c:9:
-../include/linux/bitmap.h: In function 'bitmap_zero':
-../include/linux/bitmap.h:28:34: warning: implicit declaration of 
-function 'ALIGN' [-Wimplicit-function-declaration]
-    28 | #define bitmap_size(nbits)      (ALIGN(nbits, BITS_PER_LONG) / 
-BITS_PER_BYTE)
-       |                                  ^~~~~
-../include/linux/bitmap.h:35:32: note: in expansion of macro 'bitmap_size'
-    35 |                 memset(dst, 0, bitmap_size(nbits));
-       |                                ^~~~~~~~~~~
-   LD 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/pmu-events-in.o
-   LINK 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
-in function `record__mmap_read_evlist':
-builtin-record.c:(.text+0x13578): undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
-in function `record__init_thread_masks_spec.constprop.0':
-builtin-record.c:(.text+0x13b10): undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-builtin-record.c:(.text+0x13b68): undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-builtin-record.c:(.text+0x13b9c): undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-builtin-record.c:(.text+0x13bd8): undefined reference to `ALIGN'
-/local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o:builtin-record.c:(.text+0x13c14): 
-more undefined references to `ALIGN' follow
-collect2: error: ld returned 1 exit status
-make[4]: *** [Makefile.perf:672: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf] 
-Error 1
-make[3]: *** [Makefile.perf:242: sub-make] Error 2
-make[2]: *** [Makefile:70: all] Error 2
-make[1]: *** [package/pkg-generic.mk:294: 
-/local/users/fainelli/buildroot/output/arm/build/linux-tools/.stamp_built] 
-Error 2
-make: *** [Makefile:29: _all] Error 2
--- 
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+o--
 Florian
 
