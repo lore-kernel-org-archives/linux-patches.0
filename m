@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918481C5793;
-	Tue, 27 Aug 2024 15:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A959B1A072D;
+	Tue, 27 Aug 2024 15:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771600; cv=none; b=eovFRvHl8Sv+RG8eVPMVNZDqHCkuqVTAZ8Q7FD0UQ9JrmULdrTIYaX3s2jwah8DJkQqcjhnNf4eWqOpEQmBGWB+D4mp43rR3IsHhBjONX9bLIVFifMYMTclbP7Wdss9L+MhMX91YO7v9/pyvaJVkQf9e4IwX5Gjk/uj+mRxzeW0=
+	t=1724771603; cv=none; b=kJZht4zsnaHPoogjZdED+gI7RY3XqrXMuyqKIyyBN3usBe8zdGGNcBeSCr1MizwnvTmV/G5muumNt4lo5R8MLdZGb+TVv+rYQQ7xetQWRvzIn4ktSc5vcC7p2Lh5DUCDuNt3qEaeIYqqtLugnl4mK61V7e7Al7QMdIKBqcyWGPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771600; c=relaxed/simple;
-	bh=62hGVr4C/a2mXyOBVqMa9di2d8Qi1zNc/WwuTUWtu/U=;
+	s=arc-20240116; t=1724771603; c=relaxed/simple;
+	bh=oYwxl/I95TQpu6PM2+iDV90CN4g2sMWqv2MOqREQv7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJxsiKR1Rhv9NfnryUvVP0IdJyBJI0iWiPUick9zsLZq563V8XjFyi1tT7xWoYyTRSvwMu40OHHRBytkuoA18/LuCoqGADspjMBTIDhMJy3r0QVJn0IfRr5x6HoXMbTzOZ0Sw2LIGHYhR/MbCkX3vBQH6jXrp8T4OpUOa21id2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrNfqKor; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SE66mzrSQ2fspdgBo4k80Tv3uL5+RRK8xYgEdPd5xnvitrDmDkW8i9W5tha74hEq6SaLKM2TuoDyqSlVCgdH6OXG02hzA6bfnBQ7vTsgbxcUoeGN4H1s3K8DX2fu7jWWlT3O4qvObnox8Wzlx/DV9Y358ZDwVs6nphiQYY4rS2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vttlRicM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrNfqKor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AE4C61053;
-	Tue, 27 Aug 2024 15:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vttlRicM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B71C61053;
+	Tue, 27 Aug 2024 15:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771600;
-	bh=62hGVr4C/a2mXyOBVqMa9di2d8Qi1zNc/WwuTUWtu/U=;
+	s=korg; t=1724771603;
+	bh=oYwxl/I95TQpu6PM2+iDV90CN4g2sMWqv2MOqREQv7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrNfqKorlG4uxvz1G/Dua8ziYA0HaS6L6AQm+JXAYVcj7+OmpbZ3iGCVel1fGOwrL
-	 dGMbnixy727PG60vjGXSxLs5n+949u3wm4a4vhPYIhXPcwqZgIXtucGDUw+RUvLFIe
-	 UySXIDLRCmB2qT9SLE9KTj7XhtGwxC1f3AIMIfvY=
+	b=vttlRicMQ+suLOLitxy8kVk7XADQH2fjkRJ3oX7hNdkxB5WmPbLBiX57VOo9Bx/bM
+	 SUYbDhP0cqWHQZ/LDuL3jRGpzncrfvMjCkbK4V4doGREQw3FGtqKVUFhEjXdhrz61O
+	 51DbarnG2rkVn/KF+TEQs+dsInBFT081jfe2z/94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 206/273] drm/xe: Fix opregion leak
-Date: Tue, 27 Aug 2024 16:38:50 +0200
-Message-ID: <20240827143841.249750934@linuxfoundation.org>
+Subject: [PATCH 6.10 197/273] drm/msm/dpu: limit QCM2290 to RGB formats only
+Date: Tue, 27 Aug 2024 16:38:41 +0200
+Message-ID: <20240827143840.906948561@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,71 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit f4b2a0ae1a31fd3d1b5ca18ee08319b479cf9b5f ]
+[ Upstream commit 2db13c4a631505029ada9404e09a2b06a268c1c4 ]
 
-Being part o the display, ideally the setup and cleanup would be done by
-display itself. However this is a bigger refactor that needs to be done
-on both i915 and xe. For now, just fix the leak:
+The QCM2290 doesn't have CSC blocks, so it can not support YUV formats
+even on ViG blocks. Fix the formats declared by _VIG_SBLK_NOSCALE().
 
-unreferenced object 0xffff8881a0300008 (size 192):
-  comm "modprobe", pid 4354, jiffies 4295647021
-  hex dump (first 32 bytes):
-    00 00 87 27 81 88 ff ff 18 80 9b 00 00 c9 ff ff  ...'............
-    18 81 9b 00 00 c9 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 99260e31):
-    [<ffffffff823ce65b>] kmemleak_alloc+0x4b/0x80
-    [<ffffffff81493be2>] kmalloc_trace_noprof+0x312/0x3d0
-    [<ffffffffa1345679>] intel_opregion_setup+0x89/0x700 [xe]
-    [<ffffffffa125bfaf>] xe_display_init_noirq+0x2f/0x90 [xe]
-    [<ffffffffa1199ec3>] xe_device_probe+0x7a3/0xbf0 [xe]
-    [<ffffffffa11f3713>] xe_pci_probe+0x333/0x5b0 [xe]
-    [<ffffffff81af6be8>] local_pci_probe+0x48/0xb0
-    [<ffffffff81af8778>] pci_device_probe+0xc8/0x280
-    [<ffffffff81d09048>] really_probe+0xf8/0x390
-    [<ffffffff81d0937a>] __driver_probe_device+0x8a/0x170
-    [<ffffffff81d09503>] driver_probe_device+0x23/0xb0
-    [<ffffffff81d097b7>] __driver_attach+0xc7/0x190
-    [<ffffffff81d0628d>] bus_for_each_dev+0x7d/0xd0
-    [<ffffffff81d0851e>] driver_attach+0x1e/0x30
-    [<ffffffff81d07ac7>] bus_add_driver+0x117/0x250
-
-Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240724215309.644423-1-lucas.demarchi@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 6f4e43a2f771b737d991142ec4f6d4b7ff31fbb4)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 5334087ee743 ("drm/msm: add support for QCM2290 MDSS")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/601048/
+Link: https://lore.kernel.org/r/20240627-dpu-virtual-wide-v5-1-5efb90cbb8be@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/display/xe_display.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/display/xe_display.c b/drivers/gpu/drm/xe/display/xe_display.c
-index 6ecaf83264d55..7cdc03dc40ed9 100644
---- a/drivers/gpu/drm/xe/display/xe_display.c
-+++ b/drivers/gpu/drm/xe/display/xe_display.c
-@@ -134,6 +134,7 @@ static void xe_display_fini_noirq(struct drm_device *dev, void *dummy)
- 		return;
- 
- 	intel_display_driver_remove_noirq(xe);
-+	intel_opregion_cleanup(xe);
- }
- 
- int xe_display_init_noirq(struct xe_device *xe)
-@@ -159,8 +160,10 @@ int xe_display_init_noirq(struct xe_device *xe)
- 	intel_display_device_info_runtime_init(xe);
- 
- 	err = intel_display_driver_probe_noirq(xe);
--	if (err)
-+	if (err) {
-+		intel_opregion_cleanup(xe);
- 		return err;
-+	}
- 
- 	return drmm_add_action_or_reset(&xe->drm, xe_display_fini_noirq, NULL);
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 9b72977feafa4..e61b5681f3bbd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -308,8 +308,8 @@ static const u32 wb2_formats_rgb_yuv[] = {
+ 	{ \
+ 	.maxdwnscale = SSPP_UNITY_SCALE, \
+ 	.maxupscale = SSPP_UNITY_SCALE, \
+-	.format_list = plane_formats_yuv, \
+-	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
++	.format_list = plane_formats, \
++	.num_formats = ARRAY_SIZE(plane_formats), \
+ 	.virt_format_list = plane_formats, \
+ 	.virt_num_formats = ARRAY_SIZE(plane_formats), \
+ 	}
 -- 
 2.43.0
 
