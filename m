@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92B91C6893;
-	Tue, 27 Aug 2024 15:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC91C93B0;
+	Tue, 27 Aug 2024 15:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771022; cv=none; b=aFyvAj2hWSTgBb/nuaXJ8/GDsnbtvAzB6zISepttVSvBzX/zPKmyr64FkjexMtMDy0sXJ7sddSEB/Nr73NCXzN1g+0vPTFrACvyA3pWoZTzfiXHKwvfaVOtIyZsSWsAzS+91r1VaJk637YG+q5zuwFLsCYOaJ/QIZqNJDtqwKoU=
+	t=1724771025; cv=none; b=QZC9gL63a3hB4EMB+h0hLmpWMGW/nWOYarZjV5LxyVLYhsQkcWL3e8/mmxz4F1s0hiBAh2O9DlcooQ252axQ5EQdKNzyE6qPz9Q4cBYECUhGXnUvvHZUZ68Kwouvd9PguaG0sMR3XO29koXmARNljmfMGCk6phxlBsVp3BR1zmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771022; c=relaxed/simple;
-	bh=jNMfTrG/Z3yAaVi2CnSEoByF+1+H4qc8Jbglygd8kI0=;
+	s=arc-20240116; t=1724771025; c=relaxed/simple;
+	bh=zfboCzud2JIJwiSUFF9MRY6MzlkEZG8ZCQIdws1gOjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAxE8yQeJRWd2RNkRbL3D4nUN++YRr+eWK71skcN8aLih4AM7W5E0bjnPkY6d1/+7cAYXwluv3Jc/Ui/N5T1hy6SJxRqOxzwXuE6w40uMlkx8x61z/+uy/zmsVrCzuCch47EuF4ed+SRBbGXn79FZPHviKzbhTtKqHfOuUUU9+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHtp5Pq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BusN20heIgXf2bfyfp0nTumkMfTaO93Y941dBXxDadQWY/qqSszJcDsCW12E4ZKFBMjbfU+wPyLsioiIZcyfllIt4tEvm1dUqM956MtX0yvAnKrsoQ7sBbdzECefk64HvMpgU6eQ1qhoQoMbD2KI9Qo683GKD+igp7nuYlocaYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gZ9U4bv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHtp5Pq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABBFC61056;
-	Tue, 27 Aug 2024 15:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gZ9U4bv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C46C61055;
+	Tue, 27 Aug 2024 15:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771022;
-	bh=jNMfTrG/Z3yAaVi2CnSEoByF+1+H4qc8Jbglygd8kI0=;
+	s=korg; t=1724771025;
+	bh=zfboCzud2JIJwiSUFF9MRY6MzlkEZG8ZCQIdws1gOjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHtp5Pq5/fVuEC57IlQV0ZcxyxNO8VvFze1HuYfGe7NaEEQX4EeE1PCQkWT2oCPtg
-	 w/q1m3PkUDm/0jQj76VPqRQubYXvCN1kJkUpeEYnJYZWNqDM65jdvsc712hmfMOYTm
-	 xfaP9yr5bwcNcUMGSBr/7oMfxoxjrIXljfsbxBpA=
+	b=0gZ9U4bvDKE2nxv+FJHBGokRz+xMbTgXihG4DYrTde0nFPITMYfhwknvlbAtdxZWS
+	 GEJP4bg0TGmX3c4rTZvdpJnqa2aVnqSQG4tryRa0bP2BNl69q3y+ab3yRYDfxwaKmr
+	 90B083fAGSc+MaaABnTbHnxSgtktGtZaMIvExnPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.10 032/273] ACPI: EC: Evaluate _REG outside the EC scope more carefully
-Date: Tue, 27 Aug 2024 16:35:56 +0200
-Message-ID: <20240827143834.616972659@linuxfoundation.org>
+	Andrew Jones <ajones@ventanamicro.com>,
+	Haibo Xu <haibo1.xu@intel.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Sunil V L <sunilvl@ventanamicro.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Hanjun Guo <guohanjun@huawei.com>
+Subject: [PATCH 6.10 033/273] arm64: ACPI: NUMA: initialize all values of acpi_early_node_map to NUMA_NO_NODE
+Date: Tue, 27 Aug 2024 16:35:57 +0200
+Message-ID: <20240827143834.655481494@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,103 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Haibo Xu <haibo1.xu@intel.com>
 
-commit 71bf41b8e913ec9fc91f0d39ab8fb320229ec604 upstream.
+commit a21dcf0ea8566ebbe011c79d6ed08cdfea771de3 upstream.
 
-Commit 60fa6ae6e6d0 ("ACPI: EC: Install address space handler at the
-namespace root") caused _REG methods for EC operation regions outside
-the EC device scope to be evaluated which on some systems leads to the
-evaluation of _REG methods in the scopes of device objects representing
-devices that are not present and not functional according to the _STA
-return values. Some of those device objects represent EC "alternatives"
-and if _REG is evaluated for their operation regions, the platform
-firmware may be confused and the platform may start to behave
-incorrectly.
+Currently, only acpi_early_node_map[0] was initialized to NUMA_NO_NODE.
+To ensure all the values were properly initialized, switch to initialize
+all of them to NUMA_NO_NODE.
 
-To avoid this problem, only evaluate _REG for EC operation regions
-located in the scopes of device objects representing known-to-be-present
-devices.
-
-For this purpose, partially revert commit 60fa6ae6e6d0 and trigger the
-evaluation of _REG for EC operation regions from acpi_bus_attach() for
-the known-valid devices.
-
-Fixes: 60fa6ae6e6d0 ("ACPI: EC: Install address space handler at the namespace root")
-Link: https://lore.kernel.org/linux-acpi/1f76b7e2-1928-4598-8037-28a1785c2d13@redhat.com
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2298938
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302253
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/23612351.6Emhk5qWAg@rjwysocki.net
+Fixes: e18962491696 ("arm64: numa: rework ACPI NUMA initialization")
+Cc: <stable@vger.kernel.org> # 4.19.x
+Reported-by: Andrew Jones <ajones@ventanamicro.com>
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://lore.kernel.org/r/853d7f74aa243f6f5999e203246f0d1ae92d2b61.1722828421.git.haibo1.xu@intel.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/ec.c       |   11 +++++++++--
- drivers/acpi/internal.h |    1 +
- drivers/acpi/scan.c     |    2 ++
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/acpi_numa.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1487,12 +1487,13 @@ static bool install_gpio_irq_event_handl
- static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
- 			       bool call_reg)
+--- a/arch/arm64/kernel/acpi_numa.c
++++ b/arch/arm64/kernel/acpi_numa.c
+@@ -27,7 +27,7 @@
+ 
+ #include <asm/numa.h>
+ 
+-static int acpi_early_node_map[NR_CPUS] __initdata = { NUMA_NO_NODE };
++static int acpi_early_node_map[NR_CPUS] __initdata = { [0 ... NR_CPUS - 1] = NUMA_NO_NODE };
+ 
+ int __init acpi_numa_get_nid(unsigned int cpu)
  {
--	acpi_handle scope_handle = ec == first_ec ? ACPI_ROOT_OBJECT : ec->handle;
- 	acpi_status status;
- 
- 	acpi_ec_start(ec, false);
- 
- 	if (!test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
-+		acpi_handle scope_handle = ec == first_ec ? ACPI_ROOT_OBJECT : ec->handle;
-+
- 		acpi_ec_enter_noirq(ec);
- 		status = acpi_install_address_space_handler_no_reg(scope_handle,
- 								   ACPI_ADR_SPACE_EC,
-@@ -1506,7 +1507,7 @@ static int ec_install_handlers(struct ac
- 	}
- 
- 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
--		acpi_execute_reg_methods(scope_handle, ACPI_UINT32_MAX, ACPI_ADR_SPACE_EC);
-+		acpi_execute_reg_methods(ec->handle, ACPI_UINT32_MAX, ACPI_ADR_SPACE_EC);
- 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
- 	}
- 
-@@ -1721,6 +1722,12 @@ static void acpi_ec_remove(struct acpi_d
- 	}
- }
- 
-+void acpi_ec_register_opregions(struct acpi_device *adev)
-+{
-+	if (first_ec && first_ec->handle != adev->handle)
-+		acpi_execute_reg_methods(adev->handle, 1, ACPI_ADR_SPACE_EC);
-+}
-+
- static acpi_status
- ec_parse_io_ports(struct acpi_resource *resource, void *context)
- {
---- a/drivers/acpi/internal.h
-+++ b/drivers/acpi/internal.h
-@@ -223,6 +223,7 @@ int acpi_ec_add_query_handler(struct acp
- 			      acpi_handle handle, acpi_ec_query_func func,
- 			      void *data);
- void acpi_ec_remove_query_handler(struct acpi_ec *ec, u8 query_bit);
-+void acpi_ec_register_opregions(struct acpi_device *adev);
- 
- #ifdef CONFIG_PM_SLEEP
- void acpi_ec_flush_work(void);
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -2264,6 +2264,8 @@ static int acpi_bus_attach(struct acpi_d
- 	if (device->handler)
- 		goto ok;
- 
-+	acpi_ec_register_opregions(device);
-+
- 	if (!device->flags.initialized) {
- 		device->flags.power_manageable =
- 			device->power.states[ACPI_STATE_D0].flags.valid;
 
 
