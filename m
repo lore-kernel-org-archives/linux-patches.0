@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92641C825E;
-	Tue, 27 Aug 2024 15:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFFA1C7B9D;
+	Tue, 27 Aug 2024 15:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771704; cv=none; b=WJgR70LkI5zhAyigXHBUarmK34OTVXf3iPtnkkVk85WGbzmv7cb1N4e/7BA1Txgb032joPIl5EMRKrqdoOWjMJ8ubP7IR8uDC/txNFuyDA3nCIpMvZZwflr4e736sfJf7sRC9wrHNasCRsRMph2Y3VzYPmg3kzLPLrOlwzehwVI=
+	t=1724771707; cv=none; b=nM7Z/jd9rn9loKO8d4sEeclzs5Wo4+5wTzBshBYtrDHFrojfzMLqFqg6cUBYMYSZsGi+BCB6exUOuejiFVh+eVsL7/adK9q74Hg5ofYcX+G2IbLtOv6wl2lxOdfkIL+eI2txpIVaatFF0ZgfjgsILSg5VeVfpWY42EMhPMgtcYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771704; c=relaxed/simple;
-	bh=In0JbhKR2E6Qn214K/2rz2aWrONqwB+jlfb1YDSDRn8=;
+	s=arc-20240116; t=1724771707; c=relaxed/simple;
+	bh=IfM8ohYfP1SkaA4pSHdq8QVTZrATo2PdOzVsiX53H7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDCDBbQtpGTmYKKbRIcZ1IhWJmi98naGp94gTrCI2qR7+IXgS8wxd8cr0l68nGU/CyrvBZWPTUzdCpXdl+MiUbPci6ieTmexu7zPTYdeNyMmtzuvWK22UaX/X0OP/fImNS+76vsSJWKI9jCVOVdEMgankrOqRP2i5cUNTuHrmLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoV/vgUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlK6+JOGO6lnjnIFfqczEEzhQ/YcXtVOB7H5XpT73MdsQ7Zb8L8r/abNsa6Jsm1fgO+83o/TmyUTDGJ07HZfijYJwFlVuLMOEogiual2PGLYDUaD4F/DGWoqwSJbHieSMu/mvfDvWcXZMur2uxlLRL8ZoxJ5t1lZrJ/ac9iN9vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlgHrmZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoV/vgUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242DFC61075;
-	Tue, 27 Aug 2024 15:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlgHrmZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B46DC4AF50;
+	Tue, 27 Aug 2024 15:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771703;
-	bh=In0JbhKR2E6Qn214K/2rz2aWrONqwB+jlfb1YDSDRn8=;
+	s=korg; t=1724771706;
+	bh=IfM8ohYfP1SkaA4pSHdq8QVTZrATo2PdOzVsiX53H7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoV/vgUDdXgnhHAOv+k5TmnJ2j5HnJqpdc35z7adf8wZ8As/TiPi0L2OTjRrWQ0RA
-	 N20gxZiqFVxCg+ltGlTsA9khAZTG10vjlN3vepHvKhED/vRANsiHQKBcM0+GIcZtH6
-	 U8rMq07vZMJuO8SWoLNJrf42Z9HZLtpCmS5zFWYo=
+	b=zlgHrmZf0b0xeqDYNbCEvLF7ReUyEFWUIwy9mrGK+ixMAEpnABEDnrN6VjiY7aKrS
+	 yu4MhcSLn56EAuvtvrDs1yV3wQ42Bnuqz4R3JXtResD7fXEBlhbdXwiAvWr60DbXNb
+	 mtTSL4yfFKswrDIF7ue7AKkZ8H1UqVZ6HXFksOq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.10 237/273] iommufd/device: Fix hwpt at err_unresv in iommufd_device_do_replace()
-Date: Tue, 27 Aug 2024 16:39:21 +0200
-Message-ID: <20240827143842.423688088@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.10 238/273] Input: i8042 - add forcenorestore quirk to leave controller untouched even on s3
+Date: Tue, 27 Aug 2024 16:39:22 +0200
+Message-ID: <20240827143842.460781472@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,33 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit 950aeefb34923fe3c28ade35fe05f24e2c5b1d55 upstream.
+commit 3d765ae2daccc570b3f4fbcb57eb321b12cdded2 upstream.
 
-The rewind routine should remove the reserved iovas added to the new hwpt.
+On s3 resume the i8042 driver tries to restore the controller to a known
+state by reinitializing things, however this can confuse the controller
+with different effects. Mostly occasionally unresponsive keyboards after
+resume.
 
-Fixes: 89db31635c87 ("iommufd: Derive iommufd_hwpt_paging from iommufd_hw_pagetable")
+These issues do not rise on s0ix resume as here the controller is assumed
+to preserved its state from before suspend.
+
+This patch adds a quirk for devices where the reinitialization on s3 resume
+is not needed and might be harmful as described above. It does this by
+using the s0ix resume code path at selected locations.
+
+This new quirk goes beyond what the preexisting reset=never quirk does,
+which only skips some reinitialization steps.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/r/20240718050130.1956804-1-nicolinc@nvidia.com
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240104183118.779778-2-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/serio/i8042-acpipnpio.h |   10 +++++++---
+ drivers/input/serio/i8042.c           |   10 +++++++---
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -525,7 +525,7 @@ iommufd_device_do_replace(struct iommufd
- err_unresv:
- 	if (hwpt_is_paging(hwpt))
- 		iommufd_group_remove_reserved_iova(igroup,
--						   to_hwpt_paging(old_hwpt));
-+						   to_hwpt_paging(hwpt));
- err_unlock:
- 	mutex_unlock(&idev->igroup->lock);
- 	return ERR_PTR(rc);
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -83,6 +83,7 @@ static inline void i8042_write_command(i
+ #define SERIO_QUIRK_KBDRESET		BIT(12)
+ #define SERIO_QUIRK_DRITEK		BIT(13)
+ #define SERIO_QUIRK_NOPNP		BIT(14)
++#define SERIO_QUIRK_FORCENORESTORE	BIT(15)
+ 
+ /* Quirk table for different mainboards. Options similar or identical to i8042
+  * module parameters.
+@@ -1685,6 +1686,8 @@ static void __init i8042_check_quirks(vo
+ 	if (quirks & SERIO_QUIRK_NOPNP)
+ 		i8042_nopnp = true;
+ #endif
++	if (quirks & SERIO_QUIRK_FORCENORESTORE)
++		i8042_forcenorestore = true;
+ }
+ #else
+ static inline void i8042_check_quirks(void) {}
+@@ -1718,7 +1721,7 @@ static int __init i8042_platform_init(vo
+ 
+ 	i8042_check_quirks();
+ 
+-	pr_debug("Active quirks (empty means none):%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
++	pr_debug("Active quirks (empty means none):%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+ 		i8042_nokbd ? " nokbd" : "",
+ 		i8042_noaux ? " noaux" : "",
+ 		i8042_nomux ? " nomux" : "",
+@@ -1738,10 +1741,11 @@ static int __init i8042_platform_init(vo
+ 		"",
+ #endif
+ #ifdef CONFIG_PNP
+-		i8042_nopnp ? " nopnp" : "");
++		i8042_nopnp ? " nopnp" : "",
+ #else
+-		"");
++		"",
+ #endif
++		i8042_forcenorestore ? " forcenorestore" : "");
+ 
+ 	retval = i8042_pnp_init();
+ 	if (retval)
+--- a/drivers/input/serio/i8042.c
++++ b/drivers/input/serio/i8042.c
+@@ -115,6 +115,10 @@ module_param_named(nopnp, i8042_nopnp, b
+ MODULE_PARM_DESC(nopnp, "Do not use PNP to detect controller settings");
+ #endif
+ 
++static bool i8042_forcenorestore;
++module_param_named(forcenorestore, i8042_forcenorestore, bool, 0);
++MODULE_PARM_DESC(forcenorestore, "Force no restore on s3 resume, copying s2idle behaviour");
++
+ #define DEBUG
+ #ifdef DEBUG
+ static bool i8042_debug;
+@@ -1232,7 +1236,7 @@ static int i8042_pm_suspend(struct devic
+ {
+ 	int i;
+ 
+-	if (pm_suspend_via_firmware())
++	if (!i8042_forcenorestore && pm_suspend_via_firmware())
+ 		i8042_controller_reset(true);
+ 
+ 	/* Set up serio interrupts for system wakeup. */
+@@ -1248,7 +1252,7 @@ static int i8042_pm_suspend(struct devic
+ 
+ static int i8042_pm_resume_noirq(struct device *dev)
+ {
+-	if (!pm_resume_via_firmware())
++	if (i8042_forcenorestore || !pm_resume_via_firmware())
+ 		i8042_interrupt(0, NULL);
+ 
+ 	return 0;
+@@ -1271,7 +1275,7 @@ static int i8042_pm_resume(struct device
+ 	 * not restore the controller state to whatever it had been at boot
+ 	 * time, so we do not need to do anything.
+ 	 */
+-	if (!pm_suspend_via_firmware())
++	if (i8042_forcenorestore || !pm_suspend_via_firmware())
+ 		return 0;
+ 
+ 	/*
 
 
