@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E001D278A;
-	Tue, 27 Aug 2024 15:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BCE1CB33A;
+	Tue, 27 Aug 2024 15:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772370; cv=none; b=SWuDUSoLg+b+1PO3Ne7Kj1wVNgQOxhROvYYgpsTjwaYG/xvTFY2Otkt/nqMdUr/0YT57rFK7bKgllLI/ZKVmZIVrsjYJb+jBAKGm4ESJiRMRy4HAcvNuLwimhc6HAnZxnorffbdczLsIwTmqd4ovQSNFO3V9tEnD+tOusmKVQGc=
+	t=1724772373; cv=none; b=qEY6Dz1isYsNONL/fWVWFWo18YPWWpQY7XJqLsTQv65tvxAWZx5GFRRrbwb3rPC4IuwRz1+1MJjW3HdhgAOmUWMYz66WRaMKKVoU/2KPSkAhRMpzj0+Rr8/7r3JdxYE/3BTnPfKevEoVTQFumg2PvRt2yTYqJwerNvBrwKS/zkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772370; c=relaxed/simple;
-	bh=WyBm51mR6TEi8pT7pQ0qRGqigcRMlUhvKirgT6a5pRQ=;
+	s=arc-20240116; t=1724772373; c=relaxed/simple;
+	bh=eHJy+axbfR07CI2j7j0IGJANcN/TVwAJbxGHj/Q6rqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/5+fMviUC+ykHSUWRlLKx3xHS+mv/YV6yX1jMFkRFAHX8JMt65dm/KJZb8k36qkLbWpKo4Vb2ygWLqSM5ThXgLMXjURJIx/5NVnFxKwcg7VWbEp5Hfi4oHAPg6fBy2dxR8sw8ym14QHY8S94P6r19j1IQ4d3+DgnRseqarJDrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWcwju0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmCNHi8Xaofo6xSxxbVgyoFBxEbxSWnX8pX4Al/dE5tFu5GJh8IhYu/pIvpdqR9BAFP7BHv1iz2F5/WFO8FhwUI8wSyokO7sfPpNzoACgvVdYmcK8uU23xxS/ap/DOBIfMkIRqBZIq1JOPCWR0r/IyfUXqsUpEtNnO84nYwB3wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGs2jk+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWcwju0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2196C6107C;
-	Tue, 27 Aug 2024 15:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGs2jk+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0378BC4DDEF;
+	Tue, 27 Aug 2024 15:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772370;
-	bh=WyBm51mR6TEi8pT7pQ0qRGqigcRMlUhvKirgT6a5pRQ=;
+	s=korg; t=1724772373;
+	bh=eHJy+axbfR07CI2j7j0IGJANcN/TVwAJbxGHj/Q6rqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWcwju0WoVb8Zm/0v01y6HaEtRcKruV18RYdH96SRXzuBv3vESstt5HukLZfdP33K
-	 dpGpC+IMgYwlODVkgGjRU7rzI+rDn36DLunSr71Q8dakq+Ur5M35jQhOguNxxKQqji
-	 wa5S8UHM+h9uphqKORCbGeOJ/YKDMDKvsBM366g4=
+	b=yGs2jk+YRq0V//kXDbFOeGOfALlQxuGVyRoGHHLbSpc3FiYv3rNxnJtsk15DfQW4g
+	 2/Mv0ekJlB8GYAjSnLcHDSmCMLWwuFXzfKSVYBa1MNrNGVSMpJEstd1qUgsvSDYx+7
+	 aAA6qwBibkQSQMPlS5fnWPUnHomgVnrwmKxkudus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	NeilBrown <neilb@suse.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/321] nvmet-tcp: do not continue for invalid icreq
-Date: Tue, 27 Aug 2024 16:38:22 +0200
-Message-ID: <20240827143845.616170888@linuxfoundation.org>
+Subject: [PATCH 6.1 195/321] NFS: avoid infinite loop in pnfs_update_layout.
+Date: Tue, 27 Aug 2024 16:38:23 +0200
+Message-ID: <20240827143845.653998216@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,35 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 0889d13b9e1cbef49e802ae09f3b516911ad82a1 ]
+[ Upstream commit 2fdbc20036acda9e5694db74a032d3c605323005 ]
 
-When the length check for an icreq sqe fails we should not
-continue processing but rather return immediately as all
-other contents of that sqe cannot be relied on.
+If pnfsd_update_layout() is called on a file for which recovery has
+failed it will enter a tight infinite loop.
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+NFS_LAYOUT_INVALID_STID will be set, nfs4_select_rw_stateid() will
+return -EIO, and nfs4_schedule_stateid_recovery() will do nothing, so
+nfs4_client_recover_expired_lease() will not wait.  So the code will
+loop indefinitely.
+
+Break the loop by testing the validity of the open stateid at the top of
+the loop.
+
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/pnfs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 5556f55880411..76b9eb438268f 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -836,6 +836,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
- 		pr_err("bad nvme-tcp pdu length (%d)\n",
- 			le32_to_cpu(icreq->hdr.plen));
- 		nvmet_tcp_fatal_error(queue);
-+		return -EPROTO;
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 4448ff829cbb9..8c1f47ca5dc53 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1997,6 +1997,14 @@ pnfs_update_layout(struct inode *ino,
  	}
  
- 	if (icreq->pfv != NVME_TCP_PFV_1_0) {
+ lookup_again:
++	if (!nfs4_valid_open_stateid(ctx->state)) {
++		trace_pnfs_update_layout(ino, pos, count,
++					 iomode, lo, lseg,
++					 PNFS_UPDATE_LAYOUT_INVALID_OPEN);
++		lseg = ERR_PTR(-EIO);
++		goto out;
++	}
++
+ 	lseg = ERR_PTR(nfs4_client_recover_expired_lease(clp));
+ 	if (IS_ERR(lseg))
+ 		goto out;
 -- 
 2.43.0
 
