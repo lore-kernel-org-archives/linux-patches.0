@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8F51C7B71;
-	Tue, 27 Aug 2024 15:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F7B1C7B71;
+	Tue, 27 Aug 2024 15:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772377; cv=none; b=ke0zFY6HXZe2PKxJGekuEWVCLjri+Bqpqs0cx0+KeCwb5KjKzPBFhHijCuaomPPT52sjW/QerEkCyWcFbTPlqGZA1+8HOJukK0uE7QUk99znJTY5C7hJymZszAxzUq6YbNPyqTmkhQpHVSS0GyNj/Qa8O7G4PIG3RZsOnKWueDk=
+	t=1724772380; cv=none; b=GePT17aWRhlIkvlFxmtgHCwW368C3miO63j1/Ls91hXrPEUk5qUHDwR06T5P7XzRl9BybGTmvLFzXVtedfsyQttxa1py02/BuYY5QyHARg8bGNpot9FUqx1U3Iyh3htYew2mg4cp5UlTUY+LZnd1f/N4Yk6zVfDL0NYsqUjdXgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772377; c=relaxed/simple;
-	bh=+QcArnx4CATao7C9Avtkh/4qVuKCv9hecm8yvVeWMF0=;
+	s=arc-20240116; t=1724772380; c=relaxed/simple;
+	bh=CvYHSc45U9Ol8/MLkQRzH40pVMhy4Axe2RAeWoUILho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvUrtjzWssDLk8LrIx7N+P2mfNz/SktTBC91cBY2sqr+26nMzYOzm9m5MEumKzNYBLBTy1wdPbqH6tM3KCn4DX9V6jDW3eoLb/PtC8lS4deaL9k78CSc/Mv/pn5L7b++8PewRH8/EBoVfelrfu8oY+9JJq0/EzMj0jS95erPY0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUsm24BC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VFm9y9x0AZGcfM0MMZj2L8wocqSO8ZXO/0bT4J7inaUrnbhjRAEAkOA5MYxRFzlSzYOVFEBiyAgUcNOtVifS53hw4UbQfEU9WWeN1CcyGdO0dhzBZzEJ6AQ2oDY8LVyq3itMAQ+79Tze7pZyqZb0T2qJwwoM7knOjT6yAidJQLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkF6nAmh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUsm24BC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D267C61071;
-	Tue, 27 Aug 2024 15:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkF6nAmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60041C61071;
+	Tue, 27 Aug 2024 15:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772376;
-	bh=+QcArnx4CATao7C9Avtkh/4qVuKCv9hecm8yvVeWMF0=;
+	s=korg; t=1724772379;
+	bh=CvYHSc45U9Ol8/MLkQRzH40pVMhy4Axe2RAeWoUILho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XUsm24BCURX9rHuMSwvFdMDIrZCf0XpC/UDGq64PgH+8On5/VU9rSdpqUAau2VPNm
-	 oO/RFDo7oF2QIag3utWbdbZVmb2KduF2zSkeLxXgdOa5iy7O4riOrSrs2Wf9o6NKdr
-	 RQIpaBXqnttzz6GSk9RZak9SthU0QZS02BzznLfY=
+	b=mkF6nAmhJ7DvWskaMwoZhe1kZDJVj9z15ISDAsNxD/nKZ+ht6k7otJsFbleuuzBs7
+	 7dw6yQtO8qENaNFvUQt6aVaEJE5ZFQY5SEHgwxwYOiEKCS7MV9dRHxqVs7gheLt5Nj
+	 dNKM3o0jm3UOwK9zn136GL/g+NiyD/QoI03wEZik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Oreoluwa Babatunde <quic_obabatun@quicinc.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/321] drm/lima: set gp bus_stop bit before hard reset
-Date: Tue, 27 Aug 2024 16:37:57 +0200
-Message-ID: <20240827143844.664349339@linuxfoundation.org>
+Subject: [PATCH 6.1 196/321] openrisc: Call setup_memory() earlier in the init sequence
+Date: Tue, 27 Aug 2024 16:38:24 +0200
+Message-ID: <20240827143845.692067103@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,53 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 
-[ Upstream commit 27aa58ec85f973d98d336df7b7941149308db80f ]
+[ Upstream commit 7b432bf376c9c198a7ff48f1ed14a14c0ffbe1fe ]
 
-This is required for reliable hard resets. Otherwise, doing a hard reset
-while a task is still running (such as a task which is being stopped by
-the drm_sched timeout handler) may result in random mmu write timeouts
-or lockups which cause the entire gpu to hang.
+The unflatten_and_copy_device_tree() function contains a call to
+memblock_alloc(). This means that memblock is allocating memory before
+any of the reserved memory regions are set aside in the setup_memory()
+function which calls early_init_fdt_scan_reserved_mem(). Therefore,
+there is a possibility for memblock to allocate from any of the
+reserved memory regions.
 
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240124025947.2110659-5-nunes.erico@gmail.com
+Hence, move the call to setup_memory() to be earlier in the init
+sequence so that the reserved memory regions are set aside before any
+allocations are done using memblock.
+
+Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_gp.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/openrisc/kernel/setup.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
-index ca3842f719842..82071835ec9ed 100644
---- a/drivers/gpu/drm/lima/lima_gp.c
-+++ b/drivers/gpu/drm/lima/lima_gp.c
-@@ -166,6 +166,11 @@ static void lima_gp_task_run(struct lima_sched_pipe *pipe,
- 	gp_write(LIMA_GP_CMD, cmd);
- }
+diff --git a/arch/openrisc/kernel/setup.c b/arch/openrisc/kernel/setup.c
+index 0cd04d936a7a1..f2fe45d3094df 100644
+--- a/arch/openrisc/kernel/setup.c
++++ b/arch/openrisc/kernel/setup.c
+@@ -270,6 +270,9 @@ void calibrate_delay(void)
  
-+static int lima_gp_bus_stop_poll(struct lima_ip *ip)
-+{
-+	return !!(gp_read(LIMA_GP_STATUS) & LIMA_GP_STATUS_BUS_STOPPED);
-+}
-+
- static int lima_gp_hard_reset_poll(struct lima_ip *ip)
+ void __init setup_arch(char **cmdline_p)
  {
- 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC01A0000);
-@@ -179,6 +184,13 @@ static int lima_gp_hard_reset(struct lima_ip *ip)
- 
- 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC0FFE000);
- 	gp_write(LIMA_GP_INT_MASK, 0);
++	/* setup memblock allocator */
++	setup_memory();
 +
-+	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_STOP_BUS);
-+	ret = lima_poll_timeout(ip, lima_gp_bus_stop_poll, 10, 100);
-+	if (ret) {
-+		dev_err(dev->dev, "%s bus stop timeout\n", lima_ip_name(ip));
-+		return ret;
-+	}
- 	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_RESET);
- 	ret = lima_poll_timeout(ip, lima_gp_hard_reset_poll, 10, 100);
- 	if (ret) {
+ 	unflatten_and_copy_device_tree();
+ 
+ 	setup_cpuinfo();
+@@ -293,9 +296,6 @@ void __init setup_arch(char **cmdline_p)
+ 	}
+ #endif
+ 
+-	/* setup memblock allocator */
+-	setup_memory();
+-
+ 	/* paging_init() sets up the MMU and marks all pages as reserved */
+ 	paging_init();
+ 
 -- 
 2.43.0
 
