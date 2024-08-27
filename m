@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11EC1BFE04;
-	Tue, 27 Aug 2024 14:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D924F19F485;
+	Tue, 27 Aug 2024 14:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770657; cv=none; b=Z4HgsZaLZSSD4y3VWyQrcIX1mkjBzBEVjBW2iPEaya5URGk6JF8FGkvLjdhLKdRblaET7e3HlwvDKvLVwEByGOlNMPW7v1ppLPM+t108tsE/hetu5CNn1ijBNi/2gVaWSL8rL9QReIM5bmvJdvt8ojoqqZ8jTrNSxTmQhsfUS9g=
+	t=1724770660; cv=none; b=KVI7/LwLGy0LJ7oFZ+SMY0bFqDTSMNJVuRxtcdQ+3rNIgGnllnrT0sbtyZ+j9YLXH5zy8ufOWqJkJcL3IMU7WQfbNuE/pXUi36ISr+bNIKl63qMGOWx0k0pR6mdE3wqMvJsHLNWzcNq0YJg9trjDeH1UHLGT+/FXjZIoBbdz8Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770657; c=relaxed/simple;
-	bh=BgYpx2cW7GX2456a5F4kRiZ1NnHm1dGPB9CVj4sP5nc=;
+	s=arc-20240116; t=1724770660; c=relaxed/simple;
+	bh=q1BunPWm7Vjog0RFa2gKtchMVHytCtxU3YQoS5xreiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfHAdfjCrF20yOtaBbM9h1h+oV0iTecWL6SHcn5eJX/nD7DR6o2zP/OTkDlPXDEfMDIHlMjyF/lNUWE2Xrh8+4AyXNcW/bB5AgdxaUmSl3XgdGVZo4mCwJwNnI9xnaN7Y+16GjQZPkMrjole2uem7deVyvyHluBhwAhy3hXElME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srVFeCFL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBLOgb/0K0gfHQXzU75JZQLumTwYU7tCP+teMhbohIWWFyTgrd/glr77wTT1C016mGOzduPaR3IAncpgh0+3qW3UarlN0E6t17snpdWL2N6wUZuO3g8y/am8IuAAeoLUr8TQO6hPKEwBBQAvfWKBp6FfrfKh9zc1xp/tyQMYCxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsMmlXTl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srVFeCFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F726C61040;
-	Tue, 27 Aug 2024 14:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsMmlXTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B98C61040;
+	Tue, 27 Aug 2024 14:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770656;
-	bh=BgYpx2cW7GX2456a5F4kRiZ1NnHm1dGPB9CVj4sP5nc=;
+	s=korg; t=1724770660;
+	bh=q1BunPWm7Vjog0RFa2gKtchMVHytCtxU3YQoS5xreiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srVFeCFL+biVvSXoMUE/UAd2CMaLY9yXueUbJPEJLNFwMsclAQoWixTJnaBrRIEp/
-	 OAr+rRNHJ20tik16LuyXKsn/VumfKzhvzYYQp+jZ1By29GV17tQ40EH+O8BXIkrIXb
-	 5EWEYgVgsJucmmNMs1UU6Y9H6qCxkNAERyOOb0Os=
+	b=YsMmlXTlG7IRs5XzbFsq6B0jeWkxAOeJjEmB+05u/qO3NTLJEKDCMLVEu5WFhYLbo
+	 +pBRGBitBrZjfcYIkd/fCPB5GK4KAuZMQDiZOTPY5axMzChESAKevOJbNUh6yzLZaX
+	 ru9+m6q/ppnHhf+qgRD3Z0yET2K9cwPldKJNzKeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 287/341] drm/msm/dpu: take plane rotation into account for wide planes
-Date: Tue, 27 Aug 2024 16:38:38 +0200
-Message-ID: <20240827143854.318035639@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 296/341] ksmbd: the buffer of smb2 query dir response has at least 1 byte
+Date: Tue, 27 Aug 2024 16:38:47 +0200
+Message-ID: <20240827143854.657832245@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,62 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d3a785e4f983f523380e023d8a05fb6d04402957 ]
+commit ce61b605a00502c59311d0a4b1f58d62b48272d0 upstream.
 
-Take into account the plane rotation and flipping when calculating src
-positions for the wide plane parts.
+When STATUS_NO_MORE_FILES status is set to smb2 query dir response,
+->StructureSize is set to 9, which mean buffer has 1 byte.
+This issue occurs because ->Buffer[1] in smb2_query_directory_rsp to
+flex-array.
 
-This is not an issue yet, because rotation is only supported for the
-UBWC planes and wide UBWC planes are rejected anyway because in parallel
-multirect case only the half of the usual width is supported for tiled
-formats. However it's better to fix this now rather than stumbling upon
-it later.
-
-Fixes: 80e8ae3b38ab ("drm/msm/dpu: add support for wide planes")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/601059/
-Link: https://lore.kernel.org/r/20240627-dpu-virtual-wide-v5-3-5efb90cbb8be@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: eb3e28c1e89b ("smb3: Replace smb2pdu 1-element arrays with flex-arrays")
+Cc: stable@vger.kernel.org # v6.1+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/smb/server/smb2pdu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 3c2a8c0ddaf76..637f50a8d42e6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -865,6 +865,10 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 
- 	max_linewidth = pdpu->catalog->caps->max_linewidth;
- 
-+	drm_rect_rotate(&pipe_cfg->src_rect,
-+			new_plane_state->fb->width, new_plane_state->fb->height,
-+			new_plane_state->rotation);
-+
- 	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
- 	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
- 		/*
-@@ -914,6 +918,14 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
- 	}
- 
-+	drm_rect_rotate_inv(&pipe_cfg->src_rect,
-+			    new_plane_state->fb->width, new_plane_state->fb->height,
-+			    new_plane_state->rotation);
-+	if (r_pipe->sspp)
-+		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
-+				    new_plane_state->fb->width, new_plane_state->fb->height,
-+				    new_plane_state->rotation);
-+
- 	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
- 	if (ret)
- 		return ret;
--- 
-2.43.0
-
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4406,7 +4406,8 @@ int smb2_query_dir(struct ksmbd_work *wo
+ 		rsp->OutputBufferLength = cpu_to_le32(0);
+ 		rsp->Buffer[0] = 0;
+ 		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
+-				       sizeof(struct smb2_query_directory_rsp));
++				       offsetof(struct smb2_query_directory_rsp, Buffer)
++				       + 1);
+ 		if (rc)
+ 			goto err_out;
+ 	} else {
 
 
