@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AEB1C688E;
-	Tue, 27 Aug 2024 14:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C57344C8C;
+	Tue, 27 Aug 2024 14:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770214; cv=none; b=LY8dniuDqlU8PSJo/M47+wWMhTdgzRaqGvUjDDn2LhPyIDELljtbVqoxNwV/vGNGw1dHH/qkWcYr/Ft65mtX0k4RmGYFioeJhVfKOpWNZ6QL2d9a2mRigp4M6sTO6QB/YmtYsBStkfW2DKbPSspyZ6pkpm//+5UeHfpLxKYJPkc=
+	t=1724770218; cv=none; b=CnpEw/SecEF8FY8P/bdjWIUPLHB7w9Z9n8Z6czuKLgcgVrPxOuuYxEDIrBAk1GJy7SS/jziAtpgSAfN9/Gpa9Li6LWyNESOQe5sPsq70pdy4FgjJFrA5C34UOyAHktm6c5piz3qXLjc/kJrVVm6ErskYVAr2693gXFFBIRLmReU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770214; c=relaxed/simple;
-	bh=V4yTuBx2KKVvQ5fIHth2LyjGVCucBzLgaI4CThmyIhA=;
+	s=arc-20240116; t=1724770218; c=relaxed/simple;
+	bh=09YV7xuHPPZXF2GUsAYeuKexKRXS6Jsr3sCmCEyt0hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t139fyHWA5Vo8OhiuUsHFHuRWWV8eVylgIN9b2B9TSKTEPGex4Dr2IOW0Vtdj6zyUZD11scGgpZkxDv6/4AraKnCmzmT7SRXxQZZZ9qWMe9y6h7BKBKswDDEBxAxAgtEI3nRo6/7LJZptvS01JFUirE5TVJs1cbp3alJ9ybM4L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0l7tdzOS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVE4KViVcGQT2OPbqFY/NOkic1i8JY8GyldAqSyzlPhPX/L51eELEJ9N3qxA5nsU3CyvHYXEl68nuP8V6KOkcfMSe8nPouj7nfsgegxayYrmBQtq3yNPV0n/w7uDXtykD+y+4OG6HHpZeDVPQOS21cC08PyHTQfiDSfkObat6TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nukhPI0x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0l7tdzOS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F89C4DDEF;
-	Tue, 27 Aug 2024 14:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nukhPI0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94416C4DDEF;
+	Tue, 27 Aug 2024 14:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770214;
-	bh=V4yTuBx2KKVvQ5fIHth2LyjGVCucBzLgaI4CThmyIhA=;
+	s=korg; t=1724770218;
+	bh=09YV7xuHPPZXF2GUsAYeuKexKRXS6Jsr3sCmCEyt0hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0l7tdzOSaDltK7krVhIoU+fa/A8DDYVN/FzloIKQvSRrTaroXa5Wx9NCpJQeTv4mf
-	 rWvp63Yaxc3kviWwY2xwrGKizDw8FhHBdDF9mYNqkslqB++kSUzxqKhfLp1tKa4aVL
-	 WR/4bu+wI05qTZS9rpYEO+9n70MlDKTpZ18Fs7Z8=
+	b=nukhPI0xRo4f8xv+c/nc0DRIthLhbHux5bU+QlI+ynGp3T4HFIiZQ0ltLgkEFzcVZ
+	 8MgwaFUcTQO6zMSTYW8ZDO/nuDoOwPKamtiwuPaDekMVxqmxgX317+r4vG/iJxJFwT
+	 HdztUTWotJTlGcK9mkE6/gbGLBQquyNxdSz+llYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sicong Huang <huangsicong@iie.ac.cn>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/341] media: pci: cx23885: check cx23885_vdev_init() return
-Date: Tue, 27 Aug 2024 16:36:33 +0200
-Message-ID: <20240827143849.578930354@linuxfoundation.org>
+Subject: [PATCH 6.6 163/341] fs: binfmt_elf_efpic: dont use missing interpreters properties
+Date: Tue, 27 Aug 2024 16:36:34 +0200
+Message-ID: <20240827143849.615922598@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,48 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-[ Upstream commit 15126b916e39b0cb67026b0af3c014bfeb1f76b3 ]
+[ Upstream commit 15fd1dc3dadb4268207fa6797e753541aca09a2a ]
 
-cx23885_vdev_init() can return a NULL pointer, but that pointer
-is used in the next line without a check.
+Static FDPIC executable may get an executable stack even when it has
+non-executable GNU_STACK segment. This happens when STACK segment has rw
+permissions, but does not specify stack size. In that case FDPIC loader
+uses permissions of the interpreter's stack, and for static executables
+with no interpreter it results in choosing the arch-default permissions
+for the stack.
 
-Add a NULL pointer check and go to the error unwind if it is NULL.
+Fix that by using the interpreter's properties only when the interpreter
+is actually used.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Sicong Huang <huangsicong@iie.ac.cn>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Link: https://lore.kernel.org/r/20240118150637.660461-1-jcmvbkbc@gmail.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx23885/cx23885-video.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/binfmt_elf_fdpic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/cx23885/cx23885-video.c b/drivers/media/pci/cx23885/cx23885-video.c
-index 9af2c5596121c..51d7d720ec48b 100644
---- a/drivers/media/pci/cx23885/cx23885-video.c
-+++ b/drivers/media/pci/cx23885/cx23885-video.c
-@@ -1354,6 +1354,10 @@ int cx23885_video_register(struct cx23885_dev *dev)
- 	/* register Video device */
- 	dev->video_dev = cx23885_vdev_init(dev, dev->pci,
- 		&cx23885_video_template, "video");
-+	if (!dev->video_dev) {
-+		err = -ENOMEM;
-+		goto fail_unreg;
-+	}
- 	dev->video_dev->queue = &dev->vb2_vidq;
- 	dev->video_dev->device_caps = V4L2_CAP_READWRITE | V4L2_CAP_STREAMING |
- 				      V4L2_CAP_AUDIO | V4L2_CAP_VIDEO_CAPTURE;
-@@ -1382,6 +1386,10 @@ int cx23885_video_register(struct cx23885_dev *dev)
- 	/* register VBI device */
- 	dev->vbi_dev = cx23885_vdev_init(dev, dev->pci,
- 		&cx23885_vbi_template, "vbi");
-+	if (!dev->vbi_dev) {
-+		err = -ENOMEM;
-+		goto fail_unreg;
-+	}
- 	dev->vbi_dev->queue = &dev->vb2_vbiq;
- 	dev->vbi_dev->device_caps = V4L2_CAP_READWRITE | V4L2_CAP_STREAMING |
- 				    V4L2_CAP_AUDIO | V4L2_CAP_VBI_CAPTURE;
+diff --git a/fs/binfmt_elf_fdpic.c b/fs/binfmt_elf_fdpic.c
+index 206812ce544ae..96a8b13b57d96 100644
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -320,7 +320,7 @@ static int load_elf_fdpic_binary(struct linux_binprm *bprm)
+ 	else
+ 		executable_stack = EXSTACK_DEFAULT;
+ 
+-	if (stack_size == 0) {
++	if (stack_size == 0 && interp_params.flags & ELF_FDPIC_FLAG_PRESENT) {
+ 		stack_size = interp_params.stack_size;
+ 		if (interp_params.flags & ELF_FDPIC_FLAG_EXEC_STACK)
+ 			executable_stack = EXSTACK_ENABLE_X;
 -- 
 2.43.0
 
