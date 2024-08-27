@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D6DD517;
-	Tue, 27 Aug 2024 15:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D301CE71E;
+	Tue, 27 Aug 2024 15:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772617; cv=none; b=uoUeYF11t4edT9A99ZH1/EHp9VqjPl3pC7O+la3pwy36Xr44mT7PAC0vVlqU9BVAX3lqb/6tt/JqoaS//JavDjFZSyvwP5uQzB0YO00b+h14OIYpxxgqwTBxJ+AmgiPhena4Gb+QS++9XCKpefb2nwz17KLB7YMTFIHg4ISh9Lc=
+	t=1724772620; cv=none; b=CAh3DbkFikB27nHw8StFdu7xGd0AtPBJjE4obX2zoQxMpyNMgAGSpcBHGUHQlSOEZPZYlBkLFxsslg5Ml3a01deFETMpJ1jWhpzrsQ9pj3aC9TXIcHXuOzPo0HE3OyDSqHNWtbd3ctlcp4zm+L0jbW8dGnlgCRzt7GpwvefGx/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772617; c=relaxed/simple;
-	bh=HhKGzgy+cVa4kgMw/YXbfcUM94Kn1uEJjdSHKXmRDi8=;
+	s=arc-20240116; t=1724772620; c=relaxed/simple;
+	bh=HTS32SPxh8lc6PJrREg31S5txXTl/pIcJTPEQ+gLZ4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oeFEk3eLJBxT0vC72KPvbhxhCxLMYUFGLxcX7U7hMA1a4tzM1LMidl2RWRjtlyXlIpeb9MVpQJfgD26GIfiL3XHcJZOb3JpnFOXSE0XqH56iaGoXf5tiB0Bo3/s/B98/ayOO7m8LbFotUnnDZL7L16qGjGg8D2xIf6P+LtIa45o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koTEZkxf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SekiTOFe3ZTX8k86THwiGwyy+tN+LCCKFVpyYXlmC1ufRb31HnPvtS+AM9zToHjTiX1RLT9oIFXhe8GsYvECaRV3zh44KY5RkBLL+C+XtxcdWPTWX6Sgbgt2oFreffipN6E4UNyzvNULyIDjRyTy+RyG4l+yryIR3wCslFTZljU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLzT8eY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koTEZkxf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFFEC4AF65;
-	Tue, 27 Aug 2024 15:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLzT8eY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23984C4AF64;
+	Tue, 27 Aug 2024 15:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772617;
-	bh=HhKGzgy+cVa4kgMw/YXbfcUM94Kn1uEJjdSHKXmRDi8=;
+	s=korg; t=1724772620;
+	bh=HTS32SPxh8lc6PJrREg31S5txXTl/pIcJTPEQ+gLZ4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koTEZkxfpxi6FrtSgzfmj99oAE2/mAoDBNDZM4fKPaspDfySlgDhsF2IwfYVHkznI
-	 7zLHZDkNTRDKTqNTyJY6n3NVGwNvPgv3g/TEEeR30+cx3uBmiyOFp4uxhQBcv5oIEH
-	 kj1wTeGDOU7/dEsDNtSfAVESuYesvzHopdrw6GMg=
+	b=fLzT8eY43F87A4Z5QqIYPOFsGOJaTjN38MdCHhevfXBUAnjyqt2Zzd4ev37Am45JQ
+	 +bnomsnpV19v/JJXbmHcviXMcM5fhW1gLhoBzya9DYFMnLEcLrQ93tF7mGPKe1xYDX
+	 5rvpwYesi4oxFZeLyvDlTMcRIl4Fx53pgUruEJF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 267/321] MIPS: Loongson64: Set timer mode in cpu-probe
-Date: Tue, 27 Aug 2024 16:39:35 +0200
-Message-ID: <20240827143848.416378818@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 238/321] bonding: fix bond_ipsec_offload_ok return type
+Date: Tue, 27 Aug 2024 16:39:06 +0200
+Message-ID: <20240827143847.295891422@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,47 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-commit 1cb6ab446424649f03c82334634360c2e3043684 upstream.
+[ Upstream commit fc59b9a5f7201b9f7272944596113a82cc7773d5 ]
 
-Loongson64 C and G processors have EXTIMER feature which
-is conflicting with CP0 counter.
+Fix the return type which should be bool.
 
-Although the processor resets in EXTIMER disabled & INTIMER
-enabled mode, which is compatible with MIPS CP0 compare, firmware
-may attempt to enable EXTIMER and interfere CP0 compare.
-
-Set timer mode back to MIPS compatible mode to fix booting on
-systems with such firmware before we have an actual driver for
-EXTIMER.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 955b785ec6b3 ("bonding: fix suspicious RCU usage in bond_ipsec_offload_ok()")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/cpu-probe.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/bonding/bond_main.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
---- a/arch/mips/kernel/cpu-probe.c
-+++ b/arch/mips/kernel/cpu-probe.c
-@@ -1723,12 +1723,16 @@ static inline void cpu_probe_loongson(st
- 		c->ases |= (MIPS_ASE_LOONGSON_MMI | MIPS_ASE_LOONGSON_CAM |
- 			MIPS_ASE_LOONGSON_EXT | MIPS_ASE_LOONGSON_EXT2);
- 		c->ases &= ~MIPS_ASE_VZ; /* VZ of Loongson-3A2000/3000 is incomplete */
-+		change_c0_config6(LOONGSON_CONF6_EXTIMER | LOONGSON_CONF6_INTIMER,
-+				  LOONGSON_CONF6_INTIMER);
- 		break;
- 	case PRID_IMP_LOONGSON_64G:
- 		__cpu_name[cpu] = "ICT Loongson-3";
- 		set_elf_platform(cpu, "loongson3a");
- 		set_isa(c, MIPS_CPU_ISA_M64R2);
- 		decode_cpucfg(c);
-+		change_c0_config6(LOONGSON_CONF6_EXTIMER | LOONGSON_CONF6_INTIMER,
-+				  LOONGSON_CONF6_INTIMER);
- 		break;
- 	default:
- 		panic("Unknown Loongson Processor ID!");
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index be5348d0b22e5..5c7b249a1bcfa 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -595,34 +595,28 @@ static bool bond_ipsec_offload_ok(struct sk_buff *skb, struct xfrm_state *xs)
+ 	struct net_device *real_dev;
+ 	struct slave *curr_active;
+ 	struct bonding *bond;
+-	int err;
++	bool ok = false;
+ 
+ 	bond = netdev_priv(bond_dev);
+ 	rcu_read_lock();
+ 	curr_active = rcu_dereference(bond->curr_active_slave);
+ 	real_dev = curr_active->dev;
+ 
+-	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP) {
+-		err = false;
++	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP)
+ 		goto out;
+-	}
+ 
+-	if (!xs->xso.real_dev) {
+-		err = false;
++	if (!xs->xso.real_dev)
+ 		goto out;
+-	}
+ 
+ 	if (!real_dev->xfrmdev_ops ||
+ 	    !real_dev->xfrmdev_ops->xdo_dev_offload_ok ||
+-	    netif_is_bond_master(real_dev)) {
+-		err = false;
++	    netif_is_bond_master(real_dev))
+ 		goto out;
+-	}
+ 
+-	err = real_dev->xfrmdev_ops->xdo_dev_offload_ok(skb, xs);
++	ok = real_dev->xfrmdev_ops->xdo_dev_offload_ok(skb, xs);
+ out:
+ 	rcu_read_unlock();
+-	return err;
++	return ok;
+ }
+ 
+ static const struct xfrmdev_ops bond_xfrmdev_ops = {
+-- 
+2.43.0
+
 
 
