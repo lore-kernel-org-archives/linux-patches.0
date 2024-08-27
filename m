@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339951C57BE;
-	Tue, 27 Aug 2024 14:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696EADDC1;
+	Tue, 27 Aug 2024 14:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770158; cv=none; b=q3XjK5nXXIln7Rh2p9L0FCnIvZ/F0g/4bF5cBK8YRNztLTzfJob/P5yVmMKjNL70Zvwk+W2GoIP1SP0bxJjT5h9+E5BX4XYXNuQ1h9ekSk9sHJIMNIUxmtXmYxmOj9V3eLSxbeAmUrYVsrWZLlwNn9Zj8tWLzbTFQpwdE+D+RlE=
+	t=1724770161; cv=none; b=pIxpMcZZM5nS5ETKqH+CvrrIrCHi49NcOgx+vzZI73srAzSkQgSeesScPB/ye9u9Z1VdeojP9E7qVO5HUAjCjn/CogH+7Y77c9iI4pW8AtCXf9spS8MOfXghXi+1XESXzpJUCr0NqmhscUmXaRR4qprgbX4Xtk5/3ht4fO5SUhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770158; c=relaxed/simple;
-	bh=o/9xEUXYA6GrVwe4ILpaOhsA1lQAMvTGZXVGMqVBQxs=;
+	s=arc-20240116; t=1724770161; c=relaxed/simple;
+	bh=ac0/S4cjGeTN5LUYQU4kYQU8aPU6Kl8e7ZGBc/zDP5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wz9I+88Jn6gLwm1x405ixeS/dFyAB5jytRQbOaT8woF8CdKbpbXfKyJ67lvJByJ6SkZgv+V/Xjkdup3z3We5MImzwPkF9UFQ2QEURasV/IEGqA/TTpXwn/bs4E1bOqhUUpvs6cF0dGOxcMBaio6048B4K2OcbKjUwI3vdXvECvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmOzSZ5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwb4ZOAUhrLNTDvbnq5JJIbyezj6UKfRxFProLDn4bwYpe22ns0nnxY7LxkdaT1POo0oIpUZTdxskGJWm3kYZxOPF7cVIGrC09jS1BDFM0L17WUIOJd6LyNRe1e8hvkTltHHU+hhjQXyLzf+lKri9SldwuqNbo6hejkiu6SfC4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IN+nh9+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmOzSZ5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79453C4AF13;
-	Tue, 27 Aug 2024 14:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IN+nh9+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B905CC4AF13;
+	Tue, 27 Aug 2024 14:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770158;
-	bh=o/9xEUXYA6GrVwe4ILpaOhsA1lQAMvTGZXVGMqVBQxs=;
+	s=korg; t=1724770161;
+	bh=ac0/S4cjGeTN5LUYQU4kYQU8aPU6Kl8e7ZGBc/zDP5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmOzSZ5lZStJyC3ib1QS1uEg5oPmJbuCJ76BB41vczSK8FAju2TXkRR71OVcWLS+p
-	 N8E2dPkRBSdEhMskxDlq4nYFaa4kLS7XSSTLuWyu/Bdw794zgmwv2l0znVeJkypEQw
-	 KYBlcblGt5/J+KRXl6/zn0RA1wInyxFkT7VWlG5w=
+	b=IN+nh9+t/mnmtpi4QX40CW0M9mPKCrP97MWc7Q+78aXUCeSpXx1q+So8jW865wUNp
+	 u5225ZAtfVCkfusjJhChBB4AvMfpGkuTgVC3uMDdzHP4+aZBMTKHI2j8GhprpudCO8
+	 dFbon+Cc3jIUcEGksDxC4ILJn23tnF7gnaNZzFFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Cromie <jim.cromie@gmail.com>,
-	Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	linux-hwmon@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/341] hwmon: (pc87360) Bounds check data->innr usage
-Date: Tue, 27 Aug 2024 16:36:15 +0200
-Message-ID: <20240827143848.899532703@linuxfoundation.org>
+Subject: [PATCH 6.6 145/341] powerpc/pseries/papr-sysparm: Validate buffer object lengths
+Date: Tue, 27 Aug 2024 16:36:16 +0200
+Message-ID: <20240827143848.938452635@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -55,58 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 4265eb062a7303e537ab3792ade31f424c3c5189 ]
+[ Upstream commit 35aae182bd7b422be3cefc08c12207bf2b973364 ]
 
-Without visibility into the initializers for data->innr, GCC suspects
-using it as an index could walk off the end of the various 14-element
-arrays in data. Perform an explicit clamp to the array size. Silences
-the following warning with GCC 12+:
+The ability to get and set system parameters will be exposed to user
+space, so let's get a little more strict about malformed
+papr_sysparm_buf objects.
 
-../drivers/hwmon/pc87360.c: In function 'pc87360_update_device':
-../drivers/hwmon/pc87360.c:341:49: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
-  341 |                                 data->in_max[i] = pc87360_read_value(data,
-      |                                 ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
-  342 |                                                   LD_IN, i,
-      |                                                   ~~~~~~~~~
-  343 |                                                   PC87365_REG_IN_MAX);
-      |                                                   ~~~~~~~~~~~~~~~~~~~
-../drivers/hwmon/pc87360.c:209:12: note: at offset 255 into destination object 'in_max' of size 14
-  209 |         u8 in_max[14];          /* Register value */
-      |            ^~~~~~
+* Create accessors for the length field of struct papr_sysparm_buf.
+  The length is always stored in MSB order and this is better than
+  spreading the necessary conversions all over.
 
-Cc: Jim Cromie <jim.cromie@gmail.com>
-Cc: Jean Delvare <jdelvare@suse.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Cc: linux-hwmon@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20231130200207.work.679-kees@kernel.org
-[groeck: Added comment into code clarifying context]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+* Reject attempts to submit invalid buffers to RTAS.
+
+* Warn if RTAS returns a buffer with an invalid length, clamping the
+  returned length to a safe value that won't overrun the buffer.
+
+These are meant as precautionary measures to mitigate both firmware
+and kernel bugs in this area, should they arise, but I am not aware of
+any.
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231212-papr-sys_rtas-vs-lockdown-v6-10-e9eafd0c8c6c@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pc87360.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/papr-sysparm.c | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/drivers/hwmon/pc87360.c b/drivers/hwmon/pc87360.c
-index a4adc8bd531ff..534a6072036c9 100644
---- a/drivers/hwmon/pc87360.c
-+++ b/drivers/hwmon/pc87360.c
-@@ -323,7 +323,11 @@ static struct pc87360_data *pc87360_update_device(struct device *dev)
- 		}
+diff --git a/arch/powerpc/platforms/pseries/papr-sysparm.c b/arch/powerpc/platforms/pseries/papr-sysparm.c
+index fedc61599e6cc..a1e7aeac74161 100644
+--- a/arch/powerpc/platforms/pseries/papr-sysparm.c
++++ b/arch/powerpc/platforms/pseries/papr-sysparm.c
+@@ -23,6 +23,46 @@ void papr_sysparm_buf_free(struct papr_sysparm_buf *buf)
+ 	kfree(buf);
+ }
  
- 		/* Voltages */
--		for (i = 0; i < data->innr; i++) {
-+		/*
-+		 * The min() below does not have any practical meaning and is
-+		 * only needed to silence a warning observed with gcc 12+.
-+		 */
-+		for (i = 0; i < min(data->innr, ARRAY_SIZE(data->in)); i++) {
- 			data->in_status[i] = pc87360_read_value(data, LD_IN, i,
- 					     PC87365_REG_IN_STATUS);
- 			/* Clear bits */
++static size_t papr_sysparm_buf_get_length(const struct papr_sysparm_buf *buf)
++{
++	return be16_to_cpu(buf->len);
++}
++
++static void papr_sysparm_buf_set_length(struct papr_sysparm_buf *buf, size_t length)
++{
++	WARN_ONCE(length > sizeof(buf->val),
++		  "bogus length %zu, clamping to safe value", length);
++	length = min(sizeof(buf->val), length);
++	buf->len = cpu_to_be16(length);
++}
++
++/*
++ * For use on buffers returned from ibm,get-system-parameter before
++ * returning them to callers. Ensures the encoded length of valid data
++ * cannot overrun buf->val[].
++ */
++static void papr_sysparm_buf_clamp_length(struct papr_sysparm_buf *buf)
++{
++	papr_sysparm_buf_set_length(buf, papr_sysparm_buf_get_length(buf));
++}
++
++/*
++ * Perform some basic diligence on the system parameter buffer before
++ * submitting it to RTAS.
++ */
++static bool papr_sysparm_buf_can_submit(const struct papr_sysparm_buf *buf)
++{
++	/*
++	 * Firmware ought to reject buffer lengths that exceed the
++	 * maximum specified in PAPR, but there's no reason for the
++	 * kernel to allow them either.
++	 */
++	if (papr_sysparm_buf_get_length(buf) > sizeof(buf->val))
++		return false;
++
++	return true;
++}
++
+ /**
+  * papr_sysparm_get() - Retrieve the value of a PAPR system parameter.
+  * @param: PAPR system parameter token as described in
+@@ -63,6 +103,9 @@ int papr_sysparm_get(papr_sysparm_t param, struct papr_sysparm_buf *buf)
+ 	if (token == RTAS_UNKNOWN_SERVICE)
+ 		return -ENOENT;
+ 
++	if (!papr_sysparm_buf_can_submit(buf))
++		return -EINVAL;
++
+ 	work_area = rtas_work_area_alloc(sizeof(*buf));
+ 
+ 	memcpy(rtas_work_area_raw_buf(work_area), buf, sizeof(*buf));
+@@ -77,6 +120,7 @@ int papr_sysparm_get(papr_sysparm_t param, struct papr_sysparm_buf *buf)
+ 	case 0:
+ 		ret = 0;
+ 		memcpy(buf, rtas_work_area_raw_buf(work_area), sizeof(*buf));
++		papr_sysparm_buf_clamp_length(buf);
+ 		break;
+ 	case -3: /* parameter not implemented */
+ 		ret = -EOPNOTSUPP;
+@@ -115,6 +159,9 @@ int papr_sysparm_set(papr_sysparm_t param, const struct papr_sysparm_buf *buf)
+ 	if (token == RTAS_UNKNOWN_SERVICE)
+ 		return -ENOENT;
+ 
++	if (!papr_sysparm_buf_can_submit(buf))
++		return -EINVAL;
++
+ 	work_area = rtas_work_area_alloc(sizeof(*buf));
+ 
+ 	memcpy(rtas_work_area_raw_buf(work_area), buf, sizeof(*buf));
 -- 
 2.43.0
 
