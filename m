@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34CF17C96;
-	Tue, 27 Aug 2024 15:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC231CFBC;
+	Tue, 27 Aug 2024 15:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772099; cv=none; b=CjnbIPQSXzD1hQS0LZrr3ZR+R43KjdSxai3mpzX/64q43bZw7px8wY/QtlCdQNgqRpVg3h1oHYgGravxtT45D6yaScv/IC8S4AKnhAYpu1YsFqvSItqq/IKhdwIyfVVX+8Hzp1iNPyDIPBDbB2wQH6k7awydCuL1oeN3MgmAwE8=
+	t=1724772103; cv=none; b=OHaq+MxdfGKrZCXLWo5XwVycxwBw9baJ1xCh13z7bJD4TD42stMRalAk/BCaozAY0m6fOEiXI+eNJDTMswwsl5GXmsiOlMYTnY8POod37P6DaTe+ay9vdAQBx9YCS9R6LpOBnzOfkgwua/FFLId3MveNBV5SULsoyPhDHCvN/Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772099; c=relaxed/simple;
-	bh=vZsfaJgcDImUxgkTURYwtKL9urcI2VvRF7+swmZKW30=;
+	s=arc-20240116; t=1724772103; c=relaxed/simple;
+	bh=9lZJKnwlWHfAhT5/kpo/A61AndKJ0SqL72h6jCw8n/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzqyC+WZpAnvMgPoAkNJ3ONAtkNFBbqPOUkE46CYxUOE3x27HMmmITJmKEwQorFQmUuX+Mtchu0E3MJvjaHQCV8WcBHmQNs/u6i/qzga4BuWMptIiyXDFa0NHramnn5q7ZzSOSAj+GVeWZNJvXhCaDGBmrnHvgr8Gcj5LK84Wek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x56nXLw9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZM3kO0DR+uIVhbk9AP2Ea0dDLKLuFjDxxKvTPDaERVxFEKXwM9yR+OBaey3P5lRtMC36BXsyzI2RaUWHxsoHZUt7DxKiUhaNO2qSJkppQJQhWVGjXKhxpNOdmjen3+PSVZ8512TAO+mRh2bpJ0ctyhBjH0Ly7sqVqXnSfgDZds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbDtYy5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x56nXLw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376F8C4FE09;
-	Tue, 27 Aug 2024 15:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbDtYy5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94445C4FE09;
+	Tue, 27 Aug 2024 15:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772099;
-	bh=vZsfaJgcDImUxgkTURYwtKL9urcI2VvRF7+swmZKW30=;
+	s=korg; t=1724772103;
+	bh=9lZJKnwlWHfAhT5/kpo/A61AndKJ0SqL72h6jCw8n/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x56nXLw9synZItD20Uu/QKEeGB3n/TYKk76SCwVQole0u2g7AC7FCwBdxmIBOT6EE
-	 RIvgy54VAPTyjNSiTPb71c1fm4INfkiEiEc9ZpuTulsBnRSmu+K5XEQgeXzQbMyqC/
-	 qjEaIkNJTqtLu57zsq24xTBiIFEud0PVy1ZflUKo=
+	b=CbDtYy5GYG9old2h5STbnlr79F+R/JSRgSEjRbNJqFHs2o1SyvtsTdit6E6CO7okU
+	 IGt5iMOdTg16Ilizd44Crm5YSL6WATOcm1faaSQwv7+5yq7JFhRfO06uh1IA/AXMnp
+	 6RXl3K3ECwN4N1QscedlpUPulHG3yyeQNphSA4aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/321] wifi: mac80211: fix BA session teardown race
-Date: Tue, 27 Aug 2024 16:37:02 +0200
-Message-ID: <20240827143842.584333698@linuxfoundation.org>
+Subject: [PATCH 6.1 115/321] rcu: Dump memory object info if callback function is invalid
+Date: Tue, 27 Aug 2024 16:37:03 +0200
+Message-ID: <20240827143842.621801150@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,110 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 05f136220d17839eb7c155f015ace9152f603225 ]
+[ Upstream commit 2cbc482d325ee58001472c4359b311958c4efdd1 ]
 
-As previously reported by Alexander, whose commit 69403bad97aa
-("wifi: mac80211: sdata can be NULL during AMPDU start") I'm
-reverting as part of this commit, there's a race between station
-destruction and aggregation setup, where the aggregation setup
-can happen while the station is being removed and queue the work
-after ieee80211_sta_tear_down_BA_sessions() has already run in
-__sta_info_destroy_part1(), and thus the worker will run with a
-now freed station. In his case, this manifested in a NULL sdata
-pointer, but really there's no guarantee whatsoever.
+When a structure containing an RCU callback rhp is (incorrectly) freed
+and reallocated after rhp is passed to call_rcu(), it is not unusual for
+rhp->func to be set to NULL. This defeats the debugging prints used by
+__call_rcu_common() in kernels built with CONFIG_DEBUG_OBJECTS_RCU_HEAD=y,
+which expect to identify the offending code using the identity of this
+function.
 
-The real issue seems to be that it's possible at all to have a
-situation where this occurs - we want to stop the BA sessions
-when doing _part1, but we cannot be sure, and WLAN_STA_BLOCK_BA
-isn't necessarily effective since we don't know that the setup
-isn't concurrently running and already got past the check.
+And in kernels build without CONFIG_DEBUG_OBJECTS_RCU_HEAD=y, things
+are even worse, as can be seen from this splat:
 
-Simply call ieee80211_sta_tear_down_BA_sessions() again in the
-second part of station destruction, since at that point really
-nothing else can hold a reference to the station any more.
+Unable to handle kernel NULL pointer dereference at virtual address 0
+... ...
+PC is at 0x0
+LR is at rcu_do_batch+0x1c0/0x3b8
+... ...
+ (rcu_do_batch) from (rcu_core+0x1d4/0x284)
+ (rcu_core) from (__do_softirq+0x24c/0x344)
+ (__do_softirq) from (__irq_exit_rcu+0x64/0x108)
+ (__irq_exit_rcu) from (irq_exit+0x8/0x10)
+ (irq_exit) from (__handle_domain_irq+0x74/0x9c)
+ (__handle_domain_irq) from (gic_handle_irq+0x8c/0x98)
+ (gic_handle_irq) from (__irq_svc+0x5c/0x94)
+ (__irq_svc) from (arch_cpu_idle+0x20/0x3c)
+ (arch_cpu_idle) from (default_idle_call+0x4c/0x78)
+ (default_idle_call) from (do_idle+0xf8/0x150)
+ (do_idle) from (cpu_startup_entry+0x18/0x20)
+ (cpu_startup_entry) from (0xc01530)
 
-Also revert the sdata checks since those are just misleading at
-this point.
+This commit therefore adds calls to mem_dump_obj(rhp) to output some
+information, for example:
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  slab kmalloc-256 start ffff410c45019900 pointer offset 0 size 256
+
+This provides the rough size of the memory block and the offset of the
+rcu_head structure, which as least provides at least a few clues to help
+locate the problem. If the problem is reproducible, additional slab
+debugging can be enabled, for example, CONFIG_DEBUG_SLAB=y, which can
+provide significantly more information.
+
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/agg-tx.c     |  6 +-----
- net/mac80211/driver-ops.c |  3 ---
- net/mac80211/sta_info.c   | 14 ++++++++++++++
- 3 files changed, 15 insertions(+), 8 deletions(-)
+ kernel/rcu/rcu.h      | 7 +++++++
+ kernel/rcu/srcutiny.c | 1 +
+ kernel/rcu/srcutree.c | 1 +
+ kernel/rcu/tasks.h    | 1 +
+ kernel/rcu/tiny.c     | 1 +
+ kernel/rcu/tree.c     | 1 +
+ 6 files changed, 12 insertions(+)
 
-diff --git a/net/mac80211/agg-tx.c b/net/mac80211/agg-tx.c
-index 85d2b9e4b51ce..e26a72f3a1042 100644
---- a/net/mac80211/agg-tx.c
-+++ b/net/mac80211/agg-tx.c
-@@ -491,7 +491,7 @@ void ieee80211_tx_ba_session_handle_start(struct sta_info *sta, int tid)
- {
- 	struct tid_ampdu_tx *tid_tx;
- 	struct ieee80211_local *local = sta->local;
--	struct ieee80211_sub_if_data *sdata;
-+	struct ieee80211_sub_if_data *sdata = sta->sdata;
- 	struct ieee80211_ampdu_params params = {
- 		.sta = &sta->sta,
- 		.action = IEEE80211_AMPDU_TX_START,
-@@ -519,7 +519,6 @@ void ieee80211_tx_ba_session_handle_start(struct sta_info *sta, int tid)
- 	 */
- 	synchronize_net();
+diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
+index 48d8f754b730e..49ff955ed2034 100644
+--- a/kernel/rcu/rcu.h
++++ b/kernel/rcu/rcu.h
+@@ -10,6 +10,7 @@
+ #ifndef __LINUX_RCU_H
+ #define __LINUX_RCU_H
  
--	sdata = sta->sdata;
- 	params.ssn = sta->tid_seq[tid] >> 4;
- 	ret = drv_ampdu_action(local, sdata, &params);
- 	tid_tx->ssn = params.ssn;
-@@ -533,9 +532,6 @@ void ieee80211_tx_ba_session_handle_start(struct sta_info *sta, int tid)
- 		 */
- 		set_bit(HT_AGG_STATE_DRV_READY, &tid_tx->state);
- 	} else if (ret) {
--		if (!sdata)
--			return;
--
- 		ht_dbg(sdata,
- 		       "BA request denied - HW unavailable for %pM tid %d\n",
- 		       sta->sta.addr, tid);
-diff --git a/net/mac80211/driver-ops.c b/net/mac80211/driver-ops.c
-index c08d3c9a4a177..5392ffa182704 100644
---- a/net/mac80211/driver-ops.c
-+++ b/net/mac80211/driver-ops.c
-@@ -391,9 +391,6 @@ int drv_ampdu_action(struct ieee80211_local *local,
++#include <linux/slab.h>
+ #include <trace/events/rcu.h>
  
- 	might_sleep();
+ /*
+@@ -211,6 +212,12 @@ static inline void debug_rcu_head_unqueue(struct rcu_head *head)
+ }
+ #endif	/* #else !CONFIG_DEBUG_OBJECTS_RCU_HEAD */
  
--	if (!sdata)
--		return -EIO;
--
- 	sdata = get_bss_sdata(sdata);
- 	if (!check_sdata_in_driver(sdata))
- 		return -EIO;
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 91768abf2d75b..dd1864f6549f2 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1272,6 +1272,20 @@ static void __sta_info_destroy_part2(struct sta_info *sta)
- 	 *	 after _part1 and before _part2!
- 	 */
- 
-+	/*
-+	 * There's a potential race in _part1 where we set WLAN_STA_BLOCK_BA
-+	 * but someone might have just gotten past a check, and not yet into
-+	 * queuing the work/creating the data/etc.
-+	 *
-+	 * Do another round of destruction so that the worker is certainly
-+	 * canceled before we later free the station.
-+	 *
-+	 * Since this is after synchronize_rcu()/synchronize_net() we're now
-+	 * certain that nobody can actually hold a reference to the STA and
-+	 * be calling e.g. ieee80211_start_tx_ba_session().
-+	 */
-+	ieee80211_sta_tear_down_BA_sessions(sta, AGG_STOP_DESTROY_STA);
++static inline void debug_rcu_head_callback(struct rcu_head *rhp)
++{
++	if (unlikely(!rhp->func))
++		kmem_dump_obj(rhp);
++}
 +
- 	might_sleep();
- 	lockdep_assert_held(&local->sta_mtx);
+ extern int rcu_cpu_stall_suppress_at_boot;
+ 
+ static inline bool rcu_stall_is_suppressed_at_boot(void)
+diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
+index 33adafdad2613..5e7f336baa06a 100644
+--- a/kernel/rcu/srcutiny.c
++++ b/kernel/rcu/srcutiny.c
+@@ -138,6 +138,7 @@ void srcu_drive_gp(struct work_struct *wp)
+ 	while (lh) {
+ 		rhp = lh;
+ 		lh = lh->next;
++		debug_rcu_head_callback(rhp);
+ 		local_bh_disable();
+ 		rhp->func(rhp);
+ 		local_bh_enable();
+diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
+index 929dcbc04d29c..f7825900bdfd7 100644
+--- a/kernel/rcu/srcutree.c
++++ b/kernel/rcu/srcutree.c
+@@ -1591,6 +1591,7 @@ static void srcu_invoke_callbacks(struct work_struct *work)
+ 	rhp = rcu_cblist_dequeue(&ready_cbs);
+ 	for (; rhp != NULL; rhp = rcu_cblist_dequeue(&ready_cbs)) {
+ 		debug_rcu_head_unqueue(rhp);
++		debug_rcu_head_callback(rhp);
+ 		local_bh_disable();
+ 		rhp->func(rhp);
+ 		local_bh_enable();
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 456c956f481ef..bb6b037ef30fa 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -487,6 +487,7 @@ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu
+ 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
+ 	len = rcl.len;
+ 	for (rhp = rcu_cblist_dequeue(&rcl); rhp; rhp = rcu_cblist_dequeue(&rcl)) {
++		debug_rcu_head_callback(rhp);
+ 		local_bh_disable();
+ 		rhp->func(rhp);
+ 		local_bh_enable();
+diff --git a/kernel/rcu/tiny.c b/kernel/rcu/tiny.c
+index a33a8d4942c37..21c040cba4bd0 100644
+--- a/kernel/rcu/tiny.c
++++ b/kernel/rcu/tiny.c
+@@ -97,6 +97,7 @@ static inline bool rcu_reclaim_tiny(struct rcu_head *head)
+ 
+ 	trace_rcu_invoke_callback("", head);
+ 	f = head->func;
++	debug_rcu_head_callback(head);
+ 	WRITE_ONCE(head->func, (rcu_callback_t)0L);
+ 	f(head);
+ 	rcu_lock_release(&rcu_callback_map);
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index cd6144cea5a1a..86923a8914007 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -2292,6 +2292,7 @@ static void rcu_do_batch(struct rcu_data *rdp)
+ 		trace_rcu_invoke_callback(rcu_state.name, rhp);
+ 
+ 		f = rhp->func;
++		debug_rcu_head_callback(rhp);
+ 		WRITE_ONCE(rhp->func, (rcu_callback_t)0L);
+ 		f(rhp);
  
 -- 
 2.43.0
