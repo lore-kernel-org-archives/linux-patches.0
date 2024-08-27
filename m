@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07D82FB2;
-	Tue, 27 Aug 2024 15:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD3E2FB2;
+	Tue, 27 Aug 2024 15:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770847; cv=none; b=n5YekJ3KQ+qoNXsnukU3oumZkciFn62HkaconVUAoQGp/ivHSJm2jtW16vGX4jK/+R0T8k218ZPNavjw5WZ9/YjprfxrtYc17QPlhguLrhH//HDigKYR3Lv1vpCI6016ebLwzowACWYCKxtRRXmff2B95ufZIqJGZnnWEpIEwu4=
+	t=1724770851; cv=none; b=psk0oWC5aGYZnGQVgr6qLUHNLG4Jxgwhe8ZtrqcKyHUxkmTzmYolhDO5N/mtQ7PCxqZYbi23drgUewqLH4fXsYuh7u84YnHjWSnvwzCf2bruk+axqyejKWQrR/ES8sUj/te77O52Fr1Of4751gb4IofOnmVinmNcyDUvhWpm4mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770847; c=relaxed/simple;
-	bh=XoJp75bxmGB7Wi/Ky5L7qDzH2jpS3HseFetJ5H00vHM=;
+	s=arc-20240116; t=1724770851; c=relaxed/simple;
+	bh=44oT7pECC/MNJDxqoCh5/q+alw7Di+E+tQTwlXZ6t3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njVCMDa8lgTH7ocGuShjpYmZLcqlnB7tP6INTD4ftLejD5SKubErFUrocpIlVFN9d500k2j/f331zxgDNAyOXlfraV8zvdbae9NXyy2oVWyOaGXT4/zELNO50KiRmDLRhwKUoKNHdTBwipHTw0YGuNwQNPOgVrsvdJyvZE/+bWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aU/OaYt8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u/7o+sJYpbYuTIjYRxzPbZu+Py6n9E8GK/bv8ChLkJT6aJ7dpWgpnL8Z0r0P0Zh9l1LfehtJGATHnujY8R+aOfdUz3lsfUypebsM6+jx25iwZmKGkncp4jO4AIzzJRmvhMqgl6n5iKVZqWlyrN/GBlvpXCqnjHMqv0EZWYLZjZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhVJm0Mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aU/OaYt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425D8C4AF1C;
-	Tue, 27 Aug 2024 15:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhVJm0Mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E646C4AF1C;
+	Tue, 27 Aug 2024 15:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770847;
-	bh=XoJp75bxmGB7Wi/Ky5L7qDzH2jpS3HseFetJ5H00vHM=;
+	s=korg; t=1724770851;
+	bh=44oT7pECC/MNJDxqoCh5/q+alw7Di+E+tQTwlXZ6t3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aU/OaYt8OSxz/wB0KHNd2qxhchFi0DP1VGBIgawo4BNHbbRANJ9xLB0Ims8iHrGBN
-	 TMTb9n/18sNAMxClOWritEqWrGB1X+cuVSHtLjkX/8o774K9IpbB22rV/6D9ZSqRGp
-	 iEQKry6THxTqgPA5xHOashGDwVHjiatJas1FWUGs=
+	b=rhVJm0MoSV8pCdLJUlrAF4rKwAbcOTk7ptijpYAU/Egbz/u3PcRJaLCitjgMdJOhA
+	 mrKKub8tFwYBzDrDeMs2XhAXFHlm7F1LCGLLUMhXbOWlMJ+uVAH/fKe2Pw9/g//V5u
+	 aC/iL0EAoPiWYMwjp+bLDj54GEz4dcMGXQoGQoVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+91dbdfecdd3287734d8e@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
 	Eli Billauer <eli.billauer@gmail.com>
-Subject: [PATCH 6.10 011/273] char: xillybus: Dont destroy workqueue from work item running on it
-Date: Tue, 27 Aug 2024 16:35:35 +0200
-Message-ID: <20240827143833.814327663@linuxfoundation.org>
+Subject: [PATCH 6.10 012/273] char: xillybus: Refine workqueue handling
+Date: Tue, 27 Aug 2024 16:35:36 +0200
+Message-ID: <20240827143833.852270692@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,81 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Eli Billauer <eli.billauer@gmail.com>
 
-commit ccbde4b128ef9c73d14d0d7817d68ef795f6d131 upstream.
+commit ad899c301c880766cc709aad277991b3ab671b66 upstream.
 
-Triggered by a kref decrement, destroy_workqueue() may be called from
-within a work item for destroying its own workqueue. This illegal
-situation is averted by adding a module-global workqueue for exclusive
-use of the offending work item. Other work items continue to be queued
-on per-device workqueues to ensure performance.
+As the wakeup work item now runs on a separate workqueue, it needs to be
+flushed separately along with flushing the device's workqueue.
 
-Reported-by: syzbot+91dbdfecdd3287734d8e@syzkaller.appspotmail.com
+Also, move the destroy_workqueue() call to the end of the exit method,
+so that deinitialization is done in the opposite order of
+initialization.
+
+Fixes: ccbde4b128ef ("char: xillybus: Don't destroy workqueue from work item running on it")
 Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/lkml/0000000000000ab25a061e1dfe9f@google.com/
 Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
-Link: https://lore.kernel.org/r/20240801121126.60183-1-eli.billauer@gmail.com
+Link: https://lore.kernel.org/r/20240816070200.50695-1-eli.billauer@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/xillybus/xillyusb.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/char/xillybus/xillyusb.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/drivers/char/xillybus/xillyusb.c
 +++ b/drivers/char/xillybus/xillyusb.c
-@@ -50,6 +50,7 @@ MODULE_LICENSE("GPL v2");
- static const char xillyname[] = "xillyusb";
+@@ -2093,9 +2093,11 @@ static int xillyusb_discovery(struct usb
+ 	 * just after responding with the IDT, there is no reason for any
+ 	 * work item to be running now. To be sure that xdev->channels
+ 	 * is updated on anything that might run in parallel, flush the
+-	 * workqueue, which rarely does anything.
++	 * device's workqueue and the wakeup work item. This rarely
++	 * does anything.
+ 	 */
+ 	flush_workqueue(xdev->workq);
++	flush_work(&xdev->wakeup_workitem);
  
- static unsigned int fifo_buf_order;
-+static struct workqueue_struct *wakeup_wq;
+ 	xdev->num_channels = num_channels;
  
- #define USB_VENDOR_ID_XILINX		0x03fd
- #define USB_VENDOR_ID_ALTERA		0x09fb
-@@ -569,10 +570,6 @@ static void cleanup_dev(struct kref *kre
-  * errors if executed. The mechanism relies on that xdev->error is assigned
-  * a non-zero value by report_io_error() prior to queueing wakeup_all(),
-  * which prevents bulk_in_work() from calling process_bulk_in().
-- *
-- * The fact that wakeup_all() and bulk_in_work() are queued on the same
-- * workqueue makes their concurrent execution very unlikely, however the
-- * kernel's API doesn't seem to ensure this strictly.
-  */
- 
- static void wakeup_all(struct work_struct *work)
-@@ -627,7 +624,7 @@ static void report_io_error(struct xilly
- 
- 	if (do_once) {
- 		kref_get(&xdev->kref); /* xdev is used by work item */
--		queue_work(xdev->workq, &xdev->wakeup_workitem);
-+		queue_work(wakeup_wq, &xdev->wakeup_workitem);
- 	}
- }
- 
-@@ -2258,6 +2255,10 @@ static int __init xillyusb_init(void)
- {
- 	int rc = 0;
- 
-+	wakeup_wq = alloc_workqueue(xillyname, 0, 0);
-+	if (!wakeup_wq)
-+		return -ENOMEM;
-+
- 	if (LOG2_INITIAL_FIFO_BUF_SIZE > PAGE_SHIFT)
- 		fifo_buf_order = LOG2_INITIAL_FIFO_BUF_SIZE - PAGE_SHIFT;
- 	else
-@@ -2265,11 +2266,16 @@ static int __init xillyusb_init(void)
- 
- 	rc = usb_register(&xillyusb_driver);
- 
-+	if (rc)
-+		destroy_workqueue(wakeup_wq);
-+
- 	return rc;
- }
+@@ -2274,9 +2276,9 @@ static int __init xillyusb_init(void)
  
  static void __exit xillyusb_exit(void)
  {
-+	destroy_workqueue(wakeup_wq);
-+
+-	destroy_workqueue(wakeup_wq);
+-
  	usb_deregister(&xillyusb_driver);
++
++	destroy_workqueue(wakeup_wq);
  }
  
+ module_init(xillyusb_init);
 
 
