@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5492F1C6F69;
-	Tue, 27 Aug 2024 15:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9C0DDC1;
+	Tue, 27 Aug 2024 15:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770825; cv=none; b=n6JQ4hS0VRYgC7nTle16hAWJZ3iC9fWggw/NrT6Kd230dRyFk8ZXtyFkmBwPPrGaYqsBWS72Q/5dgOnOD4gkTt4FQ2EoqGn7WTMBYF8VC7vABH2Sq43+O9PTEwvtwaHF1NFY2vB3Gz0uN3PC5Huu1MWiVxAnM8DfuMCCCSqnSCs=
+	t=1724770828; cv=none; b=o1jZ+Y9wtFuuAg78ZHKchYJlJ1i/Lz04ymSNsAoWFYitPF5r6oTE6d9uYmwXi/YJ8UKQRvYlhxiuBBdB7PMKGK9kaY+AXPhCoCb4R0Zq+UtgnIxYoo7muGHYnjz3UkLISAlF423rP8JDXu38QJoJkx5qEzud3jBP6VGJb3+5bNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770825; c=relaxed/simple;
-	bh=jmwphznRUkAPkeMtjJWQUdxMXr5PQ1ieQuACM4EHEKk=;
+	s=arc-20240116; t=1724770828; c=relaxed/simple;
+	bh=5bfum5RmnohhU6L2FbvT94JC4mEa8nBhO/Mwh13CzZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpINLTis7paWro1GmVgYPa+oCX1P/xLF2n7FDlOWEzGtuXZfWyh1R1MBczqKUHa2wpvzzqsfQev5zVIu/HZqRoxblDeJSBwLUP7/bDnvZnWTBjkliXsPDIqx1/PZsXEn5gueZ6Or9Xr2XSPobG53z1/y6vI7kt6LIgNPUPdqR98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBPyGkfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKGy+KOzUS5JIjci/EuQkW3KQFjhUIUMrm75yO71fHqegOIZjUisjYTh/+fkvteiTD0C454LwuExpk84/tG2OEpZAMkX8Z0HMtHAP/5uzKEarMBLsNHG1lcRKSlFKoRYZEvFiwLWL1pGszC9e8EVyNEOpGadmodyZ7MxggHBTu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4tFaeMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBPyGkfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ACBC4DDEF;
-	Tue, 27 Aug 2024 15:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4tFaeMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC721C4AF1C;
+	Tue, 27 Aug 2024 15:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770824;
-	bh=jmwphznRUkAPkeMtjJWQUdxMXr5PQ1ieQuACM4EHEKk=;
+	s=korg; t=1724770828;
+	bh=5bfum5RmnohhU6L2FbvT94JC4mEa8nBhO/Mwh13CzZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBPyGkfScvr8vp4yVyV4e72klzoZz5xyQjZIN9FO2E1Hb/OjbvrsO+obuFXt4yZ3p
-	 74vR9R5+vWY3fRJhIYC1yj8l9LVL2z0AtFDl5OhxNM7TB4bwsb/UwcBr0F5hQ/EzMi
-	 a4rPALoA5squuIo6oTzMIjSkl6TxQ/We73I5c4to=
+	b=Y4tFaeMnZJVbNkphT4aBAWx6/7+f3Ol8WIHW5MkWo96G9DVGVhLZ1/m8fpcukH6cz
+	 N2XC5gPTsApJNbY7aG0Jn5oY2/ozYUtP6SJL9+qN2z1th5nPj3fmbv3a3u0Ymppt7z
+	 7tHkpuwkvHBJ/hclX/I+I1Pcm0WxB6et5Sze5+Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 326/341] hwmon: (ltc2992) Fix memory leak in ltc2992_parse_dt()
-Date: Tue, 27 Aug 2024 16:39:17 +0200
-Message-ID: <20240827143855.800522210@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH 6.6 327/341] drm/msm/mdss: specify cfg bandwidth for SDM670
+Date: Tue, 27 Aug 2024 16:39:18 +0200
+Message-ID: <20240827143855.840630373@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit a94ff8e50c20bde6d50864849a98b106e45d30c6 upstream.
+commit 8d35217149daa33358c284aca6a56d5ab92cfc6c upstream.
 
-A new error path was added to the fwnode_for_each_available_node() loop
-in ltc2992_parse_dt(), which leads to an early return that requires a
-call to fwnode_handle_put() to avoid a memory leak in that case.
+Lower the requested CFG bus bandwidth for the SDM670 platform. The
+default value is 153600 kBps, which is twice as big as required by the
+platform according to the vendor kernel.
 
-Add the missing fwnode_handle_put() in the error path from a zero value
-shunt resistor.
-
-Cc: stable@vger.kernel.org
-Fixes: 10b029020487 ("hwmon: (ltc2992) Avoid division by zero")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20240523-fwnode_for_each_available_child_node_scoped-v2-1-701f3a03f2fb@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: a55c8ff252d3 ("drm/msm/mdss: Handle the reg bus ICC path")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Tested-by: Richard Acayan <mailingradian@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/572182/
+Link: https://lore.kernel.org/r/20231215013222.827975-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ltc2992.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_mdss.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/ltc2992.c
-+++ b/drivers/hwmon/ltc2992.c
-@@ -876,9 +876,11 @@ static int ltc2992_parse_dt(struct ltc29
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -600,6 +600,7 @@ static const struct msm_mdss_data sm6125
+ 	.ubwc_dec_version = UBWC_3_0,
+ 	.ubwc_swizzle = 1,
+ 	.highest_bank_bit = 1,
++	.reg_bus_bw = 76800,
+ };
  
- 		ret = fwnode_property_read_u32(child, "shunt-resistor-micro-ohms", &val);
- 		if (!ret) {
--			if (!val)
-+			if (!val) {
-+				fwnode_handle_put(child);
- 				return dev_err_probe(&st->client->dev, -EINVAL,
- 						     "shunt resistor value cannot be zero\n");
-+			}
- 			st->r_sense_uohm[addr] = val;
- 		}
- 	}
+ static const struct msm_mdss_data sm8250_data = {
 
 
