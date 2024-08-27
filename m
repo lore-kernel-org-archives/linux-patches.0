@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E501C93A3;
-	Tue, 27 Aug 2024 15:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C901CFEBC;
+	Tue, 27 Aug 2024 15:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772654; cv=none; b=AL9A9B0OXQBRMSnp+6d0BSC/AxhNTGomPKkKbCXIbHDhCy7TRAToR1cEkeLyh98OM96ZNJFQZD8diC29ReZSajpc8TvWIOAYpohRfCSKmYD9jez4kuo50NUc9KXhkarpxlCEZTvhrSI5BsCq6FkrrJVn0HOR2olXAr73ldnRsaU=
+	t=1724772657; cv=none; b=aPFTFXpJZFL0dccZdmYXuHzmbsrP5WxoDfU/tWfY9GbBOFRl4jwwXHHFmk4jxJbskD58XFOlPeIHPSSMBzX7mgTbkt5w83cETavYRMIwWnDA+5b5T9MZpscxtKVQBs9ovSxn6Dt9+XXYVORKnQE9SISmjHTGx431yCpYJ9Y0FnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772654; c=relaxed/simple;
-	bh=ZLYirR+SXVpRAa5vKIchJllci5tRQw4pskfLz+iTUaQ=;
+	s=arc-20240116; t=1724772657; c=relaxed/simple;
+	bh=cG9kFtvAITUWaMGiS3jei3JtbBbrdUJMMAxnPYnyk8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2J+XBow6w5AWt/v9qQWbR1WKWMJFnhzziI1nb1lcAq61OFIbtM9E8/Glj7ziQzOHbTjjtvodGjB1I04tE98G0OFMUoJBnnk8NtQGwOe+eNT+hS1F86K6gt863CP1A6PwbT7YVadV6REOgYVOX61yu8em+93gJQrZUDew8xSFFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9enT6xD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBD6/onfuupcug3SrA5RGa29jUOhGC80zsG64bdKfG615TXBBd9mkMlr5FloMtTeWtq46pksItDO7cRVYx1NqBkXOoZuVvAzrHUdHiN73zd3QYFDiW3weo1zUODfFCL6bJP3N0KCVgjSPo5xdSX2Gbw91CSBlgWhEMi0qpuE7Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeAg2dG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9enT6xD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BB5C4DDE4;
-	Tue, 27 Aug 2024 15:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeAg2dG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DD9C4DDE9;
+	Tue, 27 Aug 2024 15:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772654;
-	bh=ZLYirR+SXVpRAa5vKIchJllci5tRQw4pskfLz+iTUaQ=;
+	s=korg; t=1724772657;
+	bh=cG9kFtvAITUWaMGiS3jei3JtbBbrdUJMMAxnPYnyk8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9enT6xD0iLaerjjM2Ywslei6fGDotQ32oE97Ul1J2zfdmnF3PaXyYWvRXwV7tsqS
-	 8xZEz79TyVR9Mnmxq56wPuri5b1sgIohgyU/CFPTRfJ0t9l8HKjKn2gTX27u2tK+aI
-	 DWakl1zwn4DK2xVU/lQhhgyYRHp/JDwDpXqExNLo=
+	b=TeAg2dG64IEBWvu36Ys23Icc8E25APLZ6p+aUxed3ZqopU9CSVpmfUOU/ROLXB717
+	 XZAGX5JBs/jaytpDyUriOMPqSXTsqZjrHxcvDeM4XtB7wu5Hz3DtpgvOtCj3r+dncw
+	 15XsC4QUebIv6J0pJpmIxcMvoOWjaoQ0mK9WrUK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>
-Subject: [PATCH 6.1 280/321] Revert "usb: gadget: uvc: cleanup request when not in correct state"
-Date: Tue, 27 Aug 2024 16:39:48 +0200
-Message-ID: <20240827143848.908791719@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 281/321] Revert "drm/amd/display: Validate hw_points_num before using it"
+Date: Tue, 27 Aug 2024 16:39:49 +0200
+Message-ID: <20240827143848.946209421@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Alex Hung <alex.hung@amd.com>
 
-commit dddc00f255415b826190cfbaa5d6dbc87cd9ded1 upstream.
+commit 8f4bdbc8e99db6ec9cb0520748e49a2f2d7d1727 upstream.
 
-This reverts commit 52a39f2cf62bb5430ad1f54cd522dbfdab1d71ba.
+This reverts commit 58c3b3341cea4f75dc8c003b89f8a6dd8ec55e50.
 
-Based on review comments, it was applied too soon and needs more work.
+[WHY & HOW]
+The writeback series cause a regression in thunderbolt display.
 
-Reported-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231005081716.GA13853@pendragon.ideasonboard.com
-Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc_video.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/usb/gadget/function/uvc_video.c
-+++ b/drivers/usb/gadget/function/uvc_video.c
-@@ -259,12 +259,6 @@ uvc_video_complete(struct usb_ep *ep, st
- 	struct uvc_device *uvc = video->uvc;
- 	unsigned long flags;
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
+@@ -243,9 +243,6 @@ static bool dwb3_program_ogam_lut(
+ 		return false;
+ 	}
  
--	if (uvc->state == UVC_STATE_CONNECTED) {
--		usb_ep_free_request(video->ep, ureq->req);
--		ureq->req = NULL;
--		return;
--	}
+-	if (params->hw_points_num == 0)
+-		return false;
 -
- 	switch (req->status) {
- 	case 0:
- 		break;
+ 	REG_SET(DWB_OGAM_CONTROL, 0, DWB_OGAM_MODE, 2);
+ 
+ 	current_mode = dwb3_get_ogam_current(dwbc30);
 
 
