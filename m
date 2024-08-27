@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B1B1A0B13;
-	Tue, 27 Aug 2024 14:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2241C6887;
+	Tue, 27 Aug 2024 14:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770420; cv=none; b=r1wJ/HEcdLWetQWNzLwvLOwzgTVmczSn8ujjkXW7NsTXLo/QYrjhj4+AlVf7wtYAPr8vqwdC/SwuwJmjfLRs6W2SDLOF81UGjvUZ/Kpp8XWk8LpuEkWhe8rVdVT8/bs0Ys7kY4AaebXLX4afnQ8z3ecsjs1ucKxIkE2tZL5Nn6g=
+	t=1724770423; cv=none; b=PR0KMFe66Z9uHnuo9r981k5P28ls/NsFNGhIcEpS2+5wCiV/Aksk3CeUSIENii92HUocfeO8ma1XuqzpsVFWC7y50cGuk9kLKJ64Mqld7+9oy9yYdh9UoRY07iY/Cc6DM3eTEEinn3TIJTHoWcVB9158pwxcgMkJfyY2ddMpB5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770420; c=relaxed/simple;
-	bh=gRxGGeGyqtdHeIDibJZ958eUV6xSeX65LZgD5LRZ/Yo=;
+	s=arc-20240116; t=1724770423; c=relaxed/simple;
+	bh=EHAGfcXZ4LCYIR5iEfhvGMpmV7n92mNnZa0geDYrDqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhXysXq1ZF328LXS9zfXI4d4g5vKYlQ7w/ojqn3FM4gRsINQw71yjzLD3ewzQpa+44HuXPEWgL7kjWNtUT+ZdsWRRY7qZ2RJLU00AIfq/AhZBmcTSn0GqbKf6Zuz/mOhebJ3MQwMiF1wfPNlvQA/fK/v5I3evQji9jA7HD6t5aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WC+I074d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=menjDG4T4zBrfzHpnhaQ3LK9OoewGaPn+msVJiHPkz2B4P2f03O7xkIvN3ydn56F2/vDNYhBdRIQ9Gll2raYy3O3eynuzHHdU9MCoGSWZx/goLtRcHt03UcmNbszGLZCQvukOFOvxvmM3lcjXe/4EwJG6t1m3Yg+9EjcbXGbCvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYhrILHU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WC+I074d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361FBC61053;
-	Tue, 27 Aug 2024 14:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYhrILHU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96316C61053;
+	Tue, 27 Aug 2024 14:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770419;
-	bh=gRxGGeGyqtdHeIDibJZ958eUV6xSeX65LZgD5LRZ/Yo=;
+	s=korg; t=1724770423;
+	bh=EHAGfcXZ4LCYIR5iEfhvGMpmV7n92mNnZa0geDYrDqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WC+I074dnO4z8LtocjxEEvdBF3Su1PjD6azpzIIZw4YLEt0P8nTFYYNXKmGqVEYk7
-	 JR/5qNNXFvzcB9EVKYvmbV4UZqeYt9LI2m+Yr+kSwpdwVbskeTkXAF3dfbX4BfKyuh
-	 jK9317xlhi/15/ZI73i7cc+YAOtdNOqgVJVKKhsM=
+	b=JYhrILHU9ubgh6xxRy5pVzq5ym3mVNlFUiKCp6Sng0mRV0XapP0wMuNDDPDlaeu4m
+	 DNAqf1V3dKYj2A4KcnPnseuhPO+05ocVvCPQu2gPeBLjwAYEZazAOurjGIkNcODwfy
+	 6rzGImO/dWXZ8hEKfS5hjrN/3ovD/0NzjqDYj3xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/341] btrfs: change BUG_ON to assertion in tree_move_down()
-Date: Tue, 27 Aug 2024 16:37:03 +0200
-Message-ID: <20240827143850.718992705@linuxfoundation.org>
+Subject: [PATCH 6.6 193/341] btrfs: delete pointless BUG_ON check on quota root in btrfs_qgroup_account_extent()
+Date: Tue, 27 Aug 2024 16:37:04 +0200
+Message-ID: <20240827143850.756571096@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,31 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 56f335e043ae73c32dbb70ba95488845dc0f1e6e ]
+[ Upstream commit f40a3ea94881f668084f68f6b9931486b1606db0 ]
 
-There's only one caller of tree_move_down() that does not pass level 0
-so the assertion is better suited here.
+The BUG_ON is deep in the qgroup code where we can expect that it
+exists. A NULL pointer would cause a crash.
+
+It was added long ago in 550d7a2ed5db35 ("btrfs: qgroup: Add new qgroup
+calculation function btrfs_qgroup_account_extents()."). It maybe made
+sense back then as the quota enable/disable state machine was not that
+robust as it is nowadays, so we can just delete it.
 
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/send.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/qgroup.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 9da3c72eb6153..163f36eb7491a 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -7448,8 +7448,8 @@ static int tree_move_down(struct btrfs_path *path, int *level, u64 reada_min_gen
- 	u64 reada_done = 0;
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 223dfbf009938..efe84be65a440 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -2725,8 +2725,6 @@ int btrfs_qgroup_account_extent(struct btrfs_trans_handle *trans, u64 bytenr,
+ 	if (nr_old_roots == 0 && nr_new_roots == 0)
+ 		goto out_free;
  
- 	lockdep_assert_held_read(&parent->fs_info->commit_root_sem);
-+	ASSERT(*level != 0);
+-	BUG_ON(!fs_info->quota_root);
+-
+ 	trace_btrfs_qgroup_account_extent(fs_info, trans->transid, bytenr,
+ 					num_bytes, nr_old_roots, nr_new_roots);
  
--	BUG_ON(*level == 0);
- 	eb = btrfs_read_node_slot(parent, slot);
- 	if (IS_ERR(eb))
- 		return PTR_ERR(eb);
 -- 
 2.43.0
 
