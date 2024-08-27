@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8304173466;
-	Tue, 27 Aug 2024 15:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DD573466;
+	Tue, 27 Aug 2024 15:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771522; cv=none; b=FlVIbaia2qizpu47j2QGFk/wbJUpJy17GgrHDm782hGrqsA+SA8Ygph22g9uZzsxgjXtpe1k9o2fY96sm4Hp5Lf+CjnqtsNk8zlPT0GiE+VoeEhrt/uOvyt/Fo80W4v+bwAx3HshXdzteEADjr0eyiCMpj0B23r2mKCO440BMKI=
+	t=1724771525; cv=none; b=qmRztRf2twYplS+ndCkVUuD7LxGDomUuRHdgS5yA5niiNjBsrWLSgPB/ids24eFPKAgID11/JciXaOMQaIuOiHOXFhLlu7T8EEp1gGzpQsVwzVUMOVmWFM0DQXQRvc6O5MSoTmNBFp0ZtfQjYHVIzW5yyPspdkCS2YQfrSAq17M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771522; c=relaxed/simple;
-	bh=JKGRwf4/cbGtPF/ogDqdPu1ERpJzTMHlTAaB4GM5Mcg=;
+	s=arc-20240116; t=1724771525; c=relaxed/simple;
+	bh=mrATL/p2kSO2vN21KUrddFyYZyLAWxdbb/TYJOHd2Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lPRKBRjafjhDMn+a8xNB3U7bTz6h7NYnlF41GuDmCIRASnjxvHUJCPQRGYtPNTNG3slj33TN+l1rAZVniL47bMFHwqCIfmu0XbMQEMDmDAoSIUiKAGrvEAqx2xSGqCKVckGoT5VUq55Ps79rchR5mEWj0vKZVTUwzcKya/l4ikM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW+hq+KN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bUW3+s0lSW0xd6WbKXcm81THlx+MfTknnqzkhOGATCZH+GmGCGrxrV/7diWxDvJuBBFP70QnCaqW1ZxSZrt23Hfy7/V2RY6K9SNBelZmX9kdMplhYdNWjOe3hhVN6clJL85vACLXAFf6yFj7qBEIngWTcoCU99qRDrgDAnZZFAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCw7xDES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW+hq+KN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FAEC4DDFA;
-	Tue, 27 Aug 2024 15:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCw7xDES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289F6C4DDEE;
+	Tue, 27 Aug 2024 15:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771522;
-	bh=JKGRwf4/cbGtPF/ogDqdPu1ERpJzTMHlTAaB4GM5Mcg=;
+	s=korg; t=1724771525;
+	bh=mrATL/p2kSO2vN21KUrddFyYZyLAWxdbb/TYJOHd2Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PW+hq+KNgpHpkh4EDLuW5M4H9TpZCT00ybbSP0pktkYxknQlk2PpIZo6Xy/Se6IyH
-	 rcyUl9tSzpBE7uWeAIwNzZf/tVNAnEIGB3ZyjE2mY4yR2TXEQjpztcQGlwSYAnJsoJ
-	 +GMABDeknlDdX/68rKk/UJnPpUDCMadkOh8lGBLI=
+	b=JCw7xDESE+yTue/kBNKq9zbZn6coJrnyicuhENWQi30xzsh36+ZEf1BZ4g8ww/ACW
+	 fDTjPAukUDb4Lw97jjn4FsioUgf5SzNxbVl5U6V7r+vlwVISRCSKJ+CmsTk0pnSbJq
+	 b/c8mVFUm1avb/ngsQYvtQQl4vFq0bK7JvFJi4sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 214/273] drm/xe: Decouple job seqno and lrc seqno
-Date: Tue, 27 Aug 2024 16:38:58 +0200
-Message-ID: <20240827143841.552239435@linuxfoundation.org>
+Subject: [PATCH 6.10 215/273] drm/xe: Split lrc seqno fence creation up
+Date: Tue, 27 Aug 2024 16:38:59 +0200
+Message-ID: <20240827143841.589467068@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,230 +53,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit 08f7200899ca72dec550af092ae424b7db099abd ]
+[ Upstream commit e183910ae4015214475b3248ce0b4c70f104f254 ]
 
-Tightly coupling these seqno presents problems if alternative fences for
-jobs are used. Decouple these for correctness.
+Since sometimes a lock is required to initialize a seqno fence,
+and it might be desirable not to hold that lock while performing
+memory allocations, split the lrc seqno fence creation up into an
+allocation phase and an initialization phase.
 
-v2:
-- Slightly reword commit message (Thomas)
-- Make sure the lrc fence ops are used in comparison (Thomas)
-- Assume seqno is unsigned rather than signed in format string (Thomas)
+Since lrc seqno fences under the hood are hw_fences, do the same
+for these and remove the xe_hw_fence_create() function since it
+is not used anymore.
 
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
 Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240527135912.152156-2-thomas.hellstrom@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240527135912.152156-3-thomas.hellstrom@linux.intel.com
 Stable-dep-of: 9e7f30563677 ("drm/xe: Free job before xe_exec_queue_put")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec_queue.c      |  2 +-
- drivers/gpu/drm/xe/xe_guc_submit.c      |  5 +++--
- drivers/gpu/drm/xe/xe_ring_ops.c        | 12 ++++++------
- drivers/gpu/drm/xe/xe_sched_job.c       | 16 ++++++++--------
- drivers/gpu/drm/xe/xe_sched_job.h       |  5 +++++
- drivers/gpu/drm/xe/xe_sched_job_types.h |  2 ++
- drivers/gpu/drm/xe/xe_trace.h           |  7 +++++--
- 7 files changed, 30 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/xe/xe_hw_fence.c | 59 +++++++++++++++++++++++++-------
+ drivers/gpu/drm/xe/xe_hw_fence.h |  7 ++--
+ drivers/gpu/drm/xe/xe_lrc.c      | 48 ++++++++++++++++++++++++--
+ drivers/gpu/drm/xe/xe_lrc.h      |  3 ++
+ 4 files changed, 101 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
-index 33b03605a1d15..79d099e054916 100644
---- a/drivers/gpu/drm/xe/xe_exec_queue.c
-+++ b/drivers/gpu/drm/xe/xe_exec_queue.c
-@@ -98,7 +98,7 @@ static struct xe_exec_queue *__xe_exec_queue_alloc(struct xe_device *xe,
- 
- 	if (xe_exec_queue_is_parallel(q)) {
- 		q->parallel.composite_fence_ctx = dma_fence_context_alloc(1);
--		q->parallel.composite_fence_seqno = XE_FENCE_INITIAL_SEQNO;
-+		q->parallel.composite_fence_seqno = 0;
- 	}
- 
- 	return q;
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 8c75791cbc4fb..e48285c81bf57 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -917,8 +917,9 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 		return DRM_GPU_SCHED_STAT_NOMINAL;
- 	}
- 
--	drm_notice(&xe->drm, "Timedout job: seqno=%u, guc_id=%d, flags=0x%lx",
--		   xe_sched_job_seqno(job), q->guc->id, q->flags);
-+	drm_notice(&xe->drm, "Timedout job: seqno=%u, lrc_seqno=%u, guc_id=%d, flags=0x%lx",
-+		   xe_sched_job_seqno(job), xe_sched_job_lrc_seqno(job),
-+		   q->guc->id, q->flags);
- 	xe_gt_WARN(q->gt, q->flags & EXEC_QUEUE_FLAG_KERNEL,
- 		   "Kernel-submitted job timed out\n");
- 	xe_gt_WARN(q->gt, q->flags & EXEC_QUEUE_FLAG_VM && !exec_queue_killed(q),
-diff --git a/drivers/gpu/drm/xe/xe_ring_ops.c b/drivers/gpu/drm/xe/xe_ring_ops.c
-index aca7a9af6e846..3b6aad8dea99a 100644
---- a/drivers/gpu/drm/xe/xe_ring_ops.c
-+++ b/drivers/gpu/drm/xe/xe_ring_ops.c
-@@ -412,7 +412,7 @@ static void emit_job_gen12_gsc(struct xe_sched_job *job)
- 
- 	__emit_job_gen12_simple(job, job->q->lrc,
- 				job->batch_addr[0],
--				xe_sched_job_seqno(job));
-+				xe_sched_job_lrc_seqno(job));
+diff --git a/drivers/gpu/drm/xe/xe_hw_fence.c b/drivers/gpu/drm/xe/xe_hw_fence.c
+index f872ef1031272..35c0063a831af 100644
+--- a/drivers/gpu/drm/xe/xe_hw_fence.c
++++ b/drivers/gpu/drm/xe/xe_hw_fence.c
+@@ -208,23 +208,58 @@ static struct xe_hw_fence *to_xe_hw_fence(struct dma_fence *fence)
+ 	return container_of(fence, struct xe_hw_fence, dma);
  }
  
- static void emit_job_gen12_copy(struct xe_sched_job *job)
-@@ -421,14 +421,14 @@ static void emit_job_gen12_copy(struct xe_sched_job *job)
- 
- 	if (xe_sched_job_is_migration(job->q)) {
- 		emit_migration_job_gen12(job, job->q->lrc,
--					 xe_sched_job_seqno(job));
-+					 xe_sched_job_lrc_seqno(job));
- 		return;
- 	}
- 
- 	for (i = 0; i < job->q->width; ++i)
- 		__emit_job_gen12_simple(job, job->q->lrc + i,
--				        job->batch_addr[i],
--				        xe_sched_job_seqno(job));
-+					job->batch_addr[i],
-+					xe_sched_job_lrc_seqno(job));
- }
- 
- static void emit_job_gen12_video(struct xe_sched_job *job)
-@@ -439,7 +439,7 @@ static void emit_job_gen12_video(struct xe_sched_job *job)
- 	for (i = 0; i < job->q->width; ++i)
- 		__emit_job_gen12_video(job, job->q->lrc + i,
- 				       job->batch_addr[i],
--				       xe_sched_job_seqno(job));
-+				       xe_sched_job_lrc_seqno(job));
- }
- 
- static void emit_job_gen12_render_compute(struct xe_sched_job *job)
-@@ -449,7 +449,7 @@ static void emit_job_gen12_render_compute(struct xe_sched_job *job)
- 	for (i = 0; i < job->q->width; ++i)
- 		__emit_job_gen12_render_compute(job, job->q->lrc + i,
- 						job->batch_addr[i],
--						xe_sched_job_seqno(job));
-+						xe_sched_job_lrc_seqno(job));
- }
- 
- static const struct xe_ring_ops ring_ops_gen12_gsc = {
-diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
-index a4e030f5e019a..874450be327ec 100644
---- a/drivers/gpu/drm/xe/xe_sched_job.c
-+++ b/drivers/gpu/drm/xe/xe_sched_job.c
-@@ -117,6 +117,7 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
- 			err = PTR_ERR(job->fence);
- 			goto err_sched_job;
- 		}
-+		job->lrc_seqno = job->fence->seqno;
- 	} else {
- 		struct dma_fence_array *cf;
- 
-@@ -132,6 +133,8 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
- 				err = PTR_ERR(fences[j]);
- 				goto err_fences;
- 			}
-+			if (!j)
-+				job->lrc_seqno = fences[0]->seqno;
- 		}
- 
- 		cf = dma_fence_array_create(q->width, fences,
-@@ -144,10 +147,6 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
- 			goto err_fences;
- 		}
- 
--		/* Sanity check */
--		for (j = 0; j < q->width; ++j)
--			xe_assert(job_to_xe(job), cf->base.seqno == fences[j]->seqno);
--
- 		job->fence = &cf->base;
- 	}
- 
-@@ -229,9 +228,9 @@ bool xe_sched_job_started(struct xe_sched_job *job)
+-struct xe_hw_fence *xe_hw_fence_create(struct xe_hw_fence_ctx *ctx,
+-				       struct iosys_map seqno_map)
++/**
++ * xe_hw_fence_alloc() -  Allocate an hw fence.
++ *
++ * Allocate but don't initialize an hw fence.
++ *
++ * Return: Pointer to the allocated fence or
++ * negative error pointer on error.
++ */
++struct dma_fence *xe_hw_fence_alloc(void)
  {
- 	struct xe_lrc *lrc = job->q->lrc;
+-	struct xe_hw_fence *fence;
++	struct xe_hw_fence *hw_fence = fence_alloc();
  
--	return !__dma_fence_is_later(xe_sched_job_seqno(job),
-+	return !__dma_fence_is_later(xe_sched_job_lrc_seqno(job),
- 				     xe_lrc_start_seqno(lrc),
--				     job->fence->ops);
-+				     dma_fence_array_first(job->fence)->ops);
- }
+-	fence = fence_alloc();
+-	if (!fence)
++	if (!hw_fence)
+ 		return ERR_PTR(-ENOMEM);
  
- bool xe_sched_job_completed(struct xe_sched_job *job)
-@@ -243,8 +242,9 @@ bool xe_sched_job_completed(struct xe_sched_job *job)
- 	 * parallel handshake is done.
- 	 */
+-	fence->ctx = ctx;
+-	fence->seqno_map = seqno_map;
+-	INIT_LIST_HEAD(&fence->irq_link);
++	return &hw_fence->dma;
++}
  
--	return !__dma_fence_is_later(xe_sched_job_seqno(job), xe_lrc_seqno(lrc),
--				     job->fence->ops);
-+	return !__dma_fence_is_later(xe_sched_job_lrc_seqno(job),
-+				     xe_lrc_seqno(lrc),
-+				     dma_fence_array_first(job->fence)->ops);
- }
- 
- void xe_sched_job_arm(struct xe_sched_job *job)
-diff --git a/drivers/gpu/drm/xe/xe_sched_job.h b/drivers/gpu/drm/xe/xe_sched_job.h
-index c75018f4660dc..002c3b5c0a5cb 100644
---- a/drivers/gpu/drm/xe/xe_sched_job.h
-+++ b/drivers/gpu/drm/xe/xe_sched_job.h
-@@ -73,6 +73,11 @@ static inline u32 xe_sched_job_seqno(struct xe_sched_job *job)
- 	return job->fence->seqno;
- }
- 
-+static inline u32 xe_sched_job_lrc_seqno(struct xe_sched_job *job)
+-	dma_fence_init(&fence->dma, &xe_hw_fence_ops, &ctx->irq->lock,
+-		       ctx->dma_fence_ctx, ctx->next_seqno++);
++/**
++ * xe_hw_fence_free() - Free an hw fence.
++ * @fence: Pointer to the fence to free.
++ *
++ * Frees an hw fence that hasn't yet been
++ * initialized.
++ */
++void xe_hw_fence_free(struct dma_fence *fence)
 +{
-+	return job->lrc_seqno;
++	fence_free(&fence->rcu);
++}
+ 
+-	trace_xe_hw_fence_create(fence);
++/**
++ * xe_hw_fence_init() - Initialize an hw fence.
++ * @fence: Pointer to the fence to initialize.
++ * @ctx: Pointer to the struct xe_hw_fence_ctx fence context.
++ * @seqno_map: Pointer to the map into where the seqno is blitted.
++ *
++ * Initializes a pre-allocated hw fence.
++ * After initialization, the fence is subject to normal
++ * dma-fence refcounting.
++ */
++void xe_hw_fence_init(struct dma_fence *fence, struct xe_hw_fence_ctx *ctx,
++		      struct iosys_map seqno_map)
++{
++	struct  xe_hw_fence *hw_fence =
++		container_of(fence, typeof(*hw_fence), dma);
++
++	hw_fence->ctx = ctx;
++	hw_fence->seqno_map = seqno_map;
++	INIT_LIST_HEAD(&hw_fence->irq_link);
++
++	dma_fence_init(fence, &xe_hw_fence_ops, &ctx->irq->lock,
++		       ctx->dma_fence_ctx, ctx->next_seqno++);
+ 
+-	return fence;
++	trace_xe_hw_fence_create(hw_fence);
+ }
+diff --git a/drivers/gpu/drm/xe/xe_hw_fence.h b/drivers/gpu/drm/xe/xe_hw_fence.h
+index cfe5fd603787e..f13a1c4982c73 100644
+--- a/drivers/gpu/drm/xe/xe_hw_fence.h
++++ b/drivers/gpu/drm/xe/xe_hw_fence.h
+@@ -24,7 +24,10 @@ void xe_hw_fence_ctx_init(struct xe_hw_fence_ctx *ctx, struct xe_gt *gt,
+ 			  struct xe_hw_fence_irq *irq, const char *name);
+ void xe_hw_fence_ctx_finish(struct xe_hw_fence_ctx *ctx);
+ 
+-struct xe_hw_fence *xe_hw_fence_create(struct xe_hw_fence_ctx *ctx,
+-				       struct iosys_map seqno_map);
++struct dma_fence *xe_hw_fence_alloc(void);
+ 
++void xe_hw_fence_free(struct dma_fence *fence);
++
++void xe_hw_fence_init(struct dma_fence *fence, struct xe_hw_fence_ctx *ctx,
++		      struct iosys_map seqno_map);
+ #endif
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index d7bf7bc9dc145..995f47eb365c3 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -901,10 +901,54 @@ u32 xe_lrc_seqno_ggtt_addr(struct xe_lrc *lrc)
+ 	return __xe_lrc_seqno_ggtt_addr(lrc);
+ }
+ 
++/**
++ * xe_lrc_alloc_seqno_fence() - Allocate an lrc seqno fence.
++ *
++ * Allocate but don't initialize an lrc seqno fence.
++ *
++ * Return: Pointer to the allocated fence or
++ * negative error pointer on error.
++ */
++struct dma_fence *xe_lrc_alloc_seqno_fence(void)
++{
++	return xe_hw_fence_alloc();
 +}
 +
- static inline void
- xe_sched_job_add_migrate_flush(struct xe_sched_job *job, u32 flags)
++/**
++ * xe_lrc_free_seqno_fence() - Free an lrc seqno fence.
++ * @fence: Pointer to the fence to free.
++ *
++ * Frees an lrc seqno fence that hasn't yet been
++ * initialized.
++ */
++void xe_lrc_free_seqno_fence(struct dma_fence *fence)
++{
++	xe_hw_fence_free(fence);
++}
++
++/**
++ * xe_lrc_init_seqno_fence() - Initialize an lrc seqno fence.
++ * @lrc: Pointer to the lrc.
++ * @fence: Pointer to the fence to initialize.
++ *
++ * Initializes a pre-allocated lrc seqno fence.
++ * After initialization, the fence is subject to normal
++ * dma-fence refcounting.
++ */
++void xe_lrc_init_seqno_fence(struct xe_lrc *lrc, struct dma_fence *fence)
++{
++	xe_hw_fence_init(fence, &lrc->fence_ctx, __xe_lrc_seqno_map(lrc));
++}
++
+ struct dma_fence *xe_lrc_create_seqno_fence(struct xe_lrc *lrc)
  {
-diff --git a/drivers/gpu/drm/xe/xe_sched_job_types.h b/drivers/gpu/drm/xe/xe_sched_job_types.h
-index 5e12724219fdd..990ddac55ed62 100644
---- a/drivers/gpu/drm/xe/xe_sched_job_types.h
-+++ b/drivers/gpu/drm/xe/xe_sched_job_types.h
-@@ -37,6 +37,8 @@ struct xe_sched_job {
- 		/** @user_fence.value: write back value */
- 		u64 value;
- 	} user_fence;
-+	/** @lrc_seqno: LRC seqno */
-+	u32 lrc_seqno;
- 	/** @migrate_flush_flags: Additional flush flags for migration jobs */
- 	u32 migrate_flush_flags;
- 	/** @ring_ops_flush_tlb: The ring ops need to flush TLB before payload. */
-diff --git a/drivers/gpu/drm/xe/xe_trace.h b/drivers/gpu/drm/xe/xe_trace.h
-index 2d56cfc09e421..6c6cecc58f63b 100644
---- a/drivers/gpu/drm/xe/xe_trace.h
-+++ b/drivers/gpu/drm/xe/xe_trace.h
-@@ -254,6 +254,7 @@ DECLARE_EVENT_CLASS(xe_sched_job,
+-	return &xe_hw_fence_create(&lrc->fence_ctx,
+-				   __xe_lrc_seqno_map(lrc))->dma;
++	struct dma_fence *fence = xe_lrc_alloc_seqno_fence();
++
++	if (IS_ERR(fence))
++		return fence;
++
++	xe_lrc_init_seqno_fence(lrc, fence);
++	return fence;
+ }
  
- 		    TP_STRUCT__entry(
- 			     __field(u32, seqno)
-+			     __field(u32, lrc_seqno)
- 			     __field(u16, guc_id)
- 			     __field(u32, guc_state)
- 			     __field(u32, flags)
-@@ -264,6 +265,7 @@ DECLARE_EVENT_CLASS(xe_sched_job,
+ s32 xe_lrc_seqno(struct xe_lrc *lrc)
+diff --git a/drivers/gpu/drm/xe/xe_lrc.h b/drivers/gpu/drm/xe/xe_lrc.h
+index d32fa31faa2cf..f57c5836dab87 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.h
++++ b/drivers/gpu/drm/xe/xe_lrc.h
+@@ -38,6 +38,9 @@ void xe_lrc_write_ctx_reg(struct xe_lrc *lrc, int reg_nr, u32 val);
+ u64 xe_lrc_descriptor(struct xe_lrc *lrc);
  
- 		    TP_fast_assign(
- 			   __entry->seqno = xe_sched_job_seqno(job);
-+			   __entry->lrc_seqno = xe_sched_job_lrc_seqno(job);
- 			   __entry->guc_id = job->q->guc->id;
- 			   __entry->guc_state =
- 			   atomic_read(&job->q->guc->state);
-@@ -273,8 +275,9 @@ DECLARE_EVENT_CLASS(xe_sched_job,
- 			   __entry->batch_addr = (u64)job->batch_addr[0];
- 			   ),
+ u32 xe_lrc_seqno_ggtt_addr(struct xe_lrc *lrc);
++struct dma_fence *xe_lrc_alloc_seqno_fence(void);
++void xe_lrc_free_seqno_fence(struct dma_fence *fence);
++void xe_lrc_init_seqno_fence(struct xe_lrc *lrc, struct dma_fence *fence);
+ struct dma_fence *xe_lrc_create_seqno_fence(struct xe_lrc *lrc);
+ s32 xe_lrc_seqno(struct xe_lrc *lrc);
  
--		    TP_printk("fence=%p, seqno=%u, guc_id=%d, batch_addr=0x%012llx, guc_state=0x%x, flags=0x%x, error=%d",
--			      __entry->fence, __entry->seqno, __entry->guc_id,
-+		    TP_printk("fence=%p, seqno=%u, lrc_seqno=%u, guc_id=%d, batch_addr=0x%012llx, guc_state=0x%x, flags=0x%x, error=%d",
-+			      __entry->fence, __entry->seqno,
-+			      __entry->lrc_seqno, __entry->guc_id,
- 			      __entry->batch_addr, __entry->guc_state,
- 			      __entry->flags, __entry->error)
- );
 -- 
 2.43.0
 
