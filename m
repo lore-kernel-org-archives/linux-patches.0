@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCE61C8228;
-	Tue, 27 Aug 2024 15:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C6919EEA2;
+	Tue, 27 Aug 2024 15:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772601; cv=none; b=febWQbFG0ZF7nJdHMyjTHV2gykdKLDW4/oBEPiMjnYD/bZrP6Rl6BFzeTnZyONxZZUlF3lW4RNQ9q79aJO330ojptcK2nmC8qkFFjIP/7jvmCcSic+4dT9hnoA3yw5T3eAASfriu1ZW1sXQSIWK1AH5zjhYCDGBd/TLVLUMM3lY=
+	t=1724772604; cv=none; b=gXWXU6soDzEnihmSjId/NMNg/QIdpu7/PLIxXubJEzDVKkiCRAaysj5CXpP+fz07dyluTX90lwDwBpkv3Jdmw3Ce02Klo5UxXRBnAp+j+w+OTk6wJEu8K1XtWRvUSLWUlfxuKOSQbYqZze+C5GchTDOutomYVQlmLiPUPVDMGz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772601; c=relaxed/simple;
-	bh=5yVtnz92O3elg7uBIU/nU5bU0VIS381+KvaLqmIBXkE=;
+	s=arc-20240116; t=1724772604; c=relaxed/simple;
+	bh=SPnHnYW3tVRVh98U+iW3xjSNlYtEcfLMawljcbSclAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDQHYS/KN9O7CbEuV/8CFXPfRXNGwo4CxSGlcIcWCj/k/jVm/489iYkJ32cD8sEz75HsoiQGPqfbiKE+L+7jCCqnc5iL/ezhG4vafRIfBEx0yviLyyxrDnv877HuntKKgamxsYyF0BZVHlnUvTd0RhTWJOZWW0rU+njxoKn9eT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1YTCDsb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ij6rScgrn0fwh/n1eZMZJ5CXIm2ZfThcRT9cHitvKUPI2/UnLcmippQuHo77f1Cryp9GpSBAmqGi73EbZ+DvEIaW7zTH0PtvzEC34aOce+wDOpwHyBtqyzCC7Hl0vr/7tlUe6t7J7AXr5oej3Byhdt4T6Ck4IO7my5l+0ATDzT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4sY4PUU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1YTCDsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDAFC4AF15;
-	Tue, 27 Aug 2024 15:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4sY4PUU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6ECC4AF15;
+	Tue, 27 Aug 2024 15:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772600;
-	bh=5yVtnz92O3elg7uBIU/nU5bU0VIS381+KvaLqmIBXkE=;
+	s=korg; t=1724772604;
+	bh=SPnHnYW3tVRVh98U+iW3xjSNlYtEcfLMawljcbSclAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1YTCDsbbxpCBxkeIrw50Ewan2hjYe1snpQf4dEiZnWbuzxC6tJou7+DPLKmmPuLK
-	 DU7gPrIulBFp8U0L/H+8u0SnW/YEtgMRwzj7hQt8CeO03Cmq0cxWmjosHDjI7ot7eM
-	 XZHkAg6N8m4oXlvP9YnUH6UgPSYW5d3r8mrXT1qY=
+	b=M4sY4PUUTo8a3d6Si3Vl1e8CWTeBhJ0BpJ6L8d21oZbybGX++VIeaxWUvjR3yoXF1
+	 jGUMlTPhwMJAO7OfLLvnrKRkY+PsHiwW/UnTAp54kX4myQxEtwFHtv96K3U4G1X0oF
+	 pe3BW8vCeAI0qyOOABHfiw/hY1CP/XXqm+RzW0kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable <stable@kernel.org>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Yiwei Zhang <zhan4630@purdue.edu>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 263/321] Bluetooth: MGMT: Add error handling to pair_device()
-Date: Tue, 27 Aug 2024 16:39:31 +0200
-Message-ID: <20240827143848.259677980@linuxfoundation.org>
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 237/321] ip6_tunnel: Fix broken GRO
+Date: Tue, 27 Aug 2024 16:39:05 +0200
+Message-ID: <20240827143847.257637287@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,37 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-commit 538fd3921afac97158d4177139a0ad39f056dbb2 upstream.
+[ Upstream commit 4b3e33fcc38f7750604b065c55a43e94c5bc3145 ]
 
-hci_conn_params_add() never checks for a NULL value and could lead to a NULL
-pointer dereference causing a crash.
+GRO code checks for matching layer 2 headers to see, if packet belongs
+to the same flow and because ip6 tunnel set dev->hard_header_len
+this check fails in cases, where it shouldn't. To fix this don't
+set hard_header_len, but use needed_headroom like ipv4/ip_tunnel.c
+does.
 
-Fixed by adding error handling in the function.
-
-Cc: Stable <stable@kernel.org>
-Fixes: 5157b8a503fa ("Bluetooth: Fix initializing conn_params in scan phase")
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Reported-by: Yiwei Zhang <zhan4630@purdue.edu>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Link: https://patch.msgid.link/20240815151419.109864-1-tbogendoerfer@suse.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/ip6_tunnel.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3524,6 +3524,10 @@ static int pair_device(struct sock *sk,
- 		 * will be kept and this function does nothing.
- 		 */
- 		p = hci_conn_params_add(hdev, &cp->addr.bdaddr, addr_type);
-+		if (!p) {
-+			err = -EIO;
-+			goto unlock;
-+		}
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 2699915bb85be..f3324f2a40466 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1510,7 +1510,8 @@ static void ip6_tnl_link_config(struct ip6_tnl *t)
+ 			tdev = __dev_get_by_index(t->net, p->link);
  
- 		if (p->auto_connect == HCI_AUTO_CONN_EXPLICIT)
- 			p->auto_connect = HCI_AUTO_CONN_DISABLED;
+ 		if (tdev) {
+-			dev->hard_header_len = tdev->hard_header_len + t_hlen;
++			dev->needed_headroom = tdev->hard_header_len +
++				tdev->needed_headroom + t_hlen;
+ 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 
+ 			mtu = mtu - t_hlen;
+@@ -1734,7 +1735,9 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+ int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
+ {
+ 	struct ip6_tnl *tnl = netdev_priv(dev);
++	int t_hlen;
+ 
++	t_hlen = tnl->hlen + sizeof(struct ipv6hdr);
+ 	if (tnl->parms.proto == IPPROTO_IPV6) {
+ 		if (new_mtu < IPV6_MIN_MTU)
+ 			return -EINVAL;
+@@ -1743,10 +1746,10 @@ int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
+ 			return -EINVAL;
+ 	}
+ 	if (tnl->parms.proto == IPPROTO_IPV6 || tnl->parms.proto == 0) {
+-		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len)
++		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len - t_hlen)
+ 			return -EINVAL;
+ 	} else {
+-		if (new_mtu > IP_MAX_MTU - dev->hard_header_len)
++		if (new_mtu > IP_MAX_MTU - dev->hard_header_len - t_hlen)
+ 			return -EINVAL;
+ 	}
+ 	dev->mtu = new_mtu;
+@@ -1892,12 +1895,11 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
+ 	t_hlen = t->hlen + sizeof(struct ipv6hdr);
+ 
+ 	dev->type = ARPHRD_TUNNEL6;
+-	dev->hard_header_len = LL_MAX_HEADER + t_hlen;
+ 	dev->mtu = ETH_DATA_LEN - t_hlen;
+ 	if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
+ 		dev->mtu -= 8;
+ 	dev->min_mtu = ETH_MIN_MTU;
+-	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len;
++	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len - t_hlen;
+ 
+ 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
+ 	return 0;
+-- 
+2.43.0
+
 
 
