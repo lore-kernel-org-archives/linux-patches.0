@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF22F1C93AF;
-	Tue, 27 Aug 2024 15:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3D51C93AF;
+	Tue, 27 Aug 2024 15:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772520; cv=none; b=DdS6HUslg4/J1TN1dg2z3OYzs5GI76LCyNTWzQdk+UPYct7hPa7HF9DhsXv+ov7Sr2sPnZJ9Qpzl5Vfcepw9H6XYRj8hdENmKjtvp4Lxi7NB1HcSOUbXsVnKoUspH/Zdw7nenbrLkwqho5FL/YJ+oT3h0NNLLIf68PX8WgsFWfU=
+	t=1724772523; cv=none; b=DvI5/OxnbwKJuA3hS8SAg96BjJ9wCmHNeRW30c+fXSgZXi9tsDbITQhv9m/O90Digx9yEa5Y3+wlqFrrAIDchlB6cY+5dVW5ksol4r/KqbZY+kQmNU7YEd0EVw2AsVn0XJEziuQGmp86CHQWdIIfkscUIHEsxJKrL6hIBPD/H4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772520; c=relaxed/simple;
-	bh=WumBUtxDOPW27s0C79bE8irxT5pPgF+okAA2Tl2+a+U=;
+	s=arc-20240116; t=1724772523; c=relaxed/simple;
+	bh=HNquGm0+89SHVFFm3mgao/1E5EWNex/Qg35CJGqs/ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOldp8LmloXU/4EHgczh1oTCGesRqokceZ2kAaejwkATA5xbXKMzWLa9w1Qk2Js0eaHQTMpcelLzXATu02Ag33mF2hZJKKseT20lpE7LFBVoOc8bdkT5OqEd2qcMNXkKCNPls8SERqNDbCx9RLRFttM+W43A7CwoHaFS2zZkpM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vlG54/y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z9lXJSK4OSmJ1P0VBNExjZd3wnS9Ml3o5NNEOPbjeyRfUUBbH7NRFfTqwUs7CVkVNC7FvDwa8ZHWgPJm7dIEoSH61kB+ILS3EjWH6s9yvdKH5QpZPC7LANgCN1GAAdw5ruNaKar2h14cCakFt40X3fbZGYeH2TzmvAeKBS9cCrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B007V0wv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vlG54/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1227DC6107B;
-	Tue, 27 Aug 2024 15:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B007V0wv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D631C4AF15;
+	Tue, 27 Aug 2024 15:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772519;
-	bh=WumBUtxDOPW27s0C79bE8irxT5pPgF+okAA2Tl2+a+U=;
+	s=korg; t=1724772522;
+	bh=HNquGm0+89SHVFFm3mgao/1E5EWNex/Qg35CJGqs/ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vlG54/yqN3hyuSbgPZfwYE3c/5ziJccwlkVSaoiH9MLF0LvKf33U6E29n3s07xO5
-	 wDHhlfAGBARboYcsCJ+y6WJusxVYrmrEw+YX71qrLbuDG3iBmWie4zJWzNbrVyNagD
-	 JSqqHdCh5Cmj0ynwDANpUf1zS+42deYaXzl1z4v0=
+	b=B007V0wvJ6SRJS/uFekppdcV1jF/qG6LLvfNAMA2Km6N9Zp1WoAoUXk/VKk9umr+j
+	 PRkReV3VxBNWRdZRcDz+uH/3ezrHbLflUkd/zT96FGV9W1WTO/ti2h9z42ERtkYhS4
+	 cPCkRJn7+j+8GcnDS6V4iFoo1DrrYVUb38CiHAzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Harald Welte <laforge@gnumonks.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 208/321] gtp: pull network headers in gtp_dev_xmit()
-Date: Tue, 27 Aug 2024 16:38:36 +0200
-Message-ID: <20240827143846.150584588@linuxfoundation.org>
+	Jiri Slaby <jirislaby@gmail.com>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 6.1 209/321] media: solo6x10: replace max(a, min(b, c)) by clamp(b, a, c)
+Date: Tue, 27 Aug 2024 16:38:37 +0200
+Message-ID: <20240827143846.188240589@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,93 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-commit 3a3be7ff9224f424e485287b54be00d2c6bd9c40 upstream.
+commit 31e97d7c9ae3de072d7b424b2cf706a03ec10720 upstream.
 
-syzbot/KMSAN reported use of uninit-value in get_dev_xmit() [1]
+This patch replaces max(a, min(b, c)) by clamp(b, a, c) in the solo6x10
+driver.  This improves the readability and more importantly, for the
+solo6x10-p2m.c file, this reduces on my system (x86-64, gcc 13):
 
-We must make sure the IPv4 or Ipv6 header is pulled in skb->head
-before accessing fields in them.
+ - the preprocessed size from 121 MiB to 4.5 MiB;
 
-Use pskb_inet_may_pull() to fix this issue.
+ - the build CPU time from 46.8 s to 1.6 s;
 
-[1]
-BUG: KMSAN: uninit-value in ipv6_pdp_find drivers/net/gtp.c:220 [inline]
- BUG: KMSAN: uninit-value in gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
- BUG: KMSAN: uninit-value in gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
-  ipv6_pdp_find drivers/net/gtp.c:220 [inline]
-  gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
-  gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
-  __netdev_start_xmit include/linux/netdevice.h:4913 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4922 [inline]
-  xmit_one net/core/dev.c:3580 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3596
-  __dev_queue_xmit+0x358c/0x5610 net/core/dev.c:4423
-  dev_queue_xmit include/linux/netdevice.h:3105 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3145 [inline]
-  packet_sendmsg+0x90e3/0xa3a0 net/packet/af_packet.c:3177
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2204
-  __do_sys_sendto net/socket.c:2216 [inline]
-  __se_sys_sendto net/socket.c:2212 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
-  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ - the build memory from 2786 MiB to 98MiB.
 
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3994 [inline]
-  slab_alloc_node mm/slub.c:4037 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4080
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:583
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:674
-  alloc_skb include/linux/skbuff.h:1320 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6526
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2815
-  packet_alloc_skb net/packet/af_packet.c:2994 [inline]
-  packet_snd net/packet/af_packet.c:3088 [inline]
-  packet_sendmsg+0x749c/0xa3a0 net/packet/af_packet.c:3177
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2204
-  __do_sys_sendto net/socket.c:2216 [inline]
-  __se_sys_sendto net/socket.c:2212 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
-  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+In fine, this allows this relatively simple C file to be built on a
+32-bit system.
 
-CPU: 0 UID: 0 PID: 7115 Comm: syz.1.515 Not tainted 6.11.0-rc1-syzkaller-00043-g94ede2a3e913 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-
-Fixes: 999cb275c807 ("gtp: add IPv6 support")
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Harald Welte <laforge@gnumonks.org>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/20240808132455.3413916-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Jiri Slaby <jirislaby@gmail.com>
+Closes: https://lore.kernel.org/lkml/18c6df0d-45ed-450c-9eda-95160a2bbb8e@gmail.com/
+Cc:  <stable@vger.kernel.org> # v6.7+
+Suggested-by: David Laight <David.Laight@ACULAB.COM>
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: David Laight <David.Laight@ACULAB.COM>
+Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Salvatore Bonaccorso <carnil@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/pci/solo6x10/solo6x10-offsets.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -900,6 +900,9 @@ static netdev_tx_t gtp_dev_xmit(struct s
- 	if (skb_cow_head(skb, dev->needed_headroom))
- 		goto tx_err;
+--- a/drivers/media/pci/solo6x10/solo6x10-offsets.h
++++ b/drivers/media/pci/solo6x10/solo6x10-offsets.h
+@@ -57,16 +57,16 @@
+ #define SOLO_MP4E_EXT_ADDR(__solo) \
+ 	(SOLO_EREF_EXT_ADDR(__solo) + SOLO_EREF_EXT_AREA(__solo))
+ #define SOLO_MP4E_EXT_SIZE(__solo) \
+-	max((__solo->nr_chans * 0x00080000),				\
+-	    min(((__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo)) -	\
+-		 __SOLO_JPEG_MIN_SIZE(__solo)), 0x00ff0000))
++	clamp(__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo) -	\
++	      __SOLO_JPEG_MIN_SIZE(__solo),			\
++	      __solo->nr_chans * 0x00080000, 0x00ff0000)
  
-+	if (!pskb_inet_may_pull(skb))
-+		goto tx_err;
-+
- 	skb_reset_inner_headers(skb);
+ #define __SOLO_JPEG_MIN_SIZE(__solo)		(__solo->nr_chans * 0x00080000)
+ #define SOLO_JPEG_EXT_ADDR(__solo) \
+ 		(SOLO_MP4E_EXT_ADDR(__solo) + SOLO_MP4E_EXT_SIZE(__solo))
+ #define SOLO_JPEG_EXT_SIZE(__solo) \
+-	max(__SOLO_JPEG_MIN_SIZE(__solo),				\
+-	    min((__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo)), 0x00ff0000))
++	clamp(__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo),	\
++	      __SOLO_JPEG_MIN_SIZE(__solo), 0x00ff0000)
  
- 	/* PDP context lookups in gtp_build_skb_*() need rcu read-side lock. */
+ #define SOLO_SDRAM_END(__solo) \
+ 	(SOLO_JPEG_EXT_ADDR(__solo) + SOLO_JPEG_EXT_SIZE(__solo))
 
 
