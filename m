@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3598E1C3F17;
-	Tue, 27 Aug 2024 15:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23731C4EEA;
+	Tue, 27 Aug 2024 15:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772261; cv=none; b=f0UWACK2n1mDDe/3Z1nEbQKoJMqFgRWe/b2HVSreqSuoZ6BiRVv9SHA/8ucaSqrF90OOYWXwDWpnSf7VZhTMpP8KtHff13Y0N/MPEJsSyuegrZI4BWuQ4BdaA/kv8ZkzfQS8JeeBM75qtn9YCFi0f1wNLELNJbZg6PMzlIGpxW8=
+	t=1724772266; cv=none; b=oVYg1l4a3GzORUf55Ff61egj+9E21RwT55iqr2SZ6DswEAUsGSzJ75PMZcsy1CQ99MW079QDSRUyqTsCBZehbdjTs+hIu0/3h8g8wg/P/XTHJVmKPIuyQDcj2YdEQwYmMnVy1P9DsaRte0tL45mznaTBLjpqyDjsFB3RWNMQxVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772261; c=relaxed/simple;
-	bh=+80s9FWsOsH8/UJemULJ7cV55rNNvSfXnKxwZ3ENxp4=;
+	s=arc-20240116; t=1724772266; c=relaxed/simple;
+	bh=wvy20Qel9c8csIb2Q0KDoV1h6aGZhCUwugHOVAG8cfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkKkioWkUbKYGCtnRCT3ABMn/v/5J68XDyzP946osRHcNCvFfbLteroRvO2SWyBJLy03v2kuZilTC6BQ87Qfax2Lyx/InLUanYP7WIqn5p5caG+fjuV/qkiUxyP3j7hWQAF7bHs/awWReLZTsr33/6JJ3VXanBFSdoXTPgpl17Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5KsCf7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VeY9MywPCr/qqfC8lrUaBI9CCAJHo46lw8f8SX/ylO3IRkbBr0MhjdZTow7L6BAP9mOU1bqfXYnrsY3gVb0hW5MWuCKRSyJaW0oRI3hjzdYfq47Z0Yg5pHgPC9QewGp4RHysj7eJyjm5bK+JV2EoX5ANh8rM25Je8GUR/XFqoP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqY8EvN1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5KsCf7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E0CC61069;
-	Tue, 27 Aug 2024 15:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqY8EvN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B3FC61071;
+	Tue, 27 Aug 2024 15:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772261;
-	bh=+80s9FWsOsH8/UJemULJ7cV55rNNvSfXnKxwZ3ENxp4=;
+	s=korg; t=1724772264;
+	bh=wvy20Qel9c8csIb2Q0KDoV1h6aGZhCUwugHOVAG8cfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5KsCf7X2KVpNkRSbyYT4TLDGQ0OsmQpfeUuKLE+sS0kvdw4GxSdf8drpq+Iujnxy
-	 9nePhGUJFfzacvODb5rk+PZpx9v4VSxGeCg3+eOWzj6lrJX3dAIQukJiv+W9rQkp7x
-	 qOBbfulbBbp9cA2dSE4YZXqZBFlSr9t1zSXFkpto=
+	b=aqY8EvN1QK/FKACcbYtMAqSyJmJWVlowaFm64LELWw51ghMww6+x9L6nEaPodpwaN
+	 aoIz8hcVjklp838/X4wvQS5j+2K/jVk+FKyjWi0MUvbnD+XUG50kKV2bqZ5QQafF1c
+	 s7V3TmgNhb+brS0fV1H9Hxlnuq2KnquG+Web+rb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/321] fuse: fix UAF in rcu pathwalks
-Date: Tue, 27 Aug 2024 16:37:49 +0200
-Message-ID: <20240827143844.359694392@linuxfoundation.org>
+Subject: [PATCH 6.1 135/321] media: qcom: venus: fix incorrect return value
+Date: Tue, 27 Aug 2024 16:37:23 +0200
+Message-ID: <20240827143843.382942835@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,102 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 053fc4f755ad43cf35210677bcba798ccdc48d0c ]
+[ Upstream commit 51b74c09ac8c5862007fc2bf0d465529d06dd446 ]
 
-->permission(), ->get_link() and ->inode_get_acl() might dereference
-->s_fs_info (and, in case of ->permission(), ->s_fs_info->fc->user_ns
-as well) when called from rcu pathwalk.
+'pd' can be NULL, and in that case it shouldn't be passed to
+PTR_ERR. Fixes a smatch warning:
 
-Freeing ->s_fs_info->fc is rcu-delayed; we need to make freeing ->s_fs_info
-and dropping ->user_ns rcu-delayed too.
+drivers/media/platform/qcom/venus/pm_helpers.c:873 vcodec_domains_get() warn: passing zero to 'PTR_ERR'
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/cuse.c   |  3 +--
- fs/fuse/fuse_i.h |  1 +
- fs/fuse/inode.c  | 15 +++++++++++----
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/media/platform/qcom/venus/pm_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
-index c7d882a9fe339..295344a462e1d 100644
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -474,8 +474,7 @@ static int cuse_send_init(struct cuse_conn *cc)
- 
- static void cuse_fc_release(struct fuse_conn *fc)
- {
--	struct cuse_conn *cc = fc_to_cc(fc);
--	kfree_rcu(cc, fc.rcu);
-+	kfree(fc_to_cc(fc));
- }
- 
- /**
-diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
-index 253b9b78d6f13..66c2a99994683 100644
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -872,6 +872,7 @@ struct fuse_mount {
- 
- 	/* Entry on fc->mounts */
- 	struct list_head fc_entry;
-+	struct rcu_head rcu;
- };
- 
- static inline struct fuse_mount *get_fuse_mount_super(struct super_block *sb)
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index f19bdd7cbd779..64618548835b4 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -925,6 +925,14 @@ void fuse_conn_init(struct fuse_conn *fc, struct fuse_mount *fm,
- }
- EXPORT_SYMBOL_GPL(fuse_conn_init);
- 
-+static void delayed_release(struct rcu_head *p)
-+{
-+	struct fuse_conn *fc = container_of(p, struct fuse_conn, rcu);
-+
-+	put_user_ns(fc->user_ns);
-+	fc->release(fc);
-+}
-+
- void fuse_conn_put(struct fuse_conn *fc)
- {
- 	if (refcount_dec_and_test(&fc->count)) {
-@@ -936,13 +944,12 @@ void fuse_conn_put(struct fuse_conn *fc)
- 		if (fiq->ops->release)
- 			fiq->ops->release(fiq);
- 		put_pid_ns(fc->pid_ns);
--		put_user_ns(fc->user_ns);
- 		bucket = rcu_dereference_protected(fc->curr_bucket, 1);
- 		if (bucket) {
- 			WARN_ON(atomic_read(&bucket->count) != 1);
- 			kfree(bucket);
- 		}
--		fc->release(fc);
-+		call_rcu(&fc->rcu, delayed_release);
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index 48c9084bb4dba..a1b127caa90a7 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -870,7 +870,7 @@ static int vcodec_domains_get(struct venus_core *core)
+ 		pd = dev_pm_domain_attach_by_name(dev,
+ 						  res->vcodec_pmdomains[i]);
+ 		if (IS_ERR_OR_NULL(pd))
+-			return PTR_ERR(pd) ? : -ENODATA;
++			return pd ? PTR_ERR(pd) : -ENODATA;
+ 		core->pmdomains[i] = pd;
  	}
- }
- EXPORT_SYMBOL_GPL(fuse_conn_put);
-@@ -1356,7 +1363,7 @@ EXPORT_SYMBOL_GPL(fuse_send_init);
- void fuse_free_conn(struct fuse_conn *fc)
- {
- 	WARN_ON(!list_empty(&fc->devices));
--	kfree_rcu(fc, rcu);
-+	kfree(fc);
- }
- EXPORT_SYMBOL_GPL(fuse_free_conn);
- 
-@@ -1895,7 +1902,7 @@ static void fuse_sb_destroy(struct super_block *sb)
- void fuse_mount_destroy(struct fuse_mount *fm)
- {
- 	fuse_conn_put(fm->fc);
--	kfree(fm);
-+	kfree_rcu(fm, rcu);
- }
- EXPORT_SYMBOL(fuse_mount_destroy);
  
 -- 
 2.43.0
