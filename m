@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873591C57AB;
-	Tue, 27 Aug 2024 15:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E057C1C5783;
+	Tue, 27 Aug 2024 15:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771298; cv=none; b=XR2AxSh0HeZKysBgTbwWnUWZPdt8wflEtwcuSPilkzOmf11//Uoe9s8Z+CCc3R8YB6qwQ20qYf9DqPc1UjRuNIVYftatwE7z0wNLnmw0qyOri0PElaP8avatETVT4dAEb2Kp4CaBULcla0lPX5qB/kfLr5rFSehxEgJqR+eY/qk=
+	t=1724771302; cv=none; b=ZLiUi/xgBwm8dJq2c7Zaymb4RV7cyVyp3lTobSH5O2BlUhrPCrtTWZ1RynkHo3S+YTpuQt6c6tlCKGwfmJYkGr1Yf2fC3X6l+4ADudpG+yR8rdE7Z1yJbDK96rmPmvPFglFfgCfNVGjgP95HWDD4kdgWQVw8bUKuLJ8ruUlIfFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771298; c=relaxed/simple;
-	bh=dYtMNhw1cswOCTUGzihN0ztJQ96FDjhyRXnAEAAyYEs=;
+	s=arc-20240116; t=1724771302; c=relaxed/simple;
+	bh=UeMeYboT1q57XjQZ+1216pdqY+1inKqJ0NBLOoF1W6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwqYPFPl+nsfHX9ycC1cBcCI0JPUQwUPO+6x93nOsn5uWPFJWqzFIoFE0/r8Xz6/TK/MSjF3HRwDw75alzkS44TOxWxBDN8L+LEYUFC9t0gkFBoU0B0+bf5fFrUlvfMSSPV0HMpKqe5K+LXWaEQckpwgPsV+d9hqD3HTislCzc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bc8AaY9c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m9U/w+v858DTZ3PL6YoatGr7A6EMDNVAYmrfA8Mx35muTsxfP6EzjyXCcHj0b0okuMu5lXg6Q8f1r0Xbb7LJi66LnFCIu+9D08hI7ZZfD2hJeGVmZhcRyHtp7D3eHXEINPVzt7mw/CYsDnuFO0EKamNk4lbxTjBRO42YLYeRioE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2un1pYs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bc8AaY9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053F0C61074;
-	Tue, 27 Aug 2024 15:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2un1pYs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D52AC61074;
+	Tue, 27 Aug 2024 15:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771298;
-	bh=dYtMNhw1cswOCTUGzihN0ztJQ96FDjhyRXnAEAAyYEs=;
+	s=korg; t=1724771301;
+	bh=UeMeYboT1q57XjQZ+1216pdqY+1inKqJ0NBLOoF1W6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc8AaY9c5yWOPW/AIlql/OHdgbt/BRAuBeqciSE9F8vvQWWFJziqo8itXhLdGEIOi
-	 UVDw/Oqlg8p6z/VsMbxA2fojCI4pLrbBOIwyYvfpooutn3FMd51w+bZvVEiOCEPY/v
-	 MI+2+QM6/fq4kqmQNHJurob3lGVPeCfSuRRls6Wc=
+	b=C2un1pYsDtyMC9GjA3bMS6C9ga9zYj5lxJhFwX825NmidNk46d7vXY+rdOkYVdBl6
+	 54UlkZNHPzPFJVrq1F73Rtbcx18f65KnLcGUtkL+obBH7QlNdZ++JRg2uh5Dbl1nfa
+	 eAks+IQf5Px6gH4ehZo5gBRE0r/gk63us6l4M6IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alexandre Courbot <gnurou@gmail.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 147/273] ALSA: hda/tas2781: Use correct endian conversion
-Date: Tue, 27 Aug 2024 16:37:51 +0200
-Message-ID: <20240827143839.000060908@linuxfoundation.org>
+Subject: [PATCH 6.10 148/273] Makefile: add $(srctree) to dependency of compile_commands.json target
+Date: Tue, 27 Aug 2024 16:37:52 +0200
+Message-ID: <20240827143839.037198211@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -51,42 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Alexandre Courbot <gnurou@gmail.com>
 
-[ Upstream commit 829e2a23121fb36ee30ea5145c2a85199f68e2c8 ]
+[ Upstream commit 6fc9aacad49e3fbecd270c266850d50c453d52ef ]
 
-The data conversion is done rather by a wrong function.  We convert to
-BE32, not from BE32.  Although the end result must be same, this was
-complained by the compiler.
+When trying to build compile_commands.json for an external module against
+the kernel built in a separate output directory, the following error is
+displayed:
 
-Fix the code again and align with another similar function
-tas2563_apply_calib() that does already right.
+  make[1]: *** No rule to make target 'scripts/clang-tools/gen_compile_commands.py',
+  needed by 'compile_commands.json'. Stop.
 
-Fixes: 3beddef84d90 ("ALSA: hda/tas2781: fix wrong calibrated data order")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408141630.DiDUB8Z4-lkp@intel.com/
-Link: https://patch.msgid.link/20240814100500.1944-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This is because gen_compile_commands.py was previously looked up using a
+relative path to $(srctree), but commit b1992c3772e6 ("kbuild: use
+$(src) instead of $(srctree)/$(src) for source directory") stopped
+defining VPATH for external module builds.
+
+Prefixing gen_compile_commands.py with $(srctree) fixes the problem.
+
+Fixes: b1992c3772e6 ("kbuild: use $(src) instead of $(srctree)/$(src) for source directory")
+Signed-off-by: Alexandre Courbot <gnurou@gmail.com>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
-index 1d4b044b78410..9e88d39eac1e2 100644
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -527,8 +527,8 @@ static void tas2781_apply_calib(struct tasdevice_priv *tas_priv)
+diff --git a/Makefile b/Makefile
+index 361a70264e1fb..194841a4efde9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1986,7 +1986,7 @@ nsdeps: modules
+ quiet_cmd_gen_compile_commands = GEN     $@
+       cmd_gen_compile_commands = $(PYTHON3) $< -a $(AR) -o $@ $(filter-out $<, $(real-prereqs))
  
- 	for (i = 0; i < tas_priv->ndev; i++) {
- 		for (j = 0; j < CALIB_MAX; j++) {
--			data = get_unaligned_be32(
--				&tas_priv->cali_data.data[offset]);
-+			data = cpu_to_be32(
-+				*(uint32_t *)&tas_priv->cali_data.data[offset]);
- 			rc = tasdevice_dev_bulk_write(tas_priv, i,
- 				TASDEVICE_REG(0, page_array[j], rgno_array[j]),
- 				(unsigned char *)&data, 4);
+-$(extmod_prefix)compile_commands.json: scripts/clang-tools/gen_compile_commands.py \
++$(extmod_prefix)compile_commands.json: $(srctree)/scripts/clang-tools/gen_compile_commands.py \
+ 	$(if $(KBUILD_EXTMOD),, vmlinux.a $(KBUILD_VMLINUX_LIBS)) \
+ 	$(if $(CONFIG_MODULES), $(MODORDER)) FORCE
+ 	$(call if_changed,gen_compile_commands)
 -- 
 2.43.0
 
