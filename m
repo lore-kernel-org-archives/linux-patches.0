@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFFA1C7B9D;
-	Tue, 27 Aug 2024 15:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3881C7B9D;
+	Tue, 27 Aug 2024 15:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771707; cv=none; b=nM7Z/jd9rn9loKO8d4sEeclzs5Wo4+5wTzBshBYtrDHFrojfzMLqFqg6cUBYMYSZsGi+BCB6exUOuejiFVh+eVsL7/adK9q74Hg5ofYcX+G2IbLtOv6wl2lxOdfkIL+eI2txpIVaatFF0ZgfjgsILSg5VeVfpWY42EMhPMgtcYo=
+	t=1724771710; cv=none; b=YkMlKARQhYqLo2R1DZtBBlpLXzPRuI7JPn8Ac6QqNemF6VY95T3OI9Blna7qsxPkq93+sTNq42S4rNNmz99gPRRjA0v2C7gF610VWLmkquvp7mCbkcTJkitPyJZp5bq0obSnrQMNxK9xPNnY6aGufugrZ3WeT6yxzyNFJ4wEtq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771707; c=relaxed/simple;
-	bh=IfM8ohYfP1SkaA4pSHdq8QVTZrATo2PdOzVsiX53H7o=;
+	s=arc-20240116; t=1724771710; c=relaxed/simple;
+	bh=LKUNx7yGZnz9rtjWebV7L9aFEag493cWfCJfngkmm8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlK6+JOGO6lnjnIFfqczEEzhQ/YcXtVOB7H5XpT73MdsQ7Zb8L8r/abNsa6Jsm1fgO+83o/TmyUTDGJ07HZfijYJwFlVuLMOEogiual2PGLYDUaD4F/DGWoqwSJbHieSMu/mvfDvWcXZMur2uxlLRL8ZoxJ5t1lZrJ/ac9iN9vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlgHrmZf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mRDqxfb9zl/+2p+69/0Yo7OxUp/uGL70AUkFXg/tIfqpPBnL+pvz/2VqCUuuSYoVYLL+OGZCzFZU4k5eygLE+sHwmEhtBZs5raRSCtjGVANVr0UZvpTnlIU6FXIIL2/TcWSzRTuha0Z70PoRa6fHPum4ORIQ29hbpYhyYSM3H4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+MLkera; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlgHrmZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B46DC4AF50;
-	Tue, 27 Aug 2024 15:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+MLkera"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B688C61075;
+	Tue, 27 Aug 2024 15:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771706;
-	bh=IfM8ohYfP1SkaA4pSHdq8QVTZrATo2PdOzVsiX53H7o=;
+	s=korg; t=1724771710;
+	bh=LKUNx7yGZnz9rtjWebV7L9aFEag493cWfCJfngkmm8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlgHrmZf0b0xeqDYNbCEvLF7ReUyEFWUIwy9mrGK+ixMAEpnABEDnrN6VjiY7aKrS
-	 yu4MhcSLn56EAuvtvrDs1yV3wQ42Bnuqz4R3JXtResD7fXEBlhbdXwiAvWr60DbXNb
-	 mtTSL4yfFKswrDIF7ue7AKkZ8H1UqVZ6HXFksOq4=
+	b=T+MLkeraEhTpbYGIJ8HbKeDvKd18NqHhETceK+eu8iLzjQtUykU3bQNSk4xMzX1bF
+	 PLE6QrNWic5VGtCHBnbESUZSHL4u7epO9PsmmkU82m+JxAC4g2JMyprU144Yp/GIMg
+	 CrHRyIC53PFrWMfl8SKWOtQHIPiH8rUEDDV4KGhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Werner Sembach <wse@tuxedocomputers.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.10 238/273] Input: i8042 - add forcenorestore quirk to leave controller untouched even on s3
-Date: Tue, 27 Aug 2024 16:39:22 +0200
-Message-ID: <20240827143842.460781472@linuxfoundation.org>
+Subject: [PATCH 6.10 239/273] Input: i8042 - use new forcenorestore quirk to replace old buggy quirk combination
+Date: Tue, 27 Aug 2024 16:39:23 +0200
+Message-ID: <20240827143842.498275202@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,115 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit 3d765ae2daccc570b3f4fbcb57eb321b12cdded2 upstream.
+commit aaa4ca873d3da768896ffc909795359a01e853ef upstream.
 
-On s3 resume the i8042 driver tries to restore the controller to a known
-state by reinitializing things, however this can confuse the controller
-with different effects. Mostly occasionally unresponsive keyboards after
-resume.
-
-These issues do not rise on s0ix resume as here the controller is assumed
-to preserved its state from before suspend.
-
-This patch adds a quirk for devices where the reinitialization on s3 resume
-is not needed and might be harmful as described above. It does this by
-using the s0ix resume code path at selected locations.
-
-This new quirk goes beyond what the preexisting reset=never quirk does,
-which only skips some reinitialization steps.
+The old quirk combination sometimes cause a laggy keyboard after boot. With
+the new quirk the initial issue of an unresponsive keyboard after s3 resume
+is also fixed, but it doesn't have the negative side effect of the
+sometimes laggy keyboard.
 
 Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240104183118.779778-2-wse@tuxedocomputers.com
+Link: https://lore.kernel.org/r/20240104183118.779778-3-wse@tuxedocomputers.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |   10 +++++++---
- drivers/input/serio/i8042.c           |   10 +++++++---
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 --- a/drivers/input/serio/i8042-acpipnpio.h
 +++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -83,6 +83,7 @@ static inline void i8042_write_command(i
- #define SERIO_QUIRK_KBDRESET		BIT(12)
- #define SERIO_QUIRK_DRITEK		BIT(13)
- #define SERIO_QUIRK_NOPNP		BIT(14)
-+#define SERIO_QUIRK_FORCENORESTORE	BIT(15)
- 
- /* Quirk table for different mainboards. Options similar or identical to i8042
-  * module parameters.
-@@ -1685,6 +1686,8 @@ static void __init i8042_check_quirks(vo
- 	if (quirks & SERIO_QUIRK_NOPNP)
- 		i8042_nopnp = true;
- #endif
-+	if (quirks & SERIO_QUIRK_FORCENORESTORE)
-+		i8042_forcenorestore = true;
- }
- #else
- static inline void i8042_check_quirks(void) {}
-@@ -1718,7 +1721,7 @@ static int __init i8042_platform_init(vo
- 
- 	i8042_check_quirks();
- 
--	pr_debug("Active quirks (empty means none):%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
-+	pr_debug("Active quirks (empty means none):%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
- 		i8042_nokbd ? " nokbd" : "",
- 		i8042_noaux ? " noaux" : "",
- 		i8042_nomux ? " nomux" : "",
-@@ -1738,10 +1741,11 @@ static int __init i8042_platform_init(vo
- 		"",
- #endif
- #ifdef CONFIG_PNP
--		i8042_nopnp ? " nopnp" : "");
-+		i8042_nopnp ? " nopnp" : "",
- #else
--		"");
-+		"",
- #endif
-+		i8042_forcenorestore ? " forcenorestore" : "");
- 
- 	retval = i8042_pnp_init();
- 	if (retval)
---- a/drivers/input/serio/i8042.c
-+++ b/drivers/input/serio/i8042.c
-@@ -115,6 +115,10 @@ module_param_named(nopnp, i8042_nopnp, b
- MODULE_PARM_DESC(nopnp, "Do not use PNP to detect controller settings");
- #endif
- 
-+static bool i8042_forcenorestore;
-+module_param_named(forcenorestore, i8042_forcenorestore, bool, 0);
-+MODULE_PARM_DESC(forcenorestore, "Force no restore on s3 resume, copying s2idle behaviour");
-+
- #define DEBUG
- #ifdef DEBUG
- static bool i8042_debug;
-@@ -1232,7 +1236,7 @@ static int i8042_pm_suspend(struct devic
- {
- 	int i;
- 
--	if (pm_suspend_via_firmware())
-+	if (!i8042_forcenorestore && pm_suspend_via_firmware())
- 		i8042_controller_reset(true);
- 
- 	/* Set up serio interrupts for system wakeup. */
-@@ -1248,7 +1252,7 @@ static int i8042_pm_suspend(struct devic
- 
- static int i8042_pm_resume_noirq(struct device *dev)
- {
--	if (!pm_resume_via_firmware())
-+	if (i8042_forcenorestore || !pm_resume_via_firmware())
- 		i8042_interrupt(0, NULL);
- 
- 	return 0;
-@@ -1271,7 +1275,7 @@ static int i8042_pm_resume(struct device
- 	 * not restore the controller state to whatever it had been at boot
- 	 * time, so we do not need to do anything.
- 	 */
--	if (!pm_suspend_via_firmware())
-+	if (i8042_forcenorestore || !pm_suspend_via_firmware())
- 		return 0;
- 
- 	/*
+@@ -1150,18 +1150,10 @@ static const struct dmi_system_id i8042_
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
+ 	{
+-		/*
+-		 * Setting SERIO_QUIRK_NOMUX or SERIO_QUIRK_RESET_ALWAYS makes
+-		 * the keyboard very laggy for ~5 seconds after boot and
+-		 * sometimes also after resume.
+-		 * However both are required for the keyboard to not fail
+-		 * completely sometimes after boot or resume.
+-		 */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "N150CU"),
+ 		},
+-		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+-					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
+ 	},
+ 	{
+ 		.matches = {
 
 
