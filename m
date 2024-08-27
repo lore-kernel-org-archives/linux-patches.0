@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D471BC9E3;
-	Tue, 27 Aug 2024 15:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27E31BC9E3;
+	Tue, 27 Aug 2024 15:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771551; cv=none; b=MsMPde5rNRuXGxSSKL7k5GXiDIgvWQyHMQmNUzXVxu86+0Ulzue62gFregW7gzVz7LCC0mcA+r+3zE914AR6EdGST18xrRiVQC3UBNbt32HfS3fpT5tvtzt4n3ZlBQSaqaKM/sLJAoyGMeN+Uq6Y823127itWwJAYNp8i+FBMZc=
+	t=1724771554; cv=none; b=G6i9L/A/T+hHDwq1NfC5Uyt0FvfbFtG8coQIOMQwabv3wdPDui55wL0EM6e10fugOCM7bfZchoyJFdoBRFSrQYwucZtiX7Gp9+qht+YExCoWA73Io8YWE88puls02TOFO2rkrS4YdZVIPDS0kunBljFvsbiXDySBq7PP+QgfnY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771551; c=relaxed/simple;
-	bh=y4uJCYzgPyY4CvCJs05ZoSEbXUwT1hSiMDKPWkgY0dQ=;
+	s=arc-20240116; t=1724771554; c=relaxed/simple;
+	bh=U3NRBUm/qCCfYQixEsNc81OQUmERtrZTIWfxzGX/07E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmX64Dw59Oi8yHfaUKRHRIEm+4oNNRp0kGsyp8mSga7GtD1/DDQAgrbvBAogGKJkohlfQKf+e9xbdey9Y7NVT/s8Xu1dfwnh4vntxiehwE8BmPCy6Mun4M7vXqDqh7ymTJ9TOaakQXFimzW9qr75HX6E6O5zC3BlixrZZE9UuBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=figUWUO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LM04AwwgO1oTk+R9bPhr/T+yjBAkdDNcMCZDT1tCMqEK/Q9+qVonzIa1gFI2gLijxYgLe9ZH7heo+KYY+XMTEc01G57Gtycp5UpicgowbCRY2LiNHUFGZa/hSAJYP/s5lYRix1N7qswpH/K06D5brTquM7XE3huVAt/hfxBspJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osMOqvMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="figUWUO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132D6C61042;
-	Tue, 27 Aug 2024 15:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osMOqvMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3D8C61042;
+	Tue, 27 Aug 2024 15:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771551;
-	bh=y4uJCYzgPyY4CvCJs05ZoSEbXUwT1hSiMDKPWkgY0dQ=;
+	s=korg; t=1724771554;
+	bh=U3NRBUm/qCCfYQixEsNc81OQUmERtrZTIWfxzGX/07E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=figUWUO9vXt2/yw0KeSUiy5hOGYqsAKEHaj7jo7fN6Ae5/uYZwUW/Vp1KOFAg6l/t
-	 WmY1bKlymPQKBAY/alFwPNTJRTrf2nxMeB+V73/eVEqwKCnymBaLfYa25moYYa6dBA
-	 N+2YC3ITOYqngJLYGyW4X2lZSE3ASaAJ7DwdvRE0=
+	b=osMOqvMebrGVj7y1mgkRCr2Zo6Ya9PPg4GWRZ0BFt8Vbcu82ZTQraIOd7oTPBg0iA
+	 uAoq3luLSgKjxq2Wk/Kbnl9qzavsaW5IwNvoHHcwvQo0s90txQG0jAw7EdtJpR4Ca9
+	 sWYv2zkURhrKSvSUGwliO4cI7NqJe1WqLgInjS5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Mark ODonovan <shiftee@posteo.net>,
-	Changhui Zhong <czhong@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Ming Lei <ming.lei@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 222/273] nvme: move stopping keep-alive into nvme_uninit_ctrl()
-Date: Tue, 27 Aug 2024 16:39:06 +0200
-Message-ID: <20240827143841.853911982@linuxfoundation.org>
+	Stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Yiwei Zhang <zhan4630@purdue.edu>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.10 223/273] Bluetooth: MGMT: Add error handling to pair_device()
+Date: Tue, 27 Aug 2024 16:39:07 +0200
+Message-ID: <20240827143841.891765550@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -56,59 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit a54a93d0e3599b05856971734e15418ac551a14c ]
+commit 538fd3921afac97158d4177139a0ad39f056dbb2 upstream.
 
-Commit 4733b65d82bd ("nvme: start keep-alive after admin queue setup")
-moves starting keep-alive from nvme_start_ctrl() into
-nvme_init_ctrl_finish(), but don't move stopping keep-alive into
-nvme_uninit_ctrl(), so keep-alive work can be started and keep pending
-after failing to start controller, finally use-after-free is triggered if
-nvme host driver is unloaded.
+hci_conn_params_add() never checks for a NULL value and could lead to a NULL
+pointer dereference causing a crash.
 
-This patch fixes kernel panic when running nvme/004 in case that connection
-failure is triggered, by moving stopping keep-alive into nvme_uninit_ctrl().
+Fixed by adding error handling in the function.
 
-This way is reasonable because keep-alive is now started in
-nvme_init_ctrl_finish().
-
-Fixes: 3af755a46881 ("nvme: move nvme_stop_keep_alive() back to original position")
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Mark O'Donovan <shiftee@posteo.net>
-Reported-by: Changhui Zhong <czhong@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Stable <stable@kernel.org>
+Fixes: 5157b8a503fa ("Bluetooth: Fix initializing conn_params in scan phase")
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Reported-by: Yiwei Zhang <zhan4630@purdue.edu>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/mgmt.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 782090ce0bc10..d973d063bbf50 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4522,7 +4522,6 @@ void nvme_stop_ctrl(struct nvme_ctrl *ctrl)
- {
- 	nvme_mpath_stop(ctrl);
- 	nvme_auth_stop(ctrl);
--	nvme_stop_keep_alive(ctrl);
- 	nvme_stop_failfast_work(ctrl);
- 	flush_work(&ctrl->async_event_work);
- 	cancel_work_sync(&ctrl->fw_act_work);
-@@ -4558,6 +4557,7 @@ EXPORT_SYMBOL_GPL(nvme_start_ctrl);
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3457,6 +3457,10 @@ static int pair_device(struct sock *sk,
+ 		 * will be kept and this function does nothing.
+ 		 */
+ 		p = hci_conn_params_add(hdev, &cp->addr.bdaddr, addr_type);
++		if (!p) {
++			err = -EIO;
++			goto unlock;
++		}
  
- void nvme_uninit_ctrl(struct nvme_ctrl *ctrl)
- {
-+	nvme_stop_keep_alive(ctrl);
- 	nvme_hwmon_exit(ctrl);
- 	nvme_fault_inject_fini(&ctrl->fault_inject);
- 	dev_pm_qos_hide_latency_tolerance(ctrl->device);
--- 
-2.43.0
-
+ 		if (p->auto_connect == HCI_AUTO_CONN_EXPLICIT)
+ 			p->auto_connect = HCI_AUTO_CONN_DISABLED;
 
 
