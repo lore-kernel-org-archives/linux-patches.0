@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9991C68B1;
-	Tue, 27 Aug 2024 15:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948161C6F49;
+	Tue, 27 Aug 2024 15:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770969; cv=none; b=sOcOZo/zrJw+GY0Uecf0KOxARJR4Lu8p3TvSoO1KrW4NYTFVWjh1MUGJ/lUYhOblHwIYJNTkVGTvabCQrN8MO8ptIN1Kkv/4Avmwz+LunegrloADV2tFzYiCS6Fl1DlxTbj/q3GxK/6AK2IC7vNWMdiCyW1dphUaNIzidMQqVHA=
+	t=1724770972; cv=none; b=F8ckA4cPthBcpW4JqXgH+X89sepKbSUVMpiFBPE492U3/KcWHb2fuOnGxLm02D7xPpqKYYPj3wOQ8RArtQEumTH8CvjAJtz+AvFyLSwow8ZE5mfMzs6G9STJCZz9TlaoBbtn4SYH8DxQykXvqVWZguLKS9cbAKnzR4ovbqp+sxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770969; c=relaxed/simple;
-	bh=AJG7MIXzwFc9igr6NqUgNQNbDESdJ8/bn3bSE+qQlgM=;
+	s=arc-20240116; t=1724770972; c=relaxed/simple;
+	bh=d/gM7Tuh0MGTI9jCNmw/JcfNw4r8+rVUN2piBbOjx9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HU+w7HrKPdmjy36j2bQ10fqtYYLhF4UmrSo4T49zpdEuwWnwqCAJYS2qfcdo7D+o3bZ71xABf2/S6pFYvo9Rj6tLGT0t7Q6DF/XQzZLzg4NVRzwdaM+1aSmyVZzSCcGKWKKhhduIKIt78hN1sh9nJApgVSImRPbGRWBb1/VKjQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAPP5z5x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Si+NwNUwWkXVNh/vFlqQiucnCSY6fPGoGZBWzUGjoFBdXfmWF9jpP03M2o73QaNjY2q3bcLSftGMNchd+gGUyl17eM3+xtO933qAgfJ8OA6ZjgjabXuoepNKii2cCgwKO3jUrXlwKVU0ESTfKFBKbtSCd1Iyk0OpPRb4lFoJa1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aX5Fpc4s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAPP5z5x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959D8C61042;
-	Tue, 27 Aug 2024 15:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aX5Fpc4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A44C61049;
+	Tue, 27 Aug 2024 15:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770969;
-	bh=AJG7MIXzwFc9igr6NqUgNQNbDESdJ8/bn3bSE+qQlgM=;
+	s=korg; t=1724770972;
+	bh=d/gM7Tuh0MGTI9jCNmw/JcfNw4r8+rVUN2piBbOjx9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAPP5z5xFFBj56T+RsnCD79fYN8NN2pRINI1k79zrsrr/1LlpO9+VUyRh0eON7EnR
-	 UxYY3mCsoqxDDluMpaxAfv0TxxYWyOoHy0DTCPiP5d+u3JAjKJUEiGmVoLdaxfzIvZ
-	 8sv3wuMG7EPLZWX3E4KQTjh86vGdpTn6XUlhyiW8=
+	b=aX5Fpc4sfHdROPqaSjVs23bGiVK8Idqc6pCzs28bXUXl6dWIS2GEpA0uwgq9spR/j
+	 aCUN+vCtbc73yZRvRx3yHsx3vbEqUdnoDjpdfvc80sTeaEx+ERv7Y+Bp7nEy92MmGv
+	 nVWXo0AhuZ7UHtNcUgaaKOu5EJ/l1oHxEnJ8w3rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 047/273] media: atomisp: Fix streaming no longer working on BYT / ISP2400 devices
-Date: Tue, 27 Aug 2024 16:36:11 +0200
-Message-ID: <20240827143835.188966668@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.10 048/273] net: mana: Fix doorbell out of order violation and avoid unnecessary doorbell rings
+Date: Tue, 27 Aug 2024 16:36:12 +0200
+Message-ID: <20240827143835.226999546@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,97 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Long Li <longli@microsoft.com>
 
-commit 63de936b513f7a9ce559194d3269ac291f4f4662 upstream.
+commit 58a63729c957621f1990c3494c702711188ca347 upstream.
 
-Commit a0821ca14bb8 ("media: atomisp: Remove test pattern generator (TPG)
-support") broke BYT support because it removed a seemingly unused field
-from struct sh_css_sp_config and a seemingly unused value from enum
-ia_css_input_mode.
+After napi_complete_done() is called when NAPI is polling in the current
+process context, another NAPI may be scheduled and start running in
+softirq on another CPU and may ring the doorbell before the current CPU
+does. When combined with unnecessary rings when there is no need to arm
+the CQ, it triggers error paths in the hardware.
 
-But these are part of the ABI between the kernel and firmware on ISP2400
-and this part of the TPG support removal changes broke ISP2400 support.
+This patch fixes this by calling napi_complete_done() after doorbell
+rings. It limits the number of unnecessary rings when there is
+no need to arm. MANA hardware specifies that there must be one doorbell
+ring every 8 CQ wraparounds. This driver guarantees one doorbell ring as
+soon as the number of consumed CQEs exceeds 4 CQ wraparounds. In practical
+workloads, the 4 CQ wraparounds proves to be big enough that it rarely
+exceeds this limit before all the napi weight is consumed.
 
-ISP2401 support was not affected because on ISP2401 only a part of
-struct sh_css_sp_config is used.
+To implement this, add a per-CQ counter cq->work_done_since_doorbell,
+and make sure the CQ is armed as soon as passing 4 wraparounds of the CQ.
 
-Restore the removed field and enum value to fix this.
-
-Fixes: a0821ca14bb8 ("media: atomisp: Remove test pattern generator (TPG) support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: e1b5683ff62e ("net: mana: Move NAPI from EQ to CQ")
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://patch.msgid.link/1723219138-29887-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/atomisp/pci/ia_css_stream_public.h |    8 ++++--
- drivers/staging/media/atomisp/pci/sh_css_internal.h      |   19 ++++++++++++---
- 2 files changed, 22 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   22 ++++++++++++++--------
+ include/net/mana/mana.h                       |    1 +
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
---- a/drivers/staging/media/atomisp/pci/ia_css_stream_public.h
-+++ b/drivers/staging/media/atomisp/pci/ia_css_stream_public.h
-@@ -27,12 +27,16 @@
- #include "ia_css_prbs.h"
- #include "ia_css_input_port.h"
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1777,7 +1777,6 @@ static void mana_poll_rx_cq(struct mana_
+ static int mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
+ {
+ 	struct mana_cq *cq = context;
+-	u8 arm_bit;
+ 	int w;
  
--/* Input modes, these enumerate all supported input modes.
-- *  Note that not all ISP modes support all input modes.
-+/*
-+ * Input modes, these enumerate all supported input modes.
-+ * This enum is part of the atomisp firmware ABI and must
-+ * NOT be changed!
-+ * Note that not all ISP modes support all input modes.
-  */
- enum ia_css_input_mode {
- 	IA_CSS_INPUT_MODE_SENSOR, /** data from sensor */
- 	IA_CSS_INPUT_MODE_FIFO,   /** data from input-fifo */
-+	IA_CSS_INPUT_MODE_TPG,    /** data from test-pattern generator */
- 	IA_CSS_INPUT_MODE_PRBS,   /** data from pseudo-random bit stream */
- 	IA_CSS_INPUT_MODE_MEMORY, /** data from a frame in memory */
- 	IA_CSS_INPUT_MODE_BUFFERED_SENSOR /** data is sent through mipi buffer */
---- a/drivers/staging/media/atomisp/pci/sh_css_internal.h
-+++ b/drivers/staging/media/atomisp/pci/sh_css_internal.h
-@@ -341,7 +341,14 @@ struct sh_css_sp_input_formatter_set {
+ 	WARN_ON_ONCE(cq->gdma_cq != gdma_queue);
+@@ -1788,16 +1787,23 @@ static int mana_cq_handler(void *context
+ 		mana_poll_tx_cq(cq);
  
- #define IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT (3)
+ 	w = cq->work_done;
++	cq->work_done_since_doorbell += w;
  
--/* SP configuration information */
-+/*
-+ * SP configuration information
-+ *
-+ * This struct is part of the atomisp firmware ABI and is directly copied
-+ * to ISP DRAM by sh_css_store_sp_group_to_ddr()
-+ *
-+ * Do NOT change this struct's layout or remove seemingly unused fields!
-+ */
- struct sh_css_sp_config {
- 	u8			no_isp_sync; /* Signal host immediately after start */
- 	u8			enable_raw_pool_locking; /** Enable Raw Buffer Locking for HALv3 Support */
-@@ -351,6 +358,10 @@ struct sh_css_sp_config {
- 	     host (true) or when they are passed to the preview/video pipe
- 	     (false). */
+-	if (w < cq->budget &&
+-	    napi_complete_done(&cq->napi, w)) {
+-		arm_bit = SET_ARM_BIT;
+-	} else {
+-		arm_bit = 0;
++	if (w < cq->budget) {
++		mana_gd_ring_cq(gdma_queue, SET_ARM_BIT);
++		cq->work_done_since_doorbell = 0;
++		napi_complete_done(&cq->napi, w);
++	} else if (cq->work_done_since_doorbell >
++		   cq->gdma_cq->queue_size / COMP_ENTRY_SIZE * 4) {
++		/* MANA hardware requires at least one doorbell ring every 8
++		 * wraparounds of CQ even if there is no need to arm the CQ.
++		 * This driver rings the doorbell as soon as we have exceeded
++		 * 4 wraparounds.
++		 */
++		mana_gd_ring_cq(gdma_queue, 0);
++		cq->work_done_since_doorbell = 0;
+ 	}
  
-+	 /*
-+	  * Note the fields below are only used on the ISP2400 not on the ISP2401,
-+	  * sh_css_store_sp_group_to_ddr() skip copying these when run on the ISP2401.
-+	  */
- 	struct {
- 		u8					a_changed;
- 		u8					b_changed;
-@@ -360,11 +371,13 @@ struct sh_css_sp_config {
- 	} input_formatter;
+-	mana_gd_ring_cq(gdma_queue, arm_bit);
+-
+ 	return w;
+ }
  
- 	sync_generator_cfg_t	sync_gen;
-+	tpg_cfg_t		tpg;
- 	prbs_cfg_t		prbs;
- 	input_system_cfg_t	input_circuit;
- 	u8			input_circuit_cfg_changed;
--	u32		mipi_sizes_for_check[N_CSI_PORTS][IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT];
--	u8                 enable_isys_event_queue;
-+	u32			mipi_sizes_for_check[N_CSI_PORTS][IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT];
-+	/* These last 2 fields are used on both the ISP2400 and the ISP2401 */
-+	u8			enable_isys_event_queue;
- 	u8			disable_cont_vf;
+--- a/include/net/mana/mana.h
++++ b/include/net/mana/mana.h
+@@ -274,6 +274,7 @@ struct mana_cq {
+ 	/* NAPI data */
+ 	struct napi_struct napi;
+ 	int work_done;
++	int work_done_since_doorbell;
+ 	int budget;
  };
  
 
