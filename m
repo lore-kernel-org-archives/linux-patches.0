@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28704DDC1;
-	Tue, 27 Aug 2024 15:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E0B1E487;
+	Tue, 27 Aug 2024 15:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770831; cv=none; b=BnRCIqgL6h7J3vypyAfo3aWtEgh6o0PVwsWJzHPR64hGx1Lr7Qq5XlhIU7hKmVNACOIZ9vOXpd9MrLfqtcQLNeEQRMlGO0riKvIgShzI9Q3wNB7gRl8PrrJslmIFBR4sN1NXAFyvJoA89LmMe65pX3RrfeD/Wk1PoR+W6SI0EqI=
+	t=1724770834; cv=none; b=gnkEsiWxfmtW/P1ezW1KQrfMmit6WNxJXKmrL/IGk+fxmBCdp6d3f3Of2uTj17fX9EvVxxbWQVq/CrdqXBSqSW/BMnLkq15yc78I9G0WuyIyXdrUWddd6V1+qiNXWAWHDGrHQfBhj6+k4YU77iVk1UsX6Jz1g5rd+/zJ+rYlZTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770831; c=relaxed/simple;
-	bh=bvfY/1KC/AAlRInQb48DMX6rOsxJ+OGFa0M/98UoXVo=;
+	s=arc-20240116; t=1724770834; c=relaxed/simple;
+	bh=6gioIMrMfgXMnfS1e5xaQ/VdAjj9wWfy6CRR6gs/G2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFpep8l7rPboeGry0iGleIBkxG2MKv2haH0l9RLuF36u0DXoui5ONchatspzGp+7Ma6KPxGk6IplGRDD0jEZ93A2gia6YNrR/NFbTyskHX8G663VG88mXLLGBe7bhuTuJNQM4sQ0A65zp8lPEoq9zcczeaLddvyogxAFWQfA/Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpBJ7mHU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hA1rijHy2Ttn0l7Hml5H374nrz8vaL5lnFmtgTtF6L14mSmGmIsFPWRA7uRBboIhfoyAG++1m0zjxg2vF0D+/4nBYlBotarx1ZyCnAWioMuY6HQWXL9Uw7X3jHPvvSdnm95cpWpqxv/0BcrWVPcFc7DhUn7qhS+AcopcjuwjEdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9Zevky0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpBJ7mHU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B1BC4AF1C;
-	Tue, 27 Aug 2024 15:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9Zevky0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D186AC4AF1C;
+	Tue, 27 Aug 2024 15:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770831;
-	bh=bvfY/1KC/AAlRInQb48DMX6rOsxJ+OGFa0M/98UoXVo=;
+	s=korg; t=1724770834;
+	bh=6gioIMrMfgXMnfS1e5xaQ/VdAjj9wWfy6CRR6gs/G2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpBJ7mHUvfnM9YjZzEiuZ0M/Ve1elizxFqAKYtzCMUtaDOEqJruREvGdtcqkEZwqg
-	 dtAPnl1tptddLN4Kz4Z5E0t7Kz7Lw0e8BRfBlAExKQ2FSXCU1Mo7b6mQ3gJaF+0Dow
-	 U/fVmThAb0/eMPAb6omo5IzK5VKxFWsiGe4/UJIg=
+	b=X9Zevky0vJSTMThMwaiwk1LXwL6lRN3HUM8TzCbfy7Wn2dWsP05Gh3BLVThNa0fUR
+	 TGFGo5rmF7gIU8erTHaYfLPZ2ewJKfqT1Ux5BqaiG/koVNjM6egIgZECkm5DkZd+94
+	 ImwOPZ1f83z5oJsrMPdCOKADl4ubc7J0J5/449pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianhua Lu <lujianhua000@gmail.com>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.6 328/341] drm/panel: nt36523: Set 120Hz fps for xiaomi,elish panels
-Date: Tue, 27 Aug 2024 16:39:19 +0200
-Message-ID: <20240827143855.877666868@linuxfoundation.org>
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.6 329/341] igc: Fix qbv tx latency by setting gtxoffset
+Date: Tue, 27 Aug 2024 16:39:20 +0200
+Message-ID: <20240827143855.914983330@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,44 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianhua Lu <lujianhua000@gmail.com>
+From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
 
-commit de8ac5696ebc3a2d89c88b70aa3996ee112e76ef upstream.
+commit 6c3fc0b1c3d073bd6fc3bf43dbd0e64240537464 upstream.
 
-After commit e6c0de5f4450 ("drm/msm/dpu: try multirect based on mdp clock limits")
-merged, 120Hz is working on xiaomi,elish panels, so feature it.
+A large tx latency issue was discovered during testing when only QBV was
+enabled. The issue occurs because gtxoffset was not set when QBV is
+active, it was only set when launch time is active.
 
-Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://lore.kernel.org/r/20240112140047.18123-1-lujianhua000@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240112140047.18123-1-lujianhua000@gmail.com
+The patch "igc: Correct the launchtime offset" only sets gtxoffset when
+the launchtime_enable field is set by the user. Enabling launchtime_enable
+ultimately sets the register IGC_TXQCTL_QUEUE_MODE_LAUNCHT (referred to as
+LaunchT in the SW user manual).
+
+Section 7.5.2.6 of the IGC i225/6 SW User Manual Rev 1.2.4 states:
+"The latency between transmission scheduling (launch time) and the
+time the packet is transmitted to the network is listed in Table 7-61."
+
+However, the patch misinterprets the phrase "launch time" in that section
+by assuming it specifically refers to the LaunchT register, whereas it
+actually denotes the generic term for when a packet is released from the
+internal buffer to the MAC transmit logic.
+
+This launch time, as per that section, also implicitly refers to the QBV
+gate open time, where a packet waits in the buffer for the QBV gate to
+open. Therefore, latency applies whenever QBV is in use. TSN features such
+as QBU and QAV reuse QBV, making the latency universal to TSN features.
+
+Discussed with i226 HW owner (Shalev, Avi) and we were in agreement that
+the term "launch time" used in Section 7.5.2.6 is not clear and can be
+easily misinterpreted. Avi will update this section to:
+"When TQAVCTRL.TRANSMIT_MODE = TSN, the latency between transmission
+scheduling and the time the packet is transmitted to the network is listed
+in Table 7-61."
+
+Fix this issue by using igc_tsn_is_tx_mode_in_tsn() as a condition to
+write to gtxoffset, aligning with the newly updated SW User Manual.
+
+Tested:
+1. Enrol taprio on talker board
+   base-time 0
+   cycle-time 1000000
+   flags 0x2
+   index 0 cmd S gatemask 0x1 interval1
+   index 0 cmd S gatemask 0x1 interval2
+
+   Note:
+   interval1 = interval for a 64 bytes packet to go through
+   interval2 = cycle-time - interval1
+
+2. Take tcpdump on listener board
+
+3. Use udp tai app on talker to send packets to listener
+
+4. Check the timestamp on listener via wireshark
+
+Test Result:
+100 Mbps: 113 ~193 ns
+1000 Mbps: 52 ~ 84 ns
+2500 Mbps: 95 ~ 223 ns
+
+Note that the test result is similar to the patch "igc: Correct the
+launchtime offset".
+
+Fixes: 790835fcc0cb ("igc: Correct the launchtime offset")
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-novatek-nt36523.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_tsn.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panel/panel-novatek-nt36523.c
-+++ b/drivers/gpu/drm/panel/panel-novatek-nt36523.c
-@@ -935,8 +935,7 @@ static int j606f_boe_init_sequence(struc
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -61,7 +61,7 @@ void igc_tsn_adjust_txtime_offset(struct
+ 	struct igc_hw *hw = &adapter->hw;
+ 	u16 txoffset;
  
- static const struct drm_display_mode elish_boe_modes[] = {
- 	{
--		/* There is only one 120 Hz timing, but it doesn't work perfectly, 104 Hz preferred */
--		.clock = (1600 + 60 + 8 + 60) * (2560 + 26 + 4 + 168) * 104 / 1000,
-+		.clock = (1600 + 60 + 8 + 60) * (2560 + 26 + 4 + 168) * 120 / 1000,
- 		.hdisplay = 1600,
- 		.hsync_start = 1600 + 60,
- 		.hsync_end = 1600 + 60 + 8,
-@@ -950,8 +949,7 @@ static const struct drm_display_mode eli
+-	if (!is_any_launchtime(adapter))
++	if (!igc_tsn_is_tx_mode_in_tsn(adapter))
+ 		return;
  
- static const struct drm_display_mode elish_csot_modes[] = {
- 	{
--		/* There is only one 120 Hz timing, but it doesn't work perfectly, 104 Hz preferred */
--		.clock = (1600 + 200 + 40 + 52) * (2560 + 26 + 4 + 168) * 104 / 1000,
-+		.clock = (1600 + 200 + 40 + 52) * (2560 + 26 + 4 + 168) * 120 / 1000,
- 		.hdisplay = 1600,
- 		.hsync_start = 1600 + 200,
- 		.hsync_end = 1600 + 200 + 40,
+ 	switch (adapter->link_speed) {
 
 
