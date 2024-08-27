@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB42B1C6881;
-	Tue, 27 Aug 2024 15:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729A1C7B97;
+	Tue, 27 Aug 2024 15:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772680; cv=none; b=ZoAiUZvAk1IEcAyK4aQQm5+Ctq3j7UxFYwI2GG5BiY0g35QtunxhVdgHXq/Qn+GxlTn6prXDzPnTryj1CqsbIeC0kRpvrl+PPfT+mqvdGa4TXuB/FbaY3LE1A/N7pXnTv+a/MndnAZaP2p2Y2HkYSuJvUjdLH7ONQAd8oUH2oQI=
+	t=1724772684; cv=none; b=KSB1bvAJy2sdQZ14qnHW5Kq6iFQZcQEXo+UTlPthrpOwjVborDngfGzyYbNj5NWLssCvnjhARSkYJy1YXigxkKKkFB8OTZR0o/CH+N2T9TbdPyAkmjGsIzz4CPU6jIOQI7wxok588Y3I5DTng5zbU51YJP5w6eXKougMRw81IRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772680; c=relaxed/simple;
-	bh=1qyc5WdDaIFC9Lr7UdkrACLqEBsddlNhQu3FlM7VUDM=;
+	s=arc-20240116; t=1724772684; c=relaxed/simple;
+	bh=Lq+KSAcRZ5WXEbmipjcTCPIr+/hY+fIN+EbCYNhERoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xnh1arWGaBuSt3sYOaH3ST+nks6uVIqvnrOY22PY4DYLPYVIEvfjRI8GIrnwlyGHGuIb7Q/kaWxfmO/d0VVoRW6jH44YdKmjSEcGQ21hL3NiP9suwztspMcO/dZpeUbSiMBWxwQKvsBup+6J90tcs1qtdfUTngKtnjFWKZUp/Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qI0g75Z5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pv6s5/Jrq7ngBW2BHdQMiQq7QYfKEkbvyvW1AXla1Pi2ddyZJc0F7RU1Tz1K+W6xIfXTsNSvbWzvAPJ0twfzCUP+8dX2RtoSA5yMoNI/TDghfAEKdD6Wo7PdukgmHx4TfUK7i81qaduFUGQIeYlrwd9sVqh6WJSH4Awk3Hvh/hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOnNoS7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qI0g75Z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCD8C4DDF0;
-	Tue, 27 Aug 2024 15:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOnNoS7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A92C4DDF0;
+	Tue, 27 Aug 2024 15:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772680;
-	bh=1qyc5WdDaIFC9Lr7UdkrACLqEBsddlNhQu3FlM7VUDM=;
+	s=korg; t=1724772683;
+	bh=Lq+KSAcRZ5WXEbmipjcTCPIr+/hY+fIN+EbCYNhERoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qI0g75Z5yZuqTWQ1EGUTPGSnkdYuNY5Yid6m9YMpyFwCS2CfPVhehvtnyCRAm5Q6o
-	 H2Bs9cU4J66mQqZKcuEgsQkxsS8jmDmcXHO2NVDn2bNddDA+qbxoZ9mfktyu/Ja6l5
-	 XwJQyuQJKcytCutO78VjnxQW86z1kugzH5dufhwo=
+	b=TOnNoS7eZXYAKIjb4qjquTLZ2POnpN1ftmTzGRZGK+DPv7K/COZCvsGinCnmr1I4K
+	 Z22OnlLXxxabAhwYbkiX1/h8J00CHG0gyfRt+9Pk6TjF8CKCc3T5VptM1hfQNXSzUu
+	 g1JAs48Nz4vjyuSkdBdCU169ikgW7rRUGoH9jUC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 270/321] Input: i8042 - add forcenorestore quirk to leave controller untouched even on s3
-Date: Tue, 27 Aug 2024 16:39:38 +0200
-Message-ID: <20240827143848.529874755@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 288/321] nfsd: Simplify code around svc_exit_thread() call in nfsd()
+Date: Tue, 27 Aug 2024 16:39:56 +0200
+Message-ID: <20240827143849.211262411@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,117 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: NeilBrown <neilb@suse.de>
 
-commit 3d765ae2daccc570b3f4fbcb57eb321b12cdded2 upstream.
+[ Upstream commit 18e4cf915543257eae2925671934937163f5639b ]
 
-On s3 resume the i8042 driver tries to restore the controller to a known
-state by reinitializing things, however this can confuse the controller
-with different effects. Mostly occasionally unresponsive keyboards after
-resume.
+Previously a thread could exit asynchronously (due to a signal) so some
+care was needed to hold nfsd_mutex over the last svc_put() call.  Now a
+thread can only exit when svc_set_num_threads() is called, and this is
+always called under nfsd_mutex.  So no care is needed.
 
-These issues do not rise on s0ix resume as here the controller is assumed
-to preserved its state from before suspend.
+Not only is the mutex held when a thread exits now, but the svc refcount
+is elevated, so the svc_put() in svc_exit_thread() will never be a final
+put, so the mutex isn't even needed at this point in the code.
 
-This patch adds a quirk for devices where the reinitialization on s3 resume
-is not needed and might be harmful as described above. It does this by
-using the s0ix resume code path at selected locations.
-
-This new quirk goes beyond what the preexisting reset=never quirk does,
-which only skips some reinitialization steps.
-
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240104183118.779778-2-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |   10 +++++++---
- drivers/input/serio/i8042.c           |   10 +++++++---
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ fs/nfsd/nfssvc.c           |   23 -----------------------
+ include/linux/sunrpc/svc.h |   13 -------------
+ 2 files changed, 36 deletions(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -83,6 +83,7 @@ static inline void i8042_write_command(i
- #define SERIO_QUIRK_KBDRESET		BIT(12)
- #define SERIO_QUIRK_DRITEK		BIT(13)
- #define SERIO_QUIRK_NOPNP		BIT(14)
-+#define SERIO_QUIRK_FORCENORESTORE	BIT(15)
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -983,31 +983,8 @@ nfsd(void *vrqstp)
+ 	atomic_dec(&nfsd_th_cnt);
  
- /* Quirk table for different mainboards. Options similar or identical to i8042
-  * module parameters.
-@@ -1685,6 +1686,8 @@ static void __init i8042_check_quirks(vo
- 	if (quirks & SERIO_QUIRK_NOPNP)
- 		i8042_nopnp = true;
- #endif
-+	if (quirks & SERIO_QUIRK_FORCENORESTORE)
-+		i8042_forcenorestore = true;
- }
- #else
- static inline void i8042_check_quirks(void) {}
-@@ -1718,7 +1721,7 @@ static int __init i8042_platform_init(vo
- 
- 	i8042_check_quirks();
- 
--	pr_debug("Active quirks (empty means none):%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
-+	pr_debug("Active quirks (empty means none):%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
- 		i8042_nokbd ? " nokbd" : "",
- 		i8042_noaux ? " noaux" : "",
- 		i8042_nomux ? " nomux" : "",
-@@ -1738,10 +1741,11 @@ static int __init i8042_platform_init(vo
- 		"",
- #endif
- #ifdef CONFIG_PNP
--		i8042_nopnp ? " nopnp" : "");
-+		i8042_nopnp ? " nopnp" : "",
- #else
--		"");
-+		"",
- #endif
-+		i8042_forcenorestore ? " forcenorestore" : "");
- 
- 	retval = i8042_pnp_init();
- 	if (retval)
---- a/drivers/input/serio/i8042.c
-+++ b/drivers/input/serio/i8042.c
-@@ -115,6 +115,10 @@ module_param_named(nopnp, i8042_nopnp, b
- MODULE_PARM_DESC(nopnp, "Do not use PNP to detect controller settings");
- #endif
- 
-+static bool i8042_forcenorestore;
-+module_param_named(forcenorestore, i8042_forcenorestore, bool, 0);
-+MODULE_PARM_DESC(forcenorestore, "Force no restore on s3 resume, copying s2idle behaviour");
-+
- #define DEBUG
- #ifdef DEBUG
- static bool i8042_debug;
-@@ -1232,7 +1236,7 @@ static int i8042_pm_suspend(struct devic
- {
- 	int i;
- 
--	if (pm_suspend_via_firmware())
-+	if (!i8042_forcenorestore && pm_suspend_via_firmware())
- 		i8042_controller_reset(true);
- 
- 	/* Set up serio interrupts for system wakeup. */
-@@ -1248,7 +1252,7 @@ static int i8042_pm_suspend(struct devic
- 
- static int i8042_pm_resume_noirq(struct device *dev)
- {
--	if (!pm_resume_via_firmware())
-+	if (i8042_forcenorestore || !pm_resume_via_firmware())
- 		i8042_interrupt(0, NULL);
- 
+ out:
+-	/* Take an extra ref so that the svc_put in svc_exit_thread()
+-	 * doesn't call svc_destroy()
+-	 */
+-	svc_get(nn->nfsd_serv);
+-
+ 	/* Release the thread */
+ 	svc_exit_thread(rqstp);
+-
+-	/* We need to drop a ref, but may not drop the last reference
+-	 * without holding nfsd_mutex, and we cannot wait for nfsd_mutex as that
+-	 * could deadlock with nfsd_shutdown_threads() waiting for us.
+-	 * So three options are:
+-	 * - drop a non-final reference,
+-	 * - get the mutex without waiting
+-	 * - sleep briefly andd try the above again
+-	 */
+-	while (!svc_put_not_last(nn->nfsd_serv)) {
+-		if (mutex_trylock(&nfsd_mutex)) {
+-			nfsd_put(net);
+-			mutex_unlock(&nfsd_mutex);
+-			break;
+-		}
+-		msleep(20);
+-	}
+-
  	return 0;
-@@ -1271,7 +1275,7 @@ static int i8042_pm_resume(struct device
- 	 * not restore the controller state to whatever it had been at boot
- 	 * time, so we do not need to do anything.
- 	 */
--	if (!pm_suspend_via_firmware())
-+	if (i8042_forcenorestore || !pm_suspend_via_firmware())
- 		return 0;
+ }
  
- 	/*
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -123,19 +123,6 @@ static inline void svc_put(struct svc_se
+ 	kref_put(&serv->sv_refcnt, svc_destroy);
+ }
+ 
+-/**
+- * svc_put_not_last - decrement non-final reference count on SUNRPC serv
+- * @serv:  the svc_serv to have count decremented
+- *
+- * Returns: %true is refcount was decremented.
+- *
+- * If the refcount is 1, it is not decremented and instead failure is reported.
+- */
+-static inline bool svc_put_not_last(struct svc_serv *serv)
+-{
+-	return refcount_dec_not_one(&serv->sv_refcnt.refcount);
+-}
+-
+ /*
+  * Maximum payload size supported by a kernel RPC server.
+  * This is use to determine the max number of pages nfsd is
 
 
