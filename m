@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7567244C8C;
-	Tue, 27 Aug 2024 14:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BC044C8C;
+	Tue, 27 Aug 2024 14:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770188; cv=none; b=l7gMsNZ53u/UxkxPW+9BquPnI2JTq87LTjaI8++9lFiUfbTSCx7Re9hqMQxE8wY630C1EI0LdBdsSf32MXLHgiApUX+zW5VTUZ2qIqi9j+TC9amkowW1LCRmxKWeyOb3gXRI0zgi4BAsE9NWmoWSdbJQhCH4ph4IbOqwqlymRUw=
+	t=1724770191; cv=none; b=PwR8I7sKNqyQMCe/6ckC90PjM7nI3HCETIlza8phOZD1jrnsExeCYdT4xkuCWRWZVrIUOaTcNpgMaBIHvd0op4fdCWT7kt3YSjM9G2/Er05YtSqmZ2r/oerVkeABszilzGcmVgYhuG72WhVXVwpsgF4TqVT0l+Ff0BNzz0tas6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770188; c=relaxed/simple;
-	bh=02MzllkMX1LqfgjT2lLDmmbpWQuVtebv/qr0j0HLt4k=;
+	s=arc-20240116; t=1724770191; c=relaxed/simple;
+	bh=0SI9gsARQZeNiojTgZ1pjU8myvcKruNnTC8ckRsIF8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dI7n0IA2tR5yyblEAjryGF/KqIPZXXrYgtVq9CLrPzhr/QuBNInoqKNFVujMwSBezfJugGD5i0Z8UvDBfogQ2jea5dqfgZCVKxVBuqtGQ46KaISnKH3JsfgLN8bH4LHu2wbpIYcLrPuXAUzJguwfUVjJnqKEQGqkYoHZDRb8cdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poEytfFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n32YGoj9DlcsLHgjZrqOwE0qCHgdqZY+d7QbNo5ysJ5b84hklz5utVgcOeDfOD3rQy017iwOO+9gCCUyyLiuBKPxtp1X0OrNpNste4oIc/prvysXwasvUbIGWp/Dkor2IWEWHSpbWAj8vkrdkrNGdzMCnGnPZhoeCYGot/e+tf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQcx1HKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poEytfFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755C2C4AF1C;
-	Tue, 27 Aug 2024 14:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQcx1HKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A6CC4AF53;
+	Tue, 27 Aug 2024 14:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770188;
-	bh=02MzllkMX1LqfgjT2lLDmmbpWQuVtebv/qr0j0HLt4k=;
+	s=korg; t=1724770191;
+	bh=0SI9gsARQZeNiojTgZ1pjU8myvcKruNnTC8ckRsIF8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poEytfFwzZDKE8VwUMN3+noxU0D+5C+KeVklYeIgQEimKUkqj8exEjz8fqrg8YwSn
-	 mTvr7pNOGUnG0slgxZbWtAb3aDtd6/2K6VB2r8pNeEFzmMkKtYC6pz5wfB2vn9Y1ql
-	 aoX1y8H3KsjGBq0uD//gFHJT8ksbiIzX0OHLW134=
+	b=TQcx1HKeCrXJJccN/jTQLJBtmAyik/G5kJqBe2VvAEkMoNLetS5uRMZmQ91iBDmUx
+	 KddXH34Z+VGAl/BXYgL3tPwKfqAQCNHu1H8v5lcIQgJ2kyMDczWJHRGh5yedcjUATV
+	 thnLi3V6ClIzW1InHocMRX3Tcc4d2EvnFT5dYa7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Acayan <mailingradian@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/341] iommu/arm-smmu-qcom: Add SDM670 MDSS compatible
-Date: Tue, 27 Aug 2024 16:35:53 +0200
-Message-ID: <20240827143848.057795063@linuxfoundation.org>
+Subject: [PATCH 6.6 123/341] ASoC: SOF: Intel: hda-dsp: Make sure that no irq handler is pending before suspend
+Date: Tue, 27 Aug 2024 16:35:54 +0200
+Message-ID: <20240827143848.097145292@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,36 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Acayan <mailingradian@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 270a1470408e44619a55be1079254bf2ba0567fb ]
+[ Upstream commit 576a0b71b5b479008dacb3047a346625040f5ac6 ]
 
-Add the compatible for the MDSS client on the Snapdragon 670 so it can
-be properly configured by the IOMMU driver.
+In the existing IPC support, the reply to each IPC message is handled in
+an IRQ thread. The assumption is that the IRQ thread is scheduled without
+significant delays.
 
-Otherwise, there is an unhandled context fault.
+On an experimental (iow, buggy) kernel, the IRQ thread dealing with the
+reply to the last IPC message before powering-down the DSP can be delayed
+by several seconds. The IRQ thread will proceed with register accesses
+after the DSP is powered-down which results in a kernel crash.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230925234246.900351-3-mailingradian@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+While the bug which causes the delay is not in the audio stack, we must
+handle such cases with defensive programming to avoid such crashes.
+
+Call synchronize_irq() before proceeding to power down the DSP to make
+sure that no irq thread is pending execution.
+
+Closes: https://github.com/thesofproject/linux/issues/4608
+Reviewed-by: Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20231012191850.147140-3-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/sof/intel/hda-dsp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 40503376d80cc..6e6cb19c81f59 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -252,6 +252,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,sc7280-mss-pil" },
- 	{ .compatible = "qcom,sc8180x-mdss" },
- 	{ .compatible = "qcom,sc8280xp-mdss" },
-+	{ .compatible = "qcom,sdm670-mdss" },
- 	{ .compatible = "qcom,sdm845-mdss" },
- 	{ .compatible = "qcom,sdm845-mss-pil" },
- 	{ .compatible = "qcom,sm6350-mdss" },
+diff --git a/sound/soc/sof/intel/hda-dsp.c b/sound/soc/sof/intel/hda-dsp.c
+index e80a2a5ec56a1..1506982a56c30 100644
+--- a/sound/soc/sof/intel/hda-dsp.c
++++ b/sound/soc/sof/intel/hda-dsp.c
+@@ -709,6 +709,9 @@ static int hda_suspend(struct snd_sof_dev *sdev, bool runtime_suspend)
+ 	if (ret < 0)
+ 		return ret;
+ 
++	/* make sure that no irq handler is pending before shutdown */
++	synchronize_irq(sdev->ipc_irq);
++
+ 	hda_codec_jack_wake_enable(sdev, runtime_suspend);
+ 
+ 	/* power down all hda links */
 -- 
 2.43.0
 
