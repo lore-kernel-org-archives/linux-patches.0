@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7C61C689C;
-	Tue, 27 Aug 2024 15:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8A71A072D;
+	Tue, 27 Aug 2024 15:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772294; cv=none; b=oNe8SS+Ittq0Fb/qNP5+ljoAdor3FqfvshaMEYLtEB8WovJsCXa8kuePxhi6hHCNqq+0FUwAt5pfDM5d4dF9qXvPHu2hTt9Iz03DEP9ggOXfzEe3Uo8d/18cOYpRUY3oR1llFOaTnZ0f0k6RZdQO994glH0lr8vqshCtMBgyu7w=
+	t=1724772297; cv=none; b=eeu67fl3U8zpQHG+/dqVG+jrWp6EnU2j/I/RUmrTAzl5jjfzpKJnXP81pUWKEl4Pfn5D9usyeaaXxV9rMKqRVz+DcuoeTzDG+bAbd3UJpW/pXHiCPYuiGeLQ3VyGs6GvZJ8PC4IkgOWRwpfC5k+41ef/PyOt5wK4uBdqhKnO65A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772294; c=relaxed/simple;
-	bh=mJugoMKZaO8QmixlGDQhOssOuIK04DIE4AmGL5jOxuE=;
+	s=arc-20240116; t=1724772297; c=relaxed/simple;
+	bh=Dq84TwTx8ImUWtaYVOk2tSiMz7d1vi+xTLOkFYunedc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUD5J5Ha6k6U7BIzltVjVukmwZTUIOueuwU/kMeMqwNqYarHEA1OSaOJd+OdnuM8DpUl1WOS+4QNbsjNs1UNb2hm2TbKuD2XU1EtgKO68GLzIueYjM2zm/A/jBvR0JlXqnVC1C3bQX/GwIZl9hJvvN3GSiTHfTAAkAFg8w4m6Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2vN8Lxd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4dh9FTBVOm6BNNc75CPwgfWTDFOd1TUKeJcC2C0HyNX31Yf1q/Tsbdg7vIEbxMCaq2tzpkcoQcK7/xiCFlKaesBNJfRlWBcRwoip5KV/rJmHC96Ag9pmaqSTt2SViFwXC75sP/ou/BiCJUbMdpINhAm0rDRYdsS3djKuLKaukA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1T3cB7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2vN8Lxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EBDC61071;
-	Tue, 27 Aug 2024 15:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1T3cB7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422DCC61071;
+	Tue, 27 Aug 2024 15:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772293;
-	bh=mJugoMKZaO8QmixlGDQhOssOuIK04DIE4AmGL5jOxuE=;
+	s=korg; t=1724772297;
+	bh=Dq84TwTx8ImUWtaYVOk2tSiMz7d1vi+xTLOkFYunedc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2vN8Lxd/e435GTpFN/KH4gpTRwvlRs7DOxk+YIB9V+6Spq+hyQ1PosubZNL/xSnx
-	 XXYz97hf7UpMKQwpe9XXs5ppSx2nCT2+wd5EeIw6U1c+9g2rKS1rZ39KgGXGM0wObX
-	 sioMqRDHyrQRZvMHR0J7KFuR3SJgqq9k2wStgs5A=
+	b=Q1T3cB7oshzyEpMMJN23acDvFYEjTomjTTpprLMCbYS4lxQk8Ih0psArhfNoZgvwF
+	 /BVWTRh69TaQQYy7ZGXPY8ENRleo3xoXVrtMleBfWiR3WCQk4emyvF6I1JL2s9i9PT
+	 o6hRnNoewPvrRQmzxUzjz2eRFG6pAf2Tct0XgrYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/321] clk: visconti: Add bounds-checking coverage for struct visconti_pll_provider
-Date: Tue, 27 Aug 2024 16:37:28 +0200
-Message-ID: <20240827143843.568906101@linuxfoundation.org>
+Subject: [PATCH 6.1 141/321] IB/hfi1: Fix potential deadlock on &irq_src_lock and &dd->uctxt_lock
+Date: Tue, 27 Aug 2024 16:37:29 +0200
+Message-ID: <20240827143843.606358632@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,77 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 397d887c1601a71e8a8abdb6beea67d58f0472d3 ]
+[ Upstream commit 2f19c4b8395ccb6eb25ccafee883c8cfbe3fc193 ]
 
-In order to gain the bounds-checking coverage that __counted_by provides
-to flexible-array members at run-time via CONFIG_UBSAN_BOUNDS (for array
-indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions),
-we must make sure that the counter member, in this particular case `num`,
-is updated before the first access to the flex-array member, in this
-particular case array `hws`. See below:
+handle_receive_interrupt_napi_sp() running inside interrupt handler
+could introduce inverse lock ordering between &dd->irq_src_lock
+and &dd->uctxt_lock, if read_mod_write() is preempted by the isr.
 
-commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
-__counted_by") introduced `__counted_by` for `struct clk_hw_onecell_data`
-together with changes to relocate some of assignments of counter `num`
-before `hws` is accessed:
+          [CPU0]                                        |          [CPU1]
+hfi1_ipoib_dev_open()                                   |
+--> hfi1_netdev_enable_queues()                         |
+--> enable_queues(rx)                                   |
+--> hfi1_rcvctrl()                                      |
+--> set_intr_bits()                                     |
+--> read_mod_write()                                    |
+--> spin_lock(&dd->irq_src_lock)                        |
+                                                        | hfi1_poll()
+                                                        | --> poll_next()
+                                                        | --> spin_lock_irq(&dd->uctxt_lock)
+                                                        |
+                                                        | --> hfi1_rcvctrl()
+                                                        | --> set_intr_bits()
+                                                        | --> read_mod_write()
+                                                        | --> spin_lock(&dd->irq_src_lock)
+<interrupt>                                             |
+   --> handle_receive_interrupt_napi_sp()               |
+   --> set_all_fastpath()                               |
+   --> hfi1_rcd_get_by_index()                          |
+   --> spin_lock_irqsave(&dd->uctxt_lock)               |
 
-include/linux/clk-provider.h:
-1380 struct clk_hw_onecell_data {
-1381         unsigned int num;
-1382         struct clk_hw *hws[] __counted_by(num);
-1383 };
+This flaw was found by an experimental static analysis tool I am
+developing for irq-related deadlock.
 
-However, this structure is used as a member in other structs, in this
-case in `struct visconti_pll_provider`:
+To prevent the potential deadlock, the patch use spin_lock_irqsave()
+on &dd->irq_src_lock inside read_mod_write() to prevent the possible
+deadlock scenario.
 
-drivers/clk/visconti/pll.h:
- 16 struct visconti_pll_provider {
- 17         void __iomem *reg_base;
- 18         struct device_node *node;
- 19
- 20         /* Must be last */
- 21         struct clk_hw_onecell_data clk_data;
- 22 };
-
-Hence, we need to move the assignments to `ctx->clk_data.num` after
-allocation for `struct visconti_pll_provider` and before accessing the
-flexible array `ctx->clk_data.hws`. And, as assignments for all members
-in `struct visconti_pll_provider` are originally adjacent to each other,
-relocate all assignments together, so we don't split up
-`ctx->clk_data.hws = nr_plls` from the rest. :)
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/e3189f3e40e8723b6d794fb2260e2e9ab6b960bd.1697492890.git.gustavoars@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230926101116.2797-1-dg573847474@gmail.com
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/visconti/pll.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hfi1/chip.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/visconti/pll.c b/drivers/clk/visconti/pll.c
-index 1f3234f226674..e9cd80e085dc3 100644
---- a/drivers/clk/visconti/pll.c
-+++ b/drivers/clk/visconti/pll.c
-@@ -329,12 +329,12 @@ struct visconti_pll_provider * __init visconti_init_pll(struct device_node *np,
- 	if (!ctx)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/infiniband/hw/hfi1/chip.c b/drivers/infiniband/hw/hfi1/chip.c
+index 194cac40da653..c560552244ae8 100644
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -13183,15 +13183,16 @@ static void read_mod_write(struct hfi1_devdata *dd, u16 src, u64 bits,
+ {
+ 	u64 reg;
+ 	u16 idx = src / BITS_PER_REGISTER;
++	unsigned long flags;
  
--	for (i = 0; i < nr_plls; ++i)
--		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
--
- 	ctx->node = np;
- 	ctx->reg_base = base;
- 	ctx->clk_data.num = nr_plls;
- 
-+	for (i = 0; i < nr_plls; ++i)
-+		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
-+
- 	return ctx;
+-	spin_lock(&dd->irq_src_lock);
++	spin_lock_irqsave(&dd->irq_src_lock, flags);
+ 	reg = read_csr(dd, CCE_INT_MASK + (8 * idx));
+ 	if (set)
+ 		reg |= bits;
+ 	else
+ 		reg &= ~bits;
+ 	write_csr(dd, CCE_INT_MASK + (8 * idx), reg);
+-	spin_unlock(&dd->irq_src_lock);
++	spin_unlock_irqrestore(&dd->irq_src_lock, flags);
  }
+ 
+ /**
 -- 
 2.43.0
 
