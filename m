@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531941C871E;
-	Tue, 27 Aug 2024 15:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115C31C8700;
+	Tue, 27 Aug 2024 15:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771878; cv=none; b=gcMVYE9S6iVFHq7ICS3kmxPDl07rvYocZMbvDCPPQ6lEv+Ensucssoz8Wz8Ol80BkGU+w7CORat69WTen9Mrdx/oVmlHalo6/qezWJYbYj8DLTjJhepDcDuF+XmTc4SIx3ZTga0jRomk6BJAlLeGci11DUZ2riVdM+6A4O372xg=
+	t=1724771882; cv=none; b=tNDNMvhe9MU4YDLzHgXTE2pLJcvBTtPxqbMCYL6AdnIBZTXyauh/4mXrByaQlqBuVK+nVbvzXclqr1Fyb0pFX5YvwAtINhaCyWQo7IHMmpfGMewiX9mk3j+haPrlYaUbMN2ZARKHmMsKW8FVDw95t5Pa0CI3tLdfk17vu4oywsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771878; c=relaxed/simple;
-	bh=y65lppWrOd2N0WnpWWApHc2ynYPnLuqCOb489SMJdjE=;
+	s=arc-20240116; t=1724771882; c=relaxed/simple;
+	bh=D92b1fVQRwdkPNbX/AhkNw/pl4jyy4ZmrMUuyqnQIvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Guz7HKYkFSydJ54qbkg+Yq1y/uJa2bWx3fw8EA0PYLqkGqCVazbcGBlkgCZBEZfm2mHo5Fj1qNAK26gPWd3z6oGjX3y9CYxPBYwGt8cE6RvPrj5zY0Rx5xHFQI97TYvnydHvfmO7bjbnJ8DVJMehupGAUKPo9KeQPBWaNQHPQW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRu/Ly1G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J8OuAMSymh2RQ02gIGKlx2dP6WPw6j1oszpHTHiMm6wsmB4uwkmZxPr6xXGvu5FqTuDlluoww9z57Nfx0lq5GKsWFhQ6oEa/9YOvCoYUwKkFEkqs7ISw8IbBx3UEtOElqPAeC4kFuKauAcigNjqzU39BpxTu7f1RbosZ6ztRBNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIgyMZ97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRu/Ly1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B160DC61067;
-	Tue, 27 Aug 2024 15:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIgyMZ97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B99C61040;
+	Tue, 27 Aug 2024 15:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771878;
-	bh=y65lppWrOd2N0WnpWWApHc2ynYPnLuqCOb489SMJdjE=;
+	s=korg; t=1724771881;
+	bh=D92b1fVQRwdkPNbX/AhkNw/pl4jyy4ZmrMUuyqnQIvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRu/Ly1G9z44h4oKX8tICevslSpjCgpQLr+frnMN+UuoBgz/nr6nszJflMddP3Hks
-	 ZWuO9jdq61LaVZWBbWXkSVcbE8tasfgLHkL+zwDuC8FBLox34XTkfOlNC3439lX9j4
-	 rAKd/LGuxoY9+vliVP+Ef+7a7oiYW9+/RwNOvmE0=
+	b=xIgyMZ97JoHvb1QgMwAJDX3IHmH66Uu57QEn87I18eZS/UE8Jdorf5PSAVIquPYGn
+	 aDKQ4AAvAc/VVp1ubWEGmtg0hYfYzXde/u1VVQP0hLvHb3O3Ku2mg61UOpYTH3qbjV
+	 0AfMnolaC2zybv9vyNLlUqworRU7wdt+PKgkUe6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/321] Bluetooth: Fix hci_link_tx_to RCU lock usage
-Date: Tue, 27 Aug 2024 16:35:56 +0200
-Message-ID: <20240827143840.059458532@linuxfoundation.org>
+Subject: [PATCH 6.1 049/321] wifi: mac80211: take wiphy lock for MAC addr change
+Date: Tue, 27 Aug 2024 16:35:57 +0200
+Message-ID: <20240827143840.097731509@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,62 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c7eaf80bfb0c8cef852cce9501b95dd5a6bddcb9 ]
+[ Upstream commit a26787aa13974fb0b3fb42bfeb4256c1b686e305 ]
 
-Syzbot found a bug "BUG: sleeping function called from invalid context
-at kernel/locking/mutex.c:580". It is because hci_link_tx_to holds an
-RCU read lock and calls hci_disconnect which would hold a mutex lock
-since the commit a13f316e90fd ("Bluetooth: hci_conn: Consolidate code
-for aborting connections"). Here's an example call trace:
+We want to ensure everything holds the wiphy lock,
+so also extend that to the MAC change callback.
 
-   __dump_stack lib/dump_stack.c:88 [inline]
-   dump_stack_lvl+0xfc/0x174 lib/dump_stack.c:106
-   ___might_sleep+0x4a9/0x4d3 kernel/sched/core.c:9663
-   __mutex_lock_common kernel/locking/mutex.c:576 [inline]
-   __mutex_lock+0xc7/0x6e7 kernel/locking/mutex.c:732
-   hci_cmd_sync_queue+0x3a/0x287 net/bluetooth/hci_sync.c:388
-   hci_abort_conn+0x2cd/0x2e4 net/bluetooth/hci_conn.c:1812
-   hci_disconnect+0x207/0x237 net/bluetooth/hci_conn.c:244
-   hci_link_tx_to net/bluetooth/hci_core.c:3254 [inline]
-   __check_timeout net/bluetooth/hci_core.c:3419 [inline]
-   __check_timeout+0x310/0x361 net/bluetooth/hci_core.c:3399
-   hci_sched_le net/bluetooth/hci_core.c:3602 [inline]
-   hci_tx_work+0xe8f/0x12d0 net/bluetooth/hci_core.c:3652
-   process_one_work+0x75c/0xba1 kernel/workqueue.c:2310
-   worker_thread+0x5b2/0x73a kernel/workqueue.c:2457
-   kthread+0x2f7/0x30b kernel/kthread.c:319
-   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:298
-
-This patch releases RCU read lock before calling hci_disconnect and
-reacquires it afterward to fix the bug.
-
-Fixes: a13f316e90fd ("Bluetooth: hci_conn: Consolidate code for aborting connections")
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 74a7c93f45ab ("wifi: mac80211: fix change_address deadlock during unregister")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/mac80211/iface.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 398a324657697..cf164ec9899c3 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3419,7 +3419,12 @@ static void hci_link_tx_to(struct hci_dev *hdev, __u8 type)
- 		if (c->type == type && c->sent) {
- 			bt_dev_err(hdev, "killing stalled connection %pMR",
- 				   &c->dst);
-+			/* hci_disconnect might sleep, so, we have to release
-+			 * the RCU read lock before calling it.
-+			 */
-+			rcu_read_unlock();
- 			hci_disconnect(c, HCI_ERROR_REMOTE_USER_TERM);
-+			rcu_read_lock();
- 		}
- 	}
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index e00e1bf0f754a..408ee5afc9ae7 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -251,9 +251,9 @@ static int ieee80211_can_powered_addr_change(struct ieee80211_sub_if_data *sdata
+ 	return ret;
+ }
  
+-static int ieee80211_change_mac(struct net_device *dev, void *addr)
++static int _ieee80211_change_mac(struct ieee80211_sub_if_data *sdata,
++				 void *addr)
+ {
+-	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct sockaddr *sa = addr;
+ 	bool check_dup = true;
+@@ -278,7 +278,7 @@ static int ieee80211_change_mac(struct net_device *dev, void *addr)
+ 
+ 	if (live)
+ 		drv_remove_interface(local, sdata);
+-	ret = eth_mac_addr(dev, sa);
++	ret = eth_mac_addr(sdata->dev, sa);
+ 
+ 	if (ret == 0) {
+ 		memcpy(sdata->vif.addr, sa->sa_data, ETH_ALEN);
+@@ -294,6 +294,19 @@ static int ieee80211_change_mac(struct net_device *dev, void *addr)
+ 	return ret;
+ }
+ 
++static int ieee80211_change_mac(struct net_device *dev, void *addr)
++{
++	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
++	struct ieee80211_local *local = sdata->local;
++	int ret;
++
++	wiphy_lock(local->hw.wiphy);
++	ret = _ieee80211_change_mac(sdata, addr);
++	wiphy_unlock(local->hw.wiphy);
++
++	return ret;
++}
++
+ static inline int identical_mac_addr_allowed(int type1, int type2)
+ {
+ 	return type1 == NL80211_IFTYPE_MONITOR ||
 -- 
 2.43.0
 
