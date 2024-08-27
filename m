@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFAF1494AC;
-	Tue, 27 Aug 2024 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9F61C5782;
+	Tue, 27 Aug 2024 14:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769711; cv=none; b=mHGK0BWle2PPP0iouxa4GHak5Q8iYr7re6MoKM6UqH3J2oHdk0mCIWCjOQB/iUKRx15wkfRd7XT8wCZAJdNCSxWCU/ZCfFyjOZC//M4PVHTPHEL5Ogy3FB7zzOiDRrtUboVsIl7i5NTvtSIPbvuj6wQT/OlXO/dOImvpI/ofxG4=
+	t=1724769714; cv=none; b=c8Tbs19cSq/rbQJgsZmGExj7N6qMDbDTJiQD/lbBJ9udT/95yh/vTYaBpIIttkSkworMQcsWY/rYUKLNWJZYIHB/pEPxvFVKM99RJrm43XnAUnI8Z3hHKywagzwGMIagCwBw6ZbEw21CVSbXuojmS/wkDgn3lPYCnvLEFr2sTBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769711; c=relaxed/simple;
-	bh=A/VDI6mIIXVnhFubwbIhDSGMC8dldFGNi108UpBW998=;
+	s=arc-20240116; t=1724769714; c=relaxed/simple;
+	bh=ssimv+eoi4fNDMqGGIC+oCuDh3h6OQ7jJj0JZTjW9ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FP4YGdtjWc+SxxmdjZ9VBGTlnOSwR/q2gOH9Q+z4g0K+pfqPDg0ejaniheWwvEFbcSAQ020UJd4kaJtLijpiFlBOGGx+m757CZriG7jRaGdXtRoYX+k1P8qkOj6AcW5cpPu/TtFutmzYiW89qI1zt4Ycl2ls/Nit624mYEW4/UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0Lf9eEa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fI85IiP1ud6B+tc2q6KaaaLJEi7N2WwJrp/C1uRUeSGPgXAoFaPBmAYeWDAPI2q1h5IFhKyCU/fIbT+EuibVrObwZPqtzUOAc81EyFFHbzeTVV3L3zFMQeQV/BPWKfK5zjGkE5ZhBQEi+Rd3reuhEl3H45Ixujp4WQimA2+17tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOVV89Vb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0Lf9eEa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E1DC4AF1C;
-	Tue, 27 Aug 2024 14:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOVV89Vb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FE5C4AF1C;
+	Tue, 27 Aug 2024 14:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769711;
-	bh=A/VDI6mIIXVnhFubwbIhDSGMC8dldFGNi108UpBW998=;
+	s=korg; t=1724769714;
+	bh=ssimv+eoi4fNDMqGGIC+oCuDh3h6OQ7jJj0JZTjW9ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0Lf9eEa585Xrzvoi12ERNrBlUFDIoGIpJojcVPy43t/nu7mpPftIMDoejP4ItbU3
-	 Ym0bTXXpu1mT+ShVmZHJHq8WR8rbYJHiDj3VKoDrWyLwDDZz105qhvS+kPMWFAcmJh
-	 DvYkdLCyCfJmV1ulOS8NWz7EErb0Q12eWTIUjA4g=
+	b=pOVV89Vb/WhnjM6igdjOhvSbxqSVlUbgEtLq4FybP0rCNmVmfCIBYrgEg4utKUT0N
+	 7n2upvHIFKdf+9350AWj5lJ/S4TMs5wmui4Cz97Wcl38L/hEg4AKNJRfB7MK9oM+tZ
+	 0h9y3ZVFQg9bx3PdTG3DIofpmp5ToLa0MJuN3twg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Othacehe <othacehe@gnu.org>,
-	stable <stable@kernel.org>,
-	Alexander Dahl <ada@thorsis.com>
-Subject: [PATCH 6.6 002/341] tty: atmel_serial: use the correct RTS flag.
-Date: Tue, 27 Aug 2024 16:33:53 +0200
-Message-ID: <20240827143843.497707633@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.6 003/341] Revert "ACPI: EC: Evaluate orphan _REG under EC device"
+Date: Tue, 27 Aug 2024 16:33:54 +0200
+Message-ID: <20240827143843.534638308@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,43 +50,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Othacehe <othacehe@gnu.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit c9f6613b16123989f2c3bd04b1d9b2365d6914e7 upstream.
+commit 779bac9994452f6a894524f70c00cfb0cd4b6364 upstream.
 
-In RS485 mode, the RTS pin is driven high by hardware when the transmitter
-is operating. This behaviour cannot be changed. This means that the driver
-should claim that it supports SER_RS485_RTS_ON_SEND and not
-SER_RS485_RTS_AFTER_SEND.
+This reverts commit 0e6b6dedf168 ("Revert "ACPI: EC: Evaluate orphan
+_REG under EC device") because the problem addressed by it will be
+addressed differently in what follows.
 
-Otherwise, when configuring the port with the SER_RS485_RTS_ON_SEND, one
-get the following warning:
-
-kern.warning kernel: atmel_usart_serial atmel_usart_serial.2.auto:
-ttyS1 (1): invalid RTS setting, using RTS_AFTER_SEND instead
-
-which is contradictory with what's really happening.
-
-Signed-off-by: Mathieu Othacehe <othacehe@gnu.org>
-Cc: stable <stable@kernel.org>
-Tested-by: Alexander Dahl <ada@thorsis.com>
-Fixes: af47c491e3c7 ("serial: atmel: Fill in rs485_supported")
-Link: https://lore.kernel.org/r/20240808060637.19886-1-othacehe@gnu.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/3236716.5fSG56mABF@rjwysocki.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/atmel_serial.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/acevents.h |    4 ---
+ drivers/acpi/acpica/evregion.c |    6 +++-
+ drivers/acpi/acpica/evxfregn.c |   54 -----------------------------------------
+ drivers/acpi/ec.c              |    3 --
+ include/acpi/acpixf.h          |    4 ---
+ 5 files changed, 5 insertions(+), 66 deletions(-)
 
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -2522,7 +2522,7 @@ static const struct uart_ops atmel_pops
- };
+--- a/drivers/acpi/acpica/acevents.h
++++ b/drivers/acpi/acpica/acevents.h
+@@ -191,10 +191,6 @@ void
+ acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
+ 			    acpi_adr_space_type space_id, u32 function);
  
- static const struct serial_rs485 atmel_rs485_supported = {
--	.flags = SER_RS485_ENABLED | SER_RS485_RTS_AFTER_SEND | SER_RS485_RX_DURING_TX,
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RX_DURING_TX,
- 	.delay_rts_before_send = 1,
- 	.delay_rts_after_send = 1,
- };
+-void
+-acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *node,
+-				  acpi_adr_space_type space_id);
+-
+ acpi_status
+ acpi_ev_execute_reg_method(union acpi_operand_object *region_obj, u32 function);
+ 
+--- a/drivers/acpi/acpica/evregion.c
++++ b/drivers/acpi/acpica/evregion.c
+@@ -20,6 +20,10 @@ extern u8 acpi_gbl_default_address_space
+ 
+ /* Local prototypes */
+ 
++static void
++acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
++				  acpi_adr_space_type space_id);
++
+ static acpi_status
+ acpi_ev_reg_run(acpi_handle obj_handle,
+ 		u32 level, void *context, void **return_value);
+@@ -814,7 +818,7 @@ acpi_ev_reg_run(acpi_handle obj_handle,
+  *
+  ******************************************************************************/
+ 
+-void
++static void
+ acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
+ 				  acpi_adr_space_type space_id)
+ {
+--- a/drivers/acpi/acpica/evxfregn.c
++++ b/drivers/acpi/acpica/evxfregn.c
+@@ -306,57 +306,3 @@ acpi_execute_reg_methods(acpi_handle dev
+ }
+ 
+ ACPI_EXPORT_SYMBOL(acpi_execute_reg_methods)
+-
+-/*******************************************************************************
+- *
+- * FUNCTION:    acpi_execute_orphan_reg_method
+- *
+- * PARAMETERS:  device          - Handle for the device
+- *              space_id        - The address space ID
+- *
+- * RETURN:      Status
+- *
+- * DESCRIPTION: Execute an "orphan" _REG method that appears under an ACPI
+- *              device. This is a _REG method that has no corresponding region
+- *              within the device's scope.
+- *
+- ******************************************************************************/
+-acpi_status
+-acpi_execute_orphan_reg_method(acpi_handle device, acpi_adr_space_type space_id)
+-{
+-	struct acpi_namespace_node *node;
+-	acpi_status status;
+-
+-	ACPI_FUNCTION_TRACE(acpi_execute_orphan_reg_method);
+-
+-	/* Parameter validation */
+-
+-	if (!device) {
+-		return_ACPI_STATUS(AE_BAD_PARAMETER);
+-	}
+-
+-	status = acpi_ut_acquire_mutex(ACPI_MTX_NAMESPACE);
+-	if (ACPI_FAILURE(status)) {
+-		return_ACPI_STATUS(status);
+-	}
+-
+-	/* Convert and validate the device handle */
+-
+-	node = acpi_ns_validate_handle(device);
+-	if (node) {
+-
+-		/*
+-		 * If an "orphan" _REG method is present in the device's scope
+-		 * for the given address space ID, run it.
+-		 */
+-
+-		acpi_ev_execute_orphan_reg_method(node, space_id);
+-	} else {
+-		status = AE_BAD_PARAMETER;
+-	}
+-
+-	(void)acpi_ut_release_mutex(ACPI_MTX_NAMESPACE);
+-	return_ACPI_STATUS(status);
+-}
+-
+-ACPI_EXPORT_SYMBOL(acpi_execute_orphan_reg_method)
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1507,9 +1507,6 @@ static int ec_install_handlers(struct ac
+ 
+ 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
+ 		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
+-		if (scope_handle != ec->handle)
+-			acpi_execute_orphan_reg_method(ec->handle, ACPI_ADR_SPACE_EC);
+-
+ 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
+ 	}
+ 
+--- a/include/acpi/acpixf.h
++++ b/include/acpi/acpixf.h
+@@ -663,10 +663,6 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+ 						     acpi_adr_space_type
+ 						     space_id))
+ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+-			    acpi_execute_orphan_reg_method(acpi_handle device,
+-							   acpi_adr_space_type
+-							   space_id))
+-ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+ 			    acpi_remove_address_space_handler(acpi_handle
+ 							      device,
+ 							      acpi_adr_space_type
 
 
