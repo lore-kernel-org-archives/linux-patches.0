@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5336A44C8C;
-	Tue, 27 Aug 2024 14:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8911A01D0;
+	Tue, 27 Aug 2024 14:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770198; cv=none; b=TtRzRXn1OSXFozmek1xG2qXYIg5Z61Indiage6GsuUGzNhdYpgyKgOsruAy6L/EsjAHncJyo7AYlkvzsnRG157Upzc5gXDJHiJLnccqegn+DorjX6KClBlkT0altek96DCUI2Fma51FzWoQMAmjhuA2YpKP55B6MqWjRcKB8svE=
+	t=1724770201; cv=none; b=WpQC1S9FZT+tjYQ7+E4V384n4Mevku0ZFMj3fau63Zjwj/ZPgwikZqRGW2Ri1quTwpn+MMyKiAY3YMR7Vfahj1y6dvjgKSu0SANKHEmvefjVviL+wyMa+XEZuDFphlwfkLVyQ08c3VoKOOQGx2YjnaGb70iNhvzj0qtHKeuicQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770198; c=relaxed/simple;
-	bh=yeUd57RHLgAHOGJBe0L604qJm8wW3U2iUw81g32w6dc=;
+	s=arc-20240116; t=1724770201; c=relaxed/simple;
+	bh=yloia8llL2goUJ9gW1UCvKGvqZbkFkJxGW8RXsLOhKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mq/ciCVIl52EGQ/ej6t0laBe7/h4/r8vytdPV4h1aD1WJbzdwm8DK/IWSiGUxVeMLDg2X8uwr3ZGi0LoKKi0kTB5fjoQ3mcVM3UBhSyOD3fBbmffiTedpUPytkjXJRYVcVuJVJww6Ry4dtDzbarqE5ZfOhYkzO3cEdf9h7LQvtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc1YjiRG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9pOrdL+HR1wFaSQUnLwPRbZ6mvY+EcUcjhMWsSW7gEH+2ajLVBGe5yOJ11jfi54IhD7upHJ5bWLnUSokYGtMRamBJgR46HGLDHULkunoCTUBzkdNVHB6k5HANH5Uj4yAvfOpY8nJDp31PTgvqqrcT9ppwx5J28eUJT2Kop2LCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqapO737; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc1YjiRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E24C4DDEA;
-	Tue, 27 Aug 2024 14:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqapO737"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72AFC4DDEA;
+	Tue, 27 Aug 2024 14:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770197;
-	bh=yeUd57RHLgAHOGJBe0L604qJm8wW3U2iUw81g32w6dc=;
+	s=korg; t=1724770201;
+	bh=yloia8llL2goUJ9gW1UCvKGvqZbkFkJxGW8RXsLOhKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vc1YjiRG/V/Vp7FF2JXyJBfoWO+TCjH/CPTUxXM++Hfq0xP67dj2GXs1u2xrP53qe
-	 bkri66G19wqMKn5un1LAedEsMRDCU3LNt4Ad2PDrW4WeSbkzxfZJX8BeVQNRyFd5xI
-	 kw2oBR16o3rgOw2fKM7wO7GNYZ1dBrUZ0QkyJw3k=
+	b=MqapO737zc/DjXNID+P8KWpFMjSb9MyhD04aLHmH2wSs44+9J/G27qxsaHuoS2PeI
+	 8NCab194z5rIkggMBddiqG0EQf1EYrkNyiL6DnJYQhIMVqbU+S/xcaOEYK91z1jYkQ
+	 v5ftFGah5v26J+jXm0NxBJP4FU5sgUDhepA53eRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/341] wifi: mac80211: flush STA queues on unauthorization
-Date: Tue, 27 Aug 2024 16:35:56 +0200
-Message-ID: <20240827143848.172666021@linuxfoundation.org>
+Subject: [PATCH 6.6 126/341] gfs2: setattr_chown: Add missing initialization
+Date: Tue, 27 Aug 2024 16:35:57 +0200
+Message-ID: <20240827143848.210209381@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,83 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 06d6af4e1223339bb597b02fa8ad3f979ddb5511 ]
+[ Upstream commit 2d8d7990619878a848b1d916c2f936d3012ee17d ]
 
-When the station is marked as no longer authorized, we shouldn't
-transmit to it any longer, but in particular we shouldn't be able
-to transmit to it after removing keys, which might lead to frames
-being sent out unencrypted depending on the exact hardware offload
-mechanism. Thus, instead of flushing only on station destruction,
-which covers only some cases, always flush on unauthorization.
+Add a missing initialization of variable ap in setattr_chown().
+Without, chown() may be able to bypass quotas.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230928172905.d47f528829e7.I96903652c7ee0c5c66891f8b2364383da8e45a1f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ fs/gfs2/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 42ba51a9700f2..5d71e8d084c45 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1284,6 +1284,8 @@ static int _sta_info_move_state(struct sta_info *sta,
- 				enum ieee80211_sta_state new_state,
- 				bool recalc)
- {
-+	struct ieee80211_local *local = sta->local;
-+
- 	might_sleep();
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 3de0d8ab42eaf..29085643ad104 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1929,7 +1929,7 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
+ 	kuid_t ouid, nuid;
+ 	kgid_t ogid, ngid;
+ 	int error;
+-	struct gfs2_alloc_parms ap;
++	struct gfs2_alloc_parms ap = {};
  
- 	if (sta->sta_state == new_state)
-@@ -1359,6 +1361,24 @@ static int _sta_info_move_state(struct sta_info *sta,
- 		} else if (sta->sta_state == IEEE80211_STA_AUTHORIZED) {
- 			ieee80211_vif_dec_num_mcast(sta->sdata);
- 			clear_bit(WLAN_STA_AUTHORIZED, &sta->_flags);
-+
-+			/*
-+			 * If we have encryption offload, flush (station) queues
-+			 * (after ensuring concurrent TX completed) so we won't
-+			 * transmit anything later unencrypted if/when keys are
-+			 * also removed, which might otherwise happen depending
-+			 * on how the hardware offload works.
-+			 */
-+			if (local->ops->set_key) {
-+				synchronize_net();
-+				if (local->ops->flush_sta)
-+					drv_flush_sta(local, sta->sdata, sta);
-+				else
-+					ieee80211_flush_queues(local,
-+							       sta->sdata,
-+							       false);
-+			}
-+
- 			ieee80211_clear_fast_xmit(sta);
- 			ieee80211_clear_fast_rx(sta);
- 		}
-@@ -1424,18 +1444,6 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
- 		WARN_ON_ONCE(ret);
- 	}
- 
--	/* Flush queues before removing keys, as that might remove them
--	 * from hardware, and then depending on the offload method, any
--	 * frames sitting on hardware queues might be sent out without
--	 * any encryption at all.
--	 */
--	if (local->ops->set_key) {
--		if (local->ops->flush_sta)
--			drv_flush_sta(local, sta->sdata, sta);
--		else
--			ieee80211_flush_queues(local, sta->sdata, false);
--	}
--
- 	/* now keys can no longer be reached */
- 	ieee80211_free_sta_keys(local, sta);
- 
+ 	ouid = inode->i_uid;
+ 	ogid = inode->i_gid;
 -- 
 2.43.0
 
