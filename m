@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2A01C3F17;
-	Tue, 27 Aug 2024 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A06B1C57BF;
+	Tue, 27 Aug 2024 15:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772433; cv=none; b=G5aHfj4+9RE+BLJnzW2UAGQHCPKAmK1mDW7iK3xJtHcRoUuVh3Fi4GaEk79pllVQEx7AOr150i0Wnxq3XSDLTTf7jAPnUHcgU9zu4AGUUk7qD1avnmoKj+dzcDiShYw+T1RUGLuRQn7ahFWHFenDa5mnH6bm7kyAdWzxxZqbugA=
+	t=1724772436; cv=none; b=ZrysQnmjtFsOuxk5UFl/dd3bJVarkqD9SOOajio99XJfWMiFQXz3orCs70DuFP0fLtY8gyFxe86iYx2ye3R09OpcZ+KrUbP+qWqrx+OfgT2ImpYcj/GefpYR6NPNGrYCuzZSKV+x/akYKR+YW56CClQcS8fv71wjQ6WbYswKCuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772433; c=relaxed/simple;
-	bh=dbyKoEikQANwG/2IJbjQLgvRfb0WoJp2Ra9IU/tq+VM=;
+	s=arc-20240116; t=1724772436; c=relaxed/simple;
+	bh=AKbxR3iaAejQap75mIc862hOK7jHVwQb9ld5w8CjvN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rc8Vmk+1GxwW8wyH4d5LvCF3EcECOdKY/Lfb0++PyfeQSa9bYeG75/u88Y8/bvRlwoM2KoGN/njeSHhcC82LsPcwFiHugkNUdAWf6ncE9qLG1BZ/mlre3Kfz+GueyaFzUrR2cH2ocqHeBbuPNfbPaSKaGUrKFIqM32NLkQUUJoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ua03tLK+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tblzHOZfngdWQ9bi0EN2Kv6NoDDMvEjjcOR6yVxTHu1b8CBH/DK7Opob/yDJCMh7HCn0zlgISR80FhRcKnyvqlF/neqFGQ2XzuthVoT8V7OmIxMlSs/Bvv7++k+DJtCViVjmG7jAuyERb46A3pWUJjKZDhv0b0g3Ef00e4mdZxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmqhD7hm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ua03tLK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080F5C4DE14;
-	Tue, 27 Aug 2024 15:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmqhD7hm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F7CC4DE14;
+	Tue, 27 Aug 2024 15:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772432;
-	bh=dbyKoEikQANwG/2IJbjQLgvRfb0WoJp2Ra9IU/tq+VM=;
+	s=korg; t=1724772435;
+	bh=AKbxR3iaAejQap75mIc862hOK7jHVwQb9ld5w8CjvN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ua03tLK+cf9iJLt0WvzIUw46Z28HoEMTBin6Ls8jRoajA5Rf0aiX/RNQ43QtE1CNN
-	 jY5Ls3sm+F7tEPExKOUiyXCf4LsVSfe2QGtrYtMk89jIA4AyquHD+K26dR3AHa5gcU
-	 OoNq56lcOjr/HURcZM0t9Fnj5F2KAzmZNHJEdDvU=
+	b=tmqhD7hmWCLrA5At3J2jj9+xu5SlGSKoRqxUc/vr6GZQPEmkT4ndn++7gbe1QFHpu
+	 +YHlDuuGVyYegal14zpE8a+83TZiQ5+EaG1ZCFOfVINY1qX6e9GFsbt4mN3RsTl+mA
+	 0NbByu3FSxgDcYAYuHe5n48PMdLexruYhELs4seA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 214/321] net: mana: Fix doorbell out of order violation and avoid unnecessary doorbell rings
-Date: Tue, 27 Aug 2024 16:38:42 +0200
-Message-ID: <20240827143846.379315559@linuxfoundation.org>
+Subject: [PATCH 6.1 215/321] btrfs: replace sb::s_blocksize by fs_info::sectorsize
+Date: Tue, 27 Aug 2024 16:38:43 +0200
+Message-ID: <20240827143846.417463276@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,95 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 58a63729c957621f1990c3494c702711188ca347 ]
+[ Upstream commit 4e00422ee62663e31e611d7de4d2c4aa3f8555f2 ]
 
-After napi_complete_done() is called when NAPI is polling in the current
-process context, another NAPI may be scheduled and start running in
-softirq on another CPU and may ring the doorbell before the current CPU
-does. When combined with unnecessary rings when there is no need to arm
-the CQ, it triggers error paths in the hardware.
+The block size stored in the super block is used by subsystems outside
+of btrfs and it's a copy of fs_info::sectorsize. Unify that to always
+use our sectorsize, with the exception of mount where we first need to
+use fixed values (4K) until we read the super block and can set the
+sectorsize.
 
-This patch fixes this by calling napi_complete_done() after doorbell
-rings. It limits the number of unnecessary rings when there is
-no need to arm. MANA hardware specifies that there must be one doorbell
-ring every 8 CQ wraparounds. This driver guarantees one doorbell ring as
-soon as the number of consumed CQEs exceeds 4 CQ wraparounds. In practical
-workloads, the 4 CQ wraparounds proves to be big enough that it rarely
-exceeds this limit before all the napi weight is consumed.
+Replace all uses, in most cases it's fewer pointer indirections.
 
-To implement this, add a per-CQ counter cq->work_done_since_doorbell,
-and make sure the CQ is armed as soon as passing 4 wraparounds of the CQ.
-
-Cc: stable@vger.kernel.org
-Fixes: e1b5683ff62e ("net: mana: Move NAPI from EQ to CQ")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Long Li <longli@microsoft.com>
-Link: https://patch.msgid.link/1723219138-29887-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 46a6e10a1ab1 ("btrfs: send: allow cloning non-aligned extent if it ends at i_size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana.h    |  1 +
- drivers/net/ethernet/microsoft/mana/mana_en.c | 24 ++++++++++++-------
- 2 files changed, 16 insertions(+), 9 deletions(-)
+ fs/btrfs/disk-io.c   | 2 ++
+ fs/btrfs/extent_io.c | 4 ++--
+ fs/btrfs/inode.c     | 2 +-
+ fs/btrfs/ioctl.c     | 2 +-
+ fs/btrfs/reflink.c   | 6 +++---
+ fs/btrfs/send.c      | 2 +-
+ fs/btrfs/super.c     | 2 +-
+ 7 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana.h b/drivers/net/ethernet/microsoft/mana/mana.h
-index d58be64374c84..41c99eabf40a0 100644
---- a/drivers/net/ethernet/microsoft/mana/mana.h
-+++ b/drivers/net/ethernet/microsoft/mana/mana.h
-@@ -262,6 +262,7 @@ struct mana_cq {
- 	/* NAPI data */
- 	struct napi_struct napi;
- 	int work_done;
-+	int work_done_since_doorbell;
- 	int budget;
- };
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index c17232659942d..9ebb7bb37a22e 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3130,6 +3130,7 @@ static int init_mount_fs_info(struct btrfs_fs_info *fs_info, struct super_block
+ 	int ret;
  
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index b751b03eddfb1..e7d1ce68f05e3 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1311,7 +1311,6 @@ static void mana_poll_rx_cq(struct mana_cq *cq)
- static int mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
+ 	fs_info->sb = sb;
++	/* Temporary fixed values for block size until we read the superblock. */
+ 	sb->s_blocksize = BTRFS_BDEV_BLOCKSIZE;
+ 	sb->s_blocksize_bits = blksize_bits(BTRFS_BDEV_BLOCKSIZE);
+ 
+@@ -3628,6 +3629,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	sb->s_bdi->ra_pages *= btrfs_super_num_devices(disk_super);
+ 	sb->s_bdi->ra_pages = max(sb->s_bdi->ra_pages, SZ_4M / PAGE_SIZE);
+ 
++	/* Update the values for the current filesystem. */
+ 	sb->s_blocksize = sectorsize;
+ 	sb->s_blocksize_bits = blksize_bits(sectorsize);
+ 	memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 5f923c9b773e0..72227c0b4b5a1 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1748,7 +1748,7 @@ static int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
+ 	int ret = 0;
+ 	size_t pg_offset = 0;
+ 	size_t iosize;
+-	size_t blocksize = inode->i_sb->s_blocksize;
++	size_t blocksize = fs_info->sectorsize;
+ 	struct extent_io_tree *tree = &BTRFS_I(inode)->io_tree;
+ 
+ 	ret = set_page_extent_mapped(page);
+@@ -3348,7 +3348,7 @@ int extent_invalidate_folio(struct extent_io_tree *tree,
+ 	struct extent_state *cached_state = NULL;
+ 	u64 start = folio_pos(folio);
+ 	u64 end = start + folio_size(folio) - 1;
+-	size_t blocksize = folio->mapping->host->i_sb->s_blocksize;
++	size_t blocksize = btrfs_sb(folio->mapping->host->i_sb)->sectorsize;
+ 
+ 	/* This function is only called for the btree inode */
+ 	ASSERT(tree->owner == IO_TREE_BTREE_INODE_IO);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index bd3388e1b532e..934e360d1aefa 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -9111,7 +9111,7 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
+ 	u64 delalloc_bytes;
+ 	u64 inode_bytes;
+ 	struct inode *inode = d_inode(path->dentry);
+-	u32 blocksize = inode->i_sb->s_blocksize;
++	u32 blocksize = btrfs_sb(inode->i_sb)->sectorsize;
+ 	u32 bi_flags = BTRFS_I(inode)->flags;
+ 	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
+ 
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 64b37afb7c87f..31f7fe31b607a 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -517,7 +517,7 @@ static noinline int btrfs_ioctl_fitrim(struct btrfs_fs_info *fs_info,
+ 	 * block group is in the logical address space, which can be any
+ 	 * sectorsize aligned bytenr in  the range [0, U64_MAX].
+ 	 */
+-	if (range.len < fs_info->sb->s_blocksize)
++	if (range.len < fs_info->sectorsize)
+ 		return -EINVAL;
+ 
+ 	range.minlen = max(range.minlen, minlen);
+diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
+index f50586ff85c84..fc6e428525781 100644
+--- a/fs/btrfs/reflink.c
++++ b/fs/btrfs/reflink.c
+@@ -659,7 +659,7 @@ static int btrfs_extent_same_range(struct inode *src, u64 loff, u64 len,
+ 				   struct inode *dst, u64 dst_loff)
  {
- 	struct mana_cq *cq = context;
--	u8 arm_bit;
- 	int w;
+ 	struct btrfs_fs_info *fs_info = BTRFS_I(src)->root->fs_info;
+-	const u64 bs = fs_info->sb->s_blocksize;
++	const u64 bs = fs_info->sectorsize;
+ 	int ret;
  
- 	WARN_ON_ONCE(cq->gdma_cq != gdma_queue);
-@@ -1322,16 +1321,23 @@ static int mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
- 		mana_poll_tx_cq(cq);
+ 	/*
+@@ -726,7 +726,7 @@ static noinline int btrfs_clone_files(struct file *file, struct file *file_src,
+ 	int ret;
+ 	int wb_ret;
+ 	u64 len = olen;
+-	u64 bs = fs_info->sb->s_blocksize;
++	u64 bs = fs_info->sectorsize;
  
- 	w = cq->work_done;
--
--	if (w < cq->budget &&
--	    napi_complete_done(&cq->napi, w)) {
--		arm_bit = SET_ARM_BIT;
--	} else {
--		arm_bit = 0;
-+	cq->work_done_since_doorbell += w;
-+
-+	if (w < cq->budget) {
-+		mana_gd_ring_cq(gdma_queue, SET_ARM_BIT);
-+		cq->work_done_since_doorbell = 0;
-+		napi_complete_done(&cq->napi, w);
-+	} else if (cq->work_done_since_doorbell >
-+		   cq->gdma_cq->queue_size / COMP_ENTRY_SIZE * 4) {
-+		/* MANA hardware requires at least one doorbell ring every 8
-+		 * wraparounds of CQ even if there is no need to arm the CQ.
-+		 * This driver rings the doorbell as soon as we have exceeded
-+		 * 4 wraparounds.
-+		 */
-+		mana_gd_ring_cq(gdma_queue, 0);
-+		cq->work_done_since_doorbell = 0;
- 	}
+ 	/*
+ 	 * VFS's generic_remap_file_range_prep() protects us from cloning the
+@@ -792,7 +792,7 @@ static int btrfs_remap_file_range_prep(struct file *file_in, loff_t pos_in,
+ {
+ 	struct inode *inode_in = file_inode(file_in);
+ 	struct inode *inode_out = file_inode(file_out);
+-	u64 bs = BTRFS_I(inode_out)->root->fs_info->sb->s_blocksize;
++	u64 bs = BTRFS_I(inode_out)->root->fs_info->sectorsize;
+ 	u64 wb_len;
+ 	int ret;
  
--	mana_gd_ring_cq(gdma_queue, arm_bit);
--
- 	return w;
- }
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index cc57a97860d8a..e311cc291fe45 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -5910,7 +5910,7 @@ static int send_write_or_clone(struct send_ctx *sctx,
+ 	int ret = 0;
+ 	u64 offset = key->offset;
+ 	u64 end;
+-	u64 bs = sctx->send_root->fs_info->sb->s_blocksize;
++	u64 bs = sctx->send_root->fs_info->sectorsize;
  
+ 	end = min_t(u64, btrfs_file_extent_end(path), sctx->cur_inode_size);
+ 	if (offset >= end)
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 6fc5fa18d1ee6..d063379a031dc 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2426,7 +2426,7 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 		buf->f_bavail = 0;
+ 
+ 	buf->f_type = BTRFS_SUPER_MAGIC;
+-	buf->f_bsize = dentry->d_sb->s_blocksize;
++	buf->f_bsize = fs_info->sectorsize;
+ 	buf->f_namelen = BTRFS_NAME_LEN;
+ 
+ 	/* We treat it as constant endianness (it doesn't matter _which_)
 -- 
 2.43.0
 
