@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D590A1C7B60;
-	Tue, 27 Aug 2024 15:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266C41C6F79;
+	Tue, 27 Aug 2024 15:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771696; cv=none; b=rdpdBV97C/i8CAxpESlAdNcSusDAltZIN9i6yhPD99VLI2k3eea1BHEg5a3GY6ngHJ6KOe1ApkYVmjwtk/2ZtRC/wq7NBMtoYDFJ0rO3aL5tY4bsjWka+NU2Xq0sFRhyDPkKym4ie8fjIH3qcB+us+ii/4wBAuVfuet7o9YSZws=
+	t=1724771700; cv=none; b=iCcnCtpEZJor8ofMoYOn5wKJnogK/e6T/yFnz9jipMCnMCQnwSH7cTY4v8wOJeYUs0oQJDAGps0vtMwpNlEeGvEg4HNauWuZeHncFkAqhsX/s85rlj/CXcPQcaOMpp3BeLL9csrFM9nmYHPwA4BbcB6OSAYEcY9rhBzq5uRaxyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771696; c=relaxed/simple;
-	bh=z3KjcKF53Eb1WGsEy25QBXGaWa7qQ4MSkA755tVr1ps=;
+	s=arc-20240116; t=1724771700; c=relaxed/simple;
+	bh=bbZJbdXz2EX6NG4/aTVkcoP7KX1Z1XUEu4DwlAzmUZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtzWQiglBp8zoeEtGDC5kLwxjcifyxPJTuZ+Nbl10WtJatks7gWt+rZ8f3LzADo0uknmpfIuXJYgwBV3oX0WE7/NVjweLUG051F9yekgUYbNHcu786z+gimTXHx+rW6MtE4Un9+s7SjSVYcDArDj+m3sYyF5Woe7ZMMhz4EPFoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q064BBa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/z6A5GaYMOPCKgPhl/WRoI2i48hFif4im8DK4hbQjZzJZMWQ+ZLGfI4cHU7yMznOPU5CnS+tpsi//1UQ+Y+ztIQEidq4xUghAGeLh9r81Xf8Bg75r2HSv4+xF1KrPBgFzB/YG0IMAlEol38fBrzIn8kgTt0ojuVZfGOoCuUceQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMGfcvex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q064BBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4CBC6106E;
-	Tue, 27 Aug 2024 15:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMGfcvex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D12C61075;
+	Tue, 27 Aug 2024 15:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771696;
-	bh=z3KjcKF53Eb1WGsEy25QBXGaWa7qQ4MSkA755tVr1ps=;
+	s=korg; t=1724771700;
+	bh=bbZJbdXz2EX6NG4/aTVkcoP7KX1Z1XUEu4DwlAzmUZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1q064BBaPn6cb6qT/OFco0ZR5kXPXF262SOCnF+Z+fRN0yethIfNN43KWp08nz5B2
-	 Wh/jOIvR61QoYzQ/Lne3pUHDANV/gjPQTKXRe+8tKk7D294vEETXezlXJt+TaelzkP
-	 Nu7yTrdWzZZLHwCK2TRk/LykmF2Uiu2jApQ4y4kQ=
+	b=mMGfcvexQft4Tbv4GT2TwIHUR7fjDOph4f4qRbmSUorew72gHRXcDB77HX0XxfgNt
+	 GGgn+pVaZZ31koi4JJcaB9QiaB41fBOy6aWnfpWiM+P5BUf0afoIsTlF2B2/7RIVIo
+	 U9v44BlID4xr35+aipJZS0YP6zGniqyMmLCNoDF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.10 235/273] MIPS: Loongson64: Set timer mode in cpu-probe
-Date: Tue, 27 Aug 2024 16:39:19 +0200
-Message-ID: <20240827143842.349356291@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.10 236/273] HID: wacom: Defer calculation of resolution until resolution_code is known
+Date: Tue, 27 Aug 2024 16:39:20 +0200
+Message-ID: <20240827143842.386682633@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,47 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 1cb6ab446424649f03c82334634360c2e3043684 upstream.
+commit 1b8f9c1fb464968a5b18d3acc1da8c00bad24fad upstream.
 
-Loongson64 C and G processors have EXTIMER feature which
-is conflicting with CP0 counter.
+The Wacom driver maps the HID_DG_TWIST usage to ABS_Z (rather than ABS_RZ)
+for historic reasons. When the code to support twist was introduced in
+commit 50066a042da5 ("HID: wacom: generic: Add support for height, tilt,
+and twist usages"), we were careful to write it in such a way that it had
+HID calculate the resolution of the twist axis assuming ABS_RZ instead
+(so that we would get correct angular behavior). This was broken with
+the introduction of commit 08a46b4190d3 ("HID: wacom: Set a default
+resolution for older tablets"), which moved the resolution calculation
+to occur *before* the adjustment from ABS_Z to ABS_RZ occurred.
 
-Although the processor resets in EXTIMER disabled & INTIMER
-enabled mode, which is compatible with MIPS CP0 compare, firmware
-may attempt to enable EXTIMER and interfere CP0 compare.
+This commit moves the calculation of resolution after the point that
+we are finished setting things up for its proper use.
 
-Set timer mode back to MIPS compatible mode to fix booting on
-systems with such firmware before we have an actual driver for
-EXTIMER.
-
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 08a46b4190d3 ("HID: wacom: Set a default resolution for older tablets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/cpu-probe.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/wacom_wac.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/mips/kernel/cpu-probe.c
-+++ b/arch/mips/kernel/cpu-probe.c
-@@ -1724,12 +1724,16 @@ static inline void cpu_probe_loongson(st
- 		c->ases |= (MIPS_ASE_LOONGSON_MMI | MIPS_ASE_LOONGSON_CAM |
- 			MIPS_ASE_LOONGSON_EXT | MIPS_ASE_LOONGSON_EXT2);
- 		c->ases &= ~MIPS_ASE_VZ; /* VZ of Loongson-3A2000/3000 is incomplete */
-+		change_c0_config6(LOONGSON_CONF6_EXTIMER | LOONGSON_CONF6_INTIMER,
-+				  LOONGSON_CONF6_INTIMER);
- 		break;
- 	case PRID_IMP_LOONGSON_64G:
- 		__cpu_name[cpu] = "ICT Loongson-3";
- 		set_elf_platform(cpu, "loongson3a");
- 		set_isa(c, MIPS_CPU_ISA_M64R2);
- 		decode_cpucfg(c);
-+		change_c0_config6(LOONGSON_CONF6_EXTIMER | LOONGSON_CONF6_INTIMER,
-+				  LOONGSON_CONF6_INTIMER);
- 		break;
- 	default:
- 		panic("Unknown Loongson Processor ID!");
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1924,12 +1924,14 @@ static void wacom_map_usage(struct input
+ 	int fmax = field->logical_maximum;
+ 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
+ 	int resolution_code = code;
+-	int resolution = hidinput_calc_abs_res(field, resolution_code);
++	int resolution;
+ 
+ 	if (equivalent_usage == HID_DG_TWIST) {
+ 		resolution_code = ABS_RZ;
+ 	}
+ 
++	resolution = hidinput_calc_abs_res(field, resolution_code);
++
+ 	if (equivalent_usage == HID_GD_X) {
+ 		fmin += features->offset_left;
+ 		fmax -= features->offset_right;
 
 
