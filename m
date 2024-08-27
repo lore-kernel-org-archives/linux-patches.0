@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CEC1C4EEA;
-	Tue, 27 Aug 2024 15:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926DF1BC073;
+	Tue, 27 Aug 2024 15:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772426; cv=none; b=oao6uzLDskQ/QMHkOhR5xbXFtWAbqMS1x/XUKYIwO2AQk3CEg2K3urI3fJRnKY9nMlw3t1UkBTiftT9Mme/v9fvaWS+QLJ4NUXG8p8s/AsWX5YvbZm3fzHlHNdjD9z5a5KB5MMC/AhntBHBLiRMQ21C350apBcTOm1D06P8HcvA=
+	t=1724772430; cv=none; b=VoIW7YEQdVXUtIwbfrxihbwqDny5Jr6xcahYJNK0K2VsjLhVG0FXvy/Q2J1Xgje4Fg19+6NQmi7O9kjGP2XWBoE8IAt/zKzzgzzrJrGMUzh0czrXJlSQ7J0vUOTY9tMylyRCvjlXpknmA7Qrkh3rSHFXCBSv4zvJYeGhz+c+4SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772426; c=relaxed/simple;
-	bh=LxSNKAAlMNt30KP0tlHGHW3GHQypv7GF4LrfyJNQ8Sg=;
+	s=arc-20240116; t=1724772430; c=relaxed/simple;
+	bh=2FHDmnpD2MLNdv5npRsy2N1ezFvqUOeK6KKfr71LfqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRQlwvQmCkAwJxruykk10v+azltyg9gXJ1k6DYXSrCY66Y78p+PCcJAW2qwAReHxs5FSrxxDKPMlDIgBtDFC5wDPySDLZhjdklTQ+RpH4ALWnz8TIhMir902JcF4/iYwo89ZbD7FFtOjs0GtvpvEG1bAfl8jd1llRQnUpjUwKwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHVniVnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHuu5AHmqSLmdAzfwmJNd0drLSh7qj+wc1gjVb2OT3QrKaK6Qwz55UFMEppNJUN/TCa/p/DTeYV9h6ZTBSB0+Y4dBfxBMkRGglz1k50l+NlJN4TsvilQq2tUparydLHErLEOfcFgurREabyVZSXUe3gsXQikSFa0UXfQBKAeqao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvaOJ1MI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHVniVnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7412BC4DE18;
-	Tue, 27 Aug 2024 15:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvaOJ1MI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA4DC4DE18;
+	Tue, 27 Aug 2024 15:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772425;
-	bh=LxSNKAAlMNt30KP0tlHGHW3GHQypv7GF4LrfyJNQ8Sg=;
+	s=korg; t=1724772429;
+	bh=2FHDmnpD2MLNdv5npRsy2N1ezFvqUOeK6KKfr71LfqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pHVniVnbucTpCY1igElnx8UDW6aPvdiRgVD7a5xKYqQ/5xAPRinY8GJcFnoZ0ciIh
-	 pWad+vCmqstbIdkIpBAd0dO12hkmUwHlPWjZvtp2Z5nbFpewPeJM/FfLu6prPOgTra
-	 LSNu7y4eoYWqqhTPmQjsxN+DF2x0TRi9Jaz513ZU=
+	b=vvaOJ1MIEbGevUDc0CKOIGAoQTP7eql2l3Lzh7ZUgZcWBMj5dsbuzq5jxpuNgchOm
+	 gbqwgSnICJT/gIN5ZE+/5deVqQWf1WTa0eCmdMHDsSf1WStrQRjIE73DkEO+Y5hr0X
+	 tExyuvCdVnOLfAZShcEJ7S826smTgwuKs5d3B6sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael van der Westhuizen <rmikey@meta.com>,
-	Breno Leitao <leitao@debian.org>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/321] i2c: tegra: Do not mark ACPI devices as irq safe
-Date: Tue, 27 Aug 2024 16:38:40 +0200
-Message-ID: <20240827143846.302130822@linuxfoundation.org>
+Subject: [PATCH 6.1 213/321] dm suspend: return -ERESTARTSYS instead of -EINTR
+Date: Tue, 27 Aug 2024 16:38:41 +0200
+Message-ID: <20240827143846.341131453@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -54,61 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 14d069d92951a3e150c0a81f2ca3b93e54da913b ]
+[ Upstream commit 1e1fd567d32fcf7544c6e09e0e5bc6c650da6e23 ]
 
-On ACPI machines, the tegra i2c module encounters an issue due to a
-mutex being called inside a spinlock. This leads to the following bug:
+This commit changes device mapper, so that it returns -ERESTARTSYS
+instead of -EINTR when it is interrupted by a signal (so that the ioctl
+can be restarted).
 
-	BUG: sleeping function called from invalid context at kernel/locking/mutex.c:585
-	...
+The manpage signal(7) says that the ioctl function should be restarted if
+the signal was handled with SA_RESTART.
 
-	Call trace:
-	__might_sleep
-	__mutex_lock_common
-	mutex_lock_nested
-	acpi_subsys_runtime_resume
-	rpm_resume
-	tegra_i2c_xfer
-
-The problem arises because during __pm_runtime_resume(), the spinlock
-&dev->power.lock is acquired before rpm_resume() is called. Later,
-rpm_resume() invokes acpi_subsys_runtime_resume(), which relies on
-mutexes, triggering the error.
-
-To address this issue, devices on ACPI are now marked as not IRQ-safe,
-considering the dependency of acpi_subsys_runtime_resume() on mutexes.
-
-Fixes: bd2fdedbf2ba ("i2c: tegra: Add the ACPI support")
-Cc: <stable@vger.kernel.org> # v5.17+
-Co-developed-by: Michael van der Westhuizen <rmikey@meta.com>
-Signed-off-by: Michael van der Westhuizen <rmikey@meta.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Dmitry Osipenko <digetx@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-tegra.c | 4 ++--
+ drivers/md/dm.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 3792531b7ab7f..f7b4977d66496 100644
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -1832,9 +1832,9 @@ static int tegra_i2c_probe(struct platform_device *pdev)
- 	 * domain.
- 	 *
- 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
--	 * be used for atomic transfers.
-+	 * be used for atomic transfers. ACPI device is not IRQ safe also.
- 	 */
--	if (!IS_VI(i2c_dev))
-+	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
- 		pm_runtime_irq_safe(i2c_dev->dev);
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 29270f6f272f6..ddd44a7f79dbf 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2511,7 +2511,7 @@ static int dm_wait_for_bios_completion(struct mapped_device *md, unsigned int ta
+ 			break;
  
- 	pm_runtime_enable(i2c_dev->dev);
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
+ 
+@@ -2536,7 +2536,7 @@ static int dm_wait_for_completion(struct mapped_device *md, unsigned int task_st
+ 			break;
+ 
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
+ 
 -- 
 2.43.0
 
