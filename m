@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B842A1BC9E3;
-	Tue, 27 Aug 2024 15:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CF11BC9E3;
+	Tue, 27 Aug 2024 15:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771405; cv=none; b=Q9wpJs0CluOKt4QL+4Mkq/2sikyyQCkjw8HFaiXAve/RI6zjyJ/ZpvGTXVuerB7TYWaZyJ8s+L1kDeQzKoQob5Go2E3aj0TVW4WUvYv8I9kCx/fZtKVGB/pRQbZvlmGmguc29TMDIG9WMKjCyympgNAJOYEmY/nSaDX92q5U7Q4=
+	t=1724771409; cv=none; b=u6qeKxvtzua6r/CcamZZFX2IEHXWKvr1E0FAEN1j4FEySly+vXiEhhRZy8AEm6XxrqKiUh6uwU2B6xTXAJa7ZP2UdkrQqO4wWqsIyRMdvBAaf8JvnAo+2VWKLwX2NG8rDBpzrXtTi3vBofhA4+CX9bNipHnkUPivsv29B1UUoKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771405; c=relaxed/simple;
-	bh=CMYidiLBQGl4LFT5ZHqHdD49jBiJjq2OK5VlgASfnEg=;
+	s=arc-20240116; t=1724771409; c=relaxed/simple;
+	bh=NT4QdPYqCz+WusQB/+ZQYA4ilQMtZE00pcIwkrLk3Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjYSvKjvzW32JD/esPIgBVpm6RvVq+o/YolJgB3QddiJIykZPNiNTi8Ysb1y7HvPWapIARu8z6hwAmC0LY3se8iqPe4AKl3H3Vl0Wce3f7xXAqLKV9aYCk22hnZTXcN5m610DTdkE2Xwfs9i63kgnLT6sPvfD++NoJf6U6BCFns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMKZl/uZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2wybHV/CrNMTaIsrBOK2hOMV/l1cp6xCOQGBgXsdwdni2jpt868GXD02dLAPMPsmuUeknE3Ro6Xqpia48Tv4cQAmCj82ZJ65z9ZnPLhOGSB6ebz2x27JqR6OVJU2CHDrdCEzn5bIcZIL+mcqUFVZHXb+9tTVUFXWmiXyFSBdOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kujlh2aJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMKZl/uZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86FEC4AF52;
-	Tue, 27 Aug 2024 15:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kujlh2aJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681DBC4AF52;
+	Tue, 27 Aug 2024 15:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771405;
-	bh=CMYidiLBQGl4LFT5ZHqHdD49jBiJjq2OK5VlgASfnEg=;
+	s=korg; t=1724771408;
+	bh=NT4QdPYqCz+WusQB/+ZQYA4ilQMtZE00pcIwkrLk3Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMKZl/uZnLi0ohMBvfR/toZYzsWWAzZ/2C1T7XydnwSnxwlOeE4F0+Cow7iAMj+W7
-	 D/KagVZaJT3olqCoGUzw994ahBTUgmZgvaucySNuKnEGw9pzNKSud0BNjfIQooMvHp
-	 7In2krhcphkZIgXVFp/d6w5hJImwoTI+w/6yXnWE=
+	b=Kujlh2aJEHj1+EEj4BsfGrEI7J2/9NTdsbaVY1sFGCXxcUW1074LN7onzq+MEntbj
+	 s5q1tIfwfaSDHrTnRUp8zqbFfEVj7MbyPidn8e3LrmyosWbxjmDrVTr65aJcbY2zfG
+	 h/C0FvXl6RWmQA5BwiVZDqdCMe40TT+VJojsy75U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Simon Horman <horms@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 179/273] netem: fix return value if duplicate enqueue fails
-Date: Tue, 27 Aug 2024 16:38:23 +0200
-Message-ID: <20240827143840.223174162@linuxfoundation.org>
+Subject: [PATCH 6.10 180/273] udp: fix receiving fraglist GSO packets
+Date: Tue, 27 Aug 2024 16:38:24 +0200
+Message-ID: <20240827143840.261409658@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,136 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit c07ff8592d57ed258afee5a5e04991a48dbaf382 ]
+[ Upstream commit b128ed5ab27330deeeaf51ea8bb69f1442a96f7f ]
 
-There is a bug in netem_enqueue() introduced by
-commit 5845f706388a ("net: netem: fix skb length BUG_ON in __skb_to_sgvec")
-that can lead to a use-after-free.
+When assembling fraglist GSO packets, udp4_gro_complete does not set
+skb->csum_start, which makes the extra validation in __udp_gso_segment fail.
 
-This commit made netem_enqueue() always return NET_XMIT_SUCCESS
-when a packet is duplicated, which can cause the parent qdisc's q.qlen
-to be mistakenly incremented. When this happens qlen_notify() may be
-skipped on the parent during destruction, leaving a dangling pointer
-for some classful qdiscs like DRR.
-
-There are two ways for the bug happen:
-
-- If the duplicated packet is dropped by rootq->enqueue() and then
-  the original packet is also dropped.
-- If rootq->enqueue() sends the duplicated packet to a different qdisc
-  and the original packet is dropped.
-
-In both cases NET_XMIT_SUCCESS is returned even though no packets
-are enqueued at the netem qdisc.
-
-The fix is to defer the enqueue of the duplicate packet until after
-the original packet has been guaranteed to return NET_XMIT_SUCCESS.
-
-Fixes: 5845f706388a ("net: netem: fix skb length BUG_ON in __skb_to_sgvec")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240819175753.5151-1-stephen@networkplumber.org
+Fixes: 89add40066f9 ("net: drop bad gso csum_start and offset in virtio_net_hdr")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240819150621.59833-1-nbd@nbd.name
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 47 ++++++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 18 deletions(-)
+ net/ipv4/udp_offload.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index edc72962ae63a..0f8d581438c39 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -446,12 +446,10 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct netem_sched_data *q = qdisc_priv(sch);
- 	/* We don't fill cb now as skb_unshare() may invalidate it */
- 	struct netem_skb_cb *cb;
--	struct sk_buff *skb2;
-+	struct sk_buff *skb2 = NULL;
- 	struct sk_buff *segs = NULL;
- 	unsigned int prev_len = qdisc_pkt_len(skb);
- 	int count = 1;
--	int rc = NET_XMIT_SUCCESS;
--	int rc_drop = NET_XMIT_DROP;
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index ee9af921556a7..5b54f4f32b1cd 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -279,7 +279,8 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+ 		return ERR_PTR(-EINVAL);
  
- 	/* Do not fool qdisc_drop_all() */
- 	skb->prev = NULL;
-@@ -480,19 +478,11 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		skb_orphan_partial(skb);
+ 	if (unlikely(skb_checksum_start(gso_skb) !=
+-		     skb_transport_header(gso_skb)))
++		     skb_transport_header(gso_skb) &&
++		     !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)))
+ 		return ERR_PTR(-EINVAL);
  
- 	/*
--	 * If we need to duplicate packet, then re-insert at top of the
--	 * qdisc tree, since parent queuer expects that only one
--	 * skb will be queued.
-+	 * If we need to duplicate packet, then clone it before
-+	 * original is modified.
- 	 */
--	if (count > 1 && (skb2 = skb_clone(skb, GFP_ATOMIC)) != NULL) {
--		struct Qdisc *rootq = qdisc_root_bh(sch);
--		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
--
--		q->duplicate = 0;
--		rootq->enqueue(skb2, rootq, to_free);
--		q->duplicate = dupsave;
--		rc_drop = NET_XMIT_SUCCESS;
--	}
-+	if (count > 1)
-+		skb2 = skb_clone(skb, GFP_ATOMIC);
- 
- 	/*
- 	 * Randomized packet corruption.
-@@ -504,7 +494,8 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		if (skb_is_gso(skb)) {
- 			skb = netem_segment(skb, sch, to_free);
- 			if (!skb)
--				return rc_drop;
-+				goto finish_segs;
-+
- 			segs = skb->next;
- 			skb_mark_not_on_list(skb);
- 			qdisc_skb_cb(skb)->pkt_len = skb->len;
-@@ -530,7 +521,24 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* re-link segs, so that qdisc_drop_all() frees them all */
- 		skb->next = segs;
- 		qdisc_drop_all(skb, sch, to_free);
--		return rc_drop;
-+		if (skb2)
-+			__qdisc_drop(skb2, to_free);
-+		return NET_XMIT_DROP;
-+	}
-+
-+	/*
-+	 * If doing duplication then re-insert at top of the
-+	 * qdisc tree, since parent queuer expects that only one
-+	 * skb will be queued.
-+	 */
-+	if (skb2) {
-+		struct Qdisc *rootq = qdisc_root_bh(sch);
-+		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
-+
-+		q->duplicate = 0;
-+		rootq->enqueue(skb2, rootq, to_free);
-+		q->duplicate = dupsave;
-+		skb2 = NULL;
- 	}
- 
- 	qdisc_qstats_backlog_inc(sch, skb);
-@@ -601,9 +609,12 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	}
- 
- finish_segs:
-+	if (skb2)
-+		__qdisc_drop(skb2, to_free);
-+
- 	if (segs) {
- 		unsigned int len, last_len;
--		int nb;
-+		int rc, nb;
- 
- 		len = skb ? skb->len : 0;
- 		nb = skb ? 1 : 0;
+ 	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
 -- 
 2.43.0
 
