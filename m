@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8A71C461D;
-	Tue, 27 Aug 2024 15:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB931C2DB1;
+	Tue, 27 Aug 2024 15:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771252; cv=none; b=njYSKrnf91dQ1SJ2BRsVPWnczAl7hOfzT9yFY+xOw0FeSFTsViaWCqWrrU5wig2XZfdketZz50fG5a8IlxDQtOxUAADfQ7rPp48k9/ZczQLiBT89GgvyjEqF37Z6RwRr7OSVD5YS0V8psDAimhFz1k7Wl7MKUWoQ1NT20WGeSiI=
+	t=1724771255; cv=none; b=oj2ZDXwVXHcbVtGNo4TKX3hOwkTU6wPfL/nlv4lbAPpL9Lt1F5J6KiSuuxVduKObl4kyEGXFaXNQ9GTDjVUUAlOorVbqk0tT2/YotL6/hrnrUVEJ875EspuPPBEhVI4lWLw/ucCP0f/Vsl4bwlv8KK+xdwaiuCZZgSQsXtWyeI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771252; c=relaxed/simple;
-	bh=eL0MKFfh/U/Kx3hp8nIecaHVkcCAeLCfSpTPgtWFbYk=;
+	s=arc-20240116; t=1724771255; c=relaxed/simple;
+	bh=giybfBXFNK5RuJZu5WtnQX8AYSmNIdTOC/3NzZ5TASQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/kc2s1NYvV3hf3emF0bnWqS9+retcM/jZQLGZxqpt7OKqAud1WYaKhUiIl5iRnhbM4YTfDqTiAW97vcL1d4gLjkkFbN/T57bRC2a3sIDqC9YssInjKiZZrSCOTjTlWvEFnaM6w+8tY7BZkDvZAWt3iNFDVO6KCnonWTtPlbOMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xjd8OXzG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXGQKIN1KUfR7XGWvgMt2J/dE0lDlJp7Hkqcv22iz195CHq4XRt9NprJNveYgK+pZU2axcuigw4Oitucdjlp0iQWugwgW3SN1HHpfzzysGK/8c4RY7AXXoN1IZ9fAMN5nayJT7OuWuQCRUp3jc19yqAEvF4rPy+hCtRBy3pZvPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxW33V6E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xjd8OXzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4080C61040;
-	Tue, 27 Aug 2024 15:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxW33V6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D37AC61040;
+	Tue, 27 Aug 2024 15:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771251;
-	bh=eL0MKFfh/U/Kx3hp8nIecaHVkcCAeLCfSpTPgtWFbYk=;
+	s=korg; t=1724771254;
+	bh=giybfBXFNK5RuJZu5WtnQX8AYSmNIdTOC/3NzZ5TASQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xjd8OXzGexE0SeoCu3jPp9rjdwLEw/r9XQzDNZg4F0FXXOCydkVY3Dc2kFZrU+KCO
-	 jWy4CGFouYxACljLsbXVSI5RXg+tOYEWAZhUL9t/M9GMNLcbJ2N6Oaj4KyjLtHEAS4
-	 p//DTb0ZUOPCI9SmnOab9E+ABp2QV5v1F1w3psvw=
+	b=cxW33V6E+CAcA99lSZRITr+B6T6iMJ1IHMV59vntx7SStuwsCo3sb8iP4IhCzm0z2
+	 XCjsBaviqWvDbY/m1iZA+s9WoSPJoBnz0Avb5gTzTGTyBsqyFxdzyCjjm8TzKDuCMD
+	 G2Ame7CNFz9kRtzBFAb0BgrDLvuOiXIqp6ItY+sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Tranchetti <quic_stranche@quicinc.com>,
-	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tom Hughes <tom@compton.nu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 101/273] tcp: Update window clamping condition
-Date: Tue, 27 Aug 2024 16:37:05 +0200
-Message-ID: <20240827143837.253608489@linuxfoundation.org>
+Subject: [PATCH 6.10 102/273] netfilter: allow ipv6 fragments to arrive on different devices
+Date: Tue, 27 Aug 2024 16:37:06 +0200
+Message-ID: <20240827143837.291725505@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -53,92 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+From: Tom Hughes <tom@compton.nu>
 
-[ Upstream commit a2cbb1603943281a604f5adc48079a148db5cb0d ]
+[ Upstream commit 3cd740b985963f874a1a094f1969e998b9d05554 ]
 
-This patch is based on the discussions between Neal Cardwell and
-Eric Dumazet in the link
-https://lore.kernel.org/netdev/20240726204105.1466841-1-quic_subashab@quicinc.com/
+Commit 264640fc2c5f4 ("ipv6: distinguish frag queues by device
+for multicast and link-local packets") modified the ipv6 fragment
+reassembly logic to distinguish frag queues by device for multicast
+and link-local packets but in fact only the main reassembly code
+limits the use of the device to those address types and the netfilter
+reassembly code uses the device for all packets.
 
-It was correctly pointed out that tp->window_clamp would not be
-updated in cases where net.ipv4.tcp_moderate_rcvbuf=0 or if
-(copied <= tp->rcvq_space.space). While it is expected for most
-setups to leave the sysctl enabled, the latter condition may
-not end up hitting depending on the TCP receive queue size and
-the pattern of arriving data.
+This means that if fragments of a packet arrive on different interfaces
+then netfilter will fail to reassemble them and the fragments will be
+expired without going any further through the filters.
 
-The updated check should be hit only on initial MSS update from
-TCP_MIN_MSS to measured MSS value and subsequently if there was
-an update to a larger value.
-
-Fixes: 05f76b2d634e ("tcp: Adjust clamping window for applications specifying SO_RCVBUF")
-Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
-Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 648700f76b03 ("inet: frags: use rhashtables for reassembly units")
+Signed-off-by: Tom Hughes <tom@compton.nu>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ net/ipv6/netfilter/nf_conntrack_reasm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index ecd521108559f..2c52f6dcbd290 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -238,9 +238,14 @@ static void tcp_measure_rcv_mss(struct sock *sk, const struct sk_buff *skb)
- 		 */
- 		if (unlikely(len != icsk->icsk_ack.rcv_mss)) {
- 			u64 val = (u64)skb->len << TCP_RMEM_TO_WIN_SCALE;
-+			u8 old_ratio = tcp_sk(sk)->scaling_ratio;
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index 5e1b50c6a44d2..3e9779ed7daec 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -154,6 +154,10 @@ static struct frag_queue *fq_find(struct net *net, __be32 id, u32 user,
+ 	};
+ 	struct inet_frag_queue *q;
  
- 			do_div(val, skb->truesize);
- 			tcp_sk(sk)->scaling_ratio = val ? val : 1;
++	if (!(ipv6_addr_type(&hdr->daddr) & (IPV6_ADDR_MULTICAST |
++					    IPV6_ADDR_LINKLOCAL)))
++		key.iif = 0;
 +
-+			if (old_ratio != tcp_sk(sk)->scaling_ratio)
-+				WRITE_ONCE(tcp_sk(sk)->window_clamp,
-+					   tcp_win_from_space(sk, sk->sk_rcvbuf));
- 		}
- 		icsk->icsk_ack.rcv_mss = min_t(unsigned int, len,
- 					       tcp_sk(sk)->advmss);
-@@ -754,7 +759,8 @@ void tcp_rcv_space_adjust(struct sock *sk)
- 	 * <prev RTT . ><current RTT .. ><next RTT .... >
- 	 */
- 
--	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_moderate_rcvbuf)) {
-+	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_moderate_rcvbuf) &&
-+	    !(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
- 		u64 rcvwin, grow;
- 		int rcvbuf;
- 
-@@ -770,22 +776,12 @@ void tcp_rcv_space_adjust(struct sock *sk)
- 
- 		rcvbuf = min_t(u64, tcp_space_from_win(sk, rcvwin),
- 			       READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_rmem[2]));
--		if (!(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
--			if (rcvbuf > sk->sk_rcvbuf) {
--				WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
--
--				/* Make the window clamp follow along.  */
--				WRITE_ONCE(tp->window_clamp,
--					   tcp_win_from_space(sk, rcvbuf));
--			}
--		} else {
--			/* Make the window clamp follow along while being bounded
--			 * by SO_RCVBUF.
--			 */
--			int clamp = tcp_win_from_space(sk, min(rcvbuf, sk->sk_rcvbuf));
-+		if (rcvbuf > sk->sk_rcvbuf) {
-+			WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
- 
--			if (clamp > tp->window_clamp)
--				WRITE_ONCE(tp->window_clamp, clamp);
-+			/* Make the window clamp follow along.  */
-+			WRITE_ONCE(tp->window_clamp,
-+				   tcp_win_from_space(sk, rcvbuf));
- 		}
- 	}
- 	tp->rcvq_space.space = copied;
+ 	q = inet_frag_find(nf_frag->fqdir, &key);
+ 	if (!q)
+ 		return NULL;
 -- 
 2.43.0
 
