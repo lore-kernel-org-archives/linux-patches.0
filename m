@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA351C4EDC;
-	Tue, 27 Aug 2024 15:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8EF1C7B9D;
+	Tue, 27 Aug 2024 15:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772184; cv=none; b=SxK6OqmDM6zm3sadjhJ7Lh+TGM5w2lfHYyBOdmPTNpbC+axDRdjx3DjM+dVhkaFYrPa/fjQdLmM1/nbks8KtZnNIzSg64B8p0R7utQFupTVechdFHYQxPQ2tfxoqmMbMEkOx+YR1emhPidZg9ZvjhyLib3P0XjH80Pa75xFq68o=
+	t=1724772187; cv=none; b=uP3Z324/d6lLeYAGQ/vBmCrG8mE5fc2S/j0ZZbLsX2DyLXC20jpxtKof8c8oitH06YZupTOCVUdyoUHuI33ccDwV3gjbZymt2stAM2LZXFSvpLncD6TLMu1TV7c1gESDx6X5s0W6C4cReLvYBwRDQl+Te1xOhki6CcSXaKzCOGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772184; c=relaxed/simple;
-	bh=3MavnfKMXVQTzAU+N5qthWzp3qAfCVzu/XpibsGU7mU=;
+	s=arc-20240116; t=1724772187; c=relaxed/simple;
+	bh=+/rrNBS0NHkMj03tE/jKv52n/P4jitiNCihy7nNeggk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPyfmEjZFpZUAuAodWXCnyPt/bLxnCSVS1oszi9Pwvp4EtNPlEAciUcLS8dVMNG6h76llpUTKzm9dMJ2NPH4u9bcERoaPD2GKx2lj+yDcGWFP4J90DcXWDQ+0UpUEIbIq19QxQA9Vr3reOyzUIMf+ZEgRpX1Zrb8IkoOtRQ/kWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnloxEHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chH3gSCm1NRosXMtx4pDUaNQdnAH3RhfOxHCIXrAlfc29490nCR0j3ruOWZlhjK8ZEdMHQXIeDO1JoWQD/yh56pGAMQdaJxohOR3rEIxkgvGNuYjZGJTKl1jukZ/gql3av4dOIGnZqEZSpKTI6pGhmb3NjHpANY91f5s20q1blc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHpNk6/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnloxEHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BC7C6104A;
-	Tue, 27 Aug 2024 15:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHpNk6/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C62CC6104C;
+	Tue, 27 Aug 2024 15:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772183;
-	bh=3MavnfKMXVQTzAU+N5qthWzp3qAfCVzu/XpibsGU7mU=;
+	s=korg; t=1724772186;
+	bh=+/rrNBS0NHkMj03tE/jKv52n/P4jitiNCihy7nNeggk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnloxEHE4ChPwe8n//sfjSR+KZE6wDP3lcbYdRPJEoYyOgBqR0wwtP3AI5AkOchmT
-	 6fo9MER3NAyanUxoeyTjt4XphjOORE4PuuQN1BMGJV6gqXlUdMfEWSyPjn2qBnw1UY
-	 yykgzTC8kkd5QPFMyvU9RN2cIVajVkND5fuuHkew=
+	b=mHpNk6/aTmAfRjfd0A4FvQDG6GOL7YHqT+h5uPXq5PWGaY8t6L5hnSOUFZQLGknNh
+	 AP3ygOPp205yC05bfvYIE+9KW6rMEUxpXXnfTO4feJhl1MOUFFMVNcl5/DwlZPWDp0
+	 HF5Ocr9a8BTo9jw13qu4OvBIwKjq6MukvHkhbj/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang Wang <wangpeiyang1@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/321] net: hns3: use the users cfg after reset
-Date: Tue, 27 Aug 2024 16:36:56 +0200
-Message-ID: <20240827143842.357864062@linuxfoundation.org>
+Subject: [PATCH 6.1 099/321] netfilter: nf_tables: Drop pointless memset in nf_tables_dump_obj
+Date: Tue, 27 Aug 2024 16:36:47 +0200
+Message-ID: <20240827143842.017049606@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,120 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang Wang <wangpeiyang1@huawei.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 30545e17eac1f50c5ef49644daf6af205100a965 ]
+[ Upstream commit ff16111cc10c82ee065ffbd9fa8d6210394ff8c6 ]
 
-Consider the followed case that the user change speed and reset the net
-interface. Before the hw change speed successfully, the driver get old
-old speed from hw by timer task. After reset, the previous speed is config
-to hw. As a result, the new speed is configed successfully but lost after
-PF reset. The followed pictured shows more dirrectly.
+The code does not make use of cb->args fields past the first one, no
+need to zero them.
 
-+------+              +----+                 +----+
-| USER |              | PF |                 | HW |
-+---+--+              +-+--+                 +-+--+
-    |  ethtool -s 100G  |                      |
-    +------------------>|   set speed 100G     |
-    |                   +--------------------->|
-    |                   |  set successfully    |
-    |                   |<---------------------+---+
-    |                   |query cfg (timer task)|   |
-    |                   +--------------------->|   | handle speed
-    |                   |     return 200G      |   | changing event
-    |  ethtool --reset  |<---------------------+   | (100G)
-    +------------------>|  cfg previous speed  |<--+
-    |                   |  after reset (200G)  |
-    |                   +--------------------->|
-    |                   |                      +---+
-    |                   |query cfg (timer task)|   |
-    |                   +--------------------->|   | handle speed
-    |                   |     return 100G      |   | changing event
-    |                   |<---------------------+   | (200G)
-    |                   |                      |<--+
-    |                   |query cfg (timer task)|
-    |                   +--------------------->|
-    |                   |     return 200G      |
-    |                   |<---------------------+
-    |                   |                      |
-    v                   v                      v
-
-This patch save new speed if hw change speed successfully, which will be
-used after reset successfully.
-
-Fixes: 2d03eacc0b7e ("net: hns3: Only update mac configuation when necessary")
-Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 24 ++++++++++++++-----
- .../hisilicon/hns3/hns3pf/hclge_mdio.c        |  3 +++
- 2 files changed, 21 insertions(+), 6 deletions(-)
+ net/netfilter/nf_tables_api.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index dfb428550ac03..45bd5c79e4da8 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -2696,8 +2696,17 @@ static int hclge_cfg_mac_speed_dup_h(struct hnae3_handle *handle, int speed,
- {
- 	struct hclge_vport *vport = hclge_get_vport(handle);
- 	struct hclge_dev *hdev = vport->back;
-+	int ret;
-+
-+	ret = hclge_cfg_mac_speed_dup(hdev, speed, duplex, lane_num);
- 
--	return hclge_cfg_mac_speed_dup(hdev, speed, duplex, lane_num);
-+	if (ret)
-+		return ret;
-+
-+	hdev->hw.mac.req_speed = speed;
-+	hdev->hw.mac.req_duplex = duplex;
-+
-+	return 0;
- }
- 
- static int hclge_set_autoneg_en(struct hclge_dev *hdev, bool enable)
-@@ -2999,17 +3008,20 @@ static int hclge_mac_init(struct hclge_dev *hdev)
- 	if (!test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state))
- 		hdev->hw.mac.duplex = HCLGE_MAC_FULL;
- 
--	ret = hclge_cfg_mac_speed_dup_hw(hdev, hdev->hw.mac.speed,
--					 hdev->hw.mac.duplex, hdev->hw.mac.lane_num);
--	if (ret)
--		return ret;
--
- 	if (hdev->hw.mac.support_autoneg) {
- 		ret = hclge_set_autoneg_en(hdev, hdev->hw.mac.autoneg);
- 		if (ret)
- 			return ret;
- 	}
- 
-+	if (!hdev->hw.mac.autoneg) {
-+		ret = hclge_cfg_mac_speed_dup_hw(hdev, hdev->hw.mac.req_speed,
-+						 hdev->hw.mac.req_duplex,
-+						 hdev->hw.mac.lane_num);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	mac->link = 0;
- 
- 	if (mac->user_fec_mode & BIT(HNAE3_FEC_USER_DEF)) {
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
-index 85fb11de43a12..80079657afebe 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
-@@ -191,6 +191,9 @@ static void hclge_mac_adjust_link(struct net_device *netdev)
- 	if (ret)
- 		netdev_err(netdev, "failed to adjust link.\n");
- 
-+	hdev->hw.mac.req_speed = (u32)speed;
-+	hdev->hw.mac.req_duplex = (u8)duplex;
-+
- 	ret = hclge_cfg_flowctrl(hdev);
- 	if (ret)
- 		netdev_err(netdev, "failed to configure flow control.\n");
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 747033129c0fe..ddf84f226822b 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7452,9 +7452,6 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
+ 				goto cont;
+ 			if (idx < s_idx)
+ 				goto cont;
+-			if (idx > s_idx)
+-				memset(&cb->args[1], 0,
+-				       sizeof(cb->args) - sizeof(cb->args[0]));
+ 			if (filter && filter->table &&
+ 			    strcmp(filter->table, table->name))
+ 				goto cont;
 -- 
 2.43.0
 
