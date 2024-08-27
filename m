@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DB51BC9E3;
-	Tue, 27 Aug 2024 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905401C5788;
+	Tue, 27 Aug 2024 15:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771561; cv=none; b=H87SkgfxKmqD/BhvCYwG6PuL/r2qbnKh21SEcUtioF2JBzWR6DoensdN9w8WNMVvDTeQkPWFqtQ2Rva11iOHyQs8YuA6X9F7Uj1Z7u2Zfg9d+pjq3DsJPR48tKdiLh/mDGAmKD9gq6e4qdlWYdF3JUdr2xSUCTwqm6b+wp1XAT4=
+	t=1724771564; cv=none; b=e97bUKnZxOOnqqEi6CHywbtJ7xlbwPjJaRjJC7SbgJIEW/oG9Px9lV/z/RyBrtzOSD+sGXHR3KpnmlgsWNetKxAngkBIk6hCvFXNRirqp1NqbzxMJOXFTPHPB5nnaAfnkDr84r70nVZCfQ+YWVFrtNxTn5C5ZzOKks3EQHYt2+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771561; c=relaxed/simple;
-	bh=y19mRIT2Lj3nrlpdd3KfMRu1+wNnKConr8ghTfw1354=;
+	s=arc-20240116; t=1724771564; c=relaxed/simple;
+	bh=lAui+eT/eN+vZXZMQqxJ2vtI4eXsgzHVXrSCT8fqNmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktV3gi/t1OMtqAQ9PhJe5Jip83vcujWEYddvfcGNnNho/dDrl4nGEsA55yAHZgNgWiog5IOHZIXowMLKa28OZB3i/4bb7AhO78LcqxMsdgzNnb21d6ist6knNn0OGwPNmPPUfJqXSs9oLVBVwunG29eS2jLkoGdJ8CQSVhglioU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AF1cwWea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BudnvUcZRiGtnBuzsEDBfR7e79Vca6tefpOojmfy5/q+HRQ2qFYujpqRl7ymgwDSmP0TqVt3KMEQjf7B8yk1L7O++ZqN9ijXKkNPC0kjoLZ+bOR/J7kD6YpZK0W05Dg93rcv5lZgt9gV4oa/S5CYN5AaFhDz0QXk8QoNb5vLPyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCQn8Kz4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AF1cwWea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E62C61042;
-	Tue, 27 Aug 2024 15:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCQn8Kz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED912C61043;
+	Tue, 27 Aug 2024 15:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771561;
-	bh=y19mRIT2Lj3nrlpdd3KfMRu1+wNnKConr8ghTfw1354=;
+	s=korg; t=1724771564;
+	bh=lAui+eT/eN+vZXZMQqxJ2vtI4eXsgzHVXrSCT8fqNmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AF1cwWea9p9pZEc+J3L6891sxfKlsalirb/8HcdPv3w+NyQXeG5U/8ZPmBEIgfZMI
-	 Bv/zeulirubqBEX1bSCKtaBRW+mt/OlC8HnpWl9MheiAxVxk/7qD3n1f8gs7r98TxO
-	 wqk1ime8JdPO3sikXFcuuifXQPDBV39RFAN1+vHo=
+	b=OCQn8Kz49/LIP2CxDFuUKZ/vHdHCPwbeBbu6VhTEuuV4YPSNoVi8PNSdB5/ug3dAA
+	 LW28MnOPT1ZgBUac+GhUDGRM2xmpySACATpOhfsZHdGaYAeFETyH2vR8jNbjJCozbh
+	 lCq3qW4bSvvZNe5rP+XphhPUmaoTmTdsYCZEgh8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 225/273] ksmbd: the buffer of smb2 query dir response has at least 1 byte
-Date: Tue, 27 Aug 2024 16:39:09 +0200
-Message-ID: <20240827143841.968719369@linuxfoundation.org>
+	Candice Li <candice.li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 226/273] drm/amdgpu: Validate TA binary size
+Date: Tue, 27 Aug 2024 16:39:10 +0200
+Message-ID: <20240827143842.007822809@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,35 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Candice Li <candice.li@amd.com>
 
-commit ce61b605a00502c59311d0a4b1f58d62b48272d0 upstream.
+commit c99769bceab4ecb6a067b9af11f9db281eea3e2a upstream.
 
-When STATUS_NO_MORE_FILES status is set to smb2 query dir response,
-->StructureSize is set to 9, which mean buffer has 1 byte.
-This issue occurs because ->Buffer[1] in smb2_query_directory_rsp to
-flex-array.
+Add TA binary size validation to avoid OOB write.
 
-Fixes: eb3e28c1e89b ("smb3: Replace smb2pdu 1-element arrays with flex-arrays")
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c0a04e3570d72aaf090962156ad085e37c62e442)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4406,7 +4406,8 @@ int smb2_query_dir(struct ksmbd_work *wo
- 		rsp->OutputBufferLength = cpu_to_le32(0);
- 		rsp->Buffer[0] = 0;
- 		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
--				       sizeof(struct smb2_query_directory_rsp));
-+				       offsetof(struct smb2_query_directory_rsp, Buffer)
-+				       + 1);
- 		if (rc)
- 			goto err_out;
- 	} else {
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
+@@ -166,6 +166,9 @@ static ssize_t ta_if_load_debugfs_write(
+ 	if (ret)
+ 		return -EFAULT;
+ 
++	if (ta_bin_len > PSP_1_MEG)
++		return -EINVAL;
++
+ 	copy_pos += sizeof(uint32_t);
+ 
+ 	ta_bin = kzalloc(ta_bin_len, GFP_KERNEL);
 
 
