@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9057E1C6F5B;
-	Tue, 27 Aug 2024 15:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7871C8FD5;
+	Tue, 27 Aug 2024 15:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772452; cv=none; b=tQHTdETs+J31R1utk43gKwy0NQoyObJudbkL6fDfUmEtDWcDYqP/sV2b4fX8t3S/uORzMe9YmKF2Bzb89ek3BluLLQb7lLMXd4uKlBGaRPqxhyfKNYPjDUQdebSUAJEy1yCHNKUoyo3ei9Js09b0+K9zwhess2A2SQcAs+OPk90=
+	t=1724772456; cv=none; b=QAPU7DF5fL3q/FUfG6P9BFBIo4N35bl1I4FRFRAcTA7J2GF8cXzeIXodBblSjoJpHBhdtjzXXnLcv/GFSccdWjpab4j7g3mVEEN5j9IHkag8jbn1c+QnDDY75dkxvWdbGicHlU/wZZOZpIpwB9wNr5ALohroy7eRNgolqM60dBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772452; c=relaxed/simple;
-	bh=FkrQxsMCrUl4p3OMxFlk8yF8c/l1W99Y1B1nMQIrOZU=;
+	s=arc-20240116; t=1724772456; c=relaxed/simple;
+	bh=FUAi67p6r1s8ZHscUoy03VSueZZ326O5Yc4nABwdSW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfDckA93EEcAaAkEF98v/up5Y9i8XPbR3Ma9cw8IdlnOguDKa3nn2pEbodj7qsnOYMi7nNBB0Lpx9gJ2P5oUvUEDpX/Zr7Ce2HEsAPgtpJNzfcyw7huER2oisGVtLoEQaza09u5YS62kEbX5y/GKfENyu9wyUT9aFB9pn7BTvRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utLIllPO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cNGPdyeFFlRCDz64NFAnQOnMTCHRFtD+lMBa1BFvX13TO7GaA2Cl8iI7ULvKO5bs5mavpjZADFIZk/I+yk9xfeLstY1Ei7hpP09lb7N037LilUD7PsWej+6Y//8sT8xiP+JjkFeUubYmDs9vVqWkkw3DwUkvpREZOtjt+Eu5H4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyI4Irw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utLIllPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00734C61040;
-	Tue, 27 Aug 2024 15:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyI4Irw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC22C61040;
+	Tue, 27 Aug 2024 15:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772452;
-	bh=FkrQxsMCrUl4p3OMxFlk8yF8c/l1W99Y1B1nMQIrOZU=;
+	s=korg; t=1724772455;
+	bh=FUAi67p6r1s8ZHscUoy03VSueZZ326O5Yc4nABwdSW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utLIllPOlIJDpo1reSexZmPObt5VTsbxeWw9md4eoLIQgNZmzEm+YPnnBRxK4FoN1
-	 N2fGQv2Y/X4ZylqourQ+J1C8cHGvsMU+Q7hcDlnIniIhUlpnAqIe4pStX7u5fThNNQ
-	 64F2uN8bN3IMbDf3jLq1Shcwds3aWycSQgUxPglw=
+	b=vyI4Irw2ipY1gmi4T8woCpvEGtQZkaSbrLVk65e9W8S2+KpfEAnztyW3lNVph+Y+9
+	 MQeG7B82iVhfaA3sH3dL6R/ngdyryczOtV8rjfdc+BmAgr6NGGK4VxCZl8TRdBaRtV
+	 6wbyZRH76j8ztIbORpt/PtnxxCYOcYaqfM9sbS24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/321] fbdev: offb: replace of_node_put with __free(device_node)
-Date: Tue, 27 Aug 2024 16:38:30 +0200
-Message-ID: <20240827143845.922698611@linuxfoundation.org>
+Subject: [PATCH 6.1 220/321] Bluetooth: hci_core: Fix LE quote calculation
+Date: Tue, 27 Aug 2024 16:38:48 +0200
+Message-ID: <20240827143846.606971338@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,43 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit ce4a7ae84a58b9f33aae8d6c769b3c94f3d5ce76 ]
+[ Upstream commit 932021a11805b9da4bd6abf66fe233cccd59fe0e ]
 
-Replaced instance of of_node_put with __free(device_node)
-to simplify code and protect against any memory leaks
-due to future changes in the control flow.
+Function hci_sched_le needs to update the respective counter variable
+inplace other the likes of hci_quote_sent would attempt to use the
+possible outdated value of conn->{le_cnt,acl_cnt}.
 
-Suggested-by: Julia Lawall <julia.lawall@inria.fr>
-Signed-off-by: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://github.com/bluez/bluez/issues/915
+Fixes: 73d80deb7bdf ("Bluetooth: prioritizing data over HCI")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/offb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bluetooth/hci_core.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
-index 91001990e351c..6f0a9851b0924 100644
---- a/drivers/video/fbdev/offb.c
-+++ b/drivers/video/fbdev/offb.c
-@@ -355,7 +355,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
- 			par->cmap_type = cmap_gxt2000;
- 	} else if (of_node_name_prefix(dp, "vga,Display-")) {
- 		/* Look for AVIVO initialized by SLOF */
--		struct device_node *pciparent = of_get_parent(dp);
-+		struct device_node *pciparent __free(device_node) = of_get_parent(dp);
- 		const u32 *vid, *did;
- 		vid = of_get_property(pciparent, "vendor-id", NULL);
- 		did = of_get_property(pciparent, "device-id", NULL);
-@@ -367,7 +367,6 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
- 			if (par->cmap_adr)
- 				par->cmap_type = cmap_avivo;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index cf164ec9899c3..210e03a3609d4 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3744,19 +3744,19 @@ static void hci_sched_le(struct hci_dev *hdev)
+ {
+ 	struct hci_chan *chan;
+ 	struct sk_buff *skb;
+-	int quote, cnt, tmp;
++	int quote, *cnt, tmp;
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
+ 	if (!hci_conn_num(hdev, LE_LINK))
+ 		return;
+ 
+-	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
++	cnt = hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
+ 
+-	__check_timeout(hdev, cnt, LE_LINK);
++	__check_timeout(hdev, *cnt, LE_LINK);
+ 
+-	tmp = cnt;
+-	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
++	tmp = *cnt;
++	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+ 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
+ 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
+@@ -3771,7 +3771,7 @@ static void hci_sched_le(struct hci_dev *hdev)
+ 			hci_send_frame(hdev, skb);
+ 			hdev->le_last_tx = jiffies;
+ 
+-			cnt--;
++			(*cnt)--;
+ 			chan->sent++;
+ 			chan->conn->sent++;
+ 
+@@ -3781,12 +3781,7 @@ static void hci_sched_le(struct hci_dev *hdev)
  		}
--		of_node_put(pciparent);
- 	} else if (dp && of_device_is_compatible(dp, "qemu,std-vga")) {
- #ifdef __BIG_ENDIAN
- 		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
+ 	}
+ 
+-	if (hdev->le_pkts)
+-		hdev->le_cnt = cnt;
+-	else
+-		hdev->acl_cnt = cnt;
+-
+-	if (cnt != tmp)
++	if (*cnt != tmp)
+ 		hci_prio_recalculate(hdev, LE_LINK);
+ }
+ 
 -- 
 2.43.0
 
