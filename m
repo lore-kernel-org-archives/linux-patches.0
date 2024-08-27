@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A66DDC1;
-	Tue, 27 Aug 2024 14:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC741DDC1;
+	Tue, 27 Aug 2024 14:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769986; cv=none; b=AvZY1f8MOPxBYCZw8UpHWoDXY7G2B/HcHPKcfEijHcPmZEEP2+i0O8lPY/890oiboaVao1Dc0aGRVr8/sRMPyQLo3Yy6JHT3jH7AVId4e97/iGO7VGp9eAEGYA/UTDaiQhhcg5tr0nE5etwEsZBfrJZNBdWHJxkyl8gY65f48ko=
+	t=1724769989; cv=none; b=h9G61/S9NEAMo4pZ//75zrBuvi3M9FxdRb8K2b3/JjxQwuCHtwYJpKQkDVFd3LLT8mfDjvaihPossNped+dobY2DrW4Y9yz90BFhpSCfz62o1IvNe2QpbvK12cAAnpzYcuHmsbbvcuGTokJkJtcVGnloSVmOykM2oOVZ0imtG9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769986; c=relaxed/simple;
-	bh=ZLqRsvN2LSvR08mcItj9ttMDQznzCodKCQUNRVzSgWI=;
+	s=arc-20240116; t=1724769989; c=relaxed/simple;
+	bh=h83k4+CiOdnJwSf/60bCOFoVn5rnxXXIJb/kwRPopCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2j9LNGzCJwz6kr47BugpYCddNn2flwsyMALIyM/vAf3u14lIQ5PGTjsVwtuLqi9dLtuTJAgRm/7vpLvqQpVIFknQ9WF8vNCXUQVW/nErDzyiG00huf5mWzjlN8DH9ovLGvHJaf/lWlcPnzwH2oLluM8deXid8W17C+bbrqQEak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFao1fNH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6G0fLSuneBRgbOXl/21S+xo0G4+D7cOGDv+Rz3npROPeQ2SRRwzU5Bd6TD+hYCbsvl+Zh2NSQsziZiK3s+UqNH1jBC1kxh0W5KIusM55cGQKGbC5ekUnD1pBKENt/YfBPbYTpx7ryk1Wt+Ix8M3hR7omd6DcfJK2DalWQPBN5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWCMtjX2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFao1fNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89855C6106D;
-	Tue, 27 Aug 2024 14:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWCMtjX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CE5C6106D;
+	Tue, 27 Aug 2024 14:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769986;
-	bh=ZLqRsvN2LSvR08mcItj9ttMDQznzCodKCQUNRVzSgWI=;
+	s=korg; t=1724769989;
+	bh=h83k4+CiOdnJwSf/60bCOFoVn5rnxXXIJb/kwRPopCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFao1fNHtgRADTiB5VkjyJCRKhopsSSYfRLbufEpbJEwCfJP9VaOeNZJk7PNah3TR
-	 0dI2LSHY4uN2KGdyqeIuP8FRmAvY1pvhYXASBCswzvJMgkhbBeILW15EXaY+0UBgM+
-	 DYfnMuAY6Nld6NY3mPPh2JL5KlCW7DK7fwOCzSYE=
+	b=mWCMtjX2IuhPPkVQoM29CuRUHGmhojT5eHntmoVXwkEw+Q+YJAgxSu9nHvkm8QtaR
+	 iWuCaQpvq1xykYZ8eqDledl1LwrS+oqyLhjOV2UaYoWjLxluEO8d7gleU4GJNrVEB1
+	 uGzKbLhSUTu9bYNM+pIFHqnsoMEHALO66NU35LrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mel Gorman <mgorman@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/341] net: ethernet: mtk_wed: check update_wo_rx_stats in mtk_wed_update_rx_stats()
-Date: Tue, 27 Aug 2024 16:35:25 +0200
-Message-ID: <20240827143846.982982312@linuxfoundation.org>
+Subject: [PATCH 6.6 095/341] sched/topology: Handle NUMA_NO_NODE in sched_numa_find_nth_cpu()
+Date: Tue, 27 Aug 2024 16:35:26 +0200
+Message-ID: <20240827143847.022606069@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,36 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Yury Norov <yury.norov@gmail.com>
 
-[ Upstream commit 486e6ca6b48d68d7fefc99e15cc1865e2210d893 ]
+[ Upstream commit 9ecea9ae4d3127a09fb5dfcea87f248937a39ff5 ]
 
-Check if update_wo_rx_stats function pointer is properly set in
-mtk_wed_update_rx_stats routine before accessing it.
+sched_numa_find_nth_cpu() doesn't handle NUMA_NO_NODE properly, and
+may crash kernel if passed with it. On the other hand, the only user
+of sched_numa_find_nth_cpu() has to check NUMA_NO_NODE case explicitly.
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/b0d233386e059bccb59f18f69afb79a7806e5ded.1694507226.git.lorenzo@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+It would be easier for users if this logic will get moved into
+sched_numa_find_nth_cpu().
+
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Mel Gorman <mgorman@suse.de>
+Link: https://lore.kernel.org/r/20230819141239.287290-6-yury.norov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed_mcu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/topology.c | 3 +++
+ lib/cpumask.c           | 4 +---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_wed_mcu.c b/drivers/net/ethernet/mediatek/mtk_wed_mcu.c
-index 071ed3dea860d..72bcdaed12a94 100644
---- a/drivers/net/ethernet/mediatek/mtk_wed_mcu.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed_mcu.c
-@@ -68,6 +68,9 @@ mtk_wed_update_rx_stats(struct mtk_wed_device *wed, struct sk_buff *skb)
- 	struct mtk_wed_wo_rx_stats *stats;
- 	int i;
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index 8c1e183329d97..3a13cecf17740 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -2126,6 +2126,9 @@ int sched_numa_find_nth_cpu(const struct cpumask *cpus, int cpu, int node)
+ 	struct cpumask ***hop_masks;
+ 	int hop, ret = nr_cpu_ids;
  
-+	if (!wed->wlan.update_wo_rx_stats)
-+		return;
++	if (node == NUMA_NO_NODE)
++		return cpumask_nth_and(cpu, cpus, cpu_online_mask);
 +
- 	if (count * sizeof(*stats) > skb->len - sizeof(u32))
- 		return;
+ 	rcu_read_lock();
  
+ 	/* CPU-less node entries are uninitialized in sched_domains_numa_masks */
+diff --git a/lib/cpumask.c b/lib/cpumask.c
+index a7fd02b5ae264..34335c1e72653 100644
+--- a/lib/cpumask.c
++++ b/lib/cpumask.c
+@@ -146,9 +146,7 @@ unsigned int cpumask_local_spread(unsigned int i, int node)
+ 	/* Wrap: we always want a cpu. */
+ 	i %= num_online_cpus();
+ 
+-	cpu = (node == NUMA_NO_NODE) ?
+-		cpumask_nth(i, cpu_online_mask) :
+-		sched_numa_find_nth_cpu(cpu_online_mask, i, node);
++	cpu = sched_numa_find_nth_cpu(cpu_online_mask, i, node);
+ 
+ 	WARN_ON(cpu >= nr_cpu_ids);
+ 	return cpu;
 -- 
 2.43.0
 
