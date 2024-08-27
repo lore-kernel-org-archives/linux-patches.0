@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104D815F41B;
-	Tue, 27 Aug 2024 14:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E73DDC1;
+	Tue, 27 Aug 2024 14:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770104; cv=none; b=rh8EG9s4po1IxtAWT//ognUzxdY3SrLiYwj8PS7W1ASpRfWn4uroK12YTN6253FwqCiRV0KVwbQDzuEKEHyn3lqs2mm6kTyJ8TsTdOXtwKHURmRVnDf+t2fDi9Uk8tRlU0A6InWKibb2qiDNusVrOWn9uarinHOX9rgfqhctdNg=
+	t=1724770107; cv=none; b=TfKYTruLUjrtamh9MuTB1XrwAnhCx6KdtDXsnMpKRQ4IUsSG6OG2x/Bo8mTuy/zppy+XEhu+yj9SxaGgnnHqbg+CIv9Hiz0E226oU0ZKCvRxV2wOnKLpSVsC79O5yozBv80BMsn7rrIYRo0Cc3iDb7xOmm5QC/7rdZaPW1yT4N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770104; c=relaxed/simple;
-	bh=LF57fYmxzq5SzGca3b0NMPztE5XUpVzt/e8hWtWmGyk=;
+	s=arc-20240116; t=1724770107; c=relaxed/simple;
+	bh=ahU1hCT/+BsBAF11OUihw4kM1OJBWmozfstSfnxBjZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SP7jUloVeS/ZlLn36/yjpsudvoBNZUVuyYF/2fr6GNd2OBMK3Ol8dtb5DnAtRTJxO376Uvd7tucD49Q5JP4xbQdK1ksE4KS49NbEzzPJVB1Us98xxnfbHIrI0gqOLrIw+7atCR2z21A9DOhq3gF0PQVaeWPenvtxQ3kvVk0LyNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2sbm/Yn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0GBa4D/sur18dqxXx4To1XR2PKmUfWjyKzSx3NkGsrWqpEPDf7N+4AwXvowMFxSpVgGd5k8qyH+SvR/Vn3IgxyWkOizNNuAH5nHuacHSw+MS83SwnKeG1caNwYZnVHMjuClT+Pr83++4id7trk78yqcevQkBKUAXhuLU3w6Pjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrsWd4Pj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2sbm/Yn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0163C61047;
-	Tue, 27 Aug 2024 14:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrsWd4Pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58E1C61047;
+	Tue, 27 Aug 2024 14:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770103;
-	bh=LF57fYmxzq5SzGca3b0NMPztE5XUpVzt/e8hWtWmGyk=;
+	s=korg; t=1724770107;
+	bh=ahU1hCT/+BsBAF11OUihw4kM1OJBWmozfstSfnxBjZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2sbm/Yny2lfa/ddHP7zUlu0mz6BMRka0Ub5o3Dz/aZWsEOUxdFpAk56gOv49vn+P
-	 h1Db5Pe65Gv9uYJ3rzeVMR+2joF5sZ9SS+XB0/LlAMJJ35DASGISsHUBZPWVtrwJh2
-	 dYqfyKPWVPVTJpOT+ZXTSWpa1T76KMmgtDfk1HPU=
+	b=OrsWd4PjsrzPmFcNEDYcgcOKe+jREhu2D7uWF46kfx3ADFQ5KXwtyr9Pyt6cPrgYF
+	 aFcXkPBuAVuixYURl+CKuB8+bSIIWg9/5skC5IF88meRJn2yYnwjZzVC7cfKQZ1/ls
+	 HNGezNA/oUmBIKMkg4YevPGQOBB16t3SPz8N6qPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/341] wifi: iwlwifi: check for kmemdup() return value in iwl_parse_tlv_firmware()
-Date: Tue, 27 Aug 2024 16:36:00 +0200
-Message-ID: <20240827143848.325576605@linuxfoundation.org>
+Subject: [PATCH 6.6 130/341] clk: visconti: Add bounds-checking coverage for struct visconti_pll_provider
+Date: Tue, 27 Aug 2024 16:36:01 +0200
+Message-ID: <20240827143848.363672912@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,43 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 3c8aaaa7557b1e33e6ef95a27a5d8a139dcd0874 ]
+[ Upstream commit 397d887c1601a71e8a8abdb6beea67d58f0472d3 ]
 
-In 'iwl_parse_tlv_firmware()', check for 'kmemdup()' return value
-when handling IWL_UCODE_TLV_CURRENT_PC and set the number of parsed
-entries only if an allocation was successful (just like it does with
-handling IWL_UCODE_TLV_CMD_VERSIONS above). Compile tested only.
+In order to gain the bounds-checking coverage that __counted_by provides
+to flexible-array members at run-time via CONFIG_UBSAN_BOUNDS (for array
+indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions),
+we must make sure that the counter member, in this particular case `num`,
+is updated before the first access to the flex-array member, in this
+particular case array `hws`. See below:
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231009170453.149905-1-dmantipov@yandex.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") introduced `__counted_by` for `struct clk_hw_onecell_data`
+together with changes to relocate some of assignments of counter `num`
+before `hws` is accessed:
+
+include/linux/clk-provider.h:
+1380 struct clk_hw_onecell_data {
+1381         unsigned int num;
+1382         struct clk_hw *hws[] __counted_by(num);
+1383 };
+
+However, this structure is used as a member in other structs, in this
+case in `struct visconti_pll_provider`:
+
+drivers/clk/visconti/pll.h:
+ 16 struct visconti_pll_provider {
+ 17         void __iomem *reg_base;
+ 18         struct device_node *node;
+ 19
+ 20         /* Must be last */
+ 21         struct clk_hw_onecell_data clk_data;
+ 22 };
+
+Hence, we need to move the assignments to `ctx->clk_data.num` after
+allocation for `struct visconti_pll_provider` and before accessing the
+flexible array `ctx->clk_data.hws`. And, as assignments for all members
+in `struct visconti_pll_provider` are originally adjacent to each other,
+relocate all assignments together, so we don't split up
+`ctx->clk_data.hws = nr_plls` from the rest. :)
+
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/e3189f3e40e8723b6d794fb2260e2e9ab6b960bd.1697492890.git.gustavoars@kernel.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/visconti/pll.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index a56593b6135f6..47bea1855e8c8 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1304,10 +1304,12 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
- 		case IWL_UCODE_TLV_CURRENT_PC:
- 			if (tlv_len < sizeof(struct iwl_pc_data))
- 				goto invalid_tlv_len;
--			drv->trans->dbg.num_pc =
--				tlv_len / sizeof(struct iwl_pc_data);
- 			drv->trans->dbg.pc_data =
- 				kmemdup(tlv_data, tlv_len, GFP_KERNEL);
-+			if (!drv->trans->dbg.pc_data)
-+				return -ENOMEM;
-+			drv->trans->dbg.num_pc =
-+				tlv_len / sizeof(struct iwl_pc_data);
- 			break;
- 		default:
- 			IWL_DEBUG_INFO(drv, "unknown TLV: %d\n", tlv_type);
+diff --git a/drivers/clk/visconti/pll.c b/drivers/clk/visconti/pll.c
+index 1f3234f226674..e9cd80e085dc3 100644
+--- a/drivers/clk/visconti/pll.c
++++ b/drivers/clk/visconti/pll.c
+@@ -329,12 +329,12 @@ struct visconti_pll_provider * __init visconti_init_pll(struct device_node *np,
+ 	if (!ctx)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	for (i = 0; i < nr_plls; ++i)
+-		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
+-
+ 	ctx->node = np;
+ 	ctx->reg_base = base;
+ 	ctx->clk_data.num = nr_plls;
+ 
++	for (i = 0; i < nr_plls; ++i)
++		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
++
+ 	return ctx;
+ }
 -- 
 2.43.0
 
