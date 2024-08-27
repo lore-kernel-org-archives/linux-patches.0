@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141AE1C9DC2;
-	Tue, 27 Aug 2024 15:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C6E1C6F51;
+	Tue, 27 Aug 2024 15:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771923; cv=none; b=Z+zVwF8b9/lE/7UN1+0sk+xCeqjqMVeYn1t/8JrBFeBpkd89Mw+UZw3WbE55rWGfOo/PNJvtaOsH6Jgm/b4M+qtmGn0atUepDlEdxj7U/kfY32UVbG27ELQdrXhOfp7OQtTYH6gLxvdBlf+nlaQrp0Zw1XeHMrtJ5HelbFxXAOw=
+	t=1724771925; cv=none; b=hLPenuhdq7B4v2L2pbyAT+jEn5/gDxk6qGzcdujbASmUqrE4X9OLdA9BEMnEAQ4m2sj7/xbqOoNvIKEKAwSgb3TyLOQfw802D+RH0toyq51E3V/bxibVyb3AaOPLH52TEFCvVLo0DG21A0LQqS17O8wmaOGIM9ijhfUxpEb2pNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771923; c=relaxed/simple;
-	bh=gxuBoakmVpZvoPtZPJKWwd/lALN9v3mT76y2e9G2wfw=;
+	s=arc-20240116; t=1724771925; c=relaxed/simple;
+	bh=7ZxAi5laNapiRP5TadWYFOXDV/BVAozD3WWJLQLnPdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDRoINB+C/VsPmQES2z/U/3rPbNe/rFrK7qI5uHS+3kso+KuoX9uxYRyRl1thjCBt13oyBCvV46DxTOUvEruw9hNjzMK11cZlrQ8ikFw2YwtxsDjyBqOfjP94+eR3Ulh3yteUcqOFfP7sEPLyQgnBsYbnSkJuiOE55NhF9eBbeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kf+L0ID3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L9qTzTTmETR9j1IvoHGF6aqs9AZ36dNzfk7kdNljSA3vvmu5myCRJstfCT97FEQPB96LI3sJwxFXSgHKkdM0uslwAUhRELshYNc23+Jvxm+3wjPQhgE2TzCSYIfRI62VDTeWDschrw07Rijxjzuxro6uBRxZy8sMC2aqJNI8D6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtqQEIvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kf+L0ID3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF03C61067;
-	Tue, 27 Aug 2024 15:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtqQEIvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692CFC4AF1B;
+	Tue, 27 Aug 2024 15:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771921;
-	bh=gxuBoakmVpZvoPtZPJKWwd/lALN9v3mT76y2e9G2wfw=;
+	s=korg; t=1724771924;
+	bh=7ZxAi5laNapiRP5TadWYFOXDV/BVAozD3WWJLQLnPdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kf+L0ID3U7l8NXvWdfoH3V8+k8YNeIoj8EPv3YEU4bWWWVbxL3S8ssNFUAm65o9n2
-	 CBpIE+1KoPGwvJ+6+O49JYtO9Rv2vW+1Ia7GeQkVNriMRhptiQNe5Wh0MFHL46pALm
-	 b2XP9Lr/VMuSrBdP3z92KlMTffuVyqN6K0weoe9U=
+	b=RtqQEIvwehkPPmM8sqBeKIHUfwLoFaIsCDBc34w5/qbaxngsehdJRqyl4uI1lTOoI
+	 4yH+Nk1wsHdcINZnE99W6SF4mWPfhuTRjY7s6kF6qypH2b2iaxACzArQvOx/UJ5nqr
+	 i08Tf3g6Fw4KMU7QQa0uQpjpuAm71SqjEx/gq7I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8bb053b5d63595ab47db@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+9543479984ae9e576000@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/321] net: sctp: fix skb leak in sctp_inq_free()
-Date: Tue, 27 Aug 2024 16:36:08 +0200
-Message-ID: <20240827143840.521932209@linuxfoundation.org>
+Subject: [PATCH 6.1 034/321] ext4, jbd2: add an optimized bmap for the journal inode
+Date: Tue, 27 Aug 2024 16:35:42 +0200
+Message-ID: <20240827143839.520063227@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,70 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 4e45170d9acc2d5ae8f545bf3f2f67504a361338 ]
+[ Upstream commit 62913ae96de747091c4dacd06d158e7729c1a76d ]
 
-In case of GSO, 'chunk->skb' pointer may point to an entry from
-fraglist created in 'sctp_packet_gso_append()'. To avoid freeing
-random fraglist entry (and so undefined behavior and/or memory
-leak), introduce 'sctp_inq_chunk_free()' helper to ensure that
-'chunk->skb' is set to 'chunk->head_skb' (i.e. fraglist head)
-before calling 'sctp_chunk_free()', and use the aforementioned
-helper in 'sctp_inq_pop()' as well.
+The generic bmap() function exported by the VFS takes locks and does
+checks that are not necessary for the journal inode.  So allow the
+file system to set a journal-optimized bmap function in
+journal->j_bmap.
 
-Reported-by: syzbot+8bb053b5d63595ab47db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=0d8351bbe54fd04a492c2daab0164138db008042
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20240214082224.10168-1-dmantipov@yandex.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+9543479984ae9e576000@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=e4aaa78795e490421c79f76ec3679006c8ff4cf0
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/inqueue.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/ext4/super.c      | 23 +++++++++++++++++++++++
+ fs/jbd2/journal.c    |  9 ++++++---
+ include/linux/jbd2.h |  8 ++++++++
+ 3 files changed, 37 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/inqueue.c b/net/sctp/inqueue.c
-index 7182c5a450fb5..5c16521818058 100644
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -38,6 +38,14 @@ void sctp_inq_init(struct sctp_inq *queue)
- 	INIT_WORK(&queue->immediate, NULL);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 274542d869d0c..3db39758486e9 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5752,6 +5752,28 @@ static struct inode *ext4_get_journal_inode(struct super_block *sb,
+ 	return journal_inode;
  }
  
-+/* Properly release the chunk which is being worked on. */
-+static inline void sctp_inq_chunk_free(struct sctp_chunk *chunk)
++static int ext4_journal_bmap(journal_t *journal, sector_t *block)
 +{
-+	if (chunk->head_skb)
-+		chunk->skb = chunk->head_skb;
-+	sctp_chunk_free(chunk);
++	struct ext4_map_blocks map;
++	int ret;
++
++	if (journal->j_inode == NULL)
++		return 0;
++
++	map.m_lblk = *block;
++	map.m_len = 1;
++	ret = ext4_map_blocks(NULL, journal->j_inode, &map, 0);
++	if (ret <= 0) {
++		ext4_msg(journal->j_inode->i_sb, KERN_CRIT,
++			 "journal bmap failed: block %llu ret %d\n",
++			 *block, ret);
++		jbd2_journal_abort(journal, ret ? ret : -EIO);
++		return ret;
++	}
++	*block = map.m_pblk;
++	return 0;
 +}
 +
- /* Release the memory associated with an SCTP inqueue.  */
- void sctp_inq_free(struct sctp_inq *queue)
+ static journal_t *ext4_get_journal(struct super_block *sb,
+ 				   unsigned int journal_inum)
  {
-@@ -53,7 +61,7 @@ void sctp_inq_free(struct sctp_inq *queue)
- 	 * free it as well.
- 	 */
- 	if (queue->in_progress) {
--		sctp_chunk_free(queue->in_progress);
-+		sctp_inq_chunk_free(queue->in_progress);
- 		queue->in_progress = NULL;
+@@ -5772,6 +5794,7 @@ static journal_t *ext4_get_journal(struct super_block *sb,
+ 		return NULL;
  	}
+ 	journal->j_private = sb;
++	journal->j_bmap = ext4_journal_bmap;
+ 	ext4_init_journal_params(sb, journal);
+ 	return journal;
  }
-@@ -130,9 +138,7 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
- 				goto new_skb;
- 			}
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index c8d59f7c47453..d3d3ea439d29b 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -971,10 +971,13 @@ int jbd2_journal_bmap(journal_t *journal, unsigned long blocknr,
+ {
+ 	int err = 0;
+ 	unsigned long long ret;
+-	sector_t block = 0;
++	sector_t block = blocknr;
  
--			if (chunk->head_skb)
--				chunk->skb = chunk->head_skb;
--			sctp_chunk_free(chunk);
-+			sctp_inq_chunk_free(chunk);
- 			chunk = queue->in_progress = NULL;
- 		} else {
- 			/* Nothing to do. Next chunk in the packet, please. */
+-	if (journal->j_inode) {
+-		block = blocknr;
++	if (journal->j_bmap) {
++		err = journal->j_bmap(journal, &block);
++		if (err == 0)
++			*retp = block;
++	} else if (journal->j_inode) {
+ 		ret = bmap(journal->j_inode, &block);
+ 
+ 		if (ret || !block) {
+diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
+index e301d323108d1..5bf7ada754d79 100644
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -1302,6 +1302,14 @@ struct journal_s
+ 				    struct buffer_head *bh,
+ 				    enum passtype pass, int off,
+ 				    tid_t expected_commit_id);
++
++	/**
++	 * @j_bmap:
++	 *
++	 * Bmap function that should be used instead of the generic
++	 * VFS bmap function.
++	 */
++	int (*j_bmap)(struct journal_s *journal, sector_t *block);
+ };
+ 
+ #define jbd2_might_wait_for_commit(j) \
 -- 
 2.43.0
 
