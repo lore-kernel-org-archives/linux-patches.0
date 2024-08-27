@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBD8DDC1;
-	Tue, 27 Aug 2024 14:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7567244C8C;
+	Tue, 27 Aug 2024 14:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770184; cv=none; b=qORViAgywRFAWO2aVcFRjHhb4TmzrCPmq8IGPspeX0bq+75zZ4ot1CYmBu5qLCs3lILYzEWP3xQtk4TLErTSy1ROfO0D+J4DDrP6TNFLIQO1J0zvBms5oxij+4aauWc39p0dr5IIbIDtNx3pS5bz/rit8QKJAdPLEF2XQq+8Q5s=
+	t=1724770188; cv=none; b=l7gMsNZ53u/UxkxPW+9BquPnI2JTq87LTjaI8++9lFiUfbTSCx7Re9hqMQxE8wY630C1EI0LdBdsSf32MXLHgiApUX+zW5VTUZ2qIqi9j+TC9amkowW1LCRmxKWeyOb3gXRI0zgi4BAsE9NWmoWSdbJQhCH4ph4IbOqwqlymRUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770184; c=relaxed/simple;
-	bh=TexKarRH9vEKwzuf/mQxvvnbV3WEqiVUMfuXEnz8+Jk=;
+	s=arc-20240116; t=1724770188; c=relaxed/simple;
+	bh=02MzllkMX1LqfgjT2lLDmmbpWQuVtebv/qr0j0HLt4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDsBQ76nraYjV/5pnBPFZfPQsk146oq/5NeuXsovD2w82zEp3cDtGN0F/GQvUfpfdazF+r6k1aE4u2fPpbL7Be3Gx0f9AHaEHmg0+i0EtPYi9rMEumZgCDRHLZsFS4U0sGU38iPci6ve8avo/st/EnlnwJTl7L/A6Uf0zNoTPMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRjrBHGb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dI7n0IA2tR5yyblEAjryGF/KqIPZXXrYgtVq9CLrPzhr/QuBNInoqKNFVujMwSBezfJugGD5i0Z8UvDBfogQ2jea5dqfgZCVKxVBuqtGQ46KaISnKH3JsfgLN8bH4LHu2wbpIYcLrPuXAUzJguwfUVjJnqKEQGqkYoHZDRb8cdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poEytfFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRjrBHGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36999C4AF1C;
-	Tue, 27 Aug 2024 14:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poEytfFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755C2C4AF1C;
+	Tue, 27 Aug 2024 14:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770184;
-	bh=TexKarRH9vEKwzuf/mQxvvnbV3WEqiVUMfuXEnz8+Jk=;
+	s=korg; t=1724770188;
+	bh=02MzllkMX1LqfgjT2lLDmmbpWQuVtebv/qr0j0HLt4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRjrBHGbWljapLRvDIwRag7UmQARfhXEicfeQ/mgM4rgmzYzuNAUdy8vQ0vxouZGW
-	 WiC6QGkOEQIcQzPCFGx/PCWOB63VAYIT/KW+N4kXSdev/9BvL3CD229ndJaOtPdUbG
-	 uGguLQQKZmmVH/Wj3Hn71t6qAmRmv9vW/dAsF4VY=
+	b=poEytfFwzZDKE8VwUMN3+noxU0D+5C+KeVklYeIgQEimKUkqj8exEjz8fqrg8YwSn
+	 mTvr7pNOGUnG0slgxZbWtAb3aDtd6/2K6VB2r8pNeEFzmMkKtYC6pz5wfB2vn9Y1ql
+	 aoX1y8H3KsjGBq0uD//gFHJT8ksbiIzX0OHLW134=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/341] media: qcom: venus: fix incorrect return value
-Date: Tue, 27 Aug 2024 16:35:52 +0200
-Message-ID: <20240827143848.018424175@linuxfoundation.org>
+Subject: [PATCH 6.6 122/341] iommu/arm-smmu-qcom: Add SDM670 MDSS compatible
+Date: Tue, 27 Aug 2024 16:35:53 +0200
+Message-ID: <20240827143848.057795063@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -51,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Richard Acayan <mailingradian@gmail.com>
 
-[ Upstream commit 51b74c09ac8c5862007fc2bf0d465529d06dd446 ]
+[ Upstream commit 270a1470408e44619a55be1079254bf2ba0567fb ]
 
-'pd' can be NULL, and in that case it shouldn't be passed to
-PTR_ERR. Fixes a smatch warning:
+Add the compatible for the MDSS client on the Snapdragon 670 so it can
+be properly configured by the IOMMU driver.
 
-drivers/media/platform/qcom/venus/pm_helpers.c:873 vcodec_domains_get() warn: passing zero to 'PTR_ERR'
+Otherwise, there is an unhandled context fault.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230925234246.900351-3-mailingradian@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/pm_helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 48c9084bb4dba..a1b127caa90a7 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -870,7 +870,7 @@ static int vcodec_domains_get(struct venus_core *core)
- 		pd = dev_pm_domain_attach_by_name(dev,
- 						  res->vcodec_pmdomains[i]);
- 		if (IS_ERR_OR_NULL(pd))
--			return PTR_ERR(pd) ? : -ENODATA;
-+			return pd ? PTR_ERR(pd) : -ENODATA;
- 		core->pmdomains[i] = pd;
- 	}
- 
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 40503376d80cc..6e6cb19c81f59 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -252,6 +252,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+ 	{ .compatible = "qcom,sc7280-mss-pil" },
+ 	{ .compatible = "qcom,sc8180x-mdss" },
+ 	{ .compatible = "qcom,sc8280xp-mdss" },
++	{ .compatible = "qcom,sdm670-mdss" },
+ 	{ .compatible = "qcom,sdm845-mdss" },
+ 	{ .compatible = "qcom,sdm845-mss-pil" },
+ 	{ .compatible = "qcom,sm6350-mdss" },
 -- 
 2.43.0
 
