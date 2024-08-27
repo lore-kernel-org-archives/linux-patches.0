@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F0D1A072D;
-	Tue, 27 Aug 2024 15:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECA119F485;
+	Tue, 27 Aug 2024 15:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772150; cv=none; b=cRI//Z8plzmeAtDI8K6V3WTeogDiWq2/HGuzLryzLjnz697HiXFKIkjEbiiD6GkIAUyUA+r1pTNrsmXa8FqLjQsbBgE/E4J0rYR4QBVNQrVpPKjWJHpD5n/yf2TqKYsWHNpcBF5peNXLXFLMDQUe6vouNaW0yppWlkmF+fW40zw=
+	t=1724772154; cv=none; b=txO/z+TUa2frYN58hvW6OxXTGJltS1EatFPwviV6OZ0AdUjiivwM2VGHTnL0rtnwuCMrNxJujtg/rIDtTChLMBspeRCtWvLyg0yhIJIYralyxd8smlf48d9B4oVdgRcLKlakrpj4IsSQuV2Dqda63MUyF7wDQER/HHKnvR0laZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772150; c=relaxed/simple;
-	bh=x9JJnD2zAlEK8aQOT/tcxK6WqxRjGCoYt230lBWtMRk=;
+	s=arc-20240116; t=1724772154; c=relaxed/simple;
+	bh=A6SzVQdB4WfEQz/9zlPPrh9CQTndiCwI/jk1ZAZivrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=In9tdCMB5TrfTrynp5oZjfbL1UpPbX8enMNdufFzmFXp9EaRn2qHc6jSt/W4b06FtqSN9qYN5MEljVT3puAzl6pR+onSQUz9dV8Vb7A/cOH0T7+zJr4NxkkAjbC79e89T9fIOpgUHwz7MHGrKA0HHrdc5J9UUEbOgApy5u7rg9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpX9YhFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nd0Zk0LGHLd2loVSQ2krleb25eRmxqZmA3a6iLHjWNRItg0XcEXOiGiERqGGvRkqPvJQS1wNF2FwXLLINaUp122dEltqaee646vAr7P5iLthHyfJXtLPqDzaRrdpfvgJjrLEvWhpCe9x8Qx2f/tZBDkUzJsKtsSBIxvlJgeS1EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnEVnOOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpX9YhFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C794DC61043;
-	Tue, 27 Aug 2024 15:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnEVnOOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33722C61042;
+	Tue, 27 Aug 2024 15:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772150;
-	bh=x9JJnD2zAlEK8aQOT/tcxK6WqxRjGCoYt230lBWtMRk=;
+	s=korg; t=1724772153;
+	bh=A6SzVQdB4WfEQz/9zlPPrh9CQTndiCwI/jk1ZAZivrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpX9YhFed25tjHwzmvbOU+k3OO0V7MLYE/egV+o2u0MS62fzqsPJ93ybMoMwuB34Y
-	 qctgWsyoqJVs8qYG42oV54WSe9d2aW5zuwzEuNC7vvgD6F+dR9nMTS97gNSuyJvepm
-	 AiwKNCY8wIcVZelflSd3XX73cxAy/3I3+zf4a/BU=
+	b=mnEVnOOo9b9UVZ4A2hKBnNBqrDqgzzMyOURy/pCQubS63AdmaLlBhtJiLGfWVDAmm
+	 pBQdBe382seyj5MlnJeZ3PDEhqVxaiNlRYvpiRQv1Rvo7Z4nTOzs9vb+Rs0iMs2mjo
+	 4n6ZRhViiRpgeTJrs+aZpwHaeoDEwrbwWSNhXucs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/321] usb: gadget: uvc: cleanup request when not in correct state
-Date: Tue, 27 Aug 2024 16:37:16 +0200
-Message-ID: <20240827143843.117083510@linuxfoundation.org>
+Subject: [PATCH 6.1 102/321] netfilter: nf_tables: Carry s_idx in nft_obj_dump_ctx
+Date: Tue, 27 Aug 2024 16:36:50 +0200
+Message-ID: <20240827143842.132094161@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,43 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 52a39f2cf62bb5430ad1f54cd522dbfdab1d71ba ]
+[ Upstream commit 2eda95cfa2fc43bcb21a801dc1d16a0b7cc73860 ]
 
-The uvc_video_enable function of the uvc-gadget driver is dequeing and
-immediately deallocs all requests on its disable codepath. This is not
-save since the dequeue function is async and does not ensure that the
-requests are left unlinked in the controller driver.
+Prep work for moving the context into struct netlink_callback scratch
+area.
 
-By adding the ep_free_request into the completion path of the requests
-we ensure that the request will be properly deallocated.
-
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Link: https://lore.kernel.org/r/20230911140530.2995138-3-m.grzeschik@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/uvc_video.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/nf_tables_api.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/uvc_video.c b/drivers/usb/gadget/function/uvc_video.c
-index be48d5ab17c7b..95e3611811cd6 100644
---- a/drivers/usb/gadget/function/uvc_video.c
-+++ b/drivers/usb/gadget/function/uvc_video.c
-@@ -259,6 +259,12 @@ uvc_video_complete(struct usb_ep *ep, struct usb_request *req)
- 	struct uvc_device *uvc = video->uvc;
- 	unsigned long flags;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index f4bdfd5dd319a..48cd3e2dde69c 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7417,6 +7417,7 @@ static void audit_log_obj_reset(const struct nft_table *table,
+ }
  
-+	if (uvc->state == UVC_STATE_CONNECTED) {
-+		usb_ep_free_request(video->ep, ureq->req);
-+		ureq->req = NULL;
-+		return;
-+	}
-+
- 	switch (req->status) {
- 	case 0:
- 		break;
+ struct nft_obj_dump_ctx {
++	unsigned int	s_idx;
+ 	char		*table;
+ 	u32		type;
+ };
+@@ -7424,14 +7425,14 @@ struct nft_obj_dump_ctx {
+ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	const struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
+-	const struct nft_table *table;
+-	unsigned int idx = 0, s_idx = cb->args[0];
+ 	struct nft_obj_dump_ctx *ctx = cb->data;
+ 	struct net *net = sock_net(skb->sk);
+ 	int family = nfmsg->nfgen_family;
+ 	struct nftables_pernet *nft_net;
++	const struct nft_table *table;
+ 	unsigned int entries = 0;
+ 	struct nft_object *obj;
++	unsigned int idx = 0;
+ 	bool reset = false;
+ 	int rc = 0;
+ 
+@@ -7450,7 +7451,7 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
+ 		list_for_each_entry_rcu(obj, &table->objects, list) {
+ 			if (!nft_is_active(net, obj))
+ 				goto cont;
+-			if (idx < s_idx)
++			if (idx < ctx->s_idx)
+ 				goto cont;
+ 			if (ctx->table && strcmp(ctx->table, table->name))
+ 				goto cont;
+@@ -7480,7 +7481,7 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
+ 	}
+ 	rcu_read_unlock();
+ 
+-	cb->args[0] = idx;
++	ctx->s_idx = idx;
+ 	return skb->len;
+ }
+ 
 -- 
 2.43.0
 
