@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC0519F485;
-	Tue, 27 Aug 2024 15:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D0F1CCEEA;
+	Tue, 27 Aug 2024 15:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772564; cv=none; b=jDFPH7pCzP0oSCX4592ROhnyJTxVw33mI2nWAbAGwJ2Sw/y0JQ5NJ2a3Mum3IDEvamFFtYN8CluHfWtEt0HMSLu6hqwYY1FDu1uWrhrsxdOwBotShVs7QeguXIhHPuZEwdGhm3/uAlg4WlUactbN2fzxMW/zPZ8tQFKXSY8x1XY=
+	t=1724772567; cv=none; b=L+44/zwUmeFwJGgN7MvmYOxOr1ucn53a7HKtepUFKJfxZdISS8Pd1YC0JjXdyqQrbRP2Z80bk3tz19/d9G3/1nM9O6H3RtrJk8JqDkjjmzf5c9qn0nKHYAJk81xriJuwzIHAowXUWLP7RRfM2VF6PO5FtMG9QN/17isi8mafhhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772564; c=relaxed/simple;
-	bh=qo85rHt/CzfTBx+iepjiUcF3cawH8syv/LkPBugROyU=;
+	s=arc-20240116; t=1724772567; c=relaxed/simple;
+	bh=5ayV9ITLpgUWcgCrHVvZHffXpkuSsAQV3JunGCfhCNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/9G3vOrQ8Srl3Pt4s0NrDx+PSWpU0yw7+UgwnpX/ArWJV1oGAfcBMO367cZvY36okVP7fpz48KBg7OdZMQIj3LyT0VKsSVW3SMbuXW7sasHUYThoQhWkOnGEUOb3Ex06krvAhHUWnQoGpQjEYGgLPX1DKzv1ueyjmGrjyLBDn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vY4vpRKC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SM5VJIRBu9G2D4nCAp1LoGJKQaA4EGLxhW2cDDtl8qmDXPmp39I4d3j79NWXLEcTZTehOcorHimA0Xeb+ZMuscgFzgLDReq+S8ov43GEYG8Go4TC99SQLPvmBerQ6puDEdZqZsrUpBbJXgR+dOOlHPZargrfUJpPB2q8uRBTrHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KR33gG4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vY4vpRKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2436C6107E;
-	Tue, 27 Aug 2024 15:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KR33gG4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A57EC6107E;
+	Tue, 27 Aug 2024 15:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772564;
-	bh=qo85rHt/CzfTBx+iepjiUcF3cawH8syv/LkPBugROyU=;
+	s=korg; t=1724772567;
+	bh=5ayV9ITLpgUWcgCrHVvZHffXpkuSsAQV3JunGCfhCNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vY4vpRKCgRMP6UQbmCRPzevFP/EiGz++n8MnGlgKZTIJyKjQlWj8R5JHZtI1GT35C
-	 moOuuA84H9fJfMfeLqiBzCdY6L/at/PJL7cqwQFMrkpvdCvD3X/3VYodX20HOzaeR9
-	 O5956l2VfPXrolJ2LOCjLf8jPVnLfJkEosjyN+7o=
+	b=KR33gG4c5hQval4W14k91Q1+hkFtoIczyJQWWeZ5B7FdwHwninrYXGFNv/CMsxgLi
+	 y9v6Hz+J/vhdI7khFfWWsdijstElcMYZSzBay9nedEMx90h26hjGPVmNrf9pBk/v1x
+	 UOZIh7eG0F8bRv9qIfyVx7QM8KQ1K5/yfB7ZKHdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vasily Averin <vasily.averin@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 253/321] ipv6: prevent possible UAF in ip6_xmit()
-Date: Tue, 27 Aug 2024 16:39:21 +0200
-Message-ID: <20240827143847.874966246@linuxfoundation.org>
+Subject: [PATCH 6.1 236/321] netfilter: nft_counter: Synchronize nft_counter_reset() against reader.
+Date: Tue, 27 Aug 2024 16:39:04 +0200
+Message-ID: <20240827143847.220190255@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,46 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 2d5ff7e339d04622d8282661df36151906d0e1c7 ]
+[ Upstream commit a0b39e2dc7017ac667b70bdeee5293e410fab2fb ]
 
-If skb_expand_head() returns NULL, skb has been freed
-and the associated dst/idev could also have been freed.
+nft_counter_reset() resets the counter by subtracting the previously
+retrieved value from the counter. This is a write operation on the
+counter and as such it requires to be performed with a write sequence of
+nft_counter_seq to serialize against its possible reader.
 
-We must use rcu_read_lock() to prevent a possible UAF.
+Update the packets/ bytes within write-sequence of nft_counter_seq.
 
-Fixes: 0c9f227bee11 ("ipv6: use skb_expand_head in ip6_xmit")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Vasily Averin <vasily.averin@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20240820160859.3786976-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d84701ecbcd6a ("netfilter: nft_counter: rework atomic dump and reset")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nft_counter.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index cfca9627398ee..f2227e662d1cf 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -278,11 +278,15 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 		head_room += opt->opt_nflen + opt->opt_flen;
+diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
+index 73e4d278d6c13..781d3a26f5df7 100644
+--- a/net/netfilter/nft_counter.c
++++ b/net/netfilter/nft_counter.c
+@@ -107,11 +107,16 @@ static void nft_counter_reset(struct nft_counter_percpu_priv *priv,
+ 			      struct nft_counter *total)
+ {
+ 	struct nft_counter *this_cpu;
++	seqcount_t *myseq;
  
- 	if (unlikely(head_room > skb_headroom(skb))) {
-+		/* Make sure idev stays alive */
-+		rcu_read_lock();
- 		skb = skb_expand_head(skb, head_room);
- 		if (!skb) {
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
-+			rcu_read_unlock();
- 			return -ENOBUFS;
- 		}
-+		rcu_read_unlock();
- 	}
+ 	local_bh_disable();
+ 	this_cpu = this_cpu_ptr(priv->counter);
++	myseq = this_cpu_ptr(&nft_counter_seq);
++
++	write_seqcount_begin(myseq);
+ 	this_cpu->packets -= total->packets;
+ 	this_cpu->bytes -= total->bytes;
++	write_seqcount_end(myseq);
+ 	local_bh_enable();
+ }
  
- 	if (opt) {
 -- 
 2.43.0
 
