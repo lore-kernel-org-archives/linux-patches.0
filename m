@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE861C578E;
-	Tue, 27 Aug 2024 14:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AF81C578E;
+	Tue, 27 Aug 2024 14:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724769928; cv=none; b=QALW+uSNNj5LVb2vmvYzRgEk3fgTfA+NifS6eaYpmFPmY85Pe5vSYPBBRR8kJoWqDIKSLpcr2VzOtScTgeGrPan1xccMNZC57jTsaTLT6fvle2HOujFdIBvcJ9zhoFGkyoSDbzU2UVtN5SPB/8kZr0YCoULPho1kWEouP6+cz2c=
+	t=1724769937; cv=none; b=C0YlYRwYdsSRakav8Z4+kC5cxfoTEiZy6ydjHq7J9Pr9S3z7GQuhzytyIYteEG/yC/Va/Yignl5/Je/S5Lqd5t+bmjI9+sv4/XtYa1nOG94rF3yHRBzO1m26ojIRDVnYTQ8BeeM9pTeXPTws82S/wP28KVsidu+IxvMlr6HSyNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724769928; c=relaxed/simple;
-	bh=rmtGvV8BZV9E72/ZrlhQwixrOI2cjnBRJbC/XXaI858=;
+	s=arc-20240116; t=1724769937; c=relaxed/simple;
+	bh=XZEsibTtekLbj7UHYwn1KpEl7pnS0XFxCSqRnXUocZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNzVDd1PPvWoljzg5acquq5QyPTWbb79RCxi6dMtz5ZSsaC75Extd64LdaPSqOFuFFKAstV/Zpqp+0fgV2hc5MO1qWJ73IZ/visbU3mm+JFAkwPTOoacMEphauNC15K0xcTT500HZa+Rv4JA52mWkVao2mvMO2mviCKEuvEL+wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRsSb3TI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqN2JTHW2+qvpzJmRd6KVSCQm2Q7BzovuQCr5BITHpm6sTy4IC7HzTqcuRNoO6RJum6tQGA3MZU6McwAGAVWyc33MlP6ZuPdw94FHEXJrdlnfc4NtS77oyHhFZoCOvlD26f13dqVaiHIQem/IuQK6YzhWw6DuBvTXew9r9d9D4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptW5DgTP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRsSb3TI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC747C61063;
-	Tue, 27 Aug 2024 14:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptW5DgTP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403EEC61063;
+	Tue, 27 Aug 2024 14:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724769928;
-	bh=rmtGvV8BZV9E72/ZrlhQwixrOI2cjnBRJbC/XXaI858=;
+	s=korg; t=1724769937;
+	bh=XZEsibTtekLbj7UHYwn1KpEl7pnS0XFxCSqRnXUocZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRsSb3TIl2KrrHmD+3OkX9Ai8tqi5YL/pSecEgUnQaSija798Wf/2nSZU2rlpqgOZ
-	 bUc04MRnsCxKD0PzO4Or7r4TMS534qspnEOlqQpBQS2mykZ7vj3xl8lTb7I5fpV1R1
-	 g230p2r4bwm2BzeDWjxmiBkmniSQfuK/rSKhL0wc=
+	b=ptW5DgTPcp29/EGOiVHCun1VkDPnee546EM9acQo+KyVY9q04pnOETMvEpVwNJnTO
+	 +xn1dKRcKKNsc1EAgDKOokYiT0PYBuue6n/qke5S5BpM/RaNfAXAHJFICD7DCm7YNZ
+	 yKzl9EMnwWnMBEXkLv2uO5AvmtRHUBC1btreH/S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Florian Westphal <fw@strlen.de>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/341] selftests: net: lib: kill PIDs before del netns
-Date: Tue, 27 Aug 2024 16:35:08 +0200
-Message-ID: <20240827143846.341969927@linuxfoundation.org>
+Subject: [PATCH 6.6 051/341] igc: Fix reset adapter logics when tx mode change
+Date: Tue, 27 Aug 2024 16:34:42 +0200
+Message-ID: <20240827143845.360929510@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -54,43 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
 
-[ Upstream commit 7965a7f32a53d9ad807ce2c53bdda69ba104974f ]
+[ Upstream commit 0afeaeb5dae86aceded0d5f0c3a54d27858c0c6f ]
 
-When deleting netns, it is possible to still have some tasks running,
-e.g. background tasks like tcpdump running in the background, not
-stopped because the test has been interrupted.
+Following the "igc: Fix TX Hang issue when QBV Gate is close" changes,
+remaining issues with the reset adapter logic in igc_tsn_offload_apply()
+have been observed:
 
-Before deleting the netns, it is then safer to kill all attached PIDs,
-if any. That should reduce some noises after the end of some tests, and
-help with the debugging of some issues. That's why this modification is
-seen as a "fix".
+1. The reset adapter logics for i225 and i226 differ, although they should
+   be the same according to the guidelines in I225/6 HW Design Section
+   7.5.2.1 on software initialization during tx mode changes.
+2. The i225 resets adapter every time, even though tx mode doesn't change.
+   This occurs solely based on the condition  igc_is_device_id_i225() when
+   calling schedule_work().
+3. i226 doesn't reset adapter for tsn->legacy tx mode changes. It only
+   resets adapter for legacy->tsn tx mode transitions.
+4. qbv_count introduced in the patch is actually not needed; in this
+   context, a non-zero value of qbv_count is used to indicate if tx mode
+   was unconditionally set to tsn in igc_tsn_enable_offload(). This could
+   be replaced by checking the existing register
+   IGC_TQAVCTRL_TRANSMIT_MODE_TSN bit.
 
-Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
-Acked-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Acked-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20240813-upstream-net-20240813-selftests-net-lib-kill-v1-1-27b689b248b8@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This patch resolves all issues and enters schedule_work() to reset the
+adapter only when changing tx mode. It also removes reliance on qbv_count.
+
+qbv_count field will be removed in a future patch.
+
+Test ran:
+
+1. Verify reset adapter behaviour in i225/6:
+   a) Enrol a new GCL
+      Reset adapter observed (tx mode change legacy->tsn)
+   b) Enrol a new GCL without deleting qdisc
+      No reset adapter observed (tx mode remain tsn->tsn)
+   c) Delete qdisc
+      Reset adapter observed (tx mode change tsn->legacy)
+
+2. Tested scenario from "igc: Fix TX Hang issue when QBV Gate is closed"
+   to confirm it remains resolved.
+
+Fixes: 175c241288c0 ("igc: Fix TX Hang issue when QBV Gate is closed")
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/lib.sh | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/igc/igc_tsn.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
-index 323a7c305ccd4..e2c35eda230af 100644
---- a/tools/testing/selftests/net/lib.sh
-+++ b/tools/testing/selftests/net/lib.sh
-@@ -42,6 +42,7 @@ cleanup_ns()
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 8ed7b965484da..ada7514305171 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -49,6 +49,13 @@ static unsigned int igc_tsn_new_flags(struct igc_adapter *adapter)
+ 	return new_flags;
+ }
  
- 	for ns in "$@"; do
- 		[ -z "${ns}" ] && continue
-+		ip netns pids "${ns}" 2> /dev/null | xargs -r kill || true
- 		ip netns delete "${ns}" &> /dev/null || true
- 		if ! busywait $BUSYWAIT_TIMEOUT ip netns list \| grep -vq "^$ns$" &> /dev/null; then
- 			echo "Warn: Failed to remove namespace $ns"
++static bool igc_tsn_is_tx_mode_in_tsn(struct igc_adapter *adapter)
++{
++	struct igc_hw *hw = &adapter->hw;
++
++	return !!(rd32(IGC_TQAVCTRL) & IGC_TQAVCTRL_TRANSMIT_MODE_TSN);
++}
++
+ void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
+ {
+ 	struct igc_hw *hw = &adapter->hw;
+@@ -365,15 +372,22 @@ int igc_tsn_reset(struct igc_adapter *adapter)
+ 	return err;
+ }
+ 
+-int igc_tsn_offload_apply(struct igc_adapter *adapter)
++static bool igc_tsn_will_tx_mode_change(struct igc_adapter *adapter)
+ {
+-	struct igc_hw *hw = &adapter->hw;
++	bool any_tsn_enabled = !!(igc_tsn_new_flags(adapter) &
++				  IGC_FLAG_TSN_ANY_ENABLED);
++
++	return (any_tsn_enabled && !igc_tsn_is_tx_mode_in_tsn(adapter)) ||
++	       (!any_tsn_enabled && igc_tsn_is_tx_mode_in_tsn(adapter));
++}
+ 
+-	/* Per I225/6 HW Design Section 7.5.2.1, transmit mode
+-	 * cannot be changed dynamically. Require reset the adapter.
++int igc_tsn_offload_apply(struct igc_adapter *adapter)
++{
++	/* Per I225/6 HW Design Section 7.5.2.1 guideline, if tx mode change
++	 * from legacy->tsn or tsn->legacy, then reset adapter is needed.
+ 	 */
+ 	if (netif_running(adapter->netdev) &&
+-	    (igc_is_device_id_i225(hw) || !adapter->qbv_count)) {
++	    igc_tsn_will_tx_mode_change(adapter)) {
+ 		schedule_work(&adapter->reset_task);
+ 		return 0;
+ 	}
 -- 
 2.43.0
 
