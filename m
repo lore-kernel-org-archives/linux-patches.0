@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF0919F485;
-	Tue, 27 Aug 2024 15:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAFE19F485;
+	Tue, 27 Aug 2024 15:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772067; cv=none; b=Xckr4a26XXJRfulAzHbygBeFDJRIRYMCVg9pzol56tn7b7w5E6uPLXL5SQGFIBgtyOpmN3SmKnwR28Ik/PkhTLOpxg/Jcnm0NojeHjHq2ro+p9solSThHiUzklznHA9v1SW86YRQktc2TJOx2XJRCXE0F59ygzV8VwwcekEFF6U=
+	t=1724772070; cv=none; b=LLxKgjSMG9fepnr9QMZ4fUL+2YcUVaJ6ZHwlrKsMI75CUAi+jj0Sfa9C8BYe0Uxl9nMjHL5/H3MfjndAa0a0jS83aA2/6j5138Tcf5Xor1FB854dvq50U4jOy1n7tDQ+1Uaqd4Q4lNBhAYb8btQRPy3p9X2bu+hmc3NpfLxnqSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772067; c=relaxed/simple;
-	bh=woBMP4lCge/ns6KLn4MNpPsLjKA+BHudd4XHl44IBUM=;
+	s=arc-20240116; t=1724772070; c=relaxed/simple;
+	bh=jkz89yD2yBUgsM6n08B/jus5pkGmb79xsdo2Gc9DT3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Juiky9ivSFisOhu0hODNKwKRBnevrm64Dlwpuu989yo1XloSvAbVUa0FuZYgIyDLutb0jfkKKMbfCcJpdrtQ99RrmtawRB9kQVPVfWXQKFmh+ajnqhGJLHYQxgB06E1WXGby6C4Nk/w5JC3tpCTMAXVURWqN7uKyHPAaBSfIUxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLv1BM9C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Flc0QV3siHWlNYZ1Luu7epFJd51Yo1aX3H6aBYIO64JoaeoP/OAiptU2dz+w5Bwo267aD12laEuiS0h3Z8tOYDMi+l9Xw5efE/k4Wyl+IhlvnHG9M9NViVRGErm42t4arj9aeNjfd7SuYA4x1ciybNHJCFkKpZ6vW2EaMFhRTg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjdpAqoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLv1BM9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCF6C4E66E;
-	Tue, 27 Aug 2024 15:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjdpAqoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39DDC4FDFA;
+	Tue, 27 Aug 2024 15:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772067;
-	bh=woBMP4lCge/ns6KLn4MNpPsLjKA+BHudd4XHl44IBUM=;
+	s=korg; t=1724772070;
+	bh=jkz89yD2yBUgsM6n08B/jus5pkGmb79xsdo2Gc9DT3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLv1BM9CRFPtsqrXBeAUL8qhRCncraalgMJRQg58MhehZic957Ov8KDYffXGY9w54
-	 MwbhsmB7+8hylvX/EIpWGNUI3Z0uZyIf2rf2gf7XPvrAZvEd0ZQx2Ceyld0/CaUab6
-	 vOl/KeielYe0Z8lJvsxjfR/FK7/851DniCb+Us0w=
+	b=sjdpAqoLmDzLkv3+IBMe4mSOyQ225ELh4rRG7klPv7+TYh3BAO8SU+buY5vuiTgvs
+	 9onb9aRm4T/uRgKXt2hKfHX5nHus3pPSqbRtqMSXBaesjm4J2acDqdk+ofc2VrW9sd
+	 IFoTPF3j8kuqwwzn7GT8eREr7dz+NMKrqE8PLe4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1fa663a2100308ab6eab@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/321] bpf: Avoid kfree_rcu() under lock in bpf_lpm_trie.
-Date: Tue, 27 Aug 2024 16:36:19 +0200
-Message-ID: <20240827143840.945066797@linuxfoundation.org>
+Subject: [PATCH 6.1 072/321] Bluetooth: RFCOMM: Fix not validating setsockopt user input
+Date: Tue, 27 Aug 2024 16:36:20 +0200
+Message-ID: <20240827143840.983455212@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,100 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 59f2f841179aa6a0899cb9cf53659149a35749b7 ]
+[ Upstream commit a97de7bff13b1cc825c1b1344eaed8d6c2d3e695 ]
 
-syzbot reported the following lock sequence:
-cpu 2:
-  grabs timer_base lock
-    spins on bpf_lpm lock
+syzbot reported rfcomm_sock_setsockopt_old() is copying data without
+checking user input length.
 
-cpu 1:
-  grab rcu krcp lock
-    spins on timer_base lock
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset
+include/linux/sockptr.h:49 [inline]
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr
+include/linux/sockptr.h:55 [inline]
+BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt_old
+net/bluetooth/rfcomm/sock.c:632 [inline]
+BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt+0x893/0xa70
+net/bluetooth/rfcomm/sock.c:673
+Read of size 4 at addr ffff8880209a8bc3 by task syz-executor632/5064
 
-cpu 0:
-  grab bpf_lpm lock
-    spins on rcu krcp lock
-
-bpf_lpm lock can be the same.
-timer_base lock can also be the same due to timer migration.
-but rcu krcp lock is always per-cpu, so it cannot be the same lock.
-Hence it's a false positive.
-To avoid lockdep complaining move kfree_rcu() after spin_unlock.
-
-Reported-by: syzbot+1fa663a2100308ab6eab@syzkaller.appspotmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240329171439.37813-1-alexei.starovoitov@gmail.com
+Fixes: 9f2c8a03fbb3 ("Bluetooth: Replace RFCOMM link mode with security level")
+Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/bluetooth/rfcomm/sock.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index b80bffc59e5fb..37b510d91b810 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -308,6 +308,7 @@ static int trie_update_elem(struct bpf_map *map,
- {
- 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
- 	struct lpm_trie_node *node, *im_node = NULL, *new_node = NULL;
-+	struct lpm_trie_node *free_node = NULL;
- 	struct lpm_trie_node __rcu **slot;
- 	struct bpf_lpm_trie_key_u8 *key = _key;
- 	unsigned long irq_flags;
-@@ -382,7 +383,7 @@ static int trie_update_elem(struct bpf_map *map,
- 			trie->n_entries--;
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index b54e8a530f55a..29aa07e9db9d7 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -629,7 +629,7 @@ static int rfcomm_sock_setsockopt_old(struct socket *sock, int optname,
  
- 		rcu_assign_pointer(*slot, new_node);
--		kfree_rcu(node, rcu);
-+		free_node = node;
+ 	switch (optname) {
+ 	case RFCOMM_LM:
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
++		if (bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen)) {
+ 			err = -EFAULT;
+ 			break;
+ 		}
+@@ -664,7 +664,6 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	struct sock *sk = sock->sk;
+ 	struct bt_security sec;
+ 	int err = 0;
+-	size_t len;
+ 	u32 opt;
  
- 		goto out;
- 	}
-@@ -429,6 +430,7 @@ static int trie_update_elem(struct bpf_map *map,
- 	}
+ 	BT_DBG("sk %p", sk);
+@@ -686,11 +685,9 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
  
- 	spin_unlock_irqrestore(&trie->lock, irq_flags);
-+	kfree_rcu(free_node, rcu);
+ 		sec.level = BT_SECURITY_LOW;
  
- 	return ret;
- }
-@@ -437,6 +439,7 @@ static int trie_update_elem(struct bpf_map *map,
- static int trie_delete_elem(struct bpf_map *map, void *_key)
- {
- 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
-+	struct lpm_trie_node *free_node = NULL, *free_parent = NULL;
- 	struct bpf_lpm_trie_key_u8 *key = _key;
- 	struct lpm_trie_node __rcu **trim, **trim2;
- 	struct lpm_trie_node *node, *parent;
-@@ -506,8 +509,8 @@ static int trie_delete_elem(struct bpf_map *map, void *_key)
- 		else
- 			rcu_assign_pointer(
- 				*trim2, rcu_access_pointer(parent->child[0]));
--		kfree_rcu(parent, rcu);
--		kfree_rcu(node, rcu);
-+		free_parent = parent;
-+		free_node = node;
- 		goto out;
- 	}
+-		len = min_t(unsigned int, sizeof(sec), optlen);
+-		if (copy_from_sockptr(&sec, optval, len)) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
++		if (err)
+ 			break;
+-		}
  
-@@ -521,10 +524,12 @@ static int trie_delete_elem(struct bpf_map *map, void *_key)
- 		rcu_assign_pointer(*trim, rcu_access_pointer(node->child[1]));
- 	else
- 		RCU_INIT_POINTER(*trim, NULL);
--	kfree_rcu(node, rcu);
-+	free_node = node;
+ 		if (sec.level > BT_SECURITY_HIGH) {
+ 			err = -EINVAL;
+@@ -706,10 +703,9 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
  
- out:
- 	spin_unlock_irqrestore(&trie->lock, irq_flags);
-+	kfree_rcu(free_parent, rcu);
-+	kfree_rcu(free_node, rcu);
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
  
- 	return ret;
- }
+ 		if (opt)
+ 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
 -- 
 2.43.0
 
