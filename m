@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729371C5783;
-	Tue, 27 Aug 2024 14:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71FB1C57B1;
+	Tue, 27 Aug 2024 14:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770369; cv=none; b=obhJlUgE772Des8WCN+gMk42bJJw1CGlO1lfx8hkHUp97+HZCf4dSQ+Gl/+0pyKXCWii40Pt0Bn+jkqLisBIOGxlxXRLdnNk3asgjuQ4qnee4mBX5xPJiv+i7sw7YfeOQTWptD8lmMeB2Rz/Nm6x0H1yiVQtsW04OE5bbv4y0XI=
+	t=1724770372; cv=none; b=uxnjQ9INfYeK9jIRPcPtKWgeItGy50sPHdwvF+JvBfIpzpVF20Zl57wjr3o6P1HJ7k3+nKhXFq5oGYzyN4bFJK3luITzKSRQHfnrERzine5cYFXlkN2KXH2AirEVlBFLIsnwWV0ydet51hXqhszPUSQSNGqWsnvj6NKZDTY5FHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770369; c=relaxed/simple;
-	bh=sPtiFiufQTjkL0Bz9u+ZGf5GpbNVXWX1N1fbtYGFJjg=;
+	s=arc-20240116; t=1724770372; c=relaxed/simple;
+	bh=7Ys5frjz+GWz1YoPu4AS+8wAUUxAWIPY39k7ZasB3II=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVjQMiSLih++URLitaru8xVmxCngjb2U0ljF7w6UghWnYNJ6mZn0SsyWx0iKYecyz0+74ucdPqHFPn8QyGq0HLENvKnjRvGCo6dn+9WRBkWrU7JNZz5ObewKS9yJ+xfrOdNEolCbUV6Z4OxzDAjP9FMJm5DWGPT2Ijijkw9YJP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5COx5Rx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnwOaQQW20z/cf6fXo8BuAjiBrhuPT2/Pml9H013KWiTe/Z+nWr3iYuPwOhdL0bFNC2Jf0voTv1aI0l2ulVY79t6d4eb+rNNTcDSDt8gd443UMwzCzODY/C40Q0wE7apzjy5vRFVGIvPGUPuRNNrZueC48I3AFfD7DCmyWzONd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wwd1/ZEv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5COx5Rx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D457C6104A;
-	Tue, 27 Aug 2024 14:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wwd1/ZEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFA1C61042;
+	Tue, 27 Aug 2024 14:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770369;
-	bh=sPtiFiufQTjkL0Bz9u+ZGf5GpbNVXWX1N1fbtYGFJjg=;
+	s=korg; t=1724770372;
+	bh=7Ys5frjz+GWz1YoPu4AS+8wAUUxAWIPY39k7ZasB3II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5COx5RxIhDAvnOAh2ExrZr+iBlO5U9XdgSGenj3ESioE4cCDAx4TrTMVmfUminf0
-	 7WHc1dfCDUZS4whfVnnNB5/xcT8Ocf6nnsUTWzUR02T8ZIHBZHVUuaY5S0R92wt5Nh
-	 +YraUhDItMufj1jiv1+afudouZG0BQ6kEwxqckMg=
+	b=Wwd1/ZEvOF6i+68//OtVeG4l6cy/TAfWn1tnJCCRQYK9RDFQ3/gZdeF00wYtO9pvs
+	 XXlfXEkO0eRPUxsj3E0gelWlAmoP8Kqu+PYAGXs3gucqRGWzOQAViY4gRhD7IiRdBi
+	 Hv2dTVjqkdh3BoA5ToXwgdfNU0HGoXsBwHQeMrs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Guanrui Huang <guanrui.huang@linux.alibaba.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 208/341] usb: dwc3: core: Skip setting event buffers for host only controllers
-Date: Tue, 27 Aug 2024 16:37:19 +0200
-Message-ID: <20240827143851.327898623@linuxfoundation.org>
+Subject: [PATCH 6.6 209/341] irqchip/gic-v3-its: Remove BUG_ON in its_vpe_irq_domain_alloc
+Date: Tue, 27 Aug 2024 16:37:20 +0200
+Message-ID: <20240827143851.365927061@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -54,69 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Guanrui Huang <guanrui.huang@linux.alibaba.com>
 
-[ Upstream commit 89d7f962994604a3e3d480832788d06179abefc5 ]
+[ Upstream commit 382d2ffe86efb1e2fa803d2cf17e5bfc34e574f3 ]
 
-On some SoC's like SA8295P where the tertiary controller is host-only
-capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
-Trying to access them leads to a crash.
+This BUG_ON() is useless, because the same effect will be obtained
+by letting the code run its course and vm being dereferenced,
+triggering an exception.
 
-For DRD/Peripheral supported controllers, event buffer setup is done
-again in gadget_pullup. Skip setup or cleanup of event buffers if
-controller is host-only capable.
+So just remove this check.
 
-Suggested-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240420044901.884098-4-quic_kriskura@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Guanrui Huang <guanrui.huang@linux.alibaba.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240418061053.96803-3-guanrui.huang@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/irqchip/irq-gic-v3-its.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 674467b7638ea..5ce276cb39d0d 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -506,6 +506,13 @@ static void dwc3_free_event_buffers(struct dwc3 *dwc)
- static int dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned int length)
- {
- 	struct dwc3_event_buffer *evt;
-+	unsigned int hw_mode;
-+
-+	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
-+	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
-+		dwc->ev_buf = NULL;
-+		return 0;
-+	}
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index c7d6e6987166f..350abbb36e04b 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -4501,8 +4501,6 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
+ 	struct page *vprop_page;
+ 	int base, nr_ids, i, err = 0;
  
- 	evt = dwc3_alloc_one_event_buffer(dwc, length);
- 	if (IS_ERR(evt)) {
-@@ -527,6 +534,9 @@ int dwc3_event_buffers_setup(struct dwc3 *dwc)
- {
- 	struct dwc3_event_buffer	*evt;
- 
-+	if (!dwc->ev_buf)
-+		return 0;
-+
- 	evt = dwc->ev_buf;
- 	evt->lpos = 0;
- 	dwc3_writel(dwc->regs, DWC3_GEVNTADRLO(0),
-@@ -544,6 +554,9 @@ void dwc3_event_buffers_cleanup(struct dwc3 *dwc)
- {
- 	struct dwc3_event_buffer	*evt;
- 
-+	if (!dwc->ev_buf)
-+		return;
-+
- 	evt = dwc->ev_buf;
- 
- 	evt->lpos = 0;
+-	BUG_ON(!vm);
+-
+ 	bitmap = its_lpi_alloc(roundup_pow_of_two(nr_irqs), &base, &nr_ids);
+ 	if (!bitmap)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
