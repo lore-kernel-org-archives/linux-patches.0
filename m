@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C30538DC7;
-	Tue, 27 Aug 2024 14:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CACD38DC7;
+	Tue, 27 Aug 2024 14:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770290; cv=none; b=S/4oJ+lKq5S5jA0L3sKiGzW5epXzx7sy0/hs7wtDrL2EqzUA/rUrivC42M7C27AbUDOAv1s35gAPK+HnqfF+L310yVku0q7+79X6yqldFTA2Ihp6v8I8lYVez+P4Hsyr70nEHf+bnJ/glsjVa1t88wpb95BIIcC7EuQ+vur3HuE=
+	t=1724770293; cv=none; b=P+mHfjv2uwzam6d6XMnp2Q/UToN6bRe+iyTAHx1u8NSMIqhV2VeeS4Ca50nN3YdKqTPN8Y0zXFO2fG2fc75GtOwaCGjzi2tn7bMDLr4LHmdLCn1z9MqSE27F/G5tWjyLlsHfj48gIJEp8u2ayqwsYRKMal8kIRo9CknpRc48zdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770290; c=relaxed/simple;
-	bh=izTJHPAfHoaAKQXOVNPkNbZEFLy3G2CnHlX6avC1tNM=;
+	s=arc-20240116; t=1724770293; c=relaxed/simple;
+	bh=opH/8vDOhpGtPBbE7wDQb/TctlNGFa4YxtoeTfEA8Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGGbD8Yww86ijWA+6Mwap1tUVqYEWB/iKsqirBpQFx7fK4O9V3eJqim8h/WhlM6Ly4y5u/tkHxguNh7vhvc/cOt22aYlLYTwlKG0xFy/QaxrYXH9r44HeKTrWd9JTL8nWRfrfG1hRT65IbyPlSU7PG8zFQ3KxBf5XmMfNJNBdWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KV0E9RFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSogHIYYSc8vMp37yQgSlgZ0SJ1pCdHp07NWUw5ygfL1tuTtGjGjrMQKNIucIgyAvqjRgCS4DiYO/6c8KH3MRuVxVmg0uiVwE2lNOkTjhbu90XLsi9Pudc2AmTSdP+qA/kg1U58KsO1xaxwkpZOmGAJJgXjABw7zSHPCxoYPbjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKkFftTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KV0E9RFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE7CC4DE03;
-	Tue, 27 Aug 2024 14:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKkFftTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EAFC4DE03;
+	Tue, 27 Aug 2024 14:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770289;
-	bh=izTJHPAfHoaAKQXOVNPkNbZEFLy3G2CnHlX6avC1tNM=;
+	s=korg; t=1724770292;
+	bh=opH/8vDOhpGtPBbE7wDQb/TctlNGFa4YxtoeTfEA8Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KV0E9RFb8iYOT403SGwz9Rr0Cte+6fqlW5ElLi8wHPIij3fVO5MlkifgTi8Dyh4zO
-	 7pOVgI8OM2HP1ONlOVG2TZkChASHCHTQJTa1UQES8a4RxdufbUpi2eaBAv3XU2/jlD
-	 ncH9BqMWpounic8azZp1GlsF2gHPG0T7b0bb6FcU=
+	b=XKkFftTbTb8b37Nj7zQU763+L6HtWatyOZSKeLzdLIO+qwNdM5VqYvywtdV/cEd1K
+	 kc6Ky0XLxBmoLjQoCpgQPj+EExS5ciwxV5LGlQt4IFntc+yD6PG7qvp6VwbALaLhMe
+	 ZrREj6orCMkUSK/UYL/5SAxj5U9BdXIYXNBfAE74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/341] powerpc/boot: Only free if realloc() succeeds
-Date: Tue, 27 Aug 2024 16:36:54 +0200
-Message-ID: <20240827143850.376737128@linuxfoundation.org>
+Subject: [PATCH 6.6 184/341] btrfs: delayed-inode: drop pointless BUG_ON in __btrfs_remove_delayed_item()
+Date: Tue, 27 Aug 2024 16:36:55 +0200
+Message-ID: <20240827143850.415090923@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,41 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit f2d5bccaca3e8c09c9b9c8485375f7bdbb2631d2 ]
+[ Upstream commit 778e618b8bfedcc39354373c1b072c5fe044fa7b ]
 
-simple_realloc() frees the original buffer (ptr) even if the
-reallocation failed.
+There's a BUG_ON checking for a valid pointer of fs_info::delayed_root
+but it is valid since init_mount_fs_info() and has the same lifetime as
+fs_info.
 
-Fix it to behave like standard realloc() and only free the original
-buffer if the reallocation succeeded.
-
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240229115149.749264-1-mpe@ellerman.id.au
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/simple_alloc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/delayed-inode.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/powerpc/boot/simple_alloc.c b/arch/powerpc/boot/simple_alloc.c
-index db9aaa5face3f..d07796fdf91aa 100644
---- a/arch/powerpc/boot/simple_alloc.c
-+++ b/arch/powerpc/boot/simple_alloc.c
-@@ -112,10 +112,11 @@ static void *simple_realloc(void *ptr, unsigned long size)
- 		return ptr;
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index 6d562f18d3f80..12ff91d6f570f 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -425,8 +425,6 @@ static void __btrfs_remove_delayed_item(struct btrfs_delayed_item *delayed_item)
  
- 	new = simple_malloc(size);
--	if (new)
-+	if (new) {
- 		memcpy(new, ptr, p->size);
-+		simple_free(ptr);
-+	}
+ 	delayed_root = delayed_node->root->fs_info->delayed_root;
  
--	simple_free(ptr);
- 	return new;
- }
- 
+-	BUG_ON(!delayed_root);
+-
+ 	if (delayed_item->type == BTRFS_DELAYED_INSERTION_ITEM)
+ 		root = &delayed_node->ins_root;
+ 	else
 -- 
 2.43.0
 
