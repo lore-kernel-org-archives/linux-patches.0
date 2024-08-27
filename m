@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77051C688E;
-	Tue, 27 Aug 2024 15:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF231C9ECD;
+	Tue, 27 Aug 2024 15:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771965; cv=none; b=NBuiEqxGN32n0HTvYqNdy1M+s3zQOXUBd8emB+mxsZfSuUbiFtifQT1cWQm4K4qtdKrSps4v++adNTjsLd9qE2RqIMjRv0zyFiThtXr8+AuaR7ontxfgpuO23gnjg0nh+J+0KQHeFO4FjcYQntFK+pEAHuG+AyYvHIWjRv4motQ=
+	t=1724771969; cv=none; b=R6KYC1CWqurhFHTcXUqhsBh6B/qVwBE0PdP4HX7WaieSUUJ1yphz9C7kR07sayKFwCXrumW+Jj9CYmA2CV634YXhW+SHeQcSxt0YM6g5m9h5tvMUX/cdVTuHdLVULBIPs+3TEdfHfkX1DfcfLL1kEUR+omWllcPkGo8hAp03D+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771965; c=relaxed/simple;
-	bh=99sLLjl2fkiuCDegLgRitqHBpXDhElloHPlyaHsIFik=;
+	s=arc-20240116; t=1724771969; c=relaxed/simple;
+	bh=DXkU5rA3nNTp22dXimSzBsazqMXw15YGRcm4HDBDOOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZtIJIvR9GxY8XpfOOFl494MBgedWSZRT/A8F58G7cWlW8P0IcNxmlVo74+DmEOr2eOx/P1YRZpV1bWuQQfruGJX29B4mfR6SNHnTDUPjay5/jJtgznpLxpWXbF8Udo/aADV785Vlqa9KVaBHRbG6ixO/Clwcba88O3tO1uwmBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNMdp/Zr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=peLq7L3KsF0gjsMoBt+cez0OKFJa1DUlyB2DkDYNeIq9RQknaJH/lp30fWfHpazG95bM4ILBujCcU1DQi9l+uI2A4x2npaBIg8bNL3CAbpL93bo5EIZzwo0LfRA/VYg3k4fxAP/0HRJoZ7qWNXMVUatyDVWW3w5u9SmrVD958ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ul7nF34h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNMdp/Zr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465FFC4DDE1;
-	Tue, 27 Aug 2024 15:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ul7nF34h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB872C4DDE5;
+	Tue, 27 Aug 2024 15:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771965;
-	bh=99sLLjl2fkiuCDegLgRitqHBpXDhElloHPlyaHsIFik=;
+	s=korg; t=1724771969;
+	bh=DXkU5rA3nNTp22dXimSzBsazqMXw15YGRcm4HDBDOOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNMdp/ZrjTKtMXN6BiT7BpYIgzjbI6xOLSY1/p1DTHNSkISlBVFhhHO6US/Ukpfe+
-	 SKcFnMVOVWyGU1ZAvD0lU20gCdXZ3LHfm/s8aopyGv7stwIuGghXOLJlVmGv+TabPb
-	 LZaJwPCzXBMsgZcFhFs2aI/8kzXN3iUjnhDBUBDk=
+	b=Ul7nF34hUJSWEVWlOZw87Ju2lpNnavG/LPUkLO+qb8mEwuE0XA4q71CsyNDL18dWQ
+	 PxZqUXmmCTvKsgNRn0KWBNmjoLTtmNAMkJhJ78NfzxhlAP3MSLd5Qh3xCok3+TrDEh
+	 sSPrlePK7wD566H4gAZo6Q4pJaF3frDW9X54M6WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+a43d4f48b8397d0e41a9@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/321] ext4: fold quota accounting into ext4_xattr_inode_lookup_create()
-Date: Tue, 27 Aug 2024 16:36:22 +0200
-Message-ID: <20240827143841.059179319@linuxfoundation.org>
+Subject: [PATCH 6.1 075/321] ext4: do not create EA inode under buffer lock
+Date: Tue, 27 Aug 2024 16:36:23 +0200
+Message-ID: <20240827143841.096679810@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -53,116 +54,238 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 8208c41c43ad5e9b63dce6c45a73e326109ca658 ]
+[ Upstream commit 0a46ef234756dca04623b7591e8ebb3440622f0b ]
 
-When allocating EA inode, quota accounting is done just before
-ext4_xattr_inode_lookup_create(). Logically these two operations belong
-together so just fold quota accounting into
-ext4_xattr_inode_lookup_create(). We also make
-ext4_xattr_inode_lookup_create() return the looked up / created inode to
-convert the function to a more standard calling convention.
+ext4_xattr_set_entry() creates new EA inodes while holding buffer lock
+on the external xattr block. This is problematic as it nests all the
+allocation locking (which acquires locks on other buffers) under the
+buffer lock. This can even deadlock when the filesystem is corrupted and
+e.g. quota file is setup to contain xattr block as data block. Move the
+allocation of EA inode out of ext4_xattr_set_entry() into the callers.
 
+Reported-by: syzbot+a43d4f48b8397d0e41a9@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240209112107.10585-1-jack@suse.cz
+Link: https://lore.kernel.org/r/20240321162657.27420-2-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 0a46ef234756 ("ext4: do not create EA inode under buffer lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 50 ++++++++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 26 deletions(-)
+ fs/ext4/xattr.c | 113 +++++++++++++++++++++++-------------------------
+ 1 file changed, 53 insertions(+), 60 deletions(-)
 
 diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 0df0a3ecba37a..b18035b8887be 100644
+index b18035b8887be..d94b1a6c60e27 100644
 --- a/fs/ext4/xattr.c
 +++ b/fs/ext4/xattr.c
-@@ -1522,46 +1522,49 @@ ext4_xattr_inode_cache_find(struct inode *inode, const void *value,
- /*
-  * Add value of the EA in an inode.
-  */
--static int ext4_xattr_inode_lookup_create(handle_t *handle, struct inode *inode,
--					  const void *value, size_t value_len,
--					  struct inode **ret_inode)
-+static struct inode *ext4_xattr_inode_lookup_create(handle_t *handle,
-+		struct inode *inode, const void *value, size_t value_len)
+@@ -1576,6 +1576,7 @@ static struct inode *ext4_xattr_inode_lookup_create(handle_t *handle,
+ static int ext4_xattr_set_entry(struct ext4_xattr_info *i,
+ 				struct ext4_xattr_search *s,
+ 				handle_t *handle, struct inode *inode,
++				struct inode *new_ea_inode,
+ 				bool is_block)
  {
- 	struct inode *ea_inode;
- 	u32 hash;
- 	int err;
+ 	struct ext4_xattr_entry *last, *next;
+@@ -1583,7 +1584,6 @@ static int ext4_xattr_set_entry(struct ext4_xattr_info *i,
+ 	size_t min_offs = s->end - s->base, name_len = strlen(i->name);
+ 	int in_inode = i->in_inode;
+ 	struct inode *old_ea_inode = NULL;
+-	struct inode *new_ea_inode = NULL;
+ 	size_t old_size, new_size;
+ 	int ret;
  
-+	/* Account inode & space to quota even if sharing... */
-+	err = ext4_xattr_inode_alloc_quota(inode, value_len);
-+	if (err)
-+		return ERR_PTR(err);
-+
- 	hash = ext4_xattr_inode_hash(EXT4_SB(inode->i_sb), value, value_len);
- 	ea_inode = ext4_xattr_inode_cache_find(inode, value, value_len, hash);
- 	if (ea_inode) {
- 		err = ext4_xattr_inode_inc_ref(handle, ea_inode);
--		if (err) {
--			iput(ea_inode);
--			return err;
--		}
--
--		*ret_inode = ea_inode;
--		return 0;
-+		if (err)
-+			goto out_err;
-+		return ea_inode;
- 	}
- 
- 	/* Create an inode for the EA value */
- 	ea_inode = ext4_xattr_inode_create(handle, inode, hash);
--	if (IS_ERR(ea_inode))
--		return PTR_ERR(ea_inode);
-+	if (IS_ERR(ea_inode)) {
-+		ext4_xattr_inode_free_quota(inode, NULL, value_len);
-+		return ea_inode;
-+	}
- 
- 	err = ext4_xattr_inode_write(handle, ea_inode, value, value_len);
- 	if (err) {
- 		if (ext4_xattr_inode_dec_ref(handle, ea_inode))
- 			ext4_warning_inode(ea_inode, "cleanup dec ref error %d", err);
--		iput(ea_inode);
--		return err;
-+		goto out_err;
- 	}
- 
- 	if (EA_INODE_CACHE(inode))
- 		mb_cache_entry_create(EA_INODE_CACHE(inode), GFP_NOFS, hash,
- 				      ea_inode->i_ino, true /* reusable */);
--
--	*ret_inode = ea_inode;
--	return 0;
-+	return ea_inode;
-+out_err:
-+	iput(ea_inode);
-+	ext4_xattr_inode_free_quota(inode, NULL, value_len);
-+	return ERR_PTR(err);
- }
- 
- /*
-@@ -1669,16 +1672,11 @@ static int ext4_xattr_set_entry(struct ext4_xattr_info *i,
- 	if (i->value && in_inode) {
- 		WARN_ON_ONCE(!i->value_len);
- 
--		ret = ext4_xattr_inode_alloc_quota(inode, i->value_len);
--		if (ret)
--			goto out;
--
--		ret = ext4_xattr_inode_lookup_create(handle, inode, i->value,
--						     i->value_len,
--						     &new_ea_inode);
--		if (ret) {
-+		new_ea_inode = ext4_xattr_inode_lookup_create(handle, inode,
-+					i->value, i->value_len);
-+		if (IS_ERR(new_ea_inode)) {
-+			ret = PTR_ERR(new_ea_inode);
- 			new_ea_inode = NULL;
--			ext4_xattr_inode_free_quota(inode, NULL, i->value_len);
+@@ -1668,38 +1668,11 @@ static int ext4_xattr_set_entry(struct ext4_xattr_info *i,
+ 			old_ea_inode = NULL;
  			goto out;
  		}
+-	}
+-	if (i->value && in_inode) {
+-		WARN_ON_ONCE(!i->value_len);
+-
+-		new_ea_inode = ext4_xattr_inode_lookup_create(handle, inode,
+-					i->value, i->value_len);
+-		if (IS_ERR(new_ea_inode)) {
+-			ret = PTR_ERR(new_ea_inode);
+-			new_ea_inode = NULL;
+-			goto out;
+-		}
+-	}
+ 
+-	if (old_ea_inode) {
+ 		/* We are ready to release ref count on the old_ea_inode. */
+ 		ret = ext4_xattr_inode_dec_ref(handle, old_ea_inode);
+-		if (ret) {
+-			/* Release newly required ref count on new_ea_inode. */
+-			if (new_ea_inode) {
+-				int err;
+-
+-				err = ext4_xattr_inode_dec_ref(handle,
+-							       new_ea_inode);
+-				if (err)
+-					ext4_warning_inode(new_ea_inode,
+-						  "dec ref new_ea_inode err=%d",
+-						  err);
+-				ext4_xattr_inode_free_quota(inode, new_ea_inode,
+-							    i->value_len);
+-			}
++		if (ret)
+ 			goto out;
+-		}
+ 
+ 		ext4_xattr_inode_free_quota(inode, old_ea_inode,
+ 					    le32_to_cpu(here->e_value_size));
+@@ -1823,7 +1796,6 @@ static int ext4_xattr_set_entry(struct ext4_xattr_info *i,
+ 	ret = 0;
+ out:
+ 	iput(old_ea_inode);
+-	iput(new_ea_inode);
+ 	return ret;
+ }
+ 
+@@ -1886,9 +1858,21 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 	size_t old_ea_inode_quota = 0;
+ 	unsigned int ea_ino;
+ 
+-
+ #define header(x) ((struct ext4_xattr_header *)(x))
+ 
++	/* If we need EA inode, prepare it before locking the buffer */
++	if (i->value && i->in_inode) {
++		WARN_ON_ONCE(!i->value_len);
++
++		ea_inode = ext4_xattr_inode_lookup_create(handle, inode,
++					i->value, i->value_len);
++		if (IS_ERR(ea_inode)) {
++			error = PTR_ERR(ea_inode);
++			ea_inode = NULL;
++			goto cleanup;
++		}
++	}
++
+ 	if (s->base) {
+ 		int offset = (char *)s->here - bs->bh->b_data;
+ 
+@@ -1897,6 +1881,7 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 						      EXT4_JTR_NONE);
+ 		if (error)
+ 			goto cleanup;
++
+ 		lock_buffer(bs->bh);
+ 
+ 		if (header(s->base)->h_refcount == cpu_to_le32(1)) {
+@@ -1923,7 +1908,7 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 			}
+ 			ea_bdebug(bs->bh, "modifying in-place");
+ 			error = ext4_xattr_set_entry(i, s, handle, inode,
+-						     true /* is_block */);
++					     ea_inode, true /* is_block */);
+ 			ext4_xattr_block_csum_set(inode, bs->bh);
+ 			unlock_buffer(bs->bh);
+ 			if (error == -EFSCORRUPTED)
+@@ -1991,29 +1976,13 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 		s->end = s->base + sb->s_blocksize;
  	}
+ 
+-	error = ext4_xattr_set_entry(i, s, handle, inode, true /* is_block */);
++	error = ext4_xattr_set_entry(i, s, handle, inode, ea_inode,
++				     true /* is_block */);
+ 	if (error == -EFSCORRUPTED)
+ 		goto bad_block;
+ 	if (error)
+ 		goto cleanup;
+ 
+-	if (i->value && s->here->e_value_inum) {
+-		/*
+-		 * A ref count on ea_inode has been taken as part of the call to
+-		 * ext4_xattr_set_entry() above. We would like to drop this
+-		 * extra ref but we have to wait until the xattr block is
+-		 * initialized and has its own ref count on the ea_inode.
+-		 */
+-		ea_ino = le32_to_cpu(s->here->e_value_inum);
+-		error = ext4_xattr_inode_iget(inode, ea_ino,
+-					      le32_to_cpu(s->here->e_hash),
+-					      &ea_inode);
+-		if (error) {
+-			ea_inode = NULL;
+-			goto cleanup;
+-		}
+-	}
+-
+ inserted:
+ 	if (!IS_LAST_ENTRY(s->first)) {
+ 		new_bh = ext4_xattr_block_cache_find(inode, header(s->base),
+@@ -2166,17 +2135,16 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 
+ cleanup:
+ 	if (ea_inode) {
+-		int error2;
+-
+-		error2 = ext4_xattr_inode_dec_ref(handle, ea_inode);
+-		if (error2)
+-			ext4_warning_inode(ea_inode, "dec ref error=%d",
+-					   error2);
++		if (error) {
++			int error2;
+ 
+-		/* If there was an error, revert the quota charge. */
+-		if (error)
++			error2 = ext4_xattr_inode_dec_ref(handle, ea_inode);
++			if (error2)
++				ext4_warning_inode(ea_inode, "dec ref error=%d",
++						   error2);
+ 			ext4_xattr_inode_free_quota(inode, ea_inode,
+ 						    i_size_read(ea_inode));
++		}
+ 		iput(ea_inode);
+ 	}
+ 	if (ce)
+@@ -2234,14 +2202,38 @@ int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
+ {
+ 	struct ext4_xattr_ibody_header *header;
+ 	struct ext4_xattr_search *s = &is->s;
++	struct inode *ea_inode = NULL;
+ 	int error;
+ 
+ 	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
+ 		return -ENOSPC;
+ 
+-	error = ext4_xattr_set_entry(i, s, handle, inode, false /* is_block */);
+-	if (error)
++	/* If we need EA inode, prepare it before locking the buffer */
++	if (i->value && i->in_inode) {
++		WARN_ON_ONCE(!i->value_len);
++
++		ea_inode = ext4_xattr_inode_lookup_create(handle, inode,
++					i->value, i->value_len);
++		if (IS_ERR(ea_inode))
++			return PTR_ERR(ea_inode);
++	}
++	error = ext4_xattr_set_entry(i, s, handle, inode, ea_inode,
++				     false /* is_block */);
++	if (error) {
++		if (ea_inode) {
++			int error2;
++
++			error2 = ext4_xattr_inode_dec_ref(handle, ea_inode);
++			if (error2)
++				ext4_warning_inode(ea_inode, "dec ref error=%d",
++						   error2);
++
++			ext4_xattr_inode_free_quota(inode, ea_inode,
++						    i_size_read(ea_inode));
++			iput(ea_inode);
++		}
+ 		return error;
++	}
+ 	header = IHDR(inode, ext4_raw_inode(&is->iloc));
+ 	if (!IS_LAST_ENTRY(s->first)) {
+ 		header->h_magic = cpu_to_le32(EXT4_XATTR_MAGIC);
+@@ -2250,6 +2242,7 @@ int ext4_xattr_ibody_set(handle_t *handle, struct inode *inode,
+ 		header->h_magic = cpu_to_le32(0);
+ 		ext4_clear_inode_state(inode, EXT4_STATE_XATTR);
+ 	}
++	iput(ea_inode);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
