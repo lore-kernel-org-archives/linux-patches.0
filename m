@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFC41C4EDC;
-	Tue, 27 Aug 2024 15:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBC71C4EDD;
+	Tue, 27 Aug 2024 15:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772224; cv=none; b=ID6gpS52OaxHw0tSUuaXwDxojV87RgXNqPvQpRpHjmsrHv9sDgtZZGo0j/R2GQNlvOIxOBxiKzEZ1MmzqSFRQX+oUX4CZvttrUwT1pBw1kGFtDOlDfTNop+nft4vVw6cYXByYioP9fRKeB9teEryB8ClykGtKCn92LA36rYb1lg=
+	t=1724772228; cv=none; b=QX6BpZ/9X2pkeYVFK8G354ePdvCmT6Fh4odhBbyKDDZJY8fZvx892Cn/ZQ3WmnOLjVB1u8JX5KPcfEnIsZEM9hw0xzHJGRhWz9QL3E77LocsFLXvo0GJIwBENajYKAG/Db7aBGUfQGpNDSI7BY9U0SRMO/lQ7xvL77ig2pdNDlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772224; c=relaxed/simple;
-	bh=C0Y99lSR3Ne+BpRn+43lxhVHD835UTaLYAo5vb1k83Y=;
+	s=arc-20240116; t=1724772228; c=relaxed/simple;
+	bh=Yxk2WDclNsLpS1UgMTXXDsOmGvHkAJdAc3+gslvlvp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPmYuFVEMrS5jOlL5OvrJNjLPO82bvlVPLxxGm/05B4a4vZJK4DECwOMkHEfF2UVog/DfROkV1Z2XxXh2g1ZIywWFKFhVaoFNsqeX4EMGgodZg7/ovk+/tZ4hEnGI1s8GHsEnKZJeOOF+cmRE+XhfkyFKu2IwH7G/xSlI4SZtfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEUdkgWl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPAPYf3Mg5bq+4pFoZbjtRrH11xyitjifcD0h1fXWUFqDrPFPDou0noNuCek6ZG+BgKuxYcBQJQLkfq2PzMw8OBDRlY1y0YevjGS97I+yAjMNT028LDhG8aIorBHLk5YBdb5u+LiyfjorJGW4BH2+4gcGRRe5SshGhShrRiO8cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1s5J/LP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEUdkgWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A8AC61064;
-	Tue, 27 Aug 2024 15:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1s5J/LP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51329C61062;
+	Tue, 27 Aug 2024 15:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772224;
-	bh=C0Y99lSR3Ne+BpRn+43lxhVHD835UTaLYAo5vb1k83Y=;
+	s=korg; t=1724772227;
+	bh=Yxk2WDclNsLpS1UgMTXXDsOmGvHkAJdAc3+gslvlvp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MEUdkgWltI7RJ7EW/ow+tUZ4uOODt0oHkF0VDUJXC5QVbeRUNfViJOUop3dnMDs4h
-	 BTijffzkSOA49pUeonkDCBCDnjS+5klH36bOcWs+j5vPVcugQuBpOvqTyY6N/7eLR5
-	 +46f9P9u3XL/41WvjbUg064NNkjX4Id/Hv++D3G4=
+	b=U1s5J/LPR9aBsKolmUV9Mxvd4soVD0sCl6evE/Xt05Vo6UGSQ+/rCYgntmgA7Ad40
+	 HjtyC77ry9WEbzHWdmX+PUQgUoG/2Sk4Ts4+xDJPoHI4LYlOUY7laEIUmh7yb4viV6
+	 dqcLknBPStT4NIX5VtYTevl/XPHoyaaS6psZ8ZsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ashish Mhetre <amhetre@nvidia.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/321] memory: tegra: Skip SID programming if SID registers arent set
-Date: Tue, 27 Aug 2024 16:37:39 +0200
-Message-ID: <20240827143843.983950376@linuxfoundation.org>
+Subject: [PATCH 6.1 134/321] drm/tegra: Zero-initialize iosys_map
+Date: Tue, 27 Aug 2024 16:37:22 +0200
+Message-ID: <20240827143843.344694229@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -51,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Mhetre <amhetre@nvidia.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 0d6c918011ce4764ed277de4726a468b7ffe5fed ]
+[ Upstream commit 3868ff006b572cf501a3327832d36c64a9eca86a ]
 
-There are few MC clients where SID security and override register
-offsets are not specified like "sw_cluster0" in tegra234. Don't program
-SID override for such clients because it leads to access to invalid
-addresses.
+UBSAN reports an invalid load for bool, as the iosys_map is read
+later without being initialized. Zero-initialize it to avoid this.
 
-Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
-Link: https://lore.kernel.org/r/20231107112713.21399-2-amhetre@nvidia.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reported-by: Ashish Mhetre <amhetre@nvidia.com>
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230901115910.701518-2-cyndis@kapsi.fi
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/tegra186.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/tegra/gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
-index 7bb73f06fad3e..fd6f5e2e01a28 100644
---- a/drivers/memory/tegra/tegra186.c
-+++ b/drivers/memory/tegra/tegra186.c
-@@ -74,6 +74,9 @@ static void tegra186_mc_client_sid_override(struct tegra_mc *mc,
+diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
+index 81991090adcc9..cd06f25499549 100644
+--- a/drivers/gpu/drm/tegra/gem.c
++++ b/drivers/gpu/drm/tegra/gem.c
+@@ -175,7 +175,7 @@ static void tegra_bo_unpin(struct host1x_bo_mapping *map)
+ static void *tegra_bo_mmap(struct host1x_bo *bo)
  {
- 	u32 value, old;
+ 	struct tegra_bo *obj = host1x_to_tegra_bo(bo);
+-	struct iosys_map map;
++	struct iosys_map map = { 0 };
+ 	int ret;
  
-+	if (client->regs.sid.security == 0 && client->regs.sid.override == 0)
-+		return;
-+
- 	value = readl(mc->regs + client->regs.sid.security);
- 	if ((value & MC_SID_STREAMID_SECURITY_OVERRIDE) == 0) {
- 		/*
+ 	if (obj->vaddr) {
 -- 
 2.43.0
 
