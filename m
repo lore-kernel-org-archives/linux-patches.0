@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE791C8FDF;
-	Tue, 27 Aug 2024 15:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1FF1C57BF;
+	Tue, 27 Aug 2024 15:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772197; cv=none; b=IaY23wcf9hCuT3ttRJ+1JRCFNohQm1Mbt4NSgQ/kypdAO6ptEoJ4a7rI035UBfyNSLFV0uuzfPPirBkatRCimXEHeK50qxomSmo6ezZ9uNjpkXCSLrKubriuXS0VnyLxgtj6PUeKcxJ88PGpcCwxqJnQNLN0O4x/ODgRR1r/puk=
+	t=1724772201; cv=none; b=LuXxiuYN8PoomPZF0m0/+IsXOw4BG9xVR0zImUl5sPWvW66RKpp1JMYlKLbHPiCiOg3fzgiVUxQETGo6BQo+VVzkl4SYbiQ4EcSuafXF9b/fetfLFC861tHaLPKtqodtSxANLlpefmdB751BwIdI7frY+Tam5FTbaOqIeh5EHgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772197; c=relaxed/simple;
-	bh=Ja4GV8VvfaHb9Xf0YhFvimdf70iesISEqZocGR19k9Q=;
+	s=arc-20240116; t=1724772201; c=relaxed/simple;
+	bh=nYxZ4zvw5B4ZhcOnFKLIlivTV2g8hFt/kS6iOtoVMmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Af+PJAQ2tw2NJbcphTxQHhxuDTmQzOpKozTLXKDCMNHfQG27i+Eismb9ANDyuTeaR74k5nWZOrddR8DvX0GYJNKFXuK+wl7W9CBlMuTOysL+pHH8eXy/QMuWHJywNEjyRjT9Jca6ddQCTC4BPQwStDnu580iFmHifoqlU5CY5ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6hsue+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OfM1ixOl53fS8CFwASZ5TfE/qvWzArTa6racOFhM2P/j6Fa0qcqlOlC3qcUAAxj9xvnzbfltWydI49EuDl4dUnHYsB7WNN05ITgqNPHOijuer8H7Q+wrzWPSgiz+UFC9ESFc4Kxjq6JqQ/UpN3bz/JX6EZh9OheuvvVEsl/YPqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/HhyqNO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6hsue+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAABDC6105D;
-	Tue, 27 Aug 2024 15:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/HhyqNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218BAC6105E;
+	Tue, 27 Aug 2024 15:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772197;
-	bh=Ja4GV8VvfaHb9Xf0YhFvimdf70iesISEqZocGR19k9Q=;
+	s=korg; t=1724772200;
+	bh=nYxZ4zvw5B4ZhcOnFKLIlivTV2g8hFt/kS6iOtoVMmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6hsue+WWv+7GLYTyWq8aoip8zmbFxfpUzXmqR39gG5aO91Q7ZXrqb0k7Trofzqah
-	 kcgnNAHOqSkReRm1zJ220aKxety3G/UfSEm52KqFLzf5f6iiQZZpou0m1WOAsaSs5J
-	 XwPKJSxKWpNk963yk1VIwMbl/bD9fVv5YA3aSvqM=
+	b=K/HhyqNO4kGTMNQgR3agxFfnzcfBtGUIghWH9qnYQOVw8vFcsTbtzgD7dRP2PtEtQ
+	 Xi1vrHS7cDS6NjMrnU6EOmSr5sMlUGIN9zEGMltIV8M515rNkoEdJXL4ZDkc5cPKxK
+	 6mN7g9ajAcc9pjwJSgVeD2vnYnCjSy3sEUokuZzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
 	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/321] kbuild: rust_is_available: normalize version matching
-Date: Tue, 27 Aug 2024 16:37:31 +0200
-Message-ID: <20240827143843.682389537@linuxfoundation.org>
+Subject: [PATCH 6.1 144/321] kbuild: rust_is_available: handle failures calling `$RUSTC`/`$BINDGEN`
+Date: Tue, 27 Aug 2024 16:37:32 +0200
+Message-ID: <20240827143843.719414862@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -55,68 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 7cd6a3e1f94bab4f2a3425e06f70ab13eb8190d4 ]
+[ Upstream commit f295522886a4ebb628cadb2cd74d0661d6292978 ]
 
-In order to match the version string, `sed` is used in a couple
-cases, and `grep` and `head` in a couple others.
+The script already checks if `$RUSTC` and `$BINDGEN` exists via
+`command`, but the environment variables may point to a
+non-executable file, or the programs may fail for some other reason.
+While the script successfully exits with a failure as it should,
+the error given can be quite confusing depending on the shell and
+the behavior of its `command`. For instance, with `dash`:
 
-Make the script more consistent and easier to understand by
-using the same method, `sed`, for all of them.
+    $ RUSTC=./mm BINDGEN=bindgen CC=clang scripts/rust_is_available.sh
+    scripts/rust_is_available.sh: 19: arithmetic expression: expecting primary: "100000 *  + 100 *  + "
 
-This makes the version matching also a bit more strict for
-the changed cases, since the strings `rustc ` and `bindgen `
-will now be required, which should be fine since `rustc`
-complains if one attempts to call it with another program
-name, and `bindgen` uses a hardcoded string.
+Thus detect failure exit codes when calling `$RUSTC` and `$BINDGEN` and
+print a better message, in a similar way to what we do when extracting
+the `libclang` version found by `bindgen`.
 
-In addition, clarify why one of the existing `sed` commands
-does not provide an address like the others.
-
+Link: https://lore.kernel.org/rust-for-linux/CAK7LNAQYk6s11MASRHW6oxtkqF00EJVqhHOP=5rynWt-QDUsXw@mail.gmail.com/
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
 Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Link: https://lore.kernel.org/r/20230616001631.463536-9-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20230616001631.463536-10-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Stable-dep-of: 5ce86c6c8613 ("rust: suppress error messages from CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ scripts/rust_is_available.sh | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
 diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 7a925d2b20fc7..db4519945f534 100755
+index db4519945f534..1c9081d9dbea7 100755
 --- a/scripts/rust_is_available.sh
 +++ b/scripts/rust_is_available.sh
-@@ -40,8 +40,7 @@ fi
+@@ -38,8 +38,20 @@ fi
+ # Check that the Rust compiler version is suitable.
+ #
  # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
++rust_compiler_output=$( \
++	LC_ALL=C "$RUSTC" --version 2>/dev/null
++) || rust_compiler_code=$?
++if [ -n "$rust_compiler_code" ]; then
++	echo >&2 "***"
++	echo >&2 "*** Running '$RUSTC' to check the Rust compiler version failed with"
++	echo >&2 "*** code $rust_compiler_code. See output and docs below for details:"
++	echo >&2 "***"
++	echo >&2 "$rust_compiler_output"
++	echo >&2 "***"
++	exit 1
++fi
  rust_compiler_version=$( \
- 	LC_ALL=C "$RUSTC" --version 2>/dev/null \
--		| head -n 1 \
--		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
-+		| sed -nE '1s:.*rustc ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+-	LC_ALL=C "$RUSTC" --version 2>/dev/null \
++	echo "$rust_compiler_output" \
+ 		| sed -nE '1s:.*rustc ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
  )
  rust_compiler_min_version=$($min_tool_version rustc)
- rust_compiler_cversion=$(get_canonical_version $rust_compiler_version)
-@@ -67,8 +66,7 @@ fi
+@@ -64,8 +76,20 @@ fi
+ # Check that the Rust bindings generator is suitable.
+ #
  # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
++rust_bindings_generator_output=$( \
++	LC_ALL=C "$BINDGEN" --version 2>/dev/null
++) || rust_bindings_generator_code=$?
++if [ -n "$rust_bindings_generator_code" ]; then
++	echo >&2 "***"
++	echo >&2 "*** Running '$BINDGEN' to check the Rust bindings generator version failed with"
++	echo >&2 "*** code $rust_bindings_generator_code. See output and docs below for details:"
++	echo >&2 "***"
++	echo >&2 "$rust_bindings_generator_output"
++	echo >&2 "***"
++	exit 1
++fi
  rust_bindings_generator_version=$( \
- 	LC_ALL=C "$BINDGEN" --version 2>/dev/null \
--		| head -n 1 \
--		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
-+		| sed -nE '1s:.*bindgen ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+-	LC_ALL=C "$BINDGEN" --version 2>/dev/null \
++	echo "$rust_bindings_generator_output" \
+ 		| sed -nE '1s:.*bindgen ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
  )
  rust_bindings_generator_min_version=$($min_tool_version bindgen)
- rust_bindings_generator_cversion=$(get_canonical_version $rust_bindings_generator_version)
-@@ -110,6 +108,9 @@ fi
- 
- # `bindgen` returned successfully, thus use the output to check that the version
- # of the `libclang` found by the Rust bindings generator is suitable.
-+#
-+# Unlike other version checks, note that this one does not necessarily appear
-+# in the first line of the output, thus no `sed` address is provided.
- bindgen_libclang_version=$( \
- 	echo "$bindgen_libclang_output" \
- 		| sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
 -- 
 2.43.0
 
