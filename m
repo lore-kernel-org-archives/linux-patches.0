@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B67B1C6887;
-	Tue, 27 Aug 2024 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F781C4EC9;
+	Tue, 27 Aug 2024 15:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770906; cv=none; b=TXLFW142WnQBtPwWMcqF2Bkuq1zyL+lTgwvwDi43PArubWf2Qkq6nUfPmy/0BiCeTWORMzN+8Dfht1DneNHRJediGb6CxzTcwCJnH+b3NLTiWSIHNH3RS+/qYAocWudbx3MEaoQ6ycq8YTgJbhAuYc9fvekIbPAI+nPNOIkVEHM=
+	t=1724770909; cv=none; b=H8Ue51p7oBMmUmpOSRDeBKaX6dQBOpswOiNiEUOqwZIszN/Irzg4nGxUnqxY2Vf/wKOTewlqh/f8+6CbprMzpTEi7zAI35eJqv0pvopIMcUW/DSxTt0khsvifXGabS/EPnqWmp6+cnRnOpvIi8rsDVlPG9p3S1fHUlAKEz6ydhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770906; c=relaxed/simple;
-	bh=djn+d+KGpj1u9XiJRR/k6hkIp+Ti34EV2qwAUCvAQ0Q=;
+	s=arc-20240116; t=1724770909; c=relaxed/simple;
+	bh=n5SNh+c45OKlmDnzNIfnaIX5db3UUKVQqyiCU4mrPbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=culE680zLbPDoF5klfvTF9qCeByw3abag5PiJASzzNLdzsH5sPhFw/Ld4hyZ9l0sxNMz3dbCjLnnV2M8g8Etvi4R3PkVmUmVOx6jrmglFe+17mJ8ltL/69gVFn6swBDUTYV2Ag4Mgz64KH6Ec0/2SIdRmLzoq8neWTSpKM0WK2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZbTZMk6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZlWtELF7OchS8ctPeLIZcQKywN+msoEZ2w8HnscmKYk2Gx5NjEFLrYpNoO8RVhPlWuUxQKT64LEE7RL4ci/NQJ1CMH3kxC40SBTq2PG+xqNAPc9xhH64Us7QJ3rzLgGNtzGYd0rfYpZF5i1rrks1a6u+BR6FOoOqcnCAd4oUxhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0RkF44v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZbTZMk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E72C4AF1C;
-	Tue, 27 Aug 2024 15:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0RkF44v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AD8C4DDF3;
+	Tue, 27 Aug 2024 15:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770905;
-	bh=djn+d+KGpj1u9XiJRR/k6hkIp+Ti34EV2qwAUCvAQ0Q=;
+	s=korg; t=1724770909;
+	bh=n5SNh+c45OKlmDnzNIfnaIX5db3UUKVQqyiCU4mrPbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZbTZMk6ugbOLmGIWXlwdr4E61zJs7YgxCY20f5/BcyWswiR2Iw+FK1LBxIgiLnak
-	 75OcLWbBn/QbH4sDe4CEKSIycQ/OAXahCT3rZNWXfKFKMLMQCyFQZgie7r/0/kXnLs
-	 sSfzFOxk5dv4dA/WaG7tx+97+KxDDCUhTF0bzR4s=
+	b=d0RkF44v2Z2CkZ5JmmSY2YdiSmIdi5aBfotjRYyOBmjdC9R4PcB08kDWMxSMaJMVg
+	 gplLNbm4hahpq8CLBaLkaurzuLbxiAMqw2NsAN/3vOvTgAifDToF3IUU4cjqX1WmD+
+	 eyU8t8kawC+oQ6KsiNK+A6FMVJVeDZB3NLcll9YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.10 004/273] Revert "ACPI: EC: Evaluate orphan _REG under EC device"
-Date: Tue, 27 Aug 2024 16:35:28 +0200
-Message-ID: <20240827143833.545263242@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.10 005/273] Revert "misc: fastrpc: Restrict untrusted app to attach to privileged PD"
+Date: Tue, 27 Aug 2024 16:35:29 +0200
+Message-ID: <20240827143833.583684087@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,146 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit 779bac9994452f6a894524f70c00cfb0cd4b6364 upstream.
+commit 9bb5e74b2bf88fbb024bb15ded3b011e02c673be upstream.
 
-This reverts commit 0e6b6dedf168 ("Revert "ACPI: EC: Evaluate orphan
-_REG under EC device") because the problem addressed by it will be
-addressed differently in what follows.
+This reverts commit bab2f5e8fd5d2f759db26b78d9db57412888f187.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/3236716.5fSG56mABF@rjwysocki.net
+Joel reported that this commit breaks userspace and stops sensors in
+SDM845 from working. Also breaks other qcom SoC devices running postmarketOS.
+
+Cc: stable <stable@kernel.org>
+Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reported-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Link: https://lore.kernel.org/r/9a9f5646-a554-4b65-8122-d212bb665c81@umsystem.edu
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Fixes: bab2f5e8fd5d ("misc: fastrpc: Restrict untrusted app to attach to privileged PD")
+Link: https://lore.kernel.org/r/20240815094920.8242-1-griffin@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/acevents.h |    4 ---
- drivers/acpi/acpica/evregion.c |    6 +++-
- drivers/acpi/acpica/evxfregn.c |   54 -----------------------------------------
- drivers/acpi/ec.c              |    3 --
- include/acpi/acpixf.h          |    4 ---
- 5 files changed, 5 insertions(+), 66 deletions(-)
+ drivers/misc/fastrpc.c      |   22 +++-------------------
+ include/uapi/misc/fastrpc.h |    3 ---
+ 2 files changed, 3 insertions(+), 22 deletions(-)
 
---- a/drivers/acpi/acpica/acevents.h
-+++ b/drivers/acpi/acpica/acevents.h
-@@ -191,10 +191,6 @@ void
- acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
- 			    acpi_adr_space_type space_id, u32 function);
- 
--void
--acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *node,
--				  acpi_adr_space_type space_id);
--
- acpi_status
- acpi_ev_execute_reg_method(union acpi_operand_object *region_obj, u32 function);
- 
---- a/drivers/acpi/acpica/evregion.c
-+++ b/drivers/acpi/acpica/evregion.c
-@@ -20,6 +20,10 @@ extern u8 acpi_gbl_default_address_space
- 
- /* Local prototypes */
- 
-+static void
-+acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
-+				  acpi_adr_space_type space_id);
-+
- static acpi_status
- acpi_ev_reg_run(acpi_handle obj_handle,
- 		u32 level, void *context, void **return_value);
-@@ -814,7 +818,7 @@ acpi_ev_reg_run(acpi_handle obj_handle,
-  *
-  ******************************************************************************/
- 
--void
-+static void
- acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
- 				  acpi_adr_space_type space_id)
- {
---- a/drivers/acpi/acpica/evxfregn.c
-+++ b/drivers/acpi/acpica/evxfregn.c
-@@ -306,57 +306,3 @@ acpi_execute_reg_methods(acpi_handle dev
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -2087,16 +2087,6 @@ err_invoke:
+ 	return err;
  }
  
- ACPI_EXPORT_SYMBOL(acpi_execute_reg_methods)
--
--/*******************************************************************************
-- *
-- * FUNCTION:    acpi_execute_orphan_reg_method
-- *
-- * PARAMETERS:  device          - Handle for the device
-- *              space_id        - The address space ID
-- *
-- * RETURN:      Status
-- *
-- * DESCRIPTION: Execute an "orphan" _REG method that appears under an ACPI
-- *              device. This is a _REG method that has no corresponding region
-- *              within the device's scope.
-- *
-- ******************************************************************************/
--acpi_status
--acpi_execute_orphan_reg_method(acpi_handle device, acpi_adr_space_type space_id)
+-static int is_attach_rejected(struct fastrpc_user *fl)
 -{
--	struct acpi_namespace_node *node;
--	acpi_status status;
--
--	ACPI_FUNCTION_TRACE(acpi_execute_orphan_reg_method);
--
--	/* Parameter validation */
--
--	if (!device) {
--		return_ACPI_STATUS(AE_BAD_PARAMETER);
+-	/* Check if the device node is non-secure */
+-	if (!fl->is_secure_dev) {
+-		dev_dbg(&fl->cctx->rpdev->dev, "untrusted app trying to attach to privileged DSP PD\n");
+-		return -EACCES;
 -	}
--
--	status = acpi_ut_acquire_mutex(ACPI_MTX_NAMESPACE);
--	if (ACPI_FAILURE(status)) {
--		return_ACPI_STATUS(status);
--	}
--
--	/* Convert and validate the device handle */
--
--	node = acpi_ns_validate_handle(device);
--	if (node) {
--
--		/*
--		 * If an "orphan" _REG method is present in the device's scope
--		 * for the given address space ID, run it.
--		 */
--
--		acpi_ev_execute_orphan_reg_method(node, space_id);
--	} else {
--		status = AE_BAD_PARAMETER;
--	}
--
--	(void)acpi_ut_release_mutex(ACPI_MTX_NAMESPACE);
--	return_ACPI_STATUS(status);
+-	return 0;
 -}
 -
--ACPI_EXPORT_SYMBOL(acpi_execute_orphan_reg_method)
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1507,9 +1507,6 @@ static int ec_install_handlers(struct ac
- 
- 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
- 		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
--		if (scope_handle != ec->handle)
--			acpi_execute_orphan_reg_method(ec->handle, ACPI_ADR_SPACE_EC);
--
- 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
- 	}
- 
---- a/include/acpi/acpixf.h
-+++ b/include/acpi/acpixf.h
-@@ -663,10 +663,6 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
- 						     acpi_adr_space_type
- 						     space_id))
- ACPI_EXTERNAL_RETURN_STATUS(acpi_status
--			    acpi_execute_orphan_reg_method(acpi_handle device,
--							   acpi_adr_space_type
--							   space_id))
--ACPI_EXTERNAL_RETURN_STATUS(acpi_status
- 			    acpi_remove_address_space_handler(acpi_handle
- 							      device,
- 							      acpi_adr_space_type
+ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
+ 				 unsigned long arg)
+ {
+@@ -2109,19 +2099,13 @@ static long fastrpc_device_ioctl(struct
+ 		err = fastrpc_invoke(fl, argp);
+ 		break;
+ 	case FASTRPC_IOCTL_INIT_ATTACH:
+-		err = is_attach_rejected(fl);
+-		if (!err)
+-			err = fastrpc_init_attach(fl, ROOT_PD);
++		err = fastrpc_init_attach(fl, ROOT_PD);
+ 		break;
+ 	case FASTRPC_IOCTL_INIT_ATTACH_SNS:
+-		err = is_attach_rejected(fl);
+-		if (!err)
+-			err = fastrpc_init_attach(fl, SENSORS_PD);
++		err = fastrpc_init_attach(fl, SENSORS_PD);
+ 		break;
+ 	case FASTRPC_IOCTL_INIT_CREATE_STATIC:
+-		err = is_attach_rejected(fl);
+-		if (!err)
+-			err = fastrpc_init_create_static_process(fl, argp);
++		err = fastrpc_init_create_static_process(fl, argp);
+ 		break;
+ 	case FASTRPC_IOCTL_INIT_CREATE:
+ 		err = fastrpc_init_create_process(fl, argp);
+--- a/include/uapi/misc/fastrpc.h
++++ b/include/uapi/misc/fastrpc.h
+@@ -8,14 +8,11 @@
+ #define FASTRPC_IOCTL_ALLOC_DMA_BUFF	_IOWR('R', 1, struct fastrpc_alloc_dma_buf)
+ #define FASTRPC_IOCTL_FREE_DMA_BUFF	_IOWR('R', 2, __u32)
+ #define FASTRPC_IOCTL_INVOKE		_IOWR('R', 3, struct fastrpc_invoke)
+-/* This ioctl is only supported with secure device nodes */
+ #define FASTRPC_IOCTL_INIT_ATTACH	_IO('R', 4)
+ #define FASTRPC_IOCTL_INIT_CREATE	_IOWR('R', 5, struct fastrpc_init_create)
+ #define FASTRPC_IOCTL_MMAP		_IOWR('R', 6, struct fastrpc_req_mmap)
+ #define FASTRPC_IOCTL_MUNMAP		_IOWR('R', 7, struct fastrpc_req_munmap)
+-/* This ioctl is only supported with secure device nodes */
+ #define FASTRPC_IOCTL_INIT_ATTACH_SNS	_IO('R', 8)
+-/* This ioctl is only supported with secure device nodes */
+ #define FASTRPC_IOCTL_INIT_CREATE_STATIC _IOWR('R', 9, struct fastrpc_init_create_static)
+ #define FASTRPC_IOCTL_MEM_MAP		_IOWR('R', 10, struct fastrpc_mem_map)
+ #define FASTRPC_IOCTL_MEM_UNMAP		_IOWR('R', 11, struct fastrpc_mem_unmap)
 
 
