@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDEA1C6886;
-	Tue, 27 Aug 2024 14:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D02F38DC7;
+	Tue, 27 Aug 2024 14:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770336; cv=none; b=RLDfTtR9j9Dt7WFhmEhUUrCDKCanhWPi/vh+h77oqUEkCUdmBWS958tEYs1YKYGsm+wHs1V/dwScNLBeIuYLbVEXBqspQKS8l2tJg6TlLBg1le203riT+7eS+R0758tmziTK/HfuriTNiJtdZ322dUekbrRG12UB7/ihOKvpgXE=
+	t=1724770339; cv=none; b=bsVSL5dEl1KK23t3flOxNWrWKPZ7UCK7TD1x8O8frs4Y5hIDLdiyxCwkkv5fbgC72WzmjImGwKTAN9wWaSDtN+EbGF3Yj1fGV7bgwkJIRuayeH6TEmPCJXDZ2j4EeR4zEkkGtaTSuSzNtQne9A6PJLJwFKv1FwebGiTyaRkaQWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770336; c=relaxed/simple;
-	bh=yYdQyt9odB9qy0JuDVtkLJW9Q/S2bIPCxwZWnQvlilk=;
+	s=arc-20240116; t=1724770339; c=relaxed/simple;
+	bh=fzNjaX2gKKCB7mlz9d7xrlb5UfIgtwXS08EYubzfLLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGFc+mfa5b1NLBS9tj6AhgqrbEw9/Ek2LdS4aNXFJGeWDunvepJcJ04tfRpSv67ksz4JjI9+A4U8eCYoo38dT2QOr/vsagTML0DizQtMT6dQHlqsDK9Le+12sZfmj58n5BUX4BKXy9phPaN7/mwzT0VPiiLciqQk9o+KTtwSI8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hx3TpmYg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NnylPpdsQMC/3USbnJAbdQllJixMn3O/wU9AL2rSA8fxVFGzRg/dLvlQetOKPZdVJ/a1ay96TKTePPZPoNi1DUc/H1XayQAVp2SxHBV2nhv8cDjdWFMVInEfK1JxrKPfpm9LXd/CCE56HSRHoWzvW0QkcUtAkIQ0XpS+ja914/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHZlu7O3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hx3TpmYg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EC5C4DE14;
-	Tue, 27 Aug 2024 14:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHZlu7O3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7144C4DE1E;
+	Tue, 27 Aug 2024 14:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770335;
-	bh=yYdQyt9odB9qy0JuDVtkLJW9Q/S2bIPCxwZWnQvlilk=;
+	s=korg; t=1724770339;
+	bh=fzNjaX2gKKCB7mlz9d7xrlb5UfIgtwXS08EYubzfLLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hx3TpmYg/tAu9Q8+E6MomlnQS+PzFSQGIdBKfXhuh+jMXS76RYPTeWXgYp57mGB0G
-	 5kn3l3dfO61Yu6F8RuvgWUuOQcOyJOAgHKeRtecLgNGKkmYsiajBqxbt/FPeHLChNy
-	 g2IvZJiK4NIyapDX+pHqEpKm+aYosippXBFIQ9uA=
+	b=yHZlu7O355+lj8J1jGWw0qM9XMMA3Ibo8ml9uXHUXK9ffxkO4VEPYzkzw1e0mo51R
+	 njHI1SHvo6ezI/PdvsMICs0iGXg0bRaK6tq+CXe8JtmfoPmSLmuy9spPBKyIB4eLBv
+	 mbtjU16ZUa3CyuuQgIY1sQCdtNSehbirBZHJCFII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/341] rtc: nct3018y: fix possible NULL dereference
-Date: Tue, 27 Aug 2024 16:37:10 +0200
-Message-ID: <20240827143850.986408370@linuxfoundation.org>
+Subject: [PATCH 6.6 200/341] net: hns3: add checking for vf id of mailbox
+Date: Tue, 27 Aug 2024 16:37:11 +0200
+Message-ID: <20240827143851.025007304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,49 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit babfeb9cbe7ebc657bd5b3e4f9fde79f560b6acc ]
+[ Upstream commit 4e2969a0d6a7549bc0bc1ebc990588b622c4443d ]
 
-alarm_enable and alarm_flag are allowed to be NULL but will be dereferenced
-later by the dev_dbg call.
+Add checking for vf id of mailbox, in order to avoid array
+out-of-bounds risk.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202305180042.DEzW1pSd-lkp@intel.com/
-Link: https://lore.kernel.org/r/20240229222127.1878176-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-nct3018y.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rtc/rtc-nct3018y.c b/drivers/rtc/rtc-nct3018y.c
-index ed4e606be8e58..c4533c0f53896 100644
---- a/drivers/rtc/rtc-nct3018y.c
-+++ b/drivers/rtc/rtc-nct3018y.c
-@@ -99,6 +99,8 @@ static int nct3018y_get_alarm_mode(struct i2c_client *client, unsigned char *ala
- 		if (flags < 0)
- 			return flags;
- 		*alarm_enable = flags & NCT3018Y_BIT_AIE;
-+		dev_dbg(&client->dev, "%s:alarm_enable:%x\n", __func__, *alarm_enable);
-+
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+index 877feee53804f..61e155c4d441e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+@@ -1124,10 +1124,11 @@ void hclge_mbx_handler(struct hclge_dev *hdev)
+ 		req = (struct hclge_mbx_vf_to_pf_cmd *)desc->data;
  
- 	if (alarm_flag) {
-@@ -107,11 +109,9 @@ static int nct3018y_get_alarm_mode(struct i2c_client *client, unsigned char *ala
- 		if (flags < 0)
- 			return flags;
- 		*alarm_flag = flags & NCT3018Y_BIT_AF;
-+		dev_dbg(&client->dev, "%s:alarm_flag:%x\n", __func__, *alarm_flag);
- 	}
+ 		flag = le16_to_cpu(crq->desc[crq->next_to_use].flag);
+-		if (unlikely(!hnae3_get_bit(flag, HCLGE_CMDQ_RX_OUTVLD_B))) {
++		if (unlikely(!hnae3_get_bit(flag, HCLGE_CMDQ_RX_OUTVLD_B) ||
++			     req->mbx_src_vfid > hdev->num_req_vfs)) {
+ 			dev_warn(&hdev->pdev->dev,
+-				 "dropped invalid mailbox message, code = %u\n",
+-				 req->msg.code);
++				 "dropped invalid mailbox message, code = %u, vfid = %u\n",
++				 req->msg.code, req->mbx_src_vfid);
  
--	dev_dbg(&client->dev, "%s:alarm_enable:%x alarm_flag:%x\n",
--		__func__, *alarm_enable, *alarm_flag);
--
- 	return 0;
- }
- 
+ 			/* dropping/not processing this invalid message */
+ 			crq->desc[crq->next_to_use].flag = 0;
 -- 
 2.43.0
 
