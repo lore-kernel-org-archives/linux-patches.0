@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055791C57BD;
-	Tue, 27 Aug 2024 14:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADB11C688E;
+	Tue, 27 Aug 2024 14:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770261; cv=none; b=P75tJNkJcpFp9kL/8Ez1iK+FK3/9bdFhWoXyPB+eMvfin3hcW8HZ5m/QuexiJgDx5iSgFIB5ahIMKPJlFkPaiZMTnKkFq7+R5JNglvLwBtlwjQ6O+Qir8wdpGIi0KZ2ybsDpSuy0hbguqizlkc03E+c/FPCZZfIwfK1w9CzQyqw=
+	t=1724770264; cv=none; b=bq+jzWCVe0OVFWeImkbEboheQpmI2gv5IE+PTz6Eox8vR5Y+xZ/bk5d7IwDa4SaXgZHDgYaZAvIJlevBSFovxT/WjbsT8wQ3XVhjSdJbJTsjrUy/+cAV9/i2CEdJfxWEH8wHW56ppU4fjy1hZs1CGzzWr1O0feZmC2tih4+bkQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770261; c=relaxed/simple;
-	bh=15THewnaL3j6CycV+DrdH3/NFLdQ9V+SthRM2ALRREc=;
+	s=arc-20240116; t=1724770264; c=relaxed/simple;
+	bh=Yjjqw6/8ps5SGMhQmeHj5MqEb2BvIyCANE+1HWRG/1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCI1CdD/Vu4yLN5XYs4v/kkDXzfLkTzkNkX5t7Ttbu2h+DjSm/4zwLFfuYoGa9nPfQCzShtOmpNPBIiRxO12csAe3sC6/TJ25IRiypPdSFNuGjfepZVJueXN3FG5Hahjzhi32YGnUa1pilMLFzf36ZxpcRsON2Ekr6ApsYDnfyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndDSZEOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bz/k7tMoqRG5s+RClMN00phvhxaAkMnVsrqj97S8l8LCvuJUQIM44L8CvyjtVyG6/ZP4hSojzorEJzvw8L6bC4vvrIEYMiIZC8GItyKszhGrzUI3fy0I3G24tQnPIwUs+5mHHj8224VOtODkwnm2R6RVtku8o7cQ8uMYGT+BoAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiGtOdc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndDSZEOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65EB2C4DE02;
-	Tue, 27 Aug 2024 14:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiGtOdc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ACCC4DDFF;
+	Tue, 27 Aug 2024 14:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770260;
-	bh=15THewnaL3j6CycV+DrdH3/NFLdQ9V+SthRM2ALRREc=;
+	s=korg; t=1724770264;
+	bh=Yjjqw6/8ps5SGMhQmeHj5MqEb2BvIyCANE+1HWRG/1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndDSZEOUKYJihgiKf+UcBtCU/n+oIizgI1vvjPCYz/4y1z7udEWZUjdZuI6Ug/QxE
-	 hEKUNCdMJye4QHyvv8L4bQLFM8Lwa1y9mHi21lTyOrUwK9n7tKLbjAVRs18uA8+4dB
-	 haPRsuK0C4iD2rbpb2zjvH2JYuxp2HQRHw0hZIa8=
+	b=YiGtOdc1Whc72T3s+HBrvFKYjzPvChu7zMaPQiyNM9Ooz/j0NNZNIp8iVzgs66hll
+	 JyRs16l9q+d+AikFUQX2wpDUhkunxVgGzqVMGP47rwwa9RKW60bkT2V/M0I575R+s3
+	 G8F7kedRHTNITrkDjEbD0XOKKc1kIxDNI2KuljKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/341] netlink: hold nlk->cb_mutex longer in __netlink_dump_start()
-Date: Tue, 27 Aug 2024 16:36:46 +0200
-Message-ID: <20240827143850.074189597@linuxfoundation.org>
+Subject: [PATCH 6.6 176/341] md: clean up invalid BUG_ON in md_ioctl
+Date: Tue, 27 Aug 2024 16:36:47 +0200
+Message-ID: <20240827143850.112057994@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,78 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit b5590270068c4324dac4a2b5a4a156e02e21339f ]
+[ Upstream commit 9dd8702e7cd28ebf076ff838933f29cf671165ec ]
 
-__netlink_dump_start() releases nlk->cb_mutex right before
-calling netlink_dump() which grabs it again.
+'disk->private_data' is set to mddev in md_alloc() and never set to NULL,
+and users need to open mddev before submitting ioctl. So mddev must not
+have been freed during ioctl, and there is no need to check mddev here.
+Clean up it.
 
-This seems dangerous, even if KASAN did not bother yet.
-
-Add a @lock_taken parameter to netlink_dump() to let it
-grab the mutex if called from netlink_recvmsg() only.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240226031444.3606764-4-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/md/md.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 6ae782efb1ee3..db49fc4d42cf7 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -130,7 +130,7 @@ static const char *const nlk_cb_mutex_key_strings[MAX_LINKS + 1] = {
- 	"nlk_cb_mutex-MAX_LINKS"
- };
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 35b003b83ef1b..d1f6770c5cc09 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -7652,11 +7652,6 @@ static int md_ioctl(struct block_device *bdev, blk_mode_t mode,
  
--static int netlink_dump(struct sock *sk);
-+static int netlink_dump(struct sock *sk, bool lock_taken);
+ 	mddev = bdev->bd_disk->private_data;
  
- /* nl_table locking explained:
-  * Lookup and traversal are protected with an RCU read-side lock. Insertion
-@@ -1989,7 +1989,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 
- 	if (READ_ONCE(nlk->cb_running) &&
- 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
--		ret = netlink_dump(sk);
-+		ret = netlink_dump(sk, false);
- 		if (ret) {
- 			WRITE_ONCE(sk->sk_err, -ret);
- 			sk_error_report(sk);
-@@ -2198,7 +2198,7 @@ static int netlink_dump_done(struct netlink_sock *nlk, struct sk_buff *skb,
- 	return 0;
- }
- 
--static int netlink_dump(struct sock *sk)
-+static int netlink_dump(struct sock *sk, bool lock_taken)
- {
- 	struct netlink_sock *nlk = nlk_sk(sk);
- 	struct netlink_ext_ack extack = {};
-@@ -2210,7 +2210,8 @@ static int netlink_dump(struct sock *sk)
- 	int alloc_min_size;
- 	int alloc_size;
- 
--	mutex_lock(nlk->cb_mutex);
-+	if (!lock_taken)
-+		mutex_lock(nlk->cb_mutex);
- 	if (!nlk->cb_running) {
- 		err = -EINVAL;
- 		goto errout_skb;
-@@ -2367,9 +2368,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
- 	WRITE_ONCE(nlk->cb_running, true);
- 	nlk->dump_done_errno = INT_MAX;
- 
--	mutex_unlock(nlk->cb_mutex);
+-	if (!mddev) {
+-		BUG();
+-		goto out;
+-	}
 -
--	ret = netlink_dump(sk);
-+	ret = netlink_dump(sk, true);
- 
- 	sock_put(sk);
- 
+ 	/* Some actions do not requires the mutex */
+ 	switch (cmd) {
+ 	case GET_ARRAY_INFO:
 -- 
 2.43.0
 
