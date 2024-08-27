@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B56C1A01C8;
-	Tue, 27 Aug 2024 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2601C5793;
+	Tue, 27 Aug 2024 14:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770517; cv=none; b=JoAlqFi6+G9QSNV7115oBvnIesi0z3T/CLQmCzoRNxdkFmfRpnQn5YwMOQeA08Ut2xQgDEwGAa0A/r4Powbk7fD6ErIUV4rGlxQmJNALPmOo4t15MqLjBxoGu+wPpfeU9p1pv2lkWOcpJ+9O3Gbaa4LzIONCq1jLTfQ0B/c1Yqg=
+	t=1724770520; cv=none; b=Gzx06WdZ2STPyPsFZ+WSiGIspCIOHOZVV0YYHl+o068ivgO1orZwz79Bxhf7Fdkzvji+wTXgqTMbc8bx2bOSI1g4+9rjK0TaGjM5+o56Ym7K7UWr61lHmjpoy8eclz+T9WCaWkoVYYWtxA9uEnPSg7js/04R2X53mfpGJicdEFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770517; c=relaxed/simple;
-	bh=31vaVnt6TjunfZbPhhyADMLo2KVeafkqwj2JyqF01JU=;
+	s=arc-20240116; t=1724770520; c=relaxed/simple;
+	bh=Y6fhQpDKi5GBSGm0peyTuKPel4oSysW6BkxCO9feXR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G88soq+ohlX7eBJBTpZVTb0wqhL7d0RHPE+0fPr3C8AqdlKXyeCeWiCIaSeJsLoUsNLKRmEstwlu2p4XyrQu6iIOh2x1r5HkVJudtyOkyvmVRwgKYtj3iCleuwhxcAtR0fMOlY9rVCWLAxghHTizhMrjJLSQe9z9W3yBhQuzyas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNldYS1f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H710/KIlEJtzRMtw7ObCe8+8dEwZ9GgBJGuL19hqueue1DAnoech5ZefHpqBHeuNHihfwutRJjvBH3F8la5WFQtZbjQHF5oha23Mrfiwi45HgZmocPG/iYAu0lGkvw3yemxB52/c8xq0MjoHubZdC+MaOKL1vAYZW2ga6hv/pJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JItcZ2NG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNldYS1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65ECC4E691;
-	Tue, 27 Aug 2024 14:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JItcZ2NG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AE6C4E690;
+	Tue, 27 Aug 2024 14:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770517;
-	bh=31vaVnt6TjunfZbPhhyADMLo2KVeafkqwj2JyqF01JU=;
+	s=korg; t=1724770520;
+	bh=Y6fhQpDKi5GBSGm0peyTuKPel4oSysW6BkxCO9feXR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNldYS1fyGsYbQZXXYmzXf0ED/4+s3GH6BpoYPs1Gufv84Q30QA7z+niPFVd636kz
-	 W9Wp6m024ZdHNommZZqihf2vJ6XHE+/jgrU2D+M+VNJYnSQJy3SV8VlEMFZWW02fF8
-	 +IQ2uafIfZoIBSlpyeqShbDewvXvLUda2T4w5evw=
+	b=JItcZ2NGsygiEm5iDwmOasSSkmJGB2bMJRwA4n2kGxbHQUbGX2M9rQsPlWRji8SAD
+	 AvkqhjNln+vj1JVkuejOEFnov+QpZOtDh8o/s8/ZwM6DB9hFV10piP5ZXMc5xy24EB
+	 W6wd/4f+yPo3l4cZosIirQb52mFgrINf+BnHev0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 251/341] net: mctp: test: Use correct skb for route input check
-Date: Tue, 27 Aug 2024 16:38:02 +0200
-Message-ID: <20240827143852.958079753@linuxfoundation.org>
+	Sean Nyekjaer <sean@geanix.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Subject: [PATCH 6.6 223/341] i2c: stm32f7: Add atomic_xfer method to driver
+Date: Tue, 27 Aug 2024 16:37:34 +0200
+Message-ID: <20240827143851.898632425@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -53,44 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Sean Nyekjaer <sean@geanix.com>
 
-[ Upstream commit ce335db0621648472f9bb4b7191eb2e13a5793cf ]
+commit 470a662688563d8f5e0fb164930d6f5507a883e4 upstream.
 
-In the MCTP route input test, we're routing one skb, then (when delivery
-is expected) checking the resulting routed skb.
+Add an atomic_xfer method to the driver so that it behaves correctly
+when controlling a PMIC that is responsible for device shutdown.
 
-However, we're currently checking the original skb length, rather than
-the routed skb. Check the routed skb instead; the original will have
-been freed at this point.
+The atomic_xfer method added is similar to the one from the i2c-mv64xxx
+driver. When running an atomic_xfer a bool flag in the driver data is
+set, the interrupt is not unmasked on transfer start, and the IRQ
+handler is manually invoked while waiting for pending transfers to
+complete.
 
-Fixes: 8892c0490779 ("mctp: Add route input to socket tests")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/kernel-janitors/4ad204f0-94cf-46c5-bdab-49592addf315@kili.mountain/
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240816-mctp-kunit-skb-fix-v1-1-3c367ac89c27@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Cc: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mctp/test/route-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-stm32f7.c |   51 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 47 insertions(+), 4 deletions(-)
 
-diff --git a/net/mctp/test/route-test.c b/net/mctp/test/route-test.c
-index 92ea4158f7fc4..a944490a724d3 100644
---- a/net/mctp/test/route-test.c
-+++ b/net/mctp/test/route-test.c
-@@ -354,7 +354,7 @@ static void mctp_test_route_input_sk(struct kunit *test)
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -357,6 +357,7 @@ struct stm32f7_i2c_dev {
+ 	u32 dnf_dt;
+ 	u32 dnf;
+ 	struct stm32f7_i2c_alert *alert;
++	bool atomic;
+ };
  
- 		skb2 = skb_recv_datagram(sock->sk, MSG_DONTWAIT, &rc);
- 		KUNIT_EXPECT_NOT_ERR_OR_NULL(test, skb2);
--		KUNIT_EXPECT_EQ(test, skb->len, 1);
-+		KUNIT_EXPECT_EQ(test, skb2->len, 1);
+ /*
+@@ -915,7 +916,8 @@ static void stm32f7_i2c_xfer_msg(struct
  
- 		skb_free_datagram(sock->sk, skb2);
+ 	/* Configure DMA or enable RX/TX interrupt */
+ 	i2c_dev->use_dma = false;
+-	if (i2c_dev->dma && f7_msg->count >= STM32F7_I2C_DMA_LEN_MIN) {
++	if (i2c_dev->dma && f7_msg->count >= STM32F7_I2C_DMA_LEN_MIN
++	    && !i2c_dev->atomic) {
+ 		ret = stm32_i2c_prep_dma_xfer(i2c_dev->dev, i2c_dev->dma,
+ 					      msg->flags & I2C_M_RD,
+ 					      f7_msg->count, f7_msg->buf,
+@@ -939,6 +941,9 @@ static void stm32f7_i2c_xfer_msg(struct
+ 			cr1 |= STM32F7_I2C_CR1_TXDMAEN;
+ 	}
  
--- 
-2.43.0
-
++	if (i2c_dev->atomic)
++		cr1 &= ~STM32F7_I2C_ALL_IRQ_MASK; /* Disable all interrupts */
++
+ 	/* Configure Start/Repeated Start */
+ 	cr2 |= STM32F7_I2C_CR2_START;
+ 
+@@ -1673,7 +1678,22 @@ static irqreturn_t stm32f7_i2c_isr_error
+ 	return IRQ_HANDLED;
+ }
+ 
+-static int stm32f7_i2c_xfer(struct i2c_adapter *i2c_adap,
++static int stm32f7_i2c_wait_polling(struct stm32f7_i2c_dev *i2c_dev)
++{
++	ktime_t timeout = ktime_add_ms(ktime_get(), i2c_dev->adap.timeout);
++
++	while (ktime_compare(ktime_get(), timeout) < 0) {
++		udelay(5);
++		stm32f7_i2c_isr_event(0, i2c_dev);
++
++		if (completion_done(&i2c_dev->complete))
++			return 1;
++	}
++
++	return 0;
++}
++
++static int stm32f7_i2c_xfer_core(struct i2c_adapter *i2c_adap,
+ 			    struct i2c_msg msgs[], int num)
+ {
+ 	struct stm32f7_i2c_dev *i2c_dev = i2c_get_adapdata(i2c_adap);
+@@ -1697,8 +1717,12 @@ static int stm32f7_i2c_xfer(struct i2c_a
+ 
+ 	stm32f7_i2c_xfer_msg(i2c_dev, msgs);
+ 
+-	time_left = wait_for_completion_timeout(&i2c_dev->complete,
+-						i2c_dev->adap.timeout);
++	if (!i2c_dev->atomic)
++		time_left = wait_for_completion_timeout(&i2c_dev->complete,
++							i2c_dev->adap.timeout);
++	else
++		time_left = stm32f7_i2c_wait_polling(i2c_dev);
++
+ 	ret = f7_msg->result;
+ 	if (ret) {
+ 		if (i2c_dev->use_dma)
+@@ -1730,6 +1754,24 @@ pm_free:
+ 	return (ret < 0) ? ret : num;
+ }
+ 
++static int stm32f7_i2c_xfer(struct i2c_adapter *i2c_adap,
++			    struct i2c_msg msgs[], int num)
++{
++	struct stm32f7_i2c_dev *i2c_dev = i2c_get_adapdata(i2c_adap);
++
++	i2c_dev->atomic = false;
++	return stm32f7_i2c_xfer_core(i2c_adap, msgs, num);
++}
++
++static int stm32f7_i2c_xfer_atomic(struct i2c_adapter *i2c_adap,
++			    struct i2c_msg msgs[], int num)
++{
++	struct stm32f7_i2c_dev *i2c_dev = i2c_get_adapdata(i2c_adap);
++
++	i2c_dev->atomic = true;
++	return stm32f7_i2c_xfer_core(i2c_adap, msgs, num);
++}
++
+ static int stm32f7_i2c_smbus_xfer(struct i2c_adapter *adapter, u16 addr,
+ 				  unsigned short flags, char read_write,
+ 				  u8 command, int size,
+@@ -2098,6 +2140,7 @@ static u32 stm32f7_i2c_func(struct i2c_a
+ 
+ static const struct i2c_algorithm stm32f7_i2c_algo = {
+ 	.master_xfer = stm32f7_i2c_xfer,
++	.master_xfer_atomic = stm32f7_i2c_xfer_atomic,
+ 	.smbus_xfer = stm32f7_i2c_smbus_xfer,
+ 	.functionality = stm32f7_i2c_func,
+ 	.reg_slave = stm32f7_i2c_reg_slave,
 
 
