@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2166B1C6888;
-	Tue, 27 Aug 2024 14:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813E51C7B92;
+	Tue, 27 Aug 2024 14:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770309; cv=none; b=RC5lqv5TFYQ/tm1bXigr7nzU91XVUUaihVrjOusAfm9TbMSeuHpM3F5C1hIcQ3tGgCeKG6cCwGN0tu9M00Je2diiu3IPNejQu6hDbY9GIE95TAObNv/1fwzOcW06GfKyfV2Iv5hWths68lkgXyHSd+jxlWsBATq/+G7/Z/muaIA=
+	t=1724770312; cv=none; b=qVNNW9mH2E5rBlA03uuQA5uPrkBV7jQWdgPnguUDh85yBRrXzgybYolpMYvJtLtiMZM0kbt4JiRjobr8nDYZtbVRarz8LJhvOOUHlPdQ0+W7mtEzNRCH43QP4Zff3auVheK3KI5MFC7XHQVVU4wYbZfWBtUSaRSjjofKzAOGseU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770309; c=relaxed/simple;
-	bh=e5LuU/nvbm0zw1XigW5Hscv/I1AAogPMJqXyeRhTzHs=;
+	s=arc-20240116; t=1724770312; c=relaxed/simple;
+	bh=wVTSHXcjhM1RR8VqmByMHMJdgMVcR3p3nsjJ0BPD+gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9m/ekvt/lu+cAcpmTWnqH6w+IWSsqG7vK70NOXmYKFW7R6jpd1h0Sv+Ft02IZhnZzJAHehte04lhN6zNgk/Tf5/5dJ4yinpnuDttpTRm8A0xqXUeNQJhNXt2PLh0o3xBlNb/NrxtZb/Xx40nmJ8QESp/hH4KLHQyJUnEk4vXUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6v2f3FX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xxyb59HNOw6zjHeLTbeQLxFbkwseS90Wu7B/v3F77C7iiKd+4Kjtb9IyseFqotjygf6N38xfUTWjS46y8F0ePov/cXoWFZldOrc0f3t7LWcUbViOQZREe3ZTcLBhFbSscfp8Rc5fhHoWerO8xZXMG+f0j9mDaU1E4TtNmHUGpCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9PZ+HYR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6v2f3FX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D55CC4DE03;
-	Tue, 27 Aug 2024 14:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9PZ+HYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA808C4DE0F;
+	Tue, 27 Aug 2024 14:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770309;
-	bh=e5LuU/nvbm0zw1XigW5Hscv/I1AAogPMJqXyeRhTzHs=;
+	s=korg; t=1724770312;
+	bh=wVTSHXcjhM1RR8VqmByMHMJdgMVcR3p3nsjJ0BPD+gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6v2f3FXWmH0T5ptn7hWFgqmNbEggfPYrxM7GGutbr79LgsfLdZhP/cfTtCQnyyxM
-	 yMVOvCpYoSSTuzl8lsxUDvftKrbLvh5n1mJjuFSikqUqYdm0ZaCNFjZqs19Udn8RAc
-	 jGQtqFWWh7PaWbhUPOd7FtV0igk4bEY4J7pO6QXc=
+	b=c9PZ+HYRfkYxhCINbp6TMjOJvmwmJvJUEi4320yIXbxjbazIgeXrfHnhOdHUj3K6y
+	 jesl6eb6MSjICOQzpKCY1OUwRQPVOv6FBPFUJLNhEjr1otbnLYIP8MGlaUhuTZBeWF
+	 CESoJAIayRHmDXwj7e+tURihkXniyy4LQqdVruMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/341] quota: Remove BUG_ON from dqget()
-Date: Tue, 27 Aug 2024 16:36:30 +0200
-Message-ID: <20240827143849.466633299@linuxfoundation.org>
+Subject: [PATCH 6.6 160/341] riscv: blacklist assembly symbols for kprobe
+Date: Tue, 27 Aug 2024 16:36:31 +0200
+Message-ID: <20240827143849.504335749@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -44,44 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit 249f374eb9b6b969c64212dd860cc1439674c4a8 ]
+[ Upstream commit 5014396af9bbac0f28d9afee7eae405206d01ee7 ]
 
-dqget() checks whether dquot->dq_sb is set when returning it using
-BUG_ON. Firstly this doesn't work as an invalidation check for quite
-some time (we release dquot with dq_sb set these days), secondly using
-BUG_ON is quite harsh. Use WARN_ON_ONCE and check whether dquot is still
-hashed instead.
+Adding kprobes on some assembly functions (mainly exception handling)
+will result in crashes (either recursive trap or panic). To avoid such
+errors, add ASM_NOKPROBE() macro which allow adding specific symbols
+into the __kprobe_blacklist section and use to blacklist the following
+symbols that showed to be problematic:
+- handle_exception()
+- ret_from_exception()
+- handle_kernel_stack_overflow()
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20231004131009.409193-1-cleger@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/asm.h | 10 ++++++++++
+ arch/riscv/kernel/entry.S    |  3 +++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 7a2c9b153be6e..23dbde1de2520 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -995,9 +995,8 @@ struct dquot *dqget(struct super_block *sb, struct kqid qid)
- 	 * smp_mb__before_atomic() in dquot_acquire().
- 	 */
- 	smp_rmb();
--#ifdef CONFIG_QUOTA_DEBUG
--	BUG_ON(!dquot->dq_sb);	/* Has somebody invalidated entry under us? */
--#endif
-+	/* Has somebody invalidated entry under us? */
-+	WARN_ON_ONCE(hlist_unhashed(&dquot->dq_hash));
- out:
- 	if (empty)
- 		do_destroy_dquot(empty);
+diff --git a/arch/riscv/include/asm/asm.h b/arch/riscv/include/asm/asm.h
+index bfb4c26f113c4..b5b84c6be01e1 100644
+--- a/arch/riscv/include/asm/asm.h
++++ b/arch/riscv/include/asm/asm.h
+@@ -164,6 +164,16 @@
+ 	REG_L x31, PT_T6(sp)
+ 	.endm
+ 
++/* Annotate a function as being unsuitable for kprobes. */
++#ifdef CONFIG_KPROBES
++#define ASM_NOKPROBE(name)				\
++	.pushsection "_kprobe_blacklist", "aw";		\
++	RISCV_PTR name;					\
++	.popsection
++#else
++#define ASM_NOKPROBE(name)
++#endif
++
+ #endif /* __ASSEMBLY__ */
+ 
+ #endif /* _ASM_RISCV_ASM_H */
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index 278d01d2911fd..ed7baf2cf7e87 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -105,6 +105,7 @@ _save_context:
+ 1:
+ 	tail do_trap_unknown
+ SYM_CODE_END(handle_exception)
++ASM_NOKPROBE(handle_exception)
+ 
+ /*
+  * The ret_from_exception must be called with interrupt disabled. Here is the
+@@ -171,6 +172,7 @@ SYM_CODE_START_NOALIGN(ret_from_exception)
+ 	sret
+ #endif
+ SYM_CODE_END(ret_from_exception)
++ASM_NOKPROBE(ret_from_exception)
+ 
+ #ifdef CONFIG_VMAP_STACK
+ SYM_CODE_START_LOCAL(handle_kernel_stack_overflow)
+@@ -206,6 +208,7 @@ SYM_CODE_START_LOCAL(handle_kernel_stack_overflow)
+ 	move a0, sp
+ 	tail handle_bad_stack
+ SYM_CODE_END(handle_kernel_stack_overflow)
++ASM_NOKPROBE(handle_kernel_stack_overflow)
+ #endif
+ 
+ SYM_CODE_START(ret_from_fork)
 -- 
 2.43.0
 
