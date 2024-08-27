@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF1D517;
-	Tue, 27 Aug 2024 15:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F351C688F;
+	Tue, 27 Aug 2024 15:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772796; cv=none; b=oH7dOOKHcZtrFwU2k+wtVniDqayzTBvuUljAlIr0BDGNsL0kVYEL3UVXmy21k3jhj8LnD8tfUkr+Oy67cYCmJb8EqmZxtWsAI1e7Qz/S4zqxubZ3l1TFR18gf4+f/mUS8t3CRCnwGRSyYLX4425zHmjxdbZk55jivlV813bFgQ0=
+	t=1724772799; cv=none; b=HWiAoJ293gPG2pZnCxnAVjvzKpdTpJ2VJDb5UrpvvTY7zzRunThsH8UAZqlHhx027UFDqb/RblKCfqlBlbo9tE4Pt16c4PIpypWZJriwQjKfETIMgRIis5aHY2xgDbsBqswq3LWBYphiM5ntLEuXihWMo1qAM7RGPBB+R4zvRo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772796; c=relaxed/simple;
-	bh=b+Ix5Y51hiF4qP9XNMLC+HlklOan+Hio8apxDUAEXk0=;
+	s=arc-20240116; t=1724772799; c=relaxed/simple;
+	bh=h6rrhIL7RAugV/BIVdwbKePmwWlfAHqu8V+8hRjtnXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3htWA+z3Y6PD1s2MLLZNXxmPX/V7VK4Gr1Yq2VkiI7aJRn1F0Tm4JXYdzwNDKqdNTYvFUOtlcEzr4feuiwbU57W5jtkxuE81fnReXBinpq31FxNMPyCt0iwKj1ySHvGyj66b20upBrABW8atmgaechRQvPUrY+Nh3Dk339dwSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKAI3Hte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z4FvSH+LZXdD4KOv1df5Ze6UwGDeY830rpM09nuCEaTML4bzyW+ATOMf8tBcUfbPr9MIQQGZHrGxvxOgQH5AL1JMXXJqmnIc7GrkFYzU4jvQnWlDKaCDvoxrw9DLA2bqKvfO3lw9ZreKQZ+IMDmplEmUs/crK7IdKrJ/d7cx9pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhQwQJlI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKAI3Hte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF5CC61050;
-	Tue, 27 Aug 2024 15:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhQwQJlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05120C61050;
+	Tue, 27 Aug 2024 15:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772796;
-	bh=b+Ix5Y51hiF4qP9XNMLC+HlklOan+Hio8apxDUAEXk0=;
+	s=korg; t=1724772799;
+	bh=h6rrhIL7RAugV/BIVdwbKePmwWlfAHqu8V+8hRjtnXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKAI3HteXW/mYNC7TdpavuE3rj9x5xS35QZL1tCvtTnrfbI7Ln/zuGliQoKqmo8sj
-	 9V1JUUbfZItAJgqxs/7YtW7emGc2zMZaODOBX+8AJw6Hmk9hA9EY5ePTUhnyqwNlU7
-	 G/JR8TeL2L/ODAzrhxtscOzH3JJaaKYvl4nXyI18=
+	b=qhQwQJlIuG4fEtGd3/GLbvpUBL5ASsha1oVkvsXvixGCVVwC+3Nu88xn+qlmPjZFz
+	 3fmBNt1c+TzB2a38+ai8wx7H9VYmy9dbk2f5OFFPrh6OGDA55mwoA/S5cTd4MUds13
+	 KUdvKMHqgIY0bjnDDz4jbIYIqHSEXO0aymcWL5Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 304/321] wifi: mac80211: add documentation for amsdu_mesh_control
-Date: Tue, 27 Aug 2024 16:40:12 +0200
-Message-ID: <20240827143849.827588377@linuxfoundation.org>
+Subject: [PATCH 6.1 305/321] wifi: mac80211: fix mesh path discovery based on unicast packets
+Date: Tue, 27 Aug 2024 16:40:13 +0200
+Message-ID: <20240827143849.866144472@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,31 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 3caf31e7b18a90b74a2709d761a0dfa423f2c2e4 upstream.
+commit f355f70145744518ca1d9799b42f4a8da9aa0d36 upstream.
 
-This documentation wasn't added in the original patch,
-add it now.
+If a packet has reached its intended destination, it was bumped to the code
+that accepts it, without first checking if a mesh_path needs to be created
+based on the discovered source.
+Fix this by moving the destination address check further down.
 
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Fixes: 6e4c0d0460bd ("wifi: mac80211: add a workaround for receiving non-standard mesh A-MSDU")
+Cc: stable@vger.kernel.org
+Fixes: 986e43b19ae9 ("wifi: mac80211: fix receiving A-MSDU frames on mesh interfaces")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230314095956.62085-3-nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/sta_info.h |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/rx.c |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/net/mac80211/sta_info.h
-+++ b/net/mac80211/sta_info.h
-@@ -621,6 +621,8 @@ struct link_sta_info {
-  *	taken from HT/VHT capabilities or VHT operating mode notification
-  * @cparams: CoDel parameters for this station.
-  * @reserved_tid: reserved TID (if any, otherwise IEEE80211_TID_UNRESERVED)
-+ * @amsdu_mesh_control: track the mesh A-MSDU format used by the peer
-+ *	(-1: not yet known, 0: non-standard [without mesh header], 1: standard)
-  * @fast_tx: TX fastpath information
-  * @fast_rx: RX fastpath information
-  * @tdls_chandef: a TDLS peer can have a wider chandef that is compatible to
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -2770,17 +2770,6 @@ ieee80211_rx_mesh_data(struct ieee80211_
+ 	    mesh_rmc_check(sdata, eth->h_source, mesh_hdr))
+ 		return RX_DROP_MONITOR;
+ 
+-	/* Frame has reached destination.  Don't forward */
+-	if (ether_addr_equal(sdata->vif.addr, eth->h_dest))
+-		goto rx_accept;
+-
+-	if (!ifmsh->mshcfg.dot11MeshForwarding) {
+-		if (is_multicast_ether_addr(eth->h_dest))
+-			goto rx_accept;
+-
+-		return RX_DROP_MONITOR;
+-	}
+-
+ 	/* forward packet */
+ 	if (sdata->crypto_tx_tailroom_needed_cnt)
+ 		tailroom = IEEE80211_ENCRYPT_TAILROOM;
+@@ -2819,6 +2808,17 @@ ieee80211_rx_mesh_data(struct ieee80211_
+ 		rcu_read_unlock();
+ 	}
+ 
++	/* Frame has reached destination.  Don't forward */
++	if (ether_addr_equal(sdata->vif.addr, eth->h_dest))
++		goto rx_accept;
++
++	if (!ifmsh->mshcfg.dot11MeshForwarding) {
++		if (is_multicast_ether_addr(eth->h_dest))
++			goto rx_accept;
++
++		return RX_DROP_MONITOR;
++	}
++
+ 	skb_set_queue_mapping(skb, ieee802_1d_to_ac[skb->priority]);
+ 
+ 	ieee80211_fill_mesh_addresses(&hdr, &hdr.frame_control,
 
 
