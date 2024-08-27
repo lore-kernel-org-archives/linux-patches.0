@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F2217C96;
-	Tue, 27 Aug 2024 15:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C43817C96;
+	Tue, 27 Aug 2024 15:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772144; cv=none; b=aZVjlW8VmWgk7PBnGnNU8t5a/tHseI5SUgzRLvJTj1b9ZIoXyeWBvdgpY7itek2ND18XLmILn88TZ6bPQkz1zL4YPWtV0DgeqtXVu0uAy+sBDDH20qoVX+YAVYnsSM/xJhsS3yETBE2+PztLN6EY0HFId2+K26VLmLsesEdlcHM=
+	t=1724772147; cv=none; b=qBNUlN5j0+Z/E6v8h9Kamn9IE6JzrYbBIBBFbcHusDaU7il4arwxIGizUG6bqisdNEcVdyotCXlwk9gfuCuzv8MR6u6IaieNWQp0ms6SQkDeb+mL0dqRQXmxcTivN2ib4T1bZaHcuPQ9SwWVqGhFTce88xe1TnnqD5gZgr+Fk7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772144; c=relaxed/simple;
-	bh=MTUsQdpuZzNGLuNVsyYxIKAnd+7SqvbWHXe3DYrejyQ=;
+	s=arc-20240116; t=1724772147; c=relaxed/simple;
+	bh=UqzBvJruT0QSET6LHNQOsvcwzr7Mqhh+MU9VIyGDN4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjoBCLyRL17X/m6aUEybnRzFaEVopa1tCs7pNY8YcDlSWIXtbv0WCPOzqtkCvjUePT1BrA9WlTvcuS+OozVyCq7ym8AFripiXdsyBlcvs8sSX4fDF9umcXfk6zYYhSUl5m1w8vfrZgHBYDxqdWWFopssl8mrH45+cjLhZpqaxKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBByl23l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ps1QGGVU9HrR9RRUq9k1ST4qo57O84FBHGsoKtFCLYOeNeW93SY9MitlAcrJnFJ/pVojw+FNywzHa1WBKg4SmW10o6E4cd5ONkItUeltiZpOv/SKfFg7ZwW5oV/oEs/D7V/ghCZTu0WEFq9kCHUuP7OdjHGkR4hoo6NIFy1NSRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs1lmyEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBByl23l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C9BC61041;
-	Tue, 27 Aug 2024 15:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs1lmyEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAFDC61041;
+	Tue, 27 Aug 2024 15:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772143;
-	bh=MTUsQdpuZzNGLuNVsyYxIKAnd+7SqvbWHXe3DYrejyQ=;
+	s=korg; t=1724772147;
+	bh=UqzBvJruT0QSET6LHNQOsvcwzr7Mqhh+MU9VIyGDN4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBByl23lUFeYR/9wTcRt0iA+rA1YQiiYKWm62jE6Sp5jlTYzL/u5/1Jz29ToGS066
-	 tIUmS0YOtw93JS6MM0gKuGaJg9e4d9N7iMdGnNLkSPqWOOQclmFW5Ov1TLexPif1sc
-	 EuktVhdR9oyDYO51lZbTPaXNZIoiexCtD58F9mZ0=
+	b=Cs1lmyEgc0ImMiFJfSXkYPljc5CZUoadyNt0f0FnByfdBz9oFEQWZpfMKkH9Qbegn
+	 xiSO3nW/cpGnKoNiASJk10IcKw7isCK1Ulp4ZhSdou8PYjA+f1uSyO0fptMzwqvkzi
+	 CB8J4RxMSdCCJ/OmlAGIG3QDMio0B5qgQM0S2mKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/321] media: radio-isa: use dev_name to fill in bus_info
-Date: Tue, 27 Aug 2024 16:37:14 +0200
-Message-ID: <20240827143843.040987146@linuxfoundation.org>
+Subject: [PATCH 6.1 127/321] staging: iio: resolver: ad2s1210: fix use before initialization
+Date: Tue, 27 Aug 2024 16:37:15 +0200
+Message-ID: <20240827143843.078635046@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 8b7f3cf4eb9a95940eaabad3226caeaa0d9aa59d ]
+[ Upstream commit 7fe2d05cee46b1c4d9f1efaeab08cc31a0dfff60 ]
 
-This fixes this warning:
+This fixes a use before initialization in ad2s1210_probe(). The
+ad2s1210_setup_gpios() function uses st->sdev but it was being called
+before this field was initialized.
 
-drivers/media/radio/radio-isa.c: In function 'radio_isa_querycap':
-drivers/media/radio/radio-isa.c:39:57: warning: '%s' directive output may be truncated writing up to 35 bytes into a region of size 28 [-Wformat-truncation=]
-   39 |         snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", isa->v4l2_dev.name);
-      |                                                         ^~
-drivers/media/radio/radio-isa.c:39:9: note: 'snprintf' output between 5 and 40 bytes into a destination of size 32
-   39 |         snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", isa->v4l2_dev.name);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20230929-ad2s1210-mainline-v3-2-fa4364281745@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/radio/radio-isa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/iio/resolver/ad2s1210.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/radio/radio-isa.c b/drivers/media/radio/radio-isa.c
-index c591c0851fa28..ad49151f5ff09 100644
---- a/drivers/media/radio/radio-isa.c
-+++ b/drivers/media/radio/radio-isa.c
-@@ -36,7 +36,7 @@ static int radio_isa_querycap(struct file *file, void  *priv,
+diff --git a/drivers/staging/iio/resolver/ad2s1210.c b/drivers/staging/iio/resolver/ad2s1210.c
+index 636c45b128438..afe89c91c89ea 100644
+--- a/drivers/staging/iio/resolver/ad2s1210.c
++++ b/drivers/staging/iio/resolver/ad2s1210.c
+@@ -657,9 +657,6 @@ static int ad2s1210_probe(struct spi_device *spi)
+ 	if (!indio_dev)
+ 		return -ENOMEM;
+ 	st = iio_priv(indio_dev);
+-	ret = ad2s1210_setup_gpios(st);
+-	if (ret < 0)
+-		return ret;
  
- 	strscpy(v->driver, isa->drv->driver.driver.name, sizeof(v->driver));
- 	strscpy(v->card, isa->drv->card, sizeof(v->card));
--	snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", isa->v4l2_dev.name);
-+	snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", dev_name(isa->v4l2_dev.dev));
- 	return 0;
- }
+ 	spi_set_drvdata(spi, indio_dev);
  
+@@ -670,6 +667,10 @@ static int ad2s1210_probe(struct spi_device *spi)
+ 	st->resolution = 12;
+ 	st->fexcit = AD2S1210_DEF_EXCIT;
+ 
++	ret = ad2s1210_setup_gpios(st);
++	if (ret < 0)
++		return ret;
++
+ 	indio_dev->info = &ad2s1210_info;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->channels = ad2s1210_channels;
 -- 
 2.43.0
 
