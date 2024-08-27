@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667171C3F19;
-	Tue, 27 Aug 2024 15:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4931C3F19;
+	Tue, 27 Aug 2024 15:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724771135; cv=none; b=ob6UfDtTJB6IwGb/sNSileH8zSS9In+mYjFKn5mA/HEhUxQ2xd4vtPqIaNcykP3FU6TwcvBQiLPOX0G4FqW45Vkg3rDnFwBROTTs3v0NzyDxwAVIr8MJlt4u4Z1QtGi1ZXY+O1BDqMLfqdNYsFvwjGQISBlV01YJRaYtnF47VEo=
+	t=1724771138; cv=none; b=SFYFHgSx6SN5x7mYrDsZyhbXmPOceszIWBL1YY/OlEd9FN09oRKLosjpbiHJAFD8+KR/l/YxGutKzrP0Y5DCqK30WzxM1GpHl1RW/2rrFuzjcf8fj/rmbyvmGJupulMD5d7lniYyQZIsU4Zllpz6LVFiDiCb3OVg6zkE4gJekgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724771135; c=relaxed/simple;
-	bh=eFnK8jpqBxbWdJP0uM9fqI9vOa+HNcBMu8Ymr9odrQA=;
+	s=arc-20240116; t=1724771138; c=relaxed/simple;
+	bh=IUG7JbHXqTxvjb2ii4vBOJdwPMNGgUNLyOltG9MPrQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCqG1zfMa7Bq/Nkc2aBU1TkbkYodyy5/XyTHmHc14+nMywO4TBo/irECeT5r71OJMDAIz4sXH2PWTlTjstunxayEmBCHHpDEh/lWx9v87eolsZpG/QNxkSTt8mzzWbdGm8uz8adFpymNYXxe2Q3v+BtWK8B4nH3HGPkSqKUv9wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogurIJ0N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MMmGY2MM3V96Uff4UnQlobd6Jg3FQiYtfRi1mLbuypGtT4PYI8irZUz9NC7J2ysQZBGzTwHX3QNF+2Op05nKGRW78FFyd8juJYwDhhaPGt4zzoALTfbtdAjUreqnT2MAMJQEczVyAAU92nWDeWXbiJvxEpwuTeC64FNu7Fn2/7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hieIKo+6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogurIJ0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF254C6106C;
-	Tue, 27 Aug 2024 15:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hieIKo+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE4BC6106C;
+	Tue, 27 Aug 2024 15:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724771135;
-	bh=eFnK8jpqBxbWdJP0uM9fqI9vOa+HNcBMu8Ymr9odrQA=;
+	s=korg; t=1724771138;
+	bh=IUG7JbHXqTxvjb2ii4vBOJdwPMNGgUNLyOltG9MPrQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogurIJ0NS5JxBzCNcRjycTs73qA2EioImkg60zP9aKGUK0VTo8bunD4WHrE1qMKiA
-	 dKZ5tbc322aNmTWDrIr46jrrkt0e3a1Cikxtyj4jDvzfYqd+Dx84zYcxDyu7tCExQE
-	 mh+SpZ6/xzF926BB/ZDMMRkSTFboNVdOcDkeZgks=
+	b=hieIKo+6Te/H4pvqqIVsNaHADW69soSZNcHwenlHFxkjeG7+GoCm/GE5Xm6KA5Zty
+	 QkCaMCcifiuGKbJU9XOZ4r7qynlPQ7oGguZ2exSb/xsLt98vnCY2r53Dd+s5/oaqKg
+	 2GaYEYYx6tD1OkDI4z/vStJZF2VX2nG+Lf0af1A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.10 066/273] btrfs: only enable extent map shrinker for DEBUG builds
-Date: Tue, 27 Aug 2024 16:36:30 +0200
-Message-ID: <20240827143835.925652700@linuxfoundation.org>
+	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 067/273] drm/amdgpu: Actually check flags for all context ops.
+Date: Tue, 27 Aug 2024 16:36:31 +0200
+Message-ID: <20240827143835.965957172@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -50,45 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
 
-commit 534f7eff9239c1b0af852fc33f5af2b62c00eddf upstream.
+commit 0573a1e2ea7e35bff08944a40f1adf2bb35cea61 upstream.
 
-Although there are several patches improving the extent map shrinker,
-there are still reports of too frequent shrinker behavior, taking too
-much CPU for the kswapd process.
+Missing validation ...
 
-So let's only enable extent shrinker for now, until we got more
-comprehensive understanding and a better solution.
+Checked libdrm and it clears all the structs, so we should be
+safe to just check everything.
 
-Link: https://lore.kernel.org/linux-btrfs/3df4acd616a07ef4d2dc6bad668701504b412ffc.camel@intelfx.name/
-Link: https://lore.kernel.org/linux-btrfs/c30fd6b3-ca7a-4759-8a53-d42878bf84f7@gmail.com/
-Fixes: 956a17d9d050 ("btrfs: add a shrinker for extent maps")
-CC: stable@vger.kernel.org # 6.10+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c6b86421f1f9ddf9d706f2453159813ee39d0cf9)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2387,7 +2387,13 @@ static long btrfs_nr_cached_objects(stru
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+@@ -685,16 +685,24 @@ int amdgpu_ctx_ioctl(struct drm_device *
  
- 	trace_btrfs_extent_map_shrinker_count(fs_info, nr);
- 
--	return nr;
-+	/*
-+	 * Only report the real number for DEBUG builds, as there are reports of
-+	 * serious performance degradation caused by too frequent shrinks.
-+	 */
-+	if (IS_ENABLED(CONFIG_BTRFS_DEBUG))
-+		return nr;
-+	return 0;
- }
- 
- static long btrfs_free_cached_objects(struct super_block *sb, struct shrink_control *sc)
+ 	switch (args->in.op) {
+ 	case AMDGPU_CTX_OP_ALLOC_CTX:
++		if (args->in.flags)
++			return -EINVAL;
+ 		r = amdgpu_ctx_alloc(adev, fpriv, filp, priority, &id);
+ 		args->out.alloc.ctx_id = id;
+ 		break;
+ 	case AMDGPU_CTX_OP_FREE_CTX:
++		if (args->in.flags)
++			return -EINVAL;
+ 		r = amdgpu_ctx_free(fpriv, id);
+ 		break;
+ 	case AMDGPU_CTX_OP_QUERY_STATE:
++		if (args->in.flags)
++			return -EINVAL;
+ 		r = amdgpu_ctx_query(adev, fpriv, id, &args->out);
+ 		break;
+ 	case AMDGPU_CTX_OP_QUERY_STATE2:
++		if (args->in.flags)
++			return -EINVAL;
+ 		r = amdgpu_ctx_query2(adev, fpriv, id, &args->out);
+ 		break;
+ 	case AMDGPU_CTX_OP_GET_STABLE_PSTATE:
 
 
