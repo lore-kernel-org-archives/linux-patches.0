@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490B61BFE04;
-	Tue, 27 Aug 2024 14:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FB81CC14E;
+	Tue, 27 Aug 2024 14:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770696; cv=none; b=KMBIB3BluIio8gYAG5MqcISHFV3aa6kjSSfkzoMDKUQ/B8ZWSUfj2OqBWNaVw/IEPLS2xqSfpQR0+ydnpjpKaXXlumOgVsMxWqRPY4TjhNW8qTU/vu/vl6IiNDxmJnKBfBQkRgE47GR0cPd9Jb69KbkJsV7WY4N62Q+vp1kr4lM=
+	t=1724770699; cv=none; b=HRkXR2FLI3LrmyWZoBKe/OOQl/DmfXpncgOZVolsQY50UWHM8+OvK1znCMGO5F4PoclOss0Y/JE1HVPxteelZp71xnJHz2HhEmuMd7YahKGEBdkpV9c5c5snKzpC6Yv9t/JE+AgDgoQPJs5/h6PwIreC8zh+PDOtZgI2U5R+7II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770696; c=relaxed/simple;
-	bh=4o3/Za6AYK8JFZKQNWJmQS+uE1XnP8AuRBb/qhncAMo=;
+	s=arc-20240116; t=1724770699; c=relaxed/simple;
+	bh=OmLTncWUGFyDMBo5l3DbyuuDX7EXqGZ5nvMAeMel7ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rl08D1Z4DY0zvJrY6uUugQpUheAX4cWqgVV7ymMfX6CFOJTqew5ADEPbBxWyfuBHmObYsiTv0t5CL1bdQvGDLw7PSVFrZgzjJlvZWfQKwPhWvHRHQrMeyRwJ8j/GyrB9N+xxSuH3dGL1GHhfv5FaIG6PJ1KrLdALJkx1T1vkN+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epAQAB9i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NSXtWFCmIWrotwHBkm6MokX4kHJjbI1RX7sRrLGz+DPaCGzq4QQcARw2RzGdBw1Xu6DTvYS085MKkH/9BthqQvTTCWBDCIWx6H791+LU3BXEm2nDxkFnbtCrt7vwYy9SU4Joe8S/HH7huTBKDI0LOMxWTe8/Dhg2JKWwSnSY6QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzuQPP4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epAQAB9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE91FC6107B;
-	Tue, 27 Aug 2024 14:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzuQPP4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1410C61058;
+	Tue, 27 Aug 2024 14:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770696;
-	bh=4o3/Za6AYK8JFZKQNWJmQS+uE1XnP8AuRBb/qhncAMo=;
+	s=korg; t=1724770699;
+	bh=OmLTncWUGFyDMBo5l3DbyuuDX7EXqGZ5nvMAeMel7ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epAQAB9iDbpYoo14d6DZBfhtUKmliwFXQA1fnV/CRUdEoS74ZO0zH/5xTevOQK6JT
-	 28d0/VRExKTL1HTFhGmIoGoUZgHKVCxZYL9VkvsZGFVIniXvItWgvwRxhdkn+bxnF8
-	 0fFfeMNxkTivCqXTvPASQMlNK4muouYlk/EqNo0E=
+	b=JzuQPP4HO4y1crlZKPJfOop5b/qWMX4CJGEw1oRqj68eAdJopkolp71k3+pisUrof
+	 DuEEIHW6KyGX2fah/2BZGbFF+JYwCglmERrb92i87OSa0Rv0NX1WmENHhOdpYP8kXf
+	 xy/UUDef4wYmVQt83ejBUGj9+iHVKbXjKHOPekCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Whitten <ben.whitten@gmail.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 306/341] mmc: dw_mmc: allow biu and ciu clocks to defer
-Date: Tue, 27 Aug 2024 16:38:57 +0200
-Message-ID: <20240827143855.034047009@linuxfoundation.org>
+Subject: [PATCH 6.6 307/341] pmdomain: imx: scu-pd: Remove duplicated clocks
+Date: Tue, 27 Aug 2024 16:38:58 +0200
+Message-ID: <20240827143855.071308712@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -50,47 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Whitten <ben.whitten@gmail.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 6275c7bc8dd07644ea8142a1773d826800f0f3f7 upstream.
+commit 50359c9c3cb3e55e840e3485f5ee37da5b2b16b6 upstream.
 
-Fix a race condition if the clock provider comes up after mmc is probed,
-this causes mmc to fail without retrying.
-When given the DEFER error from the clk source, pass it on up the chain.
+These clocks are already added to the list. Remove the duplicates ones.
 
-Fixes: f90a0612f0e1 ("mmc: dw_mmc: lookup for optional biu and ciu clocks")
-Signed-off-by: Ben Whitten <ben.whitten@gmail.com>
+Fixes: a67d780720ff ("genpd: imx: scu-pd: add more PDs")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240811212212.123255-1-ben.whitten@gmail.com
+Link: https://lore.kernel.org/r/20240717080334.2210988-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pmdomain/imx/scu-pd.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -3294,6 +3294,10 @@ int dw_mci_probe(struct dw_mci *host)
- 	host->biu_clk = devm_clk_get(host->dev, "biu");
- 	if (IS_ERR(host->biu_clk)) {
- 		dev_dbg(host->dev, "biu clock not available\n");
-+		ret = PTR_ERR(host->biu_clk);
-+		if (ret == -EPROBE_DEFER)
-+			return ret;
-+
- 	} else {
- 		ret = clk_prepare_enable(host->biu_clk);
- 		if (ret) {
-@@ -3305,6 +3309,10 @@ int dw_mci_probe(struct dw_mci *host)
- 	host->ciu_clk = devm_clk_get(host->dev, "ciu");
- 	if (IS_ERR(host->ciu_clk)) {
- 		dev_dbg(host->dev, "ciu clock not available\n");
-+		ret = PTR_ERR(host->ciu_clk);
-+		if (ret == -EPROBE_DEFER)
-+			goto err_clk_biu;
-+
- 		host->bus_hz = host->pdata->bus_hz;
- 	} else {
- 		ret = clk_prepare_enable(host->ciu_clk);
+diff --git a/drivers/pmdomain/imx/scu-pd.c b/drivers/pmdomain/imx/scu-pd.c
+index 05841b0bf7f3..01d465d88f60 100644
+--- a/drivers/pmdomain/imx/scu-pd.c
++++ b/drivers/pmdomain/imx/scu-pd.c
+@@ -223,11 +223,6 @@ static const struct imx_sc_pd_range imx8qxp_scu_pd_ranges[] = {
+ 	{ "lvds1-pwm", IMX_SC_R_LVDS_1_PWM_0, 1, false, 0 },
+ 	{ "lvds1-lpi2c", IMX_SC_R_LVDS_1_I2C_0, 2, true, 0 },
+ 
+-	{ "mipi1", IMX_SC_R_MIPI_1, 1, 0 },
+-	{ "mipi1-pwm0", IMX_SC_R_MIPI_1_PWM_0, 1, 0 },
+-	{ "mipi1-i2c", IMX_SC_R_MIPI_1_I2C_0, 2, 1 },
+-	{ "lvds1", IMX_SC_R_LVDS_1, 1, 0 },
+-
+ 	/* DC SS */
+ 	{ "dc0", IMX_SC_R_DC_0, 1, false, 0 },
+ 	{ "dc0-pll", IMX_SC_R_DC_0_PLL_0, 2, true, 0 },
+-- 
+2.46.0
+
 
 
