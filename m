@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCF41C4EC9;
-	Tue, 27 Aug 2024 15:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FF81BFE04;
+	Tue, 27 Aug 2024 15:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770913; cv=none; b=WyFZVw111MsVXiSoIkiHtDGA1sskLoyfMYBLFilEQSlUkZxqimNcdAg13eE10nPoCUji7GiBUsHIeCzrcVp5V6EFwSZdFKOlOcxrhj7zTssNfypgNDN4orhQMYbDqnyQ3MN5jn4jE4yHrNZz6E7avgMGulJEs2bpX4zY0fezJC8=
+	t=1724770915; cv=none; b=HH8SAU3TnmMjGat1L1HaA1GM4seMDcSRdBVCxK0bK6uH+Sdt9g/fI43444WB9Ns7hv05+SRLARX/7XEnRTET3RZYvQSa24VvDa5+CobuLkEQK2/01fSDB1oB5ESXexaaTF+mqV7E4+g6jmJO2y9mmSyRl34Xz/H6OsYyKaJEmp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770913; c=relaxed/simple;
-	bh=je2Ip9sX0tKdSqm0L+9Opt/5kcDWR14whv3ALCKc/oQ=;
+	s=arc-20240116; t=1724770915; c=relaxed/simple;
+	bh=8nhgT07aqdGVt0XNg0js9di5znO2TjEo6FkUr4ii+mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQXrYKmEtXo0FIH9xDqk91kXF1oIo2aVEyTlGOwXsxhdXE/HJnF2/B17UwL8fq+lDQeUDzlLSquVYOK3RFs1lhM85kus2pkPuH6ckFg9Te6s7AlpND39N1nQ+NY3A9UDgklad+C60kGPP+pFtRGs6FyQ/UHpX2ZJinZ82qBD8Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzvZeaOH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LOMUf2AhpoFdYNFq/6Q341gWSs+zdq99yWt/dZ0P6qjOg/zwp2nczmXsYilhTFfAlb2+r48doFS01jLSg92JhNpMCWnEdKbWxu4eNMdBs5l5LraKqm5rDhek7k56QjoAb+ESjV3wzR5T1nKjlsZUrc8D9o86VJSwnVTEGLktwgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSnrKgDi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzvZeaOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3145C4DDF3;
-	Tue, 27 Aug 2024 15:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSnrKgDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF36C4DDF7;
+	Tue, 27 Aug 2024 15:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770912;
-	bh=je2Ip9sX0tKdSqm0L+9Opt/5kcDWR14whv3ALCKc/oQ=;
+	s=korg; t=1724770915;
+	bh=8nhgT07aqdGVt0XNg0js9di5znO2TjEo6FkUr4ii+mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzvZeaOHcAyzaemI4CiT4DwzkOdvd8GmSqWaQfpr+Pszi9wkmPyHKxWbZYOsf5mLf
-	 tyj/1AdmfYGsXgblvsnnNYgqP4BwbdsFtsweTASfUU7QGIIcBo4zPcOTjWm6xnXOGU
-	 wdw6EwmFFde/21O2ikoXUu4+BRHQpvSKqowJ3GSQ=
+	b=lSnrKgDiyZXsGWTQ+XQGvKntnY2qo534iXe8uEX8uYicIsEeItM1s4Zd1zyZGp3Is
+	 3b2QN/yGgGIYLDXTK/v6f9XZ0kNdqXkbmSqbKH7J7GMJG8dTJUgmG23PdU02gNInE3
+	 9V4bu7+NgkK2gK55q6NdVlOJDWScNPtqLNMRw9eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richard <thomas.richard@bootlin.com>,
-	stable <stable@kernel.org>,
-	Kevin Hilman <khilman@kernel.org>,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.10 006/273] Revert "serial: 8250_omap: Set the console genpd always on if no console suspend"
-Date: Tue, 27 Aug 2024 16:35:30 +0200
-Message-ID: <20240827143833.621909552@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.10 007/273] Revert "usb: typec: tcpm: clear pd_event queue in PORT_RESET"
+Date: Tue, 27 Aug 2024 16:35:31 +0200
+Message-ID: <20240827143833.660860444@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
 References: <20240827143833.371588371@linuxfoundation.org>
@@ -52,104 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 0863bffda1131fd2fa9c05b653ad9ee3d8db127e upstream.
+commit 21ea1ce37fc267dc45fe27517bbde926211683df upstream.
 
-This reverts commit 68e6939ea9ec3d6579eadeab16060339cdeaf940.
+This reverts commit bf20c69cf3cf9c6445c4925dd9a8a6ca1b78bfdf.
 
-Kevin reported that this causes a crash during suspend on platforms that
-dont use PM domains.
+During tcpm_init() stage, if the VBUS is still present after
+tcpm_reset_port(), then we assume that VBUS will off and goto safe0v
+after a specific discharge time. Following a TCPM_VBUS_EVENT event if
+VBUS reach to off state. TCPM_VBUS_EVENT event may be set during
+PORT_RESET handling stage. If pd_events reset to 0 after TCPM_VBUS_EVENT
+set, we will lost this VBUS event. Then the port state machine may stuck
+at one state.
 
-Link: https://lore.kernel.org/r/7ha5hgpchq.fsf@baylibre.com
-Cc: Thomas Richard <thomas.richard@bootlin.com>
-Fixes: 68e6939ea9ec ("serial: 8250_omap: Set the console genpd always on if no console suspend")
-Cc: stable <stable@kernel.org>
-Reported-by: Kevin Hilman <khilman@kernel.org>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://lore.kernel.org/r/20240814111747.82371-1-griffin@kroah.com
+Before:
+
+[    2.570172] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
+[    2.570179] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[    2.570182] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
+[    3.490213] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [delayed 920 ms]
+[    3.490220] Start toggling
+[    3.546050] CC1: 0 -> 0, CC2: 0 -> 2 [state TOGGLING, polarity 0, connected]
+[    3.546057] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
+
+After revert this patch, we can see VBUS off event and the port will goto
+expected state.
+
+[    2.441992] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
+[    2.441999] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[    2.442002] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
+[    2.442122] VBUS off
+[    2.442125] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev1 NONE_AMS]
+[    2.442127] VBUS VSAFE0V
+[    2.442351] CC1: 0 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
+[    2.442357] Start toggling
+[    2.491850] CC1: 0 -> 0, CC2: 0 -> 2 [state TOGGLING, polarity 0, connected]
+[    2.491858] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
+[    2.491863] pending state change SRC_ATTACH_WAIT -> SNK_TRY @ 200 ms [rev1 NONE_AMS]
+[    2.691905] state change SRC_ATTACH_WAIT -> SNK_TRY [delayed 200 ms]
+
+Fixes: bf20c69cf3cf ("usb: typec: tcpm: clear pd_event queue in PORT_RESET")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240809112901.535072-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 33 +++++------------------------
- 1 file changed, 5 insertions(+), 28 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 1af9aed99c65..afef1dd4ddf4 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -27,7 +27,6 @@
- #include <linux/pm_wakeirq.h>
- #include <linux/dma-mapping.h>
- #include <linux/sys_soc.h>
--#include <linux/pm_domain.h>
- 
- #include "8250.h"
- 
-@@ -119,12 +118,6 @@
- #define UART_OMAP_TO_L                 0x26
- #define UART_OMAP_TO_H                 0x27
- 
--/*
-- * Copy of the genpd flags for the console.
-- * Only used if console suspend is disabled
-- */
--static unsigned int genpd_flags_console;
--
- struct omap8250_priv {
- 	void __iomem *membase;
- 	int line;
-@@ -1655,7 +1648,6 @@ static int omap8250_suspend(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
- 	struct uart_8250_port *up = serial8250_get_port(priv->line);
--	struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
- 	int err = 0;
- 
- 	serial8250_suspend_port(priv->line);
-@@ -1666,19 +1658,8 @@ static int omap8250_suspend(struct device *dev)
- 	if (!device_may_wakeup(dev))
- 		priv->wer = 0;
- 	serial_out(up, UART_OMAP_WER, priv->wer);
--	if (uart_console(&up->port)) {
--		if (console_suspend_enabled)
--			err = pm_runtime_force_suspend(dev);
--		else {
--			/*
--			 * The pd shall not be powered-off (no console suspend).
--			 * Make copy of genpd flags before to set it always on.
--			 * The original value is restored during the resume.
--			 */
--			genpd_flags_console = genpd->flags;
--			genpd->flags |= GENPD_FLAG_ALWAYS_ON;
--		}
--	}
-+	if (uart_console(&up->port) && console_suspend_enabled)
-+		err = pm_runtime_force_suspend(dev);
- 	flush_work(&priv->qos_work);
- 
- 	return err;
-@@ -1688,16 +1669,12 @@ static int omap8250_resume(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
- 	struct uart_8250_port *up = serial8250_get_port(priv->line);
--	struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
- 	int err;
- 
- 	if (uart_console(&up->port) && console_suspend_enabled) {
--		if (console_suspend_enabled) {
--			err = pm_runtime_force_resume(dev);
--			if (err)
--				return err;
--		} else
--			genpd->flags = genpd_flags_console;
-+		err = pm_runtime_force_resume(dev);
-+		if (err)
-+			return err;
- 	}
- 
- 	serial8250_resume_port(priv->line);
--- 
-2.46.0
-
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5630,7 +5630,6 @@ static void run_state_machine(struct tcp
+ 		break;
+ 	case PORT_RESET:
+ 		tcpm_reset_port(port);
+-		port->pd_events = 0;
+ 		if (port->self_powered)
+ 			tcpm_set_cc(port, TYPEC_CC_OPEN);
+ 		else
 
 
