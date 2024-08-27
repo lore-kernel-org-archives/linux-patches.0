@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFA21C6F49;
-	Tue, 27 Aug 2024 15:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7FF1BFE07;
+	Tue, 27 Aug 2024 15:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772357; cv=none; b=daUjdowcPVzEji3QamvRBCVByevMHFR+EMcovW+fyWbdN3fTvFLndnZG6f6iAUkMrGtA5yw37OEC5ZJ189Dsnm6ryS1hZi3RepViOnMkS8ExbZKsVGSy0GeEzlrVtiSGx/AzQK62TtPwXsGxvMKfsSBjqMS9ix1Dto8JInSjUNc=
+	t=1724772361; cv=none; b=P4WrSGpV7Wf3tnHPwvjeQ8+QLpfpypeNYnx6F9WnX9HQqy3T5UI1EF88ss7GWttlcr5fIJYtHyRSGAZUlpDByBQXJ/rTHolhWdhHKwaV6yGPiL/3H3g4s3m2hOlbYbfYhiCEzX9QbUEfSiWPFveVXhM4wsQmPOPaKgYKs1LPlyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772357; c=relaxed/simple;
-	bh=i8TSW8Won1WFBCTEpZQwalgDy+DBvpkqIU6RX17hbpQ=;
+	s=arc-20240116; t=1724772361; c=relaxed/simple;
+	bh=1UQdwxUwk8KE3gCzZE2mt0N1cOKbUDuGcBMLvswWomw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lxif2t1coRvv2q+JJUDOhjvWuBGEVS2Tr6sGcZy+WJWV3T5J1DLfvrqcUA6nV74UB6jltc5831vIAPxTH5R9MDhlA4jsPjTIRcEvjXjX5wAljnhztOb+nzuTVa00pbTctW+Op1AVbZN4BnC+Gv4FkeadFyBDa8GO/tC7O+wh4+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZkrYswM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xwbk+GdOcmP8A14rBWxVGjXHvsIKmqGn3DBtNYgtX6KscJleiLfm3YzPTQy3Rl8Mr/hPbYZ0q1u5mQ3AWEUbomV4JL8F8cImLOaX6KopdbBd2dZYuFeO0VRWC+61QhW/zmR8Cnp5E9qq2PygAD/OopMOPFiNVehkv16/tYXyj88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUf3Z/Fh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZkrYswM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5BEC61071;
-	Tue, 27 Aug 2024 15:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUf3Z/Fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADC5C61071;
+	Tue, 27 Aug 2024 15:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772357;
-	bh=i8TSW8Won1WFBCTEpZQwalgDy+DBvpkqIU6RX17hbpQ=;
+	s=korg; t=1724772360;
+	bh=1UQdwxUwk8KE3gCzZE2mt0N1cOKbUDuGcBMLvswWomw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZkrYswMxNr3ldhX9BvbBDOv33AzzKI0yYxOHkwYNRtuS2nG1jnXjMuRfXOmSWQtD
-	 0EjPDMVto3l4d1kChv0nGfvokrrhX8tTy9/rBaSJ0EWYGgUN2lCfsyRNcWwXXLZur0
-	 hV/RvJooC34cPkR5TSYIKvyAHUMrR+dFIrvNrm8s=
+	b=aUf3Z/FhZzKf15nf8ynVJQA7ADDQ8c1opJg8OPb9ltwL5X8gSDXCAUtpYJlohgxNs
+	 aZFUpQ6FWkSoV4n/lGF1xZtGBLgL9dcGnZ5I0EEssaNul8TbcN/x4UHabAq3rz0pKG
+	 jse65id28qop9Z1pZlVECb8MLtew/7pvrSMUA7dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/321] Bluetooth: bnep: Fix out-of-bound access
-Date: Tue, 27 Aug 2024 16:38:18 +0200
-Message-ID: <20240827143845.463713931@linuxfoundation.org>
+Subject: [PATCH 6.1 191/321] firmware: cirrus: cs_dsp: Initialize debugfs_root to invalid
+Date: Tue, 27 Aug 2024 16:38:19 +0200
+Message-ID: <20240827143845.502007635@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -50,36 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 0f0639b4d6f649338ce29c62da3ec0787fa08cd1 ]
+[ Upstream commit 66626b15636b5f5cf3d7f6104799f77462748974 ]
 
-This fixes attempting to access past ethhdr.h_source, although it seems
-intentional to copy also the contents of h_proto this triggers
-out-of-bound access problems with the likes of static analyzer, so this
-instead just copy ETH_ALEN and then proceed to use put_unaligned to copy
-h_proto separetely.
+Initialize debugfs_root to -ENODEV so that if the client never sets a
+valid debugfs root the debugfs files will not be created.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+A NULL pointer passed to any of the debugfs_create_*() functions means
+"create in the root of debugfs". It doesn't mean "ignore".
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://msgid.link/r/20240307105353.40067-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/cirrus/cs_dsp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index 5a6a49885ab66..a660c428e2207 100644
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -385,7 +385,8 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index ee4c32669607f..68005cce01360 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -490,7 +490,7 @@ void cs_dsp_cleanup_debugfs(struct cs_dsp *dsp)
+ {
+ 	cs_dsp_debugfs_clear(dsp);
+ 	debugfs_remove_recursive(dsp->debugfs_root);
+-	dsp->debugfs_root = NULL;
++	dsp->debugfs_root = ERR_PTR(-ENODEV);
+ }
+ EXPORT_SYMBOL_GPL(cs_dsp_cleanup_debugfs);
+ #else
+@@ -2300,6 +2300,11 @@ static int cs_dsp_common_init(struct cs_dsp *dsp)
  
- 	case BNEP_COMPRESSED_DST_ONLY:
- 		__skb_put_data(nskb, skb_mac_header(skb), ETH_ALEN);
--		__skb_put_data(nskb, s->eh.h_source, ETH_ALEN + 2);
-+		__skb_put_data(nskb, s->eh.h_source, ETH_ALEN);
-+		put_unaligned(s->eh.h_proto, (__be16 *)__skb_put(nskb, 2));
- 		break;
+ 	mutex_init(&dsp->pwr_lock);
  
- 	case BNEP_GENERAL:
++#ifdef CONFIG_DEBUG_FS
++	/* Ensure this is invalid if client never provides a debugfs root */
++	dsp->debugfs_root = ERR_PTR(-ENODEV);
++#endif
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
