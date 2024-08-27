@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994A71CF284;
-	Tue, 27 Aug 2024 15:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FBF1C8FCF;
+	Tue, 27 Aug 2024 15:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772479; cv=none; b=EbiV7ChMFdONrxkDO2C0f3zdDJ/uOBDO21eUGIUNZJ9q/IHJPOZG+KWUDTaaVBYSoi3PyVY24+d/QkSU1VoBvdyXAvg0j4ejzAY9gGkNZzWMvYZ2eprr4isZ+wafJwQ8ZEkhglsBWCz8gmzpUTZ9rPMV+KjwIz0atrsGYrmwAXE=
+	t=1724772482; cv=none; b=XUYpp2c/xJvfOLuB9kPqS4y0QujCzFQXPURE85cTZoCHNTE4WJXh3MfjLon5gLQN5VtXRO2ZqBdM/hd4aM+qrZCKwZ3hdHZ3Ql/V9NlikNiiE8PtFCEjKiXvQUA6QBhOEZL+LXSc5DaecQExx7P0Lsf1eMjvp16+9lDcotCO3mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772479; c=relaxed/simple;
-	bh=LfRScGIY2T1otgKYTCUkFVzkcyvT77GkkwSMJU2lPmo=;
+	s=arc-20240116; t=1724772482; c=relaxed/simple;
+	bh=XaPG7elh7R4q+SUxcgvamPeTyWW+Mk9H5x01beYapeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWLJwXyl+o4CMaTjJoRRiuZPliStOplKBWv+XSIrbiPDPJNg0QK+EoP6c5xM5jlooDBsWHTdyvW54DxLGRX3yOlP7w7J29mh7S/7xbuzuXX7LR3clr4/+7tPKOSs49bvgmNpvEXJrxADK+ehkXrz3cbQz5fuH20WzK6sKdv/zd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9MXt8Ek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lly3aAY7BX3/zniQpk2mL/z1KpX2VEmh+6IXpzNvtqnj8zH6L9lMzd6OPNI1mtufOwkwr/bjy2Gxt8zdxxNL3NJwpoDHFyVbnJQ18bKyRKZa31M60d2pxwdvAWFO1DOQIgA4dldMwvItTjQ653kUHxsgQQ8yxq473+i/O15+hls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhoHampk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9MXt8Ek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F26C61047;
-	Tue, 27 Aug 2024 15:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhoHampk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A589C61047;
+	Tue, 27 Aug 2024 15:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772479;
-	bh=LfRScGIY2T1otgKYTCUkFVzkcyvT77GkkwSMJU2lPmo=;
+	s=korg; t=1724772482;
+	bh=XaPG7elh7R4q+SUxcgvamPeTyWW+Mk9H5x01beYapeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9MXt8Ekv70aNe1bhrOD9a01chvjuiMzHtiRQvR2R3U/5BDj+ehhbl/bI986uFb2/
-	 iijr3vd9U4VdK+2oa0rXOhnH76f+8j2BdTdPq9FBIXlELcM8hDSBiH/qQwj95UKI/w
-	 zRqZ+vEo7d6LymHeStzX4NWe8Bkn5w/W5eweYa4k=
+	b=KhoHampkUi4b+uhxYpiVS63SoTk1wW+Pp8SIGi8Tpgg41ddCe+4O3D9svr2J2UDi7
+	 uVX9tetnMpWatzi0/Yi4mIcbuAAyAARTOmaa6NhtM+lZdtfYqXvmIDvCE7rVwvkItS
+	 eBCjb6oiUiyWYhsw1m7bXiKx7YNBt3b5u3ZIoqpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Lucas Karpinski <lkarpins@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/321] tc-testing: dont access non-existent variable on exception
-Date: Tue, 27 Aug 2024 16:38:55 +0200
-Message-ID: <20240827143846.872912982@linuxfoundation.org>
+Subject: [PATCH 6.1 228/321] selftests/net: synchronize udpgro tests tx and rx connection
+Date: Tue, 27 Aug 2024 16:38:56 +0200
+Message-ID: <20240827143846.910450773@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -52,57 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Lucas Karpinski <lkarpins@redhat.com>
 
-[ Upstream commit a0c9fe5eecc97680323ee83780ea3eaf440ba1b7 ]
+[ Upstream commit 3bdd9fd29cb0f136b307559a19c107210ad5c314 ]
 
-Since commit 255c1c7279ab ("tc-testing: Allow test cases to be skipped")
-the variable test_ordinal doesn't exist in call_pre_case().
-So it should not be accessed when an exception occurs.
+The sockets used by udpgso_bench_tx aren't always ready when
+udpgso_bench_tx transmits packets. This issue is more prevalent in -rt
+kernels, but can occur in both. Replace the hacky sleep calls with a
+function that checks whether the ports in the namespace are ready for
+use.
 
-This resolves the following splat:
-
-  ...
-  During handling of the above exception, another exception occurred:
-
-  Traceback (most recent call last):
-    File ".../tdc.py", line 1028, in <module>
-      main()
-    File ".../tdc.py", line 1022, in main
-      set_operation_mode(pm, parser, args, remaining)
-    File ".../tdc.py", line 966, in set_operation_mode
-      catresults = test_runner_serial(pm, args, alltests)
-    File ".../tdc.py", line 642, in test_runner_serial
-      (index, tsr) = test_runner(pm, args, alltests)
-    File ".../tdc.py", line 536, in test_runner
-      res = run_one_test(pm, args, index, tidx)
-    File ".../tdc.py", line 419, in run_one_test
-      pm.call_pre_case(tidx)
-    File ".../tdc.py", line 146, in call_pre_case
-      print('test_ordinal is {}'.format(test_ordinal))
-  NameError: name 'test_ordinal' is not defined
-
-Fixes: 255c1c7279ab ("tc-testing: Allow test cases to be skipped")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20240815-tdc-test-ordinal-v1-1-0255c122a427@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Lucas Karpinski <lkarpins@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7167395a4be7 ("selftests: udpgro: report error when receive failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/tc-testing/tdc.py | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/net/net_helper.sh     | 22 +++++++++++++++++++
+ tools/testing/selftests/net/udpgro.sh         | 13 +++++------
+ tools/testing/selftests/net/udpgro_bench.sh   |  5 +++--
+ tools/testing/selftests/net/udpgro_frglist.sh |  5 +++--
+ 4 files changed, 34 insertions(+), 11 deletions(-)
+ create mode 100755 tools/testing/selftests/net/net_helper.sh
 
-diff --git a/tools/testing/selftests/tc-testing/tdc.py b/tools/testing/selftests/tc-testing/tdc.py
-index ee22e3447ec7e..4702c99c99d3f 100755
---- a/tools/testing/selftests/tc-testing/tdc.py
-+++ b/tools/testing/selftests/tc-testing/tdc.py
-@@ -129,7 +129,6 @@ class PluginMgr:
-             except Exception as ee:
-                 print('exception {} in call to pre_case for {} plugin'.
-                       format(ee, pgn_inst.__class__))
--                print('test_ordinal is {}'.format(test_ordinal))
-                 print('testid is {}'.format(caseinfo['id']))
-                 raise
+diff --git a/tools/testing/selftests/net/net_helper.sh b/tools/testing/selftests/net/net_helper.sh
+new file mode 100755
+index 0000000000000..4fe0befa13fbc
+--- /dev/null
++++ b/tools/testing/selftests/net/net_helper.sh
+@@ -0,0 +1,22 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++#
++# Helper functions
++
++wait_local_port_listen()
++{
++	local listener_ns="${1}"
++	local port="${2}"
++	local protocol="${3}"
++	local port_hex
++	local i
++
++	port_hex="$(printf "%04X" "${port}")"
++	for i in $(seq 10); do
++		if ip netns exec "${listener_ns}" cat /proc/net/"${protocol}"* | \
++		   grep -q "${port_hex}"; then
++			break
++		fi
++		sleep 0.1
++	done
++}
+diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
+index 0c743752669af..af5dc57c8ce93 100755
+--- a/tools/testing/selftests/net/udpgro.sh
++++ b/tools/testing/selftests/net/udpgro.sh
+@@ -3,6 +3,8 @@
+ #
+ # Run a series of udpgro functional tests.
+ 
++source net_helper.sh
++
+ readonly PEER_NS="ns-peer-$(mktemp -u XXXXXX)"
+ 
+ BPF_FILE="../bpf/xdp_dummy.bpf.o"
+@@ -51,8 +53,7 @@ run_one() {
+ 		echo "ok" || \
+ 		echo "failed" &
+ 
+-	# Hack: let bg programs complete the startup
+-	sleep 0.2
++	wait_local_port_listen ${PEER_NS} 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+ 	ret=$?
+ 	wait $(jobs -p)
+@@ -97,7 +98,7 @@ run_one_nat() {
+ 		echo "ok" || \
+ 		echo "failed"&
+ 
+-	sleep 0.1
++	wait_local_port_listen "${PEER_NS}" 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+ 	ret=$?
+ 	kill -INT $pid
+@@ -118,11 +119,9 @@ run_one_2sock() {
+ 		echo "ok" || \
+ 		echo "failed" &
+ 
+-	# Hack: let bg programs complete the startup
+-	sleep 0.2
++	wait_local_port_listen "${PEER_NS}" 12345 udp
+ 	./udpgso_bench_tx ${tx_args} -p 12345
+-	sleep 0.1
+-	# first UDP GSO socket should be closed at this point
++	wait_local_port_listen "${PEER_NS}" 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+ 	ret=$?
+ 	wait $(jobs -p)
+diff --git a/tools/testing/selftests/net/udpgro_bench.sh b/tools/testing/selftests/net/udpgro_bench.sh
+index 894972877e8b0..cb664679b4342 100755
+--- a/tools/testing/selftests/net/udpgro_bench.sh
++++ b/tools/testing/selftests/net/udpgro_bench.sh
+@@ -3,6 +3,8 @@
+ #
+ # Run a series of udpgro benchmarks
+ 
++source net_helper.sh
++
+ readonly PEER_NS="ns-peer-$(mktemp -u XXXXXX)"
+ 
+ BPF_FILE="../bpf/xdp_dummy.bpf.o"
+@@ -40,8 +42,7 @@ run_one() {
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx ${rx_args} -r &
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -t ${rx_args} -r &
+ 
+-	# Hack: let bg programs complete the startup
+-	sleep 0.2
++	wait_local_port_listen "${PEER_NS}" 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+ }
+ 
+diff --git a/tools/testing/selftests/net/udpgro_frglist.sh b/tools/testing/selftests/net/udpgro_frglist.sh
+index 0a6359bed0b92..dd47fa96f6b3e 100755
+--- a/tools/testing/selftests/net/udpgro_frglist.sh
++++ b/tools/testing/selftests/net/udpgro_frglist.sh
+@@ -3,6 +3,8 @@
+ #
+ # Run a series of udpgro benchmarks
+ 
++source net_helper.sh
++
+ readonly PEER_NS="ns-peer-$(mktemp -u XXXXXX)"
+ 
+ BPF_FILE="../bpf/xdp_dummy.bpf.o"
+@@ -45,8 +47,7 @@ run_one() {
+         echo ${rx_args}
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx ${rx_args} -r &
+ 
+-	# Hack: let bg programs complete the startup
+-	sleep 0.2
++	wait_local_port_listen "${PEER_NS}" 8000 udp
+ 	./udpgso_bench_tx ${tx_args}
+ }
  
 -- 
 2.43.0
