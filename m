@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D471C4EDC;
-	Tue, 27 Aug 2024 15:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9259A1C4EDD;
+	Tue, 27 Aug 2024 15:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724772231; cv=none; b=qmRfBgRrbP16xphVBOuORSkDEkZ0q3VJlpphTmW+JcnwXALAKgZ0/kemToPmLjVpg9/Mn126TNIZP2GEal/AhDc3D11ZpcDW/EziX7KbxhoG4YyPhF/h4NdC0aiOxMXLeo5RzaV/7OUeGV9oGHsR5wF9h0+nFpstmKDmAMIvcpE=
+	t=1724772234; cv=none; b=Bm3K/uxsFI1IXtga/cbXzGcvtAYZA2rfg9nhYYOpgz5Z6/qc4EtdzZUNsDhem8r+vj/RNvav3CZZjVK3NgXb1gShlOv8untrAhWi9IKvMDuf4CRzknVqfQkJTFrk3PbkNpl48emmCkvn5BZXyrnRtTzcXvdMp6cs6/Lr88qYo/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724772231; c=relaxed/simple;
-	bh=PE3pzd7qgkAtVfa012DNc/DLarDGo2dJCu0KSNXxbw8=;
+	s=arc-20240116; t=1724772234; c=relaxed/simple;
+	bh=BufUokUzJL7tfCNUas87FKUzcq67twwpvyKAqLdxrw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcDmNB9Aw8cA053bnD31N6RWjFB3nY7ahPt/AFv1/YRboO1nCpKuQtq99UjkmJII45QX5FeUJeeRfIvd5ahdzf6tuSnXC7KAo1n7tnzervY9lZ2rN8SqmLp+C3D3GJ+OsgwlrNJN5vJBsJzaLe6nTSP2rL8AipD50AMRYri79dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qpa2vUhN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lbfl6udF6uSF+PPESgBXUEGpbPUu7wFPRP4XIST+Rtk2I5/U4ejsNW+0irnklD3h4xaCmijch42wMldCjCTfgRkl5hDrm2Ich+aeVgqyJczEruynVMZJR8lAfnmkWv77VXjEFfsnAl4T/lwPfxCS/BTtGtpw7sMbZ8TrMPyj2rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SR6AdLYL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qpa2vUhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD2CC61062;
-	Tue, 27 Aug 2024 15:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SR6AdLYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A719AC61062;
+	Tue, 27 Aug 2024 15:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724772230;
-	bh=PE3pzd7qgkAtVfa012DNc/DLarDGo2dJCu0KSNXxbw8=;
+	s=korg; t=1724772234;
+	bh=BufUokUzJL7tfCNUas87FKUzcq67twwpvyKAqLdxrw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qpa2vUhNjp38vVvXEAXwQuYP6fxjW38lTbxdOlMEFNLaquAzcluX2zcgEcMkTTLEj
-	 tN+y7jbpCsJ4qT1ihONHHl5h1Bug/zYannL2V2OyG5hkjwy1vxmbcpSiD567iBWWy1
-	 7MDebX5hklWU3QP+hTTgKADoQqvmlPZOL9cmhR5o=
+	b=SR6AdLYLY5uQ8X49z37pOLefApHussp5VZZ0u8rxmZjihkRxk9pA582QoMjzJIRMN
+	 wCT7w1uIWm3re/bZTXtTN7LUvsnFpT+ne6lqIv3jFlODwLbOEVBd7jVMBLiwa5iGwY
+	 UzIK0CkNNUNOyzeYtGQXE3Qkv1JTrIAZkZID+n4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/321] powerpc/xics: Check return value of kasprintf in icp_native_map_one_cpu
-Date: Tue, 27 Aug 2024 16:37:40 +0200
-Message-ID: <20240827143844.021167879@linuxfoundation.org>
+Subject: [PATCH 6.1 153/321] ASoC: SOF: ipc4: check return value of snd_sof_ipc_msg_data
+Date: Tue, 27 Aug 2024 16:37:41 +0200
+Message-ID: <20240827143844.058764289@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
 References: <20240827143838.192435816@linuxfoundation.org>
@@ -45,41 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 45b1ba7e5d1f6881050d558baf9bc74a2ae13930 ]
+[ Upstream commit 2bd512626f8ea3957c981cadd2ebf75feff737dd ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+snd_sof_ipc_msg_data could return error.
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231122030651.3818-1-chentao@kylinos.cn
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20231129122021.679-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xics/icp-native.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/ipc4.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/sysdev/xics/icp-native.c b/arch/powerpc/sysdev/xics/icp-native.c
-index edc17b6b1cc2f..9b2238d73003b 100644
---- a/arch/powerpc/sysdev/xics/icp-native.c
-+++ b/arch/powerpc/sysdev/xics/icp-native.c
-@@ -236,6 +236,8 @@ static int __init icp_native_map_one_cpu(int hw_id, unsigned long addr,
- 	rname = kasprintf(GFP_KERNEL, "CPU %d [0x%x] Interrupt Presentation",
- 			  cpu, hw_id);
+diff --git a/sound/soc/sof/ipc4.c b/sound/soc/sof/ipc4.c
+index 06e1872abfee7..1449837b0fb2c 100644
+--- a/sound/soc/sof/ipc4.c
++++ b/sound/soc/sof/ipc4.c
+@@ -616,7 +616,14 @@ static void sof_ipc4_rx_msg(struct snd_sof_dev *sdev)
+ 			return;
  
-+	if (!rname)
-+		return -ENOMEM;
- 	if (!request_mem_region(addr, size, rname)) {
- 		pr_warn("icp_native: Could not reserve ICP MMIO for CPU %d, interrupt server #0x%x\n",
- 			cpu, hw_id);
+ 		ipc4_msg->data_size = data_size;
+-		snd_sof_ipc_msg_data(sdev, NULL, ipc4_msg->data_ptr, ipc4_msg->data_size);
++		err = snd_sof_ipc_msg_data(sdev, NULL, ipc4_msg->data_ptr, ipc4_msg->data_size);
++		if (err < 0) {
++			dev_err(sdev->dev, "failed to read IPC notification data: %d\n", err);
++			kfree(ipc4_msg->data_ptr);
++			ipc4_msg->data_ptr = NULL;
++			ipc4_msg->data_size = 0;
++			return;
++		}
+ 	}
+ 
+ 	sof_ipc4_log_header(sdev->dev, "ipc rx done ", ipc4_msg, true);
 -- 
 2.43.0
 
