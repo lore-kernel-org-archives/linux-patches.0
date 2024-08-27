@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345E019F485;
-	Tue, 27 Aug 2024 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A331BA87C;
+	Tue, 27 Aug 2024 14:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770248; cv=none; b=RPB3YsWmuhQ0iKVWP7xTH1dYAF3wWhFVPsqpnlWmXjYRL33StgHA9Opm+7xOP/+dLOO/HSTKN6dNT0hxPuSMvDcpBEIRC4N/oG8az0yeHqRMGsNUEkVq5uazmFObOQu8Dun073vbX6ZKacVH3JlR8GZrr8lfazItL+ifPULnqLk=
+	t=1724770251; cv=none; b=Y40/jAQUCnC+OW+mfOI6p2s7sjeS0JBrnxWE70BUL9T9IeB/W6NnjzPCsAZQ8KioC8zs+MnoRSLNC1b3kCpc12m/Y0KOWZMzDQ09moVjUOUrKyM0l0POXSx6ze/34qHtM9Fo8r7evw9sJ/+9ZpwtfKGn9o7Nrjpu399bqHRBcmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770248; c=relaxed/simple;
-	bh=1rVIjyRB6tPU5L7eLb9bEiprobz58TWiXEDExZXgHTI=;
+	s=arc-20240116; t=1724770251; c=relaxed/simple;
+	bh=1CPqs1mdqXc83cI5WwRRHFsBlCmGzUbQIEXfojLKeR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBTF1vibWl5YcnGKG48yIkxiFWvSMXbxvW4FnG0DwKHx35tKE2PVL0Trazcvx7eli17qG8WxaxNLsT4bEHUV+1HKgOWHF7/KFkmeEqiBWsk05O7Ofh3PCQxas3GlY3aXH/NBEJuIl/8wQXor8tPBNilwKY2S3ZKY0idWOOynKiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+9hoCJz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pL0tovU3yBZdTPnF7GZaivrrJAFs7xEHn27xPsxDvKS9ZeCLFq3XUbUiYtnb3dhqupKylAXFMAPvgBaPUCW9VV+xRRfjARPl9WCmJIXAVK5kHtZcZahfDS4k1fTWRe5QIr6V3wS4G31khNmzfwbokO3dgJh+DQZBSql5P8xwcoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXtwbq4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+9hoCJz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFC6C4DDFB;
-	Tue, 27 Aug 2024 14:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXtwbq4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D20C4DDFB;
+	Tue, 27 Aug 2024 14:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724770248;
-	bh=1rVIjyRB6tPU5L7eLb9bEiprobz58TWiXEDExZXgHTI=;
+	s=korg; t=1724770251;
+	bh=1CPqs1mdqXc83cI5WwRRHFsBlCmGzUbQIEXfojLKeR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+9hoCJzfEaOhdDl/HInNEqYDM616kPoU7983AqgFJLvVbfXG0sUENvPSBVTJGp6l
-	 HbC01idJPifdNnxzX97A/Uly5P3DFFxmAi72bCSI1XdimgoGKoVlOZLvgUtLNiMgV7
-	 +sO+JAYR3Ic1dO7DkJLC7Ogp/DK/jVBXCiqdiYqg=
+	b=iXtwbq4xHccCLE8LfbCuocYXCLQwEJ60Ls4xOpt8z4mbU+zMT1FWs6X3jDhzlVtNU
+	 /QtE0ckdY+TqtRzdKetjqZRpxS46b35xGdVjW5ApIhft2kxlLqWZtHWv4OAvaMnoBz
+	 tnuUnvDxMF24RaD4Ha/yYKrj6h3QjG/xIjdHUYwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Avri Kehat <akehat@habana.ai>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/341] virtiofs: forbid newlines in tags
-Date: Tue, 27 Aug 2024 16:36:42 +0200
-Message-ID: <20240827143849.921278101@linuxfoundation.org>
+Subject: [PATCH 6.6 172/341] accel/habanalabs: fix debugfs files permissions
+Date: Tue, 27 Aug 2024 16:36:43 +0200
+Message-ID: <20240827143849.959162960@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 References: <20240827143843.399359062@linuxfoundation.org>
@@ -52,42 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Avri Kehat <akehat@habana.ai>
 
-[ Upstream commit 40488cc16f7ea0d193a4e248f0d809c25cc377db ]
+[ Upstream commit 0b105a2a7225f2736bd07aca0538cd67f09bfa20 ]
 
-Newlines in virtiofs tags are awkward for users and potential vectors
-for string injection attacks.
+debugfs files are created with permissions that don't align
+with the access requirements.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Vivek Goyal <vgoyal@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Avri Kehat <akehat@habana.ai>
+Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/accel/habanalabs/common/debugfs.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index 5f1be1da92ce9..d84dacbdce2c9 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -323,6 +323,16 @@ static int virtio_fs_read_tag(struct virtio_device *vdev, struct virtio_fs *fs)
- 		return -ENOMEM;
- 	memcpy(fs->tag, tag_buf, len);
- 	fs->tag[len] = '\0';
-+
-+	/* While the VIRTIO specification allows any character, newlines are
-+	 * awkward on mount(8) command-lines and cause problems in the sysfs
-+	 * "tag" attr and uevent TAG= properties. Forbid them.
-+	 */
-+	if (strchr(fs->tag, '\n')) {
-+		dev_dbg(&vdev->dev, "refusing virtiofs tag with newline character\n");
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
+diff --git a/drivers/accel/habanalabs/common/debugfs.c b/drivers/accel/habanalabs/common/debugfs.c
+index 9e84a47a21dcf..7d733e4d50611 100644
+--- a/drivers/accel/habanalabs/common/debugfs.c
++++ b/drivers/accel/habanalabs/common/debugfs.c
+@@ -1645,19 +1645,19 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
+ 				&hl_data64b_fops);
  
+ 	debugfs_create_file("set_power_state",
+-				0200,
++				0644,
+ 				root,
+ 				dev_entry,
+ 				&hl_power_fops);
+ 
+ 	debugfs_create_file("device",
+-				0200,
++				0644,
+ 				root,
+ 				dev_entry,
+ 				&hl_device_fops);
+ 
+ 	debugfs_create_file("clk_gate",
+-				0200,
++				0644,
+ 				root,
+ 				dev_entry,
+ 				&hl_clk_gate_fops);
+@@ -1669,13 +1669,13 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
+ 				&hl_stop_on_err_fops);
+ 
+ 	debugfs_create_file("dump_security_violations",
+-				0644,
++				0400,
+ 				root,
+ 				dev_entry,
+ 				&hl_security_violations_fops);
+ 
+ 	debugfs_create_file("dump_razwi_events",
+-				0644,
++				0400,
+ 				root,
+ 				dev_entry,
+ 				&hl_razwi_check_fops);
+@@ -1708,7 +1708,7 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
+ 				&hdev->reset_info.skip_reset_on_timeout);
+ 
+ 	debugfs_create_file("state_dump",
+-				0600,
++				0644,
+ 				root,
+ 				dev_entry,
+ 				&hl_state_dump_fops);
+@@ -1726,7 +1726,7 @@ static void add_files_to_device(struct hl_device *hdev, struct hl_dbg_device_ent
+ 
+ 	for (i = 0, entry = dev_entry->entry_arr ; i < count ; i++, entry++) {
+ 		debugfs_create_file(hl_debugfs_list[i].name,
+-					0444,
++					0644,
+ 					root,
+ 					entry,
+ 					&hl_debugfs_fops);
 -- 
 2.43.0
 
