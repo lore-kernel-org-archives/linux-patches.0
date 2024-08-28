@@ -1,218 +1,181 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2078.outbound.protection.outlook.com [40.107.100.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439C71850A4
-	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 13:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724851051; cv=none; b=fmq3sjyeU+gX/BYSVCVQAgLJrRCOvU7gC7QbPpO7vbQuxgWPttCHHHU/jHfBy8FGwt/oGicipWuhPFT66nKpHOhlTuirehJGTmj0P+qWAvg1jXiVzw0jtKfaL3c0If+LaYUMCXMotCvyafqgc+/shGAnhKfvOmh7UD4+021dqaY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724851051; c=relaxed/simple;
-	bh=hPDWqLIHM/DnZGu4RmS69ayFXne41WlztcIZGcd8f8k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ii7IS5Zz+A8pxsMUKkPFvH065dBQJ7v8y4M32xLUpqtU8f/Fn5+swvsQLo2U/1Ll0EzSPhTyAxZN/DYRQdtQAJZnCAvxlfE3yySn5tIAhbP/tEphm6vM6Knw12DAU4tL5/HhOsydFLrEiVEYPmxbsnMw4ij7+TvzrptZLhqhPTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=de0f6ttI; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A462C1EB3D;
+	Wed, 28 Aug 2024 13:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.78
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724853064; cv=fail; b=TnrFYvKJgDJAmyHALwzSrH6KcOKMk7U8y1OQFFnysoz3rs2iSJoa37rlSxLzPPSU222P3qMYFlEpGI7913MFgC/z9o5hwxdDaBcMfbvaBLCcysRvoC4MmXSaRbZBkrnNXuNkNr63AYS89hJnfaCWg+H/0LWUs32XRiNvmLuosu8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724853064; c=relaxed/simple;
+	bh=UNHRBnpqfgXDo7dqIg/X0f7MFkeIFbl7vrNnyvz4r5I=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=d1IcCD/2tOH8ErhQ4wcyh5ma1jaYFPznAtK9LTxMjY0y85IP/r4gO037d9e3geyngQ7GIHOIxoDTX/hofLH0EcNlVrIq5qwwarSvk+ZmD3CB8RJV+7zHJKvxrBmc5J3M9TpZYyyA+VHbKqNQkW1br+p2RX4hjEYAaPCa4syDY4k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=3HwU2O0n; arc=fail smtp.client-ip=40.107.100.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="de0f6ttI"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3dd16257b7bso829620b6e.1
-        for <patches@lists.linux.dev>; Wed, 28 Aug 2024 06:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724851047; x=1725455847; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p85AmrzBy9ysQPfxftCN2WfEfLHzF0fIelXYs6ezfX8=;
-        b=de0f6ttIX2GfmLckIyko2ZVcYVt17A/PBwKPnL+P2OSXURjDRx2M+51oGtLR4K4C4t
-         YRrG05SY8ckYb4JztHFcedBm7XOeBfdxI4DXnlWwHjjr2X5iVtea5E+z01aLGTY2rCSs
-         p07DWTmzmF7fdAMWZcRUu0eyoZdNqbjlXZX6SEG+PuH8pdsaGxPZoy9WgmciK7999B8T
-         06Pp+JDAUlMJbwqBeyLa2T2JQptgqlfvj43vV3QO6rNGpXH/dC/qFcwvKsDxWqwVM8cz
-         W/T03GUrkpC4pbSKqZ89hShp3bIlC1e0AxCYfhjFZ/YDBYKkVolEFNx25tNOEiZ9TQSb
-         kjkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724851047; x=1725455847;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p85AmrzBy9ysQPfxftCN2WfEfLHzF0fIelXYs6ezfX8=;
-        b=Uf6AUF7O7wU0UYf0wAQvemdgRxZvZmxH8Jzxwxq89sPrcZUCxohXO+Mk8nK7zupNYH
-         m0/I0VnsX66HMxFnb9BQlpU5+CT52W7VxWKPR+IFMaDd+rSNf7EUA48IO39PP+nEDQZj
-         N+4ce4ohfESDmMguWkKFEU1/w/QVh4K7UJnW+jonW5aO+HekZuhexbTHhaQOOW6RiwKB
-         6bftqLrzrpe8Jwo4AJW64iVScf0+NCxMgH88Lm8pA4q1UI5G9Ko98h/A89qbsfv1MALF
-         w4ao3OWZ6XUViKEdqbuPepEP7fQwuqgRtsJdhdO/DpPG+B1jlTm1iWcD+6Drf5OkXFUT
-         zynQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUwZlmf2ZLBHhLDjFooi9pg7Gw/ZVwRwImFo54Pe/PYhhBk2bsap4S+YTTZ405u2/ECQW+C20je@lists.linux.dev
-X-Gm-Message-State: AOJu0YwXZ86uVlNkflNJk0zIlMujeoePb10wKIacoWtjCJXTR/ovkk2s
-	2/qBs75bMuzVo67hUyxg6HBBR4kXsQWbe39Y6DpvZavthXehqib5IWcOXo8H5Mo3NMJi9HV/pmY
-	do8LMlhjsDo8fFY4Vc0elDykOcBP7nbHFV+n/jQ==
-X-Google-Smtp-Source: AGHT+IG2ZNqmCpvxZnZqXDnDiNptOQpD9bze//Y71Nl6tPd+HcMtO0wrNlyQSgo+kAl6HiZywcc/ScZhP0dm+GM7DHw=
-X-Received: by 2002:a05:6808:3026:b0:3da:b3b3:191 with SMTP id
- 5614622812f47-3deffbae250mr1974969b6e.48.1724851047220; Wed, 28 Aug 2024
- 06:17:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="3HwU2O0n"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SiBSRnrBaydHG4e91NyCbuIHZuyFyLWseEd65m9vSvk9EV00Wgul8iYxmdQ7lTo38yhfDLwkCQ34w8zcsn0SvVppCf4RoBFrnTPHjcJbXkeWXmuM2W1WmLaKMYEZwCU/PgnTYpSiJ2ycfsN6j9rvfbmrDkGMTLnzPLXvKyyQcKTonoNJQpwnTedE87QEjzdtLd3uXBRN48AuLBSXHUbrrvpUMZOoFakiwmPaistOnWX0r897kB2MoUAjA323GGNmEXLwQbl6qrzyF+REc3LUuUQSeD0N7qzYYo0tiMxfOLhRkqa6DULb8FJ09lrxDqE5Nyj+U56fM5vEjJb0AXjWXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=X980+lHJp7VvDYSpbgv2i7nWWDQV95d/9DRqQxjXGaw=;
+ b=gbt6mHFNfHU6QFdMP86xFPsYj4i3rXfVXKSe6K67w/qQMpexf6yFPVgprHKe5EyT/JbEXQGLQ0xneGj3WvRESlgl1Kr3Jzpqlxd/+yFIg/XRMuLpDtdcf+tJmCPt27ActMBzT9OuaP4q9FrWC/58EwkA+sXqc9YeGwMQzHDenPfK6oNF8YgcDGHCS9opgfHKMZI9GrtD+IEKnK4qL2BJYrsvhx7Qn3hARN5CkgKS8Pes2tEYN6YmuQ6W1jtIspDiZQ0Fzg18v8KEpZEpenEOZ+0GOvmh460UeVVTLeaxJXzKiCuCys+/S5pr2MLRFVE3e4HR2mL+0chO4b8lep+UgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=X980+lHJp7VvDYSpbgv2i7nWWDQV95d/9DRqQxjXGaw=;
+ b=3HwU2O0np5JhIbVH+z9QzuHc3MN54piNS/ODWkgARzOLXY/I0mMnKVUvHGrK69wOmOtHBBUCwvs+atHutE7HcuGmnyKcjkRTqVIPXf9nJiswrWwPVX1E2BZlA5OSxzyWru2W3cdJeUvtaR7yXYc0pyh1IoIx0GHuBiX8a9uhi8k=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ BY1PR12MB8448.namprd12.prod.outlook.com (2603:10b6:a03:534::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.26; Wed, 28 Aug
+ 2024 13:50:59 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.7897.027; Wed, 28 Aug 2024
+ 13:50:59 +0000
+Message-ID: <e9c76953-5fed-4233-92d4-825c84706d83@amd.com>
+Date: Wed, 28 Aug 2024 19:20:50 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/14] iommu/amd: Correct the reported page sizes from the
+ V1 table
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Will Deacon <will@kernel.org>
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Joerg Roedel <jroedel@suse.de>,
+ patches@lists.linux.dev
+References: <13-v1-cdaaddf80abb+14190-amd_iopgtbl_jgg@nvidia.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <13-v1-cdaaddf80abb+14190-amd_iopgtbl_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN2PR01CA0187.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:e8::14) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240827143833.371588371@linuxfoundation.org>
-In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 28 Aug 2024 18:47:15 +0530
-Message-ID: <CA+G9fYvH=+SD+UxZ0koz4rtm4XxHfG--oZZCpD0svEcODZ9pjQ@mail.gmail.com>
-Subject: Re: [PATCH 6.10 000/273] 6.10.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|BY1PR12MB8448:EE_
+X-MS-Office365-Filtering-Correlation-Id: e3cfafb1-1ec7-4cd0-5931-08dcc7687261
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aTZtYTFkYzVuWDBXMlBvVGdML0c1VUdxc2ZqanQ0b2c3T1hKSmlIUG1MMUxh?=
+ =?utf-8?B?Y0hjQzZkVHFZSHM0d1N6RWFBRmxFRGtMZnZhWHZhZU9FYXphMHVmcnliRk92?=
+ =?utf-8?B?NXhVU0hkZ3kwMjJld0VlRlpQYnpQY1hFU1FWK0czQTdGTjBvZUdYMFUvZDdL?=
+ =?utf-8?B?RS9wK3RLK1J6VG9PYU1vaE5YZmFPUWZLdzdveEZxeWFBVERzVUhRSFlZdis2?=
+ =?utf-8?B?ZmpRemRjYVV3NTduM0ZKbUJuTGFFQi9LaGhKQ09QWndUeWwyTGtEUFZWK3ZO?=
+ =?utf-8?B?b3RuRTljRWZMblltS3JsSUczWDRuM1VtdC9MazBveWlkZTQ5SVIySzRaazZs?=
+ =?utf-8?B?QUk0bXZoNmVDOWRrbU5IbWZZaHVTQVVWR3d2dUNDbk1kMU5Vam1MMi94SXRS?=
+ =?utf-8?B?VVBmN1FBL1VaaTFITHVuWXQwdCtFN0ltWkZBUXZkVUFnREsyZ1J0UkQvNG9X?=
+ =?utf-8?B?S3V2b2JsbWs4Q2IycittZU9GSlhEREVOQ2I1bmtqcjU3YmxGVzBRTmpyZ2tx?=
+ =?utf-8?B?cjg4UDFsbE80RHpBM2pJREE4U0RCdjJJRVNOVDBOUE5ieVM3NWdCU3NZS25z?=
+ =?utf-8?B?UEE3ZnMyYmZCVWdOVGllRUhaS2VydU5mOVA1VVY1R1NpR2xmc05oZml0bytS?=
+ =?utf-8?B?UDNkNWFuakJZVG9VaVd6L3B1V2dDYmkvYWlYMWlhSFFaMW1nZjc2TGlMaFJE?=
+ =?utf-8?B?Ry9lZFJXa0tmZDcrYmM2Y1Z4MnhBTUJQVzBya3puWC84T0FJVXgyMnl3ci9P?=
+ =?utf-8?B?ZStoRWVMUzJBNkUxUFNUNEFQM3ZPQTJpQlgxRHcvWGdHbHBQekNiQmhnZGNw?=
+ =?utf-8?B?T0VFNm9YVk1NTVFPbDNaWUd6dEhvWlZkYTVMb09PWFN2VXgrVkRRUjdBQ1RG?=
+ =?utf-8?B?bEs1NGNCQ3ZIMDd6U056RUZCRzdIalVpTlpUeWVFSWV1dTA5Ujd5N2E2UGI2?=
+ =?utf-8?B?aXE4S3N1NVdXRDhEK0pLU2s4L01SLzg4MHgvYWV0MFZrbnQyN0JDNDBEQUtV?=
+ =?utf-8?B?Z1BPRmRxUjZYRDRLVjh4NzVFeitNZFJxdFg5V0lJRjlzbmJoelZ0YzZ5VERY?=
+ =?utf-8?B?a0w0dDRKRmtLTkFQWWVpbksrdW16SC80TmtFWDV0d0lLWmtWZzR4NmhUYVd1?=
+ =?utf-8?B?YzBvZ3lrMjQ2cXV2Y241VmFQOUMwenFCMnBSRE5SNDdFNDFrMFVsZ2JtNzdG?=
+ =?utf-8?B?Y3V0WVFtZWZiZ2pZS2YxTXh6OGQrVlcwbFptVU9kd21DcjhuZFZXUWtXZU8r?=
+ =?utf-8?B?YWRuM08vY2R1TjhDUnFJSURHZDk2bVpvbmdKZ2lBemhpMnZpMGMxRFRPcXFk?=
+ =?utf-8?B?RHJPeWtLaWx5MTZuNUh2TVhiVlpLU2lDcUgyQks0SmJsOTRwcDZETjBiZkMx?=
+ =?utf-8?B?TEtvU0xGYmdWMDkrdE51WWhqQm9Fd0lrSmEyODZQWjFPVVRpK2ZSYnpBTzR5?=
+ =?utf-8?B?U2tlQ1JPbjE5Vnh1a2tzY0tDcFJUb1NjMzZlQkZmZ1VSZHo2d2JUNjFZcmVK?=
+ =?utf-8?B?TElzK3NyU0t3UGtZUmxQRDFMK1E1TFpscXpNYVZLOGVPaTZ6dXFWbUIwazJI?=
+ =?utf-8?B?S2U0QUZaUXFvK2preXdydFJKaFpDeU5Da2paK1BVMkp0ZG9NaUJjWHNEYXpr?=
+ =?utf-8?B?VTFjZXJxak1UZkVuRDdqMWl2NTdjNFJFNWhkV0E4cHI5WU5LcFF0dHlVYTda?=
+ =?utf-8?B?K0Y2SnZHZzhSVCttME5ZM1h1Y2VvNU94dUp6RERaRUFFYS9RL3NURzRWLzJr?=
+ =?utf-8?B?UUZrRWxhMlNNMkRJMWxGYjd1Q1NYTW5ZUDhtYkFkMWRoV1ZXN3dnQzNqVzdS?=
+ =?utf-8?B?OGt5Y3lGUU02bi95ekhaZz09?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB6048.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NTFCcU12SWlqWWVFSFVXSVBVNFM1cjhPL1VvRjN6VGthenozSm1MKzZvMkNj?=
+ =?utf-8?B?enErV3pZUjJFVXBwWW9Dd1dJUXZiODFVOFpUeGRWOWxWZC9wNkRqMGo5eWdX?=
+ =?utf-8?B?T3ZpZmdxTGRSM2dqWVVJc05QS2hjQTVLMFdySlR0Sy9zMVJiV0czTk12N0VT?=
+ =?utf-8?B?K3U1b050dEVPREpKbm5KSUhBOEY2VGdnNVNpQUNBQmlmaWpVS3g2TjVmb25u?=
+ =?utf-8?B?anQ5YUZyQUNEcG1NTHZUOTFqZHA5VXplYU4yVUsrSFFGdis5TFpJdnFjUHVU?=
+ =?utf-8?B?S3VoOHpZajE5VklFTjZ4c01tRFhMSUMyNkJtYVlwb1dLQ1E4OC9ucnhyUEh2?=
+ =?utf-8?B?bkVBTjdFK0RkVnQ4aTd2U2FuWVpMSGJ4SUpla3ZTeWxnN2M3N0NTbTlwRWsz?=
+ =?utf-8?B?UTlNMGNGZFQxM3lYbDlWL0ZEMWQ3eUsvQVM4WFJ0SXFJbFFIQjlEdnMxY0hm?=
+ =?utf-8?B?QnRLdlBONWpnMkNDd3RWbjN1UVdQeHdvNUMvaEI2ZVVDNzVpVHkreHNHSyti?=
+ =?utf-8?B?VlVBS2l3SGREV2F4L3hRTEhwTXNSMlZnemY3djh1RWd3U29HTWVaTmFMT2hx?=
+ =?utf-8?B?TmNiaFdvTjVEK1dwWUdsYjNBRnZGQlVqOTJ1K1FneFR5SkdxK3dJRzY4Vk5K?=
+ =?utf-8?B?SWpTazM4bXpIQlZMV21lUFcyZkFjOVhSVlZjWkNsdE5DTmRmcHR4TUs3b2gw?=
+ =?utf-8?B?NGFxM00zcnFzL3JoU2pHLzRramw5ZEVNR1BKQmR5c0lqdUpPdmd3dWNWUVdi?=
+ =?utf-8?B?TTBTdVZHZ0VQYkNmS1JoZmswcTlibm1lcEdVbHQ3eWIzYTBMcTNuSkpJQnZH?=
+ =?utf-8?B?V0J1TTlFMG9Pbk81cVFSTGFrOHpQMHBDemNXN1dCbU9OeTlnNlhQeXloTTNP?=
+ =?utf-8?B?UDFnS1N0Zkk2ZnAzdFFwdjlIaHpNdlcvUmNTMnFUMGQwUDlMZ29renhEc2tt?=
+ =?utf-8?B?NmVWYytneUZ2NWw5VHhUazBkNktKZ3N5ZG9TeU5VbmZPVHlxUXliYW5yeC9H?=
+ =?utf-8?B?eWhNaGo3Tlk1K09ZU2JCZ0crYkFWQnVXbnpodVZ6a0RsVGFYTkRiU21jY3Ri?=
+ =?utf-8?B?V0YwTFJXbUF4Nmh5SUFzYUt3RjhRakI4RHhONEFrQjA2VWhCR05vSjZkRENT?=
+ =?utf-8?B?Zll4YTAyRkdtaFhPNW42UUpReTZRbm1yK2IvZDh1WTh0UHVyT3liSmpOS2dR?=
+ =?utf-8?B?Z3YwaGk4N0pOSU0vQ00yTUpuUG11QmJramhVUG8xZHdlMUNOcjhyN2RTVHZC?=
+ =?utf-8?B?MHBTR1hHS01wTlpiQkdlUmJHYUNTaEFtVGM1L3JHZzM5QWVwZ3B5Z1JFWU00?=
+ =?utf-8?B?c3BtV09EMHBjM3phekVDVkdySlFYRFE0Y3dCSjhNRC95TE96V00zYVdaVjV5?=
+ =?utf-8?B?Q1BxUWZyZVhRWnlhallMVURuVkVKK0FvS3ovTGlXenhsWDNTbENMeDFyM3hV?=
+ =?utf-8?B?eHNaRnVEQWhIVUdSM25IS3lRdTc1WHQvZFFyV2Y5cTBsM3ppZHpiaG5DY1dX?=
+ =?utf-8?B?YVpSZlBlQ1FoVzgxR0tZK1cxakV5SmJmdFpLZFg3MGlPTHdLMlN3ZDl6K1Jl?=
+ =?utf-8?B?eUtxWFVoaTFlT3liTUJHWU8xS1gwQmF0V1RpRlNnRU9VNGJ1ZG9qN3V6bFpD?=
+ =?utf-8?B?c1dibUJkOFZ0MTVlbmk5L0VsMVNiQzY0RW5CeWdjVTNPaWFiS2MzaTRleTJh?=
+ =?utf-8?B?T3RXajZ0MkJyVEtTR3ozZG0ydWdTbFVhbWhJQ3d4VnN1SjZrOGx5TW8zUm8z?=
+ =?utf-8?B?NnZkV3BwTjh4Skh6OWpEQmZhNDRjUFRPV3hRRzRab0VrOGpycFg0TEU5V1hX?=
+ =?utf-8?B?S05NTzFpendsakZSTU1CYnpwNDgrVUpqM2lBYVVISDhYUDB2dlZpUktrMnVq?=
+ =?utf-8?B?ek1JbWg4TVAzd0tlR0IweGdSbnBnbHpNZVdyREo2aXFtS0pzRFRkblU5VThp?=
+ =?utf-8?B?Y0dqZXdTRUIwc2QzQWJ2TEhlVllaZjJrZnRMQ05MQmRhdUllNWJ1WVJQczhN?=
+ =?utf-8?B?RHZTZzdXT0M4RFdISTB0blJyU3ZYTW83UDBVOGdqREQxank5SWdMZS9lV2pq?=
+ =?utf-8?B?RVdjK2ZUOTFSYm80RGdnZHR3UWVPRklKZVJWTVYrOURRVUJROWpCcXhZME1p?=
+ =?utf-8?Q?GaSvZFpvpdjBf3jIBpZk1t0z6?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e3cfafb1-1ec7-4cd0-5931-08dcc7687261
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2024 13:50:59.2435
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +lQ7Yn2eaiQVkBBfMyTDI5c6+UsE/wdgCg2tjXvwCEw48tIgGiT+PKDgEca/i72TGXCmCpQCjmoAnVYR1CxNuQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR12MB8448
 
-On Tue, 27 Aug 2024 at 20:32, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.10.7 release.
-> There are 273 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.10.7-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+On 8/21/2024 11:07 PM, Jason Gunthorpe wrote:
+> The HW only has 52 bits of physical address support, the supported page
+> sizes should not have bits set beyond this. Further the spec says that the
+> 6th level does not support any "default page size for translation entries"
+> meaning leafs in the 6th level are not allowed too.
+> 
+> Rework the definition to use GENMASK to build the range of supported pages
+> from the top of physical to 4k.
+> 
+> Nothing ever uses such large pages, so this is a cosmetic/documentation
+> improvement only.
+> 
+> Reported-by: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 
-## Build
-* kernel: 6.10.7-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: aa78b3c4e7eeb94e23ce019c419141739613862e
-* git describe: v6.10.6-274-gaa78b3c4e7ee
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.10.y/build/v6.10=
-.6-274-gaa78b3c4e7ee
 
-## Test Regressions (compared to v6.10.5-26-ga522cad06418)
-
-## Metric Regressions (compared to v6.10.5-26-ga522cad06418)
-
-## Test Fixes (compared to v6.10.5-26-ga522cad06418)
-
-## Metric Fixes (compared to v6.10.5-26-ga522cad06418)
-
-## Test result summary
-total: 171554, pass: 150636, fail: 1805, skip: 18905, xfail: 208
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 129 total, 127 passed, 2 failed
-* arm64: 41 total, 41 passed, 0 failed
-* i386: 28 total, 26 passed, 2 failed
-* mips: 26 total, 25 passed, 1 failed
-* parisc: 4 total, 3 passed, 1 failed
-* powerpc: 36 total, 35 passed, 1 failed
-* riscv: 19 total, 19 passed, 0 failed
-* s390: 14 total, 13 passed, 1 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 7 total, 6 passed, 1 failed
-* x86_64: 33 total, 33 passed, 0 failed
-
-## Test suites summary
-* boot
-* commands
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
+-Vasant
