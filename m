@@ -1,103 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBA816C857;
-	Wed, 28 Aug 2024 11:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF5F16CD2D
+	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 11:53:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724845270; cv=none; b=s5smK6drvU3PWCj+//DSBTtYyuZnU/vxD2uC/DOHifgVhQn65r9ndBnQ02C4k67cVVVRmvfJrBP21xpkjCOs0o+TVRh+0KzF/bdNTFCQoXbt9Rb8LAUPJpcN9W223ZAh5GymxBN1YZ5Ja/u+npzERnEoNYRvq4zgGpPWH63UQDM=
+	t=1724846041; cv=none; b=EvSLXILZdlSVqmhSKCKLFy+P6vRLRddmgP7qNMJBmnKFPpbdS3E6IMBHVxx5sUXvcqNkp81wQ+TH3DtnMCR7oYFBoncaqKGUtCrd0LIP9GRSJQ1etY6u2601nClD1MnLd29JXOO+AuJW0wUYi7iZd5OGKxZgzFGhIgBHE0LC0N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724845270; c=relaxed/simple;
-	bh=sA09cTgbVMRdDOVHDj1h10nyAt2IBd0xNvrNb7mM+AU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nxYkmNjLTge7G/TIr2MsqpkLXFHSsfpOpvYVZVdnOMz4WjdPpKeqAi97Z26RAd+Piv/xWCQnA3kCGj0wHKpgBPg8O578ShqbKhlPI0j2YaeHrVOTnf/rMLXXn2OQHnwPKOfTb5vfne2i8uSmGGlQXa0LKk1sqU4QOCENz8avLlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UQKfrbpE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724846041; c=relaxed/simple;
+	bh=O5gRyO2dJwvVCjf4Lq+k0i1gW54cEy1YRZ2SK+gyhV4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iGI1ptCfrafj35iLdlq1Rp1WiuQm7zIg3UjEKbB7i2Zf9wIT97dFu/hcvxNv/68hpcYg5VvYqkprSeZ9Kim6Mgf/8s8J/AMFX6MtYDFGJ9bHd4BsE2cn001Zg4r8V2V6Goh2S6ppiTz96tvGAYZtlFbobLwYg/Ljb5nou3eBu6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=zbcVlb7F; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UQKfrbpE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB25C4DE18;
-	Wed, 28 Aug 2024 11:41:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724845270;
-	bh=sA09cTgbVMRdDOVHDj1h10nyAt2IBd0xNvrNb7mM+AU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UQKfrbpE7wb/SazkTF+0vVgctMUKZajHmG16dACWPHkoWkzJpiuYUTusrmpV7FBzR
-	 gEA1xCOU9sE3wM8qf2sqSztZL1yMFlsbv+vhJRWuTGnQaifnUNovFUU2bWZn74Txue
-	 K1KI1OFcpE+HkmaFn9iU3SraO5t0VhUGRhmATWAUPHeS+fOLszZHnqDPgEHp2JjT5E
-	 56yzhuqWNFvJLv+K1tPgABZZUfVFh5iMAHKPAQvVuSewil3iJv8RN+3kZvVbd1Ysup
-	 8g4vAUMnocgpm9bpW91dkn+oBzo7q8SVOw/ryHYRUM0O58nTey4zig4nOb4V98KiJX
-	 4kVuMQukvLG2w==
-Date: Wed, 28 Aug 2024 12:41:03 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
-Message-ID: <8bc449eb-c9c4-420c-bf98-d909311b55ff@sirena.org.uk>
-References: <20240827143843.399359062@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="zbcVlb7F"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-429da8b5feaso72992155e9.2
+        for <patches@lists.linux.dev>; Wed, 28 Aug 2024 04:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1724846038; x=1725450838; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nDiNvFz6rdknbMnlsxqJINMU+j1qzEyGSwhUAud0ULQ=;
+        b=zbcVlb7FMWX3Fc5sA6dMQE+YslVIM8lssRYjI2ppK4XKJ98xsPi+a1mq0HPvBjLxRn
+         RBgKzSInSSbG7AEarx20FH4pOweetXuNg1LtpoqO7/D5mvpIYLXcj1ETZ+vPPJqJBBiW
+         SUHL0NC+OuGF7oSgdtUq1OoS1Fn3GSvO2X3DF2JV397f207x15saXIUCbsxt29tc7ICz
+         oOXmo5j/K4SnPcI2Vu90SkXg+YV0S6Hxcyamenl2ZU5tjG+8oW3x4HNSMPSoMPFGiz4b
+         u6S56WG3a1f2wELrD9hekSuraABWClmLhddeZWTuW2k6Kb31hJQifdvZ4NgXfEtU8O3h
+         c2pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724846038; x=1725450838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nDiNvFz6rdknbMnlsxqJINMU+j1qzEyGSwhUAud0ULQ=;
+        b=DO82BGp2NfrR5w0CUTMCEAyHmCaW4rV/fj1uA5UYDNCn9kNMe9EYxBCgB8mvIGT9uT
+         Aae0LtkM0kmlQpklbJmwzJGSNjbjjy9us9qYFMccEXxahu4HdbDxXyWKhgRzC2eoRIT+
+         dvHRzdtmqQog+YXyCUgNwyFxgec+L4v9geB6z4tqKtEKffhlNfjwSzXOLaN5r/ANZWAi
+         5+Rgovz8p6g2NJOJsBRcZH7xWBKmXWrRRd0azyDx/2R7zwECm8s9NtBZ4AGiAw2JmbI+
+         mZ1oHLPxGfZ4satZgXnsMD7boxERS0N/5GXW87STvuuK8cQJJm/ofNxbL8eUoAL5RYNR
+         9eKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXOihCrI4fWRZR9JFiEF+cudklDLkg9CWYuapjpBzotTSspxgpJkIqCiNIoo/gTGxzNpY0JbeWt@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxgeh+lA3FdJmw+pRnbtmeelK39LRdTsCNVf13X4mhaX/kIRQuo
+	/sRnF+w+qETse+HXzupcAX072Pi8C5bXt35sqk+qSawcVQ1TDmJoqIkWwm9paFwUrN89QIrZplq
+	4FbhkcgsDtCTW7slxvxy+W7HkapbDjyTXvsNSYQ==
+X-Google-Smtp-Source: AGHT+IFMWJPVBATysLtHqzNH0xeMJFF+wNbScXEeMxIJsqKta5Qy2aj8q2fOfZRtrVc3Zz9FY/1UkXj5heT2s2GHOug=
+X-Received: by 2002:adf:ed11:0:b0:36b:3395:5363 with SMTP id
+ ffacd0b85a97d-3731185600amr12989156f8f.16.1724846037761; Wed, 28 Aug 2024
+ 04:53:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1FFMRptj4rBabd61"
-Content-Disposition: inline
+References: <20240827143843.399359062@linuxfoundation.org>
 In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
-X-Cookie: You are number 6!  Who is number one?
-
-
---1FFMRptj4rBabd61
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 28 Aug 2024 20:53:46 +0900
+Message-ID: <CAKL4bV6Jhp4pjBbkCe7m5639CmFMv98SF0aVg4SkksheTTOpXA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 27, 2024 at 04:33:51PM +0200, Greg Kroah-Hartman wrote:
+Hi Greg
+
+On Tue, Aug 27, 2024 at 11:42=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.6.48 release.
 > There are 341 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.48-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-As others have reported the ALGIN macro is still broken, it affects the
-KVM selftests on at least arm64 too:
+6.6.48-rc1 tested.
 
-In file included from lib/memstress.c:8:
-/build/stage/linux/tools/testing/selftests/../../../tools/include/linux/bit=
-map.h
-: In function =E2=80=98bitmap_zero=E2=80=99:
-/build/stage/linux/tools/testing/selftests/../../../tools/include/linux/bit=
-map.h:28:34: warning: implicit declaration of function =E2=80=98ALIGN=E2=80=
-=99 [-Wimplicit-function-declaration]
-   28 | #define bitmap_size(nbits)      (ALIGN(nbits, BITS_PER_LONG) / BITS=
-_PER_BYTE)
-      |                                  ^~~~~
-/build/stage/linux/tools/testing/selftests/../../../tools/include/linux/bit=
-map.h:35:32: note: in expansion of macro =E2=80=98bitmap_size=E2=80=99
-   35 |                 memset(dst, 0, bitmap_size(nbits));
-      |                                ^~~~~~~~~~~
-At top level:
-cc1: note: unrecognized command-line option =E2=80=98-Wno-gnu-variable-size=
-d-type-not-at-end=E2=80=99 may have been intended to silence earlier diagno=
-stics
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
---1FFMRptj4rBabd61
-Content-Type: application/pgp-signature; name="signature.asc"
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
------BEGIN PGP SIGNATURE-----
+[    0.000000] Linux version 6.6.48-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240805, GNU ld (GNU
+Binutils) 2.43.0) #1 SMP PREEMPT_DYNAMIC Wed Aug 28 20:10:31 JST 2024
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbPDM8ACgkQJNaLcl1U
-h9DXDQf6ArrOGAkHsi7D8UCgnq7pX2qwA5PfxgVdbe4nwEzFOTvvJ6jSZU2m8Yet
-ppuA3W4SIjzERZb+zJZY9b3I65nXfN2ET0UZyr65kryAUD4U72n+MrxahIwLj1jp
-rZMfB/MY7DBWvEDnmp4VZRGrC+Fy1nfjOhXdDR0KplKvN2iCvtM5GJHdyalwHvMb
-a9HSixDxZ0RVLIp4ZxBp2RCNePwUpU4mxYm2nhmQLEyPUeEnIt77m7Zan2pV0w+n
-exz1qMMRTK1DbzC/f2M/bKvVWyKBlaHRRnv2Fb8wWriHXMmDV0cDJ5vl5B9B8aur
-5A4HuYC3TuFi/B3/1Co0IV7sLJld1A==
-=6mBj
------END PGP SIGNATURE-----
+Thanks
 
---1FFMRptj4rBabd61--
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
