@@ -1,98 +1,119 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B336B1A76DA
-	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 18:04:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478CB149C53;
+	Wed, 28 Aug 2024 18:05:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724868287; cv=none; b=JOqz81E0FlEoH9xG3OtAQwDfJvNMnEnRH/7CzRkH8HrhHhmqqL/siSKOqCQfa/0HjTQoZB4E0eUOu654vUUk6I076Gdu+oUeL5j1RXuvuidRoJAaN01pGXqmtnvTEkQVroEjT/q1es1Tf9nobezP5voYK5C2rsxQvYSvcB9KeYc=
+	t=1724868353; cv=none; b=F2ILbprzzvr7tqILsIYtexeY6ZqaF4iL3ou1e7ydTN43UYFa9S1jUwsLgr6tQRA/mYNwsVZ5v3cAAh+wbiZysO0+RGLE4FKn2loANtIPR+sGbJUfC94pT0wvrFNDHbOOnS1UdtK9Qvur3MwC50A2Ewyd7n1/J4FGn3e6bI3oZYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724868287; c=relaxed/simple;
-	bh=7LklAEbtnglm2QqbJRXoOdk5le0yekVD8FpktvgUQ0o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wju8pyx7SDxs6NyodxEHJLSanFLjsihfqk8RDrjrZTZMh1bsU9Zw1FAqGpiHq2dIylHFQr3Errlzdl9+mgYxKmvjmg4my/Pl1mhLrWxul2IdJK2nCncOBdYIhwu9x47qs8/MnQMnyqEk4gq2GYO+qRY3pRRI1iS+aDm3Tqzd/5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=XUozOeqh; arc=none smtp.client-ip=209.85.166.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1724868353; c=relaxed/simple;
+	bh=xfR7DLMbJuXnyQugqbUW1ndOSxrOfW6eObhJ/3J9Tf4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JSre+UNkpK55d2yvny5GcSy279SN29t9TO6Lh9NIZp6VsQRIR/D6vJ5ciT6ii5RZJJWoprPIXADqnbtBg2DLzovG15xx+Gt3UoiiabwzcK55tHiQSjXf0U/FRmeV74/0VCrorVwerpR30ebK/TJ+UUFarm6k/pZdt0jl73GiduM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Il4mO7Aq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="XUozOeqh"
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-81f94ce2272so259579739f.2
-        for <patches@lists.linux.dev>; Wed, 28 Aug 2024 11:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1724868285; x=1725473085; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D88RxHw+gLXI+BUbdOUTeiFUlCwvolVuRzDJ5llIRd8=;
-        b=XUozOeqhBIXl9NURlIuxEvvOBtimxr6hyTMDxNLdpDJVg55KCXqYWjDs8U1JTutbxQ
-         RJw5dN5MiwLC4lPVpyOahMQjkuNHckNrbLP+Pq0Jaeq7BKFSDTZsbqoh6HNBEJAnad+/
-         XlmPS3xeopSHsdkawHcn2fEFSWLJJu8+9fxjU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724868285; x=1725473085;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D88RxHw+gLXI+BUbdOUTeiFUlCwvolVuRzDJ5llIRd8=;
-        b=LfCVDZBwndWHzjZwVd8SvzcikxQlMgLAvS+k1gT4W/rrfgO4SUjoSPvpMgUJsMdvVF
-         K9oIhrKlwRQ6zJWqfRVAolDVDqLHVr4BiL7RkWvmAeZ2vzqHZmWM0dhx4ziucFo8HkwX
-         XBDiBVB77Y4QdYPJI/xy4KUmJRKYALsFgXo8PYwiQapEKBk/TIh0xOY/0NtUhv5wtT8u
-         BjdHRHHenQkPA4BpDat+o0bJW5K7lvgxFE4NxNF/ACUdLgMIlFwybtXCBimuK6ACc4Dm
-         oz55HsgQ2wSnXl8I/cZYJngxI1rI9WmAdy7yFFyXag3okBYZ88jH0BdmDomGmMveqFzw
-         tUTA==
-X-Forwarded-Encrypted: i=1; AJvYcCX5t4X2oCowASbeSIWyGfRZt8TAizauci+DDwOj8UyJmU4l8C6fgU1Sb2uoOn7+n6tOJRsDkTU4@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyxdp7kWFMj218YPHwvoHiYhQDFnSGqqiXK7tMaDVif0+C5/FNG
-	aOUYjrsfTFTHXCM2WUs78JPV7fN6hvfksCosylHuPI5GhbwBKOLCckKQ4RWN4A==
-X-Google-Smtp-Source: AGHT+IFD5bWw8dwybfSsYbERZ4OkMGlI4FfFSwejbt9P+LhXubeZLqrOlKHFBCJir/bc35aQBU9JSA==
-X-Received: by 2002:a05:6602:1487:b0:809:83e3:a35c with SMTP id ca18e2360f4ac-82a11036779mr46952939f.7.1724868284479;
-        Wed, 28 Aug 2024 11:04:44 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([72.42.103.70])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4ce70f1fa89sm3123229173.16.2024.08.28.11.04.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 11:04:44 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 28 Aug 2024 12:04:42 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.10 000/273] 6.10.7-rc1 review
-Message-ID: <Zs9mus6WLnij725m@fedora64.linuxtx.org>
-References: <20240827143833.371588371@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Il4mO7Aq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB74C4CEC0;
+	Wed, 28 Aug 2024 18:05:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724868352;
+	bh=xfR7DLMbJuXnyQugqbUW1ndOSxrOfW6eObhJ/3J9Tf4=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Il4mO7Aq6kJcNROSA+XPb/nws7e9lSOvF2Q4Q3uGvh/0vWMeUXEDr9rgcecqoYZcA
+	 fEyN8Wm4C//Y0crvL5hXNT/r3aYFO4hhUYh8Su89hmj4GRcSMDkCYTH1JUI/8DTnmj
+	 oaZB2M6fkyDJ5BGnpLruw9fzGwGL6AIk5CkOxy2a5X0AvfAEJXGrrFgcSxugFBmR0L
+	 nJULbqDs10u/van+b45VKAOZTwRvN9nJ2NgYGI4GjY/zsiwhhSOaWjwN6DJ6D13xgI
+	 CNzvguFg4mj6S5+veCMHhmeK/PSsheoXP2xSxtz+3QSm2Zjnq9JjUxMZELFt32D65e
+	 Z9w3BY9dz2FPw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 28 Aug 2024 11:05:35 -0700
+Subject: [PATCH] hwmon: (oxp-sensors) Add missing breaks to fix
+ -Wimplicit-fallthrough with clang
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240828-hwmon-oxp-sensors-fix-clang-implicit-fallthrough-v1-1-dc48496ac67a@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAO5mz2YC/x2N0QqDMAxFf0XyvIArxbn9ytiDq9EGalMS3QTx3
+ 1f2eOCeew4wUiaDR3OA0oeNJVe4XhoIccgzIY+VwbXOt73rMX4XySh7QaNsooYT7xhS3SIvJXH
+ gFachpTWqbHPEd0f3m3c++G6EeluUqvFPPl/n+QMg9+WyggAAAA==
+To: Derek John Clark <derekjohn.clark@gmail.com>, 
+ =?utf-8?q?Joaqu=C3=ADn_Ignacio_Aramend=C3=ADa?= <samsagax@gmail.com>, 
+ Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>
+Cc: linux-hwmon@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2096; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=xfR7DLMbJuXnyQugqbUW1ndOSxrOfW6eObhJ/3J9Tf4=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGnn0xluL4tfI7nldhTHowp3+Q2LDbQCrmnOvLh82y8eC
+ 4vetwyCHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAi+9QYGfZ9/zRtbqLfk0OT
+ 4pP2fN/Mbv5D0bdTt+9vfvEPh2v3r/9nZPg8428Ti42l9cTnEjtmHNYS75zWrJe8yerfbyeDdSl
+ v0tkA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Aug 27, 2024 at 04:35:24PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.7 release.
-> There are 273 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+clang warns (or errors due to CONFIG_WERROR):
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+  drivers/hwmon/oxp-sensors.c:481:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+  drivers/hwmon/oxp-sensors.c:553:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+  drivers/hwmon/oxp-sensors.c:556:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+  drivers/hwmon/oxp-sensors.c:607:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Clang is a little more pedantic than GCC, which does not warn when
+falling through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing breaks to
+silence the warnings.
+
+Fixes: b82b38a49926 ("hwmon: (oxp-sensors) Add support for multiple new devices.")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/hwmon/oxp-sensors.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/hwmon/oxp-sensors.c b/drivers/hwmon/oxp-sensors.c
+index b6d06370469d..83730d931824 100644
+--- a/drivers/hwmon/oxp-sensors.c
++++ b/drivers/hwmon/oxp-sensors.c
+@@ -478,6 +478,7 @@ static int oxp_platform_read(struct device *dev, enum hwmon_sensor_types type,
+ 			default:
+ 				break;
+ 			}
++			break;
+ 		default:
+ 			break;
+ 		}
+@@ -550,9 +551,11 @@ static int oxp_platform_read(struct device *dev, enum hwmon_sensor_types type,
+ 			default:
+ 				break;
+ 			}
++			break;
+ 		default:
+ 			break;
+ 		}
++		break;
+ 	default:
+ 		break;
+ 	}
+@@ -604,6 +607,7 @@ static int oxp_platform_write(struct device *dev, enum hwmon_sensor_types type,
+ 			default:
+ 				break;
+ 			}
++			break;
+ 		default:
+ 			break;
+ 		}
+
+---
+base-commit: ebb75a3c5265ceeebd2b0708d013735e5eafbb69
+change-id: 20240828-hwmon-oxp-sensors-fix-clang-implicit-fallthrough-b6e97424c46d
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
