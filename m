@@ -1,112 +1,84 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABED545028;
-	Wed, 28 Aug 2024 16:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BAB1A2844
+	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 17:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724862704; cv=none; b=p2BtLmu99kli1szb30lP3MqgJqNJGchRBbifPeS7G6pgz1lP6M2vk4FHvszISzpO8jBqKdR5N0Gxpox+tDpclFcxCKFuG2kRWn4Gdbu859pWO5Yai4PZcRRXXuRf0Sj6lFXGqKto3lgcXx4VEUHvxGMMwod/cXugqIWcQcx7KV0=
+	t=1724864623; cv=none; b=KZp1FWS/E5RnR14Jki2jgA6trQWJhnqxZSnKPc4BbcPTmSkOD1LcC8hfqCiVRG8XY1xFn1CKEFMvglKJOB1i3lJ3p64W4JMyyBFfeYeVKfeznXtHGuQK25wvohmWVkodGIxLfRFUWQgstto1iGISun/jM6vwZtNP1TcRHnuS2vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724862704; c=relaxed/simple;
-	bh=T5Rpb8zKKotsQm3MEEritbdfOWxT0DR8Vst6B153q68=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=RWPCaMEkXYnyf9ccPg4VesiJYPrOIkQkZOtvR2DH95znMHcSAZC4s5gV2k+3o0jlOBcgOIu841QUBf+ffOCUI/H4LEF944zzTiPovRtL18l2pNWCI+BpmW87S9DDqxsz3fOOk7Aru+w7bRTN5kGKXRjIpwnUadU4wBWYmdJG1Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.252])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Wv8zw3ng8zyR79;
-	Thu, 29 Aug 2024 00:31:08 +0800 (CST)
-Received: from dggpemf200003.china.huawei.com (unknown [7.185.36.52])
-	by mail.maildlp.com (Postfix) with ESMTPS id 24166180AE6;
-	Thu, 29 Aug 2024 00:31:39 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- dggpemf200003.china.huawei.com (7.185.36.52) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 29 Aug 2024 00:31:38 +0800
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
- Wed, 28 Aug 2024 17:31:36 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>
-CC: "acpica-devel@lists.linux.dev" <acpica-devel@lists.linux.dev>, "Guohanjun
- (Hanjun Guo)" <guohanjun@huawei.com>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
-	<kevin.tian@intel.com>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "Len
- Brown" <lenb@kernel.org>, "linux-acpi@vger.kernel.org"
-	<linux-acpi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
- Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
- Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
-	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Mostafa Saleh
-	<smostafa@google.com>
-Subject: RE: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Thread-Topic: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Thread-Index: AQHa+JkQkcFFSAeDsUqyXyGP6/LaZLI7ju0AgAFNDIA=
-Date: Wed, 28 Aug 2024 16:31:36 +0000
-Message-ID: <7debe8f99afa4e33aa1872be0d4a63e1@huawei.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
-In-Reply-To: <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1724864623; c=relaxed/simple;
+	bh=QasJiYQ1cDw/pStQicO3S8JcebgaLLR56R+OjX3L02Q=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XTrRKY8quIm4sJMArdnTHIMlAyiUFTDLq9ffdQTR03UbEOKRvZitF5WPmLkx1sWi1wch84aFfR0EpRwBCGFrGiTcg/robHnbhR9+46k6PMm6iWfMUsNmPWtdf5fcJyB5DVwcocFP2Jvs11QmK1KtIexnccPf5ySch62qiACFn6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=CFl2W7dc; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="CFl2W7dc"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7a7f86026a0so51961985a.3
+        for <patches@lists.linux.dev>; Wed, 28 Aug 2024 10:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1724864621; x=1725469421; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QasJiYQ1cDw/pStQicO3S8JcebgaLLR56R+OjX3L02Q=;
+        b=CFl2W7dcKXqGaqjI/DAOcSTpnodA6bRNBezzFs1q7UXxkc+FrHi3hjBFcnXhzmXRg/
+         x59nFX9K1HayGxi8IrPUOwSSDfZqu1OgyIeDTPnXmPWjGsH/qGXbWG081wvZriwNL8Lr
+         V6nmXN9KUJApweGUnyGW9ahxakTQwv/iYQpxo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724864621; x=1725469421;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QasJiYQ1cDw/pStQicO3S8JcebgaLLR56R+OjX3L02Q=;
+        b=J1FQQvE5sfQmRZH6lEw7l6+pTmT3bjTYjGYm64evfjxBujTkrsP/hlKqsRM/eAr5QR
+         /Gc3aSl3mebeZwIqlNe2sYQr4sAbK+ys05eINxZEQtv5On2IeZMAe/f+b50+f+KH0/ou
+         gFCZMXC9Jl9JDeOVKZcEI5PDT/3S7P+dY7Hne96M/u3/S11z5wWm9jK1h2q8eOO283+F
+         nqp4KYJS5mQMKg/UQWMuQhvb6ZXW3g/tX6TrbQIQfU2X5s++JFgMlFKfw4h5/AiKyZuD
+         mnQvN4AJd9aoYsrtBi+eLOMq4XQToofp8lxQznNXWY5WCjCzN23a00ucDTcHDuEf6nPQ
+         hONw==
+X-Forwarded-Encrypted: i=1; AJvYcCWHHW84CsxX7XIT9zqDiWtiBDCRkGBYF1rl4BVYH4NVef/lptz0Xi1pymBgUHfyD2coJ+aqobve@lists.linux.dev
+X-Gm-Message-State: AOJu0YwiFzszxZB/s7z6vkNxUibJcRnWL5uUnGugw7o56Agfj1kFZsZm
+	gm8ZF70zIk5yATWFGLh0vP8IOID6aMzkNITbdxm+hUCuClX4jc4qMTXkGGwtw20OkeJMTyjDvWO
+	mZmBius/SzvHWnlbn5uUcBdtVOO19ADHkN6dV
+X-Google-Smtp-Source: AGHT+IEVO9KZmNWSFybfc7A1nURst7111SB2+UOWqLJ8aG+gb/58BS72acni8VLoQAEGgDW7MBt6MwGtixuxjlVQbiw=
+X-Received: by 2002:a05:620a:2496:b0:7a4:f480:c315 with SMTP id
+ af79cd13be357-7a804182b1fmr3651685a.3.1724864621186; Wed, 28 Aug 2024
+ 10:03:41 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 28 Aug 2024 13:03:40 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <8597375d-6c15-4d20-96fd-2598805c09d5@linaro.org>
+References: <20240827231237.1014813-1-swboyd@chromium.org> <20240827231237.1014813-2-swboyd@chromium.org>
+ <8597375d-6c15-4d20-96fd-2598805c09d5@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 28 Aug 2024 13:03:40 -0400
+Message-ID: <CAE-0n50_+ci9H4M74FC1xVF5szE7kULFifEEnE+-DxaivGG-Bw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] clk: qcom: dispcc-sc7180: Only park display clks
+ at init
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
+	Taniya Das <quic_tdas@quicinc.com>, Amit Pundir <amit.pundir@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Nicolin,
+Quoting Neil Armstrong (2024-08-28 05:22:25)
+> On 28/08/2024 01:12, Stephen Boyd wrote:
+> > Amit Pundir reports that audio and USB-C host mode stops working on
+> > sm8550 if the gcc_usb30_prim_master_clk_src clk is registered and
+> > clk_rcg2_shared_init() parks it on XO.
+>
+> Why does it change the dispcc-sc7180 in this case ?
+>
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Tuesday, August 27, 2024 10:31 PM
-> To: Jason Gunthorpe <jgg@nvidia.com>
-> Cc: acpica-devel@lists.linux.dev; Guohanjun (Hanjun Guo)
-> <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
-> <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>;
-> kvm@vger.kernel.org; Len Brown <lenb@kernel.org>; linux-
-> acpi@vger.kernel.org; linux-arm-kernel@lists.infradead.org; Lorenzo Piera=
-lisi
-> <lpieralisi@kernel.org>; Rafael J. Wysocki <rafael@kernel.org>; Robert
-> Moore <robert.moore@intel.com>; Robin Murphy
-> <robin.murphy@arm.com>; Sudeep Holla <sudeep.holla@arm.com>; Will
-> Deacon <will@kernel.org>; Alex Williamson <alex.williamson@redhat.com>;
-> Eric Auger <eric.auger@redhat.com>; Jean-Philippe Brucker <jean-
-> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
-> <mshavit@google.com>; patches@lists.linux.dev; Shameerali Kolothum
-> Thodi <shameerali.kolothum.thodi@huawei.com>; Mostafa Saleh
-> <smostafa@google.com>
-> Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
->=20
-=20
-> As mentioned above, the VIOMMU series would be required to test the
-> entire nesting feature, which now has a v2 rebasing on this series. I tes=
-ted it
-> with a paring QEMU branch. Please refer to:
-> https://lore.kernel.org/linux-
-> iommu/cover.1724776335.git.nicolinc@nvidia.com/
-
-Thanks for this. I haven't gone through the viommu and its Qemu branch
-yet.  The way we present nested-smmuv3/iommufd to the Qemu seems to
-have changed  with the above Qemu branch(multiple nested SMMUs).
-The old Qemu command line for nested setup doesn't work anymore.
-
-Could you please share an example Qemu command line  to verify this
-series(Sorry, if I missed it in the links/git).
-
-Thanks,
-Shameer=20
-
-
-
-
+The patch that broke it affected all RCGs. Let me add that detail and
+resend.
