@@ -1,165 +1,98 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2064.outbound.protection.outlook.com [40.107.237.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03E61AC423;
-	Wed, 28 Aug 2024 19:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.64
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724874666; cv=fail; b=jybKrovAQMNHOD+x7hJq7MQSKI+/p7Robkl/U1sOTvkpGdnOHP7aq3fWR6x9FTJoRadY+uKcxur89RjSjuLivK7ycjAERx8029yV8BkyNEiO0aMehEpI+Bon0taqswqQa431IByRF/fILKjZW9NV9jGcyD8jn7E7kb8eSen1CBQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724874666; c=relaxed/simple;
-	bh=xMnDpBjke+DzFt2lBozl/M3sOwxXFyiw356zSBD4qNA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rh/6ge2OE6AiRpl5lgHOlUFGCOw8rRvFU/IZ2xugIHOy4a6ww4mmClVOyJjxm76HOPeL8kSTzAv4iEQ0BqjiDxeOwT+RnR34MHRToc3w7S53xSaMvdnLnHa4X2vyLxJxI7oFlg/dKV2JZXb1b+F86dB06ePrL4brLellpHk5e5Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jzA1AgRn; arc=fail smtp.client-ip=40.107.237.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7EE15A858;
+	Wed, 28 Aug 2024 20:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724877254; cv=none; b=lqg2X3m+/Tfeqy+9RT179oiR0OyjYZWlFgBc8uYxQ5smBzy6E7aZoLffjqc5N1Hea8Vn8nAv6hJSGGll7NYmAY1ffitNt6Gv4KjApHwwpCKrDmm3QHb1smwlS/z6xioIEGbpIlHjRpLyqhHOoNqT9kpaI0YZBIWed+GLmIXW7fU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724877254; c=relaxed/simple;
+	bh=JZ2riNqTl7Im6EDpW0puM397XtZZ53OmyfF4pY6tqS0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WXX8SEt/hZIAW53UcjbRTsNDATA1rMn3SXwgeIfpAq30QakhBSm76OEW0j6wVba68VSsjHaugSqZSZfWICH8809bJdACH/UtxzhSXuaex0Ijdd4ypTHJWa0z9sAWJE1nsUh/XP8UqfbzOT6rRVicq/JZ94UXOYBIqNW6Vu33OqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Whs+Ie4/; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jzA1AgRn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gYLxHD3/SNqVLf4twuCyiFZBLSRd2UyceeULbznamR25csM56Uul93iNIBio+Z1s+KG8IDe5KVy3JFrqv7Rrn87uIEhRD9nLKsAyd5zyIgJONzT469ZiMZnL7sittZnecKZhX4XWpO0B77JrLTOa2ZGYkyEs4ryfj4QHu+UmpVPUUZbQ8VprS1iRg5TKGg58PPnEyKyD9u4Ojjk05BA3ZCfB2iaIBGj0Jbtx2f8uKfP3LylIEJhjicqy1RTtGOUkSt1kLz6AEowIHGXLBqUmLMqtPcFN7tPi8yzxTFZx1yYIiUKZnIBPYjO1NHRcPLm/oh/vG1bGt2r1u0mxkG5c8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qIfLOEqZdjO5vhwpjtzk69BI8Y9ZU6ucW9WPeMH9qQo=;
- b=PeeFqNWq7ou6sVMFcvDMcYvoaP3xDuyiNyADKGy44F7mzoAPdYaSa3nlvPX2+dmTncOE32CKpvqwyr4cZZ42Ast7jvvEp4b/xtkuK01YDk2E81DqPndUFqVDbqY9ArCH2pT9FIhRW+zrDUpzHjTuIPeGsAO8ca4TpsUnmcM8SPmAzPEp2I/WI0YyjfcepUPBSOEcEay1X6PCmd2XTzK3yTjwasb/UImpcGLR6kfs69UlasdxJUe5RbNTMkzJK3JoQqyOX0JanVVDprD5E+X+c93siTlabBGBiK03djxoeXdxGm5+C1a4nkbGi4R84D5NqxXWaiohNoaOExmdL9PHFA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qIfLOEqZdjO5vhwpjtzk69BI8Y9ZU6ucW9WPeMH9qQo=;
- b=jzA1AgRn3UhIMD4NHhPJZBVJKJZkQgwxUqbttbsT+vCJmQ4KZheW87it6hPp0jWDrHwoPbO+bL4KiXiwHsH5Q8FwJme7/D/puBsCq5Um9xGBarYWta9BVl6Ra55vabz7W/Z3w//tvtMJ6lBXTTOCqH7rxYmYeKJ5H3xGNyH1j5CUYO7ESfVKwJIyKQUT4CVwUjBr67LO2YETXUHts9LRFgOAaobKnL+uy3UT50l2s5iabVf9Kk7W7yygYvDsN6ezytdBgA3VUHDzbLiHj6x+6sZS4lUs8FyaZb683aMSpSOB0e64wr0+jdG1yrpLRRG7264Lr+McQZjpaNZmpsFFAQ==
-Received: from DM6PR02CA0099.namprd02.prod.outlook.com (2603:10b6:5:1f4::40)
- by SN7PR12MB8169.namprd12.prod.outlook.com (2603:10b6:806:32f::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.27; Wed, 28 Aug
- 2024 19:51:01 +0000
-Received: from DS1PEPF0001709A.namprd05.prod.outlook.com
- (2603:10b6:5:1f4:cafe::44) by DM6PR02CA0099.outlook.office365.com
- (2603:10b6:5:1f4::40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28 via Frontend
- Transport; Wed, 28 Aug 2024 19:51:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DS1PEPF0001709A.mail.protection.outlook.com (10.167.18.104) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7918.13 via Frontend Transport; Wed, 28 Aug 2024 19:51:00 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 28 Aug
- 2024 12:50:47 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 28 Aug
- 2024 12:50:47 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Wed, 28 Aug 2024 12:50:45 -0700
-Date: Wed, 28 Aug 2024 12:50:44 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <acpica-devel@lists.linux.dev>, Hanjun Guo <guohanjun@huawei.com>,
-	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
-	<kevin.tian@intel.com>, <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
-	<linux-acpi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	"Lorenzo Pieralisi" <lpieralisi@kernel.org>, "Rafael J. Wysocki"
-	<rafael@kernel.org>, Robert Moore <robert.moore@intel.com>, Robin Murphy
-	<robin.murphy@arm.com>, Sudeep Holla <sudeep.holla@arm.com>, Will Deacon
-	<will@kernel.org>, "Alex Williamson" <alex.williamson@redhat.com>, Eric Auger
-	<eric.auger@redhat.com>, Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	<patches@lists.linux.dev>, Shameerali Kolothum Thodi
-	<shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Message-ID: <Zs9/lIKtlQhjLN1z@Asurada-Nvidia>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Whs+Ie4/"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-7c3d8f260easo4342176a12.1;
+        Wed, 28 Aug 2024 13:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724877252; x=1725482052; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gzTKUOg3azr22HOUBTsFoppQyjnouGcevvydwEbSCn4=;
+        b=Whs+Ie4/MpB/v1LxBpb6Fx/S1017PecmlFj/Ck6owGy/OpkBjXkaik/LoeBwF4swUl
+         bJSr2qu6LyabS6JQjTeYFTVhlMXg4gal4uOJykPHUcxuC1Q5h2nS9Er5m0zk3gWGIXuq
+         FtlGKflXeWYiKsZY2ClFCYS5VhEm54MuLHIs+l0u9tDmtvOzJ26x29BXfQruBiadsQVp
+         D7I/YZLavMKhlGO8Rf9nH5SJq0b+kFuUlL0by4xOUVFN8vfLZ5R7I21kwUFM+ssshmyK
+         DsGX9QX/NwTgQFsAO5gM5cUqToWPc8BP+91lHhrZGMhYvh6SzExCm7vw2KKcSOGtVPNs
+         eIhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724877252; x=1725482052;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gzTKUOg3azr22HOUBTsFoppQyjnouGcevvydwEbSCn4=;
+        b=g+bKXVjrNA5lukGxFhZYTQXT1S8uiN1wj/V58EMAsqQdZ2LOFRBJkdDfRXhA8535dq
+         tG7i+s7LrV5iEGrw8rjK1jOl/Xqu0PVNt9hYHnb2snC5VarWUfNDScFzbpg1OWx2j32Y
+         RAWF18JSXMdq8HpfRxvj89YgFo7k8Jzqk5rOyj4A/Wl8dgLB8TzXuQ1klCnYs+aRSq+Q
+         x0hq/iHt2V0PfrusX1l5RsER0V8zajHCkJWjdIRcVlP/Ww9E7CDuRlfCWIWtx+D6bxCk
+         aQcc3A+r93ga0ft5MSaxsnXs/l83vdWgBoqS2qXFutqJvHtOrLOOuHFPuLR1dbhoxtFb
+         3MSA==
+X-Forwarded-Encrypted: i=1; AJvYcCVVoB7Z3+AocoRwL/19eqKKzOPSwKLqqyVS45oo7LOa/fs4B39pDI73XPjxYCvZOQfYwwZM@lists.linux.dev, AJvYcCXSb6aRtsWZiHZMnfUcjYmgmEs/9odNO6XIWb9tAJQuV2bnDLOURNijTiOpP3/4O/YltoxI2pannw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGyB61FnRVzsguViing0wMPVs/l5EILx0UOVgN9h8hDv86qoUF
+	8O4FEPKg8L2mhlR+w8cqvVPi4/LU7m+O5ztMHToRbNeEYakc+ihJ
+X-Google-Smtp-Source: AGHT+IFNWbaPBVbpv6Pnjcl+M1U4r/8rXyDIr6EI/x4iMd3S6m08MielGrEyCJF8gv3rjGAB0SLs5g==
+X-Received: by 2002:a17:90a:d152:b0:2c9:9f50:3f9d with SMTP id 98e67ed59e1d1-2d856170cecmr515453a91.5.1724877252247;
+        Wed, 28 Aug 2024 13:34:12 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d8446c5a4fsm2362772a91.39.2024.08.28.13.34.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Aug 2024 13:34:11 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 28 Aug 2024 13:34:10 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Derek John Clark <derekjohn.clark@gmail.com>,
+	=?iso-8859-1?Q?Joaqu=EDn_Ignacio_Aramend=EDa?= <samsagax@gmail.com>,
+	Jean Delvare <jdelvare@suse.com>, linux-hwmon@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] hwmon: (oxp-sensors) Add missing breaks to fix
+ -Wimplicit-fallthrough with clang
+Message-ID: <dcdc5fd0-dd6c-4631-ab28-2cb169ff174d@roeck-us.net>
+References: <20240828-hwmon-oxp-sensors-fix-clang-implicit-fallthrough-v1-1-dc48496ac67a@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF0001709A:EE_|SN7PR12MB8169:EE_
-X-MS-Office365-Filtering-Correlation-Id: fc67e7c7-a334-4a74-87db-08dcc79abdfe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|7416014|376014|1800799024|36860700013;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?mCEofK+ilSDG1rc35qVpdFxWMZ/6eTvxoPkS63giLUo1sGeSCz74Vr+aJSsd?=
- =?us-ascii?Q?ljML949mF/YeUUEYwehoLVLFftfy5rODFENVKpzJqFT5hwaprCkkiPLxKzE3?=
- =?us-ascii?Q?eQJ2y8/jXgJaL3qTZQ9osoNGThcg/hjs/KFI9meZM0U4JLiE+sbUAWz8fzIz?=
- =?us-ascii?Q?2TWREZcixCnGZcoKdnss9vptwPM2t5fKFzjAHekuM08FLICKD0Ugy/CpcKgf?=
- =?us-ascii?Q?7jx4hiTiDTQpha9cG1kyiKYGCoNLJPm9BAYuWQtH1rJshGzL3VWzA8g+Ekf3?=
- =?us-ascii?Q?vX9qxWP43+8eBkVDQPETu5JERT5SpsvGZ5PUmZMZ7vBchiEz+uj3pPc3hYIl?=
- =?us-ascii?Q?JR8nN8PfR4JT8yoXjv3VY6NAWpMn3oejj5fD29a5BBQSrYAznm1oT7bTKS65?=
- =?us-ascii?Q?ecWVYww15VBr+LrXKTKAk8xnPMEfpQbHx50cUCETJQFIRK+L0lP63fygp0pi?=
- =?us-ascii?Q?3Id9qV+7uxlDZclFdrZsM3NQ+79WuIVz2F0wq9gZkI5D3QgQ5qbKcNQ1rMEj?=
- =?us-ascii?Q?FDZnMzV2Mj/nA8O02qDVRC4PvdhrVCxvIWASn5+ZgnR/bigVDyTT1oAd9Osh?=
- =?us-ascii?Q?BHdMwFunfpVIDKaHw6iqmROJGRxRTdEFwzvZXC4U1S5/NgaFuq1Cp5hw3YDU?=
- =?us-ascii?Q?pqc0XIq7tTNCkaTvno2TqoSM5tQXQGYUk8SXos8+NOb99fxGjZbDZomGsCoj?=
- =?us-ascii?Q?bRxiOAE0A7X8syvccYp0DO3sEJRObIV71EFqHIVa5++VE+dOAQENM2FNJRKd?=
- =?us-ascii?Q?/mQwE6s89XkqV4jQXB5Q/MFH/5wsNHi3UDh/IMuS9rrqhldtAr8RBcHPZWoF?=
- =?us-ascii?Q?0W9tl/tfDm9kuuyzGoDhy1wcuhrriATjDQ4AjCFeRhRsDvU52TaIYHqLWkd5?=
- =?us-ascii?Q?zAnsaydpw+MJGqVb0qHcw1AEDKEaCZSZY13Dj26tyoL/rLvwKtrIG0gosrOJ?=
- =?us-ascii?Q?4eE9hMWAQcRKU56WZrt6g7TrdrWoL4gEabfifOnqe+kwEi+HKi+T/OV78L5R?=
- =?us-ascii?Q?786b3MYfnfmLCHg8fIiDtL4NjeT/IxK8e1kTPhdP9v0Knwm5Q3MXWSyIbw/M?=
- =?us-ascii?Q?vHAqT0Ae7hVyMNOoK9Ct0k0rwXJh/5whHW+nmstSGQDGtp88TKDq2It41tmt?=
- =?us-ascii?Q?QMftRcH6pionT5gXnY/46d5CCEQM9sBnC5URID9zfrmD8xNlgoKplN+Hl8l8?=
- =?us-ascii?Q?6hw1V0eOkrsPrBITXCAjMS+KXYDsbIYd79rU/h9L8XTQZGPJ3VEWSrc3e8j+?=
- =?us-ascii?Q?CjMNX0L5UQe2JjP65eArEuQTDFI+6DGhn0q5BrTjDNf5wlf9kIYK4ZMRvJcp?=
- =?us-ascii?Q?q+Zy3El7OYTbY87tOrXM20kdOatyKOwl9c66PjaH2zLiOO3oZjj7517Z3Ijb?=
- =?us-ascii?Q?4tAFEztV+OmLnjwwoSL4fdJ08CQcTICGaGuR0CfcdSlqjib8ojM1tLhKpHhw?=
- =?us-ascii?Q?JdzSKjSairbVsaKrOLeCLawCFc72y7p8?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(376014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2024 19:51:00.4671
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fc67e7c7-a334-4a74-87db-08dcc79abdfe
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS1PEPF0001709A.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8169
+In-Reply-To: <20240828-hwmon-oxp-sensors-fix-clang-implicit-fallthrough-v1-1-dc48496ac67a@kernel.org>
 
-On Tue, Aug 27, 2024 at 12:51:32PM -0300, Jason Gunthorpe wrote:
-> Force Write Back (FWB) changes how the S2 IOPTE's MemAttr field
-> works. When S2FWB is supported and enabled the IOPTE will force cachable
-> access to IOMMU_CACHE memory when nesting with a S1 and deny cachable
-> access otherwise.
+On Wed, Aug 28, 2024 at 11:05:35AM -0700, Nathan Chancellor wrote:
+> clang warns (or errors due to CONFIG_WERROR):
 > 
-> When using a single stage of translation, a simple S2 domain, it doesn't
-> change anything as it is just a different encoding for the exsting mapping
-> of the IOMMU protection flags to cachability attributes.
+>   drivers/hwmon/oxp-sensors.c:481:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+>   drivers/hwmon/oxp-sensors.c:553:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+>   drivers/hwmon/oxp-sensors.c:556:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+>   drivers/hwmon/oxp-sensors.c:607:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
 > 
-> However, when used with a nested S1, FWB has the effect of preventing the
-> guest from choosing a MemAttr in it's S1 that would cause ordinary DMA to
-> bypass the cache. Consistent with KVM we wish to deny the guest the
-> ability to become incoherent with cached memory the hypervisor believes is
-> cachable so we don't have to flush it.
+> Clang is a little more pedantic than GCC, which does not warn when
+> falling through to a case that is just break or return. Clang's version
+> is more in line with the kernel's own stance in deprecated.rst, which
+> states that all switch/case blocks must end in either break,
+> fallthrough, continue, goto, or return. Add the missing breaks to
+> silence the warnings.
 > 
-> Turn on S2FWB whenever the SMMU supports it and use it for all S2
-> mappings.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> Fixes: b82b38a49926 ("hwmon: (oxp-sensors) Add support for multiple new devices.")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Applied.
+
+Thanks,
+Guenter
