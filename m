@@ -1,168 +1,115 @@
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBA4149C53;
-	Wed, 28 Aug 2024 18:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEE31A4F3F
+	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 18:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724868406; cv=none; b=iH2CfkntTziivsD2hQECbtoY94OMqEzkZcHiC8LWkMYxoOWBqkeP7i+oMElrLiVPKCU07taL+8gDxN2ZZmVA+lDebV+BUMmTR9lebln+FE2iLQ8yycPN20yKX6uUbXRH8NvzzxIaUtJQt5Mg4vQ5N20QqXl937UcRHY5X2CUeDA=
+	t=1724868511; cv=none; b=BCbpS7C6qUCM0eqIxoy8MtqKNJ7oK9HORnFm5h86NIqalVAPM4xH6utQHGcC3K3OiWIXZZg/hPpXNBOXqkiGsUjHKRywc7RSw0wQsmeUBWGC1cwvWTnk7LXB129KJgU4bTSrjSiimEBHeJ3ohSzUvWfnIYKECYsH8AxOhoVzKOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724868406; c=relaxed/simple;
-	bh=w67xNAjthsSQ+48Jvvohao+Zq2bgRnT/FFrFz/z4Zb4=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=jF3HSmKan76uZptweywWlcZZVOB++v9U31Y+86I7KDrqwVw4sEIZ6HcpMfd5oXjIeCDpWo7L4HDfzrTE1K3T5BmLWSMQkYEFpzP+wnZP98utzp7HZgCNFS5gT7GSrRCmhCGy4/DW6UF5rqYvigUDwfhzxYD0G9Dp/cWnEf+RKjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.44])
-	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4WvC2H5yLlz1HHbh;
-	Thu, 29 Aug 2024 02:03:19 +0800 (CST)
-Received: from dggpemf200001.china.huawei.com (unknown [7.185.36.225])
-	by mail.maildlp.com (Postfix) with ESMTPS id E89691400CB;
-	Thu, 29 Aug 2024 02:06:39 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- dggpemf200001.china.huawei.com (7.185.36.225) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 29 Aug 2024 02:06:39 +0800
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
- Wed, 28 Aug 2024 19:06:37 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
-	<acpica-devel@lists.linux.dev>, "Guohanjun (Hanjun Guo)"
-	<guohanjun@huawei.com>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
-	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
- Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
- Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
-	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Mostafa Saleh
-	<smostafa@google.com>
-Subject: RE: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Thread-Topic: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Thread-Index: AQHa+JkQkcFFSAeDsUqyXyGP6/LaZLI7ju0AgAFNDID///2PgIAAHqvg
-Date: Wed, 28 Aug 2024 18:06:36 +0000
-Message-ID: <cd36b0e460734df0ae95f5e82bfebaef@huawei.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
- <7debe8f99afa4e33aa1872be0d4a63e1@huawei.com>
- <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
-In-Reply-To: <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1724868511; c=relaxed/simple;
+	bh=SCLV8wd7X7ckBXak/0X6ibU6CYrjKDscx+KQsbhVC+A=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=NRsq4iRvgpvgEX1h+MmxGof/XouoVrSu53XWgChsE0QBCcAo59NklnftUMmVy9VfHbF2FLV9BorGnxMuns6Sxm6/eiQjZ9Ko7rP5rXMiYHnLHc2ani6Ro0BlBLVEn76jmkk8ezmZLmxu7AoRyQy99OeU6/i9vUVQcHJeWUYA3po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=rL4ULSGf; arc=none smtp.client-ip=44.202.169.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="rL4ULSGf"
+Received: from eig-obgw-6002a.ext.cloudfilter.net ([10.0.30.222])
+	by cmsmtp with ESMTPS
+	id jJDPsKniJg2lzjN5nswxv6; Wed, 28 Aug 2024 18:08:28 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id jN5msuIJxX56wjN5ms5Tqd; Wed, 28 Aug 2024 18:08:27 +0000
+X-Authority-Analysis: v=2.4 cv=MY6nuI/f c=1 sm=1 tr=0 ts=66cf679b
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=yoJbH4e0A30A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=pvbMRhK_gA1k-AccEgoA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=hfsNqh9p0Ut36mnWdHM7bvapJh+juYxlaROAU5v0Zr4=; b=rL4ULSGfzapvEmO3a+sfxHiYSU
+	EYNSHtgQfLyevf016rYXHLZ5OIyrBNqCmfZSkmDJTG+zO17MkNCQCxvMZ9f8Q/FAul564mWh/EaLh
+	GQC7oOXgkdmXYs/ZdZ1pap0SnJYCkNplwVe5ayZFhdytBQ0DA7y2LIdw/aaR4VwkEQoUmS0Kkr4Ap
+	B3MmkwzxlsOKyw7Xw/8wJn+wdSdZhxO1DpTfGv/5lp56op86jz7zzEAwLgUoQEcFufjIDOs0GQFiW
+	B6PdwNkkmPrM4Z6a+qrIZ4vIAmHy1BVZZhOCIsxGMsYXEpqFATS4sdzxq8V9lTIuWQvLVprwY8sQV
+	k/2+BLZg==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:37086 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1sjN5h-001FJE-1j;
+	Wed, 28 Aug 2024 12:08:21 -0600
+Subject: Re: [PATCH 6.10 000/273] 6.10.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240827143833.371588371@linuxfoundation.org>
+In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <108efbde-9cab-1c96-4143-bb80fe72d796@w6rz.net>
+Date: Wed, 28 Aug 2024 11:08:15 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1sjN5h-001FJE-1j
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:37086
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfHsZCwkXVVbmUvyViUwkTII808JAlT43gqG0fu5qEyZf/Sp2XQNhIUmli3ifQTKxm0a92pvcxlAuL1RkS6R7MWghivrvc4qRpohk6nVIwyHR5rzK9+7t
+ dmQu+Om1eeWjtyNYTCfm7pZhcQRIc6F9zi1IaWm3eLycEeGI8t+wSRDCz50jDgAuOtcHmSiAn7xnHA==
 
+On 8/27/24 7:35 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.7 release.
+> There are 273 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Wednesday, August 28, 2024 6:15 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: Jason Gunthorpe <jgg@nvidia.com>; acpica-devel@lists.linux.dev;
-> Guohanjun (Hanjun Guo) <guohanjun@huawei.com>;
-> iommu@lists.linux.dev; Joerg Roedel <joro@8bytes.org>; Kevin Tian
-> <kevin.tian@intel.com>; kvm@vger.kernel.org; Len Brown
-> <lenb@kernel.org>; linux-acpi@vger.kernel.org; linux-arm-
-> kernel@lists.infradead.org; Lorenzo Pieralisi <lpieralisi@kernel.org>; Ra=
-fael J.
-> Wysocki <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>;
-> Robin Murphy <robin.murphy@arm.com>; Sudeep Holla
-> <sudeep.holla@arm.com>; Will Deacon <will@kernel.org>; Alex Williamson
-> <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>; Jean-
-> Philippe Brucker <jean-philippe@linaro.org>; Moritz Fischer
-> <mdf@kernel.org>; Michael Shavit <mshavit@google.com>;
-> patches@lists.linux.dev; Mostafa Saleh <smostafa@google.com>
-> Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
->=20
-> Hi Shameer,
->=20
-> On Wed, Aug 28, 2024 at 04:31:36PM +0000, Shameerali Kolothum Thodi
-> wrote:
-> > Hi Nicolin,
-> >
-> > > -----Original Message-----
-> > > From: Nicolin Chen <nicolinc@nvidia.com>
-> > > Sent: Tuesday, August 27, 2024 10:31 PM
-> > > To: Jason Gunthorpe <jgg@nvidia.com>
-> > > Cc: acpica-devel@lists.linux.dev; Guohanjun (Hanjun Guo)
-> > > <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
-> > > <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>;
-> > > kvm@vger.kernel.org; Len Brown <lenb@kernel.org>; linux-
-> > > acpi@vger.kernel.org; linux-arm-kernel@lists.infradead.org; Lorenzo
-> > > Pieralisi <lpieralisi@kernel.org>; Rafael J. Wysocki
-> > > <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>; Robin
-> > > Murphy <robin.murphy@arm.com>; Sudeep Holla
-> <sudeep.holla@arm.com>;
-> > > Will Deacon <will@kernel.org>; Alex Williamson
-> > > <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>;
-> > > Jean-Philippe Brucker <jean- philippe@linaro.org>; Moritz Fischer
-> > > <mdf@kernel.org>; Michael Shavit <mshavit@google.com>;
-> > > patches@lists.linux.dev; Shameerali Kolothum Thodi
-> > > <shameerali.kolothum.thodi@huawei.com>; Mostafa Saleh
-> > > <smostafa@google.com>
-> > > Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested
-> > > translation
-> > >
-> >
-> > > As mentioned above, the VIOMMU series would be required to test the
-> > > entire nesting feature, which now has a v2 rebasing on this series.
-> > > I tested it with a paring QEMU branch. Please refer to:
-> > > https://lore.kernel.org/linux-
-> > > iommu/cover.1724776335.git.nicolinc@nvidia.com/
-> >
-> > Thanks for this. I haven't gone through the viommu and its Qemu branch
-> > yet.  The way we present nested-smmuv3/iommufd to the Qemu seems to
-> > have changed  with the above Qemu branch(multiple nested SMMUs).
-> > The old Qemu command line for nested setup doesn't work anymore.
-> >
-> > Could you please share an example Qemu command line  to verify this
-> > series(Sorry, if I missed it in the links/git).
->=20
-> My bad. I updated those two "for_iommufd_" QEMU branches with a
-> README commit on top of each for the reference command.
+Tested-by: Ron Economos <re@w6rz.net>
 
-Thanks. I did give it a go and this is my command line based on above,
-
-./qemu-system-aarch64-nicolin-viommu -object iommufd,id=3Diommufd0 \
--machine hmat=3Don \
--machine virt,accel=3Dkvm,gic-version=3D3,iommu=3Dnested-smmuv3,ras=3Don \
--cpu host -smp cpus=3D61 -m size=3D16G,slots=3D4,maxmem=3D256G -nographic \
--object memory-backend-ram,size=3D8G,id=3Dm0 \
--object memory-backend-ram,size=3D8G,id=3Dm1 \
--numa node,memdev=3Dm0,cpus=3D0-60,nodeid=3D0  -numa node,memdev=3Dm1,nodei=
-d=3D1 \
--device vfio-pci-nohotplug,host=3D0000:75:00.1,iommufd=3Diommufd0 \
--bios QEMU_EFI.fd \
--drive if=3Dnone,file=3Dubuntu-18.04-old.img,id=3Dfs \
--device virtio-blk-device,drive=3Dfs \
--kernel Image \
--append "rdinit=3Dinit console=3DttyAMA0 root=3D/dev/vda rw earlycon=3Dpl01=
-1,0x9000000 kpti=3Doff" \
--nographic
-
-But it fails to boot very early:
-
-root@ubuntu:/home/shameer/qemu-test# ./qemu_run-simple-iommufd-nicolin-2
-qemu-system-aarch64-nicolin-viommu: Illegal numa node 2
-=20
-Any idea what am I missing? Do you any special config enabled while buildin=
-g Qemu?
-
-Thanks,
-Shameer
