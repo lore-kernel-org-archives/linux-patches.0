@@ -1,86 +1,101 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A21493FEC
-	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 04:04:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF8384D0D
+	for <patches@lists.linux.dev>; Wed, 28 Aug 2024 04:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724817878; cv=none; b=p1vs+/EMXOVY/T0li6pk07wEhijS9Ng5RjpVeZwAeAhQJygzLyRd5p7D27o1UK1gjA4bB7oUMhsrqdkljBnaR/r5LueRS3ouiUIhOplMeelyWRehS/ZS4Ztb4EAoIxEdrTwjd2fAtROEidhRsAY9/t1A+sPwgFtABjg6lZhrMl4=
+	t=1724819056; cv=none; b=KjDLB8vwzu2UhnyIyySnFd3txp35GLV2drNd78oYFv/l4LY6QntJ5H/5bUWECWZPOxsZfIO7q3e02av0ys/Fhfnms/+c1MVT33RdQEex2XBFy7mivOv4nCEiLMxx7WV8ICdbdveDGmpELGFZl28mSLt+lwYt5cu5CGp7nX4kA0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724817878; c=relaxed/simple;
-	bh=7Xtxe64sq06BP1dqrXzWnife7Ce4FxLs+COPqlXnlUE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q20ivt1CHwiaY03e3gQC5dhLtMbvgZOyaX/2tojI8MC1f8AOlFc6wKRwppeTS1QEW10+TgtsrisdGtDC6x715tH34skOpQFuYMJy7wK+Xc5oeWthpPujfDr1gzIX/lIU0cOyhUeCcZl/TVdz0yg28IxUjyWGtJd+67JfMt2HkX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=34clBGYo; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1724819056; c=relaxed/simple;
+	bh=iSeEtXxbuAC+6rlIpyEzQw5/FyLhOZ+VSNh8g3YqTnc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SPMPT5kQbPDQGlbXnDuFo6V93kvMU040OgrxjlFPyRu2UmOgVnb+FV68TFYkV+M+x6GHo+gwoCz6nIl5hohsDgz3IX1pvR204nox4uSLUTVaU6TpsOBdoHmCduZoOYatyER7QLBr+6eP3BivmndkHsnIca0oj0uufEUi/bS7fiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=T22128jC; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="34clBGYo"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 2420814C1E1;
-	Wed, 28 Aug 2024 06:04:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1724817875;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UKm5ASyrnswyGNT2A5qP5zHvthW9HbZEY3kVodN5zXQ=;
-	b=34clBGYoiv8JNXbNYS9xzxquoiTIia09/JyYzXqPljUqcZRO2lQGWYuHcqbGvtDW36mfKt
-	XuPkk0HQB+5uzuEgLL4X7R53hLQJi6B6DjI+Btx7FjahzpHyjIDp2w1l5nUX2zDvtA3YgW
-	AFEMwEjhwpqF63agq2ghPD1bSPS339SumhOVx2ky2k1eAsm3nbzhfHanyFhIkAogciBuKQ
-	GnsiynuuiyP+45vv08AWqgWEfOIAmHRrPPZjpyYDj2wuMkxWjefotwNwHgP/gGIGsDLMAN
-	9thSF0SwRAWT+AKaCvH2sGjmzDB75OYNY8CFAZ0YBV1U9VAr5G7xLY3y6DeYnw==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 3ab7ac97;
-	Wed, 28 Aug 2024 04:04:31 +0000 (UTC)
-Date: Wed, 28 Aug 2024 13:04:16 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 194/317] Input: ioc3kbd - convert to platform remove
- callback returning void
-Message-ID: <Zs6hwNxk7QkCe7AW@codewreck.org>
-References: <20240613113247.525431100@linuxfoundation.org>
- <20240613113255.060736154@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="T22128jC"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5c210e23651so685588a12.3
+        for <patches@lists.linux.dev>; Tue, 27 Aug 2024 21:24:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1724819053; x=1725423853; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gEp2WWF6uAzjFpYV8RUuP3nwjzanyudW6qAn5FJB6WI=;
+        b=T22128jCMduanduRtXe4wZgzA8FeLNWlWFVS9hUHhdIURxHk6U33N0mDpiGh3w1JB+
+         9uk7dA/N2FxXF1XN51px0gU1gy9XcKKhgdFWHFFMcV+NseXXoqF2APdcuA66Tn2hHmOG
+         udF/M7BzikVUO1henmyn5aSqEzRsxrh8FYYSoNzr7xZ0AWm3wdQdr4FD7DiGPXlcJ4FF
+         YsWBx0eSH7WhAzWssE297OtQHk0LTtZLlLLW5zkpL84Q8q3fwrgXLgcghah/ysYnyp3P
+         C5ZYTuypOWM1jy3pPc94xJnoY92rS+9DQ1KCkTL2dEQhha1GvEkUVyAwfc+BcsQY6+WM
+         V6Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724819053; x=1725423853;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEp2WWF6uAzjFpYV8RUuP3nwjzanyudW6qAn5FJB6WI=;
+        b=fjjnqrVQvdsRsQgNSTqDxHHVgl/GbaCCMHiA3OajExNlRRF/j14/B2WhbFS93uVzqW
+         yg8+KryCbD7ZA7iHo5mXmVOXunPlOJ0EKFjm+YPJMiZwDu4FEBZW1/hggFS9tu/z230U
+         naX3yOmLDcZFq3TxKeYJhSiz+TnAGdKES8ieQVGrgsl8fQAWv6TCChy1Nalf9urRldVt
+         wmHuomOOTr02qOHjpeqDvs23LSNFGremJ2mSy/CIdbT6jw0VV0pudJ/lV3XUyjY294ek
+         Ab1C/HdGjJ8lILSDCTojpm7SXUTwB/puKIpTZXxuqD3sz49Z0ZupCuxIieEGexmCgZ+n
+         BvmA==
+X-Gm-Message-State: AOJu0Yy+XhrDmKQB+wuhdBex3M5nwekBJPKzYchpqYUCvewN8DnYf9fT
+	5P7iIM25H4j95srACc/Uvc7YHARSjwhpLe9YgcMA3hVv7OG4A5A=
+X-Google-Smtp-Source: AGHT+IEyaZZUdpDX4j1cUEdZP3kE2zHGP4i7DiZMfhzfMv4yWPXAK/wgq1Wo3eQ8OlE6Hy+UaWG40A==
+X-Received: by 2002:a05:6402:348f:b0:5be:cde2:861d with SMTP id 4fb4d7f45d1cf-5c213dc0aa7mr469172a12.13.1724819052764;
+        Tue, 27 Aug 2024 21:24:12 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057ded.dip0.t-ipconnect.de. [91.5.125.237])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c0bb4722b0sm1703477a12.69.2024.08.27.21.24.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Aug 2024 21:24:12 -0700 (PDT)
+Message-ID: <fa59f2a2-a8c5-4d73-9819-f7ac6350dc8b@googlemail.com>
+Date: Wed, 28 Aug 2024 06:24:10 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240613113255.060736154@linuxfoundation.org>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.10 000/273] 6.10.7-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240827143833.371588371@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240827143833.371588371@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Greg Kroah-Hartman wrote on Thu, Jun 13, 2024 at 01:33:32PM +0200:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new() which already returns void. Eventually after all drivers
-> are converted, .remove_new() will be renamed to .remove().
+Am 27.08.2024 um 16:35 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.10.7 release.
+> There are 273 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-A bit late to the party here (this patch was included as commit
-0096d223f78c in v5.10.219), but 5.10 does not have .remove_new()
-(missing commit 5c5a7680e67b ("platform: Provide a remove callback that
-returns no value")) so there is no way this commit will work.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-
-I'm not building this driver so don't really care and this can be left
-as is as far as I'm concerned (and since it's been over 2 months
-probably no-one is using this driver on this old kernel, it doesn't look
-enabled on e.g. debian's build); so this is just a head's up for mail
-archives if anyone is notified about the problem they'll want to either
-revert this or pick up the above commit.
-
-(I checked quickly and that commit was backported to 5.15, so 5.10 is
-the only tree where that broke, and there is no other driver in 5.10
-that tries to set .remove_new)
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
 
-Thanks,
+Beste Grüße,
+Peter Schneider
+
 -- 
-Dominique
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
