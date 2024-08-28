@@ -1,119 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478CB149C53;
-	Wed, 28 Aug 2024 18:05:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBA4149C53;
+	Wed, 28 Aug 2024 18:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724868353; cv=none; b=F2ILbprzzvr7tqILsIYtexeY6ZqaF4iL3ou1e7ydTN43UYFa9S1jUwsLgr6tQRA/mYNwsVZ5v3cAAh+wbiZysO0+RGLE4FKn2loANtIPR+sGbJUfC94pT0wvrFNDHbOOnS1UdtK9Qvur3MwC50A2Ewyd7n1/J4FGn3e6bI3oZYM=
+	t=1724868406; cv=none; b=iH2CfkntTziivsD2hQECbtoY94OMqEzkZcHiC8LWkMYxoOWBqkeP7i+oMElrLiVPKCU07taL+8gDxN2ZZmVA+lDebV+BUMmTR9lebln+FE2iLQ8yycPN20yKX6uUbXRH8NvzzxIaUtJQt5Mg4vQ5N20QqXl937UcRHY5X2CUeDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724868353; c=relaxed/simple;
-	bh=xfR7DLMbJuXnyQugqbUW1ndOSxrOfW6eObhJ/3J9Tf4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JSre+UNkpK55d2yvny5GcSy279SN29t9TO6Lh9NIZp6VsQRIR/D6vJ5ciT6ii5RZJJWoprPIXADqnbtBg2DLzovG15xx+Gt3UoiiabwzcK55tHiQSjXf0U/FRmeV74/0VCrorVwerpR30ebK/TJ+UUFarm6k/pZdt0jl73GiduM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Il4mO7Aq; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Il4mO7Aq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB74C4CEC0;
-	Wed, 28 Aug 2024 18:05:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724868352;
-	bh=xfR7DLMbJuXnyQugqbUW1ndOSxrOfW6eObhJ/3J9Tf4=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Il4mO7Aq6kJcNROSA+XPb/nws7e9lSOvF2Q4Q3uGvh/0vWMeUXEDr9rgcecqoYZcA
-	 fEyN8Wm4C//Y0crvL5hXNT/r3aYFO4hhUYh8Su89hmj4GRcSMDkCYTH1JUI/8DTnmj
-	 oaZB2M6fkyDJ5BGnpLruw9fzGwGL6AIk5CkOxy2a5X0AvfAEJXGrrFgcSxugFBmR0L
-	 nJULbqDs10u/van+b45VKAOZTwRvN9nJ2NgYGI4GjY/zsiwhhSOaWjwN6DJ6D13xgI
-	 CNzvguFg4mj6S5+veCMHhmeK/PSsheoXP2xSxtz+3QSm2Zjnq9JjUxMZELFt32D65e
-	 Z9w3BY9dz2FPw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 28 Aug 2024 11:05:35 -0700
-Subject: [PATCH] hwmon: (oxp-sensors) Add missing breaks to fix
- -Wimplicit-fallthrough with clang
+	s=arc-20240116; t=1724868406; c=relaxed/simple;
+	bh=w67xNAjthsSQ+48Jvvohao+Zq2bgRnT/FFrFz/z4Zb4=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=jF3HSmKan76uZptweywWlcZZVOB++v9U31Y+86I7KDrqwVw4sEIZ6HcpMfd5oXjIeCDpWo7L4HDfzrTE1K3T5BmLWSMQkYEFpzP+wnZP98utzp7HZgCNFS5gT7GSrRCmhCGy4/DW6UF5rqYvigUDwfhzxYD0G9Dp/cWnEf+RKjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4WvC2H5yLlz1HHbh;
+	Thu, 29 Aug 2024 02:03:19 +0800 (CST)
+Received: from dggpemf200001.china.huawei.com (unknown [7.185.36.225])
+	by mail.maildlp.com (Postfix) with ESMTPS id E89691400CB;
+	Thu, 29 Aug 2024 02:06:39 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
+ dggpemf200001.china.huawei.com (7.185.36.225) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 29 Aug 2024 02:06:39 +0800
+Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
+ lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
+ Wed, 28 Aug 2024 19:06:37 +0100
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
+	<acpica-devel@lists.linux.dev>, "Guohanjun (Hanjun Guo)"
+	<guohanjun@huawei.com>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
+	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
+ Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
+ Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
+	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
+	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, Mostafa Saleh
+	<smostafa@google.com>
+Subject: RE: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+Thread-Topic: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+Thread-Index: AQHa+JkQkcFFSAeDsUqyXyGP6/LaZLI7ju0AgAFNDID///2PgIAAHqvg
+Date: Wed, 28 Aug 2024 18:06:36 +0000
+Message-ID: <cd36b0e460734df0ae95f5e82bfebaef@huawei.com>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
+ <7debe8f99afa4e33aa1872be0d4a63e1@huawei.com>
+ <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
+In-Reply-To: <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240828-hwmon-oxp-sensors-fix-clang-implicit-fallthrough-v1-1-dc48496ac67a@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAO5mz2YC/x2N0QqDMAxFf0XyvIArxbn9ytiDq9EGalMS3QTx3
- 1f2eOCeew4wUiaDR3OA0oeNJVe4XhoIccgzIY+VwbXOt73rMX4XySh7QaNsooYT7xhS3SIvJXH
- gFachpTWqbHPEd0f3m3c++G6EeluUqvFPPl/n+QMg9+WyggAAAA==
-To: Derek John Clark <derekjohn.clark@gmail.com>, 
- =?utf-8?q?Joaqu=C3=ADn_Ignacio_Aramend=C3=ADa?= <samsagax@gmail.com>, 
- Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>
-Cc: linux-hwmon@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2096; i=nathan@kernel.org;
- h=from:subject:message-id; bh=xfR7DLMbJuXnyQugqbUW1ndOSxrOfW6eObhJ/3J9Tf4=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGnn0xluL4tfI7nldhTHowp3+Q2LDbQCrmnOvLh82y8eC
- 4vetwyCHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAi+9QYGfZ9/zRtbqLfk0OT
- 4pP2fN/Mbv5D0bdTt+9vfvEPh2v3r/9nZPg8428Ti42l9cTnEjtmHNYS75zWrJe8yerfbyeDdSl
- v0tkA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-clang warns (or errors due to CONFIG_WERROR):
 
-  drivers/hwmon/oxp-sensors.c:481:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-  drivers/hwmon/oxp-sensors.c:553:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-  drivers/hwmon/oxp-sensors.c:556:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-  drivers/hwmon/oxp-sensors.c:607:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
 
-Clang is a little more pedantic than GCC, which does not warn when
-falling through to a case that is just break or return. Clang's version
-is more in line with the kernel's own stance in deprecated.rst, which
-states that all switch/case blocks must end in either break,
-fallthrough, continue, goto, or return. Add the missing breaks to
-silence the warnings.
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Wednesday, August 28, 2024 6:15 PM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: Jason Gunthorpe <jgg@nvidia.com>; acpica-devel@lists.linux.dev;
+> Guohanjun (Hanjun Guo) <guohanjun@huawei.com>;
+> iommu@lists.linux.dev; Joerg Roedel <joro@8bytes.org>; Kevin Tian
+> <kevin.tian@intel.com>; kvm@vger.kernel.org; Len Brown
+> <lenb@kernel.org>; linux-acpi@vger.kernel.org; linux-arm-
+> kernel@lists.infradead.org; Lorenzo Pieralisi <lpieralisi@kernel.org>; Ra=
+fael J.
+> Wysocki <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>;
+> Robin Murphy <robin.murphy@arm.com>; Sudeep Holla
+> <sudeep.holla@arm.com>; Will Deacon <will@kernel.org>; Alex Williamson
+> <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>; Jean-
+> Philippe Brucker <jean-philippe@linaro.org>; Moritz Fischer
+> <mdf@kernel.org>; Michael Shavit <mshavit@google.com>;
+> patches@lists.linux.dev; Mostafa Saleh <smostafa@google.com>
+> Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+>=20
+> Hi Shameer,
+>=20
+> On Wed, Aug 28, 2024 at 04:31:36PM +0000, Shameerali Kolothum Thodi
+> wrote:
+> > Hi Nicolin,
+> >
+> > > -----Original Message-----
+> > > From: Nicolin Chen <nicolinc@nvidia.com>
+> > > Sent: Tuesday, August 27, 2024 10:31 PM
+> > > To: Jason Gunthorpe <jgg@nvidia.com>
+> > > Cc: acpica-devel@lists.linux.dev; Guohanjun (Hanjun Guo)
+> > > <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
+> > > <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>;
+> > > kvm@vger.kernel.org; Len Brown <lenb@kernel.org>; linux-
+> > > acpi@vger.kernel.org; linux-arm-kernel@lists.infradead.org; Lorenzo
+> > > Pieralisi <lpieralisi@kernel.org>; Rafael J. Wysocki
+> > > <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>; Robin
+> > > Murphy <robin.murphy@arm.com>; Sudeep Holla
+> <sudeep.holla@arm.com>;
+> > > Will Deacon <will@kernel.org>; Alex Williamson
+> > > <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>;
+> > > Jean-Philippe Brucker <jean- philippe@linaro.org>; Moritz Fischer
+> > > <mdf@kernel.org>; Michael Shavit <mshavit@google.com>;
+> > > patches@lists.linux.dev; Shameerali Kolothum Thodi
+> > > <shameerali.kolothum.thodi@huawei.com>; Mostafa Saleh
+> > > <smostafa@google.com>
+> > > Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested
+> > > translation
+> > >
+> >
+> > > As mentioned above, the VIOMMU series would be required to test the
+> > > entire nesting feature, which now has a v2 rebasing on this series.
+> > > I tested it with a paring QEMU branch. Please refer to:
+> > > https://lore.kernel.org/linux-
+> > > iommu/cover.1724776335.git.nicolinc@nvidia.com/
+> >
+> > Thanks for this. I haven't gone through the viommu and its Qemu branch
+> > yet.  The way we present nested-smmuv3/iommufd to the Qemu seems to
+> > have changed  with the above Qemu branch(multiple nested SMMUs).
+> > The old Qemu command line for nested setup doesn't work anymore.
+> >
+> > Could you please share an example Qemu command line  to verify this
+> > series(Sorry, if I missed it in the links/git).
+>=20
+> My bad. I updated those two "for_iommufd_" QEMU branches with a
+> README commit on top of each for the reference command.
 
-Fixes: b82b38a49926 ("hwmon: (oxp-sensors) Add support for multiple new devices.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/hwmon/oxp-sensors.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Thanks. I did give it a go and this is my command line based on above,
 
-diff --git a/drivers/hwmon/oxp-sensors.c b/drivers/hwmon/oxp-sensors.c
-index b6d06370469d..83730d931824 100644
---- a/drivers/hwmon/oxp-sensors.c
-+++ b/drivers/hwmon/oxp-sensors.c
-@@ -478,6 +478,7 @@ static int oxp_platform_read(struct device *dev, enum hwmon_sensor_types type,
- 			default:
- 				break;
- 			}
-+			break;
- 		default:
- 			break;
- 		}
-@@ -550,9 +551,11 @@ static int oxp_platform_read(struct device *dev, enum hwmon_sensor_types type,
- 			default:
- 				break;
- 			}
-+			break;
- 		default:
- 			break;
- 		}
-+		break;
- 	default:
- 		break;
- 	}
-@@ -604,6 +607,7 @@ static int oxp_platform_write(struct device *dev, enum hwmon_sensor_types type,
- 			default:
- 				break;
- 			}
-+			break;
- 		default:
- 			break;
- 		}
+./qemu-system-aarch64-nicolin-viommu -object iommufd,id=3Diommufd0 \
+-machine hmat=3Don \
+-machine virt,accel=3Dkvm,gic-version=3D3,iommu=3Dnested-smmuv3,ras=3Don \
+-cpu host -smp cpus=3D61 -m size=3D16G,slots=3D4,maxmem=3D256G -nographic \
+-object memory-backend-ram,size=3D8G,id=3Dm0 \
+-object memory-backend-ram,size=3D8G,id=3Dm1 \
+-numa node,memdev=3Dm0,cpus=3D0-60,nodeid=3D0  -numa node,memdev=3Dm1,nodei=
+d=3D1 \
+-device vfio-pci-nohotplug,host=3D0000:75:00.1,iommufd=3Diommufd0 \
+-bios QEMU_EFI.fd \
+-drive if=3Dnone,file=3Dubuntu-18.04-old.img,id=3Dfs \
+-device virtio-blk-device,drive=3Dfs \
+-kernel Image \
+-append "rdinit=3Dinit console=3DttyAMA0 root=3D/dev/vda rw earlycon=3Dpl01=
+1,0x9000000 kpti=3Doff" \
+-nographic
 
----
-base-commit: ebb75a3c5265ceeebd2b0708d013735e5eafbb69
-change-id: 20240828-hwmon-oxp-sensors-fix-clang-implicit-fallthrough-b6e97424c46d
+But it fails to boot very early:
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+root@ubuntu:/home/shameer/qemu-test# ./qemu_run-simple-iommufd-nicolin-2
+qemu-system-aarch64-nicolin-viommu: Illegal numa node 2
+=20
+Any idea what am I missing? Do you any special config enabled while buildin=
+g Qemu?
 
+Thanks,
+Shameer
