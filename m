@@ -1,98 +1,78 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2040.outbound.protection.outlook.com [40.107.244.40])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2082.outbound.protection.outlook.com [40.107.92.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2858A192B84;
-	Thu, 29 Aug 2024 16:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.40
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA54B1B5309;
+	Thu, 29 Aug 2024 16:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.82
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724947836; cv=fail; b=T6CuNpUw+ielfux7uskPwWw0+P9clmrWkur1dYAm62ZgPb05sDqF4YXpohn6IkRcTgQXrWLL/xSS+lMLhJhXlv4HS0Ugd0mwJuUAahVikTs+PHZnKBY93YXpxtBKDLZhxa2Yv581wPPvUqTcviUI918YqnVgDjZLKZHqYZTAdsM=
+	t=1724948407; cv=fail; b=XVe3XNqNizJTqvhfAhOV3ZnsNzRthYdDc7C4wnKc8LPGSaJnUdKc7ZCPJoCQT11Q9P8ZOOkdPeCWVfXWO4fubLOS2Dz92e98wknpDW9rWao66Xm1ihMRN69gVAukjeiMC8ttI/m4OhzGWOA3384SW4ERy0G2kRZoy0R9LSGyySM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724947836; c=relaxed/simple;
-	bh=IlnidsaEVJpbWfaajoJKByKlgEQwMqn0K18TmJh3fFY=;
+	s=arc-20240116; t=1724948407; c=relaxed/simple;
+	bh=L83KTmmCqpR8S8+5V23/OPMS9QbgnOuqoYauASZpEjU=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l3QZ4BJWHFMl92sJWjUxErEVm9FoHTihbCJZdx80tJr5W0bAR085l3q1/rqX1Dlzva/mpP2uJZ7TO+LIBiCvLMfaJp/AFuof6YRtd6Q/ydCfhYF2l18szZqYIuehU/JzojXYqeNb+juYLGyg12iQ9w0YS1P5vT9ldy4yy0O4LD4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QzME5Mph; arc=fail smtp.client-ip=40.107.244.40
+	 Content-Type:Content-Disposition:In-Reply-To; b=E1qrYn6hiVMnxGJtSd09Ro171xlXmmoIHxJOKy7Sa0S8KSzZH0MefrH+9Rew/AqBapCbei76HolROM9Et0IYv+4hg3fiI8QyzOrTA0x8si0+2H2qGQ7M4h+LsF9s0lRbXEAEyTF2a5X144xbs/TGhXuTooexdVoldAVNtMOQx6s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XDrfVDMy; arc=fail smtp.client-ip=40.107.92.82
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QzME5Mph"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XDrfVDMy"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=h5WaexmTKJeZZ0iaCtaPaQs5z9b6elC7Vfgex3USH/JaflDNDS256hhFmYcRpDaX9OL4KcuOzcUxh5qDhtruWbprXElqh6e/xhzi7UWtd/QvYOV2TgJc3q5651G9wWB4MOfjbHxU0DOk4iNpS2qYt7JDHx3a33GnMCMZFrGl89MM+OwxR6gyhGDqfcdboeoVG97aGziGJtU04yhcQeXYaL/KohwKKaAJAIBY9eoxDOEhlDNA/FMhtBUl9sRsunvHeCom2pAqg0Av3knnDRqB9D77CcNITUtNe3ekzFap/tfworiUgvnpoqmcCEoQuhAjkYEDqDKXgsfvqBxKUa1R6g==
+ b=Xou1s23kkzu1y/k0USwF5LTR5cEKrIEgJcE9mxT9vGooDIASbOtcVRYcTJcrC8ABYWQmtYu5RzDmCTxjHkf5z4ZdLDLIU5alzsc9nuf9oPnaAPI1uzI0dd+lJTI2p7VI85jXiDzfDbSHS6Z7qC+NmfhXMyvkDWPzLm7CbwBAUBWPUs2rFVN5QTfUpAQAnjO+s6eY3NyA+I9hjauhTWf7Sv+t0CUSM1f/+z2b3Ntkk5yhwUiOnqI/xigs3iIznmgkbVWjmGa5D7E/+t5DyssR9b5Fnyv0IYmGu78/53jzqdxnhI1xGVlJjylaOorHdqJfsiHYJGD5yaJrMkpVPSXsyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V0X5zeTS2WqgWuWC59E408gKpa+ayQeMHnHNvZ7OVn4=;
- b=XQ1um/DttWnXU48/GzY2q8V959xQVuQPxyFbxUOGa8kTyib/hJcZhL7SptSe5kT3pWWYeSRHndg50o9lZz716VVCck+crDpOqDuKVbdo70RXuw2ADi1NCRWQHmp9h6JkgonL3f/fxkvY5ZUhE/g57pvjEnUt1oMvCcVIoGeZICnyH6ro+71Yu2uYGpwUKmZmJpGpuBQ9zhmeGDS+Z/IfuhL82+4Ybnn4/McIOJWsbP/M6+w15ujIW+nkGusXIgH0RV+Ofmskc6M2QNSedvVEVzj11E9/D7o1fLCsoITHkjmUQr/F4LXSKrHEZDSh0SB5cQ8b2UBX7NoHBZbeafkvrQ==
+ bh=18rBXhv7EASx+7NoYa55PDUsGpzo7FZQz6jthlcwb+w=;
+ b=O7y9vxnUoviNciYbO3SGizfnEPNSZoKods6vXaHx8mAqkBrfc+/qVWesci7mvfwjtBfb1fpOMqExb4FuXyoHf42EqSGrDvKdqAJJSNxW0MtKMA/MRCz4VpzO6YNqn0/y5dkMhhNkSHmZI/CrbNL6PiARPGiEpmNf7fAuF3BB5o1bM5vUaiKIZyOJCDaxd3RIJtN7sJzUhD+V6jLFxGlO7yjyDHmdnIS9Xc2Pi9ZZ9QEe5jfm60EdJo9WPikhmMwjOt/NWeJUNaoQ/Qwzp/i8to1pfhIh7vGmLMz3/U8mGHDhBlPAW9UsLjubWtKiqFTRjK4iO438rxPxRN/pyM7uFg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
+ 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V0X5zeTS2WqgWuWC59E408gKpa+ayQeMHnHNvZ7OVn4=;
- b=QzME5MphKWbnRPmnjEQUjOHiLSmqZ/KRe59NCxiDxmc5lS/QVf0BxK4+LE5biYiFZwhWZaWlTA8D0LRFws1LQbXRjDc7SyAesI/D36m8xgGehtbC2Ynx5Pljrq2zmj9enEbABroqKXvcehpmq4TTD5KgOG3pLGiXb0EAH1DPM6hw24mcNU7xYZKpqcifPT7Yn++uyDnXqrEnA3H+MzqdT3nB0xfiqo7OchaxwgVTDYQNlpjmHa3FbXV383hcAhRW62aedW1tajdwKYfNAubG+EGDxh2nhUKP44LEzL/kWFB0JQAZOHzK9tp7CSSagr8x2+vb4GRD3zY+TGnhCBvwDw==
-Received: from SJ0PR13CA0019.namprd13.prod.outlook.com (2603:10b6:a03:2c0::24)
- by BL3PR12MB6643.namprd12.prod.outlook.com (2603:10b6:208:38f::17) with
+ bh=18rBXhv7EASx+7NoYa55PDUsGpzo7FZQz6jthlcwb+w=;
+ b=XDrfVDMyjuQiDJtve5xzSUgKw6sjp2mwK+kclKCzM9kcGPjTve3JBIBg4q4G64ZmOexLsHh6sIOJn7JkYPZ70yQ8CRbktCSEX10q32bLcZT+XFs3gFjhIGceBbFYO3Y4tykK8C4jApmML7vvmsRDnGGVj4Qp2vddg+ga2YawZS76cgHrY90MszakdIJGXZ/LVWLNTD2fhPB+eNj0RfXaqUwRE5FP8fou+ZZOTvxHELILRSV2g+GTYhy4H+dY1jPerQmwxs89HCNbY/GCuANev7avlSj+sx9dgH7eS2kmya15cP8KLK9V6R1P2Pu3HTicCWCIPpOze2P40ewdzSVyAg==
+Received: from CH0PR04CA0001.namprd04.prod.outlook.com (2603:10b6:610:76::6)
+ by CH3PR12MB8726.namprd12.prod.outlook.com (2603:10b6:610:17b::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28; Thu, 29 Aug
- 2024 16:10:26 +0000
-Received: from SJ1PEPF000023D1.namprd02.prod.outlook.com
- (2603:10b6:a03:2c0:cafe::4d) by SJ0PR13CA0019.outlook.office365.com
- (2603:10b6:a03:2c0::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.19 via Frontend
- Transport; Thu, 29 Aug 2024 16:10:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.26; Thu, 29 Aug
+ 2024 16:20:00 +0000
+Received: from DS3PEPF000099E2.namprd04.prod.outlook.com
+ (2603:10b6:610:76:cafe::82) by CH0PR04CA0001.outlook.office365.com
+ (2603:10b6:610:76::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.27 via Frontend
+ Transport; Thu, 29 Aug 2024 16:20:00 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SJ1PEPF000023D1.mail.protection.outlook.com (10.167.244.7) with Microsoft
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS3PEPF000099E2.mail.protection.outlook.com (10.167.17.201) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7918.13 via Frontend Transport; Thu, 29 Aug 2024 16:10:24 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.7918.13 via Frontend Transport; Thu, 29 Aug 2024 16:20:00 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 29 Aug
- 2024 09:10:09 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ 2024 09:19:45 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 29 Aug
- 2024 09:10:09 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.8)
+ 2024 09:19:45 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Thu, 29 Aug 2024 09:10:07 -0700
-Date: Thu, 29 Aug 2024 09:10:06 -0700
+ Transport; Thu, 29 Aug 2024 09:19:45 -0700
+Date: Thu, 29 Aug 2024 09:19:43 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
-	<acpica-devel@lists.linux.dev>, "Guohanjun (Hanjun Guo)"
-	<guohanjun@huawei.com>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
-	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
- Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
- Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
-	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Mostafa Saleh
-	<smostafa@google.com>
-Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Message-ID: <ZtCdXjkzVbFMBJjy@Asurada-Nvidia>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
- <7debe8f99afa4e33aa1872be0d4a63e1@huawei.com>
- <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
- <cd36b0e460734df0ae95f5e82bfebaef@huawei.com>
- <Zs9ooZLNtPZ8PwJh@Asurada-Nvidia>
- <d2ad792fe9dd44d38396c5646fa956c6@huawei.com>
- <d1dc23f484784413bb3f6658717de516@huawei.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, Kevin Tian <kevin.tian@intel.com>,
+	<patches@lists.linux.dev>, Yi Liu <yi.l.liu@intel.com>
+Subject: Re: [PATCH] iommufd: Check the domain owner of the parent before
+ creating a nesting domain
+Message-ID: <ZtCfnx/NKbrjRiJB@Asurada-Nvidia>
+References: <0-v1-c8770519edde+1a-iommufd_nesting_ops_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -101,144 +81,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <d1dc23f484784413bb3f6658717de516@huawei.com>
+In-Reply-To: <0-v1-c8770519edde+1a-iommufd_nesting_ops_jgg@nvidia.com>
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D1:EE_|BL3PR12MB6643:EE_
-X-MS-Office365-Filtering-Correlation-Id: 119f52ce-18e8-4ce2-5a94-08dcc8451764
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099E2:EE_|CH3PR12MB8726:EE_
+X-MS-Office365-Filtering-Correlation-Id: 94c5a793-7d83-47df-ff33-08dcc8466e52
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|1800799024|376014|7416014|82310400026;
+	BCL:0;ARA:13230040|36860700013|376014|1800799024|82310400026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ix7TIYIKlmpv/ZoQ+QVzrCai0bsrthbkzYvbLZqqhfYI0zuKh1MmEYwYJom6?=
- =?us-ascii?Q?+PDz3r6lBLHrjI81F1JycfyaxWyT2bcQaAvGe7A+KWOXF7PRtWsrzEdjX7B8?=
- =?us-ascii?Q?4aSM3r/gyPwb2kcoK1iGsrqd8LY3lP92g5Z5lSwwcTvd6KKLKugAJzkp5zsT?=
- =?us-ascii?Q?TtJHaC0DoDvrwNnf07ZUmkS+LJeEw2lWvFV178r/0wB9g/+f+GKJhK2veCWl?=
- =?us-ascii?Q?rBE8nclxzHri4EQhWUI1ZksHVCWEn5L/Qbgpx03Va50OW+1vDr4wIsseAm9A?=
- =?us-ascii?Q?AoOyFqY9N1r/tK/VK+YFZ4Nua2GjUrhvfjmaLFF/XmQ9JcmXg/TMLxnMEnlW?=
- =?us-ascii?Q?vRyeGSuYz0QU0gcBf5W0K+0FrMbUKE0MM43wVW5DE/Ej4aKgGWP/CNNyNNAA?=
- =?us-ascii?Q?I6b1i1qRKACDv2krRKejWjPVQqkhKdZYGDDyiX3hYPPCR4HQXVTVP+A60nEB?=
- =?us-ascii?Q?KXH3Ln/f0hn3bymIoFpRj1AY0xsFMBmezPIUE475mqTEJIIN+txx1lag17UA?=
- =?us-ascii?Q?KfAwnhBIyjwogWq0r31v9V902w+Kn8najLaIrdONUTEgVp2kY4OqjvNhCL4H?=
- =?us-ascii?Q?4VE+zsPVN/u4Q37797OJ1Msrgc0PrfokHPNmYTiI2FW/pfeQFFyvc3nKmPPo?=
- =?us-ascii?Q?quufctQVAVcPa0b3JA5qz6rjNjQO/X9LDtJpieazORuShl9hNa9j8jpiWotG?=
- =?us-ascii?Q?ZvWrBhUyGTle8jTLG5CQnYiv5UbNm9qYHUBcTj8ztp803zUL1Na/KjVo5DB5?=
- =?us-ascii?Q?1e/aoYyrUm646krgq3DiVzclQ4cTLAVrRF5lWf+Gj05HZM874CA/TqZuDC0r?=
- =?us-ascii?Q?AViaurhE16cpTH2hEb4//zMZvo+7Jen8nre8vXHb9i3br/ySRu7HWbgXSBce?=
- =?us-ascii?Q?3J8uNe5JpliYx/TGk2k5sqqdjThiaGPQvfxRH/5RuTXrOb1/GNo1wSFdkgul?=
- =?us-ascii?Q?iDLt5u35PVp9k3eeuo7FEthSk6H4M/gONZWUpqKHc0wrsf2DKnkAze9+v6Qv?=
- =?us-ascii?Q?LbDLWQe2Se3VQ/pEGsGiXqb4jPKFuVDfJfEk9FNtZjRD3JpY/bG1g1I7UqR2?=
- =?us-ascii?Q?2NVFk+Ub5wHRtry8zgBf2Ylfhtah8JHv8+iNWTuJFm3BoTCKgQBC/yuoWIbA?=
- =?us-ascii?Q?p3l+hkUPXJ8GVcHp0E9Hqe5whQTBoH++K+T0jRFy0vC3cw11ZeueJQS0sHbA?=
- =?us-ascii?Q?ixI52TwXFTHPwx65dOowytQ7s2C0FmufeUVLqmig6tl1buOBQh6JbUsuL40f?=
- =?us-ascii?Q?RC6gTEaJtcK/asJ6hfIHJVfdO+pMDOMj4GCq9cSTrQjEJJqNe/1VUJ4MI8Ol?=
- =?us-ascii?Q?Ie1QTHudRPK5CfFCgz+caar3yXIlH7PVCYGT5uN84NZiSlAl8gCe4Vo7Lv3N?=
- =?us-ascii?Q?8jdrtdM5D5kmwAvfK++ZkhdqG8WUKryXHa19oPvKnNmTWTV8iSu1I47SsYKN?=
- =?us-ascii?Q?iKcOGND4k90etOpDTqgDHL/v9ca80/VD?=
+	=?us-ascii?Q?cq3rWmeZ4KFaW2suxyKTXKJmMhER1WGZNHYkyZffXnEZqezHkjxbDEzUb5Ph?=
+ =?us-ascii?Q?aZUN2aKi/cw1tc10GV7pekitTK5NeTwUP71Gp5ncCn00eVTwN77j3CWKQkF6?=
+ =?us-ascii?Q?MkX2qZJBiEN+FQF0oY+kBVtQd7mfPpb3VXK93lbXSDM3apGPQ1ZgbBdsg/t5?=
+ =?us-ascii?Q?Hoh16FrlRzMBcc4+5l4xrklgEvhPVr0SvdmXPMSEwryYzWDnErbZi/VMe2Zu?=
+ =?us-ascii?Q?oAowBKrXbFhxaUbRuaXrUoyhQNUk7DatIY6ut3fON2uRDNwv5CbSeBtD8f+5?=
+ =?us-ascii?Q?En5w3kuKEb9VNZaA10zVqhY3fo96B/oiP00qy7M0aQL3yLkN1yZQ9fTCkhzv?=
+ =?us-ascii?Q?eZSO+iZFkfKxIK0u9Ya1zPiPjDyvd9rBwl4spMGRAzz5qQ+A109FDHETWdNq?=
+ =?us-ascii?Q?tfTL9FIRQtrMwQO4itlzCttXcdd9m5X9udQLG1wEYYlYiyMTsZf0wzsPfc0v?=
+ =?us-ascii?Q?shpYz6sejWaW+aubu3TAI2NoOfu+mB6BdgEBnTZEXhSvnFkDdwzkppjebOD7?=
+ =?us-ascii?Q?BTM9Qv1VAcIrTfhEOqxKFlOt4XmCbDNCD5vI+gaJvEBQ62JYz6jlJygL1qf4?=
+ =?us-ascii?Q?x0j9RE42e/3MijUfhNpNUcTd//fMOz51ftHbT3S7qFHRbGybaXjmGcW3NOVW?=
+ =?us-ascii?Q?s3VuHdEQK5gWtbto/0sgqGb8qAdnJbXS27sOePbqP1V/sE/GrVQy9RtG87KK?=
+ =?us-ascii?Q?jwPaIk5Qk/aIoHQNboDvj+ZolwVaru0nVvFYMHGav067invEWokII7UcFvG+?=
+ =?us-ascii?Q?5P/vWgw9iVygC1DxiBYehLS+7NLTvZ5LgDzk0oN3Uesnk8XRMpiQExnUccvB?=
+ =?us-ascii?Q?+Qhy37KVCQlBOF56i0ChPIfkpwVbQLbciyq8tSaMzbosV1CqQ9Ppsk0FPkLC?=
+ =?us-ascii?Q?7opE9ye+P6nAdI0xb07AsdukzKyU0agtVAZWc2YciusO0q2vgrQdeKLXn3q8?=
+ =?us-ascii?Q?at8cC9YyFqzRwSN+Xi4w03T9Eqb2j0hX3AfRkBeJ7Mpiu+ScZq7PiMFQ/YfQ?=
+ =?us-ascii?Q?pMZ6k02ZBT+dX9vn2kehPOiFllBKGVnm3H89/QQCg0p6WqGT6cpX9zKJWwz8?=
+ =?us-ascii?Q?YzJ5puAVIiCw+7veZriCpkrapJ2tMwnSLhLpugn9dv6fGMAKDAqadMdJMW10?=
+ =?us-ascii?Q?0ETGOjCmhzxmgBdiRI3CnNXUdfglS0z5DlaXzqCZd9XFop/DpJYKPPNw16rv?=
+ =?us-ascii?Q?YxE134sBc9wQP2nQdMI4rS41x3v0fsMp6o72xSv499bRNM1X+cBuKolDKv9g?=
+ =?us-ascii?Q?k8CiDctBVfaOKuyxfREGezxMzNChWWTBP/u/qRf4wZo8lRUanpghNZDcL3Fl?=
+ =?us-ascii?Q?t2MfHh3xn0dyAYGU7OO/AnznQ3PV1jAH0mqBKJYWV3PEjjJJuU/Wc+J0ExAJ?=
+ =?us-ascii?Q?319ChfiYSE+p7MSbYc4fZfv+VMPU76GgqJmHH0TZUjfaSe525Dnj1Y70hSJZ?=
+ =?us-ascii?Q?Tk78iujMbA/voAvbDzaqtnERHADahD68?=
 X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(376014)(7416014)(82310400026);DIR:OUT;SFP:1101;
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(1800799024)(82310400026);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2024 16:10:24.9269
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2024 16:20:00.2404
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 119f52ce-18e8-4ce2-5a94-08dcc8451764
+X-MS-Exchange-CrossTenant-Network-Message-Id: 94c5a793-7d83-47df-ff33-08dcc8466e52
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF000023D1.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099E2.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6643
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8726
 
-On Thu, Aug 29, 2024 at 02:52:23PM +0000, Shameerali Kolothum Thodi wrote:
-> > That makes some progress. But still I am not seeing the assigned dev  in
-> > Guest.
-> >
-> > -device vfio-pci-nohotplug,host=0000:75:00.1,iommufd=iommufd0
-> >
-> > root@ubuntu:/# lspci -tv#
-> >
-> > root@ubuntu:/# lspci -tv
-> > -+-[0000:ca]---00.0-[cb]--
-> >  \-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
-> >              +-01.0  Red Hat, Inc Virtio network device
-> >              +-02.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              +-03.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              +-04.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              +-05.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              +-06.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              +-07.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              +-08.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> >              \-09.0  Red Hat, Inc. QEMU PCIe Expander bridge
-
-Hmm, the tree looks correct..
-
-> > The new root port is created, but no device attached.
-> It looks like Guest finds the config invalid:
+On Thu, Aug 29, 2024 at 10:19:59AM -0300, Jason Gunthorpe wrote:
+> This check was missed, before we can pass a struct iommu_domain to a
+> driver callback we need to validate that the domain was created by that
+> driver.
 > 
-> [    0.283618] PCI host bridge to bus 0000:ca
-> [    0.284064] ACPI BIOS Error (bug): \_SB.PCF7.PCEE.PCE5.PCDC.PCD3.PCCA._DSM: Excess arguments - ASL declared 5, ACPI requires 4 (20240322/nsarguments-162)
+> Fixes: bd529dbb661d ("iommufd: Add a nested HW pagetable object")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Looks like the DSM change wasn't clean. Yet, this might not be the
-root cause, as mine could boot with it.
-
-Here is mine (I added a print to that conflict part, for success):
-
-[    0.340733] ACPI BIOS Error (bug): \_SB.PCF7.PCEE.PCE5.PCDC._DSM: Excess arguments - ASL declared 5, ACPI requires 4 (20230628/nsarguments-162)
-[    0.341776] pci 0000:dc:00.0: [1b36:000c] type 01 class 0x060400 PCIe Root Port
-[    0.344895] pci 0000:dc:00.0: BAR 0 [mem 0x10400000-0x10400fff]
-[    0.347935] pci 0000:dc:00.0: PCI bridge to [bus dd]
-[    0.348410] pci 0000:dc:00.0:   bridge window [mem 0x10200000-0x103fffff]
-[    0.349483] pci 0000:dc:00.0:   bridge window [mem 0x42000000000-0x44080ffffff 64bit pref]
-[    0.351459] pci_bus 0000:dd: busn_res: insert [bus dd] under [bus dc-dd]
-
-In my case:
-[root bus (00)] <---[pxb (dc)] <--- [root-port (dd)] <--- dev
-
-In your case:
-[root bus (00)] <---[pxb (ca)] <--- [root-port (cb)] <--- dev
-
-> [    0.285533] pci_bus 0000:ca: root bus resource [bus ca]
-> [    0.286214] pci 0000:ca:00.0: [1b36:000c] type 01 class 0x060400 PCIe Root Port
-> [    0.287717] pci 0000:ca:00.0: BAR 0 [mem 0x00000000-0x00000fff]
-> [    0.288431] pci 0000:ca:00.0: PCI bridge to [bus 00]
-
-This starts to diff. Somehow the link is reversed? It should be:
- [    0.288431] pci 0000:ca:00.0: PCI bridge to [bus cb]
-
-> [    0.290649] pci 0000:ca:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
-> [    0.292476] pci_bus 0000:cb: busn_res: can not insert [bus cb-ca] under [bus ca] (conflicts with (null) [bus ca])
-> [    0.293597] pci_bus 0000:cb: busn_res: [bus cb-ca] end is updated to cb
-> [    0.294300] pci_bus 0000:cb: busn_res: can not insert [bus cb] under [bus ca] (conflicts with (null) [bus ca])
-
-And then everything went south...
-
-Would you please try adding some prints?
-----------------------------------------------------------------------
-@@ -1556,6 +1556,7 @@ static char *create_new_pcie_port(VirtNestedSmmu *nested_smmu, Error **errp)
-     uint32_t bus_nr = pci_bus_num(nested_smmu->pci_bus);
-     DeviceState *dev;
-     char *name_port;
-+    bool ret;
- 
-     /* Create a root port */
-     dev = qdev_new("pcie-root-port");
-@@ -1571,7 +1572,9 @@ static char *create_new_pcie_port(VirtNestedSmmu *nested_smmu, Error **errp)
-     qdev_prop_set_uint32(dev, "chassis", chassis_nr);
-     qdev_prop_set_uint32(dev, "slot", port_nr);
-     qdev_prop_set_uint64(dev, "io-reserve", 0);
--    qdev_realize_and_unref(dev, BUS(nested_smmu->pci_bus), &error_fatal);
-+    ret = qdev_realize_and_unref(dev, BUS(nested_smmu->pci_bus), &error_fatal);
-+    fprintf(stderr, "ret=%d, pcie-root-port ID: %s, added to pxb_bus num: %x, chassis: %d\n",
-+            ret, name_port, pci_bus_num(nested_smmu->pci_bus), chassis_nr);
-     return name_port;
- }
- 
-----------------------------------------------------------------------
-
-We should make sure that the 'bus_nr' and 'bus' are set correctly
-and all the realize() returned true?:
-
-Thanks
-Nicolin
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
