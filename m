@@ -1,122 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12781B81D2;
-	Thu, 29 Aug 2024 18:15:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from vmicros1.altlinux.org (vmicros1.altlinux.org [194.107.17.57])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4905F4D108
+	for <patches@lists.linux.dev>; Thu, 29 Aug 2024 21:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.107.17.57
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724955302; cv=none; b=N0Fub5acp+efaOQRAB21IuFtYLpIATBMWDPkNS2FPrzNa5X8kSiQMvbQ2jAQoIhfYSI2Rr6FqIgEa9eUnNo1FaqLZcbkeiHen4OzYbnh7i98o7+fCNyqnvnzdF696WZLbn1FWUJfEwSHIiJ5RzqNO7hgjP3ej3V6u1IzCUsyzHc=
+	t=1724965924; cv=none; b=XxMuhfTzocxIfPDDvCRkZ7ZN65ulvfaBGsGepEvImtFhkys7GZujkoQVNvcM0ad7oYEzd8HCLK9UFsZBeptz+v5i4wZmtaYIHsnEuPkZ3m+O8UZY6GwGsg5z+MC38hsSv1D4gjyOOo5jlTL1/q+iVeqydiNYKEkbsyRnJRqsypc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724955302; c=relaxed/simple;
-	bh=68pjJN/T0s4pW9PljETJv3LnYCfdZMsgv4u+jY3JAdg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uwQFVWQxAJtBUB5wuilO/Gqhz9RF0/um4D6JXU/uIyOfPbf/Te6O4ab+EqfzSFa73QMfIBqArD5H9MonGpImVLziaBQNnm/H91VopkoGF2jTgjN+gv2laA2q4Z5IXMCNUNPQJwLR+P6Jftzc/vk6jpNOvSdyfvOOmAWw02IFWeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cu7LbsvN; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cu7LbsvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35ECC4CEC1;
-	Thu, 29 Aug 2024 18:15:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724955301;
-	bh=68pjJN/T0s4pW9PljETJv3LnYCfdZMsgv4u+jY3JAdg=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Cu7LbsvNjAZ86rPytatnX8nYGVP3n6pMecH2okCGZfYDGY2MKMH98ctmOqmy3zVgl
-	 qgZNCMgw3zBDYJglGk56ZAKcu5YSmJoBbiwuv1EdzgtWBcMiBbAox0radj6Df4IhWm
-	 9bC8YegzzXi04GNknISxgpiI14A0yWU3kghnbZVXmq+0hJAtx4Vd4OL9iszkqC+FUB
-	 edH61e1adfRNIp0XJTbVcExh/CCQscKUO7sP9fpLVFjHjAntekXU81dRPxZpmHMkHf
-	 QtpeF3iYd824/5kyhdGt0IMxe5nwvjqbl4+gR9EkCcHc7XEKIjzLmhmyXODfkc7tyZ
-	 Loks/GklY4stA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 29 Aug 2024 11:14:54 -0700
-Subject: [PATCH ipsec-next v2] xfrm: policy: Restore dir assignments in
- xfrm_hash_rebuild()
+	s=arc-20240116; t=1724965924; c=relaxed/simple;
+	bh=ajsUGNyZXgkadl/Qi5QNq/d4nCBtSVb9PgBi6qfVYZc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u3SbVy8X+iwhogzDGmQymv0VWNY6Xagz8CcYXoUW1zuFid66C6ykUpqBBtIl3Izp3rRX/+8iNs/fQQC6MT6nSB/7j+aBu5bo4v/3o+ePRHuZjoj3LAvxZlhDeMq9X0Mf5XgCLB4i76MZHZMaCwVpeiiPh5MNq6ohKfv24KL7lnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org; spf=pass smtp.mailfrom=altlinux.org; arc=none smtp.client-ip=194.107.17.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altlinux.org
+Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
+	by vmicros1.altlinux.org (Postfix) with ESMTP id 984DC72C8CC;
+	Fri, 30 Aug 2024 00:11:54 +0300 (MSK)
+Received: from pony.office.basealt.ru (unknown [193.43.10.9])
+	by imap.altlinux.org (Postfix) with ESMTPSA id 90A4936D0184;
+	Fri, 30 Aug 2024 00:11:54 +0300 (MSK)
+Received: by pony.office.basealt.ru (Postfix, from userid 500)
+	id 8E498360BF9D; Fri, 30 Aug 2024 00:11:53 +0300 (MSK)
+Date: Fri, 30 Aug 2024 00:11:53 +0300
+From: Vitaly Chikunov <vt@altlinux.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Julia Lawall <julia.lawall@inria.fr>, Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>, 
+	Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH 6.1 202/321] fbdev: offb: replace of_node_put with
+ __free(device_node)
+Message-ID: <ppqadq365psk4abmtn7kpfvfxbps4qzhn3fz25ysqtzj72opob@jfzmajuq6dyw>
+References: <20240827143838.192435816@linuxfoundation.org>
+ <20240827143845.922698611@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-v2-1-1cf8958f6e8e@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJ260GYC/52OWwqDMBBFtyLz3SlJ8Nmv7qOIRB11qI0ysWIR9
- 16bJfTzPrjn7uBJmDzcoh2EVvY8uVOYSwTNYF1PyO2pwSgTq9wUuHXyQiG/TELYsqD1nnsX/Gq
- wfqiE6jePLWZx0Vhj0jjJNZx7s1DHW2A9gGdPDTraFijPbODf4CfcWHVo/EFcNWq0Rqk8TeIiq
- /X9SeJovE7SQ3kcxxdkDi3W7wAAAA==
-To: Steffen Klassert <steffen.klassert@secunet.com>, 
- Herbert Xu <herbert@gondor.apana.org.au>, Florian Westphal <fw@strlen.de>
-Cc: netdev@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2489; i=nathan@kernel.org;
- h=from:subject:message-id; bh=68pjJN/T0s4pW9PljETJv3LnYCfdZMsgv4u+jY3JAdg=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGkXdi3ZyrnuT7B26DeJ5YoRnRsn7Ktc6eDio6V14dyN8
- 19v2fSmdZSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJiOoyMnzav0Zrcfr+ZRu/
- bd7b3J5ufm7a2tJftQde+rM/WPDBP/Upw3+PCO7FE36snXeQ+7mE+3PbWefFdn19Yv1N8c7PV7z
- fzJdxAQA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240827143845.922698611@linuxfoundation.org>
 
-Clang warns (or errors with CONFIG_WERROR):
+Greg, Sasha,
 
-  net/xfrm/xfrm_policy.c:1286:8: error: variable 'dir' is uninitialized when used here [-Werror,-Wuninitialized]
-   1286 |                 if ((dir & XFRM_POLICY_MASK) == XFRM_POLICY_OUT) {
-        |                      ^~~
-  net/xfrm/xfrm_policy.c:1257:9: note: initialize the variable 'dir' to silence this warning
-   1257 |         int dir;
-        |                ^
-        |                 = 0
-  1 error generated.
+On Tue, Aug 27, 2024 at 04:38:30PM GMT, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
 
-A recent refactoring removed some assignments to dir because
-xfrm_policy_is_dead_or_sk() has a dir assignment in it. However, dir is
-used elsewhere in xfrm_hash_rebuild(), including within loops where it
-needs to be reloaded for each policy. Restore the assignments before the
-first use of dir to fix the warning and ensure dir is properly
-initialized throughout the function.
+We got v6.1.107 build error on ppc64le due to this commit, with:
 
-Fixes: 08c2182cf0b4 ("xfrm: policy: use recently added helper in more places")
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Changes in v2:
-- Restore another dir assignment in
-    list_for_each_entry_reverse(policy, ...
-  loop, necessitating a value reload to avoid a stale value (thanks to
-  Florian for the review).
-- Reword commit message slightly based on above change.
-- Pick up Florian's ack.
-- Add 'ipsec-next' subject prefix.
-- Link to v1: https://lore.kernel.org/r/20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-v1-1-a200865497b1@kernel.org
----
- net/xfrm/xfrm_policy.c | 2 ++
- 1 file changed, 2 insertions(+)
+    CC      drivers/video/fbdev/offb.o
+  drivers/video/fbdev/offb.c: In function 'offb_init_palette_hacks':
+  drivers/video/fbdev/offb.c:358:24: error: cleanup argument not a function
+    358 |                 struct device_node *pciparent __free(device_node) = of_get_parent(dp);
+        |                        ^~~~~~~~~~~
+  make[4]: *** [scripts/Makefile.build:250: drivers/video/fbdev/offb.o] Error 1
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 6336baa8a93c..63890c0628c4 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1283,6 +1283,7 @@ static void xfrm_hash_rebuild(struct work_struct *work)
- 		if (xfrm_policy_is_dead_or_sk(policy))
- 			continue;
- 
-+		dir = xfrm_policy_id2dir(policy->index);
- 		if ((dir & XFRM_POLICY_MASK) == XFRM_POLICY_OUT) {
- 			if (policy->family == AF_INET) {
- 				dbits = rbits4;
-@@ -1337,6 +1338,7 @@ static void xfrm_hash_rebuild(struct work_struct *work)
- 		hlist_del_rcu(&policy->bydst);
- 
- 		newpos = NULL;
-+		dir = xfrm_policy_id2dir(policy->index);
- 		chain = policy_hash_bysel(net, &policy->selector,
- 					  policy->family, dir);
- 
+Where CONFIG_FB_OF is enabled. Perhaps, due to this commit not being picked:
 
----
-base-commit: 17163f23678c7599e40758d7b96f68e3f3f2ea15
-change-id: 20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-749ca2264581
+  9448e55d032d ("of: Add cleanup.h based auto release via __free(device_node) markings")
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+Thanks,
 
+> 
+> ------------------
+> 
+> From: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+> 
+> [ Upstream commit ce4a7ae84a58b9f33aae8d6c769b3c94f3d5ce76 ]
+> 
+> Replaced instance of of_node_put with __free(device_node)
+> to simplify code and protect against any memory leaks
+> due to future changes in the control flow.
+> 
+> Suggested-by: Julia Lawall <julia.lawall@inria.fr>
+> Signed-off-by: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/video/fbdev/offb.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
+> index 91001990e351c..6f0a9851b0924 100644
+> --- a/drivers/video/fbdev/offb.c
+> +++ b/drivers/video/fbdev/offb.c
+> @@ -355,7 +355,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+>  			par->cmap_type = cmap_gxt2000;
+>  	} else if (of_node_name_prefix(dp, "vga,Display-")) {
+>  		/* Look for AVIVO initialized by SLOF */
+> -		struct device_node *pciparent = of_get_parent(dp);
+> +		struct device_node *pciparent __free(device_node) = of_get_parent(dp);
+>  		const u32 *vid, *did;
+>  		vid = of_get_property(pciparent, "vendor-id", NULL);
+>  		did = of_get_property(pciparent, "device-id", NULL);
+> @@ -367,7 +367,6 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+>  			if (par->cmap_adr)
+>  				par->cmap_type = cmap_avivo;
+>  		}
+> -		of_node_put(pciparent);
+>  	} else if (dp && of_device_is_compatible(dp, "qemu,std-vga")) {
+>  #ifdef __BIG_ENDIAN
+>  		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
+> -- 
+> 2.43.0
+> 
+> 
+> 
