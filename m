@@ -1,159 +1,110 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A469E190468
-	for <patches@lists.linux.dev>; Thu, 29 Aug 2024 11:14:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724930084; cv=pass; b=tJKAnusXhUXdk+QIyqhpgwiKfM/MZ25oBkBv0uj8Pile/r0s4BXnjKLj+g/65lpYrZKAFcp8dJQwROpH/OQRL561jGEVZ5NfxgL8pyHGnillYiSxjKADT5AP6xhzIXda4AYMzupbzW+8uBRM4fds80Wzjwo4HP/m2qyNKYWIBPI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724930084; c=relaxed/simple;
-	bh=XNgpgXy8BWzemPVyYyqvZqBqyMbZxQd898INyFO+4h8=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=ip9sG2nj9U1gKCPS/dBYOl/081p4jYvrryKrKqnzLH4klyKnjtmqztNeIJEfMY5FS0dZr472OQmlqFndwZplg3Af7CpjK6rrxP4aaM7DKFvXk/wYzSIQRFsaIkLoc8b1Zf3sGsTx+Bz6nrMmSwu5fDrbeQPIIn1ec2R2Tp0nGoA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=shreeya.patel@collabora.com header.b=Yd3VybFr; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=shreeya.patel@collabora.com header.b="Yd3VybFr"
-ARC-Seal: i=1; a=rsa-sha256; t=1724930071; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=DfPzDSylb8U6ZKJWOTc60smxfv35Du8b/r3tLyf5hrGnUEJ9eA3WBXlVeEcYKcCg+ntZJA5awDSEFLXoTT4WY7H8m9H1V/Ul+AGyXlHxrVxiAW/WJv7mPMOWiWgR+0nXwZ6TGViCjxOVTUPMxYzCpFEe7r/8wLsZ5m4j0vCl/rA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1724930071; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=FvUnkTngcFUqn+ENmgaZvQ/jbOmVX27wh0PL86ioFCQ=; 
-	b=Gc6jxBWPf6IMZAJjleWz94PunDgX6xa5KT1rtw8wFtRXLprn6YFPzFumw0wcTJKamBMUZjmn5ZXnnBZpKhm4x42dt/ZsqoN7GUqlFQMm8LcyFzgxT5vZ5I25jX89Gg3pEDqcBPqV5u6nWOxX8upPm5rH3xFmmeRJXqwbWzzfdk8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=shreeya.patel@collabora.com;
-	dmarc=pass header.from=<shreeya.patel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724930071;
-	s=zohomail; d=collabora.com; i=shreeya.patel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=FvUnkTngcFUqn+ENmgaZvQ/jbOmVX27wh0PL86ioFCQ=;
-	b=Yd3VybFrQf1WV/UpDb5Z5XC10pXlGAe+DdCVXpf0aZiqyM7nKPB3DHBb54wWBAP7
-	0BbGmj8/RLbvYUYptC3sgs4VJ4NYhVU4mb2vRAD7H+g6ns1MbBoblki6KsEGHZsrH2M
-	2B6adYvTJTJt/pK8mB3792qr5TKjtxFylkd2O7nw=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1724930068832649.3499772276887; Thu, 29 Aug 2024 04:14:28 -0700 (PDT)
-Date: Thu, 29 Aug 2024 16:44:28 +0530
-From: Shreeya Patel <shreeya.patel@collabora.com>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Cc: "stable" <stable@vger.kernel.org>, "patches" <patches@lists.linux.dev>,
-	"linux-kernel" <linux-kernel@vger.kernel.org>,
-	"torvalds" <torvalds@linux-foundation.org>,
-	"akpm" <akpm@linux-foundation.org>, "linux" <linux@roeck-us.net>,
-	"shuah" <shuah@kernel.org>, "patches" <patches@kernelci.org>,
-	"lkft-triage" <lkft-triage@lists.linaro.org>,
-	"pavel" <pavel@denx.de>, "jonathanh" <jonathanh@nvidia.com>,
-	"f.fainelli" <f.fainelli@gmail.com>,
-	"sudipm.mukherjee" <sudipm.mukherjee@gmail.com>,
-	"srw" <srw@sladewatkins.net>, "rwarsow" <rwarsow@gmx.de>,
-	"conor" <conor@kernel.org>, "allen.lkml" <allen.lkml@gmail.com>,
-	"broonie" <broonie@kernel.org>,
-	"Kernel CI - Regressions" <kernelci-regressions@collabora.com>,
-	"Gustavo Padovan" <gustavo.padovan@collabora.com>,
-	"Jeny Sheth" <jeny.sadadia@collabora.com>
-Message-ID: <1919dd8114b.bf596719466314.4771125099001339719@collabora.com>
-In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
-References: <20240827143843.399359062@linuxfoundation.org>
-Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FA319148D
+	for <patches@lists.linux.dev>; Thu, 29 Aug 2024 11:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724931465; cv=none; b=V6UqnopL9cDUYjyNZH7+eBYpI3J0OiowINWsaEsfxTzMQP+awFCKdtyf47yQpMPiRsMlk/a/YiDtwn7qWAmm6Gns78WdbkNHzIqS9ibGweQbwbGJpW54Y/GDzBZQo4XqtQWLs1Jel1zlF2hiI73J36exXy1zhUZWhP/XVtIutg4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724931465; c=relaxed/simple;
+	bh=oOQOr+p9coOi9gUPDNiWFW8vOQny+mAQ1S6UKIjr+p4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ccLelaJH54Cpx8si2AnCG//2HE6ug8BPd0bTPIrmIbicH6hLkrwP2IkM8CbUJHFc2FmutZ8VtLegAH8ZFU9EL1EjfC8RieqPSqM/q6FSbxmijE4Oq2gWrelhb9puchlnZypXWdjnxgDU1EKPXORs3OL3OjJpns2ZgSpa3Oxv1AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id E8A011C0082; Thu, 29 Aug 2024 13:37:40 +0200 (CEST)
+Date: Thu, 29 Aug 2024 13:37:40 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	kuba@kernel.org, linan122@huawei.com, dsterba@suse.com,
+	song@kernel.org, tglx@linutronix.de, viro@zeniv.linux.org.uk,
+	christian.brauner@ubuntu.com, keescook@chromium.org
+Subject: Re: [PATCH 6.1 000/321] 6.1.107-rc1 review
+Message-ID: <ZtBdhPWRqJ6vJPu3@duo.ucw.cz>
+References: <20240827143838.192435816@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+UEXMl8Ve75Dvp+Q"
+Content-Disposition: inline
+In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
+
+
+--+UEXMl8Ve75Dvp+Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
 
- ---- On Tue, 27 Aug 2024 20:03:51 +0530  Greg Kroah-Hartman  wrote ---=20
- > This is the start of the stable review cycle for the 6.6.48 release.
- > There are 341 patches in this series, all will be posted as a response
- > to this one.  If anyone has any issues with these being applied, please
- > let me know.
- >=20
- > Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
- > Anything received after that time might be too late.
- >=20
- > The whole patch series can be found in one patch at:
- > =C2=A0=C2=A0=C2=A0=C2=A0https://www.kernel.org/pub/linux/kernel/v6.x/sta=
-ble-review/patch-6.6.48-rc1.gz
- > or in the git tree and branch at:
- > =C2=A0=C2=A0=C2=A0=C2=A0git://git.kernel.org/pub/scm/linux/kernel/git/st=
-able/linux-stable-rc.git linux-6.6.y
- > and the diffstat can be found below.
- >=20
+Hi!
 
-Hi,
+> This is the start of the stable review cycle for the 6.1.107 release.
+> There are 321 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Please find the KernelCI report below :-
+I believe these have problems:
 
-OVERVIEW
+> Jakub Kicinski <kuba@kernel.org>
+>     net: don't dump stack on queue timeout
 
-        Builds: 30 passed, 2 failed
+This does not fix bug and will cause surprises for people parsing
+logs, as changelog explains
 
-    Boot tests: 436 passed, 20 failed
+> Christian Brauner <brauner@kernel.org>
+>     binfmt_misc: cleanup on filesystem umount
 
-    CI systems: broonie, maestro
+Changelog explains how this may cause problems. It does not fix a
+bug. It is overly long. It does not have proper signoff by stable team.
 
-REVISION
+> Li Nan <linan122@huawei.com>
+>     md: clean up invalid BUG_ON in md_ioctl
 
-    Commit
-        name: v6.6.47-330-gfd01fbcb4e1b
-        hash: fd01fbcb4e1b208d063aedf49e3af43655837eb2
-    Checked out from
-        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
+Cleanup, not a bugfix.
 
+> David Sterba <dsterba@suse.com>
+>     btrfs: change BUG_ON to assertion in tree_move_down()
 
-BUILDS
+Cleanup, not a bugfix.
 
-    Failures
-      -i386 (tinyconfig)
-      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=3D1&var-=
-id=3Dmaestro:66cdd5a3fb8042744d0e8d2b
-      Build error: kernel/rcu/rcu.h:255:17: error: implicit declaration of =
-function =E2=80=98kmem_dump_obj=E2=80=99; did you mean =E2=80=98mem_dump_ob=
-j=E2=80=99? [-Werror=3Dimplicit-function-declaration]
+> David Sterba <dsterba@suse.com>
+>     btrfs: delete pointless BUG_ON check on quota root in btrfs_qgroup_ac=
+count_extent()
 
-      -x86_64 (tinyconfig)
-      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=3D1&var-=
-id=3Dmaestro:66cdd5a5fb8042744d0e8d36
-      Build error: kernel/rcu/rcu.h:255:17: error: implicit declaration of =
-function =E2=80=98kmem_dump_obj=E2=80=99; did you mean =E2=80=98kmemdup_nul=
-=E2=80=99? [-Werror=3Dimplicit-function-declaration]
-      CI system: maestro
+Cleanup, not a bugfix.
 
+> Guanrui Huang <guanrui.huang@linux.alibaba.com>
+>     irqchip/gic-v3-its: Remove BUG_ON in its_vpe_irq_domain_alloc
 
-BOOT TESTS
+Cleanup, not a bugfix.
 
-    Failures
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
-      arm:(multi_v7_defconfig)
-      -bcm2836-rpi-2-b
-      CI system: maestro
+--+UEXMl8Ve75Dvp+Q
+Content-Type: application/pgp-signature; name="signature.asc"
 
-      x86_64: (x86_64_defconfig)
-      -lenovo-TPad-C13-Yoga-zork
-      -hp-x360-14a-cb0001xx-zork
-      -hp-14b-na0052xx-zork
-      -asus-CM1400CXA-dalboz
-      -acer-cbv514-1h-34uz-brya
-      -minnowboard-turbot-E3826
-      CI system: maestro
+-----BEGIN PGP SIGNATURE-----
 
-See complete and up-to-date report at:
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZtBdhAAKCRAw5/Bqldv6
+8tQUAJ9HIPFJUPF4wxNqBq5iLMnUY3rDDACfdcK/yVH0iytrgvodz5nsyuiliN4=
+=3O9Z
+-----END PGP SIGNATURE-----
 
-    https://kcidb.kernelci.org/d/revision/revision?orgId=3D1&var-git_commit=
-_hash=3Dfd01fbcb4e1b208d063aedf49e3af43655837eb2&var-patchset_hash=3D
-
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-
-Thanks,
-KernelCI team
+--+UEXMl8Ve75Dvp+Q--
