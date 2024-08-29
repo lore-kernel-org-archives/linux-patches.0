@@ -1,116 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF221917C6;
-	Thu, 29 Aug 2024 14:23:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9404C1B1402;
+	Thu, 29 Aug 2024 14:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724941420; cv=none; b=dJeZLwF1otz+0xm9d0LIbT6Es+yf3lorzHcVHZTesCEU1QEvTBAuTahQQEI+7U6xKtfOujiL88cJ2Nt/jlEp1h+QybvPS4rJpKe291yP7fJ0ucbCqUKcoAXXTZnm2yMz9lvjM/vhypXErcn+vdxulKfXiznwsCQDQdLFVbtP0AQ=
+	t=1724943151; cv=none; b=I7jYFRMbSlFdXrasg32v1nszNiGsp/l08iLV9oF9PaaqX5HyR2RlSrYtzL1M9EkdwnZ+NHx2d+nHGDdZjS4PjpCAYVBtj+elkGuSJ3WDcXBoZXiLn1rBf7Of62mdhwWvJyitypVjPHlTCnIMGIHMY9dybX6idjyM16FwpFhf/c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724941420; c=relaxed/simple;
-	bh=L7kOUyhtroHOG+jfX2l3pQ2YuW7zkoYziytOguA1iHA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4i366J6fS85AMhNAyhdZ9NTnBZdspQGSCKjq6EcZ2uqyLUJcxPhO18fBiIxcE7Lpm0f5qfdWze0EZiY2QR81qyBUeT9ruLTImMy0gGuwtMmq8UlWwaRq3C5ONxZ8nClQAR7uOmlnq/LNlak0gtvAqqDgtm9dIa3fH4E486VZds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVMr5GjP; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVMr5GjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF93BC4CEC8;
-	Thu, 29 Aug 2024 14:23:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724941419;
-	bh=L7kOUyhtroHOG+jfX2l3pQ2YuW7zkoYziytOguA1iHA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZVMr5GjPkfSGZTOHT3LENBa14KrRbdXxICQRXZsPvEhZTZOXF1Md1t+IdbK4iH8qH
-	 1eDO+S/6is3b2V9SMncM9Y41HZvQ6tXTLL2xzkyXGigV96lkhL8/CttDemP0r4GHgS
-	 xxm5QWYnJAKBadpoXB7F3WfXbhhjI+fQhMqJodTk=
-Date: Thu, 29 Aug 2024 16:23:36 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Florian Fainelli <f.fainelli@gmail.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
-Message-ID: <2024082958-manpower-poise-4459@gregkh>
-References: <20240827143843.399359062@linuxfoundation.org>
- <ffd773a0-d71c-4647-b7de-b22a008849ab@gmail.com>
+	s=arc-20240116; t=1724943151; c=relaxed/simple;
+	bh=uS6ZUGkMELokJhjp5dBYR6LbnxF19SksPUR5GdIllFM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=cbMAp4AxESOLxLwhbbHstube1b7QUa6XGp1yTN6RvAXY4wqgbd0kj+hS/k5HGfUmH9fAcJqCAvmHDaFPc2EpLyOg7fTZ1ESIxxdEAd9y7DeoIIK+mgkNPuZZuDuLMGxvteB7e3HaL17oHR9H3eCprnUflUDLQbZIekmzASjOt7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.88.194])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4Wvkdy6wLJzQr6Y;
+	Thu, 29 Aug 2024 22:47:34 +0800 (CST)
+Received: from dggpemf500003.china.huawei.com (unknown [7.185.36.204])
+	by mail.maildlp.com (Postfix) with ESMTPS id 108351401E0;
+	Thu, 29 Aug 2024 22:52:26 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
+ dggpemf500003.china.huawei.com (7.185.36.204) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 29 Aug 2024 22:52:25 +0800
+Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
+ lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
+ Thu, 29 Aug 2024 15:52:23 +0100
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
+	<acpica-devel@lists.linux.dev>, "Guohanjun (Hanjun Guo)"
+	<guohanjun@huawei.com>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
+	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
+ Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
+ Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
+	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
+	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, Mostafa Saleh
+	<smostafa@google.com>
+Subject: RE: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+Thread-Topic: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+Thread-Index: AQHa+JkQkcFFSAeDsUqyXyGP6/LaZLI7ju0AgAFNDID///2PgIAAHqvg///xn4CAAU4tEIAAHHjg
+Date: Thu, 29 Aug 2024 14:52:23 +0000
+Message-ID: <d1dc23f484784413bb3f6658717de516@huawei.com>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
+ <7debe8f99afa4e33aa1872be0d4a63e1@huawei.com>
+ <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
+ <cd36b0e460734df0ae95f5e82bfebaef@huawei.com>
+ <Zs9ooZLNtPZ8PwJh@Asurada-Nvidia>
+ <d2ad792fe9dd44d38396c5646fa956c6@huawei.com>
+In-Reply-To: <d2ad792fe9dd44d38396c5646fa956c6@huawei.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ffd773a0-d71c-4647-b7de-b22a008849ab@gmail.com>
 
-On Tue, Aug 27, 2024 at 10:47:53AM -0700, Florian Fainelli wrote:
-> On 8/27/24 07:33, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.6.48 release.
-> > There are 341 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.48-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> Same problem as with the 6.1-rc, perf fails to build with:
-> 
-> In file included from ./util/header.h:10,
->                  from pmu-events/pmu-events.c:9:
-> ../include/linux/bitmap.h: In function 'bitmap_zero':
-> ../include/linux/bitmap.h:28:34: warning: implicit declaration of function
-> 'ALIGN' [-Wimplicit-function-declaration]
->    28 | #define bitmap_size(nbits)      (ALIGN(nbits, BITS_PER_LONG) /
-> BITS_PER_BYTE)
->       |                                  ^~~~~
-> ../include/linux/bitmap.h:35:32: note: in expansion of macro 'bitmap_size'
->    35 |                 memset(dst, 0, bitmap_size(nbits));
->       |                                ^~~~~~~~~~~
->   LD /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/pmu-events/pmu-events-in.o
->   LINK
-> /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf
-> /local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o:
-> in function `record__mmap_read_evlist':
-> builtin-record.c:(.text+0x13578): undefined reference to `ALIGN'
-> /local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o:
-> in function `record__init_thread_masks_spec.constprop.0':
-> builtin-record.c:(.text+0x13b10): undefined reference to `ALIGN'
-> /local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld:
-> builtin-record.c:(.text+0x13b68): undefined reference to `ALIGN'
-> /local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld:
-> builtin-record.c:(.text+0x13b9c): undefined reference to `ALIGN'
-> /local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld:
-> builtin-record.c:(.text+0x13bd8): undefined reference to `ALIGN'
-> /local/stbopt_p/toolchains_303/stbgcc-12.3-1.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.3.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o:builtin-record.c:(.text+0x13c14):
-> more undefined references to `ALIGN' follow
-> collect2: error: ld returned 1 exit status
-> make[4]: *** [Makefile.perf:672: /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf]
-> Error 1
-> make[3]: *** [Makefile.perf:242: sub-make] Error 2
-> make[2]: *** [Makefile:70: all] Error 2
-> make[1]: *** [package/pkg-generic.mk:294:
-> /local/users/fainelli/buildroot/output/arm/build/linux-tools/.stamp_built]
-> Error 2
-> make: *** [Makefile:29: _all] Error 2
 
-I think I've fixed this up now, but wow, I can't build perf at all for
-6.6.y or 6.1.y.  So this might have been broken for a while?  Hopefully
-people are just using perf from the latest kernel release anyway...
 
-thanks,
+> -----Original Message-----
+> From: Shameerali Kolothum Thodi
+> Sent: Thursday, August 29, 2024 2:15 PM
+> To: 'Nicolin Chen' <nicolinc@nvidia.com>
+> Cc: Jason Gunthorpe <jgg@nvidia.com>; acpica-devel@lists.linux.dev;
+> Guohanjun (Hanjun Guo) <guohanjun@huawei.com>;
+> iommu@lists.linux.dev; Joerg Roedel <joro@8bytes.org>; Kevin Tian
+> <kevin.tian@intel.com>; kvm@vger.kernel.org; Len Brown
+> <lenb@kernel.org>; linux-acpi@vger.kernel.org; linux-arm-
+> kernel@lists.infradead.org; Lorenzo Pieralisi <lpieralisi@kernel.org>; Ra=
+fael J.
+> Wysocki <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>;
+> Robin Murphy <robin.murphy@arm.com>; Sudeep Holla
+> <sudeep.holla@arm.com>; Will Deacon <will@kernel.org>; Alex Williamson
+> <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>; Jean-
+> Philippe Brucker <jean-philippe@linaro.org>; Moritz Fischer
+> <mdf@kernel.org>; Michael Shavit <mshavit@google.com>;
+> patches@lists.linux.dev; Mostafa Saleh <smostafa@google.com>
+> Subject: RE: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+>=20
+> That makes some progress. But still I am not seeing the assigned dev  in
+> Guest.
+>=20
+> -device vfio-pci-nohotplug,host=3D0000:75:00.1,iommufd=3Diommufd0
+>=20
+> root@ubuntu:/# lspci -tv#
+>=20
+> root@ubuntu:/# lspci -tv
+> -+-[0000:ca]---00.0-[cb]--
+>  \-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
+>              +-01.0  Red Hat, Inc Virtio network device
+>              +-02.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              +-03.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              +-04.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              +-05.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              +-06.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              +-07.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              +-08.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>              \-09.0  Red Hat, Inc. QEMU PCIe Expander bridge
+>=20
+> The new root port is created, but no device attached.
+It looks like Guest finds the config invalid:
 
-greg k-h
+[    0.283618] PCI host bridge to bus 0000:ca
+[    0.284064] ACPI BIOS Error (bug): \_SB.PCF7.PCEE.PCE5.PCDC.PCD3.PCCA._D=
+SM: Excess arguments - ASL declared 5, ACPI requires 4 (20240322/nsargument=
+s-162)
+[    0.285533] pci_bus 0000:ca: root bus resource [bus ca]
+[    0.286214] pci 0000:ca:00.0: [1b36:000c] type 01 class 0x060400 PCIe Ro=
+ot Port
+[    0.287717] pci 0000:ca:00.0: BAR 0 [mem 0x00000000-0x00000fff]
+[    0.288431] pci 0000:ca:00.0: PCI bridge to [bus 00]
+[    0.290649] pci 0000:ca:00.0: bridge configuration invalid ([bus 00-00])=
+, reconfiguring
+[    0.292476] pci_bus 0000:cb: busn_res: can not insert [bus cb-ca] under =
+[bus ca] (conflicts with (null) [bus ca])
+[    0.293597] pci_bus 0000:cb: busn_res: [bus cb-ca] end is updated to cb
+[    0.294300] pci_bus 0000:cb: busn_res: can not insert [bus cb] under [bu=
+s ca] (conflicts with (null) [bus ca])
+
+Let me know if you have any clue.=20
+
+Thanks,
+Shameer
+
