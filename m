@@ -1,156 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4B1C173E;
-	Fri, 30 Aug 2024 22:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E641C1755
+	for <patches@lists.linux.dev>; Fri, 30 Aug 2024 22:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725055941; cv=none; b=pz56kRNncOiDuGlg53RjWALdvTyjL1vmFWYrnS2pcx4y4T68IJqsX96hgkF0dtCfx2LYpXXFmRGOLDXjicNl+6H/P8P1qsLNLBfboKvUWmdwXL1zLGHZCKzIu3b210C6tD44yEvh0Md+fQxPcFCm/O37uR7UoyGooRro+zo7yXQ=
+	t=1725056966; cv=none; b=QO+DHrTMIfgHQ1Kc2zakFLb6edNi9bFGN5RdpiHnYKMbYMcu1vNxQbs/MILvoaFjPWI3467HJzmblIGVM62Yk8VertQd/GEs+kz2GeUyL7giHgzulWNr/L5C4wcRG3eIr17AluNOi/bDnfEUHqjen4kRCmElP2g1hVmn/YL65OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725055941; c=relaxed/simple;
-	bh=anF0WgWFP/8S4oikTTao4/i90jjTIJNVyR3wOLf+fzY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rhBCOoRnKESQ+m6caZEyKr/7B7/WBJNqnW2rbZ4Q04zBEYynYYhLU1wDwrXoFjuQpVUk3792I762K1UyFIbs6gQQM8xjLzfsJvylYJ/8upJTpHRlk7i2EK5c44zuxHbw3iZWhxPjq80KR6lUQbCY4wzwpOJkpAytJQjCZe+eTgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PMl/C+RY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725056966; c=relaxed/simple;
+	bh=4GgNHNsl6MTwxWAUSSgj5snocnM78gEmhGmvQuLddYQ=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AvpeQBnZQ/rPjik02U+aHdQCIn5ncPE584/jPok6Rw/ppfxCD54GYkDfvb1pUecK3TXBdkIdNCDmmlL55IKOdeQuuov4mfWE+wUTVb3+z4CpW9GpupixNcfXe0XUhyiLr93FPi//h3e1Mgf01K2nOYgt2WjHxFYbaDDruW8uxHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bA5dQJaS; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PMl/C+RY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CA0C4CEC2;
-	Fri, 30 Aug 2024 22:12:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725055940;
-	bh=anF0WgWFP/8S4oikTTao4/i90jjTIJNVyR3wOLf+fzY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PMl/C+RYV754nRylCZjpG5FFaw2xHaRHyJXXZRgGFnLtUZHiyVbuMHOBghjmPHY++
-	 9VAZ7DLpvGfeNBBdwmrK2rrS3OWuaeUsLRKjXt1unL9lpWWT8B5qlEW0axVrWTpyOQ
-	 iAp9BeEQlEz0n5W4YqixKQY3BmYv1tJkY6TO7Crdy2xT9UGWoBhrEpG+jBhbmCr65O
-	 eSVITMJ0HpBG6KWlI52bHWNbd8qqjMJ4e3A3B45C5w63VVoRaMGcUW1l45lGhtb3Ng
-	 nq4Iw7ypSyj3dkyro9ZSuqNvn272y2wh0KU0GnaXtQPMZucAvwpMEVceYSjzHCOKkc
-	 YCK51I98pEgGw==
-Date: Fri, 30 Aug 2024 15:12:17 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Christoph Lameter <cl@linux.com>,
-	Dennis Zhou <dennis@kernel.org>, Gary Guo <gary@garyguo.net>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.6 230/341] change alloc_pages name in dma_map_ops to
- avoid name conflicts
-Message-ID: <20240830221217.GA3837758@thelio-3990X>
-References: <20240827143843.399359062@linuxfoundation.org>
- <20240827143852.163123189@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bA5dQJaS"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-49a6d056fa3so346709137.0
+        for <patches@lists.linux.dev>; Fri, 30 Aug 2024 15:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1725056963; x=1725661763; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2GtqqHeMLIVZafaXXKgt14nskpie4/u6kUld6V4M6X4=;
+        b=bA5dQJaSvYTvMCPaUh7NwXKZaG5mKFqi0jW9FY2ZtqOIKEsR2JcF9y4WQpKhlQiE06
+         x4o3gnYApdlIrbxI2OBQtHUwWv4T400qlF4yTsiZZ6NeECzyz4Vmoi7/HgZh42ssa5J6
+         qzpGQW/qlysXTTO2NBF+z/En6MxxcFuNOJeX4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725056963; x=1725661763;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2GtqqHeMLIVZafaXXKgt14nskpie4/u6kUld6V4M6X4=;
+        b=wZaAVHMaSormI1TG/hI0vrkzMVJdmLj68mD/N/Nn3Igc2n4+GLs01W5+xR59YsXflo
+         eK0R5upsOZhIcsFZhUQNc3qwGjWQfBq57FiGLiyKZsaClO8IUdeXZuZxD6q5GKmEklqY
+         vwZsBxcf6XHJuua10eqIFI1Qvr83U/bNJfGZzrvbpHvU96bpryGZnh70UOrwABQmPpOo
+         SdmZyYX3XnBKxWn/A5fod7Qn/wznMEYbxTzFpeoQMy2hvp4bgI+qk+jNEhPoGK3cxkAy
+         JvIU4PRLoL5VrOlYxLXLPCS9D/Pden97puYyG+wJf7Aoa8DYgPSIgbeFYktCkJh9smSj
+         QwsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2eaJ84+1EbPLjzM1DQMWPcE79pNx2yO8MUQTNPSSwOcHf6WJcUB+mmJ4qmCcDlfkiQEueracm@lists.linux.dev
+X-Gm-Message-State: AOJu0YzKZueFzb1P1on71aYbOzUj+iUi9yjaMxF159BwWExgYfQM0KjW
+	p3ndVydHuiuylmryccJKWKNWxVUScHSqFy8JoQfUX0cHPN8vvPM+Uc0YGaz+pC9SFFtZF4uREO9
+	znm2Hcs9WE1UaxDse1tNMif/suG6c9LxZQ94k
+X-Google-Smtp-Source: AGHT+IH3cxSAtR2IOZY8n4PObzrdg7w+qSsS34kPT9uz2UEJg985EoHLslmaQuDZB6axejHFWN7bvxuNbWFx030eruA=
+X-Received: by 2002:a05:6102:c87:b0:48f:cb62:231a with SMTP id
+ ada2fe7eead31-49a779a41d4mr878635137.23.1725056963156; Fri, 30 Aug 2024
+ 15:29:23 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 30 Aug 2024 15:29:22 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240827143852.163123189@linuxfoundation.org>
+In-Reply-To: <CAE-0n51Ag1wpj0uUPVtMvgZJE2FF_FZkw+j=bRiAq3vYk=Y_Fw@mail.gmail.com>
+References: <20240828171722.1251587-1-swboyd@chromium.org> <20240828171722.1251587-2-swboyd@chromium.org>
+ <c1e35d3d-fa00-4453-aaa3-9f23a07acb4f@linaro.org> <CAE-0n51Ag1wpj0uUPVtMvgZJE2FF_FZkw+j=bRiAq3vYk=Y_Fw@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Fri, 30 Aug 2024 15:29:22 -0700
+Message-ID: <CAE-0n53rNuyXcVcqTBSgbNzuJzCBkaHE21dPNkMTrs=BCTkmPg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] clk: qcom: dispcc-sc7180: Only park display clks
+ at init
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
+	Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Greg and Sasha,
+Quoting Stephen Boyd (2024-08-29 09:34:05)
+> Quoting Neil Armstrong (2024-08-29 08:32:48)
+> >
+> >
+> > I've been testing this serie on SM8650, and with 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+> > it fixes an issue we have that triggers:
+> > [   18.740736] ------------[ cut here ]------------
+> > [   18.745837] ufs_phy_gdsc status stuck at 'off'
+> > [   18.745929] WARNING: CPU: 1 PID: 197 at drivers/clk/qcom/gdsc.c:178 gdsc_toggle_logic+0x15c/0x164
+> > ...
+> > after waking up UFS from runtime suspend.
+>
+> Oof that's not good.
+>
+> >
+> > So I suspect we'll need to figure out which SM8650 GCC shared clocks would need
+> > to use clk_rcg2_shared_init_park_ops ?
+> >
+> > We also had random boot crash when initializing the display very late on multiple platforms,
+> > and so far "clk: qcom: Park shared RCGs upon registration" fixed that, but I also suppose Ill
+> > need to reflect the changes done to dispcc-sc7180.c to dispcc-sm8650.c and others.
+>
+> It sounds like it's better to make the default always park at
+> registration time and special case the one or two places where that
+> isn't possible, i.e. USB because it has special rate requirements. So I
+> should just go back to v1 then and pile on the QUP patches.
 
-On Tue, Aug 27, 2024 at 04:37:41PM +0200, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Suren Baghdasaryan <surenb@google.com>
-> 
-> [ Upstream commit 8a2f11878771da65b8ac135c73b47dae13afbd62 ]
-> 
-> After redefining alloc_pages, all uses of that name are being replaced.
-> Change the conflicting names to prevent preprocessor from replacing them
-> when it's not intended.
-> 
-> Link: https://lkml.kernel.org/r/20240321163705.3067592-18-surenb@google.com
-> Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-> Tested-by: Kees Cook <keescook@chromium.org>
-> Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-> Cc: Alex Gaynor <alex.gaynor@gmail.com>
-> Cc: Alice Ryhl <aliceryhl@google.com>
-> Cc: Andreas Hindborg <a.hindborg@samsung.com>
-> Cc: Benno Lossin <benno.lossin@proton.me>
-> Cc: "Björn Roy Baron" <bjorn3_gh@protonmail.com>
-> Cc: Boqun Feng <boqun.feng@gmail.com>
-> Cc: Christoph Lameter <cl@linux.com>
-> Cc: Dennis Zhou <dennis@kernel.org>
-> Cc: Gary Guo <gary@garyguo.net>
-> Cc: Kent Overstreet <kent.overstreet@linux.dev>
-> Cc: Miguel Ojeda <ojeda@kernel.org>
-> Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-> Cc: Peter Zijlstra <peterz@infradead.org>
-> Cc: Tejun Heo <tj@kernel.org>
-> Cc: Vlastimil Babka <vbabka@suse.cz>
-> Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Stable-dep-of: 61ebe5a747da ("mm/vmalloc: fix page mapping if vm_area_alloc_pages() with high order fallback to order 0")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  arch/alpha/kernel/pci_iommu.c           | 2 +-
->  arch/mips/jazz/jazzdma.c                | 2 +-
->  arch/powerpc/kernel/dma-iommu.c         | 2 +-
->  arch/powerpc/platforms/ps3/system-bus.c | 4 ++--
->  arch/powerpc/platforms/pseries/vio.c    | 2 +-
->  arch/x86/kernel/amd_gart_64.c           | 2 +-
->  drivers/iommu/dma-iommu.c               | 2 +-
->  drivers/parisc/ccio-dma.c               | 2 +-
->  drivers/parisc/sba_iommu.c              | 2 +-
->  drivers/xen/grant-dma-ops.c             | 2 +-
->  drivers/xen/swiotlb-xen.c               | 2 +-
->  include/linux/dma-map-ops.h             | 2 +-
->  kernel/dma/mapping.c                    | 4 ++--
->  13 files changed, 15 insertions(+), 15 deletions(-)
-
-This patch breaks the build for s390:
-
-arch/s390/pci/pci_dma.c:724:10: error: 'const struct dma_map_ops' has no member named 'alloc_pages'; did you mean 'alloc_pages_op'?
-  724 |         .alloc_pages    = dma_common_alloc_pages,
-      |          ^~~~~~~~~~~
-      |          alloc_pages_op
-
-https://storage.tuxsuite.com/public/clangbuiltlinux/continuous-integration2/builds/2lNUl0tacZpSlu9Edrlk3QoSElM/build.log
-
-This change happened after commit c76c067e488c ("s390/pci: Use dma-iommu
-layer") in mainline, which explains how it was missed for stable.
-
-The fix seems simple:
-
-diff --git a/arch/s390/pci/pci_dma.c b/arch/s390/pci/pci_dma.c
-index 99209085c75b..ce0f2990cb04 100644
---- a/arch/s390/pci/pci_dma.c
-+++ b/arch/s390/pci/pci_dma.c
-@@ -721,7 +721,7 @@ const struct dma_map_ops s390_pci_dma_ops = {
- 	.unmap_page	= s390_dma_unmap_pages,
- 	.mmap		= dma_common_mmap,
- 	.get_sgtable	= dma_common_get_sgtable,
--	.alloc_pages	= dma_common_alloc_pages,
-+	.alloc_pages_op	= dma_common_alloc_pages,
- 	.free_pages	= dma_common_free_pages,
- 	/* dma_supported is unconditionally true without a callback */
- };
-
-but I think the better question is why this patch is even needed in the
-first place? It claims that it is a stable dependency of 61ebe5a747da
-but this patch does not even touch mm/vmalloc.c and 61ebe5a747da does
-not mention or touch anything with alloc_pages_op, so it seems like this
-change should just be reverted from 6.6?
-
-Cheers,
-Nathan
+I've done this now and I'll push out clk-fixes with the QUP patches.
