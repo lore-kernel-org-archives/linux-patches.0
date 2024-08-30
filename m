@@ -1,83 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4F918FDD2;
-	Fri, 30 Aug 2024 11:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7593D199FAE;
+	Fri, 30 Aug 2024 11:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725015859; cv=none; b=pU00uYcGs7z2tJh1kZN9p6H65AMs8l52EcfgoEsMC1xXX6SQqYR2FfIkfmLZsmIPTyk/kUZ6UYEhbSurPUfIYLcvjyW+ODGv9QdOj526oChLprTnsyP+cOqGhDD7vxE+opW8Lgf+/g/zoionoJEaACk1GqhJsVlCBEE7KKVPd0s=
+	t=1725016002; cv=none; b=o8LFibCxAEhbSJCDltwzO/u2Rj+ZIusDDggLH5c5bWih/vr1UqK+9o+9FpMb7UG+XgEQ6tsm0S1NPcpgbW4r+mGe0SclVlzOKqQllqRQmqaHNzCMJ8krFh+kcPj/WQGzay//LiHv4k8xnUpqFt1cWsX8xIjYjmjq+233zuAZAIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725015859; c=relaxed/simple;
-	bh=rO6b7QFMzMshg1b/0hXGx0Bjl6EL4/D2pRT9fm6J53o=;
+	s=arc-20240116; t=1725016002; c=relaxed/simple;
+	bh=d+UZ5rR/XJ0uiV33JsZnGNgXqNE+fGWSIU2/sa2Gi80=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cX3TEdasY+4roLIxPsrIhqSp3KQGcbK/W4goX7ZNz+XI/h8+YZqdXSLTfCox1ytS3lbf7oVfjkqSO+2oSAMJUaBQZzFrmTSQS5pvUABpc2uDLsIJM0SAW1BbJK2LObBX69hVCFBRVx7dpDtC1koYKlGp7jtgTsMsb1A6q0VRYh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cExWXtsF; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=YZTd1AYx1d6z9R7ahpPwUw+OMGgkUrFNa58/7G7dr0W0s7J36t2O195/CnPj5KAtp1Z4DZ6C/L9YPssYJES88FVDjdSwvrflKw+L963TTNJtwKSJpMuh607HHl6FIXqMPYs5LYoXH//x2xw1COcoHO7CVOk5X3uosSmHZJXWzZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbNq/mM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cExWXtsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19755C4CEC2;
-	Fri, 30 Aug 2024 11:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbNq/mM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC54C4CEC2;
+	Fri, 30 Aug 2024 11:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725015858;
-	bh=rO6b7QFMzMshg1b/0hXGx0Bjl6EL4/D2pRT9fm6J53o=;
+	s=korg; t=1725016002;
+	bh=d+UZ5rR/XJ0uiV33JsZnGNgXqNE+fGWSIU2/sa2Gi80=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cExWXtsFOxTgUaU9KshA4QxNtf7K1NEJriuqNf/EeM/NRe9phkQNkpeU1WZpHxfAT
-	 hPZSpgo5aDKtsPI1YTJcIyqt4/AsAnXBz3ZkceNC4kzPk7bZ/K4WNl++wImmMFGN17
-	 gRx4Bc2KeSPRrDbwsnKLtOuPTxIzKKfwX8fKSTL8=
-Date: Fri, 30 Aug 2024 13:04:15 +0200
+	b=HbNq/mM/pVldNcOCGlYaFpUXuGxPkVjmFxYGdIUo+faOfNhJUnY7DYXHLT1uFTrDv
+	 QjdJcAUkdpj6yNosxljNA8OwMSLR6VCo4WisRPsWY2GIQ5/2Mr2TxdHxTJne5pxkKX
+	 ryt57w9weoKtsKREu9oi13raAzD3l5OdeZvhMfN8=
+Date: Fri, 30 Aug 2024 13:06:39 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Florian Fainelli <f.fainelli@gmail.com>, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: Re: [PATCH 5.15 000/479] 5.15.165-rc3 review
-Message-ID: <2024083004-scouts-broadways-663b@gregkh>
-References: <20240817075228.220424500@linuxfoundation.org>
- <135ef4fd-4fc9-40b4-b188-8e64946f47c4@roeck-us.net>
- <eb7fda2e-e3c3-42cb-b477-91bcafe3088a@app.fastmail.com>
+To: Ignat Korchagin <ignat@cloudflare.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	John Hubbard <jhubbard@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>,
+	kernel-team@cloudflare.com
+Subject: Re: [PATCH 6.6 046/139] selftests/net: fix uninitialized variables
+Message-ID: <2024083021-cytoplasm-width-3e44@gregkh>
+References: <20240709110658.146853929@linuxfoundation.org>
+ <20240709110659.948165869@linuxfoundation.org>
+ <8B1717DB-8C4A-47EE-B28C-170B630C4639@cloudflare.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <eb7fda2e-e3c3-42cb-b477-91bcafe3088a@app.fastmail.com>
+In-Reply-To: <8B1717DB-8C4A-47EE-B28C-170B630C4639@cloudflare.com>
 
-On Mon, Aug 26, 2024 at 02:27:17PM +0100, Jiaxun Yang wrote:
+On Thu, Jul 11, 2024 at 04:31:45PM +0100, Ignat Korchagin wrote:
+> Hi,
+> > On 9 Jul 2024, at 12:09, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> > 
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: John Hubbard <jhubbard@nvidia.com>
+> > 
+> > [ Upstream commit eb709b5f6536636dfb87b85ded0b2af9bb6cd9e6 ]
+> > 
+> > When building with clang, via:
+> > 
+> >    make LLVM=1 -C tools/testing/selftest
+> > 
+> > ...clang warns about three variables that are not initialized in all
+> > cases:
+> > 
+> > 1) The opt_ipproto_off variable is used uninitialized if "testname" is
+> > not "ip". Willem de Bruijn pointed out that this is an actual bug, and
+> > suggested the fix that I'm using here (thanks!).
+> > 
+> > 2) The addr_len is used uninitialized, but only in the assert case,
+> >   which bails out, so this is harmless.
+> > 
+> > 3) The family variable in add_listener() is only used uninitialized in
+> >   the error case (neither IPv4 nor IPv6 is specified), so it's also
+> >   harmless.
+> > 
+> > Fix by initializing each variable.
+> > 
+> > Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+> > Reviewed-by: Willem de Bruijn <willemb@google.com>
+> > Acked-by: Mat Martineau <martineau@kernel.org>
+> > Link: https://lore.kernel.org/r/20240506190204.28497-1-jhubbard@nvidia.com
+> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> > tools/testing/selftests/net/gro.c                 | 3 +++
+> > tools/testing/selftests/net/ip_local_port_range.c | 2 +-
+> > tools/testing/selftests/net/mptcp/pm_nl_ctl.c     | 2 +-
+> > 3 files changed, 5 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
+> > index 30024d0ed3739..b204df4f33322 100644
+> > --- a/tools/testing/selftests/net/gro.c
+> > +++ b/tools/testing/selftests/net/gro.c
+> > @@ -113,6 +113,9 @@ static void setup_sock_filter(int fd)
+> > next_off = offsetof(struct ipv6hdr, nexthdr);
+> > ipproto_off = ETH_HLEN + next_off;
+> > 
+> > + /* Overridden later if exthdrs are used: */
+> > + opt_ipproto_off = ipproto_off;
+> > +
 > 
-> 
-> 在2024年8月26日八月 上午2:04，Guenter Roeck写道：
-> > On 8/17/24 01:00, Greg Kroah-Hartman wrote:
-> >> This is the start of the stable review cycle for the 5.15.165 release.
-> >> There are 479 patches in this series, all will be posted as a response
-> >> to this one.  If anyone has any issues with these being applied, please
-> >> let me know.
-> >> 
-> >> Responses should be made by Mon, 19 Aug 2024 07:51:05 +0000.
-> >> Anything received after that time might be too late.
-> >> 
-> > [ ... ]
-> >> Jiaxun Yang <jiaxun.yang@flygoat.com>
-> >>      MIPS: Loongson64: reset: Prioritise firmware service
-> >> 
-> >
-> > This patch in v5.15.165 results in:
-> 
-> Thanks for reporting!
-> 
-> This patch should be reverted for 5.15 as the infra was not here and 5.15
-> is not intended to support platforms that may be impacted by this issue.
+> This breaks selftest compilation on 6.6, because opt_ipproto_off is not
+> defined in the first place in 6.6
 
-Now reverted, thanks!
+So should it be reverted or fixed up?
+
+Can you send a patch doing either one of these?
+
+thanks,
 
 greg k-h
