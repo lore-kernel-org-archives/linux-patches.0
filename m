@@ -1,202 +1,224 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2057.outbound.protection.outlook.com [40.107.220.57])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8A017C9F1
-	for <patches@lists.linux.dev>; Fri, 30 Aug 2024 22:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725058134; cv=none; b=WJO5wJz+FhX3Y+nhH5OPNH8vz/JViJyB70hRDnQsHbbiLss6b9X4tlf3xJHPetBL37TnQDWgMET1qK1ffy0T066EnTecO9W7SXZMalKWqWGSfCJsCvlb1OySy/PKkR1iRzLSgm2FAL8KgC+eiLoHFHaGqiSqLMwSecIeUeO1lP8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725058134; c=relaxed/simple;
-	bh=vQSHT5Cx85f6cSUyggBt/S75C/KCzPjVHtXsoW2XU6M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h7U7bXV8kNV9iZ+73Oj+Cm6INGtGjTbXU2Idwxx9KAcNGSxZvgeL3ubwQvNRF47N+mb4wqXbF2B4mmCY7Y0lAEt95i//JDxrQumXvrwHnnJOif6edRlDCyzw2nhPej/KqYYMV6zfdZBnmZMRF9Pw9bxg5HhRWc0MEYw8qIaHe9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XI+nKCDf; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7714918DF9B
+	for <patches@lists.linux.dev>; Fri, 30 Aug 2024 23:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725061276; cv=fail; b=rRbaTHVQpkej6Hosqa6ZC7qbUxB6C4RePsjPxlwtLHwjWbbFlA1kO2HPEtrsAuhdoo81AI16yJ+IppD1m8Hh9Hb+DpiOIWnGu9ccmX9y2YeSNrHJH62kQkhFEK8ZIjhbLvtd3+cm1dy8Xpt/uRk+YrWf1gqNg00njj/q6pe5nVo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725061276; c=relaxed/simple;
+	bh=esoIhx5bQ0a23iHn61F/p2WzTBClvzfkt6BJcs6cYu0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=b1AW/43FFp1zGOvadvPUF3SUxdl5IxtTPc1lSQkc0Aj4rkRBldejERNSTvamiBFcBAUIJydIoEC+/1Mgbscbn6J807bi43pM4JpadwXtX2rCBrBhOxTGgC23eo1gNn/9DZdPF/xrMlKcehG8pXnEg5RDHtyZ4/u3Q12p8UWC/sY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XC0TqHpo; arc=fail smtp.client-ip=40.107.220.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XI+nKCDf"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-456871a4d8fso50341cf.0
-        for <patches@lists.linux.dev>; Fri, 30 Aug 2024 15:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725058131; x=1725662931; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5yf5qwNlK9KJHYQLjEH/sJ7OAWoMrkf4Md9wGz0SP8U=;
-        b=XI+nKCDfO//GNelXyLRhzRhpFD9j61b94KnDzVq5/FAu5Kr2LdWbDj+FVzShXQOYF1
-         xibpGnX5ZnoXwFqmLAjhKwWImUgxPQBDtGTW5EQWAtwpbnYN5Kjqj5hQz9IVUVSrLUD9
-         hvrXqN7zCzLRuHG9GT7u1kdMiu/1oxNcdeALjdASJO1WsC9JAms3wGgSY3a2E8N3SxGy
-         7GrO2G8iIHIQWGpsFNVDWNx5hDlzs4cBPzzPu0Ic3tVFtANYx74RWC4oM2naYsEX5vu0
-         2Hruivz/2oy2OcrNtH0Oyt+8Dzgm/pMCy1wxX6mtGaC6tUYsu5lRCTr5WEPpg5jiVcco
-         mg0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725058131; x=1725662931;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5yf5qwNlK9KJHYQLjEH/sJ7OAWoMrkf4Md9wGz0SP8U=;
-        b=SKILozujmazCa7yiZ5zkFYJuiAtp1YA7tSjaqkyyPDuxm0aunOpbqdHjqB3RUq7qN5
-         10rX6AY95y2QVHzFEfi9ysQLt6B35r85sLUW2F3/zX1mHmg1ewDYNu/qTUzb4CTT9+CV
-         Yf5vh/KYtMkiOqmlLRkzry8ugZ8VgU0v7+icOUGlvOlVcyIg6NfdiO9pazLaRTYhaxmF
-         1JpxXHTeV4xEuIBZim1ACL8T/xRTYO1646rSqJhdkr8ElXHZM/ImnuC3kR+13ELkq7Um
-         jeqLx5SpBFo+aU28kRSUPvd6/q/B5tKhxJRcMar3lCfckNR5odBAIy5N/p+dM5XYuxJs
-         HfuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUAjt1QEl/eNZCJtbaP8ayZeukUBi+4Ok9qhMKBFYG4InUf5laW8b8kQTZQIOBbl7iCmxAsvGN9@lists.linux.dev
-X-Gm-Message-State: AOJu0YzVIv4uDo06Y4QsZIPRHCtNtY0H2toAViU2E2kUZLY7ogD7nnn3
-	w+59q9gPrz0I9dG4EfnWVSkExKwet6zq1/f/0U9egCPlY57y1DQ2ZdSED1QTjhQfBsVsE+BqnFT
-	oM7Jonm5338hCF0mnc/3kMlXKBtsruekOhMRO
-X-Google-Smtp-Source: AGHT+IEH0ch3vYzwxiqoEQU2QupdS+7G5yKuK+OBElSv+sgjfGmViu6CX4mUvnJeQthmaBnw7sp1UOMNu7zBe6bZMHA=
-X-Received: by 2002:ac8:7c49:0:b0:447:f108:f80e with SMTP id
- d75a77b69052e-4573b34d5e3mr1194791cf.16.1725058131225; Fri, 30 Aug 2024
- 15:48:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XC0TqHpo"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ocku6oBJEj1ndxnqJyHFZsgH4L9sYQ4Yg+RTEjMuhwJOXVSsfm0ZZIKI65Etmnq8n4cH2BxIuBe7CXsE0Vp/wSpOJG4bIGVbbbeoFRAJMJX4BUVbDq0mH49VCo0b2GMG1MvakrWLYIPe1g/7qOy1+1VHE8/NSPlxKFS5j0/idzGyddokes+08ifaYHthh/0vrqRbAC5cGEKpMRoHtnRvoD0ePYNJxiqrCOuYubsFfhe+HzLgU8MIg2uOXcU/1FEvlJS78y0YxGIMx+uZ2Bo2LTmdxxyLzv7nYOLSXQi84500E+SfORL8e9cRhVJEdTcdzcJuvrY9f4AcBg2JceaMqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h2faB+/UH8Ri+qGFs57rftJDbbmO88EW+50dGNf5TuE=;
+ b=x0vQC686m2QNV3Uq297k0thRHzj2vyGSvv7JDgv7Cl1VkroVZywADU+InRWnLiR5dd4kTUcCJM+sKBjjFNolG5eoKaaSHaOqhabzIY+U5jlRFtv6ftY/rK+/sOy/EtioqjjVTGUDjc1Otx6U3pPX3BaznZ1iZnkvje8cFbMRRg9yJfbw8uIB4BZTt8lv7VKpRuxFZi8MsqZOAC6RuX4bBtw5LpMH1Y4wb3Pef65olYoXaoWkgFEwxYNsTh1Z/3pULa49VdB25LCX33J/msz6+mKUoLYy8vNk+dZyJTro/Y62GnnpEKYjlJU/uRaCR3cJ4GX5L8BifQ6l5NQ4IOcaVg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h2faB+/UH8Ri+qGFs57rftJDbbmO88EW+50dGNf5TuE=;
+ b=XC0TqHpoWwa4nvcSVWTdMrnEk0XkfiPrjF7iqwCLMEEF52+qf5SqmQgXeK5IS9N4as9tYJ5nhlm4iffd/Ez0x0pVW2aAjxUxduJfpdSarthGBhT7f4YNC708Y8qzhrzjAS/0XI8LGIIenRb7afMnqb+LQagKNXU7WnrlnupIfBShVC8myLJVIme6vY98aHGf699Tfx1Rt6UkRKHQdLhxlOtEaG/9qmHSvFWXDEJ0cb6eUiGM77O/WEMIIRYzy554CMi9sH28lKLCBrtniCc3Whe/IzQA94iVYKEf7HEALAY/NSorjjcSJC2cr87GMmQTsYA/9pGsdcFujo09nYQTHw==
+Received: from BN0PR04CA0160.namprd04.prod.outlook.com (2603:10b6:408:eb::15)
+ by PH7PR12MB5879.namprd12.prod.outlook.com (2603:10b6:510:1d7::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28; Fri, 30 Aug
+ 2024 23:41:03 +0000
+Received: from BN3PEPF0000B076.namprd04.prod.outlook.com
+ (2603:10b6:408:eb:cafe::3) by BN0PR04CA0160.outlook.office365.com
+ (2603:10b6:408:eb::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.28 via Frontend
+ Transport; Fri, 30 Aug 2024 23:41:02 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN3PEPF0000B076.mail.protection.outlook.com (10.167.243.121) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7918.13 via Frontend Transport; Fri, 30 Aug 2024 23:41:02 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 30 Aug
+ 2024 16:40:46 -0700
+Received: from [10.110.48.28] (10.126.230.35) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 30 Aug
+ 2024 16:40:45 -0700
+Message-ID: <015f481d-fd0a-48d5-a712-0df224d6d937@nvidia.com>
+Date: Fri, 30 Aug 2024 16:40:39 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240827143843.399359062@linuxfoundation.org> <20240827143852.163123189@linuxfoundation.org>
- <20240830221217.GA3837758@thelio-3990X> <CAJuCfpGuOtzSshL6U+rT2ytZr2MBAH5yWAqMJd3hLDzHyZV3JA@mail.gmail.com>
-In-Reply-To: <CAJuCfpGuOtzSshL6U+rT2ytZr2MBAH5yWAqMJd3hLDzHyZV3JA@mail.gmail.com>
-From: Suren Baghdasaryan <surenb@google.com>
-Date: Fri, 30 Aug 2024 15:48:40 -0700
-Message-ID: <CAJuCfpEmrPG6e+tv6t=v-r7TmOenCtKK73xrtaeMQ+brZDE2wA@mail.gmail.com>
-Subject: Re: [PATCH 6.6 230/341] change alloc_pages name in dma_map_ops to
- avoid name conflicts
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, 
-	stable@vger.kernel.org, patches@lists.linux.dev, 
-	Kees Cook <keescook@chromium.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, Benno Lossin <benno.lossin@proton.me>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Christoph Lameter <cl@linux.com>, Dennis Zhou <dennis@kernel.org>, 
-	Gary Guo <gary@garyguo.net>, Kent Overstreet <kent.overstreet@linux.dev>, 
-	Miguel Ojeda <ojeda@kernel.org>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>, Vlastimil Babka <vbabka@suse.cz>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Andrew Morton <akpm@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 046/139] selftests/net: fix uninitialized variables
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Ignat Korchagin
+	<ignat@cloudflare.com>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>, Willem de Bruijn
+	<willemb@google.com>, Mat Martineau <martineau@kernel.org>, Jakub Kicinski
+	<kuba@kernel.org>, Sasha Levin <sashal@kernel.org>,
+	<kernel-team@cloudflare.com>
+References: <20240709110658.146853929@linuxfoundation.org>
+ <20240709110659.948165869@linuxfoundation.org>
+ <8B1717DB-8C4A-47EE-B28C-170B630C4639@cloudflare.com>
+ <2024083021-cytoplasm-width-3e44@gregkh>
+Content-Language: en-US
+From: John Hubbard <jhubbard@nvidia.com>
+In-Reply-To: <2024083021-cytoplasm-width-3e44@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B076:EE_|PH7PR12MB5879:EE_
+X-MS-Office365-Filtering-Correlation-Id: 27c4333c-7165-48ee-4313-08dcc94d3596
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|82310400026|36860700013|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?OHozTDZ6a2tSWVNvdWsyTWQ0T2dvNm5IMFZrSUdhQzVBV09hTGF3dGF1MDNQ?=
+ =?utf-8?B?cHVEOWVUQkRPR3dtVFhKQmlQVytYU3RGTUdIN09lUWZxY2VxSkdJS1RKMnEx?=
+ =?utf-8?B?a1Y1ZzBoRy8rTnNlNk81NXF2TGt2VDA5eHF5dmRqM2ExcU1RN0NKMXI4MkRI?=
+ =?utf-8?B?Vkc5UlpsSG1QaHhheGZQdlB6SWE2QVJuMWxMWFVJUnNTclFYOEtXelVkNHFT?=
+ =?utf-8?B?S1BzTDd1YnVnVUtpUDd4RUpROGdLL3pZNktZSkg3QzF0ZzY4bGZhRjUrak5y?=
+ =?utf-8?B?cDdINVJJK0s5QWdsR0lMNGZ1ZllyYklabkdOSVlRajhvamNJNmpLTDFqWjBm?=
+ =?utf-8?B?N2tNZ2hXWjNvRnNnS2NpcWE4OCtiYk9YL3dkRmRUUEhuSnJvcUpXcFo5Ulhs?=
+ =?utf-8?B?YzRlZUtEWUkwdzNYK3NVdGE4TG1ueVloZm1FSkpNT0d1aFlibUtJR1RtZWxs?=
+ =?utf-8?B?Mll2L3d3RWMxOGk0cE9Tci9oMXhVOUJ1cVNxUWpld0Rtd0YzdmxEbnFoSG10?=
+ =?utf-8?B?MzF0U0FTRis1ZTNnWC9KS1ppNWpnR3RwdjBpWHdjUXBPMFk4NUtkS2QxNUhM?=
+ =?utf-8?B?b21ybWl4ek00S3dKeWNaYTNXSnZJbWpyM1Z3NzI3SkZHemlId2J2MWZicWVa?=
+ =?utf-8?B?ZzVwNmJ3RzJyVmdEMTlidTNkeGVYaFROMlUvdW0vdy9Lb3B2QysvRUY4dngw?=
+ =?utf-8?B?ZGpjRWFmK1VkU0hReUFSbmNBNUdHZmtUc3F6dm00TVhpM1VubjZPbXZyWXBj?=
+ =?utf-8?B?ZWZ2WGRtOHFTWjFjN0oxQ25ESS9zcVBHYmQyNVBVSEZVcytWNkluMlh4Y0Jh?=
+ =?utf-8?B?Q3RwcTBtT2VBTEp5VlNLOG9wcFVoNWdwYXNrS0k4MndhVGZOdW5BYVR2QUcx?=
+ =?utf-8?B?RzdxYzRsaloyU2dRR2U1TkJYRjh4Y2s4ZEJmYXpGN0R3MGIyUS9QVWxkeTFk?=
+ =?utf-8?B?R3VQaUJHT2lqMWUrRDFhQkpCMm1zZHpSNXRZZVV6Q0RiUHFJNEwyZUlTOWpu?=
+ =?utf-8?B?SFFmMnZRaUc1RklFbEcvaHVwekh2YnFRT3RkeEoxZXdSaDdtZlg4TjRlRzB2?=
+ =?utf-8?B?bXNGYzNvd29VcXlWU2lBUjE3bmdYcVNXcHJVZ0pTNkNrZGtucnZHUGV1emdQ?=
+ =?utf-8?B?NFVyaHNtVFFESjVCa05vNzBpWmVjV3FNUU9IUEc2OTZVVUhPamRMUkpBMTB1?=
+ =?utf-8?B?YWN3WFNkd1FKc3E5NW9tZVE4ODVxZFEvcldSNHJHNmhSQlZYY1kzaVZtckZu?=
+ =?utf-8?B?NlNlYTRWc0ptcVJtMzF5Y0dpTzFFUjhjTGh2aTlEeWxMVTJKMy9qY2VxSzkr?=
+ =?utf-8?B?bW5DVTVBZTlpMDZEOHMyUVhUcGp2bXFrSmJNVU90VFpBemg3ZjB4SUFTdmk4?=
+ =?utf-8?B?eHdhNVFURUp0bTM2S0JGSnFIUyt1QmJXOFpEdlI5b3g3Q3MzK05wS3F3YUxm?=
+ =?utf-8?B?L1Z4UVhGeEIwTmpnWjd3LzY3VjJwZUhRZDZQR3J4cy9sMFpXOWtvY1M5Zlln?=
+ =?utf-8?B?Ny9xeUFpdENIQVNrelRkamYrS2lTMEJGaG85cHF3bHNXbkFKdG5GelBhWjBW?=
+ =?utf-8?B?U1FrK240cU9lSlBsR24vRG00bG1uMFQxTFpQZ0U3dUF0OVpaZzJHYmYrRUFG?=
+ =?utf-8?B?aFFQUytpQXRrS1FyN250RGtSVTlaaHkzVHU1dEg5Sm5XVjc5U0JTdlZKVUMx?=
+ =?utf-8?B?blpFRXN1Uk9ycjlHRzI3cEtoUnVrcDRsTXhsTUNWZFRqVnBJUUp4d3k3WXk4?=
+ =?utf-8?B?eERZcUdhWVNQcVlIUWVtSzhYcUxsbmpmZ0RieEt2SXVkQ1JsZWEvSXhlcXNx?=
+ =?utf-8?B?NVN5aDVGbytlRDlWRERQbi9CeGVoSGJqMGFYcVpRWU95UUNoMlRWSVdHN1FQ?=
+ =?utf-8?B?NXNqUko2Z1l5NG9VNko0QWd6dVFrZWxGNUE2eUh6aTRhK1RWWVg3OS80VE1N?=
+ =?utf-8?Q?S028RTXxbRFR8U3Eh2YDhujz+69kcWXl?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Aug 2024 23:41:02.6441
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27c4333c-7165-48ee-4313-08dcc94d3596
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B076.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5879
 
-On Fri, Aug 30, 2024 at 3:35=E2=80=AFPM Suren Baghdasaryan <surenb@google.c=
-om> wrote:
->
-> On Fri, Aug 30, 2024 at 3:12=E2=80=AFPM Nathan Chancellor <nathan@kernel.=
-org> wrote:
-> >
-> > Hi Greg and Sasha,
-> >
-> > On Tue, Aug 27, 2024 at 04:37:41PM +0200, Greg Kroah-Hartman wrote:
-> > > 6.6-stable review patch.  If anyone has any objections, please let me=
- know.
-> > >
-> > > ------------------
-> > >
-> > > From: Suren Baghdasaryan <surenb@google.com>
-> > >
-> > > [ Upstream commit 8a2f11878771da65b8ac135c73b47dae13afbd62 ]
-> > >
-> > > After redefining alloc_pages, all uses of that name are being replace=
-d.
-> > > Change the conflicting names to prevent preprocessor from replacing t=
-hem
-> > > when it's not intended.
-> > >
-> > > Link: https://lkml.kernel.org/r/20240321163705.3067592-18-surenb@goog=
-le.com
-> > > Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-> > > Tested-by: Kees Cook <keescook@chromium.org>
-> > > Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-> > > Cc: Alex Gaynor <alex.gaynor@gmail.com>
-> > > Cc: Alice Ryhl <aliceryhl@google.com>
-> > > Cc: Andreas Hindborg <a.hindborg@samsung.com>
-> > > Cc: Benno Lossin <benno.lossin@proton.me>
-> > > Cc: "Bj=C3=B6rn Roy Baron" <bjorn3_gh@protonmail.com>
-> > > Cc: Boqun Feng <boqun.feng@gmail.com>
-> > > Cc: Christoph Lameter <cl@linux.com>
-> > > Cc: Dennis Zhou <dennis@kernel.org>
-> > > Cc: Gary Guo <gary@garyguo.net>
-> > > Cc: Kent Overstreet <kent.overstreet@linux.dev>
-> > > Cc: Miguel Ojeda <ojeda@kernel.org>
-> > > Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-> > > Cc: Peter Zijlstra <peterz@infradead.org>
-> > > Cc: Tejun Heo <tj@kernel.org>
-> > > Cc: Vlastimil Babka <vbabka@suse.cz>
-> > > Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
-> > > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> > > Stable-dep-of: 61ebe5a747da ("mm/vmalloc: fix page mapping if vm_area=
-_alloc_pages() with high order fallback to order 0")
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >  arch/alpha/kernel/pci_iommu.c           | 2 +-
-> > >  arch/mips/jazz/jazzdma.c                | 2 +-
-> > >  arch/powerpc/kernel/dma-iommu.c         | 2 +-
-> > >  arch/powerpc/platforms/ps3/system-bus.c | 4 ++--
-> > >  arch/powerpc/platforms/pseries/vio.c    | 2 +-
-> > >  arch/x86/kernel/amd_gart_64.c           | 2 +-
-> > >  drivers/iommu/dma-iommu.c               | 2 +-
-> > >  drivers/parisc/ccio-dma.c               | 2 +-
-> > >  drivers/parisc/sba_iommu.c              | 2 +-
-> > >  drivers/xen/grant-dma-ops.c             | 2 +-
-> > >  drivers/xen/swiotlb-xen.c               | 2 +-
-> > >  include/linux/dma-map-ops.h             | 2 +-
-> > >  kernel/dma/mapping.c                    | 4 ++--
-> > >  13 files changed, 15 insertions(+), 15 deletions(-)
-> >
-> > This patch breaks the build for s390:
-> >
-> > arch/s390/pci/pci_dma.c:724:10: error: 'const struct dma_map_ops' has n=
-o member named 'alloc_pages'; did you mean 'alloc_pages_op'?
-> >   724 |         .alloc_pages    =3D dma_common_alloc_pages,
-> >       |          ^~~~~~~~~~~
-> >       |          alloc_pages_op
-> >
-> > https://storage.tuxsuite.com/public/clangbuiltlinux/continuous-integrat=
-ion2/builds/2lNUl0tacZpSlu9Edrlk3QoSElM/build.log
-> >
-> > This change happened after commit c76c067e488c ("s390/pci: Use dma-iomm=
-u
-> > layer") in mainline, which explains how it was missed for stable.
-> >
-> > The fix seems simple:
-> >
-> > diff --git a/arch/s390/pci/pci_dma.c b/arch/s390/pci/pci_dma.c
-> > index 99209085c75b..ce0f2990cb04 100644
-> > --- a/arch/s390/pci/pci_dma.c
-> > +++ b/arch/s390/pci/pci_dma.c
-> > @@ -721,7 +721,7 @@ const struct dma_map_ops s390_pci_dma_ops =3D {
-> >         .unmap_page     =3D s390_dma_unmap_pages,
-> >         .mmap           =3D dma_common_mmap,
-> >         .get_sgtable    =3D dma_common_get_sgtable,
-> > -       .alloc_pages    =3D dma_common_alloc_pages,
-> > +       .alloc_pages_op =3D dma_common_alloc_pages,
-> >         .free_pages     =3D dma_common_free_pages,
-> >         /* dma_supported is unconditionally true without a callback */
-> >  };
-> >
-> > but I think the better question is why this patch is even needed in the
-> > first place? It claims that it is a stable dependency of 61ebe5a747da
-> > but this patch does not even touch mm/vmalloc.c and 61ebe5a747da does
-> > not mention or touch anything with alloc_pages_op, so it seems like thi=
-s
-> > change should just be reverted from 6.6?
->
-> Hmm, Nathan is right. I don't see any dependency between this patch
-> and 61ebe5a747da. Maybe some other patch that uses .alloc_pages_op got
-> backported and that caused a dependency but then that other patch
-> should be changed to use .alloc_pages. I'm syncing stable 6.6 to
-> check. Thanks for pointing this out Nathan!
+On 8/30/24 4:06 AM, Greg Kroah-Hartman wrote:
+> On Thu, Jul 11, 2024 at 04:31:45PM +0100, Ignat Korchagin wrote:
+>> Hi,
+>>> On 9 Jul 2024, at 12:09, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>>>
+>>> 6.6-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> ------------------
+>>>
+>>> From: John Hubbard <jhubbard@nvidia.com>
+>>>
+>>> [ Upstream commit eb709b5f6536636dfb87b85ded0b2af9bb6cd9e6 ]
+>>>
+>>> When building with clang, via:
+>>>
+>>>     make LLVM=1 -C tools/testing/selftest
+>>>
+>>> ...clang warns about three variables that are not initialized in all
+>>> cases:
+>>>
+>>> 1) The opt_ipproto_off variable is used uninitialized if "testname" is
+>>> not "ip". Willem de Bruijn pointed out that this is an actual bug, and
+>>> suggested the fix that I'm using here (thanks!).
+>>>
+>>> 2) The addr_len is used uninitialized, but only in the assert case,
+>>>    which bails out, so this is harmless.
+>>>
+>>> 3) The family variable in add_listener() is only used uninitialized in
+>>>    the error case (neither IPv4 nor IPv6 is specified), so it's also
+>>>    harmless.
+>>>
+>>> Fix by initializing each variable.
+>>>
+>>> Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+>>> Reviewed-by: Willem de Bruijn <willemb@google.com>
+>>> Acked-by: Mat Martineau <martineau@kernel.org>
+>>> Link: https://lore.kernel.org/r/20240506190204.28497-1-jhubbard@nvidia.com
+>>> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>>> ---
+>>> tools/testing/selftests/net/gro.c                 | 3 +++
+>>> tools/testing/selftests/net/ip_local_port_range.c | 2 +-
+>>> tools/testing/selftests/net/mptcp/pm_nl_ctl.c     | 2 +-
+>>> 3 files changed, 5 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
+>>> index 30024d0ed3739..b204df4f33322 100644
+>>> --- a/tools/testing/selftests/net/gro.c
+>>> +++ b/tools/testing/selftests/net/gro.c
+>>> @@ -113,6 +113,9 @@ static void setup_sock_filter(int fd)
+>>> next_off = offsetof(struct ipv6hdr, nexthdr);
+>>> ipproto_off = ETH_HLEN + next_off;
+>>>
+>>> + /* Overridden later if exthdrs are used: */
+>>> + opt_ipproto_off = ipproto_off;
+>>> +
+>>
+>> This breaks selftest compilation on 6.6, because opt_ipproto_off is not
+>> defined in the first place in 6.6
+> 
+> So should it be reverted or fixed up?
 
-I reverted this patch in stable 6.6 and there is no code using
-alloc_pages_op. We should just drop this patch
-(983e6b2636f0099dbac1874c9e885bbe1cf2df05) from stable 6.6. Sorry for
-not noticing this in the first place.
-Thanks,
-Suren.
+It should be fixed up. And that's what we already did, last month:
 
->
->
-> >
-> > Cheers,
-> > Nathan
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=6b05ad408f09a1b30dc279d35b1cd238361dc856
+
+
+thanks,
+-- 
+John Hubbard
+NVIDIA
+
+> 
+> Can you send a patch doing either one of these?
+> 
+> thanks,
+> 
+> greg k-h
+
