@@ -1,106 +1,150 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C580D1A2C35;
-	Fri, 30 Aug 2024 12:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE38019259F
+	for <patches@lists.linux.dev>; Fri, 30 Aug 2024 12:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725020667; cv=none; b=u0S2aKY0X03QMsdilL2ateaIvprz3bqc1Grz8k9sLxrsfQYH4B1ewoqPk8nPnzPQQf+Xf0SuSzcxwTcg2EeljIQT+w1aOh6Gyl4Quoqu5wLDz143RsKjs5m5fxiBE6HzFJ3ClQempshQUBbrUARzL2a6+LlW4lsC8o6uM654gko=
+	t=1725021018; cv=none; b=iwvKn4EVm3nkMzhSGPI2DF6C3aF0vLkrqRUX29mW0c7AU4UJAZFsDn1JYqEGjfA10gidTMXUurWmqcI4e3SpLvz0TC7GydpZxGo3kOmRnyprGj2UjoEw+2yBYmSBNuENgyWzc87O1j5KyhQhmf+GPB2t/eK+8v/qC3gAR0IbgtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725020667; c=relaxed/simple;
-	bh=Fye5UJaT5Z6qElniiFFVhG1gjqZp/bvz7JiyCKZVrEI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dkRgXAe/Nr0SCTrd65mAQk3OyblWIsiVH+UpbkbrXjjF6WH8KA+9LU8kAnfk7xOdkKX3HWcclPNtAAMjosJDBlPNzwZiDxuUvKOwbPVFldaxyDJmS/1RafRMuAks+omJN+BjpyZtnfPz5RVS54J1sckRN2Cw1Jaukm5NX/0+VSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WEQpzjRR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725021018; c=relaxed/simple;
+	bh=TVcMzNRMegYsp4eglrjfjrklqy5cCwCiyO8uYAi/gkM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uT7+XM74de06BSbYKGd+uL/uvYsqpXuxRziYOMwtyYWyN6t84jjDk6owemacmNVacbc0UxEw3c9JUWHtQ0qhXESqskwKHwu+GdhJg67sbFbnOKpJpmuw//LRodmARRl5MCej6WJnhFueHZzJ/vBXQSPyzbI61kgW8q9B6qRLEKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zQx1YGez; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XkSUFLdL; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zQx1YGez; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XkSUFLdL; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WEQpzjRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E41C4CEC2;
-	Fri, 30 Aug 2024 12:24:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725020667;
-	bh=Fye5UJaT5Z6qElniiFFVhG1gjqZp/bvz7JiyCKZVrEI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WEQpzjRRxsJ0GlLTZibav07DzRRwi2ebpa8UfEv89WyXteZpRuofmiRoWTqIXB/zK
-	 T/YA5u+bBkBO6e6B1iJSB77IywTdwunsHiYWm7hJhvYPqmXTKASGEVkorgsFNBebyT
-	 gjp7XUz7VyyOjLrm3VjiRN4LVvHCIpHu+Pye1sS5SgjdCmoIl0BYzPm+L+NsA3hegy
-	 v2MNuo396r/F0MJRYoeu+/ZNkX6VHu9+50RBlvjdXXW9MR1DjG93cFx8d9hgQAohaY
-	 8EYQZOyjVK8TulhQxU0g1ZyQb0YfkgGur0tA33h0wfohkCts3jRoG+fxf76s+SQVY+
-	 QdOEwcXx1oGLA==
-Message-ID: <1edc1fdb-ccf9-4dec-9669-d8c33511c7b0@kernel.org>
-Date: Fri, 30 Aug 2024 14:24:20 +0200
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zQx1YGez";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XkSUFLdL";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zQx1YGez";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XkSUFLdL"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id BDFAC21A37;
+	Fri, 30 Aug 2024 12:30:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1725021014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
+	b=zQx1YGezjdCZoIVkD8uUKXlzyKYanJgmL3KRlUcahu6jHUygEaaTUGiXrZcBV9BkmBBWnS
+	rL56KeyZR5QWT3N7Jz8Lu/bZoOMCHF2r4PMFTsSOXenyInAUPxrhWiSWqL2IlD6evL2QKg
+	oDE8II+88x5WyZdxNjesAdopui+B9xE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1725021014;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
+	b=XkSUFLdLBjJ5R4cY6zA4I3EOZrXhaDctretXIGm9e6l4RJhkniFQpdls7U8lXbdsTPhA6V
+	Jyl+LhGLc/PKQgCA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zQx1YGez;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=XkSUFLdL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1725021014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
+	b=zQx1YGezjdCZoIVkD8uUKXlzyKYanJgmL3KRlUcahu6jHUygEaaTUGiXrZcBV9BkmBBWnS
+	rL56KeyZR5QWT3N7Jz8Lu/bZoOMCHF2r4PMFTsSOXenyInAUPxrhWiSWqL2IlD6evL2QKg
+	oDE8II+88x5WyZdxNjesAdopui+B9xE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1725021014;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
+	b=XkSUFLdLBjJ5R4cY6zA4I3EOZrXhaDctretXIGm9e6l4RJhkniFQpdls7U8lXbdsTPhA6V
+	Jyl+LhGLc/PKQgCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8637813A3D;
+	Fri, 30 Aug 2024 12:30:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 5N2IH1a70WahQwAAD6G6ig
+	(envelope-from <jroedel@suse.de>); Fri, 30 Aug 2024 12:30:14 +0000
+Date: Fri, 30 Aug 2024 14:30:13 +0200
+From: Joerg Roedel <jroedel@suse.de>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: linux-pci@vger.kernel.org, Lu Baolu <baolu.lu@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	kernel test robot <lkp@intel.com>, patches@lists.linux.dev
+Subject: Re: [PATCH] PCI/ATS: Add missing pci_prepare_ats() stub
+Message-ID: <ZtG7VXSsmDbt4a3I@suse.de>
+References: <0-v1-3ff295fa1528+d7-pci_prepare_ats_proto_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sm8550: Don't park the USB RCG at
- registration time
-To: Stephen Boyd <swboyd@chromium.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- patches@lists.linux.dev, linux-clk@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Amit Pundir <amit.pundir@linaro.org>
-References: <20240819233628.2074654-1-swboyd@chromium.org>
- <20240819233628.2074654-3-swboyd@chromium.org>
- <CAE-0n52rYVs81jtnFHyfc+K4wECvyCKmnHu2w9JhPNqvMYEeOA@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <CAE-0n52rYVs81jtnFHyfc+K4wECvyCKmnHu2w9JhPNqvMYEeOA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0-v1-3ff295fa1528+d7-pci_prepare_ats_proto_jgg@nvidia.com>
+X-Rspamd-Queue-Id: BDFAC21A37
+X-Spam-Score: -6.51
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-6.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	ARC_NA(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	MIME_TRACE(0.00)[0:+];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-On 27.08.2024 8:12 PM, Stephen Boyd wrote:
-> Quoting Stephen Boyd (2024-08-19 16:36:27)
->> Amit Pundir reports that audio and USB-C host mode stops working if the
->> gcc_usb30_prim_master_clk_src clk is registered and
->> clk_rcg2_shared_init() parks it on XO. Skip parking this clk at
->> registration time to fix those issues.
->>
->> Partially revert commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
->> registration") by skipping the parking bit for this clk, but keep the
->> part where we cache the config register. That's still necessary to
->> figure out the true parent of the clk at registration time.
->>
->> Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
->> Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
->> Cc: Konrad Dybcio <konradybcio@kernel.org>
->> Cc: Bjorn Andersson <andersson@kernel.org>
->> Cc: Taniya Das <quic_tdas@quicinc.com>
->> Reported-by: Amit Pundir <amit.pundir@linaro.org>
->> Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
->> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->> ---
->>  drivers/clk/qcom/clk-rcg.h    |  1 +
->>  drivers/clk/qcom/clk-rcg2.c   | 30 ++++++++++++++++++++++++++++++
->>  drivers/clk/qcom/gcc-sm8550.c |  2 +-
->>  3 files changed, 32 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
->> index d7414361e432..8e0f3372dc7a 100644
->> --- a/drivers/clk/qcom/clk-rcg.h
->> +++ b/drivers/clk/qcom/clk-rcg.h
->> @@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
->>  extern const struct clk_ops clk_pixel_ops;
->>  extern const struct clk_ops clk_gfx3d_ops;
->>  extern const struct clk_ops clk_rcg2_shared_ops;
->> +extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
+On Wed, Aug 14, 2024 at 07:20:52PM -0300, Jason Gunthorpe wrote:
+> Surprised 0-day didn't catch this before it made it to linux-next, but here it
+> is..
 > 
-> I'm considering inverting these two rcg2_shared clk_ops so that only a
-> few clks are parked at clk registration time, to minimize the impact of
-> commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration").
-> We're up to three or four band-aids, that we can probably wait on
-> applying if we make all the shared RCGs determine the correct parent at
-> registration time but skip the parking, except for the display clks on
-> sc7180 where that exposes another problem with shared parents getting
-> turned off during probe. It's possible that other SoCs will want to park
-> their display clks as well to avoid that secondary problem, but it can
-> be an opt-in case instead of a change to all shared RCGs.
+> Joerg if you can squash it that would be great.
 
-Are all cases that need the parking obvious like it was the case on 7180,
-i.e. some downstream branch is stuck and there's complaining in dmesg?
+Done, thanks. 
 
-Konrad
+-- 
+Jörg Rödel
+jroedel@suse.de
+
+SUSE Software Solutions Germany GmbH
+Frankenstraße 146
+90461 Nürnberg
+Germany
+https://www.suse.com/
+
+Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
+(HRB 36809, AG Nürnberg)
