@@ -1,139 +1,156 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BA51BA89B
-	for <patches@lists.linux.dev>; Fri, 30 Aug 2024 17:59:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4B1C173E;
+	Fri, 30 Aug 2024 22:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725040786; cv=none; b=SEMt9BQRyRbu94sfCkygQznRj+GHAeJDr3gXeL79wtmS6JFg1LpoF844iKoYiC1h+cneMCRICAyhv4RgzmUR3xg2zULxUAPm12nVSNdCO5z9lOvROeSmzImW3/N4R6DeZJd5+pPeMC5XvXhDD6RyhMPXcXaGb9Woam5na+Ccjts=
+	t=1725055941; cv=none; b=pz56kRNncOiDuGlg53RjWALdvTyjL1vmFWYrnS2pcx4y4T68IJqsX96hgkF0dtCfx2LYpXXFmRGOLDXjicNl+6H/P8P1qsLNLBfboKvUWmdwXL1zLGHZCKzIu3b210C6tD44yEvh0Md+fQxPcFCm/O37uR7UoyGooRro+zo7yXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725040786; c=relaxed/simple;
-	bh=bj/8ePnd9N5jkwmNNZHSUu+WS6alCNx2/c1EgzNdu9M=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JviCuFjvT91XHlSSqK4RIc/IbAOsocyCWSbEyhKe3sN1DInlnLUCqcWjGqwQixUGAq38EOtqfaOcDcxtoPC5BqqhAkMiZoDqkrxZJSwr1ZUMOJhnuYowd194jxayOClbZg6DuGt7h5kkknInL+4Lj0DEcSScL5HpDBAiaFEjH2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=PqK0uEz+; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1725055941; c=relaxed/simple;
+	bh=anF0WgWFP/8S4oikTTao4/i90jjTIJNVyR3wOLf+fzY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rhBCOoRnKESQ+m6caZEyKr/7B7/WBJNqnW2rbZ4Q04zBEYynYYhLU1wDwrXoFjuQpVUk3792I762K1UyFIbs6gQQM8xjLzfsJvylYJ/8upJTpHRlk7i2EK5c44zuxHbw3iZWhxPjq80KR6lUQbCY4wzwpOJkpAytJQjCZe+eTgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PMl/C+RY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="PqK0uEz+"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7a7d7ec7395so126925785a.3
-        for <patches@lists.linux.dev>; Fri, 30 Aug 2024 10:59:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725040783; x=1725645583; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Jhz1rRhno8njq5zktzlz7/IAi0Jmdsp69Iep1staOok=;
-        b=PqK0uEz+SwG5N4kzBi+fRD6p5oT0LG/ILP5wZaxvFYDRqm4WshK/o9Y1EyzqCzQUzW
-         PdB6Nm9utCtdUP+De6iOhA6yLTLImDRf+j6C135+vgorgSb5jOtnm8VPBVc7S46C1wLi
-         HVMpwUkZGB4X8XWIgNtGI3iRijVmzCOEWEIMI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725040783; x=1725645583;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jhz1rRhno8njq5zktzlz7/IAi0Jmdsp69Iep1staOok=;
-        b=dyFv387nNm5Lo2MQLgRX+WeIonCr/TYBjep/ke07EinXj0uALnBgKHcanMWSUa63NX
-         ZScIgmc+s2Kubfu03CC57OIIlkX+rtKq/no63HGU8fsvgJVS91Hg49Ir+T62HWR8VzIL
-         W2WM1fn1H+uGxxOzNfjhHZFaJ/2PrsYGKTO6J5tBhMSdgYm30qJnI5BtrzUrzjC8phJx
-         ovIXSHwOJBh/bv2fnInnfveaAbEcsEAflHF2ZwwJT6yCowIR6CN6Vz88IAQXRzrOI6gr
-         DYXvbbZKjg3jWckNdlrcZLW1vVAk4ptgYzzJUylSNk5BZkjpBgeFHrVScHdkvmjfMY6D
-         uyJA==
-X-Forwarded-Encrypted: i=1; AJvYcCVgzGKbmkTxj4/gShuIsfsLu+rlIYLcu+oEyq5/eFimXMJR1dpgveMu5OctUzahBe/TboVB/EO2@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz0wP8Xd+/ibfoAuNySCYeD8jzwqOAJl1jwq3TN5TFqQpki7nmy
-	tWS2nkLjZK3MkX8GnCOrRwzMYbIOCn0/Ewkdg2lwBiywOYZBAC3TvdWOu6O/xhc69kXLP8kc62z
-	UoJQ04T3qhU8dAurHY4YZLLsluNXoVPJwWuZg
-X-Google-Smtp-Source: AGHT+IHE9gJOVOJVUWUOzVHbgABXqnqZXNh9tS/AWBDgyXu5yk/NgBnqXpZ3pSyYOAZ/GdUVzRGNh7r9+6YhsM3pYS8=
-X-Received: by 2002:a05:620a:3909:b0:7a3:6dd9:efa6 with SMTP id
- af79cd13be357-7a8041c1bbemr727023785a.33.1725040782659; Fri, 30 Aug 2024
- 10:59:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 30 Aug 2024 10:59:41 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PMl/C+RY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CA0C4CEC2;
+	Fri, 30 Aug 2024 22:12:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725055940;
+	bh=anF0WgWFP/8S4oikTTao4/i90jjTIJNVyR3wOLf+fzY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PMl/C+RYV754nRylCZjpG5FFaw2xHaRHyJXXZRgGFnLtUZHiyVbuMHOBghjmPHY++
+	 9VAZ7DLpvGfeNBBdwmrK2rrS3OWuaeUsLRKjXt1unL9lpWWT8B5qlEW0axVrWTpyOQ
+	 iAp9BeEQlEz0n5W4YqixKQY3BmYv1tJkY6TO7Crdy2xT9UGWoBhrEpG+jBhbmCr65O
+	 eSVITMJ0HpBG6KWlI52bHWNbd8qqjMJ4e3A3B45C5w63VVoRaMGcUW1l45lGhtb3Ng
+	 nq4Iw7ypSyj3dkyro9ZSuqNvn272y2wh0KU0GnaXtQPMZucAvwpMEVceYSjzHCOKkc
+	 YCK51I98pEgGw==
+Date: Fri, 30 Aug 2024 15:12:17 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Christoph Lameter <cl@linux.com>,
+	Dennis Zhou <dennis@kernel.org>, Gary Guo <gary@garyguo.net>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.6 230/341] change alloc_pages name in dma_map_ops to
+ avoid name conflicts
+Message-ID: <20240830221217.GA3837758@thelio-3990X>
+References: <20240827143843.399359062@linuxfoundation.org>
+ <20240827143852.163123189@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <1edc1fdb-ccf9-4dec-9669-d8c33511c7b0@kernel.org>
-References: <20240819233628.2074654-1-swboyd@chromium.org> <20240819233628.2074654-3-swboyd@chromium.org>
- <CAE-0n52rYVs81jtnFHyfc+K4wECvyCKmnHu2w9JhPNqvMYEeOA@mail.gmail.com> <1edc1fdb-ccf9-4dec-9669-d8c33511c7b0@kernel.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 30 Aug 2024 10:59:41 -0700
-Message-ID: <CAE-0n53p3=-dJLRXkkReUXWEy=yNUtLvgs2R6tMHtZmtYZSxXw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sm8550: Don't park the USB RCG at
- registration time
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
-	Taniya Das <quic_tdas@quicinc.com>, Amit Pundir <amit.pundir@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240827143852.163123189@linuxfoundation.org>
 
-Quoting Konrad Dybcio (2024-08-30 05:24:20)
-> On 27.08.2024 8:12 PM, Stephen Boyd wrote:
-> > Quoting Stephen Boyd (2024-08-19 16:36:27)
-> >> Amit Pundir reports that audio and USB-C host mode stops working if the
-> >> gcc_usb30_prim_master_clk_src clk is registered and
-> >> clk_rcg2_shared_init() parks it on XO. Skip parking this clk at
-> >> registration time to fix those issues.
-> >>
-> >> Partially revert commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-> >> registration") by skipping the parking bit for this clk, but keep the
-> >> part where we cache the config register. That's still necessary to
-> >> figure out the true parent of the clk at registration time.
-> >>
-> >> Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-> >> Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
-> >> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> >> Cc: Bjorn Andersson <andersson@kernel.org>
-> >> Cc: Taniya Das <quic_tdas@quicinc.com>
-> >> Reported-by: Amit Pundir <amit.pundir@linaro.org>
-> >> Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
-> >> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> >> ---
-> >>  drivers/clk/qcom/clk-rcg.h    |  1 +
-> >>  drivers/clk/qcom/clk-rcg2.c   | 30 ++++++++++++++++++++++++++++++
-> >>  drivers/clk/qcom/gcc-sm8550.c |  2 +-
-> >>  3 files changed, 32 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> >> index d7414361e432..8e0f3372dc7a 100644
-> >> --- a/drivers/clk/qcom/clk-rcg.h
-> >> +++ b/drivers/clk/qcom/clk-rcg.h
-> >> @@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
-> >>  extern const struct clk_ops clk_pixel_ops;
-> >>  extern const struct clk_ops clk_gfx3d_ops;
-> >>  extern const struct clk_ops clk_rcg2_shared_ops;
-> >> +extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
-> >
-> > I'm considering inverting these two rcg2_shared clk_ops so that only a
-> > few clks are parked at clk registration time, to minimize the impact of
-> > commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration").
-> > We're up to three or four band-aids, that we can probably wait on
-> > applying if we make all the shared RCGs determine the correct parent at
-> > registration time but skip the parking, except for the display clks on
-> > sc7180 where that exposes another problem with shared parents getting
-> > turned off during probe. It's possible that other SoCs will want to park
-> > their display clks as well to avoid that secondary problem, but it can
-> > be an opt-in case instead of a change to all shared RCGs.
->
-> Are all cases that need the parking obvious like it was the case on 7180,
-> i.e. some downstream branch is stuck and there's complaining in dmesg?
->
+Hi Greg and Sasha,
 
-I'm under the impression that we need to park the clk when it is shared
-by a remoteproc/firmware or is associated with a GDSC. It seems that on
-older generations of hardware the GDSC would get unstuck eventually, but
-newer generations stay broken and cause all sorts of havoc.
+On Tue, Aug 27, 2024 at 04:37:41PM +0200, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Suren Baghdasaryan <surenb@google.com>
+> 
+> [ Upstream commit 8a2f11878771da65b8ac135c73b47dae13afbd62 ]
+> 
+> After redefining alloc_pages, all uses of that name are being replaced.
+> Change the conflicting names to prevent preprocessor from replacing them
+> when it's not intended.
+> 
+> Link: https://lkml.kernel.org/r/20240321163705.3067592-18-surenb@google.com
+> Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+> Tested-by: Kees Cook <keescook@chromium.org>
+> Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+> Cc: Alex Gaynor <alex.gaynor@gmail.com>
+> Cc: Alice Ryhl <aliceryhl@google.com>
+> Cc: Andreas Hindborg <a.hindborg@samsung.com>
+> Cc: Benno Lossin <benno.lossin@proton.me>
+> Cc: "Björn Roy Baron" <bjorn3_gh@protonmail.com>
+> Cc: Boqun Feng <boqun.feng@gmail.com>
+> Cc: Christoph Lameter <cl@linux.com>
+> Cc: Dennis Zhou <dennis@kernel.org>
+> Cc: Gary Guo <gary@garyguo.net>
+> Cc: Kent Overstreet <kent.overstreet@linux.dev>
+> Cc: Miguel Ojeda <ojeda@kernel.org>
+> Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Cc: Tejun Heo <tj@kernel.org>
+> Cc: Vlastimil Babka <vbabka@suse.cz>
+> Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Stable-dep-of: 61ebe5a747da ("mm/vmalloc: fix page mapping if vm_area_alloc_pages() with high order fallback to order 0")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  arch/alpha/kernel/pci_iommu.c           | 2 +-
+>  arch/mips/jazz/jazzdma.c                | 2 +-
+>  arch/powerpc/kernel/dma-iommu.c         | 2 +-
+>  arch/powerpc/platforms/ps3/system-bus.c | 4 ++--
+>  arch/powerpc/platforms/pseries/vio.c    | 2 +-
+>  arch/x86/kernel/amd_gart_64.c           | 2 +-
+>  drivers/iommu/dma-iommu.c               | 2 +-
+>  drivers/parisc/ccio-dma.c               | 2 +-
+>  drivers/parisc/sba_iommu.c              | 2 +-
+>  drivers/xen/grant-dma-ops.c             | 2 +-
+>  drivers/xen/swiotlb-xen.c               | 2 +-
+>  include/linux/dma-map-ops.h             | 2 +-
+>  kernel/dma/mapping.c                    | 4 ++--
+>  13 files changed, 15 insertions(+), 15 deletions(-)
 
-Note that in my statement earlier in this thread I'm talking about
-parking the clk at registration time. That's done to avoid a problem
-where a shared RCG turns off their parent PLL and another shared RCG is
-also using that PLL but hasn't parked yet. The solution was to park at
-registration time to fix that. It's mostly a workaround for the fact
-that the clk framework doesn't have a good way to track dependencies for
-all the child clks that are enable at registration time which want to
-keep the parent PLL enabled. The problem is that it breaks things like
-USB that has strict frequency requirements for the link.
+This patch breaks the build for s390:
+
+arch/s390/pci/pci_dma.c:724:10: error: 'const struct dma_map_ops' has no member named 'alloc_pages'; did you mean 'alloc_pages_op'?
+  724 |         .alloc_pages    = dma_common_alloc_pages,
+      |          ^~~~~~~~~~~
+      |          alloc_pages_op
+
+https://storage.tuxsuite.com/public/clangbuiltlinux/continuous-integration2/builds/2lNUl0tacZpSlu9Edrlk3QoSElM/build.log
+
+This change happened after commit c76c067e488c ("s390/pci: Use dma-iommu
+layer") in mainline, which explains how it was missed for stable.
+
+The fix seems simple:
+
+diff --git a/arch/s390/pci/pci_dma.c b/arch/s390/pci/pci_dma.c
+index 99209085c75b..ce0f2990cb04 100644
+--- a/arch/s390/pci/pci_dma.c
++++ b/arch/s390/pci/pci_dma.c
+@@ -721,7 +721,7 @@ const struct dma_map_ops s390_pci_dma_ops = {
+ 	.unmap_page	= s390_dma_unmap_pages,
+ 	.mmap		= dma_common_mmap,
+ 	.get_sgtable	= dma_common_get_sgtable,
+-	.alloc_pages	= dma_common_alloc_pages,
++	.alloc_pages_op	= dma_common_alloc_pages,
+ 	.free_pages	= dma_common_free_pages,
+ 	/* dma_supported is unconditionally true without a callback */
+ };
+
+but I think the better question is why this patch is even needed in the
+first place? It claims that it is a stable dependency of 61ebe5a747da
+but this patch does not even touch mm/vmalloc.c and 61ebe5a747da does
+not mention or touch anything with alloc_pages_op, so it seems like this
+change should just be reverted from 6.6?
+
+Cheers,
+Nathan
