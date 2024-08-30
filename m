@@ -1,240 +1,93 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E00E133987;
-	Fri, 30 Aug 2024 09:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15BB15C147;
+	Fri, 30 Aug 2024 10:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725008845; cv=none; b=Wh3fkXKjWnLyLVXrqyOTzn1OH+pHnJGVB8QG23OmscbaADUB9I6vLFfuVLfG1utq70+mfRwAiTpvt9+d8+siBo6lGKbQ5VFB3KmH0jXFS8jbC37VMnPQ4GuYKlJ57hFJX1RAEiOiDicINfvQYQOB5CIpG5oOTcJd0QpfhueMb2Q=
+	t=1725015428; cv=none; b=XysLSJDM/nd+cE72U/7D6jTxKOSzdj6+jPyNFcqhF7iScqqIs2pgTkRAiUu0isWay2yEw2EzwG0PIKUvYwN6Xb4ahfElo9iRx4QgsN9xQ/1jcOIbZDv7dW6Kjj2JfbPrUQwUBjsSkOdOyym37Abd3msw83GpNwjp7667phdD8+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725008845; c=relaxed/simple;
-	bh=iuEsNRJ1f9bQ5sE4VjORXs3N3K9LStzfvHVKVl4XWb8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=pODS0XffR4Wv+XKf2mvgxkyXbzEX0osxHIyOLmRk6HXSZ/1OAOAynMQ1+mnvwg9V03NR4F3nUrBoHLu2TZVYRrY9v/8Fky+pxQyzRAQ64c9cg3fHcIc8KxK854hF86fiPKaWzY5k45YiQM7F56c3LwrtBOwkJkhlh2+ixcl8/Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.194])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4WwBxH4p6vzQqpk;
-	Fri, 30 Aug 2024 17:02:27 +0800 (CST)
-Received: from dggpemf200003.china.huawei.com (unknown [7.185.36.52])
-	by mail.maildlp.com (Postfix) with ESMTPS id 93FB9140202;
-	Fri, 30 Aug 2024 17:07:19 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- dggpemf200003.china.huawei.com (7.185.36.52) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 30 Aug 2024 17:07:18 +0800
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
- Fri, 30 Aug 2024 10:07:16 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
-	<acpica-devel@lists.linux.dev>, "Guohanjun (Hanjun Guo)"
-	<guohanjun@huawei.com>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
-	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
- Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
- Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
-	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Mostafa Saleh
-	<smostafa@google.com>
-Subject: RE: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Thread-Topic: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
-Thread-Index: AQHa+JkQkcFFSAeDsUqyXyGP6/LaZLI7ju0AgAFNDID///2PgIAAHqvg///xn4CAAU4tEIAAHHjggAAFZgCAASrxMA==
-Date: Fri, 30 Aug 2024 09:07:16 +0000
-Message-ID: <a008993d270b4cc381abbcc5c44e5bb9@huawei.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <Zs5Fom+JFZimFpeS@Asurada-Nvidia>
- <7debe8f99afa4e33aa1872be0d4a63e1@huawei.com>
- <Zs9a9/Dc0vBxp/33@Asurada-Nvidia>
- <cd36b0e460734df0ae95f5e82bfebaef@huawei.com>
- <Zs9ooZLNtPZ8PwJh@Asurada-Nvidia>
- <d2ad792fe9dd44d38396c5646fa956c6@huawei.com>
- <d1dc23f484784413bb3f6658717de516@huawei.com>
- <ZtCdXjkzVbFMBJjy@Asurada-Nvidia>
-In-Reply-To: <ZtCdXjkzVbFMBJjy@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1725015428; c=relaxed/simple;
+	bh=KsqVa04H80GFdfyL//UXuhuLq0MIdj7cLJLjxKOxZW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OPZYqedN7U9IDE02caszUdXcMqedeuD1UmgVD+KU0fu5WRjY3veDzQepGpFn4I7visCwHuIJqgxE2yn0HMXZ4fUoyraMI0kq6SjtXrE4m+q8hS5zPIy3p9v0ixXAwp656mmDRymV0+sSFtkEtBwTNFRNxEf/HGpcCvtdZhKzPT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJxUdJY2; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJxUdJY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31B7C4CEC6;
+	Fri, 30 Aug 2024 10:57:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725015427;
+	bh=KsqVa04H80GFdfyL//UXuhuLq0MIdj7cLJLjxKOxZW8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RJxUdJY2wJt8pkSEYlwS/tGiQF0pu0zigwsvo43z04O+5gl6hy+aK1d7JbRID5lR5
+	 l05lsHl10GspJDQyp+XlGQlznSL0L4VAoL/dLA2d67W5tMctNiSNbpjwZOIPGooCky
+	 WzXFY5MoEo/UEAVPdFsTKaL29j/D5wwiuj81eios=
+Date: Fri, 30 Aug 2024 12:57:04 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 5.15 000/479] 5.15.165-rc3 review
+Message-ID: <2024083051-nutshell-trend-602a@gregkh>
+References: <20240817075228.220424500@linuxfoundation.org>
+ <1c83d94d-1b56-4bd9-8a96-c5062c238c06@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1c83d94d-1b56-4bd9-8a96-c5062c238c06@sirena.org.uk>
 
+On Tue, Aug 20, 2024 at 03:43:44PM +0100, Mark Brown wrote:
+> On Sat, Aug 17, 2024 at 10:00:38AM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.165 release.
+> > There are 479 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> This breaks the build of at least the KVM selftests on arm64 for me:
+> 
+> In file included from dirty_log_test.c:15:
+> ../../../../tools/include/linux/bitmap.h: In function ‘bitmap_zero’:
+> ../../../../tools/include/linux/bitmap.h:33:34: warning: implicit declaration of
+>  function ‘ALIGN’ [-Wimplicit-function-declaration]
+>    33 | #define bitmap_size(nbits)      (ALIGN(nbits, BITS_PER_LONG) / BITS_PER_
+> BYTE)
+>       |                                  ^~~~~
+> ../../../../tools/include/linux/bitmap.h:40:32: note: in expansion of macro ‘bit
+> map_size’
+>    40 |                 memset(dst, 0, bitmap_size(nbits));
+>       |                                ^~~~~~~~~~~
+> /usr/bin/ld: /tmp/cc4JPVlx.o: in function `bitmap_alloc':
+> /build/stage/linux/tools/testing/selftests/kvm/../../../../tools/include/linux/b
+> itmap.h:126: undefined reference to `ALIGN'
+> /usr/bin/ld: /build/stage/linux/tools/testing/selftests/kvm/../../../../tools/in
+> clude/linux/bitmap.h:126: undefined reference to `ALIGN'
+> collect2: error: ld returned 1 exit status
+> 
+> This bisects down to:
+> 
+> 9853a5bed65d507048dbe772bb84e6f905b772a3 is the first bad commit
+> commit 9853a5bed65d507048dbe772bb84e6f905b772a3
+> Author: Alexander Lobakin <aleksander.lobakin@intel.com>
+> Date:   Wed Mar 27 16:23:49 2024 +0100
+> 
+>     bitmap: introduce generic optimized bitmap_size()
+>     
+>     commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
+> 
+> A similar issue appears to affect at least the 5.10 -rc.
 
+Thanks, I think I've fixed this up in the queues now.
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Thursday, August 29, 2024 5:10 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: Jason Gunthorpe <jgg@nvidia.com>; acpica-devel@lists.linux.dev;
-> Guohanjun (Hanjun Guo) <guohanjun@huawei.com>; iommu@lists.linux.dev;
-> Joerg Roedel <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>;
-> kvm@vger.kernel.org; Len Brown <lenb@kernel.org>; linux-
-> acpi@vger.kernel.org; linux-arm-kernel@lists.infradead.org; Lorenzo Piera=
-lisi
-> <lpieralisi@kernel.org>; Rafael J. Wysocki <rafael@kernel.org>; Robert Mo=
-ore
-> <robert.moore@intel.com>; Robin Murphy <robin.murphy@arm.com>; Sudeep
-> Holla <sudeep.holla@arm.com>; Will Deacon <will@kernel.org>; Alex
-> Williamson <alex.williamson@redhat.com>; Eric Auger
-> <eric.auger@redhat.com>; Jean-Philippe Brucker <jean-philippe@linaro.org>=
-;
-> Moritz Fischer <mdf@kernel.org>; Michael Shavit <mshavit@google.com>;
-> patches@lists.linux.dev; Mostafa Saleh <smostafa@google.com>
-> Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
->=20
-> On Thu, Aug 29, 2024 at 02:52:23PM +0000, Shameerali Kolothum Thodi wrote=
-:
-> > > That makes some progress. But still I am not seeing the assigned dev =
- in
-> > > Guest.
-> > >
-> > > -device vfio-pci-nohotplug,host=3D0000:75:00.1,iommufd=3Diommufd0
-> > >
-> > > root@ubuntu:/# lspci -tv#
-> > >
-> > > root@ubuntu:/# lspci -tv
-> > > -+-[0000:ca]---00.0-[cb]--
-> > >  \-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
-> > >              +-01.0  Red Hat, Inc Virtio network device
-> > >              +-02.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              +-03.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              +-04.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              +-05.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              +-06.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              +-07.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              +-08.0  Red Hat, Inc. QEMU PCIe Expander bridge
-> > >              \-09.0  Red Hat, Inc. QEMU PCIe Expander bridge
->=20
-> Hmm, the tree looks correct..
->=20
-> > > The new root port is created, but no device attached.
-> > It looks like Guest finds the config invalid:
-> >
-> > [    0.283618] PCI host bridge to bus 0000:ca
-> > [    0.284064] ACPI BIOS Error (bug):
-> \_SB.PCF7.PCEE.PCE5.PCDC.PCD3.PCCA._DSM: Excess arguments - ASL declared
-> 5, ACPI requires 4 (20240322/nsarguments-162)
->=20
-> Looks like the DSM change wasn't clean. Yet, this might not be the
-> root cause, as mine could boot with it.
-
-Yes. This is not the culprit in this case and was reported earlier as well,
-
-https://patchew.org/QEMU/20211005085313.493858-1-eric.auger@redhat.com/2021=
-1005085313.493858-2-eric.auger@redhat.com/
-
-> Here is mine (I added a print to that conflict part, for success):
->=20
-> [    0.340733] ACPI BIOS Error (bug): \_SB.PCF7.PCEE.PCE5.PCDC._DSM: Exce=
-ss
-> arguments - ASL declared 5, ACPI requires 4 (20230628/nsarguments-162)
-> [    0.341776] pci 0000:dc:00.0: [1b36:000c] type 01 class 0x060400 PCIe =
-Root
-> Port
-> [    0.344895] pci 0000:dc:00.0: BAR 0 [mem 0x10400000-0x10400fff]
-> [    0.347935] pci 0000:dc:00.0: PCI bridge to [bus dd]
-> [    0.348410] pci 0000:dc:00.0:   bridge window [mem 0x10200000-0x103fff=
-ff]
-> [    0.349483] pci 0000:dc:00.0:   bridge window [mem 0x42000000000-
-> 0x44080ffffff 64bit pref]
-> [    0.351459] pci_bus 0000:dd: busn_res: insert [bus dd] under [bus dc-d=
-d]
->=20
-> In my case:
-> [root bus (00)] <---[pxb (dc)] <--- [root-port (dd)] <--- dev
->=20
-> In your case:
-> [root bus (00)] <---[pxb (ca)] <--- [root-port (cb)] <--- dev
->=20
-> > [    0.285533] pci_bus 0000:ca: root bus resource [bus ca]
-> > [    0.286214] pci 0000:ca:00.0: [1b36:000c] type 01 class 0x060400 PCI=
-e Root
-> Port
-> > [    0.287717] pci 0000:ca:00.0: BAR 0 [mem 0x00000000-0x00000fff]
-> > [    0.288431] pci 0000:ca:00.0: PCI bridge to [bus 00]
->=20
-> This starts to diff. Somehow the link is reversed? It should be:
->  [    0.288431] pci 0000:ca:00.0: PCI bridge to [bus cb]
->=20
-> > [    0.290649] pci 0000:ca:00.0: bridge configuration invalid ([bus 00-=
-00]),
-> reconfiguring
-> > [    0.292476] pci_bus 0000:cb: busn_res: can not insert [bus cb-ca] un=
-der [bus
-> ca] (conflicts with (null) [bus ca])
-> > [    0.293597] pci_bus 0000:cb: busn_res: [bus cb-ca] end is updated to=
- cb
-> > [    0.294300] pci_bus 0000:cb: busn_res: can not insert [bus cb] under=
- [bus ca]
-> (conflicts with (null) [bus ca])
->=20
-> And then everything went south...
->=20
-> Would you please try adding some prints?
-> ----------------------------------------------------------------------
-> @@ -1556,6 +1556,7 @@ static char *create_new_pcie_port(VirtNestedSmmu
-> *nested_smmu, Error **errp)
->      uint32_t bus_nr =3D pci_bus_num(nested_smmu->pci_bus);
->      DeviceState *dev;
->      char *name_port;
-> +    bool ret;
->=20
->      /* Create a root port */
->      dev =3D qdev_new("pcie-root-port");
-> @@ -1571,7 +1572,9 @@ static char *create_new_pcie_port(VirtNestedSmmu
-> *nested_smmu, Error **errp)
->      qdev_prop_set_uint32(dev, "chassis", chassis_nr);
->      qdev_prop_set_uint32(dev, "slot", port_nr);
->      qdev_prop_set_uint64(dev, "io-reserve", 0);
-> -    qdev_realize_and_unref(dev, BUS(nested_smmu->pci_bus), &error_fatal)=
-;
-> +    ret =3D qdev_realize_and_unref(dev, BUS(nested_smmu->pci_bus),
-> &error_fatal);
-> +    fprintf(stderr, "ret=3D%d, pcie-root-port ID: %s, added to pxb_bus n=
-um: %x,
-> chassis: %d\n",
-> +            ret, name_port, pci_bus_num(nested_smmu->pci_bus), chassis_n=
-r);
->      return name_port;
->  }
-
-Print shows everything fine:
-create_new_pcie_port: name_port smmu_bus0xca_port0, bus_nr 0xca chassis_nr =
-0xfd, nested_smmu->index 0x2, pci_bus_num 0xca, ret 1
-
-It looks like a problem with old QEMU_EFI.fd(2022 build and before).
-I tried with 2023 QEMU_EFI.fd and with that it looks fine.
-
-root@ubuntu:/# lspci -tv
--+-[0000:ca]---00.0-[cb]----00.0  Huawei Technologies Co., Ltd. Device a251
- \-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
-             +-01.0  Red Hat, Inc Virtio network device
-             +-02.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             +-03.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             +-04.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             +-05.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             +-06.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             +-07.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             +-08.0  Red Hat, Inc. QEMU PCIe Expander bridge
-             \-09.0  Red Hat, Inc. QEMU PCIe Expander bridge
-
-So for now, I can proceed.
-
-Thanks,
-Shameer
-
-
+greg k-h
