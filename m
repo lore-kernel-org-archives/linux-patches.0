@@ -1,115 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7593D199FAE;
-	Fri, 30 Aug 2024 11:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C580D1A2C35;
+	Fri, 30 Aug 2024 12:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725016002; cv=none; b=o8LFibCxAEhbSJCDltwzO/u2Rj+ZIusDDggLH5c5bWih/vr1UqK+9o+9FpMb7UG+XgEQ6tsm0S1NPcpgbW4r+mGe0SclVlzOKqQllqRQmqaHNzCMJ8krFh+kcPj/WQGzay//LiHv4k8xnUpqFt1cWsX8xIjYjmjq+233zuAZAIg=
+	t=1725020667; cv=none; b=u0S2aKY0X03QMsdilL2ateaIvprz3bqc1Grz8k9sLxrsfQYH4B1ewoqPk8nPnzPQQf+Xf0SuSzcxwTcg2EeljIQT+w1aOh6Gyl4Quoqu5wLDz143RsKjs5m5fxiBE6HzFJ3ClQempshQUBbrUARzL2a6+LlW4lsC8o6uM654gko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725016002; c=relaxed/simple;
-	bh=d+UZ5rR/XJ0uiV33JsZnGNgXqNE+fGWSIU2/sa2Gi80=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YZTd1AYx1d6z9R7ahpPwUw+OMGgkUrFNa58/7G7dr0W0s7J36t2O195/CnPj5KAtp1Z4DZ6C/L9YPssYJES88FVDjdSwvrflKw+L963TTNJtwKSJpMuh607HHl6FIXqMPYs5LYoXH//x2xw1COcoHO7CVOk5X3uosSmHZJXWzZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbNq/mM/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725020667; c=relaxed/simple;
+	bh=Fye5UJaT5Z6qElniiFFVhG1gjqZp/bvz7JiyCKZVrEI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dkRgXAe/Nr0SCTrd65mAQk3OyblWIsiVH+UpbkbrXjjF6WH8KA+9LU8kAnfk7xOdkKX3HWcclPNtAAMjosJDBlPNzwZiDxuUvKOwbPVFldaxyDJmS/1RafRMuAks+omJN+BjpyZtnfPz5RVS54J1sckRN2Cw1Jaukm5NX/0+VSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WEQpzjRR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbNq/mM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC54C4CEC2;
-	Fri, 30 Aug 2024 11:06:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725016002;
-	bh=d+UZ5rR/XJ0uiV33JsZnGNgXqNE+fGWSIU2/sa2Gi80=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HbNq/mM/pVldNcOCGlYaFpUXuGxPkVjmFxYGdIUo+faOfNhJUnY7DYXHLT1uFTrDv
-	 QjdJcAUkdpj6yNosxljNA8OwMSLR6VCo4WisRPsWY2GIQ5/2Mr2TxdHxTJne5pxkKX
-	 ryt57w9weoKtsKREu9oi13raAzD3l5OdeZvhMfN8=
-Date: Fri, 30 Aug 2024 13:06:39 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ignat Korchagin <ignat@cloudflare.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	John Hubbard <jhubbard@nvidia.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>,
-	kernel-team@cloudflare.com
-Subject: Re: [PATCH 6.6 046/139] selftests/net: fix uninitialized variables
-Message-ID: <2024083021-cytoplasm-width-3e44@gregkh>
-References: <20240709110658.146853929@linuxfoundation.org>
- <20240709110659.948165869@linuxfoundation.org>
- <8B1717DB-8C4A-47EE-B28C-170B630C4639@cloudflare.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WEQpzjRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E41C4CEC2;
+	Fri, 30 Aug 2024 12:24:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725020667;
+	bh=Fye5UJaT5Z6qElniiFFVhG1gjqZp/bvz7JiyCKZVrEI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WEQpzjRRxsJ0GlLTZibav07DzRRwi2ebpa8UfEv89WyXteZpRuofmiRoWTqIXB/zK
+	 T/YA5u+bBkBO6e6B1iJSB77IywTdwunsHiYWm7hJhvYPqmXTKASGEVkorgsFNBebyT
+	 gjp7XUz7VyyOjLrm3VjiRN4LVvHCIpHu+Pye1sS5SgjdCmoIl0BYzPm+L+NsA3hegy
+	 v2MNuo396r/F0MJRYoeu+/ZNkX6VHu9+50RBlvjdXXW9MR1DjG93cFx8d9hgQAohaY
+	 8EYQZOyjVK8TulhQxU0g1ZyQb0YfkgGur0tA33h0wfohkCts3jRoG+fxf76s+SQVY+
+	 QdOEwcXx1oGLA==
+Message-ID: <1edc1fdb-ccf9-4dec-9669-d8c33511c7b0@kernel.org>
+Date: Fri, 30 Aug 2024 14:24:20 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8B1717DB-8C4A-47EE-B28C-170B630C4639@cloudflare.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-sm8550: Don't park the USB RCG at
+ registration time
+To: Stephen Boyd <swboyd@chromium.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ patches@lists.linux.dev, linux-clk@vger.kernel.org,
+ Konrad Dybcio <konradybcio@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Amit Pundir <amit.pundir@linaro.org>
+References: <20240819233628.2074654-1-swboyd@chromium.org>
+ <20240819233628.2074654-3-swboyd@chromium.org>
+ <CAE-0n52rYVs81jtnFHyfc+K4wECvyCKmnHu2w9JhPNqvMYEeOA@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <CAE-0n52rYVs81jtnFHyfc+K4wECvyCKmnHu2w9JhPNqvMYEeOA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 11, 2024 at 04:31:45PM +0100, Ignat Korchagin wrote:
-> Hi,
-> > On 9 Jul 2024, at 12:09, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > 
-> > 6.6-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: John Hubbard <jhubbard@nvidia.com>
-> > 
-> > [ Upstream commit eb709b5f6536636dfb87b85ded0b2af9bb6cd9e6 ]
-> > 
-> > When building with clang, via:
-> > 
-> >    make LLVM=1 -C tools/testing/selftest
-> > 
-> > ...clang warns about three variables that are not initialized in all
-> > cases:
-> > 
-> > 1) The opt_ipproto_off variable is used uninitialized if "testname" is
-> > not "ip". Willem de Bruijn pointed out that this is an actual bug, and
-> > suggested the fix that I'm using here (thanks!).
-> > 
-> > 2) The addr_len is used uninitialized, but only in the assert case,
-> >   which bails out, so this is harmless.
-> > 
-> > 3) The family variable in add_listener() is only used uninitialized in
-> >   the error case (neither IPv4 nor IPv6 is specified), so it's also
-> >   harmless.
-> > 
-> > Fix by initializing each variable.
-> > 
-> > Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-> > Reviewed-by: Willem de Bruijn <willemb@google.com>
-> > Acked-by: Mat Martineau <martineau@kernel.org>
-> > Link: https://lore.kernel.org/r/20240506190204.28497-1-jhubbard@nvidia.com
-> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> > tools/testing/selftests/net/gro.c                 | 3 +++
-> > tools/testing/selftests/net/ip_local_port_range.c | 2 +-
-> > tools/testing/selftests/net/mptcp/pm_nl_ctl.c     | 2 +-
-> > 3 files changed, 5 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
-> > index 30024d0ed3739..b204df4f33322 100644
-> > --- a/tools/testing/selftests/net/gro.c
-> > +++ b/tools/testing/selftests/net/gro.c
-> > @@ -113,6 +113,9 @@ static void setup_sock_filter(int fd)
-> > next_off = offsetof(struct ipv6hdr, nexthdr);
-> > ipproto_off = ETH_HLEN + next_off;
-> > 
-> > + /* Overridden later if exthdrs are used: */
-> > + opt_ipproto_off = ipproto_off;
-> > +
+On 27.08.2024 8:12 PM, Stephen Boyd wrote:
+> Quoting Stephen Boyd (2024-08-19 16:36:27)
+>> Amit Pundir reports that audio and USB-C host mode stops working if the
+>> gcc_usb30_prim_master_clk_src clk is registered and
+>> clk_rcg2_shared_init() parks it on XO. Skip parking this clk at
+>> registration time to fix those issues.
+>>
+>> Partially revert commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
+>> registration") by skipping the parking bit for this clk, but keep the
+>> part where we cache the config register. That's still necessary to
+>> figure out the true parent of the clk at registration time.
+>>
+>> Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+>> Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
+>> Cc: Konrad Dybcio <konradybcio@kernel.org>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Cc: Taniya Das <quic_tdas@quicinc.com>
+>> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+>> Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
+>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>> ---
+>>  drivers/clk/qcom/clk-rcg.h    |  1 +
+>>  drivers/clk/qcom/clk-rcg2.c   | 30 ++++++++++++++++++++++++++++++
+>>  drivers/clk/qcom/gcc-sm8550.c |  2 +-
+>>  3 files changed, 32 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+>> index d7414361e432..8e0f3372dc7a 100644
+>> --- a/drivers/clk/qcom/clk-rcg.h
+>> +++ b/drivers/clk/qcom/clk-rcg.h
+>> @@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
+>>  extern const struct clk_ops clk_pixel_ops;
+>>  extern const struct clk_ops clk_gfx3d_ops;
+>>  extern const struct clk_ops clk_rcg2_shared_ops;
+>> +extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
 > 
-> This breaks selftest compilation on 6.6, because opt_ipproto_off is not
-> defined in the first place in 6.6
+> I'm considering inverting these two rcg2_shared clk_ops so that only a
+> few clks are parked at clk registration time, to minimize the impact of
+> commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration").
+> We're up to three or four band-aids, that we can probably wait on
+> applying if we make all the shared RCGs determine the correct parent at
+> registration time but skip the parking, except for the display clks on
+> sc7180 where that exposes another problem with shared parents getting
+> turned off during probe. It's possible that other SoCs will want to park
+> their display clks as well to avoid that secondary problem, but it can
+> be an opt-in case instead of a change to all shared RCGs.
 
-So should it be reverted or fixed up?
+Are all cases that need the parking obvious like it was the case on 7180,
+i.e. some downstream branch is stuck and there's complaining in dmesg?
 
-Can you send a patch doing either one of these?
-
-thanks,
-
-greg k-h
+Konrad
