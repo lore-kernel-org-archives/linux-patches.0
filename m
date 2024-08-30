@@ -1,150 +1,79 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE38019259F
-	for <patches@lists.linux.dev>; Fri, 30 Aug 2024 12:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5E513C3D5;
+	Fri, 30 Aug 2024 12:47:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725021018; cv=none; b=iwvKn4EVm3nkMzhSGPI2DF6C3aF0vLkrqRUX29mW0c7AU4UJAZFsDn1JYqEGjfA10gidTMXUurWmqcI4e3SpLvz0TC7GydpZxGo3kOmRnyprGj2UjoEw+2yBYmSBNuENgyWzc87O1j5KyhQhmf+GPB2t/eK+8v/qC3gAR0IbgtM=
+	t=1725022038; cv=none; b=RdZRhLVc6jXwvr3wMqkZsMh0055GiAcB1E0Ef+qYF+S526UZrYVGT9G8yr8mYYfFkS3+vspu6Qq52GU4fA+D/zsvPVznFTqYPHH4VCzfh/JuEEv9EG44UBirhv55IiE9KAhv1ZykGIRtpv/NaZaXxKmRkwFkspsbYm0T6xG8bWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725021018; c=relaxed/simple;
-	bh=TVcMzNRMegYsp4eglrjfjrklqy5cCwCiyO8uYAi/gkM=;
+	s=arc-20240116; t=1725022038; c=relaxed/simple;
+	bh=LcGBkLQt3MdE6QDzY1xhZinz4rSO8r3XSJhxINE6t3Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uT7+XM74de06BSbYKGd+uL/uvYsqpXuxRziYOMwtyYWyN6t84jjDk6owemacmNVacbc0UxEw3c9JUWHtQ0qhXESqskwKHwu+GdhJg67sbFbnOKpJpmuw//LRodmARRl5MCej6WJnhFueHZzJ/vBXQSPyzbI61kgW8q9B6qRLEKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zQx1YGez; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XkSUFLdL; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zQx1YGez; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XkSUFLdL; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=qCMlajbNcJ8iw8uTLP2zbGbSQU1vZiZXV0kCt4uRyi2whEwxPBhytfNoMV6kQjCDWxNyjNF1bPsqGKDNq8DkZthOAf34/UvGkYsA/oW9B3kVHNA9IhIQAnlr/jJuFKxVH+mvlFXVSbkKbs56kaj4RGdCeeMM/geb/204G39X9E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0X1aFLxd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zQx1YGez";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XkSUFLdL";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zQx1YGez";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XkSUFLdL"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id BDFAC21A37;
-	Fri, 30 Aug 2024 12:30:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1725021014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
-	b=zQx1YGezjdCZoIVkD8uUKXlzyKYanJgmL3KRlUcahu6jHUygEaaTUGiXrZcBV9BkmBBWnS
-	rL56KeyZR5QWT3N7Jz8Lu/bZoOMCHF2r4PMFTsSOXenyInAUPxrhWiSWqL2IlD6evL2QKg
-	oDE8II+88x5WyZdxNjesAdopui+B9xE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1725021014;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
-	b=XkSUFLdLBjJ5R4cY6zA4I3EOZrXhaDctretXIGm9e6l4RJhkniFQpdls7U8lXbdsTPhA6V
-	Jyl+LhGLc/PKQgCA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zQx1YGez;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=XkSUFLdL
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1725021014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
-	b=zQx1YGezjdCZoIVkD8uUKXlzyKYanJgmL3KRlUcahu6jHUygEaaTUGiXrZcBV9BkmBBWnS
-	rL56KeyZR5QWT3N7Jz8Lu/bZoOMCHF2r4PMFTsSOXenyInAUPxrhWiSWqL2IlD6evL2QKg
-	oDE8II+88x5WyZdxNjesAdopui+B9xE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1725021014;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EuWAsH+Dtv6pQIUO5K6WAozw2zAgSePkfh0GGaXg+9k=;
-	b=XkSUFLdLBjJ5R4cY6zA4I3EOZrXhaDctretXIGm9e6l4RJhkniFQpdls7U8lXbdsTPhA6V
-	Jyl+LhGLc/PKQgCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8637813A3D;
-	Fri, 30 Aug 2024 12:30:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 5N2IH1a70WahQwAAD6G6ig
-	(envelope-from <jroedel@suse.de>); Fri, 30 Aug 2024 12:30:14 +0000
-Date: Fri, 30 Aug 2024 14:30:13 +0200
-From: Joerg Roedel <jroedel@suse.de>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: linux-pci@vger.kernel.org, Lu Baolu <baolu.lu@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	kernel test robot <lkp@intel.com>, patches@lists.linux.dev
-Subject: Re: [PATCH] PCI/ATS: Add missing pci_prepare_ats() stub
-Message-ID: <ZtG7VXSsmDbt4a3I@suse.de>
-References: <0-v1-3ff295fa1528+d7-pci_prepare_ats_proto_jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0X1aFLxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31ACC4CEC6;
+	Fri, 30 Aug 2024 12:47:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725022038;
+	bh=LcGBkLQt3MdE6QDzY1xhZinz4rSO8r3XSJhxINE6t3Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=0X1aFLxdlpi9qyBswVmslcyTJBTY7VhqYcih6atMp0NVDxzoCqNa3/b+vvXRz6lJb
+	 BVhH+OgupmEOqNRno2juT9ei2n2K2bJKt9XxClFOsctveLLFyHZv2We7NgzhnFdNpG
+	 stt3t6GxLFfBbnl+eMklmoNaCJ5mfc1cCd5WEgXM=
+Date: Fri, 30 Aug 2024 14:47:14 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 194/317] Input: ioc3kbd - convert to platform remove
+ callback returning void
+Message-ID: <2024083007-gratified-cesspool-6cfb@gregkh>
+References: <20240613113247.525431100@linuxfoundation.org>
+ <20240613113255.060736154@linuxfoundation.org>
+ <Zs6hwNxk7QkCe7AW@codewreck.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0-v1-3ff295fa1528+d7-pci_prepare_ats_proto_jgg@nvidia.com>
-X-Rspamd-Queue-Id: BDFAC21A37
-X-Spam-Score: -6.51
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-6.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	DWL_DNSWL_MED(-2.00)[suse.de:dkim];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	ARC_NA(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
+In-Reply-To: <Zs6hwNxk7QkCe7AW@codewreck.org>
 
-On Wed, Aug 14, 2024 at 07:20:52PM -0300, Jason Gunthorpe wrote:
-> Surprised 0-day didn't catch this before it made it to linux-next, but here it
-> is..
+On Wed, Aug 28, 2024 at 01:04:16PM +0900, Dominique Martinet wrote:
+> Greg Kroah-Hartman wrote on Thu, Jun 13, 2024 at 01:33:32PM +0200:
+> > The .remove() callback for a platform driver returns an int which makes
+> > many driver authors wrongly assume it's possible to do error handling by
+> > returning an error code. However the value returned is ignored (apart
+> > from emitting a warning) and this typically results in resource leaks.
+> > To improve here there is a quest to make the remove callback return
+> > void. In the first step of this quest all drivers are converted to
+> > .remove_new() which already returns void. Eventually after all drivers
+> > are converted, .remove_new() will be renamed to .remove().
 > 
-> Joerg if you can squash it that would be great.
+> A bit late to the party here (this patch was included as commit
+> 0096d223f78c in v5.10.219), but 5.10 does not have .remove_new()
+> (missing commit 5c5a7680e67b ("platform: Provide a remove callback that
+> returns no value")) so there is no way this commit will work.
+> 
+> 
+> I'm not building this driver so don't really care and this can be left
+> as is as far as I'm concerned (and since it's been over 2 months
+> probably no-one is using this driver on this old kernel, it doesn't look
+> enabled on e.g. debian's build); so this is just a head's up for mail
+> archives if anyone is notified about the problem they'll want to either
+> revert this or pick up the above commit.
+> 
+> (I checked quickly and that commit was backported to 5.15, so 5.10 is
+> the only tree where that broke, and there is no other driver in 5.10
+> that tries to set .remove_new)
 
-Done, thanks. 
+Thanks, I'll go revert this!
 
--- 
-Jörg Rödel
-jroedel@suse.de
-
-SUSE Software Solutions Germany GmbH
-Frankenstraße 146
-90461 Nürnberg
-Germany
-https://www.suse.com/
-
-Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
-(HRB 36809, AG Nürnberg)
+greg k-h
