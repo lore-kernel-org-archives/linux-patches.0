@@ -1,60 +1,60 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01375175D45
-	for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:19:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B922A111A8
+	for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725139158; cv=none; b=SqDHPyPzL96+7Y7IE4Ihj9xrcMooRuHM4rliuNXQqaOFuIRFEjixS8bv7wP745ewmycJhEHSHGjp1k0fVyfe90lyaeKVUBt1P94kRO3Q7/EnQVD6Fo+syS9tVY91sd6VMfuBsmwkHFjhlcnPSaKNER2oAWMsW/jmqYQ32MfYNRU=
+	t=1725139593; cv=none; b=eT7JV3sLMpQRzp2dNseP+mAe5q9txhEKOwL+XRiP+/jddFNco3W3/VYA6Ryg1KYldc8AO3Kypn6jUU6R0g59Py0+kFblh49DHNRfy7NVpnJ3EZtFr1LlUX3bg1pBVqw2Y8LWOFwZbZjO5bJlICpWYceKQuEutqtTCSwhvOjEqvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725139158; c=relaxed/simple;
-	bh=OWqRTvt9404/ano+yp1yu3wGHRwtXn5oFYJekFfxAWk=;
+	s=arc-20240116; t=1725139593; c=relaxed/simple;
+	bh=WnTYFeG/fzOiKVzt1gkZelOK94/v9zyLQUVVRTD2/2E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j6hzv7k7TPZyf40hQ9EKBQy++4FYn6aZ4DHAgmIqOLAN8AHesI151b8QHG+pLTvAwVuzKyyNnKKCRcopn5nEJS05GKyAMP6SRMfRSXU/bZp8L5sW8mNJuXLvGahShdp/iiplBawmTRnNbebfSlhBNIhwvjOdEfXEgllC7+coWg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ia0z1iXj; arc=none smtp.client-ip=209.85.161.52
+	 In-Reply-To:Content-Type; b=tVW9+Cal369jaYeclD35obJKeRw00erUVFtLLUrr3u2+MdsaGcW9PzuKOWBJ8R3lxNwnYWUtqSlhHeYG81TxV60UtY7W1lTKdtR1pyCyfTN61zJJDiVlh9P9opxD6A5JV4A25tlaMqC26+06iUEX2kDWC610JrINcezv+gDXxJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6mifziq; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ia0z1iXj"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5d5b1e33fa8so1722565eaf.3
-        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 14:19:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6mifziq"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7142448aaf9so2011631b3a.1
+        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 14:26:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725139156; x=1725743956; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1725139591; x=1725744391; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=5AiRVgx2oBpN4HxI8sWFyfTegsh1fo61Uz0IrDwOv7A=;
-        b=ia0z1iXjJEzF5aRklbzEYoDc0hSZyzw/wfaIsevScEM7CTfF7Ut59k9xkHNyjbPh55
-         XT3U/hrcFB5b1o++KMIMIUqYZjowBvXmKisqKM/Y3BhGxuMHW8nDJ3v0zZ8QZx8Ubpjm
-         m8SB8dqmjrlgNICU9t0JaoGKMloioNcqcByk7kBajBRG0NkaGXUVRgXdVuRUhuJn8tRz
-         Cph85wQI3tYAwJafYBImwHMkA2qIpd1b2pHL+t0viNeDCkZQc9pCpUaFeECTBZdQ2VDI
-         f4HKWyK2wMIi62i/5R67oV3+z8laD5/E3p9PlbKvWdqCMwmLIQTed0DVpYb0KDNetoEs
-         vJvg==
+        bh=FR2aZdF5bv/OtfI8399Ca40G5kJMSLxBifyoulxIJMw=;
+        b=l6mifziqzHMagr9uIHv7YN+022ucFLZvg3FyBiGPbNOnrMccsoZwFPZ3Fcx52EN/dD
+         X6GIHUKyjHnn2aaEqzZ5YDCIQo9VQ0OcYn36FXO3m95LkKWjLlr/Q4KTSAlD87/vMc/J
+         YNur228drTfa2U2bOmUEqWtzZh1LKErxV5jV64qcBcqX86vjOCib/CzHKq2w+4nmdwfg
+         ONqr789ZSwkz1Iuhuy/gt8FmdXgr2NJfF7psx5MRhmpduxvA16TapYOYGOHsygn8Bp/w
+         3+yEVjNzoeqaJGq4KSr6CSr9eiUAIqmo4WdINGVpsc7bBR1wEuB/ZlJ2bAxIm/iRs6m0
+         BybQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725139156; x=1725743956;
+        d=1e100.net; s=20230601; t=1725139591; x=1725744391;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5AiRVgx2oBpN4HxI8sWFyfTegsh1fo61Uz0IrDwOv7A=;
-        b=Ri5jVLeQyp7wNGeFJNc2dwJ7LnNSw10GMaSuCfjzGqFAmv0KLnnAuMwEbQlq+zE6MK
-         oFmcFD8gKx96YUHQ8TYZgeaKYEWO9k+0r9b/06enfVvV0F5gVQ1tTV5Obj0617GMzykx
-         Ke9zoH6151TvvP3Ois3YW+UfmWPh83v39Uaw1jOjnb4lsLUvJeHyqzzAOABQGcFZrvQm
-         pgElOq0R2chVxUMvP3k0HhW+e1NBgnnSsjAIE2ta6akJ1aT9KGxhIzVqG+zCBsQ7WWgk
-         +fpKovH7iWBqxcQ/eruw1GlBXG6zTgxNpMGhcwAn+QxpW0cbwJq/Y28euKWTZaxmu/Jo
-         1imA==
-X-Gm-Message-State: AOJu0YwLp0KOWhe/JvGOE8z2QG0/zX32sOLPvNM5ugjVGY1jg3O5Petm
-	JnHDPPFMUvUVm/tWLPQrjEIIJnbEC07y0roFb4ZeOTXPhU8veLr0
-X-Google-Smtp-Source: AGHT+IFpbL8W/xvro9BB9EEndYTLZsrTgHOEH49NpBEtc3b4ZNCxSPQS6o56kM89ceKeb8QklsBYJA==
-X-Received: by 2002:a05:6358:718e:b0:1b5:ffce:b28e with SMTP id e5c5f4694b2df-1b603c202femr1259468755d.12.1725139155574;
-        Sat, 31 Aug 2024 14:19:15 -0700 (PDT)
+        bh=FR2aZdF5bv/OtfI8399Ca40G5kJMSLxBifyoulxIJMw=;
+        b=gdy5lAbF5UMLoPJ/sZtexrK3HEQUaK8ihxwgyDPT01C8RQ7OJXejBHFOPye1oxSq8Z
+         I/xNSyuWr4UYkRViHMPQ7Y6Z8waDYmR5ZDgmhemAkB3T+gLJg3FSUBP+GjzJvTQmxax3
+         Sd6CgFQ0iR9CErgen3/0WaphKTgbVX+wPGQJpOcyxhi0i5MnScQaWSNPCnWJZrme436Z
+         zX2k1ibV+8i7CN2KmZ28Ba3TxEGM/8TeuhwBNDdeMBGzaolF3kdlWYdkJUkiAsVr4ND+
+         nZijUsZr1uHCVnfwlzyZPMH8ZwOt9DXBlCyM7sKEquhlx7fNQCgSB/X2IDiaYJV0Ntg3
+         s7SA==
+X-Gm-Message-State: AOJu0YydLQ0R1anqxlGhBdT4RvqvKWea1SlhssrCL6AQOjtlcLpbR6Od
+	EpFactdk7oli9y2XOzqrV3CwzX0N6pPJB0DdN1xMpT9xxQZhmE31
+X-Google-Smtp-Source: AGHT+IHazNvH5Ggr+Ry5W/EaR+fwton9T4al9vHQ+2WVAogX7HPBlJScQFXQAgfm7nEQAOJWB1R+ZQ==
+X-Received: by 2002:a05:6a00:6f64:b0:710:d294:a2b with SMTP id d2e1a72fcca58-715e0fbe5cemr16506914b3a.8.1725139590836;
+        Sat, 31 Aug 2024 14:26:30 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d8a5324db0sm1420727a91.56.2024.08.31.14.19.12
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-715e55a455esm4596093b3a.54.2024.08.31.14.26.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Aug 2024 14:19:14 -0700 (PDT)
+        Sat, 31 Aug 2024 14:26:30 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <4f4ac35e-e31c-4f67-b809-a5de4d4b273a@roeck-us.net>
-Date: Sat, 31 Aug 2024 14:19:12 -0700
+Message-ID: <4b332d8c-4ed0-4ecf-a4db-75c1aa932b48@roeck-us.net>
+Date: Sat, 31 Aug 2024 14:26:28 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/321] 6.1.107-rc1 review
+Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
@@ -70,7 +70,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
  allen.lkml@gmail.com, broonie@kernel.org
-References: <20240827143838.192435816@linuxfoundation.org>
+References: <20240827143843.399359062@linuxfoundation.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -116,13 +116,13 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
+In-Reply-To: <20240827143843.399359062@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/27/24 07:35, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.107 release.
-> There are 321 patches in this series, all will be posted as a response
+On 8/27/24 07:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.48 release.
+> There are 341 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -131,22 +131,22 @@ On 8/27/24 07:35, Greg Kroah-Hartman wrote:
 > 
 [ ... ]
 
-> Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
->      fbdev: offb: replace of_node_put with __free(device_node)
+> Suren Baghdasaryan <surenb@google.com>
+>      change alloc_pages name in dma_map_ops to avoid name conflicts
 > 
 
 This patch triggers:
 
-Building powerpc:defconfig ... failed
-Building powerpc:ppc64e_defconfig ... failed
-Building powerpc:ppc6xx_defconfig ... failed
+Building s390:defconfig ... failed
 --------------
 Error log:
-drivers/video/fbdev/offb.c: In function 'offb_init_palette_hacks':
-drivers/video/fbdev/offb.c:358:24: error: cleanup argument not a function
-   358 |                 struct device_node *pciparent __free(device_node) = of_get_parent(dp);
-       |                        ^~~~~~~~~~~
-make[5]: *** [scripts/Makefile.build:250: drivers/video/fbdev/offb.o] Error 1
+arch/s390/pci/pci_dma.c:724:10: error: 'const struct dma_map_ops' has no member named 'alloc_pages'; did you mean 'alloc_pages_op'?
+   724 |         .alloc_pages    = dma_common_alloc_pages,
+
+for pretty much all s390 builds.
+
+Source code analysis suggests that the problem also affects
+arch/ia64/hp/common/sba_iommu.c.
 
 Guenter
 
