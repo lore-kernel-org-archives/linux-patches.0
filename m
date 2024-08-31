@@ -1,172 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6988468;
-	Sat, 31 Aug 2024 05:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01375175D45
+	for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:19:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725082339; cv=none; b=kvytwIqunm99O0IVVM9ZjzbZLC/ykZ3++KznobzsZIj6EEkfvXfO4ilUli/raA8G+PsoRZCMRsMOZdeS7F5AGNEIg6wQUFQKrX9Wc3UU1QsfiOo6EsUnf9hv0K3ibZLp4r7oecPNUrZtc1nw8UplSpKuQRm6s0KMRb45irgaKiM=
+	t=1725139158; cv=none; b=SqDHPyPzL96+7Y7IE4Ihj9xrcMooRuHM4rliuNXQqaOFuIRFEjixS8bv7wP745ewmycJhEHSHGjp1k0fVyfe90lyaeKVUBt1P94kRO3Q7/EnQVD6Fo+syS9tVY91sd6VMfuBsmwkHFjhlcnPSaKNER2oAWMsW/jmqYQ32MfYNRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725082339; c=relaxed/simple;
-	bh=ggPgIEesTDgOymygzPIno9PS53EAXggmgJDCHavhNrY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BO5C9QvmCq3ffvFQFp+PX5GuMAxFdvu2/mNCt6yJzxL206C7/3WTzpIrWJviokp8NgCNY8SUpjypCF/QAzjdgFwhmc3spfAYuQuX3q/5hKanBCsQCfika9hKuXznn6LeB3TvIv8IYANDBqoLnp+riSO2QkY0t6nOZ7C42RmPjEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBgfxOGy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725139158; c=relaxed/simple;
+	bh=OWqRTvt9404/ano+yp1yu3wGHRwtXn5oFYJekFfxAWk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j6hzv7k7TPZyf40hQ9EKBQy++4FYn6aZ4DHAgmIqOLAN8AHesI151b8QHG+pLTvAwVuzKyyNnKKCRcopn5nEJS05GKyAMP6SRMfRSXU/bZp8L5sW8mNJuXLvGahShdp/iiplBawmTRnNbebfSlhBNIhwvjOdEfXEgllC7+coWg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ia0z1iXj; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBgfxOGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AECC4CEC0;
-	Sat, 31 Aug 2024 05:32:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725082338;
-	bh=ggPgIEesTDgOymygzPIno9PS53EAXggmgJDCHavhNrY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lBgfxOGy2nPj6gEMRAoHnjnCM5ScsT9Dltv1sRHKDqvp6xRR7uANOM0GP7XtgZsnH
-	 9D/w7nhm2EWOp219S89FhPH1oa12dN3zMbDAKJQYiFnZNxKp2mXmOrmQ2U0tSbAMC+
-	 np5ImVoSqssO/jo+3PUGeSwVI25BnW9SjN3rP2f0=
-Date: Sat, 31 Aug 2024 07:32:15 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Suren Baghdasaryan <surenb@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Christoph Lameter <cl@linux.com>,
-	Dennis Zhou <dennis@kernel.org>, Gary Guo <gary@garyguo.net>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.6 230/341] change alloc_pages name in dma_map_ops to
- avoid name conflicts
-Message-ID: <2024083105-stable-concrete-3183@gregkh>
-References: <20240827143843.399359062@linuxfoundation.org>
- <20240827143852.163123189@linuxfoundation.org>
- <20240830221217.GA3837758@thelio-3990X>
- <CAJuCfpGuOtzSshL6U+rT2ytZr2MBAH5yWAqMJd3hLDzHyZV3JA@mail.gmail.com>
- <CAJuCfpEmrPG6e+tv6t=v-r7TmOenCtKK73xrtaeMQ+brZDE2wA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ia0z1iXj"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5d5b1e33fa8so1722565eaf.3
+        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 14:19:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725139156; x=1725743956; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=5AiRVgx2oBpN4HxI8sWFyfTegsh1fo61Uz0IrDwOv7A=;
+        b=ia0z1iXjJEzF5aRklbzEYoDc0hSZyzw/wfaIsevScEM7CTfF7Ut59k9xkHNyjbPh55
+         XT3U/hrcFB5b1o++KMIMIUqYZjowBvXmKisqKM/Y3BhGxuMHW8nDJ3v0zZ8QZx8Ubpjm
+         m8SB8dqmjrlgNICU9t0JaoGKMloioNcqcByk7kBajBRG0NkaGXUVRgXdVuRUhuJn8tRz
+         Cph85wQI3tYAwJafYBImwHMkA2qIpd1b2pHL+t0viNeDCkZQc9pCpUaFeECTBZdQ2VDI
+         f4HKWyK2wMIi62i/5R67oV3+z8laD5/E3p9PlbKvWdqCMwmLIQTed0DVpYb0KDNetoEs
+         vJvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725139156; x=1725743956;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5AiRVgx2oBpN4HxI8sWFyfTegsh1fo61Uz0IrDwOv7A=;
+        b=Ri5jVLeQyp7wNGeFJNc2dwJ7LnNSw10GMaSuCfjzGqFAmv0KLnnAuMwEbQlq+zE6MK
+         oFmcFD8gKx96YUHQ8TYZgeaKYEWO9k+0r9b/06enfVvV0F5gVQ1tTV5Obj0617GMzykx
+         Ke9zoH6151TvvP3Ois3YW+UfmWPh83v39Uaw1jOjnb4lsLUvJeHyqzzAOABQGcFZrvQm
+         pgElOq0R2chVxUMvP3k0HhW+e1NBgnnSsjAIE2ta6akJ1aT9KGxhIzVqG+zCBsQ7WWgk
+         +fpKovH7iWBqxcQ/eruw1GlBXG6zTgxNpMGhcwAn+QxpW0cbwJq/Y28euKWTZaxmu/Jo
+         1imA==
+X-Gm-Message-State: AOJu0YwLp0KOWhe/JvGOE8z2QG0/zX32sOLPvNM5ugjVGY1jg3O5Petm
+	JnHDPPFMUvUVm/tWLPQrjEIIJnbEC07y0roFb4ZeOTXPhU8veLr0
+X-Google-Smtp-Source: AGHT+IFpbL8W/xvro9BB9EEndYTLZsrTgHOEH49NpBEtc3b4ZNCxSPQS6o56kM89ceKeb8QklsBYJA==
+X-Received: by 2002:a05:6358:718e:b0:1b5:ffce:b28e with SMTP id e5c5f4694b2df-1b603c202femr1259468755d.12.1725139155574;
+        Sat, 31 Aug 2024 14:19:15 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d8a5324db0sm1420727a91.56.2024.08.31.14.19.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 31 Aug 2024 14:19:14 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <4f4ac35e-e31c-4f67-b809-a5de4d4b273a@roeck-us.net>
+Date: Sat, 31 Aug 2024 14:19:12 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJuCfpEmrPG6e+tv6t=v-r7TmOenCtKK73xrtaeMQ+brZDE2wA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/321] 6.1.107-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, broonie@kernel.org
+References: <20240827143838.192435816@linuxfoundation.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAlVcphcFCRmg06EACgkQyx8mb86fmYFg0RAA
+ nzXJzuPkLJaOmSIzPAqqnutACchT/meCOgMEpS5oLf6xn5ySZkl23OxuhpMZTVX+49c9pvBx
+ hpvl5bCWFu5qC1jC2eWRYU+aZZE4sxMaAGeWenQJsiG9lP8wkfCJP3ockNu0ZXXAXwIbY1O1
+ c+l11zQkZw89zNgWgKobKzrDMBFOYtAh0pAInZ9TSn7oA4Ctejouo5wUugmk8MrDtUVXmEA9
+ 7f9fgKYSwl/H7dfKKsS1bDOpyJlqhEAH94BHJdK/b1tzwJCFAXFhMlmlbYEk8kWjcxQgDWMu
+ GAthQzSuAyhqyZwFcOlMCNbAcTSQawSo3B9yM9mHJne5RrAbVz4TWLnEaX8gA5xK3uCNCeyI
+ sqYuzA4OzcMwnnTASvzsGZoYHTFP3DQwf2nzxD6yBGCfwNGIYfS0i8YN8XcBgEcDFMWpOQhT
+ Pu3HeztMnF3HXrc0t7e5rDW9zCh3k2PA6D2NV4fews9KDFhLlTfCVzf0PS1dRVVWM+4jVl6l
+ HRIAgWp+2/f8dx5vPc4Ycp4IsZN0l1h9uT7qm1KTwz+sSl1zOqKD/BpfGNZfLRRxrXthvvY8
+ BltcuZ4+PGFTcRkMytUbMDFMF9Cjd2W9dXD35PEtvj8wnEyzIos8bbgtLrGTv/SYhmPpahJA
+ l8hPhYvmAvpOmusUUyB30StsHIU2LLccUPPOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAlVcpi8FCRmg08MACgkQyx8mb86fmYHNRQ/+
+ J0OZsBYP4leJvQF8lx9zif+v4ZY/6C9tTcUv/KNAE5leyrD4IKbnV4PnbrVhjq861it/zRQW
+ cFpWQszZyWRwNPWUUz7ejmm9lAwPbr8xWT4qMSA43VKQ7ZCeTQJ4TC8kjqtcbw41SjkjrcTG
+ wF52zFO4bOWyovVAPncvV9eGA/vtnd3xEZXQiSt91kBSqK28yjxAqK/c3G6i7IX2rg6pzgqh
+ hiH3/1qM2M/LSuqAv0Rwrt/k+pZXE+B4Ud42hwmMr0TfhNxG+X7YKvjKC+SjPjqp0CaztQ0H
+ nsDLSLElVROxCd9m8CAUuHplgmR3seYCOrT4jriMFBtKNPtj2EE4DNV4s7k0Zy+6iRQ8G8ng
+ QjsSqYJx8iAR8JRB7Gm2rQOMv8lSRdjva++GT0VLXtHULdlzg8VjDnFZ3lfz5PWEOeIMk7Rj
+ trjv82EZtrhLuLjHRCaG50OOm0hwPSk1J64R8O3HjSLdertmw7eyAYOo4RuWJguYMg5DRnBk
+ WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
+ HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <20240827143838.192435816@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Aug 30, 2024 at 03:48:40PM -0700, Suren Baghdasaryan wrote:
-> On Fri, Aug 30, 2024 at 3:35 PM Suren Baghdasaryan <surenb@google.com> wrote:
-> >
-> > On Fri, Aug 30, 2024 at 3:12 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> > >
-> > > Hi Greg and Sasha,
-> > >
-> > > On Tue, Aug 27, 2024 at 04:37:41PM +0200, Greg Kroah-Hartman wrote:
-> > > > 6.6-stable review patch.  If anyone has any objections, please let me know.
-> > > >
-> > > > ------------------
-> > > >
-> > > > From: Suren Baghdasaryan <surenb@google.com>
-> > > >
-> > > > [ Upstream commit 8a2f11878771da65b8ac135c73b47dae13afbd62 ]
-> > > >
-> > > > After redefining alloc_pages, all uses of that name are being replaced.
-> > > > Change the conflicting names to prevent preprocessor from replacing them
-> > > > when it's not intended.
-> > > >
-> > > > Link: https://lkml.kernel.org/r/20240321163705.3067592-18-surenb@google.com
-> > > > Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-> > > > Tested-by: Kees Cook <keescook@chromium.org>
-> > > > Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-> > > > Cc: Alex Gaynor <alex.gaynor@gmail.com>
-> > > > Cc: Alice Ryhl <aliceryhl@google.com>
-> > > > Cc: Andreas Hindborg <a.hindborg@samsung.com>
-> > > > Cc: Benno Lossin <benno.lossin@proton.me>
-> > > > Cc: "Björn Roy Baron" <bjorn3_gh@protonmail.com>
-> > > > Cc: Boqun Feng <boqun.feng@gmail.com>
-> > > > Cc: Christoph Lameter <cl@linux.com>
-> > > > Cc: Dennis Zhou <dennis@kernel.org>
-> > > > Cc: Gary Guo <gary@garyguo.net>
-> > > > Cc: Kent Overstreet <kent.overstreet@linux.dev>
-> > > > Cc: Miguel Ojeda <ojeda@kernel.org>
-> > > > Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-> > > > Cc: Peter Zijlstra <peterz@infradead.org>
-> > > > Cc: Tejun Heo <tj@kernel.org>
-> > > > Cc: Vlastimil Babka <vbabka@suse.cz>
-> > > > Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
-> > > > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> > > > Stable-dep-of: 61ebe5a747da ("mm/vmalloc: fix page mapping if vm_area_alloc_pages() with high order fallback to order 0")
-> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > > ---
-> > > >  arch/alpha/kernel/pci_iommu.c           | 2 +-
-> > > >  arch/mips/jazz/jazzdma.c                | 2 +-
-> > > >  arch/powerpc/kernel/dma-iommu.c         | 2 +-
-> > > >  arch/powerpc/platforms/ps3/system-bus.c | 4 ++--
-> > > >  arch/powerpc/platforms/pseries/vio.c    | 2 +-
-> > > >  arch/x86/kernel/amd_gart_64.c           | 2 +-
-> > > >  drivers/iommu/dma-iommu.c               | 2 +-
-> > > >  drivers/parisc/ccio-dma.c               | 2 +-
-> > > >  drivers/parisc/sba_iommu.c              | 2 +-
-> > > >  drivers/xen/grant-dma-ops.c             | 2 +-
-> > > >  drivers/xen/swiotlb-xen.c               | 2 +-
-> > > >  include/linux/dma-map-ops.h             | 2 +-
-> > > >  kernel/dma/mapping.c                    | 4 ++--
-> > > >  13 files changed, 15 insertions(+), 15 deletions(-)
-> > >
-> > > This patch breaks the build for s390:
-> > >
-> > > arch/s390/pci/pci_dma.c:724:10: error: 'const struct dma_map_ops' has no member named 'alloc_pages'; did you mean 'alloc_pages_op'?
-> > >   724 |         .alloc_pages    = dma_common_alloc_pages,
-> > >       |          ^~~~~~~~~~~
-> > >       |          alloc_pages_op
-> > >
-> > > https://storage.tuxsuite.com/public/clangbuiltlinux/continuous-integration2/builds/2lNUl0tacZpSlu9Edrlk3QoSElM/build.log
-> > >
-> > > This change happened after commit c76c067e488c ("s390/pci: Use dma-iommu
-> > > layer") in mainline, which explains how it was missed for stable.
-> > >
-> > > The fix seems simple:
-> > >
-> > > diff --git a/arch/s390/pci/pci_dma.c b/arch/s390/pci/pci_dma.c
-> > > index 99209085c75b..ce0f2990cb04 100644
-> > > --- a/arch/s390/pci/pci_dma.c
-> > > +++ b/arch/s390/pci/pci_dma.c
-> > > @@ -721,7 +721,7 @@ const struct dma_map_ops s390_pci_dma_ops = {
-> > >         .unmap_page     = s390_dma_unmap_pages,
-> > >         .mmap           = dma_common_mmap,
-> > >         .get_sgtable    = dma_common_get_sgtable,
-> > > -       .alloc_pages    = dma_common_alloc_pages,
-> > > +       .alloc_pages_op = dma_common_alloc_pages,
-> > >         .free_pages     = dma_common_free_pages,
-> > >         /* dma_supported is unconditionally true without a callback */
-> > >  };
-> > >
-> > > but I think the better question is why this patch is even needed in the
-> > > first place? It claims that it is a stable dependency of 61ebe5a747da
-> > > but this patch does not even touch mm/vmalloc.c and 61ebe5a747da does
-> > > not mention or touch anything with alloc_pages_op, so it seems like this
-> > > change should just be reverted from 6.6?
-> >
-> > Hmm, Nathan is right. I don't see any dependency between this patch
-> > and 61ebe5a747da. Maybe some other patch that uses .alloc_pages_op got
-> > backported and that caused a dependency but then that other patch
-> > should be changed to use .alloc_pages. I'm syncing stable 6.6 to
-> > check. Thanks for pointing this out Nathan!
+On 8/27/24 07:35, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.107 release.
+> There are 321 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I reverted this patch in stable 6.6 and there is no code using
-> alloc_pages_op. We should just drop this patch
-> (983e6b2636f0099dbac1874c9e885bbe1cf2df05) from stable 6.6. Sorry for
-> not noticing this in the first place.
+> Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
+> Anything received after that time might be too late.
+> 
+[ ... ]
 
-Now reverted, thanks!
+> Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+>      fbdev: offb: replace of_node_put with __free(device_node)
+> 
 
-greg k-h
+This patch triggers:
+
+Building powerpc:defconfig ... failed
+Building powerpc:ppc64e_defconfig ... failed
+Building powerpc:ppc6xx_defconfig ... failed
+--------------
+Error log:
+drivers/video/fbdev/offb.c: In function 'offb_init_palette_hacks':
+drivers/video/fbdev/offb.c:358:24: error: cleanup argument not a function
+   358 |                 struct device_node *pciparent __free(device_node) = of_get_parent(dp);
+       |                        ^~~~~~~~~~~
+make[5]: *** [scripts/Makefile.build:250: drivers/video/fbdev/offb.o] Error 1
+
+Guenter
+
