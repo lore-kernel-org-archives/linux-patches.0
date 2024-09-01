@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A3F17C;
-	Sun,  1 Sep 2024 17:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32792C6AF;
+	Sun,  1 Sep 2024 17:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210321; cv=none; b=EIk2hP6ImX1Jk5tFJaGJ8Y2zoYOL6pZnRtxzndS2lsJFmwW4UXH/BrbbEi8NG+NUc83WuPBORxl1tLy1EYeYVJ2s5guUurF07yFsW6tMQMjepmmib8ojznGbEp6P1RJ0eZnbjvfRWrAw88Zi12ULBnaFtjezPc7j/Q1HYFU3M/s=
+	t=1725210324; cv=none; b=ltyFZLyPEv1GlULPY/Pe6IVECIXFs0Y2Du4lt/wx9qHPPyDkt8ch6339MWX5/Bd9YvIsFRBcLbtKNQaH26NaYPBaAEVzwO50+lPFm5iiFUWdPJkzplm7xDNV4TXRL0XNYOPgUjYslQ3xp1SnMPlbh6w0I8F8b8mM91VPDggHass=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210321; c=relaxed/simple;
-	bh=Ko2kREj09U64pjIfUpZF4cDbg1rG5MifYOJ/ONSaFMg=;
+	s=arc-20240116; t=1725210324; c=relaxed/simple;
+	bh=VXOQ9rr1djpbMESyV8WnOEGu8Qt07sLpdxawAaCFb0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdvUU6nvURrT/4Yj/h0ZWagmtW9PojlmEZ5pt+5C+8+UucgQH4lq6pkXAAJEN+ThDK4izhhyPj+u3AP6PAz0Kou8ccczE9D11X+OYFX1fIG/udz+4iCP7CYdSpXd6CZkOZ3ektwtKDyMcFGTTwVhKcqQPEmRY8OxqUJAmW4uESw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEUohsL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQDcT7EZNEILkb0vkQyWxVvKaj2barXahauBp+EqwalqeAd0QOfQjOETz9r8moL0Y/l6E3c4pkX2d4s9U9Epyv03ENS7v5+hyIdlz3rcG7JoaAsANVlAvXAJQvtF/LlRee/RhKNkBNqGuyzKAi6oTU+h51Aiunz6OBqn/SFHWRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOF/lf85; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEUohsL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4C4C4CEC3;
-	Sun,  1 Sep 2024 17:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOF/lf85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267CBC4CEC3;
+	Sun,  1 Sep 2024 17:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210321;
-	bh=Ko2kREj09U64pjIfUpZF4cDbg1rG5MifYOJ/ONSaFMg=;
+	s=korg; t=1725210324;
+	bh=VXOQ9rr1djpbMESyV8WnOEGu8Qt07sLpdxawAaCFb0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PEUohsL5ZJhKs484frLPdB6xqdpaOJJjo8Z8GGIKlR4qFbrFy1fPN8qQJuevRD9z6
-	 hnQRVhCX+cqW8Lh+mo7wAHBN4eMC6hASoEOlm3ibs3gUv89J/ZNrLs+o6kja4H9KJ8
-	 tsijOe/qFfVQAcem7W0ZJb3GHZjS+Tt0IvBZUNto=
+	b=GOF/lf85zjNTkmbPEtEsJQI1XVDj8vUcsKoJ3V1Un6MfiLoWEgooUpIB5CcA7yVqA
+	 lPP+VFs0qxspffoa8FWKlU/vt2DmjZataVqwjFJLbAQqZDGo0OE6Sv/cno24M3HK5M
+	 GvHsbZOGKGFVbPlfnrBSsWU8LVatDrKCQ/e1vNgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/215] netfilter: nft_counter: Synchronize nft_counter_reset() against reader.
-Date: Sun,  1 Sep 2024 18:17:29 +0200
-Message-ID: <20240901160828.544220441@linuxfoundation.org>
+Subject: [PATCH 5.15 155/215] drm/msm/dpu: dont play tricks with debug macros
+Date: Sun,  1 Sep 2024 18:17:47 +0200
+Message-ID: <20240901160829.222026566@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a0b39e2dc7017ac667b70bdeee5293e410fab2fb ]
+[ Upstream commit df24373435f5899a2a98b7d377479c8d4376613b ]
 
-nft_counter_reset() resets the counter by subtracting the previously
-retrieved value from the counter. This is a write operation on the
-counter and as such it requires to be performed with a write sequence of
-nft_counter_seq to serialize against its possible reader.
+DPU debugging macros need to be converted to a proper drm_debug_*
+macros, however this is a going an intrusive patch, not suitable for a
+fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+to make sure that DPU debugging messages always end up in the drm debug
+messages and are controlled via the usual drm.debug mask.
 
-Update the packets/ bytes within write-sequence of nft_counter_seq.
+I don't think that it is a good idea for a generic DPU_DEBUG macro to be
+tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
+default it should go to the DRM_UT_DRIVER channel. While refactoring
+debug macros later on we might end up with particular messages going to
+ATOMIC or KMS, but DRIVER should be the default.
 
-Fixes: d84701ecbcd6a ("netfilter: nft_counter: rework atomic dump and reset")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/606932/
+Link: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_counter.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
-index f10d36c693b13..30b24d002c3d8 100644
---- a/net/netfilter/nft_counter.c
-+++ b/net/netfilter/nft_counter.c
-@@ -106,11 +106,16 @@ static void nft_counter_reset(struct nft_counter_percpu_priv *priv,
- 			      struct nft_counter *total)
- {
- 	struct nft_counter *this_cpu;
-+	seqcount_t *myseq;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 170b3e9dd4b00..73aef80a8556a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -32,24 +32,14 @@
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG(fmt, ...)                                                \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_KMS))                         \
+-			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
  
- 	local_bh_disable();
- 	this_cpu = this_cpu_ptr(priv->counter);
-+	myseq = this_cpu_ptr(&nft_counter_seq);
-+
-+	write_seqcount_begin(myseq);
- 	this_cpu->packets -= total->packets;
- 	this_cpu->bytes -= total->bytes;
-+	write_seqcount_end(myseq);
- 	local_bh_enable();
- }
+ /**
+  * DPU_DEBUG_DRIVER - macro for hardware driver logging
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+-			DRM_ERROR(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
  
+ #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+ #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
 -- 
 2.43.0
 
