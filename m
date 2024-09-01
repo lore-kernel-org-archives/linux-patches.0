@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248155381A;
-	Sun,  1 Sep 2024 16:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5071B1C68C;
+	Sun,  1 Sep 2024 16:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208422; cv=none; b=O2SHtmudILnEmsaZPeP80HAOyBU475+3mWpL2MMwPEKlX69sWloN5T5zsUygu0Yl1NffgpENBHrDsYWpQFukhR7a8bxlqCnmt0w0/sHDZhuJuO9z256nbFEwmhHfc4fFZ90WNkWV9Nw6Pj3ByOles03+AfFbYfAYoGbFT87WZq0=
+	t=1725208425; cv=none; b=kCKPA1kmXLfKXiSxJJCuWUAYZpIAveNVUjGp1Uh1Q4QKnremGl2FnZAaZUzflkoBQwyRWzB7gIydIa7sQzx5C6b5B4HK053wxJDmjLNMRB6QBfy+Z8QEIBhIJCBYWZFzJbIEwECxglE2b9HvElTlM9281HY+0LbD8GcG6k9xym4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208422; c=relaxed/simple;
-	bh=v4g/Vz56LyYs8rzw2ISzuXYAoAjpzQ9D6Tx1kdZ0DaE=;
+	s=arc-20240116; t=1725208425; c=relaxed/simple;
+	bh=qKbxlgR5Omb26S9zUl5GY/4TcxzwYPAuTpbAMlYYidI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaXGsDswLALM/Ahd/aa6347aTv+9YYc3LkLwqa/794PK065ZV8v0t7RpMqG+E4/s9DTXl7y7K3MocZYTPJtrh4bBjp4ir2XJgjTEbjH21BGCsLsHNc+JAokK7Rs/9IQ3sDB5vaCv36YlLQ0nmbo41Aq7jwcptG3Ihk06QcCpKQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJ9iY7u/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U4DafA97+dfnSLtKn6LzOw30VmmAcRiYiZt60LaTD2MZKcl1LIiyE2wPEC0AMsDjGSnefvIitjNfM2fMe8pePuDuVMs0AAHzaTaAEdK/izIkh6KG7/J9ot2c0EEjsWnmQ5uz+rLqgqvUb2IJt0jAvU0ydYJ8JxVlf/KJgI2CMOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk89i9NU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJ9iY7u/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBF5C4CEC3;
-	Sun,  1 Sep 2024 16:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk89i9NU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD76DC4CEC3;
+	Sun,  1 Sep 2024 16:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208422;
-	bh=v4g/Vz56LyYs8rzw2ISzuXYAoAjpzQ9D6Tx1kdZ0DaE=;
+	s=korg; t=1725208425;
+	bh=qKbxlgR5Omb26S9zUl5GY/4TcxzwYPAuTpbAMlYYidI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJ9iY7u/7V4elHoI2Mck2dnYlkNBA3+i4yoUaQunanW7BXv2cw6GxzEU42sdEZ1a9
-	 lWomxNysGd+MR/qPqdrbRDVTK2mp/QvlORP645eHn+dJkQIDqgezO+JgplEsBc59c4
-	 w4KpVALBFWoRdneZO5bv40GG3tZiIfwYj/r/I6c0=
+	b=tk89i9NUHJR7hoNjeqCDCgSwFThJ/znoUkOgkWygto0P5zEGV23s8LV+MI2/8iGoh
+	 V3vX5FB5Cy0nrG0egpEP+RNOYLV3PWlwubLPuMBvlx+utOs+SObvLMjItyshgd4W4O
+	 5cHerIIQUe7S8LbD1y0t7ke3er0aSyAD/qcJWmK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.10 077/149] cpufreq/amd-pstate: Use topology_logical_package_id() instead of logical_die_id()
-Date: Sun,  1 Sep 2024 18:16:28 +0200
-Message-ID: <20240901160820.363068340@linuxfoundation.org>
+	stable@kernel.org,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.10 078/149] iommufd: Do not allow creating areas without READ or WRITE
+Date: Sun,  1 Sep 2024 18:16:29 +0200
+Message-ID: <20240901160820.401469559@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,42 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 0d8584d288a9b4132e945d76bcc04395d158b2e7 upstream.
+commit 996dc53ac289b81957aa70d62ccadc6986d26a87 upstream.
 
-After the commit 63edbaa48a57 ("x86/cpu/topology: Add support for the
-AMD 0x80000026 leaf"), the topolgy_logical_die_id() function returns
-the logical Core Chiplet Die (CCD) ID instead of the logical socket
-ID.
+This results in passing 0 or just IOMMU_CACHE to iommu_map(). Most of
+the page table formats don't like this:
 
-Since this is currently used to set MSR_AMD_CPPC_ENABLE, which needs
-to be set on any one of the threads of the socket, it is prudent to
-use topology_logical_package_id() in place of
-topology_logical_die_id().
+  amdv1 - -EINVAL
+  armv7s - returns 0, doesn't update mapped
+  arm-lpae - returns 0 doesn't update mapped
+  dart - returns 0, doesn't update mapped
+  VT-D - returns -EINVAL
 
-Fixes: 63edbaa48a57 ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf")
-cc: stable@vger.kernel.org # 6.10
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Link: https://lore.kernel.org/lkml/20240801124509.3650-1-Dhananjay.Ugwekar@amd.com/
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Unfortunately the three formats that return 0 cause serious problems:
+
+ - Returning ret = but not uppdating mapped from domain->map_pages()
+   causes an infinite loop in __iommu_map()
+
+ - Not writing ioptes means that VFIO/iommufd have no way to recover them
+   and we will have memory leaks and worse during unmap
+
+Since almost nothing can support this, and it is a useless thing to do,
+block it early in iommufd.
+
+Cc: stable@kernel.org
+Fixes: aad37e71d5c4 ("iommufd: IOCTLs for the io_pagetable")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/1-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/ioas.c            |    8 ++++++++
+ tools/testing/selftests/iommu/iommufd.c |    6 +++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -329,7 +329,7 @@ static inline int pstate_enable(bool ena
- 		return 0;
+--- a/drivers/iommu/iommufd/ioas.c
++++ b/drivers/iommu/iommufd/ioas.c
+@@ -213,6 +213,10 @@ int iommufd_ioas_map(struct iommufd_ucmd
+ 	if (cmd->iova >= ULONG_MAX || cmd->length >= ULONG_MAX)
+ 		return -EOVERFLOW;
  
- 	for_each_present_cpu(cpu) {
--		unsigned long logical_id = topology_logical_die_id(cpu);
-+		unsigned long logical_id = topology_logical_package_id(cpu);
++	if (!(cmd->flags &
++	      (IOMMU_IOAS_MAP_WRITEABLE | IOMMU_IOAS_MAP_READABLE)))
++		return -EINVAL;
++
+ 	ioas = iommufd_get_ioas(ucmd->ictx, cmd->ioas_id);
+ 	if (IS_ERR(ioas))
+ 		return PTR_ERR(ioas);
+@@ -253,6 +257,10 @@ int iommufd_ioas_copy(struct iommufd_ucm
+ 	    cmd->dst_iova >= ULONG_MAX)
+ 		return -EOVERFLOW;
  
- 		if (test_bit(logical_id, &logical_proc_id_mask))
- 			continue;
++	if (!(cmd->flags &
++	      (IOMMU_IOAS_MAP_WRITEABLE | IOMMU_IOAS_MAP_READABLE)))
++		return -EINVAL;
++
+ 	src_ioas = iommufd_get_ioas(ucmd->ictx, cmd->src_ioas_id);
+ 	if (IS_ERR(src_ioas))
+ 		return PTR_ERR(src_ioas);
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -803,7 +803,7 @@ TEST_F(iommufd_ioas, copy_area)
+ {
+ 	struct iommu_ioas_copy copy_cmd = {
+ 		.size = sizeof(copy_cmd),
+-		.flags = IOMMU_IOAS_MAP_FIXED_IOVA,
++		.flags = IOMMU_IOAS_MAP_FIXED_IOVA | IOMMU_IOAS_MAP_WRITEABLE,
+ 		.dst_ioas_id = self->ioas_id,
+ 		.src_ioas_id = self->ioas_id,
+ 		.length = PAGE_SIZE,
+@@ -1296,7 +1296,7 @@ TEST_F(iommufd_ioas, copy_sweep)
+ {
+ 	struct iommu_ioas_copy copy_cmd = {
+ 		.size = sizeof(copy_cmd),
+-		.flags = IOMMU_IOAS_MAP_FIXED_IOVA,
++		.flags = IOMMU_IOAS_MAP_FIXED_IOVA | IOMMU_IOAS_MAP_WRITEABLE,
+ 		.src_ioas_id = self->ioas_id,
+ 		.dst_iova = MOCK_APERTURE_START,
+ 		.length = MOCK_PAGE_SIZE,
+@@ -1586,7 +1586,7 @@ TEST_F(iommufd_mock_domain, user_copy)
+ 	};
+ 	struct iommu_ioas_copy copy_cmd = {
+ 		.size = sizeof(copy_cmd),
+-		.flags = IOMMU_IOAS_MAP_FIXED_IOVA,
++		.flags = IOMMU_IOAS_MAP_FIXED_IOVA | IOMMU_IOAS_MAP_WRITEABLE,
+ 		.dst_ioas_id = self->ioas_id,
+ 		.dst_iova = MOCK_APERTURE_START,
+ 		.length = BUFFER_SIZE,
 
 
