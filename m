@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A4C44C97;
-	Sun,  1 Sep 2024 16:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C648333987;
+	Sun,  1 Sep 2024 16:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208037; cv=none; b=aa8eI4uViwFz0CaIK5JL3KUXj7B4wxYr7Y3LZSJ2BUPpcLe+JG9+taPruqxAY9KUmN6LXqYkAjJtR6zc04ZYRyh7cJqyW9sUdBY45+XC8t2PtmH+jnkQglOqd+Y1/C3HkjdOGjRpYkPnlZQtMzMK0KVHrn/cULW0LETovHQRojc=
+	t=1725208040; cv=none; b=rWD9Rv6JJ+Fwo42Rq0ZxNS0e/V8j9P/nNlHwmmx9SpiNMZhOX6+R5ZjREugC7Q+nxF9qJo6dafZiNguxt1wcm7UYlF29Z6OhPstS17I96j1po+Zg9L8zo3tC5yYFSQ0ghKJ5fpsZqMbLb1enhrJGb2sJi4AcxdLRv/PqNSULjUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208037; c=relaxed/simple;
-	bh=vgBtFu8xTGWD3HTi4ZngssjuUplN6TMz51PyNmHAjus=;
+	s=arc-20240116; t=1725208040; c=relaxed/simple;
+	bh=QgtJeAl8qchVKIN1TMqPvnnYhC+uN4/DSGbwJ5I8hGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJMezsZqgywY0phR2GYrJEv8W074Oc+eHqFbKwxIz4E+eN0aSM6sITI9c1Vfmf7Qk1xiHh39sx0/xwyhHo/kvS2ATP8DYIIp2sNDMWgz2qEsyTH60snOfsQSN9Wlxcn/WdGTKnZjX8A2wYwPgU0IyxBkkKyDSKyaVtQMsWcvnEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O96AMlwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/FnsJmZpmC012sMum+fjqqgXixHIHgtVLEA5SDIIdZgddchRUXdaCBa41JYXGaLGQklVBZjNaZCTg8OXuM7J4ISXCAu7IvjHtqThgZ44nvMHr7EvhF2UszmJOSCNrPLYpzIbkA3GGyMqb6ETvSccAIf5dvIY4JTkj2n7Q2gJII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6byKXPC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O96AMlwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDCCC4CEC3;
-	Sun,  1 Sep 2024 16:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6byKXPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35326C4CEC3;
+	Sun,  1 Sep 2024 16:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208037;
-	bh=vgBtFu8xTGWD3HTi4ZngssjuUplN6TMz51PyNmHAjus=;
+	s=korg; t=1725208040;
+	bh=QgtJeAl8qchVKIN1TMqPvnnYhC+uN4/DSGbwJ5I8hGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O96AMlweZgTW7OHCCMSVzSfeXhTcB9iSwS0+DXK3cFSSjAYwkK6FTcV8OWvObjmuJ
-	 uFKsze668kjEWa5velOVO31nSXk4Fb/iGSamWbKUIPKOW80RJWrCebPhBw3b+P+fqw
-	 lE6DIjWTwKJGXpHKOFGhm/e3Tl3cTvochHGrUelU=
+	b=W6byKXPCkNZOMkXRDyskAN0LQ+XVTLuOohgFGF88JcYogdi2SiWPyzly5B3QnqCIN
+	 s+ydMCgdxGD2nCkPy4fTG0MkIz7Mg+RVQ2zehURTdmHsbpH1oKHrLoRBh+m77pDCPF
+	 K67+TTupdkXBysUKKeNFwDoHITQ2rMmmceLvcaRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 54/93] Bluetooth: hci_core: Fix not handling hibernation actions
-Date: Sun,  1 Sep 2024 18:16:41 +0200
-Message-ID: <20240901160809.398051398@linuxfoundation.org>
+Subject: [PATCH 6.6 55/93] iommu: Do not return 0 from map_pages if it doesnt do anything
+Date: Sun,  1 Sep 2024 18:16:42 +0200
+Message-ID: <20240901160809.434577460@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -50,43 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 18b3256db76bd1130965acd99fbd38f87c3e6950 ]
+[ Upstream commit 6093cd582f8e027117a8d4ad5d129a1aacdc53d2 ]
 
-This fixes not handling hibernation actions on suspend notifier so they
-are treated in the same way as regular suspend actions.
+These three implementations of map_pages() all succeed if a mapping is
+requested with no read or write. Since they return back to __iommu_map()
+leaving the mapped output as 0 it triggers an infinite loop. Therefore
+nothing is using no-access protection bits.
 
-Fixes: 9952d90ea288 ("Bluetooth: Handle PM_SUSPEND_PREPARE and PM_POST_SUSPEND")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Further, VFIO and iommufd rely on iommu_iova_to_phys() to get back PFNs
+stored by map, if iommu_map() succeeds but iommu_iova_to_phys() fails that
+will create serious bugs.
+
+Thus remove this never used "nothing to do" concept and just fail map
+immediately.
+
+Fixes: e5fc9753b1a8 ("iommu/io-pgtable: Add ARMv7 short descriptor support")
+Fixes: e1d3c0fd701d ("iommu: add ARM LPAE page table allocator")
+Fixes: 745ef1092bcf ("iommu/io-pgtable: Move Apple DART support to its own file")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/2-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/iommu/io-pgtable-arm-v7s.c | 3 +--
+ drivers/iommu/io-pgtable-arm.c     | 3 +--
+ drivers/iommu/io-pgtable-dart.c    | 3 +--
+ 3 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index e660b3d661dae..1b56355c40eaf 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2394,10 +2394,16 @@ static int hci_suspend_notifier(struct notifier_block *nb, unsigned long action,
- 	/* To avoid a potential race with hci_unregister_dev. */
- 	hci_dev_hold(hdev);
+diff --git a/drivers/iommu/io-pgtable-arm-v7s.c b/drivers/iommu/io-pgtable-arm-v7s.c
+index 75f244a3e12df..06ffc683b28fe 100644
+--- a/drivers/iommu/io-pgtable-arm-v7s.c
++++ b/drivers/iommu/io-pgtable-arm-v7s.c
+@@ -552,9 +552,8 @@ static int arm_v7s_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+ 		    paddr >= (1ULL << data->iop.cfg.oas)))
+ 		return -ERANGE;
  
--	if (action == PM_SUSPEND_PREPARE)
-+	switch (action) {
-+	case PM_HIBERNATION_PREPARE:
-+	case PM_SUSPEND_PREPARE:
- 		ret = hci_suspend_dev(hdev);
--	else if (action == PM_POST_SUSPEND)
-+		break;
-+	case PM_POST_HIBERNATION:
-+	case PM_POST_SUSPEND:
- 		ret = hci_resume_dev(hdev);
-+		break;
-+	}
+-	/* If no access, then nothing to do */
+ 	if (!(prot & (IOMMU_READ | IOMMU_WRITE)))
+-		return 0;
++		return -EINVAL;
  
- 	if (ret)
- 		bt_dev_err(hdev, "Suspend notifier action (%lu) failed: %d",
+ 	while (pgcount--) {
+ 		ret = __arm_v7s_map(data, iova, paddr, pgsize, prot, 1, data->pgd,
+diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+index 72dcdd468cf30..934dc97f5df9e 100644
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -480,9 +480,8 @@ static int arm_lpae_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+ 	if (WARN_ON(iaext || paddr >> cfg->oas))
+ 		return -ERANGE;
+ 
+-	/* If no access, then nothing to do */
+ 	if (!(iommu_prot & (IOMMU_READ | IOMMU_WRITE)))
+-		return 0;
++		return -EINVAL;
+ 
+ 	prot = arm_lpae_prot_to_pte(data, iommu_prot);
+ 	ret = __arm_lpae_map(data, iova, paddr, pgsize, pgcount, prot, lvl,
+diff --git a/drivers/iommu/io-pgtable-dart.c b/drivers/iommu/io-pgtable-dart.c
+index 74b1ef2b96bee..10811e0b773d3 100644
+--- a/drivers/iommu/io-pgtable-dart.c
++++ b/drivers/iommu/io-pgtable-dart.c
+@@ -250,9 +250,8 @@ static int dart_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+ 	if (WARN_ON(paddr >> cfg->oas))
+ 		return -ERANGE;
+ 
+-	/* If no access, then nothing to do */
+ 	if (!(iommu_prot & (IOMMU_READ | IOMMU_WRITE)))
+-		return 0;
++		return -EINVAL;
+ 
+ 	tbl = dart_get_table(data, iova);
+ 
 -- 
 2.43.0
 
