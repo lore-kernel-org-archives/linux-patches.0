@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BB4208A7;
-	Sun,  1 Sep 2024 16:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19EC1C68C;
+	Sun,  1 Sep 2024 16:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209893; cv=none; b=Gf20NVjKfKZtxmzinkGqoHUd5oVcRznQccwwCo9sPi7Z6tnSpwlSvV4x3HFmEA8UkJrxc/ieTuUtYRjcdFPhOKOvyE4PNH8R2vxRJxma1ZpNNAQsh5xJBypfvKm5VWj1C6krnPF6TqldgTXjAXpcFkuC1oIN5HW5uqlGCrfIGqw=
+	t=1725209897; cv=none; b=hLYmqa5G5l/AoP3ee3QuSWoiWMa+daBoy+ftokXZm0P/ZRna0slZDyX1UswnXI0BDkJ7aMwwUlpixUlz1CVH3UMc5pElceyE97hPEtoYzWpc++Rh9v4791BYg7gQcXQ6WX5gotYaS9Bh1/HmBbLjfflIooq3nUzXdGG/TXNUofs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209893; c=relaxed/simple;
-	bh=h7J++ftOOIXkcrgJ2n7exue1NwEMKne86CI+XexG/Gw=;
+	s=arc-20240116; t=1725209897; c=relaxed/simple;
+	bh=nyPwlwYooYN5LDuTTloFRHHF+i1tWx3AQr424Fve4zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlQukWO/1j19YZjNnMesAnyqwhFyymdobjlO/QkrD74Oi/gQHY2BSTPcyNa4zPr6rzRC4qXn3dRkAbVbbAZS1kfgCBRiP74+qgQqrESL8nWXUouDai9MPLJK9HYgvqsK61/tK7i00KgD7NLan4iPfuy/uGvI7QUOX+6dKuBV7xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8g6gLTT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=euQc3bo92FpTDUPckdTuV/NeRJ/dolNFZ3KFVXhPRETQk6ijwrA7QwqY7NRaN1JyMC+WqwiRrp1tpCDy4Yai1+SRsuCzPCdRk00Ro+dTbxdosKtfrjE/+rSrvsLRWOXnwDkQT3Eg4b0bAFtFxJKQGlrJ0zxTgEOtx83ZmrfXHG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcUQsyS3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8g6gLTT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9286C4CEC3;
-	Sun,  1 Sep 2024 16:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcUQsyS3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D558C4CEC3;
+	Sun,  1 Sep 2024 16:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209893;
-	bh=h7J++ftOOIXkcrgJ2n7exue1NwEMKne86CI+XexG/Gw=;
+	s=korg; t=1725209896;
+	bh=nyPwlwYooYN5LDuTTloFRHHF+i1tWx3AQr424Fve4zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8g6gLTT3czihfmS7roZRNa4zcsbV3ih8yU4tKjqdsXn10bSGcrDIYInueLdCnqt3
-	 p3tGpuK+qgMi3NGs8wURI5PHhEHMQBW3PvLSZnh84U8QvEkRS3UsdajAqba60eH9jC
-	 PJoqoy12L0LYEa8uRZ+UHyfRAhP/104KTZ4gGalY=
+	b=vcUQsyS35Au9ga3dnA5AO2IJQlJ3SZvaVLq6Sz471gS2U5QcuVilMzpvrgTS3WLQ6
+	 vT9RmDlg9ixN3fI40+vKdEI3NOyz6GutVWtuYMmKmPt/uyjmjdQdNV4YqkF7GNY03E
+	 L/7sr8KCkbvkoYyDzwpIxeD432wVHOMwwsPeKYJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Tan Tee Min <tee.min.tan@linux.intel.com>,
 	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Naama Meir <naamax.meir@linux.intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/215] igc: Correct the launchtime offset
-Date: Sun,  1 Sep 2024 18:15:37 +0200
-Message-ID: <20240901160824.213241899@linuxfoundation.org>
+Subject: [PATCH 5.15 026/215] igc: remove I226 Qbv BaseTime restriction
+Date: Sun,  1 Sep 2024 18:15:38 +0200
+Message-ID: <20240901160824.251305556@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -57,164 +55,217 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
 
-[ Upstream commit 790835fcc0cb9992349ae3c9010dbc7321aaa24d ]
+[ Upstream commit b8897dc54e3bc9d25281bbb42a7d730782ff4588 ]
 
-The launchtime offset should be corrected according to sections 7.5.2.6
-Transmit Scheduling Latency of the Intel Ethernet I225/I226 Software
-User Manual.
+Remove the Qbv BaseTime restriction for I226 so that the BaseTime can be
+scheduled to the future time. A new register bit of Tx Qav Control
+(Bit-7: FutScdDis) was introduced to allow I226 scheduling future time as
+Qbv BaseTime and not having the Tx hang timeout issue.
 
-Software can compensate the latency between the transmission scheduling
-and the time that packet is transmitted to the network by setting this
-GTxOffset register. Without setting this register, there may be a
-significant delay between the packet scheduling and the network point.
+Besides, according to datasheet section 7.5.2.9.3.3, FutScdDis bit has to
+be configured first before the cycle time and base time.
 
-This patch helps to reduce the latency for each of the link speed.
+Indeed the FutScdDis bit is only active on re-configuration, thus we have
+to set the BASET_L to zero and then only set it to the desired value.
 
-Before:
+Please also note that the Qbv configuration flow is moved around based on
+the Qbv programming guideline that is documented in the latest datasheet.
 
-10Mbps   : 11000 - 13800 nanosecond
-100Mbps  : 1300 - 1700 nanosecond
-1000Mbps : 190 - 600 nanosecond
-2500Mbps : 1400 - 1700 nanosecond
-
-After:
-
-10Mbps   : less than 750 nanosecond
-100Mbps  : less than 192 nanosecond
-1000Mbps : less than 128 nanosecond
-2500Mbps : less than 128 nanosecond
-
-Test Setup:
-
-Talker : Use l2_tai.c to generate the launchtime into packet payload.
-Listener: Use timedump.c to compute the delta between packet arrival and
-LaunchTime packet payload.
-
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Co-developed-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
 Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Acked-by: Sasha Neftin <sasha.neftin@intel.com>
-Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Tested-by: Naama Meir <naamax.meir@linux.intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: e037a26ead18 ("igc: Fix packet still tx after gate close by reducing i226 MAC retry buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_defines.h |  9 ++++++
- drivers/net/ethernet/intel/igc/igc_main.c    |  7 +++++
- drivers/net/ethernet/intel/igc/igc_regs.h    |  1 +
- drivers/net/ethernet/intel/igc/igc_tsn.c     | 30 ++++++++++++++++++++
- drivers/net/ethernet/intel/igc/igc_tsn.h     |  1 +
- 5 files changed, 48 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_base.c    | 29 +++++++++++++
+ drivers/net/ethernet/intel/igc/igc_base.h    |  2 +
+ drivers/net/ethernet/intel/igc/igc_defines.h |  1 +
+ drivers/net/ethernet/intel/igc/igc_main.c    |  5 ++-
+ drivers/net/ethernet/intel/igc/igc_tsn.c     | 44 +++++++++++++-------
+ 5 files changed, 65 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
-index 703b62c5f79b5..95282dde6b8bc 100644
---- a/drivers/net/ethernet/intel/igc/igc_defines.h
-+++ b/drivers/net/ethernet/intel/igc/igc_defines.h
-@@ -405,6 +405,15 @@
- #define IGC_DTXMXPKTSZ_TSN	0x19 /* 1600 bytes of max TX DMA packet size */
- #define IGC_DTXMXPKTSZ_DEFAULT	0x98 /* 9728-byte Jumbo frames */
- 
-+/* Transmit Scheduling Latency */
-+/* Latency between transmission scheduling (LaunchTime) and the time
-+ * the packet is transmitted to the network in nanosecond.
-+ */
-+#define IGC_TXOFFSET_SPEED_10	0x000034BC
-+#define IGC_TXOFFSET_SPEED_100	0x00000578
-+#define IGC_TXOFFSET_SPEED_1000	0x0000012C
-+#define IGC_TXOFFSET_SPEED_2500	0x00000578
-+
- /* Time Sync Interrupt Causes */
- #define IGC_TSICR_SYS_WRAP	BIT(0) /* SYSTIM Wrap around. */
- #define IGC_TSICR_TXTS		BIT(1) /* Transmit Timestamp. */
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 6185566fbb98c..eb8c24318fdac 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5532,6 +5532,13 @@ static void igc_watchdog_task(struct work_struct *work)
- 				break;
- 			}
- 
-+			/* Once the launch time has been set on the wire, there
-+			 * is a delay before the link speed can be determined
-+			 * based on link-up activity. Write into the register
-+			 * as soon as we know the correct link speed.
-+			 */
-+			igc_tsn_adjust_txtime_offset(adapter);
-+
- 			if (adapter->link_speed != SPEED_1000)
- 				goto no_wait;
- 
-diff --git a/drivers/net/ethernet/intel/igc/igc_regs.h b/drivers/net/ethernet/intel/igc/igc_regs.h
-index 026c3b65fc37a..0e9c1298f36fe 100644
---- a/drivers/net/ethernet/intel/igc/igc_regs.h
-+++ b/drivers/net/ethernet/intel/igc/igc_regs.h
-@@ -227,6 +227,7 @@
- /* Transmit Scheduling Registers */
- #define IGC_TQAVCTRL		0x3570
- #define IGC_TXQCTL(_n)		(0x3344 + 0x4 * (_n))
-+#define IGC_GTXOFFSET		0x3310
- #define IGC_BASET_L		0x3314
- #define IGC_BASET_H		0x3318
- #define IGC_QBVCYCLET		0x331C
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 2330b1ff915e7..93518c785c7d2 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -48,6 +48,35 @@ static unsigned int igc_tsn_new_flags(struct igc_adapter *adapter)
- 	return new_flags;
+diff --git a/drivers/net/ethernet/intel/igc/igc_base.c b/drivers/net/ethernet/intel/igc/igc_base.c
+index 84f142f5e472e..be095c6531b68 100644
+--- a/drivers/net/ethernet/intel/igc/igc_base.c
++++ b/drivers/net/ethernet/intel/igc/igc_base.c
+@@ -402,6 +402,35 @@ void igc_rx_fifo_flush_base(struct igc_hw *hw)
+ 	rd32(IGC_MPC);
  }
  
-+void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
++bool igc_is_device_id_i225(struct igc_hw *hw)
 +{
-+	struct igc_hw *hw = &adapter->hw;
-+	u16 txoffset;
-+
-+	if (!is_any_launchtime(adapter))
-+		return;
-+
-+	switch (adapter->link_speed) {
-+	case SPEED_10:
-+		txoffset = IGC_TXOFFSET_SPEED_10;
-+		break;
-+	case SPEED_100:
-+		txoffset = IGC_TXOFFSET_SPEED_100;
-+		break;
-+	case SPEED_1000:
-+		txoffset = IGC_TXOFFSET_SPEED_1000;
-+		break;
-+	case SPEED_2500:
-+		txoffset = IGC_TXOFFSET_SPEED_2500;
-+		break;
++	switch (hw->device_id) {
++	case IGC_DEV_ID_I225_LM:
++	case IGC_DEV_ID_I225_V:
++	case IGC_DEV_ID_I225_I:
++	case IGC_DEV_ID_I225_K:
++	case IGC_DEV_ID_I225_K2:
++	case IGC_DEV_ID_I225_LMVP:
++	case IGC_DEV_ID_I225_IT:
++		return true;
 +	default:
-+		txoffset = 0;
-+		break;
++		return false;
 +	}
-+
-+	wr32(IGC_GTXOFFSET, txoffset);
 +}
 +
- /* Returns the TSN specific registers to their default values after
-  * the adapter is reset.
-  */
-@@ -57,6 +86,7 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
- 	u32 tqavctrl;
++bool igc_is_device_id_i226(struct igc_hw *hw)
++{
++	switch (hw->device_id) {
++	case IGC_DEV_ID_I226_LM:
++	case IGC_DEV_ID_I226_V:
++	case IGC_DEV_ID_I226_K:
++	case IGC_DEV_ID_I226_IT:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ static struct igc_mac_operations igc_mac_ops_base = {
+ 	.init_hw		= igc_init_hw_base,
+ 	.check_for_link		= igc_check_for_copper_link,
+diff --git a/drivers/net/ethernet/intel/igc/igc_base.h b/drivers/net/ethernet/intel/igc/igc_base.h
+index 52849f5e8048d..9f3827eda157c 100644
+--- a/drivers/net/ethernet/intel/igc/igc_base.h
++++ b/drivers/net/ethernet/intel/igc/igc_base.h
+@@ -7,6 +7,8 @@
+ /* forward declaration */
+ void igc_rx_fifo_flush_base(struct igc_hw *hw);
+ void igc_power_down_phy_copper_base(struct igc_hw *hw);
++bool igc_is_device_id_i225(struct igc_hw *hw);
++bool igc_is_device_id_i226(struct igc_hw *hw);
+ 
+ /* Transmit Descriptor - Advanced */
+ union igc_adv_tx_desc {
+diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
+index 95282dde6b8bc..4f2021a940fb3 100644
+--- a/drivers/net/ethernet/intel/igc/igc_defines.h
++++ b/drivers/net/ethernet/intel/igc/igc_defines.h
+@@ -527,6 +527,7 @@
+ /* Transmit Scheduling */
+ #define IGC_TQAVCTRL_TRANSMIT_MODE_TSN	0x00000001
+ #define IGC_TQAVCTRL_ENHANCED_QAV	0x00000008
++#define IGC_TQAVCTRL_FUTSCDDIS		0x00000080
+ 
+ #define IGC_TXQCTL_QUEUE_MODE_LAUNCHT	0x00000001
+ #define IGC_TXQCTL_STRICT_CYCLE		0x00000002
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index eb8c24318fdac..7605115e6a1b2 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -5991,6 +5991,7 @@ static bool validate_schedule(struct igc_adapter *adapter,
+ 			      const struct tc_taprio_qopt_offload *qopt)
+ {
+ 	int queue_uses[IGC_MAX_TX_QUEUES] = { };
++	struct igc_hw *hw = &adapter->hw;
+ 	struct timespec64 now;
+ 	size_t n;
+ 
+@@ -6003,8 +6004,10 @@ static bool validate_schedule(struct igc_adapter *adapter,
+ 	 * in the future, it will hold all the packets until that
+ 	 * time, causing a lot of TX Hangs, so to avoid that, we
+ 	 * reject schedules that would start in the future.
++	 * Note: Limitation above is no longer in i226.
+ 	 */
+-	if (!is_base_time_past(qopt->base_time, &now))
++	if (!is_base_time_past(qopt->base_time, &now) &&
++	    igc_is_device_id_i225(hw))
+ 		return false;
+ 
+ 	for (n = 0; n < qopt->num_entries; n++) {
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 93518c785c7d2..066444675aade 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -2,6 +2,7 @@
+ /* Copyright (c)  2019 Intel Corporation */
+ 
+ #include "igc.h"
++#include "igc_hw.h"
+ #include "igc_tsn.h"
+ 
+ static bool is_any_launchtime(struct igc_adapter *adapter)
+@@ -92,7 +93,8 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
+ 
+ 	tqavctrl = rd32(IGC_TQAVCTRL);
+ 	tqavctrl &= ~(IGC_TQAVCTRL_TRANSMIT_MODE_TSN |
+-		      IGC_TQAVCTRL_ENHANCED_QAV);
++		      IGC_TQAVCTRL_ENHANCED_QAV | IGC_TQAVCTRL_FUTSCDDIS);
++
+ 	wr32(IGC_TQAVCTRL, tqavctrl);
+ 
+ 	for (i = 0; i < adapter->num_tx_queues; i++) {
+@@ -117,20 +119,10 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 	ktime_t base_time, systim;
  	int i;
  
-+	wr32(IGC_GTXOFFSET, 0);
- 	wr32(IGC_TXPBS, I225_TXPBSIZE_DEFAULT);
- 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_DEFAULT);
+-	cycle = adapter->cycle_time;
+-	base_time = adapter->base_time;
+-
+ 	wr32(IGC_TSAUXC, 0);
+ 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_TSN);
+ 	wr32(IGC_TXPBS, IGC_TXPBSIZE_TSN);
  
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.h b/drivers/net/ethernet/intel/igc/igc_tsn.h
-index 1512307f5a528..b53e6af560b73 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.h
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.h
-@@ -6,5 +6,6 @@
+-	tqavctrl = rd32(IGC_TQAVCTRL);
+-	tqavctrl |= IGC_TQAVCTRL_TRANSMIT_MODE_TSN | IGC_TQAVCTRL_ENHANCED_QAV;
+-	wr32(IGC_TQAVCTRL, tqavctrl);
+-
+-	wr32(IGC_QBVCYCLET_S, cycle);
+-	wr32(IGC_QBVCYCLET, cycle);
+-
+ 	for (i = 0; i < adapter->num_tx_queues; i++) {
+ 		struct igc_ring *ring = adapter->tx_ring[i];
+ 		u32 txqctl = 0;
+@@ -233,21 +225,43 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 		wr32(IGC_TXQCTL(i), txqctl);
+ 	}
  
- int igc_tsn_offload_apply(struct igc_adapter *adapter);
- int igc_tsn_reset(struct igc_adapter *adapter);
-+void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter);
++	tqavctrl = rd32(IGC_TQAVCTRL);
++	tqavctrl |= IGC_TQAVCTRL_TRANSMIT_MODE_TSN | IGC_TQAVCTRL_ENHANCED_QAV;
++
++	cycle = adapter->cycle_time;
++	base_time = adapter->base_time;
++
+ 	nsec = rd32(IGC_SYSTIML);
+ 	sec = rd32(IGC_SYSTIMH);
  
- #endif /* _IGC_BASE_H */
+ 	systim = ktime_set(sec, nsec);
+-
+ 	if (ktime_compare(systim, base_time) > 0) {
+-		s64 n;
++		s64 n = div64_s64(ktime_sub_ns(systim, base_time), cycle);
+ 
+-		n = div64_s64(ktime_sub_ns(systim, base_time), cycle);
+ 		base_time = ktime_add_ns(base_time, (n + 1) * cycle);
++	} else {
++		/* According to datasheet section 7.5.2.9.3.3, FutScdDis bit
++		 * has to be configured before the cycle time and base time.
++		 */
++		if (igc_is_device_id_i226(hw))
++			tqavctrl |= IGC_TQAVCTRL_FUTSCDDIS;
+ 	}
+ 
+-	baset_h = div_s64_rem(base_time, NSEC_PER_SEC, &baset_l);
++	wr32(IGC_TQAVCTRL, tqavctrl);
++
++	wr32(IGC_QBVCYCLET_S, cycle);
++	wr32(IGC_QBVCYCLET, cycle);
+ 
++	baset_h = div_s64_rem(base_time, NSEC_PER_SEC, &baset_l);
+ 	wr32(IGC_BASET_H, baset_h);
++
++	/* In i226, Future base time is only supported when FutScdDis bit
++	 * is enabled and only active for re-configuration.
++	 * In this case, initialize the base time with zero to create
++	 * "re-configuration" scenario then only set the desired base time.
++	 */
++	if (tqavctrl & IGC_TQAVCTRL_FUTSCDDIS)
++		wr32(IGC_BASET_L, 0);
+ 	wr32(IGC_BASET_L, baset_l);
+ 
+ 	return 0;
 -- 
 2.43.0
 
