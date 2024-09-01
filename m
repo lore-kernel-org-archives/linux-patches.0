@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EAF17E91A;
-	Sun,  1 Sep 2024 16:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E75E155A24;
+	Sun,  1 Sep 2024 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207668; cv=none; b=te4COMZKnvFuFbDAe6kc0X9BxLdaBAWvo42RKz31vj7Hw0Fxj/vExM2qG+x5aSF1NLUW8vtn63oLVCD1WnIyumOEzBd78fNVXdIHi6PqDpYmT9n3b8FCl55qjEBu/INzE21EVlCgApQx03CDGB9fvHMdb85Jsb7q+igAhf/Xl4o=
+	t=1725207672; cv=none; b=RA2WkD9YySixrJZnfRVSyb9u5nI4sB4Wc8DokWR4URCQtE0ugWbz27Y8brXw5aYD1Z+IqGRMiwXmSD1WTmSxJOdBQShhN5mDIbDPPGQtt5yOk7ht/RYmMvs0sZ+OVxS1dyYwX0q8FVpOCddo6h6N4YaSfJ56vWDuNeKbb11pPdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207668; c=relaxed/simple;
-	bh=TjPtU/zDy+d9GQB/ZSI4HrM/DhsPo21+E8V3F7gZ2qg=;
+	s=arc-20240116; t=1725207672; c=relaxed/simple;
+	bh=s0D3repaL939DupniR4g+5qt66BPDck7myl9FXk10VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b5rsJ7HF/7B4aBWeB7fzvh9rldSQGrQDnAC0nEuhkZW6uMG7X2c95yjfp/nuYCNgMNmZ1cJRp0eZ03u2IfP5eFxrwGZ1g5XdwGMnpqKw4jZoSghprjVwRmNgWV9/gEJvrFrgyk9mcX68KMPxkCYHD8C4uRTgPNYpbm+d+yRnqyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHhD4KgR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=csVXpHBRpWtV+Wpw8cpGAKwEj1CbeQ6sMuHk+lh6MaNhYmmXV0QgSN4rmCSWOf/MfOetVw9k/Rhm2MhbrxQZxL3Nv3NNSoi08mjSxgvmajoFLOkS8SX13fdzuhb47OXkr3F9KOCUQX00/7uTRVQ/XaRLOqLf72lkJNym/4t8KYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0W4kAhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHhD4KgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC53C4CEC3;
-	Sun,  1 Sep 2024 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0W4kAhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278E6C4CEC3;
+	Sun,  1 Sep 2024 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207668;
-	bh=TjPtU/zDy+d9GQB/ZSI4HrM/DhsPo21+E8V3F7gZ2qg=;
+	s=korg; t=1725207671;
+	bh=s0D3repaL939DupniR4g+5qt66BPDck7myl9FXk10VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHhD4KgRmDCpMXpvOM3Lmtu2lqlWGMdA8+axoUA7kA/TVGqejP4hgyYOiXqfQhd3P
-	 2zxNPAp0Klkbi6oWDqNt5DmNbttWCXFYe9S+d5LvhK737ho4MuRT+GJypmdvtPtmyQ
-	 7d79CKyC48UN8KNYZ6lrUe1oX0Z4I9LZGwvsP6AI=
+	b=y0W4kAhy1xHUFqb/5u1kIAdXrIRckBVASBTXvDjOqGIDoSzjCo7wed00+M5MzwAUX
+	 in51l0L4+4ttoyXtxDSwxDaX2j/avUEuhImt1jB5sdp0TE3h+n/wYLiIvTSKkwSk8f
+	 ZOj7a79kaA4eocmVuFeS6ZxncK90fy7clqUfSWK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 41/98] usb: gadget: fsl: Increase size of name buffer for endpoints
-Date: Sun,  1 Sep 2024 18:16:11 +0200
-Message-ID: <20240901160805.248669016@linuxfoundation.org>
+Subject: [PATCH 4.19 42/98] Bluetooth: bnep: Fix out-of-bound access
+Date: Sun,  1 Sep 2024 18:16:12 +0200
+Message-ID: <20240901160805.287388141@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -44,42 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 87850f6cc20911e35eafcbc1d56b0d649ae9162d ]
+[ Upstream commit 0f0639b4d6f649338ce29c62da3ec0787fa08cd1 ]
 
-This fixes a W=1 warning about sprintf writing up to 16 bytes into a
-buffer of size 14. There is no practical relevance because there are not
-more than 32 endpoints.
+This fixes attempting to access past ethhdr.h_source, although it seems
+intentional to copy also the contents of h_proto this triggers
+out-of-bound access problems with the likes of static analyzer, so this
+instead just copy ETH_ALEN and then proceed to use put_unaligned to copy
+h_proto separetely.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/6754df25c56aae04f8110594fad2cd2452b1862a.1708709120.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fsl_udc_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/bnep/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/fsl_udc_core.c b/drivers/usb/gadget/udc/fsl_udc_core.c
-index 367697144cda2..b86f86902f55e 100644
---- a/drivers/usb/gadget/udc/fsl_udc_core.c
-+++ b/drivers/usb/gadget/udc/fsl_udc_core.c
-@@ -2501,7 +2501,7 @@ static int fsl_udc_probe(struct platform_device *pdev)
- 	/* setup the udc->eps[] for non-control endpoints and link
- 	 * to gadget.ep_list */
- 	for (i = 1; i < (int)(udc_controller->max_ep / 2); i++) {
--		char name[14];
-+		char name[16];
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index 7b3965861013c..a16d584a6c0d0 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -385,7 +385,8 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
  
- 		sprintf(name, "ep%dout", i);
- 		struct_ep_setup(udc_controller, i * 2, name, 1);
+ 	case BNEP_COMPRESSED_DST_ONLY:
+ 		__skb_put_data(nskb, skb_mac_header(skb), ETH_ALEN);
+-		__skb_put_data(nskb, s->eh.h_source, ETH_ALEN + 2);
++		__skb_put_data(nskb, s->eh.h_source, ETH_ALEN);
++		put_unaligned(s->eh.h_proto, (__be16 *)__skb_put(nskb, 2));
+ 		break;
+ 
+ 	case BNEP_GENERAL:
 -- 
 2.43.0
 
