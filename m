@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14E71DFD1;
-	Sun,  1 Sep 2024 16:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDCF1DFD1;
+	Sun,  1 Sep 2024 16:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209573; cv=none; b=LJfwd1pBolyqUYZkx82LEP9FISF+GGcm8kdCn57AMhBeavPxJA7Jtv5BQHthny4jeBsZ2z1qV6qGGxfQ64wSLc99KaRjBgVMQNn7e1Y+C3HrqKo63pnWyq3GuRoJtT6gu5TMANyyQuVwmy4TcXVaDhNeEst/un1tDtD0i0ohK6U=
+	t=1725209576; cv=none; b=UNyVxBodTELQXoOShMjlO9UUU8uF/wGzQXHLa+TqexyHjCcBAzCBubeHovp79bDpfrnRKCJ9ufUA9fl58Gy6GzmszgqxqWZnHt61DXFYwVut2450+vpa7K3vVAVKiyV1EnZn3+F/0X1bUcRHKstAXy65G8JILwxkyID2ahaCvgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209573; c=relaxed/simple;
-	bh=ftRo6Pp/UaVX/mad1DOuOcGE2oYLkoAftNTDFNTgilM=;
+	s=arc-20240116; t=1725209576; c=relaxed/simple;
+	bh=mKrjhLzgqmZNxkB3V70cx0UC/7edfm3SAZKQ4s2esvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=su/RbtawQjwhX+uj17xrFv2+b01z0oO2rJMp0NVVCrjFVgP93lCPlyxni10aUF/7BjsEn2dfUAr1gyeGLe6q64Mis3BT5LVYDVFYhHNZ0lwI/mkkx9hkjomM9K8/SnMAaokS9K/8ZX8d8pfhRS7EVPyMm1ifWIgWIqy16i7stTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQbKcqQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHetQucc4Q0m4tFrJ68IPditY3ZZLen/rayEuBeTx/t/7n+mSJ8/RvqGoHNg4kUOj8619ebz0CrNQ2Iq7NEH2IY1IFEDw5m8J4hlDlnbzKiQ76VdU3HduVFn+nxrDC/CS7YUjY7PD3G5lhnSc5/JmMLZt0M7+FMnz3aTAh0PhsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ch2Es0pD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQbKcqQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C4EC4CEC3;
-	Sun,  1 Sep 2024 16:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch2Es0pD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1834EC4CEC3;
+	Sun,  1 Sep 2024 16:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209573;
-	bh=ftRo6Pp/UaVX/mad1DOuOcGE2oYLkoAftNTDFNTgilM=;
+	s=korg; t=1725209576;
+	bh=mKrjhLzgqmZNxkB3V70cx0UC/7edfm3SAZKQ4s2esvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQbKcqQQa1kTCwo3sqvayxeBzO/f+VAZb7cc+kE0pLTmnEfWXYtg/K90CmFtbHVel
-	 vi4Wmw+VOBzXKAsi6+JDJUA1amZ4PT8lsxKvOKuqSh7p26HCGOq47vq+GfSLBNApBu
-	 6b9lkQ3m/swuHTPeBY8Ce+F1LufZpegvvEEcnkCI=
+	b=Ch2Es0pDCM1lK0PtHw9E+o014FEpW5ND/VrvJaYshcXx417TddY4tZgnAThMx366C
+	 lkkv3/y06L6Go0WD+30l+xjYI6y45H0KtzXhp7R146BHeM56WYTtJ9DimcFMGoD9fg
+	 7Zl5Rj1Rf/nVvYAIh9b9dilHW1as/4fw162wC9nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Li zeming <zeming@nfschina.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/151] ext4: set the type of max_zeroout to unsigned int to avoid overflow
-Date: Sun,  1 Sep 2024 18:17:19 +0200
-Message-ID: <20240901160817.092229198@linuxfoundation.org>
+Subject: [PATCH 5.10 062/151] powerpc/boot: Handle allocation failure in simple_realloc()
+Date: Sun,  1 Sep 2024 18:17:02 +0200
+Message-ID: <20240901160816.450817673@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Li zeming <zeming@nfschina.com>
 
-[ Upstream commit 261341a932d9244cbcd372a3659428c8723e5a49 ]
+[ Upstream commit 69b0194ccec033c208b071e019032c1919c2822d ]
 
-The max_zeroout is of type int and the s_extent_max_zeroout_kb is of
-type uint, and the s_extent_max_zeroout_kb can be freely modified via
-the sysfs interface. When the block size is 1024, max_zeroout may
-overflow, so declare it as unsigned int to avoid overflow.
+simple_malloc() will return NULL when there is not enough memory left.
+Check pointer 'new' before using it to copy the old data.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240319113325.3110393-9-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Li zeming <zeming@nfschina.com>
+[mpe: Reword subject, use change log from Christophe]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20221219021816.3012-1-zeming@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/boot/simple_alloc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 9e12592727914..f5fa9d542d648 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3399,9 +3399,10 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
- 	struct ext4_extent *ex, *abut_ex;
- 	ext4_lblk_t ee_block, eof_block;
- 	unsigned int ee_len, depth, map_len = map->m_len;
--	int allocated = 0, max_zeroout = 0;
- 	int err = 0;
- 	int split_flag = EXT4_EXT_DATA_VALID2;
-+	int allocated = 0;
-+	unsigned int max_zeroout = 0;
+diff --git a/arch/powerpc/boot/simple_alloc.c b/arch/powerpc/boot/simple_alloc.c
+index 65ec135d01579..188c4f996512a 100644
+--- a/arch/powerpc/boot/simple_alloc.c
++++ b/arch/powerpc/boot/simple_alloc.c
+@@ -114,7 +114,9 @@ static void *simple_realloc(void *ptr, unsigned long size)
+ 		return ptr;
  
- 	ext_debug(inode, "logical block %llu, max_blocks %u\n",
- 		  (unsigned long long)map->m_lblk, map_len);
+ 	new = simple_malloc(size);
+-	memcpy(new, ptr, p->size);
++	if (new)
++		memcpy(new, ptr, p->size);
++
+ 	simple_free(ptr);
+ 	return new;
+ }
 -- 
 2.43.0
 
