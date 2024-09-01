@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8278317C;
-	Sun,  1 Sep 2024 17:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3052C190;
+	Sun,  1 Sep 2024 17:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210368; cv=none; b=sZhB5KQYDF34zZ1VqT2kRgZa1FfrVmHx2QoHiI0Nb2F0ruBCgXPQT6jzszSt/duEUYDbE2JYhk1x1q3St8k8utmoay53jl+iSAK4ucmnHIv1VFxeaheHjGs446mqDkWIGlSH36LmvYxclNb8MS5IIuPpuFTN6FX1p1DdgzNiGIk=
+	t=1725210371; cv=none; b=RqBwX8xzavAySv6cwvg0vH6a6588xRBRgXDCGdxcwNw0ayD+JeKz1QR2Zr84pjQW+HgsKto4B9fdk9H7arYbS8zzv1cy81VoES3UnwQ4dCmsFJws+TOQREcETegNxCvepTcdHDLoxTzl3vBJ8cQlFl1QBqtUrZ1VLlLCik9s1Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210368; c=relaxed/simple;
-	bh=8sxaB70xG92Vjx/X9qSnKADNaT5yXqNKjJypfZyDdec=;
+	s=arc-20240116; t=1725210371; c=relaxed/simple;
+	bh=ff9r634YEkTTrH0Qdt2VodPyV2F0KXR8Qk/NM3e7ASo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHy4rP5Y6UMgv8B3IL6kf8n1KP4dRgggt2jMBL8GTk8Alwp7A6QD0KHa67n1EmjhlCh1wflhtOGpLyZQPM459kyL8ZAnLuykLNhZkSP2aEnlN1RtKNidhVdXPTKV98R5OsxZ+WUPdpx5bBNt6cvJHAC7dgJULJTff66AkqKQv7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1CszhFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQ9ggcpNV7DFgS+uH4msNvIDptsG4e5k+cArvwOTNz0xKJ0conj1dP/mL1a12M4F+MetuhwIlRNdETu3/zy0RtS46QYja9rnDbVpvaphSz0niGXwTPCFFHvf8iiaeYD+DVamu39MTPnVVz3exsBJpsNQdlIM/5/vEFR6wM5gZ78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drNdW5/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1CszhFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026A4C4CEC3;
-	Sun,  1 Sep 2024 17:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drNdW5/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C752C4CEC3;
+	Sun,  1 Sep 2024 17:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210368;
-	bh=8sxaB70xG92Vjx/X9qSnKADNaT5yXqNKjJypfZyDdec=;
+	s=korg; t=1725210371;
+	bh=ff9r634YEkTTrH0Qdt2VodPyV2F0KXR8Qk/NM3e7ASo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1CszhFZtvSsn2hZSOSqtyqc4KvgRnFII7ywG8cet/sU03VrTkB4XC/Z7RnZHV+Uh
-	 1TUXNbwR5rggfKzgjEGM3/jq+W5qWt3iiWEtzQoATnzk0bBtGIBdRSQmNRVAE0GuPo
-	 hQ8DaWmkrQ672v4JV+BvDhs6Y9x9FkBAxal2zc/M=
+	b=drNdW5/aBuE/F5p2izX/JqSg4qtOp6AlKoE25FgdJrjZ5d2wcynLxkkVOCwBs0ceQ
+	 czEkCFeWzn1uZiMfjL9rjnGkKKVg9TmrRGkifHF9QBLpkhtxAVHYI3HOSad+kUVmZD
+	 mF1w7h7e2ts6KB+offV+8vClSuKt5beiW2eDF+9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 167/215] Revert "drm/amd/display: Validate hw_points_num before using it"
-Date: Sun,  1 Sep 2024 18:17:59 +0200
-Message-ID: <20240901160829.671891739@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 168/215] hwmon: (ltc2992) Fix memory leak in ltc2992_parse_dt()
+Date: Sun,  1 Sep 2024 18:18:00 +0200
+Message-ID: <20240901160829.709296395@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,34 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 8f4bdbc8e99db6ec9cb0520748e49a2f2d7d1727 upstream.
+commit a94ff8e50c20bde6d50864849a98b106e45d30c6 upstream.
 
-This reverts commit 58c3b3341cea4f75dc8c003b89f8a6dd8ec55e50.
+A new error path was added to the fwnode_for_each_available_node() loop
+in ltc2992_parse_dt(), which leads to an early return that requires a
+call to fwnode_handle_put() to avoid a memory leak in that case.
 
-[WHY & HOW]
-The writeback series cause a regression in thunderbolt display.
+Add the missing fwnode_handle_put() in the error path from a zero value
+shunt resistor.
 
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Fixes: 10b029020487 ("hwmon: (ltc2992) Avoid division by zero")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20240523-fwnode_for_each_available_child_node_scoped-v2-1-701f3a03f2fb@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/hwmon/ltc2992.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
-@@ -243,9 +243,6 @@ static bool dwb3_program_ogam_lut(
- 		return false;
+--- a/drivers/hwmon/ltc2992.c
++++ b/drivers/hwmon/ltc2992.c
+@@ -913,9 +913,11 @@ static int ltc2992_parse_dt(struct ltc29
+ 
+ 		ret = fwnode_property_read_u32(child, "shunt-resistor-micro-ohms", &val);
+ 		if (!ret) {
+-			if (!val)
++			if (!val) {
++				fwnode_handle_put(child);
+ 				return dev_err_probe(&st->client->dev, -EINVAL,
+ 						     "shunt resistor value cannot be zero\n");
++			}
+ 			st->r_sense_uohm[addr] = val;
+ 		}
  	}
- 
--	if (params->hw_points_num == 0)
--		return false;
--
- 	REG_SET(DWB_OGAM_CONTROL, 0, DWB_OGAM_MODE, 2);
- 
- 	current_mode = dwb3_get_ogam_current(dwbc30);
 
 
