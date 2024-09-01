@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D1A186E43;
-	Sun,  1 Sep 2024 16:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA18818452E;
+	Sun,  1 Sep 2024 16:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209218; cv=none; b=UH7L/Yw+PFNcO8hFwMRSo4kib8a7xsMxYqVjdOB06Pestxiklt8p5776zKkMfwIwQ3u1viTcwmkoLW9sVtNCygtWdr0LoSNH3U/KvqfHQqeyw1lgfpQVrlgYtzTkVN//632qxaRs3wlAd23qm6VFeQ88NDSl35YHsQih5JRvqWE=
+	t=1725209221; cv=none; b=Mc0hvF+FXavUNJAuwdHpx3NG500o2Pelspq43aMNA0fgkGFWmu/89S/uRF2nEYLb7uA7xzGVTm9zzV6JATJgtt3jSjBLosPY9zxk7Mw7FyFGw3EihcXN/j0c/q3tyQvjAjs0FERkMCAi2k40J/4QB1bhVkF7+ljCaYn5GDXH99Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209218; c=relaxed/simple;
-	bh=20eS1IvRcBjFhIP3bEYHLBbx32KM6nBANUDOiMJoWPU=;
+	s=arc-20240116; t=1725209221; c=relaxed/simple;
+	bh=2ynujQitxK9f3wsfw7x10NJcpLOiqRELndOLUMhpmhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMigO96kqLSxeKtFIy3YhCOLKM393rsZJVjXBb6/+4t1KhshdyN0dVX7rbqhoo5cwHTl/puFfqmxZCIV07KofbTkusMwRsSRh2P+MhbipWY8QqnFD25MgY26cslK33Dwlh9yJ9f931hzjtmW10C18IzB1o73zdgFd7F92PMp1g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCq5y1YB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRN8GnNYg9PxbtoHXpfqHThcc3hYNz96xbzY25EBaCMIOmf35FLZLv4bcnVftnGwhq2vPhve3R3b7QSV6x491DDvZhVs5Q7Fkb7KH6POV0fKeIibX/qlmTfcOIMvi6X69DM1T2Z0eXYp7tzoDLSGZRsuI4lEGcZQ/dpTorbKKzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6sBL9TW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCq5y1YB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0286AC4CEC3;
-	Sun,  1 Sep 2024 16:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6sBL9TW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D54C4CEC3;
+	Sun,  1 Sep 2024 16:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209218;
-	bh=20eS1IvRcBjFhIP3bEYHLBbx32KM6nBANUDOiMJoWPU=;
+	s=korg; t=1725209221;
+	bh=2ynujQitxK9f3wsfw7x10NJcpLOiqRELndOLUMhpmhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCq5y1YBzQvjXtzuLh7fUl+qklBbRD0I2yuYtsssMHzNEcDKEur26Mbowrqs2o5L3
-	 xoV4T8yk2gEPzhVAreUMV9OyX0P31O9XM5SLG90XR+LI+RKvqlKRcNK31NJTKIOGnB
-	 fCgkw3QgAS6Xv7DJxj8o9wCbq5cP4XZ9K94+DnW0=
+	b=X6sBL9TWoL6b/kA9Xn3fEJLdZwI14tNcWnbYx79HGcF/4wnxWj/hiOsD9oDXQ00pr
+	 ZahplDN3cE9QMygKKN9LXz9vOo0yZBRiHLVMx9n1BSJnVitAScoVLvqtLBBZ6qw+xx
+	 tIgLo+fpX1fCNiSRTVPh+o7gFXBplQVbIsFSPyHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Piyush Mehta <piyush.mehta@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 37/71] phy: xilinx: add runtime PM support
-Date: Sun,  1 Sep 2024 18:17:42 +0200
-Message-ID: <20240901160803.292752837@linuxfoundation.org>
+Subject: [PATCH 6.1 38/71] phy: xilinx: phy-zynqmp: dynamic clock support for power-save
+Date: Sun,  1 Sep 2024 18:17:43 +0200
+Message-ID: <20240901160803.329761955@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -53,113 +53,198 @@ Content-Transfer-Encoding: 8bit
 
 From: Piyush Mehta <piyush.mehta@amd.com>
 
-[ Upstream commit b3db66f624468ab4a0385586bc7f4221e477d6b2 ]
+[ Upstream commit 25d70083351318b44ae699d92c042dcb18a738ea ]
 
-Added Runtime power management support to the xilinx phy driver and using
-DEFINE_RUNTIME_DEV_PM_OPS new macros allows the compiler to remove the
-unused dev_pm_ops structure and related functions if !CONFIG_PM without
-the need to mark the functions __maybe_unused.
+Enabling clock for all the lanes consumes power even PHY is active or
+inactive. To resolve this, enable/disable clocks in phy_init/phy_exit.
+
+By default clock is disabled for all the lanes. Whenever phy_init called
+from USB, SATA, or display driver, etc. It enabled the required clock
+for requested lane. On phy_exit cycle, it disabled clock for the active
+PHYs.
+
+During the suspend/resume cycle, each USB/ SATA/ display driver called
+phy_exit/phy_init individually. It disabled clock on exit, and enabled
+on initialization for the active PHYs.
 
 Signed-off-by: Piyush Mehta <piyush.mehta@amd.com>
-Link: https://lore.kernel.org/r/20230613140250.3018947-2-piyush.mehta@amd.com
+Link: https://lore.kernel.org/r/20230613140250.3018947-3-piyush.mehta@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 5af9b304bc60 ("phy: xilinx: phy-zynqmp: Fix SGMII linkup failure on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 35 ++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 61 ++++++++-------------------------
+ 1 file changed, 15 insertions(+), 46 deletions(-)
 
 diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index 9be9535ad7ab7..964d8087fcf46 100644
+index 964d8087fcf46..a8782aad62ca4 100644
 --- a/drivers/phy/xilinx/phy-zynqmp.c
 +++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -21,6 +21,7 @@
- #include <linux/of.h>
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/slab.h>
+@@ -573,6 +573,10 @@ static int xpsgtr_phy_init(struct phy *phy)
  
- #include <dt-bindings/phy/phy.h>
-@@ -821,7 +822,7 @@ static struct phy *xpsgtr_xlate(struct device *dev,
-  * Power Management
-  */
+ 	mutex_lock(&gtr_dev->gtr_mutex);
  
--static int __maybe_unused xpsgtr_suspend(struct device *dev)
-+static int xpsgtr_runtime_suspend(struct device *dev)
++	/* Configure and enable the clock when peripheral phy_init call */
++	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->lane]))
++		goto out;
++
+ 	/* Skip initialization if not required. */
+ 	if (!xpsgtr_phy_init_required(gtr_phy))
+ 		goto out;
+@@ -617,9 +621,13 @@ static int xpsgtr_phy_init(struct phy *phy)
+ static int xpsgtr_phy_exit(struct phy *phy)
  {
- 	struct xpsgtr_dev *gtr_dev = dev_get_drvdata(dev);
- 	unsigned int i;
-@@ -836,7 +837,7 @@ static int __maybe_unused xpsgtr_suspend(struct device *dev)
+ 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
++	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
+ 
+ 	gtr_phy->skip_phy_init = false;
+ 
++	/* Ensure that disable clock only, which configure for lane */
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->lane]);
++
  	return 0;
  }
  
--static int __maybe_unused xpsgtr_resume(struct device *dev)
-+static int xpsgtr_runtime_resume(struct device *dev)
+@@ -825,15 +833,11 @@ static struct phy *xpsgtr_xlate(struct device *dev,
+ static int xpsgtr_runtime_suspend(struct device *dev)
  {
  	struct xpsgtr_dev *gtr_dev = dev_get_drvdata(dev);
- 	unsigned int icm_cfg0, icm_cfg1;
-@@ -877,10 +878,8 @@ static int __maybe_unused xpsgtr_resume(struct device *dev)
- 	return err;
- }
+-	unsigned int i;
  
--static const struct dev_pm_ops xpsgtr_pm_ops = {
--	SET_SYSTEM_SLEEP_PM_OPS(xpsgtr_suspend, xpsgtr_resume)
--};
+ 	/* Save the snapshot ICM_CFG registers. */
+ 	gtr_dev->saved_icm_cfg0 = xpsgtr_read(gtr_dev, ICM_CFG0);
+ 	gtr_dev->saved_icm_cfg1 = xpsgtr_read(gtr_dev, ICM_CFG1);
+ 
+-	for (i = 0; i < ARRAY_SIZE(gtr_dev->clk); i++)
+-		clk_disable_unprepare(gtr_dev->clk[i]);
 -
-+static DEFINE_RUNTIME_DEV_PM_OPS(xpsgtr_pm_ops, xpsgtr_runtime_suspend,
-+				 xpsgtr_runtime_resume, NULL);
- /*
-  * Probe & Platform Driver
-  */
-@@ -1006,6 +1005,16 @@ static int xpsgtr_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(provider);
- 		goto err_clk_put;
- 	}
-+
-+	pm_runtime_set_active(gtr_dev->dev);
-+	pm_runtime_enable(gtr_dev->dev);
-+
-+	ret = pm_runtime_resume_and_get(gtr_dev->dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(gtr_dev->dev);
-+		goto err_clk_put;
-+	}
-+
  	return 0;
- 
- err_clk_put:
-@@ -1015,6 +1024,17 @@ static int xpsgtr_probe(struct platform_device *pdev)
- 	return ret;
  }
  
-+static int xpsgtr_remove(struct platform_device *pdev)
-+{
-+	struct xpsgtr_dev *gtr_dev = platform_get_drvdata(pdev);
-+
-+	pm_runtime_disable(gtr_dev->dev);
-+	pm_runtime_put_noidle(gtr_dev->dev);
-+	pm_runtime_set_suspended(gtr_dev->dev);
-+
-+	return 0;
-+}
-+
- static const struct of_device_id xpsgtr_of_match[] = {
- 	{ .compatible = "xlnx,zynqmp-psgtr", },
- 	{ .compatible = "xlnx,zynqmp-psgtr-v1.1", },
-@@ -1024,10 +1044,11 @@ MODULE_DEVICE_TABLE(of, xpsgtr_of_match);
+@@ -843,13 +847,6 @@ static int xpsgtr_runtime_resume(struct device *dev)
+ 	unsigned int icm_cfg0, icm_cfg1;
+ 	unsigned int i;
+ 	bool skip_phy_init;
+-	int err;
+-
+-	for (i = 0; i < ARRAY_SIZE(gtr_dev->clk); i++) {
+-		err = clk_prepare_enable(gtr_dev->clk[i]);
+-		if (err)
+-			goto err_clk_put;
+-	}
  
- static struct platform_driver xpsgtr_driver = {
- 	.probe = xpsgtr_probe,
-+	.remove	= xpsgtr_remove,
- 	.driver = {
- 		.name = "xilinx-psgtr",
- 		.of_match_table	= xpsgtr_of_match,
--		.pm =  &xpsgtr_pm_ops,
-+		.pm =  pm_ptr(&xpsgtr_pm_ops),
- 	},
- };
+ 	icm_cfg0 = xpsgtr_read(gtr_dev, ICM_CFG0);
+ 	icm_cfg1 = xpsgtr_read(gtr_dev, ICM_CFG1);
+@@ -870,12 +867,6 @@ static int xpsgtr_runtime_resume(struct device *dev)
+ 		gtr_dev->phys[i].skip_phy_init = skip_phy_init;
  
+ 	return 0;
+-
+-err_clk_put:
+-	while (i--)
+-		clk_disable_unprepare(gtr_dev->clk[i]);
+-
+-	return err;
+ }
+ 
+ static DEFINE_RUNTIME_DEV_PM_OPS(xpsgtr_pm_ops, xpsgtr_runtime_suspend,
+@@ -887,7 +878,6 @@ static DEFINE_RUNTIME_DEV_PM_OPS(xpsgtr_pm_ops, xpsgtr_runtime_suspend,
+ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
+ {
+ 	unsigned int refclk;
+-	int ret;
+ 
+ 	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->refclk_sscs); ++refclk) {
+ 		unsigned long rate;
+@@ -898,19 +888,14 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
+ 		snprintf(name, sizeof(name), "ref%u", refclk);
+ 		clk = devm_clk_get_optional(gtr_dev->dev, name);
+ 		if (IS_ERR(clk)) {
+-			ret = dev_err_probe(gtr_dev->dev, PTR_ERR(clk),
+-					    "Failed to get reference clock %u\n",
+-					    refclk);
+-			goto err_clk_put;
++			return dev_err_probe(gtr_dev->dev, PTR_ERR(clk),
++					     "Failed to get ref clock %u\n",
++					     refclk);
+ 		}
+ 
+ 		if (!clk)
+ 			continue;
+ 
+-		ret = clk_prepare_enable(clk);
+-		if (ret)
+-			goto err_clk_put;
+-
+ 		gtr_dev->clk[refclk] = clk;
+ 
+ 		/*
+@@ -930,18 +915,11 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
+ 			dev_err(gtr_dev->dev,
+ 				"Invalid rate %lu for reference clock %u\n",
+ 				rate, refclk);
+-			ret = -EINVAL;
+-			goto err_clk_put;
++			return -EINVAL;
+ 		}
+ 	}
+ 
+ 	return 0;
+-
+-err_clk_put:
+-	while (refclk--)
+-		clk_disable_unprepare(gtr_dev->clk[refclk]);
+-
+-	return ret;
+ }
+ 
+ static int xpsgtr_probe(struct platform_device *pdev)
+@@ -950,7 +928,6 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 	struct xpsgtr_dev *gtr_dev;
+ 	struct phy_provider *provider;
+ 	unsigned int port;
+-	unsigned int i;
+ 	int ret;
+ 
+ 	gtr_dev = devm_kzalloc(&pdev->dev, sizeof(*gtr_dev), GFP_KERNEL);
+@@ -990,8 +967,7 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 		phy = devm_phy_create(&pdev->dev, np, &xpsgtr_phyops);
+ 		if (IS_ERR(phy)) {
+ 			dev_err(&pdev->dev, "failed to create PHY\n");
+-			ret = PTR_ERR(phy);
+-			goto err_clk_put;
++			return PTR_ERR(phy);
+ 		}
+ 
+ 		gtr_phy->phy = phy;
+@@ -1002,8 +978,7 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 	provider = devm_of_phy_provider_register(&pdev->dev, xpsgtr_xlate);
+ 	if (IS_ERR(provider)) {
+ 		dev_err(&pdev->dev, "registering provider failed\n");
+-		ret = PTR_ERR(provider);
+-		goto err_clk_put;
++		return PTR_ERR(provider);
+ 	}
+ 
+ 	pm_runtime_set_active(gtr_dev->dev);
+@@ -1012,16 +987,10 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 	ret = pm_runtime_resume_and_get(gtr_dev->dev);
+ 	if (ret < 0) {
+ 		pm_runtime_disable(gtr_dev->dev);
+-		goto err_clk_put;
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-err_clk_put:
+-	for (i = 0; i < ARRAY_SIZE(gtr_dev->clk); i++)
+-		clk_disable_unprepare(gtr_dev->clk[i]);
+-
+-	return ret;
+ }
+ 
+ static int xpsgtr_remove(struct platform_device *pdev)
 -- 
 2.43.0
 
