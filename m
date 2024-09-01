@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879F183CBC;
-	Sun,  1 Sep 2024 16:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC9E2C1B4;
+	Sun,  1 Sep 2024 16:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207629; cv=none; b=b4HPmjwO7sbKcOTdT5yEOqekW8OCunp7FiNmDbPHKxm2XXDr78+LjxGIKVYHw++uK1zhfnFiJLlWUdwnJ3/GV2LThmyZ6C2Tv3tPgMJ2BoiPP9nWJE8wxA2lRZgNBURJZuAMlIOmvwjxG+hHiswyc56O2gZY9oZUwQ7oviQ+87A=
+	t=1725207632; cv=none; b=CWSKEMTa//QCrNxj4g9iXngzlZ44IZf8SNy1XDTTdfEE5B3nfRzWJowEnDG4iBEg8c1G9m7jCv+mOad3wsLVsvX3a7NmEiBhiRn5s4u41TWfQjdmKP+CyoQr68QPU1Ie1X9XCj9tGfK5T+zsfPj3pJ8+QGdeJH2OSV1usw6i5Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207629; c=relaxed/simple;
-	bh=iIb4fAgg7xgZAoPuBKnDig42jkO5LZuq1WixVcFmFdg=;
+	s=arc-20240116; t=1725207632; c=relaxed/simple;
+	bh=tDjP8V8tBip5pTlVwKOHpJA7CeyDXvPdEY6s0OoGEfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSGIQtTb8aQkG1ZSQxdJdcF9n4czEAFY52CzqEf6sYqnIDQm7wVAgoFbNVpmxyKEOh0LKtTR7F3J0NULdag2XtYZ9S6ZevxbkWJkUx48Rfx+vzRxu43HDD5QS0o+LkKRMFAdrGLUSteJUvLS7+GXfpZeVEnhYU39xrwJoWOuYb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVh6iOHj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E+xQAwQrN8FacFPA1fmdDuLjP52/xyDmeicug04ZR68XTOEKBGf4qfvBY7Dih5Gb95LL3jrYGhXJX5w0HLXeVmSTJfQjViMLPPMleGqxxGrGUN1xH5xwtjSPSNKJH6HXFabl23EhMUdkA7oHKIPnXfMxmKS7ASROibY6rgK8ZiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKrRaIzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVh6iOHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3144C4CEC3;
-	Sun,  1 Sep 2024 16:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKrRaIzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E83C4CEC3;
+	Sun,  1 Sep 2024 16:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207629;
-	bh=iIb4fAgg7xgZAoPuBKnDig42jkO5LZuq1WixVcFmFdg=;
+	s=korg; t=1725207632;
+	bh=tDjP8V8tBip5pTlVwKOHpJA7CeyDXvPdEY6s0OoGEfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UVh6iOHjJdfc+YwCpzrKD1SgqHL/wKBG4cRdUd+DkqhGxCir43L+6aPB/lSJPOTjJ
-	 wfyUlVx3wnIkP2U2Z7TQ9mh6dii5sJPNO/iVrPiO4+L6itAG8d9MPR8EJ768wk9ikt
-	 15A2OeVVq2uX+B3e44QnVycCN5yRQ/9sZAM/4ZFQ=
+	b=XKrRaIzQcmKqJ8Kb3D0+ABwMRzu93IU2202j+7melJDwo9ENV1RYU86pvcXk9gKm/
+	 79GpuCNg0W8kz/RWril1Br+4fX/s5XmW7K+N5En/DIFm1bK72bEKW7ldZUYDGWyY5U
+	 qHAZwATqQcnmTgP/QD0dLC4F6CF5Ms4ctQjSFxM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Martin Wilck <mwilck@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sam Creasey <sammy@sammy.net>,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 22/98] scsi: spi: Fix sshdr use
-Date: Sun,  1 Sep 2024 18:15:52 +0200
-Message-ID: <20240901160804.529286438@linuxfoundation.org>
+Subject: [PATCH 4.19 31/98] net/sun3_82586: Avoid reading past buffer in debug output
+Date: Sun,  1 Sep 2024 18:16:01 +0200
+Message-ID: <20240901160804.870981240@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -54,43 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 0b149cee836aa53989ea089af1cb9d90d7c6ac9e ]
+[ Upstream commit 4bea747f3fbec33c16d369b2f51e55981d7c78d0 ]
 
-If scsi_execute_cmd returns < 0, it doesn't initialize the sshdr, so we
-shouldn't access the sshdr. If it returns 0, then the cmd executed
-successfully, so there is no need to check the sshdr. This has us access
-the sshdr when we get a return value > 0.
+Since NUM_XMIT_BUFFS is always 1, building m68k with sun3_defconfig and
+-Warraybounds, this build warning is visible[1]:
 
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20231004210013.5601-7-michael.christie@oracle.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin Wilck <mwilck@suse.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+drivers/net/ethernet/i825xx/sun3_82586.c: In function 'sun3_82586_timeout':
+drivers/net/ethernet/i825xx/sun3_82586.c:990:122: warning: array subscript 1 is above array bounds of 'volatile struct transmit_cmd_struct *[1]' [-Warray-bounds=]
+  990 |                 printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
+      |                                                                                                               ~~~~~~~~~~~~^~~
+...
+drivers/net/ethernet/i825xx/sun3_82586.c:156:46: note: while referencing 'xmit_cmds'
+  156 |         volatile struct transmit_cmd_struct *xmit_cmds[NUM_XMIT_BUFFS];
+
+Avoid accessing index 1 since it doesn't exist.
+
+Link: https://github.com/KSPP/linux/issues/325 [1]
+Cc: Sam Creasey <sammy@sammy.net>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20240206161651.work.876-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_spi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/i825xx/sun3_82586.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_transport_spi.c b/drivers/scsi/scsi_transport_spi.c
-index efb9c3d902133..adbe9b07f3d0b 100644
---- a/drivers/scsi/scsi_transport_spi.c
-+++ b/drivers/scsi/scsi_transport_spi.c
-@@ -690,10 +690,10 @@ spi_dv_device_echo_buffer(struct scsi_device *sdev, u8 *buffer,
- 	for (r = 0; r < retries; r++) {
- 		result = spi_execute(sdev, spi_write_buffer, DMA_TO_DEVICE,
- 				     buffer, len, &sshdr);
--		if(result || !scsi_device_online(sdev)) {
-+		if (result || !scsi_device_online(sdev)) {
- 
- 			scsi_device_set_state(sdev, SDEV_QUIESCE);
--			if (scsi_sense_valid(&sshdr)
-+			if (result > 0 && scsi_sense_valid(&sshdr)
- 			    && sshdr.sense_key == ILLEGAL_REQUEST
- 			    /* INVALID FIELD IN CDB */
- 			    && sshdr.asc == 0x24 && sshdr.ascq == 0x00)
+diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
+index 1a86184d44c0a..e0c9fee4e1e65 100644
+--- a/drivers/net/ethernet/i825xx/sun3_82586.c
++++ b/drivers/net/ethernet/i825xx/sun3_82586.c
+@@ -990,7 +990,7 @@ static void sun3_82586_timeout(struct net_device *dev)
+ 	{
+ #ifdef DEBUG
+ 		printk("%s: xmitter timed out, try to restart! stat: %02x\n",dev->name,p->scb->cus);
+-		printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
++		printk("%s: command-stats: %04x\n", dev->name, swab16(p->xmit_cmds[0]->cmd_status));
+ 		printk("%s: check, whether you set the right interrupt number!\n",dev->name);
+ #endif
+ 		sun3_82586_close(dev);
 -- 
 2.43.0
 
