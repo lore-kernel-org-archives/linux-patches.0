@@ -1,54 +1,54 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C8B13AD39
-	for <patches@lists.linux.dev>; Sun,  1 Sep 2024 04:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F75413C820
+	for <patches@lists.linux.dev>; Sun,  1 Sep 2024 04:07:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725163639; cv=none; b=lbixOtlEjGf32Sul44YPsGnptFL5dtqM7ksp8GmIt9D2DSIHnL44WchMsY7cqCdEyyBCwMAsXO+ri0rjK3aZX4bjZ5i0eizaO58YJ44oquzzzBFoAFHzw6QgxQlDaVuN3hRZpcNfySvvACjjyFlELC/P191Jp/8WjsTADUy5hRQ=
+	t=1725163641; cv=none; b=EoZ0lzHNxkFovip8SIpr9X1lmGzcjTVMjgnLgOW4npS1njmuPfxPqbWlWl3ySZzeiLWPXwPs01Xx2qs6sFJA3V0bCgRlkUDflVgiLg2fnMHMJ8zPWCKUqXPZGSzr3F/Lk6+nlBdRewdX3GY7LTi/1Zefq9gv8S8qKc+PKCHkK3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725163639; c=relaxed/simple;
-	bh=qY6RFdgdEz4w9jQTLOHoc3XmVl5kjOyodlnHhwG34MY=;
+	s=arc-20240116; t=1725163641; c=relaxed/simple;
+	bh=K0vY/b3gdQJ7BbfGBTXVjSZjUjMpNMzLu+iBHhG2UV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZh/vJGxBn9O5pBFURX8+esQtsc0IKsunIvqW5pX+xus3vCsyWLa90o+CHD8r+lvR2fs3EqZLoAnH/2r1rQ9scMnpX9rmKHTeTRVsUUJzrNmUzC2cpKTNEG4Tw09eGt1vlMl2EPl1CzZBeAcidlP9fqCd6NZjQ10ldSqYsPkS9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Ax8T+FaE; arc=none smtp.client-ip=209.85.214.180
+	 MIME-Version; b=CvLMUEXHTuHI+MgxifvEppHUux+H2dFezqN//4JRGKXYHDIjZdQx62igtFjCMrDbXvcgcSyzze73hDBthQMevF5zOBWeAhGr8upPvjszrP+O/0dcohAu9q21joc1pWpTKS4n3SImJ5wLHHKVfIQLZI8lUq3EVas1XeGzOGylSOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=e9tLYe0z; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Ax8T+FaE"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2023dd9b86aso24222585ad.1
-        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:07:17 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="e9tLYe0z"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-7cd9cfe4748so2160975a12.2
+        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725163637; x=1725768437; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1725163639; x=1725768439; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EnT+TkOPiwvRqtG4XdBzNIXwEpZ2e3WbsaKfU3N0MOw=;
-        b=Ax8T+FaEizfAyeiFZ/4+y6/PZqrbrcOjs6Sq+IsLyfLT2m7vMwMOFA05c4IUotqKjw
-         Z1dvvetcPi1uy+NOmqpI7AM49ylVg6i2XEKh3PUVyY2CoXbUkOYzjrA0WPUbXiL2FLjd
-         o35Z0YbP/VHpLVASQZC/9i9oVzijySQUnEj7E=
+        bh=dihu8n2PjcWrFXOuwWbECc9MpTZcbkDtMAPCx56QCc0=;
+        b=e9tLYe0zEsSq1CFv5CvFjm1lPLLoOETmwOwD0MT82Vg+bpaQ3WbJx2Q1QUEN9fYXfR
+         VcISsudjmFuTRn40hK5HNdwhbhYYFXd/ZWZ9YLBqm9UifczcDiTEjeGFWCr9m9UqZSWw
+         5dLwBaYFKwKluIXVtE9mxa1SIhFg0FYLfGygM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725163637; x=1725768437;
+        d=1e100.net; s=20230601; t=1725163639; x=1725768439;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EnT+TkOPiwvRqtG4XdBzNIXwEpZ2e3WbsaKfU3N0MOw=;
-        b=pSn4Xc0936dncTP02otmvPTEKArtdjAW5mrNqDDu5zhGxn09l9tHywE8Ow4BLWJScc
-         kn5o1CUod6+ldtBqjDJOB+zWKOPiBQwIF2oLxcGrg8jSVTG6SZl/S/tpnwlrmbgjGXpa
-         VRzpRrX6A+iASfHFa9kXxA9MIxQEc4uo725jdH4uw1ya8kbaA5Qjn/nlpOqIZZ7iKQ5u
-         w4eu81qlzKWvBDiuwPBKV84Sj9erunwbDu9dJcOhdCMZuAxQR4KQvoLIW2k3vZmXfRoQ
-         E0Swu1SzvuI7iux7BMTb06WtLKM+YXYwO7LyTqjsP1Wf8q3fqqfhrU/dVYmyvrz8F6TC
-         EeBw==
-X-Forwarded-Encrypted: i=1; AJvYcCXTlx1M4GVEaLQqXRcwKXCyS0B9lPzuSGn01INtFMy2g3zy6nNsw+KSFcKjo4EjZGatPW7Ja7wI@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyau2SOQykVSn/WvLqtxF1NUxZi7+AW6Xj0tKDK6DbgkHP2O+ab
-	pWAh/fyoDfxjyhHZdo0xtJU4GBMkj8+nZPBW+tIDUb0mkYJcEgyNotKE3ZSALw==
-X-Google-Smtp-Source: AGHT+IFy6qneRh0JJN2K30z3cDl+DrJ4fLZ39NN7FVzA1lAH0njyn66SGUGcS/pbvoFHuvYriZC5zA==
-X-Received: by 2002:a17:903:1209:b0:1fa:1dd8:947a with SMTP id d9443c01a7336-2050c40deccmr100312495ad.46.1725163637193;
-        Sat, 31 Aug 2024 21:07:17 -0700 (PDT)
+        bh=dihu8n2PjcWrFXOuwWbECc9MpTZcbkDtMAPCx56QCc0=;
+        b=Ur7fJl3sLnwFl8eXQpGdp0+2B24KLAvzBj+fMv+D+NaHsxgidbo10hKMI0A01O7Ugw
+         EQOtby3qCeCxqaZli0mr4S2cQh1qlVbIs70IQ/apjR8m7uQviPmBsONtADVoVOVehxHX
+         i4LNSYrhThZtSTadvWdzEoY18q+sgKGnhaKlleCswz9gPOdXcdcPLNzoUoxwR/FHsdEy
+         MsMUq6OHSnL/hOSjVFtZq6KbGiwidx4yJKsRb6XioQGFBPGcBiVQJC5exMDpVh1yCDrd
+         SpeMAFvAlrUTKnd6EeZoxT2vK1iAp+NoH5fpq0vQYx1UGlh4lwoHZ8Zf8hr4x5oeXt/u
+         816A==
+X-Forwarded-Encrypted: i=1; AJvYcCXCM08lt2DDAJvCjJRbaTDwta6ef9kR6+l7M+7rjz6Xi6H1h/hbyO6EWmAeQQUIXuD06jaBMEOT@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw7DtIcpe9iBJBsf9pr07jmnQpnlx0I6z2FrVrYKYhu8YMoHNy3
+	BxQiVG2d9GPes2+i32LEcOwFrvOL0Rr/KBTDSoPRJ+TAUEYPtjpDWEL4yRQnrw==
+X-Google-Smtp-Source: AGHT+IGUB6+86RHnw08wq757NS4DSJb/B5ixBOuB5HoLx7W2xOHzGQ0pL/7XrZLrWwYk0S+0GfQauw==
+X-Received: by 2002:a05:6a21:3213:b0:1c4:a8a6:a85f with SMTP id adf61e73a8af0-1ced62a2b24mr2056687637.30.1725163639331;
+        Sat, 31 Aug 2024 21:07:19 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-205152b12c7sm46853475ad.56.2024.08.31.21.07.15
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2d8aba505bfsm1381042a91.8.2024.08.31.21.07.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Aug 2024 21:07:16 -0700 (PDT)
+        Sat, 31 Aug 2024 21:07:19 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -89,9 +89,9 @@ Cc: linux-kernel@vger.kernel.org,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v4 07/18] drm/bridge: dp_typec: Support USB Type-C orientation
-Date: Sat, 31 Aug 2024 21:06:45 -0700
-Message-ID: <20240901040658.157425-8-swboyd@chromium.org>
+Subject: [PATCH v4 08/18] drm/bridge: dp_typec: Add "no-hpd" support
+Date: Sat, 31 Aug 2024 21:06:46 -0700
+Message-ID: <20240901040658.157425-9-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
 In-Reply-To: <20240901040658.157425-1-swboyd@chromium.org>
 References: <20240901040658.157425-1-swboyd@chromium.org>
@@ -103,12 +103,16 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Register an orientation switch for each type-c output node to support
-flipping the lane mapping when the port is in reverse orientation. Only
-do this when the orientation-switch property is present. This is mostly
-useful for the case where the DP lanes are directly connected to the
-usb-c-connector and the device doesn't have an orientation switch wired
-down on the board between the connector and the DP controller.
+Add support for HPD coming from somewhere else in the drm_bridge chain.
+Skip signaling HPD sate when "no-hpd" is present in the DT node backing
+the dp_typec bridge.
+
+Add this support because some EC firmwares on Trogdor/Strongbad boards
+don't properly indicate the state of the DP HPD level on a type-c port.
+The EC only indicates that DP mode is entered or exited for a type-c
+port. The HPD level is expressed to the DP controller via a pin on the
+AP that the EC drives high or low when the type-c port partner (i.e.
+monitor) asserts or deasserts HPD.
 
 Cc: Prashant Malani <pmalani@chromium.org>
 Cc: Benson Leung <bleung@chromium.org>
@@ -118,147 +122,58 @@ Cc: Pin-yen Lin <treapking@chromium.org>
 Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/gpu/drm/bridge/aux-hpd-bridge.c | 77 +++++++++++++++++++++----
- 1 file changed, 66 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/bridge/aux-hpd-bridge.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/aux-hpd-bridge.c b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-index 32565f88ade7..d2832e6481d7 100644
+index d2832e6481d7..52db36aa190b 100644
 --- a/drivers/gpu/drm/bridge/aux-hpd-bridge.c
 +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-@@ -47,12 +47,16 @@ struct drm_dp_typec_bridge_data;
- /**
-  * struct drm_dp_typec_bridge_typec_port - USB type-c port associated with DP bridge
-  * @lane_mapping: Physical (array index) to logical (array value) USB type-C lane mapping
-+ * @orientation: Orientation of USB type-c port
-  * @mode_switch: DP altmode switch
-+ * @orientation_switch: USB type-c orientation switch
-  * @typec_data: Back pointer to type-c bridge data
-  */
- struct drm_dp_typec_bridge_typec_port {
- 	u32 lane_mapping[NUM_USB_SS];
-+	enum typec_orientation orientation;
- 	struct typec_mux_dev *mode_switch;
-+	struct typec_switch_dev *orientation_switch;
- 	struct drm_dp_typec_bridge_data *typec_data;
+@@ -22,6 +22,7 @@ static DEFINE_IDA(drm_aux_hpd_bridge_ida);
+ struct drm_aux_hpd_bridge_data {
+ 	struct drm_bridge bridge;
+ 	struct device *dev;
++	bool no_hpd;
  };
  
-@@ -378,17 +382,35 @@ static int dp_lane_to_typec_lane(enum dp_lane lane)
- 	return -EINVAL;
+ enum dp_lane {
+@@ -355,6 +356,8 @@ void drm_aux_hpd_bridge_notify(struct device *dev, enum drm_connector_status sta
+ 
+ 	if (!data)
+ 		return;
++	if (data->no_hpd)
++		return;
+ 
+ 	drm_bridge_hpd_notify(&data->bridge, status);
  }
- 
--static int typec_to_dp_lane(enum usb_ss_lane lane)
-+static int typec_to_dp_lane(enum usb_ss_lane lane,
-+			    enum typec_orientation orientation)
- {
--	switch (lane) {
--	case USB_SSRX1:
--		return DP_ML3;
--	case USB_SSTX1:
--		return DP_ML2;
--	case USB_SSTX2:
--		return DP_ML0;
--	case USB_SSRX2:
--		return DP_ML1;
-+	switch (orientation) {
-+	case TYPEC_ORIENTATION_NONE:
-+	case TYPEC_ORIENTATION_NORMAL:
-+		switch (lane) {
-+		case USB_SSRX1:
-+			return DP_ML3;
-+		case USB_SSTX1:
-+			return DP_ML2;
-+		case USB_SSTX2:
-+			return DP_ML0;
-+		case USB_SSRX2:
-+			return DP_ML1;
-+		}
-+		break;
-+	case TYPEC_ORIENTATION_REVERSE:
-+		switch (lane) {
-+		case USB_SSRX1:
-+			return DP_ML0;
-+		case USB_SSTX1:
-+			return DP_ML1;
-+		case USB_SSTX2:
-+			return DP_ML3;
-+		case USB_SSRX2:
-+			return DP_ML2;
-+		}
-+		break;
+@@ -672,6 +675,7 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
+ 			return -ENOMEM;
+ 		bridge = &hpd_data->bridge;
+ 		bridge->funcs = &drm_aux_hpd_bridge_funcs;
++		bridge->ops = DRM_BRIDGE_OP_HPD;
+ 	} else if (id->driver_data == DRM_AUX_TYPEC_BRIDGE) {
+ 		typec_data = devm_kzalloc(dev, sizeof(*typec_data), GFP_KERNEL);
+ 		if (!typec_data)
+@@ -680,6 +684,9 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
+ 		bridge = &hpd_data->bridge;
+ 		bridge->funcs = &drm_dp_typec_bridge_funcs;
+ 		typec_bridge_dev = to_drm_dp_typec_bridge_dev(dev);
++		hpd_data->no_hpd = of_property_read_bool(np, "no-hpd");
++		if (!hpd_data->no_hpd)
++			bridge->ops = DRM_BRIDGE_OP_HPD;
+ 		memcpy(typec_data->dp_lanes, dp_lanes, sizeof(typec_data->dp_lanes));
+ 		ret = drm_dp_typec_bridge_probe_typec_ports(typec_data, typec_bridge_dev, np);
+ 		if (ret)
+@@ -689,8 +696,7 @@ static int drm_aux_hpd_bridge_probe(struct auxiliary_device *auxdev,
  	}
  
- 	return -EINVAL;
-@@ -413,6 +435,7 @@ drm_dp_typec_bridge_assign_pins(struct drm_dp_typec_bridge_dev *typec_bridge_dev
- 				u32 conf,
- 				struct drm_dp_typec_bridge_typec_port *port)
- {
-+	enum typec_orientation orientation = port->orientation;
- 	enum usb_ss_lane *lane_mapping = port->lane_mapping;
- 	struct auxiliary_device *adev = &typec_bridge_dev->adev;
- 	struct drm_aux_hpd_bridge_data *hpd_data = auxiliary_get_drvdata(adev);
-@@ -448,7 +471,7 @@ drm_dp_typec_bridge_assign_pins(struct drm_dp_typec_bridge_dev *typec_bridge_dev
- 		typec_lane = lane_mapping[typec_lane];
+ 	hpd_data->dev = dev;
+-	bridge->of_node = dev_get_platdata(dev);
+-	bridge->ops = DRM_BRIDGE_OP_HPD;
++	bridge->of_node = np;
+ 	bridge->type = DRM_MODE_CONNECTOR_DisplayPort;
  
- 		/* Map logical type-c lane to logical DP lane */
--		dp_lanes[i] = typec_to_dp_lane(typec_lane);
-+		dp_lanes[i] = typec_to_dp_lane(typec_lane, orientation);
- 	}
- 
- 	return 0;
-@@ -496,6 +519,23 @@ static const struct drm_bridge_funcs drm_dp_typec_bridge_funcs = {
- 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
- };
- 
-+static int drm_dp_typec_bridge_orientation_set(struct typec_switch_dev *sw,
-+					       enum typec_orientation orientation)
-+{
-+	struct drm_dp_typec_bridge_typec_port *port;
-+
-+	/*
-+	 * Lane remapping is in drm_dp_typec_bridge_mode_switch_set(). Whenever
-+	 * an orientation changes the mode will switch in and out of DP mode,
-+	 * HPD will deassert and reassert so that
-+	 * drm_dp_typec_bridge_atomic_check() sees the proper state.
-+	 */
-+	port = typec_switch_get_drvdata(sw);
-+	port->orientation = orientation;
-+
-+	return 0;
-+}
-+
- static int
- drm_dp_typec_bridge_mode_switch_set(struct typec_mux_dev *mode_switch,
- 				    struct typec_mux_state *state)
-@@ -544,7 +584,9 @@ drm_dp_typec_bridge_probe_typec_ports(struct drm_dp_typec_bridge_data *typec_dat
- 	struct drm_dp_typec_bridge_typec_port *port;
- 	size_t num_ports = typec_bridge_dev->num_typec_ports;
- 	struct typec_mux_desc mode_switch_desc = { };
-+	struct typec_switch_desc orientation_switch_desc = { };
- 	struct fwnode_handle *fwnode;
-+	bool orientation = of_property_read_bool(np, "orientation-switch");
- 	const char *name;
- 
- 	port = devm_kcalloc(dev, num_ports, sizeof(*port), GFP_KERNEL);
-@@ -587,6 +629,19 @@ drm_dp_typec_bridge_probe_typec_ports(struct drm_dp_typec_bridge_data *typec_dat
- 			return PTR_ERR(port->mode_switch);
- 		}
- 
-+		if (orientation) {
-+			orientation_switch_desc.set = drm_dp_typec_bridge_orientation_set,
-+			orientation_switch_desc.fwnode = fwnode;
-+			orientation_switch_desc.drvdata = port;
-+			orientation_switch_desc.name = name;
-+			port->orientation_switch = typec_switch_register(dev,
-+									 &orientation_switch_desc);
-+			if (IS_ERR(port->orientation_switch)) {
-+				kfree(name);
-+				return PTR_ERR(port->orientation_switch);
-+			}
-+		}
-+
- 		kfree(name);
- 		port++;
- 	}
+ 	auxiliary_set_drvdata(auxdev, hpd_data);
 -- 
 https://chromeos.dev
 
