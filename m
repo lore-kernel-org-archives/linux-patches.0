@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF0526AC1;
-	Sun,  1 Sep 2024 17:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F249526AC1;
+	Sun,  1 Sep 2024 17:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210511; cv=none; b=Lmfow8AYOxZ8gHdPxDQ6GS1xF8dElQwGnYkY7LxnK+38BlYlKHlELGIWi3GqQ6QXbvtJJqFYAox2ocpUVtGgl623Xba4cr4VyN4Yd6/OliRZUvtww1MRBDdVNPIXEGJbLvF+e6du0tYOVPFhauB9kW1B+lZQV22Okhptkj5ik0A=
+	t=1725210515; cv=none; b=OCG5J2mymrHJyAx4uks2myIGNe+rB2OQ1CT7CoRtCXEASQcPxK7nnRA1jgIOUoYrRdq4URwnRUDMtNczVnwiwW533730AOqYRfQJstgTZuCFcAXA8yhzhmUm6bPXNKRBWrloCLLguRdNKWd/X/7I9rY6D8aZDVrfy+RXK0wnGbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210511; c=relaxed/simple;
-	bh=yxAqCiXNNdq2iwjWUfSSEii474ZMqfKS55aGPcfNhU4=;
+	s=arc-20240116; t=1725210515; c=relaxed/simple;
+	bh=9pQbzNAqpsS9xDjn80h++9jzbVyo0q5uv6Yq4ABxVrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZQnREsC0pa5FoWHr2FqRV7/FKQ1kEX9oXS6unh1N4GWEW+iA/Qr+LDNETio06POiCLqFKfyyjNvNE7iUrO4n7f6L+8B22BqxBzeL6A57geadsPLUi3fuw0d+tx7W5z6uplsIDqVJP/oAie1izmSBUf0xoCAXi2GDHe+p+CfcjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg/oMXy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dsvGOVjMl+FJBlgrHpCS4mScZ9haBzfuRwGJNIytWB9eK/hJ1XrpiFUzm5UBa1FYK0dcQ1TsmSI8sSsOextMBSWUtK8MQpIeFkedEf7XI289DFJ1pB1pFM1MPXnZVMHO6vRKqlz0jr1FBJL+a4H8bB+IC75y/MwtXSDMmQvgc7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZ8PEtJN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg/oMXy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E463C4CEC3;
-	Sun,  1 Sep 2024 17:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZ8PEtJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A70C4CEC3;
+	Sun,  1 Sep 2024 17:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210511;
-	bh=yxAqCiXNNdq2iwjWUfSSEii474ZMqfKS55aGPcfNhU4=;
+	s=korg; t=1725210514;
+	bh=9pQbzNAqpsS9xDjn80h++9jzbVyo0q5uv6Yq4ABxVrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wg/oMXy05tHT5YipqRiL8zXZblHYSsxVyUfR8RJmxF4+Funfy372JpSBDZWCBuC8J
-	 c2PQBx7pSyhrFZkPzxN+iYCl31hdYtzlshjQ9j2JcdBwWpu3hsmvoFbJx6vKWiNGvG
-	 KIG9MeSnqtMEv/wRbdZMnBiRuUNV+8di1jLkNdsA=
+	b=HZ8PEtJN8fUZA8iurEOJQBeFJKOA0sVOTLYZMbZ6XATaR/wK1y+AXq7CApIOlNdxI
+	 /eQbciCLS/VGlDW7zN853Vp42D3vMSJeYBQCcqhT9SIraPoL4oedzMlsMzDlyVNHDI
+	 Cx/swAyRqOnOByD4WscgwNogkciP5cJVSyl1vW60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Subject: [PATCH 5.15 204/215] usb: dwc3: omap: add missing depopulate in probe error path
-Date: Sun,  1 Sep 2024 18:18:36 +0200
-Message-ID: <20240901160831.064686869@linuxfoundation.org>
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.15 213/215] igc: Fix qbv tx latency by setting gtxoffset
+Date: Sun,  1 Sep 2024 18:18:45 +0200
+Message-ID: <20240901160831.402688820@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,40 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
 
-commit 2aa765a43817ec8add990f83c8e54a9a5d87aa9c upstream.
+commit 6c3fc0b1c3d073bd6fc3bf43dbd0e64240537464 upstream.
 
-Depopulate device in probe error paths to fix leak of children
-resources.
+A large tx latency issue was discovered during testing when only QBV was
+enabled. The issue occurs because gtxoffset was not set when QBV is
+active, it was only set when launch time is active.
 
-Fixes: ee249b455494 ("usb: dwc3: omap: remove IRQ_NOAUTOEN used with shared irq")
-Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/20240816075409.23080-1-krzysztof.kozlowski@linaro.org
+The patch "igc: Correct the launchtime offset" only sets gtxoffset when
+the launchtime_enable field is set by the user. Enabling launchtime_enable
+ultimately sets the register IGC_TXQCTL_QUEUE_MODE_LAUNCHT (referred to as
+LaunchT in the SW user manual).
+
+Section 7.5.2.6 of the IGC i225/6 SW User Manual Rev 1.2.4 states:
+"The latency between transmission scheduling (launch time) and the
+time the packet is transmitted to the network is listed in Table 7-61."
+
+However, the patch misinterprets the phrase "launch time" in that section
+by assuming it specifically refers to the LaunchT register, whereas it
+actually denotes the generic term for when a packet is released from the
+internal buffer to the MAC transmit logic.
+
+This launch time, as per that section, also implicitly refers to the QBV
+gate open time, where a packet waits in the buffer for the QBV gate to
+open. Therefore, latency applies whenever QBV is in use. TSN features such
+as QBU and QAV reuse QBV, making the latency universal to TSN features.
+
+Discussed with i226 HW owner (Shalev, Avi) and we were in agreement that
+the term "launch time" used in Section 7.5.2.6 is not clear and can be
+easily misinterpreted. Avi will update this section to:
+"When TQAVCTRL.TRANSMIT_MODE = TSN, the latency between transmission
+scheduling and the time the packet is transmitted to the network is listed
+in Table 7-61."
+
+Fix this issue by using igc_tsn_is_tx_mode_in_tsn() as a condition to
+write to gtxoffset, aligning with the newly updated SW User Manual.
+
+Tested:
+1. Enrol taprio on talker board
+   base-time 0
+   cycle-time 1000000
+   flags 0x2
+   index 0 cmd S gatemask 0x1 interval1
+   index 0 cmd S gatemask 0x1 interval2
+
+   Note:
+   interval1 = interval for a 64 bytes packet to go through
+   interval2 = cycle-time - interval1
+
+2. Take tcpdump on listener board
+
+3. Use udp tai app on talker to send packets to listener
+
+4. Check the timestamp on listener via wireshark
+
+Test Result:
+100 Mbps: 113 ~193 ns
+1000 Mbps: 52 ~ 84 ns
+2500 Mbps: 95 ~ 223 ns
+
+Note that the test result is similar to the patch "igc: Correct the
+launchtime offset".
+
+Fixes: 790835fcc0cb ("igc: Correct the launchtime offset")
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-omap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_tsn.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-omap.c
-+++ b/drivers/usb/dwc3/dwc3-omap.c
-@@ -522,11 +522,13 @@ static int dwc3_omap_probe(struct platfo
- 	if (ret) {
- 		dev_err(dev, "failed to request IRQ #%d --> %d\n",
- 			omap->irq, ret);
--		goto err1;
-+		goto err2;
- 	}
- 	dwc3_omap_enable_irqs(omap);
- 	return 0;
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -61,7 +61,7 @@ void igc_tsn_adjust_txtime_offset(struct
+ 	struct igc_hw *hw = &adapter->hw;
+ 	u16 txoffset;
  
-+err2:
-+	of_platform_depopulate(dev);
- err1:
- 	pm_runtime_put_sync(dev);
- 	pm_runtime_disable(dev);
+-	if (!is_any_launchtime(adapter))
++	if (!igc_tsn_is_tx_mode_in_tsn(adapter))
+ 		return;
+ 
+ 	switch (adapter->link_speed) {
 
 
