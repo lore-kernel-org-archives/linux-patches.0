@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D6644C97;
-	Sun,  1 Sep 2024 16:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4C1183CAF;
+	Sun,  1 Sep 2024 16:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207599; cv=none; b=KXDSC5OaU1HiEVXBKwik9jcUxjudeyVvGZZYWKkVyqw13kG3X8UHF7g238aavVQ7DhEBvTk8eSgWamDObPm/cn4XlUjREX19BuqK2zkO/4Y+uAwtExNJ9ELVHZPHvkTcoILJRbdXMvXzENI+T2PewoMAWj7HYqmye4tbfv0/Xaw=
+	t=1725207603; cv=none; b=jx2iggn0Fc7tH6GXNI8VRpXgVnJSCia9ZLuOBBY6hg52yONOB9KhhHeHnz15q0YOXqaqxswKXqoaYcxF1Og5fruRjWA5xEIcW1gAkjiJHB2n7/FoNT6ah1p4Q5T5ua/2n2c3bngZqus/2V7UkVgWuqy7FRbB0LI+689DMdq7Mds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207599; c=relaxed/simple;
-	bh=tyalicEz71vLNQLXmroOyHpIUo6AMaRbM1uWv4f6qdI=;
+	s=arc-20240116; t=1725207603; c=relaxed/simple;
+	bh=OOiUWVFgXDbu7dy3eM/rqx9/V/AAWIju4eEPdkTyz+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O4lYT1qg5bBuoX7Vr53uodEGMArJHMUWzSC/mcbR/ssMMfMNbMhszEARUxLKCshGcW8e8R1fp7zNz/XFka6XaAZe6GrV7qD3igucTMnNYBkQBoS2jsGpDSQNRkX8rMlhpSHuy7+z2/bIhW9MwFpIkmJ6092X2brMYL3jgRV14/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiqGQ8Sq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HubT0fA6OqpYRENecSehgewFl8qw0mhT7gEIMWmfo4anBeFTBwzYeEJQ3h8qCGrK8a4tE1rBTF0bXhbblsAoNsJwEppuPJmTDI61djXT9o9t5xFJvcuYYytWbtPLGwrHOqLfZIo9AIl36LPd5YCQTd0L5Zm3vPqQtgxz7IXdXSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od6crr2B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiqGQ8Sq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEF3C4CEC3;
-	Sun,  1 Sep 2024 16:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od6crr2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EE0C4CEC3;
+	Sun,  1 Sep 2024 16:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207599;
-	bh=tyalicEz71vLNQLXmroOyHpIUo6AMaRbM1uWv4f6qdI=;
+	s=korg; t=1725207602;
+	bh=OOiUWVFgXDbu7dy3eM/rqx9/V/AAWIju4eEPdkTyz+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LiqGQ8Sqc8+eDvxbZwz1DRmD0wCy3rbG2sdZqZ7lKIeWTIQUmkqbdvokRbVodH4/o
-	 Yrdz0FZfH9HVHsulDBctPnljDvrPeU9aNWCxpVs0xxbUrLzhnY7Y7RNwpsgtvqzmlr
-	 sOjRwkhVY84Ww/baA+WNGQODwOiNGhe7SITsJEVw=
+	b=od6crr2Bz+UzwicUVvkGWu1yCxR0wlGflwC57rmzR0N5Sjx36yfbAH9FFcYGQ8Gkd
+	 1agfi7E6KHCGeB5MCthYHq9ai+49kmkXEe9K75twxnz/3KvMSr1ganTX9ZCb+49S9N
+	 G301OXixxJXZe0Q32hE2FZJtKDFsjFJNnsTgu9BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 20/98] staging: ks7010: disable bh on tx_dev_lock
-Date: Sun,  1 Sep 2024 18:15:50 +0200
-Message-ID: <20240901160804.453203874@linuxfoundation.org>
+	Karel Balej <balejk@matfyz.cz>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 4.19 03/98] xhci: Fix Panther point NULL pointer deref at full-speed re-enumeration
+Date: Sun,  1 Sep 2024 18:15:33 +0200
+Message-ID: <20240901160803.806564653@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -50,51 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 058cbee52ccd7be77e373d31a4f14670cfd32018 ]
+commit af8e119f52e9c13e556be9e03f27957554a84656 upstream.
 
-As &priv->tx_dev.tx_dev_lock is also acquired by xmit callback which
-could be call from timer under softirq context, use spin_lock_bh()
-on it to prevent potential deadlock.
+re-enumerating full-speed devices after a failed address device command
+can trigger a NULL pointer dereference.
 
-hostif_sme_work()
---> hostif_sme_set_pmksa()
---> hostif_mib_set_request()
---> ks_wlan_hw_tx()
---> spin_lock(&priv->tx_dev.tx_dev_lock)
+Full-speed devices may need to reconfigure the endpoint 0 Max Packet Size
+value during enumeration. Usb core calls usb_ep0_reinit() in this case,
+which ends up calling xhci_configure_endpoint().
 
-ks_wlan_start_xmit()
---> hostif_data_request()
---> ks_wlan_hw_tx()
---> spin_lock(&priv->tx_dev.tx_dev_lock)
+On Panther point xHC the xhci_configure_endpoint() function will
+additionally check and reserve bandwidth in software. Other hosts do
+this in hardware
 
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230926161323.41928-1-dg573847474@gmail.com
+If xHC address device command fails then a new xhci_virt_device structure
+is allocated as part of re-enabling the slot, but the bandwidth table
+pointers are not set up properly here.
+This triggers the NULL pointer dereference the next time usb_ep0_reinit()
+is called and xhci_configure_endpoint() tries to check and reserve
+bandwidth
+
+[46710.713538] usb 3-1: new full-speed USB device number 5 using xhci_hcd
+[46710.713699] usb 3-1: Device not responding to setup address.
+[46710.917684] usb 3-1: Device not responding to setup address.
+[46711.125536] usb 3-1: device not accepting address 5, error -71
+[46711.125594] BUG: kernel NULL pointer dereference, address: 0000000000000008
+[46711.125600] #PF: supervisor read access in kernel mode
+[46711.125603] #PF: error_code(0x0000) - not-present page
+[46711.125606] PGD 0 P4D 0
+[46711.125610] Oops: Oops: 0000 [#1] PREEMPT SMP PTI
+[46711.125615] CPU: 1 PID: 25760 Comm: kworker/1:2 Not tainted 6.10.3_2 #1
+[46711.125620] Hardware name: Gigabyte Technology Co., Ltd.
+[46711.125623] Workqueue: usb_hub_wq hub_event [usbcore]
+[46711.125668] RIP: 0010:xhci_reserve_bandwidth (drivers/usb/host/xhci.c
+
+Fix this by making sure bandwidth table pointers are set up correctly
+after a failed address device command, and additionally by avoiding
+checking for bandwidth in cases like this where no actual endpoints are
+added or removed, i.e. only context for default control endpoint 0 is
+evaluated.
+
+Reported-by: Karel Balej <balejk@matfyz.cz>
+Closes: https://lore.kernel.org/linux-usb/D3CKQQAETH47.1MUO22RTCH2O3@matfyz.cz/
+Cc: stable@vger.kernel.org
+Fixes: 651aaf36a7d7 ("usb: xhci: Handle USB transaction error on address command")
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240815141117.2702314-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/ks7010/ks7010_sdio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/ks7010/ks7010_sdio.c b/drivers/staging/ks7010/ks7010_sdio.c
-index 79d0513bd2828..85c4e27f571b1 100644
---- a/drivers/staging/ks7010/ks7010_sdio.c
-+++ b/drivers/staging/ks7010/ks7010_sdio.c
-@@ -395,9 +395,9 @@ int ks_wlan_hw_tx(struct ks_wlan_private *priv, void *p, unsigned long size,
- 	priv->hostt.buff[priv->hostt.qtail] = le16_to_cpu(hdr->event);
- 	priv->hostt.qtail = (priv->hostt.qtail + 1) % SME_EVENT_BUFF_SIZE;
- 
--	spin_lock(&priv->tx_dev.tx_dev_lock);
-+	spin_lock_bh(&priv->tx_dev.tx_dev_lock);
- 	result = enqueue_txdev(priv, p, size, complete_handler, skb);
--	spin_unlock(&priv->tx_dev.tx_dev_lock);
-+	spin_unlock_bh(&priv->tx_dev.tx_dev_lock);
- 
- 	if (txq_has_space(priv))
- 		queue_delayed_work(priv->wq, &priv->rw_dwork, 0);
--- 
-2.43.0
-
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -2790,7 +2790,7 @@ static int xhci_configure_endpoint(struc
+ 				xhci->num_active_eps);
+ 		return -ENOMEM;
+ 	}
+-	if ((xhci->quirks & XHCI_SW_BW_CHECKING) &&
++	if ((xhci->quirks & XHCI_SW_BW_CHECKING) && !ctx_change &&
+ 	    xhci_reserve_bandwidth(xhci, virt_dev, command->in_ctx)) {
+ 		if ((xhci->quirks & XHCI_EP_LIMIT_QUIRK))
+ 			xhci_free_host_resources(xhci, ctrl_ctx);
+@@ -4145,8 +4145,10 @@ static int xhci_setup_device(struct usb_
+ 		mutex_unlock(&xhci->mutex);
+ 		ret = xhci_disable_slot(xhci, udev->slot_id);
+ 		xhci_free_virt_device(xhci, udev->slot_id);
+-		if (!ret)
+-			xhci_alloc_dev(hcd, udev);
++		if (!ret) {
++			if (xhci_alloc_dev(hcd, udev) == 1)
++				xhci_setup_addressable_virt_dev(xhci, udev);
++		}
+ 		kfree(command->completion);
+ 		kfree(command);
+ 		return -EPROTO;
 
 
