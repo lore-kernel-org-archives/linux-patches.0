@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A705381A;
-	Sun,  1 Sep 2024 16:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B930A5381A;
+	Sun,  1 Sep 2024 16:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208308; cv=none; b=C+UU4v3WFrv5eAbg0VbU/2uqvv0TwK0+jOLYTwaIfFUGhvhSpDMW6W5bsfP9A6aTHpsND6I2BFE80Jko4vZ/MQ3D/LSoE3yfb0gUQBlNjXx/lFeW05/nLFdSWitAa7GZ3FBwaYl2EKpEtmeqZWGGLmUqa6Kp6oIgdUJmx+btNJ8=
+	t=1725208311; cv=none; b=tSkxiRM91TfuJWbppWTYgqJr/JuG609mykNZ3snYg54cKs//8VN8672R+vd2h9aFqV4e4FwR29y5rLoaVLKt+mJoSbsJxI/ZNEv5hhJPTgRE+0AXULA8zLklkeUBnkVhA1otuyF5bgtD+pUf4OJr2J6KP75IkbIYTghpcpqrSZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208308; c=relaxed/simple;
-	bh=QA378Zlkowog8BJugdPguQL19MAgqOyUvTpy2U6RhUg=;
+	s=arc-20240116; t=1725208311; c=relaxed/simple;
+	bh=N9jhI61vmvVcfGOfiUss9kahFjfZBn2BPi7wSnfUV50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxj18flOOjC6Pya7QthGDiiG+95/e/MVzBb/JVHLi3lJCmYvzzaFdbdDwg5Ct6TkKiUn47jN7fWXnA2TnD6DgQgxNQMKGDlV/zVNnzq3WHNqEkU+jv+ia3tgA7X2IBsGQ7DpZzTtxrJcB9U0vGzlMJWumDQ/NjmLh7H/j4wXltQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTCWMtPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlZMP6cDljZQiT/NxKia0AxB5Z0BwsLpIRhtwVJ9vCibe2AIvq9lIjK/iKCF/B12jpK4hCIT5/lSdfsxXmB624hlr0iUoNtX/bPhRSOl2fxSU2fOPqHGfiPrWjjK3krQ93c3lLehqaIQvIMFtSMNvvg/6nBWXyf6YYltupancHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQC3gYbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTCWMtPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E6BC4CECE;
-	Sun,  1 Sep 2024 16:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQC3gYbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38591C4CEC3;
+	Sun,  1 Sep 2024 16:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208308;
-	bh=QA378Zlkowog8BJugdPguQL19MAgqOyUvTpy2U6RhUg=;
+	s=korg; t=1725208311;
+	bh=N9jhI61vmvVcfGOfiUss9kahFjfZBn2BPi7wSnfUV50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTCWMtPi9siChZYVB6A+H/7MrjxGY6zVrYEdL5tKjkCTAWPSI3wtl4va8vi3ue7Wz
-	 Ogd48F9fWmw+9KH8PpsSMyf9VJjNb2k2w1tcnN2enqcFrjwU7lgerg5a2E6C+/X4nY
-	 09LbSpAMa45QiqMRPBB6LXAoyf+VaUybjnPPDNTQ=
+	b=SQC3gYbL70sJPEKZXvtDgsn4doQoLx8jlij9tcUvYVBAjkKcALo8rlI8yW3HU+Lld
+	 I1+8FKHA3/gnchzlekGQ1wb/u7afz6Y84huSOUVuaHidZImC+KKrvPPb/t+EPM9I71
+	 /ZVZDAoFC0K+dUuoOydl7NR+39e3MVnID5rxvjq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Christian Heusel <christian@heusel.eu>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	Martin Krastev <martin.krastev@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Benjamin Coddington <bcodding@redhat.com>
-Subject: [PATCH 6.10 042/149] drm/vmwgfx: Disable coherent dumb buffers without 3d
-Date: Sun,  1 Sep 2024 18:15:53 +0200
-Message-ID: <20240901160819.047253101@linuxfoundation.org>
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 043/149] video/aperture: optionally match the device in sysfb_disable()
+Date: Sun,  1 Sep 2024 18:15:54 +0200
+Message-ID: <20240901160819.085485817@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -55,53 +54,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit e9fd436bb8fb9b9d31fdf07bbcdba6d30290c5e4 upstream.
+commit b49420d6a1aeb399e5b107fc6eb8584d0860fbd7 upstream.
 
-Coherent surfaces make only sense if the host renders to them using
-accelerated apis. Without 3d the entire content of dumb buffers stays
-in the guest making all of the extra work they're doing to synchronize
-between guest and host useless.
+In aperture_remove_conflicting_pci_devices(), we currently only
+call sysfb_disable() on vga class devices.  This leads to the
+following problem when the pimary device is not VGA compatible:
 
-Configurations without 3d also tend to run with very low graphics
-memory limits. The pinned console fb, mob cursors and graphical login
-manager tend to run out of 16MB graphics memory that those guests use.
+1. A PCI device with a non-VGA class is the boot display
+2. That device is probed first and it is not a VGA device so
+   sysfb_disable() is not called, but the device resources
+   are freed by aperture_detach_platform_device()
+3. Non-primary GPU has a VGA class and it ends up calling sysfb_disable()
+4. NULL pointer dereference via sysfb_disable() since the resources
+   have already been freed by aperture_detach_platform_device() when
+   it was called by the other device.
 
-Fix it by making sure the coherent dumb buffers are only used on
-configs with 3d enabled.
+Fix this by passing a device pointer to sysfb_disable() and checking
+the device to determine if we should execute it or not.
 
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: d6667f0ddf46 ("drm/vmwgfx: Fix handling of dumb buffers")
-Reported-by: Christian Heusel <christian@heusel.eu>
-Closes: https://lore.kernel.org/all/0d0330f3-2ac0-4cd5-8075-7f1cbaf72a8e@heusel.eu
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.9+
-Link: https://patchwork.freedesktop.org/patch/msgid/20240816183332.31961-4-zack.rusin@broadcom.com
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Tested-by: Benjamin Coddington <bcodding@redhat.com>
+v2: Fix build when CONFIG_SCREEN_INFO is not set
+v3: Move device check into the mutex
+    Drop primary variable in aperture_remove_conflicting_pci_devices()
+    Drop __init on pci sysfb_pci_dev_is_enabled()
+
+Fixes: 5ae3716cfdcd ("video/aperture: Only remove sysfb on the default vga pci device")
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240821191135.829765-1-alexander.deucher@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_surface.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/firmware/sysfb.c |   19 +++++++++++++------
+ drivers/of/platform.c    |    2 +-
+ drivers/video/aperture.c |   11 +++--------
+ include/linux/sysfb.h    |    4 ++--
+ 4 files changed, 19 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-@@ -2283,9 +2283,11 @@ int vmw_dumb_create(struct drm_file *fil
- 	/*
- 	 * Without mob support we're just going to use raw memory buffer
- 	 * because we wouldn't be able to support full surface coherency
--	 * without mobs
-+	 * without mobs. There also no reason to support surface coherency
-+	 * without 3d (i.e. gpu usage on the host) because then all the
-+	 * contents is going to be rendered guest side.
- 	 */
--	if (!dev_priv->has_mob) {
-+	if (!dev_priv->has_mob || !vmw_supports_3d(dev_priv)) {
- 		int cpp = DIV_ROUND_UP(args->bpp, 8);
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -39,6 +39,8 @@ static struct platform_device *pd;
+ static DEFINE_MUTEX(disable_lock);
+ static bool disabled;
  
- 		switch (cpp) {
++static struct device *sysfb_parent_dev(const struct screen_info *si);
++
+ static bool sysfb_unregister(void)
+ {
+ 	if (IS_ERR_OR_NULL(pd))
+@@ -52,6 +54,7 @@ static bool sysfb_unregister(void)
+ 
+ /**
+  * sysfb_disable() - disable the Generic System Framebuffers support
++ * @dev:	the device to check if non-NULL
+  *
+  * This disables the registration of system framebuffer devices that match the
+  * generic drivers that make use of the system framebuffer set up by firmware.
+@@ -61,17 +64,21 @@ static bool sysfb_unregister(void)
+  * Context: The function can sleep. A @disable_lock mutex is acquired to serialize
+  *          against sysfb_init(), that registers a system framebuffer device.
+  */
+-void sysfb_disable(void)
++void sysfb_disable(struct device *dev)
+ {
++	struct screen_info *si = &screen_info;
++
+ 	mutex_lock(&disable_lock);
+-	sysfb_unregister();
+-	disabled = true;
++	if (!dev || dev == sysfb_parent_dev(si)) {
++		sysfb_unregister();
++		disabled = true;
++	}
+ 	mutex_unlock(&disable_lock);
+ }
+ EXPORT_SYMBOL_GPL(sysfb_disable);
+ 
+ #if defined(CONFIG_PCI)
+-static __init bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
++static bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
+ {
+ 	/*
+ 	 * TODO: Try to integrate this code into the PCI subsystem
+@@ -87,13 +94,13 @@ static __init bool sysfb_pci_dev_is_enab
+ 	return true;
+ }
+ #else
+-static __init bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
++static bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
+ {
+ 	return false;
+ }
+ #endif
+ 
+-static __init struct device *sysfb_parent_dev(const struct screen_info *si)
++static struct device *sysfb_parent_dev(const struct screen_info *si)
+ {
+ 	struct pci_dev *pdev;
+ 
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -592,7 +592,7 @@ static int __init of_platform_default_po
+ 			 * This can happen for example on DT systems that do EFI
+ 			 * booting and may provide a GOP handle to the EFI stub.
+ 			 */
+-			sysfb_disable();
++			sysfb_disable(NULL);
+ 			of_platform_device_create(node, NULL, NULL);
+ 			of_node_put(node);
+ 		}
+--- a/drivers/video/aperture.c
++++ b/drivers/video/aperture.c
+@@ -293,7 +293,7 @@ int aperture_remove_conflicting_devices(
+ 	 * ask for this, so let's assume that a real driver for the display
+ 	 * was already probed and prevent sysfb to register devices later.
+ 	 */
+-	sysfb_disable();
++	sysfb_disable(NULL);
+ 
+ 	aperture_detach_devices(base, size);
+ 
+@@ -346,15 +346,10 @@ EXPORT_SYMBOL(__aperture_remove_legacy_v
+  */
+ int aperture_remove_conflicting_pci_devices(struct pci_dev *pdev, const char *name)
+ {
+-	bool primary = false;
+ 	resource_size_t base, size;
+ 	int bar, ret = 0;
+ 
+-	if (pdev == vga_default_device())
+-		primary = true;
+-
+-	if (primary)
+-		sysfb_disable();
++	sysfb_disable(&pdev->dev);
+ 
+ 	for (bar = 0; bar < PCI_STD_NUM_BARS; ++bar) {
+ 		if (!(pci_resource_flags(pdev, bar) & IORESOURCE_MEM))
+@@ -370,7 +365,7 @@ int aperture_remove_conflicting_pci_devi
+ 	 * that consumes the VGA framebuffer I/O range. Remove this
+ 	 * device as well.
+ 	 */
+-	if (primary)
++	if (pdev == vga_default_device())
+ 		ret = __aperture_remove_legacy_vga_devices(pdev);
+ 
+ 	return ret;
+--- a/include/linux/sysfb.h
++++ b/include/linux/sysfb.h
+@@ -58,11 +58,11 @@ struct efifb_dmi_info {
+ 
+ #ifdef CONFIG_SYSFB
+ 
+-void sysfb_disable(void);
++void sysfb_disable(struct device *dev);
+ 
+ #else /* CONFIG_SYSFB */
+ 
+-static inline void sysfb_disable(void)
++static inline void sysfb_disable(struct device *dev)
+ {
+ }
+ 
 
 
