@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347B228387;
-	Sun,  1 Sep 2024 16:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C1E28387;
+	Sun,  1 Sep 2024 16:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208195; cv=none; b=kG7oOIRQyCu3s+nsAJNcrErQ7MTK5bcpbC0cn3LxJsDQZY9aD9sNHBB2c1XBLUOLUxJFYrknYqzSfgVBnzH38UE/EmeM/Gxbl6iFHrrKlVkDSuh3wNNkP/iCbkyaAGhOq2uNbaEmf96tfDU5L7oSiBmcPDgH9J76mlwrng84sWo=
+	t=1725208198; cv=none; b=uRoZP/+xZqL9guzHOCbSIti+CfuNi+0jGqL7LysL3zE6gr7M72KUNjlptbtDblG5v5Z4B0LkO3drvH++bxz5dU3LUaRD88RFHJGaHf9pfPk6ijRM8lxn4OgvZ5f4FSwBwo5aHCLEO7BCTTE+T8zltLC5UHZAawpANo6QtpUwu+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208195; c=relaxed/simple;
-	bh=Yt8SbjtRVPuqLfxbpvJX0my5PKGfJDZvWJPOc49gYhY=;
+	s=arc-20240116; t=1725208198; c=relaxed/simple;
+	bh=vICCKWGRUXY7jAMjrrRKpJ7PObNL8r53dWRYShrMgws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayG30Msju4GMU+FApnCLXZy6LusKVwNEYP0VLF3ojjpoUty66sCLZblVKNKhsQRWq0Wrs06FC0SpjFK39CsRi+mVzOOi7B7vFRE2YkoPaLrv9Dd6PKaF8jwzO59TVJigpc3dpghxDm0y0H7LszaLg8Pc1MF+aAPoMZxmeSjLPZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tAg89vH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEViAYRRAmuDwmUQCpdJ5rLUonrXk5N8+R9md1PSDZtUc+eFEeRW3t7EujxT9Jzsj3Oa8sSg76OdmZkysfUk5jTQI4WUwbTFZNlnQcDrohZyC9PzgQ9v3uyrXsdnlTzKL7reb50qYyFVZng5OEm4jwlCc1pg2IIMvNUpLVIJ5NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDHloLQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tAg89vH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AF4C4CEC3;
-	Sun,  1 Sep 2024 16:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDHloLQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95317C4CEC3;
+	Sun,  1 Sep 2024 16:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208194;
-	bh=Yt8SbjtRVPuqLfxbpvJX0my5PKGfJDZvWJPOc49gYhY=;
+	s=korg; t=1725208198;
+	bh=vICCKWGRUXY7jAMjrrRKpJ7PObNL8r53dWRYShrMgws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tAg89vH8POwF1BIMw8jEhoKVBFm+Rb1uhJ9qUizC51RTWPUfelIDX/j2k9BiroFh
-	 jz60Ad0H7N7q2lUO+xUn3texG/t2PdsMDQecScOUfyCAc06KqdGJMffGnd9w00xX16
-	 6jU7e+OAnmw8QGpAWjAIEapeWM+zYAtdHVw2KDhw=
+	b=QDHloLQylVymHn/XkJFTduUubgQrpIQs1I68dXTQ2AJnKBNg9P8EQ6lax0sc0pLOb
+	 eLbmG2bw3XSkXCoSAQzaCg+xg/winkVTroLYDwAh6/V2GWpwrrgIVyBHRCOzMTyfom
+	 i51Dt9Li8VhCGAxEdm+K/qP2wyhVxKgLmVCeTv0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 62/93] bonding: implement xdo_dev_state_free and call it after deletion
-Date: Sun,  1 Sep 2024 18:16:49 +0200
-Message-ID: <20240901160809.698354810@linuxfoundation.org>
+	Jack Xiao <Jack.Xiao@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 001/149] drm/amdgpu/mes: fix mes ring buffer overflow
+Date: Sun,  1 Sep 2024 18:15:12 +0200
+Message-ID: <20240901160817.520390148@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
-References: <20240901160807.346406833@linuxfoundation.org>
+In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
+References: <20240901160817.461957599@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,98 +46,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Jack Xiao <Jack.Xiao@amd.com>
 
-[ Upstream commit ec13009472f4a756288eb4e18e20a7845da98d10 ]
+commit 11752c013f562a1124088a35bd314aa0e9f0e88f upstream.
 
-Add this implementation for bonding, so hardware resources can be
-freed from the active slave after xfrm state is deleted. The netdev
-used to invoke xdo_dev_state_free callback, is saved in the xfrm state
-(xs->xso.real_dev), which is also the bond's active slave. To prevent
-it from being freed, acquire netdev reference before leaving RCU
-read-side critical section, and release it after callback is done.
+wait memory room until enough before writing mes packets
+to avoid ring buffer overflow.
 
-And call it when deleting all SAs from old active real interface while
-switching current active slave.
+v2: squash in sched_hw_submission fix
 
-Fixes: 9a5605505d9c ("bonding: Add struct bond_ipesc to manage SA")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20240823031056.110999-2-jianbol@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: de3246254156 ("drm/amdgpu: cleanup MES11 command submission")
+Fixes: fffe347e1478 ("drm/amdgpu: cleanup MES12 command submission")
+Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 34e087e8920e635c62e2ed6a758b0cd27f836d13)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c | 36 +++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |    2 ++
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c   |   18 ++++++++++++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 566b02ca78261..c166c4b8cee78 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -581,12 +581,47 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
- 				   __func__);
- 		} else {
- 			slave->dev->xfrmdev_ops->xdo_dev_state_delete(ipsec->xs);
-+			if (slave->dev->xfrmdev_ops->xdo_dev_state_free)
-+				slave->dev->xfrmdev_ops->xdo_dev_state_free(ipsec->xs);
- 		}
- 	}
- 	spin_unlock_bh(&bond->ipsec_lock);
- 	rcu_read_unlock();
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -212,6 +212,8 @@ int amdgpu_ring_init(struct amdgpu_devic
+ 	 */
+ 	if (ring->funcs->type == AMDGPU_RING_TYPE_KIQ)
+ 		sched_hw_submission = max(sched_hw_submission, 256);
++	if (ring->funcs->type == AMDGPU_RING_TYPE_MES)
++		sched_hw_submission = 8;
+ 	else if (ring == &adev->sdma.instance[0].page)
+ 		sched_hw_submission = 256;
  
-+static void bond_ipsec_free_sa(struct xfrm_state *xs)
-+{
-+	struct net_device *bond_dev = xs->xso.dev;
-+	struct net_device *real_dev;
-+	netdevice_tracker tracker;
-+	struct bonding *bond;
-+	struct slave *slave;
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -163,7 +163,7 @@ static int mes_v11_0_submit_pkt_and_poll
+ 	const char *op_str, *misc_op_str;
+ 	unsigned long flags;
+ 	u64 status_gpu_addr;
+-	u32 status_offset;
++	u32 seq, status_offset;
+ 	u64 *status_ptr;
+ 	signed long r;
+ 	int ret;
+@@ -191,6 +191,13 @@ static int mes_v11_0_submit_pkt_and_poll
+ 	if (r)
+ 		goto error_unlock_free;
+ 
++	seq = ++ring->fence_drv.sync_seq;
++	r = amdgpu_fence_wait_polling(ring,
++				      seq - ring->fence_drv.num_fences_mask,
++				      timeout);
++	if (r < 1)
++		goto error_undo;
 +
-+	if (!bond_dev)
-+		return;
+ 	api_status = (struct MES_API_STATUS *)((char *)pkt + api_status_off);
+ 	api_status->api_completion_fence_addr = status_gpu_addr;
+ 	api_status->api_completion_fence_value = 1;
+@@ -203,8 +210,7 @@ static int mes_v11_0_submit_pkt_and_poll
+ 	mes_status_pkt.header.dwsize = API_FRAME_SIZE_IN_DWORDS;
+ 	mes_status_pkt.api_status.api_completion_fence_addr =
+ 		ring->fence_drv.gpu_addr;
+-	mes_status_pkt.api_status.api_completion_fence_value =
+-		++ring->fence_drv.sync_seq;
++	mes_status_pkt.api_status.api_completion_fence_value = seq;
+ 
+ 	amdgpu_ring_write_multiple(ring, &mes_status_pkt,
+ 				   sizeof(mes_status_pkt) / 4);
+@@ -224,7 +230,7 @@ static int mes_v11_0_submit_pkt_and_poll
+ 		dev_dbg(adev->dev, "MES msg=%d was emitted\n",
+ 			x_pkt->header.opcode);
+ 
+-	r = amdgpu_fence_wait_polling(ring, ring->fence_drv.sync_seq, timeout);
++	r = amdgpu_fence_wait_polling(ring, seq, timeout);
+ 	if (r < 1 || !*status_ptr) {
+ 
+ 		if (misc_op_str)
+@@ -247,6 +253,10 @@ static int mes_v11_0_submit_pkt_and_poll
+ 	amdgpu_device_wb_free(adev, status_offset);
+ 	return 0;
+ 
++error_undo:
++	dev_err(adev->dev, "MES ring buffer is full.\n");
++	amdgpu_ring_undo(ring);
 +
-+	rcu_read_lock();
-+	bond = netdev_priv(bond_dev);
-+	slave = rcu_dereference(bond->curr_active_slave);
-+	real_dev = slave ? slave->dev : NULL;
-+	netdev_hold(real_dev, &tracker, GFP_ATOMIC);
-+	rcu_read_unlock();
-+
-+	if (!slave)
-+		goto out;
-+
-+	if (!xs->xso.real_dev)
-+		goto out;
-+
-+	WARN_ON(xs->xso.real_dev != real_dev);
-+
-+	if (real_dev && real_dev->xfrmdev_ops &&
-+	    real_dev->xfrmdev_ops->xdo_dev_state_free)
-+		real_dev->xfrmdev_ops->xdo_dev_state_free(xs);
-+out:
-+	netdev_put(real_dev, &tracker);
-+}
-+
- /**
-  * bond_ipsec_offload_ok - can this packet use the xfrm hw offload
-  * @skb: current data packet
-@@ -627,6 +662,7 @@ static bool bond_ipsec_offload_ok(struct sk_buff *skb, struct xfrm_state *xs)
- static const struct xfrmdev_ops bond_xfrmdev_ops = {
- 	.xdo_dev_state_add = bond_ipsec_add_sa,
- 	.xdo_dev_state_delete = bond_ipsec_del_sa,
-+	.xdo_dev_state_free = bond_ipsec_free_sa,
- 	.xdo_dev_offload_ok = bond_ipsec_offload_ok,
- };
- #endif /* CONFIG_XFRM_OFFLOAD */
--- 
-2.43.0
-
+ error_unlock_free:
+ 	spin_unlock_irqrestore(&mes->ring_lock, flags);
+ 
 
 
