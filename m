@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAEA1E498;
-	Sun,  1 Sep 2024 16:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9A92B9C7;
+	Sun,  1 Sep 2024 16:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209020; cv=none; b=R8NQDkAw83yyO0hZf3HaRAqOvbuoMA8oGeiuuISnyJw5LxUQ9SWg++ZissjsCRRBgI2u5+lEUkE9XZFxqhGuGZHmy5gQzUo69F2LA+R4ry0PseTggtO77KbEZpW0Sk9u0bYM/7tIA1j3+qrx3TDvY5pUFaF3eaYLlx68g8Le8xU=
+	t=1725209024; cv=none; b=gG9Ns3nYi5+VqAtPN85W+gFhxfNZzV5G2i8J1JmGF+uTtQB41Krl2368yhJs0/0B0PDonQrVGdMK221K3rfmnovC62Qkfci+leq66A4FpEgEvAYRmIb2RdDEZe8+33FijldriFtjCbZRQc+1NwUzXkpDHyyuhGAIuuHzhjG7ack=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209020; c=relaxed/simple;
-	bh=hLF3NCfUZkMlDHN1Ndj+vEZdp4U704W+X58g45BRG/A=;
+	s=arc-20240116; t=1725209024; c=relaxed/simple;
+	bh=MtdWKH9YxJjHLC8IwIhPvBEllasQV8i8tcC4wTAFX7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCbrqa6RJpiTOkLORwzlypaNp2UXll98sr91ZzgHtFsyGkvn/Qe1z5uYiOKK+II+nIAIyvbb2lruNPY20sw2c0wDjDJg1T1g1K+MjHUXCuRoxmSE/TXBN9zFOu0jupgohH0IKYq9DhW1JcU223N1F2LyjiB7rvpIyqbmU+2gPSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKulpuFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtQQoQFKhIsOBwFaWobr/P7uoaAEWzjs3aIn5YPSxfZ4vCQXpF0DR24r/0AEnqi4HPikV9+hSZJ/JD8tvR8ncTZ3fhULw0i66k9oHrv4zVp5qtc7hk5j5vWx+F9m6AzbxW4Ss190QOl7PhprEHnEI1rSrhc8wGwQAMoO5x/hf4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzP47uv3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKulpuFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF92C4CEC3;
-	Sun,  1 Sep 2024 16:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzP47uv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82CCC4CEC3;
+	Sun,  1 Sep 2024 16:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209020;
-	bh=hLF3NCfUZkMlDHN1Ndj+vEZdp4U704W+X58g45BRG/A=;
+	s=korg; t=1725209024;
+	bh=MtdWKH9YxJjHLC8IwIhPvBEllasQV8i8tcC4wTAFX7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKulpuFXiPr4bNZ/GtpgqdTr1OyBp9419vjHUOKcyi+oepHYJQ69P11ASYvdm5ndh
-	 ujBpsRNOovInIBTq9yvSAZz8wWZ8b639cBRsCXOwNpMgeKwOtBpcA857y8L3iV/9qU
-	 xr9fr1g8eYviISdCDA2UPGcf+059kBSYglmOwrTE=
+	b=SzP47uv3rrB15DpY3jq1NCYhwAvPMh7l3Uiqm9kQYpefhDmUJ8U4/ozf+N6lO0fTZ
+	 8KovgVs/FNAmmDzvbUva3hRsinFq3Utn5jOKeHwRRm7OwHsESrgnVZXpDKv7JXIVab
+	 ygoNcWcw2P+8C3IzaskLFKb3yJ1bVq+yrQ4k2TaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.4 109/134] wifi: mwifiex: duplicate static structs used in driver instances
-Date: Sun,  1 Sep 2024 18:17:35 +0200
-Message-ID: <20240901160814.187985860@linuxfoundation.org>
+	Rafael Aquini <aquini@redhat.com>,
+	Davidlohr Bueso <dbueso@suse.de>,
+	Manfred Spraul <manfred@colorfullife.com>,
+	Waiman Long <llong@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 110/134] ipc: replace costly bailout check in sysvipc_find_ipc()
+Date: Sun,  1 Sep 2024 18:17:36 +0200
+Message-ID: <20240901160814.224580063@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,84 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Rafael Aquini <aquini@redhat.com>
 
-commit 27ec3c57fcadb43c79ed05b2ea31bc18c72d798a upstream.
+commit 20401d1058f3f841f35a594ac2fc1293710e55b9 upstream.
 
-mwifiex_band_2ghz and mwifiex_band_5ghz are statically allocated, but
-used and modified in driver instances. Duplicate them before using
-them in driver instances so that different driver instances do not
-influence each other.
+sysvipc_find_ipc() was left with a costly way to check if the offset
+position fed to it is bigger than the total number of IPC IDs in use.  So
+much so that the time it takes to iterate over /proc/sysvipc/* files grows
+exponentially for a custom benchmark that creates "N" SYSV shm segments
+and then times the read of /proc/sysvipc/shm (milliseconds):
 
-This was observed on a board which has one PCIe and one SDIO mwifiex
-adapter. It blew up in mwifiex_setup_ht_caps(). This was called with
-the statically allocated struct which is modified in this function.
+    12 msecs to read   1024 segs from /proc/sysvipc/shm
+    18 msecs to read   2048 segs from /proc/sysvipc/shm
+    65 msecs to read   4096 segs from /proc/sysvipc/shm
+   325 msecs to read   8192 segs from /proc/sysvipc/shm
+  1303 msecs to read  16384 segs from /proc/sysvipc/shm
+  5182 msecs to read  32768 segs from /proc/sysvipc/shm
 
-Cc: stable@vger.kernel.org
-Fixes: d6bffe8bb520 ("mwifiex: support for creation of AP interface")
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240809-mwifiex-duplicate-static-structs-v1-1-6837b903b1a4@pengutronix.de
+The root problem lies with the loop that computes the total amount of ids
+in use to check if the "pos" feeded to sysvipc_find_ipc() grew bigger than
+"ids->in_use".  That is a quite inneficient way to get to the maximum
+index in the id lookup table, specially when that value is already
+provided by struct ipc_ids.max_idx.
+
+This patch follows up on the optimization introduced via commit
+15df03c879836 ("sysvipc: make get_maxid O(1) again") and gets rid of the
+aforementioned costly loop replacing it by a simpler checkpoint based on
+ipc_get_maxidx() returned value, which allows for a smooth linear increase
+in time complexity for the same custom benchmark:
+
+     2 msecs to read   1024 segs from /proc/sysvipc/shm
+     2 msecs to read   2048 segs from /proc/sysvipc/shm
+     4 msecs to read   4096 segs from /proc/sysvipc/shm
+     9 msecs to read   8192 segs from /proc/sysvipc/shm
+    19 msecs to read  16384 segs from /proc/sysvipc/shm
+    39 msecs to read  32768 segs from /proc/sysvipc/shm
+
+Link: https://lkml.kernel.org/r/20210809203554.1562989-1-aquini@redhat.com
+Signed-off-by: Rafael Aquini <aquini@redhat.com>
+Acked-by: Davidlohr Bueso <dbueso@suse.de>
+Acked-by: Manfred Spraul <manfred@colorfullife.com>
+Cc: Waiman Long <llong@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |   32 +++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ ipc/util.c |   16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4319,11 +4319,27 @@ int mwifiex_register_cfg80211(struct mwi
- 	if (ISSUPP_ADHOC_ENABLED(adapter->fw_cap_info))
- 		wiphy->interface_modes |= BIT(NL80211_IFTYPE_ADHOC);
+--- a/ipc/util.c
++++ b/ipc/util.c
+@@ -754,21 +754,13 @@ struct pid_namespace *ipc_seq_pid_ns(str
+ static struct kern_ipc_perm *sysvipc_find_ipc(struct ipc_ids *ids, loff_t pos,
+ 					      loff_t *new_pos)
+ {
+-	struct kern_ipc_perm *ipc;
+-	int total, id;
++	struct kern_ipc_perm *ipc = NULL;
++	int max_idx = ipc_get_maxidx(ids);
  
--	wiphy->bands[NL80211_BAND_2GHZ] = &mwifiex_band_2ghz;
--	if (adapter->config_bands & BAND_A)
--		wiphy->bands[NL80211_BAND_5GHZ] = &mwifiex_band_5ghz;
--	else
-+	wiphy->bands[NL80211_BAND_2GHZ] = devm_kmemdup(adapter->dev,
-+						       &mwifiex_band_2ghz,
-+						       sizeof(mwifiex_band_2ghz),
-+						       GFP_KERNEL);
-+	if (!wiphy->bands[NL80211_BAND_2GHZ]) {
-+		ret = -ENOMEM;
-+		goto err;
-+	}
-+
-+	if (adapter->config_bands & BAND_A) {
-+		wiphy->bands[NL80211_BAND_5GHZ] = devm_kmemdup(adapter->dev,
-+							       &mwifiex_band_5ghz,
-+							       sizeof(mwifiex_band_5ghz),
-+							       GFP_KERNEL);
-+		if (!wiphy->bands[NL80211_BAND_5GHZ]) {
-+			ret = -ENOMEM;
-+			goto err;
-+		}
-+	} else {
- 		wiphy->bands[NL80211_BAND_5GHZ] = NULL;
-+	}
+-	total = 0;
+-	for (id = 0; id < pos && total < ids->in_use; id++) {
+-		ipc = idr_find(&ids->ipcs_idr, id);
+-		if (ipc != NULL)
+-			total++;
+-	}
+-
+-	ipc = NULL;
+-	if (total >= ids->in_use)
++	if (max_idx == -1 || pos > max_idx)
+ 		goto out;
  
- 	if (adapter->drcs_enabled && ISSUPP_DRCS_ENABLED(adapter->fw_cap_info))
- 		wiphy->iface_combinations = &mwifiex_iface_comb_ap_sta_drcs;
-@@ -4411,8 +4427,7 @@ int mwifiex_register_cfg80211(struct mwi
- 	if (ret < 0) {
- 		mwifiex_dbg(adapter, ERROR,
- 			    "%s: wiphy_register failed: %d\n", __func__, ret);
--		wiphy_free(wiphy);
--		return ret;
-+		goto err;
- 	}
- 
- 	if (!adapter->regd) {
-@@ -4454,4 +4469,9 @@ int mwifiex_register_cfg80211(struct mwi
- 
- 	adapter->wiphy = wiphy;
- 	return ret;
-+
-+err:
-+	wiphy_free(wiphy);
-+
-+	return ret;
- }
+-	for (; pos < ipc_mni; pos++) {
++	for (; pos <= max_idx; pos++) {
+ 		ipc = idr_find(&ids->ipcs_idr, pos);
+ 		if (ipc != NULL) {
+ 			rcu_read_lock();
 
 
