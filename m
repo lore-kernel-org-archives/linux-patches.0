@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A42644C93;
-	Sun,  1 Sep 2024 16:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C181DFD1;
+	Sun,  1 Sep 2024 16:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209512; cv=none; b=jXBirAOKDUre7K3CB4Vjsn5JQ7QiEAa0PXgSH9rSLPtcyLLHUZOY8ohPToUVMGJbIqRmfQA0CBwl9LxzPs+rotPuyOGudnL32LgkEoTfl6EdcSLL2M5WZ0FEQFLimU9+eLpPdUtoL4hZHBfnimjNYrWSGkmu4EdU9njVveUp5XQ=
+	t=1725209515; cv=none; b=W+nejRIpP9slFQT0lfG/bdTi8W0/vcxOXa9QoEoVMk9rWyUlIAuNm3eK710ycC7fIP2wA4iQmOnFaKB9jRZIloiODLrUS9lI9O4cHIlXKNYiJ4oZ5mymgqanpsyxVpAhcm2tyHVqlUB+gK/USbRhvfENrJJgVH9C2vabXTkv+pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209512; c=relaxed/simple;
-	bh=qlbFpnysDdZou9jnb7N/iXGexbT81UL3Vo76HZOHB0o=;
+	s=arc-20240116; t=1725209515; c=relaxed/simple;
+	bh=Ks3NHNRoIiU/bwee9p8rOotG3OQ916xZp67yIYyoeE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfUHwrTKFTMFmP17Bjj/KvE7LR34wtPixM/yjTUNMbpDXvZTsMdn3bzuLNl1R8HFg367NmUwcvDh7wdRU3MPTqvcXIuqQTWkjCFxafCZdljE/hd8+kSI04R8nVnmf5dAn9eDVEBzzFvY4sTCq/IjYUa9ZTsTuVHoYzuzGIxrj0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqzPmcXD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Al5ZBv8qe8ZC+vdkqHwVH907YkaHMt1sJiS4Ocdi1Kz8IofrnybFfIcewLPB5Brv9CNTwPgVxFUlnzwMW2a5TusbuhBmjZrLh9kf50UO8fKV8kdy329H8b+wqUXycPr6I55DruAzV1lh0T2NLZ3lu1ffUWgJrcz1a8MtVpYoWy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ga2kkaiJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqzPmcXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD208C4CEC3;
-	Sun,  1 Sep 2024 16:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ga2kkaiJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E87C4CEC3;
+	Sun,  1 Sep 2024 16:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209512;
-	bh=qlbFpnysDdZou9jnb7N/iXGexbT81UL3Vo76HZOHB0o=;
+	s=korg; t=1725209515;
+	bh=Ks3NHNRoIiU/bwee9p8rOotG3OQ916xZp67yIYyoeE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BqzPmcXD4ohOrkf6u2hsPjK3asFfS4rIBbzWLNRi/X+aNzMiQh+5bDRQiZP934j71
-	 IXFEaDHuPsqvRqcukObpTPtwbwfj2JyzmWY9hiz8ut3w623mr37bNmCWR95uq1q4qh
-	 VWOTekOF/l6h0CRrGI9V5C11MObLbujaCQwCjrwA=
+	b=ga2kkaiJJkagT4yeCkRdtD40S203a6K2mNfy0m9cGpSU4jqLNSJwvxZJ2X+hDMPaE
+	 Wc1igZB0255dJNJPtL90RzZFFLlyRsDcg55rcrQ7RmbtyADmlEmYI3M+BjfY2yBu6G
+	 D/xRQKaXQhnIpn15LPFTDqdCHg3EdZ0lwfc48kgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	y0un9n132@gmail.com,
+	Kees Cook <keescook@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/151] md: clean up invalid BUG_ON in md_ioctl
-Date: Sun,  1 Sep 2024 18:16:58 +0200
-Message-ID: <20240901160816.300378818@linuxfoundation.org>
+Subject: [PATCH 5.10 059/151] x86: Increase brk randomness entropy for 64-bit systems
+Date: Sun,  1 Sep 2024 18:16:59 +0200
+Message-ID: <20240901160816.337899176@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,40 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 9dd8702e7cd28ebf076ff838933f29cf671165ec ]
+[ Upstream commit 44c76825d6eefee9eb7ce06c38e1a6632ac7eb7d ]
 
-'disk->private_data' is set to mddev in md_alloc() and never set to NULL,
-and users need to open mddev before submitting ioctl. So mddev must not
-have been freed during ioctl, and there is no need to check mddev here.
-Clean up it.
+In commit c1d171a00294 ("x86: randomize brk"), arch_randomize_brk() was
+defined to use a 32MB range (13 bits of entropy), but was never increased
+when moving to 64-bit. The default arch_randomize_brk() uses 32MB for
+32-bit tasks, and 1GB (18 bits of entropy) for 64-bit tasks.
 
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240226031444.3606764-4-linan666@huaweicloud.com
+Update x86_64 to match the entropy used by arm64 and other 64-bit
+architectures.
+
+Reported-by: y0un9n132@gmail.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Closes: https://lore.kernel.org/linux-hardening/CA+2EKTVLvc8hDZc+2Yhwmus=dzOUG5E4gV7ayCbu0MPJTZzWkw@mail.gmail.com/
+Link: https://lore.kernel.org/r/20240217062545.1631668-1-keescook@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 5 -----
- 1 file changed, 5 deletions(-)
+ arch/x86/kernel/process.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index f1f029243e0cb..accf9ac9bb8c0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -7601,11 +7601,6 @@ static int md_ioctl(struct block_device *bdev, fmode_t mode,
+diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+index 1cba09a9f1c13..4f731981d3267 100644
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -926,7 +926,10 @@ unsigned long arch_align_stack(unsigned long sp)
  
- 	mddev = bdev->bd_disk->private_data;
+ unsigned long arch_randomize_brk(struct mm_struct *mm)
+ {
+-	return randomize_page(mm->brk, 0x02000000);
++	if (mmap_is_ia32())
++		return randomize_page(mm->brk, SZ_32M);
++
++	return randomize_page(mm->brk, SZ_1G);
+ }
  
--	if (!mddev) {
--		BUG();
--		goto out;
--	}
--
- 	/* Some actions do not requires the mutex */
- 	switch (cmd) {
- 	case GET_ARRAY_INFO:
+ /*
 -- 
 2.43.0
 
