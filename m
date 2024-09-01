@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54441C68C;
-	Sun,  1 Sep 2024 16:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2621C68C;
+	Sun,  1 Sep 2024 16:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209420; cv=none; b=BqPDXAy+8zom3Pnq0u5NG3zPp6NSiyBXbxKK6aGJ5HuhZcvtKZXGZw5OPSaZMdtXrJDaONMEE4WWyNUFoBdp1Cbtj4QIA7mOKob2CoxDvsJ+9jkevPlSbYd+0hWmbfBfAkSGsbEQ1CXslZwV76xTebmeE7ORMTJRZqc3C8oi9gg=
+	t=1725209423; cv=none; b=caX0cT43ZhkFGFRgwqYT2HDlT/c9izFRjOdtQ+/cD6JwqlateA1h2Ahts1xEAoptTrfGH8XVkoMVZESjj0qjGb+eBpRlmCrc5znEK2ZyVBmTV/T0RGV5Tb2ivOd2DPW3XpiLATHv++Bh/0Lv0jZCiFMd+64OiIGKUXx+oHN5Xg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209420; c=relaxed/simple;
-	bh=/vBJjSXbzmx3EQA9ftknf8rpJqv7H5+InzGlyVdaY84=;
+	s=arc-20240116; t=1725209423; c=relaxed/simple;
+	bh=WJcrFWUzko5hFoqeYBL1+pW5fHbFQV+tLBRjvn559Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LA57vtLwj57LUK8grxXoe5ZNYH6Na5N9B8BgcIomSAZIDE69kNUaarH6an93cFfNeD+T2+Up2+1cj1YLL/AQcbD+UkOp/IQicgqC8thJzgGdqj0DAGOadjmo9KcIyGtZ1HUPttBXbqBcm38/Mg6oQa04uAINDpWZYSVSozivMNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtv28h9g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQ7/HFBTCVUiBfLgrzg7lVvZc05gvFM0cC+1F1vQYPD1dYr2NQomPr377EiImG8/WKAVAEiP/t8ofCtU3DRaqjyfCtxwJ0uTDXqkpK7J8To+CE9eDGOOncNvgqyY/1BAp5BrrsumFsOYwUQZLeRNmKsQaPsXrjrTFIqomRbSwr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbtzy06s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtv28h9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBFCC4CEC3;
-	Sun,  1 Sep 2024 16:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbtzy06s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33740C4CEC3;
+	Sun,  1 Sep 2024 16:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209420;
-	bh=/vBJjSXbzmx3EQA9ftknf8rpJqv7H5+InzGlyVdaY84=;
+	s=korg; t=1725209423;
+	bh=WJcrFWUzko5hFoqeYBL1+pW5fHbFQV+tLBRjvn559Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mtv28h9g+TF0APRM7Zma1FcnVISJ4qPGI/j6CSTsGlCTcHmXDcIEV0VHtjkm46cAU
-	 EyQC3ePoURKERPMY/v2DEwUcSRpbO2FcJNj88bGXnPCBup59CoHEAuun1TdTEEG5j8
-	 V/zh00qmZFwnicS30x36A6yasrD2Nv6efyokMUBI=
+	b=jbtzy06s6ZiBBEkVKWWS4skgkRBdRdiOpRTXqIoHfmLkMzER5F919vKyfAHu+lyuJ
+	 bjVCxsLvRFPPHutR/qAIQGU9WEuQwZq6vBREE9Wy1JLbIak1HTdh+rqK2u3/nr2TFn
+	 9UeuNFhAoGBPocfAxeOdyA109i2udzp0ni6aXIBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
-	Khazhismel Kumykov <khazhy@google.com>
-Subject: [PATCH 5.10 007/151] dm resume: dont return EINVAL when signalled
-Date: Sun,  1 Sep 2024 18:16:07 +0200
-Message-ID: <20240901160814.374401129@linuxfoundation.org>
+	Zdenek Kabelac <zkabelac@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.10 008/151] dm persistent data: fix memory allocation failure
+Date: Sun,  1 Sep 2024 18:16:08 +0200
+Message-ID: <20240901160814.411713333@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -50,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khazhismel Kumykov <khazhy@google.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 7a636b4f03af9d541205f69e373672e7b2b60a8a upstream.
+commit faada2174c08662ae98b439c69efe3e79382c538 upstream.
 
-If the dm_resume method is called on a device that is not suspended, the
-method will suspend the device briefly, before resuming it (so that the
-table will be swapped).
+kmalloc is unreliable when allocating more than 8 pages of memory. It may
+fail when there is plenty of free memory but the memory is fragmented.
+Zdenek Kabelac observed such failure in his tests.
 
-However, there was a bug that the return value of dm_suspended_md was not
-checked. dm_suspended_md may return an error when it is interrupted by a
-signal. In this case, do_resume would call dm_swap_table, which would
-return -EINVAL.
-
-This commit fixes the logic, so that error returned by dm_suspend is
-checked and the resume operation is undone.
+This commit changes kmalloc to kvmalloc - kvmalloc will fall back to
+vmalloc if the large allocation fails.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
+Reported-by: Zdenek Kabelac <zkabelac@redhat.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/md/persistent-data/dm-space-map-metadata.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1064,8 +1064,26 @@ static int do_resume(struct dm_ioctl *pa
- 			suspend_flags &= ~DM_SUSPEND_LOCKFS_FLAG;
- 		if (param->flags & DM_NOFLUSH_FLAG)
- 			suspend_flags |= DM_SUSPEND_NOFLUSH_FLAG;
--		if (!dm_suspended_md(md))
--			dm_suspend(md, suspend_flags);
-+		if (!dm_suspended_md(md)) {
-+			r = dm_suspend(md, suspend_flags);
-+			if (r) {
-+				down_write(&_hash_lock);
-+				hc = dm_get_mdptr(md);
-+				if (hc && !hc->new_map) {
-+					hc->new_map = new_map;
-+					new_map = NULL;
-+				} else {
-+					r = -ENXIO;
-+				}
-+				up_write(&_hash_lock);
-+				if (new_map) {
-+					dm_sync_table(md);
-+					dm_table_destroy(new_map);
-+				}
-+				dm_put(md);
-+				return r;
-+			}
-+		}
+--- a/drivers/md/persistent-data/dm-space-map-metadata.c
++++ b/drivers/md/persistent-data/dm-space-map-metadata.c
+@@ -275,7 +275,7 @@ static void sm_metadata_destroy(struct d
+ {
+ 	struct sm_metadata *smm = container_of(sm, struct sm_metadata, sm);
  
- 		old_map = dm_swap_table(md, new_map);
- 		if (IS_ERR(old_map)) {
+-	kfree(smm);
++	kvfree(smm);
+ }
+ 
+ static int sm_metadata_get_nr_blocks(struct dm_space_map *sm, dm_block_t *count)
+@@ -759,7 +759,7 @@ struct dm_space_map *dm_sm_metadata_init
+ {
+ 	struct sm_metadata *smm;
+ 
+-	smm = kmalloc(sizeof(*smm), GFP_KERNEL);
++	smm = kvmalloc(sizeof(*smm), GFP_KERNEL);
+ 	if (!smm)
+ 		return ERR_PTR(-ENOMEM);
+ 
 
 
