@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E98F2C6AF;
-	Sun,  1 Sep 2024 17:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539CD17C;
+	Sun,  1 Sep 2024 17:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210362; cv=none; b=IEnfUN2lpzLawTuIo/BY/SLoOryedonFxG4R1wxqfoe+T7wLxXO5TL7CFOkQjQO9DortP+KknSlPJ5MTLZVqjOHij+VREhyfoXUkA4FUXLiy86hVU5Yp3TJBJdfBJQsO/S92HOUSin2W2il1JVK1wVbGIdtNSyngX0JcG/0Fz9k=
+	t=1725210365; cv=none; b=LWlJH7X3laHJJETzS3QioltjjKitkfZXEMb56cz6Bs5U46odo3YcEgmfTd+SqhDgb7JsNqCGKO5UDHzsiPSDcHilSu0RFQqHpjxHMQ+xPGwIxamXGNTH5kt4r5FRJxVHL0L5ldqk75bod03x5Ett1eqELYW601dkt6szSifD1I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210362; c=relaxed/simple;
-	bh=xS21LTM+gFB94VSRasRXReIYf3C/DY+Vj6GtIq5qkA8=;
+	s=arc-20240116; t=1725210365; c=relaxed/simple;
+	bh=EPq9WxZQLa3vBt9zLo4YtZU8O7uEl8BdW9vSqd2F0pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VoDq4DoU4cX/KH6MnSM9i29QGstvGK8STxEHYt4rfL4nXtaZy6/W6iWo1VFkfDCaR9ncZ0Pn3mSvnpD8vSrV5Q52LMBPYeEKQ/sM9xo3ItbxIOvFBZKK5LwD8OUhqLsRKeHsK8zcPTHpwJq59pOyfkamEfKm0nw1H8z7xRfqvag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNhudVUX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DzZJAh8U76jQDfI55VE5cqVXoECY26xfPzIU+hwrDt2bV6IYb+hQebTleCrFukniNM4ukJoPMzCflhuk/qP10/TKKvDi+WSfAWuhCsbEy8009MBpWyp2Sn6A8+fc5yFJDJkXr9xrIyBbdZ2ZLNvptcczmVa3Z9cBh2rrMtVBQzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlE/z3Go; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNhudVUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EF1C4CEC3;
-	Sun,  1 Sep 2024 17:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlE/z3Go"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C97C4CEC3;
+	Sun,  1 Sep 2024 17:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210362;
-	bh=xS21LTM+gFB94VSRasRXReIYf3C/DY+Vj6GtIq5qkA8=;
+	s=korg; t=1725210365;
+	bh=EPq9WxZQLa3vBt9zLo4YtZU8O7uEl8BdW9vSqd2F0pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNhudVUXldl01wckqIOPpet6mOZoyKErDXgA3bDhsEWLjx9ggikfesfJQppAk2pW5
-	 s4/4xim/iFL7YPl/QLX0C3e4Od9EA2QYq2eayrcHf5zWuMapLbBpsmrYz74Qe9iBEV
-	 KvO1abT+TdfX/P0BmMgI7sTAwHo7yf5HrbThQhLw=
+	b=tlE/z3Go8wGYF5s5+P4xrc9pVhJJsnCLtiF5aZKO+EV4TzzpZY3Q9CYoBtykWynYe
+	 ojtIUTjAbq7kzPsLZRlU5NxKEs7HjQRabvdllll1lnzKUM0tdZhbFZWHp5cbaOiMbp
+	 d24dlWU2u+h2HDx2E9kh+I9WkCgiC5suidkybbdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 5.15 165/215] KVM: arm64: Make ICC_*SGI*_EL1 undef in the absence of a vGICv3
-Date: Sun,  1 Sep 2024 18:17:57 +0200
-Message-ID: <20240901160829.596137703@linuxfoundation.org>
+	Ben Whitten <ben.whitten@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 166/215] mmc: dw_mmc: allow biu and ciu clocks to defer
+Date: Sun,  1 Sep 2024 18:17:58 +0200
+Message-ID: <20240901160829.633413110@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,66 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Ben Whitten <ben.whitten@gmail.com>
 
-commit 3e6245ebe7ef341639e9a7e402b3ade8ad45a19f upstream.
+commit 6275c7bc8dd07644ea8142a1773d826800f0f3f7 upstream.
 
-On a system with a GICv3, if a guest hasn't been configured with
-GICv3 and that the host is not capable of GICv2 emulation,
-a write to any of the ICC_*SGI*_EL1 registers is trapped to EL2.
+Fix a race condition if the clock provider comes up after mmc is probed,
+this causes mmc to fail without retrying.
+When given the DEFER error from the clk source, pass it on up the chain.
 
-We therefore try to emulate the SGI access, only to hit a NULL
-pointer as no private interrupt is allocated (no GIC, remember?).
-
-The obvious fix is to give the guest what it deserves, in the
-shape of a UNDEF exception.
-
-Reported-by: Alexander Potapenko <glider@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: f90a0612f0e1 ("mmc: dw_mmc: lookup for optional biu and ciu clocks")
+Signed-off-by: Ben Whitten <ben.whitten@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240820100349.3544850-2-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240811212212.123255-1-ben.whitten@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/sys_regs.c  |    6 ++++++
- arch/arm64/kvm/vgic/vgic.h |    7 +++++++
- 2 files changed, 13 insertions(+)
+ drivers/mmc/host/dw_mmc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -30,6 +30,7 @@
- #include <trace/events/kvm.h>
- 
- #include "sys_regs.h"
-+#include "vgic/vgic.h"
- 
- #include "trace.h"
- 
-@@ -203,6 +204,11 @@ static bool access_gic_sgi(struct kvm_vc
- {
- 	bool g1;
- 
-+	if (!kvm_has_gicv3(vcpu->kvm)) {
-+		kvm_inject_undefined(vcpu);
-+		return false;
-+	}
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -3246,6 +3246,10 @@ int dw_mci_probe(struct dw_mci *host)
+ 	host->biu_clk = devm_clk_get(host->dev, "biu");
+ 	if (IS_ERR(host->biu_clk)) {
+ 		dev_dbg(host->dev, "biu clock not available\n");
++		ret = PTR_ERR(host->biu_clk);
++		if (ret == -EPROBE_DEFER)
++			return ret;
 +
- 	if (!p->is_write)
- 		return read_from_write_only(vcpu, p, r);
- 
---- a/arch/arm64/kvm/vgic/vgic.h
-+++ b/arch/arm64/kvm/vgic/vgic.h
-@@ -324,4 +324,11 @@ void vgic_v4_configure_vsgis(struct kvm
- void vgic_v4_get_vlpi_state(struct vgic_irq *irq, bool *val);
- int vgic_v4_request_vpe_irq(struct kvm_vcpu *vcpu, int irq);
- 
-+static inline bool kvm_has_gicv3(struct kvm *kvm)
-+{
-+	return (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif) &&
-+		irqchip_in_kernel(kvm) &&
-+		kvm->arch.vgic.vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3);
-+}
+ 	} else {
+ 		ret = clk_prepare_enable(host->biu_clk);
+ 		if (ret) {
+@@ -3257,6 +3261,10 @@ int dw_mci_probe(struct dw_mci *host)
+ 	host->ciu_clk = devm_clk_get(host->dev, "ciu");
+ 	if (IS_ERR(host->ciu_clk)) {
+ 		dev_dbg(host->dev, "ciu clock not available\n");
++		ret = PTR_ERR(host->ciu_clk);
++		if (ret == -EPROBE_DEFER)
++			goto err_clk_biu;
 +
- #endif
+ 		host->bus_hz = host->pdata->bus_hz;
+ 	} else {
+ 		ret = clk_prepare_enable(host->ciu_clk);
 
 
