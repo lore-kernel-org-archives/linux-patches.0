@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739A5183CC5;
-	Sun,  1 Sep 2024 16:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAAE44C97;
+	Sun,  1 Sep 2024 16:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207979; cv=none; b=FwUSJWRaCHq4emgKSqyroe/tORqZz8h3yZrNyC7u13U2a4fQfOTMFk7DHcHxWjkbR4vpxuVq4+OyHf8ozyzBtajgL7shFKkTeE2cNi0LV33ijGvx5HSJ/iJGeaBNjld1Q25huzxMUQzj50JLAdylg73TOMPBiIFkmQ4sl7R9Du8=
+	t=1725207983; cv=none; b=Bnva8kozN2XHOsmemWFG4lliBuvX2VEMVdumqeZRcvPxdKpQeDTkRBQwwPGCvyQ4DhdCz5bvIdFZbNs6T3MXNEHWAdXOCT9j3SgExEYiC28GsjDDwfPXZxfkWSZf3XvIJKtQaBuB1UQyMlBGKu294EYkaFM6ixvHoRq9+XjbCvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207979; c=relaxed/simple;
-	bh=t8Qe1VwJgDRlxmlATvfxGDbo8byP+PskZ3nopylJ934=;
+	s=arc-20240116; t=1725207983; c=relaxed/simple;
+	bh=/4pt3qKWLFQCaMrMK/i1jwse6+VlGqK5wsEFrUbMCNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dev9Lyd6ZVJyGu0eqRoAs8bL8QOi7KmmF8AvRYIshsgdekEdoTSdHvQ+3vQdQ6oq0e4jjgEUgqFOw6GBUbn68U1Qsku5v1L0G/y+XPR8FB+nK/NZJmQUPzJFE0umt2Qd5Kn7u+3vny9NKAnZivmW23976Cv6T0mR99gjYf27psc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmihIDJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HiezQxJ/xTfsPudyTGRtgO83/MVuYY4Nba1SbQBuKn7AcnngDhqXd2kXXp9AcK7DTzXzqXy5jr4LFyuusOC1A0iSmMSBVkctqCPJYLoVSOm0AGcW61ESCLjQc1sYHloIRXHdEn/9whcYCPkynlPZu02k1GDSSKd2YJzpVFttv3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5ql9HfF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmihIDJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E595AC4CEC8;
-	Sun,  1 Sep 2024 16:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5ql9HfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F716C4CEC3;
+	Sun,  1 Sep 2024 16:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207979;
-	bh=t8Qe1VwJgDRlxmlATvfxGDbo8byP+PskZ3nopylJ934=;
+	s=korg; t=1725207982;
+	bh=/4pt3qKWLFQCaMrMK/i1jwse6+VlGqK5wsEFrUbMCNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmihIDJrnFNOuu5dZOoWNL5c/rrcyOvnmgaFOzSMh6S/j5e2UGW2y5G9pazu4eedv
-	 I2rLTSfoKaEalD/511m9hkAR3U+1x2G8DjeRpyb4sDsX5tWhvk4ttov2jfHk6S3bWo
-	 rOhptXMCX6TDoXZYmqMTlRD/N9+0LaOzi6oRYXuA=
+	b=q5ql9HfFhE2As4tW+4T1XKM8gU5Qu9IVwJT/mognVDmMKYvCWwdVLXd2LD5Ws27Kt
+	 dxXoF6ZY57j8t+raI15LQtQmdyoLX5g7njvzK8mqouyq30FfmS2eCSFNRaLdCEdfjz
+	 9zow/LqR1G1UbRwb795/oiNZEmQ2XJyojl4Devdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 29/93] of: Introduce for_each_*_child_of_node_scoped() to automate of_node_put() handling
-Date: Sun,  1 Sep 2024 18:16:16 +0200
-Message-ID: <20240901160808.456595942@linuxfoundation.org>
+Subject: [PATCH 6.6 38/93] ovl: ovl_parse_param_lowerdir: Add missed \n for pr_err
+Date: Sun,  1 Sep 2024 18:16:25 +0200
+Message-ID: <20240901160808.793617945@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -51,62 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 34af4554fb0ce164e2c4876683619eb1e23848d4 ]
+[ Upstream commit 441e36ef5b347d9ab4f54f7b54853266be687556 ]
 
-To avoid issues with out of order cleanup, or ambiguity about when the
-auto freed data is first instantiated, do it within the for loop definition.
+Add '\n' for pr_err in function ovl_parse_param_lowerdir(), which
+ensures that error message is displayed at once.
 
-The disadvantage is that the struct device_node *child variable creation
-is not immediately obvious where this is used.
-However, in many cases, if there is another definition of
-struct device_node *child; the compiler / static analysers will notify us
-that it is unused, or uninitialized.
-
-Note that, in the vast majority of cases, the _available_ form should be
-used and as code is converted to these scoped handers, we should confirm
-that any cases that do not check for available have a good reason not
-to.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20240225142714.286440-3-jic23@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Stable-dep-of: afc954fd223d ("thermal: of: Fix OF node leak in thermal_of_trips_init() error path")
+Fixes: b36a5780cb44 ("ovl: modify layer parameter parsing")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://lore.kernel.org/r/20240705011510.794025-4-chengzhihao1@huawei.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/of.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/overlayfs/params.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/of.h b/include/linux/of.h
-index 50e882ee91da7..024dda54b9c77 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -1430,10 +1430,23 @@ static inline int of_property_read_s32(const struct device_node *np,
- #define for_each_child_of_node(parent, child) \
- 	for (child = of_get_next_child(parent, NULL); child != NULL; \
- 	     child = of_get_next_child(parent, child))
-+
-+#define for_each_child_of_node_scoped(parent, child) \
-+	for (struct device_node *child __free(device_node) =		\
-+	     of_get_next_child(parent, NULL);				\
-+	     child != NULL;						\
-+	     child = of_get_next_child(parent, child))
-+
- #define for_each_available_child_of_node(parent, child) \
- 	for (child = of_get_next_available_child(parent, NULL); child != NULL; \
- 	     child = of_get_next_available_child(parent, child))
+diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
+index 39919a10ce1c9..0f3768cf9e871 100644
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -453,7 +453,7 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
+ 		return 0;
  
-+#define for_each_available_child_of_node_scoped(parent, child) \
-+	for (struct device_node *child __free(device_node) =		\
-+	     of_get_next_available_child(parent, NULL);			\
-+	     child != NULL;						\
-+	     child = of_get_next_available_child(parent, child))
-+
- #define for_each_of_cpu_node(cpu) \
- 	for (cpu = of_get_next_cpu_node(NULL); cpu != NULL; \
- 	     cpu = of_get_next_cpu_node(cpu))
+ 	if (*name == ':') {
+-		pr_err("cannot append lower layer");
++		pr_err("cannot append lower layer\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -497,7 +497,7 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
+ 			 * there are no data layers.
+ 			 */
+ 			if (ctx->nr_data > 0) {
+-				pr_err("regular lower layers cannot follow data lower layers");
++				pr_err("regular lower layers cannot follow data lower layers\n");
+ 				goto out_err;
+ 			}
+ 
 -- 
 2.43.0
 
