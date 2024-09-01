@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C0117B50B;
-	Sun,  1 Sep 2024 16:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D3C1DFD1;
+	Sun,  1 Sep 2024 16:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209579; cv=none; b=srtpuVkPQm0Zn86Qm3HiWGeYIUhQ1q7mQkOR8cZ/Or9ZOHVDitRCAIJLdOYpU7317icGLgYSohxGbQ/R3vAA+u3xdCEx/DIqEb1NfHM5C7OC+awyoXEbB4JwfS8lRb+IdHYNu1yQTrYZfT4M6U0mPRUBlUSM/BoK0CgFawSQVPY=
+	t=1725209582; cv=none; b=vDiZ6jn/0oVc3akeAXoLgidu37oVdEoq8BSYrThKG4Vf8EqUmTjzhCMkxennW987L6f4NQmXM0IAq452HMwynXBQAYwLMC98AZ0JYUstcM6oGPinzjuNP91TvMFBbByajYvverVBV2eJ+I+UwbZm6bRwnaTISVgms4aiyBirZOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209579; c=relaxed/simple;
-	bh=M2EUick9F+l0vFk/R+5bhA7ubP439LbduavlzOI/Tqk=;
+	s=arc-20240116; t=1725209582; c=relaxed/simple;
+	bh=0tx9GUZG7a8tC+fdChdzeL+sc9WAN/HOcfIg1CgBvlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QC2ecwreaXc8Pc5qMBISWm1ktPHEW7d0GMpl3yPPpynPtr++7DUHi/7m6n9Aem222TCAiDDGvphxEmH05AeeyPWRpjhiJ8FWt//kETHdSeWbLoZO3WdB9lTHjXvUH3PHltzGZXbq+p4fHkg4VyBg2jBL1XxvDHvYJfXEwPtfML0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6M+obYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/qL3vltqGP7RCeo3EBOPy0/5S+cyQD6e3qJfY98usOgqxbC7t+BIujYdiFjvdoVTQAndlFl3pgP7zTalQ3V4Yt/JSc+P19JMHHqg1B8MrFZfl5ShSITgaB6gah709j+mXUF3ODtUeMnm8uhiPY3XGQMttUDM1pDI0Ld6baKzOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+Qf60Kj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6M+obYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DACC4CEC3;
-	Sun,  1 Sep 2024 16:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+Qf60Kj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7BDC4CEC3;
+	Sun,  1 Sep 2024 16:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209579;
-	bh=M2EUick9F+l0vFk/R+5bhA7ubP439LbduavlzOI/Tqk=;
+	s=korg; t=1725209582;
+	bh=0tx9GUZG7a8tC+fdChdzeL+sc9WAN/HOcfIg1CgBvlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6M+obYWT74d7i4WbcphMTJWhT8IvSjSL2LcdStf0H9kei8xFAKtUS41WDUOmEwLJ
-	 BJwppco1PpLiQmH3Q8UHgk7ifzut/GtXjYw8li76n6HsR/E3MNK4r5FlgbwsnIce6k
-	 bI1R5/9xUziGzFO205grLJg9/qeR5n/niLj+FjZk=
+	b=d+Qf60Kjk+kcJVODciMfmaZoW3xuq2FIPbiXaQ+VgO3xbQz4Qv0iBdutU6KlFC7Fl
+	 rTsktniH0eqE7C0l2eYXFRkW8LQmiHNZuohjx9XIcr8ITre1Z+a/9X7Eq5ARSI33jA
+	 cnAMLhnoR93Qgdth22I8BspxaCZyDj6BgvpyGL8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Phil Chang <phil.chang@mediatek.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/151] nvmet-rdma: fix possible bad dereference when freeing rsps
-Date: Sun,  1 Sep 2024 18:17:20 +0200
-Message-ID: <20240901160817.130265769@linuxfoundation.org>
+Subject: [PATCH 5.10 081/151] hrtimer: Prevent queuing of hrtimer without a function callback
+Date: Sun,  1 Sep 2024 18:17:21 +0200
+Message-ID: <20240901160817.168354892@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,83 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Phil Chang <phil.chang@mediatek.com>
 
-[ Upstream commit 73964c1d07c054376f1b32a62548571795159148 ]
+[ Upstream commit 5a830bbce3af16833fe0092dec47b6dd30279825 ]
 
-It is possible that the host connected and saw a cm established
-event and started sending nvme capsules on the qp, however the
-ctrl did not yet see an established event. This is why the
-rsp_wait_list exists (for async handling of these cmds, we move
-them to a pending list).
+The hrtimer function callback must not be NULL. It has to be specified by
+the call side but it is not validated by the hrtimer code. When a hrtimer
+is queued without a function callback, the kernel crashes with a null
+pointer dereference when trying to execute the callback in __run_hrtimer().
 
-Furthermore, it is possible that the ctrl cm times out, resulting
-in a connect-error cm event. in this case we hit a bad deref [1]
-because in nvmet_rdma_free_rsps we assume that all the responses
-are in the free list.
+Introduce a validation before queuing the hrtimer in
+hrtimer_start_range_ns().
 
-We are freeing the cmds array anyways, so don't even bother to
-remove the rsp from the free_list. It is also guaranteed that we
-are not racing anything when we are releasing the queue so no
-other context accessing this array should be running.
+[anna-maria: Rephrase commit message]
 
-[1]:
---
-Workqueue: nvmet-free-wq nvmet_rdma_free_queue_work [nvmet_rdma]
-[...]
-pc : nvmet_rdma_free_rsps+0x78/0xb8 [nvmet_rdma]
-lr : nvmet_rdma_free_queue_work+0x88/0x120 [nvmet_rdma]
- Call trace:
- nvmet_rdma_free_rsps+0x78/0xb8 [nvmet_rdma]
- nvmet_rdma_free_queue_work+0x88/0x120 [nvmet_rdma]
- process_one_work+0x1ec/0x4a0
- worker_thread+0x48/0x490
- kthread+0x158/0x160
- ret_from_fork+0x10/0x18
---
-
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Phil Chang <phil.chang@mediatek.com>
+Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ kernel/time/hrtimer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 6d5552f2f184a..944e8a2766630 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -472,12 +472,8 @@ nvmet_rdma_alloc_rsps(struct nvmet_rdma_queue *queue)
- 	return 0;
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 2b2a6e29219dc..16f1e747c5673 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1182,6 +1182,8 @@ void hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
+ 	struct hrtimer_clock_base *base;
+ 	unsigned long flags;
  
- out_free:
--	while (--i >= 0) {
--		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
--
--		list_del(&rsp->free_list);
--		nvmet_rdma_free_rsp(ndev, rsp);
--	}
-+	while (--i >= 0)
-+		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
- 	kfree(queue->rsps);
- out:
- 	return ret;
-@@ -488,12 +484,8 @@ static void nvmet_rdma_free_rsps(struct nvmet_rdma_queue *queue)
- 	struct nvmet_rdma_device *ndev = queue->dev;
- 	int i, nr_rsps = queue->recv_queue_size * 2;
- 
--	for (i = 0; i < nr_rsps; i++) {
--		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
--
--		list_del(&rsp->free_list);
--		nvmet_rdma_free_rsp(ndev, rsp);
--	}
-+	for (i = 0; i < nr_rsps; i++)
-+		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
- 	kfree(queue->rsps);
- }
- 
++	if (WARN_ON_ONCE(!timer->function))
++		return;
+ 	/*
+ 	 * Check whether the HRTIMER_MODE_SOFT bit and hrtimer.is_soft
+ 	 * match on CONFIG_PREEMPT_RT = n. With PREEMPT_RT check the hard
 -- 
 2.43.0
 
