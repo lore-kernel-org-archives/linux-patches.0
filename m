@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB281DFD1;
-	Sun,  1 Sep 2024 16:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4491116B391;
+	Sun,  1 Sep 2024 16:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209595; cv=none; b=qlItwR/91prehuwpq1e/odVfPvO12BXUzUklX2BHs6APPu/j2QAmy7t5wpDLLLgsWkSvnSc+CkBiJrt1NIXIfCgFNU/KL6n/eKhskXJulhGCTNmshg2+t5syEl0ek6Zp9TSlU+O39sR79CuCI4zCfd1k9Haby2mzoZx8JUUj+0E=
+	t=1725209599; cv=none; b=XwQbIFmRf5ggq84cGVZRSA28JVlavzgSz0jgUEycEOF/xfrMZ98YMutzIr9oFpbcPsvUE5jfj7zAK2h1jzdaMI9E2uqC2RNKWQ5OXqsaYirnJM1ZwPdPS/97teOlGPsodzyfO1PcqAnS83cYc+7S2/g2/XqnedrAPc70RYh1JXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209595; c=relaxed/simple;
-	bh=0ldbB0CY/Lh1KwTUbvPpZUrs71qVU2wT0lJRSKn8MP8=;
+	s=arc-20240116; t=1725209599; c=relaxed/simple;
+	bh=7dZJwIecKSgIpEp0uz9HjYKlct5uIzKUY5qxJcxaRow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NX/2FTzk28nRmqIQzMfxXHtxzY4tNevjS6+q6LIF9KpMZ0+dOMx25AOJ5/bSckMXlMBR3wuLu9YyVaKgBuflw12eqO7CG7dm5/g29T1+GeBdiagbjgh+90726oKsOn1R2qp/sqfRWIowqMc7DeoO9n0NQY3W08f9MeEeYbjSq9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGqOF3x8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3PD9M+sJVG5t647Bu27Zp+HU1iYo70rLzoRYyrbyobV27JlqXUwrGKqNEMEVxDNlOpUbYTYWb8UlWbio42HAv+QG24Aq6e39+G5O93LOl+C3+bsYnEKPJ24hnFz6IcE/bkcoJfVf/DoXZQRvC2nPVAdaqIRiowIyaIDacBJPcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkZvc9HU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGqOF3x8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D79C4CEC3;
-	Sun,  1 Sep 2024 16:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkZvc9HU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CC4C4CEC3;
+	Sun,  1 Sep 2024 16:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209595;
-	bh=0ldbB0CY/Lh1KwTUbvPpZUrs71qVU2wT0lJRSKn8MP8=;
+	s=korg; t=1725209598;
+	bh=7dZJwIecKSgIpEp0uz9HjYKlct5uIzKUY5qxJcxaRow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGqOF3x8aA95LpfSM4w7nqW2mYtZ4Hfpi/jqejFPWjbKThrpuykGQ928qJ+v0fWGa
-	 lekOcoFh6pB11AC3xK0pSEEDJI+jRo6g6GQL8Hd+1feewm1teKgDMkj+sRF+5hJy/d
-	 /xzeZIGXv5Z/3Y+4HMI6Etbes0SdQnCTyQjOW1s8=
+	b=rkZvc9HUqbmOzvW2bDWBw4p0xeDARkn2B43l/1hnNqw1T7+nebswLJpnL8MbKrc3y
+	 dwJyN+PlAfQvIl7K/NkKjR2JkQsviHmsCTgxCGOGzYRzAyyHSu92NpERGNN4wKiiHM
+	 JHm0CYFpsRW14O85nckZWIFYLdvUOAoA5oONPONw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/151] dm suspend: return -ERESTARTSYS instead of -EINTR
-Date: Sun,  1 Sep 2024 18:17:25 +0200
-Message-ID: <20240901160817.317434443@linuxfoundation.org>
+Subject: [PATCH 5.10 086/151] Bluetooth: hci_core: Fix LE quote calculation
+Date: Sun,  1 Sep 2024 18:17:26 +0200
+Message-ID: <20240901160817.354106793@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -50,45 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 1e1fd567d32fcf7544c6e09e0e5bc6c650da6e23 ]
+[ Upstream commit 932021a11805b9da4bd6abf66fe233cccd59fe0e ]
 
-This commit changes device mapper, so that it returns -ERESTARTSYS
-instead of -EINTR when it is interrupted by a signal (so that the ioctl
-can be restarted).
+Function hci_sched_le needs to update the respective counter variable
+inplace other the likes of hci_quote_sent would attempt to use the
+possible outdated value of conn->{le_cnt,acl_cnt}.
 
-The manpage signal(7) says that the ioctl function should be restarted if
-the signal was handled with SA_RESTART.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
+Link: https://github.com/bluez/bluez/issues/915
+Fixes: 73d80deb7bdf ("Bluetooth: prioritizing data over HCI")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_core.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index dc8498b4b5c13..b56ea42ab7d2b 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2343,7 +2343,7 @@ static int dm_wait_for_bios_completion(struct mapped_device *md, long task_state
- 			break;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index c8c1cd55c0eb0..9787a4c551138 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4685,19 +4685,19 @@ static void hci_sched_le(struct hci_dev *hdev)
+ {
+ 	struct hci_chan *chan;
+ 	struct sk_buff *skb;
+-	int quote, cnt, tmp;
++	int quote, *cnt, tmp;
  
- 		if (signal_pending_state(task_state, current)) {
--			r = -EINTR;
-+			r = -ERESTARTSYS;
- 			break;
+ 	BT_DBG("%s", hdev->name);
+ 
+ 	if (!hci_conn_num(hdev, LE_LINK))
+ 		return;
+ 
+-	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
++	cnt = hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
+ 
+-	__check_timeout(hdev, cnt, LE_LINK);
++	__check_timeout(hdev, *cnt, LE_LINK);
+ 
+-	tmp = cnt;
+-	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
++	tmp = *cnt;
++	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+ 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
+ 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
+@@ -4712,7 +4712,7 @@ static void hci_sched_le(struct hci_dev *hdev)
+ 			hci_send_frame(hdev, skb);
+ 			hdev->le_last_tx = jiffies;
+ 
+-			cnt--;
++			(*cnt)--;
+ 			chan->sent++;
+ 			chan->conn->sent++;
+ 
+@@ -4722,12 +4722,7 @@ static void hci_sched_le(struct hci_dev *hdev)
  		}
+ 	}
  
-@@ -2368,7 +2368,7 @@ static int dm_wait_for_completion(struct mapped_device *md, long task_state)
- 			break;
- 
- 		if (signal_pending_state(task_state, current)) {
--			r = -EINTR;
-+			r = -ERESTARTSYS;
- 			break;
- 		}
+-	if (hdev->le_pkts)
+-		hdev->le_cnt = cnt;
+-	else
+-		hdev->acl_cnt = cnt;
+-
+-	if (cnt != tmp)
++	if (*cnt != tmp)
+ 		hci_prio_recalculate(hdev, LE_LINK);
+ }
  
 -- 
 2.43.0
