@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E4433987;
-	Sun,  1 Sep 2024 16:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE95044C97;
+	Sun,  1 Sep 2024 16:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208027; cv=none; b=I+B2jhM26GJVHkD8wXCDpklpTIicUNXx6EuzTure5viLL63aXwp1OVpQ9pGxl6eqdq5QdZwKcw3ULQ3iZYA3dqSETQDgezHIERyry0VYzCKG/X8m8QSTJ9j4IVmIS/8aqcqK7NPggaMYiYmdcHWUJv4R3kw+9/LSilYg6GdWHbw=
+	t=1725208031; cv=none; b=R9w1KqXugrp9yX4vgsLuZ65+ZWJj/RHTm1YWcQvhUE0s4pf3xrvfBvcYBWp4D46eHpM5u1q90jLOUpGWAFRns1W8h0/Dk6hd0xGyrBlIINh4AFfy4DQA3SwdMjmsEk6Lytis1QMgUDuebJK5OAfRrbFg/pBXLDLteyw20iHY41Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208027; c=relaxed/simple;
-	bh=KJg/QnjQFcRmCw6V3dQiwl7mAGXfbfZ1PCxc95JG2do=;
+	s=arc-20240116; t=1725208031; c=relaxed/simple;
+	bh=rDYNZXDJO5SC4pfnIwp/GdaPNS1ZxewP5SS5G2YAX2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZAxAJ5JEwQJ+mHRW4mIAq/An57XDhJ5G/ike1Zoes2hFg3GbWk420/B+hsqmaQXKT6z8kdsOFJ9exznsOMVW2lNAH87vftU9dDJaPl7M8zlWNpYaHz3aaV4bc/Mcr83A+3ANc8cirlDJReLq88rtPIducy+fLkqki3ruhJBJ+RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUXWDP+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbOl1NNNgphhjXKUkc8DfymltTAnXjZzCw9EftkZUEm/Jm+8yCsFWqd4fD1MReiYtkiWxUru6+8km1RQy+u05GsGqQvKMCl8djOAu6qyf/4WTR1X//qHg/Eqqmv7hnslhrwv+Vycifiv34DqNylQZ2QjKU9f448Zxk88qjQIllw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kdx95ZQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUXWDP+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F170CC4CEC3;
-	Sun,  1 Sep 2024 16:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kdx95ZQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0BBC4CEC3;
+	Sun,  1 Sep 2024 16:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208027;
-	bh=KJg/QnjQFcRmCw6V3dQiwl7mAGXfbfZ1PCxc95JG2do=;
+	s=korg; t=1725208030;
+	bh=rDYNZXDJO5SC4pfnIwp/GdaPNS1ZxewP5SS5G2YAX2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUXWDP+jQNwL0yL5Lrb56vhOmpQVxwcAmvZuE/LGcg+Z7tfmtt8vp2BEpf3KEl0Vh
-	 fINBrAABdUT/pYOEH6NAfqPtzEYjrXHCmlfIDbRk3+xNHCv5KC0CwqFs9MBIeMaJau
-	 5ncI25ps6gtkpipIhXoeoCRQ4ue612GafhbBllcU=
+	b=Kdx95ZQ338OCYhGaOrAqqdHtvFiIVWz2Y72jivJxBMLtiBOTEzzdaGf6Egy3XLbW7
+	 hitsgV86yg46rz5iCz+OxxkYXEaB66butqiOvd+a95KIgFfGfrqQ1FG7O3n1VA/zK5
+	 i/a+MWmKziZI1/ehcwczG2wYFVagrnuIZq6BF6V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Guillaume Legoupil <guillaume.legoupil@nxp.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 51/93] Bluetooth: btnxpuart: Resolve TX timeout error in power save stress test
-Date: Sun,  1 Sep 2024 18:16:38 +0200
-Message-ID: <20240901160809.284998090@linuxfoundation.org>
+Subject: [PATCH 6.6 52/93] Bluetooth: btnxpuart: Handle FW Download Abort scenario
+Date: Sun,  1 Sep 2024 18:16:39 +0200
+Message-ID: <20240901160809.322900563@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,148 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 
-[ Upstream commit e4db90e4eb8d5487098712ffb1048f3fa6d25e98 ]
+[ Upstream commit e3c4891098c875a63ab0c3b31d584f6d4f1895fd ]
 
-This fixes the tx timeout issue seen while running a stress test on
-btnxpuart for couple of hours, such that the interval between two HCI
-commands coincide with the power save timeout value of 2 seconds.
+This adds a new flag BTNXPUART_FW_DOWNLOAD_ABORT which handles the
+situation where driver is removed while firmware download is in
+progress.
 
-Test procedure using bash script:
-<load btnxpuart.ko>
-hciconfig hci0 up
-//Enable Power Save feature
-hcitool -i hci0 cmd 3f 23 02 00 00
-while (true)
-do
-    hciconfig hci0 leadv
-    sleep 2
-    hciconfig hci0 noleadv
-    sleep 2
-done
-
-Error log, after adding few more debug prints:
-Bluetooth: btnxpuart_queue_skb(): 01 0A 20 01 00
-Bluetooth: hci0: Set UART break: on, status=0
-Bluetooth: hci0: btnxpuart_tx_wakeup() tx_work scheduled
-Bluetooth: hci0: btnxpuart_tx_work() dequeue: 01 0A 20 01 00
-Can't set advertise mode on hci0: Connection timed out (110)
-Bluetooth: hci0: command 0x200a tx timeout
-
-When the power save mechanism turns on UART break, and btnxpuart_tx_work()
-is scheduled simultaneously, psdata->ps_state is read as PS_STATE_AWAKE,
-which prevents the psdata->work from being scheduled, which is responsible
-to turn OFF UART break.
-
-This issue is fixed by adding a ps_lock mutex around UART break on/off as
-well as around ps_state read/write.
-btnxpuart_tx_wakeup() will now read updated ps_state value. If ps_state is
-PS_STATE_SLEEP, it will first schedule psdata->work, and then it will
-reschedule itself once UART break has been turned off and ps_state is
-PS_STATE_AWAKE.
-
-Tested above script for 50,000 iterations and TX timeout error was not
-observed anymore.
+logs:
+modprobe btnxpuart
+[65239.230431] Bluetooth: hci0: ChipID: 7601, Version: 0
+[65239.236670] Bluetooth: hci0: Request Firmware: nxp/uartspi_n61x_v1.bin.se
+rmmod btnxpuart
+[65241.425300] Bluetooth: hci0: FW Download Aborted
 
 Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Tested-by: Guillaume Legoupil <guillaume.legoupil@nxp.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 35237475384a ("Bluetooth: btnxpuart: Fix random crash seen while removing driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btnxpuart.c | 47 ++++++++++++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index b5d40e0e05f31..2e18f89a931b8 100644
+index 2e18f89a931b8..f72086ee614fb 100644
 --- a/drivers/bluetooth/btnxpuart.c
 +++ b/drivers/bluetooth/btnxpuart.c
-@@ -126,6 +126,7 @@ struct ps_data {
- 	struct hci_dev *hdev;
- 	struct work_struct work;
- 	struct timer_list ps_timer;
-+	struct mutex ps_lock;
- };
+@@ -29,6 +29,7 @@
+ #define BTNXPUART_CHECK_BOOT_SIGNATURE	3
+ #define BTNXPUART_SERDEV_OPEN		4
+ #define BTNXPUART_IR_IN_PROGRESS	5
++#define BTNXPUART_FW_DOWNLOAD_ABORT	6
  
- struct wakeup_cmd_payload {
-@@ -333,6 +334,9 @@ static void ps_start_timer(struct btnxpuart_dev *nxpdev)
- 
- 	if (psdata->cur_psmode == PS_MODE_ENABLE)
- 		mod_timer(&psdata->ps_timer, jiffies + msecs_to_jiffies(psdata->h2c_ps_interval));
+ /* NXP HW err codes */
+ #define BTNXPUART_IR_HW_ERR		0xb0
+@@ -159,6 +160,7 @@ struct btnxpuart_dev {
+ 	u8 fw_name[MAX_FW_FILE_NAME_LEN];
+ 	u32 fw_dnld_v1_offset;
+ 	u32 fw_v1_sent_bytes;
++	u32 fw_dnld_v3_offset;
+ 	u32 fw_v3_offset_correction;
+ 	u32 fw_v1_expected_len;
+ 	u32 boot_reg_offset;
+@@ -566,6 +568,7 @@ static int nxp_download_firmware(struct hci_dev *hdev)
+ 	nxpdev->fw_v1_sent_bytes = 0;
+ 	nxpdev->fw_v1_expected_len = HDR_LEN;
+ 	nxpdev->boot_reg_offset = 0;
++	nxpdev->fw_dnld_v3_offset = 0;
+ 	nxpdev->fw_v3_offset_correction = 0;
+ 	nxpdev->baudrate_changed = false;
+ 	nxpdev->timeout_changed = false;
+@@ -580,14 +583,23 @@ static int nxp_download_firmware(struct hci_dev *hdev)
+ 					       !test_bit(BTNXPUART_FW_DOWNLOADING,
+ 							 &nxpdev->tx_state),
+ 					       msecs_to_jiffies(60000));
 +
-+	if (psdata->ps_state == PS_STATE_AWAKE && psdata->ps_cmd == PS_CMD_ENTER_PS)
-+		cancel_work_sync(&psdata->work);
- }
- 
- static void ps_cancel_timer(struct btnxpuart_dev *nxpdev)
-@@ -353,6 +357,7 @@ static void ps_control(struct hci_dev *hdev, u8 ps_state)
- 	    !test_bit(BTNXPUART_SERDEV_OPEN, &nxpdev->tx_state))
- 		return;
- 
-+	mutex_lock(&psdata->ps_lock);
- 	switch (psdata->cur_h2c_wakeupmode) {
- 	case WAKEUP_METHOD_DTR:
- 		if (ps_state == PS_STATE_AWAKE)
-@@ -366,12 +371,15 @@ static void ps_control(struct hci_dev *hdev, u8 ps_state)
- 			status = serdev_device_break_ctl(nxpdev->serdev, 0);
- 		else
- 			status = serdev_device_break_ctl(nxpdev->serdev, -1);
-+		msleep(20); /* Allow chip to detect UART-break and enter sleep */
- 		bt_dev_dbg(hdev, "Set UART break: %s, status=%d",
- 			   str_on_off(ps_state == PS_STATE_SLEEP), status);
- 		break;
++	release_firmware(nxpdev->fw);
++	memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
++
+ 	if (err == 0) {
+-		bt_dev_err(hdev, "FW Download Timeout.");
++		bt_dev_err(hdev, "FW Download Timeout. offset: %d",
++				nxpdev->fw_dnld_v1_offset ?
++				nxpdev->fw_dnld_v1_offset :
++				nxpdev->fw_dnld_v3_offset);
+ 		return -ETIMEDOUT;
  	}
- 	if (!status)
- 		psdata->ps_state = ps_state;
-+	mutex_unlock(&psdata->ps_lock);
-+
- 	if (ps_state == PS_STATE_AWAKE)
- 		btnxpuart_tx_wakeup(nxpdev);
- }
-@@ -407,17 +415,25 @@ static void ps_setup(struct hci_dev *hdev)
++	if (test_bit(BTNXPUART_FW_DOWNLOAD_ABORT, &nxpdev->tx_state)) {
++		bt_dev_err(hdev, "FW Download Aborted");
++		return -EINTR;
++	}
  
- 	psdata->hdev = hdev;
- 	INIT_WORK(&psdata->work, ps_work_func);
-+	mutex_init(&psdata->ps_lock);
- 	timer_setup(&psdata->ps_timer, ps_timeout_func, 0);
- }
+ 	serdev_device_set_flow_control(nxpdev->serdev, true);
+-	release_firmware(nxpdev->fw);
+-	memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
  
--static void ps_wakeup(struct btnxpuart_dev *nxpdev)
-+static bool ps_wakeup(struct btnxpuart_dev *nxpdev)
- {
- 	struct ps_data *psdata = &nxpdev->psdata;
-+	u8 ps_state;
- 
--	if (psdata->ps_state != PS_STATE_AWAKE) {
-+	mutex_lock(&psdata->ps_lock);
-+	ps_state = psdata->ps_state;
-+	mutex_unlock(&psdata->ps_lock);
-+
-+	if (ps_state != PS_STATE_AWAKE) {
- 		psdata->ps_cmd = PS_CMD_EXIT_PS;
- 		schedule_work(&psdata->work);
-+		return true;
+ 	/* Allow the downloaded FW to initialize */
+ 	msleep(1200);
+@@ -998,8 +1010,9 @@ static int nxp_recv_fw_req_v3(struct hci_dev *hdev, struct sk_buff *skb)
+ 		goto free_skb;
  	}
-+	return false;
+ 
+-	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data + offset -
+-				nxpdev->fw_v3_offset_correction, len);
++	nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
++	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
++				nxpdev->fw_dnld_v3_offset, len);
+ 
+ free_skb:
+ 	kfree_skb(skb);
+@@ -1430,16 +1443,22 @@ static void nxp_serdev_remove(struct serdev_device *serdev)
+ 	struct btnxpuart_dev *nxpdev = serdev_device_get_drvdata(serdev);
+ 	struct hci_dev *hdev = nxpdev->hdev;
+ 
+-	/* Restore FW baudrate to fw_init_baudrate if changed.
+-	 * This will ensure FW baudrate is in sync with
+-	 * driver baudrate in case this driver is re-inserted.
+-	 */
+-	if (nxpdev->current_baudrate != nxpdev->fw_init_baudrate) {
+-		nxpdev->new_baudrate = nxpdev->fw_init_baudrate;
+-		nxp_set_baudrate_cmd(hdev, NULL);
++	if (is_fw_downloading(nxpdev)) {
++		set_bit(BTNXPUART_FW_DOWNLOAD_ABORT, &nxpdev->tx_state);
++		clear_bit(BTNXPUART_FW_DOWNLOADING, &nxpdev->tx_state);
++		wake_up_interruptible(&nxpdev->check_boot_sign_wait_q);
++		wake_up_interruptible(&nxpdev->fw_dnld_done_wait_q);
++	} else {
++		/* Restore FW baudrate to fw_init_baudrate if changed.
++		 * This will ensure FW baudrate is in sync with
++		 * driver baudrate in case this driver is re-inserted.
++		 */
++		if (nxpdev->current_baudrate != nxpdev->fw_init_baudrate) {
++			nxpdev->new_baudrate = nxpdev->fw_init_baudrate;
++			nxp_set_baudrate_cmd(hdev, NULL);
++		}
++		ps_cancel_timer(nxpdev);
+ 	}
+-
+-	ps_cancel_timer(nxpdev);
+ 	hci_unregister_dev(hdev);
+ 	hci_free_dev(hdev);
  }
- 
- static int send_ps_cmd(struct hci_dev *hdev, void *data)
-@@ -1215,7 +1231,6 @@ static struct sk_buff *nxp_dequeue(void *data)
- {
- 	struct btnxpuart_dev *nxpdev = (struct btnxpuart_dev *)data;
- 
--	ps_wakeup(nxpdev);
- 	ps_start_timer(nxpdev);
- 	return skb_dequeue(&nxpdev->txq);
- }
-@@ -1230,6 +1245,9 @@ static void btnxpuart_tx_work(struct work_struct *work)
- 	struct sk_buff *skb;
- 	int len;
- 
-+	if (ps_wakeup(nxpdev))
-+		return;
-+
- 	while ((skb = nxp_dequeue(nxpdev))) {
- 		len = serdev_device_write_buf(serdev, skb->data, skb->len);
- 		hdev->stat.byte_tx += len;
 -- 
 2.43.0
 
