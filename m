@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7034B184533;
-	Sun,  1 Sep 2024 16:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CFA17F394;
+	Sun,  1 Sep 2024 16:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207845; cv=none; b=g3d+iPWPi1zkQSczOT/BDKAkZ7zwQf0fJJtD6mP8KxvMLvS/LmPOt+Bui2NyzPdd1m5SuExa61d7G/3ZEnzKtKnk2NlVvCllqkzeqcThiGgBuJvtKgqzzNtfRc/U0hzptH9g5n2asS4Bw4AzQowSDuTxFN7lJ7Ct6AL7W++6FHY=
+	t=1725207848; cv=none; b=QzOvt8Kg2Gr50b0zXex9v2/487w8EItt4C873tvRuSs7Hzed7YvvwR0ZnSL2fsxxKHOHq0aR5oYhYWEL71uKV78hw0PB4Cb10GKbGVI1BlflIhm0LIK6F+OMDSfZlnxOgu00jDrDlE8HVkpLEmg/hcA4iqYgrua5rNLeuo73Ztw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207845; c=relaxed/simple;
-	bh=UcVd8XtjP+U2/D3/7Xvdb1Dpb8G5C9qvExsXfjWG25s=;
+	s=arc-20240116; t=1725207848; c=relaxed/simple;
+	bh=mvJo1Jqt7jp8k/aPLsa5QWYkeFauGeqM9rddAcKpYVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxtRXoukbUMridKWU4AH26xweMgvy5almVBca+2IyOzTqUWX5k5pY0t83Agh6DHorLKpLcqtxpARbVR68V0dTQIrONjdOUrxRkzb+dvwmB8YR4HRNtWye6yzG+6VhaKUjI9QFW+tJFPkT6envWkEC8Ha+RbBXRvyfLJDv811WJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgJmxWAO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KCCSEPF0CtTicbHBhx+c7d/oIM9SzTB3wYtRfjYnzAFYhrTHez5dTnuDb6wrdUsJ4eExCpCVkkkgc+yMQOvfQGepxgBL9pEzbh/ab08ICyx4BZJ2eRBg5AKTloisQ/B6umk7rXWJYF8AjBP3pXojaa9c2A82uI7U7D52ioa17LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRT5Qz85; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgJmxWAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9976FC4CEC4;
-	Sun,  1 Sep 2024 16:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRT5Qz85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD34AC4CEC3;
+	Sun,  1 Sep 2024 16:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207845;
-	bh=UcVd8XtjP+U2/D3/7Xvdb1Dpb8G5C9qvExsXfjWG25s=;
+	s=korg; t=1725207848;
+	bh=mvJo1Jqt7jp8k/aPLsa5QWYkeFauGeqM9rddAcKpYVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgJmxWAOsnuVMNw3m/gY6uCEHDpZtK2/PDwkPEa2zVl+L3pTKl0/eN6U7DzXbXPtG
-	 D3pim11i+sIlGjJNQnkX5bus6JdMeML6S+4ZOjyynhDIBGoFh261Iw4RaYmaUE2TX4
-	 gEzXNt+VKDLtAsNMxuROb4BnZ81VQbwCm9pSaZW0=
+	b=tRT5Qz85mNkTEt5eF22xog9eCdPod5oCvw0BbSyrtGoAB/ROAnmm1pAeh58n2k45L
+	 cA+vFdy4F00d/R+S0PF6EgyodkS76JERSeuWSiFM+GKObv8PpR3bVIdNM/trILBEHH
+	 kFXcnTx2UfzhjIscct4Fh71a5984VBOzCEB0KYQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 63/98] mmc: mmc_test: Fix NULL dereference on allocation failure
-Date: Sun,  1 Sep 2024 18:16:33 +0200
-Message-ID: <20240901160806.075952327@linuxfoundation.org>
+	Stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Yiwei Zhang <zhan4630@purdue.edu>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.19 64/98] Bluetooth: MGMT: Add error handling to pair_device()
+Date: Sun,  1 Sep 2024 18:16:34 +0200
+Message-ID: <20240901160806.113781723@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -51,55 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit a1e627af32ed60713941cbfc8075d44cad07f6dd ]
+commit 538fd3921afac97158d4177139a0ad39f056dbb2 upstream.
 
-If the "test->highmem = alloc_pages()" allocation fails then calling
-__free_pages(test->highmem) will result in a NULL dereference.  Also
-change the error code to -ENOMEM instead of returning success.
+hci_conn_params_add() never checks for a NULL value and could lead to a NULL
+pointer dereference causing a crash.
 
-Fixes: 2661081f5ab9 ("mmc_test: highmem tests")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/8c90be28-67b4-4b0d-a105-034dc72a0b31@stanley.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixed by adding error handling in the function.
+
+Cc: Stable <stable@kernel.org>
+Fixes: 5157b8a503fa ("Bluetooth: Fix initializing conn_params in scan phase")
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Reported-by: Yiwei Zhang <zhan4630@purdue.edu>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc_test.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/bluetooth/mgmt.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
-index ef18daeaa4cc6..164b4e43050e7 100644
---- a/drivers/mmc/core/mmc_test.c
-+++ b/drivers/mmc/core/mmc_test.c
-@@ -3101,13 +3101,13 @@ static ssize_t mtf_test_write(struct file *file, const char __user *buf,
- 	test->buffer = kzalloc(BUFFER_SIZE, GFP_KERNEL);
- #ifdef CONFIG_HIGHMEM
- 	test->highmem = alloc_pages(GFP_KERNEL | __GFP_HIGHMEM, BUFFER_ORDER);
-+	if (!test->highmem) {
-+		count = -ENOMEM;
-+		goto free_test_buffer;
-+	}
- #endif
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2913,6 +2913,10 @@ static int pair_device(struct sock *sk,
+ 		 * will be kept and this function does nothing.
+ 		 */
+ 		p = hci_conn_params_add(hdev, &cp->addr.bdaddr, addr_type);
++		if (!p) {
++			err = -EIO;
++			goto unlock;
++		}
  
--#ifdef CONFIG_HIGHMEM
--	if (test->buffer && test->highmem) {
--#else
- 	if (test->buffer) {
--#endif
- 		mutex_lock(&mmc_test_lock);
- 		mmc_test_run(test, testcase);
- 		mutex_unlock(&mmc_test_lock);
-@@ -3115,6 +3115,7 @@ static ssize_t mtf_test_write(struct file *file, const char __user *buf,
- 
- #ifdef CONFIG_HIGHMEM
- 	__free_pages(test->highmem, BUFFER_ORDER);
-+free_test_buffer:
- #endif
- 	kfree(test->buffer);
- 	kfree(test);
--- 
-2.43.0
-
+ 		if (p->auto_connect == HCI_AUTO_CONN_EXPLICIT)
+ 			p->auto_connect = HCI_AUTO_CONN_DISABLED;
 
 
