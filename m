@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DF926AC1;
-	Sun,  1 Sep 2024 17:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A599426AC1;
+	Sun,  1 Sep 2024 17:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210397; cv=none; b=aThTkuDvnZFxZNJuInRPc3k59/7cbhvLCdMfgLTATiJ7KIF+RlC1UfB9WezcbhmiYvQ4frODtHtuYYAjrgSva7U3JxUyL4uwpBKJv1ez9ODQr8L1p4EYgABXvGiUW1NCIEKQ0+LQlkgfHctk7dyBjgZ3sRXCu9GwBkWKz4AKgKc=
+	t=1725210400; cv=none; b=dh8wdfDNLbJrxFcEOyL6Mghk+yPRxR4wJN2KoQU9bcFmSNdO1F096GJ9KFXBMRVUbWZRCM3CyxS6pHjOwUQy1MN/fEN9stOyJw28BnKeqVehQ3lom9C0ZSstSg6ooVl0oqF0k7Cc1Mw9QYpQs5Gg4XPFr7m9N6mMCXc9/mLLw/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210397; c=relaxed/simple;
-	bh=/c8Cd7v5mzTjwq108SUYXf+i+ncrhZOkOTpkpRiWGjQ=;
+	s=arc-20240116; t=1725210400; c=relaxed/simple;
+	bh=XoLeniHt+UFC/yUp4mCRxn7VOdAfADXgFwLVffi7LYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbT4UDYZ5RXnF+khLT9wBgXO4pOBs8pjE6tALgW7KgLkzru1wNydwRWmwSxZHP/qrRXtTekIkyoLhZKHph1pJvZJqjYlgpV035+d9DTlPEP78JtSHpHOcXyAN/Ozl/CD4s/tZv4ptd8gTpx9TQBNr+XjM5goANaHWAQxfoiTtVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG8jZD2+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpI9OB/H5MtEZ2uZDajGRTWZQdzuuhRZO8nFh3n1u1QeP4tnOBCX9D/M6/HQFtQMTZU0UKGxJWRkiFFO1iaexTaHjx/lhNqdTRNDon5HPLEQFhMgtaBYQs2NL3wHm35dH8ADpD8J6G1BaBe2VFLjQNF0xGpWrgUZP8cQjLjg1H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVKR7sSH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG8jZD2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166A3C4CEC3;
-	Sun,  1 Sep 2024 17:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVKR7sSH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2964BC4CEC3;
+	Sun,  1 Sep 2024 17:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210397;
-	bh=/c8Cd7v5mzTjwq108SUYXf+i+ncrhZOkOTpkpRiWGjQ=;
+	s=korg; t=1725210400;
+	bh=XoLeniHt+UFC/yUp4mCRxn7VOdAfADXgFwLVffi7LYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BG8jZD2+QRyo/U3PpxPGT85XtxYMpZiekSOtiy4GgCEdfCZXa8tdHd454rAh9IfpQ
-	 SoXfy/6PW3U1GAIl+98CLpmO4t5mSUjHWFT69ykdW1Y8FRnjsoZwgkCNZ3+KRo8AzD
-	 U6rU+5eiFedU8+/qZGssgeX1dJD5aKW2wc0FMaeU=
+	b=MVKR7sSH3P7WKI8OMRuW3MVlF1Eqn/FLztsH+6x53XuFP7utTB4VCmsG+4Siaoknj
+	 Cov0TaowXtj6UervAkaaxYsikqoGD/22o+DyiVFDtrT4zK1XFZe1pLWoi8/Y5ByTup
+	 QkQ8UYJi70Sgkgj8WynId2ZOO/fnf1jvJvLmKVcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 170/215] mm/numa: no task_numa_fault() call if PMD is changed
-Date: Sun,  1 Sep 2024 18:18:02 +0200
-Message-ID: <20240901160829.788225429@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.15 179/215] wifi: mwifiex: duplicate static structs used in driver instances
+Date: Sun,  1 Sep 2024 18:18:11 +0200
+Message-ID: <20240901160830.127698251@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -56,94 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit fd8c35a92910f4829b7c99841f39b1b952c259d5 upstream.
+commit 27ec3c57fcadb43c79ed05b2ea31bc18c72d798a upstream.
 
-When handling a numa page fault, task_numa_fault() should be called by a
-process that restores the page table of the faulted folio to avoid
-duplicated stats counting.  Commit c5b5a3dd2c1f ("mm: thp: refactor NUMA
-fault handling") restructured do_huge_pmd_numa_page() and did not avoid
-task_numa_fault() call in the second page table check after a numa
-migration failure.  Fix it by making all !pmd_same() return immediately.
+mwifiex_band_2ghz and mwifiex_band_5ghz are statically allocated, but
+used and modified in driver instances. Duplicate them before using
+them in driver instances so that different driver instances do not
+influence each other.
 
-This issue can cause task_numa_fault() being called more than necessary
-and lead to unexpected numa balancing results (It is hard to tell whether
-the issue will cause positive or negative performance impact due to
-duplicated numa fault counting).
+This was observed on a board which has one PCIe and one SDIO mwifiex
+adapter. It blew up in mwifiex_setup_ht_caps(). This was called with
+the statically allocated struct which is modified in this function.
 
-Link: https://lkml.kernel.org/r/20240809145906.1513458-3-ziy@nvidia.com
-Fixes: c5b5a3dd2c1f ("mm: thp: refactor NUMA fault handling")
-Reported-by: "Huang, Ying" <ying.huang@intel.com>
-Closes: https://lore.kernel.org/linux-mm/87zfqfw0yw.fsf@yhuang6-desk2.ccr.corp.intel.com/
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: d6bffe8bb520 ("mwifiex: support for creation of AP interface")
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240809-mwifiex-duplicate-static-structs-v1-1-6837b903b1a4@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |   32 +++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1437,7 +1437,7 @@ vm_fault_t do_huge_pmd_numa_page(struct
- 	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
- 	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
- 		spin_unlock(vmf->ptl);
--		goto out;
-+		return 0;
- 	}
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4328,11 +4328,27 @@ int mwifiex_register_cfg80211(struct mwi
+ 	if (ISSUPP_ADHOC_ENABLED(adapter->fw_cap_info))
+ 		wiphy->interface_modes |= BIT(NL80211_IFTYPE_ADHOC);
  
- 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
-@@ -1465,23 +1465,16 @@ vm_fault_t do_huge_pmd_numa_page(struct
- 	if (migrated) {
- 		flags |= TNF_MIGRATED;
- 		page_nid = target_nid;
--	} else {
--		flags |= TNF_MIGRATE_FAIL;
--		vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
--		if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
--			spin_unlock(vmf->ptl);
--			goto out;
--		}
--		goto out_map;
-+		task_numa_fault(last_cpupid, page_nid, HPAGE_PMD_NR, flags);
-+		return 0;
- 	}
- 
--out:
--	if (page_nid != NUMA_NO_NODE)
--		task_numa_fault(last_cpupid, page_nid, HPAGE_PMD_NR,
--				flags);
--
--	return 0;
--
-+	flags |= TNF_MIGRATE_FAIL;
-+	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
-+	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
-+		spin_unlock(vmf->ptl);
-+		return 0;
+-	wiphy->bands[NL80211_BAND_2GHZ] = &mwifiex_band_2ghz;
+-	if (adapter->config_bands & BAND_A)
+-		wiphy->bands[NL80211_BAND_5GHZ] = &mwifiex_band_5ghz;
+-	else
++	wiphy->bands[NL80211_BAND_2GHZ] = devm_kmemdup(adapter->dev,
++						       &mwifiex_band_2ghz,
++						       sizeof(mwifiex_band_2ghz),
++						       GFP_KERNEL);
++	if (!wiphy->bands[NL80211_BAND_2GHZ]) {
++		ret = -ENOMEM;
++		goto err;
 +	}
- out_map:
- 	/* Restore the PMD */
- 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
-@@ -1491,7 +1484,10 @@ out_map:
- 	set_pmd_at(vma->vm_mm, haddr, vmf->pmd, pmd);
- 	update_mmu_cache_pmd(vma, vmf->address, vmf->pmd);
- 	spin_unlock(vmf->ptl);
--	goto out;
 +
-+	if (page_nid != NUMA_NO_NODE)
-+		task_numa_fault(last_cpupid, page_nid, HPAGE_PMD_NR, flags);
-+	return 0;
- }
++	if (adapter->config_bands & BAND_A) {
++		wiphy->bands[NL80211_BAND_5GHZ] = devm_kmemdup(adapter->dev,
++							       &mwifiex_band_5ghz,
++							       sizeof(mwifiex_band_5ghz),
++							       GFP_KERNEL);
++		if (!wiphy->bands[NL80211_BAND_5GHZ]) {
++			ret = -ENOMEM;
++			goto err;
++		}
++	} else {
+ 		wiphy->bands[NL80211_BAND_5GHZ] = NULL;
++	}
  
- /*
+ 	if (adapter->drcs_enabled && ISSUPP_DRCS_ENABLED(adapter->fw_cap_info))
+ 		wiphy->iface_combinations = &mwifiex_iface_comb_ap_sta_drcs;
+@@ -4425,8 +4441,7 @@ int mwifiex_register_cfg80211(struct mwi
+ 	if (ret < 0) {
+ 		mwifiex_dbg(adapter, ERROR,
+ 			    "%s: wiphy_register failed: %d\n", __func__, ret);
+-		wiphy_free(wiphy);
+-		return ret;
++		goto err;
+ 	}
+ 
+ 	if (!adapter->regd) {
+@@ -4468,4 +4483,9 @@ int mwifiex_register_cfg80211(struct mwi
+ 
+ 	adapter->wiphy = wiphy;
+ 	return ret;
++
++err:
++	wiphy_free(wiphy);
++
++	return ret;
+ }
 
 
