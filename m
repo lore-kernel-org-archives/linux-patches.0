@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8E8364AB;
-	Sun,  1 Sep 2024 16:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CBC364AB;
+	Sun,  1 Sep 2024 16:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207761; cv=none; b=bako17QRaxVSJND6GcMUi/oWwdxZ2SvOpPCAXh99mQX1DFpDGofciNgXGBCyF1BwskT2i9syg/0FtJZGFgX+iKvvtNhMI4F8dA2HVjZ08XxHuJkEbD0R8AG1DGMl6TqaCY18u3mUaFIIYEdd9bCUPhl2XUQR6DOCLIxkh5s2aDI=
+	t=1725207765; cv=none; b=I5QaIuuZKgTMhiixOCfMVmDcpN2aDB3Wc5rnPqoaoFt1CbBm5hFwHvHOGj41vIzUi6++PoYvD8BNseTkO9T8bggJuH8Gu26SopxfWZqwBPVPTSW0UztJG6eBq9Vt6pLdBWgnToR70TZmpJaisb69R2f+6XWe5Jlr/gKTu2S3aSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207761; c=relaxed/simple;
-	bh=vnk6qnZ8hz9iFsJiAc2HktbOSMc4UPSYt9+J9JuIphY=;
+	s=arc-20240116; t=1725207765; c=relaxed/simple;
+	bh=sr45mZxr0qw2J/JHKOQXiyGOi8DiNYmKBkPHH1EeRv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxiBbQut1LQSxy+7aplKpBB3lsVW+7hJjwDKHbCzey+qhUr2jGrF84Y9NbTKpjt1EQs5YHii7ntKH5LH0RG+vvEenrd5F8s5W+5UawNjeNaNTnD8U7WLOTE4JegDh7LZIpWxgr/a+dCe6Ri+kTvrsiX7apsJz9+Y69ynvBR4QhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBFaypGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nufHhdEAfgYGU8nSPyvWPnn251f0ewAJxMu7FJx++9W0r2TesM/HyTzd9PMFv1HCauF0qBkJSpMKmm9LX/SrDevK5xdK2VpGOWniOcP05hYzFcg4glzKkq3LgrXT1nP3m0tmN5VWIH8X109fRVEBSu5RjhUnLzkMHKnhKZIMV3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjDo5cMW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBFaypGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B57CC4CEC3;
-	Sun,  1 Sep 2024 16:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjDo5cMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502CBC4CEC3;
+	Sun,  1 Sep 2024 16:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207761;
-	bh=vnk6qnZ8hz9iFsJiAc2HktbOSMc4UPSYt9+J9JuIphY=;
+	s=korg; t=1725207764;
+	bh=sr45mZxr0qw2J/JHKOQXiyGOi8DiNYmKBkPHH1EeRv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBFaypGoJg3tnx+7L9G4IL1xp5T9KajqNVRlPAoBoaXW/8f6Qqvi3mwDv7Tt8IRN2
-	 vUstJborNK7Vb2FSthZXzHEGnEI9ccVaGq5zB7Bnshq3NCkWt3wfc0i0Zy+ryxSD3n
-	 v4u5kFo6LtUOxyu6VPLL2E5+zbOM/4JRDuS7n7Bo=
+	b=WjDo5cMWAzrIDbXlsakLtyA0xOcRd3OOXxh/ALO1jQulj2uLpmFDg2Yo2JgliI14J
+	 xCtMqDAxqIZynjBSN1B6vllEen7fe0cdzbpaPJ8kaUoRUVTNZ6tDCZfGpXfZ5kWyfS
+	 6HSi9sWywlMMnE/6GW3u0vKIl5ug0C84bULzrPUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	George Kennedy <george.kennedy@oracle.com>
-Subject: [PATCH 4.19 70/98] Input: MT - limit max slots
-Date: Sun,  1 Sep 2024 18:16:40 +0200
-Message-ID: <20240901160806.337361697@linuxfoundation.org>
+	Yury Norov <yury.norov@gmail.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 71/98] tools: move alignment-related macros to new <linux/align.h>
+Date: Sun,  1 Sep 2024 18:16:41 +0200
+Message-ID: <20240901160806.374403432@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -53,37 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-commit 99d3bf5f7377d42f8be60a6b9cb60fb0be34dceb upstream.
+commit 10a04ff09bcc39e0044190ffe9f00f998f13647c upstream.
 
-syzbot is reporting too large allocation at input_mt_init_slots(), for
-num_slots is supplied from userspace using ioctl(UI_DEV_CREATE).
+Currently, tools have *ALIGN*() macros scattered across the unrelated
+headers, as there are only 3 of them and they were added separately
+each time on an as-needed basis.
+Anyway, let's make it more consistent with the kernel headers and allow
+using those macros outside of the mentioned headers. Create
+<linux/align.h> inside the tools/ folder and include it where needed.
 
-Since nobody knows possible max slots, this patch chose 1024.
-
-Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: George Kennedy <george.kennedy@oracle.com>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/input-mt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/include/linux/align.h  |   12 ++++++++++++
+ tools/include/linux/bitmap.h |    1 +
+ 2 files changed, 13 insertions(+)
+ create mode 100644 tools/include/linux/align.h
 
---- a/drivers/input/input-mt.c
-+++ b/drivers/input/input-mt.c
-@@ -48,6 +48,9 @@ int input_mt_init_slots(struct input_dev
- 		return 0;
- 	if (mt)
- 		return mt->num_slots != num_slots ? -EINVAL : 0;
-+	/* Arbitrary limit for avoiding too large memory allocation. */
-+	if (num_slots > 1024)
-+		return -EINVAL;
+--- /dev/null
++++ b/tools/include/linux/align.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _TOOLS_LINUX_ALIGN_H
++#define _TOOLS_LINUX_ALIGN_H
++
++#include <uapi/linux/const.h>
++
++#define ALIGN(x, a)		__ALIGN_KERNEL((x), (a))
++#define ALIGN_DOWN(x, a)	__ALIGN_KERNEL((x) - ((a) - 1), (a))
++#define IS_ALIGNED(x, a)	(((x) & ((typeof(x))(a) - 1)) == 0)
++
++#endif /* _TOOLS_LINUX_ALIGN_H */
+--- a/tools/include/linux/bitmap.h
++++ b/tools/include/linux/bitmap.h
+@@ -3,6 +3,7 @@
+ #define _PERF_BITOPS_H
  
- 	mt = kzalloc(struct_size(mt, slots, num_slots), GFP_KERNEL);
- 	if (!mt)
+ #include <string.h>
++#include <linux/align.h>
+ #include <linux/bitops.h>
+ #include <stdlib.h>
+ #include <linux/kernel.h>
 
 
