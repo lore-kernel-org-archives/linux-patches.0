@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32792C6AF;
-	Sun,  1 Sep 2024 17:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3CB2C6AF;
+	Sun,  1 Sep 2024 17:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210324; cv=none; b=ltyFZLyPEv1GlULPY/Pe6IVECIXFs0Y2Du4lt/wx9qHPPyDkt8ch6339MWX5/Bd9YvIsFRBcLbtKNQaH26NaYPBaAEVzwO50+lPFm5iiFUWdPJkzplm7xDNV4TXRL0XNYOPgUjYslQ3xp1SnMPlbh6w0I8F8b8mM91VPDggHass=
+	t=1725210327; cv=none; b=skQc67TnA/8ZMEPoHeG+xdV/rXSG8S9MV7glPm8317WZyV2RoQdn8X8QDlpAlKf0xfroXss8TtezMwpCEwg2rMjx6Mj5yR5KCcEWBhmxfdy5LLnRSRUfAIBuEyIX9fx/DBPaewI1nlh8GjG+nuzyNmsLNkCfLK9unsv3B8rI+FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210324; c=relaxed/simple;
-	bh=VXOQ9rr1djpbMESyV8WnOEGu8Qt07sLpdxawAaCFb0Y=;
+	s=arc-20240116; t=1725210327; c=relaxed/simple;
+	bh=C/GNcxO4xot7T88AAqUfrgGLwXa//qu20vICvPaZmJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQDcT7EZNEILkb0vkQyWxVvKaj2barXahauBp+EqwalqeAd0QOfQjOETz9r8moL0Y/l6E3c4pkX2d4s9U9Epyv03ENS7v5+hyIdlz3rcG7JoaAsANVlAvXAJQvtF/LlRee/RhKNkBNqGuyzKAi6oTU+h51Aiunz6OBqn/SFHWRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOF/lf85; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FFrBQ7IjB5mZFBKuf8BH8j2TV3tn5S2GbocALB6NCVMczdcCVtMwWbJbhvXhcroalSn0IWNA54p3E1Ibem0VFR8jbMQAZjkPz9j3fW7wEfAhbof+QNP39ox4JkvOFu6AIy+l7R7JxSsP5hJXJQzc5ErFg80Pwj2/eJmhjA2VY5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddXRzVyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOF/lf85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267CBC4CEC3;
-	Sun,  1 Sep 2024 17:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddXRzVyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558EFC4CEC3;
+	Sun,  1 Sep 2024 17:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210324;
-	bh=VXOQ9rr1djpbMESyV8WnOEGu8Qt07sLpdxawAaCFb0Y=;
+	s=korg; t=1725210327;
+	bh=C/GNcxO4xot7T88AAqUfrgGLwXa//qu20vICvPaZmJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOF/lf85zjNTkmbPEtEsJQI1XVDj8vUcsKoJ3V1Un6MfiLoWEgooUpIB5CcA7yVqA
-	 lPP+VFs0qxspffoa8FWKlU/vt2DmjZataVqwjFJLbAQqZDGo0OE6Sv/cno24M3HK5M
-	 GvHsbZOGKGFVbPlfnrBSsWU8LVatDrKCQ/e1vNgw=
+	b=ddXRzVyw29giTgQx0LvuX2lOoXcO7xLXj8YsXZQNj2EaoC8IBvgOWnYRCrMtNh35b
+	 uTmjsKxE3tHyTqEJeAQ2k1IT5Kk3NVE5Gz0T3kjZ4knLedbzyPN84X4oOAqWOUe4bq
+	 iUc96KYiyuTwWAk2rts+EVdXm0qNzSvunugO74C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 155/215] drm/msm/dpu: dont play tricks with debug macros
-Date: Sun,  1 Sep 2024 18:17:47 +0200
-Message-ID: <20240901160829.222026566@linuxfoundation.org>
+Subject: [PATCH 5.15 156/215] drm/msm/dp: reset the link phy params before link training
+Date: Sun,  1 Sep 2024 18:17:48 +0200
+Message-ID: <20240901160829.259072092@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,64 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit df24373435f5899a2a98b7d377479c8d4376613b ]
+[ Upstream commit 319aca883bfa1b85ee08411541b51b9a934ac858 ]
 
-DPU debugging macros need to be converted to a proper drm_debug_*
-macros, however this is a going an intrusive patch, not suitable for a
-fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
-to make sure that DPU debugging messages always end up in the drm debug
-messages and are controlled via the usual drm.debug mask.
+Before re-starting link training reset the link phy params namely
+the pre-emphasis and voltage swing levels otherwise the next
+link training begins at the previously cached levels which can result
+in link training failures.
 
-I don't think that it is a good idea for a generic DPU_DEBUG macro to be
-tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
-default it should go to the DRM_UT_DRIVER channel. While refactoring
-debug macros later on we might end up with particular messages going to
-ATOMIC or KMS, but DRIVER should be the default.
-
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/606932/
-Link: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org
+Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/605946/
+Link: https://lore.kernel.org/r/20240725220450.131245-1-quic_abhinavk@quicinc.com
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 170b3e9dd4b00..73aef80a8556a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -32,24 +32,14 @@
-  * @fmt: Pointer to format string
-  */
- #define DPU_DEBUG(fmt, ...)                                                \
--	do {                                                               \
--		if (drm_debug_enabled(DRM_UT_KMS))                         \
--			DRM_DEBUG(fmt, ##__VA_ARGS__); \
--		else                                                       \
--			pr_debug(fmt, ##__VA_ARGS__);                      \
--	} while (0)
-+	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 854173df67018..85f86afc55052 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1237,6 +1237,8 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
+ 	link_info.rate = ctrl->link->link_params.rate;
+ 	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
  
- /**
-  * DPU_DEBUG_DRIVER - macro for hardware driver logging
-  * @fmt: Pointer to format string
-  */
- #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
--	do {                                                               \
--		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
--			DRM_ERROR(fmt, ##__VA_ARGS__); \
--		else                                                       \
--			pr_debug(fmt, ##__VA_ARGS__);                      \
--	} while (0)
-+	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
- 
- #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
- #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
++	dp_link_reset_phy_params_vx_px(ctrl->link);
++
+ 	dp_aux_link_configure(ctrl->aux, &link_info);
+ 	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
+ 				&encoding, 1);
 -- 
 2.43.0
 
