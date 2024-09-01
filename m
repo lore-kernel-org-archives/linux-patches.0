@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419F51DFD1;
-	Sun,  1 Sep 2024 16:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BB8183CBD;
+	Sun,  1 Sep 2024 16:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209302; cv=none; b=Ki0iILRX8PcsPmzXtIGAbw24oC4DQNZqQILWpx4PVmfHuUsrcgDJk24/IUgc9Xz75vGMCAQPIqaGv0NmkoxldAMTmU9YIB4cKPurAptzOGiOElzesTeQG/o3vHlFOu/dZ/LANykpRN3SQj4croRslaGMfrBokX7Z3FimpIxvvvI=
+	t=1725209305; cv=none; b=CORtkj1E2EK3kChrwzsfBNjgiOaND3frun0/9RCRAk/NSNNRh1+xvE+0/KhbwRqCjSy2d2J9BvQw3LyjmpvHreILvrDy3GZNfEdO+v6Jm0JaAA3VuFCO3yG29Qx3FCGFfmfIpSXZ/6PbbCZhuVqPd0qtYbMZVtg7oBWF7f4pexU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209302; c=relaxed/simple;
-	bh=7GfpzL0Z1TRk8b9HjH+M3sx0+4NSzjxsAVzx3qHvkhQ=;
+	s=arc-20240116; t=1725209305; c=relaxed/simple;
+	bh=VPP4fNpO0iOZ48N9jdgM5W7n4AR25413wWNr9PSIQak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXrujc6YJzJIyv32P4YpMys26antFnbiwJg79+yJHMLbQpY13IEK9lDZXDTYfQ9BWWdGkF0umVBHirt57PS/QzHcdOxaslzXTFZ0nbZI2JCETnyu9KqdSCP5RGsm/6Tj3GmHi6Lyez4PejmWNZ8yLMocUUqOJK/xR+BjmJ00tNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5c5610K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0ZpJvcB2Bs68WBZ+WdbF2cWfViygtqf6jtZPSJjq9nRGLY1V3zxtOtUSp124JDC7CaXbCS9b3fJIKxFsakU4LBIegnt/+fkkQXSh1lpMj1jLgu46Os2es/mwlZWSoF1GUoCXNPOuQL0ZerxDV1xn5fPGTjubBZRltysCAigGNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIe3VnzX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5c5610K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D87C4CEC3;
-	Sun,  1 Sep 2024 16:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIe3VnzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B452FC4CEC3;
+	Sun,  1 Sep 2024 16:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209302;
-	bh=7GfpzL0Z1TRk8b9HjH+M3sx0+4NSzjxsAVzx3qHvkhQ=;
+	s=korg; t=1725209305;
+	bh=VPP4fNpO0iOZ48N9jdgM5W7n4AR25413wWNr9PSIQak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5c5610Ko4Vacrx/8N8Hi5FMI5lTbQI6gh764uOC5KASe6xKcDgmlLGugniq/rmsz
-	 QDXv5Vahv0kNPIC9hBUyHNdeZR101KciZWc4y5EhMok6PSFaB1BDprN5Mm7zTWSVEB
-	 mL+r1Yx1R9x1RqjNjXWRi8V19rB9GyeOMmOU6JUA=
+	b=oIe3VnzXpM67mxRDFMLVHf0qolcGaVrvoc0xEDabqp2qyFRK0J0hC/O2HFDYJkVl+
+	 /yt1AhDORaZmWnZKCo1kS6siqfK5TFyKp3eaT+OF8IVdCfszhNR26Ah6UQCi23P1ij
+	 Eexviwj1lBKPRlh4ZHsD7I0P6W5wQPTn/OU2hi0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.1 65/71] usb: cdnsp: fix for Link TRB with TC
-Date: Sun,  1 Sep 2024 18:18:10 +0200
-Message-ID: <20240901160804.340129781@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 66/71] phy: zynqmp: Enable reference clock correctly
+Date: Sun,  1 Sep 2024 18:18:11 +0200
+Message-ID: <20240901160804.377391752@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -50,91 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit 740f2e2791b98e47288b3814c83a3f566518fed2 upstream.
+commit 687d6bccb28238fcfa65f7c1badfdfeac498c428 upstream.
 
-Stop Endpoint command on LINK TRB with TC bit set to 1 causes that
-internal cycle bit can have incorrect state after command complete.
-In consequence empty transfer ring can be incorrectly detected
-when EP is resumed.
-NOP TRB before LINK TRB avoid such scenario. Stop Endpoint command
-is then on NOP TRB and internal cycle bit is not changed and have
-correct value.
+Lanes can use other lanes' reference clocks, as determined by refclk.
+Use refclk to determine the clock to enable/disable instead of always
+using the lane's own reference clock. This ensures the clock selected in
+xpsgtr_configure_pll is the one enabled.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-cc: <stable@vger.kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB953878279F375CCCE6C6F40FDD8E2@PH7PR07MB9538.namprd07.prod.outlook.com
+For the other half of the equation, always program REF_CLK_SEL even when
+we are selecting the lane's own clock. This ensures that Linux's idea of
+the reference clock matches the hardware. We use the "local" clock mux
+for this instead of going through the ref clock network.
+
+Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://lore.kernel.org/r/20240628205540.3098010-2-sean.anderson@linux.dev
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.h |    3 +++
- drivers/usb/cdns3/cdnsp-ring.c   |   28 ++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+ drivers/phy/xilinx/phy-zynqmp.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.h
-+++ b/drivers/usb/cdns3/cdnsp-gadget.h
-@@ -811,6 +811,7 @@ struct cdnsp_stream_info {
-  *        generate Missed Service Error Event.
-  *        Set skip flag when receive a Missed Service Error Event and
-  *        process the missed tds on the endpoint ring.
-+ * @wa1_nop_trb: hold pointer to NOP trb.
-  */
- struct cdnsp_ep {
- 	struct usb_ep endpoint;
-@@ -838,6 +839,8 @@ struct cdnsp_ep {
- #define EP_UNCONFIGURED		BIT(7)
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -81,7 +81,8 @@
  
- 	bool skip;
-+	union cdnsp_trb	 *wa1_nop_trb;
-+
- };
+ /* Reference clock selection parameters */
+ #define L0_Ln_REF_CLK_SEL(n)		(0x2860 + (n) * 4)
+-#define L0_REF_CLK_SEL_MASK		0x8f
++#define L0_REF_CLK_LCL_SEL		BIT(7)
++#define L0_REF_CLK_SEL_MASK		0x9f
  
- /**
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -1903,6 +1903,23 @@ int cdnsp_queue_bulk_tx(struct cdnsp_dev
- 		return ret;
+ /* Calibration digital logic parameters */
+ #define L3_TM_CALIB_DIG19		0xec4c
+@@ -396,11 +397,12 @@ static void xpsgtr_configure_pll(struct
+ 		       PLL_FREQ_MASK, ssc->pll_ref_clk);
  
- 	/*
-+	 * workaround 1: STOP EP command on LINK TRB with TC bit set to 1
-+	 * causes that internal cycle bit can have incorrect state after
-+	 * command complete. In consequence empty transfer ring can be
-+	 * incorrectly detected when EP is resumed.
-+	 * NOP TRB before LINK TRB avoid such scenario. STOP EP command is
-+	 * then on NOP TRB and internal cycle bit is not changed and have
-+	 * correct value.
-+	 */
-+	if (pep->wa1_nop_trb) {
-+		field = le32_to_cpu(pep->wa1_nop_trb->trans_event.flags);
-+		field ^= TRB_CYCLE;
-+
-+		pep->wa1_nop_trb->trans_event.flags = cpu_to_le32(field);
-+		pep->wa1_nop_trb = NULL;
-+	}
-+
-+	/*
- 	 * Don't give the first TRB to the hardware (by toggling the cycle bit)
- 	 * until we've finished creating all the other TRBs. The ring's cycle
- 	 * state may change as we enqueue the other TRBs, so save it too.
-@@ -1997,6 +2014,17 @@ int cdnsp_queue_bulk_tx(struct cdnsp_dev
- 		send_addr = addr;
- 	}
+ 	/* Enable lane clock sharing, if required */
+-	if (gtr_phy->refclk != gtr_phy->lane) {
+-		/* Lane3 Ref Clock Selection Register */
++	if (gtr_phy->refclk == gtr_phy->lane)
++		xpsgtr_clr_set(gtr_phy->dev, L0_Ln_REF_CLK_SEL(gtr_phy->lane),
++			       L0_REF_CLK_SEL_MASK, L0_REF_CLK_LCL_SEL);
++	else
+ 		xpsgtr_clr_set(gtr_phy->dev, L0_Ln_REF_CLK_SEL(gtr_phy->lane),
+ 			       L0_REF_CLK_SEL_MASK, 1 << gtr_phy->refclk);
+-	}
  
-+	if (cdnsp_trb_is_link(ring->enqueue + 1)) {
-+		field = TRB_TYPE(TRB_TR_NOOP) | TRB_IOC;
-+		if (!ring->cycle_state)
-+			field |= TRB_CYCLE;
-+
-+		pep->wa1_nop_trb = ring->enqueue;
-+
-+		cdnsp_queue_trb(pdev, ring, 0, 0x0, 0x0,
-+				TRB_INTR_TARGET(0), field);
-+	}
-+
- 	cdnsp_check_trb_math(preq, enqd_len);
- 	ret = cdnsp_giveback_first_trb(pdev, pep, preq->request.stream_id,
- 				       start_cycle, start_trb);
+ 	/* SSC step size [7:0] */
+ 	xpsgtr_clr_set_phy(gtr_phy, L0_PLL_SS_STEP_SIZE_0_LSB,
+@@ -620,7 +622,7 @@ static int xpsgtr_phy_init(struct phy *p
+ 	mutex_lock(&gtr_dev->gtr_mutex);
+ 
+ 	/* Configure and enable the clock when peripheral phy_init call */
+-	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->lane]))
++	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
+ 		goto out;
+ 
+ 	/* Skip initialization if not required. */
+@@ -672,7 +674,7 @@ static int xpsgtr_phy_exit(struct phy *p
+ 	gtr_phy->skip_phy_init = false;
+ 
+ 	/* Ensure that disable clock only, which configure for lane */
+-	clk_disable_unprepare(gtr_dev->clk[gtr_phy->lane]);
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
+ 
+ 	return 0;
+ }
 
 
