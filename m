@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40641DFD1;
-	Sun,  1 Sep 2024 16:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76453208A7;
+	Sun,  1 Sep 2024 16:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209686; cv=none; b=D84pA+wu2xhL0+zrKhMFoftJG0Rd3zYYcGaUUjdf6Ecv5hYswsf9MFZkJd2D4QKWuBgkc2X72wbLuJ2hpqZczrpdz6nv8Buka+LOsMBs54R4dj4fO06O+50GcdZexbyd3yMQQoXAt2ppeI2ZH3UwZu0AaHORKuDKBy5AqH1MtJs=
+	t=1725209690; cv=none; b=gqr8bKEVcRc+5MRxQD5kFTv9v7SDVz3Yd2Tj3tHlUSxh0EWu/OC8z4llYGTrCfKsiIbYVpztYs2ifbD+5onQcsnZv911kvRRTyP1JFeKbZuqs5rskusOJrrBTS1Yp2wNdf62J+9qjOTNOXRXMW3Ripr7I34qxmPB9MseDzYWiWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209686; c=relaxed/simple;
-	bh=+7KVQ9LQp3qiabAQrrieEpGMcKbdYv9JLTffEjA54gU=;
+	s=arc-20240116; t=1725209690; c=relaxed/simple;
+	bh=p7RpoQeqGGYCL+2dgULjvTYWlkuSJ1dqR17aZXx8Qdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqAJ+pYNyQO8/VeXEwqqkeE1qWM34RxeiGXUwJBusHETtqNkVTNWPuoxyaIpEWvwHkK3yOtZ4J64cHyOVg3Kbjem/nZaRpJhLldDFjiATdg5ydBoO0RA7phAkHoPCZWQ+2n9xz7diGeyqFAf1Lr1q+z+We0mte+CAg1iX9l8yUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEXWLQie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6f35mh6ven5FnyoJtgGMX6K12+ZHt32QTb4q4QmjMEatb6IdXVcW/c+NpPUMGLOtb472aoP2deIAhVBwX+zj13jboQdewasbbdQ6Oevb7PsTVLcmvsJp8W7Es9716HFxjuvFKYezpiroy5MAZj2+jQx3YYl0zuRb9mrF5IZsSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVMbunCH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEXWLQie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2820CC4CEC3;
-	Sun,  1 Sep 2024 16:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVMbunCH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D6DC4CEC3;
+	Sun,  1 Sep 2024 16:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209686;
-	bh=+7KVQ9LQp3qiabAQrrieEpGMcKbdYv9JLTffEjA54gU=;
+	s=korg; t=1725209690;
+	bh=p7RpoQeqGGYCL+2dgULjvTYWlkuSJ1dqR17aZXx8Qdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEXWLQiehIA75H0cadl/DW2hYM3+r4GEnYjTjOFc6AR5aHVsTpjCxBylnNqxdXCLZ
-	 4vGAle4xuJIpIy90LRCYD6EJkxHd61PxZItOOHZRWz9mjFVkbWIDSf6lQ+Cyc3M3pb
-	 geANhng1LXNUpC9s6KvgQ4O91ExzT0Pgk2bs6DnA=
+	b=jVMbunCH8k5uLzlpAJPWTFHWbZtueXKxlkmEBPMOx86MoV6uBoPc70Xfohp+aJFDm
+	 AjkTeT/bYQ2rk44dV85nAWxH059OL+Td6IFEVQRP2OklgP3R8obHsKYnd2AWIQnHFG
+	 Bc5CzQnVlzNbAH/BWAFy5sY88sJz6kLgX4ySb0xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Capitulino <luizcap@redhat.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 5.10 096/151] ice: fix ICE_LAST_OFFSET formula
-Date: Sun,  1 Sep 2024 18:17:36 +0200
-Message-ID: <20240901160817.724096795@linuxfoundation.org>
+	Ben Whitten <ben.whitten@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 114/151] mmc: dw_mmc: allow biu and ciu clocks to defer
+Date: Sun,  1 Sep 2024 18:17:54 +0200
+Message-ID: <20240901160818.398411511@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -53,39 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Ben Whitten <ben.whitten@gmail.com>
 
-[ Upstream commit b966ad832942b5a11e002f9b5ef102b08425b84a ]
+commit 6275c7bc8dd07644ea8142a1773d826800f0f3f7 upstream.
 
-For bigger PAGE_SIZE archs, ice driver works on 3k Rx buffers.
-Therefore, ICE_LAST_OFFSET should take into account ICE_RXBUF_3072, not
-ICE_RXBUF_2048.
+Fix a race condition if the clock provider comes up after mmc is probed,
+this causes mmc to fail without retrying.
+When given the DEFER error from the clk source, pass it on up the chain.
 
-Fixes: 7237f5b0dba4 ("ice: introduce legacy Rx flag")
-Suggested-by: Luiz Capitulino <luizcap@redhat.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f90a0612f0e1 ("mmc: dw_mmc: lookup for optional biu and ciu clocks")
+Signed-off-by: Ben Whitten <ben.whitten@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240811212212.123255-1-ben.whitten@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 442a9bcbf60a7..7734264d570db 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -786,7 +786,7 @@ ice_can_reuse_rx_page(struct ice_rx_buf *rx_buf, int rx_buf_pgcnt)
- 		return false;
- #else
- #define ICE_LAST_OFFSET \
--	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_2048)
-+	(SKB_WITH_OVERHEAD(PAGE_SIZE) - ICE_RXBUF_3072)
- 	if (rx_buf->page_offset > ICE_LAST_OFFSET)
- 		return false;
- #endif /* PAGE_SIZE < 8192) */
--- 
-2.43.0
-
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -3171,6 +3171,10 @@ int dw_mci_probe(struct dw_mci *host)
+ 	host->biu_clk = devm_clk_get(host->dev, "biu");
+ 	if (IS_ERR(host->biu_clk)) {
+ 		dev_dbg(host->dev, "biu clock not available\n");
++		ret = PTR_ERR(host->biu_clk);
++		if (ret == -EPROBE_DEFER)
++			return ret;
++
+ 	} else {
+ 		ret = clk_prepare_enable(host->biu_clk);
+ 		if (ret) {
+@@ -3182,6 +3186,10 @@ int dw_mci_probe(struct dw_mci *host)
+ 	host->ciu_clk = devm_clk_get(host->dev, "ciu");
+ 	if (IS_ERR(host->ciu_clk)) {
+ 		dev_dbg(host->dev, "ciu clock not available\n");
++		ret = PTR_ERR(host->ciu_clk);
++		if (ret == -EPROBE_DEFER)
++			goto err_clk_biu;
++
+ 		host->bus_hz = host->pdata->bus_hz;
+ 	} else {
+ 		ret = clk_prepare_enable(host->ciu_clk);
 
 
