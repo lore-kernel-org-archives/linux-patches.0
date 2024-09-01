@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D861EB5B;
-	Sun,  1 Sep 2024 17:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9655B1EB5B;
+	Sun,  1 Sep 2024 17:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210052; cv=none; b=IIWd3M1s9uOyut1IxcVKMuw/vw/3VzxTVEYpjVIRztMm2bTYehhuFxg5aMtvPIVADrux7ibw3g736PvMqCmc//QaayPCRtqVl8MkprGPEzQ1KJpkTHor2jPdBgFxU4fwv9nnulsF38fx5iCEuQj8z4EjFvgMibI1fkNuvetpHz4=
+	t=1725210055; cv=none; b=WNPl2yjJdp8zvx41BdXPpdEuiIBtJH6PQVtNGHIBJ96NA1w6Sd5SUwBtJRrdMOz13iTpbRC0/Ik0VYiKZleYTjew+t8yh78a7nyE2KYl4RRKRxef75J0DYqEBd0czaE1yV3MJxelz+P4yIO4Dz1RFRrVq7Qkalu5j3AEq9IxBd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210052; c=relaxed/simple;
-	bh=cXR7DFRQPm0+qZRrXdLaqDBL35f3N9C/HHrmjXIgjHU=;
+	s=arc-20240116; t=1725210055; c=relaxed/simple;
+	bh=yNqgWO6Tj2fjHcroA+ftTKatklJZ0NtrwzbEYOULi6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExgZZQnxvqdviVqK4eXPdrUQ8XjLNMEe4VCH0Lhwg61HWE7OfU3KwfHJCSEoW0TM7iDm58U95vSY4+13WSkgl470OhyNJ2a0Xmq7zYOc5F5GPSJk8SWrF3BvRoclaYFuMoQuGThRk36FVOWTXXUxCGZHiCK3mT7hr1TLynQhcVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6uXAu8Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lhc1gZrrZQIF/f0RlLKDwV6rDnpiyIuvnM1I2MyDDjySPbC+Ds9u91tP2ZX7EptYh6CTTj+Cwqo4aAuRmrrCeiVPeEy6vE2dCTA5jDScxRJudfFlPMMxtVBcpSvLj+3yHpFEaTZlU3nfOujmtqS0Q2i3dWXUPY6EHqpSKEt7qlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3rx12b2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6uXAu8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AB6C4CEC3;
-	Sun,  1 Sep 2024 17:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3rx12b2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3A6C4CEC3;
+	Sun,  1 Sep 2024 17:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210052;
-	bh=cXR7DFRQPm0+qZRrXdLaqDBL35f3N9C/HHrmjXIgjHU=;
+	s=korg; t=1725210055;
+	bh=yNqgWO6Tj2fjHcroA+ftTKatklJZ0NtrwzbEYOULi6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f6uXAu8QD9h4J4/2umKZya9K/reQqFxlWYQRdJDZN92jFMIQXQofRLywUQWqd2E7k
-	 /luHSB8bVPglJSMBkBWll5vbVBhEFGcsnGl6mjGl8R1aICcqrD+a8qq4sIAnO0L/Hu
-	 BRyq77S8iG9waHIvLBRtE4utBpZi55GNAviD5WCg=
+	b=O3rx12b2nn+BMBsWJJmnRteZ8sEXExwNz0Pbn7+Brlw+PZyr/m2Yr8AZAZ13EUKiu
+	 mCebVnmd6PjysjJ3aI0loa2xkfLPT9tGswRuVBDn+ElKXDMsiOYG1HPsUr3ZB4b8uR
+	 XfIodFv2QAqh74MO8s3TUXnrEXhYji01DZ+z2Y90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parsa Poorshikhian <parsa.poorsh@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Pawel Dembicki <paweldembicki@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/215] ALSA: hda/realtek: Fix noise from speakers on Lenovo IdeaPad 3 15IAU7
-Date: Sun,  1 Sep 2024 18:15:54 +0200
-Message-ID: <20240901160824.938129818@linuxfoundation.org>
+Subject: [PATCH 5.15 033/215] net: dsa: vsc73xx: check busy flag in MDIO operations
+Date: Sun,  1 Sep 2024 18:15:45 +0200
+Message-ID: <20240901160824.515136021@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,37 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parsa Poorshikhian <parsa.poorsh@gmail.com>
+From: Pawel Dembicki <paweldembicki@gmail.com>
 
-[ Upstream commit ef9718b3d54e822de294351251f3a574f8a082ce ]
+[ Upstream commit fa63c6434b6f6aaf9d8d599dc899bc0a074cc0ad ]
 
-Fix noise from speakers connected to AUX port when no sound is playing.
-The problem occurs because the `alc_shutup_pins` function includes
-a 0x10ec0257 vendor ID, which causes noise on Lenovo IdeaPad 3 15IAU7 with
-Realtek ALC257 codec when no sound is playing.
-Removing this vendor ID from the function fixes the bug.
+The VSC73xx has a busy flag used during MDIO operations. It is raised
+when MDIO read/write operations are in progress. Without it, PHYs are
+misconfigured and bus operations do not work as expected.
 
-Fixes: 70794b9563fe ("ALSA: hda/realtek: Add more codec ID to no shutup pins list")
-Signed-off-by: Parsa Poorshikhian <parsa.poorsh@gmail.com>
-Link: https://patch.msgid.link/20240810150939.330693-1-parsa.poorsh@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/dsa/vitesse-vsc73xx-core.c | 37 +++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 8729896c7f9cd..05fb686ae2508 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -577,7 +577,6 @@ static void alc_shutup_pins(struct hda_codec *codec)
- 	switch (codec->core.vendor_id) {
- 	case 0x10ec0236:
- 	case 0x10ec0256:
--	case 0x10ec0257:
- 	case 0x19e58326:
- 	case 0x10ec0283:
- 	case 0x10ec0285:
+diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
+index ce1c6d6eeb606..592527f069446 100644
+--- a/drivers/net/dsa/vitesse-vsc73xx-core.c
++++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
+@@ -39,6 +39,10 @@
+ #define VSC73XX_BLOCK_ARBITER	0x5 /* Only subblock 0 */
+ #define VSC73XX_BLOCK_SYSTEM	0x7 /* Only subblock 0 */
+ 
++/* MII Block subblock */
++#define VSC73XX_BLOCK_MII_INTERNAL	0x0 /* Internal MDIO subblock */
++#define VSC73XX_BLOCK_MII_EXTERNAL	0x1 /* External MDIO subblock */
++
+ #define CPU_PORT	6 /* CPU port */
+ 
+ /* MAC Block registers */
+@@ -197,6 +201,8 @@
+ #define VSC73XX_MII_CMD		0x1
+ #define VSC73XX_MII_DATA	0x2
+ 
++#define VSC73XX_MII_STAT_BUSY	BIT(3)
++
+ /* Arbiter block 5 registers */
+ #define VSC73XX_ARBEMPTY		0x0c
+ #define VSC73XX_ARBDISC			0x0e
+@@ -271,6 +277,7 @@
+ #define IS_739X(a) (IS_7395(a) || IS_7398(a))
+ 
+ #define VSC73XX_POLL_SLEEP_US		1000
++#define VSC73XX_MDIO_POLL_SLEEP_US	5
+ #define VSC73XX_POLL_TIMEOUT_US		10000
+ 
+ struct vsc73xx_counter {
+@@ -488,6 +495,22 @@ static int vsc73xx_detect(struct vsc73xx *vsc)
+ 	return 0;
+ }
+ 
++static int vsc73xx_mdio_busy_check(struct vsc73xx *vsc)
++{
++	int ret, err;
++	u32 val;
++
++	ret = read_poll_timeout(vsc73xx_read, err,
++				err < 0 || !(val & VSC73XX_MII_STAT_BUSY),
++				VSC73XX_MDIO_POLL_SLEEP_US,
++				VSC73XX_POLL_TIMEOUT_US, false, vsc,
++				VSC73XX_BLOCK_MII, VSC73XX_BLOCK_MII_INTERNAL,
++				VSC73XX_MII_STAT, &val);
++	if (ret)
++		return ret;
++	return err;
++}
++
+ static int vsc73xx_phy_read(struct dsa_switch *ds, int phy, int regnum)
+ {
+ 	struct vsc73xx *vsc = ds->priv;
+@@ -495,12 +518,20 @@ static int vsc73xx_phy_read(struct dsa_switch *ds, int phy, int regnum)
+ 	u32 val;
+ 	int ret;
+ 
++	ret = vsc73xx_mdio_busy_check(vsc);
++	if (ret)
++		return ret;
++
+ 	/* Setting bit 26 means "read" */
+ 	cmd = BIT(26) | (phy << 21) | (regnum << 16);
+ 	ret = vsc73xx_write(vsc, VSC73XX_BLOCK_MII, 0, 1, cmd);
+ 	if (ret)
+ 		return ret;
+-	msleep(2);
++
++	ret = vsc73xx_mdio_busy_check(vsc);
++	if (ret)
++		return ret;
++
+ 	ret = vsc73xx_read(vsc, VSC73XX_BLOCK_MII, 0, 2, &val);
+ 	if (ret)
+ 		return ret;
+@@ -524,6 +555,10 @@ static int vsc73xx_phy_write(struct dsa_switch *ds, int phy, int regnum,
+ 	u32 cmd;
+ 	int ret;
+ 
++	ret = vsc73xx_mdio_busy_check(vsc);
++	if (ret)
++		return ret;
++
+ 	/* It was found through tedious experiments that this router
+ 	 * chip really hates to have it's PHYs reset. They
+ 	 * never recover if that happens: autonegotiation stops
 -- 
 2.43.0
 
