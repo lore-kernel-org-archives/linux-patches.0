@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1130117DFFC;
-	Sun,  1 Sep 2024 16:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869AC1E87B;
+	Sun,  1 Sep 2024 16:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208542; cv=none; b=eyW1HrYxs61TeMTXd0JoyRkWj4enWso8+BQ3h+69a29O/uMufegGmxzKelrHgf4e+8uAKblZ4FFuh/x/1albkFlk5yCDCFxpinPSsPBFHSMworu0eADboTwMS1uXJpPPxSphfV0c3AxtfzlLNC+ePZOPUmUyyl5AP1NnfFiOVd0=
+	t=1725208545; cv=none; b=UrxrTsH7mdegZsXlcZ0XPqxZENz9Y7iw7sZVUo1FJGbbjy0ol5RzSMBhdB8qVMbh4H9R/pRAR+ES+RSQVwb3sp5OUNSQ7Faxb4jUTGyY56xLQSlMNw6AGOg9HkRiUYw1rcEbSyUnN/zc1NVlYa4gyhewD3W+9HK6BnsqzyVemwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208542; c=relaxed/simple;
-	bh=JHwSZg/VkqZiIf0HlBv0bwc7I45hBT34kJ+yXmvlq6E=;
+	s=arc-20240116; t=1725208545; c=relaxed/simple;
+	bh=jKaqa0IP2wwSJoFaDUG4DogTFAdqjdto1/kdLLJgBhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9TE7evM1oBEeaXK3JZVK9w5p8icZUOKWJa9o1aZbZ6TJj+26IcfAN3ycVII2Hjb1ytdJ21I/E9/6F9ka+zm3Zo02KTb01Zu7fuyGupOf1r4S1+ec3NRvOWWR7Wyxk27szllXajL2zwxKoR4H/lF74pfMOXUHC0yCQqef/zo0Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFcyjpAa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLXdG88Rxl8GW/6sYcx0ZKHuGkD+yzmHlCcjiIxdjAiytzMoimZvTm5qJfL6eEG+bD9AB5081nhQ3bSngGkzYJ7VjsuuTKpsvLa16LP5IkRPLswwYnXZwK8PU9UdaN9of05NyEojGK10+sPVBulOmJ52oSp+F1za8tD2g15QGns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XchD042b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFcyjpAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A83C4CEC3;
-	Sun,  1 Sep 2024 16:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XchD042b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA65C4CEC3;
+	Sun,  1 Sep 2024 16:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208541;
-	bh=JHwSZg/VkqZiIf0HlBv0bwc7I45hBT34kJ+yXmvlq6E=;
+	s=korg; t=1725208545;
+	bh=jKaqa0IP2wwSJoFaDUG4DogTFAdqjdto1/kdLLJgBhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFcyjpAal5PHWDFJdxjpB97rgzVqwr5cbsPi3Wq1Z0PMXlG9DwjlZhPLvsFxlDsDb
-	 wqDZCkt32xXtRjrpw/nEgkyhWB1wucPzKqBOLHMFfKgAQBnydI9WRRa9PHW9Lt89fK
-	 u5EX5zNVNbFcYTsCJvXk8sv7dOEX2UBTURavuAq8=
+	b=XchD042bnTqbv5SITH8AWRmI2YvY7zKvUBLBe25qVAQR+20m7jH12L4dXR3DJHTIv
+	 viqcSILbHmweNph5qr30iDXeUR42MlODSmfCa0iBDpiyjVoHnKIv6RLs7oxqqErRxP
+	 ruMrJ2MuTT/WZOvdxRA3ZIAVB2td/jmSZ2QZLCSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 113/149] drm/xe/hwmon: Fix WRITE_I1 param from u32 to u16
-Date: Sun,  1 Sep 2024 18:17:04 +0200
-Message-ID: <20240901160821.704072665@linuxfoundation.org>
+Subject: [PATCH 6.10 114/149] io_uring/kbuf: return correct iovec count from classic buffer peek
+Date: Sun,  1 Sep 2024 18:17:05 +0200
+Message-ID: <20240901160821.743169278@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,43 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 59d237c8a241168c7ae34c48244059b7bafaff38 ]
+[ Upstream commit f274495aea7b15225b3d83837121b22ef96e560c ]
 
-WRITE_I1 sub-command of the POWER_SETUP pcode command accepts a u16
-parameter instead of u32. This change prevents potential illegal
-sub-command errors.
+io_provided_buffers_select() returns 0 to indicate success, but it should
+be returning 1 to indicate that 1 vec was mapped. This causes peeking
+to fail with classic provided buffers, and while that's not a use case
+that anyone should use, it should still work correctly.
 
-v2: Mask uval instead of changing the prototype. (Badal)
+The end result is that no buffer will be selected, and hence a completion
+with '0' as the result will be posted, without a buffer attached.
 
-v3: Rephrase commit message. (Badal)
-
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Fixes: 92d44a422d0d ("drm/xe/hwmon: Expose card reactive critical power")
-Reviewed-by: Badal Nilawar <badal.nilawar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240827155301.183383-1-karthik.poosa@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit a7f657097e96d8fa745c74bb1a239ebd5a8c971c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 2 +-
+ io_uring/kbuf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index d37f1dea9f8b8..bb815dbde63a6 100644
---- a/drivers/gpu/drm/xe/xe_hwmon.c
-+++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -443,7 +443,7 @@ static int xe_hwmon_pcode_write_i1(struct xe_gt *gt, u32 uval)
- {
- 	return xe_pcode_write(gt, PCODE_MBOX(PCODE_POWER_SETUP,
- 			      POWER_SETUP_SUBCOMMAND_WRITE_I1, 0),
--			      uval);
-+			      (uval & POWER_SETUP_I1_DATA_MASK));
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index 1af2bd56af44a..bdfa30b38321b 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -129,7 +129,7 @@ static int io_provided_buffers_select(struct io_kiocb *req, size_t *len,
+ 
+ 	iov[0].iov_base = buf;
+ 	iov[0].iov_len = *len;
+-	return 0;
++	return 1;
  }
  
- static int xe_hwmon_power_curr_crit_read(struct xe_hwmon *hwmon, int channel,
+ static struct io_uring_buf *io_ring_head_to_buf(struct io_uring_buf_ring *br,
 -- 
 2.43.0
 
