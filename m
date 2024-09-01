@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29D22C6AF;
-	Sun,  1 Sep 2024 17:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E98F2C6AF;
+	Sun,  1 Sep 2024 17:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210358; cv=none; b=SQPgRjkUh1DrrfbyFIL1hUXGYIpRadOnZZTwxrY21gLQ/3svIoN1cZf4QioshfLTdzmbcvH1sUIqBFy8XqhmMtMhWOElj3QkTabszTnoieswi05xEgsyps9N+4ZmMXwt/lKSKaKM1l72PlD5jzhRJWP79iJTMfauT2/TgdgWPDs=
+	t=1725210362; cv=none; b=IEnfUN2lpzLawTuIo/BY/SLoOryedonFxG4R1wxqfoe+T7wLxXO5TL7CFOkQjQO9DortP+KknSlPJ5MTLZVqjOHij+VREhyfoXUkA4FUXLiy86hVU5Yp3TJBJdfBJQsO/S92HOUSin2W2il1JVK1wVbGIdtNSyngX0JcG/0Fz9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210358; c=relaxed/simple;
-	bh=XF7QdoucP3l785WQ3f480E7PtWBSNfvg+XGPcvwOtYE=;
+	s=arc-20240116; t=1725210362; c=relaxed/simple;
+	bh=xS21LTM+gFB94VSRasRXReIYf3C/DY+Vj6GtIq5qkA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqqF9wXJsqxyoMOCWIbZLDjDXHPNdkEyIU3//73UVEStGmCMPqdxd/tDSiBJNechVkBnu1gqtPhi/ZntMaye6C7uIwTDHw9TBjHJQ6UD+R+n60XE9XMLSIwFuVjolr056rSUzlZZvHWqZC53E5toBkcVCBgCmV/FCCLoItGo7HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eX8WlZ5q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VoDq4DoU4cX/KH6MnSM9i29QGstvGK8STxEHYt4rfL4nXtaZy6/W6iWo1VFkfDCaR9ncZ0Pn3mSvnpD8vSrV5Q52LMBPYeEKQ/sM9xo3ItbxIOvFBZKK5LwD8OUhqLsRKeHsK8zcPTHpwJq59pOyfkamEfKm0nw1H8z7xRfqvag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNhudVUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eX8WlZ5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58629C4CEC3;
-	Sun,  1 Sep 2024 17:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNhudVUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EF1C4CEC3;
+	Sun,  1 Sep 2024 17:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210358;
-	bh=XF7QdoucP3l785WQ3f480E7PtWBSNfvg+XGPcvwOtYE=;
+	s=korg; t=1725210362;
+	bh=xS21LTM+gFB94VSRasRXReIYf3C/DY+Vj6GtIq5qkA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eX8WlZ5qptCQKEQKQqV1gGcsyzsgxcn8QtHqeqqf3xmbB8d+b7oMtIylojVlmdXbU
-	 jgLO8iaNdTOnNihvmLL1rNdMprhoWY6DmclB9gD/Jm0D3xW3NxHVPu/mRmMtrGp75S
-	 O6Iqmwb0Dwbn0Ovd9N4TChjLO4HP3n3/mSwW3zm8=
+	b=gNhudVUXldl01wckqIOPpet6mOZoyKErDXgA3bDhsEWLjx9ggikfesfJQppAk2pW5
+	 s4/4xim/iFL7YPl/QLX0C3e4Od9EA2QYq2eayrcHf5zWuMapLbBpsmrYz74Qe9iBEV
+	 KvO1abT+TdfX/P0BmMgI7sTAwHo7yf5HrbThQhLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/215] ip6_tunnel: Fix broken GRO
-Date: Sun,  1 Sep 2024 18:17:30 +0200
-Message-ID: <20240901160828.581388035@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 5.15 165/215] KVM: arm64: Make ICC_*SGI*_EL1 undef in the absence of a vGICv3
+Date: Sun,  1 Sep 2024 18:17:57 +0200
+Message-ID: <20240901160829.596137703@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,78 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 4b3e33fcc38f7750604b065c55a43e94c5bc3145 ]
+commit 3e6245ebe7ef341639e9a7e402b3ade8ad45a19f upstream.
 
-GRO code checks for matching layer 2 headers to see, if packet belongs
-to the same flow and because ip6 tunnel set dev->hard_header_len
-this check fails in cases, where it shouldn't. To fix this don't
-set hard_header_len, but use needed_headroom like ipv4/ip_tunnel.c
-does.
+On a system with a GICv3, if a guest hasn't been configured with
+GICv3 and that the host is not capable of GICv2 emulation,
+a write to any of the ICC_*SGI*_EL1 registers is trapped to EL2.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Link: https://patch.msgid.link/20240815151419.109864-1-tbogendoerfer@suse.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We therefore try to emulate the SGI access, only to hit a NULL
+pointer as no private interrupt is allocated (no GIC, remember?).
+
+The obvious fix is to give the guest what it deserves, in the
+shape of a UNDEF exception.
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240820100349.3544850-2-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ arch/arm64/kvm/sys_regs.c  |    6 ++++++
+ arch/arm64/kvm/vgic/vgic.h |    7 +++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index d370a71c97520..5955fca601b3a 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1501,7 +1501,8 @@ static void ip6_tnl_link_config(struct ip6_tnl *t)
- 			tdev = __dev_get_by_index(t->net, p->link);
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -30,6 +30,7 @@
+ #include <trace/events/kvm.h>
  
- 		if (tdev) {
--			dev->hard_header_len = tdev->hard_header_len + t_hlen;
-+			dev->needed_headroom = tdev->hard_header_len +
-+				tdev->needed_headroom + t_hlen;
- 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ #include "sys_regs.h"
++#include "vgic/vgic.h"
  
- 			mtu = mtu - t_hlen;
-@@ -1729,7 +1730,9 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
- int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
+ #include "trace.h"
+ 
+@@ -203,6 +204,11 @@ static bool access_gic_sgi(struct kvm_vc
  {
- 	struct ip6_tnl *tnl = netdev_priv(dev);
-+	int t_hlen;
+ 	bool g1;
  
-+	t_hlen = tnl->hlen + sizeof(struct ipv6hdr);
- 	if (tnl->parms.proto == IPPROTO_IPV6) {
- 		if (new_mtu < IPV6_MIN_MTU)
- 			return -EINVAL;
-@@ -1738,10 +1741,10 @@ int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
- 			return -EINVAL;
- 	}
- 	if (tnl->parms.proto == IPPROTO_IPV6 || tnl->parms.proto == 0) {
--		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len)
-+		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len - t_hlen)
- 			return -EINVAL;
- 	} else {
--		if (new_mtu > IP_MAX_MTU - dev->hard_header_len)
-+		if (new_mtu > IP_MAX_MTU - dev->hard_header_len - t_hlen)
- 			return -EINVAL;
- 	}
- 	dev->mtu = new_mtu;
-@@ -1887,12 +1890,11 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
- 	t_hlen = t->hlen + sizeof(struct ipv6hdr);
++	if (!kvm_has_gicv3(vcpu->kvm)) {
++		kvm_inject_undefined(vcpu);
++		return false;
++	}
++
+ 	if (!p->is_write)
+ 		return read_from_write_only(vcpu, p, r);
  
- 	dev->type = ARPHRD_TUNNEL6;
--	dev->hard_header_len = LL_MAX_HEADER + t_hlen;
- 	dev->mtu = ETH_DATA_LEN - t_hlen;
- 	if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
- 		dev->mtu -= 8;
- 	dev->min_mtu = ETH_MIN_MTU;
--	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len;
-+	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len - t_hlen;
+--- a/arch/arm64/kvm/vgic/vgic.h
++++ b/arch/arm64/kvm/vgic/vgic.h
+@@ -324,4 +324,11 @@ void vgic_v4_configure_vsgis(struct kvm
+ void vgic_v4_get_vlpi_state(struct vgic_irq *irq, bool *val);
+ int vgic_v4_request_vpe_irq(struct kvm_vcpu *vcpu, int irq);
  
- 	dev_hold(dev);
- 	return 0;
--- 
-2.43.0
-
++static inline bool kvm_has_gicv3(struct kvm *kvm)
++{
++	return (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif) &&
++		irqchip_in_kernel(kvm) &&
++		kvm->arch.vgic.vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3);
++}
++
+ #endif
 
 
