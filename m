@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994491C68C;
-	Sun,  1 Sep 2024 16:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0102B17E00C;
+	Sun,  1 Sep 2024 16:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208702; cv=none; b=LpJoKlQTgYNn3mTq5tQTmTT/cwUqUMUr+OZNveappOqaPZwjsHN7mshHoB1LjzBjc1Flz3Ow0jimcqJFejAbH6rU4I7zhdid85X4efZQ0JVSrK5hZXaDjpeAWJ4fwABaQPCdUGXh8eF0rCEisv8pn3pUILX08p1Y74+/rmnXbyU=
+	t=1725208706; cv=none; b=NHvdYj7VEoUpJtJlBl48Un7KkQOAir8PJ8IW6GaeHmhG+2mXCD1dBrddVFTm57+1tZmW+WD+mbDQ1ArIrMMpOA4mcJ/u1eyV5jDCMOL+fzeogRs2z2u28XrFRKf7IQxpfXWHEgGYNpSuXvMu1LbBvGpnK+ZD8HZbumdMf42SuB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208702; c=relaxed/simple;
-	bh=kQNWj+nEG4XKAqqkb+IbNfF0/UuKVJjniw5QrTBJG3M=;
+	s=arc-20240116; t=1725208706; c=relaxed/simple;
+	bh=OkWDAFe3J9I6MDdRG5roGXQoIB/yLeZjoIychJFmbjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ImZulABCqjvGjRzxhOWU4RbMpbDsuqAl27La1K3HTQCexNOCLryXN8d2Zg+ET9BjQh2ocsH3fXiYKeq6mr1axLOgY4wneBlZf8so3qSzOP3ceNbk2/uAh+SEVbaRMDg9iqeXoXYamyY9HNr6o5xcBhuuXGBmo2xM1g21WK9tr74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHQRqnjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apyMcxppsPHPRD/wWRwXNXYKleLtGyI9ehzJWS1uVQ8EROiXJHQFc8uHwiYXPo2rTJltzTW3bfPF238p5b1FHM2GhufP2dx7ybQy/24W4xNssuERVAi6q5v29Rci+ETPiNh+Cwpi8c/SOljgOMvuhmNHcNKD3EoTgdZ7T8L0kAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgFVYZtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHQRqnjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A63C4CEC3;
-	Sun,  1 Sep 2024 16:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgFVYZtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C24C4CEC3;
+	Sun,  1 Sep 2024 16:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208702;
-	bh=kQNWj+nEG4XKAqqkb+IbNfF0/UuKVJjniw5QrTBJG3M=;
+	s=korg; t=1725208705;
+	bh=OkWDAFe3J9I6MDdRG5roGXQoIB/yLeZjoIychJFmbjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHQRqnjDPQ2ZKEVXxEDWkIO7lZQ/+92apBILsMzXmHP9p5lUYuXJbZjCzFKoR3p00
-	 pW0Y+Pl4JL11W7fd6/VnZpqLRJ95Q4Y0TEg6UEqia9MMsE6oBXMiSgzQ3rBtoVGuIC
-	 CDP1sb9sPyQ1NsL1grOIZ2u05YnQfWiQUwbTMCZM=
+	b=qgFVYZtDy+uFsIm86v6oduuKlCbU6NYwix7lwvUscJ3zcOhOGh8sPfGYLEcABAOtC
+	 gOhP576qdVDXsnjxHvPFPqp3h1KbUX4Cik9q+6qbVRcvTFbiwx+Qa/smjxhMKxwIVS
+	 x8SKx+krZ3hrujl2E8we5UZVc80oNR83CYSIoPFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	David Sterba <dsterba@suse.com>,
+	Yury Norov <yury.norov@gmail.com>,
 	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 014/134] s390/cio: rename bitmap_size() -> idset_bitmap_size()
-Date: Sun,  1 Sep 2024 18:16:00 +0200
-Message-ID: <20240901160810.649315498@linuxfoundation.org>
+Subject: [PATCH 5.4 015/134] btrfs: rename bitmap_set_bits() -> btrfs_bitmap_set_bits()
+Date: Sun,  1 Sep 2024 18:16:01 +0200
+Message-ID: <20240901160810.686530132@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -54,59 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-commit c1023f5634b9bfcbfff0dc200245309e3cde9b54 upstream.
+commit 4ca532d64648d4776d15512caed3efea05ca7195 upstream.
 
-bitmap_size() is a pretty generic name and one may want to use it for
-a generic bitmap API function. At the same time, its logic is not
-"generic", i.e. it's not just `nbits -> size of bitmap in bytes`
-converter as it would be expected from its name.
-Add the prefix 'idset_' used throughout the file where the function
-resides.
+bitmap_set_bits() does not start with the FS' prefix and may collide
+with a new generic helper one day. It operates with the FS-specific
+types, so there's no change those two could do the same thing.
+Just add the prefix to exclude such possible conflict.
 
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Acked-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Acked-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Yury Norov <yury.norov@gmail.com>
 Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/idset.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/btrfs/free-space-cache.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/s390/cio/idset.c
-+++ b/drivers/s390/cio/idset.c
-@@ -16,7 +16,7 @@ struct idset {
- 	unsigned long bitmap[0];
- };
- 
--static inline unsigned long bitmap_size(int num_ssid, int num_id)
-+static inline unsigned long idset_bitmap_size(int num_ssid, int num_id)
- {
- 	return bitmap_size(size_mul(num_ssid, num_id));
- }
-@@ -25,11 +25,12 @@ static struct idset *idset_new(int num_s
- {
- 	struct idset *set;
- 
--	set = vmalloc(sizeof(struct idset) + bitmap_size(num_ssid, num_id));
-+	set = vmalloc(sizeof(struct idset) +
-+		      idset_bitmap_size(num_ssid, num_id));
- 	if (set) {
- 		set->num_ssid = num_ssid;
- 		set->num_id = num_id;
--		memset(set->bitmap, 0, bitmap_size(num_ssid, num_id));
-+		memset(set->bitmap, 0, idset_bitmap_size(num_ssid, num_id));
- 	}
- 	return set;
- }
-@@ -41,7 +42,8 @@ void idset_free(struct idset *set)
- 
- void idset_fill(struct idset *set)
- {
--	memset(set->bitmap, 0xff, bitmap_size(set->num_ssid, set->num_id));
-+	memset(set->bitmap, 0xff,
-+	       idset_bitmap_size(set->num_ssid, set->num_id));
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -1729,9 +1729,9 @@ static void bitmap_clear_bits(struct btr
+ 	ctl->free_space -= bytes;
  }
  
- static inline void idset_add(struct idset *set, int ssid, int id)
+-static void bitmap_set_bits(struct btrfs_free_space_ctl *ctl,
+-			    struct btrfs_free_space *info, u64 offset,
+-			    u64 bytes)
++static void btrfs_bitmap_set_bits(struct btrfs_free_space_ctl *ctl,
++				  struct btrfs_free_space *info, u64 offset,
++				  u64 bytes)
+ {
+ 	unsigned long start, count;
+ 
+@@ -1988,7 +1988,7 @@ static u64 add_bytes_to_bitmap(struct bt
+ 
+ 	bytes_to_set = min(end - offset, bytes);
+ 
+-	bitmap_set_bits(ctl, info, offset, bytes_to_set);
++	btrfs_bitmap_set_bits(ctl, info, offset, bytes_to_set);
+ 
+ 	/*
+ 	 * We set some bytes, we have no idea what the max extent size is
 
 
