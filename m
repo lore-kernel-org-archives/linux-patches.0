@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BC817E00C;
-	Sun,  1 Sep 2024 16:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A0744C93;
+	Sun,  1 Sep 2024 16:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209987; cv=none; b=rxhQtHvyrb/uzd5xg6gL06dRVFCPN8cInHP+09hXg/Vnnrnv592GU/VUx+cuYAm6VY2nyQ1kiT/R4D1Rb5FpKtAzxIKw6rpzV6gOcFS3rx3BXjbIjBY+kCGrtBQjaWebrKAlRbaXSmoaYAb1xBVp+acV9xUlFvJSKzxmS9z8fo4=
+	t=1725209990; cv=none; b=qNaGQ4qsm2LT+a7aziFcyFr74vit3ueKqgYVXvfSek6YwfR7F1Ullsfd8RWc+kEaGxJHYaeWZm8QRNZ6MWBFdVFDIzBAHyFU7yxEOQotDL9ktQ2wArXT3clMukYnEivEci6G/YJ+072XFZSJrEdl7IAv1Lk3TszOHhFeX3pwdRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209987; c=relaxed/simple;
-	bh=4a3Y+h+qSB+2W+3itSursoWQT+I9tbDhRHfMfmJBB6w=;
+	s=arc-20240116; t=1725209990; c=relaxed/simple;
+	bh=LFh4qChb+A+l0tHWs17OwUxrpYy14vwvTaG8eWDNFQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnhCDyjhKRhFZpmoWze3EGQpTJ4WBBEe1S/xspTf8yAZdb8z72P0SjYN34+C6rS2jK5H/Ja6AmyZLs9i59n9ZfNs8q8DLeJASY2i2FrzXxJ1gg0gq8Wxh+Zj8Y+J6I6cemSLCtUQA9ujNkZ5fopwsGW0Sx28ahR/Iehg7+4UASI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6vml63h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZmNgA19ukvnuHcxtLPT3j5/qEA9SM/l1hp+3P+dmAhr4BheNhK2Adr/n15xZzXvOq/aAm4f3vDNc87rS++rF/1DHFzjCABqZ35pOc8K1DNKvjQKSGEfUser7z23A/8YXoZBhjw1fwjtgSZt+UXWzvTaObAKWOaycTaONZNmivU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GK8XVS+q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6vml63h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADD4C4CEC3;
-	Sun,  1 Sep 2024 16:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GK8XVS+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A33AC4CEC3;
+	Sun,  1 Sep 2024 16:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209987;
-	bh=4a3Y+h+qSB+2W+3itSursoWQT+I9tbDhRHfMfmJBB6w=;
+	s=korg; t=1725209990;
+	bh=LFh4qChb+A+l0tHWs17OwUxrpYy14vwvTaG8eWDNFQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6vml63hUFeQa1U93lTVOoX9X7dIMGQ6hrw64uTOyr7zLbNwrP6dBmf8MYQUIZ+B1
-	 O2jJieaKYGib74v5cqzPE6e1NfJYJVCxV8Fr4VKBDDYcwFWhUc1l0nxGZC3jFigTX5
-	 NIqlBm6HPqRQbWDGsrpLB+pg89m9p77Xb/vi0bUA=
+	b=GK8XVS+q/6RtqujJqRBWfiyK1dAWmS9b4565Zk0wcVkRXFcN9a1XiDTPLgjhQbW2R
+	 6wNjRLQhB9d6vBDdckNr1W/acisxDm9X5k48vQCDmIzmwJZR5g7WiMcfkI0D6kP7Zm
+	 0YYS/fI8bmA8W9mwOEcihwHKD9F+kGoivWMOcITE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/215] staging: iio: resolver: ad2s1210: fix use before initialization
-Date: Sun,  1 Sep 2024 18:16:05 +0200
-Message-ID: <20240901160825.356813166@linuxfoundation.org>
+Subject: [PATCH 5.15 054/215] drm/amd/display: Validate hw_points_num before using it
+Date: Sun,  1 Sep 2024 18:16:06 +0200
+Message-ID: <20240901160825.393543094@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,47 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 7fe2d05cee46b1c4d9f1efaeab08cc31a0dfff60 ]
+[ Upstream commit 58c3b3341cea4f75dc8c003b89f8a6dd8ec55e50 ]
 
-This fixes a use before initialization in ad2s1210_probe(). The
-ad2s1210_setup_gpios() function uses st->sdev but it was being called
-before this field was initialized.
+[WHAT]
+hw_points_num is 0 before ogam LUT is programmed; however, function
+"dwb3_program_ogam_pwl" assumes hw_points_num is always greater than 0,
+i.e. substracting it by 1 as an array index.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20230929-ad2s1210-mainline-v3-2-fa4364281745@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[HOW]
+Check hw_points_num is not equal to 0 before using it.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/resolver/ad2s1210.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/staging/iio/resolver/ad2s1210.c b/drivers/staging/iio/resolver/ad2s1210.c
-index a19cfb2998c93..f19bb5c796cf7 100644
---- a/drivers/staging/iio/resolver/ad2s1210.c
-+++ b/drivers/staging/iio/resolver/ad2s1210.c
-@@ -658,9 +658,6 @@ static int ad2s1210_probe(struct spi_device *spi)
- 	if (!indio_dev)
- 		return -ENOMEM;
- 	st = iio_priv(indio_dev);
--	ret = ad2s1210_setup_gpios(st);
--	if (ret < 0)
--		return ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
+index 6a3d3a0ec0a36..0f2e7fba0c938 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
+@@ -243,6 +243,9 @@ static bool dwb3_program_ogam_lut(
+ 		return false;
+ 	}
  
- 	spi_set_drvdata(spi, indio_dev);
- 
-@@ -671,6 +668,10 @@ static int ad2s1210_probe(struct spi_device *spi)
- 	st->resolution = 12;
- 	st->fexcit = AD2S1210_DEF_EXCIT;
- 
-+	ret = ad2s1210_setup_gpios(st);
-+	if (ret < 0)
-+		return ret;
++	if (params->hw_points_num == 0)
++		return false;
 +
- 	indio_dev->info = &ad2s1210_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
- 	indio_dev->channels = ad2s1210_channels;
+ 	REG_SET(DWB_OGAM_CONTROL, 0, DWB_OGAM_MODE, 2);
+ 
+ 	current_mode = dwb3_get_ogam_current(dwbc30);
 -- 
 2.43.0
 
