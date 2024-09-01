@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E9F26AC1;
-	Sun,  1 Sep 2024 17:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2871126AC1;
+	Sun,  1 Sep 2024 17:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210440; cv=none; b=gJNqFs904s0/OBZkKhTPurIeEfChlpDrmRU7DXYRvuvMQ3zqL20uu2L6v4YLxheUjHytuqSIjHh7XrVsBroA21uEW4w/M7/JWDl1uQyOB5H1Ib6P3blW8FXFY+B5mRCgi5R3VdO0BbnlFof1KunucJWbqWucjkTuCNWa+VVAw+c=
+	t=1725210444; cv=none; b=tNZzSdje5ux5wclhM8aUrMloQA5bIjt1V6Sp8iakGu3QNRTrS8YQgsdYuR5rUkxDcG2gctrTjhkOF0YBCPbPlmwlwTuhnYu0ojVwL92nNTMYZ/Vg/6AxGRfqXVUWKQ+BXjQg3qlYPkP9ulJ/Iw5zknK+svLJGinRiqpABgsNEd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210440; c=relaxed/simple;
-	bh=fMJFBePvwqIh5NMO1rK13UQNi/kmjQDip0G725C/o1w=;
+	s=arc-20240116; t=1725210444; c=relaxed/simple;
+	bh=+3sKGl6Y/pQZSyVVbJWwSOuBWTpdlWNrF5WfQjyhFWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAEix+2YXs9xIzwFs32qjbzRBc5PVXDuJbn3usaXNc6VoCntJA4BaYsjBndNiCHm20wfLHU2scLadqT3Op2/vEnU+eqxLlLn0TXIrrizA5IdoAIg03cQuFti5+QJUDEq3YOaWmrsHoP2cNng9GIaulOEtjNNVWEUKp38a8hKQHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSmhPuH+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+tyeuzotHPZSS2JY9DlCv8MvVzuhXbOLVffCN/9Oq5d1f2xJMMaJJm/yDN5ojm20QJW5yc8xop9CEDJ65Dq/59uwQs6EO6niSqK2nEbaVCQeZDI7VRbmKYB+L6BFL6LZAR6Lrp9+biz/2YdSvblJV9yuF4uEsj9ZMr5fAH3eFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cM1nCRov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSmhPuH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDE6C4CEC3;
-	Sun,  1 Sep 2024 17:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cM1nCRov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D37EC4CEC3;
+	Sun,  1 Sep 2024 17:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210440;
-	bh=fMJFBePvwqIh5NMO1rK13UQNi/kmjQDip0G725C/o1w=;
+	s=korg; t=1725210444;
+	bh=+3sKGl6Y/pQZSyVVbJWwSOuBWTpdlWNrF5WfQjyhFWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JSmhPuH+2Q+Nw+YbaP+6CcipZEbu5sz7/DiABeys2AEDA/GwTCkDg0Bp9YQuak7Yu
-	 52rvrvumM3D+K1tXjwIQ/fKaVBtfMmUFABcU2RaWbVmzJ0XSzGPpDj7y0+PI3TYndQ
-	 ZucIWIMAopZ7CBlfxMkdJlGFl3jm9NidA37CdHWs=
+	b=cM1nCRovQKv3RZjU2dFLbefML6vs50Ybit5nBwEwiPaqRq++QuVG6/+MKxI4VVHhF
+	 EavDSHSIUMb3iGrstFHQSMOTcxs/goy47kGeSS/raqfUoypNeQpCPMC92UFjhSeTqI
+	 yHvaWyIbbMN5f1t9SFzgkyVX6S2duQNQKGmQSbZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/215] PM: core: Add EXPORT[_GPL]_SIMPLE_DEV_PM_OPS macros
-Date: Sun,  1 Sep 2024 18:18:22 +0200
-Message-ID: <20240901160830.539374448@linuxfoundation.org>
+Subject: [PATCH 5.15 191/215] PM: runtime: Add DEFINE_RUNTIME_DEV_PM_OPS() macro
+Date: Sun,  1 Sep 2024 18:18:23 +0200
+Message-ID: <20240901160830.578099360@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -55,22 +55,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit 0ae101fdd3297b7165755340e05386f1e1379709 ]
+[ Upstream commit 9d8619190031af0a314bee865262d8975473e4dd ]
 
-These macros are defined conditionally, according to CONFIG_PM:
-- if CONFIG_PM is enabled, these macros resolve to
-  DEFINE_SIMPLE_DEV_PM_OPS(), and the dev_pm_ops symbol will be
-  exported.
+A lot of drivers create a dev_pm_ops struct with the system sleep
+suspend/resume callbacks set to pm_runtime_force_suspend() and
+pm_runtime_force_resume().
 
-- if CONFIG_PM is disabled, these macros will result in a dummy static
-  dev_pm_ops to be created with the __maybe_unused flag. The dev_pm_ops
-  will then be discarded by the compiler, along with the provided
-  callback functions if they are not used anywhere else.
-
-In the second case, the symbol is not exported, which should be
-perfectly fine - users of the symbol should all use the pm_ptr() or
-pm_sleep_ptr() macro, so the dev_pm_ops marked as "extern" in the
-client's code will never be accessed.
+These drivers can now use the DEFINE_RUNTIME_DEV_PM_OPS() macro, which
+will use pm_runtime_force_{suspend,resume}() as the system sleep
+callbacks, while having the same dead code removal characteristic that
+is already provided by DEFINE_SIMPLE_DEV_PM_OPS().
 
 Signed-off-by: Paul Cercueil <paul@crapouillou.net>
 Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
@@ -79,67 +73,49 @@ Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 5af9b304bc60 ("phy: xilinx: phy-zynqmp: Fix SGMII linkup failure on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pm.h | 35 ++++++++++++++++++++++++++++++++---
- 1 file changed, 32 insertions(+), 3 deletions(-)
+ include/linux/pm.h         |  3 ++-
+ include/linux/pm_runtime.h | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/pm.h b/include/linux/pm.h
-index 452c1ed902b75..c3665382b9f8c 100644
+index c3665382b9f8c..b8578e1f7c110 100644
 --- a/include/linux/pm.h
 +++ b/include/linux/pm.h
-@@ -8,6 +8,7 @@
- #ifndef _LINUX_PM_H
- #define _LINUX_PM_H
- 
-+#include <linux/export.h>
- #include <linux/list.h>
- #include <linux/workqueue.h>
- #include <linux/spinlock.h>
-@@ -357,14 +358,42 @@ struct dev_pm_ops {
- #define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
- #endif
- 
-+#define _DEFINE_DEV_PM_OPS(name, \
-+			   suspend_fn, resume_fn, \
-+			   runtime_suspend_fn, runtime_resume_fn, idle_fn) \
-+const struct dev_pm_ops name = { \
-+	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-+	RUNTIME_PM_OPS(runtime_suspend_fn, runtime_resume_fn, idle_fn) \
-+}
-+
-+#ifdef CONFIG_PM
-+#define _EXPORT_DEV_PM_OPS(name, suspend_fn, resume_fn, runtime_suspend_fn, \
-+			   runtime_resume_fn, idle_fn, sec) \
-+	_DEFINE_DEV_PM_OPS(name, suspend_fn, resume_fn, runtime_suspend_fn, \
-+			   runtime_resume_fn, idle_fn); \
-+	_EXPORT_SYMBOL(name, sec)
-+#else
-+#define _EXPORT_DEV_PM_OPS(name, suspend_fn, resume_fn, runtime_suspend_fn, \
-+			   runtime_resume_fn, idle_fn, sec) \
-+static __maybe_unused _DEFINE_DEV_PM_OPS(__static_##name, suspend_fn, \
-+					 resume_fn, runtime_suspend_fn, \
-+					 runtime_resume_fn, idle_fn)
-+#endif
-+
- /*
-  * Use this if you want to use the same suspend and resume callbacks for suspend
-  * to RAM and hibernation.
-+ *
-+ * If the underlying dev_pm_ops struct symbol has to be exported, use
-+ * EXPORT_SIMPLE_DEV_PM_OPS() or EXPORT_GPL_SIMPLE_DEV_PM_OPS() instead.
+@@ -414,7 +414,8 @@ const struct dev_pm_ops __maybe_unused name = { \
+  * .resume_early(), to the same routines as .runtime_suspend() and
+  * .runtime_resume(), respectively (and analogously for hibernation).
+  *
+- * Deprecated. You most likely don't want this macro.
++ * Deprecated. You most likely don't want this macro. Use
++ * DEFINE_RUNTIME_DEV_PM_OPS() instead.
   */
- #define DEFINE_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
--const struct dev_pm_ops name = { \
--	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
--}
-+	_DEFINE_DEV_PM_OPS(name, suspend_fn, resume_fn, NULL, NULL, NULL)
-+
-+#define EXPORT_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
-+	_EXPORT_DEV_PM_OPS(name, suspend_fn, resume_fn, NULL, NULL, NULL, "")
-+#define EXPORT_GPL_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
-+	_EXPORT_DEV_PM_OPS(name, suspend_fn, resume_fn, NULL, NULL, NULL, "_gpl")
+ #define UNIVERSAL_DEV_PM_OPS(name, suspend_fn, resume_fn, idle_fn) \
+ const struct dev_pm_ops __maybe_unused name = { \
+diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+index 7efb105183134..9a10b6bac4a71 100644
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -22,6 +22,20 @@
+ 					    usage_count */
+ #define RPM_AUTO		0x08	/* Use autosuspend_delay */
  
- /* Deprecated. Use DEFINE_SIMPLE_DEV_PM_OPS() instead. */
- #define SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
++/*
++ * Use this for defining a set of PM operations to be used in all situations
++ * (system suspend, hibernation or runtime PM).
++ *
++ * Note that the behaviour differs from the deprecated UNIVERSAL_DEV_PM_OPS()
++ * macro, which uses the provided callbacks for both runtime PM and system
++ * sleep, while DEFINE_RUNTIME_DEV_PM_OPS() uses pm_runtime_force_suspend()
++ * and pm_runtime_force_resume() for its system sleep callbacks.
++ */
++#define DEFINE_RUNTIME_DEV_PM_OPS(name, suspend_fn, resume_fn, idle_fn) \
++	_DEFINE_DEV_PM_OPS(name, pm_runtime_force_suspend, \
++			   pm_runtime_force_resume, suspend_fn, \
++			   resume_fn, idle_fn)
++
+ #ifdef CONFIG_PM
+ extern struct workqueue_struct *pm_wq;
+ 
 -- 
 2.43.0
 
