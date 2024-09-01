@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773CF185B63;
-	Sun,  1 Sep 2024 16:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8B51865E3;
+	Sun,  1 Sep 2024 16:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209166; cv=none; b=IPuDP6OEdbMo8tBULJxjx1lKxrHbWOmyrlwAGVBH27EHj7Euw7vXgF2p8UtqsxbGliJAiBySAcZWnCY1KBak5C5Jrp9H5Zlyxh+WLm03Zy9aTcV5XQA6qfb94pNGvVu63UBUmcgmkCDmBS7xDtPu1x4uRAuobgTiBylLNHot6BY=
+	t=1725209170; cv=none; b=bh8tEQJPS0EL5r2jL04a6w3SZaphHWHETFfm29sgYMoaU3AO+7tfjPVdj9WOQmRE0URTcxGxcmnLo1TU2HTJ5uK2WD2hT58IKb76LZ2G5iy24LS3odUFGYuDCONej3TFW8tp1vhRtB1AB41GpDZDVnAa+ZeI/OOdop9UqscvCP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209166; c=relaxed/simple;
-	bh=d8HWN5C4iN2fD5ghv+TOkGrm9/3Y7KOXxKSNNNofjlk=;
+	s=arc-20240116; t=1725209170; c=relaxed/simple;
+	bh=X6rs3GjWu78mQU1Deoz5jS9fvg6L62FCdbZ6FbBSU1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZt28IjvrY93oMT4TsX6Lym8XTF12LrJ4pA2Q8N1jtFNqBQOPwXAehOhDbRyJqj/JWhmnEvuVB8N0XwB45GyvST0ABURcfu23mGr8aSHZ/rAqW272RmWllhSI5taLFuXlk6HbZHk5/BFVbH9xWf0dXxgHKRaBStPxgHMHytuYvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FD+WBz1W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZhSdr+Wxe0nJ/fQwPhFxwgMnB6FIzyPyZdv0gRCaSjVPV8W7bYftWSaRMGg5rnX+qg1pmtkbn0ETKZqewd0C3r4SqI+HsPQ7EdyTLKkvChKSvujn78aGbO2pEUybx6boDR0kvzs6wUGJzVcSyROd0ENVQz5yQFuFHGmVeNX6pr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByxqnOeD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FD+WBz1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD8BC4CEC3;
-	Sun,  1 Sep 2024 16:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByxqnOeD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D028FC4CEC3;
+	Sun,  1 Sep 2024 16:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209166;
-	bh=d8HWN5C4iN2fD5ghv+TOkGrm9/3Y7KOXxKSNNNofjlk=;
+	s=korg; t=1725209169;
+	bh=X6rs3GjWu78mQU1Deoz5jS9fvg6L62FCdbZ6FbBSU1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FD+WBz1WS2HD2n0mnBTfdFNPtUrj5sh/C/Q3Vhus6IZnoyw2C8lTY6yPN1LzphnF9
-	 kKRe3sTaEXOt/tFvOkdV7fX1GQRIvrDXf0+MTmcgr72C7MfXZdAP8jdHY6hxDQMMN6
-	 9x1qtggjAZBZnifCF0o7bOBNjsAog78XN0Sj48Tw=
+	b=ByxqnOeDkumQf1nXNsaVnWbszpp28ZdXmxJCNs0aXgm6TPemFTidCkYXVv/hAhYUb
+	 tVy2EMqBF1vvRiTrpE6To3P9vkA8wW8E/98ihVECEDywwv7e5ONt/I58QjNQfX10bU
+	 PlWalMvY4qLIkyKxInDbeDeHDv0D3dSpoTsuvFo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 6.1 07/71] of: Add cleanup.h based auto release via __free(device_node) markings
-Date: Sun,  1 Sep 2024 18:17:12 +0200
-Message-ID: <20240901160802.163921956@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.1 08/71] wifi: wfx: repair open network AP mode
+Date: Sun,  1 Sep 2024 18:17:13 +0200
+Message-ID: <20240901160802.201425933@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -44,72 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 9448e55d032d99af8e23487f51a542d51b2f1a48 upstream.
+commit 6d30bb88f623526197c0e18a366e68a4254a2c83 upstream.
 
-The recent addition of scope based cleanup support to the kernel
-provides a convenient tool to reduce the chances of leaking reference
-counts where of_node_put() should have been called in an error path.
+RSN IE missing in beacon is normal in open networks.
+Avoid returning -EINVAL in this case.
 
-This enables
-	struct device_node *child __free(device_node) = NULL;
+Steps to reproduce:
 
-	for_each_child_of_node(np, child) {
-		if (test)
-			return test;
-	}
+$ cat /etc/wpa_supplicant.conf
+network={
+	ssid="testNet"
+	mode=2
+	key_mgmt=NONE
+}
 
-with no need for a manual call of of_node_put().
-A following patch will reduce the scope of the child variable to the
-for loop, to avoid an issues with ordering of autocleanup, and make it
-obvious when this assigned a non NULL value.
+$ wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
+nl80211: Beacon set failed: -22 (Invalid argument)
+Failed to set beacon parameters
+Interface initialization failed
+wlan0: interface state UNINITIALIZED->DISABLED
+wlan0: AP-DISABLED
+wlan0: Unable to setup interface.
+Failed to initialize AP interface
 
-In this simple example the gains are small but there are some very
-complex error handling cases buried in these loops that will be
-greatly simplified by enabling early returns with out the need
-for this manual of_node_put() call.
+After the change:
 
-Note that there are coccinelle checks in
-scripts/coccinelle/iterators/for_each_child.cocci to detect a failure
-to call of_node_put(). This new approach does not cause false positives.
-Longer term we may want to add scripting to check this new approach is
-done correctly with no double of_node_put() calls being introduced due
-to the auto cleanup. It may also be useful to script finding places
-this new approach is useful.
+$ wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
+Successfully initialized wpa_supplicant
+wlan0: interface state UNINITIALIZED->ENABLED
+wlan0: AP-ENABLED
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20240225142714.286440-2-jic23@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: fe0a7776d4d1 ("wifi: wfx: fix possible NULL pointer dereference in wfx_set_mfp_ap()")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240823131521.3309073-1-alexander.sverdlin@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/of.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/silabs/wfx/sta.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -13,6 +13,7 @@
-  */
- #include <linux/types.h>
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/errno.h>
- #include <linux/kobject.h>
- #include <linux/mod_devicetable.h>
-@@ -128,6 +129,7 @@ static inline struct device_node *of_nod
- }
- static inline void of_node_put(struct device_node *node) { }
- #endif /* !CONFIG_OF_DYNAMIC */
-+DEFINE_FREE(device_node, struct device_node *, if (_T) of_node_put(_T))
+--- a/drivers/net/wireless/silabs/wfx/sta.c
++++ b/drivers/net/wireless/silabs/wfx/sta.c
+@@ -370,8 +370,11 @@ static int wfx_set_mfp_ap(struct wfx_vif
  
- /* Pointer for first entry in chain of all nodes. */
- extern struct device_node *of_root;
+ 	ptr = (u16 *)cfg80211_find_ie(WLAN_EID_RSN, skb->data + ieoffset,
+ 				      skb->len - ieoffset);
+-	if (unlikely(!ptr))
++	if (!ptr) {
++		/* No RSN IE is fine in open networks */
++		ret = 0;
+ 		goto free_skb;
++	}
+ 
+ 	ptr += pairwise_cipher_suite_count_offset;
+ 	if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
 
 
