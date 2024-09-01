@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783AF2C6AF;
-	Sun,  1 Sep 2024 17:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A8B2C6AF;
+	Sun,  1 Sep 2024 17:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210270; cv=none; b=g9d6oqij0JJFxXRNAehLKTJ6ZMpXbN6ZWWnQQmo+0xmCjIde+9fxYUekR3f8L92cw8Z7uhs8f74Sy7ca0PIBV4OQXszodh9d+PsWoKGbQAvJhhmeyo4euvbDsmQranea1ZuaYYI9hXl4XtGKNfkfXUXOrz2MoeSXQtC/aXPpGNQ=
+	t=1725210274; cv=none; b=oBjOtDU0yBqWdvVv9zn8R11GGhNw8ZMFCwOekZUBCbtX0mpI89pzuvtIdem2t33W26uKVccOPK8xuLSCp/zOj8nufldfAfQ0hK7Cjj1pPlxzKeh8CD5DhxytCvoCeXDhwW9VOpmo671yczGV8mrfsijEUKJTjdjen/cfOIYuqzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210270; c=relaxed/simple;
-	bh=Je5IDWIEWox5tmMmVJ+PzjjDVZK30t7OhQjuDxnFGvU=;
+	s=arc-20240116; t=1725210274; c=relaxed/simple;
+	bh=tfd57QXaSvl7Mp6m6jFVg6MG0Ax1JE1AlWtKgnNJa38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fx8BQsoYWX9OJCrRhWAwM9aDKwwEo13h28enRtV3Qi6qX+FvnDBvEFeaDMF74eqaJGlMrqWgy8BW4FNYtpitFJpy+/DhbYnz26GKKNOFDkl/DeUJr7zq/4DaETm8zrp32Fd9jHM5KMwYS3PwE/sXhz45/51mI1eCnsvP+9EIeG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+tH1/DH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2zBx1hcXFv7HpLdTAtKt69JMQ/m7vo3U6Bw4YKkhII8QrreVg6Ey+ZBC6LT5GVLWxXquzqMGTv+Cy+WQDcqLnFXuvBqBOgKdJy2hCKIJvPONKTPKnytM5nQfcnQ3/JYdRt17loh/3qG88azcoBx2bjeK2FPGxrcTNW+hxZxWQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwSwUBbV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+tH1/DH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A69C4CEC3;
-	Sun,  1 Sep 2024 17:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwSwUBbV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70051C4CEC3;
+	Sun,  1 Sep 2024 17:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210270;
-	bh=Je5IDWIEWox5tmMmVJ+PzjjDVZK30t7OhQjuDxnFGvU=;
+	s=korg; t=1725210273;
+	bh=tfd57QXaSvl7Mp6m6jFVg6MG0Ax1JE1AlWtKgnNJa38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+tH1/DHHMXDxeG9kWm13fcV4pxpp2QPOzLBDjJFkegRB2NjqKthdGUpZvEErWNN1
-	 KLDIH+bVyp+1OFjkDM5+Go6UzeUasitf9hDiLChD+0CnPJWUH+rOQg5vM1ouUywi1c
-	 ZVxfvnWBU4mHvkwF1EPEu5RFxH2G88FWKOEQ7OFM=
+	b=iwSwUBbVUKyKlznOyjBfW60gXKqQs13cyYPqtbZry3yEpre9FPippVlnp0fy2eibF
+	 jMm2t4OjE+twc5uZo6Z8MjH2/14V0qas7fNZsu7YI1wJ6/9Jjg9hcGfpNfYcb+JZTD
+	 jEAFhfgrm/5sp/KIxxP8x8l0mroJQ3PfINnCDVjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Harald Welte <laforge@gnumonks.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 108/215] gtp: pull network headers in gtp_dev_xmit()
-Date: Sun,  1 Sep 2024 18:17:00 +0200
-Message-ID: <20240901160827.427912428@linuxfoundation.org>
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	David Hunter <david.hunter.linux@gmail.com>
+Subject: [PATCH 5.15 109/215] block: use "unsigned long" for blk_validate_block_size().
+Date: Sun,  1 Sep 2024 18:17:01 +0200
+Message-ID: <20240901160827.465536081@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,93 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
 
-commit 3a3be7ff9224f424e485287b54be00d2c6bd9c40 upstream.
+commit 37ae5a0f5287a52cf51242e76ccf198d02ffe495 upstream.
 
-syzbot/KMSAN reported use of uninit-value in get_dev_xmit() [1]
+Since lo_simple_ioctl(LOOP_SET_BLOCK_SIZE) and ioctl(NBD_SET_BLKSIZE) pass
+user-controlled "unsigned long arg" to blk_validate_block_size(),
+"unsigned long" should be used for validation.
 
-We must make sure the IPv4 or Ipv6 header is pulled in skb->head
-before accessing fields in them.
-
-Use pskb_inet_may_pull() to fix this issue.
-
-[1]
-BUG: KMSAN: uninit-value in ipv6_pdp_find drivers/net/gtp.c:220 [inline]
- BUG: KMSAN: uninit-value in gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
- BUG: KMSAN: uninit-value in gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
-  ipv6_pdp_find drivers/net/gtp.c:220 [inline]
-  gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
-  gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
-  __netdev_start_xmit include/linux/netdevice.h:4913 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4922 [inline]
-  xmit_one net/core/dev.c:3580 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3596
-  __dev_queue_xmit+0x358c/0x5610 net/core/dev.c:4423
-  dev_queue_xmit include/linux/netdevice.h:3105 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3145 [inline]
-  packet_sendmsg+0x90e3/0xa3a0 net/packet/af_packet.c:3177
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2204
-  __do_sys_sendto net/socket.c:2216 [inline]
-  __se_sys_sendto net/socket.c:2212 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
-  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3994 [inline]
-  slab_alloc_node mm/slub.c:4037 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4080
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:583
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:674
-  alloc_skb include/linux/skbuff.h:1320 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6526
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2815
-  packet_alloc_skb net/packet/af_packet.c:2994 [inline]
-  packet_snd net/packet/af_packet.c:3088 [inline]
-  packet_sendmsg+0x749c/0xa3a0 net/packet/af_packet.c:3177
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2204
-  __do_sys_sendto net/socket.c:2216 [inline]
-  __se_sys_sendto net/socket.c:2212 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
-  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 0 UID: 0 PID: 7115 Comm: syz.1.515 Not tainted 6.11.0-rc1-syzkaller-00043-g94ede2a3e913 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-
-Fixes: 999cb275c807 ("gtp: add IPv6 support")
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Harald Welte <laforge@gnumonks.org>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/20240808132455.3413916-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/9ecbf057-4375-c2db-ab53-e4cc0dff953d@i-love.sakura.ne.jp
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: David Hunter <david.hunter.linux@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/blkdev.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -572,6 +572,9 @@ static netdev_tx_t gtp_dev_xmit(struct s
- 	if (skb_cow_head(skb, dev->needed_headroom))
- 		goto tx_err;
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -235,7 +235,7 @@ struct request {
+ 	void *end_io_data;
+ };
  
-+	if (!pskb_inet_may_pull(skb))
-+		goto tx_err;
-+
- 	skb_reset_inner_headers(skb);
- 
- 	/* PDP context lookups in gtp_build_skb_*() need rcu read-side lock. */
+-static inline int blk_validate_block_size(unsigned int bsize)
++static inline int blk_validate_block_size(unsigned long bsize)
+ {
+ 	if (bsize < 512 || bsize > PAGE_SIZE || !is_power_of_2(bsize))
+ 		return -EINVAL;
 
 
