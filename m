@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589FC26AC1;
-	Sun,  1 Sep 2024 17:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DF926AC1;
+	Sun,  1 Sep 2024 17:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210394; cv=none; b=XhLg/krro7ipZAbtDxpK0HW8eZdE6PrdSCZf+nKYdLXcm7wzCV+qJYEm0+zOnPmW2I1GmzcpUj3HG2ameFtw4WlyPoydefb/B2Tosyn5WFxGrp/uaWsF6j7/UxLwUZ7AuiNRHIaMFRCYIaSpO35VQgLvtNr30vQE2y2X2iUwXI0=
+	t=1725210397; cv=none; b=aThTkuDvnZFxZNJuInRPc3k59/7cbhvLCdMfgLTATiJ7KIF+RlC1UfB9WezcbhmiYvQ4frODtHtuYYAjrgSva7U3JxUyL4uwpBKJv1ez9ODQr8L1p4EYgABXvGiUW1NCIEKQ0+LQlkgfHctk7dyBjgZ3sRXCu9GwBkWKz4AKgKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210394; c=relaxed/simple;
-	bh=Pru2sAftvL0/6frWDXOXXqZMNQ5uefHb+WCYGyoXais=;
+	s=arc-20240116; t=1725210397; c=relaxed/simple;
+	bh=/c8Cd7v5mzTjwq108SUYXf+i+ncrhZOkOTpkpRiWGjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jifnGPgJkDP280YX1+GdxrHCwpcSJ1A/mfRkQmC6ghfm468gG4uDFZeCqDW43ynOS6Uq4A2HTAqbltJ6LUGXJDoM1bGzd1TIYdNWaWbjz/7t/MwnYCPXiiKicJKard3u20m2Kg2T82gsGGGHgXaq1mZ8496aDR7zZxfOKrqEUTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L9FjhK8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fbT4UDYZ5RXnF+khLT9wBgXO4pOBs8pjE6tALgW7KgLkzru1wNydwRWmwSxZHP/qrRXtTekIkyoLhZKHph1pJvZJqjYlgpV035+d9DTlPEP78JtSHpHOcXyAN/Ozl/CD4s/tZv4ptd8gTpx9TQBNr+XjM5goANaHWAQxfoiTtVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG8jZD2+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L9FjhK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACADCC4CEC3;
-	Sun,  1 Sep 2024 17:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG8jZD2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166A3C4CEC3;
+	Sun,  1 Sep 2024 17:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210394;
-	bh=Pru2sAftvL0/6frWDXOXXqZMNQ5uefHb+WCYGyoXais=;
+	s=korg; t=1725210397;
+	bh=/c8Cd7v5mzTjwq108SUYXf+i+ncrhZOkOTpkpRiWGjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0L9FjhK8sr1J/i8AWRN32B9vphqi5sXsYJiLhuLIZBMu3vkOMoZMEyjQO5D6tj3js
-	 md1pL6Fu7mtTkgdYjzlSsx8Kqh60/1qiwx8xThapCUApswFiBAE19e7PreEViV2zu2
-	 40S1kxwhbdb6CuY3dJsDmVpsTUgNTqHSmolBBlwM=
+	b=BG8jZD2+QRyo/U3PpxPGT85XtxYMpZiekSOtiy4GgCEdfCZXa8tdHd454rAh9IfpQ
+	 SoXfy/6PW3U1GAIl+98CLpmO4t5mSUjHWFT69ykdW1Y8FRnjsoZwgkCNZ3+KRo8AzD
+	 U6rU+5eiFedU8+/qZGssgeX1dJD5aKW2wc0FMaeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b72d86aa5df17ce74c60@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/215] kcm: Serialise kcm_sendmsg() for the same socket.
-Date: Sun,  1 Sep 2024 18:17:27 +0200
-Message-ID: <20240901160828.469367352@linuxfoundation.org>
+	"Huang, Ying" <ying.huang@intel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 170/215] mm/numa: no task_numa_fault() call if PMD is changed
+Date: Sun,  1 Sep 2024 18:18:02 +0200
+Message-ID: <20240901160829.788225429@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,223 +56,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit 807067bf014d4a3ae2cc55bd3de16f22a01eb580 ]
+commit fd8c35a92910f4829b7c99841f39b1b952c259d5 upstream.
 
-syzkaller reported UAF in kcm_release(). [0]
+When handling a numa page fault, task_numa_fault() should be called by a
+process that restores the page table of the faulted folio to avoid
+duplicated stats counting.  Commit c5b5a3dd2c1f ("mm: thp: refactor NUMA
+fault handling") restructured do_huge_pmd_numa_page() and did not avoid
+task_numa_fault() call in the second page table check after a numa
+migration failure.  Fix it by making all !pmd_same() return immediately.
 
-The scenario is
+This issue can cause task_numa_fault() being called more than necessary
+and lead to unexpected numa balancing results (It is hard to tell whether
+the issue will cause positive or negative performance impact due to
+duplicated numa fault counting).
 
-  1. Thread A builds a skb with MSG_MORE and sets kcm->seq_skb.
-
-  2. Thread A resumes building skb from kcm->seq_skb but is blocked
-     by sk_stream_wait_memory()
-
-  3. Thread B calls sendmsg() concurrently, finishes building kcm->seq_skb
-     and puts the skb to the write queue
-
-  4. Thread A faces an error and finally frees skb that is already in the
-     write queue
-
-  5. kcm_release() does double-free the skb in the write queue
-
-When a thread is building a MSG_MORE skb, another thread must not touch it.
-
-Let's add a per-sk mutex and serialise kcm_sendmsg().
-
-[0]:
-BUG: KASAN: slab-use-after-free in __skb_unlink include/linux/skbuff.h:2366 [inline]
-BUG: KASAN: slab-use-after-free in __skb_dequeue include/linux/skbuff.h:2385 [inline]
-BUG: KASAN: slab-use-after-free in __skb_queue_purge_reason include/linux/skbuff.h:3175 [inline]
-BUG: KASAN: slab-use-after-free in __skb_queue_purge include/linux/skbuff.h:3181 [inline]
-BUG: KASAN: slab-use-after-free in kcm_release+0x170/0x4c8 net/kcm/kcmsock.c:1691
-Read of size 8 at addr ffff0000ced0fc80 by task syz-executor329/6167
-
-CPU: 1 PID: 6167 Comm: syz-executor329 Tainted: G    B              6.8.0-rc5-syzkaller-g9abbc24128bc #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-Call trace:
- dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:291
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:298
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x178/0x518 mm/kasan/report.c:488
- kasan_report+0xd8/0x138 mm/kasan/report.c:601
- __asan_report_load8_noabort+0x20/0x2c mm/kasan/report_generic.c:381
- __skb_unlink include/linux/skbuff.h:2366 [inline]
- __skb_dequeue include/linux/skbuff.h:2385 [inline]
- __skb_queue_purge_reason include/linux/skbuff.h:3175 [inline]
- __skb_queue_purge include/linux/skbuff.h:3181 [inline]
- kcm_release+0x170/0x4c8 net/kcm/kcmsock.c:1691
- __sock_release net/socket.c:659 [inline]
- sock_close+0xa4/0x1e8 net/socket.c:1421
- __fput+0x30c/0x738 fs/file_table.c:376
- ____fput+0x20/0x30 fs/file_table.c:404
- task_work_run+0x230/0x2e0 kernel/task_work.c:180
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0x618/0x1f64 kernel/exit.c:871
- do_group_exit+0x194/0x22c kernel/exit.c:1020
- get_signal+0x1500/0x15ec kernel/signal.c:2893
- do_signal+0x23c/0x3b44 arch/arm64/kernel/signal.c:1249
- do_notify_resume+0x74/0x1f4 arch/arm64/kernel/entry-common.c:148
- exit_to_user_mode_prepare arch/arm64/kernel/entry-common.c:169 [inline]
- exit_to_user_mode arch/arm64/kernel/entry-common.c:178 [inline]
- el0_svc+0xac/0x168 arch/arm64/kernel/entry-common.c:713
- el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
-
-Allocated by task 6166:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_alloc_info+0x70/0x84 mm/kasan/generic.c:626
- unpoison_slab_object mm/kasan/common.c:314 [inline]
- __kasan_slab_alloc+0x74/0x8c mm/kasan/common.c:340
- kasan_slab_alloc include/linux/kasan.h:201 [inline]
- slab_post_alloc_hook mm/slub.c:3813 [inline]
- slab_alloc_node mm/slub.c:3860 [inline]
- kmem_cache_alloc_node+0x204/0x4c0 mm/slub.c:3903
- __alloc_skb+0x19c/0x3d8 net/core/skbuff.c:641
- alloc_skb include/linux/skbuff.h:1296 [inline]
- kcm_sendmsg+0x1d3c/0x2124 net/kcm/kcmsock.c:783
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- sock_sendmsg+0x220/0x2c0 net/socket.c:768
- splice_to_socket+0x7cc/0xd58 fs/splice.c:889
- do_splice_from fs/splice.c:941 [inline]
- direct_splice_actor+0xec/0x1d8 fs/splice.c:1164
- splice_direct_to_actor+0x438/0xa0c fs/splice.c:1108
- do_splice_direct_actor fs/splice.c:1207 [inline]
- do_splice_direct+0x1e4/0x304 fs/splice.c:1233
- do_sendfile+0x460/0xb3c fs/read_write.c:1295
- __do_sys_sendfile64 fs/read_write.c:1362 [inline]
- __se_sys_sendfile64 fs/read_write.c:1348 [inline]
- __arm64_sys_sendfile64+0x160/0x3b4 fs/read_write.c:1348
- __invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
- el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
-
-Freed by task 6167:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_free_info+0x5c/0x74 mm/kasan/generic.c:640
- poison_slab_object+0x124/0x18c mm/kasan/common.c:241
- __kasan_slab_free+0x3c/0x78 mm/kasan/common.c:257
- kasan_slab_free include/linux/kasan.h:184 [inline]
- slab_free_hook mm/slub.c:2121 [inline]
- slab_free mm/slub.c:4299 [inline]
- kmem_cache_free+0x15c/0x3d4 mm/slub.c:4363
- kfree_skbmem+0x10c/0x19c
- __kfree_skb net/core/skbuff.c:1109 [inline]
- kfree_skb_reason+0x240/0x6f4 net/core/skbuff.c:1144
- kfree_skb include/linux/skbuff.h:1244 [inline]
- kcm_release+0x104/0x4c8 net/kcm/kcmsock.c:1685
- __sock_release net/socket.c:659 [inline]
- sock_close+0xa4/0x1e8 net/socket.c:1421
- __fput+0x30c/0x738 fs/file_table.c:376
- ____fput+0x20/0x30 fs/file_table.c:404
- task_work_run+0x230/0x2e0 kernel/task_work.c:180
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0x618/0x1f64 kernel/exit.c:871
- do_group_exit+0x194/0x22c kernel/exit.c:1020
- get_signal+0x1500/0x15ec kernel/signal.c:2893
- do_signal+0x23c/0x3b44 arch/arm64/kernel/signal.c:1249
- do_notify_resume+0x74/0x1f4 arch/arm64/kernel/entry-common.c:148
- exit_to_user_mode_prepare arch/arm64/kernel/entry-common.c:169 [inline]
- exit_to_user_mode arch/arm64/kernel/entry-common.c:178 [inline]
- el0_svc+0xac/0x168 arch/arm64/kernel/entry-common.c:713
- el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
-
-The buggy address belongs to the object at ffff0000ced0fc80
- which belongs to the cache skbuff_head_cache of size 240
-The buggy address is located 0 bytes inside of
- freed 240-byte region [ffff0000ced0fc80, ffff0000ced0fd70)
-
-The buggy address belongs to the physical page:
-page:00000000d35f4ae4 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10ed0f
-flags: 0x5ffc00000000800(slab|node=0|zone=2|lastcpupid=0x7ff)
-page_type: 0xffffffff()
-raw: 05ffc00000000800 ffff0000c1cbf640 fffffdffc3423100 dead000000000004
-raw: 0000000000000000 00000000000c000c 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff0000ced0fb80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff0000ced0fc00: fb fb fb fb fb fb fc fc fc fc fc fc fc fc fc fc
->ffff0000ced0fc80: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                   ^
- ffff0000ced0fd00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc
- ffff0000ced0fd80: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot+b72d86aa5df17ce74c60@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b72d86aa5df17ce74c60
-Tested-by: syzbot+b72d86aa5df17ce74c60@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240815220437.69511-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20240809145906.1513458-3-ziy@nvidia.com
+Fixes: c5b5a3dd2c1f ("mm: thp: refactor NUMA fault handling")
+Reported-by: "Huang, Ying" <ying.huang@intel.com>
+Closes: https://lore.kernel.org/linux-mm/87zfqfw0yw.fsf@yhuang6-desk2.ccr.corp.intel.com/
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/kcm.h | 1 +
- net/kcm/kcmsock.c | 4 ++++
- 2 files changed, 5 insertions(+)
+ mm/huge_memory.c |   30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/kcm.h b/include/net/kcm.h
-index 2d704f8f49059..8e8252e08a9ce 100644
---- a/include/net/kcm.h
-+++ b/include/net/kcm.h
-@@ -70,6 +70,7 @@ struct kcm_sock {
- 	struct work_struct tx_work;
- 	struct list_head wait_psock_list;
- 	struct sk_buff *seq_skb;
-+	struct mutex tx_mutex;
- 	u32 tx_stopped : 1;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1437,7 +1437,7 @@ vm_fault_t do_huge_pmd_numa_page(struct
+ 	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
+ 	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
+ 		spin_unlock(vmf->ptl);
+-		goto out;
++		return 0;
+ 	}
  
- 	/* Don't use bit fields here, these are set under different locks */
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 5457ca1909801..a3b281f7a99bc 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -911,6 +911,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 		  !(msg->msg_flags & MSG_MORE) : !!(msg->msg_flags & MSG_EOR);
- 	int err = -EPIPE;
+ 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
+@@ -1465,23 +1465,16 @@ vm_fault_t do_huge_pmd_numa_page(struct
+ 	if (migrated) {
+ 		flags |= TNF_MIGRATED;
+ 		page_nid = target_nid;
+-	} else {
+-		flags |= TNF_MIGRATE_FAIL;
+-		vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
+-		if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
+-			spin_unlock(vmf->ptl);
+-			goto out;
+-		}
+-		goto out_map;
++		task_numa_fault(last_cpupid, page_nid, HPAGE_PMD_NR, flags);
++		return 0;
+ 	}
  
-+	mutex_lock(&kcm->tx_mutex);
- 	lock_sock(sk);
- 
- 	/* Per tcp_sendmsg this should be in poll */
-@@ -1059,6 +1060,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	KCM_STATS_ADD(kcm->stats.tx_bytes, copied);
- 
- 	release_sock(sk);
-+	mutex_unlock(&kcm->tx_mutex);
- 	return copied;
- 
- out_error:
-@@ -1084,6 +1086,7 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 		sk->sk_write_space(sk);
- 
- 	release_sock(sk);
-+	mutex_unlock(&kcm->tx_mutex);
- 	return err;
+-out:
+-	if (page_nid != NUMA_NO_NODE)
+-		task_numa_fault(last_cpupid, page_nid, HPAGE_PMD_NR,
+-				flags);
+-
+-	return 0;
+-
++	flags |= TNF_MIGRATE_FAIL;
++	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
++	if (unlikely(!pmd_same(oldpmd, *vmf->pmd))) {
++		spin_unlock(vmf->ptl);
++		return 0;
++	}
+ out_map:
+ 	/* Restore the PMD */
+ 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
+@@ -1491,7 +1484,10 @@ out_map:
+ 	set_pmd_at(vma->vm_mm, haddr, vmf->pmd, pmd);
+ 	update_mmu_cache_pmd(vma, vmf->address, vmf->pmd);
+ 	spin_unlock(vmf->ptl);
+-	goto out;
++
++	if (page_nid != NUMA_NO_NODE)
++		task_numa_fault(last_cpupid, page_nid, HPAGE_PMD_NR, flags);
++	return 0;
  }
  
-@@ -1326,6 +1329,7 @@ static void init_kcm_sock(struct kcm_sock *kcm, struct kcm_mux *mux)
- 	spin_unlock_bh(&mux->lock);
- 
- 	INIT_WORK(&kcm->tx_work, kcm_tx_work);
-+	mutex_init(&kcm->tx_mutex);
- 
- 	spin_lock_bh(&mux->rx_lock);
- 	kcm_rcv_ready(kcm);
--- 
-2.43.0
-
+ /*
 
 
