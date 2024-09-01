@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76CD17C;
-	Sun,  1 Sep 2024 17:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE2D17C;
+	Sun,  1 Sep 2024 17:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210246; cv=none; b=Ez57c4bi2Mu5/YVSKq1h4UieEkKNifecu58O82sKzC5+wHXPIjcH+/qujD6kVnTG2IdeJUB7rAW7p5gT9wVT79T14gPPm2yI8sSJ2Rbg7ceG0VmEB65zOz3E52bAJfCkC3tZ4oQsVpwO+hwSWvd6o661kXwnBIsuhRQ7g6BtpQY=
+	t=1725210250; cv=none; b=rQd6pSeVrKbXvKRmAj7ZswYopFlWgNQG/HvDD92ZLDKVCp7bLKHFHMz11Uxi4tUK9VqxWvEQjNYWqdGHJ+mhNVVaY7mtA/FxodCcn93ppLACpv75Gjmx3ntfv0wG3V7x9y4Iq8kZcDrFvNtVtuRv1mGAl37Ej5L0q4TCIPGFSIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210246; c=relaxed/simple;
-	bh=WGPLbK+blPvBnlo9yHnGgaoZ41f76vwRIdfhKui38Ms=;
+	s=arc-20240116; t=1725210250; c=relaxed/simple;
+	bh=Ea6m6k6eCdFzagZbggN1hTgpOvlksbWbsigdhZ/Va6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jkx3gRAig0bZInSuI/LQcwvYWIAtXxccSloXw9suN1DI4jBjH7zWls358ftcV+OceE5gGAif+T784zimO/Oi8fnemswHsXGfuKcK+ym9ygS+02clPdrQb9UexEqgo8g46YfEUVWhyWjQrH6CuOcoS9u0mXnZ7rtsVPCTvf7ih6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pS8XQ0IE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uA7VhHIhS31ERroj2K3tRCbh9xRa9iRMIewFV6r4bAKlGRYxKOwnYuLPoR1ebw3qcZH2em38scftGvSGZAIIuq3IEt+VHHpJZg4Jp6vsSVn7z8vKKSO1aKRST5CsrEWqRNSD77+IZDim6GJClw30mdfQxv0VuAoF8t32yXSys4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15Sl3G0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pS8XQ0IE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B31C4CEC3;
-	Sun,  1 Sep 2024 17:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15Sl3G0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80466C4CEC3;
+	Sun,  1 Sep 2024 17:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210246;
-	bh=WGPLbK+blPvBnlo9yHnGgaoZ41f76vwRIdfhKui38Ms=;
+	s=korg; t=1725210250;
+	bh=Ea6m6k6eCdFzagZbggN1hTgpOvlksbWbsigdhZ/Va6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pS8XQ0IEcD6YINgFAJl7YQiagug2yV0OrlrXcSU2ejVglykOtZfOxZmhNT+hIm3Ep
-	 PQYZympLLEp/7pZqhMwk+vBfumdD1vyU571alQAdeDYBuzVzBk6k4mxrgtzPPdQSOp
-	 SCcqep2iJ70WAuHRryPrBH99M9OQhGE3YGtmwMQI=
+	b=15Sl3G0Ym4ChZanQYxmWMPZn8my9cKlkP630IfBvufrRLFtnAgjqlvnaW3VAZuNuM
+	 trGWD1gxWrNn3CPbsALVgMQ34DoggG9+8mSBqO/xJnnaT2PSYLv/BUhzZLsopgIj0k
+	 PpdjdnUZX3w9Pn2YHbxuwo1gZR0d9whdGrBqGJiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/215] platform/surface: aggregator: Fix warning when controller is destroyed in probe
-Date: Sun,  1 Sep 2024 18:17:23 +0200
-Message-ID: <20240901160828.318198280@linuxfoundation.org>
+Subject: [PATCH 5.15 132/215] Bluetooth: hci_core: Fix LE quote calculation
+Date: Sun,  1 Sep 2024 18:17:24 +0200
+Message-ID: <20240901160828.355501265@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -45,66 +44,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit bc923d594db21bee0ead128eb4bb78f7e77467a4 ]
+[ Upstream commit 932021a11805b9da4bd6abf66fe233cccd59fe0e ]
 
-There is a small window in ssam_serial_hub_probe() where the controller
-is initialized but has not been started yet. Specifically, between
-ssam_controller_init() and ssam_controller_start(). Any failure in this
-window, for example caused by a failure of serdev_device_open(),
-currently results in an incorrect warning being emitted.
+Function hci_sched_le needs to update the respective counter variable
+inplace other the likes of hci_quote_sent would attempt to use the
+possible outdated value of conn->{le_cnt,acl_cnt}.
 
-In particular, any failure in this window results in the controller
-being destroyed via ssam_controller_destroy(). This function checks the
-state of the controller and, in an attempt to validate that the
-controller has been cleanly shut down before we try and deallocate any
-resources, emits a warning if that state is not SSAM_CONTROLLER_STOPPED.
-
-However, since we have only just initialized the controller and have not
-yet started it, its state is SSAM_CONTROLLER_INITIALIZED. Note that this
-is the only point at which the controller has this state, as it will
-change after we start the controller with ssam_controller_start() and
-never revert back. Further, at this point no communication has taken
-place and the sender and receiver threads have not been started yet (and
-we may not even have an open serdev device either).
-
-Therefore, it is perfectly safe to call ssam_controller_destroy() with a
-state of SSAM_CONTROLLER_INITIALIZED. This, however, means that the
-warning currently being emitted is incorrect. Fix it by extending the
-check.
-
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20240811124645.246016-1-luzmaximilian@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://github.com/bluez/bluez/issues/915
+Fixes: 73d80deb7bdf ("Bluetooth: prioritizing data over HCI")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/aggregator/controller.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/platform/surface/aggregator/controller.c b/drivers/platform/surface/aggregator/controller.c
-index 5542b768890c9..cc78687d6874c 100644
---- a/drivers/platform/surface/aggregator/controller.c
-+++ b/drivers/platform/surface/aggregator/controller.c
-@@ -1354,7 +1354,8 @@ void ssam_controller_destroy(struct ssam_controller *ctrl)
- 	if (ctrl->state == SSAM_CONTROLLER_UNINITIALIZED)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index fc4e02b3f26ad..7dff3f1a2a9eb 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4876,19 +4876,19 @@ static void hci_sched_le(struct hci_dev *hdev)
+ {
+ 	struct hci_chan *chan;
+ 	struct sk_buff *skb;
+-	int quote, cnt, tmp;
++	int quote, *cnt, tmp;
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
+ 	if (!hci_conn_num(hdev, LE_LINK))
  		return;
  
--	WARN_ON(ctrl->state != SSAM_CONTROLLER_STOPPED);
-+	WARN_ON(ctrl->state != SSAM_CONTROLLER_STOPPED &&
-+		ctrl->state != SSAM_CONTROLLER_INITIALIZED);
+-	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
++	cnt = hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
  
- 	/*
- 	 * Note: New events could still have been received after the previous
+-	__check_timeout(hdev, cnt, LE_LINK);
++	__check_timeout(hdev, *cnt, LE_LINK);
+ 
+-	tmp = cnt;
+-	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
++	tmp = *cnt;
++	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+ 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
+ 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
+@@ -4903,7 +4903,7 @@ static void hci_sched_le(struct hci_dev *hdev)
+ 			hci_send_frame(hdev, skb);
+ 			hdev->le_last_tx = jiffies;
+ 
+-			cnt--;
++			(*cnt)--;
+ 			chan->sent++;
+ 			chan->conn->sent++;
+ 
+@@ -4913,12 +4913,7 @@ static void hci_sched_le(struct hci_dev *hdev)
+ 		}
+ 	}
+ 
+-	if (hdev->le_pkts)
+-		hdev->le_cnt = cnt;
+-	else
+-		hdev->acl_cnt = cnt;
+-
+-	if (cnt != tmp)
++	if (*cnt != tmp)
+ 		hci_prio_recalculate(hdev, LE_LINK);
+ }
+ 
 -- 
 2.43.0
 
