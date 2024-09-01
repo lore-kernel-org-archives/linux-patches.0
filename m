@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2AE18593A;
-	Sun,  1 Sep 2024 16:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4C8183CA3;
+	Sun,  1 Sep 2024 16:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209064; cv=none; b=pPt3PrbqRr//KkVMPKpQsoaufrO2K9MSF5Gh/vjFNzJDPXBXyUNmNb8p0jRF6WNVJfq/C1NOnVM9u78vBW1gQWTuFNUWfx+Fd37ptB9emI29UgOw4P/J4EdaPdBi6j3DF2g7zMOIZ6hoqKLIU52MdHQh/t2b6Tk1sDmQUdv+alc=
+	t=1725209068; cv=none; b=EriCF7pi45w2hbvpp561EakeJJWA94vgmOGA2jcVnWgnF+gFFJT3m+G9wyMBuJREMi6P8Ld/woaie2AS6Se0Qs0dccYu6ycgEvL4YpS+Z/QvUdgeVG2uUkoZawLbZK04tO1bbCqEQ0SeR+ZamZ797PCiZGHNtC0iJo+9tqLGAis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209064; c=relaxed/simple;
-	bh=tNzovmimcYdjAjVyUQnlHcCKn6C3nFaSUSjkng34XJk=;
+	s=arc-20240116; t=1725209068; c=relaxed/simple;
+	bh=6I6m8K9+FNPSpe8Ul3is69cOL4j41oKA3cGrpadfC8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcBdW27SHj+brPaikeQN9OygF3mLlrdT5iVmjdVJD13QMAjs2Ijj+Iw8vAQTr0e3s9K3qFHXbm1paP5KML16myyrADTdHc64jOtTG/M/HO+GBzUMaOMZbpf9l1d68BjJXQFiEu9QOgnn/HkbQ2Fkj7PjcUslXMcD3ku1N6mBSxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k81WcC2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lki9JA2cZvWIZv4n0eh8NhUkHqoZZE8LKBPpMLTq1j5UT6xJlYO3I0vrrXKeoQUTOTIa6vNihKpY3gXiwx6M9B7fLQ2X26CYsfG7UrpazJikSMNHq58kVSBfOUtPwKJIIAHtUYRgIbZFxbVfufjYmB041gZgL5eFsetsqbf06eM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRb9Xyx+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k81WcC2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5216AC4CECA;
-	Sun,  1 Sep 2024 16:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRb9Xyx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20ABC4CECA;
+	Sun,  1 Sep 2024 16:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209064;
-	bh=tNzovmimcYdjAjVyUQnlHcCKn6C3nFaSUSjkng34XJk=;
+	s=korg; t=1725209068;
+	bh=6I6m8K9+FNPSpe8Ul3is69cOL4j41oKA3cGrpadfC8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k81WcC2/lb+KkEtm6FffJmRsI+1PdpORXrSJz/Wq65BPPL0EdBFH3LiIoFzqr+EJ9
-	 mkToYKnltBwiy+CtvkHgivIBETD4MQ7s/ft+YpkT/y/u+iCewRyl7bnqfj9WfZlnt5
-	 jkiAAEmG1pgjbFeNeqMIkudA+8NwCpa0+a7jW7dM=
+	b=jRb9Xyx+IKGeE7Cr1lMKNkyj3NTnL1j/3Os20y9u07xF8UVzdKN4937BC0jUeBzmi
+	 ynqnkr+/mI68OW+WfRGFFWTolu0rT/iz1AsQBbtdSvoQ0G3clSgS1fXz49z//N0Ec9
+	 LHJ/J+j33bCZt4COIR9WF6M6fB55i39KDvFcGh7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 091/134] netem: fix return value if duplicate enqueue fails
-Date: Sun,  1 Sep 2024 18:17:17 +0200
-Message-ID: <20240901160813.522208256@linuxfoundation.org>
+Subject: [PATCH 5.4 092/134] ipv6: prevent UAF in ip6_send_skb()
+Date: Sun,  1 Sep 2024 18:17:18 +0200
+Message-ID: <20240901160813.559546726@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -53,136 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c07ff8592d57ed258afee5a5e04991a48dbaf382 ]
+[ Upstream commit faa389b2fbaaec7fd27a390b4896139f9da662e3 ]
 
-There is a bug in netem_enqueue() introduced by
-commit 5845f706388a ("net: netem: fix skb length BUG_ON in __skb_to_sgvec")
-that can lead to a use-after-free.
+syzbot reported an UAF in ip6_send_skb() [1]
 
-This commit made netem_enqueue() always return NET_XMIT_SUCCESS
-when a packet is duplicated, which can cause the parent qdisc's q.qlen
-to be mistakenly incremented. When this happens qlen_notify() may be
-skipped on the parent during destruction, leaving a dangling pointer
-for some classful qdiscs like DRR.
+After ip6_local_out() has returned, we no longer can safely
+dereference rt, unless we hold rcu_read_lock().
 
-There are two ways for the bug happen:
+A similar issue has been fixed in commit
+a688caa34beb ("ipv6: take rcu lock in rawv6_send_hdrinc()")
 
-- If the duplicated packet is dropped by rootq->enqueue() and then
-  the original packet is also dropped.
-- If rootq->enqueue() sends the duplicated packet to a different qdisc
-  and the original packet is dropped.
+Another potential issue in ip6_finish_output2() is handled in a
+separate patch.
 
-In both cases NET_XMIT_SUCCESS is returned even though no packets
-are enqueued at the netem qdisc.
+[1]
+ BUG: KASAN: slab-use-after-free in ip6_send_skb+0x18d/0x230 net/ipv6/ip6_output.c:1964
+Read of size 8 at addr ffff88806dde4858 by task syz.1.380/6530
 
-The fix is to defer the enqueue of the duplicate packet until after
-the original packet has been guaranteed to return NET_XMIT_SUCCESS.
+CPU: 1 UID: 0 PID: 6530 Comm: syz.1.380 Not tainted 6.11.0-rc3-syzkaller-00306-gdf6cbc62cc9b #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:93 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  ip6_send_skb+0x18d/0x230 net/ipv6/ip6_output.c:1964
+  rawv6_push_pending_frames+0x75c/0x9e0 net/ipv6/raw.c:588
+  rawv6_sendmsg+0x19c7/0x23c0 net/ipv6/raw.c:926
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x1a6/0x270 net/socket.c:745
+  sock_write_iter+0x2dd/0x400 net/socket.c:1160
+ do_iter_readv_writev+0x60a/0x890
+  vfs_writev+0x37c/0xbb0 fs/read_write.c:971
+  do_writev+0x1b1/0x350 fs/read_write.c:1018
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f936bf79e79
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f936cd7f038 EFLAGS: 00000246 ORIG_RAX: 0000000000000014
+RAX: ffffffffffffffda RBX: 00007f936c115f80 RCX: 00007f936bf79e79
+RDX: 0000000000000001 RSI: 0000000020000040 RDI: 0000000000000004
+RBP: 00007f936bfe7916 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f936c115f80 R15: 00007fff2860a7a8
+ </TASK>
 
-Fixes: 5845f706388a ("net: netem: fix skb length BUG_ON in __skb_to_sgvec")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240819175753.5151-1-stephen@networkplumber.org
+Allocated by task 6530:
+  kasan_save_stack mm/kasan/common.c:47 [inline]
+  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+  unpoison_slab_object mm/kasan/common.c:312 [inline]
+  __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:338
+  kasan_slab_alloc include/linux/kasan.h:201 [inline]
+  slab_post_alloc_hook mm/slub.c:3988 [inline]
+  slab_alloc_node mm/slub.c:4037 [inline]
+  kmem_cache_alloc_noprof+0x135/0x2a0 mm/slub.c:4044
+  dst_alloc+0x12b/0x190 net/core/dst.c:89
+  ip6_blackhole_route+0x59/0x340 net/ipv6/route.c:2670
+  make_blackhole net/xfrm/xfrm_policy.c:3120 [inline]
+  xfrm_lookup_route+0xd1/0x1c0 net/xfrm/xfrm_policy.c:3313
+  ip6_dst_lookup_flow+0x13e/0x180 net/ipv6/ip6_output.c:1257
+  rawv6_sendmsg+0x1283/0x23c0 net/ipv6/raw.c:898
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x1a6/0x270 net/socket.c:745
+  ____sys_sendmsg+0x525/0x7d0 net/socket.c:2597
+  ___sys_sendmsg net/socket.c:2651 [inline]
+  __sys_sendmsg+0x2b0/0x3a0 net/socket.c:2680
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 45:
+  kasan_save_stack mm/kasan/common.c:47 [inline]
+  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+  kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
+  poison_slab_object+0xe0/0x150 mm/kasan/common.c:240
+  __kasan_slab_free+0x37/0x60 mm/kasan/common.c:256
+  kasan_slab_free include/linux/kasan.h:184 [inline]
+  slab_free_hook mm/slub.c:2252 [inline]
+  slab_free mm/slub.c:4473 [inline]
+  kmem_cache_free+0x145/0x350 mm/slub.c:4548
+  dst_destroy+0x2ac/0x460 net/core/dst.c:124
+  rcu_do_batch kernel/rcu/tree.c:2569 [inline]
+  rcu_core+0xafd/0x1830 kernel/rcu/tree.c:2843
+  handle_softirqs+0x2c4/0x970 kernel/softirq.c:554
+  __do_softirq kernel/softirq.c:588 [inline]
+  invoke_softirq kernel/softirq.c:428 [inline]
+  __irq_exit_rcu+0xf4/0x1c0 kernel/softirq.c:637
+  irq_exit_rcu+0x9/0x30 kernel/softirq.c:649
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
+  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
+  asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+
+Last potentially related work creation:
+  kasan_save_stack+0x3f/0x60 mm/kasan/common.c:47
+  __kasan_record_aux_stack+0xac/0xc0 mm/kasan/generic.c:541
+  __call_rcu_common kernel/rcu/tree.c:3106 [inline]
+  call_rcu+0x167/0xa70 kernel/rcu/tree.c:3210
+  refdst_drop include/net/dst.h:263 [inline]
+  skb_dst_drop include/net/dst.h:275 [inline]
+  nf_ct_frag6_queue net/ipv6/netfilter/nf_conntrack_reasm.c:306 [inline]
+  nf_ct_frag6_gather+0xb9a/0x2080 net/ipv6/netfilter/nf_conntrack_reasm.c:485
+  ipv6_defrag+0x2c8/0x3c0 net/ipv6/netfilter/nf_defrag_ipv6_hooks.c:67
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
+  nf_hook include/linux/netfilter.h:269 [inline]
+  __ip6_local_out+0x6fa/0x800 net/ipv6/output_core.c:143
+  ip6_local_out+0x26/0x70 net/ipv6/output_core.c:153
+  ip6_send_skb+0x112/0x230 net/ipv6/ip6_output.c:1959
+  rawv6_push_pending_frames+0x75c/0x9e0 net/ipv6/raw.c:588
+  rawv6_sendmsg+0x19c7/0x23c0 net/ipv6/raw.c:926
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x1a6/0x270 net/socket.c:745
+  sock_write_iter+0x2dd/0x400 net/socket.c:1160
+ do_iter_readv_writev+0x60a/0x890
+
+Fixes: 0625491493d9 ("ipv6: ip6_push_pending_frames() should increment IPSTATS_MIB_OUTDISCARDS")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20240820160859.3786976-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 47 ++++++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 18 deletions(-)
+ net/ipv6/ip6_output.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 265a02b6ad099..591ca93e2a01d 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -437,12 +437,10 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct netem_sched_data *q = qdisc_priv(sch);
- 	/* We don't fill cb now as skb_unshare() may invalidate it */
- 	struct netem_skb_cb *cb;
--	struct sk_buff *skb2;
-+	struct sk_buff *skb2 = NULL;
- 	struct sk_buff *segs = NULL;
- 	unsigned int prev_len = qdisc_pkt_len(skb);
- 	int count = 1;
--	int rc = NET_XMIT_SUCCESS;
--	int rc_drop = NET_XMIT_DROP;
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index c67d634dccd47..a34a562b0954d 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1882,6 +1882,7 @@ int ip6_send_skb(struct sk_buff *skb)
+ 	struct rt6_info *rt = (struct rt6_info *)skb_dst(skb);
+ 	int err;
  
- 	/* Do not fool qdisc_drop_all() */
- 	skb->prev = NULL;
-@@ -471,19 +469,11 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		skb_orphan_partial(skb);
- 
- 	/*
--	 * If we need to duplicate packet, then re-insert at top of the
--	 * qdisc tree, since parent queuer expects that only one
--	 * skb will be queued.
-+	 * If we need to duplicate packet, then clone it before
-+	 * original is modified.
- 	 */
--	if (count > 1 && (skb2 = skb_clone(skb, GFP_ATOMIC)) != NULL) {
--		struct Qdisc *rootq = qdisc_root_bh(sch);
--		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
--
--		q->duplicate = 0;
--		rootq->enqueue(skb2, rootq, to_free);
--		q->duplicate = dupsave;
--		rc_drop = NET_XMIT_SUCCESS;
--	}
-+	if (count > 1)
-+		skb2 = skb_clone(skb, GFP_ATOMIC);
- 
- 	/*
- 	 * Randomized packet corruption.
-@@ -495,7 +485,8 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		if (skb_is_gso(skb)) {
- 			skb = netem_segment(skb, sch, to_free);
- 			if (!skb)
--				return rc_drop;
-+				goto finish_segs;
-+
- 			segs = skb->next;
- 			skb_mark_not_on_list(skb);
- 			qdisc_skb_cb(skb)->pkt_len = skb->len;
-@@ -521,7 +512,24 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* re-link segs, so that qdisc_drop_all() frees them all */
- 		skb->next = segs;
- 		qdisc_drop_all(skb, sch, to_free);
--		return rc_drop;
-+		if (skb2)
-+			__qdisc_drop(skb2, to_free);
-+		return NET_XMIT_DROP;
-+	}
-+
-+	/*
-+	 * If doing duplication then re-insert at top of the
-+	 * qdisc tree, since parent queuer expects that only one
-+	 * skb will be queued.
-+	 */
-+	if (skb2) {
-+		struct Qdisc *rootq = qdisc_root_bh(sch);
-+		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
-+
-+		q->duplicate = 0;
-+		rootq->enqueue(skb2, rootq, to_free);
-+		q->duplicate = dupsave;
-+		skb2 = NULL;
++	rcu_read_lock();
+ 	err = ip6_local_out(net, skb->sk, skb);
+ 	if (err) {
+ 		if (err > 0)
+@@ -1891,6 +1892,7 @@ int ip6_send_skb(struct sk_buff *skb)
+ 				      IPSTATS_MIB_OUTDISCARDS);
  	}
  
- 	qdisc_qstats_backlog_inc(sch, skb);
-@@ -592,9 +600,12 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	}
++	rcu_read_unlock();
+ 	return err;
+ }
  
- finish_segs:
-+	if (skb2)
-+		__qdisc_drop(skb2, to_free);
-+
- 	if (segs) {
- 		unsigned int len, last_len;
--		int nb;
-+		int rc, nb;
- 
- 		len = skb ? skb->len : 0;
- 		nb = skb ? 1 : 0;
 -- 
 2.43.0
 
