@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A67144C97;
-	Sun,  1 Sep 2024 16:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CC633987;
+	Sun,  1 Sep 2024 16:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208011; cv=none; b=hB/n85fruadZmG2ynMH1GJF/WZvQtDrSpiAoXnezSYIrANj2WN4e+58UDjhIEULxEWWabZAn1nVq5yNJp9J2blNAbN/TLw+GGMlshndhf0VcWC0T2Xs58KsciuvJJqQfnSH3Ovusfk0A1IJfb3Xto4m5v5AiK63D4NSt7dyIThg=
+	t=1725208014; cv=none; b=YxlgUgxl/5JWonc+lLIFquP0PqjmDwOX7bRSPL8rBTobVn9bm/w3cNEAGm6Afd3J8o2cy4veTKAsXlduRWRq+ZtGSm+UdIWQ4UQ0xtuTKJpzzWPRyQuugUYgsJr0bBjYrLBEIl3Wn4tC37sT3OahX1CUyawbfglYC6aOblUHayU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208011; c=relaxed/simple;
-	bh=4Pvmx2x+vpw5+kr1mRC3NtwH/6QG2dXoEQ+b5QcvNsw=;
+	s=arc-20240116; t=1725208014; c=relaxed/simple;
+	bh=ggAOvFXRdg9mBIzIRPFDVXL401cz5ncV7jPIbjEVVp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRtYZ1rjm0OdZi/TMZz0GVAGQr9mp3zCoOv+FXfpKIbl5c9UMxFBgjL9iZOCtc5nMwHf2+amGkn3UUptbfv3/1n25bQBsUQu33xAJ6FEbsEQazpfrmgDhVy61N4nKogrZxSdx0JInROKzwv9ew6YD9yIjTiM5moTC4JCf5VZYLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDY7uSmG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0P/XLVUA5HsOlHyv6Qx5BvtTGmMP11GLtuoUSyoq2xlywiMbWNB/KG9kNJ6dJw47jXbucCB/IjFOVdfwekaHiG9ds8Urfe2Sg72ahaXiVfbi7d0RDt+rte5Lhwim6ak9xIyjtjBN8Gtb5xT6bDmi8OjjrVPKBcm1viScDdyq2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmJHl5f0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDY7uSmG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB309C4CEC3;
-	Sun,  1 Sep 2024 16:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmJHl5f0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00129C4CEC3;
+	Sun,  1 Sep 2024 16:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208011;
-	bh=4Pvmx2x+vpw5+kr1mRC3NtwH/6QG2dXoEQ+b5QcvNsw=;
+	s=korg; t=1725208014;
+	bh=ggAOvFXRdg9mBIzIRPFDVXL401cz5ncV7jPIbjEVVp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDY7uSmGrvj4gsL6RGN2Dhp1UuZB0ofV6dM/95KQimHxKwNo5Ev0Y5oqA19jlv4JS
-	 JUewBNxuWVOoeMs53KX0nE4q1FV8dMNFD5PsJR1+G6VeNxxFLjBp8pVjO5ZAKvztLR
-	 dnCjAUl6DUj2aISKwg5iEd98QC9XXH/McTnw2wog=
+	b=wmJHl5f0P7sJHpMzfEZ2AvuvaoGxnZ1DloIYeZbv7E01ICBJ1IzGiOsxyB91o7mzf
+	 CpKT+zqIHER/vBRYyevBub3REEas01BDQjeYGB0lWHtLz+McPJ6d1XyDinczJgce/x
+	 ueako/nyQY8J7bqKPRrOIoOUEyb1M/uOwOmAUgI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 47/93] dmaengine: dw-edma: Do not enable watermark interrupts for HDMA
-Date: Sun,  1 Sep 2024 18:16:34 +0200
-Message-ID: <20240901160809.133798898@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 30/93] thermal: of: Fix OF node leak in thermal_of_trips_init() error path
+Date: Sun,  1 Sep 2024 18:16:17 +0200
+Message-ID: <20240901160808.494274932@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,80 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 9f646ff25c09c52cebe726601db27a60f876f15e upstream.
+[ Upstream commit afc954fd223ded70b1fa000767e2531db55cce58 ]
 
-DW_HDMA_V0_LIE and DW_HDMA_V0_RIE are initialized as BIT(3) and BIT(4)
-respectively in dw_hdma_control enum. But as per HDMA register these
-bits are corresponds to LWIE and RWIE bit i.e local watermark interrupt
-enable and remote watermarek interrupt enable. In linked list mode LWIE
-and RWIE bits only enable the local and remote watermark interrupt.
+Terminating for_each_child_of_node() loop requires dropping OF node
+reference, so bailing out after thermal_of_populate_trip() error misses
+this.  Solve the OF node reference leak with scoped
+for_each_child_of_node_scoped().
 
-Since the watermark interrupts are not used but enabled, this leads to
-spurious interrupts getting generated. So remove the code that enables
-them to avoid generating spurious watermark interrupts.
-
-And also rename DW_HDMA_V0_LIE to DW_HDMA_V0_LWIE and DW_HDMA_V0_RIE to
-DW_HDMA_V0_RWIE as there is no LIE and RIE bits in HDMA and those bits
-are corresponds to LWIE and RWIE bits.
-
-Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
-cc: stable@vger.kernel.org
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/1724674261-3144-3-git-send-email-quic_msarkar@quicinc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d0c75fa2c17f ("thermal/of: Initialize trip points separately")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://patch.msgid.link/20240814195823.437597-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ drivers/thermal/thermal_of.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index 2addaca3b694..e3f8db4fe909 100644
---- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -17,8 +17,8 @@ enum dw_hdma_control {
- 	DW_HDMA_V0_CB					= BIT(0),
- 	DW_HDMA_V0_TCB					= BIT(1),
- 	DW_HDMA_V0_LLP					= BIT(2),
--	DW_HDMA_V0_LIE					= BIT(3),
--	DW_HDMA_V0_RIE					= BIT(4),
-+	DW_HDMA_V0_LWIE					= BIT(3),
-+	DW_HDMA_V0_RWIE					= BIT(4),
- 	DW_HDMA_V0_CCS					= BIT(8),
- 	DW_HDMA_V0_LLE					= BIT(9),
- };
-@@ -195,25 +195,14 @@ static void dw_hdma_v0_write_ll_link(struct dw_edma_chunk *chunk,
- static void dw_hdma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index d5174f11b91c2..e7d25e70fb93e 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -123,7 +123,7 @@ static int thermal_of_populate_trip(struct device_node *np,
+ static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *ntrips)
  {
- 	struct dw_edma_burst *child;
--	struct dw_edma_chan *chan = chunk->chan;
- 	u32 control = 0, i = 0;
--	int j;
+ 	struct thermal_trip *tt;
+-	struct device_node *trips, *trip;
++	struct device_node *trips;
+ 	int ret, count;
  
- 	if (chunk->cb)
- 		control = DW_HDMA_V0_CB;
+ 	trips = of_get_child_by_name(np, "trips");
+@@ -148,7 +148,7 @@ static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *n
+ 	*ntrips = count;
  
--	j = chunk->bursts_alloc;
--	list_for_each_entry(child, &chunk->burst->list, list) {
--		j--;
--		if (!j) {
--			control |= DW_HDMA_V0_LIE;
--			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
--				control |= DW_HDMA_V0_RIE;
--		}
--
-+	list_for_each_entry(child, &chunk->burst->list, list)
- 		dw_hdma_v0_write_ll_data(chunk, i++, control, child->sz,
- 					 child->sar, child->dar);
--	}
- 
- 	control = DW_HDMA_V0_LLP | DW_HDMA_V0_TCB;
- 	if (!chunk->cb)
+ 	count = 0;
+-	for_each_child_of_node(trips, trip) {
++	for_each_child_of_node_scoped(trips, trip) {
+ 		ret = thermal_of_populate_trip(trip, &tt[count++]);
+ 		if (ret)
+ 			goto out_kfree;
 -- 
-2.46.0
+2.43.0
 
 
 
