@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0B81C68C;
-	Sun,  1 Sep 2024 16:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4231C68C;
+	Sun,  1 Sep 2024 16:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208850; cv=none; b=AK0R8Ivx0aqGRhSLr7btxqV7OcQhbGUT7Y8L2yzWE//ScbcxiVFVp9LQtj1PqKTSDNCLtVBenyfRdxiNfJUrqzNMJMYEn7s7JtMOXFfk4hahvurZ5/Z/kwOl330SdFvzaqqDFMB6qE+ef3b9865s1Y3X9/968X9mJuB2I5lY190=
+	t=1725208854; cv=none; b=HrasTKIFdJ++Aezx1hzGQWP0iDuIcpgtEmzbXyq5tBUuPM185HesEfQsj4RlrsC5GkUpdb8Cbcwqz6fLJsxaHVTDj/mLReF1geZy9rT0SVHMaaG3l8CXWil3OYwEAqBv0DjQadooW55qTuIbhiD8Jhoan9YYAjSThjcAipKId3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208850; c=relaxed/simple;
-	bh=4Hv8NubanigQLE6LQEnBB96RRjUbHzLetrdYXEvQkdI=;
+	s=arc-20240116; t=1725208854; c=relaxed/simple;
+	bh=RpsoFlqU6eFmJJhh70bJI6qzLPzpJu8bftfB5Uq3ta8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLDG3jNosOCi+moxf8zxsR2JyxbH7/r+qNnGz7B2/VzeOQuW0YqCBUaMK+ZLswapGsDDecWnF1LHibzdF2rutQKsp0gaGZCFSYuIUlXLfXxXY6pTDJFPnOREcps2cwBm0V6+99d4qzNI2OoKK4iJS/DkF1IdXR310V8wbo2233c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL/QzCvB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DF7v4V5+B6cNEiUkg+pNGVJPEJAVLmH7QAJ816Mq2nN5NpJkMiHSCTiIx05/ycb6mFZr1lCtE2XN/TaXINEPchifvnJ3JfS/FSoARCm2NdQRb2WK5D+14CISR+pFTYSdlHzmqWNUuyyUph4ONxwAXcxx2/Kkpmhg7pycIHngllY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9fjU2cu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL/QzCvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6FBC4CEC3;
-	Sun,  1 Sep 2024 16:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9fjU2cu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A06EC4CEC3;
+	Sun,  1 Sep 2024 16:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208850;
-	bh=4Hv8NubanigQLE6LQEnBB96RRjUbHzLetrdYXEvQkdI=;
+	s=korg; t=1725208853;
+	bh=RpsoFlqU6eFmJJhh70bJI6qzLPzpJu8bftfB5Uq3ta8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eL/QzCvB7vVUPexWuLr9l/T/VosUuxcYqXndKKCk1VPmBbRxeYhun5fwEdZgRM4ga
-	 LXk8AC1knuUDT66IYrUnfZiFfP1IpUe7R/uDU3uSjxGD/FV2prXWJPj8isZlis8zU5
-	 +I+OPifZOvDExtqEVL9hx2WQxgm6r3XtnwIT014Y=
+	b=z9fjU2cuPf//meLtotifhpfT16DRMqORgeCVhi5posM1QtsdFKmcBCL3X/qD1OJlx
+	 7pElPA62PB2OTP1hyuDlrZryZXremY7/icqAn/u1LjmeuEDBglR5UMjEnliCu53NQQ
+	 RdZo7eU8H5yDnZ6ZMvb3Wij0ORcBbW+CUM9BeKSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/134] net: axienet: Autodetect 64-bit DMA capability
-Date: Sun,  1 Sep 2024 18:16:12 +0200
-Message-ID: <20240901160811.092353197@linuxfoundation.org>
+Subject: [PATCH 5.4 027/134] net: axienet: Fix register defines comment description
+Date: Sun,  1 Sep 2024 18:16:13 +0200
+Message-ID: <20240901160811.129851595@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -51,90 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit f735c40ed93ccaeb52d026def47ac1a423df7133 ]
+[ Upstream commit 9ff2f816e2aa65ca9a1cdf0954842f8173c0f48d ]
 
-When newer revisions of the Axienet IP are configured for a 64-bit bus,
-we *need* to write to the MSB part of the an address registers,
-otherwise the IP won't recognise this as a DMA start condition.
-This is even true when the actual DMA address comes from the lower 4 GB.
+In axiethernet header fix register defines comment description to be
+inline with IP documentation. It updates MAC configuration register,
+MDIO configuration register and frame filter control description.
 
-To autodetect this configuration, at probe time we write all 1's to such
-an MSB register, and see if any bits stick. If this is configured for a
-32-bit bus, those MSB registers are RES0, so reading back 0 indicates
-that no MSB writes are necessary.
-On the other hands reading anything other than 0 indicated the need to
-write the MSB registers, so we set the respective flag.
-
-The actual DMA mask stays at 32-bit for now. To help bisecting, a
-separate patch will enable allocations from higher addresses.
-
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9ff2f816e2aa ("net: axienet: Fix register defines comment description")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h  |  1 +
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 26 +++++++++++++++++++
- 2 files changed, 27 insertions(+)
+ drivers/net/ethernet/xilinx/xilinx_axienet.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index 84c4c3655516a..fbaf3c987d9c1 100644
+index fbaf3c987d9c1..bf1a19a00adc6 100644
 --- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
 +++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -161,6 +161,7 @@
+@@ -159,16 +159,16 @@
+ #define XAE_RCW1_OFFSET		0x00000404 /* Rx Configuration Word 1 */
+ #define XAE_TC_OFFSET		0x00000408 /* Tx Configuration */
  #define XAE_FCC_OFFSET		0x0000040C /* Flow Control Configuration */
- #define XAE_EMMC_OFFSET		0x00000410 /* EMAC mode configuration */
- #define XAE_PHYC_OFFSET		0x00000414 /* RGMII/SGMII configuration */
-+#define XAE_ID_OFFSET		0x000004F8 /* Identification register */
- #define XAE_MDIO_MC_OFFSET	0x00000500 /* MII Management Config */
- #define XAE_MDIO_MCR_OFFSET	0x00000504 /* MII Management Control */
- #define XAE_MDIO_MWD_OFFSET	0x00000508 /* MII Management Write Data */
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 5440f39c5760d..1156719210cdb 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -152,6 +152,9 @@ static void axienet_dma_out_addr(struct axienet_local *lp, off_t reg,
- 				 dma_addr_t addr)
- {
- 	axienet_dma_out32(lp, reg, lower_32_bits(addr));
-+
-+	if (lp->features & XAE_FEATURE_DMA_64BIT)
-+		axienet_dma_out32(lp, reg + 4, upper_32_bits(addr));
- }
+-#define XAE_EMMC_OFFSET		0x00000410 /* EMAC mode configuration */
+-#define XAE_PHYC_OFFSET		0x00000414 /* RGMII/SGMII configuration */
++#define XAE_EMMC_OFFSET		0x00000410 /* MAC speed configuration */
++#define XAE_PHYC_OFFSET		0x00000414 /* RX Max Frame Configuration */
+ #define XAE_ID_OFFSET		0x000004F8 /* Identification register */
+-#define XAE_MDIO_MC_OFFSET	0x00000500 /* MII Management Config */
+-#define XAE_MDIO_MCR_OFFSET	0x00000504 /* MII Management Control */
+-#define XAE_MDIO_MWD_OFFSET	0x00000508 /* MII Management Write Data */
+-#define XAE_MDIO_MRD_OFFSET	0x0000050C /* MII Management Read Data */
++#define XAE_MDIO_MC_OFFSET	0x00000500 /* MDIO Setup */
++#define XAE_MDIO_MCR_OFFSET	0x00000504 /* MDIO Control */
++#define XAE_MDIO_MWD_OFFSET	0x00000508 /* MDIO Write Data */
++#define XAE_MDIO_MRD_OFFSET	0x0000050C /* MDIO Read Data */
+ #define XAE_UAW0_OFFSET		0x00000700 /* Unicast address word 0 */
+ #define XAE_UAW1_OFFSET		0x00000704 /* Unicast address word 1 */
+-#define XAE_FMI_OFFSET		0x00000708 /* Filter Mask Index */
++#define XAE_FMI_OFFSET		0x00000708 /* Frame Filter Control */
+ #define XAE_AF0_OFFSET		0x00000710 /* Address Filter 0 */
+ #define XAE_AF1_OFFSET		0x00000714 /* Address Filter 1 */
  
- static void desc_set_phys_addr(struct axienet_local *lp, dma_addr_t addr,
-@@ -1954,6 +1957,29 @@ static int axienet_probe(struct platform_device *pdev)
- 		goto free_netdev;
- 	}
+@@ -307,7 +307,7 @@
+  */
+ #define XAE_UAW1_UNICASTADDR_MASK	0x0000FFFF
  
-+	/* Autodetect the need for 64-bit DMA pointers.
-+	 * When the IP is configured for a bus width bigger than 32 bits,
-+	 * writing the MSB registers is mandatory, even if they are all 0.
-+	 * We can detect this case by writing all 1's to one such register
-+	 * and see if that sticks: when the IP is configured for 32 bits
-+	 * only, those registers are RES0.
-+	 * Those MSB registers were introduced in IP v7.1, which we check first.
-+	 */
-+	if ((axienet_ior(lp, XAE_ID_OFFSET) >> 24) >= 0x9) {
-+		void __iomem *desc = lp->dma_regs + XAXIDMA_TX_CDESC_OFFSET + 4;
-+
-+		iowrite32(0x0, desc);
-+		if (ioread32(desc) == 0) {	/* sanity check */
-+			iowrite32(0xffffffff, desc);
-+			if (ioread32(desc) > 0) {
-+				lp->features |= XAE_FEATURE_DMA_64BIT;
-+				dev_info(&pdev->dev,
-+					 "autodetected 64-bit DMA range\n");
-+			}
-+			iowrite32(0x0, desc);
-+		}
-+	}
-+
- 	/* Check for Ethernet core IRQ (optional) */
- 	if (lp->eth_irq <= 0)
- 		dev_info(&pdev->dev, "Ethernet core IRQ not defined\n");
+-/* Bit masks for Axi Ethernet FMI register */
++/* Bit masks for Axi Ethernet FMC register */
+ #define XAE_FMI_PM_MASK			0x80000000 /* Promis. mode enable */
+ #define XAE_FMI_IND_MASK		0x00000003 /* Index Mask */
+ 
 -- 
 2.43.0
 
