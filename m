@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8391EB5B;
-	Sun,  1 Sep 2024 17:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E458417C;
+	Sun,  1 Sep 2024 17:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210123; cv=none; b=sZCbP/hRBU5ucVn/ZwB69oCmLnq0Kwx2JcRBoWiIctqYSOfC3Ity3/npn+88/EXiNz1y/aWluMuXNgab91+eOs6vR4HvXw0lsohNDVVYAdK5LSHiwd/tarlnEh1CDIE7jIIMWkekwQsEDsyGv1kaGi0ESWM8MYMwWsHQlVhkD9E=
+	t=1725210127; cv=none; b=o2D2cSigo8pvcB3rgGZUAnXBMpyCSv3HjeTvn9+qR0wEkz8QeRMhFzRbOOIrVM/lq8Ci5cB4fgaJ0gsvqO9xgIeq0xnpl45O1okpdlpS8yoNA2CKX+cW0Hh9m9DusAQeeDW2kJc/pRsemSHM1YSOeq7FRLupHMCQVh1e26pIuL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210123; c=relaxed/simple;
-	bh=Lnsk7dbacXQbbngeeUBeiyqJMx5Lt8wxbPRvgtGEmkU=;
+	s=arc-20240116; t=1725210127; c=relaxed/simple;
+	bh=XPENrdSAawLI5XbQ+kxkjGkfHgJeV9TdUkoXi9s5uUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzgaJeRaTLZ+9zVxfAf+bh2IvardCQMTCXkhrE2EXSnhMJue/2aWrA7OuObqRG7T4tpDZSdqYlAbTc5QNjAPE6Vo3Be2A6tSg+pA+h8PrSKaVTur2U3EgIxopJGPxauOTsMt9dufjT/n3P/RKp4oRIwU/lpB0eDuZcvy74/NUSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvVt+bZc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzHBwjtQ1DWvFeIuKHutqoEz/d0bfJJIwgTkgdj9/BCANB5RP7JWs1T6KksZFD7dJO7PH62sdgIn4UgBEk5wgfF13uUB7dS0yoVlB2q/eCn29eX0/7voKrnlsuYFKhLSvZewCM/mt7zDlvUFsM9SKAh1mlcLQQGb0SCa1DCwOls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rI2f7aUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvVt+bZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECA4C4CEC3;
-	Sun,  1 Sep 2024 17:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rI2f7aUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D4DC4CEC3;
+	Sun,  1 Sep 2024 17:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210123;
-	bh=Lnsk7dbacXQbbngeeUBeiyqJMx5Lt8wxbPRvgtGEmkU=;
+	s=korg; t=1725210126;
+	bh=XPENrdSAawLI5XbQ+kxkjGkfHgJeV9TdUkoXi9s5uUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvVt+bZc7UiLA8MvSYvTESK9m1dMRHSypll0MVwi7SsPOVnG/SDn92WakLHLegdte
-	 XvGvNDNFw2p2sis9GjdyivyN6SRsk7pu0+mAPena3iArJKYAD0dM75+3g+p3Bet80N
-	 8tFQr4qWWSNcm3Llh0xlkYyI5JEQHB+KT7OhbGoA=
+	b=rI2f7aUisjJf6byHv7H2rKo3u/djddANsGgOsb8XSBDvhLqd4MllWKFOpbQtGXD2T
+	 bOBjnhE9PGWeFFrMD5jjxfQBJdFDx92A8EUmHRecHjqKpkz+jQVoFhoe6JYySfATLs
+	 BG4jUO/o8wQG9EjDB4x9/0uRpRN0nXNYGjC3atVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/215] net: hns3: add checking for vf id of mailbox
-Date: Sun,  1 Sep 2024 18:16:47 +0200
-Message-ID: <20240901160826.941767839@linuxfoundation.org>
+Subject: [PATCH 5.15 096/215] nvmet-tcp: do not continue for invalid icreq
+Date: Sun,  1 Sep 2024 18:16:48 +0200
+Message-ID: <20240901160826.979056109@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,41 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 4e2969a0d6a7549bc0bc1ebc990588b622c4443d ]
+[ Upstream commit 0889d13b9e1cbef49e802ae09f3b516911ad82a1 ]
 
-Add checking for vf id of mailbox, in order to avoid array
-out-of-bounds risk.
+When the length check for an icreq sqe fails we should not
+continue processing but rather return immediately as all
+other contents of that sqe cannot be relied on.
 
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-index 77c432ab7856c..e2fe41d3972fb 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-@@ -1066,10 +1066,11 @@ void hclge_mbx_handler(struct hclge_dev *hdev)
- 		req = (struct hclge_mbx_vf_to_pf_cmd *)desc->data;
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 8468a41322f25..df044a79a7348 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -858,6 +858,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
+ 		pr_err("bad nvme-tcp pdu length (%d)\n",
+ 			le32_to_cpu(icreq->hdr.plen));
+ 		nvmet_tcp_fatal_error(queue);
++		return -EPROTO;
+ 	}
  
- 		flag = le16_to_cpu(crq->desc[crq->next_to_use].flag);
--		if (unlikely(!hnae3_get_bit(flag, HCLGE_CMDQ_RX_OUTVLD_B))) {
-+		if (unlikely(!hnae3_get_bit(flag, HCLGE_CMDQ_RX_OUTVLD_B) ||
-+			     req->mbx_src_vfid > hdev->num_req_vfs)) {
- 			dev_warn(&hdev->pdev->dev,
--				 "dropped invalid mailbox message, code = %u\n",
--				 req->msg.code);
-+				 "dropped invalid mailbox message, code = %u, vfid = %u\n",
-+				 req->msg.code, req->mbx_src_vfid);
- 
- 			/* dropping/not processing this invalid message */
- 			crq->desc[crq->next_to_use].flag = 0;
+ 	if (icreq->pfv != NVME_TCP_PFV_1_0) {
 -- 
 2.43.0
 
