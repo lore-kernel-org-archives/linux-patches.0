@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB11183CA3;
-	Sun,  1 Sep 2024 16:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F59A183CA3;
+	Sun,  1 Sep 2024 16:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209289; cv=none; b=hkZ+2WU+JH3BudCrgn/Z03+zqrIrbGmqkYwOOjB6IMNDqCL4Jc9SwYhVhRt6/Uh4sQWGcRGkV4k+vYXbHAnGoH9C1FWbMusRVQVRp9CEY3UfWsuHDrQvzB+aOupVPA5mXqWSfxJMD1hTNpnPhWQMoqGxjJrIWTmCxeGtW9FxdJo=
+	t=1725209293; cv=none; b=TL/FzbkUCsmDqGRMDu+LPBZvK+lPnLS8yxX3bkD4gWMhDXICeW0dvjdSALhvAkg+4YBvyHDndKoGNkpFovjZf2f6bjK5e210XtsWziXxncZOKugyEOey4vOyXkqoz/FVywA/F5Pwpq96Y0Du53It8uWjy6vH41g4yTWyVBXA1WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209289; c=relaxed/simple;
-	bh=4Pp1Mfz+F3wy2fN+cADGXOTICwYdR8YgJ3IsPS2zjlo=;
+	s=arc-20240116; t=1725209293; c=relaxed/simple;
+	bh=0+AuAji31pXLg+QAvwwqKrr3afFlaMCEDSkDf/XvkFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfDU/9F9pf8wt+x6wlRBrcRhrLl1bCILphHY9YLIYiPtgB9IOdyR20+regF1ZXU37CHvYi8hmqLLUd8jmgDCjAs2uWyFyodCOpj/lA8dZETK72WDRlJ97Nrv5fBoLwtMBXS/7tcUhydEVLLcVow6PTQVzIvDzrq0b5tLmXDn808=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HReqMcGV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZxWOgfc9RSy+uKFKOn5KEKT4XnoDdqvcV8RsC9vdRhTZTJPZjiQvo4vm6svbZOhs+w7YwSHVYqmC/RbZ5SwPGGM9nbqU7fb0RRqetn+ll0lxcHW7IKIwQ/7YHAXA0hB1+y0zv1PHzWq8b7PMp+AdgCBsx06vCWEvMTqc/GRKkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1o6OhAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HReqMcGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43864C4CEC3;
-	Sun,  1 Sep 2024 16:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1o6OhAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D102C4CEC3;
+	Sun,  1 Sep 2024 16:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209289;
-	bh=4Pp1Mfz+F3wy2fN+cADGXOTICwYdR8YgJ3IsPS2zjlo=;
+	s=korg; t=1725209292;
+	bh=0+AuAji31pXLg+QAvwwqKrr3afFlaMCEDSkDf/XvkFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HReqMcGVU8qc714neLXif/WgzbxIvpvTQrtwaCjQjbCIRYaomzp94Z12YlgsZZ12s
-	 DwZZ4ot5A1RfMSeEWY+eXPZCNvLiR3wkvAmDFGdx/+RIjNZgdWBuNJNhPQHKsqSuHI
-	 5s04lsndi7VZWpppTtUaSWcLdlIhATEQZggDzG+8=
+	b=N1o6OhAOhnUOEe+0PPYRZMcm1ZmduG/t1e8iBSJuspvp8/wjaJ+fav2xv7ja2vdid
+	 kANCbLGext13M61XKrw9Nc2EduLFJXCznOH08Q/Y9yLPzHRPrD81MFOKK0Gw+jd9Z3
+	 HWfKLVmYfU7tKeEV8QdfOOwT2F4CPPThEW5fj/eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>
-Subject: [PATCH 6.1 61/71] usb: dwc3: st: fix probed platform device ref count on probe error path
-Date: Sun,  1 Sep 2024 18:18:06 +0200
-Message-ID: <20240901160804.189844707@linuxfoundation.org>
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 62/71] usb: dwc3: st: add missing depopulate in probe error path
+Date: Sun,  1 Sep 2024 18:18:07 +0200
+Message-ID: <20240901160804.226973358@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -53,59 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit ddfcfeba891064b88bb844208b43bef2ef970f0c upstream.
+commit cd4897bfd14f6a5388b21ba45a066541a0425199 upstream.
 
-The probe function never performs any paltform device allocation, thus
-error path "undo_platform_dev_alloc" is entirely bogus.  It drops the
-reference count from the platform device being probed.  If error path is
-triggered, this will lead to unbalanced device reference counts and
-premature release of device resources, thus possible use-after-free when
-releasing remaining devm-managed resources.
+Depopulate device in probe error paths to fix leak of children
+resources.
 
 Fixes: f83fca0707c6 ("usb: dwc3: add ST dwc3 glue layer to manage dwc3 HC")
 Cc: stable@vger.kernel.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://lore.kernel.org/r/20240814093957.37940-1-krzysztof.kozlowski@linaro.org
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240814093957.37940-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-st.c |   11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/usb/dwc3/dwc3-st.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/usb/dwc3/dwc3-st.c
 +++ b/drivers/usb/dwc3/dwc3-st.c
-@@ -219,10 +219,8 @@ static int st_dwc3_probe(struct platform
- 	dwc3_data->regmap = regmap;
- 
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "syscfg-reg");
--	if (!res) {
--		ret = -ENXIO;
--		goto undo_platform_dev_alloc;
--	}
-+	if (!res)
-+		return -ENXIO;
- 
- 	dwc3_data->syscfg_reg_off = res->start;
- 
-@@ -233,8 +231,7 @@ static int st_dwc3_probe(struct platform
- 		devm_reset_control_get_exclusive(dev, "powerdown");
- 	if (IS_ERR(dwc3_data->rstc_pwrdn)) {
- 		dev_err(&pdev->dev, "could not get power controller\n");
--		ret = PTR_ERR(dwc3_data->rstc_pwrdn);
--		goto undo_platform_dev_alloc;
-+		return PTR_ERR(dwc3_data->rstc_pwrdn);
+@@ -266,7 +266,7 @@ static int st_dwc3_probe(struct platform
+ 	if (!child_pdev) {
+ 		dev_err(dev, "failed to find dwc3 core device\n");
+ 		ret = -ENODEV;
+-		goto err_node_put;
++		goto depopulate;
  	}
  
- 	/* Manage PowerDown */
-@@ -300,8 +297,6 @@ undo_softreset:
- 	reset_control_assert(dwc3_data->rstc_rst);
- undo_powerdown:
- 	reset_control_assert(dwc3_data->rstc_pwrdn);
--undo_platform_dev_alloc:
--	platform_device_put(pdev);
- 	return ret;
- }
+ 	dwc3_data->dr_mode = usb_get_dr_mode(&child_pdev->dev);
+@@ -282,6 +282,7 @@ static int st_dwc3_probe(struct platform
+ 	ret = st_dwc3_drd_init(dwc3_data);
+ 	if (ret) {
+ 		dev_err(dev, "drd initialisation failed\n");
++		of_platform_depopulate(dev);
+ 		goto undo_softreset;
+ 	}
  
+@@ -291,6 +292,8 @@ static int st_dwc3_probe(struct platform
+ 	platform_set_drvdata(pdev, dwc3_data);
+ 	return 0;
+ 
++depopulate:
++	of_platform_depopulate(dev);
+ err_node_put:
+ 	of_node_put(child);
+ undo_softreset:
 
 
