@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E3A28387;
-	Sun,  1 Sep 2024 16:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D67D44C97;
+	Sun,  1 Sep 2024 16:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208147; cv=none; b=FysGLelr220yljEBBt/L7sazLeKFltLzrV1NTs3TOeeN5/Y9CGP305vjUt9dUZ3VnTrk2PjPTQQ8mQwnlhI4W8UM5f3mIjAxAIVLCe7+rsTq9JiaKXChOSehWt3FrST9gdbzzzY/eGLv9sQRb/PVaypEYq12Svv8LBnTVxy+46I=
+	t=1725208151; cv=none; b=jrxKtI85F6/u1IREyzPQlERWEo7Mg8vEuKqbmoXiCzTJI+X1N/4UQ304G6SetNzWXoiK1AvaaSi2BEG2+zgw5JPdSwdDzH/ubIykFZdjo1AbyO5LRzkbwQ6cb+Xh0sSoLl5WO2jihS0SVDyi+0GqyMkSq31R6owgy+Q381Omjoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208147; c=relaxed/simple;
-	bh=/QKd+x68M4jlw4SZ8PVWyyAUffC0wUSn2n+ZhNMmWFQ=;
+	s=arc-20240116; t=1725208151; c=relaxed/simple;
+	bh=fknHJlbWnLDZdg+DKfFNFATV6sMSowVD0fLk781H5Rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWBtgUgqlmU1Wcmy+VCibsjVOT9TJHo1lyR+WxYtFC7vrONH5dziTOF0quCmS4BogayupMpHYHC4oQmZqGuwJVgZX3IIyTdl0vDraMdxHvQ6BYM8C4r4Docptump/+1BjUZ+Gwxptb4vJbJIzKOgIYe9D1Pg/rDjCTJYHM8PB2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMzx6zWl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EdSItBagAhJhevs2hpkUg8rnxw7b+PPPjg5WacREpNRWTkx07c64H2eBXHUqCLDFBzhbdZ3PjG9LPyAHvgNsguyYFZ5oOpided4HLzdBeuK2JPgnGC81se7I3nURBCKfgmyVu5u/szJzYWRI5NAxrgfB0qGoJPSwvhriw+Km57Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vcwH6Hk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMzx6zWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2194C4CEC3;
-	Sun,  1 Sep 2024 16:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vcwH6Hk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495E8C4CEC3;
+	Sun,  1 Sep 2024 16:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208147;
-	bh=/QKd+x68M4jlw4SZ8PVWyyAUffC0wUSn2n+ZhNMmWFQ=;
+	s=korg; t=1725208150;
+	bh=fknHJlbWnLDZdg+DKfFNFATV6sMSowVD0fLk781H5Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMzx6zWllRb3/FaSZK+bc3w2E6R87ia7IYXnyKExL4J90vm2eT78oa4Tq1UHn3OyA
-	 guKh+/KO9/AnPBdW2pPjL63B4VSO0D7603AupyLtUentCIe1B/Gwfa0CJx7chxrbkB
-	 P1ttm9oH+1U4o5huGggq4xPy1CmW+r9S3vy+vpWs=
+	b=1vcwH6HknUzHi2bcTQKnnc+WocFYekn7cV8kKbUtpFb25DjTCk9MP1LNVgSglSBgs
+	 vUZOLVxp7YpkEcIm/dqaToqqhdxZ8p6nNvWBqBkzuFoiUw0fKoDqS/92lE1MS/olSk
+	 PCAYCy1wvXFD+DEpEjczAjythof841m2ByK0fNyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 87/93] arm64: dts: imx93: add nvmem property for fec1
-Date: Sun,  1 Sep 2024 18:17:14 +0200
-Message-ID: <20240901160811.008614154@linuxfoundation.org>
+Subject: [PATCH 6.6 88/93] arm64: dts: imx93: add nvmem property for eqos
+Date: Sun,  1 Sep 2024 18:17:15 +0200
+Message-ID: <20240901160811.045560910@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,38 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit b2ab0edaf484d578e8d0c06093af0003586def72 ]
+[ Upstream commit 0d4fbaffbdcaec3fce29445b00324f470ee403c4 ]
 
-Add nvmem property for fec1 to get mac address.
+Add nvmem properties for eqos to get mac address.
 
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Stable-dep-of: 109f256285dd ("arm64: dts: imx93: update default value for snps,clk-csr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/freescale/imx93.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/freescale/imx93.dtsi b/arch/arm64/boot/dts/freescale/imx93.dtsi
-index 943b7e6655634..1b7260d2a0fff 100644
+index 1b7260d2a0fff..8ca5c7b6fbf03 100644
 --- a/arch/arm64/boot/dts/freescale/imx93.dtsi
 +++ b/arch/arm64/boot/dts/freescale/imx93.dtsi
-@@ -786,6 +786,8 @@
- 				fsl,num-tx-queues = <3>;
- 				fsl,num-rx-queues = <3>;
- 				fsl,stop-mode = <&wakeupmix_gpr 0x0c 1>;
-+				nvmem-cells = <&eth_mac1>;
+@@ -810,6 +810,8 @@
+ 				assigned-clock-rates = <100000000>, <250000000>;
+ 				intf_mode = <&wakeupmix_gpr 0x28>;
+ 				snps,clk-csr = <0>;
++				nvmem-cells = <&eth_mac2>;
 +				nvmem-cell-names = "mac-address";
  				status = "disabled";
  			};
  
-@@ -888,6 +890,11 @@
- 			reg = <0x47510000 0x10000>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-+
-+			eth_mac1: mac-address@4ec {
-+				reg = <0x4ec 0x6>;
+@@ -895,6 +897,10 @@
+ 				reg = <0x4ec 0x6>;
+ 			};
+ 
++			eth_mac2: mac-address@4f2 {
++				reg = <0x4f2 0x6>;
 +			};
 +
  		};
