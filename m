@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F8118454E;
-	Sun,  1 Sep 2024 16:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECF5183CC2;
+	Sun,  1 Sep 2024 16:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208475; cv=none; b=COW4hoopaPw9Zm6v4ccnv8Ne88wiANgMtHzG+jV54u0N4zLtB1qHWj/FmHAJXlaRw8es2Z6v3PSG8dd1hDNnraPs3MJAOYnhHatDxYX3ruLOdGk3Mn0F/AXvh9dre1htAecRVCkjIekbjgOvSHtTC1+pZke/IvFSRb2Q/fJB1+A=
+	t=1725208479; cv=none; b=d0Vf8aRFSGksMK3j7GZ1JYECE/4cRvjHW0dOrVZfK+EO0ww00YomkUgbt3rVGcyCsNhXxfw/tvwAB0vEjryNp8Txe5f4u8ukjbLtywUwRJDX3wsDqJcykdy7jW0UHVieU8cXkKdBdNJ18/Zffy6pa5HppldKUSy5S6MySJccqGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208475; c=relaxed/simple;
-	bh=hPDySGdS+fepgmQEoVwDYqYpIXRsUzGcH06ck73sfZg=;
+	s=arc-20240116; t=1725208479; c=relaxed/simple;
+	bh=aoneMT/uicfKVc7Kh8Q5Jde3sb+kT9zEOUhU22unMqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtptoM5AISlZF/F64gplZ5WBw3tmbeQuPgZkX+rjj1fC37erzVfeezhLwTIonTCK9QkbzZ1H8z4LMpoPpeDFAofJV8V0QY4q6vjKGdglIsEQgzaKmoM0jJmySPDdNVKGrTC696meEsNZE6NI4+lgkzHRDiOKPH6bWfQI9yBH+Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5zY2pnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQ5y/UpBfAtGm+WXzK84xrra225ndgpYUYyRVuLGphDr93lrzGoA3tMPUnPFJqymnP46aFzIB+Mvij+9+i7AkR7LcGeIiKhzmlv0STI9R6UnKdBXGiicJp/YskQl2gqn3yXyfuKsDwJ5AJ7Dmf7iZY2dpE1SSV0jsnD9VTcrHEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwHZOPFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5zY2pnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD536C4CED0;
-	Sun,  1 Sep 2024 16:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwHZOPFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B56C4CEC3;
+	Sun,  1 Sep 2024 16:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208475;
-	bh=hPDySGdS+fepgmQEoVwDYqYpIXRsUzGcH06ck73sfZg=;
+	s=korg; t=1725208478;
+	bh=aoneMT/uicfKVc7Kh8Q5Jde3sb+kT9zEOUhU22unMqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5zY2pnWTdkVMauCgDAF8/IVBtt5kabEFBqrr5jLNur7OeXp3fQalovJbLatxjb8v
-	 wfFmGMlPDWsUJjoSkmGk/cGQf7BnNuOL/lNvH1/01uURgA0LjQuEQSHNFKox8nxXxZ
-	 ZfjpV0Gm8C1vNU8+sT6jO9AjQJgt1XbUWQaTiOG4=
+	b=IwHZOPFumfmvPN+ioG/NVuVnTWX0R35+7iSBvuc3rnML6jz18phmmbzoozs8HreR8
+	 aH7Cxny00zkXLvm/KCfUvJJgIusx/gE1IbMaHnz0U0ok64meryeJGQjpDK8XqSMxU8
+	 iz5hiaMgATt8wgibmhpnLHb5ZDAQ0qCF7biGd3tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <quic_kdybcio@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hal Feng <hal.feng@starfivetech.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 062/149] pinctrl: qcom: x1e80100: Fix special pin offsets
-Date: Sun,  1 Sep 2024 18:16:13 +0200
-Message-ID: <20240901160819.799864199@linuxfoundation.org>
+Subject: [PATCH 6.10 063/149] pinctrl: starfive: jh7110: Correct the level trigger configuration of iev register
+Date: Sun,  1 Sep 2024 18:16:14 +0200
+Message-ID: <20240901160819.836744644@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -53,44 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <quic_kdybcio@quicinc.com>
+From: Hal Feng <hal.feng@starfivetech.com>
 
-[ Upstream commit d3692d95cc4d88114b070ee63cffc976f00f207f ]
+[ Upstream commit 639766ca10d1e218e257ae7eabe76814bae6ab89 ]
 
-Remove the erroneus 0x100000 offset to prevent the boards from crashing
-on pin state setting, as well as for the intended state changes to take
-effect.
+A mistake was made in level trigger register configuration. Correct it.
 
-Fixes: 05e4941d97ef ("pinctrl: qcom: Add X1E80100 pinctrl driver")
-Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/20240809-topic-h_sdc-v1-1-bb421532c531@quicinc.com
+Fixes: 447976ab62c5 ("pinctrl: starfive: Add StarFive JH7110 sys controller driver")
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+Link: https://lore.kernel.org/20240812070108.100923-1-hal.feng@starfivetech.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-x1e80100.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-x1e80100.c b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
-index 6cd4d10e6fd6f..65ed933f05ce1 100644
---- a/drivers/pinctrl/qcom/pinctrl-x1e80100.c
-+++ b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
-@@ -1805,10 +1805,10 @@ static const struct msm_pingroup x1e80100_groups[] = {
- 	[235] = PINGROUP(235, aon_cci, qdss_gpio, _, _, _, _, _, _, _),
- 	[236] = PINGROUP(236, aon_cci, qdss_gpio, _, _, _, _, _, _, _),
- 	[237] = PINGROUP(237, _, _, _, _, _, _, _, _, _),
--	[238] = UFS_RESET(ufs_reset, 0x1f9000),
--	[239] = SDC_QDSD_PINGROUP(sdc2_clk, 0x1f2000, 14, 6),
--	[240] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x1f2000, 11, 3),
--	[241] = SDC_QDSD_PINGROUP(sdc2_data, 0x1f2000, 9, 0),
-+	[238] = UFS_RESET(ufs_reset, 0xf9000),
-+	[239] = SDC_QDSD_PINGROUP(sdc2_clk, 0xf2000, 14, 6),
-+	[240] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xf2000, 11, 3),
-+	[241] = SDC_QDSD_PINGROUP(sdc2_data, 0xf2000, 9, 0),
- };
- 
- static const struct msm_gpio_wakeirq_map x1e80100_pdc_map[] = {
+diff --git a/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c b/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c
+index 9609eb1ecc3d8..7637de7452b91 100644
+--- a/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c
++++ b/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c
+@@ -795,12 +795,12 @@ static int jh7110_irq_set_type(struct irq_data *d, unsigned int trigger)
+ 	case IRQ_TYPE_LEVEL_HIGH:
+ 		irq_type  = 0;    /* 0: level triggered */
+ 		edge_both = 0;    /* 0: ignored */
+-		polarity  = mask; /* 1: high level */
++		polarity  = 0;    /* 0: high level */
+ 		break;
+ 	case IRQ_TYPE_LEVEL_LOW:
+ 		irq_type  = 0;    /* 0: level triggered */
+ 		edge_both = 0;    /* 0: ignored */
+-		polarity  = 0;    /* 0: low level */
++		polarity  = mask; /* 1: low level */
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.43.0
 
