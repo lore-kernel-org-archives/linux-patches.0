@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D9744C93;
-	Sun,  1 Sep 2024 16:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1597F1DFD1;
+	Sun,  1 Sep 2024 16:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209480; cv=none; b=qFYZ2ms7Z47Mz1jDVoY9v9oZWKrN0WpKI7shDmjSlqnDC73YTvkMH2D8Mow2TsiNakQdPND1zGDFtmscyUGE3mHXge32G4hGm9Oml/BRi5MoTOYF+F2ESAN9p1rOs1L5Auqi26cnfJcfhWNlHtzMEhbQCpoz8TUaCzk+SNBxxtE=
+	t=1725209484; cv=none; b=e0oEHrJ/mKEJKmAcLq+9MZBcMv+Fs+nWWiOctHNISKUqwKis9Jvc9HQ1jxi3fUQPK+XPuGg31vUIkrx4pJW/W/aqoiQoogwa37drolk2/OMKL/f7PwfSEAkhzA1gdBUgVLXfWLbG0GYC0jvDx8nJOBERdy54JnRw6vwIiKqWEW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209480; c=relaxed/simple;
-	bh=6Un70EX/BNZI+TP2prUeQRPrAoW1ZrDLQF9hxaSlyTc=;
+	s=arc-20240116; t=1725209484; c=relaxed/simple;
+	bh=BFocv+bkh+fThclmWQDwqGrW7oNJcwklvXPPFOSqXKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjYJXHEekikbcEZ+2vz3xJ/zXLBdwBVGxA04c/9cHE7F03ncxwjzboXFuPkzeRFUde52SkES5ASf1rm0G+2C0Bbs2WgqinHm9vHSsu9a/FgeWDjZg3KA53wCs2GNHBIgT0J5qDtHJrSXAgtoP/ae4yeIZnkF7jrolplKXRJtmZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7m4WVoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MEfjAzufS9nPKjH2QXGBy8mXDy5mzaHEEL3XMKFRJEWPWBA42HAWsrKFh5NH2lH2UsL6AhxnumtgXsnh29qcdvhwf3tKtohC/uJkYGasM/9VapmC4D7qSltQ3GGQ2cn0aarD7zeLBhVSITY/XVY8hDVinWsvx1GaAPR4Ep0N3pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMv2XLcY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7m4WVoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E173C4CEC3;
-	Sun,  1 Sep 2024 16:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMv2XLcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB1BC4CEC3;
+	Sun,  1 Sep 2024 16:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209480;
-	bh=6Un70EX/BNZI+TP2prUeQRPrAoW1ZrDLQF9hxaSlyTc=;
+	s=korg; t=1725209483;
+	bh=BFocv+bkh+fThclmWQDwqGrW7oNJcwklvXPPFOSqXKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7m4WVoMjtLjIPr6KH9kBkTiZ93ldfAQxguWEP1yTPDCE0ts4RsnlvQh35fAGH7Ov
-	 6idj1Ci9cny0RCTkb32Q3F4pOnntRwILMIr/CJhIMoJB6x+4vLMFbCQvD2ATk0NRbV
-	 y1W8ZhBakxvLqst1xOCcyXYZdw8AlzxheIsncq+M=
+	b=TMv2XLcYRfTloNK51gCOTyYc7x0gTPNlQf6Z+yLFLkSqHoMLLOp3ew6jpkW3Qpo4Q
+	 ddeIwejvhDpKIWmy7cvB74FdLJshdgIxwiJw9806CqOLwMyPoz1vf/iguu0LgJPXsG
+	 QBOUOShAZsx0VzLqykaKW8KpV/H33vDjFd4ryg8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/151] ext4: do not trim the group with corrupted block bitmap
-Date: Sun,  1 Sep 2024 18:16:49 +0200
-Message-ID: <20240901160815.963581385@linuxfoundation.org>
+Subject: [PATCH 5.10 050/151] quota: Remove BUG_ON from dqget()
+Date: Sun,  1 Sep 2024 18:16:50 +0200
+Message-ID: <20240901160816.001049920@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,36 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 172202152a125955367393956acf5f4ffd092e0d ]
+[ Upstream commit 249f374eb9b6b969c64212dd860cc1439674c4a8 ]
 
-Otherwise operating on an incorrupted block bitmap can lead to all sorts
-of unknown problems.
+dqget() checks whether dquot->dq_sb is set when returning it using
+BUG_ON. Firstly this doesn't work as an invalidation check for quite
+some time (we release dquot with dq_sb set these days), secondly using
+BUG_ON is quite harsh. Use WARN_ON_ONCE and check whether dquot is still
+hashed instead.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/quota/dquot.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index bc5db22df9fe7..7cbbcee225ddd 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -5955,6 +5955,9 @@ static int ext4_try_to_trim_range(struct super_block *sb,
- 	bool set_trimmed = false;
- 	void *bitmap;
- 
-+	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
-+		return 0;
-+
- 	last = ext4_last_grp_cluster(sb, e4b->bd_group);
- 	bitmap = e4b->bd_bitmap;
- 	if (start == 0 && max >= last)
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index 6a7b7d44753a3..9b8babbd1653c 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -997,9 +997,8 @@ struct dquot *dqget(struct super_block *sb, struct kqid qid)
+ 	 * smp_mb__before_atomic() in dquot_acquire().
+ 	 */
+ 	smp_rmb();
+-#ifdef CONFIG_QUOTA_DEBUG
+-	BUG_ON(!dquot->dq_sb);	/* Has somebody invalidated entry under us? */
+-#endif
++	/* Has somebody invalidated entry under us? */
++	WARN_ON_ONCE(hlist_unhashed(&dquot->dq_hash));
+ out:
+ 	if (empty)
+ 		do_destroy_dquot(empty);
 -- 
 2.43.0
 
