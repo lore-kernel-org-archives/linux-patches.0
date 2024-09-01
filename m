@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283EB14290C;
-	Sun,  1 Sep 2024 16:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C41A14290C;
+	Sun,  1 Sep 2024 16:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207902; cv=none; b=d/aazEM4hs7rkYaFZk11vLOgqlUAoz5wDWzb7mfU+s/Mw/BqwqTDyVrtAxfGFHSZ5DETB2N8UveZ0JmYfNl4Ow/CiW1CTw/09CfRAVUH+MrP0C0FBdy6T4239+ndt3PtW3EgNrgejUJmgkmbSzLcNegLJ3RAQgw1OwF9/Qqcy2Y=
+	t=1725207905; cv=none; b=m6h3968klWFXKW3RyYB7/5icNoBSDkZ0sLGi/VWnYZ1d0jBzLHDNaQerbCRvkOTxwOYkRwGNM9Q/ry4/F1Da8UiRH3+2RUHq1/b2B1hjtlzTDiKYJ2MHCMMF3o+DyQFcs5GN2wPaPAf8QXcz4hnxO/oslaxmcieRs+zeldzPsJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207902; c=relaxed/simple;
-	bh=Wqr4nrmj2A1X+oZCCwAz5uJaAiz+sdf9J4Q/Tr571fg=;
+	s=arc-20240116; t=1725207905; c=relaxed/simple;
+	bh=a8VWYZerN+wAUKI8xaIntN+QXrh1YXcmQQKeIbBnwM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dX0GIuAGFylsnrDgD+HB3xpC2AR5yEmmcBspkfL7rKWE41cwV+Ug9C4O1D4NXaevjJwd9U6VL7XZmraMyocoC0ISCq8PGJ3NCbJzXUYVoeCSZnf5qd1dBAeBxQv5pNGPrfZo8TT402D+n1FqiZ+faUi2J8kd6SWr8EwEcknCAtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOuF4mN1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GdhElisDQTDe7iu8Whc25W7IaAfJHyUVJfMjteJYhmhLIcngfm+75lCo8hIn9xcKkKgPJowmW6tvGzLcOrFD1tfArMo+IrJgZpvTqVdmVMeZc3QKzpdrjkJ92lY28GM4SSdA36zDpnrDRdrCoZuSq+qBQXOnimJRhNXAEDdvqaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQQS9tPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOuF4mN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A43C4CEC3;
-	Sun,  1 Sep 2024 16:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQQS9tPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0483C4CEC3;
+	Sun,  1 Sep 2024 16:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207902;
-	bh=Wqr4nrmj2A1X+oZCCwAz5uJaAiz+sdf9J4Q/Tr571fg=;
+	s=korg; t=1725207905;
+	bh=a8VWYZerN+wAUKI8xaIntN+QXrh1YXcmQQKeIbBnwM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOuF4mN1ZY0219Yo/fcD5X9zLneg9T+V5wCKcB3KkyXV6n3Y2OfvFQZM004AWu1L2
-	 L/HzXVSyu/PJV8blpvWekBT9DECDpZGMxkWc1A7jzItoaLn13UxRbtniEn+7QJcIhx
-	 FKw6mQxu0nTHcllDMDnHWlzF6IKeuMDSeWwh75JM=
+	b=CQQS9tPe2sRsjiAAaZDJB+bK/fYjvMRakxaa0FgpSkJdP7zb7A+0Qk54Po32pcFX9
+	 3gy/QOq2XmI4zU/+p1sCylWQxNJvp2lJ8RJ9d7VinMuhEjQZwqo6kylHVXnTtLdo/4
+	 tnitNuH4rlF4PNUI6tDAYdRdY3kJPvjnm8YPUdCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 13/93] mptcp: sched: check both backup in retrans
-Date: Sun,  1 Sep 2024 18:16:00 +0200
-Message-ID: <20240901160807.858156085@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 14/93] mptcp: pm: reuse ID 0 after delete and re-add
+Date: Sun,  1 Sep 2024 18:16:01 +0200
+Message-ID: <20240901160807.895470744@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,46 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 2a1f596ebb23eadc0f9b95a8012e18ef76295fc8 upstream.
+commit 8b8ed1b429f8fa7ebd5632555e7b047bc0620075 upstream.
 
-The 'mptcp_subflow_context' structure has two items related to the
-backup flags:
+When the endpoint used by the initial subflow is removed and re-added
+later, the PM has to force the ID 0, it is a special case imposed by the
+MPTCP specs.
 
- - 'backup': the subflow has been marked as backup by the other peer
+Note that the endpoint should then need to be re-added reusing the same
+ID.
 
- - 'request_bkup': the backup flag has been set by the host
-
-Looking only at the 'backup' flag can make sense in some cases, but it
-is not the behaviour of the default packet scheduler when selecting
-paths.
-
-As explained in the commit b6a66e521a20 ("mptcp: sched: check both
-directions for backup"), the packet scheduler should look at both flags,
-because that was the behaviour from the beginning: the 'backup' flag was
-set by accident instead of the 'request_bkup' one. Now that the latter
-has been fixed, get_retrans() needs to be adapted as well.
-
-Fixes: b6a66e521a20 ("mptcp: sched: check both directions for backup")
+Fixes: 3ad14f54bd74 ("mptcp: more accurate MPC endpoint tracking")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240826-net-mptcp-close-extra-sf-fin-v1-3-905199fe1172@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2289,7 +2289,7 @@ struct sock *mptcp_subflow_get_retrans(s
- 			continue;
- 		}
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -593,6 +593,11 @@ static void mptcp_pm_create_subflow_or_s
  
--		if (subflow->backup) {
-+		if (subflow->backup || subflow->request_bkup) {
- 			if (!backup)
- 				backup = ssk;
+ 		__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
+ 		msk->pm.add_addr_signaled++;
++
++		/* Special case for ID0: set the correct ID */
++		if (local.addr.id == msk->mpc_endpoint_id)
++			local.addr.id = 0;
++
+ 		mptcp_pm_announce_addr(msk, &local.addr, false);
+ 		mptcp_pm_nl_addr_send_ack(msk);
+ 
+@@ -617,6 +622,11 @@ subflow:
+ 
+ 		msk->pm.local_addr_used++;
+ 		__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
++
++		/* Special case for ID0: set the correct ID */
++		if (local.addr.id == msk->mpc_endpoint_id)
++			local.addr.id = 0;
++
+ 		nr = fill_remote_addresses_vec(msk, &local.addr, fullmesh, addrs);
+ 		if (nr == 0)
  			continue;
 
 
