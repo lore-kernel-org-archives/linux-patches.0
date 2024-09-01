@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578832B9C7;
-	Sun,  1 Sep 2024 16:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404321C68C;
+	Sun,  1 Sep 2024 16:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208989; cv=none; b=H8KUIXEh3ALiRzpi00hfoO4iRXeq98qayJl3FeQ9eQwNPMsvBhsYrGJyes3ksZnf4gwdHBQJQXhbzAlM6yI8Ob4cqWDrzDoXXKjBfdK8dH/DLD8d06+MThuWID6RFfpLshYBhPy7PEVxZbI1bqhXF1layZFiO9fAUvb/017vmpg=
+	t=1725208992; cv=none; b=CwX109WWnLkqJ8Eh3X6sBo7Jyh4vbcFT1QFKDkeFFGJEQn626hdbm/vwUQdXQMd1MgbAZ1lYA0iCVKsNjjH+h13ExYkn48Zg6Hsu8gScKiAR0j3zWJlx/c0+Kb5YAyHF6D2qwQN+S4QVE0/O7NwogqGPNSSDECYkrxHMZHMMqDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208989; c=relaxed/simple;
-	bh=D/Y3aViHReriHdhSVTjbFCLHcAgxS3jX4oAIb7kR1fU=;
+	s=arc-20240116; t=1725208992; c=relaxed/simple;
+	bh=TfSqHZBtHlrt4trEkweoBgCp8UZN61kpCOHJ6CLdZkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nCSPdvgELmFEcfuoFmJge6k5ACAwXU9TZDIOeH+jzBWbUppb7gzpMQ1ljuzdNzK2CFdkkxDy3mIzdGvS3WSw9A+v9ippr5jxXEhg4Fulg4ObxlaYHoSspcU2HCj/A9fJs0oa2CE/8JH4DUCsH+64iYS3yNHFT+iplg0GRTH0IKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYR8xFCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1mR1XoIWjTvrLZCespT4KRZf63y3d9e0GjIFeqJksl2JWysaTKqxYHt1zzFcVkphGhUYTQAq0u0W2zXYZ1Ie+u9/3mTNrPtXTN3ZmJ+NPghK34rI8mYVT7VU7YHKwtSVTBK/7eI4GI2uzWLD9tllKotbBg8wzWr/UBmtJ1F1/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jok/NdjS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYR8xFCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D333FC4CEC3;
-	Sun,  1 Sep 2024 16:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jok/NdjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0C4C4CEC3;
+	Sun,  1 Sep 2024 16:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208989;
-	bh=D/Y3aViHReriHdhSVTjbFCLHcAgxS3jX4oAIb7kR1fU=;
+	s=korg; t=1725208992;
+	bh=TfSqHZBtHlrt4trEkweoBgCp8UZN61kpCOHJ6CLdZkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYR8xFCcPSXWR1ycr0M/4xAAU1mFa9CZpy+UyD5kEOzWvyjzFiDpIKJ1bH2toq6tf
-	 8baEfSpQo88Xo0bYby2VEvob0pQVwJhVoFO07BjVozToYkVLXt7YcJbPBmG4dhSf4L
-	 PuQvyJNUwbAfzsVMm4VbT7hTErLnjxTe0wzHusJo=
+	b=jok/NdjSorSqkdQASP3as+G1DbcZh2zOjflulUmXx7T65eKmUugI/oXAEWb2yrQNl
+	 h7LyBtnFJiI9GrmNXOk6F9P3WCeIYixFUkg8SQDmk5yQ0dPr0RXWPott2zgj93YMnW
+	 qrETCQaxyWgpaaPGmZHF/JhAJpP60n/Wcmk92IwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 101/134] cxgb4: add forgotten u64 ivlan cast before shift
-Date: Sun,  1 Sep 2024 18:17:27 +0200
-Message-ID: <20240901160813.891732567@linuxfoundation.org>
+	Ben Whitten <ben.whitten@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 102/134] mmc: dw_mmc: allow biu and ciu clocks to defer
+Date: Sun,  1 Sep 2024 18:17:28 +0200
+Message-ID: <20240901160813.928704308@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,38 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Ben Whitten <ben.whitten@gmail.com>
 
-commit 80a1e7b83bb1834b5568a3872e64c05795d88f31 upstream.
+commit 6275c7bc8dd07644ea8142a1773d826800f0f3f7 upstream.
 
-It is done everywhere in cxgb4 code, e.g. in is_filter_exact_match()
-There is no reason it should not be done here
+Fix a race condition if the clock provider comes up after mmc is probed,
+this causes mmc to fail without retrying.
+When given the DEFER error from the clk source, pass it on up the chain.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Fixes: f90a0612f0e1 ("mmc: dw_mmc: lookup for optional biu and ciu clocks")
+Signed-off-by: Ben Whitten <ben.whitten@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 12b276fbf6e0 ("cxgb4: add support to create hash filters")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240819075408.92378-1-kniv@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240811212212.123255-1-ben.whitten@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c
-@@ -969,7 +969,8 @@ static u64 hash_filter_ntuple(struct ch_
- 	 * in the Compressed Filter Tuple.
- 	 */
- 	if (tp->vlan_shift >= 0 && fs->mask.ivlan)
--		ntuple |= (FT_VLAN_VLD_F | fs->val.ivlan) << tp->vlan_shift;
-+		ntuple |= (u64)(FT_VLAN_VLD_F |
-+				fs->val.ivlan) << tp->vlan_shift;
- 
- 	if (tp->port_shift >= 0 && fs->mask.iport)
- 		ntuple |= (u64)fs->val.iport << tp->port_shift;
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -3179,6 +3179,10 @@ int dw_mci_probe(struct dw_mci *host)
+ 	host->biu_clk = devm_clk_get(host->dev, "biu");
+ 	if (IS_ERR(host->biu_clk)) {
+ 		dev_dbg(host->dev, "biu clock not available\n");
++		ret = PTR_ERR(host->biu_clk);
++		if (ret == -EPROBE_DEFER)
++			return ret;
++
+ 	} else {
+ 		ret = clk_prepare_enable(host->biu_clk);
+ 		if (ret) {
+@@ -3190,6 +3194,10 @@ int dw_mci_probe(struct dw_mci *host)
+ 	host->ciu_clk = devm_clk_get(host->dev, "ciu");
+ 	if (IS_ERR(host->ciu_clk)) {
+ 		dev_dbg(host->dev, "ciu clock not available\n");
++		ret = PTR_ERR(host->ciu_clk);
++		if (ret == -EPROBE_DEFER)
++			goto err_clk_biu;
++
+ 		host->bus_hz = host->pdata->bus_hz;
+ 	} else {
+ 		ret = clk_prepare_enable(host->ciu_clk);
 
 
