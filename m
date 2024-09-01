@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E2717E01C;
-	Sun,  1 Sep 2024 16:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D0018132F;
+	Sun,  1 Sep 2024 16:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207717; cv=none; b=LKh5xRGKh+CZUQvUbyJIQI/QwceIxQh9HqoB78fYVcSekT/7myShuP49KXpHniCvAfQWIGQEP5fKHcKXQz4FmOwcKSSxDZdHcd+zSqSc5sI8R3BlHTZWR+vO3mFE3vKn/WtQiDPa1F5Qczy3FwY20bCCqd2b7YPZDr0XUxK0TBY=
+	t=1725207721; cv=none; b=Zuq2cESGKL/NeMLn5doO+DkZmxoT6kWd3PCVbFvvezNp1pnVPz/ve5FTeq8OI66mdPDwhk1hOTm86dyRRC7860YTqC5SOgEMwobf/jBDf232qmyF4yw4KKGDG1OG3tdDT0dbWpXjx1qbE01BA8Lab5JKWDXtbZgWnq+XUQrw3no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207717; c=relaxed/simple;
-	bh=jLd0gF9qozKn4XVnjGm58Slr2T6DzctitxFVluO8PP8=;
+	s=arc-20240116; t=1725207721; c=relaxed/simple;
+	bh=rY1jPElhtJF7uKuk6KtO4DbGjHHVUo2QVD3iM+bXhdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQMjsSXoVyWvPxNnoMX+KIFhfDmybyvI9EWNtPEtuC57Gb7vJK2DrFf0ZFzMqxRnnC0HCj6tVVN9z7itNB/7PJQJTAgjs0a2pKBJkgX7F2bj3oM4MK3KYb6SN6Yqh74EHaXgHtCf+A0j6cuN7FPL4Ol3dEC28lVqw0DIur9OEMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRjsq0U2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iLpL6U85TZI+dMam+JkSY9VgsnCh7nwa4Ba/PoNet+XInd0B7ni4+cvRn7Jg88dd8Tv3dSfV3OgwtTP5KOIOjA3fOPMGK2E66Mml4o4tUvMIxQN6Su6Tax5dW6qRWHRhCawcehsu+wTJXYjkoQuRH0IJUt3t+dQOAhq5VJbwBEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCwGaOzL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRjsq0U2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0E5C4CEC3;
-	Sun,  1 Sep 2024 16:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCwGaOzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922F9C4CEC3;
+	Sun,  1 Sep 2024 16:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207717;
-	bh=jLd0gF9qozKn4XVnjGm58Slr2T6DzctitxFVluO8PP8=;
+	s=korg; t=1725207721;
+	bh=rY1jPElhtJF7uKuk6KtO4DbGjHHVUo2QVD3iM+bXhdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRjsq0U2/uyG7VNIbX4jAkbhrkUngeVv45qXlg1nkVWPMTswVvQnCznUk3b1XPKID
-	 NS2yTq4DTpYWiRXxgAQEopNOsxC8akabTBweTMokva/B7a5O6ovl5e49tH6EkH0W6H
-	 tDSJB/I3sGbGJ5GHAGUYKd4d6LUohxA8kP8VzP2k=
+	b=uCwGaOzLZCCGeufSgCuh4GlZ85K9tIlKP/57zqmwes9kIZJJuN/ID/eYo2sheNem+
+	 OIBMj1eEIyrDxkJ6+uOtx4UyENH/C5+rDSs2wyA2wPCYV42xCsRT6+eHvahEspLxE5
+	 1MoMtOr+eBKRYCnrzrwcoGuRRXj0dLFUndWRQWQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 25/98] powerpc/xics: Check return value of kasprintf in icp_native_map_one_cpu
-Date: Sun,  1 Sep 2024 18:15:55 +0200
-Message-ID: <20240901160804.641050000@linuxfoundation.org>
+Subject: [PATCH 4.19 26/98] ext4: do not trim the group with corrupted block bitmap
+Date: Sun,  1 Sep 2024 18:15:56 +0200
+Message-ID: <20240901160804.678846751@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -51,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 45b1ba7e5d1f6881050d558baf9bc74a2ae13930 ]
+[ Upstream commit 172202152a125955367393956acf5f4ffd092e0d ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+Otherwise operating on an incorrupted block bitmap can lead to all sorts
+of unknown problems.
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231122030651.3818-1-chentao@kylinos.cn
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xics/icp-native.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/mballoc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/powerpc/sysdev/xics/icp-native.c b/arch/powerpc/sysdev/xics/icp-native.c
-index 340de58a15bd6..71278d554715d 100644
---- a/arch/powerpc/sysdev/xics/icp-native.c
-+++ b/arch/powerpc/sysdev/xics/icp-native.c
-@@ -240,6 +240,8 @@ static int __init icp_native_map_one_cpu(int hw_id, unsigned long addr,
- 	rname = kasprintf(GFP_KERNEL, "CPU %d [0x%x] Interrupt Presentation",
- 			  cpu, hw_id);
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 5dcc3cad5c7d3..75dbe40ed8f72 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5219,6 +5219,9 @@ static int ext4_try_to_trim_range(struct super_block *sb,
+ 	bool set_trimmed = false;
+ 	void *bitmap;
  
-+	if (!rname)
-+		return -ENOMEM;
- 	if (!request_mem_region(addr, size, rname)) {
- 		pr_warn("icp_native: Could not reserve ICP MMIO for CPU %d, interrupt server #0x%x\n",
- 			cpu, hw_id);
++	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
++		return 0;
++
+ 	last = ext4_last_grp_cluster(sb, e4b->bd_group);
+ 	bitmap = e4b->bd_bitmap;
+ 	if (start == 0 && max >= last)
 -- 
 2.43.0
 
