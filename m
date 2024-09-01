@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7132B28387;
-	Sun,  1 Sep 2024 16:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3417183CC3;
+	Sun,  1 Sep 2024 16:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208111; cv=none; b=Kzvk1dVSPcYyjYSbLldEc6Putm/CD0W9bIf8kD35YtE03hPexjIC1PcxsMBn3AtAe8FUB8u8nIITU2ziRdjeInJmvHROp3p82R52ew7npq5cgE7apej2W6wOh/GzHLcF0AWeW1Alk9HHL+xerGvf7lZF9JywZ3GNFy8ywLeiY3c=
+	t=1725208115; cv=none; b=IlLSu65IiIMibEIySjTW7HCBPbqivVMKmzvOiOCURWLhabhhDQOy30F4YzFAjozQr4+VnYuiYJNMkqnJR6hksM1yI/Kt2xPeK4zi2/7nBVylpAo4BfqrAW4t5xAMbvicHOZGtKMiar7TlKAzD2P9En1M2oHfQrpEzTxwyAt89Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208111; c=relaxed/simple;
-	bh=yDPNE+F140U4txi0M9xtXrs4qjjuOHtKgo0piNtvTME=;
+	s=arc-20240116; t=1725208115; c=relaxed/simple;
+	bh=3fFpSZ1vdASQmz/DN8EFx18NuYBvPqQIZ3+CTkaGR9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qb2q3l/ZknOp+v5Ws+oXJ92628Xn1AxtfCCwD1zaRHfYyWJ8wKhwmo5fsYS4blbvZ+8PyI2CA9lT7zO97CePIVozR7QOzUgYa42LbG4ty9p4TlPxZSYkZzr8N8Elewuazu+4GgePlaYiUj8aRO4zuUTnl35rnOkh3iN9+aA7dF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1RnwMvr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOZm0xdW8uzhLfywdeHCbqJd/AjkjMgklvmj1XQ/32tKRSx+LNhF6wip3Piqb8vCerVeAFHqC0PBbjThzjeXcJK7CHrra56tCHUZCcDaZDfNc3SHLCKg1yB4ZzNNQE4qN/WjfFkaoYERpc4SJVc3dTFLINzQ7klXMB92m40WP+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dshKwQcX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1RnwMvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48AFC4CEC3;
-	Sun,  1 Sep 2024 16:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dshKwQcX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F338C4CEC3;
+	Sun,  1 Sep 2024 16:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208111;
-	bh=yDPNE+F140U4txi0M9xtXrs4qjjuOHtKgo0piNtvTME=;
+	s=korg; t=1725208114;
+	bh=3fFpSZ1vdASQmz/DN8EFx18NuYBvPqQIZ3+CTkaGR9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1RnwMvrpUSIvZGQH3lbDkLCnu3r+0Pzr71HQa4l6xyDaHt+DkmD/jf6JywFsJ1WC
-	 Xyu30Yb5G9oBZcfjcvBoJYlg9xMhP52NxgCzFxv5P+oJ7R9Y7ZlrKShV0zDVQQopAQ
-	 CJgbY+eGixKt5mXT3ICIwKLy487ZjbmtvI5+0Fko=
+	b=dshKwQcX11yVW/i+AjbD+LO4gbEbsVLJvBOUiu8SvkdoWSwdQX90Wp15AMQfysmQS
+	 2ObBLXyXPXPhMXbJD/n5uaE1gTrDW/lnxelYFc+jLbshS0C2qoCvaV3ufFzCtiH1z3
+	 +1I9K76xLTgFQ9EPRAsay9HqFoM7TCt5Dx8u3Obc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Vok=C3=A1=C4=8D?= <michal.vokac@ysoft.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.6 77/93] ARM: dts: imx6dl-yapp43: Increase LED current to match the yapp4 HW design
-Date: Sun,  1 Sep 2024 18:17:04 +0200
-Message-ID: <20240901160810.635612275@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 6.6 78/93] usb: dwc3: omap: add missing depopulate in probe error path
+Date: Sun,  1 Sep 2024 18:17:05 +0200
+Message-ID: <20240901160810.673075721@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -44,74 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Vokáč <michal.vokac@ysoft.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 8512fbb64b0e599412da661412d10d4ba1cb003c upstream.
+commit 2aa765a43817ec8add990f83c8e54a9a5d87aa9c upstream.
 
-On the imx6dl-yapp4 revision based boards, the RGB LED is not driven
-directly by the LP5562 driver but through FET transistors. Hence the LED
-current is not determined by the driver but by the LED series resistors.
+Depopulate device in probe error paths to fix leak of children
+resources.
 
-On the imx6dl-yapp43 revision based boards, we removed the FET transistors
-to drive the LED directly from the LP5562 but forgot to tune the output
-current to match the previous HW design.
-
-Set the LED current on imx6dl-yapp43 based boards to the same values
-measured on the imx6dl-yapp4 boards and limit the maximum current to 20mA.
-
-Fixes: 7da4734751e0 ("ARM: dts: imx6dl-yapp43: Add support for new HW revision of the IOTA board")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Michal Vokáč <michal.vokac@ysoft.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: ee249b455494 ("usb: dwc3: omap: remove IRQ_NOAUTOEN used with shared irq")
+Cc: stable@vger.kernel.org
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/20240816075409.23080-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/dwc3-omap.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi b/arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi
-index 52a0f6ee426f..bcf4d9c870ec 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi
-@@ -274,24 +274,24 @@ leds: led-controller@30 {
+--- a/drivers/usb/dwc3/dwc3-omap.c
++++ b/drivers/usb/dwc3/dwc3-omap.c
+@@ -522,11 +522,13 @@ static int dwc3_omap_probe(struct platfo
+ 	if (ret) {
+ 		dev_err(dev, "failed to request IRQ #%d --> %d\n",
+ 			omap->irq, ret);
+-		goto err1;
++		goto err2;
+ 	}
+ 	dwc3_omap_enable_irqs(omap);
+ 	return 0;
  
- 		led@0 {
- 			chan-name = "R";
--			led-cur = /bits/ 8 <0x20>;
--			max-cur = /bits/ 8 <0x60>;
-+			led-cur = /bits/ 8 <0x6e>;
-+			max-cur = /bits/ 8 <0xc8>;
- 			reg = <0>;
- 			color = <LED_COLOR_ID_RED>;
- 		};
- 
- 		led@1 {
- 			chan-name = "G";
--			led-cur = /bits/ 8 <0x20>;
--			max-cur = /bits/ 8 <0x60>;
-+			led-cur = /bits/ 8 <0xbe>;
-+			max-cur = /bits/ 8 <0xc8>;
- 			reg = <1>;
- 			color = <LED_COLOR_ID_GREEN>;
- 		};
- 
- 		led@2 {
- 			chan-name = "B";
--			led-cur = /bits/ 8 <0x20>;
--			max-cur = /bits/ 8 <0x60>;
-+			led-cur = /bits/ 8 <0xbe>;
-+			max-cur = /bits/ 8 <0xc8>;
- 			reg = <2>;
- 			color = <LED_COLOR_ID_BLUE>;
- 		};
--- 
-2.46.0
-
++err2:
++	of_platform_depopulate(dev);
+ err1:
+ 	pm_runtime_put_sync(dev);
+ 	pm_runtime_disable(dev);
 
 
