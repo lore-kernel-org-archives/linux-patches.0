@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C231C68C;
-	Sun,  1 Sep 2024 16:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE93208A7;
+	Sun,  1 Sep 2024 16:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209883; cv=none; b=PhFGRa429foYOTAaoJFYEYE0gyA0VWNfdBalUuuw6GT/5vLiXeA3okSrDSTV3YfYlTlzHyAGxvMED5n9JfV40uaHTYSvEBznx+n/Fooe/l3ApYcRZXk3fG7cL5wi9sqVtr3UcDU9bGGOF4UGTSJ+aLurQ04e7YSEOWheC6amHjY=
+	t=1725209886; cv=none; b=uxulDw8xK99NjTBl9kH+CKUlugAqcraP0CK5asE9Fcx+mDD7ryyoV4ODZhBKY8SwYq74vNncVoPd0kNhqP5HamUTvzu0mj8ZXy7a0OWVzA+rJKNaVJGU9dH4cjtScZT7nrElzy/zsDJmZfTifqUfbqX40RVBoZEhUSK+EnYD/dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209883; c=relaxed/simple;
-	bh=n7NPwQ6PpSCM08cGXk9NypTfHyYgPw4fNa/9RweTdYw=;
+	s=arc-20240116; t=1725209886; c=relaxed/simple;
+	bh=QUthQExYXC4IrjYr3atM94zh31DDwOXTYsTD9LCs7T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4g8/NNJ6aQeVvi0XF4xdsTO/KDRZbmT1DfUYc3ThzwZDE6meK8pcF33DnTYkZAe1BHhuLmFbK0HUkUc+Z6iSdUQ0gcVGH7P4MbgR6r+6ePUiuofRIHd1Ahh3K48sDpxzD3h9AtKCwg8BYP2qp931gz2n7JBALy7ZUwNk4nalB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sn5OE3vs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBMmDtZ4EKR6qqC1XwwnBY8QDzE5VB50enOjQ6Eok7vWfL7qenAmCBr0/XAtKRb9rnDQhwcsApZEiKmbIqew691DWvHwMNujyMjqL/WduEwdDK/kDS6jbECgFrghMJVb920r+42L7yPwODIeOh5SvhUyysgv+ykVLbWUQHr+KeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMZKdCEz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sn5OE3vs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BD7C4CEC3;
-	Sun,  1 Sep 2024 16:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMZKdCEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136A2C4CEC3;
+	Sun,  1 Sep 2024 16:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209883;
-	bh=n7NPwQ6PpSCM08cGXk9NypTfHyYgPw4fNa/9RweTdYw=;
+	s=korg; t=1725209886;
+	bh=QUthQExYXC4IrjYr3atM94zh31DDwOXTYsTD9LCs7T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sn5OE3vsNyaRjprhxWEBU3b8r7VHFackjpiZN/lCvPBV088mRgVqr+vHc9TfRz6N6
-	 M+w5CsPSpQSUtrAAFdBjvEEeqHeifhGZRXXXHZFOXkXJfC9W42+gaOG956cHgkgXnL
-	 1x4GEvh7R7HnqjLlOKNUTJhDq/BMsHEREh0jetos=
+	b=wMZKdCEzwv3g1FWU1c60sz3W1FaW0KfNjBKMfwoe3BZL4P6+4mOhRiCHLmTWLkiLy
+	 ZApt0NbRN2QUv1fkHwZ52lrpzhJRzoUmwxEouZeogxYnGuvXZ09jW3SoGxiON4Wd2Q
+	 tNDDoelirw/APswKzbFhn6ZUxO24aoYLOXrtsrB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.15 022/215] memcg_write_event_control(): fix a user-triggerable oops
-Date: Sun,  1 Sep 2024 18:15:34 +0200
-Message-ID: <20240901160824.101030890@linuxfoundation.org>
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 023/215] drm/amdgpu/jpeg2: properly set atomics vmid field
+Date: Sun,  1 Sep 2024 18:15:35 +0200
+Message-ID: <20240901160824.138227596@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,39 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 046667c4d3196938e992fba0dfcde570aa85cd0e upstream.
+commit e414a304f2c5368a84f03ad34d29b89f965a33c9 upstream.
 
-we are *not* guaranteed that anything past the terminating NUL
-is mapped (let alone initialized with anything sane).
+This needs to be set as well if the IB uses atomics.
 
-Fixes: 0dea116876ee ("cgroup: implement eventfd-based generic API for notifications")
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 35c628774e50b3784c59e8ca7973f03bcb067132)
 Cc: stable@vger.kernel.org
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -4807,9 +4807,12 @@ static ssize_t memcg_write_event_control
- 	buf = endp + 1;
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
+@@ -557,11 +557,11 @@ void jpeg_v2_0_dec_ring_emit_ib(struct a
  
- 	cfd = simple_strtoul(buf, &endp, 10);
--	if ((*endp != ' ') && (*endp != '\0'))
-+	if (*endp == '\0')
-+		buf = endp;
-+	else if (*endp == ' ')
-+		buf = endp + 1;
-+	else
- 		return -EINVAL;
--	buf = endp + 1;
+ 	amdgpu_ring_write(ring, PACKETJ(mmUVD_LMI_JRBC_IB_VMID_INTERNAL_OFFSET,
+ 		0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
++	amdgpu_ring_write(ring, (vmid | (vmid << 4) | (vmid << 8)));
  
- 	event = kzalloc(sizeof(*event), GFP_KERNEL);
- 	if (!event)
+ 	amdgpu_ring_write(ring, PACKETJ(mmUVD_LMI_JPEG_VMID_INTERNAL_OFFSET,
+ 		0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
++	amdgpu_ring_write(ring, (vmid | (vmid << 4) | (vmid << 8)));
+ 
+ 	amdgpu_ring_write(ring,	PACKETJ(mmUVD_LMI_JRBC_IB_64BIT_BAR_LOW_INTERNAL_OFFSET,
+ 		0, 0, PACKETJ_TYPE0));
 
 
