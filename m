@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D56186E43;
-	Sun,  1 Sep 2024 16:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB76187866;
+	Sun,  1 Sep 2024 16:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209074; cv=none; b=e0y7rvgpuVIgFelubgrVrFkR367VVwNGBEdPiID/R80X57HhjE9nAQuSx5yVmNGjABPRGOtCZguRFrv6AophXo/UCpgbp39s/9fmeMc6emhDxw2Lk2AnpsOTBjaVH7vCu03Z8bpb5xF/BibGHdQQhEA4lRA/tirGipdaNtSmRXs=
+	t=1725209077; cv=none; b=jlGt/Dgi6Z0i2Xs6v5xOeaeaYN+HMh/ju7if0C6Rqa73r7w415ANqwaIpi4fJRZsIazCt6iqWL/tf8cpnsGFjdT+M/E6z8ZntifpT4kYDUN1p6mo4HCqVLGlxJ5vfYGhSAC4R3zH6gXsiHj+BvIuJtoFErrf30n41MGbLlYW0RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209074; c=relaxed/simple;
-	bh=/tEDIdbSU+IiNyLz7/tIAE7fToNY9O3kn73oM6hCelM=;
+	s=arc-20240116; t=1725209077; c=relaxed/simple;
+	bh=zfIVDZ++hPOLBEK3oz6U1xatxw9Z40PH3RNul3DMFXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I80HjFBWcxp+D6sVPOESaEchftmKm3Rqg36qC3oyWRY3qirSMArgbY5sqtUVjMIF5Pa6/PEhTcW94deM/VTW3QyRmWgz6Ki0cIhUB0yE4h3Pv3jl1ophqcjXeuWmmPQ64JXCZbCTHslR1zQjcTFOA6HZNoJBOjxRlsaLoK405IE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kokLY1jW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLVID/9LIYO4I+hUv85wpgukGppk+NlbraNoiKLOekoHvx3f6qmsevQ+eXSIJTsC9PTpTsX4L4BXbDPBbJtgryjDW2aCCiHNVX9buwDepTFOtemGJVPuah/BgnyWi4/b6b6+grlsPS6U6LJ75qM1tPI1/n0pkBM+hI2Vj8ocwMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNV0CvYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kokLY1jW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E90C4CEC8;
-	Sun,  1 Sep 2024 16:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNV0CvYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FAEC4CEC9;
+	Sun,  1 Sep 2024 16:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209074;
-	bh=/tEDIdbSU+IiNyLz7/tIAE7fToNY9O3kn73oM6hCelM=;
+	s=korg; t=1725209077;
+	bh=zfIVDZ++hPOLBEK3oz6U1xatxw9Z40PH3RNul3DMFXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kokLY1jWcZg5btvG2W8eXRIG0LaaCJjyaz6857N1NKEo65vUjUeiGgW5j492czbj3
-	 7k9CdtxPLT23QVzqQHTSypurclvp1KiqlOLVaiGbiO1Yo7VtzI6IirLorWMQMdcZP6
-	 A/o9STyclg3f1LmlNj1XRXQfiC+CtsyVyY6AfV4c=
+	b=fNV0CvYkQTCOk8E9kMp7TXvIdwXgkTjWnBylbR6mQWxOcqrLSHKQCLfai5w4ZoUka
+	 IRvqo5skcXTJ6MZwcFgpI1ZChu0myJEiVXr+4B2taH2tfPeHOMnCuWvOGalGBh2Xb0
+	 wEv1oelWwA37iWj9Icn6WSPG7cjf8x3MWlKKMX80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/134] net: xilinx: axienet: Fix dangling multicast addresses
-Date: Sun,  1 Sep 2024 18:17:20 +0200
-Message-ID: <20240901160813.633742540@linuxfoundation.org>
+Subject: [PATCH 5.4 095/134] drm/msm: use drm_debug_enabled() to check for debug categories
+Date: Sun,  1 Sep 2024 18:17:21 +0200
+Message-ID: <20240901160813.670282230@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,92 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 797a68c9de0f5a5447baf4bd3bb9c10a3993435b ]
+[ Upstream commit d8db0b36d888b6a5eb392f112dc156e694de2369 ]
 
-If a multicast address is removed but there are still some multicast
-addresses, that address would remain programmed into the frame filter.
-Fix this by explicitly setting the enable bit for each filter.
+Allow better abstraction of the drm_debug global variable in the
+future. No functional changes.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240822154059.1066595-3-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2: Move unlikely() to drm_debug_enabled()
+
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/c7142cdebb5f6fed527272b333cd6c43c0aa68ec.1569329774.git.jani.nikula@intel.com
+Stable-dep-of: df24373435f5 ("drm/msm/dpu: don't play tricks with debug macros")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h  |  1 +
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 21 ++++++++-----------
- 2 files changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index bf1a19a00adc6..c43d437f22bdf 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -169,6 +169,7 @@
- #define XAE_UAW0_OFFSET		0x00000700 /* Unicast address word 0 */
- #define XAE_UAW1_OFFSET		0x00000704 /* Unicast address word 1 */
- #define XAE_FMI_OFFSET		0x00000708 /* Frame Filter Control */
-+#define XAE_FFE_OFFSET		0x0000070C /* Frame Filter Enable */
- #define XAE_AF0_OFFSET		0x00000710 /* Address Filter 0 */
- #define XAE_AF1_OFFSET		0x00000714 /* Address Filter 1 */
- 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 80bb6b85bd441..2aacc077ee2bc 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -409,7 +409,7 @@ static int netdev_set_mac_address(struct net_device *ndev, void *p)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 6a4813505c33c..d6c26426b1c6e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -31,7 +31,7 @@
   */
- static void axienet_set_multicast_list(struct net_device *ndev)
- {
--	int i;
-+	int i = 0;
- 	u32 reg, af0reg, af1reg;
- 	struct axienet_local *lp = netdev_priv(ndev);
- 
-@@ -431,7 +431,6 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 		reg &= ~XAE_FMI_PM_MASK;
- 		axienet_iow(lp, XAE_FMI_OFFSET, reg);
- 
--		i = 0;
- 		netdev_for_each_mc_addr(ha, ndev) {
- 			if (i >= XAE_MULTICAST_CAM_TABLE_NUM)
- 				break;
-@@ -450,6 +449,7 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 			axienet_iow(lp, XAE_FMI_OFFSET, reg);
- 			axienet_iow(lp, XAE_AF0_OFFSET, af0reg);
- 			axienet_iow(lp, XAE_AF1_OFFSET, af1reg);
-+			axienet_iow(lp, XAE_FFE_OFFSET, 1);
- 			i++;
- 		}
- 	} else {
-@@ -457,18 +457,15 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 		reg &= ~XAE_FMI_PM_MASK;
- 
- 		axienet_iow(lp, XAE_FMI_OFFSET, reg);
--
--		for (i = 0; i < XAE_MULTICAST_CAM_TABLE_NUM; i++) {
--			reg = axienet_ior(lp, XAE_FMI_OFFSET) & 0xFFFFFF00;
--			reg |= i;
--
--			axienet_iow(lp, XAE_FMI_OFFSET, reg);
--			axienet_iow(lp, XAE_AF0_OFFSET, 0);
--			axienet_iow(lp, XAE_AF1_OFFSET, 0);
--		}
--
- 		dev_info(&ndev->dev, "Promiscuous mode disabled.\n");
- 	}
-+
-+	for (; i < XAE_MULTICAST_CAM_TABLE_NUM; i++) {
-+		reg = axienet_ior(lp, XAE_FMI_OFFSET) & 0xFFFFFF00;
-+		reg |= i;
-+		axienet_iow(lp, XAE_FMI_OFFSET, reg);
-+		axienet_iow(lp, XAE_FFE_OFFSET, 0);
-+	}
- }
- 
- /**
+ #define DPU_DEBUG(fmt, ...)                                                \
+ 	do {                                                               \
+-		if (unlikely(drm_debug & DRM_UT_KMS))                      \
++		if (drm_debug_enabled(DRM_UT_KMS))                         \
+ 			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+ 		else                                                       \
+ 			pr_debug(fmt, ##__VA_ARGS__);                      \
+@@ -43,7 +43,7 @@
+  */
+ #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+ 	do {                                                               \
+-		if (unlikely(drm_debug & DRM_UT_DRIVER))                   \
++		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+ 			DRM_ERROR(fmt, ##__VA_ARGS__); \
+ 		else                                                       \
+ 			pr_debug(fmt, ##__VA_ARGS__);                      \
 -- 
 2.43.0
 
