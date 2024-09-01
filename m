@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C648333987;
-	Sun,  1 Sep 2024 16:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA8B183CBB;
+	Sun,  1 Sep 2024 16:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208040; cv=none; b=rWD9Rv6JJ+Fwo42Rq0ZxNS0e/V8j9P/nNlHwmmx9SpiNMZhOX6+R5ZjREugC7Q+nxF9qJo6dafZiNguxt1wcm7UYlF29Z6OhPstS17I96j1po+Zg9L8zo3tC5yYFSQ0ghKJ5fpsZqMbLb1enhrJGb2sJi4AcxdLRv/PqNSULjUE=
+	t=1725208044; cv=none; b=bfrtWRMrl+Ja8WJeHkoYHErmVa9g3WoK5p4fI3VZBoPuRKa+Ik1f+X9bsb/dVzICKL6Qvb3zQBPYTMwiKoKNNvbw3jifFdYSGNUEgnGhhunCnByMstv4ztBucfFATjI8k63xzPpE0XAXetDKm+25l7Wr8ZRs/JlDUDFY1x70U+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208040; c=relaxed/simple;
-	bh=QgtJeAl8qchVKIN1TMqPvnnYhC+uN4/DSGbwJ5I8hGM=;
+	s=arc-20240116; t=1725208044; c=relaxed/simple;
+	bh=fmy81NGhasS5xP5MqERSpp1iVuyOhxS4xzOgb0XEgbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/FnsJmZpmC012sMum+fjqqgXixHIHgtVLEA5SDIIdZgddchRUXdaCBa41JYXGaLGQklVBZjNaZCTg8OXuM7J4ISXCAu7IvjHtqThgZ44nvMHr7EvhF2UszmJOSCNrPLYpzIbkA3GGyMqb6ETvSccAIf5dvIY4JTkj2n7Q2gJII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6byKXPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GnErGEPUk6v+HpmTUXfO+TQrYCfPSsLQyRFz/iqRCluG/XmlRu6L5HEkB3Yu+zCoJz5wUfiQBFODDX/QFBLxdZz/82JDB3ZEwlIr7I8WhkU2x4X+RVSYaSpp5rKVJIOChLPVPOqBFjOfm2O9E1neYIJOsYEJmM6cMkKHHSSDd+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHHdP5nd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6byKXPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35326C4CEC3;
-	Sun,  1 Sep 2024 16:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHHdP5nd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91022C4CEC8;
+	Sun,  1 Sep 2024 16:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208040;
-	bh=QgtJeAl8qchVKIN1TMqPvnnYhC+uN4/DSGbwJ5I8hGM=;
+	s=korg; t=1725208044;
+	bh=fmy81NGhasS5xP5MqERSpp1iVuyOhxS4xzOgb0XEgbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6byKXPCkNZOMkXRDyskAN0LQ+XVTLuOohgFGF88JcYogdi2SiWPyzly5B3QnqCIN
-	 s+ydMCgdxGD2nCkPy4fTG0MkIz7Mg+RVQ2zehURTdmHsbpH1oKHrLoRBh+m77pDCPF
-	 K67+TTupdkXBysUKKeNFwDoHITQ2rMmmceLvcaRs=
+	b=aHHdP5ndU0M/XtBfpmGOmxs7J4LsGSl8jVcTFPD8IlsjNlIVPYqomxHpjlu912ekZ
+	 Vjv7LE0Zva0AumrWgJ8f5j3A1pZXH8e9cx2ZvkMSlUX6kCTH3cidzGEoezdEM1QGpk
+	 PDTA3u8S3HRxIZY3TofSEhopR4NiioBQO2vVwXGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Jorge Ortiz <jorge.ortiz.escribano@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 55/93] iommu: Do not return 0 from map_pages if it doesnt do anything
-Date: Sun,  1 Sep 2024 18:16:42 +0200
-Message-ID: <20240901160809.434577460@linuxfoundation.org>
+Subject: [PATCH 6.6 56/93] netfilter: nf_tables: restore IP sanity checks for netdev/egress
+Date: Sun,  1 Sep 2024 18:16:43 +0200
+Message-ID: <20240901160809.471483953@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,82 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6093cd582f8e027117a8d4ad5d129a1aacdc53d2 ]
+[ Upstream commit 5fd0628918977a0afdc2e6bc562d8751b5d3b8c5 ]
 
-These three implementations of map_pages() all succeed if a mapping is
-requested with no read or write. Since they return back to __iommu_map()
-leaving the mapped output as 0 it triggers an infinite loop. Therefore
-nothing is using no-access protection bits.
+Subtract network offset to skb->len before performing IPv4 header sanity
+checks, then adjust transport offset from offset from mac header.
 
-Further, VFIO and iommufd rely on iommu_iova_to_phys() to get back PFNs
-stored by map, if iommu_map() succeeds but iommu_iova_to_phys() fails that
-will create serious bugs.
+Jorge Ortiz says:
 
-Thus remove this never used "nothing to do" concept and just fail map
-immediately.
+When small UDP packets (< 4 bytes payload) are sent from eth0,
+`meta l4proto udp` condition is not met because `NFT_PKTINFO_L4PROTO` is
+not set. This happens because there is a comparison that checks if the
+transport header offset exceeds the total length.  This comparison does
+not take into account the fact that the skb network offset might be
+non-zero in egress mode (e.g., 14 bytes for Ethernet header).
 
-Fixes: e5fc9753b1a8 ("iommu/io-pgtable: Add ARMv7 short descriptor support")
-Fixes: e1d3c0fd701d ("iommu: add ARM LPAE page table allocator")
-Fixes: 745ef1092bcf ("iommu/io-pgtable: Move Apple DART support to its own file")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/2-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 0ae8e4cca787 ("netfilter: nf_tables: set transport offset from mac header for netdev/egress")
+Reported-by: Jorge Ortiz <jorge.ortiz.escribano@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/io-pgtable-arm-v7s.c | 3 +--
- drivers/iommu/io-pgtable-arm.c     | 3 +--
- drivers/iommu/io-pgtable-dart.c    | 3 +--
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ include/net/netfilter/nf_tables_ipv4.h | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/io-pgtable-arm-v7s.c b/drivers/iommu/io-pgtable-arm-v7s.c
-index 75f244a3e12df..06ffc683b28fe 100644
---- a/drivers/iommu/io-pgtable-arm-v7s.c
-+++ b/drivers/iommu/io-pgtable-arm-v7s.c
-@@ -552,9 +552,8 @@ static int arm_v7s_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
- 		    paddr >= (1ULL << data->iop.cfg.oas)))
- 		return -ERANGE;
+diff --git a/include/net/netfilter/nf_tables_ipv4.h b/include/net/netfilter/nf_tables_ipv4.h
+index 60a7d0ce30804..fcf967286e37c 100644
+--- a/include/net/netfilter/nf_tables_ipv4.h
++++ b/include/net/netfilter/nf_tables_ipv4.h
+@@ -19,7 +19,7 @@ static inline void nft_set_pktinfo_ipv4(struct nft_pktinfo *pkt)
+ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ {
+ 	struct iphdr *iph, _iph;
+-	u32 len, thoff;
++	u32 len, thoff, skb_len;
  
--	/* If no access, then nothing to do */
- 	if (!(prot & (IOMMU_READ | IOMMU_WRITE)))
--		return 0;
-+		return -EINVAL;
+ 	iph = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb),
+ 				 sizeof(*iph), &_iph);
+@@ -30,8 +30,10 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ 		return -1;
  
- 	while (pgcount--) {
- 		ret = __arm_v7s_map(data, iova, paddr, pgsize, prot, 1, data->pgd,
-diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-index 72dcdd468cf30..934dc97f5df9e 100644
---- a/drivers/iommu/io-pgtable-arm.c
-+++ b/drivers/iommu/io-pgtable-arm.c
-@@ -480,9 +480,8 @@ static int arm_lpae_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
- 	if (WARN_ON(iaext || paddr >> cfg->oas))
- 		return -ERANGE;
+ 	len = iph_totlen(pkt->skb, iph);
+-	thoff = skb_network_offset(pkt->skb) + (iph->ihl * 4);
+-	if (pkt->skb->len < len)
++	thoff = iph->ihl * 4;
++	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
++
++	if (skb_len < len)
+ 		return -1;
+ 	else if (len < thoff)
+ 		return -1;
+@@ -40,7 +42,7 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
  
--	/* If no access, then nothing to do */
- 	if (!(iommu_prot & (IOMMU_READ | IOMMU_WRITE)))
--		return 0;
-+		return -EINVAL;
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
+ 	pkt->tprot = iph->protocol;
+-	pkt->thoff = thoff;
++	pkt->thoff = skb_network_offset(pkt->skb) + thoff;
+ 	pkt->fragoff = ntohs(iph->frag_off) & IP_OFFSET;
  
- 	prot = arm_lpae_prot_to_pte(data, iommu_prot);
- 	ret = __arm_lpae_map(data, iova, paddr, pgsize, pgcount, prot, lvl,
-diff --git a/drivers/iommu/io-pgtable-dart.c b/drivers/iommu/io-pgtable-dart.c
-index 74b1ef2b96bee..10811e0b773d3 100644
---- a/drivers/iommu/io-pgtable-dart.c
-+++ b/drivers/iommu/io-pgtable-dart.c
-@@ -250,9 +250,8 @@ static int dart_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
- 	if (WARN_ON(paddr >> cfg->oas))
- 		return -ERANGE;
- 
--	/* If no access, then nothing to do */
- 	if (!(iommu_prot & (IOMMU_READ | IOMMU_WRITE)))
--		return 0;
-+		return -EINVAL;
- 
- 	tbl = dart_get_table(data, iova);
- 
+ 	return 0;
 -- 
 2.43.0
 
