@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B11181B87;
-	Sun,  1 Sep 2024 16:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCC6184530;
+	Sun,  1 Sep 2024 16:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208396; cv=none; b=VRCOx4BW1owEvLilBm9tQvQIbK0ah/kk66R7vDUqS/ER6VdjHaNIWsiqb6L9Ra+Grmh8qoY8TYyb12Urwld4c9mV0MvIdcGTi0FwL6z83ElE65nZYZ12jaBtFb3rvzHfuvuU6sK/yBXZqQdTH8sI4p1MjJQYswgzbR4sWACtzaI=
+	t=1725208399; cv=none; b=IbbwWt/U1KVHA/UXwqwzWwhHd3TY2zTy+dLTVQiEYoi7EUMLDqZ8DXWAVw9Lotyy527nxMXroXnMAeEHtmsUrIsZXw3dVIavZEMvmMxFJvz8epgSVzRShojEVdw5mgw5D0KAE11fKxHDnZ+9L5cdHXcd9rm/76ExpTWy2KYli2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208396; c=relaxed/simple;
-	bh=mL4t1330ZVJydAYtzT9QEIsfT+natLABjBqOK5ayafU=;
+	s=arc-20240116; t=1725208399; c=relaxed/simple;
+	bh=Tlh4OJXMRH8HpRbgaRcd1tx5MJYujpDnn5LwH9I+E/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgtFww8K7A4eC/Q3Ya/fQf6lc3Cjomo0/vEH1oedA/QHPlQ+R5EOueD5kL4jyovQshchQFqisfSTA8X3smI75cnxb1n4XLtery8SpqnFYBuxpEiJjAo22II56pxC7NxU6rwc894K1zPLNmXI/pr760ELiMdgEqIPF4hkhofDPKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuBrMipr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5qSzRqV1BeSYFPwLi3Fk/nTMpmby8sUpaID306CbXAFFs4FdJxRaZZ9Q1pAhoWKjU58NZV/MvbdrqIVP8mdC8jRgxKt2LDS8TEe+7awVdc49crdhje7xhxrwHO7r5OwnXMuLLOf3Uz9zjYxViiKS5J04HRjdHBzyQW1UevxKyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxLEEenR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuBrMipr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0F0C4CEC3;
-	Sun,  1 Sep 2024 16:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxLEEenR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6BC4CEC3;
+	Sun,  1 Sep 2024 16:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208395;
-	bh=mL4t1330ZVJydAYtzT9QEIsfT+natLABjBqOK5ayafU=;
+	s=korg; t=1725208399;
+	bh=Tlh4OJXMRH8HpRbgaRcd1tx5MJYujpDnn5LwH9I+E/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuBrMipr2QUZ++oX9/HkbCpJppkHrJt51yyYVGF3YO1VM3ozXLCoB/dlYpA5Oe3wn
-	 Qey7TXBkxDYKEVIJKwPx1U9JyPPOK3fHVziVOM7R3T3XFlax1hDpkpEiFK8esogK9w
-	 W9p7Wz6ge9AxkGVLt5UR1fM+gD3GU+8jt0NpX7uw=
+	b=kxLEEenROlM9xowrn26ROTWAKv0BcS7yNLUFHaHqWlkmFbDdQGL2zja04FtgV3BHJ
+	 xAKejjtH7xrMKEgnvnGMlrgn/SHNVXG4ZSpZA3aUOnZ7hpFGQkcEkB/KIuFWz+Lfo4
+	 9aB1n2oibdl+qbgQB8FgoBg3Ch2vQOijivZWIsqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 070/149] netfs: Fix interaction of streaming writes with zero-point tracker
-Date: Sun,  1 Sep 2024 18:16:21 +0200
-Message-ID: <20240901160820.098239104@linuxfoundation.org>
+Subject: [PATCH 6.10 071/149] smb/client: remove unused rq_iter_size from struct smb_rqst
+Date: Sun,  1 Sep 2024 18:16:22 +0200
+Message-ID: <20240901160820.135682111@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -57,68 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit e00e99ba6c6b8e5239e75cd6684a6827d93c39a2 ]
+[ Upstream commit b608e2c318789aeba49055747166e13bee57df4a ]
 
-When a folio that is marked for streaming write (dirty, but not uptodate,
-with partial content specified in the private data) is written back, the
-folio is effectively switched to the blank state upon completion of the
-write.  This means that if we want to read it in future, we need to reread
-the whole folio.
-
-However, if the folio is above the zero_point position, when it is read
-back, it will just be cleared and the read skipped, leading to apparent
-local corruption.
-
-Fix this by increasing the zero_point to the end of the dirty data in the
-folio when clearing the folio state after writeback.  This is analogous to
-the folio having ->release_folio() called upon it.
-
-This was causing the config.log generated by configuring a cpython tree on
-a cifs share to get corrupted because the scripts involved were appending
-text to the file in small pieces.
-
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/563286.1724500613@warthog.procyon.org.uk
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_collect.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/client/cifsglob.h | 1 -
+ fs/smb/client/cifssmb.c  | 1 -
+ fs/smb/client/smb2ops.c  | 2 --
+ fs/smb/client/smb2pdu.c  | 2 --
+ 4 files changed, 6 deletions(-)
 
-diff --git a/fs/netfs/write_collect.c b/fs/netfs/write_collect.c
-index 488147439fe0f..a2b697b4aa401 100644
---- a/fs/netfs/write_collect.c
-+++ b/fs/netfs/write_collect.c
-@@ -33,6 +33,7 @@
- int netfs_folio_written_back(struct folio *folio)
- {
- 	enum netfs_folio_trace why = netfs_folio_trace_clear;
-+	struct netfs_inode *ictx = netfs_inode(folio->mapping->host);
- 	struct netfs_folio *finfo;
- 	struct netfs_group *group = NULL;
- 	int gcount = 0;
-@@ -41,6 +42,12 @@ int netfs_folio_written_back(struct folio *folio)
- 		/* Streaming writes cannot be redirtied whilst under writeback,
- 		 * so discard the streaming record.
- 		 */
-+		unsigned long long fend;
-+
-+		fend = folio_pos(folio) + finfo->dirty_offset + finfo->dirty_len;
-+		if (fend > ictx->zero_point)
-+			ictx->zero_point = fend;
-+
- 		folio_detach_private(folio);
- 		group = finfo->netfs_group;
- 		gcount++;
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 0a271b9fbc622..1e4da268de3b4 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -254,7 +254,6 @@ struct cifs_open_info_data {
+ struct smb_rqst {
+ 	struct kvec	*rq_iov;	/* array of kvecs */
+ 	unsigned int	rq_nvec;	/* number of kvecs in array */
+-	size_t		rq_iter_size;	/* Amount of data in ->rq_iter */
+ 	struct iov_iter	rq_iter;	/* Data iterator */
+ 	struct xarray	rq_buffer;	/* Page buffer for encryption */
+ };
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 595c4b673707e..6dce70f172082 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -1713,7 +1713,6 @@ cifs_async_writev(struct cifs_io_subrequest *wdata)
+ 	rqst.rq_iov = iov;
+ 	rqst.rq_nvec = 2;
+ 	rqst.rq_iter = wdata->subreq.io_iter;
+-	rqst.rq_iter_size = iov_iter_count(&wdata->subreq.io_iter);
+ 
+ 	cifs_dbg(FYI, "async write at %llu %zu bytes\n",
+ 		 wdata->subreq.start, wdata->subreq.len);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 7fe59235f0901..cfbca3489ece1 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4428,7 +4428,6 @@ smb3_init_transform_rq(struct TCP_Server_Info *server, int num_rqst,
+ 			}
+ 			iov_iter_xarray(&new->rq_iter, ITER_SOURCE,
+ 					buffer, 0, size);
+-			new->rq_iter_size = size;
+ 		}
+ 	}
+ 
+@@ -4474,7 +4473,6 @@ decrypt_raw_data(struct TCP_Server_Info *server, char *buf,
+ 	rqst.rq_nvec = 2;
+ 	if (iter) {
+ 		rqst.rq_iter = *iter;
+-		rqst.rq_iter_size = iov_iter_count(iter);
+ 		iter_size = iov_iter_count(iter);
+ 	}
+ 
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 52b95f33db57d..d262e70100c9c 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -4517,7 +4517,6 @@ smb2_readv_callback(struct mid_q_entry *mid)
+ 
+ 	if (rdata->got_bytes) {
+ 		rqst.rq_iter	  = rdata->subreq.io_iter;
+-		rqst.rq_iter_size = iov_iter_count(&rdata->subreq.io_iter);
+ 	}
+ 
+ 	WARN_ONCE(rdata->server != mid->server,
+@@ -4969,7 +4968,6 @@ smb2_async_writev(struct cifs_io_subrequest *wdata)
+ 	rqst.rq_iov = iov;
+ 	rqst.rq_nvec = 1;
+ 	rqst.rq_iter = wdata->subreq.io_iter;
+-	rqst.rq_iter_size = iov_iter_count(&rqst.rq_iter);
+ 	if (test_bit(NETFS_SREQ_RETRYING, &wdata->subreq.flags))
+ 		smb2_set_replay(server, &rqst);
+ #ifdef CONFIG_CIFS_SMB_DIRECT
 -- 
 2.43.0
 
