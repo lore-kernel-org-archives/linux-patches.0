@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88558186E33;
-	Sun,  1 Sep 2024 16:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8206183CD2;
+	Sun,  1 Sep 2024 16:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209184; cv=none; b=RqQCIV6ZBmC65GI6kDdq7nsxVTK1d9cDlmeVqZjoHI59pCafM7KdOKJCx1h7mMu5Ui39Lv530Sy1QXdSj3yCea9IDo6RUtZAuWCEmrX9GjaTVijI0tsIRGvK87IZz2NFhsqAZ6q+Q42uGYDkF3NgZdcMkxaEJj98CUsHJVzwRRM=
+	t=1725209187; cv=none; b=ksVtP45DJg2y8tCilhn9EHYfwvOMFEUNWqH0IX3GECo6FhtxfLffqWo6PpLu6tWp7MAIruxp8StNlZmTrCJ1P+4jOHw68H1p8RtclY4AOXUJAlSEQf3/qp8TSE+7IzKEYVSz1SQUDKLUvTyvVatV36HgWPTMQHUH9qaxzd3zkQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209184; c=relaxed/simple;
-	bh=IOfidqnWUEikfE0RvVPwLVAW8Ybr7sFfCGWjvwRw/N8=;
+	s=arc-20240116; t=1725209187; c=relaxed/simple;
+	bh=6NAK0sQycs92IGvXFHu+cU7RQrWAf5ll2NYr84kOQgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtSkaklm736q/8RS5yrzKaXEgeqeGspn2JTWL2tlHapPGMSMBLeZotvHfzAv1gKJER9A5Mbkxb06asj8VUKZfAM/qIgLqqvfTCJxlgN5pPqw5anfoVgQRcuzOm4ILZVkInKzfksy4ZeMzanu8UdubQswkgQxlw3mmARXLXN5dCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtLJ4bTT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2m+qi7w5Em4UPkoS8z7YabinZcq2dSmyAQxGsN0ObPMkICkAf67EzB6FkZJluKC4EolrppJU0jy5bwd7LVJ8v/8gOoa5DArn4qN6QgOvON4W0HUIJLcfLaRxxqLWuclPe8tz0XKunzGhbIrCWEELfVsJI1j2s0VdQ7BTAsJ9eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzOTDuRy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtLJ4bTT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E07C4CEC3;
-	Sun,  1 Sep 2024 16:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzOTDuRy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4ABAC4CEC3;
+	Sun,  1 Sep 2024 16:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209184;
-	bh=IOfidqnWUEikfE0RvVPwLVAW8Ybr7sFfCGWjvwRw/N8=;
+	s=korg; t=1725209187;
+	bh=6NAK0sQycs92IGvXFHu+cU7RQrWAf5ll2NYr84kOQgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtLJ4bTTGG8R/waLDMaUp6FcqKnaf64t2YgaQYktDn8e06C8bLrq/dg3UIl+f+xZ0
-	 6cbarU0LeIND17MYRIG4Qlp8FYTHEh7/OTkOcIxFbgx3wlOowl3te+S60Bc3Ykt2QO
-	 MbUeUQ+pSnUpAAeewp/b2M6y7JAZ+oF0b4GcCmgs=
+	b=PzOTDuRy18i+qrw8718lsthhc2sD1dHfIdynQD5nGlCGFnteXWFin9nVGuoBZ/JfW
+	 NU8AxaRG1ebfbaWhKmOsdqdJKmxnuQlf9tsLfJ0fTmMclWuC2b8TispFNgLrWOpXIN
+	 0RLoQtMJv+wXpOrBCtT1wDoVx+NgU2ohE1pDul9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/71] mptcp: pm: check add_addr_accept_max before accepting new ADD_ADDR
-Date: Sun,  1 Sep 2024 18:17:32 +0200
-Message-ID: <20240901160802.914894334@linuxfoundation.org>
+Subject: [PATCH 6.1 28/71] of: Introduce for_each_*_child_of_node_scoped() to automate of_node_put() handling
+Date: Sun,  1 Sep 2024 18:17:33 +0200
+Message-ID: <20240901160802.952136431@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -52,39 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 0137a3c7c2ea3f9df8ebfc65d78b4ba712a187bb ]
+[ Upstream commit 34af4554fb0ce164e2c4876683619eb1e23848d4 ]
 
-The limits might have changed in between, it is best to check them
-before accepting new ADD_ADDR.
+To avoid issues with out of order cleanup, or ambiguity about when the
+auto freed data is first instantiated, do it within the for loop definition.
 
-Fixes: d0876b2284cf ("mptcp: add the incoming RM_ADDR support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-10-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The disadvantage is that the struct device_node *child variable creation
+is not immediately obvious where this is used.
+However, in many cases, if there is another definition of
+struct device_node *child; the compiler / static analysers will notify us
+that it is unused, or uninitialized.
+
+Note that, in the vast majority of cases, the _available_ form should be
+used and as code is converted to these scoped handers, we should confirm
+that any cases that do not check for available have a good reason not
+to.
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20240225142714.286440-3-jic23@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Stable-dep-of: afc954fd223d ("thermal: of: Fix OF node leak in thermal_of_trips_init() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/of.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index d546e17063f75..9e16ae1b23fc7 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -870,8 +870,8 @@ static void mptcp_pm_nl_rm_addr_or_subflow(struct mptcp_sock *msk,
- 			/* Note: if the subflow has been closed before, this
- 			 * add_addr_accepted counter will not be decremented.
- 			 */
--			msk->pm.add_addr_accepted--;
--			WRITE_ONCE(msk->pm.accept_addr, true);
-+			if (--msk->pm.add_addr_accepted < mptcp_pm_get_add_addr_accept_max(msk))
-+				WRITE_ONCE(msk->pm.accept_addr, true);
- 		}
- 	}
- }
+diff --git a/include/linux/of.h b/include/linux/of.h
+index 506e30e4c959c..2960e609ca05e 100644
+--- a/include/linux/of.h
++++ b/include/linux/of.h
+@@ -1373,10 +1373,23 @@ static inline int of_property_read_s32(const struct device_node *np,
+ #define for_each_child_of_node(parent, child) \
+ 	for (child = of_get_next_child(parent, NULL); child != NULL; \
+ 	     child = of_get_next_child(parent, child))
++
++#define for_each_child_of_node_scoped(parent, child) \
++	for (struct device_node *child __free(device_node) =		\
++	     of_get_next_child(parent, NULL);				\
++	     child != NULL;						\
++	     child = of_get_next_child(parent, child))
++
+ #define for_each_available_child_of_node(parent, child) \
+ 	for (child = of_get_next_available_child(parent, NULL); child != NULL; \
+ 	     child = of_get_next_available_child(parent, child))
+ 
++#define for_each_available_child_of_node_scoped(parent, child) \
++	for (struct device_node *child __free(device_node) =		\
++	     of_get_next_available_child(parent, NULL);			\
++	     child != NULL;						\
++	     child = of_get_next_available_child(parent, child))
++
+ #define for_each_of_cpu_node(cpu) \
+ 	for (cpu = of_get_next_cpu_node(NULL); cpu != NULL; \
+ 	     cpu = of_get_next_cpu_node(cpu))
 -- 
 2.43.0
 
