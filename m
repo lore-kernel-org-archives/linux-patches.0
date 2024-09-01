@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA018537FF;
-	Sun,  1 Sep 2024 16:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C40817E46E;
+	Sun,  1 Sep 2024 16:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208215; cv=none; b=dQiGZmQJbvUcIxdGz9wfBYzteXAwrU0iVoiCb/42O8hWzpAS35fy727IE2XoXHbDNO21sJuDHV/jCpyFhOVAgEwEGUT/T5Fo1GUkhAy9Uft7eRFbfWzSdEJxqOEUlQc01duJylFFIrLBSTqrnZ2/2NB04GzlSKiL+aCktqIT13Q=
+	t=1725208218; cv=none; b=rsf1qIlMWgL9W4HDvG4foaux+UafE2yiUwUWf34dlIasj9sXMFYlQeVSsKM/LjHz8CTCMncatMQQDLEIQwkVAQgwsjwFD2tHKEUoueZke7nEKnxfViWXAl63bSqc3y2BBIy6TjRFOItwlXrxYaIv1lpupYqgLyzJy2pCOqcPXfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208215; c=relaxed/simple;
-	bh=xhn+MF3hqGrLXb1LRI3b0c5JVKjjLvNvVZqlphT19lI=;
+	s=arc-20240116; t=1725208218; c=relaxed/simple;
+	bh=CHNZQSIdmpqjlEL2phEnShEUaXKZYB2Yq1Ih8Gkd/JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSyeIomYRCk2C4X6h+JJsIcoX+pV9ljv0iA7FBoJDS07qwuNdKQGlgjsfV21zD6qviY/TtTbpmKBtmW12WB7DKMBNL+uzI/EWYXE+EFwx+HNeH2ejxDZehL16PsewYRubibysdtr7e8VKEU8Dy0TpeOLiQhn6Cii4SwNJYRvq+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2V5O9nqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O38FEofcL/gEAQ494Uy3seWpWfqxkB+dhYjP6W4xp62I2rAc73Ane9vWlQoyLB0DvaLRjaS9IiRQvnb2asKF9v500id644DYkRZbZcmZ1/ytlZHN+RqpZ66CGl78USz9bSS2oySVKgvL1bKmuWm45gpV58LGGemnKCmInWDF0oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJGx4VD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2V5O9nqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31360C4CEC3;
-	Sun,  1 Sep 2024 16:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJGx4VD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE312C4CEC3;
+	Sun,  1 Sep 2024 16:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208214;
-	bh=xhn+MF3hqGrLXb1LRI3b0c5JVKjjLvNvVZqlphT19lI=;
+	s=korg; t=1725208218;
+	bh=CHNZQSIdmpqjlEL2phEnShEUaXKZYB2Yq1Ih8Gkd/JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2V5O9nqsFDR57FvnegInxeAuc83cHU0ZNA4UjPv3TDvSaxBQXOJL5oCBdZE8MzIJI
-	 KV6BtVKD9PM/Zn1St6GUfqCAQ+per85uqgYUzh+2ZTIVlK/RJLGb4UeQA5tepxGe+M
-	 y0Py8J/fmH4h9iCzTfDqJkr8iH/u87y2rEojN2Hw=
+	b=bJGx4VD21CC0iG/lnW1Lm0Z9tjkSaDhXRkzfyr7UD6kwPZVSBAykZZFLoxqEPBXaQ
+	 BgAVH3u/GjePKQJZATb9N+h37EhykFGLa3Wvh5uhsFw19D4mzdHx21PZsC8XbcUPF4
+	 D4jw1zFldyjmdZxBobDwplHG2MVuYd0K3Wq+5CXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	ceph-devel@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.10 014/149] netfs, ceph: Partially revert "netfs: Replace PG_fscache by setting folio->private and marking dirty"
-Date: Sun,  1 Sep 2024 18:15:25 +0200
-Message-ID: <20240901160818.003327412@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.10 015/149] wifi: wfx: repair open network AP mode
+Date: Sun,  1 Sep 2024 18:15:26 +0200
+Message-ID: <20240901160818.040873135@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -53,78 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 92764e8822d4e7f8efb5ad959fac195a7f8ea0c6 upstream.
+commit 6d30bb88f623526197c0e18a366e68a4254a2c83 upstream.
 
-This partially reverts commit 2ff1e97587f4d398686f52c07afde3faf3da4e5c.
+RSN IE missing in beacon is normal in open networks.
+Avoid returning -EINVAL in this case.
 
-In addition to reverting the removal of PG_private_2 wrangling from the
-buffered read code[1][2], the removal of the waits for PG_private_2 from
-netfs_release_folio() and netfs_invalidate_folio() need reverting too.
+Steps to reproduce:
 
-It also adds a wait into ceph_evict_inode() to wait for netfs read and
-copy-to-cache ops to complete.
+$ cat /etc/wpa_supplicant.conf
+network={
+	ssid="testNet"
+	mode=2
+	key_mgmt=NONE
+}
 
-Fixes: 2ff1e97587f4 ("netfs: Replace PG_fscache by setting folio->private and marking dirty")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/3575457.1722355300@warthog.procyon.org.uk [1]
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8e5ced7804cb9184c4a23f8054551240562a8eda [2]
-Link: https://lore.kernel.org/r/20240814203850.2240469-2-dhowells@redhat.com
-cc: Max Kellermann <max.kellermann@ionos.com>
-cc: Ilya Dryomov <idryomov@gmail.com>
-cc: Xiubo Li <xiubli@redhat.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: ceph-devel@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-cc: linux-mm@kvack.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+$ wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
+nl80211: Beacon set failed: -22 (Invalid argument)
+Failed to set beacon parameters
+Interface initialization failed
+wlan0: interface state UNINITIALIZED->DISABLED
+wlan0: AP-DISABLED
+wlan0: Unable to setup interface.
+Failed to initialize AP interface
+
+After the change:
+
+$ wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
+Successfully initialized wpa_supplicant
+wlan0: interface state UNINITIALIZED->ENABLED
+wlan0: AP-ENABLED
+
+Cc: stable@vger.kernel.org
+Fixes: fe0a7776d4d1 ("wifi: wfx: fix possible NULL pointer dereference in wfx_set_mfp_ap()")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240823131521.3309073-1-alexander.sverdlin@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/inode.c |    1 +
- fs/netfs/misc.c |    7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/net/wireless/silabs/wfx/sta.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -697,6 +697,7 @@ void ceph_evict_inode(struct inode *inod
+--- a/drivers/net/wireless/silabs/wfx/sta.c
++++ b/drivers/net/wireless/silabs/wfx/sta.c
+@@ -352,8 +352,11 @@ static int wfx_set_mfp_ap(struct wfx_vif
  
- 	percpu_counter_dec(&mdsc->metric.total_inodes);
- 
-+	netfs_wait_for_outstanding_io(inode);
- 	truncate_inode_pages_final(&inode->i_data);
- 	if (inode->i_state & I_PINNING_NETFS_WB)
- 		ceph_fscache_unuse_cookie(inode, true);
---- a/fs/netfs/misc.c
-+++ b/fs/netfs/misc.c
-@@ -101,6 +101,8 @@ void netfs_invalidate_folio(struct folio
- 
- 	kenter("{%lx},%zx,%zx", folio->index, offset, length);
- 
-+	folio_wait_private_2(folio); /* [DEPRECATED] */
-+
- 	if (!folio_test_private(folio))
- 		return;
- 
-@@ -165,6 +167,11 @@ bool netfs_release_folio(struct folio *f
- 
- 	if (folio_test_private(folio))
- 		return false;
-+	if (unlikely(folio_test_private_2(folio))) { /* [DEPRECATED] */
-+		if (current_is_kswapd() || !(gfp & __GFP_FS))
-+			return false;
-+		folio_wait_private_2(folio);
+ 	ptr = (u16 *)cfg80211_find_ie(WLAN_EID_RSN, skb->data + ieoffset,
+ 				      skb->len - ieoffset);
+-	if (unlikely(!ptr))
++	if (!ptr) {
++		/* No RSN IE is fine in open networks */
++		ret = 0;
+ 		goto free_skb;
 +	}
- 	fscache_note_page_release(netfs_i_cookie(ctx));
- 	return true;
- }
+ 
+ 	ptr += pairwise_cipher_suite_count_offset;
+ 	if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
 
 
