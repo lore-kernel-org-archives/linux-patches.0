@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE93208A7;
-	Sun,  1 Sep 2024 16:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBED7208A7;
+	Sun,  1 Sep 2024 16:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209886; cv=none; b=uxulDw8xK99NjTBl9kH+CKUlugAqcraP0CK5asE9Fcx+mDD7ryyoV4ODZhBKY8SwYq74vNncVoPd0kNhqP5HamUTvzu0mj8ZXy7a0OWVzA+rJKNaVJGU9dH4cjtScZT7nrElzy/zsDJmZfTifqUfbqX40RVBoZEhUSK+EnYD/dY=
+	t=1725209890; cv=none; b=u7QbXlNq7XP0oPQ1K11m8vPtXkJS/r+Vl9EWhMPC1OzByUxqm2kUJ/lk/mNZOzowQjuH19I6HrgSOIn14R1PHAZzT3rB9sZOZbHCcjM84iK4a9r347x+sH9/x3Z87pyxOqaA16uhVaAtljp3IJUVehB0GyZ/mec7XqjrYaXj2kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209886; c=relaxed/simple;
-	bh=QUthQExYXC4IrjYr3atM94zh31DDwOXTYsTD9LCs7T8=;
+	s=arc-20240116; t=1725209890; c=relaxed/simple;
+	bh=N1p/xEY2oHKobu6LmurJIeAA4wogJQ6s/PLZFy4m7is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBMmDtZ4EKR6qqC1XwwnBY8QDzE5VB50enOjQ6Eok7vWfL7qenAmCBr0/XAtKRb9rnDQhwcsApZEiKmbIqew691DWvHwMNujyMjqL/WduEwdDK/kDS6jbECgFrghMJVb920r+42L7yPwODIeOh5SvhUyysgv+ykVLbWUQHr+KeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMZKdCEz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULI0SJPXNfupfLTLe05KxpGRuAn3rsqGY1SJC6FgRVyb1Q00ffGIAo5EH33Przyl6hSEE6aKaND8JdXo2bbs4xfXn6FH7Xlg12BxcFCnM+3VEbcCi1+3ce7sbB5sWriLPM1XWtIbXbzwYanRilOt/bxg9+wyynQ+f6CSOeySEmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoMZXaYy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMZKdCEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136A2C4CEC3;
-	Sun,  1 Sep 2024 16:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoMZXaYy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579F0C4CEC3;
+	Sun,  1 Sep 2024 16:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209886;
-	bh=QUthQExYXC4IrjYr3atM94zh31DDwOXTYsTD9LCs7T8=;
+	s=korg; t=1725209889;
+	bh=N1p/xEY2oHKobu6LmurJIeAA4wogJQ6s/PLZFy4m7is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wMZKdCEzwv3g1FWU1c60sz3W1FaW0KfNjBKMfwoe3BZL4P6+4mOhRiCHLmTWLkiLy
-	 ZApt0NbRN2QUv1fkHwZ52lrpzhJRzoUmwxEouZeogxYnGuvXZ09jW3SoGxiON4Wd2Q
-	 tNDDoelirw/APswKzbFhn6ZUxO24aoYLOXrtsrB8=
+	b=MoMZXaYyKvOTEk4iiMuVLprlMHwbwcaNdeVSx8dkHfGIXea0M9J0kjub7N9gJCn1U
+	 5gyBBpcHczBVdEfzNyh5EzPClQ3vfwYH0MMu3/mYbN0zJ+iIWahvXme6wUZIsR+ooj
+	 OsEEhjSWWkiltPRGn0728FWdPjRIuawaoz8AMdn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 023/215] drm/amdgpu/jpeg2: properly set atomics vmid field
-Date: Sun,  1 Sep 2024 18:15:35 +0200
-Message-ID: <20240901160824.138227596@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Steffen Eiden <seiden@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 024/215] s390/uv: Panic for set and remove shared access UVC errors
+Date: Sun,  1 Sep 2024 18:15:36 +0200
+Message-ID: <20240901160824.175416972@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -50,36 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-commit e414a304f2c5368a84f03ad34d29b89f965a33c9 upstream.
+[ Upstream commit cff59d8631e1409ffdd22d9d717e15810181b32c ]
 
-This needs to be set as well if the IB uses atomics.
+The return value uv_set_shared() and uv_remove_shared() (which are
+wrappers around the share() function) is not always checked. The system
+integrity of a protected guest depends on the Share and Unshare UVCs
+being successful. This means that any caller that fails to check the
+return value will compromise the security of the protected guest.
 
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 35c628774e50b3784c59e8ca7973f03bcb067132)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+No code path that would lead to such violation of the security
+guarantees is currently exercised, since all the areas that are shared
+never get unshared during the lifetime of the system. This might
+change and become an issue in the future.
+
+The Share and Unshare UVCs can only fail in case of hypervisor
+misbehaviour (either a bug or malicious behaviour). In such cases there
+is no reasonable way forward, and the system needs to panic.
+
+This patch replaces the return at the end of the share() function with
+a panic, to guarantee system integrity.
+
+Fixes: 5abb9351dfd9 ("s390/uv: introduce guest side ultravisor code")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240801112548.85303-1-imbrenda@linux.ibm.com
+Message-ID: <20240801112548.85303-1-imbrenda@linux.ibm.com>
+[frankja@linux.ibm.com: Fixed up patch subject]
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/include/asm/uv.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-@@ -557,11 +557,11 @@ void jpeg_v2_0_dec_ring_emit_ib(struct a
+diff --git a/arch/s390/include/asm/uv.h b/arch/s390/include/asm/uv.h
+index fe92a4caf5ec8..56df0bc01e3a8 100644
+--- a/arch/s390/include/asm/uv.h
++++ b/arch/s390/include/asm/uv.h
+@@ -312,7 +312,10 @@ static inline int share(unsigned long addr, u16 cmd)
  
- 	amdgpu_ring_write(ring, PACKETJ(mmUVD_LMI_JRBC_IB_VMID_INTERNAL_OFFSET,
- 		0, 0, PACKETJ_TYPE0));
--	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
-+	amdgpu_ring_write(ring, (vmid | (vmid << 4) | (vmid << 8)));
+ 	if (!uv_call(0, (u64)&uvcb))
+ 		return 0;
+-	return -EINVAL;
++	pr_err("%s UVC failed (rc: 0x%x, rrc: 0x%x), possible hypervisor bug.\n",
++	       uvcb.header.cmd == UVC_CMD_SET_SHARED_ACCESS ? "Share" : "Unshare",
++	       uvcb.header.rc, uvcb.header.rrc);
++	panic("System security cannot be guaranteed unless the system panics now.\n");
+ }
  
- 	amdgpu_ring_write(ring, PACKETJ(mmUVD_LMI_JPEG_VMID_INTERNAL_OFFSET,
- 		0, 0, PACKETJ_TYPE0));
--	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
-+	amdgpu_ring_write(ring, (vmid | (vmid << 4) | (vmid << 8)));
- 
- 	amdgpu_ring_write(ring,	PACKETJ(mmUVD_LMI_JRBC_IB_64BIT_BAR_LOW_INTERNAL_OFFSET,
- 		0, 0, PACKETJ_TYPE0));
+ /*
+-- 
+2.43.0
+
 
 
