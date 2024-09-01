@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF2E14290C;
-	Sun,  1 Sep 2024 16:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089F616EB4B;
+	Sun,  1 Sep 2024 16:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207915; cv=none; b=pqwLRrwDe3M43MQTzwmLILJ2kjDOdvWia2RjGfVtY4UUPB3Ht6daT7RozRvFDGTkBYOYh14cj4EuGni4wAnCfoJjSBtlgCRJj4XF0etZyUdl8HRcAZNyIkxPMlSwqWqFN0Tw149FoCdYm89qGCiCzUvs1mKRW331iWOfG2eUGjM=
+	t=1725207919; cv=none; b=C30h65lyLtYN239nV8l14Ohw/GMbf31pUkIZkuf69kxvcyfgnLleSEGIKKfdHkq/8+zJww+KdEr6oAVCRgXZ7Posra6yVapxifpbtJ4ol2YqvTjCrfx0PN5AUmLaUdGqHxy+KqFm7hag9LSVMtqFiW24rDu0Ifkqj9kBrasWBes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207915; c=relaxed/simple;
-	bh=qyRW9K0UhWuoAAKxwU3jj5PQDo2bYaEDrP2T0KHxjsM=;
+	s=arc-20240116; t=1725207919; c=relaxed/simple;
+	bh=czUmFwjIu6cywCytCVBLpU5EZLOdinsVhnYw+1FyqLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5gA1AiUzLzjvOSWUZA//kRxPwobqwRv3DamdHDV/Iwz3IqioZSUtw1KCcbKTOAvwZDjg7PSB9jU09cKaHdoEbjGS8r+zkN0Kc7M5NF0xxbECbGQ94U2jFuX3xZxb5T7Wz995hy3cL6LaBCd33t6rzMSGH0YlCcnfrzXD9ehX0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZJtNXE5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iVNcoYou1aC6hkCRm8xyMoIRIlcM943wDO5ePAS8LZYIhIFNzYi+EA3mCR8rW2nF6SL5E8It6HktmFV+o0Mf5VO1MMatrZyGZ+tIwFov9pzy2nNG+B4k6XyemGRHu/wvEG96U1r76RspilpUO8XIPBlstna1TC3tO8xvwrCJWXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcL/p5nu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZJtNXE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFA4C4CEC3;
-	Sun,  1 Sep 2024 16:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcL/p5nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26531C4CEC3;
+	Sun,  1 Sep 2024 16:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207915;
-	bh=qyRW9K0UhWuoAAKxwU3jj5PQDo2bYaEDrP2T0KHxjsM=;
+	s=korg; t=1725207918;
+	bh=czUmFwjIu6cywCytCVBLpU5EZLOdinsVhnYw+1FyqLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZJtNXE5jx6PfaYV5hxyK6s5BfLS2rjoJ1ph8+T/PYSXaa14r+bXt+ySGFZwPjl0o
-	 EEmhvl1FQLZb8mtS6Ifu+cD680e6Tn2wuMhbTAlX+Dcn264UYsW8wKELDpPGKf0Ga8
-	 ciFUseeu7luE1m8vdxKe6uPtZ5O4G+XDA/98jYnY=
+	b=WcL/p5nuR8zPNwKulmMON7cX0WH62L6gw3SgG1VrTUjvfMDXM9iOoYVQzSxRFsNei
+	 AgG41waP4BaYgmYsi/iFwD/cW/PX2NDIrz0exMY2OMfzqC8Jd1AyOxuNuSpthpD5m2
+	 tVdQsIjeJttEIx2steOqRGqz3gBucT8nunhfoGtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 17/93] mptcp: pm: send ACK on an active subflow
-Date: Sun,  1 Sep 2024 18:16:04 +0200
-Message-ID: <20240901160808.010347510@linuxfoundation.org>
+Subject: [PATCH 6.6 18/93] mptcp: pm: do not remove already closed subflows
+Date: Sun,  1 Sep 2024 18:16:05 +0200
+Message-ID: <20240901160808.047757651@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,39 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit c07cc3ed895f9bfe0c53b5ed6be710c133b4271c upstream.
+commit 58e1b66b4e4b8a602d3f2843e8eba00a969ecce2 upstream.
 
-Taking the first one on the list doesn't work in some cases, e.g. if the
-initial subflow is being removed. Pick another one instead of not
-sending anything.
+It is possible to have in the list already closed subflows, e.g. the
+initial subflow has been already closed, but still in the list. No need
+to try to close it again, and increments the related counters again.
 
-Fixes: 84dfe3677a6f ("mptcp: send out dedicated ADD_ADDR packet")
+Fixes: 0ee4261a3681 ("mptcp: implement mptcp_pm_remove_subflow")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/mptcp/pm_netlink.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -776,9 +776,12 @@ void mptcp_pm_nl_addr_send_ack(struct mp
- 	    !mptcp_pm_should_rm_signal(msk))
- 		return;
+@@ -851,6 +851,8 @@ static void mptcp_pm_nl_rm_addr_or_subfl
+ 			int how = RCV_SHUTDOWN | SEND_SHUTDOWN;
+ 			u8 id = subflow_get_local_id(subflow);
  
--	subflow = list_first_entry_or_null(&msk->conn_list, typeof(*subflow), node);
--	if (subflow)
--		mptcp_pm_send_ack(msk, subflow, false, false);
-+	mptcp_for_each_subflow(msk, subflow) {
-+		if (__mptcp_subflow_active(subflow)) {
-+			mptcp_pm_send_ack(msk, subflow, false, false);
-+			break;
-+		}
-+	}
- }
- 
- int mptcp_pm_nl_mp_prio_send_ack(struct mptcp_sock *msk,
++			if (inet_sk_state_load(ssk) == TCP_CLOSE)
++				continue;
+ 			if (rm_type == MPTCP_MIB_RMADDR && remote_id != rm_id)
+ 				continue;
+ 			if (rm_type == MPTCP_MIB_RMSUBFLOW && !mptcp_local_id_match(msk, id, rm_id))
 
 
