@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51B51DFD1;
-	Sun,  1 Sep 2024 16:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628A717E900;
+	Sun,  1 Sep 2024 16:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209650; cv=none; b=TZc3g/11z3/n4Q3oSuZewe2Gq38jKLJ/WAku8g/BOBBCgo/B4Dd9yoTuoYYy17hZxacaUeWeOPKpVm4zjmN5g/1k8En8PEFZAo16bTKCmHwRBSXGSTG4/L+3FwSL9/xIlX52jn9ni02QH/bL7w5pKPN4tyGrxkwHu5FXUYGpjgQ=
+	t=1725209654; cv=none; b=RJEVtoLBG2GoGSHBA/s7cXobWhsFdp8bE6Dn7P0Pg4QFrweEpgLQ1+5FGMbPbH0WCnJhMNd/EcRugdfneG5G12lmCAjZuc/i/oc1SrAEATgP3iU/9cvZM9FC/PilCSbpdzHOWq8cnf6zoGvb+UEeIXJyJ/ULjCAD3JTLlA7pqdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209650; c=relaxed/simple;
-	bh=L8ccglQoQV5reBfw/Xw3q/b2F7TyIcCEqNMFVRzvedg=;
+	s=arc-20240116; t=1725209654; c=relaxed/simple;
+	bh=Nr5CvNgAeQl1hzZ5hiecRRD3CWwQj1bYPZAhqVuw67U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPwjMZiu0Xv5h1c36bHp83ww4/E0JUljuU99jFIbtsGK1a4OvBmFtffOQpwNJRmAJd/tcxVv0ftHoy/P+cCCpTxuwQiSIvkn4C2TYc8oeqjJfnx/rvNJsXqig+mHKGJZ/ZGVwaYiam3aVB2Yd1aYk+UfCAsAVSbVj+6mUnwdk18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9oDpmlh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mXTGkXkGnZETQc+0AaeVwi4PPNy6MkmEFGsXr9H56kwb413ckabzSYls56+6BHF2KlzaBHp4YvteHixeMaCp/lahnLqn4puF6aWU5u2u5cJvDTNg2GebrcEnK3z+2Jq5b440gp+Uhdny0LJCXSKST04mDA2DYPxMuHhEUl1vQHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQeRuZet; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9oDpmlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D14C4CEC3;
-	Sun,  1 Sep 2024 16:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQeRuZet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68371C4CEC3;
+	Sun,  1 Sep 2024 16:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209650;
-	bh=L8ccglQoQV5reBfw/Xw3q/b2F7TyIcCEqNMFVRzvedg=;
+	s=korg; t=1725209653;
+	bh=Nr5CvNgAeQl1hzZ5hiecRRD3CWwQj1bYPZAhqVuw67U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9oDpmlhcljTNFUL0JeQgCdZuv/qTrUeOOYTOuNbpzKIb+ov1KeQzndItYmQKe+v8
-	 AYqwLkmb8LLmcA+XgoXF30VdAf0nEZrAeehvy08z9w7CvfdG6y30yP8M75sVfjV0iz
-	 z3wJ2YzVZGPccx/fmgx2BexTHsGSnDCBHi6zujtk=
+	b=bQeRuZet+uQKNat1WQQn/mv/a2gWSI7fve8U6Q1KJE3I6kPDCuAc6wCljKMjZUlsN
+	 lX2oJVLbcOwbwDw8DFfy93M8XoV4KdfoJlqFQJ0jdpIA/4XGsaSavgj/N7uUvfgGXo
+	 dhELv4RIwT9gH0fBZVHNB54QXQkBJCoyJl2PUGVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/151] bonding: fix xfrm state handling when clearing active slave
-Date: Sun,  1 Sep 2024 18:17:35 +0200
-Message-ID: <20240901160817.688104055@linuxfoundation.org>
+Subject: [PATCH 5.10 104/151] drm/msm/dpu: dont play tricks with debug macros
+Date: Sun,  1 Sep 2024 18:17:44 +0200
+Message-ID: <20240901160818.022655769@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,41 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit c4c5c5d2ef40a9f67a9241dc5422eac9ffe19547 ]
+[ Upstream commit df24373435f5899a2a98b7d377479c8d4376613b ]
 
-If the active slave is cleared manually the xfrm state is not flushed.
-This leads to xfrm add/del imbalance and adding the same state multiple
-times. For example when the device cannot handle anymore states we get:
- [ 1169.884811] bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
-because it's filled with the same state after multiple active slave
-clearings. This change also has a few nice side effects: user-space
-gets a notification for the change, the old device gets its mac address
-and promisc/mcast adjusted properly.
+DPU debugging macros need to be converted to a proper drm_debug_*
+macros, however this is a going an intrusive patch, not suitable for a
+fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+to make sure that DPU debugging messages always end up in the drm debug
+messages and are controlled via the usual drm.debug mask.
 
-Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+I don't think that it is a good idea for a generic DPU_DEBUG macro to be
+tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
+default it should go to the DRM_UT_DRIVER channel. While refactoring
+debug macros later on we might end up with particular messages going to
+ATOMIC or KMS, but DRIVER should be the default.
+
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/606932/
+Link: https://lore.kernel.org/r/20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_options.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index fa0bf77870d43..acc6185749945 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -822,7 +822,7 @@ static int bond_option_active_slave_set(struct bonding *bond,
- 	/* check to see if we are clearing active */
- 	if (!slave_dev) {
- 		netdev_dbg(bond->dev, "Clearing current active slave\n");
--		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
-+		bond_change_active_slave(bond, NULL);
- 		bond_select_active_slave(bond);
- 	} else {
- 		struct slave *old_active = rtnl_dereference(bond->curr_active_slave);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index bb7c7e437242e..31a5646f54939 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -32,24 +32,14 @@
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG(fmt, ...)                                                \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_KMS))                         \
+-			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+ 
+ /**
+  * DPU_DEBUG_DRIVER - macro for hardware driver logging
+  * @fmt: Pointer to format string
+  */
+ #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+-			DRM_ERROR(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+ 
+ #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+ #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
 -- 
 2.43.0
 
