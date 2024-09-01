@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F252C190;
-	Sun,  1 Sep 2024 17:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AE52C190;
+	Sun,  1 Sep 2024 17:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210375; cv=none; b=VwujJGZ/o5kDl3wNuGQzWi8PXRPjQ2lLTs+RvbWgMlrkreyy9dPBWtnHFaqo8wtYG+qmdqn9SNfgH3mlxoRpalsoihNVPJoX2iXWbMDJP5THWwnuNBYDkVzScztCBBU/o1BPdPu1KsbtuMs13JfpC4vuI7l3/LiKo9+JQ0+1TDQ=
+	t=1725210378; cv=none; b=Jc9KSrIjjVpCqzNtlHUi+ahDrONDmWnUJFdXjJ/h9Z/MGHDkkD6kjl+1Bn1EvPHPFZiRT5E2jxZ85xxTBT06/JH658K0IgA8i4NKJwYKpobEikS+1W4rNebPrkVKhWXCLUurEOQzFG9whpS68+Hc2S3639uTH2vAOev+nlGzVHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210375; c=relaxed/simple;
-	bh=hrLzIOSnHXPVnTenjBSF6vNdSKyMhTuCocgejXQITb8=;
+	s=arc-20240116; t=1725210378; c=relaxed/simple;
+	bh=HY8vF2n7tvbgMTBgJVpq9KTyol677Hyla3OJH21V4GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTxqiz5sn4HlH/iyrUPuZuLs4e6LLMWsw5gVenhvvwbl2c99lJhUTWseHXqjKPlNbHN06rFxgebx8q1IYIRQ7lR6O/BZ35NUNwp1KspnDFb2HbNbTqszzDiuRmGNrFMZIlGQnbB07c2DipR+RHYmQIahMfF1CWiI6tztnrURMAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HecaWNHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYTScgztoV7a/NEztLWjeQD/CBZQH3oVLQyXOHulSuoLB2ZUCDGZZkBI897pIUbINszS5RT+eaZnuEYIvTqnd23Lk5Iwp+/gWxomuDPdzJ4aZR8vhC58Kof2/bipE/vkrb4dQhaIKWwbLFLfQ0FQHsfq3QTeuSkOpRsPPb9ABNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rx91MOAr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HecaWNHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE46C4CEC3;
-	Sun,  1 Sep 2024 17:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rx91MOAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997F4C4CEC3;
+	Sun,  1 Sep 2024 17:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210374;
-	bh=hrLzIOSnHXPVnTenjBSF6vNdSKyMhTuCocgejXQITb8=;
+	s=korg; t=1725210378;
+	bh=HY8vF2n7tvbgMTBgJVpq9KTyol677Hyla3OJH21V4GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HecaWNHAWne5kLdBm4KGUOT31QNnIK1DYSnXaD8bYYS5G5fUCr4XbwSFlM1zgg/fN
-	 ujmjzEUhlZtvw9DUD4g1aSeKI8uO9WtuAl+aJ2cqu96B1SGBhk3vbt4aLQw6ROshyH
-	 3cFvptdTM/rsrwblzNnwnRqB0fi5yD/EQ09/fqmw=
+	b=rx91MOArpIq95rPN+jqGNq7SRlDJUgefK+pq00isvsCkNrml4mb6C6r8q0gH0GoOH
+	 nz60haSXMxV7XpBZfGk7vocjvJz4bQwjzL7rjADg0QoBme7rhrqClrDQRd8T10u+Bb
+	 6M+t/I3DKp2/BhytB69esBqE6bKwqvQQ5Uh4l7UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Hangbin Liu <liuhangbin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/215] bonding: fix bond_ipsec_offload_ok return type
-Date: Sun,  1 Sep 2024 18:17:31 +0200
-Message-ID: <20240901160828.621480875@linuxfoundation.org>
+Subject: [PATCH 5.15 140/215] bonding: fix null pointer deref in bond_ipsec_offload_ok
+Date: Sun,  1 Sep 2024 18:17:32 +0200
+Message-ID: <20240901160828.658624379@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -54,64 +55,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit fc59b9a5f7201b9f7272944596113a82cc7773d5 ]
+[ Upstream commit 95c90e4ad89d493a7a14fa200082e466e2548f9d ]
 
-Fix the return type which should be bool.
+We must check if there is an active slave before dereferencing the pointer.
 
-Fixes: 955b785ec6b3 ("bonding: fix suspicious RCU usage in bond_ipsec_offload_ok()")
+Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
 Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
 Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 6a91229b0e05b..61ff4bb22e647 100644
+index 61ff4bb22e647..177c90e9a4685 100644
 --- a/drivers/net/bonding/bond_main.c
 +++ b/drivers/net/bonding/bond_main.c
-@@ -592,34 +592,28 @@ static bool bond_ipsec_offload_ok(struct sk_buff *skb, struct xfrm_state *xs)
- 	struct net_device *real_dev;
- 	struct slave *curr_active;
- 	struct bonding *bond;
--	int err;
-+	bool ok = false;
- 
+@@ -597,6 +597,8 @@ static bool bond_ipsec_offload_ok(struct sk_buff *skb, struct xfrm_state *xs)
  	bond = netdev_priv(bond_dev);
  	rcu_read_lock();
  	curr_active = rcu_dereference(bond->curr_active_slave);
++	if (!curr_active)
++		goto out;
  	real_dev = curr_active->dev;
  
--	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP) {
--		err = false;
-+	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP)
- 		goto out;
--	}
- 
--	if (!xs->xso.real_dev) {
--		err = false;
-+	if (!xs->xso.real_dev)
- 		goto out;
--	}
- 
- 	if (!real_dev->xfrmdev_ops ||
- 	    !real_dev->xfrmdev_ops->xdo_dev_offload_ok ||
--	    netif_is_bond_master(real_dev)) {
--		err = false;
-+	    netif_is_bond_master(real_dev))
- 		goto out;
--	}
- 
--	err = real_dev->xfrmdev_ops->xdo_dev_offload_ok(skb, xs);
-+	ok = real_dev->xfrmdev_ops->xdo_dev_offload_ok(skb, xs);
- out:
- 	rcu_read_unlock();
--	return err;
-+	return ok;
- }
- 
- static const struct xfrmdev_ops bond_xfrmdev_ops = {
+ 	if (BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP)
 -- 
 2.43.0
 
