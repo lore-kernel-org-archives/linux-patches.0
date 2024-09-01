@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B0917DFFC;
-	Sun,  1 Sep 2024 16:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E43017E00C;
+	Sun,  1 Sep 2024 16:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208225; cv=none; b=S4gUYORlh6k8uVktP7ziRvG9CmEkUZgpFAKxDbUtB4P67nQ4qphwLSPayOvSHI87ahRS5Su1zBVrHEOVKSMnfzICNXQ683Z4ZgArYVpGX5J4eA6jqQRDZuAAIem+4FWXLM8Fnjw4G5FldEPkDodIgQ/f0l6Rx9l7+kBSoIQpGkY=
+	t=1725208228; cv=none; b=FDqNqyJI4MEn4qQ8Z1juhwvC58s5GW+gzrTHkf2eVYJSBckJ9b7uqVS5lPuVyDIoJBmr4jW6mBeepHRVASQYUOdmRNX8RzUmCVsbbPLKTQqg/3g0XTlaD2iken//EODdSynsUjOFiWKPq+YxA368ndW0UaVCkf/TSLoRFVUhHCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208225; c=relaxed/simple;
-	bh=c/sY3xsT/rUQ8WYjVcdH2sLKeh/vQw9QYpxvJ1L94Dc=;
+	s=arc-20240116; t=1725208228; c=relaxed/simple;
+	bh=vlo927otO6cdUdESulpKKMdtBsfqLeqQ04gLVcuWiz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdzbYBmKeIf+XfxsHaPUdUozDDy31sJmq0BR0tw3nd8bLO4Eps/fkQ2vC8DKXaJfz/6wB594jh9qRaGaXWzNd+b98USKRZDKBzp6uM4g5KKB49+VcuTSd0U/BSK5FM9xtYwhSGIfez1Ji1zHO+qZOyHzh3DQZy+JDQSHl8HYAWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPUqGBtb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+0Gn21NxUcO6GQi4q7yhAYDM0Qn/GBl9NnAAfWCR9M8Jz1wCR9+HPoK9u+sIHGUGATscV/oiOI0udfbx6jWkW1ofvGxwMnevWlq/LnrFUPRa7WMDw9UKglIJM+uefmLNXNuBN9kUZISl9vQwpxQsSNQH2cjqw9sxjjc7DTcxyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vS8inLrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPUqGBtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837E4C4CEC3;
-	Sun,  1 Sep 2024 16:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vS8inLrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95325C4CEC3;
+	Sun,  1 Sep 2024 16:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208224;
-	bh=c/sY3xsT/rUQ8WYjVcdH2sLKeh/vQw9QYpxvJ1L94Dc=;
+	s=korg; t=1725208228;
+	bh=vlo927otO6cdUdESulpKKMdtBsfqLeqQ04gLVcuWiz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPUqGBtbQCdMAgdjs91SJk8siuaKO/p2ATmcuoPaUFOcugKU3FZWwFBYsXS9hMewD
-	 kKhNWy9hcUMKRmA+9r0hQjm3ljCQIyDmuItUkdQXanuSF+C0dO8ileBt+qoDNxZhMd
-	 fKsnVL9ifIPRC0Cq8bpyyyVzodKUdDls11h89WKM=
+	b=vS8inLrNLG8f5jWMoun7vYYE+b8E+e5tEsmS95q48tRLqYHU3R6s1DfwrPh3gij+4
+	 yF2mYhAf1Zi153d4FJ+RjYshTtDi2+j/Am9v9fs37AE8rOeKG8RLKrFElZPvvyivq9
+	 yICsGs6k+V8UD6xl1rXR2CsYdtj4K/IhEicsqN20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.10 017/149] net: mana: Fix race of mana_hwc_post_rx_wqe and new hwc response
-Date: Sun,  1 Sep 2024 18:15:28 +0200
-Message-ID: <20240901160818.114255549@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 018/149] mptcp: close subflow when receiving TCP+FIN
+Date: Sun,  1 Sep 2024 18:15:29 +0200
+Message-ID: <20240901160818.151835763@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,133 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 8af174ea863c72f25ce31cee3baad8a301c0cf0f upstream.
+commit f09b0ad55a1196f5891663f8888463c0541059cb upstream.
 
-The mana_hwc_rx_event_handler() / mana_hwc_handle_resp() calls
-complete(&ctx->comp_event) before posting the wqe back. It's
-possible that other callers, like mana_create_txq(), start the
-next round of mana_hwc_send_request() before the posting of wqe.
-And if the HW is fast enough to respond, it can hit no_wqe error
-on the HW channel, then the response message is lost. The mana
-driver may fail to create queues and open, because of waiting for
-the HW response and timed out.
-Sample dmesg:
-[  528.610840] mana 39d4:00:02.0: HWC: Request timed out!
-[  528.614452] mana 39d4:00:02.0: Failed to send mana message: -110, 0x0
-[  528.618326] mana 39d4:00:02.0 enP14804s2: Failed to create WQ object: -110
+When a peer decides to close one subflow in the middle of a connection
+having multiple subflows, the receiver of the first FIN should accept
+that, and close the subflow on its side as well. If not, the subflow
+will stay half closed, and would even continue to be used until the end
+of the MPTCP connection or a reset from the network.
 
-To fix it, move posting of rx wqe before complete(&ctx->comp_event).
+The issue has not been seen before, probably because the in-kernel
+path-manager always sends a RM_ADDR before closing the subflow. Upon the
+reception of this RM_ADDR, the other peer will initiate the closure on
+its side as well. On the other hand, if the RM_ADDR is lost, or if the
+path-manager of the other peer only closes the subflow without sending a
+RM_ADDR, the subflow would switch to TCP_CLOSE_WAIT, but that's it,
+leaving the subflow half-closed.
 
+So now, when the subflow switches to the TCP_CLOSE_WAIT state, and if
+the MPTCP connection has not been closed before with a DATA_FIN, the
+kernel owning the subflow schedules its worker to initiate the closure
+on its side as well.
+
+This issue can be easily reproduced with packetdrill, as visible in [1],
+by creating an additional subflow, injecting a FIN+ACK before sending
+the DATA_FIN, and expecting a FIN+ACK in return.
+
+Fixes: 40947e13997a ("mptcp: schedule worker when subflow is closed")
 Cc: stable@vger.kernel.org
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://github.com/multipath-tcp/packetdrill/pull/154 [1]
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240826-net-mptcp-close-extra-sf-fin-v1-1-905199fe1172@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/hw_channel.c |   62 ++++++++++++-----------
- 1 file changed, 34 insertions(+), 28 deletions(-)
+ net/mptcp/protocol.c |    5 ++++-
+ net/mptcp/subflow.c  |    8 ++++++--
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -52,9 +52,33 @@ static int mana_hwc_verify_resp_msg(cons
- 	return 0;
- }
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2533,8 +2533,11 @@ static void __mptcp_close_subflow(struct
  
-+static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
-+				struct hwc_work_request *req)
-+{
-+	struct device *dev = hwc_rxq->hwc->dev;
-+	struct gdma_sge *sge;
-+	int err;
-+
-+	sge = &req->sge;
-+	sge->address = (u64)req->buf_sge_addr;
-+	sge->mem_key = hwc_rxq->msg_buf->gpa_mkey;
-+	sge->size = req->buf_len;
-+
-+	memset(&req->wqe_req, 0, sizeof(struct gdma_wqe_request));
-+	req->wqe_req.sgl = sge;
-+	req->wqe_req.num_sge = 1;
-+	req->wqe_req.client_data_unit = 0;
-+
-+	err = mana_gd_post_and_ring(hwc_rxq->gdma_wq, &req->wqe_req, NULL);
-+	if (err)
-+		dev_err(dev, "Failed to post WQE on HWC RQ: %d\n", err);
-+	return err;
-+}
-+
- static void mana_hwc_handle_resp(struct hw_channel_context *hwc, u32 resp_len,
--				 const struct gdma_resp_hdr *resp_msg)
-+				 struct hwc_work_request *rx_req)
+ 	mptcp_for_each_subflow_safe(msk, subflow, tmp) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		int ssk_state = inet_sk_state_load(ssk);
+ 
+-		if (inet_sk_state_load(ssk) != TCP_CLOSE)
++		if (ssk_state != TCP_CLOSE &&
++		    (ssk_state != TCP_CLOSE_WAIT ||
++		     inet_sk_state_load(sk) != TCP_ESTABLISHED))
+ 			continue;
+ 
+ 		/* 'subflow_data_ready' will re-sched once rx queue is empty */
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1255,12 +1255,16 @@ out:
+ /* sched mptcp worker to remove the subflow if no more data is pending */
+ static void subflow_sched_work_if_closed(struct mptcp_sock *msk, struct sock *ssk)
  {
-+	const struct gdma_resp_hdr *resp_msg = rx_req->buf_va;
- 	struct hwc_caller_ctx *ctx;
- 	int err;
- 
-@@ -62,6 +86,7 @@ static void mana_hwc_handle_resp(struct
- 		      hwc->inflight_msg_res.map)) {
- 		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n",
- 			resp_msg->response.hwc_msg_id);
-+		mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
+-	if (likely(ssk->sk_state != TCP_CLOSE))
++	struct sock *sk = (struct sock *)msk;
++
++	if (likely(ssk->sk_state != TCP_CLOSE &&
++		   (ssk->sk_state != TCP_CLOSE_WAIT ||
++		    inet_sk_state_load(sk) != TCP_ESTABLISHED)))
  		return;
- 	}
  
-@@ -75,30 +100,13 @@ static void mana_hwc_handle_resp(struct
- 	memcpy(ctx->output_buf, resp_msg, resp_len);
- out:
- 	ctx->error = err;
--	complete(&ctx->comp_event);
--}
--
--static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
--				struct hwc_work_request *req)
--{
--	struct device *dev = hwc_rxq->hwc->dev;
--	struct gdma_sge *sge;
--	int err;
--
--	sge = &req->sge;
--	sge->address = (u64)req->buf_sge_addr;
--	sge->mem_key = hwc_rxq->msg_buf->gpa_mkey;
--	sge->size = req->buf_len;
- 
--	memset(&req->wqe_req, 0, sizeof(struct gdma_wqe_request));
--	req->wqe_req.sgl = sge;
--	req->wqe_req.num_sge = 1;
--	req->wqe_req.client_data_unit = 0;
-+	/* Must post rx wqe before complete(), otherwise the next rx may
-+	 * hit no_wqe error.
-+	 */
-+	mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
- 
--	err = mana_gd_post_and_ring(hwc_rxq->gdma_wq, &req->wqe_req, NULL);
--	if (err)
--		dev_err(dev, "Failed to post WQE on HWC RQ: %d\n", err);
--	return err;
-+	complete(&ctx->comp_event);
+ 	if (skb_queue_empty(&ssk->sk_receive_queue) &&
+ 	    !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
+-		mptcp_schedule_work((struct sock *)msk);
++		mptcp_schedule_work(sk);
  }
  
- static void mana_hwc_init_event_handler(void *ctx, struct gdma_queue *q_self,
-@@ -235,14 +243,12 @@ static void mana_hwc_rx_event_handler(vo
- 		return;
- 	}
- 
--	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, resp);
-+	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req);
- 
--	/* Do no longer use 'resp', because the buffer is posted to the HW
--	 * in the below mana_hwc_post_rx_wqe().
-+	/* Can no longer use 'resp', because the buffer is posted to the HW
-+	 * in mana_hwc_handle_resp() above.
- 	 */
- 	resp = NULL;
--
--	mana_hwc_post_rx_wqe(hwc_rxq, rx_req);
- }
- 
- static void mana_hwc_tx_event_handler(void *ctx, u32 gdma_txq_id,
+ static bool subflow_can_fallback(struct mptcp_subflow_context *subflow)
 
 
