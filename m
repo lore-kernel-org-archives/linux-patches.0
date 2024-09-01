@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701981C68C;
-	Sun,  1 Sep 2024 16:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30942B9C7;
+	Sun,  1 Sep 2024 16:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208669; cv=none; b=IIFBKUK50gwXZ13wVjcgrkZSP2ytLL6CWL1nPw/ZNjm/HAPL3tJJw/EhsxLvgShULqOSzz45v2Y1kydjAcviFv2xwQnSHkOZ3QECZ2Kc0v5rQ47DrVEhxoz9AmtWUI98WzUz5J1aekryy7xon9W7/GMNP8WoX5hMgd/VtYIQXXI=
+	t=1725208672; cv=none; b=qRB0LFhwTNywooOfM2/IeOlQIXtv26ibfbyKLVxRRhqr9Mx1IrrIrPo7bQwzCxDEneMbNKymrIrGIXoqdtqvpDcEmSaBBOQ6WR3wstmWwOlxrSl0fYv2QRMFxRAvzxZzGVrA3ez+T3FkY5mNF/S0aMWylSueXj5KeVsGlMdto1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208669; c=relaxed/simple;
-	bh=1SM28nTHpPHPGU+tFqlOvmAj5Gup5pgR2kpRj6aLFR0=;
+	s=arc-20240116; t=1725208672; c=relaxed/simple;
+	bh=5sG9k3B/958kKnsc26xxirZrdB6nq646QKxZ7i5HB/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAxCCecUyJLylX9gDV6eknCipQbPdktAsJVEm/d3FXTPVrpWZ1ceOaJ/J/7ZO3XULAVEEkaGKHdsLhRr21Rq8d7smBIbv+VRzWQaTZj0qRg/omadgIdh/2zAlIom775OI393H42Iz7lcF2dhSaW8Zy549YiVBKwvuEg4cmFpjVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+LJW3sk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a148huPsKAx8LIP4oUeePYnDvprcUKoVMofJ1oTjkae25c1fUQPGr+/ZOOfUFMiqZFUiJBR8DRlp4UBRjFHiAMaEkY2ZsRC/vOBbjn9GjGl3ELgXbx//re+rClHr8/56+NlHpimj767EzgkTCar431OCN37znWN/shp9GS4ZKPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHzH4iC6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+LJW3sk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD89C4CEC3;
-	Sun,  1 Sep 2024 16:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHzH4iC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DE2C4CEC3;
+	Sun,  1 Sep 2024 16:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208669;
-	bh=1SM28nTHpPHPGU+tFqlOvmAj5Gup5pgR2kpRj6aLFR0=;
+	s=korg; t=1725208672;
+	bh=5sG9k3B/958kKnsc26xxirZrdB6nq646QKxZ7i5HB/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+LJW3sk2Ip6g/NgOq0ZMYA0wyLbM560NN5cfv8w1uVxhHKGfmBf0j/KnmIXJcjQ7
-	 oncvie9y3BdlqNH1pjJX+2Rl28nsHqNWKWph3STZb10LvSJPsJ3rW7S7xkrqf5XOh+
-	 KG2f0dihhP7CiclVn+ucq1IiPllEaLv9QvY7VrzI=
+	b=gHzH4iC6Ur00ZvE+7pqPPp6ERDMN49gXcGwN0u1owKrRQR2fZfpe7FruMYXO02MNl
+	 y/sPELE/4mV4RfExGGNpFkM6I9mroyWMotx8loBJQilsC/J0WdnmRmzDOqEoX3l1QO
+	 4FJQoPJx2D7Gm1u7cQmV+iHagcnVzQ6fBTxoGK7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 128/149] arm64: dts: qcom: x1e80100: fix PCIe domain numbers
-Date: Sun,  1 Sep 2024 18:17:19 +0200
-Message-ID: <20240901160822.267884459@linuxfoundation.org>
+	=?UTF-8?q?Michal=20Vok=C3=A1=C4=8D?= <michal.vokac@ysoft.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.10 129/149] ARM: dts: imx6dl-yapp43: Increase LED current to match the yapp4 HW design
+Date: Sun,  1 Sep 2024 18:17:20 +0200
+Message-ID: <20240901160822.306068592@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -45,49 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Michal Vokáč <michal.vokac@ysoft.com>
 
-commit f8fa1f2f6412bffa71972f9506b72992d0e6e485 upstream.
+commit 8512fbb64b0e599412da661412d10d4ba1cb003c upstream.
 
-The current PCIe domain numbers are off by one and do not match the
-numbers that the UEFI firmware (and Windows) uses.
+On the imx6dl-yapp4 revision based boards, the RGB LED is not driven
+directly by the LP5562 driver but through FET transistors. Hence the LED
+current is not determined by the driver but by the LED series resistors.
 
-Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-Cc: stable@vger.kernel.org	# 6.9
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240722094249.26471-3-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+On the imx6dl-yapp43 revision based boards, we removed the FET transistors
+to drive the LED directly from the LP5562 but forgot to tune the output
+current to match the previous HW design.
+
+Set the LED current on imx6dl-yapp43 based boards to the same values
+measured on the imx6dl-yapp4 boards and limit the maximum current to 20mA.
+
+Fixes: 7da4734751e0 ("ARM: dts: imx6dl-yapp43: Add support for new HW revision of the IOTA board")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Michal Vokáč <michal.vokac@ysoft.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2756,7 +2756,7 @@
+--- a/arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6dl-yapp43-common.dtsi
+@@ -274,24 +274,24 @@
  
- 			dma-coherent;
+ 		led@0 {
+ 			chan-name = "R";
+-			led-cur = /bits/ 8 <0x20>;
+-			max-cur = /bits/ 8 <0x60>;
++			led-cur = /bits/ 8 <0x6e>;
++			max-cur = /bits/ 8 <0xc8>;
+ 			reg = <0>;
+ 			color = <LED_COLOR_ID_RED>;
+ 		};
  
--			linux,pci-domain = <7>;
-+			linux,pci-domain = <6>;
- 			num-lanes = <2>;
+ 		led@1 {
+ 			chan-name = "G";
+-			led-cur = /bits/ 8 <0x20>;
+-			max-cur = /bits/ 8 <0x60>;
++			led-cur = /bits/ 8 <0xbe>;
++			max-cur = /bits/ 8 <0xc8>;
+ 			reg = <1>;
+ 			color = <LED_COLOR_ID_GREEN>;
+ 		};
  
- 			interrupts = <GIC_SPI 773 IRQ_TYPE_LEVEL_HIGH>,
-@@ -2878,7 +2878,7 @@
- 
- 			dma-coherent;
- 
--			linux,pci-domain = <5>;
-+			linux,pci-domain = <4>;
- 			num-lanes = <2>;
- 
- 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+ 		led@2 {
+ 			chan-name = "B";
+-			led-cur = /bits/ 8 <0x20>;
+-			max-cur = /bits/ 8 <0x60>;
++			led-cur = /bits/ 8 <0xbe>;
++			max-cur = /bits/ 8 <0xc8>;
+ 			reg = <2>;
+ 			color = <LED_COLOR_ID_BLUE>;
+ 		};
 
 
