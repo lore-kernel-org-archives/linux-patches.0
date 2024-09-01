@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB1E3B79C;
-	Sun,  1 Sep 2024 17:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AAC2C190;
+	Sun,  1 Sep 2024 17:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210159; cv=none; b=t5KRHCV1/0JoPLVVdw/S2hctERvapFHY1GxSx33e6bm9dnGTxMqjYgNglVB5ISt1FUty0YYd5Xi2ZsGsv6dLadB2MfDeOHl6wrrDkrB/1MWYDftANQD/WMC+AbyLD4I7VhC2Dk2UjcEUAhVAGENqtWcFN2a62jRiEQnHz71Y9/E=
+	t=1725210162; cv=none; b=W6jRDZGmMUIeE89kAJMJSPkWxGbTw6dXRQ0+ZsbfCDzLlYamQQpLFO6Tgo2fTxHGPYXBRW0bTBKsp3wCaZe36AFUwhEM735G/XC9DmCO4g0LOICyKJq2HXxHh5D1QeyyIOqAavPjej1JHR62cdKaVYfG8H76OuD/sUK5XbibXcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210159; c=relaxed/simple;
-	bh=oEwSBkNc9yRulwyvbeYwF0gzOMV27oJNVTEny2ZqIEw=;
+	s=arc-20240116; t=1725210162; c=relaxed/simple;
+	bh=/sKXA4pvR3Kuchvu3NlDQDUbnqIT2Je5Gz9ZzpNaeuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYbW5YYO/47J5pUAXprq3Ld1lq1LA8FPC8QZ9BEqP3R7id3MVTm7Wq6A3OLe2I2vQyLn1yy7cwgMiA/Tosit+2ewDQez2w6Gq8w4qYfPqpqj7EZp2tgd4LgyPMBf4mhfXEUH3HK9NpH4QyfTmXafFqe/yugLldb28a9ygMs6Quc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0MAVbmT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8OoliZt6NiHECoyXTtQrL3MtTMj1umMkV/Dvm9pkdu8rav8lgvX+ZAhqLjKoyjV7hSxDQcNsLIoctgSbaaQ/m1jNWMxjSeOfjFo/3GIkFfeTuzLx7Mp15Jydktm9E+WhZ4tNpwAG5IxAoU+FOLpRhiVExxG+KY8EfyAnQqh2ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFDXg1vU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0MAVbmT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325D4C4CEC3;
-	Sun,  1 Sep 2024 17:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFDXg1vU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569F6C4CEC3;
+	Sun,  1 Sep 2024 17:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210159;
-	bh=oEwSBkNc9yRulwyvbeYwF0gzOMV27oJNVTEny2ZqIEw=;
+	s=korg; t=1725210162;
+	bh=/sKXA4pvR3Kuchvu3NlDQDUbnqIT2Je5Gz9ZzpNaeuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0MAVbmTq6kbgVGctOAYA4DwoKNBNLdFPBqHQHIz37ivUaFRo+JpQkIpsjGQ1SRlh
-	 dPPyrI48NmHTflRMLubVzQVPjkS7+zfwz2FtgulolAVbdzvj39MwbwP2uJ8eV8k4JL
-	 aeujC5pG0rSQHhAGExti7Ph7P/UEfmoIichGXb/8=
+	b=rFDXg1vUSE9Q4jJMxNWnrdttL6oB6n6Nd4MKNsZUEkSIEG8/M46BoVhDjzrRB9DPl
+	 ZwuLB80DsNLrFz0E6OfF24sfGiBEl8WWpuWTLg+itQhyBtrZlQM4md1rDWja4r3z5e
+	 ynAtkFVQwd/PsmdqrL8jDSmwBWz5EtHzJFuc8ILs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sam Creasey <sammy@sammy.net>,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/215] media: drivers/media/dvb-core: copy user arrays safely
-Date: Sun,  1 Sep 2024 18:16:27 +0200
-Message-ID: <20240901160826.187838002@linuxfoundation.org>
+Subject: [PATCH 5.15 076/215] net/sun3_82586: Avoid reading past buffer in debug output
+Date: Sun,  1 Sep 2024 18:16:28 +0200
+Message-ID: <20240901160826.225393612@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,68 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 102fb77c2deb0df3683ef8ff7a6f4cf91dc456e2 ]
+[ Upstream commit 4bea747f3fbec33c16d369b2f51e55981d7c78d0 ]
 
-At several positions in dvb_frontend.c, memdup_user() is utilized to
-copy userspace arrays. This is done without overflow checks.
+Since NUM_XMIT_BUFFS is always 1, building m68k with sun3_defconfig and
+-Warraybounds, this build warning is visible[1]:
 
-Use the new wrapper memdup_array_user() to copy the arrays more safely.
+drivers/net/ethernet/i825xx/sun3_82586.c: In function 'sun3_82586_timeout':
+drivers/net/ethernet/i825xx/sun3_82586.c:990:122: warning: array subscript 1 is above array bounds of 'volatile struct transmit_cmd_struct *[1]' [-Warray-bounds=]
+  990 |                 printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
+      |                                                                                                               ~~~~~~~~~~~~^~~
+...
+drivers/net/ethernet/i825xx/sun3_82586.c:156:46: note: while referencing 'xmit_cmds'
+  156 |         volatile struct transmit_cmd_struct *xmit_cmds[NUM_XMIT_BUFFS];
 
-Link: https://lore.kernel.org/linux-media/20231102191633.52592-2-pstanner@redhat.com
-Suggested-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Avoid accessing index 1 since it doesn't exist.
+
+Link: https://github.com/KSPP/linux/issues/325 [1]
+Cc: Sam Creasey <sammy@sammy.net>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20240206161651.work.876-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_frontend.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/i825xx/sun3_82586.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index fea62bce97468..d76ac3ec93c2f 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -2160,7 +2160,8 @@ static int dvb_frontend_handle_compat_ioctl(struct file *file, unsigned int cmd,
- 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
- 			return -EINVAL;
- 
--		tvp = memdup_user(compat_ptr(tvps->props), tvps->num * sizeof(*tvp));
-+		tvp = memdup_array_user(compat_ptr(tvps->props),
-+					tvps->num, sizeof(*tvp));
- 		if (IS_ERR(tvp))
- 			return PTR_ERR(tvp);
- 
-@@ -2191,7 +2192,8 @@ static int dvb_frontend_handle_compat_ioctl(struct file *file, unsigned int cmd,
- 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
- 			return -EINVAL;
- 
--		tvp = memdup_user(compat_ptr(tvps->props), tvps->num * sizeof(*tvp));
-+		tvp = memdup_array_user(compat_ptr(tvps->props),
-+					tvps->num, sizeof(*tvp));
- 		if (IS_ERR(tvp))
- 			return PTR_ERR(tvp);
- 
-@@ -2368,7 +2370,8 @@ static int dvb_get_property(struct dvb_frontend *fe, struct file *file,
- 	if (!tvps->num || tvps->num > DTV_IOCTL_MAX_MSGS)
- 		return -EINVAL;
- 
--	tvp = memdup_user((void __user *)tvps->props, tvps->num * sizeof(*tvp));
-+	tvp = memdup_array_user((void __user *)tvps->props,
-+				tvps->num, sizeof(*tvp));
- 	if (IS_ERR(tvp))
- 		return PTR_ERR(tvp);
- 
-@@ -2446,7 +2449,8 @@ static int dvb_frontend_handle_ioctl(struct file *file,
- 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
- 			return -EINVAL;
- 
--		tvp = memdup_user((void __user *)tvps->props, tvps->num * sizeof(*tvp));
-+		tvp = memdup_array_user((void __user *)tvps->props,
-+					tvps->num, sizeof(*tvp));
- 		if (IS_ERR(tvp))
- 			return PTR_ERR(tvp);
- 
+diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
+index 18d32302c3c7a..6c89aa7eaa222 100644
+--- a/drivers/net/ethernet/i825xx/sun3_82586.c
++++ b/drivers/net/ethernet/i825xx/sun3_82586.c
+@@ -987,7 +987,7 @@ static void sun3_82586_timeout(struct net_device *dev, unsigned int txqueue)
+ 	{
+ #ifdef DEBUG
+ 		printk("%s: xmitter timed out, try to restart! stat: %02x\n",dev->name,p->scb->cus);
+-		printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
++		printk("%s: command-stats: %04x\n", dev->name, swab16(p->xmit_cmds[0]->cmd_status));
+ 		printk("%s: check, whether you set the right interrupt number!\n",dev->name);
+ #endif
+ 		sun3_82586_close(dev);
 -- 
 2.43.0
 
