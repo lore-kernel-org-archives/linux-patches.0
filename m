@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545791DFD1;
-	Sun,  1 Sep 2024 16:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FF32A1B8;
+	Sun,  1 Sep 2024 16:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209674; cv=none; b=s3tbZUEGstUQ7R0X5yKf8nXPAtQ2b1ZSGSMG4Zxv9IUrUTTvTT/2gllCCcM3Zew+4QZ1K9m/Ld66J0mQ4Wc8hq2nK3dgHeEm15AIA7aAl193ICwGKn5s5IjI0V15yy84mqUTSDET5YsSyd1RyXfEL7tgXdWuX9uJJOl+UbLtrwM=
+	t=1725209677; cv=none; b=ozcCFnSKMK/DkCZbsXf0YU/I7OxLdDHvaN0MIm0qK4/7hMBOcsl4Q5sQ5ZKAQQHeQ3NNcAbvD6/wI+owSvO99FsoKGjYxlU77a8X6Exns9Z+hgRiBxSGPqgWp1tE+7HZea7VKoSwhiiHqtwema/T7m8rcWsfSrtR1+568/mIaRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209674; c=relaxed/simple;
-	bh=heviHjN1/TtsO5boUCAv1y2eh6tFlK7KBbE+Aza6TyU=;
+	s=arc-20240116; t=1725209677; c=relaxed/simple;
+	bh=ArZMdUeVXT8MtVYVK6deBIh7eRkCZFBXfW6IcGkVwR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pN36J/TblVLLujuQ6YNPiMUIGFvvV+HHF06jJmS871K9f8Y2RVPF4sxeI0YRMPfIyFiK6My1cgPmerfCihONL672aY15EFzaqPDTfrLA2OAplA5yH71ymTHd4AjtxuGIVcDVBhdl0NC1z/JsrJlXr6X4eyF+X7UUCCp4wUf0e+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQxr1BqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDHvOZqrHcD2xc90Eg9xyuwsgiISvPGmiV/cbJrt4KYhzeE7YWypXv2LndvIbfm9fbC9adcBx42gz9avgZyNXe/r8k4qvEZvAljAMdo3H1SCEe5wn1kP5NqAxlwSRsMITS+xp+8DvxJFpw7EPLN44UF853+TnEobyK5UqdQDtS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ux4+MQDy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQxr1BqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F30C4CEC3;
-	Sun,  1 Sep 2024 16:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ux4+MQDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C260BC4CEC3;
+	Sun,  1 Sep 2024 16:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209673;
-	bh=heviHjN1/TtsO5boUCAv1y2eh6tFlK7KBbE+Aza6TyU=;
+	s=korg; t=1725209677;
+	bh=ArZMdUeVXT8MtVYVK6deBIh7eRkCZFBXfW6IcGkVwR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQxr1BqZM/Gb+E6mPq5/UMkGEc0srsolcKAJdNFgWTd5pNTt+kSzSsUNlYGqn2K/O
-	 nW2S/zGK8W7/gf6zETgzsSeufUGP4pmghKpSW31ntc6Nf3ltFAaAFCe6udMj7VlbnO
-	 FjTyMW5R1FlL19CO5eWdl7HMLVCwFT+hUyJz3KOc=
+	b=Ux4+MQDyxdkFpHbBK15DmHhNUMdnXdFeq2PqtKzg02+hqzyJcFIaokIJa70iQsQMu
+	 DmwoJUUgT/HTwWn0wuGUx03U+AXrKNgYRqZc8y4jZD7FOHmu8RbHluBAFVrk7qWUeI
+	 u+BSPvII/Ah87RtlJJHnx5Vr9dXYCE8bNVFkTPFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 110/151] HID: wacom: Defer calculation of resolution until resolution_code is known
-Date: Sun,  1 Sep 2024 18:17:50 +0200
-Message-ID: <20240901160818.245782275@linuxfoundation.org>
+	Bastien Nocera <hadess@hadess.net>,
+	Siarhei Vishniakou <svv@google.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.10 111/151] HID: microsoft: Add rumble support to latest xbox controllers
+Date: Sun,  1 Sep 2024 18:17:51 +0200
+Message-ID: <20240901160818.284428260@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -50,49 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gerecke <jason.gerecke@wacom.com>
+From: Siarhei Vishniakou <svv@google.com>
 
-commit 1b8f9c1fb464968a5b18d3acc1da8c00bad24fad upstream.
+commit f5554725f30475b05b5178b998366f11ecb50c7f upstream.
 
-The Wacom driver maps the HID_DG_TWIST usage to ABS_Z (rather than ABS_RZ)
-for historic reasons. When the code to support twist was introduced in
-commit 50066a042da5 ("HID: wacom: generic: Add support for height, tilt,
-and twist usages"), we were careful to write it in such a way that it had
-HID calculate the resolution of the twist axis assuming ABS_RZ instead
-(so that we would get correct angular behavior). This was broken with
-the introduction of commit 08a46b4190d3 ("HID: wacom: Set a default
-resolution for older tablets"), which moved the resolution calculation
-to occur *before* the adjustment from ABS_Z to ABS_RZ occurred.
+Currently, rumble is only supported via bluetooth on a single xbox
+controller, called 'model 1708'. On the back of the device, it's named
+'wireless controller for xbox one'. However, in 2021, Microsoft released
+a firmware update for this controller. As part of this update, the HID
+descriptor of the device changed. The product ID was also changed from
+0x02fd to 0x0b20. On this controller, rumble was supported via
+hid-microsoft, which matched against the old product id (0x02fd). As a
+result, the firmware update broke rumble support on this controller.
 
-This commit moves the calculation of resolution after the point that
-we are finished setting things up for its proper use.
+See:
+https://news.xbox.com/en-us/2021/09/08/xbox-controller-firmware-update-rolling-out-to-insiders-starting-today/
 
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Fixes: 08a46b4190d3 ("HID: wacom: Set a default resolution for older tablets")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The hid-microsoft driver actually supports rumble on the new firmware,
+as well. So simply adding new product id is sufficient to bring back
+this support.
+
+After discussing further with the xbox team, it was pointed out that
+another xbox controller, xbox elite series 2, can be supported in a
+similar way.
+
+Add rumble support for all of these devices in this patch. Two of the
+devices have received firmware updates that caused their product id's to
+change. Both old and new firmware versions of these devices were tested.
+
+The tested controllers are:
+
+1. 'wireless controller for xbox one', model 1708
+2. 'xbox wireless controller', model 1914. This is also sometimes
+   referred to as 'xbox series S|X'.
+3. 'elite series 2', model 1797.
+
+The tested configurations are:
+1. model 1708, pid 0x02fd (old firmware)
+2. model 1708, pid 0x0b20 (new firmware)
+3. model 1914, pid 0x0b13
+4. model 1797, pid 0x0b05 (old firmware)
+5. model 1797, pid 0x0b22 (new firmware)
+
+I verified rumble support on both bluetooth and usb.
+
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Siarhei Vishniakou <svv@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/hid-ids.h       |   10 +++++++++-
+ drivers/hid/hid-microsoft.c |   11 ++++++++++-
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1920,12 +1920,14 @@ static void wacom_map_usage(struct input
- 	int fmax = field->logical_maximum;
- 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 	int resolution_code = code;
--	int resolution = hidinput_calc_abs_res(field, resolution_code);
-+	int resolution;
- 
- 	if (equivalent_usage == HID_DG_TWIST) {
- 		resolution_code = ABS_RZ;
- 	}
- 
-+	resolution = hidinput_calc_abs_res(field, resolution_code);
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -875,7 +875,15 @@
+ #define USB_DEVICE_ID_MS_TYPE_COVER_2    0x07a9
+ #define USB_DEVICE_ID_MS_POWER_COVER     0x07da
+ #define USB_DEVICE_ID_MS_SURFACE3_COVER		0x07de
+-#define USB_DEVICE_ID_MS_XBOX_ONE_S_CONTROLLER	0x02fd
++/*
++ * For a description of the Xbox controller models, refer to:
++ * https://en.wikipedia.org/wiki/Xbox_Wireless_Controller#Summary
++ */
++#define USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1708	0x02fd
++#define USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1708_BLE	0x0b20
++#define USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1914	0x0b13
++#define USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1797	0x0b05
++#define USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1797_BLE	0x0b22
+ #define USB_DEVICE_ID_MS_PIXART_MOUSE    0x00cb
+ #define USB_DEVICE_ID_8BITDO_SN30_PRO_PLUS      0x02e0
+ #define USB_DEVICE_ID_MS_MOUSE_0783      0x0783
+--- a/drivers/hid/hid-microsoft.c
++++ b/drivers/hid/hid-microsoft.c
+@@ -446,7 +446,16 @@ static const struct hid_device_id ms_dev
+ 		.driver_data = MS_PRESENTER },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, 0x091B),
+ 		.driver_data = MS_SURFACE_DIAL },
+-	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_XBOX_ONE_S_CONTROLLER),
 +
- 	if (equivalent_usage == HID_GD_X) {
- 		fmin += features->offset_left;
- 		fmax -= features->offset_right;
++	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1708),
++		.driver_data = MS_QUIRK_FF },
++	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1708_BLE),
++		.driver_data = MS_QUIRK_FF },
++	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1914),
++		.driver_data = MS_QUIRK_FF },
++	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1797),
++		.driver_data = MS_QUIRK_FF },
++	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_MS_XBOX_CONTROLLER_MODEL_1797_BLE),
+ 		.driver_data = MS_QUIRK_FF },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_MICROSOFT, USB_DEVICE_ID_8BITDO_SN30_PRO_PLUS),
+ 		.driver_data = MS_QUIRK_FF },
 
 
