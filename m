@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7488017CA1F;
-	Sun,  1 Sep 2024 16:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BE8537FF;
+	Sun,  1 Sep 2024 16:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208299; cv=none; b=LTG2XXY/+j9BoupvNVKPHamtGIbB1PKfyakGIuV9rQtieWMXmVuoVa85c6MMWQnyHrhkzjyGiCrAE3jCDOdU7WdeiaGUwDW01X80btM+NFibp7t6pR05kTmzLEisW1tdwToNrnqKf3K5X5iREqz74k+sCv+y3ba1OYI4+s5V41Q=
+	t=1725208302; cv=none; b=NZ1CV+Y1qHt3HBpsqg8x8Bspe3Dd6vaetFq3u2QwqbsJVGlQHWv7HgKKEtamDrEUbZowaR81dqLDg3qntYjU92ncWYI1H8RoUG86TRA2a/uKvGfY1cKbHe55umSG90jAf4LiNQLDbYUQ46NRpH/rufjzjrtd492KmiV+HyEQWs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208299; c=relaxed/simple;
-	bh=G/3O2aqsTjkvV4PE3JGBQq0rJ7iVjdPbf1SEgHbiO2s=;
+	s=arc-20240116; t=1725208302; c=relaxed/simple;
+	bh=ql2EXjexnVLrRkxhY/wMyL2HQ+oazucCcBolv6uHwHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raiwpNLj9D/OuCq7lohnaR2xMvtUKN5sKI3XCIhXtbbp5t2nOY3LtDOxLciaJNiFZ8L52kMEq1LRZliyZcNrYhLxGnDVt7jwppjoqTM8PBBY8esSy0Wfj6z6WokMk3b1TNlD1zcvKv/5w8DAhwIuUTZ3bpO4nkjVhxpyA1rUOrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wR78WzrQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uMcQYryaj4Bph2cyo/axXXXtcjs0mFO/CH6oVMDo38YaQZufeQOnUxcKvJQdDNkV4w9fu95h4NPqKEQyKGgH3ByQCjSCZ2fmE1Bt/ag9I5/QJn/hWk5eDztOgxfB663ij+peX/QYmzET8To98bjsNyLfmeAx6mTSML4E/6/YXrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGD2R7yi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wR78WzrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE6DC4CEC3;
-	Sun,  1 Sep 2024 16:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGD2R7yi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC47FC4CEC3;
+	Sun,  1 Sep 2024 16:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208298;
-	bh=G/3O2aqsTjkvV4PE3JGBQq0rJ7iVjdPbf1SEgHbiO2s=;
+	s=korg; t=1725208302;
+	bh=ql2EXjexnVLrRkxhY/wMyL2HQ+oazucCcBolv6uHwHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wR78WzrQFRSf+VZ8z+FHiKbNmmcSc1nD2DYNoxZB9QsNqCjwtfymfbyzMB3Knb82H
-	 GfkOJvhkfYVDDehtbabTg0gAZiFhtxHjxZRfxMWmAcHjw+0RoDf7SRLhecENWp9nSp
-	 Q0sQz5cg3Z8slUHJlIqvTNkdSpHtP4gefbUIeSQ8=
+	b=MGD2R7yi8n7DNPnUNz8ax0+9BGUCQ6wm3fgCBNimQAyu5l3MIkJJRQwUhOdcZSneZ
+	 2XUdvJmOWubUPLksq3em8/6Jszmcth6mMQJA7aPhJGjuOgxdrJHR2BQJgXatWo81DL
+	 NgzvkeyLfxK0yuro5Gd/ADft1UDGmrav3s42Csfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.10 022/149] mptcp: pm: skip connecting to already established sf
-Date: Sun,  1 Sep 2024 18:15:33 +0200
-Message-ID: <20240901160818.299983032@linuxfoundation.org>
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Subject: [PATCH 6.10 040/149] drm/vmwgfx: Prevent unmapping active read buffers
+Date: Sun,  1 Sep 2024 18:15:51 +0200
+Message-ID: <20240901160818.970833301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,54 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit bc19ff57637ff563d2bdf2b385b48c41e6509e0d upstream.
+commit aba07b9a0587f50e5d3346eaa19019cf3f86c0ea upstream.
 
-The lookup_subflow_by_daddr() helper checks if there is already a
-subflow connected to this address. But there could be a subflow that is
-closing, but taking time due to some reasons: latency, losses, data to
-process, etc.
+The kms paths keep a persistent map active to read and compare the cursor
+buffer. These maps can race with each other in simple scenario where:
+a) buffer "a" mapped for update
+b) buffer "a" mapped for compare
+c) do the compare
+d) unmap "a" for compare
+e) update the cursor
+f) unmap "a" for update
+At step "e" the buffer has been unmapped and the read contents is bogus.
 
-If an ADD_ADDR is received while the endpoint is being closed, it is
-better to try connecting to it, instead of rejecting it: the peer which
-has sent the ADD_ADDR will not be notified that the ADD_ADDR has been
-rejected for this reason, and the expected subflow will not be created
-at the end.
+Prevent unmapping of active read buffers by simply keeping a count of
+how many paths have currently active maps and unmap only when the count
+reaches 0.
 
-This helper should then only look for subflows that are established, or
-going to be, but not the ones being closed.
-
-Fixes: d84ad04941c3 ("mptcp: skip connecting the connected address")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 485d98d472d5 ("drm/vmwgfx: Add support for CursorMob and CursorBypass 4")
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.19+
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240816183332.31961-2-zack.rusin@broadcom.com
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c |   13 +++++++++++--
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.h |    3 +++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -130,12 +130,15 @@ static bool lookup_subflow_by_daddr(cons
- {
- 	struct mptcp_subflow_context *subflow;
- 	struct mptcp_addr_info cur;
--	struct sock_common *skc;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+@@ -360,6 +360,8 @@ void *vmw_bo_map_and_cache_size(struct v
+ 	void *virtual;
+ 	int ret;
  
- 	list_for_each_entry(subflow, list, node) {
--		skc = (struct sock_common *)mptcp_subflow_tcp_sock(subflow);
-+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 
--		remote_address(skc, &cur);
-+		if (!((1 << inet_sk_state_load(ssk)) &
-+		      (TCPF_ESTABLISHED | TCPF_SYN_SENT | TCPF_SYN_RECV)))
-+			continue;
++	atomic_inc(&vbo->map_count);
 +
-+		remote_address((struct sock_common *)ssk, &cur);
- 		if (mptcp_addresses_equal(&cur, daddr, daddr->port))
- 			return true;
- 	}
+ 	virtual = ttm_kmap_obj_virtual(&vbo->map, &not_used);
+ 	if (virtual)
+ 		return virtual;
+@@ -383,11 +385,17 @@ void *vmw_bo_map_and_cache_size(struct v
+  */
+ void vmw_bo_unmap(struct vmw_bo *vbo)
+ {
++	int map_count;
++
+ 	if (vbo->map.bo == NULL)
+ 		return;
+ 
+-	ttm_bo_kunmap(&vbo->map);
+-	vbo->map.bo = NULL;
++	map_count = atomic_dec_return(&vbo->map_count);
++
++	if (!map_count) {
++		ttm_bo_kunmap(&vbo->map);
++		vbo->map.bo = NULL;
++	}
+ }
+ 
+ 
+@@ -421,6 +429,7 @@ static int vmw_bo_init(struct vmw_privat
+ 	vmw_bo->tbo.priority = 3;
+ 	vmw_bo->res_tree = RB_ROOT;
+ 	xa_init(&vmw_bo->detached_resources);
++	atomic_set(&vmw_bo->map_count, 0);
+ 
+ 	params->size = ALIGN(params->size, PAGE_SIZE);
+ 	drm_gem_private_object_init(vdev, &vmw_bo->tbo.base, params->size);
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
+@@ -71,6 +71,8 @@ struct vmw_bo_params {
+  * @map: Kmap object for semi-persistent mappings
+  * @res_tree: RB tree of resources using this buffer object as a backing MOB
+  * @res_prios: Eviction priority counts for attached resources
++ * @map_count: The number of currently active maps. Will differ from the
++ * cpu_writers because it includes kernel maps.
+  * @cpu_writers: Number of synccpu write grabs. Protected by reservation when
+  * increased. May be decreased without reservation.
+  * @dx_query_ctx: DX context if this buffer object is used as a DX query MOB
+@@ -90,6 +92,7 @@ struct vmw_bo {
+ 	u32 res_prios[TTM_MAX_BO_PRIORITY];
+ 	struct xarray detached_resources;
+ 
++	atomic_t map_count;
+ 	atomic_t cpu_writers;
+ 	/* Not ref-counted.  Protected by binding_mutex */
+ 	struct vmw_resource *dx_query_ctx;
 
 
