@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7541C68C;
-	Sun,  1 Sep 2024 16:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102DA2B9C7;
+	Sun,  1 Sep 2024 16:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208825; cv=none; b=u8fd4CqRF1NWf8TQbIZeqRIBCeV5xkbK9w4uFK5nBTXxMDwUvy5h046jBrDxE468CQKzIj9zVPF2gO/omonQH+lMLhXAqBP8gYi4yI9WYL81sfCvrXFBEGZj5dbHdAVVN66ZEK+vd743WwX59uTjEjmTIhVCshg3o8X9aLdHIR4=
+	t=1725208828; cv=none; b=fp6cSv+CC9+V43Z101UUFTShWFGE/5RCLeo6A1bv7RoRnYtcOhXrGYZMC/40pXIxUDnGUXlv+nVOX5AtumaS0K/4+cYzCPpUsGzaaBjU7Pi6Usrz2OoiRhBqh8VdMsfY0ku4Vvcn5IUH1eEp/OblDP3Krm8WCqpo2jOR3biCsFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208825; c=relaxed/simple;
-	bh=x8cpt4cpdqXaayB7ZI1OK4dmRUs+YJjoHtmX9jdWR/I=;
+	s=arc-20240116; t=1725208828; c=relaxed/simple;
+	bh=GN79wNiymmKEtr1Y0yAE3MnAd/SkEDnPAcNCBVXPzp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6aJHLHY4Is4N1YecffIhov/HpvBcwoRD9j5AvGoARezuVEWkRgLCEmX0IGiTgqIHbSW+gA+qzlxMoOQL14TUtKGu+ZfB9Ie8vMySvv+e/H+IqdRNWJ7+pOT8wgu7Of/kGZ6FE28TkFbSHS2j4L0ceUJckhtk6RqIgn/X3KeQDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbVowFIS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ru57JBYYvLWDPZA97QCpPBkcGvkZ+PUkAlygdE2YytDG1eKaw5VQsY1Ce8dHX6IiSckC5Jmlo5PqFGUVMpNSo8djd0X9xz80NvmKtCvCnAPFJoF7Fh2LzNccZ5HHvZbvoC3Fe3LEXqYqBrFkA96u7tf/fJu7xOF7Bu+umAOiV5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NImbHk8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbVowFIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8CCC4CEC3;
-	Sun,  1 Sep 2024 16:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NImbHk8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790D2C4CEC3;
+	Sun,  1 Sep 2024 16:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208824;
-	bh=x8cpt4cpdqXaayB7ZI1OK4dmRUs+YJjoHtmX9jdWR/I=;
+	s=korg; t=1725208827;
+	bh=GN79wNiymmKEtr1Y0yAE3MnAd/SkEDnPAcNCBVXPzp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbVowFISzlhCEX7c9321cR0EWT6zhOPA12kSFqqgb8AZ4u6TqBxeFaoqR6Ki3bFte
-	 qFM6bcluTUKJghaSZp9bWeRrFc1uYO/Osg/aBkO6eDq2rqwzpeUPi7SjUVdPKHCQCs
-	 x7dp56sAolD8wr04g7V5UKo8aBOelYylGZcPfRBc=
+	b=NImbHk8h0uaH2TEf9dc6CdsXzwKr1BlJqF9mCt9wKqpWVtu9PXMKNWAf7CdAFLa+l
+	 ju/awdV77gweTTq4DQpIXEdxqCyjd8csQwJSG5oDGXBtOE1cKvu7DdBnRqqPW3bg+3
+	 ectHdAVojvZl7Twj3LirilJZsIwNz4zfie9DD4t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/134] drm/lima: set gp bus_stop bit before hard reset
-Date: Sun,  1 Sep 2024 18:16:35 +0200
-Message-ID: <20240901160811.954339224@linuxfoundation.org>
+Subject: [PATCH 5.4 050/134] virtiofs: forbid newlines in tags
+Date: Sun,  1 Sep 2024 18:16:36 +0200
+Message-ID: <20240901160811.992453661@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -51,53 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-[ Upstream commit 27aa58ec85f973d98d336df7b7941149308db80f ]
+[ Upstream commit 40488cc16f7ea0d193a4e248f0d809c25cc377db ]
 
-This is required for reliable hard resets. Otherwise, doing a hard reset
-while a task is still running (such as a task which is being stopped by
-the drm_sched timeout handler) may result in random mmu write timeouts
-or lockups which cause the entire gpu to hang.
+Newlines in virtiofs tags are awkward for users and potential vectors
+for string injection attacks.
 
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240124025947.2110659-5-nunes.erico@gmail.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Vivek Goyal <vgoyal@redhat.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_gp.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/fuse/virtio_fs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
-index 3fca560087c97..4bf216cb33030 100644
---- a/drivers/gpu/drm/lima/lima_gp.c
-+++ b/drivers/gpu/drm/lima/lima_gp.c
-@@ -138,6 +138,11 @@ static void lima_gp_task_run(struct lima_sched_pipe *pipe,
- 	gp_write(LIMA_GP_CMD, cmd);
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index fadf6fb90fe22..48f144d083813 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -237,6 +237,16 @@ static int virtio_fs_read_tag(struct virtio_device *vdev, struct virtio_fs *fs)
+ 		return -ENOMEM;
+ 	memcpy(fs->tag, tag_buf, len);
+ 	fs->tag[len] = '\0';
++
++	/* While the VIRTIO specification allows any character, newlines are
++	 * awkward on mount(8) command-lines and cause problems in the sysfs
++	 * "tag" attr and uevent TAG= properties. Forbid them.
++	 */
++	if (strchr(fs->tag, '\n')) {
++		dev_dbg(&vdev->dev, "refusing virtiofs tag with newline character\n");
++		return -EINVAL;
++	}
++
+ 	return 0;
  }
  
-+static int lima_gp_bus_stop_poll(struct lima_ip *ip)
-+{
-+	return !!(gp_read(LIMA_GP_STATUS) & LIMA_GP_STATUS_BUS_STOPPED);
-+}
-+
- static int lima_gp_hard_reset_poll(struct lima_ip *ip)
- {
- 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC01A0000);
-@@ -151,6 +156,13 @@ static int lima_gp_hard_reset(struct lima_ip *ip)
- 
- 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC0FFE000);
- 	gp_write(LIMA_GP_INT_MASK, 0);
-+
-+	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_STOP_BUS);
-+	ret = lima_poll_timeout(ip, lima_gp_bus_stop_poll, 10, 100);
-+	if (ret) {
-+		dev_err(dev->dev, "%s bus stop timeout\n", lima_ip_name(ip));
-+		return ret;
-+	}
- 	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_RESET);
- 	ret = lima_poll_timeout(ip, lima_gp_hard_reset_poll, 10, 100);
- 	if (ret) {
 -- 
 2.43.0
 
