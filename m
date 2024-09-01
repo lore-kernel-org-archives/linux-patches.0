@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59D51DFD1;
-	Sun,  1 Sep 2024 16:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38741DFD1;
+	Sun,  1 Sep 2024 16:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209404; cv=none; b=FkH2NtJMP3A5YJgZ3KFY848Oz9rr/l21fGKifrf1AtLm/oeHE0QWXrh6KLgS0ZX3X0y9sNd+yEVNZlujc7OJYpOg9FaSCOuBvw/aG0yDOABXHgpJhYnQ3frefsAFPwd+cfyD6EGefpVPivDtZ1XVV7VG3xEtjsY0hWPOv8FZMxU=
+	t=1725209407; cv=none; b=n/lZ9BxJ0ZuUYAT9UB2JFhHnH2kvspxN70oW+jlsld7jd+PtHAbUtp2xsrif9NGFvo/NW5/PJWatqCa6cd0JPX7rUe2AWmNt0Zskksk41mwuwFxtCvtCIAWKkT9kxCE+dXvl2wU7N0Db1M/ssn2KWXCRaAFsRosRZu2Sqc1igAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209404; c=relaxed/simple;
-	bh=SIbcLW4pNtWA1qIGBFKsNw02GEEewbewemtKozMyKb0=;
+	s=arc-20240116; t=1725209407; c=relaxed/simple;
+	bh=5X5hGyqnkI36zEkz/9OCAuO30z6d5akhMXJ62Nu3VcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdPXtFfgKMyAJMD/7G0hEZdEqHehtsLAq4RukDeh1yY5pGmMyegeyQjg49i+/rysj4EAFnf/wNao+iojJG9hgwe+yJd1FU3bHnJj7HxuIUvc6XxzgTZ48ZrVJmaspJy7ODi/UNvUM9vc5HKZA07mQlq8lbbI66VqWYH6SgOiuk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehnoaSQ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lWItZGvDWNQmY/Ckc24b8LvjHFofKBaJiNIuvxXO2hg2MDPpfBj8I+0/Uu8xDJy92V6dXma6RnyEX6GMYmEj0s+uHkzLUA37OGCg4+IdBa/0b3r+m0ohvUBGtJ73L9QSvB07HhM16jhIo8SgJbXjUiIh8D5Ntnuj40r77IXTjaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01lBOKB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehnoaSQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB01C4CEC3;
-	Sun,  1 Sep 2024 16:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01lBOKB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58903C4CEC3;
+	Sun,  1 Sep 2024 16:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209404;
-	bh=SIbcLW4pNtWA1qIGBFKsNw02GEEewbewemtKozMyKb0=;
+	s=korg; t=1725209407;
+	bh=5X5hGyqnkI36zEkz/9OCAuO30z6d5akhMXJ62Nu3VcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehnoaSQ7xn5+basQiIjSicyAozmNl9lfYdXer4iae1b1HAUsPZB513iN/QpARSQrK
-	 Yxa06xXVpqKsZrzeOKUtImaamwyAEVPLNoN2afSSpNyXfSEpVgyju1ZiFJyTA2eOrR
-	 Ba+tOrbcgLjSFVteOkWmvLVtB7ZmfcVt0bs11U6w=
+	b=01lBOKB9QlctcabUoitM19tp7XkM8+1ReGKhOcDs78JAMxuVnyb5sJ+hSf0FRK3nv
+	 1itJ6ZU6jSQeoF8RUYbYPEPF3kW5Kqv3noJTcQwpLDoEi51RbXyhCmCgtB69GOeKKV
+	 Cfj7vrftY6Ozcd8QobDzUrraFIe8gf4t6PGUGr/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Pawel Dembicki <paweldembicki@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/151] net: dsa: vsc73xx: check busy flag in MDIO operations
-Date: Sun,  1 Sep 2024 18:16:25 +0200
-Message-ID: <20240901160815.044757430@linuxfoundation.org>
+	Karel Balej <balejk@matfyz.cz>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 003/151] xhci: Fix Panther point NULL pointer deref at full-speed re-enumeration
+Date: Sun,  1 Sep 2024 18:16:03 +0200
+Message-ID: <20240901160814.223776762@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -53,114 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Dembicki <paweldembicki@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit fa63c6434b6f6aaf9d8d599dc899bc0a074cc0ad ]
+commit af8e119f52e9c13e556be9e03f27957554a84656 upstream.
 
-The VSC73xx has a busy flag used during MDIO operations. It is raised
-when MDIO read/write operations are in progress. Without it, PHYs are
-misconfigured and bus operations do not work as expected.
+re-enumerating full-speed devices after a failed address device command
+can trigger a NULL pointer dereference.
 
-Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Full-speed devices may need to reconfigure the endpoint 0 Max Packet Size
+value during enumeration. Usb core calls usb_ep0_reinit() in this case,
+which ends up calling xhci_configure_endpoint().
+
+On Panther point xHC the xhci_configure_endpoint() function will
+additionally check and reserve bandwidth in software. Other hosts do
+this in hardware
+
+If xHC address device command fails then a new xhci_virt_device structure
+is allocated as part of re-enabling the slot, but the bandwidth table
+pointers are not set up properly here.
+This triggers the NULL pointer dereference the next time usb_ep0_reinit()
+is called and xhci_configure_endpoint() tries to check and reserve
+bandwidth
+
+[46710.713538] usb 3-1: new full-speed USB device number 5 using xhci_hcd
+[46710.713699] usb 3-1: Device not responding to setup address.
+[46710.917684] usb 3-1: Device not responding to setup address.
+[46711.125536] usb 3-1: device not accepting address 5, error -71
+[46711.125594] BUG: kernel NULL pointer dereference, address: 0000000000000008
+[46711.125600] #PF: supervisor read access in kernel mode
+[46711.125603] #PF: error_code(0x0000) - not-present page
+[46711.125606] PGD 0 P4D 0
+[46711.125610] Oops: Oops: 0000 [#1] PREEMPT SMP PTI
+[46711.125615] CPU: 1 PID: 25760 Comm: kworker/1:2 Not tainted 6.10.3_2 #1
+[46711.125620] Hardware name: Gigabyte Technology Co., Ltd.
+[46711.125623] Workqueue: usb_hub_wq hub_event [usbcore]
+[46711.125668] RIP: 0010:xhci_reserve_bandwidth (drivers/usb/host/xhci.c
+
+Fix this by making sure bandwidth table pointers are set up correctly
+after a failed address device command, and additionally by avoiding
+checking for bandwidth in cases like this where no actual endpoints are
+added or removed, i.e. only context for default control endpoint 0 is
+evaluated.
+
+Reported-by: Karel Balej <balejk@matfyz.cz>
+Closes: https://lore.kernel.org/linux-usb/D3CKQQAETH47.1MUO22RTCH2O3@matfyz.cz/
+Cc: stable@vger.kernel.org
+Fixes: 651aaf36a7d7 ("usb: xhci: Handle USB transaction error on address command")
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240815141117.2702314-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/vitesse-vsc73xx-core.c | 37 +++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
-index d050dfaf327cc..8a21902212e04 100644
---- a/drivers/net/dsa/vitesse-vsc73xx-core.c
-+++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
-@@ -39,6 +39,10 @@
- #define VSC73XX_BLOCK_ARBITER	0x5 /* Only subblock 0 */
- #define VSC73XX_BLOCK_SYSTEM	0x7 /* Only subblock 0 */
- 
-+/* MII Block subblock */
-+#define VSC73XX_BLOCK_MII_INTERNAL	0x0 /* Internal MDIO subblock */
-+#define VSC73XX_BLOCK_MII_EXTERNAL	0x1 /* External MDIO subblock */
-+
- #define CPU_PORT	6 /* CPU port */
- 
- /* MAC Block registers */
-@@ -197,6 +201,8 @@
- #define VSC73XX_MII_CMD		0x1
- #define VSC73XX_MII_DATA	0x2
- 
-+#define VSC73XX_MII_STAT_BUSY	BIT(3)
-+
- /* Arbiter block 5 registers */
- #define VSC73XX_ARBEMPTY		0x0c
- #define VSC73XX_ARBDISC			0x0e
-@@ -271,6 +277,7 @@
- #define IS_739X(a) (IS_7395(a) || IS_7398(a))
- 
- #define VSC73XX_POLL_SLEEP_US		1000
-+#define VSC73XX_MDIO_POLL_SLEEP_US	5
- #define VSC73XX_POLL_TIMEOUT_US		10000
- 
- struct vsc73xx_counter {
-@@ -488,6 +495,22 @@ static int vsc73xx_detect(struct vsc73xx *vsc)
- 	return 0;
- }
- 
-+static int vsc73xx_mdio_busy_check(struct vsc73xx *vsc)
-+{
-+	int ret, err;
-+	u32 val;
-+
-+	ret = read_poll_timeout(vsc73xx_read, err,
-+				err < 0 || !(val & VSC73XX_MII_STAT_BUSY),
-+				VSC73XX_MDIO_POLL_SLEEP_US,
-+				VSC73XX_POLL_TIMEOUT_US, false, vsc,
-+				VSC73XX_BLOCK_MII, VSC73XX_BLOCK_MII_INTERNAL,
-+				VSC73XX_MII_STAT, &val);
-+	if (ret)
-+		return ret;
-+	return err;
-+}
-+
- static int vsc73xx_phy_read(struct dsa_switch *ds, int phy, int regnum)
- {
- 	struct vsc73xx *vsc = ds->priv;
-@@ -495,12 +518,20 @@ static int vsc73xx_phy_read(struct dsa_switch *ds, int phy, int regnum)
- 	u32 val;
- 	int ret;
- 
-+	ret = vsc73xx_mdio_busy_check(vsc);
-+	if (ret)
-+		return ret;
-+
- 	/* Setting bit 26 means "read" */
- 	cmd = BIT(26) | (phy << 21) | (regnum << 16);
- 	ret = vsc73xx_write(vsc, VSC73XX_BLOCK_MII, 0, 1, cmd);
- 	if (ret)
- 		return ret;
--	msleep(2);
-+
-+	ret = vsc73xx_mdio_busy_check(vsc);
-+	if (ret)
-+		return ret;
-+
- 	ret = vsc73xx_read(vsc, VSC73XX_BLOCK_MII, 0, 2, &val);
- 	if (ret)
- 		return ret;
-@@ -524,6 +555,10 @@ static int vsc73xx_phy_write(struct dsa_switch *ds, int phy, int regnum,
- 	u32 cmd;
- 	int ret;
- 
-+	ret = vsc73xx_mdio_busy_check(vsc);
-+	if (ret)
-+		return ret;
-+
- 	/* It was found through tedious experiments that this router
- 	 * chip really hates to have it's PHYs reset. They
- 	 * never recover if that happens: autonegotiation stops
--- 
-2.43.0
-
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -2826,7 +2826,7 @@ static int xhci_configure_endpoint(struc
+ 				xhci->num_active_eps);
+ 		return -ENOMEM;
+ 	}
+-	if ((xhci->quirks & XHCI_SW_BW_CHECKING) &&
++	if ((xhci->quirks & XHCI_SW_BW_CHECKING) && !ctx_change &&
+ 	    xhci_reserve_bandwidth(xhci, virt_dev, command->in_ctx)) {
+ 		if ((xhci->quirks & XHCI_EP_LIMIT_QUIRK))
+ 			xhci_free_host_resources(xhci, ctrl_ctx);
+@@ -4242,8 +4242,10 @@ static int xhci_setup_device(struct usb_
+ 		mutex_unlock(&xhci->mutex);
+ 		ret = xhci_disable_slot(xhci, udev->slot_id);
+ 		xhci_free_virt_device(xhci, udev->slot_id);
+-		if (!ret)
+-			xhci_alloc_dev(hcd, udev);
++		if (!ret) {
++			if (xhci_alloc_dev(hcd, udev) == 1)
++				xhci_setup_addressable_virt_dev(xhci, udev);
++		}
+ 		kfree(command->completion);
+ 		kfree(command);
+ 		return -EPROTO;
 
 
