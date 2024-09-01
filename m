@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB17C44C93;
-	Sun,  1 Sep 2024 16:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1861C68C;
+	Sun,  1 Sep 2024 16:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209900; cv=none; b=WLQ+zuZUQgXuCeq525SbG/W5iEt8kOjWEPigJMHLbwovxS+CtIaFe+sIRGsl0fJgt5NdaQevViw9TxQpkInw8SSPZOPvA0P8pNeXYVvf8f//llB2HbfVPBOIt0U8/JsVIZP2VSdKkUlHGVGLDBqK/qW2USpbQHCq/gYnpdflPp0=
+	t=1725209904; cv=none; b=GMqfE3d+3ITVgTVP6XE2fCe26ZLgVRt85qSqnEjFnHN8FCG5kN797/oYFV1SHLzf72TacgABkLjB5kfcy800xn72CahDa4AOqXqr+qLm5GyzuE8bwcbhZh8cmXrtHQ0zKN3sPY5w0pPKO8YfIrKz1fIR8fNtgOHfbhJutmMubgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209900; c=relaxed/simple;
-	bh=6HAv8bGwIFbH0t6t5xh1UdU2Noo6ZeCfVJEBXfpAX38=;
+	s=arc-20240116; t=1725209904; c=relaxed/simple;
+	bh=MvkK4OA59InBw6fNIXHenAz0nA79uIqku/A/I6wsjbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9ZL8ROR/6Z5XCzT+SwhAPTHC5P2235nHIZI71z0Rlld5pn6MHRsklb/ZFk/6UUl/EHsfXdiGiYekNKd+FHNsUnz+CWaecSTgmJKaaYjvOmvfuMX+Xz1m+zLNk7UnywB9+RQFJ9qLVO99XzY+oQ2X9pjlFo4ec0g1fFW0E1MciU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8vtHnVm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6cXpm9H7W/T+4CngcW+kSHS6uxXg7qBhxtgJR6J2sZj0OO+x80OqMjyKdErpTHKNWLKvIXWHSenampX+5lmzrDxKE4FkyVQ7f6Dxrt4At1zN6C9/p+s+N2PstjoFNy1Pw6XIuafDUGKbbs5qqaMWAmHivvbVxFPa8I68HRQMp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqwzua5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8vtHnVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F5DC4CEC3;
-	Sun,  1 Sep 2024 16:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqwzua5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE42C4CEC3;
+	Sun,  1 Sep 2024 16:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209900;
-	bh=6HAv8bGwIFbH0t6t5xh1UdU2Noo6ZeCfVJEBXfpAX38=;
+	s=korg; t=1725209904;
+	bh=MvkK4OA59InBw6fNIXHenAz0nA79uIqku/A/I6wsjbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8vtHnVmzZ32uPGbLDqBP0VDNOKl7J8fyHkIB0Z9ip5vXKjof98V5jFqKg5t81DTV
-	 aZ3c3NDbWyt0IkmUgCQ0i+/DfbWeb3eWIcMH0uVq7Xa9Qoq3w0u5pmHCDyj8v8hnIz
-	 283yZAcz6JTthzuEM75wXUrNTTQMWj/qr+y+LAj8=
+	b=qqwzua5vFc1KMs6b85cG5Jr84cW51kfjlweCj8EzuhoL8uKoWlnRPwCwP43QVBAT7
+	 0Du6M1USaouZFMRKbILV8mB9Sz72u+2NU5XB9EAxKitpNSHLxjvif7iRJp5RuA4Ric
+	 DnvzYWR4OIpETeOFn/U8lYN6LNBLZOD3CfCCpbY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/215] igc: Fix packet still tx after gate close by reducing i226 MAC retry buffer
-Date: Sun,  1 Sep 2024 18:15:39 +0200
-Message-ID: <20240901160824.288984562@linuxfoundation.org>
+Subject: [PATCH 5.15 028/215] net/mlx5e: Correctly report errors for ethtool rx flows
+Date: Sun,  1 Sep 2024 18:15:40 +0200
+Message-ID: <20240901160824.326649039@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,146 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit e037a26ead187901f83cad9c503ccece5ff6817a ]
+[ Upstream commit cbc796be1779c4dbc9a482c7233995e2a8b6bfb3 ]
 
-Testing uncovered that even when the taprio gate is closed, some packets
-still transmit.
+Previously, an ethtool rx flow with no attrs would not be added to the
+NIC as it has no rules to configure the hw with, but it would be
+reported as successful to the caller (return code 0). This is confusing
+for the user as ethtool then reports "Added rule $num", but no rule was
+actually added.
 
-According to i225/6 hardware errata [1], traffic might overflow the
-planned QBV window. This happens because MAC maintains an internal buffer,
-primarily for supporting half duplex retries. Therefore, even when the
-gate closes, residual MAC data in the buffer may still transmit.
+This change corrects that by instead reporting these wrong rules as
+-EINVAL.
 
-To mitigate this for i226, reduce the MAC's internal buffer from 192 bytes
-to the recommended 88 bytes by modifying the RETX_CTL register value.
-
-This follows guidelines from:
-[1] Ethernet Controller I225/I22 Spec Update Rev 2.1 Errata Item 9:
-    TSN: Packet Transmission Might Cross Qbv Window
-[2] I225/6 SW User Manual Rev 1.2.4: Section 8.11.5 Retry Buffer Control
-
-Note that the RETX_CTL register can't be used in TSN mode because half
-duplex feature cannot coexist with TSN.
-
-Test Steps:
-1.  Send taprio cmd to board A:
-    tc qdisc replace dev enp1s0 parent root handle 100 taprio \
-    num_tc 4 \
-    map 3 2 1 0 3 3 3 3 3 3 3 3 3 3 3 3 \
-    queues 1@0 1@1 1@2 1@3 \
-    base-time 0 \
-    sched-entry S 0x07 500000 \
-    sched-entry S 0x0f 500000 \
-    flags 0x2 \
-    txtime-delay 0
-
-    Note that for TC3, gate should open for 500us and close for another
-    500us.
-
-3.  Take tcpdump log on Board B.
-
-4.  Send udp packets via UDP tai app from Board A to Board B.
-
-5.  Analyze tcpdump log via wireshark log on Board B. Ensure that the
-    total time from the first to the last packet received during one cycle
-    for TC3 does not exceed 500us.
-
-Fixes: 43546211738e ("igc: Add new device ID's")
-Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: b29c61dac3a2 ("net/mlx5e: Ethtool steering flow validation refactoring")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20240808144107.2095424-5-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_defines.h |  6 ++++
- drivers/net/ethernet/intel/igc/igc_tsn.c     | 34 ++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
-index 4f2021a940fb3..d5acee27894e5 100644
---- a/drivers/net/ethernet/intel/igc/igc_defines.h
-+++ b/drivers/net/ethernet/intel/igc/igc_defines.h
-@@ -405,6 +405,12 @@
- #define IGC_DTXMXPKTSZ_TSN	0x19 /* 1600 bytes of max TX DMA packet size */
- #define IGC_DTXMXPKTSZ_DEFAULT	0x98 /* 9728-byte Jumbo frames */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c
+index d32b70c62c949..32212bc41df30 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_fs_ethtool.c
+@@ -727,7 +727,7 @@ mlx5e_ethtool_flow_replace(struct mlx5e_priv *priv,
+ 	if (num_tuples <= 0) {
+ 		netdev_warn(priv->netdev, "%s: flow is not valid %d\n",
+ 			    __func__, num_tuples);
+-		return num_tuples;
++		return num_tuples < 0 ? num_tuples : -EINVAL;
+ 	}
  
-+/* Retry Buffer Control */
-+#define IGC_RETX_CTL			0x041C
-+#define IGC_RETX_CTL_WATERMARK_MASK	0xF
-+#define IGC_RETX_CTL_QBVFULLTH_SHIFT	8 /* QBV Retry Buffer Full Threshold */
-+#define IGC_RETX_CTL_QBVFULLEN	0x1000 /* Enable QBV Retry Buffer Full Threshold */
-+
- /* Transmit Scheduling Latency */
- /* Latency between transmission scheduling (LaunchTime) and the time
-  * the packet is transmitted to the network in nanosecond.
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 066444675aade..9fbc0b0455803 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -78,6 +78,15 @@ void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
- 	wr32(IGC_GTXOFFSET, txoffset);
- }
- 
-+static void igc_tsn_restore_retx_default(struct igc_adapter *adapter)
-+{
-+	struct igc_hw *hw = &adapter->hw;
-+	u32 retxctl;
-+
-+	retxctl = rd32(IGC_RETX_CTL) & IGC_RETX_CTL_WATERMARK_MASK;
-+	wr32(IGC_RETX_CTL, retxctl);
-+}
-+
- /* Returns the TSN specific registers to their default values after
-  * the adapter is reset.
-  */
-@@ -91,6 +100,9 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
- 	wr32(IGC_TXPBS, I225_TXPBSIZE_DEFAULT);
- 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_DEFAULT);
- 
-+	if (igc_is_device_id_i226(hw))
-+		igc_tsn_restore_retx_default(adapter);
-+
- 	tqavctrl = rd32(IGC_TQAVCTRL);
- 	tqavctrl &= ~(IGC_TQAVCTRL_TRANSMIT_MODE_TSN |
- 		      IGC_TQAVCTRL_ENHANCED_QAV | IGC_TQAVCTRL_FUTSCDDIS);
-@@ -111,6 +123,25 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
- 	return 0;
- }
- 
-+/* To partially fix i226 HW errata, reduce MAC internal buffering from 192 Bytes
-+ * to 88 Bytes by setting RETX_CTL register using the recommendation from:
-+ * a) Ethernet Controller I225/I226 Specification Update Rev 2.1
-+ *    Item 9: TSN: Packet Transmission Might Cross the Qbv Window
-+ * b) I225/6 SW User Manual Rev 1.2.4: Section 8.11.5 Retry Buffer Control
-+ */
-+static void igc_tsn_set_retx_qbvfullthreshold(struct igc_adapter *adapter)
-+{
-+	struct igc_hw *hw = &adapter->hw;
-+	u32 retxctl, watermark;
-+
-+	retxctl = rd32(IGC_RETX_CTL);
-+	watermark = retxctl & IGC_RETX_CTL_WATERMARK_MASK;
-+	/* Set QBVFULLTH value using watermark and set QBVFULLEN */
-+	retxctl |= (watermark << IGC_RETX_CTL_QBVFULLTH_SHIFT) |
-+		   IGC_RETX_CTL_QBVFULLEN;
-+	wr32(IGC_RETX_CTL, retxctl);
-+}
-+
- static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- {
- 	struct igc_hw *hw = &adapter->hw;
-@@ -123,6 +154,9 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_TSN);
- 	wr32(IGC_TXPBS, IGC_TXPBSIZE_TSN);
- 
-+	if (igc_is_device_id_i226(hw))
-+		igc_tsn_set_retx_qbvfullthreshold(adapter);
-+
- 	for (i = 0; i < adapter->num_tx_queues; i++) {
- 		struct igc_ring *ring = adapter->tx_ring[i];
- 		u32 txqctl = 0;
+ 	eth_ft = get_flow_table(priv, fs, num_tuples);
 -- 
 2.43.0
 
