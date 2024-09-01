@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02A244C93;
-	Sun,  1 Sep 2024 16:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14881181334;
+	Sun,  1 Sep 2024 16:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209265; cv=none; b=SmY9UEhO5ERBAIaw1EzsJRePSUzqNKto4wJmYc9iq5doWlVu3z66dq3QYAEE3c2eOpx4Sq8utjv2Xo/v6oEulhWsi7/ASRdvhrkPevIuRC+DalODdhFHaphARit+2UAr4Wu8S9zuBBHnrjBI2pDfc5CDPDZ/lz42d99LJmflWlU=
+	t=1725209268; cv=none; b=UApOfs49Nko5RKgkAVXQp+KrzVgrMALBDeUANXTnhL6XoxKUZDm0rLjm2BxuV6weH7ENXlIOaHqKufU+ok+waRdo+ZiR7ETKx6fP6viQMnZtn1XNyNcQp+puVFk84wW7B23DhNrRPgoC12JeE5NtNLP7PaBVP/hOPlcnQ0uyL5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209265; c=relaxed/simple;
-	bh=JX1KRNIcpzHi53TQUoGoe9rRQE7GzdGqCbPIILYM6eI=;
+	s=arc-20240116; t=1725209268; c=relaxed/simple;
+	bh=7Ee8CzHniuKhmgcCBAkWkxST774f77IAuL1XbijUipI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVj2OYOT/byaoa/d25YdQQSi/l9VWE+CrU+TXYhu2Kr2vzxX7Pcu+NtHaiTEKGWYHAILli3y2f31PBHHXe+8kcomRHWHL6tcQyhtSc5KUhcRu3RzUrq+eqDA1xo7C/zDAOKTwVbLfWiPO4QqWB90yPPXWs3SnZwOgY2SdLcCkAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zlb0Mg+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYZmj5XtQlkVswIJhp8q2KIus4e3+3rrNRthMwSMcPWCRTJ9tNnlwDeTVRnxPEknNuykyHhOq+8N/WGg4sSTHzfK1bid6+PA7onLXjbu2cW1oIZGe+Tf65sMropLgBLQ4ACHnMOTcNNQLKWNc0K3MZnAJILjsLpS76MLqap7OVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvFsKF+V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zlb0Mg+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669A0C4CEC3;
-	Sun,  1 Sep 2024 16:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvFsKF+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C98DC4CEC3;
+	Sun,  1 Sep 2024 16:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209264;
-	bh=JX1KRNIcpzHi53TQUoGoe9rRQE7GzdGqCbPIILYM6eI=;
+	s=korg; t=1725209268;
+	bh=7Ee8CzHniuKhmgcCBAkWkxST774f77IAuL1XbijUipI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zlb0Mg+J9cWI4NCzwrXIlgFMuWhRfLvxrrz4LDeGbFTR1Aha4eIATE7n8dAO0CL2X
-	 X8QG+aViUkTaZhM8RS/xQooQ3yI66iV7VY5D9xgCw4d1ION8cVWIaCXsn9VHb44R+K
-	 0LMjG8A5Yadkojcue9GlMp2M2rFovGWVsU03qNN8=
+	b=jvFsKF+VxdBoPTuQ72X1B4sWZWHXZ9k8Iw2poXmtYtwU1qujbr3J0MMUtwh8ofXo5
+	 zR8HuCICOdi0R+kyU5/pqUpK1MwnN4r/Wt6OiRYDoOE2LKAK0ubqq0bq76REJU8OIO
+	 rFLtqPSp7PBSp09zYT59XsqropggaOz3aIMy9fiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Yo <charlesyo@google.com>,
-	Kyle Tso <kyletso@google.com>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Ondrej Jirman <megi@xff.cz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.1 21/71] usb: typec: fix up incorrectly backported "usb: typec: tcpm: unregister existing source caps before re-registration"
-Date: Sun,  1 Sep 2024 18:17:26 +0200
-Message-ID: <20240901160802.689035616@linuxfoundation.org>
+	ChanWoo Lee <cw9316.lee@samsung.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 22/71] mmc: Avoid open coding by using mmc_op_tuning()
+Date: Sun,  1 Sep 2024 18:17:27 +0200
+Message-ID: <20240901160802.725682051@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -54,73 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: ChanWoo Lee <cw9316.lee@samsung.com>
 
-In commit cfcd544a9974 ("usb: typec: tcpm: unregister existing source
-caps before re-registration"), quilt, and git, applied the diff to the
-incorrect function, which would cause bad problems if exercised in a
-device with these capabilities.
+[ Upstream commit b98e7e8daf0ebab9dcc36812378a71e1be0b5089 ]
 
-Fix this all up (including the follow-up fix in commit 4053696594d7
-("usb: typec: tcpm: fix use-after-free case in
-tcpm_register_source_caps") to be in the correct function.
+Replace code with the already defined function. No functional changes.
 
-Fixes: 4053696594d7 ("usb: typec: tcpm: fix use-after-free case in tcpm_register_source_caps")
-Fixes: cfcd544a9974 ("usb: typec: tcpm: unregister existing source caps before re-registration")
-Reported-by: Charles Yo <charlesyo@google.com>
-Cc: Kyle Tso <kyletso@google.com>
-Cc: Amit Sunil Dhamne <amitsd@google.com>
-Cc: Ondrej Jirman <megi@xff.cz>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20221124080031.14690-1-cw9316.lee@samsung.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 9374ae912dbb ("mmc: mtk-sd: receive cmd8 data when hs400 tuning fail")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/mmc/core/core.c              | 3 +--
+ drivers/mmc/host/dw_mmc.c            | 3 +--
+ drivers/mmc/host/mtk-sd.c            | 8 ++------
+ drivers/mmc/host/sdhci-msm.c         | 3 +--
+ drivers/mmc/host/sdhci-pci-o2micro.c | 3 +--
+ drivers/mmc/host/sdhci-tegra.c       | 8 ++------
+ drivers/mmc/host/sdhci.c             | 9 ++-------
+ 7 files changed, 10 insertions(+), 27 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2397,7 +2397,7 @@ static int tcpm_register_source_caps(str
+diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
+index df85c35a86a3b..fc2fca5325ba5 100644
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -142,8 +142,7 @@ void mmc_request_done(struct mmc_host *host, struct mmc_request *mrq)
+ 	int err = cmd->error;
+ 
+ 	/* Flag re-tuning needed on CRC errors */
+-	if (cmd->opcode != MMC_SEND_TUNING_BLOCK &&
+-	    cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200 &&
++	if (!mmc_op_tuning(cmd->opcode) &&
+ 	    !host->retune_crc_disable &&
+ 	    (err == -EILSEQ || (mrq->sbc && mrq->sbc->error == -EILSEQ) ||
+ 	    (mrq->data && mrq->data->error == -EILSEQ) ||
+diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+index a0ccf88876f98..d0da4573b38cd 100644
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -334,8 +334,7 @@ static u32 dw_mci_prep_stop_abort(struct dw_mci *host, struct mmc_command *cmd)
+ 	    cmdr == MMC_READ_MULTIPLE_BLOCK ||
+ 	    cmdr == MMC_WRITE_BLOCK ||
+ 	    cmdr == MMC_WRITE_MULTIPLE_BLOCK ||
+-	    cmdr == MMC_SEND_TUNING_BLOCK ||
+-	    cmdr == MMC_SEND_TUNING_BLOCK_HS200 ||
++	    mmc_op_tuning(cmdr) ||
+ 	    cmdr == MMC_GEN_CMD) {
+ 		stop->opcode = MMC_STOP_TRANSMISSION;
+ 		stop->arg = 0;
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 70e414027155d..efd2af2d36862 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -1207,9 +1207,7 @@ static bool msdc_cmd_done(struct msdc_host *host, int events,
+ 
+ 	if (!sbc_error && !(events & MSDC_INT_CMDRDY)) {
+ 		if (events & MSDC_INT_CMDTMO ||
+-		    (cmd->opcode != MMC_SEND_TUNING_BLOCK &&
+-		     cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200 &&
+-		     !host->hs400_tuning))
++		    (!mmc_op_tuning(cmd->opcode) && !host->hs400_tuning))
+ 			/*
+ 			 * should not clear fifo/interrupt as the tune data
+ 			 * may have alreay come when cmd19/cmd21 gets response
+@@ -1303,9 +1301,7 @@ static void msdc_cmd_next(struct msdc_host *host,
  {
- 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
- 	struct usb_power_delivery_capabilities_desc caps = { };
--	struct usb_power_delivery_capabilities *cap;
-+	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
+ 	if ((cmd->error &&
+ 	    !(cmd->error == -EILSEQ &&
+-	      (cmd->opcode == MMC_SEND_TUNING_BLOCK ||
+-	       cmd->opcode == MMC_SEND_TUNING_BLOCK_HS200 ||
+-	       host->hs400_tuning))) ||
++	      (mmc_op_tuning(cmd->opcode) || host->hs400_tuning))) ||
+ 	    (mrq->sbc && mrq->sbc->error))
+ 		msdc_request_done(host, mrq);
+ 	else if (cmd == mrq->sbc)
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e37fb25577c0f..28bd562c439ef 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2218,8 +2218,7 @@ static int __sdhci_msm_check_write(struct sdhci_host *host, u16 val, int reg)
+ 		if (!msm_host->use_cdr)
+ 			break;
+ 		if ((msm_host->transfer_mode & SDHCI_TRNS_READ) &&
+-		    SDHCI_GET_CMD(val) != MMC_SEND_TUNING_BLOCK_HS200 &&
+-		    SDHCI_GET_CMD(val) != MMC_SEND_TUNING_BLOCK)
++		    !mmc_op_tuning(SDHCI_GET_CMD(val)))
+ 			sdhci_msm_set_cdr(host, true);
+ 		else
+ 			sdhci_msm_set_cdr(host, false);
+diff --git a/drivers/mmc/host/sdhci-pci-o2micro.c b/drivers/mmc/host/sdhci-pci-o2micro.c
+index 24bb0e9809e76..cfa0956e7d72a 100644
+--- a/drivers/mmc/host/sdhci-pci-o2micro.c
++++ b/drivers/mmc/host/sdhci-pci-o2micro.c
+@@ -326,8 +326,7 @@ static int sdhci_o2_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 		(host->timing != MMC_TIMING_UHS_SDR50))
+ 		return sdhci_execute_tuning(mmc, opcode);
  
- 	if (!port->partner_pd)
- 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
-@@ -2407,6 +2407,11 @@ static int tcpm_register_source_caps(str
- 	memcpy(caps.pdo, port->source_caps, sizeof(u32) * port->nr_source_caps);
- 	caps.role = TYPEC_SOURCE;
+-	if (WARN_ON((opcode != MMC_SEND_TUNING_BLOCK_HS200) &&
+-			(opcode != MMC_SEND_TUNING_BLOCK)))
++	if (WARN_ON(!mmc_op_tuning(opcode)))
+ 		return -EINVAL;
  
-+	if (cap) {
-+		usb_power_delivery_unregister_capabilities(cap);
-+		port->partner_source_caps = NULL;
-+	}
-+
- 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
- 	if (IS_ERR(cap))
- 		return PTR_ERR(cap);
-@@ -2420,7 +2425,7 @@ static int tcpm_register_sink_caps(struc
+ 	/* Force power mode enter L0 */
+diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+index 1adaa94c31aca..62d236bfe9377 100644
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -268,13 +268,9 @@ static void tegra210_sdhci_writew(struct sdhci_host *host, u16 val, int reg)
  {
- 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
- 	struct usb_power_delivery_capabilities_desc caps = { };
--	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
-+	struct usb_power_delivery_capabilities *cap;
+ 	bool is_tuning_cmd = 0;
+ 	bool clk_enabled;
+-	u8 cmd;
  
- 	if (!port->partner_pd)
- 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
-@@ -2430,11 +2435,6 @@ static int tcpm_register_sink_caps(struc
- 	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
- 	caps.role = TYPEC_SINK;
- 
--	if (cap) {
--		usb_power_delivery_unregister_capabilities(cap);
--		port->partner_source_caps = NULL;
+-	if (reg == SDHCI_COMMAND) {
+-		cmd = SDHCI_GET_CMD(val);
+-		is_tuning_cmd = cmd == MMC_SEND_TUNING_BLOCK ||
+-				cmd == MMC_SEND_TUNING_BLOCK_HS200;
 -	}
++	if (reg == SDHCI_COMMAND)
++		is_tuning_cmd = mmc_op_tuning(SDHCI_GET_CMD(val));
+ 
+ 	if (is_tuning_cmd)
+ 		clk_enabled = tegra_sdhci_configure_card_clk(host, 0);
+diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+index 4237d8ae878c1..536d21028a116 100644
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -1712,8 +1712,7 @@ static bool sdhci_send_command(struct sdhci_host *host, struct mmc_command *cmd)
+ 		flags |= SDHCI_CMD_INDEX;
+ 
+ 	/* CMD19 is special in that the Data Present Select should be set */
+-	if (cmd->data || cmd->opcode == MMC_SEND_TUNING_BLOCK ||
+-	    cmd->opcode == MMC_SEND_TUNING_BLOCK_HS200)
++	if (cmd->data || mmc_op_tuning(cmd->opcode))
+ 		flags |= SDHCI_CMD_DATA;
+ 
+ 	timeout = jiffies;
+@@ -3396,8 +3395,6 @@ static void sdhci_adma_show_error(struct sdhci_host *host)
+ 
+ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
+ {
+-	u32 command;
 -
- 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
- 	if (IS_ERR(cap))
- 		return PTR_ERR(cap);
+ 	/*
+ 	 * CMD19 generates _only_ Buffer Read Ready interrupt if
+ 	 * use sdhci_send_tuning.
+@@ -3406,9 +3403,7 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
+ 	 * SDHCI_INT_DATA_AVAIL always there, stuck in irq storm.
+ 	 */
+ 	if (intmask & SDHCI_INT_DATA_AVAIL && !host->data) {
+-		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
+-		if (command == MMC_SEND_TUNING_BLOCK ||
+-		    command == MMC_SEND_TUNING_BLOCK_HS200) {
++		if (mmc_op_tuning(SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND)))) {
+ 			host->tuning_done = 1;
+ 			wake_up(&host->buf_ready_int);
+ 			return;
+-- 
+2.43.0
+
 
 
