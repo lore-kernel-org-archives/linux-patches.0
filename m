@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4C1183CAF;
-	Sun,  1 Sep 2024 16:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CD744C97;
+	Sun,  1 Sep 2024 16:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207603; cv=none; b=jx2iggn0Fc7tH6GXNI8VRpXgVnJSCia9ZLuOBBY6hg52yONOB9KhhHeHnz15q0YOXqaqxswKXqoaYcxF1Og5fruRjWA5xEIcW1gAkjiJHB2n7/FoNT6ah1p4Q5T5ua/2n2c3bngZqus/2V7UkVgWuqy7FRbB0LI+689DMdq7Mds=
+	t=1725207606; cv=none; b=iuYoRbCqvFMT17PTqbj2/kyfpepN31QH9vPtqGaQlLYuMABgu6LHJjLLNXksgrZsPSofhixPD5sYESp4ga0LOHCP6BavFqEAcIIkRAwpHk+e94kACRovFQtZMAkb1WqSsQMD//Fi2zSin2cPwPKMlBd3XNTJaLAEhzFzeFsWxqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207603; c=relaxed/simple;
-	bh=OOiUWVFgXDbu7dy3eM/rqx9/V/AAWIju4eEPdkTyz+4=;
+	s=arc-20240116; t=1725207606; c=relaxed/simple;
+	bh=11xqQxjfJ+eK1Sq3AnzmcxPHyArH4eXAVtceHYw6Z4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HubT0fA6OqpYRENecSehgewFl8qw0mhT7gEIMWmfo4anBeFTBwzYeEJQ3h8qCGrK8a4tE1rBTF0bXhbblsAoNsJwEppuPJmTDI61djXT9o9t5xFJvcuYYytWbtPLGwrHOqLfZIo9AIl36LPd5YCQTd0L5Zm3vPqQtgxz7IXdXSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od6crr2B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QJCzeshckqVXWLgvnAR+ilrR0M2/wIiDyRXVLbI59l21wsfNagZ83X0IhY2iCK/exX7brTeciNHCEv/yywDTTnWeUO0UIOAqShpgimuLjF05bp3pnqtHWMvQQtcbTC9XMNqZDgcZviTd1JWhnimYLDhhj7TwW44xQZehNHAZSUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaNA3QsX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od6crr2B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EE0C4CEC3;
-	Sun,  1 Sep 2024 16:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaNA3QsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B215DC4CEC3;
+	Sun,  1 Sep 2024 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207602;
-	bh=OOiUWVFgXDbu7dy3eM/rqx9/V/AAWIju4eEPdkTyz+4=;
+	s=korg; t=1725207606;
+	bh=11xqQxjfJ+eK1Sq3AnzmcxPHyArH4eXAVtceHYw6Z4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=od6crr2Bz+UzwicUVvkGWu1yCxR0wlGflwC57rmzR0N5Sjx36yfbAH9FFcYGQ8Gkd
-	 1agfi7E6KHCGeB5MCthYHq9ai+49kmkXEe9K75twxnz/3KvMSr1ganTX9ZCb+49S9N
-	 G301OXixxJXZe0Q32hE2FZJtKDFsjFJNnsTgu9BA=
+	b=WaNA3QsXyBr2TtA+pQOVK2u9IrOivzfpcXYcjI9uld1BsCoAmDkqXJO1d/wa6fC/x
+	 rMfjYjMt85jXU6Dd+PdmZ2WajKZAgOjps9dMI9I6feJvxKRD9ZsW2VT5T5g3QR6SrA
+	 SBjJsze0W3mXYP6zgeDGQdwwOOrejtDLdP9GKz4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karel Balej <balejk@matfyz.cz>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.19 03/98] xhci: Fix Panther point NULL pointer deref at full-speed re-enumeration
-Date: Sun,  1 Sep 2024 18:15:33 +0200
-Message-ID: <20240901160803.806564653@linuxfoundation.org>
+	Andrew Jones <ajones@ventanamicro.com>,
+	Haibo Xu <haibo1.xu@intel.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Sunil V L <sunilvl@ventanamicro.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Hanjun Guo <guohanjun@huawei.com>
+Subject: [PATCH 4.19 04/98] arm64: ACPI: NUMA: initialize all values of acpi_early_node_map to NUMA_NO_NODE
+Date: Sun,  1 Sep 2024 18:15:34 +0200
+Message-ID: <20240901160803.844802213@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -50,82 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Haibo Xu <haibo1.xu@intel.com>
 
-commit af8e119f52e9c13e556be9e03f27957554a84656 upstream.
+commit a21dcf0ea8566ebbe011c79d6ed08cdfea771de3 upstream.
 
-re-enumerating full-speed devices after a failed address device command
-can trigger a NULL pointer dereference.
+Currently, only acpi_early_node_map[0] was initialized to NUMA_NO_NODE.
+To ensure all the values were properly initialized, switch to initialize
+all of them to NUMA_NO_NODE.
 
-Full-speed devices may need to reconfigure the endpoint 0 Max Packet Size
-value during enumeration. Usb core calls usb_ep0_reinit() in this case,
-which ends up calling xhci_configure_endpoint().
-
-On Panther point xHC the xhci_configure_endpoint() function will
-additionally check and reserve bandwidth in software. Other hosts do
-this in hardware
-
-If xHC address device command fails then a new xhci_virt_device structure
-is allocated as part of re-enabling the slot, but the bandwidth table
-pointers are not set up properly here.
-This triggers the NULL pointer dereference the next time usb_ep0_reinit()
-is called and xhci_configure_endpoint() tries to check and reserve
-bandwidth
-
-[46710.713538] usb 3-1: new full-speed USB device number 5 using xhci_hcd
-[46710.713699] usb 3-1: Device not responding to setup address.
-[46710.917684] usb 3-1: Device not responding to setup address.
-[46711.125536] usb 3-1: device not accepting address 5, error -71
-[46711.125594] BUG: kernel NULL pointer dereference, address: 0000000000000008
-[46711.125600] #PF: supervisor read access in kernel mode
-[46711.125603] #PF: error_code(0x0000) - not-present page
-[46711.125606] PGD 0 P4D 0
-[46711.125610] Oops: Oops: 0000 [#1] PREEMPT SMP PTI
-[46711.125615] CPU: 1 PID: 25760 Comm: kworker/1:2 Not tainted 6.10.3_2 #1
-[46711.125620] Hardware name: Gigabyte Technology Co., Ltd.
-[46711.125623] Workqueue: usb_hub_wq hub_event [usbcore]
-[46711.125668] RIP: 0010:xhci_reserve_bandwidth (drivers/usb/host/xhci.c
-
-Fix this by making sure bandwidth table pointers are set up correctly
-after a failed address device command, and additionally by avoiding
-checking for bandwidth in cases like this where no actual endpoints are
-added or removed, i.e. only context for default control endpoint 0 is
-evaluated.
-
-Reported-by: Karel Balej <balejk@matfyz.cz>
-Closes: https://lore.kernel.org/linux-usb/D3CKQQAETH47.1MUO22RTCH2O3@matfyz.cz/
-Cc: stable@vger.kernel.org
-Fixes: 651aaf36a7d7 ("usb: xhci: Handle USB transaction error on address command")
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240815141117.2702314-2-mathias.nyman@linux.intel.com
+Fixes: e18962491696 ("arm64: numa: rework ACPI NUMA initialization")
+Cc: <stable@vger.kernel.org> # 4.19.x
+Reported-by: Andrew Jones <ajones@ventanamicro.com>
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://lore.kernel.org/r/853d7f74aa243f6f5999e203246f0d1ae92d2b61.1722828421.git.haibo1.xu@intel.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/acpi_numa.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -2790,7 +2790,7 @@ static int xhci_configure_endpoint(struc
- 				xhci->num_active_eps);
- 		return -ENOMEM;
- 	}
--	if ((xhci->quirks & XHCI_SW_BW_CHECKING) &&
-+	if ((xhci->quirks & XHCI_SW_BW_CHECKING) && !ctx_change &&
- 	    xhci_reserve_bandwidth(xhci, virt_dev, command->in_ctx)) {
- 		if ((xhci->quirks & XHCI_EP_LIMIT_QUIRK))
- 			xhci_free_host_resources(xhci, ctrl_ctx);
-@@ -4145,8 +4145,10 @@ static int xhci_setup_device(struct usb_
- 		mutex_unlock(&xhci->mutex);
- 		ret = xhci_disable_slot(xhci, udev->slot_id);
- 		xhci_free_virt_device(xhci, udev->slot_id);
--		if (!ret)
--			xhci_alloc_dev(hcd, udev);
-+		if (!ret) {
-+			if (xhci_alloc_dev(hcd, udev) == 1)
-+				xhci_setup_addressable_virt_dev(xhci, udev);
-+		}
- 		kfree(command->completion);
- 		kfree(command);
- 		return -EPROTO;
+--- a/arch/arm64/kernel/acpi_numa.c
++++ b/arch/arm64/kernel/acpi_numa.c
+@@ -28,7 +28,7 @@
+ 
+ #include <asm/numa.h>
+ 
+-static int acpi_early_node_map[NR_CPUS] __initdata = { NUMA_NO_NODE };
++static int acpi_early_node_map[NR_CPUS] __initdata = { [0 ... NR_CPUS - 1] = NUMA_NO_NODE };
+ 
+ int __init acpi_numa_get_nid(unsigned int cpu)
+ {
 
 
