@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91129183092;
-	Sun,  1 Sep 2024 16:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D404F18308E;
+	Sun,  1 Sep 2024 16:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209950; cv=none; b=mUvyz0yF3wCUe3mdvYfMFict3MrXRAxHWx/Hu+vmZsFLgiZ8W3fuAhduVRDaf2lm5BR4Hx6SGD7PTU7s0QF3ZOIIPS4aB04V7dtKA3Qz3uE0pE38fk712RWkpiHX3LmbEZzkK+XiooG5z2Qa/oIlkaUN/zQ7LbpyUqvhj5hZtwA=
+	t=1725209953; cv=none; b=QOKlkYLVd/KDfmCNInlk10I7LvrEvBNFq9j7lFlSR5KS65UuSzis9fbfKatQBLn7RoslcwvQzi89iRpBrR3szjEqxGeXJjWnktSTp5KSK+fRcBbhoaBCEASGd0PKyqra3LZXswH5bxhj1nCuhQAtG/1uk+SjL5nslZpxgAzaNZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209950; c=relaxed/simple;
-	bh=Py8/KlINwenuukJfRslLgBdYVZypYjSEkQYVizsH/uM=;
+	s=arc-20240116; t=1725209953; c=relaxed/simple;
+	bh=Fgbx9q4+qRl4jLmpAj6lulBbij/PJ2FGpU8psUZUYek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kf2vhDNYYmViK1Z8mdE0cPbbv3HFW8WV70cBhpXLULHrSKY76R8BjjF7kecwb2NqblmdA4R88FkMEB3sQ1cOqdoo8TOZ5Z8+045/f8+6KM9Q5NZo/DPaNnHAqU2BnfZLMhcko0IU/liYVvttdx94im/YgGVT1k8E+GMQX8XAA6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cz6qHF90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJaKmAIEmq0ZjJ+XXMdjQ1A/YUaetBrwAJltkzY8XHk+Tik0oKOSqGk5EY/JsX42SZe1YwaieIfE8Csql6ymhpwULyIVE8gojH/D8UM4JW6B2nhnzVpTNKvG72dymC8EXxGO/mm/4cspflK1e8C6vtL+5swFgJiEGWkpcrd0m6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmLOSwOU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cz6qHF90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000B0C4CEC3;
-	Sun,  1 Sep 2024 16:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmLOSwOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C368C4CEC3;
+	Sun,  1 Sep 2024 16:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209950;
-	bh=Py8/KlINwenuukJfRslLgBdYVZypYjSEkQYVizsH/uM=;
+	s=korg; t=1725209953;
+	bh=Fgbx9q4+qRl4jLmpAj6lulBbij/PJ2FGpU8psUZUYek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cz6qHF90DKpQkme0BBsPe5jfQ+MvG+PyfxyvH+72Wp/Du2dh4tUXqcSEXETZ+dbOD
-	 wXTpUCqtSnVRAr2o+tb6hj3GGHL3KRueWJCQ6ySeFq1w6KfbWKghbv0b4rLMeGh3N7
-	 Fn+RDiDLB/YKdnF5utaFcooP/I0jnrgo8zC7IRqk=
+	b=BmLOSwOUY7lLFBkBr9I1iLN4Wqyi8eiFz8mrPjPXc0b+UMzumaoGSSLpFvwApfZX3
+	 AAZ+KGekCpvVugzVFOY4MuFhUZVrxhP8pMT7KujRkLfIb9uNIgYRMP2WQd/9lO+aem
+	 0nzAhu6U8MJGnUrlp7zZWHYJkOivB6wbd+2e5Bew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
-	Kalle Valo <kvalo@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/215] ssb: Fix division by zero issue in ssb_calc_clock_rate
-Date: Sun,  1 Sep 2024 18:15:55 +0200
-Message-ID: <20240901160824.975932195@linuxfoundation.org>
+Subject: [PATCH 5.15 044/215] wifi: cfg80211: check wiphy mutex is held for wdev mutex
+Date: Sun,  1 Sep 2024 18:15:56 +0200
+Message-ID: <20240901160825.013135421@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -47,51 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit e0b5127fa134fe0284d58877b6b3133939c8b3ce ]
+[ Upstream commit 1474bc87fe57deac726cc10203f73daa6c3212f7 ]
 
-In ssb_calc_clock_rate(), there is a potential issue where the value of
-m1 could be zero due to initialization using clkfactor_f6_resolv(). This
-situation raised concerns about the possibility of a division by zero
-error.
+This might seem pretty pointless rather than changing the locking
+immediately, but it seems safer to run for a while with checks and
+the old locking scheme, and then remove the wdev lock later.
 
-We fixed it by following the suggestions provided by Larry Finger
-<Larry.Finger@lwfinger.net> and Michael Büsch <m@bues.ch>. The fix
-involves returning a value of 1 instead of 0 in clkfactor_f6_resolv().
-This modification ensures the proper functioning of the code and
-eliminates the risk of division by zero errors.
-
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Acked-by: Larry Finger <Larry.Finger@lwfinger.net>
-Acked-by: Michael Büsch <m@bues.ch>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230904232346.34991-1-rand.sec96@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ssb/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/core.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ssb/main.c b/drivers/ssb/main.c
-index 8a93c83cb6f80..d52e91258e989 100644
---- a/drivers/ssb/main.c
-+++ b/drivers/ssb/main.c
-@@ -837,7 +837,7 @@ static u32 clkfactor_f6_resolve(u32 v)
- 	case SSB_CHIPCO_CLK_F6_7:
- 		return 7;
- 	}
--	return 0;
-+	return 1;
+diff --git a/net/wireless/core.h b/net/wireless/core.h
+index 1720abf36f92a..be186b5a15f3d 100644
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -217,6 +217,7 @@ void cfg80211_register_wdev(struct cfg80211_registered_device *rdev,
+ static inline void wdev_lock(struct wireless_dev *wdev)
+ 	__acquires(wdev)
+ {
++	lockdep_assert_held(&wdev->wiphy->mtx);
+ 	mutex_lock(&wdev->mtx);
+ 	__acquire(wdev->mtx);
+ }
+@@ -224,11 +225,16 @@ static inline void wdev_lock(struct wireless_dev *wdev)
+ static inline void wdev_unlock(struct wireless_dev *wdev)
+ 	__releases(wdev)
+ {
++	lockdep_assert_held(&wdev->wiphy->mtx);
+ 	__release(wdev->mtx);
+ 	mutex_unlock(&wdev->mtx);
  }
  
- /* Calculate the speed the backplane would run at a given set of clockcontrol values */
+-#define ASSERT_WDEV_LOCK(wdev) lockdep_assert_held(&(wdev)->mtx)
++static inline void ASSERT_WDEV_LOCK(struct wireless_dev *wdev)
++{
++	lockdep_assert_held(&wdev->wiphy->mtx);
++	lockdep_assert_held(&wdev->mtx);
++}
+ 
+ static inline bool cfg80211_has_monitors_only(struct cfg80211_registered_device *rdev)
+ {
 -- 
 2.43.0
 
