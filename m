@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C2B2C190;
-	Sun,  1 Sep 2024 17:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EDA17C;
+	Sun,  1 Sep 2024 17:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210175; cv=none; b=EpqugQfai9vnRm1H5UvN+olnaGNgKuI6qJs6v+WXhJgusUcnJwxbWHouzTdjZXmYQIHXKLsfa+cgJmH4naEqvNiKbXvJDCmHhb2rlZdFwVG9VgDvk5gOUqVPCbdvnHp5meWxe/4LUZk2gC0OEAwmCzvoiZi4GK1HdrPZphyBLP4=
+	t=1725210179; cv=none; b=YATjX7DROsSo6gdj7TRJExrvu3BF4PqNCHgE9IN0v7UYuvI14fxZKvf0bZQL0gLUZU+WAF7JOoW8qfG0lyKrwaxMtDTLfRIDNF8m1uO/pXvAZ1amwgF6K8wm2lettPnXD0g50rh9XXm5r1mqmPqcsq95iVbcyWj0xu7g1RhI4Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210175; c=relaxed/simple;
-	bh=Cl+UIj2p3oBKnkQZ+C/fLzJD9Sqf0Hcg5yvG/k/e/D4=;
+	s=arc-20240116; t=1725210179; c=relaxed/simple;
+	bh=uEN1T0P/M7/ZI9Mob5MgekN4KyQotvqzdXuXNZzxOoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6uhENjQP6ZnTnJ52/bwcNtl1djZ4kDugLUJ/N/xpsOW65oEQMVaOq0P6pOO1hslBJlt1GH3krWFRGFXdmENK1ZUjK+Wk9KKMiw5trBJeuZSO34ou76rsVpHRtf84cgHOB4Ic70wkuy17BCRodACNvR/UFKZ6WydTtP0iIj0c+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVnmsnWE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+3sTEbe4UhQuFMmoLbJEKmaFUiswe8OVqZDmzPpi9ZKkhbWPCpsb0oklzh7tlApka2lbyHCi4XzCOrKLsoaCaX19+KbwJdbNv/cgckgH924O4hHwQuyLQCludyR8nBeLfSr/maX+B4+lC8QdP21lOixRfj3gGev88nIGvMBl1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqPbN9dR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVnmsnWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44893C4CEC3;
-	Sun,  1 Sep 2024 17:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqPbN9dR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCA3C4CEC3;
+	Sun,  1 Sep 2024 17:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210175;
-	bh=Cl+UIj2p3oBKnkQZ+C/fLzJD9Sqf0Hcg5yvG/k/e/D4=;
+	s=korg; t=1725210179;
+	bh=uEN1T0P/M7/ZI9Mob5MgekN4KyQotvqzdXuXNZzxOoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HVnmsnWExrGVEreU4ljxy1HaP4RpaHmA5yTxBTbfX2UVWpZrfuTqU1+6YJpSWmfQj
-	 cTIDEVsCQ442hEl9JMhufF0XacHehQxb5x5hZxBzi9LHp/qcgxdXrlApyjdYK/GKbr
-	 zjfCKoEKeE44mAbTIiz4qs5uS0oaggJiVOwVfW64=
+	b=lqPbN9dRPvrQuzq2Bi01Ct0asQAGz+WflvEYRl8FyJvou02jvFzQycLxAr9wQHGaj
+	 kWzmjUMz7ASh/8JwhkMUgmpaWGaggF+0YUxbCQrsQiZZwuQ+C9Vy0VCCJ6Yg7yPLn5
+	 1aHXj+xQeV/758cR3dWz47l/XL+CPs8UshXChDPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 112/215] NFSD: Refactor nfsd_reply_cache_free_locked()
-Date: Sun,  1 Sep 2024 18:17:04 +0200
-Message-ID: <20240901160827.583341479@linuxfoundation.org>
+Subject: [PATCH 5.15 113/215] NFSD: Rename nfsd_reply_cache_alloc()
+Date: Sun,  1 Sep 2024 18:17:05 +0200
+Message-ID: <20240901160827.622193294@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,78 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 35308e7f0fc3942edc87d9c6dc78c4a096428957 ]
+[ Upstream commit ff0d169329768c1102b7b07eebe5a9839aa1c143 ]
 
-To reduce contention on the bucket locks, we must avoid calling
-kfree() while each bucket lock is held.
-
-Start by refactoring nfsd_reply_cache_free_locked() into a helper
-that removes an entry from the bucket (and must therefore run under
-the lock) and a second helper that frees the entry (which does not
-need to hold the lock).
-
-For readability, rename the helpers nfsd_cacherep_<verb>.
+For readability, rename to match the other helpers.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Stable-dep-of: a9507f6af145 ("NFSD: Replace nfsd_prune_bucket()")
+Stable-dep-of: 4b14885411f7 ("nfsd: make all of the nfsd stats per-network namespace")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfscache.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ fs/nfsd/nfscache.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/fs/nfsd/nfscache.c
 +++ b/fs/nfsd/nfscache.c
-@@ -110,21 +110,33 @@ nfsd_reply_cache_alloc(struct svc_rqst *
- 	return rp;
+@@ -85,8 +85,8 @@ nfsd_hashsize(unsigned int limit)
  }
  
-+static void nfsd_cacherep_free(struct svc_cacherep *rp)
-+{
-+	if (rp->c_type == RC_REPLBUFF)
-+		kfree(rp->c_replvec.iov_base);
-+	kmem_cache_free(drc_slab, rp);
-+}
-+
- static void
--nfsd_reply_cache_free_locked(struct nfsd_drc_bucket *b, struct svc_cacherep *rp,
--				struct nfsd_net *nn)
-+nfsd_cacherep_unlink_locked(struct nfsd_net *nn, struct nfsd_drc_bucket *b,
-+			    struct svc_cacherep *rp)
+ static struct svc_cacherep *
+-nfsd_reply_cache_alloc(struct svc_rqst *rqstp, __wsum csum,
+-			struct nfsd_net *nn)
++nfsd_cacherep_alloc(struct svc_rqst *rqstp, __wsum csum,
++		    struct nfsd_net *nn)
  {
--	if (rp->c_type == RC_REPLBUFF && rp->c_replvec.iov_base) {
-+	if (rp->c_type == RC_REPLBUFF && rp->c_replvec.iov_base)
- 		nfsd_stats_drc_mem_usage_sub(nn, rp->c_replvec.iov_len);
--		kfree(rp->c_replvec.iov_base);
--	}
- 	if (rp->c_state != RC_UNUSED) {
- 		rb_erase(&rp->c_node, &b->rb_head);
- 		list_del(&rp->c_lru);
- 		atomic_dec(&nn->num_drc_entries);
- 		nfsd_stats_drc_mem_usage_sub(nn, sizeof(*rp));
- 	}
--	kmem_cache_free(drc_slab, rp);
-+}
-+
-+static void
-+nfsd_reply_cache_free_locked(struct nfsd_drc_bucket *b, struct svc_cacherep *rp,
-+				struct nfsd_net *nn)
-+{
-+	nfsd_cacherep_unlink_locked(nn, b, rp);
-+	nfsd_cacherep_free(rp);
- }
+ 	struct svc_cacherep	*rp;
  
- static void
-@@ -132,8 +144,9 @@ nfsd_reply_cache_free(struct nfsd_drc_bu
- 			struct nfsd_net *nn)
- {
- 	spin_lock(&b->cache_lock);
--	nfsd_reply_cache_free_locked(b, rp, nn);
-+	nfsd_cacherep_unlink_locked(nn, b, rp);
- 	spin_unlock(&b->cache_lock);
-+	nfsd_cacherep_free(rp);
- }
+@@ -457,7 +457,7 @@ int nfsd_cache_lookup(struct svc_rqst *r
+ 	 * preallocate an entry.
+ 	 */
+ 	nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+-	rp = nfsd_reply_cache_alloc(rqstp, csum, nn);
++	rp = nfsd_cacherep_alloc(rqstp, csum, nn);
+ 	if (!rp)
+ 		goto out;
  
- int nfsd_drc_slab_create(void)
 
 
