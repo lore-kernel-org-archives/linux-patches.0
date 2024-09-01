@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7677F2B9C7;
-	Sun,  1 Sep 2024 16:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D7C1C68C;
+	Sun,  1 Sep 2024 16:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208402; cv=none; b=oHIHIawkXJncxbwoEwve8LGgxKqmCuWoofmVRMw4lUMkWusbF08V3c6Iy5b3OZTBzAoV5nWCCvHeD9Z+1lCvbntc6iFeLjLnSjKngNVIK2DSAIXuhLsvkYsB9NWGIRkORTk2cCtzwY4YX8oS1tIWFZGFwQM+FEv4mLkWPkNhyVg=
+	t=1725208405; cv=none; b=mNB8l++j8EPu4cwssMepd8Ykq76VH249wODW417r0RmhTDd4KMZTzj9TVArIShzb4bU9sz0aRo7qH+bJFrON2AdBRrxSGjsBTLTIeKDQMJdQrJ33m9QP2y0F6BQ8GlZMRo46SkH8OGFC2jSwK96ZVy2ZRQhSp6hWReUcaHFqQRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208402; c=relaxed/simple;
-	bh=9o/vd6q79XBRfsxHjr7dha6xQzqmuHh+CV0HjLxjBjU=;
+	s=arc-20240116; t=1725208405; c=relaxed/simple;
+	bh=oa9A7DBGZmTBqq9I6fxPrF5sbiH9qR4UD4HrxEYimSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leShJS/v5cYxW50Fpby2KDR7zVEVL0MSr8UiWz+KqlpLr8/NBRLWvwEZX7+mpqH2t5dHlmnqVbG03lVVj3kpld1qaBDTdFF4O9fjOI54bygnl391zwLL4ivzyLpgf856y0kJ0y0q8AP9G44+tZGooSFRIGiBKtbRl+BjL99T+aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU97MFQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrgGR4scMyGuKKYygyr6Z1hGR+xhPlfjE9Bmc1cj6nY7/GZeJGtbKBtZ+Io0L8Q5tZiK2r1l9ynaI4i/1R6qCdMv51cTjwfleinTH4YxlHzbYp8YVrhEN7eT++w99aFNVgMkqCY1cm5I93cHznOk42bbHiibXLxdaeSXOROcu7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7PldnEe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU97MFQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF94C4CEC3;
-	Sun,  1 Sep 2024 16:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7PldnEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44390C4CEC3;
+	Sun,  1 Sep 2024 16:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208402;
-	bh=9o/vd6q79XBRfsxHjr7dha6xQzqmuHh+CV0HjLxjBjU=;
+	s=korg; t=1725208405;
+	bh=oa9A7DBGZmTBqq9I6fxPrF5sbiH9qR4UD4HrxEYimSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU97MFQ+iXqpcF1J8d+WW8ZZzAQ2pCW4gQAJ8tbbov+pRnuT8XY+gcQ4eHoFaNbeV
-	 LafRnfPBwqqYQXcB9YwGJkCDO4pRmUpys5RJFkOUko95Vw0gi9agJ8Z5z0WIAARhYc
-	 XBBpGLPgfxBEcpJOTMSBYQH7soLHNFzXE7afl600=
+	b=X7PldnEesyh7VtttE1Eu5J5B7ZblgkKp783JPewAD6ojsuPw7H+qUaE/vg71YRjYw
+	 yKQnQnuz1R0avJDK5o65hMaCKige9zTpvfYzSquKzHfgt0O0286OlnPgH672E5OzAq
+	 qa1F+Cuz+p/3jUhwHkd7CS7lRXNJiefTXaAAuBZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 072/149] cifs: Fix FALLOC_FL_PUNCH_HOLE support
-Date: Sun,  1 Sep 2024 18:16:23 +0200
-Message-ID: <20240901160820.173540829@linuxfoundation.org>
+Subject: [PATCH 6.10 073/149] nfsd: hold reference to delegation when updating it for cb_getattr
+Date: Sun,  1 Sep 2024 18:16:24 +0200
+Message-ID: <20240901160820.211219947@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -57,103 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 416871f4fb84bc96822562e654941d5625a25bf8 ]
+[ Upstream commit da05ba23d4c8d3e8a45846b952e53dd76c4b5e36 ]
 
-The cifs filesystem doesn't quite emulate FALLOC_FL_PUNCH_HOLE correctly
-(note that due to lack of protocol support, it can't actually implement it
-directly).  Whilst it will (partially) invalidate dirty folios in the
-pagecache, it doesn't write them back first, and so the EOF marker on the
-server may be lower than inode->i_size.
+Once we've dropped the flc_lock, there is nothing that ensures that the
+delegation that was found will still be around later. Take a reference
+to it while holding the lock and then drop it when we've finished with
+the delegation.
 
-This presents a problem, however, as if the punched hole invalidates the
-tail of the locally cached dirty data, writeback won't know it needs to
-move the EOF over to account for the hole punch (which isn't supposed to
-move the EOF).  We could just write zeroes over the punched out region of
-the pagecache and write that back - but this is supposed to be a
-deallocatory operation.
-
-Fix this by manually moving the EOF over on the server after the operation
-if the hole punched would corrupt it.
-
-Note that the FSCTL_SET_ZERO_DATA RPC and the setting of the EOF should
-probably be compounded to stop a third party interfering (or, at least,
-massively reduce the chance).
-
-This was reproducible occasionally by using fsx with the following script:
-
-	truncate 0x0 0x375e2 0x0
-	punch_hole 0x2f6d3 0x6ab5 0x375e2
-	truncate 0x0 0x3a71f 0x375e2
-	mapread 0xee05 0xcf12 0x3a71f
-	write 0x2078e 0x5604 0x3a71f
-	write 0x3ebdf 0x1421 0x3a71f *
-	punch_hole 0x379d0 0x8630 0x40000 *
-	mapread 0x2aaa2 0x85b 0x40000
-	fallocate 0x1b401 0x9ada 0x40000
-	read 0x15f2 0x7d32 0x40000
-	read 0x32f37 0x7a3b 0x40000 *
-
-The second "write" should extend the EOF to 0x40000, and the "punch_hole"
-should operate inside of that - but that depends on whether the VM gets in
-and writes back the data first.  If it doesn't, the file ends up 0x3a71f in
-size, not 0x40000.
-
-Fixes: 31742c5a3317 ("enable fallocate punch hole ("fallocate -p") for SMB3")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/nfsd/nfs4state.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index cfbca3489ece1..f44f5f2494006 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3287,6 +3287,7 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
- 	struct inode *inode = file_inode(file);
- 	struct cifsFileInfo *cfile = file->private_data;
- 	struct file_zero_data_information fsctl_buf;
-+	unsigned long long end = offset + len, i_size, remote_i_size;
- 	long rc;
- 	unsigned int xid;
- 	__u8 set_sparse = 1;
-@@ -3318,6 +3319,27 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
- 			(char *)&fsctl_buf,
- 			sizeof(struct file_zero_data_information),
- 			CIFSMaxBufSize, NULL, NULL);
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index dafff707e23a4..19d39872be325 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8837,7 +8837,6 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct inode *inode,
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	struct file_lock_context *ctx;
+ 	struct file_lease *fl;
+-	struct nfs4_delegation *dp;
+ 	struct iattr attrs;
+ 	struct nfs4_cb_fattr *ncf;
+ 
+@@ -8862,7 +8861,8 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct inode *inode,
+ 			goto break_lease;
+ 		}
+ 		if (type == F_WRLCK) {
+-			dp = fl->c.flc_owner;
++			struct nfs4_delegation *dp = fl->c.flc_owner;
 +
-+	if (rc)
-+		goto unlock;
-+
-+	/* If there's dirty data in the buffer that would extend the EOF if it
-+	 * were written, then we need to move the EOF marker over to the lower
-+	 * of the high end of the hole and the proposed EOF.  The problem is
-+	 * that we locally hole-punch the tail of the dirty data, the proposed
-+	 * EOF update will end up in the wrong place.
-+	 */
-+	i_size = i_size_read(inode);
-+	remote_i_size = netfs_inode(inode)->remote_i_size;
-+	if (end > remote_i_size && i_size > remote_i_size) {
-+		unsigned long long extend_to = umin(end, i_size);
-+		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
-+				  cfile->fid.volatile_fid, cfile->pid, extend_to);
-+		if (rc >= 0)
-+			netfs_inode(inode)->remote_i_size = extend_to;
-+	}
-+
-+unlock:
- 	filemap_invalidate_unlock(inode->i_mapping);
- out:
- 	inode_unlock(inode);
+ 			if (dp->dl_recall.cb_clp == *(rqstp->rq_lease_breaker)) {
+ 				spin_unlock(&ctx->flc_lock);
+ 				return 0;
+@@ -8870,6 +8870,7 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct inode *inode,
+ break_lease:
+ 			nfsd_stats_wdeleg_getattr_inc(nn);
+ 			dp = fl->c.flc_owner;
++			refcount_inc(&dp->dl_stid.sc_count);
+ 			ncf = &dp->dl_cb_fattr;
+ 			nfs4_cb_getattr(&dp->dl_cb_fattr);
+ 			spin_unlock(&ctx->flc_lock);
+@@ -8879,8 +8880,10 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct inode *inode,
+ 				/* Recall delegation only if client didn't respond */
+ 				status = nfserrno(nfsd_open_break_lease(inode, NFSD_MAY_READ));
+ 				if (status != nfserr_jukebox ||
+-						!nfsd_wait_for_delegreturn(rqstp, inode))
++						!nfsd_wait_for_delegreturn(rqstp, inode)) {
++					nfs4_put_stid(&dp->dl_stid);
+ 					return status;
++				}
+ 			}
+ 			if (!ncf->ncf_file_modified &&
+ 					(ncf->ncf_initial_cinfo != ncf->ncf_cb_change ||
+@@ -8900,6 +8903,7 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct inode *inode,
+ 				*size = ncf->ncf_cur_fsize;
+ 				*modified = true;
+ 			}
++			nfs4_put_stid(&dp->dl_stid);
+ 			return 0;
+ 		}
+ 		break;
 -- 
 2.43.0
 
