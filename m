@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C419F44C97;
-	Sun,  1 Sep 2024 16:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A4728387;
+	Sun,  1 Sep 2024 16:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208104; cv=none; b=DxhOrngz1XctUXN0T3ayIn31hzmRBQAJAyGAzZOFjHakN5afDCH4kgca7x4YmoM2HOjoxET6aEQLsk6on3iIj2z9fbI9X2jIQzvWyfCV88uX7Rxzy6LvaNxPGoHG+ARWMWaE6vOa0U+gEv5Ppuvt4wK9J7zvhzxt7duz9OUJOZA=
+	t=1725208108; cv=none; b=GpLE4cBAJcthjro4+6pyrhdaPymg4EoLTJxuQuM7A0eTVRYX4HwWOavDzE+HjYgP1hVdiVKhojPlCVgGpejKycMXB7Nku90Z5NAPR4uoTFEX4NIRRECng1Qc3k5GAFZsEDn6sTkgXW+MlBFvBIcbQ7ogrIP6TOimV5wo7RNHrOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208104; c=relaxed/simple;
-	bh=EDZ3krE2XCzQlxEBs7piYdVJX9YJZZ42ux2KsDa0hfE=;
+	s=arc-20240116; t=1725208108; c=relaxed/simple;
+	bh=FGQFXL4qI712IwoATlskeAXW8EzOH9HrLBaXcBzaeCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nd8LOjOCU/MLTBaFsdLrSLjzwBmizy8gfZ2VHVP3jJDyGNoj2+dK+th65BREKbOmW1Gukg9hVjGJAN7Z5J5YuFS5k8zRt6JddKbSQ9DJuWhEtsR69iEI9bQXqyybnsH6YdoyUO0HrUF3qz7bdQBK2AaYsyfI8Am5KEGLyZz1jZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlSpMORJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTIwbS+j3aFvbXm40daHo8dLI912G7Nm1/mRRlJ2hOItUtex+xGuyWjPZsWblWhlwz191gYPC3XSjtoenWAQEDJbFcLdxV5QhVjRPQThsHKouFt09ycXKr8sI0qSW5Q7xCa61/2dX1ZTKsGAK5uQuZEeuEU3F9/HJxy7mII8U20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoPZ8ujJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlSpMORJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF42C4CEC3;
-	Sun,  1 Sep 2024 16:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoPZ8ujJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CF1C4CEC3;
+	Sun,  1 Sep 2024 16:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208104;
-	bh=EDZ3krE2XCzQlxEBs7piYdVJX9YJZZ42ux2KsDa0hfE=;
+	s=korg; t=1725208108;
+	bh=FGQFXL4qI712IwoATlskeAXW8EzOH9HrLBaXcBzaeCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlSpMORJOqeU07ABGHUZablYNBw9QdJmgSJx47f4cRksInlssiuxSZPyrprHMbr5A
-	 iyzTFt57BLWI5XpfMEYJlYHLa9iJWBrYjwvpYGqrF0yToHyhL3qNfaTdCXoG8n5D0h
-	 QwJGefdQohtSoy/MbxvDIpT7KHJMx9rccRW7slBM=
+	b=XoPZ8ujJhEI8bh+8G8k/q+PIjGx3QYfrj3dL2IWUzVg/pA1esaIw6v0Wi5hWE48WV
+	 YK778+WWPhjDusYwH8PcS4d+Q0vH0rUjETn9IMbIya81BWD0DJisWHTbs7DlqtYrdj
+	 EoEL+EGQ0JTU7NWMeK9AXWCoP8z3bPbSvpXaix9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 75/93] scsi: sd: Ignore command SYNCHRONIZE CACHE error if format in progress
-Date: Sun,  1 Sep 2024 18:17:02 +0200
-Message-ID: <20240901160810.560626716@linuxfoundation.org>
+	ZHANG Yuntian <yt@radxa.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 76/93] USB: serial: option: add MeiG Smart SRM825L
+Date: Sun,  1 Sep 2024 18:17:03 +0200
+Message-ID: <20240901160810.598824411@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,62 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: ZHANG Yuntian <yt@radxa.com>
 
-commit 4f9eedfa27ae5806ed10906bcceee7bae49c8941 upstream.
+commit 9a471de516c35219d1722c13367191ce1f120fe9 upstream.
 
-If formatting a suspended disk (such as formatting with different DIF
-type), the disk will be resuming first, and then the format command will
-submit to the disk through SG_IO ioctl.
+Add support for MeiG Smart SRM825L which is based on Qualcomm 315 chip.
 
-When the disk is processing the format command, the system does not
-submit other commands to the disk. Therefore, the system attempts to
-suspend the disk again and sends the SYNCHRONIZE CACHE command. However,
-the SYNCHRONIZE CACHE command will fail because the disk is in the
-formatting process. This will cause the runtime_status of the disk to
-error and it is difficult for user to recover it. Error info like:
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d22 Rev= 4.14
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=6f345e48
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-[  669.925325] sd 6:0:6:0: [sdg] Synchronizing SCSI cache
-[  670.202371] sd 6:0:6:0: [sdg] Synchronize Cache(10) failed: Result: hostbyte=0x00 driverbyte=DRIVER_OK
-[  670.216300] sd 6:0:6:0: [sdg] Sense Key : 0x2 [current]
-[  670.221860] sd 6:0:6:0: [sdg] ASC=0x4 ASCQ=0x4
-
-To solve the issue, ignore the error and return success/0 when format is
-in progress.
-
+Signed-off-by: ZHANG Yuntian <yt@radxa.com>
+Link: https://lore.kernel.org/0041DFA5200EFB1B+20240803074619.563116-1-yt@radxa.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Link: https://lore.kernel.org/r/20240819090934.2130592-1-liyihang9@huawei.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/usb/serial/option.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -1690,13 +1690,15 @@ static int sd_sync_cache(struct scsi_dis
- 			    (sshdr.asc == 0x74 && sshdr.ascq == 0x71))	/* drive is password locked */
- 				/* this is no error here */
- 				return 0;
-+
- 			/*
--			 * This drive doesn't support sync and there's not much
--			 * we can do because this is called during shutdown
--			 * or suspend so just return success so those operations
--			 * can proceed.
-+			 * If a format is in progress or if the drive does not
-+			 * support sync, there is not much we can do because
-+			 * this is called during shutdown or suspend so just
-+			 * return success so those operations can proceed.
- 			 */
--			if (sshdr.sense_key == ILLEGAL_REQUEST)
-+			if ((sshdr.asc == 0x04 && sshdr.ascq == 0x04) ||
-+			    sshdr.sense_key == ILLEGAL_REQUEST)
- 				return 0;
- 		}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -619,6 +619,8 @@ static void option_instat_callback(struc
  
+ /* MeiG Smart Technology products */
+ #define MEIGSMART_VENDOR_ID			0x2dee
++/* MeiG Smart SRM825L based on Qualcomm 315 */
++#define MEIGSMART_PRODUCT_SRM825L		0x4d22
+ /* MeiG Smart SLM320 based on UNISOC UIS8910 */
+ #define MEIGSMART_PRODUCT_SLM320		0x4d41
+ 
+@@ -2366,6 +2368,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
