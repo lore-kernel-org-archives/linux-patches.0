@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639F1183CA5;
-	Sun,  1 Sep 2024 16:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC7144C97;
+	Sun,  1 Sep 2024 16:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207995; cv=none; b=tsYiSs0XMbQ+rHLf3Qnm51VVUkpQq6qcDTH+p4zDRbbp5bwMs+HCJ0ZaGD9EoqhF9gj+KMfawqA3mZ3qcoqxQnnu0P5Sq3i1UEYcVEI0OcgvQzI42uUIrqNqYWXKjx45R0UTkjZ92FMqLuP5fCpDBW+HNMinE+e0Kk3CexsK5nc=
+	t=1725207998; cv=none; b=Wkhv3e6/UvXaftJc820eYCT9Xfl3zQ+OQ3RFh9Kh0bHgxTbhMwj7yAVub2o9M9pXm8FrxmarOaM2rGxCOxL3A6vievxAJKvRjF4wPOSXvsH4kEpXKn2o4Ldg+44ukDwBDbA3S5eILd6B75woeJj4KnLsVf5/8Hb4nd/V1zyPeB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207995; c=relaxed/simple;
-	bh=xJliqHAobR4yCHOBPNnaDgQH+PJ0Tpl7xk80tb1StVw=;
+	s=arc-20240116; t=1725207998; c=relaxed/simple;
+	bh=YCkIsjJ/o0HWhCxFvQEfLAMKAj7+KTJodoKvsLj9XeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldFzHANn4JH9Yo6pjiDwshQ2uEluylm3O5S2hiE+BgZMhGYmJyy6gtC5cNiZXCfaCRigXKyn7/E2GDOWNGPO5k1/GtZm3QQIqlFx36FVzJJbYSek3fEScsONJx7Qnf7ybZly61W6z2R2kshijycDEDwfV2dlz97gbEvtRvpEJBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRoye6/R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LWntUgcaKYx533BivQbqAmK5d7lNWuQJ4GTv1kteQY97vZpV05mBgOTMv/6s47U2xq2C93139dk5e96VkEkoHmDwyZvXMcxaxLkpAKVzHE6Ufp0kjXxyQkSNPiRtNA2v2U9VgUPUmNMHVBQ2IV3jIZzjhlGY35BIDylVbTlRjd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTtUjB8M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRoye6/R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6815C4CEC3;
-	Sun,  1 Sep 2024 16:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTtUjB8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9094C4CEC3;
+	Sun,  1 Sep 2024 16:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207995;
-	bh=xJliqHAobR4yCHOBPNnaDgQH+PJ0Tpl7xk80tb1StVw=;
+	s=korg; t=1725207998;
+	bh=YCkIsjJ/o0HWhCxFvQEfLAMKAj7+KTJodoKvsLj9XeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRoye6/RkG7bA9hDQet+Ug4xC02UdcH+loEbNCNYdFiPMo3GF7nmeNAbLAVTfnqrH
-	 ZavYD2DMSvs9VoyL5+Z3cA+rsbczW//PKRJVUEVcfjEV0YfZmcLkMbCqizPK1JjHjq
-	 W7g5g/448eHmBzBxFgkz8WgraL2LVzaKXAbGx4kU=
+	b=hTtUjB8Mv+qOHMhR/gqQ1Z7PfgAP+dW8jC7qYmJWi/Xfg+tKqwH1dGU/tmINjygZQ
+	 vccA/vioSO9HFCbasVAXyuhQ9L6+2evOwZjQCnI79TH33Ry3P+NVNbO0XEGCXOxQq+
+	 2NNGaD9VbYhAQblZ5Tx6h7YCRPmR3nPdP1T6JixM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Marek Gresko <marek.gresko@protonmail.com>,
-	Scott Mayhew <smayhew@redhat.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 42/93] selinux,smack: dont bypass permissions check in inode_setsecctx hook
-Date: Sun,  1 Sep 2024 18:16:29 +0200
-Message-ID: <20240901160808.946775899@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.6 43/93] iommufd: Do not allow creating areas without READ or WRITE
+Date: Sun,  1 Sep 2024 18:16:30 +0200
+Message-ID: <20240901160808.984117479@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -56,72 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 76a0e79bc84f466999fa501fce5bf7a07641b8a7 upstream.
+commit 996dc53ac289b81957aa70d62ccadc6986d26a87 upstream.
 
-Marek Gresko reports that the root user on an NFS client is able to
-change the security labels on files on an NFS filesystem that is
-exported with root squashing enabled.
+This results in passing 0 or just IOMMU_CACHE to iommu_map(). Most of
+the page table formats don't like this:
 
-The end of the kerneldoc comment for __vfs_setxattr_noperm() states:
+  amdv1 - -EINVAL
+  armv7s - returns 0, doesn't update mapped
+  arm-lpae - returns 0 doesn't update mapped
+  dart - returns 0, doesn't update mapped
+  VT-D - returns -EINVAL
 
- *  This function requires the caller to lock the inode's i_mutex before it
- *  is executed. It also assumes that the caller will make the appropriate
- *  permission checks.
+Unfortunately the three formats that return 0 cause serious problems:
 
-nfsd_setattr() does do permissions checking via fh_verify() and
-nfsd_permission(), but those don't do all the same permissions checks
-that are done by security_inode_setxattr() and its related LSM hooks do.
+ - Returning ret = but not uppdating mapped from domain->map_pages()
+   causes an infinite loop in __iommu_map()
 
-Since nfsd_setattr() is the only consumer of security_inode_setsecctx(),
-simplest solution appears to be to replace the call to
-__vfs_setxattr_noperm() with a call to __vfs_setxattr_locked().  This
-fixes the above issue and has the added benefit of causing nfsd to
-recall conflicting delegations on a file when a client tries to change
-its security label.
+ - Not writing ioptes means that VFIO/iommufd have no way to recover them
+   and we will have memory leaks and worse during unmap
+
+Since almost nothing can support this, and it is a useless thing to do,
+block it early in iommufd.
 
 Cc: stable@kernel.org
-Reported-by: Marek Gresko <marek.gresko@protonmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218809
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Tested-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Casey Schaufler <casey@schaufler-ca.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: aad37e71d5c4 ("iommufd: IOCTLs for the io_pagetable")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/1-v1-1211e1294c27+4b1-iommu_no_prot_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c   |    4 ++--
- security/smack/smack_lsm.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/iommu/iommufd/ioas.c            |    8 ++++++++
+ tools/testing/selftests/iommu/iommufd.c |    6 +++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -6553,8 +6553,8 @@ static int selinux_inode_notifysecctx(st
-  */
- static int selinux_inode_setsecctx(struct dentry *dentry, void *ctx, u32 ctxlen)
+--- a/drivers/iommu/iommufd/ioas.c
++++ b/drivers/iommu/iommufd/ioas.c
+@@ -213,6 +213,10 @@ int iommufd_ioas_map(struct iommufd_ucmd
+ 	if (cmd->iova >= ULONG_MAX || cmd->length >= ULONG_MAX)
+ 		return -EOVERFLOW;
+ 
++	if (!(cmd->flags &
++	      (IOMMU_IOAS_MAP_WRITEABLE | IOMMU_IOAS_MAP_READABLE)))
++		return -EINVAL;
++
+ 	ioas = iommufd_get_ioas(ucmd->ictx, cmd->ioas_id);
+ 	if (IS_ERR(ioas))
+ 		return PTR_ERR(ioas);
+@@ -253,6 +257,10 @@ int iommufd_ioas_copy(struct iommufd_ucm
+ 	    cmd->dst_iova >= ULONG_MAX)
+ 		return -EOVERFLOW;
+ 
++	if (!(cmd->flags &
++	      (IOMMU_IOAS_MAP_WRITEABLE | IOMMU_IOAS_MAP_READABLE)))
++		return -EINVAL;
++
+ 	src_ioas = iommufd_get_ioas(ucmd->ictx, cmd->src_ioas_id);
+ 	if (IS_ERR(src_ioas))
+ 		return PTR_ERR(src_ioas);
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -531,7 +531,7 @@ TEST_F(iommufd_ioas, copy_area)
  {
--	return __vfs_setxattr_noperm(&nop_mnt_idmap, dentry, XATTR_NAME_SELINUX,
--				     ctx, ctxlen, 0);
-+	return __vfs_setxattr_locked(&nop_mnt_idmap, dentry, XATTR_NAME_SELINUX,
-+				     ctx, ctxlen, 0, NULL);
- }
- 
- static int selinux_inode_getsecctx(struct inode *inode, void **ctx, u32 *ctxlen)
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4772,8 +4772,8 @@ static int smack_inode_notifysecctx(stru
- 
- static int smack_inode_setsecctx(struct dentry *dentry, void *ctx, u32 ctxlen)
+ 	struct iommu_ioas_copy copy_cmd = {
+ 		.size = sizeof(copy_cmd),
+-		.flags = IOMMU_IOAS_MAP_FIXED_IOVA,
++		.flags = IOMMU_IOAS_MAP_FIXED_IOVA | IOMMU_IOAS_MAP_WRITEABLE,
+ 		.dst_ioas_id = self->ioas_id,
+ 		.src_ioas_id = self->ioas_id,
+ 		.length = PAGE_SIZE,
+@@ -1024,7 +1024,7 @@ TEST_F(iommufd_ioas, copy_sweep)
  {
--	return __vfs_setxattr_noperm(&nop_mnt_idmap, dentry, XATTR_NAME_SMACK,
--				     ctx, ctxlen, 0);
-+	return __vfs_setxattr_locked(&nop_mnt_idmap, dentry, XATTR_NAME_SMACK,
-+				     ctx, ctxlen, 0, NULL);
- }
- 
- static int smack_inode_getsecctx(struct inode *inode, void **ctx, u32 *ctxlen)
+ 	struct iommu_ioas_copy copy_cmd = {
+ 		.size = sizeof(copy_cmd),
+-		.flags = IOMMU_IOAS_MAP_FIXED_IOVA,
++		.flags = IOMMU_IOAS_MAP_FIXED_IOVA | IOMMU_IOAS_MAP_WRITEABLE,
+ 		.src_ioas_id = self->ioas_id,
+ 		.dst_iova = MOCK_APERTURE_START,
+ 		.length = MOCK_PAGE_SIZE,
+@@ -1314,7 +1314,7 @@ TEST_F(iommufd_mock_domain, user_copy)
+ 	};
+ 	struct iommu_ioas_copy copy_cmd = {
+ 		.size = sizeof(copy_cmd),
+-		.flags = IOMMU_IOAS_MAP_FIXED_IOVA,
++		.flags = IOMMU_IOAS_MAP_FIXED_IOVA | IOMMU_IOAS_MAP_WRITEABLE,
+ 		.dst_ioas_id = self->ioas_id,
+ 		.dst_iova = MOCK_APERTURE_START,
+ 		.length = BUFFER_SIZE,
 
 
