@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40D61C68C;
-	Sun,  1 Sep 2024 16:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880D1C68C;
+	Sun,  1 Sep 2024 16:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208636; cv=none; b=NRqiJms4SCBSkcyGGxFMCgCLNo+BIVcSbl4g8HYGjPMdDBSZ5T+6GYVP+huuDiyWl2xmfmrD//nJ21z2UWwjeanRjVqbHiHWc5rUrq+qjOM+XDuM8bhxHe2OBakdJHJbrTMyR9slHDE0WRy7si9mCMN16xGOpRtJdmn4QK2/wFQ=
+	t=1725208640; cv=none; b=PPXWWLALjS9G2+O6BYusPAkBn3MM87qKEmM9WpPohr/wLocUVwguO2h0KckC5HNmTKzcLAEzpsHYUDE1AxAfUqQ6NKgBqxoIObhDDVyfE5H11QLTIip2Bdkfnlmvl71COfJQdz9m75yAp4qcjWk3tgEDIx9V8ODJBOJCu8LE7wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208636; c=relaxed/simple;
-	bh=p3x9dBwF1IarLKQj8HWOn/mHCk/TxXpUYPqLLs93wUY=;
+	s=arc-20240116; t=1725208640; c=relaxed/simple;
+	bh=+l9kL9t/G4Zz8y08EInjIMh23Y/yHOwNdOshJD9QDnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pj5dY6Nj06AKQHH/Xw7kAowm/cAuHt6z+kVTJeCiojGLn2CkbJPHxm0+YNtiKzo0blml3qIAkWUUUnsKT16a/Q1e/TTPY58Un8ah2QLbUVzfbEJWGhIk6JYeGV3XWK+o4lwrvAd99vVvkditvjEjMwwYKqJ+dpGv3xzRvnhBALw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOwrhPpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AyECFdw7I+E4p4XxeJWxks452YrMcw2WA+YBGyxov54eNF4DxR0MSbR5yeccOD83sNtOkL3M5xpr/s/C8wZdacksbe9FT6JgeaIaciBwvJ+dSsjfyg0EX1PAmEC3vZDmwa6pyuIKb6eyQbVawRrrN5G10YDQQnoXLmfyN5aWr9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BH14RBDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOwrhPpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15898C4CEC3;
-	Sun,  1 Sep 2024 16:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BH14RBDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59369C4CEC3;
+	Sun,  1 Sep 2024 16:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208636;
-	bh=p3x9dBwF1IarLKQj8HWOn/mHCk/TxXpUYPqLLs93wUY=;
+	s=korg; t=1725208639;
+	bh=+l9kL9t/G4Zz8y08EInjIMh23Y/yHOwNdOshJD9QDnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOwrhPpadqfvWQr6EkaA56ojYhLA19sGanUZZ9Lmy0pxRSInNCjg6wH8iyphV/iDS
-	 tUs0gysr+VqAH4u6h5YyuzXy5z8sU2Bw+t4d4dJERON6woLzypEcwvzUKxIpWz1KI3
-	 Nf/riC7u9io3tfEZDkvdpStwaf2y/0QxGN+nWB6w=
+	b=BH14RBDgAJXhHnUIcqdfHYo3MIC8E/4pfLBIKOuNjwJC3fQMTOM/N1iQAczFGySOB
+	 PQWOhbvKY7hastpAvZsOVQdL95W/+GJNcaubjC0y11ZTgMOiUORcrJGmZhFr5xyJtG
+	 uK5ENxYO0NMVXwQONuvVA1w8oKADrYktddbtXLWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
+	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 143/149] arm64: dts: imx93: update default value for snps,clk-csr
-Date: Sun,  1 Sep 2024 18:17:34 +0200
-Message-ID: <20240901160822.824565956@linuxfoundation.org>
+Subject: [PATCH 6.10 144/149] arm64: dts: freescale: imx93-tqma9352: fix CMA alloc-ranges
+Date: Sun,  1 Sep 2024 18:17:35 +0200
+Message-ID: <20240901160822.861447787@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,44 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 
-[ Upstream commit 109f256285dd6a5f8c3bd0d80d39b2ccd4fe314e ]
+[ Upstream commit cd0c6872aab4d2c556a5e953e6926a1b4485e543 ]
 
-For the i.MX93 SoC, the default clock rate for the IP of STMMAC EQOS is
-312.5 MHz. According to the following mapping table from the i.MX93
-reference manual, this clock rate corresponds to a CSR value of 6.
+DRAM starts at 0x80000000.
 
- 0000: CSR clock = 60-100 MHz; MDC clock = CSR clock/42
- 0001: CSR clock = 100-150 MHz; MDC clock = CSR clock/62
- 0010: CSR clock = 20-35 MHz; MDC clock = CSR clock/16
- 0011: CSR clock = 35-60 MHz; MDC clock = CSR clock/26
- 0100: CSR clock = 150-250 MHz; MDC clock = CSR clock/102
- 0101: CSR clock = 250-300 MHz; MDC clock = CSR clock/124
- 0110: CSR clock = 300-500 MHz; MDC clock = CSR clock/204
- 0111: CSR clock = 500-800 MHz; MDC clock = CSR clock/324
-
-Fixes: f2d03ba997cb ("arm64: dts: imx93: reorder device nodes")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Fixes: c982ecfa7992 ("arm64: dts: freescale: add initial device tree for MBa93xxLA SBC board")
+Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx93.dtsi b/arch/arm64/boot/dts/freescale/imx93.dtsi
-index 4a3f42355cb8f..a0993022c102d 100644
---- a/arch/arm64/boot/dts/freescale/imx93.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx93.dtsi
-@@ -1105,7 +1105,7 @@
- 							 <&clk IMX93_CLK_SYS_PLL_PFD0_DIV2>;
- 				assigned-clock-rates = <100000000>, <250000000>;
- 				intf_mode = <&wakeupmix_gpr 0x28>;
--				snps,clk-csr = <0>;
-+				snps,clk-csr = <6>;
- 				nvmem-cells = <&eth_mac2>;
- 				nvmem-cell-names = "mac-address";
- 				status = "disabled";
+diff --git a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
+index 9d2328c185c90..fe951f86a96bd 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
+@@ -19,7 +19,7 @@
+ 		linux,cma {
+ 			compatible = "shared-dma-pool";
+ 			reusable;
+-			alloc-ranges = <0 0x60000000 0 0x40000000>;
++			alloc-ranges = <0 0x80000000 0 0x40000000>;
+ 			size = <0 0x10000000>;
+ 			linux,cma-default;
+ 		};
 -- 
 2.43.0
 
