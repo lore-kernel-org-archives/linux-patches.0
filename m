@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05624208A7;
-	Sun,  1 Sep 2024 16:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9882C208A7;
+	Sun,  1 Sep 2024 16:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209863; cv=none; b=ubMCzNnM/XULm0AVd3DnzMGninMJOKB4Uk4k4lLMq/fQn0lWCfqg0RfgXviIT52kRKWw2hMyIIJMy7tQS40Aza86lWG2oWvXRzGkbgck7AyBUkoZsKIIHZ8AUko1ROexRFpyNgMwlYaVcr+opNHZgHw//i0b2PSAi3e989U8iHE=
+	t=1725209866; cv=none; b=TMoMdWW8ZWvCBBIW7sHkihB1lQ1Vt3GdxxVNgIE9K1lHdqrWOjvaz6uqWFqxWnacmLTV7zigwbzYhOu6EN4DO08tnDJEggf7bU7j47WIBclscfH+spzHC3s/GULj5fT666j9aUn3g2tEOU7/lWypgF6N24U7nYAw8mS+NDqOjk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209863; c=relaxed/simple;
-	bh=0oTHlL8SwhfmvN4hkC38dzTUa5/aT26StZP7gV2PDKU=;
+	s=arc-20240116; t=1725209866; c=relaxed/simple;
+	bh=dvJFRLoD1OwPtZtEomX4PrEZRA/ygijvuFyefdKDE8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8KKPjMKyXeKUuiSPm416ro4IsKMmyJQWHmjnfZNsc55mDPI0aCHfRmg2aUAIHPcp+rIUTYCMHvtkAywVI23FrY6yseh5H2fVDkHjdNl1ISnz4clDOugYdEP+AWrOEyHsvoHEpYgvToiujAwgj2Ysr9tfuMC8lvqCR2xKLPO+Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzjBjulc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aDpJXKkQYqsokGHbwmkSYfp92VBhHqn5l//Q9cuHwubRHxZwyaDmdL5o+usfkrrDAGQurwdkD+oiITm/Tm3tQMlBZyQXYVyzHPYjwbtmuDFo2ugc/OFYSSgfCrFrcWfbnVVibJphAd7vssaLoDZaIAPOEVxKkZw9o7N5KVREgw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fahEoUKz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzjBjulc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D5EC4CEC3;
-	Sun,  1 Sep 2024 16:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fahEoUKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB483C4CEC3;
+	Sun,  1 Sep 2024 16:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209862;
-	bh=0oTHlL8SwhfmvN4hkC38dzTUa5/aT26StZP7gV2PDKU=;
+	s=korg; t=1725209866;
+	bh=dvJFRLoD1OwPtZtEomX4PrEZRA/ygijvuFyefdKDE8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzjBjulcCtSuppAVLlX90r2r7lxkbV+bGmguZ2wKwiXnnnXUaT1LYJ4AowcCsFm15
-	 ayJuCgk6YJcnerS+zGkLl18k8ON2U4UNP2JkBFoI232p1B9WkvagLvJlICEypY06U/
-	 xuU/n1mXUEXLhW/FfwAfMHaQMToFNmgtSOYLfx3o=
+	b=fahEoUKzgTeoIWZhTRt8cZHPx+Nr3ajjw9tjv8jtGVspl384nleVTdM4zQ3GdYbiC
+	 KW8ZdnHBXZwR/9G0gJS4h/KvDtrA0pJkxaGEzJ+GCiHXRX3DlxE/td4jFDTwF7frqZ
+	 myRbrIoO9xmo0e3O1V76DEKWPt1sORfzVsS2dIvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 017/215] bitmap: introduce generic optimized bitmap_size()
-Date: Sun,  1 Sep 2024 18:15:29 +0200
-Message-ID: <20240901160823.906490052@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 5.15 018/215] fix bitmap corruption on close_range() with CLOSE_RANGE_UNSHARE
+Date: Sun,  1 Sep 2024 18:15:30 +0200
+Message-ID: <20240901160823.945295319@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,166 +49,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
+commit 9a2fa1472083580b6c66bdaf291f591e1170123a upstream.
 
-The number of times yet another open coded
-`BITS_TO_LONGS(nbits) * sizeof(long)` can be spotted is huge.
-Some generic helper is long overdue.
+copy_fd_bitmaps(new, old, count) is expected to copy the first
+count/BITS_PER_LONG bits from old->full_fds_bits[] and fill
+the rest with zeroes.  What it does is copying enough words
+(BITS_TO_LONGS(count/BITS_PER_LONG)), then memsets the rest.
+That works fine, *if* all bits past the cutoff point are
+clear.  Otherwise we are risking garbage from the last word
+we'd copied.
 
-Add one, bitmap_size(), but with one detail.
-BITS_TO_LONGS() uses DIV_ROUND_UP(). The latter works well when both
-divident and divisor are compile-time constants or when the divisor
-is not a pow-of-2. When it is however, the compilers sometimes tend
-to generate suboptimal code (GCC 13):
+For most of the callers that is true - expand_fdtable() has
+count equal to old->max_fds, so there's no open descriptors
+past count, let alone fully occupied words in ->open_fds[],
+which is what bits in ->full_fds_bits[] correspond to.
 
-48 83 c0 3f          	add    $0x3f,%rax
-48 c1 e8 06          	shr    $0x6,%rax
-48 8d 14 c5 00 00 00 00	lea    0x0(,%rax,8),%rdx
+The other caller (dup_fd()) passes sane_fdtable_size(old_fdt, max_fds),
+which is the smallest multiple of BITS_PER_LONG that covers all
+opened descriptors below max_fds.  In the common case (copying on
+fork()) max_fds is ~0U, so all opened descriptors will be below
+it and we are fine, by the same reasons why the call in expand_fdtable()
+is safe.
 
-%BITS_PER_LONG is always a pow-2 (either 32 or 64), but GCC still does
-full division of `nbits + 63` by it and then multiplication by 8.
-Instead of BITS_TO_LONGS(), use ALIGN() and then divide by 8. GCC:
+Unfortunately, there is a case where max_fds is less than that
+and where we might, indeed, end up with junk in ->full_fds_bits[] -
+close_range(from, to, CLOSE_RANGE_UNSHARE) with
+	* descriptor table being currently shared
+	* 'to' being above the current capacity of descriptor table
+	* 'from' being just under some chunk of opened descriptors.
+In that case we end up with observably wrong behaviour - e.g. spawn
+a child with CLONE_FILES, get all descriptors in range 0..127 open,
+then close_range(64, ~0U, CLOSE_RANGE_UNSHARE) and watch dup(0) ending
+up with descriptor #128, despite #64 being observably not open.
 
-8d 50 3f             	lea    0x3f(%rax),%edx
-c1 ea 03             	shr    $0x3,%edx
-81 e2 f8 ff ff 1f    	and    $0x1ffffff8,%edx
+The minimally invasive fix would be to deal with that in dup_fd().
+If this proves to add measurable overhead, we can go that way, but
+let's try to fix copy_fd_bitmaps() first.
 
-Now it shifts `nbits + 63` by 3 positions (IOW performs fast division
-by 8) and then masks bits[2:0]. bloat-o-meter:
+* new helper: bitmap_copy_and_expand(to, from, bits_to_copy, size).
+* make copy_fd_bitmaps() take the bitmap size in words, rather than
+bits; it's 'count' argument is always a multiple of BITS_PER_LONG,
+so we are not losing any information, and that way we can use the
+same helper for all three bitmaps - compiler will see that count
+is a multiple of BITS_PER_LONG for the large ones, so it'll generate
+plain memcpy()+memset().
 
-add/remove: 0/0 grow/shrink: 20/133 up/down: 156/-773 (-617)
+Reproducer added to tools/testing/selftests/core/close_range_test.c
 
-Clang does it better and generates the same code before/after starting
-from -O1, except that with the ALIGN() approach it uses %edx and thus
-still saves some bytes:
-
-add/remove: 0/0 grow/shrink: 9/133 up/down: 18/-538 (-520)
-
-Note that we can't expand DIV_ROUND_UP() by adding a check and using
-this approach there, as it's used in array declarations where
-expressions are not allowed.
-Add this helper to tools/ as well.
-
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Acked-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: stable@vger.kernel.org
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-clone-metadata.c |    5 -----
- drivers/s390/cio/idset.c       |    2 +-
- include/linux/bitmap.h         |    8 +++++---
- include/linux/cpumask.h        |    2 +-
- lib/math/prime_numbers.c       |    2 --
- tools/include/linux/bitmap.h   |    7 ++++---
- 6 files changed, 11 insertions(+), 15 deletions(-)
+ fs/file.c                                       |   28 ++++++++-----------
+ include/linux/bitmap.h                          |   12 ++++++++
+ tools/testing/selftests/core/close_range_test.c |   35 ++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 16 deletions(-)
 
---- a/drivers/md/dm-clone-metadata.c
-+++ b/drivers/md/dm-clone-metadata.c
-@@ -465,11 +465,6 @@ static void __destroy_persistent_data_st
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -46,27 +46,23 @@ static void free_fdtable_rcu(struct rcu_
+ #define BITBIT_NR(nr)	BITS_TO_LONGS(BITS_TO_LONGS(nr))
+ #define BITBIT_SIZE(nr)	(BITBIT_NR(nr) * sizeof(long))
  
- /*---------------------------------------------------------------------------*/
++#define fdt_words(fdt) ((fdt)->max_fds / BITS_PER_LONG) // words in ->open_fds
+ /*
+  * Copy 'count' fd bits from the old table to the new table and clear the extra
+  * space if any.  This does not copy the file pointers.  Called with the files
+  * spinlock held for write.
+  */
+-static void copy_fd_bitmaps(struct fdtable *nfdt, struct fdtable *ofdt,
+-			    unsigned int count)
++static inline void copy_fd_bitmaps(struct fdtable *nfdt, struct fdtable *ofdt,
++			    unsigned int copy_words)
+ {
+-	unsigned int cpy, set;
++	unsigned int nwords = fdt_words(nfdt);
  
--static size_t bitmap_size(unsigned long nr_bits)
--{
--	return BITS_TO_LONGS(nr_bits) * sizeof(long);
--}
+-	cpy = count / BITS_PER_BYTE;
+-	set = (nfdt->max_fds - count) / BITS_PER_BYTE;
+-	memcpy(nfdt->open_fds, ofdt->open_fds, cpy);
+-	memset((char *)nfdt->open_fds + cpy, 0, set);
+-	memcpy(nfdt->close_on_exec, ofdt->close_on_exec, cpy);
+-	memset((char *)nfdt->close_on_exec + cpy, 0, set);
 -
- static int __dirty_map_init(struct dirty_map *dmap, unsigned long nr_words,
- 			    unsigned long nr_regions)
- {
---- a/drivers/s390/cio/idset.c
-+++ b/drivers/s390/cio/idset.c
-@@ -18,7 +18,7 @@ struct idset {
- 
- static inline unsigned long idset_bitmap_size(int num_ssid, int num_id)
- {
--	return BITS_TO_LONGS(num_ssid * num_id) * sizeof(unsigned long);
-+	return bitmap_size(size_mul(num_ssid, num_id));
+-	cpy = BITBIT_SIZE(count);
+-	set = BITBIT_SIZE(nfdt->max_fds) - cpy;
+-	memcpy(nfdt->full_fds_bits, ofdt->full_fds_bits, cpy);
+-	memset((char *)nfdt->full_fds_bits + cpy, 0, set);
++	bitmap_copy_and_extend(nfdt->open_fds, ofdt->open_fds,
++			copy_words * BITS_PER_LONG, nwords * BITS_PER_LONG);
++	bitmap_copy_and_extend(nfdt->close_on_exec, ofdt->close_on_exec,
++			copy_words * BITS_PER_LONG, nwords * BITS_PER_LONG);
++	bitmap_copy_and_extend(nfdt->full_fds_bits, ofdt->full_fds_bits,
++			copy_words, nwords);
  }
  
- static struct idset *idset_new(int num_ssid, int num_id)
+ /*
+@@ -84,7 +80,7 @@ static void copy_fdtable(struct fdtable
+ 	memcpy(nfdt->fd, ofdt->fd, cpy);
+ 	memset((char *)nfdt->fd + cpy, 0, set);
+ 
+-	copy_fd_bitmaps(nfdt, ofdt, ofdt->max_fds);
++	copy_fd_bitmaps(nfdt, ofdt, fdt_words(ofdt));
+ }
+ 
+ /*
+@@ -374,7 +370,7 @@ struct files_struct *dup_fd(struct files
+ 		open_files = sane_fdtable_size(old_fdt, max_fds);
+ 	}
+ 
+-	copy_fd_bitmaps(new_fdt, old_fdt, open_files);
++	copy_fd_bitmaps(new_fdt, old_fdt, open_files / BITS_PER_LONG);
+ 
+ 	old_fds = old_fdt->fd;
+ 	new_fds = new_fdt->fd;
 --- a/include/linux/bitmap.h
 +++ b/include/linux/bitmap.h
-@@ -236,22 +236,24 @@ extern int bitmap_print_list_to_buf(char
- #define BITMAP_FIRST_WORD_MASK(start) (~0UL << ((start) & (BITS_PER_LONG - 1)))
- #define BITMAP_LAST_WORD_MASK(nbits) (~0UL >> (-(nbits) & (BITS_PER_LONG - 1)))
+@@ -268,6 +268,18 @@ static inline void bitmap_copy_clear_tai
+ 		dst[nbits / BITS_PER_LONG] &= BITMAP_LAST_WORD_MASK(nbits);
+ }
  
-+#define bitmap_size(nbits)	(ALIGN(nbits, BITS_PER_LONG) / BITS_PER_BYTE)
++static inline void bitmap_copy_and_extend(unsigned long *to,
++					  const unsigned long *from,
++					  unsigned int count, unsigned int size)
++{
++	unsigned int copy = BITS_TO_LONGS(count);
 +
- static inline void bitmap_zero(unsigned long *dst, unsigned int nbits)
- {
--	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
-+	unsigned int len = bitmap_size(nbits);
- 	memset(dst, 0, len);
- }
- 
- static inline void bitmap_fill(unsigned long *dst, unsigned int nbits)
- {
--	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
-+	unsigned int len = bitmap_size(nbits);
- 	memset(dst, 0xff, len);
- }
- 
- static inline void bitmap_copy(unsigned long *dst, const unsigned long *src,
- 			unsigned int nbits)
- {
--	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
-+	unsigned int len = bitmap_size(nbits);
- 	memcpy(dst, src, len);
- }
- 
---- a/include/linux/cpumask.h
-+++ b/include/linux/cpumask.h
-@@ -667,7 +667,7 @@ static inline int cpulist_parse(const ch
-  */
- static inline unsigned int cpumask_size(void)
- {
--	return BITS_TO_LONGS(nr_cpumask_bits) * sizeof(long);
-+	return bitmap_size(nr_cpumask_bits);
- }
- 
- /*
---- a/lib/math/prime_numbers.c
-+++ b/lib/math/prime_numbers.c
-@@ -6,8 +6,6 @@
- #include <linux/prime_numbers.h>
- #include <linux/slab.h>
- 
--#define bitmap_size(nbits) (BITS_TO_LONGS(nbits) * sizeof(unsigned long))
--
- struct primes {
- 	struct rcu_head rcu;
- 	unsigned long last, sz;
---- a/tools/include/linux/bitmap.h
-+++ b/tools/include/linux/bitmap.h
-@@ -24,13 +24,14 @@ int __bitmap_intersects(const unsigned l
- #define BITMAP_FIRST_WORD_MASK(start) (~0UL << ((start) & (BITS_PER_LONG - 1)))
- #define BITMAP_LAST_WORD_MASK(nbits) (~0UL >> (-(nbits) & (BITS_PER_LONG - 1)))
- 
-+#define bitmap_size(nbits)	(ALIGN(nbits, BITS_PER_LONG) / BITS_PER_BYTE)
++	memcpy(to, from, copy * sizeof(long));
++	if (count % BITS_PER_LONG)
++		to[copy - 1] &= BITMAP_LAST_WORD_MASK(count);
++	memset(to + copy, 0, bitmap_size(size) - copy * sizeof(long));
++}
 +
- static inline void bitmap_zero(unsigned long *dst, unsigned int nbits)
- {
- 	if (small_const_nbits(nbits))
- 		*dst = 0UL;
- 	else {
--		int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
--		memset(dst, 0, len);
-+		memset(dst, 0, bitmap_size(nbits));
- 	}
- }
- 
-@@ -116,7 +117,7 @@ static inline int test_and_clear_bit(int
-  */
- static inline unsigned long *bitmap_zalloc(int nbits)
- {
--	return calloc(1, BITS_TO_LONGS(nbits) * sizeof(unsigned long));
-+	return calloc(1, bitmap_size(nbits));
- }
- 
  /*
+  * On 32-bit systems bitmaps are represented as u32 arrays internally, and
+  * therefore conversion is not needed when copying data from/to arrays of u32.
+--- a/tools/testing/selftests/core/close_range_test.c
++++ b/tools/testing/selftests/core/close_range_test.c
+@@ -567,4 +567,39 @@ TEST(close_range_cloexec_unshare_syzbot)
+ 	EXPECT_EQ(close(fd3), 0);
+ }
+ 
++TEST(close_range_bitmap_corruption)
++{
++	pid_t pid;
++	int status;
++	struct __clone_args args = {
++		.flags = CLONE_FILES,
++		.exit_signal = SIGCHLD,
++	};
++
++	/* get the first 128 descriptors open */
++	for (int i = 2; i < 128; i++)
++		EXPECT_GE(dup2(0, i), 0);
++
++	/* get descriptor table shared */
++	pid = sys_clone3(&args, sizeof(args));
++	ASSERT_GE(pid, 0);
++
++	if (pid == 0) {
++		/* unshare and truncate descriptor table down to 64 */
++		if (sys_close_range(64, ~0U, CLOSE_RANGE_UNSHARE))
++			exit(EXIT_FAILURE);
++
++		ASSERT_EQ(fcntl(64, F_GETFD), -1);
++		/* ... and verify that the range 64..127 is not
++		   stuck "fully used" according to secondary bitmap */
++		EXPECT_EQ(dup(0), 64)
++			exit(EXIT_FAILURE);
++		exit(EXIT_SUCCESS);
++	}
++
++	EXPECT_EQ(waitpid(pid, &status, 0), pid);
++	EXPECT_EQ(true, WIFEXITED(status));
++	EXPECT_EQ(0, WEXITSTATUS(status));
++}
++
+ TEST_HARNESS_MAIN
 
 
