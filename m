@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DA333987;
-	Sun,  1 Sep 2024 16:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6F7183090;
+	Sun,  1 Sep 2024 16:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208047; cv=none; b=GQ1oMQ6C02f/mDVSucmhHnv6x2sAW4Y5pL2ZPFoUniQuk1yoM9MloWYJMdyMVk5J3k9uBUR2KF5BtRYZmfjgq6+cLEy4slQzqPbfVyB37DMIzp9R2nCpceLQIyRY6qQlitoO6OQ2yKiMqIsL0wQAe4/+GXQIwlia/QNyI81nN18=
+	t=1725208050; cv=none; b=Wt/qmXhlIdD/qWGuUJw1fdkKR6mcLyaoAtEy7wh5ZB29pd+H3ib3bHDRLseRi5Pap09nO+1lth1u8Yw5AQU54ws1GDUmj3LQpN7a+2BA0iGH+zr7V0X89iAwZUUtQKQDzowe+006VhpfH4A7nekvuWFGUVBFw+Y8ShcISxzZNYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208047; c=relaxed/simple;
-	bh=vjp+MH9gVkEr7NM2Ah7ChOET6QB/jNS4wU4Dr/8kfZI=;
+	s=arc-20240116; t=1725208050; c=relaxed/simple;
+	bh=VNILEzJZ/dinOgr1Y3xIRtgD6oM8gIl4IPYveJGt+RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gi1JUGMab6Ch4dRwB26qtJKvz5CPmsAGx+aU3sgvaDk2RkTGCLOUU+nOtM4M7qFTkvXyLIccJgBHmm/mw0vqn4kN4T2D7XJ/hIGhnX3U0omDiXinOWdjXA2huISJ+Y/9o05Kju89reeOKjCLF71VvH54eulMiS2R2y6gBMugi68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9+orjHK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BcGOIJrsTZFMeD1BzN/AmUCCCP5/FP8lz9GIQ5ZTyTsqnLvs+azvt5LXCiVucaakGPJH3TQiHB2A74so257z2DVsGtV6RVs7uKyM/5vgU8LddnuYzxy7jIL33EBUZzdy7IXuR0jrYN7rC4GIkPUdw8oUz9AzO02TbB7fSf94U2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP151QfU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9+orjHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC100C4CEC8;
-	Sun,  1 Sep 2024 16:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP151QfU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B49BC4CEC3;
+	Sun,  1 Sep 2024 16:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208047;
-	bh=vjp+MH9gVkEr7NM2Ah7ChOET6QB/jNS4wU4Dr/8kfZI=;
+	s=korg; t=1725208050;
+	bh=VNILEzJZ/dinOgr1Y3xIRtgD6oM8gIl4IPYveJGt+RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9+orjHKNIv0Worw7X0QMqah3wFS9Dz16pQgpwhUJ3Q7ByTjzIEaZugijKBdYUJp3
-	 fVWq8UpFO38uR9rlHxWYL7Q2XsUE7UGwFHIhHqb7Mtg0vosUiVHlFHT+fq8+k8PEoA
-	 SBVIsL2HA7k2RdwpDJGYSWnN8jimNBaDgv3x9zJQ=
+	b=fP151QfUT0hebK8i60la14/gGrCdoo/DWUiU7fjdAZz4JY05LZx6a7DhVPmcx+9wR
+	 t53y7ZWwHpWf57QmoHh7FSJ6RtWhh5uQWt/+yoZyehYz1bngQ2VmOKkQKaLJBsUPW3
+	 YNiSQa5Qsb1JI1G9qpUD5CJ9uDq84wSFKBYtrApk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 57/93] wifi: iwlwifi: fw: fix wgds rev 3 exact size
-Date: Sun,  1 Sep 2024 18:16:44 +0200
-Message-ID: <20240901160809.510005975@linuxfoundation.org>
+Subject: [PATCH 6.6 31/93] thermal: of: Fix OF node leak in of_thermal_zone_find() error paths
+Date: Sun,  1 Sep 2024 18:16:18 +0200
+Message-ID: <20240901160808.531909392@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,60 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 3ee22f07a35b76939c5b8d17d6af292f5fafb509 ]
+[ Upstream commit c0a1ef9c5be72ff28a5413deb1b3e1a066593c13 ]
 
-Check size of WGDS revision 3 is equal to 8 entries size with some header,
-but doesn't depend on the number of used entries. Check that used entries
-are between min and max but allow more to be present than are used to fix
-operation with some BIOSes that have such data.
+Terminating for_each_available_child_of_node() loop requires dropping OF
+node reference, so bailing out on errors misses this.  Solve the OF node
+reference leak with scoped for_each_available_child_of_node_scoped().
 
-Fixes: 97f8a3d1610b ("iwlwifi: ACPI: support revision 3 WGDS tables")
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.cc71dfc67ec3.Ic27ee15ac6128b275c210b6de88f2145bd83ca7b@changeid
-[edit commit message]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://patch.msgid.link/20240814195823.437597-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/thermal/thermal_of.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 2cda1dcfd059a..9943e2d21a8f5 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -867,22 +867,25 @@ int iwl_sar_get_wgds_table(struct iwl_fw_runtime *fwrt)
- 				entry = &wifi_pkg->package.elements[entry_idx];
- 				entry_idx++;
- 				if (entry->type != ACPI_TYPE_INTEGER ||
--				    entry->integer.value > num_profiles) {
-+				    entry->integer.value > num_profiles ||
-+				    entry->integer.value <
-+					rev_data[idx].min_profiles) {
- 					ret = -EINVAL;
- 					goto out_free;
- 				}
--				num_profiles = entry->integer.value;
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index e7d25e70fb93e..d8dfcd49695d3 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -182,14 +182,14 @@ static struct device_node *of_thermal_zone_find(struct device_node *sensor, int
+ 	 * Search for each thermal zone, a defined sensor
+ 	 * corresponding to the one passed as parameter
+ 	 */
+-	for_each_available_child_of_node(np, tz) {
++	for_each_available_child_of_node_scoped(np, child) {
  
- 				/*
--				 * this also validates >= min_profiles since we
--				 * otherwise wouldn't have gotten the data when
--				 * looking up in ACPI
-+				 * Check to see if we received package count
-+				 * same as max # of profiles
- 				 */
- 				if (wifi_pkg->package.count !=
- 				    hdr_size + profile_size * num_profiles) {
- 					ret = -EINVAL;
- 					goto out_free;
- 				}
-+
-+				/* Number of valid profiles */
-+				num_profiles = entry->integer.value;
+ 		int count, i;
+ 
+-		count = of_count_phandle_with_args(tz, "thermal-sensors",
++		count = of_count_phandle_with_args(child, "thermal-sensors",
+ 						   "#thermal-sensor-cells");
+ 		if (count <= 0) {
+-			pr_err("%pOFn: missing thermal sensor\n", tz);
++			pr_err("%pOFn: missing thermal sensor\n", child);
+ 			tz = ERR_PTR(-EINVAL);
+ 			goto out;
+ 		}
+@@ -198,18 +198,19 @@ static struct device_node *of_thermal_zone_find(struct device_node *sensor, int
+ 
+ 			int ret;
+ 
+-			ret = of_parse_phandle_with_args(tz, "thermal-sensors",
++			ret = of_parse_phandle_with_args(child, "thermal-sensors",
+ 							 "#thermal-sensor-cells",
+ 							 i, &sensor_specs);
+ 			if (ret < 0) {
+-				pr_err("%pOFn: Failed to read thermal-sensors cells: %d\n", tz, ret);
++				pr_err("%pOFn: Failed to read thermal-sensors cells: %d\n", child, ret);
+ 				tz = ERR_PTR(ret);
+ 				goto out;
  			}
- 			goto read_table;
+ 
+ 			if ((sensor == sensor_specs.np) && id == (sensor_specs.args_count ?
+ 								  sensor_specs.args[0] : 0)) {
+-				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, tz);
++				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, child);
++				tz = no_free_ptr(child);
+ 				goto out;
+ 			}
  		}
 -- 
 2.43.0
