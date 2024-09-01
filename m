@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8F116EB4B;
-	Sun,  1 Sep 2024 16:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6853364AB;
+	Sun,  1 Sep 2024 16:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207741; cv=none; b=jtPBA3VZ05/TLdufE7YNfwcOw03Cq18LqX2z/WBINPzMvqTKUxBzzPSOEJ0/3DK28UAf0PYpYE53uT9kB5k0tYrEbHNDxjJkBFNXPgelLp3DCBkDUmQwAPbyF6pAABNXewfSvaZ5sQH2VP69Rl5N41N56PG6IOEZMhgusyj0FXo=
+	t=1725207744; cv=none; b=Wcb8Vt5sT+bl8ZfqRrwHhUsE/4pZLHSL8GqZdYlhh+aeSRfHs48bZ+aQUKnPigtlmxFlZvteH8ZTF5KMRZfQcpteH5gsKcidd+a5pdQl6IU13+O+MXUGIka8ta3nl/QU/1RZsDdrP555it5/Qyjo/8PUThV9vSAclQrFsgHlqrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207741; c=relaxed/simple;
-	bh=9nb111DVIdbO2wzndmZB3uqTiy1SLaozL11AKMWT85M=;
+	s=arc-20240116; t=1725207744; c=relaxed/simple;
+	bh=u2kHE52fqksnO/SLxTzEZO92I2zeBMvlkW8yyB52ERY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/O0vb4cgOKtd2BeIkRV4UqmWA8zDRvsgZfE24bMo1UbSyPB5yDhKe8x8DpnquP2hzxZd3cdg2htTYnD3phl5PJzwu3h+PuM9BkL0zsj1UBBhKCA7DOqqK8vrimGW4NWvxROAFtGggWxqgdDWQjv18m74fbzSQYbmNQcStJQt2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES5iJmcb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEFagEB4ivvji8DGyJzFAAJ+1+ICxsrgB93KcDxFx4DD4UL39hMnJ7AwCTsZ+Uh/LbqP6jtzTgWLTtaYOwL0uTFwKy6CLVXX2B9/omwHzeLwGkPrLH/MG1kUvboCXd9m0yUNy71Ov3W/1oJc9j7Ivv9XynmqxWNPSIrKDlFx+wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1JlOPNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES5iJmcb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C366BC4CEC3;
-	Sun,  1 Sep 2024 16:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1JlOPNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C134C4CEC3;
+	Sun,  1 Sep 2024 16:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207741;
-	bh=9nb111DVIdbO2wzndmZB3uqTiy1SLaozL11AKMWT85M=;
+	s=korg; t=1725207744;
+	bh=u2kHE52fqksnO/SLxTzEZO92I2zeBMvlkW8yyB52ERY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES5iJmcbAOGn5QraDMWmQ3vZvVwLuHkDkQJrDWVzNwLVRkTtK43ZsLjU9VbG/aO4Y
-	 upOfEJwVTm0WmOsG1QLKuwDGaSP2/mN2V5hAQCIvW5a4x2l5CJzrarPpGZ9CwepxYv
-	 rkxJpv3GaijAY8oXAdi2Go7FHt79mQbzkFwMbT4w=
+	b=l1JlOPNX8jlGCiX6fjlJALOYL/iMuEvvhmmMJ8NkuBwo2V9S30OBMFlep6Peo6AV9
+	 9Xh7tvzaYIPzdt+LAeaSlDaVViVYZzidUZ1ICswuvjEYFt7/dCf0otPumBL6VLR07N
+	 7EcnrhLl6LJyShaOSxNoaTmnzA485q7e2VbEb6d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 56/98] Bluetooth: hci_core: Fix LE quote calculation
-Date: Sun,  1 Sep 2024 18:16:26 +0200
-Message-ID: <20240901160805.811360028@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 4.19 65/98] HID: wacom: Defer calculation of resolution until resolution_code is known
+Date: Sun,  1 Sep 2024 18:16:35 +0200
+Message-ID: <20240901160806.150597878@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -50,74 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-[ Upstream commit 932021a11805b9da4bd6abf66fe233cccd59fe0e ]
+commit 1b8f9c1fb464968a5b18d3acc1da8c00bad24fad upstream.
 
-Function hci_sched_le needs to update the respective counter variable
-inplace other the likes of hci_quote_sent would attempt to use the
-possible outdated value of conn->{le_cnt,acl_cnt}.
+The Wacom driver maps the HID_DG_TWIST usage to ABS_Z (rather than ABS_RZ)
+for historic reasons. When the code to support twist was introduced in
+commit 50066a042da5 ("HID: wacom: generic: Add support for height, tilt,
+and twist usages"), we were careful to write it in such a way that it had
+HID calculate the resolution of the twist axis assuming ABS_RZ instead
+(so that we would get correct angular behavior). This was broken with
+the introduction of commit 08a46b4190d3 ("HID: wacom: Set a default
+resolution for older tablets"), which moved the resolution calculation
+to occur *before* the adjustment from ABS_Z to ABS_RZ occurred.
 
-Link: https://github.com/bluez/bluez/issues/915
-Fixes: 73d80deb7bdf ("Bluetooth: prioritizing data over HCI")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This commit moves the calculation of resolution after the point that
+we are finished setting things up for its proper use.
+
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 08a46b4190d3 ("HID: wacom: Set a default resolution for older tablets")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/hid/wacom_wac.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 3360ae1e4c8ce..bb89ca37decbc 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4121,19 +4121,19 @@ static void hci_sched_le(struct hci_dev *hdev)
- {
- 	struct hci_chan *chan;
- 	struct sk_buff *skb;
--	int quote, cnt, tmp;
-+	int quote, *cnt, tmp;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1830,12 +1830,14 @@ static void wacom_map_usage(struct input
+ 	int fmax = field->logical_maximum;
+ 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
+ 	int resolution_code = code;
+-	int resolution = hidinput_calc_abs_res(field, resolution_code);
++	int resolution;
  
- 	BT_DBG("%s", hdev->name);
- 
- 	if (!hci_conn_num(hdev, LE_LINK))
- 		return;
- 
--	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
-+	cnt = hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
- 
--	__check_timeout(hdev, cnt, LE_LINK);
-+	__check_timeout(hdev, *cnt, LE_LINK);
- 
--	tmp = cnt;
--	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
-+	tmp = *cnt;
-+	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
- 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
- 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
-@@ -4148,18 +4148,13 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			hci_send_frame(hdev, skb);
- 			hdev->le_last_tx = jiffies;
- 
--			cnt--;
-+			(*cnt)--;
- 			chan->sent++;
- 			chan->conn->sent++;
- 		}
+ 	if (equivalent_usage == HID_DG_TWIST) {
+ 		resolution_code = ABS_RZ;
  	}
  
--	if (hdev->le_pkts)
--		hdev->le_cnt = cnt;
--	else
--		hdev->acl_cnt = cnt;
--
--	if (cnt != tmp)
-+	if (*cnt != tmp)
- 		hci_prio_recalculate(hdev, LE_LINK);
- }
- 
--- 
-2.43.0
-
++	resolution = hidinput_calc_abs_res(field, resolution_code);
++
+ 	if (equivalent_usage == HID_GD_X) {
+ 		fmin += features->offset_left;
+ 		fmax -= features->offset_right;
 
 
