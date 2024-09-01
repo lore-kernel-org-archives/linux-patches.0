@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B91E87B;
-	Sun,  1 Sep 2024 16:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43F61E87B;
+	Sun,  1 Sep 2024 16:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208522; cv=none; b=TDddyrIj1GblZeBflT/B/WT469ytgE1uHS2u9P1erxWJJ1prd3DaykRME41VnOIrwE56AM4E7qpkasbtQiQabFymh+qvWE/1Rly9aIVAAWnlQMbASBN6MQp7JOD/0ZRZkoAmlA0eq5R5R9KnmM7Yc/EBbjAXyxIcFFgywnXrLp8=
+	t=1725208526; cv=none; b=eNKK+Ym+g0LSwVgUbgczOjJ7PC51JSqew3NYNfGC424tXzYY+2kpz65cBbWPic9XXCk+7ei2uniN8GHpLkcj67RfzZrpDN4UkAVcoVZG1xqQokHSZ46f7ssKwfOkn0AGofRzVxOajvgUwOWYA8OY8HaE6EhDCdhfEi+vZhnVBX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208522; c=relaxed/simple;
-	bh=vYKPyZ+IoUGhhkFuQS9QRqyrVtpnnKIbZJSMiNYv/ZM=;
+	s=arc-20240116; t=1725208526; c=relaxed/simple;
+	bh=H2LLt5cJeU7C9kKilCaBx+Vr9KorCpQRTqKP1wt05vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufij9/r3zgT2cfzENAENQ4vAzSXTkXDVIARyfLjQbG2qmZViDImY5AyARgARwDRBHNNkByDrMuWn0uFPL0W61PXhU1vF3S3e6TfCAz7HOX27xqxLScwRY7xOcR3nZebaWtsYOD8a6qsWUN/exaQ2e/ND4v6i+YnjdUZunMfLBks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqejH30C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIfd8f7G+TEKuJDGTj/g2LKl7Uet3zZpSFSf3U4kFswyu6ACcDFnl/I4xL38V1OB0a9fUPaKdaJSi7rRjCFJBeI/lApEubXz9tq2ZM52IaCts88aIZJkIK8IxkJmLXCec5GvuB/TmY7rjMuFenGOp5TvHxKr2MYem5nSiCGzYu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIa+hEa5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqejH30C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9375BC4CEC3;
-	Sun,  1 Sep 2024 16:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIa+hEa5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FC7C4CEC3;
+	Sun,  1 Sep 2024 16:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208522;
-	bh=vYKPyZ+IoUGhhkFuQS9QRqyrVtpnnKIbZJSMiNYv/ZM=;
+	s=korg; t=1725208525;
+	bh=H2LLt5cJeU7C9kKilCaBx+Vr9KorCpQRTqKP1wt05vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqejH30CjH0IkdCTZKVB1qDTOwxVprc/+DUoAAg6UKPdYqxYzBGgDTEpusCn3CR6C
-	 TUWTi6ZsrEDdHoKhR2zdAXlwCv2EdLUubCSiRO/wZbhNxahejQ5NGoGZmhyb2pWgZ9
-	 zybS7DthE7prdWI5dXKfo/fTffuwYZU6aBUUIHrI=
+	b=ZIa+hEa5xkxrpZrZ3hDL2TdqfnQfncvnt5HMJ36HDKpLIYYxRqDKTj8dPA+OaWN3K
+	 UbRLUNc8/DjhKrrOsZVqpAzo4dAQFOdZ8j6bdkI7w4jPDSKa5mvUzKMT5JjUtxqvG2
+	 S8OpPbNaVQg5reSxyzb8FJreshh8vApSjJpf86UU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Guillaume Legoupil <guillaume.legoupil@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xueming Feng <kuro@kuroa.me>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 090/149] Bluetooth: btnxpuart: Handle FW Download Abort scenario
-Date: Sun,  1 Sep 2024 18:16:41 +0200
-Message-ID: <20240901160820.849759866@linuxfoundation.org>
+Subject: [PATCH 6.10 108/149] tcp: fix forever orphan socket caused by tcp_abort
+Date: Sun,  1 Sep 2024 18:16:59 +0200
+Message-ID: <20240901160821.516860198@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,129 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+From: Xueming Feng <kuro@kuroa.me>
 
-[ Upstream commit e3c4891098c875a63ab0c3b31d584f6d4f1895fd ]
+[ Upstream commit bac76cf89816bff06c4ec2f3df97dc34e150a1c4 ]
 
-This adds a new flag BTNXPUART_FW_DOWNLOAD_ABORT which handles the
-situation where driver is removed while firmware download is in
-progress.
+We have some problem closing zero-window fin-wait-1 tcp sockets in our
+environment. This patch come from the investigation.
 
-logs:
-modprobe btnxpuart
-[65239.230431] Bluetooth: hci0: ChipID: 7601, Version: 0
-[65239.236670] Bluetooth: hci0: Request Firmware: nxp/uartspi_n61x_v1.bin.se
-rmmod btnxpuart
-[65241.425300] Bluetooth: hci0: FW Download Aborted
+Previously tcp_abort only sends out reset and calls tcp_done when the
+socket is not SOCK_DEAD, aka orphan. For orphan socket, it will only
+purging the write queue, but not close the socket and left it to the
+timer.
 
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Tested-by: Guillaume Legoupil <guillaume.legoupil@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 35237475384a ("Bluetooth: btnxpuart: Fix random crash seen while removing driver")
+While purging the write queue, tp->packets_out and sk->sk_write_queue
+is cleared along the way. However tcp_retransmit_timer have early
+return based on !tp->packets_out and tcp_probe_timer have early
+return based on !sk->sk_write_queue.
+
+This caused ICSK_TIME_RETRANS and ICSK_TIME_PROBE0 not being resched
+and socket not being killed by the timers, converting a zero-windowed
+orphan into a forever orphan.
+
+This patch removes the SOCK_DEAD check in tcp_abort, making it send
+reset to peer and close the socket accordingly. Preventing the
+timer-less orphan from happening.
+
+According to Lorenzo's email in the v1 thread, the check was there to
+prevent force-closing the same socket twice. That situation is handled
+by testing for TCP_CLOSE inside lock, and returning -ENOENT if it is
+already closed.
+
+The -ENOENT code comes from the associate patch Lorenzo made for
+iproute2-ss; link attached below, which also conform to RFC 9293.
+
+At the end of the patch, tcp_write_queue_purge(sk) is removed because it
+was already called in tcp_done_with_error().
+
+p.s. This is the same patch with v2. Resent due to mis-labeled "changes
+requested" on patchwork.kernel.org.
+
+Link: https://patchwork.ozlabs.org/project/netdev/patch/1450773094-7978-3-git-send-email-lorenzo@google.com/
+Fixes: c1e64e298b8c ("net: diag: Support destroying TCP sockets.")
+Signed-off-by: Xueming Feng <kuro@kuroa.me>
+Tested-by: Lorenzo Colitti <lorenzo@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240826102327.1461482-1-kuro@kuroa.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 47 ++++++++++++++++++++++++-----------
- 1 file changed, 33 insertions(+), 14 deletions(-)
+ net/ipv4/tcp.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index d310b525fbf00..1bb97747c4836 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -29,6 +29,7 @@
- #define BTNXPUART_CHECK_BOOT_SIGNATURE	3
- #define BTNXPUART_SERDEV_OPEN		4
- #define BTNXPUART_IR_IN_PROGRESS	5
-+#define BTNXPUART_FW_DOWNLOAD_ABORT	6
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index ec6911034138f..2edbd5b181e29 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4573,6 +4573,13 @@ int tcp_abort(struct sock *sk, int err)
+ 		/* Don't race with userspace socket closes such as tcp_close. */
+ 		lock_sock(sk);
  
- /* NXP HW err codes */
- #define BTNXPUART_IR_HW_ERR		0xb0
-@@ -159,6 +160,7 @@ struct btnxpuart_dev {
- 	u8 fw_name[MAX_FW_FILE_NAME_LEN];
- 	u32 fw_dnld_v1_offset;
- 	u32 fw_v1_sent_bytes;
-+	u32 fw_dnld_v3_offset;
- 	u32 fw_v3_offset_correction;
- 	u32 fw_v1_expected_len;
- 	u32 boot_reg_offset;
-@@ -566,6 +568,7 @@ static int nxp_download_firmware(struct hci_dev *hdev)
- 	nxpdev->fw_v1_sent_bytes = 0;
- 	nxpdev->fw_v1_expected_len = HDR_LEN;
- 	nxpdev->boot_reg_offset = 0;
-+	nxpdev->fw_dnld_v3_offset = 0;
- 	nxpdev->fw_v3_offset_correction = 0;
- 	nxpdev->baudrate_changed = false;
- 	nxpdev->timeout_changed = false;
-@@ -580,14 +583,23 @@ static int nxp_download_firmware(struct hci_dev *hdev)
- 					       !test_bit(BTNXPUART_FW_DOWNLOADING,
- 							 &nxpdev->tx_state),
- 					       msecs_to_jiffies(60000));
-+
-+	release_firmware(nxpdev->fw);
-+	memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
-+
- 	if (err == 0) {
--		bt_dev_err(hdev, "FW Download Timeout.");
-+		bt_dev_err(hdev, "FW Download Timeout. offset: %d",
-+				nxpdev->fw_dnld_v1_offset ?
-+				nxpdev->fw_dnld_v1_offset :
-+				nxpdev->fw_dnld_v3_offset);
- 		return -ETIMEDOUT;
- 	}
-+	if (test_bit(BTNXPUART_FW_DOWNLOAD_ABORT, &nxpdev->tx_state)) {
-+		bt_dev_err(hdev, "FW Download Aborted");
-+		return -EINTR;
++	/* Avoid closing the same socket twice. */
++	if (sk->sk_state == TCP_CLOSE) {
++		if (!has_current_bpf_ctx())
++			release_sock(sk);
++		return -ENOENT;
 +	}
++
+ 	if (sk->sk_state == TCP_LISTEN) {
+ 		tcp_set_state(sk, TCP_CLOSE);
+ 		inet_csk_listen_stop(sk);
+@@ -4582,16 +4589,13 @@ int tcp_abort(struct sock *sk, int err)
+ 	local_bh_disable();
+ 	bh_lock_sock(sk);
  
- 	serdev_device_set_flow_control(nxpdev->serdev, true);
--	release_firmware(nxpdev->fw);
--	memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
+-	if (!sock_flag(sk, SOCK_DEAD)) {
+-		if (tcp_need_reset(sk->sk_state))
+-			tcp_send_active_reset(sk, GFP_ATOMIC,
+-					      SK_RST_REASON_NOT_SPECIFIED);
+-		tcp_done_with_error(sk, err);
+-	}
++	if (tcp_need_reset(sk->sk_state))
++		tcp_send_active_reset(sk, GFP_ATOMIC,
++				      SK_RST_REASON_NOT_SPECIFIED);
++	tcp_done_with_error(sk, err);
  
- 	/* Allow the downloaded FW to initialize */
- 	msleep(1200);
-@@ -998,8 +1010,9 @@ static int nxp_recv_fw_req_v3(struct hci_dev *hdev, struct sk_buff *skb)
- 		goto free_skb;
- 	}
- 
--	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data + offset -
--				nxpdev->fw_v3_offset_correction, len);
-+	nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
-+	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
-+				nxpdev->fw_dnld_v3_offset, len);
- 
- free_skb:
- 	kfree_skb(skb);
-@@ -1429,16 +1442,22 @@ static void nxp_serdev_remove(struct serdev_device *serdev)
- 	struct btnxpuart_dev *nxpdev = serdev_device_get_drvdata(serdev);
- 	struct hci_dev *hdev = nxpdev->hdev;
- 
--	/* Restore FW baudrate to fw_init_baudrate if changed.
--	 * This will ensure FW baudrate is in sync with
--	 * driver baudrate in case this driver is re-inserted.
--	 */
--	if (nxpdev->current_baudrate != nxpdev->fw_init_baudrate) {
--		nxpdev->new_baudrate = nxpdev->fw_init_baudrate;
--		nxp_set_baudrate_cmd(hdev, NULL);
-+	if (is_fw_downloading(nxpdev)) {
-+		set_bit(BTNXPUART_FW_DOWNLOAD_ABORT, &nxpdev->tx_state);
-+		clear_bit(BTNXPUART_FW_DOWNLOADING, &nxpdev->tx_state);
-+		wake_up_interruptible(&nxpdev->check_boot_sign_wait_q);
-+		wake_up_interruptible(&nxpdev->fw_dnld_done_wait_q);
-+	} else {
-+		/* Restore FW baudrate to fw_init_baudrate if changed.
-+		 * This will ensure FW baudrate is in sync with
-+		 * driver baudrate in case this driver is re-inserted.
-+		 */
-+		if (nxpdev->current_baudrate != nxpdev->fw_init_baudrate) {
-+			nxpdev->new_baudrate = nxpdev->fw_init_baudrate;
-+			nxp_set_baudrate_cmd(hdev, NULL);
-+		}
-+		ps_cancel_timer(nxpdev);
- 	}
--
--	ps_cancel_timer(nxpdev);
- 	hci_unregister_dev(hdev);
- 	hci_free_dev(hdev);
- }
+ 	bh_unlock_sock(sk);
+ 	local_bh_enable();
+-	tcp_write_queue_purge(sk);
+ 	if (!has_current_bpf_ctx())
+ 		release_sock(sk);
+ 	return 0;
 -- 
 2.43.0
 
