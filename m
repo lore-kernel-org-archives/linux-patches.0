@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43F61E87B;
-	Sun,  1 Sep 2024 16:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9924537FF;
+	Sun,  1 Sep 2024 16:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208526; cv=none; b=eNKK+Ym+g0LSwVgUbgczOjJ7PC51JSqew3NYNfGC424tXzYY+2kpz65cBbWPic9XXCk+7ei2uniN8GHpLkcj67RfzZrpDN4UkAVcoVZG1xqQokHSZ46f7ssKwfOkn0AGofRzVxOajvgUwOWYA8OY8HaE6EhDCdhfEi+vZhnVBX4=
+	t=1725208528; cv=none; b=DncdN5lTZxwkuxwQsC3LC9LEm4ZpmTwxzHSAtwN0lesW+eZxTFjt+PCiqcAmW4wAJ1d6R4i9XJCPrlKDN9x/o1C9hdyDu77ZjxnK3Wjd/J4EeMRi0yYZ96sB1t4C0oyY2ZcmniHDSMHOgu+JZI2NmjIk4Rj8MsjGNDyf0DvmyJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208526; c=relaxed/simple;
-	bh=H2LLt5cJeU7C9kKilCaBx+Vr9KorCpQRTqKP1wt05vs=;
+	s=arc-20240116; t=1725208528; c=relaxed/simple;
+	bh=/FlW9d01NibIrWYf0oQCdjl5/Wp+efnAso8pD+/oF10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIfd8f7G+TEKuJDGTj/g2LKl7Uet3zZpSFSf3U4kFswyu6ACcDFnl/I4xL38V1OB0a9fUPaKdaJSi7rRjCFJBeI/lApEubXz9tq2ZM52IaCts88aIZJkIK8IxkJmLXCec5GvuB/TmY7rjMuFenGOp5TvHxKr2MYem5nSiCGzYu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIa+hEa5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ls9AaR4zxJWztNnbRQLTAHS+gkFufUfywwwOF65CQ8d9wSe9ccteUtGepB2yGgUiVv3nQcfCR6U0rdGXehQXXmtBx0zCBzvN7Tr1byTNfPhEtJNh+UplArHVqYHOlL/KxAC+PY4xaugqIU9+vRmU1G45NN4tB20n0NMdNNz7mIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc2z87uK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIa+hEa5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FC7C4CEC3;
-	Sun,  1 Sep 2024 16:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc2z87uK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D09DC4CEC3;
+	Sun,  1 Sep 2024 16:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208525;
-	bh=H2LLt5cJeU7C9kKilCaBx+Vr9KorCpQRTqKP1wt05vs=;
+	s=korg; t=1725208528;
+	bh=/FlW9d01NibIrWYf0oQCdjl5/Wp+efnAso8pD+/oF10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIa+hEa5xkxrpZrZ3hDL2TdqfnQfncvnt5HMJ36HDKpLIYYxRqDKTj8dPA+OaWN3K
-	 UbRLUNc8/DjhKrrOsZVqpAzo4dAQFOdZ8j6bdkI7w4jPDSKa5mvUzKMT5JjUtxqvG2
-	 S8OpPbNaVQg5reSxyzb8FJreshh8vApSjJpf86UU=
+	b=uc2z87uKTrylftzw8kIlkf0pVTLftmB2AcnPxhyEj4vtUqvzjx7ZDHr3mmLWgio+K
+	 tftzcn97zxwhZKJ2q9frEwQ9bhIYVJrnaHgOEqJ3uJrboqf0srpOJcTcE1WyV0EOOJ
+	 ydNtVZrr7LA9ULQKKA68aQNyLZq06oRRmZS2sjbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueming Feng <kuro@kuroa.me>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 108/149] tcp: fix forever orphan socket caused by tcp_abort
-Date: Sun,  1 Sep 2024 18:16:59 +0200
-Message-ID: <20240901160821.516860198@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.10 109/149] sctp: fix association labeling in the duplicate COOKIE-ECHO case
+Date: Sun,  1 Sep 2024 18:17:00 +0200
+Message-ID: <20240901160821.554283206@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -54,97 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueming Feng <kuro@kuroa.me>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit bac76cf89816bff06c4ec2f3df97dc34e150a1c4 ]
+[ Upstream commit 3a0504d54b3b57f0d7bf3d9184a00c9f8887f6d7 ]
 
-We have some problem closing zero-window fin-wait-1 tcp sockets in our
-environment. This patch come from the investigation.
+sctp_sf_do_5_2_4_dupcook() currently calls security_sctp_assoc_request()
+on new_asoc, but as it turns out, this association is always discarded
+and the LSM labels never get into the final association (asoc).
 
-Previously tcp_abort only sends out reset and calls tcp_done when the
-socket is not SOCK_DEAD, aka orphan. For orphan socket, it will only
-purging the write queue, but not close the socket and left it to the
-timer.
+This can be reproduced by having two SCTP endpoints try to initiate an
+association with each other at approximately the same time and then peel
+off the association into a new socket, which exposes the unitialized
+labels and triggers SELinux denials.
 
-While purging the write queue, tp->packets_out and sk->sk_write_queue
-is cleared along the way. However tcp_retransmit_timer have early
-return based on !tp->packets_out and tcp_probe_timer have early
-return based on !sk->sk_write_queue.
+Fix it by calling security_sctp_assoc_request() on asoc instead of
+new_asoc. Xin Long also suggested limit calling the hook only to cases
+A, B, and D, since in cases C and E the COOKIE ECHO chunk is discarded
+and the association doesn't enter the ESTABLISHED state, so rectify that
+as well.
 
-This caused ICSK_TIME_RETRANS and ICSK_TIME_PROBE0 not being resched
-and socket not being killed by the timers, converting a zero-windowed
-orphan into a forever orphan.
+One related caveat with SELinux and peer labeling: When an SCTP
+connection is set up simultaneously in this way, we will end up with an
+association that is initialized with security_sctp_assoc_request() on
+both sides, so the MLS component of the security context of the
+association will get swapped between the peers, instead of just one side
+setting it to the other's MLS component. However, at that point
+security_sctp_assoc_request() had already been called on both sides in
+sctp_sf_do_unexpected_init() (on a temporary association) and thus if
+the exchange didn't fail before due to MLS, it won't fail now either
+(most likely both endpoints have the same MLS range).
 
-This patch removes the SOCK_DEAD check in tcp_abort, making it send
-reset to peer and close the socket accordingly. Preventing the
-timer-less orphan from happening.
+Tested by:
+ - reproducer from https://src.fedoraproject.org/tests/selinux/pull-request/530
+ - selinux-testsuite (https://github.com/SELinuxProject/selinux-testsuite/)
+ - sctp-tests (https://github.com/sctp/sctp-tests) - no tests failed
+   that wouldn't fail also without the patch applied
 
-According to Lorenzo's email in the v1 thread, the check was there to
-prevent force-closing the same socket twice. That situation is handled
-by testing for TCP_CLOSE inside lock, and returning -ENOENT if it is
-already closed.
-
-The -ENOENT code comes from the associate patch Lorenzo made for
-iproute2-ss; link attached below, which also conform to RFC 9293.
-
-At the end of the patch, tcp_write_queue_purge(sk) is removed because it
-was already called in tcp_done_with_error().
-
-p.s. This is the same patch with v2. Resent due to mis-labeled "changes
-requested" on patchwork.kernel.org.
-
-Link: https://patchwork.ozlabs.org/project/netdev/patch/1450773094-7978-3-git-send-email-lorenzo@google.com/
-Fixes: c1e64e298b8c ("net: diag: Support destroying TCP sockets.")
-Signed-off-by: Xueming Feng <kuro@kuroa.me>
-Tested-by: Lorenzo Colitti <lorenzo@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240826102327.1461482-1-kuro@kuroa.me
+Fixes: c081d53f97a1 ("security: pass asoc to sctp_assoc_request and sctp_sk_clone")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Paul Moore <paul@paul-moore.com> (LSM/SELinux)
+Link: https://patch.msgid.link/20240826130711.141271-1-omosnace@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ net/sctp/sm_statefuns.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index ec6911034138f..2edbd5b181e29 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4573,6 +4573,13 @@ int tcp_abort(struct sock *sk, int err)
- 		/* Don't race with userspace socket closes such as tcp_close. */
- 		lock_sock(sk);
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 5adf0c0a6c1ac..7d315a18612ba 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -2260,12 +2260,6 @@ enum sctp_disposition sctp_sf_do_5_2_4_dupcook(
+ 		}
+ 	}
  
-+	/* Avoid closing the same socket twice. */
-+	if (sk->sk_state == TCP_CLOSE) {
-+		if (!has_current_bpf_ctx())
-+			release_sock(sk);
-+		return -ENOENT;
+-	/* Update socket peer label if first association. */
+-	if (security_sctp_assoc_request(new_asoc, chunk->head_skb ?: chunk->skb)) {
+-		sctp_association_free(new_asoc);
+-		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
+-	}
+-
+ 	/* Set temp so that it won't be added into hashtable */
+ 	new_asoc->temp = 1;
+ 
+@@ -2274,6 +2268,22 @@ enum sctp_disposition sctp_sf_do_5_2_4_dupcook(
+ 	 */
+ 	action = sctp_tietags_compare(new_asoc, asoc);
+ 
++	/* In cases C and E the association doesn't enter the ESTABLISHED
++	 * state, so there is no need to call security_sctp_assoc_request().
++	 */
++	switch (action) {
++	case 'A': /* Association restart. */
++	case 'B': /* Collision case B. */
++	case 'D': /* Collision case D. */
++		/* Update socket peer label if first association. */
++		if (security_sctp_assoc_request((struct sctp_association *)asoc,
++						chunk->head_skb ?: chunk->skb)) {
++			sctp_association_free(new_asoc);
++			return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
++		}
++		break;
 +	}
 +
- 	if (sk->sk_state == TCP_LISTEN) {
- 		tcp_set_state(sk, TCP_CLOSE);
- 		inet_csk_listen_stop(sk);
-@@ -4582,16 +4589,13 @@ int tcp_abort(struct sock *sk, int err)
- 	local_bh_disable();
- 	bh_lock_sock(sk);
- 
--	if (!sock_flag(sk, SOCK_DEAD)) {
--		if (tcp_need_reset(sk->sk_state))
--			tcp_send_active_reset(sk, GFP_ATOMIC,
--					      SK_RST_REASON_NOT_SPECIFIED);
--		tcp_done_with_error(sk, err);
--	}
-+	if (tcp_need_reset(sk->sk_state))
-+		tcp_send_active_reset(sk, GFP_ATOMIC,
-+				      SK_RST_REASON_NOT_SPECIFIED);
-+	tcp_done_with_error(sk, err);
- 
- 	bh_unlock_sock(sk);
- 	local_bh_enable();
--	tcp_write_queue_purge(sk);
- 	if (!has_current_bpf_ctx())
- 		release_sock(sk);
- 	return 0;
+ 	switch (action) {
+ 	case 'A': /* Association restart. */
+ 		retval = sctp_sf_do_dupcook_a(net, ep, asoc, chunk, commands,
 -- 
 2.43.0
 
