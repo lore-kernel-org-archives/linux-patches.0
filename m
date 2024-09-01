@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF7D183CC1;
-	Sun,  1 Sep 2024 16:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5274944C97;
+	Sun,  1 Sep 2024 16:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207590; cv=none; b=ZVHqalZnfx6b0U28qIrC6ixcK21azB2G+n0r1TKOMCBKc4v9bi2ypWWu5SWdc+dH2vaC3bJBHgGyjoyc+AzJyl9K7/Mu2xjf5DEE4ZbQJ47/OIaJWnCURN6RWY7335qA2LDiQSf/H/EqSqXtIGGdtynu7Y9nW79nQPo8VkVNW/Q=
+	t=1725207593; cv=none; b=IOtFc+DwXGBIQBlHkIQk0IQtKXUUT4YBsqfPY+qxfiNEDXcq6kpcUgAuTpiQ6f0QOLFmOG/zSQ5XSwoPf2Jm3awPXjxJeJWuMfF4nCQrT2DniWLXdL4agjrNt45dsaL0eeUOmLNqpxpqKGldt5qv2mdPQEEQGkQvJbWKdB2q4HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207590; c=relaxed/simple;
-	bh=aR+BAOT6LpVoTB0bwyZ5iChhcoiWbNfMUO6RFLHg4JE=;
+	s=arc-20240116; t=1725207593; c=relaxed/simple;
+	bh=VFxXGwZ/3jwwPO0NuuoAtoFAQ5MamrL+jx9JMziM05U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ng54qv9hu4w0RFKq36yu4CuUWhUHPaLR9gY6ZV1cBr28qesuC5sse8Pzx3orAuIrZWvLvJikVsYYzp8DaCbCJ1oD56PpB5w2vkmZc83EHLest72QjUGLQXbNvlK1VeD6DAFU72+M7b186Be+r8st8eXuJK004OWwdcRjCmAMxQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJCAVVsm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ueoreZh5yU3RVMVV8fPoX/2XCTO/ZMsRhZC1ETsl4NNl3f6+Nbd4qFNNi2Fr8WqNx44L9zbRRYpjEfiaVB3f4MHM+Y3jhitl3LsmgUP5wT/o/960p3Si5AncXyPxLXxqiJEhMFaEDQzR3SKB04jNK6tBXENBq6AeCnFLYT4TKf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNFXiT8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJCAVVsm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED3EC4CEC3;
-	Sun,  1 Sep 2024 16:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNFXiT8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66302C4CEC3;
+	Sun,  1 Sep 2024 16:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207589;
-	bh=aR+BAOT6LpVoTB0bwyZ5iChhcoiWbNfMUO6RFLHg4JE=;
+	s=korg; t=1725207592;
+	bh=VFxXGwZ/3jwwPO0NuuoAtoFAQ5MamrL+jx9JMziM05U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJCAVVsmp690Z/wDO0pFxd57JEtFjJHqM5Q6s7hOmyr2eq0DsXtXOu9eSvNEUGQE1
-	 M2vOfF7b3ByvcyBesB5krsgcgw90sOKY5MR19z60U/goDxHmaWjyqdRMItkuVpUmRk
-	 f2iCi5UUCp1jdEmLzSSY/rVBh4Gb29/SXi5sCWow=
+	b=zNFXiT8Jy7OqER682Ze++11Y6DNhr3ZmDwI0wG9el7S2s5b9pzy+eKgHLvMmAsJeO
+	 Os7yiFxsoWF2YEIwEsnVEv5dMvmFoy5te56VHzaP86w73AMoYOfGTn7VeSlTu93PUk
+	 UNXY8MMbTPZuiWF+mFcpgfEMnaOhJ+gFFsAsE0Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/98] wifi: cw1200: Avoid processing an invalid TIM IE
-Date: Sun,  1 Sep 2024 18:15:48 +0200
-Message-ID: <20240901160804.379169053@linuxfoundation.org>
+Subject: [PATCH 4.19 19/98] i2c: riic: avoid potential division by zero
+Date: Sun,  1 Sep 2024 18:15:49 +0200
+Message-ID: <20240901160804.415568423@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -51,37 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit b7bcea9c27b3d87b54075735c870500123582145 ]
+[ Upstream commit 7890fce6201aed46d3576e3d641f9ee5c1f0e16f ]
 
-While converting struct ieee80211_tim_ie::virtual_map to be a flexible
-array it was observed that the TIM IE processing in cw1200_rx_cb()
-could potentially process a malformed IE in a manner that could result
-in a buffer over-read. Add logic to verify that the TIM IE length is
-large enough to hold a valid TIM payload before processing it.
+Value comes from DT, so it could be 0. Unlikely, but could be.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230831-ieee80211_tim_ie-v3-1-e10ff584ab5d@quicinc.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/st/cw1200/txrx.c | 2 +-
+ drivers/i2c/busses/i2c-riic.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/st/cw1200/txrx.c b/drivers/net/wireless/st/cw1200/txrx.c
-index f7b1b0062db32..3ccb3a134599d 100644
---- a/drivers/net/wireless/st/cw1200/txrx.c
-+++ b/drivers/net/wireless/st/cw1200/txrx.c
-@@ -1173,7 +1173,7 @@ void cw1200_rx_cb(struct cw1200_common *priv,
- 		size_t ies_len = skb->len - (ies - (u8 *)(skb->data));
+diff --git a/drivers/i2c/busses/i2c-riic.c b/drivers/i2c/busses/i2c-riic.c
+index e6f351c92c02d..82ffa8eecec8d 100644
+--- a/drivers/i2c/busses/i2c-riic.c
++++ b/drivers/i2c/busses/i2c-riic.c
+@@ -315,7 +315,7 @@ static int riic_init_hw(struct riic_dev *riic, struct i2c_timings *t)
+ 	 * frequency with only 62 clock ticks max (31 high, 31 low).
+ 	 * Aim for a duty of 60% LOW, 40% HIGH.
+ 	 */
+-	total_ticks = DIV_ROUND_UP(rate, t->bus_freq_hz);
++	total_ticks = DIV_ROUND_UP(rate, t->bus_freq_hz ?: 1);
  
- 		tim_ie = cfg80211_find_ie(WLAN_EID_TIM, ies, ies_len);
--		if (tim_ie) {
-+		if (tim_ie && tim_ie[1] >= sizeof(struct ieee80211_tim_ie)) {
- 			struct ieee80211_tim_ie *tim =
- 				(struct ieee80211_tim_ie *)&tim_ie[2];
- 
+ 	for (cks = 0; cks < 7; cks++) {
+ 		/*
 -- 
 2.43.0
 
