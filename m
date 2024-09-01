@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA80184534;
-	Sun,  1 Sep 2024 16:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1130117DFFC;
+	Sun,  1 Sep 2024 16:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208538; cv=none; b=kO8fsxoQ6j57Ap2FYCMINxUcYMh8e6fgGEoR1+H+KtI68tgyEKX3AxqMzgXmXqEn/d6+1f35WWSqBt2QeSFwetbX7KwOGm2HxpoidGS+aiX8UB9UcF0iPCQemSXjh4VzthTYLNwq4FFB6N1PGtml3/tcSo5XjIt1rbf7JEcmmFQ=
+	t=1725208542; cv=none; b=eyW1HrYxs61TeMTXd0JoyRkWj4enWso8+BQ3h+69a29O/uMufegGmxzKelrHgf4e+8uAKblZ4FFuh/x/1albkFlk5yCDCFxpinPSsPBFHSMworu0eADboTwMS1uXJpPPxSphfV0c3AxtfzlLNC+ePZOPUmUyyl5AP1NnfFiOVd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208538; c=relaxed/simple;
-	bh=tz0G4m3VA0BSvuao6NeUkIM7h2fTbhXr9jY3cvDYOoU=;
+	s=arc-20240116; t=1725208542; c=relaxed/simple;
+	bh=JHwSZg/VkqZiIf0HlBv0bwc7I45hBT34kJ+yXmvlq6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dzsw3jHA7K2bNUSTiGngYDAwabmbZlxXVgvblezk1+SVi5jBgto6hoYsoaoBJ5zwsoDYaO211WlEqGP4QsdmhvK6JTs/hj92D66DVlPYkzfsfNfw2TtL3cqy6nSn5UV+MoREqgUc+veqIMVTOuUi+adpD24V47osajAut1sIQp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tztYdl8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9TE7evM1oBEeaXK3JZVK9w5p8icZUOKWJa9o1aZbZ6TJj+26IcfAN3ycVII2Hjb1ytdJ21I/E9/6F9ka+zm3Zo02KTb01Zu7fuyGupOf1r4S1+ec3NRvOWWR7Wyxk27szllXajL2zwxKoR4H/lF74pfMOXUHC0yCQqef/zo0Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFcyjpAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tztYdl8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000A5C4CEC3;
-	Sun,  1 Sep 2024 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFcyjpAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A83C4CEC3;
+	Sun,  1 Sep 2024 16:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208538;
-	bh=tz0G4m3VA0BSvuao6NeUkIM7h2fTbhXr9jY3cvDYOoU=;
+	s=korg; t=1725208541;
+	bh=JHwSZg/VkqZiIf0HlBv0bwc7I45hBT34kJ+yXmvlq6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tztYdl8oyuqr/0rfZ0tOlKuJXPHCvAElpTJr7hYJ2s+mrwQIjJrWl69zTL67GI7c5
-	 EboKB5gOQLZ2XFEMGMGWyTIw4vmBtqgQ+CHtTVta8OtSjjxbBJfNpLjyuNv0+Wu1kD
-	 nbnrThD+QunmQcbm74rDXCP5yMLFnfRo179tDhaM=
+	b=wFcyjpAal5PHWDFJdxjpB97rgzVqwr5cbsPi3Wq1Z0PMXlG9DwjlZhPLvsFxlDsDb
+	 wqDZCkt32xXtRjrpw/nEgkyhWB1wucPzKqBOLHMFfKgAQBnydI9WRRa9PHW9Lt89fK
+	 u5EX5zNVNbFcYTsCJvXk8sv7dOEX2UBTURavuAq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Karthik Poosa <karthik.poosa@intel.com>,
+	Badal Nilawar <badal.nilawar@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 112/149] nfc: pn533: Add poll mod list filling check
-Date: Sun,  1 Sep 2024 18:17:03 +0200
-Message-ID: <20240901160821.666854496@linuxfoundation.org>
+Subject: [PATCH 6.10 113/149] drm/xe/hwmon: Fix WRITE_I1 param from u32 to u16
+Date: Sun,  1 Sep 2024 18:17:04 +0200
+Message-ID: <20240901160821.704072665@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,60 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Karthik Poosa <karthik.poosa@intel.com>
 
-[ Upstream commit febccb39255f9df35527b88c953b2e0deae50e53 ]
+[ Upstream commit 59d237c8a241168c7ae34c48244059b7bafaff38 ]
 
-In case of im_protocols value is 1 and tm_protocols value is 0 this
-combination successfully passes the check
-'if (!im_protocols && !tm_protocols)' in the nfc_start_poll().
-But then after pn533_poll_create_mod_list() call in pn533_start_poll()
-poll mod list will remain empty and dev->poll_mod_count will remain 0
-which lead to division by zero.
+WRITE_I1 sub-command of the POWER_SETUP pcode command accepts a u16
+parameter instead of u32. This change prevents potential illegal
+sub-command errors.
 
-Normally no im protocol has value 1 in the mask, so this combination is
-not expected by driver. But these protocol values actually come from
-userspace via Netlink interface (NFC_CMD_START_POLL operation). So a
-broken or malicious program may pass a message containing a "bad"
-combination of protocol parameter values so that dev->poll_mod_count
-is not incremented inside pn533_poll_create_mod_list(), thus leading
-to division by zero.
-Call trace looks like:
-nfc_genl_start_poll()
-  nfc_start_poll()
-    ->start_poll()
-    pn533_start_poll()
+v2: Mask uval instead of changing the prototype. (Badal)
 
-Add poll mod list filling check.
+v3: Rephrase commit message. (Badal)
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: dfccd0f58044 ("NFC: pn533: Add some polling entropy")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240827084822.18785-1-amishin@t-argos.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
+Fixes: 92d44a422d0d ("drm/xe/hwmon: Expose card reactive critical power")
+Reviewed-by: Badal Nilawar <badal.nilawar@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240827155301.183383-1-karthik.poosa@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit a7f657097e96d8fa745c74bb1a239ebd5a8c971c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/pn533.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xe/xe_hwmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index b19c39dcfbd93..e2bc67300a915 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -1723,6 +1723,11 @@ static int pn533_start_poll(struct nfc_dev *nfc_dev,
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+index d37f1dea9f8b8..bb815dbde63a6 100644
+--- a/drivers/gpu/drm/xe/xe_hwmon.c
++++ b/drivers/gpu/drm/xe/xe_hwmon.c
+@@ -443,7 +443,7 @@ static int xe_hwmon_pcode_write_i1(struct xe_gt *gt, u32 uval)
+ {
+ 	return xe_pcode_write(gt, PCODE_MBOX(PCODE_POWER_SETUP,
+ 			      POWER_SETUP_SUBCOMMAND_WRITE_I1, 0),
+-			      uval);
++			      (uval & POWER_SETUP_I1_DATA_MASK));
+ }
  
- 	pn533_poll_create_mod_list(dev, im_protocols, tm_protocols);
-+	if (!dev->poll_mod_count) {
-+		nfc_err(dev->dev,
-+			"Poll mod list is empty\n");
-+		return -EINVAL;
-+	}
- 
- 	/* Do not always start polling from the same modulation */
- 	get_random_bytes(&rand_mod, sizeof(rand_mod));
+ static int xe_hwmon_power_curr_crit_read(struct xe_hwmon *hwmon, int channel,
 -- 
 2.43.0
 
