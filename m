@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14744183CC5;
-	Sun,  1 Sep 2024 16:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C1E183CA3;
+	Sun,  1 Sep 2024 16:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208061; cv=none; b=Yaj8Yp7FYWHCOBNuDioli+WYIf/lnxaG8F15DRgxAWhKTBVS/cfQIZ+7/1blnW63pfJNvhkTQhZZTYWlmsI510mpv6YvyQW96vV6FoU/3YoqNVemvHSPuWKqpq1x/I+C8flMYzTsbSIRX/9Niq7LZhbMGPJeh9md1SvJp+g7hDI=
+	t=1725208064; cv=none; b=jI/Cest+5OKulJCojr2dCflo5j/Plwf6s0us3NY0M2bVgAJmc+Ef78wE7pvrHyVc5DNgcUzqc0CohcDzFYHNwlHJ8/cf96GAr809r4l+9EXBPu1M414xHU8K+gmjfIOli8bjkFZq5rk6tDNCiko2nucEs6PXmWBqGOvlS7yQd20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208061; c=relaxed/simple;
-	bh=Qu59aJdfwS1ww/tz25Il5QmyGrYhtztalvFi/pgiN+g=;
+	s=arc-20240116; t=1725208064; c=relaxed/simple;
+	bh=bTy4rdCtEERnwW+IBh/0BdCUVDwnD7HEMkOhuS1oD38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKGbOsWGFYyH8/Nmr/HNQUyWzyfWF2tvbBAwV67+rFL45C5q7kKWENnVk14uNZv05Mkk7dNHSxCW3o4yzniN0J9gu25VxXzMjrEf446j5C8Maro24TsxLUbr7/l1zpHscI/u4+fimSiVzQISEJQtDUuR061ReIZT2J7qSk2tJsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIUoN3fh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mAAXANSg8PP15tOaz32LNAukrz03Bjgs0jAErDsGxyATadCqMWuSHjP03xvI+DQotTzedcW2Hi8Jv6A4/FGGb3z0LglzyiaYUNqxTNGYVvMWldpPFhqiKqZUPJHeDpHaQ/TGvzvIkWk53y1L5lvjbL0cjpu5P86wQgtMrtC8rFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhgJZ4N8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIUoN3fh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774CCC4CEC3;
-	Sun,  1 Sep 2024 16:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhgJZ4N8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3A1C4CEC3;
+	Sun,  1 Sep 2024 16:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208061;
-	bh=Qu59aJdfwS1ww/tz25Il5QmyGrYhtztalvFi/pgiN+g=;
+	s=korg; t=1725208064;
+	bh=bTy4rdCtEERnwW+IBh/0BdCUVDwnD7HEMkOhuS1oD38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIUoN3fhKHkq6VK9qiTkvR3rIkIn5X8sG7e6cjN+Y0fnhper1k7Z3SlzGnJkRYskr
-	 cfhrqyn00atLNWAz4A91w1fqR9CHJsukItkeGWT9XzI35lVWmrBqTXrnrsSOOaRhDX
-	 pse+ZyQ7TEVVUbcK/FPSYfA8sMbmgCcLXrXNT8AY=
+	b=nhgJZ4N8Y/Iy85T8sR6Ya2zAtq47wEy3Hc8YM0gyylAs1C6Ub8b0D3FY+CpRPDk0l
+	 aRy7uxiSlRTlqFcC5WoeZ/Weguf8cveldZ+NsGs0RqRgxBPDAhZvDHUgtsI5V4Ls8+
+	 hBvtPQN0QfRHKAhmXgWH15w5R7IzBUsUGm2aXxU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 60/93] selftests: forwarding: no_forwarding: Down ports on cleanup
-Date: Sun,  1 Sep 2024 18:16:47 +0200
-Message-ID: <20240901160809.622335634@linuxfoundation.org>
+Subject: [PATCH 6.6 61/93] selftests: forwarding: local_termination: Down ports on cleanup
+Date: Sun,  1 Sep 2024 18:16:48 +0200
+Message-ID: <20240901160809.661837519@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -54,33 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit e8497d6951ee8541d73784f9aac9942a7f239980 ]
+[ Upstream commit 65a3cce43d5b4c53cf16b0be1a03991f665a0806 ]
 
 This test neglects to put ports down on cleanup. Fix it.
 
-Fixes: 476a4f05d9b8 ("selftests: forwarding: add a no_forwarding.sh test")
+Fixes: 90b9566aa5cd ("selftests: forwarding: add a test for local_termination.sh")
 Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0baf91dc24b95ae0cadfdf5db05b74888e6a228a.1724430120.git.petrm@nvidia.com
+Link: https://patch.msgid.link/bf9b79f45de378f88344d44550f0a5052b386199.1724692132.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/no_forwarding.sh | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/forwarding/local_termination.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/no_forwarding.sh b/tools/testing/selftests/net/forwarding/no_forwarding.sh
-index af3b398d13f01..9e677aa64a06a 100755
---- a/tools/testing/selftests/net/forwarding/no_forwarding.sh
-+++ b/tools/testing/selftests/net/forwarding/no_forwarding.sh
-@@ -233,6 +233,9 @@ cleanup()
+diff --git a/tools/testing/selftests/net/forwarding/local_termination.sh b/tools/testing/selftests/net/forwarding/local_termination.sh
+index c5b0cbc85b3e0..9b5a63519b949 100755
+--- a/tools/testing/selftests/net/forwarding/local_termination.sh
++++ b/tools/testing/selftests/net/forwarding/local_termination.sh
+@@ -278,6 +278,10 @@ bridge()
+ cleanup()
  {
  	pre_cleanup
- 
-+	ip link set dev $swp2 down
-+	ip link set dev $swp1 down
 +
- 	h2_destroy
- 	h1_destroy
++	ip link set $h2 down
++	ip link set $h1 down
++
+ 	vrf_cleanup
+ }
  
 -- 
 2.43.0
