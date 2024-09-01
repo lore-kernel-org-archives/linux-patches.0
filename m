@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E271E87B;
-	Sun,  1 Sep 2024 16:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C381E87B;
+	Sun,  1 Sep 2024 16:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209274; cv=none; b=Bq+KxHUXzYhF+d+qorZXeJCxIYV+8JPT3AbK+1V+CWuAitenKV4Y933oWba8VNV23YOJeKivjWkD3PMYLLbbvib6DeMa1FpPvyyeRG//8BML7m5PdLNAmqF1z/To13zzsJNg06gQdQ7ZwWFfrqBS3TZfntwYYUBKIZz5RHvQl4U=
+	t=1725209277; cv=none; b=hRPAJVeGcpM9Y4db2vXxIxu9LochBes1OaxstrkKwrcHzPEnN+nsQf+UlDzxzcjndCSTqDAej704SPNrYWSoGT7KkwNE0lPBfNBqehfxUutS1p4/foSyICkg2JuRSsLLfg/6LJu2XIC96iuX55bFHu67W7vNWlXnQFKX5/pOREI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209274; c=relaxed/simple;
-	bh=Lvoc5Q0KRXW/fUaSqVYtHk6VvWn76UaSwVlDoIyNXUk=;
+	s=arc-20240116; t=1725209277; c=relaxed/simple;
+	bh=DRsALNr0Pg16LpkYz22pE/BjDIIqegrtI0AiO0vlSl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdBJ9o+gEogrSPqiXAg1m2qM4JqDEwPw0u2COHwoKzTQ6rJQ8+R6K1NbKxHl+PHxJ9zLBcfbdlBJfdYDk8dnVDp9hrtIVpqVje+xR1IWyZ1Fbu5BNhp4LIYZ0JfeZXjU3O44igEOSZSHACj46e6KHhQkq/ImFcNgybuwQsWiBkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hzp0XDC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdnwSfFfCaGmvSuwL2JWeqd1LZwAC/UftFlH+muBiYqRYiurDN9zOv/R68nqb/5iRZT6rmgdYfnZR7YrZE7NfD7O/rj4219f2lyZIitkreRoHL0wDLDxD/4pid6j2x4wB9NMTc8qPd3BMW5A02+sr0LrB2mU+Le6/a23BlDIvxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCtEKG+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hzp0XDC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEE9C4CEC3;
-	Sun,  1 Sep 2024 16:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCtEKG+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297E4C4CEC3;
+	Sun,  1 Sep 2024 16:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209274;
-	bh=Lvoc5Q0KRXW/fUaSqVYtHk6VvWn76UaSwVlDoIyNXUk=;
+	s=korg; t=1725209277;
+	bh=DRsALNr0Pg16LpkYz22pE/BjDIIqegrtI0AiO0vlSl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hzp0XDC0DtmPy2tEnYB2OMVGSvdPm5xuPw6jvkPX6KLR+stvyhx3WMDSHb+mGQKPg
-	 HObs0ZLviCZ/wvuzFqK+sS9rIpZDeim+BXriOpbcn8/SFnEoWwMRE9+v2Gat293ZQs
-	 j8SoaQ7JYDK4P5xCpPZyXYAZ9GhYJbljh9jpQx/8=
+	b=DCtEKG+w7PGFAOgvkNUtfP4wWo8a8c3sl9f6LZZYqdHJF72/BWmrfSG5mpxdj8O/O
+	 CF191uzCiaIUjj1Vqfj3HBXjbbl0oqhb4l4eO7pEbeD7i21cTf9Cz9cpDxApimA0tV
+	 DShkvTYaSZ6bR6xHXxOFt86N/w+Mu80HP/+acMxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang.tang@suse.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/71] mptcp: unify pm get_local_id interfaces
-Date: Sun,  1 Sep 2024 18:17:29 +0200
-Message-ID: <20240901160802.801562665@linuxfoundation.org>
+Subject: [PATCH 6.1 25/71] mptcp: pm: remove mptcp_pm_remove_subflow()
+Date: Sun,  1 Sep 2024 18:17:30 +0200
+Message-ID: <20240901160802.839065311@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -53,129 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 9bbec87ecfe8a5c06710100a93e6b7e66f2cbbaf ]
+[ Upstream commit f448451aa62d54be16acb0034223c17e0d12bc69 ]
 
-This patch unifies the three PM get_local_id() interfaces:
+This helper is confusing. It is in pm.c, but it is specific to the
+in-kernel PM and it cannot be used by the userspace one. Also, it simply
+calls one in-kernel specific function with the PM lock, while the
+similar mptcp_pm_remove_addr() helper requires the PM lock.
 
-mptcp_pm_nl_get_local_id() in mptcp/pm_netlink.c for the in-kernel PM and
-mptcp_userspace_pm_get_local_id() in mptcp/pm_userspace.c for the
-userspace PM.
+What's left is the pr_debug(), which is not that useful, because a
+similar one is present in the only function called by this helper:
 
-They'll be switched in the common PM infterface mptcp_pm_get_local_id()
-in mptcp/pm.c based on whether mptcp_pm_is_userspace() or not.
+  mptcp_pm_nl_rm_subflow_received()
 
-Also put together the declarations of these three functions in protocol.h.
+After these modifications, this helper can be marked as 'static', and
+the lock can be taken only once in mptcp_pm_flush_addrs_and_subflows().
 
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Note that it is not a bug fix, but it will help backporting the
+following commits.
+
+Fixes: 0ee4261a3681 ("mptcp: implement mptcp_pm_remove_subflow")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-7-38035d40de5b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f448451aa62d ("mptcp: pm: remove mptcp_pm_remove_subflow()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm.c         | 18 +++++++++++++++++-
- net/mptcp/pm_netlink.c | 22 +++-------------------
- net/mptcp/protocol.h   |  2 +-
- 3 files changed, 21 insertions(+), 21 deletions(-)
+ net/mptcp/pm.c         | 10 ----------
+ net/mptcp/pm_netlink.c | 16 +++++++---------
+ net/mptcp/protocol.h   |  3 ---
+ 3 files changed, 7 insertions(+), 22 deletions(-)
 
 diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
-index 323fc823069ba..5d9baade5c3b4 100644
+index 5d9baade5c3b4..5646c7275a92d 100644
 --- a/net/mptcp/pm.c
 +++ b/net/mptcp/pm.c
-@@ -415,7 +415,23 @@ bool mptcp_pm_rm_addr_signal(struct mptcp_sock *msk, unsigned int remaining,
- 
- int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc)
- {
--	return mptcp_pm_nl_get_local_id(msk, skc);
-+	struct mptcp_addr_info skc_local;
-+	struct mptcp_addr_info msk_local;
-+
-+	if (WARN_ON_ONCE(!msk))
-+		return -1;
-+
-+	/* The 0 ID mapping is defined by the first subflow, copied into the msk
-+	 * addr
-+	 */
-+	mptcp_local_address((struct sock_common *)msk, &msk_local);
-+	mptcp_local_address((struct sock_common *)skc, &skc_local);
-+	if (mptcp_addresses_equal(&msk_local, &skc_local, false))
-+		return 0;
-+
-+	if (mptcp_pm_is_userspace(msk))
-+		return mptcp_userspace_pm_get_local_id(msk, &skc_local);
-+	return mptcp_pm_nl_get_local_id(msk, &skc_local);
- }
- 
- bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc)
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 6fb01e9768476..6a85e9665080c 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1091,33 +1091,17 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+@@ -59,16 +59,6 @@ int mptcp_pm_remove_addr(struct mptcp_sock *msk, const struct mptcp_rm_list *rm_
  	return 0;
  }
  
--int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct sock_common *skc)
-+int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc)
+-int mptcp_pm_remove_subflow(struct mptcp_sock *msk, const struct mptcp_rm_list *rm_list)
+-{
+-	pr_debug("msk=%p, rm_list_nr=%d", msk, rm_list->nr);
+-
+-	spin_lock_bh(&msk->pm.lock);
+-	mptcp_pm_nl_rm_subflow_received(msk, rm_list);
+-	spin_unlock_bh(&msk->pm.lock);
+-	return 0;
+-}
+-
+ /* path manager event handlers */
+ 
+ void mptcp_pm_new_connection(struct mptcp_sock *msk, const struct sock *ssk, int server_side)
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 6a85e9665080c..3b3e656a2ab09 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -883,8 +883,8 @@ static void mptcp_pm_nl_rm_addr_received(struct mptcp_sock *msk)
+ 	mptcp_pm_nl_rm_addr_or_subflow(msk, &msk->pm.rm_list_rx, MPTCP_MIB_RMADDR);
+ }
+ 
+-void mptcp_pm_nl_rm_subflow_received(struct mptcp_sock *msk,
+-				     const struct mptcp_rm_list *rm_list)
++static void mptcp_pm_nl_rm_subflow_received(struct mptcp_sock *msk,
++					    const struct mptcp_rm_list *rm_list)
  {
- 	struct mptcp_pm_addr_entry *entry;
--	struct mptcp_addr_info skc_local;
--	struct mptcp_addr_info msk_local;
- 	struct pm_nl_pernet *pernet;
- 	int ret = -1;
+ 	mptcp_pm_nl_rm_addr_or_subflow(msk, rm_list, MPTCP_MIB_RMSUBFLOW);
+ }
+@@ -1526,7 +1526,9 @@ static int mptcp_nl_remove_subflow_and_signal_addr(struct net *net,
+ 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
  
--	if (WARN_ON_ONCE(!msk))
--		return -1;
--
--	/* The 0 ID mapping is defined by the first subflow, copied into the msk
--	 * addr
--	 */
--	mptcp_local_address((struct sock_common *)msk, &msk_local);
--	mptcp_local_address((struct sock_common *)skc, &skc_local);
--	if (mptcp_addresses_equal(&msk_local, &skc_local, false))
--		return 0;
--
--	if (mptcp_pm_is_userspace(msk))
--		return mptcp_userspace_pm_get_local_id(msk, &skc_local);
--
- 	pernet = pm_nl_get_pernet_from_msk(msk);
+ 		if (remove_subflow) {
+-			mptcp_pm_remove_subflow(msk, &list);
++			spin_lock_bh(&msk->pm.lock);
++			mptcp_pm_nl_rm_subflow_received(msk, &list);
++			spin_unlock_bh(&msk->pm.lock);
+ 		} else if (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW) {
+ 			/* If the subflow has been used, but now closed */
+ 			spin_lock_bh(&msk->pm.lock);
+@@ -1674,18 +1676,14 @@ void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
+ 			alist.ids[alist.nr++] = entry->addr.id;
+ 	}
  
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
--		if (mptcp_addresses_equal(&entry->addr, &skc_local, entry->addr.port)) {
-+		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
- 			ret = entry->addr.id;
- 			break;
- 		}
-@@ -1131,7 +1115,7 @@ int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct sock_common *skc)
- 	if (!entry)
- 		return -ENOMEM;
- 
--	entry->addr = skc_local;
-+	entry->addr = *skc;
- 	entry->addr.id = 0;
- 	entry->addr.port = 0;
- 	entry->ifindex = 0;
++	spin_lock_bh(&msk->pm.lock);
+ 	if (alist.nr) {
+-		spin_lock_bh(&msk->pm.lock);
+ 		msk->pm.add_addr_signaled -= alist.nr;
+ 		mptcp_pm_remove_addr(msk, &alist);
+-		spin_unlock_bh(&msk->pm.lock);
+ 	}
+-
+ 	if (slist.nr)
+-		mptcp_pm_remove_subflow(msk, &slist);
+-
++		mptcp_pm_nl_rm_subflow_received(msk, &slist);
+ 	/* Reset counters: maybe some subflows have been removed before */
+-	spin_lock_bh(&msk->pm.lock);
+ 	bitmap_fill(msk->pm.id_avail_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 	msk->pm.local_addr_used = 0;
+ 	spin_unlock_bh(&msk->pm.lock);
 diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index f6ec1e0bf6a99..b4d6710e6ca3a 100644
+index b4d6710e6ca3a..c3cd68edab779 100644
 --- a/net/mptcp/protocol.h
 +++ b/net/mptcp/protocol.h
-@@ -914,6 +914,7 @@ bool mptcp_pm_add_addr_signal(struct mptcp_sock *msk, const struct sk_buff *skb,
- bool mptcp_pm_rm_addr_signal(struct mptcp_sock *msk, unsigned int remaining,
- 			     struct mptcp_rm_list *rm_list);
- int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
-+int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
- int mptcp_userspace_pm_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
- bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc);
- bool mptcp_pm_nl_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
-@@ -932,7 +933,6 @@ void __init mptcp_pm_nl_init(void);
+@@ -836,7 +836,6 @@ int mptcp_pm_announce_addr(struct mptcp_sock *msk,
+ 			   const struct mptcp_addr_info *addr,
+ 			   bool echo);
+ int mptcp_pm_remove_addr(struct mptcp_sock *msk, const struct mptcp_rm_list *rm_list);
+-int mptcp_pm_remove_subflow(struct mptcp_sock *msk, const struct mptcp_rm_list *rm_list);
+ void mptcp_pm_remove_addrs(struct mptcp_sock *msk, struct list_head *rm_list);
+ void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
+ 					struct list_head *rm_list);
+@@ -931,8 +930,6 @@ static inline u8 subflow_get_local_id(const struct mptcp_subflow_context *subflo
+ 
+ void __init mptcp_pm_nl_init(void);
  void mptcp_pm_nl_work(struct mptcp_sock *msk);
- void mptcp_pm_nl_rm_subflow_received(struct mptcp_sock *msk,
- 				     const struct mptcp_rm_list *rm_list);
--int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
+-void mptcp_pm_nl_rm_subflow_received(struct mptcp_sock *msk,
+-				     const struct mptcp_rm_list *rm_list);
  unsigned int mptcp_pm_get_add_addr_signal_max(const struct mptcp_sock *msk);
  unsigned int mptcp_pm_get_add_addr_accept_max(const struct mptcp_sock *msk);
  unsigned int mptcp_pm_get_subflows_max(const struct mptcp_sock *msk);
