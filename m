@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A20185B58;
-	Sun,  1 Sep 2024 16:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61DD185B46;
+	Sun,  1 Sep 2024 16:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209129; cv=none; b=rYMi/O5tA5EFWy09I9l6D3ERm6nxE0Zd9F1FaaKVZDpgQBASXJdpy1BVIAF15w8bFHSttkhn5Jwz0pDj9uwbVVIfin0bbWKxM9VF0W/3qwdaWCX6At70BGefQfZHX9mVw94VvGnX4MWxCZgs1v8jby6U+g/82eVmKf3pPZZCHsc=
+	t=1725209132; cv=none; b=bGg1CthlkOZnFLg471dom7Z5u5p19SRlVF0VaqDfoarVYyo8S1CD0pdbCqoHU68OABEzNVKMSVzmkqBTUd/DwrH+YqlHjcimieTSkeDuVlqReo9YNfOntKF0lDmuPDuo1CwDcB02PVAziLLnoAQTfC8SjWFAQ6jZn1d1/hsqEwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209129; c=relaxed/simple;
-	bh=vWtYNI3WpLzV7JjVoNdbkf9uJ7EeFgdVBEALm+eV100=;
+	s=arc-20240116; t=1725209132; c=relaxed/simple;
+	bh=wKmn4gnv70AzxegCZRdpa5u1oXxaxGfUm66Ejkf5P9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BfppYLc5+bOmQbPutEi87DhUwTwhlbjJTTrkdw4F19fSsWCXQvJ3vwWMAbw6qvLaG0e7ZEIk/al/m47IVRJnctlgiSPCKSNOl1CzgCQPiV5elqHUwXAstvjqeCfoflbhFEh05+MT6oaQPrhKf9htdO2oghebU3/FP3du+xYKvEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2J/mUb5U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lN1lJPA3lzMJyhATuC9NLibe6+TktkIvhrr909DhyPMltAVNc0y15q34U32tsVnO+feObtouuArLtYPQJPvMyUXUV8n+JQ4/c8egarZoRk8LJ9xMpeHNR2jSPJk71nL1GLanWpWxxjUKlbvreysmqd6y4oyibjRtGvDzdHF8Wpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JX/2cCTO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2J/mUb5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B54C4CEC3;
-	Sun,  1 Sep 2024 16:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX/2cCTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F18C4CEC3;
+	Sun,  1 Sep 2024 16:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209129;
-	bh=vWtYNI3WpLzV7JjVoNdbkf9uJ7EeFgdVBEALm+eV100=;
+	s=korg; t=1725209132;
+	bh=wKmn4gnv70AzxegCZRdpa5u1oXxaxGfUm66Ejkf5P9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2J/mUb5UQAUDLho+/KUWHgrhT5FwXKExuqKi3Hj3TihnSfWW9kphXHlcQ7Y4xNv3+
-	 m16/TDC+K8rdK0cRsu7fRVnLS1MtzsVp5EEHueL5mxvg/1ZCDXF8YC/laHjmPa08eQ
-	 pne1cUTpRxv8VpIfDMYBz+DaxeSoBKdT2+8sgkKY=
+	b=JX/2cCTOBfcB0fhwjA7XclyTi2cB/pEJsB1D+GzfvRJREAaB0xNuuvZsgrbzuZ+eP
+	 bIolcOw1vYYdQlCiwW6worBIHi/urupnFrArOkadFIJYEjzSCmogPP+2geKfnf7KAT
+	 kJUpiKrGDncxb4sLus8aT32njzr9xlfi6USiNNaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
-Subject: [PATCH 6.1 01/71] drm/amdgpu: Using uninitialized value *size when calling amdgpu_vce_cs_reloc
-Date: Sun,  1 Sep 2024 18:17:06 +0200
-Message-ID: <20240901160801.939133742@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 10/71] net: mana: Fix race of mana_hwc_post_rx_wqe and new hwc response
+Date: Sun,  1 Sep 2024 18:17:15 +0200
+Message-ID: <20240901160802.276744046@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -47,43 +45,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit 88a9a467c548d0b3c7761b4fd54a68e70f9c0944 upstream.
+commit 8af174ea863c72f25ce31cee3baad8a301c0cf0f upstream.
 
-Initialize the size before calling amdgpu_vce_cs_reloc, such as case 0x03000001.
-V2: To really improve the handling we would actually
-   need to have a separate value of 0xffffffff.(Christian)
+The mana_hwc_rx_event_handler() / mana_hwc_handle_resp() calls
+complete(&ctx->comp_event) before posting the wqe back. It's
+possible that other callers, like mana_create_txq(), start the
+next round of mana_hwc_send_request() before the posting of wqe.
+And if the HW is fast enough to respond, it can hit no_wqe error
+on the HW channel, then the response message is lost. The mana
+driver may fail to create queues and open, because of waiting for
+the HW response and timed out.
+Sample dmesg:
+[  528.610840] mana 39d4:00:02.0: HWC: Request timed out!
+[  528.614452] mana 39d4:00:02.0: Failed to send mana message: -110, 0x0
+[  528.618326] mana 39d4:00:02.0 enP14804s2: Failed to create WQ object: -110
 
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+To fix it, move posting of rx wqe before complete(&ctx->comp_event).
+
+Cc: stable@vger.kernel.org
+Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/hw_channel.c |   62 ++++++++++++-----------
+ 1 file changed, 34 insertions(+), 28 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-@@ -743,7 +743,8 @@ int amdgpu_vce_ring_parse_cs(struct amdg
- 	uint32_t created = 0;
- 	uint32_t allocated = 0;
- 	uint32_t tmp, handle = 0;
--	uint32_t *size = &tmp;
-+	uint32_t dummy = 0xffffffff;
-+	uint32_t *size = &dummy;
- 	unsigned idx;
- 	int i, r = 0;
+--- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
++++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+@@ -51,9 +51,33 @@ static int mana_hwc_verify_resp_msg(cons
+ 	return 0;
+ }
  
++static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
++				struct hwc_work_request *req)
++{
++	struct device *dev = hwc_rxq->hwc->dev;
++	struct gdma_sge *sge;
++	int err;
++
++	sge = &req->sge;
++	sge->address = (u64)req->buf_sge_addr;
++	sge->mem_key = hwc_rxq->msg_buf->gpa_mkey;
++	sge->size = req->buf_len;
++
++	memset(&req->wqe_req, 0, sizeof(struct gdma_wqe_request));
++	req->wqe_req.sgl = sge;
++	req->wqe_req.num_sge = 1;
++	req->wqe_req.client_data_unit = 0;
++
++	err = mana_gd_post_and_ring(hwc_rxq->gdma_wq, &req->wqe_req, NULL);
++	if (err)
++		dev_err(dev, "Failed to post WQE on HWC RQ: %d\n", err);
++	return err;
++}
++
+ static void mana_hwc_handle_resp(struct hw_channel_context *hwc, u32 resp_len,
+-				 const struct gdma_resp_hdr *resp_msg)
++				 struct hwc_work_request *rx_req)
+ {
++	const struct gdma_resp_hdr *resp_msg = rx_req->buf_va;
+ 	struct hwc_caller_ctx *ctx;
+ 	int err;
+ 
+@@ -61,6 +85,7 @@ static void mana_hwc_handle_resp(struct
+ 		      hwc->inflight_msg_res.map)) {
+ 		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n",
+ 			resp_msg->response.hwc_msg_id);
++		mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
+ 		return;
+ 	}
+ 
+@@ -74,30 +99,13 @@ static void mana_hwc_handle_resp(struct
+ 	memcpy(ctx->output_buf, resp_msg, resp_len);
+ out:
+ 	ctx->error = err;
+-	complete(&ctx->comp_event);
+-}
+-
+-static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
+-				struct hwc_work_request *req)
+-{
+-	struct device *dev = hwc_rxq->hwc->dev;
+-	struct gdma_sge *sge;
+-	int err;
+-
+-	sge = &req->sge;
+-	sge->address = (u64)req->buf_sge_addr;
+-	sge->mem_key = hwc_rxq->msg_buf->gpa_mkey;
+-	sge->size = req->buf_len;
+ 
+-	memset(&req->wqe_req, 0, sizeof(struct gdma_wqe_request));
+-	req->wqe_req.sgl = sge;
+-	req->wqe_req.num_sge = 1;
+-	req->wqe_req.client_data_unit = 0;
++	/* Must post rx wqe before complete(), otherwise the next rx may
++	 * hit no_wqe error.
++	 */
++	mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
+ 
+-	err = mana_gd_post_and_ring(hwc_rxq->gdma_wq, &req->wqe_req, NULL);
+-	if (err)
+-		dev_err(dev, "Failed to post WQE on HWC RQ: %d\n", err);
+-	return err;
++	complete(&ctx->comp_event);
+ }
+ 
+ static void mana_hwc_init_event_handler(void *ctx, struct gdma_queue *q_self,
+@@ -216,14 +224,12 @@ static void mana_hwc_rx_event_handler(vo
+ 		return;
+ 	}
+ 
+-	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, resp);
++	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req);
+ 
+-	/* Do no longer use 'resp', because the buffer is posted to the HW
+-	 * in the below mana_hwc_post_rx_wqe().
++	/* Can no longer use 'resp', because the buffer is posted to the HW
++	 * in mana_hwc_handle_resp() above.
+ 	 */
+ 	resp = NULL;
+-
+-	mana_hwc_post_rx_wqe(hwc_rxq, rx_req);
+ }
+ 
+ static void mana_hwc_tx_event_handler(void *ctx, u32 gdma_txq_id,
 
 
