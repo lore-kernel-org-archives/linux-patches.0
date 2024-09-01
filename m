@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4486183CDB;
-	Sun,  1 Sep 2024 16:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8717117DFFC;
+	Sun,  1 Sep 2024 16:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208431; cv=none; b=a6FI9oWOnV8jQQRRX83cFqouqQmkTrQuJmVA6UyRaPkg77Sxss/KqtfXGN+Rxwlcs/UVsalH39D4HKTuw1oKr6OQHOzO7wAwLAiRBQaruuvxNPZ+vrb7Z0Q4dce2qGHMULIiyy2gh10yAcW1Y2meUnLN4nRYnZkN5XWjjdfLv4U=
+	t=1725208435; cv=none; b=aisZ2x+leOIx1zqkbuUXX9uTL/1vA/mHAi9F9E7qEaZkbdlvKbrYRHFpcFzo7rOvYa8nroTneQO35IiYuzgQ0KTIwIvL5LrzGwIthPi1EX1S7U8bLGOR2mzUMcMzUh6+dOowNdK4Zu9w5yEexZDfsZ+b6HskVxdWNMZgwSdAZmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208431; c=relaxed/simple;
-	bh=Dcl75eP1JdYDBd0Izfnz5RSiiTHdSzJYonVFq6UcLgs=;
+	s=arc-20240116; t=1725208435; c=relaxed/simple;
+	bh=TuJHHpvnHgQkLq5TUhwHByAw78s9VbQZV/HquN7sWa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxp/VZi/DJ8q9gqJ3ag9TQ9JGF0nuUbfv2i9GH4Bzh8ockV20Js6EZ3Z0dDA7TJQdXVTY49k91lLULoGiKMPYbBmQhXCJcOKA5Df0tzdiX7pmGoHNbU1YmKbl7J/aNw45g+9WLF5PgCkMSqv4ulXfj+n+yQtExrRwKwf5NfoNEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7De1/Bo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eZE0OigFd3fkaVCYuNS54WaVMwbqxvNkXCMnsmeBjWXF/80jZJWvBNEdEDs02OYjEhOhCHtcRts2ripXyOj1W5K2QSuEjEfLvJsRBHnGwDmEXlBYAwA9pqbbVGSUnzpPu4mnwMamAygzrxnz7x70Dw9NKHOCjiPP5aC83aSLg4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyxZsfs/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7De1/Bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48602C4CEC3;
-	Sun,  1 Sep 2024 16:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyxZsfs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD54C4CEC3;
+	Sun,  1 Sep 2024 16:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208431;
-	bh=Dcl75eP1JdYDBd0Izfnz5RSiiTHdSzJYonVFq6UcLgs=;
+	s=korg; t=1725208435;
+	bh=TuJHHpvnHgQkLq5TUhwHByAw78s9VbQZV/HquN7sWa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7De1/Bo3qYgSsZGD4sDrWNMayRNTdRzCQOG3hqKMcJbpMh6PSFGE9hs7SNPTeTiI
-	 0+htYFLGz56b8tHKzV6ow/ps/kg+WLYJMpQFRnos/nMK/b5e+wBfHPVZgUVDY1PZ/Y
-	 KiOsQMFg5s8naWxU0NjQJ/5faR7O8Fnp3qeMS0/I=
+	b=pyxZsfs/vNNlPAK00riK8zA74kci6ghHuepabXIGiOd3blbvu20HxLX1NO1HYN6zc
+	 O7CL3LfYCWtER5+aHxEgfa8OvD/7U9OeD/boZW6vgm154c2i7hRQFqgtcTNca4z/6e
+	 Eb5u1+2+CoBX/JWMEk3LWZmiAf+tPTbBb+/Ntcns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.10 080/149] soundwire: stream: fix programming slave ports for non-continous port maps
-Date: Sun,  1 Sep 2024 18:16:31 +0200
-Message-ID: <20240901160820.478005976@linuxfoundation.org>
+Subject: [PATCH 6.10 081/149] dmaengine: dw-edma: Fix unmasking STOP and ABORT interrupts for HDMA
+Date: Sun,  1 Sep 2024 18:16:32 +0200
+Message-ID: <20240901160820.514803182@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,58 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 
-commit ab8d66d132bc8f1992d3eb6cab8d32dda6733c84 upstream.
+commit 383baf5c8f062091af34c63f28d37642a8f188ae upstream.
 
-Two bitmasks in 'struct sdw_slave_prop' - 'source_ports' and
-'sink_ports' - define which ports to program in
-sdw_program_slave_port_params().  The masks are used to get the
-appropriate data port properties ('struct sdw_get_slave_dpn_prop') from
-an array.
+The current logic is enabling both STOP_INT_MASK and ABORT_INT_MASK
+bit. This is apparently masking those particular interrupts rather than
+unmasking the same. If the interrupts are masked, they would never get
+triggered.
 
-Bitmasks can be non-continuous or can start from index different than 0,
-thus when looking for matching port property for given port, we must
-iterate over mask bits, not from 0 up to number of ports.
+So fix the issue by unmasking the STOP and ABORT interrupts properly.
 
-This fixes allocation and programming slave ports, when a source or sink
-masks start from further index.
-
-Fixes: f8101c74aa54 ("soundwire: Add Master and Slave port programming")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20240729140157.326450-1-krzysztof.kozlowski@linaro.org
+Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+cc: stable@vger.kernel.org
+Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/1724674261-3144-2-git-send-email-quic_msarkar@quicinc.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/stream.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1286,18 +1286,18 @@ struct sdw_dpn_prop *sdw_get_slave_dpn_p
- 					    unsigned int port_num)
- {
- 	struct sdw_dpn_prop *dpn_prop;
--	u8 num_ports;
-+	unsigned long mask;
- 	int i;
- 
- 	if (direction == SDW_DATA_DIR_TX) {
--		num_ports = hweight32(slave->prop.source_ports);
-+		mask = slave->prop.source_ports;
- 		dpn_prop = slave->prop.src_dpn_prop;
- 	} else {
--		num_ports = hweight32(slave->prop.sink_ports);
-+		mask = slave->prop.sink_ports;
- 		dpn_prop = slave->prop.sink_dpn_prop;
- 	}
- 
--	for (i = 0; i < num_ports; i++) {
-+	for_each_set_bit(i, &mask, 32) {
- 		if (dpn_prop[i].num == port_num)
- 			return &dpn_prop[i];
- 	}
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -247,10 +247,11 @@ static void dw_hdma_v0_core_start(struct
+ 	if (first) {
+ 		/* Enable engine */
+ 		SET_CH_32(dw, chan->dir, chan->id, ch_en, BIT(0));
+-		/* Interrupt enable&unmask - done, abort */
+-		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
+-		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
+-		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
++		/* Interrupt unmask - stop, abort */
++		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup);
++		tmp &= ~(HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		/* Interrupt enable - stop, abort */
++		tmp |= HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
+ 		if (!(dw->chip->flags & DW_EDMA_CHIP_LOCAL))
+ 			tmp |= HDMA_V0_REMOTE_STOP_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN;
+ 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
 
 
