@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F9A537FF;
-	Sun,  1 Sep 2024 16:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415761C68C;
+	Sun,  1 Sep 2024 16:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208675; cv=none; b=j15Dn4ROQy6QgOZ5DioMnq+cxcjzLaaSgKnFizgNQ9O1lhMd8N1ZQbaeKLkGDgqosW0WoyWAPqCCoTm768GIyRkNmkgA3Z0YjhPYpTQWI3YdPUX3g9NN1y/2Y7SvUrBOMyLRmNaoqz7iFiom0iv0kwQ+xM5kEixexvh5+1o81PE=
+	t=1725208679; cv=none; b=rrxhUMnN+gf/zoWqZ1mqf+7aO8KOWvH+aAGOE2GnVEc3s3X/upw3TgdBQslkbHkOkB2dOVXmoQEgmoc5Quj91IGsb5OjeMxamvMljvAY2HDbtUToxviPaeyhnpo1iLrnAA2XGuxSvtiWSfiltZ9uhCTVMT3WO+UwMCq98WhuTSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208675; c=relaxed/simple;
-	bh=hP8B5zaVSxGNuxLteYATXF45YjgtxOeIzVyC20QMuKg=;
+	s=arc-20240116; t=1725208679; c=relaxed/simple;
+	bh=nxNRSvIqenktZygj/5uBU34d3IZtYrrRLIMgB/sSEJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/j4ezUqEe4oqfXfC/aGryxbtPMSJTJm0FnFZb49WSWFMdSBORfx3mAW7zSp/Y/NZqnx57adjwoIMTjW8T5oM6Sl3GqtgINv6QWeReIzn/n2O/X5ZHIttXAkGoBzQCjDYkLO9Q/hd0k4agyRF1JiFPfzkE8F9bnRHmDQoA+CwHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvJscU+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9JPDUNQDL2y9Z2QF3RQn6+gIpb/2svENYB+1xqKQpIUeTO34ihMuEEeTAMbJ0M1L4MwHhKixntTmDLpytBZpBm99qdzYZU/hiV7ytrrsuHMEvZgceKBUdi9wK5+e4yCjloZppPRVQ+e+8TxCYVX8WE5gqPoO2x0NzmhGpBQJ/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAA9QNOG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvJscU+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C105C4CEC3;
-	Sun,  1 Sep 2024 16:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAA9QNOG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83A4C4CEC3;
+	Sun,  1 Sep 2024 16:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208675;
-	bh=hP8B5zaVSxGNuxLteYATXF45YjgtxOeIzVyC20QMuKg=;
+	s=korg; t=1725208679;
+	bh=nxNRSvIqenktZygj/5uBU34d3IZtYrrRLIMgB/sSEJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvJscU+0XFsqn3R5NmqoqIGMpM+SYoIKgEXxockCXYZ547dMoBCOilGELynmCQEpU
-	 HnkXwFd52iyIZ66AXZ5qUgaLePVLbasFe9NRJX4E158m4FQNU36/ko3KSSCtPhde6z
-	 EPxxBTziIOIFFQdc50mLWwuGxBRDd2js/oN0OWOQ=
+	b=NAA9QNOG2+hbjXYkWvsS5aMBsa1a4bz3W1RO9jrBcHTXrHPbo7u7tO09z1vGIoXU3
+	 DWC6J4Jzwap4GS+VgMwXqTCSuKVk4UmyBhxpVVcTHW43cSxO5z4/n0sX3vYcdJ7muF
+	 hEhwRHRBzCQhahNyo+/M6nG+er2wmuL3z8QPOyBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>
-Subject: [PATCH 6.10 130/149] usb: dwc3: ep0: Dont reset resource alloc flag (including ep0)
-Date: Sun,  1 Sep 2024 18:17:21 +0200
-Message-ID: <20240901160822.342902853@linuxfoundation.org>
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.10 131/149] usb: dwc3: xilinx: add missing depopulate in probe error path
+Date: Sun,  1 Sep 2024 18:17:22 +0200
+Message-ID: <20240901160822.379947024@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -50,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 72fca8371f205d654f95b09cd023a71fd5307041 upstream.
+commit 16f2a21d9d7e48e1af02654fe3d926c0ce6cb3e5 upstream.
 
-The DWC3_EP_RESOURCE_ALLOCATED flag ensures that the resource of an
-endpoint is only assigned once. Unless the endpoint is reset, don't
-clear this flag. Otherwise we may set endpoint resource again, which
-prevents the driver from initiate transfer after handling a STALL or
-endpoint halt to the control endpoint.
+Depopulate device in probe error paths to fix leak of children
+resources.
 
-Commit f2e0eee47038 ("usb: dwc3: ep0: Don't reset resource alloc flag")
-was fixing the initial issue, but did this only for physical ep1. Since
-the function dwc3_ep0_stall_and_restart is resetting the flags for both
-physical endpoints, this also has to be done for ep0.
-
+Fixes: 53b5ff83d893 ("usb: dwc3: xilinx: improve error handling for PM APIs")
 Cc: stable@vger.kernel.org
-Fixes: b311048c174d ("usb: dwc3: gadget: Rewrite endpoint allocation flow")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Link: https://lore.kernel.org/r/20240814-dwc3hwep0reset-v2-1-29e1d7d923ea@pengutronix.de
+Link: https://lore.kernel.org/r/20240816075409.23080-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-xilinx.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/ep0.c b/drivers/usb/dwc3/ep0.c
-index d96ffbe52039..c9533a99e47c 100644
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -232,7 +232,8 @@ void dwc3_ep0_stall_and_restart(struct dwc3 *dwc)
- 	/* stall is always issued on EP0 */
- 	dep = dwc->eps[0];
- 	__dwc3_gadget_ep_set_halt(dep, 1, false);
--	dep->flags = DWC3_EP_ENABLED;
-+	dep->flags &= DWC3_EP_RESOURCE_ALLOCATED;
-+	dep->flags |= DWC3_EP_ENABLED;
- 	dwc->delayed_status = false;
+--- a/drivers/usb/dwc3/dwc3-xilinx.c
++++ b/drivers/usb/dwc3/dwc3-xilinx.c
+@@ -298,9 +298,14 @@ static int dwc3_xlnx_probe(struct platfo
+ 		goto err_pm_set_suspended;
  
- 	if (!list_empty(&dep->pending_list)) {
--- 
-2.46.0
-
+ 	pm_suspend_ignore_children(dev, false);
+-	return pm_runtime_resume_and_get(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0)
++		goto err_pm_set_suspended;
++
++	return 0;
+ 
+ err_pm_set_suspended:
++	of_platform_depopulate(dev);
+ 	pm_runtime_set_suspended(dev);
+ 
+ err_clk_put:
 
 
