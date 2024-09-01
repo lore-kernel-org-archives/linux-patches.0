@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0128444C97;
-	Sun,  1 Sep 2024 16:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2F044C97;
+	Sun,  1 Sep 2024 16:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207682; cv=none; b=FScHyZjPUo7pXywn4kHXKabP2tXRFSLXAoVtUtxX4YatBiH9hlYy0zCp7ke/CmNyMoremx/ML9Q/UkZHB+UF/1cFp32i0KGPqG7kV7hB0J+L7wl0wfcWgoASjxmzw59cD7gH7STpyaKw5P7FZvlSTd51Cb/9vksPaf6pIyuYGRg=
+	t=1725207685; cv=none; b=Ref6Eg7IQnnXJHaD1fMpPZd8xJhLBO44dAgukw8G+NhynOkULJE3in2wBK8Z8HLRyWWd0MWcLxdchn6c0V6RpywvDppsl09qZvTEegetrSuGsRe6B5RiiwQxt/Lne0taKgUrVftqygNEz6Q5+XOPPngidUmHmefzaeL5hMF9sFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207682; c=relaxed/simple;
-	bh=iVgUjstn6FH15bIjIFzIlVdXKq96jCKUWw//9JDbpA8=;
+	s=arc-20240116; t=1725207685; c=relaxed/simple;
+	bh=R9SzzxvTuBA8Urh3YjhuZtkda8OyNem/K8kVdV3GPW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGqZdYyueKkhwY/ANnTVkbwb3jGwMG3coFFfUwhSJw/8h70sEh+j0GitebmPG1I8xEiR2xkLe1H6UikcR7gNEvZcBlqXoEnkik1MoyUF/2rTN1mZF1fIpe5h3bpeDy/Sqw3XpAFB+fvRHWQAonFvmzOM7Qj8J/ax5Qyv/019cyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAjCSui3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGoZo70dFkzG9DjwgsfYQucNrklqcdL3AeMkmlvM0ol+4WEkwIoeRxqkvoh7djJeSvJ3B71D5KKWJd/nz5bM1wZBXNtJ/C7Kmj8AaOjo0z8NdUEyumMqCIfS/WsEpYyj+dNfWBkHQPLMzs/acxDomO2/SobhWziknFcAFS3McsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHbtv+2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAjCSui3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16058C4CEC3;
-	Sun,  1 Sep 2024 16:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHbtv+2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D081C4CEC3;
+	Sun,  1 Sep 2024 16:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207681;
-	bh=iVgUjstn6FH15bIjIFzIlVdXKq96jCKUWw//9JDbpA8=;
+	s=korg; t=1725207685;
+	bh=R9SzzxvTuBA8Urh3YjhuZtkda8OyNem/K8kVdV3GPW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAjCSui3uD403Bc2T6untUn1FK8hoJWHcCishFM6B2yvTD73IHbJBQiP0984I0OiM
-	 6M5x7ZvYxF01z3e/R4JD2bwaTMqFo+xOGImZASUXXgcmAjO/wMnJoN8g/eCjXyNfAs
-	 RX8siTpF1pLA8nty6NLA6up6t8C7o5++GrBnYlTs=
+	b=JHbtv+2T+InLyQ9VU7KZxr1ARtGYdy7UObunj1k6z9BRorPfJTd40Nf07Af77NR6i
+	 YH7Qk5EPIFfxhbXi1SDXyVFE51FR6cVW99cQrhNO54HAF0Axa3Tfo9+9IZtrr+5CIL
+	 kDrnoxWVYiFffNVE+//Z9ObUMqGhCzhBDkYugtGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Johan Hovold <johan@kernel.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 45/98] s390/iucv: fix receive buffer virtual vs physical address confusion
-Date: Sun,  1 Sep 2024 18:16:15 +0200
-Message-ID: <20240901160805.398378850@linuxfoundation.org>
+Subject: [PATCH 4.19 46/98] usb: dwc3: core: Skip setting event buffers for host only controllers
+Date: Sun,  1 Sep 2024 18:16:16 +0200
+Message-ID: <20240901160805.436250084@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -52,36 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-[ Upstream commit 4e8477aeb46dfe74e829c06ea588dd00ba20c8cc ]
+[ Upstream commit 89d7f962994604a3e3d480832788d06179abefc5 ]
 
-Fix IUCV_IPBUFLST-type buffers virtual vs physical address confusion.
-This does not fix a bug since virtual and physical address spaces are
-currently the same.
+On some SoC's like SA8295P where the tertiary controller is host-only
+capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
+Trying to access them leads to a crash.
 
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+For DRD/Peripheral supported controllers, event buffer setup is done
+again in gadget_pullup. Skip setup or cleanup of event buffers if
+controller is host-only capable.
+
+Suggested-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240420044901.884098-4-quic_kriskura@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/iucv.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/dwc3/core.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
-index 2f82a6f0992e4..b1ecf008fa507 100644
---- a/net/iucv/iucv.c
-+++ b/net/iucv/iucv.c
-@@ -1149,8 +1149,7 @@ static int iucv_message_receive_iprmdata(struct iucv_path *path,
- 		size = (size < 8) ? size : 8;
- 		for (array = buffer; size > 0; array++) {
- 			copy = min_t(size_t, size, array->length);
--			memcpy((u8 *)(addr_t) array->address,
--				rmmsg, copy);
-+			memcpy(phys_to_virt(array->address), rmmsg, copy);
- 			rmmsg += copy;
- 			size -= copy;
- 		}
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index fd82904e14657..b14e06ee831bc 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -372,6 +372,13 @@ static void dwc3_free_event_buffers(struct dwc3 *dwc)
+ static int dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned length)
+ {
+ 	struct dwc3_event_buffer *evt;
++	unsigned int hw_mode;
++
++	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
++	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
++		dwc->ev_buf = NULL;
++		return 0;
++	}
+ 
+ 	evt = dwc3_alloc_one_event_buffer(dwc, length);
+ 	if (IS_ERR(evt)) {
+@@ -393,6 +400,9 @@ int dwc3_event_buffers_setup(struct dwc3 *dwc)
+ {
+ 	struct dwc3_event_buffer	*evt;
+ 
++	if (!dwc->ev_buf)
++		return 0;
++
+ 	evt = dwc->ev_buf;
+ 	evt->lpos = 0;
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTADRLO(0),
+@@ -410,6 +420,9 @@ void dwc3_event_buffers_cleanup(struct dwc3 *dwc)
+ {
+ 	struct dwc3_event_buffer	*evt;
+ 
++	if (!dwc->ev_buf)
++		return;
++
+ 	evt = dwc->ev_buf;
+ 
+ 	evt->lpos = 0;
 -- 
 2.43.0
 
