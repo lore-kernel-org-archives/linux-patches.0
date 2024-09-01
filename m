@@ -1,52 +1,54 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D762C6AF
-	for <patches@lists.linux.dev>; Sun,  1 Sep 2024 04:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E44B381DF
+	for <patches@lists.linux.dev>; Sun,  1 Sep 2024 04:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725163625; cv=none; b=NNQIVEkVF9hZXMk/lPqq4SkrXtH9Z+8j3OuJ9S2qGchMAupTF29276OYU3/vNtlOG/Xm2uUTgnx9tUxyp3zsunUeVO0QVSnlirQSJbm/YtWkFjClF5dOzNomX+hbRwQ8nGUkxctuIjmtWXC6/Oxpu+bmVXCtdVBEavL3e+vIgzo=
+	t=1725163626; cv=none; b=HM31WJdlDy8DXx7kCyDk3hDtKTagGYXEUhlBFXXbOkxLYQxptnhLThz5oh2kV8RFsBzfFiB+P76xHoU4WTPoS1dB2yAz2cY8gu6CPM7ckuX0e6r3pAX9RdQI56CAyBVdJ/B5oLj0QCmiNPTaCA55zg70GlJf8Xv8sK7NW1+pv2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725163625; c=relaxed/simple;
-	bh=60xCXeXzxeUrktoR9R5NiMkSZWaLOywMB76XxDKQj8o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nD7Ido5lcLucg/YxnMTFBv4e7SvEQiIwSaSMDxW5uhf5baNWceHj8WnXEyI9Ok6D7HMwg1iEphiriQhAaBbaS+H5MdMTDJSwT4kVjM42lI3e+z/9senWAmSLA3ho+UGHfbXsmiZcVfSJGy8Tp8rbxy6Um4B2LnpvLKSg6ugV6C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GXSatr98; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1725163626; c=relaxed/simple;
+	bh=oz72Q0doCA/TDcpGgSX5zcBpwt/SNMECwtIx/YvZSjs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=d4/q1GOBKzE+Tpkj2sZDy/ieIVcID/LSWgubdbN8AHtPbJezBetFVIZZyFP4JefjvNwvx4yEqftL5CWfXITOCxv0nnUe39VHPRjSE2mGIbKNPuYlQuTnRYtgq3YpBW0B1VB0vdmhqSF3OVB1F3IYb8zJnruh8zF/3msQalHOdxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Qv3sGbli; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GXSatr98"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20570b42f24so54305ad.1
-        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:07:02 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Qv3sGbli"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2d86f71353dso1357900a91.2
+        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:07:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725163622; x=1725768422; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nuBr4jHV5S80VE6wt73LlMepnLPoYFInOo7nmnbq2q0=;
-        b=GXSatr98Kb+NwA/R+QxfBiOhm25p+z/uryMtssNOdAG8QURbDR9fHuXjuN0/0lMAXE
-         6XdA3HO0+N7hXQCAo1/fSAq22Vn4qsbVdeEC0HeJkOu9mIdsmApCBvLpXtLCENAsRJii
-         6oK1WKVGnl9WJZ5RVEVzhdt7ryPRWRLFC9Wn0=
+        d=chromium.org; s=google; t=1725163624; x=1725768424; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h4epShKXY+hj6izJiuYDlNYe3lRcBUUzUpZVsUSgXYg=;
+        b=Qv3sGbli+wGD8cMqNLT8dtNBmE2xYgEiiBwqtX/6h55F9BNowAKQbL5VDU/BHgPJET
+         dxRc4LOT4cedaTnbj/+nBmSwm7OyRiCBPHcWm+8YiMmgCMT1FTlSTKTnOpl093XvJgyz
+         aQwMQs/Z/QDLTVYPLLwgXkUPgZpDpWH8naCJE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725163622; x=1725768422;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nuBr4jHV5S80VE6wt73LlMepnLPoYFInOo7nmnbq2q0=;
-        b=X/NIS6Cb0WQlI+MwHskfBr/zuvTI14MBImmKM86YZsBZ7MNkZK8hX9ICnQ3AHzBYvM
-         5Dio6795mwzlCE6AVPZaJPTho7q4ucw0NO5aKkCc7DbifnC+QeM1CJ5GodfrQ36VnkCH
-         q5tw2D2IfvV1yg2HtN0G4qC1EJbeHUbPPba6wtDWLJS3R1UfYl49AfmZeVwXDNu4a4q0
-         xFoACP2YyRkJpVtb4oBFzc6qZwPekUiaM5+Jp8WL36nK7FRXPMcwrv9F0NdoT1GwLuwc
-         SywWjYM+DRAD8SsB35/E6IR2xTedmTPnUYqQpSdHgPHYwvcunfKkrOpalxqk1jRodAWg
-         2LkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSejn3XirtQemYJLA+thjb4P8WqFqFVuvIpXmjr3QVjjM1iRAQxks9xPBGOjCovCUN13NFkxL+@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzp5F4dFXqchr5UA7Oy9djgwUngXAYMb/87J/uTq4SZhZ60gwX3
-	zOOokabzPa239KmMoxA9EXxsiHEoCJcR9hsDhOYzNr5W4+D1P2oycuedDo2vGg==
-X-Google-Smtp-Source: AGHT+IFdVKVrHGgclkl0cGkMwkBlcXVzyf0ZspkV2XMx+5RcpUZYEjzMjlqXOut5r9vzgEcJ72vHDg==
-X-Received: by 2002:a17:902:ecc7:b0:1fc:2b3b:1482 with SMTP id d9443c01a7336-2050c2159fcmr112626595ad.12.1725163621781;
-        Sat, 31 Aug 2024 21:07:01 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725163624; x=1725768424;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=h4epShKXY+hj6izJiuYDlNYe3lRcBUUzUpZVsUSgXYg=;
+        b=BTGQm6wIPRoLj50EMmNyZo5MhIgNvVOpRkZ+YmR5jzcODvrrYjqJbvaDWfZCjOJKxA
+         nkbuk/9zbhwoOS4yWGDOgrIOagBt1W0dEz8TqSjhOhFABkiTAyBpd8LTTUwAeQshgyEb
+         jbJbO22S8R7zth2L/DNqXgeU83a0EI52oDzz/1JSQ6UmbF8muE/yTwOXwKeS3gD9+33v
+         EcWBYexuPaf1R8AsqLXfNLb7xOk3k1J5ZrSwrvcfAnZR+CjMR3GxDyc/t9otNln8k3Iw
+         hcVBnpizhTM6dDW2fHetT5D8i6Q0PQr9MNrAp24PpM2vttpjWTKGnWX2sTOM+cgsK059
+         513Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUQbc8AK0TK8pJ1CzunkYNDX8v4wnUeblZHe/yFHeRYPUH8rVNFJiOZaZRjM4NU+9JR8Y6jX0s4@lists.linux.dev
+X-Gm-Message-State: AOJu0YyUqNri3zEfSsLUZ1R+YvX5lKkBLe+y6QX7tZbeTRBwvni8sErG
+	Dt7E9x1FTiyVF7qyrG0bcBpruKCPgCkf4IDk3XqBCZTv0/cCBP571yabYXnYEg==
+X-Google-Smtp-Source: AGHT+IGNVmA7VWhk62f3LFtg2+v2Z6maXACsQbPztg1sx/IxxPw8hvbJri39WvmDmQ2WFOhjt1g07Q==
+X-Received: by 2002:a17:90a:a88a:b0:2c9:5ecd:e3c5 with SMTP id 98e67ed59e1d1-2d8563922b8mr11419814a91.33.1725163624128;
+        Sat, 31 Aug 2024 21:07:04 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-20543b7c7e2sm19180565ad.3.2024.08.31.21.06.59
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2d8446c5880sm8970224a91.42.2024.08.31.21.07.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Aug 2024 21:07:01 -0700 (PDT)
+        Sat, 31 Aug 2024 21:07:03 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -87,10 +89,12 @@ Cc: linux-kernel@vger.kernel.org,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v4 00/18] platform/chrome: Add DT USB/DP muxing/topology support
-Date: Sat, 31 Aug 2024 21:06:38 -0700
-Message-ID: <20240901040658.157425-1-swboyd@chromium.org>
+Subject: [PATCH v4 01/18] drm/atomic-helper: Introduce lane remapping support to bridges
+Date: Sat, 31 Aug 2024 21:06:39 -0700
+Message-ID: <20240901040658.157425-2-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
+In-Reply-To: <20240901040658.157425-1-swboyd@chromium.org>
+References: <20240901040658.157425-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -99,124 +103,169 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series adds support for fully describing the USB/DP topology on
-ChromeOS Trogdor devices in DT. Trogdor devices have a single DP phy in
-the AP that is muxed to one of two usb type-c connectors depending on
-which port asserts HPD first to the EC. We'd like to know which port is
-connected to an external monitor to provide a better experience to the
-user about things like which type-c port is displaying DP or which
-type-c hub is acting up, etc. Describing the connection all the way from
-the source to the connector will allow us to do this.
+Add support to the DRM atomic logic to support lane remapping between
+bridges, encoders and connectors. Typically lane mapping is handled
+statically in firmware, e.g. on DT we use the data-lanes property to
+assign lanes when connecting display bridges. Lane assignment is dynamic
+with USB-C DisplayPort altmodes, e.g. pin conf D assigns 2 lanes of DP
+to pins on the USB-C connector while pin conf C assigns 4 lanes of DP to
+pins on the USB-C connector. The lane assignment can't be set statically
+because the DP altmode repurposes USB-C pins for the DP lanes while also
+limiting the number of DP lanes or their pin assignment at runtime.
 
-DRM core patches: These are used to implement lane assignment for DP
-altmode configurations through the drm_bridge code. The typec code will
-use this to tell the DP phy how many lanes of DP to drive and which
-lanes to drive out to the USB type-c connector. Adding support for lane
-assignment allows us to implement DP muxing as well, physically
-splitting the DP lanes on the DP phy so that hardware doesn't have to
-use an analog mux to steer two DP lanes to one or the other type-c port.
+Bridge drivers should point their 'struct drm_bus_cfg::lanes' pointer to
+an allocated array of 'struct drm_lane_cfg' structures and indicate the
+size of this allocated array with 'struct drm_bus_cfg::num_lanes' in
+their atomic_check() callback. The previous bridge in the bridge chain
+can look at this information by calling
+drm_bridge_next_bridge_lane_cfg() in their atomic_check() callback to
+figure out what lanes need to be logically assigned to the physical
+output lanes to satisfy the next bridge's lane assignment.
 
-Type-c core patches: These add some devm helpers so that the next
-patches in the series can skip open-coding devres helpers for
-unregistering typec switches and muxes.
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: <dri-devel@lists.freedesktop.org>
+Cc: Pin-yen Lin <treapking@chromium.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/drm_atomic_state_helper.c |  2 ++
+ drivers/gpu/drm/drm_bridge.c              | 34 +++++++++++++++++++++++
+ include/drm/drm_atomic.h                  | 31 +++++++++++++++++++++
+ include/drm/drm_bridge.h                  |  4 +++
+ 4 files changed, 71 insertions(+)
 
-DRM aux hpd patches: These implement an auxiliary device for USB type-c
-DP alternate mode. I took Dmitry's suggestion and moved the code that
-does the remapping into this driver. The existing hpd bridge is wrapped
-so as to avoid changing the current users. It also registers a typec mux
-and switch (if applicable) so that the DP altmode pin assignment and
-port orientation can be passed to the switch callbacks. We'll still need
-to implement logic in the phy layer to handle configuration.
-
-Cros EC typec patches: This ties together everything that comes before it in
-this series. The EC typec driver registers the drm_dp_typec_bridge that
-can signal HPD from the type-c connector through the bridge chain, mux
-the DP phy in software so that we don't have to use an analog mux, and
-implement orientation control for boards like Kukui that directly
-connect the DP phy to the type-c port, necessitating lane assignment to
-flip the lanes to match the cable orientation.
-
-Changes from v3: https://lore.kernel.org/r/20240819223834.2049862-1-swboyd@chromium.org
- * Use devm_add_action_or_reset() for typec patches
- * Fix kernel-doc
- * Document devcon_match_fn_t before extending it
- * Include err.h in typec header
- * Document devm_typec_switch_register()
- * Remove struct cros_typec_dp_bridge and fold it into parent
- * Drop unevaluatedProperties in some places
- * Change name of registered typec switches to include dev_name of
-   parent to avoid collisions
-
-Changes from v2: https://lore.kernel.org/r/20240815003417.1175506-1-swboyd@chromium.org
- * Move most of the binding bits to usb-switch.yaml
- * Move google,cros-ec-typec binding to usb/
- * Implement mode-switch and orientation-switch typec controls in
-   drm_dp_typec_bridge driver
- * Get rid of public APIs that would be used to assign pins or
-   orientation of the port
- * Add devm helpers for typec mux and switch registration
- * Add a way to match fwnodes while walking the graph based on the
-   endpoint
-
-Changes from v1: https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
- * Too many to count!
- * Split out the DRM bits into this series
- * Moved the logic into dp-aux-hpd bridge driver
- * Drive the bridge from cros_ec_typec driver instead of globbing onto
-   the ACPI centric cros-typec-switch driver
- * During that process drop a lot of patches that aren't needed anymore
- * Move the DT graph and other properties to the cros-ec-typec binding
- * Skip mode-switch/orientation-switch properties because we're not
-   registering typec structs anymore
-
-Stephen Boyd (18):
-  drm/atomic-helper: Introduce lane remapping support to bridges
-  drm/bridge: Verify lane assignment is going to work during
-    atomic_check
-  usb: typec: Stub out typec_switch APIs when CONFIG_TYPEC=n
-  usb: typec: Add device managed typec_mux_register()
-  usb: typec: Add device managed typec_switch_register()
-  drm/bridge: aux-hpd: Support USB Type-C DP altmodes via DRM lane
-    assignment
-  drm/bridge: dp_typec: Support USB Type-C orientation
-  drm/bridge: dp_typec: Add "no-hpd" support
-  drm/bridge: dp_typec: Allow users to hook hpd notify path
-  devcon property: Document devcon_match_fn_t
-  device property: Add remote endpoint to devcon matcher
-  dt-bindings: usb-switch: Extract endpoints to defs
-  dt-bindings: usb-switch: Extend for DisplayPort altmode
-  dt-bindings: Move google,cros-ec-typec binding to usb
-  dt-bindings: usb: Add ports to google,cros-ec-typec for DP altmode
-  platform/chrome: cros_ec_typec: Add support for signaling DP HPD via
-    drm_bridge
-  platform/chrome: cros_ec_typec: Support DP muxing
-  platform/chrome: cros_ec_typec: Handle lack of HPD information
-
- .../bindings/chrome/google,cros-ec-typec.yaml |  66 --
- .../bindings/mfd/google,cros-ec.yaml          |   7 +-
- .../bindings/usb/google,cros-ec-typec.yaml    | 295 +++++++++
- .../devicetree/bindings/usb/usb-switch.yaml   | 163 ++++-
- drivers/base/property.c                       |   7 +-
- drivers/gpu/drm/bridge/aux-hpd-bridge.c       | 575 +++++++++++++++++-
- drivers/gpu/drm/drm_atomic_state_helper.c     |   2 +
- drivers/gpu/drm/drm_bridge.c                  |  51 ++
- drivers/platform/chrome/Kconfig               |   1 +
- drivers/platform/chrome/cros_ec_typec.c       | 136 ++++-
- drivers/platform/chrome/cros_ec_typec.h       |   4 +
- drivers/usb/roles/class.c                     |   4 +-
- drivers/usb/typec/mux.c                       |  79 +++
- drivers/usb/typec/retimer.c                   |   7 +-
- include/drm/bridge/aux-bridge.h               |  26 +
- include/drm/drm_atomic.h                      |  31 +
- include/drm/drm_bridge.h                      |   4 +
- include/linux/property.h                      |  24 +-
- include/linux/usb/typec_mux.h                 |  59 +-
- 19 files changed, 1433 insertions(+), 108 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
- create mode 100644 Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-
-
-base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/drm/drm_atomic_state_helper.c
+index 519228eb1095..12d574458e7b 100644
+--- a/drivers/gpu/drm/drm_atomic_state_helper.c
++++ b/drivers/gpu/drm/drm_atomic_state_helper.c
+@@ -779,6 +779,8 @@ EXPORT_SYMBOL(drm_atomic_helper_bridge_duplicate_state);
+ void drm_atomic_helper_bridge_destroy_state(struct drm_bridge *bridge,
+ 					    struct drm_bridge_state *state)
+ {
++	kfree(state->input_bus_cfg.lanes);
++	kfree(state->output_bus_cfg.lanes);
+ 	kfree(state);
+ }
+ EXPORT_SYMBOL(drm_atomic_helper_bridge_destroy_state);
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index d44f055dbe3e..bd18c1e91dee 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -822,6 +822,40 @@ void drm_atomic_bridge_chain_enable(struct drm_bridge *bridge,
+ }
+ EXPORT_SYMBOL(drm_atomic_bridge_chain_enable);
+ 
++/**
++ * drm_bridge_next_bridge_lane_cfg - get the lane configuration of the next bridge
++ * @bridge: bridge control structure
++ * @state: new atomic state
++ * @num_lanes: will contain the size of the returned array
++ *
++ * This function is typically called from &drm_bridge_funcs.atomic_check().
++ * The @bridge driver calls this function to determine what the next bridge in
++ * the bridge chain requires for the physical to logical lane assignments.
++ *
++ * Return: Lane configuration array of size @num_lanes for the next bridge
++ * after @bridge in the bridge chain, or NULL if the lane configuration is
++ * unchanged from the default.
++ */
++const struct drm_lane_cfg *
++drm_bridge_next_bridge_lane_cfg(struct drm_bridge *bridge,
++				struct drm_atomic_state *state,
++				u8 *num_lanes)
++{
++	const struct drm_bridge_state *next_bridge_state;
++	struct drm_bridge *next_bridge = drm_bridge_get_next_bridge(bridge);
++
++	next_bridge_state = drm_atomic_get_new_bridge_state(state, next_bridge);
++	if (!next_bridge_state) {
++		*num_lanes = 0;
++		return NULL;
++	}
++
++	*num_lanes = next_bridge_state->input_bus_cfg.num_lanes;
++
++	return next_bridge_state->input_bus_cfg.lanes;
++}
++EXPORT_SYMBOL(drm_bridge_next_bridge_lane_cfg);
++
+ static int drm_atomic_bridge_check(struct drm_bridge *bridge,
+ 				   struct drm_crtc_state *crtc_state,
+ 				   struct drm_connector_state *conn_state)
+diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+index 4d7f4c5f2001..e1a38d0742f1 100644
+--- a/include/drm/drm_atomic.h
++++ b/include/drm/drm_atomic.h
+@@ -1122,6 +1122,27 @@ drm_atomic_crtc_effectively_active(const struct drm_crtc_state *state)
+ 	return state->active || state->self_refresh_active;
+ }
+ 
++/**
++ * struct drm_lane_cfg - lane configuration
++ *
++ * This structure stores the lane configuration of a physical bus between
++ * two components in an output pipeline, usually between two bridges, an
++ * encoder and a bridge, or a bridge and a connector.
++ *
++ * The lane configuration is stored in &drm_bus_cfg.
++ */
++struct drm_lane_cfg {
++	/**
++	 * @logical: Logical lane number
++	 */
++	u8 logical;
++
++	/**
++	 * @inverted: True if lane polarity is inverted, false otherwise
++	 */
++	bool inverted;
++};
++
+ /**
+  * struct drm_bus_cfg - bus configuration
+  *
+@@ -1152,6 +1173,16 @@ struct drm_bus_cfg {
+ 	 * @flags: DRM_BUS_* flags used on this bus
+ 	 */
+ 	u32 flags;
++
++	/**
++	 * @lanes: Lane mapping for this bus
++	 */
++	struct drm_lane_cfg *lanes;
++
++	/**
++	 * @num_lanes: Number of lanes in @lanes
++	 */
++	u8 num_lanes;
+ };
+ 
+ /**
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 75019d16be64..064d3c8600a9 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -963,6 +963,10 @@ drm_atomic_helper_bridge_propagate_bus_fmt(struct drm_bridge *bridge,
+ 					struct drm_connector_state *conn_state,
+ 					u32 output_fmt,
+ 					unsigned int *num_input_fmts);
++const struct drm_lane_cfg *
++drm_bridge_next_bridge_lane_cfg(struct drm_bridge *bridge,
++				struct drm_atomic_state *state,
++				u8 *num_lanes);
+ 
+ enum drm_connector_status drm_bridge_detect(struct drm_bridge *bridge);
+ int drm_bridge_get_modes(struct drm_bridge *bridge,
 -- 
 https://chromeos.dev
 
