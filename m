@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C1E183CA3;
-	Sun,  1 Sep 2024 16:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C268F183CA9;
+	Sun,  1 Sep 2024 16:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208064; cv=none; b=jI/Cest+5OKulJCojr2dCflo5j/Plwf6s0us3NY0M2bVgAJmc+Ef78wE7pvrHyVc5DNgcUzqc0CohcDzFYHNwlHJ8/cf96GAr809r4l+9EXBPu1M414xHU8K+gmjfIOli8bjkFZq5rk6tDNCiko2nucEs6PXmWBqGOvlS7yQd20=
+	t=1725208067; cv=none; b=gPKw7FEKdMxJkEN3JGivTPzXZPiEsH/AF7dGR2pXVF1N2ZPGfLi9luEQ9RtHAnnH/q2SsQP/+lwfgkAmbokfF+BsyXvJGtEmfpK75PV5ntk/rf60ERKd/XQ6+hANzlicNogm3HwtsDanq9YP63eMgXmK/MaTcngFISoNnAlz1NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208064; c=relaxed/simple;
-	bh=bTy4rdCtEERnwW+IBh/0BdCUVDwnD7HEMkOhuS1oD38=;
+	s=arc-20240116; t=1725208067; c=relaxed/simple;
+	bh=wCnS1X5gRXx34Zt7iGLVCEboP469l4EhSuBFs8Rd1fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAAXANSg8PP15tOaz32LNAukrz03Bjgs0jAErDsGxyATadCqMWuSHjP03xvI+DQotTzedcW2Hi8Jv6A4/FGGb3z0LglzyiaYUNqxTNGYVvMWldpPFhqiKqZUPJHeDpHaQ/TGvzvIkWk53y1L5lvjbL0cjpu5P86wQgtMrtC8rFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhgJZ4N8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ea8enqI7vp/Way5XIaTwZe0O0ezBzwwZqx/wugoaEa2hLOBhl7Ne3xC4SAjndB6K1H9UXU/ePM0VmOcsdV8dV7dvMFcq636HkKEnH2gbfj+Srp12CShIXyAUfQBKXzHqBARoEZ19vyi115+pNvln1jojEC5/KmfVjXZzGo8ZgmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pc7l/slC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhgJZ4N8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3A1C4CEC3;
-	Sun,  1 Sep 2024 16:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pc7l/slC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C60BC4CEC3;
+	Sun,  1 Sep 2024 16:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208064;
-	bh=bTy4rdCtEERnwW+IBh/0BdCUVDwnD7HEMkOhuS1oD38=;
+	s=korg; t=1725208067;
+	bh=wCnS1X5gRXx34Zt7iGLVCEboP469l4EhSuBFs8Rd1fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhgJZ4N8Y/Iy85T8sR6Ya2zAtq47wEy3Hc8YM0gyylAs1C6Ub8b0D3FY+CpRPDk0l
-	 aRy7uxiSlRTlqFcC5WoeZ/Weguf8cveldZ+NsGs0RqRgxBPDAhZvDHUgtsI5V4Ls8+
-	 hBvtPQN0QfRHKAhmXgWH15w5R7IzBUsUGm2aXxU8=
+	b=Pc7l/slC9rQ2J3N5cvTuqVjx/7tY0HcS/t1HvR1KyJMCLc8/VC8hbFPW2g6NlgyRd
+	 9MQHZcY38TIP4R7E9DKbrIdarXs4kyhsx9Pqk/xSeeDFGyhYkbpYGW0bzienLoEyQY
+	 2ry+P2Ofr+TvIinUvW1W4FGazYRhVJKnvWAeGmt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuntao Liu <liuyuntao12@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 61/93] selftests: forwarding: local_termination: Down ports on cleanup
-Date: Sun,  1 Sep 2024 18:16:48 +0200
-Message-ID: <20240901160809.661837519@linuxfoundation.org>
+Subject: [PATCH 6.6 32/93] ASoC: amd: acp: fix module autoloading
+Date: Sun,  1 Sep 2024 18:16:19 +0200
+Message-ID: <20240901160808.569485193@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -51,36 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Yuntao Liu <liuyuntao12@huawei.com>
 
-[ Upstream commit 65a3cce43d5b4c53cf16b0be1a03991f665a0806 ]
+[ Upstream commit 164199615ae230ace4519141285f06766d6d8036 ]
 
-This test neglects to put ports down on cleanup. Fix it.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from platform_device_id table.
 
-Fixes: 90b9566aa5cd ("selftests: forwarding: add a test for local_termination.sh")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/bf9b79f45de378f88344d44550f0a5052b386199.1724692132.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9d8a7be88b336 ("ASoC: amd: acp: Add legacy sound card support for Chrome audio")
+Signed-off-by: Yuntao Liu <liuyuntao12@huawei.com>
+Link: https://patch.msgid.link/20240815084923.756476-1-liuyuntao12@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/local_termination.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/amd/acp/acp-legacy-mach.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/local_termination.sh b/tools/testing/selftests/net/forwarding/local_termination.sh
-index c5b0cbc85b3e0..9b5a63519b949 100755
---- a/tools/testing/selftests/net/forwarding/local_termination.sh
-+++ b/tools/testing/selftests/net/forwarding/local_termination.sh
-@@ -278,6 +278,10 @@ bridge()
- cleanup()
- {
- 	pre_cleanup
+diff --git a/sound/soc/amd/acp/acp-legacy-mach.c b/sound/soc/amd/acp/acp-legacy-mach.c
+index 6d57d17ddfd77..6e820c2edd1d8 100644
+--- a/sound/soc/amd/acp/acp-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-legacy-mach.c
+@@ -137,6 +137,8 @@ static const struct platform_device_id board_ids[] = {
+ 	},
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(platform, board_ids);
 +
-+	ip link set $h2 down
-+	ip link set $h1 down
-+
- 	vrf_cleanup
- }
- 
+ static struct platform_driver acp_asoc_audio = {
+ 	.driver = {
+ 		.pm = &snd_soc_pm_ops,
 -- 
 2.43.0
 
