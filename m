@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF4F17E005;
-	Sun,  1 Sep 2024 17:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6058A381BD;
+	Sun,  1 Sep 2024 17:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210233; cv=none; b=WiquBPXujL5iAcPDrf2lmodDZaLFtL5eqIqB4O/LdUb+YTBaLrfUo1bsEYSZf0mB5lhvERabxW+C/MGqZYw5ClyHA3YCXCtkiqeM/4+EcriJym0Cj3uymY6QMjqPhaaVKNtPXI7zk35rZQu2PZ3bXNOhmlQybH5MgTbgYEx98Os=
+	t=1725210236; cv=none; b=epFOEbYFG0tjMc1sOOJLRFVdXMdwL/IvlV26dLDl7aQ/hIftJGbRfHVzr0bb7t5aEc7mAoxAK8fzpWORFnERpR/0rXjn2bO27tolDrxOuhELjavgABGfa2LY+VpepjSZEFMi5RzwFjKs9TZshDtLdMH2pfWJhyKCGSxK6WdYv9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210233; c=relaxed/simple;
-	bh=0ChwocMVwf2kktVH42nT8ZYsjvz3YhkhyeAwPL03udk=;
+	s=arc-20240116; t=1725210236; c=relaxed/simple;
+	bh=XcBmceHjW7h10VFMLcERiz491Wjnu4CJiluDtjJT4Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkHlcd9JZDuFUhpkpQHeu9Z9uk8iJTcrk4r1jz8J3KWWVCaeEvde9MUjLcuSnX5aYGlX45DfxP4Q2uyFvDwL8BD+VbCu4cTJik0p8pbdHxRM26XXh+ypeKDeKdtf/AllgAgTGcYMdp5chz3/g49ErJTqsCBFgZFAxOf6quy8ZYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxWlIws+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJyb6SK5ZY/FST3ZwEnoeNms5C5u0RNhcmasEddO21Lpta6SFusDiXg+JxtgOMD12Usao/YoRpdBrXN8YtARTRpDbKur5FNQ+mswQM+Otxvpp+hCKLgRwxxBPae+izHsMzee+vuGMODL86/fmC3vRGCr5Z26WFzbVhfCH7ky9Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwIGl86P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxWlIws+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F059C4CEC3;
-	Sun,  1 Sep 2024 17:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwIGl86P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF755C4CEC3;
+	Sun,  1 Sep 2024 17:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210232;
-	bh=0ChwocMVwf2kktVH42nT8ZYsjvz3YhkhyeAwPL03udk=;
+	s=korg; t=1725210236;
+	bh=XcBmceHjW7h10VFMLcERiz491Wjnu4CJiluDtjJT4Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxWlIws+shd/Nqz7zbmNHnMvmD/SfonOFifEkLaU/+JwX6EwMUT5G8LKGQjVWXFGY
-	 uc0MZaZkbnnJAGZmXBv+wfTYRsu51EKewg+a3sPvxkEdeIBh55R6c9uO9iRzJh/v9e
-	 N4/UYRostNzbU2lcupuWxiaJKy3jOOW10pGoJx3Q=
+	b=OwIGl86PHQpI/qq+y3OD73yI/J2zby48c1ZvCZpshiT3x3c5FKfKlawPAcUK6/B4h
+	 U5qqXguZP/ibJaQry4qsTZUqS2O5nnFbHo+1SMykg31zue9Tnyio10aYSbrWln0u8A
+	 i7zwkt133pBH112v/W75DdejWdd/DSLMdV9qwbRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@gmail.com>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 128/215] media: solo6x10: replace max(a, min(b, c)) by clamp(b, a, c)
-Date: Sun,  1 Sep 2024 18:17:20 +0200
-Message-ID: <20240901160828.203430582@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 129/215] dm suspend: return -ERESTARTSYS instead of -EINTR
+Date: Sun,  1 Sep 2024 18:17:21 +0200
+Message-ID: <20240901160828.242360679@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,59 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 31e97d7c9ae3de072d7b424b2cf706a03ec10720 upstream.
+[ Upstream commit 1e1fd567d32fcf7544c6e09e0e5bc6c650da6e23 ]
 
-This patch replaces max(a, min(b, c)) by clamp(b, a, c) in the solo6x10
-driver.  This improves the readability and more importantly, for the
-solo6x10-p2m.c file, this reduces on my system (x86-64, gcc 13):
+This commit changes device mapper, so that it returns -ERESTARTSYS
+instead of -EINTR when it is interrupted by a signal (so that the ioctl
+can be restarted).
 
- - the preprocessed size from 121 MiB to 4.5 MiB;
+The manpage signal(7) says that the ioctl function should be restarted if
+the signal was handled with SA_RESTART.
 
- - the build CPU time from 46.8 s to 1.6 s;
-
- - the build memory from 2786 MiB to 98MiB.
-
-In fine, this allows this relatively simple C file to be built on a
-32-bit system.
-
-Reported-by: Jiri Slaby <jirislaby@gmail.com>
-Closes: https://lore.kernel.org/lkml/18c6df0d-45ed-450c-9eda-95160a2bbb8e@gmail.com/
-Cc:  <stable@vger.kernel.org> # v6.7+
-Suggested-by: David Laight <David.Laight@ACULAB.COM>
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: David Laight <David.Laight@ACULAB.COM>
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/solo6x10/solo6x10-offsets.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/md/dm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/solo6x10/solo6x10-offsets.h
-+++ b/drivers/media/pci/solo6x10/solo6x10-offsets.h
-@@ -57,16 +57,16 @@
- #define SOLO_MP4E_EXT_ADDR(__solo) \
- 	(SOLO_EREF_EXT_ADDR(__solo) + SOLO_EREF_EXT_AREA(__solo))
- #define SOLO_MP4E_EXT_SIZE(__solo) \
--	max((__solo->nr_chans * 0x00080000),				\
--	    min(((__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo)) -	\
--		 __SOLO_JPEG_MIN_SIZE(__solo)), 0x00ff0000))
-+	clamp(__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo) -	\
-+	      __SOLO_JPEG_MIN_SIZE(__solo),			\
-+	      __solo->nr_chans * 0x00080000, 0x00ff0000)
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index fd9bb8b53219a..8199166ca8620 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2255,7 +2255,7 @@ static int dm_wait_for_bios_completion(struct mapped_device *md, unsigned int ta
+ 			break;
  
- #define __SOLO_JPEG_MIN_SIZE(__solo)		(__solo->nr_chans * 0x00080000)
- #define SOLO_JPEG_EXT_ADDR(__solo) \
- 		(SOLO_MP4E_EXT_ADDR(__solo) + SOLO_MP4E_EXT_SIZE(__solo))
- #define SOLO_JPEG_EXT_SIZE(__solo) \
--	max(__SOLO_JPEG_MIN_SIZE(__solo),				\
--	    min((__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo)), 0x00ff0000))
-+	clamp(__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo),	\
-+	      __SOLO_JPEG_MIN_SIZE(__solo), 0x00ff0000)
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
  
- #define SOLO_SDRAM_END(__solo) \
- 	(SOLO_JPEG_EXT_ADDR(__solo) + SOLO_JPEG_EXT_SIZE(__solo))
+@@ -2280,7 +2280,7 @@ static int dm_wait_for_completion(struct mapped_device *md, unsigned int task_st
+ 			break;
+ 
+ 		if (signal_pending_state(task_state, current)) {
+-			r = -EINTR;
++			r = -ERESTARTSYS;
+ 			break;
+ 		}
+ 
+-- 
+2.43.0
+
 
 
