@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C201E87B;
-	Sun,  1 Sep 2024 16:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A99183CDC;
+	Sun,  1 Sep 2024 16:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209317; cv=none; b=L+t8YHj+7K+zNrnWp6IThHbTU2W3mbvcr0wjYyvE0XItauimz7eU7tL0V63TqCiK0U+2zNbs0OwLMoV/WcQjEIx07HAsX9M2H/7c0lY4gGHoVehRb2fDh5GchwpVpDefylwGKLwZ2ztOs7kZ0iZAmDVq5Gq0y6J1MXKIJ9h0SBo=
+	t=1725209320; cv=none; b=O33kwvBz5U/UpxpoMOd2h4fy2FIrbF6fKiQMJIlCN0NwO2ocq3HgocNyjHVjI8HhL15ci4Pmqqpbhq9XVFHeap6YLeF5QkiwlONcRkPXVT2FEdFxyUTw6RWa1Kogm/Oa9yzPEl3SgWoj2fWrhfjq2rXqb2Ar9uR6T+e731f9DSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209317; c=relaxed/simple;
-	bh=N1wRxK6F6gaIwM+5wwPnXi5Gf0Eg33wzEXdr4XbsPbU=;
+	s=arc-20240116; t=1725209320; c=relaxed/simple;
+	bh=Ev/xt/P7k4UuUDeuPeGznF7oWyBWMuYDSAclM8VA8zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLKjD8X9paUBTnoTxf5v2ejryB3T7SmXiuyF2IKiv0FCpF2SS/n9AR19J61VR3HseoY7g50tKfnmGnpW5LVKE/3VwkRv5yfo6wNSgQfWDtJ0yYTXZgG9Okl2ac9fR0sOkhQgj3RRoMhOc4OZmtXEZACarmDklvl0KR3sdN+X6+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYY0Zq0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4O12G10AFbDX9pl39aQFyIJBG2IpzVNTIj+9Gf5YHrLbVJcpgTD5LFvc0sxXtHSGKW11Ey+SOR6Yt7NU8A+qu8koV2lZH/2ICMCO9WTprAi4SeJf45cRAjyTHsWtmoVFOzEThUK3a+giKVEFskhe9r8HOA3dkdsaGoABbtJeec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neHTSQr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYY0Zq0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C12FC4CEC3;
-	Sun,  1 Sep 2024 16:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neHTSQr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E26C4CEC3;
+	Sun,  1 Sep 2024 16:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209317;
-	bh=N1wRxK6F6gaIwM+5wwPnXi5Gf0Eg33wzEXdr4XbsPbU=;
+	s=korg; t=1725209320;
+	bh=Ev/xt/P7k4UuUDeuPeGznF7oWyBWMuYDSAclM8VA8zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYY0Zq0r86nFyMISgM2cqp5kgnFdu9qaz7BE0LT5uUpQyDriHGfDBE/eEPukHBBTK
-	 8emHWAX/vHbjpC2xGXAZz19ilbS8Y/qx0p5Kef1xtmVt8lqGb7AHphTb99X77/Oqv3
-	 J6kwBJK0x4A8D9U2BrSP2AyIRJYz9m43SA4aEVGg=
+	b=neHTSQr9F4cpdmDg6Bcrh3BBkyIQrAnNeMg5kEz0hmLrjhPNnvLJysZ4sajz0z6O0
+	 obVfOp1C3FRQBNr896srj7bZqp1ewIYhDS9VQ/bRGusVZNFUNleNc1kCeQCZGe21cI
+	 KgUCsrZvdNykDdIqKwHUxO4mi/B0+zAvCnzC5qmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 52/71] sctp: fix association labeling in the duplicate COOKIE-ECHO case
-Date: Sun,  1 Sep 2024 18:17:57 +0200
-Message-ID: <20240901160803.853537177@linuxfoundation.org>
+	Brendan Higgins <brendanhiggins@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 70/71] apparmor: fix policy_unpack_test on big endian systems
+Date: Sun,  1 Sep 2024 18:18:15 +0200
+Message-ID: <20240901160804.529724268@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -53,94 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 3a0504d54b3b57f0d7bf3d9184a00c9f8887f6d7 ]
+[ Upstream commit 98c0cc48e27e9d269a3e4db2acd72b486c88ec77 ]
 
-sctp_sf_do_5_2_4_dupcook() currently calls security_sctp_assoc_request()
-on new_asoc, but as it turns out, this association is always discarded
-and the LSM labels never get into the final association (asoc).
+policy_unpack_test fails on big endian systems because data byte order
+is expected to be little endian but is generated in host byte order.
+This results in test failures such as:
 
-This can be reproduced by having two SCTP endpoints try to initiate an
-association with each other at approximately the same time and then peel
-off the association into a new socket, which exposes the unitialized
-labels and triggers SELinux denials.
+ # policy_unpack_test_unpack_array_with_null_name: EXPECTATION FAILED at security/apparmor/policy_unpack_test.c:150
+    Expected array_size == (u16)16, but
+        array_size == 4096 (0x1000)
+        (u16)16 == 16 (0x10)
+    # policy_unpack_test_unpack_array_with_null_name: pass:0 fail:1 skip:0 total:1
+    not ok 3 policy_unpack_test_unpack_array_with_null_name
+    # policy_unpack_test_unpack_array_with_name: EXPECTATION FAILED at security/apparmor/policy_unpack_test.c:164
+    Expected array_size == (u16)16, but
+        array_size == 4096 (0x1000)
+        (u16)16 == 16 (0x10)
+    # policy_unpack_test_unpack_array_with_name: pass:0 fail:1 skip:0 total:1
 
-Fix it by calling security_sctp_assoc_request() on asoc instead of
-new_asoc. Xin Long also suggested limit calling the hook only to cases
-A, B, and D, since in cases C and E the COOKIE ECHO chunk is discarded
-and the association doesn't enter the ESTABLISHED state, so rectify that
-as well.
+Add the missing endianness conversions when generating test data.
 
-One related caveat with SELinux and peer labeling: When an SCTP
-connection is set up simultaneously in this way, we will end up with an
-association that is initialized with security_sctp_assoc_request() on
-both sides, so the MLS component of the security context of the
-association will get swapped between the peers, instead of just one side
-setting it to the other's MLS component. However, at that point
-security_sctp_assoc_request() had already been called on both sides in
-sctp_sf_do_unexpected_init() (on a temporary association) and thus if
-the exchange didn't fail before due to MLS, it won't fail now either
-(most likely both endpoints have the same MLS range).
-
-Tested by:
- - reproducer from https://src.fedoraproject.org/tests/selinux/pull-request/530
- - selinux-testsuite (https://github.com/SELinuxProject/selinux-testsuite/)
- - sctp-tests (https://github.com/sctp/sctp-tests) - no tests failed
-   that wouldn't fail also without the patch applied
-
-Fixes: c081d53f97a1 ("security: pass asoc to sctp_assoc_request and sctp_sk_clone")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Paul Moore <paul@paul-moore.com> (LSM/SELinux)
-Link: https://patch.msgid.link/20240826130711.141271-1-omosnace@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4d944bcd4e73 ("apparmor: add AppArmor KUnit tests for policy unpack")
+Cc: Brendan Higgins <brendanhiggins@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ security/apparmor/policy_unpack_test.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 5383b6a9da61c..a56749a50e5c5 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -2261,12 +2261,6 @@ enum sctp_disposition sctp_sf_do_5_2_4_dupcook(
- 		}
- 	}
+diff --git a/security/apparmor/policy_unpack_test.c b/security/apparmor/policy_unpack_test.c
+index f25cf2a023d57..0711a0305df34 100644
+--- a/security/apparmor/policy_unpack_test.c
++++ b/security/apparmor/policy_unpack_test.c
+@@ -81,14 +81,14 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
+ 	*(buf + 1) = strlen(TEST_U32_NAME) + 1;
+ 	strcpy(buf + 3, TEST_U32_NAME);
+ 	*(buf + 3 + strlen(TEST_U32_NAME) + 1) = AA_U32;
+-	*((u32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = TEST_U32_DATA;
++	*((__le32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = cpu_to_le32(TEST_U32_DATA);
  
--	/* Update socket peer label if first association. */
--	if (security_sctp_assoc_request(new_asoc, chunk->head_skb ?: chunk->skb)) {
--		sctp_association_free(new_asoc);
--		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
--	}
--
- 	/* Set temp so that it won't be added into hashtable */
- 	new_asoc->temp = 1;
+ 	buf = e->start + TEST_NAMED_U64_BUF_OFFSET;
+ 	*buf = AA_NAME;
+ 	*(buf + 1) = strlen(TEST_U64_NAME) + 1;
+ 	strcpy(buf + 3, TEST_U64_NAME);
+ 	*(buf + 3 + strlen(TEST_U64_NAME) + 1) = AA_U64;
+-	*((u64 *)(buf + 3 + strlen(TEST_U64_NAME) + 2)) = TEST_U64_DATA;
++	*((__le64 *)(buf + 3 + strlen(TEST_U64_NAME) + 2)) = cpu_to_le64(TEST_U64_DATA);
  
-@@ -2275,6 +2269,22 @@ enum sctp_disposition sctp_sf_do_5_2_4_dupcook(
- 	 */
- 	action = sctp_tietags_compare(new_asoc, asoc);
+ 	buf = e->start + TEST_NAMED_BLOB_BUF_OFFSET;
+ 	*buf = AA_NAME;
+@@ -104,7 +104,7 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
+ 	*(buf + 1) = strlen(TEST_ARRAY_NAME) + 1;
+ 	strcpy(buf + 3, TEST_ARRAY_NAME);
+ 	*(buf + 3 + strlen(TEST_ARRAY_NAME) + 1) = AA_ARRAY;
+-	*((u16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = TEST_ARRAY_SIZE;
++	*((__le16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = cpu_to_le16(TEST_ARRAY_SIZE);
  
-+	/* In cases C and E the association doesn't enter the ESTABLISHED
-+	 * state, so there is no need to call security_sctp_assoc_request().
-+	 */
-+	switch (action) {
-+	case 'A': /* Association restart. */
-+	case 'B': /* Collision case B. */
-+	case 'D': /* Collision case D. */
-+		/* Update socket peer label if first association. */
-+		if (security_sctp_assoc_request((struct sctp_association *)asoc,
-+						chunk->head_skb ?: chunk->skb)) {
-+			sctp_association_free(new_asoc);
-+			return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-+		}
-+		break;
-+	}
-+
- 	switch (action) {
- 	case 'A': /* Association restart. */
- 		retval = sctp_sf_do_dupcook_a(net, ep, asoc, chunk, commands,
+ 	return e;
+ }
 -- 
 2.43.0
 
