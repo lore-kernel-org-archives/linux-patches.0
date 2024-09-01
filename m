@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085DB185958;
-	Sun,  1 Sep 2024 16:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A20185B58;
+	Sun,  1 Sep 2024 16:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209127; cv=none; b=iMTi1B1DiHx2/wECcud27DwE17fDoCAUwAl6Ocppq9AXm1Hfb4759XHdZdLnN/idPki93msbLy0UW/tAIqaoEOBVJmcgqMhL69NvZ7jmOZ2eUBqH0oqvVC26ofL965DonSkTFjBb2FaAzQIhxmnbiugurtsEsqaI2p59e3d2TmE=
+	t=1725209129; cv=none; b=rYMi/O5tA5EFWy09I9l6D3ERm6nxE0Zd9F1FaaKVZDpgQBASXJdpy1BVIAF15w8bFHSttkhn5Jwz0pDj9uwbVVIfin0bbWKxM9VF0W/3qwdaWCX6At70BGefQfZHX9mVw94VvGnX4MWxCZgs1v8jby6U+g/82eVmKf3pPZZCHsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209127; c=relaxed/simple;
-	bh=okG9X9ptlte5a9gfZLGYOhWJ5ByaCgp0PUylW8fCtj4=;
+	s=arc-20240116; t=1725209129; c=relaxed/simple;
+	bh=vWtYNI3WpLzV7JjVoNdbkf9uJ7EeFgdVBEALm+eV100=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBXRU0J9InkxAKFW3NTjB5WRyGjSfIgui9Waqh7SCoVQ5YZ79Vsf5wRjWh2EWCailD7BTizJwu6wrVuXNkgfBFUuoqxKsTwsacFFL1W6u3WHeRHLc7JIo7fxORkiJgPVq7O4wqSVapl5VfB/saEBhZfqYiAwFgSI75NkGtRbRxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Hu7oCs7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BfppYLc5+bOmQbPutEi87DhUwTwhlbjJTTrkdw4F19fSsWCXQvJ3vwWMAbw6qvLaG0e7ZEIk/al/m47IVRJnctlgiSPCKSNOl1CzgCQPiV5elqHUwXAstvjqeCfoflbhFEh05+MT6oaQPrhKf9htdO2oghebU3/FP3du+xYKvEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2J/mUb5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Hu7oCs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D560C4CEC3;
-	Sun,  1 Sep 2024 16:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2J/mUb5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B54C4CEC3;
+	Sun,  1 Sep 2024 16:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209126;
-	bh=okG9X9ptlte5a9gfZLGYOhWJ5ByaCgp0PUylW8fCtj4=;
+	s=korg; t=1725209129;
+	bh=vWtYNI3WpLzV7JjVoNdbkf9uJ7EeFgdVBEALm+eV100=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Hu7oCs7NgmLRmWGry0CVckgIEIlzsLpiXeT5oPsmgatEIQhs52EUHuSf2zuuVJ3t
-	 Hue1GIBlOlwObkd8bdWtj2VJdu9z6UrEXwZr5N/vmSoUB+nvxZXlsXh2B6MO7g3Ryd
-	 w7E87car7o/dT1iY3uWUyhMzyFOYMts9KF9tJpIM=
+	b=2J/mUb5UQAUDLho+/KUWHgrhT5FwXKExuqKi3Hj3TihnSfWW9kphXHlcQ7Y4xNv3+
+	 m16/TDC+K8rdK0cRsu7fRVnLS1MtzsVp5EEHueL5mxvg/1ZCDXF8YC/laHjmPa08eQ
+	 pne1cUTpRxv8VpIfDMYBz+DaxeSoBKdT2+8sgkKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Joe Damato <jdamato@fastly.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 121/134] net: busy-poll: use ktime_get_ns() instead of local_clock()
-Date: Sun,  1 Sep 2024 18:17:47 +0200
-Message-ID: <20240901160814.635230325@linuxfoundation.org>
+	Jesse Zhang <jesse.zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+Subject: [PATCH 6.1 01/71] drm/amdgpu: Using uninitialized value *size when calling amdgpu_vce_cs_reloc
+Date: Sun,  1 Sep 2024 18:17:06 +0200
+Message-ID: <20240901160801.939133742@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
-References: <20240901160809.752718937@linuxfoundation.org>
+In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
+References: <20240901160801.879647959@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 0870b0d8b393dde53106678a1e2cec9dfa52f9b7 ]
+commit 88a9a467c548d0b3c7761b4fd54a68e70f9c0944 upstream.
 
-Typically, busy-polling durations are below 100 usec.
+Initialize the size before calling amdgpu_vce_cs_reloc, such as case 0x03000001.
+V2: To really improve the handling we would actually
+   need to have a separate value of 0xffffffff.(Christian)
 
-When/if the busy-poller thread migrates to another cpu,
-local_clock() can be off by +/-2msec or more for small
-values of HZ, depending on the platform.
-
-Use ktimer_get_ns() to ensure deterministic behavior,
-which is the whole point of busy-polling.
-
-Fixes: 060212928670 ("net: add low latency socket poll")
-Fixes: 9a3c71aa8024 ("net: convert low latency sockets to sched_clock()")
-Fixes: 37089834528b ("sched, net: Fixup busy_loop_us_clock()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20240827114916.223377-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/busy_poll.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/busy_poll.h b/include/net/busy_poll.h
-index 16258c0c7319e..36259516ec0d2 100644
---- a/include/net/busy_poll.h
-+++ b/include/net/busy_poll.h
-@@ -61,7 +61,7 @@ static inline bool sk_can_busy_loop(struct sock *sk)
- static inline unsigned long busy_loop_current_time(void)
- {
- #ifdef CONFIG_NET_RX_BUSY_POLL
--	return (unsigned long)(local_clock() >> 10);
-+	return (unsigned long)(ktime_get_ns() >> 10);
- #else
- 	return 0;
- #endif
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -743,7 +743,8 @@ int amdgpu_vce_ring_parse_cs(struct amdg
+ 	uint32_t created = 0;
+ 	uint32_t allocated = 0;
+ 	uint32_t tmp, handle = 0;
+-	uint32_t *size = &tmp;
++	uint32_t dummy = 0xffffffff;
++	uint32_t *size = &dummy;
+ 	unsigned idx;
+ 	int i, r = 0;
+ 
 
 
