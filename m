@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744E51C68C;
-	Sun,  1 Sep 2024 16:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F681C68C;
+	Sun,  1 Sep 2024 16:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208359; cv=none; b=kxDV2ySFc8gmA1uLROFjZD56N5WE4iFVuqO9xTh4duC12VV0fS/IzccqQAzyJ4BkAB0ib+B8sNVv+K1jmEgdgsJVvWp7RcNQ9Ahk/Z0FBBhhQA//8hbVGOkz40yAb4P/8roI8syALPPJTtdNaeMSF45cTyedSJOllB1BhE+WJIM=
+	t=1725208362; cv=none; b=OhKeVnC1Z2XS2D41tj3i7W9Bk1T8g0+ysbv0fR39ZIbjAOM6OZrkI5DDFZe2LlAwo/6so9w2Gl7myaqA6ARS2WCiGxpfRvPyxlJxjtrwALZgfSbRVT1lWfCm4rdoltz63cyoh8D40E55sAkDxsoGSAmZ6HXI5iCUNShJtftugYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208359; c=relaxed/simple;
-	bh=vYhcWEs9v2gp9uiOJ0k8eFXJbEnt7JOEI/nn6VLho3c=;
+	s=arc-20240116; t=1725208362; c=relaxed/simple;
+	bh=CIFp0RRf+hJURZa8QHugK5VTkejpj14L5NIpgTZ3P9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=htLghG5SeIAKyLyT8vjTnu/qpHkYYmZcghqTHctRsYX2mxBnbd7bvWPwXB904P63RaVA+39cQqvmkpXCcRdZ1AdEr+jUDFMO2MzJNrKQty8+P3HvaTKfjfSmQbnlKamzzX4vc/ObCKTVBjYLmG/KzEAeEXxF/k+HfcvhE/SXp0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xee6pA7g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EFoR2zx1Lztlly78Fe+Gl2ryKqIvzktNQKMF8BZ0+HUNdVrzvmVtztzXoqHdbOp8K8G0X9fj52OdW1xbYNKumDnTGoFAzJLCwj9aKhlV59g9ValrWI6okPv017qtkfOGDr6DZGMsYFDQgYByguneS9fwzZH/6HQnDSOLxOmKkKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCYAMn1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xee6pA7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B73C4CEC3;
-	Sun,  1 Sep 2024 16:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCYAMn1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285D7C4CEC3;
+	Sun,  1 Sep 2024 16:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208359;
-	bh=vYhcWEs9v2gp9uiOJ0k8eFXJbEnt7JOEI/nn6VLho3c=;
+	s=korg; t=1725208362;
+	bh=CIFp0RRf+hJURZa8QHugK5VTkejpj14L5NIpgTZ3P9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xee6pA7gQEZPTlneJRYzOCteqCgZKTRcizB4rgMb190prjxG1jJ9GlPTliHIdBJxq
-	 jT4u57gjd2U7lJHOL4pMaVUgtQkfnk3iVQod1GBqB5KKkw3ygImZ9aeYPZ10QA2e2N
-	 eQgpMx3twUT8O96G1VPEljSqna5PHujITwK3Fbcc=
+	b=HCYAMn1V3myVhFP2cl8Z42TlOwus5mRgyNoNKzRSWX8dHAcQmO1xkBfFGgU2swpKv
+	 YWt+uVTqGcrtol3a1swvi8CJnlKQ0JSKs8gkcQ4cBpecce/WqdqxpIROmHC13e3AGU
+	 3aarKGWqQ0OnB1ugf2xjnkAtAj7qeL7o32Ler9tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	syzbot+455d38ecd5f655fc45cf@syzkaller.appspotmail.com,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.10 027/149] mptcp: pm: fix ID 0 endp usage after multiple re-creations
-Date: Sun,  1 Sep 2024 18:15:38 +0200
-Message-ID: <20240901160818.485397994@linuxfoundation.org>
+Subject: [PATCH 6.10 028/149] mptcp: avoid duplicated SUB_CLOSED events
+Date: Sun,  1 Sep 2024 18:15:39 +0200
+Message-ID: <20240901160818.522418506@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -56,24 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 9366922adc6a71378ca01f898c41be295309f044 upstream.
+commit d82809b6c5f2676b382f77a5cbeb1a5d91ed2235 upstream.
 
-'local_addr_used' and 'add_addr_accepted' are decremented for addresses
-not related to the initial subflow (ID0), because the source and
-destination addresses of the initial subflows are known from the
-beginning: they don't count as "additional local address being used" or
-"ADD_ADDR being accepted".
+The initial subflow might have already been closed, but still in the
+connection list. When the worker is instructed to close the subflows
+that have been marked as closed, it might then try to close the initial
+subflow again.
 
-It is then required not to increment them when the entrypoint used by
-the initial subflow is removed and re-added during a connection. Without
-this modification, this entrypoint cannot be removed and re-added more
-than once.
+ A consequence of that is that the SUB_CLOSED event can be seen twice:
 
-Reported-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/512
-Fixes: 3ad14f54bd74 ("mptcp: more accurate MPC endpoint tracking")
-Reported-by: syzbot+455d38ecd5f655fc45cf@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/00000000000049861306209237f4@google.com
+  # ip mptcp endpoint
+  1.1.1.1 id 1 subflow dev eth0
+  2.2.2.2 id 2 subflow dev eth1
+
+  # ip mptcp monitor &
+  [         CREATED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+  [     ESTABLISHED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+  [  SF_ESTABLISHED] remid=0 locid=2 saddr4=2.2.2.2 daddr4=9.9.9.9
+
+  # ip mptcp endpoint delete id 1
+  [       SF_CLOSED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+  [       SF_CLOSED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+
+The first one is coming from mptcp_pm_nl_rm_subflow_received(), and the
+second one from __mptcp_close_subflow().
+
+To avoid doing the post-closed processing twice, the subflow is now
+marked as closed the first time.
+
+Note that it is not enough to check if we are dealing with the first
+subflow and check its sk_state: the subflow might have been reset or
+closed before calling mptcp_close_ssk().
+
+Fixes: b911c97c7dc7 ("mptcp: add netlink event support")
 Cc: stable@vger.kernel.org
 Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
@@ -81,36 +95,36 @@ Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/mptcp/protocol.c |    6 ++++++
+ net/mptcp/protocol.h |    3 ++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -615,12 +615,13 @@ subflow:
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2508,6 +2508,12 @@ out:
+ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		     struct mptcp_subflow_context *subflow)
+ {
++	/* The first subflow can already be closed and still in the list */
++	if (subflow->close_event_done)
++		return;
++
++	subflow->close_event_done = true;
++
+ 	if (sk->sk_state == TCP_ESTABLISHED)
+ 		mptcp_event(MPTCP_EVENT_SUB_CLOSED, mptcp_sk(sk), ssk, GFP_KERNEL);
  
- 		fullmesh = !!(local.flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
- 
--		msk->pm.local_addr_used++;
- 		__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
- 
- 		/* Special case for ID0: set the correct ID */
- 		if (local.addr.id == msk->mpc_endpoint_id)
- 			local.addr.id = 0;
-+		else /* local_addr_used is not decr for ID 0 */
-+			msk->pm.local_addr_used++;
- 
- 		nr = fill_remote_addresses_vec(msk, &local.addr, fullmesh, addrs);
- 		if (nr == 0)
-@@ -750,7 +751,9 @@ static void mptcp_pm_nl_add_addr_receive
- 	spin_lock_bh(&msk->pm.lock);
- 
- 	if (sf_created) {
--		msk->pm.add_addr_accepted++;
-+		/* add_addr_accepted is not decr for ID 0 */
-+		if (remote.id)
-+			msk->pm.add_addr_accepted++;
- 		if (msk->pm.add_addr_accepted >= add_addr_accept_max ||
- 		    msk->pm.subflows >= subflows_max)
- 			WRITE_ONCE(msk->pm.accept_addr, false);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -519,7 +519,8 @@ struct mptcp_subflow_context {
+ 		stale : 1,	    /* unable to snd/rcv data, do not use for xmit */
+ 		valid_csum_seen : 1,        /* at least one csum validated */
+ 		is_mptfo : 1,	    /* subflow is doing TFO */
+-		__unused : 10;
++		close_event_done : 1,       /* has done the post-closed part */
++		__unused : 9;
+ 	bool	data_avail;
+ 	bool	scheduled;
+ 	u32	remote_nonce;
 
 
