@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093A71C68C;
-	Sun,  1 Sep 2024 16:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D861E87B;
+	Sun,  1 Sep 2024 16:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208459; cv=none; b=GFLBQsQXWnaQ4bGzHIcwhHB4akMAm09uEwkBRlv0S+3/LrSBFZNXk1CiGb0gZKZPQBHmU69z3JdVQJR9QDzep27Gc0FsUw4QC7I+xyNRZ+piMfsW+qOiqqhDVaXKFLhnlaEUcfjQVt27LEFd2iELVJhAKjuFYK6jTCPHbUcDcko=
+	t=1725208462; cv=none; b=PD2JhinFSDYjDpNHjF5BW7YNLy4B0arnn3FqVMcAFwzGepan0yh/ZDepytPn/SLDYJbXdOohA6Whq2yCbR8hSJPUMDGzBXWCLRMgUem0kFzUt1kj1NrmAizNmF+TuPz5OxRLb8gpOlCJnGfI3ZO3XtUk9bEHcS3UnzEncrR1wtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208459; c=relaxed/simple;
-	bh=c6GDlp8iwfzbWlpfA+AN0c2ojYQThv1klTpwrqB2inw=;
+	s=arc-20240116; t=1725208462; c=relaxed/simple;
+	bh=VQBUEP1HTo6GNB2PK0P4RF7sTYIWZoG0gzyNgzCMbnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhSBYkRIgO628LD3R2R/E0NsVMvRiQ1R4OmrtSN8ll11rX+ME/xOYYO/lO+pwzBV12JBh+IUZbLTCAJFXTCzUMa7tplAmjF6c8tG8fj2kbpYGEowyPdOe8i7Y9FYK4JlQTplkelFUP9fA0yGsHbpsbYRPenJIplOzYlahlb99Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+oLdYBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m4ujrc17h+L6NdwVdjySsODuKkqlqBG1FqGjT2DRCBPQmlk57OGgSvPgsbz4wPkhm/SxLxiOSUrCPeedvuAVmT1x2tlrGIYiGbsKxueFbrZ0ANd/U9En3zi2Qe21eZtO78ShCtysvF+rRC8qQdgKSVO0tVt0M098/OapJ/N/wt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSI2PPA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+oLdYBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EF8C4CEC3;
-	Sun,  1 Sep 2024 16:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSI2PPA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925A1C4CEC4;
+	Sun,  1 Sep 2024 16:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208458;
-	bh=c6GDlp8iwfzbWlpfA+AN0c2ojYQThv1klTpwrqB2inw=;
+	s=korg; t=1725208462;
+	bh=VQBUEP1HTo6GNB2PK0P4RF7sTYIWZoG0gzyNgzCMbnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+oLdYBwoRWbek2+Vxw8/1ozMUmwIiiaKjwYTuJ00uFPy5RuwTIHzdMYCI3r6wsQ1
-	 61zi3ZkD4lb2LyPkOjsB0Inc7kx4FgTMaYvq0yOBi1dxdwBx8l8b/LgV+ec2SQWTA7
-	 0EyTWk9PVzDY9Vziaaoc3aE9A2P9al0NCR2nazBs=
+	b=tSI2PPA9GWnucH0eXZDfHH3fdttTEpVoh00xk5DaHLO4lXNmvvh2tqnYgWcXlJAme
+	 bA2nUA4EL1thL2PFm5d/n4pPagx9usbwUGfE+NUYKFx7fxsbsIC62M3ziCD+/ViKJn
+	 zXSZXB132lzFduiZeb9w8GJMq8hl5rQJSNJeEQh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 087/149] dmaengine: ti: omap-dma: Initialize sglen after allocation
-Date: Sun,  1 Sep 2024 18:16:38 +0200
-Message-ID: <20240901160820.738915246@linuxfoundation.org>
+Subject: [PATCH 6.10 058/149] ASoC: cs-amp-lib: Ignore empty UEFI calibration entries
+Date: Sun,  1 Sep 2024 18:16:09 +0200
+Message-ID: <20240901160819.650972860@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,69 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 5e5c793c7fc47219998465361d94510fdf55d83f ]
+[ Upstream commit bb4485562f5907708f1c218b5d70dce04165d1e1 ]
 
-With the new __counted_by annocation, the "sglen" struct member must
-be set before accessing the "sg" array. This initialization was done in
-other places where a new struct omap_desc is allocated, but these cases
-were missed. Set "sglen" after allocation.
+If the timestamp of a calibration entry is 0 it is an unused entry and
+must be ignored.
 
-Fixes: b85178611c11 ("dmaengine: ti: omap-dma: Annotate struct omap_desc with __counted_by")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20240716215702.work.802-kees@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Some end-products reserve EFI space for calibration entries by shipping
+with a zero-filled EFI file. When searching the file for calibration
+data the driver must skip the empty entries. The timestamp of a valid
+entry is always non-zero.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 1cad8725f2b9 ("ASoC: cs-amp-lib: Add helpers for factory calibration data")
+Link: https://patch.msgid.link/20240822133544.304421-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/omap-dma.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/cs-amp-lib.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
-index b9e0e22383b72..984fbec2c4bae 100644
---- a/drivers/dma/ti/omap-dma.c
-+++ b/drivers/dma/ti/omap-dma.c
-@@ -1186,10 +1186,10 @@ static struct dma_async_tx_descriptor *omap_dma_prep_dma_cyclic(
- 	d->dev_addr = dev_addr;
- 	d->fi = burst;
- 	d->es = es;
-+	d->sglen = 1;
- 	d->sg[0].addr = buf_addr;
- 	d->sg[0].en = period_len / es_bytes[es];
- 	d->sg[0].fn = buf_len / period_len;
--	d->sglen = 1;
+diff --git a/sound/soc/codecs/cs-amp-lib.c b/sound/soc/codecs/cs-amp-lib.c
+index 605964af8afad..51b128c806718 100644
+--- a/sound/soc/codecs/cs-amp-lib.c
++++ b/sound/soc/codecs/cs-amp-lib.c
+@@ -182,6 +182,10 @@ static int _cs_amp_get_efi_calibration_data(struct device *dev, u64 target_uid,
+ 		for (i = 0; i < efi_data->count; ++i) {
+ 			u64 cal_target = cs_amp_cal_target_u64(&efi_data->data[i]);
  
- 	d->ccr = c->ccr;
- 	if (dir == DMA_DEV_TO_MEM)
-@@ -1258,10 +1258,10 @@ static struct dma_async_tx_descriptor *omap_dma_prep_dma_memcpy(
- 	d->dev_addr = src;
- 	d->fi = 0;
- 	d->es = data_type;
-+	d->sglen = 1;
- 	d->sg[0].en = len / BIT(data_type);
- 	d->sg[0].fn = 1;
- 	d->sg[0].addr = dest;
--	d->sglen = 1;
- 	d->ccr = c->ccr;
- 	d->ccr |= CCR_DST_AMODE_POSTINC | CCR_SRC_AMODE_POSTINC;
++			/* Skip empty entries */
++			if (!efi_data->data[i].calTime[0] && !efi_data->data[i].calTime[1])
++				continue;
++
+ 			/* Skip entries with unpopulated silicon ID */
+ 			if (cal_target == 0)
+ 				continue;
+@@ -193,7 +197,8 @@ static int _cs_amp_get_efi_calibration_data(struct device *dev, u64 target_uid,
+ 		}
+ 	}
  
-@@ -1309,6 +1309,7 @@ static struct dma_async_tx_descriptor *omap_dma_prep_dma_interleaved(
- 	if (data_type > CSDP_DATA_TYPE_32)
- 		data_type = CSDP_DATA_TYPE_32;
+-	if (!cal && (amp_index >= 0) && (amp_index < efi_data->count)) {
++	if (!cal && (amp_index >= 0) && (amp_index < efi_data->count) &&
++	    (efi_data->data[amp_index].calTime[0] || efi_data->data[amp_index].calTime[1])) {
+ 		u64 cal_target = cs_amp_cal_target_u64(&efi_data->data[amp_index]);
  
-+	d->sglen = 1;
- 	sg = &d->sg[0];
- 	d->dir = DMA_MEM_TO_MEM;
- 	d->dev_addr = xt->src_start;
-@@ -1316,7 +1317,6 @@ static struct dma_async_tx_descriptor *omap_dma_prep_dma_interleaved(
- 	sg->en = xt->sgl[0].size / BIT(data_type);
- 	sg->fn = xt->numf;
- 	sg->addr = xt->dst_start;
--	d->sglen = 1;
- 	d->ccr = c->ccr;
- 
- 	src_icg = dmaengine_get_src_icg(xt, &xt->sgl[0]);
+ 		/*
 -- 
 2.43.0
 
