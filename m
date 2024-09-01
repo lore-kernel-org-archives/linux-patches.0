@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B8B2C6AF;
-	Sun,  1 Sep 2024 17:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29D22C6AF;
+	Sun,  1 Sep 2024 17:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210355; cv=none; b=q6YPcPnZw6c5aLeUOhd1/XkiUYuqeSFydCuKhgjL00jy9h8Ca1uk1moQS0lbC5zzN9/jqKHljnH6zUje+zzM+azesr1GEWnLGkzm505T6DOz1nyldtZPnTFZdantCcV+sRr87rMZ5pvKoxEF+z/Gh9XF+GYiwIYnX7e5yHx7cr0=
+	t=1725210358; cv=none; b=SQPgRjkUh1DrrfbyFIL1hUXGYIpRadOnZZTwxrY21gLQ/3svIoN1cZf4QioshfLTdzmbcvH1sUIqBFy8XqhmMtMhWOElj3QkTabszTnoieswi05xEgsyps9N+4ZmMXwt/lKSKaKM1l72PlD5jzhRJWP79iJTMfauT2/TgdgWPDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210355; c=relaxed/simple;
-	bh=Jf+a7TkU8k6cmf2Zmvmlct+VOpW28MQXEP2aaPllO18=;
+	s=arc-20240116; t=1725210358; c=relaxed/simple;
+	bh=XF7QdoucP3l785WQ3f480E7PtWBSNfvg+XGPcvwOtYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSjNlbaek23UobAzqC8COHWWuSEP5kBGbBkP7TL9Je6TM0eatx4l5bBhHPxP9/iskFs/+proncC79jqqK7EOzlEzoDKus4cEXEbF5zpa8+Si66yStfaXcLQYx5qpZ8cSfrA74b3HJmJP0AwQS7a200owv+FK94GmDQJX5J57vgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbVecV/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZqqF9wXJsqxyoMOCWIbZLDjDXHPNdkEyIU3//73UVEStGmCMPqdxd/tDSiBJNechVkBnu1gqtPhi/ZntMaye6C7uIwTDHw9TBjHJQ6UD+R+n60XE9XMLSIwFuVjolr056rSUzlZZvHWqZC53E5toBkcVCBgCmV/FCCLoItGo7HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eX8WlZ5q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbVecV/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A30C4CEC3;
-	Sun,  1 Sep 2024 17:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eX8WlZ5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58629C4CEC3;
+	Sun,  1 Sep 2024 17:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210355;
-	bh=Jf+a7TkU8k6cmf2Zmvmlct+VOpW28MQXEP2aaPllO18=;
+	s=korg; t=1725210358;
+	bh=XF7QdoucP3l785WQ3f480E7PtWBSNfvg+XGPcvwOtYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbVecV/uwk5Y5JfBNBmtQq3L962pKX75KRrtBQUaoABUTHeGjMXdZ4RLah79qF+gq
-	 5r7HUGQxwsgNTXHCOlZRTj89ROtLbFETXqfip2yLYc7IobaXalsZpopER72PHBHe1S
-	 agLszqAKrLoEwamazlh9KOmuGdSLYHdeaew7IVvA=
+	b=eX8WlZ5qptCQKEQKQqV1gGcsyzsgxcn8QtHqeqqf3xmbB8d+b7oMtIylojVlmdXbU
+	 jgLO8iaNdTOnNihvmLL1rNdMprhoWY6DmclB9gD/Jm0D3xW3NxHVPu/mRmMtrGp75S
+	 O6Iqmwb0Dwbn0Ovd9N4TChjLO4HP3n3/mSwW3zm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 164/215] cxgb4: add forgotten u64 ivlan cast before shift
-Date: Sun,  1 Sep 2024 18:17:56 +0200
-Message-ID: <20240901160829.558129125@linuxfoundation.org>
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 138/215] ip6_tunnel: Fix broken GRO
+Date: Sun,  1 Sep 2024 18:17:30 +0200
+Message-ID: <20240901160828.581388035@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,38 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-commit 80a1e7b83bb1834b5568a3872e64c05795d88f31 upstream.
+[ Upstream commit 4b3e33fcc38f7750604b065c55a43e94c5bc3145 ]
 
-It is done everywhere in cxgb4 code, e.g. in is_filter_exact_match()
-There is no reason it should not be done here
+GRO code checks for matching layer 2 headers to see, if packet belongs
+to the same flow and because ip6 tunnel set dev->hard_header_len
+this check fails in cases, where it shouldn't. To fix this don't
+set hard_header_len, but use needed_headroom like ipv4/ip_tunnel.c
+does.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Cc: stable@vger.kernel.org
-Fixes: 12b276fbf6e0 ("cxgb4: add support to create hash filters")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240819075408.92378-1-kniv@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Link: https://patch.msgid.link/20240815151419.109864-1-tbogendoerfer@suse.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_tunnel.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_filter.c
-@@ -1244,7 +1244,8 @@ static u64 hash_filter_ntuple(struct ch_
- 	 * in the Compressed Filter Tuple.
- 	 */
- 	if (tp->vlan_shift >= 0 && fs->mask.ivlan)
--		ntuple |= (FT_VLAN_VLD_F | fs->val.ivlan) << tp->vlan_shift;
-+		ntuple |= (u64)(FT_VLAN_VLD_F |
-+				fs->val.ivlan) << tp->vlan_shift;
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index d370a71c97520..5955fca601b3a 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1501,7 +1501,8 @@ static void ip6_tnl_link_config(struct ip6_tnl *t)
+ 			tdev = __dev_get_by_index(t->net, p->link);
  
- 	if (tp->port_shift >= 0 && fs->mask.iport)
- 		ntuple |= (u64)fs->val.iport << tp->port_shift;
+ 		if (tdev) {
+-			dev->hard_header_len = tdev->hard_header_len + t_hlen;
++			dev->needed_headroom = tdev->hard_header_len +
++				tdev->needed_headroom + t_hlen;
+ 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 
+ 			mtu = mtu - t_hlen;
+@@ -1729,7 +1730,9 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+ int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
+ {
+ 	struct ip6_tnl *tnl = netdev_priv(dev);
++	int t_hlen;
+ 
++	t_hlen = tnl->hlen + sizeof(struct ipv6hdr);
+ 	if (tnl->parms.proto == IPPROTO_IPV6) {
+ 		if (new_mtu < IPV6_MIN_MTU)
+ 			return -EINVAL;
+@@ -1738,10 +1741,10 @@ int ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
+ 			return -EINVAL;
+ 	}
+ 	if (tnl->parms.proto == IPPROTO_IPV6 || tnl->parms.proto == 0) {
+-		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len)
++		if (new_mtu > IP6_MAX_MTU - dev->hard_header_len - t_hlen)
+ 			return -EINVAL;
+ 	} else {
+-		if (new_mtu > IP_MAX_MTU - dev->hard_header_len)
++		if (new_mtu > IP_MAX_MTU - dev->hard_header_len - t_hlen)
+ 			return -EINVAL;
+ 	}
+ 	dev->mtu = new_mtu;
+@@ -1887,12 +1890,11 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
+ 	t_hlen = t->hlen + sizeof(struct ipv6hdr);
+ 
+ 	dev->type = ARPHRD_TUNNEL6;
+-	dev->hard_header_len = LL_MAX_HEADER + t_hlen;
+ 	dev->mtu = ETH_DATA_LEN - t_hlen;
+ 	if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
+ 		dev->mtu -= 8;
+ 	dev->min_mtu = ETH_MIN_MTU;
+-	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len;
++	dev->max_mtu = IP6_MAX_MTU - dev->hard_header_len - t_hlen;
+ 
+ 	dev_hold(dev);
+ 	return 0;
+-- 
+2.43.0
+
 
 
