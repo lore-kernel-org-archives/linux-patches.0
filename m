@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692CE1C68C;
-	Sun,  1 Sep 2024 16:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE56E1C68C;
+	Sun,  1 Sep 2024 16:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208928; cv=none; b=auL2VfMlo+mLK3N4T7xgLN4PFy5/a+/uPHSR6KueoGcwFSYYEGZ74SHVFV3cM0LGhRPKfUgKJTLNqUtc4ewis9uAI2qasyY/KUoi+nQdEvysk17eNFfPHJNhvMs+90k7g8v7Ds0Jlj0sYq/64WZ06ZJ9/f7oVMdTNxR6DT5gIs4=
+	t=1725208932; cv=none; b=K51ssjKPni34ErMza9PI2i0Deg48hYo9m7YUcpwIVUUCFQ+rhpSk59ZVQVbgB6Vx6OmBiFS2wPo3z43EgTUu3pnqZe/WaQdZ5bkYxS+ImbIS4tIbHnPQYP1AbSM9GkUQ6ii3qMQv8Z3pBYH5os5zzj52fzkTgy1sSR0Hh7P90aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208928; c=relaxed/simple;
-	bh=kCp2z2s7gWkz8I549ukfWwUI2Iv8sCDoEJiBZH6jgaA=;
+	s=arc-20240116; t=1725208932; c=relaxed/simple;
+	bh=+qHS1nlXbcOrEnF4MAwa9OTICgREQvMvWLoQieS8/Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8IWeaUcXziUSvDIG6UxXYxRPZALD6I0ZAhF4o/fsLQKiNYfkjowxZRUJ3vTSibRQboEpdlHZTs7PhQzU4DeTGzT9SoaGTB3lAmL+HrXF9wqAdTbF3QZVefIMfNtXY9C/K5IYmXCV+rRKq1LgFfemCZl11xtvSTYiJ1cnK+2ZQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bwdo0xKW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIA4vAKfbB7NsUk0ZXcg4rascsgPIBKjD174HF+9+Cv/7TvQ5FR+sDNPI1+qSblptJRC9/JoLbenHsR4vMR5sFoU/9B9eN71eaLI+n+lBe+aI1rxSyJcyQKlIY0H7h/lRyZuUHvRgwyNSBYsXeMLkiXvUo8VYSLU/LS84BevAkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2E9cnOb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bwdo0xKW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44AEC4CEC3;
-	Sun,  1 Sep 2024 16:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2E9cnOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A4CC4CEC3;
+	Sun,  1 Sep 2024 16:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208928;
-	bh=kCp2z2s7gWkz8I549ukfWwUI2Iv8sCDoEJiBZH6jgaA=;
+	s=korg; t=1725208931;
+	bh=+qHS1nlXbcOrEnF4MAwa9OTICgREQvMvWLoQieS8/Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bwdo0xKWAt4PD6k22zdSADnSYTzADEbXrd4Dxw4sTKDM7rndrawEF/WBOomAD5i1Z
-	 EXYVes9e0ZRi2vJpiQ5G/7BpDHykfpyo1GQe/cRdGiFQpWc/VI9dmLkooZSF4ZtTNJ
-	 9vwJl++vrgq3Jx+N9rN8W7FYBFGwCdF0DdvV/dx4=
+	b=m2E9cnObmoCuluNhTZAxiYRR3nzcDQZwOAxyEUHwzChuAA9UjPPFujcKTCgZam0Hh
+	 WLrt7AOWa07RoYQKGAirjhXzTs8xB0Ff8iG1+9nr+SP/E5QL/B957mkZ4X9N6PMpEh
+	 gaiKnKeT5IfwL0MG9+5bZMfQ817+bZRyCOvzJs/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/134] Bluetooth: hci_core: Fix LE quote calculation
-Date: Sun,  1 Sep 2024 18:17:08 +0200
-Message-ID: <20240901160813.184769409@linuxfoundation.org>
+Subject: [PATCH 5.4 056/134] btrfs: change BUG_ON to assertion when checking for delayed_node root
+Date: Sun,  1 Sep 2024 18:16:42 +0200
+Message-ID: <20240901160812.215347646@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -50,71 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 932021a11805b9da4bd6abf66fe233cccd59fe0e ]
+[ Upstream commit be73f4448b607e6b7ce41cd8ef2214fdf6e7986f ]
 
-Function hci_sched_le needs to update the respective counter variable
-inplace other the likes of hci_quote_sent would attempt to use the
-possible outdated value of conn->{le_cnt,acl_cnt}.
+The pointer to root is initialized in btrfs_init_delayed_node(), no need
+to check for it again. Change the BUG_ON to assertion.
 
-Link: https://github.com/bluez/bluez/issues/915
-Fixes: 73d80deb7bdf ("Bluetooth: prioritizing data over HCI")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ fs/btrfs/delayed-inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index b6243cb97e8ec..f1e8bda97c106 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4245,19 +4245,19 @@ static void hci_sched_le(struct hci_dev *hdev)
- {
- 	struct hci_chan *chan;
- 	struct sk_buff *skb;
--	int quote, cnt, tmp;
-+	int quote, *cnt, tmp;
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index 95afe5ef7500c..e3a43bf63f06c 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -988,7 +988,7 @@ static void btrfs_release_delayed_inode(struct btrfs_delayed_node *delayed_node)
  
- 	BT_DBG("%s", hdev->name);
- 
- 	if (!hci_conn_num(hdev, LE_LINK))
- 		return;
- 
--	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
-+	cnt = hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
- 
--	__check_timeout(hdev, cnt, LE_LINK);
-+	__check_timeout(hdev, *cnt, LE_LINK);
- 
--	tmp = cnt;
--	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
-+	tmp = *cnt;
-+	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
- 		while (quote-- && (skb = skb_peek(&chan->data_q))) {
- 			BT_DBG("chan %p skb %p len %d priority %u", chan, skb,
-@@ -4272,18 +4272,13 @@ static void hci_sched_le(struct hci_dev *hdev)
- 			hci_send_frame(hdev, skb);
- 			hdev->le_last_tx = jiffies;
- 
--			cnt--;
-+			(*cnt)--;
- 			chan->sent++;
- 			chan->conn->sent++;
- 		}
- 	}
- 
--	if (hdev->le_pkts)
--		hdev->le_cnt = cnt;
--	else
--		hdev->acl_cnt = cnt;
--
--	if (cnt != tmp)
-+	if (*cnt != tmp)
- 		hci_prio_recalculate(hdev, LE_LINK);
- }
+ 	if (delayed_node &&
+ 	    test_bit(BTRFS_DELAYED_NODE_INODE_DIRTY, &delayed_node->flags)) {
+-		BUG_ON(!delayed_node->root);
++		ASSERT(delayed_node->root);
+ 		clear_bit(BTRFS_DELAYED_NODE_INODE_DIRTY, &delayed_node->flags);
+ 		delayed_node->count--;
  
 -- 
 2.43.0
