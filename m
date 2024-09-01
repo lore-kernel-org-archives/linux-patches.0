@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8276225D9;
-	Sun,  1 Sep 2024 17:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAA717C;
+	Sun,  1 Sep 2024 17:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210058; cv=none; b=M0eGQQvMaAln4DePyVfnocIyRX9Mb44GOPpORePEfhaX+/oNhPqoNXXeeTCoRD7pEEjLUIS74zdBzd9JJwKtLj6q6gaQoTsNTuVJ8ZsZkSCWfzjrDPxXySyHw3EcnPvosC4EajD390z/js3eRghOGcVA6G1Lq+mundbY9AorXvI=
+	t=1725210062; cv=none; b=OK/+zb5ZYjLhM6sHgzBMH7YFbR1ARvg4CFb7epXlPUz87Nb0sftOojd1dWXbpaE8i0wtVErc9mH8nUsAG67hNnZkYJJo+Acbc47djtcNudQq8+RWZ4IQIcgSXRgLW+d15Q5EJmcYjI0jcx3fpSvLzhdEoBZxbWbxopibnE7tp/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210058; c=relaxed/simple;
-	bh=ubEJy5byjTHiaKAFuU6M+aOSgFVvWzbiiRk+lMifAwU=;
+	s=arc-20240116; t=1725210062; c=relaxed/simple;
+	bh=HXAXUEk0M7FQKX5HB0PKMCvIfiH6oJfBvFzy8XlOUcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjSrQVakiy5vG6jOgW7J1phFbxyW/2a/k4UAmijZEvDTvaqjLyUpBDSIvXxSLywI4CAOodbTYdqYlQsMxb9LCCFy8CnWiX97K3RsGD7py6BqWRoiNNKc2VQRsxj1Hh/rfXtPsFt09oTf0llim85ji7xAwKpk0TAGA/76uQvaP1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbEOUEZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxyJBOkn6JPubUrGIRUUluSyy1Sh9VQC4zkxdCdfv6/6B15SQTIYx9kFli1v702CxpE3bALiJilWDLY6gTSGDl5ZYUMWe1WOyHyMPyEgt/sJvF3mcBmNCIyjb17K+QAaYDJ3r7lAbvcABhRhakCbvqI4pkv2yGxuB4JseQCezgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkBpVGta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbEOUEZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2131DC4CEC3;
-	Sun,  1 Sep 2024 17:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkBpVGta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA88C4CEC3;
+	Sun,  1 Sep 2024 17:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210058;
-	bh=ubEJy5byjTHiaKAFuU6M+aOSgFVvWzbiiRk+lMifAwU=;
+	s=korg; t=1725210061;
+	bh=HXAXUEk0M7FQKX5HB0PKMCvIfiH6oJfBvFzy8XlOUcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbEOUEZNHvEbk7htzdBei20vH/L52XfaY0OZMyDdqyTOM1pCbbKUM+RpT4Wl2xiQH
-	 e3hEYfkqM1u4d6OIkwoCbY72/d6Rq/yUV1MpYHXHpXgzdb78F18uE1v5EI4obFpNBu
-	 uwZu8AC85TZ8cQ5UQYjWueol8Jb0O4A1W67zESZc=
+	b=qkBpVGtaIZeI03zZsz/RHXWQ7WRkYSsiChB6Gy4IzaCxiGbbVjNwriBuKBaPd/b8u
+	 NG6Px/f5Zf0kVdc/0mjrAYF5JMvlC5pZgRxHwM32MJGox3EBsfZavZ+P2g61OmRAP/
+	 wVngqRYaIn61P1Um/Umdkkax29SXUfnxPqimSqV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Erico Nunes <nunes.erico@gmail.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/215] ext4: do not trim the group with corrupted block bitmap
-Date: Sun,  1 Sep 2024 18:16:20 +0200
-Message-ID: <20240901160825.923930491@linuxfoundation.org>
+Subject: [PATCH 5.15 077/215] drm/lima: set gp bus_stop bit before hard reset
+Date: Sun,  1 Sep 2024 18:16:29 +0200
+Message-ID: <20240901160826.263876165@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,36 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit 172202152a125955367393956acf5f4ffd092e0d ]
+[ Upstream commit 27aa58ec85f973d98d336df7b7941149308db80f ]
 
-Otherwise operating on an incorrupted block bitmap can lead to all sorts
-of unknown problems.
+This is required for reliable hard resets. Otherwise, doing a hard reset
+while a task is still running (such as a task which is being stopped by
+the drm_sched timeout handler) may result in random mmu write timeouts
+or lockups which cause the entire gpu to hang.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240124025947.2110659-5-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/lima/lima_gp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 630a5e5a380e2..a48c9cc5aa6e8 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6496,6 +6496,9 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- 	bool set_trimmed = false;
- 	void *bitmap;
+diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
+index ca3842f719842..82071835ec9ed 100644
+--- a/drivers/gpu/drm/lima/lima_gp.c
++++ b/drivers/gpu/drm/lima/lima_gp.c
+@@ -166,6 +166,11 @@ static void lima_gp_task_run(struct lima_sched_pipe *pipe,
+ 	gp_write(LIMA_GP_CMD, cmd);
+ }
  
-+	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
-+		return 0;
++static int lima_gp_bus_stop_poll(struct lima_ip *ip)
++{
++	return !!(gp_read(LIMA_GP_STATUS) & LIMA_GP_STATUS_BUS_STOPPED);
++}
 +
- 	last = ext4_last_grp_cluster(sb, e4b->bd_group);
- 	bitmap = e4b->bd_bitmap;
- 	if (start == 0 && max >= last)
+ static int lima_gp_hard_reset_poll(struct lima_ip *ip)
+ {
+ 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC01A0000);
+@@ -179,6 +184,13 @@ static int lima_gp_hard_reset(struct lima_ip *ip)
+ 
+ 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC0FFE000);
+ 	gp_write(LIMA_GP_INT_MASK, 0);
++
++	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_STOP_BUS);
++	ret = lima_poll_timeout(ip, lima_gp_bus_stop_poll, 10, 100);
++	if (ret) {
++		dev_err(dev->dev, "%s bus stop timeout\n", lima_ip_name(ip));
++		return ret;
++	}
+ 	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_RESET);
+ 	ret = lima_poll_timeout(ip, lima_gp_hard_reset_poll, 10, 100);
+ 	if (ret) {
 -- 
 2.43.0
 
