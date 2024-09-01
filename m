@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC3726AC1;
-	Sun,  1 Sep 2024 17:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29D517B50B;
+	Sun,  1 Sep 2024 17:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210007; cv=none; b=WxmFAeqeGf5VPlea0CDsFpmKpTr2t0/u4whSBqCWIiRzfaI4uOSeta510CFmZqGugRxrO1siaykRdalwB9/7k1heUbszidPxz5txfjRmN5sidJyuAMDM1QR4Y82Tw3IMtd+UMDeOXKohB3ZudfqF9Gw5E/5cO9PdcLkRmjUYpnM=
+	t=1725210010; cv=none; b=esEavgSQS+laxlAwR5Lc6GGTPyokY176VmDlf9J2zc2ZwcVKXs+eFRuWmFfOICqWSvdpkIEqjemJpoBokVLLgvnVLBLQ6gfjacnJWfyXhE7c0QaSAMIGmfyrf7WDVXn6R8jClc4B1WMsthiGQgA2N8MlRkSGjO/uCu/7P4XU/aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210007; c=relaxed/simple;
-	bh=EubeKURDzYldantp7zGZR2Zcx24kBYjaNBR48x5+vw4=;
+	s=arc-20240116; t=1725210010; c=relaxed/simple;
+	bh=3kUNCAqIXL/M6l00jj7Yh6uI9H/KFpe21QdQvdM2LCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qs8/lmh3Ikw9Xwrn2TRnG8L3vc2OtuH/FADtDonyUB2r0V5OvHD7LSuMxb52l4ErkGYFsXYCe6p2pANHxQJgrjKNHw9I3I/w0c/REy0EQA8vK9WTJ0hwNeHN+WuoifwVZq9BMqG6nO/QmMUjKEg3i89dx0368hhT4o01MTSFiVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dgZM1V8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgVS3HnphSC/MCChlnXARDWwND0ftuLrLwEgFbEoswIXJfpfltYrucJKa9lSvPLCD+1ZQ3cr8MoZK8mYeQwEhICVUC04+FImpRIPRg2+84jwWYD/8UTBPhV1MvY6DdpT+VI7iQ5F8twX9BX5cm94j7ED7Jf67MDQ+7fNwoyKtcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxLShZdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dgZM1V8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB862C4CEC3;
-	Sun,  1 Sep 2024 17:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxLShZdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DDFC4CEC3;
+	Sun,  1 Sep 2024 17:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210007;
-	bh=EubeKURDzYldantp7zGZR2Zcx24kBYjaNBR48x5+vw4=;
+	s=korg; t=1725210010;
+	bh=3kUNCAqIXL/M6l00jj7Yh6uI9H/KFpe21QdQvdM2LCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dgZM1V8vePIcEMMGP5p4t/zIR5A0XHKW4WPEBIo1B3ws1xE1uWzWpR9t6UBnJB4U
-	 BWBWfZBdqDe2MMPaNFvYh8xjDr0hiIfVolQpqcqNvIUgE1oq+rVVHyl+NW8XmPxMIv
-	 T4o4h1IgmMWnz6O7gnpxJ+a7pUE6Vw67dDr2lmCc=
+	b=AxLShZdpgRRPpd5OFV7vRa/ZX1QBl7ZT9wJdfo8/MNbYa+JwWBZD0T8r19P2P4zge
+	 e3N9YSOTjFMf2wIM91fzyCzsvX8QZ1COCNFf4Dymu2cILPm07Htiiq1l97r9Jc666z
+	 HcwN6e+rScRxsDAsv/tbq8Spqi8/AbPCv5MR81MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/215] gfs2: setattr_chown: Add missing initialization
-Date: Sun,  1 Sep 2024 18:16:11 +0200
-Message-ID: <20240901160825.587133227@linuxfoundation.org>
+Subject: [PATCH 5.15 060/215] wifi: iwlwifi: abort scan when rfkill on but device enabled
+Date: Sun,  1 Sep 2024 18:16:12 +0200
+Message-ID: <20240901160825.624612805@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -50,32 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 2d8d7990619878a848b1d916c2f936d3012ee17d ]
+[ Upstream commit 3c6a0b1f0add72e7f522bc9145222b86d0a7712a ]
 
-Add a missing initialization of variable ap in setattr_chown().
-Without, chown() may be able to bypass quotas.
+In RFKILL we first set the RFKILL bit, then we abort scan
+(if one exists) by waiting for the notification from FW
+and notifying mac80211. And then we stop the device.
+But in case we have a scan ongoing in the period of time between
+rfkill on and before the device is stopped - we will not wait for the
+FW notification because of the iwl_mvm_is_radio_killed() condition,
+and then the scan_status and uid_status are misconfigured,
+(scan_status is cleared but uid_status not)
+and when the notification suddenly arrives (before stopping the device)
+we will get into the assert about scan_status and uid_status mismatch.
+Fix this by waiting for FW notif when rfkill is on but the device isn't
+disabled yet.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231004123422.c43b69aa2c77.Icc7b5efb47974d6f499156ff7510b786e177993b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 462e957eda8be..763d8dccdfc13 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1910,7 +1910,7 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
- 	kuid_t ouid, nuid;
- 	kgid_t ogid, ngid;
- 	int error;
--	struct gfs2_alloc_parms ap;
-+	struct gfs2_alloc_parms ap = {};
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 8179a7395bcaf..4bab14ceef5f5 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -3068,7 +3068,7 @@ int iwl_mvm_scan_stop(struct iwl_mvm *mvm, int type, bool notify)
+ 	if (!(mvm->scan_status & type))
+ 		return 0;
  
- 	ouid = inode->i_uid;
- 	ogid = inode->i_gid;
+-	if (iwl_mvm_is_radio_killed(mvm)) {
++	if (!test_bit(STATUS_DEVICE_ENABLED, &mvm->trans->status)) {
+ 		ret = 0;
+ 		goto out;
+ 	}
 -- 
 2.43.0
 
