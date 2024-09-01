@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5DF44C93;
-	Sun,  1 Sep 2024 16:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E011208A7;
+	Sun,  1 Sep 2024 16:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209753; cv=none; b=CWwTIAIufKWREWhwpYB0T+j0qT0vF5kzKoUsOmNoWAPni5TJQJfppWC0CEp3GAmkns+ANkj5PC/tpwyEIqocq7v4X2nI4k/Jr/APnCtwUyzxjKDRkf+2tx/BJeUPficWYQe5XPM6780hL96uU5FXe59GPB+2uwHnCdJ0EsA6RDw=
+	t=1725209756; cv=none; b=eOz8fRX4Ogn8URy6o3EmquDvZKjSsIUkW9JTPu+KwRr/hvvjMVq3k/bOs97ype8rVwu10+mKJgWL2InwYYQVmjdbL1Ey4/UAhd5v9SxE6xI4LPMBnlqX3iBFcvGvKxr/V0Hw9wokqZJ4nWhSHg6Mym++09xFbplMuhMo1x8A43c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209753; c=relaxed/simple;
-	bh=UZx5d+AHxnlBUxI97YWU+ZU5bWPxCJwMTrVBzDUSTgs=;
+	s=arc-20240116; t=1725209756; c=relaxed/simple;
+	bh=MjF7rB+Ix7zsbAi9l3UxOL+l4Az7wdDLJqEDcLD1oEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iewJzoUXCC0tt42+NSxvU7hOBQRtIl2Cn0bYSMXiBJMG83GG6e2cY8RJdTWkePdkU3f5qzd+OBQQHC+SOG9tr4suNvgjrIiElLyH3ueUB9/B8atihWnc9oFKB7jYzZmgRYsd66KKIXehbe0E5axPgQOvwBuCenIBwczfn7a4Vf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZaltxwz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXvbG5sZGAba6lQkBpJPm2lRKh+SOP6E4/5kBEJcD75S076cKNrw03JC7BauBn8ZoOEOgLVm05BnngtCSubJ/B+9CdGufJODgfZfO0cEFhS+nGxAmLEGsOTPpxgAYXPFsI3i6U//rY5AaGrPP+kiyC1g+yHv5Uev7OnUI7jxqPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8Vu7Khn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZaltxwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA84C4CEC3;
-	Sun,  1 Sep 2024 16:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8Vu7Khn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DD7C4CEC3;
+	Sun,  1 Sep 2024 16:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209753;
-	bh=UZx5d+AHxnlBUxI97YWU+ZU5bWPxCJwMTrVBzDUSTgs=;
+	s=korg; t=1725209756;
+	bh=MjF7rB+Ix7zsbAi9l3UxOL+l4Az7wdDLJqEDcLD1oEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZaltxwzsQ6opAri7B3sXF1hFNBuhjwmmxlBK5BwrWWrsPeCrvdcHM54Ff6l7fEE5
-	 ANhFBKzhg+76AwUvKDDJRUnpcfJSwvXhh+QVh/3Dd7J8tNp9NjGLo303/yh/ddx0UD
-	 6zbaZtzXXvFalN54d/ZWKyOkpLUSUPv/FAn2vnpU=
+	b=n8Vu7KhnUTgGuwScw0duz1kt3KsbMH1SxDZDSIEvyMOC6Q8AV6RXifwFUt5ih9WPa
+	 SUh0Sue+pRizxUiwcasdn4kQboakiwht+B7SE/a1ihtPVsvq4O2KgXYD+Iq0YTSzX8
+	 BrH2kFINjh8XUUAAJUV7IaWkUrbOmeHbl7hom+iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 103/151] net: xilinx: axienet: Fix dangling multicast addresses
-Date: Sun,  1 Sep 2024 18:17:43 +0200
-Message-ID: <20240901160817.985496359@linuxfoundation.org>
+Subject: [PATCH 5.10 094/151] bonding: fix xfrm real_dev null pointer dereference
+Date: Sun,  1 Sep 2024 18:17:34 +0200
+Message-ID: <20240901160817.651592956@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,92 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 797a68c9de0f5a5447baf4bd3bb9c10a3993435b ]
+[ Upstream commit f8cde9805981c50d0c029063dc7d82821806fc44 ]
 
-If a multicast address is removed but there are still some multicast
-addresses, that address would remain programmed into the frame filter.
-Fix this by explicitly setting the enable bit for each filter.
+We shouldn't set real_dev to NULL because packets can be in transit and
+xfrm might call xdo_dev_offload_ok() in parallel. All callbacks assume
+real_dev is set.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240822154059.1066595-3-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ Example trace:
+ kernel: BUG: unable to handle page fault for address: 0000000000001030
+ kernel: bond0: (slave eni0np1): making interface the new active one
+ kernel: #PF: supervisor write access in kernel mode
+ kernel: #PF: error_code(0x0002) - not-present page
+ kernel: PGD 0 P4D 0
+ kernel: Oops: 0002 [#1] PREEMPT SMP
+ kernel: CPU: 4 PID: 2237 Comm: ping Not tainted 6.7.7+ #12
+ kernel: Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
+ kernel: RIP: 0010:nsim_ipsec_offload_ok+0xc/0x20 [netdevsim]
+ kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
+ kernel: Code: e0 0f 0b 48 83 7f 38 00 74 de 0f 0b 48 8b 47 08 48 8b 37 48 8b 78 40 e9 b2 e5 9a d7 66 90 0f 1f 44 00 00 48 8b 86 80 02 00 00 <83> 80 30 10 00 00 01 b8 01 00 00 00 c3 0f 1f 80 00 00 00 00 0f 1f
+ kernel: bond0: (slave eni0np1): making interface the new active one
+ kernel: RSP: 0018:ffffabde81553b98 EFLAGS: 00010246
+ kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
+ kernel:
+ kernel: RAX: 0000000000000000 RBX: ffff9eb404e74900 RCX: ffff9eb403d97c60
+ kernel: RDX: ffffffffc090de10 RSI: ffff9eb404e74900 RDI: ffff9eb3c5de9e00
+ kernel: RBP: ffff9eb3c0a42000 R08: 0000000000000010 R09: 0000000000000014
+ kernel: R10: 7974203030303030 R11: 3030303030303030 R12: 0000000000000000
+ kernel: R13: ffff9eb3c5de9e00 R14: ffffabde81553cc8 R15: ffff9eb404c53000
+ kernel: FS:  00007f2a77a3ad00(0000) GS:ffff9eb43bd00000(0000) knlGS:0000000000000000
+ kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ kernel: CR2: 0000000000001030 CR3: 00000001122ab000 CR4: 0000000000350ef0
+ kernel: bond0: (slave eni0np1): making interface the new active one
+ kernel: Call Trace:
+ kernel:  <TASK>
+ kernel:  ? __die+0x1f/0x60
+ kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
+ kernel:  ? page_fault_oops+0x142/0x4c0
+ kernel:  ? do_user_addr_fault+0x65/0x670
+ kernel:  ? kvm_read_and_reset_apf_flags+0x3b/0x50
+ kernel: bond0: (slave eni0np1): making interface the new active one
+ kernel:  ? exc_page_fault+0x7b/0x180
+ kernel:  ? asm_exc_page_fault+0x22/0x30
+ kernel:  ? nsim_bpf_uninit+0x50/0x50 [netdevsim]
+ kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
+ kernel:  ? nsim_ipsec_offload_ok+0xc/0x20 [netdevsim]
+ kernel: bond0: (slave eni0np1): making interface the new active one
+ kernel:  bond_ipsec_offload_ok+0x7b/0x90 [bonding]
+ kernel:  xfrm_output+0x61/0x3b0
+ kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
+ kernel:  ip_push_pending_frames+0x56/0x80
+
+Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h  |  1 +
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 21 ++++++++-----------
- 2 files changed, 10 insertions(+), 12 deletions(-)
+ drivers/net/bonding/bond_main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index c0c93d0e3c7f9..071822028ea5e 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -169,6 +169,7 @@
- #define XAE_UAW0_OFFSET		0x00000700 /* Unicast address word 0 */
- #define XAE_UAW1_OFFSET		0x00000704 /* Unicast address word 1 */
- #define XAE_FMI_OFFSET		0x00000708 /* Frame Filter Control */
-+#define XAE_FFE_OFFSET		0x0000070C /* Frame Filter Enable */
- #define XAE_AF0_OFFSET		0x00000710 /* Address Filter 0 */
- #define XAE_AF1_OFFSET		0x00000714 /* Address Filter 1 */
- 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index b814ef1da3c73..3253ace2b6014 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -409,7 +409,7 @@ static int netdev_set_mac_address(struct net_device *ndev, void *p)
-  */
- static void axienet_set_multicast_list(struct net_device *ndev)
- {
--	int i;
-+	int i = 0;
- 	u32 reg, af0reg, af1reg;
- 	struct axienet_local *lp = netdev_priv(ndev);
- 
-@@ -431,7 +431,6 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 		reg &= ~XAE_FMI_PM_MASK;
- 		axienet_iow(lp, XAE_FMI_OFFSET, reg);
- 
--		i = 0;
- 		netdev_for_each_mc_addr(ha, ndev) {
- 			if (i >= XAE_MULTICAST_CAM_TABLE_NUM)
- 				break;
-@@ -450,6 +449,7 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 			axienet_iow(lp, XAE_FMI_OFFSET, reg);
- 			axienet_iow(lp, XAE_AF0_OFFSET, af0reg);
- 			axienet_iow(lp, XAE_AF1_OFFSET, af1reg);
-+			axienet_iow(lp, XAE_FFE_OFFSET, 1);
- 			i++;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index bd74b2d64ad48..506b6d1cc27df 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -540,7 +540,6 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
+ 		} else {
+ 			slave->dev->xfrmdev_ops->xdo_dev_state_delete(ipsec->xs);
  		}
- 	} else {
-@@ -457,18 +457,15 @@ static void axienet_set_multicast_list(struct net_device *ndev)
- 		reg &= ~XAE_FMI_PM_MASK;
- 
- 		axienet_iow(lp, XAE_FMI_OFFSET, reg);
--
--		for (i = 0; i < XAE_MULTICAST_CAM_TABLE_NUM; i++) {
--			reg = axienet_ior(lp, XAE_FMI_OFFSET) & 0xFFFFFF00;
--			reg |= i;
--
--			axienet_iow(lp, XAE_FMI_OFFSET, reg);
--			axienet_iow(lp, XAE_AF0_OFFSET, 0);
--			axienet_iow(lp, XAE_AF1_OFFSET, 0);
--		}
--
- 		dev_info(&ndev->dev, "Promiscuous mode disabled.\n");
+-		ipsec->xs->xso.real_dev = NULL;
  	}
-+
-+	for (; i < XAE_MULTICAST_CAM_TABLE_NUM; i++) {
-+		reg = axienet_ior(lp, XAE_FMI_OFFSET) & 0xFFFFFF00;
-+		reg |= i;
-+		axienet_iow(lp, XAE_FMI_OFFSET, reg);
-+		axienet_iow(lp, XAE_FFE_OFFSET, 0);
-+	}
- }
- 
- /**
+ 	spin_unlock_bh(&bond->ipsec_lock);
+ 	rcu_read_unlock();
 -- 
 2.43.0
 
