@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FA82B9C7;
-	Sun,  1 Sep 2024 16:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285061E87B;
+	Sun,  1 Sep 2024 16:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208438; cv=none; b=CquURyYfAciBFZO6Na4/JfpcDAbRntI+guN/rJbCiPxN0HFyDFW8fO/sqFigbhrJwaHqg/ldj+XnnNrUJMSCw1FsJyNsWLaQbyT7V/PH+aCtXiUAp0C5CowufhGduZZWB8ykqwudnKNfW11d5MfU20AC+pPP83bdFkOsyeqHxM4=
+	t=1725208442; cv=none; b=WKUdiThxv/pzUp5QQKHgV26qCCcGkpitQLyqy9m0//OCddrqgFpdZUneQyp7KqIo2a2uvc2Fsz62gsrEz3YOYzW96enklplIVChngJloLB+vsO9BGyQW04Ud8tAQuiF8Mn9gG4RauWBBZrnw8xLoYrAfrAVI+KvDcMqU5LTEAZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208438; c=relaxed/simple;
-	bh=p2eHvkZ1Rm/9vHx36DoAogTfUaig4FyG6VIwEpxlOgw=;
+	s=arc-20240116; t=1725208442; c=relaxed/simple;
+	bh=4L8KffLsXE7bPvNl7YqEU28NpyWsXFgyejHyp8LZY+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ov2Usm01GGG/9nCl2O7Yt9WzTnlPqBFkwJNy/qeOTG3r6FZaWPfbXOdbwsZ/FC2zkEqF/DeU5v9qD98h9Bwz8qj6zloWs2Z/MZk9WtMdJv0u91qoBZs1Tx8cQkg9UPrijQfLdpeGr20cW4u+BzcAPmscOWYE4VUdfjWRSyO6ShU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekMSJvc+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqgD/UGoE8f1UmrJK/BT8d+ojnYZeJOM3H/Z1mavQd3AsARv+skOGO9//fG8JABAEtCq4HqrFQm20uDOXin4EfAFaWgny8pOb6D5jK4YpMc32YzxwmKbX560mbg4Pan6AuKksz3M158cVJ3zXBWB4aXbh6oOXqL0xRplu2x5jvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFakcnv0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekMSJvc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D691CC4CEC3;
-	Sun,  1 Sep 2024 16:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFakcnv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36322C4CEC3;
+	Sun,  1 Sep 2024 16:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208438;
-	bh=p2eHvkZ1Rm/9vHx36DoAogTfUaig4FyG6VIwEpxlOgw=;
+	s=korg; t=1725208441;
+	bh=4L8KffLsXE7bPvNl7YqEU28NpyWsXFgyejHyp8LZY+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekMSJvc+cZTmEwuiMr7eR+SPekRkrb+eoVS4NQzilWspup5bIC4gW95ALj17n7c1E
-	 xa3Xe6Z8ebB8wMnUkf9WTr6Msanxbsg2rB4BRfeUlIkxm6Mtu+r+vnMyaJAKKCV38z
-	 saK4qScW4CUznvkg4WcGylLG1XE+7dqr30AH97YQ=
+	b=BFakcnv0LK7Q/nHh6QQooJtFBGAJHh3pD2I1MOY5EV9lR18RZi0GkQbMhYDz7BZyu
+	 lUrok2Q8Ai2G4hJVVJErftmT8vt44P4bxwD/U+hHTJ6mhoUvGG2MmJJG0gP+smfe1y
+	 7IDOXEOuY/MeTj/uI31MYiwEpV3bqU8d8ebsrX/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.10 082/149] dmaengine: dw-edma: Do not enable watermark interrupts for HDMA
-Date: Sun,  1 Sep 2024 18:16:33 +0200
-Message-ID: <20240901160820.552245009@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 083/149] phy: qcom: qmp-pcie: Fix X1E80100 PCIe Gen4 PHY initialisation
+Date: Sun,  1 Sep 2024 18:16:34 +0200
+Message-ID: <20240901160820.589118496@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,75 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 9f646ff25c09c52cebe726601db27a60f876f15e upstream.
+[ Upstream commit 0e8a0504da59041e775a95db3ebc1a6211423593 ]
 
-DW_HDMA_V0_LIE and DW_HDMA_V0_RIE are initialized as BIT(3) and BIT(4)
-respectively in dw_hdma_control enum. But as per HDMA register these
-bits are corresponds to LWIE and RWIE bit i.e local watermark interrupt
-enable and remote watermarek interrupt enable. In linked list mode LWIE
-and RWIE bits only enable the local and remote watermark interrupt.
+Update the PCIe Gen4 PHY init sequence with the latest based on internal
+Qualcomm documentation.
 
-Since the watermark interrupts are not used but enabled, this leads to
-spurious interrupts getting generated. So remove the code that enables
-them to avoid generating spurious watermark interrupts.
-
-And also rename DW_HDMA_V0_LIE to DW_HDMA_V0_LWIE and DW_HDMA_V0_RIE to
-DW_HDMA_V0_RWIE as there is no LIE and RIE bits in HDMA and those bits
-are corresponds to LWIE and RWIE bits.
-
-Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
-cc: stable@vger.kernel.org
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/1724674261-3144-3-git-send-email-quic_msarkar@quicinc.com
+Fixes: 606060ce8fd0 ("phy: qcom-qmp-pcie: Add support for X1E80100 g3x2 and g4x2 PCIE")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20240801-x1e80100-phy-qmp-pcie-fix-config-v2-1-cdc0f22b4169@linaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c |   17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -17,8 +17,8 @@ enum dw_hdma_control {
- 	DW_HDMA_V0_CB					= BIT(0),
- 	DW_HDMA_V0_TCB					= BIT(1),
- 	DW_HDMA_V0_LLP					= BIT(2),
--	DW_HDMA_V0_LIE					= BIT(3),
--	DW_HDMA_V0_RIE					= BIT(4),
-+	DW_HDMA_V0_LWIE					= BIT(3),
-+	DW_HDMA_V0_RWIE					= BIT(4),
- 	DW_HDMA_V0_CCS					= BIT(8),
- 	DW_HDMA_V0_LLE					= BIT(9),
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 8fcdcb193d241..e99cbcc378908 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1008,8 +1008,8 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_serdes_tbl[] = {
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RXCLK_DIV2_CTRL, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_DFE_DAC_ENABLE1, 0x88),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH1, 0x00),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH2, 0x1f),
++	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH1, 0x02),
++	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH2, 0x0d),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B0, 0xd4),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B1, 0x12),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B2, 0xdb),
+@@ -1026,6 +1026,7 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH4_RATE3, 0x1f),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH5_RATE3, 0x1f),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH6_RATE3, 0x1f),
++	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_SUMMER_CAL_SPD_MODE, 0x5b),
  };
-@@ -195,25 +195,14 @@ static void dw_hdma_v0_write_ll_link(str
- static void dw_hdma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
- {
- 	struct dw_edma_burst *child;
--	struct dw_edma_chan *chan = chunk->chan;
- 	u32 control = 0, i = 0;
--	int j;
  
- 	if (chunk->cb)
- 		control = DW_HDMA_V0_CB;
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_tx_tbl[] = {
+@@ -1049,12 +1050,15 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_rx_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_1, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_2, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_3, 0x45),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0b),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0a, 1),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0b, 2),
++	QMP_PHY_INIT_CFG(QSERDES_V6_20_VGA_CAL_CNTRL1, 0x00),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_GM_CAL, 0x0d),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_EQU_ADAPTOR_CNTRL4, 0x0b),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_SIGDET_ENABLES, 0x1c),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_PHPRE_CTRL, 0x20),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x3a, 1),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38, 2),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_Q_PI_INTRINSIC_BIAS_RATE32, 0x39),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B0, 0x14),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B1, 0xb3),
+@@ -1070,6 +1074,7 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_rx_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B4, 0x4b),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B5, 0x76),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B6, 0xff),
++	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_TX_ADPT_CTRL, 0x10),
+ };
  
--	j = chunk->bursts_alloc;
--	list_for_each_entry(child, &chunk->burst->list, list) {
--		j--;
--		if (!j) {
--			control |= DW_HDMA_V0_LIE;
--			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
--				control |= DW_HDMA_V0_RIE;
--		}
--
-+	list_for_each_entry(child, &chunk->burst->list, list)
- 		dw_hdma_v0_write_ll_data(chunk, i++, control, child->sz,
- 					 child->sar, child->dar);
--	}
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_tbl[] = {
+@@ -1077,6 +1082,8 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_RX_SIGDET_LVL, 0xcc),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_EQ_CONFIG4, 0x00),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_EQ_CONFIG5, 0x22),
++	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_TX_RX_CONFIG1, 0x04),
++	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_TX_RX_CONFIG2, 0x02),
+ };
  
- 	control = DW_HDMA_V0_LLP | DW_HDMA_V0_TCB;
- 	if (!chunk->cb)
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+@@ -1087,11 +1094,13 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_PRE_GAIN, 0x2e),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG1, 0x03),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG3, 0x28),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_RXEQEVAL_TIME, 0x27),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_RXEQEVAL_TIME, 0x27),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_TX_RX_CONFIG, 0xc0),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_POWER_STATE_CONFIG2, 0x1d),
+-	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG5, 0x0f),
+-	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_FOM_EQ_CONFIG5, 0xf2),
+-	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_FOM_EQ_CONFIG5, 0xf2),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG5, 0x18),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_FOM_EQ_CONFIG5, 0x7a),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_FOM_EQ_CONFIG5, 0x8a),
+ };
+ 
+ static const struct qmp_phy_init_tbl sm8250_qmp_pcie_serdes_tbl[] = {
+-- 
+2.43.0
+
 
 
