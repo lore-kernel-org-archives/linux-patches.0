@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415761C68C;
-	Sun,  1 Sep 2024 16:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAC91C68C;
+	Sun,  1 Sep 2024 16:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208679; cv=none; b=rrxhUMnN+gf/zoWqZ1mqf+7aO8KOWvH+aAGOE2GnVEc3s3X/upw3TgdBQslkbHkOkB2dOVXmoQEgmoc5Quj91IGsb5OjeMxamvMljvAY2HDbtUToxviPaeyhnpo1iLrnAA2XGuxSvtiWSfiltZ9uhCTVMT3WO+UwMCq98WhuTSM=
+	t=1725208682; cv=none; b=PMudBRf+MAgZLY3KLRk/B6BHRaWDMaWDkPydp3D55AZem+r8C3MD+TfX00P0KPeTFyvpM9nETtPWsnGrUIxi+0Pz/VowjR/yseQjgKpxc1nHJsjI9ZlhsANWp/TpM60XvCjSYZna+8EuqiyKijCVmHbs5wSHwftKG9IQ3WFn6zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208679; c=relaxed/simple;
-	bh=nxNRSvIqenktZygj/5uBU34d3IZtYrrRLIMgB/sSEJs=;
+	s=arc-20240116; t=1725208682; c=relaxed/simple;
+	bh=KKWzR28Y0LZzHLeb1x3qwxvtXK8cuJOg7IMed/9G6cI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9JPDUNQDL2y9Z2QF3RQn6+gIpb/2svENYB+1xqKQpIUeTO34ihMuEEeTAMbJ0M1L4MwHhKixntTmDLpytBZpBm99qdzYZU/hiV7ytrrsuHMEvZgceKBUdi9wK5+e4yCjloZppPRVQ+e+8TxCYVX8WE5gqPoO2x0NzmhGpBQJ/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAA9QNOG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYHy0dawk7mvheetOL5AhqcEQ1ABgCHoz/z+H6QwWX46iNd1tfyaiAHMBU+eh/830u+M0HWugcSzEeqlHkp+FpAiAh4tDOpeY/6eA1qvcuMFsEq/cj/6wgMouFYMrT/6AOn2FOWOHMVkr2x8yOGqTEf3WSO8fLpyYXeBiJSTtvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWQub7KI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAA9QNOG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83A4C4CEC3;
-	Sun,  1 Sep 2024 16:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWQub7KI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB973C4CEC3;
+	Sun,  1 Sep 2024 16:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208679;
-	bh=nxNRSvIqenktZygj/5uBU34d3IZtYrrRLIMgB/sSEJs=;
+	s=korg; t=1725208682;
+	bh=KKWzR28Y0LZzHLeb1x3qwxvtXK8cuJOg7IMed/9G6cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAA9QNOG2+hbjXYkWvsS5aMBsa1a4bz3W1RO9jrBcHTXrHPbo7u7tO09z1vGIoXU3
-	 DWC6J4Jzwap4GS+VgMwXqTCSuKVk4UmyBhxpVVcTHW43cSxO5z4/n0sX3vYcdJ7muF
-	 hEhwRHRBzCQhahNyo+/M6nG+er2wmuL3z8QPOyBw=
+	b=dWQub7KIrvhwgQJ65ioymivtJ4dbxkjdYk9QgTlrYqKy7ItFXfr+noh7dn0yw6peh
+	 NzahZxXJQtL4YLe6/dt9ucg+jK/6jN/TyBirL2ivU64xwEjTUKdcUSNWPYPOjNjcTK
+	 QlhxS7t+e6mcOCeYruErJiJZ6xgKez+sfnOxH6NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.10 131/149] usb: dwc3: xilinx: add missing depopulate in probe error path
-Date: Sun,  1 Sep 2024 18:17:22 +0200
-Message-ID: <20240901160822.379947024@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>
+Subject: [PATCH 6.10 122/149] dt-bindings: usb: microchip,usb2514: Fix reference USB device schema
+Date: Sun,  1 Sep 2024 18:17:13 +0200
+Message-ID: <20240901160822.041311224@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,41 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 16f2a21d9d7e48e1af02654fe3d926c0ce6cb3e5 upstream.
+commit 5b235693ed2a1e4963625717a1598becf97759cc upstream.
 
-Depopulate device in probe error paths to fix leak of children
-resources.
+An USB hub is not a HCD, but an USB device. Fix the referenced schema
+accordingly.
 
-Fixes: 53b5ff83d893 ("usb: dwc3: xilinx: improve error handling for PM APIs")
+Fixes: bfbf2e4b77e2 ("dt-bindings: usb: Document the Microchip USB2514 hub")
 Cc: stable@vger.kernel.org
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240816075409.23080-2-krzysztof.kozlowski@linaro.org
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20240815113132.372542-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/usb/microchip,usb2514.yaml |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -298,9 +298,14 @@ static int dwc3_xlnx_probe(struct platfo
- 		goto err_pm_set_suspended;
+--- a/Documentation/devicetree/bindings/usb/microchip,usb2514.yaml
++++ b/Documentation/devicetree/bindings/usb/microchip,usb2514.yaml
+@@ -10,7 +10,7 @@ maintainers:
+   - Fabio Estevam <festevam@gmail.com>
  
- 	pm_suspend_ignore_children(dev, false);
--	return pm_runtime_resume_and_get(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		goto err_pm_set_suspended;
+ allOf:
+-  - $ref: usb-hcd.yaml#
++  - $ref: usb-device.yaml#
+ 
+ properties:
+   compatible:
+@@ -35,6 +35,13 @@ required:
+   - compatible
+   - reg
+ 
++patternProperties:
++  "^.*@[0-9a-f]{1,2}$":
++    description: The hard wired USB devices
++    type: object
++    $ref: /schemas/usb/usb-device.yaml
++    additionalProperties: true
 +
-+	return 0;
+ unevaluatedProperties: false
  
- err_pm_set_suspended:
-+	of_platform_depopulate(dev);
- 	pm_runtime_set_suspended(dev);
- 
- err_clk_put:
+ examples:
 
 
