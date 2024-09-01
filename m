@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0591DFD1;
-	Sun,  1 Sep 2024 17:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB35926AC1;
+	Sun,  1 Sep 2024 17:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210504; cv=none; b=Wnp+DRtpUKFK+GdF7Czffy9RgQ3Ti2GUYwGNh74Zp0WRAQ3yyxX1uQtKL1/U67BPKDLMKdj+nJfxfMaDhJwZfnomETJUAC0qHV4VpOSA8yDPIxq8nGCWGK3MsoUDTvtNl4ntgivVJZZ3lt1PU1dZy2Q7X7Ljch6hg+P1ZS1hBGA=
+	t=1725210507; cv=none; b=nC+pt32vCzH3x8eHPr0Wcd51BKqDmmWTekCSzUp67dfY3PPVMchXfirGRKB9uJW5tPrgFLx1+wBWHKmZ0JuTBAdfsg0EeQjUVvpt+FdEO9L8eyZGGeCDa2/XXn71BmPI0Eg4SomSXTFy3P4CFNHQGLe0p+rXNcvd1o+rZKtAkEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210504; c=relaxed/simple;
-	bh=nP2dcNfMWzln7cdW/+pEJi/C3piFyrhrT35jBrnAwLQ=;
+	s=arc-20240116; t=1725210507; c=relaxed/simple;
+	bh=67SrPtkfRMiW1Z3YbI5qLhzOY87VvPZ1J2lP1IAL6Ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKPPb/5z0foHI5QTUaOWr6K1996vkWCVc0i+Y4SDqHn4X5K/k/pPbbNRI2cS0xddQa+zFBM3BS2QKLyN9nCv7o5Y457sfbQH6uSeoNlmPSXXvOo/3N4c7jxP7Wf8PAsmP4gmu8IRPn9DH9bbxG/SkW3OnBZQSVp2NQAIxABIBS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CorTJmNL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CqbNGF3lpTn7MEkWlmEymqR/4QQuyXzAiRiwzvaqBRU9xCs3+uTlPb9d5RBBdeDS94slYDY3Z3+qjlVjUog5ho5L2GqQZbf6w+pEq+3Y95+gQj9ccxwyJdo4w8WE9wzt1qng7YOYqGBzJ+yJR0ji6JYY31RCe3MB662vjXz0MN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WM5sZsEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CorTJmNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D44C4CEC3;
-	Sun,  1 Sep 2024 17:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WM5sZsEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DEEC4CEC3;
+	Sun,  1 Sep 2024 17:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210504;
-	bh=nP2dcNfMWzln7cdW/+pEJi/C3piFyrhrT35jBrnAwLQ=;
+	s=korg; t=1725210507;
+	bh=67SrPtkfRMiW1Z3YbI5qLhzOY87VvPZ1J2lP1IAL6Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CorTJmNLkBucIJTOuhlG4r6GkJyhM96Wey+TyI5sXcUWDKgVHP+1ay61vGuNfC3sc
-	 eO2bAmXmHZydIRBF22lIiUYMx1khFFO0llUPg9JHs0Pu34LKARoGWw8A2S+vbSZwqo
-	 MuCvyV2KPvI8y8jgKwIqnfR7TNjeBqQ8jEDwo+vY=
+	b=WM5sZsEkhLtlE/McjjdZx0bBH/czH/hZIXA8lutiW6EkgGJbyxlBlY6tchnKihfzT
+	 deB8Rov52Cs1ODubxxaKDrBwlIdBQ6GsYBRDVYBJHEALavq/29rdKj0PtEZJO/fy1X
+	 4N+swxHdtVDNc1m2gqxztm/FxeCDGXjZEEdSo6cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 178/215] pinctrl: single: fix potential NULL dereference in pcs_get_function()
-Date: Sun,  1 Sep 2024 18:18:10 +0200
-Message-ID: <20240901160830.090991964@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 169/215] ALSA: timer: Relax start tick time check for slave timer elements
+Date: Sun,  1 Sep 2024 18:18:01 +0200
+Message-ID: <20240901160829.750536831@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -50,36 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 1c38a62f15e595346a1106025722869e87ffe044 upstream.
+commit ccbfcac05866ebe6eb3bc6d07b51d4ed4fcde436 upstream.
 
-pinmux_generic_get_function() can return NULL and the pointer 'function'
-was dereferenced without checking against NULL. Add checking of pointer
-'function' in pcs_get_function().
+The recent addition of a sanity check for a too low start tick time
+seems breaking some applications that uses aloop with a certain slave
+timer setup.  They may have the initial resolution 0, hence it's
+treated as if it were a too low value.
 
-Found by code review.
+Relax and skip the check for the slave timer instance for addressing
+the regression.
 
-Cc: stable@vger.kernel.org
-Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://lore.kernel.org/20240808041355.2766009-1-make24@iscas.ac.cn
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 4a63bd179fa8 ("ALSA: timer: Set lower bound of start tick time")
+Cc: <stable@vger.kernel.org>
+Link: https://github.com/raspberrypi/linux/issues/6294
+Link: https://patch.msgid.link/20240810084833.10939-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-single.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/core/timer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -350,6 +350,8 @@ static int pcs_get_function(struct pinct
- 		return -ENOTSUPP;
- 	fselector = setting->func;
- 	function = pinmux_generic_get_function(pctldev, fselector);
-+	if (!function)
-+		return -EINVAL;
- 	*func = function->data;
- 	if (!(*func)) {
- 		dev_err(pcs->dev, "%s could not find function%i\n",
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -556,7 +556,7 @@ static int snd_timer_start1(struct snd_t
+ 	/* check the actual time for the start tick;
+ 	 * bail out as error if it's way too low (< 100us)
+ 	 */
+-	if (start) {
++	if (start && !(timer->hw.flags & SNDRV_TIMER_HW_SLAVE)) {
+ 		if ((u64)snd_timer_hw_resolution(timer) * ticks < 100000) {
+ 			result = -EINVAL;
+ 			goto unlock;
 
 
