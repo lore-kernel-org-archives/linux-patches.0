@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6129F183092;
-	Sun,  1 Sep 2024 16:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2C817E00C;
+	Sun,  1 Sep 2024 16:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209433; cv=none; b=Teosah1vFXALS8bvFoEHjn+Hpj68kBd14BxHi5V/6QpwEJ/4zh31rM2hJY5JkM5I3TqHBy4sHfnqzKv6z+haXN8f3CBh9mllyFYyhNVf9R6HpYGLUNzPGW1V4sfRyCsWc9uDNhmEsfiN68lMUJBRiCtRvwYSS4AW2Q+1lR2GnHA=
+	t=1725209436; cv=none; b=kgTlwBQCPtZ5yu4VmLVW6Rw3R0sXpYpAtJCH8GzTFtQOQDXYMU0G9xx8Qd2EyerxHbG9j4Ew4eBclLcJBpA6SGWFXzjEVeDJTpvsRsBoGldULhk+9ScPGTKTHkKYzVzmw3UWXRG4LTOxMiRNaipTeMSWCOoTBc/0X/tcAUur4zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209433; c=relaxed/simple;
-	bh=I2Z10wmpbl1i225CmYxXqO9mw8WtBwbK0Apushs6ynM=;
+	s=arc-20240116; t=1725209436; c=relaxed/simple;
+	bh=m2XyC+hQosY1ynU7U+HJwfylcM0jbbNm8fl5tOSManc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3rJ5rKMOE3sIUoMFhEQAHfoRKtDdX8o8OSr9cJKLJ+IHqt5luDqVqORxLOb7Rxbo+m1Ir72uc2a1rkLz7WTuc881l1D6RHVs86XwU7jVt7XHKmPhGCIDtztqUWh9sp2VYeC5FlmVHW7OtFxQeNf9tTOBnpnMxNymvGwqPvFXSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9RBz7g4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o0KbuTRUvpohUdFurGafC5n4Uz6egvdOy8rz0L2LGqd1pr9qj/PuccxRCGRrKJ4R2vRKDlw8oaax49CjmAr8CQwnKZQ4qsms59QfSz+tm1eVwNWCcYFt0dGuwfeoQEMysoWZidYkQe6GiWvaIdSOBNpDvnXEd63cYuBVzRAFF+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltQvri3T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9RBz7g4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC665C4CEC3;
-	Sun,  1 Sep 2024 16:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltQvri3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66C1C4CEC3;
+	Sun,  1 Sep 2024 16:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209433;
-	bh=I2Z10wmpbl1i225CmYxXqO9mw8WtBwbK0Apushs6ynM=;
+	s=korg; t=1725209436;
+	bh=m2XyC+hQosY1ynU7U+HJwfylcM0jbbNm8fl5tOSManc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9RBz7g4oABc5CmGCGoh6wt63nBWFL1i2nZUAwQeKTYz/TqdQM+pL90paqsklq/td
-	 AUeW+rlTWGuYwITmlWsGtbuS1hng6qLRZX0y4WInrtM5dzvw0hce/vhQBxv3FzoFU+
-	 5K54vs79z1bjrGZCObF/2XpiFCrCa1W/WYFNCdJw=
+	b=ltQvri3Tgvj19bTpHbdnMMmbqQXTaaIk6Tpp58SSSFbjBSsyvPXvA51XIBNNjLj2C
+	 LQxfM1+TqyrtJ3as9u3afs5X/OLeySALVb8kLHs1RHaT31yEcLfcru0ge+EFrIv9se
+	 wX3t7n8kCDrsq/a4YT5kP4AmdGM5/aD+KPcE4UY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/151] netfilter: flowtable: initialise extack before use
-Date: Sun,  1 Sep 2024 18:16:27 +0200
-Message-ID: <20240901160815.118353020@linuxfoundation.org>
+Subject: [PATCH 5.10 036/151] s390/smp,mcck: fix early IPI handling
+Date: Sun,  1 Sep 2024 18:16:36 +0200
+Message-ID: <20240901160815.459161741@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,35 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donald Hunter <donald.hunter@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit e9767137308daf906496613fd879808a07f006a2 ]
+[ Upstream commit 4a1725281fc5b0009944b1c0e1d2c1dc311a09ec ]
 
-Fix missing initialisation of extack in flow offload.
+Both the external call as well as the emergency signal submask bits in
+control register 0 are set before any interrupt handler is registered.
 
-Fixes: c29f74e0df7a ("netfilter: nf_flow_table: hardware offload support")
-Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Change the order and first register the interrupt handler and only then
+enable the interrupts by setting the corresponding bits in control
+register 0.
+
+This prevents that the second part of the machine check handler for
+early machine check handling is not executed: the machine check handler
+sends an IPI to the CPU it runs on. If the corresponding interrupts are
+enabled, but no interrupt handler is present, the interrupt is ignored.
+
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/early.c | 12 +++---------
+ arch/s390/kernel/smp.c   |  4 ++--
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 746ca77d0aad6..f6275d93f8a51 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -682,8 +682,8 @@ static int nf_flow_offload_tuple(struct nf_flowtable *flowtable,
- 				 struct list_head *block_cb_list)
- {
- 	struct flow_cls_offload cls_flow = {};
-+	struct netlink_ext_ack extack = {};
- 	struct flow_block_cb *block_cb;
--	struct netlink_ext_ack extack;
- 	__be16 proto = ETH_P_ALL;
- 	int err, i = 0;
+diff --git a/arch/s390/kernel/early.c b/arch/s390/kernel/early.c
+index 985e1e7553336..bac1be43d36cb 100644
+--- a/arch/s390/kernel/early.c
++++ b/arch/s390/kernel/early.c
+@@ -252,15 +252,9 @@ static inline void save_vector_registers(void)
+ #endif
+ }
  
+-static inline void setup_control_registers(void)
++static inline void setup_low_address_protection(void)
+ {
+-	unsigned long reg;
+-
+-	__ctl_store(reg, 0, 0);
+-	reg |= CR0_LOW_ADDRESS_PROTECTION;
+-	reg |= CR0_EMERGENCY_SIGNAL_SUBMASK;
+-	reg |= CR0_EXTERNAL_CALL_SUBMASK;
+-	__ctl_load(reg, 0, 0);
++	__ctl_set_bit(0, 28);
+ }
+ 
+ static inline void setup_access_registers(void)
+@@ -313,7 +307,7 @@ void __init startup_init(void)
+ 	save_vector_registers();
+ 	setup_topology();
+ 	sclp_early_detect();
+-	setup_control_registers();
++	setup_low_address_protection();
+ 	setup_access_registers();
+ 	lockdep_on();
+ }
+diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
+index 5674792726cd9..2e0c3b0a5a58a 100644
+--- a/arch/s390/kernel/smp.c
++++ b/arch/s390/kernel/smp.c
+@@ -982,12 +982,12 @@ void __init smp_fill_possible_mask(void)
+ 
+ void __init smp_prepare_cpus(unsigned int max_cpus)
+ {
+-	/* request the 0x1201 emergency signal external interrupt */
+ 	if (register_external_irq(EXT_IRQ_EMERGENCY_SIG, do_ext_call_interrupt))
+ 		panic("Couldn't request external interrupt 0x1201");
+-	/* request the 0x1202 external call external interrupt */
++	ctl_set_bit(0, 14);
+ 	if (register_external_irq(EXT_IRQ_EXTERNAL_CALL, do_ext_call_interrupt))
+ 		panic("Couldn't request external interrupt 0x1202");
++	ctl_set_bit(0, 13);
+ }
+ 
+ void __init smp_prepare_boot_cpu(void)
 -- 
 2.43.0
 
