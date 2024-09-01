@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C40817E46E;
-	Sun,  1 Sep 2024 16:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE33183CAF;
+	Sun,  1 Sep 2024 16:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208218; cv=none; b=rsf1qIlMWgL9W4HDvG4foaux+UafE2yiUwUWf34dlIasj9sXMFYlQeVSsKM/LjHz8CTCMncatMQQDLEIQwkVAQgwsjwFD2tHKEUoueZke7nEKnxfViWXAl63bSqc3y2BBIy6TjRFOItwlXrxYaIv1lpupYqgLyzJy2pCOqcPXfs=
+	t=1725208221; cv=none; b=DVkgfGmO9oq3C26Susm+DHhEJg48y0TV4gXrSJHn1yvqhtMF2shvkBx+I/w6FeJLJBdYfLayNnz2BDbgboo7GiVSIq8sW/R4zE9S8inTXD42Nla5q4Om5TcZ0GbGeTqlyqcwDBaQeCUQ0KwAznx8Li6fYcULwUj8clZh7dZY/XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208218; c=relaxed/simple;
-	bh=CHNZQSIdmpqjlEL2phEnShEUaXKZYB2Yq1Ih8Gkd/JE=;
+	s=arc-20240116; t=1725208221; c=relaxed/simple;
+	bh=xnYtMovcf9lef9cofZYPklxb3HAwyzHRg+5DTccz8iY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O38FEofcL/gEAQ494Uy3seWpWfqxkB+dhYjP6W4xp62I2rAc73Ane9vWlQoyLB0DvaLRjaS9IiRQvnb2asKF9v500id644DYkRZbZcmZ1/ytlZHN+RqpZ66CGl78USz9bSS2oySVKgvL1bKmuWm45gpV58LGGemnKCmInWDF0oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJGx4VD2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWKdkCs1gqV0ocicfvY0CSfMV9g+L6DoqWXWoJchPzvPBeXFPlFwEs351gMnLumTGVH68TbSgd9dAzNhhRTXTYL0Av72rWb86p6P1xCCGNZkX/EIv7Gceb7Nb18e8p73c3SrUix/HFZhKYMUOlxGoGvlTlu5KmywD7+/2EFvYKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6jEDkZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJGx4VD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE312C4CEC3;
-	Sun,  1 Sep 2024 16:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6jEDkZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40389C4CEC3;
+	Sun,  1 Sep 2024 16:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208218;
-	bh=CHNZQSIdmpqjlEL2phEnShEUaXKZYB2Yq1Ih8Gkd/JE=;
+	s=korg; t=1725208221;
+	bh=xnYtMovcf9lef9cofZYPklxb3HAwyzHRg+5DTccz8iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJGx4VD21CC0iG/lnW1Lm0Z9tjkSaDhXRkzfyr7UD6kwPZVSBAykZZFLoxqEPBXaQ
-	 BgAVH3u/GjePKQJZATb9N+h37EhykFGLa3Wvh5uhsFw19D4mzdHx21PZsC8XbcUPF4
-	 D4jw1zFldyjmdZxBobDwplHG2MVuYd0K3Wq+5CXs=
+	b=m6jEDkZnAxbAa4mwIq/iZLpg7FvpWOzYN9sMV6s4jXL0fe81k+NnyEya8jCFzUFaq
+	 zcy/Ls31yh46InPArgjNQldCF57CMtXSnfD+sJVsMQT0vBsMpRhaMxjONFKTT6gGhA
+	 Ve6kn6W+njLaqX3IA3tN32VqH2EzQ297G5MS+Qiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Brian Norris <briannorris@chromium.org>,
 	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.10 015/149] wifi: wfx: repair open network AP mode
-Date: Sun,  1 Sep 2024 18:15:26 +0200
-Message-ID: <20240901160818.040873135@linuxfoundation.org>
+Subject: [PATCH 6.10 016/149] wifi: mwifiex: duplicate static structs used in driver instances
+Date: Sun,  1 Sep 2024 18:15:27 +0200
+Message-ID: <20240901160818.077538457@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -45,70 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 6d30bb88f623526197c0e18a366e68a4254a2c83 upstream.
+commit 27ec3c57fcadb43c79ed05b2ea31bc18c72d798a upstream.
 
-RSN IE missing in beacon is normal in open networks.
-Avoid returning -EINVAL in this case.
+mwifiex_band_2ghz and mwifiex_band_5ghz are statically allocated, but
+used and modified in driver instances. Duplicate them before using
+them in driver instances so that different driver instances do not
+influence each other.
 
-Steps to reproduce:
-
-$ cat /etc/wpa_supplicant.conf
-network={
-	ssid="testNet"
-	mode=2
-	key_mgmt=NONE
-}
-
-$ wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
-nl80211: Beacon set failed: -22 (Invalid argument)
-Failed to set beacon parameters
-Interface initialization failed
-wlan0: interface state UNINITIALIZED->DISABLED
-wlan0: AP-DISABLED
-wlan0: Unable to setup interface.
-Failed to initialize AP interface
-
-After the change:
-
-$ wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
-Successfully initialized wpa_supplicant
-wlan0: interface state UNINITIALIZED->ENABLED
-wlan0: AP-ENABLED
+This was observed on a board which has one PCIe and one SDIO mwifiex
+adapter. It blew up in mwifiex_setup_ht_caps(). This was called with
+the statically allocated struct which is modified in this function.
 
 Cc: stable@vger.kernel.org
-Fixes: fe0a7776d4d1 ("wifi: wfx: fix possible NULL pointer dereference in wfx_set_mfp_ap()")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Fixes: d6bffe8bb520 ("mwifiex: support for creation of AP interface")
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240823131521.3309073-1-alexander.sverdlin@siemens.com
+Link: https://patch.msgid.link/20240809-mwifiex-duplicate-static-structs-v1-1-6837b903b1a4@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/silabs/wfx/sta.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |   32 +++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/silabs/wfx/sta.c
-+++ b/drivers/net/wireless/silabs/wfx/sta.c
-@@ -352,8 +352,11 @@ static int wfx_set_mfp_ap(struct wfx_vif
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4363,11 +4363,27 @@ int mwifiex_register_cfg80211(struct mwi
+ 	if (ISSUPP_ADHOC_ENABLED(adapter->fw_cap_info))
+ 		wiphy->interface_modes |= BIT(NL80211_IFTYPE_ADHOC);
  
- 	ptr = (u16 *)cfg80211_find_ie(WLAN_EID_RSN, skb->data + ieoffset,
- 				      skb->len - ieoffset);
--	if (unlikely(!ptr))
-+	if (!ptr) {
-+		/* No RSN IE is fine in open networks */
-+		ret = 0;
- 		goto free_skb;
+-	wiphy->bands[NL80211_BAND_2GHZ] = &mwifiex_band_2ghz;
+-	if (adapter->config_bands & BAND_A)
+-		wiphy->bands[NL80211_BAND_5GHZ] = &mwifiex_band_5ghz;
+-	else
++	wiphy->bands[NL80211_BAND_2GHZ] = devm_kmemdup(adapter->dev,
++						       &mwifiex_band_2ghz,
++						       sizeof(mwifiex_band_2ghz),
++						       GFP_KERNEL);
++	if (!wiphy->bands[NL80211_BAND_2GHZ]) {
++		ret = -ENOMEM;
++		goto err;
++	}
++
++	if (adapter->config_bands & BAND_A) {
++		wiphy->bands[NL80211_BAND_5GHZ] = devm_kmemdup(adapter->dev,
++							       &mwifiex_band_5ghz,
++							       sizeof(mwifiex_band_5ghz),
++							       GFP_KERNEL);
++		if (!wiphy->bands[NL80211_BAND_5GHZ]) {
++			ret = -ENOMEM;
++			goto err;
++		}
++	} else {
+ 		wiphy->bands[NL80211_BAND_5GHZ] = NULL;
 +	}
  
- 	ptr += pairwise_cipher_suite_count_offset;
- 	if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
+ 	if (adapter->drcs_enabled && ISSUPP_DRCS_ENABLED(adapter->fw_cap_info))
+ 		wiphy->iface_combinations = &mwifiex_iface_comb_ap_sta_drcs;
+@@ -4461,8 +4477,7 @@ int mwifiex_register_cfg80211(struct mwi
+ 	if (ret < 0) {
+ 		mwifiex_dbg(adapter, ERROR,
+ 			    "%s: wiphy_register failed: %d\n", __func__, ret);
+-		wiphy_free(wiphy);
+-		return ret;
++		goto err;
+ 	}
+ 
+ 	if (!adapter->regd) {
+@@ -4504,4 +4519,9 @@ int mwifiex_register_cfg80211(struct mwi
+ 
+ 	adapter->wiphy = wiphy;
+ 	return ret;
++
++err:
++	wiphy_free(wiphy);
++
++	return ret;
+ }
 
 
