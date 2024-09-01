@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D183A2B9C7;
-	Sun,  1 Sep 2024 16:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215802B9C7;
+	Sun,  1 Sep 2024 16:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208735; cv=none; b=EfO3826MqCIV01NsZ0aff+Fp5GGcvnxZcExjaD9ZaRGxdWhNN3/dwRl/JEFJG19+nhsuMlFSdE7g4h7i8ieX1wfDUEZm8yhvdV4Kl2srU4qF7nj/4oR89peGI1CpLgmQr630OYgp7Qx0ItpyGBe2kUGiLkZhEKlaKY6mIcQGsOI=
+	t=1725208739; cv=none; b=n1BSVMoiqkaOgftHBgL23Ao6VrnIMm+NOImnIQUUgRNr/i3FKtL/uYuqSXfhl5/wDChLKHFiWWXCX4ab9Rtb6VRWSjo/9UjJisuZc2QGA5tmEbocEXVKb84HX01PR5c7XNOMGSp6qv+wX6/LgcdvY7aDW17M8eEGwFuKFnORHW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208735; c=relaxed/simple;
-	bh=KZ+xGyPcFpWkDzmKg3Djqlb6+nfs+K/qzzBCgUkGEWE=;
+	s=arc-20240116; t=1725208739; c=relaxed/simple;
+	bh=B/QejyBH8cBH4ufvfFO8fMW9qgD+gwdBEN2nl9EMUB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e5DRo015qphwiDEyS0DP0jWRobJh/k/CDOmor05um2dBj50oK+/Sf2FyD4ZINwXFmPDoLU3vH+5mcr/OQK+8pxm87MHs+fxY4rbMiGaN6pSHnFsw2Y05bBo8LVRq8XGtyaJTerszlG6m1tLu5RB4gIhQEWxy9UdjuVt1JHfg31A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y58ynh4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBcSoAhJfdcKx50wp1spMu71HmiWZK5WyNUdcaw3SXx1bbi0zubs3jcbKuY4mzYustr0ue4z4SrgAPWF2ju5XqZXQBTGz4uLt6mYmaQ7rLJ26a//Ek5P69Vzc/+o4x0sZrKWW4vrSl/zcMv9ppsJYL7rv7GKrBzDx0CnPk5NFSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZbpubjG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y58ynh4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFC6C4CEC3;
-	Sun,  1 Sep 2024 16:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZbpubjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46523C4CEC3;
+	Sun,  1 Sep 2024 16:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208735;
-	bh=KZ+xGyPcFpWkDzmKg3Djqlb6+nfs+K/qzzBCgUkGEWE=;
+	s=korg; t=1725208738;
+	bh=B/QejyBH8cBH4ufvfFO8fMW9qgD+gwdBEN2nl9EMUB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y58ynh4xrA6poFWHiKluJ0ZYBhEkmT11NdHmWAS7+sWPkZsyAK7XOTt/LVS1w8vOj
-	 uGE70bjTo5EdzVe61yP7sS5vsvXCSOe7YLLPprYOBIgG15LPvCuonvnrVw0RhTZx6W
-	 bOOuHdhkEmQ3Qt6DX3dm9ohJZakeLt2N82cWayNE=
+	b=xZbpubjGmnksDAv5HbqBqKv1nyGynNnhUc5bsutcEvxgmI365pQcvcciHkDxG1Fit
+	 tRlP3K9RQp86RyJdTDYcMFStZg4pgkuHoRicp8TYd3qkr+ehrjmGzV1daRLcdD3/HP
+	 eZmmsYMBzxUc4EulC1YQ5EOt93z24FyZl0IGdZNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 008/134] vfs: Dont evict inode under the inode lru traversing context
-Date: Sun,  1 Sep 2024 18:15:54 +0200
-Message-ID: <20240901160810.425534650@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 009/134] bitmap: introduce generic optimized bitmap_size()
+Date: Sun,  1 Sep 2024 18:15:55 +0200
+Message-ID: <20240901160810.463097224@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -46,219 +46,172 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-commit 2a0629834cd82f05d424bbc193374f9a43d1f87d upstream.
+commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
 
-The inode reclaiming process(See function prune_icache_sb) collects all
-reclaimable inodes and mark them with I_FREEING flag at first, at that
-time, other processes will be stuck if they try getting these inodes
-(See function find_inode_fast), then the reclaiming process destroy the
-inodes by function dispose_list(). Some filesystems(eg. ext4 with
-ea_inode feature, ubifs with xattr) may do inode lookup in the inode
-evicting callback function, if the inode lookup is operated under the
-inode lru traversing context, deadlock problems may happen.
+The number of times yet another open coded
+`BITS_TO_LONGS(nbits) * sizeof(long)` can be spotted is huge.
+Some generic helper is long overdue.
 
-Case 1: In function ext4_evict_inode(), the ea inode lookup could happen
-        if ea_inode feature is enabled, the lookup process will be stuck
-	under the evicting context like this:
+Add one, bitmap_size(), but with one detail.
+BITS_TO_LONGS() uses DIV_ROUND_UP(). The latter works well when both
+divident and divisor are compile-time constants or when the divisor
+is not a pow-of-2. When it is however, the compilers sometimes tend
+to generate suboptimal code (GCC 13):
 
- 1. File A has inode i_reg and an ea inode i_ea
- 2. getfattr(A, xattr_buf) // i_ea is added into lru // lru->i_ea
- 3. Then, following three processes running like this:
+48 83 c0 3f          	add    $0x3f,%rax
+48 c1 e8 06          	shr    $0x6,%rax
+48 8d 14 c5 00 00 00 00	lea    0x0(,%rax,8),%rdx
 
-    PA                              PB
- echo 2 > /proc/sys/vm/drop_caches
-  shrink_slab
-   prune_dcache_sb
-   // i_reg is added into lru, lru->i_ea->i_reg
-   prune_icache_sb
-    list_lru_walk_one
-     inode_lru_isolate
-      i_ea->i_state |= I_FREEING // set inode state
-     inode_lru_isolate
-      __iget(i_reg)
-      spin_unlock(&i_reg->i_lock)
-      spin_unlock(lru_lock)
-                                     rm file A
-                                      i_reg->nlink = 0
-      iput(i_reg) // i_reg->nlink is 0, do evict
-       ext4_evict_inode
-        ext4_xattr_delete_inode
-         ext4_xattr_inode_dec_ref_all
-          ext4_xattr_inode_iget
-           ext4_iget(i_ea->i_ino)
-            iget_locked
-             find_inode_fast
-              __wait_on_freeing_inode(i_ea) ----→ AA deadlock
-    dispose_list // cannot be executed by prune_icache_sb
-     wake_up_bit(&i_ea->i_state)
+%BITS_PER_LONG is always a pow-2 (either 32 or 64), but GCC still does
+full division of `nbits + 63` by it and then multiplication by 8.
+Instead of BITS_TO_LONGS(), use ALIGN() and then divide by 8. GCC:
 
-Case 2: In deleted inode writing function ubifs_jnl_write_inode(), file
-        deleting process holds BASEHD's wbuf->io_mutex while getting the
-	xattr inode, which could race with inode reclaiming process(The
-        reclaiming process could try locking BASEHD's wbuf->io_mutex in
-	inode evicting function), then an ABBA deadlock problem would
-	happen as following:
+8d 50 3f             	lea    0x3f(%rax),%edx
+c1 ea 03             	shr    $0x3,%edx
+81 e2 f8 ff ff 1f    	and    $0x1ffffff8,%edx
 
- 1. File A has inode ia and a xattr(with inode ixa), regular file B has
-    inode ib and a xattr.
- 2. getfattr(A, xattr_buf) // ixa is added into lru // lru->ixa
- 3. Then, following three processes running like this:
+Now it shifts `nbits + 63` by 3 positions (IOW performs fast division
+by 8) and then masks bits[2:0]. bloat-o-meter:
 
-        PA                PB                        PC
-                echo 2 > /proc/sys/vm/drop_caches
-                 shrink_slab
-                  prune_dcache_sb
-                  // ib and ia are added into lru, lru->ixa->ib->ia
-                  prune_icache_sb
-                   list_lru_walk_one
-                    inode_lru_isolate
-                     ixa->i_state |= I_FREEING // set inode state
-                    inode_lru_isolate
-                     __iget(ib)
-                     spin_unlock(&ib->i_lock)
-                     spin_unlock(lru_lock)
-                                                   rm file B
-                                                    ib->nlink = 0
- rm file A
-  iput(ia)
-   ubifs_evict_inode(ia)
-    ubifs_jnl_delete_inode(ia)
-     ubifs_jnl_write_inode(ia)
-      make_reservation(BASEHD) // Lock wbuf->io_mutex
-      ubifs_iget(ixa->i_ino)
-       iget_locked
-        find_inode_fast
-         __wait_on_freeing_inode(ixa)
-          |          iput(ib) // ib->nlink is 0, do evict
-          |           ubifs_evict_inode
-          |            ubifs_jnl_delete_inode(ib)
-          ↓             ubifs_jnl_write_inode
-     ABBA deadlock ←-----make_reservation(BASEHD)
-                   dispose_list // cannot be executed by prune_icache_sb
-                    wake_up_bit(&ixa->i_state)
+add/remove: 0/0 grow/shrink: 20/133 up/down: 156/-773 (-617)
 
-Fix the possible deadlock by using new inode state flag I_LRU_ISOLATING
-to pin the inode in memory while inode_lru_isolate() reclaims its pages
-instead of using ordinary inode reference. This way inode deletion
-cannot be triggered from inode_lru_isolate() thus avoiding the deadlock.
-evict() is made to wait for I_LRU_ISOLATING to be cleared before
-proceeding with inode cleanup.
+Clang does it better and generates the same code before/after starting
+from -O1, except that with the ALIGN() approach it uses %edx and thus
+still saves some bytes:
 
-Link: https://lore.kernel.org/all/37c29c42-7685-d1f0-067d-63582ffac405@huaweicloud.com/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219022
-Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
-Fixes: 7959cf3a7506 ("ubifs: journal: Handle xattrs like files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://lore.kernel.org/r/20240809031628.1069873-1-chengzhihao@huaweicloud.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Suggested-by: Jan Kara <jack@suse.cz>
-Suggested-by: Mateusz Guzik <mjguzik@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+add/remove: 0/0 grow/shrink: 9/133 up/down: 18/-538 (-520)
+
+Note that we can't expand DIV_ROUND_UP() by adding a check and using
+this approach there, as it's used in array declarations where
+expressions are not allowed.
+Add this helper to tools/ as well.
+
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Acked-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/inode.c         |   39 +++++++++++++++++++++++++++++++++++++--
- include/linux/fs.h |    5 +++++
- 2 files changed, 42 insertions(+), 2 deletions(-)
+ drivers/md/dm-clone-metadata.c |    5 -----
+ drivers/s390/cio/idset.c       |    2 +-
+ include/linux/bitmap.h         |    8 +++++---
+ include/linux/cpumask.h        |    2 +-
+ lib/math/prime_numbers.c       |    2 --
+ tools/include/linux/bitmap.h   |    7 ++++---
+ 6 files changed, 11 insertions(+), 15 deletions(-)
 
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -450,6 +450,39 @@ static void inode_lru_list_del(struct in
- 		this_cpu_dec(nr_unused);
+--- a/drivers/md/dm-clone-metadata.c
++++ b/drivers/md/dm-clone-metadata.c
+@@ -471,11 +471,6 @@ static void __destroy_persistent_data_st
+ 
+ /*---------------------------------------------------------------------------*/
+ 
+-static size_t bitmap_size(unsigned long nr_bits)
+-{
+-	return BITS_TO_LONGS(nr_bits) * sizeof(long);
+-}
+-
+ static int __dirty_map_init(struct dirty_map *dmap, unsigned long nr_words,
+ 			    unsigned long nr_regions)
+ {
+--- a/drivers/s390/cio/idset.c
++++ b/drivers/s390/cio/idset.c
+@@ -18,7 +18,7 @@ struct idset {
+ 
+ static inline unsigned long bitmap_size(int num_ssid, int num_id)
+ {
+-	return BITS_TO_LONGS(num_ssid * num_id) * sizeof(unsigned long);
++	return bitmap_size(size_mul(num_ssid, num_id));
  }
  
-+static void inode_pin_lru_isolating(struct inode *inode)
-+{
-+	lockdep_assert_held(&inode->i_lock);
-+	WARN_ON(inode->i_state & (I_LRU_ISOLATING | I_FREEING | I_WILL_FREE));
-+	inode->i_state |= I_LRU_ISOLATING;
-+}
-+
-+static void inode_unpin_lru_isolating(struct inode *inode)
-+{
-+	spin_lock(&inode->i_lock);
-+	WARN_ON(!(inode->i_state & I_LRU_ISOLATING));
-+	inode->i_state &= ~I_LRU_ISOLATING;
-+	smp_mb();
-+	wake_up_bit(&inode->i_state, __I_LRU_ISOLATING);
-+	spin_unlock(&inode->i_lock);
-+}
-+
-+static void inode_wait_for_lru_isolating(struct inode *inode)
-+{
-+	spin_lock(&inode->i_lock);
-+	if (inode->i_state & I_LRU_ISOLATING) {
-+		DEFINE_WAIT_BIT(wq, &inode->i_state, __I_LRU_ISOLATING);
-+		wait_queue_head_t *wqh;
-+
-+		wqh = bit_waitqueue(&inode->i_state, __I_LRU_ISOLATING);
-+		spin_unlock(&inode->i_lock);
-+		__wait_on_bit(wqh, &wq, bit_wait, TASK_UNINTERRUPTIBLE);
-+		spin_lock(&inode->i_lock);
-+		WARN_ON(inode->i_state & I_LRU_ISOLATING);
-+	}
-+	spin_unlock(&inode->i_lock);
-+}
-+
- /**
-  * inode_sb_list_add - add inode to the superblock list of inodes
-  * @inode: inode to add
-@@ -562,6 +595,8 @@ static void evict(struct inode *inode)
+ static struct idset *idset_new(int num_ssid, int num_id)
+--- a/include/linux/bitmap.h
++++ b/include/linux/bitmap.h
+@@ -216,22 +216,24 @@ extern int bitmap_print_to_pagebuf(bool
+ #define small_const_nbits(nbits) \
+ 	(__builtin_constant_p(nbits) && (nbits) <= BITS_PER_LONG && (nbits) > 0)
  
- 	inode_sb_list_del(inode);
- 
-+	inode_wait_for_lru_isolating(inode);
++#define bitmap_size(nbits)	(ALIGN(nbits, BITS_PER_LONG) / BITS_PER_BYTE)
 +
- 	/*
- 	 * Wait for flusher thread to be done with the inode so that filesystem
- 	 * does not start destroying it while writeback is still running. Since
-@@ -761,7 +796,7 @@ static enum lru_status inode_lru_isolate
- 	}
+ static inline void bitmap_zero(unsigned long *dst, unsigned int nbits)
+ {
+-	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
++	unsigned int len = bitmap_size(nbits);
+ 	memset(dst, 0, len);
+ }
  
- 	if (inode_has_buffers(inode) || inode->i_data.nrpages) {
--		__iget(inode);
-+		inode_pin_lru_isolating(inode);
- 		spin_unlock(&inode->i_lock);
- 		spin_unlock(lru_lock);
- 		if (remove_inode_buffers(inode)) {
-@@ -774,7 +809,7 @@ static enum lru_status inode_lru_isolate
- 			if (current->reclaim_state)
- 				current->reclaim_state->reclaimed_slab += reap;
- 		}
--		iput(inode);
-+		inode_unpin_lru_isolating(inode);
- 		spin_lock(lru_lock);
- 		return LRU_RETRY;
- 	}
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2153,6 +2153,9 @@ static inline void init_sync_kiocb(struc
-  *			Used to detect that mark_inode_dirty() should not move
-  * 			inode between dirty lists.
-  *
-+ * I_LRU_ISOLATING	Inode is pinned being isolated from LRU without holding
-+ *			i_count.
-+ *
-  * Q: What is the difference between I_WILL_FREE and I_FREEING?
+ static inline void bitmap_fill(unsigned long *dst, unsigned int nbits)
+ {
+-	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
++	unsigned int len = bitmap_size(nbits);
+ 	memset(dst, 0xff, len);
+ }
+ 
+ static inline void bitmap_copy(unsigned long *dst, const unsigned long *src,
+ 			unsigned int nbits)
+ {
+-	unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
++	unsigned int len = bitmap_size(nbits);
+ 	memcpy(dst, src, len);
+ }
+ 
+--- a/include/linux/cpumask.h
++++ b/include/linux/cpumask.h
+@@ -685,7 +685,7 @@ static inline int cpulist_parse(const ch
   */
- #define I_DIRTY_SYNC		(1 << 0)
-@@ -2174,6 +2177,8 @@ static inline void init_sync_kiocb(struc
- #define I_OVL_INUSE		(1 << 14)
- #define I_CREATING		(1 << 15)
- #define I_SYNC_QUEUED		(1 << 17)
-+#define __I_LRU_ISOLATING	19
-+#define I_LRU_ISOLATING		(1 << __I_LRU_ISOLATING)
+ static inline unsigned int cpumask_size(void)
+ {
+-	return BITS_TO_LONGS(nr_cpumask_bits) * sizeof(long);
++	return bitmap_size(nr_cpumask_bits);
+ }
  
- #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
- #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
+ /*
+--- a/lib/math/prime_numbers.c
++++ b/lib/math/prime_numbers.c
+@@ -6,8 +6,6 @@
+ #include <linux/prime_numbers.h>
+ #include <linux/slab.h>
+ 
+-#define bitmap_size(nbits) (BITS_TO_LONGS(nbits) * sizeof(unsigned long))
+-
+ struct primes {
+ 	struct rcu_head rcu;
+ 	unsigned long last, sz;
+--- a/tools/include/linux/bitmap.h
++++ b/tools/include/linux/bitmap.h
+@@ -28,13 +28,14 @@ void bitmap_clear(unsigned long *map, un
+ #define small_const_nbits(nbits) \
+ 	(__builtin_constant_p(nbits) && (nbits) <= BITS_PER_LONG)
+ 
++#define bitmap_size(nbits)	(ALIGN(nbits, BITS_PER_LONG) / BITS_PER_BYTE)
++
+ static inline void bitmap_zero(unsigned long *dst, int nbits)
+ {
+ 	if (small_const_nbits(nbits))
+ 		*dst = 0UL;
+ 	else {
+-		int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
+-		memset(dst, 0, len);
++		memset(dst, 0, bitmap_size(nbits));
+ 	}
+ }
+ 
+@@ -120,7 +121,7 @@ static inline int test_and_clear_bit(int
+  */
+ static inline unsigned long *bitmap_alloc(int nbits)
+ {
+-	return calloc(1, BITS_TO_LONGS(nbits) * sizeof(unsigned long));
++	return calloc(1, bitmap_size(nbits));
+ }
+ 
+ /*
 
 
