@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E61537FF;
-	Sun,  1 Sep 2024 16:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE52D2B9C7;
+	Sun,  1 Sep 2024 16:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208646; cv=none; b=OiEZG4vAs9dDPgmIHMlstmq0Mm7hNeAPSAMXlzK+rDNAm8cNN6KzwrF/qje+kxnvJbT8Ohrx9wRjg9KhLqoAKUmxzgXnIV63UBwAdA5v5Jwi+yL7s+c9hYHadj1uTMfcvzviVMMQyDtHF/hnfwChQzfiHnfMqVrPqikRLpSJD50=
+	t=1725208650; cv=none; b=Bjlo4o4HGtn2vDjZU0wTuo0OmAx0vRjUisI5Rvozy6Ki7DLO9Ngz4svzT87+97AHfGJfvz+b5LtjIpPL3354uFDveqeSo73YN/mOkXeayBRVuW35TxPz3bhzInZ1cgvFGXTA8Gvd+abWzDpDl5+x6SsnmuHVGBLREqoNWOz6OA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208646; c=relaxed/simple;
-	bh=65OwdB0w3oF4b7LrA/v+KXVOSUnCyZTsBsLmb3Hqa4k=;
+	s=arc-20240116; t=1725208650; c=relaxed/simple;
+	bh=yBRDzq/eVsrf5+o12vAJG7uPCKk+GAnblzMk3cEW4hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9lJB85N32YHy1ygz9SuwDxNWFqNP6ph8ztwx835k+F43M6FOOKBM8qSEr6zQT5Ry4oibL8PCGPgxVcUyaWpi6ghneRJ4i5Gl7/zHKgYsrOvzUinTS4/xbyfNAutve+5eFvK9ubfVUJzi+6W8IVBZ6qhsDxp8HUr7/CXXEN7r9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bnb1E2zD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LOxJx5F62aFrBhE3Oaq+oLfHimnKe4spWf1nZVAvfDz8Wf3GI5S8LhxTfJOkJUQm5sc2VVtd5i5HqJTLpU+Zz8Xucc0Nffx7hMzHnhQSFBmoRdzavsbrUl2oS99PCLfjfqUUH8Rtayn8ewi1q2+uvUjtIHtHo3BoLAfL4yI3aPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBi1XB0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bnb1E2zD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0119DC4CEC8;
-	Sun,  1 Sep 2024 16:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBi1XB0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F95C4CEC3;
+	Sun,  1 Sep 2024 16:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208646;
-	bh=65OwdB0w3oF4b7LrA/v+KXVOSUnCyZTsBsLmb3Hqa4k=;
+	s=korg; t=1725208649;
+	bh=yBRDzq/eVsrf5+o12vAJG7uPCKk+GAnblzMk3cEW4hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bnb1E2zD4+UxG7CgZJDKxKzdmbP7TNQNlIxCXJwpVo01zv8IwpdzEg7A/IQH3up6v
-	 kE1M43YN8h1DcehWmvVOkoIPiVHQzC/Y8tHJoCsWizd1Dn7hdIo4zqdsrupY8NsJzb
-	 ep6ZnGcl2MkTR+RTnFQaxG+m/fRputu9VZXSqNXg=
+	b=sBi1XB0Ge8V5LpoxU/Alffw5/3xHLu0tEUUE1FAdaIvYiu6z6Pe2pXxBZj4x7lFV9
+	 oV524MMf7LuS5qfFJhFDdOQH/jQwO9cnbOC0jldWetEO4m44U082jLI/BCIgz17CcR
+	 3hlT/c6J2ncqP58LO37jNKhxFxSGzD+E1fFxYgvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wilkins <steve.wilkins@raymarine.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Michael Gordon <m.gordon.zelenoborsky@gmail.com>,
+	Ben Hutchings <benh@debian.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 146/149] firmware: microchip: fix incorrect error report of programming:timeout on success
-Date: Sun,  1 Sep 2024 18:17:37 +0200
-Message-ID: <20240901160822.937050713@linuxfoundation.org>
+Subject: [PATCH 6.10 147/149] scsi: aacraid: Fix double-free on probe failure
+Date: Sun,  1 Sep 2024 18:17:38 +0200
+Message-ID: <20240901160822.974505544@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,36 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wilkins <steve.wilkins@raymarine.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit 591940e22e287fb64ac07be275e343d860cb72d6 ]
+[ Upstream commit 919ddf8336f0b84c0453bac583808c9f165a85c2 ]
 
-After successfully programming the SPI flash with an MFPS auto update
-image, the error sysfs attribute reports programming:timeout.
-This is caused by an incorrect check on the return value from
-wait_for_completion_timeout() in mpfs_auto_update_poll_complete().
+aac_probe_one() calls hardware-specific init functions through the
+aac_driver_ident::init pointer, all of which eventually call down to
+aac_init_adapter().
 
-Fixes: ec5b0f1193ad ("firmware: microchip: add PolarFire SoC Auto Update support")
-Signed-off-by: Steve Wilkins <steve.wilkins@raymarine.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+If aac_init_adapter() fails after allocating memory for aac_dev::queues,
+it frees the memory but does not clear that member.
+
+After the hardware-specific init function returns an error,
+aac_probe_one() goes down an error path that frees the memory pointed to
+by aac_dev::queues, resulting.in a double-free.
+
+Reported-by: Michael Gordon <m.gordon.zelenoborsky@gmail.com>
+Link: https://bugs.debian.org/1075855
+Fixes: 8e0c5ebde82b ("[SCSI] aacraid: Newer adapter communication iterface support")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Link: https://lore.kernel.org/r/ZsZvfqlQMveoL5KQ@decadent.org.uk
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/microchip/mpfs-auto-update.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/aacraid/comminit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/microchip/mpfs-auto-update.c b/drivers/firmware/microchip/mpfs-auto-update.c
-index 835a19a7a3a09..4a95fbbf4733e 100644
---- a/drivers/firmware/microchip/mpfs-auto-update.c
-+++ b/drivers/firmware/microchip/mpfs-auto-update.c
-@@ -153,7 +153,7 @@ static enum fw_upload_err mpfs_auto_update_poll_complete(struct fw_upload *fw_up
- 	 */
- 	ret = wait_for_completion_timeout(&priv->programming_complete,
- 					  msecs_to_jiffies(AUTO_UPDATE_TIMEOUT_MS));
--	if (ret)
-+	if (!ret)
- 		return FW_UPLOAD_ERR_TIMEOUT;
+diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
+index bd99c5492b7d4..0f64b02443037 100644
+--- a/drivers/scsi/aacraid/comminit.c
++++ b/drivers/scsi/aacraid/comminit.c
+@@ -642,6 +642,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
  
- 	return FW_UPLOAD_ERR_NONE;
+ 	if (aac_comm_init(dev)<0){
+ 		kfree(dev->queues);
++		dev->queues = NULL;
+ 		return NULL;
+ 	}
+ 	/*
+@@ -649,6 +650,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
+ 	 */
+ 	if (aac_fib_setup(dev) < 0) {
+ 		kfree(dev->queues);
++		dev->queues = NULL;
+ 		return NULL;
+ 	}
+ 		
 -- 
 2.43.0
 
