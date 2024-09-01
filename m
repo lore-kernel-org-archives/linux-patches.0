@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F79017CA1F;
-	Sun,  1 Sep 2024 16:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E791C68C;
+	Sun,  1 Sep 2024 16:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208653; cv=none; b=mClaYHEdIPPMh59e20m5Y5wnxCWJ+Sqv/98NMIeJmZuPGebus0aj8oq42Bmpo3NZW+t4lc8+PMmXH4moCmsrquHe3RicnsTGeqBW6X0b2wI0GUjHydOWmqahc6r2WvIpdv1qWnxIhwhdkVGNWwpFZpV0M8Gw8UCR1YHB8/hK0Xs=
+	t=1725208656; cv=none; b=icSqyRgV8p0BnIoRYm4Xk0+ipBwwbHJXqRACfrGROib1ZVDlEPZJtDUiJI7Z2x75J6OSkWeAzxrp/d5tVYmgi638WnPhFVjld0sdlpcADz3s1evoGvPzaTO5JPoUmvE6Cl8ly2COTgcWKPW4bPCt+92q528bfJIhcjs1hyG5Qpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208653; c=relaxed/simple;
-	bh=2WzH4BwU+PsJrgyzSKaPmh8vaT9pcUz6wdQrSXOIRjI=;
+	s=arc-20240116; t=1725208656; c=relaxed/simple;
+	bh=E5907xIhxg3SCP8CY4QKO1UlaSj3oO7hzU25ihyVXQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thu9Zn2NJOXiDOJeE/OS/9MOPf13jyQcFHylZQh/YtW9fHnv0He47MOi09bPnaxhPy/LDyutHF2J5jwk3TwtRlY5M1GeN77eR8hM7VG8Qpv7xNfF3GlC+Gw4mpMnIx5rGTyP7fQ0rqd7P4HuNMKZ8/r8cft31wft2yrdZVr26eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APuMTx4F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RmROtpAtJugEzfIWqhldhsLeidQCTcDi3L3vBNZTtPemMHIK8hI6t0v+OuPjTInPGg4gvL36AUSzs/Q2+6C3h608yyo9V25ojCEa41uWGhwJ1FpCruz0FVvnd4q6uc/BTXBjvMEVV541B7xNlNBYjTiCWe9X3lDI+hZvEQwLHuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhohs0qq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APuMTx4F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5CBC4CEC3;
-	Sun,  1 Sep 2024 16:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhohs0qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6097C4CEC3;
+	Sun,  1 Sep 2024 16:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208652;
-	bh=2WzH4BwU+PsJrgyzSKaPmh8vaT9pcUz6wdQrSXOIRjI=;
+	s=korg; t=1725208656;
+	bh=E5907xIhxg3SCP8CY4QKO1UlaSj3oO7hzU25ihyVXQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APuMTx4FAkc5tn4QuxNdPZs9zBH8JV4pUtrjLOcbRQpiF8Gru+m8wm4ZC6NSbiy8H
-	 MwmjxY/O7GjQiOVh3g0iEFS8KJnf+OcX2h4aoVb/MwIOYApemv4mX6l6U4EO1r7LmJ
-	 A1JfMudHBD6+DBurtNR2mZpaWRTySPcV11c6T1h0=
+	b=bhohs0qqH86EVJ9xvKKarx+BD5x1goO0h7q0h0UYugs6iUQH7LwiQAEtvbsWblUue
+	 LHmRaijmNFJODfJYCpHFa8UtHk86jS/KQjrBAIKjzTgg3YrrXQ2uIBEcLvIHdIPZKN
+	 R2ddL4lRhrY56HVU677rsEH/BjwL7FfvSbimq/4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Higgins <brendanhiggins@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 148/149] apparmor: fix policy_unpack_test on big endian systems
-Date: Sun,  1 Sep 2024 18:17:39 +0200
-Message-ID: <20240901160823.011775196@linuxfoundation.org>
+Subject: [PATCH 6.10 149/149] nfsd: fix nfsd4_deleg_getattr_conflict in presence of third party lease
+Date: Sun,  1 Sep 2024 18:17:40 +0200
+Message-ID: <20240901160823.049123999@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,67 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 98c0cc48e27e9d269a3e4db2acd72b486c88ec77 ]
+[ Upstream commit 40927f3d0972bf86357a32a5749be71a551241b6 ]
 
-policy_unpack_test fails on big endian systems because data byte order
-is expected to be little endian but is generated in host byte order.
-This results in test failures such as:
+It is not safe to dereference fl->c.flc_owner without first confirming
+fl->fl_lmops is the expected manager.  nfsd4_deleg_getattr_conflict()
+tests fl_lmops but largely ignores the result and assumes that flc_owner
+is an nfs4_delegation anyway.  This is wrong.
 
- # policy_unpack_test_unpack_array_with_null_name: EXPECTATION FAILED at security/apparmor/policy_unpack_test.c:150
-    Expected array_size == (u16)16, but
-        array_size == 4096 (0x1000)
-        (u16)16 == 16 (0x10)
-    # policy_unpack_test_unpack_array_with_null_name: pass:0 fail:1 skip:0 total:1
-    not ok 3 policy_unpack_test_unpack_array_with_null_name
-    # policy_unpack_test_unpack_array_with_name: EXPECTATION FAILED at security/apparmor/policy_unpack_test.c:164
-    Expected array_size == (u16)16, but
-        array_size == 4096 (0x1000)
-        (u16)16 == 16 (0x10)
-    # policy_unpack_test_unpack_array_with_name: pass:0 fail:1 skip:0 total:1
+With this patch we restore the "!= &nfsd_lease_mng_ops" case to behave
+as it did before the change mentioned below.  This is the same as the
+current code, but without any reference to a possible delegation.
 
-Add the missing endianness conversions when generating test data.
-
-Fixes: 4d944bcd4e73 ("apparmor: add AppArmor KUnit tests for policy unpack")
-Cc: Brendan Higgins <brendanhiggins@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack_test.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/policy_unpack_test.c b/security/apparmor/policy_unpack_test.c
-index 5c9bde25e56df..2b8003eb4f463 100644
---- a/security/apparmor/policy_unpack_test.c
-+++ b/security/apparmor/policy_unpack_test.c
-@@ -80,14 +80,14 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
- 	*(buf + 1) = strlen(TEST_U32_NAME) + 1;
- 	strscpy(buf + 3, TEST_U32_NAME, e->end - (void *)(buf + 3));
- 	*(buf + 3 + strlen(TEST_U32_NAME) + 1) = AA_U32;
--	*((u32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = TEST_U32_DATA;
-+	*((__le32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = cpu_to_le32(TEST_U32_DATA);
- 
- 	buf = e->start + TEST_NAMED_U64_BUF_OFFSET;
- 	*buf = AA_NAME;
- 	*(buf + 1) = strlen(TEST_U64_NAME) + 1;
- 	strscpy(buf + 3, TEST_U64_NAME, e->end - (void *)(buf + 3));
- 	*(buf + 3 + strlen(TEST_U64_NAME) + 1) = AA_U64;
--	*((u64 *)(buf + 3 + strlen(TEST_U64_NAME) + 2)) = TEST_U64_DATA;
-+	*((__le64 *)(buf + 3 + strlen(TEST_U64_NAME) + 2)) = cpu_to_le64(TEST_U64_DATA);
- 
- 	buf = e->start + TEST_NAMED_BLOB_BUF_OFFSET;
- 	*buf = AA_NAME;
-@@ -103,7 +103,7 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
- 	*(buf + 1) = strlen(TEST_ARRAY_NAME) + 1;
- 	strscpy(buf + 3, TEST_ARRAY_NAME, e->end - (void *)(buf + 3));
- 	*(buf + 3 + strlen(TEST_ARRAY_NAME) + 1) = AA_ARRAY;
--	*((u16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = TEST_ARRAY_SIZE;
-+	*((__le16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = cpu_to_le16(TEST_ARRAY_SIZE);
- 
- 	return e;
- }
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 07f2496850c4c..a366fb1c1b9b4 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8859,7 +8859,15 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct dentry *dentry,
+ 			 */
+ 			if (type == F_RDLCK)
+ 				break;
+-			goto break_lease;
++
++			nfsd_stats_wdeleg_getattr_inc(nn);
++			spin_unlock(&ctx->flc_lock);
++
++			status = nfserrno(nfsd_open_break_lease(inode, NFSD_MAY_READ));
++			if (status != nfserr_jukebox ||
++			    !nfsd_wait_for_delegreturn(rqstp, inode))
++				return status;
++			return 0;
+ 		}
+ 		if (type == F_WRLCK) {
+ 			struct nfs4_delegation *dp = fl->c.flc_owner;
+@@ -8868,7 +8876,6 @@ nfsd4_deleg_getattr_conflict(struct svc_rqst *rqstp, struct dentry *dentry,
+ 				spin_unlock(&ctx->flc_lock);
+ 				return 0;
+ 			}
+-break_lease:
+ 			nfsd_stats_wdeleg_getattr_inc(nn);
+ 			dp = fl->c.flc_owner;
+ 			refcount_inc(&dp->dl_stid.sc_count);
 -- 
 2.43.0
 
