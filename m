@@ -1,54 +1,54 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E67A13A40F
-	for <patches@lists.linux.dev>; Sun,  1 Sep 2024 04:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2BF143736
+	for <patches@lists.linux.dev>; Sun,  1 Sep 2024 04:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725163646; cv=none; b=pNVR/t6U8yj6VXwQwBA0R4jBUJAWr7V5HzbdW8SYKsBVe4TP4IGd6UhrZ0Jf3rJ0o84OgZNMHt0ZJVz6QF2zrxaWLlZPmcY7oXnLWrfpACXYE5V+sscE+VUx2SGYDcLpHFSpNHMvsoMfrDvipDi6E4h0LSqSDmqGRyo0gZROuWQ=
+	t=1725163649; cv=none; b=gUpNAeGYznd7iSGky4cbjtnZRjb3uUfm7xoIloj0gW+qPHz3RtUsgcP8flO+RMCbT3pP+L4CNLioiGrb/cPHUuXD4fqtwEHPfrZMO75YOUwnqIby8w2qBzueZt8AcZIhi6r2uEhuhPv+WkudUsMKQ3ZN/OTw1G3aUsNA4k+StAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725163646; c=relaxed/simple;
-	bh=2tAlkjfeIOfQ7pqxJw2iSfNqPK9cXn4z7367eyq0Rjg=;
+	s=arc-20240116; t=1725163649; c=relaxed/simple;
+	bh=+zyMv3RGe6S6LrOSBHIbaRGTiGQgsHff7zfMdzmNV+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8FhhF5WfsD3krWfCebTQD0ulC2PsfAETjQ8/JFjWJ8xTytVwQBCkJUKF3DHLTY30FJx8L0U42gHDSaDXH31OVWPEVUiaJbKaJflH72M2/AJpoi8MGgqheYyk3TKeNaOwLhvIYjoktfbNoOfeIDW3VLQJSiWSPeVJgky1viLsqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=gRcnJzcT; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version; b=WPK+uN9VDOjgQeNruUhwpKmjEfWXm+I1Og+20ySgrXUlnSwUaQEc6ez+EGQF2ApM8oB5WxcXdIlFDNSJempE+j9A0JFNyLIfu9jNabyicoFRb3YztmQLyrT3EhchlP0w3v1d7WlyvG5OP1P0Tuk40pLDwayGk8TeX2nmqVi3nUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ajeM+Bj2; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="gRcnJzcT"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71423704ef3so2375999b3a.3
-        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:07:24 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ajeM+Bj2"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-202089e57d8so19612095ad.0
+        for <patches@lists.linux.dev>; Sat, 31 Aug 2024 21:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725163644; x=1725768444; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1725163646; x=1725768446; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nad3jYq+zuMNkdjkLGBBGQbMhdXY1+s1WlyYMjA8ho4=;
-        b=gRcnJzcT4S6BJ3WZx/WfUyzIG8WkRn2cspQn4KWBb/czuIVG8dd8fSbMxeekRuqFSr
-         r3E5xe3MYJ9AncaGMvEccyA2H8eF+BVqvpuy7MKjqvKCkBcL7fLJPRS4EKUI+MFMoTys
-         1eJBoP2fSgm30uOcv39zXDvPjfWiwnq1du/KU=
+        bh=Pmo3/yU2P8LsM22CtkppGBhBN/HDkEIQ1oKrtDKPQrs=;
+        b=ajeM+Bj28sJ+IHj6HQc44XesBjdzmOs4VPsRFf81PPUWqGyeT5q7cteQXG5jaJA5MT
+         /Nlip/WwFB5gpq9aLw0KBU0GAuHnm70AGLJlhcbfp9Pl04hwCB0Iw7N8X5hqcHL19Lkq
+         1Q/T4lvmSHFYW6MEDfEvZ6aTN7YDs4YTA4V24=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725163644; x=1725768444;
+        d=1e100.net; s=20230601; t=1725163646; x=1725768446;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nad3jYq+zuMNkdjkLGBBGQbMhdXY1+s1WlyYMjA8ho4=;
-        b=wLJVdqgELhitWDwWTQEl5nJI8adHoNd9cre7/OHdsWTrlmuLnd1Q1bAkNqGtiBbAcO
-         13YCXYgH3zNPXP8T89fLE5966ZOR4/wVGSopMaJowFGF3WmsO8yWi3Qs6cMWz6lZmRJB
-         wtgQFxjArD/W8k1tWWWqpCfFzrimvNc70iry3MbS+DGnQOKTLqwctBgDCTZ3tQHCkOB8
-         YXbr6SsV7Y7SGCz7rw+3OjHF3yx6fG6G6wYbfXRPqr/VdK3Yeo5QwHYeA+bkkCYtsHSk
-         Gg6rzxFxWw4zHITXQ5Q5Y/qKyG/c2rc0id3ZwzvWGXXwBhoHSW5sYYbxer5yBxsntcgb
-         O/2w==
-X-Forwarded-Encrypted: i=1; AJvYcCVxJSaEMydcgOx1L6nDCtv3qi3kflmcpYX/37PZp+6EwYCyePF2O1MVMQQnTBhf8tmBNf8WFZQ7@lists.linux.dev
-X-Gm-Message-State: AOJu0YylcQ5hy6oHcmql9CfUdwqov1x4iHLK1OrXjZs7EOZxnUZdtlAW
-	Oe1KVKoSuhEHfPwq8ysXc4rbGAFyFGCO8RFBjftTTSwB26Kds0jq/g7Xp6jsTg==
-X-Google-Smtp-Source: AGHT+IE4gRNS1Wle0dhusZLk2Qf9YkMQZghXHbtMZ6oKKSwEP4ondmRftvf+lk7yL+f1D9vFEqjyTA==
-X-Received: by 2002:a05:6a00:91d8:b0:714:147c:1377 with SMTP id d2e1a72fcca58-7173b5c8556mr4671065b3a.7.1725163643536;
-        Sat, 31 Aug 2024 21:07:23 -0700 (PDT)
+        bh=Pmo3/yU2P8LsM22CtkppGBhBN/HDkEIQ1oKrtDKPQrs=;
+        b=WfpVJyNx69JR7TuL4gIHMz4AiFD2dPWX8v/0UO5nTv/Fbao1NkqTInmcZgkhBlBsxm
+         VIKvZ+YHJklEb8YWvhHh6ZOSPhSE2hrBABMVU9BPfRslsRm3I6Xqr+N5QhBKv4XTXidu
+         slnPYy3ToSQn70effLnl7PimbAr+ylTKVQCDrzhAJLLK9QvQ40QYs69GZ8AbzsS43AFP
+         51tNd02aRoKKU/eE3Qev9NPRynkEyIT1LF3MyVCoxh7E5v5yaf93FpEBOoyU4QeFsv/H
+         tpEov3467cpACVvoLFFBz7QCZFul4kqWIdJdTVJbD1+ujpUtUcQmrC7U07mo5JinZCu5
+         /gXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV5TDTWZWIt2JGUG745HNpUXsS87R7QHooPsL3LZXigjTuA2GXBooAuLhOgNJKNTUKokVn4LqUO@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz/NWzg8VcFex/lSa5XitugFKc68pb44gAV1j9PbjDjW8hAySoq
+	/zwzloMFZBWwAZZL2hyVQhnFhY3ldlBk+JByAV9RECqe5wlI5NblumaWVotKeQ==
+X-Google-Smtp-Source: AGHT+IGkEvNKrwf9vzljH1qmOoDG+G58iNPsfXL5CyX8XTHyhIjQ2Mn1eF6oxR0BUcemUEp0so8ADQ==
+X-Received: by 2002:a17:903:181:b0:1fb:2ebc:d17a with SMTP id d9443c01a7336-205286bb7cemr101990685ad.23.1725163645599;
+        Sat, 31 Aug 2024 21:07:25 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-715e569ef39sm4828452b3a.122.2024.08.31.21.07.22
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-205155338bcsm47111615ad.177.2024.08.31.21.07.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Aug 2024 21:07:23 -0700 (PDT)
+        Sat, 31 Aug 2024 21:07:25 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -89,9 +89,9 @@ Cc: linux-kernel@vger.kernel.org,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v4 10/18] devcon property: Document devcon_match_fn_t
-Date: Sat, 31 Aug 2024 21:06:48 -0700
-Message-ID: <20240901040658.157425-11-swboyd@chromium.org>
+Subject: [PATCH v4 11/18] device property: Add remote endpoint to devcon matcher
+Date: Sat, 31 Aug 2024 21:06:49 -0700
+Message-ID: <20240901040658.157425-12-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
 In-Reply-To: <20240901040658.157425-1-swboyd@chromium.org>
 References: <20240901040658.157425-1-swboyd@chromium.org>
@@ -103,45 +103,190 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The usage of this match function is hard to understand at a glance.
-Document the arguments and the return value so it is clear how to
-implement the function.
+When a single DT node has a graph connected to more than one
+usb-c-connector node we can't differentiate which typec switch
+registered for the device is associated with the USB connector because
+the devcon matcher code assumes a 1:1 relationship between remote node
+and typec switch. Furthermore, we don't have a #typec-switch-cells
+property so there can only be one node per typec switch.
 
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Support multiple USB typec switches exposed by one node by passing the
+remote endpoint node in addition to the remote node to the devcon
+matcher function (devcon_match_fn_t). With this change, typec switch
+drivers can register switches with the device node pointer for a graph
+endpoint so that they can support more than one typec switch if
+necessary. Either way, a DT property like 'mode-switch' is always in the
+graph's parent node and not in the endpoint node.
+
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Daniel Scally <djrscally@gmail.com>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Ivan Orlov <ivan.orlov0322@gmail.com>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: <devicetree@vger.kernel.org>
+Cc: <linux-usb@vger.kernel.org>
+Cc: <linux-acpi@vger.kernel.org>
+Cc: Pin-yen Lin <treapking@chromium.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- include/linux/property.h | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/base/property.c     |  7 +++++--
+ drivers/usb/roles/class.c   |  4 ++--
+ drivers/usb/typec/mux.c     |  8 ++++++++
+ drivers/usb/typec/retimer.c |  7 ++++++-
+ include/linux/property.h    | 11 +++++++----
+ 5 files changed, 28 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index 837d77e3af2b..621de33f2956 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -1284,6 +1284,7 @@ static unsigned int fwnode_graph_devcon_matches(const struct fwnode_handle *fwno
+ {
+ 	struct fwnode_handle *node;
+ 	struct fwnode_handle *ep;
++	struct fwnode_handle *remote_ep;
+ 	unsigned int count = 0;
+ 	void *ret;
+ 
+@@ -1299,7 +1300,9 @@ static unsigned int fwnode_graph_devcon_matches(const struct fwnode_handle *fwno
+ 			continue;
+ 		}
+ 
+-		ret = match(node, con_id, data);
++		remote_ep = fwnode_graph_get_remote_endpoint(ep);
++		ret = match(node, remote_ep, con_id, data);
++		fwnode_handle_put(remote_ep);
+ 		fwnode_handle_put(node);
+ 		if (ret) {
+ 			if (matches)
+@@ -1329,7 +1332,7 @@ static unsigned int fwnode_devcon_matches(const struct fwnode_handle *fwnode,
+ 		if (IS_ERR(node))
+ 			break;
+ 
+-		ret = match(node, NULL, data);
++		ret = match(node, NULL, NULL, data);
+ 		fwnode_handle_put(node);
+ 		if (ret) {
+ 			if (matches)
+diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
+index d7aa913ceb8a..d8bd5071d9d8 100644
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -121,8 +121,8 @@ enum usb_role usb_role_switch_get_role(struct usb_role_switch *sw)
+ }
+ EXPORT_SYMBOL_GPL(usb_role_switch_get_role);
+ 
+-static void *usb_role_switch_match(const struct fwnode_handle *fwnode, const char *id,
+-				   void *data)
++static void *usb_role_switch_match(const struct fwnode_handle *fwnode, const struct fwnode_handle *endpoint,
++				   const char *id, void *data)
+ {
+ 	struct device *dev;
+ 
+diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
+index f420185e36e3..9ddb6ec54325 100644
+--- a/drivers/usb/typec/mux.c
++++ b/drivers/usb/typec/mux.c
+@@ -33,6 +33,7 @@ static int switch_fwnode_match(struct device *dev, const void *fwnode)
+ }
+ 
+ static void *typec_switch_match(const struct fwnode_handle *fwnode,
++				const struct fwnode_handle *endpoint,
+ 				const char *id, void *data)
+ {
+ 	struct device *dev;
+@@ -55,6 +56,9 @@ static void *typec_switch_match(const struct fwnode_handle *fwnode,
+ 	 */
+ 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
+ 				switch_fwnode_match);
++	if (!dev)
++		dev = class_find_device(&typec_mux_class, NULL, endpoint,
++				switch_fwnode_match);
+ 
+ 	return dev ? to_typec_switch_dev(dev) : ERR_PTR(-EPROBE_DEFER);
+ }
+@@ -299,6 +303,7 @@ static int mux_fwnode_match(struct device *dev, const void *fwnode)
+ }
+ 
+ static void *typec_mux_match(const struct fwnode_handle *fwnode,
++			     const struct fwnode_handle *endpoint,
+ 			     const char *id, void *data)
+ {
+ 	struct device *dev;
+@@ -316,6 +321,9 @@ static void *typec_mux_match(const struct fwnode_handle *fwnode,
+ 
+ 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
+ 				mux_fwnode_match);
++	if (!dev)
++		dev = class_find_device(&typec_mux_class, NULL, endpoint,
++					mux_fwnode_match);
+ 
+ 	return dev ? to_typec_mux_dev(dev) : ERR_PTR(-EPROBE_DEFER);
+ }
+diff --git a/drivers/usb/typec/retimer.c b/drivers/usb/typec/retimer.c
+index b519fcf358ca..ee4e6312c2d9 100644
+--- a/drivers/usb/typec/retimer.c
++++ b/drivers/usb/typec/retimer.c
+@@ -22,7 +22,9 @@ static int retimer_fwnode_match(struct device *dev, const void *fwnode)
+ 	return is_typec_retimer(dev) && device_match_fwnode(dev, fwnode);
+ }
+ 
+-static void *typec_retimer_match(const struct fwnode_handle *fwnode, const char *id, void *data)
++static void *typec_retimer_match(const struct fwnode_handle *fwnode,
++				 const struct fwnode_handle *endpoint,
++				 const char *id, void *data)
+ {
+ 	struct device *dev;
+ 
+@@ -31,6 +33,9 @@ static void *typec_retimer_match(const struct fwnode_handle *fwnode, const char
+ 
+ 	dev = class_find_device(&retimer_class, NULL, fwnode,
+ 				retimer_fwnode_match);
++	if (!dev)
++		dev = class_find_device(&retimer_class, NULL, endpoint,
++					retimer_fwnode_match);
+ 
+ 	return dev ? to_typec_retimer(dev) : ERR_PTR(-EPROBE_DEFER);
+ }
 diff --git a/include/linux/property.h b/include/linux/property.h
-index 61fc20e5f81f..797b1eeda7d2 100644
+index 797b1eeda7d2..72a89cd410db 100644
 --- a/include/linux/property.h
 +++ b/include/linux/property.h
-@@ -507,8 +507,25 @@ unsigned int fwnode_graph_get_endpoint_count(const struct fwnode_handle *fwnode,
- int fwnode_graph_parse_endpoint(const struct fwnode_handle *fwnode,
- 				struct fwnode_endpoint *endpoint);
- 
--typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode, const char *id,
--				   void *data);
-+/**
-+ * devcon_match_fn_t - device connection match function
-+ * @fwnode: Remote connection's device node
-+ * @con_id: Identifier for the connection
-+ * @data: Match function caller specific data
-+ *
-+ * Implement a callback with this function signature to search a fwnode's
-+ * connections for a match with a function like device_connection_find_match().
-+ * This function will be called possibly multiple times, once for each
-+ * connection. The match function should inspect the @fwnode to look for a
-+ * match. The @con_id and @data provided are the same as the @con_id and @data
-+ * arguments passed to the functions that take a devcon_match_fn_t argument.
-+ *
-+ * Note: This function can be called multiple times.
-+ *
-+ * Return: Pointer to match or NULL if no match found.
-+ */
-+typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode,
-+				   const char *con_id, void *data);
+@@ -510,22 +510,25 @@ int fwnode_graph_parse_endpoint(const struct fwnode_handle *fwnode,
+ /**
+  * devcon_match_fn_t - device connection match function
+  * @fwnode: Remote connection's device node
++ * @endpoint: Remote connection's endpoint node
+  * @con_id: Identifier for the connection
+  * @data: Match function caller specific data
+  *
+  * Implement a callback with this function signature to search a fwnode's
+  * connections for a match with a function like device_connection_find_match().
+  * This function will be called possibly multiple times, once for each
+- * connection. The match function should inspect the @fwnode to look for a
+- * match. The @con_id and @data provided are the same as the @con_id and @data
+- * arguments passed to the functions that take a devcon_match_fn_t argument.
++ * connection. The match function should inspect the connection's @fwnode
++ * and/or @endpoint to look for a match. The @con_id and @data provided are the
++ * same as the @con_id and @data arguments passed to the functions that take a
++ * devcon_match_fn_t argument.
+  *
+  * Note: This function can be called multiple times.
+  *
+  * Return: Pointer to match or NULL if no match found.
+  */
+ typedef void *(*devcon_match_fn_t)(const struct fwnode_handle *fwnode,
+-				   const char *con_id, void *data);
++				   const struct fwnode_handle *endpoint,
++				   const char *id, void *data);
  
  void *fwnode_connection_find_match(const struct fwnode_handle *fwnode,
  				   const char *con_id, void *data,
