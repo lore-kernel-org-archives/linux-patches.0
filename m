@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D6E44C97;
-	Sun,  1 Sep 2024 16:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1DD17F394;
+	Sun,  1 Sep 2024 16:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207751; cv=none; b=cznvBjAzveREbcMPGAA7GmhQSWEx+jCP38UL5afZtYcHV3sMB0Taoqj2STv63i27iEoErbTvQEU39w8a0FULaU1tPKtyki02vZUe0vHwko6DbLxRHpd5E1A0DFPA3piSLUgVUNztCOwDufSzDIQb192KqoXB5ZKXjit0DWPjVpU=
+	t=1725207754; cv=none; b=bpyhsrVp8LmrfgDAetmkSITrhrLpTnzarT93RMjgYCWZMFBo8KSv5OT7UB/e4XUvsULd7M1P+fl93Vb9UD16F7dUvdpCc0yuecalj2I+MHw7x9lifTalszD4+0wNqZSy4vj73X2rdfhs5l2ueg8zIsaJlisGrQ0qPIZq+MAJpd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207751; c=relaxed/simple;
-	bh=vazMM4pc3Ah2cFlln451tohtr3iw03OBjJw82PjNeQY=;
+	s=arc-20240116; t=1725207754; c=relaxed/simple;
+	bh=cNov5Dzmz/0IjlovJ2rPA5BTo1A2Qx/m55kTOCV5MOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X43ojxEiCstQKWz6GLTouhYYzLPPkKt3Dx3bXHWvEMG+xoy5O6hCTFYQuoM2KnFxhh2oqqU7hl8iTWNIK9YvrHMiLfxl0HE38h1DdYOhq8rMBPCJjPtatdPbbMyXlpFR7ChOut8egTX57u3fL/6wQFWH09g54AIUY4lhlm4lasc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGrZtfXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCjn4FySRiqLEBD2DvAHj9VHicLtx+MxuE9SpOfyDj8vFbXcATJMDbMts3UI62WH462AUs3r7HoDMcRSXgeqNW4wEl9Qu47VuXetF2Y1yGtfajmUUGwhSTChLGW/Gq8scK49QbCFr03DgYssegbUOipkAAVgaZfHdus1vhUbAlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhMQQkv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGrZtfXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEA9C4CEC3;
-	Sun,  1 Sep 2024 16:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhMQQkv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDF8C4CEC3;
+	Sun,  1 Sep 2024 16:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207751;
-	bh=vazMM4pc3Ah2cFlln451tohtr3iw03OBjJw82PjNeQY=;
+	s=korg; t=1725207754;
+	bh=cNov5Dzmz/0IjlovJ2rPA5BTo1A2Qx/m55kTOCV5MOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGrZtfXXmdEAUU+0Vo9pjs9Zqnvb/lNEVXfhc3adGsgIl4JWYS57HNkt/Hxj/swUZ
-	 e2LhLRVdR89qHPiK/haya0YTCq2fEzExLZYRz9I5wktii5ZgySduH9ujhbavQ9GcHv
-	 nJ4tD5hIPEVnmxXHWOWtpb3XP+xPffNL4IM2VCPs=
+	b=WhMQQkv/R/07Jy0dTKMd0sYJrdR5mJRAyr4vxvj/WK26RpND0Wrh6JA8o4/nS+TcM
+	 bqRsIzKJf+st+5aW4QXT7UIVsWyfMRotwc1m6UE2GBYJcOgpn1Xc4YzW0qN33ol0Lo
+	 TmMxLEanBnygYGG+BFSGybLpxOGH8BWFqUD0bjE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Whitten <ben.whitten@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 67/98] mmc: dw_mmc: allow biu and ciu clocks to defer
-Date: Sun,  1 Sep 2024 18:16:37 +0200
-Message-ID: <20240901160806.224893419@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 68/98] ALSA: timer: Relax start tick time check for slave timer elements
+Date: Sun,  1 Sep 2024 18:16:38 +0200
+Message-ID: <20240901160806.261812465@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -50,47 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Whitten <ben.whitten@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 6275c7bc8dd07644ea8142a1773d826800f0f3f7 upstream.
+commit ccbfcac05866ebe6eb3bc6d07b51d4ed4fcde436 upstream.
 
-Fix a race condition if the clock provider comes up after mmc is probed,
-this causes mmc to fail without retrying.
-When given the DEFER error from the clk source, pass it on up the chain.
+The recent addition of a sanity check for a too low start tick time
+seems breaking some applications that uses aloop with a certain slave
+timer setup.  They may have the initial resolution 0, hence it's
+treated as if it were a too low value.
 
-Fixes: f90a0612f0e1 ("mmc: dw_mmc: lookup for optional biu and ciu clocks")
-Signed-off-by: Ben Whitten <ben.whitten@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240811212212.123255-1-ben.whitten@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Relax and skip the check for the slave timer instance for addressing
+the regression.
+
+Fixes: 4a63bd179fa8 ("ALSA: timer: Set lower bound of start tick time")
+Cc: <stable@vger.kernel.org>
+Link: https://github.com/raspberrypi/linux/issues/6294
+Link: https://patch.msgid.link/20240810084833.10939-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/core/timer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -3205,6 +3205,10 @@ int dw_mci_probe(struct dw_mci *host)
- 	host->biu_clk = devm_clk_get(host->dev, "biu");
- 	if (IS_ERR(host->biu_clk)) {
- 		dev_dbg(host->dev, "biu clock not available\n");
-+		ret = PTR_ERR(host->biu_clk);
-+		if (ret == -EPROBE_DEFER)
-+			return ret;
-+
- 	} else {
- 		ret = clk_prepare_enable(host->biu_clk);
- 		if (ret) {
-@@ -3216,6 +3220,10 @@ int dw_mci_probe(struct dw_mci *host)
- 	host->ciu_clk = devm_clk_get(host->dev, "ciu");
- 	if (IS_ERR(host->ciu_clk)) {
- 		dev_dbg(host->dev, "ciu clock not available\n");
-+		ret = PTR_ERR(host->ciu_clk);
-+		if (ret == -EPROBE_DEFER)
-+			goto err_clk_biu;
-+
- 		host->bus_hz = host->pdata->bus_hz;
- 	} else {
- 		ret = clk_prepare_enable(host->ciu_clk);
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -532,7 +532,7 @@ static int snd_timer_start1(struct snd_t
+ 	/* check the actual time for the start tick;
+ 	 * bail out as error if it's way too low (< 100us)
+ 	 */
+-	if (start) {
++	if (start && !(timer->hw.flags & SNDRV_TIMER_HW_SLAVE)) {
+ 		if ((u64)snd_timer_hw_resolution(timer) * ticks < 100000) {
+ 			result = -EINVAL;
+ 			goto unlock;
 
 
