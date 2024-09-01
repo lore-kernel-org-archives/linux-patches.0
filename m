@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D425F184523;
-	Sun,  1 Sep 2024 16:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F171F186E3A;
+	Sun,  1 Sep 2024 16:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209205; cv=none; b=phlnsNFNZAoU3hpHI1I3gLwXnGdaeuBTK95Jmb/A7RBTKhllgiBgNIzmQf7q1gFWQh15fVUsTvtTo05aR1Tw70pqoB3cyqaAe42YZkHZvNEGOgXNx6MaC2SrRvA87YNRnFtR/P1oEciemjECyVl5Q8sxB1w9m67+dJi4pPVAkpw=
+	t=1725209209; cv=none; b=q+qrMOjgtWhU17cq//se4n0ZAsevRtzlb49p47cj5WIkBnZZZzk7LF2Z+xCRTde1waFQmC9EC/GS8LJW7s10zcRCdo4sm6AC8Yq1gZTDlKYoG44dzIr0R6SmjO+/XeIJgAZ1Pt8GxFstymVYfjfzKn267PxxzJ7MYxLmZ39tnP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209205; c=relaxed/simple;
-	bh=AIWuaP0FrBoeDCiIM5y4X1hGyiKLwvSYT7PGUP6W5LY=;
+	s=arc-20240116; t=1725209209; c=relaxed/simple;
+	bh=8OvfHofNySDWd/ztkLweigl2dZt5zDmrIHfUdJYHzs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k28z0teWuPhbTeOzbcYJrr73ToD/imV68lqRUbRtieJM/N5R2cmzA50HLGXaKjc4LfwpugUztFC47DgAULOROERcsm+gaIGEFxPtSCtE1TbSIbsof2eQRFC787KuR7giq1KVf5RYpIByvoV9NVYPnwm9qEx/MVoZgTh4e+NbIGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Imy2Wl0n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZFxHur9OPgK5UqPahAX4eb5XYkaWUhXM8TtGv4qDnG8oSv0Lzp3T7ZSyXCrGol853tlIdrceESIIYMNarnpSvGoY3dppt98dO9Fv9xi154ziYS0v3o1xioVQiEzKaY6P4HMxrNSoFH78oxzDtAVwSzURxQhaQhI7BcdWoUXasvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlmJJgDd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Imy2Wl0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4ADC4CEC3;
-	Sun,  1 Sep 2024 16:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlmJJgDd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CEFC4CEC3;
+	Sun,  1 Sep 2024 16:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209205;
-	bh=AIWuaP0FrBoeDCiIM5y4X1hGyiKLwvSYT7PGUP6W5LY=;
+	s=korg; t=1725209208;
+	bh=8OvfHofNySDWd/ztkLweigl2dZt5zDmrIHfUdJYHzs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Imy2Wl0nLS+aV7rfxa/mSNv8i98KwDbV5dx5BMC02KXgPs4E3x68OvwwOSWPsMPNm
-	 4tkJIN8HvOnrykoBCHHVJGyTmfPDyhvyc1VJaVYkb/R4XHARd82h5zkRYkRYJC3Pn4
-	 56U6W/+QhjblfzHGy9YLowZX3IaUTNsV9tzW1IF8=
+	b=WlmJJgDdamCIfl8tHydbGzVLprZV7ALypP/aW8RA2gW+iiLRPl3oglA6YUZ2tKshX
+	 HjIdQCR1mGEqnertWegDQ3yKDVCeHXILG5piW0+t1f5yTTtWwREfbjqXlAoEkfterH
+	 L3jy6r3hvUHYw4CvWWg4yeFV2H6Di1Dz3wD+dbf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	netfs@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 34/71] mm: Fix missing folio invalidation calls during truncation
-Date: Sun,  1 Sep 2024 18:17:39 +0200
-Message-ID: <20240901160803.179512721@linuxfoundation.org>
+	syzbot+853d80cba98ce1157ae6@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+Subject: [PATCH 6.1 35/71] btrfs: fix extent map use-after-free when adding pages to compressed bio
+Date: Sun,  1 Sep 2024 18:17:40 +0200
+Message-ID: <20240901160803.216809339@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -59,66 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 0aa2e1b2fb7a75aa4b5b4347055ccfea6f091769 ]
+commit 8e7860543a94784d744c7ce34b78a2e11beefa5c upstream.
 
-When AS_RELEASE_ALWAYS is set on a mapping, the ->release_folio() and
-->invalidate_folio() calls should be invoked even if PG_private and
-PG_private_2 aren't set.  This is used by netfslib to keep track of the
-point above which reads can be skipped in favour of just zeroing pagecache
-locally.
+At add_ra_bio_pages() we are accessing the extent map to calculate
+'add_size' after we dropped our reference on the extent map, resulting
+in a use-after-free. Fix this by computing 'add_size' before dropping our
+extent map reference.
 
-There are a couple of places in truncation in which invalidation is only
-called when folio_has_private() is true.  Fix these to check
-folio_needs_release() instead.
-
-Without this, the generic/075 and generic/112 xfstests (both fsx-based
-tests) fail with minimum folio size patches applied[1].
-
-Fixes: b4fa966f03b7 ("mm, netfs, fscache: stop read optimisation when folio removed from pagecache")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20240815090849.972355-1-kernel@pankajraghav.com/ [1]
-Link: https://lore.kernel.org/r/20240823200819.532106-2-dhowells@redhat.com
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-cc: Pankaj Raghav <p.raghav@samsung.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: netfs@lists.linux.dev
-cc: linux-mm@kvack.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+853d80cba98ce1157ae6@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000038144061c6d18f2@google.com/
+Fixes: 6a4049102055 ("btrfs: subpage: make add_ra_bio_pages() compatible")
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/truncate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/compression.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/truncate.c b/mm/truncate.c
-index 0d4dd233f5187..96e9812667db2 100644
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -174,7 +174,7 @@ static void truncate_cleanup_folio(struct folio *folio)
- 	if (folio_mapped(folio))
- 		unmap_mapping_folio(folio);
+--- a/fs/btrfs/compression.c
++++ b/fs/btrfs/compression.c
+@@ -613,6 +613,7 @@ static noinline int add_ra_bio_pages(str
+ 			put_page(page);
+ 			break;
+ 		}
++		add_size = min(em->start + em->len, page_end + 1) - cur;
+ 		free_extent_map(em);
  
--	if (folio_has_private(folio))
-+	if (folio_needs_release(folio))
- 		folio_invalidate(folio, 0, folio_size(folio));
+ 		if (page->index == end_index) {
+@@ -625,7 +626,6 @@ static noinline int add_ra_bio_pages(str
+ 			}
+ 		}
  
- 	/*
-@@ -235,7 +235,7 @@ bool truncate_inode_partial_folio(struct folio *folio, loff_t start, loff_t end)
- 	 */
- 	folio_zero_range(folio, offset, length);
- 
--	if (folio_has_private(folio))
-+	if (folio_needs_release(folio))
- 		folio_invalidate(folio, offset, length);
- 	if (!folio_test_large(folio))
- 		return true;
--- 
-2.43.0
-
+-		add_size = min(em->start + em->len, page_end + 1) - cur;
+ 		ret = bio_add_page(cb->orig_bio, page, add_size, offset_in_page(cur));
+ 		if (ret != add_size) {
+ 			unlock_extent(tree, cur, page_end, NULL);
 
 
