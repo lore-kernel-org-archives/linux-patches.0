@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2F044C97;
-	Sun,  1 Sep 2024 16:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C2A44C97;
+	Sun,  1 Sep 2024 16:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207685; cv=none; b=Ref6Eg7IQnnXJHaD1fMpPZd8xJhLBO44dAgukw8G+NhynOkULJE3in2wBK8Z8HLRyWWd0MWcLxdchn6c0V6RpywvDppsl09qZvTEegetrSuGsRe6B5RiiwQxt/Lne0taKgUrVftqygNEz6Q5+XOPPngidUmHmefzaeL5hMF9sFA=
+	t=1725207688; cv=none; b=jYBi0eoYhwUHPPnkmoj/dRdWOWWIUf5jszzAlNPx5sGEybaa4dvvIRL3Oby9QxxvpjwDLEQwBlQwqKALIPQYRZCXfFnvxMjtQl02/+qza/VTDC9GZzo457K7oWf/z5uGQc4IaorKlztx/kvYm8P3D9jJ/lsTIgI1ElJjlt+PK/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207685; c=relaxed/simple;
-	bh=R9SzzxvTuBA8Urh3YjhuZtkda8OyNem/K8kVdV3GPW8=;
+	s=arc-20240116; t=1725207688; c=relaxed/simple;
+	bh=5DLmwOKDQKfIfG1u8ccLyDiipZt/dhcQGuA/6Oml/LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGoZo70dFkzG9DjwgsfYQucNrklqcdL3AeMkmlvM0ol+4WEkwIoeRxqkvoh7djJeSvJ3B71D5KKWJd/nz5bM1wZBXNtJ/C7Kmj8AaOjo0z8NdUEyumMqCIfS/WsEpYyj+dNfWBkHQPLMzs/acxDomO2/SobhWziknFcAFS3McsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHbtv+2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCCjC626Dx6vOx2smiY8gF4Xvsdfe/A1nP8P5qJwFsVmqeZ8BErB91xCpFqXklhr3l6/JO/aXTLPnnIbepEUaiG52U6rmishM5epViMN1/u2tXA8RygL/3k73t7FDWyKWnnyBuqk9a8AH6J29a/1uFbkBmbEM5yAFNBq74pzBwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7649IA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHbtv+2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D081C4CEC3;
-	Sun,  1 Sep 2024 16:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7649IA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A5FC4CEC3;
+	Sun,  1 Sep 2024 16:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207685;
-	bh=R9SzzxvTuBA8Urh3YjhuZtkda8OyNem/K8kVdV3GPW8=;
+	s=korg; t=1725207688;
+	bh=5DLmwOKDQKfIfG1u8ccLyDiipZt/dhcQGuA/6Oml/LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHbtv+2T+InLyQ9VU7KZxr1ARtGYdy7UObunj1k6z9BRorPfJTd40Nf07Af77NR6i
-	 YH7Qk5EPIFfxhbXi1SDXyVFE51FR6cVW99cQrhNO54HAF0Axa3Tfo9+9IZtrr+5CIL
-	 kDrnoxWVYiFffNVE+//Z9ObUMqGhCzhBDkYugtGQ=
+	b=K7649IA91ynorX7h0igWo71W+f2WzpD2tGVDlI6tkEi/k+pqiIWGwgmiD1/e7ujzn
+	 w59LWSlQd1SKU9stoMFm3aS4BpNEIb5Ya+TQ39Ebrife7K/NV2QNH9/hFKUCnujNQa
+	 XjPMpIlbSRe5lisnDsdJriue7cMIrRNJLImdd9ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 46/98] usb: dwc3: core: Skip setting event buffers for host only controllers
-Date: Sun,  1 Sep 2024 18:16:16 +0200
-Message-ID: <20240901160805.436250084@linuxfoundation.org>
+Subject: [PATCH 4.19 47/98] fbdev: offb: replace of_node_put with __free(device_node)
+Date: Sun,  1 Sep 2024 18:16:17 +0200
+Message-ID: <20240901160805.474469928@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -54,69 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
 
-[ Upstream commit 89d7f962994604a3e3d480832788d06179abefc5 ]
+[ Upstream commit ce4a7ae84a58b9f33aae8d6c769b3c94f3d5ce76 ]
 
-On some SoC's like SA8295P where the tertiary controller is host-only
-capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
-Trying to access them leads to a crash.
+Replaced instance of of_node_put with __free(device_node)
+to simplify code and protect against any memory leaks
+due to future changes in the control flow.
 
-For DRD/Peripheral supported controllers, event buffer setup is done
-again in gadget_pullup. Skip setup or cleanup of event buffers if
-controller is host-only capable.
-
-Suggested-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240420044901.884098-4-quic_kriskura@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Julia Lawall <julia.lawall@inria.fr>
+Signed-off-by: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/video/fbdev/offb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index fd82904e14657..b14e06ee831bc 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -372,6 +372,13 @@ static void dwc3_free_event_buffers(struct dwc3 *dwc)
- static int dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned length)
- {
- 	struct dwc3_event_buffer *evt;
-+	unsigned int hw_mode;
-+
-+	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
-+	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
-+		dwc->ev_buf = NULL;
-+		return 0;
-+	}
- 
- 	evt = dwc3_alloc_one_event_buffer(dwc, length);
- 	if (IS_ERR(evt)) {
-@@ -393,6 +400,9 @@ int dwc3_event_buffers_setup(struct dwc3 *dwc)
- {
- 	struct dwc3_event_buffer	*evt;
- 
-+	if (!dwc->ev_buf)
-+		return 0;
-+
- 	evt = dwc->ev_buf;
- 	evt->lpos = 0;
- 	dwc3_writel(dwc->regs, DWC3_GEVNTADRLO(0),
-@@ -410,6 +420,9 @@ void dwc3_event_buffers_cleanup(struct dwc3 *dwc)
- {
- 	struct dwc3_event_buffer	*evt;
- 
-+	if (!dwc->ev_buf)
-+		return;
-+
- 	evt = dwc->ev_buf;
- 
- 	evt->lpos = 0;
+diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
+index 77c0a2f45b3b9..b52c6080abe44 100644
+--- a/drivers/video/fbdev/offb.c
++++ b/drivers/video/fbdev/offb.c
+@@ -352,7 +352,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+ 			par->cmap_type = cmap_gxt2000;
+ 	} else if (dp && !strncmp(name, "vga,Display-", 12)) {
+ 		/* Look for AVIVO initialized by SLOF */
+-		struct device_node *pciparent = of_get_parent(dp);
++		struct device_node *pciparent __free(device_node) = of_get_parent(dp);
+ 		const u32 *vid, *did;
+ 		vid = of_get_property(pciparent, "vendor-id", NULL);
+ 		did = of_get_property(pciparent, "device-id", NULL);
+@@ -364,7 +364,6 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+ 			if (par->cmap_adr)
+ 				par->cmap_type = cmap_avivo;
+ 		}
+-		of_node_put(pciparent);
+ 	} else if (dp && of_device_is_compatible(dp, "qemu,std-vga")) {
+ #ifdef __BIG_ENDIAN
+ 		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
 -- 
 2.43.0
 
