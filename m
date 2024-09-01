@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF60B33987;
-	Sun,  1 Sep 2024 16:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14744183CC5;
+	Sun,  1 Sep 2024 16:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208057; cv=none; b=JXlVfQ0ujLVme9z7v3Xn29vN2A/OhQKokq9NmBi5Dm9z69Qh8FE9DEx+O5QifF3FtC9YT2hvy3oDcoLIfnpA5k2cdzIedfXZ2K43PhGSHtq3aY1qzWMCfaiAbKaDtp+YlpU8Pvc7hTdOia8ylcgG0/7nbZZj8Ph225UYmys/6QI=
+	t=1725208061; cv=none; b=Yaj8Yp7FYWHCOBNuDioli+WYIf/lnxaG8F15DRgxAWhKTBVS/cfQIZ+7/1blnW63pfJNvhkTQhZZTYWlmsI510mpv6YvyQW96vV6FoU/3YoqNVemvHSPuWKqpq1x/I+C8flMYzTsbSIRX/9Niq7LZhbMGPJeh9md1SvJp+g7hDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208057; c=relaxed/simple;
-	bh=Bcx0GYRiCnPmKA1+EGohu2qpAj9iGpAmXJC2rMij4u8=;
+	s=arc-20240116; t=1725208061; c=relaxed/simple;
+	bh=Qu59aJdfwS1ww/tz25Il5QmyGrYhtztalvFi/pgiN+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqlj7kpzOql7HRp5WcMhdUl21TqVOUqJQEiytMX3SYBTK8QJzXBvy1ZUv0CHT6QrTXyzTt7ljNU7QnjjY3NMttUp9FvRR2c5dyFfUeUvpONFah9yAEJn2yQvZbO3X1NqzbW7In74gETCxPhtaptiO8X0HzrlWahZW+lz3ZSlnsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiIkGI11; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKGbOsWGFYyH8/Nmr/HNQUyWzyfWF2tvbBAwV67+rFL45C5q7kKWENnVk14uNZv05Mkk7dNHSxCW3o4yzniN0J9gu25VxXzMjrEf446j5C8Maro24TsxLUbr7/l1zpHscI/u4+fimSiVzQISEJQtDUuR061ReIZT2J7qSk2tJsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIUoN3fh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiIkGI11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C431C4CEC3;
-	Sun,  1 Sep 2024 16:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIUoN3fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774CCC4CEC3;
+	Sun,  1 Sep 2024 16:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208057;
-	bh=Bcx0GYRiCnPmKA1+EGohu2qpAj9iGpAmXJC2rMij4u8=;
+	s=korg; t=1725208061;
+	bh=Qu59aJdfwS1ww/tz25Il5QmyGrYhtztalvFi/pgiN+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiIkGI11ld0JZl59tOoc3cqmA3XHU9Bu/sZFT00p9cxUUhO4lWnYcBi0tuPT9s3bF
-	 zWFU5365qVb7+Btn6UdfAtXvMwLTjHiJPqfu2hJkvL0PjyZ9efBZocm/b2WiDZYA17
-	 +JYuy4LiVur2MhfAzfgUfvVJzjtnPKvwnN98aphg=
+	b=uIUoN3fhKHkq6VK9qiTkvR3rIkIn5X8sG7e6cjN+Y0fnhper1k7Z3SlzGnJkRYskr
+	 cfhrqyn00atLNWAz4A91w1fqR9CHJsukItkeGWT9XzI35lVWmrBqTXrnrsSOOaRhDX
+	 pse+ZyQ7TEVVUbcK/FPSYfA8sMbmgCcLXrXNT8AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 59/93] netfilter: nf_tables_ipv6: consider network offset in netdev/egress validation
-Date: Sun,  1 Sep 2024 18:16:46 +0200
-Message-ID: <20240901160809.585140942@linuxfoundation.org>
+Subject: [PATCH 6.6 60/93] selftests: forwarding: no_forwarding: Down ports on cleanup
+Date: Sun,  1 Sep 2024 18:16:47 +0200
+Message-ID: <20240901160809.622335634@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -50,44 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 70c261d500951cf3ea0fcf32651aab9a65a91471 ]
+[ Upstream commit e8497d6951ee8541d73784f9aac9942a7f239980 ]
 
->From netdev/egress, skb->len can include the ethernet header, therefore,
-subtract network offset from skb->len when validating IPv6 packet length.
+This test neglects to put ports down on cleanup. Fix it.
 
-Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 476a4f05d9b8 ("selftests: forwarding: add a no_forwarding.sh test")
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0baf91dc24b95ae0cadfdf5db05b74888e6a228a.1724430120.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables_ipv6.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/forwarding/no_forwarding.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/netfilter/nf_tables_ipv6.h b/include/net/netfilter/nf_tables_ipv6.h
-index 467d59b9e5334..a0633eeaec977 100644
---- a/include/net/netfilter/nf_tables_ipv6.h
-+++ b/include/net/netfilter/nf_tables_ipv6.h
-@@ -31,8 +31,8 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
- 	struct ipv6hdr *ip6h, _ip6h;
- 	unsigned int thoff = 0;
- 	unsigned short frag_off;
-+	u32 pkt_len, skb_len;
- 	int protohdr;
--	u32 pkt_len;
+diff --git a/tools/testing/selftests/net/forwarding/no_forwarding.sh b/tools/testing/selftests/net/forwarding/no_forwarding.sh
+index af3b398d13f01..9e677aa64a06a 100755
+--- a/tools/testing/selftests/net/forwarding/no_forwarding.sh
++++ b/tools/testing/selftests/net/forwarding/no_forwarding.sh
+@@ -233,6 +233,9 @@ cleanup()
+ {
+ 	pre_cleanup
  
- 	ip6h = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb),
- 				  sizeof(*ip6h), &_ip6h);
-@@ -43,7 +43,8 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
- 		return -1;
++	ip link set dev $swp2 down
++	ip link set dev $swp1 down
++
+ 	h2_destroy
+ 	h1_destroy
  
- 	pkt_len = ntohs(ip6h->payload_len);
--	if (pkt_len + sizeof(*ip6h) > pkt->skb->len)
-+	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
-+	if (pkt_len + sizeof(*ip6h) > skb_len)
- 		return -1;
- 
- 	protohdr = ipv6_find_hdr(pkt->skb, &thoff, -1, &frag_off, &flags);
 -- 
 2.43.0
 
