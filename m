@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1809183CA3;
-	Sun,  1 Sep 2024 16:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7506F183CA3;
+	Sun,  1 Sep 2024 16:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208168; cv=none; b=rs/5JLy8HN7huhkRO9AAJCDirUHzFjlVPgvpcRYsXYOdIeUC5Pqf8yCwuv7Krpw0un7EpPX3glBXZqsZxodburn1ECWPDMh2YNqV6qoSKsD2vFRsFJSZdDk6byO9CzZFd8j5kozQOfKf1KlufhDl7gwuhMCMEl8ksY/0Xy7f+sk=
+	t=1725208171; cv=none; b=kkw2TqyolBYHOvmxXsHy8kCn/VcL3UJAAYRFKQZndnfMv+PtB7oS996rDXFAAiKPTPogPnrmalo85upAXFv052tlY466wWou01jjQ2pb3j8TLUV339DRJ5ac0hTQe2ty0xjR7XbMlThymPI68e1u8jKXkbiSmveTjS3CefgBW44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208168; c=relaxed/simple;
-	bh=9u76tWUmoU1ef9JuhG5TjcgRbW0/wwTIx+nFmNqQcWQ=;
+	s=arc-20240116; t=1725208171; c=relaxed/simple;
+	bh=1e9remJhkHwcMItnozxaAm3QZRnX569tm0OHyvUGeTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9dGVq/e0TdqGuzF/SX1EY7MeQfSViz2oZKGSKrKlRQ9dxTGSyZTeKIJyYOSVSNAQ7E6EzSHsZZzGfCUZ+c18J6S50vPOQR0RG9lZo6x9JiV2TXHYK3/VJ6OZa29DPKoUZDlqTsq7H33gNVDKv/th9hQ9LJFlYFKVz1yD1jrQ/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMUQdVcL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKJdz1kAAQkE4mYpVIpF5sTg2tbtrA4jqt4OdIT2jIcMCpXetGxpbrkwfvNtpT/L91jmsoSstr2n/Rz9hWfQc3BN9ECFNG5n8MyWQrg3OoE6/Cr7F/ejgDKyRrtwQaSTTRQCoPLj8+A3OoVdiArBbSDhY3kgCr1XlNNQgjbsQtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Hb9YBla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMUQdVcL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61893C4CEC3;
-	Sun,  1 Sep 2024 16:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Hb9YBla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90EAC4CEC3;
+	Sun,  1 Sep 2024 16:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208167;
-	bh=9u76tWUmoU1ef9JuhG5TjcgRbW0/wwTIx+nFmNqQcWQ=;
+	s=korg; t=1725208171;
+	bh=1e9remJhkHwcMItnozxaAm3QZRnX569tm0OHyvUGeTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMUQdVcLDCDBRuC86bD9bKmUs0JKyF0OHD8+EeZhyrbJBtwzC7n0YG11bd9S+bA9Z
-	 o3MGW6XmFUB0lKajhBCe9qakdw+OgGvH4pAeX1PvIUl6dZbogAd/zhxjUtuR97PYgo
-	 pqjFIgyaJJo9UZoHoF0NAuKbUgMZbXNuH8iDsKhM=
+	b=1Hb9YBlaALLHx4/H8W0ZyCI42jx9cn34NzdP6F0KtQn1c/yFN3MXa1S7wvWktuk2Q
+	 l+j/4StbWhOaV/QGMuiXwXgpjGW8wM4uZ3o4sMbalbFeSKJHO4II+iQ3ItlS7jL5Av
+	 uVT1UZkhYOrfJxXh3h+TN0Sa2rLBolOGHlXu/6Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Gordon <m.gordon.zelenoborsky@gmail.com>,
-	Ben Hutchings <benh@debian.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 92/93] scsi: aacraid: Fix double-free on probe failure
-Date: Sun,  1 Sep 2024 18:17:19 +0200
-Message-ID: <20240901160811.195776580@linuxfoundation.org>
+Subject: [PATCH 6.6 93/93] apparmor: fix policy_unpack_test on big endian systems
+Date: Sun,  1 Sep 2024 18:17:20 +0200
+Message-ID: <20240901160811.233194496@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,52 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 919ddf8336f0b84c0453bac583808c9f165a85c2 ]
+[ Upstream commit 98c0cc48e27e9d269a3e4db2acd72b486c88ec77 ]
 
-aac_probe_one() calls hardware-specific init functions through the
-aac_driver_ident::init pointer, all of which eventually call down to
-aac_init_adapter().
+policy_unpack_test fails on big endian systems because data byte order
+is expected to be little endian but is generated in host byte order.
+This results in test failures such as:
 
-If aac_init_adapter() fails after allocating memory for aac_dev::queues,
-it frees the memory but does not clear that member.
+ # policy_unpack_test_unpack_array_with_null_name: EXPECTATION FAILED at security/apparmor/policy_unpack_test.c:150
+    Expected array_size == (u16)16, but
+        array_size == 4096 (0x1000)
+        (u16)16 == 16 (0x10)
+    # policy_unpack_test_unpack_array_with_null_name: pass:0 fail:1 skip:0 total:1
+    not ok 3 policy_unpack_test_unpack_array_with_null_name
+    # policy_unpack_test_unpack_array_with_name: EXPECTATION FAILED at security/apparmor/policy_unpack_test.c:164
+    Expected array_size == (u16)16, but
+        array_size == 4096 (0x1000)
+        (u16)16 == 16 (0x10)
+    # policy_unpack_test_unpack_array_with_name: pass:0 fail:1 skip:0 total:1
 
-After the hardware-specific init function returns an error,
-aac_probe_one() goes down an error path that frees the memory pointed to
-by aac_dev::queues, resulting.in a double-free.
+Add the missing endianness conversions when generating test data.
 
-Reported-by: Michael Gordon <m.gordon.zelenoborsky@gmail.com>
-Link: https://bugs.debian.org/1075855
-Fixes: 8e0c5ebde82b ("[SCSI] aacraid: Newer adapter communication iterface support")
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Link: https://lore.kernel.org/r/ZsZvfqlQMveoL5KQ@decadent.org.uk
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 4d944bcd4e73 ("apparmor: add AppArmor KUnit tests for policy unpack")
+Cc: Brendan Higgins <brendanhiggins@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aacraid/comminit.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/apparmor/policy_unpack_test.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
-index bd99c5492b7d4..0f64b02443037 100644
---- a/drivers/scsi/aacraid/comminit.c
-+++ b/drivers/scsi/aacraid/comminit.c
-@@ -642,6 +642,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
+diff --git a/security/apparmor/policy_unpack_test.c b/security/apparmor/policy_unpack_test.c
+index 5c9bde25e56df..2b8003eb4f463 100644
+--- a/security/apparmor/policy_unpack_test.c
++++ b/security/apparmor/policy_unpack_test.c
+@@ -80,14 +80,14 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
+ 	*(buf + 1) = strlen(TEST_U32_NAME) + 1;
+ 	strscpy(buf + 3, TEST_U32_NAME, e->end - (void *)(buf + 3));
+ 	*(buf + 3 + strlen(TEST_U32_NAME) + 1) = AA_U32;
+-	*((u32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = TEST_U32_DATA;
++	*((__le32 *)(buf + 3 + strlen(TEST_U32_NAME) + 2)) = cpu_to_le32(TEST_U32_DATA);
  
- 	if (aac_comm_init(dev)<0){
- 		kfree(dev->queues);
-+		dev->queues = NULL;
- 		return NULL;
- 	}
- 	/*
-@@ -649,6 +650,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
- 	 */
- 	if (aac_fib_setup(dev) < 0) {
- 		kfree(dev->queues);
-+		dev->queues = NULL;
- 		return NULL;
- 	}
- 		
+ 	buf = e->start + TEST_NAMED_U64_BUF_OFFSET;
+ 	*buf = AA_NAME;
+ 	*(buf + 1) = strlen(TEST_U64_NAME) + 1;
+ 	strscpy(buf + 3, TEST_U64_NAME, e->end - (void *)(buf + 3));
+ 	*(buf + 3 + strlen(TEST_U64_NAME) + 1) = AA_U64;
+-	*((u64 *)(buf + 3 + strlen(TEST_U64_NAME) + 2)) = TEST_U64_DATA;
++	*((__le64 *)(buf + 3 + strlen(TEST_U64_NAME) + 2)) = cpu_to_le64(TEST_U64_DATA);
+ 
+ 	buf = e->start + TEST_NAMED_BLOB_BUF_OFFSET;
+ 	*buf = AA_NAME;
+@@ -103,7 +103,7 @@ static struct aa_ext *build_aa_ext_struct(struct policy_unpack_fixture *puf,
+ 	*(buf + 1) = strlen(TEST_ARRAY_NAME) + 1;
+ 	strscpy(buf + 3, TEST_ARRAY_NAME, e->end - (void *)(buf + 3));
+ 	*(buf + 3 + strlen(TEST_ARRAY_NAME) + 1) = AA_ARRAY;
+-	*((u16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = TEST_ARRAY_SIZE;
++	*((__le16 *)(buf + 3 + strlen(TEST_ARRAY_NAME) + 2)) = cpu_to_le16(TEST_ARRAY_SIZE);
+ 
+ 	return e;
+ }
 -- 
 2.43.0
 
