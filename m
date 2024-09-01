@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F3B1C68C;
-	Sun,  1 Sep 2024 16:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40D61C68C;
+	Sun,  1 Sep 2024 16:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208633; cv=none; b=IB2KMczkz2z8zTQuBAzPZe4kQOFz9QYwctH4kDANiijnt3dVa8R/yXQ+E+Yj16/v2A46zcWdbFmHyq8HPHbsZb/16g/mdoXp0/me3DNDgXHVPKSiuRkSFwZiSe0CTMX/rDIaiSSr3M3ZJ/F0PTpUsXn49DbJARfFHlX2spbDy4w=
+	t=1725208636; cv=none; b=NRqiJms4SCBSkcyGGxFMCgCLNo+BIVcSbl4g8HYGjPMdDBSZ5T+6GYVP+huuDiyWl2xmfmrD//nJ21z2UWwjeanRjVqbHiHWc5rUrq+qjOM+XDuM8bhxHe2OBakdJHJbrTMyR9slHDE0WRy7si9mCMN16xGOpRtJdmn4QK2/wFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208633; c=relaxed/simple;
-	bh=XHsMSZr3KlPLIfSKh78Ci4cc8WrTor00O74lvL/5J9E=;
+	s=arc-20240116; t=1725208636; c=relaxed/simple;
+	bh=p3x9dBwF1IarLKQj8HWOn/mHCk/TxXpUYPqLLs93wUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKF0numKVVnmuQ2W6eVn4J4hBDgD4HdsfMMh3d/efyQ3qoqzivlgaUGOo3kc+t1YThF9CQvDuj6AcNVl7p1Ez1qiA5hahZLB1I56L0JzjJKnk7PxJ8mtaLYfrkV1DzMadYLph3EZWlwUNCDiyMvjt+aB3M0A/Q0IGXExdX+iqsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdJqO5+r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pj5dY6Nj06AKQHH/Xw7kAowm/cAuHt6z+kVTJeCiojGLn2CkbJPHxm0+YNtiKzo0blml3qIAkWUUUnsKT16a/Q1e/TTPY58Un8ah2QLbUVzfbEJWGhIk6JYeGV3XWK+o4lwrvAd99vVvkditvjEjMwwYKqJ+dpGv3xzRvnhBALw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOwrhPpa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdJqO5+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0985EC4CEC3;
-	Sun,  1 Sep 2024 16:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOwrhPpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15898C4CEC3;
+	Sun,  1 Sep 2024 16:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208633;
-	bh=XHsMSZr3KlPLIfSKh78Ci4cc8WrTor00O74lvL/5J9E=;
+	s=korg; t=1725208636;
+	bh=p3x9dBwF1IarLKQj8HWOn/mHCk/TxXpUYPqLLs93wUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdJqO5+rOlbBXwbORwjVWWQMjV1oVtrEhOynkzRTvCeHgMmpVGt6qrdDFJgZ/URXx
-	 /qgdgVyD3tgQAXP7zVpTG6goMXp4JSpbQRhMIgOPCTF+bkeEox/QXGkddzTygpxxCn
-	 k/DzsgmZTbmtZq9sZgLKd/kcQcKB2pcgNixAvGoQ=
+	b=cOwrhPpadqfvWQr6EkaA56ojYhLA19sGanUZZ9Lmy0pxRSInNCjg6wH8iyphV/iDS
+	 tUs0gysr+VqAH4u6h5YyuzXy5z8sU2Bw+t4d4dJERON6woLzypEcwvzUKxIpWz1KI3
+	 Nf/riC7u9io3tfEZDkvdpStwaf2y/0QxGN+nWB6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 142/149] arm64: dts: imx8mp-beacon-kit: Fix Stereo Audio on WM8962
-Date: Sun,  1 Sep 2024 18:17:33 +0200
-Message-ID: <20240901160822.787153794@linuxfoundation.org>
+Subject: [PATCH 6.10 143/149] arm64: dts: imx93: update default value for snps,clk-csr
+Date: Sun,  1 Sep 2024 18:17:34 +0200
+Message-ID: <20240901160822.824565956@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,59 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit 4e69cd835a2d5c3915838491f59a68ee697a87d0 ]
+[ Upstream commit 109f256285dd6a5f8c3bd0d80d39b2ccd4fe314e ]
 
-The L/R clock needs to be controlled by the SAI3 instead of the
-CODEC to properly achieve stereo sound. Doing this allows removes
-the need for unnecessary clock manipulation to try to get the
-CODEC's clock in sync with the SAI3 clock, since the CODEC can cope
-with a wide variety of clock inputs.
+For the i.MX93 SoC, the default clock rate for the IP of STMMAC EQOS is
+312.5 MHz. According to the following mapping table from the i.MX93
+reference manual, this clock rate corresponds to a CSR value of 6.
 
-Fixes: 161af16c18f3 ("arm64: dts: imx8mp-beacon-kit: Fix audio_pll2 clock")
-Fixes: 69e2f37a6ddc ("arm64: dts: imx8mp-beacon-kit: Enable WM8962 Audio CODEC")
-Signed-off-by: Adam Ford <aford173@gmail.com>
+ 0000: CSR clock = 60-100 MHz; MDC clock = CSR clock/42
+ 0001: CSR clock = 100-150 MHz; MDC clock = CSR clock/62
+ 0010: CSR clock = 20-35 MHz; MDC clock = CSR clock/16
+ 0011: CSR clock = 35-60 MHz; MDC clock = CSR clock/26
+ 0100: CSR clock = 150-250 MHz; MDC clock = CSR clock/102
+ 0101: CSR clock = 250-300 MHz; MDC clock = CSR clock/124
+ 0110: CSR clock = 300-500 MHz; MDC clock = CSR clock/204
+ 0111: CSR clock = 500-800 MHz; MDC clock = CSR clock/324
+
+Fixes: f2d03ba997cb ("arm64: dts: imx93: reorder device nodes")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-index e5d3901f29136..e1f59bdcae497 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-@@ -211,13 +211,12 @@
- 
- 		simple-audio-card,cpu {
- 			sound-dai = <&sai3>;
-+			frame-master;
-+			bitclock-master;
- 		};
- 
- 		simple-audio-card,codec {
- 			sound-dai = <&wm8962>;
--			clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO1>;
--			frame-master;
--			bitclock-master;
- 		};
- 	};
- };
-@@ -499,10 +498,9 @@
- &sai3 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sai3>;
--	assigned-clocks = <&clk IMX8MP_CLK_SAI3>,
--			  <&clk IMX8MP_AUDIO_PLL2> ;
--	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
--	assigned-clock-rates = <12288000>, <361267200>;
-+	assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
-+	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL1_OUT>;
-+	assigned-clock-rates = <12288000>;
- 	fsl,sai-mclk-direction-output;
- 	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx93.dtsi b/arch/arm64/boot/dts/freescale/imx93.dtsi
+index 4a3f42355cb8f..a0993022c102d 100644
+--- a/arch/arm64/boot/dts/freescale/imx93.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93.dtsi
+@@ -1105,7 +1105,7 @@
+ 							 <&clk IMX93_CLK_SYS_PLL_PFD0_DIV2>;
+ 				assigned-clock-rates = <100000000>, <250000000>;
+ 				intf_mode = <&wakeupmix_gpr 0x28>;
+-				snps,clk-csr = <0>;
++				snps,clk-csr = <6>;
+ 				nvmem-cells = <&eth_mac2>;
+ 				nvmem-cell-names = "mac-address";
+ 				status = "disabled";
 -- 
 2.43.0
 
