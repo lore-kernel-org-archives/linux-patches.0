@@ -1,38 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3CB18132F;
-	Sun,  1 Sep 2024 16:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C93183CA3;
+	Sun,  1 Sep 2024 16:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207798; cv=none; b=pPSom1ptJ2wb5Kuu6zIVE7/Kz5Ery70CTEBGgozCmQAQ6ma2iKEKbaLSon8xsJRvOp0tlmX5h0IU2fEr+Hr+eM5c92w9CWAnJ4EsRPzKtxfHLYkPrjxV0/sRcMEcuxjdZgHh0sbf5ZmHU58UEx1D+kTiBfGQTY661uKN0Io26j8=
+	t=1725207801; cv=none; b=samF2edBA7w0otVvgM/0MnKLAdBZ0xEq9AKsQLYEwrr2UCHCQ/eLdNZZXe6Nb/aY4q8ZkhuobAZSuO5xkzHDqinGedl8DPlEkAzsEUbBb04Fl9LrHfrhpfRktJej7quSdj81El2/X17u8KGZQ8O8yShLyRKCbzbVQNVCIsJzGoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207798; c=relaxed/simple;
-	bh=+mG7qp+PNtK9GcMqsRMJEw4doyKvOu1b7VpQ6LbNzVw=;
+	s=arc-20240116; t=1725207801; c=relaxed/simple;
+	bh=tE6jEDykuDE0m1g2QkBWxTkVLlVBBax6MM81Jq1Sqdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2+aHzKPW8sGWPnWTmY+ftLYHR4mKLP5cUo507ehGeYwtqHu93vtClGYGS1+Cd9HR8L9+VbNHlzMXZAbm2Vzn9rozhv8ZS2gqmc4aUTkY1eIV0lla74e29yAe/GDXNl1L4JGWkc1mR9UFbwtXN70dhgKggpuTVR7dRoN/dt/6xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vM3aDFt3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvZW09lX6BcKv0kZ9f4s0qaCLjF3T3ckDgTobLw5yIFi7Uac5+YW9M4kP1cilnquW17wwuwaqgiZbrDP1bl0dgQDjQBYjxocjy3x5RxiTOTf62SW65uWRNsATZkCoxsiVnnouSveJwPJW7BS4f81xhlNN0QY936cToKmUnaWacg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjO4WFTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vM3aDFt3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809CBC4CEC3;
-	Sun,  1 Sep 2024 16:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjO4WFTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F71C4CEC3;
+	Sun,  1 Sep 2024 16:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207798;
-	bh=+mG7qp+PNtK9GcMqsRMJEw4doyKvOu1b7VpQ6LbNzVw=;
+	s=korg; t=1725207801;
+	bh=tE6jEDykuDE0m1g2QkBWxTkVLlVBBax6MM81Jq1Sqdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vM3aDFt3is16K9CYf75g9oNgHQdlw8vnygFTpyesdKh2zpyU4t7qm3ywpjql21dAw
-	 i/Tgw+YSuw97xP81DqlXmjg+j9C2WnXsr0qTsesAT3DGOqXDruewcsUdTgG7XniyHh
-	 hcl1wP6xMHk1NotVfaQcLsK/qLL6Mi9AjPut/l3E=
+	b=JjO4WFTUSw6ff3T6eQY5A3dBwoSqbFAb2dU9gsoMAqW9lrKHwmT+C1B9ZBdVLuJ8D
+	 r0fhtPLXnZcgLxV4+xrh8Ly2DpN8ZsSQXb24cVDIfoUb2hxsbb6HxVnydwf4jNsIRL
+	 xq8HArJNu5/ajQh5eHYofhqKJCgUjvXhs2wljK4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
+	Vasily Averin <vvs@virtuozzo.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Borislav Petkov <bp@suse.de>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kirill Tkhai <ktkhai@virtuozzo.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Roman Gushchin <guro@fb.com>,
+	Serge Hallyn <serge@hallyn.com>,
 	Tejun Heo <tj@kernel.org>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 4.19 80/98] cgroup/cpuset: Prevent UAF in proc_cpuset_show()
-Date: Sun,  1 Sep 2024 18:16:50 +0200
-Message-ID: <20240901160806.712516715@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vladimir Davydov <vdavydov.dev@gmail.com>,
+	Yutian Yang <nglaive@gmail.com>,
+	Zefan Li <lizefan.x@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 4.19 81/98] memcg: enable accounting of ipc resources
+Date: Sun,  1 Sep 2024 18:16:51 +0200
+Message-ID: <20240901160806.750288491@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -51,92 +78,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Vasily Averin <vvs@virtuozzo.com>
 
-commit 1be59c97c83ccd67a519d8a49486b3a8a73ca28a upstream.
+commit 18319498fdd4cdf8c1c2c48cd432863b1f915d6f upstream.
 
-An UAF can happen when /proc/cpuset is read as reported in [1].
+When user creates IPC objects it forces kernel to allocate memory for
+these long-living objects.
 
-This can be reproduced by the following methods:
-1.add an mdelay(1000) before acquiring the cgroup_lock In the
- cgroup_path_ns function.
-2.$cat /proc/<pid>/cpuset   repeatly.
-3.$mount -t cgroup -o cpuset cpuset /sys/fs/cgroup/cpuset/
-$umount /sys/fs/cgroup/cpuset/   repeatly.
+It makes sense to account them to restrict the host's memory consumption
+from inside the memcg-limited container.
 
-The race that cause this bug can be shown as below:
+This patch enables accounting for IPC shared memory segments, messages
+semaphores and semaphore's undo lists.
 
-(umount)		|	(cat /proc/<pid>/cpuset)
-css_release		|	proc_cpuset_show
-css_release_work_fn	|	css = task_get_css(tsk, cpuset_cgrp_id);
-css_free_rwork_fn	|	cgroup_path_ns(css->cgroup, ...);
-cgroup_destroy_root	|	mutex_lock(&cgroup_mutex);
-rebind_subsystems	|
-cgroup_free_root 	|
-			|	// cgrp was freed, UAF
-			|	cgroup_path_ns_locked(cgrp,..);
-
-When the cpuset is initialized, the root node top_cpuset.css.cgrp
-will point to &cgrp_dfl_root.cgrp. In cgroup v1, the mount operation will
-allocate cgroup_root, and top_cpuset.css.cgrp will point to the allocated
-&cgroup_root.cgrp. When the umount operation is executed,
-top_cpuset.css.cgrp will be rebound to &cgrp_dfl_root.cgrp.
-
-The problem is that when rebinding to cgrp_dfl_root, there are cases
-where the cgroup_root allocated by setting up the root for cgroup v1
-is cached. This could lead to a Use-After-Free (UAF) if it is
-subsequently freed. The descendant cgroups of cgroup v1 can only be
-freed after the css is released. However, the css of the root will never
-be released, yet the cgroup_root should be freed when it is unmounted.
-This means that obtaining a reference to the css of the root does
-not guarantee that css.cgrp->root will not be freed.
-
-Fix this problem by using rcu_read_lock in proc_cpuset_show().
-As cgroup_root is kfree_rcu after commit d23b5c577715
-("cgroup: Make operations on the cgroup root_list RCU safe"),
-css->cgroup won't be freed during the critical section.
-To call cgroup_path_ns_locked, css_set_lock is needed, so it is safe to
-replace task_get_css with task_css.
-
-[1] https://syzkaller.appspot.com/bug?extid=9b1ff7be974a403aa4cd
-
-Fixes: a79a908fd2b0 ("cgroup: introduce cgroup namespaces")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Link: https://lkml.kernel.org/r/d6507b06-4df6-78f8-6c54-3ae86e3b5339@virtuozzo.com
+Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
+Reviewed-by: Shakeel Butt <shakeelb@google.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Christian Brauner <christian.brauner@ubuntu.com>
+Cc: Dmitry Safonov <0x7f454c46@gmail.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: "J. Bruce Fields" <bfields@fieldses.org>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kirill Tkhai <ktkhai@virtuozzo.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Roman Gushchin <guro@fb.com>
+Cc: Serge Hallyn <serge@hallyn.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Cc: Yutian Yang <nglaive@gmail.com>
+Cc: Zefan Li <lizefan.x@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ ipc/msg.c |    2 +-
+ ipc/sem.c |   10 ++++++----
+ ipc/shm.c |    2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -22,6 +22,7 @@
-  *  distribution for more details.
-  */
+--- a/ipc/msg.c
++++ b/ipc/msg.c
+@@ -137,7 +137,7 @@ static int newque(struct ipc_namespace *
+ 	key_t key = params->key;
+ 	int msgflg = params->flg;
  
-+#include "cgroup-internal.h"
- #include <linux/cpu.h>
- #include <linux/cpumask.h>
- #include <linux/cpuset.h>
-@@ -2758,10 +2759,14 @@ int proc_cpuset_show(struct seq_file *m,
- 	if (!buf)
- 		goto out;
+-	msq = kvmalloc(sizeof(*msq), GFP_KERNEL);
++	msq = kvmalloc(sizeof(*msq), GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!msq))
+ 		return -ENOMEM;
  
--	css = task_get_css(tsk, cpuset_cgrp_id);
--	retval = cgroup_path_ns(css->cgroup, buf, PATH_MAX,
--				current->nsproxy->cgroup_ns);
--	css_put(css);
-+	rcu_read_lock();
-+	spin_lock_irq(&css_set_lock);
-+	css = task_css(tsk, cpuset_cgrp_id);
-+	retval = cgroup_path_ns_locked(css->cgroup, buf, PATH_MAX,
-+				       current->nsproxy->cgroup_ns);
-+	spin_unlock_irq(&css_set_lock);
-+	rcu_read_unlock();
-+
- 	if (retval >= PATH_MAX)
- 		retval = -ENAMETOOLONG;
- 	if (retval < 0)
+--- a/ipc/sem.c
++++ b/ipc/sem.c
+@@ -494,7 +494,7 @@ static struct sem_array *sem_alloc(size_
+ 		return NULL;
+ 
+ 	size = sizeof(*sma) + nsems * sizeof(sma->sems[0]);
+-	sma = kvmalloc(size, GFP_KERNEL);
++	sma = kvmalloc(size, GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!sma))
+ 		return NULL;
+ 
+@@ -1813,7 +1813,7 @@ static inline int get_undo_list(struct s
+ 
+ 	undo_list = current->sysvsem.undo_list;
+ 	if (!undo_list) {
+-		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL);
++		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL_ACCOUNT);
+ 		if (undo_list == NULL)
+ 			return -ENOMEM;
+ 		spin_lock_init(&undo_list->lock);
+@@ -1897,7 +1897,8 @@ static struct sem_undo *find_alloc_undo(
+ 	rcu_read_unlock();
+ 
+ 	/* step 2: allocate new undo structure */
+-	new = kzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems, GFP_KERNEL);
++	new = kzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems,
++		      GFP_KERNEL_ACCOUNT);
+ 	if (!new) {
+ 		ipc_rcu_putref(&sma->sem_perm, sem_rcu_free);
+ 		return ERR_PTR(-ENOMEM);
+@@ -1961,7 +1962,8 @@ static long do_semtimedop(int semid, str
+ 	if (nsops > ns->sc_semopm)
+ 		return -E2BIG;
+ 	if (nsops > SEMOPM_FAST) {
+-		sops = kvmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
++		sops = kvmalloc_array(nsops, sizeof(*sops),
++				      GFP_KERNEL_ACCOUNT);
+ 		if (sops == NULL)
+ 			return -ENOMEM;
+ 	}
+--- a/ipc/shm.c
++++ b/ipc/shm.c
+@@ -711,7 +711,7 @@ static int newseg(struct ipc_namespace *
+ 			ns->shm_tot + numpages > ns->shm_ctlall)
+ 		return -ENOSPC;
+ 
+-	shp = kvmalloc(sizeof(*shp), GFP_KERNEL);
++	shp = kvmalloc(sizeof(*shp), GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!shp))
+ 		return -ENOMEM;
+ 
 
 
