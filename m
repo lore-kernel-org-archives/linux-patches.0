@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77C51DFD1;
-	Sun,  1 Sep 2024 16:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C341DFD1;
+	Sun,  1 Sep 2024 16:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209493; cv=none; b=pimSbqcOEWhOv6ibTaaJgYQ7lmzR5qO60vyPz6y6fmRX3qho2UBJuky55aXWiXg/jNJHOfgbHi9DuMMP7L16UDmFSZCYY8+rOHtQuu8CoAHzdbKW/JtmcXztx1x3eAf4UpLJkMuAbgG6aUKjkIOn44W0DPAdYFko+kT+9raA3Sw=
+	t=1725209496; cv=none; b=jc7jRypiqQdn6voSSqAmTcrci4i97BWBIFyvSXYHVMYwCjPG+LlxZJP2+DNznA8El+JHfGgts24yJW2qfIXij7DqhAIxLrIwqZmkgQrsUc5onZ7Nq/+DqXj6Hf6X4/M7Y7JVR4llxPMb79WGOGMF9YVb+1geK+EtzrWaCsrMy5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209493; c=relaxed/simple;
-	bh=afMlcvXSYk+i5kSTImcT51opNdNnBRee4FHENl7OiEs=;
+	s=arc-20240116; t=1725209496; c=relaxed/simple;
+	bh=B2vPQ0ieU62tx3tluclJ96801ZupA/DL+OBTYLTjLzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=spMzFjlwF3G3vJ+NrBgA/+Y/ubKUId1EfKbfjvIVRlab2v79K7GJOpXlNSciVDWC9PT8mGasKc07u9jqIJRUmZM+o6awtB+X/ya4ISuDQyEswOa4YewrYbdk+ELmXK55Wk+nNfZiWpu/UjSN/0EARly01ILyToZzPC5ifWR5uPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXxSAdmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjM8KVvD2KcduPA1IWzUbtDXZpP1Qn1eu+ci7Z6DiQrUyWJWWcv7yTjbR0TeFA7GecsVMClexFEMvQOPK8/cFmLEzBWYp7zWjBDy6qjQTpHvI9VsuRcOt0wt7R1NEGiGbYd/MNWNzgEPPFTnadNPurwZYfsy1MoSgYpjCkwUn6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWMIsiUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXxSAdmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F272BC4CEC3;
-	Sun,  1 Sep 2024 16:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWMIsiUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2707DC4CEC3;
+	Sun,  1 Sep 2024 16:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209493;
-	bh=afMlcvXSYk+i5kSTImcT51opNdNnBRee4FHENl7OiEs=;
+	s=korg; t=1725209496;
+	bh=B2vPQ0ieU62tx3tluclJ96801ZupA/DL+OBTYLTjLzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXxSAdmYtQziqubuP5MsIyDQK0e3PdbNd3xR7+nqW0y3k7q/AOwLkbpTYmkbl0djO
-	 I1wnbFu41FcdP0KooTUWccLyAMLsnm0X1H6uDcm3uDoVaDIPbS8FvGlyzm6/36CQBe
-	 s4xpcY7qhPQ9Ojcrnzbvo7lM3PLtd1BnvM/Y9gqw=
+	b=pWMIsiUEoyldx3gO9Tdq7ZMSkZkU+/CQHfVUWm4VugJTSrbC/vsxLo9H+3Dl6YRJ0
+	 Uu/xDkTTIufytHEagsFxOKKS/k4FHuV52oFlt0VlbmblF6BE2ropiQoawPgESCadtA
+	 ywn5v2gKitFG//PaTFL2EV+rX1T1PkkhZ72ExoT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sam Creasey <sammy@sammy.net>,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/151] scsi: lpfc: Initialize status local variable in lpfc_sli4_repost_sgl_list()
-Date: Sun,  1 Sep 2024 18:16:53 +0200
-Message-ID: <20240901160816.114653567@linuxfoundation.org>
+Subject: [PATCH 5.10 054/151] net/sun3_82586: Avoid reading past buffer in debug output
+Date: Sun,  1 Sep 2024 18:16:54 +0200
+Message-ID: <20240901160816.151199414@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,38 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 3d0f9342ae200aa1ddc4d6e7a573c6f8f068d994 ]
+[ Upstream commit 4bea747f3fbec33c16d369b2f51e55981d7c78d0 ]
 
-A static code analyzer tool indicates that the local variable called status
-in the lpfc_sli4_repost_sgl_list() routine could be used to print garbage
-uninitialized values in the routine's log message.
+Since NUM_XMIT_BUFFS is always 1, building m68k with sun3_defconfig and
+-Warraybounds, this build warning is visible[1]:
 
-Fix by initializing to zero.
+drivers/net/ethernet/i825xx/sun3_82586.c: In function 'sun3_82586_timeout':
+drivers/net/ethernet/i825xx/sun3_82586.c:990:122: warning: array subscript 1 is above array bounds of 'volatile struct transmit_cmd_struct *[1]' [-Warray-bounds=]
+  990 |                 printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
+      |                                                                                                               ~~~~~~~~~~~~^~~
+...
+drivers/net/ethernet/i825xx/sun3_82586.c:156:46: note: while referencing 'xmit_cmds'
+  156 |         volatile struct transmit_cmd_struct *xmit_cmds[NUM_XMIT_BUFFS];
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240131185112.149731-2-justintee8345@gmail.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Avoid accessing index 1 since it doesn't exist.
+
+Link: https://github.com/KSPP/linux/issues/325 [1]
+Cc: Sam Creasey <sammy@sammy.net>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20240206161651.work.876-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 2 +-
+ drivers/net/ethernet/i825xx/sun3_82586.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 923ceaba0bf30..84f90f4d5abd8 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -7048,7 +7048,7 @@ lpfc_sli4_repost_sgl_list(struct lpfc_hba *phba,
- 	struct lpfc_sglq *sglq_entry = NULL;
- 	struct lpfc_sglq *sglq_entry_next = NULL;
- 	struct lpfc_sglq *sglq_entry_first = NULL;
--	int status, total_cnt;
-+	int status = 0, total_cnt;
- 	int post_cnt = 0, num_posted = 0, block_cnt = 0;
- 	int last_xritag = NO_XRI;
- 	LIST_HEAD(prep_sgl_list);
+diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
+index 4564ee02c95f6..83a6114afbf90 100644
+--- a/drivers/net/ethernet/i825xx/sun3_82586.c
++++ b/drivers/net/ethernet/i825xx/sun3_82586.c
+@@ -990,7 +990,7 @@ static void sun3_82586_timeout(struct net_device *dev, unsigned int txqueue)
+ 	{
+ #ifdef DEBUG
+ 		printk("%s: xmitter timed out, try to restart! stat: %02x\n",dev->name,p->scb->cus);
+-		printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
++		printk("%s: command-stats: %04x\n", dev->name, swab16(p->xmit_cmds[0]->cmd_status));
+ 		printk("%s: check, whether you set the right interrupt number!\n",dev->name);
+ #endif
+ 		sun3_82586_close(dev);
 -- 
 2.43.0
 
