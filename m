@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2C817E00C;
-	Sun,  1 Sep 2024 16:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBF61C68C;
+	Sun,  1 Sep 2024 16:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209436; cv=none; b=kgTlwBQCPtZ5yu4VmLVW6Rw3R0sXpYpAtJCH8GzTFtQOQDXYMU0G9xx8Qd2EyerxHbG9j4Ew4eBclLcJBpA6SGWFXzjEVeDJTpvsRsBoGldULhk+9ScPGTKTHkKYzVzmw3UWXRG4LTOxMiRNaipTeMSWCOoTBc/0X/tcAUur4zs=
+	t=1725209439; cv=none; b=anlGt1H1wLFM7xr06k5chTJWvJtiN9gP0E/QOHvCZ0KSTOsgjdYmIqdWNodON0uOMl9PWSiFCJuHlqLn4d1VrUzqkaf3Hwkx15cF+etnw1yE0xs+UZaYoIyzT+8QWZtLNLrbHsoUg86tu5UdpqlVTCt6/FhruPjAUnFYQP/5s9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209436; c=relaxed/simple;
-	bh=m2XyC+hQosY1ynU7U+HJwfylcM0jbbNm8fl5tOSManc=;
+	s=arc-20240116; t=1725209439; c=relaxed/simple;
+	bh=s9VcL2Zm9AEhLr9eLNlZCiYyn4EfKrANyk8eyWw8MH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0KbuTRUvpohUdFurGafC5n4Uz6egvdOy8rz0L2LGqd1pr9qj/PuccxRCGRrKJ4R2vRKDlw8oaax49CjmAr8CQwnKZQ4qsms59QfSz+tm1eVwNWCcYFt0dGuwfeoQEMysoWZidYkQe6GiWvaIdSOBNpDvnXEd63cYuBVzRAFF+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltQvri3T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aH7/kl40zBPvk4LChI7qPL7Pj/9IdFFeyeNKyq3GGtOK/OauvVfbh1kMFgldpCPlzAJ56nXs+Am4NdAuP7ZfKE+la3UvFUNbpfLeZ4dpG96fmOARa1dT8WxkWqMAKALICqBqgfIcTRFt3zV6qFH4YSjNEdyJhIewYISRPx+scps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SB3z9qSB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltQvri3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66C1C4CEC3;
-	Sun,  1 Sep 2024 16:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB3z9qSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05051C4CEC3;
+	Sun,  1 Sep 2024 16:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209436;
-	bh=m2XyC+hQosY1ynU7U+HJwfylcM0jbbNm8fl5tOSManc=;
+	s=korg; t=1725209439;
+	bh=s9VcL2Zm9AEhLr9eLNlZCiYyn4EfKrANyk8eyWw8MH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltQvri3Tgvj19bTpHbdnMMmbqQXTaaIk6Tpp58SSSFbjBSsyvPXvA51XIBNNjLj2C
-	 LQxfM1+TqyrtJ3as9u3afs5X/OLeySALVb8kLHs1RHaT31yEcLfcru0ge+EFrIv9se
-	 wX3t7n8kCDrsq/a4YT5kP4AmdGM5/aD+KPcE4UY0=
+	b=SB3z9qSBEsEHBEpxaVcfNiNlXJvSRJ5htrSzib+e9SCZoT7uTvGjduMZhxAu5H4vA
+	 7I5mWs6FHy1GY6iyWMOlg9mhXHmQ8X84fU7UGu0UtTZ/NcHY5/Lb1/LUZOqpOQ7Z2K
+	 NHNJatwNcNxCfm+eMX+Wi7ZjoIwe6+dQiG4QRnQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/151] s390/smp,mcck: fix early IPI handling
-Date: Sun,  1 Sep 2024 18:16:36 +0200
-Message-ID: <20240901160815.459161741@linuxfoundation.org>
+Subject: [PATCH 5.10 037/151] media: radio-isa: use dev_name to fill in bus_info
+Date: Sun,  1 Sep 2024 18:16:37 +0200
+Message-ID: <20240901160815.498621329@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -53,82 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 4a1725281fc5b0009944b1c0e1d2c1dc311a09ec ]
+[ Upstream commit 8b7f3cf4eb9a95940eaabad3226caeaa0d9aa59d ]
 
-Both the external call as well as the emergency signal submask bits in
-control register 0 are set before any interrupt handler is registered.
+This fixes this warning:
 
-Change the order and first register the interrupt handler and only then
-enable the interrupts by setting the corresponding bits in control
-register 0.
+drivers/media/radio/radio-isa.c: In function 'radio_isa_querycap':
+drivers/media/radio/radio-isa.c:39:57: warning: '%s' directive output may be truncated writing up to 35 bytes into a region of size 28 [-Wformat-truncation=]
+   39 |         snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", isa->v4l2_dev.name);
+      |                                                         ^~
+drivers/media/radio/radio-isa.c:39:9: note: 'snprintf' output between 5 and 40 bytes into a destination of size 32
+   39 |         snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", isa->v4l2_dev.name);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This prevents that the second part of the machine check handler for
-early machine check handling is not executed: the machine check handler
-sends an IPI to the CPU it runs on. If the corresponding interrupts are
-enabled, but no interrupt handler is present, the interrupt is ignored.
-
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/early.c | 12 +++---------
- arch/s390/kernel/smp.c   |  4 ++--
- 2 files changed, 5 insertions(+), 11 deletions(-)
+ drivers/media/radio/radio-isa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/early.c b/arch/s390/kernel/early.c
-index 985e1e7553336..bac1be43d36cb 100644
---- a/arch/s390/kernel/early.c
-+++ b/arch/s390/kernel/early.c
-@@ -252,15 +252,9 @@ static inline void save_vector_registers(void)
- #endif
+diff --git a/drivers/media/radio/radio-isa.c b/drivers/media/radio/radio-isa.c
+index ad2ac16ff12dd..610d3e3269518 100644
+--- a/drivers/media/radio/radio-isa.c
++++ b/drivers/media/radio/radio-isa.c
+@@ -36,7 +36,7 @@ static int radio_isa_querycap(struct file *file, void  *priv,
+ 
+ 	strscpy(v->driver, isa->drv->driver.driver.name, sizeof(v->driver));
+ 	strscpy(v->card, isa->drv->card, sizeof(v->card));
+-	snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", isa->v4l2_dev.name);
++	snprintf(v->bus_info, sizeof(v->bus_info), "ISA:%s", dev_name(isa->v4l2_dev.dev));
+ 	return 0;
  }
  
--static inline void setup_control_registers(void)
-+static inline void setup_low_address_protection(void)
- {
--	unsigned long reg;
--
--	__ctl_store(reg, 0, 0);
--	reg |= CR0_LOW_ADDRESS_PROTECTION;
--	reg |= CR0_EMERGENCY_SIGNAL_SUBMASK;
--	reg |= CR0_EXTERNAL_CALL_SUBMASK;
--	__ctl_load(reg, 0, 0);
-+	__ctl_set_bit(0, 28);
- }
- 
- static inline void setup_access_registers(void)
-@@ -313,7 +307,7 @@ void __init startup_init(void)
- 	save_vector_registers();
- 	setup_topology();
- 	sclp_early_detect();
--	setup_control_registers();
-+	setup_low_address_protection();
- 	setup_access_registers();
- 	lockdep_on();
- }
-diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
-index 5674792726cd9..2e0c3b0a5a58a 100644
---- a/arch/s390/kernel/smp.c
-+++ b/arch/s390/kernel/smp.c
-@@ -982,12 +982,12 @@ void __init smp_fill_possible_mask(void)
- 
- void __init smp_prepare_cpus(unsigned int max_cpus)
- {
--	/* request the 0x1201 emergency signal external interrupt */
- 	if (register_external_irq(EXT_IRQ_EMERGENCY_SIG, do_ext_call_interrupt))
- 		panic("Couldn't request external interrupt 0x1201");
--	/* request the 0x1202 external call external interrupt */
-+	ctl_set_bit(0, 14);
- 	if (register_external_irq(EXT_IRQ_EXTERNAL_CALL, do_ext_call_interrupt))
- 		panic("Couldn't request external interrupt 0x1202");
-+	ctl_set_bit(0, 13);
- }
- 
- void __init smp_prepare_boot_cpu(void)
 -- 
 2.43.0
 
