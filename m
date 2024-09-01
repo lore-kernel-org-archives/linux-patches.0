@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12856181B87;
-	Sun,  1 Sep 2024 16:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67493183CA3;
+	Sun,  1 Sep 2024 16:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208495; cv=none; b=sku6bQq4aGb2+C8ZqYoXmie4V1sImbqWuGlt+W/QI43c+ROf5ZdyDQjq0Y0V8Yoc34k7WdPmwrQ+H+BLmt618XU699KwXIXvDAnK2c5/QZEjBrBz9DN0m+JskjqhnEoGdkTg0WE5qYORuxnH/tIbIX17UOkKc6M65RWb766AMA4=
+	t=1725208498; cv=none; b=qhIf3+Cn0uhWGd3KGrDd5wRG6pBuEPQejHtktlmUAxk/u/OYkxLujwBN7hkFdxZUiAN81+7hbcsD0Hz+B09a+q7cm8Yyh+pioqvaphSexGUepxWcLkxQCrJKQYdIjd09hUmcx/5f/VCwBIKvyIfJcEYaRnon49sqDbXZMletGrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208495; c=relaxed/simple;
-	bh=rcuRA8I0NBD2/CFtUXTgi/PxiM02m39/4IdibUTzdW8=;
+	s=arc-20240116; t=1725208498; c=relaxed/simple;
+	bh=2g71342dXKGLNaoXBYyGXVpgqQqD+xpZji5M598HD7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDv7jbLdxraNO91ux48XfbT/RF2a3FCXnfc3glnFcjtq4ps0HSplJk+VuqZJYldEYgz7O0bw4CK1wIO7HbvhYDTjDZZuG+aT7osasPPwfaiwe6CmS0HsTWeQyKFY2Ui98PFa1dLwflkAGbr8SVBzvNs0lquw4jaQvTbbD7cRB2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2QGBUVj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKER8XPKRf5tWrDrAseG9EC5sMObtLXK1OSKPYSpovqXqwh4debYPOzi8gk56EjYW++hu6Yv8nzHds23cbmh4UNs//uuNhx+008jKRWmzkPD7GMp+9hAjMxFiS4zaUiMrUpfGpIzRITDoiv1MgeL01iPXjPIR8PhcAazZzyQlFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/QEydw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2QGBUVj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72760C4CEC3;
-	Sun,  1 Sep 2024 16:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/QEydw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF74C4CEC3;
+	Sun,  1 Sep 2024 16:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208494;
-	bh=rcuRA8I0NBD2/CFtUXTgi/PxiM02m39/4IdibUTzdW8=;
+	s=korg; t=1725208498;
+	bh=2g71342dXKGLNaoXBYyGXVpgqQqD+xpZji5M598HD7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2QGBUVjQeMiOiMggxe5MZ3LBPQncTUZ3G7RCA4bbwNvTjguiRefNO5qGM0eSH7+V
-	 vzq9xIBLS87o2IKpuGKQFmLEbhhioL4Z9kZxkApdXoRgsw1hvNTNrM+XJd2yWddre2
-	 vAwQXe4bXyu5xwxA8Tgz3MjfUYZPrlmZDPhQkYBw=
+	b=y/QEydw2OYe2KDubpdSFXKA9SPwNpNmTDOBOIo5P925UiaeFDEbkQDoLDv8G54R3g
+	 1EW3C6b824/NK5oCc+xd1ezCurLWN+ValGQTrADm/vRwk6thXD1Zb6EAL1IczGfI8L
+	 Syp9lkyFnikRSyNt0tFs39bClfUpnWd8hIVDpo+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	John Sperbeck <jsperbeck@google.com>
-Subject: [PATCH 6.10 100/149] net_sched: sch_fq: fix incorrect behavior for small weights
-Date: Sun,  1 Sep 2024 18:16:51 +0200
-Message-ID: <20240901160821.220956437@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 101/149] netfilter: nf_tables_ipv6: consider network offset in netdev/egress validation
+Date: Sun,  1 Sep 2024 18:16:52 +0200
+Message-ID: <20240901160821.257876915@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -53,48 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit bc21000e99f92a6b5540d7267c6b22806c5c33d3 ]
+[ Upstream commit 70c261d500951cf3ea0fcf32651aab9a65a91471 ]
 
-fq_dequeue() has a complex logic to find packets in one of the 3 bands.
+>From netdev/egress, skb->len can include the ethernet header, therefore,
+subtract network offset from skb->len when validating IPv6 packet length.
 
-As Neal found out, it is possible that one band has a deficit smaller
-than its weight. fq_dequeue() can return NULL while some packets are
-elligible for immediate transmit.
-
-In this case, more than one iteration is needed to refill pband->credit.
-
-With default parameters (weights 589824 196608 65536) bug can trigger
-if large BIG TCP packets are sent to the lowest priority band.
-
-Bisected-by: John Sperbeck <jsperbeck@google.com>
-Diagnosed-by: Neal Cardwell <ncardwell@google.com>
-Fixes: 29f834aa326e ("net_sched: sch_fq: add 3 bands and WRR scheduling")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Link: https://patch.msgid.link/20240824181901.953776-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_tables_ipv6.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 2389747256793..19a49af5a9e52 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -663,7 +663,9 @@ static struct sk_buff *fq_dequeue(struct Qdisc *sch)
- 			pband = &q->band_flows[q->band_nr];
- 			pband->credit = min(pband->credit + pband->quantum,
- 					    pband->quantum);
--			goto begin;
-+			if (pband->credit > 0)
-+				goto begin;
-+			retry = 0;
- 		}
- 		if (q->time_next_delayed_flow != ~0ULL)
- 			qdisc_watchdog_schedule_range_ns(&q->watchdog,
+diff --git a/include/net/netfilter/nf_tables_ipv6.h b/include/net/netfilter/nf_tables_ipv6.h
+index 467d59b9e5334..a0633eeaec977 100644
+--- a/include/net/netfilter/nf_tables_ipv6.h
++++ b/include/net/netfilter/nf_tables_ipv6.h
+@@ -31,8 +31,8 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ 	struct ipv6hdr *ip6h, _ip6h;
+ 	unsigned int thoff = 0;
+ 	unsigned short frag_off;
++	u32 pkt_len, skb_len;
+ 	int protohdr;
+-	u32 pkt_len;
+ 
+ 	ip6h = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb),
+ 				  sizeof(*ip6h), &_ip6h);
+@@ -43,7 +43,8 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ 		return -1;
+ 
+ 	pkt_len = ntohs(ip6h->payload_len);
+-	if (pkt_len + sizeof(*ip6h) > pkt->skb->len)
++	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
++	if (pkt_len + sizeof(*ip6h) > skb_len)
+ 		return -1;
+ 
+ 	protohdr = ipv6_find_hdr(pkt->skb, &thoff, -1, &frag_off, &flags);
 -- 
 2.43.0
 
