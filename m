@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F79A17B50B;
-	Sun,  1 Sep 2024 17:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB1E3B79C;
+	Sun,  1 Sep 2024 17:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210156; cv=none; b=DJ5Rq077uCmIn+6VOUm6UwHXzgCaSBe10IZ6s2SHS0gmM0a0jvy9XRtNhyyofBMDVhxElMw5wR8QDbibDlyI1vDeqxpzAY76FG0A1GhSNHO+LO1GM3gLIG7np4Bxnq0Mj61shAp2FMfyCwuZ0pPp6LPEJ8h80zVACLeRLHVJw78=
+	t=1725210159; cv=none; b=t5KRHCV1/0JoPLVVdw/S2hctERvapFHY1GxSx33e6bm9dnGTxMqjYgNglVB5ISt1FUty0YYd5Xi2ZsGsv6dLadB2MfDeOHl6wrrDkrB/1MWYDftANQD/WMC+AbyLD4I7VhC2Dk2UjcEUAhVAGENqtWcFN2a62jRiEQnHz71Y9/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210156; c=relaxed/simple;
-	bh=1HHSLjbvoZEW8AxHaPCjiIkj3pheG2oL/1EZaecGoaI=;
+	s=arc-20240116; t=1725210159; c=relaxed/simple;
+	bh=oEwSBkNc9yRulwyvbeYwF0gzOMV27oJNVTEny2ZqIEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pm6kwcV2QuMTn7aA0PnK52iTmtyTCZ0cfuilT4bCQGRZ0dPh7Km7vPxvyAZZAAW9JfStYojaz7cQAr535+d4OoFPYWYD3Vxyz1oQ7hyopNUlwUvvKCX/DQ5CUh9yGe2s9i78RbwzsjO0V543qI3yy3m2LdcTtYWkn314ZmU5IgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCz0sixs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYbW5YYO/47J5pUAXprq3Ld1lq1LA8FPC8QZ9BEqP3R7id3MVTm7Wq6A3OLe2I2vQyLn1yy7cwgMiA/Tosit+2ewDQez2w6Gq8w4qYfPqpqj7EZp2tgd4LgyPMBf4mhfXEUH3HK9NpH4QyfTmXafFqe/yugLldb28a9ygMs6Quc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0MAVbmT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCz0sixs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1ADEC4CEC3;
-	Sun,  1 Sep 2024 17:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0MAVbmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325D4C4CEC3;
+	Sun,  1 Sep 2024 17:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210156;
-	bh=1HHSLjbvoZEW8AxHaPCjiIkj3pheG2oL/1EZaecGoaI=;
+	s=korg; t=1725210159;
+	bh=oEwSBkNc9yRulwyvbeYwF0gzOMV27oJNVTEny2ZqIEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCz0sixs4Gxh7uTxGFuNn7IK3YGQHdMNxjRJG5gW/lTltNd+nilADh/v6d884Ayuk
-	 6n5cvwj5CNnvwVXnTg7V+H0A1F+K810yvOWl2HPmc4p/3H+qua85qTag/QfslsGzmT
-	 vCaF5N7fpxsr8ygAAHvjAyP9Gw6DVsxhK+pDI2vs=
+	b=a0MAVbmTq6kbgVGctOAYA4DwoKNBNLdFPBqHQHIz37ivUaFRo+JpQkIpsjGQ1SRlh
+	 dPPyrI48NmHTflRMLubVzQVPjkS7+zfwz2FtgulolAVbdzvj39MwbwP2uJ8eV8k4JL
+	 aeujC5pG0rSQHhAGExti7Ph7P/UEfmoIichGXb/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Philipp Stanner <pstanner@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/215] scsi: lpfc: Initialize status local variable in lpfc_sli4_repost_sgl_list()
-Date: Sun,  1 Sep 2024 18:16:26 +0200
-Message-ID: <20240901160826.149932580@linuxfoundation.org>
+Subject: [PATCH 5.15 075/215] media: drivers/media/dvb-core: copy user arrays safely
+Date: Sun,  1 Sep 2024 18:16:27 +0200
+Message-ID: <20240901160826.187838002@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,38 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Philipp Stanner <pstanner@redhat.com>
 
-[ Upstream commit 3d0f9342ae200aa1ddc4d6e7a573c6f8f068d994 ]
+[ Upstream commit 102fb77c2deb0df3683ef8ff7a6f4cf91dc456e2 ]
 
-A static code analyzer tool indicates that the local variable called status
-in the lpfc_sli4_repost_sgl_list() routine could be used to print garbage
-uninitialized values in the routine's log message.
+At several positions in dvb_frontend.c, memdup_user() is utilized to
+copy userspace arrays. This is done without overflow checks.
 
-Fix by initializing to zero.
+Use the new wrapper memdup_array_user() to copy the arrays more safely.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240131185112.149731-2-justintee8345@gmail.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/linux-media/20231102191633.52592-2-pstanner@redhat.com
+Suggested-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Philipp Stanner <pstanner@redhat.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvb_frontend.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 30bc72324f068..68b015bb6d157 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -7490,7 +7490,7 @@ lpfc_sli4_repost_sgl_list(struct lpfc_hba *phba,
- 	struct lpfc_sglq *sglq_entry = NULL;
- 	struct lpfc_sglq *sglq_entry_next = NULL;
- 	struct lpfc_sglq *sglq_entry_first = NULL;
--	int status, total_cnt;
-+	int status = 0, total_cnt;
- 	int post_cnt = 0, num_posted = 0, block_cnt = 0;
- 	int last_xritag = NO_XRI;
- 	LIST_HEAD(prep_sgl_list);
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index fea62bce97468..d76ac3ec93c2f 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -2160,7 +2160,8 @@ static int dvb_frontend_handle_compat_ioctl(struct file *file, unsigned int cmd,
+ 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
+ 			return -EINVAL;
+ 
+-		tvp = memdup_user(compat_ptr(tvps->props), tvps->num * sizeof(*tvp));
++		tvp = memdup_array_user(compat_ptr(tvps->props),
++					tvps->num, sizeof(*tvp));
+ 		if (IS_ERR(tvp))
+ 			return PTR_ERR(tvp);
+ 
+@@ -2191,7 +2192,8 @@ static int dvb_frontend_handle_compat_ioctl(struct file *file, unsigned int cmd,
+ 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
+ 			return -EINVAL;
+ 
+-		tvp = memdup_user(compat_ptr(tvps->props), tvps->num * sizeof(*tvp));
++		tvp = memdup_array_user(compat_ptr(tvps->props),
++					tvps->num, sizeof(*tvp));
+ 		if (IS_ERR(tvp))
+ 			return PTR_ERR(tvp);
+ 
+@@ -2368,7 +2370,8 @@ static int dvb_get_property(struct dvb_frontend *fe, struct file *file,
+ 	if (!tvps->num || tvps->num > DTV_IOCTL_MAX_MSGS)
+ 		return -EINVAL;
+ 
+-	tvp = memdup_user((void __user *)tvps->props, tvps->num * sizeof(*tvp));
++	tvp = memdup_array_user((void __user *)tvps->props,
++				tvps->num, sizeof(*tvp));
+ 	if (IS_ERR(tvp))
+ 		return PTR_ERR(tvp);
+ 
+@@ -2446,7 +2449,8 @@ static int dvb_frontend_handle_ioctl(struct file *file,
+ 		if (!tvps->num || (tvps->num > DTV_IOCTL_MAX_MSGS))
+ 			return -EINVAL;
+ 
+-		tvp = memdup_user((void __user *)tvps->props, tvps->num * sizeof(*tvp));
++		tvp = memdup_array_user((void __user *)tvps->props,
++					tvps->num, sizeof(*tvp));
+ 		if (IS_ERR(tvp))
+ 			return PTR_ERR(tvp);
+ 
 -- 
 2.43.0
 
