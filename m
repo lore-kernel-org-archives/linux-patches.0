@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0904814290C;
-	Sun,  1 Sep 2024 16:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EBB143C6E;
+	Sun,  1 Sep 2024 16:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207929; cv=none; b=t53QvEtSvOCV21Ig2p5RgTDufA+pzhaO3yXA5CeC1m8lEv2Lo0q+OTNzbH8UvfB3eY5Z54h0q1eis+XBrWJjzjsS3ga4Evn1UiRXp8Hd621tn5l5Jz8eA/BA+0iPsOOqP337RxoFy4FPjficAezt4EZ+HYWCFA/2tFUGm2AHzxs=
+	t=1725207931; cv=none; b=TPjimLJcwDsw6pxgO8Tb6vgcRTkhUnnO3YhJVxJlFkYZ9Gh3z81dHJXT/4teAbFSK4jlCX3BjVl5OcEUuhC57RYgLFPJdW/jUpfxSHhFWizQHPJrcBg7dI2gteGfGerSeJMYcYdtGd5w6MaJ1yZT0Wa+OIAXAbs+Ryb1YxfYOEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207929; c=relaxed/simple;
-	bh=2Z+2r9mx5Wa4qrqQzOaf2SomOJ+os7WddaXt0H7MuQk=;
+	s=arc-20240116; t=1725207931; c=relaxed/simple;
+	bh=MNbxKstlr0o7CmhBA6NhWp8hRr4a0eLwsABiKWdyj0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSvB1dD+764pGAXu5Q/RlS4PT68kphyQpd3CJAhQBLWtwu+x+g0Ltb3L28eCNnICKnEr8M+VSbbKfPkYwXH8EPyf52r4zHrphi6+Yr46Ln8I6D5p+k8y9MSIW34JXbhNhi736l1EnynsgWxqihqv1P+mH/vk4MDBThe8Bu9ZaT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeJVmbat; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i2xGv4E8TQO0pHoUPiy3wPzlk29IMy8dKW1yncw4FS3lbp9Zpr9uHeILu/36+utWYhtShMj42OX0dcuZ+zVFDPTjpdYeAEIj/Pg1FVekRv1pA3mr8AJnTW8j7WqyaW4DI2ZEjMlqMAXX502TzWVxfgQwZktAumUnWkwIJpqO0BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmbKAm3u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeJVmbat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AD0C4CEC3;
-	Sun,  1 Sep 2024 16:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmbKAm3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407BEC4CEC3;
+	Sun,  1 Sep 2024 16:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207928;
-	bh=2Z+2r9mx5Wa4qrqQzOaf2SomOJ+os7WddaXt0H7MuQk=;
+	s=korg; t=1725207931;
+	bh=MNbxKstlr0o7CmhBA6NhWp8hRr4a0eLwsABiKWdyj0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeJVmbatl6AuPX78bEPazDR5ePVoR7zA3QgjEzq/GKoW35mIMkYBqwMD9HgKlYbFM
-	 vBwK6vgDytRdcqeTLn7JxPR6iriuR+gzsS5EnoW8wAC2egfJCQn41Ds8mC2Wpidt6p
-	 mkB6N0EY2Qb3Mdai1FaRDnFNJaq7LQ+SQUURwow8=
+	b=VmbKAm3uNdgxbZeW2F5/QgBzs1ZkuzGEpdyr39OOfG0AZjX/evfOkKJaaYo23kuKC
+	 IA9l5AV2yCvFX4XWzxT3G3m2sb5eSogqcq4KIDd8Rd8ni6HVgw3v/u+ySfwz/EPgMZ
+	 GCKH46MBx5hbTEtgJgoS2DtHrc7VV8qudy8gg2HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 20/93] mptcp: pm: ADD_ADDR 0 is not a new address
-Date: Sun,  1 Sep 2024 18:16:07 +0200
-Message-ID: <20240901160808.121477060@linuxfoundation.org>
+Subject: [PATCH 6.6 21/93] selftests: mptcp: join: check removing ID 0 endpoint
+Date: Sun,  1 Sep 2024 18:16:08 +0200
+Message-ID: <20240901160808.158105680@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,78 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 57f86203b41c98b322119dfdbb1ec54ce5e3369b upstream.
+commit 5f94b08c001290acda94d9d8868075590931c198 upstream.
 
-The ADD_ADDR 0 with the address from the initial subflow should not be
-considered as a new address: this is not something new. If the host
-receives it, it simply means that the address is available again.
+Removing the endpoint linked to the initial subflow should trigger a
+RM_ADDR for the right ID, and the removal of the subflow. That's what is
+now being verified in the "delete and re-add" test.
 
-When receiving an ADD_ADDR for the ID 0, the PM already doesn't consider
-it as new by not incrementing the 'add_addr_accepted' counter. But the
-'accept_addr' might not be set if the limit has already been reached:
-this can be bypassed in this case. But before, it is important to check
-that this ADD_ADDR for the ID 0 is for the same address as the initial
-subflow. If not, it is not something that should happen, and the
-ADD_ADDR can be ignored.
+Note that removing the initial subflow will not decrement the 'subflows'
+counters, which corresponds to the *additional* subflows. On the other
+hand, when the same endpoint is re-added, it will increment this
+counter, as it will be seen as an additional subflow this time.
 
-Note that if an ADD_ADDR is received while there is already a subflow
-opened using the same address, this ADD_ADDR is ignored as well. It
-means that if multiple ADD_ADDR for ID 0 are received, there will not be
-any duplicated subflows created by the client.
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
-Fixes: d0876b2284cf ("mptcp: add the incoming RM_ADDR support")
+Fixes: 3ad14f54bd74 ("mptcp: more accurate MPC endpoint tracking")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c         |    4 +++-
- net/mptcp/pm_netlink.c |    9 +++++++++
- net/mptcp/protocol.h   |    2 ++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   25 +++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -227,7 +227,9 @@ void mptcp_pm_add_addr_received(const st
- 		} else {
- 			__MPTCP_INC_STATS(sock_net((struct sock *)msk), MPTCP_MIB_ADDADDRDROP);
- 		}
--	} else if (!READ_ONCE(pm->accept_addr)) {
-+	/* id0 should not have a different address */
-+	} else if ((addr->id == 0 && !mptcp_pm_nl_is_init_remote_addr(msk, addr)) ||
-+		   (addr->id > 0 && !READ_ONCE(pm->accept_addr))) {
- 		mptcp_pm_announce_addr(msk, addr, true);
- 		mptcp_pm_add_addr_send_ack(msk);
- 	} else if (mptcp_pm_schedule_work(msk, MPTCP_PM_ADD_ADDR_RECEIVED)) {
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -768,6 +768,15 @@ static void mptcp_pm_nl_add_addr_receive
- 	}
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3578,8 +3578,9 @@ endpoint_tests()
+ 
+ 	if reset_with_tcp_filter "delete and re-add" ns2 10.0.3.2 REJECT OUTPUT &&
+ 	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
+-		pm_nl_set_limits $ns1 0 2
+-		pm_nl_set_limits $ns2 0 2
++		pm_nl_set_limits $ns1 0 3
++		pm_nl_set_limits $ns2 0 3
++		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
+ 		test_linkfail=4 speed=20 \
+ 			run_tests $ns1 $ns2 10.0.1.1 &
+@@ -3588,17 +3589,17 @@ endpoint_tests()
+ 		wait_mpj $ns2
+ 		pm_nl_check_endpoint "creation" \
+ 			$ns2 10.0.2.2 id 2 flags subflow dev ns2eth2
+-		chk_subflow_nr "before delete" 2
++		chk_subflow_nr "before delete id 2" 2
+ 		chk_mptcp_info subflows 1 subflows 1
+ 
+ 		pm_nl_del_endpoint $ns2 2 10.0.2.2
+ 		sleep 0.5
+-		chk_subflow_nr "after delete" 1
++		chk_subflow_nr "after delete id 2" 1
+ 		chk_mptcp_info subflows 0 subflows 0
+ 
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
+ 		wait_mpj $ns2
+-		chk_subflow_nr "after re-add" 2
++		chk_subflow_nr "after re-add id 2" 2
+ 		chk_mptcp_info subflows 1 subflows 1
+ 
+ 		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
+@@ -3613,10 +3614,20 @@ endpoint_tests()
+ 		chk_subflow_nr "after no reject" 3
+ 		chk_mptcp_info subflows 2 subflows 2
+ 
++		pm_nl_del_endpoint $ns2 1 10.0.1.2
++		sleep 0.5
++		chk_subflow_nr "after delete id 0" 2
++		chk_mptcp_info subflows 2 subflows 2 # only decr for additional sf
++
++		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
++		wait_mpj $ns2
++		chk_subflow_nr "after re-add id 0" 3
++		chk_mptcp_info subflows 3 subflows 3
++
+ 		mptcp_lib_kill_wait $tests_pid
+ 
+-		chk_join_nr 3 3 3
+-		chk_rm_nr 1 1
++		chk_join_nr 4 4 4
++		chk_rm_nr 2 2
+ 	fi
  }
  
-+bool mptcp_pm_nl_is_init_remote_addr(struct mptcp_sock *msk,
-+				     const struct mptcp_addr_info *remote)
-+{
-+	struct mptcp_addr_info mpc_remote;
-+
-+	remote_address((struct sock_common *)msk, &mpc_remote);
-+	return mptcp_addresses_equal(&mpc_remote, remote, remote->port);
-+}
-+
- void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk)
- {
- 	struct mptcp_subflow_context *subflow;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -907,6 +907,8 @@ void mptcp_pm_add_addr_received(const st
- void mptcp_pm_add_addr_echoed(struct mptcp_sock *msk,
- 			      const struct mptcp_addr_info *addr);
- void mptcp_pm_add_addr_send_ack(struct mptcp_sock *msk);
-+bool mptcp_pm_nl_is_init_remote_addr(struct mptcp_sock *msk,
-+				     const struct mptcp_addr_info *remote);
- void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk);
- void mptcp_pm_rm_addr_received(struct mptcp_sock *msk,
- 			       const struct mptcp_rm_list *rm_list);
 
 
