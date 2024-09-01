@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6AF26AC1;
-	Sun,  1 Sep 2024 17:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEBB26AC1;
+	Sun,  1 Sep 2024 17:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210471; cv=none; b=UrlsJ/1DRTbmN5fLDBWwhyjoHodtvFb6w1doCoB+caX3JGDOFiQh3ADiPqxPEc+NtZDLequD0xSdAfHpXJQJEpEJdcBcZlv0ZMNxhss7ErAFd4tBDyfC0iuz6Syh7go2ub59e0xz1lwmQwn1GYLun5gh3sEWKfAtoFLBW4GbW5Q=
+	t=1725210474; cv=none; b=c6x4yRtJBd3CAZdci/UOYAkvXt9qqHp28wNyVG4bGyUjCWLmJI7kdJyDkF0glJX3wA/xF9lE13+Wf9M4WIjip9CsyDr8ixcyNj9u7ACH/6lEumiWtfnTrQSaPILeVkD2tpOrL0v819TGgCdWP4x6YMIDl8AxCPDevg4iR23G0qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210471; c=relaxed/simple;
-	bh=FPYnSwdPquWAh+GWXmaBVxMUo9JxrMLeT02fWqNe90o=;
+	s=arc-20240116; t=1725210474; c=relaxed/simple;
+	bh=MD74r7yAimuF+otA/1zGe4adHKweSK4vAHWN1hD4MZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccCG7lfmPL7KhaJXnfBrVen1TjgxrCH6E2dnrnjeWToe3ZmYz3qZr7hgDDppJXjPu6mP6JsMxfoRdxQtABL8I3R03NO8tTegV4ivsQhFXVLC7V4KxP6gsKtbKRvuRfbLw3uJUdtON0XGoLc0coi43cmWE45+0oSWzz57NhC9cHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHb+i/5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rcPu3PnrX9p2NxMtwLHnjY0K7UjUsScwUCpgMeGaPZlwcwIGSSBKvcFfWi5UqJoIV4Puod8YEsUsQ3fcps5duG6Gg0lD8JOln75kYwOJijCQa0RhiuRVWxYlP+3A41vfUveJvqv4Yv/awD8UvbWpCqlwGTBk3x+rPapls3yK/iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3FkwaRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHb+i/5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D83C4CEC3;
-	Sun,  1 Sep 2024 17:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3FkwaRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C4AC4CEC3;
+	Sun,  1 Sep 2024 17:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210471;
-	bh=FPYnSwdPquWAh+GWXmaBVxMUo9JxrMLeT02fWqNe90o=;
+	s=korg; t=1725210474;
+	bh=MD74r7yAimuF+otA/1zGe4adHKweSK4vAHWN1hD4MZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHb+i/5nmCV1TyQToT7sM5H9z8hHbgfIgveEOsFQ9rx8pDOBk5Q4qzdPowVqeMwTF
-	 rAWKHexNF2N13gFWnOhvqPFFbLhG7BxNkU1BPItRBXtdWp+H4+RWMyWEX5m7mubxx3
-	 3Imjo2RZAJJBoc2yc0mPsqS65Yc9vTf9lyekqAg0=
+	b=m3FkwaREvAH8PZVSy82qucX86lcJjHACg21++v0QHDlcmuqOLY0+qMhTSs44hPVrw
+	 S9Xo5C/9h+GOZu+vBxnYHOFoD+IcfDWqTbDNCYfGYyVNnR9PY6I3uOBuzBoegWFJ+g
+	 bI1t9yV1P+chq6zOOwlmJZReqcyXrjUHN1zACsvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Hao <yhao016@ucr.edu>,
-	Weiteng Chen <wchen130@ucr.edu>,
-	"Lee, Chun-Yi" <jlee@suse.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 172/215] Bluetooth: hci_ldisc: check HCI_UART_PROTO_READY flag in HCIUARTGETPROTO
-Date: Sun,  1 Sep 2024 18:18:04 +0200
-Message-ID: <20240901160829.865553697@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 199/215] net: busy-poll: use ktime_get_ns() instead of local_clock()
+Date: Sun,  1 Sep 2024 18:18:31 +0200
+Message-ID: <20240901160830.874937297@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,42 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee, Chun-Yi <joeyli.kernel@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 9c33663af9ad115f90c076a1828129a3fbadea98 upstream.
+[ Upstream commit 0870b0d8b393dde53106678a1e2cec9dfa52f9b7 ]
 
-This patch adds code to check HCI_UART_PROTO_READY flag before
-accessing hci_uart->proto. It fixes the race condition in
-hci_uart_tty_ioctl() between HCIUARTSETPROTO and HCIUARTGETPROTO.
-This issue bug found by Yu Hao and Weiteng Chen:
+Typically, busy-polling durations are below 100 usec.
 
-BUG: general protection fault in hci_uart_tty_ioctl [1]
+When/if the busy-poller thread migrates to another cpu,
+local_clock() can be off by +/-2msec or more for small
+values of HZ, depending on the platform.
 
-The information of C reproducer can also reference the link [2]
+Use ktimer_get_ns() to ensure deterministic behavior,
+which is the whole point of busy-polling.
 
-Reported-by: Yu Hao <yhao016@ucr.edu>
-Closes: https://lore.kernel.org/all/CA+UBctC3p49aTgzbVgkSZ2+TQcqq4fPDO7yZitFT5uBPDeCO2g@mail.gmail.com/ [1]
-Reported-by: Weiteng Chen <wchen130@ucr.edu>
-Closes: https://lore.kernel.org/lkml/CA+UBctDPEvHdkHMwD340=n02rh+jNRJNNQ5LBZNA+Wm4Keh2ow@mail.gmail.com/T/ [2]
-Signed-off-by: "Lee, Chun-Yi" <jlee@suse.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 060212928670 ("net: add low latency socket poll")
+Fixes: 9a3c71aa8024 ("net: convert low latency sockets to sched_clock()")
+Fixes: 37089834528b ("sched, net: Fixup busy_loop_us_clock()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20240827114916.223377-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ldisc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/busy_poll.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -768,7 +768,8 @@ static int hci_uart_tty_ioctl(struct tty
- 		break;
- 
- 	case HCIUARTGETPROTO:
--		if (test_bit(HCI_UART_PROTO_SET, &hu->flags))
-+		if (test_bit(HCI_UART_PROTO_SET, &hu->flags) &&
-+		    test_bit(HCI_UART_PROTO_READY, &hu->flags))
- 			err = hu->proto->id;
- 		else
- 			err = -EUNATCH;
+diff --git a/include/net/busy_poll.h b/include/net/busy_poll.h
+index 3459a04a3d61c..2c37aa0a4ccb9 100644
+--- a/include/net/busy_poll.h
++++ b/include/net/busy_poll.h
+@@ -63,7 +63,7 @@ static inline bool sk_can_busy_loop(struct sock *sk)
+ static inline unsigned long busy_loop_current_time(void)
+ {
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+-	return (unsigned long)(local_clock() >> 10);
++	return (unsigned long)(ktime_get_ns() >> 10);
+ #else
+ 	return 0;
+ #endif
+-- 
+2.43.0
+
 
 
