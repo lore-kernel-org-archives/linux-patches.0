@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4184C1DFD1;
-	Sun,  1 Sep 2024 16:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604A1DFD1;
+	Sun,  1 Sep 2024 16:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209333; cv=none; b=gR5rMw/OLrndUfypvREy6eDMCMVWGHrAhvWgmvt48caFTH8rB+9Vvjw+qq1UJt+K2+vNFVHVS44Dsg+qxqJpgMl3Rwky8whb1996DpKOPyKMmzBWT7TfXhJI7C2bJkK6NAtWqO8TjXUL/fe/JQvwgBnWHFx9paW9N1gW0+RG/Rg=
+	t=1725209336; cv=none; b=oYdY95HibWHQkxuJZFBXPUsx5K33ZKKptRhBITeG6B4B5PkTSzbmlDe4Mg49U9DvbBFLW/wyL0Df+gW12CMbZVxEaCzrM0YG5rkmlaK5LRAVTjqLoOctmuheRe6MDPqGAfm0QOTPgrT/y8qSYF/OSKzVdDWOsSyNvVS5nV5C6jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209333; c=relaxed/simple;
-	bh=2UJqfxfErCD5IBg93bNQ6JQmJt0VUnL/4/tkjmzU6mk=;
+	s=arc-20240116; t=1725209336; c=relaxed/simple;
+	bh=21g0eVuHV3TYsAtTMzZSDNTngDiSd4ZsDPoRJwEbLcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7LaTA9EQYh2FLy4G3AHdXqEIDZ4FS6wsXNgbW54AsrMJRb6axYCnBgAy6rYEeZiEgRnx9tBIJSQntqUBqKrgcsNYwzwp/G4pKx/lMx3ho/UzfhwzQCzBJ/vgIu8QbYgTmS4YS/ROuL4CA9wEdYirkOKEbFdOyAlIXovRogMn/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4wt9f62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0vS7fKwtycgc20gCuH5eUp4EVBv9yOrX8w5cOOz5JKy6FBCM5UTSUifK5PJ+0nB9mi3lhWkPH7qTOHmuNfuE3RCRv6SZzL+d8F6B1Iq0py/ojRomhaPju2fVZvAR3yzKfQ5P9lMyXrRkF2EwUIigL/iPCaT97pTyQhP1wST8ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgHXTign; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4wt9f62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB8EC4CEC3;
-	Sun,  1 Sep 2024 16:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgHXTign"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18AEC4CEC3;
+	Sun,  1 Sep 2024 16:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209333;
-	bh=2UJqfxfErCD5IBg93bNQ6JQmJt0VUnL/4/tkjmzU6mk=;
+	s=korg; t=1725209336;
+	bh=21g0eVuHV3TYsAtTMzZSDNTngDiSd4ZsDPoRJwEbLcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4wt9f62pVE83Q56txTM3I1LcsUlzU870mYZeGaAaKYp/Kq5V2QthNUtxldG9YzKE
-	 d7O7ht7LmLtiwGUwkDvo+fqrYqDVlFMgLCPLdw4CBbZ3/s2vZDZDfc3VS4t28NIpaB
-	 zrygs4m4u4JkiHsFfTcXrNs36q+u3PSs80qmJnf0=
+	b=HgHXTignJ5HVQFB0fy6BWvxkfnkmppAgZN9MvCstATYqzkcwHiuvx6+dBD4xxpNrN
+	 g62JR5BiOxErpyFY3qHEaVdipxdpVWoznaBVGYRAMzDtpCWIP5gbLedVsPRjj+I5e2
+	 9n+lalmF7AmHhzH2b2/ydSkqg4BGdRn21vbbAZIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 55/71] nfc: pn533: Add poll mod list filling check
-Date: Sun,  1 Sep 2024 18:18:00 +0200
-Message-ID: <20240901160803.965128423@linuxfoundation.org>
+	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 6.1 56/71] soc: qcom: cmd-db: Map shared memory as WC, not WB
+Date: Sun,  1 Sep 2024 18:18:01 +0200
+Message-ID: <20240901160804.002632972@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -52,62 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
 
-[ Upstream commit febccb39255f9df35527b88c953b2e0deae50e53 ]
+commit f9bb896eab221618927ae6a2f1d566567999839d upstream.
 
-In case of im_protocols value is 1 and tm_protocols value is 0 this
-combination successfully passes the check
-'if (!im_protocols && !tm_protocols)' in the nfc_start_poll().
-But then after pn533_poll_create_mod_list() call in pn533_start_poll()
-poll mod list will remain empty and dev->poll_mod_count will remain 0
-which lead to division by zero.
+Linux does not write into cmd-db region. This region of memory is write
+protected by XPU. XPU may sometime falsely detect clean cache eviction
+as "write" into the write protected region leading to secure interrupt
+which causes an endless loop somewhere in Trust Zone.
 
-Normally no im protocol has value 1 in the mask, so this combination is
-not expected by driver. But these protocol values actually come from
-userspace via Netlink interface (NFC_CMD_START_POLL operation). So a
-broken or malicious program may pass a message containing a "bad"
-combination of protocol parameter values so that dev->poll_mod_count
-is not incremented inside pn533_poll_create_mod_list(), thus leading
-to division by zero.
-Call trace looks like:
-nfc_genl_start_poll()
-  nfc_start_poll()
-    ->start_poll()
-    pn533_start_poll()
+The only reason it is working right now is because Qualcomm Hypervisor
+maps the same region as Non-Cacheable memory in Stage 2 translation
+tables. The issue manifests if we want to use another hypervisor (like
+Xen or KVM), which does not know anything about those specific mappings.
 
-Add poll mod list filling check.
+Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
+removes dependency on correct mappings in Stage 2 tables. This patch
+fixes the issue by updating the mapping to MEMREMAP_WC.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+I tested this on SA8155P with Xen.
 
-Fixes: dfccd0f58044 ("NFC: pn533: Add some polling entropy")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240827084822.18785-1-amishin@t-argos.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Tested-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Link: https://lore.kernel.org/r/20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/pn533/pn533.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/soc/qcom/cmd-db.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index f0cac19005527..2e0871409926b 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -1723,6 +1723,11 @@ static int pn533_start_poll(struct nfc_dev *nfc_dev,
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -354,7 +354,7 @@ static int cmd_db_dev_probe(struct platf
+ 		return -EINVAL;
  	}
  
- 	pn533_poll_create_mod_list(dev, im_protocols, tm_protocols);
-+	if (!dev->poll_mod_count) {
-+		nfc_err(dev->dev,
-+			"Poll mod list is empty\n");
-+		return -EINVAL;
-+	}
- 
- 	/* Do not always start polling from the same modulation */
- 	get_random_bytes(&rand_mod, sizeof(rand_mod));
--- 
-2.43.0
-
+-	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
++	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+ 	if (!cmd_db_header) {
+ 		ret = -ENOMEM;
+ 		cmd_db_header = NULL;
 
 
