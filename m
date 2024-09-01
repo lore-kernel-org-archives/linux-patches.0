@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD06213D53B;
-	Sun,  1 Sep 2024 16:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AB744C97;
+	Sun,  1 Sep 2024 16:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208077; cv=none; b=o72DwnR0DyzUlFS2ByApwv9bzvkAV/E084Tg3l8t8180HffteH/JeCBrKJEVemFMbNxWCncM6YSPPO/rov0JImDbTBbxDSx3CBdprOeIPUc5bynMmNj/kUfHbfgTSr0DU1qH66LjwJKm+V5rkRpjscsj8Qnyz5xlZsHvvkv5DYQ=
+	t=1725208081; cv=none; b=hNIqjGQaPr8X/stmU26D3CNs2oQn+9G45zAjp7js1ag/JHX3tN/tAO/Jm3YZosCajdjy2Hk5u+0naIIyGk+zN3q/FQBrStL4MxwqNRrBPW+YTxAaoucuZ3Wd/zwob/DfPu89QbRqQQJSQ7p1okQHn+rknilw5VRs5lMvE/r0WWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208077; c=relaxed/simple;
-	bh=PcY/rXvPdSDfCeN2mcCbs5PigRIV5g6O01WF7th56q4=;
+	s=arc-20240116; t=1725208081; c=relaxed/simple;
+	bh=RKJ3XHwUXQ+CmqcZpe63lAx82aj8utuPy6sX5fuvBQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUqvNd1rnLSNhXBDgBLgqha6+1Y1RIOpt4mIC+OV9on/d+RyX5sBCiLKt6n6/sXGNbKv/5+2zuaWDNR9vnc70F8oaJzRz2FU0KQULBEiEtcXkYNP4xzh5nIRfjVEfnGWmhl58siXaBEpkJ94tu7fEd3DPgm+RF3Hc1tejbg1zQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puIX40Sl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAFfhg0AB5ey0w033dCgti/0CGOKbfIOvgiY4r+BEIk3hUDC7/EgpzfsQLnu0HAQCCFozJSk/r1wLM5GVbliCdSiMCfMG/XHhGvMcFiGAVz5eqz03wh/WxzDx6UNJWy6Xi8K04/OL1wc67pHpx3JIURbo2d1QmjyKJgw8hKB34k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKYsVjcp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puIX40Sl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA42C4CEC3;
-	Sun,  1 Sep 2024 16:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKYsVjcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A25CC4CEC3;
+	Sun,  1 Sep 2024 16:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208077;
-	bh=PcY/rXvPdSDfCeN2mcCbs5PigRIV5g6O01WF7th56q4=;
+	s=korg; t=1725208081;
+	bh=RKJ3XHwUXQ+CmqcZpe63lAx82aj8utuPy6sX5fuvBQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puIX40Sl2Rw6X/XaWMBalvpBGAJO5blaq41sTzTnqVEM4UABlydk2JPoqf4YC3Uar
-	 CTUjluDceg/UCxrRbFs+DAI+n4Y59hLqzx/MAMUS6SaffYhiayzn9E5wv9I0Jc9TeQ
-	 O8Qxqtqm5yMsv4aZs9ienup4RdHbWMi7eR7QbWv8=
+	b=wKYsVjcpW0j1zXe7H8m97AW/Iq5SmvEcuUXHEY8B7O3KAXbkorZ0naUYU9cRDq31d
+	 ly1fKg/A2ryzaqpbog+RVmVbCQIDNjQmcq3J+DgAuOsLHsMMcmo9+r/8d8hTcGyAz0
+	 NKH/+myjogO2Crgl34eKsKgS6cpPIK54yNQKOMx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hal Feng <hal.feng@starfivetech.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 35/93] pinctrl: starfive: jh7110: Correct the level trigger configuration of iev register
-Date: Sun,  1 Sep 2024 18:16:22 +0200
-Message-ID: <20240901160808.681262344@linuxfoundation.org>
+Subject: [PATCH 6.6 36/93] ovl: pass string to ovl_parse_layer()
+Date: Sun,  1 Sep 2024 18:16:23 +0200
+Message-ID: <20240901160808.718507154@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -51,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hal Feng <hal.feng@starfivetech.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 639766ca10d1e218e257ae7eabe76814bae6ab89 ]
+[ Upstream commit 7eff3453cbd7e0bfc7524d59694119b5ca844778 ]
 
-A mistake was made in level trigger register configuration. Correct it.
+So it can be used for parsing the Opt_lowerdir.
 
-Fixes: 447976ab62c5 ("pinctrl: starfive: Add StarFive JH7110 sys controller driver")
-Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
-Link: https://lore.kernel.org/20240812070108.100923-1-hal.feng@starfivetech.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://lore.kernel.org/r/20240705011510.794025-2-chengzhihao1@huawei.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: ca76ac36bb60 ("ovl: fix wrong lowerdir number check for parameter Opt_lowerdir")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/overlayfs/params.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c b/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c
-index b4f7995726894..a3fee55479d20 100644
---- a/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c
-+++ b/drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c
-@@ -805,12 +805,12 @@ static int jh7110_irq_set_type(struct irq_data *d, unsigned int trigger)
- 	case IRQ_TYPE_LEVEL_HIGH:
- 		irq_type  = 0;    /* 0: level triggered */
- 		edge_both = 0;    /* 0: ignored */
--		polarity  = mask; /* 1: high level */
-+		polarity  = 0;    /* 0: high level */
+diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
+index 488f920f79d28..17b9c1838182d 100644
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -369,10 +369,9 @@ static void ovl_add_layer(struct fs_context *fc, enum ovl_opt layer,
+ 	}
+ }
+ 
+-static int ovl_parse_layer(struct fs_context *fc, struct fs_parameter *param,
+-			   enum ovl_opt layer)
++static int ovl_parse_layer(struct fs_context *fc, const char *layer_name, enum ovl_opt layer)
+ {
+-	char *name = kstrdup(param->string, GFP_KERNEL);
++	char *name = kstrdup(layer_name, GFP_KERNEL);
+ 	bool upper = (layer == Opt_upperdir || layer == Opt_workdir);
+ 	struct path path;
+ 	int err;
+@@ -586,7 +585,7 @@ static int ovl_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 	case Opt_datadir_add:
+ 	case Opt_upperdir:
+ 	case Opt_workdir:
+-		err = ovl_parse_layer(fc, param, opt);
++		err = ovl_parse_layer(fc, param->string, opt);
  		break;
- 	case IRQ_TYPE_LEVEL_LOW:
- 		irq_type  = 0;    /* 0: level triggered */
- 		edge_both = 0;    /* 0: ignored */
--		polarity  = 0;    /* 0: low level */
-+		polarity  = mask; /* 1: low level */
- 		break;
- 	default:
- 		return -EINVAL;
+ 	case Opt_default_permissions:
+ 		config->default_permissions = true;
 -- 
 2.43.0
 
