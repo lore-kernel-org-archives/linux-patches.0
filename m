@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106EA1C68C;
-	Sun,  1 Sep 2024 16:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A701C68C;
+	Sun,  1 Sep 2024 16:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208624; cv=none; b=TF9ObyOVakQux8hwI5BWvZUGP8gR7nrmaa3pbAdY9K+NqThpf/x6kK/K1KA4Hjt0dW9gnmw7nsEiNkLLkZhLLK7J7KWmr7pV8EqM0S+l8nGst1KmhUIvs1gpo9DGQjIrRA831wkW9TvNzvx9H6Hl56RxV+e/JaNQ3e2JIBi7pFg=
+	t=1725208627; cv=none; b=lgGfS2QcyLQn9ALWblT2DjXyZIGDOf2U7CsNNI88IK0UXiO5is1PXc2pB+wlvqrC9pHLW9YPOK4DId/dZULXH79Zc8O4pg+Wh7U3+BXAJdYykKLxf57lFFVKZJI1YlVrrwUj6brsXq733t5KHuykiaH4b6L+zhcciEtx+p5pMpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208624; c=relaxed/simple;
-	bh=i1EgrYOHDHeB5aomN/mKuRJI+g+nu+MtBYY+Ufnp79g=;
+	s=arc-20240116; t=1725208627; c=relaxed/simple;
+	bh=ft8nhVgfs7QsMnLVoIwHu4vrNDqgcEw5D5aRS5E4R4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbZ43OHjGud4ZWdGabLJg+OjETDA/e42wId7TYnf2gup9u6TfEY100D2m04pMOheSVOyYa445HW4C4kWSsQ40l4aNT5Mb0O5xKKeomd85uGwD1KEAQaq494OLu4Q3GzV1jTevmkhyn5x6ygdEAT7CIgUkF5tIMUAtvPDzfbpMsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqOw/H7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRBicViLjLj7sjiTtoso+rE4/Q70HDkSPEOsZX/9J8cCAaCEFYP5K5f+en4Z5G8kbnvoKN9BKKTpo7Z5ptjnze6fd6G/XIfA8/BJN0SWOQ/mNhM23mn/+uQcZJBZhDck0PJeFv1rNI0MLdDfNglsK2MMMrFJW17jUmY18xtISpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o69bB0am; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqOw/H7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0F0C4CEC3;
-	Sun,  1 Sep 2024 16:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o69bB0am"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DFEC4CEC3;
+	Sun,  1 Sep 2024 16:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208623;
-	bh=i1EgrYOHDHeB5aomN/mKuRJI+g+nu+MtBYY+Ufnp79g=;
+	s=korg; t=1725208627;
+	bh=ft8nhVgfs7QsMnLVoIwHu4vrNDqgcEw5D5aRS5E4R4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqOw/H7v0Ec8dJq00xZo9+ZTyQal4LumuEMZyUtITsyg9kQmNOaM53UlxxSq3aqHg
-	 rvREb76z9h8RyMAfNS5IJO7nCnY0FTCciA5twIqqfpor54nfwNWw5yg8lhwSW8IQcM
-	 NIOtwIDJNhIaK3HfEkoYDHhbSDHnrUPfcdD3DqCg=
+	b=o69bB0amop8lSQXofPb3BlK57FrR/eu/oueCmXwWvtu/B4e1eaE7yNAfF0Wns+TYJ
+	 rywbWX8mtX2TDdW9VVhF0SoG9Q84eeAeKTMHq3l7wRoisxPT+bYOjPPtfRHMc2mDv6
+	 3a7xgAD///oL4G+mfvV79pSZ1opChp4tZ/4j2ACE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 140/149] arm64: dts: qcom: ipq5332: Fix interrupt trigger type for usb
-Date: Sun,  1 Sep 2024 18:17:31 +0200
-Message-ID: <20240901160822.712276182@linuxfoundation.org>
+Subject: [PATCH 6.10 141/149] ARM: dts: omap3-n900: correct the accelerometer orientation
+Date: Sun,  1 Sep 2024 18:17:32 +0200
+Message-ID: <20240901160822.749642864@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,39 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
+From: Sicelo A. Mhlongo <absicsz@gmail.com>
 
-[ Upstream commit 60a76f7826b88ebf7697a56fdcd9596b23c2b616 ]
+[ Upstream commit 5062d9c0cbbc202e495e9b20f147f64ef5cc2897 ]
 
-Trigger type is incorrectly specified as IRQ_TYPE_EDGE_BOTH
-instead of IRQ_TYPE_LEVEL_HIGH. This trigger type is not
-supported for SPIs and results in probe failure with -EINVAL.
+Negate the values reported for the accelerometer z-axis in order to
+match Documentation/devicetree/bindings/iio/mount-matrix.txt.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Fixes: 927173bf8a0e ("arm64: dts: qcom: Add missing interrupts for qcs404/ipq5332")
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-Link: https://lore.kernel.org/r/20240723100151.402300-3-quic_varada@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 14a213dcb004 ("ARM: dts: n900: use iio driver for accelerometer")
+
+Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
+Reviewed-By: Andreas Kemnade <andreas@kemnade.info>
+Link: https://lore.kernel.org/r/20240722113137.3240847-1-absicsz@gmail.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/ti/omap/omap3-n900.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 770d9c2fb4562..e3064568f0221 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -321,8 +321,8 @@
- 			reg = <0x08af8800 0x400>;
+diff --git a/arch/arm/boot/dts/ti/omap/omap3-n900.dts b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
+index 07c5b963af78a..4bde3342bb959 100644
+--- a/arch/arm/boot/dts/ti/omap/omap3-n900.dts
++++ b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
+@@ -781,7 +781,7 @@
  
- 			interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 53 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 52 IRQ_TYPE_EDGE_BOTH>;
-+				     <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "pwr_event",
- 					  "dp_hs_phy_irq",
- 					  "dm_hs_phy_irq";
+ 		mount-matrix =	 "-1",  "0",  "0",
+ 				  "0",  "1",  "0",
+-				  "0",  "0",  "1";
++				  "0",  "0",  "-1";
+ 	};
+ 
+ 	cam1: camera@3e {
 -- 
 2.43.0
 
