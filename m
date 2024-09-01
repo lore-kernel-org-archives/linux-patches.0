@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0074A1C68C;
-	Sun,  1 Sep 2024 16:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD621E87B;
+	Sun,  1 Sep 2024 16:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209921; cv=none; b=fZqtGxNL6qV8O4qEWdWJfUkgZTuAq1y2uXtk0y7b/IQnLDrqykaHaphvAy4ZpsbXMPvWGJJFOEDmlTzjdxzcb8NnabtPRrYvy48nPswWjCrB7lytFaZldqS1FgWITQh17POp+TysUcp6krpe6zJ9Mtui+Ys2+BQXzWDe5eaVJwM=
+	t=1725209924; cv=none; b=MWduTcegYz4TCb+3J+aBoLuwKvwlwj2wzwxI7At2Z7aFYG5/AFgK6N5v6UNo5Qd/4/5LI2IT1Kb0DC1JQdIDBX+FtPjMXpddVirOESIxDdL2ning/pCAlnSUOvWpNWEGnIkLtf6BfVbRul4ttQL6qPuWL9u2Y8LXsVhhLecl/C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209921; c=relaxed/simple;
-	bh=NOrTVI/bTEtOki1+D75yNKmK/KJX1dkhLyWsOn8rCLE=;
+	s=arc-20240116; t=1725209924; c=relaxed/simple;
+	bh=jHevElhDfFwhCGrGRKjVGnT5Opj0rb07S3JIBDXiMY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxINZ2hsOyq7YbaEFHoh9OI/osede9p/YkfzEvtdsSqTTp11P/WiWNkD65Rt4OtRRrODdK6EAEN18xO3K50CUnxPIu0b/PtgkKA/VKlPx3O7B3lSsZvuGvORQsv4Deu2XjIUb/Kr472GaPzukgfPld6YhM+nKbNdKjcvxqiCdeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlUWDtmx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akW84m7nuLh/n2jK4/CTk2aPmCqL73F/SqA1NMOTmFRTAAuLkoxqbIYIyQXH1R7FvmugjhjMKQi0X9/O1YRAp8UUuEk9xvf4KqbW3ZrQlY0P521rZcHV3kbV/paWCrHggcXXrUBEclqDvwBhuRBAyf2aJtQ+fQGvXTLpf87owcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2FPHFSm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlUWDtmx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD04C4CEC3;
-	Sun,  1 Sep 2024 16:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2FPHFSm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A744EC4CEC3;
+	Sun,  1 Sep 2024 16:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209920;
-	bh=NOrTVI/bTEtOki1+D75yNKmK/KJX1dkhLyWsOn8rCLE=;
+	s=korg; t=1725209924;
+	bh=jHevElhDfFwhCGrGRKjVGnT5Opj0rb07S3JIBDXiMY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VlUWDtmx7tljQ7wW324wGYMR6e0Ebf2jFcioc686yk9H+9R5Tl5lwzS2xef5lLkA2
-	 mo5QUCUi5HSHsS1f5HOONt+xHRSkCXwRLb42EG8hIxX+OB30+ep1wDFgBamy6toGwo
-	 CF6LjziSNO4VVsczUfbpUmWWTxcMxN4pl0Uw3vKY=
+	b=i2FPHFSmTjSh6bXzN+zLcUvPVQwcVLU+1iCZA/JHTp/luIvRoD/IsOYfjNHwCATNC
+	 w9iO5cx2c7kgVrWj01UAHBps2HIL3fV+dujalsE6RyLvmuofJCpQ/nmgtPPb/ehcA9
+	 C4z54fPVLzhiQLl7UsPtPfRkkhMVzygb1J3BwC3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Pawel Dembicki <paweldembicki@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/215] net: dsa: vsc73xx: use read_poll_timeout instead delay loop
-Date: Sun,  1 Sep 2024 18:15:44 +0200
-Message-ID: <20240901160824.476457623@linuxfoundation.org>
+	syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Eli Billauer <eli.billauer@gmail.com>
+Subject: [PATCH 5.15 004/215] char: xillybus: Check USB endpoints when probing device
+Date: Sun,  1 Sep 2024 18:15:16 +0200
+Message-ID: <20240901160823.404189556@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -55,100 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Dembicki <paweldembicki@gmail.com>
+From: Eli Billauer <eli.billauer@gmail.com>
 
-[ Upstream commit eb7e33d01db3aec128590391b2397384bab406b6 ]
+commit 2374bf7558de915edc6ec8cb10ec3291dfab9594 upstream.
 
-Switch the delay loop during the Arbiter empty check from
-vsc73xx_adjust_link() to use read_poll_timeout(). Functionally,
-one msleep() call is eliminated at the end of the loop in the timeout
-case.
+Ensure, as the driver probes the device, that all endpoints that the
+driver may attempt to access exist and are of the correct type.
 
-As Russell King suggested:
+All XillyUSB devices must have a Bulk IN and Bulk OUT endpoint at
+address 1. This is verified in xillyusb_setup_base_eps().
 
-"This [change] avoids the issue that on the last iteration, the code reads
-the register, tests it, finds the condition that's being waiting for is
-false, _then_ waits and end up printing the error message - that last
-wait is rather useless, and as the arbiter state isn't checked after
-waiting, it could be that we had success during the last wait."
+On top of that, a XillyUSB device may have additional Bulk OUT
+endpoints. The information about these endpoints' addresses is deduced
+from a data structure (the IDT) that the driver fetches from the device
+while probing it. These endpoints are checked in setup_channels().
 
-Suggested-by: Russell King <linux@armlinux.org.uk>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
-Link: https://lore.kernel.org/r/20240417205048.3542839-2-paweldembicki@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: fa63c6434b6f ("net: dsa: vsc73xx: check busy flag in MDIO operations")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A XillyUSB device never has more than one IN endpoint, as all data
+towards the host is multiplexed in this single Bulk IN endpoint. This is
+why setup_channels() only checks OUT endpoints.
+
+Reported-by: syzbot+eac39cba052f2e750dbe@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://lore.kernel.org/all/0000000000001d44a6061f7a54ee@google.com/T/
+Fixes: a53d1202aef1 ("char: xillybus: Add driver for XillyUSB (Xillybus variant for USB)").
+Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
+Link: https://lore.kernel.org/r/20240816070200.50695-2-eli.billauer@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/vitesse-vsc73xx-core.c | 30 ++++++++++++++------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/char/xillybus/xillyusb.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
-index 15afb84155472..ce1c6d6eeb606 100644
---- a/drivers/net/dsa/vitesse-vsc73xx-core.c
-+++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
-@@ -17,6 +17,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/device.h>
-+#include <linux/iopoll.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
- #include <linux/of_mdio.h>
-@@ -269,6 +270,9 @@
- #define IS_7398(a) ((a)->chipid == VSC73XX_CHIPID_ID_7398)
- #define IS_739X(a) (IS_7395(a) || IS_7398(a))
+--- a/drivers/char/xillybus/xillyusb.c
++++ b/drivers/char/xillybus/xillyusb.c
+@@ -1889,6 +1889,13 @@ static const struct file_operations xill
  
-+#define VSC73XX_POLL_SLEEP_US		1000
-+#define VSC73XX_POLL_TIMEOUT_US		10000
+ static int xillyusb_setup_base_eps(struct xillyusb_dev *xdev)
+ {
++	struct usb_device *udev = xdev->udev;
 +
- struct vsc73xx_counter {
- 	u8 counter;
- 	const char *name;
-@@ -780,7 +784,7 @@ static void vsc73xx_adjust_link(struct dsa_switch *ds, int port,
- 	 * after a PHY or the CPU port comes up or down.
- 	 */
- 	if (!phydev->link) {
--		int maxloop = 10;
-+		int ret, err;
++	/* Verify that device has the two fundamental bulk in/out endpoints */
++	if (usb_pipe_type_check(udev, usb_sndbulkpipe(udev, MSG_EP_NUM)) ||
++	    usb_pipe_type_check(udev, usb_rcvbulkpipe(udev, IN_EP_NUM)))
++		return -ENODEV;
++
+ 	xdev->msg_ep = endpoint_alloc(xdev, MSG_EP_NUM | USB_DIR_OUT,
+ 				      bulk_out_work, 1, 2);
+ 	if (!xdev->msg_ep)
+@@ -1918,14 +1925,15 @@ static int setup_channels(struct xillyus
+ 			  __le16 *chandesc,
+ 			  int num_channels)
+ {
+-	struct xillyusb_channel *chan;
++	struct usb_device *udev = xdev->udev;
++	struct xillyusb_channel *chan, *new_channels;
+ 	int i;
  
- 		dev_dbg(vsc->dev, "port %d: went down\n",
- 			port);
-@@ -795,19 +799,17 @@ static void vsc73xx_adjust_link(struct dsa_switch *ds, int port,
- 				    VSC73XX_ARBDISC, BIT(port), BIT(port));
+ 	chan = kcalloc(num_channels, sizeof(*chan), GFP_KERNEL);
+ 	if (!chan)
+ 		return -ENOMEM;
  
- 		/* Wait until queue is empty */
--		vsc73xx_read(vsc, VSC73XX_BLOCK_ARBITER, 0,
--			     VSC73XX_ARBEMPTY, &val);
--		while (!(val & BIT(port))) {
--			msleep(1);
--			vsc73xx_read(vsc, VSC73XX_BLOCK_ARBITER, 0,
--				     VSC73XX_ARBEMPTY, &val);
--			if (--maxloop == 0) {
--				dev_err(vsc->dev,
--					"timeout waiting for block arbiter\n");
--				/* Continue anyway */
--				break;
--			}
--		}
-+		ret = read_poll_timeout(vsc73xx_read, err,
-+					err < 0 || (val & BIT(port)),
-+					VSC73XX_POLL_SLEEP_US,
-+					VSC73XX_POLL_TIMEOUT_US, false,
-+					vsc, VSC73XX_BLOCK_ARBITER, 0,
-+					VSC73XX_ARBEMPTY, &val);
-+		if (ret)
-+			dev_err(vsc->dev,
-+				"timeout waiting for block arbiter\n");
-+		else if (err < 0)
-+			dev_err(vsc->dev, "error reading arbiter\n");
+-	xdev->channels = chan;
++	new_channels = chan;
  
- 		/* Put this port into reset */
- 		vsc73xx_write(vsc, VSC73XX_BLOCK_MAC, port, VSC73XX_MAC_CFG,
--- 
-2.43.0
-
+ 	for (i = 0; i < num_channels; i++, chan++) {
+ 		unsigned int in_desc = le16_to_cpu(*chandesc++);
+@@ -1954,6 +1962,15 @@ static int setup_channels(struct xillyus
+ 		 */
+ 
+ 		if ((out_desc & 0x80) && i < 14) { /* Entry is valid */
++			if (usb_pipe_type_check(udev,
++						usb_sndbulkpipe(udev, i + 2))) {
++				dev_err(xdev->dev,
++					"Missing BULK OUT endpoint %d\n",
++					i + 2);
++				kfree(new_channels);
++				return -ENODEV;
++			}
++
+ 			chan->writable = 1;
+ 			chan->out_synchronous = !!(out_desc & 0x40);
+ 			chan->out_seekable = !!(out_desc & 0x20);
+@@ -1963,6 +1980,7 @@ static int setup_channels(struct xillyus
+ 		}
+ 	}
+ 
++	xdev->channels = new_channels;
+ 	return 0;
+ }
+ 
 
 
