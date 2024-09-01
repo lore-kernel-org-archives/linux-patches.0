@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886011DFD1;
-	Sun,  1 Sep 2024 16:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6581DFD1;
+	Sun,  1 Sep 2024 16:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209795; cv=none; b=Z7O4g/qJUuF8pNHwBQNf9PVGFqLFeNkOLEJAl+FBJrVDKqJFL+PbP0/RfkiXiGaW7HH9xzEly8QlE21FkLuJPa4ZBZain765Rv0PN6BYEPeoOu3SRiM7y1EkQytjlGxgvgBCRoI8MIktHD561+mktASL3UvZyTTQhtLFR9BHcqQ=
+	t=1725209798; cv=none; b=goA7Fqc5Fx706d3CeVS8KnVR9ED5ojojveQ9MxmzyGbVBijogt4ftNgbuvszxCelsD1EXL+fT5kFStmxzqMhs3StXOGvmMBiCaqGlPAXoLEfYDp+dWbQHI8zCmpuSeLwQsgkKm4jm/lk/Ul9Ey91TDfBfzcp3nesw4FHF2i9a14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209795; c=relaxed/simple;
-	bh=BNduLgJKXb5XvEbvZoLOyRoZv+rQYXMIndEqlqUOMR4=;
+	s=arc-20240116; t=1725209798; c=relaxed/simple;
+	bh=0KNd7XqUG2pW9CVxfPXRxAtzB0M5W61+F9ddmNC0FUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XYwn3KIkqhV1PY8gXn3t1cyJWPTzN6hzo5EjelJaZhS4Z+CfW7ywYdCe0yyzJAuc0E7S3ELbClJznrntm54brgpk2qGvoDRwttD1aUXUWPQg1kv6o9FI+cB0DsnGIjuW+ylYUdjzjFS9lh4yYwNTyKPfQbQc4baXChfDVievHzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiVMk7YW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XagNZbynLjJ5srcedYj0HZWe+EweiGMlH9oDT78A86eoDMi8bmjiZ1gAiHL7gW9SxXPBtwl/F2um+WJ8LfLdMbKQjIsB+FFnLYBzs7toQhLSbjv/bHihSqw1g5WP1T8H23zgbGf3sbw2qJiUvWCL7af9npK5aTjkSZi7MIJSplc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5UXs0Iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiVMk7YW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3A9C4CEC3;
-	Sun,  1 Sep 2024 16:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5UXs0Iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B05C4CEC3;
+	Sun,  1 Sep 2024 16:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209795;
-	bh=BNduLgJKXb5XvEbvZoLOyRoZv+rQYXMIndEqlqUOMR4=;
+	s=korg; t=1725209798;
+	bh=0KNd7XqUG2pW9CVxfPXRxAtzB0M5W61+F9ddmNC0FUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZiVMk7YWfdf3b4pkd6NxKSJ9wD5Bjxwnarh0g9m2rhgw27jN/yMpPt0EZwNBMB7Ps
-	 opoDiAg9S1QO+67mflg9fSsMacaU4KvZ3E8VjxDeUfLhj7wCaPAzEBBDd/aPXDqWQE
-	 EMvcgf78SmulF0KaauzYWmLww0MdLcylXKHhGe00=
+	b=D5UXs0IyXwXw5FuwQnaRax+nhfmxf9K1B9cbV9RXJNLa/tRh5AENuKkohJKY336V4
+	 +OwL1Rak7HxB751CW+bqA/9nIAAb7ot7JmKYB+F/eNpfUK7e0xkQYJCT8A7JIIf/rs
+	 0Zj+Az5u4zJ7JGxHW8uEMaoNJcfnEoIgCFhztRsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/151] Revert "Input: ioc3kbd - convert to platform remove callback returning void"
-Date: Sun,  1 Sep 2024 18:18:10 +0200
-Message-ID: <20240901160818.998146019@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 148/151] usb: dwc3: st: add missing depopulate in probe error path
+Date: Sun,  1 Sep 2024 18:18:28 +0200
+Message-ID: <20240901160819.681358285@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -46,60 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-This reverts commit 0096d223f78cb48db1ae8ae9fd56d702896ba8ae which is
-commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b upstream.
+commit cd4897bfd14f6a5388b21ba45a066541a0425199 upstream.
 
-It breaks the build and shouldn't be here, it was applied to make a
-follow-up one apply easier.
+Depopulate device in probe error paths to fix leak of children
+resources.
 
-Reported-by: Dominique Martinet <asmadeus@codewreck.org>
-Link: https://lore.kernel.org/r/Zs6hwNxk7QkCe7AW@codewreck.org
-Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230920125829.1478827-37-u.kleine-koenig@pengutronix.de
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Sasha Levin <sashal@kernel.org>
+Fixes: f83fca0707c6 ("usb: dwc3: add ST dwc3 glue layer to manage dwc3 HC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240814093957.37940-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/ioc3kbd.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-st.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/input/serio/ioc3kbd.c
-+++ b/drivers/input/serio/ioc3kbd.c
-@@ -190,7 +190,7 @@ static int ioc3kbd_probe(struct platform
+--- a/drivers/usb/dwc3/dwc3-st.c
++++ b/drivers/usb/dwc3/dwc3-st.c
+@@ -266,7 +266,7 @@ static int st_dwc3_probe(struct platform
+ 	if (!child_pdev) {
+ 		dev_err(dev, "failed to find dwc3 core device\n");
+ 		ret = -ENODEV;
+-		goto err_node_put;
++		goto depopulate;
+ 	}
+ 
+ 	dwc3_data->dr_mode = usb_get_dr_mode(&child_pdev->dev);
+@@ -282,6 +282,7 @@ static int st_dwc3_probe(struct platform
+ 	ret = st_dwc3_drd_init(dwc3_data);
+ 	if (ret) {
+ 		dev_err(dev, "drd initialisation failed\n");
++		of_platform_depopulate(dev);
+ 		goto undo_softreset;
+ 	}
+ 
+@@ -291,6 +292,8 @@ static int st_dwc3_probe(struct platform
+ 	platform_set_drvdata(pdev, dwc3_data);
  	return 0;
- }
  
--static void ioc3kbd_remove(struct platform_device *pdev)
-+static int ioc3kbd_remove(struct platform_device *pdev)
- {
- 	struct ioc3kbd_data *d = platform_get_drvdata(pdev);
- 
-@@ -198,6 +198,8 @@ static void ioc3kbd_remove(struct platfo
- 
- 	serio_unregister_port(d->kbd);
- 	serio_unregister_port(d->aux);
-+
-+	return 0;
- }
- 
- static const struct platform_device_id ioc3kbd_id_table[] = {
-@@ -208,7 +210,7 @@ MODULE_DEVICE_TABLE(platform, ioc3kbd_id
- 
- static struct platform_driver ioc3kbd_driver = {
- 	.probe          = ioc3kbd_probe,
--	.remove_new     = ioc3kbd_remove,
-+	.remove         = ioc3kbd_remove,
- 	.id_table	= ioc3kbd_id_table,
- 	.driver = {
- 		.name = "ioc3-kbd",
++depopulate:
++	of_platform_depopulate(dev);
+ err_node_put:
+ 	of_node_put(child);
+ undo_softreset:
 
 
