@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC9E2C1B4;
-	Sun,  1 Sep 2024 16:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDDC2C1B4;
+	Sun,  1 Sep 2024 16:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207632; cv=none; b=CWSKEMTa//QCrNxj4g9iXngzlZ44IZf8SNy1XDTTdfEE5B3nfRzWJowEnDG4iBEg8c1G9m7jCv+mOad3wsLVsvX3a7NmEiBhiRn5s4u41TWfQjdmKP+CyoQr68QPU1Ie1X9XCj9tGfK5T+zsfPj3pJ8+QGdeJH2OSV1usw6i5Bg=
+	t=1725207636; cv=none; b=QgDWuap6cQeH0Vs5G6SRnAFitfRAF3ouAYx6fJ8P8vVk2iIUfo6KFVKd1U4Keq2MIedFxTtn3aj01hJgvq4TdNARf9pIe221GwsTMAJvm1aG9CFCc4FM33z+syQB0aUXFUp5fL3wxaxxFea0rE+ZjbQ1G1J0v/VbbcViF71HIa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207632; c=relaxed/simple;
-	bh=tDjP8V8tBip5pTlVwKOHpJA7CeyDXvPdEY6s0OoGEfc=;
+	s=arc-20240116; t=1725207636; c=relaxed/simple;
+	bh=37jUno90uhltMdwfJXE65JQ/4aLRpX2ig3oX9TBH5f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+xQAwQrN8FacFPA1fmdDuLjP52/xyDmeicug04ZR68XTOEKBGf4qfvBY7Dih5Gb95LL3jrYGhXJX5w0HLXeVmSTJfQjViMLPPMleGqxxGrGUN1xH5xwtjSPSNKJH6HXFabl23EhMUdkA7oHKIPnXfMxmKS7ASROibY6rgK8ZiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKrRaIzQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bw1iy1+cm3THpG7Vja3xHaV2pcbkOwLSQD5A82rZ5rjZuuPsm8FO5y4MQCNyR41k39tavVnHKOtT/dEkyjVuIjIOVYnWudpwMgfAtKa7ZVOs/7JQXwVa93fQsJVM9FLuzR2DeTKnKSg+s/pXLKk89UmcH86VDdzrsUlcq1VLR2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzKA56Nm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKrRaIzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E83C4CEC3;
-	Sun,  1 Sep 2024 16:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzKA56Nm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4C9C4CEC3;
+	Sun,  1 Sep 2024 16:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207632;
-	bh=tDjP8V8tBip5pTlVwKOHpJA7CeyDXvPdEY6s0OoGEfc=;
+	s=korg; t=1725207635;
+	bh=37jUno90uhltMdwfJXE65JQ/4aLRpX2ig3oX9TBH5f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKrRaIzQcmKqJ8Kb3D0+ABwMRzu93IU2202j+7melJDwo9ENV1RYU86pvcXk9gKm/
-	 79GpuCNg0W8kz/RWril1Br+4fX/s5XmW7K+N5En/DIFm1bK72bEKW7ldZUYDGWyY5U
-	 qHAZwATqQcnmTgP/QD0dLC4F6CF5Ms4ctQjSFxM8=
+	b=SzKA56NmKsT7hWHIR/haDxeAB4IxGMk2W9+DabmlH+/Wm9HeiENlNPvKV9U48gTmq
+	 2rdAeBDILjgiAq8/ai7w0yr2PUYN1cIIGFBwFjQEJqzTA7Fz/nGUbFSY1XiVaLzPKI
+	 V6P6n3wBsGdkzyBdgVHZuGgYX6JBftKRhLblxER4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Creasey <sammy@sammy.net>,
-	Kees Cook <keescook@chromium.org>,
-	Simon Horman <horms@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 31/98] net/sun3_82586: Avoid reading past buffer in debug output
-Date: Sun,  1 Sep 2024 18:16:01 +0200
-Message-ID: <20240901160804.870981240@linuxfoundation.org>
+Subject: [PATCH 4.19 32/98] md: clean up invalid BUG_ON in md_ioctl
+Date: Sun,  1 Sep 2024 18:16:02 +0200
+Message-ID: <20240901160804.909907771@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -54,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 4bea747f3fbec33c16d369b2f51e55981d7c78d0 ]
+[ Upstream commit 9dd8702e7cd28ebf076ff838933f29cf671165ec ]
 
-Since NUM_XMIT_BUFFS is always 1, building m68k with sun3_defconfig and
--Warraybounds, this build warning is visible[1]:
+'disk->private_data' is set to mddev in md_alloc() and never set to NULL,
+and users need to open mddev before submitting ioctl. So mddev must not
+have been freed during ioctl, and there is no need to check mddev here.
+Clean up it.
 
-drivers/net/ethernet/i825xx/sun3_82586.c: In function 'sun3_82586_timeout':
-drivers/net/ethernet/i825xx/sun3_82586.c:990:122: warning: array subscript 1 is above array bounds of 'volatile struct transmit_cmd_struct *[1]' [-Warray-bounds=]
-  990 |                 printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
-      |                                                                                                               ~~~~~~~~~~~~^~~
-...
-drivers/net/ethernet/i825xx/sun3_82586.c:156:46: note: while referencing 'xmit_cmds'
-  156 |         volatile struct transmit_cmd_struct *xmit_cmds[NUM_XMIT_BUFFS];
-
-Avoid accessing index 1 since it doesn't exist.
-
-Link: https://github.com/KSPP/linux/issues/325 [1]
-Cc: Sam Creasey <sammy@sammy.net>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20240206161651.work.876-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240226031444.3606764-4-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/i825xx/sun3_82586.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
-index 1a86184d44c0a..e0c9fee4e1e65 100644
---- a/drivers/net/ethernet/i825xx/sun3_82586.c
-+++ b/drivers/net/ethernet/i825xx/sun3_82586.c
-@@ -990,7 +990,7 @@ static void sun3_82586_timeout(struct net_device *dev)
- 	{
- #ifdef DEBUG
- 		printk("%s: xmitter timed out, try to restart! stat: %02x\n",dev->name,p->scb->cus);
--		printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
-+		printk("%s: command-stats: %04x\n", dev->name, swab16(p->xmit_cmds[0]->cmd_status));
- 		printk("%s: check, whether you set the right interrupt number!\n",dev->name);
- #endif
- 		sun3_82586_close(dev);
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 68eb3220be1c9..6f463eec60b48 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -7245,11 +7245,6 @@ static int md_ioctl(struct block_device *bdev, fmode_t mode,
+ 
+ 	mddev = bdev->bd_disk->private_data;
+ 
+-	if (!mddev) {
+-		BUG();
+-		goto out;
+-	}
+-
+ 	/* Some actions do not requires the mutex */
+ 	switch (cmd) {
+ 	case GET_ARRAY_INFO:
 -- 
 2.43.0
 
