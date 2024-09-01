@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD077184536;
-	Sun,  1 Sep 2024 16:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A5F17E00C;
+	Sun,  1 Sep 2024 16:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209083; cv=none; b=NzCmNSoD7+DAnYD1O9SRZzFK+TY3eMUuKw6XsFoHFpn7HoNWkqFiRq9Y87pScWnMLx1zOMbIRqmjbjVIJ/byQXSCGrhYp3Cett3qwlHCNPWCKZIZv0LAUUU8UEFJs/ZzptMLYSOI7NmZczdWWj9MeyAmOU623xEqBRwp5aqx3Z4=
+	t=1725209086; cv=none; b=OmEmLskjrdagIvuxczHZku6epQYttbZYAwNQJYxuri/+OOG3BcnFmCjUWu2zzzUQhzcNVubhZJa8xstsD/8zBTgot9yH3WBe+qKp20/qUQpyfJ2dBA5McqEX1jlNrXSkoockC4t6WFV8jml51x28QMy4W3T/tddetqLHONfkbek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209083; c=relaxed/simple;
-	bh=HY3TNvcvns5LkXs+E/kss6hjgY7YvLiKee+xiidC+Uc=;
+	s=arc-20240116; t=1725209086; c=relaxed/simple;
+	bh=r4h7pHqMcKo3M7ktPkgyOxOxlpVfb4/NrFD0JtFvn9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgkDZWhSiohPaG6V6x4M9F8viEbvBlMOYswIcdMMuC2FqVeHs4AyjXQsGyiX3bx62y2hRdema/dd+vjJL/QEwvmbGcAEmQHLckeLQOzwAYquhNxcgGgUifZf3NPMliepb+3wCdsblgBm5cM9QoY9mpy9B9M92v8YhIqvXD89ykM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3Pord0X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cb4+LZ/4m27RVrHPelNjauqayxdhJh1RRP4ct7F5Fl+YRHc4nDly+rWq2R4te6X1e2KCyNaLnFbAHW9KH1YXoqBgrlkIc01bxfuKPEmy8Piv8rkOTu0r2muIcaIp1Va69hRLiQYljMzeA/7YRlTwGLUenkVFHKlWB/ryatMJY/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FptuRMTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3Pord0X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EEFC4CEC3;
-	Sun,  1 Sep 2024 16:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FptuRMTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C41C4CEC3;
+	Sun,  1 Sep 2024 16:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209083;
-	bh=HY3TNvcvns5LkXs+E/kss6hjgY7YvLiKee+xiidC+Uc=;
+	s=korg; t=1725209086;
+	bh=r4h7pHqMcKo3M7ktPkgyOxOxlpVfb4/NrFD0JtFvn9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3Pord0XZronu10XDoZGX+V98Bmaz8h/Fx0iqGfODtUwv/RAG+3UJ0LN6q4+4SkdE
-	 //ZHIhxJFdtHsDCzlh9ulmk8a8Ba0g9cxceNWGS6GTSY0exTg0dTXVRcWTEWkfShIX
-	 cHq/VFzee8zBFDeMNSkS+c6vYkA7bS8M+oi8d/f8=
+	b=FptuRMTkadiKmmVAiB6+fWmlcfZGKIHV47oawalGluwcZJTxbnH+fXdqhCQcF4/LJ
+	 mG03Wk0R7748HQjlotr0COA5ckhZaaC/MV3uqB4/SDhBoGdiFPGSIsgxzx3drn7U+d
+	 uBhXi54cvRZVph9tnSbT8Oq3liHNC1lin0REZri4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
+	Johan Hovold <johan@kernel.org>,
+	Lars Poeschel <poeschel@lemonage.de>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/134] net: dsa: mv88e6xxx: global1_atu: Add helper for get next
-Date: Sun,  1 Sep 2024 18:17:13 +0200
-Message-ID: <20240901160813.376332202@linuxfoundation.org>
+Subject: [PATCH 5.4 122/134] nfc: pn533: Add dev_up/dev_down hooks to phy_ops
+Date: Sun,  1 Sep 2024 18:17:48 +0200
+Message-ID: <20240901160814.672236778@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -51,87 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Lars Poeschel <poeschel@lemonage.de>
 
-[ Upstream commit c5f299d592617847124900d75e5765cb0368ffae ]
+[ Upstream commit 0bf2840ccc6efcba82d83b224dcde19dea9f1ee3 ]
 
-When retrieving the ATU statistics, and ATU get next has to be
-performed to trigger the ATU to collect the statistics. Export a
-helper from global1_atu to perform this.
+This adds hooks for dev_up and dev_down to the phy_ops. They are
+optional.
+The idea is to inform the phy driver when the nfc chip is really going
+to be used. When it is not used, the phy driver can suspend it's
+interface to the nfc chip to save some power. The nfc chip is considered
+not in use before dev_up and after dev_down.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Cc: Johan Hovold <johan@kernel.org>
+Signed-off-by: Lars Poeschel <poeschel@lemonage.de>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 528876d867a2 ("net: dsa: mv88e6xxx: Fix out-of-bound access")
+Stable-dep-of: febccb39255f ("nfc: pn533: Add poll mod list filling check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/global1.h     |  1 +
- drivers/net/dsa/mv88e6xxx/global1_atu.c |  5 +++++
- drivers/net/dsa/mv88e6xxx/global2.c     | 11 ++---------
- drivers/net/dsa/mv88e6xxx/global2.h     |  2 +-
- 4 files changed, 9 insertions(+), 10 deletions(-)
+ drivers/nfc/pn533/pn533.c | 12 +++++++++++-
+ drivers/nfc/pn533/pn533.h |  9 +++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/global1.h b/drivers/net/dsa/mv88e6xxx/global1.h
-index 0ae96a1e919b6..dc44e197817a8 100644
---- a/drivers/net/dsa/mv88e6xxx/global1.h
-+++ b/drivers/net/dsa/mv88e6xxx/global1.h
-@@ -339,5 +339,6 @@ int mv88e6390_g1_vtu_loadpurge(struct mv88e6xxx_chip *chip,
- int mv88e6xxx_g1_vtu_flush(struct mv88e6xxx_chip *chip);
- int mv88e6xxx_g1_vtu_prob_irq_setup(struct mv88e6xxx_chip *chip);
- void mv88e6xxx_g1_vtu_prob_irq_free(struct mv88e6xxx_chip *chip);
-+int mv88e6xxx_g1_atu_get_next(struct mv88e6xxx_chip *chip, u16 fid);
- 
- #endif /* _MV88E6XXX_GLOBAL1_H */
-diff --git a/drivers/net/dsa/mv88e6xxx/global1_atu.c b/drivers/net/dsa/mv88e6xxx/global1_atu.c
-index 792a96ef418ff..d655a96f27f0a 100644
---- a/drivers/net/dsa/mv88e6xxx/global1_atu.c
-+++ b/drivers/net/dsa/mv88e6xxx/global1_atu.c
-@@ -122,6 +122,11 @@ static int mv88e6xxx_g1_atu_op(struct mv88e6xxx_chip *chip, u16 fid, u16 op)
- 	return mv88e6xxx_g1_atu_op_wait(chip);
- }
- 
-+int mv88e6xxx_g1_atu_get_next(struct mv88e6xxx_chip *chip, u16 fid)
-+{
-+	return mv88e6xxx_g1_atu_op(chip, fid, MV88E6XXX_G1_ATU_OP_GET_NEXT_DB);
-+}
-+
- /* Offset 0x0C: ATU Data Register */
- 
- static int mv88e6xxx_g1_atu_data_read(struct mv88e6xxx_chip *chip,
-diff --git a/drivers/net/dsa/mv88e6xxx/global2.c b/drivers/net/dsa/mv88e6xxx/global2.c
-index 6059c244373c8..4d4bd4a162815 100644
---- a/drivers/net/dsa/mv88e6xxx/global2.c
-+++ b/drivers/net/dsa/mv88e6xxx/global2.c
-@@ -288,16 +288,9 @@ int mv88e6xxx_g2_atu_stats_set(struct mv88e6xxx_chip *chip, u16 kind, u16 bin)
- 				  kind | bin);
- }
- 
--int mv88e6xxx_g2_atu_stats_get(struct mv88e6xxx_chip *chip)
-+int mv88e6xxx_g2_atu_stats_get(struct mv88e6xxx_chip *chip, u16 *stats)
+diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
+index 1e90ff17f87db..c36cd68b47eb5 100644
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -2465,6 +2465,9 @@ static int pn533_dev_up(struct nfc_dev *nfc_dev)
  {
--	int err;
--	u16 val;
--
--	err = mv88e6xxx_g2_read(chip, MV88E6XXX_G2_ATU_STATS, &val);
--	if (err)
--		return err;
--
--	return val & MV88E6XXX_G2_ATU_STATS_MASK;
-+	return mv88e6xxx_g2_read(chip, MV88E6XXX_G2_ATU_STATS, stats);
+ 	struct pn533 *dev = nfc_get_drvdata(nfc_dev);
+ 
++	if (dev->phy_ops->dev_up)
++		dev->phy_ops->dev_up(dev);
++
+ 	if (dev->device_type == PN533_DEVICE_PN532) {
+ 		int rc = pn532_sam_configuration(nfc_dev);
+ 
+@@ -2477,7 +2480,14 @@ static int pn533_dev_up(struct nfc_dev *nfc_dev)
+ 
+ static int pn533_dev_down(struct nfc_dev *nfc_dev)
+ {
+-	return pn533_rf_field(nfc_dev, 0);
++	struct pn533 *dev = nfc_get_drvdata(nfc_dev);
++	int ret;
++
++	ret = pn533_rf_field(nfc_dev, 0);
++	if (dev->phy_ops->dev_down && !ret)
++		dev->phy_ops->dev_down(dev);
++
++	return ret;
  }
  
- /* Offset 0x0F: Priority Override Table */
-diff --git a/drivers/net/dsa/mv88e6xxx/global2.h b/drivers/net/dsa/mv88e6xxx/global2.h
-index 0e0ecf78f5ea7..a0cc40e7c2508 100644
---- a/drivers/net/dsa/mv88e6xxx/global2.h
-+++ b/drivers/net/dsa/mv88e6xxx/global2.h
-@@ -364,7 +364,7 @@ extern const struct mv88e6xxx_gpio_ops mv88e6352_gpio_ops;
- int mv88e6xxx_g2_scratch_gpio_set_smi(struct mv88e6xxx_chip *chip,
- 				      bool external);
- int mv88e6xxx_g2_atu_stats_set(struct mv88e6xxx_chip *chip, u16 kind, u16 bin);
--int mv88e6xxx_g2_atu_stats_get(struct mv88e6xxx_chip *chip);
-+int mv88e6xxx_g2_atu_stats_get(struct mv88e6xxx_chip *chip, u16 *stats);
+ static struct nfc_ops pn533_nfc_ops = {
+diff --git a/drivers/nfc/pn533/pn533.h b/drivers/nfc/pn533/pn533.h
+index 8bf9d6ece0f50..570ee0a3e832b 100644
+--- a/drivers/nfc/pn533/pn533.h
++++ b/drivers/nfc/pn533/pn533.h
+@@ -207,6 +207,15 @@ struct pn533_phy_ops {
+ 			  struct sk_buff *out);
+ 	int (*send_ack)(struct pn533 *dev, gfp_t flags);
+ 	void (*abort_cmd)(struct pn533 *priv, gfp_t flags);
++	/*
++	 * dev_up and dev_down are optional.
++	 * They are used to inform the phy layer that the nfc chip
++	 * is going to be really used very soon. The phy layer can then
++	 * bring up it's interface to the chip and have it suspended for power
++	 * saving reasons otherwise.
++	 */
++	void (*dev_up)(struct pn533 *priv);
++	void (*dev_down)(struct pn533 *priv);
+ };
  
- #else /* !CONFIG_NET_DSA_MV88E6XXX_GLOBAL2 */
  
 -- 
 2.43.0
