@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B3944393;
-	Sun,  1 Sep 2024 16:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA35244393;
+	Sun,  1 Sep 2024 16:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209557; cv=none; b=PRHXN0KHSrwf0/830opZhJnWukA+PviNaHzqT15qI8kczIABF2ZUEIgK83AFfD9fyIkzTkNP+Ek6EDwpS+LjfTF8ANkNf7AIyr1Um2U/SpwoebQ+BFFdNcgoiv5SuqkyVkETZECX25Ev+fPw5HBT34yhJqd6oAfO8atVFBQL5vc=
+	t=1725209560; cv=none; b=KijF5VaSaiy5nrSlggslV+7JUq1m7Q8rk2MpBBQEYNSuuaRm2wfoSDnzqDNjpERimHtfr2s6xx0Eca1AgHynGSznAslEF9qBMteW4sRILciTfgiuy/tABxG7z8Ud+w0uIBvdFWQ2LDv2fd38RhapipLzdE91hru7cSuO8gus18g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209557; c=relaxed/simple;
-	bh=r1j2cqFG0lQo3EpNK5Em0osHvvOKDSMbWAMp/xvEDRE=;
+	s=arc-20240116; t=1725209560; c=relaxed/simple;
+	bh=EZPa8LkzmanPLRFK3kcsrJ4CNWlk9EWcmDh/Ya/Qk/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWvNoTTH3fd7SikP1rKLyn21gIyWAqFfZfzKD16Nyr1V/4ABkQT6nlHJwY7W7jREl4SYASpacZ3lnnJZmy3SGXMYCrGKSdSEwvoEJ895b2Za59ajBJEDtFTul+UYLa/gi14wx7qMNZAzeWDfnpxru1h8B7EIWAjYG/ntPWb/r9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nP0VVREx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgoeL20mikMmGb4hhiuCZoI2fHWDWaK/GmorlnBJmZRklqthSohKbKbdzM06S6ZQUZ1VGaQsTHSD01n67FI0foh0PsL0kc8FbSLNdZa0cZxXV1TLtTzDuw45aW8ih7HuBW01uqhyFgftplgqZwK3bvbrM/5vKIzCNudtmKidVWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSM7xNOw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nP0VVREx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03649C4CEC3;
-	Sun,  1 Sep 2024 16:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSM7xNOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B94C4CEC3;
+	Sun,  1 Sep 2024 16:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209557;
-	bh=r1j2cqFG0lQo3EpNK5Em0osHvvOKDSMbWAMp/xvEDRE=;
+	s=korg; t=1725209560;
+	bh=EZPa8LkzmanPLRFK3kcsrJ4CNWlk9EWcmDh/Ya/Qk/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nP0VVREx/N8ibDsdpS/LAhlSk6j+BNJsrwNp+eQCJMEeUPBE0gpYOnY8jIW8Tb0zs
-	 dG9R45VXMZZsWv5EalGNKg87iyzyYwYO6o5h+oKMX3aju7JspNXfP1yFp4b/KD5Sjl
-	 pWNpS5ZhKRqSS/7ryVdJHBu0ijPYtfYRgDryzB5Q=
+	b=WSM7xNOwpOnstiJgr+7tGiZFNqCVy9Y3+0UA3wlu08NaEuaB5k7DLFIMEccLgHcKE
+	 udyZpaxdBJ2NysaTAfAD0jb/OtHFMX48d/WlJD4GMCOIgODXxgKeOjAZmgiqKuCfX9
+	 YpRbmpuVSO5SIE5ixeV9OLgPGmYtfoC+V2P/VsBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oreoluwa Babatunde <quic_obabatun@quicinc.com>,
-	Stafford Horne <shorne@gmail.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/151] openrisc: Call setup_memory() earlier in the init sequence
-Date: Sun,  1 Sep 2024 18:17:14 +0200
-Message-ID: <20240901160816.898477232@linuxfoundation.org>
+Subject: [PATCH 5.10 075/151] s390/iucv: fix receive buffer virtual vs physical address confusion
+Date: Sun,  1 Sep 2024 18:17:15 +0200
+Message-ID: <20240901160816.935764301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -51,52 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit 7b432bf376c9c198a7ff48f1ed14a14c0ffbe1fe ]
+[ Upstream commit 4e8477aeb46dfe74e829c06ea588dd00ba20c8cc ]
 
-The unflatten_and_copy_device_tree() function contains a call to
-memblock_alloc(). This means that memblock is allocating memory before
-any of the reserved memory regions are set aside in the setup_memory()
-function which calls early_init_fdt_scan_reserved_mem(). Therefore,
-there is a possibility for memblock to allocate from any of the
-reserved memory regions.
+Fix IUCV_IPBUFLST-type buffers virtual vs physical address confusion.
+This does not fix a bug since virtual and physical address spaces are
+currently the same.
 
-Hence, move the call to setup_memory() to be earlier in the init
-sequence so that the reserved memory regions are set aside before any
-allocations are done using memblock.
-
-Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/setup.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/iucv/iucv.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/openrisc/kernel/setup.c b/arch/openrisc/kernel/setup.c
-index c6f9e7b9f7cb2..8c65810eeca24 100644
---- a/arch/openrisc/kernel/setup.c
-+++ b/arch/openrisc/kernel/setup.c
-@@ -284,6 +284,9 @@ void calibrate_delay(void)
- 
- void __init setup_arch(char **cmdline_p)
- {
-+	/* setup memblock allocator */
-+	setup_memory();
-+
- 	unflatten_and_copy_device_tree();
- 
- 	setup_cpuinfo();
-@@ -310,9 +313,6 @@ void __init setup_arch(char **cmdline_p)
- 	}
- #endif
- 
--	/* setup memblock allocator */
--	setup_memory();
--
- 	/* paging_init() sets up the MMU and marks all pages as reserved */
- 	paging_init();
- 
+diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
+index 06770b77e5d22..be5f598acbce2 100644
+--- a/net/iucv/iucv.c
++++ b/net/iucv/iucv.c
+@@ -1088,8 +1088,7 @@ static int iucv_message_receive_iprmdata(struct iucv_path *path,
+ 		size = (size < 8) ? size : 8;
+ 		for (array = buffer; size > 0; array++) {
+ 			copy = min_t(size_t, size, array->length);
+-			memcpy((u8 *)(addr_t) array->address,
+-				rmmsg, copy);
++			memcpy(phys_to_virt(array->address), rmmsg, copy);
+ 			rmmsg += copy;
+ 			size -= copy;
+ 		}
 -- 
 2.43.0
 
