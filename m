@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657A42C190;
-	Sun,  1 Sep 2024 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C0426AC1;
+	Sun,  1 Sep 2024 17:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210417; cv=none; b=HPZsQ61IZdjzyPUD0PM6j8emmyHmcHydaaofUDa0DVwUWYnsMjwS3AgZjjpgaBxSEUlAFPskBIP67qIWZUT+YlHWejlUrS2ljv+aPOum+nkA1q60KmCb9IhyGxJNzrrS51Zp3nBfefxgMPNGFe50ZHCjj15qoB/wSIN3sWKuprc=
+	t=1725210420; cv=none; b=gVpHK75nFlOAxMl3nnY4GG8LXLIgROyBY+HfIzU/NDdlNb2j/tp3QvAmUHbuf1LnUGV4ad6zDR9NLN96C2Tp0Bk1kRvI0E8vcm25+1PuNeQ2UAXyrkjacanwJnKAjLh2buO9So3O/hEDGj368Yo80GExsiRCLY1lwOYEM/PNAGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210417; c=relaxed/simple;
-	bh=kcoFN6EQSB+KIF19PqJZbDeAKnKpmwAcEmOIo2gH1mI=;
+	s=arc-20240116; t=1725210420; c=relaxed/simple;
+	bh=0bq8dO+o4EyDs5jqZWGQA2vljOhGezsfK7qy96DG1T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C68J1cNPVd2DFrOYAFAKtAOJ5yQXMbQRalyLQYvJWyYM3sDqtJlMm/xhUu5XECW1jnVHjXSG1KCywedwKERD00LZ8Htv9iNvR4ZkWV0/1mu4KYaX5Dg4YQIZCYPWjpj5NN8hxcgS6vi6FvAP2NNQuLU+dDfp4Z9OqAjC86p9k+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOXiN40Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYO/tLY+QPfIWxWOv/60FLVA4azIoOjjpKrX+nVjsZvw2y2yhthzbSTSZHvWHb4aIhsxp/AwhkRBFP+gURtimaNC3FMWQlLAJVD1D8MZsZTPehfPNxHbeS555tzZc/yedd02jECOoIKhfVvTPR572C0lngCeULn/LIVBIGusJIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhwSaRNn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOXiN40Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E225BC4CEC3;
-	Sun,  1 Sep 2024 17:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhwSaRNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293C3C4CEC3;
+	Sun,  1 Sep 2024 17:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210417;
-	bh=kcoFN6EQSB+KIF19PqJZbDeAKnKpmwAcEmOIo2gH1mI=;
+	s=korg; t=1725210420;
+	bh=0bq8dO+o4EyDs5jqZWGQA2vljOhGezsfK7qy96DG1T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOXiN40ZEr1kzGJ/++N2Wo6Ac9BAldA9mYRY/8+Dhbalc346qTaMImY6ULDK52nk9
-	 YPv+S5j1kwJ5UdTKOJxoflFCfTLcycy6neJ3aLKBBGGW/RUKtbfk+nQ/7QtKJ8rNot
-	 oSCRiczU/jJhAvWDCgVyeVM7LdtkIHYSiSk1aG0o=
+	b=LhwSaRNnPYafnOyWIwRphQ3DEP8Eyya6ldq/6zwGjDfQc8PNaKRykbW7nXyLI/P1S
+	 nkeeE8BgBOCdkb0gaI6zwQ3YaN3Baf7UB2+ssjYGRWFhenuF95HSLJC+csPwGTaTtS
+	 bDPGbd5f+oqDS+H6ZX9UfVFmIATf+E1qzrPgH1V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Oleksandr Tymoshenko <ovt@google.com>
-Subject: [PATCH 5.15 184/215] ata: libata-core: Fix null pointer dereference on error
-Date: Sun,  1 Sep 2024 18:18:16 +0200
-Message-ID: <20240901160830.314483765@linuxfoundation.org>
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 5.15 185/215] cgroup/cpuset: Prevent UAF in proc_cpuset_show()
+Date: Sun,  1 Sep 2024 18:18:17 +0200
+Message-ID: <20240901160830.351279942@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,73 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Chen Ridong <chenridong@huawei.com>
 
-commit 5d92c7c566dc76d96e0e19e481d926bbe6631c1e upstream.
+commit 1be59c97c83ccd67a519d8a49486b3a8a73ca28a upstream.
 
-If the ata_port_alloc() call in ata_host_alloc() fails,
-ata_host_release() will get called.
+An UAF can happen when /proc/cpuset is read as reported in [1].
 
-However, the code in ata_host_release() tries to free ata_port struct
-members unconditionally, which can lead to the following:
+This can be reproduced by the following methods:
+1.add an mdelay(1000) before acquiring the cgroup_lock In the
+ cgroup_path_ns function.
+2.$cat /proc/<pid>/cpuset   repeatly.
+3.$mount -t cgroup -o cpuset cpuset /sys/fs/cgroup/cpuset/
+$umount /sys/fs/cgroup/cpuset/   repeatly.
 
-BUG: unable to handle page fault for address: 0000000000003990
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 10 PID: 594 Comm: (udev-worker) Not tainted 6.10.0-rc5 #44
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-RIP: 0010:ata_host_release.cold+0x2f/0x6e [libata]
-Code: e4 4d 63 f4 44 89 e2 48 c7 c6 90 ad 32 c0 48 c7 c7 d0 70 33 c0 49 83 c6 0e 41
-RSP: 0018:ffffc90000ebb968 EFLAGS: 00010246
-RAX: 0000000000000041 RBX: ffff88810fb52e78 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffff88813b3218c0 RDI: ffff88813b3218c0
-RBP: ffff88810fb52e40 R08: 0000000000000000 R09: 6c65725f74736f68
-R10: ffffc90000ebb738 R11: 73692033203a746e R12: 0000000000000004
-R13: 0000000000000000 R14: 0000000000000011 R15: 0000000000000006
-FS:  00007f6cc55b9980(0000) GS:ffff88813b300000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000003990 CR3: 00000001122a2000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __die_body.cold+0x19/0x27
- ? page_fault_oops+0x15a/0x2f0
- ? exc_page_fault+0x7e/0x180
- ? asm_exc_page_fault+0x26/0x30
- ? ata_host_release.cold+0x2f/0x6e [libata]
- ? ata_host_release.cold+0x2f/0x6e [libata]
- release_nodes+0x35/0xb0
- devres_release_group+0x113/0x140
- ata_host_alloc+0xed/0x120 [libata]
- ata_host_alloc_pinfo+0x14/0xa0 [libata]
- ahci_init_one+0x6c9/0xd20 [ahci]
+The race that cause this bug can be shown as below:
 
-Do not access ata_port struct members unconditionally.
+(umount)		|	(cat /proc/<pid>/cpuset)
+css_release		|	proc_cpuset_show
+css_release_work_fn	|	css = task_get_css(tsk, cpuset_cgrp_id);
+css_free_rwork_fn	|	cgroup_path_ns(css->cgroup, ...);
+cgroup_destroy_root	|	mutex_lock(&cgroup_mutex);
+rebind_subsystems	|
+cgroup_free_root 	|
+			|	// cgrp was freed, UAF
+			|	cgroup_path_ns_locked(cgrp,..);
 
-Fixes: 633273a3ed1c ("libata-pmp: hook PMP support and enable it")
-Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20240629124210.181537-7-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+When the cpuset is initialized, the root node top_cpuset.css.cgrp
+will point to &cgrp_dfl_root.cgrp. In cgroup v1, the mount operation will
+allocate cgroup_root, and top_cpuset.css.cgrp will point to the allocated
+&cgroup_root.cgrp. When the umount operation is executed,
+top_cpuset.css.cgrp will be rebound to &cgrp_dfl_root.cgrp.
+
+The problem is that when rebinding to cgrp_dfl_root, there are cases
+where the cgroup_root allocated by setting up the root for cgroup v1
+is cached. This could lead to a Use-After-Free (UAF) if it is
+subsequently freed. The descendant cgroups of cgroup v1 can only be
+freed after the css is released. However, the css of the root will never
+be released, yet the cgroup_root should be freed when it is unmounted.
+This means that obtaining a reference to the css of the root does
+not guarantee that css.cgrp->root will not be freed.
+
+Fix this problem by using rcu_read_lock in proc_cpuset_show().
+As cgroup_root is kfree_rcu after commit d23b5c577715
+("cgroup: Make operations on the cgroup root_list RCU safe"),
+css->cgroup won't be freed during the critical section.
+To call cgroup_path_ns_locked, css_set_lock is needed, so it is safe to
+replace task_get_css with task_css.
+
+[1] https://syzkaller.appspot.com/bug?extid=9b1ff7be974a403aa4cd
+
+Fixes: a79a908fd2b0 ("cgroup: introduce cgroup namespaces")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cgroup/cpuset.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5391,6 +5391,9 @@ static void ata_host_release(struct kref
- 	for (i = 0; i < host->n_ports; i++) {
- 		struct ata_port *ap = host->ports[i];
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -22,6 +22,7 @@
+  *  distribution for more details.
+  */
  
-+		if (!ap)
-+			continue;
++#include "cgroup-internal.h"
+ #include <linux/cpu.h>
+ #include <linux/cpumask.h>
+ #include <linux/cpuset.h>
+@@ -3780,10 +3781,14 @@ int proc_cpuset_show(struct seq_file *m,
+ 	if (!buf)
+ 		goto out;
+ 
+-	css = task_get_css(tsk, cpuset_cgrp_id);
+-	retval = cgroup_path_ns(css->cgroup, buf, PATH_MAX,
+-				current->nsproxy->cgroup_ns);
+-	css_put(css);
++	rcu_read_lock();
++	spin_lock_irq(&css_set_lock);
++	css = task_css(tsk, cpuset_cgrp_id);
++	retval = cgroup_path_ns_locked(css->cgroup, buf, PATH_MAX,
++				       current->nsproxy->cgroup_ns);
++	spin_unlock_irq(&css_set_lock);
++	rcu_read_unlock();
 +
- 		kfree(ap->pmp_link);
- 		kfree(ap->slave_link);
- 		kfree(ap);
+ 	if (retval >= PATH_MAX)
+ 		retval = -ENAMETOOLONG;
+ 	if (retval < 0)
 
 
