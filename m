@@ -1,44 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F091E18132F;
-	Sun,  1 Sep 2024 16:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B803183CC4;
+	Sun,  1 Sep 2024 16:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207989; cv=none; b=gttj8wOM/x+zJ6fJA2Um6Wwz8S+0ktEr0DWlXsXF4O1mNhW+40rTlCmg31HpyqjQY5vUMhvL7GFRWYLME4SAaMkGLN11sx7ISPJaWHDjdB0GRc2IeDdb+jLJzKgNbEqT7RmrEZ061kfh5LqQd1U2nSYHeZGuyqjjdVXZQK5rc5M=
+	t=1725207992; cv=none; b=Ks/q/zTK46vLR9hEuGrStMtaRJofu/xIcKMA0/ouKczH2lYYP5O/4C+VbRQk/DW4/Q5P2VxGXM4J2KgHdruJHvoAGnZLsaz99+AmFV0ANKuQOb8LRhP/1Flvkkn1G0DawS+H5NxINr8Ks3Q4uRvUeHr3G3oAyE+Lv15wC4pnMFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207989; c=relaxed/simple;
-	bh=N/959gfYX00ziHtqMXnG549dcbHHpLZdLmkODtpAD8o=;
+	s=arc-20240116; t=1725207992; c=relaxed/simple;
+	bh=84aHd2qO6C+6ZXSzKg0OQGFRxJ9gnx40ZfglbApCZHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlkmMArZawysg5C2e6LdOD2mYei/r78MjEP0Mi4tz7qHLFKvbHKIHEPagY6/eJwm1kgfdxH/XNBSVLokBvRVa+tqg/YrZ16HWyx687sGEn/K0b2WrtwhqAmKgg9Ii1/8d54KtCmlQs8Q5BlovCy63QNqJel3lJy/P5KLct4Mgt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp5D+XHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qHkmm6dkZnCCwPeRf6Tvcp14pmEqhyFQuLpg7/Rp2VYaaT7wXLQvPCo6duDY5o0RMEWkFx6x4xr3UI3Zbwcl+8hn9upo4vB5F+6J/1OKG9NDeulr12WD1MMFYQZXZZtFoIkbKKG5sHxIMmjSLAQMzxSWtPNAXCABrqPOAlUmoS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeFzGpIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp5D+XHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7988EC4CEC3;
-	Sun,  1 Sep 2024 16:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeFzGpIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75041C4CEC3;
+	Sun,  1 Sep 2024 16:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207988;
-	bh=N/959gfYX00ziHtqMXnG549dcbHHpLZdLmkODtpAD8o=;
+	s=korg; t=1725207992;
+	bh=84aHd2qO6C+6ZXSzKg0OQGFRxJ9gnx40ZfglbApCZHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qp5D+XHtHnF3J9X6XnVIxGXlWjIvjWsJA98Od70cJUgs3JllvjttWqxtTKexuhonq
-	 cbMRebALByB+JCfRM4XZimOwbjU1OL3gRv6DcxZEKD4ZYvNgfw30KVmiowd8/k5dzx
-	 hxbPhyDmhnzrAc7aar8ZCinGFlP3h5ulr4KECRBE=
+	b=MeFzGpIAyfIGVGjutT+OdEMSYBbxRswIzdL+O9UCfGl8wzfG3vqs4vzoJnq8gFuHi
+	 rfd0yJOupo6r7JUQA9IekXcCULF8I9Cikz60Oaw6e66HqbO2xWGrriBljidsmzLhcL
+	 2o2iWxcBbu4KB/ByOl1Xbjsj6S2CiHZvhb3zAe/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Christoph Lameter <cl@linux.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 40/93] cifs: Fix FALLOC_FL_PUNCH_HOLE support
-Date: Sun,  1 Sep 2024 18:16:27 +0200
-Message-ID: <20240901160808.870426806@linuxfoundation.org>
+Subject: [PATCH 6.6 41/93] Revert "change alloc_pages name in dma_map_ops to avoid name conflicts"
+Date: Sun,  1 Sep 2024 18:16:28 +0200
+Message-ID: <20240901160808.908613948@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -51,111 +64,214 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 416871f4fb84bc96822562e654941d5625a25bf8 ]
+This reverts commit 983e6b2636f0099dbac1874c9e885bbe1cf2df05 which is
+commit 8a2f11878771da65b8ac135c73b47dae13afbd62 upstream.
 
-The cifs filesystem doesn't quite emulate FALLOC_FL_PUNCH_HOLE correctly
-(note that due to lack of protocol support, it can't actually implement it
-directly).  Whilst it will (partially) invalidate dirty folios in the
-pagecache, it doesn't write them back first, and so the EOF marker on the
-server may be lower than inode->i_size.
+It wasn't needed and caused a build break on s390, so just revert it
+entirely.
 
-This presents a problem, however, as if the punched hole invalidates the
-tail of the locally cached dirty data, writeback won't know it needs to
-move the EOF over to account for the hole punch (which isn't supposed to
-move the EOF).  We could just write zeroes over the punched out region of
-the pagecache and write that back - but this is supposed to be a
-deallocatory operation.
-
-Fix this by manually moving the EOF over on the server after the operation
-if the hole punched would corrupt it.
-
-Note that the FSCTL_SET_ZERO_DATA RPC and the setting of the EOF should
-probably be compounded to stop a third party interfering (or, at least,
-massively reduce the chance).
-
-This was reproducible occasionally by using fsx with the following script:
-
-	truncate 0x0 0x375e2 0x0
-	punch_hole 0x2f6d3 0x6ab5 0x375e2
-	truncate 0x0 0x3a71f 0x375e2
-	mapread 0xee05 0xcf12 0x3a71f
-	write 0x2078e 0x5604 0x3a71f
-	write 0x3ebdf 0x1421 0x3a71f *
-	punch_hole 0x379d0 0x8630 0x40000 *
-	mapread 0x2aaa2 0x85b 0x40000
-	fallocate 0x1b401 0x9ada 0x40000
-	read 0x15f2 0x7d32 0x40000
-	read 0x32f37 0x7a3b 0x40000 *
-
-The second "write" should extend the EOF to 0x40000, and the "punch_hole"
-should operate inside of that - but that depends on whether the VM gets in
-and writes back the data first.  If it doesn't, the file ends up 0x3a71f in
-size, not 0x40000.
-
-Fixes: 31742c5a3317 ("enable fallocate punch hole ("fallocate -p") for SMB3")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20240830221217.GA3837758@thelio-3990X
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: Andreas Hindborg <a.hindborg@samsung.com>
+Cc: Benno Lossin <benno.lossin@proton.me>
+Cc: "Björn Roy Baron" <bjorn3_gh@protonmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Gary Guo <gary@garyguo.net>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ arch/alpha/kernel/pci_iommu.c           |    2 +-
+ arch/mips/jazz/jazzdma.c                |    2 +-
+ arch/powerpc/kernel/dma-iommu.c         |    2 +-
+ arch/powerpc/platforms/ps3/system-bus.c |    4 ++--
+ arch/powerpc/platforms/pseries/vio.c    |    2 +-
+ arch/x86/kernel/amd_gart_64.c           |    2 +-
+ drivers/iommu/dma-iommu.c               |    2 +-
+ drivers/parisc/ccio-dma.c               |    2 +-
+ drivers/parisc/sba_iommu.c              |    2 +-
+ drivers/xen/grant-dma-ops.c             |    2 +-
+ drivers/xen/swiotlb-xen.c               |    2 +-
+ include/linux/dma-map-ops.h             |    2 +-
+ kernel/dma/mapping.c                    |    4 ++--
+ 13 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 66cfce456263b..012d6ec12a691 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3251,6 +3251,7 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
- 	struct inode *inode = file_inode(file);
- 	struct cifsFileInfo *cfile = file->private_data;
- 	struct file_zero_data_information fsctl_buf;
-+	unsigned long long end = offset + len, i_size, remote_i_size;
- 	long rc;
- 	unsigned int xid;
- 	__u8 set_sparse = 1;
-@@ -3282,6 +3283,27 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
- 			(char *)&fsctl_buf,
- 			sizeof(struct file_zero_data_information),
- 			CIFSMaxBufSize, NULL, NULL);
-+
-+	if (rc)
-+		goto unlock;
-+
-+	/* If there's dirty data in the buffer that would extend the EOF if it
-+	 * were written, then we need to move the EOF marker over to the lower
-+	 * of the high end of the hole and the proposed EOF.  The problem is
-+	 * that we locally hole-punch the tail of the dirty data, the proposed
-+	 * EOF update will end up in the wrong place.
-+	 */
-+	i_size = i_size_read(inode);
-+	remote_i_size = netfs_inode(inode)->remote_i_size;
-+	if (end > remote_i_size && i_size > remote_i_size) {
-+		unsigned long long extend_to = umin(end, i_size);
-+		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
-+				  cfile->fid.volatile_fid, cfile->pid, extend_to);
-+		if (rc >= 0)
-+			netfs_inode(inode)->remote_i_size = extend_to;
-+	}
-+
-+unlock:
- 	filemap_invalidate_unlock(inode->i_mapping);
- out:
- 	inode_unlock(inode);
--- 
-2.43.0
-
+--- a/arch/alpha/kernel/pci_iommu.c
++++ b/arch/alpha/kernel/pci_iommu.c
+@@ -929,7 +929,7 @@ const struct dma_map_ops alpha_pci_ops =
+ 	.dma_supported		= alpha_pci_supported,
+ 	.mmap			= dma_common_mmap,
+ 	.get_sgtable		= dma_common_get_sgtable,
+-	.alloc_pages_op		= dma_common_alloc_pages,
++	.alloc_pages		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ };
+ EXPORT_SYMBOL(alpha_pci_ops);
+--- a/arch/mips/jazz/jazzdma.c
++++ b/arch/mips/jazz/jazzdma.c
+@@ -617,7 +617,7 @@ const struct dma_map_ops jazz_dma_ops =
+ 	.sync_sg_for_device	= jazz_dma_sync_sg_for_device,
+ 	.mmap			= dma_common_mmap,
+ 	.get_sgtable		= dma_common_get_sgtable,
+-	.alloc_pages_op		= dma_common_alloc_pages,
++	.alloc_pages		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ };
+ EXPORT_SYMBOL(jazz_dma_ops);
+--- a/arch/powerpc/kernel/dma-iommu.c
++++ b/arch/powerpc/kernel/dma-iommu.c
+@@ -216,6 +216,6 @@ const struct dma_map_ops dma_iommu_ops =
+ 	.get_required_mask	= dma_iommu_get_required_mask,
+ 	.mmap			= dma_common_mmap,
+ 	.get_sgtable		= dma_common_get_sgtable,
+-	.alloc_pages_op		= dma_common_alloc_pages,
++	.alloc_pages		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ };
+--- a/arch/powerpc/platforms/ps3/system-bus.c
++++ b/arch/powerpc/platforms/ps3/system-bus.c
+@@ -695,7 +695,7 @@ static const struct dma_map_ops ps3_sb_d
+ 	.unmap_page = ps3_unmap_page,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+-	.alloc_pages_op = dma_common_alloc_pages,
++	.alloc_pages = dma_common_alloc_pages,
+ 	.free_pages = dma_common_free_pages,
+ };
+ 
+@@ -709,7 +709,7 @@ static const struct dma_map_ops ps3_ioc0
+ 	.unmap_page = ps3_unmap_page,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+-	.alloc_pages_op = dma_common_alloc_pages,
++	.alloc_pages = dma_common_alloc_pages,
+ 	.free_pages = dma_common_free_pages,
+ };
+ 
+--- a/arch/powerpc/platforms/pseries/vio.c
++++ b/arch/powerpc/platforms/pseries/vio.c
+@@ -611,7 +611,7 @@ static const struct dma_map_ops vio_dma_
+ 	.get_required_mask = dma_iommu_get_required_mask,
+ 	.mmap		   = dma_common_mmap,
+ 	.get_sgtable	   = dma_common_get_sgtable,
+-	.alloc_pages_op	   = dma_common_alloc_pages,
++	.alloc_pages	   = dma_common_alloc_pages,
+ 	.free_pages	   = dma_common_free_pages,
+ };
+ 
+--- a/arch/x86/kernel/amd_gart_64.c
++++ b/arch/x86/kernel/amd_gart_64.c
+@@ -676,7 +676,7 @@ static const struct dma_map_ops gart_dma
+ 	.get_sgtable			= dma_common_get_sgtable,
+ 	.dma_supported			= dma_direct_supported,
+ 	.get_required_mask		= dma_direct_get_required_mask,
+-	.alloc_pages_op			= dma_direct_alloc_pages,
++	.alloc_pages			= dma_direct_alloc_pages,
+ 	.free_pages			= dma_direct_free_pages,
+ };
+ 
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1614,7 +1614,7 @@ static const struct dma_map_ops iommu_dm
+ 	.flags			= DMA_F_PCI_P2PDMA_SUPPORTED,
+ 	.alloc			= iommu_dma_alloc,
+ 	.free			= iommu_dma_free,
+-	.alloc_pages_op		= dma_common_alloc_pages,
++	.alloc_pages		= dma_common_alloc_pages,
+ 	.free_pages		= dma_common_free_pages,
+ 	.alloc_noncontiguous	= iommu_dma_alloc_noncontiguous,
+ 	.free_noncontiguous	= iommu_dma_free_noncontiguous,
+--- a/drivers/parisc/ccio-dma.c
++++ b/drivers/parisc/ccio-dma.c
+@@ -1022,7 +1022,7 @@ static const struct dma_map_ops ccio_ops
+ 	.map_sg =		ccio_map_sg,
+ 	.unmap_sg =		ccio_unmap_sg,
+ 	.get_sgtable =		dma_common_get_sgtable,
+-	.alloc_pages_op =	dma_common_alloc_pages,
++	.alloc_pages =		dma_common_alloc_pages,
+ 	.free_pages =		dma_common_free_pages,
+ };
+ 
+--- a/drivers/parisc/sba_iommu.c
++++ b/drivers/parisc/sba_iommu.c
+@@ -1090,7 +1090,7 @@ static const struct dma_map_ops sba_ops
+ 	.map_sg =		sba_map_sg,
+ 	.unmap_sg =		sba_unmap_sg,
+ 	.get_sgtable =		dma_common_get_sgtable,
+-	.alloc_pages_op =	dma_common_alloc_pages,
++	.alloc_pages =		dma_common_alloc_pages,
+ 	.free_pages =		dma_common_free_pages,
+ };
+ 
+--- a/drivers/xen/grant-dma-ops.c
++++ b/drivers/xen/grant-dma-ops.c
+@@ -282,7 +282,7 @@ static int xen_grant_dma_supported(struc
+ static const struct dma_map_ops xen_grant_dma_ops = {
+ 	.alloc = xen_grant_dma_alloc,
+ 	.free = xen_grant_dma_free,
+-	.alloc_pages_op = xen_grant_dma_alloc_pages,
++	.alloc_pages = xen_grant_dma_alloc_pages,
+ 	.free_pages = xen_grant_dma_free_pages,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+--- a/drivers/xen/swiotlb-xen.c
++++ b/drivers/xen/swiotlb-xen.c
+@@ -403,7 +403,7 @@ const struct dma_map_ops xen_swiotlb_dma
+ 	.dma_supported = xen_swiotlb_dma_supported,
+ 	.mmap = dma_common_mmap,
+ 	.get_sgtable = dma_common_get_sgtable,
+-	.alloc_pages_op = dma_common_alloc_pages,
++	.alloc_pages = dma_common_alloc_pages,
+ 	.free_pages = dma_common_free_pages,
+ 	.max_mapping_size = swiotlb_max_mapping_size,
+ };
+--- a/include/linux/dma-map-ops.h
++++ b/include/linux/dma-map-ops.h
+@@ -28,7 +28,7 @@ struct dma_map_ops {
+ 			unsigned long attrs);
+ 	void (*free)(struct device *dev, size_t size, void *vaddr,
+ 			dma_addr_t dma_handle, unsigned long attrs);
+-	struct page *(*alloc_pages_op)(struct device *dev, size_t size,
++	struct page *(*alloc_pages)(struct device *dev, size_t size,
+ 			dma_addr_t *dma_handle, enum dma_data_direction dir,
+ 			gfp_t gfp);
+ 	void (*free_pages)(struct device *dev, size_t size, struct page *vaddr,
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -570,9 +570,9 @@ static struct page *__dma_alloc_pages(st
+ 	size = PAGE_ALIGN(size);
+ 	if (dma_alloc_direct(dev, ops))
+ 		return dma_direct_alloc_pages(dev, size, dma_handle, dir, gfp);
+-	if (!ops->alloc_pages_op)
++	if (!ops->alloc_pages)
+ 		return NULL;
+-	return ops->alloc_pages_op(dev, size, dma_handle, dir, gfp);
++	return ops->alloc_pages(dev, size, dma_handle, dir, gfp);
+ }
+ 
+ struct page *dma_alloc_pages(struct device *dev, size_t size,
 
 
