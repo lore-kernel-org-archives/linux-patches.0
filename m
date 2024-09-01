@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E138183090;
-	Sun,  1 Sep 2024 16:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E2717E01C;
+	Sun,  1 Sep 2024 16:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207714; cv=none; b=niE5iIKGCU7ukk7PsXlU5+hsED7tDX6FG8EcUUtT9NEf3CBXF4nJkPmt4V1puglHwEjiys7OdlXALa0y0skZIFEH4ud/Hhn8o7XewjEtrzbnfdsrAisRZ2udXsYsIj8zS/HCZqCbYbzXePXgV6j8hiqhRCIVaE/HWOOXEXypBQk=
+	t=1725207717; cv=none; b=LKh5xRGKh+CZUQvUbyJIQI/QwceIxQh9HqoB78fYVcSekT/7myShuP49KXpHniCvAfQWIGQEP5fKHcKXQz4FmOwcKSSxDZdHcd+zSqSc5sI8R3BlHTZWR+vO3mFE3vKn/WtQiDPa1F5Qczy3FwY20bCCqd2b7YPZDr0XUxK0TBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207714; c=relaxed/simple;
-	bh=uCzjZbbqctetRMcepL6W8oC9JX1cyTPl2kvyCAxmdOw=;
+	s=arc-20240116; t=1725207717; c=relaxed/simple;
+	bh=jLd0gF9qozKn4XVnjGm58Slr2T6DzctitxFVluO8PP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMDsaRmrV3MBnosqirnnzXAJ/q/cAhEmxM9nV0nsCbxNmMzIeo4vxfAAHGycnLY9yTKHp/yRpEqY5tEMqfqa+6Vtsc8vKqEydDs17QdByCNzmB2ITa3PTdiwjTii/sfpATT2dNOCZDBvXJbYeMS1WF1lb9KUkPQRTsJRryRhi6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1RlO40G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQMjsSXoVyWvPxNnoMX+KIFhfDmybyvI9EWNtPEtuC57Gb7vJK2DrFf0ZFzMqxRnnC0HCj6tVVN9z7itNB/7PJQJTAgjs0a2pKBJkgX7F2bj3oM4MK3KYb6SN6Yqh74EHaXgHtCf+A0j6cuN7FPL4Ol3dEC28lVqw0DIur9OEMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRjsq0U2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1RlO40G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3D5C4CEC3;
-	Sun,  1 Sep 2024 16:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRjsq0U2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0E5C4CEC3;
+	Sun,  1 Sep 2024 16:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207714;
-	bh=uCzjZbbqctetRMcepL6W8oC9JX1cyTPl2kvyCAxmdOw=;
+	s=korg; t=1725207717;
+	bh=jLd0gF9qozKn4XVnjGm58Slr2T6DzctitxFVluO8PP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1RlO40GqTyBxmZ0/a/hETXKRfia2S1MpwEJh4xLpesURUm9wNoyxM5ZSwIyYzTzZ
-	 mJSu9gNLV9p/EdY6pK1A/MgAc+TIuPvDn548RUw0xyJx+Nk2J07BonA1aPk1TAm6sY
-	 BXbqQGhEtQfW9yRn/PwpXKDpEBWi94JoeJOIvNN0=
+	b=hRjsq0U2/uyG7VNIbX4jAkbhrkUngeVv45qXlg1nkVWPMTswVvQnCznUk3b1XPKID
+	 NS2yTq4DTpYWiRXxgAQEopNOsxC8akabTBweTMokva/B7a5O6ovl5e49tH6EkH0W6H
+	 tDSJB/I3sGbGJ5GHAGUYKd4d6LUohxA8kP8VzP2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 54/98] Bluetooth: Make use of __check_timeout on hci_sched_le
-Date: Sun,  1 Sep 2024 18:16:24 +0200
-Message-ID: <20240901160805.737359832@linuxfoundation.org>
+Subject: [PATCH 4.19 25/98] powerpc/xics: Check return value of kasprintf in icp_native_map_one_cpu
+Date: Sun,  1 Sep 2024 18:15:55 +0200
+Message-ID: <20240901160804.641050000@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -51,44 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 1b1d29e5149990e44634b2e681de71effd463591 ]
+[ Upstream commit 45b1ba7e5d1f6881050d558baf9bc74a2ae13930 ]
 
-This reuse __check_timeout on hci_sched_le following the same logic
-used hci_sched_acl.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: 932021a11805 ("Bluetooth: hci_core: Fix LE quote calculation")
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231122030651.3818-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ arch/powerpc/sysdev/xics/icp-native.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 504f6aa4e95db..0221aa5785052 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4116,15 +4116,10 @@ static void hci_sched_le(struct hci_dev *hdev)
- 	if (!hci_conn_num(hdev, LE_LINK))
- 		return;
+diff --git a/arch/powerpc/sysdev/xics/icp-native.c b/arch/powerpc/sysdev/xics/icp-native.c
+index 340de58a15bd6..71278d554715d 100644
+--- a/arch/powerpc/sysdev/xics/icp-native.c
++++ b/arch/powerpc/sysdev/xics/icp-native.c
+@@ -240,6 +240,8 @@ static int __init icp_native_map_one_cpu(int hw_id, unsigned long addr,
+ 	rname = kasprintf(GFP_KERNEL, "CPU %d [0x%x] Interrupt Presentation",
+ 			  cpu, hw_id);
  
--	if (!hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
--		/* LE tx timeout must be longer than maximum
--		 * link supervision timeout (40.9 seconds) */
--		if (!hdev->le_cnt && hdev->le_pkts &&
--		    time_after(jiffies, hdev->le_last_tx + HZ * 45))
--			hci_link_tx_to(hdev, LE_LINK);
--	}
--
- 	cnt = hdev->le_pkts ? hdev->le_cnt : hdev->acl_cnt;
-+
-+	__check_timeout(hdev, cnt);
-+
- 	tmp = cnt;
- 	while (cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
++	if (!rname)
++		return -ENOMEM;
+ 	if (!request_mem_region(addr, size, rname)) {
+ 		pr_warn("icp_native: Could not reserve ICP MMIO for CPU %d, interrupt server #0x%x\n",
+ 			cpu, hw_id);
 -- 
 2.43.0
 
