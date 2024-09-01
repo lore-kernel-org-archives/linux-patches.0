@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D861E87B;
-	Sun,  1 Sep 2024 16:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3171C68C;
+	Sun,  1 Sep 2024 16:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208462; cv=none; b=PD2JhinFSDYjDpNHjF5BW7YNLy4B0arnn3FqVMcAFwzGepan0yh/ZDepytPn/SLDYJbXdOohA6Whq2yCbR8hSJPUMDGzBXWCLRMgUem0kFzUt1kj1NrmAizNmF+TuPz5OxRLb8gpOlCJnGfI3ZO3XtUk9bEHcS3UnzEncrR1wtw=
+	t=1725208465; cv=none; b=Zb+Jh2lAiLqSeKHYFYxYFlmeSrJpkRFR6n1CcJeKvZG5Cn3TT8EMowOzAZVix6mJ6UtWt5z2lw/h+fqQVcPSxzixTr+JaY1pzwMxNYCQjqDz9Oga3gakoiUtVTxf3XFtJK1S/L8rJ2pNCXy8xNi5vBcQWfdI0KLsNObHzhq0D9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208462; c=relaxed/simple;
-	bh=VQBUEP1HTo6GNB2PK0P4RF7sTYIWZoG0gzyNgzCMbnw=;
+	s=arc-20240116; t=1725208465; c=relaxed/simple;
+	bh=7RJtrmFnEF5jJgaa7OTn/Mpbmdw8EHKZ17GuLnrC3yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4ujrc17h+L6NdwVdjySsODuKkqlqBG1FqGjT2DRCBPQmlk57OGgSvPgsbz4wPkhm/SxLxiOSUrCPeedvuAVmT1x2tlrGIYiGbsKxueFbrZ0ANd/U9En3zi2Qe21eZtO78ShCtysvF+rRC8qQdgKSVO0tVt0M098/OapJ/N/wt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSI2PPA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tw3lVcYILx/ZEsaePDgK2yxSVFmmR+5zSjg4rsytM5JAQx9XDVF5a6uLYXyejSoVFgeeCCAJ0nYt9g797qllZkwweXlI1kGbW1s8dwvZsYLu2UL69herFEmQ9uJ0+LE4xTCQdqNOdvlcTAny96ei0yiWYqxoers+cRja/NiUH7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvhIXkz7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSI2PPA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925A1C4CEC4;
-	Sun,  1 Sep 2024 16:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvhIXkz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE5DC4CEC4;
+	Sun,  1 Sep 2024 16:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208462;
-	bh=VQBUEP1HTo6GNB2PK0P4RF7sTYIWZoG0gzyNgzCMbnw=;
+	s=korg; t=1725208465;
+	bh=7RJtrmFnEF5jJgaa7OTn/Mpbmdw8EHKZ17GuLnrC3yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSI2PPA9GWnucH0eXZDfHH3fdttTEpVoh00xk5DaHLO4lXNmvvh2tqnYgWcXlJAme
-	 bA2nUA4EL1thL2PFm5d/n4pPagx9usbwUGfE+NUYKFx7fxsbsIC62M3ziCD+/ViKJn
-	 zXSZXB132lzFduiZeb9w8GJMq8hl5rQJSNJeEQh8=
+	b=FvhIXkz7+0N/8XF+2+9f1XF/tJA2GmRuY56kvlTK6YvKC/j2Uxy3/oc/GW0Tev06C
+	 Zafi3QkSB/nN6ygpGesL7xuYByusblHNSz7xyOYUstEa2PBiWbXxDQWJbXr45tEQ0w
+	 UJU2ysKTWnpFxZh0d5iSYzpGShoENbmO1MXpbR2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 058/149] ASoC: cs-amp-lib: Ignore empty UEFI calibration entries
-Date: Sun,  1 Sep 2024 18:16:09 +0200
-Message-ID: <20240901160819.650972860@linuxfoundation.org>
+Subject: [PATCH 6.10 059/149] nfsd: ensure that nfsd4_fattr_args.context is zeroed out
+Date: Sun,  1 Sep 2024 18:16:10 +0200
+Message-ID: <20240901160819.687995275@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit bb4485562f5907708f1c218b5d70dce04165d1e1 ]
+[ Upstream commit f58bab6fd4063913bd8321e99874b8239e9ba726 ]
 
-If the timestamp of a calibration entry is 0 it is an unused entry and
-must be ignored.
+If nfsd4_encode_fattr4 ends up doing a "goto out" before we get to
+checking for the security label, then args.context will be set to
+uninitialized junk on the stack, which we'll then try to free.
+Initialize it early.
 
-Some end-products reserve EFI space for calibration entries by shipping
-with a zero-filled EFI file. When searching the file for calibration
-data the driver must skip the empty entries. The timestamp of a valid
-entry is always non-zero.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 1cad8725f2b9 ("ASoC: cs-amp-lib: Add helpers for factory calibration data")
-Link: https://patch.msgid.link/20240822133544.304421-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f59388a579c6 ("NFSD: Add nfsd4_encode_fattr4_sec_label()")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs-amp-lib.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs-amp-lib.c b/sound/soc/codecs/cs-amp-lib.c
-index 605964af8afad..51b128c806718 100644
---- a/sound/soc/codecs/cs-amp-lib.c
-+++ b/sound/soc/codecs/cs-amp-lib.c
-@@ -182,6 +182,10 @@ static int _cs_amp_get_efi_calibration_data(struct device *dev, u64 target_uid,
- 		for (i = 0; i < efi_data->count; ++i) {
- 			u64 cal_target = cs_amp_cal_target_u64(&efi_data->data[i]);
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index c7bfd2180e3f2..8a7bc2b58e721 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3545,6 +3545,9 @@ nfsd4_encode_fattr4(struct svc_rqst *rqstp, struct xdr_stream *xdr,
+ 	args.dentry = dentry;
+ 	args.ignore_crossmnt = (ignore_crossmnt != 0);
+ 	args.acl = NULL;
++#ifdef CONFIG_NFSD_V4_SECURITY_LABEL
++	args.context = NULL;
++#endif
  
-+			/* Skip empty entries */
-+			if (!efi_data->data[i].calTime[0] && !efi_data->data[i].calTime[1])
-+				continue;
-+
- 			/* Skip entries with unpopulated silicon ID */
- 			if (cal_target == 0)
- 				continue;
-@@ -193,7 +197,8 @@ static int _cs_amp_get_efi_calibration_data(struct device *dev, u64 target_uid,
- 		}
- 	}
+ 	/*
+ 	 * Make a local copy of the attribute bitmap that can be modified.
+@@ -3617,7 +3620,6 @@ nfsd4_encode_fattr4(struct svc_rqst *rqstp, struct xdr_stream *xdr,
+ 	args.contextsupport = false;
  
--	if (!cal && (amp_index >= 0) && (amp_index < efi_data->count)) {
-+	if (!cal && (amp_index >= 0) && (amp_index < efi_data->count) &&
-+	    (efi_data->data[amp_index].calTime[0] || efi_data->data[amp_index].calTime[1])) {
- 		u64 cal_target = cs_amp_cal_target_u64(&efi_data->data[amp_index]);
- 
- 		/*
+ #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
+-	args.context = NULL;
+ 	if ((attrmask[2] & FATTR4_WORD2_SECURITY_LABEL) ||
+ 	     attrmask[0] & FATTR4_WORD0_SUPPORTED_ATTRS) {
+ 		if (exp->ex_flags & NFSEXP_SECURITY_LABEL)
 -- 
 2.43.0
 
