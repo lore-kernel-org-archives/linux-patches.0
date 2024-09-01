@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2BD185950;
-	Sun,  1 Sep 2024 16:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6809E18593B;
+	Sun,  1 Sep 2024 16:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209151; cv=none; b=AKAksTvRvw3p7to0DF3mVyJavLKgX0L3tcBYjTTqaiTp/BWA83QCJnF7rKMZySkp9GJzqYiaMmXNQiX6YwBs3AOEQqcnla+XRLxDwx17dMeSOxCpzz+X2o8MwkMe0P8+uLSzNIVIpkpNcTZsV/eR4NoRy0+SakonitYhkYWEBb8=
+	t=1725209154; cv=none; b=JlFk/+1gc05clj0SWhlNPTvwrwK99d+VZ5KE9sAIKWzPHdJdGvoYMA3uCCiEe+Z8okPbrS7TdBWh3xUx0SvtgGG2EddIRsx/NrpM2q/62B2dlz6NzDKbYCCuUaKnDg/DdFGB+dcdkpz30FRKWXMfnwrL+yO2Ge9+cdxq+vc4dwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209151; c=relaxed/simple;
-	bh=KL1aeYDXfkMf0ZBVGUFkiX60nWnwKKYzb1HhrQleF4k=;
+	s=arc-20240116; t=1725209154; c=relaxed/simple;
+	bh=LlRh3IOqcOHntNATvqQDMioHE5mjMCDMQUACnEw8yAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pLeGsBUwVXz9EYtBONRUKaosBfUJqq+tK95eRaO+sD5hJZ8qINdcSe76Kadg/+LhED1Jg7SNu09bzm07dchSeU6xMixzAUZNZJHFj2i9o5PZAPhDJNTqaI0onrxEeOCJi4whRrGb5D/7gasuRgjnrVPSiLTtwgRFEXCZIczXDf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxSfoYb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XVQMhmKjfKr2Y8yUf1pU0DZqPOxrKnV5V081U8k2PYBb+fctciZzsfpKD7QlVeGVPTaNKPixZOwTQgfUhF7wSPnNXifCPTa5eczj5Z3FnmWA3rPIuNbhGL/suQ4tjzw+VApAatdZRLUF6s00f9pwe/pl2AQBVMV1V5N8ZhJIDeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnTm4Cs/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxSfoYb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BC4C4CEC3;
-	Sun,  1 Sep 2024 16:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnTm4Cs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C64C4CEC3;
+	Sun,  1 Sep 2024 16:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209150;
-	bh=KL1aeYDXfkMf0ZBVGUFkiX60nWnwKKYzb1HhrQleF4k=;
+	s=korg; t=1725209154;
+	bh=LlRh3IOqcOHntNATvqQDMioHE5mjMCDMQUACnEw8yAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxSfoYb+rffanOjKaFH8pjRiOvJI+v9L/2qT5EL9P3kHf2iv5TGrt3mAjciWMeTIH
-	 epi2FSmJqbyi6z4o1tdLM7LLH5uHnGHGx8IoE48SsVDjzcsvck+MGUqoaFIEmZ/Ln0
-	 1sPTJXCzNbSn1w4D17rcelh79LiHkaYtOpNzqFyU=
+	b=KnTm4Cs/zj14zC6c18j+C64Pxi60fdPLnCleIjMsba+ThTTL70lxjOIb3boLfTOWu
+	 uso1yZqzz+aDYa8VBUDQBV4PrXVLp5tYq/m+3wSwzypQSWVeeNYWRRn45YJ7Nv5Idg
+	 7+XFO2hzIv0sVjpwI7xPn8719W+jOatTHWqStDKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Wang <shankerwangmiao@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 02/71] LoongArch: Remove the unused dma-direct.h
-Date: Sun,  1 Sep 2024 18:17:07 +0200
-Message-ID: <20240901160801.975806106@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 03/71] btrfs: run delayed iputs when flushing delalloc
+Date: Sun,  1 Sep 2024 18:17:08 +0200
+Message-ID: <20240901160802.012777840@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -50,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 58aec91efb93338d1cc7acc0a93242613a2a4e5f upstream.
+commit 2d3447261031503b181dacc549fe65ffe2d93d65 upstream.
 
-dma-direct.h is introduced in commit d4b6f1562a3c3284 ("LoongArch: Add
-Non-Uniform Memory Access (NUMA) support"). In commit c78c43fe7d42524c
-("LoongArch: Use acpi_arch_dma_setup() and remove ARCH_HAS_PHYS_TO_DMA"),
-ARCH_HAS_PHYS_TO_DMA was deselected and the coresponding phys_to_dma()/
-dma_to_phys() functions were removed. However, the unused dma-direct.h
-was left behind, which is removed by this patch.
+We have transient failures with btrfs/301, specifically in the part
+where we do
 
-Cc: <stable@vger.kernel.org>
-Fixes: c78c43fe7d42 ("LoongArch: Use acpi_arch_dma_setup() and remove ARCH_HAS_PHYS_TO_DMA")
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+  for i in $(seq 0 10); do
+	  write 50m to file
+	  rm -f file
+  done
+
+Sometimes this will result in a transient quota error, and it's because
+sometimes we start writeback on the file which results in a delayed
+iput, and thus the rm doesn't actually clean the file up.  When we're
+flushing the quota space we need to run the delayed iputs to make sure
+all the unlinks that we think have completed have actually completed.
+This removes the small window where we could fail to find enough space
+in our quota.
+
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/dma-direct.h | 11 -----------
- 1 file changed, 11 deletions(-)
- delete mode 100644 arch/loongarch/include/asm/dma-direct.h
+ fs/btrfs/qgroup.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/loongarch/include/asm/dma-direct.h b/arch/loongarch/include/asm/dma-direct.h
-deleted file mode 100644
-index 75ccd808a2af..000000000000
---- a/arch/loongarch/include/asm/dma-direct.h
-+++ /dev/null
-@@ -1,11 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--/*
-- * Copyright (C) 2020-2022 Loongson Technology Corporation Limited
-- */
--#ifndef _LOONGARCH_DMA_DIRECT_H
--#define _LOONGARCH_DMA_DIRECT_H
--
--dma_addr_t phys_to_dma(struct device *dev, phys_addr_t paddr);
--phys_addr_t dma_to_phys(struct device *dev, dma_addr_t daddr);
--
--#endif /* _LOONGARCH_DMA_DIRECT_H */
--- 
-2.46.0
-
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3745,6 +3745,8 @@ static int try_flush_qgroup(struct btrfs
+ 		return 0;
+ 	}
+ 
++	btrfs_run_delayed_iputs(root->fs_info);
++	btrfs_wait_on_delayed_iputs(root->fs_info);
+ 	ret = btrfs_start_delalloc_snapshot(root, true);
+ 	if (ret < 0)
+ 		goto out;
 
 
