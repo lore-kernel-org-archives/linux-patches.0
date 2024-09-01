@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0C944C97;
-	Sun,  1 Sep 2024 16:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D6644C97;
+	Sun,  1 Sep 2024 16:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207596; cv=none; b=ZUuJ9hg3pD/n4+KB937npXSWgHJhRid8ZkGNvy0cwJpmuskgz/8bGwSEcV0ISuPjpshkvjZuK9IXj6/Y9nIlNUfcViE/xAN0q9xYYFEYfsN2/5A8lIQj8YU3YFvZ5mHuOku9uCKoysCr8hLDc2k/Ca7+V9ekko6h6t3Znyuyo+M=
+	t=1725207599; cv=none; b=KXDSC5OaU1HiEVXBKwik9jcUxjudeyVvGZZYWKkVyqw13kG3X8UHF7g238aavVQ7DhEBvTk8eSgWamDObPm/cn4XlUjREX19BuqK2zkO/4Y+uAwtExNJ9ELVHZPHvkTcoILJRbdXMvXzENI+T2PewoMAWj7HYqmye4tbfv0/Xaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207596; c=relaxed/simple;
-	bh=0SWc5UMn7HsSe7QvwU3EmYrG+Z9T8y9HDCBI13P2Qhk=;
+	s=arc-20240116; t=1725207599; c=relaxed/simple;
+	bh=tyalicEz71vLNQLXmroOyHpIUo6AMaRbM1uWv4f6qdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lOx7BLccqJwtLseOasUZycfT+ttxiVYfF1cRlwYeoiPgOlp/TLm3Fx3Z0oYQL1ICnw3dSDjo7xfdT+i5Slzxoc7Ahmx/X8F1uq3+bGCM+f6Yf3aJi+aGR0qxxfOfWkijAbAcIu2ceeIz94xva7hVmzvLeT3hzhr4gVAASEDlfig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHCIQSnp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4lYT1qg5bBuoX7Vr53uodEGMArJHMUWzSC/mcbR/ssMMfMNbMhszEARUxLKCshGcW8e8R1fp7zNz/XFka6XaAZe6GrV7qD3igucTMnNYBkQBoS2jsGpDSQNRkX8rMlhpSHuy7+z2/bIhW9MwFpIkmJ6092X2brMYL3jgRV14/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiqGQ8Sq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHCIQSnp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A111CC4CEC3;
-	Sun,  1 Sep 2024 16:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiqGQ8Sq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEF3C4CEC3;
+	Sun,  1 Sep 2024 16:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207596;
-	bh=0SWc5UMn7HsSe7QvwU3EmYrG+Z9T8y9HDCBI13P2Qhk=;
+	s=korg; t=1725207599;
+	bh=tyalicEz71vLNQLXmroOyHpIUo6AMaRbM1uWv4f6qdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHCIQSnpAFUHEt8XV7DTyKrJY8rYmCOsXB99mSUmODJvXdbaFBK/Iit0hSdNehZZ0
-	 Yp5waaIL4jsx3FrppqeStKe+JaLMCTyYcVAAeAD7zCMEYA3UJpPaMMn1fMswZ/KZUV
-	 QzZuxo4TLeqluFnz1cTQP2O1W6o1NEywG3am85nw=
+	b=LiqGQ8Sqc8+eDvxbZwz1DRmD0wCy3rbG2sdZqZ7lKIeWTIQUmkqbdvokRbVodH4/o
+	 Yrdz0FZfH9HVHsulDBctPnljDvrPeU9aNWCxpVs0xxbUrLzhnY7Y7RNwpsgtvqzmlr
+	 sOjRwkhVY84Ww/baA+WNGQODwOiNGhe7SITsJEVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Juan=20Jos=C3=A9=20Arboleda?= <soyjuanarbol@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 02/98] ALSA: usb-audio: Support Yamaha P-125 quirk entry
-Date: Sun,  1 Sep 2024 18:15:32 +0200
-Message-ID: <20240901160803.769132465@linuxfoundation.org>
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 20/98] staging: ks7010: disable bh on tx_dev_lock
+Date: Sun,  1 Sep 2024 18:15:50 +0200
+Message-ID: <20240901160804.453203874@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -44,37 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juan José Arboleda <soyjuanarbol@gmail.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-commit c286f204ce6ba7b48e3dcba53eda7df8eaa64dd9 upstream.
+[ Upstream commit 058cbee52ccd7be77e373d31a4f14670cfd32018 ]
 
-This patch adds a USB quirk for the Yamaha P-125 digital piano.
+As &priv->tx_dev.tx_dev_lock is also acquired by xmit callback which
+could be call from timer under softirq context, use spin_lock_bh()
+on it to prevent potential deadlock.
 
-Signed-off-by: Juan José Arboleda <soyjuanarbol@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240813161053.70256-1-soyjuanarbol@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+hostif_sme_work()
+--> hostif_sme_set_pmksa()
+--> hostif_mib_set_request()
+--> ks_wlan_hw_tx()
+--> spin_lock(&priv->tx_dev.tx_dev_lock)
+
+ks_wlan_start_xmit()
+--> hostif_data_request()
+--> ks_wlan_hw_tx()
+--> spin_lock(&priv->tx_dev.tx_dev_lock)
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230926161323.41928-1-dg573847474@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/ks7010/ks7010_sdio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -352,6 +352,7 @@ YAMAHA_DEVICE(0x105a, NULL),
- YAMAHA_DEVICE(0x105b, NULL),
- YAMAHA_DEVICE(0x105c, NULL),
- YAMAHA_DEVICE(0x105d, NULL),
-+YAMAHA_DEVICE(0x1718, "P-125"),
- {
- 	USB_DEVICE(0x0499, 0x1503),
- 	.driver_info = (unsigned long) & (const struct snd_usb_audio_quirk) {
+diff --git a/drivers/staging/ks7010/ks7010_sdio.c b/drivers/staging/ks7010/ks7010_sdio.c
+index 79d0513bd2828..85c4e27f571b1 100644
+--- a/drivers/staging/ks7010/ks7010_sdio.c
++++ b/drivers/staging/ks7010/ks7010_sdio.c
+@@ -395,9 +395,9 @@ int ks_wlan_hw_tx(struct ks_wlan_private *priv, void *p, unsigned long size,
+ 	priv->hostt.buff[priv->hostt.qtail] = le16_to_cpu(hdr->event);
+ 	priv->hostt.qtail = (priv->hostt.qtail + 1) % SME_EVENT_BUFF_SIZE;
+ 
+-	spin_lock(&priv->tx_dev.tx_dev_lock);
++	spin_lock_bh(&priv->tx_dev.tx_dev_lock);
+ 	result = enqueue_txdev(priv, p, size, complete_handler, skb);
+-	spin_unlock(&priv->tx_dev.tx_dev_lock);
++	spin_unlock_bh(&priv->tx_dev.tx_dev_lock);
+ 
+ 	if (txq_has_space(priv))
+ 		queue_delayed_work(priv->wq, &priv->rw_dwork, 0);
+-- 
+2.43.0
+
 
 
