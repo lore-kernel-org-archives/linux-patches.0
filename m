@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A2B17C;
-	Sun,  1 Sep 2024 17:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9AE376EC;
+	Sun,  1 Sep 2024 17:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210332; cv=none; b=CI2nPDMPjlg9ivOxHwnafVqKTQHVueOo5hI7dgmxRWTtZ2qCB+vDtbiq9hFTBoL+61VMpTZG/PrOks6fMbcZK6pEtIWTc9xTArXVAkFrFav8KZkm1z0dVLX9KvV5rDwXAOB0UPoknDx2xmaQxQ8H/cLyVz+R1vYcNCEBQxsnp3s=
+	t=1725210335; cv=none; b=naS0GgWxdd+xs4Vu1bm8v884FVzksJzBlLS78MxjI8a4wvNJmrGDyOQDx9eblJNUrhti3yQWtYjmacJ2z8lmgHS4W/t6s1sPHcFeUXg1kGA7nwiOXpabPvgmEqP4EOhal2qSvqoRcPSYIEeBRQK4ZrxjcXXC6zANbBthzP/kpCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210332; c=relaxed/simple;
-	bh=mJ7xZ+EMQLxyxuZVAwSgAJNEiVT75t9wB9/iiil9Q+g=;
+	s=arc-20240116; t=1725210335; c=relaxed/simple;
+	bh=stS/028XzAIZYMkH60r9tHgbyVWDXXyJpju+I/3JDh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mr7fIW9BKtLYUcLja+2SuPy/qjAbO6D2ZPpuogeE6FVGgd9ga7KZj5i+n1gWn/bCfi0uMp3desEPq9QNKUB1kNbWeQTLJNIRc0kHsi9lO17SzrT52XIHCdToJbNCItL6jRD0xy1PINJ/ams6eqERwd6KFCy0Np5axPjeG8LFzVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0K7lhEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EbtRvpjSshir+/E4csYQlwhh/njM0ithn9FFcULsBDVSEq4ZueZd5pgZ/IxuiVNzsJYtIzN/EfdcORewSWH0M/qYjo8fQ2wDH0levHOooV9pVLfEm3XZfimhw0w1anBcPXLQKPU5Fov40nNtXSBbiPBRDGtASgVuMcGhV0n9d4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtlVhHGX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0K7lhEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BC9C4CEC3;
-	Sun,  1 Sep 2024 17:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtlVhHGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624E2C4CEC3;
+	Sun,  1 Sep 2024 17:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210331;
-	bh=mJ7xZ+EMQLxyxuZVAwSgAJNEiVT75t9wB9/iiil9Q+g=;
+	s=korg; t=1725210334;
+	bh=stS/028XzAIZYMkH60r9tHgbyVWDXXyJpju+I/3JDh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0K7lhEgJdfGUqO7VjqPqtQyoKPrhBZv1FbM3R9iczXalvSMF3j7QVhsKmbeOkCio
-	 ZT/Vlj91bXXkC4WvDmFn9JIGfy4ltPvf/A/hX4IqwtXkMCrtnOluykxetJHEfxwb0L
-	 Vfuozj27tGDcaUdODVXIQbAQoZ5timfce7aM16u8=
+	b=QtlVhHGXL06oTxHqlApDDmvezG+diBDWGNYs2I7sk5PrbTj7k2ZNF7gIrnTV0GX6F
+	 f9Ny6c+rOvHtcOEiPMAVrxnl/CXIX2BaaRgh7wQOzwjNXZR8bv/HgbnC7E6gQP6CcQ
+	 AWlwff3CH+fUGqNOkESug599qY7gr4zCIYOPEY2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/215] drm/msm/dpu: cleanup FB if dpu_format_populate_layout fails
-Date: Sun,  1 Sep 2024 18:17:49 +0200
-Message-ID: <20240901160829.297181920@linuxfoundation.org>
+Subject: [PATCH 5.15 158/215] mmc: mmc_test: Fix NULL dereference on allocation failure
+Date: Sun,  1 Sep 2024 18:17:50 +0200
+Message-ID: <20240901160829.334172896@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,68 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit bfa1a6283be390947d3649c482e5167186a37016 ]
+[ Upstream commit a1e627af32ed60713941cbfc8075d44cad07f6dd ]
 
-If the dpu_format_populate_layout() fails, then FB is prepared, but not
-cleaned up. This ends up leaking the pin_count on the GEM object and
-causes a splat during DRM file closure:
+If the "test->highmem = alloc_pages()" allocation fails then calling
+__free_pages(test->highmem) will result in a NULL dereference.  Also
+change the error code to -ENOMEM instead of returning success.
 
-msm_obj->pin_count
-WARNING: CPU: 2 PID: 569 at drivers/gpu/drm/msm/msm_gem.c:121 update_lru_locked+0xc4/0xcc
-[...]
-Call trace:
- update_lru_locked+0xc4/0xcc
- put_pages+0xac/0x100
- msm_gem_free_object+0x138/0x180
- drm_gem_object_free+0x1c/0x30
- drm_gem_object_handle_put_unlocked+0x108/0x10c
- drm_gem_object_release_handle+0x58/0x70
- idr_for_each+0x68/0xec
- drm_gem_release+0x28/0x40
- drm_file_free+0x174/0x234
- drm_release+0xb0/0x160
- __fput+0xc0/0x2c8
- __fput_sync+0x50/0x5c
- __arm64_sys_close+0x38/0x7c
- invoke_syscall+0x48/0x118
- el0_svc_common.constprop.0+0x40/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x4c/0x120
- el0t_64_sync_handler+0x100/0x12c
- el0t_64_sync+0x190/0x194
-irq event stamp: 129818
-hardirqs last  enabled at (129817): [<ffffa5f6d953fcc0>] console_unlock+0x118/0x124
-hardirqs last disabled at (129818): [<ffffa5f6da7dcf04>] el1_dbg+0x24/0x8c
-softirqs last  enabled at (129808): [<ffffa5f6d94afc18>] handle_softirqs+0x4c8/0x4e8
-softirqs last disabled at (129785): [<ffffa5f6d94105e4>] __do_softirq+0x14/0x20
-
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/600714/
-Link: https://lore.kernel.org/r/20240625-dpu-mode-config-width-v5-1-501d984d634f@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 2661081f5ab9 ("mmc_test: highmem tests")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/8c90be28-67b4-4b0d-a105-034dc72a0b31@stanley.mountain
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/core/mmc_test.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 9c30ab106b0a1..3ee9a92ffed57 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -906,6 +906,9 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
- 			new_state->fb, &layout);
- 	if (ret) {
- 		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-+		if (pstate->aspace)
-+			msm_framebuffer_cleanup(new_state->fb, pstate->aspace,
-+						pstate->needs_dirtyfb);
- 		return ret;
- 	}
+diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
+index 4052f828f75e7..e03d4405cda36 100644
+--- a/drivers/mmc/core/mmc_test.c
++++ b/drivers/mmc/core/mmc_test.c
+@@ -3111,13 +3111,13 @@ static ssize_t mtf_test_write(struct file *file, const char __user *buf,
+ 	test->buffer = kzalloc(BUFFER_SIZE, GFP_KERNEL);
+ #ifdef CONFIG_HIGHMEM
+ 	test->highmem = alloc_pages(GFP_KERNEL | __GFP_HIGHMEM, BUFFER_ORDER);
++	if (!test->highmem) {
++		count = -ENOMEM;
++		goto free_test_buffer;
++	}
+ #endif
  
+-#ifdef CONFIG_HIGHMEM
+-	if (test->buffer && test->highmem) {
+-#else
+ 	if (test->buffer) {
+-#endif
+ 		mutex_lock(&mmc_test_lock);
+ 		mmc_test_run(test, testcase);
+ 		mutex_unlock(&mmc_test_lock);
+@@ -3125,6 +3125,7 @@ static ssize_t mtf_test_write(struct file *file, const char __user *buf,
+ 
+ #ifdef CONFIG_HIGHMEM
+ 	__free_pages(test->highmem, BUFFER_ORDER);
++free_test_buffer:
+ #endif
+ 	kfree(test->buffer);
+ 	kfree(test);
 -- 
 2.43.0
 
