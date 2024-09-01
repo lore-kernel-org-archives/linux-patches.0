@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9242C1C68C;
-	Sun,  1 Sep 2024 16:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267EB1C68C;
+	Sun,  1 Sep 2024 16:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209445; cv=none; b=c6BH9SAYxWdSau8wd2HksDUif9Mfnyx6+j7IN/ICL0xYejxWEIflDzDbYMPMtZmPp6x3Xy/rajSgK5LRBC0PvKECWw9LIMllXA4Dm1LycLzQG8a5yieNNLsYgjEOo580wgSxB7xpI57ydhvXiAF4uiEwmLgpXjisyza+DiB/jhA=
+	t=1725209449; cv=none; b=jnztc5SoPxK0ShNvUC6uaks6YR2h6zYqmPd3xF9CCY2WZ1/lJVkF7t/y4o1ZfsFeT6nZBl92Drl63znWp5nJS/r0MW8w8d3Tsu8mncqdB7jQ9J9k7dJJg6iuQAbkLdk5P7jAMGAezH79/XSO47yCwjnEff/NEzcFCHq8Vo0M3/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209445; c=relaxed/simple;
-	bh=Fa8T29YTlp3O/GEp5gQl+6jdjqkcFFMcNunp8pq/HqQ=;
+	s=arc-20240116; t=1725209449; c=relaxed/simple;
+	bh=fQj6k945/yIcPc0t5TcaXFNOGqhXdTZ5q6T13wAF9CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcgiZlbDJiQx+8bEDpe0BplLP5VDpxlGoHmXcvwS22CltQV2HpW9YwAZMOWiO8YwMTBvyZui8MNVXPcnxarziA+e6OGCxeiS1gj2K+KpsNUFXoyCL9MirKSAHofsoBDPIwTcqEStyFI3q+nh0gPMgG+Ijqc+FWo4xMmcUYlTM+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrKQEAVy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jGYXUaJqHIvXKIcCCQIU/QvyymWf4Fv0Qp+aTyPAT+pxTCFItWHSmrGaxGP/mfXDsOY3sPPFWtoNkuPBzUN6EnhZXAMVfZW272IiqxRIx0W/kHdV6T3O+hyfiMEqysaysEG6eSzv5R3ee9A51FFZr80eLk+GABltjrenKolM5pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWwb9AXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrKQEAVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9F7C4CEC3;
-	Sun,  1 Sep 2024 16:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWwb9AXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28FCC4CEC3;
+	Sun,  1 Sep 2024 16:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209445;
-	bh=Fa8T29YTlp3O/GEp5gQl+6jdjqkcFFMcNunp8pq/HqQ=;
+	s=korg; t=1725209449;
+	bh=fQj6k945/yIcPc0t5TcaXFNOGqhXdTZ5q6T13wAF9CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrKQEAVymWjA+r+rMDO3rTTEkh3yVdNkgn+vJCb+MiexC/ygkeDnlBqBxySC3vFQX
-	 yNLXmAO3pdUWf0PMWvSKT3ir7PxKxpEWEV+CLC4VInGGiELIUWiBGguJczmFM37Y0Q
-	 /KY15NhmWGQmFYgdkx6QQ3sUxmRFy0Kratq6hAA4=
+	b=UWwb9AXHyprvWrCKmtT46GUk5mSILWXzn7Sg8JBqY+jIsxL9hl85vbsRvnrVQS2N2
+	 kCRgmsXk9nY8qBimNoRgmFLcl8BOq594ccYUBWt2HWYBO4uhlQtUbvQdfPMwLjUpDW
+	 O4IQe9Kv/ZAqgMo3/aQ0zYMsss1B80b5V1+Vhgxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chengfeng Ye <dg573847474@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/151] drm/amd/display: Validate hw_points_num before using it
-Date: Sun,  1 Sep 2024 18:16:39 +0200
-Message-ID: <20240901160815.571825861@linuxfoundation.org>
+Subject: [PATCH 5.10 040/151] staging: ks7010: disable bh on tx_dev_lock
+Date: Sun,  1 Sep 2024 18:16:40 +0200
+Message-ID: <20240901160815.609310566@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,40 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 58c3b3341cea4f75dc8c003b89f8a6dd8ec55e50 ]
+[ Upstream commit 058cbee52ccd7be77e373d31a4f14670cfd32018 ]
 
-[WHAT]
-hw_points_num is 0 before ogam LUT is programmed; however, function
-"dwb3_program_ogam_pwl" assumes hw_points_num is always greater than 0,
-i.e. substracting it by 1 as an array index.
+As &priv->tx_dev.tx_dev_lock is also acquired by xmit callback which
+could be call from timer under softirq context, use spin_lock_bh()
+on it to prevent potential deadlock.
 
-[HOW]
-Check hw_points_num is not equal to 0 before using it.
+hostif_sme_work()
+--> hostif_sme_set_pmksa()
+--> hostif_mib_set_request()
+--> ks_wlan_hw_tx()
+--> spin_lock(&priv->tx_dev.tx_dev_lock)
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+ks_wlan_start_xmit()
+--> hostif_data_request()
+--> ks_wlan_hw_tx()
+--> spin_lock(&priv->tx_dev.tx_dev_lock)
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230926161323.41928-1-dg573847474@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/ks7010/ks7010_sdio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
-index 6d621f07be489..1c170fbb634da 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dwb_cm.c
-@@ -243,6 +243,9 @@ static bool dwb3_program_ogam_lut(
- 		return false;
- 	}
+diff --git a/drivers/staging/ks7010/ks7010_sdio.c b/drivers/staging/ks7010/ks7010_sdio.c
+index 8c740c771f509..8e3fc4b78fd20 100644
+--- a/drivers/staging/ks7010/ks7010_sdio.c
++++ b/drivers/staging/ks7010/ks7010_sdio.c
+@@ -395,9 +395,9 @@ int ks_wlan_hw_tx(struct ks_wlan_private *priv, void *p, unsigned long size,
+ 	priv->hostt.buff[priv->hostt.qtail] = le16_to_cpu(hdr->event);
+ 	priv->hostt.qtail = (priv->hostt.qtail + 1) % SME_EVENT_BUFF_SIZE;
  
-+	if (params->hw_points_num == 0)
-+		return false;
-+
- 	REG_SET(DWB_OGAM_CONTROL, 0, DWB_OGAM_MODE, 2);
+-	spin_lock(&priv->tx_dev.tx_dev_lock);
++	spin_lock_bh(&priv->tx_dev.tx_dev_lock);
+ 	result = enqueue_txdev(priv, p, size, complete_handler, skb);
+-	spin_unlock(&priv->tx_dev.tx_dev_lock);
++	spin_unlock_bh(&priv->tx_dev.tx_dev_lock);
  
- 	current_mode = dwb3_get_ogam_current(dwbc30);
+ 	if (txq_has_space(priv))
+ 		queue_delayed_work(priv->wq, &priv->rw_dwork, 0);
 -- 
 2.43.0
 
