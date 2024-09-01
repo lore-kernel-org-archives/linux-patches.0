@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D3C1DFD1;
-	Sun,  1 Sep 2024 16:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BDF1DFD1;
+	Sun,  1 Sep 2024 16:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209582; cv=none; b=vDiZ6jn/0oVc3akeAXoLgidu37oVdEoq8BSYrThKG4Vf8EqUmTjzhCMkxennW987L6f4NQmXM0IAq452HMwynXBQAYwLMC98AZ0JYUstcM6oGPinzjuNP91TvMFBbByajYvverVBV2eJ+I+UwbZm6bRwnaTISVgms4aiyBirZOY=
+	t=1725209586; cv=none; b=KDjJTaJJup1OnYLCV0DK/I9a4NnHVRlk0779lFQr7Pglc/ArWOCPg0BklK9xVbNEI4jHUVUc7sZCEpo8oBoVydtB8ooiZ2xaJrP8ijNBITAuVznJR5C4LN0HmOb1stNW5P5GFCFCAKeAGJasMZgpZJI730O0SZk2eR5dPV+zFqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209582; c=relaxed/simple;
-	bh=0tx9GUZG7a8tC+fdChdzeL+sc9WAN/HOcfIg1CgBvlw=;
+	s=arc-20240116; t=1725209586; c=relaxed/simple;
+	bh=KgcWLLRfJJXKBb4oX5x1bzmFQKKAb8gFjh3CEz4C/88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/qL3vltqGP7RCeo3EBOPy0/5S+cyQD6e3qJfY98usOgqxbC7t+BIujYdiFjvdoVTQAndlFl3pgP7zTalQ3V4Yt/JSc+P19JMHHqg1B8MrFZfl5ShSITgaB6gah709j+mXUF3ODtUeMnm8uhiPY3XGQMttUDM1pDI0Ld6baKzOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+Qf60Kj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DbkbkCZXmtkRL9NM4jyxnC+I+XE6wBNk4o98IXxsvxP44RGwMcB0mHjc1DZKKlwQoPXWB/aDUiLSQQPStx1isp5yNVsJDXLNdn0hz6OeaS/XzZTFTEnIyW4rkAbknlTAVwPf7kjs3Y/KcTCIF0UEL9SFkE8kmXG3Fbo7cRlyKeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PT21QXqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+Qf60Kj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7BDC4CEC3;
-	Sun,  1 Sep 2024 16:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PT21QXqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A146BC4CEC3;
+	Sun,  1 Sep 2024 16:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209582;
-	bh=0tx9GUZG7a8tC+fdChdzeL+sc9WAN/HOcfIg1CgBvlw=;
+	s=korg; t=1725209586;
+	bh=KgcWLLRfJJXKBb4oX5x1bzmFQKKAb8gFjh3CEz4C/88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+Qf60Kjk+kcJVODciMfmaZoW3xuq2FIPbiXaQ+VgO3xbQz4Qv0iBdutU6KlFC7Fl
-	 rTsktniH0eqE7C0l2eYXFRkW8LQmiHNZuohjx9XIcr8ITre1Z+a/9X7Eq5ARSI33jA
-	 cnAMLhnoR93Qgdth22I8BspxaCZyDj6BgvpyGL8Q=
+	b=PT21QXqJKbo3tyeayrty/IU5y/tCX+Oms9XvfnBWdZg8BWP0+sPd2mdv3YohoGTOr
+	 Ackz6fwNzmla7Yme+4eyj9tHxFDYXHtg4i2wl6Ga8AzYd5orkTsZrSHUYA+U34+/rf
+	 7WBEyjT+yKCXGJd/9Q3FXMaDv9mjkOMBZlAFzscI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Chang <phil.chang@mediatek.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/151] hrtimer: Prevent queuing of hrtimer without a function callback
-Date: Sun,  1 Sep 2024 18:17:21 +0200
-Message-ID: <20240901160817.168354892@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Harald Welte <laforge@gnumonks.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 082/151] gtp: pull network headers in gtp_dev_xmit()
+Date: Sun,  1 Sep 2024 18:17:22 +0200
+Message-ID: <20240901160817.206333173@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,44 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Chang <phil.chang@mediatek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5a830bbce3af16833fe0092dec47b6dd30279825 ]
+commit 3a3be7ff9224f424e485287b54be00d2c6bd9c40 upstream.
 
-The hrtimer function callback must not be NULL. It has to be specified by
-the call side but it is not validated by the hrtimer code. When a hrtimer
-is queued without a function callback, the kernel crashes with a null
-pointer dereference when trying to execute the callback in __run_hrtimer().
+syzbot/KMSAN reported use of uninit-value in get_dev_xmit() [1]
 
-Introduce a validation before queuing the hrtimer in
-hrtimer_start_range_ns().
+We must make sure the IPv4 or Ipv6 header is pulled in skb->head
+before accessing fields in them.
 
-[anna-maria: Rephrase commit message]
+Use pskb_inet_may_pull() to fix this issue.
 
-Signed-off-by: Phil Chang <phil.chang@mediatek.com>
-Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1]
+BUG: KMSAN: uninit-value in ipv6_pdp_find drivers/net/gtp.c:220 [inline]
+ BUG: KMSAN: uninit-value in gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
+ BUG: KMSAN: uninit-value in gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
+  ipv6_pdp_find drivers/net/gtp.c:220 [inline]
+  gtp_build_skb_ip6 drivers/net/gtp.c:1229 [inline]
+  gtp_dev_xmit+0x1424/0x2540 drivers/net/gtp.c:1281
+  __netdev_start_xmit include/linux/netdevice.h:4913 [inline]
+  netdev_start_xmit include/linux/netdevice.h:4922 [inline]
+  xmit_one net/core/dev.c:3580 [inline]
+  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3596
+  __dev_queue_xmit+0x358c/0x5610 net/core/dev.c:4423
+  dev_queue_xmit include/linux/netdevice.h:3105 [inline]
+  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
+  packet_snd net/packet/af_packet.c:3145 [inline]
+  packet_sendmsg+0x90e3/0xa3a0 net/packet/af_packet.c:3177
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  __sys_sendto+0x685/0x830 net/socket.c:2204
+  __do_sys_sendto net/socket.c:2216 [inline]
+  __se_sys_sendto net/socket.c:2212 [inline]
+  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
+  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:3994 [inline]
+  slab_alloc_node mm/slub.c:4037 [inline]
+  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4080
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:583
+  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:674
+  alloc_skb include/linux/skbuff.h:1320 [inline]
+  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6526
+  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2815
+  packet_alloc_skb net/packet/af_packet.c:2994 [inline]
+  packet_snd net/packet/af_packet.c:3088 [inline]
+  packet_sendmsg+0x749c/0xa3a0 net/packet/af_packet.c:3177
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  __sys_sendto+0x685/0x830 net/socket.c:2204
+  __do_sys_sendto net/socket.c:2216 [inline]
+  __se_sys_sendto net/socket.c:2212 [inline]
+  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2212
+  x64_sys_call+0x3799/0x3c10 arch/x86/include/generated/asm/syscalls_64.h:45
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 0 UID: 0 PID: 7115 Comm: syz.1.515 Not tainted 6.11.0-rc1-syzkaller-00043-g94ede2a3e913 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
+
+Fixes: 999cb275c807 ("gtp: add IPv6 support")
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Harald Welte <laforge@gnumonks.org>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20240808132455.3413916-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/gtp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 2b2a6e29219dc..16f1e747c5673 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1182,6 +1182,8 @@ void hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
- 	struct hrtimer_clock_base *base;
- 	unsigned long flags;
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -567,6 +567,9 @@ static netdev_tx_t gtp_dev_xmit(struct s
+ 	if (skb_cow_head(skb, dev->needed_headroom))
+ 		goto tx_err;
  
-+	if (WARN_ON_ONCE(!timer->function))
-+		return;
- 	/*
- 	 * Check whether the HRTIMER_MODE_SOFT bit and hrtimer.is_soft
- 	 * match on CONFIG_PREEMPT_RT = n. With PREEMPT_RT check the hard
--- 
-2.43.0
-
++	if (!pskb_inet_may_pull(skb))
++		goto tx_err;
++
+ 	skb_reset_inner_headers(skb);
+ 
+ 	/* PDP context lookups in gtp_build_skb_*() need rcu read-side lock. */
 
 
