@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1B81C68C;
-	Sun,  1 Sep 2024 16:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD75E1C68C;
+	Sun,  1 Sep 2024 16:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208719; cv=none; b=XbjiMCDKL5X1bI4/wC5DnvNRt1zRaeUTr+XlyTLYusK0gxqr2QyJ8wVJ//ABM9jJN11IgQhdHWtiFW5O7yVwE32VQYM9VQl7nhfKxfZpcu56XzgtwuEUplLg72wfY294Jtiz6oKq1Sqt/xKc3QQGTOFly/5Noy1ibNs5NPO+NNw=
+	t=1725208722; cv=none; b=L2hWKg0aHbAkTxKvcAbWVDCcyAEV2Z01HrkgkrAWp0tKirwp2xYnLzMuoWy0dAz810jyXaIqHFHAT8/4iF8cpKLZlVh8E4LoJvZJ3RxQebR+K0ghF4tlwD/8v/1Srso4Alm3IwL8EKxmuRJWunS27jdImqBd0xagheimW1iVDVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208719; c=relaxed/simple;
-	bh=+yi8wDB/tOFWsfGBe5ziMoklY473gn2sKhT2/7AyzUw=;
+	s=arc-20240116; t=1725208722; c=relaxed/simple;
+	bh=7nMTklS8jK0Iaokq/vnZsynSlzsM7VvJQ5tExxDReVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACmk0MNJK0p6zu9QXxQ0kGqtdA/3G0fiikzdciQGRjjNeGrtXQ0TgNjfrNPCvWI3FXatBmps8Q2cTzZ1PqrV1nG3agO4Jy1Tfs6DLX6t5ce2+Og9NeFgnfD/xiYVwuohjLNIBrnik5Y3zOnWND0VaGl1zPP6w0e0XMy3clBlQT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKCSheRV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EM241JfeImp5VzcoeyW+8HydzejVGmebW7gYUgpGx7SWgTFlmLdEGYIHyXYm2bFfgb37K+GOvlWehXBxI6opH57zkTupfWBxCBDJyvQWbry9+F87YjR91cEbbhUb4yyflU87WiZv+4C8FnJ2kYqTaSggBp6syR182uybrZZOxRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0fu3dNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKCSheRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF68DC4CEC3;
-	Sun,  1 Sep 2024 16:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0fu3dNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E18C4CEC3;
+	Sun,  1 Sep 2024 16:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208719;
-	bh=+yi8wDB/tOFWsfGBe5ziMoklY473gn2sKhT2/7AyzUw=;
+	s=korg; t=1725208722;
+	bh=7nMTklS8jK0Iaokq/vnZsynSlzsM7VvJQ5tExxDReVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKCSheRVKiR4NOU0o502cjiaOUNzhJXC8hn8TT2Bq4CQpr3m0AYo5ilsBpLpr4rT0
-	 OejD7vyqbvnRMPxHrJp1Fwc9NrJC7MLJnmwbF5WKSHotkR8+0CNEsfRnKSz0QTpey1
-	 kSo1Kvw+KuATwwu9dwkAKX+7KFcSKxy4GE2Own88=
+	b=p0fu3dNQaouJ1uQRLJOeAxVth/2zlHRx4Cz4ptizN7VSq70fSdevYlpLW6n6ajJCO
+	 qGZtqBV3aw5O1nrAzSrJkHguUq8UhMpdm0UKevVIDL1/JMkLlK7ANKirxKbZ1ImQgS
+	 hQ/vfVGBj7l0yXp23omMTIZmdvc93pdcQRfRYq6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karel Balej <balejk@matfyz.cz>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.4 003/134] xhci: Fix Panther point NULL pointer deref at full-speed re-enumeration
-Date: Sun,  1 Sep 2024 18:15:49 +0200
-Message-ID: <20240901160809.886561435@linuxfoundation.org>
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 004/134] s390/dasd: fix error recovery leading to data corruption on ESE devices
+Date: Sun,  1 Sep 2024 18:15:50 +0200
+Message-ID: <20240901160809.922984206@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -50,82 +51,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit af8e119f52e9c13e556be9e03f27957554a84656 upstream.
+commit 7db4042336580dfd75cb5faa82c12cd51098c90b upstream.
 
-re-enumerating full-speed devices after a failed address device command
-can trigger a NULL pointer dereference.
+Extent Space Efficient (ESE) or thin provisioned volumes need to be
+formatted on demand during usual IO processing.
 
-Full-speed devices may need to reconfigure the endpoint 0 Max Packet Size
-value during enumeration. Usb core calls usb_ep0_reinit() in this case,
-which ends up calling xhci_configure_endpoint().
+The dasd_ese_needs_format function checks for error codes that signal
+the non existence of a proper track format.
 
-On Panther point xHC the xhci_configure_endpoint() function will
-additionally check and reserve bandwidth in software. Other hosts do
-this in hardware
+The check for incorrect length is to imprecise since other error cases
+leading to transport of insufficient data also have this flag set.
+This might lead to data corruption in certain error cases for example
+during a storage server warmstart.
 
-If xHC address device command fails then a new xhci_virt_device structure
-is allocated as part of re-enabling the slot, but the bandwidth table
-pointers are not set up properly here.
-This triggers the NULL pointer dereference the next time usb_ep0_reinit()
-is called and xhci_configure_endpoint() tries to check and reserve
-bandwidth
+Fix by removing the check for incorrect length and replacing by
+explicitly checking for invalid track format in transport mode.
 
-[46710.713538] usb 3-1: new full-speed USB device number 5 using xhci_hcd
-[46710.713699] usb 3-1: Device not responding to setup address.
-[46710.917684] usb 3-1: Device not responding to setup address.
-[46711.125536] usb 3-1: device not accepting address 5, error -71
-[46711.125594] BUG: kernel NULL pointer dereference, address: 0000000000000008
-[46711.125600] #PF: supervisor read access in kernel mode
-[46711.125603] #PF: error_code(0x0000) - not-present page
-[46711.125606] PGD 0 P4D 0
-[46711.125610] Oops: Oops: 0000 [#1] PREEMPT SMP PTI
-[46711.125615] CPU: 1 PID: 25760 Comm: kworker/1:2 Not tainted 6.10.3_2 #1
-[46711.125620] Hardware name: Gigabyte Technology Co., Ltd.
-[46711.125623] Workqueue: usb_hub_wq hub_event [usbcore]
-[46711.125668] RIP: 0010:xhci_reserve_bandwidth (drivers/usb/host/xhci.c
+Also remove the check for file protected since this is not a valid
+ESE handling case.
 
-Fix this by making sure bandwidth table pointers are set up correctly
-after a failed address device command, and additionally by avoiding
-checking for bandwidth in cases like this where no actual endpoints are
-added or removed, i.e. only context for default control endpoint 0 is
-evaluated.
-
-Reported-by: Karel Balej <balejk@matfyz.cz>
-Closes: https://lore.kernel.org/linux-usb/D3CKQQAETH47.1MUO22RTCH2O3@matfyz.cz/
-Cc: stable@vger.kernel.org
-Fixes: 651aaf36a7d7 ("usb: xhci: Handle USB transaction error on address command")
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240815141117.2702314-2-mathias.nyman@linux.intel.com
+Cc: stable@vger.kernel.org # 5.3+
+Fixes: 5e2b17e712cf ("s390/dasd: Add dynamic formatting support for ESE volumes")
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240812125733.126431-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/s390/block/dasd.c          |   36 +++++++++++++++---------
+ drivers/s390/block/dasd_3990_erp.c |   10 +-----
+ drivers/s390/block/dasd_eckd.c     |   55 ++++++++++++++++---------------------
+ drivers/s390/block/dasd_int.h      |    2 -
+ 4 files changed, 50 insertions(+), 53 deletions(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -2819,7 +2819,7 @@ static int xhci_configure_endpoint(struc
- 				xhci->num_active_eps);
- 		return -ENOMEM;
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -1665,9 +1665,15 @@ static int dasd_ese_needs_format(struct
+ 	if (!sense)
+ 		return 0;
+ 
+-	return !!(sense[1] & SNS1_NO_REC_FOUND) ||
+-		!!(sense[1] & SNS1_FILE_PROTECTED) ||
+-		scsw_cstat(&irb->scsw) == SCHN_STAT_INCORR_LEN;
++	if (sense[1] & SNS1_NO_REC_FOUND)
++		return 1;
++
++	if ((sense[1] & SNS1_INV_TRACK_FORMAT) &&
++	    scsw_is_tm(&irb->scsw) &&
++	    !(sense[2] & SNS2_ENV_DATA_PRESENT))
++		return 1;
++
++	return 0;
+ }
+ 
+ static int dasd_ese_oos_cond(u8 *sense)
+@@ -1688,7 +1694,7 @@ void dasd_int_handler(struct ccw_device
+ 	struct dasd_device *device;
+ 	unsigned long now;
+ 	int nrf_suppressed = 0;
+-	int fp_suppressed = 0;
++	int it_suppressed = 0;
+ 	struct request *req;
+ 	u8 *sense = NULL;
+ 	int expires;
+@@ -1743,8 +1749,9 @@ void dasd_int_handler(struct ccw_device
+ 		 */
+ 		sense = dasd_get_sense(irb);
+ 		if (sense) {
+-			fp_suppressed = (sense[1] & SNS1_FILE_PROTECTED) &&
+-				test_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
++			it_suppressed =	(sense[1] & SNS1_INV_TRACK_FORMAT) &&
++				!(sense[2] & SNS2_ENV_DATA_PRESENT) &&
++				test_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
+ 			nrf_suppressed = (sense[1] & SNS1_NO_REC_FOUND) &&
+ 				test_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
+ 
+@@ -1759,7 +1766,7 @@ void dasd_int_handler(struct ccw_device
+ 				return;
+ 			}
+ 		}
+-		if (!(fp_suppressed || nrf_suppressed))
++		if (!(it_suppressed || nrf_suppressed))
+ 			device->discipline->dump_sense_dbf(device, irb, "int");
+ 
+ 		if (device->features & DASD_FEATURE_ERPLOG)
+@@ -2513,14 +2520,17 @@ retry:
+ 	rc = 0;
+ 	list_for_each_entry_safe(cqr, n, ccw_queue, blocklist) {
+ 		/*
+-		 * In some cases the 'File Protected' or 'Incorrect Length'
+-		 * error might be expected and error recovery would be
+-		 * unnecessary in these cases.	Check if the according suppress
+-		 * bit is set.
++		 * In some cases certain errors might be expected and
++		 * error recovery would be unnecessary in these cases.
++		 * Check if the according suppress bit is set.
+ 		 */
+ 		sense = dasd_get_sense(&cqr->irb);
+-		if (sense && sense[1] & SNS1_FILE_PROTECTED &&
+-		    test_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags))
++		if (sense && (sense[1] & SNS1_INV_TRACK_FORMAT) &&
++		    !(sense[2] & SNS2_ENV_DATA_PRESENT) &&
++		    test_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags))
++			continue;
++		if (sense && (sense[1] & SNS1_NO_REC_FOUND) &&
++		    test_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags))
+ 			continue;
+ 		if (scsw_cstat(&cqr->irb.scsw) == 0x40 &&
+ 		    test_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags))
+--- a/drivers/s390/block/dasd_3990_erp.c
++++ b/drivers/s390/block/dasd_3990_erp.c
+@@ -1401,14 +1401,8 @@ dasd_3990_erp_file_prot(struct dasd_ccw_
+ 
+ 	struct dasd_device *device = erp->startdev;
+ 
+-	/*
+-	 * In some cases the 'File Protected' error might be expected and
+-	 * log messages shouldn't be written then.
+-	 * Check if the according suppress bit is set.
+-	 */
+-	if (!test_bit(DASD_CQR_SUPPRESS_FP, &erp->flags))
+-		dev_err(&device->cdev->dev,
+-			"Accessing the DASD failed because of a hardware error\n");
++	dev_err(&device->cdev->dev,
++		"Accessing the DASD failed because of a hardware error\n");
+ 
+ 	return dasd_3990_erp_cleanup(erp, DASD_CQR_FAILED);
+ 
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -2201,6 +2201,7 @@ dasd_eckd_analysis_ccw(struct dasd_devic
+ 	cqr->status = DASD_CQR_FILLED;
+ 	/* Set flags to suppress output for expected errors */
+ 	set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
++	set_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
+ 
+ 	return cqr;
+ }
+@@ -2482,7 +2483,6 @@ dasd_eckd_build_check_tcw(struct dasd_de
+ 	cqr->buildclk = get_tod_clock();
+ 	cqr->status = DASD_CQR_FILLED;
+ 	/* Set flags to suppress output for expected errors */
+-	set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
+ 	set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
+ 
+ 	return cqr;
+@@ -4031,8 +4031,6 @@ static struct dasd_ccw_req *dasd_eckd_bu
+ 
+ 	/* Set flags to suppress output for expected errors */
+ 	if (dasd_eckd_is_ese(basedev)) {
+-		set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
+-		set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
+ 		set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
  	}
--	if ((xhci->quirks & XHCI_SW_BW_CHECKING) &&
-+	if ((xhci->quirks & XHCI_SW_BW_CHECKING) && !ctx_change &&
- 	    xhci_reserve_bandwidth(xhci, virt_dev, command->in_ctx)) {
- 		if ((xhci->quirks & XHCI_EP_LIMIT_QUIRK))
- 			xhci_free_host_resources(xhci, ctrl_ctx);
-@@ -4231,8 +4231,10 @@ static int xhci_setup_device(struct usb_
- 		mutex_unlock(&xhci->mutex);
- 		ret = xhci_disable_slot(xhci, udev->slot_id);
- 		xhci_free_virt_device(xhci, udev->slot_id);
--		if (!ret)
--			xhci_alloc_dev(hcd, udev);
-+		if (!ret) {
-+			if (xhci_alloc_dev(hcd, udev) == 1)
-+				xhci_setup_addressable_virt_dev(xhci, udev);
-+		}
- 		kfree(command->completion);
- 		kfree(command);
- 		return -EPROTO;
+ 
+@@ -4534,9 +4532,8 @@ static struct dasd_ccw_req *dasd_eckd_bu
+ 
+ 	/* Set flags to suppress output for expected errors */
+ 	if (dasd_eckd_is_ese(basedev)) {
+-		set_bit(DASD_CQR_SUPPRESS_FP, &cqr->flags);
+-		set_bit(DASD_CQR_SUPPRESS_IL, &cqr->flags);
+ 		set_bit(DASD_CQR_SUPPRESS_NRF, &cqr->flags);
++		set_bit(DASD_CQR_SUPPRESS_IT, &cqr->flags);
+ 	}
+ 
+ 	return cqr;
+@@ -5706,36 +5703,32 @@ static void dasd_eckd_dump_sense(struct
+ {
+ 	u8 *sense = dasd_get_sense(irb);
+ 
+-	if (scsw_is_tm(&irb->scsw)) {
+-		/*
+-		 * In some cases the 'File Protected' or 'Incorrect Length'
+-		 * error might be expected and log messages shouldn't be written
+-		 * then. Check if the according suppress bit is set.
+-		 */
+-		if (sense && (sense[1] & SNS1_FILE_PROTECTED) &&
+-		    test_bit(DASD_CQR_SUPPRESS_FP, &req->flags))
+-			return;
+-		if (scsw_cstat(&irb->scsw) == 0x40 &&
+-		    test_bit(DASD_CQR_SUPPRESS_IL, &req->flags))
+-			return;
++	/*
++	 * In some cases certain errors might be expected and
++	 * log messages shouldn't be written then.
++	 * Check if the according suppress bit is set.
++	 */
++	if (sense && (sense[1] & SNS1_INV_TRACK_FORMAT) &&
++	    !(sense[2] & SNS2_ENV_DATA_PRESENT) &&
++	    test_bit(DASD_CQR_SUPPRESS_IT, &req->flags))
++		return;
+ 
+-		dasd_eckd_dump_sense_tcw(device, req, irb);
+-	} else {
+-		/*
+-		 * In some cases the 'Command Reject' or 'No Record Found'
+-		 * error might be expected and log messages shouldn't be
+-		 * written then. Check if the according suppress bit is set.
+-		 */
+-		if (sense && sense[0] & SNS0_CMD_REJECT &&
+-		    test_bit(DASD_CQR_SUPPRESS_CR, &req->flags))
+-			return;
++	if (sense && sense[0] & SNS0_CMD_REJECT &&
++	    test_bit(DASD_CQR_SUPPRESS_CR, &req->flags))
++		return;
+ 
+-		if (sense && sense[1] & SNS1_NO_REC_FOUND &&
+-		    test_bit(DASD_CQR_SUPPRESS_NRF, &req->flags))
+-			return;
++	if (sense && sense[1] & SNS1_NO_REC_FOUND &&
++	    test_bit(DASD_CQR_SUPPRESS_NRF, &req->flags))
++		return;
+ 
++	if (scsw_cstat(&irb->scsw) == 0x40 &&
++	    test_bit(DASD_CQR_SUPPRESS_IL, &req->flags))
++		return;
++
++	if (scsw_is_tm(&irb->scsw))
++		dasd_eckd_dump_sense_tcw(device, req, irb);
++	else
+ 		dasd_eckd_dump_sense_ccw(device, req, irb);
+-	}
+ }
+ 
+ static int dasd_eckd_pm_freeze(struct dasd_device *device)
+--- a/drivers/s390/block/dasd_int.h
++++ b/drivers/s390/block/dasd_int.h
+@@ -226,7 +226,7 @@ struct dasd_ccw_req {
+  * The following flags are used to suppress output of certain errors.
+  */
+ #define DASD_CQR_SUPPRESS_NRF	4	/* Suppress 'No Record Found' error */
+-#define DASD_CQR_SUPPRESS_FP	5	/* Suppress 'File Protected' error*/
++#define DASD_CQR_SUPPRESS_IT	5	/* Suppress 'Invalid Track' error*/
+ #define DASD_CQR_SUPPRESS_IL	6	/* Suppress 'Incorrect Length' error */
+ #define DASD_CQR_SUPPRESS_CR	7	/* Suppress 'Command Reject' error */
+ 
 
 
