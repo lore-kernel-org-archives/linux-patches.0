@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578CC376EC;
-	Sun,  1 Sep 2024 17:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6485D2C190;
+	Sun,  1 Sep 2024 17:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210481; cv=none; b=sEgFDJeA7rB/aBv2lTIgAu/3/2OwpNf05817RFLUFU1cGq3KerFhPwvSX/IgCx+sr+i0IRLSnurtbejq+3ipnPFhzBQ0gtH/PvGV/7Pagixri0S96xl2YBzooZC8Rl1H8RdYJ7R0z7SLaFj0xLI3hzNrmO/mJF9ilsQ1Ragfq6M=
+	t=1725210484; cv=none; b=BrsNNNMmeT4v4qeA8XcZ8liMVL6ZmPrGerVojYWViBcRnO2LTLtSdyxFJRn+lR/Q1F39js17WuLPOGJGjZI5XxeMNRgGH9QWnpnjA2/nBiKedq2R2atQU9BBQPzLCxracG1Bx95Oj2HnV+MSsoVXreupCDD4aIS5z6M40nCYvow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210481; c=relaxed/simple;
-	bh=G9smTHK9O6P3CSMQb7pLM89OFQfqLKBH54ZFPRqlAh8=;
+	s=arc-20240116; t=1725210484; c=relaxed/simple;
+	bh=09jgOuzhY2Wq4pFzfCzei1q90gg11ImEvgkFMyUgIEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ik5gzJlldr0/EVuFT5FnQnD0BfAP/7LBZKBLJEcLqRPnieNBiRibylrBvjXvOwc3zX2mNhKUcd91z5TVc+ykmNA2K8YnzM//XEQzZsFs6JnhedA+QxU/ABhD8T7AaOmta7x/Uw1iq5HTzxuvPZtQUVZ912850b4FOwbJKskzzY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3kOg8Bo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bkEJpiQKKT9yWwyMzpXr+GzbUU2Y5bm3SV63gY2tG7JaMgpn/xgh+9sIqubR4CW/1xyztzzx+5VRSDZ6wID4VKa1oKNePDzRkupyoRgGfg2mk1B7ka2T4oGUaJD8ZEoJ7PHa1UrYsTCRoSpNGDRsX9K2zZT20ociVhpAkIk5UsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psXq3FNd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3kOg8Bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDCEC4CEC3;
-	Sun,  1 Sep 2024 17:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psXq3FNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E83C4CEC3;
+	Sun,  1 Sep 2024 17:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210480;
-	bh=G9smTHK9O6P3CSMQb7pLM89OFQfqLKBH54ZFPRqlAh8=;
+	s=korg; t=1725210484;
+	bh=09jgOuzhY2Wq4pFzfCzei1q90gg11ImEvgkFMyUgIEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3kOg8BoqIPZzHA5FEYlRZkAXWtMrSKkI3Yns2USdqzWRknTcY5mCty2LrEkM4X4s
-	 qgucubhgTE/SF2CtXsLLnQ+BR0B58r8HQnGyX6MHlZZkdXudruonxq9U9as9XPsF5z
-	 RaypENCLdYpC857OrR9lIoWfbo74taN0UsZaHLpw=
+	b=psXq3FNddaZK43la5kW+ZS7tj8BxLhai2J9FPdLwnVXzbzAW6gxzAmJtrcjeLcZD4
+	 Vvxej9CvgLG15X9MKkqGnKLxXKFQg4D7MmzdvB+i104FBTu5OEaQk9ljoDmlkOebkx
+	 ksCbUXzLEX/nJAeNRSth8mO3Gt1n6Ev0AwMgm2eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
-	Maulik Shah <quic_mkshah@quicinc.com>,
-	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH 5.15 201/215] soc: qcom: cmd-db: Map shared memory as WC, not WB
-Date: Sun,  1 Sep 2024 18:18:33 +0200
-Message-ID: <20240901160830.949913055@linuxfoundation.org>
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Oliver Neuku <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 202/215] cdc-acm: Add DISABLE_ECHO quirk for GE HealthCare UI Controller
+Date: Sun,  1 Sep 2024 18:18:34 +0200
+Message-ID: <20240901160830.990498130@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -54,50 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-commit f9bb896eab221618927ae6a2f1d566567999839d upstream.
+commit 0b00583ecacb0b51712a5ecd34cf7e6684307c67 upstream.
 
-Linux does not write into cmd-db region. This region of memory is write
-protected by XPU. XPU may sometime falsely detect clean cache eviction
-as "write" into the write protected region leading to secure interrupt
-which causes an endless loop somewhere in Trust Zone.
+USB_DEVICE(0x1901, 0x0006) may send data before cdc_acm is ready, which
+may be misinterpreted in the default N_TTY line discipline.
 
-The only reason it is working right now is because Qualcomm Hypervisor
-maps the same region as Non-Cacheable memory in Stage 2 translation
-tables. The issue manifests if we want to use another hypervisor (like
-Xen or KVM), which does not know anything about those specific mappings.
-
-Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
-removes dependency on correct mappings in Stage 2 tables. This patch
-fixes the issue by updating the mapping to MEMREMAP_WC.
-
-I tested this on SA8155P with Xen.
-
-Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-Tested-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Acked-by: Oliver Neuku <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240814072905.2501-1-ian.ray@gehealthcare.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/cmd-db.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -350,7 +350,7 @@ static int cmd_db_dev_probe(struct platf
- 		return -EINVAL;
- 	}
- 
--	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
-+	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
- 	if (!cmd_db_header) {
- 		ret = -ENOMEM;
- 		cmd_db_header = NULL;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1741,6 +1741,9 @@ static const struct usb_device_id acm_id
+ 	{ USB_DEVICE(0x11ca, 0x0201), /* VeriFone Mx870 Gadget Serial */
+ 	.driver_info = SINGLE_RX_URB,
+ 	},
++	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
++	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
++	},
+ 	{ USB_DEVICE(0x1965, 0x0018), /* Uniden UBC125XLT */
+ 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
+ 	},
 
 
