@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A701C68C;
-	Sun,  1 Sep 2024 16:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5043617DFFC;
+	Sun,  1 Sep 2024 16:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208627; cv=none; b=lgGfS2QcyLQn9ALWblT2DjXyZIGDOf2U7CsNNI88IK0UXiO5is1PXc2pB+wlvqrC9pHLW9YPOK4DId/dZULXH79Zc8O4pg+Wh7U3+BXAJdYykKLxf57lFFVKZJI1YlVrrwUj6brsXq733t5KHuykiaH4b6L+zhcciEtx+p5pMpA=
+	t=1725208630; cv=none; b=cYAXOvfg2eFu+A+VB+KXsuSMpU+58cFWo8iLfQ9x61Gt0l4fhbg8RZ9eIwTpgXoz5E3lKwo9esC5PR2iMphyg0+W9bzdC9TpULU33lYjiQ7HeUm8V1RU09wS74JBuVhC/E1fgtBckpK24gFH5ww3qiK8hmQNZsARYd24bKA6IW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208627; c=relaxed/simple;
-	bh=ft8nhVgfs7QsMnLVoIwHu4vrNDqgcEw5D5aRS5E4R4c=;
+	s=arc-20240116; t=1725208630; c=relaxed/simple;
+	bh=VXj/+QGGfc/L8E/U5B8MovI/JIbNfvXtP7cfUnOw0BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRBicViLjLj7sjiTtoso+rE4/Q70HDkSPEOsZX/9J8cCAaCEFYP5K5f+en4Z5G8kbnvoKN9BKKTpo7Z5ptjnze6fd6G/XIfA8/BJN0SWOQ/mNhM23mn/+uQcZJBZhDck0PJeFv1rNI0MLdDfNglsK2MMMrFJW17jUmY18xtISpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o69bB0am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=auIefYkwwTvI2J8992ffDLsXWuKns/uE/fd9vt3NeZGcojasd0QNy8lqKXkpbwMRxt099Gcw3QCz/hzCXLgU7KjODj+lxLaaN0znwKjIaa4wIa/U1LXWaIaiqALJteFFIgQcxRw7sGdaVetvUag+8XKU3X1WpGVKa5EmAMMe9Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoZw9UVw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o69bB0am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DFEC4CEC3;
-	Sun,  1 Sep 2024 16:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoZw9UVw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E80C4CEC3;
+	Sun,  1 Sep 2024 16:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208627;
-	bh=ft8nhVgfs7QsMnLVoIwHu4vrNDqgcEw5D5aRS5E4R4c=;
+	s=korg; t=1725208630;
+	bh=VXj/+QGGfc/L8E/U5B8MovI/JIbNfvXtP7cfUnOw0BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o69bB0amop8lSQXofPb3BlK57FrR/eu/oueCmXwWvtu/B4e1eaE7yNAfF0Wns+TYJ
-	 rywbWX8mtX2TDdW9VVhF0SoG9Q84eeAeKTMHq3l7wRoisxPT+bYOjPPtfRHMc2mDv6
-	 3a7xgAD///oL4G+mfvV79pSZ1opChp4tZ/4j2ACE=
+	b=xoZw9UVwKgklt4xMFbdpQTO/BiwdDC/9qD/py4Xafm+D0fRQgOP5dSDWN57mB4vqp
+	 Imi2VGO+m3cwIZ4iPZftuQfgFzxWljxbuHY6jtEH3mQhH0AurIV2b4SPzVoHHZeKRh
+	 eXU0ZGNGJyk1vntT6AyZC4Y7xXaeViQJ7tfP23o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 141/149] ARM: dts: omap3-n900: correct the accelerometer orientation
-Date: Sun,  1 Sep 2024 18:17:32 +0200
-Message-ID: <20240901160822.749642864@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.10 124/149] usb: gadget: uvc: queue pump work in uvcg_video_enable()
+Date: Sun,  1 Sep 2024 18:17:15 +0200
+Message-ID: <20240901160822.116008218@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,39 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sicelo A. Mhlongo <absicsz@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 5062d9c0cbbc202e495e9b20f147f64ef5cc2897 ]
+commit b52a07e07dead777517af3cbda851bb2cc157c9d upstream.
 
-Negate the values reported for the accelerometer z-axis in order to
-match Documentation/devicetree/bindings/iio/mount-matrix.txt.
+Since commit "6acba0345b68 usb:gadget:uvc Do not use worker thread to pump
+isoc usb requests", pump work could only be queued in uvc_video_complete()
+and uvc_v4l2_qbuf(). If VIDIOC_QBUF is executed before VIDIOC_STREAMON,
+we can only depend on uvc_video_complete() to queue pump work. However,
+this requires some free requests in req_ready list. If req_ready list is
+empty all the time, pump work will never be queued and video datas will
+never be pumped to usb controller. Actually, this situation could happen
+when run uvc-gadget with static image:
 
-Fixes: 14a213dcb004 ("ARM: dts: n900: use iio driver for accelerometer")
+$ ./uvc-gadget -i 1080p.jpg uvc.0
 
-Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
-Reviewed-By: Andreas Kemnade <andreas@kemnade.info>
-Link: https://lore.kernel.org/r/20240722113137.3240847-1-absicsz@gmail.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When capture image from this device, the user app will always block there.
+
+The issue is uvc driver has queued video buffer before streamon, but the
+req_ready list is empty all the time after streamon. This will queue pump
+work in uvcg_video_enable() to fill some request to req_ready list so the
+uvc device could work properly.
+
+Fixes: 6acba0345b68 ("usb:gadget:uvc Do not use worker thread to pump isoc usb requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20240814112537.2608949-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/ti/omap/omap3-n900.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/uvc_video.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/ti/omap/omap3-n900.dts b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-index 07c5b963af78a..4bde3342bb959 100644
---- a/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-+++ b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-@@ -781,7 +781,7 @@
+--- a/drivers/usb/gadget/function/uvc_video.c
++++ b/drivers/usb/gadget/function/uvc_video.c
+@@ -753,6 +753,7 @@ int uvcg_video_enable(struct uvc_video *
+ 	video->req_int_count = 0;
  
- 		mount-matrix =	 "-1",  "0",  "0",
- 				  "0",  "1",  "0",
--				  "0",  "0",  "1";
-+				  "0",  "0",  "-1";
- 	};
+ 	uvc_video_ep_queue_initial_requests(video);
++	queue_work(video->async_wq, &video->pump);
  
- 	cam1: camera@3e {
--- 
-2.43.0
-
+ 	return ret;
+ }
 
 
