@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E42A183092;
-	Sun,  1 Sep 2024 16:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236CE183092;
+	Sun,  1 Sep 2024 16:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209358; cv=none; b=Ubz/kgx0+6T/w+zNS4svuVqUJdIqKkVoyjxplKZmTgtiDb5615p5Z/4SzpvdofD2kRvHdi5M/ri8v1kYOGuSNepuHVeY6+3BiFhL+cM08a8FH/Af/JLlrVh6Nva0pmkpjpPW9xtOQkIwDHo43znAkMjo5eA0HRQCxpme+/gH+KI=
+	t=1725209361; cv=none; b=tgekoXbaF1UeXP9wQ+CahSJ5pGbl/H+Uk2TmkMVnPIiGSgvV0jF8rlIwhxVcLoMzAygxsWq6G3xnUDjxzy1UKuPoib9SOcCw9zYhqFidbOQfZQ4ur0HeO+anmBeq9/om8Erw/B/y5Yy2XEmrBdUXKghEe7LE8hsRE9cai8v5ays=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209358; c=relaxed/simple;
-	bh=X8khr5kB1/ilJh2RKLg/A8CGSPRQxnN1E+OJeQxs7Xk=;
+	s=arc-20240116; t=1725209361; c=relaxed/simple;
+	bh=jzaemdfIJgLmQoqXW4iB3o6xzckJDJiM0dCkG47hTVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQ3BIkH6i8Qr2xjFxIENmC2V/iYUvdaPJh6k5x3ykypCDkYjWfT9MmoO5TEMshQqW06VAzk1/OrAmYRuUc3Ewykrt8UIfsMvZ+cXdv/ryWacjgs20EF6MnkoyVOKDGaTNe94CVmLWpsfzd4f4k/8PzejgpWY2WHoCMNq8Ff8QgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIOTYq7M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s2EZPFZY36uiOaKqp2bT2vnxdgrVB6NKLJnECtDU47jkkXK3GIK4VrJZL7FNIc6Ousq0WhWgjUzn2iSuWolvLczG9St+9NujqruOB0VTYeAXZLNhiQnVaaWqWja/XchDGUb+jdxpLJtNkZLtZo34x0HROSr8JtM/569KmDIdcwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LN9Mebs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIOTYq7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9568EC4CEC3;
-	Sun,  1 Sep 2024 16:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LN9Mebs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98EE7C4CEC3;
+	Sun,  1 Sep 2024 16:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209358;
-	bh=X8khr5kB1/ilJh2RKLg/A8CGSPRQxnN1E+OJeQxs7Xk=;
+	s=korg; t=1725209361;
+	bh=jzaemdfIJgLmQoqXW4iB3o6xzckJDJiM0dCkG47hTVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIOTYq7M/KsnwTTMfD0N6GpN2pvMfRAO84PWKfj2ztEZjGQeFtQvlLkN/Ld4E5iOo
-	 WcYvcK0lHYqE4V2UcrN6utbpDmxgMltcfEPxBn9O/CULcebIMSCAj2biruYRq5jWQV
-	 Ke2padWBR9rYuSXl3/BYYAWtoRR6VlrnF35Pty5M=
+	b=1LN9MebsdN7Qas2iZDlD12Er8JR1x3ALMNVI5Bh+n6n8FHdEDOLUYC1GvP8eQscyB
+	 C4mmLX1ypM2Dx+Exl07ygxBtPACmeGJkQLfxktF3OPODJOMNsDT08E1kFo4tku1te8
+	 5ZuWlTxmLRqtPGO61e5dWiEAg4MrnrJUN8lNlImc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.10 011/151] fix bitmap corruption on close_range() with CLOSE_RANGE_UNSHARE
-Date: Sun,  1 Sep 2024 18:16:11 +0200
-Message-ID: <20240901160814.525088287@linuxfoundation.org>
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.10 012/151] selinux: fix potential counting error in avc_add_xperms_decision()
+Date: Sun,  1 Sep 2024 18:16:12 +0200
+Message-ID: <20240901160814.562266150@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -49,184 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-commit 9a2fa1472083580b6c66bdaf291f591e1170123a upstream.
+commit 379d9af3f3da2da1bbfa67baf1820c72a080d1f1 upstream.
 
-copy_fd_bitmaps(new, old, count) is expected to copy the first
-count/BITS_PER_LONG bits from old->full_fds_bits[] and fill
-the rest with zeroes.  What it does is copying enough words
-(BITS_TO_LONGS(count/BITS_PER_LONG)), then memsets the rest.
-That works fine, *if* all bits past the cutoff point are
-clear.  Otherwise we are risking garbage from the last word
-we'd copied.
-
-For most of the callers that is true - expand_fdtable() has
-count equal to old->max_fds, so there's no open descriptors
-past count, let alone fully occupied words in ->open_fds[],
-which is what bits in ->full_fds_bits[] correspond to.
-
-The other caller (dup_fd()) passes sane_fdtable_size(old_fdt, max_fds),
-which is the smallest multiple of BITS_PER_LONG that covers all
-opened descriptors below max_fds.  In the common case (copying on
-fork()) max_fds is ~0U, so all opened descriptors will be below
-it and we are fine, by the same reasons why the call in expand_fdtable()
-is safe.
-
-Unfortunately, there is a case where max_fds is less than that
-and where we might, indeed, end up with junk in ->full_fds_bits[] -
-close_range(from, to, CLOSE_RANGE_UNSHARE) with
-	* descriptor table being currently shared
-	* 'to' being above the current capacity of descriptor table
-	* 'from' being just under some chunk of opened descriptors.
-In that case we end up with observably wrong behaviour - e.g. spawn
-a child with CLONE_FILES, get all descriptors in range 0..127 open,
-then close_range(64, ~0U, CLOSE_RANGE_UNSHARE) and watch dup(0) ending
-up with descriptor #128, despite #64 being observably not open.
-
-The minimally invasive fix would be to deal with that in dup_fd().
-If this proves to add measurable overhead, we can go that way, but
-let's try to fix copy_fd_bitmaps() first.
-
-* new helper: bitmap_copy_and_expand(to, from, bits_to_copy, size).
-* make copy_fd_bitmaps() take the bitmap size in words, rather than
-bits; it's 'count' argument is always a multiple of BITS_PER_LONG,
-so we are not losing any information, and that way we can use the
-same helper for all three bitmaps - compiler will see that count
-is a multiple of BITS_PER_LONG for the large ones, so it'll generate
-plain memcpy()+memset().
-
-Reproducer added to tools/testing/selftests/core/close_range_test.c
+The count increases only when a node is successfully added to
+the linked list.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: fa1aa143ac4a ("selinux: extended permissions for ioctls")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c                                       |   28 ++++++++-----------
- include/linux/bitmap.h                          |   12 ++++++++
- tools/testing/selftests/core/close_range_test.c |   35 ++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 16 deletions(-)
+ security/selinux/avc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -46,27 +46,23 @@ static void free_fdtable_rcu(struct rcu_
- #define BITBIT_NR(nr)	BITS_TO_LONGS(BITS_TO_LONGS(nr))
- #define BITBIT_SIZE(nr)	(BITBIT_NR(nr) * sizeof(long))
- 
-+#define fdt_words(fdt) ((fdt)->max_fds / BITS_PER_LONG) // words in ->open_fds
- /*
-  * Copy 'count' fd bits from the old table to the new table and clear the extra
-  * space if any.  This does not copy the file pointers.  Called with the files
-  * spinlock held for write.
-  */
--static void copy_fd_bitmaps(struct fdtable *nfdt, struct fdtable *ofdt,
--			    unsigned int count)
-+static inline void copy_fd_bitmaps(struct fdtable *nfdt, struct fdtable *ofdt,
-+			    unsigned int copy_words)
+--- a/security/selinux/avc.c
++++ b/security/selinux/avc.c
+@@ -332,12 +332,12 @@ static int avc_add_xperms_decision(struc
  {
--	unsigned int cpy, set;
-+	unsigned int nwords = fdt_words(nfdt);
+ 	struct avc_xperms_decision_node *dest_xpd;
  
--	cpy = count / BITS_PER_BYTE;
--	set = (nfdt->max_fds - count) / BITS_PER_BYTE;
--	memcpy(nfdt->open_fds, ofdt->open_fds, cpy);
--	memset((char *)nfdt->open_fds + cpy, 0, set);
--	memcpy(nfdt->close_on_exec, ofdt->close_on_exec, cpy);
--	memset((char *)nfdt->close_on_exec + cpy, 0, set);
--
--	cpy = BITBIT_SIZE(count);
--	set = BITBIT_SIZE(nfdt->max_fds) - cpy;
--	memcpy(nfdt->full_fds_bits, ofdt->full_fds_bits, cpy);
--	memset((char *)nfdt->full_fds_bits + cpy, 0, set);
-+	bitmap_copy_and_extend(nfdt->open_fds, ofdt->open_fds,
-+			copy_words * BITS_PER_LONG, nwords * BITS_PER_LONG);
-+	bitmap_copy_and_extend(nfdt->close_on_exec, ofdt->close_on_exec,
-+			copy_words * BITS_PER_LONG, nwords * BITS_PER_LONG);
-+	bitmap_copy_and_extend(nfdt->full_fds_bits, ofdt->full_fds_bits,
-+			copy_words, nwords);
+-	node->ae.xp_node->xp.len++;
+ 	dest_xpd = avc_xperms_decision_alloc(src->used);
+ 	if (!dest_xpd)
+ 		return -ENOMEM;
+ 	avc_copy_xperms_decision(&dest_xpd->xpd, src);
+ 	list_add(&dest_xpd->xpd_list, &node->ae.xp_node->xpd_head);
++	node->ae.xp_node->xp.len++;
+ 	return 0;
  }
  
- /*
-@@ -84,7 +80,7 @@ static void copy_fdtable(struct fdtable
- 	memcpy(nfdt->fd, ofdt->fd, cpy);
- 	memset((char *)nfdt->fd + cpy, 0, set);
- 
--	copy_fd_bitmaps(nfdt, ofdt, ofdt->max_fds);
-+	copy_fd_bitmaps(nfdt, ofdt, fdt_words(ofdt));
- }
- 
- /*
-@@ -374,7 +370,7 @@ struct files_struct *dup_fd(struct files
- 		open_files = sane_fdtable_size(old_fdt, max_fds);
- 	}
- 
--	copy_fd_bitmaps(new_fdt, old_fdt, open_files);
-+	copy_fd_bitmaps(new_fdt, old_fdt, open_files / BITS_PER_LONG);
- 
- 	old_fds = old_fdt->fd;
- 	new_fds = new_fdt->fd;
---- a/include/linux/bitmap.h
-+++ b/include/linux/bitmap.h
-@@ -272,6 +272,18 @@ static inline void bitmap_copy_clear_tai
- 		dst[nbits / BITS_PER_LONG] &= BITMAP_LAST_WORD_MASK(nbits);
- }
- 
-+static inline void bitmap_copy_and_extend(unsigned long *to,
-+					  const unsigned long *from,
-+					  unsigned int count, unsigned int size)
-+{
-+	unsigned int copy = BITS_TO_LONGS(count);
-+
-+	memcpy(to, from, copy * sizeof(long));
-+	if (count % BITS_PER_LONG)
-+		to[copy - 1] &= BITMAP_LAST_WORD_MASK(count);
-+	memset(to + copy, 0, bitmap_size(size) - copy * sizeof(long));
-+}
-+
- /*
-  * On 32-bit systems bitmaps are represented as u32 arrays internally, and
-  * therefore conversion is not needed when copying data from/to arrays of u32.
---- a/tools/testing/selftests/core/close_range_test.c
-+++ b/tools/testing/selftests/core/close_range_test.c
-@@ -224,4 +224,39 @@ TEST(close_range_unshare_capped)
- 	EXPECT_EQ(0, WEXITSTATUS(status));
- }
- 
-+TEST(close_range_bitmap_corruption)
-+{
-+	pid_t pid;
-+	int status;
-+	struct __clone_args args = {
-+		.flags = CLONE_FILES,
-+		.exit_signal = SIGCHLD,
-+	};
-+
-+	/* get the first 128 descriptors open */
-+	for (int i = 2; i < 128; i++)
-+		EXPECT_GE(dup2(0, i), 0);
-+
-+	/* get descriptor table shared */
-+	pid = sys_clone3(&args, sizeof(args));
-+	ASSERT_GE(pid, 0);
-+
-+	if (pid == 0) {
-+		/* unshare and truncate descriptor table down to 64 */
-+		if (sys_close_range(64, ~0U, CLOSE_RANGE_UNSHARE))
-+			exit(EXIT_FAILURE);
-+
-+		ASSERT_EQ(fcntl(64, F_GETFD), -1);
-+		/* ... and verify that the range 64..127 is not
-+		   stuck "fully used" according to secondary bitmap */
-+		EXPECT_EQ(dup(0), 64)
-+			exit(EXIT_FAILURE);
-+		exit(EXIT_SUCCESS);
-+	}
-+
-+	EXPECT_EQ(waitpid(pid, &status, 0), pid);
-+	EXPECT_EQ(true, WIFEXITED(status));
-+	EXPECT_EQ(0, WEXITSTATUS(status));
-+}
-+
- TEST_HARNESS_MAIN
 
 
