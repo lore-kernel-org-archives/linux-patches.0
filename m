@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2531C68C;
-	Sun,  1 Sep 2024 16:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4C72B9C7;
+	Sun,  1 Sep 2024 16:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208896; cv=none; b=Ku3ligTbknVnUYQ3g34mUAj7paSqPmz6t8CiiSiy/VVOUP0jRB5bDt2zQYw5sPwH+onkc8j76+Zw2NNY7f43LBdK4S4CZd1bE6o8Yh68VCbEvwLYP2H+t+LnWpKfEH/zr+6GKcbDVrMvLS5LGP3Bhw3Dzg2XE1AMeVTryRKEL5U=
+	t=1725208899; cv=none; b=J0+CPLHrEBICrJr7vfQb6nHumdRD4JISGoL9HPpEfT1iu2V7Pypw2Y6KCKBoow+Gr9NiulUVn7qI/Is7VFt1k/Ty/w8MLdsd97QaTR50xZm4QEw4R4n04FUx24oRdkVvH+KSuNCf1lXXjo6A5LoeX6TvNDbfPgPCNdvmDg8tGtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208896; c=relaxed/simple;
-	bh=DJu42gCL+nzYO3HHGn2B9anzRzO/mNev1OPqSlZ6+44=;
+	s=arc-20240116; t=1725208899; c=relaxed/simple;
+	bh=m7SU5clOEfJfhgRrd2NcCUdc/FgW8EM1gT43QeBiyyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXqkkLgjs6II7bVQhFuTNJBCHLzkK3jhXaIodfqbUIZj3+Jga54Sh6JBw3eRPQHqtRMQNqeKsBZ3kWkKhX+TCbRK/CT32+ItIjhD3LSTiwemWQ6KRs4YxKWsu4AQQA5DbOvzebgaE7cd8BpEeM6+BE3trHDpVpCy9CtywbgZUa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYwtGM4g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+hVIajY5jquS1UDJUNIb0/V7KCGeOavkOquErr2oNpE/9MpG0c03kTLXUa3QtRchAumPpukjvkxdeumnVMu6pntsbfBLN09oMxS/mzZSOP+tZX3wyc/SeUTH5QK4KN7sUiLkwXKwrlGPeBze2/L0vm6w+2F1ESsLTB2KqSBl7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IL2Q5oPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYwtGM4g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1CDC4CEC3;
-	Sun,  1 Sep 2024 16:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IL2Q5oPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC48C4CEC3;
+	Sun,  1 Sep 2024 16:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208895;
-	bh=DJu42gCL+nzYO3HHGn2B9anzRzO/mNev1OPqSlZ6+44=;
+	s=korg; t=1725208899;
+	bh=m7SU5clOEfJfhgRrd2NcCUdc/FgW8EM1gT43QeBiyyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bYwtGM4gogyzsT+3Y9nMtr7+W5t/LBO1M+yl3HCdSn715XAe4kWIjTf3jufZUlf1k
-	 TNbNs2zv4MtHJXVPf+fHlC9YcTCqE9MED7lx1V+1oE1qyjrullyLuTRoj5ETURbwxn
-	 LR+oGsgbWh4IBptjnCNZexeKlVGqEl9IZKNIXEGc=
+	b=IL2Q5oPIxO/p5wn4EEO7eS0Obfb0iuVQdcHz9EEpU3bddPYi1bPvA0EBKWXiN2bi/
+	 NM9KRoODGgVdJb/GvovqkY2F6ZYe3ZPC0P/2HdNOXx/Yrepi9RhV0kfsJee9Mv5/x/
+	 Gji35WzR929ITansFr30ecxJ6opJ7TdRxC2foKS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Phil Chang <phil.chang@mediatek.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/134] powerpc/boot: Only free if realloc() succeeds
-Date: Sun,  1 Sep 2024 18:16:41 +0200
-Message-ID: <20240901160812.178149626@linuxfoundation.org>
+Subject: [PATCH 5.4 073/134] hrtimer: Prevent queuing of hrtimer without a function callback
+Date: Sun,  1 Sep 2024 18:16:59 +0200
+Message-ID: <20240901160812.849159444@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -50,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Phil Chang <phil.chang@mediatek.com>
 
-[ Upstream commit f2d5bccaca3e8c09c9b9c8485375f7bdbb2631d2 ]
+[ Upstream commit 5a830bbce3af16833fe0092dec47b6dd30279825 ]
 
-simple_realloc() frees the original buffer (ptr) even if the
-reallocation failed.
+The hrtimer function callback must not be NULL. It has to be specified by
+the call side but it is not validated by the hrtimer code. When a hrtimer
+is queued without a function callback, the kernel crashes with a null
+pointer dereference when trying to execute the callback in __run_hrtimer().
 
-Fix it to behave like standard realloc() and only free the original
-buffer if the reallocation succeeded.
+Introduce a validation before queuing the hrtimer in
+hrtimer_start_range_ns().
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240229115149.749264-1-mpe@ellerman.id.au
+[anna-maria: Rephrase commit message]
+
+Signed-off-by: Phil Chang <phil.chang@mediatek.com>
+Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/simple_alloc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/time/hrtimer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/boot/simple_alloc.c b/arch/powerpc/boot/simple_alloc.c
-index 188c4f996512a..bc99f75b8582d 100644
---- a/arch/powerpc/boot/simple_alloc.c
-+++ b/arch/powerpc/boot/simple_alloc.c
-@@ -114,10 +114,11 @@ static void *simple_realloc(void *ptr, unsigned long size)
- 		return ptr;
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 1b301dd1692b8..2e4f136bdf6ab 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1183,6 +1183,8 @@ void hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
+ 	struct hrtimer_clock_base *base;
+ 	unsigned long flags;
  
- 	new = simple_malloc(size);
--	if (new)
-+	if (new) {
- 		memcpy(new, ptr, p->size);
-+		simple_free(ptr);
-+	}
- 
--	simple_free(ptr);
- 	return new;
- }
- 
++	if (WARN_ON_ONCE(!timer->function))
++		return;
+ 	/*
+ 	 * Check whether the HRTIMER_MODE_SOFT bit and hrtimer.is_soft
+ 	 * match on CONFIG_PREEMPT_RT = n. With PREEMPT_RT check the hard
 -- 
 2.43.0
 
