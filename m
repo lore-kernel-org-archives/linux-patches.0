@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2BA18132F;
-	Sun,  1 Sep 2024 16:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF7D183CC1;
+	Sun,  1 Sep 2024 16:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207587; cv=none; b=Wf0sOUCkjXKmggyrM7ajBnJj9RlsIWUBzy5VaRHXtMJ3WZ04Odb+5L5dgx6WbtYfuxDImd4ofeGOseoBxR2iwRrXqUm8VaqNcV8SeOXIJ7zEPU2HkhYVoNnUTEmF4ZBkW45q1PLOhebDtSqMO2hVjCNN+ghuV7+hAE7hKCHnfsg=
+	t=1725207590; cv=none; b=ZVHqalZnfx6b0U28qIrC6ixcK21azB2G+n0r1TKOMCBKc4v9bi2ypWWu5SWdc+dH2vaC3bJBHgGyjoyc+AzJyl9K7/Mu2xjf5DEE4ZbQJ47/OIaJWnCURN6RWY7335qA2LDiQSf/H/EqSqXtIGGdtynu7Y9nW79nQPo8VkVNW/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207587; c=relaxed/simple;
-	bh=CQmXlF0UGH2x0rDS0Y3nhrSI6BjuoCzXIbbft55MUPo=;
+	s=arc-20240116; t=1725207590; c=relaxed/simple;
+	bh=aR+BAOT6LpVoTB0bwyZ5iChhcoiWbNfMUO6RFLHg4JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qTonoz7anb2tHeCjEfvfwosyAiYaj4F4EHP/LJ3GToM5LnKLTAo6f/LVxrdnBWlcvpC3p4CT26jh/3b27hRBaqN0H0p/101qtQQu8+30vXiE3O2owfTWVzsdqCmSv+LgxjlsG73ZW69QT0esuTKuqKp3e4Y4cVl/+n5/l7has1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfWLUYpR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ng54qv9hu4w0RFKq36yu4CuUWhUHPaLR9gY6ZV1cBr28qesuC5sse8Pzx3orAuIrZWvLvJikVsYYzp8DaCbCJ1oD56PpB5w2vkmZc83EHLest72QjUGLQXbNvlK1VeD6DAFU72+M7b186Be+r8st8eXuJK004OWwdcRjCmAMxQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJCAVVsm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfWLUYpR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29814C4CEC3;
-	Sun,  1 Sep 2024 16:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJCAVVsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED3EC4CEC3;
+	Sun,  1 Sep 2024 16:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207586;
-	bh=CQmXlF0UGH2x0rDS0Y3nhrSI6BjuoCzXIbbft55MUPo=;
+	s=korg; t=1725207589;
+	bh=aR+BAOT6LpVoTB0bwyZ5iChhcoiWbNfMUO6RFLHg4JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfWLUYpRRBOEzw6a+5EQxya6g7LhuqykcyVLspW18x4h32WuH5MwAGvIS79qk+chm
-	 BgvoQelWhp8HqtNQhNXDdsfZygmySHUhW0LtAlY5RC0NvkK2TAYC/2dWMgA9Hrg0VK
-	 S0+YKT1+1pyUkmF/mY49+At2PdMqBOwXb57nPEaA=
+	b=dJCAVVsmp690Z/wDO0pFxd57JEtFjJHqM5Q6s7hOmyr2eq0DsXtXOu9eSvNEUGQE1
+	 M2vOfF7b3ByvcyBesB5krsgcgw90sOKY5MR19z60U/goDxHmaWjyqdRMItkuVpUmRk
+	 f2iCi5UUCp1jdEmLzSSY/rVBh4Gb29/SXi5sCWow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 17/98] ssb: Fix division by zero issue in ssb_calc_clock_rate
-Date: Sun,  1 Sep 2024 18:15:47 +0200
-Message-ID: <20240901160804.340980081@linuxfoundation.org>
+Subject: [PATCH 4.19 18/98] wifi: cw1200: Avoid processing an invalid TIM IE
+Date: Sun,  1 Sep 2024 18:15:48 +0200
+Message-ID: <20240901160804.379169053@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -47,51 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit e0b5127fa134fe0284d58877b6b3133939c8b3ce ]
+[ Upstream commit b7bcea9c27b3d87b54075735c870500123582145 ]
 
-In ssb_calc_clock_rate(), there is a potential issue where the value of
-m1 could be zero due to initialization using clkfactor_f6_resolv(). This
-situation raised concerns about the possibility of a division by zero
-error.
+While converting struct ieee80211_tim_ie::virtual_map to be a flexible
+array it was observed that the TIM IE processing in cw1200_rx_cb()
+could potentially process a malformed IE in a manner that could result
+in a buffer over-read. Add logic to verify that the TIM IE length is
+large enough to hold a valid TIM payload before processing it.
 
-We fixed it by following the suggestions provided by Larry Finger
-<Larry.Finger@lwfinger.net> and Michael Büsch <m@bues.ch>. The fix
-involves returning a value of 1 instead of 0 in clkfactor_f6_resolv().
-This modification ensures the proper functioning of the code and
-eliminates the risk of division by zero errors.
-
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Acked-by: Larry Finger <Larry.Finger@lwfinger.net>
-Acked-by: Michael Büsch <m@bues.ch>
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230904232346.34991-1-rand.sec96@gmail.com
+Link: https://lore.kernel.org/r/20230831-ieee80211_tim_ie-v3-1-e10ff584ab5d@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ssb/main.c | 2 +-
+ drivers/net/wireless/st/cw1200/txrx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ssb/main.c b/drivers/ssb/main.c
-index 0a26984acb2ca..9e54bc7eec663 100644
---- a/drivers/ssb/main.c
-+++ b/drivers/ssb/main.c
-@@ -835,7 +835,7 @@ static u32 clkfactor_f6_resolve(u32 v)
- 	case SSB_CHIPCO_CLK_F6_7:
- 		return 7;
- 	}
--	return 0;
-+	return 1;
- }
+diff --git a/drivers/net/wireless/st/cw1200/txrx.c b/drivers/net/wireless/st/cw1200/txrx.c
+index f7b1b0062db32..3ccb3a134599d 100644
+--- a/drivers/net/wireless/st/cw1200/txrx.c
++++ b/drivers/net/wireless/st/cw1200/txrx.c
+@@ -1173,7 +1173,7 @@ void cw1200_rx_cb(struct cw1200_common *priv,
+ 		size_t ies_len = skb->len - (ies - (u8 *)(skb->data));
  
- /* Calculate the speed the backplane would run at a given set of clockcontrol values */
+ 		tim_ie = cfg80211_find_ie(WLAN_EID_TIM, ies, ies_len);
+-		if (tim_ie) {
++		if (tim_ie && tim_ie[1] >= sizeof(struct ieee80211_tim_ie)) {
+ 			struct ieee80211_tim_ie *tim =
+ 				(struct ieee80211_tim_ie *)&tim_ie[2];
+ 
 -- 
 2.43.0
 
