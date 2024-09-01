@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B9C17F394;
-	Sun,  1 Sep 2024 16:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2406364AB;
+	Sun,  1 Sep 2024 16:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207768; cv=none; b=u0zjPnS4hf8AOShyM5j+uXROcz9JF+fd++F9+dcC0fWHJB6zvrpAj4ZwF8foXABd/q+/SbWX2xz9QjtOpnlX4R/zcAFLcjy6Mc0g0IrXsxJusiPJWF4chOaP8m4ht7+o3RllCpOg8VKhN93Ekdhw9vgNHH3ySkbYmX/yTVNroW4=
+	t=1725207771; cv=none; b=byFvPRjkEa2jn1qkpzq1yPXmXkCp2LFSx2Mpsq6k2NYuhofenZUE3OIPuziENkmvoLCpvktIsXePFrwUHHXzdtbvFxepvd7NIRJGgjSM1TWbgFRa5OiB0MjMoJSpEHiAbjXOzGFcYgO+ZJkgnyt8N7jA5VhmEI9UQ/8tWX1sOI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207768; c=relaxed/simple;
-	bh=JmgcnSuiBorqBRwY2bUdv7UCGL76c2AMK6jq6wBc/jk=;
+	s=arc-20240116; t=1725207771; c=relaxed/simple;
+	bh=t1vpZvw/lSCFt32Sggd1qo+bnu//0Gywi21/zdvlv8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XQUHyr38VdIakCUL9RV8dzzxx7l6Tc92z9JS0CKNfwx50XIk7W/PelF2htMgJGrQAt4CwJgwA8XAKWaQAtbwwGoa7295bNYBa2XGXN4mXUIWLMUztJ8cj3n8fqvtnw272Ci42hOCZjosBO/L2QpisxeXH4THJomaRqDlD0404zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFTbAucc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V9fGurAt/gNOnKTnSTQqj7jqWAl2Q0OGa0PjL96nlsR86jeWiHtgFnLpSjmBGaVrcrilpJ2E5xsRrpLNr8aSjuxXzq9PIQ0zjy+oG5MHZNSKJRixHpaDXYdMZfVJqddkByP+N+2gW6omTQirc/oFqzRD4hcqmSCjDNTnpq2bvow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sI6wFfu9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFTbAucc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A1EC4CEC3;
-	Sun,  1 Sep 2024 16:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sI6wFfu9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19968C4CEC3;
+	Sun,  1 Sep 2024 16:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207768;
-	bh=JmgcnSuiBorqBRwY2bUdv7UCGL76c2AMK6jq6wBc/jk=;
+	s=korg; t=1725207771;
+	bh=t1vpZvw/lSCFt32Sggd1qo+bnu//0Gywi21/zdvlv8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFTbAuccJ0/DBaGP9NCTKQ6tkZUp7HotoMmDe4LvLaH185ZJDajhaTXqTx58sOEsf
-	 XxBq5ICjp+x0hUruCekCUDz3cTmtnuExiSqWguHOKCKqKtA3bDTteg/YCJn1i8Bo5L
-	 62SK1k+ucwBVGaJB1U/rCYzGVYsCWoTvBUM+NYw8=
+	b=sI6wFfu9AWPqXNS2RlwFSLnjTeu+IX4Sn916+gb5sRifRCLAj189GWFrui7ZtPCSK
+	 CeeCF1DjILRm9gKoRQr5QcXdmCZUy7CV1CabEeijCiLF8h5QhOmMFVeicBT03s9xdf
+	 9iSzttlS0+pKJsCCKGjtWh1Wcy/4JSHPVZPlBF7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
-Subject: [PATCH 4.19 72/98] drm/amdgpu: Using uninitialized value *size when calling amdgpu_vce_cs_reloc
-Date: Sun,  1 Sep 2024 18:16:42 +0200
-Message-ID: <20240901160806.412069898@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 4.19 73/98] pinctrl: single: fix potential NULL dereference in pcs_get_function()
+Date: Sun,  1 Sep 2024 18:16:43 +0200
+Message-ID: <20240901160806.449643224@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -47,43 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 88a9a467c548d0b3c7761b4fd54a68e70f9c0944 upstream.
+commit 1c38a62f15e595346a1106025722869e87ffe044 upstream.
 
-Initialize the size before calling amdgpu_vce_cs_reloc, such as case 0x03000001.
-V2: To really improve the handling we would actually
-   need to have a separate value of 0xffffffff.(Christian)
+pinmux_generic_get_function() can return NULL and the pointer 'function'
+was dereferenced without checking against NULL. Add checking of pointer
+'function' in pcs_get_function().
 
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://lore.kernel.org/20240808041355.2766009-1-make24@iscas.ac.cn
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-@@ -714,7 +714,8 @@ int amdgpu_vce_ring_parse_cs(struct amdg
- 	uint32_t created = 0;
- 	uint32_t allocated = 0;
- 	uint32_t tmp, handle = 0;
--	uint32_t *size = &tmp;
-+	uint32_t dummy = 0xffffffff;
-+	uint32_t *size = &dummy;
- 	unsigned idx;
- 	int i, r = 0;
- 
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -323,6 +323,8 @@ static int pcs_get_function(struct pinct
+ 		return -ENOTSUPP;
+ 	fselector = setting->func;
+ 	function = pinmux_generic_get_function(pctldev, fselector);
++	if (!function)
++		return -EINVAL;
+ 	*func = function->data;
+ 	if (!(*func)) {
+ 		dev_err(pcs->dev, "%s could not find function%i\n",
 
 
