@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D7D1C68C;
-	Sun,  1 Sep 2024 16:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB4F2B9C7;
+	Sun,  1 Sep 2024 16:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208659; cv=none; b=lXtYeRJMfDmjRbew2iG8athRs1/AlidjCYtEj01Qi+jTrw6Eg99gI5KmOhkfNKeZ7ySQsnaTqiGd9gM1J5Z4+SQr17zltl5nHft6YF8EMWHr4nGMmLzLgYoNcT7zGYywJJzYdQ4//vUf7ZSFRI+np2S+0otxn1cFYDNOwgkD/ZU=
+	t=1725208662; cv=none; b=pUUBi/kz/jNiwo558Zrj/XzEHMDO4NpUfG5+vjGMHVb6YBJkysP4NVRE8tKnGHpc1JgRtrrSaNh36y2BQsFyJjkkDSFCgqSdzWPN48PPRQfwP4l9S/rsj13LiIJLqUmcCa6Y1a2XmkKT2GO+5Xp9b3uG3hSmjbzRssXBLVIaUTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208659; c=relaxed/simple;
-	bh=OToiNimeUX2JiA9pwAa5c3KZtsaSooSvQ3q8mRlnYM0=;
+	s=arc-20240116; t=1725208662; c=relaxed/simple;
+	bh=7kbXJUBF5oRFzlolCMPqzfzdcCkfEPHf8c+iZptqfEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIIO0tne8lP1XAV9uo6/ApLflRc3sTzCunlVn2hLSDhQbVneiW3Jy+E9OtM6RvVtT8LayLgUAwFLK/gH5gOduy9O6/8PEF4aqNWwe9d2rKYZYkpbLNJ2sZZqBX+IU2IF6ena7GTMDXjFZdj5F8aMRIVf3TcjYYRmaQs/AcJbAdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIaCaFaz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PF+bGna7gKZezHiJO1sK0PAE+ez0WXSL8F33XqkiEt4bMb7Z1YuJDGXeLrc6pwUYtltd3B5N6JhUgpuQzoAqKz9H9pt7cJ8j+AUpAJurBD/nG9aR841YCytjBLQf69R/gZnatZWkPxQg7XTpq0/W4Dvrq5i8InCfD+Pqxh/PSCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEgMCAHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIaCaFaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07418C4CEC3;
-	Sun,  1 Sep 2024 16:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEgMCAHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B612C4CEC3;
+	Sun,  1 Sep 2024 16:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208659;
-	bh=OToiNimeUX2JiA9pwAa5c3KZtsaSooSvQ3q8mRlnYM0=;
+	s=korg; t=1725208662;
+	bh=7kbXJUBF5oRFzlolCMPqzfzdcCkfEPHf8c+iZptqfEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIaCaFazSF5dh4IklZaKbuRGyPJu/JsX/yj5XL4057iMP+HIfOXSdOlZ1KRLeocbJ
-	 f68ZZJP9U6gtag9l5kufxNW5ovS0POml9xxiMskHxQ/GUGqwPCeXwFcfXLHThkPK2U
-	 FtALnrQ14Zgjp487WB9cY3Lf9u+ZJQYoohBikRUc=
+	b=JEgMCAHCX10L/buNxwHs+DltYnUjI//JW5p7+rdZdR/EjKnUPRe+kQM9v3CFWFPyK
+	 LD3jWamIJdCWLmON7fUpfOSv5M6BJ/idC7CGEBOOB+EagYIZoNwJ0DOKUyYCio1IL1
+	 iP2RQdt45D0y+P7vsVeoWLR/WHEkgJ3erwen+/PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 125/149] arm64: dts: qcom: x1e80100-crd: fix PCIe4 PHY supply
-Date: Sun,  1 Sep 2024 18:17:16 +0200
-Message-ID: <20240901160822.152902278@linuxfoundation.org>
+Subject: [PATCH 6.10 126/149] arm64: dts: qcom: x1e80100-qcp: fix PCIe4 PHY supply
+Date: Sun,  1 Sep 2024 18:17:17 +0200
+Message-ID: <20240901160822.191648993@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -53,24 +54,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 30f593fa0088b89f479f7358640687b3cbca93d4 upstream.
+commit f03dd49f884f428ba71efe23383ff842f4f15e0e upstream.
 
-The PCIe4 PHY is powered by vreg_l3i (not vreg_l3j).
+The PCIe4 PHY is powered by vreg_l3i (not vreg_l3j) on the CRD so assume
+the same applies to the QCP.
 
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Cc: stable@vger.kernel.org	# 6.9
+Fixes: f9a9c11471da ("arm64: dts: qcom: x1e80100-qcp: Enable more support")
+Cc: stable@vger.kernel.org      # 6.9
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240722094249.26471-2-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20240722095459.27437-2-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts |    2 +-
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -648,7 +648,7 @@
+--- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+@@ -459,7 +459,7 @@
  };
  
  &pcie4_phy {
