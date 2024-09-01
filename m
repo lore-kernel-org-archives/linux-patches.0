@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603C83BB48;
-	Sun,  1 Sep 2024 17:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED2417C;
+	Sun,  1 Sep 2024 17:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210287; cv=none; b=ZxhMAJkBHKHy8jgp5S2L53LxwVsGkCsOa9HsVW0sQ7Xo/+FdtbmzUIQBMvT80f0aSdnla01RkyWT5KLZIJ0CV3dyA4EmKZvsfqlPIdAhwabLdTdSTzj4lB+czALvjV+PbYvvTilaOcr75p0mDe1H8E4/vkbzrNjYt6dhTBsj9q0=
+	t=1725210291; cv=none; b=ABFwaHKl8begRcjecV+n1F3XtBfsiG1lBMa+cmd+J6q9bAUcV0vGqWM1kkhlojR0YwIskY5w4oHXtpsDy/fJLv26tDFNEao3s1c6QirOqUjqEeKxeP1G5kcQQzS7SCxL/Ym+XYov4XeQvemo+29SlHp2WZmtzi/nFbXKKAJrvVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210287; c=relaxed/simple;
-	bh=iLOyqaoXhtG/lg6UGNXDBpOkQUilDbra/65koVTTXNw=;
+	s=arc-20240116; t=1725210291; c=relaxed/simple;
+	bh=LDJR1hcbjnxPoVjitz5TiGYZ5SaXCNSq3HBXejIcIe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nM8b1Y+BVkaQg5DFTuP2yH7MpTIW1i89u9HUIy9gts/8K9ubqukvwAw8Pf/7QNDv03NmNn6v922zbd2X3cUhLKD66VrbBhy51CdcCylvpImTAKcURPZ3Aps92ZgYDQQhZytGTHIhjhKA8WO39yWviilm4W3zU2maehkR60G1cuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWgkyq0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XfetKPI+JxxOz11xeCXkMftwy/URfEI1SEEt2OPMt3OxAf/RnX4Nb/l/Dl/8qzdu2us9oiBaQ2yw3uGP1d6wFjXihN32z7N2lfFx4IqYzKjFGG/bYrQle1W+M9SeeCNG64PC+1KMMegGat1JCqilFsqjvdZiEMb9hblRFcUVOx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxF4hATK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWgkyq0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F9DC4CEC3;
-	Sun,  1 Sep 2024 17:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxF4hATK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45203C4CEC3;
+	Sun,  1 Sep 2024 17:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210287;
-	bh=iLOyqaoXhtG/lg6UGNXDBpOkQUilDbra/65koVTTXNw=;
+	s=korg; t=1725210290;
+	bh=LDJR1hcbjnxPoVjitz5TiGYZ5SaXCNSq3HBXejIcIe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWgkyq0RevxKX1fe/LYa/R8SKXU7/soh4u5D0MuyMY09ktYVco2lUBg/LdW+gkogp
-	 4SMAkar+iQRZdCa5DMZlMGomcFupCmJRlJcUUQLfCokzZMtILxHbNV1yIGUlppBQON
-	 yTl599HJ+kKMxkLwX/zN8RHxzx9bX9NP6NiecHkc=
+	b=QxF4hATKYRiqaWFrZzF6Wor6DwjWXtzHUQJevUzxXW79J7EtoDkyaJ/bn5nSZAJXH
+	 A+gEr3bC/VIXlDPM7sdl68ilHtSVYf2sEOui/2PTB0rTgPWTEkcmHbphwXfVPQnA0k
+	 XMXwP27QdCgYL+F3KwqmkIYDdAq3AwUKuEoY56fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Hans J. Schultz" <netdev@kapio-technology.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Saeed Mahameed <saeed@kernel.org>,
 	Florian Fainelli <f.fainelli@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 145/215] net: dsa: mv88e6xxx: read FID when handling ATU violations
-Date: Sun,  1 Sep 2024 18:17:37 +0200
-Message-ID: <20240901160828.847256945@linuxfoundation.org>
+Subject: [PATCH 5.15 146/215] net: dsa: mv88e6xxx: replace ATU violation prints with trace points
+Date: Sun,  1 Sep 2024 18:17:38 +0200
+Message-ID: <20240901160828.884661500@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,173 +53,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans J. Schultz <netdev@kapio-technology.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 4bf24ad09bc0b05e97fb48b962b2c9246fc76727 ]
+[ Upstream commit 8646384d80f3d3b4a66b3284dbbd8232d1b8799e ]
 
-When an ATU violation occurs, the switch uses the ATU FID register to
-report the FID of the MAC address that incurred the violation. It would
-be good for the driver to know the FID value for purposes such as
-logging and CPU-based authentication.
+In applications where the switch ports must perform 802.1X based
+authentication and are therefore locked, ATU violation interrupts are
+quite to be expected as part of normal operation. The problem is that
+they currently spam the kernel log, even if rate limited.
 
-Up until now, the driver has been calling the mv88e6xxx_g1_atu_op()
-function to read ATU violations, but that doesn't do exactly what we
-want, namely it calls mv88e6xxx_g1_atu_fid_write() with FID 0.
-(side note, the documentation for the ATU Get/Clear Violation command
-says that writes to the ATU FID register have no effect before the
-operation starts, it's only that we disregard the value that this
-register provides once the operation completes)
+Create a series of trace points, all derived from the same event class,
+which log these violations to the kernel's trace buffer, which is both
+much faster and much easier to ignore than printing to a serial console.
 
-So mv88e6xxx_g1_atu_fid_write() is not what we want, but rather
-mv88e6xxx_g1_atu_fid_read(). However, the latter doesn't exist, we need
-to write it.
+New usage model:
 
-The remainder of mv88e6xxx_g1_atu_op() except for
-mv88e6xxx_g1_atu_fid_write() is still needed, namely to send a
-GET_CLR_VIOLATION command to the ATU. In principle we could have still
-kept calling mv88e6xxx_g1_atu_op(), but the MDIO writes to the ATU FID
-register are pointless, but in the interest of doing less CPU work per
-interrupt, write a new function called mv88e6xxx_g1_read_atu_violation()
-and call it.
+$ trace-cmd list | grep mv88e6xxx
+mv88e6xxx
+mv88e6xxx:mv88e6xxx_atu_full_violation
+mv88e6xxx:mv88e6xxx_atu_miss_violation
+mv88e6xxx:mv88e6xxx_atu_member_violation
+$ trace-cmd record -e mv88e6xxx sleep 10
 
-The FID will be the port default FID as set by mv88e6xxx_port_set_fid()
-if the VID from the packet cannot be found in the VTU. Otherwise it is
-the FID derived from the VTU entry associated with that VID.
-
-Signed-off-by: Hans J. Schultz <netdev@kapio-technology.com>
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Saeed Mahameed <saeed@kernel.org>
 Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 528876d867a2 ("net: dsa: mv88e6xxx: Fix out-of-bound access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/global1_atu.c | 72 +++++++++++++++++++++----
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ drivers/net/dsa/mv88e6xxx/Makefile      |  4 ++
+ drivers/net/dsa/mv88e6xxx/global1_atu.c | 19 +++----
+ drivers/net/dsa/mv88e6xxx/trace.c       |  6 +++
+ drivers/net/dsa/mv88e6xxx/trace.h       | 66 +++++++++++++++++++++++++
+ 4 files changed, 86 insertions(+), 9 deletions(-)
+ create mode 100644 drivers/net/dsa/mv88e6xxx/trace.c
+ create mode 100644 drivers/net/dsa/mv88e6xxx/trace.h
 
+diff --git a/drivers/net/dsa/mv88e6xxx/Makefile b/drivers/net/dsa/mv88e6xxx/Makefile
+index c8eca2b6f9594..49bf358b9c4fa 100644
+--- a/drivers/net/dsa/mv88e6xxx/Makefile
++++ b/drivers/net/dsa/mv88e6xxx/Makefile
+@@ -15,3 +15,7 @@ mv88e6xxx-objs += port_hidden.o
+ mv88e6xxx-$(CONFIG_NET_DSA_MV88E6XXX_PTP) += ptp.o
+ mv88e6xxx-objs += serdes.o
+ mv88e6xxx-objs += smi.o
++mv88e6xxx-objs += trace.o
++
++# for tracing framework to find trace.h
++CFLAGS_trace.o := -I$(src)
 diff --git a/drivers/net/dsa/mv88e6xxx/global1_atu.c b/drivers/net/dsa/mv88e6xxx/global1_atu.c
-index 40bd67a5c8e93..4f689396fc402 100644
+index 4f689396fc402..7c513a03789cf 100644
 --- a/drivers/net/dsa/mv88e6xxx/global1_atu.c
 +++ b/drivers/net/dsa/mv88e6xxx/global1_atu.c
-@@ -114,6 +114,19 @@ static int mv88e6xxx_g1_atu_op_wait(struct mv88e6xxx_chip *chip)
- 	return mv88e6xxx_g1_wait_bit(chip, MV88E6XXX_G1_ATU_OP, bit, 0);
- }
+@@ -12,6 +12,7 @@
  
-+static int mv88e6xxx_g1_read_atu_violation(struct mv88e6xxx_chip *chip)
-+{
-+	int err;
-+
-+	err = mv88e6xxx_g1_write(chip, MV88E6XXX_G1_ATU_OP,
-+				 MV88E6XXX_G1_ATU_OP_BUSY |
-+				 MV88E6XXX_G1_ATU_OP_GET_CLR_VIOLATION);
-+	if (err)
-+		return err;
-+
-+	return mv88e6xxx_g1_atu_op_wait(chip);
-+}
-+
- static int mv88e6xxx_g1_atu_op(struct mv88e6xxx_chip *chip, u16 fid, u16 op)
- {
- 	u16 val;
-@@ -159,6 +172,41 @@ int mv88e6xxx_g1_atu_get_next(struct mv88e6xxx_chip *chip, u16 fid)
- 	return mv88e6xxx_g1_atu_op(chip, fid, MV88E6XXX_G1_ATU_OP_GET_NEXT_DB);
- }
+ #include "chip.h"
+ #include "global1.h"
++#include "trace.h"
  
-+static int mv88e6xxx_g1_atu_fid_read(struct mv88e6xxx_chip *chip, u16 *fid)
-+{
-+	u16 val = 0, upper = 0, op = 0;
-+	int err = -EOPNOTSUPP;
-+
-+	if (mv88e6xxx_num_databases(chip) > 256) {
-+		err = mv88e6xxx_g1_read(chip, MV88E6352_G1_ATU_FID, &val);
-+		val &= 0xfff;
-+		if (err)
-+			return err;
-+	} else {
-+		err = mv88e6xxx_g1_read(chip, MV88E6XXX_G1_ATU_OP, &op);
-+		if (err)
-+			return err;
-+		if (mv88e6xxx_num_databases(chip) > 64) {
-+			/* ATU DBNum[7:4] are located in ATU Control 15:12 */
-+			err = mv88e6xxx_g1_read(chip, MV88E6XXX_G1_ATU_CTL,
-+						&upper);
-+			if (err)
-+				return err;
-+
-+			upper = (upper >> 8) & 0x00f0;
-+		} else if (mv88e6xxx_num_databases(chip) > 16) {
-+			/* ATU DBNum[5:4] are located in ATU Operation 9:8 */
-+			upper = (op >> 4) & 0x30;
-+		}
-+
-+		/* ATU DBNum[3:0] are located in ATU Operation 3:0 */
-+		val = (op & 0xf) | upper;
-+	}
-+	*fid = val;
-+
-+	return err;
-+}
-+
- /* Offset 0x0C: ATU Data Register */
+ /* Offset 0x01: ATU FID Register */
  
- static int mv88e6xxx_g1_atu_data_read(struct mv88e6xxx_chip *chip,
-@@ -353,14 +401,12 @@ static irqreturn_t mv88e6xxx_g1_atu_prob_irq_thread_fn(int irq, void *dev_id)
- {
- 	struct mv88e6xxx_chip *chip = dev_id;
- 	struct mv88e6xxx_atu_entry entry;
--	int spid;
--	int err;
--	u16 val;
-+	int err, spid;
-+	u16 val, fid;
- 
- 	mv88e6xxx_reg_lock(chip);
- 
--	err = mv88e6xxx_g1_atu_op(chip, 0,
--				  MV88E6XXX_G1_ATU_OP_GET_CLR_VIOLATION);
-+	err = mv88e6xxx_g1_read_atu_violation(chip);
- 	if (err)
- 		goto out;
- 
-@@ -368,6 +414,10 @@ static irqreturn_t mv88e6xxx_g1_atu_prob_irq_thread_fn(int irq, void *dev_id)
- 	if (err)
- 		goto out;
- 
-+	err = mv88e6xxx_g1_atu_fid_read(chip, &fid);
-+	if (err)
-+		goto out;
-+
- 	err = mv88e6xxx_g1_atu_data_read(chip, &entry);
- 	if (err)
- 		goto out;
-@@ -386,22 +436,22 @@ static irqreturn_t mv88e6xxx_g1_atu_prob_irq_thread_fn(int irq, void *dev_id)
+@@ -435,23 +436,23 @@ static irqreturn_t mv88e6xxx_g1_atu_prob_irq_thread_fn(int irq, void *dev_id)
+ 	}
  
  	if (val & MV88E6XXX_G1_ATU_OP_MEMBER_VIOLATION) {
- 		dev_err_ratelimited(chip->dev,
--				    "ATU member violation for %pM portvec %x spid %d\n",
--				    entry.mac, entry.portvec, spid);
-+				    "ATU member violation for %pM fid %u portvec %x spid %d\n",
-+				    entry.mac, fid, entry.portvec, spid);
+-		dev_err_ratelimited(chip->dev,
+-				    "ATU member violation for %pM fid %u portvec %x spid %d\n",
+-				    entry.mac, fid, entry.portvec, spid);
++		trace_mv88e6xxx_atu_member_violation(chip->dev, spid,
++						     entry.portvec, entry.mac,
++						     fid);
  		chip->ports[spid].atu_member_violation++;
  	}
  
  	if (val & MV88E6XXX_G1_ATU_OP_MISS_VIOLATION) {
- 		dev_err_ratelimited(chip->dev,
--				    "ATU miss violation for %pM portvec %x spid %d\n",
--				    entry.mac, entry.portvec, spid);
-+				    "ATU miss violation for %pM fid %u portvec %x spid %d\n",
-+				    entry.mac, fid, entry.portvec, spid);
+-		dev_err_ratelimited(chip->dev,
+-				    "ATU miss violation for %pM fid %u portvec %x spid %d\n",
+-				    entry.mac, fid, entry.portvec, spid);
++		trace_mv88e6xxx_atu_miss_violation(chip->dev, spid,
++						   entry.portvec, entry.mac,
++						   fid);
  		chip->ports[spid].atu_miss_violation++;
  	}
  
  	if (val & MV88E6XXX_G1_ATU_OP_FULL_VIOLATION) {
- 		dev_err_ratelimited(chip->dev,
--				    "ATU full violation for %pM portvec %x spid %d\n",
--				    entry.mac, entry.portvec, spid);
-+				    "ATU full violation for %pM fid %u portvec %x spid %d\n",
-+				    entry.mac, fid, entry.portvec, spid);
+-		dev_err_ratelimited(chip->dev,
+-				    "ATU full violation for %pM fid %u portvec %x spid %d\n",
+-				    entry.mac, fid, entry.portvec, spid);
++		trace_mv88e6xxx_atu_full_violation(chip->dev, spid,
++						   entry.portvec, entry.mac,
++						   fid);
  		chip->ports[spid].atu_full_violation++;
  	}
  	mv88e6xxx_reg_unlock(chip);
+diff --git a/drivers/net/dsa/mv88e6xxx/trace.c b/drivers/net/dsa/mv88e6xxx/trace.c
+new file mode 100644
+index 0000000000000..7833cb50ca5d7
+--- /dev/null
++++ b/drivers/net/dsa/mv88e6xxx/trace.c
+@@ -0,0 +1,6 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/* Copyright 2022 NXP
++ */
++
++#define CREATE_TRACE_POINTS
++#include "trace.h"
+diff --git a/drivers/net/dsa/mv88e6xxx/trace.h b/drivers/net/dsa/mv88e6xxx/trace.h
+new file mode 100644
+index 0000000000000..d9ab5c8dee55d
+--- /dev/null
++++ b/drivers/net/dsa/mv88e6xxx/trace.h
+@@ -0,0 +1,66 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Copyright 2022 NXP
++ */
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM	mv88e6xxx
++
++#if !defined(_MV88E6XXX_TRACE_H) || defined(TRACE_HEADER_MULTI_READ)
++#define _MV88E6XXX_TRACE_H
++
++#include <linux/device.h>
++#include <linux/if_ether.h>
++#include <linux/tracepoint.h>
++
++DECLARE_EVENT_CLASS(mv88e6xxx_atu_violation,
++
++	TP_PROTO(const struct device *dev, int spid, u16 portvec,
++		 const unsigned char *addr, u16 fid),
++
++	TP_ARGS(dev, spid, portvec, addr, fid),
++
++	TP_STRUCT__entry(
++		__string(name, dev_name(dev))
++		__field(int, spid)
++		__field(u16, portvec)
++		__array(unsigned char, addr, ETH_ALEN)
++		__field(u16, fid)
++	),
++
++	TP_fast_assign(
++		__assign_str(name, dev_name(dev));
++		__entry->spid = spid;
++		__entry->portvec = portvec;
++		memcpy(__entry->addr, addr, ETH_ALEN);
++		__entry->fid = fid;
++	),
++
++	TP_printk("dev %s spid %d portvec 0x%x addr %pM fid %u",
++		  __get_str(name), __entry->spid, __entry->portvec,
++		  __entry->addr, __entry->fid)
++);
++
++DEFINE_EVENT(mv88e6xxx_atu_violation, mv88e6xxx_atu_member_violation,
++	     TP_PROTO(const struct device *dev, int spid, u16 portvec,
++		      const unsigned char *addr, u16 fid),
++	     TP_ARGS(dev, spid, portvec, addr, fid));
++
++DEFINE_EVENT(mv88e6xxx_atu_violation, mv88e6xxx_atu_miss_violation,
++	     TP_PROTO(const struct device *dev, int spid, u16 portvec,
++		      const unsigned char *addr, u16 fid),
++	     TP_ARGS(dev, spid, portvec, addr, fid));
++
++DEFINE_EVENT(mv88e6xxx_atu_violation, mv88e6xxx_atu_full_violation,
++	     TP_PROTO(const struct device *dev, int spid, u16 portvec,
++		      const unsigned char *addr, u16 fid),
++	     TP_ARGS(dev, spid, portvec, addr, fid));
++
++#endif /* _MV88E6XXX_TRACE_H */
++
++/* We don't want to use include/trace/events */
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH .
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE	trace
++/* This part must be outside protection */
++#include <trace/define_trace.h>
 -- 
 2.43.0
 
