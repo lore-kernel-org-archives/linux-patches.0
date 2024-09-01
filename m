@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32E52C190;
-	Sun,  1 Sep 2024 17:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3907A2C190;
+	Sun,  1 Sep 2024 17:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210166; cv=none; b=ULDTEDG83cv1exMczY9ZygX3jC6yxL5NeiHSTJmwjH9VKlel49XWkx4lTY6Ge2aLhBSsXcuuQ9mFGj+jpSahuxTrHSXoPGudFU9ik/LuGjONUcvgZLHZt0N7ApXz3vXUHC8Nn1wxrpY5qVzEhzQ535iTYkWmpzVrZxoXRtrOvOc=
+	t=1725210169; cv=none; b=pc/yLcCFn4jPq4pevpcxAE5ua44qNsZfe4nIJmvU+lIGIxDNqMHLIO+0vuhteSM838cG+XPWq7nqnWD00kj6lHKNKckLJ6vEVrS9vYaAyxj/yHnbqxLTLcIV471NTFKD9ufc13tr+fP3//q+auUKI9L3WBVOvOvIcImDiGWn6kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210166; c=relaxed/simple;
-	bh=O6pUSfRTbSUQAYDq3UVMohb14+n8K9L61K6J70a1XNI=;
+	s=arc-20240116; t=1725210169; c=relaxed/simple;
+	bh=Mg9KoRx0GFyED+boTO/XXz+tRxIPPHPftcD3tawbaGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c23XiWZMu4k2U4DTaagd4EGnB5V78oes7K9aVM8iQ/NeDWL8RFRBjD18/EuTeivNcLpoxHdEr3b4sL9GeY2Gmct3rGotx6OufvdDGGA1HS3GnWX2pAqtDKuNjfH+87WKL7sKpJcgNROSurTHphFUxZ2S2XVT/lCazKqoG4w1B3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBrSjLQl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nd4MVpGXBrqdC9JLetN0Gc+fAqzQ1fMgNJUSk3rKXjjRqA6P50Jw2X5CkVaPu+DqWO0sa/Bkp1vNdGQPPC+GjpurKChMXcJKAmNf/BzZaqW4cxI2JGyAoW7e5r0/SsnF0NDJXoxXvjjOifvjyZMqBWcVZEIGtPkOmnzK25Pvydo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8Ev4bt5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBrSjLQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6687AC4CEC3;
-	Sun,  1 Sep 2024 17:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8Ev4bt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B307FC4CEC3;
+	Sun,  1 Sep 2024 17:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210165;
-	bh=O6pUSfRTbSUQAYDq3UVMohb14+n8K9L61K6J70a1XNI=;
+	s=korg; t=1725210169;
+	bh=Mg9KoRx0GFyED+boTO/XXz+tRxIPPHPftcD3tawbaGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBrSjLQlQYwsC1zoTZ1P5Qj1QC7zhF2pHjtRgP/itMEWrbL+nK78Cr7sNSFafxBlU
-	 bL6FTERSDiK9WfBN+IC9Mtrl3UN1BBJY1kooES5Th8A8sG3QXvu/Z5LvV0knxdngFc
-	 co1H5qMunPc17dckIAF4FvhgVU7RPBCtrIxpDudc=
+	b=R8Ev4bt5Rqj6DZdF6G9k5feH6gPjySl1HwTqKUKcOhRQiNS6DeFDX7+geOYEY01Pe
+	 HcpfsoYhZKaiNsoilxT1Y0nWUaruByLr6kf8j3QK8VbYEqYsPTna0965xNvtlvSHZ6
+	 32VFJl573nRuZcUZo3S0NJV8TlQx/o5QutzA3t0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Daniel Wagner <dwagner@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/215] nvmet-trace: avoid dereferencing pointer too early
-Date: Sun,  1 Sep 2024 18:16:19 +0200
-Message-ID: <20240901160825.886529452@linuxfoundation.org>
+Subject: [PATCH 5.15 102/215] usb: dwc3: core: Skip setting event buffers for host only controllers
+Date: Sun,  1 Sep 2024 18:16:54 +0200
+Message-ID: <20240901160827.205125256@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,139 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-[ Upstream commit 0e716cec6fb11a14c220ee17c404b67962e902f7 ]
+[ Upstream commit 89d7f962994604a3e3d480832788d06179abefc5 ]
 
-The first command issued from the host to the target is the fabrics
-connect command. At this point, neither the target queue nor the
-controller have been allocated. But we already try to trace this command
-in nvmet_req_init.
+On some SoC's like SA8295P where the tertiary controller is host-only
+capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
+Trying to access them leads to a crash.
 
-Reported by KASAN.
+For DRD/Peripheral supported controllers, event buffer setup is done
+again in gadget_pullup. Skip setup or cleanup of event buffers if
+controller is host-only capable.
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Suggested-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240420044901.884098-4-quic_kriskura@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/trace.c |  6 +++---
- drivers/nvme/target/trace.h | 28 +++++++++++++++++-----------
- 2 files changed, 20 insertions(+), 14 deletions(-)
+ drivers/usb/dwc3/core.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/nvme/target/trace.c b/drivers/nvme/target/trace.c
-index bff454d46255b..6ee1f3db81d04 100644
---- a/drivers/nvme/target/trace.c
-+++ b/drivers/nvme/target/trace.c
-@@ -211,7 +211,7 @@ const char *nvmet_trace_disk_name(struct trace_seq *p, char *name)
- 	return ret;
- }
- 
--const char *nvmet_trace_ctrl_name(struct trace_seq *p, struct nvmet_ctrl *ctrl)
-+const char *nvmet_trace_ctrl_id(struct trace_seq *p, u16 ctrl_id)
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 1dc417da1a0fe..26eaeb7a0301b 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -430,6 +430,13 @@ static void dwc3_free_event_buffers(struct dwc3 *dwc)
+ static int dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned length)
  {
- 	const char *ret = trace_seq_buffer_ptr(p);
- 
-@@ -224,8 +224,8 @@ const char *nvmet_trace_ctrl_name(struct trace_seq *p, struct nvmet_ctrl *ctrl)
- 	 * If we can know the extra data of the connect command in this stage,
- 	 * we can update this print statement later.
- 	 */
--	if (ctrl)
--		trace_seq_printf(p, "%d", ctrl->cntlid);
-+	if (ctrl_id)
-+		trace_seq_printf(p, "%d", ctrl_id);
- 	else
- 		trace_seq_printf(p, "_");
- 	trace_seq_putc(p, 0);
-diff --git a/drivers/nvme/target/trace.h b/drivers/nvme/target/trace.h
-index 155334ddc13f3..89020018a0e35 100644
---- a/drivers/nvme/target/trace.h
-+++ b/drivers/nvme/target/trace.h
-@@ -32,18 +32,24 @@ const char *nvmet_trace_parse_fabrics_cmd(struct trace_seq *p, u8 fctype,
- 	 nvmet_trace_parse_nvm_cmd(p, opcode, cdw10) :			\
- 	 nvmet_trace_parse_admin_cmd(p, opcode, cdw10)))
- 
--const char *nvmet_trace_ctrl_name(struct trace_seq *p, struct nvmet_ctrl *ctrl);
--#define __print_ctrl_name(ctrl)				\
--	nvmet_trace_ctrl_name(p, ctrl)
-+const char *nvmet_trace_ctrl_id(struct trace_seq *p, u16 ctrl_id);
-+#define __print_ctrl_id(ctrl_id)			\
-+	nvmet_trace_ctrl_id(p, ctrl_id)
- 
- const char *nvmet_trace_disk_name(struct trace_seq *p, char *name);
- #define __print_disk_name(name)				\
- 	nvmet_trace_disk_name(p, name)
- 
- #ifndef TRACE_HEADER_MULTI_READ
--static inline struct nvmet_ctrl *nvmet_req_to_ctrl(struct nvmet_req *req)
-+static inline u16 nvmet_req_to_ctrl_id(struct nvmet_req *req)
- {
--	return req->sq->ctrl;
-+	/*
-+	 * The queue and controller pointers are not valid until an association
-+	 * has been established.
-+	 */
-+	if (!req->sq || !req->sq->ctrl)
+ 	struct dwc3_event_buffer *evt;
++	unsigned int hw_mode;
++
++	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
++	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
++		dwc->ev_buf = NULL;
 +		return 0;
-+	return req->sq->ctrl->cntlid;
- }
++	}
  
- static inline void __assign_req_name(char *name, struct nvmet_req *req)
-@@ -62,7 +68,7 @@ TRACE_EVENT(nvmet_req_init,
- 	TP_ARGS(req, cmd),
- 	TP_STRUCT__entry(
- 		__field(struct nvme_command *, cmd)
--		__field(struct nvmet_ctrl *, ctrl)
-+		__field(u16, ctrl_id)
- 		__array(char, disk, DISK_NAME_LEN)
- 		__field(int, qid)
- 		__field(u16, cid)
-@@ -75,7 +81,7 @@ TRACE_EVENT(nvmet_req_init,
- 	),
- 	TP_fast_assign(
- 		__entry->cmd = cmd;
--		__entry->ctrl = nvmet_req_to_ctrl(req);
-+		__entry->ctrl_id = nvmet_req_to_ctrl_id(req);
- 		__assign_req_name(__entry->disk, req);
- 		__entry->qid = req->sq->qid;
- 		__entry->cid = cmd->common.command_id;
-@@ -89,7 +95,7 @@ TRACE_EVENT(nvmet_req_init,
- 	),
- 	TP_printk("nvmet%s: %sqid=%d, cmdid=%u, nsid=%u, flags=%#x, "
- 		  "meta=%#llx, cmd=(%s, %s)",
--		__print_ctrl_name(__entry->ctrl),
-+		__print_ctrl_id(__entry->ctrl_id),
- 		__print_disk_name(__entry->disk),
- 		__entry->qid, __entry->cid, __entry->nsid,
- 		__entry->flags, __entry->metadata,
-@@ -103,7 +109,7 @@ TRACE_EVENT(nvmet_req_complete,
- 	TP_PROTO(struct nvmet_req *req),
- 	TP_ARGS(req),
- 	TP_STRUCT__entry(
--		__field(struct nvmet_ctrl *, ctrl)
-+		__field(u16, ctrl_id)
- 		__array(char, disk, DISK_NAME_LEN)
- 		__field(int, qid)
- 		__field(int, cid)
-@@ -111,7 +117,7 @@ TRACE_EVENT(nvmet_req_complete,
- 		__field(u16, status)
- 	),
- 	TP_fast_assign(
--		__entry->ctrl = nvmet_req_to_ctrl(req);
-+		__entry->ctrl_id = nvmet_req_to_ctrl_id(req);
- 		__entry->qid = req->cq->qid;
- 		__entry->cid = req->cqe->command_id;
- 		__entry->result = le64_to_cpu(req->cqe->result.u64);
-@@ -119,7 +125,7 @@ TRACE_EVENT(nvmet_req_complete,
- 		__assign_req_name(__entry->disk, req);
- 	),
- 	TP_printk("nvmet%s: %sqid=%d, cmdid=%u, res=%#llx, status=%#x",
--		__print_ctrl_name(__entry->ctrl),
-+		__print_ctrl_id(__entry->ctrl_id),
- 		__print_disk_name(__entry->disk),
- 		__entry->qid, __entry->cid, __entry->result, __entry->status)
+ 	evt = dwc3_alloc_one_event_buffer(dwc, length);
+ 	if (IS_ERR(evt)) {
+@@ -451,6 +458,9 @@ int dwc3_event_buffers_setup(struct dwc3 *dwc)
+ {
+ 	struct dwc3_event_buffer	*evt;
  
++	if (!dwc->ev_buf)
++		return 0;
++
+ 	evt = dwc->ev_buf;
+ 	evt->lpos = 0;
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTADRLO(0),
+@@ -468,6 +478,9 @@ void dwc3_event_buffers_cleanup(struct dwc3 *dwc)
+ {
+ 	struct dwc3_event_buffer	*evt;
+ 
++	if (!dwc->ev_buf)
++		return;
++
+ 	evt = dwc->ev_buf;
+ 
+ 	evt->lpos = 0;
 -- 
 2.43.0
 
