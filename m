@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C1D17CA1F;
-	Sun,  1 Sep 2024 16:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95965183CAB;
+	Sun,  1 Sep 2024 16:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208208; cv=none; b=G0GkcghsmiWwR5WWge1qdvK9cFzRvrOLpyjQufFQUtqUSfbDp2+EYYGwHw288oM6QkMPL8qU/9OEMu9O/jH/VEFAmGn6KHXbX6MBAuyGCbxQf9dZfUdFUY2NWp9tNithJtYv+EMBDsM0QjDrsQRQPYbM62edCVsxcy9jgSJAT+U=
+	t=1725208211; cv=none; b=ZaKTUu6WB32NBkQPNLsTP58EjEZiUWyVI6fCx5eoorpWqAP7CCjQ866x1gKFboanKJotNSfsaHCioj2tmDtj/t0reQUCXt6HwUlcsOTsdlYXLaea5VI3ogj2hegLS0lmWHGXM6MnVtj2EJxQjSXBA5AscdGCtelQVzjDAZS3wTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208208; c=relaxed/simple;
-	bh=M1r+5pmOXv4N898G0RGzlThYp73xqlpnOQu0U30hc/g=;
+	s=arc-20240116; t=1725208211; c=relaxed/simple;
+	bh=0QcsczcFN4FH4YFeGY9Wit01VddJCzv7a5M42ZW0VZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n5zM8a/gYUTZ3xXUdj1dIhDNcN4p1ThZlsxetCdNBlo0JTSr4ZLEd2wehYD2q8kVOGiWMm+OixE7ZHe06jPBuvtO8kwyyujoQbnzs3Pui/dQy5FNNz/+SOkXFk0VkVZI2Ac4v8Fju0mkRA5euJdeQrXJZeNvpCHXe+EHLk/dBS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnoQ+Y6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Icg43za6Vd6Upr6RhdZYyX4otUstIf4jOEEJhv/VQBq+5SsAuiaIMXQDLkezN2nGhX44QhpZk0NrnGHpehe8gk+qR4HQ5VdQvQynZcdDWf/0Kc5WRWji3Zi+d22FJ0b6s3cCqO8cKF+VoVyuVdVLsuAe/Ker0AaRqazzXbKbsVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q279tNfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnoQ+Y6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6312C4CEC3;
-	Sun,  1 Sep 2024 16:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q279tNfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CCDC4CEC3;
+	Sun,  1 Sep 2024 16:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208208;
-	bh=M1r+5pmOXv4N898G0RGzlThYp73xqlpnOQu0U30hc/g=;
+	s=korg; t=1725208211;
+	bh=0QcsczcFN4FH4YFeGY9Wit01VddJCzv7a5M42ZW0VZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnoQ+Y6RNF96gBbb6FLU4r5m/EcgGv+Hv77M76lW0w/y/OzI12z7hArDxfAE0K6Sq
-	 Ck6xdHpG62jrE6V6CtSUytYCbqDbuwROziYf4iI05lTN/5krgR/BiGlkR0MUZDgvA3
-	 ye4owpKWkHB1NPwZinGV2arosVJYAy8voRHdSU+E=
+	b=Q279tNfa5ZV3SSxjAgG08F7XjZZKnG4WNHm4RVm8OWaZAqRMDOcPpnFGvRUXfPhtQ
+	 ziufq1M6BonTMud+PecJng97yRKoW3Z1yFxrKSlZQ0RiRXxqbhovhhfwXlCktYzlrk
+	 FqD1KHefXDPmRNJ4qPXI4NJXlyz0ceUYuxEcIfYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Kojedzinszky <richard@kojedz.in>,
-	Huang-Huang Bao <i@eh5.me>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Trevor Woerner <twoerner@gmail.com>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.10 012/149] pinctrl: rockchip: correct RK3328 iomux width flag for GPIO2-B pins
-Date: Sun,  1 Sep 2024 18:15:23 +0200
-Message-ID: <20240901160817.929907613@linuxfoundation.org>
+Subject: [PATCH 6.10 013/149] pinctrl: single: fix potential NULL dereference in pcs_get_function()
+Date: Sun,  1 Sep 2024 18:15:24 +0200
+Message-ID: <20240901160817.966680664@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -54,52 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang-Huang Bao <i@eh5.me>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 128f71fe014fc91efa1407ce549f94a9a9f1072c upstream.
+commit 1c38a62f15e595346a1106025722869e87ffe044 upstream.
 
-The base iomux offsets for each GPIO pin line are accumulatively
-calculated based off iomux width flag in rockchip_pinctrl_get_soc_data.
-If the iomux width flag is one of IOMUX_WIDTH_4BIT, IOMUX_WIDTH_3BIT or
-IOMUX_WIDTH_2BIT, the base offset for next pin line would increase by 8
-bytes, otherwise it would increase by 4 bytes.
+pinmux_generic_get_function() can return NULL and the pointer 'function'
+was dereferenced without checking against NULL. Add checking of pointer
+'function' in pcs_get_function().
 
-Despite most of GPIO2-B iomux have 2-bit data width, which can be fit
-into 4 bytes space with write mask, it actually take 8 bytes width for
-whole GPIO2-B line.
+Found by code review.
 
-Commit e8448a6c817c ("pinctrl: rockchip: fix pinmux bits for RK3328
-GPIO2-B pins") wrongly set iomux width flag to 0, causing all base
-iomux offset for line after GPIO2-B to be calculated wrong. Fix the
-iomux width flag to IOMUX_WIDTH_2BIT so the offset after GPIO2-B is
-correctly increased by 8, matching the actual width of GPIO2-B iomux.
-
-Fixes: e8448a6c817c ("pinctrl: rockchip: fix pinmux bits for RK3328 GPIO2-B pins")
 Cc: stable@vger.kernel.org
-Reported-by: Richard Kojedzinszky <richard@kojedz.in>
-Closes: https://lore.kernel.org/linux-rockchip/4f29b743202397d60edfb3c725537415@kojedz.in/
-Tested-by: Richard Kojedzinszky <richard@kojedz.in>
-Signed-off-by: Huang-Huang Bao <i@eh5.me>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Tested-by: Trevor Woerner <twoerner@gmail.com>
-Link: https://lore.kernel.org/20240709105428.1176375-1-i@eh5.me
+Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://lore.kernel.org/20240808041355.2766009-1-make24@iscas.ac.cn
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -3800,7 +3800,7 @@ static struct rockchip_pin_bank rk3328_p
- 	PIN_BANK_IOMUX_FLAGS(0, 32, "gpio0", 0, 0, 0, 0),
- 	PIN_BANK_IOMUX_FLAGS(1, 32, "gpio1", 0, 0, 0, 0),
- 	PIN_BANK_IOMUX_FLAGS(2, 32, "gpio2", 0,
--			     0,
-+			     IOMUX_WIDTH_2BIT,
- 			     IOMUX_WIDTH_3BIT,
- 			     0),
- 	PIN_BANK_IOMUX_FLAGS(3, 32, "gpio3",
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -345,6 +345,8 @@ static int pcs_get_function(struct pinct
+ 		return -ENOTSUPP;
+ 	fselector = setting->func;
+ 	function = pinmux_generic_get_function(pctldev, fselector);
++	if (!function)
++		return -EINVAL;
+ 	*func = function->data;
+ 	if (!(*func)) {
+ 		dev_err(pcs->dev, "%s could not find function%i\n",
 
 
