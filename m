@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA72A2C190;
-	Sun,  1 Sep 2024 17:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19482C190;
+	Sun,  1 Sep 2024 17:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210430; cv=none; b=QC5RXu8ugYBgm2cgsBGqkViL+Xw8du6763AZjhp+r81rr1H0JyEB1oAdmX1cZ3jZBthL/g5FTaDO9GNNokFoUV5RKB3rvr++LPGm31VOlYV1K/cYS0+XIpFrECppVtOU6ln4s5wPmcXbGWFsu7lRNO+TRVXX3PEFxn8w8uVzn0s=
+	t=1725210434; cv=none; b=Z+2WBCSmKUF1AK0gSuop96WvdjZOE04ULElDI/QWMDVuwbTpSHb9WitFcol/bLo8035SrM/0usryaS/Mcl4XuHb1xVItZ2Q/77qNL4s26q5x7o9RNuEMW62u6iCsq4h4oj3T7KLeyIBOqFY1BJNt3s/H1imiPd1GQnq/RrzYfAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210430; c=relaxed/simple;
-	bh=7l+Bp7MBmrchRcRFS6rGnxLXpc/C58BsKSYKIu4mcWA=;
+	s=arc-20240116; t=1725210434; c=relaxed/simple;
+	bh=S1uHVgA11CNxnlnkj0hC4pTTZv7qCeclGI0856zpHUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ag79Ab1wqKBk5ZYEPgLlsExiyZHehO1mdq9ESwo2la5cN4hXhKlvq4m0IDUAqyzdbrbgtDOOV69sMDokuojp2HEUBnKr4M+AZcl4NcN64p+i9dFi8QXmwX9puYczAdzNrKU2YVBGt45MNez3WRy9wB6KQXCyZNi5dsy+j81/ZYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4fsT4R9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X048XXGT35PU4eSCxFZuWcf11wZKmAP2mbHuDlJN6Aqi1D1zYzBOv8N8wlk/MArTlnTsCztCDbA2yMbnnYzAUytTyPKQIDdhWMOBamRNkjePjoACAq/GyatM8RZZTUrziNIwo69tf+8dvZp1Qa2xlEv+/d3VqOujk/J1Isl7jyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVZCORbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4fsT4R9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5FCC4CEC3;
-	Sun,  1 Sep 2024 17:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVZCORbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C358C4CEC3;
+	Sun,  1 Sep 2024 17:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210430;
-	bh=7l+Bp7MBmrchRcRFS6rGnxLXpc/C58BsKSYKIu4mcWA=;
+	s=korg; t=1725210433;
+	bh=S1uHVgA11CNxnlnkj0hC4pTTZv7qCeclGI0856zpHUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4fsT4R9vYQ4bddDnqzfAQTdT/HRT2y5h8CM2WB9C+nHhJ6ON12KyePgiyh3pfVJl
-	 tTuq4u9UQCn6Wq2JTc6+0vmPNmGUEtesjhyLp6O+tcua0zdwSD6VpL5B7eAQikvaxp
-	 4Hy8N6cNgwRd8XZpTLG9KQg1Yk00HN/IVhuu8zeM=
+	b=bVZCORbPRSo6LiD2reSNKUSpYgTFWr0RU1uKy+LVNYNPSy/7ib81b6WivJizVh4to
+	 f18UeFKFbuWwgUlgV4JRlGbGVi9HqSfOeq3aDi8R36mLppWFblX1q+IteHVt6anDIK
+	 rTq0TcLBppaIU8X6rM1xlMxxue1BevdRJOsRi1+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 188/215] soundwire: stream: fix programming slave ports for non-continous port maps
-Date: Sun,  1 Sep 2024 18:18:20 +0200
-Message-ID: <20240901160830.465052492@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 171/215] mm/numa: no task_numa_fault() call if PTE is changed
+Date: Sun,  1 Sep 2024 18:18:03 +0200
+Message-ID: <20240901160829.826156416@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,58 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Zi Yan <ziy@nvidia.com>
 
-commit ab8d66d132bc8f1992d3eb6cab8d32dda6733c84 upstream.
+commit 40b760cfd44566bca791c80e0720d70d75382b84 upstream.
 
-Two bitmasks in 'struct sdw_slave_prop' - 'source_ports' and
-'sink_ports' - define which ports to program in
-sdw_program_slave_port_params().  The masks are used to get the
-appropriate data port properties ('struct sdw_get_slave_dpn_prop') from
-an array.
+When handling a numa page fault, task_numa_fault() should be called by a
+process that restores the page table of the faulted folio to avoid
+duplicated stats counting.  Commit b99a342d4f11 ("NUMA balancing: reduce
+TLB flush via delaying mapping on hint page fault") restructured
+do_numa_page() and did not avoid task_numa_fault() call in the second page
+table check after a numa migration failure.  Fix it by making all
+!pte_same() return immediately.
 
-Bitmasks can be non-continuous or can start from index different than 0,
-thus when looking for matching port property for given port, we must
-iterate over mask bits, not from 0 up to number of ports.
+This issue can cause task_numa_fault() being called more than necessary
+and lead to unexpected numa balancing results (It is hard to tell whether
+the issue will cause positive or negative performance impact due to
+duplicated numa fault counting).
 
-This fixes allocation and programming slave ports, when a source or sink
-masks start from further index.
-
-Fixes: f8101c74aa54 ("soundwire: Add Master and Slave port programming")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20240729140157.326450-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lkml.kernel.org/r/20240809145906.1513458-2-ziy@nvidia.com
+Fixes: b99a342d4f11 ("NUMA balancing: reduce TLB flush via delaying mapping on hint page fault")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: "Huang, Ying" <ying.huang@intel.com>
+Closes: https://lore.kernel.org/linux-mm/87zfqfw0yw.fsf@yhuang6-desk2.ccr.corp.intel.com/
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/stream.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/memory.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1445,18 +1445,18 @@ struct sdw_dpn_prop *sdw_get_slave_dpn_p
- 					    unsigned int port_num)
- {
- 	struct sdw_dpn_prop *dpn_prop;
--	u8 num_ports;
-+	unsigned long mask;
- 	int i;
- 
- 	if (direction == SDW_DATA_DIR_TX) {
--		num_ports = hweight32(slave->prop.source_ports);
-+		mask = slave->prop.source_ports;
- 		dpn_prop = slave->prop.src_dpn_prop;
- 	} else {
--		num_ports = hweight32(slave->prop.sink_ports);
-+		mask = slave->prop.sink_ports;
- 		dpn_prop = slave->prop.sink_dpn_prop;
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -4407,7 +4407,7 @@ static vm_fault_t do_numa_page(struct vm
+ 	spin_lock(vmf->ptl);
+ 	if (unlikely(!pte_same(*vmf->pte, vmf->orig_pte))) {
+ 		pte_unmap_unlock(vmf->pte, vmf->ptl);
+-		goto out;
++		return 0;
  	}
  
--	for (i = 0; i < num_ports; i++) {
-+	for_each_set_bit(i, &mask, 32) {
- 		if (dpn_prop[i].num == port_num)
- 			return &dpn_prop[i];
+ 	/* Get the normal PTE  */
+@@ -4454,21 +4454,17 @@ static vm_fault_t do_numa_page(struct vm
+ 	if (migrate_misplaced_page(page, vma, target_nid)) {
+ 		page_nid = target_nid;
+ 		flags |= TNF_MIGRATED;
+-	} else {
+-		flags |= TNF_MIGRATE_FAIL;
+-		vmf->pte = pte_offset_map(vmf->pmd, vmf->address);
+-		spin_lock(vmf->ptl);
+-		if (unlikely(!pte_same(*vmf->pte, vmf->orig_pte))) {
+-			pte_unmap_unlock(vmf->pte, vmf->ptl);
+-			goto out;
+-		}
+-		goto out_map;
++		task_numa_fault(last_cpupid, page_nid, 1, flags);
++		return 0;
  	}
+ 
+-out:
+-	if (page_nid != NUMA_NO_NODE)
+-		task_numa_fault(last_cpupid, page_nid, 1, flags);
+-	return 0;
++	flags |= TNF_MIGRATE_FAIL;
++	vmf->pte = pte_offset_map(vmf->pmd, vmf->address);
++	spin_lock(vmf->ptl);
++	if (unlikely(!pte_same(*vmf->pte, vmf->orig_pte))) {
++		pte_unmap_unlock(vmf->pte, vmf->ptl);
++		return 0;
++	}
+ out_map:
+ 	/*
+ 	 * Make it present again, depending on how arch implements
+@@ -4482,7 +4478,10 @@ out_map:
+ 	ptep_modify_prot_commit(vma, vmf->address, vmf->pte, old_pte, pte);
+ 	update_mmu_cache(vma, vmf->address, vmf->pte);
+ 	pte_unmap_unlock(vmf->pte, vmf->ptl);
+-	goto out;
++
++	if (page_nid != NUMA_NO_NODE)
++		task_numa_fault(last_cpupid, page_nid, 1, flags);
++	return 0;
+ }
+ 
+ static inline vm_fault_t create_huge_pmd(struct vm_fault *vmf)
 
 
