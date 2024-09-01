@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418A5183CA9;
-	Sun,  1 Sep 2024 16:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4370E16B391;
+	Sun,  1 Sep 2024 16:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209380; cv=none; b=p/44J27lOm9hugjc1JVfU7JQ7lcePavNHvGJWpIVXJ99HOHBP0PwzIygp2VLfEF/XgKUvh1GhXNBZ25stgoKbwwZpb763Wo4hZo1/IChFK0rodZnabOoacF2GN3k1qpmX6or5XItlvn+VFbFQAnIsC7ZCcaW8SWUBPORiT96Fu4=
+	t=1725209383; cv=none; b=JoUxpBCeAywrT4Zdq7qBAQIUasHDsnJjRjZZM8uIHl60uHESW6qClqb9lgivrmINHh0xd3bpCCV6KXZABpq4Y1YkGbCR+JhAJvDYdfWdLPJ+0GlIKbF6KYPXv/Cb2Z/xKFjENrl1IwNrrGiRSnG+caemztaVsy6RUthyJPxlP5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209380; c=relaxed/simple;
-	bh=Bt1f60IIuKxVdTdVNSp/lQWwduFU2bWnJHzKzxEWvew=;
+	s=arc-20240116; t=1725209383; c=relaxed/simple;
+	bh=VXvRQDq+F4k1o++gPfTC4ikE3qH4itKa3SYb4onxm3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B8h6Ba7wu1Az/49aYJvTSHaIjuvsvm4xQeQws5cdjtLBFhW+qyJMn9iecBR9LY5zaLVZLfeAnbghufXJ4C7D6GBY3WeoVDrZTpXEYWslZk7uBFuB63a7IjIE898JDbKUDGQ/wAlRQd48sU5ZWSUXDBnvwIPsX3+woAXX0FByVvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XRYzzmj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBCW0dmjuMz4/TAtMfQo44nSl5WCI0YKKR6iecq2/XkU9RvNZWbOeltranOQKObuWmKlXGCuQQnSXofjBHjCVPZaHg3KLHm28fS7ArBEwgmlJIlcFiklfso5MsmJx6QtHB/ifFk+IeswHR2ztfHoxhJI0+TPmE/N/KmctXK+80M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPbJ2ry7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XRYzzmj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51774C4CEC4;
-	Sun,  1 Sep 2024 16:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPbJ2ry7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8452FC4CEC3;
+	Sun,  1 Sep 2024 16:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209379;
-	bh=Bt1f60IIuKxVdTdVNSp/lQWwduFU2bWnJHzKzxEWvew=;
+	s=korg; t=1725209383;
+	bh=VXvRQDq+F4k1o++gPfTC4ikE3qH4itKa3SYb4onxm3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XRYzzmj5OdVGP0Dm8bnxCGT/nBsk07430FnnUoR83bkY7/+e0uBv35ulPsOEsmuP
-	 l91vW2oEoYqNdRivkNn0gAZhNAFBTifV21bHkGPxDVIXXiEvV0bxHDwmGArXeD1vM3
-	 m2kCYLsMThtvMM4esDDUEZRM+2Y0eLvurVzZNuNs=
+	b=hPbJ2ry7zG/4ntbJmbGbK0SHDO9NjTYkYF4mMQrlcJZlXebpq5FvcfyBqv/jMHsFT
+	 4FBzoMZ6pdOYgnwcHFe/HYFyvFU+7SOCZF3nkzhhVHxgL6ZwjqulFrAYCi6YGLT7Hs
+	 Dqhbb6ChBhfCW04W2xJEiF2NTbmyUsXMEew+mpE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	David Sterba <dsterba@suse.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 018/151] btrfs: rename bitmap_set_bits() -> btrfs_bitmap_set_bits()
-Date: Sun,  1 Sep 2024 18:16:18 +0200
-Message-ID: <20240901160814.786021163@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Steffen Eiden <seiden@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 019/151] s390/uv: Panic for set and remove shared access UVC errors
+Date: Sun,  1 Sep 2024 18:16:19 +0200
+Message-ID: <20240901160814.823492587@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -53,48 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-commit 4ca532d64648d4776d15512caed3efea05ca7195 upstream.
+[ Upstream commit cff59d8631e1409ffdd22d9d717e15810181b32c ]
 
-bitmap_set_bits() does not start with the FS' prefix and may collide
-with a new generic helper one day. It operates with the FS-specific
-types, so there's no change those two could do the same thing.
-Just add the prefix to exclude such possible conflict.
+The return value uv_set_shared() and uv_remove_shared() (which are
+wrappers around the share() function) is not always checked. The system
+integrity of a protected guest depends on the Share and Unshare UVCs
+being successful. This means that any caller that fails to check the
+return value will compromise the security of the protected guest.
 
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Acked-by: David Sterba <dsterba@suse.com>
-Reviewed-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+No code path that would lead to such violation of the security
+guarantees is currently exercised, since all the areas that are shared
+never get unshared during the lifetime of the system. This might
+change and become an issue in the future.
+
+The Share and Unshare UVCs can only fail in case of hypervisor
+misbehaviour (either a bug or malicious behaviour). In such cases there
+is no reasonable way forward, and the system needs to panic.
+
+This patch replaces the return at the end of the share() function with
+a panic, to guarantee system integrity.
+
+Fixes: 5abb9351dfd9 ("s390/uv: introduce guest side ultravisor code")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240801112548.85303-1-imbrenda@linux.ibm.com
+Message-ID: <20240801112548.85303-1-imbrenda@linux.ibm.com>
+[frankja@linux.ibm.com: Fixed up patch subject]
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-cache.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/s390/include/asm/uv.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -1755,9 +1755,9 @@ static void bitmap_clear_bits(struct btr
- 	ctl->free_space -= bytes;
+diff --git a/arch/s390/include/asm/uv.h b/arch/s390/include/asm/uv.h
+index 12c5f006c1364..8fd441150a4e6 100644
+--- a/arch/s390/include/asm/uv.h
++++ b/arch/s390/include/asm/uv.h
+@@ -312,7 +312,10 @@ static inline int share(unsigned long addr, u16 cmd)
+ 
+ 	if (!uv_call(0, (u64)&uvcb))
+ 		return 0;
+-	return -EINVAL;
++	pr_err("%s UVC failed (rc: 0x%x, rrc: 0x%x), possible hypervisor bug.\n",
++	       uvcb.header.cmd == UVC_CMD_SET_SHARED_ACCESS ? "Share" : "Unshare",
++	       uvcb.header.rc, uvcb.header.rrc);
++	panic("System security cannot be guaranteed unless the system panics now.\n");
  }
  
--static void bitmap_set_bits(struct btrfs_free_space_ctl *ctl,
--			    struct btrfs_free_space *info, u64 offset,
--			    u64 bytes)
-+static void btrfs_bitmap_set_bits(struct btrfs_free_space_ctl *ctl,
-+				  struct btrfs_free_space *info, u64 offset,
-+				  u64 bytes)
- {
- 	unsigned long start, count, end;
- 	int extent_delta = 1;
-@@ -2077,7 +2077,7 @@ static u64 add_bytes_to_bitmap(struct bt
- 
- 	bytes_to_set = min(end - offset, bytes);
- 
--	bitmap_set_bits(ctl, info, offset, bytes_to_set);
-+	btrfs_bitmap_set_bits(ctl, info, offset, bytes_to_set);
- 
- 	/*
- 	 * We set some bytes, we have no idea what the max extent size is
+ /*
+-- 
+2.43.0
+
 
 
