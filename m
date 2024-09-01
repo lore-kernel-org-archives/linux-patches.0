@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141D41C68C;
-	Sun,  1 Sep 2024 16:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413AF1DFD1;
+	Sun,  1 Sep 2024 16:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209468; cv=none; b=jjBtQ/zrEhrpeshpWzCnJ40MRY8H3RlSYY4EWOLcIZtdwITKZsNoJXEx2yyriVDPQMRIS7gbAVgw1GewGbALcyLoLOf5Parzh+ragUg7kUONbv+jza3d+cWSj7D/suuy1PBQoMHGNy6BIvzIeQw00UVgV3oyyaBUrYNSX5sAZ4c=
+	t=1725209471; cv=none; b=RzVAuS2ibcjlXXIEXr5/DQIm0WxK8+j2gOtMge9TwnjzbefYR8+ToTd4U5DJmcbjK8h3z3f3e7KCX/StlUUcwTiAjvf2DCP2YoSqCeHkTJT/NsfvfBqc4R1mA8iInsNd/+XMQSYSzfMwm4IEwRAkETxRNCKiDeTtbMIsQ7n4Lew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209468; c=relaxed/simple;
-	bh=2rcf6Ahy0k5HAy/Di0TepiruEd2VBYoW+OXMXJPE7So=;
+	s=arc-20240116; t=1725209471; c=relaxed/simple;
+	bh=QgO6DCYF2ih06QsYNJ152XKIHpjQT5OZCTP1gd6g3P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eT+nvCMBbda2MpSbVZdzRU4kd7xftbVksyrOfIydwxcLar8UtFcc748aBnIgIVYovntN962a7orpCAiFvl94rScr+xouCo26S8N7g8nlBW5Dn+R0UrfJznvFre+EZAsc/kG5Mf5MX7XQ4swT0Ad36FTIRhPG/+N7YRNQeAp5koM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qf3Qbhiz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+ZC1gkvkmRH6txAJUhUeGyEABjgtR30x2k4Rr9q2EPa5akSXl8nG2uS82pZEnRfonIS0NWcw7P7XC/chC+IRWd4SRgdSWdpQZCpBPLud2Ip7qgRfySP6Xd/a4uzWIGcvOEme5g1XlRV0nett5JQDRi1HUTBAJpi012EKspGrUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLpWaURw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qf3Qbhiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9030FC4CEC3;
-	Sun,  1 Sep 2024 16:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLpWaURw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4EAC4CEC3;
+	Sun,  1 Sep 2024 16:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209467;
-	bh=2rcf6Ahy0k5HAy/Di0TepiruEd2VBYoW+OXMXJPE7So=;
+	s=korg; t=1725209471;
+	bh=QgO6DCYF2ih06QsYNJ152XKIHpjQT5OZCTP1gd6g3P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qf3Qbhiz8U2SqfPsK9mmuqq6M+yIM+6qz5RNO79Kv8xM83uwhxblhyGjZPked2OIz
-	 gU/J4vbTy+rlZM04By8YOOZpMOgys3fcNdC0MzktGQmsxSTCHtaicLIqJksUAS2UD7
-	 R/oaAaJqpVsZvoEmLXl4zEyweru69Fh+CZnj7TrM=
+	b=qLpWaURww9ImcJ8xHdfaQZ+ncb2mwEsBk7AwNNYLYWzq2vUtEqUVIJP59BKsT8I1P
+	 4zKLiWxHvEbLJasipXaNqYC8VmC0yPV1rog1y7nU6NS/g9+s9f6XbSiWK57H5QLYuX
+	 BlIaNgHQQCZxIPM7gp7BRKGvUoipBiRY5cJjpnzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/151] net: hns3: fix wrong use of semaphore up
-Date: Sun,  1 Sep 2024 18:16:28 +0200
-Message-ID: <20240901160815.156117877@linuxfoundation.org>
+Subject: [PATCH 5.10 046/151] IB/hfi1: Fix potential deadlock on &irq_src_lock and &dd->uctxt_lock
+Date: Sun,  1 Sep 2024 18:16:46 +0200
+Message-ID: <20240901160815.840973833@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,59 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 8445d9d3c03101859663d34fda747f6a50947556 ]
+[ Upstream commit 2f19c4b8395ccb6eb25ccafee883c8cfbe3fc193 ]
 
-Currently, if hns3 PF or VF FLR reset failed after five times retry,
-the reset done process will directly release the semaphore
-which has already released in hclge_reset_prepare_general.
-This will cause down operation fail.
+handle_receive_interrupt_napi_sp() running inside interrupt handler
+could introduce inverse lock ordering between &dd->irq_src_lock
+and &dd->uctxt_lock, if read_mod_write() is preempted by the isr.
 
-So this patch fixes it by adding reset state judgement. The up operation is
-only called after successful PF FLR reset.
+          [CPU0]                                        |          [CPU1]
+hfi1_ipoib_dev_open()                                   |
+--> hfi1_netdev_enable_queues()                         |
+--> enable_queues(rx)                                   |
+--> hfi1_rcvctrl()                                      |
+--> set_intr_bits()                                     |
+--> read_mod_write()                                    |
+--> spin_lock(&dd->irq_src_lock)                        |
+                                                        | hfi1_poll()
+                                                        | --> poll_next()
+                                                        | --> spin_lock_irq(&dd->uctxt_lock)
+                                                        |
+                                                        | --> hfi1_rcvctrl()
+                                                        | --> set_intr_bits()
+                                                        | --> read_mod_write()
+                                                        | --> spin_lock(&dd->irq_src_lock)
+<interrupt>                                             |
+   --> handle_receive_interrupt_napi_sp()               |
+   --> set_all_fastpath()                               |
+   --> hfi1_rcd_get_by_index()                          |
+   --> spin_lock_irqsave(&dd->uctxt_lock)               |
 
-Fixes: 8627bdedc435 ("net: hns3: refactor the precedure of PF FLR")
-Fixes: f28368bb4542 ("net: hns3: refactor the procedure of VF FLR")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This flaw was found by an experimental static analysis tool I am
+developing for irq-related deadlock.
+
+To prevent the potential deadlock, the patch use spin_lock_irqsave()
+on &dd->irq_src_lock inside read_mod_write() to prevent the possible
+deadlock scenario.
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230926101116.2797-1-dg573847474@gmail.com
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 4 ++--
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hfi1/chip.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 5dbee850fef53..885793707a5f1 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -10051,8 +10051,8 @@ static void hclge_flr_done(struct hnae3_ae_dev *ae_dev)
- 		dev_err(&hdev->pdev->dev, "fail to rebuild, ret=%d\n", ret);
+diff --git a/drivers/infiniband/hw/hfi1/chip.c b/drivers/infiniband/hw/hfi1/chip.c
+index c74868f016379..b7ae4bf2f5499 100644
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -13224,15 +13224,16 @@ static void read_mod_write(struct hfi1_devdata *dd, u16 src, u64 bits,
+ {
+ 	u64 reg;
+ 	u16 idx = src / BITS_PER_REGISTER;
++	unsigned long flags;
  
- 	hdev->reset_type = HNAE3_NONE_RESET;
--	clear_bit(HCLGE_STATE_RST_HANDLING, &hdev->state);
--	up(&hdev->reset_sem);
-+	if (test_and_clear_bit(HCLGE_STATE_RST_HANDLING, &hdev->state))
-+		up(&hdev->reset_sem);
+-	spin_lock(&dd->irq_src_lock);
++	spin_lock_irqsave(&dd->irq_src_lock, flags);
+ 	reg = read_csr(dd, CCE_INT_MASK + (8 * idx));
+ 	if (set)
+ 		reg |= bits;
+ 	else
+ 		reg &= ~bits;
+ 	write_csr(dd, CCE_INT_MASK + (8 * idx), reg);
+-	spin_unlock(&dd->irq_src_lock);
++	spin_unlock_irqrestore(&dd->irq_src_lock, flags);
  }
  
- static void hclge_clear_resetting_state(struct hclge_dev *hdev)
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index be41117ec1465..755935f9efc81 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2093,8 +2093,8 @@ static void hclgevf_flr_done(struct hnae3_ae_dev *ae_dev)
- 			 ret);
- 
- 	hdev->reset_type = HNAE3_NONE_RESET;
--	clear_bit(HCLGEVF_STATE_RST_HANDLING, &hdev->state);
--	up(&hdev->reset_sem);
-+	if (test_and_clear_bit(HCLGEVF_STATE_RST_HANDLING, &hdev->state))
-+		up(&hdev->reset_sem);
- }
- 
- static u32 hclgevf_get_fw_version(struct hnae3_handle *handle)
+ /**
 -- 
 2.43.0
 
