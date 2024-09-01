@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6809E18593B;
-	Sun,  1 Sep 2024 16:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B29185B4B;
+	Sun,  1 Sep 2024 16:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209154; cv=none; b=JlFk/+1gc05clj0SWhlNPTvwrwK99d+VZ5KE9sAIKWzPHdJdGvoYMA3uCCiEe+Z8okPbrS7TdBWh3xUx0SvtgGG2EddIRsx/NrpM2q/62B2dlz6NzDKbYCCuUaKnDg/DdFGB+dcdkpz30FRKWXMfnwrL+yO2Ge9+cdxq+vc4dwY=
+	t=1725209157; cv=none; b=qdzt6EC2cUeGF3FxqJV6zsrXiD3MsXsDrH7l+Pd3R3NXW5SHKhn+t0fshVbEVCVAkIZ2jb6V26gY8RAVRv9ZiqdYL5NyVIfWZ32BhQ6a/P0YAvl0mZaanM8vy/Hy11YhJFS/C+xVeJbZ/E3fIUZBmMhqcO07ngLE/eDJFXCcp5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209154; c=relaxed/simple;
-	bh=LlRh3IOqcOHntNATvqQDMioHE5mjMCDMQUACnEw8yAU=;
+	s=arc-20240116; t=1725209157; c=relaxed/simple;
+	bh=1BYOKrIeTyHDGQJSf3mFwoOKNjwX/bxMkq3zp6/KjQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVQMhmKjfKr2Y8yUf1pU0DZqPOxrKnV5V081U8k2PYBb+fctciZzsfpKD7QlVeGVPTaNKPixZOwTQgfUhF7wSPnNXifCPTa5eczj5Z3FnmWA3rPIuNbhGL/suQ4tjzw+VApAatdZRLUF6s00f9pwe/pl2AQBVMV1V5N8ZhJIDeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnTm4Cs/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xn+IZSNlBYMDd/E2jFhwKA3zMn5XbXffLcAJ8Ku5oeJopggYGlpsaaGyF5GVIQQ0pUBNA0N1kkpD9qXtz+oOeX5dGXBVAgVjpUSmzhtJIYYxoF+AeVEaKfwWvEoJP9bCkYaCIrBlFZ0UKNetr4Hxca2OEewFmRF3aQ/Sp0qPEz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMIYiN4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnTm4Cs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C64C4CEC3;
-	Sun,  1 Sep 2024 16:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMIYiN4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81646C4CEC3;
+	Sun,  1 Sep 2024 16:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209154;
-	bh=LlRh3IOqcOHntNATvqQDMioHE5mjMCDMQUACnEw8yAU=;
+	s=korg; t=1725209156;
+	bh=1BYOKrIeTyHDGQJSf3mFwoOKNjwX/bxMkq3zp6/KjQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KnTm4Cs/zj14zC6c18j+C64Pxi60fdPLnCleIjMsba+ThTTL70lxjOIb3boLfTOWu
-	 uso1yZqzz+aDYa8VBUDQBV4PrXVLp5tYq/m+3wSwzypQSWVeeNYWRRn45YJ7Nv5Idg
-	 7+XFO2hzIv0sVjpwI7xPn8719W+jOatTHWqStDKE=
+	b=uMIYiN4H/IVgwo5dKh3fAilVrgRhDdF942UINbNPHT+kIpAsv4hz3UIYtrj1Iwhgo
+	 TE2vEolSK05MJW3eI8s4EgPJibKGhQantwti9AMlYBW7xUokNSDS0X+ui6lwdnKxqy
+	 zZ6n+iWYBOM+tz5JPjQxM9K/TEIHa3n5dPoiq9e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 03/71] btrfs: run delayed iputs when flushing delalloc
-Date: Sun,  1 Sep 2024 18:17:08 +0200
-Message-ID: <20240901160802.012777840@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 04/71] smb/client: avoid dereferencing rdata=NULL in smb2_new_read_req()
+Date: Sun,  1 Sep 2024 18:17:09 +0200
+Message-ID: <20240901160802.051467047@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -51,45 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 2d3447261031503b181dacc549fe65ffe2d93d65 upstream.
+commit c724b2ab6a46435b4e7d58ad2fbbdb7a318823cf upstream.
 
-We have transient failures with btrfs/301, specifically in the part
-where we do
+This happens when called from SMB2_read() while using rdma
+and reaching the rdma_readwrite_threshold.
 
-  for i in $(seq 0 10); do
-	  write 50m to file
-	  rm -f file
-  done
-
-Sometimes this will result in a transient quota error, and it's because
-sometimes we start writeback on the file which results in a delayed
-iput, and thus the rm doesn't actually clean the file up.  When we're
-flushing the quota space we need to run the delayed iputs to make sure
-all the unlinks that we think have completed have actually completed.
-This removes the small window where we could fail to find enough space
-in our quota.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: a6559cc1d35d ("cifs: split out smb3_use_rdma_offload() helper")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/smb2pdu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3745,6 +3745,8 @@ static int try_flush_qgroup(struct btrfs
- 		return 0;
- 	}
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -4184,7 +4184,7 @@ smb2_new_read_req(void **buf, unsigned i
+ 	 * If we want to do a RDMA write, fill in and append
+ 	 * smbd_buffer_descriptor_v1 to the end of read request
+ 	 */
+-	if (smb3_use_rdma_offload(io_parms)) {
++	if (rdata && smb3_use_rdma_offload(io_parms)) {
+ 		struct smbd_buffer_descriptor_v1 *v1;
+ 		bool need_invalidate = server->dialect == SMB30_PROT_ID;
  
-+	btrfs_run_delayed_iputs(root->fs_info);
-+	btrfs_wait_on_delayed_iputs(root->fs_info);
- 	ret = btrfs_start_delalloc_snapshot(root, true);
- 	if (ret < 0)
- 		goto out;
 
 
