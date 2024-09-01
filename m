@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520C2181B87;
-	Sun,  1 Sep 2024 16:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1761E87B;
+	Sun,  1 Sep 2024 16:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208488; cv=none; b=dFrO5wG7ztLy4q/0pNtWLiJDHul7juH/dyaEGuEXZreXFnR+D1tVwtR7GuySyy4I0WbY4UlbmOyVhEDog2rteQeZ3w2StcGBBZxhvc6I+TwAFkj0y8NkSFIJHbvgwM7u/3Xaq/1irCe61tYia6HqPmmduIxODYVuH2p1ucCWxQQ=
+	t=1725208491; cv=none; b=MhDYbr4Xf/17kOknvVBVSrGE3cgF7fitMpyMZC2TSIMbH3mPbOsyx1DW6Ny7NzQxIa+h7ZWGxmqk/QyQYPfgxHw3EPlfRqtdsY6Nql1XiBsxD7Qz4FJwB+BygxFKf7KzSfKplFkJ3+xn+d0nZQ7mjep0zB6rUrn9+4SE671nUDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208488; c=relaxed/simple;
-	bh=kflyk+TzxBsOOFQiUYm8a76H/LgN/CbJcpK05WqV3is=;
+	s=arc-20240116; t=1725208491; c=relaxed/simple;
+	bh=LvUn6Sxk30ZzrQ5Qk4KeIHOOBUg6dKS5BTluzQwAv+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWsn7Fs/FpSvx+x3oWLjnifYrbCgFK6UZc/CUbQn1z1jh6WFNiFlLZtvU7r3jmuXlwIxP5wBBwkfBoDICLXyLEsjw/Xxr7iCdvtFBasMiTgIs6+X93ues4ip7s5VXCZhEQNYLm/YJPqqZodqEYbznXw/8AJJBJk6JkTyYfdVPts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwscS5VS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwafFyf1l3feFhaH3g4v6XHDbHqcIeYaURk0J6ZJHLgd8NYwW/+Anms/80o5lUAIVnuyjRJMc9XB7wBR5MRAlL+3YvnUgXKTrfpCqiv6JtLxx5KCzVWJ4w2lbkbZZiNt20uLDen8B6cKBK+D/MS58sc4tyms0KqfyDjKiZry3t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BexFdbpV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwscS5VS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD123C4CEC3;
-	Sun,  1 Sep 2024 16:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BexFdbpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E58FC4CEC3;
+	Sun,  1 Sep 2024 16:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208488;
-	bh=kflyk+TzxBsOOFQiUYm8a76H/LgN/CbJcpK05WqV3is=;
+	s=korg; t=1725208491;
+	bh=LvUn6Sxk30ZzrQ5Qk4KeIHOOBUg6dKS5BTluzQwAv+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwscS5VSev81+ogzXsXUdbgO6NZ1l0CquHqkw4zg4BLK6Tzg6XnZGEUoyDfMnIwxD
-	 AJQGemORK/66qw5t3Nmpx+HN04wtqD3CtLZF7rXXFKgJChK7HrJ49ax4DzZCHBtXwv
-	 Tfoua+oNRDUhCpHXx96JBVVClF58k9iky5l5UcfI=
+	b=BexFdbpV7Pahf2DJp4jMXLLwGR5YZnrhlmhag2xI66pTK7a8UpPJwfVwphuZURKUZ
+	 7tz9uwcFLXvAb/3lfCkK9wZdKzK08EdeAphfPj4J+ysWYgEeyx+J4Az7cj50r0Ov0C
+	 BKf5234VX7Dyhrkxs2HetACN7gYoZCQ7KWF7Jeww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cosmo Chou <chou.cosmo@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 098/149] ethtool: check device is present when getting link settings
-Date: Sun,  1 Sep 2024 18:16:49 +0200
-Message-ID: <20240901160821.146327379@linuxfoundation.org>
+Subject: [PATCH 6.10 099/149] hwmon: (pt5161l) Fix invalid temperature reading
+Date: Sun,  1 Sep 2024 18:16:50 +0200
+Message-ID: <20240901160821.183930118@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -51,77 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+From: Cosmo Chou <chou.cosmo@gmail.com>
 
-[ Upstream commit a699781c79ecf6cfe67fb00a0331b4088c7c8466 ]
+[ Upstream commit 7bbc079531fc38d401e1c4088d4981435a8828e3 ]
 
-A sysfs reader can race with a device reset or removal, attempting to
-read device state when the device is not actually present. eg:
+The temperature reading function was using a signed long for the ADC
+code, which could lead to mishandling of invalid codes on 32-bit
+platforms. This allowed out-of-range ADC codes to be incorrectly
+interpreted as valid values and used in temperature calculations.
 
-     [exception RIP: qed_get_current_link+17]
-  #8 [ffffb9e4f2907c48] qede_get_link_ksettings at ffffffffc07a994a [qede]
-  #9 [ffffb9e4f2907cd8] __rh_call_get_link_ksettings at ffffffff992b01a3
- #10 [ffffb9e4f2907d38] __ethtool_get_link_ksettings at ffffffff992b04e4
- #11 [ffffb9e4f2907d90] duplex_show at ffffffff99260300
- #12 [ffffb9e4f2907e38] dev_attr_show at ffffffff9905a01c
- #13 [ffffb9e4f2907e50] sysfs_kf_seq_show at ffffffff98e0145b
- #14 [ffffb9e4f2907e68] seq_read at ffffffff98d902e3
- #15 [ffffb9e4f2907ec8] vfs_read at ffffffff98d657d1
- #16 [ffffb9e4f2907f00] ksys_read at ffffffff98d65c3f
- #17 [ffffb9e4f2907f38] do_syscall_64 at ffffffff98a052fb
+Change adc_code to u32 to ensure that invalid ADC codes are correctly
+identified on all platforms.
 
- crash> struct net_device.state ffff9a9d21336000
-    state = 5,
-
-state 5 is __LINK_STATE_START (0b1) and __LINK_STATE_NOCARRIER (0b100).
-The device is not present, note lack of __LINK_STATE_PRESENT (0b10).
-
-This is the same sort of panic as observed in commit 4224cfd7fb65
-("net-sysfs: add check for netdevice being present to speed_show").
-
-There are many other callers of __ethtool_get_link_ksettings() which
-don't have a device presence check.
-
-Move this check into ethtool to protect all callers.
-
-Fixes: d519e17e2d01 ("net: export device speed and duplex via sysfs")
-Fixes: 4224cfd7fb65 ("net-sysfs: add check for netdevice being present to speed_show")
-Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Link: https://patch.msgid.link/8bae218864beaa44ed01628140475b9bf641c5b0.1724393671.git.jamie.bainbridge@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1b2ca93cd059 ("hwmon: Add driver for Astera Labs PT5161L retimer")
+Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+Message-ID: <20240819104630.2375441-1-chou.cosmo@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net-sysfs.c | 2 +-
- net/ethtool/ioctl.c  | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwmon/pt5161l.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
-index 4c27a360c2948..dc91921da4ea0 100644
---- a/net/core/net-sysfs.c
-+++ b/net/core/net-sysfs.c
-@@ -235,7 +235,7 @@ static ssize_t speed_show(struct device *dev,
- 	if (!rtnl_trylock())
- 		return restart_syscall();
+diff --git a/drivers/hwmon/pt5161l.c b/drivers/hwmon/pt5161l.c
+index b0d58a26d499d..a9f0b23f9e76e 100644
+--- a/drivers/hwmon/pt5161l.c
++++ b/drivers/hwmon/pt5161l.c
+@@ -427,7 +427,7 @@ static int pt5161l_read(struct device *dev, enum hwmon_sensor_types type,
+ 	struct pt5161l_data *data = dev_get_drvdata(dev);
+ 	int ret;
+ 	u8 buf[8];
+-	long adc_code;
++	u32 adc_code;
  
--	if (netif_running(netdev) && netif_device_present(netdev)) {
-+	if (netif_running(netdev)) {
- 		struct ethtool_link_ksettings cmd;
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+@@ -449,7 +449,7 @@ static int pt5161l_read(struct device *dev, enum hwmon_sensor_types type,
  
- 		if (!__ethtool_get_link_ksettings(netdev, &cmd))
-diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
-index fcc3dbef8b503..f99fd564d0ee5 100644
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -441,6 +441,9 @@ int __ethtool_get_link_ksettings(struct net_device *dev,
- 	if (!dev->ethtool_ops->get_link_ksettings)
- 		return -EOPNOTSUPP;
+ 		adc_code = buf[3] << 24 | buf[2] << 16 | buf[1] << 8 | buf[0];
+ 		if (adc_code == 0 || adc_code >= 0x3ff) {
+-			dev_dbg(dev, "Invalid adc_code %lx\n", adc_code);
++			dev_dbg(dev, "Invalid adc_code %x\n", adc_code);
+ 			return -EIO;
+ 		}
  
-+	if (!netif_device_present(dev))
-+		return -ENODEV;
-+
- 	memset(link_ksettings, 0, sizeof(*link_ksettings));
- 	return dev->ethtool_ops->get_link_ksettings(dev, link_ksettings);
- }
 -- 
 2.43.0
 
