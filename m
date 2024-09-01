@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6F7183090;
-	Sun,  1 Sep 2024 16:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3850633987;
+	Sun,  1 Sep 2024 16:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208050; cv=none; b=Wt/qmXhlIdD/qWGuUJw1fdkKR6mcLyaoAtEy7wh5ZB29pd+H3ib3bHDRLseRi5Pap09nO+1lth1u8Yw5AQU54ws1GDUmj3LQpN7a+2BA0iGH+zr7V0X89iAwZUUtQKQDzowe+006VhpfH4A7nekvuWFGUVBFw+Y8ShcISxzZNYo=
+	t=1725208054; cv=none; b=vGPwqL07hEfDxMp6w6Zo1/MGK3V2iVAmlWLnFnMDsZ11SQpZfzNNjPvvt3DwiQjAdVnFJT7zXLLiyvELTQGF8DVMSWM0eU0rs8XMu3p2i+Kwpcsau3wpPnVN1FvR3FrEFvDdJYWlPl0Ej6T8gc1J2ydtvVbr+yvN9GbT51CKJHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208050; c=relaxed/simple;
-	bh=VNILEzJZ/dinOgr1Y3xIRtgD6oM8gIl4IPYveJGt+RU=;
+	s=arc-20240116; t=1725208054; c=relaxed/simple;
+	bh=Z0f1P9lemC5fwZ4+N+YzUiA1zJJjSm56TlPK5z8NlUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcGOIJrsTZFMeD1BzN/AmUCCCP5/FP8lz9GIQ5ZTyTsqnLvs+azvt5LXCiVucaakGPJH3TQiHB2A74so257z2DVsGtV6RVs7uKyM/5vgU8LddnuYzxy7jIL33EBUZzdy7IXuR0jrYN7rC4GIkPUdw8oUz9AzO02TbB7fSf94U2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP151QfU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4Z8CDsjpHmvcVjH1gEshPZ+3VZfXIXQBGgWAQaru8Mii1ujYRy6kOdMYvdeQOF9ZwRXVjc1QzC5wtKu6PrWwAdoC7siGpsKbxAVqHv3O1lRHtKLEeFMhQRN1ccN8alL6WL0OymZol2bET8tIETbIjyoIT/DV8c4pedm9cfhSII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJGLZ+nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP151QfU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B49BC4CEC3;
-	Sun,  1 Sep 2024 16:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJGLZ+nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688D1C4CEC3;
+	Sun,  1 Sep 2024 16:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208050;
-	bh=VNILEzJZ/dinOgr1Y3xIRtgD6oM8gIl4IPYveJGt+RU=;
+	s=korg; t=1725208054;
+	bh=Z0f1P9lemC5fwZ4+N+YzUiA1zJJjSm56TlPK5z8NlUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fP151QfUT0hebK8i60la14/gGrCdoo/DWUiU7fjdAZz4JY05LZx6a7DhVPmcx+9wR
-	 t53y7ZWwHpWf57QmoHh7FSJ6RtWhh5uQWt/+yoZyehYz1bngQ2VmOKkQKaLJBsUPW3
-	 YNiSQa5Qsb1JI1G9qpUD5CJ9uDq84wSFKBYtrApk=
+	b=WJGLZ+nhEGNOjJlbGEIocOnpL7R7zCZ4GMq1r4pGTxOBHBB1qRJDcgijW/rZbjpbv
+	 jwKnQstBJSnWi6wBVd2vlO3kGeGKFqPaGSCV7d86ZRHr+SA9G0v/aMMnrRE69ZbYd0
+	 zjEPL4GvKCRF2ImKs30qARh5y2flpd57c0kYFRqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/93] thermal: of: Fix OF node leak in of_thermal_zone_find() error paths
-Date: Sun,  1 Sep 2024 18:16:18 +0200
-Message-ID: <20240901160808.531909392@linuxfoundation.org>
+Subject: [PATCH 6.6 58/93] ethtool: check device is present when getting link settings
+Date: Sun,  1 Sep 2024 18:16:45 +0200
+Message-ID: <20240901160809.547794849@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -53,71 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit c0a1ef9c5be72ff28a5413deb1b3e1a066593c13 ]
+[ Upstream commit a699781c79ecf6cfe67fb00a0331b4088c7c8466 ]
 
-Terminating for_each_available_child_of_node() loop requires dropping OF
-node reference, so bailing out on errors misses this.  Solve the OF node
-reference leak with scoped for_each_available_child_of_node_scoped().
+A sysfs reader can race with a device reset or removal, attempting to
+read device state when the device is not actually present. eg:
 
-Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20240814195823.437597-3-krzysztof.kozlowski@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+     [exception RIP: qed_get_current_link+17]
+  #8 [ffffb9e4f2907c48] qede_get_link_ksettings at ffffffffc07a994a [qede]
+  #9 [ffffb9e4f2907cd8] __rh_call_get_link_ksettings at ffffffff992b01a3
+ #10 [ffffb9e4f2907d38] __ethtool_get_link_ksettings at ffffffff992b04e4
+ #11 [ffffb9e4f2907d90] duplex_show at ffffffff99260300
+ #12 [ffffb9e4f2907e38] dev_attr_show at ffffffff9905a01c
+ #13 [ffffb9e4f2907e50] sysfs_kf_seq_show at ffffffff98e0145b
+ #14 [ffffb9e4f2907e68] seq_read at ffffffff98d902e3
+ #15 [ffffb9e4f2907ec8] vfs_read at ffffffff98d657d1
+ #16 [ffffb9e4f2907f00] ksys_read at ffffffff98d65c3f
+ #17 [ffffb9e4f2907f38] do_syscall_64 at ffffffff98a052fb
+
+ crash> struct net_device.state ffff9a9d21336000
+    state = 5,
+
+state 5 is __LINK_STATE_START (0b1) and __LINK_STATE_NOCARRIER (0b100).
+The device is not present, note lack of __LINK_STATE_PRESENT (0b10).
+
+This is the same sort of panic as observed in commit 4224cfd7fb65
+("net-sysfs: add check for netdevice being present to speed_show").
+
+There are many other callers of __ethtool_get_link_ksettings() which
+don't have a device presence check.
+
+Move this check into ethtool to protect all callers.
+
+Fixes: d519e17e2d01 ("net: export device speed and duplex via sysfs")
+Fixes: 4224cfd7fb65 ("net-sysfs: add check for netdevice being present to speed_show")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Link: https://patch.msgid.link/8bae218864beaa44ed01628140475b9bf641c5b0.1724393671.git.jamie.bainbridge@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_of.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/core/net-sysfs.c | 2 +-
+ net/ethtool/ioctl.c  | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
-index e7d25e70fb93e..d8dfcd49695d3 100644
---- a/drivers/thermal/thermal_of.c
-+++ b/drivers/thermal/thermal_of.c
-@@ -182,14 +182,14 @@ static struct device_node *of_thermal_zone_find(struct device_node *sensor, int
- 	 * Search for each thermal zone, a defined sensor
- 	 * corresponding to the one passed as parameter
- 	 */
--	for_each_available_child_of_node(np, tz) {
-+	for_each_available_child_of_node_scoped(np, child) {
+diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
+index 5a9487af44e00..f7404bc679746 100644
+--- a/net/core/net-sysfs.c
++++ b/net/core/net-sysfs.c
+@@ -216,7 +216,7 @@ static ssize_t speed_show(struct device *dev,
+ 	if (!rtnl_trylock())
+ 		return restart_syscall();
  
- 		int count, i;
+-	if (netif_running(netdev) && netif_device_present(netdev)) {
++	if (netif_running(netdev)) {
+ 		struct ethtool_link_ksettings cmd;
  
--		count = of_count_phandle_with_args(tz, "thermal-sensors",
-+		count = of_count_phandle_with_args(child, "thermal-sensors",
- 						   "#thermal-sensor-cells");
- 		if (count <= 0) {
--			pr_err("%pOFn: missing thermal sensor\n", tz);
-+			pr_err("%pOFn: missing thermal sensor\n", child);
- 			tz = ERR_PTR(-EINVAL);
- 			goto out;
- 		}
-@@ -198,18 +198,19 @@ static struct device_node *of_thermal_zone_find(struct device_node *sensor, int
+ 		if (!__ethtool_get_link_ksettings(netdev, &cmd))
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 7cb23bcf8ef7a..4486cbe2faf0c 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -438,6 +438,9 @@ int __ethtool_get_link_ksettings(struct net_device *dev,
+ 	if (!dev->ethtool_ops->get_link_ksettings)
+ 		return -EOPNOTSUPP;
  
- 			int ret;
- 
--			ret = of_parse_phandle_with_args(tz, "thermal-sensors",
-+			ret = of_parse_phandle_with_args(child, "thermal-sensors",
- 							 "#thermal-sensor-cells",
- 							 i, &sensor_specs);
- 			if (ret < 0) {
--				pr_err("%pOFn: Failed to read thermal-sensors cells: %d\n", tz, ret);
-+				pr_err("%pOFn: Failed to read thermal-sensors cells: %d\n", child, ret);
- 				tz = ERR_PTR(ret);
- 				goto out;
- 			}
- 
- 			if ((sensor == sensor_specs.np) && id == (sensor_specs.args_count ?
- 								  sensor_specs.args[0] : 0)) {
--				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, tz);
-+				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, child);
-+				tz = no_free_ptr(child);
- 				goto out;
- 			}
- 		}
++	if (!netif_device_present(dev))
++		return -ENODEV;
++
+ 	memset(link_ksettings, 0, sizeof(*link_ksettings));
+ 	return dev->ethtool_ops->get_link_ksettings(dev, link_ksettings);
+ }
 -- 
 2.43.0
 
