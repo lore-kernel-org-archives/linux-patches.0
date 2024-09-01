@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F249526AC1;
-	Sun,  1 Sep 2024 17:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E174E1DFD1;
+	Sun,  1 Sep 2024 17:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210515; cv=none; b=OCG5J2mymrHJyAx4uks2myIGNe+rB2OQ1CT7CoRtCXEASQcPxK7nnRA1jgIOUoYrRdq4URwnRUDMtNczVnwiwW533730AOqYRfQJstgTZuCFcAXA8yhzhmUm6bPXNKRBWrloCLLguRdNKWd/X/7I9rY6D8aZDVrfy+RXK0wnGbw=
+	t=1725210518; cv=none; b=l2XNU14rWOKjvv0MOAbCxlDSn9GvOqn5I8ShJr+WiX007MEKi9eSvPwBH1wKtVVs4L2tws8PrSuuMTo2ie2be/a04rPwsLy1SLlHeSwd+Zx1iWp/pYGtFwudxQ4ZVSJ3jEBMc6HZBR3KNW/PFi5eYJtBBp6LfHH8gE7u1TeEoio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210515; c=relaxed/simple;
-	bh=9pQbzNAqpsS9xDjn80h++9jzbVyo0q5uv6Yq4ABxVrU=;
+	s=arc-20240116; t=1725210518; c=relaxed/simple;
+	bh=G3ULU4GP+WZITfZnCgLclxid13G18eLb/WdLbOzQFpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsvGOVjMl+FJBlgrHpCS4mScZ9haBzfuRwGJNIytWB9eK/hJ1XrpiFUzm5UBa1FYK0dcQ1TsmSI8sSsOextMBSWUtK8MQpIeFkedEf7XI289DFJ1pB1pFM1MPXnZVMHO6vRKqlz0jr1FBJL+a4H8bB+IC75y/MwtXSDMmQvgc7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZ8PEtJN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YaVD5S4eb+6/BR9Xd6SZnLsUkTdMQV2HLk4fc6VDRywDZfsglZ35WCZrGieygghuWWRUVRprLosW2fvD610hd4TyQAxlL8CMHId0sA3tXjV9BHvs985SjL3hlxXDPIkQk2eXCgmAm8qXI88Xq2Q5J0Q1IezoFHve5Yt4PmInnkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTSPLYmM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZ8PEtJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A70C4CEC3;
-	Sun,  1 Sep 2024 17:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTSPLYmM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C16AC4CEC3;
+	Sun,  1 Sep 2024 17:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210514;
-	bh=9pQbzNAqpsS9xDjn80h++9jzbVyo0q5uv6Yq4ABxVrU=;
+	s=korg; t=1725210517;
+	bh=G3ULU4GP+WZITfZnCgLclxid13G18eLb/WdLbOzQFpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZ8PEtJN8fUZA8iurEOJQBeFJKOA0sVOTLYZMbZ6XATaR/wK1y+AXq7CApIOlNdxI
-	 /eQbciCLS/VGlDW7zN853Vp42D3vMSJeYBQCcqhT9SIraPoL4oedzMlsMzDlyVNHDI
-	 Cx/swAyRqOnOByD4WscgwNogkciP5cJVSyl1vW60=
+	b=JTSPLYmMXDmWu73XvwqQDbbGoQGVqXdE1ml1JStYPiEIGtzsxVbIEu0rHrEbEC95G
+	 Cbhw6mqfO9wJaRJyjmjsVcAfBjgYdDTQm0agRPoig7rNl09b4VcYFq4dYgixGBxMmD
+	 KmykDRr3LPiZ+LxqusQziqXcEHatRZipgqf4Oaqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.15 213/215] igc: Fix qbv tx latency by setting gtxoffset
-Date: Sun,  1 Sep 2024 18:18:45 +0200
-Message-ID: <20240901160831.402688820@linuxfoundation.org>
+	Michael Gordon <m.gordon.zelenoborsky@gmail.com>,
+	Ben Hutchings <benh@debian.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 214/215] scsi: aacraid: Fix double-free on probe failure
+Date: Sun,  1 Sep 2024 18:18:46 +0200
+Message-ID: <20240901160831.440834353@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,90 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit 6c3fc0b1c3d073bd6fc3bf43dbd0e64240537464 upstream.
+[ Upstream commit 919ddf8336f0b84c0453bac583808c9f165a85c2 ]
 
-A large tx latency issue was discovered during testing when only QBV was
-enabled. The issue occurs because gtxoffset was not set when QBV is
-active, it was only set when launch time is active.
+aac_probe_one() calls hardware-specific init functions through the
+aac_driver_ident::init pointer, all of which eventually call down to
+aac_init_adapter().
 
-The patch "igc: Correct the launchtime offset" only sets gtxoffset when
-the launchtime_enable field is set by the user. Enabling launchtime_enable
-ultimately sets the register IGC_TXQCTL_QUEUE_MODE_LAUNCHT (referred to as
-LaunchT in the SW user manual).
+If aac_init_adapter() fails after allocating memory for aac_dev::queues,
+it frees the memory but does not clear that member.
 
-Section 7.5.2.6 of the IGC i225/6 SW User Manual Rev 1.2.4 states:
-"The latency between transmission scheduling (launch time) and the
-time the packet is transmitted to the network is listed in Table 7-61."
+After the hardware-specific init function returns an error,
+aac_probe_one() goes down an error path that frees the memory pointed to
+by aac_dev::queues, resulting.in a double-free.
 
-However, the patch misinterprets the phrase "launch time" in that section
-by assuming it specifically refers to the LaunchT register, whereas it
-actually denotes the generic term for when a packet is released from the
-internal buffer to the MAC transmit logic.
-
-This launch time, as per that section, also implicitly refers to the QBV
-gate open time, where a packet waits in the buffer for the QBV gate to
-open. Therefore, latency applies whenever QBV is in use. TSN features such
-as QBU and QAV reuse QBV, making the latency universal to TSN features.
-
-Discussed with i226 HW owner (Shalev, Avi) and we were in agreement that
-the term "launch time" used in Section 7.5.2.6 is not clear and can be
-easily misinterpreted. Avi will update this section to:
-"When TQAVCTRL.TRANSMIT_MODE = TSN, the latency between transmission
-scheduling and the time the packet is transmitted to the network is listed
-in Table 7-61."
-
-Fix this issue by using igc_tsn_is_tx_mode_in_tsn() as a condition to
-write to gtxoffset, aligning with the newly updated SW User Manual.
-
-Tested:
-1. Enrol taprio on talker board
-   base-time 0
-   cycle-time 1000000
-   flags 0x2
-   index 0 cmd S gatemask 0x1 interval1
-   index 0 cmd S gatemask 0x1 interval2
-
-   Note:
-   interval1 = interval for a 64 bytes packet to go through
-   interval2 = cycle-time - interval1
-
-2. Take tcpdump on listener board
-
-3. Use udp tai app on talker to send packets to listener
-
-4. Check the timestamp on listener via wireshark
-
-Test Result:
-100 Mbps: 113 ~193 ns
-1000 Mbps: 52 ~ 84 ns
-2500 Mbps: 95 ~ 223 ns
-
-Note that the test result is similar to the patch "igc: Correct the
-launchtime offset".
-
-Fixes: 790835fcc0cb ("igc: Correct the launchtime offset")
-Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Michael Gordon <m.gordon.zelenoborsky@gmail.com>
+Link: https://bugs.debian.org/1075855
+Fixes: 8e0c5ebde82b ("[SCSI] aacraid: Newer adapter communication iterface support")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Link: https://lore.kernel.org/r/ZsZvfqlQMveoL5KQ@decadent.org.uk
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/aacraid/comminit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -61,7 +61,7 @@ void igc_tsn_adjust_txtime_offset(struct
- 	struct igc_hw *hw = &adapter->hw;
- 	u16 txoffset;
+diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
+index 355b16f0b1456..34e45c87cae03 100644
+--- a/drivers/scsi/aacraid/comminit.c
++++ b/drivers/scsi/aacraid/comminit.c
+@@ -642,6 +642,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
  
--	if (!is_any_launchtime(adapter))
-+	if (!igc_tsn_is_tx_mode_in_tsn(adapter))
- 		return;
- 
- 	switch (adapter->link_speed) {
+ 	if (aac_comm_init(dev)<0){
+ 		kfree(dev->queues);
++		dev->queues = NULL;
+ 		return NULL;
+ 	}
+ 	/*
+@@ -649,6 +650,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
+ 	 */
+ 	if (aac_fib_setup(dev) < 0) {
+ 		kfree(dev->queues);
++		dev->queues = NULL;
+ 		return NULL;
+ 	}
+ 		
+-- 
+2.43.0
+
 
 
