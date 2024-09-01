@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E011208A7;
-	Sun,  1 Sep 2024 16:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15841DFD1;
+	Sun,  1 Sep 2024 16:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209756; cv=none; b=eOz8fRX4Ogn8URy6o3EmquDvZKjSsIUkW9JTPu+KwRr/hvvjMVq3k/bOs97ype8rVwu10+mKJgWL2InwYYQVmjdbL1Ey4/UAhd5v9SxE6xI4LPMBnlqX3iBFcvGvKxr/V0Hw9wokqZJ4nWhSHg6Mym++09xFbplMuhMo1x8A43c=
+	t=1725209760; cv=none; b=INJJyH5qljTQFIjVfV0HOitkY+B1C7myGsEu2DsFGgZTQQrrj+9eVtherXYGcVjiwrd3PqQfZ/9CJxwjNkmKI9ZofKahw/N2CNi1tXAFBXq8EWo19yHK7XwuPn310LIU7HiErd/UFTflDFSsjxjC2yJVgYpT6CjU7WJpy7WCF9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209756; c=relaxed/simple;
-	bh=MjF7rB+Ix7zsbAi9l3UxOL+l4Az7wdDLJqEDcLD1oEY=;
+	s=arc-20240116; t=1725209760; c=relaxed/simple;
+	bh=sUaxAteUt/2aCvGcx3DpOWSSJzkygxYF76HF4+iNUT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXvbG5sZGAba6lQkBpJPm2lRKh+SOP6E4/5kBEJcD75S076cKNrw03JC7BauBn8ZoOEOgLVm05BnngtCSubJ/B+9CdGufJODgfZfO0cEFhS+nGxAmLEGsOTPpxgAYXPFsI3i6U//rY5AaGrPP+kiyC1g+yHv5Uev7OnUI7jxqPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8Vu7Khn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eq3quHWaFJktFv0IjHLgGaPjDyiPr7O9QF+5rZXAR49ywVQ3yspxR4bcWR6Fz/Z8EAwSummwTn9teKm8wshmX0fC5jTjK+ajnxKIF+aXsg5zm4IeBIpznpa/pvW6GITwHnCrLi5WB9db1+quR9gz91GxihiCHn+4FEPWSQ+SC/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lkf2L4To; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8Vu7Khn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DD7C4CEC3;
-	Sun,  1 Sep 2024 16:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lkf2L4To"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E166C4CEC3;
+	Sun,  1 Sep 2024 16:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209756;
-	bh=MjF7rB+Ix7zsbAi9l3UxOL+l4Az7wdDLJqEDcLD1oEY=;
+	s=korg; t=1725209759;
+	bh=sUaxAteUt/2aCvGcx3DpOWSSJzkygxYF76HF4+iNUT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8Vu7KhnUTgGuwScw0duz1kt3KsbMH1SxDZDSIEvyMOC6Q8AV6RXifwFUt5ih9WPa
-	 SUh0Sue+pRizxUiwcasdn4kQboakiwht+B7SE/a1ihtPVsvq4O2KgXYD+Iq0YTSzX8
-	 BrH2kFINjh8XUUAAJUV7IaWkUrbOmeHbl7hom+iM=
+	b=Lkf2L4ToxyaxXGiWwlgaw8fm5KfcGOIINZ1p8m6PkwSpIbcZkCdHgBFMKCvcwgng5
+	 Kq1zbMwYUW1pnMYm+d/CRmibxFOgZXx7ECJ54zlPtmoR8cvbpxKbIPWmNnuxUsh5ov
+	 vn/IFsZCZnErdyyumh6w2SBNdQD4Z+Ct/Y4mWgSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 094/151] bonding: fix xfrm real_dev null pointer dereference
-Date: Sun,  1 Sep 2024 18:17:34 +0200
-Message-ID: <20240901160817.651592956@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 5.10 129/151] media: uvcvideo: Fix integer overflow calculating timestamp
+Date: Sun,  1 Sep 2024 18:18:09 +0200
+Message-ID: <20240901160818.960764136@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,81 +50,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit f8cde9805981c50d0c029063dc7d82821806fc44 ]
+commit 8676a5e796fa18f55897ca36a94b2adf7f73ebd1 upstream.
 
-We shouldn't set real_dev to NULL because packets can be in transit and
-xfrm might call xdo_dev_offload_ok() in parallel. All callbacks assume
-real_dev is set.
+The function uvc_video_clock_update() supports a single SOF overflow. Or
+in other words, the maximum difference between the first ant the last
+timestamp can be 4096 ticks or 4.096 seconds.
 
- Example trace:
- kernel: BUG: unable to handle page fault for address: 0000000000001030
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel: #PF: supervisor write access in kernel mode
- kernel: #PF: error_code(0x0002) - not-present page
- kernel: PGD 0 P4D 0
- kernel: Oops: 0002 [#1] PREEMPT SMP
- kernel: CPU: 4 PID: 2237 Comm: ping Not tainted 6.7.7+ #12
- kernel: Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
- kernel: RIP: 0010:nsim_ipsec_offload_ok+0xc/0x20 [netdevsim]
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel: Code: e0 0f 0b 48 83 7f 38 00 74 de 0f 0b 48 8b 47 08 48 8b 37 48 8b 78 40 e9 b2 e5 9a d7 66 90 0f 1f 44 00 00 48 8b 86 80 02 00 00 <83> 80 30 10 00 00 01 b8 01 00 00 00 c3 0f 1f 80 00 00 00 00 0f 1f
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel: RSP: 0018:ffffabde81553b98 EFLAGS: 00010246
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:
- kernel: RAX: 0000000000000000 RBX: ffff9eb404e74900 RCX: ffff9eb403d97c60
- kernel: RDX: ffffffffc090de10 RSI: ffff9eb404e74900 RDI: ffff9eb3c5de9e00
- kernel: RBP: ffff9eb3c0a42000 R08: 0000000000000010 R09: 0000000000000014
- kernel: R10: 7974203030303030 R11: 3030303030303030 R12: 0000000000000000
- kernel: R13: ffff9eb3c5de9e00 R14: ffffabde81553cc8 R15: ffff9eb404c53000
- kernel: FS:  00007f2a77a3ad00(0000) GS:ffff9eb43bd00000(0000) knlGS:0000000000000000
- kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- kernel: CR2: 0000000000001030 CR3: 00000001122ab000 CR4: 0000000000350ef0
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel: Call Trace:
- kernel:  <TASK>
- kernel:  ? __die+0x1f/0x60
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:  ? page_fault_oops+0x142/0x4c0
- kernel:  ? do_user_addr_fault+0x65/0x670
- kernel:  ? kvm_read_and_reset_apf_flags+0x3b/0x50
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel:  ? exc_page_fault+0x7b/0x180
- kernel:  ? asm_exc_page_fault+0x22/0x30
- kernel:  ? nsim_bpf_uninit+0x50/0x50 [netdevsim]
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:  ? nsim_ipsec_offload_ok+0xc/0x20 [netdevsim]
- kernel: bond0: (slave eni0np1): making interface the new active one
- kernel:  bond_ipsec_offload_ok+0x7b/0x90 [bonding]
- kernel:  xfrm_output+0x61/0x3b0
- kernel: bond0: (slave eni0np1): bond_ipsec_add_sa_all: failed to add SA
- kernel:  ip_push_pending_frames+0x56/0x80
+This results in a maximum value for y2 of: 0x12FBECA00, that overflows
+32bits.
+y2 = (u32)ktime_to_ns(ktime_sub(last->host_time, first->host_time)) + y1;
 
-Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Extend the size of y2 to u64 to support all its values.
+
+Without this patch:
+ # yavta -s 1920x1080 -f YUYV -t 1/5 -c /dev/video0
+Device /dev/v4l/by-id/usb-Shine-Optics_Integrated_Camera_0001-video-index0 opened.
+Device `Integrated Camera: Integrated C' on `usb-0000:00:14.0-6' (driver 'uvcvideo') supports video, capture, without mplanes.
+Video format set: YUYV (56595559) 1920x1080 (stride 3840) field none buffer size 4147200
+Video format: YUYV (56595559) 1920x1080 (stride 3840) field none buffer size 4147200
+Current frame rate: 1/5
+Setting frame rate to: 1/5
+Frame rate set: 1/5
+8 buffers requested.
+length: 4147200 offset: 0 timestamp type/source: mono/SoE
+Buffer 0/0 mapped at address 0x7947ea94c000.
+length: 4147200 offset: 4149248 timestamp type/source: mono/SoE
+Buffer 1/0 mapped at address 0x7947ea557000.
+length: 4147200 offset: 8298496 timestamp type/source: mono/SoE
+Buffer 2/0 mapped at address 0x7947ea162000.
+length: 4147200 offset: 12447744 timestamp type/source: mono/SoE
+Buffer 3/0 mapped at address 0x7947e9d6d000.
+length: 4147200 offset: 16596992 timestamp type/source: mono/SoE
+Buffer 4/0 mapped at address 0x7947e9978000.
+length: 4147200 offset: 20746240 timestamp type/source: mono/SoE
+Buffer 5/0 mapped at address 0x7947e9583000.
+length: 4147200 offset: 24895488 timestamp type/source: mono/SoE
+Buffer 6/0 mapped at address 0x7947e918e000.
+length: 4147200 offset: 29044736 timestamp type/source: mono/SoE
+Buffer 7/0 mapped at address 0x7947e8d99000.
+0 (0) [-] none 0 4147200 B 507.554210 508.874282 242.836 fps ts mono/SoE
+1 (1) [-] none 2 4147200 B 508.886298 509.074289 0.751 fps ts mono/SoE
+2 (2) [-] none 3 4147200 B 509.076362 509.274307 5.261 fps ts mono/SoE
+3 (3) [-] none 4 4147200 B 509.276371 509.474336 5.000 fps ts mono/SoE
+4 (4) [-] none 5 4147200 B 509.476394 509.674394 4.999 fps ts mono/SoE
+5 (5) [-] none 6 4147200 B 509.676506 509.874345 4.997 fps ts mono/SoE
+6 (6) [-] none 7 4147200 B 509.876430 510.074370 5.002 fps ts mono/SoE
+7 (7) [-] none 8 4147200 B 510.076434 510.274365 5.000 fps ts mono/SoE
+8 (0) [-] none 9 4147200 B 510.276421 510.474333 5.000 fps ts mono/SoE
+9 (1) [-] none 10 4147200 B 510.476391 510.674429 5.001 fps ts mono/SoE
+10 (2) [-] none 11 4147200 B 510.676434 510.874283 4.999 fps ts mono/SoE
+11 (3) [-] none 12 4147200 B 510.886264 511.074349 4.766 fps ts mono/SoE
+12 (4) [-] none 13 4147200 B 511.070577 511.274304 5.426 fps ts mono/SoE
+13 (5) [-] none 14 4147200 B 511.286249 511.474301 4.637 fps ts mono/SoE
+14 (6) [-] none 15 4147200 B 511.470542 511.674251 5.426 fps ts mono/SoE
+15 (7) [-] none 16 4147200 B 511.672651 511.874337 4.948 fps ts mono/SoE
+16 (0) [-] none 17 4147200 B 511.873988 512.074462 4.967 fps ts mono/SoE
+17 (1) [-] none 18 4147200 B 512.075982 512.278296 4.951 fps ts mono/SoE
+18 (2) [-] none 19 4147200 B 512.282631 512.482423 4.839 fps ts mono/SoE
+19 (3) [-] none 20 4147200 B 518.986637 512.686333 0.149 fps ts mono/SoE
+20 (4) [-] none 21 4147200 B 518.342709 512.886386 -1.553 fps ts mono/SoE
+21 (5) [-] none 22 4147200 B 517.909812 513.090360 -2.310 fps ts mono/SoE
+22 (6) [-] none 23 4147200 B 517.590775 513.294454 -3.134 fps ts mono/SoE
+23 (7) [-] none 24 4147200 B 513.298465 513.494335 -0.233 fps ts mono/SoE
+24 (0) [-] none 25 4147200 B 513.510273 513.698375 4.721 fps ts mono/SoE
+25 (1) [-] none 26 4147200 B 513.698904 513.902327 5.301 fps ts mono/SoE
+26 (2) [-] none 27 4147200 B 513.895971 514.102348 5.074 fps ts mono/SoE
+27 (3) [-] none 28 4147200 B 514.099091 514.306337 4.923 fps ts mono/SoE
+28 (4) [-] none 29 4147200 B 514.310348 514.510567 4.734 fps ts mono/SoE
+29 (5) [-] none 30 4147200 B 514.509295 514.710367 5.026 fps ts mono/SoE
+30 (6) [-] none 31 4147200 B 521.532513 514.914398 0.142 fps ts mono/SoE
+31 (7) [-] none 32 4147200 B 520.885277 515.118385 -1.545 fps ts mono/SoE
+32 (0) [-] none 33 4147200 B 520.411140 515.318336 -2.109 fps ts mono/SoE
+33 (1) [-] none 34 4147200 B 515.325425 515.522278 -0.197 fps ts mono/SoE
+34 (2) [-] none 35 4147200 B 515.538276 515.726423 4.698 fps ts mono/SoE
+35 (3) [-] none 36 4147200 B 515.720767 515.930373 5.480 fps ts mono/SoE
+
+Cc: stable@vger.kernel.org
+Fixes: 66847ef013cc ("[media] uvcvideo: Add UVC timestamps support")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240610-hwtimestamp-followup-v1-2-f9eaed7be7f0@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/usb/uvc/uvc_video.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index bd74b2d64ad48..506b6d1cc27df 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -540,7 +540,6 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
- 		} else {
- 			slave->dev->xfrmdev_ops->xdo_dev_state_delete(ipsec->xs);
- 		}
--		ipsec->xs->xso.real_dev = NULL;
- 	}
- 	spin_unlock_bh(&bond->ipsec_lock);
- 	rcu_read_unlock();
--- 
-2.43.0
-
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -723,11 +723,11 @@ void uvc_video_clock_update(struct uvc_s
+ 	unsigned long flags;
+ 	u64 timestamp;
+ 	u32 delta_stc;
+-	u32 y1, y2;
++	u32 y1;
+ 	u32 x1, x2;
+ 	u32 mean;
+ 	u32 sof;
+-	u64 y;
++	u64 y, y2;
+ 
+ 	if (!uvc_hw_timestamps_param)
+ 		return;
+@@ -767,7 +767,7 @@ void uvc_video_clock_update(struct uvc_s
+ 	sof = y;
+ 
+ 	uvc_trace(UVC_TRACE_CLOCK, "%s: PTS %u y %llu.%06llu SOF %u.%06llu "
+-		  "(x1 %u x2 %u y1 %u y2 %u SOF offset %u)\n",
++		  "(x1 %u x2 %u y1 %u y2 %llu SOF offset %u)\n",
+ 		  stream->dev->name, buf->pts,
+ 		  y >> 16, div_u64((y & 0xffff) * 1000000, 65536),
+ 		  sof >> 16, div_u64(((u64)sof & 0xffff) * 1000000LLU, 65536),
+@@ -782,7 +782,7 @@ void uvc_video_clock_update(struct uvc_s
+ 		goto done;
+ 
+ 	y1 = NSEC_PER_SEC;
+-	y2 = (u32)ktime_to_ns(ktime_sub(last->host_time, first->host_time)) + y1;
++	y2 = ktime_to_ns(ktime_sub(last->host_time, first->host_time)) + y1;
+ 
+ 	/* Interpolated and host SOF timestamps can wrap around at slightly
+ 	 * different times. Handle this by adding or removing 2048 to or from
+@@ -802,7 +802,7 @@ void uvc_video_clock_update(struct uvc_s
+ 	timestamp = ktime_to_ns(first->host_time) + y - y1;
+ 
+ 	uvc_trace(UVC_TRACE_CLOCK, "%s: SOF %u.%06llu y %llu ts %llu "
+-		  "buf ts %llu (x1 %u/%u/%u x2 %u/%u/%u y1 %u y2 %u)\n",
++		  "buf ts %llu (x1 %u/%u/%u x2 %u/%u/%u y1 %u y2 %llu)\n",
+ 		  stream->dev->name,
+ 		  sof >> 16, div_u64(((u64)sof & 0xffff) * 1000000LLU, 65536),
+ 		  y, timestamp, vbuf->vb2_buf.timestamp,
 
 
