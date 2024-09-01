@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5B61C68C;
-	Sun,  1 Sep 2024 16:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12191C68C;
+	Sun,  1 Sep 2024 16:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208908; cv=none; b=OI73XfrW4fz7VkoKdcNRWM/MAlE1o3bQrE4DPaZ9uG/DJA/DaVf2tzYK17DVRm+mj8A8CWcJCN7Q+/O3LdhdwQ0HmdhKnUJGFQhPiTEE5c1iP4dx2QovjaHodze2L6fTX9ewJLvuof3F0FvcOAPRpThvn14tajcXOEgLKs743XI=
+	t=1725208912; cv=none; b=AAFSPquh5W9d/7gjBZMdZv37AKd9FD6EOK74Gi4M60aqhCrDgwbggio7GGqAstLzizLrJZH5a+fZvvFyryFDqpbLNofPYragr3+Oe77PbKiprPbY4rCpY/7N2YMWsHl9RrVRuK15gd1gvLTRb1HY6deZ1M+k2vhOA1tYP/sxj2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208908; c=relaxed/simple;
-	bh=OfWwitWIt/xoiYTo7uqta+XWZtJRbfpBxNijol8grfA=;
+	s=arc-20240116; t=1725208912; c=relaxed/simple;
+	bh=NWCG1epY3mCCDCfjJc1qHy3+zbgW8dCDNOsMtdH5ljk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmulHrpqXvKKpK86xPTi5zdczqlLah08Cpf7AJmVDW/gtwUfmmok1+iXn0iIIbLHgRuZtwgAke+oj0KT2IyfmfovqRSm+EYYqSQPqy/+7WKzvwfVBgijen/zs6vFi1EQ4Ru6N8RQcAZOVyRVk3vd/NBsTiX1E40940OoAvI8d2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcT9Q/cI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDzorn7bCz7ak9wr9rcn3L2oHNMFE2N6KRlJiBph+Q0DDszwmoIGCfvouA7OBrBSHNjTazEUEiEyAId0qJcK5iH1XfZPnQtpk9XFKDhUazwCz+aZ8w/JWxIVI/EAqe8LN2nWQFKSj0P7s8X1qP/SPJxfRNqwIF0ETceHDjzACkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JW40p1E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcT9Q/cI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390CFC4CEC3;
-	Sun,  1 Sep 2024 16:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JW40p1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632CEC4CEC3;
+	Sun,  1 Sep 2024 16:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208908;
-	bh=OfWwitWIt/xoiYTo7uqta+XWZtJRbfpBxNijol8grfA=;
+	s=korg; t=1725208911;
+	bh=NWCG1epY3mCCDCfjJc1qHy3+zbgW8dCDNOsMtdH5ljk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcT9Q/cI0hC7zAEGI/zmzaElyHenGBzVeO/5aVVHhmCrXn+8Bqjhlh8iiPEtzxt1G
-	 sXv/oHJcLzKKHae/AONo0zWgnWcmBOtucK7+1AMwpJ8wqRBNgYTf/mhzdmv/IxybJJ
-	 PXfjzrFaiue3mQiE+Y05XBc9K6gq3PJ7OVALOPYY=
+	b=1JW40p1Eu++mLQU3pgvmiu3f4RBUWLjh7TjXvmWjMMUCPfWXd+ktUmQPTpgZYB8kv
+	 8K4O5JJtduiqF7MUErRPMS83YRDgl9EKWrXqrKPJKBNNvyRifjpJQUpCjB51NsWv2k
+	 LwyMfSXa9TZYdrdcFc/9NU7ntkcKp8eHM46JHrFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@gmail.com>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 076/134] media: solo6x10: replace max(a, min(b, c)) by clamp(b, a, c)
-Date: Sun,  1 Sep 2024 18:17:02 +0200
-Message-ID: <20240901160812.961417803@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Mike Snitzer <snitzer@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 077/134] dm mpath: pass IO start time to path selector
+Date: Sun,  1 Sep 2024 18:17:03 +0200
+Message-ID: <20240901160812.999595523@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -53,59 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-commit 31e97d7c9ae3de072d7b424b2cf706a03ec10720 upstream.
+[ Upstream commit 087615bf3acdafd0ba7c7c9ed5286e7b7c80fe1b ]
 
-This patch replaces max(a, min(b, c)) by clamp(b, a, c) in the solo6x10
-driver.  This improves the readability and more importantly, for the
-solo6x10-p2m.c file, this reduces on my system (x86-64, gcc 13):
+The HST path selector needs this information to perform path
+prediction. For request-based mpath, struct request's io_start_time_ns
+is used, while for bio-based, use the start_time stored in dm_io.
 
- - the preprocessed size from 121 MiB to 4.5 MiB;
-
- - the build CPU time from 46.8 s to 1.6 s;
-
- - the build memory from 2786 MiB to 98MiB.
-
-In fine, this allows this relatively simple C file to be built on a
-32-bit system.
-
-Reported-by: Jiri Slaby <jirislaby@gmail.com>
-Closes: https://lore.kernel.org/lkml/18c6df0d-45ed-450c-9eda-95160a2bbb8e@gmail.com/
-Cc:  <stable@vger.kernel.org> # v6.7+
-Suggested-by: David Laight <David.Laight@ACULAB.COM>
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: David Laight <David.Laight@ACULAB.COM>
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Mike Snitzer <snitzer@redhat.com>
+Stable-dep-of: 1e1fd567d32f ("dm suspend: return -ERESTARTSYS instead of -EINTR")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/solo6x10/solo6x10-offsets.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/md/dm-mpath.c         | 9 ++++++---
+ drivers/md/dm-path-selector.h | 2 +-
+ drivers/md/dm-queue-length.c  | 2 +-
+ drivers/md/dm-service-time.c  | 2 +-
+ drivers/md/dm.c               | 9 +++++++++
+ include/linux/device-mapper.h | 2 ++
+ 6 files changed, 20 insertions(+), 6 deletions(-)
 
---- a/drivers/media/pci/solo6x10/solo6x10-offsets.h
-+++ b/drivers/media/pci/solo6x10/solo6x10-offsets.h
-@@ -57,16 +57,16 @@
- #define SOLO_MP4E_EXT_ADDR(__solo) \
- 	(SOLO_EREF_EXT_ADDR(__solo) + SOLO_EREF_EXT_AREA(__solo))
- #define SOLO_MP4E_EXT_SIZE(__solo) \
--	max((__solo->nr_chans * 0x00080000),				\
--	    min(((__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo)) -	\
--		 __SOLO_JPEG_MIN_SIZE(__solo)), 0x00ff0000))
-+	clamp(__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo) -	\
-+	      __SOLO_JPEG_MIN_SIZE(__solo),			\
-+	      __solo->nr_chans * 0x00080000, 0x00ff0000)
+diff --git a/drivers/md/dm-mpath.c b/drivers/md/dm-mpath.c
+index 54ecfea2cf47b..4f6a54452b1ca 100644
+--- a/drivers/md/dm-mpath.c
++++ b/drivers/md/dm-mpath.c
+@@ -558,7 +558,8 @@ static void multipath_release_clone(struct request *clone,
+ 		if (pgpath && pgpath->pg->ps.type->end_io)
+ 			pgpath->pg->ps.type->end_io(&pgpath->pg->ps,
+ 						    &pgpath->path,
+-						    mpio->nr_bytes);
++						    mpio->nr_bytes,
++						    clone->io_start_time_ns);
+ 	}
  
- #define __SOLO_JPEG_MIN_SIZE(__solo)		(__solo->nr_chans * 0x00080000)
- #define SOLO_JPEG_EXT_ADDR(__solo) \
- 		(SOLO_MP4E_EXT_ADDR(__solo) + SOLO_MP4E_EXT_SIZE(__solo))
- #define SOLO_JPEG_EXT_SIZE(__solo) \
--	max(__SOLO_JPEG_MIN_SIZE(__solo),				\
--	    min((__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo)), 0x00ff0000))
-+	clamp(__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo),	\
-+	      __SOLO_JPEG_MIN_SIZE(__solo), 0x00ff0000)
+ 	blk_put_request(clone);
+@@ -1568,7 +1569,8 @@ static int multipath_end_io(struct dm_target *ti, struct request *clone,
+ 		struct path_selector *ps = &pgpath->pg->ps;
  
- #define SOLO_SDRAM_END(__solo) \
- 	(SOLO_JPEG_EXT_ADDR(__solo) + SOLO_JPEG_EXT_SIZE(__solo))
+ 		if (ps->type->end_io)
+-			ps->type->end_io(ps, &pgpath->path, mpio->nr_bytes);
++			ps->type->end_io(ps, &pgpath->path, mpio->nr_bytes,
++					 clone->io_start_time_ns);
+ 	}
+ 
+ 	return r;
+@@ -1612,7 +1614,8 @@ static int multipath_end_io_bio(struct dm_target *ti, struct bio *clone,
+ 		struct path_selector *ps = &pgpath->pg->ps;
+ 
+ 		if (ps->type->end_io)
+-			ps->type->end_io(ps, &pgpath->path, mpio->nr_bytes);
++			ps->type->end_io(ps, &pgpath->path, mpio->nr_bytes,
++					 dm_start_time_ns_from_clone(clone));
+ 	}
+ 
+ 	return r;
+diff --git a/drivers/md/dm-path-selector.h b/drivers/md/dm-path-selector.h
+index b6eb5365b1a46..c47bc0e20275b 100644
+--- a/drivers/md/dm-path-selector.h
++++ b/drivers/md/dm-path-selector.h
+@@ -74,7 +74,7 @@ struct path_selector_type {
+ 	int (*start_io) (struct path_selector *ps, struct dm_path *path,
+ 			 size_t nr_bytes);
+ 	int (*end_io) (struct path_selector *ps, struct dm_path *path,
+-		       size_t nr_bytes);
++		       size_t nr_bytes, u64 start_time);
+ };
+ 
+ /* Register a path selector */
+diff --git a/drivers/md/dm-queue-length.c b/drivers/md/dm-queue-length.c
+index 969c4f1a36336..5fd018d184187 100644
+--- a/drivers/md/dm-queue-length.c
++++ b/drivers/md/dm-queue-length.c
+@@ -227,7 +227,7 @@ static int ql_start_io(struct path_selector *ps, struct dm_path *path,
+ }
+ 
+ static int ql_end_io(struct path_selector *ps, struct dm_path *path,
+-		     size_t nr_bytes)
++		     size_t nr_bytes, u64 start_time)
+ {
+ 	struct path_info *pi = path->pscontext;
+ 
+diff --git a/drivers/md/dm-service-time.c b/drivers/md/dm-service-time.c
+index f006a9005593b..9cfda665e9ebd 100644
+--- a/drivers/md/dm-service-time.c
++++ b/drivers/md/dm-service-time.c
+@@ -309,7 +309,7 @@ static int st_start_io(struct path_selector *ps, struct dm_path *path,
+ }
+ 
+ static int st_end_io(struct path_selector *ps, struct dm_path *path,
+-		     size_t nr_bytes)
++		     size_t nr_bytes, u64 start_time)
+ {
+ 	struct path_info *pi = path->pscontext;
+ 
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index a7724ba45b437..36d21a5d09ebf 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -659,6 +659,15 @@ static bool md_in_flight(struct mapped_device *md)
+ 		return md_in_flight_bios(md);
+ }
+ 
++u64 dm_start_time_ns_from_clone(struct bio *bio)
++{
++	struct dm_target_io *tio = container_of(bio, struct dm_target_io, clone);
++	struct dm_io *io = tio->io;
++
++	return jiffies_to_nsecs(io->start_time);
++}
++EXPORT_SYMBOL_GPL(dm_start_time_ns_from_clone);
++
+ static void start_io_acct(struct dm_io *io)
+ {
+ 	struct mapped_device *md = io->md;
+diff --git a/include/linux/device-mapper.h b/include/linux/device-mapper.h
+index 60631f3abddbd..b077f32043653 100644
+--- a/include/linux/device-mapper.h
++++ b/include/linux/device-mapper.h
+@@ -332,6 +332,8 @@ void *dm_per_bio_data(struct bio *bio, size_t data_size);
+ struct bio *dm_bio_from_per_bio_data(void *data, size_t data_size);
+ unsigned dm_bio_get_target_bio_nr(const struct bio *bio);
+ 
++u64 dm_start_time_ns_from_clone(struct bio *bio);
++
+ int dm_register_target(struct target_type *t);
+ void dm_unregister_target(struct target_type *t);
+ 
+-- 
+2.43.0
+
 
 
