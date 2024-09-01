@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF0C1C68C;
-	Sun,  1 Sep 2024 16:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2531C68C;
+	Sun,  1 Sep 2024 16:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208893; cv=none; b=aNYnJUp39pzEbaG4P0ckhkG4V5cvNfVDp9nlGvFpNaT9q9fhWwo7RK99yMe1GxUNIQ/Foquof3oK24Ut5o4SGA4ynzi1G0zp2aQuXDiZ+/1ivR0hDlbxMQJtEgYOtVAwa8CrbYrmAaVV2Tio7F8+eTkosDvwqXc5OqUabZ0LXAI=
+	t=1725208896; cv=none; b=Ku3ligTbknVnUYQ3g34mUAj7paSqPmz6t8CiiSiy/VVOUP0jRB5bDt2zQYw5sPwH+onkc8j76+Zw2NNY7f43LBdK4S4CZd1bE6o8Yh68VCbEvwLYP2H+t+LnWpKfEH/zr+6GKcbDVrMvLS5LGP3Bhw3Dzg2XE1AMeVTryRKEL5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208893; c=relaxed/simple;
-	bh=cDQYgZ3wFd5Dcx32HriffctQochTF49ssn4m1Gp8AMI=;
+	s=arc-20240116; t=1725208896; c=relaxed/simple;
+	bh=DJu42gCL+nzYO3HHGn2B9anzRzO/mNev1OPqSlZ6+44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUNW3ospRcbPz0Na6JyYdF8OG5dPjYudU1XRBfiuhhyormhgfLRNvb0Ypka3QieS2Tz/GIdBhXhb+dQYONg87UjLcHB7CGHYtDVCzCaPcZBsYLiehoHFRNg1WX6nzYbO8NLXP2RSnY/Ssp6qFkZiVImtpBzM82sdSOElhAPGVIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTLWah1Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXqkkLgjs6II7bVQhFuTNJBCHLzkK3jhXaIodfqbUIZj3+Jga54Sh6JBw3eRPQHqtRMQNqeKsBZ3kWkKhX+TCbRK/CT32+ItIjhD3LSTiwemWQ6KRs4YxKWsu4AQQA5DbOvzebgaE7cd8BpEeM6+BE3trHDpVpCy9CtywbgZUa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYwtGM4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTLWah1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432C8C4CEC3;
-	Sun,  1 Sep 2024 16:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYwtGM4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1CDC4CEC3;
+	Sun,  1 Sep 2024 16:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208892;
-	bh=cDQYgZ3wFd5Dcx32HriffctQochTF49ssn4m1Gp8AMI=;
+	s=korg; t=1725208895;
+	bh=DJu42gCL+nzYO3HHGn2B9anzRzO/mNev1OPqSlZ6+44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTLWah1QtzO/JW/Id2kzAX3IPAMUhJA9hJo4BpoqoXrp7i76gHea2V3sXfw1UguiO
-	 vrq3hBTGdF9TULDvnnl14qMOIKUDzQBpY2ySLAAsZXMEuEVhAjtS+D5k2sQijmixjO
-	 amF9WVnCZd5/IDHAz5t5QsVw4sZQccMIatwiI5L8=
+	b=bYwtGM4gogyzsT+3Y9nMtr7+W5t/LBO1M+yl3HCdSn715XAe4kWIjTf3jufZUlf1k
+	 TNbNs2zv4MtHJXVPf+fHlC9YcTCqE9MED7lx1V+1oE1qyjrullyLuTRoj5ETURbwxn
+	 LR+oGsgbWh4IBptjnCNZexeKlVGqEl9IZKNIXEGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 072/134] nvmet-rdma: fix possible bad dereference when freeing rsps
-Date: Sun,  1 Sep 2024 18:16:58 +0200
-Message-ID: <20240901160812.811590025@linuxfoundation.org>
+Subject: [PATCH 5.4 055/134] powerpc/boot: Only free if realloc() succeeds
+Date: Sun,  1 Sep 2024 18:16:41 +0200
+Message-ID: <20240901160812.178149626@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,81 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 73964c1d07c054376f1b32a62548571795159148 ]
+[ Upstream commit f2d5bccaca3e8c09c9b9c8485375f7bdbb2631d2 ]
 
-It is possible that the host connected and saw a cm established
-event and started sending nvme capsules on the qp, however the
-ctrl did not yet see an established event. This is why the
-rsp_wait_list exists (for async handling of these cmds, we move
-them to a pending list).
+simple_realloc() frees the original buffer (ptr) even if the
+reallocation failed.
 
-Furthermore, it is possible that the ctrl cm times out, resulting
-in a connect-error cm event. in this case we hit a bad deref [1]
-because in nvmet_rdma_free_rsps we assume that all the responses
-are in the free list.
+Fix it to behave like standard realloc() and only free the original
+buffer if the reallocation succeeded.
 
-We are freeing the cmds array anyways, so don't even bother to
-remove the rsp from the free_list. It is also guaranteed that we
-are not racing anything when we are releasing the queue so no
-other context accessing this array should be running.
-
-[1]:
---
-Workqueue: nvmet-free-wq nvmet_rdma_free_queue_work [nvmet_rdma]
-[...]
-pc : nvmet_rdma_free_rsps+0x78/0xb8 [nvmet_rdma]
-lr : nvmet_rdma_free_queue_work+0x88/0x120 [nvmet_rdma]
- Call trace:
- nvmet_rdma_free_rsps+0x78/0xb8 [nvmet_rdma]
- nvmet_rdma_free_queue_work+0x88/0x120 [nvmet_rdma]
- process_one_work+0x1ec/0x4a0
- worker_thread+0x48/0x490
- kthread+0x158/0x160
- ret_from_fork+0x10/0x18
---
-
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240229115149.749264-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ arch/powerpc/boot/simple_alloc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 50e2007092bc0..ae41b6001c7e2 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -428,12 +428,8 @@ nvmet_rdma_alloc_rsps(struct nvmet_rdma_queue *queue)
- 	return 0;
+diff --git a/arch/powerpc/boot/simple_alloc.c b/arch/powerpc/boot/simple_alloc.c
+index 188c4f996512a..bc99f75b8582d 100644
+--- a/arch/powerpc/boot/simple_alloc.c
++++ b/arch/powerpc/boot/simple_alloc.c
+@@ -114,10 +114,11 @@ static void *simple_realloc(void *ptr, unsigned long size)
+ 		return ptr;
  
- out_free:
--	while (--i >= 0) {
--		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
--
--		list_del(&rsp->free_list);
--		nvmet_rdma_free_rsp(ndev, rsp);
--	}
-+	while (--i >= 0)
-+		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
- 	kfree(queue->rsps);
- out:
- 	return ret;
-@@ -444,12 +440,8 @@ static void nvmet_rdma_free_rsps(struct nvmet_rdma_queue *queue)
- 	struct nvmet_rdma_device *ndev = queue->dev;
- 	int i, nr_rsps = queue->recv_queue_size * 2;
+ 	new = simple_malloc(size);
+-	if (new)
++	if (new) {
+ 		memcpy(new, ptr, p->size);
++		simple_free(ptr);
++	}
  
--	for (i = 0; i < nr_rsps; i++) {
--		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
--
--		list_del(&rsp->free_list);
--		nvmet_rdma_free_rsp(ndev, rsp);
--	}
-+	for (i = 0; i < nr_rsps; i++)
-+		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
- 	kfree(queue->rsps);
+-	simple_free(ptr);
+ 	return new;
  }
  
 -- 
