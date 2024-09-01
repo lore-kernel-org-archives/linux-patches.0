@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D396417C;
-	Sun,  1 Sep 2024 17:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB352C6AF;
+	Sun,  1 Sep 2024 17:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210307; cv=none; b=fL1YD2iq1ryTYm68aFNttnRSyBXwfkRrTSE0uz436YMZAi6R8hCq8dbmNZbIwNme/Bw2FGY+avSBNHGeGRT3qBHbVIZ+Y6BH87JQqlCfuhnkL0QGKMSS93xPpBSKvX6vppE/L+94DllKsgag49bxotAj9unxtLjN5h/XUDKOAy4=
+	t=1725210311; cv=none; b=jEupeSvmzzmF+aqX4auPogBVypqxgVcEWdnjOFgchikbDN5SjVjUTj8GLrnBLJSsfZF4mhozdP4e2ruqdrge5RqsyMX1c5lefuhJEN/RaYZxMmsREz9I4iGJW8Ota3XdI5VvUo6hLe+TbLX3hN3nwrAtPCJt/SDxa9gBxo+ZI0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210307; c=relaxed/simple;
-	bh=q+Jn4kt/Y+xarmPPd/IYriP1bn8+GUJFPpsjUZ1OvGI=;
+	s=arc-20240116; t=1725210311; c=relaxed/simple;
+	bh=Wy9WOWxJoIdQryW9P6bHAo/q5Fkg/wnRHsKYJermfFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKYcPU97pMMI2Jplq8yAu4WqUluVFDREVvaQej3edzx+P0QlTJHj2B4xbJFlKu8nud1vumhfCQGJEk5DO4I+6i2LX4kj4eaJR8VbsCsHlYbEuEPsxeUJ1gJAs7UQlVxbOM7uGNUGVOeXhY2gUoAUJWcE9kf+51OyJZiuGjvX2PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlPctkHp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOj9j6/rBxlQyEdWoO7y8XVwgWYHQ4WVqJgjPJK8UoA1GHqiuHiuQuFxRvp/n4KCo8IYXe0snKXH70jdFDSTYAk36H0zrHbRvv1KLG6WE4UnUmHWP2sFol7CbK5ISs75EjPFo37b9p0PRHFxDY2r1Ly+lKP22ACycNfGxlFfOZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGBkP5kd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlPctkHp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DA6C4CEC3;
-	Sun,  1 Sep 2024 17:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGBkP5kd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA275C4CEC4;
+	Sun,  1 Sep 2024 17:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210307;
-	bh=q+Jn4kt/Y+xarmPPd/IYriP1bn8+GUJFPpsjUZ1OvGI=;
+	s=korg; t=1725210311;
+	bh=Wy9WOWxJoIdQryW9P6bHAo/q5Fkg/wnRHsKYJermfFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlPctkHpNTgy3NSxhfk35aw/tbJUh7D0PqzN2pNUNkbX1+8v5mZnzkMOmzf64j0Np
-	 MMgm3/zPdeDrEY00Rs56XVZzZuJVpVkFTdSjqo5cECKUbGEa9LCOx6kMrWNec4rgvn
-	 sN6B1V90/5k1rqY4vZ8Lp7D/NEwohwDnvoEnt/mc=
+	b=cGBkP5kdDKaW5TJZn/EdV+hOE74pORB7Tl+z3JySejYBueXvs+4EzrNljWmvJzhQD
+	 3laki1cMESVVE6FOlCkFmFn6Izi+Ou7qjB6Td0NrOGr1ta9oQoIvhdCJu6vwc5TzQx
+	 U4Vuq1uw682FqMTq8VmpEl372dfNTRgHBR0yn7/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vasily Averin <vasily.averin@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+8407d9bb88cd4c6bf61a@syzkaller.appspotmail.com,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/215] ipv6: prevent possible UAF in ip6_xmit()
-Date: Sun,  1 Sep 2024 18:17:43 +0200
-Message-ID: <20240901160829.072755510@linuxfoundation.org>
+Subject: [PATCH 5.15 152/215] netfilter: flowtable: validate vlan header
+Date: Sun,  1 Sep 2024 18:17:44 +0200
+Message-ID: <20240901160829.110409017@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,46 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2d5ff7e339d04622d8282661df36151906d0e1c7 ]
+[ Upstream commit 6ea14ccb60c8ab829349979b22b58a941ec4a3ee ]
 
-If skb_expand_head() returns NULL, skb has been freed
-and the associated dst/idev could also have been freed.
+Ensure there is sufficient room to access the protocol field of the
+VLAN header, validate it once before the flowtable lookup.
 
-We must use rcu_read_lock() to prevent a possible UAF.
+=====================================================
+BUG: KMSAN: uninit-value in nf_flow_offload_inet_hook+0x45a/0x5f0 net/netfilter/nf_flow_table_inet.c:32
+ nf_flow_offload_inet_hook+0x45a/0x5f0 net/netfilter/nf_flow_table_inet.c:32
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_ingress include/linux/netfilter_netdev.h:34 [inline]
+ nf_ingress net/core/dev.c:5440 [inline]
 
-Fixes: 0c9f227bee11 ("ipv6: use skb_expand_head in ip6_xmit")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Vasily Averin <vasily.averin@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20240820160859.3786976-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4cd91f7c290f ("netfilter: flowtable: add vlan support")
+Reported-by: syzbot+8407d9bb88cd4c6bf61a@syzkaller.appspotmail.com
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nf_flow_table_inet.c | 3 +++
+ net/netfilter/nf_flow_table_ip.c   | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 8054a4a2f2a5e..b37121f872bc9 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -273,11 +273,15 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 		head_room += opt->opt_nflen + opt->opt_flen;
+diff --git a/net/netfilter/nf_flow_table_inet.c b/net/netfilter/nf_flow_table_inet.c
+index 6783ea220f8fe..7f746acb4b027 100644
+--- a/net/netfilter/nf_flow_table_inet.c
++++ b/net/netfilter/nf_flow_table_inet.c
+@@ -17,6 +17,9 @@ nf_flow_offload_inet_hook(void *priv, struct sk_buff *skb,
  
- 	if (unlikely(head_room > skb_headroom(skb))) {
-+		/* Make sure idev stays alive */
-+		rcu_read_lock();
- 		skb = skb_expand_head(skb, head_room);
- 		if (!skb) {
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
-+			rcu_read_unlock();
- 			return -ENOBUFS;
- 		}
-+		rcu_read_unlock();
- 	}
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_8021Q):
++		if (!pskb_may_pull(skb, skb_mac_offset(skb) + sizeof(*veth)))
++			return NF_ACCEPT;
++
+ 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
+ 		proto = veth->h_vlan_encapsulated_proto;
+ 		break;
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index f3227f9316969..8fa16be0def2a 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -254,6 +254,9 @@ static bool nf_flow_skb_encap_protocol(struct sk_buff *skb, __be16 proto,
  
- 	if (opt) {
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_8021Q):
++		if (!pskb_may_pull(skb, skb_mac_offset(skb) + sizeof(*veth)))
++			return false;
++
+ 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
+ 		if (veth->h_vlan_encapsulated_proto == proto) {
+ 			*offset += VLAN_HLEN;
 -- 
 2.43.0
 
