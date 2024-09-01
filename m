@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66647143894;
-	Sun,  1 Sep 2024 16:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9150E183CA4;
+	Sun,  1 Sep 2024 16:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207960; cv=none; b=hBFXL2YxxQiYg/V8EXTeN7ROWdDJQYbmn3My7wmG77h3Y70YlyrbZzq35Rv9g/kVtv16Dvc7DlcaWBWjueLiaCHYva6HQyQzxdZsf0E8QhhrehP/SsjfDxbFWxiGw93LBr2xWJ99ui2u/spjg3KNHLxx5zxKOY0wqB0Pz3K9yFY=
+	t=1725207963; cv=none; b=gsbi8H/zGiWr2ae1vkQ5kI3ZpriHwjRPypUJipHZ20vtr6JXg9aJYEfaPYEq3h84x8c6WjZ229NxF9Kdc+CyfopKKDR1WxIgHna7vJz9A2UvCufd0RN+6xIbzocyn2LqZrFfAj88Cn94OYldXfQDpxw6M5HLmFcRwxhsrxUPgYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207960; c=relaxed/simple;
-	bh=btUpvuseOLguA06Ld7KYZI9Fx9MYMcQiGbz5VRrEsXk=;
+	s=arc-20240116; t=1725207963; c=relaxed/simple;
+	bh=lQQy1IJFj3S0K/2qIn0Re+XEQF9vZnX0aiPNE6EgDKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kjdw9n/N7vLtPJgE7AkTSqYmIDIGucVPJGt6JWNibp1An45O7vC0wksclp+UO90TIuxUptD/hGcZVfIGqnMCYExZa9WDqN5268LQ3e0pu+y8/+Mho07c7mOzFohzgvS29xkg5lfA30OpcPa+kkw68XTnaWuTIkIZU2YE2eVIuEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9PFswNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dk6mW6EZDAg4hdPOvRYV1GqZ7ydBDqLRpevr3oChCxHdxeXnuU5QBDua7jinwLf0RKcYh0RO9jQppNwCHaooO5S2DKpcEsqgCZonfjatApu2H4IcxcsQZU5tnT7yjTJtRVAWgmuvKyC3FtqJuLzDdOrrzpW533Fr9IDHqRa7y6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLETJTbU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9PFswNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB833C4CEC3;
-	Sun,  1 Sep 2024 16:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLETJTbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F54C4CEC3;
+	Sun,  1 Sep 2024 16:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207960;
-	bh=btUpvuseOLguA06Ld7KYZI9Fx9MYMcQiGbz5VRrEsXk=;
+	s=korg; t=1725207963;
+	bh=lQQy1IJFj3S0K/2qIn0Re+XEQF9vZnX0aiPNE6EgDKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9PFswNWsKbdd6BtMKQIUQR4b478KWHIiyRZy87XLfzGdcxC7uGesyIrkuz9Om6Em
-	 DPmdA6gho3KD26xJgQVUpEpZnflZeOkhKF+IOEFXwCgpUVeExEIYmKX8JPbSaftGSM
-	 zMMuV2vx517wMU7jKuxF0kS1s3+uNRQE40E3KZhA=
+	b=XLETJTbUP/gvgpNi1J9eS9Zhl6Xle2bUPSKfmIFPFsdRKuJNWiTS9pOHWaQefOfDC
+	 DT7YIXeDcj7VAflRUq85ch/uA9E2vevAkfZmhet7p+DMWN5k/GvRulFAxLOC83JKek
+	 9G/aHpDFsoBuDM+gs6JQTt13GaT7JZxezImkTEaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 05/93] smb/client: avoid dereferencing rdata=NULL in smb2_new_read_req()
-Date: Sun,  1 Sep 2024 18:15:52 +0200
-Message-ID: <20240901160807.557724841@linuxfoundation.org>
+	Richard Kojedzinszky <richard@kojedz.in>,
+	Huang-Huang Bao <i@eh5.me>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Trevor Woerner <twoerner@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 06/93] pinctrl: rockchip: correct RK3328 iomux width flag for GPIO2-B pins
+Date: Sun,  1 Sep 2024 18:15:53 +0200
+Message-ID: <20240901160807.596122419@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -51,33 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Huang-Huang Bao <i@eh5.me>
 
-commit c724b2ab6a46435b4e7d58ad2fbbdb7a318823cf upstream.
+commit 128f71fe014fc91efa1407ce549f94a9a9f1072c upstream.
 
-This happens when called from SMB2_read() while using rdma
-and reaching the rdma_readwrite_threshold.
+The base iomux offsets for each GPIO pin line are accumulatively
+calculated based off iomux width flag in rockchip_pinctrl_get_soc_data.
+If the iomux width flag is one of IOMUX_WIDTH_4BIT, IOMUX_WIDTH_3BIT or
+IOMUX_WIDTH_2BIT, the base offset for next pin line would increase by 8
+bytes, otherwise it would increase by 4 bytes.
 
+Despite most of GPIO2-B iomux have 2-bit data width, which can be fit
+into 4 bytes space with write mask, it actually take 8 bytes width for
+whole GPIO2-B line.
+
+Commit e8448a6c817c ("pinctrl: rockchip: fix pinmux bits for RK3328
+GPIO2-B pins") wrongly set iomux width flag to 0, causing all base
+iomux offset for line after GPIO2-B to be calculated wrong. Fix the
+iomux width flag to IOMUX_WIDTH_2BIT so the offset after GPIO2-B is
+correctly increased by 8, matching the actual width of GPIO2-B iomux.
+
+Fixes: e8448a6c817c ("pinctrl: rockchip: fix pinmux bits for RK3328 GPIO2-B pins")
 Cc: stable@vger.kernel.org
-Fixes: a6559cc1d35d ("cifs: split out smb3_use_rdma_offload() helper")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Richard Kojedzinszky <richard@kojedz.in>
+Closes: https://lore.kernel.org/linux-rockchip/4f29b743202397d60edfb3c725537415@kojedz.in/
+Tested-by: Richard Kojedzinszky <richard@kojedz.in>
+Signed-off-by: Huang-Huang Bao <i@eh5.me>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Tested-by: Trevor Woerner <twoerner@gmail.com>
+Link: https://lore.kernel.org/20240709105428.1176375-1-i@eh5.me
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    2 +-
+ drivers/pinctrl/pinctrl-rockchip.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4431,7 +4431,7 @@ smb2_new_read_req(void **buf, unsigned i
- 	 * If we want to do a RDMA write, fill in and append
- 	 * smbd_buffer_descriptor_v1 to the end of read request
- 	 */
--	if (smb3_use_rdma_offload(io_parms)) {
-+	if (rdata && smb3_use_rdma_offload(io_parms)) {
- 		struct smbd_buffer_descriptor_v1 *v1;
- 		bool need_invalidate = server->dialect == SMB30_PROT_ID;
- 
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -3802,7 +3802,7 @@ static struct rockchip_pin_bank rk3328_p
+ 	PIN_BANK_IOMUX_FLAGS(0, 32, "gpio0", 0, 0, 0, 0),
+ 	PIN_BANK_IOMUX_FLAGS(1, 32, "gpio1", 0, 0, 0, 0),
+ 	PIN_BANK_IOMUX_FLAGS(2, 32, "gpio2", 0,
+-			     0,
++			     IOMUX_WIDTH_2BIT,
+ 			     IOMUX_WIDTH_3BIT,
+ 			     0),
+ 	PIN_BANK_IOMUX_FLAGS(3, 32, "gpio3",
 
 
