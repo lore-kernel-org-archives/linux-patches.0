@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC92F1C68C;
-	Sun,  1 Sep 2024 16:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AC917ADE1;
+	Sun,  1 Sep 2024 16:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209930; cv=none; b=NxNlysXWwPuC/DzUkB3YLuDW7WGG0A816RbX5+tkM2A8TsL5BJpzUKUdT1ef7palL8FMOfese10PcmTL80B1fIA2Pum2XqAIThHm3XwhsF5AbLjCasj8qNIt8Rvrt9tkWq6hTB1sN6bxNVk7EwHM3sdIIK/vgZhtNbnJgVp3eQ0=
+	t=1725209934; cv=none; b=DzAxgIN4nfTADpUgs2g2lvoluftE+UxbsQUaD0E+p7v7OsWXCWiQlz8Enr+npD34hG3omwuTRty8GH/h6AqjbB6scVRzyuHQPdzJRfB77sR3OA/K+K2WcjBxZr0NI0bXcX3w7gu3WzX/EOIri5Mj+VGwZWxGZCJcL7+gP4nnpcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209930; c=relaxed/simple;
-	bh=l24+CEhIPe/K1dpUNEbc8oXllQBqxqPRkggdIglTRqQ=;
+	s=arc-20240116; t=1725209934; c=relaxed/simple;
+	bh=YZVEiSKvjCxG34p9Jacul31kZpLBvallpCf4HFhV9Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c25AxU2lIhOAuJzWI4qVYKl/ac0Li1C8nqbcQzR5uJSI/X9oXUh2mstgkhsyfZwtNca7TClvhNQCKrUaMN6UtTSgHAJTWmvTRG7bGUCAqtJnrJLzcDyQUzFCEKoRoZPE7bSu7s+HXM3oE604utjkjElwnmX1k8gc8LVolrvF3aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff8JbSAZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTDKLK7IQHXBERdKNj3h7+E0qk1LLD2kVbd24Au8ISpY9GJyByLSL13NunFt/qj1rQ+BHsFHdfX4J9xzzudMxJYLvelW+GBHolKG2ua4leJoIDCRHYG/Awf6k9uRQfSPCioapmltDSggDAeuYhTMuUoIJOiYAj6uPZlyBgbVQEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DR3AG1LV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff8JbSAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E018C4CEC3;
-	Sun,  1 Sep 2024 16:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DR3AG1LV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C4AC4CEC3;
+	Sun,  1 Sep 2024 16:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209930;
-	bh=l24+CEhIPe/K1dpUNEbc8oXllQBqxqPRkggdIglTRqQ=;
+	s=korg; t=1725209933;
+	bh=YZVEiSKvjCxG34p9Jacul31kZpLBvallpCf4HFhV9Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ff8JbSAZzTg66ppJS3UJGEgeuO6efjuK8v6OiX4b0V9lVMP/SoAL82/b37RIFo/7M
-	 ZY1Ir7vxxKgx6+FrwnA/9TqctKIIyld1QMJbgCttHADTbdHmJ39lPgJt4+Wv6DQEjH
-	 R7m+FvVfbqgC0lw9wLhaTtziCyVFJPXcv+22uzTY=
+	b=DR3AG1LVRctAGF3qgQMk/tMw9Q1tE6bN0hQ1Sywqmmc+//Fa+rzcjdh3cwUd6s7wE
+	 WsFkQBZic942fFQCf0K7GoWz9wY7Jj3NLcfjZaaGiKqUh6HK8Kc6ShL6cP3ICMQg4A
+	 pM+MXMwAZCoxiQ4ezzHSaaBUcFq/T5Bz+H5UUU+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Juan=20Jos=C3=A9=20Arboleda?= <soyjuanarbol@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 006/215] ALSA: usb-audio: Support Yamaha P-125 quirk entry
-Date: Sun,  1 Sep 2024 18:15:18 +0200
-Message-ID: <20240901160823.480850566@linuxfoundation.org>
+	Karel Balej <balejk@matfyz.cz>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 007/215] xhci: Fix Panther point NULL pointer deref at full-speed re-enumeration
+Date: Sun,  1 Sep 2024 18:15:19 +0200
+Message-ID: <20240901160823.517712329@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -44,37 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juan José Arboleda <soyjuanarbol@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit c286f204ce6ba7b48e3dcba53eda7df8eaa64dd9 upstream.
+commit af8e119f52e9c13e556be9e03f27957554a84656 upstream.
 
-This patch adds a USB quirk for the Yamaha P-125 digital piano.
+re-enumerating full-speed devices after a failed address device command
+can trigger a NULL pointer dereference.
 
-Signed-off-by: Juan José Arboleda <soyjuanarbol@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240813161053.70256-1-soyjuanarbol@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Full-speed devices may need to reconfigure the endpoint 0 Max Packet Size
+value during enumeration. Usb core calls usb_ep0_reinit() in this case,
+which ends up calling xhci_configure_endpoint().
+
+On Panther point xHC the xhci_configure_endpoint() function will
+additionally check and reserve bandwidth in software. Other hosts do
+this in hardware
+
+If xHC address device command fails then a new xhci_virt_device structure
+is allocated as part of re-enabling the slot, but the bandwidth table
+pointers are not set up properly here.
+This triggers the NULL pointer dereference the next time usb_ep0_reinit()
+is called and xhci_configure_endpoint() tries to check and reserve
+bandwidth
+
+[46710.713538] usb 3-1: new full-speed USB device number 5 using xhci_hcd
+[46710.713699] usb 3-1: Device not responding to setup address.
+[46710.917684] usb 3-1: Device not responding to setup address.
+[46711.125536] usb 3-1: device not accepting address 5, error -71
+[46711.125594] BUG: kernel NULL pointer dereference, address: 0000000000000008
+[46711.125600] #PF: supervisor read access in kernel mode
+[46711.125603] #PF: error_code(0x0000) - not-present page
+[46711.125606] PGD 0 P4D 0
+[46711.125610] Oops: Oops: 0000 [#1] PREEMPT SMP PTI
+[46711.125615] CPU: 1 PID: 25760 Comm: kworker/1:2 Not tainted 6.10.3_2 #1
+[46711.125620] Hardware name: Gigabyte Technology Co., Ltd.
+[46711.125623] Workqueue: usb_hub_wq hub_event [usbcore]
+[46711.125668] RIP: 0010:xhci_reserve_bandwidth (drivers/usb/host/xhci.c
+
+Fix this by making sure bandwidth table pointers are set up correctly
+after a failed address device command, and additionally by avoiding
+checking for bandwidth in cases like this where no actual endpoints are
+added or removed, i.e. only context for default control endpoint 0 is
+evaluated.
+
+Reported-by: Karel Balej <balejk@matfyz.cz>
+Closes: https://lore.kernel.org/linux-usb/D3CKQQAETH47.1MUO22RTCH2O3@matfyz.cz/
+Cc: stable@vger.kernel.org
+Fixes: 651aaf36a7d7 ("usb: xhci: Handle USB transaction error on address command")
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240815141117.2702314-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -273,6 +273,7 @@ YAMAHA_DEVICE(0x105a, NULL),
- YAMAHA_DEVICE(0x105b, NULL),
- YAMAHA_DEVICE(0x105c, NULL),
- YAMAHA_DEVICE(0x105d, NULL),
-+YAMAHA_DEVICE(0x1718, "P-125"),
- {
- 	USB_DEVICE(0x0499, 0x1503),
- 	.driver_info = (unsigned long) & (const struct snd_usb_audio_quirk) {
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -2954,7 +2954,7 @@ static int xhci_configure_endpoint(struc
+ 				xhci->num_active_eps);
+ 		return -ENOMEM;
+ 	}
+-	if ((xhci->quirks & XHCI_SW_BW_CHECKING) &&
++	if ((xhci->quirks & XHCI_SW_BW_CHECKING) && !ctx_change &&
+ 	    xhci_reserve_bandwidth(xhci, virt_dev, command->in_ctx)) {
+ 		if ((xhci->quirks & XHCI_EP_LIMIT_QUIRK))
+ 			xhci_free_host_resources(xhci, ctrl_ctx);
+@@ -4294,8 +4294,10 @@ static int xhci_setup_device(struct usb_
+ 		mutex_unlock(&xhci->mutex);
+ 		ret = xhci_disable_slot(xhci, udev->slot_id);
+ 		xhci_free_virt_device(xhci, udev->slot_id);
+-		if (!ret)
+-			xhci_alloc_dev(hcd, udev);
++		if (!ret) {
++			if (xhci_alloc_dev(hcd, udev) == 1)
++				xhci_setup_addressable_virt_dev(xhci, udev);
++		}
+ 		kfree(command->completion);
+ 		kfree(command);
+ 		return -EPROTO;
 
 
