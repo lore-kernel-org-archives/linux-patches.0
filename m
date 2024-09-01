@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F03C1C68C;
-	Sun,  1 Sep 2024 16:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BE25381A;
+	Sun,  1 Sep 2024 16:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208234; cv=none; b=co305WlSAfTObas614MKHlUxsdi/APQayvDrZ7Wi4oN8J5dHuj2kira5OhnTm3rk4a1m6lxLJUC/xKjmFGm9DIXcGw09qyxqY/z1piyzXaCaOVrxV8bupzTrNmP0S7YcIAzE4lYK00FPzwEKxgHG44R/OOLyrTxBJMJhC7Z0FOA=
+	t=1725208238; cv=none; b=rOenVgOuy0eS0/N4DvRDF49wCS/+RBp1+sfN+P4QiLx7NM5VUUUBJJoI2nxnbTlZrzsiFkOFjCOBulTPsH2qQaCsZYLaPrbjJHWHm2mlo1D4z/G4yHIISVblPmhTUsSdRNc6Nb9Pg3hQwKydp39Iapu6csGmiu6OQCG9DiHnGIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208234; c=relaxed/simple;
-	bh=1kzh7LrC7veQMIPT7HM2WpjjMX5oEMyBTPOpZwMLDQE=;
+	s=arc-20240116; t=1725208238; c=relaxed/simple;
+	bh=Xq8AxDe3ODyhsEpAHsMoPoYqsBWHGIFPBL+HO3xDgrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oe15rLlNY8W/UwWo43zNxiw8K9qG+Bz1SX77DI7PYto7Kk4eAMt4vQ9Mj49jGvDii7t8wreOkFEYIkCYGQRkx0qUrpMB6BO7thy6kICm8A5abMGaIB2RdTOFxk437S54T4PSMrSCfH5D5iIEBY04NGF+q9YbdVMOZi7HdAjkQB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXfs1OZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPG+fvkAfu7qNTktdtUk7oNenop5nbbpMFuovwBSEpQ2z/whZ5UkUJ7WLWgO517Bkv03mY6jkAPZ9khm90vzsE69+6IMg5SoRa9O51oiYgbQ/MsxODttIhxnbk47FSwBKR6xhmuQ87sxQmaM91LFTyUit7yPzMNMu+T049Q1Sn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgW9mjTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXfs1OZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01EDC4CEC3;
-	Sun,  1 Sep 2024 16:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgW9mjTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3B3C4CEC3;
+	Sun,  1 Sep 2024 16:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208234;
-	bh=1kzh7LrC7veQMIPT7HM2WpjjMX5oEMyBTPOpZwMLDQE=;
+	s=korg; t=1725208237;
+	bh=Xq8AxDe3ODyhsEpAHsMoPoYqsBWHGIFPBL+HO3xDgrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXfs1OZ9JDYdg/A58Ay3f38Oq4zYewIRmmrWMbW9vnlHkfpjxEFAO48rr0WOcLcfr
-	 givYl7VJfYIi1i4icrK0KJ8t4cy/tjAC9uFzTtqiX+whPeYYndPMh5aCASz1Is7N2W
-	 XsCoNTY06Uw99XjcclWBjvunOyG/3K5FrjwMtIAM=
+	b=hgW9mjTkUiyJ6qZKYR1s7gTsLX37kQCdK/8J+4MXNjKqOzxyCitdOLYk61eUBHmvs
+	 NzW8dWIpqb05zvhI2BIVCEnHE3ulicbagsNnCePKt3QL9hwUPDHNrAAprBoH008EOT
+	 9oGNUUOMy2NXy2HZFf2yXrEbmhQdgZ/ccdmv6r/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+242ee56aaa9585553766@syzkaller.appspotmail.com,
-	Chunhai Guo <guochunhai@vivo.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.10 002/149] erofs: fix out-of-bound access when z_erofs_gbuf_growsize() partially fails
-Date: Sun,  1 Sep 2024 18:15:13 +0200
-Message-ID: <20240901160817.557372399@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 003/149] ALSA: seq: Skip event type filtering for UMP events
+Date: Sun,  1 Sep 2024 18:15:14 +0200
+Message-ID: <20240901160817.595200510@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,45 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 0005e01e1e875c5e27130c5e2ed0189749d1e08a upstream.
+commit 32108c22ac619c32dd6db594319e259b63bfb387 upstream.
 
-If z_erofs_gbuf_growsize() partially fails on a global buffer due to
-memory allocation failure or fault injection (as reported by syzbot [1]),
-new pages need to be freed by comparing to the existing pages to avoid
-memory leaks.
+UMP events don't use the event type field, hence it's invalid to apply
+the filter, which may drop the events unexpectedly.
+Skip the event filtering for UMP events, instead.
 
-However, the old gbuf->pages[] array may not be large enough, which can
-lead to null-ptr-deref or out-of-bound access.
-
-Fix this by checking against gbuf->nrpages in advance.
-
-[1] https://lore.kernel.org/r/000000000000f7b96e062018c6e3@google.com
-
-Reported-by: syzbot+242ee56aaa9585553766@syzkaller.appspotmail.com
-Fixes: d6db47e571dc ("erofs: do not use pagepool in z_erofs_gbuf_growsize()")
-Cc: <stable@vger.kernel.org> # 6.10+
-Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
-Reviewed-by: Sandeep Dhavale <dhavale@google.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240820085619.1375963-1-hsiangkao@linux.alibaba.com
+Fixes: 46397622a3fa ("ALSA: seq: Add UMP support")
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240819084156.10286-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zutil.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/core/seq/seq_clientmgr.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/erofs/zutil.c
-+++ b/fs/erofs/zutil.c
-@@ -111,7 +111,8 @@ int z_erofs_gbuf_growsize(unsigned int n
- out:
- 	if (i < z_erofs_gbuf_count && tmp_pages) {
- 		for (j = 0; j < nrpages; ++j)
--			if (tmp_pages[j] && tmp_pages[j] != gbuf->pages[j])
-+			if (tmp_pages[j] && (j >= gbuf->nrpages ||
-+					     tmp_pages[j] != gbuf->pages[j]))
- 				__free_page(tmp_pages[j]);
- 		kfree(tmp_pages);
- 	}
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -537,6 +537,9 @@ static struct snd_seq_client *get_event_
+ 		return NULL;
+ 	if (! dest->accept_input)
+ 		goto __not_avail;
++	if (snd_seq_ev_is_ump(event))
++		return dest; /* ok - no filter checks */
++
+ 	if ((dest->filter & SNDRV_SEQ_FILTER_USE_EVENT) &&
+ 	    ! test_bit(event->type, dest->event_filter))
+ 		goto __not_avail;
 
 
