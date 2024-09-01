@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A544C1E87B;
-	Sun,  1 Sep 2024 16:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD931849CB;
+	Sun,  1 Sep 2024 16:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209280; cv=none; b=SR4j7vJqG3c3DsNdffsG07ZrRCFRKxZH7N9DdpFezITIogyt9iA+OwFWfUzcy1Ab7vcqINVOZ8ky7rR+NXR5P4Xq57YDx4iKD6N43vEXGE60cwrDEzLdg6yqzPCLf40n8K6A2jDi681a9tsOPJ4xaqre74plieNT70K/RbKKyhE=
+	t=1725209283; cv=none; b=crWq0K2IaDXIUG32QItmagNR73LFQevJUYcsM+8srk3Kn2pmiZU/ERAhYvKTFLtOHskYgFxPMMHCuC3HWjvubjFuQ3DMloP0gpYXJR2ymPIAI/NRHp/Ztb9b3nmY65b90tHT17UAfDTdMELK/BjOPVlfHawXTqx4ltJIoz7x7p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209280; c=relaxed/simple;
-	bh=aFNpwhOz5P9rc0Fxe4zQDQzB4A0Nrs2byH/MYVGwb6M=;
+	s=arc-20240116; t=1725209283; c=relaxed/simple;
+	bh=RJwpr+yHUfY01UAsE1AF5BlEmf7VwZzT10t0YS7qmoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBBn4BXm51RktHndNur14QSA8YeFfAaL5JzFlk1pY8fY3dgD500AoafeJ64DLFoL3Qwn7fF6HdqDSWUFs5mxax1v5D+5d2XowO6A26MOqk1VwObUDbs5vFimOrmnNEim4b/hyArcHs/MbyAuQR9HJyQaOXWoDnCkjQXHMTs/V+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuQh+fV1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=euRCDURAtPanV4lTk7OkrnVwDDMz1bbbL6pusLqGbGeDTZCARtmN8R+1HU3V5kuB+KOSeZdxeY6zVNGAay9lvpCjlk8iJiR3SsOvXEHu3TFmms4bIRI89FBT8Y1ULiHMIB0QJuaSSG7Sb3wCKEq7be1V41TSUV7pCubBWF7ZmVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYgbuY/u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuQh+fV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A227C4CEC3;
-	Sun,  1 Sep 2024 16:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYgbuY/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252E8C4CEC3;
+	Sun,  1 Sep 2024 16:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209280;
-	bh=aFNpwhOz5P9rc0Fxe4zQDQzB4A0Nrs2byH/MYVGwb6M=;
+	s=korg; t=1725209283;
+	bh=RJwpr+yHUfY01UAsE1AF5BlEmf7VwZzT10t0YS7qmoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuQh+fV1g89CsT8iAkdkdG6k5fcTP8SQlHJOfplQsB7Ic4FfkUEBQWQvzRYv74Xr7
-	 00dvfB0MENNW3fHqJn/gXvulOTpHKAD9WitjftY/Qh6XzCz9gUzaklYgzZzmfGDE6H
-	 35vUvRTejjNtEKldkT/HIxVH79+IqzLO65KddTDY=
+	b=GYgbuY/uIH3m4prtP+LNgefDMaBCx1JuJYoKW0bGD032O5+O2qhn+n897Q2dDWgHX
+	 Zo7OdoNI+DQHkStdJu0UR3RoRF08MxxIhh3S56VhnQ5+pu1U0slRn9JXXfwT0ms7oZ
+	 xMx3kDlOXML2zKN1ek1KkYtHmbXNFsSCmfRaIYGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 16/71] mptcp: pm: do not remove already closed subflows
-Date: Sun,  1 Sep 2024 18:17:21 +0200
-Message-ID: <20240901160802.502821644@linuxfoundation.org>
+	Andreas Schultz <aschultz@tpip.net>,
+	Harald Welte <laforge@gnumonks.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 51/71] gtp: fix a potential NULL pointer dereference
+Date: Sun,  1 Sep 2024 18:17:56 +0200
+Message-ID: <20240901160803.816857989@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -51,34 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Cong Wang <cong.wang@bytedance.com>
 
-commit 58e1b66b4e4b8a602d3f2843e8eba00a969ecce2 upstream.
+[ Upstream commit defd8b3c37b0f9cb3e0f60f47d3d78d459d57fda ]
 
-It is possible to have in the list already closed subflows, e.g. the
-initial subflow has been already closed, but still in the list. No need
-to try to close it again, and increments the related counters again.
+When sockfd_lookup() fails, gtp_encap_enable_socket() returns a
+NULL pointer, but its callers only check for error pointers thus miss
+the NULL pointer case.
 
-Fixes: 0ee4261a3681 ("mptcp: implement mptcp_pm_remove_subflow")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix it by returning an error pointer with the error code carried from
+sockfd_lookup().
+
+(I found this bug during code inspection.)
+
+Fixes: 1e3a3abd8b28 ("gtp: make GTP sockets in gtp_newlink optional")
+Cc: Andreas Schultz <aschultz@tpip.net>
+Cc: Harald Welte <laforge@gnumonks.org>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20240825191638.146748-1-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/gtp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -825,6 +825,8 @@ static void mptcp_pm_nl_rm_addr_or_subfl
- 			int how = RCV_SHUTDOWN | SEND_SHUTDOWN;
- 			u8 id = subflow_get_local_id(subflow);
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 512daeb14e28b..bbe8d76b1595e 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1219,7 +1219,7 @@ static struct sock *gtp_encap_enable_socket(int fd, int type,
+ 	sock = sockfd_lookup(fd, &err);
+ 	if (!sock) {
+ 		pr_debug("gtp socket fd=%d not found\n", fd);
+-		return NULL;
++		return ERR_PTR(err);
+ 	}
  
-+			if (inet_sk_state_load(ssk) == TCP_CLOSE)
-+				continue;
- 			if (rm_type == MPTCP_MIB_RMADDR && remote_id != rm_id)
- 				continue;
- 			if (rm_type == MPTCP_MIB_RMSUBFLOW && !mptcp_local_id_match(msk, id, rm_id))
+ 	sk = sock->sk;
+-- 
+2.43.0
+
 
 
