@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E54376EC;
-	Sun,  1 Sep 2024 17:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02C726AC1;
+	Sun,  1 Sep 2024 17:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210461; cv=none; b=mNd9O84vnBPeqNG9ZbRS/rPKe0vSZdKsQWUx8E6Ow9GqUybGjXgc5+0DzqkogpK5VKLD/ueQJ1Gr9sLhAtqE4jtLYI3rSs/IMy4i8ERthm7TdbuEOOmP3t4Je6KmL8BZqw1lxuVA5phOxgWYMrmM57rW74ur/P/R1MZ6Ai/ZBGg=
+	t=1725210464; cv=none; b=sLRbPIS6jkf+557YauXzeo7EfZ0wTBIQRJsaFlsWByXT8L2v7GltrPKJoTR9Ty5/8srdCY0WvqYBFp94QykqP54yaK4fHq+6KJsfdVNCHspxLvk7hBaoCgmtHu3i9cPIXi3vd37aPWc8sHVkTxYf8OxwrCDPR7qGGmDIpytXZJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210461; c=relaxed/simple;
-	bh=rYLwjJBfAXpXtE8L38O8Lf5BUuPSTaCoDOok0zxDLEs=;
+	s=arc-20240116; t=1725210464; c=relaxed/simple;
+	bh=s8wQD89plA7L/eS7ewPssnIkDP3OrTl+nWVhudQPNpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uoP1kvP4OO6+FXg4DHpidbBqWvgdUOVqY+XnIwmshid077dMq+DodxC0oW+Vi8TRwKB8X8dRSULKOuK3HnLtsBxxH2gucZ2ZtfSfeFU90ivB7djRbRi9r4eGK7eH5a3t3WTNVldkWDqTXLhDRlSzWX+PgGKUxbFDceY+Aam1swc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zARayx2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpym+un5s7vmeMCAgBFEJNd5fA+2varR7ZZt7vJQi+aaiwGQHa+Cr8FMsqbGw2ZzQOjCs8TjT4cbbP39HOdO7LhGKQ7lyczw2WNuyEzFGPm2ct6FWbghmjQC6q/U0eMKnlIMo3SMbsYgU5k2TXsKB/trS/fQvfbbH7Xm5H6snM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcVPnMTr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zARayx2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE81C4CEC3;
-	Sun,  1 Sep 2024 17:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcVPnMTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E93DC4CEC3;
+	Sun,  1 Sep 2024 17:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210461;
-	bh=rYLwjJBfAXpXtE8L38O8Lf5BUuPSTaCoDOok0zxDLEs=;
+	s=korg; t=1725210464;
+	bh=s8wQD89plA7L/eS7ewPssnIkDP3OrTl+nWVhudQPNpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zARayx2Ga4lD5I0AWZ8bJk4I9SOzbcN7yqWHrcRv1MS20nVlwXNBRSTIpKRTz+9Lc
-	 pnmXVr/e884x94cpPPGwSQ/fIgpIXnOvDZGKnqJ2Sf7mS6QfgR4mwfOrlee/ddBhAl
-	 nISbuPwrLnZj7Xx3X9+h1WU2lk6axbgL8Nyquvpg=
+	b=BcVPnMTr2NbbNZi101gORRqXFZ1qydHqY9gTqXxZSm4GUD6y1QYRXp2jhmi2BKDOA
+	 qKDf9EJyDm+gK3+ZwnU4eWYM/alq4qmhI0zH8hEpBHxixxQa8J/JA88hNT3YYDJHk6
+	 +ZXCfnXK2svLqibb9wznLGlDvzg7bUw1k9kvnbSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 196/215] dmaengine: dw: Add memory bus width verification
-Date: Sun,  1 Sep 2024 18:18:28 +0200
-Message-ID: <20240901160830.763899742@linuxfoundation.org>
+Subject: [PATCH 5.15 197/215] ethtool: check device is present when getting link settings
+Date: Sun,  1 Sep 2024 18:18:29 +0200
+Message-ID: <20240901160830.800382599@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,184 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serge Semin <fancer.lancer@gmail.com>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit d04b21bfa1c50a2ade4816cab6fdc91827b346b1 ]
+[ Upstream commit a699781c79ecf6cfe67fb00a0331b4088c7c8466 ]
 
-Currently in case of the DEV_TO_MEM or MEM_TO_DEV DMA transfers the memory
-data width (single transfer width) is determined based on the buffer
-length, buffer base address or DMA master-channel max address width
-capability. It isn't enough in case of the channel disabling prior the
-block transfer is finished. Here is what DW AHB DMA IP-core databook says
-regarding the port suspension (DMA-transfer pause) implementation in the
-controller:
+A sysfs reader can race with a device reset or removal, attempting to
+read device state when the device is not actually present. eg:
 
-"When CTLx.SRC_TR_WIDTH < CTLx.DST_TR_WIDTH and the CFGx.CH_SUSP bit is
-high, the CFGx.FIFO_EMPTY is asserted once the contents of the FIFO do not
-permit a single word of CTLx.DST_TR_WIDTH to be formed. However, there may
-still be data in the channel FIFO, but not enough to form a single
-transfer of CTLx.DST_TR_WIDTH. In this scenario, once the channel is
-disabled, the remaining data in the channel FIFO is not transferred to the
-destination peripheral."
+     [exception RIP: qed_get_current_link+17]
+  #8 [ffffb9e4f2907c48] qede_get_link_ksettings at ffffffffc07a994a [qede]
+  #9 [ffffb9e4f2907cd8] __rh_call_get_link_ksettings at ffffffff992b01a3
+ #10 [ffffb9e4f2907d38] __ethtool_get_link_ksettings at ffffffff992b04e4
+ #11 [ffffb9e4f2907d90] duplex_show at ffffffff99260300
+ #12 [ffffb9e4f2907e38] dev_attr_show at ffffffff9905a01c
+ #13 [ffffb9e4f2907e50] sysfs_kf_seq_show at ffffffff98e0145b
+ #14 [ffffb9e4f2907e68] seq_read at ffffffff98d902e3
+ #15 [ffffb9e4f2907ec8] vfs_read at ffffffff98d657d1
+ #16 [ffffb9e4f2907f00] ksys_read at ffffffff98d65c3f
+ #17 [ffffb9e4f2907f38] do_syscall_64 at ffffffff98a052fb
 
-So in case if the port gets to be suspended and then disabled it's
-possible to have the data silently discarded even though the controller
-reported that FIFO is empty and the CTLx.BLOCK_TS indicated the dropped
-data already received from the source device. This looks as if the data
-somehow got lost on a way from the peripheral device to memory and causes
-problems for instance in the DW APB UART driver, which pauses and disables
-the DMA-transfer as soon as the recv data timeout happens. Here is the way
-it looks:
+ crash> struct net_device.state ffff9a9d21336000
+    state = 5,
 
- Memory <------- DMA FIFO <------ UART FIFO <---------------- UART
-  DST_TR_WIDTH -+--------|       |         |
-                |        |       |         |                No more data
-   Current lvl -+--------|       |---------+- DMA-burst lvl
-                |        |       |---------+- Leftover data
-                |        |       |---------+- SRC_TR_WIDTH
-               -+--------+-------+---------+
+state 5 is __LINK_STATE_START (0b1) and __LINK_STATE_NOCARRIER (0b100).
+The device is not present, note lack of __LINK_STATE_PRESENT (0b10).
 
-In the example above: no more data is getting received over the UART port
-and BLOCK_TS is not even close to be fully received; some data is left in
-the UART FIFO, but not enough to perform a bursted DMA-xfer to the DMA
-FIFO; some data is left in the DMA FIFO, but not enough to be passed
-further to the system memory in a single transfer. In this situation the
-8250 UART driver catches the recv timeout interrupt, pauses the
-DMA-transfer and terminates it completely, after which the IRQ handler
-manually fetches the leftover data from the UART FIFO into the
-recv-buffer. But since the DMA-channel has been disabled with the data
-left in the DMA FIFO, that data will be just discarded and the recv-buffer
-will have a gap of the "current lvl" size in the recv-buffer at the tail
-of the lately received data portion. So the data will be lost just due to
-the misconfigured DMA transfer.
+This is the same sort of panic as observed in commit 4224cfd7fb65
+("net-sysfs: add check for netdevice being present to speed_show").
 
-Note this is only relevant for the case of the transfer suspension and
-_disabling_. No problem will happen if the transfer will be re-enabled
-afterwards or the block transfer is fully completed. In the later case the
-"FIFO flush mode" will be executed at the transfer final stage in order to
-push out the data left in the DMA FIFO.
+There are many other callers of __ethtool_get_link_ksettings() which
+don't have a device presence check.
 
-In order to fix the denoted problem the DW AHB DMA-engine driver needs to
-make sure that the _bursted_ source transfer width is greater or equal to
-the single destination transfer (note the HW databook describes more
-strict constraint than actually required). Since the peripheral-device
-side is prescribed by the client driver logic, the memory-side can be only
-used for that. The solution can be easily implemented for the DEV_TO_MEM
-transfers just by adjusting the memory-channel address width. Sadly it's
-not that easy for the MEM_TO_DEV transfers since the mem-to-dma burst size
-is normally dynamically determined by the controller. So the only thing
-that can be done is to make sure that memory-side address width is greater
-than the peripheral device address width.
+Move this check into ethtool to protect all callers.
 
-Fixes: a09820043c9e ("dw_dmac: autoconfigure data_width or get it via platform data")
-Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-Acked-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20240802075100.6475-3-fancer.lancer@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: d519e17e2d01 ("net: export device speed and duplex via sysfs")
+Fixes: 4224cfd7fb65 ("net-sysfs: add check for netdevice being present to speed_show")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Link: https://patch.msgid.link/8bae218864beaa44ed01628140475b9bf641c5b0.1724393671.git.jamie.bainbridge@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw/core.c | 51 +++++++++++++++++++++++++++++++++++++------
- 1 file changed, 44 insertions(+), 7 deletions(-)
+ net/core/net-sysfs.c | 2 +-
+ net/ethtool/ioctl.c  | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
-index 128c194d65b6d..0beafcee72673 100644
---- a/drivers/dma/dw/core.c
-+++ b/drivers/dma/dw/core.c
-@@ -625,12 +625,10 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 	struct dw_desc		*prev;
- 	struct dw_desc		*first;
- 	u32			ctllo, ctlhi;
--	u8			m_master = dwc->dws.m_master;
--	u8			lms = DWC_LLP_LMS(m_master);
-+	u8			lms = DWC_LLP_LMS(dwc->dws.m_master);
- 	dma_addr_t		reg;
- 	unsigned int		reg_width;
- 	unsigned int		mem_width;
--	unsigned int		data_width = dw->pdata->data_width[m_master];
- 	unsigned int		i;
- 	struct scatterlist	*sg;
- 	size_t			total_len = 0;
-@@ -664,7 +662,7 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 			mem = sg_dma_address(sg);
- 			len = sg_dma_len(sg);
+diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
+index e9ea0695efb42..173ea92124f8c 100644
+--- a/net/core/net-sysfs.c
++++ b/net/core/net-sysfs.c
+@@ -214,7 +214,7 @@ static ssize_t speed_show(struct device *dev,
+ 	if (!rtnl_trylock())
+ 		return restart_syscall();
  
--			mem_width = __ffs(data_width | mem | len);
-+			mem_width = __ffs(sconfig->src_addr_width | mem | len);
+-	if (netif_running(netdev) && netif_device_present(netdev)) {
++	if (netif_running(netdev)) {
+ 		struct ethtool_link_ksettings cmd;
  
- slave_sg_todev_fill_desc:
- 			desc = dwc_desc_get(dwc);
-@@ -724,7 +722,7 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 			lli_write(desc, sar, reg);
- 			lli_write(desc, dar, mem);
- 			lli_write(desc, ctlhi, ctlhi);
--			mem_width = __ffs(data_width | mem);
-+			mem_width = __ffs(sconfig->dst_addr_width | mem);
- 			lli_write(desc, ctllo, ctllo | DWC_CTLL_DST_WIDTH(mem_width));
- 			desc->len = dlen;
+ 		if (!__ethtool_get_link_ksettings(netdev, &cmd))
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 53e2ef6ada8f3..1e9e70a633d1c 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -433,6 +433,9 @@ int __ethtool_get_link_ksettings(struct net_device *dev,
+ 	if (!dev->ethtool_ops->get_link_ksettings)
+ 		return -EOPNOTSUPP;
  
-@@ -816,6 +814,41 @@ static int dwc_verify_p_buswidth(struct dma_chan *chan)
- 	return 0;
++	if (!netif_device_present(dev))
++		return -ENODEV;
++
+ 	memset(link_ksettings, 0, sizeof(*link_ksettings));
+ 	return dev->ethtool_ops->get_link_ksettings(dev, link_ksettings);
  }
- 
-+static int dwc_verify_m_buswidth(struct dma_chan *chan)
-+{
-+	struct dw_dma_chan *dwc = to_dw_dma_chan(chan);
-+	struct dw_dma *dw = to_dw_dma(chan->device);
-+	u32 reg_width, reg_burst, mem_width;
-+
-+	mem_width = dw->pdata->data_width[dwc->dws.m_master];
-+
-+	/*
-+	 * It's possible to have a data portion locked in the DMA FIFO in case
-+	 * of the channel suspension. Subsequent channel disabling will cause
-+	 * that data silent loss. In order to prevent that maintain the src and
-+	 * dst transfer widths coherency by means of the relation:
-+	 * (CTLx.SRC_TR_WIDTH * CTLx.SRC_MSIZE >= CTLx.DST_TR_WIDTH)
-+	 * Look for the details in the commit message that brings this change.
-+	 *
-+	 * Note the DMA configs utilized in the calculations below must have
-+	 * been verified to have correct values by this method call.
-+	 */
-+	if (dwc->dma_sconfig.direction == DMA_MEM_TO_DEV) {
-+		reg_width = dwc->dma_sconfig.dst_addr_width;
-+		if (mem_width < reg_width)
-+			return -EINVAL;
-+
-+		dwc->dma_sconfig.src_addr_width = mem_width;
-+	} else if (dwc->dma_sconfig.direction == DMA_DEV_TO_MEM) {
-+		reg_width = dwc->dma_sconfig.src_addr_width;
-+		reg_burst = rounddown_pow_of_two(dwc->dma_sconfig.src_maxburst);
-+
-+		dwc->dma_sconfig.dst_addr_width = min(mem_width, reg_width * reg_burst);
-+	}
-+
-+	return 0;
-+}
-+
- static int dwc_config(struct dma_chan *chan, struct dma_slave_config *sconfig)
- {
- 	struct dw_dma_chan *dwc = to_dw_dma_chan(chan);
-@@ -825,14 +858,18 @@ static int dwc_config(struct dma_chan *chan, struct dma_slave_config *sconfig)
- 	memcpy(&dwc->dma_sconfig, sconfig, sizeof(*sconfig));
- 
- 	dwc->dma_sconfig.src_maxburst =
--		clamp(dwc->dma_sconfig.src_maxburst, 0U, dwc->max_burst);
-+		clamp(dwc->dma_sconfig.src_maxburst, 1U, dwc->max_burst);
- 	dwc->dma_sconfig.dst_maxburst =
--		clamp(dwc->dma_sconfig.dst_maxburst, 0U, dwc->max_burst);
-+		clamp(dwc->dma_sconfig.dst_maxburst, 1U, dwc->max_burst);
- 
- 	ret = dwc_verify_p_buswidth(chan);
- 	if (ret)
- 		return ret;
- 
-+	ret = dwc_verify_m_buswidth(chan);
-+	if (ret)
-+		return ret;
-+
- 	dw->encode_maxburst(dwc, &dwc->dma_sconfig.src_maxburst);
- 	dw->encode_maxburst(dwc, &dwc->dma_sconfig.dst_maxburst);
- 
 -- 
 2.43.0
 
