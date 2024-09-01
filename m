@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1A91C68C;
-	Sun,  1 Sep 2024 16:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDC21C68C;
+	Sun,  1 Sep 2024 16:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208376; cv=none; b=olIOi0OI6S228YYXjFdilEIFxMOIR1P88+VvkxnG2zemHhahoYlmx+z89uHQ16flsgrGhbuGBL4ZIUFH1lklssZQHF3qHswuFsgTUQBYCZPH/GNWQLtPnZ1s5UCFDjegOH0Zs283tVGFU/l742XLCdurkxxX2J11vqqh1AWGDFg=
+	t=1725208379; cv=none; b=T0i/LqPcBFKUQtgMLceKyLwqvHwSm5B4ABhkQVglbcO3KJmuQaIN3A11iCCG9P85mbtEmRPZ6JqEnIh2ZIBxUL5tsDcGkosiZiuSafHOwjigQsW068Ruhf7Ss4rR92thsZlcBGYkPyo3j+lJlxe7KhHmqfBMwEHxrCUZuP2VRnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208376; c=relaxed/simple;
-	bh=DvA/GBr+DBJaPabzwgNrnm2avMX8KWayy4Nr4MCLfds=;
+	s=arc-20240116; t=1725208379; c=relaxed/simple;
+	bh=UIALWQ3/FCQWvFNh2VqExjMGio+ih0PHhKLoO5IhNRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXhtEa69uW+w/0A83IgCo91iVVY+G8/cXHGtFxg/GnZXg+w3baFoVod6rmAgi37Ng6ZTaZ1Pc3gMHPfjO1b7t1iN+zJAxj/CW/IB49MNXr7Dnqj8gMaXRVpTYtcITBQt146+I33Ya1Ry3NvpHSCO2nVF/ysIbdZkbn38jp553D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay6zPs1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mg2mcNTFWqpIJf2qprGK4FvJ2ujFxUChfC3mkitOei7rrU6Mhq2woytEzhDC5m/QJXzjw3Cqg6v4QHUL3oeFFvsF9nQPKPrQHvyRjJvQJGXzYpxfcKn/W7xJrb2NJBhZ0ItHL0AeXhAZyqjcrGgtevQSROeTyGRw3BEkclDJWnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2K7dAMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay6zPs1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75A5C4CEC3;
-	Sun,  1 Sep 2024 16:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2K7dAMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9A5C4CEC3;
+	Sun,  1 Sep 2024 16:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208376;
-	bh=DvA/GBr+DBJaPabzwgNrnm2avMX8KWayy4Nr4MCLfds=;
+	s=korg; t=1725208379;
+	bh=UIALWQ3/FCQWvFNh2VqExjMGio+ih0PHhKLoO5IhNRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ay6zPs1YvYuf675IS0TZrtRVu8j7K/6GPPUD/w+oa+mQYd1nhEIBoaU1oKE8BKhiF
-	 /ea9F1GuTKXrm8AlLYXPCH9U7Jod04xJE+ZPpSJq/KOEOXMH8N/8DmzpxytoFyFqUY
-	 YlwfpdbVXD6IxqbGKSaftfHiaIGsv6++vAU6o0u0=
+	b=C2K7dAMof9gKHeZ96HH3T/jNjriTjp+Up1X7jjwt1eRaLpDbNxE5gwJfkFtEELmOo
+	 Pc9i2TRaykVg2oVK+HUnPlzdV7mfcah1/6TldRIwxBMVkWDk4JYFmf+czFKeIAq6by
+	 Ig5Zn+YAUs4SDSMuKRoGEAWyzcIRgN10yRSfv4kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	netfs@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 064/149] nfsd: prevent panic for nfsv4.0 closed files in nfs4_show_open
-Date: Sun,  1 Sep 2024 18:16:15 +0200
-Message-ID: <20240901160819.874025648@linuxfoundation.org>
+Subject: [PATCH 6.10 065/149] mm: Fix missing folio invalidation calls during truncation
+Date: Sun,  1 Sep 2024 18:16:16 +0200
+Message-ID: <20240901160819.911773395@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -52,75 +59,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit a204501e1743d695ca2930ed25a2be9f8ced96d3 ]
+[ Upstream commit 0aa2e1b2fb7a75aa4b5b4347055ccfea6f091769 ]
 
-Prior to commit 3f29cc82a84c ("nfsd: split sc_status out of
-sc_type") states_show() relied on sc_type field to be of valid
-type before calling into a subfunction to show content of a
-particular stateid. From that commit, we split the validity of
-the stateid into sc_status and no longer changed sc_type to 0
-while unhashing the stateid. This resulted in kernel oopsing
-for nfsv4.0 opens that stay around and in nfs4_show_open()
-would derefence sc_file which was NULL.
+When AS_RELEASE_ALWAYS is set on a mapping, the ->release_folio() and
+->invalidate_folio() calls should be invoked even if PG_private and
+PG_private_2 aren't set.  This is used by netfslib to keep track of the
+point above which reads can be skipped in favour of just zeroing pagecache
+locally.
 
-Instead, for closed open stateids forgo displaying information
-that relies of having a valid sc_file.
+There are a couple of places in truncation in which invalidation is only
+called when folio_has_private() is true.  Fix these to check
+folio_needs_release() instead.
 
-To reproduce: mount the server with 4.0, read and close
-a file and then on the server cat /proc/fs/nfsd/clients/2/states
+Without this, the generic/075 and generic/112 xfstests (both fsx-based
+tests) fail with minimum folio size patches applied[1].
 
-[  513.590804] Call trace:
-[  513.590925]  _raw_spin_lock+0xcc/0x160
-[  513.591119]  nfs4_show_open+0x78/0x2c0 [nfsd]
-[  513.591412]  states_show+0x44c/0x488 [nfsd]
-[  513.591681]  seq_read_iter+0x5d8/0x760
-[  513.591896]  seq_read+0x188/0x208
-[  513.592075]  vfs_read+0x148/0x470
-[  513.592241]  ksys_read+0xcc/0x178
-
-Fixes: 3f29cc82a84c ("nfsd: split sc_status out of sc_type")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: b4fa966f03b7 ("mm, netfs, fscache: stop read optimisation when folio removed from pagecache")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20240815090849.972355-1-kernel@pankajraghav.com/ [1]
+Link: https://lore.kernel.org/r/20240823200819.532106-2-dhowells@redhat.com
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+cc: Pankaj Raghav <p.raghav@samsung.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: netfs@lists.linux.dev
+cc: linux-mm@kvack.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ mm/truncate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index a20c2c9d7d457..dafff707e23a4 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2789,15 +2789,18 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 		deny & NFS4_SHARE_ACCESS_READ ? "r" : "-",
- 		deny & NFS4_SHARE_ACCESS_WRITE ? "w" : "-");
+diff --git a/mm/truncate.c b/mm/truncate.c
+index e99085bf3d34d..a2af7f088407f 100644
+--- a/mm/truncate.c
++++ b/mm/truncate.c
+@@ -174,7 +174,7 @@ static void truncate_cleanup_folio(struct folio *folio)
+ 	if (folio_mapped(folio))
+ 		unmap_mapping_folio(folio);
  
--	spin_lock(&nf->fi_lock);
--	file = find_any_file_locked(nf);
--	if (file) {
--		nfs4_show_superblock(s, file);
--		seq_puts(s, ", ");
--		nfs4_show_fname(s, file);
--		seq_puts(s, ", ");
--	}
--	spin_unlock(&nf->fi_lock);
-+	if (nf) {
-+		spin_lock(&nf->fi_lock);
-+		file = find_any_file_locked(nf);
-+		if (file) {
-+			nfs4_show_superblock(s, file);
-+			seq_puts(s, ", ");
-+			nfs4_show_fname(s, file);
-+			seq_puts(s, ", ");
-+		}
-+		spin_unlock(&nf->fi_lock);
-+	} else
-+		seq_puts(s, "closed, ");
- 	nfs4_show_owner(s, oo);
- 	if (st->sc_status & SC_STATUS_ADMIN_REVOKED)
- 		seq_puts(s, ", admin-revoked");
+-	if (folio_has_private(folio))
++	if (folio_needs_release(folio))
+ 		folio_invalidate(folio, 0, folio_size(folio));
+ 
+ 	/*
+@@ -235,7 +235,7 @@ bool truncate_inode_partial_folio(struct folio *folio, loff_t start, loff_t end)
+ 	 */
+ 	folio_zero_range(folio, offset, length);
+ 
+-	if (folio_has_private(folio))
++	if (folio_needs_release(folio))
+ 		folio_invalidate(folio, offset, length);
+ 	if (!folio_test_large(folio))
+ 		return true;
 -- 
 2.43.0
 
