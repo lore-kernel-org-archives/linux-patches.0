@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD7A2B9C7;
-	Sun,  1 Sep 2024 16:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7541C68C;
+	Sun,  1 Sep 2024 16:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208822; cv=none; b=MiL/Qw7G7lzo5znFqNrDaC4ZzBjhAR7Lpm7kuZRnZfU471HKd0gvKDwZYoYgf9+qiXWZoJ2rGrPTPQZrdvdQji+YjCkWySDQB11CDkhfI8Vp3aKPlP1lwjsX/MAHG5oCOgy/Br89ggaDKjpOv6n3oDTAFEspgAe9x2GhL67gPDY=
+	t=1725208825; cv=none; b=u8fd4CqRF1NWf8TQbIZeqRIBCeV5xkbK9w4uFK5nBTXxMDwUvy5h046jBrDxE468CQKzIj9zVPF2gO/omonQH+lMLhXAqBP8gYi4yI9WYL81sfCvrXFBEGZj5dbHdAVVN66ZEK+vd743WwX59uTjEjmTIhVCshg3o8X9aLdHIR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208822; c=relaxed/simple;
-	bh=EQdYFzsn1Xv9YGwiu6QDIYSJ1fEYyrQSlDEpWr4lSnc=;
+	s=arc-20240116; t=1725208825; c=relaxed/simple;
+	bh=x8cpt4cpdqXaayB7ZI1OK4dmRUs+YJjoHtmX9jdWR/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUMIdivWOYgfTFsndd086yGKuu65a38WnFiu56pp+O22Om+d38lrm/vIvQhOWh7mK1n6cY+jN6xTs2MblKQLV0j0Oofvs18GDXELBPcXUgyuAJOyO7KNffocVtlyu/a1OCcO+anUNO3sSdCpF3Bh97/otTQOTGQ4eufwg0o5V34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU4zDf63; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P6aJHLHY4Is4N1YecffIhov/HpvBcwoRD9j5AvGoARezuVEWkRgLCEmX0IGiTgqIHbSW+gA+qzlxMoOQL14TUtKGu+ZfB9Ie8vMySvv+e/H+IqdRNWJ7+pOT8wgu7Of/kGZ6FE28TkFbSHS2j4L0ceUJckhtk6RqIgn/X3KeQDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbVowFIS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU4zDf63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3891BC4CEC3;
-	Sun,  1 Sep 2024 16:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbVowFIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8CCC4CEC3;
+	Sun,  1 Sep 2024 16:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208821;
-	bh=EQdYFzsn1Xv9YGwiu6QDIYSJ1fEYyrQSlDEpWr4lSnc=;
+	s=korg; t=1725208824;
+	bh=x8cpt4cpdqXaayB7ZI1OK4dmRUs+YJjoHtmX9jdWR/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FU4zDf637RV3i+x6G3aK7Q6bbj8/2qwzTRAh/zeiMZXbSjOU/4UtuEwSEN6DbEkEI
-	 hNU0XrjaH/bq7oTm2HZNH/foRr1jz/ZWz3CmVVpTQ0Jyq5ORZQdey+Ej5HkTeegd7m
-	 E9V/uTwjyzV3JOXXXImTfIgzHXqqNGUBmETR+d6A=
+	b=bbVowFISzlhCEX7c9321cR0EWT6zhOPA12kSFqqgb8AZ4u6TqBxeFaoqR6Ki3bFte
+	 qFM6bcluTUKJghaSZp9bWeRrFc1uYO/Osg/aBkO6eDq2rqwzpeUPi7SjUVdPKHCQCs
+	 x7dp56sAolD8wr04g7V5UKo8aBOelYylGZcPfRBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Creasey <sammy@sammy.net>,
-	Kees Cook <keescook@chromium.org>,
-	Simon Horman <horms@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Erico Nunes <nunes.erico@gmail.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 048/134] net/sun3_82586: Avoid reading past buffer in debug output
-Date: Sun,  1 Sep 2024 18:16:34 +0200
-Message-ID: <20240901160811.916014005@linuxfoundation.org>
+Subject: [PATCH 5.4 049/134] drm/lima: set gp bus_stop bit before hard reset
+Date: Sun,  1 Sep 2024 18:16:35 +0200
+Message-ID: <20240901160811.954339224@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -54,49 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit 4bea747f3fbec33c16d369b2f51e55981d7c78d0 ]
+[ Upstream commit 27aa58ec85f973d98d336df7b7941149308db80f ]
 
-Since NUM_XMIT_BUFFS is always 1, building m68k with sun3_defconfig and
--Warraybounds, this build warning is visible[1]:
+This is required for reliable hard resets. Otherwise, doing a hard reset
+while a task is still running (such as a task which is being stopped by
+the drm_sched timeout handler) may result in random mmu write timeouts
+or lockups which cause the entire gpu to hang.
 
-drivers/net/ethernet/i825xx/sun3_82586.c: In function 'sun3_82586_timeout':
-drivers/net/ethernet/i825xx/sun3_82586.c:990:122: warning: array subscript 1 is above array bounds of 'volatile struct transmit_cmd_struct *[1]' [-Warray-bounds=]
-  990 |                 printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
-      |                                                                                                               ~~~~~~~~~~~~^~~
-...
-drivers/net/ethernet/i825xx/sun3_82586.c:156:46: note: while referencing 'xmit_cmds'
-  156 |         volatile struct transmit_cmd_struct *xmit_cmds[NUM_XMIT_BUFFS];
-
-Avoid accessing index 1 since it doesn't exist.
-
-Link: https://github.com/KSPP/linux/issues/325 [1]
-Cc: Sam Creasey <sammy@sammy.net>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20240206161651.work.876-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240124025947.2110659-5-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/i825xx/sun3_82586.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/lima/lima_gp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
-index 1a86184d44c0a..e0c9fee4e1e65 100644
---- a/drivers/net/ethernet/i825xx/sun3_82586.c
-+++ b/drivers/net/ethernet/i825xx/sun3_82586.c
-@@ -990,7 +990,7 @@ static void sun3_82586_timeout(struct net_device *dev)
- 	{
- #ifdef DEBUG
- 		printk("%s: xmitter timed out, try to restart! stat: %02x\n",dev->name,p->scb->cus);
--		printk("%s: command-stats: %04x %04x\n",dev->name,swab16(p->xmit_cmds[0]->cmd_status),swab16(p->xmit_cmds[1]->cmd_status));
-+		printk("%s: command-stats: %04x\n", dev->name, swab16(p->xmit_cmds[0]->cmd_status));
- 		printk("%s: check, whether you set the right interrupt number!\n",dev->name);
- #endif
- 		sun3_82586_close(dev);
+diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
+index 3fca560087c97..4bf216cb33030 100644
+--- a/drivers/gpu/drm/lima/lima_gp.c
++++ b/drivers/gpu/drm/lima/lima_gp.c
+@@ -138,6 +138,11 @@ static void lima_gp_task_run(struct lima_sched_pipe *pipe,
+ 	gp_write(LIMA_GP_CMD, cmd);
+ }
+ 
++static int lima_gp_bus_stop_poll(struct lima_ip *ip)
++{
++	return !!(gp_read(LIMA_GP_STATUS) & LIMA_GP_STATUS_BUS_STOPPED);
++}
++
+ static int lima_gp_hard_reset_poll(struct lima_ip *ip)
+ {
+ 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC01A0000);
+@@ -151,6 +156,13 @@ static int lima_gp_hard_reset(struct lima_ip *ip)
+ 
+ 	gp_write(LIMA_GP_PERF_CNT_0_LIMIT, 0xC0FFE000);
+ 	gp_write(LIMA_GP_INT_MASK, 0);
++
++	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_STOP_BUS);
++	ret = lima_poll_timeout(ip, lima_gp_bus_stop_poll, 10, 100);
++	if (ret) {
++		dev_err(dev->dev, "%s bus stop timeout\n", lima_ip_name(ip));
++		return ret;
++	}
+ 	gp_write(LIMA_GP_CMD, LIMA_GP_CMD_RESET);
+ 	ret = lima_poll_timeout(ip, lima_gp_hard_reset_poll, 10, 100);
+ 	if (ret) {
 -- 
 2.43.0
 
