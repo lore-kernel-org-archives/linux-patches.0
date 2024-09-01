@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6D413D53B;
-	Sun,  1 Sep 2024 16:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3685928387;
+	Sun,  1 Sep 2024 16:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208084; cv=none; b=Ah4eF5iaqqXApySxa/uOhsmwlwfQUaLLZ4JfRe8TY5Qeg3WfZ53D3rPUTBvS6Vw7XiwQTDw7qvLWmc1ft5fxiDJ462ME0SnfcVExyaJUVRsgApU/kFZcRXG6UOP+UaC4sen0cz6t31lyaGnUzHGiHw4MwaWSv6CEyg/Fcrx9Ud0=
+	t=1725208088; cv=none; b=W38p7YAVzNtWGoSCux5DhvqYf6+7qjZpqQ8FhldGs7Ci4tp93NCL5VwudgGcLSPiRHJheBvrVW479EseNlA69t8C7bnTTn8n3wsEy38oJZcSckc9Dh0tpaDFU6DuO4HBEE7DlrZ93YRzy4uIhhbP2JFuFh6BSwSfpADbDbafBaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208084; c=relaxed/simple;
-	bh=JuC0DvE3BWhzBa7y59RI1PP8ZYINpzxeYuQkVwpRjAM=;
+	s=arc-20240116; t=1725208088; c=relaxed/simple;
+	bh=zV312t+dQD1y6UUXZJ/zC/vTeZjq/2IOFZ4Wznj1I0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxzhZ/4BxwsEVyJEVWFPjjDCxhRA6aep8u1yyKMr+MBB9zOzms1E6BQZZiugEVNhvMAdzFNdgZLTauq/4lEshVcans1DlJXqU+q6XEvWOIn+GQVj28prQ2Huw8avHC8eCNorAZ7sWuBHGv8luSeQkM5RTF518ITVTt/std2w28E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZZKqTdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NOGy/T01URO4W5A80AM/Bv0J3sU8MQXRzbKZrC6YINnaJxW92NHfH0ixFDF2TN1nfBADxejuSt2WaI/Ml/RG92SiKudJRPg4FV8PLKdbHLCul9a2JM2ydm11dV2S6Xn8eF4GguM635VhrpKJXJr8NYCoNQ96gNjHEuVJsLPvArA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SH+A8PVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZZKqTdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B270C4CEC3;
-	Sun,  1 Sep 2024 16:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SH+A8PVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A899C4CEC3;
+	Sun,  1 Sep 2024 16:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208084;
-	bh=JuC0DvE3BWhzBa7y59RI1PP8ZYINpzxeYuQkVwpRjAM=;
+	s=korg; t=1725208088;
+	bh=zV312t+dQD1y6UUXZJ/zC/vTeZjq/2IOFZ4Wznj1I0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZZKqTdbq4VAaSOXUriEgs/qvMmqpLy0KVvOoc5e6FUH6C/L7yiCIo17lqwlRWrQz
-	 xPxzeHQj9P0aaYiOCA7WRvx5EvUljE5IfiaGcDmG8NH523nyL7ydz0dj79Nd/SJopi
-	 RfamfUaC9U7FsO4ubtsVi0BDWK7FWB5xU8ayNMD8=
+	b=SH+A8PVtCtNvPkxWh0uojdKYNUG3KNkx2oduH8elf2Jwv8O8SHkdMLYgjxpXfQ07V
+	 mQo+Rca9Y/wBTw6ckFngM+LyqttRBxUTEy4YeYaHB+Y7DFnDkbHpAhZqdfWkQQaFSP
+	 rB+J6xhelooltScfgfkl6t4RWCzNrq6xCiKXRaGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 37/93] ovl: fix wrong lowerdir number check for parameter Opt_lowerdir
-Date: Sun,  1 Sep 2024 18:16:24 +0200
-Message-ID: <20240901160808.756407145@linuxfoundation.org>
+	Charles Yo <charlesyo@google.com>,
+	Kyle Tso <kyletso@google.com>,
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Ondrej Jirman <megi@xff.cz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.6 28/93] usb: typec: fix up incorrectly backported "usb: typec: tcpm: unregister existing source caps before re-registration"
+Date: Sun,  1 Sep 2024 18:16:15 +0200
+Message-ID: <20240901160808.419602012@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,123 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit ca76ac36bb6068866feca185045e7edf2a8f392f ]
+In commit b16abab1fb64 ("usb: typec: tcpm: unregister existing source
+caps before re-registration"), quilt, and git, applied the diff to the
+incorrect function, which would cause bad problems if exercised in a
+device with these capabilities.
 
-The max count of lowerdir is OVL_MAX_STACK[500], which is broken by
-commit 37f32f526438("ovl: fix memory leak in ovl_parse_param()") for
-parameter Opt_lowerdir. Since commit 819829f0319a("ovl: refactor layer
-parsing helpers") and commit 24e16e385f22("ovl: add support for
-appending lowerdirs one by one") added check ovl_mount_dir_check() in
-function ovl_parse_param_lowerdir(), the 'ctx->nr' should be smaller
-than OVL_MAX_STACK, after commit 37f32f526438("ovl: fix memory leak in
-ovl_parse_param()") is applied, the 'ctx->nr' is updated before the
-check ovl_mount_dir_check(), which leads the max count of lowerdir
-to become 499 for parameter Opt_lowerdir.
-Fix it by replacing lower layers parsing code with the existing helper
-function ovl_parse_layer().
+Fix this all up (including the follow-up fix in commit 04c05d50fa79
+("usb: typec: tcpm: fix use-after-free case in
+tcpm_register_source_caps") to be in the correct function.
 
-Fixes: 37f32f526438 ("ovl: fix memory leak in ovl_parse_param()")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://lore.kernel.org/r/20240705011510.794025-3-chengzhihao1@huawei.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 04c05d50fa79 ("usb: typec: tcpm: fix use-after-free case in tcpm_register_source_caps")
+Fixes: b16abab1fb64 ("usb: typec: tcpm: unregister existing source caps before re-registration")
+Reported-by: Charles Yo <charlesyo@google.com>
+Cc: Kyle Tso <kyletso@google.com>
+Cc: Amit Sunil Dhamne <amitsd@google.com>
+Cc: Ondrej Jirman <megi@xff.cz>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/params.c | 40 +++++++---------------------------------
- 1 file changed, 7 insertions(+), 33 deletions(-)
-
-diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
-index 17b9c1838182d..39919a10ce1c9 100644
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -357,6 +357,8 @@ static void ovl_add_layer(struct fs_context *fc, enum ovl_opt layer,
- 	case Opt_datadir_add:
- 		ctx->nr_data++;
- 		fallthrough;
-+	case Opt_lowerdir:
-+		fallthrough;
- 	case Opt_lowerdir_add:
- 		WARN_ON(ctx->nr >= ctx->capacity);
- 		l = &ctx->lower[ctx->nr++];
-@@ -379,7 +381,7 @@ static int ovl_parse_layer(struct fs_context *fc, const char *layer_name, enum o
- 	if (!name)
- 		return -ENOMEM;
- 
--	if (upper)
-+	if (upper || layer == Opt_lowerdir)
- 		err = ovl_mount_dir(name, &path);
- 	else
- 		err = ovl_mount_dir_noesc(name, &path);
-@@ -435,7 +437,6 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
+ drivers/usb/typec/tcpm/tcpm.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -2403,7 +2403,7 @@ static int tcpm_register_source_caps(str
  {
- 	int err;
- 	struct ovl_fs_context *ctx = fc->fs_private;
--	struct ovl_fs_context_layer *l;
- 	char *dup = NULL, *iter;
- 	ssize_t nr_lower, nr;
- 	bool data_layer = false;
-@@ -475,35 +476,11 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
- 		goto out_err;
- 	}
+ 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
+ 	struct usb_power_delivery_capabilities_desc caps = { };
+-	struct usb_power_delivery_capabilities *cap;
++	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
  
--	if (nr_lower > ctx->capacity) {
--		err = -ENOMEM;
--		l = krealloc_array(ctx->lower, nr_lower, sizeof(*ctx->lower),
--				   GFP_KERNEL_ACCOUNT);
--		if (!l)
--			goto out_err;
--
--		ctx->lower = l;
--		ctx->capacity = nr_lower;
+ 	if (!port->partner_pd)
+ 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
+@@ -2413,6 +2413,11 @@ static int tcpm_register_source_caps(str
+ 	memcpy(caps.pdo, port->source_caps, sizeof(u32) * port->nr_source_caps);
+ 	caps.role = TYPEC_SOURCE;
+ 
++	if (cap) {
++		usb_power_delivery_unregister_capabilities(cap);
++		port->partner_source_caps = NULL;
++	}
++
+ 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
+ 	if (IS_ERR(cap))
+ 		return PTR_ERR(cap);
+@@ -2426,7 +2431,7 @@ static int tcpm_register_sink_caps(struc
+ {
+ 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
+ 	struct usb_power_delivery_capabilities_desc caps = { };
+-	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
++	struct usb_power_delivery_capabilities *cap;
+ 
+ 	if (!port->partner_pd)
+ 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
+@@ -2436,11 +2441,6 @@ static int tcpm_register_sink_caps(struc
+ 	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
+ 	caps.role = TYPEC_SINK;
+ 
+-	if (cap) {
+-		usb_power_delivery_unregister_capabilities(cap);
+-		port->partner_source_caps = NULL;
 -	}
 -
- 	iter = dup;
--	l = ctx->lower;
--	for (nr = 0; nr < nr_lower; nr++, l++) {
--		ctx->nr++;
--		memset(l, 0, sizeof(*l));
--
--		err = ovl_mount_dir(iter, &l->path);
-+	for (nr = 0; nr < nr_lower; nr++) {
-+		err = ovl_parse_layer(fc, iter, Opt_lowerdir);
- 		if (err)
--			goto out_put;
--
--		err = ovl_mount_dir_check(fc, &l->path, Opt_lowerdir, iter, false);
--		if (err)
--			goto out_put;
--
--		err = -ENOMEM;
--		l->name = kstrdup(iter, GFP_KERNEL_ACCOUNT);
--		if (!l->name)
--			goto out_put;
-+			goto out_err;
- 
- 		if (data_layer)
- 			ctx->nr_data++;
-@@ -521,7 +498,7 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
- 			 */
- 			if (ctx->nr_data > 0) {
- 				pr_err("regular lower layers cannot follow data lower layers");
--				goto out_put;
-+				goto out_err;
- 			}
- 
- 			data_layer = false;
-@@ -535,9 +512,6 @@ static int ovl_parse_param_lowerdir(const char *name, struct fs_context *fc)
- 	kfree(dup);
- 	return 0;
- 
--out_put:
--	ovl_reset_lowerdirs(ctx);
--
- out_err:
- 	kfree(dup);
- 
--- 
-2.43.0
-
+ 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
+ 	if (IS_ERR(cap))
+ 		return PTR_ERR(cap);
 
 
