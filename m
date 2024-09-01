@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869AC1E87B;
-	Sun,  1 Sep 2024 16:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A4A1E87B;
+	Sun,  1 Sep 2024 16:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208545; cv=none; b=UrxrTsH7mdegZsXlcZ0XPqxZENz9Y7iw7sZVUo1FJGbbjy0ol5RzSMBhdB8qVMbh4H9R/pRAR+ES+RSQVwb3sp5OUNSQ7Faxb4jUTGyY56xLQSlMNw6AGOg9HkRiUYw1rcEbSyUnN/zc1NVlYa4gyhewD3W+9HK6BnsqzyVemwA=
+	t=1725208548; cv=none; b=SzFRXWjqg0ApPwFHKmPXWTPWefLDsg12dgZ8O3k15wQeJfnTw1vTCytB+1MCbiZnBhW8pObjkoPw/tz4bgWTjxEAMckHqSEbNSLX1ZB4Npj5MYqggN5JGsKFfzpliPQEe3Xz0XaTuPICUNvDyU66gP3VK6fgNyZ+tjYMPUKHHg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208545; c=relaxed/simple;
-	bh=jKaqa0IP2wwSJoFaDUG4DogTFAdqjdto1/kdLLJgBhc=;
+	s=arc-20240116; t=1725208548; c=relaxed/simple;
+	bh=KNb9E4jsB81GrhkEQv/EFoonfmr2tcvL+tNN68rwu4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLXdG88Rxl8GW/6sYcx0ZKHuGkD+yzmHlCcjiIxdjAiytzMoimZvTm5qJfL6eEG+bD9AB5081nhQ3bSngGkzYJ7VjsuuTKpsvLa16LP5IkRPLswwYnXZwK8PU9UdaN9of05NyEojGK10+sPVBulOmJ52oSp+F1za8tD2g15QGns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XchD042b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p53zHmL+MnYCoO0LvkYPwByN5ZgPpHcRiwJ7TflASBiTSpvIxCyVigfClt2ZTWmFZvV69sXPUquOwUppazVRW7LOADPzRvU21l2fuZEt5aW7pMmMtESKfci5LsHv7/jFgfGG6j6u/Yw5U5XITrUYJCa9L+tZHPfuaxMmj0zPYPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u69m5tXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XchD042b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA65C4CEC3;
-	Sun,  1 Sep 2024 16:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u69m5tXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5BDC4CEC3;
+	Sun,  1 Sep 2024 16:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208545;
-	bh=jKaqa0IP2wwSJoFaDUG4DogTFAdqjdto1/kdLLJgBhc=;
+	s=korg; t=1725208547;
+	bh=KNb9E4jsB81GrhkEQv/EFoonfmr2tcvL+tNN68rwu4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XchD042bnTqbv5SITH8AWRmI2YvY7zKvUBLBe25qVAQR+20m7jH12L4dXR3DJHTIv
-	 viqcSILbHmweNph5qr30iDXeUR42MlODSmfCa0iBDpiyjVoHnKIv6RLs7oxqqErRxP
-	 ruMrJ2MuTT/WZOvdxRA3ZIAVB2td/jmSZ2QZLCSM=
+	b=u69m5tXN6S9GxRqVK9dpX/7D/XF4ynR1mC+WwpBPBIsknypCnK8BFjf8RGt0sPnNQ
+	 8rrK7ymvFIzwyjlha/xLs80UKo+18+ceKnzMVDqo5ePlxw5IMmuj3Me0pV3iHSwAPZ
+	 x2f4/1nLkAMpy15Y6mAJ8zf61Xs6rX+0C5SKqXD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 114/149] io_uring/kbuf: return correct iovec count from classic buffer peek
-Date: Sun,  1 Sep 2024 18:17:05 +0200
-Message-ID: <20240901160821.743169278@linuxfoundation.org>
+	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 6.10 115/149] soc: qcom: cmd-db: Map shared memory as WC, not WB
+Date: Sun,  1 Sep 2024 18:17:06 +0200
+Message-ID: <20240901160821.780835557@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -50,40 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
 
-[ Upstream commit f274495aea7b15225b3d83837121b22ef96e560c ]
+commit f9bb896eab221618927ae6a2f1d566567999839d upstream.
 
-io_provided_buffers_select() returns 0 to indicate success, but it should
-be returning 1 to indicate that 1 vec was mapped. This causes peeking
-to fail with classic provided buffers, and while that's not a use case
-that anyone should use, it should still work correctly.
+Linux does not write into cmd-db region. This region of memory is write
+protected by XPU. XPU may sometime falsely detect clean cache eviction
+as "write" into the write protected region leading to secure interrupt
+which causes an endless loop somewhere in Trust Zone.
 
-The end result is that no buffer will be selected, and hence a completion
-with '0' as the result will be posted, without a buffer attached.
+The only reason it is working right now is because Qualcomm Hypervisor
+maps the same region as Non-Cacheable memory in Stage 2 translation
+tables. The issue manifests if we want to use another hypervisor (like
+Xen or KVM), which does not know anything about those specific mappings.
 
-Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
+removes dependency on correct mappings in Stage 2 tables. This patch
+fixes the issue by updating the mapping to MEMREMAP_WC.
+
+I tested this on SA8155P with Xen.
+
+Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Tested-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Link: https://lore.kernel.org/r/20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c | 2 +-
+ drivers/soc/qcom/cmd-db.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
-index 1af2bd56af44a..bdfa30b38321b 100644
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -129,7 +129,7 @@ static int io_provided_buffers_select(struct io_kiocb *req, size_t *len,
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -349,7 +349,7 @@ static int cmd_db_dev_probe(struct platf
+ 		return -EINVAL;
+ 	}
  
- 	iov[0].iov_base = buf;
- 	iov[0].iov_len = *len;
--	return 0;
-+	return 1;
- }
- 
- static struct io_uring_buf *io_ring_head_to_buf(struct io_uring_buf_ring *br,
--- 
-2.43.0
-
+-	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
++	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+ 	if (!cmd_db_header) {
+ 		ret = -ENOMEM;
+ 		cmd_db_header = NULL;
 
 
