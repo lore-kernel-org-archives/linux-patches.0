@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD2628387;
-	Sun,  1 Sep 2024 16:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C39183CA3;
+	Sun,  1 Sep 2024 16:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208161; cv=none; b=g9Ch0DejA7ZVAjM7Gj3YgkD1LnJ7Os9JxrpVHCEArJ98hkJ4JYgOVBEFCFraxNjT/e9LMhgLanWhSVN1iRm3CMi0gPaM4EwTZM2pPcm/XWC5FRYCdxwt6+D5yhNp9HldV6RuXhiexiWbhp8HSnDdbfbym0fJfT+Sz0h5082XkFU=
+	t=1725208164; cv=none; b=HPwJnz/Bk6E6jbWdGez90vprvvo/hvkLjOaarR/t7tMioHKBn8tji5QDKRF/DvzbuXRB3XE/CP7T2goeNW76Tr38iSHJWHsdjqXvt0VvY1yShcQAn1k+o39VWvHLebu0jTep1QjsCHjWvaG9MWPC+aqt2RjzEyFE/KLXFPkxBAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208161; c=relaxed/simple;
-	bh=LRwoZzce6rHKC2wpxir7s4yhaL+yZ9lRuPYPrJoMReE=;
+	s=arc-20240116; t=1725208164; c=relaxed/simple;
+	bh=lNdbe4P3ZNWoja0RmSC6khv3uy/YsGZTYNyEoHNlFXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIaVSvXnoVyWTI8b8cF/DJRiLdSr7/uR9l8p1nANhVoY8zXaCPqZaNZmGkmR2tncl6XKakmnIBJcqtHCS9K/o3zO4oKqBjJfU027XBUqWY+hy76s33E586RLIvBrwVA8ubADv1L5xx9gLgyywbQ4zpZ1x1Z03UyXNdJiNYQZEx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfSdnVl6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmVmTQY7bTxWDyNAOMD/jE4HxA6xVevdIlNMvrpP3YNglIgU9xkEH5m62GX3cZLKyk1W16t7wm22kmAHLtAzDpjYjNO7AW9Mn30V27nqcAYuSA8WY1EHwS83BxiOd1T1MhFVV58mEYtqrDR6I1l4BlTIsQ+dqncEyH9ULSzjKN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEWJYP+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfSdnVl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3834FC4CEC3;
-	Sun,  1 Sep 2024 16:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEWJYP+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEA0C4CEC3;
+	Sun,  1 Sep 2024 16:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208160;
-	bh=LRwoZzce6rHKC2wpxir7s4yhaL+yZ9lRuPYPrJoMReE=;
+	s=korg; t=1725208164;
+	bh=lNdbe4P3ZNWoja0RmSC6khv3uy/YsGZTYNyEoHNlFXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfSdnVl6VDzkBBmPxNmGnvCxNhCbyjnfsvdaSxUbFkrsrq4CbTiHBpn0MpjQoJ73R
-	 naaDV8nGf3/+kPxJypyKJWoIN8Nixk5eHBJ4U08Fd6LnxJWCOKip0b+zKaO6d+kP/c
-	 cMVVKL0BO5HUr/n1qL8M2f0Wx+U1pcq031dvGGL8=
+	b=WEWJYP+Pc0B0hdnOsOyV94EXrH+g+nEtc0AXwjVcPqyKnw/izodUaKCZX9i3cZD0b
+	 dm7eM6XYLRBlXshTTktKAS4/UTWUEQJ0BAGRuQu7OQ/73yy443vUxV4OiS8sv4ym4y
+	 WOV3RXD8L22bnHrK3UzHhk+anUMhTwJief3JpYxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Andreas Schultz <aschultz@tpip.net>,
+	Harald Welte <laforge@gnumonks.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 91/93] arm64: dts: freescale: imx93-tqma9352-mba93xxla: fix typo
-Date: Sun,  1 Sep 2024 18:17:18 +0200
-Message-ID: <20240901160811.158618182@linuxfoundation.org>
+Subject: [PATCH 6.6 65/93] gtp: fix a potential NULL pointer dereference
+Date: Sun,  1 Sep 2024 18:16:52 +0200
+Message-ID: <20240901160809.810862328@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,34 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 5f0a894bfa3c26ce61deda4c52b12e8ec84d876a ]
+[ Upstream commit defd8b3c37b0f9cb3e0f60f47d3d78d459d57fda ]
 
-Fix typo in assignment of SD-Card cd-gpios.
+When sockfd_lookup() fails, gtp_encap_enable_socket() returns a
+NULL pointer, but its callers only check for error pointers thus miss
+the NULL pointer case.
 
-Fixes: c982ecfa7992 ("arm64: dts: freescale: add initial device tree for MBa93xxLA SBC board")
-Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fix it by returning an error pointer with the error code carried from
+sockfd_lookup().
+
+(I found this bug during code inspection.)
+
+Fixes: 1e3a3abd8b28 ("gtp: make GTP sockets in gtp_newlink optional")
+Cc: Andreas Schultz <aschultz@tpip.net>
+Cc: Harald Welte <laforge@gnumonks.org>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20240825191638.146748-1-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93-tqma9352-mba93xxla.dts | 2 +-
+ drivers/net/gtp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx93-tqma9352-mba93xxla.dts b/arch/arm64/boot/dts/freescale/imx93-tqma9352-mba93xxla.dts
-index 3c5c67ebee5d3..aaf9685ef0fbb 100644
---- a/arch/arm64/boot/dts/freescale/imx93-tqma9352-mba93xxla.dts
-+++ b/arch/arm64/boot/dts/freescale/imx93-tqma9352-mba93xxla.dts
-@@ -437,7 +437,7 @@
- 	pinctrl-0 = <&pinctrl_usdhc2_hs>, <&pinctrl_usdhc2_gpio>;
- 	pinctrl-1 = <&pinctrl_usdhc2_uhs>, <&pinctrl_usdhc2_gpio>;
- 	pinctrl-2 = <&pinctrl_usdhc2_uhs>, <&pinctrl_usdhc2_gpio>;
--	cd-gpios = <&gpio3 00 GPIO_ACTIVE_LOW>;
-+	cd-gpios = <&gpio3 0 GPIO_ACTIVE_LOW>;
- 	vmmc-supply = <&reg_usdhc2_vmmc>;
- 	bus-width = <4>;
- 	no-sdio;
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 931b65591f4d1..9b0b22b65cb25 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1220,7 +1220,7 @@ static struct sock *gtp_encap_enable_socket(int fd, int type,
+ 	sock = sockfd_lookup(fd, &err);
+ 	if (!sock) {
+ 		pr_debug("gtp socket fd=%d not found\n", fd);
+-		return NULL;
++		return ERR_PTR(err);
+ 	}
+ 
+ 	sk = sock->sk;
 -- 
 2.43.0
 
