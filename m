@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3AF181B88;
-	Sun,  1 Sep 2024 16:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9368D28387;
+	Sun,  1 Sep 2024 16:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208141; cv=none; b=rux8V4kDKGZjjIG06l6ecY1Kv39JgW4JciNyGsvvSueCZVs9gmXtn9NcwyvuKL3LGyLXA0K3TrW954Xy7Iu+fywQD6q3rG8r3vdZsIovvkcibu4G1YXeeKwSeW39HeXinIZ8kHONb3+d6nGn99qOOFIRHOy73BwMjgoGTkoZgbA=
+	t=1725208144; cv=none; b=QYrcMJQ9IHO4koTwLSdoCvFh/LWTJN5QpegJrL7o5ZMDpB1Kt/iqKVerdnt5l+WOmr0EeRvE2b/9nFkSDu3fxBLcOOTxIDIO/HhFGM8zNqqfZbTYHRxiJYCNTeqBcbuK+tCCRILI6+hIZ3+ud9D5Sr4yjrSL7WsiXrCFj2fslQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208141; c=relaxed/simple;
-	bh=/nSElZU80cYsyk0yjk5tdM2N1BQyZBnkEyVBphCnIzA=;
+	s=arc-20240116; t=1725208144; c=relaxed/simple;
+	bh=zt/uuSzGQ/7o84j2dxSqDFEXkCs06L2mZEmf2xAcQz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0u0Rehz50oYmRURsOwNIzMl7pMHwElMudg+nOFgGBoXYM96CSBoy1WB+Z2HAMqWFsfZgDVCHNFMnmccm9MHFea9KScgSSstDa3tnn2jOJ6Q5Hak517010wIiM3HeL+SEZy9lsWho1660ydK4AUb4kAnYwmga8qyJ5j+He2ZDWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPF2hYKN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTQVOVtskTVfHA6UbTZm1FdEtKrSHiKTepg9BLQtQLS8BxHrasQFOsBY59PoySBqmqcIPOZkrpDwjv6b9t6y4D9yZ//7k1npOmYBW1cZRCnUkkxMTy1ETENa9FRGo2j+9KpoMLAyl4BTBYxhZbSXzyrpUp1eTjVC8BWZyEvlqbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fA/aMN4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPF2hYKN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40462C4CEC3;
-	Sun,  1 Sep 2024 16:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fA/aMN4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63CEC4CEC3;
+	Sun,  1 Sep 2024 16:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208140;
-	bh=/nSElZU80cYsyk0yjk5tdM2N1BQyZBnkEyVBphCnIzA=;
+	s=korg; t=1725208144;
+	bh=zt/uuSzGQ/7o84j2dxSqDFEXkCs06L2mZEmf2xAcQz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPF2hYKNZAucZSzjbhsQ1P5GUUob+KOJo0Op/eriRAth1K3QEIt+kUif7cZG3MGTA
-	 h6JirXzPih46PNgmFOJ7QX5IRT+j4EP+ie7/9LH5xQvx0EBCon7PZn8dheGNHJaib4
-	 e4yiH1YglEHFM0HO1G9ALSnObcNN8qx833kS/J1g=
+	b=0fA/aMN4gNWrZ4LlDlpe/mALz0QsZkdPTZ8iBJVtFf2qpz+/2KGoHE37HS2gfDZZH
+	 W6fQX5WhrRFsJGOReUP3pE36mQOAtpA4VHKvGFWJzdQ+lB6QUSxj0kKIajRtv+zKo4
+	 t5LCF5X5CVd6Ls5PeElvQkyO5DTiebdULJmqiCEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Adam Ford <aford173@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 85/93] ARM: dts: omap3-n900: correct the accelerometer orientation
-Date: Sun,  1 Sep 2024 18:17:12 +0200
-Message-ID: <20240901160810.934428644@linuxfoundation.org>
+Subject: [PATCH 6.6 86/93] arm64: dts: imx8mp-beacon-kit: Fix Stereo Audio on WM8962
+Date: Sun,  1 Sep 2024 18:17:13 +0200
+Message-ID: <20240901160810.972078530@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,37 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sicelo A. Mhlongo <absicsz@gmail.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 5062d9c0cbbc202e495e9b20f147f64ef5cc2897 ]
+[ Upstream commit 4e69cd835a2d5c3915838491f59a68ee697a87d0 ]
 
-Negate the values reported for the accelerometer z-axis in order to
-match Documentation/devicetree/bindings/iio/mount-matrix.txt.
+The L/R clock needs to be controlled by the SAI3 instead of the
+CODEC to properly achieve stereo sound. Doing this allows removes
+the need for unnecessary clock manipulation to try to get the
+CODEC's clock in sync with the SAI3 clock, since the CODEC can cope
+with a wide variety of clock inputs.
 
-Fixes: 14a213dcb004 ("ARM: dts: n900: use iio driver for accelerometer")
-
-Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
-Reviewed-By: Andreas Kemnade <andreas@kemnade.info>
-Link: https://lore.kernel.org/r/20240722113137.3240847-1-absicsz@gmail.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: 161af16c18f3 ("arm64: dts: imx8mp-beacon-kit: Fix audio_pll2 clock")
+Fixes: 69e2f37a6ddc ("arm64: dts: imx8mp-beacon-kit: Enable WM8962 Audio CODEC")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/omap3-n900.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/omap3-n900.dts b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-index d334853412517..036e472b77beb 100644
---- a/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-+++ b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-@@ -781,7 +781,7 @@
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
+index acd265d8b58ed..e094f409028dd 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
+@@ -163,13 +163,12 @@
  
- 		mount-matrix =	 "-1",  "0",  "0",
- 				  "0",  "1",  "0",
--				  "0",  "0",  "1";
-+				  "0",  "0",  "-1";
+ 		simple-audio-card,cpu {
+ 			sound-dai = <&sai3>;
++			frame-master;
++			bitclock-master;
+ 		};
+ 
+ 		simple-audio-card,codec {
+ 			sound-dai = <&wm8962>;
+-			clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO1>;
+-			frame-master;
+-			bitclock-master;
+ 		};
  	};
- 
- 	cam1: camera@3e {
+ };
+@@ -381,10 +380,9 @@
+ &sai3 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_sai3>;
+-	assigned-clocks = <&clk IMX8MP_CLK_SAI3>,
+-			  <&clk IMX8MP_AUDIO_PLL2> ;
+-	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
+-	assigned-clock-rates = <12288000>, <361267200>;
++	assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
++	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL1_OUT>;
++	assigned-clock-rates = <12288000>;
+ 	fsl,sai-mclk-direction-output;
+ 	status = "okay";
+ };
 -- 
 2.43.0
 
