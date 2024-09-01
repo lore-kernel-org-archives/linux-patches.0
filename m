@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F81DFD1;
-	Sun,  1 Sep 2024 16:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85BF17B50B;
+	Sun,  1 Sep 2024 16:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209531; cv=none; b=u6DxOAued9oZUBlf+I3XYFLzAUz0Cl/w7SN8rBLItaGPJpa0Fb2GBd3h7kCCSuJZosq/SmhNGBeDppeplDraHsrCNHg1GinJHiwL2ddth7T2KGkyllvQktBegqQoPl+5Ln5JJBzEac6y4v3bcH8aa82hB4uUPP2d1ZZFCkCW0vc=
+	t=1725209535; cv=none; b=F8tBDprxKOtBj4klWQqSSnUNrNVPoOiUs1rEG0MsGQrDMa1Gvdc+laSJiRu1LnNF5LxYW7EGZO1zqDjBQ07XBrqnr1b/O62I36yCPvw2J1H10CvGuGCke2+VmF6X0f/f0dFSDuBpBYW1zo8uezHrsvPPx+fB/qaLH/yqpcvv1QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209531; c=relaxed/simple;
-	bh=/ttphmw1VhTCySoyiIj7Dcw6u+Ds5uEnVeD3w9E/KjQ=;
+	s=arc-20240116; t=1725209535; c=relaxed/simple;
+	bh=TGZunQHMglgZiueIGQ7jYyKrbissHg1ZzWjVquTNQAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+m8CjJo+uuQBBg/J94/BJgZORaLz4EwO+z0LPCA/7tiQLOecEI97qaS+pCgcjXp/Yc3ynTLkthHRB/x4lZISIKq5Bcp/JZe+AZbwBaPlC15WPdGawGemGeGTBUpf1qgVcKuP7Emuj70PoJMM2VlZGxJfHDX9qi630YG9Nnmxs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cNeKM/7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cs+cbcHSvRb2pIXyPjik6gVUTX8OsmK8Ry4lj2F2OU15ZALcDywh08u/q0TA0ty+eNCERv3GkFTMEEC3wlfRz1NSJl4YMADxyNXtMIcpCBuw1rmE1G7zEQQiIOSzqWlNLP+taWopaq9Df5b5/7Ji/V7vQpaBJK6EyZkZOVzplvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kINVAb+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cNeKM/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE13EC4CEC3;
-	Sun,  1 Sep 2024 16:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kINVAb+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EE7C4CEC3;
+	Sun,  1 Sep 2024 16:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209531;
-	bh=/ttphmw1VhTCySoyiIj7Dcw6u+Ds5uEnVeD3w9E/KjQ=;
+	s=korg; t=1725209534;
+	bh=TGZunQHMglgZiueIGQ7jYyKrbissHg1ZzWjVquTNQAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cNeKM/7zHbOEIHlbgotkoDiLlbSoODsuPmEx+tA0zhNCXoqdvWnGhrVdcLS/bjuC
-	 xf3dEGuDZOcIHAOVsr3AAAy5x3VcRG9Q02caQhxQAnuC3R5drHTNRRhEvadZj4c4nd
-	 yXLCPNwDivFVyv6XBvUMBZ3ZBHrrH/7IL1gZozj0=
+	b=kINVAb+zLludp0ViRo1o5MyGwq5+KwZE0pCx6nFsSn+W8Yl0Bsser3GuIHc8yXPrn
+	 xpZZGuscPGmR1fSnOLC+bRviur0csUiCyM9u52LoYSY5b0bBNrAUtHNZcdFY7n8L/l
+	 SQRz8qL9wJwxrOQxwiHULNqQIDW/t47yS6m4RwIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/151] i2c: riic: avoid potential division by zero
-Date: Sun,  1 Sep 2024 18:16:34 +0200
-Message-ID: <20240901160815.383547677@linuxfoundation.org>
+Subject: [PATCH 5.10 035/151] RDMA/rtrs: Fix the problem of variable not initialized fully
+Date: Sun,  1 Sep 2024 18:16:35 +0200
+Message-ID: <20240901160815.421868625@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -52,33 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 7890fce6201aed46d3576e3d641f9ee5c1f0e16f ]
+[ Upstream commit c5930a1aa08aafe6ffe15b5d28fe875f88f6ac86 ]
 
-Value comes from DT, so it could be 0. Unlikely, but could be.
+No functionality change. The variable which is not initialized fully
+will introduce potential risks.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://lore.kernel.org/r/20230919020806.534183-1-yanjun.zhu@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-riic.c | 2 +-
+ drivers/infiniband/ulp/rtrs/rtrs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-riic.c b/drivers/i2c/busses/i2c-riic.c
-index 4eccc0f69861f..d8f252c4caf2b 100644
---- a/drivers/i2c/busses/i2c-riic.c
-+++ b/drivers/i2c/busses/i2c-riic.c
-@@ -312,7 +312,7 @@ static int riic_init_hw(struct riic_dev *riic, struct i2c_timings *t)
- 	 * frequency with only 62 clock ticks max (31 high, 31 low).
- 	 * Aim for a duty of 60% LOW, 40% HIGH.
- 	 */
--	total_ticks = DIV_ROUND_UP(rate, t->bus_freq_hz);
-+	total_ticks = DIV_ROUND_UP(rate, t->bus_freq_hz ?: 1);
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
+index 76b993e8d672f..f34793068f344 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs.c
+@@ -235,7 +235,7 @@ static int create_cq(struct rtrs_con *con, int cq_vector, u16 cq_size,
+ static int create_qp(struct rtrs_con *con, struct ib_pd *pd,
+ 		     u32 max_send_wr, u32 max_recv_wr, u32 max_sge)
+ {
+-	struct ib_qp_init_attr init_attr = {NULL};
++	struct ib_qp_init_attr init_attr = {};
+ 	struct rdma_cm_id *cm_id = con->cm_id;
+ 	int ret;
  
- 	for (cks = 0; cks < 7; cks++) {
- 		/*
 -- 
 2.43.0
 
