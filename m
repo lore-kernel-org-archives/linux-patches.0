@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D481C68C;
-	Sun,  1 Sep 2024 16:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A3117B50B;
+	Sun,  1 Sep 2024 16:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208583; cv=none; b=NZ7/iTVdcHIUTb6F51dRWv2Rl6ehNKXH5ToNxvcwWPzlvuwJg5rpixLNfNxl6Alta1gqYT5sDQp22Ok4XoDe74pPOt42c5MyI4HqX8lu6YJ1OIIWAR61Z42zbOBflKrk6yxzGxNGuuaAAX9xd2o4lUxGEwqlCDfNq8uYy+HD0cw=
+	t=1725208586; cv=none; b=Z6puv0SNvFexDbiePOpYyLF95Fy/KnPJr9OcN2T3+0jqaI1NdS+bqIZFRUrRmcDkOVYyqRxOWIO2Z6DwPmtw8T0ewgw9OobinjF3DSGIgJv4yrYb808Q1rLMIXajWOB++2pxDkSJNfseJsDC6kqq/MT5zntC+LQvuG8zON0/lGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208583; c=relaxed/simple;
-	bh=Ai4ErVdv2NjUEfrqQ+GCwHyutf704OUx8I/1jbuvvtU=;
+	s=arc-20240116; t=1725208586; c=relaxed/simple;
+	bh=8t10Xm0J3LJ93l/x0WsRAErHVHoGQb96JVYYOs746Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xt1X8Fi8A6lNMidWy3mPEZw2wlUcwzIRxGixHg1BrS/LFpoqxDIi7VsWGlkNfusy//M4iO5T48cvabwCwobnuP0KwKp5FhzKd5Rw2CeIr5Io1H2QuyvRH/Nwz4SiOclJrXqa/kh75CBeBrFqvO8Is8rjs+iAT3wnt2c8CvbD4Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG3+7Ipu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNmaj0kLU3ixzxVSX49UPr4jD51P7qlBfWtexM22aM50z/xT5/aTxNV93IMs9GGGaLLMOJBKU9F8qrkaZXl3lLJBS1s7m0u78jIcfWy8A8BxvkGoTmjiZAS/fpxPDO2SSo3f//ixH1D1pj14uWf592sTbOLZlOYzFiSs81NdJNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CW/wC+YZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG3+7Ipu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E5EC4CEC3;
-	Sun,  1 Sep 2024 16:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CW/wC+YZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943FAC4CEC3;
+	Sun,  1 Sep 2024 16:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208582;
-	bh=Ai4ErVdv2NjUEfrqQ+GCwHyutf704OUx8I/1jbuvvtU=;
+	s=korg; t=1725208586;
+	bh=8t10Xm0J3LJ93l/x0WsRAErHVHoGQb96JVYYOs746Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yG3+7IpulDkcnW4EusKML8cOwhVMlK8Wh55jU8Sm1+L7vF/TtEp7rWmoodF159koF
-	 dsg638gD6HhA4JbrypxcFVpxuss+fb93y+js4wAk05pJAz4wTCjLOF1ZpBqQotv46I
-	 0f4VgZUWdUZuOsLCUwTvUjT56OELwHNG+7ArG5/8=
+	b=CW/wC+YZe2wYYFHF/8qrmUSy9XLhA8m3YfXcfEbto3bj/byueV7p7c/f8hFaWEDo9
+	 xZ1e6UmNpzrfnkwsQg1xJFI5kR+O2Ew+aakxQBjaOOY07rpReC/AiWibBERyHnLnyt
+	 rKT0ZStXULbzhZCD1PSQJRtehRkUVrXMjIslWg84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 095/149] wifi: iwlwifi: mvm: take the mutex before running link selection
-Date: Sun,  1 Sep 2024 18:16:46 +0200
-Message-ID: <20240901160821.035426022@linuxfoundation.org>
+Subject: [PATCH 6.10 096/149] wifi: iwlwifi: fw: fix wgds rev 3 exact size
+Date: Sun,  1 Sep 2024 18:16:47 +0200
+Message-ID: <20240901160821.072373960@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -53,45 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit cd6f46c2fdb82e80ca248549c1f3ebe08b4a63ab ]
+[ Upstream commit 3ee22f07a35b76939c5b8d17d6af292f5fafb509 ]
 
-iwl_mvm_select_links is called by the link selection worker and it
-requires the mutex.
-Take it in the link selection worker.
-This logic used to run from iwl_mvm_rx_umac_scan_complete_notif which
-had the mvm->mutex held. This was changed to run in a worker holding the
-wiphy mutex, but we also need the mvm->mutex.
+Check size of WGDS revision 3 is equal to 8 entries size with some header,
+but doesn't depend on the number of used entries. Check that used entries
+are between min and max but allow more to be present than are used to fix
+operation with some BIOSes that have such data.
 
-Fixes: 2e194efa3809 ("wifi: iwlwifi: mvm: Fix race in scan completion")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Fixes: 97f8a3d1610b ("iwlwifi: ACPI: support revision 3 WGDS tables")
+Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.0cacecd5db1e.Iaca38a078592b69bdd06549daf63408ccf1810e4@changeid
+Link: https://patch.msgid.link/20240825191257.cc71dfc67ec3.Ic27ee15ac6128b275c210b6de88f2145bd83ca7b@changeid
+[edit commit message]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index d343432474db0..1380ae5155f35 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1190,10 +1190,12 @@ static void iwl_mvm_trig_link_selection(struct wiphy *wiphy,
- 	struct iwl_mvm *mvm =
- 		container_of(wk, struct iwl_mvm, trig_link_selection_wk);
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index fa339791223b8..ba9e656037a20 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -724,22 +724,25 @@ int iwl_acpi_get_wgds_table(struct iwl_fw_runtime *fwrt)
+ 				entry = &wifi_pkg->package.elements[entry_idx];
+ 				entry_idx++;
+ 				if (entry->type != ACPI_TYPE_INTEGER ||
+-				    entry->integer.value > num_profiles) {
++				    entry->integer.value > num_profiles ||
++				    entry->integer.value <
++					rev_data[idx].min_profiles) {
+ 					ret = -EINVAL;
+ 					goto out_free;
+ 				}
+-				num_profiles = entry->integer.value;
  
-+	mutex_lock(&mvm->mutex);
- 	ieee80211_iterate_active_interfaces(mvm->hw,
- 					    IEEE80211_IFACE_ITER_NORMAL,
- 					    iwl_mvm_find_link_selection_vif,
- 					    NULL);
-+	mutex_unlock(&mvm->mutex);
- }
- 
- static struct iwl_op_mode *
+ 				/*
+-				 * this also validates >= min_profiles since we
+-				 * otherwise wouldn't have gotten the data when
+-				 * looking up in ACPI
++				 * Check to see if we received package count
++				 * same as max # of profiles
+ 				 */
+ 				if (wifi_pkg->package.count !=
+ 				    hdr_size + profile_size * num_profiles) {
+ 					ret = -EINVAL;
+ 					goto out_free;
+ 				}
++
++				/* Number of valid profiles */
++				num_profiles = entry->integer.value;
+ 			}
+ 			goto read_table;
+ 		}
 -- 
 2.43.0
 
