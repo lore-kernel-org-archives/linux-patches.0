@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E619C1DFD1;
-	Sun,  1 Sep 2024 16:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84D31DFD1;
+	Sun,  1 Sep 2024 16:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209732; cv=none; b=pl6L21cME8rKIKr4zAH5xcJ6ozX1uqb9cp/6PxPL6qqv2r4PBKiR7nKqp4qBN0Lw/JEM3ME4Qte+tsPFv+uj2Fk2X0vorGEECxyHyCYgr+e7CD6nLY2VgQJosLhwgT/i7uLGnJ13LWTSyCDnPv4VsaDA/1hBEB16BYKR4+H5h7c=
+	t=1725209734; cv=none; b=NrBqCk6BLVY8X3kojSYI8W1uOkNFiuF+F5kPHVONcgLcvu/xttm3BrIf6ZyQi3pgPw5ps34pIBSiEbfZCGnkFMC26wap3mTPvvnnYyFUr81ajrFevY5UtWzlmj5Xr7EuFf5KrBMBP6Dph+7BvsDYX28g/Vq3forNaoXgQvKNO6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209732; c=relaxed/simple;
-	bh=Fw/Zuzin8av+oWjI7rj70v3gSt/i8lkI8GslnUGDhhs=;
+	s=arc-20240116; t=1725209734; c=relaxed/simple;
+	bh=+aoYXcJ1iJU80kAhMBzISrKEgy1fRJAwbm82fF80Rb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYo+BGuTrrwiw/KBWJTVvAjHAnRwROS2yaBnDcFbfuRO1NSO4+HAFt6Ho5lcS9tpxmrluD3OdXez1WuQoYrkyPnwV7AEOs5rvDkMMrAc2fn7bR+xFcgseRfm+z7SSY1BMaTWfLgvXYLvrlkw2x+wtma/iryu6ciqOe8R/CDn6Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1k6j7Qyk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjFkMoVXmfCcEB6intSNToisk4fQrUzwnjNIJvJ68q17S5ZFl8mCAucQBdpRbJD6vQSbPtUXEFj9Oykv4GZI3/g9YBnpuWT/5+Ms3uk7qGo6Dug9Ku3qpFI8y8OUtOkT78wzI7vwSHs6sAnHrcNwuDRw5Faxc0NLepktjl/xCWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooFFFr2e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1k6j7Qyk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5B4C4CEC3;
-	Sun,  1 Sep 2024 16:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooFFFr2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F88DC4CEC3;
+	Sun,  1 Sep 2024 16:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209731;
-	bh=Fw/Zuzin8av+oWjI7rj70v3gSt/i8lkI8GslnUGDhhs=;
+	s=korg; t=1725209734;
+	bh=+aoYXcJ1iJU80kAhMBzISrKEgy1fRJAwbm82fF80Rb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1k6j7QykOFzw8oX7uO+H7Mpx8j5Jw2sgjpZ9puSGkKJy9vl0UZ6G+P8ULLi0lPA3g
-	 dPKptWZP9cwsmZm2GZJ/eZp1oPKdelnnf1rjsjeb+asNOoZB2C5aSL9QDqJ2EmpQ1Q
-	 We4ielcBqNrkAu/wLcxAQXhD0mOqBVGRY3PYk7+w=
+	b=ooFFFr2ebJW7BifSmBNZFqjIp88WXnyPZst1eQ4qXesEHvnLYoO7tVGPvDACswMC3
+	 miLHwohuDNffLSRzdjUX2wMXYlvdmz03p9FFvlJw+ZTyjFoX7YC/dyE2smD7THebQS
+	 hbw63LFVhtztZdbrvZgFbcMxzJllYhHhFkjOqbiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 126/151] mptcp: sched: check both backup in retrans
-Date: Sun,  1 Sep 2024 18:18:06 +0200
-Message-ID: <20240901160818.848300748@linuxfoundation.org>
+	Rafael Aquini <aquini@redhat.com>,
+	Davidlohr Bueso <dbueso@suse.de>,
+	Manfred Spraul <manfred@colorfullife.com>,
+	Waiman Long <llong@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 5.10 127/151] ipc: replace costly bailout check in sysvipc_find_ipc()
+Date: Sun,  1 Sep 2024 18:18:07 +0200
+Message-ID: <20240901160818.885786560@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160814.090297276@linuxfoundation.org>
 References: <20240901160814.090297276@linuxfoundation.org>
@@ -51,48 +55,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Rafael Aquini <aquini@redhat.com>
 
-commit 2a1f596ebb23eadc0f9b95a8012e18ef76295fc8 upstream.
+commit 20401d1058f3f841f35a594ac2fc1293710e55b9 upstream.
 
-The 'mptcp_subflow_context' structure has two items related to the
-backup flags:
+sysvipc_find_ipc() was left with a costly way to check if the offset
+position fed to it is bigger than the total number of IPC IDs in use.  So
+much so that the time it takes to iterate over /proc/sysvipc/* files grows
+exponentially for a custom benchmark that creates "N" SYSV shm segments
+and then times the read of /proc/sysvipc/shm (milliseconds):
 
- - 'backup': the subflow has been marked as backup by the other peer
+    12 msecs to read   1024 segs from /proc/sysvipc/shm
+    18 msecs to read   2048 segs from /proc/sysvipc/shm
+    65 msecs to read   4096 segs from /proc/sysvipc/shm
+   325 msecs to read   8192 segs from /proc/sysvipc/shm
+  1303 msecs to read  16384 segs from /proc/sysvipc/shm
+  5182 msecs to read  32768 segs from /proc/sysvipc/shm
 
- - 'request_bkup': the backup flag has been set by the host
+The root problem lies with the loop that computes the total amount of ids
+in use to check if the "pos" feeded to sysvipc_find_ipc() grew bigger than
+"ids->in_use".  That is a quite inneficient way to get to the maximum
+index in the id lookup table, specially when that value is already
+provided by struct ipc_ids.max_idx.
 
-Looking only at the 'backup' flag can make sense in some cases, but it
-is not the behaviour of the default packet scheduler when selecting
-paths.
+This patch follows up on the optimization introduced via commit
+15df03c879836 ("sysvipc: make get_maxid O(1) again") and gets rid of the
+aforementioned costly loop replacing it by a simpler checkpoint based on
+ipc_get_maxidx() returned value, which allows for a smooth linear increase
+in time complexity for the same custom benchmark:
 
-As explained in the commit b6a66e521a20 ("mptcp: sched: check both
-directions for backup"), the packet scheduler should look at both flags,
-because that was the behaviour from the beginning: the 'backup' flag was
-set by accident instead of the 'request_bkup' one. Now that the latter
-has been fixed, get_retrans() needs to be adapted as well.
+     2 msecs to read   1024 segs from /proc/sysvipc/shm
+     2 msecs to read   2048 segs from /proc/sysvipc/shm
+     4 msecs to read   4096 segs from /proc/sysvipc/shm
+     9 msecs to read   8192 segs from /proc/sysvipc/shm
+    19 msecs to read  16384 segs from /proc/sysvipc/shm
+    39 msecs to read  32768 segs from /proc/sysvipc/shm
 
-Fixes: b6a66e521a20 ("mptcp: sched: check both directions for backup")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240826-net-mptcp-close-extra-sf-fin-v1-3-905199fe1172@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20210809203554.1562989-1-aquini@redhat.com
+Signed-off-by: Rafael Aquini <aquini@redhat.com>
+Acked-by: Davidlohr Bueso <dbueso@suse.de>
+Acked-by: Manfred Spraul <manfred@colorfullife.com>
+Cc: Waiman Long <llong@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ipc/util.c |   16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1664,7 +1664,7 @@ static struct sock *mptcp_subflow_get_re
- 			return NULL;
- 		}
+--- a/ipc/util.c
++++ b/ipc/util.c
+@@ -754,21 +754,13 @@ struct pid_namespace *ipc_seq_pid_ns(str
+ static struct kern_ipc_perm *sysvipc_find_ipc(struct ipc_ids *ids, loff_t pos,
+ 					      loff_t *new_pos)
+ {
+-	struct kern_ipc_perm *ipc;
+-	int total, id;
++	struct kern_ipc_perm *ipc = NULL;
++	int max_idx = ipc_get_maxidx(ids);
  
--		if (subflow->backup) {
-+		if (subflow->backup || subflow->request_bkup) {
- 			if (!backup)
- 				backup = ssk;
- 			continue;
+-	total = 0;
+-	for (id = 0; id < pos && total < ids->in_use; id++) {
+-		ipc = idr_find(&ids->ipcs_idr, id);
+-		if (ipc != NULL)
+-			total++;
+-	}
+-
+-	ipc = NULL;
+-	if (total >= ids->in_use)
++	if (max_idx == -1 || pos > max_idx)
+ 		goto out;
+ 
+-	for (; pos < ipc_mni; pos++) {
++	for (; pos <= max_idx; pos++) {
+ 		ipc = idr_find(&ids->ipcs_idr, pos);
+ 		if (ipc != NULL) {
+ 			rcu_read_lock();
 
 
