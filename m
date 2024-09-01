@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102DA2B9C7;
-	Sun,  1 Sep 2024 16:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA3A2B9C7;
+	Sun,  1 Sep 2024 16:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208828; cv=none; b=fp6cSv+CC9+V43Z101UUFTShWFGE/5RCLeo6A1bv7RoRnYtcOhXrGYZMC/40pXIxUDnGUXlv+nVOX5AtumaS0K/4+cYzCPpUsGzaaBjU7Pi6Usrz2OoiRhBqh8VdMsfY0ku4Vvcn5IUH1eEp/OblDP3Krm8WCqpo2jOR3biCsFQ=
+	t=1725208832; cv=none; b=pZHBz+mwqPyWXOD5qdbzN6T47GtmUHBy0YPbPd24Nmo8UGjpNBmDj6F22WA9g+cwwdigVatuLExoueeoF0vzQkDRhGwHS8ImgVg/8y0xDjzOCFqgmqubdGmkZHGjP+ES5aavlUAWa64tlCS1ehzpOpl8t1mETOEJDvhc2wWY7Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208828; c=relaxed/simple;
-	bh=GN79wNiymmKEtr1Y0yAE3MnAd/SkEDnPAcNCBVXPzp8=;
+	s=arc-20240116; t=1725208832; c=relaxed/simple;
+	bh=Zw1Bu5TGIz++mcb6EaZLeQe14OGaLJSgaMurzBU4lh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ru57JBYYvLWDPZA97QCpPBkcGvkZ+PUkAlygdE2YytDG1eKaw5VQsY1Ce8dHX6IiSckC5Jmlo5PqFGUVMpNSo8djd0X9xz80NvmKtCvCnAPFJoF7Fh2LzNccZ5HHvZbvoC3Fe3LEXqYqBrFkA96u7tf/fJu7xOF7Bu+umAOiV5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NImbHk8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOQtwOiX96rl8669ow+VgU0k4GfglLQ6BkCXbq7EGQnndnXdAMmmQZ0M9sqpu8M4lJzhiVDblSKNAPL2S4OGEjaa3ntvJ1L8Jfzz6c5eyiZbOed1Cn3USeOJRH6dbrZgB+EvC7IQb6RGjsnPEUAFJBIZ4ro41huN/BTYVFJ4/EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUiYHUGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NImbHk8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790D2C4CEC3;
-	Sun,  1 Sep 2024 16:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUiYHUGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00EEC4CEC3;
+	Sun,  1 Sep 2024 16:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208827;
-	bh=GN79wNiymmKEtr1Y0yAE3MnAd/SkEDnPAcNCBVXPzp8=;
+	s=korg; t=1725208832;
+	bh=Zw1Bu5TGIz++mcb6EaZLeQe14OGaLJSgaMurzBU4lh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NImbHk8h0uaH2TEf9dc6CdsXzwKr1BlJqF9mCt9wKqpWVtu9PXMKNWAf7CdAFLa+l
-	 ju/awdV77gweTTq4DQpIXEdxqCyjd8csQwJSG5oDGXBtOE1cKvu7DdBnRqqPW3bg+3
-	 ectHdAVojvZl7Twj3LirilJZsIwNz4zfie9DD4t8=
+	b=CUiYHUGVrhXHcO2ZHYTVHIA7hSYT6ItpcFLn8KZovYw3AbjwqyLfwzVM6l2N65tzN
+	 UGsq1x75ZdmifpMTzLgmO5R4EaTcnuztVB9UIDGxUR1kmi/nZ0w1gJj3T6uSpAlx0y
+	 QMESpu2AhTwVSOmq4qadSPX9zSJxItUsvNwvVH9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/134] virtiofs: forbid newlines in tags
-Date: Sun,  1 Sep 2024 18:16:36 +0200
-Message-ID: <20240901160811.992453661@linuxfoundation.org>
+Subject: [PATCH 5.4 051/134] md: clean up invalid BUG_ON in md_ioctl
+Date: Sun,  1 Sep 2024 18:16:37 +0200
+Message-ID: <20240901160812.029566090@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 40488cc16f7ea0d193a4e248f0d809c25cc377db ]
+[ Upstream commit 9dd8702e7cd28ebf076ff838933f29cf671165ec ]
 
-Newlines in virtiofs tags are awkward for users and potential vectors
-for string injection attacks.
+'disk->private_data' is set to mddev in md_alloc() and never set to NULL,
+and users need to open mddev before submitting ioctl. So mddev must not
+have been freed during ioctl, and there is no need to check mddev here.
+Clean up it.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Vivek Goyal <vgoyal@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240226031444.3606764-4-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/md/md.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index fadf6fb90fe22..48f144d083813 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -237,6 +237,16 @@ static int virtio_fs_read_tag(struct virtio_device *vdev, struct virtio_fs *fs)
- 		return -ENOMEM;
- 	memcpy(fs->tag, tag_buf, len);
- 	fs->tag[len] = '\0';
-+
-+	/* While the VIRTIO specification allows any character, newlines are
-+	 * awkward on mount(8) command-lines and cause problems in the sysfs
-+	 * "tag" attr and uevent TAG= properties. Forbid them.
-+	 */
-+	if (strchr(fs->tag, '\n')) {
-+		dev_dbg(&vdev->dev, "refusing virtiofs tag with newline character\n");
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 61c3e8df1b55b..e5f3010debb85 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -7396,11 +7396,6 @@ static int md_ioctl(struct block_device *bdev, fmode_t mode,
  
+ 	mddev = bdev->bd_disk->private_data;
+ 
+-	if (!mddev) {
+-		BUG();
+-		goto out;
+-	}
+-
+ 	/* Some actions do not requires the mutex */
+ 	switch (cmd) {
+ 	case GET_ARRAY_INFO:
 -- 
 2.43.0
 
