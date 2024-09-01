@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C372B9C7;
-	Sun,  1 Sep 2024 16:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB8143894;
+	Sun,  1 Sep 2024 16:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209027; cv=none; b=cT+8f4/kK34flSEyBj0YwLiYFcHCo2sClJtzIGRq+tpcu9HEbdtw5r0coX/Hu1YjlNVDzjDP82fhUwKgq5u0ENrvZXK9d80ooFeiA0G28Tk/KTmvFanyVRuY5XoRWN8RxjtLwirQUC9RVWFIR5LD/VBB2uz7deFCG2di3DjWALA=
+	t=1725209030; cv=none; b=PNWVAa6zq+P/JGMzSRW8twQBKcP+ySVoU4/vY+B3twUqnR6htyNtJFKO02enlajHPFlHTXHtq9aB/meBmNIPiqbLYBbjW544VV2Sm17yvr4e/nVOQOlLnE+xNDNY6m4Oawf5VHFnhlRRvKoKG3jdJtbeGLKQ4kMKJe7ff7ILZS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209027; c=relaxed/simple;
-	bh=fPKPuQ0VYzdJOc4SAQBLQ08GBwe6ni6JDlWpq5yOG9w=;
+	s=arc-20240116; t=1725209030; c=relaxed/simple;
+	bh=2LEuaxnDMDC4TK61jtJpPzUenybka5bW+/O7Y8T92uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEniBkhGmnU+tgvH0KpQqzxx6Sd83B/vCF4ri4sbq/y/O6zkMjGbbv+NWmmPiTNE4t//WmhsvzF5ySNxOg8il2lyVVShyrbMPG5CeXmTnysanHoEHGZrH3oBdXQneQ6ppRP1poDHtwi4+3ID1m3ry6ZbtCyeMbVPAjSUl5ATv+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfRrdrfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OU+F1yQW6vt7m2+RzHQ7f7VsLIaI9kmT+eGNxWxUa6axesNzEPILAofWt2UVi4ADy9QyXVD+lJzDSW02cNcmmyDkbPCPP0XqM3hsp7g51XclsBPg4sUgulgqgvarQugnSA55ZCJPh5g0Jdm/PgBFTvr0ka5gJPynF5w8nKh9IfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5PruflA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfRrdrfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E119C4CEC3;
-	Sun,  1 Sep 2024 16:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5PruflA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AD6C4CEC3;
+	Sun,  1 Sep 2024 16:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209027;
-	bh=fPKPuQ0VYzdJOc4SAQBLQ08GBwe6ni6JDlWpq5yOG9w=;
+	s=korg; t=1725209030;
+	bh=2LEuaxnDMDC4TK61jtJpPzUenybka5bW+/O7Y8T92uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfRrdrfmmPg9LB+XZ4Dwi3FnKuGKXDOIygZrKaqgb/kDLXDo+ESsyBqhkMvKv0ztm
-	 ByuiXr1ka4bKzIiiDuYTziJuEq2mb83AD/pE9XiaRVKWD8SV1TxG5ORhhdXOJC9aZg
-	 wf5drV5Uuho0NX1yzgcGxaL2auMDzbmeGMrnrqYI=
+	b=b5PruflAfabxdv54gAjOKHI5vF/DIClNvQlPEbvaCVJb3blzhRx4O341ry8mMUB+I
+	 HHse/yc05UafMOVqLjL4jbvE8PMuf+PyLUFqeCdL6z6+twnsrPZinPohtfWI4xyUex
+	 hU3j6Ex1j/Jszia9MmcJvbo9ll2UmmWov7z9VLYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 111/134] drm/amdkfd: dont allow mapping the MMIO HDP page with large pages
-Date: Sun,  1 Sep 2024 18:17:37 +0200
-Message-ID: <20240901160814.261481646@linuxfoundation.org>
+	Long Li <leo.lilong@huawei.com>
+Subject: [PATCH 5.4 112/134] filelock: Correct the filelock owner in fcntl_setlk/fcntl_setlk64
+Date: Sun,  1 Sep 2024 18:17:38 +0200
+Message-ID: <20240901160814.298614121@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -50,47 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Long Li <leo.lilong@huawei.com>
 
-commit be4a2a81b6b90d1a47eaeaace4cc8e2cb57b96c7 upstream.
+The locks_remove_posix() function in fcntl_setlk/fcntl_setlk64 is designed
+to reliably remove locks when an fcntl/close race is detected. However, it
+was passing in the wrong filelock owner, it looks like a mistake and
+resulting in a failure to remove locks. More critically, if the lock
+removal fails, it could lead to a uaf issue while traversing the locks.
 
-We don't get the right offset in that case.  The GPU has
-an unused 4K area of the register BAR space into which you can
-remap registers.  We remap the HDP flush registers into this
-space to allow userspace (CPU or GPU) to flush the HDP when it
-updates VRAM.  However, on systems with >4K pages, we end up
-exposing PAGE_SIZE of MMIO space.
+This problem occurs only in the 4.19/5.4 stable version.
 
-Fixes: d8e408a82704 ("drm/amdkfd: Expose HDP registers to user space")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 4c43ad4ab416 ("filelock: Fix fcntl/close race recovery compat path")
+Fixes: dc2ce1dfceaa ("filelock: Remove locks reliably when fcntl/close race is detected")
 Cc: stable@vger.kernel.org
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/locks.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1278,7 +1278,7 @@ static int kfd_ioctl_alloc_memory_of_gpu
- 		if (args->size != PAGE_SIZE)
- 			return -EINVAL;
- 		offset = amdgpu_amdkfd_get_mmio_remap_phys_addr(dev->kgd);
--		if (!offset)
-+		if (!offset || (PAGE_SIZE > 4096))
- 			return -ENOMEM;
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2542,7 +2542,7 @@ int fcntl_setlk(unsigned int fd, struct
+ 		f = fcheck(fd);
+ 		spin_unlock(&current->files->file_lock);
+ 		if (f != filp) {
+-			locks_remove_posix(filp, &current->files);
++			locks_remove_posix(filp, current->files);
+ 			error = -EBADF;
+ 		}
  	}
- 
-@@ -1872,6 +1872,9 @@ static int kfd_mmio_mmap(struct kfd_dev
- 	if (vma->vm_end - vma->vm_start != PAGE_SIZE)
- 		return -EINVAL;
- 
-+	if (PAGE_SIZE > 4096)
-+		return -EINVAL;
-+
- 	address = amdgpu_amdkfd_get_mmio_remap_phys_addr(dev->kgd);
- 
- 	vma->vm_flags |= VM_IO | VM_DONTCOPY | VM_DONTEXPAND | VM_NORESERVE |
+@@ -2672,7 +2672,7 @@ int fcntl_setlk64(unsigned int fd, struc
+ 		f = fcheck(fd);
+ 		spin_unlock(&current->files->file_lock);
+ 		if (f != filp) {
+-			locks_remove_posix(filp, &current->files);
++			locks_remove_posix(filp, current->files);
+ 			error = -EBADF;
+ 		}
+ 	}
 
 
