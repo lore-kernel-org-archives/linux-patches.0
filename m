@@ -1,39 +1,42 @@
-Received: from mail-m16.yeah.net (mail-m16.yeah.net [220.197.32.16])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DD6C23AB;
-	Sun,  1 Sep 2024 07:37:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.16
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD5033987;
+	Sun,  1 Sep 2024 09:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725176243; cv=none; b=a6BY6usIMj2FIEy8lsJH9V5HR/d57CYJEoZLxAc64o59tg3oGmAupSBa8yKjyykz3LfsCLJb97JUQNVNIT1hJ+9QqDizlX69yMlCerTrEjU8R0N1QGyl3j1njF7LrVMdwquNIXoYUzEavKto23ICELbYcoaP4UlDO15jhghgsjE=
+	t=1725183807; cv=none; b=t2R4+YdjsTR8UiqcttL1cYVbqSzmeTuU6uZonXk9cGQNMe8I9syC+mMavxntLPE2C4jJ5lvON/frrv0SsLR5+XNp02h3wO+A3LDpAarK/yrPd9fNw66tte8K1gvl47JwKfPUlH3qSQGjNQjOQeLHbGqPPm6F/j5ZTI4DKSSsDYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725176243; c=relaxed/simple;
-	bh=wi7L4ZDwktZiC+F/59oVfeIEQMcrwpQFSajswZvZ+Pw=;
+	s=arc-20240116; t=1725183807; c=relaxed/simple;
+	bh=ATV3v4eEGH1inz75dlAac4a5OY7uoxTwSMgdr+KFD44=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R0n/sQMgyc0umBYzqz/MBasp+qT2JxAtB9jn6IMQ1DPSOyp1+YCWNjtra2cJRHLNfjYd5RNA43p2XGm5wjOEqDN26RHpRIiqKEz+50JHtVcDUUxwfEI0UG38lhpbYHFl/OFUHO7bOCPlBdTipH6W4q/Eg/349ntTLr76XJtdyt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yeah.net; spf=pass smtp.mailfrom=yeah.net; dkim=pass (1024-bit key) header.d=yeah.net header.i=@yeah.net header.b=Ssy/SiYt; arc=none smtp.client-ip=220.197.32.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yeah.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yeah.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=VswiI91AByLv72vAcuTxYJ/onijl+1YgfnHk9wUUr1oBtXA9srTIY7YDgsxykXJ0ed2ey0Xzsf6E9c3sf6ooOzrhkUlMJwOD6t8/IuxYBWgmkIAIV1xY0ALFYhIej8N+PxvWukjRPbFK+wLRcGAkIiDHfnoDNliDnmUSpTjn1E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnAMA3h9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yeah.net header.i=@yeah.net header.b="Ssy/SiYt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
-	s=s110527; h=Date:From:Subject:Message-ID:MIME-Version:
-	Content-Type; bh=XUKwHwHeZnfMiWQx9ysnjJQqAF9uH2ywN1zSmv3u0Yw=;
-	b=Ssy/SiYtfJuY8YrQQnXuAmU+ujDdWwc5Ej+/795nngedfvpht9mGJbjGwaxRig
-	XIB3NBhbMZAa6RhoK/i2FchRFDkbQCRZf4zn81jql+9MSChXVBQHPcZcSK3ODn+i
-	TSHPwOxq3leFrdb/HmTZztUCWqGJ9ytW6X5Sjy//LnQoM=
-Received: from dragon (unknown [114.216.210.89])
-	by gzsmtp3 (Coremail) with SMTP id M88vCgD3J_WbGdRmIqJCAA--.32384S3;
-	Sun, 01 Sep 2024 15:37:01 +0800 (CST)
-Date: Sun, 1 Sep 2024 15:36:59 +0800
-From: Shawn Guo <shawnguo2@yeah.net>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] ARM: imx: Annotate imx7d_enet_init() as __init
-Message-ID: <ZtQZmxbLxr3dXZ/N@dragon>
-References: <20240822-imx7d-mark-imx7d_enet_init-as-init-v1-1-8dfadee3bed4@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnAMA3h9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C56DC4CEC3;
+	Sun,  1 Sep 2024 09:43:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725183807;
+	bh=ATV3v4eEGH1inz75dlAac4a5OY7uoxTwSMgdr+KFD44=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rnAMA3h9Sa05nQxeMRvrOkeSs2Ui2mWgPuugmL1bnjWg368krM3+HvWGiaLwClKFQ
+	 XGQNr7ltYNuVNHAkmNlDJ/jcbS9+4bOI1IX4262DRXnqlYS+6k51ix8AMaUFti/yqw
+	 HDkT3AW8MvRPNyovfCj6Ap5XEJqUkZrV0SudZxkw=
+Date: Sun, 1 Sep 2024 11:43:24 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.6 000/341] 6.6.48-rc1 review
+Message-ID: <2024090118-wisdom-footman-ace8@gregkh>
+References: <20240827143843.399359062@linuxfoundation.org>
+ <4b332d8c-4ed0-4ecf-a4db-75c1aa932b48@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,28 +45,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240822-imx7d-mark-imx7d_enet_init-as-init-v1-1-8dfadee3bed4@kernel.org>
-X-CM-TRANSID:M88vCgD3J_WbGdRmIqJCAA--.32384S3
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Xryxtr47tr1Dtr4DXFWrXwb_yoWfGrg_Zr
-	48Xw1xCr1UWw1vkw1vgFy3Aryqkw40qFy3Zrn5W3yIq34fJayvyas5G393J3s7WwsrZF98
-	CrW5Jr43trnFqjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0XVy7UUUUU==
-X-CM-SenderInfo: pvkd40hjxrjqh1hdxhhqhw/1tbiCQJNZWbUDFkdrQAAs0
+In-Reply-To: <4b332d8c-4ed0-4ecf-a4db-75c1aa932b48@roeck-us.net>
 
-On Thu, Aug 22, 2024 at 05:05:17PM -0700, Nathan Chancellor wrote:
-> After a recent LLVM change [1] that deduces __cold on functions that
-> only call cold code (such as __init functions), there is a section
-> mismatch warning from imx7d_enet_init(), which got moved to
-> .text.unlikely. as a result of that optimization:
+On Sat, Aug 31, 2024 at 02:26:28PM -0700, Guenter Roeck wrote:
+> On 8/27/24 07:33, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.6.48 release.
+> > There are 341 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 29 Aug 2024 14:37:36 +0000.
+> > Anything received after that time might be too late.
+> > 
+> [ ... ]
 > 
->   WARNING: modpost: vmlinux: section mismatch in reference: imx7d_enet_init+0x20 (section: .text.unlikely.) -> imx7d_enet_clk_sel (section: .init.text)
+> > Suren Baghdasaryan <surenb@google.com>
+> >      change alloc_pages name in dma_map_ops to avoid name conflicts
+> > 
 > 
-> Drop the inline keyword (which does not guarantee inlining) and replace
-> it with __init, as imx7d_enet_init() is only called from __init code,
-> which clears up the warning.
+> This patch triggers:
 > 
-> Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Building s390:defconfig ... failed
+> --------------
+> Error log:
+> arch/s390/pci/pci_dma.c:724:10: error: 'const struct dma_map_ops' has no member named 'alloc_pages'; did you mean 'alloc_pages_op'?
+>   724 |         .alloc_pages    = dma_common_alloc_pages,
+> 
+> for pretty much all s390 builds.
+> 
+> Source code analysis suggests that the problem also affects
+> arch/ia64/hp/common/sba_iommu.c.a
 
-Applied, thanks!
+Thanks, already handled.
 
+greg k-h
