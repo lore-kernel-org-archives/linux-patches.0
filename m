@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A4A1E87B;
-	Sun,  1 Sep 2024 16:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463322B9C7;
+	Sun,  1 Sep 2024 16:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208548; cv=none; b=SzFRXWjqg0ApPwFHKmPXWTPWefLDsg12dgZ8O3k15wQeJfnTw1vTCytB+1MCbiZnBhW8pObjkoPw/tz4bgWTjxEAMckHqSEbNSLX1ZB4Npj5MYqggN5JGsKFfzpliPQEe3Xz0XaTuPICUNvDyU66gP3VK6fgNyZ+tjYMPUKHHg4=
+	t=1725208551; cv=none; b=pG8rKIHw2Td1ms8i7pMmyYTStqXAmJTp/5J+UgpYg7b9SY1CXza/zgRqV2T8eEBdTpE+J40TnwENa5yR6FOhgjZNbd3ML2KuliblQ8eU+6rVL6V1vm4C6uKLXvFdBrRI71j6eGdm11l2/E8ZFmUx1KnttYFtcfXKftGY8hITWiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208548; c=relaxed/simple;
-	bh=KNb9E4jsB81GrhkEQv/EFoonfmr2tcvL+tNN68rwu4k=;
+	s=arc-20240116; t=1725208551; c=relaxed/simple;
+	bh=BRO6dht36ItnCmA+nsFHxCWq9Eb2eSFfvQNxzahG9AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p53zHmL+MnYCoO0LvkYPwByN5ZgPpHcRiwJ7TflASBiTSpvIxCyVigfClt2ZTWmFZvV69sXPUquOwUppazVRW7LOADPzRvU21l2fuZEt5aW7pMmMtESKfci5LsHv7/jFgfGG6j6u/Yw5U5XITrUYJCa9L+tZHPfuaxMmj0zPYPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u69m5tXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3zNPvKxTl7H/4imz1yrz5ECavVsoPas1EupP3mExQ3MjDmon2ZiuOsdRcsSoaM8/b97nggZ5VKWqszKplEZNrS6w1/cQpmh0Oh+FUI7zYgkbOGz2H5649h/l3kY7qGJADi3oVdZ+bH3/tc0wrSe0o/x2FhRY0HCqWXAVwNTSLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0pDUAoO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u69m5tXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5BDC4CEC3;
-	Sun,  1 Sep 2024 16:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0pDUAoO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90163C4CEC3;
+	Sun,  1 Sep 2024 16:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208547;
-	bh=KNb9E4jsB81GrhkEQv/EFoonfmr2tcvL+tNN68rwu4k=;
+	s=korg; t=1725208551;
+	bh=BRO6dht36ItnCmA+nsFHxCWq9Eb2eSFfvQNxzahG9AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u69m5tXN6S9GxRqVK9dpX/7D/XF4ynR1mC+WwpBPBIsknypCnK8BFjf8RGt0sPnNQ
-	 8rrK7ymvFIzwyjlha/xLs80UKo+18+ceKnzMVDqo5ePlxw5IMmuj3Me0pV3iHSwAPZ
-	 x2f4/1nLkAMpy15Y6mAJ8zf61Xs6rX+0C5SKqXD8=
+	b=e0pDUAoOpSo3cGRNYxfih9gDpIdePFutoPq3DlfNT7RTxqdjwbxbEmWoCSi0g5Dtj
+	 iJYw7kFmDg82/s/4SIL8Nz6Rfe7pJ8U/8wjCCpoUWZynp3N4G3vgKUAmX1jbQaOaic
+	 ar4gC3oD40d2jSrASkQ21I/hlFaAx+vdAakZxric=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
-	Maulik Shah <quic_mkshah@quicinc.com>,
-	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH 6.10 115/149] soc: qcom: cmd-db: Map shared memory as WC, not WB
-Date: Sun,  1 Sep 2024 18:17:06 +0200
-Message-ID: <20240901160821.780835557@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.10 116/149] soc: qcom: pmic_glink: Actually communicate when remote goes down
+Date: Sun,  1 Sep 2024 18:17:07 +0200
+Message-ID: <20240901160821.819831429@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -54,50 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-commit f9bb896eab221618927ae6a2f1d566567999839d upstream.
+commit ad51126037a43c05f5f4af5eb262734e3e88ca59 upstream.
 
-Linux does not write into cmd-db region. This region of memory is write
-protected by XPU. XPU may sometime falsely detect clean cache eviction
-as "write" into the write protected region leading to secure interrupt
-which causes an endless loop somewhere in Trust Zone.
+When the pmic_glink state is UP and we either receive a protection-
+domain (PD) notification indicating that the PD is going down, or that
+the whole remoteproc is going down, it's expected that the pmic_glink
+client instances are notified that their function has gone DOWN.
 
-The only reason it is working right now is because Qualcomm Hypervisor
-maps the same region as Non-Cacheable memory in Stage 2 translation
-tables. The issue manifests if we want to use another hypervisor (like
-Xen or KVM), which does not know anything about those specific mappings.
+This is not what the code does, which results in the client state either
+not updating, or being wrong in many cases. So let's fix the conditions.
 
-Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
-removes dependency on correct mappings in Stage 2 tables. This patch
-fixes the issue by updating the mapping to MEMREMAP_WC.
-
-I tested this on SA8155P with Xen.
-
-Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-Tested-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Link: https://lore.kernel.org/r/20240820-pmic-glink-v6-11-races-v3-3-eec53c750a04@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/cmd-db.c |    2 +-
+ drivers/soc/qcom/pmic_glink.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -349,7 +349,7 @@ static int cmd_db_dev_probe(struct platf
- 		return -EINVAL;
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -175,7 +175,7 @@ static void pmic_glink_state_notify_clie
+ 		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
+ 			new_state = SERVREG_SERVICE_STATE_UP;
+ 	} else {
+-		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
++		if (pg->pdr_state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
+ 			new_state = SERVREG_SERVICE_STATE_DOWN;
  	}
  
--	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
-+	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
- 	if (!cmd_db_header) {
- 		ret = -ENOMEM;
- 		cmd_db_header = NULL;
 
 
