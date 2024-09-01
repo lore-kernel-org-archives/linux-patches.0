@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B601B1C68C;
-	Sun,  1 Sep 2024 16:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1E81C68C;
+	Sun,  1 Sep 2024 16:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208948; cv=none; b=OCzTiwA0/ooWBDiRhP2Bm7uyVPZ68Ag59+Y9rinBPmClfhh9v9ROAwR5fWAXHIBxMBQNG8NnXb3UIelBGwKO0Nnq+avW4quY+zYNLQGiUkpfR3trwNE8K1RqeFgUctTPBGsCGua6iDh/MY/xVmPh1pvWX7HE7/GREbb/h1fvz3c=
+	t=1725208951; cv=none; b=TTVRFnuvJA/xImXUEsQuf7h15MAywyJm2qdLPDp1qOIkssYFDJZTNvEJfRdhPxAGNmZK/nuNzOYEaGk0VINw5woLbngDoFCOriDkmlvykx/TEoYTcKzxo/K7UfU2mQBQHoSIF7Iq7CrPFNrbtxlHmxamsQ6ZJIu9W3EvrVNFoko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208948; c=relaxed/simple;
-	bh=XwR4Q1+/QlskJVDdUK22fy9bRmINxJFLld4hPiIVKkk=;
+	s=arc-20240116; t=1725208951; c=relaxed/simple;
+	bh=G34I3/sLgoQVAS87JX6xG34XbL8W7/q4GLsB9z+acAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5M137qkjMW+mixQNNaBtYtY7dVdEglftD6u30Y18Idtm+wd/GM/HRH93q5ubqh1gQQr31PcYextchJrEhzaj04cQWiD6s2ZeKgiNNepsWdse6LF/vrZ2hZYKJH2zLQkIBG3zQ+grWLOsP0GeEYhIsmisbZGFaGYDLOgqHOJl4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiKRoiwq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=diBn3dWBT4bWwh4pJ1L6AWhkSbWOHGu8nksGnGd4XB3KtNeALozsf/R3AoUGTE9O1daHuoIF4Hrpv3+4O7QEbPIRGr+/An+IUCrzNScxL5ex5O+BIljib+SiTtHkd5EikDAHWeFzZ8ZIArNfNJ+ufkd9jB2Fn11lvvOngP3kpis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYZ/dFi6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiKRoiwq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF57DC4CEC3;
-	Sun,  1 Sep 2024 16:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYZ/dFi6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50A0C4CEC3;
+	Sun,  1 Sep 2024 16:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208948;
-	bh=XwR4Q1+/QlskJVDdUK22fy9bRmINxJFLld4hPiIVKkk=;
+	s=korg; t=1725208951;
+	bh=G34I3/sLgoQVAS87JX6xG34XbL8W7/q4GLsB9z+acAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MiKRoiwqwkqNBLHl9xhHJDvWZfC6bi5oWFLQOD3NOWNeI4CzlL3pM/W37WolWGgsy
-	 sTCT16BAocBb/Uu/ZOWA1123+qGARTKZO6eKFfQwHaOTju3VVWaX2KcKgGF7JTbpWA
-	 XFf17SvvifKfx8ry5bL53HwWx0V2EYOe49Y1DN10=
+	b=AYZ/dFi6IXQjGWByK/VY+Ver+wATLgqaQANnRP2X57tqcsW3ePB0TKQhZMmcZLG+S
+	 lWL+BmT83TwPLalj2jzI2tqZEsfM+11ZtErftZB82vd2cYHdQGx0ihryYWP9gxl6AL
+	 9svllSXV7RKaAeTkvBAfMfwGEY4NQM8LHH70+sso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/134] btrfs: handle invalid root reference found in may_destroy_subvol()
-Date: Sun,  1 Sep 2024 18:16:43 +0200
-Message-ID: <20240901160812.251619594@linuxfoundation.org>
+Subject: [PATCH 5.4 058/134] btrfs: send: handle unexpected data in header buffer in begin_cmd()
+Date: Sun,  1 Sep 2024 18:16:44 +0200
+Message-ID: <20240901160812.288773353@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 6fbc6f4ac1f4907da4fc674251527e7dc79ffbf6 ]
+[ Upstream commit e80e3f732cf53c64b0d811e1581470d67f6c3228 ]
 
-The may_destroy_subvol() looks up a root by a key, allowing to do an
-inexact search when key->offset is -1.  It's never expected to find such
-item, as it would break the allowed range of a root id.
+Change BUG_ON to a proper error handling in the unlikely case of seeing
+data when the command is started. This is supposed to be reset when the
+command is finished (send_cmd, send_encoded_extent).
 
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/send.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 2c86be3fc25cd..d2a988bf9c895 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4520,7 +4520,14 @@ static noinline int may_destroy_subvol(struct btrfs_root *root)
- 	ret = btrfs_search_slot(NULL, fs_info->tree_root, &key, path, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	BUG_ON(ret == 0);
-+	if (ret == 0) {
-+		/*
-+		 * Key with offset -1 found, there would have to exist a root
-+		 * with such id, but this is out of valid range.
-+		 */
-+		ret = -EUCLEAN;
-+		goto out;
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 576c027909f8a..e1063ef3dece5 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -692,7 +692,12 @@ static int begin_cmd(struct send_ctx *sctx, int cmd)
+ 	if (WARN_ON(!sctx->send_buf))
+ 		return -EINVAL;
+ 
+-	BUG_ON(sctx->send_size);
++	if (unlikely(sctx->send_size != 0)) {
++		btrfs_err(sctx->send_root->fs_info,
++			  "send: command header buffer not empty cmd %d offset %llu",
++			  cmd, sctx->send_off);
++		return -EINVAL;
 +	}
  
- 	ret = 0;
- 	if (path->slots[0] > 0) {
+ 	sctx->send_size += sizeof(*hdr);
+ 	hdr = (struct btrfs_cmd_header *)sctx->send_buf;
 -- 
 2.43.0
 
