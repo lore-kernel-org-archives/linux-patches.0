@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F20A183CD7;
-	Sun,  1 Sep 2024 16:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7383183CDB;
+	Sun,  1 Sep 2024 16:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209196; cv=none; b=Ef9/QK+lyxvxv8nUdmRQaRzUl9AjJopFSa+dMtM+TUNBnJFGbp4VtAFcFZaclA/iA7mEJXe6x8+yl+T5DEkSxCEMfSVBifhdGwpyIzPC9IpXU8/7hBLEcPffiGUfzMjACVUSbAqDzq8QNYQ722MxjhdcDJbiefvzJQ9e71CUQs8=
+	t=1725209199; cv=none; b=jWuUjAlq8dRceyr+yuv3gU/3t88dTnFyE77KEvseKe45GqGE3UKPuoeTltNZb6vUTm21iqQ/+ddlwrnLT2qcWSkk4HUuG/wazCE4b/HRHbt+UrOfJkr03K3kUyAZFuyv4MhaVTtw1WQqZTCafVg1T+9wxno9EL+0UXvTRTIW4vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209196; c=relaxed/simple;
-	bh=AUThN5kgPouPnuNvSnVPDq7p1KXovvVAwLMH/upSos4=;
+	s=arc-20240116; t=1725209199; c=relaxed/simple;
+	bh=LWNfzgFqzAS9hKl1mmPspO7o2XXHUxGU0X3NmP4uJwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/tUvoNFfP7WTjo+GnlOXpZ3Ca4HyOhktf+tCJ324FxZ91+SE0K+3+bciduj8+h+wX8Uqv1pHttRDjivqj+jWMhlLoqv4FncVyTJWTFF80ZTDf4g4+hGvKVXXmT996zq3anXSWxw7UziosRfzQ5f7R28RTqJTPKw3MGuVEg/G1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Man1/0Ys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5IlmhGK86YVzXARpzS/qsEeMTjHxM2HzSH8Nd8yl0z556ONwsDDY1oDMMNA0lA2k/3/zMcpM0QABUitiDAn3XVYa+b62yu6bf5q8mHs1KwTSdaoz9NW25Eo7ysiD09dpHAuGWRqgLhBYlwx6PkpjJNIIWMIKWD6QqaPyLFDDko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OKsRmjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Man1/0Ys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181E9C4CEC3;
-	Sun,  1 Sep 2024 16:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OKsRmjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE54C4CEC3;
+	Sun,  1 Sep 2024 16:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209196;
-	bh=AUThN5kgPouPnuNvSnVPDq7p1KXovvVAwLMH/upSos4=;
+	s=korg; t=1725209199;
+	bh=LWNfzgFqzAS9hKl1mmPspO7o2XXHUxGU0X3NmP4uJwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Man1/0YsBFW3xi2z2fAgBEJEwFPUhFJbSDOIkU33w5KVkAmn6eovAihpwvreiHT3e
-	 hM6ih8jzM8SOmW4ywMg5SFuVE9BGO6IZpH0exCAOY9QVbtm91pOGylVUW5ySHitEo0
-	 +v7sbSREVrgm4cjnzhKUDPLN83PGiAqC0hpZT8Bk=
+	b=0OKsRmjPoXS8oPW1CwkwcyQc7r5IYF5FTpRV1Y5kn5/Icl2FFkXlvq1VGpM9shhxB
+	 Hv7qu/P2Liknw5YGwL2Lpt0WslgFb/qQmNGV5suF6UTXb4v2BwCNt04j1hAy1tsErP
+	 ByYOnyysBq/7huicbfkBtkrJ1mThNXZhJGTJbDeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Liu <liuyuntao12@huawei.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/71] ASoC: amd: acp: fix module autoloading
-Date: Sun,  1 Sep 2024 18:17:36 +0200
-Message-ID: <20240901160803.065873194@linuxfoundation.org>
+Subject: [PATCH 6.1 32/71] ASoC: SOF: amd: Fix for acp init sequence
+Date: Sun,  1 Sep 2024 18:17:37 +0200
+Message-ID: <20240901160803.103985992@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -51,35 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Liu <liuyuntao12@huawei.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 164199615ae230ace4519141285f06766d6d8036 ]
+[ Upstream commit a42db293e5983aa1508d12644f23d73f0553b32c ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from platform_device_id table.
+When ACP is not powered on by default, acp power on sequence explicitly
+invoked by programming pgfsm control mask. The existing implementation
+checks the same PGFSM status mask and programs the same PGFSM control mask
+in all ACP variants which breaks acp power on sequence for ACP6.0 and
+ACP6.3 variants. So to fix this issue, update ACP pgfsm control mask and
+status mask based on acp descriptor rev field, which will vary based on
+acp variant.
 
-Fixes: 9d8a7be88b336 ("ASoC: amd: acp: Add legacy sound card support for Chrome audio")
-Signed-off-by: Yuntao Liu <liuyuntao12@huawei.com>
-Link: https://patch.msgid.link/20240815084923.756476-1-liuyuntao12@huawei.com
+Fixes: 846aef1d7cc0 ("ASoC: SOF: amd: Add Renoir ACP HW support")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20240816070328.610360-1-Vijendar.Mukunda@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-legacy-mach.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/amd/acp.c | 19 +++++++++++++++++--
+ sound/soc/sof/amd/acp.h |  7 +++++--
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-legacy-mach.c b/sound/soc/amd/acp/acp-legacy-mach.c
-index 1f4878ff7d372..2f98f3da0ad0b 100644
---- a/sound/soc/amd/acp/acp-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-legacy-mach.c
-@@ -144,6 +144,8 @@ static const struct platform_device_id board_ids[] = {
- 	},
- 	{ }
- };
-+MODULE_DEVICE_TABLE(platform, board_ids);
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index f8d2372a758f4..e4e046d4778e2 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -363,6 +363,7 @@ static int acp_power_on(struct snd_sof_dev *sdev)
+ 	const struct sof_amd_acp_desc *desc = get_chip_info(sdev->pdata);
+ 	unsigned int base = desc->pgfsm_base;
+ 	unsigned int val;
++	unsigned int acp_pgfsm_status_mask, acp_pgfsm_cntl_mask;
+ 	int ret;
+ 
+ 	val = snd_sof_dsp_read(sdev, ACP_DSP_BAR, base + PGFSM_STATUS_OFFSET);
+@@ -370,9 +371,23 @@ static int acp_power_on(struct snd_sof_dev *sdev)
+ 	if (val == ACP_POWERED_ON)
+ 		return 0;
+ 
+-	if (val & ACP_PGFSM_STATUS_MASK)
++	switch (desc->rev) {
++	case 3:
++	case 5:
++		acp_pgfsm_status_mask = ACP3X_PGFSM_STATUS_MASK;
++		acp_pgfsm_cntl_mask = ACP3X_PGFSM_CNTL_POWER_ON_MASK;
++		break;
++	case 6:
++		acp_pgfsm_status_mask = ACP6X_PGFSM_STATUS_MASK;
++		acp_pgfsm_cntl_mask = ACP6X_PGFSM_CNTL_POWER_ON_MASK;
++		break;
++	default:
++		return -EINVAL;
++	}
 +
- static struct platform_driver acp_asoc_audio = {
- 	.driver = {
- 		.pm = &snd_soc_pm_ops,
++	if (val & acp_pgfsm_status_mask)
+ 		snd_sof_dsp_write(sdev, ACP_DSP_BAR, base + PGFSM_CONTROL_OFFSET,
+-				  ACP_PGFSM_CNTL_POWER_ON_MASK);
++				  acp_pgfsm_cntl_mask);
+ 
+ 	ret = snd_sof_dsp_read_poll_timeout(sdev, ACP_DSP_BAR, base + PGFSM_STATUS_OFFSET, val,
+ 					    !val, ACP_REG_POLL_INTERVAL, ACP_REG_POLL_TIMEOUT_US);
+diff --git a/sound/soc/sof/amd/acp.h b/sound/soc/sof/amd/acp.h
+index 14148c311f504..b1414ac1ea985 100644
+--- a/sound/soc/sof/amd/acp.h
++++ b/sound/soc/sof/amd/acp.h
+@@ -22,8 +22,11 @@
+ #define ACP_REG_POLL_TIMEOUT_US                 2000
+ #define ACP_DMA_COMPLETE_TIMEOUT_US		5000
+ 
+-#define ACP_PGFSM_CNTL_POWER_ON_MASK		0x01
+-#define ACP_PGFSM_STATUS_MASK			0x03
++#define ACP3X_PGFSM_CNTL_POWER_ON_MASK		0x01
++#define ACP3X_PGFSM_STATUS_MASK			0x03
++#define ACP6X_PGFSM_CNTL_POWER_ON_MASK		0x07
++#define ACP6X_PGFSM_STATUS_MASK			0x0F
++
+ #define ACP_POWERED_ON				0x00
+ #define ACP_ASSERT_RESET			0x01
+ #define ACP_RELEASE_RESET			0x00
 -- 
 2.43.0
 
