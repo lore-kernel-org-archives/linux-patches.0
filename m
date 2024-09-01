@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9368D28387;
-	Sun,  1 Sep 2024 16:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E3A28387;
+	Sun,  1 Sep 2024 16:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208144; cv=none; b=QYrcMJQ9IHO4koTwLSdoCvFh/LWTJN5QpegJrL7o5ZMDpB1Kt/iqKVerdnt5l+WOmr0EeRvE2b/9nFkSDu3fxBLcOOTxIDIO/HhFGM8zNqqfZbTYHRxiJYCNTeqBcbuK+tCCRILI6+hIZ3+ud9D5Sr4yjrSL7WsiXrCFj2fslQA=
+	t=1725208147; cv=none; b=FysGLelr220yljEBBt/L7sazLeKFltLzrV1NTs3TOeeN5/Y9CGP305vjUt9dUZ3VnTrk2PjPTQQ8mQwnlhI4W8UM5f3mIjAxAIVLCe7+rsTq9JiaKXChOSehWt3FrST9gdbzzzY/eGLv9sQRb/PVaypEYq12Svv8LBnTVxy+46I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208144; c=relaxed/simple;
-	bh=zt/uuSzGQ/7o84j2dxSqDFEXkCs06L2mZEmf2xAcQz4=;
+	s=arc-20240116; t=1725208147; c=relaxed/simple;
+	bh=/QKd+x68M4jlw4SZ8PVWyyAUffC0wUSn2n+ZhNMmWFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jTQVOVtskTVfHA6UbTZm1FdEtKrSHiKTepg9BLQtQLS8BxHrasQFOsBY59PoySBqmqcIPOZkrpDwjv6b9t6y4D9yZ//7k1npOmYBW1cZRCnUkkxMTy1ETENa9FRGo2j+9KpoMLAyl4BTBYxhZbSXzyrpUp1eTjVC8BWZyEvlqbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fA/aMN4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWBtgUgqlmU1Wcmy+VCibsjVOT9TJHo1lyR+WxYtFC7vrONH5dziTOF0quCmS4BogayupMpHYHC4oQmZqGuwJVgZX3IIyTdl0vDraMdxHvQ6BYM8C4r4Docptump/+1BjUZ+Gwxptb4vJbJIzKOgIYe9D1Pg/rDjCTJYHM8PB2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMzx6zWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fA/aMN4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63CEC4CEC3;
-	Sun,  1 Sep 2024 16:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMzx6zWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2194C4CEC3;
+	Sun,  1 Sep 2024 16:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208144;
-	bh=zt/uuSzGQ/7o84j2dxSqDFEXkCs06L2mZEmf2xAcQz4=;
+	s=korg; t=1725208147;
+	bh=/QKd+x68M4jlw4SZ8PVWyyAUffC0wUSn2n+ZhNMmWFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fA/aMN4gNWrZ4LlDlpe/mALz0QsZkdPTZ8iBJVtFf2qpz+/2KGoHE37HS2gfDZZH
-	 W6fQX5WhrRFsJGOReUP3pE36mQOAtpA4VHKvGFWJzdQ+lB6QUSxj0kKIajRtv+zKo4
-	 t5LCF5X5CVd6Ls5PeElvQkyO5DTiebdULJmqiCEw=
+	b=uMzx6zWllRb3/FaSZK+bc3w2E6R87ia7IYXnyKExL4J90vm2eT78oa4Tq1UHn3OyA
+	 guKh+/KO9/AnPBdW2pPjL63B4VSO0D7603AupyLtUentCIe1B/Gwfa0CJx7chxrbkB
+	 P1ttm9oH+1U4o5huGggq4xPy1CmW+r9S3vy+vpWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 86/93] arm64: dts: imx8mp-beacon-kit: Fix Stereo Audio on WM8962
-Date: Sun,  1 Sep 2024 18:17:13 +0200
-Message-ID: <20240901160810.972078530@linuxfoundation.org>
+Subject: [PATCH 6.6 87/93] arm64: dts: imx93: add nvmem property for fec1
+Date: Sun,  1 Sep 2024 18:17:14 +0200
+Message-ID: <20240901160811.008614154@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -51,59 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 4e69cd835a2d5c3915838491f59a68ee697a87d0 ]
+[ Upstream commit b2ab0edaf484d578e8d0c06093af0003586def72 ]
 
-The L/R clock needs to be controlled by the SAI3 instead of the
-CODEC to properly achieve stereo sound. Doing this allows removes
-the need for unnecessary clock manipulation to try to get the
-CODEC's clock in sync with the SAI3 clock, since the CODEC can cope
-with a wide variety of clock inputs.
+Add nvmem property for fec1 to get mac address.
 
-Fixes: 161af16c18f3 ("arm64: dts: imx8mp-beacon-kit: Fix audio_pll2 clock")
-Fixes: 69e2f37a6ddc ("arm64: dts: imx8mp-beacon-kit: Enable WM8962 Audio CODEC")
-Signed-off-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: 109f256285dd ("arm64: dts: imx93: update default value for snps,clk-csr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-index acd265d8b58ed..e094f409028dd 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-beacon-kit.dts
-@@ -163,13 +163,12 @@
+diff --git a/arch/arm64/boot/dts/freescale/imx93.dtsi b/arch/arm64/boot/dts/freescale/imx93.dtsi
+index 943b7e6655634..1b7260d2a0fff 100644
+--- a/arch/arm64/boot/dts/freescale/imx93.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93.dtsi
+@@ -786,6 +786,8 @@
+ 				fsl,num-tx-queues = <3>;
+ 				fsl,num-rx-queues = <3>;
+ 				fsl,stop-mode = <&wakeupmix_gpr 0x0c 1>;
++				nvmem-cells = <&eth_mac1>;
++				nvmem-cell-names = "mac-address";
+ 				status = "disabled";
+ 			};
  
- 		simple-audio-card,cpu {
- 			sound-dai = <&sai3>;
-+			frame-master;
-+			bitclock-master;
+@@ -888,6 +890,11 @@
+ 			reg = <0x47510000 0x10000>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
++
++			eth_mac1: mac-address@4ec {
++				reg = <0x4ec 0x6>;
++			};
++
  		};
  
- 		simple-audio-card,codec {
- 			sound-dai = <&wm8962>;
--			clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO1>;
--			frame-master;
--			bitclock-master;
- 		};
- 	};
- };
-@@ -381,10 +380,9 @@
- &sai3 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sai3>;
--	assigned-clocks = <&clk IMX8MP_CLK_SAI3>,
--			  <&clk IMX8MP_AUDIO_PLL2> ;
--	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
--	assigned-clock-rates = <12288000>, <361267200>;
-+	assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
-+	assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL1_OUT>;
-+	assigned-clock-rates = <12288000>;
- 	fsl,sai-mclk-direction-output;
- 	status = "okay";
- };
+ 		s4muap: mailbox@47520000 {
 -- 
 2.43.0
 
