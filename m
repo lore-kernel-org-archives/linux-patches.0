@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A1B2C6AF;
-	Sun,  1 Sep 2024 17:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827872C6AF;
+	Sun,  1 Sep 2024 17:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210294; cv=none; b=GpFfwcBbXNap6AnIrc8538aVpNWhaRZ0I1TQgHrxu2e+FAv+LTDUiUDltRVMkZEaxne+D6DsdPqe80ycWdlsYKWCT28Dcq23waezBiNa8S3BqE/R6Rg8n81ia/siHx+uXd25QBW0FiZLXFBcns9gdX+EsjnbSw9+NWylbziuUSA=
+	t=1725210297; cv=none; b=mbT73dZWpV+IGFFAfLWafvKGLnn+nMDUyhuUrUfnsE1i2fSES5GYzDPBibw99kOvd6T0hg3vZhyDsY50mdFlOxjKrUy/4KwTmMCQLHNF3V+kGZeYo5Me6yRaoBTjhYV86N5jFx5AQJEQj3Ar4lu61d4qx4pKOXQ+hP+0qQyKyck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210294; c=relaxed/simple;
-	bh=ScyNYBPrsAacAEjVtagoECfsUx2KrPcih82ibX24EPQ=;
+	s=arc-20240116; t=1725210297; c=relaxed/simple;
+	bh=fZIYmT2oilqshdz34Zi18uEXGXxEC6EDDTq5fxvcslE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAYJADUT1Dl+gxJ9hCy0Uk/0H+M8B+uzfAG+UxZBIqXEB/SG1nxjg6bjFy+4wA2YlqCTxsrzqTNOYpSzpolsvnvIMotQrufHnUVQCBe5Y7uCtVsBOo0ee3cEvi1B7jNOY7Q7MOMOB7u0OGU/VGy8qzQ0i/SKooTjb4Rwa7BmCQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaVXBsJY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SIFzCPi1BKomZlL6hNCIXrOyriCeV0DMqa48Nytv2UFoiT7QxtVSX26uznI+7J+o5iibzzDGVCCHfxVF0XYy12I5RYA9E7Yo+dAWBF+PAdglxYHcpU6ZwYh9QRHTfMdGO35tzJpR489xsvzCdZiyAa/5FvsZcpDQhuRG1NxH7FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aouv1rqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaVXBsJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DD8C4CEC3;
-	Sun,  1 Sep 2024 17:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aouv1rqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDB1C4CEC3;
+	Sun,  1 Sep 2024 17:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210294;
-	bh=ScyNYBPrsAacAEjVtagoECfsUx2KrPcih82ibX24EPQ=;
+	s=korg; t=1725210297;
+	bh=fZIYmT2oilqshdz34Zi18uEXGXxEC6EDDTq5fxvcslE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaVXBsJYYONI9xGTmjdr2LQ2rjPILZiyiBrIAuqn5BRMzE+fbwKMPG23ZD7ilUt30
-	 UlabONeu3vcwiyz1os/3qQf+p9lTTLszk061JTnITb3VHSUqVHIO+7hOhu2xpc3r79
-	 f0hI5TK4KmPO44OdSkFkZuXyLauAAHn3KpzJqLqo=
+	b=Aouv1rquK/oTxd5Ie5tEAx3oFsAfz+pykSJ1Q5d/ROG+981bEia9Vgc0t02aqIU2+
+	 Tt1goWRuujfIA61pKMlt/Wjl820TkZPB5/7QtZ84UOpJ6qOVkDKiTZC5y3e/OlgK8m
+	 OePpCOXH+BYgBE0SKc28VtAPgv5/8W1KETyWiig8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Huang <Joseph.Huang@garmin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/215] net: dsa: mv88e6xxx: Fix out-of-bound access
-Date: Sun,  1 Sep 2024 18:17:39 +0200
-Message-ID: <20240901160828.922952006@linuxfoundation.org>
+Subject: [PATCH 5.15 148/215] netem: fix return value if duplicate enqueue fails
+Date: Sun,  1 Sep 2024 18:17:40 +0200
+Message-ID: <20240901160828.960186031@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,37 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Huang <Joseph.Huang@garmin.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 528876d867a23b5198022baf2e388052ca67c952 ]
+[ Upstream commit c07ff8592d57ed258afee5a5e04991a48dbaf382 ]
 
-If an ATU violation was caused by a CPU Load operation, the SPID could
-be larger than DSA_MAX_PORTS (the size of mv88e6xxx_chip.ports[] array).
+There is a bug in netem_enqueue() introduced by
+commit 5845f706388a ("net: netem: fix skb length BUG_ON in __skb_to_sgvec")
+that can lead to a use-after-free.
 
-Fixes: 75c05a74e745 ("net: dsa: mv88e6xxx: Fix counting of ATU violations")
-Signed-off-by: Joseph Huang <Joseph.Huang@garmin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20240819235251.1331763-1-Joseph.Huang@garmin.com
+This commit made netem_enqueue() always return NET_XMIT_SUCCESS
+when a packet is duplicated, which can cause the parent qdisc's q.qlen
+to be mistakenly incremented. When this happens qlen_notify() may be
+skipped on the parent during destruction, leaving a dangling pointer
+for some classful qdiscs like DRR.
+
+There are two ways for the bug happen:
+
+- If the duplicated packet is dropped by rootq->enqueue() and then
+  the original packet is also dropped.
+- If rootq->enqueue() sends the duplicated packet to a different qdisc
+  and the original packet is dropped.
+
+In both cases NET_XMIT_SUCCESS is returned even though no packets
+are enqueued at the netem qdisc.
+
+The fix is to defer the enqueue of the duplicate packet until after
+the original packet has been guaranteed to return NET_XMIT_SUCCESS.
+
+Fixes: 5845f706388a ("net: netem: fix skb length BUG_ON in __skb_to_sgvec")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240819175753.5151-1-stephen@networkplumber.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/global1_atu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_netem.c | 47 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/global1_atu.c b/drivers/net/dsa/mv88e6xxx/global1_atu.c
-index 7c513a03789cf..17fd62616ce6d 100644
---- a/drivers/net/dsa/mv88e6xxx/global1_atu.c
-+++ b/drivers/net/dsa/mv88e6xxx/global1_atu.c
-@@ -453,7 +453,8 @@ static irqreturn_t mv88e6xxx_g1_atu_prob_irq_thread_fn(int irq, void *dev_id)
- 		trace_mv88e6xxx_atu_full_violation(chip->dev, spid,
- 						   entry.portvec, entry.mac,
- 						   fid);
--		chip->ports[spid].atu_full_violation++;
-+		if (spid < ARRAY_SIZE(chip->ports))
-+			chip->ports[spid].atu_full_violation++;
- 	}
- 	mv88e6xxx_reg_unlock(chip);
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 08aaa6efc62c8..e0e16b0fdb179 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -437,12 +437,10 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	struct netem_sched_data *q = qdisc_priv(sch);
+ 	/* We don't fill cb now as skb_unshare() may invalidate it */
+ 	struct netem_skb_cb *cb;
+-	struct sk_buff *skb2;
++	struct sk_buff *skb2 = NULL;
+ 	struct sk_buff *segs = NULL;
+ 	unsigned int prev_len = qdisc_pkt_len(skb);
+ 	int count = 1;
+-	int rc = NET_XMIT_SUCCESS;
+-	int rc_drop = NET_XMIT_DROP;
  
+ 	/* Do not fool qdisc_drop_all() */
+ 	skb->prev = NULL;
+@@ -471,19 +469,11 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		skb_orphan_partial(skb);
+ 
+ 	/*
+-	 * If we need to duplicate packet, then re-insert at top of the
+-	 * qdisc tree, since parent queuer expects that only one
+-	 * skb will be queued.
++	 * If we need to duplicate packet, then clone it before
++	 * original is modified.
+ 	 */
+-	if (count > 1 && (skb2 = skb_clone(skb, GFP_ATOMIC)) != NULL) {
+-		struct Qdisc *rootq = qdisc_root_bh(sch);
+-		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
+-
+-		q->duplicate = 0;
+-		rootq->enqueue(skb2, rootq, to_free);
+-		q->duplicate = dupsave;
+-		rc_drop = NET_XMIT_SUCCESS;
+-	}
++	if (count > 1)
++		skb2 = skb_clone(skb, GFP_ATOMIC);
+ 
+ 	/*
+ 	 * Randomized packet corruption.
+@@ -495,7 +485,8 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		if (skb_is_gso(skb)) {
+ 			skb = netem_segment(skb, sch, to_free);
+ 			if (!skb)
+-				return rc_drop;
++				goto finish_segs;
++
+ 			segs = skb->next;
+ 			skb_mark_not_on_list(skb);
+ 			qdisc_skb_cb(skb)->pkt_len = skb->len;
+@@ -521,7 +512,24 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		/* re-link segs, so that qdisc_drop_all() frees them all */
+ 		skb->next = segs;
+ 		qdisc_drop_all(skb, sch, to_free);
+-		return rc_drop;
++		if (skb2)
++			__qdisc_drop(skb2, to_free);
++		return NET_XMIT_DROP;
++	}
++
++	/*
++	 * If doing duplication then re-insert at top of the
++	 * qdisc tree, since parent queuer expects that only one
++	 * skb will be queued.
++	 */
++	if (skb2) {
++		struct Qdisc *rootq = qdisc_root_bh(sch);
++		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
++
++		q->duplicate = 0;
++		rootq->enqueue(skb2, rootq, to_free);
++		q->duplicate = dupsave;
++		skb2 = NULL;
+ 	}
+ 
+ 	qdisc_qstats_backlog_inc(sch, skb);
+@@ -592,9 +600,12 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	}
+ 
+ finish_segs:
++	if (skb2)
++		__qdisc_drop(skb2, to_free);
++
+ 	if (segs) {
+ 		unsigned int len, last_len;
+-		int nb;
++		int rc, nb;
+ 
+ 		len = skb ? skb->len : 0;
+ 		nb = skb ? 1 : 0;
 -- 
 2.43.0
 
