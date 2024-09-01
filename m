@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1DD17F394;
-	Sun,  1 Sep 2024 16:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480AF2C1B4;
+	Sun,  1 Sep 2024 16:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207754; cv=none; b=bpyhsrVp8LmrfgDAetmkSITrhrLpTnzarT93RMjgYCWZMFBo8KSv5OT7UB/e4XUvsULd7M1P+fl93Vb9UD16F7dUvdpCc0yuecalj2I+MHw7x9lifTalszD4+0wNqZSy4vj73X2rdfhs5l2ueg8zIsaJlisGrQ0qPIZq+MAJpd0=
+	t=1725207758; cv=none; b=vBoPJLXKRI4rZhBmM3fTZ2oAfHsgTVePE07zQXXdeqvABmtND7vCfgnhitylWWvnS6wCdY7Yif32EsFsTurl7aNK7772rNzR9kWKx702+ttbbDx+UYc0OZTmpf3keJl/FVFwe1Ax0XrFYO8VUxFka7r0HXzgsBctfCoGdPb6y78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207754; c=relaxed/simple;
-	bh=cNov5Dzmz/0IjlovJ2rPA5BTo1A2Qx/m55kTOCV5MOs=;
+	s=arc-20240116; t=1725207758; c=relaxed/simple;
+	bh=hZ5WsR6kf3pCYdO5RuDvJC7XMdHIhrDBh2fsYFZXh6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCjn4FySRiqLEBD2DvAHj9VHicLtx+MxuE9SpOfyDj8vFbXcATJMDbMts3UI62WH462AUs3r7HoDMcRSXgeqNW4wEl9Qu47VuXetF2Y1yGtfajmUUGwhSTChLGW/Gq8scK49QbCFr03DgYssegbUOipkAAVgaZfHdus1vhUbAlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhMQQkv/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1paVL+QCAb2I7NmxA4uo+fQZVrnj9fqcmquYVcNCARw+bIJTrLkI92cANXd714KkqEAETJ0vjeyP4i5B8YFQJtVtrhZg03UqH45DeWW2nTSJ/zUzmPDoJjUK6cXUUHARZ7cT/KK81nZVNTRn4mDV7XbaOOawlJX4URoSXGNSbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rU8ZKqJv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhMQQkv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDF8C4CEC3;
-	Sun,  1 Sep 2024 16:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rU8ZKqJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F75C4CEC3;
+	Sun,  1 Sep 2024 16:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207754;
-	bh=cNov5Dzmz/0IjlovJ2rPA5BTo1A2Qx/m55kTOCV5MOs=;
+	s=korg; t=1725207758;
+	bh=hZ5WsR6kf3pCYdO5RuDvJC7XMdHIhrDBh2fsYFZXh6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WhMQQkv/R/07Jy0dTKMd0sYJrdR5mJRAyr4vxvj/WK26RpND0Wrh6JA8o4/nS+TcM
-	 bqRsIzKJf+st+5aW4QXT7UIVsWyfMRotwc1m6UE2GBYJcOgpn1Xc4YzW0qN33ol0Lo
-	 TmMxLEanBnygYGG+BFSGybLpxOGH8BWFqUD0bjE4=
+	b=rU8ZKqJvDdx31PvVyy3BpvQSfJmQUyPhcizMtdSBxYp9KjyIVuVUJo9y33/aEoSfN
+	 HmeVzMmtqDn0zVM0tDJMnDLybrUKDeyvE3MWai6tQq78iz2PhG+orm2zvnZr+Rm3dP
+	 xtpIFWCOZEAy9brX9/Va0EyXu7pOMNNLSSPk05F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 68/98] ALSA: timer: Relax start tick time check for slave timer elements
-Date: Sun,  1 Sep 2024 18:16:38 +0200
-Message-ID: <20240901160806.261812465@linuxfoundation.org>
+	Yu Hao <yhao016@ucr.edu>,
+	Weiteng Chen <wchen130@ucr.edu>,
+	"Lee, Chun-Yi" <jlee@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 4.19 69/98] Bluetooth: hci_ldisc: check HCI_UART_PROTO_READY flag in HCIUARTGETPROTO
+Date: Sun,  1 Sep 2024 18:16:39 +0200
+Message-ID: <20240901160806.299169010@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -49,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Lee, Chun-Yi <joeyli.kernel@gmail.com>
 
-commit ccbfcac05866ebe6eb3bc6d07b51d4ed4fcde436 upstream.
+commit 9c33663af9ad115f90c076a1828129a3fbadea98 upstream.
 
-The recent addition of a sanity check for a too low start tick time
-seems breaking some applications that uses aloop with a certain slave
-timer setup.  They may have the initial resolution 0, hence it's
-treated as if it were a too low value.
+This patch adds code to check HCI_UART_PROTO_READY flag before
+accessing hci_uart->proto. It fixes the race condition in
+hci_uart_tty_ioctl() between HCIUARTSETPROTO and HCIUARTGETPROTO.
+This issue bug found by Yu Hao and Weiteng Chen:
 
-Relax and skip the check for the slave timer instance for addressing
-the regression.
+BUG: general protection fault in hci_uart_tty_ioctl [1]
 
-Fixes: 4a63bd179fa8 ("ALSA: timer: Set lower bound of start tick time")
-Cc: <stable@vger.kernel.org>
-Link: https://github.com/raspberrypi/linux/issues/6294
-Link: https://patch.msgid.link/20240810084833.10939-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The information of C reproducer can also reference the link [2]
+
+Reported-by: Yu Hao <yhao016@ucr.edu>
+Closes: https://lore.kernel.org/all/CA+UBctC3p49aTgzbVgkSZ2+TQcqq4fPDO7yZitFT5uBPDeCO2g@mail.gmail.com/ [1]
+Reported-by: Weiteng Chen <wchen130@ucr.edu>
+Closes: https://lore.kernel.org/lkml/CA+UBctDPEvHdkHMwD340=n02rh+jNRJNNQ5LBZNA+Wm4Keh2ow@mail.gmail.com/T/ [2]
+Signed-off-by: "Lee, Chun-Yi" <jlee@suse.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_ldisc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -532,7 +532,7 @@ static int snd_timer_start1(struct snd_t
- 	/* check the actual time for the start tick;
- 	 * bail out as error if it's way too low (< 100us)
- 	 */
--	if (start) {
-+	if (start && !(timer->hw.flags & SNDRV_TIMER_HW_SLAVE)) {
- 		if ((u64)snd_timer_hw_resolution(timer) * ticks < 100000) {
- 			result = -EINVAL;
- 			goto unlock;
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -773,7 +773,8 @@ static int hci_uart_tty_ioctl(struct tty
+ 		break;
+ 
+ 	case HCIUARTGETPROTO:
+-		if (test_bit(HCI_UART_PROTO_SET, &hu->flags))
++		if (test_bit(HCI_UART_PROTO_SET, &hu->flags) &&
++		    test_bit(HCI_UART_PROTO_READY, &hu->flags))
+ 			err = hu->proto->id;
+ 		else
+ 			err = -EUNATCH;
 
 
