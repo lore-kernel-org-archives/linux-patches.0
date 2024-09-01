@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864E8184529;
-	Sun,  1 Sep 2024 16:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D1A186E43;
+	Sun,  1 Sep 2024 16:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209215; cv=none; b=DnekFgYFf6wPBeANjhtK84lR8O1y/jNW+lJ37utTIIE+Ry4frt1U+Q6BxNXS6/R2ttT4xWVsKBm1HRty/Shm9Hd0+vJzOHePZ244zRk+bG4V3eqdZQQTCyAKY8vwfTM5eoiCVlEQl++qniLx5/O5BNP5iDBTRFozvw4UC8cEvng=
+	t=1725209218; cv=none; b=UH7L/Yw+PFNcO8hFwMRSo4kib8a7xsMxYqVjdOB06Pestxiklt8p5776zKkMfwIwQ3u1viTcwmkoLW9sVtNCygtWdr0LoSNH3U/KvqfHQqeyw1lgfpQVrlgYtzTkVN//632qxaRs3wlAd23qm6VFeQ88NDSl35YHsQih5JRvqWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209215; c=relaxed/simple;
-	bh=q0wy6GkfSbfoaXrXYXWAO/irJ5GXt0Gsho+5U43B6j8=;
+	s=arc-20240116; t=1725209218; c=relaxed/simple;
+	bh=20eS1IvRcBjFhIP3bEYHLBbx32KM6nBANUDOiMJoWPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkrceFbQBhW61wk5BCcSMxprqLO5rJPlwo0G4htWOeSCh8huNX6v6eH5doytdU4M1GQWhDc/5bBL7Qj/TrvcZ6/JeBtx35nPwwqdk9y5TK4eJr3XxzpcDAsR6fK27fhzsC9aSGnNu5sLyqglTacKx3ooTedIf2S3Uo2fCCZafN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STv1m5YP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMigO96kqLSxeKtFIy3YhCOLKM393rsZJVjXBb6/+4t1KhshdyN0dVX7rbqhoo5cwHTl/puFfqmxZCIV07KofbTkusMwRsSRh2P+MhbipWY8QqnFD25MgY26cslK33Dwlh9yJ9f931hzjtmW10C18IzB1o73zdgFd7F92PMp1g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCq5y1YB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STv1m5YP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B894C4CEC3;
-	Sun,  1 Sep 2024 16:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCq5y1YB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0286AC4CEC3;
+	Sun,  1 Sep 2024 16:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209215;
-	bh=q0wy6GkfSbfoaXrXYXWAO/irJ5GXt0Gsho+5U43B6j8=;
+	s=korg; t=1725209218;
+	bh=20eS1IvRcBjFhIP3bEYHLBbx32KM6nBANUDOiMJoWPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=STv1m5YPS3gZZ2FKDXQk3JZ8jghSmby9VP2eM0kpBqiocjbHTI8hx5H098s/FIJbM
-	 2c6tl1cejZbIquP3oxpoWEj4bFo6KMjhu2gR4NheSL8agzK/rFNedI6CljbCCOzhVW
-	 BCg7qAIWVityewliGj+he3mPJB3a3KrY9kGy2/Wg=
+	b=cCq5y1YBzQvjXtzuLh7fUl+qklBbRD0I2yuYtsssMHzNEcDKEur26Mbowrqs2o5L3
+	 xoV4T8yk2gEPzhVAreUMV9OyX0P31O9XM5SLG90XR+LI+RKvqlKRcNK31NJTKIOGnB
+	 fCgkw3QgAS6Xv7DJxj8o9wCbq5cP4XZ9K94+DnW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 36/71] soundwire: stream: fix programming slave ports for non-continous port maps
-Date: Sun,  1 Sep 2024 18:17:41 +0200
-Message-ID: <20240901160803.255768489@linuxfoundation.org>
+	Piyush Mehta <piyush.mehta@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 37/71] phy: xilinx: add runtime PM support
+Date: Sun,  1 Sep 2024 18:17:42 +0200
+Message-ID: <20240901160803.292752837@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -51,58 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Piyush Mehta <piyush.mehta@amd.com>
 
-commit ab8d66d132bc8f1992d3eb6cab8d32dda6733c84 upstream.
+[ Upstream commit b3db66f624468ab4a0385586bc7f4221e477d6b2 ]
 
-Two bitmasks in 'struct sdw_slave_prop' - 'source_ports' and
-'sink_ports' - define which ports to program in
-sdw_program_slave_port_params().  The masks are used to get the
-appropriate data port properties ('struct sdw_get_slave_dpn_prop') from
-an array.
+Added Runtime power management support to the xilinx phy driver and using
+DEFINE_RUNTIME_DEV_PM_OPS new macros allows the compiler to remove the
+unused dev_pm_ops structure and related functions if !CONFIG_PM without
+the need to mark the functions __maybe_unused.
 
-Bitmasks can be non-continuous or can start from index different than 0,
-thus when looking for matching port property for given port, we must
-iterate over mask bits, not from 0 up to number of ports.
-
-This fixes allocation and programming slave ports, when a source or sink
-masks start from further index.
-
-Fixes: f8101c74aa54 ("soundwire: Add Master and Slave port programming")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20240729140157.326450-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Piyush Mehta <piyush.mehta@amd.com>
+Link: https://lore.kernel.org/r/20230613140250.3018947-2-piyush.mehta@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 5af9b304bc60 ("phy: xilinx: phy-zynqmp: Fix SGMII linkup failure on resume")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/stream.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 35 ++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
 
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1272,18 +1272,18 @@ struct sdw_dpn_prop *sdw_get_slave_dpn_p
- 					    unsigned int port_num)
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index 9be9535ad7ab7..964d8087fcf46 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -21,6 +21,7 @@
+ #include <linux/of.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/slab.h>
+ 
+ #include <dt-bindings/phy/phy.h>
+@@ -821,7 +822,7 @@ static struct phy *xpsgtr_xlate(struct device *dev,
+  * Power Management
+  */
+ 
+-static int __maybe_unused xpsgtr_suspend(struct device *dev)
++static int xpsgtr_runtime_suspend(struct device *dev)
  {
- 	struct sdw_dpn_prop *dpn_prop;
--	u8 num_ports;
-+	unsigned long mask;
- 	int i;
+ 	struct xpsgtr_dev *gtr_dev = dev_get_drvdata(dev);
+ 	unsigned int i;
+@@ -836,7 +837,7 @@ static int __maybe_unused xpsgtr_suspend(struct device *dev)
+ 	return 0;
+ }
  
- 	if (direction == SDW_DATA_DIR_TX) {
--		num_ports = hweight32(slave->prop.source_ports);
-+		mask = slave->prop.source_ports;
- 		dpn_prop = slave->prop.src_dpn_prop;
- 	} else {
--		num_ports = hweight32(slave->prop.sink_ports);
-+		mask = slave->prop.sink_ports;
- 		dpn_prop = slave->prop.sink_dpn_prop;
- 	}
+-static int __maybe_unused xpsgtr_resume(struct device *dev)
++static int xpsgtr_runtime_resume(struct device *dev)
+ {
+ 	struct xpsgtr_dev *gtr_dev = dev_get_drvdata(dev);
+ 	unsigned int icm_cfg0, icm_cfg1;
+@@ -877,10 +878,8 @@ static int __maybe_unused xpsgtr_resume(struct device *dev)
+ 	return err;
+ }
  
--	for (i = 0; i < num_ports; i++) {
-+	for_each_set_bit(i, &mask, 32) {
- 		if (dpn_prop[i].num == port_num)
- 			return &dpn_prop[i];
+-static const struct dev_pm_ops xpsgtr_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(xpsgtr_suspend, xpsgtr_resume)
+-};
+-
++static DEFINE_RUNTIME_DEV_PM_OPS(xpsgtr_pm_ops, xpsgtr_runtime_suspend,
++				 xpsgtr_runtime_resume, NULL);
+ /*
+  * Probe & Platform Driver
+  */
+@@ -1006,6 +1005,16 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(provider);
+ 		goto err_clk_put;
  	}
++
++	pm_runtime_set_active(gtr_dev->dev);
++	pm_runtime_enable(gtr_dev->dev);
++
++	ret = pm_runtime_resume_and_get(gtr_dev->dev);
++	if (ret < 0) {
++		pm_runtime_disable(gtr_dev->dev);
++		goto err_clk_put;
++	}
++
+ 	return 0;
+ 
+ err_clk_put:
+@@ -1015,6 +1024,17 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int xpsgtr_remove(struct platform_device *pdev)
++{
++	struct xpsgtr_dev *gtr_dev = platform_get_drvdata(pdev);
++
++	pm_runtime_disable(gtr_dev->dev);
++	pm_runtime_put_noidle(gtr_dev->dev);
++	pm_runtime_set_suspended(gtr_dev->dev);
++
++	return 0;
++}
++
+ static const struct of_device_id xpsgtr_of_match[] = {
+ 	{ .compatible = "xlnx,zynqmp-psgtr", },
+ 	{ .compatible = "xlnx,zynqmp-psgtr-v1.1", },
+@@ -1024,10 +1044,11 @@ MODULE_DEVICE_TABLE(of, xpsgtr_of_match);
+ 
+ static struct platform_driver xpsgtr_driver = {
+ 	.probe = xpsgtr_probe,
++	.remove	= xpsgtr_remove,
+ 	.driver = {
+ 		.name = "xilinx-psgtr",
+ 		.of_match_table	= xpsgtr_of_match,
+-		.pm =  &xpsgtr_pm_ops,
++		.pm =  pm_ptr(&xpsgtr_pm_ops),
+ 	},
+ };
+ 
+-- 
+2.43.0
+
 
 
