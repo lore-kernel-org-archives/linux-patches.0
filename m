@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8360E13D53B;
-	Sun,  1 Sep 2024 16:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C419F44C97;
+	Sun,  1 Sep 2024 16:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208101; cv=none; b=gEyHILsIhq7EpNtJ8X9LSWlHigBTssqZGUccgWdg1Cg/qWhhDbM7U31KQEzmCkq9XohrVK1rNsv1avQHOnhU+HRVE3f+qriQN9aB6wQ8g1egg+W7Twf7HZNiSz9LOCy355UWWSnqH6NKQxLAoZTo7lD12VeEtCbozX9syjd7LRk=
+	t=1725208104; cv=none; b=DxhOrngz1XctUXN0T3ayIn31hzmRBQAJAyGAzZOFjHakN5afDCH4kgca7x4YmoM2HOjoxET6aEQLsk6on3iIj2z9fbI9X2jIQzvWyfCV88uX7Rxzy6LvaNxPGoHG+ARWMWaE6vOa0U+gEv5Ppuvt4wK9J7zvhzxt7duz9OUJOZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208101; c=relaxed/simple;
-	bh=+s2aAz6QDIPlgOUMSkrLUUGxf/ZKIrly5Ax0K3tPtWA=;
+	s=arc-20240116; t=1725208104; c=relaxed/simple;
+	bh=EDZ3krE2XCzQlxEBs7piYdVJX9YJZZ42ux2KsDa0hfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdJeEncd+rnqnVSxiI/OKmifYn7dRHOcJKMEQWVuY+mOJUZc7/EaSaxGoGA3drI9uWqvAUm5qdoMr3+m8+X6zKt8JZ0HzI9xYaUwkdNS6Uv1iu812rDdJ60us2L5YGBuKeglvacga5VE+FLTW0QHvS8hUjzF9U2O46IUbTLtrsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRmDaWKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nd8LOjOCU/MLTBaFsdLrSLjzwBmizy8gfZ2VHVP3jJDyGNoj2+dK+th65BREKbOmW1Gukg9hVjGJAN7Z5J5YuFS5k8zRt6JddKbSQ9DJuWhEtsR69iEI9bQXqyybnsH6YdoyUO0HrUF3qz7bdQBK2AaYsyfI8Am5KEGLyZz1jZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlSpMORJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRmDaWKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56C0C4CEC3;
-	Sun,  1 Sep 2024 16:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlSpMORJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF42C4CEC3;
+	Sun,  1 Sep 2024 16:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208101;
-	bh=+s2aAz6QDIPlgOUMSkrLUUGxf/ZKIrly5Ax0K3tPtWA=;
+	s=korg; t=1725208104;
+	bh=EDZ3krE2XCzQlxEBs7piYdVJX9YJZZ42ux2KsDa0hfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRmDaWKAoCyrY7OYAjD8tZ6JOmcgbw0J8zTraQBqhTrw5rKm0HVkg2yPhJam9NaWa
-	 lpconE3lZyxIfNZICs4u8c9vaekYUAnblR7oWjvAP+IwYVHFgG3+7/iFt/YIYiC2gb
-	 43ZpQri2o6er1xxWYuSxTnjAvhulwVHZRboMjouM=
+	b=DlSpMORJOqeU07ABGHUZablYNBw9QdJmgSJx47f4cRksInlssiuxSZPyrprHMbr5A
+	 iyzTFt57BLWI5XpfMEYJlYHLa9iJWBrYjwvpYGqrF0yToHyhL3qNfaTdCXoG8n5D0h
+	 QwJGefdQohtSoy/MbxvDIpT7KHJMx9rccRW7slBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murali Nalajala <quic_mnalajal@quicinc.com>,
-	Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 74/93] firmware: qcom: scm: Mark get_wq_ctx() as atomic call
-Date: Sun,  1 Sep 2024 18:17:01 +0200
-Message-ID: <20240901160810.523543332@linuxfoundation.org>
+	Yihang Li <liyihang9@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 75/93] scsi: sd: Ignore command SYNCHRONIZE CACHE error if format in progress
+Date: Sun,  1 Sep 2024 18:17:02 +0200
+Message-ID: <20240901160810.560626716@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -52,41 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murali Nalajala <quic_mnalajal@quicinc.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-commit 9960085a3a82c58d3323c1c20b991db6045063b0 upstream.
+commit 4f9eedfa27ae5806ed10906bcceee7bae49c8941 upstream.
 
-Currently get_wq_ctx() is wrongly configured as a standard call. When two
-SMC calls are in sleep and one SMC wakes up, it calls get_wq_ctx() to
-resume the corresponding sleeping thread. But if get_wq_ctx() is
-interrupted, goes to sleep and another SMC call is waiting to be allocated
-a waitq context, it leads to a deadlock.
+If formatting a suspended disk (such as formatting with different DIF
+type), the disk will be resuming first, and then the format command will
+submit to the disk through SG_IO ioctl.
 
-To avoid this get_wq_ctx() must be an atomic call and can't be a standard
-SMC call. Hence mark get_wq_ctx() as a fast call.
+When the disk is processing the format command, the system does not
+submit other commands to the disk. Therefore, the system attempts to
+suspend the disk again and sends the SYNCHRONIZE CACHE command. However,
+the SYNCHRONIZE CACHE command will fail because the disk is in the
+formatting process. This will cause the runtime_status of the disk to
+error and it is difficult for user to recover it. Error info like:
 
-Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
+[  669.925325] sd 6:0:6:0: [sdg] Synchronizing SCSI cache
+[  670.202371] sd 6:0:6:0: [sdg] Synchronize Cache(10) failed: Result: hostbyte=0x00 driverbyte=DRIVER_OK
+[  670.216300] sd 6:0:6:0: [sdg] Sense Key : 0x2 [current]
+[  670.221860] sd 6:0:6:0: [sdg] ASC=0x4 ASCQ=0x4
+
+To solve the issue, ignore the error and return success/0 when format is
+in progress.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Murali Nalajala <quic_mnalajal@quicinc.com>
-Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-Link: https://lore.kernel.org/r/20240814223244.40081-1-quic_uchalich@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Link: https://lore.kernel.org/r/20240819090934.2130592-1-liyihang9@huawei.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/qcom_scm-smc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/sd.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/firmware/qcom_scm-smc.c
-+++ b/drivers/firmware/qcom_scm-smc.c
-@@ -71,7 +71,7 @@ int scm_get_wq_ctx(u32 *wq_ctx, u32 *fla
- 	struct arm_smccc_res get_wq_res;
- 	struct arm_smccc_args get_wq_ctx = {0};
- 
--	get_wq_ctx.args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
-+	get_wq_ctx.args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,
- 				ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
- 				SCM_SMC_FNID(QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_GET_WQ_CTX));
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -1690,13 +1690,15 @@ static int sd_sync_cache(struct scsi_dis
+ 			    (sshdr.asc == 0x74 && sshdr.ascq == 0x71))	/* drive is password locked */
+ 				/* this is no error here */
+ 				return 0;
++
+ 			/*
+-			 * This drive doesn't support sync and there's not much
+-			 * we can do because this is called during shutdown
+-			 * or suspend so just return success so those operations
+-			 * can proceed.
++			 * If a format is in progress or if the drive does not
++			 * support sync, there is not much we can do because
++			 * this is called during shutdown or suspend so just
++			 * return success so those operations can proceed.
+ 			 */
+-			if (sshdr.sense_key == ILLEGAL_REQUEST)
++			if ((sshdr.asc == 0x04 && sshdr.ascq == 0x04) ||
++			    sshdr.sense_key == ILLEGAL_REQUEST)
+ 				return 0;
+ 		}
  
 
 
