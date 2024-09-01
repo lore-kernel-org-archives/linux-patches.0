@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523EF181334;
-	Sun,  1 Sep 2024 16:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A789D16B391;
+	Sun,  1 Sep 2024 16:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209240; cv=none; b=LXmlB6Hji72gJlU9sQ090C+y6jpejFHsNmLK7Dw+StXG3nfSZs6WovR6cPEX60fUbRmSdug2qnmOPdGlze1f2ikyYygCUjP/KL8T6tQMdcx++19qpZmnvStIEnJPuhJCUZ3HnV+mzUqP3523mAWYpKEuN9JwO0lMrgNt7/HQaGs=
+	t=1725209243; cv=none; b=tTCe8/cF9tWON2idTLmmgvVrz+rDWhowYuft3RA1q0Os3VgWHQMSjI1VcMA5Shnt8eSR4vSeJ5AMWkul8U3wyzJTlpLc2sURuzPyzNv68KP4KF3NIOu7d4Pz2Zrud+3n2j1gajBWjss70aKQW1HlvcwTH2uDz2H6E5BsvE8HSoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209240; c=relaxed/simple;
-	bh=zHPNMUMavYDydSEThlaq+zEeeb46Q09WP5bj3AnJ4Ao=;
+	s=arc-20240116; t=1725209243; c=relaxed/simple;
+	bh=0Z4/1bhRRVv2Qx+KgOq5ZafqxasP9ZCe82bzvky232E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kbm85DCwYqxDdrL1ncn0MYnVpVbWsgQvXg3im/QpeObkDEcoXr7+vgPa18aFsgaaxrICEmU0kJrIt72aNHFOoGnLI0t2GGe3JgdoIsDGg+OteyTxh3xJzE/OSFv+900FK5lMi8V3icepPHaktq6LguXgVKNGRofAajaRnCvaEG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMP84PWH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KkJd5eMSopqWgobJYk6Xa5lzepB9125kaAseTTXylUO6ByNFme8jbnBGglGUy1rMR4QOhH+byzIckNHvCG4SzIUeYf+KiUzmyDEEjjdCY3oECBVpfcQijfzammy9oAe0XOEWt0tYZjOlkybuFQAsXvbCLbtFQclxhjPmQ+Buo+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ID1QxZzs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMP84PWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A5BC4CEC4;
-	Sun,  1 Sep 2024 16:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ID1QxZzs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0B7C4CEC4;
+	Sun,  1 Sep 2024 16:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209240;
-	bh=zHPNMUMavYDydSEThlaq+zEeeb46Q09WP5bj3AnJ4Ao=;
+	s=korg; t=1725209243;
+	bh=0Z4/1bhRRVv2Qx+KgOq5ZafqxasP9ZCe82bzvky232E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMP84PWHzWz0/jbk7cjwQOhqvw2bD2igqG4Hc3Pi+ia3Fy9hSCzHvcbHlfa/ujG1r
-	 iPDU0NA1Fg0oQfbwICczVMWYa9QXdrVH203SfD6ZbWsiGTfqzEOoq7Ssi+Sf90LtQz
-	 s8Jt7oyeBioySOdt3fPtF9UnPO2lEuBsxRP5+mtY=
+	b=ID1QxZzsse+Jtlslk/ORGQ4RzP6T7oQqkDjZZdmQ1s/YS3b+6huglKEWiVBYpLudW
+	 H7uLsNEXiLj+DiU5/TWzvongkoiG6NhKr3PJCpz2NSTFngtVONy5/4fK/Wc1SBXOJA
+	 XCRuvfQjiB30zZ8azlVOJu8HKKE4kYvyUrdaWOW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ortiz <jorge.ortiz.escribano@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 44/71] netfilter: nf_tables: restore IP sanity checks for netdev/egress
-Date: Sun,  1 Sep 2024 18:17:49 +0200
-Message-ID: <20240901160803.554531738@linuxfoundation.org>
+Subject: [PATCH 6.1 45/71] wifi: iwlwifi: fw: fix wgds rev 3 exact size
+Date: Sun,  1 Sep 2024 18:17:50 +0200
+Message-ID: <20240901160803.591721916@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160801.879647959@linuxfoundation.org>
 References: <20240901160801.879647959@linuxfoundation.org>
@@ -51,64 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 5fd0628918977a0afdc2e6bc562d8751b5d3b8c5 ]
+[ Upstream commit 3ee22f07a35b76939c5b8d17d6af292f5fafb509 ]
 
-Subtract network offset to skb->len before performing IPv4 header sanity
-checks, then adjust transport offset from offset from mac header.
+Check size of WGDS revision 3 is equal to 8 entries size with some header,
+but doesn't depend on the number of used entries. Check that used entries
+are between min and max but allow more to be present than are used to fix
+operation with some BIOSes that have such data.
 
-Jorge Ortiz says:
-
-When small UDP packets (< 4 bytes payload) are sent from eth0,
-`meta l4proto udp` condition is not met because `NFT_PKTINFO_L4PROTO` is
-not set. This happens because there is a comparison that checks if the
-transport header offset exceeds the total length.  This comparison does
-not take into account the fact that the skb network offset might be
-non-zero in egress mode (e.g., 14 bytes for Ethernet header).
-
-Fixes: 0ae8e4cca787 ("netfilter: nf_tables: set transport offset from mac header for netdev/egress")
-Reported-by: Jorge Ortiz <jorge.ortiz.escribano@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 97f8a3d1610b ("iwlwifi: ACPI: support revision 3 WGDS tables")
+Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240825191257.cc71dfc67ec3.Ic27ee15ac6128b275c210b6de88f2145bd83ca7b@changeid
+[edit commit message]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables_ipv4.h | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables_ipv4.h b/include/net/netfilter/nf_tables_ipv4.h
-index 5225d2bd1a6e9..10b0a7c9e721f 100644
---- a/include/net/netfilter/nf_tables_ipv4.h
-+++ b/include/net/netfilter/nf_tables_ipv4.h
-@@ -19,7 +19,7 @@ static inline void nft_set_pktinfo_ipv4(struct nft_pktinfo *pkt)
- static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
- {
- 	struct iphdr *iph, _iph;
--	u32 len, thoff;
-+	u32 len, thoff, skb_len;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index 235963e1d7a9a..c96dfd7fd3dc8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -825,22 +825,25 @@ int iwl_sar_get_wgds_table(struct iwl_fw_runtime *fwrt)
+ 				entry = &wifi_pkg->package.elements[entry_idx];
+ 				entry_idx++;
+ 				if (entry->type != ACPI_TYPE_INTEGER ||
+-				    entry->integer.value > num_profiles) {
++				    entry->integer.value > num_profiles ||
++				    entry->integer.value <
++					rev_data[idx].min_profiles) {
+ 					ret = -EINVAL;
+ 					goto out_free;
+ 				}
+-				num_profiles = entry->integer.value;
  
- 	iph = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb),
- 				 sizeof(*iph), &_iph);
-@@ -30,15 +30,17 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
- 		return -1;
- 
- 	len = iph_totlen(pkt->skb, iph);
--	thoff = skb_network_offset(pkt->skb) + (iph->ihl * 4);
--	if (pkt->skb->len < len)
-+	thoff = iph->ihl * 4;
-+	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
+ 				/*
+-				 * this also validates >= min_profiles since we
+-				 * otherwise wouldn't have gotten the data when
+-				 * looking up in ACPI
++				 * Check to see if we received package count
++				 * same as max # of profiles
+ 				 */
+ 				if (wifi_pkg->package.count !=
+ 				    hdr_size + profile_size * num_profiles) {
+ 					ret = -EINVAL;
+ 					goto out_free;
+ 				}
 +
-+	if (skb_len < len)
- 		return -1;
- 	else if (len < thoff)
- 		return -1;
- 
- 	pkt->flags = NFT_PKTINFO_L4PROTO;
- 	pkt->tprot = iph->protocol;
--	pkt->thoff = thoff;
-+	pkt->thoff = skb_network_offset(pkt->skb) + thoff;
- 	pkt->fragoff = ntohs(iph->frag_off) & IP_OFFSET;
- 
- 	return 0;
++				/* Number of valid profiles */
++				num_profiles = entry->integer.value;
+ 			}
+ 			goto read_table;
+ 		}
 -- 
 2.43.0
 
