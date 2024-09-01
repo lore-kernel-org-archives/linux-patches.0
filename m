@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627A41E87B;
-	Sun,  1 Sep 2024 16:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA80184534;
+	Sun,  1 Sep 2024 16:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208535; cv=none; b=Rvc0ggKVp7qS/j3EKmXCnVVmC6jx18nroFCDQMjw+HFNzr3BGCoGQqvFEs+EDrje+DY4QAhRs+vHjCCE54+dyO3EmMwVc65+1NQ/q241gBrtt/xP6APwovyWCvEkUGTuEwVqN3PcEZ2HS0aW0fi9l/9EGZE2OYNcIzd+yQaOkzg=
+	t=1725208538; cv=none; b=kO8fsxoQ6j57Ap2FYCMINxUcYMh8e6fgGEoR1+H+KtI68tgyEKX3AxqMzgXmXqEn/d6+1f35WWSqBt2QeSFwetbX7KwOGm2HxpoidGS+aiX8UB9UcF0iPCQemSXjh4VzthTYLNwq4FFB6N1PGtml3/tcSo5XjIt1rbf7JEcmmFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208535; c=relaxed/simple;
-	bh=4QNcIgrlTdrKUK6qyQT6CMPWWdXD2HI/yJa+MRGL/Jk=;
+	s=arc-20240116; t=1725208538; c=relaxed/simple;
+	bh=tz0G4m3VA0BSvuao6NeUkIM7h2fTbhXr9jY3cvDYOoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTCkDg/QbGAG7PC3sQl3fIk7AmM7UQ4ZE9yFC26mOPe7CNJg8jW+BJUQclw3tmeTLRMUJtETXDpWtOnKAnq8cK+aSOaKbKFrznCWmoJ2N19c71KH/nzNNChCieqiFn51hA+2YonQq0V4I2sfVkazNj5vKCMbXa+k+8O0r8RQASU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJDosJTv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dzsw3jHA7K2bNUSTiGngYDAwabmbZlxXVgvblezk1+SVi5jBgto6hoYsoaoBJ5zwsoDYaO211WlEqGP4QsdmhvK6JTs/hj92D66DVlPYkzfsfNfw2TtL3cqy6nSn5UV+MoREqgUc+veqIMVTOuUi+adpD24V47osajAut1sIQp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tztYdl8o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJDosJTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87D8C4CEC8;
-	Sun,  1 Sep 2024 16:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tztYdl8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000A5C4CEC3;
+	Sun,  1 Sep 2024 16:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208535;
-	bh=4QNcIgrlTdrKUK6qyQT6CMPWWdXD2HI/yJa+MRGL/Jk=;
+	s=korg; t=1725208538;
+	bh=tz0G4m3VA0BSvuao6NeUkIM7h2fTbhXr9jY3cvDYOoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJDosJTvDjLzisGeiNpRuYS5YvK6NIa1M8LEecWgMqfdokbZp8ECY1hMl03V4wlPV
-	 V9/SE0qbmc6gAKjfvFOCQqQEqRP349P5u5nenBgUsdEl10SsPv58WN7h44x0Mvi8k7
-	 kCW1f1cJj92rypHAjESbDEOefE9f85claSJQdC1Y=
+	b=tztYdl8oyuqr/0rfZ0tOlKuJXPHCvAElpTJr7hYJ2s+mrwQIjJrWl69zTL67GI7c5
+	 EboKB5gOQLZ2XFEMGMGWyTIw4vmBtqgQ+CHtTVta8OtSjjxbBJfNpLjyuNv0+Wu1kD
+	 nbnrThD+QunmQcbm74rDXCP5yMLFnfRo179tDhaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Joe Damato <jdamato@fastly.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 111/149] net: busy-poll: use ktime_get_ns() instead of local_clock()
-Date: Sun,  1 Sep 2024 18:17:02 +0200
-Message-ID: <20240901160821.629468196@linuxfoundation.org>
+Subject: [PATCH 6.10 112/149] nfc: pn533: Add poll mod list filling check
+Date: Sun,  1 Sep 2024 18:17:03 +0200
+Message-ID: <20240901160821.666854496@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -54,46 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 0870b0d8b393dde53106678a1e2cec9dfa52f9b7 ]
+[ Upstream commit febccb39255f9df35527b88c953b2e0deae50e53 ]
 
-Typically, busy-polling durations are below 100 usec.
+In case of im_protocols value is 1 and tm_protocols value is 0 this
+combination successfully passes the check
+'if (!im_protocols && !tm_protocols)' in the nfc_start_poll().
+But then after pn533_poll_create_mod_list() call in pn533_start_poll()
+poll mod list will remain empty and dev->poll_mod_count will remain 0
+which lead to division by zero.
 
-When/if the busy-poller thread migrates to another cpu,
-local_clock() can be off by +/-2msec or more for small
-values of HZ, depending on the platform.
+Normally no im protocol has value 1 in the mask, so this combination is
+not expected by driver. But these protocol values actually come from
+userspace via Netlink interface (NFC_CMD_START_POLL operation). So a
+broken or malicious program may pass a message containing a "bad"
+combination of protocol parameter values so that dev->poll_mod_count
+is not incremented inside pn533_poll_create_mod_list(), thus leading
+to division by zero.
+Call trace looks like:
+nfc_genl_start_poll()
+  nfc_start_poll()
+    ->start_poll()
+    pn533_start_poll()
 
-Use ktimer_get_ns() to ensure deterministic behavior,
-which is the whole point of busy-polling.
+Add poll mod list filling check.
 
-Fixes: 060212928670 ("net: add low latency socket poll")
-Fixes: 9a3c71aa8024 ("net: convert low latency sockets to sched_clock()")
-Fixes: 37089834528b ("sched, net: Fixup busy_loop_us_clock()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20240827114916.223377-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: dfccd0f58044 ("NFC: pn533: Add some polling entropy")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240827084822.18785-1-amishin@t-argos.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/busy_poll.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/pn533/pn533.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/net/busy_poll.h b/include/net/busy_poll.h
-index 9b09acac538ee..522f1da8b747a 100644
---- a/include/net/busy_poll.h
-+++ b/include/net/busy_poll.h
-@@ -68,7 +68,7 @@ static inline bool sk_can_busy_loop(struct sock *sk)
- static inline unsigned long busy_loop_current_time(void)
- {
- #ifdef CONFIG_NET_RX_BUSY_POLL
--	return (unsigned long)(local_clock() >> 10);
-+	return (unsigned long)(ktime_get_ns() >> 10);
- #else
- 	return 0;
- #endif
+diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
+index b19c39dcfbd93..e2bc67300a915 100644
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -1723,6 +1723,11 @@ static int pn533_start_poll(struct nfc_dev *nfc_dev,
+ 	}
+ 
+ 	pn533_poll_create_mod_list(dev, im_protocols, tm_protocols);
++	if (!dev->poll_mod_count) {
++		nfc_err(dev->dev,
++			"Poll mod list is empty\n");
++		return -EINVAL;
++	}
+ 
+ 	/* Do not always start polling from the same modulation */
+ 	get_random_bytes(&rand_mod, sizeof(rand_mod));
 -- 
 2.43.0
 
