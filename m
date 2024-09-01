@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B930A5381A;
-	Sun,  1 Sep 2024 16:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBFE537FF;
+	Sun,  1 Sep 2024 16:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208311; cv=none; b=tSkxiRM91TfuJWbppWTYgqJr/JuG609mykNZ3snYg54cKs//8VN8672R+vd2h9aFqV4e4FwR29y5rLoaVLKt+mJoSbsJxI/ZNEv5hhJPTgRE+0AXULA8zLklkeUBnkVhA1otuyF5bgtD+pUf4OJr2J6KP75IkbIYTghpcpqrSZs=
+	t=1725208314; cv=none; b=E0H90WUGQioVJVjrtm3+qqBRT4ELt7kd6bpTjckAfdEttPKWscFSghuP2fqju5waPvdVk72Ct7AJYoBzw+roVHcu8gaTu7qtlVFrT2npGIGX7Xou4MnFDFPtKo1xB2IBjyUU+NQ6kBX3DGVZWZmPvO007YcvItSDiQlMbQB8y+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208311; c=relaxed/simple;
-	bh=N9jhI61vmvVcfGOfiUss9kahFjfZBn2BPi7wSnfUV50=;
+	s=arc-20240116; t=1725208314; c=relaxed/simple;
+	bh=MC4Lhd0NDaQPLEY8vIAA4wk+/MVB4GUCsm12SZ/ffs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlZMP6cDljZQiT/NxKia0AxB5Z0BwsLpIRhtwVJ9vCibe2AIvq9lIjK/iKCF/B12jpK4hCIT5/lSdfsxXmB624hlr0iUoNtX/bPhRSOl2fxSU2fOPqHGfiPrWjjK3krQ93c3lLehqaIQvIMFtSMNvvg/6nBWXyf6YYltupancHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQC3gYbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dg2TTvZnH4HcTHcIYMAvqo0gjsQpX+uprOoX7RxwU59UbTF7ncu4FAth6rKp7gjZOirwKJeL8JGfqzvIHfBznLfh0xOO5e/zqKnppryjuER7EDG5tmdml0kqSYVX3nkrz4QdBGUcc/5C4RwjDnLIRY9z0w1/t1lZa7bE54oYbKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIYnp4qX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQC3gYbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38591C4CEC3;
-	Sun,  1 Sep 2024 16:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIYnp4qX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4290AC4CEC3;
+	Sun,  1 Sep 2024 16:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208311;
-	bh=N9jhI61vmvVcfGOfiUss9kahFjfZBn2BPi7wSnfUV50=;
+	s=korg; t=1725208314;
+	bh=MC4Lhd0NDaQPLEY8vIAA4wk+/MVB4GUCsm12SZ/ffs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQC3gYbL70sJPEKZXvtDgsn4doQoLx8jlij9tcUvYVBAjkKcALo8rlI8yW3HU+Lld
-	 I1+8FKHA3/gnchzlekGQ1wb/u7afz6Y84huSOUVuaHidZImC+KKrvPPb/t+EPM9I71
-	 /ZVZDAoFC0K+dUuoOydl7NR+39e3MVnID5rxvjq4=
+	b=EIYnp4qX84Mf3giB1chvVdq5TjwgWbGdBPf7eNkM3JYu9p4bmFSz7TJyAdRbVXIJI
+	 mk1mC2rU8Vg68OhR0Iich68AsLp522b29fqSAA4NgPTAviZcLyKJblcBNfnU33Vb0f
+	 BvyYGrXsFVC5WERqVO9qIJViFdd2aO/vG/T7/YH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.10 043/149] video/aperture: optionally match the device in sysfb_disable()
-Date: Sun,  1 Sep 2024 18:15:54 +0200
-Message-ID: <20240901160819.085485817@linuxfoundation.org>
+	Anshuman Gupta <anshuman.gupta@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Francois Dugast <francois.dugast@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 044/149] drm/xe: Prepare display for D3Cold
+Date: Sun,  1 Sep 2024 18:15:55 +0200
+Message-ID: <20240901160819.122974223@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -54,175 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-commit b49420d6a1aeb399e5b107fc6eb8584d0860fbd7 upstream.
+[ Upstream commit e7b180b22022f52e3f5fca695cc75d63bddc5a1c ]
 
-In aperture_remove_conflicting_pci_devices(), we currently only
-call sysfb_disable() on vga class devices.  This leads to the
-following problem when the pimary device is not VGA compatible:
+Prepare power-well and DC handling for a full power
+lost during D3Cold, then sanitize it upon D3->D0.
+Otherwise we get a bunch of state mismatch.
 
-1. A PCI device with a non-VGA class is the boot display
-2. That device is probed first and it is not a VGA device so
-   sysfb_disable() is not called, but the device resources
-   are freed by aperture_detach_platform_device()
-3. Non-primary GPU has a VGA class and it ends up calling sysfb_disable()
-4. NULL pointer dereference via sysfb_disable() since the resources
-   have already been freed by aperture_detach_platform_device() when
-   it was called by the other device.
+Ideally we could leave DC9 enabled and wouldn't need
+to move DC9->DC0 on every runtime resume, however,
+the disable_DC is part of the power-well checks and
+intrinsic to the dc_off power well. In the future that
+can be detangled so we can have even bigger power savings.
+But for now, let's focus on getting a D3Cold, which saves
+much more power by itself.
 
-Fix this by passing a device pointer to sysfb_disable() and checking
-the device to determine if we should execute it or not.
+v2: create new functions to avoid full-suspend-resume path,
+which would result in a deadlock between xe_gem_fault and the
+modeset-ioctl.
 
-v2: Fix build when CONFIG_SCREEN_INFO is not set
-v3: Move device check into the mutex
-    Drop primary variable in aperture_remove_conflicting_pci_devices()
-    Drop __init on pci sysfb_pci_dev_is_enabled()
+v3: Only avoid the full modeset to avoid the race, for a more
+robust suspend-resume.
 
-Fixes: 5ae3716cfdcd ("video/aperture: Only remove sysfb on the default vga pci device")
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240821191135.829765-1-alexander.deucher@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Anshuman Gupta <anshuman.gupta@intel.com>
+Cc: Uma Shankar <uma.shankar@intel.com>
+Tested-by: Francois Dugast <francois.dugast@intel.com>
+Reviewed-by: Anshuman Gupta <anshuman.gupta@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240522170105.327472-5-rodrigo.vivi@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Stable-dep-of: ddf6492e0e50 ("drm/xe/display: Make display suspend/resume work on discrete")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/sysfb.c |   19 +++++++++++++------
- drivers/of/platform.c    |    2 +-
- drivers/video/aperture.c |   11 +++--------
- include/linux/sysfb.h    |    4 ++--
- 4 files changed, 19 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/xe/display/xe_display.c | 10 ++++++----
+ drivers/gpu/drm/xe/display/xe_display.h |  8 ++++----
+ drivers/gpu/drm/xe/xe_pm.c              | 15 ++++++++++++---
+ 3 files changed, 22 insertions(+), 11 deletions(-)
 
---- a/drivers/firmware/sysfb.c
-+++ b/drivers/firmware/sysfb.c
-@@ -39,6 +39,8 @@ static struct platform_device *pd;
- static DEFINE_MUTEX(disable_lock);
- static bool disabled;
- 
-+static struct device *sysfb_parent_dev(const struct screen_info *si);
-+
- static bool sysfb_unregister(void)
- {
- 	if (IS_ERR_OR_NULL(pd))
-@@ -52,6 +54,7 @@ static bool sysfb_unregister(void)
- 
- /**
-  * sysfb_disable() - disable the Generic System Framebuffers support
-+ * @dev:	the device to check if non-NULL
-  *
-  * This disables the registration of system framebuffer devices that match the
-  * generic drivers that make use of the system framebuffer set up by firmware.
-@@ -61,17 +64,21 @@ static bool sysfb_unregister(void)
-  * Context: The function can sleep. A @disable_lock mutex is acquired to serialize
-  *          against sysfb_init(), that registers a system framebuffer device.
-  */
--void sysfb_disable(void)
-+void sysfb_disable(struct device *dev)
- {
-+	struct screen_info *si = &screen_info;
-+
- 	mutex_lock(&disable_lock);
--	sysfb_unregister();
--	disabled = true;
-+	if (!dev || dev == sysfb_parent_dev(si)) {
-+		sysfb_unregister();
-+		disabled = true;
-+	}
- 	mutex_unlock(&disable_lock);
- }
- EXPORT_SYMBOL_GPL(sysfb_disable);
- 
- #if defined(CONFIG_PCI)
--static __init bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
-+static bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
- {
- 	/*
- 	 * TODO: Try to integrate this code into the PCI subsystem
-@@ -87,13 +94,13 @@ static __init bool sysfb_pci_dev_is_enab
- 	return true;
- }
- #else
--static __init bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
-+static bool sysfb_pci_dev_is_enabled(struct pci_dev *pdev)
- {
+diff --git a/drivers/gpu/drm/xe/display/xe_display.c b/drivers/gpu/drm/xe/display/xe_display.c
+index 7cdc03dc40ed9..79d33d592093c 100644
+--- a/drivers/gpu/drm/xe/display/xe_display.c
++++ b/drivers/gpu/drm/xe/display/xe_display.c
+@@ -302,7 +302,7 @@ static bool suspend_to_idle(void)
  	return false;
  }
- #endif
  
--static __init struct device *sysfb_parent_dev(const struct screen_info *si)
-+static struct device *sysfb_parent_dev(const struct screen_info *si)
+-void xe_display_pm_suspend(struct xe_device *xe)
++void xe_display_pm_suspend(struct xe_device *xe, bool runtime)
  {
- 	struct pci_dev *pdev;
+ 	bool s2idle = suspend_to_idle();
+ 	if (!xe->info.enable_display)
+@@ -316,7 +316,8 @@ void xe_display_pm_suspend(struct xe_device *xe)
+ 	if (has_display(xe))
+ 		drm_kms_helper_poll_disable(&xe->drm);
  
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -592,7 +592,7 @@ static int __init of_platform_default_po
- 			 * This can happen for example on DT systems that do EFI
- 			 * booting and may provide a GOP handle to the EFI stub.
- 			 */
--			sysfb_disable();
-+			sysfb_disable(NULL);
- 			of_platform_device_create(node, NULL, NULL);
- 			of_node_put(node);
- 		}
---- a/drivers/video/aperture.c
-+++ b/drivers/video/aperture.c
-@@ -293,7 +293,7 @@ int aperture_remove_conflicting_devices(
- 	 * ask for this, so let's assume that a real driver for the display
- 	 * was already probed and prevent sysfb to register devices later.
- 	 */
--	sysfb_disable();
-+	sysfb_disable(NULL);
+-	intel_display_driver_suspend(xe);
++	if (!runtime)
++		intel_display_driver_suspend(xe);
  
- 	aperture_detach_devices(base, size);
+ 	intel_dp_mst_suspend(xe);
  
-@@ -346,15 +346,10 @@ EXPORT_SYMBOL(__aperture_remove_legacy_v
-  */
- int aperture_remove_conflicting_pci_devices(struct pci_dev *pdev, const char *name)
- {
--	bool primary = false;
- 	resource_size_t base, size;
- 	int bar, ret = 0;
- 
--	if (pdev == vga_default_device())
--		primary = true;
--
--	if (primary)
--		sysfb_disable();
-+	sysfb_disable(&pdev->dev);
- 
- 	for (bar = 0; bar < PCI_STD_NUM_BARS; ++bar) {
- 		if (!(pci_resource_flags(pdev, bar) & IORESOURCE_MEM))
-@@ -370,7 +365,7 @@ int aperture_remove_conflicting_pci_devi
- 	 * that consumes the VGA framebuffer I/O range. Remove this
- 	 * device as well.
- 	 */
--	if (primary)
-+	if (pdev == vga_default_device())
- 		ret = __aperture_remove_legacy_vga_devices(pdev);
- 
- 	return ret;
---- a/include/linux/sysfb.h
-+++ b/include/linux/sysfb.h
-@@ -58,11 +58,11 @@ struct efifb_dmi_info {
- 
- #ifdef CONFIG_SYSFB
- 
--void sysfb_disable(void);
-+void sysfb_disable(struct device *dev);
- 
- #else /* CONFIG_SYSFB */
- 
--static inline void sysfb_disable(void)
-+static inline void sysfb_disable(struct device *dev)
- {
+@@ -352,7 +353,7 @@ void xe_display_pm_resume_early(struct xe_device *xe)
+ 	intel_power_domains_resume(xe);
  }
  
+-void xe_display_pm_resume(struct xe_device *xe)
++void xe_display_pm_resume(struct xe_device *xe, bool runtime)
+ {
+ 	if (!xe->info.enable_display)
+ 		return;
+@@ -367,7 +368,8 @@ void xe_display_pm_resume(struct xe_device *xe)
+ 
+ 	/* MST sideband requires HPD interrupts enabled */
+ 	intel_dp_mst_resume(xe);
+-	intel_display_driver_resume(xe);
++	if (!runtime)
++		intel_display_driver_resume(xe);
+ 
+ 	intel_hpd_poll_disable(xe);
+ 	if (has_display(xe))
+diff --git a/drivers/gpu/drm/xe/display/xe_display.h b/drivers/gpu/drm/xe/display/xe_display.h
+index 710e56180b52d..93d1f779b9788 100644
+--- a/drivers/gpu/drm/xe/display/xe_display.h
++++ b/drivers/gpu/drm/xe/display/xe_display.h
+@@ -34,10 +34,10 @@ void xe_display_irq_enable(struct xe_device *xe, u32 gu_misc_iir);
+ void xe_display_irq_reset(struct xe_device *xe);
+ void xe_display_irq_postinstall(struct xe_device *xe, struct xe_gt *gt);
+ 
+-void xe_display_pm_suspend(struct xe_device *xe);
++void xe_display_pm_suspend(struct xe_device *xe, bool runtime);
+ void xe_display_pm_suspend_late(struct xe_device *xe);
+ void xe_display_pm_resume_early(struct xe_device *xe);
+-void xe_display_pm_resume(struct xe_device *xe);
++void xe_display_pm_resume(struct xe_device *xe, bool runtime);
+ 
+ #else
+ 
+@@ -63,10 +63,10 @@ static inline void xe_display_irq_enable(struct xe_device *xe, u32 gu_misc_iir)
+ static inline void xe_display_irq_reset(struct xe_device *xe) {}
+ static inline void xe_display_irq_postinstall(struct xe_device *xe, struct xe_gt *gt) {}
+ 
+-static inline void xe_display_pm_suspend(struct xe_device *xe) {}
++static inline void xe_display_pm_suspend(struct xe_device *xe, bool runtime) {}
+ static inline void xe_display_pm_suspend_late(struct xe_device *xe) {}
+ static inline void xe_display_pm_resume_early(struct xe_device *xe) {}
+-static inline void xe_display_pm_resume(struct xe_device *xe) {}
++static inline void xe_display_pm_resume(struct xe_device *xe, bool runtime) {}
+ 
+ #endif /* CONFIG_DRM_XE_DISPLAY */
+ #endif /* _XE_DISPLAY_H_ */
+diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
+index 37fbeda12d3bd..07615acd2c299 100644
+--- a/drivers/gpu/drm/xe/xe_pm.c
++++ b/drivers/gpu/drm/xe/xe_pm.c
+@@ -96,12 +96,12 @@ int xe_pm_suspend(struct xe_device *xe)
+ 	if (err)
+ 		goto err;
+ 
+-	xe_display_pm_suspend(xe);
++	xe_display_pm_suspend(xe, false);
+ 
+ 	for_each_gt(gt, xe, id) {
+ 		err = xe_gt_suspend(gt);
+ 		if (err) {
+-			xe_display_pm_resume(xe);
++			xe_display_pm_resume(xe, false);
+ 			goto err;
+ 		}
+ 	}
+@@ -151,7 +151,7 @@ int xe_pm_resume(struct xe_device *xe)
+ 
+ 	xe_irq_resume(xe);
+ 
+-	xe_display_pm_resume(xe);
++	xe_display_pm_resume(xe, false);
+ 
+ 	for_each_gt(gt, xe, id)
+ 		xe_gt_resume(gt);
+@@ -366,6 +366,7 @@ int xe_pm_runtime_suspend(struct xe_device *xe)
+ 		err = xe_bo_evict_all(xe);
+ 		if (err)
+ 			goto out;
++		xe_display_pm_suspend(xe, true);
+ 	}
+ 
+ 	for_each_gt(gt, xe, id) {
+@@ -375,7 +376,12 @@ int xe_pm_runtime_suspend(struct xe_device *xe)
+ 	}
+ 
+ 	xe_irq_suspend(xe);
++
++	if (xe->d3cold.allowed)
++		xe_display_pm_suspend_late(xe);
+ out:
++	if (err)
++		xe_display_pm_resume(xe, true);
+ 	lock_map_release(&xe_pm_runtime_lockdep_map);
+ 	xe_pm_write_callback_task(xe, NULL);
+ 	return err;
+@@ -411,6 +417,8 @@ int xe_pm_runtime_resume(struct xe_device *xe)
+ 		if (err)
+ 			goto out;
+ 
++		xe_display_pm_resume_early(xe);
++
+ 		/*
+ 		 * This only restores pinned memory which is the memory
+ 		 * required for the GT(s) to resume.
+@@ -426,6 +434,7 @@ int xe_pm_runtime_resume(struct xe_device *xe)
+ 		xe_gt_resume(gt);
+ 
+ 	if (xe->d3cold.allowed && xe->d3cold.power_lost) {
++		xe_display_pm_resume(xe, true);
+ 		err = xe_bo_restore_user(xe);
+ 		if (err)
+ 			goto out;
+-- 
+2.43.0
+
 
 
