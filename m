@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19EC1C68C;
-	Sun,  1 Sep 2024 16:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB17C44C93;
+	Sun,  1 Sep 2024 16:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209897; cv=none; b=hLYmqa5G5l/AoP3ee3QuSWoiWMa+daBoy+ftokXZm0P/ZRna0slZDyX1UswnXI0BDkJ7aMwwUlpixUlz1CVH3UMc5pElceyE97hPEtoYzWpc++Rh9v4791BYg7gQcXQ6WX5gotYaS9Bh1/HmBbLjfflIooq3nUzXdGG/TXNUofs=
+	t=1725209900; cv=none; b=WLQ+zuZUQgXuCeq525SbG/W5iEt8kOjWEPigJMHLbwovxS+CtIaFe+sIRGsl0fJgt5NdaQevViw9TxQpkInw8SSPZOPvA0P8pNeXYVvf8f//llB2HbfVPBOIt0U8/JsVIZP2VSdKkUlHGVGLDBqK/qW2USpbQHCq/gYnpdflPp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209897; c=relaxed/simple;
-	bh=nyPwlwYooYN5LDuTTloFRHHF+i1tWx3AQr424Fve4zc=;
+	s=arc-20240116; t=1725209900; c=relaxed/simple;
+	bh=6HAv8bGwIFbH0t6t5xh1UdU2Noo6ZeCfVJEBXfpAX38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euQc3bo92FpTDUPckdTuV/NeRJ/dolNFZ3KFVXhPRETQk6ijwrA7QwqY7NRaN1JyMC+WqwiRrp1tpCDy4Yai1+SRsuCzPCdRk00Ro+dTbxdosKtfrjE/+rSrvsLRWOXnwDkQT3Eg4b0bAFtFxJKQGlrJ0zxTgEOtx83ZmrfXHG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcUQsyS3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9ZL8ROR/6Z5XCzT+SwhAPTHC5P2235nHIZI71z0Rlld5pn6MHRsklb/ZFk/6UUl/EHsfXdiGiYekNKd+FHNsUnz+CWaecSTgmJKaaYjvOmvfuMX+Xz1m+zLNk7UnywB9+RQFJ9qLVO99XzY+oQ2X9pjlFo4ec0g1fFW0E1MciU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8vtHnVm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcUQsyS3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D558C4CEC3;
-	Sun,  1 Sep 2024 16:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8vtHnVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F5DC4CEC3;
+	Sun,  1 Sep 2024 16:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209896;
-	bh=nyPwlwYooYN5LDuTTloFRHHF+i1tWx3AQr424Fve4zc=;
+	s=korg; t=1725209900;
+	bh=6HAv8bGwIFbH0t6t5xh1UdU2Noo6ZeCfVJEBXfpAX38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcUQsyS35Au9ga3dnA5AO2IJQlJ3SZvaVLq6Sz471gS2U5QcuVilMzpvrgTS3WLQ6
-	 vT9RmDlg9ixN3fI40+vKdEI3NOyz6GutVWtuYMmKmPt/uyjmjdQdNV4YqkF7GNY03E
-	 L/7sr8KCkbvkoYyDzwpIxeD432wVHOMwwsPeKYJM=
+	b=F8vtHnVmzZ32uPGbLDqBP0VDNOKl7J8fyHkIB0Z9ip5vXKjof98V5jFqKg5t81DTV
+	 aZ3c3NDbWyt0IkmUgCQ0i+/DfbWeb3eWIcMH0uVq7Xa9Qoq3w0u5pmHCDyj8v8hnIz
+	 283yZAcz6JTthzuEM75wXUrNTTQMWj/qr+y+LAj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/215] igc: remove I226 Qbv BaseTime restriction
-Date: Sun,  1 Sep 2024 18:15:38 +0200
-Message-ID: <20240901160824.251305556@linuxfoundation.org>
+Subject: [PATCH 5.15 027/215] igc: Fix packet still tx after gate close by reducing i226 MAC retry buffer
+Date: Sun,  1 Sep 2024 18:15:39 +0200
+Message-ID: <20240901160824.288984562@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,219 +53,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
 
-[ Upstream commit b8897dc54e3bc9d25281bbb42a7d730782ff4588 ]
+[ Upstream commit e037a26ead187901f83cad9c503ccece5ff6817a ]
 
-Remove the Qbv BaseTime restriction for I226 so that the BaseTime can be
-scheduled to the future time. A new register bit of Tx Qav Control
-(Bit-7: FutScdDis) was introduced to allow I226 scheduling future time as
-Qbv BaseTime and not having the Tx hang timeout issue.
+Testing uncovered that even when the taprio gate is closed, some packets
+still transmit.
 
-Besides, according to datasheet section 7.5.2.9.3.3, FutScdDis bit has to
-be configured first before the cycle time and base time.
+According to i225/6 hardware errata [1], traffic might overflow the
+planned QBV window. This happens because MAC maintains an internal buffer,
+primarily for supporting half duplex retries. Therefore, even when the
+gate closes, residual MAC data in the buffer may still transmit.
 
-Indeed the FutScdDis bit is only active on re-configuration, thus we have
-to set the BASET_L to zero and then only set it to the desired value.
+To mitigate this for i226, reduce the MAC's internal buffer from 192 bytes
+to the recommended 88 bytes by modifying the RETX_CTL register value.
 
-Please also note that the Qbv configuration flow is moved around based on
-the Qbv programming guideline that is documented in the latest datasheet.
+This follows guidelines from:
+[1] Ethernet Controller I225/I22 Spec Update Rev 2.1 Errata Item 9:
+    TSN: Packet Transmission Might Cross Qbv Window
+[2] I225/6 SW User Manual Rev 1.2.4: Section 8.11.5 Retry Buffer Control
 
-Co-developed-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Note that the RETX_CTL register can't be used in TSN mode because half
+duplex feature cannot coexist with TSN.
+
+Test Steps:
+1.  Send taprio cmd to board A:
+    tc qdisc replace dev enp1s0 parent root handle 100 taprio \
+    num_tc 4 \
+    map 3 2 1 0 3 3 3 3 3 3 3 3 3 3 3 3 \
+    queues 1@0 1@1 1@2 1@3 \
+    base-time 0 \
+    sched-entry S 0x07 500000 \
+    sched-entry S 0x0f 500000 \
+    flags 0x2 \
+    txtime-delay 0
+
+    Note that for TC3, gate should open for 500us and close for another
+    500us.
+
+3.  Take tcpdump log on Board B.
+
+4.  Send udp packets via UDP tai app from Board A to Board B.
+
+5.  Analyze tcpdump log via wireshark log on Board B. Ensure that the
+    total time from the first to the last packet received during one cycle
+    for TC3 does not exceed 500us.
+
+Fixes: 43546211738e ("igc: Add new device ID's")
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: e037a26ead18 ("igc: Fix packet still tx after gate close by reducing i226 MAC retry buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_base.c    | 29 +++++++++++++
- drivers/net/ethernet/intel/igc/igc_base.h    |  2 +
- drivers/net/ethernet/intel/igc/igc_defines.h |  1 +
- drivers/net/ethernet/intel/igc/igc_main.c    |  5 ++-
- drivers/net/ethernet/intel/igc/igc_tsn.c     | 44 +++++++++++++-------
- 5 files changed, 65 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_defines.h |  6 ++++
+ drivers/net/ethernet/intel/igc/igc_tsn.c     | 34 ++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_base.c b/drivers/net/ethernet/intel/igc/igc_base.c
-index 84f142f5e472e..be095c6531b68 100644
---- a/drivers/net/ethernet/intel/igc/igc_base.c
-+++ b/drivers/net/ethernet/intel/igc/igc_base.c
-@@ -402,6 +402,35 @@ void igc_rx_fifo_flush_base(struct igc_hw *hw)
- 	rd32(IGC_MPC);
- }
- 
-+bool igc_is_device_id_i225(struct igc_hw *hw)
-+{
-+	switch (hw->device_id) {
-+	case IGC_DEV_ID_I225_LM:
-+	case IGC_DEV_ID_I225_V:
-+	case IGC_DEV_ID_I225_I:
-+	case IGC_DEV_ID_I225_K:
-+	case IGC_DEV_ID_I225_K2:
-+	case IGC_DEV_ID_I225_LMVP:
-+	case IGC_DEV_ID_I225_IT:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
-+bool igc_is_device_id_i226(struct igc_hw *hw)
-+{
-+	switch (hw->device_id) {
-+	case IGC_DEV_ID_I226_LM:
-+	case IGC_DEV_ID_I226_V:
-+	case IGC_DEV_ID_I226_K:
-+	case IGC_DEV_ID_I226_IT:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- static struct igc_mac_operations igc_mac_ops_base = {
- 	.init_hw		= igc_init_hw_base,
- 	.check_for_link		= igc_check_for_copper_link,
-diff --git a/drivers/net/ethernet/intel/igc/igc_base.h b/drivers/net/ethernet/intel/igc/igc_base.h
-index 52849f5e8048d..9f3827eda157c 100644
---- a/drivers/net/ethernet/intel/igc/igc_base.h
-+++ b/drivers/net/ethernet/intel/igc/igc_base.h
-@@ -7,6 +7,8 @@
- /* forward declaration */
- void igc_rx_fifo_flush_base(struct igc_hw *hw);
- void igc_power_down_phy_copper_base(struct igc_hw *hw);
-+bool igc_is_device_id_i225(struct igc_hw *hw);
-+bool igc_is_device_id_i226(struct igc_hw *hw);
- 
- /* Transmit Descriptor - Advanced */
- union igc_adv_tx_desc {
 diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
-index 95282dde6b8bc..4f2021a940fb3 100644
+index 4f2021a940fb3..d5acee27894e5 100644
 --- a/drivers/net/ethernet/intel/igc/igc_defines.h
 +++ b/drivers/net/ethernet/intel/igc/igc_defines.h
-@@ -527,6 +527,7 @@
- /* Transmit Scheduling */
- #define IGC_TQAVCTRL_TRANSMIT_MODE_TSN	0x00000001
- #define IGC_TQAVCTRL_ENHANCED_QAV	0x00000008
-+#define IGC_TQAVCTRL_FUTSCDDIS		0x00000080
+@@ -405,6 +405,12 @@
+ #define IGC_DTXMXPKTSZ_TSN	0x19 /* 1600 bytes of max TX DMA packet size */
+ #define IGC_DTXMXPKTSZ_DEFAULT	0x98 /* 9728-byte Jumbo frames */
  
- #define IGC_TXQCTL_QUEUE_MODE_LAUNCHT	0x00000001
- #define IGC_TXQCTL_STRICT_CYCLE		0x00000002
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index eb8c24318fdac..7605115e6a1b2 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5991,6 +5991,7 @@ static bool validate_schedule(struct igc_adapter *adapter,
- 			      const struct tc_taprio_qopt_offload *qopt)
- {
- 	int queue_uses[IGC_MAX_TX_QUEUES] = { };
-+	struct igc_hw *hw = &adapter->hw;
- 	struct timespec64 now;
- 	size_t n;
- 
-@@ -6003,8 +6004,10 @@ static bool validate_schedule(struct igc_adapter *adapter,
- 	 * in the future, it will hold all the packets until that
- 	 * time, causing a lot of TX Hangs, so to avoid that, we
- 	 * reject schedules that would start in the future.
-+	 * Note: Limitation above is no longer in i226.
- 	 */
--	if (!is_base_time_past(qopt->base_time, &now))
-+	if (!is_base_time_past(qopt->base_time, &now) &&
-+	    igc_is_device_id_i225(hw))
- 		return false;
- 
- 	for (n = 0; n < qopt->num_entries; n++) {
++/* Retry Buffer Control */
++#define IGC_RETX_CTL			0x041C
++#define IGC_RETX_CTL_WATERMARK_MASK	0xF
++#define IGC_RETX_CTL_QBVFULLTH_SHIFT	8 /* QBV Retry Buffer Full Threshold */
++#define IGC_RETX_CTL_QBVFULLEN	0x1000 /* Enable QBV Retry Buffer Full Threshold */
++
+ /* Transmit Scheduling Latency */
+ /* Latency between transmission scheduling (LaunchTime) and the time
+  * the packet is transmitted to the network in nanosecond.
 diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 93518c785c7d2..066444675aade 100644
+index 066444675aade..9fbc0b0455803 100644
 --- a/drivers/net/ethernet/intel/igc/igc_tsn.c
 +++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -2,6 +2,7 @@
- /* Copyright (c)  2019 Intel Corporation */
+@@ -78,6 +78,15 @@ void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
+ 	wr32(IGC_GTXOFFSET, txoffset);
+ }
  
- #include "igc.h"
-+#include "igc_hw.h"
- #include "igc_tsn.h"
++static void igc_tsn_restore_retx_default(struct igc_adapter *adapter)
++{
++	struct igc_hw *hw = &adapter->hw;
++	u32 retxctl;
++
++	retxctl = rd32(IGC_RETX_CTL) & IGC_RETX_CTL_WATERMARK_MASK;
++	wr32(IGC_RETX_CTL, retxctl);
++}
++
+ /* Returns the TSN specific registers to their default values after
+  * the adapter is reset.
+  */
+@@ -91,6 +100,9 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
+ 	wr32(IGC_TXPBS, I225_TXPBSIZE_DEFAULT);
+ 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_DEFAULT);
  
- static bool is_any_launchtime(struct igc_adapter *adapter)
-@@ -92,7 +93,8 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
- 
++	if (igc_is_device_id_i226(hw))
++		igc_tsn_restore_retx_default(adapter);
++
  	tqavctrl = rd32(IGC_TQAVCTRL);
  	tqavctrl &= ~(IGC_TQAVCTRL_TRANSMIT_MODE_TSN |
--		      IGC_TQAVCTRL_ENHANCED_QAV);
-+		      IGC_TQAVCTRL_ENHANCED_QAV | IGC_TQAVCTRL_FUTSCDDIS);
+ 		      IGC_TQAVCTRL_ENHANCED_QAV | IGC_TQAVCTRL_FUTSCDDIS);
+@@ -111,6 +123,25 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
+ 	return 0;
+ }
+ 
++/* To partially fix i226 HW errata, reduce MAC internal buffering from 192 Bytes
++ * to 88 Bytes by setting RETX_CTL register using the recommendation from:
++ * a) Ethernet Controller I225/I226 Specification Update Rev 2.1
++ *    Item 9: TSN: Packet Transmission Might Cross the Qbv Window
++ * b) I225/6 SW User Manual Rev 1.2.4: Section 8.11.5 Retry Buffer Control
++ */
++static void igc_tsn_set_retx_qbvfullthreshold(struct igc_adapter *adapter)
++{
++	struct igc_hw *hw = &adapter->hw;
++	u32 retxctl, watermark;
 +
- 	wr32(IGC_TQAVCTRL, tqavctrl);
- 
- 	for (i = 0; i < adapter->num_tx_queues; i++) {
-@@ -117,20 +119,10 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 	ktime_t base_time, systim;
- 	int i;
- 
--	cycle = adapter->cycle_time;
--	base_time = adapter->base_time;
--
- 	wr32(IGC_TSAUXC, 0);
++	retxctl = rd32(IGC_RETX_CTL);
++	watermark = retxctl & IGC_RETX_CTL_WATERMARK_MASK;
++	/* Set QBVFULLTH value using watermark and set QBVFULLEN */
++	retxctl |= (watermark << IGC_RETX_CTL_QBVFULLTH_SHIFT) |
++		   IGC_RETX_CTL_QBVFULLEN;
++	wr32(IGC_RETX_CTL, retxctl);
++}
++
+ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ {
+ 	struct igc_hw *hw = &adapter->hw;
+@@ -123,6 +154,9 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
  	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_TSN);
  	wr32(IGC_TXPBS, IGC_TXPBSIZE_TSN);
  
--	tqavctrl = rd32(IGC_TQAVCTRL);
--	tqavctrl |= IGC_TQAVCTRL_TRANSMIT_MODE_TSN | IGC_TQAVCTRL_ENHANCED_QAV;
--	wr32(IGC_TQAVCTRL, tqavctrl);
--
--	wr32(IGC_QBVCYCLET_S, cycle);
--	wr32(IGC_QBVCYCLET, cycle);
--
++	if (igc_is_device_id_i226(hw))
++		igc_tsn_set_retx_qbvfullthreshold(adapter);
++
  	for (i = 0; i < adapter->num_tx_queues; i++) {
  		struct igc_ring *ring = adapter->tx_ring[i];
  		u32 txqctl = 0;
-@@ -233,21 +225,43 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 		wr32(IGC_TXQCTL(i), txqctl);
- 	}
- 
-+	tqavctrl = rd32(IGC_TQAVCTRL);
-+	tqavctrl |= IGC_TQAVCTRL_TRANSMIT_MODE_TSN | IGC_TQAVCTRL_ENHANCED_QAV;
-+
-+	cycle = adapter->cycle_time;
-+	base_time = adapter->base_time;
-+
- 	nsec = rd32(IGC_SYSTIML);
- 	sec = rd32(IGC_SYSTIMH);
- 
- 	systim = ktime_set(sec, nsec);
--
- 	if (ktime_compare(systim, base_time) > 0) {
--		s64 n;
-+		s64 n = div64_s64(ktime_sub_ns(systim, base_time), cycle);
- 
--		n = div64_s64(ktime_sub_ns(systim, base_time), cycle);
- 		base_time = ktime_add_ns(base_time, (n + 1) * cycle);
-+	} else {
-+		/* According to datasheet section 7.5.2.9.3.3, FutScdDis bit
-+		 * has to be configured before the cycle time and base time.
-+		 */
-+		if (igc_is_device_id_i226(hw))
-+			tqavctrl |= IGC_TQAVCTRL_FUTSCDDIS;
- 	}
- 
--	baset_h = div_s64_rem(base_time, NSEC_PER_SEC, &baset_l);
-+	wr32(IGC_TQAVCTRL, tqavctrl);
-+
-+	wr32(IGC_QBVCYCLET_S, cycle);
-+	wr32(IGC_QBVCYCLET, cycle);
- 
-+	baset_h = div_s64_rem(base_time, NSEC_PER_SEC, &baset_l);
- 	wr32(IGC_BASET_H, baset_h);
-+
-+	/* In i226, Future base time is only supported when FutScdDis bit
-+	 * is enabled and only active for re-configuration.
-+	 * In this case, initialize the base time with zero to create
-+	 * "re-configuration" scenario then only set the desired base time.
-+	 */
-+	if (tqavctrl & IGC_TQAVCTRL_FUTSCDDIS)
-+		wr32(IGC_BASET_L, 0);
- 	wr32(IGC_BASET_L, baset_l);
- 
- 	return 0;
 -- 
 2.43.0
 
