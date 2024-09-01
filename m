@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF2C208A7;
-	Sun,  1 Sep 2024 16:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED3616B391;
+	Sun,  1 Sep 2024 16:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725209870; cv=none; b=hiOVdMenfKi5TfEXHMGuCjUNUukhDLlsuPQI+TZ5Y4rs9zy8V16DIcy8c16/0wJLdM+fqk/R+XPsFEzlCaLhfglzukUh5gaBnQvqoWvf63MxfIfDC7IMzjyuP/s17o4ygMOdlbOng24i7hBUvT7GDJN5KfgbjvqhukvwdGMcdKA=
+	t=1725209873; cv=none; b=EcBDfGiyg4YayKOMIef3ty+MdvHejOP85K40EJgaSweD4EGRQ2hKNyWlZRQbnXmwtBhXFHClG/UKzTnmRUFz5mDDFh/UcDigT5+93ispGnG/DC4n4NRDwxFlealnJstEjJOO8BSqt8rWa975yYeHQB5StoXX4fQ2+fC9kXVBeNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725209870; c=relaxed/simple;
-	bh=1/5oytWr3cqIKnmOEur8qPwzD0aaCFSbIOtS5FYsTIU=;
+	s=arc-20240116; t=1725209873; c=relaxed/simple;
+	bh=7fWxFT1PVNgPPxHLjUGp6a4aanpgT4Z6gNJz9mW3MwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlOgGMK8vK0uUrGMaqV4+1skxUI0ALA723N95NHJaxRdgjqGilRxTmvegaq5dzejJXv36EeRNE2ArtJmzR/LJN42asnSg9f5WZU/urGe2fS3+JUgFGV+Dimf+RVKjJTgtNU7sNCzqJhXz18vZrUa0u0WxjmbVZ+qdE/LR4qt2z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzHnZlwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCzKj5oAknDX4cBsdCoaSAp/ZpnNPD6O3Ap1IYruB6iQmjsbdeXUtqKeSIidbPL5Uu7Q+3Vl2HLcP3D+q0gR9ffOQDW/QAx5s2Kkqrs5jjbbfX4rfrBtoYzRUro1M/dDe466CPD0ssPkxKb28pCGFDZ8EtzXdh8GZpnVcTvFzhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRsxPbX8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzHnZlwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6BAC4CEC3;
-	Sun,  1 Sep 2024 16:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRsxPbX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0488C4CEC3;
+	Sun,  1 Sep 2024 16:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725209870;
-	bh=1/5oytWr3cqIKnmOEur8qPwzD0aaCFSbIOtS5FYsTIU=;
+	s=korg; t=1725209873;
+	bh=7fWxFT1PVNgPPxHLjUGp6a4aanpgT4Z6gNJz9mW3MwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzHnZlweQ0TeJ9/9lOl9czZlR1Lecu8popHJDLQtLbFyB8dYU7p7QwwslBXAnCzBU
-	 wg40cFRvhAkrMYjb4Bxc6m9EZ0DGBrCWMUryLNO7Tm5ZrwVPe2M6rU3/uQPfQBPV6L
-	 2j0vqbGyUO6gd8SOXf9oYBWsBeheVJN367CU6zlY=
+	b=KRsxPbX8ZWd8dDOeP/dnRs20B3Lx8IA8dXurLv+nUS5qM/SliIUT5SP55rKbhTID7
+	 0HqpGi+sNtwx/e5lyGDIavXQhGUhNJlX1rtIxhI7y5wPqfYNBgrpDIVnXhP8vP+X+7
+	 WGPqKc7Iag5P0wBubbH/TflKkTKLktu39Akj95fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.15 019/215] selinux: fix potential counting error in avc_add_xperms_decision()
-Date: Sun,  1 Sep 2024 18:15:31 +0200
-Message-ID: <20240901160823.986358750@linuxfoundation.org>
+	syzbot+91dbdfecdd3287734d8e@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Eli Billauer <eli.billauer@gmail.com>
+Subject: [PATCH 5.15 002/215] char: xillybus: Dont destroy workqueue from work item running on it
+Date: Sun,  1 Sep 2024 18:15:14 +0200
+Message-ID: <20240901160823.328129856@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,37 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Eli Billauer <eli.billauer@gmail.com>
 
-commit 379d9af3f3da2da1bbfa67baf1820c72a080d1f1 upstream.
+commit ccbde4b128ef9c73d14d0d7817d68ef795f6d131 upstream.
 
-The count increases only when a node is successfully added to
-the linked list.
+Triggered by a kref decrement, destroy_workqueue() may be called from
+within a work item for destroying its own workqueue. This illegal
+situation is averted by adding a module-global workqueue for exclusive
+use of the offending work item. Other work items continue to be queued
+on per-device workqueues to ensure performance.
 
-Cc: stable@vger.kernel.org
-Fixes: fa1aa143ac4a ("selinux: extended permissions for ioctls")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Reported-by: syzbot+91dbdfecdd3287734d8e@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://lore.kernel.org/lkml/0000000000000ab25a061e1dfe9f@google.com/
+Signed-off-by: Eli Billauer <eli.billauer@gmail.com>
+Link: https://lore.kernel.org/r/20240801121126.60183-1-eli.billauer@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/avc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/xillybus/xillyusb.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/security/selinux/avc.c
-+++ b/security/selinux/avc.c
-@@ -332,12 +332,12 @@ static int avc_add_xperms_decision(struc
- {
- 	struct avc_xperms_decision_node *dest_xpd;
+--- a/drivers/char/xillybus/xillyusb.c
++++ b/drivers/char/xillybus/xillyusb.c
+@@ -50,6 +50,7 @@ MODULE_LICENSE("GPL v2");
+ static const char xillyname[] = "xillyusb";
  
--	node->ae.xp_node->xp.len++;
- 	dest_xpd = avc_xperms_decision_alloc(src->used);
- 	if (!dest_xpd)
- 		return -ENOMEM;
- 	avc_copy_xperms_decision(&dest_xpd->xpd, src);
- 	list_add(&dest_xpd->xpd_list, &node->ae.xp_node->xpd_head);
-+	node->ae.xp_node->xp.len++;
- 	return 0;
+ static unsigned int fifo_buf_order;
++static struct workqueue_struct *wakeup_wq;
+ 
+ #define USB_VENDOR_ID_XILINX		0x03fd
+ #define USB_VENDOR_ID_ALTERA		0x09fb
+@@ -561,10 +562,6 @@ static void cleanup_dev(struct kref *kre
+  * errors if executed. The mechanism relies on that xdev->error is assigned
+  * a non-zero value by report_io_error() prior to queueing wakeup_all(),
+  * which prevents bulk_in_work() from calling process_bulk_in().
+- *
+- * The fact that wakeup_all() and bulk_in_work() are queued on the same
+- * workqueue makes their concurrent execution very unlikely, however the
+- * kernel's API doesn't seem to ensure this strictly.
+  */
+ 
+ static void wakeup_all(struct work_struct *work)
+@@ -619,7 +616,7 @@ static void report_io_error(struct xilly
+ 
+ 	if (do_once) {
+ 		kref_get(&xdev->kref); /* xdev is used by work item */
+-		queue_work(xdev->workq, &xdev->wakeup_workitem);
++		queue_work(wakeup_wq, &xdev->wakeup_workitem);
+ 	}
+ }
+ 
+@@ -2242,6 +2239,10 @@ static int __init xillyusb_init(void)
+ {
+ 	int rc = 0;
+ 
++	wakeup_wq = alloc_workqueue(xillyname, 0, 0);
++	if (!wakeup_wq)
++		return -ENOMEM;
++
+ 	if (LOG2_INITIAL_FIFO_BUF_SIZE > PAGE_SHIFT)
+ 		fifo_buf_order = LOG2_INITIAL_FIFO_BUF_SIZE - PAGE_SHIFT;
+ 	else
+@@ -2249,11 +2250,16 @@ static int __init xillyusb_init(void)
+ 
+ 	rc = usb_register(&xillyusb_driver);
+ 
++	if (rc)
++		destroy_workqueue(wakeup_wq);
++
+ 	return rc;
+ }
+ 
+ static void __exit xillyusb_exit(void)
+ {
++	destroy_workqueue(wakeup_wq);
++
+ 	usb_deregister(&xillyusb_driver);
  }
  
 
