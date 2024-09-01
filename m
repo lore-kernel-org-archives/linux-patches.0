@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A8B2C6AF;
-	Sun,  1 Sep 2024 17:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0222C6AF;
+	Sun,  1 Sep 2024 17:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210274; cv=none; b=oBjOtDU0yBqWdvVv9zn8R11GGhNw8ZMFCwOekZUBCbtX0mpI89pzuvtIdem2t33W26uKVccOPK8xuLSCp/zOj8nufldfAfQ0hK7Cjj1pPlxzKeh8CD5DhxytCvoCeXDhwW9VOpmo671yczGV8mrfsijEUKJTjdjen/cfOIYuqzQ=
+	t=1725210277; cv=none; b=OYTWEpNh85wVXIuFNabv0ijxEsrDqSpuzpOQb8oF0BVkRHBG+IdEU4I05VFfqyBFdR/AXBUqPfCSyZNfI51GG6ByRx1UA+gEda6QeLr5xOgPw75rt/yHX4J3znJHCIS54xtXs7yCU1zEHTd5jYrqX0pMio23e6UNl8Z9fbCoXZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210274; c=relaxed/simple;
-	bh=tfd57QXaSvl7Mp6m6jFVg6MG0Ax1JE1AlWtKgnNJa38=;
+	s=arc-20240116; t=1725210277; c=relaxed/simple;
+	bh=i2TnmzUsvDzpu43yLvuvhDAURecQROQsXx0zWH+E5ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2zBx1hcXFv7HpLdTAtKt69JMQ/m7vo3U6Bw4YKkhII8QrreVg6Ey+ZBC6LT5GVLWxXquzqMGTv+Cy+WQDcqLnFXuvBqBOgKdJy2hCKIJvPONKTPKnytM5nQfcnQ3/JYdRt17loh/3qG88azcoBx2bjeK2FPGxrcTNW+hxZxWQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwSwUBbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VsK/yfGY2c/Av0xhugcghDGOhADdspp5LGyV5+m8zamKBOtLigUdIZIJqqDQwZ9A3Q6B4hY7FE8Sdq+MWPTiOTRTYoOQznnGIeSO+LY3+gC9AntxEBats+41zgAv122C35vY5eHYYk3YAKKqFiQ82aM3MccED5+5Ni4YS+plU7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVU8sXfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwSwUBbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70051C4CEC3;
-	Sun,  1 Sep 2024 17:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVU8sXfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF32C4CEC3;
+	Sun,  1 Sep 2024 17:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210273;
-	bh=tfd57QXaSvl7Mp6m6jFVg6MG0Ax1JE1AlWtKgnNJa38=;
+	s=korg; t=1725210277;
+	bh=i2TnmzUsvDzpu43yLvuvhDAURecQROQsXx0zWH+E5ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwSwUBbVUKyKlznOyjBfW60gXKqQs13cyYPqtbZry3yEpre9FPippVlnp0fy2eibF
-	 jMm2t4OjE+twc5uZo6Z8MjH2/14V0qas7fNZsu7YI1wJ6/9Jjg9hcGfpNfYcb+JZTD
-	 jEAFhfgrm/5sp/KIxxP8x8l0mroJQ3PfINnCDVjU=
+	b=HVU8sXfxAl3CPND9IyVXZgQUBgpZ7gD1TFP0bxkk+RfZ7kGVL0DET/h90oRyHnLYr
+	 7bZfCk8VESfsBuf682o0WaLedhpbC6hmJUpa6+f0YDsAuxVmGTO12G5chV9689lR/q
+	 3E/MrB8ku7Ft1/IZI+vhpZXvrRzrFCvBa3fgKrrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	David Hunter <david.hunter.linux@gmail.com>
-Subject: [PATCH 5.15 109/215] block: use "unsigned long" for blk_validate_block_size().
-Date: Sun,  1 Sep 2024 18:17:01 +0200
-Message-ID: <20240901160827.465536081@linuxfoundation.org>
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 110/215] nfsd: move reply cache initialization into nfsd startup
+Date: Sun,  1 Sep 2024 18:17:02 +0200
+Message-ID: <20240901160827.506483620@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,34 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 37ae5a0f5287a52cf51242e76ccf198d02ffe495 upstream.
+[ Upstream commit f5f9d4a314da88c0a5faa6d168bf69081b7a25ae ]
 
-Since lo_simple_ioctl(LOOP_SET_BLOCK_SIZE) and ioctl(NBD_SET_BLKSIZE) pass
-user-controlled "unsigned long arg" to blk_validate_block_size(),
-"unsigned long" should be used for validation.
+There's no need to start the reply cache before nfsd is up and running,
+and doing so means that we register a shrinker for every net namespace
+instead of just the ones where nfsd is running.
 
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/9ecbf057-4375-c2db-ab53-e4cc0dff953d@i-love.sakura.ne.jp
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: David Hunter <david.hunter.linux@gmail.com>
+Move it to the per-net nfsd startup instead.
+
+Reported-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Stable-dep-of: ed9ab7346e90 ("nfsd: move init of percpu reply_cache_stats counters back to nfsd_init_net")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blkdev.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |    8 --------
+ fs/nfsd/nfssvc.c |   10 +++++++++-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -235,7 +235,7 @@ struct request {
- 	void *end_io_data;
- };
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1461,16 +1461,11 @@ static __net_init int nfsd_init_net(stru
+ 	nn->nfsd_versions = NULL;
+ 	nn->nfsd4_minorversions = NULL;
+ 	nfsd4_init_leases_net(nn);
+-	retval = nfsd_reply_cache_init(nn);
+-	if (retval)
+-		goto out_cache_error;
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
  
--static inline int blk_validate_block_size(unsigned int bsize)
-+static inline int blk_validate_block_size(unsigned long bsize)
+ 	return 0;
+ 
+-out_cache_error:
+-	nfsd_idmap_shutdown(net);
+ out_idmap_error:
+ 	nfsd_export_shutdown(net);
+ out_export_error:
+@@ -1479,9 +1474,6 @@ out_export_error:
+ 
+ static __net_exit void nfsd_exit_net(struct net *net)
  {
- 	if (bsize < 512 || bsize > PAGE_SIZE || !is_power_of_2(bsize))
- 		return -EINVAL;
+-	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+-
+-	nfsd_reply_cache_shutdown(nn);
+ 	nfsd_idmap_shutdown(net);
+ 	nfsd_export_shutdown(net);
+ 	nfsd_netns_free_versions(net_generic(net, nfsd_net_id));
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -427,16 +427,23 @@ static int nfsd_startup_net(struct net *
+ 	ret = nfsd_file_cache_start_net(net);
+ 	if (ret)
+ 		goto out_lockd;
+-	ret = nfs4_state_start_net(net);
++
++	ret = nfsd_reply_cache_init(nn);
+ 	if (ret)
+ 		goto out_filecache;
+ 
++	ret = nfs4_state_start_net(net);
++	if (ret)
++		goto out_reply_cache;
++
+ #ifdef CONFIG_NFSD_V4_2_INTER_SSC
+ 	nfsd4_ssc_init_umount_work(nn);
+ #endif
+ 	nn->nfsd_net_up = true;
+ 	return 0;
+ 
++out_reply_cache:
++	nfsd_reply_cache_shutdown(nn);
+ out_filecache:
+ 	nfsd_file_cache_shutdown_net(net);
+ out_lockd:
+@@ -454,6 +461,7 @@ static void nfsd_shutdown_net(struct net
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+ 	nfs4_state_shutdown_net(net);
++	nfsd_reply_cache_shutdown(nn);
+ 	nfsd_file_cache_shutdown_net(net);
+ 	if (nn->lockd_up) {
+ 		lockd_down(net);
 
 
