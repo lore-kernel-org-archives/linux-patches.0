@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA901DFD1;
-	Sun,  1 Sep 2024 17:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AF12A1B8;
+	Sun,  1 Sep 2024 17:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210547; cv=none; b=qi4UGaS/KOqxS9hE/skB30EpC/HTU/kfq5JRd9IgEi5VVoB4ED8bayDcDpTbbW4uoxmcAJ6nmgvq4ufytfxkmOZWYahTYkn3u91MoMnlLBmoZZNFLy064lN73w/5hEj7VKUWp2SaCiD2xxDxbAYprIhqvsdZiWqiZjAbWHjv1f0=
+	t=1725210551; cv=none; b=gxiJ4ACbBfky/DzMWNStGmFVM/HT0hIQaMABbdEwLGGk8da3/quDz1PilrKu4s9fNtzIyv1wUpzHtseb4MOnW0zBK8mBcmYys0zMJkfXNN8A6+hdlSvg4waIsjylBcWn2QG5N8WO/PxnPAdo0ePVbGzna1mJNG/638fyXZqtf8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210547; c=relaxed/simple;
-	bh=47tP9u89Kf557zVPEZNbK6AV9ATFJPAaOqIjA+/tI0A=;
+	s=arc-20240116; t=1725210551; c=relaxed/simple;
+	bh=cN3AN9tl0kGdHjZHBbhuZGCmDL1WyKBmKFHlIgMZ1DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2GbOWAutLLqaAHQO8zmLQ1cxxLciL1CSTeCabo33J+2vouCH15hnWoN+8oeoFWEbm95SaMPA8I9hghZk1bhUZl4g/QVhW1l686/A7D5OLu3nYr8CGhhXhlWXhs8IA7rsW6LlPpY51+4EwOsNVl93rTWnwdovzRusf3Fio2vYlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQLjA47d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJadTxI8GW6oCb9k3551eMFliOOiOR3lt5rHLp49x4CbT2L2TtbJNaog0pP9DFmUDt7dun3tU/DGIlNEmggP8QbisAFQX4/bR5e37xEfU/fKa90aBoWgF88VW3oEwlNYxyF2JwTz8Tf2Ez2Sv4mIvwKiGfAQM2dY0AtTZOyZNGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8v3MFxD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQLjA47d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C2CC4CEC3;
-	Sun,  1 Sep 2024 17:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8v3MFxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C642C4CEC3;
+	Sun,  1 Sep 2024 17:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210547;
-	bh=47tP9u89Kf557zVPEZNbK6AV9ATFJPAaOqIjA+/tI0A=;
+	s=korg; t=1725210550;
+	bh=cN3AN9tl0kGdHjZHBbhuZGCmDL1WyKBmKFHlIgMZ1DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQLjA47dP691DCn2c0AtDrV5G15CxD8sxbID/+WwtHjbq/vsOydULw3dgvaTfz6xJ
-	 soYILS56AUG8HCHheCFdY1AVgrhVb5KXlvnLXvz/ZsQuQ805aj80FtHT46e/ajRGVF
-	 IT38yOOrXE8K7DHFYjkOjTe4TqRhwMommlaimJh0=
+	b=b8v3MFxDtAwsRFtcDfUmbe20z2tZ/XsuRvzziaeCEPS0heMzB74WtyUhh0OOrDVS5
+	 7M2i3nvvFEqXJk1pmwjPaGL1v9KohIjsZvPA8wTc1+Q1znmzSelMG9/cYf1xmMgvhC
+	 usJKvUFG3fzRYXjuTJSU0W3sROF14PRgcHf6rXrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.15 212/215] igc: Fix reset adapter logics when tx mode change
-Date: Sun,  1 Sep 2024 18:18:44 +0200
-Message-ID: <20240901160831.365002759@linuxfoundation.org>
+	ZHANG Yuntian <yt@radxa.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 203/215] USB: serial: option: add MeiG Smart SRM825L
+Date: Sun,  1 Sep 2024 18:18:35 +0200
+Message-ID: <20240901160831.027408899@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -53,74 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+From: ZHANG Yuntian <yt@radxa.com>
 
-commit 0afeaeb5dae86aceded0d5f0c3a54d27858c0c6f upstream.
+commit 9a471de516c35219d1722c13367191ce1f120fe9 upstream.
 
-Following the "igc: Fix TX Hang issue when QBV Gate is close" changes,
-remaining issues with the reset adapter logic in igc_tsn_offload_apply()
-have been observed:
+Add support for MeiG Smart SRM825L which is based on Qualcomm 315 chip.
 
-1. The reset adapter logics for i225 and i226 differ, although they should
-   be the same according to the guidelines in I225/6 HW Design Section
-   7.5.2.1 on software initialization during tx mode changes.
-2. The i225 resets adapter every time, even though tx mode doesn't change.
-   This occurs solely based on the condition  igc_is_device_id_i225() when
-   calling schedule_work().
-3. i226 doesn't reset adapter for tsn->legacy tx mode changes. It only
-   resets adapter for legacy->tsn tx mode transitions.
-4. qbv_count introduced in the patch is actually not needed; in this
-   context, a non-zero value of qbv_count is used to indicate if tx mode
-   was unconditionally set to tsn in igc_tsn_enable_offload(). This could
-   be replaced by checking the existing register
-   IGC_TQAVCTRL_TRANSMIT_MODE_TSN bit.
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d22 Rev= 4.14
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=6f345e48
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-This patch resolves all issues and enters schedule_work() to reset the
-adapter only when changing tx mode. It also removes reliance on qbv_count.
-
-qbv_count field will be removed in a future patch.
-
-Test ran:
-
-1. Verify reset adapter behaviour in i225/6:
-   a) Enrol a new GCL
-      Reset adapter observed (tx mode change legacy->tsn)
-   b) Enrol a new GCL without deleting qdisc
-      No reset adapter observed (tx mode remain tsn->tsn)
-   c) Delete qdisc
-      Reset adapter observed (tx mode change tsn->legacy)
-
-2. Tested scenario from "igc: Fix TX Hang issue when QBV Gate is closed"
-   to confirm it remains resolved.
-
-Fixes: 175c241288c0 ("igc: Fix TX Hang issue when QBV Gate is closed")
-Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-[ Only want the igc_tsn_is_tx_mode_in_tsn() portion of this for older stable
-  kernels - gregkh ]
+Signed-off-by: ZHANG Yuntian <yt@radxa.com>
+Link: https://lore.kernel.org/0041DFA5200EFB1B+20240803074619.563116-1-yt@radxa.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/serial/option.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -49,6 +49,13 @@ static unsigned int igc_tsn_new_flags(st
- 	return new_flags;
- }
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -619,6 +619,8 @@ static void option_instat_callback(struc
  
-+static bool igc_tsn_is_tx_mode_in_tsn(struct igc_adapter *adapter)
-+{
-+	struct igc_hw *hw = &adapter->hw;
-+
-+	return !!(rd32(IGC_TQAVCTRL) & IGC_TQAVCTRL_TRANSMIT_MODE_TSN);
-+}
-+
- void igc_tsn_adjust_txtime_offset(struct igc_adapter *adapter)
- {
- 	struct igc_hw *hw = &adapter->hw;
+ /* MeiG Smart Technology products */
+ #define MEIGSMART_VENDOR_ID			0x2dee
++/* MeiG Smart SRM825L based on Qualcomm 315 */
++#define MEIGSMART_PRODUCT_SRM825L		0x4d22
+ /* MeiG Smart SLM320 based on UNISOC UIS8910 */
+ #define MEIGSMART_PRODUCT_SLM320		0x4d41
+ 
+@@ -2366,6 +2368,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
