@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F6A17E46E;
-	Sun,  1 Sep 2024 16:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7488017CA1F;
+	Sun,  1 Sep 2024 16:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208295; cv=none; b=PGt/oV5vW0nO+1r6slrlXq5wxCAKtFLBkqPtb4vUgpIDUjqVdarJT98Yi3wccZEIdXHAHpNww6PIj1k2W+8pa4pHk5e59R/5Pmz7qaT45ZXlPzdVX65kWNR+ijCc3bJmz6t359d9jkLWcSFvoADgAKhe7Q4fUJcX0JjHwwXjtSw=
+	t=1725208299; cv=none; b=LTG2XXY/+j9BoupvNVKPHamtGIbB1PKfyakGIuV9rQtieWMXmVuoVa85c6MMWQnyHrhkzjyGiCrAE3jCDOdU7WdeiaGUwDW01X80btM+NFibp7t6pR05kTmzLEisW1tdwToNrnqKf3K5X5iREqz74k+sCv+y3ba1OYI4+s5V41Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208295; c=relaxed/simple;
-	bh=ZrL01JAaNK34MabyuG7lSZmNRriIEVwUnpRPFfWctro=;
+	s=arc-20240116; t=1725208299; c=relaxed/simple;
+	bh=G/3O2aqsTjkvV4PE3JGBQq0rJ7iVjdPbf1SEgHbiO2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIz3ozCTX41eSCIci9Cq4UWWJYBsTny87+T14GY3sbqY8VXhw9FuLgsCtxAO1PlLKwJT52YmulHDB7kBrh6GryKf8KhgvfA2PejZPdyCB4KfyvnKLRxFQ2ATP4rUB8mIVDe1huz8zKyQCNqCt978wTCryI0jKOqesosLdRgyBhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alhsuLKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=raiwpNLj9D/OuCq7lohnaR2xMvtUKN5sKI3XCIhXtbbp5t2nOY3LtDOxLciaJNiFZ8L52kMEq1LRZliyZcNrYhLxGnDVt7jwppjoqTM8PBBY8esSy0Wfj6z6WokMk3b1TNlD1zcvKv/5w8DAhwIuUTZ3bpO4nkjVhxpyA1rUOrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wR78WzrQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alhsuLKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E99C4CEC3;
-	Sun,  1 Sep 2024 16:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wR78WzrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE6DC4CEC3;
+	Sun,  1 Sep 2024 16:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208295;
-	bh=ZrL01JAaNK34MabyuG7lSZmNRriIEVwUnpRPFfWctro=;
+	s=korg; t=1725208298;
+	bh=G/3O2aqsTjkvV4PE3JGBQq0rJ7iVjdPbf1SEgHbiO2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=alhsuLKBLhjtivQulKbRa2XlndiYYy48jTM60H1Eu6fCLj6yuhT4o3uI4uf2KVZ4O
-	 KqM5yrrQ3Mr+cmgEPT9czn/628y6PSSPmyk7EitstrLo4fin29BAiew7gV4ADZbmIx
-	 x0fldF3JvWp1mQyA7A8wKGBRGVoblKKqOv/eKk1A=
+	b=wR78WzrQFRSf+VZ8z+FHiKbNmmcSc1nD2DYNoxZB9QsNqCjwtfymfbyzMB3Knb82H
+	 GfkOJvhkfYVDDehtbabTg0gAZiFhtxHjxZRfxMWmAcHjw+0RoDf7SRLhecENWp9nSp
+	 Q0sQz5cg3Z8slUHJlIqvTNkdSpHtP4gefbUIeSQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.10 039/149] drm/amdgpu/swsmu: always force a state reprogram on init
-Date: Sun,  1 Sep 2024 18:15:50 +0200
-Message-ID: <20240901160818.932574756@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.10 022/149] mptcp: pm: skip connecting to already established sf
+Date: Sun,  1 Sep 2024 18:15:33 +0200
+Message-ID: <20240901160818.299983032@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
 References: <20240901160817.461957599@linuxfoundation.org>
@@ -50,71 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit d420c857d85777663e8d16adfc24463f5d5c2dbc upstream.
+commit bc19ff57637ff563d2bdf2b385b48c41e6509e0d upstream.
 
-Always reprogram the hardware state on init.  This ensures
-the PMFW state is explicitly programmed and we are not relying
-on the default PMFW state.
+The lookup_subflow_by_daddr() helper checks if there is already a
+subflow connected to this address. But there could be a subflow that is
+closing, but taking time due to some reasons: latency, losses, data to
+process, etc.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3131
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c50fe289ed7207f71df3b5f1720512a9620e84fb)
+If an ADD_ADDR is received while the endpoint is being closed, it is
+better to try connecting to it, instead of rejecting it: the peer which
+has sent the ADD_ADDR will not be notified that the ADD_ADDR has been
+rejected for this reason, and the expected subflow will not be created
+at the end.
+
+This helper should then only look for subflows that are established, or
+going to be, but not the ones being closed.
+
+Fixes: d84ad04941c3 ("mptcp: skip connecting the connected address")
 Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/mptcp/pm_netlink.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -2215,8 +2215,9 @@ static int smu_bump_power_profile_mode(s
- }
- 
- static int smu_adjust_power_state_dynamic(struct smu_context *smu,
--				   enum amd_dpm_forced_level level,
--				   bool skip_display_settings)
-+					  enum amd_dpm_forced_level level,
-+					  bool skip_display_settings,
-+					  bool force_update)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -130,12 +130,15 @@ static bool lookup_subflow_by_daddr(cons
  {
- 	int ret = 0;
- 	int index = 0;
-@@ -2245,7 +2246,7 @@ static int smu_adjust_power_state_dynami
- 		}
+ 	struct mptcp_subflow_context *subflow;
+ 	struct mptcp_addr_info cur;
+-	struct sock_common *skc;
+ 
+ 	list_for_each_entry(subflow, list, node) {
+-		skc = (struct sock_common *)mptcp_subflow_tcp_sock(subflow);
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 
+-		remote_address(skc, &cur);
++		if (!((1 << inet_sk_state_load(ssk)) &
++		      (TCPF_ESTABLISHED | TCPF_SYN_SENT | TCPF_SYN_RECV)))
++			continue;
++
++		remote_address((struct sock_common *)ssk, &cur);
+ 		if (mptcp_addresses_equal(&cur, daddr, daddr->port))
+ 			return true;
  	}
- 
--	if (smu_dpm_ctx->dpm_level != level) {
-+	if (force_update || smu_dpm_ctx->dpm_level != level) {
- 		ret = smu_asic_set_performance_level(smu, level);
- 		if (ret) {
- 			dev_err(smu->adev->dev, "Failed to set performance level!");
-@@ -2261,7 +2262,7 @@ static int smu_adjust_power_state_dynami
- 		index = index > 0 && index <= WORKLOAD_POLICY_MAX ? index - 1 : 0;
- 		workload[0] = smu->workload_setting[index];
- 
--		if (smu->power_profile_mode != workload[0])
-+		if (force_update || smu->power_profile_mode != workload[0])
- 			smu_bump_power_profile_mode(smu, workload, 0);
- 	}
- 
-@@ -2282,11 +2283,13 @@ static int smu_handle_task(struct smu_co
- 		ret = smu_pre_display_config_changed(smu);
- 		if (ret)
- 			return ret;
--		ret = smu_adjust_power_state_dynamic(smu, level, false);
-+		ret = smu_adjust_power_state_dynamic(smu, level, false, false);
- 		break;
- 	case AMD_PP_TASK_COMPLETE_INIT:
-+		ret = smu_adjust_power_state_dynamic(smu, level, true, true);
-+		break;
- 	case AMD_PP_TASK_READJUST_POWER_STATE:
--		ret = smu_adjust_power_state_dynamic(smu, level, true);
-+		ret = smu_adjust_power_state_dynamic(smu, level, true, false);
- 		break;
- 	default:
- 		break;
 
 
