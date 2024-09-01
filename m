@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532C6183090;
-	Sun,  1 Sep 2024 16:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5166143C6E;
+	Sun,  1 Sep 2024 16:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725207872; cv=none; b=Xd1kAVr8D7pi0DdxHubmiW+/hSBVy7KZRslfWw57HKU6oqYDCUtk/JRY1er4KnHpXJl404PjPELOqn1YnMsR3tCZyTY/hdW3TyJLhdrrzb11ry0UEC2fwTFgWy6cMFUyFqggRTIjrp24KOhWYpJZCdHk31/gpuhYmMZNZ4XFVwY=
+	t=1725207876; cv=none; b=VCSOhMgoDqz3LXWF8u9c/2XY1YEM9IBhF3QMglGuSP0iSJnLVPCserorcLw7U52vPbpKpmsqExYW+fbmWcMD9tpZ7D3QlsKTN5621TzsyF7FRGOPLzzo1K7K81ZFbgJDFGEVSRocQc6vLxqaFvn6CRBRipGW77ZFZn/yrMpXloc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725207872; c=relaxed/simple;
-	bh=cbNlr86IkxW47XF07SypRkAvqGprWgmhZZSzX1iD3EU=;
+	s=arc-20240116; t=1725207876; c=relaxed/simple;
+	bh=3PGWYWMq16rvRyC6kQGbDRr8bkDighmFhhIdGhtokhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLF/RjeYu/+0DB/AgifVys0Fv0/IpX2Ji4iLfDom8jfwOk1APeApZdNb5GFj6tSvCxBBt7NvZUGevgA1aNoAIzy6SlAUZ43hiBerRwTRAmnvZale2RF+4HZ8AUnWy/AxrQv+c0akYYFO8XI7uxg3AD5ZUHEOcu6f20Oj9JVNhcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2g0+E/jM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNvRNdlqB6wBG/2538qcvWKbht9E5mzXY7i5kVOyxMuKzdwBUPmkQlULi+QHmr/6cSS51cM5pZ+3zvEDq7JOS/O8p9XhtHp67OuXxQWWlpPdXcFmV7LxHB82s7ZDvtdK2RkqxupP5x9NHqYDmva4T8Uxd0JY0OF/TpFmpF42ds8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQLPWIUh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g0+E/jM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD2FC4CEC3;
-	Sun,  1 Sep 2024 16:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQLPWIUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5D0C4CEC3;
+	Sun,  1 Sep 2024 16:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725207872;
-	bh=cbNlr86IkxW47XF07SypRkAvqGprWgmhZZSzX1iD3EU=;
+	s=korg; t=1725207875;
+	bh=3PGWYWMq16rvRyC6kQGbDRr8bkDighmFhhIdGhtokhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2g0+E/jM+xvzQT5oRiRl5UMcAtLMDZD3XI5RfLonzHm3sRIqk8zTyhpHpHEMYlAMe
-	 dgS3KJDrg0uN7cxD31YZmQhgs/eF7aeL2XkgEL66Co48Cf7iHeIT8+GbRMZl256WxE
-	 TVg1wC7McEjOBfRfkBmygq5dkwmFNq1YszCVXHfQ=
+	b=TQLPWIUh9+4rmRG+ScAV65p4l0De95lg5FtDtsdusQ63lgqT6XP8eSmTKRq7DfZwo
+	 VCplU8Jm+QLb+woHls+8R4tKS6kRx0Zo2LwaLe1UROS+hyB/xo9w7Bn3G4nT4b+J08
+	 zjF1begS7tab5Y2q+iOLBI81n1CBqvgbytKtR2kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 4.19 95/98] usb: core: sysfs: Unmerge @usb3_hardware_lpm_attr_group in remove_power_attributes()
-Date: Sun,  1 Sep 2024 18:17:05 +0200
-Message-ID: <20240901160807.280589104@linuxfoundation.org>
+	Michael Gordon <m.gordon.zelenoborsky@gmail.com>,
+	Ben Hutchings <benh@debian.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 96/98] scsi: aacraid: Fix double-free on probe failure
+Date: Sun,  1 Sep 2024 18:17:06 +0200
+Message-ID: <20240901160807.319016392@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
 References: <20240901160803.673617007@linuxfoundation.org>
@@ -49,32 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit 3a8839bbb86da7968a792123ed2296d063871a52 upstream.
+[ Upstream commit 919ddf8336f0b84c0453bac583808c9f165a85c2 ]
 
-Device attribute group @usb3_hardware_lpm_attr_group is merged by
-add_power_attributes(), but it is not unmerged explicitly, fixed by
-unmerging it in remove_power_attributes().
+aac_probe_one() calls hardware-specific init functions through the
+aac_driver_ident::init pointer, all of which eventually call down to
+aac_init_adapter().
 
-Fixes: 655fe4effe0f ("usbcore: add sysfs support to xHCI usb3 hardware LPM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240820-sysfs_fix-v2-1-a9441487077e@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If aac_init_adapter() fails after allocating memory for aac_dev::queues,
+it frees the memory but does not clear that member.
+
+After the hardware-specific init function returns an error,
+aac_probe_one() goes down an error path that frees the memory pointed to
+by aac_dev::queues, resulting.in a double-free.
+
+Reported-by: Michael Gordon <m.gordon.zelenoborsky@gmail.com>
+Link: https://bugs.debian.org/1075855
+Fixes: 8e0c5ebde82b ("[SCSI] aacraid: Newer adapter communication iterface support")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Link: https://lore.kernel.org/r/ZsZvfqlQMveoL5KQ@decadent.org.uk
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/sysfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/aacraid/comminit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -689,6 +689,7 @@ static int add_power_attributes(struct d
+diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
+index 0dc7b5a4fea25..0378fd3eb0392 100644
+--- a/drivers/scsi/aacraid/comminit.c
++++ b/drivers/scsi/aacraid/comminit.c
+@@ -652,6 +652,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
  
- static void remove_power_attributes(struct device *dev)
- {
-+	sysfs_unmerge_group(&dev->kobj, &usb3_hardware_lpm_attr_group);
- 	sysfs_unmerge_group(&dev->kobj, &usb2_hardware_lpm_attr_group);
- 	sysfs_unmerge_group(&dev->kobj, &power_attr_group);
- }
+ 	if (aac_comm_init(dev)<0){
+ 		kfree(dev->queues);
++		dev->queues = NULL;
+ 		return NULL;
+ 	}
+ 	/*
+@@ -659,6 +660,7 @@ struct aac_dev *aac_init_adapter(struct aac_dev *dev)
+ 	 */
+ 	if (aac_fib_setup(dev) < 0) {
+ 		kfree(dev->queues);
++		dev->queues = NULL;
+ 		return NULL;
+ 	}
+ 		
+-- 
+2.43.0
+
 
 
