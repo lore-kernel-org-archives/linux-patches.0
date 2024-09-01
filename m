@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E6628387;
-	Sun,  1 Sep 2024 16:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F14844C97;
+	Sun,  1 Sep 2024 16:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208091; cv=none; b=LcWe/c+wXARGWU4nmqO4hj0mGu8k9N/S9PbElGMFwToitEsm17cHLgDpTjUyVlvygXWfMb6aiNp/6xTCmUFM1OHUk0cz+cCWls2ZbxUss5mSmXxlUb8qWF+b5+1D0o1qdaIs49TbXslIp+WLcfwCyAbhh1P0NqVvyjWS9UDgNfU=
+	t=1725208095; cv=none; b=NT38Sx9XIvIPErgXcDIT+GN6og5/KWtQXqNFLTjQKZ5Mypbr39Fk4RERKPEOTtnMvWKVdBghMvY9S/RQdPbtAmIUuI2wamDnFAfh1CT9j8Q0hxhceIxajK9aaVUs1V0BeopBqxRDqLq46IL6BZP+GLZd0Bm/WECT951WzhLdI+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208091; c=relaxed/simple;
-	bh=tBnPg8zLTlNbv3OwcGIkIOrrtOcX9mVUb9d03S3njgY=;
+	s=arc-20240116; t=1725208095; c=relaxed/simple;
+	bh=bOwNR/N2MNGLAfivG3k3UhTbUzTxk+g0Xl/tAr+mBFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tT8tO/pHitIMU/9I1Sv2ig3iva3rPumaSRXOCExxDamXPIGT14pV5vxcIh8Mr+D0Sm+nIGufMSZGy7lMTRTPiD6zVG41/ChN/Holg3QkSIB2Eh3YaQlDgYcxTCxeU0LoOhx+a9aoyCCaQCh+dV0BgO/m0Vrqp5Ts/v+Qach9e6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWpf5ddn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKDzDCJrixsyHn1e+YXdZorX309ZtxIYtpcojC28G1K4jtKwRTuQnXQE0obaU4QP0nqnE2us51imUVC/SxmLRVxXrpDT5pRgMZFAwU/o50t29EEAEC9bwW9KKyqxRwlhPm/UyNpT+rzMYZXDYYMz67hLv/Rqb7MoULHcCuOo9+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDY8xtuY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWpf5ddn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2CAC4CEC3;
-	Sun,  1 Sep 2024 16:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDY8xtuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F92C4CEC3;
+	Sun,  1 Sep 2024 16:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208091;
-	bh=tBnPg8zLTlNbv3OwcGIkIOrrtOcX9mVUb9d03S3njgY=;
+	s=korg; t=1725208095;
+	bh=bOwNR/N2MNGLAfivG3k3UhTbUzTxk+g0Xl/tAr+mBFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWpf5ddnXtRXm8EV7Wrh1T7V1AOsn2iAMENbLKApWyti9G+SHgGpYy9YnjNhfmB7h
-	 ITKVv2sagi1nlNirxzLjxI9CeDD2p0mDx1Xw0JJxxW9VD/o/zg9cC0mkynOvvF0iHd
-	 NE2xA/hLlYW6/zGCBoSfzmdfzhz/c25BQ/Hc19pA=
+	b=lDY8xtuYXFPmZ2GMmV1WPaZgC6OyfFaS8uBI9UE1XhENRIeffI9+/bI2HEDZ9HUHf
+	 ZIKpALA2psGwUHb8Zp7bXmgtSLP7nOtyoBDMbFJeNIk4PQ7+eJ1gd3CQCmqEmD09fd
+	 dwR/Kkh37b5Biu4tDXan8YnIxYi6j77AjtXOAlFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 63/93] bonding: extract the use of real_device into local variable
-Date: Sun,  1 Sep 2024 18:16:50 +0200
-Message-ID: <20240901160809.735140482@linuxfoundation.org>
+	Amit Pundir <amit.pundir@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 72/93] soc: qcom: pmic_glink: Fix race during initialization
+Date: Sun,  1 Sep 2024 18:16:59 +0200
+Message-ID: <20240901160810.447896250@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
 References: <20240901160807.346406833@linuxfoundation.org>
@@ -55,175 +57,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 907ed83a7583e8ffede88c5ac088392701a7d458 ]
+commit 3568affcddd68743e25aa3ec1647d9b82797757b upstream.
 
-Add a local variable for slave->dev, to prepare for the lock change in
-the next patch. There is no functionality change.
+As pointed out by Stephen Boyd it is possible that during initialization
+of the pmic_glink child drivers, the protection-domain notifiers fires,
+and the associated work is scheduled, before the client registration
+returns and as a result the local "client" pointer has been initialized.
 
-Fixes: 9a5605505d9c ("bonding: Add struct bond_ipesc to manage SA")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20240823031056.110999-3-jianbol@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The outcome of this is a NULL pointer dereference as the "client"
+pointer is blindly dereferenced.
+
+Timeline provided by Stephen:
+ CPU0                               CPU1
+ ----                               ----
+ ucsi->client = NULL;
+ devm_pmic_glink_register_client()
+  client->pdr_notify(client->priv, pg->client_state)
+   pmic_glink_ucsi_pdr_notify()
+    schedule_work(&ucsi->register_work)
+    <schedule away>
+                                    pmic_glink_ucsi_register()
+                                     ucsi_register()
+                                      pmic_glink_ucsi_read_version()
+                                       pmic_glink_ucsi_read()
+                                        pmic_glink_ucsi_read()
+                                         pmic_glink_send(ucsi->client)
+                                         <client is NULL BAD>
+ ucsi->client = client // Too late!
+
+This code is identical across the altmode, battery manager and usci
+child drivers.
+
+Resolve this by splitting the allocation of the "client" object and the
+registration thereof into two operations.
+
+This only happens if the protection domain registry is populated at the
+time of registration, which by the introduction of commit '1ebcde047c54
+("soc: qcom: add pd-mapper implementation")' became much more likely.
+
+Reported-by: Amit Pundir <amit.pundir@linaro.org>
+Closes: https://lore.kernel.org/all/CAMi1Hd2_a7TjA7J9ShrAbNOd_CoZ3D87twmO5t+nZxC9sX18tA@mail.gmail.com/
+Reported-by: Johan Hovold <johan@kernel.org>
+Closes: https://lore.kernel.org/all/ZqiyLvP0gkBnuekL@hovoldconsulting.com/
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Closes: https://lore.kernel.org/all/CAE-0n52JgfCBWiFQyQWPji8cq_rCsviBpW-m72YitgNfdaEhQg@mail.gmail.com/
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Link: https://lore.kernel.org/r/20240820-pmic-glink-v6-11-races-v3-1-eec53c750a04@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c | 58 +++++++++++++++++++--------------
- 1 file changed, 33 insertions(+), 25 deletions(-)
+ drivers/power/supply/qcom_battmgr.c   |   16 ++++++++++------
+ drivers/soc/qcom/pmic_glink.c         |   28 ++++++++++++++++++----------
+ drivers/soc/qcom/pmic_glink_altmode.c |   17 +++++++++++------
+ drivers/usb/typec/ucsi/ucsi_glink.c   |   16 ++++++++++------
+ include/linux/soc/qcom/pmic_glink.h   |   11 ++++++-----
+ 5 files changed, 55 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index c166c4b8cee78..6f61bb2f4b901 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -427,6 +427,7 @@ static int bond_ipsec_add_sa(struct xfrm_state *xs,
- 			     struct netlink_ext_ack *extack)
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -1384,12 +1384,16 @@ static int qcom_battmgr_probe(struct aux
+ 					     "failed to register wireless charing power supply\n");
+ 	}
+ 
+-	battmgr->client = devm_pmic_glink_register_client(dev,
+-							  PMIC_GLINK_OWNER_BATTMGR,
+-							  qcom_battmgr_callback,
+-							  qcom_battmgr_pdr_notify,
+-							  battmgr);
+-	return PTR_ERR_OR_ZERO(battmgr->client);
++	battmgr->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_BATTMGR,
++						       qcom_battmgr_callback,
++						       qcom_battmgr_pdr_notify,
++						       battmgr);
++	if (IS_ERR(battmgr->client))
++		return PTR_ERR(battmgr->client);
++
++	pmic_glink_client_register(battmgr->client);
++
++	return 0;
+ }
+ 
+ static const struct auxiliary_device_id qcom_battmgr_id_table[] = {
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -69,15 +69,14 @@ static void _devm_pmic_glink_release_cli
+ 	spin_unlock_irqrestore(&pg->client_lock, flags);
+ }
+ 
+-struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
+-							  unsigned int id,
+-							  void (*cb)(const void *, size_t, void *),
+-							  void (*pdr)(void *, int),
+-							  void *priv)
++struct pmic_glink_client *devm_pmic_glink_client_alloc(struct device *dev,
++						       unsigned int id,
++						       void (*cb)(const void *, size_t, void *),
++						       void (*pdr)(void *, int),
++						       void *priv)
  {
- 	struct net_device *bond_dev = xs->xso.dev;
-+	struct net_device *real_dev;
- 	struct bond_ipsec *ipsec;
- 	struct bonding *bond;
- 	struct slave *slave;
-@@ -443,9 +444,10 @@ static int bond_ipsec_add_sa(struct xfrm_state *xs,
- 		return -ENODEV;
- 	}
+ 	struct pmic_glink_client *client;
+ 	struct pmic_glink *pg = dev_get_drvdata(dev->parent);
+-	unsigned long flags;
  
--	if (!slave->dev->xfrmdev_ops ||
--	    !slave->dev->xfrmdev_ops->xdo_dev_state_add ||
--	    netif_is_bond_master(slave->dev)) {
-+	real_dev = slave->dev;
-+	if (!real_dev->xfrmdev_ops ||
-+	    !real_dev->xfrmdev_ops->xdo_dev_state_add ||
-+	    netif_is_bond_master(real_dev)) {
- 		NL_SET_ERR_MSG_MOD(extack, "Slave does not support ipsec offload");
- 		rcu_read_unlock();
- 		return -EINVAL;
-@@ -456,9 +458,9 @@ static int bond_ipsec_add_sa(struct xfrm_state *xs,
- 		rcu_read_unlock();
- 		return -ENOMEM;
- 	}
--	xs->xso.real_dev = slave->dev;
+ 	client = devres_alloc(_devm_pmic_glink_release_client, sizeof(*client), GFP_KERNEL);
+ 	if (!client)
+@@ -88,6 +87,18 @@ struct pmic_glink_client *devm_pmic_glin
+ 	client->cb = cb;
+ 	client->pdr_notify = pdr;
+ 	client->priv = priv;
++	INIT_LIST_HEAD(&client->node);
++
++	devres_add(dev, client);
++
++	return client;
++}
++EXPORT_SYMBOL_GPL(devm_pmic_glink_client_alloc);
++
++void pmic_glink_client_register(struct pmic_glink_client *client)
++{
++	struct pmic_glink *pg = client->pg;
++	unsigned long flags;
  
--	err = slave->dev->xfrmdev_ops->xdo_dev_state_add(xs, extack);
-+	xs->xso.real_dev = real_dev;
-+	err = real_dev->xfrmdev_ops->xdo_dev_state_add(xs, extack);
- 	if (!err) {
- 		ipsec->xs = xs;
- 		INIT_LIST_HEAD(&ipsec->list);
-@@ -475,6 +477,7 @@ static int bond_ipsec_add_sa(struct xfrm_state *xs,
- static void bond_ipsec_add_sa_all(struct bonding *bond)
+ 	mutex_lock(&pg->state_lock);
+ 	spin_lock_irqsave(&pg->client_lock, flags);
+@@ -98,11 +109,8 @@ struct pmic_glink_client *devm_pmic_glin
+ 	spin_unlock_irqrestore(&pg->client_lock, flags);
+ 	mutex_unlock(&pg->state_lock);
+ 
+-	devres_add(dev, client);
+-
+-	return client;
+ }
+-EXPORT_SYMBOL_GPL(devm_pmic_glink_register_client);
++EXPORT_SYMBOL_GPL(pmic_glink_client_register);
+ 
+ int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len)
  {
- 	struct net_device *bond_dev = bond->dev;
-+	struct net_device *real_dev;
- 	struct bond_ipsec *ipsec;
- 	struct slave *slave;
- 
-@@ -483,12 +486,13 @@ static void bond_ipsec_add_sa_all(struct bonding *bond)
- 	if (!slave)
- 		goto out;
- 
--	if (!slave->dev->xfrmdev_ops ||
--	    !slave->dev->xfrmdev_ops->xdo_dev_state_add ||
--	    netif_is_bond_master(slave->dev)) {
-+	real_dev = slave->dev;
-+	if (!real_dev->xfrmdev_ops ||
-+	    !real_dev->xfrmdev_ops->xdo_dev_state_add ||
-+	    netif_is_bond_master(real_dev)) {
- 		spin_lock_bh(&bond->ipsec_lock);
- 		if (!list_empty(&bond->ipsec_list))
--			slave_warn(bond_dev, slave->dev,
-+			slave_warn(bond_dev, real_dev,
- 				   "%s: no slave xdo_dev_state_add\n",
- 				   __func__);
- 		spin_unlock_bh(&bond->ipsec_lock);
-@@ -497,9 +501,9 @@ static void bond_ipsec_add_sa_all(struct bonding *bond)
- 
- 	spin_lock_bh(&bond->ipsec_lock);
- 	list_for_each_entry(ipsec, &bond->ipsec_list, list) {
--		ipsec->xs->xso.real_dev = slave->dev;
--		if (slave->dev->xfrmdev_ops->xdo_dev_state_add(ipsec->xs, NULL)) {
--			slave_warn(bond_dev, slave->dev, "%s: failed to add SA\n", __func__);
-+		ipsec->xs->xso.real_dev = real_dev;
-+		if (real_dev->xfrmdev_ops->xdo_dev_state_add(ipsec->xs, NULL)) {
-+			slave_warn(bond_dev, real_dev, "%s: failed to add SA\n", __func__);
- 			ipsec->xs->xso.real_dev = NULL;
- 		}
- 	}
-@@ -515,6 +519,7 @@ static void bond_ipsec_add_sa_all(struct bonding *bond)
- static void bond_ipsec_del_sa(struct xfrm_state *xs)
- {
- 	struct net_device *bond_dev = xs->xso.dev;
-+	struct net_device *real_dev;
- 	struct bond_ipsec *ipsec;
- 	struct bonding *bond;
- 	struct slave *slave;
-@@ -532,16 +537,17 @@ static void bond_ipsec_del_sa(struct xfrm_state *xs)
- 	if (!xs->xso.real_dev)
- 		goto out;
- 
--	WARN_ON(xs->xso.real_dev != slave->dev);
-+	real_dev = slave->dev;
-+	WARN_ON(xs->xso.real_dev != real_dev);
- 
--	if (!slave->dev->xfrmdev_ops ||
--	    !slave->dev->xfrmdev_ops->xdo_dev_state_delete ||
--	    netif_is_bond_master(slave->dev)) {
--		slave_warn(bond_dev, slave->dev, "%s: no slave xdo_dev_state_delete\n", __func__);
-+	if (!real_dev->xfrmdev_ops ||
-+	    !real_dev->xfrmdev_ops->xdo_dev_state_delete ||
-+	    netif_is_bond_master(real_dev)) {
-+		slave_warn(bond_dev, real_dev, "%s: no slave xdo_dev_state_delete\n", __func__);
- 		goto out;
+--- a/drivers/soc/qcom/pmic_glink_altmode.c
++++ b/drivers/soc/qcom/pmic_glink_altmode.c
+@@ -529,12 +529,17 @@ static int pmic_glink_altmode_probe(stru
+ 			return ret;
  	}
  
--	slave->dev->xfrmdev_ops->xdo_dev_state_delete(xs);
-+	real_dev->xfrmdev_ops->xdo_dev_state_delete(xs);
- out:
- 	spin_lock_bh(&bond->ipsec_lock);
- 	list_for_each_entry(ipsec, &bond->ipsec_list, list) {
-@@ -558,6 +564,7 @@ static void bond_ipsec_del_sa(struct xfrm_state *xs)
- static void bond_ipsec_del_sa_all(struct bonding *bond)
- {
- 	struct net_device *bond_dev = bond->dev;
-+	struct net_device *real_dev;
- 	struct bond_ipsec *ipsec;
- 	struct slave *slave;
+-	altmode->client = devm_pmic_glink_register_client(dev,
+-							  altmode->owner_id,
+-							  pmic_glink_altmode_callback,
+-							  pmic_glink_altmode_pdr_notify,
+-							  altmode);
+-	return PTR_ERR_OR_ZERO(altmode->client);
++	altmode->client = devm_pmic_glink_client_alloc(dev,
++						       altmode->owner_id,
++						       pmic_glink_altmode_callback,
++						       pmic_glink_altmode_pdr_notify,
++						       altmode);
++	if (IS_ERR(altmode->client))
++		return PTR_ERR(altmode->client);
++
++	pmic_glink_client_register(altmode->client);
++
++	return 0;
+ }
  
-@@ -568,21 +575,22 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
- 		return;
+ static const struct auxiliary_device_id pmic_glink_altmode_id_table[] = {
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -376,12 +376,16 @@ static int pmic_glink_ucsi_probe(struct
+ 					"failed to acquire orientation-switch\n");
  	}
  
-+	real_dev = slave->dev;
- 	spin_lock_bh(&bond->ipsec_lock);
- 	list_for_each_entry(ipsec, &bond->ipsec_list, list) {
- 		if (!ipsec->xs->xso.real_dev)
- 			continue;
+-	ucsi->client = devm_pmic_glink_register_client(dev,
+-						       PMIC_GLINK_OWNER_USBC,
+-						       pmic_glink_ucsi_callback,
+-						       pmic_glink_ucsi_pdr_notify,
+-						       ucsi);
+-	return PTR_ERR_OR_ZERO(ucsi->client);
++	ucsi->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_USBC,
++						    pmic_glink_ucsi_callback,
++						    pmic_glink_ucsi_pdr_notify,
++						    ucsi);
++	if (IS_ERR(ucsi->client))
++		return PTR_ERR(ucsi->client);
++
++	pmic_glink_client_register(ucsi->client);
++
++	return 0;
+ }
  
--		if (!slave->dev->xfrmdev_ops ||
--		    !slave->dev->xfrmdev_ops->xdo_dev_state_delete ||
--		    netif_is_bond_master(slave->dev)) {
--			slave_warn(bond_dev, slave->dev,
-+		if (!real_dev->xfrmdev_ops ||
-+		    !real_dev->xfrmdev_ops->xdo_dev_state_delete ||
-+		    netif_is_bond_master(real_dev)) {
-+			slave_warn(bond_dev, real_dev,
- 				   "%s: no slave xdo_dev_state_delete\n",
- 				   __func__);
- 		} else {
--			slave->dev->xfrmdev_ops->xdo_dev_state_delete(ipsec->xs);
--			if (slave->dev->xfrmdev_ops->xdo_dev_state_free)
--				slave->dev->xfrmdev_ops->xdo_dev_state_free(ipsec->xs);
-+			real_dev->xfrmdev_ops->xdo_dev_state_delete(ipsec->xs);
-+			if (real_dev->xfrmdev_ops->xdo_dev_state_free)
-+				real_dev->xfrmdev_ops->xdo_dev_state_free(ipsec->xs);
- 		}
- 	}
- 	spin_unlock_bh(&bond->ipsec_lock);
--- 
-2.43.0
-
+ static void pmic_glink_ucsi_remove(struct auxiliary_device *adev)
+--- a/include/linux/soc/qcom/pmic_glink.h
++++ b/include/linux/soc/qcom/pmic_glink.h
+@@ -23,10 +23,11 @@ struct pmic_glink_hdr {
+ 
+ int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len);
+ 
+-struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
+-							  unsigned int id,
+-							  void (*cb)(const void *, size_t, void *),
+-							  void (*pdr)(void *, int),
+-							  void *priv);
++struct pmic_glink_client *devm_pmic_glink_client_alloc(struct device *dev,
++						       unsigned int id,
++						       void (*cb)(const void *, size_t, void *),
++						       void (*pdr)(void *, int),
++						       void *priv);
++void pmic_glink_client_register(struct pmic_glink_client *client);
+ 
+ #endif
 
 
