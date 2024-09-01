@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C8F381BD;
-	Sun,  1 Sep 2024 17:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689AC17C;
+	Sun,  1 Sep 2024 17:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210203; cv=none; b=K9i7QQhEtLu3w51Tdn+Ts6U9KilI0EIL6o2obWEHw7vr63Q56DPpIh61dwbdSnC+KAGwX/3qgEMNCfq7spjaZx1XoWbo2rHb6r1lI2hqtiQlMRTMvzK9GBINQbRkXE0r7Ac1perzMiZHS0MaAaxDqh3W0mb7ZsjIzBqhsqZHsnA=
+	t=1725210206; cv=none; b=R5fTEu6Wd+ZTqEG5V/QmHMP53RwowdSiC6h8U+fIjx8HZCV76hkGVWk2mGsTrmNg+eoTv09vReBhR7o6ts6MsbcIUHfwcCCd+4Dar+trsSW1vJ3h2oCygxlZvi14m0KABEg+tFW/xBr/DzawfXfts8o4j/n7yvd+EiuUS7m3JZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210203; c=relaxed/simple;
-	bh=w8G5KHM9Erufzp8I7zw1NRWgUUfX1BxSebAywSSOR3c=;
+	s=arc-20240116; t=1725210206; c=relaxed/simple;
+	bh=+eR23HIqlZIqADekeVtm4+x/E41IeeKmIDhckyjH29U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJTZsWXuHnKrINDW15OgkF9NaOpMoI6QZOlxMx3WfAsfyRLKxwJI3gfq63ShHGcL96TjJuvs++u/44oB3/XIPKGFiQfDDRWZYyKGV8Q/W5ixLPsA2jkhvqi9aShDCbUtN5Gg7QH3RHqB4GqGI12ICLoF0cbH5gJHZW53ne7XCeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1nqaJIF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kskXQJ2r/0MyjYifQAAligzDkK4XRwqmA0YFIcwE6R0pbEXj9ck9NZ4G3wmUIVaSKKOzPhazjBI5a4/DubQo2Us+AO0KSm3I1P8pHidycfcux1wzCZP+H+EvLiG0Xt4eGQEkMRRQzUgY5KN+5AyYlBEhaEvdu+IyoRHe2dOCOVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOMLJ4Iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1nqaJIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67241C4CEC3;
-	Sun,  1 Sep 2024 17:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOMLJ4Iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79555C4CEC3;
+	Sun,  1 Sep 2024 17:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210202;
-	bh=w8G5KHM9Erufzp8I7zw1NRWgUUfX1BxSebAywSSOR3c=;
+	s=korg; t=1725210206;
+	bh=+eR23HIqlZIqADekeVtm4+x/E41IeeKmIDhckyjH29U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1nqaJIFzwL9IgNZJ99HOGmT/A5ZFwfoKtr0x7UOi5pJJ+lcTZWwVknma7DkejKdc
-	 DIS+sWVZnhjqMmRI8OJO6Q0t+KZIbNsDq8wOdOy0kGy1uAYTKiAjEVyr/Wu89G2RBa
-	 BAAy9b2CjHDBiMp5tluAAtFrE3XkqggAmfuJwzfc=
+	b=OOMLJ4Iy0eSBwUqSC3BFbZBorVSighvYBqY5dh4pJSgg+WI8x8rFBmE73B7xIWBdi
+	 Qmc4t2qMq43GGojzAL0IFMTg1F+i5lmBYY9xbFaChJPdUvj214qn2leJOE1QXZhSeW
+	 kvOvR5z+QgpyWsYe6eXTGagQRMKeHtQtwJ3+TI0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 120/215] sunrpc: pass in the sv_stats struct through svc_create_pooled
-Date: Sun,  1 Sep 2024 18:17:12 +0200
-Message-ID: <20240901160827.891007905@linuxfoundation.org>
+	Julia Lawall <julia.lawall@inria.fr>,
+	Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 103/215] fbdev: offb: replace of_node_put with __free(device_node)
+Date: Sun,  1 Sep 2024 18:16:55 +0200
+Message-ID: <20240901160827.241975147@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -51,104 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
 
-[ Upstream commit f094323867668d50124886ad884b665de7319537 ]
+[ Upstream commit ce4a7ae84a58b9f33aae8d6c769b3c94f3d5ce76 ]
 
-Since only one service actually reports the rpc stats there's not much
-of a reason to have a pointer to it in the svc_program struct.  Adjust
-the svc_create_pooled function to take the sv_stats as an argument and
-pass the struct through there as desired instead of getting it from the
-svc_program->pg_stats.
+Replaced instance of of_node_put with __free(device_node)
+to simplify code and protect against any memory leaks
+due to future changes in the control flow.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-[ cel: adjusted to apply to v5.15.y ]
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Julia Lawall <julia.lawall@inria.fr>
+Signed-off-by: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c           |    3 ++-
- include/linux/sunrpc/svc.h |    4 +++-
- net/sunrpc/svc.c           |   12 +++++++-----
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/video/fbdev/offb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -665,7 +665,8 @@ int nfsd_create_serv(struct net *net)
- 	if (nfsd_max_blksize == 0)
- 		nfsd_max_blksize = nfsd_get_default_max_blksize();
- 	nfsd_reset_versions(nn);
--	serv = svc_create_pooled(&nfsd_program, nfsd_max_blksize, nfsd);
-+	serv = svc_create_pooled(&nfsd_program, &nfsd_svcstats,
-+				 nfsd_max_blksize, nfsd);
- 	if (serv == NULL)
- 		return -ENOMEM;
- 
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -483,7 +483,9 @@ void		   svc_rqst_replace_page(struct sv
- 					 struct page *page);
- void		   svc_rqst_free(struct svc_rqst *);
- void		   svc_exit_thread(struct svc_rqst *);
--struct svc_serv *  svc_create_pooled(struct svc_program *, unsigned int,
-+struct svc_serv *  svc_create_pooled(struct svc_program *prog,
-+				     struct svc_stat *stats,
-+				     unsigned int bufsize,
- 				     int (*threadfn)(void *data));
- int		   svc_set_num_threads(struct svc_serv *, struct svc_pool *, int);
- int		   svc_pool_stats_open(struct svc_serv *serv, struct file *file);
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -447,8 +447,8 @@ __svc_init_bc(struct svc_serv *serv)
-  * Create an RPC service
-  */
- static struct svc_serv *
--__svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
--	     int (*threadfn)(void *data))
-+__svc_create(struct svc_program *prog, struct svc_stat *stats,
-+	     unsigned int bufsize, int npools, int (*threadfn)(void *data))
- {
- 	struct svc_serv	*serv;
- 	unsigned int vers;
-@@ -460,7 +460,7 @@ __svc_create(struct svc_program *prog, u
- 	serv->sv_name      = prog->pg_name;
- 	serv->sv_program   = prog;
- 	kref_init(&serv->sv_refcnt);
--	serv->sv_stats     = prog->pg_stats;
-+	serv->sv_stats     = stats;
- 	if (bufsize > RPCSVC_MAXPAYLOAD)
- 		bufsize = RPCSVC_MAXPAYLOAD;
- 	serv->sv_max_payload = bufsize? bufsize : 4096;
-@@ -522,26 +522,28 @@ __svc_create(struct svc_program *prog, u
- struct svc_serv *svc_create(struct svc_program *prog, unsigned int bufsize,
- 			    int (*threadfn)(void *data))
- {
--	return __svc_create(prog, bufsize, 1, threadfn);
-+	return __svc_create(prog, NULL, bufsize, 1, threadfn);
- }
- EXPORT_SYMBOL_GPL(svc_create);
- 
- /**
-  * svc_create_pooled - Create an RPC service with pooled threads
-  * @prog: the RPC program the new service will handle
-+ * @stats: the stats struct if desired
-  * @bufsize: maximum message size for @prog
-  * @threadfn: a function to service RPC requests for @prog
-  *
-  * Returns an instantiated struct svc_serv object or NULL.
-  */
- struct svc_serv *svc_create_pooled(struct svc_program *prog,
-+				   struct svc_stat *stats,
- 				   unsigned int bufsize,
- 				   int (*threadfn)(void *data))
- {
- 	struct svc_serv *serv;
- 	unsigned int npools = svc_pool_map_get();
- 
--	serv = __svc_create(prog, bufsize, npools, threadfn);
-+	serv = __svc_create(prog, stats, bufsize, npools, threadfn);
- 	if (!serv)
- 		goto out_err;
- 	return serv;
+diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
+index 4501e848a36f2..766adaf2618c5 100644
+--- a/drivers/video/fbdev/offb.c
++++ b/drivers/video/fbdev/offb.c
+@@ -354,7 +354,7 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+ 			par->cmap_type = cmap_gxt2000;
+ 	} else if (of_node_name_prefix(dp, "vga,Display-")) {
+ 		/* Look for AVIVO initialized by SLOF */
+-		struct device_node *pciparent = of_get_parent(dp);
++		struct device_node *pciparent __free(device_node) = of_get_parent(dp);
+ 		const u32 *vid, *did;
+ 		vid = of_get_property(pciparent, "vendor-id", NULL);
+ 		did = of_get_property(pciparent, "device-id", NULL);
+@@ -366,7 +366,6 @@ static void offb_init_palette_hacks(struct fb_info *info, struct device_node *dp
+ 			if (par->cmap_adr)
+ 				par->cmap_type = cmap_avivo;
+ 		}
+-		of_node_put(pciparent);
+ 	} else if (dp && of_device_is_compatible(dp, "qemu,std-vga")) {
+ #ifdef __BIG_ENDIAN
+ 		const __be32 io_of_addr[3] = { 0x01000000, 0x0, 0x0 };
+-- 
+2.43.0
+
 
 
