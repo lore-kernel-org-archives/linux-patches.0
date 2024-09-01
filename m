@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1621C68C;
-	Sun,  1 Sep 2024 16:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264731C68C;
+	Sun,  1 Sep 2024 16:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208781; cv=none; b=iXfh1ijRsn8JhZgevII0IpcrMCHn86YkQxe7ABaED6h7bCiVAgP7rE6nG7u6zMzvb3XLxc6phmxWYspUXCkjmTatOPJBfir7Oij/5aWGCt93n/aJFTf+E3iinDpAjLr25Czn/fvwvOmQk4K1PijIssPJLooFo7a1FgGWDCXKO4M=
+	t=1725208785; cv=none; b=Yz/NtqKG+ncN+xirzGsfC1f8IZeH4Q4C3Sp9VXA0505NUMnGcauZc72z0CYPjUgitdhu9Pf2IIpblXm4AU99D1Pl27W7nwY+l+xnFlT82KF+y8T0ewhIWG79UFo5wUE61P+g8pVoIvpoXmCAbepCcmAOBJHdQ1Gf405X49nuM9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208781; c=relaxed/simple;
-	bh=xcQGi0PyUXJrMft/UH/4VPtTzIX333fdhJwkmvwPckk=;
+	s=arc-20240116; t=1725208785; c=relaxed/simple;
+	bh=KHGLogeJaMubrSo6A9PK9pqIxItqhErOE7j1iz+HTRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bc3ycxFDAXUonDHGazRmN/Rll+MpXqJcYKT72o452zEyKpG7lsDhdZW2zX0Zzx3kgb+xGvGQlV7tv/LUVgtGhzoWOxfBOeuwfqzkK99klLQ5DVBNaqcznnOZfA6SdAW6SWPv96HWPCKw1TLVR7iaZgUTs4JX+90rdw1uV5tT3w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDEPZDnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6pS/aNlETEYyum5CERdriXBQmCX4gBZB13ndfXJDvD77/j+2GYIQQXLHyr/HRk2sDjzVx8TbsqfeDpX0RXhLB8glDEtOYJeMQlYga9V/pxPmYhxM+/jn9TGJ/RHMnJIdbUDzc1BU/0dFtxrLKyQUvKbLwJ/fDqkjEIw2JU5hEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIGTn1hM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDEPZDnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610DBC4CEC3;
-	Sun,  1 Sep 2024 16:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIGTn1hM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F436C4CEC3;
+	Sun,  1 Sep 2024 16:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208781;
-	bh=xcQGi0PyUXJrMft/UH/4VPtTzIX333fdhJwkmvwPckk=;
+	s=korg; t=1725208785;
+	bh=KHGLogeJaMubrSo6A9PK9pqIxItqhErOE7j1iz+HTRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oDEPZDnL3hQwWw1vl6wbeXAAcRLt4GWFp5DO9H8yMbNeMSgJejex/5WoHNy2AH0L1
-	 STXMaRAFtDjnoMA3TtLfgS7nw/RawI6AnR+7aG4zXP+APcubCcy99nOe3aOERVi0kc
-	 nLPyi26X41c/T55hACAlBlmqwhGqFU2mlxz7LEWk=
+	b=TIGTn1hM5f9JGbsEo01Z2ibVG+R+6Sh2DRXBPvOkdluAyyTcZ8hY6PfDWfG93JWi0
+	 ByS+JJr74KNkOwiA84EJdsW74eYQzS02qU4M6FjhXfaFIlO/SSIJRW+hqklOKyDUFt
+	 pndqV6t+L6ux7rde1inJOy1s2+Mmj6cSUEbigluw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 020/134] net: axienet: Improve DMA error handling
-Date: Sun,  1 Sep 2024 18:16:06 +0200
-Message-ID: <20240901160810.870303224@linuxfoundation.org>
+Subject: [PATCH 5.4 038/134] gfs2: setattr_chown: Add missing initialization
+Date: Sun,  1 Sep 2024 18:16:24 +0200
+Message-ID: <20240901160811.543703986@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -52,48 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit e7fea0b9d09e2f7d32776f5198192dfc2572a5b9 ]
+[ Upstream commit 2d8d7990619878a848b1d916c2f936d3012ee17d ]
 
-Since 0 is a valid DMA address, we cannot use the physical address to
-check whether a TX descriptor is valid and is holding a DMA mapping.
+Add a missing initialization of variable ap in setattr_chown().
+Without, chown() may be able to bypass quotas.
 
-Use the "cntrl" member of the descriptor to make this decision, as it
-contains at least the length of the buffer, so 0 points to an
-uninitialised buffer.
-
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@xilinx.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9ff2f816e2aa ("net: axienet: Fix register defines comment description")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/gfs2/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 27901bb7cd5b5..22222d79e4902 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -572,7 +572,7 @@ static void axienet_start_xmit_done(struct net_device *ndev)
- 				DMA_TO_DEVICE);
- 		if (cur_p->skb)
- 			dev_consume_skb_irq(cur_p->skb);
--		/*cur_p->phys = 0;*/
-+		cur_p->cntrl = 0;
- 		cur_p->app0 = 0;
- 		cur_p->app1 = 0;
- 		cur_p->app2 = 0;
-@@ -1562,7 +1562,7 @@ static void axienet_dma_err_handler(struct work_struct *work)
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 988bb7b17ed8f..4e0c933e08002 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1869,7 +1869,7 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
+ 	kuid_t ouid, nuid;
+ 	kgid_t ogid, ngid;
+ 	int error;
+-	struct gfs2_alloc_parms ap;
++	struct gfs2_alloc_parms ap = {};
  
- 	for (i = 0; i < lp->tx_bd_num; i++) {
- 		cur_p = &lp->tx_bd_v[i];
--		if (cur_p->phys)
-+		if (cur_p->cntrl)
- 			dma_unmap_single(ndev->dev.parent, cur_p->phys,
- 					 (cur_p->cntrl &
- 					  XAXIDMA_BD_CTRL_LENGTH_MASK),
+ 	ouid = inode->i_uid;
+ 	ogid = inode->i_gid;
 -- 
 2.43.0
 
