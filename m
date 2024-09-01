@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42DD1C68C;
-	Sun,  1 Sep 2024 16:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C0F1C68C;
+	Sun,  1 Sep 2024 16:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208725; cv=none; b=MXOE9qGz2Y2fRGrl5JsKGFqh4ZqpN4dHWbjuQF/5qVOtBtx9Fmxn99Dw0GaOU+UBAlBNCVt/Du4LM1frJhokRQ+3FsK0VS9l0qEXNn4D2XjC37IcUHXYAepY0kJlSaomD5i/VKlqAGzLPU+Bbn6yH5WAMekq18ST7AbLGPw0HFw=
+	t=1725208729; cv=none; b=HL4oxW4MPYCRgL9OtcphXOSV4ELlUEwD5VZ6XthKrZ+F5bBRO/gO9TjBIdUEMIBSyf2QrCPEtZYpKKvriGm0yxtPCBSRVoMmDAa+Y3ocEF2Kxla7VNAbl5EONueNPjthSpwkEIp+nDI7YQtHSUBZlSYehBoOAgBe54TxlTikWM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208725; c=relaxed/simple;
-	bh=Z/6KJwssYrhyAQRY3h1dg4aE3gjOA7l0k0RNbhjCVtw=;
+	s=arc-20240116; t=1725208729; c=relaxed/simple;
+	bh=0paFXTcSReWGIiVujGmeFJ82+7NPP+MPuTaH6OJIg2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqQ9ASqn92EBW+qxuXKIy0ePMgHOIRi2cD8XYrD9qg+zo7EtQVcVuEFmJn3r33KNwFz5e9ImYQgWfK/j2Qb7DU7rcAHLeEueRAPTT134GLWsDxJCmrYwME1IzN+q7V4byIadeWIZP0Rm2IRlUf5/oRM7LN857xrd5TndLOebThw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nK0QtlqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMs7nQHjyzpVkUe8qcW6XXFF+8/K+DWBUFKbK1XHnbXR4mXIXnKCAN1QdDvgjE0VWllJ/YKOaEjyf68VXzpm7EhltPV5NnSDkMnGe3yRSbJfVBjlug/ImnkdZQGmeH+qbqhm981e9qlwG3+RzgNwwVtDBFhfAu0/mwpcBKxz5nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vB8r/6ta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nK0QtlqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450A3C4CEC3;
-	Sun,  1 Sep 2024 16:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vB8r/6ta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B73C4CEC3;
+	Sun,  1 Sep 2024 16:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725208725;
-	bh=Z/6KJwssYrhyAQRY3h1dg4aE3gjOA7l0k0RNbhjCVtw=;
+	s=korg; t=1725208729;
+	bh=0paFXTcSReWGIiVujGmeFJ82+7NPP+MPuTaH6OJIg2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nK0QtlqHQIHPeZ2jD25EP/3a0eZxaEavPGDQlW86gU5J8sidBxLZza0AZ4HzQvgp/
-	 JAGgVwtUbwcAxACB06k4CGiWIfL7LP5lTKQ4GmjGwRFMJBpz5X7Vy5zpBq3mcCttIj
-	 3bPnhF6fDRboooEdlJwhRN1gO/NaJPiduzByqYQs=
+	b=vB8r/6ta+lw5ssDCkLH6v8nQtXTmHdeN71G/t8MH0yMGqekObEnR9xueUFOJIEgpu
+	 AylPH8o64VdvRYeS9q1KPfWxGe4HvJQsApguIeONJslbB3THPNahLqy8lz1MMoN/dw
+	 YdhFIP1+BjntG8BGnF88gJjCxFymJeGH6+8cs4ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Haibo Xu <haibo1.xu@intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Hanjun Guo <guohanjun@huawei.com>
-Subject: [PATCH 5.4 005/134] arm64: ACPI: NUMA: initialize all values of acpi_early_node_map to NUMA_NO_NODE
-Date: Sun,  1 Sep 2024 18:15:51 +0200
-Message-ID: <20240901160809.962586221@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Khazhismel Kumykov <khazhy@google.com>
+Subject: [PATCH 5.4 006/134] dm resume: dont return EINVAL when signalled
+Date: Sun,  1 Sep 2024 18:15:52 +0200
+Message-ID: <20240901160810.000629264@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160809.752718937@linuxfoundation.org>
 References: <20240901160809.752718937@linuxfoundation.org>
@@ -55,42 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Xu <haibo1.xu@intel.com>
+From: Khazhismel Kumykov <khazhy@google.com>
 
-commit a21dcf0ea8566ebbe011c79d6ed08cdfea771de3 upstream.
+commit 7a636b4f03af9d541205f69e373672e7b2b60a8a upstream.
 
-Currently, only acpi_early_node_map[0] was initialized to NUMA_NO_NODE.
-To ensure all the values were properly initialized, switch to initialize
-all of them to NUMA_NO_NODE.
+If the dm_resume method is called on a device that is not suspended, the
+method will suspend the device briefly, before resuming it (so that the
+table will be swapped).
 
-Fixes: e18962491696 ("arm64: numa: rework ACPI NUMA initialization")
-Cc: <stable@vger.kernel.org> # 4.19.x
-Reported-by: Andrew Jones <ajones@ventanamicro.com>
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Link: https://lore.kernel.org/r/853d7f74aa243f6f5999e203246f0d1ae92d2b61.1722828421.git.haibo1.xu@intel.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+However, there was a bug that the return value of dm_suspended_md was not
+checked. dm_suspended_md may return an error when it is interrupted by a
+signal. In this case, do_resume would call dm_swap_table, which would
+return -EINVAL.
+
+This commit fixes the logic, so that error returned by dm_suspend is
+checked and the resume operation is undone.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/acpi_numa.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kernel/acpi_numa.c
-+++ b/arch/arm64/kernel/acpi_numa.c
-@@ -27,7 +27,7 @@
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1064,8 +1064,26 @@ static int do_resume(struct dm_ioctl *pa
+ 			suspend_flags &= ~DM_SUSPEND_LOCKFS_FLAG;
+ 		if (param->flags & DM_NOFLUSH_FLAG)
+ 			suspend_flags |= DM_SUSPEND_NOFLUSH_FLAG;
+-		if (!dm_suspended_md(md))
+-			dm_suspend(md, suspend_flags);
++		if (!dm_suspended_md(md)) {
++			r = dm_suspend(md, suspend_flags);
++			if (r) {
++				down_write(&_hash_lock);
++				hc = dm_get_mdptr(md);
++				if (hc && !hc->new_map) {
++					hc->new_map = new_map;
++					new_map = NULL;
++				} else {
++					r = -ENXIO;
++				}
++				up_write(&_hash_lock);
++				if (new_map) {
++					dm_sync_table(md);
++					dm_table_destroy(new_map);
++				}
++				dm_put(md);
++				return r;
++			}
++		}
  
- #include <asm/numa.h>
- 
--static int acpi_early_node_map[NR_CPUS] __initdata = { NUMA_NO_NODE };
-+static int acpi_early_node_map[NR_CPUS] __initdata = { [0 ... NR_CPUS - 1] = NUMA_NO_NODE };
- 
- int __init acpi_numa_get_nid(unsigned int cpu)
- {
+ 		old_map = dm_swap_table(md, new_map);
+ 		if (IS_ERR(old_map)) {
 
 
