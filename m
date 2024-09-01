@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29D517B50B;
-	Sun,  1 Sep 2024 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0CC17B50B;
+	Sun,  1 Sep 2024 17:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725210010; cv=none; b=esEavgSQS+laxlAwR5Lc6GGTPyokY176VmDlf9J2zc2ZwcVKXs+eFRuWmFfOICqWSvdpkIEqjemJpoBokVLLgvnVLBLQ6gfjacnJWfyXhE7c0QaSAMIGmfyrf7WDVXn6R8jClc4B1WMsthiGQgA2N8MlRkSGjO/uCu/7P4XU/aA=
+	t=1725210014; cv=none; b=tymfWEJEANUA9YURpvTqWct4C+PJoehMAcuKbKWY7eIHAl9E/ZYeMuF3+JtVhWIZtVZqs8PKRHoeVTNOtnuE6OUNOt4/4LfC97sgE6o/XDCBzXa5/SDNhS/Ey4OzXitoW9pp9z03vptbNgd3diQevTtRJtd9wlejt6MKot1bY6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725210010; c=relaxed/simple;
-	bh=3kUNCAqIXL/M6l00jj7Yh6uI9H/KFpe21QdQvdM2LCw=;
+	s=arc-20240116; t=1725210014; c=relaxed/simple;
+	bh=Ga9XYBiPlvnjH+3ItzQkp9/frPS4zjcs5JgICdZjLUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgVS3HnphSC/MCChlnXARDWwND0ftuLrLwEgFbEoswIXJfpfltYrucJKa9lSvPLCD+1ZQ3cr8MoZK8mYeQwEhICVUC04+FImpRIPRg2+84jwWYD/8UTBPhV1MvY6DdpT+VI7iQ5F8twX9BX5cm94j7ED7Jf67MDQ+7fNwoyKtcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxLShZdp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krrmaEjavK5OLX73ZgxDYikaiPLsl1WqLNv9Z03prYMoDCXoXPor2Z6S10jFsnu6lp67mNpV54cPp3IdCO8TpCccD7Yb++L2a3NyKiN7NJOQDRUj4cMQOTkgJvBNweNPYuxns7B2vC6mKqSYlX4b2h4cVbhnHxY4pVc44e84fyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lALrrYOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxLShZdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DDFC4CEC3;
-	Sun,  1 Sep 2024 17:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lALrrYOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91124C4CEC3;
+	Sun,  1 Sep 2024 17:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725210010;
-	bh=3kUNCAqIXL/M6l00jj7Yh6uI9H/KFpe21QdQvdM2LCw=;
+	s=korg; t=1725210014;
+	bh=Ga9XYBiPlvnjH+3ItzQkp9/frPS4zjcs5JgICdZjLUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AxLShZdpgRRPpd5OFV7vRa/ZX1QBl7ZT9wJdfo8/MNbYa+JwWBZD0T8r19P2P4zge
-	 e3N9YSOTjFMf2wIM91fzyCzsvX8QZ1COCNFf4Dymu2cILPm07Htiiq1l97r9Jc666z
-	 HcwN6e+rScRxsDAsv/tbq8Spqi8/AbPCv5MR81MA=
+	b=lALrrYOfERovj/CGexAlyuCaAlWzB75S1ERxlpg3elzsXN/9P+MxejElr5BbGAPOh
+	 C3/NqhxFXwOo7ca+d3af961lCHEOve4KvjEGbGjgB39S76iW/AbG0XBsUfqa6eyGqR
+	 vyEz9jFYyUofXkCebjYORdxTMy9iA/WVu6A9AzaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/215] wifi: iwlwifi: abort scan when rfkill on but device enabled
-Date: Sun,  1 Sep 2024 18:16:12 +0200
-Message-ID: <20240901160825.624612805@linuxfoundation.org>
+Subject: [PATCH 5.15 061/215] wifi: iwlwifi: fw: Fix debugfs command sending
+Date: Sun,  1 Sep 2024 18:16:13 +0200
+Message-ID: <20240901160825.662251564@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
 References: <20240901160823.230213148@linuxfoundation.org>
@@ -52,45 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 
-[ Upstream commit 3c6a0b1f0add72e7f522bc9145222b86d0a7712a ]
+[ Upstream commit 048449fc666d736a1a17d950fde0b5c5c8fd10cc ]
 
-In RFKILL we first set the RFKILL bit, then we abort scan
-(if one exists) by waiting for the notification from FW
-and notifying mac80211. And then we stop the device.
-But in case we have a scan ongoing in the period of time between
-rfkill on and before the device is stopped - we will not wait for the
-FW notification because of the iwl_mvm_is_radio_killed() condition,
-and then the scan_status and uid_status are misconfigured,
-(scan_status is cleared but uid_status not)
-and when the notification suddenly arrives (before stopping the device)
-we will get into the assert about scan_status and uid_status mismatch.
-Fix this by waiting for FW notif when rfkill is on but the device isn't
-disabled yet.
+During debugfs command handling transport function is used directly,
+this bypasses the locking used by runtime operation function
+and leads to a kernel warning when two commands are
+sent in parallel.
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Fix it by using runtime operations function when sending
+debugfs command.
+
+Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231004123422.c43b69aa2c77.Icc7b5efb47974d6f499156ff7510b786e177993b@changeid
+Link: https://lore.kernel.org/r/20231004123422.4f80ac90658a.Ia1dfa1195c919f3002fe08db3eefbd2bfa921bbf@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 8179a7395bcaf..4bab14ceef5f5 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3068,7 +3068,7 @@ int iwl_mvm_scan_stop(struct iwl_mvm *mvm, int type, bool notify)
- 	if (!(mvm->scan_status & type))
- 		return 0;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+index e372f935f6983..6419fbfec5aca 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+@@ -163,7 +163,11 @@ static int iwl_dbgfs_enabled_severities_write(struct iwl_fw_runtime *fwrt,
  
--	if (iwl_mvm_is_radio_killed(mvm)) {
-+	if (!test_bit(STATUS_DEVICE_ENABLED, &mvm->trans->status)) {
- 		ret = 0;
- 		goto out;
- 	}
+ 	event_cfg.enabled_severities = cpu_to_le32(enabled_severities);
+ 
+-	ret = iwl_trans_send_cmd(fwrt->trans, &hcmd);
++	if (fwrt->ops && fwrt->ops->send_hcmd)
++		ret = fwrt->ops->send_hcmd(fwrt->ops_ctx, &hcmd);
++	else
++		ret = -EPERM;
++
+ 	IWL_INFO(fwrt,
+ 		 "sent host event cfg with enabled_severities: %u, ret: %d\n",
+ 		 enabled_severities, ret);
 -- 
 2.43.0
 
