@@ -1,97 +1,177 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2120C1C3F2B;
-	Mon,  2 Sep 2024 10:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B48B13B58D;
+	Mon,  2 Sep 2024 11:13:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725274746; cv=none; b=lAvxlrdonVRFcMXLCF81gt8pIzPtTQsbxN/dk+KB+x5w+UTncTaOv4fhfJuU18KGRIU1g4OM7uiHxzO1usIlsAYO5okWQG4NuegX6IWQJRBmpusEW/n5JeGRAnzXvtT51SFK5y21z2eK8eFU2/wf6FaM9J4I3+WkWJdYW6cixo4=
+	t=1725275584; cv=none; b=gREDnDXN9gc8L70xtDrEW6L8nTnIauMo9w1QVYuVv0OnsaCdLt+7dSimHdTpaNOcV5Vm5DpybhQ8NvaPi3AG+d70VtRkfjmsbGmovpil3DoHb5v47Uyc2/etX8HPjjKA35I/6S8JPT93l7XvaxrgWUfvSt40lE0ab4dLcJ2iCno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725274746; c=relaxed/simple;
-	bh=VkabMg1G/J3eCh7fJ13PJdYvPJYreYYZcHeUqILTJZs=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=h+ykQk5JTubod8L7iChLzkSJs5/A2n/pzSPLU+nL7RAipTRsCj7aosYZRAFy4Xt7ccv3MmJmQzFldyW/UJn8XTZzDFP480pIzWM2oVLcNURkFHmfo4xE5zqBUGOXaLTuNR3ji9P/NYmj7fml8tGvsXcK54X6PJ62GCO20lNmjW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=RqUIWWoR; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1725275584; c=relaxed/simple;
+	bh=+uulfcVXT6YjoKghtTgzQhPkoYdQXxqT7443vnr5b58=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VUwiH3sDWQDBBx/iEvGGARbgauUZ7VyeEF0Wympj5pCZz6T4/lesNSqoCsZJec7p8M0wf55SGWlWiOjmt2Ypi2k1seaFsyqWV5hZxvsLH9yfMdFWrNG2W26FprP/CAOYs6uN7ENJG8yxSOAZqDC90YQOBE+0Vhce7XzCtA/Iw34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nU0mvZjj; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="RqUIWWoR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1725274690; x=1725879490; i=frank.scheiner@web.de;
-	bh=VkabMg1G/J3eCh7fJ13PJdYvPJYreYYZcHeUqILTJZs=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=RqUIWWoRIie0ugZPMHnBv3ao1ktoxSts+R8SYXesf8RXk3wzmNjawKU4IfZ7VEYG
-	 dCh2WNhXMu8Nbq45gpE7vBSd6YaeW4Np9QdW7q9j2CFnrVgliiTS537SnQ9KKhV2C
-	 YR9BmcNI6b1NvfZs8Ignk7dpbCtXT4ykOj3sWy/GonTXv5n9/lx2Vu2ZBeuWvTsUQ
-	 3FSxluGHNkOwZ3msg5T6J3e6z+q0+jHJYcOJLHcUivPYfFWti6a+Avu5x2Q3X9ViG
-	 3fcLEhuRP/R2xLjezeQqwrTEg4LDOdPTiJKnPWeMLkhlwirh6md6BOv4qRkLTdhW/
-	 e4s2y9niomfjkzz22Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.30] ([84.152.250.180]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mi537-1s73BL2NPt-00b8LH; Mon, 02
- Sep 2024 12:58:10 +0200
-Message-ID: <ca1d2ed3-6328-47ca-874a-5b18a010a85a@web.de>
-Date: Mon, 2 Sep 2024 12:58:07 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nU0mvZjj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1725275583; x=1756811583;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=+uulfcVXT6YjoKghtTgzQhPkoYdQXxqT7443vnr5b58=;
+  b=nU0mvZjjBdUpc63/RyqeEOYDOia6NVzSyGn9+ZGe9C1I0z+1T6TUXoF4
+   3084XQTdqQqY8KzAtAvIIvZ7Glz0CEzh229DgL1bPg4L/yKAhnaxLmkFX
+   WLjYrKRmM3uiu///xzbuEqz0FYn8lvYF0YMeZyG2Gqcc4Lt2TGi8HD3Yw
+   Z+GunjyjjS8WOGDHdeY+NzAybdR9oartpI441u6t+hbP0GJbhUWfMrXJG
+   RK/3A9ZLRgMdEeCh2sK4ouRqL/WlsZ/jKOIRyvyi6VSPG1+4P8LyjvzDu
+   JPNKZ+N+A+RyA5c5mPy70qAMhOCOynWgD5K2qgdwq+52W6YL0XK5FUmAJ
+   Q==;
+X-CSE-ConnectionGUID: /Ac/3PIUTdmT5jCPWoeCxg==
+X-CSE-MsgGUID: 23CjD6UOTrmHm9eGHTXvtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11182"; a="41352612"
+X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
+   d="scan'208";a="41352612"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:13:02 -0700
+X-CSE-ConnectionGUID: ltWCpk/5SMKI28+OWW8xEg==
+X-CSE-MsgGUID: 9PxBVm5wQcWh8LoEG16rjQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
+   d="scan'208";a="68716707"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:12:54 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1sl4zK-00000004Kz6-11Uq;
+	Mon, 02 Sep 2024 14:12:50 +0300
+Date: Mon, 2 Sep 2024 14:12:49 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, devicetree@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Benson Leung <bleung@chromium.org>,
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	Guenter Roeck <groeck@chromium.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v4 11/18] device property: Add remote endpoint to devcon
+ matcher
+Message-ID: <ZtWdsZrFxfjYLgaG@smile.fi.intel.com>
+References: <20240901040658.157425-1-swboyd@chromium.org>
+ <20240901040658.157425-12-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: gregkh@linuxfoundation.org
-Cc: a.hindborg@samsung.com, akpm@linux-foundation.org, alex.gaynor@gmail.com,
- aliceryhl@google.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
- boqun.feng@gmail.com, cl@linux.com, dennis@kernel.org, gary@garyguo.net,
- keescook@chromium.org, kent.overstreet@linux.dev, nathan@kernel.org,
- ojeda@kernel.org, pasha.tatashin@soleen.com, patches@lists.linux.dev,
- peterz@infradead.org, sashal@kernel.org, stable@vger.kernel.org,
- surenb@google.com, tj@kernel.org, vbabka@suse.cz, viro@zeniv.linux.org.uk,
- wedsonaf@gmail.com
-References: <20240901160808.908613948@linuxfoundation.org>
-Subject: Re: [PATCH 6.6 41/93] Revert "change alloc_pages name in dma_map_ops
- to avoid name conflicts"
-Content-Language: en-US
-From: Frank Scheiner <frank.scheiner@web.de>
-In-Reply-To: <20240901160808.908613948@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lKRwo+1QlPoEqVRWAFv1FkPLl55849RbCkVsabVcxsySoziG4GD
- Nr5agLYyU5iP+jo7A4Mz3RBEyR1GKo6OtkAiXiRfSD5xZ5qYlg+kSayUrQzJWWEEmVGyu53
- fHXatoWHH7Bf9luyQDYPIAof/06h+nRTRrZa1n8qdOplAEnLMiDeuUBWNgZA5ac4rgFB20/
- RRFdnvtkUEzbtgxik/FTg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:nua4ASzHzZk=;fOr7lO0ylLhqwGWMT4f2LdTCtbj
- kN90jczra8CM+F4LH0m1gvtosFNpEGhIDS8+nrVwMAjunP2RyAheFW8uFiXVKEyTqhxkaTs5l
- cVj8PjSlOWMJfqDE5Rxq7bUPzCOYeKrXWN5xfVTnrDDh1hUCvNknnNyZX6HGMe5VA+w05scSB
- bgzPTSKopoOH/oQksvPyXjPblqJPSnCSzoGQDXJ4yDM4RNtXrTE4jCzjCKwUAE9r1Zie/3R9+
- mP2FnvG1jJBIjSj0oRvJML15kEcZvnM0Yajd6VUOkO8T0tWjxkKlX2+7Nz2G3smlbChaW84SH
- q/70+zoMCEmklvdez9Kfnhe66o0rqKtMU7edYMI9LZwSnJ3QoKKJ3CDjCVEUIXGnilSsvxF21
- VSHPj5A/LcM31T3Gz28RlpvTZ9E2xQ8Uv7eGam+5o9UX4UEa78LCMzb/OxIZyb9Kl1AX8ZNsL
- vn6gLjjAKrfqfyVA7UQLo0aNjjxXHBbavKlOFxPu78rqqzEofzuoZXlgpmz+ex8gUt516/zoo
- e1cYGm5QN/3FxIrmieOxVMEE/7DkdKv3fPFUq1qWcbzu1aIH5xqN+0OBsvm/GXdrCXq7GKMTT
- fd4MCC+60ItWiDeNd+SBa4hN2JHuyygzNMgRuFRjWbInjXEke4Hi5haIg6NPZ46k84zLdBQs2
- pkNuKxGjWA3KMI3y/T2N3CR8Ki6OBUfcoyyugnsrRjq4rwZmn6o+iCpAjrnJjNL5P3WwbMR8k
- TS1GT+T8FSg/dajgEuX5uwNApUgdxenkXwwSyJVDchq4chQmb9LvvkRJ8piZo82tYHQuCYGxv
- 7Aj/42D532U88HQwzhMQVUrHjf3Yb8OAX+8Fbq8Sxbh78=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240901040658.157425-12-swboyd@chromium.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->
-> This reverts commit 983e6b2636f0099dbac1874c9e885bbe1cf2df05 which is
-> commit 8a2f11878771da65b8ac135c73b47dae13afbd62 upstream.
->
-> It wasn't needed and caused a build break on s390, so just revert it
-> entirely.
+On Sat, Aug 31, 2024 at 09:06:49PM -0700, Stephen Boyd wrote:
+> When a single DT node has a graph connected to more than one
+> usb-c-connector node we can't differentiate which typec switch
+> registered for the device is associated with the USB connector because
+> the devcon matcher code assumes a 1:1 relationship between remote node
+> and typec switch. Furthermore, we don't have a #typec-switch-cells
+> property so there can only be one node per typec switch.
+> 
+> Support multiple USB typec switches exposed by one node by passing the
+> remote endpoint node in addition to the remote node to the devcon
+> matcher function (devcon_match_fn_t). With this change, typec switch
+> drivers can register switches with the device node pointer for a graph
+> endpoint so that they can support more than one typec switch if
+> necessary. Either way, a DT property like 'mode-switch' is always in the
+> graph's parent node and not in the endpoint node.
 
-Thanks for reverting this, as it also broke the build for ia64 since
-6.6.48-rc1 (see e.g. [1]).
+> Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Cc: Daniel Scally <djrscally@gmail.com>
+> Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+> Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+> Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Cc: Ivan Orlov <ivan.orlov0322@gmail.com>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: Conor Dooley <conor+dt@kernel.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: <linux-usb@vger.kernel.org>
+> Cc: <linux-acpi@vger.kernel.org>
+> Cc: Pin-yen Lin <treapking@chromium.org>
 
-[1]:
-https://github.com/linux-ia64/linux-stable-rc/actions/runs/10589507221/job=
-/29344063186#step:8:1892
+Is it possible to move these Cc:s after --- line below?
 
-Cheers,
-Frank
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+
+...
+
+>  /**
+>   * devcon_match_fn_t - device connection match function
+>   * @fwnode: Remote connection's device node
+> + * @endpoint: Remote connection's endpoint node
+>   * @con_id: Identifier for the connection
+>   * @data: Match function caller specific data
+>   *
+>   * Implement a callback with this function signature to search a fwnode's
+>   * connections for a match with a function like device_connection_find_match().
+>   * This function will be called possibly multiple times, once for each
+> - * connection. The match function should inspect the @fwnode to look for a
+> - * match. The @con_id and @data provided are the same as the @con_id and @data
+> - * arguments passed to the functions that take a devcon_match_fn_t argument.
+> + * connection. The match function should inspect the connection's @fwnode
+> + * and/or @endpoint to look for a match. The @con_id and @data provided are the
+> + * same as the @con_id and @data arguments passed to the functions that take a
+> + * devcon_match_fn_t argument.
+
+So, struct fwnode_handle is a single-linked list. Can we utilise that instead
+of adding a new parameter? I.o.w. do those objects (@fwnode and @endpoint) have
+anything in common and can be chained?
+
+>   * Note: This function can be called multiple times.
+
+What does this mean? Is it idempotent? Or what is the effect of being called
+multiple times?
+
+>   *
+>   * Return: Pointer to match or NULL if no match found.
+>   */
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
