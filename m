@@ -1,53 +1,53 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50875184523;
-	Mon,  2 Sep 2024 11:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DFD18454E;
+	Mon,  2 Sep 2024 11:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725276137; cv=none; b=nc66hIGT+WnjAIR8LTXGMVJj28TD1UAcH6N2DoiKL6Bfo+yJY6dCTpKoNZ/PRn7auMllHMjfdO++wRg2x/1pdumyozLkd6wfKyvTfdZWHnQASe3LkFfEaWGqA21datBYfX5kEfcvbNTgGF83ZiRqju1g3RqBwnN1GDv+/ffcYGw=
+	t=1725276960; cv=none; b=WeVdR8c3C6iqcPZcrHlUM2CToYCYPi2ROMDadpOeeNslx2SZTijh7xMpvB7TlaNBVLiMlXSs49hzBy/M3mcU0Xr8s2cUns6mmANLz+ZVKcWqjg45U645SnNyJqHVyCCTZBDlVz6/fda2o5x7rW0k7ZGsGDAeTs9RVJ8tt5hTJPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725276137; c=relaxed/simple;
-	bh=fehs2+E64I0ZFEnYzghltUagaBJu6yND9Ki/e2rbcLA=;
+	s=arc-20240116; t=1725276960; c=relaxed/simple;
+	bh=ijLYhyyOfFYUMsUXfR6J6D9+QxK+paVNZEW3dTYB+HQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cKHgqQ/1kUxepOP0UHKEM4ZMaEUXgntMDO4osFIQYBIjqC2b0CheFYvpYxa+yM4wFNMDU64gtPFwfKsNEQLQyqMiGUHgNxbPA/U3+yG1CiyVhYoLEsbSW/kYC+7KhDSowqk2RCWNUG0kTc8Vi15WSCz2V6rw9Sve58zi9ea4Xgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=euV7kv3z; arc=none smtp.client-ip=192.198.163.8
+	 Content-Type:Content-Disposition:In-Reply-To; b=VkDJhhlTncWb6FaUAh2Zb+fcVpSYz5Np6cicl8t3WotolUljQNZm+1GWnMF8jjf2O/9K3LlChh5cPqidpcRQh6tPNocqnMC+igKspAYSJe/PYQ/jVq2vj3jAJqDa9aIaiNFgVUY2pBrCNIEzkDV0sneW8P4EN2JjyXUNWFIeHdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RpVnQEAj; arc=none smtp.client-ip=192.198.163.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="euV7kv3z"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RpVnQEAj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1725276136; x=1756812136;
+  t=1725276959; x=1756812959;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=fehs2+E64I0ZFEnYzghltUagaBJu6yND9Ki/e2rbcLA=;
-  b=euV7kv3zWoc06+7n+5WlQrWoaKuQXKDorUV3fa34d2LsSlIX9JvQhOHx
-   sdXsCNUByspR+fsZtWVA93pD+VGUiTlS5jIDZ7vCR9W8ULogiR0rhSTZm
-   h49XBP8X01dW8Z5HidHWHUdR2w5iurvrI+upmPOxtKAOGIFBjXWcrdq3d
-   YDGfHrCYpK24FOulZL2ulh8Xptedkr6SMEkMUG9ETcJ/D/jg8FwOvxJEk
-   rVY00k0bDCD1QOLhglC+brXMus6MpN9226ZqK1J94+9hYTbUTE1A7eWnP
-   zApT9JTweD5Hggaem97r2lXDeCfNVYuTYt2dwKmXsjj+aNzKtbp4gwXQu
-   A==;
-X-CSE-ConnectionGUID: XphGMPunSOy5AnUajiDM0g==
-X-CSE-MsgGUID: 8GY8NaqkRa+SQa/jRQ1VVw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11182"; a="41353291"
+  bh=ijLYhyyOfFYUMsUXfR6J6D9+QxK+paVNZEW3dTYB+HQ=;
+  b=RpVnQEAj4w5UJw1wGZkb5N9sJw+c5SRYB7bkS8VkEJmql6IPmtbTekyS
+   gyRpSAx4c6663hiTWSJAs8t+JxmU865hL1k0XrBjiwRFoR6bLNONWKpiu
+   2boMaRjkMYrnX4dZGOeOp0+J4ssJY1R0jvA7Alzwzxh0DJmMmRePegKr/
+   AXOndQbgIbKvI7k/SSujr1DwMbDHXyuNNq6yOe9keTyqyB0GHKRYLUYh6
+   fR0XQxhfD20zCbvZlMTkSI3VVvmtCWCPCjV8xCCai+JSNc9hV/Q0UMGFg
+   QfyGVQhyCDgcCfUCoWX9xBknAL0Nb8fGKEGh7jRnTHMGAaCfU/oYX4VDJ
+   w==;
+X-CSE-ConnectionGUID: FUn9lkhjSnGtBtzUMaJf3g==
+X-CSE-MsgGUID: hvmsQaqJTtWCCZJuhpau/Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11182"; a="13329089"
 X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
-   d="scan'208";a="41353291"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:22:16 -0700
-X-CSE-ConnectionGUID: r9dZ1SjQR7mt8hDhn4QGFQ==
-X-CSE-MsgGUID: HvRqsXktRSmLSzJ4FQaJ5A==
+   d="scan'208";a="13329089"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:35:58 -0700
+X-CSE-ConnectionGUID: dYg4LNV0Tgayw6N9btAGjg==
+X-CSE-MsgGUID: JiwWAzMER72Z6q3Er8BeYg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
-   d="scan'208";a="68718584"
+   d="scan'208";a="69207807"
 Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:22:07 -0700
+  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:35:50 -0700
 Received: from andy by smile.fi.intel.com with local (Exim 4.98)
 	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sl58G-00000004L8V-0vHk;
-	Mon, 02 Sep 2024 14:22:04 +0300
-Date: Mon, 2 Sep 2024 14:22:03 +0300
+	id 1sl5LW-00000004LMj-1ywK;
+	Mon, 02 Sep 2024 14:35:46 +0300
+Date: Mon, 2 Sep 2024 14:35:46 +0300
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -83,11 +83,11 @@ Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v4 05/18] usb: typec: Add device managed
- typec_switch_register()
-Message-ID: <ZtWf2y8vGJyerSXs@smile.fi.intel.com>
+Subject: Re: [PATCH v4 06/18] drm/bridge: aux-hpd: Support USB Type-C DP
+ altmodes via DRM lane assignment
+Message-ID: <ZtWjEudmlR51zkU9@smile.fi.intel.com>
 References: <20240901040658.157425-1-swboyd@chromium.org>
- <20240901040658.157425-6-swboyd@chromium.org>
+ <20240901040658.157425-7-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -96,35 +96,223 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240901040658.157425-6-swboyd@chromium.org>
+In-Reply-To: <20240901040658.157425-7-swboyd@chromium.org>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Sat, Aug 31, 2024 at 09:06:43PM -0700, Stephen Boyd wrote:
-> Simplify driver error paths by adding devm_typec_switch_register() which
-> will unregister the typec switch when the parent device is unbound.
+On Sat, Aug 31, 2024 at 09:06:44PM -0700, Stephen Boyd wrote:
+> Extend the aux-hpd bridge driver to support assigning DP lanes to USB
+> type-c pins based on typec mux state entry. Existing users of this
+> driver only need the HPD signaling support, so leave that in place and
+> wrap the code with a variant that supports more features of USB type-c
+
+Isn't the proper spelling "USB Type-C"?
+
+> DP altmode, i.e. pin configurations. Prefix that code with
+> 'drm_dp_typec_bridge' to differentiate it from the existing
+> 'drm_aux_hpd_bridge' code.
+> 
+> Parse the struct typec_mux_state members to determine if DP altmode has
+> been entered and if HPD is asserted or not. Signal HPD to the drm bridge
+> chain when HPD is asserted. Similarly, parse the pin assignment and map
+> the DP lanes to the usb-c output lanes, taking into account any lane
+> remapping from the data-lanes endpoint property. Pass that lane mapping
+> to the previous drm_bridge in the bridge chain during the atomic check
+> phase.
 
 ...
 
-> +struct typec_switch_dev *
-> +devm_typec_switch_register(struct device *parent,
-> +			   const struct typec_switch_desc *desc)
+> +static inline struct drm_dp_typec_bridge_data *
+> +hpd_bridge_to_typec_bridge_data(struct drm_aux_hpd_bridge_data *hpd_data)
 > +{
-> +	int ret;
-> +	struct typec_switch_dev *switch_dev;
-> +
-> +	switch_dev = typec_switch_register(parent ,desc);
+> +	return container_of(hpd_data, struct drm_dp_typec_bridge_data, hpd_bridge);
 
-Slipped typo, i.e. wrong location of the white space character.
++ container_of.h ?
 
-> +	if (IS_ERR(switch_dev))
-> +		return switch_dev;
+With that said, can the argument be const here?
+
+> +}
+
+...
+
+Ditto for the two more helpers, added in this change.
+
+...
+
+> +static void drm_dp_typec_bridge_release(struct device *dev)
+> +{
+> +	struct drm_dp_typec_bridge_dev *typec_bridge_dev;
+> +	struct auxiliary_device *adev;
 > +
-> +	ret = devm_add_action_or_reset(parent, devm_typec_switch_unregister, switch_dev);
+> +	typec_bridge_dev = to_drm_dp_typec_bridge_dev(dev);
+> +	adev = &typec_bridge_dev->adev;
+> +
+> +	ida_free(&drm_aux_hpd_bridge_ida, adev->id);
+
+> +	of_node_put(adev->dev.platform_data);
+> +	of_node_put(adev->dev.of_node);
+
+I'm wondering why it's not made fwnode to begin with...
+From the file / function names it's not obvious that it's OF-only code. Neither
+there is no explanations why this must be OF-only code (among all fwnode types
+supported).
+
+> +	kfree(typec_bridge_dev);
+> +}
+
+...
+
+> +		return ERR_PTR(dev_err_probe(parent, -ENODEV, "Missing typec endpoint(s) port@0\n"));
+
+We have a new helper for such cases.
+
+...
+
+> +	adev->dev.of_node = of_node_get(parent->of_node);
+
+device_set_node() ?
+
+...
+
+> +	ret = auxiliary_device_init(adev);
+> +	if (ret) {
+> +		of_node_put(adev->dev.platform_data);
+> +		of_node_put(adev->dev.of_node);
+> +		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
+> +		kfree(adev);
+> +		return ERR_PTR(ret);
+
+Can cleanup.h be utilised here and in other error paths in this function?
+
+> +	}
+
+> +	ret = devm_add_action_or_reset(parent, drm_aux_hpd_bridge_free_adev, adev);
 > +	if (ret)
 > +		return ERR_PTR(ret);
 > +
-> +	return switch_dev;
+> +	return typec_bridge_dev;
 > +}
+
+...
+
+> +static int dp_lane_to_typec_lane(enum dp_lane lane)
+> +{
+> +	switch (lane) {
+> +	case DP_ML0:
+> +		return USB_SSTX2;
+> +	case DP_ML1:
+> +		return USB_SSRX2;
+> +	case DP_ML2:
+> +		return USB_SSTX1;
+> +	case DP_ML3:
+> +		return USB_SSRX1;
+> +	}
+
+> +	return -EINVAL;
+
+Hmm... This can be simply made as default case.
+
+> +}
+> +
+> +static int typec_to_dp_lane(enum usb_ss_lane lane)
+> +{
+> +	switch (lane) {
+> +	case USB_SSRX1:
+> +		return DP_ML3;
+> +	case USB_SSTX1:
+> +		return DP_ML2;
+> +	case USB_SSTX2:
+> +		return DP_ML0;
+> +	case USB_SSRX2:
+> +		return DP_ML1;
+> +	}
+> +
+> +	return -EINVAL;
+
+Ditto.
+
+> +}
+
+...
+
+> +	for (i = 0; i < num_lanes; i++) {
+> +		/* Get physical type-c lane for DP lane */
+> +		typec_lane = dp_lane_to_typec_lane(i);
+> +		if (typec_lane < 0) {
+> +			dev_err(&adev->dev, "Invalid type-c lane configuration at DP_ML%d\n", i);
+> +			return -EINVAL;
+
+Most likely typec_lane contains an error code here. If yes, it would be rather
+
+			return typec_lane;
+
+If no, why not make that happen?
+
+> +		}
+> +
+> +		/* Map physical to logical type-c lane */
+> +		typec_lane = lane_mapping[typec_lane];
+> +
+> +		/* Map logical type-c lane to logical DP lane */
+> +		dp_lanes[i] = typec_to_dp_lane(typec_lane);
+> +	}
+
+...
+
+> +static int drm_dp_typec_bridge_atomic_check(struct drm_bridge *bridge,
+> +					   struct drm_bridge_state *bridge_state,
+> +					   struct drm_crtc_state *crtc_state,
+> +					   struct drm_connector_state *conn_state)
+> +{
+> +	struct drm_dp_typec_bridge_data *data;
+> +	struct drm_lane_cfg *in_lanes;
+> +	u8 *dp_lanes;
+> +	size_t num_lanes;
+
+> +	int i;
+
+Does it need to be signed? Can it theoretically overflow as num_lanes defined
+as size_t?
+
+> +	data = to_drm_dp_typec_bridge_data(bridge);
+> +	num_lanes = data->num_lanes;
+> +	if (!num_lanes)
+> +		return 0;
+> +	dp_lanes = data->dp_lanes;
+> +
+> +	in_lanes = kcalloc(num_lanes, sizeof(*in_lanes), GFP_KERNEL);
+> +	if (!in_lanes)
+> +		return -ENOMEM;
+> +
+> +	bridge_state->input_bus_cfg.lanes = in_lanes;
+> +	bridge_state->input_bus_cfg.num_lanes = num_lanes;
+> +
+> +	for (i = 0; i < num_lanes; i++)
+> +		in_lanes[i].logical = dp_lanes[i];
+> +
+> +	return 0;
+> +}
+
+...
+
+> +		port->typec_data = typec_data;
+> +		if (of_property_read_u32_array(ep.local_node, "data-lanes",
+> +					       port->lane_mapping,
+> +					       ARRAY_SIZE(port->lane_mapping))) {
+
+> +			memcpy(port->lane_mapping, mapping, sizeof(mapping));
+
+Hmm... I'm wondering if direct assignment will save a few .text bytes
+
+		port->lane_mapping = ...;
+		of_property_read_u32_array(ep.local_node, "data-lanes",
+					   port->lane_mapping,
+					   ARRAY_SIZE(port->lane_mapping));
+
+Also note that conditional is not needed in this case.
+
+(And again, why OF-centric code?)
+
+> +		}
 
 -- 
 With Best Regards,
