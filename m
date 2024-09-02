@@ -1,166 +1,108 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2BA1428E8
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 10:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDE217DFEC;
+	Mon,  2 Sep 2024 10:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725271884; cv=none; b=oJg84XkUd5LEZHGWndMKodHbPRspEphD4iUY/23gwUuti6m3xovNrwNXqMkHwLSfagqT2hMrXrFtcoKLZkawomOoujLcEjACnJTbhswoSS+fd6u/YMZbYwLhLwRw2eAE/BGLZm2Y8JjbmJRWDmcAe3yeSn4vMByCBLBrsljG9r8=
+	t=1725274743; cv=none; b=lPTvoETaLrod+UTDDXaHqrb/40Ph2PRCfrupkdRVRMhLPxMjk+CaL+18FiYojcFoSdyHlt5qGXoN/yMToyh99KFbDZyfJ+X7h2Kq7XPRjJJ4EX2LwNuYG/dSpRoa+ds7cUaTRc8pl6lJMDE+Yhd/+U2dsFdViBQKpIbCS3yQCm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725271884; c=relaxed/simple;
-	bh=qNGXWzNFmm5xDRCpulne9Ld0dJBH7APDO2VH8uDcPos=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ux3bREJ6hwM7k2U0LE/O9ZSeuWfunD/H4r+VXEY1SlRLCMoaHtGoXjalQ6wc6WcH4hHhh5zE5lxVlCcIUsTlwvXQTB1iWRN4lUfNAzzsJhW68bTCaS+ey/AjcMKdInlYMx7I2cVDckF9BiYKjMT6gPy5etmV2vh+AQ0jaDupZKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yWvt7mk6; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725274743; c=relaxed/simple;
+	bh=2B1xem6LeY7zU4pbdoP3bFeSSKwEtLb0XuH00Q4137Q=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=iTPGE9grjvH/h5iFEAGlBrg3/ddsL8MsTWaoHnQSyOClMU2qHEKDECnB4DAEvc+gt8XkQ7RxlHEVZOY8RUkuRSl3u6k7EgQG6dnLczmmGoBco0xp4Nx5i3jYuMs5521Q0kqNl85+cWITQAnGHsIoaggMvUrd1yItMbdLCb/cobo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=l9Ebn/oD; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yWvt7mk6"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-429d1a9363aso64945e9.1
-        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 03:11:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725271881; x=1725876681; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uv5FZr6rZ6VqzNNSiX6mzSa07qcjEjBpw1DOUryq6jM=;
-        b=yWvt7mk6FbLUu22yBsnwAo3jZGVyYagUCIccF+obhdCIbMmvf3YbwcB8AfxydXjvfv
-         yGlO3edPZrbbs13JcBCxtd+/nwTiGJ5WTr/vtdZZF8puP2PYakzkHF3pVhDyKHZ0XD6w
-         o1V1JEFvcbRLAn7KoRzm/AYXQPR0LPlvy3BlUux/Efn/RnxlIkX770jaRxpGPoTYJfRD
-         bGfwTw8ums1WvdJqq0zZFeg5mVGf+NFNJyGtL31j1Pmd8Zsurc/yesTaBmdnvH7poBg2
-         tS0KrkHc7ttuvcEWJZ3HNtMzh518ZYPsTeyEKlIZgX43+ZrXb0UX5CIt2cBhjM5Pr8Mu
-         01aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725271881; x=1725876681;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uv5FZr6rZ6VqzNNSiX6mzSa07qcjEjBpw1DOUryq6jM=;
-        b=D1CuHQ2mst4tfyNp/byzjv8U+/lcNEoFppCXxHs+GKbdPY+odm9I082xk81n1Bq1Er
-         mDrAawMJqiquSn2FdLFMTBB2O2X54/iO1cIJboZ/RiVqkp/XS7HJU/MfpEEN7jYKtGCQ
-         fdNHzzLWm/FUFblSx6nIMZ251N1NivjcTMUIqr0U80Rx7fMDoQ2pMuv3T12tU1ug/GUK
-         GHXqpNAqidHf88OjUIqW1Y0bkwbyt27RuqM0Ruf0qX/saqJIOtnrCCgvtjt2m235W75a
-         l/YaD6+4scdZ5xBH2jhQMLR+dYcgpPE5rENT4dMbFh/OoyGuiCetpkdpQukVojyWT3K9
-         6Lrg==
-X-Forwarded-Encrypted: i=1; AJvYcCXAKHRj4jKc2crCw6rSiie6B/wBPPuYbENxJ8CO9JZbAn1YP5zBwNBVYjm0UtVX+XqG4W80WliW@lists.linux.dev
-X-Gm-Message-State: AOJu0YyKjxdZyz9UdKEWiLUb5S+oEa+BprN1UaokhcZ3bAbQwTilFIEX
-	G5cozAfcOMFwxrQSi48jIRXbvBVTna+g+R+qo9KDS0dv/kNP807YIj9UnP7K8A==
-X-Google-Smtp-Source: AGHT+IEUVqSYP8vAntRCNYY+qDlbdxLNJoRSmxfSPQkZYaqM46by3fcwoSLExd+dVfdZhFC6FNtXRg==
-X-Received: by 2002:a05:600c:c15:b0:42b:8ff7:9cfe with SMTP id 5b1f17b1804b1-42c787683a2mr2004925e9.1.1725271880837;
-        Mon, 02 Sep 2024 03:11:20 -0700 (PDT)
-Received: from google.com (109.36.187.35.bc.googleusercontent.com. [35.187.36.109])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bba3f2875sm111687515e9.41.2024.09.02.03.11.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 03:11:20 -0700 (PDT)
-Date: Mon, 2 Sep 2024 10:11:16 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v2 6/8] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via
- struct arm_smmu_hw_info
-Message-ID: <ZtWPRDsQ-VV-6juL@google.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <6-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHj_X6Gt91TlUZG@google.com>
- <20240830171602.GX3773488@nvidia.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="l9Ebn/oD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1725274709; x=1725879509; i=frank.scheiner@web.de;
+	bh=EVPNt6C8o2MY2YfJMjNDfVOjEycIKBzxO1tyINT6wZc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=l9Ebn/oDGr1sU7FPiVSZcnaNIyNQvej1xwpZ6dYamcc7ifU5+gxw3baH3+yoTF29
+	 mOYFTIcfvTe4BAmonlDE2D9VGUm5nTtbUEkHPMWEDDTKxPAGiwFe1mGLmkN3oyNGC
+	 VpEelQLof7XQ3XQX4XHBCNKITskEB8BGN4snzpJjKTPQJdEy+djxZFyE5SrnRdIGD
+	 sL3h8nt2HbPeLjs4H+3kyye/1VyF/w0JL2RG3QiTqXAp9uGaSd3mGPl2KYYGm35FW
+	 xbCoBnPJSO0dQ0qGyN9uw/JoIm2Tqy2banGIC5c1SOJwxwQr7KHnOzhvTwB0ZLG4n
+	 zwzsV/kzZ/I7KC4PYw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.30] ([84.152.250.180]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MD5jp-1stdUC1kxd-007DOE; Mon, 02
+ Sep 2024 12:58:29 +0200
+Message-ID: <4b44c4c9-4082-4c08-b900-bb0350f33fd4@web.de>
+Date: Mon, 2 Sep 2024 12:58:26 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240830171602.GX3773488@nvidia.com>
+User-Agent: Mozilla Thunderbird
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org, allen.lkml@gmail.com, broonie@kernel.org,
+ conor@kernel.org, f.fainelli@gmail.com, jonathanh@nvidia.com,
+ linux-kernel@vger.kernel.org, linux@roeck-us.net,
+ lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev,
+ pavel@denx.de, rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
+ stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
+ torvalds@linux-foundation.org
+References: <20240901160807.346406833@linuxfoundation.org>
+Subject: Re: [PATCH 6.6 00/93] 6.6.49-rc1 review
+Content-Language: en-US
+From: Frank Scheiner <frank.scheiner@web.de>
+In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:E4DF1fuWRaYAxu5olsHuPYDe14pv94hm8UljtHIloBUiWrLpcbO
+ 4dqRBj4/hsJYYYZQwrfFhdXcLpppURq3St2wLcIRlVY3Hf96rb+s/2DbJ+2f2mXJ5DYP4qy
+ RsWCdE7tQ34VPSwl7zdHv+Eb6QmAz5jSSvovwWDR1Gvv7E+6cPYMh039Q6zvbSZwihFHtZh
+ RiVVwFgZpY/ugsVRR+7hg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:WNUEySXDfY4=;+n9SgWugvlofjxS44oiRLU1liWy
+ aBETsF0U0YYMHgBp7jLimhha/d+TpSdzxFSQEk338jMzivUfRNEN0j/LRC13ILP+DTtmOQYCz
+ FnTVlrpuWd6rrdocchXVLsUAwrTf/cen6unsPBkVdWOtTrno486TEl45rMl23l+CUqW4kU2S7
+ JnJ45EFvNtWQ/iymNglXY26Su/pTBMkr8LZxUz/ABlELI6takXOWXcpkf2dyGgNgTN1nQmsME
+ /E7nY4Rf9orHnbZY4qHBS/6cbAImyGCDzAvceJ0C6wGyQ4OQBkVsnZ4T/FmMttwGS0qc7HZmI
+ OKiN46LQ1VNlZQ+GY6qfj7DuikRlLOM/knAG799dFncje9jQz+WCaM7eKJpFmVY7r7V/Pq4V5
+ p9nguIcMLmH2rX3Rbc8VDfUwwnlZDXcLiB8ZCleGQKX5ebDZTK53Q/QmIpVD5LscxOrDMd9v4
+ DzmXaC6ltX5906mtsuSgXaQNyYCDQDnDn8HmZBEX0carMac1wLg8P/mlcd4FbaGUbLxsbfOT+
+ RqDoFOJArDa1UgXaxEwRnf2KOzsA2U1IgrGgR1aWRYkc27vfoFtoQnx6IgpSt6rzhQ6AXwa0z
+ A/4L6YcTVyQPttlbSU9nHvd9f1voGgKys2gRTihgDyDcSald+G4gCNeQCo6pROwfeocj4l/eh
+ Fe42fINXW24DnIipIvF3A8UZJCTluEdqvE2PD2glGojGbgoVKCKiTnpeRZv+3xPwykrDq/L+n
+ 4jia/Ce3dL9LXrBZeBKydp/lPKcIFLDbKvHfKvD5T3As414WrC4z1Nr9KZPiQLK42wXPHuZ/C
+ WYzrTSQsov3GsuKMzfGerEUvF77ofAlqn3dzd4q5PYnf0=
 
-On Fri, Aug 30, 2024 at 02:16:02PM -0300, Jason Gunthorpe wrote:
-> On Fri, Aug 30, 2024 at 03:23:41PM +0000, Mostafa Saleh wrote:
-> > > +/**
-> > > + * struct iommu_hw_info_arm_smmuv3 - ARM SMMUv3 hardware information
-> > > + *                                   (IOMMU_HW_INFO_TYPE_ARM_SMMUV3)
-> > > + *
-> > > + * @flags: Must be set to 0
-> > > + * @__reserved: Must be 0
-> > > + * @idr: Implemented features for ARM SMMU Non-secure programming interface
-> > > + * @iidr: Information about the implementation and implementer of ARM SMMU,
-> > > + *        and architecture version supported
-> > > + * @aidr: ARM SMMU architecture version
-> > > + *
-> > > + * For the details of @idr, @iidr and @aidr, please refer to the chapters
-> > > + * from 6.3.1 to 6.3.6 in the SMMUv3 Spec.
-> > > + *
-> > > + * User space should read the underlying ARM SMMUv3 hardware information for
-> > > + * the list of supported features.
-> > > + *
-> > > + * Note that these values reflect the raw HW capability, without any insight if
-> > > + * any required kernel driver support is present. Bits may be set indicating the
-> > > + * HW has functionality that is lacking kernel software support, such as BTM. If
-> > > + * a VMM is using this information to construct emulated copies of these
-> > > + * registers it should only forward bits that it knows it can support.
-> > > + *
-> > > + * In future, presence of required kernel support will be indicated in flags.
-> > > + */
-> > > +struct iommu_hw_info_arm_smmuv3 {
-> > > +	__u32 flags;
-> > > +	__u32 __reserved;
-> > > +	__u32 idr[6];
-> > > +	__u32 iidr;
-> > > +	__u32 aidr;
-> > > +};
-> > There is a ton of information here, I think we might need to santitze the
-> > values for what user space needs to know (that's why I was asking about qemu)
-> > also SMMU_IDR4 is implementation define, not sure if we can unconditionally
-> > expose it to userspace.
-> 
-> What is the harm? Does exposing IDR data to userspace in any way
-> compromise the security or integrity of the system?
-> 
-> I think no - how could it?
+> This is the start of the stable review cycle for the 6.6.49 release.
+> There are 93 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.49=
+-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi=
+t linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I don’t see a clear harm or exploit with exposing IDRs, but IMHO we
-should deal with userspace with the least privilege principle and
-only expose what user space cares about (with sanitised IDRs or
-through another mechanism)
+Cross-builds for ia64/hp-sim and runs fine in ski ([1]).
 
-For example, KVM doesn’t allow reading reading the CPU system
-registers to know if SVE(or other features) is supported but hides
-that by a CAP in KVM_CHECK_EXTENSION
+[1]:
+https://github.com/linux-ia64/linux-stable-rc/actions/runs/10660100556#sum=
+mary-29543888306
 
-> 
-> As the comments says, the VMM should not just blindly forward this to
-> a guest!
+Tested-by: Frank Scheiner <frank.scheiner@web.de>
 
-I don't think the kernel should trust userspace.
-
-> 
-> The VMM needs to make its own IDR to reflect its own vSMMU
-> capabilities. It can refer to the kernel IDR if it needs to.
-> 
-> So, if the kernel is going to limit it, what criteria would you
-> propose the kernel use?
-
-I agree that the VMM would create a virtual IDR for guest, but that
-doesn't have to be directly based on the physical one (same as CPU).
-
-Thanks,
-Mostafa
-
-> 
-> Jason
+Cheers,
+Frank
