@@ -1,155 +1,163 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5725C18734B
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 08:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2913D18757C
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 09:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725267480; cv=none; b=quNoLV4DbOzIJEa049TGxQe1bhJ7/wwMvxIZOwk2bDkZXL35j/Q1JISOe7qZxc8io6vu39SKsb43F3DIExNeMZx8JWab2tK7d/+Jz7IiCPNYCICUZzN2aL4AwRUwn1k2vlMDCqLhohPQo26sLfZZpeQni1j6I78EUMfYfHYU16Y=
+	t=1725267671; cv=none; b=fd8EBmTYTklGWHPrjkZRa29uyHLevPWOuFqMvV+9v0L+Km/YX0vyHS+yh74nXDPLk2yyhdosbJSoy9ozrsNa3XC1j471UJfS/EabKxA3SSCclfebeb3BAG9Me1PM7HPTpOTBkC9W+NJymzP/OVI8mOs1d7DwJlVsqWvLTR0g0yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725267480; c=relaxed/simple;
-	bh=c0OW0xQ0WrcxXFjOgX053qT4DVNz5MYcUfMesZuHjIU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iSOKJJOla8LTzH5lUZggOJtBCU6tszMESPWgwHn4Gp1aQIBxZkSky5CUmbDypfSMKs4mW84hFiOCXjxOBCl+NHYsj8hb0qQ0N2hOcxLCl8m+YxQ6u+wFgJx9IjRxhnOteXmak6mm5ckLFPfUQzk/BGi+4dwrhhoi0zuAfembzj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4eqNLuEL; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725267671; c=relaxed/simple;
+	bh=UF/oNZ5SbgpZ4WIfaXfqh3OBB6cIqxui1RRnAIkH+PM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pbbryqHaFvl7t1JZheQOpLDrQqZl1827z1GJNLKZIkVRORfvC52oUB7zhXINBcxmp1Pk9p2dW8f65LYi+y3ljiF7CJqDP2+DhqFNhY5Vy4aNc5RKo/qfK0ukS/2c/7AOO8PX//2rCcuRiD4/IPFaVZhplz/QLR8vY8Gt3+w/Av0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ckd7ri66; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4eqNLuEL"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42bba6a003bso61935e9.0
-        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 01:57:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ckd7ri66"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-498d7c77e91so1337214137.0
+        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 02:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725267476; x=1725872276; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rDJ3c/SnX1xtZaObviOe/fqhAy0qt+DAWX/W/IrfKf8=;
-        b=4eqNLuELYs/7+9NBZ1UQqLFA/vVDk3ATw8lQMFwdf4XRAahGEijDOAxo26kzs0VXFF
-         0WNFIsRLzO8pq2hmYSbMZrd8HE1XmIlDausdD9u+dznlkBVcnvcuXA3hJpiAOmQIVaOk
-         aX03K6V0JUxEgTljdZ+V3ih1JTI56LP0G4DcLYMl4d89lSw/RusoKsH+brFuLJxOrYpA
-         XRhZe9mmUVaD4xhZd2xkZSBFqMxs+81u9UJT5IgtSep3dvzcOlJ8+AxYIlrTzoaC5Es8
-         2zREKSzc3Q59zHLF8K1aBjQqq+9Cot5+BYiPhF8kuj+mcnMKuBtWzA1Q5QxHw4M81Qre
-         qCnw==
+        d=linaro.org; s=google; t=1725267669; x=1725872469; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qqSh94kF96VerY0m3+ny14R8sqauQwh7BBb3bguK3jo=;
+        b=Ckd7ri66WYKMebeICyOnQ23G7wMUEPQZrA76c8het0xWH80NJMZb9HDtn4G7Fo0N5G
+         v2CMRYSbtW4E4tmYXh16f/wUSQdR3vGqUvh97QyZenru24BMBdkRSHYL+E0nBWY563IM
+         H3JWrTd1rQsYQn9o8LGnIUSmqh4EtE9b/8fQeeLaCXvWhYr5UXKXXImrW2Erw7vTlp/k
+         TzPp9McYQCEmcNgQQJjIrWv966PNTDz1dygA7t/iwgh56228rMLDOkKa7wp8jBUkS6l/
+         Sx7qkDKZ6RNAl6zUMxTJYQWV6JtNnOqUuNd4jtZjMM0HZ9Y1bYoXwIHqIZxiRtNNgkJx
+         akeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725267476; x=1725872276;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rDJ3c/SnX1xtZaObviOe/fqhAy0qt+DAWX/W/IrfKf8=;
-        b=rBaXILnheFxkVEKnEerpwb7JfQ91AWWkrsQjLM7LEVap8aZLuqCR7MYmFzCSMkgbxv
-         vmGVMrnt0PgjKwUoatt4Cabspkys0G+G6hsEHyoU4QlsC4109scZy04KbbX+Xokf3gfz
-         bx2el1xpM2mlW21Bs88/xNw9uqghe0cfqnGxalxbTtN6vRciEerfxVHauyfaOmQjKSfT
-         BSybtFKhoqBNwRevPVKX6Sc0an0fj/8/M+BA3X5p70270O+Jy5HxIiYHO5JdJut7Xma0
-         esEkeKk8w0CqVFKf3NlLXNetmEpMvYukZyxtQSQ+2eP26jmqZ8Fabss1nyRFpaz0Cgye
-         k7tw==
-X-Forwarded-Encrypted: i=1; AJvYcCVVHixKKSlsoE1PIhca3VZK7l7c+5oNEzj8I3r3hs26nwSnmmC0gmE7rawDKkC/D8VyKNZdV1o7@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxxc6xXkCwRXa4Tx2rpXSIveWzYLdw2FdcZ9sOAa5JwkXnqvFAy
-	7+a8MlFp0gIEhw+sHxZGoBCqlGfV9JSEeklKV3qLeBeUAMbNcAB3QuAt2/Uxtg==
-X-Google-Smtp-Source: AGHT+IEaLVJ/wTV51wop3m+lk/qJDgyUDoC18kpCfu1q8TvT9dKkREX0von9jbn66ji3B2gnWNgrVA==
-X-Received: by 2002:a05:600c:3ac8:b0:428:31c:5a4f with SMTP id 5b1f17b1804b1-42c787685fbmr1905585e9.3.1725267475261;
-        Mon, 02 Sep 2024 01:57:55 -0700 (PDT)
-Received: from google.com (109.36.187.35.bc.googleusercontent.com. [35.187.36.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-374c2ffe062sm4918816f8f.29.2024.09.02.01.57.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 01:57:54 -0700 (PDT)
-Date: Mon, 2 Sep 2024 08:57:50 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v2 7/8] iommu/arm-smmu-v3: Implement
- IOMMU_HWPT_ALLOC_NEST_PARENT
-Message-ID: <ZtV-DvqIDx5ZFAph@google.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <7-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHkxFrojjXplvvn@google.com>
- <20240830171817.GY3773488@nvidia.com>
+        d=1e100.net; s=20230601; t=1725267669; x=1725872469;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qqSh94kF96VerY0m3+ny14R8sqauQwh7BBb3bguK3jo=;
+        b=OAH6JU8YSG0PgXCKEGKQ+jfKyFjwxXK5fFBv8Dh/VJeQ01AJlFfA1Sy39EWU9v7TId
+         +jSR1NzMlIobNx7GmzN1//WyaXZ7+cNyi/aLR14D2zonLysofKk7V/COn7sLlrs4G7Pt
+         BpCd5t4lrrj5HrUbmQuNBSapCKvFAZx2AxV49Vp2c5qiJ8paZ3BCce8zCmCWeI4KoTwa
+         V4uMBSsI7j6a02qoLqAh4SXILtplN/XJytBDGzBjc7wBRXt6Crp+YdtY4kwiChpq+eLw
+         r804/TpuqO2dyRRXMeekQgR1wnjhIWiInGhS03cGm21iTcpJDGhvH/2r6qpNKK2PTIoo
+         38bA==
+X-Forwarded-Encrypted: i=1; AJvYcCXauHmLBZtqbiBmySDcbG1qbDjIZaU62W970PxC74z/QS7Kc4tBeo5E+VCyvMdjKhwXD7D6gdn2@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/GDEN4oKRMNiFTy09jpsQ4dnu0v81+AaXzcnrWRCOkc7PpIm9
+	PYZM+cuyjtwOgToYGdZHarrF9xb9pQ3GfIGPMUcKscHitMjgYNFybaPsLiNqaPT+EGHtA6dLbBr
+	tlUto6VphQFVvK8Llnje0FRxAcOUI+Ozk2a9E5Q==
+X-Google-Smtp-Source: AGHT+IEvo6sNwVTRnSmRm3IVSdi1vc5y1sUmNJLRLJrwsKN7lJkndFUCHSw+iSloG1P66HIall33Bpam1LCeHWDoX0M=
+X-Received: by 2002:a05:6102:a53:b0:498:e25c:738f with SMTP id
+ ada2fe7eead31-49a5ae82463mr15833583137.18.1725267669045; Mon, 02 Sep 2024
+ 02:01:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240830171817.GY3773488@nvidia.com>
+References: <20240901160803.673617007@linuxfoundation.org>
+In-Reply-To: <20240901160803.673617007@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 2 Sep 2024 14:30:57 +0530
+Message-ID: <CA+G9fYscUiPT0Eo9yo4UhJq2jjYtvLhOofQKhAMEOiVueR-Vaw@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/98] 4.19.321-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Anders Roxell <anders.roxell@linaro.org>, aleksander.lobakin@intel.com, 
+	"David S. Miller" <davem@davemloft.net>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Aug 30, 2024 at 02:18:17PM -0300, Jason Gunthorpe wrote:
-> On Fri, Aug 30, 2024 at 03:27:00PM +0000, Mostafa Saleh wrote:
-> > Hi Jason,
-> > 
-> > On Tue, Aug 27, 2024 at 12:51:37PM -0300, Jason Gunthorpe wrote:
-> > > For SMMUv3 the parent must be a S2 domain, which can be composed
-> > > into a IOMMU_DOMAIN_NESTED.
-> > > 
-> > > In future the S2 parent will also need a VMID linked to the VIOMMU and
-> > > even to KVM.
-> > > 
-> > > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > > ---
-> > >  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 11 ++++++++++-
-> > >  1 file changed, 10 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > > index ec2fcdd4523a26..8db3db6328f8b7 100644
-> > > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > > @@ -3103,7 +3103,8 @@ arm_smmu_domain_alloc_user(struct device *dev, u32 flags,
-> > >  			   const struct iommu_user_data *user_data)
-> > >  {
-> > >  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-> > > -	const u32 PAGING_FLAGS = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
-> > > +	const u32 PAGING_FLAGS = IOMMU_HWPT_ALLOC_DIRTY_TRACKING |
-> > > +				 IOMMU_HWPT_ALLOC_NEST_PARENT;
-> > >  	struct arm_smmu_domain *smmu_domain;
-> > >  	int ret;
-> > >  
-> > > @@ -3116,6 +3117,14 @@ arm_smmu_domain_alloc_user(struct device *dev, u32 flags,
-> > >  	if (!smmu_domain)
-> > >  		return ERR_PTR(-ENOMEM);
-> > >  
-> > > +	if (flags & IOMMU_HWPT_ALLOC_NEST_PARENT) {
-> > > +		if (!(master->smmu->features & ARM_SMMU_FEAT_NESTING)) {
-> > > +			ret = -EOPNOTSUPP;
-> > I think that should be:
-> > 	ret = ERR_PTR(-EOPNOTSUPP);
-> 
-> Read again :)
+On Sun, 1 Sept 2024 at 21:50, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.321 release.
+> There are 98 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.321-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Oops, sorry about the noise.
+Apart from Powerpc build regressions we have noticed s390 build regression.
+The S390 defconfig builds failed on Linux stable-rc 4.19.321-rc1 due to
+following build warnings / errors with clang-18 and gcc-12.
 
-Thanks,
-Mostafa
-> 
-> static struct iommu_domain *
-> arm_smmu_domain_alloc_user(struct device *dev, u32 flags,
-> 			   struct iommu_domain *parent,
-> 			   const struct iommu_user_data *user_data)
-> {
-> 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-> 	const u32 PAGING_FLAGS = IOMMU_HWPT_ALLOC_DIRTY_TRACKING |
-> 				 IOMMU_HWPT_ALLOC_NEST_PARENT;
-> 	struct arm_smmu_domain *smmu_domain;
-> 	int ret;
->      ^^^^^^^^^^^^^^
-> 
-> err_free:
-> 	kfree(smmu_domain);
-> 	return ERR_PTR(ret);
->            ^^^^^^^^^^^^^^^^^^
-> 
-> Jason
+This is a same problem on current stable-rc review on
+   - 4.19.321-rc1 review
+
+In the case of stable-rc linux-4.19.y
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Following two commits have been added on 4.19.321-rc1.
+-------
+  s390/cio: rename bitmap_size() -> idset_bitmap_size()
+  commit c1023f5634b9bfcbfff0dc200245309e3cde9b54 upstream.
+
+  bitmap: introduce generic optimized bitmap_size()
+  commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
+
+
+build log:
+--------
+drivers/s390/cio/idset.c: In function 'idset_bitmap_size':
+drivers/s390/cio/idset.c:21:28: error: implicit declaration of
+function 'size_mul' [-Werror=implicit-function-declaration]
+   21 |         return bitmap_size(size_mul(num_ssid, num_id));
+      |                            ^~~~~~~~
+include/uapi/linux/const.h:32:44: note: in definition of macro
+'__ALIGN_KERNEL_MASK'
+   32 | #define __ALIGN_KERNEL_MASK(x, mask)    (((x) + (mask)) & ~(mask))
+      |                                            ^
+include/linux/kernel.h:58:33: note: in expansion of macro '__ALIGN_KERNEL'
+   58 | #define ALIGN(x, a)             __ALIGN_KERNEL((x), (a))
+      |                                 ^~~~~~~~~~~~~~
+include/linux/bitmap.h:215:34: note: in expansion of macro 'ALIGN'
+  215 | #define bitmap_size(nbits)      (ALIGN(nbits, BITS_PER_LONG) /
+BITS_PER_BYTE)
+      |                                  ^~~~~
+drivers/s390/cio/idset.c:21:16: note: in expansion of macro 'bitmap_size'
+   21 |         return bitmap_size(size_mul(num_ssid, num_id));
+      |                ^~~~~~~~~~~
+cc1: some warnings being treated as errors
+
+Build Log links,
+--------
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.320-99-g0cc44dd838a6/testrun/24994013/suite/build/test/gcc-12-defconfig/log
+
+
+metadata:
+----
+  git describe: v4.19.320-99-g0cc44dd838a6
+  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git sha: 0cc44dd838a6e3fee60d7af3ca412c4d1b824562
+  kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2lTf8qakoJKDjTgS3TvH3naApk1/config
+  build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2lTf8qakoJKDjTgS3TvH3naApk1/
+  toolchain: clang-18 and gcc-12
+  config: defconfig
+  arch: S390
+
+Steps to reproduce:
+---------
+- tuxmake --runtime podman --target-arch s390 --toolchain gcc-12
+--kconfig defconfig
+
+--
+Linaro LKFT
+https://lkft.linaro.org
