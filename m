@@ -1,92 +1,89 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F2B433B5
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 06:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2353F155A2F;
+	Mon,  2 Sep 2024 07:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725259375; cv=none; b=OsEuGpbGJklTB2ebCzd+kdtQRZeCMeHXOY0b8uQ/yUyFWUyztwwyLjnnWg7HWLRypg06HnBjbdxdineDNColOp4xb6PP35k2E9p0EzYC4VIzViCMc5Jkvcva/F+Ds0JFoEKN7VDudSlVUecE/DJyu3cALRobkcwcPmdEE7692VI=
+	t=1725260838; cv=none; b=EB4aHSLMLiKZb9CeEwoRfo6UMqlxumBYdwvjQeMxGWBwLwJBqiH/lrm+8u8+BjJm6PL7Zkx6Fu4pVtUVBHDxLBaTsXwouvVenB0EZw3IcUMb1+f8e3oIlYFPn1QVaqUagaBSBECqLG0HZkwMNc4tNIZUsOl4wRlEhaEpPkVud2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725259375; c=relaxed/simple;
-	bh=YuJhfr/6n8ZUQkW0SqrSgb1QZEMtZXbRPnwl6+57OUE=;
+	s=arc-20240116; t=1725260838; c=relaxed/simple;
+	bh=KG3FfFVr0J5N9JkhiRWMquhd15fD18BTlr/nqhCv00g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dSP4Fy6+RFGxSeW4VRK+YgLc1xgU6bGDtPe55dss2wbP1D27qiahrWpllmkEr4uUP8ghPkfQFrXTt+0nJOD2GMN4PQgRjrdTlZpa5dXtOaVfSQGMxSnMAa/UWx7saJqQxOZT8zkI6FthQOUkeuaG5vLVn8JeeLPGgkcYSO5mYOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=Mew2LRYE; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=e6mykFV3wJ6Dd5yqY/xPhBeesgv/ORK2P77oKVvI9IvXn2QCDkBUCQbIzLgD2IzJdBvyLBL+ZEhUDSX2hqvnosz4eyRGSPjEIGBmG5lR0mbyTC1f5qUQaiuvn86TvPAPzJV3xzor8JEUA2QzIsr50ITlWYX39FiQCczR9hZvN2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q13wcI0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="Mew2LRYE"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 4B41A14C1E1;
-	Mon,  2 Sep 2024 08:42:50 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1725259371;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/hMd0tOh3JzV5Ri3bdf1HBQ4Ddkhg2Xw0cqqBCjSIgk=;
-	b=Mew2LRYE22O1KE2u2ytocMIJhNYP3QrB/EVLEbbe3IJwri67UJPymA1PUWyXGrhI6tDzQB
-	6aF9mLLYOdROMYX9UDFRrdGG3dDwr5Jc1UDSSyBVMOow5KDEREFxejfttibouh9nroI8ja
-	2i6rm8Yx1bxdvh3T1frgZT5muWGcEwE6P5pZZ8T0z/g+4xIQi02IGyXzCY4g29BOu/wtDg
-	A8kvIhHt1fHlQK0AoLmLZC2Q7kxG8j/6voYu8xDhhvJ8LCclg86Izc4gJmsPUFk7lYrvCc
-	PLrOIyJCBiT9aWlmMULozRySXzLIr35l4Mw8Z2lAUuXx+crM7pX3Zf6lEQpkBQ==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id af1c5266;
-	Mon, 2 Sep 2024 06:42:48 +0000 (UTC)
-Date: Mon, 2 Sep 2024 15:42:33 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q13wcI0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CF2C4CEC2;
+	Mon,  2 Sep 2024 07:07:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725260837;
+	bh=KG3FfFVr0J5N9JkhiRWMquhd15fD18BTlr/nqhCv00g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Q13wcI0QY7rDrnreizvYuyB7KSYgkhCnNh6pXIHQZXhLJQLSJTfBpsVric1syZoLu
+	 9KKQsFoQhyD/ZeaJcc03avUSegb+SqqcepOTkeMYpfY1vqKLcDahMH7+L9p/TtJXk/
+	 3P8CDgZ6tQympg38BMsge63ZvggAK2zkwV5omncE=
+Date: Mon, 2 Sep 2024 09:07:14 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Dominique Martinet <asmadeus@codewreck.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
 Subject: Re: [PATCH 5.10 130/151] Revert "Input: ioc3kbd - convert to
  platform remove callback returning void"
-Message-ID: <ZtVeWUa4L3F-EDc2@codewreck.org>
+Message-ID: <2024090238-icky-unselect-3134@gregkh>
 References: <20240901160814.090297276@linuxfoundation.org>
  <20240901160818.998146019@linuxfoundation.org>
  <ZtURsofEb-WmU69f@codewreck.org>
  <2024090259-sultry-cartel-8e0e@gregkh>
+ <ZtVeWUa4L3F-EDc2@codewreck.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2024090259-sultry-cartel-8e0e@gregkh>
+In-Reply-To: <ZtVeWUa4L3F-EDc2@codewreck.org>
 
-Greg Kroah-Hartman wrote on Mon, Sep 02, 2024 at 08:03:24AM +0200:
-> On Mon, Sep 02, 2024 at 10:15:30AM +0900, Dominique Martinet wrote:
-> > Greg Kroah-Hartman wrote on Sun, Sep 01, 2024 at 06:18:10PM +0200:
-> > > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On Mon, Sep 02, 2024 at 03:42:33PM +0900, Dominique Martinet wrote:
+> Greg Kroah-Hartman wrote on Mon, Sep 02, 2024 at 08:03:24AM +0200:
+> > On Mon, Sep 02, 2024 at 10:15:30AM +0900, Dominique Martinet wrote:
+> > > Greg Kroah-Hartman wrote on Sun, Sep 01, 2024 at 06:18:10PM +0200:
+> > > > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > > 
+> > > > This reverts commit 0096d223f78cb48db1ae8ae9fd56d702896ba8ae which is
+> > > > commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b upstream.
+> > > > 
+> > > > It breaks the build and shouldn't be here, it was applied to make a
+> > > > follow-up one apply easier.
+> > > > 
+> > > > Reported-by: Dominique Martinet <asmadeus@codewreck.org>
 > > > 
-> > > This reverts commit 0096d223f78cb48db1ae8ae9fd56d702896ba8ae which is
-> > > commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b upstream.
+> > > It's a detail but if you fix anything else in this branch I'd appreciate
+> > > this mail being updated to my work address:
+> > > Reported-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 > > > 
-> > > It breaks the build and shouldn't be here, it was applied to make a
-> > > follow-up one apply easier.
-> > > 
-> > > Reported-by: Dominique Martinet <asmadeus@codewreck.org>
+> > > (Sorry for the annoyance, just trying to keep the boundary with stable
+> > > kernel work I do for $job and 9p work on I do on my free time; if you're
+> > > not updating the patches feel free to leave it that way - thanks for
+> > > having taken the time to revert the commit in the first place!)
 > > 
-> > It's a detail but if you fix anything else in this branch I'd appreciate
-> > this mail being updated to my work address:
-> > Reported-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-> > 
-> > (Sorry for the annoyance, just trying to keep the boundary with stable
-> > kernel work I do for $job and 9p work on I do on my free time; if you're
-> > not updating the patches feel free to leave it that way - thanks for
-> > having taken the time to revert the commit in the first place!)
+> > We can't really change things that are already in the tree, so we just
+> > copy the commit directly from that, sorry.
 > 
-> We can't really change things that are already in the tree, so we just
-> copy the commit directly from that, sorry.
+> This commit isn't in tree yet -- it's a patch specific to the 5.10
+> branch that doesn't exist anywhere else (not a backport), and 5.10.225
+> hasn't been tagged yet.
+> 
+> With that said I'll reiterate it's probably not worth the trouble,
+> just replying because I don't understand where that "already in the
+> tree" came from.
 
-This commit isn't in tree yet -- it's a patch specific to the 5.10
-branch that doesn't exist anywhere else (not a backport), and 5.10.225
-hasn't been tagged yet.
+Ah, you are right, sorry about that.  Dealing with thousands of patches
+here...
 
-With that said I'll reiterate it's probably not worth the trouble,
-just replying because I don't understand where that "already in the
-tree" came from.
+I'll go fix it up right now, not a problem.
 
-Thanks,
--- 
-Dominique
+greg k-h
