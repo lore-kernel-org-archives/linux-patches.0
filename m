@@ -1,200 +1,114 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay5.mymailcheap.com (relay5.mymailcheap.com [159.100.248.207])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32401D3196
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 09:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498F213E04C
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 10:02:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.100.248.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725271073; cv=none; b=JBDTo53Msu4jZCXiTdKfLoMjwEIiapo9irsE7b/QEfKxNZtgg2YShUPzdoE1jLVda7uS9kx/4o1I0T74yYMTrk1JBmaL6uB7LVt9pkedLw3EpyIksMmhlhNKamlu7jq6zXjb56br6okE9BApmHB4nxybqZhstlO4GWhxjYmrEOM=
+	t=1725271367; cv=none; b=omY14qcUmKM/MDO+olCfqdJhG+/V6+yOEN2TpZzLhbAk8+MTc5po55EZHtakCtsAJK1s8/9TtrW7WuEsPWOUq9R7FCl5STGpRwg4xOIahMJgqyv2qEROCzdnTNYcZMhuEh+E+yjY9ByUKzcMHhli+lnoiN9qqMYLFP0Nr6Zbt7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725271073; c=relaxed/simple;
-	bh=AebbeBylEZc6YvUUKEOp3IYHZ5WtMcK0qrIBOuhdE/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rEXNKIyYhLClhxm0SvnmOLrH8WA9DE2wwot8MuCp4E86fTll1m89yEdtx+BxUimB41Tfbz/aeOJBhC/X1OM1pEE2SKVl+veBKN4W0Ym6pu4ZxfFmtn3ERrziZOgZIZWwDpkRSQEm4Q1ig7iW3XzOS1aqWxKJ/0Wi1kmUmxzPgVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2P+Ih43D; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725271367; c=relaxed/simple;
+	bh=yu05MG49Y96wNnlCUSqbQDKyaIQsanfK87VEISGQHk8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dJdZkqIQ4FIN9JpOghu3rdS5hzR3c2QraDcTJntwA928jhuqh1rHHlhEidyh8nK1XT6VCHyoVXwzRom9smq6YMqGMOS2oiL+m2L7hGBa3Y7vyvtN8mJ5mwLXeNL/i4MBsPb4mZN/S3PcuAmzzLzDqdXBTR/Z0NCW2JuNYJvjrGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io; spf=pass smtp.mailfrom=aosc.io; dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b=W+ObnJhf; arc=none smtp.client-ip=159.100.248.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aosc.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2P+Ih43D"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42ba8928f1dso66685e9.1
-        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 02:57:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725271070; x=1725875870; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=lZQX/cMZETZqukPtivvikiv242o9q96eLnQhbaJJJkM=;
-        b=2P+Ih43DTgMZFLFKHXLlYLTyTeRbvfNLrc8HnSaoOzFaCwDZHoxhaK1jVFL/fMl3Cf
-         kD8kYpVf/eJC4qksm4WazXuZrNUt+rHaIiBZJDKsilFYX0G8tl4ohD38LTbkydm8GYOM
-         tIuhk7SF3F6k0AcMNL4W4NgDL+Dagkm8QHPhbqzg6siYsRgkzrdF0WXSkTkDD08pRZhE
-         QS/k6XxoOGltlrb3nHPZ003gmtuUkhofoqJl1rRVSWb9LVf0GfuHpg2ru4Gv0j05Z+kE
-         N60fS8XVpjTV7gfJCc1fZKuj8wOi+FMqMwMZ6t6g7j/ULBhRW2mZziVrN5TyOHWuzF/t
-         5EUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725271070; x=1725875870;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lZQX/cMZETZqukPtivvikiv242o9q96eLnQhbaJJJkM=;
-        b=Y2VQVy2P2gwez3zz6YeTPNmbT4Vc/eO7VThXVHoXrR8hKHfXsf98VwU2yYpDu4B3v6
-         ZZkODckP9GNkLgweMbs6bEMxHBkybaHRhDpf87yAsTOb4aZtCineW3oRJj7AZ8n7a18K
-         xJ+ox84q9A0vvfad4GwUZXM1H71XC9L1fshkvbu5ahgZlwOqNQ70tkj5lP841SAzczo5
-         YBgpkYuvdlMLA1s7K1T0qyjQsuxzU7SnmA2gB/F9tsA1xrgXzBwrjIzU5Q4jvXINJS32
-         aXaGHhPRv+BU0Mdeu9U4eDbvGBkbnNqTPFmQKpfm1zkebpetWvjBJ/AKRJJ1Zl+ZjoEd
-         Vbiw==
-X-Forwarded-Encrypted: i=1; AJvYcCUA0wubcbX87SFCq7X5Vt9b1mCg0e+gdIy5sHS4/v/6AiWMWjZVSxSKfl3GXmplOPDfg/AgifUV@lists.linux.dev
-X-Gm-Message-State: AOJu0Yya8YpSymke2W2C4EISviS8RwEQSAePmTDmGn+3OkEWu2Tyfcw6
-	8bI4gd5LrHoOnDkvmkA2gFpEbRl3DjZQwidHGY1PGXjMrvaQQkYsxCYnJ/vWLA==
-X-Google-Smtp-Source: AGHT+IFSZcv0nult7Zja5pAokUpRh3eCHY8+dggfufZa4QfUGMc7wSMOSbQ5AYJaIDsiCUY7g7vMyA==
-X-Received: by 2002:a05:600c:500f:b0:426:5d89:896d with SMTP id 5b1f17b1804b1-42c78767f7amr1965085e9.1.1725271069765;
-        Mon, 02 Sep 2024 02:57:49 -0700 (PDT)
-Received: from google.com (109.36.187.35.bc.googleusercontent.com. [35.187.36.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3749ee4d391sm11015220f8f.3.2024.09.02.02.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 02:57:49 -0700 (PDT)
-Date: Mon, 2 Sep 2024 09:57:45 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v2 8/8] iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
-Message-ID: <ZtWMGQAdR6sjBmer@google.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <8-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHuoDWbe54H1nhZ@google.com>
- <20240830170426.GV3773488@nvidia.com>
+	dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b="W+ObnJhf"
+Received: from relay4.mymailcheap.com (relay4.mymailcheap.com [137.74.80.154])
+	by relay5.mymailcheap.com (Postfix) with ESMTPS id 866702619F
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 10:02:42 +0000 (UTC)
+Received: from nf1.mymailcheap.com (nf1.mymailcheap.com [51.75.14.91])
+	by relay4.mymailcheap.com (Postfix) with ESMTPS id 99035203E4;
+	Mon,  2 Sep 2024 10:02:34 +0000 (UTC)
+Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
+	by nf1.mymailcheap.com (Postfix) with ESMTPSA id 3785840096;
+	Mon,  2 Sep 2024 10:02:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
+	t=1725271354; bh=yu05MG49Y96wNnlCUSqbQDKyaIQsanfK87VEISGQHk8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=W+ObnJhfIKWvb+1dMGalYrT5Vh3kRfxKBZNDWa7ZP91OWY/vPWOGoUDJzb0yW5YZf
+	 6K+u7qqWuEDR9oHFznf3lciugjSm/iv+xD3g0C0pQN26AJt4zOBN8YU1XYlSH8x8BK
+	 ugs/GMTWGyh+MA7/ItgyiA5l1dBXOZ6D4uv/k8LA=
+Received: from localhost.localdomain (unknown [58.32.40.121])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail20.mymailcheap.com (Postfix) with ESMTPSA id B44AD4107A;
+	Mon,  2 Sep 2024 10:02:31 +0000 (UTC)
+From: Kexy Biscuit <kexybiscuit@aosc.io>
+To: gregkh@linuxfoundation.org
+Cc: jarkko@kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	stefanb@linux.ibm.com,
+	Kexy Biscuit <kexybiscuit@aosc.io>,
+	kernel test robot <lkp@intel.com>,
+	Mingcong Bai <jeffbai@aosc.io>
+Subject: [PATCH v2] tpm: export tpm2_sessions_init() to fix ibmvtpm building
+Date: Mon,  2 Sep 2024 17:58:36 +0800
+Message-ID: <20240902095835.16925-2-kexybiscuit@aosc.io>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240901160817.780395041@linuxfoundation.org>
+References: <20240901160817.780395041@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240830170426.GV3773488@nvidia.com>
+X-Rspamd-Server: nf1.mymailcheap.com
+X-Rspamd-Queue-Id: 3785840096
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [1.40 / 10.00];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_COUNT_ONE(0.00)[1];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:16276, ipnet:51.83.0.0/16, country:FR];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[]
 
-On Fri, Aug 30, 2024 at 02:04:26PM -0300, Jason Gunthorpe wrote:
-> On Fri, Aug 30, 2024 at 04:09:04PM +0000, Mostafa Saleh wrote:
-> > Hi Jason,
-> > 
-> > On Tue, Aug 27, 2024 at 12:51:38PM -0300, Jason Gunthorpe wrote:
-> > > For SMMUv3 a IOMMU_DOMAIN_NESTED is composed of a S2 iommu_domain acting
-> > > as the parent and a user provided STE fragment that defines the CD table
-> > > and related data with addresses translated by the S2 iommu_domain.
-> > > 
-> > > The kernel only permits userspace to control certain allowed bits of the
-> > > STE that are safe for user/guest control.
-> > > 
-> > > IOTLB maintenance is a bit subtle here, the S1 implicitly includes the S2
-> > > translation, but there is no way of knowing which S1 entries refer to a
-> > > range of S2.
-> > > 
-> > > For the IOTLB we follow ARM's guidance and issue a CMDQ_OP_TLBI_NH_ALL to
-> > > flush all ASIDs from the VMID after flushing the S2 on any change to the
-> > > S2.
-> > > 
-> > > Similarly we have to flush the entire ATC if the S2 is changed.
-> > > 
-> > 
-> > I am still reviewing this patch, but just some quick questions.
-> > 
-> > 1) How does userspace do IOTLB maintenance for S1 in that case?
-> 
-> See
-> 
-> https://lore.kernel.org/linux-iommu/cover.1724776335.git.nicolinc@nvidia.com
-> 
-> Patch 17
+Commit 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to
+initialize session support") adds call to tpm2_sessions_init() in ibmvtpm,
+which could be built as a module. However, tpm2_sessions_init() wasn't
+exported, causing libmvtpm to fail to build as a module:
 
-Thanks, I had this series on my radar, I will check it by this week.
+ERROR: modpost: "tpm2_sessions_init" [drivers/char/tpm/tpm_ibmvtpm.ko] undefined!
 
->
-> Really, this series and that series must be together. We have a patch
-> planning issue to sort out here as well, all 27 should go together
-> into the same merge window.
-> 
-> > 2) Is there a reason the UAPI is designed this way?
-> > The way I imagined this, is that userspace will pass the pointer to the CD
-> > (+ format) not the STE (or part of it).
-> 
-> Yes, we need more information from the STE than just that. EATS and
-> STALL for instance. And the cachability below. Who knows what else in
-> the future.
+Export tpm2_sessions_init() to resolve the issue.
 
-But for example if that was extended later, how can user space know
-which fields are allowed and which are not?
+Cc: stable@vger.kernel.org # v6.10+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408051735.ZJkAPQ3b-lkp@intel.com/
+Fixes: 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to initialize session support")
+Signed-off-by: Kexy Biscuit <kexybiscuit@aosc.io>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+---
+V1 -> V2: Added Fixes tag and fixed email format
 
-> 
-> We also want to support the V=0, Bypass and Abort STE configurations
-> under the nesting domain (V, CFG required) so that the VIOMMU can
-> remain affiliated with the STE in all cases. This is necessary to
-> allow VIOMMU event reporting to always work.
-> 
-> Looking at the masks:
-> 
-> STRTAB_STE_0_NESTING_ALLOWED = 0xf80fffffffffffff
-> STRTAB_STE_1_NESTING_ALLOWED = 0x380000ff
-> 
-> So we do use alot of the bits. Reformatting from the native HW format
-> into something else doesn't seem better for VMM or kernel..
-> 
-> This is similar to the invalidation design where we also just forward
-> the invalidation command as is in native HW format, and how IDR is
-> done the same.
-> 
-> Overall this sort of direct transparency is how I prefer to see these
-> kinds of iommufd HW specific interfaces designed. From a lot of
-> experience here, arbitary marshall/unmarshall is often an
-> antipattern :)
+ drivers/char/tpm/tpm2-sessions.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Is there any documentation for the (proposed) SMMUv3 UAPI for IOMMUFD?
-I can understand reading IDRs from userspace (with some sanitation),
-but adding some more logic to map vSTE to STE needs more care of what
-kind of semantics are provided.
+diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
+index d3521aadd43e..44f60730cff4 100644
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -1362,4 +1362,5 @@ int tpm2_sessions_init(struct tpm_chip *chip)
+ 
+ 	return rc;
+ }
++EXPORT_SYMBOL(tpm2_sessions_init);
+ #endif /* CONFIG_TCG_TPM2_HMAC */
+-- 
+2.46.0
 
-Also, I am working on similar interface for pKVM where we “paravirtualize”
-the SMMU access for guests, it’s different semantics, but I hope we can
-align that with IOMMUFD (but it’s nowhere near upstream now)
-
-I see you are talking in LPC about IOMMUFD:
-https://lore.kernel.org/linux-iommu/0-v1-01fa10580981+1d-iommu_pt_jgg@nvidia.com/T/#m2dbb08f3bf8506a492bc7dda2de662e42371e683
-
-Do you have any plans to talk about this also?
-
-Thanks,
-Mostafa
-> 
-> > Making user space messing with shareability and cacheability of S1 CD access
-> > feels odd. (Although CD configure page table access which is similar).
-> 
-> As I understand it, the walk of the CD table will be constrained by
-> the S2FWB, just like all the other accesses by the guest.
-> 
-> So we just take a consistent approach of allowing the guest to provide
-> memattrs in the vSTE, CD, and S1 page table and rely on the HW's S2FWB
-> to police it.
-> 
-> As you say there are lots of memattr type bits under direct guest
-> control, it doesn't necessarily make alot of sense to permit
-> everything in those contexts and then add extra code to do something
-> different here.
-> 
-> Though I agree it looks odd, it is self-consistent.
-> 
-> Jason
