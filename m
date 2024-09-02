@@ -1,40 +1,40 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDE217DFEC;
-	Mon,  2 Sep 2024 10:59:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2120C1C3F2B;
+	Mon,  2 Sep 2024 10:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725274743; cv=none; b=lPTvoETaLrod+UTDDXaHqrb/40Ph2PRCfrupkdRVRMhLPxMjk+CaL+18FiYojcFoSdyHlt5qGXoN/yMToyh99KFbDZyfJ+X7h2Kq7XPRjJJ4EX2LwNuYG/dSpRoa+ds7cUaTRc8pl6lJMDE+Yhd/+U2dsFdViBQKpIbCS3yQCm4=
+	t=1725274746; cv=none; b=lAvxlrdonVRFcMXLCF81gt8pIzPtTQsbxN/dk+KB+x5w+UTncTaOv4fhfJuU18KGRIU1g4OM7uiHxzO1usIlsAYO5okWQG4NuegX6IWQJRBmpusEW/n5JeGRAnzXvtT51SFK5y21z2eK8eFU2/wf6FaM9J4I3+WkWJdYW6cixo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725274743; c=relaxed/simple;
-	bh=2B1xem6LeY7zU4pbdoP3bFeSSKwEtLb0XuH00Q4137Q=;
+	s=arc-20240116; t=1725274746; c=relaxed/simple;
+	bh=VkabMg1G/J3eCh7fJ13PJdYvPJYreYYZcHeUqILTJZs=;
 	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=iTPGE9grjvH/h5iFEAGlBrg3/ddsL8MsTWaoHnQSyOClMU2qHEKDECnB4DAEvc+gt8XkQ7RxlHEVZOY8RUkuRSl3u6k7EgQG6dnLczmmGoBco0xp4Nx5i3jYuMs5521Q0kqNl85+cWITQAnGHsIoaggMvUrd1yItMbdLCb/cobo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=l9Ebn/oD; arc=none smtp.client-ip=212.227.15.3
+	 In-Reply-To:Content-Type; b=h+ykQk5JTubod8L7iChLzkSJs5/A2n/pzSPLU+nL7RAipTRsCj7aosYZRAFy4Xt7ccv3MmJmQzFldyW/UJn8XTZzDFP480pIzWM2oVLcNURkFHmfo4xE5zqBUGOXaLTuNR3ji9P/NYmj7fml8tGvsXcK54X6PJ62GCO20lNmjW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=RqUIWWoR; arc=none smtp.client-ip=212.227.15.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="l9Ebn/oD"
+	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="RqUIWWoR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1725274709; x=1725879509; i=frank.scheiner@web.de;
-	bh=EVPNt6C8o2MY2YfJMjNDfVOjEycIKBzxO1tyINT6wZc=;
+	s=s29768273; t=1725274690; x=1725879490; i=frank.scheiner@web.de;
+	bh=VkabMg1G/J3eCh7fJ13PJdYvPJYreYYZcHeUqILTJZs=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
 	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=l9Ebn/oDGr1sU7FPiVSZcnaNIyNQvej1xwpZ6dYamcc7ifU5+gxw3baH3+yoTF29
-	 mOYFTIcfvTe4BAmonlDE2D9VGUm5nTtbUEkHPMWEDDTKxPAGiwFe1mGLmkN3oyNGC
-	 VpEelQLof7XQ3XQX4XHBCNKITskEB8BGN4snzpJjKTPQJdEy+djxZFyE5SrnRdIGD
-	 sL3h8nt2HbPeLjs4H+3kyye/1VyF/w0JL2RG3QiTqXAp9uGaSd3mGPl2KYYGm35FW
-	 xbCoBnPJSO0dQ0qGyN9uw/JoIm2Tqy2banGIC5c1SOJwxwQr7KHnOzhvTwB0ZLG4n
-	 zwzsV/kzZ/I7KC4PYw==
+	b=RqUIWWoRIie0ugZPMHnBv3ao1ktoxSts+R8SYXesf8RXk3wzmNjawKU4IfZ7VEYG
+	 dCh2WNhXMu8Nbq45gpE7vBSd6YaeW4Np9QdW7q9j2CFnrVgliiTS537SnQ9KKhV2C
+	 YR9BmcNI6b1NvfZs8Ignk7dpbCtXT4ykOj3sWy/GonTXv5n9/lx2Vu2ZBeuWvTsUQ
+	 3FSxluGHNkOwZ3msg5T6J3e6z+q0+jHJYcOJLHcUivPYfFWti6a+Avu5x2Q3X9ViG
+	 3fcLEhuRP/R2xLjezeQqwrTEg4LDOdPTiJKnPWeMLkhlwirh6md6BOv4qRkLTdhW/
+	 e4s2y9niomfjkzz22Q==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.30] ([84.152.250.180]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MD5jp-1stdUC1kxd-007DOE; Mon, 02
- Sep 2024 12:58:29 +0200
-Message-ID: <4b44c4c9-4082-4c08-b900-bb0350f33fd4@web.de>
-Date: Mon, 2 Sep 2024 12:58:26 +0200
+Received: from [192.168.178.30] ([84.152.250.180]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mi537-1s73BL2NPt-00b8LH; Mon, 02
+ Sep 2024 12:58:10 +0200
+Message-ID: <ca1d2ed3-6328-47ca-874a-5b18a010a85a@web.de>
+Date: Mon, 2 Sep 2024 12:58:07 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,66 +43,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org, allen.lkml@gmail.com, broonie@kernel.org,
- conor@kernel.org, f.fainelli@gmail.com, jonathanh@nvidia.com,
- linux-kernel@vger.kernel.org, linux@roeck-us.net,
- lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev,
- pavel@denx.de, rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
- stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
- torvalds@linux-foundation.org
-References: <20240901160807.346406833@linuxfoundation.org>
-Subject: Re: [PATCH 6.6 00/93] 6.6.49-rc1 review
+Cc: a.hindborg@samsung.com, akpm@linux-foundation.org, alex.gaynor@gmail.com,
+ aliceryhl@google.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
+ boqun.feng@gmail.com, cl@linux.com, dennis@kernel.org, gary@garyguo.net,
+ keescook@chromium.org, kent.overstreet@linux.dev, nathan@kernel.org,
+ ojeda@kernel.org, pasha.tatashin@soleen.com, patches@lists.linux.dev,
+ peterz@infradead.org, sashal@kernel.org, stable@vger.kernel.org,
+ surenb@google.com, tj@kernel.org, vbabka@suse.cz, viro@zeniv.linux.org.uk,
+ wedsonaf@gmail.com
+References: <20240901160808.908613948@linuxfoundation.org>
+Subject: Re: [PATCH 6.6 41/93] Revert "change alloc_pages name in dma_map_ops
+ to avoid name conflicts"
 Content-Language: en-US
 From: Frank Scheiner <frank.scheiner@web.de>
-In-Reply-To: <20240901160807.346406833@linuxfoundation.org>
+In-Reply-To: <20240901160808.908613948@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:E4DF1fuWRaYAxu5olsHuPYDe14pv94hm8UljtHIloBUiWrLpcbO
- 4dqRBj4/hsJYYYZQwrfFhdXcLpppURq3St2wLcIRlVY3Hf96rb+s/2DbJ+2f2mXJ5DYP4qy
- RsWCdE7tQ34VPSwl7zdHv+Eb6QmAz5jSSvovwWDR1Gvv7E+6cPYMh039Q6zvbSZwihFHtZh
- RiVVwFgZpY/ugsVRR+7hg==
+X-Provags-ID: V03:K1:lKRwo+1QlPoEqVRWAFv1FkPLl55849RbCkVsabVcxsySoziG4GD
+ Nr5agLYyU5iP+jo7A4Mz3RBEyR1GKo6OtkAiXiRfSD5xZ5qYlg+kSayUrQzJWWEEmVGyu53
+ fHXatoWHH7Bf9luyQDYPIAof/06h+nRTRrZa1n8qdOplAEnLMiDeuUBWNgZA5ac4rgFB20/
+ RRFdnvtkUEzbtgxik/FTg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:WNUEySXDfY4=;+n9SgWugvlofjxS44oiRLU1liWy
- aBETsF0U0YYMHgBp7jLimhha/d+TpSdzxFSQEk338jMzivUfRNEN0j/LRC13ILP+DTtmOQYCz
- FnTVlrpuWd6rrdocchXVLsUAwrTf/cen6unsPBkVdWOtTrno486TEl45rMl23l+CUqW4kU2S7
- JnJ45EFvNtWQ/iymNglXY26Su/pTBMkr8LZxUz/ABlELI6takXOWXcpkf2dyGgNgTN1nQmsME
- /E7nY4Rf9orHnbZY4qHBS/6cbAImyGCDzAvceJ0C6wGyQ4OQBkVsnZ4T/FmMttwGS0qc7HZmI
- OKiN46LQ1VNlZQ+GY6qfj7DuikRlLOM/knAG799dFncje9jQz+WCaM7eKJpFmVY7r7V/Pq4V5
- p9nguIcMLmH2rX3Rbc8VDfUwwnlZDXcLiB8ZCleGQKX5ebDZTK53Q/QmIpVD5LscxOrDMd9v4
- DzmXaC6ltX5906mtsuSgXaQNyYCDQDnDn8HmZBEX0carMac1wLg8P/mlcd4FbaGUbLxsbfOT+
- RqDoFOJArDa1UgXaxEwRnf2KOzsA2U1IgrGgR1aWRYkc27vfoFtoQnx6IgpSt6rzhQ6AXwa0z
- A/4L6YcTVyQPttlbSU9nHvd9f1voGgKys2gRTihgDyDcSald+G4gCNeQCo6pROwfeocj4l/eh
- Fe42fINXW24DnIipIvF3A8UZJCTluEdqvE2PD2glGojGbgoVKCKiTnpeRZv+3xPwykrDq/L+n
- 4jia/Ce3dL9LXrBZeBKydp/lPKcIFLDbKvHfKvD5T3As414WrC4z1Nr9KZPiQLK42wXPHuZ/C
- WYzrTSQsov3GsuKMzfGerEUvF77ofAlqn3dzd4q5PYnf0=
+UI-OutboundReport: notjunk:1;M01:P0:nua4ASzHzZk=;fOr7lO0ylLhqwGWMT4f2LdTCtbj
+ kN90jczra8CM+F4LH0m1gvtosFNpEGhIDS8+nrVwMAjunP2RyAheFW8uFiXVKEyTqhxkaTs5l
+ cVj8PjSlOWMJfqDE5Rxq7bUPzCOYeKrXWN5xfVTnrDDh1hUCvNknnNyZX6HGMe5VA+w05scSB
+ bgzPTSKopoOH/oQksvPyXjPblqJPSnCSzoGQDXJ4yDM4RNtXrTE4jCzjCKwUAE9r1Zie/3R9+
+ mP2FnvG1jJBIjSj0oRvJML15kEcZvnM0Yajd6VUOkO8T0tWjxkKlX2+7Nz2G3smlbChaW84SH
+ q/70+zoMCEmklvdez9Kfnhe66o0rqKtMU7edYMI9LZwSnJ3QoKKJ3CDjCVEUIXGnilSsvxF21
+ VSHPj5A/LcM31T3Gz28RlpvTZ9E2xQ8Uv7eGam+5o9UX4UEa78LCMzb/OxIZyb9Kl1AX8ZNsL
+ vn6gLjjAKrfqfyVA7UQLo0aNjjxXHBbavKlOFxPu78rqqzEofzuoZXlgpmz+ex8gUt516/zoo
+ e1cYGm5QN/3FxIrmieOxVMEE/7DkdKv3fPFUq1qWcbzu1aIH5xqN+0OBsvm/GXdrCXq7GKMTT
+ fd4MCC+60ItWiDeNd+SBa4hN2JHuyygzNMgRuFRjWbInjXEke4Hi5haIg6NPZ46k84zLdBQs2
+ pkNuKxGjWA3KMI3y/T2N3CR8Ki6OBUfcoyyugnsrRjq4rwZmn6o+iCpAjrnJjNL5P3WwbMR8k
+ TS1GT+T8FSg/dajgEuX5uwNApUgdxenkXwwSyJVDchq4chQmb9LvvkRJ8piZo82tYHQuCYGxv
+ 7Aj/42D532U88HQwzhMQVUrHjf3Yb8OAX+8Fbq8Sxbh78=
 
-> This is the start of the stable review cycle for the 6.6.49 release.
-> There are 93 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 >
-> Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
-> Anything received after that time might be too late.
+> This reverts commit 983e6b2636f0099dbac1874c9e885bbe1cf2df05 which is
+> commit 8a2f11878771da65b8ac135c73b47dae13afbd62 upstream.
 >
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.49=
--rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi=
-t linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> It wasn't needed and caused a build break on s390, so just revert it
+> entirely.
 
-Cross-builds for ia64/hp-sim and runs fine in ski ([1]).
+Thanks for reverting this, as it also broke the build for ia64 since
+6.6.48-rc1 (see e.g. [1]).
 
 [1]:
-https://github.com/linux-ia64/linux-stable-rc/actions/runs/10660100556#sum=
-mary-29543888306
-
-Tested-by: Frank Scheiner <frank.scheiner@web.de>
+https://github.com/linux-ia64/linux-stable-rc/actions/runs/10589507221/job=
+/29344063186#step:8:1892
 
 Cheers,
 Frank
