@@ -1,123 +1,107 @@
-Received: from relay5.mymailcheap.com (relay5.mymailcheap.com [159.100.241.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B37125DB
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 02:05:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.100.241.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76301F949
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 02:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725242726; cv=none; b=Qyz2mtxe6cfahaiRgA5nHK6ebBBDoJLvAhhibSQPWbD4Yxv03Fo/sn+U5mpa/niRwCdRQb5KFYIDk2g+/ED5K1mJz0HkaTYFkTt4xufCJAUtYJDUA6wb3QdrxGlsiV0WA6xlkNmVeWP1DJ7NV0+pvEV3hwAt1pVT0xSeagm2Es4=
+	t=1725243356; cv=none; b=lCQ4zORbBweGm6tw6YvetHmubBjLfJn3C7wav3AW2DaWiM2HudU8XPbPcy8TW+WwE37wfZhnF8xrUZAqzXsPiT1C+3pPwtODceEBG5D0a+8TAQ/NZOD1C1l0SU+HXhhGJp8vjSarm0123inXEfbl1S88SQwTQNg9my5UaVDCRQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725242726; c=relaxed/simple;
-	bh=3bsjVY8bldJihatLeQZqJT5FdnEmepoai4xFY/QtUX0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxjvNOCi/53dEnB1sqyQob7OhUArJ+MXMGCw8td0cErrMRrx2801sNv7PISpSF4qhEjzCoDXPmXkOT3FAYAgg5ItK9sYxp3XSg0oardR3qqDcud3VIeRGXk+bC9joKLQ5PqGhRbuWoGX0AJcmqIkkk0WAKn4PfcH/s7UtSSjSDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io; spf=pass smtp.mailfrom=aosc.io; dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b=Kp5o5Ok5; arc=none smtp.client-ip=159.100.241.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aosc.io
+	s=arc-20240116; t=1725243356; c=relaxed/simple;
+	bh=6z77a/tm64j1l7gPWIFt1gWOncRUJVxSyOL6jV/krSY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bMppnSuR3Y76mFxpN7f6DVx7r3RVW39xSfx5JWJg8KPVwlzd7eNFbFzco2qUWZAOSdHr1LpS8JQ5g1qRW3tIpec0OLUEJHBrMADqoqADRVBCnHCeWhooaxs/McDo8W7+gODffTa5Gx6U4YGG9NhxslkPrbwcv6wJXYQAoRK2ZhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dl7DhFY7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b="Kp5o5Ok5"
-Received: from relay3.mymailcheap.com (relay3.mymailcheap.com [217.182.66.161])
-	by relay5.mymailcheap.com (Postfix) with ESMTPS id 3258520113
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 02:05:22 +0000 (UTC)
-Received: from nf1.mymailcheap.com (nf1.mymailcheap.com [51.75.14.91])
-	by relay3.mymailcheap.com (Postfix) with ESMTPS id CC8773E970;
-	Mon,  2 Sep 2024 04:05:13 +0200 (CEST)
-Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
-	by nf1.mymailcheap.com (Postfix) with ESMTPSA id 6683C4007A;
-	Mon,  2 Sep 2024 02:05:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
-	t=1725242713; bh=3bsjVY8bldJihatLeQZqJT5FdnEmepoai4xFY/QtUX0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kp5o5Ok5i7dVrIej6wXKyGoX7aS+s0Nn5AmAMKPutY2YEFNhZQg2x8CTQsAynre0I
-	 lSaUVFfHbxnrpr/PQbI68IiwWU/ppR3j/U7h67/VjQO+g01OlCjnNLPN6u8MpzAOxv
-	 hYP5reQbGNbagU5F6RKf+LfWBPIF5xLb4/bqUxGQ=
-Received: from localhost.localdomain (unknown [58.32.40.121])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail20.mymailcheap.com (Postfix) with ESMTPSA id 05E57406F1;
-	Mon,  2 Sep 2024 02:05:10 +0000 (UTC)
-From: Kexy Biscuit <kexybiscuit@aosc.io>
-To: gregkh@linuxfoundation.org
-Cc: jarkko@kernel.org,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	stefanb@linux.ibm.com,
-	kernel test robot <lkp@intel.com>,
-	Kexy Biscuit <kexybiscuit@aosc.io>,
-	Mingcong Bai <jeffbai@aosc.io>
-Subject: [PATCH] tpm: export tpm2_sessions_init() to fix ibmvtpm building
-Date: Mon,  2 Sep 2024 09:59:13 +0800
-Message-ID: <20240902015912.56377-2-kexybiscuit@aosc.io>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240901160817.780395041@linuxfoundation.org>
-References: <20240901160817.780395041@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dl7DhFY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAD0C4CEC9
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 02:15:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725243355;
+	bh=6z77a/tm64j1l7gPWIFt1gWOncRUJVxSyOL6jV/krSY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=dl7DhFY7EF0KTN0YUauxSwwDq5ak/HCu+Ecnss5k4OqtQYe/KD/0q+8zen9RBKsBC
+	 u72KqeJOAjiCBk3FOhHbBT0kggqD9AeJuzqiLuI1n3sa8vC3pWzosdJ38B9Ag6JTsO
+	 6CvS9Y7VuoJS3i4xFqc6Il1hHFb9HCdhpm5SapoULTNAFhDl/oAR+TfEqJ9VCw1rnT
+	 3xayK0GYc93AH0pJmm/1G703GLvieSeWwN46CFjxVSR46OqQzYttx2DME8iFM/tQMB
+	 YKy9QDi8bVdEsRUXOoIXiYKNvL4FIHCPQZPDbMP+R9ehsBBTm2XIF92IEzEA9uAjJR
+	 TQYkYT7Yu3Nxg==
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f50966c469so41418941fa.3
+        for <patches@lists.linux.dev>; Sun, 01 Sep 2024 19:15:55 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUPyrgbq0w7yISBlXaqOEOPI7b9Btn16+Zm+s1CicVRcMcu0AT5WM30mCs84z/xibsI3pg/opMH@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz7QYBR4u+mYMc58d5LkeD+3FWv++YG4NHeDscSTmvEgH3nEZ9y
+	iYYxIpC0MvCt38bgMcWybQqa839qIZPXbT1ssI81e1NzD8AQS/4XzOx/ssKvib0SxRwYcYb73Ab
+	07DgR3s8E1Ui3AVTsr4EuhVhYjPc=
+X-Google-Smtp-Source: AGHT+IERe6EqEnhkGMu2Dri3rExqJpscPFLnCvRKWhFr1SjF2sXzajyZ8dl2BetccFcd+pZ8aH8cVyPRoEBeJlZyJBA=
+X-Received: by 2002:a2e:b88b:0:b0:2f0:1fd5:2f29 with SMTP id
+ 38308e7fff4ca-2f6290445femr32966531fa.19.1725243354204; Sun, 01 Sep 2024
+ 19:15:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6683C4007A
-X-Rspamd-Server: nf1.mymailcheap.com
-X-Spamd-Result: default: False [1.40 / 10.00];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_ONE(0.00)[1];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:16276, ipnet:51.83.0.0/16, country:FR];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	TO_MATCH_ENVRCPT_SOME(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[]
-X-Rspamd-Action: no action
+References: <20240728125527.690726-1-ojeda@kernel.org> <CAK7LNARhR=GGZ2Vr-SSog1yjnjh6iT7cCEe4mpYg889GhJnO9g@mail.gmail.com>
+ <ZsiV0V5-UYFGkxPE@bergen> <CANiq72khCDjCVbU=t+vpR+EfJucNBpYhZkW2VVjnXbD9S77C0A@mail.gmail.com>
+In-Reply-To: <CANiq72khCDjCVbU=t+vpR+EfJucNBpYhZkW2VVjnXbD9S77C0A@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 2 Sep 2024 11:15:18 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARJjM2t_sqE-MePzEEF3D3SznNYh99F5bM003N_xGFpug@mail.gmail.com>
+Message-ID: <CAK7LNARJjM2t_sqE-MePzEEF3D3SznNYh99F5bM003N_xGFpug@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: pahole-version: avoid errors if executing fails
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Nicolas Schier <nicolas@fjasle.eu>, Miguel Ojeda <ojeda@kernel.org>, 
+	Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
+	Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <martin.lau@linux.dev>, 
+	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, 
+	Yonghong Song <yonghong.song@linux.dev>, John Fastabend <john.fastabend@gmail.com>, 
+	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>, 
+	Jiri Olsa <jolsa@kernel.org>, bpf@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"tpm: ibmvtpm: Call tpm2_sessions_init() to initialize session support"
-breaks ibmvtpm to be built as a module, since tpm2_sessions_init isn't
-an exported symbol. Proposing the following patch to resolve the issue.
+On Sat, Aug 24, 2024 at 3:48=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> On Fri, Aug 23, 2024 at 4:00=E2=80=AFPM Nicolas Schier <nicolas@fjasle.eu=
+> wrote:
+> >
+> > Do we have to catch all possibilities?  Then, what about this:
+>
+> Something like that sounds good to me too -- we do something similar
+> in `rust_is_available.sh`. We also have a `1` in the beginning of
+> (most of) the `sed` commands there to check only the first line.
+>
+> I guess it depends on whether Masahiro thinks the extra
+> checks/complexity is worth it. Here I was aiming to catch the case he
+> reported, i.e. non-successful programs.
 
-Also, please disregard for the previous incorrectly formatted email.
----
 
-From 3e43cfa3466178ec7f4309031647e93565bc70bf Mon Sep 17 00:00:00 2001
-From: Kexy Biscuit <kexybiscuit@aosc.io>
-Date: Mon, 2 Sep 2024 08:26:38 +0800
-Subject: [PATCH] tpm: export tpm2_sessions_init() to fix ibmvtpm building
+My previous report was slightly different.
 
-Commit 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to
-initialize session support") adds call to tpm2_sessions_init() in ibmvtpm,
-which could be built as a module. However, tpm2_sessions_init() wasn't
-exported, causing libmvtpm to fail to build as a module:
+CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT are string type symbols.
+The shell command is allowed to return any string, including an empty strin=
+g,
+as long as the value is enclosed by double quotes.
 
-ERROR: modpost: "tpm2_sessions_init" [drivers/char/tpm/tpm_ibmvtpm.ko] undefined!
+In this case, CONFIG_PAHOLE_VERSION is an int type symbol,
+hence the shell command must not return an empty string.
 
-Export tpm2_sessions_init() to resolve the issue.
+Ensuring this should be easy.
+Why don't we fix it properly while we are here?
 
-Cc: stable@vger.kernel.org # v6.10+
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408051735.ZJkAPQ3b-lkp@intel.com/
-Signed-off-by: Kexy Biscuit <kexybiscuit@aosc.io>
-Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
----
- drivers/char/tpm/tpm2-sessions.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
-index d3521aadd43ee..44f60730cff44 100644
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -1362,4 +1362,5 @@ int tpm2_sessions_init(struct tpm_chip *chip)
- 
- 	return rc;
- }
-+EXPORT_SYMBOL(tpm2_sessions_init);
- #endif /* CONFIG_TCG_TPM2_HMAC */
--- 
-2.46.0
 
+
+>
+> Cheers,
+> Miguel
+>
+
+
+--
+Best Regards
+Masahiro Yamada
