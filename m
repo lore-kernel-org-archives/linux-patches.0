@@ -1,321 +1,219 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DFD18454E;
-	Mon,  2 Sep 2024 11:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CE378C60
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 11:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725276960; cv=none; b=WeVdR8c3C6iqcPZcrHlUM2CToYCYPi2ROMDadpOeeNslx2SZTijh7xMpvB7TlaNBVLiMlXSs49hzBy/M3mcU0Xr8s2cUns6mmANLz+ZVKcWqjg45U645SnNyJqHVyCCTZBDlVz6/fda2o5x7rW0k7ZGsGDAeTs9RVJ8tt5hTJPs=
+	t=1725277770; cv=none; b=HKwN1eqAoJ2RrYd9LtyVp8oUX0MyGGpa/D+lcKTtnYyFs5Bh7eFPcCJ8ZmINDvla4HG/TAZxfltPjs3nItZvwaOeHiYxxt3KyHwPuO/FoaF/vFSWAqys35Ku0/3I7hbgPbghgSE/DFfdcYNf457o7aP7o/+mLzMQuAiF6PE/u04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725276960; c=relaxed/simple;
-	bh=ijLYhyyOfFYUMsUXfR6J6D9+QxK+paVNZEW3dTYB+HQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VkDJhhlTncWb6FaUAh2Zb+fcVpSYz5Np6cicl8t3WotolUljQNZm+1GWnMF8jjf2O/9K3LlChh5cPqidpcRQh6tPNocqnMC+igKspAYSJe/PYQ/jVq2vj3jAJqDa9aIaiNFgVUY2pBrCNIEzkDV0sneW8P4EN2JjyXUNWFIeHdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RpVnQEAj; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1725277770; c=relaxed/simple;
+	bh=TbsLhDhTwEQZqG/BspoBxQwZG8kUpSJ8LMtZATpnDRM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u2/ZIAYGMGqlswqk7kNdHZogx9nUpnObbibjc4TDFL9if4nfc93pUt9QaUuZuetcQHy/PCQUDF5qNYiHvpB73mpMXOTQAmqHsRVhTDDeW06b1u+ChJgSK7VxN0CE9cipSamJ3lsIABXCYo9hDVZCD8N2L6ilygb6M3ZxLvyV7VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DL1fW/1d; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RpVnQEAj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1725276959; x=1756812959;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ijLYhyyOfFYUMsUXfR6J6D9+QxK+paVNZEW3dTYB+HQ=;
-  b=RpVnQEAj4w5UJw1wGZkb5N9sJw+c5SRYB7bkS8VkEJmql6IPmtbTekyS
-   gyRpSAx4c6663hiTWSJAs8t+JxmU865hL1k0XrBjiwRFoR6bLNONWKpiu
-   2boMaRjkMYrnX4dZGOeOp0+J4ssJY1R0jvA7Alzwzxh0DJmMmRePegKr/
-   AXOndQbgIbKvI7k/SSujr1DwMbDHXyuNNq6yOe9keTyqyB0GHKRYLUYh6
-   fR0XQxhfD20zCbvZlMTkSI3VVvmtCWCPCjV8xCCai+JSNc9hV/Q0UMGFg
-   QfyGVQhyCDgcCfUCoWX9xBknAL0Nb8fGKEGh7jRnTHMGAaCfU/oYX4VDJ
-   w==;
-X-CSE-ConnectionGUID: FUn9lkhjSnGtBtzUMaJf3g==
-X-CSE-MsgGUID: hvmsQaqJTtWCCZJuhpau/Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11182"; a="13329089"
-X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
-   d="scan'208";a="13329089"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:35:58 -0700
-X-CSE-ConnectionGUID: dYg4LNV0Tgayw6N9btAGjg==
-X-CSE-MsgGUID: JiwWAzMER72Z6q3Er8BeYg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
-   d="scan'208";a="69207807"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:35:50 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sl5LW-00000004LMj-1ywK;
-	Mon, 02 Sep 2024 14:35:46 +0300
-Date: Mon, 2 Sep 2024 14:35:46 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	dri-devel@lists.freedesktop.org,
-	Guenter Roeck <groeck@chromium.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v4 06/18] drm/bridge: aux-hpd: Support USB Type-C DP
- altmodes via DRM lane assignment
-Message-ID: <ZtWjEudmlR51zkU9@smile.fi.intel.com>
-References: <20240901040658.157425-1-swboyd@chromium.org>
- <20240901040658.157425-7-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DL1fW/1d"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-498c4d5a912so1577481137.2
+        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 04:49:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725277766; x=1725882566; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cTifHbeYcxDQuXfliKouQ/B6JHrDG8JJUyn5xqITlps=;
+        b=DL1fW/1dXTh/09oaoh7rSJkGfdJHNbY1t60RmlXCt/ETUYhhRs0tKlHKYRoD2NLl6H
+         eEpbPY+vFRxfxfcyUaV+aF4+FVtpYlFBkFZonFvFwge3EbgLRSu+MlyoSPBVYVI6UP4p
+         TyfpGThh2PKq5YVQwnmHIotvJ6mZAqoJ/fIn/bEB89wW143vDY1rbQL8b03gidvp5EUl
+         8ZaKyypvqC1nsjUR8Xll3D5iQTwbHy9ILkSakFqzP/+hQsYALEITPD6tg/P4l/nXjWQ6
+         DXKiTg8mmhjbra1Vkd2MpNrbEl9Oln5F7lF8DYwCzjn0Oa/yxltozJRU9AR7DpfBZkKR
+         NaQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725277766; x=1725882566;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cTifHbeYcxDQuXfliKouQ/B6JHrDG8JJUyn5xqITlps=;
+        b=BKKE5sSzzqjOIB5G//Z6YSDnRQL1bL3nCt63D6gKBmZebJAzY9qJftUK7oS8Mgjj7V
+         aKfiFbD7XfsoTgNhFz4CfU0UL3ctiSw19N2yku1GS8S94JMiAQL/0V7buf6vLpFUXAhc
+         pNVP0JRzdUYLXRwyHFkEOFyzfoQ7qWuMlwc57aYECvnlcI0Y4RjYlByV9K9qWfV4GtJy
+         k58q9zD4GQL0N8c48HOaQjTMY3xrqrKFbLrZDmIs7Qzc85WcGkR79JWqntPBq0yTrtIn
+         mVqQ5CEJBk2Xy79wMEgQuWqby1XUMySS74PARK7qsTLcur4CjFkXyhfNuo7zJnLAfg/M
+         uGvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXNYjnYdvuFxPsd8zuQNEXjyykepaTpgPgO4AP1UdWQith3j8wxhbeSQYPCLI+jX68X1bi32PUo@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2h7ogZTzLHWVYIYQGfjbhzs6vmwPB8QDoOgC/pZlVHp0quq8e
+	RGiLFnJDEeG1OF1g8qnmlgjPN4OljHuzIltQQ+FU8Ud+nl0wyiZpYjcGUySxxvlBEmGMHAJ/Knz
+	Sec1YeSP8AmHJ6CX55mirr4vfLP5ClE9+zVyAVA==
+X-Google-Smtp-Source: AGHT+IEqJTMFzAtvhaYcjWv0okauFOgdky9k0/FOXTxZktuO6h2MRkyM3tNfux7MBolYe2+OpW4jCLLHXdWXrfZzrWA=
+X-Received: by 2002:a05:6102:3a0d:b0:493:de37:b3ef with SMTP id
+ ada2fe7eead31-49a5ae733bbmr19067756137.13.1725277766603; Mon, 02 Sep 2024
+ 04:49:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240901040658.157425-7-swboyd@chromium.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20240901160817.461957599@linuxfoundation.org>
+In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 2 Sep 2024 17:19:14 +0530
+Message-ID: <CA+G9fYvYmpUeain222FMmDCQ=N5qMrBoza=fO-jhNP5romhM3w@mail.gmail.com>
+Subject: Re: [PATCH 6.10 000/149] 6.10.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 31, 2024 at 09:06:44PM -0700, Stephen Boyd wrote:
-> Extend the aux-hpd bridge driver to support assigning DP lanes to USB
-> type-c pins based on typec mux state entry. Existing users of this
-> driver only need the HPD signaling support, so leave that in place and
-> wrap the code with a variant that supports more features of USB type-c
-
-Isn't the proper spelling "USB Type-C"?
-
-> DP altmode, i.e. pin configurations. Prefix that code with
-> 'drm_dp_typec_bridge' to differentiate it from the existing
-> 'drm_aux_hpd_bridge' code.
-> 
-> Parse the struct typec_mux_state members to determine if DP altmode has
-> been entered and if HPD is asserted or not. Signal HPD to the drm bridge
-> chain when HPD is asserted. Similarly, parse the pin assignment and map
-> the DP lanes to the usb-c output lanes, taking into account any lane
-> remapping from the data-lanes endpoint property. Pass that lane mapping
-> to the previous drm_bridge in the bridge chain during the atomic check
-> phase.
-
-...
-
-> +static inline struct drm_dp_typec_bridge_data *
-> +hpd_bridge_to_typec_bridge_data(struct drm_aux_hpd_bridge_data *hpd_data)
-> +{
-> +	return container_of(hpd_data, struct drm_dp_typec_bridge_data, hpd_bridge);
-
-+ container_of.h ?
-
-With that said, can the argument be const here?
-
-> +}
-
-...
-
-Ditto for the two more helpers, added in this change.
-
-...
-
-> +static void drm_dp_typec_bridge_release(struct device *dev)
-> +{
-> +	struct drm_dp_typec_bridge_dev *typec_bridge_dev;
-> +	struct auxiliary_device *adev;
-> +
-> +	typec_bridge_dev = to_drm_dp_typec_bridge_dev(dev);
-> +	adev = &typec_bridge_dev->adev;
-> +
-> +	ida_free(&drm_aux_hpd_bridge_ida, adev->id);
-
-> +	of_node_put(adev->dev.platform_data);
-> +	of_node_put(adev->dev.of_node);
-
-I'm wondering why it's not made fwnode to begin with...
-From the file / function names it's not obvious that it's OF-only code. Neither
-there is no explanations why this must be OF-only code (among all fwnode types
-supported).
-
-> +	kfree(typec_bridge_dev);
-> +}
-
-...
-
-> +		return ERR_PTR(dev_err_probe(parent, -ENODEV, "Missing typec endpoint(s) port@0\n"));
-
-We have a new helper for such cases.
-
-...
-
-> +	adev->dev.of_node = of_node_get(parent->of_node);
-
-device_set_node() ?
-
-...
-
-> +	ret = auxiliary_device_init(adev);
-> +	if (ret) {
-> +		of_node_put(adev->dev.platform_data);
-> +		of_node_put(adev->dev.of_node);
-> +		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
-> +		kfree(adev);
-> +		return ERR_PTR(ret);
-
-Can cleanup.h be utilised here and in other error paths in this function?
-
-> +	}
-
-> +	ret = devm_add_action_or_reset(parent, drm_aux_hpd_bridge_free_adev, adev);
-> +	if (ret)
-> +		return ERR_PTR(ret);
-> +
-> +	return typec_bridge_dev;
-> +}
-
-...
-
-> +static int dp_lane_to_typec_lane(enum dp_lane lane)
-> +{
-> +	switch (lane) {
-> +	case DP_ML0:
-> +		return USB_SSTX2;
-> +	case DP_ML1:
-> +		return USB_SSRX2;
-> +	case DP_ML2:
-> +		return USB_SSTX1;
-> +	case DP_ML3:
-> +		return USB_SSRX1;
-> +	}
-
-> +	return -EINVAL;
-
-Hmm... This can be simply made as default case.
-
-> +}
-> +
-> +static int typec_to_dp_lane(enum usb_ss_lane lane)
-> +{
-> +	switch (lane) {
-> +	case USB_SSRX1:
-> +		return DP_ML3;
-> +	case USB_SSTX1:
-> +		return DP_ML2;
-> +	case USB_SSTX2:
-> +		return DP_ML0;
-> +	case USB_SSRX2:
-> +		return DP_ML1;
-> +	}
-> +
-> +	return -EINVAL;
-
-Ditto.
-
-> +}
-
-...
-
-> +	for (i = 0; i < num_lanes; i++) {
-> +		/* Get physical type-c lane for DP lane */
-> +		typec_lane = dp_lane_to_typec_lane(i);
-> +		if (typec_lane < 0) {
-> +			dev_err(&adev->dev, "Invalid type-c lane configuration at DP_ML%d\n", i);
-> +			return -EINVAL;
-
-Most likely typec_lane contains an error code here. If yes, it would be rather
-
-			return typec_lane;
-
-If no, why not make that happen?
-
-> +		}
-> +
-> +		/* Map physical to logical type-c lane */
-> +		typec_lane = lane_mapping[typec_lane];
-> +
-> +		/* Map logical type-c lane to logical DP lane */
-> +		dp_lanes[i] = typec_to_dp_lane(typec_lane);
-> +	}
-
-...
-
-> +static int drm_dp_typec_bridge_atomic_check(struct drm_bridge *bridge,
-> +					   struct drm_bridge_state *bridge_state,
-> +					   struct drm_crtc_state *crtc_state,
-> +					   struct drm_connector_state *conn_state)
-> +{
-> +	struct drm_dp_typec_bridge_data *data;
-> +	struct drm_lane_cfg *in_lanes;
-> +	u8 *dp_lanes;
-> +	size_t num_lanes;
-
-> +	int i;
-
-Does it need to be signed? Can it theoretically overflow as num_lanes defined
-as size_t?
-
-> +	data = to_drm_dp_typec_bridge_data(bridge);
-> +	num_lanes = data->num_lanes;
-> +	if (!num_lanes)
-> +		return 0;
-> +	dp_lanes = data->dp_lanes;
-> +
-> +	in_lanes = kcalloc(num_lanes, sizeof(*in_lanes), GFP_KERNEL);
-> +	if (!in_lanes)
-> +		return -ENOMEM;
-> +
-> +	bridge_state->input_bus_cfg.lanes = in_lanes;
-> +	bridge_state->input_bus_cfg.num_lanes = num_lanes;
-> +
-> +	for (i = 0; i < num_lanes; i++)
-> +		in_lanes[i].logical = dp_lanes[i];
-> +
-> +	return 0;
-> +}
-
-...
-
-> +		port->typec_data = typec_data;
-> +		if (of_property_read_u32_array(ep.local_node, "data-lanes",
-> +					       port->lane_mapping,
-> +					       ARRAY_SIZE(port->lane_mapping))) {
-
-> +			memcpy(port->lane_mapping, mapping, sizeof(mapping));
-
-Hmm... I'm wondering if direct assignment will save a few .text bytes
-
-		port->lane_mapping = ...;
-		of_property_read_u32_array(ep.local_node, "data-lanes",
-					   port->lane_mapping,
-					   ARRAY_SIZE(port->lane_mapping));
-
-Also note that conditional is not needed in this case.
-
-(And again, why OF-centric code?)
-
-> +		}
-
--- 
-With Best Regards,
-Andy Shevchenko
+On Sun, 1 Sept 2024 at 22:01, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.10.8 release.
+> There are 149 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.10.8-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 6.10.8-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 88062a11f41d8d4c9f723337833e4e9ea9324d5a
+* git describe: v6.10.7-150-g88062a11f41d
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.10.y/build/v6.10=
+.7-150-g88062a11f41d
+
+## Test Regressions (compared to v6.10.6-274-gaa78b3c4e7ee)
+
+## Metric Regressions (compared to v6.10.6-274-gaa78b3c4e7ee)
+
+## Test Fixes (compared to v6.10.6-274-gaa78b3c4e7ee)
+
+## Metric Fixes (compared to v6.10.6-274-gaa78b3c4e7ee)
+
+## Test result summary
+total: 199765, pass: 176468, fail: 1757, skip: 21311, xfail: 229
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 129 total, 127 passed, 2 failed
+* arm64: 41 total, 41 passed, 0 failed
+* i386: 28 total, 26 passed, 2 failed
+* mips: 26 total, 25 passed, 1 failed
+* parisc: 4 total, 3 passed, 1 failed
+* powerpc: 36 total, 35 passed, 1 failed
+* riscv: 19 total, 19 passed, 0 failed
+* s390: 14 total, 13 passed, 1 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 7 total, 6 passed, 1 failed
+* x86_64: 33 total, 33 passed, 0 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kss/1_kselftest-capabilities
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhu
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
