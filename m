@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027C1154C1E;
-	Mon,  2 Sep 2024 06:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F30914AD2C;
+	Mon,  2 Sep 2024 06:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725256973; cv=none; b=gaN0egnC4ot5H9JrlWZ+Z5jOMTTOB1cGOM9Qa+dlNl1IjkmvIR3Il3YqtHIdnn6bEAFxvqib0j8pvC0kfnuEvFvujz7ULfyL07EC8hN15d+l83A7i8GFj0AWV9hur/cuK7Dh2nIQ26jEjI4RftTzw96ZvTkdKEiwk3kKV3J8+Bs=
+	t=1725257008; cv=none; b=LVXNKHFES7HDle7G3iYfXOIuWzQUQkboRWwYIh+wVFNv9ySz429/P/94/l9Hk08WNbPMo89FVQdtU0t4EfVdupUNxYqfO0xbGyJRyZUdxPX/zsVYpEXLY7LF8UqENKA1UcgDjU32AcJvgWIAQELA+iHkEcNRke9PgP+2w6/Y/x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725256973; c=relaxed/simple;
-	bh=ovoMCORahu58BxE/Fjouv3G7V1TN4kRwK08WbvgGEI0=;
+	s=arc-20240116; t=1725257008; c=relaxed/simple;
+	bh=WIKSdJ1VbN844gIw7Ur87DVvqmPZp7xgceKl5KUU6YA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bo5qLzrjmuT4UwSoU1S/yJdVDbEYx6BP7o1iEzGHFYl5SUdUdHDYjYBqXqVqtrodcsAPDlGxn7MuIcNLe1SskiN/vL9e8l9L1gSDD8smKcRbqc5gd832DcuTVQKH+HvAteQELMaQ0c/cYriKZ++21OWi5LGrFEigeFVZv8S8JJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVflIsin; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=oQN6GRgtxCx4tym7PfenUHpLKEY60nZ4AnnZ7RH+MnpamD9TI5RKLXcU3PZpjb3qCkyAtP4qxQYlG1slf04+1xUpI3BjYzrOtYKbr3/OrBB+XZqvOXQuyzCtBqpNyac2Kwi1qVvPLCfmpHuYFPEteX+i5k8JbXx5hmhSWxzLOag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+4A2oxx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVflIsin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBD4C4CEC4;
-	Mon,  2 Sep 2024 06:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+4A2oxx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C24C4CEC2;
+	Mon,  2 Sep 2024 06:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725256972;
-	bh=ovoMCORahu58BxE/Fjouv3G7V1TN4kRwK08WbvgGEI0=;
+	s=korg; t=1725257008;
+	bh=WIKSdJ1VbN844gIw7Ur87DVvqmPZp7xgceKl5KUU6YA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=xVflIsin0gAgLxHrrjzFnBIX2zTLRW1fiCenlG3X0jQbY223z9tGEIoyCWxGj3fM5
-	 0FPBoTpFmqqKc1jp+phIyO8Fxc32qzTfAKcWpsLntMyNFcJVbUW6NPU6liXl27Rrx0
-	 ULwkQfemazHW9vjLtKuBBe6S+P4chxVDkHaN32rI=
-Date: Mon, 2 Sep 2024 08:02:48 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Kexy Biscuit <kexybiscuit@aosc.io>
-Cc: jarkko@kernel.org, patches@lists.linux.dev, stable@vger.kernel.org,
-	stefanb@linux.ibm.com, kernel test robot <lkp@intel.com>,
-	Mingcong Bai <jeffbai@aosc.io>
-Subject: Re: [PATCH] tpm: export tpm2_sessions_init() to fix ibmvtpm building
-Message-ID: <2024090259-disfigure-situated-77f9@gregkh>
-References: <20240901160817.780395041@linuxfoundation.org>
- <20240902015912.56377-2-kexybiscuit@aosc.io>
+	b=P+4A2oxxErRaAvaMnq5FlZfVOJ8pG927JOChtByeVQRZ1BY3iZAEL9Wo3LxWWnZ03
+	 Mg7Swte3xgmLl/PKYiHBJrTn4Kzxu4VRas/x6nyQWrxMZeCxRqjeat27LxXpkd7EiP
+	 WXd+bFwvRS6Kfk2LNcmKG/0LiUczmQUA+b8OErmI=
+Date: Mon, 2 Sep 2024 08:03:24 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 130/151] Revert "Input: ioc3kbd - convert to
+ platform remove callback returning void"
+Message-ID: <2024090259-sultry-cartel-8e0e@gregkh>
+References: <20240901160814.090297276@linuxfoundation.org>
+ <20240901160818.998146019@linuxfoundation.org>
+ <ZtURsofEb-WmU69f@codewreck.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,47 +44,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240902015912.56377-2-kexybiscuit@aosc.io>
+In-Reply-To: <ZtURsofEb-WmU69f@codewreck.org>
 
-On Mon, Sep 02, 2024 at 09:59:13AM +0800, Kexy Biscuit wrote:
-> "tpm: ibmvtpm: Call tpm2_sessions_init() to initialize session support"
-> breaks ibmvtpm to be built as a module, since tpm2_sessions_init isn't
-> an exported symbol. Proposing the following patch to resolve the issue.
+On Mon, Sep 02, 2024 at 10:15:30AM +0900, Dominique Martinet wrote:
+> Greg Kroah-Hartman wrote on Sun, Sep 01, 2024 at 06:18:10PM +0200:
+> > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > 
+> > This reverts commit 0096d223f78cb48db1ae8ae9fd56d702896ba8ae which is
+> > commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b upstream.
+> > 
+> > It breaks the build and shouldn't be here, it was applied to make a
+> > follow-up one apply easier.
+> > 
+> > Reported-by: Dominique Martinet <asmadeus@codewreck.org>
 > 
-> Also, please disregard for the previous incorrectly formatted email.
-> ---
+> It's a detail but if you fix anything else in this branch I'd appreciate
+> this mail being updated to my work address:
+> Reported-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 > 
-> >From 3e43cfa3466178ec7f4309031647e93565bc70bf Mon Sep 17 00:00:00 2001
-> From: Kexy Biscuit <kexybiscuit@aosc.io>
-> Date: Mon, 2 Sep 2024 08:26:38 +0800
-> Subject: [PATCH] tpm: export tpm2_sessions_init() to fix ibmvtpm building
-> 
-> Commit 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to
-> initialize session support") adds call to tpm2_sessions_init() in ibmvtpm,
-> which could be built as a module. However, tpm2_sessions_init() wasn't
-> exported, causing libmvtpm to fail to build as a module:
-> 
-> ERROR: modpost: "tpm2_sessions_init" [drivers/char/tpm/tpm_ibmvtpm.ko] undefined!
-> 
-> Export tpm2_sessions_init() to resolve the issue.
-> 
-> Cc: stable@vger.kernel.org # v6.10+
+> (Sorry for the annoyance, just trying to keep the boundary with stable
+> kernel work I do for $job and 9p work on I do on my free time; if you're
+> not updating the patches feel free to leave it that way - thanks for
+> having taken the time to revert the commit in the first place!)
 
-Put the git commit id in a Fixes: tag please?
+We can't really change things that are already in the tree, so we just
+copy the commit directly from that, sorry.
 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202408051735.ZJkAPQ3b-lkp@intel.com/
-> Signed-off-by: Kexy Biscuit <kexybiscuit@aosc.io>
-> Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
-> ---
->  drivers/char/tpm/tpm2-sessions.c | 1 +
->  1 file changed, 1 insertion(+)
-
-
-For some reason this patch is attached, and that will not work.  Please
-fix up and resend using 'git send-email' or some such tool so that it
-can be applied properly.
-
-thanks,
+thanks for the contribution!
 
 greg k-h
