@@ -1,96 +1,112 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0C51A4E66
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 20:14:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5521A4E71
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 23:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725308090; cv=none; b=k2/FQ1qU3UbELO09WIdD8HKVIYzf/8ujKnZIQeeIO53bCenFcEdN7pJt/l5MqKk+pKYt2uGz+WY3IgALd7a+UUR61wA7NnK80usyjbIYt5u/12eEqiyJ9RIZjJC4gnwYg6oJBRswI3gSiJ1gJS8dtgrgCRKZOWFKh4ojcOnwHHI=
+	t=1725318979; cv=none; b=rn/42Uw9/ldO5h0Uc4YuqxaPEvvWWPzXyKggJD0CVvB+Uxw2QPufXQvAPk9MiEhbdRc+RcDaJBJ48BZXxPmWFPaRJNMWM5VdwVy14Y3vp8DbVCsh6wvnGw4lFLAHP3R8d441ql8LAI+o4rs4EFYG30gBAYzRiInAg0MAmijCYjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725308090; c=relaxed/simple;
-	bh=VUBUrgI8fZ9UdZTf7JBIxZO5g8A0/zi0bMsBWCmBpmI=;
+	s=arc-20240116; t=1725318979; c=relaxed/simple;
+	bh=Ej0QxayqmDqh+wOpxhn6PZ7Ekd6SK7fVmjZK7b/LTh0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CynxRYHb+BE13I1i1+9m9CQF4iVjWXcUhuyBeWiacmVcOkjcEqJqcNwQZjsN0KF25ipA1gKsXSqGRPTE8pn9FpAYLjxXNus0luz9qULHagtrovaQyfgxDLjsaJyA53bFNGTI7siBRhMqNled7jpPr1Le0/yFF+ByamXtlx0FBTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=cj8V7H+i; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
+	 To:Cc:Content-Type; b=NiaGW8t9N8hMOT8OkugikP5FLt4x9KgiTYhpmSAl8SjLAULZO6bgSAcnGYH29XrdXdDhP21Z+oS6FdOTjzoZO/rTItsQt0Bit0kXP5+zmcg43i+uptB9BCRidsmcQwmolESnrqEJDpb2RSE7emPO1/taKzpUhOp0cqWNr9FaTfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LTW2Xlfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="cj8V7H+i"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6c91f9fb0acso38820047b3.2
-        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 13:14:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1725308087; x=1725912887; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VUBUrgI8fZ9UdZTf7JBIxZO5g8A0/zi0bMsBWCmBpmI=;
-        b=cj8V7H+ioXdu7zLuBchHqmirehh2tkw8C86tdevoKFflX2U4/QU9901aCDMVuXDQCe
-         6bPNXBXzJUhCzSNkVlXxr2rY7H3gOH6CEdr64VzSNHfIPMlvhQxh87c4Hxv4SbRGa2Fw
-         fCxCp5wK8ipwYZBwISfeyV+V7nVDLrY9clUH2motHUnFBw8DI4KHN2qrHxfp+E047pWo
-         CTsNDU1xtQI297gKcfRdukgrog3FaTuaQAHvon6E83CkeFyAiZ2FZkI75ApgCk4t+usz
-         ubykaARsIa6YOew5ElEfemFE5cY4bi72wedSE6wnTU4txoR4gMDYtOriXku/s6irhZKB
-         WDtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725308087; x=1725912887;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VUBUrgI8fZ9UdZTf7JBIxZO5g8A0/zi0bMsBWCmBpmI=;
-        b=vbQACBmcWtDAKPkMF4FlF89TyaPDmqF81tF8MlYs1tguFqh3ayN3rvGvu9cXKJ8Omg
-         TFih/e6YJaze2W/pIarHHqb6Gc9tG0rJTeOSsPSACBksaQQMYzUZEHMFGTjltVb1ytsI
-         niMsZktAj6Jt/M8JGZ+6Jmfhv9vY7Fy/IzcaB4SurOLm1DifJJeL+A3rfRrXXWSfLZ+8
-         ApgCnIzwWdLT6BcvOfNY4csokUcHTrEQahoS/Ouq6t0MG4dcGAzBebY/vowqJ3fY8Lkl
-         BhtEspf21ZVFCAHfgNpdCQ5OdhL+vs8VoRgp5VxY6fjqXBQgfQ05Awm0wrfjXisE1z2T
-         42Mg==
-X-Forwarded-Encrypted: i=1; AJvYcCUygSHYkjvOaEsAgzr14tpl9KUcZGccyKN14CTdKcYo0SgwfblEuTHJQSUjNrGRcMHR8PJq+GjY@lists.linux.dev
-X-Gm-Message-State: AOJu0YwUpd4iLDrLNrmHldWB2sEb7+Y+P6/+YUeS7vnJnOzTctVD5fsH
-	Ud9weU+SwKDCDRxYCrPT0uv10cS11P4IoMdyOcomfjAKd8rj25Qtj10ZhikENZ2AMrXPYW4jSFg
-	LffWCZzyVk7uKoiM4dIt1eWKUxJ4+B9WTHLEOhw==
-X-Google-Smtp-Source: AGHT+IGsXiR+Wz+6S4QOoyChhXUKek0EL7dfcorJfeKc88gOTnhJF8XcgdnaFG0Y0Q9vn6kCbLybTQ+QQtTSSBDJQwA=
-X-Received: by 2002:a05:690c:418f:b0:6d3:f400:81e1 with SMTP id
- 00721157ae682-6d40e17f6a2mr89660447b3.14.1725308087698; Mon, 02 Sep 2024
- 13:14:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LTW2Xlfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6571BC4CEC6
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 23:16:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725318979;
+	bh=Ej0QxayqmDqh+wOpxhn6PZ7Ekd6SK7fVmjZK7b/LTh0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=LTW2XlfmLF1ioGde4BsCDN0IhOlKhZyC4ys/J/mC2HvjfI+D7/17gwGXcP8HaNdmz
+	 TqwYM0DdYC8al+NCgJRUdgnEM3Of+HQyu3Ojg11X+3mXmWfBCMpqDQffQiHV7NWZ5n
+	 LerQePfFo/SKWmyzAiqT/LoeVMvsYCdUb6RnoXsZLW9P7YSjmLCUzMEjpmgGCD5N2k
+	 De0SRcFP+YuIxcNSu0lLH4sV7quVXkbIM+Z3y8REWXGkHYc7Mn6Y3sWRBiHDlGAjcI
+	 vHIVSw+2g6m+PSfYbf/DZmVbdbUktpLW/iFiX9un3Tw61Q0LzfTDM3DUPEtJzb84Vx
+	 sdjuyENRl0Wkg==
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-277dd761926so1085922fac.2
+        for <patches@lists.linux.dev>; Mon, 02 Sep 2024 16:16:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUVd8syjGt/xPeORlJhF1fEAQCEVAH96VMV18ZLFmnRTP/FzeVC4J7vjLybTXu9KsFSsAsROPtD@lists.linux.dev
+X-Gm-Message-State: AOJu0YycgkshiXuvwZnKCU/qwBHxFBoUCW6KrO7Kvnk11UrKk26aTlRH
+	TBBUdk8KpWWCvtK9WPDr5qMNZgysrz1bEi2hPvqx8yzLej7AMPvHMFd7HuBt24rqoTW9aK3I4Lm
+	ihtFxPJd61CADwqf1IayA46AEN4w=
+X-Google-Smtp-Source: AGHT+IHZFLXQHfwF/+H01XPI7DZ1neDBClcyw6vG784FclEFN5UP5Vrolv7pexrAYKz2gd97A67gGOi+aBZMpKD7yDE=
+X-Received: by 2002:a05:6871:4e48:b0:25e:368:b5a4 with SMTP id
+ 586e51a60fabf-277d03b127amr10124293fac.18.1725318978733; Mon, 02 Sep 2024
+ 16:16:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240902173255.1105340-1-ojeda@kernel.org>
-In-Reply-To: <20240902173255.1105340-1-ojeda@kernel.org>
-From: Trevor Gross <tmgross@umich.edu>
-Date: Mon, 2 Sep 2024 16:14:36 -0400
-Message-ID: <CALNs47s_DT4Vt3WuAAcP54GA7so_aNg=LY4CCB01xn2nGiUjDA@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: add Trevor Gross as Rust reviewer
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20240901160823.230213148@linuxfoundation.org> <20240901160830.426516431@linuxfoundation.org>
+In-Reply-To: <20240901160830.426516431@linuxfoundation.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Tue, 3 Sep 2024 08:16:07 +0900
+X-Gmail-Original-Message-ID: <CAKYAXd_UvscfaXpnoJNv2GEeDU0sUfg3_=gG7VX7My60EzXgfA@mail.gmail.com>
+Message-ID: <CAKYAXd_UvscfaXpnoJNv2GEeDU0sUfg3_=gG7VX7My60EzXgfA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 187/215] ksmbd: the buffer of smb2 query dir response
+ has at least 1 byte
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Steve French <stfrench@microsoft.com>, Sasha Levin <sashal@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 2, 2024 at 1:33=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
+On Mon, Sep 2, 2024 at 2:07=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> Trevor has been involved with the Rust for Linux project for more than
-> a year now. He has been active reviewing Rust code in the mailing list,
-> and he already is a formal reviewer of the Rust PHY library and the two
-> PHY drivers.
->
-> In addition, he is also part of several upstream Rust teams:
-> libs-contributors (contributors to the Rust standard library on a regular
-> basis), crate-maintainers (maintainers of official Rust crates), the
-> binary size working group and the Rust for Linux ping group.
->
-> His expertise with the language will be very useful to have around in
-> the future if Rust keeps growing within the kernel, thus add him to the
-> `RUST` entry as a reviewer.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Hi Greg,
+> 5.15-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+Please drop this patch.
+I told you this patch was required for 6.1 kernel versions or later in
+previous mail.
 
-Thank you Miguel!
-
-Acked-by: Trevor Gross <tmgross@umich.edu>
+Thanks!
+>
+> ------------------
+>
+> From: Namjae Jeon <linkinjeon@kernel.org>
+>
+> [ Upstream commit ce61b605a00502c59311d0a4b1f58d62b48272d0 ]
+>
+> When STATUS_NO_MORE_FILES status is set to smb2 query dir response,
+> ->StructureSize is set to 9, which mean buffer has 1 byte.
+> This issue occurs because ->Buffer[1] in smb2_query_directory_rsp to
+> flex-array.
+>
+> Fixes: eb3e28c1e89b ("smb3: Replace smb2pdu 1-element arrays with flex-ar=
+rays")
+> Cc: stable@vger.kernel.org # v6.1+
+> Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+> Signed-off-by: Steve French <stfrench@microsoft.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/ksmbd/smb2pdu.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+> index 57f59172d8212..3458f2ae5cee4 100644
+> --- a/fs/ksmbd/smb2pdu.c
+> +++ b/fs/ksmbd/smb2pdu.c
+> @@ -4160,7 +4160,8 @@ int smb2_query_dir(struct ksmbd_work *work)
+>                 rsp->OutputBufferLength =3D cpu_to_le32(0);
+>                 rsp->Buffer[0] =3D 0;
+>                 rc =3D ksmbd_iov_pin_rsp(work, (void *)rsp,
+> -                                      sizeof(struct smb2_query_directory=
+_rsp));
+> +                                      offsetof(struct smb2_query_directo=
+ry_rsp, Buffer)
+> +                                      + 1);
+>                 if (rc)
+>                         goto err_out;
+>         } else {
+> --
+> 2.43.0
+>
+>
+>
