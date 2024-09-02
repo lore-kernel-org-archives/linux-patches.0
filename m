@@ -1,78 +1,118 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9DF979C0
-	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 01:15:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from relay5.mymailcheap.com (relay5.mymailcheap.com [159.100.241.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924C628683
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 01:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.100.241.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725239754; cv=none; b=Rd8Rtjm6duGGQHFJ1AGr8nn2FVO18iqGEteVgdlk/Wv3Gqtf28NUN82TAfgjAh+07CGjpywGfSZqCiB+EIHI/Siw04JMrwsRNdO90Y964TW6RnEaWOOakbOPmgznWmGdVZm4ZVKWlO5LxDfKF7El1dNRoIQ0u5GIGO9wUdLZops=
+	t=1725242227; cv=none; b=LAiYuZNfTmLe7SeVfj9/btC3+6r6iaGJWGJY0HOHgsF2dRWbGcDU8rVPgsFMPg+D1L5BsTovcJquYbrfRdcK5BJKzpxfWBVfBxdfh6r1kLDI9RUR4HbYwj+J/UQtpaNA1ScUkSIm0yiI9SbPpZoX7Cz5Igc6fUIbzD6vwLRcccc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725239754; c=relaxed/simple;
-	bh=DHelPONrrGuP94Ep8CDeXojOJOEwWE6+O5SSi5VY4Gk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=grpdBlSM8nkZOVS2tZrVySXs+NZyeYebMIIuu1q2yyU7MbMWqnA++J76WGiookdrYyaSmt54oBkL2mVm7gZI/lQy69J/MgW67mFgezqZqC+adr7RN+KXN3ly0Lbms94ebKAvomgrf/uugIGd3kR1PK5YfOLVY+2yEcw/obpJRCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=Mx8lzy16; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1725242227; c=relaxed/simple;
+	bh=R/yiV9s8Z3jqlBYw2L7Um1OXYJNKCGfHGoDM/ulLzxY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BmhPwv3ycAPwe2RScMBoIGX6VZXwWplXa2Be4M9DGsdVB8KyZeByJGL58ss2Q0rJJXcI8Jh76ndCuDeGX4Z808MGpIBTvudbKMhEypdOB9+b2eetWHhTcBnQBg1Ez7ABMdNjxa+NzkNUUcyRKqW/T5/B3GVeTPeGOMLqoXGjf0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io; spf=pass smtp.mailfrom=aosc.io; dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b=tHn15Xxm; arc=none smtp.client-ip=159.100.241.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aosc.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="Mx8lzy16"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id AF8D014C1E1;
-	Mon,  2 Sep 2024 03:15:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1725239749;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sQJR2ONbfC8kwd5wz2n0IpjJsfQljFhf/xj3xdxkih8=;
-	b=Mx8lzy16BSBNXE63YI/iTuwun/WDfvMpSIs55+K44oMh8W2UJjYlwy/sQmPTQ5mVsFVSqU
-	whb6moqMz+D+SMYiyGq7/5DCdslagbruAkO5IUztLRO42N2RqdUBUQ7IhlYBmk6WeVwFAk
-	yV+8KwKQ8m+BQqN/RRD4lua9KFK4KDEC6E+oJDoG3AB7n5czX4D5ivYs8OFBSqYWSCBnsJ
-	dA+6pAgCnCgdfRugJW4nhZdtO5x02ww4QfyGkZ/le3DCl8Mb3rmFC1cGv4SEw80gBrPDkO
-	ofIVwZ7UztrhX1Rj1i7TvCSblfg4/MeuMEgS/nH9FKHXqZfGY8MqdmT3US1qOw==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 7f28c78b;
-	Mon, 2 Sep 2024 01:15:45 +0000 (UTC)
-Date: Mon, 2 Sep 2024 10:15:30 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 130/151] Revert "Input: ioc3kbd - convert to
- platform remove callback returning void"
-Message-ID: <ZtURsofEb-WmU69f@codewreck.org>
-References: <20240901160814.090297276@linuxfoundation.org>
- <20240901160818.998146019@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b="tHn15Xxm"
+Received: from relay2.mymailcheap.com (relay2.mymailcheap.com [217.182.113.132])
+	by relay5.mymailcheap.com (Postfix) with ESMTPS id D388B20113
+	for <patches@lists.linux.dev>; Mon,  2 Sep 2024 01:56:57 +0000 (UTC)
+Received: from nf2.mymailcheap.com (nf2.mymailcheap.com [54.39.180.165])
+	by relay2.mymailcheap.com (Postfix) with ESMTPS id 9EE3E3E8D0;
+	Mon,  2 Sep 2024 03:56:49 +0200 (CEST)
+Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
+	by nf2.mymailcheap.com (Postfix) with ESMTPSA id A2ACE40095;
+	Mon,  2 Sep 2024 01:56:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
+	t=1725242207; bh=R/yiV9s8Z3jqlBYw2L7Um1OXYJNKCGfHGoDM/ulLzxY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tHn15XxmiK31Fem9XJirBWFI+EuAXxmZsPtGfU56ahUIAkRYi1R+egnX0WDB35BVi
+	 cmH6+gN/nh5RMqJVUEY3SRl+r6lFwvSru31+Trm0MBJc2ttoYT4ol4HmIMpUmn3G8b
+	 w8mAPP85WPxCp4eXY9w4ALzDrqTVt7fKwz9487VY=
+Received: from localhost.localdomain (unknown [58.32.40.121])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail20.mymailcheap.com (Postfix) with ESMTPSA id 8840040CF0;
+	Mon,  2 Sep 2024 01:56:41 +0000 (UTC)
+From: Kexy Biscuit <kexybiscuit@aosc.io>
+To: gregkh@linuxfoundation.org
+Cc: jarkko@kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	stefanb@linux.ibm.com,
+	kernel test robot <lkp@intel.com>,
+	Kexy Biscuit <kexybiscuit@aosc.io>,
+	Mingcong Bai <jeffbai@aosc.io>
+Subject: breaks ibmvtpm to be built as a module, since tpm2_sessions_init isn't
+Date: Mon,  2 Sep 2024 09:54:31 +0800
+Message-ID: <20240902015430.54159-2-kexybiscuit@aosc.io>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240901160817.780395041@linuxfoundation.org>
+References: <20240901160817.780395041@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240901160818.998146019@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: A2ACE40095
+X-Rspamd-Server: nf2.mymailcheap.com
+X-Spamd-Result: default: False [1.40 / 10.00];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_COUNT_ONE(0.00)[1];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:16276, ipnet:51.83.0.0/16, country:FR];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[]
+X-Rspamd-Action: no action
 
-Greg Kroah-Hartman wrote on Sun, Sep 01, 2024 at 06:18:10PM +0200:
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> 
-> This reverts commit 0096d223f78cb48db1ae8ae9fd56d702896ba8ae which is
-> commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b upstream.
-> 
-> It breaks the build and shouldn't be here, it was applied to make a
-> follow-up one apply easier.
-> 
-> Reported-by: Dominique Martinet <asmadeus@codewreck.org>
+------------------
 
-It's a detail but if you fix anything else in this branch I'd appreciate
-this mail being updated to my work address:
-Reported-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From 3e43cfa3466178ec7f4309031647e93565bc70bf Mon Sep 17 00:00:00 2001
+From: Kexy Biscuit <kexybiscuit@aosc.io>
+Date: Mon, 2 Sep 2024 08:26:38 +0800
+Subject: [PATCH] tpm: export tpm2_sessions_init() to fix ibmvtpm building
 
-(Sorry for the annoyance, just trying to keep the boundary with stable
-kernel work I do for $job and 9p work on I do on my free time; if you're
-not updating the patches feel free to leave it that way - thanks for
-having taken the time to revert the commit in the first place!)
+Commit 08d08e2e9f0a ("tpm: ibmvtpm: Call tpm2_sessions_init() to
+initialize session support") adds call to tpm2_sessions_init() in ibmvtpm,
+which could be built as a module. However, tpm2_sessions_init() wasn't
+exported, causing libmvtpm to fail to build as a module:
 
-Cheers,
+ERROR: modpost: "tpm2_sessions_init" [drivers/char/tpm/tpm_ibmvtpm.ko] undefined!
+
+Export tpm2_sessions_init() to resolve the issue.
+
+Cc: stable@vger.kernel.org # v6.10+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408051735.ZJkAPQ3b-lkp@intel.com/
+Signed-off-by: Kexy Biscuit <kexybiscuit@aosc.io>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+---
+ drivers/char/tpm/tpm2-sessions.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
+index d3521aadd43ee..44f60730cff44 100644
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -1362,4 +1362,5 @@ int tpm2_sessions_init(struct tpm_chip *chip)
+ 
+ 	return rc;
+ }
++EXPORT_SYMBOL(tpm2_sessions_init);
+ #endif /* CONFIG_TCG_TPM2_HMAC */
 -- 
-Dominique
+2.46.0
+
