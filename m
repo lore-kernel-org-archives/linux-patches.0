@@ -1,127 +1,104 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8241A42BB;
-	Tue,  3 Sep 2024 11:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A366D1CA6A7;
+	Tue,  3 Sep 2024 13:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725364676; cv=none; b=D8+OMDeqvxO5bDM+AtJyJTyr2/bJg5nEN26RVyjcct2ex0mQvIJ1DIzUOpEfW1ePFXDw+QGs+6TW7D97eFqjJFnVDU3OHbCHSfW9ftEeALuqnHP5swBRq6sR5cIKvsZZvTHGMDJLNWbfJkHLF9O3kaKPszfiM8vJI4g/H1Cy/Y0=
+	t=1725368553; cv=none; b=en59xM6x8FdhPw7/yumnX9skS4K0g0XJpvkxyBSo4Jpwxh6bMgb4kNnu6Ec52OLP90sGlN9WzhNVIRyZoVwPRikAtdww4R+E7ixtJwq2Z/ACEjrSA6DoN3yS4nbfMtRbH9xwyel6jxqLwNoU0ASdzON139x4mwbxnnhmI2WFG0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725364676; c=relaxed/simple;
-	bh=pYR/4xqMSDopVbTkWH4Grl03ykIHCeaM7sZywKn0npc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cU68NWEaAbT3v6APYZT4wlGmFCDzg5+5kyy5n+bO3QpjoSRcsJMCTjm3zZYm0MgvOv9vlV0dyUgH3DnceNL4uJHOkEj7nFZPqtPwzGSfwI9GqsYa2zTyu6GmXGUbljpp9mKY7farX1Qkp3ET8pmRTra2Bj1Bo3L+QqAgAgu015w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MK25J7t4; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1725368553; c=relaxed/simple;
+	bh=RKYmQLjTh3bRw4tiaBfejmcaMdebUhnCWWkQpyck+Pw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XvyiimNzgSK1g/azH+Wawg196qqbQZe7I6QwzWipoOd6QVWYCnpAJRj0WN/77bgtI4H/HMr/o3s/ce0jlpqfRItZ/17MqZvHQ2RWpIP11BnhqZXKTNAsp79qipfBLTdc4lnIanQmEYt8zd/eNZ+5NLOIfwShu3PfjGHxqcV4ZyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pOffpb6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MK25J7t4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1725364675; x=1756900675;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=pYR/4xqMSDopVbTkWH4Grl03ykIHCeaM7sZywKn0npc=;
-  b=MK25J7t4kEQLracRb6W7wKAiKemOdjY9WD6AblWwFSnkhRHWqigjUs1+
-   LaevWap/X9oJUQyeCgWYOdghlUu8svC0Q6UjQ3Yc8PTBzWI1GYQklbQne
-   3g45ikVZjbwkTT6c+jcN061hN9Dr7aPhhCQsGPMU4l+9b7RvcmjE/fAas
-   jqILyAcx7oQhbIU6juaD9URjK9W33PJdWExJVnCQCbRgB03TnTu5sV1jU
-   PB5Of9V5ipyMYanpq7QPX24quRNaDCVGh9cOVbdL960JDuptSDHV2fO6b
-   N0JBQK7+8Ik/q9e1MeqBfYO93Oi/kHG+1OXKKh9WKAzZ05pm5rGRs7+Tg
-   Q==;
-X-CSE-ConnectionGUID: Fg58VnfXThC2RI/gHVWaUw==
-X-CSE-MsgGUID: Icpv830fS2qnps+hRwRZ0A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11183"; a="24074710"
-X-IronPort-AV: E=Sophos;i="6.10,198,1719903600"; 
-   d="scan'208";a="24074710"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2024 04:57:55 -0700
-X-CSE-ConnectionGUID: AN3CRyX3TEyjq+2mjWOAVg==
-X-CSE-MsgGUID: tescbFueRZCiRT1Yv66pUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,198,1719903600"; 
-   d="scan'208";a="65249228"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orviesa006.jf.intel.com with SMTP; 03 Sep 2024 04:57:44 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 03 Sep 2024 14:57:43 +0300
-Date: Tue, 3 Sep 2024 14:57:43 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	dri-devel@lists.freedesktop.org,
-	Guenter Roeck <groeck@chromium.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v4 04/18] usb: typec: Add device managed
- typec_mux_register()
-Message-ID: <Ztb5twUp15phr1H5@kuha.fi.intel.com>
-References: <20240901040658.157425-1-swboyd@chromium.org>
- <20240901040658.157425-5-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pOffpb6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2D5C4CEC4;
+	Tue,  3 Sep 2024 13:02:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725368553;
+	bh=RKYmQLjTh3bRw4tiaBfejmcaMdebUhnCWWkQpyck+Pw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pOffpb6+LnfBUArZklZYCwOU5i5AMuFoyWKkx+96cGxXEix1CRJgCloiBKZL60O2v
+	 3eZ7yBJL69y55ZBOvrEBHSl9impqPpOG7fofC7/ZdF4xGQbayClrp8VvvmgVy2cyTA
+	 XjFRhKirB5oHIhmH8pvTkXXXxEczsmwUWNHib82/vrYD47OksKIn4cyW7xVIBui7mn
+	 bGrS4Cz9hJPPtofIf0XJWCy0WTmk3EFwy2vbQqt300f8NKzFAOKuTbjnIyAK0Jl73k
+	 P8PQNnGYYVM3+CeV4WsL8qtrCCN9PQd1JKk+9CROWlK5ojqOA/IIDCBj0auykufmtX
+	 gh6wd7B31l6iA==
+From: Christian Brauner <brauner@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>,
+	Chandan Babu R <chandan.babu@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] xfs: Fix format specifier for max_folio_size in xfs_fs_fill_super()
+Date: Tue,  3 Sep 2024 15:02:25 +0200
+Message-ID: <20240903-bergdorf-vierkantholz-d085836abbe1@brauner>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240827-xfs-fix-wformat-bs-gt-ps-v1-1-aec6717609e0@kernel.org>
+References: <20240827-xfs-fix-wformat-bs-gt-ps-v1-1-aec6717609e0@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240901040658.157425-5-swboyd@chromium.org>
+Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2491; i=brauner@kernel.org; h=from:subject:message-id; bh=RKYmQLjTh3bRw4tiaBfejmcaMdebUhnCWWkQpyck+Pw=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMaRd53ikXqG9VWavo1DGzi8XDpwXkzY/M0n4ifDBypKV0 hFC29dM7yhlYRDjYpAVU2RxaDcJl1vOU7HZKFMDZg4rE8gQBi5OAZiIsTjD/2hpzwrjOXVJEuWh v99HSbRb3va59+xnTo7yskMC15wKlzP8ldd+WKSfVur10vGN4gFfl1clCgqmSQvqlH8eab39dos fMwA=
+X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Transfer-Encoding: 8bit
 
-> diff --git a/include/linux/usb/typec_mux.h b/include/linux/usb/typec_mux.h
-> index efb5ed32b813..08431f0896d5 100644
-> --- a/include/linux/usb/typec_mux.h
-> +++ b/include/linux/usb/typec_mux.h
-> @@ -99,6 +99,8 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state);
->  
->  struct typec_mux_dev *
->  typec_mux_register(struct device *parent, const struct typec_mux_desc *desc);
-> +struct typec_mux_dev *
-> +devm_typec_mux_register(struct device *parent, const struct typec_mux_desc *desc);
->  void typec_mux_unregister(struct typec_mux_dev *mux);
->  
->  void typec_mux_set_drvdata(struct typec_mux_dev *mux, void *data);
-> @@ -123,6 +125,11 @@ typec_mux_register(struct device *parent, const struct typec_mux_desc *desc)
->  {
->  	return ERR_PTR(-EOPNOTSUPP);
->  }
-> +static inline struct typec_mux_dev *
-> +devm_typec_mux_register(struct device *parent, const struct typec_mux_desc *desc)
-> +{
-> +	return typec_mux_register(parent, desc);
+On Tue, 27 Aug 2024 16:15:05 -0700, Nathan Chancellor wrote:
+> When building for a 32-bit architecture, where 'size_t' is 'unsigned
+> int', there is a warning due to use of '%ld', the specifier for a 'long
+> int':
+> 
+>   In file included from fs/xfs/xfs_linux.h:82,
+>                    from fs/xfs/xfs.h:26,
+>                    from fs/xfs/xfs_super.c:7:
+>   fs/xfs/xfs_super.c: In function 'xfs_fs_fill_super':
+>   fs/xfs/xfs_super.c:1654:1: error: format '%ld' expects argument of type 'long int', but argument 5 has type 'size_t' {aka 'unsigned int'} [-Werror=format=]
+>    1654 | "block size (%u bytes) not supported; Only block size (%ld) or less is supported",
+>         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    1655 |                                 mp->m_sb.sb_blocksize, max_folio_size);
+>         |                                                        ~~~~~~~~~~~~~~
+>         |                                                        |
+>         |                                                        size_t {aka unsigned int}
+>   ...
+>   fs/xfs/xfs_super.c:1654:58: note: format string is defined here
+>    1654 | "block size (%u bytes) not supported; Only block size (%ld) or less is supported",
+>         |                                                        ~~^
+>         |                                                          |
+>         |                                                          long int
+>         |                                                        %d
+> 
+> [...]
 
-Please just return the error directly here.
+The fix has been folded into the commit it fixes and a Link tag has been added
+noting that this patch has been folded. Thanks!
 
-> +}
+---
 
-thanks,
+Applied to the vfs.blocksize branch of the vfs/vfs.git tree.
+Patches in the vfs.blocksize branch should appear in linux-next soon.
 
--- 
-heikki
+Please report any outstanding bugs that were missed during review in a
+new review to the original patch series allowing us to drop it.
+
+It's encouraged to provide Acked-bys and Reviewed-bys even though the
+patch has now been applied. If possible patch trailers will be updated.
+
+Note that commit hashes shown below are subject to change due to rebase,
+trailer updates or similar. If in doubt, please check the listed branch.
+
+tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
+branch: vfs.blocksize
+
+[1/1] xfs: Fix format specifier for max_folio_size in xfs_fs_fill_super()
+      (no commit info)
