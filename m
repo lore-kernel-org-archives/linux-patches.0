@@ -1,79 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311A61DC73C;
-	Tue,  3 Sep 2024 19:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55951EBFE1;
+	Tue,  3 Sep 2024 21:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725393311; cv=none; b=D80gaufIlK5MFvZtiCroi2koaherJMqNC9BtJch8ZYy2kV11lfqfbn4gsBvaOdl5goYBXTG9u6Aq5xTx3EWSL0os1ewdGJelfqzhsvpywKql7wR77esCy85MFj4y38cLyegJJFxsj2+yGXPM3Nuo33J2uXMvsH2BWv9rvd58uz4=
+	t=1725397674; cv=none; b=CvZzC6jkmXgT04cjBF1tlIPuFm2xlqNqFCghV9M8bnf+SjSzlRs2nLAMcS32ei9nzcMCk1tOtHu46ujUvOpLStUFAPKR3SOuIt5n3zW1MpYEEV8oa49y1xzNpAidC/ADlxVqTmPHLv9GJWGgHlHq8vomg7eWmY03dl3or14CmXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725393311; c=relaxed/simple;
-	bh=LmjZ5WVu9+gaNJJ9kk1RITONyd5+Jfpn3l706IYYomc=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=su0xs0XhrIi55Vk6YqUq2uMcFHgpv1PnKqV1dhu9iEyw0wT3J6tBP70yg6LBGOBPRmu2C2feKScrjpcjawCdc99iPZa8PdfkEqtQDTcqBArL1oKFKbqySl3SF2wF6ARTAJkp9CzDLe8XdxBeklvvXRT0uZF3T8WHZmLjrvcBxx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nICfBoUw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725397674; c=relaxed/simple;
+	bh=+c/HZrNUFSwGZX/50JUBYF7FvAAul3DQIfv1DDbccro=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Ns5webpfDdLss1AsLBnzNBA908BRe6CRfLRL7RI3a6jTCFZnXZdupBpmwq4tt3sUQZ4SOvE3mvOMBMA21JqeVEVaNOVMnvxGZk9gr+7JglDOW9RsJ6+l2YD+64qpYhtWcAY6Ok07ks9gW+5Wwl9zkyCIWjHdfdocjMmpdtr+DDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJHsfpS1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nICfBoUw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8D2C4CEC4;
-	Tue,  3 Sep 2024 19:55:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJHsfpS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C2FC4CEC5;
+	Tue,  3 Sep 2024 21:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725393309;
-	bh=LmjZ5WVu9+gaNJJ9kk1RITONyd5+Jfpn3l706IYYomc=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=nICfBoUwhj1gTPS0bR4mOpR/rlmg7s+sLyJiKGgQlLYWy+KFvby5uRK+QFuzYZiZz
-	 W9Oqu8142ENn3iQjdLH/atJzAcEvSOHfmZpYcB1xurir0inDOleoTzdeW/H1oA0jTe
-	 gvxjZ9tYljgvFKic+1lzTWbieBS8pjhz2+WNGqvToTEjKVG6sMkn35McbE7K/T9796
-	 vKd+Hr77VF2baztVvEWa8HP61MUnXVTdN1t99Qd+18FbSq1HgeNQ9lT4tuLBiJn9Qy
-	 Tke+a62gVkHqLHRFZTJQI13JR7YSSTmwcTx4mr1q6skYxwlYfs+RmPVL43/SFlAMdb
-	 JG+65j0geFPwg==
-Message-ID: <8a02734c7b64efa186e97a54eb34c632.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1725397674;
+	bh=+c/HZrNUFSwGZX/50JUBYF7FvAAul3DQIfv1DDbccro=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=OJHsfpS1WQVSLVilcUw7dNQPSuThThnWWj7zoFUO8Ur3kHy59tniGYJnxzZCiqwCK
+	 l999NWcckjQ461jlCau+gKxzZ4qqtubJSFM+S8EeS2MuG+q19amqRcdqDD7gowx0V3
+	 GR8LXG9Aiwm9rfedLF0tZDZUhcdnmiLa9FUDE0S3s+0AJGbD45Q/xPSd7jnh4dmCfO
+	 N7WhfKdzIaB1GqBf364GHOfVk+o/Ywc7/ic9FpThQKASJtslAysUBcwM1AgpqNZxXC
+	 pJuMvk8LgvGyLyuR0P6O1VPj/38IZUlQbV40zSmCwcUpKKtPKSQJA440NysGh912kx
+	 ZChMFmsql3D/A==
+From: Mark Brown <broonie@kernel.org>
+To: Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, Yang Ruibin <11162571@vivo.com>, 
+ Nathan Chancellor <nathan@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-spi@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Geert Uytterhoeven <geert@linux-m68k.org>
+In-Reply-To: <20240902-spi-revert-8a0ec8c2d736-v1-1-928b829fed2b@kernel.org>
+References: <20240902-spi-revert-8a0ec8c2d736-v1-1-928b829fed2b@kernel.org>
+Subject: Re: [PATCH] spi: Revert "spi: Insert the missing
+ pci_dev_put()before return"
+Message-Id: <172539767218.139258.12953765191983738123.b4-ty@kernel.org>
+Date: Tue, 03 Sep 2024 22:07:52 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ZtVmKWTBtJiA53U0@hovoldconsulting.com>
-References: <20240828171722.1251587-1-swboyd@chromium.org> <20240828171722.1251587-2-swboyd@chromium.org> <c1e35d3d-fa00-4453-aaa3-9f23a07acb4f@linaro.org> <CAE-0n51Ag1wpj0uUPVtMvgZJE2FF_FZkw+j=bRiAq3vYk=Y_Fw@mail.gmail.com> <CAE-0n53rNuyXcVcqTBSgbNzuJzCBkaHE21dPNkMTrs=BCTkmPg@mail.gmail.com> <ZtVmKWTBtJiA53U0@hovoldconsulting.com>
-Subject: Re: [PATCH v3 1/2] clk: qcom: dispcc-sc7180: Only park display clks at init
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, patches@lists.linux.dev, linux-clk@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
-To: Johan Hovold <johan@kernel.org>
-Date: Tue, 03 Sep 2024 12:55:07 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-37811
 
-Quoting Johan Hovold (2024-09-02 00:15:53)
-> On Fri, Aug 30, 2024 at 03:29:22PM -0700, Stephen Boyd wrote:
-> > Quoting Stephen Boyd (2024-08-29 09:34:05)
->=20
-> > > It sounds like it's better to make the default always park at
-> > > registration time and special case the one or two places where that
-> > > isn't possible, i.e. USB because it has special rate requirements. So=
- I
-> > > should just go back to v1 then and pile on the QUP patches.
-> >=20
-> > I've done this now and I'll push out clk-fixes with the QUP patches.
->=20
-> I assumed you'd fix up all the other SoCs affected by this, but I only
-> saw fixes for sm8550, sm8650 and x1e80100 in your fixes branch.
->=20
-> Just sent a corresponding fix for sc8280xp, which I've confirmed also
-> needs this for QUP:
+On Mon, 02 Sep 2024 17:43:06 -0700, Nathan Chancellor wrote:
+> Commit 8a0ec8c2d736 ("spi: Insert the missing pci_dev_put()before
+> return") added two uses of pci_dev_put() with an uninitialized dma_dev,
+> resulting in the following compiler warnings (or errors with
+> CONFIG_WERROR) when building with clang:
+> 
+>   drivers/spi/spi-pxa2xx-pci.c:150:15: error: variable 'dma_dev' is uninitialized when used here [-Werror,-Wuninitialized]
+>     150 |                 pci_dev_put(dma_dev);
+>         |                             ^~~~~~~
+>   drivers/spi/spi-pxa2xx-pci.c:228:15: error: variable 'dma_dev' is uninitialized when used here [-Werror,-Wuninitialized]
+>     228 |                 pci_dev_put(dma_dev);
+>         |                             ^~~~~~~
+> 
+> [...]
+
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
 Thanks!
 
->=20
->         https://lore.kernel.org/lkml/20240902070830.8535-1-johan+linaro@k=
-ernel.org/
->=20
-> But what about the sm8550 USB issue? Don't the other platforms also need
-> a corresponding fix (e.g. for when booting from USB)?
+[1/1] spi: Revert "spi: Insert the missing pci_dev_put()before return"
+      commit: bf62a8c7908ee8e0ef61d27d9ff65bf12f41fb0a
 
-I don't know. Are you seeing USB host issues on other platforms with
-shared RCG clk_ops for the USB clk? It looks inconsistent that sometimes
-there's a USB GDSC but the shared clk ops aren't used. If nothing is
-broken then let's work on the proper fix, which is parking RCGs when the
-GDSC is turned off so that turning on the GDSC always works. If USB is
-broken for you then send another patch.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
