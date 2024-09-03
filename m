@@ -1,115 +1,185 @@
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19DE205E28
-	for <patches@lists.linux.dev>; Tue,  3 Sep 2024 07:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CE01DAC78
+	for <patches@lists.linux.dev>; Tue,  3 Sep 2024 07:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725348718; cv=none; b=RMWEa3MAQhM7lHuZj7qtw129l4pxlPb7Vj8G2tJM/qOpUNxebVIruWV6V0jS7X/NHo0hOoA6G8vBWrtMESe017GzVWFE1xYfWtbH9ixTAVV1uLoo+ER9IrWzmhV0AHtE2Qsr0v//RYJmen+MqwTwjPOIK8PXgKPfraWttDLAtKY=
+	t=1725350229; cv=none; b=OOh9+ZkOEolxzAqXr/0RIbSsUraCPzPNuthdmJO1AWAjgtE8k2uAGCfrTfVWA4iJ/DylTtmjDY1O20N/08KzW1NjzICr0R6u3ByfEUB6J8fTd1rZ6glr8LcRFV42E3t92tVM1RI/V3yac1gT8SGBrpHSBCWa0+hfecp4kCYBcCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725348718; c=relaxed/simple;
-	bh=oaOtF3mnOGhPPknWuchy+VG4R9Md2oOdD/wELS/3P+0=;
-	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
-	 MIME-Version:Content-Type; b=BLtklD05XGEiS+sOE9F8F3geQ6WuSEYm0GMvVqQyHGvrXvDPR+ygZDb4AkURZ5Ng3TxikY9qeJSUNFmwL5ruF83Xa7rctXkH5D9bUKIEq7CKpkS8wtOsVXHr7BY0oPejUW1W35nzwOS5mU0HgMTfvRYnDOl1EX5d5kPCTTTsrmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=PbKTKQVW; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1725350229; c=relaxed/simple;
+	bh=bLFrm8+W36cFU2HdRdXUPsjNB7gq91ms8m5UZQZPs/g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kwLB7ljMkvSmWBn7ObIZ204cCQ4EPhzhTD0dDHlHTdf6nG/EvARa6TMzYNk9DQluFg9Zq5Ib4Yn72Ms6XduPeEo0XpYTdfib1SuZglC/ZSOaH9CRilVZhgev6zI0W1KLONFrlv13lqsDZW42pRJDXHK9CspZwChCvWt3r7NOAP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZnuqnHAj; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="PbKTKQVW"
-Received: from eig-obgw-6006a.ext.cloudfilter.net ([10.0.30.182])
-	by cmsmtp with ESMTPS
-	id l6JBszflunNFGlO10sTLKd; Tue, 03 Sep 2024 07:31:50 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id lO0zsfs2F37DYlO0zsVXvJ; Tue, 03 Sep 2024 07:31:50 +0000
-X-Authority-Analysis: v=2.4 cv=dNqgmvZb c=1 sm=1 tr=0 ts=66d6bb66
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=/JdGR1ElBqWoLMmUPKNOcI9zGa/tpf3safM59qtOubc=; b=PbKTKQVWWrpyNlg6JS12ZJwKHc
-	bZ7Ts9OADmy3Z/xGnnnRsYDdEYhm2ttsflpkGgs4DySgvOFE7H7zLJ6lpGLETl5yW4yiprZAf9w7E
-	g0O4ymuIBptQBScNGlCYtKjclHDZhpE7XT3v7Yctgc28q12s7JQSga5kiqh9kaggzOrzXsHY325OJ
-	cdV3gE3W+ZFWIYaDRz8rcOjLVOcy63KszVjA2gQcyE0G7X2mLgHW7Snw2PfcpnBHTLB5ivSAUnoMf
-	lqvqY0zVvzDRQHQT+jkstvYrKkAJ2hgccjiB7LsMNEYkqgbthwtzZZwQgu9n5YmSdENhjARrsFHs0
-	vDKsJKCQ==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:38110 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1slO0x-003tmn-1Z;
-	Tue, 03 Sep 2024 01:31:47 -0600
-Subject: Re: [PATCH 5.15 000/215] 5.15.166-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240901160823.230213148@linuxfoundation.org>
-In-Reply-To: <20240901160823.230213148@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <4fbb6c1d-bb54-778f-810d-8c6816ee01d7@w6rz.net>
-Date: Tue, 3 Sep 2024 00:31:45 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZnuqnHAj"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42ba8928f1dso111305e9.1
+        for <patches@lists.linux.dev>; Tue, 03 Sep 2024 00:57:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1725350226; x=1725955026; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=EpqgvHYsrTqtiBbD2gubTtjEbMzyUsaQNI2kDwROGw4=;
+        b=ZnuqnHAjb7+lrNwPOhLhdA2JKB2kvffia+aMxY98xxoBYz7/NTeJOt3fAxXXq1E6/W
+         mHP6DTn1k9nHE1Hh3+pG5rSv6DfnDGhLzCCacGgrtORCaQiztBtjUreCbr+7D9VpNs9A
+         YT7YR9nQW4Y2CkU+7KPB7SgHRgcZHZdMxlNEQ+OKfE695tjyBBeIiw3sQEHseLRjKQUU
+         3ICcHmrUjB7ZPqWuOw4fpGz+RnrhDo8Hj05Y6WLNpdnCJeMhL2aUGME+bBbW9GBxmdK9
+         4Ot1/sx1LvrAXxDpOLg/dkSPul5keRZngBjAtBiNfN4qwi57Klmy50p5AbTMjDK5A0aU
+         Sbog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725350226; x=1725955026;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EpqgvHYsrTqtiBbD2gubTtjEbMzyUsaQNI2kDwROGw4=;
+        b=DNPeg2L0B1pnAjMczR9tC0bebQ9zTY6mW/jLg+ftO+k+3TYrmqDC1HoDEl8ZnhAf6w
+         OCU2XEOGZxBy6ij6p41PN2YkIlxwLLf7Ec/VtZiYFAlTq0i05uSGD2ZwXcxF0yy++ztn
+         rqRoV1o+LL9jfK2a7Qs3sTWOpnJS2+tIP4qNkMKE5+5s9+M6Q9cZajG3otpFaQLOy+Dp
+         mcEHVxMsYPU6XHwi74U7eXxzdG+YZSggevw9/3d7Vub/mKPibo4EemfPNnN1QL9kOYiP
+         t4pFOyx3+aXIUG9a746OBtjl3jt6PxWR/BCnhocGs3nJOXlNeKg5z6c5T4y5Y2U4ZWzS
+         m9Hg==
+X-Forwarded-Encrypted: i=1; AJvYcCV0iCIT46++rimRAUCUCRZn40stdWffNZjdXd+SKuFuuX4atWbCXzy48JWEMVgVBpvz+Br4UQ1m@lists.linux.dev
+X-Gm-Message-State: AOJu0YzhxBf4QptWz3uwpoxTah7cgN7kvluTy3cLquNuoPbP2C0ahr/O
+	dZOIbv0BagtSq7ZUwCvVGzp0PhoPXZVKkszaR0tTKRGkPHV+ODaDom/RS1Tm3g==
+X-Google-Smtp-Source: AGHT+IHgA6nmHG1PnRdTR7J4T9ZeBV+88BPig2e5l9HlhMUvcfgRj5uIoCkj4peI2Tcgr2az2ArssQ==
+X-Received: by 2002:a05:600c:1d9f:b0:428:e6eb:1340 with SMTP id 5b1f17b1804b1-42c33a5fb71mr3188345e9.4.1725350225593;
+        Tue, 03 Sep 2024 00:57:05 -0700 (PDT)
+Received: from google.com (109.36.187.35.bc.googleusercontent.com. [35.187.36.109])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb5969234sm165927345e9.17.2024.09.03.00.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Sep 2024 00:57:05 -0700 (PDT)
+Date: Tue, 3 Sep 2024 07:57:01 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robert Moore <robert.moore@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+Message-ID: <ZtbBTX96OWdONhaQ@google.com>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <ZtHhdj6RAKACBCUG@google.com>
+ <20240830164019.GU3773488@nvidia.com>
+ <ZtWFkR0eSRM4ogJL@google.com>
+ <20240903000546.GD3773488@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1slO0x-003tmn-1Z
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:38110
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 60
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfGM8t+OuBH8OUZRfHFqlBLzArFxfGrvrmNyHRomkSPcOhSCNixPvHgz91g9IipeiZkCmJNJKc9BFJGYAUVqxyBjRJ1OdSatSij1n2k3QV0jE9iUpMDyT
- mx4qg7wWaVIkn+IN5uf+i8q9X0JFvo/L04cSgpy4p844xZnVAItTzWRV4uyrDs17LMdd+WAHaHfNmQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240903000546.GD3773488@nvidia.com>
 
-On 9/1/24 9:15 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.166 release.
-> There are 215 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.166-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, Sep 02, 2024 at 09:05:46PM -0300, Jason Gunthorpe wrote:
+> On Mon, Sep 02, 2024 at 09:29:53AM +0000, Mostafa Saleh wrote:
+> > On Fri, Aug 30, 2024 at 01:40:19PM -0300, Jason Gunthorpe wrote:
+> > > On Fri, Aug 30, 2024 at 03:12:54PM +0000, Mostafa Saleh wrote:
+> > > > > +	/*
+> > > > > +	 * If for some reason the HW does not support DMA coherency then using
+> > > > > +	 * S2FWB won't work. This will also disable nesting support.
+> > > > > +	 */
+> > > > > +	if (FIELD_GET(IDR3_FWB, reg) &&
+> > > > > +	    (smmu->features & ARM_SMMU_FEAT_COHERENCY))
+> > > > > +		smmu->features |= ARM_SMMU_FEAT_S2FWB;
+> > > > I think that’s for the SMMU coherency which in theory is not related to the
+> > > > master which FWB overrides, so this check is not correct.
+> > > 
+> > > Yes, I agree, in theory.
+> > > 
+> > > However the driver today already links them together:
+> > > 
+> > > 	case IOMMU_CAP_CACHE_COHERENCY:
+> > > 		/* Assume that a coherent TCU implies coherent TBUs */
+> > > 		return master->smmu->features & ARM_SMMU_FEAT_COHERENCY;
+> > > 
+> > > So this hunk was a continuation of that design.
+> > > 
+> > > > What I meant in the previous thread that we should set FWB only for coherent
+> > > > masters as (in attach s2):
+> > > > 	if (smmu->features & ARM_SMMU_FEAT_S2FWB && dev_is_dma_coherent(master->dev)
+> > > > 		// set S2FWB in STE
+> > > 
+> > > I think as I explained in that thread, it is not really correct
+> > > either. There is no reason to block using S2FWB for non-coherent
+> > > masters that are not used with VFIO. The page table will still place
+> > > the correct memattr according to the IOMMU_CACHE flag, S2FWB just
+> > > slightly changes the encoding.
+> > 
+> > It’s not just the encoding that changes, as
+> > - Without FWB, stage-2 combine attributes
+> > - While with FWB, it overrides them.
+> 
+> You mean there is some incomming attribute in the transaction
+> (obviously not talking PCI here) and S2FWB combines with that?
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Yes, stuff as cacheability (as defined by Arm spec)
+I am not sure about PCI, but according to the spec:
+	“PCIe does not contain memory type attributes, and each transaction
+	takes a system-defined memory type when it progresses into the system”
 
-Tested-by: Ron Economos <re@w6rz.net>
+> 
+> > So a cacheable mapping in stage-2 can lead to a non-cacheable
+> > (or with different cachableitiy attributes) transaction based on the
+> > input. I am not sure though if there is such case in the kernel.
+> 
+> If the kernel supplies IOMMU_CACHE then the kernel also skips all the
+> cache flushing. So it would be a functional problem if combining was
+> causing a non-cachable access through a IOMMU_CACHE S2 already. The
+> DMA API would fail if that was the case.
 
+Correct, but it’s not just about cacheable/non-cacheable, as I mentioned
+it’s about other attributes also, this is a very niche case, and again I
+am not sure if there are devices affected in the kernel, but I just
+wanted to highlight it’s not just a different encoding for stage-2.
+
+> 
+> > > If anything should be changed then it would be the above
+> > > IOMMU_CAP_CACHE_COHERENCY test, and I don't know if
+> > > dev_is_dma_coherent() would be correct there, or if it should do some
+> > > ACPI inspection or what.
+> > 
+> > I agree, I believe that this assumption is not accurate, I am not sure
+> > what is the right approach here, but in concept I think we shouldn’t
+> > enable FWB for non-coherent devices (using dev_is_dma_coherent() or
+> > other check)
+> 
+> The DMA API requires that the cachability rules it sets via
+> IOMMU_CACHE are followed. In this way the stricter behavior of S2FWB
+> is a benefit, not a draw back.
+> 
+> I'm still not seeing a problm here??
+
+Basically, I believe we shouldn’t set FWB blindly just because it’s supported,
+I don’t see how it’s useful for stage-2 only domains.
+
+And I believe making assumptions about VFIO (which actually is not correctly
+enforced at the moment) is fragile, and we should only set FWB for coherent
+devices in nested setup only where the VMM(or hypervisor) knows better than
+the VM.
+
+Thanks,
+Mostafa
+
+> 
+> Jason
