@@ -1,313 +1,139 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1414618E35F
-	for <patches@lists.linux.dev>; Tue,  3 Sep 2024 17:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7D1190064
+	for <patches@lists.linux.dev>; Tue,  3 Sep 2024 17:58:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725384900; cv=none; b=bJd0CwuKQ/xksS48l1rtFGsiFfAPKBzLJaFECELfdr9YZTz02PtvVOx1pflJ5Dl6k1+BKl2uUmHY4NYbZIEDu2TucXGzXIBQAIxMecZUWRX2YrjKfxOdjtCVQ+xBuUEJA18eaqxH2F7HGLYhBn8oyykU7RJIcEm44qqWyzCaFY4=
+	t=1725386293; cv=none; b=QQ/pophDKLP9Z1+fdXWrg1PJUIb3Z11OK9MabVKU54Xz58cp9hFpWvU31HEwxhRqFxRsg+PRVCOqm7TP+kwi7e4xY5ya/vu892a2j3V84q1duP565OmYRhNCRbM3TubLEz11KtYNocq6cG51hqUOZ2ZzZy7IzoI5ZqmAiVYPKIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725384900; c=relaxed/simple;
-	bh=OppoUoa9VLSDb0gOUl1fd135LjvE4DmUbJuGCJnSfE4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SK2NEfy1EbrTDT5kMKqmXegWUcKKzz4KRCHL4TpKxJp5P0QJ7cXfkSLPyTbEcPu6gBCFEf2dIhMFmynrdaepUlMDoMEXzlBcMdermQdTG9DClXSCyCjsWY00WIJJPWOu5AjN3uDoQV+4eHddWkBO4UTIpb7S4esKiA+pZUIVfCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HYXAP7Wu; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1725386293; c=relaxed/simple;
+	bh=stHicUucsegKO71SAj1/KL9WPLmA8VTgZfhUoLPukRg=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=sjuBvIC+PEiM7f45GjB4C4l7GICJ6kS6qycyc809Jcp8HRLztx02YgF4USDOkJOEquKC4CcGa7sEtJOL9to5gcREwGde4VimCbmddmxFLgSu9CRaEPYR6iuLAROe50GE0Xv+IbNUxGdYPnyDNIwAMJnqiRVPJ3Hu52BASEGFbfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=BaV1GKQj; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HYXAP7Wu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1725384900; x=1756920900;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=OppoUoa9VLSDb0gOUl1fd135LjvE4DmUbJuGCJnSfE4=;
-  b=HYXAP7Wu5zHpc3QYp/z+iCcRy48eTUDpgHDZu+PQYvXLETZaIN4BsBm5
-   RjekgIh+eYl4kWnEDbzdnCOTckcgcdJhntbItHHtYQPhAYHElcmgiQ0B9
-   7qkkIbnLmSYMTTCodpxaipNXcD85NS+FcEXGknpdUSbzzMYwhZvQU6zZa
-   Z4uV/NeZvcYhBCC458KMnXRWYGMpqvFHvkjouXLnR22J5w4YKIh6vqd5X
-   SVJTnxq8pNh0qMYIiC9FoQf7YcBelWou0nv1dEoIwFXwc0/uAo+1FF2kT
-   UFZ+z7Vb3Q/wZ4OLx9SFadcvK1WGb7i/4L5zPKU7vCfmD+ePNL5GCWb9v
-   w==;
-X-CSE-ConnectionGUID: i2b+Gnc8TeeleeGIJSnnow==
-X-CSE-MsgGUID: +7ZEUkIdRWGpL9L69A7E4Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11184"; a="46528550"
-X-IronPort-AV: E=Sophos;i="6.10,199,1719903600"; 
-   d="scan'208";a="46528550"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2024 10:34:56 -0700
-X-CSE-ConnectionGUID: lShKJROJRmeSMaGSnCn35g==
-X-CSE-MsgGUID: 4TjnwwVxRA6YhnZLKm2vOw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,199,1719903600"; 
-   d="scan'208";a="65715880"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2024 10:34:55 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org
-Cc: Chanwoo Choi <cw00.choi@samsung.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v8 3/3] x86/cpu/vfm: Delete all the *_FAM6_ CPU #defines
-Date: Tue,  3 Sep 2024 10:34:43 -0700
-Message-ID: <20240903173443.7962-4-tony.luck@intel.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240903173443.7962-1-tony.luck@intel.com>
-References: <20240903173443.7962-1-tony.luck@intel.com>
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="BaV1GKQj"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42bbc70caa4so37714685e9.0
+        for <patches@lists.linux.dev>; Tue, 03 Sep 2024 10:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1725386290; x=1725991090; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CGOuW5YwL2FIu5pmIeJzfRaokSatabRSgmpdBuikasM=;
+        b=BaV1GKQjDfiwTHraNQf/RQ0qZ5WZvX46qyO7YjMWTnPQU4/GGHqS48iv07bZodo/lc
+         +L/xQcsjFwmrTsGboA1+v/x7vh/HJhOe+H0UmCy25iCyJqJ4cyWaEBLbspX7Onj6ez0Q
+         7HevlSDpKcvXY0wqiWdRd6BsNugd7b5MJzGkg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725386290; x=1725991090;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CGOuW5YwL2FIu5pmIeJzfRaokSatabRSgmpdBuikasM=;
+        b=s543VIt34pX5Z4K0hge9l/hQ3yTM5+AhnB+770uEZNHpIkQsqQLoudL5ocymSvW9/r
+         7LGE5J/kDlfd+MDGtwiD5sUPXLrmtByRqhJzcbTPO0yKufH+wmR6hojBfpE0Fcp4AMoX
+         JUqaI0BP1sGYGkdEbn0MIP0ayPt8B5bgJ6l0ijCIsEurFX2gnHYeqLbz9V6Kwe8ZUKlg
+         1peISJwkfA7sGtH4wTk3oczcd2h6IoCEtkP4rOwzCS9jMlfFtGdZSI1GI+MZqF6UawYt
+         qlBdAUe2P05OQoWkjInL5wQT5VCygyQ4CB4bX1B9CLwkst2XmPfQovuxW0HPQEGYQ3ac
+         bdrQ==
+X-Gm-Message-State: AOJu0YwUGbXR+FjMstuMPlVQ50I00lMy1Lu+6yzYqgSqkBp7ZLMvxg68
+	c8684nCJw9DV7MKo+fq3QIiOS4Le83aLOc4bAnRRehea8cQnj+9v5Q/1DYiEMJgTz/p+/RzDIBt
+	9bQ==
+X-Google-Smtp-Source: AGHT+IHPl3b+URUQd3W36EU7ONol/0MH2gm2E/V+FoZlsccSAjjwphnkP3leQEP9pl1QtFJ1qwU2Bw==
+X-Received: by 2002:a05:600c:1d19:b0:427:ab29:30cf with SMTP id 5b1f17b1804b1-42c8de5f599mr13734265e9.4.1725386290410;
+        Tue, 03 Sep 2024 10:58:10 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb6deb43esm179450195e9.7.2024.09.03.10.58.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Sep 2024 10:58:09 -0700 (PDT)
+From: Florian Fainelli <florian.fainelli@broadcom.com>
+X-Google-Original-From: Florian Fainelli <f.fainelli@gmail.com>
+Message-ID: <4ae307e4-5d01-49fc-97e4-dfbab222c22b@gmail.com>
+Date: Tue, 3 Sep 2024 10:58:04 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.10 000/149] 6.10.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240901160817.461957599@linuxfoundation.org>
+Content-Language: en-US
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ HGuUuzv+GKZ6nsysJw==
+In-Reply-To: <20240901160817.461957599@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-All code has been converted to use the vendor/family/model versions.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/intel-family.h | 85 +----------------------------
- 1 file changed, 2 insertions(+), 83 deletions(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 27bdf3b55c6f..44949f972826 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -10,7 +10,7 @@
-  * that group keep the CPUID for the variants sorted by model number.
-  *
-  * The defined symbol names have the following form:
-- *	INTEL_FAM6{OPTFAMILY}_{MICROARCH}{OPTDIFF}
-+ *	INTEL_{OPTFAMILY}_{MICROARCH}{OPTDIFF}
-  * where:
-  * OPTFAMILY	Describes the family of CPUs that this belongs to. Default
-  *		is assumed to be "_CORE" (and should be omitted). Other values
-@@ -42,217 +42,136 @@
- 
- #define IFM(_fam, _model)	VFM_MAKE(X86_VENDOR_INTEL, _fam, _model)
- 
--/* Wildcard match for FAM6 so X86_MATCH_INTEL_FAM6_MODEL(ANY) works */
--#define INTEL_FAM6_ANY			X86_MODEL_ANY
--/* Wildcard match for FAM6 so X86_MATCH_VFM(ANY) works */
-+/* Wildcard match so X86_MATCH_VFM(ANY) works */
- #define INTEL_ANY			IFM(X86_FAMILY_ANY, X86_MODEL_ANY)
- 
- #define INTEL_PENTIUM_PRO		IFM(6, 0x01)
- 
--#define INTEL_FAM6_CORE_YONAH		0x0E
- #define INTEL_CORE_YONAH		IFM(6, 0x0E)
- 
--#define INTEL_FAM6_CORE2_MEROM		0x0F
- #define INTEL_CORE2_MEROM		IFM(6, 0x0F)
--#define INTEL_FAM6_CORE2_MEROM_L	0x16
- #define INTEL_CORE2_MEROM_L		IFM(6, 0x16)
--#define INTEL_FAM6_CORE2_PENRYN		0x17
- #define INTEL_CORE2_PENRYN		IFM(6, 0x17)
--#define INTEL_FAM6_CORE2_DUNNINGTON	0x1D
- #define INTEL_CORE2_DUNNINGTON		IFM(6, 0x1D)
- 
--#define INTEL_FAM6_NEHALEM		0x1E
- #define INTEL_NEHALEM			IFM(6, 0x1E)
--#define INTEL_FAM6_NEHALEM_G		0x1F /* Auburndale / Havendale */
- #define INTEL_NEHALEM_G			IFM(6, 0x1F) /* Auburndale / Havendale */
--#define INTEL_FAM6_NEHALEM_EP		0x1A
- #define INTEL_NEHALEM_EP		IFM(6, 0x1A)
--#define INTEL_FAM6_NEHALEM_EX		0x2E
- #define INTEL_NEHALEM_EX		IFM(6, 0x2E)
- 
--#define INTEL_FAM6_WESTMERE		0x25
- #define INTEL_WESTMERE			IFM(6, 0x25)
--#define INTEL_FAM6_WESTMERE_EP		0x2C
- #define INTEL_WESTMERE_EP		IFM(6, 0x2C)
--#define INTEL_FAM6_WESTMERE_EX		0x2F
- #define INTEL_WESTMERE_EX		IFM(6, 0x2F)
- 
--#define INTEL_FAM6_SANDYBRIDGE		0x2A
- #define INTEL_SANDYBRIDGE		IFM(6, 0x2A)
--#define INTEL_FAM6_SANDYBRIDGE_X	0x2D
- #define INTEL_SANDYBRIDGE_X		IFM(6, 0x2D)
--#define INTEL_FAM6_IVYBRIDGE		0x3A
- #define INTEL_IVYBRIDGE			IFM(6, 0x3A)
--#define INTEL_FAM6_IVYBRIDGE_X		0x3E
- #define INTEL_IVYBRIDGE_X		IFM(6, 0x3E)
- 
--#define INTEL_FAM6_HASWELL		0x3C
- #define INTEL_HASWELL			IFM(6, 0x3C)
--#define INTEL_FAM6_HASWELL_X		0x3F
- #define INTEL_HASWELL_X			IFM(6, 0x3F)
--#define INTEL_FAM6_HASWELL_L		0x45
- #define INTEL_HASWELL_L			IFM(6, 0x45)
--#define INTEL_FAM6_HASWELL_G		0x46
- #define INTEL_HASWELL_G			IFM(6, 0x46)
- 
--#define INTEL_FAM6_BROADWELL		0x3D
- #define INTEL_BROADWELL			IFM(6, 0x3D)
--#define INTEL_FAM6_BROADWELL_G		0x47
- #define INTEL_BROADWELL_G		IFM(6, 0x47)
--#define INTEL_FAM6_BROADWELL_X		0x4F
- #define INTEL_BROADWELL_X		IFM(6, 0x4F)
--#define INTEL_FAM6_BROADWELL_D		0x56
- #define INTEL_BROADWELL_D		IFM(6, 0x56)
- 
--#define INTEL_FAM6_SKYLAKE_L		0x4E	/* Sky Lake             */
- #define INTEL_SKYLAKE_L			IFM(6, 0x4E) /* Sky Lake */
--#define INTEL_FAM6_SKYLAKE		0x5E	/* Sky Lake             */
- #define INTEL_SKYLAKE			IFM(6, 0x5E) /* Sky Lake */
--#define INTEL_FAM6_SKYLAKE_X		0x55	/* Sky Lake             */
- #define INTEL_SKYLAKE_X			IFM(6, 0x55) /* Sky Lake */
- /*                 CASCADELAKE_X	0x55	   Sky Lake -- s: 7     */
- /*                 COOPERLAKE_X		0x55	   Sky Lake -- s: 11    */
- 
--#define INTEL_FAM6_KABYLAKE_L		0x8E	/* Sky Lake             */
- #define INTEL_KABYLAKE_L		IFM(6, 0x8E) /* Sky Lake */
- /*                 AMBERLAKE_L		0x8E	   Sky Lake -- s: 9     */
- /*                 COFFEELAKE_L		0x8E	   Sky Lake -- s: 10    */
- /*                 WHISKEYLAKE_L	0x8E       Sky Lake -- s: 11,12 */
- 
--#define INTEL_FAM6_KABYLAKE		0x9E	/* Sky Lake             */
- #define INTEL_KABYLAKE			IFM(6, 0x9E) /* Sky Lake */
- /*                 COFFEELAKE		0x9E	   Sky Lake -- s: 10-13 */
- 
--#define INTEL_FAM6_COMETLAKE		0xA5	/* Sky Lake             */
- #define INTEL_COMETLAKE			IFM(6, 0xA5) /* Sky Lake */
--#define INTEL_FAM6_COMETLAKE_L		0xA6	/* Sky Lake             */
- #define INTEL_COMETLAKE_L		IFM(6, 0xA6) /* Sky Lake */
- 
--#define INTEL_FAM6_CANNONLAKE_L		0x66	/* Palm Cove */
- #define INTEL_CANNONLAKE_L		IFM(6, 0x66) /* Palm Cove */
- 
--#define INTEL_FAM6_ICELAKE_X		0x6A	/* Sunny Cove */
- #define INTEL_ICELAKE_X			IFM(6, 0x6A) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_D		0x6C	/* Sunny Cove */
- #define INTEL_ICELAKE_D			IFM(6, 0x6C) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE		0x7D	/* Sunny Cove */
- #define INTEL_ICELAKE			IFM(6, 0x7D) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_L		0x7E	/* Sunny Cove */
- #define INTEL_ICELAKE_L			IFM(6, 0x7E) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_NNPI		0x9D	/* Sunny Cove */
- #define INTEL_ICELAKE_NNPI		IFM(6, 0x9D) /* Sunny Cove */
- 
--#define INTEL_FAM6_ROCKETLAKE		0xA7	/* Cypress Cove */
- #define INTEL_ROCKETLAKE		IFM(6, 0xA7) /* Cypress Cove */
- 
--#define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
- #define INTEL_TIGERLAKE_L		IFM(6, 0x8C) /* Willow Cove */
--#define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
- #define INTEL_TIGERLAKE			IFM(6, 0x8D) /* Willow Cove */
- 
--#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
- #define INTEL_SAPPHIRERAPIDS_X		IFM(6, 0x8F) /* Golden Cove */
- 
--#define INTEL_FAM6_EMERALDRAPIDS_X	0xCF
- #define INTEL_EMERALDRAPIDS_X		IFM(6, 0xCF)
- 
--#define INTEL_FAM6_GRANITERAPIDS_X	0xAD
- #define INTEL_GRANITERAPIDS_X		IFM(6, 0xAD)
--#define INTEL_FAM6_GRANITERAPIDS_D	0xAE
- #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
- 
- /* "Hybrid" Processors (P-Core/E-Core) */
- 
--#define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
- #define INTEL_LAKEFIELD			IFM(6, 0x8A) /* Sunny Cove / Tremont */
- 
--#define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
- #define INTEL_ALDERLAKE			IFM(6, 0x97) /* Golden Cove / Gracemont */
--#define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
- #define INTEL_ALDERLAKE_L		IFM(6, 0x9A) /* Golden Cove / Gracemont */
- 
--#define INTEL_FAM6_RAPTORLAKE		0xB7	/* Raptor Cove / Enhanced Gracemont */
- #define INTEL_RAPTORLAKE		IFM(6, 0xB7) /* Raptor Cove / Enhanced Gracemont */
--#define INTEL_FAM6_RAPTORLAKE_P		0xBA
- #define INTEL_RAPTORLAKE_P		IFM(6, 0xBA)
--#define INTEL_FAM6_RAPTORLAKE_S		0xBF
- #define INTEL_RAPTORLAKE_S		IFM(6, 0xBF)
- 
--#define INTEL_FAM6_METEORLAKE		0xAC
- #define INTEL_METEORLAKE		IFM(6, 0xAC)
--#define INTEL_FAM6_METEORLAKE_L		0xAA
- #define INTEL_METEORLAKE_L		IFM(6, 0xAA)
- 
--#define INTEL_FAM6_ARROWLAKE_H		0xC5
- #define INTEL_ARROWLAKE_H		IFM(6, 0xC5)
--#define INTEL_FAM6_ARROWLAKE		0xC6
- #define INTEL_ARROWLAKE			IFM(6, 0xC6)
--#define INTEL_FAM6_ARROWLAKE_U		0xB5
- #define INTEL_ARROWLAKE_U		IFM(6, 0xB5)
- 
--#define INTEL_FAM6_LUNARLAKE_M		0xBD
- #define INTEL_LUNARLAKE_M		IFM(6, 0xBD)
- 
- /* "Small Core" Processors (Atom/E-Core) */
- 
--#define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
- #define INTEL_ATOM_BONNELL		IFM(6, 0x1C) /* Diamondville, Pineview */
--#define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
- #define INTEL_ATOM_BONNELL_MID		IFM(6, 0x26) /* Silverthorne, Lincroft */
- 
--#define INTEL_FAM6_ATOM_SALTWELL	0x36 /* Cedarview */
- #define INTEL_ATOM_SALTWELL		IFM(6, 0x36) /* Cedarview */
--#define INTEL_FAM6_ATOM_SALTWELL_MID	0x27 /* Penwell */
- #define INTEL_ATOM_SALTWELL_MID		IFM(6, 0x27) /* Penwell */
--#define INTEL_FAM6_ATOM_SALTWELL_TABLET	0x35 /* Cloverview */
- #define INTEL_ATOM_SALTWELL_TABLET	IFM(6, 0x35) /* Cloverview */
- 
--#define INTEL_FAM6_ATOM_SILVERMONT	0x37 /* Bay Trail, Valleyview */
- #define INTEL_ATOM_SILVERMONT		IFM(6, 0x37) /* Bay Trail, Valleyview */
--#define INTEL_FAM6_ATOM_SILVERMONT_D	0x4D /* Avaton, Rangely */
- #define INTEL_ATOM_SILVERMONT_D		IFM(6, 0x4D) /* Avaton, Rangely */
--#define INTEL_FAM6_ATOM_SILVERMONT_MID	0x4A /* Merriefield */
- #define INTEL_ATOM_SILVERMONT_MID	IFM(6, 0x4A) /* Merriefield */
- 
--#define INTEL_FAM6_ATOM_AIRMONT		0x4C /* Cherry Trail, Braswell */
- #define INTEL_ATOM_AIRMONT		IFM(6, 0x4C) /* Cherry Trail, Braswell */
--#define INTEL_FAM6_ATOM_AIRMONT_MID	0x5A /* Moorefield */
- #define INTEL_ATOM_AIRMONT_MID		IFM(6, 0x5A) /* Moorefield */
--#define INTEL_FAM6_ATOM_AIRMONT_NP	0x75 /* Lightning Mountain */
- #define INTEL_ATOM_AIRMONT_NP		IFM(6, 0x75) /* Lightning Mountain */
- 
--#define INTEL_FAM6_ATOM_GOLDMONT	0x5C /* Apollo Lake */
- #define INTEL_ATOM_GOLDMONT		IFM(6, 0x5C) /* Apollo Lake */
--#define INTEL_FAM6_ATOM_GOLDMONT_D	0x5F /* Denverton */
- #define INTEL_ATOM_GOLDMONT_D		IFM(6, 0x5F) /* Denverton */
- 
- /* Note: the micro-architecture is "Goldmont Plus" */
--#define INTEL_FAM6_ATOM_GOLDMONT_PLUS	0x7A /* Gemini Lake */
- #define INTEL_ATOM_GOLDMONT_PLUS	IFM(6, 0x7A) /* Gemini Lake */
- 
--#define INTEL_FAM6_ATOM_TREMONT_D	0x86 /* Jacobsville */
- #define INTEL_ATOM_TREMONT_D		IFM(6, 0x86) /* Jacobsville */
--#define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
- #define INTEL_ATOM_TREMONT		IFM(6, 0x96) /* Elkhart Lake */
--#define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
- #define INTEL_ATOM_TREMONT_L		IFM(6, 0x9C) /* Jasper Lake */
- 
--#define INTEL_FAM6_ATOM_GRACEMONT	0xBE /* Alderlake N */
- #define INTEL_ATOM_GRACEMONT		IFM(6, 0xBE) /* Alderlake N */
- 
--#define INTEL_FAM6_ATOM_CRESTMONT_X	0xAF /* Sierra Forest */
- #define INTEL_ATOM_CRESTMONT_X		IFM(6, 0xAF) /* Sierra Forest */
--#define INTEL_FAM6_ATOM_CRESTMONT	0xB6 /* Grand Ridge */
- #define INTEL_ATOM_CRESTMONT		IFM(6, 0xB6) /* Grand Ridge */
- 
--#define INTEL_FAM6_ATOM_DARKMONT_X	0xDD /* Clearwater Forest */
- #define INTEL_ATOM_DARKMONT_X		IFM(6, 0xDD) /* Clearwater Forest */
- 
- /* Xeon Phi */
- 
--#define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
- #define INTEL_XEON_PHI_KNL		IFM(6, 0x57) /* Knights Landing */
--#define INTEL_FAM6_XEON_PHI_KNM		0x85 /* Knights Mill */
- #define INTEL_XEON_PHI_KNM		IFM(6, 0x85) /* Knights Mill */
- 
- /* Family 5 */
+On 9/1/2024 9:15 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.8 release.
+> There are 149 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.8-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.46.0
+Florian
+
+
 
