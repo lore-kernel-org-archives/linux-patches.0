@@ -1,58 +1,58 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CE01DAC78
-	for <patches@lists.linux.dev>; Tue,  3 Sep 2024 07:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DB21DAC4D
+	for <patches@lists.linux.dev>; Tue,  3 Sep 2024 08:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725350229; cv=none; b=OOh9+ZkOEolxzAqXr/0RIbSsUraCPzPNuthdmJO1AWAjgtE8k2uAGCfrTfVWA4iJ/DylTtmjDY1O20N/08KzW1NjzICr0R6u3ByfEUB6J8fTd1rZ6glr8LcRFV42E3t92tVM1RI/V3yac1gT8SGBrpHSBCWa0+hfecp4kCYBcCk=
+	t=1725352465; cv=none; b=kBntPJ/9pFyj7YTeQ4lwXl/mzm3cZh577pHPm54MghBjzr+9Cvz7NJBV20e/3++eHVMjcSlyJ2Eq7vu1KFRQPCsbI3EFtZCoNgGQtxjecVIpjZyntADsBun2BiZ6qjKVYF0J7Bu7JO396z5FuyPDMx2iNIbc7NeJpAjZwjJyMxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725350229; c=relaxed/simple;
-	bh=bLFrm8+W36cFU2HdRdXUPsjNB7gq91ms8m5UZQZPs/g=;
+	s=arc-20240116; t=1725352465; c=relaxed/simple;
+	bh=Ooaq7ri1Yl3eVP7lha8lZRj8WwdjRH3fBUHtV8sPBAw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kwLB7ljMkvSmWBn7ObIZ204cCQ4EPhzhTD0dDHlHTdf6nG/EvARa6TMzYNk9DQluFg9Zq5Ib4Yn72Ms6XduPeEo0XpYTdfib1SuZglC/ZSOaH9CRilVZhgev6zI0W1KLONFrlv13lqsDZW42pRJDXHK9CspZwChCvWt3r7NOAP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZnuqnHAj; arc=none smtp.client-ip=209.85.128.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cq2tV66TPpEzMvFRNFWVC3R8UvUFmr0k5SpUsJTQjTmu55mkHnkL8uzYNgNb2uxG3mwZJrQ8B3BPnUc0xXT8jMf+40MQOTZWQ8kHsMJa9zMfeuTjWndtJHk68Y22RtIVJ+2DqwrUeLnCNVv3sUADQI63nO1E0kjMzxR0HbSTxtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EeSe6CW7; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZnuqnHAj"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42ba8928f1dso111305e9.1
-        for <patches@lists.linux.dev>; Tue, 03 Sep 2024 00:57:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EeSe6CW7"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c2443b2581so20740a12.0
+        for <patches@lists.linux.dev>; Tue, 03 Sep 2024 01:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725350226; x=1725955026; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1725352462; x=1725957262; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=EpqgvHYsrTqtiBbD2gubTtjEbMzyUsaQNI2kDwROGw4=;
-        b=ZnuqnHAjb7+lrNwPOhLhdA2JKB2kvffia+aMxY98xxoBYz7/NTeJOt3fAxXXq1E6/W
-         mHP6DTn1k9nHE1Hh3+pG5rSv6DfnDGhLzCCacGgrtORCaQiztBtjUreCbr+7D9VpNs9A
-         YT7YR9nQW4Y2CkU+7KPB7SgHRgcZHZdMxlNEQ+OKfE695tjyBBeIiw3sQEHseLRjKQUU
-         3ICcHmrUjB7ZPqWuOw4fpGz+RnrhDo8Hj05Y6WLNpdnCJeMhL2aUGME+bBbW9GBxmdK9
-         4Ot1/sx1LvrAXxDpOLg/dkSPul5keRZngBjAtBiNfN4qwi57Klmy50p5AbTMjDK5A0aU
-         Sbog==
+        bh=0x4pAN9v3PKcJSMJc9wNdVW/9mRtNQg8cuL1zQPTZck=;
+        b=EeSe6CW70jF9xDrEWrvDEpbaNfDKIQ4ECCZDGIXlEakzvHhXQKLnAye4xF5kQ+oPv0
+         C5IUIc51yISZx2VfEnXHO7GhWOuPPx0iRDLXH4BAs/yYeUWaBVZmbCXFql1wkqCijF09
+         nOR2b7LQSskINmiOsn3gAxPBvpJxMGM1kp8kP8YeRZq9I+YWUPFSYqabmoZG8BAvFVDm
+         fiPNgacXGEeWX9mESet6oeCyWuWOIivRlExj3WZX9UwUp1PksfQ+q1vppsoXy9TBRdLC
+         xacM86M+KcssqDItpCKVsiGW1B7qqPrTWQDFuIdy0olM78z0FGy6aTOo+1tSFui5C88u
+         hEkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725350226; x=1725955026;
+        d=1e100.net; s=20230601; t=1725352462; x=1725957262;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EpqgvHYsrTqtiBbD2gubTtjEbMzyUsaQNI2kDwROGw4=;
-        b=DNPeg2L0B1pnAjMczR9tC0bebQ9zTY6mW/jLg+ftO+k+3TYrmqDC1HoDEl8ZnhAf6w
-         OCU2XEOGZxBy6ij6p41PN2YkIlxwLLf7Ec/VtZiYFAlTq0i05uSGD2ZwXcxF0yy++ztn
-         rqRoV1o+LL9jfK2a7Qs3sTWOpnJS2+tIP4qNkMKE5+5s9+M6Q9cZajG3otpFaQLOy+Dp
-         mcEHVxMsYPU6XHwi74U7eXxzdG+YZSggevw9/3d7Vub/mKPibo4EemfPNnN1QL9kOYiP
-         t4pFOyx3+aXIUG9a746OBtjl3jt6PxWR/BCnhocGs3nJOXlNeKg5z6c5T4y5Y2U4ZWzS
-         m9Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0iCIT46++rimRAUCUCRZn40stdWffNZjdXd+SKuFuuX4atWbCXzy48JWEMVgVBpvz+Br4UQ1m@lists.linux.dev
-X-Gm-Message-State: AOJu0YzhxBf4QptWz3uwpoxTah7cgN7kvluTy3cLquNuoPbP2C0ahr/O
-	dZOIbv0BagtSq7ZUwCvVGzp0PhoPXZVKkszaR0tTKRGkPHV+ODaDom/RS1Tm3g==
-X-Google-Smtp-Source: AGHT+IHgA6nmHG1PnRdTR7J4T9ZeBV+88BPig2e5l9HlhMUvcfgRj5uIoCkj4peI2Tcgr2az2ArssQ==
-X-Received: by 2002:a05:600c:1d9f:b0:428:e6eb:1340 with SMTP id 5b1f17b1804b1-42c33a5fb71mr3188345e9.4.1725350225593;
-        Tue, 03 Sep 2024 00:57:05 -0700 (PDT)
+        bh=0x4pAN9v3PKcJSMJc9wNdVW/9mRtNQg8cuL1zQPTZck=;
+        b=GxoTzTe4SdRnDbTqm/qYOG8YzS1IFIYyFwQjCCHwnjICDI94kuyA4BnsM12470wYi1
+         pFDUIZL4y3zsin9icEtPe9vW8Wyro7WItcfsz2BsOEF8jZ370EyXvIJykNIhcmb1cMym
+         fNGj2B8MdmvdtxyQqrF3PBvaYHp6mBLPJUoITOhSxWPe/L+GwYIivw7vHFqSNWejUtxA
+         /H9rsATFIy9QFzjF53ddbMv2dQB2JoA13F7DJ91DK2PoZHESr544N7FDl0gC/28W5HZi
+         P1+xO/uVT/XVu74neqKwLlehRaNafO+dGejkWGaKivXAUyJspvC2k+jMnM2me/vLQGnG
+         6yvA==
+X-Forwarded-Encrypted: i=1; AJvYcCXvEs4JkpF/2uBpUZri3qPS02JUj7S+4BKcoQucAoU7UEX8Rc7600dAG6/sxO1qdixQU/t/Rfi8@lists.linux.dev
+X-Gm-Message-State: AOJu0YyyxWup1ecgsHO/yxhniGzBXzg9obm7KRLjLeWLGo+XhahoruND
+	077n3aB8uyGaFxfjZ7qsCdxDSmqCi5vHC8FV5UAQqjAbY9rUSX7M6ykCk1i0Fg==
+X-Google-Smtp-Source: AGHT+IHojl3Oq9t0TVbNRBXWCRNq0mfrK+8JmhduosaFNh97XMJFm2HeZ0fHsdevV1+0F28pRpzQOw==
+X-Received: by 2002:a05:6402:2687:b0:5aa:19b1:ffc7 with SMTP id 4fb4d7f45d1cf-5c244360b96mr412535a12.2.1725352461558;
+        Tue, 03 Sep 2024 01:34:21 -0700 (PDT)
 Received: from google.com (109.36.187.35.bc.googleusercontent.com. [35.187.36.109])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb5969234sm165927345e9.17.2024.09.03.00.57.04
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-374baae211bsm9667974f8f.66.2024.09.03.01.34.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 00:57:05 -0700 (PDT)
-Date: Tue, 3 Sep 2024 07:57:01 +0000
+        Tue, 03 Sep 2024 01:34:21 -0700 (PDT)
+Date: Tue, 3 Sep 2024 08:34:17 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
@@ -72,14 +72,15 @@ Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
 	Michael Shavit <mshavit@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Message-ID: <ZtbBTX96OWdONhaQ@google.com>
+Subject: Re: [PATCH v2 6/8] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via
+ struct arm_smmu_hw_info
+Message-ID: <ZtbKCb9FTt5gjERf@google.com>
 References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHhdj6RAKACBCUG@google.com>
- <20240830164019.GU3773488@nvidia.com>
- <ZtWFkR0eSRM4ogJL@google.com>
- <20240903000546.GD3773488@nvidia.com>
+ <6-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <ZtHj_X6Gt91TlUZG@google.com>
+ <20240830171602.GX3773488@nvidia.com>
+ <ZtWPRDsQ-VV-6juL@google.com>
+ <20240903001654.GE3773488@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -89,94 +90,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240903000546.GD3773488@nvidia.com>
+In-Reply-To: <20240903001654.GE3773488@nvidia.com>
 
-On Mon, Sep 02, 2024 at 09:05:46PM -0300, Jason Gunthorpe wrote:
-> On Mon, Sep 02, 2024 at 09:29:53AM +0000, Mostafa Saleh wrote:
-> > On Fri, Aug 30, 2024 at 01:40:19PM -0300, Jason Gunthorpe wrote:
-> > > On Fri, Aug 30, 2024 at 03:12:54PM +0000, Mostafa Saleh wrote:
-> > > > > +	/*
-> > > > > +	 * If for some reason the HW does not support DMA coherency then using
-> > > > > +	 * S2FWB won't work. This will also disable nesting support.
-> > > > > +	 */
-> > > > > +	if (FIELD_GET(IDR3_FWB, reg) &&
-> > > > > +	    (smmu->features & ARM_SMMU_FEAT_COHERENCY))
-> > > > > +		smmu->features |= ARM_SMMU_FEAT_S2FWB;
-> > > > I think that’s for the SMMU coherency which in theory is not related to the
-> > > > master which FWB overrides, so this check is not correct.
+On Mon, Sep 02, 2024 at 09:16:54PM -0300, Jason Gunthorpe wrote:
+> On Mon, Sep 02, 2024 at 10:11:16AM +0000, Mostafa Saleh wrote:
+> 
+> > > What is the harm? Does exposing IDR data to userspace in any way
+> > > compromise the security or integrity of the system?
 > > > 
-> > > Yes, I agree, in theory.
-> > > 
-> > > However the driver today already links them together:
-> > > 
-> > > 	case IOMMU_CAP_CACHE_COHERENCY:
-> > > 		/* Assume that a coherent TCU implies coherent TBUs */
-> > > 		return master->smmu->features & ARM_SMMU_FEAT_COHERENCY;
-> > > 
-> > > So this hunk was a continuation of that design.
-> > > 
-> > > > What I meant in the previous thread that we should set FWB only for coherent
-> > > > masters as (in attach s2):
-> > > > 	if (smmu->features & ARM_SMMU_FEAT_S2FWB && dev_is_dma_coherent(master->dev)
-> > > > 		// set S2FWB in STE
-> > > 
-> > > I think as I explained in that thread, it is not really correct
-> > > either. There is no reason to block using S2FWB for non-coherent
-> > > masters that are not used with VFIO. The page table will still place
-> > > the correct memattr according to the IOMMU_CACHE flag, S2FWB just
-> > > slightly changes the encoding.
+> > > I think no - how could it?
 > > 
-> > It’s not just the encoding that changes, as
-> > - Without FWB, stage-2 combine attributes
-> > - While with FWB, it overrides them.
+> > I don’t see a clear harm or exploit with exposing IDRs, but IMHO we
+> > should deal with userspace with the least privilege principle and
+> > only expose what user space cares about (with sanitised IDRs or
+> > through another mechanism)
 > 
-> You mean there is some incomming attribute in the transaction
-> (obviously not talking PCI here) and S2FWB combines with that?
-
-Yes, stuff as cacheability (as defined by Arm spec)
-I am not sure about PCI, but according to the spec:
-	“PCIe does not contain memory type attributes, and each transaction
-	takes a system-defined memory type when it progresses into the system”
-
+> If the information is harmless then why hide it? We expose all kinds
+> of stuff to userspace, like most of the PCI config space for
+> instance. I think we need a reason. 
 > 
-> > So a cacheable mapping in stage-2 can lead to a non-cacheable
-> > (or with different cachableitiy attributes) transaction based on the
-> > input. I am not sure though if there is such case in the kernel.
+> Any sanitization in the kernel will complicate everything because we
+> will get it wrong.
 > 
-> If the kernel supplies IOMMU_CACHE then the kernel also skips all the
-> cache flushing. So it would be a functional problem if combining was
-> causing a non-cachable access through a IOMMU_CACHE S2 already. The
-> DMA API would fail if that was the case.
-
-Correct, but it’s not just about cacheable/non-cacheable, as I mentioned
-it’s about other attributes also, this is a very niche case, and again I
-am not sure if there are devices affected in the kernel, but I just
-wanted to highlight it’s not just a different encoding for stage-2.
-
+> Let's not make things complicated without reasons. Intel and AMD are
+> exposing their IDR equivalents in this manner as well.
 > 
-> > > If anything should be changed then it would be the above
-> > > IOMMU_CAP_CACHE_COHERENCY test, and I don't know if
-> > > dev_is_dma_coherent() would be correct there, or if it should do some
-> > > ACPI inspection or what.
+> > For example, KVM doesn’t allow reading reading the CPU system
+> > registers to know if SVE(or other features) is supported but hides
+> > that by a CAP in KVM_CHECK_EXTENSION
+> 
+> Do you know why?
+> 
+
+I am not really sure, but I believe it’s a useful abstraction
+
+> > > As the comments says, the VMM should not just blindly forward this to
+> > > a guest!
 > > 
-> > I agree, I believe that this assumption is not accurate, I am not sure
-> > what is the right approach here, but in concept I think we shouldn’t
-> > enable FWB for non-coherent devices (using dev_is_dma_coherent() or
-> > other check)
+> > I don't think the kernel should trust userspace.
 > 
-> The DMA API requires that the cachability rules it sets via
-> IOMMU_CACHE are followed. In this way the stricter behavior of S2FWB
-> is a benefit, not a draw back.
+> There is no trust. If the VMM blindly forwards the IDRS then the VMM
+> will find its VM's have issues. It is a functional bug, just as if the
+> VMM puts random garbage in its vIDRS.
 > 
-> I'm still not seeing a problm here??
+> The onl purpose of this interface is to provide information about the
+> physical hardware to the VMM.
+> 
+> > > The VMM needs to make its own IDR to reflect its own vSMMU
+> > > capabilities. It can refer to the kernel IDR if it needs to.
+> > > 
+> > > So, if the kernel is going to limit it, what criteria would you
+> > > propose the kernel use?
+> > 
+> > I agree that the VMM would create a virtual IDR for guest, but that
+> > doesn't have to be directly based on the physical one (same as CPU).
+> 
+> No one said it should be. In fact the comment explicitly says not to
+> do that.
+> 
+> The VMM is expected to read out of the physical IDR any information
+> that effects data structures that are under direct guest control.
+> 
+> For instance anything that effects the CD on downwards. So page sizes,
+> IAS limits, etc etc etc. Anything that effects assigned invalidation
+> queues. Anything that impacts errata the VM needs to be aware of.
+> 
+> If you sanitize it then you will hide information that someone will
+> need at some point, then we have go an unsanitize it, then add feature
+> flags.. It is a pain.
 
-Basically, I believe we shouldn’t set FWB blindly just because it’s supported,
-I don’t see how it’s useful for stage-2 only domains.
-
-And I believe making assumptions about VFIO (which actually is not correctly
-enforced at the moment) is fragile, and we should only set FWB for coherent
-devices in nested setup only where the VMM(or hypervisor) knows better than
-the VM.
+I don’t have a very strong opinion to sanitise the IDRs (specifically
+many of those are documented anyway per IP), but at least we should have
+some clear requirement for what userspace needs, I am just concerned
+that userspace can misuse some of the features leading to a strange UAPI.
 
 Thanks,
 Mostafa
