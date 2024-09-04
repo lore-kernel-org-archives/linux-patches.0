@@ -1,95 +1,130 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8311E1324
-	for <patches@lists.linux.dev>; Wed,  4 Sep 2024 18:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C1B40C03;
+	Wed,  4 Sep 2024 19:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725473018; cv=none; b=YFsGp3Yw1zAeTYdOYlhAFR7UbYNTIaIynwXiQpLT+SvCh3sK2fDz4UMwCq5cO6BU54hm0LFqKZt42Z+5qGCrb0j9125xhzlKy/9gWz8mVvoEKy21J2P4S2yhmIsoGrsBvi5tsGmp5N6mXRgyBwiE6tIneTtETg5rLnRIK5UtCT8=
+	t=1725478359; cv=none; b=A/eBa0BnAo0Y9ReqcI+g9TGh9wRrWA7zVlD8aEN4jVXp/bipxgj3RfnHxoAm3JEqKHJdKhdi651K9VpevAyWxBywlRNWUGGFYWDZN45f5jpcYuS53JjV6VfCo4hlv0ugP5+DOfIvAutiaUr9vqcnzpv/6FB+oIOfGJ09xicfe+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725473018; c=relaxed/simple;
-	bh=sGxD221mI90raKKqY69Jrvx+alI7qWayFZJCwsVmXTs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=szgfp2KZNu0rDptklmTkO/joCTm/FbL0YdN+oTEEeUfTndFBPRavUD9+uapLwP/h4E8/JvZBfhUZkQuA0+jSVfV7BRkmSiTm9kwN5bgCkz7kqjESZ66ING+SlTft8J2Z+YMSkC64im+SAK/U8ajzsNCQe47qDIP3rwcFgIub4k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3lognHrD; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725478359; c=relaxed/simple;
+	bh=1BsfqSYBZBusIv1VPB8MyWxdGEMUcVXrmZ9yEtuQZg8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HRcHgy+Hu6Hx65m1lS81hQ1O7NGAN3ti9tXW/c+rHgrX6l7+rAOlLcE+3LUKuLG3MP+vgf42nltzTK3hhFK/07KCd56yUlLFkM6sFPYru6Dh45DZE8FLmTgmf5BwzizC6PSM2mcidaPfBYXRPPYgOmZcUzzZJ7D41pGrpDHYGqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=pZh2AzMR; arc=none smtp.client-ip=194.63.252.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3lognHrD"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6c34dd6c1b4so5508586d6.1
-        for <patches@lists.linux.dev>; Wed, 04 Sep 2024 11:03:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725473015; x=1726077815; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sGxD221mI90raKKqY69Jrvx+alI7qWayFZJCwsVmXTs=;
-        b=3lognHrD8Rlzu9QU4vMBF8pFi8jfeboeVCypWA0xIGjZEr+TjuVeu0ia3Fr/oFvFVZ
-         6XB7vxbUw8j59jnJ7FnwY1lpmrCKSZa0hKkpa9PhFMowRo4aLdC546B/76eZkmwDSHCr
-         2JnE6Ik5gMrxTGuRXYxPxVljegj8x1qBBVCyR+o1JxAnfSXNSRjqZwBB5S/+CupDYeSf
-         nl9Zci2lf9zHaaxP0vl/B12oLzlsqo0AVnmKdHIHdL2uglSc0Tfx/hcitKy2jfwQjjK4
-         RxyPwAwHoxOaSf6A2jLsGMZlTyTWpfTpvwp/aaQ6R6OQYbwEHBl6uAMT32X9BzHw3Kl2
-         8YQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725473015; x=1726077815;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sGxD221mI90raKKqY69Jrvx+alI7qWayFZJCwsVmXTs=;
-        b=N2iOSv8whP3nmg0ys8RxoAOtZDHF7U454CMRoe9k18pfpdKlg6MS8NnKDaw12YloF4
-         iBsjqFYaOGqKKGkEv0S0HOn2GEvdxFhoq61Geb/J87xEX/0yr8P/ZMiWGKpxO18XaIa5
-         RpISeJAXtDTapXeDRuLJzrE6wVcOIIc65Jjf2dorDrZnwg/snPOOAhlWs9zOjYi7TWig
-         3xH4OM6bbyiHe/X/yWryVJjfhdxf/S1xdumCohCbyHphEu8wPRyjdystspw7f0qP/3ts
-         VgJgQdAxgn/4L/R0BXpcqfInQpgZpsWREfnVLyYp3vapJAonSXMO/saNtD+nQUfJagcz
-         QwjA==
-X-Forwarded-Encrypted: i=1; AJvYcCWuN9SY393SYCeiMVSE0S6SpCfPyocEVeeVbAkws0hP1XunxP8oO83qZDsUHPchchf7AZxXD8fq@lists.linux.dev
-X-Gm-Message-State: AOJu0YwlZV1dMkznwc82t0WRiB7jOHwjc8/K2glHFKYJBKf7Ky0kDPIp
-	D+au7Pa0Wp70ZfLfLmm/nASZTs8kNTf02VqbffE4sligbg0Y3UpAu/h9PCF5ruvXy9ey7A2qbb5
-	EusIsx45N5SeGw4YCvOQPET5MDlJUNo425OkI
-X-Google-Smtp-Source: AGHT+IHBmJTTHN2Wmj2krBKYeUJNhB5p9uqzsqxdO8mlK2mkQ3IDyZ4DJz70MF5sZsUtDnLHJNbztr+CG+65CRyvY3w=
-X-Received: by 2002:a05:6214:320a:b0:6c3:6f34:eba6 with SMTP id
- 6a1803df08f44-6c36f35002cmr72924326d6.42.1725473014610; Wed, 04 Sep 2024
- 11:03:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="pZh2AzMR"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
+	s=ds202307; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=UcHZ5CTv4mKFksQdsvPKwDXzMVb8f/RnarAvgSKCoGI=; b=pZh2AzMRSB1aGFIVzn1u/ZRfmg
+	2ClmQClSdEusW4Yt8bAV3os45uPmOw2TVKbxvHRJtCQLRbh7+7rVirnSXkMYtuV0B0ySv6neLetxM
+	VaNQSocRoPZpfKewd4Qvsg4e6Qis9QtBk0E9Zo4r9ewJaAPPufwuisrLqCcDibVrWVb0Y+eC6QxAz
+	uWiuu9dGTNjhQUstDF2Ck/4CWJ12HxcXFC0kLICFZYLYxv8XlePvK3Lz2VOhHw9m+j43VHP2Iors+
+	K4N/US6DXABAkoKkNe1jrSANbH28heN7mn8tpOiPTiJw6psbaeT8JO6hFOBuJ4z99CIa7gNtY2QRF
+	GOunnGAQ==;
+Received: from [2001:9e8:9c9:f01:3235:adff:fed0:37e6] (port=49090 helo=lindesnes.fjasle.eu)
+	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <nicolas@fjasle.eu>)
+	id 1slvjv-004FVt-Ge;
+	Wed, 04 Sep 2024 21:32:27 +0200
+Date: Wed, 4 Sep 2024 21:32:17 +0200
+From: Nicolas Schier <nicolas@fjasle.eu>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 0/6] `RUSTC_VERSION` and re-config/re-build support on
+ compiler change
+Message-ID: <20240904-cordial-zircon-grebe-ba4806@lindesnes>
+References: <20240902165535.1101978-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904144229.18592-1-ojeda@kernel.org> <CAH5fLgizixTZ8nytkSzSLA67+f=zWZZKt8xTJ2BQg5K0ivAAmQ@mail.gmail.com>
-In-Reply-To: <CAH5fLgizixTZ8nytkSzSLA67+f=zWZZKt8xTJ2BQg5K0ivAAmQ@mail.gmail.com>
-From: Matt Gilbride <mattgilbride@google.com>
-Date: Wed, 4 Sep 2024 14:02:58 -0400
-Message-ID: <CABVGRke2nj83ohcBg_Q4RCKHuVVXP86jiL=moZ8x3fBEuKv0uQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: avoid `box_uninit_write` feature
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240902165535.1101978-1-ojeda@kernel.org>
 
-On Wed, Sep 4, 2024 at 4:43=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
->
-> Like commit 0903b9e2a46c ("rust: alloc: eschew
-> `Box<MaybeUninit<T>>::write`"), but for the new `rbtree` and `alloc` code=
-.
->
-> That is, `feature(new_uninit)` [1] got partially stabilized [2]
-> for Rust 1.82.0 (expected to be released on 2024-10-17), but it
-> did not include `Box<MaybeUninit<T>>::write`, which got split into
-> `feature(box_uninit_write)` [3].
->
-> To avoid relying on a new unstable feature, rewrite the `write` +
-> `assume_init` pair manually.
->
-> Link: https://github.com/rust-lang/rust/issues/63291 [1]
-> Link: https://github.com/rust-lang/rust/pull/129401 [2]
-> Link: https://github.com/rust-lang/rust/issues/129397 [3]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Mon, Sep 02, 2024 at 06:55:27PM +0200, Miguel Ojeda wrote:
+> This series mainly adds support for `CONFIG_RUSTC_VERSION` (which is needed for
+> other upcoming series) as well as support for rebuilding the kernel when the
+> Rust compiler version text changes, plus other secondary improvements.
+> 
+> v1: https://lore.kernel.org/rust-for-linux/20240808221138.873750-1-ojeda@kernel.org/
+> v2:
+> 
+>   - Dropped patch #2 "kbuild: rust: make command for `RUSTC_VERSION_TEXT` closer
+>     to the `CC` one" (Masahiro, Björn).
+> 
+>     In other words, now the `RUSTC_VERSION_TEXT` command is kept as it
+>     was, without `LC_ALL=1` nor `| head -n1`.
+> 
+>   - Replaced `macros` crate dependency with a comment in the code that `fixdep`
+>     will find, since we can do it for that one, unlike `core` (Masahiro,
+>     Nicolas).
+> 
+>   - Added patch (here #5) to add a warning when the Rust compiler used to build
+>     the kernel differs from the one used to build an out-of-tree module, like
+>     the C side does (Nicolas).
+> 
+>     If the patch is not wanted, then it can be skipped without much loss, since
+>     anyway Rust will fail to compile in that case. However, it would be nice to
+>     have to prevent potentially unexpected situations and to clarify the errors
+>     that `rustc` would emit later. See the commit message for more details.
+> 
+>   - Rewrapped comment to stay under 80 lines (Nicolas).
+> 
+>   - Picked up a couple tags that could more or less be reasonably taken given
+>     the changes to v2. Re-runs of tests welcome!
+> 
+> Miguel Ojeda (6):
+>   kbuild: rust: add `CONFIG_RUSTC_VERSION`
+>   kbuild: rust: re-run Kconfig if the version text changes
+>   kbuild: rust: rebuild if the version text changes
+>   kbuild: rust: replace proc macros dependency on `core.o` with the
+>     version text
+>   kbuild: rust: warn if the out-of-tree compiler differs from the kernel
+>     one
+>   docs: rust: include other expressions in conditional compilation
+>     section
+> 
+>  Documentation/rust/general-information.rst |  8 +++++++
+>  Makefile                                   | 18 ++++++++++-----
+>  init/Kconfig                               | 11 ++++++++-
+>  rust/Makefile                              |  7 +++---
+>  rust/macros/lib.rs                         |  4 ++++
+>  scripts/rustc-version.sh                   | 26 ++++++++++++++++++++++
+>  6 files changed, 64 insertions(+), 10 deletions(-)
+>  create mode 100755 scripts/rustc-version.sh
+> 
+> 
+> base-commit: a335e95914046c6bed45c0d17cabcd483682cf5e
+> --
+> 2.46.0
+> 
 
-Reviewed-by: Matt Gilbride <mattgilbride@google.com>
+the whole series looks good to me.  Thanks for the good explanations.
+
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+
+Kind regards,
+Nicolas
+
