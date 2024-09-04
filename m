@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FDE1714B4;
-	Wed,  4 Sep 2024 20:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1373017623F;
+	Wed,  4 Sep 2024 20:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725482726; cv=none; b=OO4GJAHimwwiqSvaK/RfDgotZQ7Dz+NPStj14bAmKfnUosVncRHplRuWecR4OhbU3kg36EkrI9ePEcTm/gZ7Sy2Q+SLKkB6klz/+XKqNlCop+juefYW3d9OwXAyCDHSM0jA8GThd01MaUPtPoOd8ihrRAGcnV66QRxUK6HuG+AU=
+	t=1725482732; cv=none; b=YjBdT+FxVJ2CoqzOemLEJgMnFuC3U6yc0f3wRMBVX7jGUtMbz1s87v78g6UHtN5VeqI1RnkiX9s9VrCmGX6kUcFKpvlILHm9U5EJigtn9fIAop9s5tBRUxG5F2pGDXhVx1EnGfAeicHgud/KHCQDKyP6pRe5mUSvMSJ6ZRmyhbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725482726; c=relaxed/simple;
-	bh=GCoMjmNj5/XSFld4YyYz7jnEzqA8ETrIM9dohxikmcU=;
+	s=arc-20240116; t=1725482732; c=relaxed/simple;
+	bh=Ssl2889E1Mv3hIu22VdL53Z2yZNkmUfjHy2j46S1dHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4snJsm6MJzICnUqGfF8bD/sEzQrE4v6pu87HnCzc322kewoefUeqaYqocqs25rWU2cTu13XNmxqvXiJh1jTcyl/B4NllJ322i5+NGhvBzIuqn2jlN9WmMV4wMCTuirkb4Q9COwCYQDkOfC0AUgG/aSChuO9De3XgKXbEYYMMxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T2WgcxrF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXrlLbIPBX6fzm6gBfLO3eBXk8jelTxUHhPhmBhVHaMDsW+JOhRTJOdoHD51THpnazGacz2FxH//hazoGvj+IjHrfeySDmgtUaKPcXfwUUTQhihp6CHv3Ur+H0RKeGX0FgnS+wlqwXiHZ+L41/O3MyNgTQezlAH6pbUSuoWPVi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F0qIz8o6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T2WgcxrF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39B6C4CEC2;
-	Wed,  4 Sep 2024 20:45:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F0qIz8o6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5BBC4CEC2;
+	Wed,  4 Sep 2024 20:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725482725;
-	bh=GCoMjmNj5/XSFld4YyYz7jnEzqA8ETrIM9dohxikmcU=;
+	s=k20201202; t=1725482729;
+	bh=Ssl2889E1Mv3hIu22VdL53Z2yZNkmUfjHy2j46S1dHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2WgcxrFj+PUSL2LxBGgpdLHtv5MR2gLSHpwMesVKiqcLk1cZ/pyO520zKtr4vf+M
-	 7GvN+3ChqkCmg5yrslYmyBPvv2PZ/ecmRL/dPXNG96NEH7RdpoauEablZlX+qybywm
-	 CYuSd6OVcMaSj6ZCMPP8m8MDQgPT6oqdld2ftjmm9/g3I+FvB6bChxyWryWBjOpt9n
-	 VfdBK5eXPXC3iNEE3NsTSNK+JfoEmgQaeDuDGKz87W9nkwHWKJHCxeilT7AtOguK5t
-	 Ix7bLzU4mOybjMjy0wq1HftpT1Ip2JoKRv8iQ6f9g53lUeh6DvIbWJgxXN/SL0oQn3
-	 vGyubBvQPFrtQ==
+	b=F0qIz8o637Pfw6aqEIzaiKbAl/YwPYiKx9t10pD/8bXV2M/Gc2OfBZte+bV7BcvyB
+	 R82nuuOhx0aRtBMWToA82Jmr9XdE/IUEcAsXWAhNaRiu7zDyXy6APCkFjW0E+f6Zhe
+	 dr2av2UuQgivstItV3XBw3ND94BL780gzvJ/r58NfOqhdAFDrxvEDybWhOKX4RR1WY
+	 vJpeuKTRPs9IP2yhNUVuKdfs9SC8UsP9aetJb1XXBDo5LEyZ1Hu/VWd6wNYiyr6Jl/
+	 5tN8ExSQ9R0V9e3UKb8GJuB+KVz+2eUvfXVTuW8eNbi8G6gr4s2+d6u9HGkqvDPQjj
+	 JlwMwpzNOMWsw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -40,9 +40,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 12/19] rust: replace `clippy::dbg_macro` with `disallowed_macros`
-Date: Wed,  4 Sep 2024 22:43:40 +0200
-Message-ID: <20240904204347.168520-13-ojeda@kernel.org>
+Subject: [PATCH 13/19] rust: rbtree: fix `SAFETY` comments that should be `# Safety` sections
+Date: Wed,  4 Sep 2024 22:43:41 +0200
+Message-ID: <20240904204347.168520-14-ojeda@kernel.org>
 In-Reply-To: <20240904204347.168520-1-ojeda@kernel.org>
 References: <20240904204347.168520-1-ojeda@kernel.org>
 Precedence: bulk
@@ -53,131 +53,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Back when we used Rust 1.60.0 (before Rust was merged in the kernel),
-we added `-Wclippy::dbg_macro` to the compilation flags. This worked
-great with our custom `dbg!` macro (vendored from `std`, but slightly
-modified to use the kernel printing facilities).
+The tag `SAFETY` is used for safety comments, i.e. `// SAFETY`, while a
+`Safety` section is used for safety preconditions in code documentation,
+i.e. `/// # Safety`.
 
-However, in the very next version, 1.61.0, it stopped working [1] since
-the lint started to use a Rust diagnostic item rather than a path to find
-the `dbg!` macro [1]. This behavior remains until the current nightly
-(1.83.0).
+Fix the three instances recently added in `rbtree` that Clippy would
+have normally caught in a public item, so that we can enable checking
+of private items in the next commit.
 
-Therefore, currently, the `dbg_macro` is not doing anything, which
-explains why we can invoke `dbg!` in samples/rust/rust_print.rs`, as well
-as why changing the `#[allow()]`s to `#[expect()]`s in `std_vendor.rs`
-doctests does not work since they are not fulfilled.
-
-One possible workaround is using `rustc_attrs` like the standard library
-does. However, this is intended to be internal, and we just started
-supporting several Rust compiler versions, so it is best to avoid it.
-
-Therefore, instead, use `disallowed_macros`. It is a stable lint and
-is more flexible (in that we can provide different macros), although
-its diagnostic message(s) are not as nice as the specialized one (yet),
-and does not allow to set different lint levels per macro/path [2].
-
-In turn, this requires allowing the (intentional) `dbg!` use in the
-sample, as one would have expected.
-
-Finally, in a single case, the `allow` is fixed to be an inner attribute,
-since otherwise it was not being applied.
-
-Link: https://github.com/rust-lang/rust-clippy/issues/11303 [1]
-Link: https://github.com/rust-lang/rust-clippy/issues/11307 [2]
+Fixes: 98c14e40e07a ("rust: rbtree: add cursor")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- .clippy.toml               |  6 ++++++
- Makefile                   |  1 -
- rust/kernel/std_vendor.rs  | 10 +++++-----
- samples/rust/rust_print.rs |  1 +
- 4 files changed, 12 insertions(+), 6 deletions(-)
+ rust/kernel/rbtree.rs | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/.clippy.toml b/.clippy.toml
-index f66554cd5c45..ad9f804fb677 100644
---- a/.clippy.toml
-+++ b/.clippy.toml
-@@ -1 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
-+
-+disallowed-macros = [
-+    # The `clippy::dbg_macro` lint only works with `std::dbg!`, thus we simulate
-+    # it here, see: https://github.com/rust-lang/rust-clippy/issues/11303.
-+    { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool" },
-+]
-diff --git a/Makefile b/Makefile
-index 234ab97de796..f236dd5fb6d9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -451,7 +451,6 @@ export rust_common_flags := --edition=2021 \
- 			    -Wrust_2018_idioms \
- 			    -Wunreachable_pub \
- 			    -Wclippy::all \
--			    -Wclippy::dbg_macro \
- 			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
- 			    -Wclippy::needless_bitwise_bool \
-diff --git a/rust/kernel/std_vendor.rs b/rust/kernel/std_vendor.rs
-index 67bf9d37ddb5..085b23312c65 100644
---- a/rust/kernel/std_vendor.rs
-+++ b/rust/kernel/std_vendor.rs
-@@ -14,7 +14,7 @@
- ///
- /// ```rust
- /// let a = 2;
--/// # #[allow(clippy::dbg_macro)]
-+/// # #[allow(clippy::disallowed_macros)]
- /// let b = dbg!(a * 2) + 1;
- /// //      ^-- prints: [src/main.rs:2] a * 2 = 4
- /// assert_eq!(b, 5);
-@@ -52,7 +52,7 @@
- /// With a method call:
- ///
- /// ```rust
--/// # #[allow(clippy::dbg_macro)]
-+/// # #[allow(clippy::disallowed_macros)]
- /// fn foo(n: usize) {
- ///     if dbg!(n.checked_sub(4)).is_some() {
- ///         // ...
-@@ -71,7 +71,7 @@
- /// Naive factorial implementation:
- ///
- /// ```rust
--/// # #[allow(clippy::dbg_macro)]
-+/// # #[allow(clippy::disallowed_macros)]
- /// # {
- /// fn factorial(n: u32) -> u32 {
- ///     if dbg!(n <= 1) {
-@@ -118,7 +118,7 @@
- /// a tuple (and return it, too):
- ///
- /// ```
--/// # #[allow(clippy::dbg_macro)]
-+/// # #![allow(clippy::disallowed_macros)]
- /// assert_eq!(dbg!(1usize, 2u32), (1, 2));
- /// ```
- ///
-@@ -127,7 +127,7 @@
- /// invocations. You can use a 1-tuple directly if you need one:
- ///
- /// ```
--/// # #[allow(clippy::dbg_macro)]
-+/// # #[allow(clippy::disallowed_macros)]
- /// # {
- /// assert_eq!(1, dbg!(1u32,)); // trailing comma ignored
- /// assert_eq!((1,), dbg!((1u32,))); // 1-tuple
-diff --git a/samples/rust/rust_print.rs b/samples/rust/rust_print.rs
-index 6eabb0d79ea3..ed1137ab2018 100644
---- a/samples/rust/rust_print.rs
-+++ b/samples/rust/rust_print.rs
-@@ -15,6 +15,7 @@
+diff --git a/rust/kernel/rbtree.rs b/rust/kernel/rbtree.rs
+index 48ceb9560bf5..48e552799e17 100644
+--- a/rust/kernel/rbtree.rs
++++ b/rust/kernel/rbtree.rs
+@@ -884,7 +884,8 @@ fn get_neighbor_raw(&self, direction: Direction) -> Option<NonNull<bindings::rb_
+         NonNull::new(neighbor)
+     }
  
- struct RustPrint;
+-    /// SAFETY:
++    /// # Safety
++    ///
+     /// - `node` must be a valid pointer to a node in an [`RBTree`].
+     /// - The caller has immutable access to `node` for the duration of 'b.
+     unsafe fn to_key_value<'b>(node: NonNull<bindings::rb_node>) -> (&'b K, &'b V) {
+@@ -894,7 +895,8 @@ unsafe fn to_key_value<'b>(node: NonNull<bindings::rb_node>) -> (&'b K, &'b V) {
+         (k, unsafe { &*v })
+     }
  
-+#[allow(clippy::disallowed_macros)]
- fn arc_print() -> Result {
-     use kernel::sync::*;
+-    /// SAFETY:
++    /// # Safety
++    ///
+     /// - `node` must be a valid pointer to a node in an [`RBTree`].
+     /// - The caller has mutable access to `node` for the duration of 'b.
+     unsafe fn to_key_value_mut<'b>(node: NonNull<bindings::rb_node>) -> (&'b K, &'b mut V) {
+@@ -904,7 +906,8 @@ unsafe fn to_key_value_mut<'b>(node: NonNull<bindings::rb_node>) -> (&'b K, &'b
+         (k, unsafe { &mut *v })
+     }
  
+-    /// SAFETY:
++    /// # Safety
++    ///
+     /// - `node` must be a valid pointer to a node in an [`RBTree`].
+     /// - The caller has immutable access to the key for the duration of 'b.
+     unsafe fn to_key_value_raw<'b>(node: NonNull<bindings::rb_node>) -> (&'b K, *mut V) {
 -- 
 2.46.0
 
