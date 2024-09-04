@@ -1,72 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546441CCB29;
-	Wed,  4 Sep 2024 09:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFC21CEE8B;
+	Wed,  4 Sep 2024 09:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725442613; cv=none; b=A26zIk4NVI/x2h2pS/14WEBKJJgn73jh38SSlHXANgQSx/98YIpm76KXJDjYPqWILktYrTBqKAdP6MUi1jHD9OhE8gcOJ47j5ngol69DP5HeaeWFVdPylbDPke8i2t39CXuVXl6rtCcVR2CYxtHF6NRpEklCYtC6Sio/FbYdxCU=
+	t=1725442689; cv=none; b=EBOk6qnHrjBLDyPvCfe8Blu4+KA9ykYKuwJOtLKq0caKMQVD42hOylu446zDGuMJzXJFPxuYBAruvjhTEEwcfJpqkHfFglW2UMns4UTC5PXlnc9ell63A8+s19FJy129vd34JJJsYkAjeef89BM6T2u92b3rfEoEzsmGuUM1O5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725442613; c=relaxed/simple;
-	bh=MBwBMik3WdpeSRwdosVELrhielfxG8FEjRiwld/tWvY=;
+	s=arc-20240116; t=1725442689; c=relaxed/simple;
+	bh=IKirc6HevZIvUKJ+85aPDDWvupVvCnVxgat3yoXt4Mc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OUyhOWiip4ab0MhSRYAdesFLyKlKn/5DxyVrA/LkF6B6uMb+BC70ipIRwn9zj3rl7mg20Frci9WRpTs9BQtiT7yoOLlgeRF0AvYUM30gDND5jc+GoVQAjolqj7wKvEi1GBhqK9uT+RcJG7BRD1UEoAEDZlh86hQPVB6bOgNT1n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JBmejodC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=V6YoCiPPG/rFI7EaQAkrEG4QsGoLooW+v5hg/PXmRUwVYJdJNZ8DaoE/vnfI8Ak8IpnsELDKmjvXkfoVW4bsg8+bDetyVoVvPS1QtbvpHCTl4Md6nRIIqA9IngP9FsXsY7245Va0Qotxf0Qd6Gl5pc6Tp+evAoBpYIO2tiZKP+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSabC1xj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JBmejodC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08A4C4CEC6;
-	Wed,  4 Sep 2024 09:36:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725442613;
-	bh=MBwBMik3WdpeSRwdosVELrhielfxG8FEjRiwld/tWvY=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSabC1xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0C3C4CEC2;
+	Wed,  4 Sep 2024 09:38:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725442688;
+	bh=IKirc6HevZIvUKJ+85aPDDWvupVvCnVxgat3yoXt4Mc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JBmejodC5PZ/bZIdUTxfbws8t13TO0dZx2NADVSzFiCdFZFONf/s5E9sIcxpk+JCj
-	 ATqP3UeW/yxC5clX1Ak7Yaw2th9C9qYdbNGKyDsxM5YEGWfx+CHKOTG10nyO9Z8kj8
-	 gAVqGaS7J/ed/cn3a4aQdjgY3JhaMrYopF5etv5xjpGUOGtHnV0hhCOF88BwO95epj
-	 +pv2ovc++y4PXoo4NLK7icGN2N9DDHJP/SUyAnmZR6d6OwnZBZhFaWyrsQKQRMjpzP
-	 c01rOWAS9ey3OIMv8vl1KhcWAyqBb2jWn7vPC8mvVlGCYQ+fLTEALKKSot5K9t+K2B
-	 JkDEuYjxYbDSQ==
-Date: Wed, 4 Sep 2024 09:36:45 +0000
-From: Tzung-Bi Shih <tzungbi@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	dri-devel@lists.freedesktop.org,
-	Guenter Roeck <groeck@chromium.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v4 18/18] platform/chrome: cros_ec_typec: Handle lack of
- HPD information
-Message-ID: <ZtgqLZXbJbpG65vD@google.com>
-References: <20240901040658.157425-1-swboyd@chromium.org>
- <20240901040658.157425-19-swboyd@chromium.org>
+	b=GSabC1xjeQi546QZ83/KA3NhitTdMJaFd0r4H7JYFMe6oaDFZUale8NPYaPwS6r7J
+	 D7u9fCkaaDm/hZCaqFNv/+04TLGOHh47s1mYMFILeDLJcO11ATut+dyOa3miU9mbvz
+	 15Ig8bZL2cr8drjJkcOGBGXoCY4TRXhQvwmEoKD4=
+Date: Wed, 4 Sep 2024 11:38:05 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Anders Roxell <anders.roxell@linaro.org>,
+	aleksander.lobakin@intel.com,
+	"David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH 4.19 00/98] 4.19.321-rc1 review
+Message-ID: <2024090449-reselect-charter-575b@gregkh>
+References: <20240901160803.673617007@linuxfoundation.org>
+ <CA+G9fYscUiPT0Eo9yo4UhJq2jjYtvLhOofQKhAMEOiVueR-Vaw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -75,33 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240901040658.157425-19-swboyd@chromium.org>
+In-Reply-To: <CA+G9fYscUiPT0Eo9yo4UhJq2jjYtvLhOofQKhAMEOiVueR-Vaw@mail.gmail.com>
 
-On Sat, Aug 31, 2024 at 09:06:56PM -0700, Stephen Boyd wrote:
-> +static void cros_typec_inject_hpd(struct cros_typec_data *typec,
-> +				  struct ec_response_usb_pd_mux_info *resp,
-> +				  struct cros_typec_port *port)
-> +{
-[...]
-> +	/*
-> +	 * Only read the mux GPIO setting if we need to change the active port.
-> +	 * Otherwise, an active port is already set and HPD going high or low
-> +	 * doesn't change the muxed port until DP mode is exited.
-> +	 */
-> +	if (!typec->active_dp_port) {
+On Mon, Sep 02, 2024 at 02:30:57PM +0530, Naresh Kamboju wrote:
+> On Sun, 1 Sept 2024 at 21:50, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 4.19.321 release.
+> > There are 98 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.321-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> Apart from Powerpc build regressions we have noticed s390 build regression.
+> The S390 defconfig builds failed on Linux stable-rc 4.19.321-rc1 due to
+> following build warnings / errors with clang-18 and gcc-12.
+> 
+> This is a same problem on current stable-rc review on
+>    - 4.19.321-rc1 review
+> 
+> In the case of stable-rc linux-4.19.y
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Following two commits have been added on 4.19.321-rc1.
+> -------
+>   s390/cio: rename bitmap_size() -> idset_bitmap_size()
+>   commit c1023f5634b9bfcbfff0dc200245309e3cde9b54 upstream.
+> 
+>   bitmap: introduce generic optimized bitmap_size()
+>   commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
 
-Given that cros_typec_inject_hpd() is called before `typec->active_dp_port`
-would be set (from previous patch "platform/chrome: ...  Support DP muxing"),
-would it possibly wrongly fall into here at the beginning?  (E.g.:
-cros_typec_probe() -> cros_typec_port_update() -> cros_typec_configure_mux()
--> cros_typec_inject_hpd().)
+Odd, this should have also shown up in your 5.4.y builds too.
 
-> [...]
-> +	/* Inject HPD from the GPIO state if EC firmware is broken. */
-> +	if (typec->hpd_asserted)
-> +		resp->flags |= USB_PD_MUX_HPD_LVL;
+I'll go drop this from both trees now, thanks.
 
-`typec->hpd_asserted` is shared between all typec->ports[...].  Would it be
-possible that a HPD is asserted for another port but not current `port`?
-E.g.: cros_typec_inject_hpd() for port 2 and cros_typec_dp_bridge_hpd_notify()
-gets called due to port 1 at the same time?
+greg k-h
