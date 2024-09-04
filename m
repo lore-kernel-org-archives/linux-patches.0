@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EEB156871;
-	Wed,  4 Sep 2024 20:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014D156871;
+	Wed,  4 Sep 2024 20:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725482719; cv=none; b=NjGNOCwF/1AfgGavjLPB4Uqqn8kF0/t2wcGOYx5Eyw3DzA093mnBYH0v7kkA+NYdrsZPMYrO5D8ok7ioKMWWn2L4LowognuqGIZUSp6h0UQPfze5qs6ldgu4mgEdlmuMm2pn5M4zus77K0Z5EN0OHlQuJH7KG/8Rm+lxZKeRO5g=
+	t=1725482722; cv=none; b=W9kdyr/KbW6BXtAZo09yjK/4qQ1J37tgopguoN+3GuJ0+8v/0wZ9TYWjxMDSpMvRQ+q1GcY67z8i+oIN8lOr927EUZwNTXQub92nYnQEr7oz0tHczf8wIAbseMfmmjTYFz7DXcM+Gj5Y1b0wV5RZP/NAejDjrBp17dLx2oFvYVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725482719; c=relaxed/simple;
-	bh=vJQvhymk7IQJA94TrCwgY0z7LvJcOwadrzPK6L20pWw=;
+	s=arc-20240116; t=1725482722; c=relaxed/simple;
+	bh=c3kGndlFIp+qZPOCF675bBzcX634NpzyVuX7M0WNkek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPnoH1nn43MIICzFDfn0dQcJakk3FCaL2hVDVyQlrXdAJzC+7IngOKI7lYUaIO6KxbyZ9eWEQO1AmaH6/8Ka8uL4yPb5Dk8x7Xlxf3YEQDcRSfZ4bpGugoBnOYGr1oYiRoesBMpcFhBldQj0oLP+jQ67cr4Bpg0C9lIfzvu+Zj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4gsCmiA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPGBlQON2wMBM4WcGKLVMqCZw9LTf6rtlJp44X0UgElTxFqHpCii8HjW9IQ586PyMhExL9NI4kpCCrGzJFVZGzreWyxQoyKpYMdjrBXrdybCVXirs+7/I8QKdw0VbmZuPbdsSZKox3ViNJeihOUX8vMwM8PXthbXlttpAO+1Nfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qsaii+C2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4gsCmiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72845C4CEC5;
-	Wed,  4 Sep 2024 20:45:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qsaii+C2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF31C4CEC2;
+	Wed,  4 Sep 2024 20:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725482718;
-	bh=vJQvhymk7IQJA94TrCwgY0z7LvJcOwadrzPK6L20pWw=;
+	s=k20201202; t=1725482722;
+	bh=c3kGndlFIp+qZPOCF675bBzcX634NpzyVuX7M0WNkek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4gsCmiA8R/FnmPj8VVbJjBYfoAo9rBJ9G0VqScpwzFkZJfj+fh7QsaQYjQtsb3DC
-	 nwflgYO5lrAdez2Ehh5klsua6l6GD600MW+67TCoZj7y94OehMLI4XWuiXMM+1JAJo
-	 uTOPCN/Zq8/jPPRdMleUG0oonwVptTKqjbjD7p1wNpoUoURCtZPC3p+rmY/nu54siy
-	 Bmh2CPbHoPXkAxXABZ6KLMJ5UHNmRRtEgcdyU5u093kzQojDZnYx6PAjhcKJ58LrvZ
-	 n8TrwBIFR9bQgobmFE7uSQT6rw1pN4wO9xbvoqPE6AfaraYuAP7AYKmIlaHsqRMT75
-	 k/fPeRMfsOs6w==
+	b=qsaii+C2vqxbx7WMAcWvZb7r4tMqSSnquP7CblVaw6t8f+BVJJMCOC5s++1LwrGQ2
+	 W6Ue/ZZ4YIdBpaS2bwkB2R32HGIfrix/tQZ9uBNhEP1ecXEys3DdsLl4yv12GpXyNW
+	 QZdwPlVZJ9tQxDkxryhjDdUVF1eyu6CHSjRbmHU9QLFQrEG0FThJUwX8WggCG4F7uC
+	 b6JTgWzQZfTFiRjurZ+RvJPTMeXY8dVFykJW1p0FLKREjfZogVO1+Rrtgpp/PqlUQa
+	 pLRvSSYhE75d5f5CWpHGTfrfK03MLLk9ieozVHlO6upgLvGSKmxPSbHkqVBYd7qGfZ
+	 wIn3O4rtHZ4zg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -40,9 +40,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 10/19] rust: sync: remove unneeded `#[allow(clippy::non_send_fields_in_send_ty)]`
-Date: Wed,  4 Sep 2024 22:43:38 +0200
-Message-ID: <20240904204347.168520-11-ojeda@kernel.org>
+Subject: [PATCH 11/19] rust: introduce `.clippy.toml`
+Date: Wed,  4 Sep 2024 22:43:39 +0200
+Message-ID: <20240904204347.168520-12-ojeda@kernel.org>
 In-Reply-To: <20240904204347.168520-1-ojeda@kernel.org>
 References: <20240904204347.168520-1-ojeda@kernel.org>
 Precedence: bulk
@@ -53,45 +53,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Rust 1.58.0 (before Rust was merged into the kernel) made Clippy's
-`non_send_fields_in_send_ty` lint part of the `suspicious` lint group for
-a brief window of time [1] until the minor version 1.58.1 got released
-a week after, where the lint was moved back to `nursery`.
+Some Clippy lints can be configured/tweaked. We will use these knobs to
+our advantage in later commits.
 
-By that time, we had already upgraded to that Rust version, and thus we
-had `allow`ed the lint here for `CondVar`.
+This is done via a configuration file, `.clippy.toml` [1]. The file is
+currently unstable. This may be a problem in the future, but we can adapt
+as needed. In addition, we proposed adding Clippy to the Rust CI's RFL
+job [2], so we should be able to catch issues pre-merge.
 
-Nowadays, Clippy's `non_send_fields_in_send_ty` would still trigger here
-if it were enabled.
+Thus introduce the file.
 
-Moreover, if enabled, `Lock<T, B>` and `Task` would also require an
-`allow`. Therefore, it does not seem like someone is actually enabling it
-(in, e.g., a custom flags build).
-
-Finally, the lint does not appear to have had major improvements since
-then [2].
-
-Thus remove the `allow` since it is unneeded.
-
-Link: https://github.com/rust-lang/rust/blob/master/RELEASES.md#version-1581-2022-01-20 [1]
-Link: https://github.com/rust-lang/rust-clippy/issues/8045 [2]
+Link: https://doc.rust-lang.org/clippy/configuration.html [1]
+Link: https://github.com/rust-lang/rust/pull/128928 [2]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/sync/condvar.rs | 1 -
- 1 file changed, 1 deletion(-)
+ .clippy.toml | 1 +
+ .gitignore   | 1 +
+ MAINTAINERS  | 1 +
+ Makefile     | 3 +++
+ 4 files changed, 6 insertions(+)
+ create mode 100644 .clippy.toml
 
-diff --git a/rust/kernel/sync/condvar.rs b/rust/kernel/sync/condvar.rs
-index 7e00048bf4b1..dec2e5ffc919 100644
---- a/rust/kernel/sync/condvar.rs
-+++ b/rust/kernel/sync/condvar.rs
-@@ -92,7 +92,6 @@ pub struct CondVar {
-     _pin: PhantomPinned,
- }
+diff --git a/.clippy.toml b/.clippy.toml
+new file mode 100644
+index 000000000000..f66554cd5c45
+--- /dev/null
++++ b/.clippy.toml
+@@ -0,0 +1 @@
++# SPDX-License-Identifier: GPL-2.0
+diff --git a/.gitignore b/.gitignore
+index 7902adf4f7f1..907c782962d2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -102,6 +102,7 @@ modules.order
+ # We don't want to ignore the following even if they are dot-files
+ #
+ !.clang-format
++!.clippy.toml
+ !.cocciconfig
+ !.editorconfig
+ !.get_maintainer.ignore
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 77b395476a80..cb63f1f97556 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -19922,6 +19922,7 @@ B:	https://github.com/Rust-for-Linux/linux/issues
+ C:	zulip://rust-for-linux.zulipchat.com
+ P:	https://rust-for-linux.com/contributing
+ T:	git https://github.com/Rust-for-Linux/linux.git rust-next
++F:	.clippy.toml
+ F:	Documentation/rust/
+ F:	rust/
+ F:	samples/rust/
+diff --git a/Makefile b/Makefile
+index fc66bac4b4f1..234ab97de796 100644
+--- a/Makefile
++++ b/Makefile
+@@ -590,6 +590,9 @@ endif
+ # Allows the usage of unstable features in stable compilers.
+ export RUSTC_BOOTSTRAP := 1
  
--#[allow(clippy::non_send_fields_in_send_ty)]
- // SAFETY: `CondVar` only uses a `struct wait_queue_head`, which is safe to use on any thread.
- unsafe impl Send for CondVar {}
- 
++# Allows finding `.clippy.toml` in out-of-srctree builds.
++export CLIPPY_CONF_DIR := $(srctree)
++
+ export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC HOSTPKG_CONFIG
+ export RUSTC RUSTDOC RUSTFMT RUSTC_OR_CLIPPY_QUIET RUSTC_OR_CLIPPY BINDGEN
+ export HOSTRUSTC KBUILD_HOSTRUSTFLAGS
 -- 
 2.46.0
 
