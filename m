@@ -1,49 +1,46 @@
-Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72D5E1CCEF6;
-	Wed,  4 Sep 2024 09:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725442788; cv=none; b=rCfFKVaWW/ZMyyfhGsoUY4dMfbetAP7GWJ+zfldojKI+n4iLHUEDpY9mimTE+GLKvuREmYmjvwqohy2plQ3PFpW0Gf/KWRnFmgb/DkqlIndR5tW9xrEVaAX+NOb1Oa3n+dxMAGqS4XDnabsQcZ0qO4KlzmjpeuNLyjE59RXPvr4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725442788; c=relaxed/simple;
-	bh=CddvKxH3zQWkoMFnZXITl8R2jYedP+QqRmTlXxvygh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jIxPxqJncGFx17ernGS7jgHM/tLscP5eUqgeNuqyGuuvUZXhzbbAJ0cmKaydKe6rEDf8sD6lIr1FjBx/5yolVNBxevfova0H48fNaY2caDrEo4vHO8eZ98PLnjfpCQQ/kwbqQ6P8iMV9KSr9zNwahMgArpMiNigF58YnN9L7evk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=CWyhRG2y; arc=none smtp.client-ip=85.214.250.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="CWyhRG2y"
-Received: from 8bytes.org (p4ffe1f47.dip0.t-ipconnect.de [79.254.31.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id 4E710285A43;
-	Wed,  4 Sep 2024 11:39:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1725442785;
-	bh=CddvKxH3zQWkoMFnZXITl8R2jYedP+QqRmTlXxvygh0=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4571CCECB;
+	Wed,  4 Sep 2024 09:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725443178; cv=none; b=kEqT4cm0tZ2sSfErVBHquW0m0kzXQYXS6EtcZfGZfKb2DxaU5cbOqZRiKcQSB9uM7a3zJWrXWUYJDzU5qoJ1kky+h6RbF71E31k+8KjVmqpnhOVbfQIjV9m3xVKJ3ajFr2qfDULZ0poeOtgEbXHNaYBRxJNlTLBn+B3f3X/17JI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725443178; c=relaxed/simple;
+	bh=dIyubfnNsld2zEdy4ZUqK6BWciQYKqKZR8vjl0Ivpho=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dZyrs09OsLTkeFLzRETHdsPdX3lKbpBsaP027G8h7mM2/ot3frFzF4vZ7zuFFIH4rcwg7xXkPnOOkTUvm4vkYPazcyDDh6pLhRynW7kiKvqK/atjpJ14tm3UihzLht8ih8v3WWn/u2hUIZVx+YhLB3WpPCtqNmtwKv4fWJcxpJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2868FyP; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2868FyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B76C4CEC2;
+	Wed,  4 Sep 2024 09:46:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725443177;
+	bh=dIyubfnNsld2zEdy4ZUqK6BWciQYKqKZR8vjl0Ivpho=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CWyhRG2yGf8eDOTbnhYB/bZZ8wR2XnS+yQGMCc0YO/mKKCTZtadmAMw8jsFkpsiQ/
-	 /vWxuIDawEs1g8AKy2YogHNiXWZ+Ww2P1+OUESUP59f4hrTxbN8Yyw/6QOYuqWWGBU
-	 T0DWz50XD+stOY7c4ttYwdwE+Qd9dOYm+5tJbR6pCSa4tZCc9wd3OkAo+s3BcAlq3N
-	 ECxC7tF+HEueUZ7xpUaeqS1tACbm5Ra4S/DDOiHjm0fHuWjnJq71y1nEi5GYQR5T8m
-	 P76IzG081cFVd1moVSb4vFNkwk7uP79I+ejQMS7cYCVTafPgQ8JAdKv/9nQoSdo4mI
-	 OJG/snhtbvYTg==
-Date: Wed, 4 Sep 2024 11:39:44 +0200
-From: Joerg Roedel <joro@8bytes.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Joerg Roedel <jroedel@suse.de>, patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>
-Subject: Re: [PATCH v2 00/14] Minor fixups and refactorings for AMD's
- io-pgtable code
-Message-ID: <Ztgq4Kl4SmcxrjlY@8bytes.org>
-References: <0-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com>
+	b=h2868FyPZqlxY6SbvmQEE74WegLBjxyP+udhz5Usx8QVsgdtx1Gb7W6Iy5v6hDFYM
+	 ftgEUR8nRqpizqRV+1PNOGzWMsQLsMuK8/264pOtnOJrE2qtgsZflS5v76AUQpMZPi
+	 FtjA6jrqO9bRnioVXwuE22sdwflsHT9B5LuAGBWw=
+Date: Wed, 4 Sep 2024 11:46:14 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Anders Roxell <anders.roxell@linaro.org>,
+	aleksander.lobakin@intel.com,
+	"David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH 4.19 00/98] 4.19.321-rc1 review
+Message-ID: <2024090459-second-vaporizer-eecf@gregkh>
+References: <20240901160803.673617007@linuxfoundation.org>
+ <CA+G9fYscUiPT0Eo9yo4UhJq2jjYtvLhOofQKhAMEOiVueR-Vaw@mail.gmail.com>
+ <2024090449-reselect-charter-575b@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,23 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0-v2-831cdc4d00f3+1a315-amd_iopgtbl_jgg@nvidia.com>
+In-Reply-To: <2024090449-reselect-charter-575b@gregkh>
 
-On Thu, Aug 29, 2024 at 09:06:09PM -0300, Jason Gunthorpe wrote:
-> Jason Gunthorpe (14):
->   iommu/amd: Move allocation of the top table into v1_alloc_pgtable
->   iommu/amd: Allocate the page table root using GFP_KERNEL
->   iommu/amd: Set the pgsize_bitmap correctly
->   iommu/amd: Remove amd_iommu_domain_update() from page table freeing
->   iommu/amd: Remove the amd_iommu_domain_set_pt_root() and related
->   iommu/amd: Rename struct amd_io_pgtable iopt to pgtbl
->   iommu/amd: Remove amd_io_pgtable::pgtbl_cfg
->   iommu/amd: Store the nid in io_pgtable_cfg instead of the domain
->   iommu/amd: Narrow the use of struct protection_domain to invalidation
->   iommu/amd: Remove conditions from domain free paths
->   iommu/amd: Fix typo of , instead of ;
->   iommu/amd: Remove the confusing dummy iommu_flush_ops tlb ops
->   iommu/amd: Correct the reported page sizes from the V1 table
->   iommu/amd: Do not set the D bit on AMD v2 table entries
+On Wed, Sep 04, 2024 at 11:38:05AM +0200, Greg Kroah-Hartman wrote:
+> On Mon, Sep 02, 2024 at 02:30:57PM +0530, Naresh Kamboju wrote:
+> > On Sun, 1 Sept 2024 at 21:50, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 4.19.321 release.
+> > > There are 98 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.321-rc1.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
+> > 
+> > Apart from Powerpc build regressions we have noticed s390 build regression.
+> > The S390 defconfig builds failed on Linux stable-rc 4.19.321-rc1 due to
+> > following build warnings / errors with clang-18 and gcc-12.
+> > 
+> > This is a same problem on current stable-rc review on
+> >    - 4.19.321-rc1 review
+> > 
+> > In the case of stable-rc linux-4.19.y
+> > 
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > 
+> > Following two commits have been added on 4.19.321-rc1.
+> > -------
+> >   s390/cio: rename bitmap_size() -> idset_bitmap_size()
+> >   commit c1023f5634b9bfcbfff0dc200245309e3cde9b54 upstream.
+> > 
+> >   bitmap: introduce generic optimized bitmap_size()
+> >   commit a37fbe666c016fd89e4460d0ebfcea05baba46dc upstream.
+> 
+> Odd, this should have also shown up in your 5.4.y builds too.
+> 
+> I'll go drop this from both trees now, thanks.
 
-Applied, thanks.
+Nope, I need it there, I'll go add some helper functions to make this
+work, thanks.
+
+greg k-h
