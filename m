@@ -1,55 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777EA824AF;
-	Wed,  4 Sep 2024 07:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D48219A280;
+	Wed,  4 Sep 2024 09:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725435425; cv=none; b=H9rjvUVWKmdROTvqMr37yLNMTM/Mo/f3CL0ffOhHx4CCFtKRx92U85bqSbAAowbqTn0uOZafvm2XeTX4uFIoqogZeyzWy4Y32QOZ92CqODEjkFYynt62DAD4XH2UpsacMpSbb/SQPP9jj2QAN0k4UcZYSqkUWIpGaniusedF3NM=
+	t=1725442184; cv=none; b=aDUqxyZZUytfsCDsbmhzJl2IXG+Qi2BxGrfhE+hlk8wEN3KsMr0ttFZIOkM6c//Rw83I5ASEVTRqo9/I3KoUi0i7qy42/fv3s/Lc/IsAZZ1Ef17rZZs32DiwHuT+bMbvr/yDXUcWwzWp2Fqp/Ml95xnuyY51B4MMhhlh7CFuYto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725435425; c=relaxed/simple;
-	bh=AfxzpX4GHl51hFDB4zqrm6o7GErc6877ymLCUd48txE=;
+	s=arc-20240116; t=1725442184; c=relaxed/simple;
+	bh=hbNlSjmK/Uz0cgICOymWuwgRMivBtn+074B4AI5cj5Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WNNaIw2c2GCAUzop5gSa761vR6mDUwwCdlRQj5f7qy1KjBb2jiBWu7hVVpaPfkpCXTZCrQh1wuZctqw+L4XCIvXSz/tOpuDjDC+4RLIvbl/hj9IwIvARXBpPewcQ/BF7xeT3sJDLaHwPcdgegRJSVFNkXVm8G03sgBnzUeUWaCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZb55oHw; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=SiD7kcx2wpJ37OwfpTA21APjqhP/RlZe8U0OZl3UuZNwSKR/v89rBXLxGjfUmVJEnXNwV0+MqNrTLDqreKZIwMeAeHFOj24y/CyUiSvb08HV3CB3abCpoElD+dN4XNPyBj4QUmb0tDI62upQN/1t45R2/WAPdu8d52+x3KliiPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjdO3q0b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZb55oHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060FEC4CEC2;
-	Wed,  4 Sep 2024 07:37:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725435425;
-	bh=AfxzpX4GHl51hFDB4zqrm6o7GErc6877ymLCUd48txE=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjdO3q0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56488C4CEC2;
+	Wed,  4 Sep 2024 09:29:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725442184;
+	bh=hbNlSjmK/Uz0cgICOymWuwgRMivBtn+074B4AI5cj5Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lZb55oHwrLAB5sjGQkLV4ny7WTr6hEA4VR7hczbYooL5I4DVHFqhRo6jWARP46Q/Y
-	 kE+pi17yhNvs2nA4yQIJ5pqiVFG1GxV7lHPCWigq2VhvUCn20kHxygl+wViq4/iuCd
-	 ChKTsje/b4mVqXMxHDyYfVlWUdArgh27kqE/LQh9auxEAVwFIhnbC/m7tPczdM7gyC
-	 unABFN9RTFQIcHqtLDw8oDU+5K+BWjrLaSR1mXk35ttaSztVav09tJpAUTRK5jvDkH
-	 J8e00gP3VpCgqzmGlO3+cDAkyOL2fGo9Oh8swyqZfPpwPYHsKp65rkPw4aS4FN4Ynh
-	 sBXPpQbPR7Vig==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1slkZs-000000001kV-486R;
-	Wed, 04 Sep 2024 09:37:21 +0200
-Date: Wed, 4 Sep 2024 09:37:20 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, patches@lists.linux.dev,
-	linux-clk@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH v3 1/2] clk: qcom: dispcc-sc7180: Only park display clks
- at init
-Message-ID: <ZtgOMJ2fmkZO8nDG@hovoldconsulting.com>
-References: <20240828171722.1251587-1-swboyd@chromium.org>
- <20240828171722.1251587-2-swboyd@chromium.org>
- <c1e35d3d-fa00-4453-aaa3-9f23a07acb4f@linaro.org>
- <CAE-0n51Ag1wpj0uUPVtMvgZJE2FF_FZkw+j=bRiAq3vYk=Y_Fw@mail.gmail.com>
- <CAE-0n53rNuyXcVcqTBSgbNzuJzCBkaHE21dPNkMTrs=BCTkmPg@mail.gmail.com>
- <ZtVmKWTBtJiA53U0@hovoldconsulting.com>
- <8a02734c7b64efa186e97a54eb34c632.sboyd@kernel.org>
+	b=KjdO3q0bux1bMuGd9L3/VaGY/LNJ4JOlqxUtHee0l6yJDw7nQoP90K8jiTThJWCM7
+	 VMQUWXIVbv+TIwFlW0lL+Hebv45Hqgy2mQ057EgagKsxqz682xy9VNtIlfAO9qNF4q
+	 II8L8jF8Q2hP+TbtgKXYEfkAMMJAKSi4Jh73jUHA=
+Date: Wed, 4 Sep 2024 11:29:40 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/151] 5.10.225-rc1 review
+Message-ID: <2024090433-paramedic-unpaired-d90f@gregkh>
+References: <20240901160814.090297276@linuxfoundation.org>
+ <CA+G9fYuK+=YW6F+mBMeHAZoUrQQS6-AgAezRfQGEpZui4JUepg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,50 +45,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8a02734c7b64efa186e97a54eb34c632.sboyd@kernel.org>
+In-Reply-To: <CA+G9fYuK+=YW6F+mBMeHAZoUrQQS6-AgAezRfQGEpZui4JUepg@mail.gmail.com>
 
-On Tue, Sep 03, 2024 at 12:55:07PM -0700, Stephen Boyd wrote:
-> Quoting Johan Hovold (2024-09-02 00:15:53)
-> > On Fri, Aug 30, 2024 at 03:29:22PM -0700, Stephen Boyd wrote:
-> > > Quoting Stephen Boyd (2024-08-29 09:34:05)
-> > 
-> > > > It sounds like it's better to make the default always park at
-> > > > registration time and special case the one or two places where that
-> > > > isn't possible, i.e. USB because it has special rate requirements. So I
-> > > > should just go back to v1 then and pile on the QUP patches.
-> > > 
-> > > I've done this now and I'll push out clk-fixes with the QUP patches.
-> > 
-> > I assumed you'd fix up all the other SoCs affected by this, but I only
-> > saw fixes for sm8550, sm8650 and x1e80100 in your fixes branch.
-> > 
-> > Just sent a corresponding fix for sc8280xp, which I've confirmed also
-> > needs this for QUP:
+On Mon, Sep 02, 2024 at 02:03:13PM +0530, Naresh Kamboju wrote:
+> On Sun, 1 Sept 2024 at 22:20, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 5.10.225 release.
+> > There are 151 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.225-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> Thanks!
+> The Powerpc defconfig builds failed on Linux stable-rc due to following
+> build warnings / errors with clang-18 and gcc-12.
 > 
-> >         https://lore.kernel.org/lkml/20240902070830.8535-1-johan+linaro@kernel.org/
-> > 
-> > But what about the sm8550 USB issue? Don't the other platforms also need
-> > a corresponding fix (e.g. for when booting from USB)?
+> This is a same problem on current stable-rc review on
+>    - 5.4.283-rc1 review
+>    - 5.10.225-rc1 review
+>    - 5.15.166-rc1 review
 > 
-> I don't know. Are you seeing USB host issues on other platforms with
-> shared RCG clk_ops for the USB clk? It looks inconsistent that sometimes
-> there's a USB GDSC but the shared clk ops aren't used. If nothing is
-> broken then let's work on the proper fix, which is parking RCGs when the
-> GDSC is turned off so that turning on the GDSC always works. If USB is
-> broken for you then send another patch.
+> In the case of stable-rc linux-5.10.y
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Anders bisected this to first bad commit id as,
+>   fbdev: offb: replace of_node_put with __free(device_node)
+>   [ Upstream commit ce4a7ae84a58b9f33aae8d6c769b3c94f3d5ce76 ]
 
-I haven't noticed any USB issues on the two platforms I work on and
-which both have USB GDSCs (sc8280xp and x1e80100), but then again I
-don't test USB booting regularly (if that's when the issue show up).
+Now dropped, thanks.
 
-I was hoping you would have a theory as to why things broke on sm8550 so
-that you can reason about which platforms need this, rather than have
-multiple users debug these issues and play whack-a-mole with incomplete
-fixes.
-
-I don't see anything SoC specific about the QUP fixes and assume early
-console handover is now broken on all Qualcomm SoCs for example.
-
-Johan
+greg k-h
