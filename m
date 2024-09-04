@@ -1,220 +1,173 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2067.outbound.protection.outlook.com [40.107.223.67])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E8D1D58B5;
-	Wed,  4 Sep 2024 12:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.67
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725451273; cv=fail; b=peXoARmVUP1ddiOFwDCOFDX9mQeXqq492Fle6xaE+elvhNlQ7jEw4mnRfYvO7+TTrNQsopYOTFzZWpyNqD9MYVpkFl4wWGBmQgLQ4pZUkj8jvwuNi4aZgUcpqRxANprkh6O213YRzjv5+LoyIsFU9ZDIccN7TMrhHmBwxtxf3gs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725451273; c=relaxed/simple;
-	bh=zyH7Kpi+T0Ety3nenMg7Qz5Kf606rAjg1cQRWNU7mRM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=W+z3Z5lX021Cb6YJJKdkc2goT8BPUO+IMuhvU79IolqOTYvUUes0mQA9SOVfD8qBiPzfrmNx1Aa3V49yy/3u1Uey07i7Eb4eG/fxSkg10vcQwbEkUkB+LJZAIoyyctBz5GH6Gu11WGO8XhrJVW0wiDvEOQMy4Ysk63syIH63Ia0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kz/o9aU+; arc=fail smtp.client-ip=40.107.223.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F8E1D04B8;
+	Wed,  4 Sep 2024 13:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725454902; cv=none; b=mL0LnuESfhjsZfzr5Pnd/CPjGfbaPSlHq1iQfSdjEspMggWcd+dDp52NlSoj3L522sAEBw4HYUcTlRFf56TlH1YAbRrK/4SAKskAs1Y3QSKRBCkr9Kk8Iip4BnAed8wba3IozBv/6e8NTS16Q922SSZ84lU+X/TZfToZmD4CyjE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725454902; c=relaxed/simple;
+	bh=6Kw6B3185mdUtc47auQpHWY0ReGfCqoefhPtw0as7VY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m4RcAeVMw8NiBvQNzfwLTBfthf41+TQxJRekPcrv55Yd9mN/ijouNEc33ECZQEe3f1I4iBDkLQCuZD1CTRu9c45iNhUEexd198shqDABIuktMZ2IyTq+IzAWM0NemJeslOntHiIWECDiKS/+zwBP68GFIQ9J/wTd0n0wzBUjaTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=B4XpwumY; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kz/o9aU+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=t72KmuTDdMAGxPtgDvi4/cUi/reQcKJ/kk0BmeZ2yaTBytHtC51TJDGszikY9JzRxPTduTNrmDtWd/FfETpVqaRzaxbY9zX780NFUziRSHimrrs6wkELO0r0h9YpkdvhRB2AmcvzQAr2kyorf/ni3SWofmuLmfzOdo8iIvMZRUNa2vr2ba5c1Iu+nWXn8DMEgqqE0WIOdD9gV9LvlmAPWTh31D6OQnSghBeKZC/9Wa0ZtNf1AFUnjf1tp9ceSAYNFnnoAog+VgWyaQ2HwCQf/PxFDjCFgqwBzQnpv/odpY0GvL3UmSKFgZd4Um85DAN7QrnVS60LgC1tvvmZdl+rZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=18WgC/YD8FGZD37SfXhhhAnO8yp7qKVhB9weAsro6zk=;
- b=TsMzMFbfDsu/ex3T12sutBFE5gBP2wWxENbMn0XVjsxUwLm6QvWX341jWskUmBK9MDcAzdf9uLH527kWxsNnl33i1Hhin537BAIQAb9RIN+YLITeoGEFFobYf2L/+QuHT3ftlJS3b2zER6ImenWmLU4k/ms240OL0TjrqjcpACMRufIWzZV85Z19LucRw+8pxIFetcg2D0t+JwWm+GihUY04/Pkbgkq6jrRZrpWOiM7rKHTqnbgiH+kKFgffbOLf94xx32Ooi7h/mJfitpTh83uyiyX0DlgOS/7XlDdniuyd5Mba32LtMDSdb7sTmBPV+b3G5Hrh/HQxz9ToPd/jfA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=18WgC/YD8FGZD37SfXhhhAnO8yp7qKVhB9weAsro6zk=;
- b=kz/o9aU+Y1h/IJDn0YZ1Coe2RWQCubmwYT5Va7M48euuG+CqLHXnMdFCqxhnXF0/wLGfhIKCqrr0Ryie22Sspcd6xgUXccE35xFb1RoCGjqF2fjDx87Hvl5sgY+6GY1Gn6xws6LEsNp19rg5iw6LdG1A32sKmHez3ZkSM3fVZ+g5UvszCV4Nkjp1F+hsy/FADT0rt/jg72Tvikugk2yqOrEDPKFsNbiaen1q8C0KSm27x0Hk73iuPXV8OiRObn+RTLgQgKZXuB95fKf3Q9+GczHoWNPCFcadPix2e0Mh6ttM4+Xc70bb/kQRaLFOUxoUzx+O4CLzQq6QSG8Dxw7Zmw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
- by PH8PR12MB6794.namprd12.prod.outlook.com (2603:10b6:510:1c5::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.25; Wed, 4 Sep
- 2024 12:01:04 +0000
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7918.024; Wed, 4 Sep 2024
- 12:01:04 +0000
-Date: Wed, 4 Sep 2024 09:01:03 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Cc: Mostafa Saleh <smostafa@google.com>,
-	"acpica-devel@lists.linux.dev" <acpica-devel@lists.linux.dev>,
-	"Guohanjun (Hanjun Guo)" <guohanjun@huawei.com>,
-	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-	Len Brown <lenb@kernel.org>,
-	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v2 6/8] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via
- struct arm_smmu_hw_info
-Message-ID: <20240904120103.GB3915968@nvidia.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <6-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHj_X6Gt91TlUZG@google.com>
- <20240830171602.GX3773488@nvidia.com>
- <ZtWPRDsQ-VV-6juL@google.com>
- <20240903001654.GE3773488@nvidia.com>
- <ZtbKCb9FTt5gjERf@google.com>
- <20240903234019.GI3773488@nvidia.com>
- <9e8153c95b664726bd7fcb6d0605610a@huawei.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9e8153c95b664726bd7fcb6d0605610a@huawei.com>
-X-ClientProxiedBy: MN2PR04CA0022.namprd04.prod.outlook.com
- (2603:10b6:208:d4::35) To CH3PR12MB7763.namprd12.prod.outlook.com
- (2603:10b6:610:145::10)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="B4XpwumY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1725454901; x=1756990901;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6Kw6B3185mdUtc47auQpHWY0ReGfCqoefhPtw0as7VY=;
+  b=B4XpwumYDwR0jjGaaENm24F7X3p4EIefa4XPryHzw3ZYvCZ8oOUBbrFf
+   vx1lri9KyYADUqttSypYEgQ4UPkQqJOa8X7ufGiCo7BfiNVGEB6Y4uIQN
+   1ZFgbRt5UtUz8i+4DpQuo1R/S+5SNLzcP7OJvl9CuU6H58CGjSoeN5sof
+   YtaIGZs0axcjxjoPQuZ2r9US/QAVneSx31QBzt877b2iuJxXzbQtwJenG
+   0kRCKIPw+/ozKhwFXWSpnUcebYQg+MoCR5pUyAfEBmBLh04VIDqPEhSsQ
+   /EIcKLEcGccs4Z3dZqIF+F/f12TP1byaOX6/RfYkuJ5AVyhU139s1H7c2
+   g==;
+X-CSE-ConnectionGUID: 9hNuqxgZRcWhAjzoblR44A==
+X-CSE-MsgGUID: NVXOsSKmROigT3ZpuKVH4w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11184"; a="34713868"
+X-IronPort-AV: E=Sophos;i="6.10,201,1719903600"; 
+   d="scan'208";a="34713868"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2024 06:01:40 -0700
+X-CSE-ConnectionGUID: zt+H+du4TBWU8QDtHMqVYQ==
+X-CSE-MsgGUID: jdxwf08QTkW9tnDCY81T8w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,201,1719903600"; 
+   d="scan'208";a="95996608"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2024 06:01:30 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1slpd3-000000054Ce-3bap;
+	Wed, 04 Sep 2024 16:00:57 +0300
+Date: Wed, 4 Sep 2024 16:00:57 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, devicetree@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Benson Leung <bleung@chromium.org>,
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	Guenter Roeck <groeck@chromium.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>, linux-acpi@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v4 06/18] drm/bridge: aux-hpd: Support USB Type-C DP
+ altmodes via DRM lane assignment
+Message-ID: <ZthaCQel2aHhyIu4@smile.fi.intel.com>
+References: <20240901040658.157425-1-swboyd@chromium.org>
+ <20240901040658.157425-7-swboyd@chromium.org>
+ <ZtWjEudmlR51zkU9@smile.fi.intel.com>
+ <CAE-0n51eSxxvnJXwnfPrXx1=rei=8OGGEtCAgw6nhCktZ0iQDw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|PH8PR12MB6794:EE_
-X-MS-Office365-Filtering-Correlation-Id: 865fc5a9-7054-4fe5-95d1-08dcccd9408a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7416014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?SnliQnh1eDlSdElPMDdFRVpod1N4TGc4QkhUbWM1UWxWbFhxMUVvY0hlSXAy?=
- =?utf-8?B?U1FPOHB6cXpBb1FCeC85eE1VR1Y3STAzbDdESmp3QXhOQXNVRzZtbjIvNUoy?=
- =?utf-8?B?QVc3TDZrb0JnQndBTHpPdXV3VWhld1Q4TjhQYnB1VTNCOHlZYWk4TEZ1Tm5K?=
- =?utf-8?B?OVlpTnV4SytaWjJ0TVZIR1EvTFk5QVRBMmtQMzFuR1ZESDFUWUhoQ2h0SlJz?=
- =?utf-8?B?QlpLN2VhT25sdnJGWWxhaVg5emxJbzFvMHpMUXlleE5mL1FwNEFNSDliaFRH?=
- =?utf-8?B?cGhSK210ZTBBZlBKaUlnSkVIOUh0RDJSc0RoV0JWVHNwVFlRelU2cU1qZ0t5?=
- =?utf-8?B?N3R4OTFXY3VZSU1oVkFxVVpvY3E4VWw2OTFtT0YrbWNacE9oTndleHVzblR2?=
- =?utf-8?B?NW5PT2U0ODNlL3pHTnZlb1JDMktwMFd3ejlGV0VnNFpWZmNXZGl6UHRZbnZZ?=
- =?utf-8?B?dFowL1ZWKy9sU0xNYnZnMjJNcXlZS3AvSXA4RGxuK1h4OTh2dlRtMlM4MkRG?=
- =?utf-8?B?V25QcFJyWjNSOTlYYU1Vc2toUGVNeUgrNUtDdkk2ckI1REZqSWtCekZFZGtX?=
- =?utf-8?B?R2w2dXRneTZvbWx5MUhwU2sxd0F1em1pc055YkFKZk1RUDA4VjJjb1dkbjBY?=
- =?utf-8?B?NVNHU0NjYlIyQnluaWZGY0kxNWxzdlhoU3g2WGNFb01XcmZCUjN5N2FMdHRi?=
- =?utf-8?B?MVVzd2FqVUt4TjdsemF0UHl1MkV3c05Ga3lVVXFJMWd4Lyt4MUNaT1dXcExt?=
- =?utf-8?B?U3lUQlJ2VUUzUHhwS3hXT05BR09jOUZmVjlDUUFzcnNGV1V6akYyM2FTK0k2?=
- =?utf-8?B?b0tITXk5WVJmYUZXUTl6dlIzcDJMV3pUWUQvZDU0VndKc213ckg5NVZvNmVj?=
- =?utf-8?B?dE9EMThMeEtSTlB5TTVLQVdFcjRjQ2hxNm80dlB3WEhZbUc0Y2U0MGJFQW82?=
- =?utf-8?B?VnlWUGRsTDhXL3YvaXF3WFh2dFpiTVdCS0ZUTk56RVFEQm40Um9VRUFDdEdt?=
- =?utf-8?B?ZVNXaTFONGJDanBYWVc2ZHVVRXVZMEpOS3ZmZXFFMnVlVUZtaitKYW90cWZF?=
- =?utf-8?B?TmYwa3RleGc1bURSYVROZG5ROUg0ZzlOK1FOcjFUdU5HZVBIYi9BVGxUV3hv?=
- =?utf-8?B?VU9QaTdVam5CSlRzNVBMd25XMGErQmw1VmJyR2NLZ0RtUnJmNVdkNDk0eCtP?=
- =?utf-8?B?ZVdBUDFaR2ZOY3l3REdFWjJscC9acmhONFlRMWRRanJ2a1FNU25kNFdLT0VE?=
- =?utf-8?B?UDB4c3hPbXBHdyswWHM0bkZkcjAyK2krYTYrb1JtYkQ3L2tpOWJlQ0tRdEY4?=
- =?utf-8?B?ZVY1QTlyeGhTRnpVV1NOZWMwQTJNdU1EZ0VJckoxT3Z4cHRrbUQyMi8yejB1?=
- =?utf-8?B?WUNLMHhrN1ZsRmQ3YkhlOFVISmN5SEpvUnNGUTVmYkN3WlJGVVFiYmNqN3Z4?=
- =?utf-8?B?QzMwMlZHT1lYZ0NWUnU4SkFnQnpLdjIrdjZLNXZQVWErVlJMSHJxZ2lCSDZV?=
- =?utf-8?B?b2Ryb05EZ2NWbmJ0a0I4bFJ2SmJtOGFUQ3BGd0FYMmFXaFRpTnJzeTN4QjRP?=
- =?utf-8?B?U25pZHVuZXJTdXlscEh1M0M1MzlUazd5R1BvR0pPVmNObUxFR2tkZXZyNHlI?=
- =?utf-8?B?Lzd1UjF6bDR6VmVmZlFjM3VYMEJOR1BqaDZwcUdvell2Z1A4ZDQwU2tIcGpW?=
- =?utf-8?B?aDRSdXoxRHNSK1J6WnJtNEhlUTNJeUxNaWNPV09WWXVXRFpFRElUU20vSW1W?=
- =?utf-8?B?b3p1OFZuTkEwd2ZGT3FPempGeHRUYjZQcW95NzN3bEMza29VT3p2OWJMYmMv?=
- =?utf-8?Q?n2zA8N/kQl5w/iV24obNuGFp6M5+nfTyActXc=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(7416014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?MlJ6bE9nSUVib25YQmtIWFdTcnM2VGpBZE1nR1YrZ3NBWWUxNjhBeHJPeEdy?=
- =?utf-8?B?dUppOS9NMzFHbnY0REl6R2hDTXNsTWNhY3ZZWks3MmY1c29GeHhuY2hKWVpU?=
- =?utf-8?B?WG1Cd1BSTldhWTZydmZxTUpLRTg5OEFIOXlsMDlSR1dHcXJJMFVwOHRUZDVQ?=
- =?utf-8?B?bHZWQlVDQWhvekp1VWJtT1pqQWRGTi9rN09sVEpHZXQ3Qm8weVkzbHBxNFFP?=
- =?utf-8?B?c0x6Y2IvU2ErcU0reXptVU1zbElidDBKeVBHNkw3TXc5Mit1UnN3NDZxc0RF?=
- =?utf-8?B?eVdlNmtGNnAvNFlQYWtQdUN4YldDSGpib2hGcTFXaTJrbGhCNDVCTGttVHE5?=
- =?utf-8?B?d0pWTU9tQmZJYXNMZ0dsQzVYb01VbTY0bytyd0F5clp3ajQ2UFc5cTFpc2c5?=
- =?utf-8?B?RWpoV011UXZ1WVF4WE40b1ppd0tIcVA4ekkyK0l3aTduU012L2E2TGsvQUxt?=
- =?utf-8?B?SHMydXRjZy9Cc0c2NUNXYitwekR4Z3FWb2xxWm5KSkcyNmlETUI4cnFrSXBS?=
- =?utf-8?B?SlBvRWJLeEtKZXBlZlFOV0xpZG1acWlVK1pydEU2ZVB2S1I0VFoxaGpPenpN?=
- =?utf-8?B?RFZIcEdpNzdibVcyOG1lY3FFWEo4aWJNTk9Selg1cW93K0tmQWlPTjRFU0Iz?=
- =?utf-8?B?eTdzRHdOVUdsSEFuU0dIcnRFU3F5SGdKN05peWM0cHhPZDhNamJKMWRnT0lv?=
- =?utf-8?B?V2J1K1ZMbTJDZnpqNGpxNXhYWml0Vit2MytiNEFkeVJiTkJ2L2k2RjJndzBS?=
- =?utf-8?B?d3ltTmlkZWh1UnlZVnNJaW5hN090cGZpWnlhMjEzK0NoZk9Jam1WKzk4REZ1?=
- =?utf-8?B?WGJEUjlaMTdJcHB2MC80OFV1MTl1NHcrY2gwTmUraEtOeWU0N1RVaXk2UXp5?=
- =?utf-8?B?R0pQNU1LZExSRTg2aGtLYUtFVHhkS1BHdGQxS2RjRFBUclZNNzQydEh2a0ZK?=
- =?utf-8?B?Rlhod05WcHdZckVncG1DRUlwdTJkUmgvMDJRSWYvTERkMUZ2R2tNTis4Lzd3?=
- =?utf-8?B?cWFydVJyM09LRjZxZ2c2RWZCM1VwUDdrZFlBMmNtajhkZHBFMHZubVY4cFpQ?=
- =?utf-8?B?K2RjUXZOWDhlTjl2MXNMYU5hbFZMZTFITXdSNnBOUzJZUU9GNllNMmZmeXdV?=
- =?utf-8?B?d0RUR0piUTY3M1lwL0hHank4MUJOYUYxdGowdi8wcUlyeHZmNVdGdS9veDIy?=
- =?utf-8?B?SCtwb1E2aFEwblBmSllaSEJqWWRsN0xsNEltQkVmRmh5dCtEWi8xL1lLcW1I?=
- =?utf-8?B?WG9zWTY3cUVCbGt0c0kwVWNrcGVuWkhxUlZNUFoxaHVGSkRqYld5akhRZ2w2?=
- =?utf-8?B?U2JsdWRacUM3cHl3UlRuQlRLN2pZeU1VT01MWUJVSE51TkRwU0RvSTEyNnBv?=
- =?utf-8?B?aitsRzZ2S3Z5THU3NGhDSDMrUVR2ZFU4bThlUkV5RXZIZmNpTGV1cmxiLzQ3?=
- =?utf-8?B?aUF2eTY2TkpzOHkzZ3gyRFpkdWVrRlIybXpaQlZnSjc1eGJYU0dpdXlhcmNw?=
- =?utf-8?B?dnV6VkxIdGkzcDc4RGJwSklINFRMT0Z5SEQwL0FwV1krRGpzT3BrS0xQWElj?=
- =?utf-8?B?aytkMlVtZFZRUDhEK1hWSGhLUFUxcUtZQU9palUvNDNWWCszK0sycWdyYXlp?=
- =?utf-8?B?bWRMV1dxeWZCRlJJdU0zdkN1eUtJeWpFRlVuRnhqT3NycmRCa1RLL29Qb1Zp?=
- =?utf-8?B?RzFZSVAwblRkY3I2LzB4aEJ3ZXNMcDZ5TVVmS21HakhpK1kwUkRiUElIOEZD?=
- =?utf-8?B?VitZM2ZtSkNSQ1hFeUFPTHBydGlLbWhxbzJmS3lxd1pmbVRSRXVjRzFzRzFI?=
- =?utf-8?B?M2ViVmZvek1YK2lRRDQrQVp6YlV0THpFWXE2Vit3TTZjMUw2K21BOHhXS1pk?=
- =?utf-8?B?bnJENmJwbkZ4eXJoUmwrNFBOb2ZvVDNtSXRJcXJSVE5pamw4alhhRjBnS0dR?=
- =?utf-8?B?cDRwcGx0aHZQOHlCdjUvNm5IRXhaTllCOVhwVjlmTVR0S1RORThlSkdnTVhK?=
- =?utf-8?B?RmFyS0ZBQ0Voa01vTmdSOUpXMmtMTjBEcTRJc1M3ejFrNms5RlpsOHU1bW5Q?=
- =?utf-8?B?dWYyQXUvbnR6bHR1V2xERnBIdmkwdzUrckJRRjNmdEFtSEhTY2JrTFZ3cWk0?=
- =?utf-8?Q?AZc8NJbNVh8twmxPwlimOWHM1?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 865fc5a9-7054-4fe5-95d1-08dcccd9408a
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2024 12:01:04.4001
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AdiamznpW45ZHHUMllRyI4Uhs7eWB0PjwC7TQhHUZeXsRYHntvbo68zDqjK5njZj
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6794
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n51eSxxvnJXwnfPrXx1=rei=8OGGEtCAgw6nhCktZ0iQDw@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Wed, Sep 04, 2024 at 07:11:19AM +0000, Shameerali Kolothum Thodi wrote:
+On Tue, Sep 03, 2024 at 06:20:14PM -0400, Stephen Boyd wrote:
+> Quoting Andy Shevchenko (2024-09-02 04:35:46)
+> > On Sat, Aug 31, 2024 at 09:06:44PM -0700, Stephen Boyd wrote:
 
-> > On Tue, Sep 03, 2024 at 08:34:17AM +0000, Mostafa Saleh wrote:
-> > 
-> > > > > For example, KVM doesn’t allow reading reading the CPU system
-> > > > > registers to know if SVE(or other features) is supported but hides
-> > > > > that by a CAP in KVM_CHECK_EXTENSION
-> > > >
-> > > > Do you know why?
+> > > Extend the aux-hpd bridge driver to support assigning DP lanes to USB
+> > > type-c pins based on typec mux state entry. Existing users of this
+> > > driver only need the HPD signaling support, so leave that in place and
+> > > wrap the code with a variant that supports more features of USB type-c
+> >
+> > Isn't the proper spelling "USB Type-C"?
+> 
+> Perhaps in a title?
+
+I am talking about the commit message :-)
+
+> > > DP altmode, i.e. pin configurations. Prefix that code with
+> > > 'drm_dp_typec_bridge' to differentiate it from the existing
+> > > 'drm_aux_hpd_bridge' code.
 > > >
-> > > I am not really sure, but I believe it’s a useful abstraction
-> > 
-> > It seems odd to me, unpriv userspace can look in /proc/cpuinfo and see
-> > SEV, why would kvm hide the same information behind a
-> > CAP_SYS_ADMIN/whatever check?
-> 
-> I don’t think KVM hides SVE always. It also depends on whether the
-> VMM has requested sve for a specific Guest or not(Qemu has option to
-> turn sve on/off, similarly pmu as well).  Based on that KVM
-> populates the Guest specific ID registers.  And Guest /proc/cpuinfo
-> reflects that.
-> 
-> And for some features if KVM is not handling the feature properly or
-> not making any sense to be exposed to Guest, those features are
-> masked in ID registers.
-> 
-> Recently ARM64 ID registers has been made writable from userspace to
-> allow VMM to turn on/off features, so that VMs can be migrated
-> between hosts that differ in feature support.
-> 
-> https://lore.kernel.org/all/ZR2YfAixZgbCFnb8@linux.dev/T/#m7c2493fd2d43c13a3336d19f2dc06a89803c6fdb
+> > > Parse the struct typec_mux_state members to determine if DP altmode has
+> > > been entered and if HPD is asserted or not. Signal HPD to the drm bridge
+> > > chain when HPD is asserted. Similarly, parse the pin assignment and map
+> > > the DP lanes to the usb-c output lanes, taking into account any lane
+> > > remapping from the data-lanes endpoint property. Pass that lane mapping
+> > > to the previous drm_bridge in the bridge chain during the atomic check
+> > > phase.
 
-I see, so there is a significant difference - in KVM the kernel
-controls what ID values the VM observes and in vSMMU the VMM controls
-it.
+...
 
-Jason
+> > > +     adev->dev.of_node = of_node_get(parent->of_node);
+> >
+> > device_set_node() ?
+> 
+> Or device_set_of_node_from_dev()?
+
+This is quite unclear to me. The second one bumps the reference count IIRC
+for no reason (in usual cases). Also only few drivers use that, I would hear
+what OF people can tell about this API and its usage scope.
+
+...
+
+> > > +static int dp_lane_to_typec_lane(enum dp_lane lane)
+> > > +{
+> > > +     switch (lane) {
+> > > +     case DP_ML0:
+> > > +             return USB_SSTX2;
+> > > +     case DP_ML1:
+> > > +             return USB_SSRX2;
+> > > +     case DP_ML2:
+> > > +             return USB_SSTX1;
+> > > +     case DP_ML3:
+> > > +             return USB_SSRX1;
+> > > +     }
+> >
+> > > +     return -EINVAL;
+> >
+> > Hmm... This can be simply made as default case.
+> 
+> And then the enum is always "covered" and the compiler doesn't complain
+> about missing cases (I don't think we have -Wswitch-enum)? Seems worse.
+
+Hmm... You mean if I remove one of the above cases I will get the warning?
+
+> > > +}
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
