@@ -1,184 +1,125 @@
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D941D014A;
-	Wed,  4 Sep 2024 14:20:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23E85C96;
+	Wed,  4 Sep 2024 14:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725459646; cv=none; b=Mz2l1NC5bAlt2opP6B1RZsAUNzo8OXfrIyj+AWdWLYZXH6pjywSqHywG/AkIDkl8Vq34elDcYLMg8/EwCjrEAr6ch9XalJZlkbga0H3pAyoxQuZkLJeZubSUw+r4rGeTeg4zB6CYsEOge/5xpJ5w69MW3sJgeO0gQYcLUMH0YhM=
+	t=1725461003; cv=none; b=Nvgl3aSAfz4YnqgBo7sHuI4xScw1ZW12463qUon14u9PGf3NO6IqYt7WMQfOZA0hSs7z5fgrlIBDgKub17JQIi6Z52hxVLFt2tmM6lIRSJOMJFylnplTRd4J2sCc38nNb5/OrFCuMhi6G+HCS/pSk+yfjsmu3j3LJeOyUYNo9Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725459646; c=relaxed/simple;
-	bh=3NFixX3Kl1y5WBzsUh6ZkbNWiMteGWvyfBElaxW/K1Q=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=l2QLUHXJus5lU1mL+mwmEzMj5CVoMG4BgXilP/F9inBCtanX6Vkmedz33nsKIMiH32cEtSRu2CR/y3AvMZc5rVCVPgVOIMqq+412sNTj4mC+pTN3cFU4Sq70gwTbl4y/W7HGHJiMBt5SX5Lf+G17f+iLtwL5fuD1BmkoEN1/WA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.44])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4WzPfQ4FJsz20nLZ;
-	Wed,  4 Sep 2024 22:15:42 +0800 (CST)
-Received: from dggpemf500002.china.huawei.com (unknown [7.185.36.57])
-	by mail.maildlp.com (Postfix) with ESMTPS id CDD681400D7;
-	Wed,  4 Sep 2024 22:20:39 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- dggpemf500002.china.huawei.com (7.185.36.57) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 4 Sep 2024 22:20:38 +0800
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
- Wed, 4 Sep 2024 15:20:37 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
-	<acpica-devel@lists.linux.dev>, "Guohanjun (Hanjun Guo)"
-	<guohanjun@huawei.com>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, Len Brown <lenb@kernel.org>,
-	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
- Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
- Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Eric Auger
-	<eric.auger@redhat.com>, Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	"Nicolin Chen" <nicolinc@nvidia.com>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, Mostafa Saleh <smostafa@google.com>
-Subject: RE: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Thread-Topic: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Thread-Index: AQHa+JkNXX8oIDp/tkauz0b2cgKn4bJHsELw
-Date: Wed, 4 Sep 2024 14:20:36 +0000
-Message-ID: <85aa5e8eb6f243fd9df754fdc96471b8@huawei.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
-In-Reply-To: <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1725461003; c=relaxed/simple;
+	bh=ysrIaa54LXGyRQ0SCJqaqPXG/wL/56b1svoQ9zTZvwI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tf6c76OyKWpCEJO25W67Y3Xrl7A7OZtmFSYjAP/ViGy02+l2zb0uElulBoMXFHfHH6qawj2DlL9cc20U8ybzq9+UBDIY8IYHl3ns+TvOtBY/7/TxwROeG4auutzrbgHaXrmqKCmmkMuwSRjObqh+tinHplpODt9Muf6ild2t62I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=og6Bu/9Q; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="og6Bu/9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5841C4CEC2;
+	Wed,  4 Sep 2024 14:43:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725461002;
+	bh=ysrIaa54LXGyRQ0SCJqaqPXG/wL/56b1svoQ9zTZvwI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=og6Bu/9QOcl2W3bniJfApqUSTx6DFe/oZoANDXrHF9Xd2/5tdinWY0pa2C/GWx4cj
+	 xBbaTHrDpDcvV3uKakxsSbcR8g9VN3JIKNSU92Uwnr/7depEttC94p7Ig8Lm3WAG8q
+	 6RmqVZXY1qKuziPnTB1qa5w+6OPMlGTzvO9sF1hkTmaVr7KYRo097faW7TPq9a5Rxb
+	 1Qmawq+a6s0n3+C6oDt8Ey/L1hEr9KOE3sWfOgusTfGONnLTAgxRVs3WkZSYTvN8y5
+	 jLMrT6gPPehqUF7gzzt9aAVFdujAZGT+CWU3Ah9VC26Ht9DOg8nmkgGdm/uqGCbAI0
+	 4cq9Vsm3fD7VA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Matt Gilbride <mattgilbride@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: avoid `box_uninit_write` feature
+Date: Wed,  4 Sep 2024 16:42:29 +0200
+Message-ID: <20240904144229.18592-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+Like commit 0903b9e2a46c ("rust: alloc: eschew
+`Box<MaybeUninit<T>>::write`"), but for the new `rbtree` and `alloc` code.
 
+That is, `feature(new_uninit)` [1] got partially stabilized [2]
+for Rust 1.82.0 (expected to be released on 2024-10-17), but it
+did not include `Box<MaybeUninit<T>>::write`, which got split into
+`feature(box_uninit_write)` [3].
 
-> -----Original Message-----
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Tuesday, August 27, 2024 4:52 PM
-> To: acpica-devel@lists.linux.dev; Guohanjun (Hanjun Guo)
-> <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
-> <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>;
-> kvm@vger.kernel.org; Len Brown <lenb@kernel.org>; linux-
-> acpi@vger.kernel.org; linux-arm-kernel@lists.infradead.org; Lorenzo Piera=
-lisi
-> <lpieralisi@kernel.org>; Rafael J. Wysocki <rafael@kernel.org>; Robert
-> Moore <robert.moore@intel.com>; Robin Murphy
-> <robin.murphy@arm.com>; Sudeep Holla <sudeep.holla@arm.com>; Will
-> Deacon <will@kernel.org>
-> Cc: Alex Williamson <alex.williamson@redhat.com>; Eric Auger
-> <eric.auger@redhat.com>; Jean-Philippe Brucker <jean-
-> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
-> <mshavit@google.com>; Nicolin Chen <nicolinc@nvidia.com>;
-> patches@lists.linux.dev; Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; Mostafa Saleh
-> <smostafa@google.com>
-> Subject: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
->=20
-> Force Write Back (FWB) changes how the S2 IOPTE's MemAttr field
-> works. When S2FWB is supported and enabled the IOPTE will force cachable
-> access to IOMMU_CACHE memory when nesting with a S1 and deny cachable
-> access otherwise.
->=20
-> When using a single stage of translation, a simple S2 domain, it doesn't
-> change anything as it is just a different encoding for the exsting mappin=
-g
-> of the IOMMU protection flags to cachability attributes.
->=20
-> However, when used with a nested S1, FWB has the effect of preventing the
-> guest from choosing a MemAttr in it's S1 that would cause ordinary DMA to
-> bypass the cache. Consistent with KVM we wish to deny the guest the
-> ability to become incoherent with cached memory the hypervisor believes i=
-s
-> cachable so we don't have to flush it.
->=20
-> Turn on S2FWB whenever the SMMU supports it and use it for all S2
-> mappings.
->=20
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
+To avoid relying on a new unstable feature, rewrite the `write` +
+`assume_init` pair manually.
 
-(...)
+Link: https://github.com/rust-lang/rust/issues/63291 [1]
+Link: https://github.com/rust-lang/rust/pull/129401 [2]
+Link: https://github.com/rust-lang/rust/issues/129397 [3]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/kernel/alloc/box_ext.rs |  6 ++++--
+ rust/kernel/rbtree.rs        | 17 ++++++++---------
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
-> @@ -932,7 +948,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg
-> *cfg, void *cookie)
->  	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
->  			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
->  			    IO_PGTABLE_QUIRK_ARM_OUTER_WBWA |
-> -			    IO_PGTABLE_QUIRK_ARM_HD))
-> +			    IO_PGTABLE_QUIRK_ARM_HD |
-> +			    IO_PGTABLE_QUIRK_ARM_S2FWB))
->  		return NULL;
+diff --git a/rust/kernel/alloc/box_ext.rs b/rust/kernel/alloc/box_ext.rs
+index b68ade26a42d..5b1550d620fd 100644
+--- a/rust/kernel/alloc/box_ext.rs
++++ b/rust/kernel/alloc/box_ext.rs
+@@ -26,9 +26,11 @@ pub trait BoxExt<T>: Sized {
+     /// use kernel::alloc::{flags, box_ext::BoxExt};
+     /// let value = Box::new([0; 32], flags::GFP_KERNEL)?;
+     /// assert_eq!(*value, [0; 32]);
+-    /// let value = Box::drop_contents(value);
++    /// let mut value = Box::drop_contents(value);
+     /// // Now we can re-use `value`:
+-    /// let value = Box::write(value, [1; 32]);
++    /// value.write([1; 32]);
++    /// // SAFETY: We just wrote to it.
++    /// let value = unsafe { value.assume_init() };
+     /// assert_eq!(*value, [1; 32]);
+     /// # Ok::<(), Error>(())
+     /// ```
+diff --git a/rust/kernel/rbtree.rs b/rust/kernel/rbtree.rs
+index 48ceb9560bf5..25eb36fd1cdc 100644
+--- a/rust/kernel/rbtree.rs
++++ b/rust/kernel/rbtree.rs
+@@ -1059,15 +1059,14 @@ impl<K, V> RBTreeNodeReservation<K, V> {
+     /// Initialises a node reservation.
+     ///
+     /// It then becomes an [`RBTreeNode`] that can be inserted into a tree.
+-    pub fn into_node(self, key: K, value: V) -> RBTreeNode<K, V> {
+-        let node = Box::write(
+-            self.node,
+-            Node {
+-                key,
+-                value,
+-                links: bindings::rb_node::default(),
+-            },
+-        );
++    pub fn into_node(mut self, key: K, value: V) -> RBTreeNode<K, V> {
++        self.node.write(Node {
++            key,
++            value,
++            links: bindings::rb_node::default(),
++        });
++        // SAFETY: We just wrote to it.
++        let node = unsafe { self.node.assume_init() };
+         RBTreeNode { node }
+     }
+ }
 
-This should be added to arm_64_lpae_alloc_pgtable_s2(), not here.
-
-With the above fixed, I was able to assign a n/w VF dev to a Guest on a
-test hardware that supports S2FWB.
-
-However host kernel has this WARN message:
-[ 1546.165105] WARNING: CPU: 5 PID: 7047 at drivers/iommu/arm/arm-smmu-v3/a=
-rm-smmu-v3.c:1086 arm_smmu_entry_qword_diff+0x124/0x138
-....
-[ 1546.330312]  arm_smmu_entry_qword_diff+0x124/0x138
-[ 1546.335090]  arm_smmu_write_entry+0x38/0x22c
-[ 1546.339346]  arm_smmu_install_ste_for_dev+0x158/0x1ac
-[ 1546.344383]  arm_smmu_attach_dev+0x138/0x240
-[ 1546.348639]  __iommu_device_set_domain+0x7c/0x11c
-[ 1546.353330]  __iommu_group_set_domain_internal+0x60/0x134
-[ 1546.358714]  iommu_group_replace_domain+0x3c/0x68
-[ 1546.363404]  iommufd_device_do_replace+0x334/0x398
-[ 1546.368181]  iommufd_device_change_pt+0x26c/0x650
-[ 1546.372871]  iommufd_device_replace+0x18/0x24
-[ 1546.377214]  vfio_iommufd_physical_attach_ioas+0x28/0x68
-[ 1546.382514]  vfio_df_ioctl_attach_pt+0x98/0x170
-
-
-And when I tried to use the assigned n/w dev, it seems to do a reset
-continuously.
-
-root@localhost:/# ping 150.0.124.42
-PING 150.0.124.42 (150.0.124.42): 56 data bytes
-64 bytes from 150.0.124.42: seq=3D0 ttl=3D64 time=3D47.648 ms
-[ 1395.958630] hns3 0000:c2:00.0 eth1: NETDEV WATCHDOG: CPU: 1: transmit qu=
-eue 10 timed out 5260 ms
-[ 1395.960187] hns3 0000:c2:00.0 eth1: DQL info last_cnt: 42, queued: 42, a=
-dj_limit: 0, completed: 0
-[ 1395.961758] hns3 0000:c2:00.0 eth1: queue state: 0x6, delta msecs: 5260
-[ 1395.962925] hns3 0000:c2:00.0 eth1: tx_timeout count: 1, queue id: 10, S=
-W_NTU: 0x1, SW_NTC: 0x0, napi state: 16
-[ 1395.964677] hns3 0000:c2:00.0 eth1: tx_pkts: 0, tx_bytes: 0, sw_err_cnt:=
- 0, tx_pending: 0
-[ 1395.966114] hns3 0000:c2:00.0 eth1: seg_pkt_cnt: 0, tx_more: 0, restart_=
-queue: 0, tx_busy: 0
-[ 1395.967598] hns3 0000:c2:00.0 eth1: tx_push: 1, tx_mem_doorbell: 0
-[ 1395.968687] hns3 0000:c2:00.0 eth1: BD_NUM: 0x7f HW_HEAD: 0x0, HW_TAIL: =
-0x0, BD_ERR: 0x0, INT: 0x1
-[ 1395.970291] hns3 0000:c2:00.0 eth1: RING_EN: 0x1, TC: 0x0, FBD_NUM: 0x0 =
-FBD_OFT: 0x0, EBD_NUM: 0x400, EBD_OFT: 0x0
-[ 1395.972134] hns3 0000:c2:00.0: received reset request from VF enet
-
-All this works fine on a hardware without S2FWB though.
-
-Also on this test hardware, it works fine with legacy VFIO assignment.
-
-Not debugged further. Please let me know if you have any hunch.
-
-Thanks,
-Shameer
-
-
+base-commit: 68d3b6aa08708bb3907c2c13eaf4b3ccf4805160
+-- 
+2.46.0
 
