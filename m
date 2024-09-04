@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10501153824;
-	Wed,  4 Sep 2024 20:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EBD14D457;
+	Wed,  4 Sep 2024 20:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725482708; cv=none; b=X7lK1MYECyvxS4sSDwfvQfzhhQ6FpHYBz4iIKr8mLNZr9IYfrJnIzZtvo43wiyXsV6T0uv61sYGQ7CKzqHBMTX9tLD3cJElKccZLhQ7LdH7Qqf6VcRh/tODadRWppqKCZf5t+9HdAwmUXovzZpujUMr4D6Bh4MPLwna1MGnyY2I=
+	t=1725482711; cv=none; b=AMCn17vJbJn8l8VsUt5Rf286LZwZI6m0eG1Dv7CwWxeyU1IbTLNt8aRuXurh4zrtlAFt2LKiDbTiGdMp6u5quW6OT4pCufGuZct/mwP20pXJiUlLdtYK6UUq1svMTcaOxTBDkTpmKjGfk/cCQtN4jgbCSMrJ2m/ixoXfK+x6Y3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725482708; c=relaxed/simple;
-	bh=glvDHd6iNw4JzzL+e5mlgcx23zzqkBX2iil+RJ4+6/w=;
+	s=arc-20240116; t=1725482711; c=relaxed/simple;
+	bh=GnSFaYVDAVNJbXv/9AtI8T4gMvVKf3w7/yAPMS4ovFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGPEEETLms3X1R+i6V5Gi4/IDifKcsCuttpwaVNoCNLFf1ogmhEM6ZGl0Tc/slM+NApuDRFlzb0ZaGEV5VvlctpDLSmILsOhE7e0aNbJgf4Z+afi91tPpEMfxeUu2Ci+l6rA+l/p3YZLk3/xljZs3lMxdMWVMBhR2IKQQTFyze0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BM0sidpr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RYaVQJb1ViQV1uGFsB/c03Duu4dc62CPQb/o6trZzNp6F/zBa5M22cqfAFioD/kQBjOjcQW09cdfCwyAqEu8RDqD8Q4hPpFSiJviojPBqOAQwaX4f+tbIHxpXMfMXZrVCY4Nii1kcvBBLC4WEFU8nW7RubBG0Wy43RuZePpmimE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IuM1jjIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BM0sidpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6B0C4CEC5;
-	Wed,  4 Sep 2024 20:45:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IuM1jjIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BA7C4CEC8;
+	Wed,  4 Sep 2024 20:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725482707;
-	bh=glvDHd6iNw4JzzL+e5mlgcx23zzqkBX2iil+RJ4+6/w=;
+	s=k20201202; t=1725482711;
+	bh=GnSFaYVDAVNJbXv/9AtI8T4gMvVKf3w7/yAPMS4ovFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BM0sidprk7i3FSoeF4LZErYZbC4hUpGWVcsPRQPtpaWa53tAAclBbMIk+ZiIcS2p7
-	 gtCDtwVWHxCejWNCeWaExcSHwu/6P4wZK+xxqlSnO/AqTWBouh6Vc0zrPw4urpMI31
-	 LxjWfQznX7s8Qf8udk6lg/0metfmeggiFLAwKMOolbEjEjycwJIEPpekWWkWyeHPJt
-	 UoeDAjFFZnRcPN/C9RnWsW+wwHpL2U6vDfNTWa9MksEmRKvz3ez0cVXo7C6bNCT1mG
-	 3VfO1JmVl7P/hnPGtt8NlysRKXUEerE8CqCwX/DGc8QKiFD4t0lSRoazva+yo7uNst
-	 2yYfv6Foq5itw==
+	b=IuM1jjIEjSBxKPLvDFYIIfp1iWElwRH2uO37ZDeP7MXAaWQcS48Qx20WxtfSPpwnp
+	 F4FEYtwoz59sMzC+ye1fDUqw0D+kckGSBDi78IkzI1l7KXgIL077BeZY97DPR5x1gX
+	 1UWhDTSoLep7ymbdQB137YogYuS5g1gM1n3e81r1r/zIE8dDQ+4VNY0TRcprZvjObL
+	 Lu9WeVYxSInxY9+/xfdj6+W4NqzoCN4F8qcM+hCh+mjWXUptvrEDxVvxjYaLuN0FOe
+	 vb/+stYKYPmUKONZETRWo2EhCAL9/XUpjOXuKcXSegoo1UKmIy/PXFQVdHEkKOBnj2
+	 qYCDK8mjs0CvA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -40,9 +40,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 07/19] rust: enable `clippy::ignored_unit_patterns` lint
-Date: Wed,  4 Sep 2024 22:43:35 +0200
-Message-ID: <20240904204347.168520-8-ojeda@kernel.org>
+Subject: [PATCH 08/19] rust: enable `rustdoc::unescaped_backticks` lint
+Date: Wed,  4 Sep 2024 22:43:36 +0200
+Message-ID: <20240904204347.168520-9-ojeda@kernel.org>
 In-Reply-To: <20240904204347.168520-1-ojeda@kernel.org>
 References: <20240904204347.168520-1-ojeda@kernel.org>
 Precedence: bulk
@@ -53,57 +53,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In Rust 1.73.0, Clippy introduced the `ignored_unit_patterns` lint [1]:
+In Rust 1.71.0, `rustdoc` added the `unescaped_backticks` lint, which
+detects what are typically typos in Markdown formatting regarding inline
+code [1], e.g. from the Rust standard library:
 
-> Matching with `()` explicitly instead of `_` outlines the fact that
-> the pattern contains no data. Also it would detect a type change
-> that `_` would ignore.
+    /// ... to `deref`/`deref_mut`` must ...
 
-There is only a single case that requires a change:
+    /// ... use [`from_mut`]`. Specifically, ...
 
-    error: matching over `()` is more explicit
-       --> rust/kernel/types.rs:176:45
-        |
-    176 |         ScopeGuard::new_with_data((), move |_| cleanup())
-        |                                             ^ help: use `()` instead of `_`: `()`
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#ignored_unit_patterns
-        = note: requested on the command line with `-D clippy::ignored-unit-patterns`
+It does not seem to have almost any false positives, from the experience
+of enabling it in the Rust standard library [2], which will be checked
+starting with Rust 1.82.0. The maintainers also confirmed it is ready
+to be used.
 
-Thus clean it up and enable the lint -- no functional change intended.
+Thus enable it.
 
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#/ignored_unit_patterns [1]
+Link: https://doc.rust-lang.org/rustdoc/lints.html#unescaped_backticks [1]
+Link: https://github.com/rust-lang/rust/pull/128307 [2]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- Makefile             | 1 +
- rust/kernel/types.rs | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ Makefile      | 3 ++-
+ rust/Makefile | 5 ++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index f903309db91b..cc1b01590227 100644
+index cc1b01590227..fc66bac4b4f1 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -452,6 +452,7 @@ export rust_common_flags := --edition=2021 \
- 			    -Wunreachable_pub \
- 			    -Wclippy::all \
- 			    -Wclippy::dbg_macro \
-+			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
- 			    -Wclippy::needless_bitwise_bool \
- 			    -Wclippy::needless_continue \
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index 6c2d5fa9bce3..4e03df725f3f 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -225,7 +225,7 @@ pub fn dismiss(mut self) -> T {
- impl ScopeGuard<(), fn(())> {
-     /// Creates a new guarded object with the given cleanup function.
-     pub fn new(cleanup: impl FnOnce()) -> ScopeGuard<(), impl FnOnce(())> {
--        ScopeGuard::new_with_data((), move |_| cleanup())
-+        ScopeGuard::new_with_data((), move |()| cleanup())
-     }
- }
+@@ -460,7 +460,8 @@ export rust_common_flags := --edition=2021 \
+ 			    -Wclippy::undocumented_unsafe_blocks \
+ 			    -Wclippy::unnecessary_safety_comment \
+ 			    -Wclippy::unnecessary_safety_doc \
+-			    -Wrustdoc::missing_crate_level_docs
++			    -Wrustdoc::missing_crate_level_docs \
++			    -Wrustdoc::unescaped_backticks
  
+ KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
+ 		       $(HOSTCFLAGS) -I $(srctree)/scripts/include
+diff --git a/rust/Makefile b/rust/Makefile
+index e13d14ec5fe7..bc8ae3cc0537 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -61,7 +61,7 @@ alloc-cfgs = \
+ quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
+       cmd_rustdoc = \
+ 	OBJTREE=$(abspath $(objtree)) \
+-	$(RUSTDOC) $(if $(rustdoc_host),$(rust_common_flags),$(rust_flags)) \
++	$(RUSTDOC) $(filter-out $(skip_flags),$(if $(rustdoc_host),$(rust_common_flags),$(rust_flags))) \
+ 		$(rustc_target_flags) -L$(objtree)/$(obj) \
+ 		-Zunstable-options --generate-link-to-definition \
+ 		--output $(rustdoc_output) \
+@@ -98,6 +98,9 @@ rustdoc-macros: private rustc_target_flags = --crate-type proc-macro \
+ rustdoc-macros: $(src)/macros/lib.rs FORCE
+ 	+$(call if_changed,rustdoc)
+ 
++# Starting with Rust 1.82.0, skipping `-Wrustdoc::unescaped_backticks` should
++# not be needed -- see https://github.com/rust-lang/rust/pull/128307.
++rustdoc-core: private skip_flags = -Wrustdoc::unescaped_backticks
+ rustdoc-core: private rustc_target_flags = $(core-cfgs)
+ rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
+ 	+$(call if_changed,rustdoc)
 -- 
 2.46.0
 
