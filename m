@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B60014D703;
-	Wed,  4 Sep 2024 20:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1E3155730;
+	Wed,  4 Sep 2024 20:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725482686; cv=none; b=hQQqj9jwA6bHNUcgSQ6CjLjxRwhzHn0+4IU4I0ek5TPWkttyZXtmeXvDeTGbmtoH6KWdBs2UFhp7FDMLBLLC1S0/IpbFk9zWJ74rbsUwbjKT9QB0UYXoXoX0sw9Imjw77wQG2d8wGDF0fgH1sDYSrBW87DsMv1OzFdacT61uPy8=
+	t=1725482689; cv=none; b=I+68vnro5Gs6GEvTcld7isdPjRgtV4oYEcbtLs7JIjr+NCxPPWRgP028eA42pb9WLEFncDUhOqhseb0zLQ91wkvYYNl5Gd3326yVvclDp0CJf+4i0MtyozXU3Dk7pofjXFyfAjDTIqaoLUmn1QU2283bjD5UONeF9UKz8aGEkNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725482686; c=relaxed/simple;
-	bh=vANsDtYmWGHFZ2IuDU/7W7TVVPKtroKugzofcbnxEJM=;
+	s=arc-20240116; t=1725482689; c=relaxed/simple;
+	bh=n+H0WVK71AlS2DbgqqLYwugZDAwCnU45IJ9wYNEw5Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9xCHvSACK9RvOmBZYNukLEH5FFN5Gk2yPFqM1AP8wi17TXxgjzRCt1q4RGkvEgN8/90Yrj4j8yufFXTdbggemRQnIclZruGx1U655ij3IqqI9acpmiMizX7F1kCGlA1KUdB5wyQINA6T3FxKx1iq2xK8q5b7VWhWv1wDrQgV1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tIcs2NOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3ubY5AgmlNtD5uql80dX25vNzARGYo3fR7UDObZyL2S5+WKYTqHTY3DyvE+R1XKmwp04NcPHysoD5a8/KOwtxeAkhdKfl9VFZAJCZSBp6zrotARx7WUJDpOE24kJX5aLoX/R5ONIT2Q9LHHKNe9VTZz2XECXTg7sERYdmJ+89Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E/mxmall; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tIcs2NOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A894C4CEC5;
-	Wed,  4 Sep 2024 20:44:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E/mxmall"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C7FC4CEC8;
+	Wed,  4 Sep 2024 20:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725482685;
-	bh=vANsDtYmWGHFZ2IuDU/7W7TVVPKtroKugzofcbnxEJM=;
+	s=k20201202; t=1725482689;
+	bh=n+H0WVK71AlS2DbgqqLYwugZDAwCnU45IJ9wYNEw5Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIcs2NOtwaR0voinJjko/gjpXM3MWLUkOQZVv0Okm+AiSP5VwW+1FEEAUaEJ6fHkX
-	 wSGa/X2xNI4bprCWqmf5gpPuTuy1Rjb62mxRHLNdbHu5bThGlZFjvsaH6xvEpeBero
-	 RDoYnkYKvLgdwcRgf15VAzFAhshs4OkU0qRpnVfQKjC01L/+HDh4r3USoA3dC/6kTE
-	 AvU9BvQuYdZ8+QuR5pgA38vb9BAxbYLjhb3ahSepvHQO7GofiviMFLOkiyhhA09Oi4
-	 mNfMeFTREGbm2aptSeTthhmAuaPRP7O5VTPpw6iTlznHUAjDMFNl2qzxcsAh0WrSll
-	 XZcDFtEbXho+Q==
+	b=E/mxmall0XlIt8dpA7ujiYjHOS1YypBu7tqQJRR0h55ErzVgoHST/P+vD40wLhL8U
+	 Z+5/D0uI7SeR36G2pzypU4qOoXz4woAs+/eQXu75PoIXduQnTO0rh0sRb3S5sVQ68Y
+	 Nz5V1waC5/vofwTxZFiI3q1ZdgviOgc8eGbOpHXwQTasVuAcwcj3SB62bFze42eLX4
+	 1RjaTzN6xCrH/WbJDhuoX7wSZZEx9FXq2pwJSLnYIpivX/h52+C4+GsfBwfM2k7hQ/
+	 FUxLNFnJmyRYkhgDCIbD2Zhd+/Z/4rLhUNR29I20HVialbuvf0CR+ygZytMJv0at5O
+	 QlO7EI67crlNw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -40,9 +40,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 01/19] rust: workqueue: remove unneeded ``#[allow(clippy::new_ret_no_self)]`
-Date: Wed,  4 Sep 2024 22:43:29 +0200
-Message-ID: <20240904204347.168520-2-ojeda@kernel.org>
+Subject: [PATCH 02/19] rust: sort global Rust flags
+Date: Wed,  4 Sep 2024 22:43:30 +0200
+Message-ID: <20240904204347.168520-3-ojeda@kernel.org>
 In-Reply-To: <20240904204347.168520-1-ojeda@kernel.org>
 References: <20240904204347.168520-1-ojeda@kernel.org>
 Precedence: bulk
@@ -53,38 +53,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Perform the same clean commit b2516f7af9d2 ("rust: kernel: remove
-`#[allow(clippy::new_ret_no_self)]`") did for a case that appeared in
-workqueue in parallel in commit 7324b88975c5 ("rust: workqueue: add
-helper for defining work_struct fields"):
-
-    Clippy triggered a false positive on its `new_ret_no_self` lint
-    when using the `pin_init!` macro. Since Rust 1.67.0, that does
-    not happen anymore, since Clippy learnt to not warn about
-    `-> impl Trait<Self>` [1][2].
-
-    The kernel nowadays uses Rust 1.72.1, thus remove the `#[allow]`.
-
-    Link: https://github.com/rust-lang/rust-clippy/issues/7344 [1]
-    Link: https://github.com/rust-lang/rust-clippy/pull/9733 [2]
+Sort the global Rust flags so that it is easier to follow along when we
+have more, like this patch series does.
 
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/workqueue.rs | 1 -
- 1 file changed, 1 deletion(-)
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-index 553a5cba2adc..493288dc1de0 100644
---- a/rust/kernel/workqueue.rs
-+++ b/rust/kernel/workqueue.rs
-@@ -366,7 +366,6 @@ unsafe impl<T: ?Sized, const ID: u64> Sync for Work<T, ID> {}
- impl<T: ?Sized, const ID: u64> Work<T, ID> {
-     /// Creates a new instance of [`Work`].
-     #[inline]
--    #[allow(clippy::new_ret_no_self)]
-     pub fn new(name: &'static CStr, key: &'static LockClassKey) -> impl PinInit<Self>
-     where
-         T: WorkItem<ID>,
+diff --git a/Makefile b/Makefile
+index 68ebd6d6b444..7a97726f54f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -445,18 +445,18 @@ KBUILD_USERLDFLAGS := $(USERLDFLAGS)
+ # host programs.
+ export rust_common_flags := --edition=2021 \
+ 			    -Zbinary_dep_depinfo=y \
+-			    -Dunsafe_op_in_unsafe_fn \
+ 			    -Dnon_ascii_idents \
++			    -Dunsafe_op_in_unsafe_fn \
++			    -Wmissing_docs \
+ 			    -Wrust_2018_idioms \
+ 			    -Wunreachable_pub \
+-			    -Wmissing_docs \
+-			    -Wrustdoc::missing_crate_level_docs \
+ 			    -Wclippy::all \
++			    -Wclippy::dbg_macro \
+ 			    -Wclippy::mut_mut \
+ 			    -Wclippy::needless_bitwise_bool \
+ 			    -Wclippy::needless_continue \
+ 			    -Wclippy::no_mangle_with_rust_abi \
+-			    -Wclippy::dbg_macro
++			    -Wrustdoc::missing_crate_level_docs
+ 
+ KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
+ 		       $(HOSTCFLAGS) -I $(srctree)/scripts/include
 -- 
 2.46.0
 
