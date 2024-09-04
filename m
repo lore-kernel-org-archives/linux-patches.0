@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D48219A280;
-	Wed,  4 Sep 2024 09:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD33B17C9AA;
+	Wed,  4 Sep 2024 09:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725442184; cv=none; b=aDUqxyZZUytfsCDsbmhzJl2IXG+Qi2BxGrfhE+hlk8wEN3KsMr0ttFZIOkM6c//Rw83I5ASEVTRqo9/I3KoUi0i7qy42/fv3s/Lc/IsAZZ1Ef17rZZs32DiwHuT+bMbvr/yDXUcWwzWp2Fqp/Ml95xnuyY51B4MMhhlh7CFuYto=
+	t=1725442197; cv=none; b=tULgi0N+WEff9PzB/3B0Cp9ectYFwYHF8aPayfns3y8LHKyI9/mlmWDIU3LH/O94/3wfn+7EHDDCRozLAnzdjPuURJqOzllQr4FZ0vnMOShHHi0sYuGtgSrxYNHU0L7M4o3leMWDmeAiHcj9GZRi8xsTvTsvx5+5hvMH5QqB5oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725442184; c=relaxed/simple;
-	bh=hbNlSjmK/Uz0cgICOymWuwgRMivBtn+074B4AI5cj5Q=;
+	s=arc-20240116; t=1725442197; c=relaxed/simple;
+	bh=pKDl6/1gDcvOpmIoAI6TJhRZ8eBUNhAAzJqvOCMWq7g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SiD7kcx2wpJ37OwfpTA21APjqhP/RlZe8U0OZl3UuZNwSKR/v89rBXLxGjfUmVJEnXNwV0+MqNrTLDqreKZIwMeAeHFOj24y/CyUiSvb08HV3CB3abCpoElD+dN4XNPyBj4QUmb0tDI62upQN/1t45R2/WAPdu8d52+x3KliiPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjdO3q0b; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xvg5G3KnllxLz0OpuXNShkdN14pMu3DuNY78DTjNOPujuO9RvXFXlR2hwCqiNEhSqJh3tm8OZrMQpHZLIRu5CRRQqWQV9wt+AFT9pCQeNb8gyzNdMS2+co4vDjhypwM5UzidplMuP7S36/qOq16yxM8ofeZEZhtt4+C9Q4q6C0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIcLExD6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjdO3q0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56488C4CEC2;
-	Wed,  4 Sep 2024 09:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIcLExD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C32C4CEC2;
+	Wed,  4 Sep 2024 09:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725442184;
-	bh=hbNlSjmK/Uz0cgICOymWuwgRMivBtn+074B4AI5cj5Q=;
+	s=korg; t=1725442196;
+	bh=pKDl6/1gDcvOpmIoAI6TJhRZ8eBUNhAAzJqvOCMWq7g=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KjdO3q0bux1bMuGd9L3/VaGY/LNJ4JOlqxUtHee0l6yJDw7nQoP90K8jiTThJWCM7
-	 VMQUWXIVbv+TIwFlW0lL+Hebv45Hqgy2mQ057EgagKsxqz682xy9VNtIlfAO9qNF4q
-	 II8L8jF8Q2hP+TbtgKXYEfkAMMJAKSi4Jh73jUHA=
-Date: Wed, 4 Sep 2024 11:29:40 +0200
+	b=qIcLExD6HZx+K5LQGPxU1AHhtBVLPJ7ow3O/a0sFAhWSuwA1cejGjiqTzRjAMkwqp
+	 riyzMfw4ddbPDaT18TFcx/Hg8zdgASV7nCJUOgJIEYy6PbOdymfWMQD4Qrlz1IeP/L
+	 zgmvW+3bY4JCzu2xHQEDIsHnSb4EA4mvtFAZHBhI=
+Date: Wed, 4 Sep 2024 11:29:53 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Naresh Kamboju <naresh.kamboju@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -32,11 +32,13 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 000/151] 5.10.225-rc1 review
-Message-ID: <2024090433-paramedic-unpaired-d90f@gregkh>
-References: <20240901160814.090297276@linuxfoundation.org>
- <CA+G9fYuK+=YW6F+mBMeHAZoUrQQS6-AgAezRfQGEpZui4JUepg@mail.gmail.com>
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Anders Roxell <anders.roxell@linaro.org>,
+	abdulrasaqolawani@gmail.com, Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH 5.4 000/134] 5.4.283-rc1 review
+Message-ID: <2024090444-bully-parcel-c981@gregkh>
+References: <20240901160809.752718937@linuxfoundation.org>
+ <CA+G9fYszuNTqPzsX7cw-2_7D0tFUMeroVKeza4gASmUEbcxcqw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,14 +47,14 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYuK+=YW6F+mBMeHAZoUrQQS6-AgAezRfQGEpZui4JUepg@mail.gmail.com>
+In-Reply-To: <CA+G9fYszuNTqPzsX7cw-2_7D0tFUMeroVKeza4gASmUEbcxcqw@mail.gmail.com>
 
-On Mon, Sep 02, 2024 at 02:03:13PM +0530, Naresh Kamboju wrote:
-> On Sun, 1 Sept 2024 at 22:20, Greg Kroah-Hartman
+On Mon, Sep 02, 2024 at 02:06:42PM +0530, Naresh Kamboju wrote:
+> On Sun, 1 Sept 2024 at 22:09, Greg Kroah-Hartman
 > <gregkh@linuxfoundation.org> wrote:
 > >
-> > This is the start of the stable review cycle for the 5.10.225 release.
-> > There are 151 patches in this series, all will be posted as a response
+> > This is the start of the stable review cycle for the 5.4.283 release.
+> > There are 134 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
 > >
@@ -60,9 +62,9 @@ On Mon, Sep 02, 2024 at 02:03:13PM +0530, Naresh Kamboju wrote:
 > > Anything received after that time might be too late.
 > >
 > > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.225-rc1.gz
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.283-rc1.gz
 > > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > > and the diffstat can be found below.
 > >
 > > thanks,
@@ -77,7 +79,7 @@ On Mon, Sep 02, 2024 at 02:03:13PM +0530, Naresh Kamboju wrote:
 >    - 5.10.225-rc1 review
 >    - 5.15.166-rc1 review
 > 
-> In the case of stable-rc linux-5.10.y
+> In the case of stable-rc linux-5.4.y
 > 
 > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 > 
