@@ -1,123 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C9C145B35;
-	Wed,  4 Sep 2024 09:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F19B1CC16B
+	for <patches@lists.linux.dev>; Wed,  4 Sep 2024 10:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725443506; cv=none; b=tIbAb5Zh2w1OwThLVIcEcqo0MtxlEqr84DyXnQpwjpjKrDaR+pASKfKJnLfaQ/OuKQf2a4v0qB1jRWoPPIdKmShhaMG0seTUVY+Banq6l+l6HM5InmPmNSzW/nVXJdB0ottQxD4se3PX/Ul58bAxWWvmt86jqeJ3SETQdCgpBWs=
+	t=1725444837; cv=none; b=n/fCSrBENfKm9BCdXTWp9omMr/tlrPBHEU1A0HG9Zl2ljK0j+cReCJdUQLQadNBb6IHAr+Hw0FqWwyQv6aUwHOKsomVbxEF+NLzR0WkguAgBfrwxOHsvTNEKF1hNVJfJdEDZRmsahOdps5szqG5EdVKUoZxoCKtsjnbRQ4FrcyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725443506; c=relaxed/simple;
-	bh=9v8g1rIECH33scUifS0SJLjKLhwqrmPT+U7zRZHR7aQ=;
+	s=arc-20240116; t=1725444837; c=relaxed/simple;
+	bh=egu6KUuOUr3qxa89kLRUGMP2PnrU8/ncNgUmVSQHj9k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GC8zOvZa5Q1Vxwu2ldA3LtrJZzZTwO+I72IuJyHSwi+DGZw2hP/jtzt4YWPKBHAcQDewFWIyLB1IUnjQ3zYYrfYhEERxhpLAwVjMkS07lVITf+2ZBiFYRccwkykK2qlrfTss92y1lUUyRa7lJjBf6WHFcn7K7aJ6OunyT+n2UaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kt653IpM; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=r4xyLGaR2Q+QbSFvXwfKHu8Xa7ijXJxTIU1keHnKYoqu41gBxKDsOOwwTLSRdHPIwC3ZsnRzUQb5rEXqonYUN6L3fEmhKOfnbBZ5BG1r4C5lM+VTcAqnhhSAw5YhLvM0Oc7zwzXblTUxlT+gBL1uCKUVoq+aKlLSQmL3sDEBpQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=AJm9suZU; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kt653IpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC1BC4CEC2;
-	Wed,  4 Sep 2024 09:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725443505;
-	bh=9v8g1rIECH33scUifS0SJLjKLhwqrmPT+U7zRZHR7aQ=;
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="AJm9suZU"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 179A940E0275;
+	Wed,  4 Sep 2024 10:13:52 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id W4tFNaA71j54; Wed,  4 Sep 2024 10:13:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1725444827; bh=a7o76Jb1YyH+cC7wR2ZXV5t2sUTN+Rmiomgx5u4Ts/w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kt653IpMJgUa37vyxIoA3w6Y9fHCQ6jN3ejkCQo9mUejmBKRAkDi7UwqDMKGaqE7y
-	 wQDEEEbl1XaPaE1tarYBe9V5MRRUrChv3OsCRA7IAcz66WMWCK+yiy0mtQibNA2sDX
-	 bdzTPi9qUpXimz11f6JOLAF5vteJeIWxfzAveUUo=
-Date: Wed, 4 Sep 2024 11:51:42 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 4.19 00/98] 4.19.321-rc1 review
-Message-ID: <2024090459-glancing-vengeful-f3fb@gregkh>
-References: <20240901160803.673617007@linuxfoundation.org>
- <98f6ad0c-65d0-4a39-8a11-a55b3dd83b7b@oracle.com>
+	b=AJm9suZUI95dLDfDxaksIFdVpDbW3XFZXyCS2whPzpmjfeA7mbbFr4c5QaqiqmMCZ
+	 3gj9tgjeI71/3aY90INJZWkkRf6Q/4whxOU5ob+B5CRKQmRk9pZ2yTc0DVZVBoyJLV
+	 NBQmcu1ttmDb566ylWCTd6M+apEXEUo4qfK3fTHNeNHbYElxlwbdgf70UQvyt9TSF8
+	 3YzAcPFf0TmTappp8UYnHP37bdYuRzatfT98Xu6sqNxud0km6cPpeHXf3TlPxgkyP4
+	 ZdIYGMs/LRvVeEEB6/Qpa7WLnat6JbJ4KSW6PUSgIwYsIhqZVY/P//deSTlkt9CeQe
+	 35nEQ+I1/4yYEuOFxYSSrYvomTiZ4H1o3GuwhqxqEIs5aje+xr+rB62hH7QWJGX4CW
+	 e+vTWaxY7NHBoqKpEP8Cy4kNjMqiITwgYYSDk+9JGcY9aM94EuAYvoRT0e4Eal/Vyh
+	 71/zB+Q0ydGp5YY4ZyLjIOPSHaF55kOAY5WRYoRvh7YzY3C5lcScRSjq91Xy5RZAFD
+	 hHvl5WQCAcN+ESuwQZr1lVWS7UVVwrfFVRcRCh9ZDjLR0yAxdZehmHZEwj8m8jhbWs
+	 t+Or26O4RZpJT7KvtCTIHDdjUv3AI7xJdfUA0wfYp+xpPCrcGFtFpgzMUGB8Jp0E1+
+	 y6H7wDmNsvT6qVauJTwwJ0Qc=
+Received: from zn.tnic (p5de8e8eb.dip0.t-ipconnect.de [93.232.232.235])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 734A640E0198;
+	Wed,  4 Sep 2024 10:13:37 +0000 (UTC)
+Date: Wed, 4 Sep 2024 12:13:30 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Chanwoo Choi <cw00.choi@samsung.com>
+Cc: "Luck, Tony" <tony.luck@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"x86@kernel.org" <x86@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v8 0/3] Final pieces of Intel new families support
+Message-ID: <20240904101330.GAZtgyysjdKRJ9sBPj@fat_crate.local>
+References: <20240903173443.7962-1-tony.luck@intel.com>
+ <20240903192655.GCZtdi_w9xN6z9hPGV@fat_crate.local>
+ <SJ1PR11MB60832E477464FFA09B248CE4FC932@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <98f6ad0c-65d0-4a39-8a11-a55b3dd83b7b@oracle.com>
+In-Reply-To: <SJ1PR11MB60832E477464FFA09B248CE4FC932@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-On Mon, Sep 02, 2024 at 02:44:44PM +0530, Harshit Mogalapalli wrote:
-> Hi Greg,
-> 
-> On 01/09/24 21:45, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 4.19.321 release.
-> > There are 98 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
-> > Anything received after that time might be too late.
-> 
-> Build fails on our infrastructure.
-> 
-> 
-> BUILDSTDERR: In file included from /builddir/build/BUILD/kernel-4.19.321/linux-4.19.321-master.20240901.el7.dev/tools/include/linux/bitmap.h:6,
-> BUILDSTDERR:                  from /builddir/build/BUILD/kernel-4.19.321/linux-4.19.321-master.20240901.el7.dev/tools/perf/util/include/../../util/pmu.h:5,
-> BUILDSTDERR:                  from arch/x86/util/pmu.c:9:
-> BUILDSTDERR: /builddir/build/BUILD/kernel-4.19.321/linux-4.19.321-master.20240901.el7.dev/tools/include/linux/align.h:6:10:
-> fatal error: uapi/linux/const.h: No such file or directory
-> BUILDSTDERR:  #include <uapi/linux/const.h>
-> BUILDSTDERR:           ^~~~~~~~~~~~~~~~~~~~
-> BUILDSTDERR: compilation terminated.
-> 
-> 
-> Looked at the commits:
-> 
-> This commit 993a20bf6225c: ("tools: move alignment-related macros to new
-> <linux/align.h>") is causing that perf build to fail.
-> 
-> Solution is not to drop this patch as this is probably pulled in to support
-> bitmap_size() macros in these commits(which are also part of this release):
-> 
-> 6fbe5a3920f48 fix bitmap corruption on close_range() with
-> CLOSE_RANGE_UNSHARE
-> ef9ebc42c10f8 bitmap: introduce generic optimized bitmap_size()
-> 
-> 
-> 
-> Applying the below diff, helps the perf build to pass: I think we should
-> fold this into: commit 993a20bf6225c: ("tools: move alignment-related macros
-> to new <linux/align.h>")
-> 
-> diff --git a/tools/include/linux/align.h b/tools/include/linux/align.h
-> index 14e34ace80dda..a27bc1edf6e5c 100644
-> --- a/tools/include/linux/align.h
-> +++ b/tools/include/linux/align.h
-> @@ -3,7 +3,7 @@
->  #ifndef _TOOLS_LINUX_ALIGN_H
->  #define _TOOLS_LINUX_ALIGN_H
-> 
-> -#include <uapi/linux/const.h>
-> +#include <linux/const.h>
-> 
->  #define ALIGN(x, a)            __ALIGN_KERNEL((x), (a))
->  #define ALIGN_DOWN(x, a)       __ALIGN_KERNEL((x) - ((a) - 1), (a))
+Chanwoo,
 
-Change now made, thanks.
+On Tue, Sep 03, 2024 at 07:43:35PM +0000, Luck, Tony wrote:
+> >> All except one of the precursor patches were merged to Linus' tree
+> >> in the v6.11 merge window. The exception is a one-liner that is in
+> >> the maintainer tree and linux-next, but didn't get pulled this time.
+> >
+> > So when is Chanwoo planning on sending that one to Linus?
+> 
+> I don't know why it wasn't pulled.
+> 
+> > Or should he drop it and I pick up all three and finish this conversion?
+> >
+> > Hmmm.
+> 
+> That would be simplest at this point.
 
-> !! But this breaks the build for arm here.
-> !! Not sure what is the best way to solve this problem.
+how about it?
 
-Are people building perf for arm on 4.19.y?  If so, wow, this thing is
-about to go end-of-life any week now, and I would be amazed if it built
-at all anymore as I can't get perf to build on _ANY_ lts kernel these
-days.
+How about you drop this patch from your tree and I take it with the other two
+and send them to Linus now so that this conversion is done?
 
-Anyway, I'll make this change and if any arm build fixes want to show
-up, I'll be glad to take them.
+Thx.
 
-thanks,
+-- 
+Regards/Gruss,
+    Boris.
 
-greg k-h
+https://people.kernel.org/tglx/notes-about-netiquette
