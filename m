@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A905B83CDB;
-	Thu,  5 Sep 2024 10:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61DC13D28F;
+	Thu,  5 Sep 2024 10:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530420; cv=none; b=HounLm2uolEp8KKHCM0ng2CxpCzeiV4sQzRMGffr84nxr23kJD+jM938ahcvjjpidChy/XRSkYzlyMNDhpM3AIbqatp2Z9UkMmnQ0bril1Xd3L5s/X9bq/8dh+IZI1CKBR6QC6bwAFMo7Cgnj2H9hofOmfZROzbPxmi9BTXMPvc=
+	t=1725530423; cv=none; b=ZlLP7uUmwStZ9RcI3u4fCIiTK9Htof/issDHpV7J6EIPui5qMn4NsKIlUlqVDW0tnBEnOS4rWUZPqYhv56sFuyc7e/ksRmoRkZUnEjEcv9G4jhHQmXET9zzJ2DSgSVMP1O2gOzMKK4QZLZslLH8I9P0vtDeAkld8oaWr9iD7RXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530420; c=relaxed/simple;
-	bh=kc6+13sybU3C+H/rtndVv8bJS0x/dLtcqhw4v/a2FFg=;
+	s=arc-20240116; t=1725530423; c=relaxed/simple;
+	bh=Eo/uLFvV4q8axRMrYUcDsI/alShfErg2ct3Da5+Ah+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+Rt48m5HluFGpNCoOQFG9NIjVvSAKKi9UFyU2q25AnXrQsNPNmbMIeVLVOSiqZ014uEaRdt/xTFxuWhRz18RYkZWoZHxWqCy4rrQKejniS4a+tZ7IUHW/aMV3rvULEdyVBn6FO1yiMed5k0n/Tram7T0cA9nSS4EN9z/igP9a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvf6ppjJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MODVMdTL7W/IFv93VqFW/hn2C3fK6S1HWzWeeLy58YtCwkuittYzN0grmFJTnI3U7vH6xulmtSPqSBXfCjeXr6P80v7tYjqWBj6S+3RhvNgTrDJ9PqJJU8l1drmtOGnDsYkzBGMFqRSNgj+lppdO+Kxekpy85pViGA9+cOL/9Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWWH+tMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvf6ppjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B903C4CEC3;
-	Thu,  5 Sep 2024 10:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWWH+tMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7E0C4CEC3;
+	Thu,  5 Sep 2024 10:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530420;
-	bh=kc6+13sybU3C+H/rtndVv8bJS0x/dLtcqhw4v/a2FFg=;
+	s=korg; t=1725530423;
+	bh=Eo/uLFvV4q8axRMrYUcDsI/alShfErg2ct3Da5+Ah+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvf6ppjJnvCSpXz42RRrFf1bZ8HIYQHjRODUfvv6Ngb6S9dPUn3vVvRqK4JI7gSP8
-	 jP7kQU+RTRzREYQflT5hxttQjvNWGdDDvQoRZkEmMNPRJKEBEflBXxpa5HWnXNz//U
-	 gN8ieY4rxNRQMiBtZQhXXwkVClPARpV6jnQJ9N8w=
+	b=xWWH+tMdDYxztsePnAmxhdi81g6hSjAJciuwegi1sINVgWeYx3Qa8eNUUewqBqtzN
+	 IejIAa86kJMkeQs7qyndPtkcyT5wB2XbteHwUbmAmQCHzNWLBofhZJ2QG95D+j/Ell
+	 ueh7A2NV7sVP96Z5+TQR4XP1gL0whpz8PNdffYoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 019/101] selftests: mptcp: add explicit test case for remove/readd
-Date: Thu,  5 Sep 2024 11:40:51 +0200
-Message-ID: <20240905093716.865082384@linuxfoundation.org>
+	Peter Wang <peter.wang@mediatek.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 002/101] scsi: ufs: core: Bypass quick recovery if force reset is needed
+Date: Thu,  5 Sep 2024 11:40:34 +0200
+Message-ID: <20240905093716.176378159@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,64 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Peter Wang <peter.wang@mediatek.com>
 
-From: Paolo Abeni <pabeni@redhat.com>
+[ Upstream commit 022587d8aec3da1d1698ddae9fb8cfe35f3ad49c ]
 
-commit b5e2fb832f48bc01d937a053e0550a1465a2f05d upstream.
+If force_reset is true, bypass quick recovery.  This will shorten error
+recovery time.
 
-Delete and re-create a signal endpoint and ensure that the PM
-actually deletes and re-create the subflow.
-
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e06959e9eebd ("selftests: mptcp: join: test for flush/re-add endpoints")
-[ No conflicts, but adapt the test to the helpers in this version:
-  - run_tests has been modified a few times to reduce the number of
-    positional parameters
-  - no pm_nl_check_endpoint helper
-  - no chk_mptcp_info helper
-  - chk_subflow_nr taking an extra parameter
-  - kill_tests_wait instead of mptcp_lib_kill_wait ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20240712094506.11284-1-peter.wang@mediatek.com
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/ufs/core/ufshcd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3239,6 +3239,29 @@ userspace_tests()
- 		chk_join_nr 1 1 1
- 		chk_rm_nr 1 1
- 	fi
-+
-+	# remove and re-add
-+	if reset "delete re-add signal" &&
-+	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+		pm_nl_set_limits $ns1 1 1
-+		pm_nl_set_limits $ns2 1 1
-+		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
-+		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_20 2>/dev/null &
-+		local tests_pid=$!
-+
-+		wait_mpj $ns2
-+		chk_subflow_nr needtitle "before delete" 2
-+
-+		pm_nl_del_endpoint $ns1 1 10.0.2.1
-+		sleep 0.5
-+		chk_subflow_nr "" "after delete" 1
-+
-+		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-+		wait_mpj $ns2
-+		chk_subflow_nr "" "after re-add" 2
-+		kill_tests_wait
-+	fi
-+
- }
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index bfed5d36fa2e5..d528ee0092bd2 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6307,7 +6307,8 @@ static void ufshcd_err_handler(struct work_struct *work)
+ 	if (ufshcd_err_handling_should_stop(hba))
+ 		goto skip_err_handling;
  
- endpoint_tests()
+-	if (hba->dev_quirks & UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS) {
++	if ((hba->dev_quirks & UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS) &&
++	    !hba->force_reset) {
+ 		bool ret;
+ 
+ 		spin_unlock_irqrestore(hba->host->host_lock, flags);
+-- 
+2.43.0
+
 
 
