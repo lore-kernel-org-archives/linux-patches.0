@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3911B192D73;
-	Thu,  5 Sep 2024 09:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8385D19413B;
+	Thu,  5 Sep 2024 09:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530205; cv=none; b=NbUYNMJT6Ka/aXvgnlUZGenHnvJyoiXJ2y38TmSs+R6p0QEcMGWwKgckoTsu9nxWGZHnawSvoCTxdQYdrC7Tvuz8wGM98bpvtfaNYi6BzEnbaFWCEVdqKtQof7oUKKT7k++tbfg9YRyTPxTKvb9OO1m9ZzikXbvn49yGMZkSefw=
+	t=1725530208; cv=none; b=hkIsxZVb6QsKpZEDjPxLmwajsxT1i+Q8qzPrMa3NVX1PY/JL8b0YrpuhOAuewtsD/TnVZN2dX5TSQv3g7Lpy5d06I8tJ2YVOoFa96SKAYcR8m3BGXxC/Pkf7/kBKvlYKVN8hGjoyCFCmtPf8HYbNvW3JJWr+VuXSNrvX2gutBhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530205; c=relaxed/simple;
-	bh=Z61GbWblX1rWj/5KExbvgqCmdjOV36Dk1x2ZdHOZAeg=;
+	s=arc-20240116; t=1725530208; c=relaxed/simple;
+	bh=3v2dATf8EPapVefMfZmqadW7I7OrcciaIZXvqGwA0uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULvElqJOXIXkUBuo04C6pD0pxr9qopqjH7IzMF6Ghz1t0XwbKrAjvUkFEeZfqwCH1l/wcMRDRh8rq/6pNgDkUahJAkI+TeBs82g/eXNpKpZzX0885wkHCc2xY29QVTq3zGRcz0ikHU7uXfza8tQiZ/7jpjhxkyGfIlfPnKxwW0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1i/TZzET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MHPlnuxKTCLv7DSP272o2XHm3K96V86X974K1PBPdqPCBCi+2AAremXGZ9dcfO0bHXvKVRYPeLimPvyGgLjr/JkrKUlSbhoNlC1YQyOjvRnE8WhbARfrtPJh7FecPvoh4/DkuSMHzoBSumB+Nis/zlO64m1r1lglt5jv1stYvsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBkiowxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1i/TZzET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60E3C4CEC7;
-	Thu,  5 Sep 2024 09:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBkiowxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0560FC4CEC3;
+	Thu,  5 Sep 2024 09:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530205;
-	bh=Z61GbWblX1rWj/5KExbvgqCmdjOV36Dk1x2ZdHOZAeg=;
+	s=korg; t=1725530208;
+	bh=3v2dATf8EPapVefMfZmqadW7I7OrcciaIZXvqGwA0uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1i/TZzET4kBGzNM+RonyXAL+UxfzrcALvOaAPLCmrDMnQRk2MXQFMUNHrvLqPTTZf
-	 dqFE9d1+/729pZY6uiIDteziAyo+KwwqXqPurt2ye96IM1nQTlMG/L/C76SxHxpyJd
-	 Kp9Rf7837lNpH5s/FesHBxL7WlW4dV8LCIUUC1bg=
+	b=dBkiowxcVNgDLHAfE6xz75Oq8DWqD5/N5a+I9F8nhL/EUfN9L5bUwkun0mP4Z+2ob
+	 7Jyl43wiSsEiJZHeUSGvonL/vBsaignomMTMv0L/6hIpP8NJOrFAWsTBLcLYKYgiKH
+	 qsYeQ6yqpj2oTE9vJe4sAYW4cINZHllAz/PlOf5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Xiaogang Chen <Xiaogang.Chen@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/132] wifi: rtw89: ser: avoid multiple deinit on same CAM
-Date: Thu,  5 Sep 2024 11:41:13 +0200
-Message-ID: <20240905093725.593330524@linuxfoundation.org>
+Subject: [PATCH 6.6 087/132] drm/kfd: Correct pinned buffer handling at kfd restore and validate process
+Date: Thu,  5 Sep 2024 11:41:14 +0200
+Message-ID: <20240905093725.631398585@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -51,42 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit cea4066588308fa932b6b03486c608efff1d761c ]
+[ Upstream commit f326d7cc745683f53052b84382bd10567b45cd5d ]
 
-We did deinit CAM in STA iteration in VIF loop. But, the STA iteration
-missed to restrict the target VIF. So, if there are multiple VIFs, we
-would deinit a CAM multiple times. Now, fix it.
+This reverts commit 8a774fe912ff ("drm/amdgpu: avoid restore process run into dead loop")
+since buffer got pinned is not related whether it needs mapping
+And skip buffer validation at kfd driver if the buffer has been pinned.
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/20240509090646.35304-2-pkshih@realtek.com
+Signed-off-by: Xiaogang Chen <Xiaogang.Chen@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/ser.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
-index c1644353053f..01b17b8f4ff9 100644
---- a/drivers/net/wireless/realtek/rtw89/ser.c
-+++ b/drivers/net/wireless/realtek/rtw89/ser.c
-@@ -308,9 +308,13 @@ static void ser_reset_vif(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 9d72bb0a0eae..a1f35510d539 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -407,6 +407,10 @@ static int amdgpu_amdkfd_bo_validate(struct amdgpu_bo *bo, uint32_t domain,
+ 		 "Called with userptr BO"))
+ 		return -EINVAL;
  
- static void ser_sta_deinit_cam_iter(void *data, struct ieee80211_sta *sta)
- {
--	struct rtw89_vif *rtwvif = (struct rtw89_vif *)data;
--	struct rtw89_dev *rtwdev = rtwvif->rtwdev;
-+	struct rtw89_vif *target_rtwvif = (struct rtw89_vif *)data;
- 	struct rtw89_sta *rtwsta = (struct rtw89_sta *)sta->drv_priv;
-+	struct rtw89_vif *rtwvif = rtwsta->rtwvif;
-+	struct rtw89_dev *rtwdev = rtwvif->rtwdev;
++	/* bo has been pinned, not need validate it */
++	if (bo->tbo.pin_count)
++		return 0;
 +
-+	if (rtwvif != target_rtwvif)
-+		return;
+ 	amdgpu_bo_placement_from_domain(bo, domain);
  
- 	if (rtwvif->net_type == RTW89_NET_TYPE_AP_MODE || sta->tdls)
- 		rtw89_cam_deinit_addr_cam(rtwdev, &rtwsta->addr_cam);
+ 	ret = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
+@@ -2631,7 +2635,7 @@ static int confirm_valid_user_pages_locked(struct amdkfd_process_info *process_i
+ 
+ 		/* keep mem without hmm range at userptr_inval_list */
+ 		if (!mem->range)
+-			 continue;
++			continue;
+ 
+ 		/* Only check mem with hmm range associated */
+ 		valid = amdgpu_ttm_tt_get_user_pages_done(
+@@ -2848,9 +2852,6 @@ int amdgpu_amdkfd_gpuvm_restore_process_bos(void *info, struct dma_fence **ef)
+ 			if (!attachment->is_mapped)
+ 				continue;
+ 
+-			if (attachment->bo_va->base.bo->tbo.pin_count)
+-				continue;
+-
+ 			kfd_mem_dmaunmap_attachment(mem, attachment);
+ 			ret = update_gpuvm_pte(mem, attachment, &sync_obj);
+ 			if (ret) {
 -- 
 2.43.0
 
