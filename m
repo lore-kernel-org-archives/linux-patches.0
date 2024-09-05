@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36AC14A08E;
-	Thu,  5 Sep 2024 09:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0919514A08E;
+	Thu,  5 Sep 2024 09:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529639; cv=none; b=B/RWrIwBackZOPEHg4cvDNNqV7ymkO56b1Qc9yFq1BcnIK69tZqiLAWxo8siQq6FbRQzb887nLQJWSTOK7UPmtjIglnHch2eYl3GCEJqJwwg8XNLmNXULhy0b6kXCMZ3dcI6zoxuLgES7d/X9RrhxQliKGsXvhWIIwqEDgzuL4M=
+	t=1725529642; cv=none; b=AVpJp+cMklWxOZI3QU52lkqcH01sxPUIyc2EgT2n2mRjHc+HUP96v6bRmyyDE66cWYD0f1Sw/DDz90BLaXhLjVhp5BRFK7OWdp/UVz3wRLte6VXR/2n22jovc5xkYwpbXa/rphpevPaE3nQahkxH6BQm2lO9+89NzI02BET60s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529639; c=relaxed/simple;
-	bh=snFwZ36KhkJeu69n/yQQRn9FehqMPaIm14taKoFpXwA=;
+	s=arc-20240116; t=1725529642; c=relaxed/simple;
+	bh=msuYBH4Hnql3TEBN3T+eRXzhtegpGgVV3d/4XpFwnTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlcXZwkw4vbf8PaGesSXmyGpbEuuUkTNNYbboA7WE1Jkm7vqepgfZC+my/sPMNPtgJ9ESJeZiPiSQ7+Z/tPJkGf0W466MN8+OOEFjEFkWQI7d4dXuaLzrHH6ZwvR6318L/QsopvPkH0NMT1CLTnFAhTYXvukPSaGE993wrgE/Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ3rwaj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bmc5Z6IuTVR329O/FWE6wpZ4gnszQm1tzBdH+u8TdTQxYocmzAMR4bdQqA6GcpXMY10+6VkXdGo3K8QDlHYMkBjs8MGIvCaB0FlsJPta02qFkLS/aab/3boW97mD25poHOihHPPH23hBnnKZp/QuuFe0WDL6VhNENFUYWKeb4Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gcg3ohO/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ3rwaj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663BDC4CEC3;
-	Thu,  5 Sep 2024 09:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gcg3ohO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822BCC4CEC3;
+	Thu,  5 Sep 2024 09:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529638;
-	bh=snFwZ36KhkJeu69n/yQQRn9FehqMPaIm14taKoFpXwA=;
+	s=korg; t=1725529641;
+	bh=msuYBH4Hnql3TEBN3T+eRXzhtegpGgVV3d/4XpFwnTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ3rwaj6zokNhaSjH9T6bYfzYPsZ8RD8/c6idU+HUbvlTuiQnPyd23AvoTQCsBTEv
-	 sVdxroSw/6jaTmHNsw42b2MfAWrvxF+AGsxM76hX6qTOevoQym7ejq2pR7Vd5jCqQg
-	 Ds1HN1aP0WXJsaeVgU0h1AIc4ogdEXkU+XbKeZg8=
+	b=Gcg3ohO/IiE52yO9VZclJJWShu1q6Escp3jOWVJ1RGv76W4L8T9fb+2+ntBivKzOi
+	 dOe4rudEe8+5g3vVqvPdSMsudHk8NQfOmW5J1TyniG6drOTRwTyvQ7yiZnPXfZSwLX
+	 iYgsTClhvTPKTDEJiPwE99SpsSsrEaoU+Zfh6+Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Zhigang Luo <Zhigang.Luo@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 065/184] drm/amd/display: Check num_valid_sets before accessing reader_wm_sets[]
-Date: Thu,  5 Sep 2024 11:39:38 +0200
-Message-ID: <20240905093734.777428617@linuxfoundation.org>
+Subject: [PATCH 6.10 056/184] drm/amdgpu: avoid reading vf2pf info size from FB
+Date: Thu,  5 Sep 2024 11:39:29 +0200
+Message-ID: <20240905093734.429422369@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,40 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Zhigang Luo <Zhigang.Luo@amd.com>
 
-[ Upstream commit b38a4815f79b87efb196cd5121579fc51e29a7fb ]
+[ Upstream commit 3bcc0ee14768d886cedff65da72d83d375a31a56 ]
 
-[WHY & HOW]
-num_valid_sets needs to be checked to avoid a negative index when
-accessing reader_wm_sets[num_valid_sets - 1].
+VF can't access FB when host is doing mode1 reset. Using sizeof to get
+vf2pf info size, instead of reading it from vf2pf header stored in FB.
 
-This fixes an OVERRUN issue reported by Coverity.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Zhigang Luo <Zhigang.Luo@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
-index 5ef0879f6ad9..aea4bb46856e 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
-@@ -484,7 +484,8 @@ static void build_watermark_ranges(struct clk_bw_params *bw_params, struct pp_sm
- 			ranges->reader_wm_sets[num_valid_sets].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
- 
- 			/* Modify previous watermark range to cover up to max */
--			ranges->reader_wm_sets[num_valid_sets - 1].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
-+			if (num_valid_sets > 0)
-+				ranges->reader_wm_sets[num_valid_sets - 1].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
- 		}
- 		num_valid_sets++;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+index f5fedf1be236..761fff80ec1f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -585,7 +585,7 @@ static int amdgpu_virt_write_vf2pf_data(struct amdgpu_device *adev)
  	}
+ 	vf2pf_info->checksum =
+ 		amd_sriov_msg_checksum(
+-		vf2pf_info, vf2pf_info->header.size, 0, 0);
++		vf2pf_info, sizeof(*vf2pf_info), 0, 0);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
