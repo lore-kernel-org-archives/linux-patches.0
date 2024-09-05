@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4996B14A08E;
-	Thu,  5 Sep 2024 09:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A49214A08E;
+	Thu,  5 Sep 2024 09:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529735; cv=none; b=ZAJy9lqIafg6bF9gCR5vjjPGUvJuS1q/SYD718cy/+lRoW4SwmzMbZKysSB5fuYjWMl5ldIwReHG1EAsjs6PWwCRyLlfINFv7p8m2i7o1m1sGM6Cxl3b5WSi1qVPYFSVIhr7TquceX8ERzqVjVgUNh5x2o776vj5e4kUE7qaDZg=
+	t=1725529738; cv=none; b=OHlzeo+bpraP8qlYU9vshIntuJTZAATTosYK2YmN3m9h2tyztgiXuDYqum5CaxEjSUl/ANR4nizqo/Dx7D/DJriwrD+Gb1esaHCOdI5BUr5KXKXKReoBjXs2mF6wKnTx8HbG/DAKA/7gFbOusvecHNiUqVi6rteuhrwelqBHzlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529735; c=relaxed/simple;
-	bh=PABNG7z3Kf/ubwnglQqfT/7PnR0LaoucQWU/1GRes8c=;
+	s=arc-20240116; t=1725529738; c=relaxed/simple;
+	bh=7MATz7/tGhq9SgqlbhJyI05Xf3SgWChWLX4vrzGW9Y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDJ//DP+dqvcevSuOz1UezDWzRH4ibHSCs80S1dfbbWEJ+N4v/3STwR2CVXBCJ+RozphPLqutXVqhdj0MVOBhp+7R6EYl7jtF3TjTXU5bctMoOPirpOjfIlN3d+VqJwfwT6Ga8/+WEAhbcQd+sKhHMAdt5cS+zYImofX49SlrDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSx9w98+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fB2VbpE3BrVNEsdJgRFqeTHkvjfTsbeyG051Y3t9u7NgIgDJxXEBhvQFZsNkmwpxtGVchMtNsrbWuhqLg7HH4Fn1UH6n9L1PizV6AvTelfhpJOLjDOyH3dH+9OOW2aQrQzPuwrpPE2h2Zoc+wl2dgbVfgETbDvvZjs5aeLeUfUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XbEeVTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSx9w98+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04ACC4CEC3;
-	Thu,  5 Sep 2024 09:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XbEeVTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1381C4CEC6;
+	Thu,  5 Sep 2024 09:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529735;
-	bh=PABNG7z3Kf/ubwnglQqfT/7PnR0LaoucQWU/1GRes8c=;
+	s=korg; t=1725529738;
+	bh=7MATz7/tGhq9SgqlbhJyI05Xf3SgWChWLX4vrzGW9Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSx9w98+VTVNT73sYuYJJy1ruh3yGsqX4W9/mWtoKOo6+Dvrbtg/p54GJfP3bWO1I
-	 JHz3WQHz15fwK6QjCbGeS5E46tF4g7xYnw0nhNYfk/TFVwcBXQjRRPzV5xgcYimGde
-	 KgLY6wTJa7dJgYID7hDZ/SkJVu1PWVE2wsz4hmGU=
+	b=0XbEeVTN1vNSyLzRwvCdLh2DsJGoX1zO6WUjNeXrWtCM6ALu1n0ZEXwwIXsOR8kdp
+	 Fi5crEG5Kb5mDjUp1l6aPXw6dh36nJpz07vYfkHZP428t40DrgfBMutmMvgBRg4o/h
+	 DvpdI7ZzbyErimDVlmbWiNZy3WLU8R9CdUIgc1PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leesoo Ahn <lsahn@ooseel.net>,
-	John Johansen <john.johansen@canonical.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 096/184] apparmor: fix possible NULL pointer dereference
-Date: Thu,  5 Sep 2024 11:40:09 +0200
-Message-ID: <20240905093735.989502545@linuxfoundation.org>
+Subject: [PATCH 6.10 097/184] wifi: ath12k: initialize ret in ath12k_qmi_load_file_target_mem()
+Date: Thu,  5 Sep 2024 11:40:10 +0200
+Message-ID: <20240905093736.027081179@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -51,105 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leesoo Ahn <lsahn@ooseel.net>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit 3dd384108d53834002be5630132ad5c3f32166ad ]
+[ Upstream commit bb0b0a6b96e6de854cb1e349e17bd0e8bf421a59 ]
 
-profile->parent->dents[AAFS_PROF_DIR] could be NULL only if its parent is made
-from __create_missing_ancestors(..) and 'ent->old' is NULL in
-aa_replace_profiles(..).
-In that case, it must return an error code and the code, -ENOENT represents
-its state that the path of its parent is not existed yet.
+smatch flagged the following issue:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000030
-PGD 0 P4D 0
-PREEMPT SMP PTI
-CPU: 4 PID: 3362 Comm: apparmor_parser Not tainted 6.8.0-24-generic #24
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? show_regs+0x6d/0x80
- ? __die+0x24/0x80
- ? page_fault_oops+0x99/0x1b0
- ? kernelmode_fixup_or_oops+0xb2/0x140
- ? __bad_area_nosemaphore+0x1a5/0x2c0
- ? find_vma+0x34/0x60
- ? bad_area_nosemaphore+0x16/0x30
- ? do_user_addr_fault+0x2a2/0x6b0
- ? exc_page_fault+0x83/0x1b0
- ? asm_exc_page_fault+0x27/0x30
- ? aafs_create.constprop.0+0x7f/0x130
- ? aafs_create.constprop.0+0x51/0x130
- __aafs_profile_mkdir+0x3d6/0x480
- aa_replace_profiles+0x83f/0x1270
- policy_update+0xe3/0x180
- profile_load+0xbc/0x150
- ? rw_verify_area+0x47/0x140
- vfs_write+0x100/0x480
- ? __x64_sys_openat+0x55/0xa0
- ? syscall_exit_to_user_mode+0x86/0x260
- ksys_write+0x73/0x100
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x7e/0x25c0
- do_syscall_64+0x7f/0x180
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7be9f211c574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007ffd26f2b8c8 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00005d504415e200 RCX: 00007be9f211c574
-RDX: 0000000000001fc1 RSI: 00005d504418bc80 RDI: 0000000000000004
-RBP: 0000000000001fc1 R08: 0000000000001fc1 R09: 0000000080000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00005d504418bc80
-R13: 0000000000000004 R14: 00007ffd26f2b9b0 R15: 00007ffd26f2ba30
- </TASK>
-Modules linked in: snd_seq_dummy snd_hrtimer qrtr snd_hda_codec_generic snd_hda_intel snd_intel_dspcfg snd_intel_sdw_acpi snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_seq_midi snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device i2c_i801 snd_timer i2c_smbus qxl snd soundcore drm_ttm_helper lpc_ich ttm joydev input_leds serio_raw mac_hid binfmt_misc msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs qemu_fw_cfg ip_tables x_tables autofs4 hid_generic usbhid hid ahci libahci psmouse virtio_rng xhci_pci xhci_pci_renesas
-CR2: 0000000000000030
----[ end trace 0000000000000000 ]---
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
+drivers/net/wireless/ath/ath12k/qmi.c:2619 ath12k_qmi_load_file_target_mem() error: uninitialized symbol 'ret'.
 
-Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+The reality is that 'ret' is initialized in every path through
+ath12k_qmi_load_file_target_mem() except one, the case where the input
+'len' is 0, and hence the "while (remaining)" loop is never entered.
+But to make sure this case is also handled, add an initializer to the
+declaration of 'ret'.
+
+No functional changes, compile tested only.
+
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240504-qmi_load_file_target_mem-v1-1-069fc44c45eb@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath12k/qmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index bcfea073e3f2..01b923d97a44 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -1692,6 +1692,10 @@ int __aafs_profile_mkdir(struct aa_profile *profile, struct dentry *parent)
- 		struct aa_profile *p;
- 		p = aa_deref_parent(profile);
- 		dent = prof_dir(p);
-+		if (!dent) {
-+			error = -ENOENT;
-+			goto fail2;
-+		}
- 		/* adding to parent that previously didn't have children */
- 		dent = aafs_create_dir("profiles", dent);
- 		if (IS_ERR(dent))
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
+index 5484112859a6..6d1ebbba17d9 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.c
++++ b/drivers/net/wireless/ath/ath12k/qmi.c
+@@ -2538,7 +2538,7 @@ static int ath12k_qmi_load_file_target_mem(struct ath12k_base *ab,
+ 	struct qmi_wlanfw_bdf_download_resp_msg_v01 resp = {};
+ 	struct qmi_txn txn;
+ 	const u8 *temp = data;
+-	int ret;
++	int ret = 0;
+ 	u32 remaining = len;
+ 
+ 	req = kzalloc(sizeof(*req), GFP_KERNEL);
 -- 
 2.43.0
 
