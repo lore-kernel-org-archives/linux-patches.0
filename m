@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630CE1494DB;
-	Thu,  5 Sep 2024 10:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937EE1494DB;
+	Thu,  5 Sep 2024 10:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530635; cv=none; b=o88WGsbIpsaTW1iZ1Hw6Z68QpsfXF2uWEu3e0ErjrMakk+vtO6YZvCWnCqowNKWElqgbREdaslNk7mpRdzvRe8/GJDoExgrHLiYRuBWCbYRd5RtnDJsrchktPvSPSSN5PLgtv4IrpWcHBRQd7KyvvF7PUxgGX0f2YAxRUIhXrkE=
+	t=1725530638; cv=none; b=Lf3wavipcsXg2m7ry8PUq5sUAS2ucgdpB2m8MpJjXvZyG/wv3cU/fq9rTqG8AvPonmq1vTXJF/zHSIEBFng1TYbUlhUx8iw2acsR1JhucsnrGE5i8xeeHtTO6Oi6BaWJQ+qKu6NQjTVwrYkKYDaSNg6gKZ5g+fr6L/15zWMCQ04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530635; c=relaxed/simple;
-	bh=D/s5bVSjqgFtkXX89Hh1hXUyU6UL5xm8FuAJBVqnkN8=;
+	s=arc-20240116; t=1725530638; c=relaxed/simple;
+	bh=/KOMrjDkkukpJvTj7YBtiOeGX9K3DQZoQHdFK4FIsFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P99u+byCXruFmAieAayhOEkvJvBHmmM7dfzsqfHunW0/yPmgY9hjGQ+wL0aGyZYDF2VYIOYBTugWheirr8A4H959NRLQa5EOO6nAoWf7gkb0F6EES6icmNImFdOpQn5RhlL9bKjUvfo3EDOuaN/4LWUei1wKq0w0AcrWnFd+56o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPt+E7Kh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUyvTMrUnB0zBq8WVIrASL9ucRWko191MBh3AyigI7uN0Wk0EXhECxCm+WvWBb/gX0jApZI5EItmuML8ltNuALGGU2L+y7Dr9SYHnp0cWN5h6MbPoXwp8EvnKSPV28FLgyA23vuU2jS6FAdQd6X9YEv83S7e7hoRZf/rSFP7iaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKcUcT1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPt+E7Kh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E53C4CEC3;
-	Thu,  5 Sep 2024 10:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKcUcT1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B70BC4CEC3;
+	Thu,  5 Sep 2024 10:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530635;
-	bh=D/s5bVSjqgFtkXX89Hh1hXUyU6UL5xm8FuAJBVqnkN8=;
+	s=korg; t=1725530638;
+	bh=/KOMrjDkkukpJvTj7YBtiOeGX9K3DQZoQHdFK4FIsFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPt+E7Kh2hhCLeWOL+dMGIJa4ICbJg4iTLpzWh/VMgneXrbarzwLF9Lw5lJ8bDeX6
-	 HZsZvh+S+3TgBKABEVVyrKlve9qrWjfHq3TPrfa7t53JXwpzz3GDS85fJi3TkrzmfM
-	 nR9Y6O/PoMZZJ2Pk9J3Z2t0Qs5e/MchlSxE7fAT4=
+	b=aKcUcT1/TTVDxKlVsTpqR/edV+SZNlROL0sqmBWulUyF8I05v7sRlQrLDRot6cQEv
+	 Jcp5qbzPZHR/4YdbuVUEDWU06RfH8wkGmeEz1GdDap9/SECnpPS1pwlXpo36Xcvgrd
+	 aI1oSM6LFuPWmh+h/GBaX/azyWiMVKPYgjCEuSuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/101] dmaengine: altera-msgdma: properly free descriptor in msgdma_free_descriptor
-Date: Thu,  5 Sep 2024 11:41:57 +0200
-Message-ID: <20240905093719.453791513@linuxfoundation.org>
+Subject: [PATCH 6.1 059/101] wifi: ath11k: initialize ret in ath11k_qmi_load_file_target_mem()
+Date: Thu,  5 Sep 2024 11:41:31 +0200
+Message-ID: <20240905093718.447051497@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Dautricourt <olivierdautricourt@gmail.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit 54e4ada1a4206f878e345ae01cf37347d803d1b1 ]
+[ Upstream commit 199f149e97dc7be80e5eed4b232529c1d1aa8055 ]
 
-Remove list_del call in msgdma_chan_desc_cleanup, this should be the role
-of msgdma_free_descriptor. In consequence replace list_add_tail with
-list_move_tail in msgdma_free_descriptor.
+smatch flagged the following issue:
 
-This fixes the path:
-   msgdma_free_chan_resources -> msgdma_free_descriptors ->
-   msgdma_free_desc_list -> msgdma_free_descriptor
+drivers/net/wireless/ath/ath11k/qmi.c:2401 ath11k_qmi_load_file_target_mem() error: uninitialized symbol 'ret'.
 
-which does not correctly free the descriptors as first nodes were not
-removed from the list.
+The reality is that 'ret' is initialized in every path through
+ath11k_qmi_load_file_target_mem() except one, the case where the input
+'len' is 0, and hence the "while (remaining)" loop is never entered.
+But to make sure this case is also handled, add an initializer to the
+declaration of 'ret'.
 
-Signed-off-by: Olivier Dautricourt <olivierdautricourt@gmail.com>
-Tested-by: Olivier Dautricourt <olivierdautricourt@gmail.com>
-Link: https://lore.kernel.org/r/20240608213216.25087-3-olivierdautricourt@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+No functional changes, compile tested only.
+
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240504-qmi_load_file_target_mem-v1-2-069fc44c45eb@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/altera-msgdma.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/qmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-index 8c479a3676fc..711e3756a39a 100644
---- a/drivers/dma/altera-msgdma.c
-+++ b/drivers/dma/altera-msgdma.c
-@@ -233,7 +233,7 @@ static void msgdma_free_descriptor(struct msgdma_device *mdev,
- 	struct msgdma_sw_desc *child, *next;
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index 01b02c03fa89..764cd320c6c1 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -2293,7 +2293,7 @@ static int ath11k_qmi_load_file_target_mem(struct ath11k_base *ab,
+ 	struct qmi_txn txn;
+ 	const u8 *temp = data;
+ 	void __iomem *bdf_addr = NULL;
+-	int ret;
++	int ret = 0;
+ 	u32 remaining = len;
  
- 	mdev->desc_free_cnt++;
--	list_add_tail(&desc->node, &mdev->free_list);
-+	list_move_tail(&desc->node, &mdev->free_list);
- 	list_for_each_entry_safe(child, next, &desc->tx_list, node) {
- 		mdev->desc_free_cnt++;
- 		list_move_tail(&child->node, &mdev->free_list);
-@@ -588,8 +588,6 @@ static void msgdma_chan_desc_cleanup(struct msgdma_device *mdev)
- 	list_for_each_entry_safe(desc, next, &mdev->done_list, node) {
- 		struct dmaengine_desc_callback cb;
- 
--		list_del(&desc->node);
--
- 		dmaengine_desc_get_callback(&desc->async_tx, &cb);
- 		if (dmaengine_desc_callback_valid(&cb)) {
- 			spin_unlock_irqrestore(&mdev->lock, irqflags);
+ 	req = kzalloc(sizeof(*req), GFP_KERNEL);
 -- 
 2.43.0
 
