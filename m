@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3499483CC8;
-	Thu,  5 Sep 2024 09:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6781183CC8;
+	Thu,  5 Sep 2024 10:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530397; cv=none; b=kjVRR5yyLXqtH8Lp2ehh2NVIwzHlXKJVFYgEHaWLm66f5myweNBrqMtnqsB92psJf6CWoktqvdJgnKZHxv3CJENGdkEsBhiFbTcXyuX1nd6ji5xvetkTURubqGmIG+4PdxELieXJwnO6IPZitSFBpmpmLD2rkdguilJJsplrXEQ=
+	t=1725530400; cv=none; b=UHvrSxInsnIkg704S7uChazzKpfw8ye3jzgR13lHXEwcaFccrVvOFb4gOrPPducU4IYswTnTK+JKAPiTJGbsOH/JLzoOmPyb1c3mQlgIOyRDrjanw8SY2ES3OVFBdNhtpwQ9ZJ6lm36dRBjMkXIXqZ7k454aAtVQPhAEYxvq5Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530397; c=relaxed/simple;
-	bh=g3nelucE2RgS94zaQ8/R9z4wu1hF3gQTb2CxoLLmHhA=;
+	s=arc-20240116; t=1725530400; c=relaxed/simple;
+	bh=owUAyoT/Z/njindrUh6o2a9kY1QWXRVa/DWtUS15zYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfP3nUupYvGOYmbK3A6EP4pNYpT1SybMLpyvx+qEDM50Q/V7j9xYvcvhGDq4a4neJ8TfdgGyd2tnF5cfLbeAzelh7pNgV8CV3N5PxNSx7gJt8b7lLCBdAe8MmdNBW/NEltffrLIGCT3P0cyRK1v5LM+nSn7GVDy5ak8zKitTq1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7ZV+QzZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WyQZpAvoxo6/mKyA4gpAvCq5uyMTOXaZD9B1f6f7Bs6HPFYSdW4k4ri36GAYx+qG+k39qZzLL1ejOfnOufX18qGK359PTMqOeVfwNGcoQ3YuAetChnsKk3JkLmRGpZ+62lAimwhucQjPpUEQeoQpt7JTB6ZmqA9EyVHWAuhiEbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNieWSZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7ZV+QzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A0BC4CEC3;
-	Thu,  5 Sep 2024 09:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNieWSZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C35C4CEC3;
+	Thu,  5 Sep 2024 09:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530396;
-	bh=g3nelucE2RgS94zaQ8/R9z4wu1hF3gQTb2CxoLLmHhA=;
+	s=korg; t=1725530400;
+	bh=owUAyoT/Z/njindrUh6o2a9kY1QWXRVa/DWtUS15zYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7ZV+QzZKM8itrWgiTPldCXyXZm0l8Qoau5JdknwUTfhz6mZUPD1JY7rVSO4NhzvP
-	 fqmJ6eJKcGrl3EpMQ3ueC+iKu9HYVgpAGYIKgBDl/nUz8aKUmDCq5/zbEOhMFDHa3X
-	 9RBuyhp9Gzm4cAH+8/ofgZPfc9xrqqU9bpUJKTgw=
+	b=xNieWSZarfL/iGVH/QNz+60PCoM/v6WzLc5nt9vhKzEwpf52oj1KRimTipMLAA/n1
+	 NxJWRs6cKyJfpTY7du7vqki/HDOKULRactZEgTqlCB3TqhlsbtQJHQBKCt4s8uOdIR
+	 A1VQY+mvSTlY8/2HLjNoLEzi349vJdzUdmM3XmFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chenyuwen <yuwen.chen@xjmz.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.1 012/101] f2fs: fix to truncate preallocated blocks in f2fs_file_open()
-Date: Thu,  5 Sep 2024 11:40:44 +0200
-Message-ID: <20240905093716.573114061@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 013/101] mptcp: pm: fullmesh: select the right ID later
+Date: Thu,  5 Sep 2024 11:40:45 +0200
+Message-ID: <20240905093716.612811424@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -53,149 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 298b1e4182d657c3e388adcc29477904e9600ed5 upstream.
+commit 09355f7abb9fbfc1a240be029837921ea417bf4f upstream.
 
-chenyuwen reports a f2fs bug as below:
+When reacting upon the reception of an ADD_ADDR, the in-kernel PM first
+looks for fullmesh endpoints. If there are some, it will pick them,
+using their entry ID.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000011
- fscrypt_set_bio_crypt_ctx+0x78/0x1e8
- f2fs_grab_read_bio+0x78/0x208
- f2fs_submit_page_read+0x44/0x154
- f2fs_get_read_data_page+0x288/0x5f4
- f2fs_get_lock_data_page+0x60/0x190
- truncate_partial_data_page+0x108/0x4fc
- f2fs_do_truncate_blocks+0x344/0x5f0
- f2fs_truncate_blocks+0x6c/0x134
- f2fs_truncate+0xd8/0x200
- f2fs_iget+0x20c/0x5ac
- do_garbage_collect+0x5d0/0xf6c
- f2fs_gc+0x22c/0x6a4
- f2fs_disable_checkpoint+0xc8/0x310
- f2fs_fill_super+0x14bc/0x1764
- mount_bdev+0x1b4/0x21c
- f2fs_mount+0x20/0x30
- legacy_get_tree+0x50/0xbc
- vfs_get_tree+0x5c/0x1b0
- do_new_mount+0x298/0x4cc
- path_mount+0x33c/0x5fc
- __arm64_sys_mount+0xcc/0x15c
- invoke_syscall+0x60/0x150
- el0_svc_common+0xb8/0xf8
- do_el0_svc+0x28/0xa0
- el0_svc+0x24/0x84
- el0t_64_sync_handler+0x88/0xec
+It should set the ID 0 when using the endpoint corresponding to the
+initial subflow, it is a special case imposed by the MPTCP specs.
 
-It is because inode.i_crypt_info is not initialized during below path:
-- mount
- - f2fs_fill_super
-  - f2fs_disable_checkpoint
-   - f2fs_gc
-    - f2fs_iget
-     - f2fs_truncate
+Note that msk->mpc_endpoint_id might not be set when receiving the first
+ADD_ADDR from the server. So better to compare the addresses.
 
-So, let's relocate truncation of preallocated blocks to f2fs_file_open(),
-after fscrypt_file_open().
-
-Fixes: d4dd19ec1ea0 ("f2fs: do not expose unwritten blocks to user by DIO")
-Reported-by: chenyuwen <yuwen.chen@xjmz.com>
-Closes: https://lore.kernel.org/linux-kernel/20240517085327.1188515-1-yuwen.chen@xjmz.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Fixes: 1a0d6136c5f0 ("mptcp: local addresses fullmesh")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-12-38035d40de5b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in pm_netlink.c, because the new 'mpc_addr' variable is
+  added where the 'local' one was, before commit b9d69db87fb7 ("mptcp:
+  let the in-kernel PM use mixed IPv4 and IPv6 addresses"), that is not
+  a candidate for the backports. This 'local' variable has been moved to
+  the new place to reduce the scope, and help with possible future
+  backports. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h  |    1 +
- fs/f2fs/file.c  |   42 +++++++++++++++++++++++++++++++++++++++++-
- fs/f2fs/inode.c |    8 --------
- 3 files changed, 42 insertions(+), 9 deletions(-)
+ net/mptcp/pm_netlink.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -788,6 +788,7 @@ enum {
- 	FI_ALIGNED_WRITE,	/* enable aligned write */
- 	FI_COW_FILE,		/* indicate COW file */
- 	FI_ATOMIC_COMMITTED,	/* indicate atomic commit completed except disk sync */
-+	FI_OPENED_FILE,         /* indicate file has been opened */
- 	FI_MAX,			/* max flag, never be used */
- };
- 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -538,6 +538,42 @@ static int f2fs_file_mmap(struct file *f
- 	return 0;
- }
- 
-+static int finish_preallocate_blocks(struct inode *inode)
-+{
-+	int ret;
-+
-+	inode_lock(inode);
-+	if (is_inode_flag_set(inode, FI_OPENED_FILE)) {
-+		inode_unlock(inode);
-+		return 0;
-+	}
-+
-+	if (!file_should_truncate(inode)) {
-+		set_inode_flag(inode, FI_OPENED_FILE);
-+		inode_unlock(inode);
-+		return 0;
-+	}
-+
-+	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
-+	filemap_invalidate_lock(inode->i_mapping);
-+
-+	truncate_setsize(inode, i_size_read(inode));
-+	ret = f2fs_truncate(inode);
-+
-+	filemap_invalidate_unlock(inode->i_mapping);
-+	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
-+
-+	if (!ret)
-+		set_inode_flag(inode, FI_OPENED_FILE);
-+
-+	inode_unlock(inode);
-+	if (ret)
-+		return ret;
-+
-+	file_dont_truncate(inode);
-+	return 0;
-+}
-+
- static int f2fs_file_open(struct inode *inode, struct file *filp)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -648,7 +648,7 @@ static unsigned int fill_local_addresses
  {
- 	int err = fscrypt_file_open(inode, filp);
-@@ -554,7 +590,11 @@ static int f2fs_file_open(struct inode *
+ 	struct sock *sk = (struct sock *)msk;
+ 	struct mptcp_pm_addr_entry *entry;
+-	struct mptcp_addr_info local;
++	struct mptcp_addr_info mpc_addr;
+ 	struct pm_nl_pernet *pernet;
+ 	unsigned int subflows_max;
+ 	int i = 0;
+@@ -656,6 +656,8 @@ static unsigned int fill_local_addresses
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
+ 	subflows_max = mptcp_pm_get_subflows_max(msk);
  
- 	filp->f_mode |= FMODE_NOWAIT;
- 
--	return dquot_file_open(inode, filp);
-+	err = dquot_file_open(inode, filp);
-+	if (err)
-+		return err;
++	mptcp_local_address((struct sock_common *)msk, &mpc_addr);
 +
-+	return finish_preallocate_blocks(inode);
- }
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+ 		if (!(entry->flags & MPTCP_PM_ADDR_FLAG_FULLMESH))
+@@ -673,7 +675,13 @@ static unsigned int fill_local_addresses
  
- void f2fs_truncate_data_blocks_range(struct dnode_of_data *dn, int count)
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -549,14 +549,6 @@ make_now:
+ 		if (msk->pm.subflows < subflows_max) {
+ 			msk->pm.subflows++;
+-			addrs[i++] = entry->addr;
++			addrs[i] = entry->addr;
++
++			/* Special case for ID0: set the correct ID */
++			if (mptcp_addresses_equal(&entry->addr, &mpc_addr, entry->addr.port))
++				addrs[i].id = 0;
++
++			i++;
+ 		}
  	}
- 	f2fs_set_inode_flags(inode);
+ 	rcu_read_unlock();
+@@ -682,6 +690,8 @@ static unsigned int fill_local_addresses
+ 	 * 'IPADDRANY' local address
+ 	 */
+ 	if (!i) {
++		struct mptcp_addr_info local;
++
+ 		memset(&local, 0, sizeof(local));
+ 		local.family = msk->pm.remote.family;
  
--	if (file_should_truncate(inode) &&
--			!is_sbi_flag_set(sbi, SBI_POR_DOING)) {
--		ret = f2fs_truncate(inode);
--		if (ret)
--			goto bad_inode;
--		file_dont_truncate(inode);
--	}
--
- 	unlock_new_inode(inode);
- 	trace_f2fs_iget(inode);
- 	return inode;
 
 
