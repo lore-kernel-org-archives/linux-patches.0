@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0524C1494DB;
-	Thu,  5 Sep 2024 10:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1801494DB;
+	Thu,  5 Sep 2024 10:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530674; cv=none; b=R1oq+cZa9ous1D7CgeNGDBx7zQyCcxBPTnKE5fJ1wtyfrJ5i3euf7pXziuGm0eC+jZvfC8Hj01FPJjpZnkFl3mpk3c4epbuPeutYGID/ezZGmjCZrUR9SvmiZqz04sWusA+6k042h6QxWGGwNea0UrE1bo4gYDsAl/rjE0lFAzw=
+	t=1725530677; cv=none; b=aabPoybvYnWY6GoNkCk4s9pI45tCG+J0TMsIRWXSc/EJ5Q9mmkLFiRfxycz9RcRT8TH+kgk+PenVbUjk87agkRMMpUpuj7mUtZBx/DEmsulgXZqiETpc9fIbcDmCy0k0A8xYJl/gPIft4yJDm4vqcgdTc91+oSQdRvTOQrWDa5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530674; c=relaxed/simple;
-	bh=BPbZTcVyukJgY25b+TjhwTcrJ18ebXrK9h6kG2f6ab8=;
+	s=arc-20240116; t=1725530677; c=relaxed/simple;
+	bh=iHFAMq3xULQQcYlqSns3XDagH0sz5dwZj0+7x7HoXHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjEoXVg8WVUQuTxHrRtP6HyCxK3Lpq+CHEqjc+ymaiQJLap2l/FD6iMIs0yjNYnQIfKS5/xfNRHPvuZ+A7+qfZVO0DDk8xR9FWoFwMxY8xLflq6+kO2GABTLCcVl0IrHc14gM4FMRkIIoyu8MCOxu7DPfEb4GHFmMCJraGiU01M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W99nNh6g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P2oi5W3zPHS2E8fwvkh3j9ife05VOLmpNiHLWn53uCFPIC5/bQLxNsJo3/1dLjpgHjUAgx9+fEUQa0DvBj5MiCWrYHoWH/TGgT0Jtidrg47eDx9v6QlU+D7IoTBQ3VJ1R5D4mSC+U3uZz5+HQ0J5kHdBbIrkXdl+ETS8GFqMyS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=id+NOQ2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W99nNh6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F1C4CEC3;
-	Thu,  5 Sep 2024 10:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="id+NOQ2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903A2C4CEC3;
+	Thu,  5 Sep 2024 10:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530673;
-	bh=BPbZTcVyukJgY25b+TjhwTcrJ18ebXrK9h6kG2f6ab8=;
+	s=korg; t=1725530677;
+	bh=iHFAMq3xULQQcYlqSns3XDagH0sz5dwZj0+7x7HoXHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W99nNh6g1PXP/ov5ExNTttXhT9rTr62/C7BIP4CLGujqhhlmiHPKJNzdRJ2kAL/M5
-	 YceC6Qt5SaGsSLK9i0N4sEKmQEKZI81N/UOUmPQz6ts46kyM9JLFwh3eOIDs9bBipS
-	 PcVhvWbXOi6abq9REVZ4htKRiBSQloXnW+1YYtEM=
+	b=id+NOQ2OUcyU+LkYGeF3PtEv8D5ICZZT/JDSzs/EyW//I2Py/sWpUXWiMS+BXQPeq
+	 05ZZLZZ8XYv6s36lDaVbuBA/+/LbVZlCWS7EEvBn6FRUZe1CdRGrL0vyITOjZs+KmE
+	 n0B521GAYrtVuxzZ5McpENVPKZF3oP5l6bD0KjU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/101] drm/amdgpu: fix mc_data out-of-bounds read warning
-Date: Thu,  5 Sep 2024 11:41:28 +0200
-Message-ID: <20240905093718.328853286@linuxfoundation.org>
+Subject: [PATCH 6.1 091/101] drm/amd/display: Correct the defined value for AMDGPU_DMUB_NOTIFICATION_MAX
+Date: Thu,  5 Sep 2024 11:42:03 +0200
+Message-ID: <20240905093719.686701666@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,33 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Wayne Lin <wayne.lin@amd.com>
 
-[ Upstream commit 51dfc0a4d609fe700750a62f41447f01b8c9ea50 ]
+[ Upstream commit ad28d7c3d989fc5689581664653879d664da76f0 ]
 
-Clear warning that read mc_data[i-1] may out-of-bounds.
+[Why & How]
+It actually exposes '6' types in enum dmub_notification_type. Not 5. Using smaller
+number to create array dmub_callback & dmub_thread_offload has potential to access
+item out of array bound. Fix it.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
+Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-index 9ba4817a9148..816014ea5381 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-@@ -1476,6 +1476,8 @@ int amdgpu_atombios_init_mc_reg_table(struct amdgpu_device *adev,
- 										(u32)le32_to_cpu(*((u32 *)reg_data + j));
- 									j++;
- 								} else if ((reg_table->mc_reg_address[i].pre_reg_data & LOW_NIBBLE_MASK) == DATA_EQU_PREV) {
-+									if (i == 0)
-+										continue;
- 									reg_table->mc_reg_table_entry[num_ranges].mc_data[i] =
- 										reg_table->mc_reg_table_entry[num_ranges].mc_data[i - 1];
- 								}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 2c9a33c80c81..df18b4df1f2c 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -49,7 +49,7 @@
+ 
+ #define AMDGPU_DM_MAX_NUM_EDP 2
+ 
+-#define AMDGPU_DMUB_NOTIFICATION_MAX 5
++#define AMDGPU_DMUB_NOTIFICATION_MAX 6
+ 
+ /*
+ #include "include/amdgpu_dal_power_if.h"
 -- 
 2.43.0
 
