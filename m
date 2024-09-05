@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150514A08E;
-	Thu,  5 Sep 2024 09:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAE0198A08;
+	Thu,  5 Sep 2024 09:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530016; cv=none; b=ZeEXxEn08BTJrdeFvnHwqOcmY2V31WcwebScZtV4Ui3ra0pip8FdoFii7R8QA2fosOxk3fpQXABaJ7gpfoVZfCCr68hiABHnFYqRukcVIef9fmrbgYLDMeEL4h/25/bwrA6pzBqkaY+r6Q1v0w1GDvJBnYOC5GrxnLDtFoGz9q0=
+	t=1725530020; cv=none; b=jL+X+9Btd//UqJb09aFLj1gO58wkL/BI8BNq4ENfyLN9VL15H+y01ops1qnd3j9RhuemrQpvTRDSnosqahOcvlM7kRAV7sTEG9VSHu9PS6WQKlAL88eN2BvOXheztHacgL2ud9X1qY4a4d7R8LCcAoG/BhwfLCjTcDpPdGmL82o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530016; c=relaxed/simple;
-	bh=4JnQz5rCaBL5Uki9L5eRUcwAF4RBy+6PwvetKLTYOgU=;
+	s=arc-20240116; t=1725530020; c=relaxed/simple;
+	bh=M3YLr7OJx+4uItK5/62KPI5zYrL6WkICaObG8O2Z7Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltfFIe7xkhVgx8Q5qRBdAtf26OPe9BYAlFLMmYPpB8cXcu1Y49SQvUizwWPbh5n2SoV3URHf1v37WxepxVmucnhwQPdzL1AuLWxcaLuktHjqbVXTjCH9HcmXRYuydD2os2tYIMDVZmGKLJAhDThWSuv7feHvE3x7ZzblJzZTLlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kp1Yg76V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsXFQI2QnMrO0cG5TFPbuAAFR5CETPqDVb/xfifapA9/hqhwI74OOaoRpnqzp1y6gu17ILuW5ULAa/1PnZtBkjy5UE705XueSRN45X+Jadm8GANjX9Xc2FpRbNZ5jmtguIMvPm1fWIIM4h6Fyp3M3bNMLTyu4slK8Q3zf4cVVWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ow7KiKOM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kp1Yg76V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374AAC4CEC3;
-	Thu,  5 Sep 2024 09:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ow7KiKOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A979C4CEC4;
+	Thu,  5 Sep 2024 09:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530016;
-	bh=4JnQz5rCaBL5Uki9L5eRUcwAF4RBy+6PwvetKLTYOgU=;
+	s=korg; t=1725530020;
+	bh=M3YLr7OJx+4uItK5/62KPI5zYrL6WkICaObG8O2Z7Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kp1Yg76VR6kYEOvswdK1fZQ54wd6a2+O2lzftBMnPSR3E+eZEid7hfpAhQhfAuljm
-	 Lj18bvo5t3CmCbXbQq2xqB3Kqyt7O4/xLVJowvxokUX98q99Nh4MR/sIcNunEnxnMu
-	 snSLtobhM5vEgP0BHxZYoAx4U4fFm1vlm6kNfEQc=
+	b=ow7KiKOMitOcUnLgNGxkdbVukRg3MvnOjNyr1G88vr4ct9cFNrGSF/yYGDRpKQqFD
+	 SNF71Gr5Qt+uVYtI/BIXEjR2Io4AXlYJaInmJOdQyLQ+jLhSg1CkCEAPA+DoCARd45
+	 1P55F27HhwqYBN7Wychj5hTxbW/gUxt/DthT4BFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Krakow <hurikhan77@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/132] btrfs: tree-checker: validate dref root and objectid
-Date: Thu,  5 Sep 2024 11:39:52 +0200
-Message-ID: <20240905093722.444952688@linuxfoundation.org>
+Subject: [PATCH 6.6 006/132] ALSA: hda/generic: Add a helper to mute speakers at suspend/shutdown
+Date: Thu,  5 Sep 2024 11:39:53 +0200
+Message-ID: <20240905093722.483416897@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -53,149 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f333a3c7e8323499aa65038e77fe8f3199d4e283 ]
+[ Upstream commit 6cd23b26b348fa52c88e1adf9c0e48d68e13f95e ]
 
-[CORRUPTION]
-There is a bug report that btrfs flips RO due to a corruption in the
-extent tree, the involved dumps looks like this:
+Some devices indicate click noises at suspend or shutdown when the
+speakers are unmuted.  This patch adds a helper,
+snd_hda_gen_shutup_speakers(), to work around it.  The new function is
+supposed to be called at suspend or shutdown by the codec driver, and
+it mutes the speakers.
 
- 	item 188 key (402811572224 168 4096) itemoff 14598 itemsize 79
- 		extent refs 3 gen 3678544 flags 1
- 		ref#0: extent data backref root 13835058055282163977 objectid 281473384125923 offset 81432576 count 1
- 		ref#1: shared data backref parent 1947073626112 count 1
- 		ref#2: shared data backref parent 1156030103552 count 1
- BTRFS critical (device vdc1: state EA): unable to find ref byte nr 402811572224 parent 0 root 265 owner 28703026 offset 81432576 slot 189
- BTRFS error (device vdc1: state EA): failed to run delayed ref for logical 402811572224 num_bytes 4096 type 178 action 2 ref_mod 1: -2
+The mute status isn't cached, hence the original mute state will be
+restored at resume again.
 
-[CAUSE]
-The corrupted entry is ref#0 of item 188.
-The root number 13835058055282163977 is beyond the upper limit for root
-items (the current limit is 1 << 48), and the objectid also looks
-suspicious.
-
-Only the offset and count is correct.
-
-[ENHANCEMENT]
-Although it's still unknown why we have such many bytes corrupted
-randomly, we can still enhance the tree-checker for data backrefs by:
-
-- Validate the root value
-  For now there should only be 3 types of roots can have data backref:
-  * subvolume trees
-  * data reloc trees
-  * root tree
-    Only for v1 space cache
-
-- validate the objectid value
-  The objectid should be a valid inode number.
-
-Hopefully we can catch such problem in the future with the new checkers.
-
-Reported-by: Kai Krakow <hurikhan77@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAMthOuPjg5RDT-G_LXeBBUUtzt3cq=JywF+D1_h+JYxe=WKp-Q@mail.gmail.com/#t
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://patch.msgid.link/20240726142625.2460-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 47 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+ sound/pci/hda/hda_generic.c | 63 +++++++++++++++++++++++++++++++++++++
+ sound/pci/hda/hda_generic.h |  1 +
+ 2 files changed, 64 insertions(+)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 7ff61909648d7..46c1f74983956 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1266,6 +1266,19 @@ static void extent_err(const struct extent_buffer *eb, int slot,
- 	va_end(args);
+diff --git a/sound/pci/hda/hda_generic.c b/sound/pci/hda/hda_generic.c
+index bf685d01259d3..d3ed3e21b1979 100644
+--- a/sound/pci/hda/hda_generic.c
++++ b/sound/pci/hda/hda_generic.c
+@@ -4956,6 +4956,69 @@ void snd_hda_gen_stream_pm(struct hda_codec *codec, hda_nid_t nid, bool on)
  }
+ EXPORT_SYMBOL_GPL(snd_hda_gen_stream_pm);
  
-+static bool is_valid_dref_root(u64 rootid)
++/* forcibly mute the speaker output without caching; return true if updated */
++static bool force_mute_output_path(struct hda_codec *codec, hda_nid_t nid)
 +{
-+	/*
-+	 * The following tree root objectids are allowed to have a data backref:
-+	 * - subvolume trees
-+	 * - data reloc tree
-+	 * - tree root
-+	 *   For v1 space cache
-+	 */
-+	return is_fstree(rootid) || rootid == BTRFS_DATA_RELOC_TREE_OBJECTID ||
-+	       rootid == BTRFS_ROOT_TREE_OBJECTID;
++	if (!nid)
++		return false;
++	if (!nid_has_mute(codec, nid, HDA_OUTPUT))
++		return false; /* no mute, skip */
++	if (snd_hda_codec_amp_read(codec, nid, 0, HDA_OUTPUT, 0) &
++	    snd_hda_codec_amp_read(codec, nid, 1, HDA_OUTPUT, 0) &
++	    HDA_AMP_MUTE)
++		return false; /* both channels already muted, skip */
++
++	/* direct amp update without caching */
++	snd_hda_codec_write(codec, nid, 0, AC_VERB_SET_AMP_GAIN_MUTE,
++			    AC_AMP_SET_OUTPUT | AC_AMP_SET_LEFT |
++			    AC_AMP_SET_RIGHT | HDA_AMP_MUTE);
++	return true;
 +}
 +
- static int check_extent_item(struct extent_buffer *leaf,
- 			     struct btrfs_key *key, int slot,
- 			     struct btrfs_key *prev_key)
-@@ -1418,6 +1431,8 @@ static int check_extent_item(struct extent_buffer *leaf,
- 		struct btrfs_extent_data_ref *dref;
- 		struct btrfs_shared_data_ref *sref;
- 		u64 seq;
-+		u64 dref_root;
-+		u64 dref_objectid;
- 		u64 dref_offset;
- 		u64 inline_offset;
- 		u8 inline_type;
-@@ -1461,11 +1476,26 @@ static int check_extent_item(struct extent_buffer *leaf,
- 		 */
- 		case BTRFS_EXTENT_DATA_REF_KEY:
- 			dref = (struct btrfs_extent_data_ref *)(&iref->offset);
-+			dref_root = btrfs_extent_data_ref_root(leaf, dref);
-+			dref_objectid = btrfs_extent_data_ref_objectid(leaf, dref);
- 			dref_offset = btrfs_extent_data_ref_offset(leaf, dref);
- 			seq = hash_extent_data_ref(
- 					btrfs_extent_data_ref_root(leaf, dref),
- 					btrfs_extent_data_ref_objectid(leaf, dref),
- 					btrfs_extent_data_ref_offset(leaf, dref));
-+			if (unlikely(!is_valid_dref_root(dref_root))) {
-+				extent_err(leaf, slot,
-+					   "invalid data ref root value %llu",
-+					   dref_root);
-+				return -EUCLEAN;
-+			}
-+			if (unlikely(dref_objectid < BTRFS_FIRST_FREE_OBJECTID ||
-+				     dref_objectid > BTRFS_LAST_FREE_OBJECTID)) {
-+				extent_err(leaf, slot,
-+					   "invalid data ref objectid value %llu",
-+					   dref_root);
-+				return -EUCLEAN;
-+			}
- 			if (unlikely(!IS_ALIGNED(dref_offset,
- 						 fs_info->sectorsize))) {
- 				extent_err(leaf, slot,
-@@ -1601,6 +1631,8 @@ static int check_extent_data_ref(struct extent_buffer *leaf,
- 		return -EUCLEAN;
- 	}
- 	for (; ptr < end; ptr += sizeof(*dref)) {
-+		u64 root;
-+		u64 objectid;
- 		u64 offset;
++/**
++ * snd_hda_gen_shutup_speakers - Forcibly mute the speaker outputs
++ * @codec: the HDA codec
++ *
++ * Forcibly mute the speaker outputs, to be called at suspend or shutdown.
++ *
++ * The mute state done by this function isn't cached, hence the original state
++ * will be restored at resume.
++ *
++ * Return true if the mute state has been changed.
++ */
++bool snd_hda_gen_shutup_speakers(struct hda_codec *codec)
++{
++	struct hda_gen_spec *spec = codec->spec;
++	const int *paths;
++	const struct nid_path *path;
++	int i, p, num_paths;
++	bool updated = false;
++
++	/* if already powered off, do nothing */
++	if (!snd_hdac_is_power_on(&codec->core))
++		return false;
++
++	if (spec->autocfg.line_out_type == AUTO_PIN_SPEAKER_OUT) {
++		paths = spec->out_paths;
++		num_paths = spec->autocfg.line_outs;
++	} else {
++		paths = spec->speaker_paths;
++		num_paths = spec->autocfg.speaker_outs;
++	}
++
++	for (i = 0; i < num_paths; i++) {
++		path = snd_hda_get_path_from_idx(codec, paths[i]);
++		if (!path)
++			continue;
++		for (p = 0; p < path->depth; p++)
++			if (force_mute_output_path(codec, path->path[p]))
++				updated = true;
++	}
++
++	return updated;
++}
++EXPORT_SYMBOL_GPL(snd_hda_gen_shutup_speakers);
++
+ /**
+  * snd_hda_gen_parse_auto_config - Parse the given BIOS configuration and
+  * set up the hda_gen_spec
+diff --git a/sound/pci/hda/hda_generic.h b/sound/pci/hda/hda_generic.h
+index a8eea83676299..aed4381f7a619 100644
+--- a/sound/pci/hda/hda_generic.h
++++ b/sound/pci/hda/hda_generic.h
+@@ -355,5 +355,6 @@ int snd_hda_gen_add_mute_led_cdev(struct hda_codec *codec,
+ int snd_hda_gen_add_micmute_led_cdev(struct hda_codec *codec,
+ 				     int (*callback)(struct led_classdev *,
+ 						     enum led_brightness));
++bool snd_hda_gen_shutup_speakers(struct hda_codec *codec);
  
- 		/*
-@@ -1608,7 +1640,22 @@ static int check_extent_data_ref(struct extent_buffer *leaf,
- 		 * overflow from the leaf due to hash collisions.
- 		 */
- 		dref = (struct btrfs_extent_data_ref *)ptr;
-+		root = btrfs_extent_data_ref_root(leaf, dref);
-+		objectid = btrfs_extent_data_ref_objectid(leaf, dref);
- 		offset = btrfs_extent_data_ref_offset(leaf, dref);
-+		if (unlikely(!is_valid_dref_root(root))) {
-+			extent_err(leaf, slot,
-+				   "invalid extent data backref root value %llu",
-+				   root);
-+			return -EUCLEAN;
-+		}
-+		if (unlikely(objectid < BTRFS_FIRST_FREE_OBJECTID ||
-+			     objectid > BTRFS_LAST_FREE_OBJECTID)) {
-+			extent_err(leaf, slot,
-+				   "invalid extent data backref objectid value %llu",
-+				   root);
-+			return -EUCLEAN;
-+		}
- 		if (unlikely(!IS_ALIGNED(offset, leaf->fs_info->sectorsize))) {
- 			extent_err(leaf, slot,
- 	"invalid extent data backref offset, have %llu expect aligned to %u",
+ #endif /* __SOUND_HDA_GENERIC_H */
 -- 
 2.43.0
 
