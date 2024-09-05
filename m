@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811C198E85;
-	Thu,  5 Sep 2024 09:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D39B18732F;
+	Thu,  5 Sep 2024 09:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529984; cv=none; b=VPaX2N8bGZ2Xlnn8E8l1fHv1M9fJuTJWpUBTVmicmyTNon16vEDEyYgePN0Y+6GUBuzEPZa7j9iQhiRFyaf1EqBSA7M2mF++7tb0Jy4bb2nOjGwX2uTuRLQKQfjhgnmiIkj7G9Mr8CjEOpiW/eeokPLEdDi0Atuw6bgBb+gT0Mw=
+	t=1725529987; cv=none; b=G/DSQzGdzsgB+hfmSA0ih+AKhua2hvCPmHMwaDQCZgtnjTBZ9LvdAWWO5VT1TOW1j0DNcK41/eoSL2r39jGuJxWjwpr9gfeaUXq7icZPniq8riwE5tiS1+YsMYZ04dT9pyHuZHAegGxnVVFGrwmc5ENi+VvwJbuXaI2e6MqVCVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529984; c=relaxed/simple;
-	bh=dL3s2iTxUrc99jcPDZg7LhDu5r1O8JxE1CWDJPqtnc4=;
+	s=arc-20240116; t=1725529987; c=relaxed/simple;
+	bh=FhVzybxvjlcByIE/jkGbZJkYGQi1JBp6VGqw3FWHJEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxXIeACUldO5inqpnGplgsSI6+cYk56hCKR/1sKyJAfUpVdPpGvg2qaxrhRn0zm4Bb5EJ8ft5NZZ8Fq0q1XS5LrhH0deGD4NyG906kdzLxtWDwScl2IrH1qOJKR4QuSMELo1h5T781zVYdEiBppKYBzw0vX6WVxqA8nHXE6Yv4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrU6rqqY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZa9A1ajWHF72pOE9DbwrPC/nH2SdGxxLWBwXHSY0x6t/lPNOP1iu9MYVaGRX46L64b97DG5w6tEEI+ITbDShGwwHVsVMl5bOIFM24L6TCrU2SRRvsbAuF4Zh6OZWS5N+4KO71pOXN6Y2/bkQ469XkcX2An/Fp5JqpB2R4l0MXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNj0wJs8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrU6rqqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3810C4CEC3;
-	Thu,  5 Sep 2024 09:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNj0wJs8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E246BC4CEC3;
+	Thu,  5 Sep 2024 09:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529984;
-	bh=dL3s2iTxUrc99jcPDZg7LhDu5r1O8JxE1CWDJPqtnc4=;
+	s=korg; t=1725529987;
+	bh=FhVzybxvjlcByIE/jkGbZJkYGQi1JBp6VGqw3FWHJEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrU6rqqY6EfKFH98hw/cnjmuELm33S7wTVKds/jz6vjnBjGyqKYFqWPIZGm82qoVg
-	 hOZeCQZ/vUkQqgS+xY0uHzxW8DCV191Dcj/H5kxuZJB4vZ7LCBryOCSB18pF7BzuMZ
-	 dxvxz7TRBzNhWTAl2qM9y3+CZ+ji9Rrc86ziMAO4=
+	b=cNj0wJs8/WEsLweJgZZri/P0na9mwgrY0DdJVhQTVmeKo7pEtuI7PgngnKfiMvAvv
+	 uXPfxf4emNhPk/QBjgVGKq6m8IqIXlfwiCwLSz0SiLKmi/GcYf3I3DlLO8iobOxts7
+	 2U97nsnzExgwIYFvvh26Flfl4Ft/C965FiFQi4aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZHANG Yuntian <yt@radxa.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Philip Mueller <philm@manjaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/132] net: usb: qmi_wwan: add MeiG Smart SRM825L
-Date: Thu,  5 Sep 2024 11:40:06 +0200
-Message-ID: <20240905093722.985118453@linuxfoundation.org>
+Subject: [PATCH 6.6 002/132] drm: panel-orientation-quirks: Add quirk for OrangePi Neo
+Date: Thu,  5 Sep 2024 11:39:49 +0200
+Message-ID: <20240905093722.329864739@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -51,62 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZHANG Yuntian <yt@radxa.com>
+From: Philip Mueller <philm@manjaro.org>
 
-[ Upstream commit 1ca645a2f74a4290527ae27130c8611391b07dbf ]
+[ Upstream commit d60c429610a14560085d98fa6f4cdb43040ca8f0 ]
 
-Add support for MeiG Smart SRM825L which is based on Qualcomm 315 chip.
+This adds a DMI orientation quirk for the OrangePi Neo Linux Gaming
+Handheld.
 
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d22 Rev= 4.14
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=6f345e48
-C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: ZHANG Yuntian <yt@radxa.com>
-Link: https://patch.msgid.link/D1EB81385E405DFE+20240803074656.567061-1-yt@radxa.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Philip Mueller <philm@manjaro.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240715045818.1019979-1-philm@manjaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index b1380cf1b13ab..92c1500fa7c44 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1438,6 +1438,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1312, 4)},	/* u-blox LARA-R6 01B */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
- 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
-+	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
- 
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 5db52d6c5c35c..039da0d1a613b 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -414,6 +414,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "ONE XPLAYER"),
+ 		},
+ 		.driver_data = (void *)&lcd1600x2560_leftside_up,
++	}, {	/* OrangePi Neo */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "OrangePi"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "NEO-01"),
++		},
++		.driver_data = (void *)&lcd1200x1920_rightside_up,
+ 	}, {	/* Samsung GalaxyBook 10.6 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "SAMSUNG ELECTRONICS CO., LTD."),
 -- 
 2.43.0
 
