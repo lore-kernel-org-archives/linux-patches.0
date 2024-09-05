@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80BB197A92;
-	Thu,  5 Sep 2024 09:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A5619755E;
+	Thu,  5 Sep 2024 09:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529879; cv=none; b=nLbo4AV72rhFYlSdmqp1caaLcqN25nKOBCPVk8+Jz6+UwLNIWBggugtGGLUwUcZYMWgLVx9xMkvZ59OOU9DN0XVAXL9Z+YIMoJ6dnwkRCc49tB7X50haWhYiQmJ++bem34mDR+ZitUGc67QjTHarmON82pCM8piVRHC27Opb8c8=
+	t=1725529882; cv=none; b=JBKvfb6CXk+PciDeX9EHzLGavuaqQmmY7PKI++wUnAaFWpyk4BqBxbxmpjreRVI6jYBPHpNclpkTfEXY3gaTErdjJ0yZTsEzLBZSDRZixs7HxJuY2fZFbmzHiRtcC/llxLyzI6w4zYeFI9Di/qUpL62EbHHq9fK2Jtb/6AB+DUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529879; c=relaxed/simple;
-	bh=ik38IIOy0w3RGj6pI+jSETbLtxmd1KpvEH4wOzgBvEU=;
+	s=arc-20240116; t=1725529882; c=relaxed/simple;
+	bh=F2jqXMTyEphzrx0diXfzsLTxfws4PcTUBxQ8ycjyKck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvBvaPMV9YPw5XiNTXhKNrBWQJXHNnZU3MN/aVZyYtTT/aEoKGNFybnK8nUT8eXpgmzoQ0aNEzcdxWlTNelU9BN7gOkm+H4d9UvnYBSsg4eHeyIWqXZRlq/ynQRf6Egfx3ruL0HnDrt7KpDfd6GJRHdIGkh71MLd+rlBM+zrNQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2zG3m7Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R68fxP84NRT0Uj3SCJNf0fk6apWPjI/D7ZyO+eiUsfezCqqaWfvywuF9rDLUdzQ/niMDfJGcCSHy7t8GM+wzzYJm1lbvNsoxLfUAcrE0h401lEzKZULBUAuZkpMStaW23Y/tTL2WZyTMpsYD+8I06wbbVhis7FAJOcj+BIEJflo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBLLO6J9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2zG3m7Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E2DC4CEC3;
-	Thu,  5 Sep 2024 09:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBLLO6J9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0348AC4CEC3;
+	Thu,  5 Sep 2024 09:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529879;
-	bh=ik38IIOy0w3RGj6pI+jSETbLtxmd1KpvEH4wOzgBvEU=;
+	s=korg; t=1725529882;
+	bh=F2jqXMTyEphzrx0diXfzsLTxfws4PcTUBxQ8ycjyKck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2zG3m7YKsKnxq9fR2SgxrrFQPAk73LMDLuKVUP6N8NGeA2Z8WUNxvJsKmzQrpCCZ
-	 X4jZ3u1LjtWDt2F+SW1ZcL+KW0EpiOha90nJQOKD3iBHya6gR4jrkBqM5n7s5CZia9
-	 at+oPtuZqW2ph5xb7l5w+opKm6cejxsu+OkE6mqc=
+	b=oBLLO6J9ore+tZo/RyD8FHgEPcjh/Mf5OJlXi5uAZWjsUIwjZ1GA6Ls5ZqK7ooHu5
+	 5Inu3cZOyPlvOZ2tSu1BEr5qH4N3VtBQTej7wY5ietLHzZKqJt9BlZ26+wu1Xpd7x5
+	 jEQgQl0lQOAbBU2on+y49VZlwWIpB5Q4JK/4N/RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
+	Ovidiu Bunea <ovidiu.bunea@amd.com>,
 	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 171/184] drm/amd/display: use preferred link settings for dp signal only
-Date: Thu,  5 Sep 2024 11:41:24 +0200
-Message-ID: <20240905093739.015118059@linuxfoundation.org>
+Subject: [PATCH 6.10 172/184] drm/amd/display: Disable DMCUB timeout for DCN35
+Date: Thu,  5 Sep 2024 11:41:25 +0200
+Message-ID: <20240905093739.053077760@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,61 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjing Liu <wenjing.liu@amd.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit abf34ca465f5cd182b07701d3f3d369c0fc04723 ]
+[ Upstream commit 7c70e60fbf4bff1123f0e8d5cb1ae71df6164d7f ]
 
-[why]
-We set preferred link settings for virtual signal. However we don't support
-virtual signal for UHBR link rate. If preferred is set to UHBR link rate, we
-will allow virtual signal with UHBR link rate which causes system crashes.
+[Why]
+DMCUB can intermittently take longer than expected to process commands.
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Old ASIC policy was to continue while logging a diagnostic error - which
+works fine for ASIC without IPS, but with IPS this could lead to a race
+condition where we attempt to access DCN state while it's inaccessible,
+leading to a system hang when the NIU port is not disabled or register
+accesses that timeout and the display configuration in an undefined
+state.
+
+[How]
+We need to investigate why these accesses take longer than expected, but
+for now we should disable the timeout on DCN35 to avoid this race
+condition. Since the waits happen only at lower interrupt levels the
+risk of taking too long at higher IRQ and causing a system watchdog
+timeout are minimal.
+
+Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
 Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/link/protocols/link_dp_capability.c    | 24 ++++++++-----------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index b26faed3bb20..a3df1b55e48b 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -914,21 +914,17 @@ bool link_decide_link_settings(struct dc_stream_state *stream,
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
+index 28c459907698..915d68cc04e9 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
+@@ -785,6 +785,7 @@ static const struct dc_debug_options debug_defaults_drv = {
+ 	.ips2_entry_delay_us = 800,
+ 	.disable_dmub_reallow_idle = false,
+ 	.static_screen_wait_frames = 2,
++	.disable_timeout = true,
+ };
  
- 	memset(link_setting, 0, sizeof(*link_setting));
- 
--	/* if preferred is specified through AMDDP, use it, if it's enough
--	 * to drive the mode
--	 */
--	if (link->preferred_link_setting.lane_count !=
--			LANE_COUNT_UNKNOWN &&
--			link->preferred_link_setting.link_rate !=
--					LINK_RATE_UNKNOWN) {
-+	if (dc_is_dp_signal(stream->signal)  &&
-+			link->preferred_link_setting.lane_count != LANE_COUNT_UNKNOWN &&
-+			link->preferred_link_setting.link_rate != LINK_RATE_UNKNOWN) {
-+		/* if preferred is specified through AMDDP, use it, if it's enough
-+		 * to drive the mode
-+		 */
- 		*link_setting = link->preferred_link_setting;
--		return true;
--	}
--
--	/* MST doesn't perform link training for now
--	 * TODO: add MST specific link training routine
--	 */
--	if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST) {
-+	} else if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST) {
-+		/* MST doesn't perform link training for now
-+		 * TODO: add MST specific link training routine
-+		 */
- 		decide_mst_link_settings(link, link_setting);
- 	} else if (link->connector_signal == SIGNAL_TYPE_EDP) {
- 		/* enable edp link optimization for DSC eDP case */
+ static const struct dc_panel_config panel_config_defaults = {
 -- 
 2.43.0
 
