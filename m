@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F303E196446;
-	Thu,  5 Sep 2024 09:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CD2196D90;
+	Thu,  5 Sep 2024 09:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529475; cv=none; b=CkE6muyD2R4SYKH3QqlMXGeLOeqwnkz68BDEhBe+H8x0UhXX+AjHyX5l4cztvaNEVH5twLh3pfK6VytKO69etT6n9Us1sGDynX9OcA7Z2Ho3h/dypvtesDepXfkH811rAw/OpL3mlHS5XDkfGpIX9UaCBSLmXe3+FA9xeRJThVU=
+	t=1725529477; cv=none; b=C1R5CHyMaFk9TIEolUZ548j1/4ICavZpRwb4ioEbPfQYk7LwcNbgCSCgcwbUOn+ft7+SM141Cu2aMVTS0+t1jA3gxQU9wDZuBJliXwMWeNpJ0NLL4mKLwqUl8nfufUNLyX/cFH5d9cG4jsyt+DS8soJiKiruJdOaF5GU8tzSs3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529475; c=relaxed/simple;
-	bh=SDQr7AWKCJwU8+Pp/HHIas5v6LNfbPMdhdq0Uz8rQmc=;
+	s=arc-20240116; t=1725529477; c=relaxed/simple;
+	bh=FrZcjjvmCfb4KiVycLY/SHcJ1FGDEQUuXSxszoiCzGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QAt964KPPb/Epzyx4DXrhOlbtY9hYiUFTZV+Kc8EEf8k899UvoxN+rCvw39y8CBg+GYz65oJHYstJ/SynoO38NOoH7imJyHWaTq3I9O92qJ15fAtKv/F7veOefhQtgAjVp9qNbk8NQ+XpQ7Wq55gq9zZuppcp1SC6PFF0a/51tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfpY/E/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jouY2ls2Fk0lAeWVipr9/Zvx1vwdMV/NDD9xb/ERKKOIDa9/0rz0QsSqK38C8AXm3TCYhrY0yhOuXIE/9ZxhNl581C1IySO4nQXq+Wgriy/QbV88zBv88k6UPKdkCj5m1rLBTkOyhCD9gNmd14tQFxTY1n9apmXFCykD699GYlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCLTLYQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfpY/E/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F378AC4CEC3;
-	Thu,  5 Sep 2024 09:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCLTLYQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CB3C4CEC3;
+	Thu,  5 Sep 2024 09:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529474;
-	bh=SDQr7AWKCJwU8+Pp/HHIas5v6LNfbPMdhdq0Uz8rQmc=;
+	s=korg; t=1725529477;
+	bh=FrZcjjvmCfb4KiVycLY/SHcJ1FGDEQUuXSxszoiCzGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YfpY/E/uFQoQK7o+haDW+Ysv5xR8N8/w12R2chmXWoAK1xM5+I5N54BPwmit2TEd1
-	 C9Z0kPbs7WthP0m2R4w3bnjmzAdwQc6m87112HB4j022+vPMRjMFkCZZydIiHTDRzh
-	 uEkKcMygVLf9n++Pc4qzTp4GZdKZ0I3+TGY79EDA=
+	b=CCLTLYQ6MkuYhwVw2xQ+YFPrBsjRfhHVzTHNvgH/cGcsy3PPFPdpHRcWbk+x7vx1K
+	 DrdF9+8iYhiP5oKoL0lco1UfJJzQm8Xl1JQShkH6RC5rGLUQVGGa+Z3H78J2w8u+ij
+	 fHrF+J/A+RBNXhV8rYjJ8ybQEMuCX5B/uo38MjEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 044/184] drm/amdgpu: Handle sg size limit for contiguous allocation
-Date: Thu,  5 Sep 2024 11:39:17 +0200
-Message-ID: <20240905093733.969192266@linuxfoundation.org>
+Subject: [PATCH 6.10 045/184] drm/amdgpu: fix overflowed array index read warning
+Date: Thu,  5 Sep 2024 11:39:18 +0200
+Message-ID: <20240905093734.007934593@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -53,78 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit b2dba064c9bdd18c7dd39066d25453af28451dbf ]
+[ Upstream commit ebbc2ada5c636a6a63d8316a3408753768f5aa9f ]
 
-Define macro AMDGPU_MAX_SG_SEGMENT_SIZE 2GB, because struct scatterlist
-length is unsigned int, and some users of it cast to a signed int, so
-every segment of sg table is limited to size 2GB maximum.
+Clear overflowed array index read warning by cast operation.
 
-For contiguous VRAM allocation, don't limit the max buddy block size in
-order to get contiguous VRAM memory. To workaround the sg table segment
-size limit, allocate multiple segments if contiguous size is bigger than
-AMDGPU_MAX_SG_SEGMENT_SIZE.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-index 6c30eceec896..f91cc149d06c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -31,6 +31,8 @@
- #include "amdgpu_atomfirmware.h"
- #include "atom.h"
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+index 88ffb15e25cc..d20405d84e12 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -475,8 +475,9 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
+ 					size_t size, loff_t *pos)
+ {
+ 	struct amdgpu_ring *ring = file_inode(f)->i_private;
+-	int r, i;
+ 	uint32_t value, result, early[3];
++	loff_t i;
++	int r;
  
-+#define AMDGPU_MAX_SG_SEGMENT_SIZE	(2UL << 30)
-+
- struct amdgpu_vram_reservation {
- 	u64 start;
- 	u64 size;
-@@ -518,9 +520,7 @@ static int amdgpu_vram_mgr_new(struct ttm_resource_manager *man,
- 		else
- 			min_block_size = mgr->default_page_size;
- 
--		/* Limit maximum size to 2GiB due to SG table limitations */
--		size = min(remaining_size, 2ULL << 30);
--
-+		size = remaining_size;
- 		if ((size >= (u64)pages_per_block << PAGE_SHIFT) &&
- 		    !(size & (((u64)pages_per_block << PAGE_SHIFT) - 1)))
- 			min_block_size = (u64)pages_per_block << PAGE_SHIFT;
-@@ -660,7 +660,7 @@ int amdgpu_vram_mgr_alloc_sgt(struct amdgpu_device *adev,
- 	amdgpu_res_first(res, offset, length, &cursor);
- 	while (cursor.remaining) {
- 		num_entries++;
--		amdgpu_res_next(&cursor, cursor.size);
-+		amdgpu_res_next(&cursor, min(cursor.size, AMDGPU_MAX_SG_SEGMENT_SIZE));
- 	}
- 
- 	r = sg_alloc_table(*sgt, num_entries, GFP_KERNEL);
-@@ -680,7 +680,7 @@ int amdgpu_vram_mgr_alloc_sgt(struct amdgpu_device *adev,
- 	amdgpu_res_first(res, offset, length, &cursor);
- 	for_each_sgtable_sg((*sgt), sg, i) {
- 		phys_addr_t phys = cursor.start + adev->gmc.aper_base;
--		size_t size = cursor.size;
-+		unsigned long size = min(cursor.size, AMDGPU_MAX_SG_SEGMENT_SIZE);
- 		dma_addr_t addr;
- 
- 		addr = dma_map_resource(dev, phys, size, dir,
-@@ -693,7 +693,7 @@ int amdgpu_vram_mgr_alloc_sgt(struct amdgpu_device *adev,
- 		sg_dma_address(sg) = addr;
- 		sg_dma_len(sg) = size;
- 
--		amdgpu_res_next(&cursor, cursor.size);
-+		amdgpu_res_next(&cursor, size);
- 	}
- 
- 	return 0;
+ 	if (*pos & 3 || size & 3)
+ 		return -EINVAL;
 -- 
 2.43.0
 
