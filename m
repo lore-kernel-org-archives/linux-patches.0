@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC21B198A27;
-	Thu,  5 Sep 2024 09:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B6719884A;
+	Thu,  5 Sep 2024 09:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529837; cv=none; b=lrT0AUUIZSyjUM49DWudzD9Ia8FlJoO6wTDMEXR7mkQJiErDk/7rIio672AMp//v4XdK2YG+CLHUGV11a5ppdxzSNqayZMp+zltoAw7BsROUFON/naegLIZc0PNcsyKpGTV3j1rLyuBxhVCj/nd+NKYoz6E9p3KNrrDgR/AUzDE=
+	t=1725529840; cv=none; b=oghGfe64b+TbV3PQIZxidFXCnNaeUWpHTExQ2WquALUhI6qgvAK5HE1iQmRnU53EHqbVsop15MsN/yF2wcfq2QBMgZKxcpSZHpZdE2GlmXh7BPbJwiKuFx4kD1e2CtwFdMJ4LgBuxsd7cOXKr/WZablevlbx2fwNE9GmarvKPnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529837; c=relaxed/simple;
-	bh=fiy8J7gV6Cf1dQqzapP/37i0HhGEGUHP/vAZ3LmaKSY=;
+	s=arc-20240116; t=1725529840; c=relaxed/simple;
+	bh=l1OerHW4bW1ru+zy+jzu0S2ItJ1GroIwN4jCSFEVBDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+BV0XEiUND7JtZdPwOKvufATF6BeZh6WV5DD7gRQ04TTRPYqLldN/D+qAMN7Pt3rKf0Lhf4N/EzHLCgROHnjRI0OSs+j3gSIknCuOMocUmO3nFLR7QSpQrM2cfchKYuN4Rbg2r9hwNKKO7SmB3XmFcUo6ZsQ853Z0yOI1Bd+Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h237sqe2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNrM/0LOyaqxCxCVtCWaaRC+OJmuaE6n815daCn60cvyaHCoJNgTv6pwyNHRh98r35ioE2e6rhDP53c7fqxLVu+pNDCUCURsrwA2rM9IAblniIJMclDOGr8y5GjXEliLiChH1x/kNZeOWYyIRYEL9IhiNhWz+9fRG47jB9PtT7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghuF4I3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h237sqe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E096C4CEC3;
-	Thu,  5 Sep 2024 09:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghuF4I3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306C0C4CEC3;
+	Thu,  5 Sep 2024 09:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529837;
-	bh=fiy8J7gV6Cf1dQqzapP/37i0HhGEGUHP/vAZ3LmaKSY=;
+	s=korg; t=1725529840;
+	bh=l1OerHW4bW1ru+zy+jzu0S2ItJ1GroIwN4jCSFEVBDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h237sqe2f7FgHOmEW9yW3TVBpRuZKN7exdVSAWrvIrwp5piQqtaxYqB/hGODJ4xUE
-	 0ZbsB9mwLLm4jgUVYOg9bLNwP6mFbXap6WSwN7YS+rJu+I2DAXXJqTLTp3GL51W2Dn
-	 7EWi9tETDW2dNfTNv631hNzKymNjDahnzf/Ju8Jo=
+	b=ghuF4I3x1mmOKuLz+cqR6wsqPN3lSTiGv5KEqpT1s9AfBrQj2Su7ckvgKDeGhrGw8
+	 RMCA8cnd9meAgKR5E37Da07KTRIDgApbFBTNIP/j+s/PsZ+zRsUKfu+KoNQh2JTz1Q
+	 4xBvOT52F7dLeBJ7j1b1/pXq/HB17d3u8LobSkdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Maina <quic_rmaina@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Chris Lew <quic_clew@quicinc.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Yehuda Yitschak <yehuday@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Gal Pressman <gal.pressman@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 127/184] remoteproc: qcom_q6v5_pas: Add hwspinlock bust on stop
-Date: Thu,  5 Sep 2024 11:40:40 +0200
-Message-ID: <20240905093737.185898743@linuxfoundation.org>
+Subject: [PATCH 6.10 128/184] RDMA/efa: Properly handle unexpected AQ completions
+Date: Thu,  5 Sep 2024 11:40:41 +0200
+Message-ID: <20240905093737.224164202@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,111 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Maina <quic_rmaina@quicinc.com>
+From: Michael Margolin <mrgolin@amazon.com>
 
-[ Upstream commit 568b13b65078e2b557ccf47674a354cecd1db641 ]
+[ Upstream commit 2d0e7ba468eae365f3c4bc9266679e1f8dd405f0 ]
 
-When remoteproc goes down unexpectedly this results in a state where any
-acquired hwspinlocks will remain locked possibly resulting in deadlock.
-In order to ensure all locks are freed we include a call to
-qcom_smem_bust_hwspin_lock_by_host() during remoteproc shutdown.
+Do not try to handle admin command completion if it has an unexpected
+command id and print a relevant error message.
 
-For qcom_q6v5_pas remoteprocs, each remoteproc has an assigned smem
-host_id. Remoteproc can pass this id to smem to try and bust the lock on
-remoteproc stop.
-
-This edge case only occurs with q6v5_pas watchdog crashes. The error
-fatal case has handling to clear the hwspinlock before the error fatal
-interrupt is triggered.
-
-Signed-off-by: Richard Maina <quic_rmaina@quicinc.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Link: https://lore.kernel.org/r/20240529-hwspinlock-bust-v3-4-c8b924ffa5a2@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Yehuda Yitschak <yehuday@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Link: https://lore.kernel.org/r/20240513064630.6247-1-mrgolin@amazon.com
+Reviewed-by: Gal Pressman <gal.pressman@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/infiniband/hw/efa/efa_com.c | 30 ++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 54d8005d40a3..8458bcfe9e19 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -52,6 +52,7 @@ struct adsp_data {
- 	const char *ssr_name;
- 	const char *sysmon_name;
- 	int ssctl_id;
-+	unsigned int smem_host_id;
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 16a24a05fc2a..bafd210dd43e 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+ /*
+- * Copyright 2018-2021 Amazon.com, Inc. or its affiliates. All rights reserved.
++ * Copyright 2018-2024 Amazon.com, Inc. or its affiliates. All rights reserved.
+  */
  
- 	int region_assign_idx;
- 	int region_assign_count;
-@@ -81,6 +82,7 @@ struct qcom_adsp {
- 	int lite_pas_id;
- 	unsigned int minidump_id;
- 	int crash_reason_smem;
-+	unsigned int smem_host_id;
- 	bool decrypt_shutdown;
- 	const char *info_name;
- 
-@@ -399,6 +401,9 @@ static int adsp_stop(struct rproc *rproc)
- 	if (handover)
- 		qcom_pas_handover(&adsp->q6v5);
- 
-+	if (adsp->smem_host_id)
-+		ret = qcom_smem_bust_hwspin_lock_by_host(adsp->smem_host_id);
-+
- 	return ret;
+ #include "efa_com.h"
+@@ -406,8 +406,8 @@ static struct efa_comp_ctx *efa_com_submit_admin_cmd(struct efa_com_admin_queue
+ 	return comp_ctx;
  }
  
-@@ -727,6 +732,7 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->pas_id = desc->pas_id;
- 	adsp->lite_pas_id = desc->lite_pas_id;
- 	adsp->info_name = desc->sysmon_name;
-+	adsp->smem_host_id = desc->smem_host_id;
- 	adsp->decrypt_shutdown = desc->decrypt_shutdown;
- 	adsp->region_assign_idx = desc->region_assign_idx;
- 	adsp->region_assign_count = min_t(int, MAX_ASSIGN_COUNT, desc->region_assign_count);
-@@ -1196,6 +1202,7 @@ static const struct adsp_data sm8550_adsp_resource = {
- 	.ssr_name = "lpass",
- 	.sysmon_name = "adsp",
- 	.ssctl_id = 0x14,
-+	.smem_host_id = 2,
- };
+-static void efa_com_handle_single_admin_completion(struct efa_com_admin_queue *aq,
+-						   struct efa_admin_acq_entry *cqe)
++static int efa_com_handle_single_admin_completion(struct efa_com_admin_queue *aq,
++						  struct efa_admin_acq_entry *cqe)
+ {
+ 	struct efa_comp_ctx *comp_ctx;
+ 	u16 cmd_id;
+@@ -416,11 +416,11 @@ static void efa_com_handle_single_admin_completion(struct efa_com_admin_queue *a
+ 			 EFA_ADMIN_ACQ_COMMON_DESC_COMMAND_ID);
  
- static const struct adsp_data sm8550_cdsp_resource = {
-@@ -1216,6 +1223,7 @@ static const struct adsp_data sm8550_cdsp_resource = {
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-+	.smem_host_id = 5,
- };
+ 	comp_ctx = efa_com_get_comp_ctx(aq, cmd_id, false);
+-	if (!comp_ctx) {
++	if (comp_ctx->status != EFA_CMD_SUBMITTED) {
+ 		ibdev_err(aq->efa_dev,
+-			  "comp_ctx is NULL. Changing the admin queue running state\n");
+-		clear_bit(EFA_AQ_STATE_RUNNING_BIT, &aq->state);
+-		return;
++			  "Received completion with unexpected command id[%d], sq producer: %d, sq consumer: %d, cq consumer: %d\n",
++			  cmd_id, aq->sq.pc, aq->sq.cc, aq->cq.cc);
++		return -EINVAL;
+ 	}
  
- static const struct adsp_data sm8550_mpss_resource = {
-@@ -1236,6 +1244,7 @@ static const struct adsp_data sm8550_mpss_resource = {
- 	.ssr_name = "mpss",
- 	.sysmon_name = "modem",
- 	.ssctl_id = 0x12,
-+	.smem_host_id = 1,
- 	.region_assign_idx = 2,
- 	.region_assign_count = 1,
- 	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
-@@ -1275,6 +1284,7 @@ static const struct adsp_data sm8650_cdsp_resource = {
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-+	.smem_host_id = 5,
- 	.region_assign_idx = 2,
- 	.region_assign_count = 1,
- 	.region_assign_shared = true,
-@@ -1299,6 +1309,7 @@ static const struct adsp_data sm8650_mpss_resource = {
- 	.ssr_name = "mpss",
- 	.sysmon_name = "modem",
- 	.ssctl_id = 0x12,
-+	.smem_host_id = 1,
- 	.region_assign_idx = 2,
- 	.region_assign_count = 3,
- 	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
+ 	comp_ctx->status = EFA_CMD_COMPLETED;
+@@ -428,14 +428,17 @@ static void efa_com_handle_single_admin_completion(struct efa_com_admin_queue *a
+ 
+ 	if (!test_bit(EFA_AQ_STATE_POLLING_BIT, &aq->state))
+ 		complete(&comp_ctx->wait_event);
++
++	return 0;
+ }
+ 
+ static void efa_com_handle_admin_completion(struct efa_com_admin_queue *aq)
+ {
+ 	struct efa_admin_acq_entry *cqe;
+ 	u16 queue_size_mask;
+-	u16 comp_num = 0;
++	u16 comp_cmds = 0;
+ 	u8 phase;
++	int err;
+ 	u16 ci;
+ 
+ 	queue_size_mask = aq->depth - 1;
+@@ -453,10 +456,12 @@ static void efa_com_handle_admin_completion(struct efa_com_admin_queue *aq)
+ 		 * phase bit was validated
+ 		 */
+ 		dma_rmb();
+-		efa_com_handle_single_admin_completion(aq, cqe);
++		err = efa_com_handle_single_admin_completion(aq, cqe);
++		if (!err)
++			comp_cmds++;
+ 
++		aq->cq.cc++;
+ 		ci++;
+-		comp_num++;
+ 		if (ci == aq->depth) {
+ 			ci = 0;
+ 			phase = !phase;
+@@ -465,10 +470,9 @@ static void efa_com_handle_admin_completion(struct efa_com_admin_queue *aq)
+ 		cqe = &aq->cq.entries[ci];
+ 	}
+ 
+-	aq->cq.cc += comp_num;
+ 	aq->cq.phase = phase;
+-	aq->sq.cc += comp_num;
+-	atomic64_add(comp_num, &aq->stats.completed_cmd);
++	aq->sq.cc += comp_cmds;
++	atomic64_add(comp_cmds, &aq->stats.completed_cmd);
+ }
+ 
+ static int efa_com_comp_status_to_errno(u8 comp_status)
 -- 
 2.43.0
 
