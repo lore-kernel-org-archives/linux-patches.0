@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F2D154BFF;
-	Thu,  5 Sep 2024 09:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F71156225;
+	Thu,  5 Sep 2024 09:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530101; cv=none; b=LEdSBOMW09OvsnOkvnWQ3b0mIn67U2m0FzciQ8P34BSsEiBRnpBudNJlfTNOQPG+2jeIzDjoDAq9pkEVBBNPOnSQA4cprLNEHeG6a99516Zj5bparzIeMWw8oVRA/EYEVN0H0kXPIwcKf9HmH6p+XicXusRt6o9h39agUNTiWCI=
+	t=1725530104; cv=none; b=g9oo2p8vRxzRzz6FCD6J87I2LrvHoUFQRJD4jdxT1H+4A1zK5nMWlAVXU8EnhcstK6jGoaZJBIxlxqzxZ6tbnSQm3viE7uPgzwjzCNvoqGoS/xr0+zDTPzeNq8r7loyTY+H1sAWD6FqNhoMiQ50aHyz2oerd+QLEJs/xz5Vr32I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530101; c=relaxed/simple;
-	bh=/8IpxaC6QsWQLLcgM0y4fMLQ4TlKCaFXTrAyaYGXsGs=;
+	s=arc-20240116; t=1725530104; c=relaxed/simple;
+	bh=2o1dAaak+k/cj0H8/QphPp4tIXgLXrjDmLdqzpvbIdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjKf2Ny1DaFj9GA7t0IIB6u6fNdGcd/9tHYsRkdWeUYr7tcpfMDZllLin7R6ieCXJs2fBIQdSWQ0s5IKDFvg72ftMQVPjNy+nViDsQR8GddvsDgf8X0CTJLuFqcFCiGX0S/mllSCXDVj+uepIFGr9cfBkJoFFYRspniEL7rqx4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcaAu1u2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gCXumKK6KuaG2875TZDC0N3srlYb+lsnuM8ZkeW0KXvKVrClUsaEfgb9PorcM+jUso/mrmIulQ0uEdhJ6MRxR+F530m23jo2jrl3bF4NxekkCB1+7uA38D9n+eyXQP5jqFSWYeeeU2m4Q0z2QMQ/ketdDL9g7mDcDwqV2S5s57E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cd/e9FLd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcaAu1u2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A27CC4CEC3;
-	Thu,  5 Sep 2024 09:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cd/e9FLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF13CC4CEC3;
+	Thu,  5 Sep 2024 09:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530101;
-	bh=/8IpxaC6QsWQLLcgM0y4fMLQ4TlKCaFXTrAyaYGXsGs=;
+	s=korg; t=1725530104;
+	bh=2o1dAaak+k/cj0H8/QphPp4tIXgLXrjDmLdqzpvbIdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcaAu1u2QOInqkFd4dEJPiNEV+D0oYTcC2pmSev2UycoipKABlfLjv7FwaFcgnzJp
-	 KBwZMl6JIEHuWkhQf2TIHEWQ4upB+d6WN/aP6v4v+omvR0ipZOW7oy9OTcrZwbawQk
-	 gQw4fYUZ3Q79SlF4s7JBm2V6jYYjs5Uh65zfVgc0=
+	b=Cd/e9FLd6f8q3LZfyK/3axBAVUcAcGWXbQq/s+m1dfGIC9E30Eb8iEY29qKVCQEuD
+	 RNIK69LubpG03nUjKU9xhozk3DLM5tM2YF8vu7x1OxR5Q19gcvdD11JOsiyDSKweni
+	 kWo/dKzrOt7rjgXOSbRe4UjzG6ca6Wuf1djymn2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/132] drm/amd/display: Add array index check for hdcp ddc access
-Date: Thu,  5 Sep 2024 11:40:41 +0200
-Message-ID: <20240905093724.360192921@linuxfoundation.org>
+Subject: [PATCH 6.6 055/132] drm/amd/display: Check num_valid_sets before accessing reader_wm_sets[]
+Date: Thu,  5 Sep 2024 11:40:42 +0200
+Message-ID: <20240905093724.397999614@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -54,93 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 4e70c0f5251c25885c31ee84a31f99a01f7cf50e ]
+[ Upstream commit b38a4815f79b87efb196cd5121579fc51e29a7fb ]
 
-[Why]
-Coverity reports OVERRUN warning. Do not check if array
-index valid.
+[WHY & HOW]
+num_valid_sets needs to be checked to avoid a negative index when
+accessing reader_wm_sets[num_valid_sets - 1].
 
-[How]
-Check msg_id valid and valid array index.
+This fixes an OVERRUN issue reported by Coverity.
 
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/modules/hdcp/hdcp_ddc.c   | 28 ++++++++++++++++---
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-index 8e9caae7c955..1b2df97226a3 100644
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-@@ -156,11 +156,16 @@ static enum mod_hdcp_status read(struct mod_hdcp *hdcp,
- 	uint32_t cur_size = 0;
- 	uint32_t data_offset = 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
+index 0c6a4ab72b1d..97cdc24cef9a 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
+@@ -484,7 +484,8 @@ static void build_watermark_ranges(struct clk_bw_params *bw_params, struct pp_sm
+ 			ranges->reader_wm_sets[num_valid_sets].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
  
--	if (msg_id == MOD_HDCP_MESSAGE_ID_INVALID) {
-+	if (msg_id == MOD_HDCP_MESSAGE_ID_INVALID ||
-+		msg_id >= MOD_HDCP_MESSAGE_ID_MAX)
- 		return MOD_HDCP_STATUS_DDC_FAILURE;
--	}
- 
- 	if (is_dp_hdcp(hdcp)) {
-+		int num_dpcd_addrs = sizeof(hdcp_dpcd_addrs) /
-+			sizeof(hdcp_dpcd_addrs[0]);
-+		if (msg_id >= num_dpcd_addrs)
-+			return MOD_HDCP_STATUS_DDC_FAILURE;
-+
- 		while (buf_len > 0) {
- 			cur_size = MIN(buf_len, HDCP_MAX_AUX_TRANSACTION_SIZE);
- 			success = hdcp->config.ddc.funcs.read_dpcd(hdcp->config.ddc.handle,
-@@ -175,6 +180,11 @@ static enum mod_hdcp_status read(struct mod_hdcp *hdcp,
- 			data_offset += cur_size;
+ 			/* Modify previous watermark range to cover up to max */
+-			ranges->reader_wm_sets[num_valid_sets - 1].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
++			if (num_valid_sets > 0)
++				ranges->reader_wm_sets[num_valid_sets - 1].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
  		}
- 	} else {
-+		int num_i2c_offsets = sizeof(hdcp_i2c_offsets) /
-+			sizeof(hdcp_i2c_offsets[0]);
-+		if (msg_id >= num_i2c_offsets)
-+			return MOD_HDCP_STATUS_DDC_FAILURE;
-+
- 		success = hdcp->config.ddc.funcs.read_i2c(
- 				hdcp->config.ddc.handle,
- 				HDCP_I2C_ADDR,
-@@ -219,11 +229,16 @@ static enum mod_hdcp_status write(struct mod_hdcp *hdcp,
- 	uint32_t cur_size = 0;
- 	uint32_t data_offset = 0;
- 
--	if (msg_id == MOD_HDCP_MESSAGE_ID_INVALID) {
-+	if (msg_id == MOD_HDCP_MESSAGE_ID_INVALID ||
-+		msg_id >= MOD_HDCP_MESSAGE_ID_MAX)
- 		return MOD_HDCP_STATUS_DDC_FAILURE;
--	}
- 
- 	if (is_dp_hdcp(hdcp)) {
-+		int num_dpcd_addrs = sizeof(hdcp_dpcd_addrs) /
-+			sizeof(hdcp_dpcd_addrs[0]);
-+		if (msg_id >= num_dpcd_addrs)
-+			return MOD_HDCP_STATUS_DDC_FAILURE;
-+
- 		while (buf_len > 0) {
- 			cur_size = MIN(buf_len, HDCP_MAX_AUX_TRANSACTION_SIZE);
- 			success = hdcp->config.ddc.funcs.write_dpcd(
-@@ -239,6 +254,11 @@ static enum mod_hdcp_status write(struct mod_hdcp *hdcp,
- 			data_offset += cur_size;
- 		}
- 	} else {
-+		int num_i2c_offsets = sizeof(hdcp_i2c_offsets) /
-+			sizeof(hdcp_i2c_offsets[0]);
-+		if (msg_id >= num_i2c_offsets)
-+			return MOD_HDCP_STATUS_DDC_FAILURE;
-+
- 		hdcp->buf[0] = hdcp_i2c_offsets[msg_id];
- 		memmove(&hdcp->buf[1], buf, buf_len);
- 		success = hdcp->config.ddc.funcs.write_i2c(
+ 		num_valid_sets++;
+ 	}
 -- 
 2.43.0
 
