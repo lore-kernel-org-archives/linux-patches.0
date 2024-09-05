@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F135195FCE;
-	Thu,  5 Sep 2024 09:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A982197A77;
+	Thu,  5 Sep 2024 09:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529452; cv=none; b=kifTUZTb+8sh+VB+0hIQqmkeSBCP+l8JSRkoIp5WumvPMxbnO2E16CbPa6/nSQdQXwTdJczcAQr9+H+GEH/X/M5PGTRDdXbJTi+xbojdTHa0R/v5ZFsNGGfLxSSuxe86RMYeGsY1q5KYtZB+iF2F7JaOwpdBylc4w+yz8WeON/o=
+	t=1725529455; cv=none; b=iVpe9IlSoizfpZhj/MmByc5bvWDE58XmDWMc6zZboBQgaAQK3J5QsnE6vnUTM5PfrSLPh76z0BlNtn5FLYXipMGARUd6ITY/bjLr52SGbqXRpeM8mZXBAvvdRuxfPTU9HqcDJSMRzTPi6HYU1qaxNsfuWaQyrh6+R8gd5iKbrzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529452; c=relaxed/simple;
-	bh=KGmB07st3Jl/kNHhzprXo2N/VwhQftg0/qgntI4xweo=;
+	s=arc-20240116; t=1725529455; c=relaxed/simple;
+	bh=Ho6TRf3bAJNdmqY4PShiZDvcDdmCPaplCFl1JHtY5Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6IG/qlYcZV7dAu302vXMoFHswIBuCIl3U3nnyLApJ47ygjbPZyMoz/UkCqWvRZG8urab8V5jxXiT2kmRrVcBPR5a/LmrNKoXL1t1MDI/vDBejHSPK0hrwnHn6WZH0zm4XRrUiVFsAcT0EnPW0pV01m1Z8ekzyyJrZPyx/CJyOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBaWqsmC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gf1bBl8yhvr1RAJsKhBgWcVyyTkqBkL3MBr8Iecnmx49Xy/EWXufPKcYcLGoDvbZISKD2Mklvmp09zHOSsAKY4NBqRw9KwKnkZxBojPSPPglXtbqG5Vz5HYv8xpCgzVBNbImNuMqUhmHbaxIKxE2S9QyyoGL/8uSKjSGtnBQzXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y224dx24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBaWqsmC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F5FC4CEC3;
-	Thu,  5 Sep 2024 09:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y224dx24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEFAC4CEC3;
+	Thu,  5 Sep 2024 09:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529451;
-	bh=KGmB07st3Jl/kNHhzprXo2N/VwhQftg0/qgntI4xweo=;
+	s=korg; t=1725529455;
+	bh=Ho6TRf3bAJNdmqY4PShiZDvcDdmCPaplCFl1JHtY5Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBaWqsmC0vpof/xioxhgVHQTie3FKzOo5fPzShrw5QWQ0v+qhLLd1mw5vgehaiQSm
-	 xO4uhPm1qzXf8eXX4AU1LNTaZQ9cdfo19Wn6Lh+FgzWoj0Np04jfa/7ZQA+7b/aDrF
-	 0RdxSC7hMCkBTjh9xhYjNEdwPsMg43OFfdPx5vw0=
+	b=Y224dx24M6H435tSgr9whIXh9vxhL/i/nvcq3pb2xYOR6rJYbVvjeZcq1QJr7OGYg
+	 Z06WanshRGOHFr3HKwwQtnxnBCTuawiiWaJZS4vS3vSgKAZDIAzXDrsuXYxdm4j2DQ
+	 7rKRJI+zXE0Fv4O/SM5/hKg44J9isQCSWkvAN3ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 038/184] selftests: mptcp: join: check re-re-adding ID 0 signal
-Date: Thu,  5 Sep 2024 11:39:11 +0200
-Message-ID: <20240905093733.736507774@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 039/184] selftests: mptcp: join: test for flush/re-add endpoints
+Date: Thu,  5 Sep 2024 11:39:12 +0200
+Message-ID: <20240905093733.775036193@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,93 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit f18fa2abf81099d822d842a107f8c9889c86043c ]
+commit e06959e9eebdfea4654390f53b65cff57691872e upstream.
 
-This test extends "delete re-add signal" to validate the previous
-commit: when the 'signal' endpoint linked to the initial subflow (ID 0)
-is re-added multiple times, it will re-send the ADD_ADDR with id 0. The
-client should still be able to re-create this subflow, even if the
-add_addr_accepted limit has been reached as this special address is not
-considered as a new address.
+After having flushed endpoints that didn't cause the creation of new
+subflows, it is important to check endpoints can be re-created, re-using
+previously used IDs.
+
+Before the previous commit, the client would not have been able to
+re-create the subflow that was previously rejected.
 
 The 'Fixes' tag here below is the same as the one from the previous
 commit: this patch here is not fixing anything wrong in the selftests,
 but it validates the previous fix for an issue introduced by this commit
 ID.
 
-Fixes: d0876b2284cf ("mptcp: add the incoming RM_ADDR support")
+Fixes: 06faa2271034 ("mptcp: remove multi addresses and subflows in PM")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-6-38035d40de5b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../testing/selftests/net/mptcp/mptcp_join.sh | 32 ++++++++++++-------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   30 ++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-index 73f9db065788e..3b65c462d6ddc 100755
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3688,7 +3688,7 @@ endpoint_tests()
- 		# broadcast IP: no packet for this address will be received on ns1
- 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
- 		pm_nl_add_endpoint $ns1 10.0.1.1 id 42 flags signal
--		test_linkfail=4 speed=20 \
-+		test_linkfail=4 speed=5 \
- 			run_tests $ns1 $ns2 10.0.1.1 &
- 		local tests_pid=$!
- 
-@@ -3717,7 +3717,17 @@ endpoint_tests()
- 
- 		pm_nl_add_endpoint $ns1 10.0.1.1 id 99 flags signal
- 		wait_mpj $ns2
--		chk_subflow_nr "after re-add" 3
-+		chk_subflow_nr "after re-add ID 0" 3
-+		chk_mptcp_info subflows 3 subflows 3
-+
-+		pm_nl_del_endpoint $ns1 99 10.0.1.1
-+		sleep 0.5
-+		chk_subflow_nr "after re-delete ID 0" 2
-+		chk_mptcp_info subflows 2 subflows 2
-+
-+		pm_nl_add_endpoint $ns1 10.0.1.1 id 88 flags signal
-+		wait_mpj $ns2
-+		chk_subflow_nr "after re-re-add ID 0" 3
- 		chk_mptcp_info subflows 3 subflows 3
- 		mptcp_lib_kill_wait $tests_pid
- 
-@@ -3727,19 +3737,19 @@ endpoint_tests()
- 		chk_evt_nr ns1 MPTCP_LIB_EVENT_ESTABLISHED 1
- 		chk_evt_nr ns1 MPTCP_LIB_EVENT_ANNOUNCED 0
- 		chk_evt_nr ns1 MPTCP_LIB_EVENT_REMOVED 0
--		chk_evt_nr ns1 MPTCP_LIB_EVENT_SUB_ESTABLISHED 4
--		chk_evt_nr ns1 MPTCP_LIB_EVENT_SUB_CLOSED 2
-+		chk_evt_nr ns1 MPTCP_LIB_EVENT_SUB_ESTABLISHED 5
-+		chk_evt_nr ns1 MPTCP_LIB_EVENT_SUB_CLOSED 3
- 
- 		chk_evt_nr ns2 MPTCP_LIB_EVENT_CREATED 1
- 		chk_evt_nr ns2 MPTCP_LIB_EVENT_ESTABLISHED 1
--		chk_evt_nr ns2 MPTCP_LIB_EVENT_ANNOUNCED 5
--		chk_evt_nr ns2 MPTCP_LIB_EVENT_REMOVED 3
--		chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_ESTABLISHED 4
--		chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
-+		chk_evt_nr ns2 MPTCP_LIB_EVENT_ANNOUNCED 6
-+		chk_evt_nr ns2 MPTCP_LIB_EVENT_REMOVED 4
-+		chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_ESTABLISHED 5
-+		chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_CLOSED 3
- 
--		chk_join_nr 4 4 4
--		chk_add_nr 5 5
--		chk_rm_nr 3 2 invert
-+		chk_join_nr 5 5 5
-+		chk_add_nr 6 6
-+		chk_rm_nr 4 3 invert
+@@ -3752,6 +3752,36 @@ endpoint_tests()
+ 		chk_rm_nr 4 3 invert
  	fi
  
++	# flush and re-add
++	if reset_with_tcp_filter "flush re-add" ns2 10.0.3.2 REJECT OUTPUT &&
++	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
++		pm_nl_set_limits $ns1 0 2
++		pm_nl_set_limits $ns2 1 2
++		# broadcast IP: no packet for this address will be received on ns1
++		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
++		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
++		test_linkfail=4 speed=20 \
++			run_tests $ns1 $ns2 10.0.1.1 &
++		local tests_pid=$!
++
++		wait_attempt_fail $ns2
++		chk_subflow_nr "before flush" 1
++		chk_mptcp_info subflows 0 subflows 0
++
++		pm_nl_flush_endpoint $ns2
++		pm_nl_flush_endpoint $ns1
++		wait_rm_addr $ns2 0
++		ip netns exec "${ns2}" ${iptables} -D OUTPUT -s "10.0.3.2" -p tcp -j REJECT
++		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
++		wait_mpj $ns2
++		pm_nl_add_endpoint $ns1 10.0.3.1 id 2 flags signal
++		wait_mpj $ns2
++		mptcp_lib_kill_wait $tests_pid
++
++		chk_join_nr 2 2 2
++		chk_add_nr 2 2
++		chk_rm_nr 1 0 invert
++	fi
  }
--- 
-2.43.0
-
+ 
+ # [$1: error message]
 
 
