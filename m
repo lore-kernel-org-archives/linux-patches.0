@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7FE154BFF;
-	Thu,  5 Sep 2024 09:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795B919538A;
+	Thu,  5 Sep 2024 09:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530141; cv=none; b=qMXxkuZE67Uvzy0/sHfXW8KpEqewicazqQ8Ryh4Bo7HH4mzRQn/6bZTJ2TBtC9ne6gMvvbcAkddutSfu6zVW1jdcqMJYpXMWia0NMZy+YmMmuNe70Y6rKieubKOc0S4T3qN851WiPFD9eqs7cuKjPuPzsaBoaNH4s7/uFkV3yNU=
+	t=1725530144; cv=none; b=eneqZRXT3jpg8ax0Tbe9mBclsL+a4uF849DI/nHQOZUA05KKldhhpJbqOBpQLBJlXvQ8SqOBW7vgQGPhwiHUAGaCs0zzvhLornjLH1hjYTm6t2XGWv49s/fFUxpHppEmtVDhD0BAIPG/TKAmrK3x786ZnhtBUg4fyy0r4kQny7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530141; c=relaxed/simple;
-	bh=I8r/D9mMv3YlV5u8Da3Jzih4lT01FJvSRAcVu++uoKY=;
+	s=arc-20240116; t=1725530144; c=relaxed/simple;
+	bh=3djIWIBkZZsDqF/uaHa2Uy2uqb2ayR3UHWt+N1r6qAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKmZBrMWH6UxLnWLuyO5lznBUgHu8BL69ur6ZYYTetBbcLCDr7LLW3FiF51uHR7bNcqnen80q9knWQXQyIBAm7C2faAWHFoaZPiNmSdXRfSLuUtU9nCOtyLyaR1spmhhiwGdAoWbdUu5N8EFodsk/OJtEWV2BHL8ffMD7J+dCfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=km0sWpiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/DJLvK7bYsX+9ncvZ/Z+cIMN1rmSefnbfW2/oXQoNGahsQR5pYFAySfkHh/YhMcjfqqX55xPCHgVUjIzRs7JMfnUw67JbHrsHC3vpcaOtkoWDp5aCSiC9WXTQSQp+l/HdsxyR3MGNSAzxqr+aEm95W2RBhi/eV9pFQ5DbjaE/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywVLORL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="km0sWpiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5719C4CEC3;
-	Thu,  5 Sep 2024 09:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywVLORL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6F8C4CEC3;
+	Thu,  5 Sep 2024 09:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530141;
-	bh=I8r/D9mMv3YlV5u8Da3Jzih4lT01FJvSRAcVu++uoKY=;
+	s=korg; t=1725530144;
+	bh=3djIWIBkZZsDqF/uaHa2Uy2uqb2ayR3UHWt+N1r6qAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=km0sWpiGgS1GpQuVXOMy6y2dlXQqwZlBKRdgyjwwpY/TCDZMzj36CLXK+O0QjSN0f
-	 fUzZWGtib5mfEEdx2Z1ZNvjSoKjFKYlSrFriwMh7q2XfH+13DHakdAAXbs4ofEBFRG
-	 VqE4hakTK2Zae+dfUy7clwyjVFYLRM/9jAgMFBLE=
+	b=ywVLORL5TVwZn0lGVpt68QuRcc8ZpZkxTWpmUlpxb26AqwgAoco+TkkyAcoqARLkk
+	 +6rw3HWUD2absOD3TnP/oXdNpyAu6nbqPy56DhwezBC1RqqGSruEd2gRLwY9LPnliv
+	 Edk7akXhnfDtg+JhPcFI1+mCwc+kev2i4TKMWSz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 035/132] selftests: mptcp: join: test for flush/re-add endpoints
-Date: Thu,  5 Sep 2024 11:40:22 +0200
-Message-ID: <20240905093723.608136173@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 026/132] selftests: mptcp: userspace pm get addr tests
+Date: Thu,  5 Sep 2024 11:40:13 +0200
+Message-ID: <20240905093723.253866229@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -51,71 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit e06959e9eebdfea4654390f53b65cff57691872e upstream.
+[ Upstream commit 4cc5cc7ca052c816e20ed0cbc160299b454cbb75 ]
 
-After having flushed endpoints that didn't cause the creation of new
-subflows, it is important to check endpoints can be re-created, re-using
-previously used IDs.
+This patch adds a new helper userspace_pm_get_addr() in mptcp_join.sh.
+In it, parse the token value from the output of 'pm_nl_ctl events', then
+pass it to pm_nl_ctl get_addr command. Use this helper in userspace pm
+dump tests.
 
-Before the previous commit, the client would not have been able to
-re-create the subflow that was previously rejected.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 06faa2271034 ("mptcp: remove multi addresses and subflows in PM")
-Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-6-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: e93681afcb96 ("selftests: mptcp: join: cannot rm sf if closed")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   30 ++++++++++++++++++++++++
+ .../testing/selftests/net/mptcp/mptcp_join.sh | 30 +++++++++++++++++++
  1 file changed, 30 insertions(+)
 
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index df071b8c675fb..f03df10947c15 100755
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3858,6 +3858,36 @@ endpoint_tests()
- 		chk_rm_nr 4 3 invert
- 	fi
- 
-+	# flush and re-add
-+	if reset_with_tcp_filter "flush re-add" ns2 10.0.3.2 REJECT OUTPUT &&
-+	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 1 2
-+		# broadcast IP: no packet for this address will be received on ns1
-+		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
-+		test_linkfail=4 speed=20 \
-+			run_tests $ns1 $ns2 10.0.1.1 &
-+		local tests_pid=$!
-+
-+		wait_attempt_fail $ns2
-+		chk_subflow_nr "before flush" 1
-+		chk_mptcp_info subflows 0 subflows 0
-+
-+		pm_nl_flush_endpoint $ns2
-+		pm_nl_flush_endpoint $ns1
-+		wait_rm_addr $ns2 0
-+		ip netns exec "${ns2}" ${iptables} -D OUTPUT -s "10.0.3.2" -p tcp -j REJECT
-+		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
-+		wait_mpj $ns2
-+		pm_nl_add_endpoint $ns1 10.0.3.1 id 2 flags signal
-+		wait_mpj $ns2
-+		mptcp_lib_kill_wait $tests_pid
-+
-+		chk_join_nr 2 2 2
-+		chk_add_nr 2 2
-+		chk_rm_nr 1 0 invert
-+	fi
+@@ -3454,6 +3454,18 @@ userspace_pm_dump()
+ 	ip netns exec $1 ./pm_nl_ctl dump token $tk
  }
  
- # [$1: error message]
++# $1: ns ; $2: id
++userspace_pm_get_addr()
++{
++	local evts=$evts_ns1
++	local tk
++
++	[ "$1" == "$ns2" ] && evts=$evts_ns2
++	tk=$(mptcp_lib_evts_get_info token "$evts")
++
++	ip netns exec $1 ./pm_nl_ctl get $2 token $tk
++}
++
+ userspace_pm_chk_dump_addr()
+ {
+ 	local ns="${1}"
+@@ -3469,6 +3481,21 @@ userspace_pm_chk_dump_addr()
+ 	fi
+ }
+ 
++userspace_pm_chk_get_addr()
++{
++	local ns="${1}"
++	local id="${2}"
++	local exp="${3}"
++
++	print_check "get id ${id} addr"
++
++	if mptcp_lib_kallsyms_has "mptcp_userspace_pm_get_addr$"; then
++		check_output "userspace_pm_get_addr ${ns} ${id}" "${exp}"
++	else
++		print_skip
++	fi
++}
++
+ userspace_tests()
+ {
+ 	# userspace pm type prevents add_addr
+@@ -3563,6 +3590,8 @@ userspace_tests()
+ 		userspace_pm_chk_dump_addr "${ns1}" \
+ 			$'id 10 flags signal 10.0.2.1\nid 20 flags signal 10.0.3.1' \
+ 			"signal"
++		userspace_pm_chk_get_addr "${ns1}" "10" "id 10 flags signal 10.0.2.1"
++		userspace_pm_chk_get_addr "${ns1}" "20" "id 20 flags signal 10.0.3.1"
+ 		userspace_pm_rm_addr $ns1 10
+ 		userspace_pm_rm_sf $ns1 "::ffff:10.0.2.1" $SUB_ESTABLISHED
+ 		userspace_pm_chk_dump_addr "${ns1}" \
+@@ -3593,6 +3622,7 @@ userspace_tests()
+ 		userspace_pm_chk_dump_addr "${ns2}" \
+ 			"id 20 flags subflow 10.0.3.2" \
+ 			"subflow"
++		userspace_pm_chk_get_addr "${ns2}" "20" "id 20 flags subflow 10.0.3.2"
+ 		userspace_pm_rm_addr $ns2 20
+ 		userspace_pm_rm_sf $ns2 10.0.3.2 $SUB_ESTABLISHED
+ 		userspace_pm_chk_dump_addr "${ns2}" \
+-- 
+2.43.0
+
 
 
