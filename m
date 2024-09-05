@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CE41991C9;
-	Thu,  5 Sep 2024 09:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC43718732F;
+	Thu,  5 Sep 2024 09:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529895; cv=none; b=HsMcC0btuyGOzjNizlvVXiiJFQzsLDlZqG7Oo+t+5HUd9+GIx4pBqCTZy5HgxeMWoJPr6BmCzgqX47ML01yAmGavHtmp4P1UKNQcysXepjJVbW41zXYpVCkHAn7ujcmFe2lfmveOM6sNYMczWuwU8mnYYXYZ2XeQ/GR+CdV7ZEA=
+	t=1725529898; cv=none; b=XH429bd7gY0POjSISua8VJBOaXsyfUXv86B9rsiguBhTRBGU1a47MPDijCxuCrF/mJQQ18fV2H8u7hm2MQ1PqYk2dvRrtJdZVaChtvDRo+vpalgrugqiutUr/YUsLM6Ku1+69QFVce/sGjk4lmYiBnD3Gm1JdWizWjKgYOo8kGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529895; c=relaxed/simple;
-	bh=tHEvlODD0tqitD3+LNfW37TrH9mZeOD+ktySSHFPrdA=;
+	s=arc-20240116; t=1725529898; c=relaxed/simple;
+	bh=4XXjbyQJieJrE/VLBdR9GilwTDffCfVw7gBt++7ltas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QU2Mc3t9hmGC/MbTrYw7+InwGLoti/NvmDMACW4kBYTeOACXi8cy03g7TephFgS2gsx1d8Sut/OvKuT8Bmyjt7hBf6dx+wfQWEm9reSKosqzznuVtpYbv+h3TSIJlBaxjjcIk1MrUxbzWPGaUB4TTMvJbmSPlv0GKz2+IXQsp6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTUHLuw6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=er8RsW4IiX0QBtlBXVJW5VsPfZgXx8AORP3GdzgVjzVPlcxM4QqUiHyhkgkp5k8zwuolVba6BKqKhi7ejArbopeZu+qldrZCy+2Mrn0QUMBFg4e731IN7zIywuI6ExY+ACbq4eVojZ3c3+0i8BOMHtohyMlyqjl+5uWHxD+yZBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQviBXTs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTUHLuw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0836C4CEC3;
-	Thu,  5 Sep 2024 09:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQviBXTs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E443BC4CEC3;
+	Thu,  5 Sep 2024 09:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529895;
-	bh=tHEvlODD0tqitD3+LNfW37TrH9mZeOD+ktySSHFPrdA=;
+	s=korg; t=1725529898;
+	bh=4XXjbyQJieJrE/VLBdR9GilwTDffCfVw7gBt++7ltas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTUHLuw6HJ7VzMbZIqky5YR1rDdr22/ZpCOWCUy+y00+OqhjjJHzFYnkKA5kmo+0H
-	 dwV8OIoL+OLQCiDKcAiAE2kLHwjrZdd94YnaurvrY2OSiLQa967wGfWebQ0IqMuPUZ
-	 7wHy7Iu6TFTSHPqiYeyOqKtenGX2cUpZYnbrAHN8=
+	b=UQviBXTsMSxyCgaV6dlYIZlCbVEwY0oFTVCJddy0vv9qulAQagRdV2knXZnykOvXL
+	 kmySg/g1rPXR+xhIXZw+6U8wfLqmM9i1+h46N6awarqFpZ6PLU6J1w81YJnoLvq/OA
+	 K4R+HKYMS5w7jeb7BvkduFUJcXgvCQJ4scmWNpgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 158/184] wifi: cfg80211: make hash table duplicates more survivable
-Date: Thu,  5 Sep 2024 11:41:11 +0200
-Message-ID: <20240905093738.512444250@linuxfoundation.org>
+Subject: [PATCH 6.10 176/184] drm/amd/display: Check BIOS images before it is used
+Date: Thu,  5 Sep 2024 11:41:29 +0200
+Message-ID: <20240905093739.205575872@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -50,128 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 7f12e26a194d0043441f870708093d9c2c3bad7d ]
+[ Upstream commit 8b0ddf19cca2a352b2a7e01d99d3ba949a99c84c ]
 
-Jiazi Li reported that they occasionally see hash table duplicates
-as evidenced by the WARN_ON() in rb_insert_bss() in this code.  It
-isn't clear how that happens, nor have I been able to reproduce it,
-but if it does happen, the kernel crashes later, when it tries to
-unhash the entry that's now not hashed.
+BIOS images may fail to load and null checks are added before they are
+used.
 
-Try to make this situation more survivable by removing the BSS from
-the list(s) as well, that way it's fully leaked here (as had been
-the intent in the hash insert error path), and no longer reachable
-through the list(s) so it shouldn't be unhashed again later.
+This fixes 6 NULL_RETURNS issues reported by Coverity.
 
-Link: https://lore.kernel.org/r/20231026013528.GA24122@Jiazi.Li
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://msgid.link/20240607181726.36835-2-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 46 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 34 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 292b530a6dd3..64c779788a64 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1604,7 +1604,7 @@ struct cfg80211_bss *__cfg80211_get_bss(struct wiphy *wiphy,
- }
- EXPORT_SYMBOL(__cfg80211_get_bss);
- 
--static void rb_insert_bss(struct cfg80211_registered_device *rdev,
-+static bool rb_insert_bss(struct cfg80211_registered_device *rdev,
- 			  struct cfg80211_internal_bss *bss)
- {
- 	struct rb_node **p = &rdev->bss_tree.rb_node;
-@@ -1620,7 +1620,7 @@ static void rb_insert_bss(struct cfg80211_registered_device *rdev,
- 
- 		if (WARN_ON(!cmp)) {
- 			/* will sort of leak this BSS */
--			return;
-+			return false;
- 		}
- 
- 		if (cmp < 0)
-@@ -1631,6 +1631,7 @@ static void rb_insert_bss(struct cfg80211_registered_device *rdev,
- 
- 	rb_link_node(&bss->rbn, parent, p);
- 	rb_insert_color(&bss->rbn, &rdev->bss_tree);
-+	return true;
- }
- 
- static struct cfg80211_internal_bss *
-@@ -1657,6 +1658,34 @@ rb_find_bss(struct cfg80211_registered_device *rdev,
- 	return NULL;
- }
- 
-+static void cfg80211_insert_bss(struct cfg80211_registered_device *rdev,
-+				struct cfg80211_internal_bss *bss)
-+{
-+	lockdep_assert_held(&rdev->bss_lock);
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
+index 25fe1a124029..3bacf470f7c5 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
+@@ -665,6 +665,9 @@ static enum bp_result get_ss_info_v3_1(
+ 	ss_table_header_include = ((ATOM_ASIC_INTERNAL_SS_INFO_V3 *) bios_get_image(&bp->base,
+ 				DATA_TABLES(ASIC_InternalSS_Info),
+ 				struct_size(ss_table_header_include, asSpreadSpectrum, 1)));
++	if (!ss_table_header_include)
++		return BP_RESULT_UNSUPPORTED;
 +
-+	if (!rb_insert_bss(rdev, bss))
-+		return;
-+	list_add_tail(&bss->list, &rdev->bss_list);
-+	rdev->bss_entries++;
-+}
+ 	table_size =
+ 		(le16_to_cpu(ss_table_header_include->sHeader.usStructureSize)
+ 				- sizeof(ATOM_COMMON_TABLE_HEADER))
+@@ -1034,6 +1037,8 @@ static enum bp_result get_ss_info_from_internal_ss_info_tbl_V2_1(
+ 				&bp->base,
+ 				DATA_TABLES(ASIC_InternalSS_Info),
+ 				struct_size(header, asSpreadSpectrum, 1)));
++	if (!header)
++		return result;
+ 
+ 	memset(info, 0, sizeof(struct spread_spectrum_info));
+ 
+@@ -1107,6 +1112,8 @@ static enum bp_result get_ss_info_from_ss_info_table(
+ 	get_atom_data_table_revision(header, &revision);
+ 
+ 	tbl = GET_IMAGE(ATOM_SPREAD_SPECTRUM_INFO, DATA_TABLES(SS_Info));
++	if (!tbl)
++		return result;
+ 
+ 	if (1 != revision.major || 2 > revision.minor)
+ 		return result;
+@@ -1634,6 +1641,8 @@ static uint32_t get_ss_entry_number_from_ss_info_tbl(
+ 
+ 	tbl = GET_IMAGE(ATOM_SPREAD_SPECTRUM_INFO,
+ 			DATA_TABLES(SS_Info));
++	if (!tbl)
++		return number;
+ 
+ 	if (1 != revision.major || 2 > revision.minor)
+ 		return number;
+@@ -1716,6 +1725,8 @@ static uint32_t get_ss_entry_number_from_internal_ss_info_tbl_v2_1(
+ 				&bp->base,
+ 				DATA_TABLES(ASIC_InternalSS_Info),
+ 				struct_size(header_include, asSpreadSpectrum, 1)));
++	if (!header_include)
++		return 0;
+ 
+ 	size = (le16_to_cpu(header_include->sHeader.usStructureSize)
+ 			- sizeof(ATOM_COMMON_TABLE_HEADER))
+@@ -1755,6 +1766,9 @@ static uint32_t get_ss_entry_number_from_internal_ss_info_tbl_V3_1(
+ 	header_include = ((ATOM_ASIC_INTERNAL_SS_INFO_V3 *) bios_get_image(&bp->base,
+ 				DATA_TABLES(ASIC_InternalSS_Info),
+ 				struct_size(header_include, asSpreadSpectrum, 1)));
++	if (!header_include)
++		return number;
 +
-+static void cfg80211_rehash_bss(struct cfg80211_registered_device *rdev,
-+                                struct cfg80211_internal_bss *bss)
-+{
-+	lockdep_assert_held(&rdev->bss_lock);
-+
-+	rb_erase(&bss->rbn, &rdev->bss_tree);
-+	if (!rb_insert_bss(rdev, bss)) {
-+		list_del(&bss->list);
-+		if (!list_empty(&bss->hidden_list))
-+			list_del_init(&bss->hidden_list);
-+		if (!list_empty(&bss->pub.nontrans_list))
-+			list_del_init(&bss->pub.nontrans_list);
-+		rdev->bss_entries--;
-+	}
-+	rdev->bss_generation++;
-+}
-+
- static bool cfg80211_combine_bsses(struct cfg80211_registered_device *rdev,
- 				   struct cfg80211_internal_bss *new)
- {
-@@ -1969,9 +1998,7 @@ __cfg80211_bss_update(struct cfg80211_registered_device *rdev,
- 			bss_ref_get(rdev, bss_from_pub(tmp->pub.transmitted_bss));
- 		}
- 
--		list_add_tail(&new->list, &rdev->bss_list);
--		rdev->bss_entries++;
--		rb_insert_bss(rdev, new);
-+		cfg80211_insert_bss(rdev, new);
- 		found = new;
- 	}
- 
-@@ -3354,19 +3381,14 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
- 		if (!WARN_ON(!__cfg80211_unlink_bss(rdev, new)))
- 			rdev->bss_generation++;
- 	}
--
--	rb_erase(&cbss->rbn, &rdev->bss_tree);
--	rb_insert_bss(rdev, cbss);
--	rdev->bss_generation++;
-+	cfg80211_rehash_bss(rdev, cbss);
- 
- 	list_for_each_entry_safe(nontrans_bss, tmp,
- 				 &cbss->pub.nontrans_list,
- 				 nontrans_list) {
- 		bss = bss_from_pub(nontrans_bss);
- 		bss->pub.channel = chan;
--		rb_erase(&bss->rbn, &rdev->bss_tree);
--		rb_insert_bss(rdev, bss);
--		rdev->bss_generation++;
-+		cfg80211_rehash_bss(rdev, bss);
- 	}
- 
- done:
+ 	size = (le16_to_cpu(header_include->sHeader.usStructureSize) -
+ 			sizeof(ATOM_COMMON_TABLE_HEADER)) /
+ 					sizeof(ATOM_ASIC_SS_ASSIGNMENT_V3);
 -- 
 2.43.0
 
