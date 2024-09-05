@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061511990BB;
-	Thu,  5 Sep 2024 09:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3D61991B0;
+	Thu,  5 Sep 2024 09:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529693; cv=none; b=GOLjIIMlTghJHkEoh/eWXfsaf5ayf2A4L4upkeefYRr1t/sLG4flh6dBPjPO5U5QujB+B2b9W9a5ywkPZf9siBjfEnwo7zU/e20TEY8ky7RHmVpKvgoh5mlsxlMOFvXKPY3F4oTLJSWza8VY5wz8NBmBkT+54Zk9fZ/oInJ634U=
+	t=1725529696; cv=none; b=iFW5W/Ey18t7Gbc7fqdTzUG5N3XCVBhMfn9YLEHXP1kT3+gcpEcr2+eYmmCTREEDWO7IThpY0Tc2+VwzdYszzkDi//fq7GMbMDBEskCyeZjiHOV978CNUV0wUNE9TmtDcVfKWxz1w8Awxymd4INuz+6ywTSQAtMHWQrCact0sus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529693; c=relaxed/simple;
-	bh=FY+r0V4xcDIO/h50dSEiarT1Z7lCtOjpoE8BCPBb/tI=;
+	s=arc-20240116; t=1725529696; c=relaxed/simple;
+	bh=TsHYj67o7kieH+UxqQqRIpRn/633xcyAZ+cQkaAABiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjlcJPs0/EkBTP5Bq8i9fA9PCBS8gSEBNXE7HOqmLYznOBP0acmi57gL1CI1JcYCUwYRCg0HbZWC6ENgmyuI5EjA6ijcKUCg+G8OXSG+ULPyoK2VK+BAOAV74Qy5dHDlr/vfUdhhnCX+f5XsSlU6CJrwtv59sauMLDMWo5b0eTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxvbZFTS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ozjq9WzWPJmrV9Ekm4C36JOBEwlIFKAGLRbky15Agu3MOBhMhwz3qW1zftjlUWCtXtm8iVaKzc++yM9Uj5oDxVPYdIPhHfi+hKQJPBPXr/fsKYceThsDd/meWZvT7EZE7OD4uRZfVm3X8htVUJ2h3CfgJFImw08LvmyYsl5BTsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYmDKPYE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxvbZFTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8233AC4CEC3;
-	Thu,  5 Sep 2024 09:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYmDKPYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19C3C4CEC3;
+	Thu,  5 Sep 2024 09:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529692;
-	bh=FY+r0V4xcDIO/h50dSEiarT1Z7lCtOjpoE8BCPBb/tI=;
+	s=korg; t=1725529696;
+	bh=TsHYj67o7kieH+UxqQqRIpRn/633xcyAZ+cQkaAABiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxvbZFTSAh0w6My1L7kesozwAFA13T1S0fF9jlUQKWXitLU9xrKgwjmBXxIax0xET
-	 m7qdyKUj/ftx6DoN84YnArEQoc9f4BRZtKTGMTbsDwbXfL2Wm8lkgAFN7j1LVrP8PC
-	 yvmQl6VUtlkZM+lbN2EoM7x6aluncd2GY2swUe7o=
+	b=mYmDKPYENa0sd5852cICn27Q5ek7RMyXww12JRbyq9nsR0t+EXfpuLU61ZBST9+RK
+	 Nzo9EcTDee7lpxVvpn2E4X5R/qTZyuBxeRyMELe04oIu0Z8XkLKGJ+akMea5GCdSIj
+	 s6FD8wZElFQnkkJYA53pY5j5L5Ds4QZ2vEVqFIgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <Xiaogang.Chen@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 113/184] drm/kfd: Correct pinned buffer handling at kfd restore and validate process
-Date: Thu,  5 Sep 2024 11:40:26 +0200
-Message-ID: <20240905093736.643032425@linuxfoundation.org>
+Subject: [PATCH 6.10 114/184] drm/amdgpu: fix compiler side-effect check issue for RAS_EVENT_LOG()
+Date: Thu,  5 Sep 2024 11:40:27 +0200
+Message-ID: <20240905093736.682789017@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,56 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaogang Chen <xiaogang.chen@amd.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit f326d7cc745683f53052b84382bd10567b45cd5d ]
+[ Upstream commit b712d7c20133b67f13aa134e7534369f19e1214f ]
 
-This reverts commit 8a774fe912ff ("drm/amdgpu: avoid restore process run into dead loop")
-since buffer got pinned is not related whether it needs mapping
-And skip buffer validation at kfd driver if the buffer has been pinned.
+create a new helper function to avoid compiler 'side-effect'
+check about RAS_EVENT_LOG() macro.
 
-Signed-off-by: Xiaogang Chen <Xiaogang.Chen@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 18 ++++++++++++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h | 13 ++++++-------
+ 2 files changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 48ad0c04aa72..e675e4815650 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -415,6 +415,10 @@ static int amdgpu_amdkfd_bo_validate(struct amdgpu_bo *bo, uint32_t domain,
- 		 "Called with userptr BO"))
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index 0c4ee06451e9..57fdc4ab9c54 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -4504,3 +4504,21 @@ int amdgpu_ras_reserve_page(struct amdgpu_device *adev, uint64_t pfn)
  
-+	/* bo has been pinned, not need validate it */
-+	if (bo->tbo.pin_count)
-+		return 0;
+ 	return ret;
+ }
 +
- 	amdgpu_bo_placement_from_domain(bo, domain);
++void amdgpu_ras_event_log_print(struct amdgpu_device *adev, u64 event_id,
++				const char *fmt, ...)
++{
++	struct va_format vaf;
++	va_list args;
++
++	va_start(args, fmt);
++	vaf.fmt = fmt;
++	vaf.va = &args;
++
++	if (amdgpu_ras_event_id_is_valid(adev, event_id))
++		dev_printk(KERN_INFO, adev->dev, "{%llu}%pV", event_id, &vaf);
++	else
++		dev_printk(KERN_INFO, adev->dev, "%pV", &vaf);
++
++	va_end(args);
++}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
+index 7021c4a66fb5..d06c01b978cd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
+@@ -67,13 +67,8 @@ struct amdgpu_iv_entry;
+ /* The high three bits indicates socketid */
+ #define AMDGPU_RAS_GET_FEATURES(val)  ((val) & ~AMDGPU_RAS_FEATURES_SOCKETID_MASK)
  
- 	ret = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
-@@ -2712,7 +2716,7 @@ static int confirm_valid_user_pages_locked(struct amdkfd_process_info *process_i
+-#define RAS_EVENT_LOG(_adev, _id, _fmt, ...)				\
+-do {									\
+-	if (amdgpu_ras_event_id_is_valid((_adev), (_id)))			\
+-	    dev_info((_adev)->dev, "{%llu}" _fmt, (_id), ##__VA_ARGS__);	\
+-	else								\
+-	    dev_info((_adev)->dev, _fmt, ##__VA_ARGS__);			\
+-} while (0)
++#define RAS_EVENT_LOG(adev, id, fmt, ...)	\
++	amdgpu_ras_event_log_print((adev), (id), (fmt), ##__VA_ARGS__);
  
- 		/* keep mem without hmm range at userptr_inval_list */
- 		if (!mem->range)
--			 continue;
-+			continue;
+ enum amdgpu_ras_block {
+ 	AMDGPU_RAS_BLOCK__UMC = 0,
+@@ -956,4 +951,8 @@ int amdgpu_ras_put_poison_req(struct amdgpu_device *adev,
+ 		enum amdgpu_ras_block block, uint16_t pasid,
+ 		pasid_notify pasid_fn, void *data, uint32_t reset);
  
- 		/* Only check mem with hmm range associated */
- 		valid = amdgpu_ttm_tt_get_user_pages_done(
-@@ -2957,9 +2961,6 @@ int amdgpu_amdkfd_gpuvm_restore_process_bos(void *info, struct dma_fence __rcu *
- 			if (!attachment->is_mapped)
- 				continue;
- 
--			if (attachment->bo_va->base.bo->tbo.pin_count)
--				continue;
--
- 			kfd_mem_dmaunmap_attachment(mem, attachment);
- 			ret = update_gpuvm_pte(mem, attachment, &sync_obj);
- 			if (ret) {
++__printf(3, 4)
++void amdgpu_ras_event_log_print(struct amdgpu_device *adev, u64 event_id,
++				const char *fmt, ...);
++
+ #endif
 -- 
 2.43.0
 
