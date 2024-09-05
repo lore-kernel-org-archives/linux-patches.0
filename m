@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B99198822;
-	Thu,  5 Sep 2024 09:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E24618D65E;
+	Thu,  5 Sep 2024 09:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530334; cv=none; b=BJv0L4EJfqK413CJjmbR3+TVXfXIHmmo1fwV2xPdEIqxSC/2l5j8vJ9UXoMQtiuvPWa/8bzEYQykgjesjVExtJZGqPlzPNfwb6vLL/BxVwVsHCRJhzBefVBCuoAeNfLQuefqo32D3ngTr2WSgrMM6KHu1aEIsJ3Elt8JFi+Id90=
+	t=1725530337; cv=none; b=rG8/h9wBjngfj0ucPR/p3KW38Qec7GCpU6WVuO+ns5F0faTOYnW5CkeLp28SctyTMbIUqvhRfnjS1u38n8WnhAt1Mm7DKsHKJhd33PsV1xA+MLF8PFRQfrOEhYdtVpLQ8iHR3o4Agymes8+3oQfL6vRpGSe3mtLt5eQyoi9gzrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530334; c=relaxed/simple;
-	bh=niSO8lyBPC6IWrHJqQBR4KbswuD2+uV5Wjqy/Esy4mg=;
+	s=arc-20240116; t=1725530337; c=relaxed/simple;
+	bh=0pP/wUTGw9lEFz+X/PUM2EBF69dy0kkEF73anu3TMe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOTTajwku0k3pZNCDPKv9/+VbcO7j44gd3SsWrrYZFcB9jxmxVA2HhiEH2Kh/LO3kxDetVwobgOVAia4ij4hnt3G3bq7Jv4bDxbuhmGzVf5jK/M5Fv2oUWZYucg6RdHQgoNRknfyxeAJsaS3cmE5Xb+qbUXDaEDiAtLOvfUrDZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odKTUcIv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pj7IVFvLg69sbeWiPFB7WCwhImkHhz9x6532CnVYdORvDakeD+0PXvW2qDurcHaYuQo7wprfqHC28lAuvu+imgyGrkt03ieBC86xcpHb6K5CChZnYZAas1e9fjFdxKT/e3MSnjWcNg/d5uLJtGOhGJkJ4/Z4Nb4xJX6TfqkCMRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ncDikEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odKTUcIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58676C4CEC3;
-	Thu,  5 Sep 2024 09:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ncDikEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2AFC4CEC3;
+	Thu,  5 Sep 2024 09:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530333;
-	bh=niSO8lyBPC6IWrHJqQBR4KbswuD2+uV5Wjqy/Esy4mg=;
+	s=korg; t=1725530337;
+	bh=0pP/wUTGw9lEFz+X/PUM2EBF69dy0kkEF73anu3TMe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=odKTUcIvNfrBJFGGDI+lu+JzEGnHYQLjD36OtGJAiYhlUz61Mrcby9McRP99WV0q6
-	 6zFaCVkFcCRlIj5cDJkuvMk/xM/WvXUppUEi86GF0p9XRaR7d780oXZoO+YZpsxUTt
-	 TIWBdPmaZgLdk1qofDJOF11XYhJpvVYvfXZOpJTc=
+	b=0ncDikEEwDe33ykD1B+iDm+mEPkBrVXQBuVEIweUkqpo2qUDjPB05kpvuASeaD22D
+	 Z3wL+w/HbExvbKR9wqAA+aOd2UYA41z+B5uzlw2GC6Q8AEBpYHDYa2WZmr93eEc1rc
+	 9VSytOni49Rd1SpcPV2h76+JJ/SZiuGGDcrjHUtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
 	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	winstang <winstang@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/132] drm/amd/display: added NULL check at start of dc_validate_stream
-Date: Thu,  5 Sep 2024 11:41:51 +0200
-Message-ID: <20240905093727.038074240@linuxfoundation.org>
+Subject: [PATCH 6.6 125/132] drm/amd/display: Correct the defined value for AMDGPU_DMUB_NOTIFICATION_MAX
+Date: Thu,  5 Sep 2024 11:41:52 +0200
+Message-ID: <20240905093727.075433955@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -54,41 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: winstang <winstang@amd.com>
+From: Wayne Lin <wayne.lin@amd.com>
 
-[ Upstream commit 26c56049cc4f1705b498df013949427692a4b0d5 ]
+[ Upstream commit ad28d7c3d989fc5689581664653879d664da76f0 ]
 
-[Why]
-prevent invalid memory access
+[Why & How]
+It actually exposes '6' types in enum dmub_notification_type. Not 5. Using smaller
+number to create array dmub_callback & dmub_thread_offload has potential to access
+item out of array bound. Fix it.
 
-[How]
-check if dc and stream are NULL
-
-Co-authored-by: winstang <winstang@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
 Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Signed-off-by: winstang <winstang@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 84923c5400d3..733e445331ea 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -3927,6 +3927,9 @@ void resource_build_bit_depth_reduction_params(struct dc_stream_state *stream,
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 9e4cc5eeda76..88606b805330 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -49,7 +49,7 @@
  
- enum dc_status dc_validate_stream(struct dc *dc, struct dc_stream_state *stream)
- {
-+	if (dc == NULL || stream == NULL)
-+		return DC_ERROR_UNEXPECTED;
-+
- 	struct dc_link *link = stream->link;
- 	struct timing_generator *tg = dc->res_pool->timing_generators[0];
- 	enum dc_status res = DC_OK;
+ #define AMDGPU_DM_MAX_NUM_EDP 2
+ 
+-#define AMDGPU_DMUB_NOTIFICATION_MAX 5
++#define AMDGPU_DMUB_NOTIFICATION_MAX 6
+ 
+ #define HDMI_AMD_VENDOR_SPECIFIC_DATA_BLOCK_IEEE_REGISTRATION_ID 0x00001A
+ #define AMD_VSDB_VERSION_3_FEATURECAP_REPLAYMODE 0x40
 -- 
 2.43.0
 
