@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB433192D73;
-	Thu,  5 Sep 2024 09:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A42518D65E;
+	Thu,  5 Sep 2024 09:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530274; cv=none; b=ZfyNr01srcMXHZi7Arv4Vs77MUV5KArr1OjprsvStPSzw1cwtvyOnm74pqYaJcZeCHq1OUsmMzfK9LY6tBEWya2ECfme3ZmreresNL1O7R5934rr0Lz3tQqv1dQs9EmC5WUqauB0bZP314JQwTDZgPf9/Bay3IBCZuZFGRjz3w8=
+	t=1725530278; cv=none; b=tCQVgRCmsv++BZEScCG17Loyj2rjPRcWg+s4QvCOA2X32lwpEb4Mi/PntnPimSWSJcTYYIbnimBkkdwswyUCdXCT0tdctHTaRJlq+IC9okYc0P/CDz8ctFOOe/ZbSqY5MzYgs0z131d+NtAYovVXETIlfyBSZFEEYpSLnWSWxYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530274; c=relaxed/simple;
-	bh=TIB84f8tlK8VT/5xNTuUDO1Q8mPMZaOjFThN8/BqlFg=;
+	s=arc-20240116; t=1725530278; c=relaxed/simple;
+	bh=F7WqWebCNdzFgXb/j0Eufd7l+ZIG4e4v3R0EKXbZYf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2AaPmcr3RR39Shcu+wpn/4ttACCNXUzal2R947yZG5PB8ySOyTQ3NVrgwzkE0o5APEVL4ZAjIH3pwHDlO9f8DVEFCtfmHW6IA6o396ytTkwcpxwTSp3UUm3lj86PeZBQGC7WGUQxUSxAipsGV61qwJSjy6MAYe9cAYmY55NMcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf8hbEPy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIa5lv9u9jBtRU6PaXC9M1SAMwJIRn83I3axcC19BBuHBjINRvgPNFg3cXgLVO90yy3mxOhqH+vnDR+v70UOb8VxjVIdrB5hjCoBxeaEVglnyU8q95SDdDGSimpggNOx+AfkCqkjFvziOjiLhizuzOfKTmH6dY/Wog1Czsmcvg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsAV5Nv4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf8hbEPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A013C4CEC3;
-	Thu,  5 Sep 2024 09:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsAV5Nv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCE5C4CEC3;
+	Thu,  5 Sep 2024 09:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530274;
-	bh=TIB84f8tlK8VT/5xNTuUDO1Q8mPMZaOjFThN8/BqlFg=;
+	s=korg; t=1725530277;
+	bh=F7WqWebCNdzFgXb/j0Eufd7l+ZIG4e4v3R0EKXbZYf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf8hbEPyY8RciEaGzMfH+cU8BhitDSZO+ZwqtiDNz8ldk0DXQsAHciKpkWAje6B25
-	 DOEuaHI7QAL/bjy2rxW4wayfYu6jqAf+i93d3j+6G09CPzelhJepUgg86b1duzqq2O
-	 2UMOH7NV9MPTjuTODx+yir7iV5xHtQBhdoBuR7yA=
+	b=zsAV5Nv4HcVWQzVBp0ZSdZ3H7LEGO2L+1iLjQV4Jk7rW59444bwUqYbcmnu6e+3X4
+	 CHfsF2jIwhtr1J/jjFJj/l4uDpo022P4eNjtj8kEHu/rj5OAdWRrTuL7e0Cs3QcS+p
+	 YsbEfTpMBLXRV9r2H8gHw0L6OQZntdZLniQ2B1UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haoran Liu <liuhaoran14@163.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/132] net/mlx5e: SHAMPO, Fix incorrect page release
-Date: Thu,  5 Sep 2024 11:41:35 +0200
-Message-ID: <20240905093726.430496952@linuxfoundation.org>
+Subject: [PATCH 6.6 109/132] drm/meson: plane: Add error handling
+Date: Thu,  5 Sep 2024 11:41:36 +0200
+Message-ID: <20240905093726.467711338@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -52,45 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Haoran Liu <liuhaoran14@163.com>
 
-[ Upstream commit 70bd03b89f20b9bbe51a7f73c4950565a17a45f7 ]
+[ Upstream commit 3c28b239620e249b68beeca17f429e317fa6b8d4 ]
 
-Under the following conditions:
-1) No skb created yet
-2) header_size == 0 (no SHAMPO header)
-3) header_index + 1 % MLX5E_SHAMPO_WQ_HEADER_PER_PAGE == 0 (this is the
-   last page fragment of a SHAMPO header page)
+This patch adds robust error handling to the meson_plane_create
+function in drivers/gpu/drm/meson/meson_plane.c. The function
+previously lacked proper handling for potential failure scenarios
+of the drm_universal_plane_init call.
 
-a new skb is formed with a page that is NOT a SHAMPO header page (it
-is a regular data page). Further down in the same function
-(mlx5e_handle_rx_cqe_mpwrq_shampo()), a SHAMPO header page from
-header_index is released. This is wrong and it leads to SHAMPO header
-pages being released more than once.
-
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240603212219.1037656-3-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Haoran Liu <liuhaoran14@163.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20231129113405.33057-1-liuhaoran14@163.com
+[narmstrong: fixe the commit subject]
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231129113405.33057-1-liuhaoran14@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_plane.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index 79ec6fcc9e25..57b0e26696e3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -2369,7 +2369,8 @@ static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cq
- 	if (flush)
- 		mlx5e_shampo_flush_skb(rq, cqe, match);
- free_hd_entry:
--	mlx5e_free_rx_shampo_hd_entry(rq, header_index);
-+	if (likely(head_size))
-+		mlx5e_free_rx_shampo_hd_entry(rq, header_index);
- mpwrq_cqe_out:
- 	if (likely(wi->consumed_strides < rq->mpwqe.num_strides))
- 		return;
+diff --git a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_plane.c
+index 815dfe30492b..b43ac61201f3 100644
+--- a/drivers/gpu/drm/meson/meson_plane.c
++++ b/drivers/gpu/drm/meson/meson_plane.c
+@@ -534,6 +534,7 @@ int meson_plane_create(struct meson_drm *priv)
+ 	struct meson_plane *meson_plane;
+ 	struct drm_plane *plane;
+ 	const uint64_t *format_modifiers = format_modifiers_default;
++	int ret;
+ 
+ 	meson_plane = devm_kzalloc(priv->drm->dev, sizeof(*meson_plane),
+ 				   GFP_KERNEL);
+@@ -548,12 +549,16 @@ int meson_plane_create(struct meson_drm *priv)
+ 	else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
+ 		format_modifiers = format_modifiers_afbc_g12a;
+ 
+-	drm_universal_plane_init(priv->drm, plane, 0xFF,
+-				 &meson_plane_funcs,
+-				 supported_drm_formats,
+-				 ARRAY_SIZE(supported_drm_formats),
+-				 format_modifiers,
+-				 DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
++	ret = drm_universal_plane_init(priv->drm, plane, 0xFF,
++					&meson_plane_funcs,
++					supported_drm_formats,
++					ARRAY_SIZE(supported_drm_formats),
++					format_modifiers,
++					DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
++	if (ret) {
++		devm_kfree(priv->drm->dev, meson_plane);
++		return ret;
++	}
+ 
+ 	drm_plane_helper_add(plane, &meson_plane_helper_funcs);
+ 
 -- 
 2.43.0
 
