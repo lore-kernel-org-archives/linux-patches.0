@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313CF1991AE;
-	Thu,  5 Sep 2024 09:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061511990BB;
+	Thu,  5 Sep 2024 09:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529690; cv=none; b=BmwpGGaPj0iW75NLp4gI61co5KxxlSqm4hfomfQi01NWnGVBciWmRggTtUOUhnfwWeL7QXd6sEWGZPJFSS4G+S6calz8yRhft6+T+5gwDSKoJsslPde2s5Fk8bBKaz4S98wO5QbzJWuN8QTAyzXAI0WX+K1aVpzouiCgp6DK/OM=
+	t=1725529693; cv=none; b=GOLjIIMlTghJHkEoh/eWXfsaf5ayf2A4L4upkeefYRr1t/sLG4flh6dBPjPO5U5QujB+B2b9W9a5ywkPZf9siBjfEnwo7zU/e20TEY8ky7RHmVpKvgoh5mlsxlMOFvXKPY3F4oTLJSWza8VY5wz8NBmBkT+54Zk9fZ/oInJ634U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529690; c=relaxed/simple;
-	bh=PrlTEB3YnzyGujGhSSQUJjH3+CAvBum45iPTiPrMsmg=;
+	s=arc-20240116; t=1725529693; c=relaxed/simple;
+	bh=FY+r0V4xcDIO/h50dSEiarT1Z7lCtOjpoE8BCPBb/tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiyTV1AwDL4DubOOpctx+vkJJxu8LyH3FOm+8sCGXePq2+UETdEPkIJJsZSLv8hDCubBb7IIT2gCOZGYpPITxB44UrRgTecgN91zPkakfOlmyL2nVPHqsPQIT+odQ2MtjmHwRzOU3/PD+sAUQwx8zslPCiBIjihiSPj+D4Dh0ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRyEp3j6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cjlcJPs0/EkBTP5Bq8i9fA9PCBS8gSEBNXE7HOqmLYznOBP0acmi57gL1CI1JcYCUwYRCg0HbZWC6ENgmyuI5EjA6ijcKUCg+G8OXSG+ULPyoK2VK+BAOAV74Qy5dHDlr/vfUdhhnCX+f5XsSlU6CJrwtv59sauMLDMWo5b0eTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxvbZFTS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRyEp3j6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3CDC4CEC4;
-	Thu,  5 Sep 2024 09:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxvbZFTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8233AC4CEC3;
+	Thu,  5 Sep 2024 09:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529689;
-	bh=PrlTEB3YnzyGujGhSSQUJjH3+CAvBum45iPTiPrMsmg=;
+	s=korg; t=1725529692;
+	bh=FY+r0V4xcDIO/h50dSEiarT1Z7lCtOjpoE8BCPBb/tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRyEp3j67unctk8PHh/EAsyMWQbw6Y1HuRRY/DX1N6hAhQMtw9aYf1wqS4lOPrbFe
-	 t/zUsb5SYDJsgjUfZAfdgV1sW70+YUCsvTrqpX4sFi/0nzX9224S1m6CAOqM9Qb9VG
-	 edU3LrEtPLb417h4N8EVxlxkA2BJLixhlhWoNj5c=
+	b=mxvbZFTSAh0w6My1L7kesozwAFA13T1S0fF9jlUQKWXitLU9xrKgwjmBXxIax0xET
+	 m7qdyKUj/ftx6DoN84YnArEQoc9f4BRZtKTGMTbsDwbXfL2Wm8lkgAFN7j1LVrP8PC
+	 yvmQl6VUtlkZM+lbN2EoM7x6aluncd2GY2swUe7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Xiaogang Chen <Xiaogang.Chen@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 112/184] drm/xe: Fix the warning conditions
-Date: Thu,  5 Sep 2024 11:40:25 +0200
-Message-ID: <20240905093736.604609477@linuxfoundation.org>
+Subject: [PATCH 6.10 113/184] drm/kfd: Correct pinned buffer handling at kfd restore and validate process
+Date: Thu,  5 Sep 2024 11:40:26 +0200
+Message-ID: <20240905093736.643032425@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,65 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit 4c0be90e6874b8af30541c37689780fc7c8276c9 ]
+[ Upstream commit f326d7cc745683f53052b84382bd10567b45cd5d ]
 
-The maximum timeout display uses in xe_pcode_request is 3 msec, add the
-warning in cases the function is misused with higher timeouts.
+This reverts commit 8a774fe912ff ("drm/amdgpu: avoid restore process run into dead loop")
+since buffer got pinned is not related whether it needs mapping
+And skip buffer validation at kfd driver if the buffer has been pinned.
 
-Add a warning if pcode_try_request is not passed the timeout parameter
-greater than 0.
-
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240508152216.3263109-3-himal.prasad.ghimiray@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Xiaogang Chen <Xiaogang.Chen@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pcode.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pcode.c b/drivers/gpu/drm/xe/xe_pcode.c
-index a5e7da8cf944..9c4eefdf6642 100644
---- a/drivers/gpu/drm/xe/xe_pcode.c
-+++ b/drivers/gpu/drm/xe/xe_pcode.c
-@@ -10,6 +10,7 @@
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 48ad0c04aa72..e675e4815650 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -415,6 +415,10 @@ static int amdgpu_amdkfd_bo_validate(struct amdgpu_bo *bo, uint32_t domain,
+ 		 "Called with userptr BO"))
+ 		return -EINVAL;
  
- #include <drm/drm_managed.h>
- 
-+#include "xe_assert.h"
- #include "xe_device.h"
- #include "xe_gt.h"
- #include "xe_mmio.h"
-@@ -124,6 +125,8 @@ static int pcode_try_request(struct xe_gt *gt, u32 mbox,
- {
- 	int slept, wait = 10;
- 
-+	xe_gt_assert(gt, timeout_us > 0);
++	/* bo has been pinned, not need validate it */
++	if (bo->tbo.pin_count)
++		return 0;
 +
- 	for (slept = 0; slept < timeout_us; slept += wait) {
- 		if (locked)
- 			*status = pcode_mailbox_rw(gt, mbox, &request, NULL, 1, true,
-@@ -169,6 +172,8 @@ int xe_pcode_request(struct xe_gt *gt, u32 mbox, u32 request,
- 	u32 status;
- 	int ret;
+ 	amdgpu_bo_placement_from_domain(bo, domain);
  
-+	xe_gt_assert(gt, timeout_base_ms <= 3);
-+
- 	mutex_lock(&gt->pcode.lock);
+ 	ret = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
+@@ -2712,7 +2716,7 @@ static int confirm_valid_user_pages_locked(struct amdkfd_process_info *process_i
  
- 	ret = pcode_try_request(gt, mbox, request, reply_mask, reply, &status,
-@@ -188,7 +193,6 @@ int xe_pcode_request(struct xe_gt *gt, u32 mbox, u32 request,
- 	 */
- 	drm_err(&gt_to_xe(gt)->drm,
- 		"PCODE timeout, retrying with preemption disabled\n");
--	drm_WARN_ON_ONCE(&gt_to_xe(gt)->drm, timeout_base_ms > 1);
- 	preempt_disable();
- 	ret = pcode_try_request(gt, mbox, request, reply_mask, reply, &status,
- 				true, 50 * 1000, true);
+ 		/* keep mem without hmm range at userptr_inval_list */
+ 		if (!mem->range)
+-			 continue;
++			continue;
+ 
+ 		/* Only check mem with hmm range associated */
+ 		valid = amdgpu_ttm_tt_get_user_pages_done(
+@@ -2957,9 +2961,6 @@ int amdgpu_amdkfd_gpuvm_restore_process_bos(void *info, struct dma_fence __rcu *
+ 			if (!attachment->is_mapped)
+ 				continue;
+ 
+-			if (attachment->bo_va->base.bo->tbo.pin_count)
+-				continue;
+-
+ 			kfd_mem_dmaunmap_attachment(mem, attachment);
+ 			ret = update_gpuvm_pte(mem, attachment, &sync_obj);
+ 			if (ret) {
 -- 
 2.43.0
 
