@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210E2198E61;
-	Thu,  5 Sep 2024 09:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6469B194A64;
+	Thu,  5 Sep 2024 09:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530231; cv=none; b=Rn3LzcgpM+pRc0UViKU43SWwndwtzcug7VsBf7bv+0N0B3y3LplSuL1IB3lCk9zVqcf761vPiNGLKrdlx+BPZ3Aj6HrHZiEaiWI0pMacVv+78dr24xQ9GNMjZczUomaKQCYOyxwdIXWU4xhSNvCF5PUp8ztoApUgIdFKJfluCQc=
+	t=1725530234; cv=none; b=HMfWuIoK1tkTofve1pI6miAneRAxtUFSG07MDmJgBuPqAeeFAcUe/eQN/mtSUOmt1/fcB+izQOhlsVdMKPtV8LF1t+hX7pQYnJaBRFK82pB9uNtRqXbA66zvT4e+odWScWmW0Wden0T16NOTzoueSzWeXPH37kfdGyogJv9FS2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530231; c=relaxed/simple;
-	bh=L6qKPJlYCDIrv4iDD/BfCPS0O6x0XJ6bBxuZX7lH0NI=;
+	s=arc-20240116; t=1725530234; c=relaxed/simple;
+	bh=MI8m/zf1Ty9AimpUvhNYO/YM98uA5fBMJ6bdfpfYZ9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhgbgSB5PcCfyQ50j+hrqbN+C0SqGkR5K8K3KK6HwT3/SgVM8JnXe4I+oFY598qd6FSMyKKkvfjFb3xfsiaBpKYf3lnTktlNtNMqSyK7skmfCb0j4KNRRjcQQzBikvWGCXSMSnHFBR69Mku7ovUunTgIUldZpAT3M8JUwPLkMCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B99Fqz9u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K0CKzOTixzvRyRQ5ibK8rXR1htkKYwRPwhFAro4At4Go7J4ZBZAxdFjcjZuqCIn4tUSqN0hLrJbfyDeTIshGgJ9cDbtjGrb+Rd009Me6fLbhczTDbxqV59aWllMAXBkAhd8koDUSJcZ4CXpVsTvthx3xWE+REwkGiEcKK1y4i9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR9ezvln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B99Fqz9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977E9C4CEC6;
-	Thu,  5 Sep 2024 09:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR9ezvln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6040C4CEC3;
+	Thu,  5 Sep 2024 09:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530231;
-	bh=L6qKPJlYCDIrv4iDD/BfCPS0O6x0XJ6bBxuZX7lH0NI=;
+	s=korg; t=1725530234;
+	bh=MI8m/zf1Ty9AimpUvhNYO/YM98uA5fBMJ6bdfpfYZ9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B99Fqz9u7xpglRcPMl89ekvwxrIelocHytazepgPTVkWz+jkooFXX3K5LNGm62yY5
-	 aK0t7bDIzQg+f51VbmXddfJi68RW4HFX+Yk7DdnF3ywqqFHcCdPfaz0wRFGXusstDx
-	 ItSgyyqHibPiAxa/3oZl8sx4vhwrxvtJisR29Wlw=
+	b=tR9ezvlnubDC0d08sOR6vOeT/CfDfDaabRkL6QjBXBi1I0HmHrjpX5oROiVy+mbYw
+	 K3r8GFNB+qqqbFjv49zkE8ylne1XQlNCNmxG39ksyagqFCvaOlszskDXRAo5sOneiI
+	 i4MWWnYn1DzUP5W6koCVayiLctlkwfPrEQhfvcdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Maina <quic_rmaina@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Chris Lew <quic_clew@quicinc.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/132] hwspinlock: Introduce hwspin_lock_bust()
-Date: Thu,  5 Sep 2024 11:41:20 +0200
-Message-ID: <20240905093725.860032140@linuxfoundation.org>
+Subject: [PATCH 6.6 064/132] drm/amd/amdgpu: Check tbo resource pointer
+Date: Thu,  5 Sep 2024 11:40:51 +0200
+Message-ID: <20240905093724.746825609@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -46,141 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Maina <quic_rmaina@quicinc.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 7c327d56597d8de1680cf24e956b704270d3d84a ]
+[ Upstream commit 6cd2b872643bb29bba01a8ac739138db7bd79007 ]
 
-When a remoteproc crashes or goes down unexpectedly this can result in
-a state where locks held by the remoteproc will remain locked possibly
-resulting in deadlock. This new API hwspin_lock_bust() allows
-hwspinlock implementers to define a bust operation for freeing previously
-acquired hwspinlocks after verifying ownership of the acquired lock.
+Validate tbo resource pointer, skip if NULL
 
-Signed-off-by: Richard Maina <quic_rmaina@quicinc.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Link: https://lore.kernel.org/r/20240529-hwspinlock-bust-v3-1-c8b924ffa5a2@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/locking/hwspinlock.rst     | 11 ++++++++++
- drivers/hwspinlock/hwspinlock_core.c     | 28 ++++++++++++++++++++++++
- drivers/hwspinlock/hwspinlock_internal.h |  3 +++
- include/linux/hwspinlock.h               |  6 +++++
- 4 files changed, 48 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/locking/hwspinlock.rst b/Documentation/locking/hwspinlock.rst
-index 6f03713b7003..2ffaa3cbd63f 100644
---- a/Documentation/locking/hwspinlock.rst
-+++ b/Documentation/locking/hwspinlock.rst
-@@ -85,6 +85,17 @@ is already free).
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index eb663eb81156..251627c91f98 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4480,7 +4480,8 @@ static int amdgpu_device_recover_vram(struct amdgpu_device *adev)
+ 		shadow = vmbo->shadow;
  
- Should be called from a process context (might sleep).
- 
-+::
-+
-+  int hwspin_lock_bust(struct hwspinlock *hwlock, unsigned int id);
-+
-+After verifying the owner of the hwspinlock, release a previously acquired
-+hwspinlock; returns 0 on success, or an appropriate error code on failure
-+(e.g. -EOPNOTSUPP if the bust operation is not defined for the specific
-+hwspinlock).
-+
-+Should be called from a process context (might sleep).
-+
- ::
- 
-   int hwspin_lock_timeout(struct hwspinlock *hwlock, unsigned int timeout);
-diff --git a/drivers/hwspinlock/hwspinlock_core.c b/drivers/hwspinlock/hwspinlock_core.c
-index ada694ba9f95..f279dd010b73 100644
---- a/drivers/hwspinlock/hwspinlock_core.c
-+++ b/drivers/hwspinlock/hwspinlock_core.c
-@@ -302,6 +302,34 @@ void __hwspin_unlock(struct hwspinlock *hwlock, int mode, unsigned long *flags)
- }
- EXPORT_SYMBOL_GPL(__hwspin_unlock);
- 
-+/**
-+ * hwspin_lock_bust() - bust a specific hwspinlock
-+ * @hwlock: a previously-acquired hwspinlock which we want to bust
-+ * @id: identifier of the remote lock holder, if applicable
-+ *
-+ * This function will bust a hwspinlock that was previously acquired as
-+ * long as the current owner of the lock matches the id given by the caller.
-+ *
-+ * Context: Process context.
-+ *
-+ * Returns: 0 on success, or -EINVAL if the hwspinlock does not exist, or
-+ * the bust operation fails, and -EOPNOTSUPP if the bust operation is not
-+ * defined for the hwspinlock.
-+ */
-+int hwspin_lock_bust(struct hwspinlock *hwlock, unsigned int id)
-+{
-+	if (WARN_ON(!hwlock))
-+		return -EINVAL;
-+
-+	if (!hwlock->bank->ops->bust) {
-+		pr_err("bust operation not defined\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	return hwlock->bank->ops->bust(hwlock, id);
-+}
-+EXPORT_SYMBOL_GPL(hwspin_lock_bust);
-+
- /**
-  * of_hwspin_lock_simple_xlate - translate hwlock_spec to return a lock id
-  * @bank: the hwspinlock device bank
-diff --git a/drivers/hwspinlock/hwspinlock_internal.h b/drivers/hwspinlock/hwspinlock_internal.h
-index 29892767bb7a..f298fc0ee5ad 100644
---- a/drivers/hwspinlock/hwspinlock_internal.h
-+++ b/drivers/hwspinlock/hwspinlock_internal.h
-@@ -21,6 +21,8 @@ struct hwspinlock_device;
-  * @trylock: make a single attempt to take the lock. returns 0 on
-  *	     failure and true on success. may _not_ sleep.
-  * @unlock:  release the lock. always succeed. may _not_ sleep.
-+ * @bust:    optional, platform-specific bust handler, called by hwspinlock
-+ *	     core to bust a specific lock.
-  * @relax:   optional, platform-specific relax handler, called by hwspinlock
-  *	     core while spinning on a lock, between two successive
-  *	     invocations of @trylock. may _not_ sleep.
-@@ -28,6 +30,7 @@ struct hwspinlock_device;
- struct hwspinlock_ops {
- 	int (*trylock)(struct hwspinlock *lock);
- 	void (*unlock)(struct hwspinlock *lock);
-+	int (*bust)(struct hwspinlock *lock, unsigned int id);
- 	void (*relax)(struct hwspinlock *lock);
- };
- 
-diff --git a/include/linux/hwspinlock.h b/include/linux/hwspinlock.h
-index bfe7c1f1ac6d..f0231dbc4777 100644
---- a/include/linux/hwspinlock.h
-+++ b/include/linux/hwspinlock.h
-@@ -68,6 +68,7 @@ int __hwspin_lock_timeout(struct hwspinlock *, unsigned int, int,
- int __hwspin_trylock(struct hwspinlock *, int, unsigned long *);
- void __hwspin_unlock(struct hwspinlock *, int, unsigned long *);
- int of_hwspin_lock_get_id_byname(struct device_node *np, const char *name);
-+int hwspin_lock_bust(struct hwspinlock *hwlock, unsigned int id);
- int devm_hwspin_lock_free(struct device *dev, struct hwspinlock *hwlock);
- struct hwspinlock *devm_hwspin_lock_request(struct device *dev);
- struct hwspinlock *devm_hwspin_lock_request_specific(struct device *dev,
-@@ -127,6 +128,11 @@ void __hwspin_unlock(struct hwspinlock *hwlock, int mode, unsigned long *flags)
- {
- }
- 
-+static inline int hwspin_lock_bust(struct hwspinlock *hwlock, unsigned int id)
-+{
-+	return 0;
-+}
-+
- static inline int of_hwspin_lock_get_id(struct device_node *np, int index)
- {
- 	return 0;
+ 		/* No need to recover an evicted BO */
+-		if (shadow->tbo.resource->mem_type != TTM_PL_TT ||
++		if (!shadow->tbo.resource ||
++		    shadow->tbo.resource->mem_type != TTM_PL_TT ||
+ 		    shadow->tbo.resource->start == AMDGPU_BO_INVALID_OFFSET ||
+ 		    shadow->parent->tbo.resource->mem_type != TTM_PL_VRAM)
+ 			continue;
 -- 
 2.43.0
 
