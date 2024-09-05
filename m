@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB79154BFF;
-	Thu,  5 Sep 2024 09:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85D5154BFF;
+	Thu,  5 Sep 2024 09:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530147; cv=none; b=EP767b/Nd4OYuRKX9VbL7kiNfZX7wNC6pBKT2aO827FCuguvadJd0a2UvyZwzbHUriE+snO4ne6/iF/ty3uBeOMMkkO1G/DG492ZfKuDIWVB0sjHgm16hHdmMAqXw8Ob6SFVxiLUPAnClKgRsWe7h6UP2jXm9+Wu6yaXLi2kahg=
+	t=1725530150; cv=none; b=olaK3GaS4+9fwKG6fgYFqXoTBbILiYv42aVws7TuJt/ser4mpHaVbhRaLPUp6kWCWNlIWj8C3nPVt7sR7QFb6rJRnl5c8PUZ+50Kp2iIf5YnU9Fya++bdYnKLZ+pzyy7tHJ9C9cLgGFFbtW9aEyHNI07b5IGCoZyIj4J7nUPph4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530147; c=relaxed/simple;
-	bh=zsI3ehX0xi2B3kRvYfhhTr3QuCXOPPR+1qnS+0qsjY8=;
+	s=arc-20240116; t=1725530150; c=relaxed/simple;
+	bh=VIPFISC4mtgJqLXYCpfHlsJeZhAmswYvHrKodB57jP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/s5RaE5CvjW+NKQ7dMc/JB7YIbHu4szfNJ2NwqL1dV8Sy4Fstb2cNCKDmW7mQUgvG/EmDYMt0f9rsnky7sVaGEER8tQdiK13lp3ZP1ryDB5/SStw01lOWibp4FpUbzzBwe3bEXLvsA8BfwxBfdIX85UoZniBGr6zC/C4nE+h2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgao/LTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3LixuH+QaehTGUd2F80R5SNebF+/w6e/o/7BDEiXFqaPU+BlNuRTuATucr0BxeqL201HNCRnjlnlvGjjcRPOkfewGrikYuzQ4Nrw9pOzmPoFTBLmYkVbpRkHyVeVqWLT1LP/IVk9U0gBCwkKEbQD6gaUpA4JeQMyC1oJ6+ezNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcZQszpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgao/LTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEE3C4CEC3;
-	Thu,  5 Sep 2024 09:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcZQszpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B01C4CEC3;
+	Thu,  5 Sep 2024 09:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530147;
-	bh=zsI3ehX0xi2B3kRvYfhhTr3QuCXOPPR+1qnS+0qsjY8=;
+	s=korg; t=1725530150;
+	bh=VIPFISC4mtgJqLXYCpfHlsJeZhAmswYvHrKodB57jP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgao/LTiuIo0F6om/eZEw5z6ueQXXcdfGUDuD178pWznoFZUnsKwM5HwZK0JAzenn
-	 5GKsTs8k5db7D7mHAa5Kb7vK+sJFyhfXFBlHvRAUtflAXAnjaCoRQRUYMeAnvqvXJd
-	 LB3x/3/TqfRK6/bvWWEC4pceWzmU6LeFg9VxilW4=
+	b=WcZQszpnMKriL+i3MKVlDESiHWe29JhSvhg8PdZllf59lk9xRDD69i02QOQs9WY6x
+	 0c4hW0CDAX/O0zwhCCb8iz15Dhn5kB9dSJiHfT1ASN+KdikHsrOIzcXd84JeOgAB/f
+	 7yMnFBeUH+fqzh3Eqe4kO/bXMJrsyRIB6TM6nGVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	"Lin.Cao" <lincao12@amd.com>,
+	Jonathan Kim <jonathan.kim@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/132] drm/amd/display: Ensure index calculation will not overflow
-Date: Thu,  5 Sep 2024 11:40:48 +0200
-Message-ID: <20240905093724.629605183@linuxfoundation.org>
+Subject: [PATCH 6.6 070/132] drm/amdkfd: Check debug trap enable before write dbg_ev_file
+Date: Thu,  5 Sep 2024 11:40:57 +0200
+Message-ID: <20240905093724.980986883@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -54,44 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Lin.Cao <lincao12@amd.com>
 
-[ Upstream commit 8e2734bf444767fed787305ccdcb36a2be5301a2 ]
+[ Upstream commit 547033b593063eb85bfdf9b25a5f1b8fd1911be2 ]
 
-[WHY & HOW]
-Make sure vmid0p72_idx, vnom0p8_idx and vmax0p9_idx calculation will
-never overflow and exceess array size.
+In interrupt context, write dbg_ev_file will be run by work queue. It
+will cause write dbg_ev_file execution after debug_trap_disable, which
+will cause NULL pointer access.
+v2: cancel work "debug_event_workarea" before set dbg_ev_file as NULL.
 
-This fixes 3 OVERRUN and 1 INTEGER_OVERFLOW issues reported by Coverity.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Lin.Cao <lincao12@amd.com>
+Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_debug.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c b/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
-index 50b0434354f8..c08169de3660 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
-@@ -1453,10 +1453,9 @@ void dcn_bw_update_from_pplib_fclks(
- 	ASSERT(fclks->num_levels);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
+index 9ec750666382..94aaf2fc556c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
+@@ -103,7 +103,8 @@ void debug_event_write_work_handler(struct work_struct *work)
+ 			struct kfd_process,
+ 			debug_event_workarea);
  
- 	vmin0p65_idx = 0;
--	vmid0p72_idx = fclks->num_levels -
--		(fclks->num_levels > 2 ? 3 : (fclks->num_levels > 1 ? 2 : 1));
--	vnom0p8_idx = fclks->num_levels - (fclks->num_levels > 1 ? 2 : 1);
--	vmax0p9_idx = fclks->num_levels - 1;
-+	vmid0p72_idx = fclks->num_levels > 2 ? fclks->num_levels - 3 : 0;
-+	vnom0p8_idx = fclks->num_levels > 1 ? fclks->num_levels - 2 : 0;
-+	vmax0p9_idx = fclks->num_levels > 0 ? fclks->num_levels - 1 : 0;
+-	kernel_write(process->dbg_ev_file, &write_data, 1, &pos);
++	if (process->debug_trap_enabled && process->dbg_ev_file)
++		kernel_write(process->dbg_ev_file, &write_data, 1, &pos);
+ }
  
- 	dc->dcn_soc->fabric_and_dram_bandwidth_vmin0p65 =
- 		32 * (fclks->data[vmin0p65_idx].clocks_in_khz / 1000.0) / 1000.0;
+ /* update process/device/queue exception status, write to descriptor
+@@ -645,6 +646,7 @@ int kfd_dbg_trap_disable(struct kfd_process *target)
+ 	else if (target->runtime_info.runtime_state != DEBUG_RUNTIME_STATE_DISABLED)
+ 		target->runtime_info.runtime_state = DEBUG_RUNTIME_STATE_ENABLED;
+ 
++	cancel_work_sync(&target->debug_event_workarea);
+ 	fput(target->dbg_ev_file);
+ 	target->dbg_ev_file = NULL;
+ 
 -- 
 2.43.0
 
