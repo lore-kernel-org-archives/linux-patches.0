@@ -1,94 +1,158 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAA619882F
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 09:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD6D199943;
+	Thu,  5 Sep 2024 09:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529532; cv=none; b=bKYiuGqQ62/ITX/BU52/uFYw/Ci/orEBfGrnk3JpV5r78SYD95uFh2PjMCVOsqH9VMcBPlaHMCocHq1NpkbndTGffrmGku274RJiZRVsC77lhpKw9Td8cLRs445cy6PqS6lJNV9+v98QKgRqi7Nq0RGmcMcDMqKEVRt5xZYxLX4=
+	t=1725529533; cv=none; b=J1XJA/s2obn8Y2T5kzVX7EZvP+6GVHmmdX3LAU3zHVHZjzyfCEhlhZbYSk8lbk+bEjhC3e3VifonWWzOvPBEZLyFrgJA7MtCkxB1NnJZ4GOhC99DrG/3RiyJlnHn/UEXGsY8b/mZPUEBlBkigpx8/0M7rK0iW2TDj1aD2OAq6J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529532; c=relaxed/simple;
-	bh=T9uAT6P2XJVZAdZnyx/4GZlbV0cbx0PWvTakz+ui324=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m+Jc888/E0GyuwLc0jJ0eF5ybyVUa3HZM9Ymo8Etin/GWzslJuCkEYqNUtUB5TtVc5wxQNLTrA2vEHs6wjBeej/LyUtX/7C7mqsB0kP8aiNFALE4FLh+HXxcbIkP+gYYqEa81++h4vGBDcZJwMa/kl8eN2clG5b9R0aqK18vQGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fiwlFWrN; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725529533; c=relaxed/simple;
+	bh=QjBL4kpiD1N9ocrbZ2uTmu9R36/GxDKwp3x5yxfT9pQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=u8rPz3f0l0InfKCEdtIwpg77Mgwd7gPhhcOR8QM1JGM6H4loB/mVhEZc0fh068L9yhIhWCurpe69/nj9HXtRphfmgJ8KWXiwXOCqqmhoCzKpSo+iZYwHVg6SZSMbhQtNwrvEBuQyBuxV0CUc/aARSwd1TcWnOMDoxVUj8u1vEpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcIbEr0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiwlFWrN"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-26110765976so42063fac.1
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 02:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725529530; x=1726134330; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T9uAT6P2XJVZAdZnyx/4GZlbV0cbx0PWvTakz+ui324=;
-        b=fiwlFWrN6zhjzaJznDIX1qj5j9dhJU2ewtxyLBG0fed/XttVguzEVd2+hcgNLBby+R
-         Lmc+xEwqgsMNuQ15Q80TXpnWh3iMA/ng+rWE06pDK9/cs6Rwz0zN2ShQTDuvpwyVATkx
-         Y5uWF0WSKbfcBFbzMvF3Ll4thTHLt9Qg7SvD/I9zZCLo16IMSx9hwA2h2nCSjh7Yucqw
-         WCn7DxF7Ak4ppFdFfwQ0RrVw5/xVdJ+pABS8tgi2hIgITMTAiJ1XvwImasSHFxTTxibQ
-         iXDyDid+0pOlF47eWLD7RWWF9pLBfmu2yQcARumTwB+zObrTwukgjHPH94+p7jXr52nZ
-         aZMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725529530; x=1726134330;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T9uAT6P2XJVZAdZnyx/4GZlbV0cbx0PWvTakz+ui324=;
-        b=iAPT5nAa3ZNGRAcBTiAdViJKSdQIf7+kqJeTihG5bH0JkICegLbYwJGu7jrFAmBzcz
-         oBsCl4cNkYgeegt8f7dysySAanIb55VNzK7NbG3J648kwV3FOiMvMWs9ABWzcNEyKl4i
-         bPRHF5cbgWH2PyRm7WYHI3Blxzskamyi6eRK9fXzYThw8oMqR+NRZ1FFtZsO5qksztkY
-         e/1QESKUrh5ah7hoJFMATQDTIr7kyfAWxv9Qxjy/fBYsAA3QTNNn4XOrWgt0qPQYmRwa
-         EJE7EV8q63XmWhGM5awpsUemNsIdCuxe2KAhLSZVrb4sYOwoL3bQEWc33EC8D7ZSGKeR
-         v5xw==
-X-Forwarded-Encrypted: i=1; AJvYcCXChtojXX/NLcmyNaqkOeZ279VwN00g63GWuKpnfyoXzqt/ZnmgFwTQV2pn7LmdutGsszbRpJdD@lists.linux.dev
-X-Gm-Message-State: AOJu0YydAreQiPzhKWzEeLoz0PtzvNStcBTsvuK0GPsZTIHi/KaJoQlr
-	trp5L2ohzbDtbxA2+9O+uPhNhL+JG2lrUrlYvE7S2pbSJQ/SGMh0b5+OHesIhdZM/e70nKoFvEA
-	M0Uj+VhtJLitZqSB8+VLpnyWFOp0=
-X-Google-Smtp-Source: AGHT+IF4/iqCXFx0YZniYl3ZSu+g9OE3IT6hrjrMVy3pCALICpQGkQrU5kNPgWw9rFg6Yzz1lTOlB0WKywfTKVKf050=
-X-Received: by 2002:a05:6871:54a:b0:278:6e3:934c with SMTP id
- 586e51a60fabf-27806e3966fmr6728709fac.5.1725529530073; Thu, 05 Sep 2024
- 02:45:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcIbEr0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA92AC4CECC;
+	Thu,  5 Sep 2024 09:45:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725529533;
+	bh=QjBL4kpiD1N9ocrbZ2uTmu9R36/GxDKwp3x5yxfT9pQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GcIbEr0/1scmlr/Aeg+wJXt1FHbZ1rJynH7gNvOLomy21wYZBrXPz0prbXvZRDE2o
+	 GHRqAoGx2DP4DGfwkM5qKYXK4ySz2vDauYlS0HdAGDpECfRfY/TDjxEzn3LVTZXDKu
+	 Ki6A6KeKzrJYKpHtxBLrdXyRJlFD4V63T0k6N2wA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 022/184] btrfs: fix qgroup reserve leaks in cow_file_range
+Date: Thu,  5 Sep 2024 11:38:55 +0200
+Message-ID: <20240905093733.113478237@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
+References: <20240905093732.239411633@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-17-ojeda@kernel.org>
- <CAH5fLgg20kDCJfD_6+fTSogOnpqK0x3a6eKaTahgSvdgfFzSEw@mail.gmail.com>
-In-Reply-To: <CAH5fLgg20kDCJfD_6+fTSogOnpqK0x3a6eKaTahgSvdgfFzSEw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 5 Sep 2024 11:45:17 +0200
-Message-ID: <CANiq72ktnMSfMfGEhN1kO0F+C5O_KsUY1y_eb7ZL+qzzSkg9bw@mail.gmail.com>
-Subject: Re: [PATCH 16/19] Documentation: rust: add coding guidelines on lints
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 5, 2024 at 10:16=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> w=
-rote:
->
-> Wow, does C really not have an easier way to do it?
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
-Yeah, it would be nice to get a similar system in C.
+------------------
 
-There are targeted attributes that can annotate certain things, like
-`[[maybe_unused]]` in C23 (and vendor attributes too like our
-`__maybe_unused` macro), so `-Wunused-function` is not really the best
-example in that sense -- I will think of a better one (it was nice to
-use the same as in the other examples I wrote for `expect` later on,
-which is why I used it).
+From: Boris Burkov <boris@bur.io>
 
-But, as far as I am aware, there is no way to handle lints (and levels
-and so on) in a simple and consistent way like Rust does.
+[ Upstream commit 30479f31d44d47ed00ae0c7453d9b253537005b2 ]
 
-Cheers,
-Miguel
+In the buffered write path, the dirty page owns the qgroup reserve until
+it creates an ordered_extent.
+
+Therefore, any errors that occur before the ordered_extent is created
+must free that reservation, or else the space is leaked. The fstest
+generic/475 exercises various IO error paths, and is able to trigger
+errors in cow_file_range where we fail to get to allocating the ordered
+extent. Note that because we *do* clear delalloc, we are likely to
+remove the inode from the delalloc list, so the inodes/pages to not have
+invalidate/launder called on them in the commit abort path.
+
+This results in failures at the unmount stage of the test that look like:
+
+  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
+  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
+  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
+  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
+  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
+  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
+  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
+  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
+  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
+  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? __warn.cold+0x8e/0xea
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   ? report_bug+0xff/0x140
+   ? handle_bug+0x3b/0x70
+   ? exc_invalid_op+0x17/0x70
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? close_ctree+0x222/0x4d0 [btrfs]
+   generic_shutdown_super+0x70/0x160
+   kill_anon_super+0x11/0x40
+   btrfs_kill_super+0x11/0x20 [btrfs]
+   deactivate_locked_super+0x2e/0xa0
+   cleanup_mnt+0xb5/0x150
+   task_work_run+0x57/0x80
+   syscall_exit_to_user_mode+0x121/0x130
+   do_syscall_64+0xab/0x1a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f916847a887
+  ---[ end trace 0000000000000000 ]---
+  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
+
+Cases 2 and 3 in the out_reserve path both pertain to this type of leak
+and must free the reserved qgroup data. Because it is already an error
+path, I opted not to handle the possible errors in
+btrfs_free_qgroup_data.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/btrfs/inode.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 39d22693e47b6..c2f48fc159e5a 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1586,6 +1586,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
+ 					     locked_page, &cached,
+ 					     clear_bits,
+ 					     page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 		start += cur_alloc_size;
+ 	}
+ 
+@@ -1599,6 +1600,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
+ 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
+ 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
+ 					     &cached, clear_bits, page_ops);
++		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
+ 	}
+ 	return ret;
+ }
+@@ -2269,6 +2271,7 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
+ 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
+ 					     PAGE_START_WRITEBACK |
+ 					     PAGE_END_WRITEBACK);
++		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
+ 	}
+ 	btrfs_free_path(path);
+ 	return ret;
+-- 
+2.43.0
+
+
+
