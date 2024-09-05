@@ -1,68 +1,67 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B4C197A7F
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 08:12:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7107D27735
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 08:13:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725523975; cv=none; b=X8uVR0DOGU8lEJ8pHYJ++gvE6SYLQj6w4VtjUP7RLyHFYgdX2gSesOY1iI3kSxVPXshoBIcajP62mdI8RDSWHrJC575tv6t7FcgdUHMos2w6wxDSnA7JJd4/cs9mRc5HppMmo1uLb95aIHBltAFtnE9BnyeqcPz1LFVyX42XtOQ=
+	t=1725524039; cv=none; b=RjdO0wsCVZh04iFrROah44teW314BolQOLgXj0JHiUGvBz/oVUBpZ3IxVuDtSUBLxy+ipMnFBNkxha8m9hE2S9id2LluXpIf5oRnZge8LDBEo06mB1VUvgUSImVFu3HUxxEDi+4DJdncjNjJ5/CJUfRHkhylT5Hb0u4aUZS17pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725523975; c=relaxed/simple;
-	bh=EM5AYZn3xHS8ysks1h1PoSTJYxA67HpzaIoeDZpkynY=;
+	s=arc-20240116; t=1725524039; c=relaxed/simple;
+	bh=8nMbj5vMNPnZb//DYqlw97WZvVsPp1BtGEEzYeBSTYk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Iu+R5esuJ0ueMVmPq1xc6YJc0Q/TySz5rScCqaP9kYEIIoxSwe1ryCpf+cXkVdSxvfJDT1W48OASTVTHrzF78QPmz9Ex2KxPGRzMWx8M1qUM8y+tHIW4Y5gEClo5PIIklhWCQoRaQFnvMU9ZBRv9u+eYW074K0W7z6Hva8e8qAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=V4CcBNob; arc=none smtp.client-ip=209.85.221.48
+	 To:Cc:Content-Type; b=NCK3pQe3MsbYLnVN+0UuB8OcgpworxQGajK6dng/mOT6tx18FcX6WqICNW7SKJ1t/a26pILpbPQASYn672RoGWj5tsj1lqDclC2wBDPFYz5yjQ4M3A4iCqpioDUlC9qqVZ+YuJ9J4h7TnjK1GU9hnlBca1cbgJsBTdzIsgzGeC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cUVJYN1B; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="V4CcBNob"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-374d29ad870so253597f8f.3
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 01:12:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cUVJYN1B"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-374c84dcc64so289318f8f.1
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 01:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725523971; x=1726128771; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1725524036; x=1726128836; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EM5AYZn3xHS8ysks1h1PoSTJYxA67HpzaIoeDZpkynY=;
-        b=V4CcBNobLNICpsNbilfHaOnwkD0WM+NhTMZnoGMp94RuFK+nm02wA7MewWMU+ousIa
-         rtS9B242/q72UUDyNSARC8oWfOJsG6afphNhFE4E0VCy/sebydHSZrFnOyotsKvUpMj+
-         s+KuW1PqwVfCMq7hq7z9hCOqNoxOF7J3+JiqoKf8m9/ttY0OhheFAGAwNzOaOSae9Dpf
-         8lkTaJp64tb5hDwmMcZr4+McM/Z7A/PpCdGovfp7Q4ymTfDrvJHq3FEgNIaY9q6TK6Vf
-         kIpwJq60k5OhRhhmNNVBlG9KwF/N75clddqg0/IswSsobMPGxXwGpcEek+PX+KeGaLMI
-         cVjA==
+        bh=OmQpWs+ZpL8+nQ+M/UHkIAp2vU2mSouieb8DnlV52jg=;
+        b=cUVJYN1B0mJL42VjRp6KAFJDTbfNp1xcpqEf1ZAiqcaYex/KVFD0+6gMy6h0VbhPkf
+         5v5/fDGTKfnqaGd/umu0jp7BwPYWW9cJSv0AcfJ1/jfFusU4rTiGrzIUE2VRaN6TfGvh
+         AXM3BTa+CFnAQwHwhDizYq2Y6nIuH6Oyw4l2tsx62SSMjG98TB7KqF4pnX5/97FA5PAr
+         n7CFHEYYrU4KwZ5NESx6bZsMoF5YAqi77f3XNmVoUfMDPzl9n8dckeP+ARLkhcgwQfLy
+         4mcpFUaMbV2Rms7/r3yxoHIcLv3+UY5ycn/cdI4UD/V+G/SkgoNVCG4zWstBrhws1VhG
+         Uo1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725523971; x=1726128771;
+        d=1e100.net; s=20230601; t=1725524036; x=1726128836;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EM5AYZn3xHS8ysks1h1PoSTJYxA67HpzaIoeDZpkynY=;
-        b=CWpy1fBK35La5jmNd1kP5Zk5fChCh5c1XISyUXwzCPLZhQhBNBdruof1wlBLqSw1/C
-         DSOfjLWWycFlkNEVuYfaRxy9W+LNv9R4uQONJriYiRklO/9/la9Il2E9nTfnbPs4PjJ+
-         1kofWi4ZbaDVCgX2qWerQY+mAXYBowTNOMhEQJZnFgwunBPeCjOpA0x/EuCJxDWH4T/z
-         1LJHxijJyt1Lg/X2K6BUscwB+R03H+e+6DrxKKTFwdl+Tq0IOsmRrykb2s4EkW1h4Wvf
-         gQVN4+umNvtwErulK9OUAasl5zcBalB0mrR5QJ5aTz+VNUc+H4npfgVEO+pYFKQrPeOP
-         xGsA==
-X-Forwarded-Encrypted: i=1; AJvYcCUp8yQ34kv/f0Mx3l+8aSDF3DnN5/dRWgr1jWAWT4gJeqcAdJaXD3QLL3DJUQh+E22QjdNWj9Jm@lists.linux.dev
-X-Gm-Message-State: AOJu0YwbQpABTN6vhJsuHkhE8hNiX5hvKisCIGb684K0+Fv5NectSkYf
-	OdZ8BxpJ/TS+K2+MfWp+3C5fFyrxZvNSa1/UMdIdKLk+7xH40fZ7dk7PPveI1BBRT6Ktras5f+V
-	5Xd1UlL/P3rM/4+uNxSXU+JisseT8z24l4m3d
-X-Google-Smtp-Source: AGHT+IHUJq5GDiaW5WkXtiY5x7TbnuRpJfJj9Rrctnr2ggXgTY3BHdUazeZIh/t5+B4zy9gdHlKeAYqs8BTvqcnvl7w=
-X-Received: by 2002:a5d:4706:0:b0:371:8e8b:902c with SMTP id
- ffacd0b85a97d-374bf1c954fmr9377269f8f.38.1725523970885; Thu, 05 Sep 2024
- 01:12:50 -0700 (PDT)
+        bh=OmQpWs+ZpL8+nQ+M/UHkIAp2vU2mSouieb8DnlV52jg=;
+        b=gM8rQJUjbWvJJI5d1rZOKrUGB0P/V+6eSna4ygMfOvQkt87ASvbqK9+x3dmDd1cdkv
+         UvZ4WlrTICxs9UPa/VwOn7z4QXRWmAbK7h3WO1phwtV4Ss2+ox4zFredUdpAnEOifoxz
+         hgn0XallvIJG+PjF6pgkMineR3FDORdbiivGbpTnmVlaM2XOYYKcRSlDvt6P1niLkkjP
+         XMB0Txmwj3YUxQjUOVfkm6bg+B0FUBMtiCUFDatgdJMAwlC4TDTKEaPyelW+nlXL+Mem
+         wRPJjwV7MThUjLFfJEOIcIIc+zOV/iIRHqhTnZUPy5tWto15spjuKKDT3pA+eNypT5/c
+         g4GA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaSdwejRVTBFKdxO+XprGFY7/IViC877BGN30GPutG5zDR/yhgkMXOAABhSrT8aDMy0MiTURSb@lists.linux.dev
+X-Gm-Message-State: AOJu0YysAWV+GC9gvroacxMwdVHVT1dFYvGvjn2JYntnhocS0SsM9nmo
+	dELe4GL/UN5wpZAYAFs8W0sGlDjImBwaDnGefCL5cr0IlWhnElBUqthxJM1r3OH0nKksgPVBW6Y
+	g2SHHdjBfPvdIskIZgHvzkHCTY+QJLTBd6jri
+X-Google-Smtp-Source: AGHT+IF6K/OC4L3DDXFevk4nj4cdDYMB+5p9rOI5uQ5GbPzkuLbAWPEkG0lkHomDQmHZLq35i0GcrEcClCnb4a9Zdyk=
+X-Received: by 2002:a5d:4fc4:0:b0:374:cafe:c55f with SMTP id
+ ffacd0b85a97d-374cafec737mr8641982f8f.20.1725524035618; Thu, 05 Sep 2024
+ 01:13:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-14-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-14-ojeda@kernel.org>
+References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-15-ojeda@kernel.org>
+In-Reply-To: <20240904204347.168520-15-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Thu, 5 Sep 2024 10:12:38 +0200
-Message-ID: <CAH5fLghf+JUHJpPzL7yTXGxtRA0LK5xreXwzsSVfxCiT-mo20w@mail.gmail.com>
-Subject: Re: [PATCH 13/19] rust: rbtree: fix `SAFETY` comments that should be
- `# Safety` sections
+Date: Thu, 5 Sep 2024 10:13:43 +0200
+Message-ID: <CAH5fLgiger4Vg4fUFfwTwmWCN8TAP9qncP8AQpyH=p-qf0u-eg@mail.gmail.com>
+Subject: Re: [PATCH 14/19] rust: provide proper code documentation titles
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -76,15 +75,60 @@ Content-Transfer-Encoding: quoted-printable
 On Wed, Sep 4, 2024 at 10:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> The tag `SAFETY` is used for safety comments, i.e. `// SAFETY`, while a
-> `Safety` section is used for safety preconditions in code documentation,
-> i.e. `/// # Safety`.
+> Rust 1.82.0's Clippy is introducing [1][2] a new warn-by-default lint,
+> `too_long_first_doc_paragraph` [3], which is intended to catch titles
+> of code documentation items that are too long (likely because no title
+> was provided and the item documentation starts with a paragraph).
 >
-> Fix the three instances recently added in `rbtree` that Clippy would
-> have normally caught in a public item, so that we can enable checking
-> of private items in the next commit.
+> This lint does not currently trigger anywhere, but it does detect a coupl=
+e
+> cases we had in private cases if checking for private items gets enabled
+> (which we will do in the next commit):
 >
-> Fixes: 98c14e40e07a ("rust: rbtree: add cursor")
+>     error: first doc comment paragraph is too long
+>       --> rust/kernel/init/__internal.rs:18:1
+>        |
+>     18 | / /// This is the module-internal type implementing `PinInit` an=
+d `Init`. It is unsafe to create this
+>     19 | | /// type, since the closure needs to fulfill the same safety r=
+equirement as the
+>     20 | | /// `__pinned_init`/`__init` functions.
+>        | |_
+>        |
+>        =3D help: for further information visit https://rust-lang.github.i=
+o/rust-clippy/master/index.html#too_long_first_doc_paragraph
+>        =3D note: `-D clippy::too-long-first-doc-paragraph` implied by `-D=
+ warnings`
+>        =3D help: to override `-D warnings` add `#[allow(clippy::too_long_=
+first_doc_paragraph)]`
+>
+>     error: first doc comment paragraph is too long
+>      --> rust/kernel/sync/arc/std_vendor.rs:3:1
+>       |
+>     3 | / //! The contents of this file come from the Rust standard libra=
+ry, hosted in
+>     4 | | //! the <https://github.com/rust-lang/rust> repository, license=
+d under
+>     5 | | //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyrig=
+ht details,
+>     6 | | //! see <https://github.com/rust-lang/rust/blob/master/COPYRIGH=
+T>.
+>       | |_
+>       |
+>       =3D help: for further information visit https://rust-lang.github.io=
+/rust-clippy/master/index.html#too_long_first_doc_paragraph
+>
+> Thus clean the two instances we hit and enable the lint.
+>
+> In addition, since we have a second `std_vendor.rs` file with a similar
+> header, do the same there too (even if that one does not trigger the lint=
+,
+> because it is `doc(hidden)`).
+>
+> Link: https://github.com/rust-lang/rust/pull/129531 [1]
+> Link: https://github.com/rust-lang/rust-clippy/pull/12993 [2]
+> Link: https://rust-lang.github.io/rust-clippy/master/index.html#/too_long=
+_first_doc_paragraph [3]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
