@@ -1,67 +1,67 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA07194A42
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 07:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FF81946B5
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 07:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725523071; cv=none; b=BhDAuKmxF8Ld7SbyFoyuY1HMX9gCsL19+SNYP6LqoO/LmzOwZJkAz/3qpoJ9tFiXA+AENurMiY1DA95UzNZQHXScta7qLdpw/bklY6s84Ybmsh/o36Jx/DcwLwb1/U61Rd0s6QraAKXRIt06HRymIQ3quAe2Ath6Do/TybK3xzw=
+	t=1725523143; cv=none; b=KiYTBmSMRwY1jSh0WLsILKzmf3hxbdLQOkuJUukXxzodz2tUU4lvvzcqo4p1Ip7WNa2PKBxrtJI3aMsA9OLdxXkcRAtZh648MyXFxkMLZZGc6AKygUiw8erVHpf+vi9dJXxoUpqDBG88BGTbfLnW09aEHEQ7FasFykvKVivH4Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725523071; c=relaxed/simple;
-	bh=uzqoXNG3+qdG4fZg0Gqs2RhJ7NCXI4GO3eiiknmlaNE=;
+	s=arc-20240116; t=1725523143; c=relaxed/simple;
+	bh=S4wg+N7dLtvOvfF5uGJECcWCNVHiuhHmcyXrxkMmoWQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C60XQgAYe5iCDlq3TaOSqOylIsTlXJb3utB/N9fjTBp5a3pg71HKF3GfrjNCLlfvGY8345EmBFh7qHTDh5zIc6fA4IX87tfFhOJ093F6y+XvQ8R+Yqe82ZGbxAj/7RnrKACKKqMh4LqbWnw284py/bc8H3y+SFqRR0KG68f2QCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=erR5vxTs; arc=none smtp.client-ip=209.85.221.54
+	 To:Cc:Content-Type; b=kejMU9KIUaaSiPtyxjJrJmHYfqxgtepnNrWsxaqo06pnS8NF2oT2IMQ8oqZi+3liIF8T213fsdg83LjvcDmEsAW3l2gNRVlOCWVuu1fNNO7+i0861zsValRO4SdR78JMMd6J8HaqPFQTFAxjlW61rwLcB/jK1f17BijKHfLhAyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3B1N9bfp; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="erR5vxTs"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-374c1e5fe79so263350f8f.1
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 00:57:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3B1N9bfp"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-374bfc395a5so246932f8f.0
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 00:59:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725523068; x=1726127868; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1725523140; x=1726127940; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uzqoXNG3+qdG4fZg0Gqs2RhJ7NCXI4GO3eiiknmlaNE=;
-        b=erR5vxTsTUcmp+8hQJQOG7JV4iPUlhrYpCX/nAjDKkqIFrRJuW9UFugWlQDgp8hWq5
-         v+13Ly7lSjR+eW2XygO54Wev+MS8t+xleAns6ALbdkTJ1kMjW75ns4QST5w9as9hzYgl
-         jhaYIXGeHLDtHP0uaoC4Le03Yoy1eXR2mkvwFwdAcMft7frbZWxc53hdrB1jnD53EIT+
-         xTPzck0bW6nfNrJBHWhSiwRNRPlDp/U/zYNj8uvEm/R/9ufM8IqqiT3tIoho/7VIfrQf
-         lspsiqlmPjivQWl3DFcGGW5G3cvkNcxhc3UyniSCTtLBxaUyuEUV9Hgwhfj4ZJR96Ltd
-         2LYw==
+        bh=S4wg+N7dLtvOvfF5uGJECcWCNVHiuhHmcyXrxkMmoWQ=;
+        b=3B1N9bfpFFzchKrliRwe2YJGr3/+jAfjvl5VzzjFumLZthOsPefRKtoojBT2zlzgbx
+         ceMVfOrk6U6EW33hzLuKHwmvOW+8Bjtq/n6yKjhjv2fO7un740L6vrfHeN20UsW6i6ga
+         Bu2DfdinNKejbNPBwQ918SsUeMqGsv/gylnRRuYw6TCypzYcwkKJT03Ip5kmFB9Gz5W9
+         Cmic5366s1h+1/+KBkpVnwUArTuuSsVg1D09Zm/Z3UsG7WtCqBDVLK3oQh/sWqwm0IiI
+         o80g8fKP/gwwubbo/ESV5AeV2UufJksdgfo3ArmDujBIsCfethlj1naTwhwV7tCuJjLm
+         vjlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725523068; x=1726127868;
+        d=1e100.net; s=20230601; t=1725523140; x=1726127940;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uzqoXNG3+qdG4fZg0Gqs2RhJ7NCXI4GO3eiiknmlaNE=;
-        b=cYg3AHb3Mpt85xUetVduXfvyc1xGL83PmaJa4vsBu35TQ36D9NmZuWIHs8SPKmbVwm
-         YIDIkaX0+K+zM9h3USv2wGkZH5HwPANW7nPftB6INqyOA0su516XQ2RV8A2jr6ldMdTR
-         o75pqcZE56sFTACsD6+mFKN7dwE4QdIgD6229xbwcssapYQziwWhjzvTI/GMuOwAbp5Y
-         dR90fpYWu4678numiUVntLE/0jhBOhBHhC4owD8D7qb2QceHx5cLqua1cuT92IDb/nf+
-         E7egdc7suZXDw5AdhwzD0G1lr0zU2ozNWTdJ91enT3QxD25wM+Kfgz9hAZuWFpYIMXnj
-         9n4g==
-X-Forwarded-Encrypted: i=1; AJvYcCVGOiWdySSBkqXnASr7EqC22FJfopxNhR2u6r4pDtYwWkTFrlmGcEMCEsWx+GeVc9mluDRidHJ4@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQy6MwJ5n6Os7udwvwDqujt/bWUa2Vxgeq0/l7a5ael6Jn895c
-	tCOAcnR/cJoqZ/E0udfQ7KWKP85QCwjnAks2S9njlH2M/J954S4YEe567yDJBzAtbTrcDP0WLIk
-	08cUaWGAjcc/RFY7oERUBqFpEzEvfAgodsrZB
-X-Google-Smtp-Source: AGHT+IHTjzNnIL5A1Fd+8dZPOcunE+C0lDt4qQ8dgmGxe28nKfdYYnM8VoMndW494oUXHykAwYo0jir5Q6p0G0T9D5E=
-X-Received: by 2002:a05:6000:4013:b0:374:c621:62a6 with SMTP id
- ffacd0b85a97d-374c62164damr10875495f8f.47.1725523067641; Thu, 05 Sep 2024
- 00:57:47 -0700 (PDT)
+        bh=S4wg+N7dLtvOvfF5uGJECcWCNVHiuhHmcyXrxkMmoWQ=;
+        b=PEv2mUX3q44hHdsADn8oTSIM2R/l9x+3fP3zkuHcBfRe46db6xsKygjBAoz08nXcTV
+         L3CXOqjjqoVLb7dZY/nsiBGVZXtuvpDJIYZa8H+BdsX0+BJSseXQzPnSMMcD1QTmE8Op
+         EFWOGvieGmuphoYq3peflFacUhHlN5ofhDLWnhI/Vtms4O/no17Apvhbv14sWP8NRaDh
+         cwFGt8ZPVjCm+OQFayuauOoXl69Nahcpxvd38LgW+F2L82lOdSWUw5sSmba0f+XptwwF
+         mLMmqvWuyvGIc5VMocASa9WoKhGCGv2uXPe/0LR8JinwgAGjF5OYFhwqX26rsXKUmLid
+         vN7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWiE1J1j/bU9Vcr7qOvblYbuyYDvc1B4PgPM8Awikq911bLgKRU9elLO2gg8m4bCGcS7sIW5WJt@lists.linux.dev
+X-Gm-Message-State: AOJu0YxH51tfnAK54hygkqIgRIJ0sJzgrKPLzWts3404JUE1Facb0f2N
+	7TQv6U0Il5Tub1kIObHLbzK8OIdcvY7uYVV4///Ziv6KVQhPCqr3kS0elhI0r6aKDKTsyav1+gt
+	e3CTKs74dUrlqYLOm2w97jfg0wf1H49B0qlTL
+X-Google-Smtp-Source: AGHT+IGtCPMuGPM1tEnxEq9yaB7NNJmDwi3mMPagHojR/JnOLPZuTRsGFLFDq1TA5h0cNWIxOaDOSqYB5CqWwC4WUqE=
+X-Received: by 2002:a5d:4a90:0:b0:376:e2f4:5414 with SMTP id
+ ffacd0b85a97d-377998aaf1bmr3162540f8f.5.1725523139945; Thu, 05 Sep 2024
+ 00:58:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-3-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-3-ojeda@kernel.org>
+References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-4-ojeda@kernel.org>
+In-Reply-To: <20240904204347.168520-4-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Thu, 5 Sep 2024 09:57:35 +0200
-Message-ID: <CAH5fLgjte9RYaRMHeKfRpefPBkXuSYp8FnCq=9Ftr9eV+V3S2Q@mail.gmail.com>
-Subject: Re: [PATCH 02/19] rust: sort global Rust flags
+Date: Thu, 5 Sep 2024 09:58:48 +0200
+Message-ID: <CAH5fLghNLZWjaABcztD8utC9VbPMUYGNYKjisPdV=vVYVF+H+w@mail.gmail.com>
+Subject: Re: [PATCH 03/19] rust: types: avoid repetition in `{As,From}Bytes` impls
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -75,8 +75,21 @@ Content-Transfer-Encoding: quoted-printable
 On Wed, Sep 4, 2024 at 10:44=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> Sort the global Rust flags so that it is easier to follow along when we
-> have more, like this patch series does.
+> In order to provide `// SAFETY` comments for every `unsafe impl`, we woul=
+d
+> need to repeat them, which is not very useful and would be harder to read=
+.
+>
+> We could perhaps allow the lint (ideally within a small module), but we
+> can take the chance to avoid the repetition of the `impl`s themselves
+> too by using a small local macro, like in other places where we have
+> had to do this sort of thing.
+>
+> Thus add the straightforward `impl_{from,as}bytes!` macros and use them
+> to implement `FromBytes`.
+>
+> This, in turn, will allow us in the next patch to place a `// SAFETY`
+> comment that defers to the actual invocation of the macro.
 >
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
