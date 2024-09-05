@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B631154BFF;
-	Thu,  5 Sep 2024 09:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BF614A08E;
+	Thu,  5 Sep 2024 09:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529725; cv=none; b=dQhFg85jPhNv2Xwk5F0Xqlvlnv0wCwpyT5A+wnaDm22tsirWJCE96VJjfwOZ3c0CURVhBveJuSQkKDNIiPOhpY7qqJbz0QyeoLGzMgAKzfuouR8hE4SwUxvu9ujySei4EmjnSX0C0UeOdFxtvZn2Oqwqs/wyxslxBrvTHweTJh4=
+	t=1725529728; cv=none; b=K+e1sqUTwKqQ+A7SBEIksQ2ssmTQZvEre1Mq56SwCbop+8Ji2hWjkjO98pZ8MdO4tI290NeZHShJkWZkguO2BUZ7GZ2g8AtZlAdZyB0qXJjpRJVqV2nJZOFo33ko1yeegMrGDMO2acoO2PoHQO143B6J70mBA8SZAx1M9vyqzuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529725; c=relaxed/simple;
-	bh=aZVBlDKHRerPZQ1WQFn5k8bAa2MxhH28Nuv85gvwzDs=;
+	s=arc-20240116; t=1725529728; c=relaxed/simple;
+	bh=5+6Q5skF/cdpy0pQSZ3P1dBYBhYW4HEer697tLc7eco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaQ3tiEowAG7uEpQD32pdCF+dt1MUpZq4k0TCaRScIyXzSLw9Nb/eYOj53xzaTtGNu1/V2hjzCsC8odfp4EFRJ8nWVFWMVjrw9jtY7b5ybFU++dhDcJqTg+NNoiPEHG2p4PiJOa7FQnl11b3WjJQN3GB7v+F9mARl21OzG12Veo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YejNPT30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHWq63Ku8TAbhNpKq1U4OgUo1PLrXHGt3vypcpbUWWVkE/TQHhoPfsCijMuoXrkKyGRcUXF1PM73u/HiIak0D5mm02OrH4wiUU9SsQ2b3+SWGTpJn5eFCmLmHEVOyZdp+d0FrSJe4bMVnm6PEwa3KVCVAic1TtBMZ1znMxO8MjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyrpF+d4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YejNPT30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B15DC4CEC3;
-	Thu,  5 Sep 2024 09:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyrpF+d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFF5C4CEC3;
+	Thu,  5 Sep 2024 09:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529725;
-	bh=aZVBlDKHRerPZQ1WQFn5k8bAa2MxhH28Nuv85gvwzDs=;
+	s=korg; t=1725529728;
+	bh=5+6Q5skF/cdpy0pQSZ3P1dBYBhYW4HEer697tLc7eco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YejNPT30MW36OaGbNv3xoNhaFjmiqaYRoXoGIGKYX8L1p1qX+W1WbnQURkzFpYKGi
-	 IkK74549AV/Fsn/0rAFr4KFijSJ3CR/F4IxeccjUbS54eVHb64H6W60AP7fUsu+kQI
-	 BLz6QZDg0VDmp8nzw/hVF6o4BQLNiZFZLDldq9bE=
+	b=DyrpF+d4rmmNAezPxXhmRq/nkiXe9H/HyeuqgMCvyfS8P0bU/oIYAsCsUgh6Er25x
+	 c/rTd5SP/DoKGkUqX659XsLBcaAKV0dgx6l9NDDPo/5SqxuqZXR6uxSnyvdi5MkCtd
+	 jF4Vnqmx/yA1xYsYqn0Sgi9ZUWym7feTYSbR5bsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Michael Chen <michael.chen@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 122/184] remoteproc: mediatek: Zero out only remaining bytes of IPI buffer
-Date: Thu,  5 Sep 2024 11:40:35 +0200
-Message-ID: <20240905093736.991960928@linuxfoundation.org>
+Subject: [PATCH 6.10 094/184] drm/amdkfd: Reconcile the definition and use of oem_id in struct kfd_topology_device
+Date: Thu,  5 Sep 2024 11:40:07 +0200
+Message-ID: <20240905093735.912152940@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -51,36 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Michael Chen <michael.chen@amd.com>
 
-[ Upstream commit 9dbd9962cfe56d210be5232349851420b5f9c8f6 ]
+[ Upstream commit 10f624ef239bd136cdcc5bbc626157a57b938a31 ]
 
-In scp_ipi_handler(), instead of zeroing out the entire shared
-buffer, which may be as large as 600 bytes, overwrite it with the
-received data, then zero out only the remaining bytes.
+Currently oem_id is defined as uint8_t[6] and casted to uint64_t*
+in some use case. This would lead code scanner to complain about
+access beyond. Re-define it in union to enforce 8-byte size and
+alignment to avoid potential issue.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240520112724.139945-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Michael Chen <michael.chen@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/mtk_scp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.h     | 2 --
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 3 +--
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.h | 5 ++++-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
-index abf7b371b860..e744c07507ee 100644
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -117,8 +117,8 @@ static void scp_ipi_handler(struct mtk_scp *scp)
- 		return;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.h b/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
+index 300634b9f668..a8ca7ecb6d27 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
+@@ -42,8 +42,6 @@
+ #define CRAT_OEMTABLEID_LENGTH	8
+ #define CRAT_RESERVED_LENGTH	6
+ 
+-#define CRAT_OEMID_64BIT_MASK ((1ULL << (CRAT_OEMID_LENGTH * 8)) - 1)
+-
+ /* Compute Unit flags */
+ #define COMPUTE_UNIT_CPU	(1 << 0)  /* Create Virtual CRAT for CPU */
+ #define COMPUTE_UNIT_GPU	(1 << 1)  /* Create Virtual CRAT for GPU */
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+index bc9eb847ecfe..1d271ecc386f 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -958,8 +958,7 @@ static void kfd_update_system_properties(void)
+ 	dev = list_last_entry(&topology_device_list,
+ 			struct kfd_topology_device, list);
+ 	if (dev) {
+-		sys_props.platform_id =
+-			(*((uint64_t *)dev->oem_id)) & CRAT_OEMID_64BIT_MASK;
++		sys_props.platform_id = dev->oem_id64;
+ 		sys_props.platform_oem = *((uint64_t *)dev->oem_table_id);
+ 		sys_props.platform_rev = dev->oem_revision;
  	}
- 
--	memset(scp->share_buf, 0, scp_sizes->ipi_share_buffer_size);
- 	memcpy_fromio(scp->share_buf, &rcv_obj->share_buf, len);
-+	memset(&scp->share_buf[len], 0, scp_sizes->ipi_share_buffer_size - len);
- 	handler(scp->share_buf, len, ipi_desc[id].priv);
- 	scp_ipi_unlock(scp, id);
- 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.h b/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
+index 27386ce9a021..2d1c9d771bef 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
+@@ -154,7 +154,10 @@ struct kfd_topology_device {
+ 	struct attribute		attr_gpuid;
+ 	struct attribute		attr_name;
+ 	struct attribute		attr_props;
+-	uint8_t				oem_id[CRAT_OEMID_LENGTH];
++	union {
++		uint8_t				oem_id[CRAT_OEMID_LENGTH];
++		uint64_t			oem_id64;
++	};
+ 	uint8_t				oem_table_id[CRAT_OEMTABLEID_LENGTH];
+ 	uint32_t			oem_revision;
+ };
 -- 
 2.43.0
 
