@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3D6198E7A;
-	Thu,  5 Sep 2024 10:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070E81946A2;
+	Thu,  5 Sep 2024 10:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530462; cv=none; b=ZNG53PF4fDv64bSP2XdZgxVpm0KTotmgqZhmiF2Fr0Ocb006JRR8AErLdpoorcDrJJbgGmPEievHLmvsnDChaoUAc2hYVmW/bKAVeObsBXUyru+7HcqV6npowlHYuBTno93N2Q5DD7v5wYUii9G9y8RXN5V4O6ume4VOQJLiMtY=
+	t=1725530465; cv=none; b=cvExi64iiQFFQvARqstPmakaejh0vRoYOY1qEp/lG8KybbUyz7te5Lg1tWaVhy+p00npd2roTLZQEaReLSKY+o46lPoj2ot6yQOhzGN0FyBZ37nx0/tc+W6P5MkZmKBskLGIIDr7E70rcAN8ZWtsonlNFk+Ia1BNk5m1G5M0Tqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530462; c=relaxed/simple;
-	bh=jErGR9qL5bhgoMFALUhSWM1agOK73geYf3KqzGU8i84=;
+	s=arc-20240116; t=1725530465; c=relaxed/simple;
+	bh=0iN7/YzYH0WiMmG2L57OATQWjOauphaDoJUg36vGdR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvCHYltwtCMj/m1CKpnN3GPvhLr0IQHjLBEFHZpM4C6CDsJumwMC51kKPgfxD0xwkPSJmgy4dwmzmpMmx9kqjynEXmWyrgBW/8GSgyh2Gz8wL2Z7XYNEhQvuq7FsPX5aOSNdB3CCt3ekbo5sSw66ToKCCTEApiDZWPiq+BXsHO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wa7YKe5R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sfUNRVS3rvI0WWiMWNzsUe3T8ZtT3mmLRzxL91M9twsxKiLp/AkGq5uYagRZBCadBHow+pcqGTVf/yHEmaHFTsfdDoR8PAeIRFJYwRz3qjIBZbXJlMdg8pqgXNBu7jXErSlpaiuDtD7MoYf1PocXwVJYdh/fDbZoNl7H2My+9qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=surTXQHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wa7YKe5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652D4C4CEC4;
-	Thu,  5 Sep 2024 10:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="surTXQHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D59C4CEC3;
+	Thu,  5 Sep 2024 10:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530461;
-	bh=jErGR9qL5bhgoMFALUhSWM1agOK73geYf3KqzGU8i84=;
+	s=korg; t=1725530464;
+	bh=0iN7/YzYH0WiMmG2L57OATQWjOauphaDoJUg36vGdR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wa7YKe5RYYwQLg+T0cdy5PVQSDkkB/F45mAR2qoHP5gvQGFhXVHqhlKy+09jsesP5
-	 vqwObpwuN4bKhfFts0pAjdRMyL8Fju5Z+nS3J2nF3rUgt1ogQcY/iAVJzLJnh7qGAZ
-	 znQT8XsE0cLMFYhDCIk5MLWd01xou4Fdatex0VFw=
+	b=surTXQHpvecBM6E6GoDzxLWOuj/1GMQnTwxsRIqsra8XBD1hj4WaVHDPqb2bkmS6f
+	 y9L23G49xPA173E1Ds/Mra+EaXGK+yVOKIxRpDTNNYMdJI1zfJOL3Jyz7r7eea/LAp
+	 ktD87oNM5eJEV2cK5vHqnDIEVDYWQNo5fj2gR8+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
 	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/101] drm/amdgpu/pm: Check the return value of smum_send_msg_to_smc
-Date: Thu,  5 Sep 2024 11:41:04 +0200
-Message-ID: <20240905093717.386378090@linuxfoundation.org>
+Subject: [PATCH 6.1 033/101] drm/amd/pm: fix uninitialized variable warning
+Date: Thu,  5 Sep 2024 11:41:05 +0200
+Message-ID: <20240905093717.424918749@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -52,47 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 579f0c21baec9e7506b6bb3f60f0a9b6d07693b4 ]
+[ Upstream commit 7c836905520703dbc8b938993b6d4d718bc739f3 ]
 
-Check the return value of smum_send_msg_to_smc, otherwise
-we might use an uninitialized variable "now"
+Check the return of function smum_send_msg_to_smc
+as it may fail to initialize the variable.
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Reviewed-by: Tim Huang <Tim.Huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c
-index 86d6e88c7386..e4d524ae5a77 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c
-@@ -1036,7 +1036,9 @@ static int smu10_print_clock_levels(struct pp_hwmgr *hwmgr,
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+index f3668911a88f..eae4b4826f04 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -99,7 +99,7 @@ static void pp_swctf_delayed_work_handler(struct work_struct *work)
+ 	struct amdgpu_device *adev = hwmgr->adev;
+ 	struct amdgpu_dpm_thermal *range =
+ 				&adev->pm.dpm.thermal;
+-	uint32_t gpu_temperature, size;
++	uint32_t gpu_temperature, size = sizeof(gpu_temperature);
+ 	int ret;
  
- 	switch (type) {
- 	case PP_SCLK:
--		smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetGfxclkFrequency, &now);
-+		ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetGfxclkFrequency, &now);
-+		if (ret)
-+			return ret;
- 
- 	/* driver only know min/max gfx_clk, Add level 1 for all other gfx clks */
- 		if (now == data->gfx_max_freq_limit/100)
-@@ -1057,7 +1059,9 @@ static int smu10_print_clock_levels(struct pp_hwmgr *hwmgr,
- 					i == 2 ? "*" : "");
- 		break;
- 	case PP_MCLK:
--		smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetFclkFrequency, &now);
-+		ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetFclkFrequency, &now);
-+		if (ret)
-+			return ret;
- 
- 		for (i = 0; i < mclk_table->count; i++)
- 			size += sprintf(buf + size, "%d: %uMhz %s\n",
+ 	/*
 -- 
 2.43.0
 
