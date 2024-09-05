@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E788192D73;
-	Thu,  5 Sep 2024 09:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BE81957FC;
+	Thu,  5 Sep 2024 09:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530254; cv=none; b=EM1giUmDQ7hUfeaI7ZAGksRIDtM6CRQWevS6ukZ/nzU3sGiIHgGW1bhQUDv019VwRdX/X/S0in7vPm6ERuG5lD/Xa4O9I97PcI3mhZ8rj+J16EJ87jOhEcF4B4xMxt7LFHebqeMDv15/XE8a3S1Jq5z04PDfJuQuyg9R69PArGc=
+	t=1725530258; cv=none; b=gwzFbck7OrsnHBfoixLEsJGHCjEhQdDddvpaFZg6LtIUaLgvUco2I1wfmeDTHSCPJyJW6lx0eDELcAMi6Q5X6X2O0BxxNdcZlc/2FgO01PjbZwP/thcRE+lTbLsPhrr0Jf2o8RivfYu2UwZDPe07Cllpo0gI5qtlW4x/SBU7arM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530254; c=relaxed/simple;
-	bh=AvvpfeMIoGkm5Sn+/34q+yoeN5S0INUZjUkaEDKxdY0=;
+	s=arc-20240116; t=1725530258; c=relaxed/simple;
+	bh=BSESEP5zo3IuGGeFU7wkiwtJg249I3JaSltJkJnrg90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVcstacgRACNVPBTB5nRdF/dYg5kQlCI5ZXGqBfUi2RGsuZ2VxsFrfZQTHRC1IMU2+AgT1sgOr5uSaXi12DcBMxyYBwu291gUwt+HSwOP8lhXomBF33iPO8R4GqYwXDcRuUoO5u1Ko6DB4YHJIDNQArIYlW5+B0ApHpteCO/Xgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpquiuMC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTbeBikQY/uO/B1nNLbwRJs4TysSEzsDAoajYEettHLtPPkce4xQnGcfvXg3uviDKS6qe+P++g0DAHu3vQKc2KsJqEkwEEhXVRoMcK6tGlpJVCqMDT6pXujfZ25B8G0ITU0/XWIXF7isrtDVvt0RoAw9HD5RJG0udJ/i7XKNzD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHiXq9Vw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpquiuMC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000D5C4CEC3;
-	Thu,  5 Sep 2024 09:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHiXq9Vw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEE6C4CEC3;
+	Thu,  5 Sep 2024 09:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530254;
-	bh=AvvpfeMIoGkm5Sn+/34q+yoeN5S0INUZjUkaEDKxdY0=;
+	s=korg; t=1725530258;
+	bh=BSESEP5zo3IuGGeFU7wkiwtJg249I3JaSltJkJnrg90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpquiuMCWLKBzW7Fo2mShSnaycz0M74ioV/l7ojH8Zlm0/ahczVm+p8IPyCYHpwfv
-	 PGPTSeTeNJaQamf7V/BGULIN/2eRlStKWSdPiz8wcCu94ocpPqldgxoBC26Q9qXABV
-	 8o+GXi7a9nFeIeAZDnL8MHQhhVkfnY4pett9IMZQ=
+	b=UHiXq9Vw1GAW7Z9MC78m9usr3BSPi4pn/g/VOi4sCa8T/pa/b2gamwmF+pXPoY2fT
+	 vDLA/OK7E6BgP8O4ivNIXciFfrw0tz6HmxS/1Gi8sAjHhjhWFO2m4/DqurlJQ5biFs
+	 eabuHHl3IshbPzDAdaTY8X2iqy0ZyPZw3YvUI6as=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Yehuda Yitschak <yehuday@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Gal Pressman <gal.pressman@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/132] drm/amd/display: Fix Coverity INTEGER_OVERFLOW within decide_fallback_link_setting_max_bw_policy
-Date: Thu,  5 Sep 2024 11:40:47 +0200
-Message-ID: <20240905093724.590934135@linuxfoundation.org>
+Subject: [PATCH 6.6 095/132] RDMA/efa: Properly handle unexpected AQ completions
+Date: Thu,  5 Sep 2024 11:41:22 +0200
+Message-ID: <20240905093725.938876588@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -55,47 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Michael Margolin <mrgolin@amazon.com>
 
-[ Upstream commit 83c0c8361347cf43937348e8ca0a487679c003ae ]
+[ Upstream commit 2d0e7ba468eae365f3c4bc9266679e1f8dd405f0 ]
 
-[Why]
-For addtion (uint8_t) variable + constant 1,
-coverity generates message below:
-Truncation due to cast operation on "cur_idx + 1" from
-32 to 8 bits.
+Do not try to handle admin command completion if it has an unexpected
+command id and print a relevant error message.
 
-Then Coverity assume result is 32 bits value be saved into
-8 bits variable. When result is used as index to access
-array, Coverity suspects index invalid.
-
-[How]
-Change varaible type to uint32_t.
-
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Yehuda Yitschak <yehuday@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Link: https://lore.kernel.org/r/20240513064630.6247-1-mrgolin@amazon.com
+Reviewed-by: Gal Pressman <gal.pressman@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c  | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/efa/efa_com.c | 30 ++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 9a0beaf601f8..16f4865e4246 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -528,7 +528,7 @@ static bool decide_fallback_link_setting_max_bw_policy(
- 		struct dc_link_settings *cur,
- 		enum link_training_result training_result)
- {
--	uint8_t cur_idx = 0, next_idx;
-+	uint32_t cur_idx = 0, next_idx;
- 	bool found = false;
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 16a24a05fc2a..bafd210dd43e 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+ /*
+- * Copyright 2018-2021 Amazon.com, Inc. or its affiliates. All rights reserved.
++ * Copyright 2018-2024 Amazon.com, Inc. or its affiliates. All rights reserved.
+  */
  
- 	if (training_result == LINK_TRAINING_ABORT)
+ #include "efa_com.h"
+@@ -406,8 +406,8 @@ static struct efa_comp_ctx *efa_com_submit_admin_cmd(struct efa_com_admin_queue
+ 	return comp_ctx;
+ }
+ 
+-static void efa_com_handle_single_admin_completion(struct efa_com_admin_queue *aq,
+-						   struct efa_admin_acq_entry *cqe)
++static int efa_com_handle_single_admin_completion(struct efa_com_admin_queue *aq,
++						  struct efa_admin_acq_entry *cqe)
+ {
+ 	struct efa_comp_ctx *comp_ctx;
+ 	u16 cmd_id;
+@@ -416,11 +416,11 @@ static void efa_com_handle_single_admin_completion(struct efa_com_admin_queue *a
+ 			 EFA_ADMIN_ACQ_COMMON_DESC_COMMAND_ID);
+ 
+ 	comp_ctx = efa_com_get_comp_ctx(aq, cmd_id, false);
+-	if (!comp_ctx) {
++	if (comp_ctx->status != EFA_CMD_SUBMITTED) {
+ 		ibdev_err(aq->efa_dev,
+-			  "comp_ctx is NULL. Changing the admin queue running state\n");
+-		clear_bit(EFA_AQ_STATE_RUNNING_BIT, &aq->state);
+-		return;
++			  "Received completion with unexpected command id[%d], sq producer: %d, sq consumer: %d, cq consumer: %d\n",
++			  cmd_id, aq->sq.pc, aq->sq.cc, aq->cq.cc);
++		return -EINVAL;
+ 	}
+ 
+ 	comp_ctx->status = EFA_CMD_COMPLETED;
+@@ -428,14 +428,17 @@ static void efa_com_handle_single_admin_completion(struct efa_com_admin_queue *a
+ 
+ 	if (!test_bit(EFA_AQ_STATE_POLLING_BIT, &aq->state))
+ 		complete(&comp_ctx->wait_event);
++
++	return 0;
+ }
+ 
+ static void efa_com_handle_admin_completion(struct efa_com_admin_queue *aq)
+ {
+ 	struct efa_admin_acq_entry *cqe;
+ 	u16 queue_size_mask;
+-	u16 comp_num = 0;
++	u16 comp_cmds = 0;
+ 	u8 phase;
++	int err;
+ 	u16 ci;
+ 
+ 	queue_size_mask = aq->depth - 1;
+@@ -453,10 +456,12 @@ static void efa_com_handle_admin_completion(struct efa_com_admin_queue *aq)
+ 		 * phase bit was validated
+ 		 */
+ 		dma_rmb();
+-		efa_com_handle_single_admin_completion(aq, cqe);
++		err = efa_com_handle_single_admin_completion(aq, cqe);
++		if (!err)
++			comp_cmds++;
+ 
++		aq->cq.cc++;
+ 		ci++;
+-		comp_num++;
+ 		if (ci == aq->depth) {
+ 			ci = 0;
+ 			phase = !phase;
+@@ -465,10 +470,9 @@ static void efa_com_handle_admin_completion(struct efa_com_admin_queue *aq)
+ 		cqe = &aq->cq.entries[ci];
+ 	}
+ 
+-	aq->cq.cc += comp_num;
+ 	aq->cq.phase = phase;
+-	aq->sq.cc += comp_num;
+-	atomic64_add(comp_num, &aq->stats.completed_cmd);
++	aq->sq.cc += comp_cmds;
++	atomic64_add(comp_cmds, &aq->stats.completed_cmd);
+ }
+ 
+ static int efa_com_comp_status_to_errno(u8 comp_status)
 -- 
 2.43.0
 
