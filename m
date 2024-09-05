@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFC413AD3F;
-	Thu,  5 Sep 2024 09:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAD5635;
+	Thu,  5 Sep 2024 09:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529568; cv=none; b=IDQPSg9NxibxAIX5EEVo7VuLpm6nTeLt81DBxuQQUotFLdUsibVknZdBd4MRW0abTvrp4or/Fd0XCR0DdSv6R4d0+YAhXktkrpBkCWpFKcjQVl5npd1P/qK7FPox+L1ZB3It1g4hhz+sakue2uejktnO4WubggJvScfyIW11z0w=
+	t=1725529571; cv=none; b=f8deNlB99KCSNOI7Bv9H4vaf6AAhL1KJVgpc8I7DRTn0sBG0wCSlKdMbtk32hQvOPXem+cY7iJKSKsf1CcgvXxvrMCCUJzSF/Z0sTs9XTQAH40rPycXyOnSD1XvkCcVvdsF+WxXGAeiObs+gCpER0kErZS3BzK6MJmEgY7T764Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529568; c=relaxed/simple;
-	bh=78x1iNJjzA4TUIQFjEOHBWPmQ/VQGl/iYdUf8D+WIBI=;
+	s=arc-20240116; t=1725529571; c=relaxed/simple;
+	bh=i3a4Ng97QY60Yg9CKcJLZCtArcyZ2JfXnNovNFwUGCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSut/zcizOHp6YhDjLRCpyZnXmyKd45ubODYYWOSayrQllwJxr20dvGfRkbLW9b0Nyasd9oW+K7Xh9+2zcUwagEjvzbF58baAZkRFt4KNCMwxLD725ICaPIUJd4DcC2oA9RwvwqtskyKrzHIxUt8MfnabYdCrYWEj5GKZ+umtXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXfeLxHq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+fxIXfuMuxL8cnhMhkpcDdgbn9gL5mTW9ZQfBMtWibhymzcs+J/PhtMKE5AetMa/VPkqwTEti4wFCiczCSbhtM5dmS6NM2thkN1mTf390X0ogODazVtH/XhdzsttlWdwlaTRuKTiq3zqc+sOI0sQDQn9Jjl+28sDI3SLelWwng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNH55Cdj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXfeLxHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936BCC4CEC3;
-	Thu,  5 Sep 2024 09:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNH55Cdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF14C4CEC3;
+	Thu,  5 Sep 2024 09:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529568;
-	bh=78x1iNJjzA4TUIQFjEOHBWPmQ/VQGl/iYdUf8D+WIBI=;
+	s=korg; t=1725529571;
+	bh=i3a4Ng97QY60Yg9CKcJLZCtArcyZ2JfXnNovNFwUGCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXfeLxHq1YV1+HYKoCQ8pU3RvxH3qUajlLlaCO4Tya8Q5m1LgJ6UJ2hkSR2TUlWK5
-	 f21HxDJWaw1Iidtu07BgS8LVMpwm/QSbaWVRIJxJAd0zO98yTEfzeSUtHAqh0PBtYy
-	 2YibKd6KIgT2zGvqjI5s61HKLjB8VMUToXgFnghM=
+	b=BNH55CdjRp11/dw1chT9ICkPaEJG2EZiCJPRNaKSEMbzk5wAp3KCBnUgPgC7QMLE4
+	 wYU/lXBbLn/VnKrJpNcytrEPyTKXrDJKBlGXoGpa+0oG+WnpcRbj6cvAIRunEAgrNK
+	 g32R5ILJ5BMFPIhuVeGFlHHRWFTR6KiLr6qlvHRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 075/184] drm/amd/display: Ensure index calculation will not overflow
-Date: Thu,  5 Sep 2024 11:39:48 +0200
-Message-ID: <20240905093735.170081639@linuxfoundation.org>
+Subject: [PATCH 6.10 058/184] drm/amd/display: Check gpio_id before used as array index
+Date: Thu,  5 Sep 2024 11:39:31 +0200
+Message-ID: <20240905093734.507035632@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -56,13 +56,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 8e2734bf444767fed787305ccdcb36a2be5301a2 ]
+[ Upstream commit 2a5626eeb3b5eec7a36886f9556113dd93ec8ed6 ]
 
 [WHY & HOW]
-Make sure vmid0p72_idx, vnom0p8_idx and vmax0p9_idx calculation will
-never overflow and exceess array size.
+GPIO_ID_UNKNOWN (-1) is not a valid value for array index and therefore
+should be checked in advance.
 
-This fixes 3 OVERRUN and 1 INTEGER_OVERFLOW issues reported by Coverity.
+This fixes 5 OVERRUN issues reported by Coverity.
 
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
@@ -71,27 +71,61 @@ Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c b/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
-index 0c4a8fe8e5ca..f1cde1e4265f 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
-@@ -1453,10 +1453,9 @@ void dcn_bw_update_from_pplib_fclks(
- 	ASSERT(fclks->num_levels);
+diff --git a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+index 663c17f52779..d19d5c177022 100644
+--- a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
++++ b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+@@ -239,6 +239,9 @@ static bool is_pin_busy(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
++	if (id == GPIO_ID_UNKNOWN)
++		return false;
++
+ 	return service->busyness[id][en];
+ }
  
- 	vmin0p65_idx = 0;
--	vmid0p72_idx = fclks->num_levels -
--		(fclks->num_levels > 2 ? 3 : (fclks->num_levels > 1 ? 2 : 1));
--	vnom0p8_idx = fclks->num_levels - (fclks->num_levels > 1 ? 2 : 1);
--	vmax0p9_idx = fclks->num_levels - 1;
-+	vmid0p72_idx = fclks->num_levels > 2 ? fclks->num_levels - 3 : 0;
-+	vnom0p8_idx = fclks->num_levels > 1 ? fclks->num_levels - 2 : 0;
-+	vmax0p9_idx = fclks->num_levels > 0 ? fclks->num_levels - 1 : 0;
+@@ -247,6 +250,9 @@ static void set_pin_busy(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
++	if (id == GPIO_ID_UNKNOWN)
++		return;
++
+ 	service->busyness[id][en] = true;
+ }
  
- 	dc->dcn_soc->fabric_and_dram_bandwidth_vmin0p65 =
- 		32 * (fclks->data[vmin0p65_idx].clocks_in_khz / 1000.0) / 1000.0;
+@@ -255,6 +261,9 @@ static void set_pin_free(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
++	if (id == GPIO_ID_UNKNOWN)
++		return;
++
+ 	service->busyness[id][en] = false;
+ }
+ 
+@@ -263,7 +272,7 @@ enum gpio_result dal_gpio_service_lock(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
+-	if (!service->busyness[id]) {
++	if (id != GPIO_ID_UNKNOWN && !service->busyness[id]) {
+ 		ASSERT_CRITICAL(false);
+ 		return GPIO_RESULT_OPEN_FAILED;
+ 	}
+@@ -277,7 +286,7 @@ enum gpio_result dal_gpio_service_unlock(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
+-	if (!service->busyness[id]) {
++	if (id != GPIO_ID_UNKNOWN && !service->busyness[id]) {
+ 		ASSERT_CRITICAL(false);
+ 		return GPIO_RESULT_OPEN_FAILED;
+ 	}
 -- 
 2.43.0
 
