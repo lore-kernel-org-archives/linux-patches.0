@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D2519882B;
-	Thu,  5 Sep 2024 09:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8208D198A31;
+	Thu,  5 Sep 2024 09:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529511; cv=none; b=phYvTgwnR55uYvlMxd0s2BGrWytslmUBCdgMFNSMx5kVMU8etjzsZw3ZRQzlq7df/wrY9VWY0lUx9+NO6QFNotaPwEY/kRflFBXSa4aq1zBcldakd97rvoNC87Jsu6HQxMP3La01PiLFUiJrDggicUVrEFTpXcF9CgkmLkE1M6k=
+	t=1725529514; cv=none; b=gHGasmNNdtFP5JgJIkgN388sHPaFD/u+gCj48QJ2yvg5DDYRa4Cmd3Ng4wbC4o5Z4ByDW7PKcde/yOJKPPYX1SOfeX9+cSoGnTN0bbDKBCn6i0tz78h5Qys2cQ7u63/49cSV9P4ieBXPz0AwQizbkLUwQTvQEhcIuYqDZdbjui8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529511; c=relaxed/simple;
-	bh=s9A4NZhfgGGFMiy5Dvsa40stapE/qVX2ubzRbq22hqk=;
+	s=arc-20240116; t=1725529514; c=relaxed/simple;
+	bh=0C3JX8/sCNL6F0OBcvkJc/Wi7qIBbbl2YPTpcGqzU6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+X0fwouB19ARdMB6CpkD8auS7rpHmgUQemlb9JE65BLm8dsU+eJe1HzVYa0moFYMkMSfSkLXp0piOVBjqIOrhztL9WoqrmspOmf3md3FKGjzcxT7/v86ENPdi2PzDsSyUm1ufoH72NcZWyaGaAeid4GM/tjO+buqRQlsMWDMnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6eYvWFO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQw5wp8iGTcoIQLjUyLDMwq4Yr5H+ly+hxRc9+0V5npBiEoqXqrpbiFF1pjNZSf+1hMzleJzZgj5nY1kKmHxOGx6lDhWqTo51MExeoWu4mynOIisawkZzjQPihZfdtmSA9nUlEkhQcYRkER9Ox7XPoY0OciJ7WpxmDrgPkt4Pzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4DTMWBy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6eYvWFO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDA9C4CEC4;
-	Thu,  5 Sep 2024 09:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4DTMWBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05145C4CEC6;
+	Thu,  5 Sep 2024 09:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529511;
-	bh=s9A4NZhfgGGFMiy5Dvsa40stapE/qVX2ubzRbq22hqk=;
+	s=korg; t=1725529514;
+	bh=0C3JX8/sCNL6F0OBcvkJc/Wi7qIBbbl2YPTpcGqzU6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6eYvWFOYSRXlovatXTXU4dBh9a9I3tlPp9FJ3/XAN9WBw6ovQA0FXYYWcUSSoDd8
-	 DaxywQmY2nLos0SMI6MsPlVwsuXvq32uKIyoci++afk7c+elk4G123UhBx71X4Bxov
-	 ITjD6vD3uvY/+sTzAsl9KK0SqHX4lQg/BtkyAAIY=
+	b=M4DTMWByRDzDSV1dZsya0fsP3N22FkD9B3nvfKD+RFvGIGExLilf0NKfDIxJSX6rZ
+	 p8JHueHokLf8snXR0zXFsMQ1MALKwTaEl41W3ZViV6uRSwiq4CqXWgMTBQz25XbtN3
+	 4X9oUNRYQXJkbeCSaeX7Xk9KWJJ5buXkhvAvLpa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Francois Dugast <francois.dugast@intel.com>,
+	ZHANG Yuntian <yt@radxa.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 055/184] drm/xe/gt: Fix assert in L3 bank mask generation
-Date: Thu,  5 Sep 2024 11:39:28 +0200
-Message-ID: <20240905093734.390908740@linuxfoundation.org>
+Subject: [PATCH 6.10 026/184] net: usb: qmi_wwan: add MeiG Smart SRM825L
+Date: Thu,  5 Sep 2024 11:38:59 +0200
+Message-ID: <20240905093733.269028703@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,50 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francois Dugast <francois.dugast@intel.com>
+From: ZHANG Yuntian <yt@radxa.com>
 
-[ Upstream commit 8ad0e1810bf23f22cedb8a2664548b15646570c7 ]
+[ Upstream commit 1ca645a2f74a4290527ae27130c8611391b07dbf ]
 
-What needs to be asserted is that the pattern fits in the number
-of bits provided by the user in patternbits, otherwise it would
-be truncated when replicated according to the mask, which is
-likely not the intended use of this function.
-The pattern argument is a bitmap so use find_last_bit() instead
-of fls(). The bit position starts at index 0 so remove "or equal"
-from the comparison. XE_MAX_L3_BANK_MASK_BITS would be the
-returned value if the pattern is 0, which can be the case on some
-platforms.
+Add support for MeiG Smart SRM825L which is based on Qualcomm 315 chip.
 
-v2: Check the result does not overflow the array (Lucas De Marchi)
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d22 Rev= 4.14
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=6f345e48
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-v3: Use __fls() for long and handle mask == 0  (Lucas De Marchi)
-
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Francois Dugast <francois.dugast@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240502124311.159695-1-francois.dugast@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: ZHANG Yuntian <yt@radxa.com>
+Link: https://patch.msgid.link/D1EB81385E405DFE+20240803074656.567061-1-yt@radxa.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_topology.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_topology.c b/drivers/gpu/drm/xe/xe_gt_topology.c
-index 3733e7a6860d..d224ed1b5c0f 100644
---- a/drivers/gpu/drm/xe/xe_gt_topology.c
-+++ b/drivers/gpu/drm/xe/xe_gt_topology.c
-@@ -108,7 +108,9 @@ gen_l3_mask_from_pattern(struct xe_device *xe, xe_l3_bank_mask_t dst,
- {
- 	unsigned long bit;
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index cfda32047cffb..4823dbdf54656 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1432,6 +1432,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1312, 4)},	/* u-blox LARA-R6 01B */
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+ 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
++	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
  
--	xe_assert(xe, fls(mask) <= patternbits);
-+	xe_assert(xe, find_last_bit(pattern, XE_MAX_L3_BANK_MASK_BITS) < patternbits ||
-+		  bitmap_empty(pattern, XE_MAX_L3_BANK_MASK_BITS));
-+	xe_assert(xe, !mask || patternbits * (__fls(mask) + 1) <= XE_MAX_L3_BANK_MASK_BITS);
- 	for_each_set_bit(bit, &mask, 32) {
- 		xe_l3_bank_mask_t shifted_pattern = {};
- 
+ 	/* 4. Gobi 1000 devices */
+ 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
 -- 
 2.43.0
 
