@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A982197A77;
-	Thu,  5 Sep 2024 09:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0B5195FCE;
+	Thu,  5 Sep 2024 09:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529455; cv=none; b=iVpe9IlSoizfpZhj/MmByc5bvWDE58XmDWMc6zZboBQgaAQK3J5QsnE6vnUTM5PfrSLPh76z0BlNtn5FLYXipMGARUd6ITY/bjLr52SGbqXRpeM8mZXBAvvdRuxfPTU9HqcDJSMRzTPi6HYU1qaxNsfuWaQyrh6+R8gd5iKbrzk=
+	t=1725529459; cv=none; b=WRYFyagGUEIfESX04FLa5mmWZurZFvq2EzXruGeA4zXnfDq1rECJuKWHodW7G50ykVsL5x8XiCqHloseVb9rwxamNRiBk3/gGBhx0h8dApjdB0OwEZPxLucvaWTQpANfJu4gQ8y6y6YtkoBSrgl//DQBrSampzJKhWJNWGiiwKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529455; c=relaxed/simple;
-	bh=Ho6TRf3bAJNdmqY4PShiZDvcDdmCPaplCFl1JHtY5Do=;
+	s=arc-20240116; t=1725529459; c=relaxed/simple;
+	bh=6h4dXN64Ul9iEAPF2HB/QQQPC7I5u7jWKxf4CPBXaEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gf1bBl8yhvr1RAJsKhBgWcVyyTkqBkL3MBr8Iecnmx49Xy/EWXufPKcYcLGoDvbZISKD2Mklvmp09zHOSsAKY4NBqRw9KwKnkZxBojPSPPglXtbqG5Vz5HYv8xpCgzVBNbImNuMqUhmHbaxIKxE2S9QyyoGL/8uSKjSGtnBQzXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y224dx24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jnB4/2JaXZ9CcYGoSlVazfjHv1NSrfylrARQEhaXRj8aCWyy4OAnxyQ2XTKIlhcpUXuVOY09GfJJZldqklLuad9Rc01ml0eBFxJ5TyRmYHZ8yznVBCw5OWBvntFjuowQXJibnfn6i2EJOYXNqYiLW2gZw9K4YOxEdObsIr8G/Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imHfsCPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y224dx24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEFAC4CEC3;
-	Thu,  5 Sep 2024 09:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imHfsCPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66399C4CEC3;
+	Thu,  5 Sep 2024 09:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529455;
-	bh=Ho6TRf3bAJNdmqY4PShiZDvcDdmCPaplCFl1JHtY5Do=;
+	s=korg; t=1725529459;
+	bh=6h4dXN64Ul9iEAPF2HB/QQQPC7I5u7jWKxf4CPBXaEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y224dx24M6H435tSgr9whIXh9vxhL/i/nvcq3pb2xYOR6rJYbVvjeZcq1QJr7OGYg
-	 Z06WanshRGOHFr3HKwwQtnxnBCTuawiiWaJZS4vS3vSgKAZDIAzXDrsuXYxdm4j2DQ
-	 7rKRJI+zXE0Fv4O/SM5/hKg44J9isQCSWkvAN3ZQ=
+	b=imHfsCPUBNZQRG9zxUuQCZ8tZYzc5taAqg/bhnuNALqWUyr1mhSEK2xAu8aLeaeZ0
+	 qnPb17gLpnXqvpZYWGYGktSdsDPYHy+JYWeYK8zg+6VJtdAsDCCLJ/RYhl2DIkEmEx
+	 Jy02I8HZXvZDswRvxjLG+roQhlojFQKFAaS1oCH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 039/184] selftests: mptcp: join: test for flush/re-add endpoints
-Date: Thu,  5 Sep 2024 11:39:12 +0200
-Message-ID: <20240905093733.775036193@linuxfoundation.org>
+	Ma Jun <Jun.Ma2@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 040/184] drm/amdgpu: Fix uninitialized variable warning in amdgpu_afmt_acr
+Date: Thu,  5 Sep 2024 11:39:13 +0200
+Message-ID: <20240905093733.813724550@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -51,71 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-commit e06959e9eebdfea4654390f53b65cff57691872e upstream.
+[ Upstream commit c0d6bd3cd209419cc46ac49562bef1db65d90e70 ]
 
-After having flushed endpoints that didn't cause the creation of new
-subflows, it is important to check endpoints can be re-created, re-using
-previously used IDs.
+Assign value to clock to fix the warning below:
+"Using uninitialized value res. Field res.clock is uninitialized"
 
-Before the previous commit, the client would not have been able to
-re-create the subflow that was previously rejected.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 06faa2271034 ("mptcp: remove multi addresses and subflows in PM")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-6-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   30 ++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3752,6 +3752,36 @@ endpoint_tests()
- 		chk_rm_nr 4 3 invert
- 	fi
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c
+index a4d65973bf7c..80771b1480ff 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c
+@@ -100,6 +100,7 @@ struct amdgpu_afmt_acr amdgpu_afmt_acr(uint32_t clock)
+ 	amdgpu_afmt_calc_cts(clock, &res.cts_32khz, &res.n_32khz, 32000);
+ 	amdgpu_afmt_calc_cts(clock, &res.cts_44_1khz, &res.n_44_1khz, 44100);
+ 	amdgpu_afmt_calc_cts(clock, &res.cts_48khz, &res.n_48khz, 48000);
++	res.clock = clock;
  
-+	# flush and re-add
-+	if reset_with_tcp_filter "flush re-add" ns2 10.0.3.2 REJECT OUTPUT &&
-+	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 1 2
-+		# broadcast IP: no packet for this address will be received on ns1
-+		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
-+		test_linkfail=4 speed=20 \
-+			run_tests $ns1 $ns2 10.0.1.1 &
-+		local tests_pid=$!
-+
-+		wait_attempt_fail $ns2
-+		chk_subflow_nr "before flush" 1
-+		chk_mptcp_info subflows 0 subflows 0
-+
-+		pm_nl_flush_endpoint $ns2
-+		pm_nl_flush_endpoint $ns1
-+		wait_rm_addr $ns2 0
-+		ip netns exec "${ns2}" ${iptables} -D OUTPUT -s "10.0.3.2" -p tcp -j REJECT
-+		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
-+		wait_mpj $ns2
-+		pm_nl_add_endpoint $ns1 10.0.3.1 id 2 flags signal
-+		wait_mpj $ns2
-+		mptcp_lib_kill_wait $tests_pid
-+
-+		chk_join_nr 2 2 2
-+		chk_add_nr 2 2
-+		chk_rm_nr 1 0 invert
-+	fi
+ 	return res;
  }
- 
- # [$1: error message]
+-- 
+2.43.0
+
 
 
