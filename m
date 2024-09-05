@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A2F1494DB;
-	Thu,  5 Sep 2024 10:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BB71494DB;
+	Thu,  5 Sep 2024 10:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530542; cv=none; b=KAgcx2PxMK2vOJCVJrHraVWl6QR1Z2Ttq6qXzPha4o4z77hE3lTnrpD35kswxBq0OyCdQXDl/1PAp6iyhKhZLb+su9bqHN3AwV921wbhFk05audJ5m9z0bhp0fbqWfkhSdtRPepn5olaQUsy2INGxUd94lrqNWT/Z4c0b7nFd0s=
+	t=1725530545; cv=none; b=JMMoKIuSt8yqBlaD/360rVoDaU/frqDdYs39eR3TNOs3wqDMEs7kkFH9HRTBG9XCpXn/kjNU0grr9WRmyy77vMd8VB3oSuKfhv/Sw/uJo944hYcwRs+g06/+rst8i5EcO0ctAzu6VTl9bEoOYJGRjDYQbk9ySlEmwF8etM2nVwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530542; c=relaxed/simple;
-	bh=F37Xf0Q2VPC8QyzRB8Ys3AVqpruJOZzToYl/wtLybkI=;
+	s=arc-20240116; t=1725530545; c=relaxed/simple;
+	bh=OgcqFzMhLW1ZjCpIPpCghiM4+cyutWCz9q6BOgqiq5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFQns/CQFgNL2+oQHHni5iMQ6KgGvGOjTf3993sNSjOgs7b2GnbuOX4eRsV9y6aWDnD47/CTYA8JtJiAZlwViJRYR+GZUgeibS76Eutm2KR/+9VJP3XlVFVYK8tUgjaVgXDCbQE8JPtix1/T36BSZXj5xvlJu/B5lEb8XDjpqv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNlGlpEf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHuY7v3qbLJGZA19xEIa0BGAwXcuNgSiHGnb5CYpnsRFdrs2K2ZZUW1jFNic/0L37iR4dJuv3erDvyTTAErZ0XZ8MqfBwdHONmvsGsrTmKD18zYIOOBHsoR5Rm24C8qhsJ0d/GNa3Iq5gAZURog97gsfDxZaAO4Y0NN7beozTuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUL1CwDE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNlGlpEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B065C4CEC3;
-	Thu,  5 Sep 2024 10:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUL1CwDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96688C4CEC3;
+	Thu,  5 Sep 2024 10:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530541;
-	bh=F37Xf0Q2VPC8QyzRB8Ys3AVqpruJOZzToYl/wtLybkI=;
+	s=korg; t=1725530545;
+	bh=OgcqFzMhLW1ZjCpIPpCghiM4+cyutWCz9q6BOgqiq5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNlGlpEfWWe9KbOg2vYvTSwczH/5cmJQIWuAYnvsuSTRx/j7Tu3lpU4ISiqwhCvQN
-	 VD8LV/jz+DpJaC9i8OgvpTLLTUR9sRXSIzy7Tbdj2nzKXLJZasGjuUjuFPXxnG3OEt
-	 EbHCyi2Xr5mEYuaSWbiWaD1+xUmXqBvwoguUrDX4=
+	b=lUL1CwDEjjLu4DtY2l655iTMohYtyqQhd/UWW6jXPueU2h3tPzwx+hJb/YeyRNUCx
+	 zz2kY6VFJg+4HXbDm6y2i0+AJRVG66nLtLlybsQSDVP5KOqC5cFNJzM32j+gKI+sdn
+	 De/2H78LYSmiCBmnuZvmmZXLrlleYfTear1zGT1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/101] drm/amdgpu: fix ucode out-of-bounds read warning
-Date: Thu,  5 Sep 2024 11:41:27 +0200
-Message-ID: <20240905093718.289772991@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 026/101] selftests: mptcp: join: no extra msg if no counter
+Date: Thu,  5 Sep 2024 11:40:58 +0200
+Message-ID: <20240905093717.146671776@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,36 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 8944acd0f9db33e17f387fdc75d33bb473d7936f ]
+commit 76a2d8394cc183df872adf04bf636eaf42746449 upstream.
 
-Clear warning that read ucode[] may out-of-bounds.
+The checksum and fail counters might not be available. Then no need to
+display an extra message with missing info.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While at it, fix the indentation around, which is wrong since the same
+commit.
+
+Fixes: 47867f0a7e83 ("selftests: mptcp: join: skip check if MIB counter not supported")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Conflicts in mptcp_join.sh, because the context is different, but the
+  exact same fix can still be applied on the modified lines: adding
+  '[ -n "$count" ]', and fixing the indentation. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c
-index f1a050379190..682de88cf91f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c
-@@ -213,6 +213,9 @@ static int amdgpu_cgs_get_firmware_info(struct cgs_device *cgs_device,
- 		struct amdgpu_firmware_info *ucode;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -1252,13 +1252,13 @@ chk_csum_nr()
  
- 		id = fw_type_convert(cgs_device, type);
-+		if (id >= AMDGPU_UCODE_ID_MAXIMUM)
-+			return -EINVAL;
-+
- 		ucode = &adev->firmware.ucode[id];
- 		if (ucode->fw == NULL)
- 			return -EINVAL;
--- 
-2.43.0
-
+ 	printf "%-${nr_blank}s %s" " " "sum"
+ 	count=$(get_counter ${ns1} "MPTcpExtDataCsumErr")
+-	if [ "$count" != "$csum_ns1" ]; then
++	if [ -n "$count" ] && [ "$count" != "$csum_ns1" ]; then
+ 		extra_msg="$extra_msg ns1=$count"
+ 	fi
+ 	if [ -z "$count" ]; then
+ 		echo -n "[skip]"
+ 	elif { [ "$count" != $csum_ns1 ] && [ $allow_multi_errors_ns1 -eq 0 ]; } ||
+-	   { [ "$count" -lt $csum_ns1 ] && [ $allow_multi_errors_ns1 -eq 1 ]; }; then
++	     { [ "$count" -lt $csum_ns1 ] && [ $allow_multi_errors_ns1 -eq 1 ]; }; then
+ 		echo "[fail] got $count data checksum error[s] expected $csum_ns1"
+ 		fail_test
+ 		dump_stats=1
+@@ -1267,13 +1267,13 @@ chk_csum_nr()
+ 	fi
+ 	echo -n " - csum  "
+ 	count=$(get_counter ${ns2} "MPTcpExtDataCsumErr")
+-	if [ "$count" != "$csum_ns2" ]; then
++	if [ -n "$count" ] && [ "$count" != "$csum_ns2" ]; then
+ 		extra_msg="$extra_msg ns2=$count"
+ 	fi
+ 	if [ -z "$count" ]; then
+ 		echo -n "[skip]"
+ 	elif { [ "$count" != $csum_ns2 ] && [ $allow_multi_errors_ns2 -eq 0 ]; } ||
+-	   { [ "$count" -lt $csum_ns2 ] && [ $allow_multi_errors_ns2 -eq 1 ]; }; then
++	     { [ "$count" -lt $csum_ns2 ] && [ $allow_multi_errors_ns2 -eq 1 ]; }; then
+ 		echo "[fail] got $count data checksum error[s] expected $csum_ns2"
+ 		fail_test
+ 		dump_stats=1
+@@ -1315,13 +1315,13 @@ chk_fail_nr()
+ 
+ 	printf "%-${nr_blank}s %s" " " "ftx"
+ 	count=$(get_counter ${ns_tx} "MPTcpExtMPFailTx")
+-	if [ "$count" != "$fail_tx" ]; then
++	if [ -n "$count" ] && [ "$count" != "$fail_tx" ]; then
+ 		extra_msg="$extra_msg,tx=$count"
+ 	fi
+ 	if [ -z "$count" ]; then
+ 		echo -n "[skip]"
+ 	elif { [ "$count" != "$fail_tx" ] && [ $allow_tx_lost -eq 0 ]; } ||
+-	   { [ "$count" -gt "$fail_tx" ] && [ $allow_tx_lost -eq 1 ]; }; then
++	     { [ "$count" -gt "$fail_tx" ] && [ $allow_tx_lost -eq 1 ]; }; then
+ 		echo "[fail] got $count MP_FAIL[s] TX expected $fail_tx"
+ 		fail_test
+ 		dump_stats=1
+@@ -1331,13 +1331,13 @@ chk_fail_nr()
+ 
+ 	echo -n " - failrx"
+ 	count=$(get_counter ${ns_rx} "MPTcpExtMPFailRx")
+-	if [ "$count" != "$fail_rx" ]; then
++	if [ -n "$count" ] && [ "$count" != "$fail_rx" ]; then
+ 		extra_msg="$extra_msg,rx=$count"
+ 	fi
+ 	if [ -z "$count" ]; then
+ 		echo -n "[skip]"
+ 	elif { [ "$count" != "$fail_rx" ] && [ $allow_rx_lost -eq 0 ]; } ||
+-	   { [ "$count" -gt "$fail_rx" ] && [ $allow_rx_lost -eq 1 ]; }; then
++	     { [ "$count" -gt "$fail_rx" ] && [ $allow_rx_lost -eq 1 ]; }; then
+ 		echo "[fail] got $count MP_FAIL[s] RX expected $fail_rx"
+ 		fail_test
+ 		dump_stats=1
 
 
