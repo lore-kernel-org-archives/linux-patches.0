@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B03195FCE;
-	Thu,  5 Sep 2024 09:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6342314A08E;
+	Thu,  5 Sep 2024 09:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529940; cv=none; b=fpipdqIN+DMqeBCV8gsyzgPyUPmEZMgOe2xFX/OqhkQL8xDrlo5Q88Uo2qFtaPX4erK6BUXDfG5u9lk+LHJE5SUyBO7L1Z+im09lvymRAYj4Nit1K2m/IxCuxdvG3OPzUhldIBYxN4GRNPhiIhOIlMLsSrF2qHawpzRHDJdVGpk=
+	t=1725529943; cv=none; b=IBTmQSHWhCilsYg8V9An3ZeB+Xls9fIp+JQRrEwmnzKQOK2xAJrJGORYELSQR8sqBLQBL95qFWvYNsTBOIUoqouRaeurClz15D1A6yWx3zBRxc7abcxL8TtK339KvWeZcWYCd5rTnEyUUwD99tCN+6kK5xvQApRuM/D0bmYK13U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529940; c=relaxed/simple;
-	bh=UExJEgV3amwCAlHikPUbABjkkgVJEyqwk4+pzXNE084=;
+	s=arc-20240116; t=1725529943; c=relaxed/simple;
+	bh=mJhmp/6A0q+bHszcci7QJSHBjPbBqF2N9kaK5RDAnio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lor1oZ+DbweZ6JrcBWblprTxvtmrPxKMfpd1r6DGhH6YtkRH88CAY7F1q8UoxDJp2NcxTTUBpmIczQqEPWbLPkmK1sq4+eiL1rcFUmmLo9Q6XJhR0BEa5TxtCxdN03BEgWyP0ur0ZLj+wKyFYzs49dhUCL8nVN3E4NjdGl4jDSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxGMUBPg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JdNsOvs03Ow+9urArxZ62n9a8y/PofJzaq309PB9ZQaEAHqS3RuC/zoqAVvw9uB+F5fHoHadxz0FGC7BQ/wDXElxM1EiLi7Mbn3hldwmBf5Q6MC5p6XP6GCz+tefWcVAQbNF64HPGFtDBhZ4VeT4Bv4eePXPEOvGo1Ha3jkdU/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pqZO9vO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxGMUBPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D22C4CEC4;
-	Thu,  5 Sep 2024 09:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pqZO9vO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDCFC4CEC4;
+	Thu,  5 Sep 2024 09:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529940;
-	bh=UExJEgV3amwCAlHikPUbABjkkgVJEyqwk4+pzXNE084=;
+	s=korg; t=1725529943;
+	bh=mJhmp/6A0q+bHszcci7QJSHBjPbBqF2N9kaK5RDAnio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxGMUBPglGArN5OQfFlDb1YOJqHIO1NS3hzjnjTQv/HbNGdQpKMsSss9ovhdbtjtz
-	 H5uRvEmGuAWU9RmVd3EKOHYZ90o7T0GkPNiirseMz8L5Xp3PrlyKqqHRuthZ+hjYk/
-	 48Ph8eIYR7T7Xs99yVpAgW+v6//AtZIaRrSSuYeQ=
+	b=1pqZO9vOEhaicIfJu5SUg/It2ba4hsSk4IPN39Kfn9zUdDTBRvw0wK6tij9CLg0Wg
+	 I1K3zkdhZn4Z+7+H16vBqgA94Mu5hH1tfWUyHhx6DD1d27F3TVvvmnPb3XZCIPGjOZ
+	 0t9niAxGU84CLPW3J/d1PTJzQtiN1u9g35tHExo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 163/184] drm/amdgpu: add skip_hw_access checks for sriov
-Date: Thu,  5 Sep 2024 11:41:16 +0200
-Message-ID: <20240905093738.704423526@linuxfoundation.org>
+Subject: [PATCH 6.10 164/184] drm/amdgpu: add lock in amdgpu_gart_invalidate_tlb
+Date: Thu,  5 Sep 2024 11:41:17 +0200
+Message-ID: <20240905093738.742341837@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -55,53 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit b3948ad1ac582f560e1f3aeaecf384619921c48d ]
+[ Upstream commit 18f2525d31401e5142db95ff3a6ec0f4147be818 ]
 
-Accessing registers via host is missing the check for skip_hw_access and
-the lockdep check that comes with it.
+We need to take the reset domain lock before flush hdp. We can't put the
+lock inside amdgpu_device_flush_hdp itself because it is used during
+reset where we already take the write side lock.
 
 Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 923d51f16ec8..2359d1d60275 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -977,6 +977,9 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v, u32 f
- 		return 0;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
+index c623e23049d1..a6ddffbf8b4d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
+@@ -34,6 +34,7 @@
+ #include <asm/set_memory.h>
+ #endif
+ #include "amdgpu.h"
++#include "amdgpu_reset.h"
+ #include <drm/drm_drv.h>
+ #include <drm/ttm/ttm_tt.h>
  
-+	if (amdgpu_device_skip_hw_access(adev))
-+		return 0;
-+
- 	reg_access_ctrl = &adev->gfx.rlc.reg_access_ctrl[xcc_id];
- 	scratch_reg0 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg0;
- 	scratch_reg1 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg1;
-@@ -1053,6 +1056,9 @@ void amdgpu_sriov_wreg(struct amdgpu_device *adev,
- {
- 	u32 rlcg_flag;
+@@ -408,7 +409,10 @@ void amdgpu_gart_invalidate_tlb(struct amdgpu_device *adev)
+ 		return;
  
-+	if (amdgpu_device_skip_hw_access(adev))
-+		return;
-+
- 	if (!amdgpu_sriov_runtime(adev) &&
- 		amdgpu_virt_get_rlcg_reg_access_flag(adev, acc_flags, hwip, true, &rlcg_flag)) {
- 		amdgpu_virt_rlcg_reg_rw(adev, offset, value, rlcg_flag, xcc_id);
-@@ -1070,6 +1076,9 @@ u32 amdgpu_sriov_rreg(struct amdgpu_device *adev,
- {
- 	u32 rlcg_flag;
- 
-+	if (amdgpu_device_skip_hw_access(adev))
-+		return 0;
-+
- 	if (!amdgpu_sriov_runtime(adev) &&
- 		amdgpu_virt_get_rlcg_reg_access_flag(adev, acc_flags, hwip, false, &rlcg_flag))
- 		return amdgpu_virt_rlcg_reg_rw(adev, offset, 0, rlcg_flag, xcc_id);
+ 	mb();
+-	amdgpu_device_flush_hdp(adev, NULL);
++	if (down_read_trylock(&adev->reset_domain->sem)) {
++		amdgpu_device_flush_hdp(adev, NULL);
++		up_read(&adev->reset_domain->sem);
++	}
+ 	for_each_set_bit(i, adev->vmhubs_mask, AMDGPU_MAX_VMHUBS)
+ 		amdgpu_gmc_flush_gpu_tlb(adev, 0, i, 0);
+ }
 -- 
 2.43.0
 
