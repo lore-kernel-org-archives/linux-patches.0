@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0919514A08E;
-	Thu,  5 Sep 2024 09:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCE314A08E;
+	Thu,  5 Sep 2024 09:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529642; cv=none; b=AVpJp+cMklWxOZI3QU52lkqcH01sxPUIyc2EgT2n2mRjHc+HUP96v6bRmyyDE66cWYD0f1Sw/DDz90BLaXhLjVhp5BRFK7OWdp/UVz3wRLte6VXR/2n22jovc5xkYwpbXa/rphpevPaE3nQahkxH6BQm2lO9+89NzI02BET60s0=
+	t=1725529645; cv=none; b=g9jlDUHLSUHyK6iQGSbNs8mErEc7CvS49RLFmXpacuYg9zfS1PCn9OWdJHG2XTUKxQ0+mwWsfU2tSSRmBHNYU1kyNoE0O+JEPJXuxnq0Zdrw3zH1h54hJagUlV1+Q1mhvx2oKbdTKBaQxDJvChzw9tUeZrac0MibGsaNFBhddXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529642; c=relaxed/simple;
-	bh=msuYBH4Hnql3TEBN3T+eRXzhtegpGgVV3d/4XpFwnTo=;
+	s=arc-20240116; t=1725529645; c=relaxed/simple;
+	bh=zaTbc0o1knnnA0JpQiHbXO/z/5tyaMxa0sJW8EP5UlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bmc5Z6IuTVR329O/FWE6wpZ4gnszQm1tzBdH+u8TdTQxYocmzAMR4bdQqA6GcpXMY10+6VkXdGo3K8QDlHYMkBjs8MGIvCaB0FlsJPta02qFkLS/aab/3boW97mD25poHOihHPPH23hBnnKZp/QuuFe0WDL6VhNENFUYWKeb4Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gcg3ohO/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cd9WT53PJZ9GMDDLc635p19E4+UDxB0+z51J/7Tnrmu0yYVJXdT4x9qKlPhHGEgBwgBJtR0B93zuFNfsuNbGkNRAtQf7tZyjKLiidAxZGug3Tfj7839Bl+QZlcNHXMEphLEdCKjD55pgRczC7QGpuIWwcrCCKkPOi6sRQ/pz3l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVkrG5of; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gcg3ohO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822BCC4CEC3;
-	Thu,  5 Sep 2024 09:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVkrG5of"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68DBC4CEC3;
+	Thu,  5 Sep 2024 09:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529641;
-	bh=msuYBH4Hnql3TEBN3T+eRXzhtegpGgVV3d/4XpFwnTo=;
+	s=korg; t=1725529645;
+	bh=zaTbc0o1knnnA0JpQiHbXO/z/5tyaMxa0sJW8EP5UlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gcg3ohO/IiE52yO9VZclJJWShu1q6Escp3jOWVJ1RGv76W4L8T9fb+2+ntBivKzOi
-	 dOe4rudEe8+5g3vVqvPdSMsudHk8NQfOmW5J1TyniG6drOTRwTyvQ7yiZnPXfZSwLX
-	 iYgsTClhvTPKTDEJiPwE99SpsSsrEaoU+Zfh6+Tw=
+	b=FVkrG5ofHX39PWPkWT4RkhejyuhiZL49C9yRAJekTCPu30oDsBvlvaezbG0wszdaA
+	 RbhQyXLGC9H1Ja1j/9hiFXHt3BLDcGJlcvj2hM4Q5cWXNclgJCP1/jvityhS+e0Uju
+	 QbEfSReNsC8FTElO52uo0ovxQJW/e7nMlkwSxPEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhigang Luo <Zhigang.Luo@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Ma Jun <Jun.Ma2@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 056/184] drm/amdgpu: avoid reading vf2pf info size from FB
-Date: Thu,  5 Sep 2024 11:39:29 +0200
-Message-ID: <20240905093734.429422369@linuxfoundation.org>
+Subject: [PATCH 6.10 091/184] drm/amdgpu: Fix uninitialized variable warning in amdgpu_info_ioctl
+Date: Thu,  5 Sep 2024 11:40:04 +0200
+Message-ID: <20240905093735.794531827@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -53,35 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhigang Luo <Zhigang.Luo@amd.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit 3bcc0ee14768d886cedff65da72d83d375a31a56 ]
+[ Upstream commit 0991e49d2b73bb4189f83a49eb41cdf16976bbf6 ]
 
-VF can't access FB when host is doing mode1 reset. Using sizeof to get
-vf2pf info size, instead of reading it from vf2pf header stored in FB.
+Check the return value of amdgpu_xcp_get_inst_details, otherwise we
+may use an uninitialized variable inst_mask
 
-Signed-off-by: Zhigang Luo <Zhigang.Luo@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index f5fedf1be236..761fff80ec1f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -585,7 +585,7 @@ static int amdgpu_virt_write_vf2pf_data(struct amdgpu_device *adev)
- 	}
- 	vf2pf_info->checksum =
- 		amd_sriov_msg_checksum(
--		vf2pf_info, vf2pf_info->header.size, 0, 0);
-+		vf2pf_info, sizeof(*vf2pf_info), 0, 0);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index a0ea6fe8d060..977cde6d1362 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -623,25 +623,32 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 			switch (type) {
+ 			case AMD_IP_BLOCK_TYPE_GFX:
+ 				ret = amdgpu_xcp_get_inst_details(xcp, AMDGPU_XCP_GFX, &inst_mask);
++				if (ret)
++					return ret;
+ 				count = hweight32(inst_mask);
+ 				break;
+ 			case AMD_IP_BLOCK_TYPE_SDMA:
+ 				ret = amdgpu_xcp_get_inst_details(xcp, AMDGPU_XCP_SDMA, &inst_mask);
++				if (ret)
++					return ret;
+ 				count = hweight32(inst_mask);
+ 				break;
+ 			case AMD_IP_BLOCK_TYPE_JPEG:
+ 				ret = amdgpu_xcp_get_inst_details(xcp, AMDGPU_XCP_VCN, &inst_mask);
++				if (ret)
++					return ret;
+ 				count = hweight32(inst_mask) * adev->jpeg.num_jpeg_rings;
+ 				break;
+ 			case AMD_IP_BLOCK_TYPE_VCN:
+ 				ret = amdgpu_xcp_get_inst_details(xcp, AMDGPU_XCP_VCN, &inst_mask);
++				if (ret)
++					return ret;
+ 				count = hweight32(inst_mask);
+ 				break;
+ 			default:
+ 				return -EINVAL;
+ 			}
+-			if (ret)
+-				return ret;
++
+ 			return copy_to_user(out, &count, min(size, 4u)) ? -EFAULT : 0;
+ 		}
  
- 	return 0;
- }
 -- 
 2.43.0
 
