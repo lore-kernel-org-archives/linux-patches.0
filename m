@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47797156225;
-	Thu,  5 Sep 2024 09:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6B7194A45;
+	Thu,  5 Sep 2024 09:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530195; cv=none; b=TgGCY4yLBUvaW3KtZgLWpNm8yQEEAurmuCAPPcjfrl43+FUvl4FVr0dC+WVg/+2tY9Y7HKTjU0RCyeDIJAxp8OH0kyFnNn2NeHnMjgWciKoDVs5yiEgNFtQcm6CU7OTOnZL6gf/NZM9Vro2pDGzFPezJgHv+BpTP0mYALH6VjnE=
+	t=1725530198; cv=none; b=Qhcxge9EIM6S4d735Y81Tc1HfepwiWqr8+7yf4WpxnKhDlN4WX1pmr/t8GPUIIy0qjSBUFlmc6IaSTzxXp5kJCB9PSfuk7zB3lNzuSDXeGZIXX+MQPjws+nELjM0QmQvhEeKQpQZ7lxwXKPeatO7Uki38hpMF3TndN0NLz6Ho0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530195; c=relaxed/simple;
-	bh=uLXFQdtXHhwaaAvE9oSqu/sofyZ6FxsyYKVp5CNyQM0=;
+	s=arc-20240116; t=1725530198; c=relaxed/simple;
+	bh=P2sffgSsWdr5Q7Wmk4GUILjkUrWdzBpKU+iW73uYKmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdftdSFZG/8eDS4poIvuCuSwVaq0o5GRtPsLljtmAIm4iXwW5I/qMO/HOSSKK0uqkL/aUDmjizXEvyH8A7XV79sPxknn9oTGJEbb7V9YKSqpCExIwMDJNQVMzFb5V27+FXmcuPfzAzkHLAlqnkNzpl4vjyz30N3Uz7lBdVT3jXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1SqGv2E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHxdTakRX9VjsPFy76JQ1XcUVGPxfaJFwqkqFDPMFgxSnBWWPOpuYSpnWwXa0aCEqKt+t/+XEMd6F6aiTdN+jTbm+5up4OOjQ2F22TUJurPK6QooxL5VYY56n6OmLUzkvSceP5U+uCZCQ2x0A9GfxxDXHjNRyElNIuhRnDu8gNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xb/B73v3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1SqGv2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1325C4CEC3;
-	Thu,  5 Sep 2024 09:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xb/B73v3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFE2C4CEC4;
+	Thu,  5 Sep 2024 09:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530195;
-	bh=uLXFQdtXHhwaaAvE9oSqu/sofyZ6FxsyYKVp5CNyQM0=;
+	s=korg; t=1725530198;
+	bh=P2sffgSsWdr5Q7Wmk4GUILjkUrWdzBpKU+iW73uYKmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1SqGv2E0UitUT8f/Rg8V47RPIMRfRDhuDJd39wkl5DuS4EalT8uI7to0GAh4vmGp
-	 I3RGx7jEypzc6zM4EmOEC8lTHjOa21j1lMB8J0drfrDLu6ea3QLBHIMHFgpo9iodwD
-	 ZIyi9LIrUMxxN9Y2UnQ/psxt3iFa0C4iB9jZ8RL8=
+	b=xb/B73v34t04JWlkBZHHxeKdnqZTn0soHMVE0ckQk2y3cE4Q0XOM41Y6oXNoieqeS
+	 V2y4Pakpn1EZNmlBmOqmXHgQrd3p7dRlbYryzn0tPrcbrlWxM/84yOqhELOin2BOkQ
+	 owEAfoR8o1ddWNySKxwk83f821L1ysXJblxkqRGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Tim Huang <Tim.Huang@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/132] drm/amd/pm: check specific index for smu13
-Date: Thu,  5 Sep 2024 11:41:10 +0200
-Message-ID: <20240905093725.478336145@linuxfoundation.org>
+Subject: [PATCH 6.6 084/132] drm/amdgpu: the warning dereferencing obj for nbio_v7_4
+Date: Thu,  5 Sep 2024 11:41:11 +0200
+Message-ID: <20240905093725.516761734@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -55,33 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit a3ac9d1c9751f00026c2d98b802ec8a98626c3ed ]
+[ Upstream commit d190b459b2a4304307c3468ed97477b808381011 ]
 
-Check for specific indexes that may be invalid values.
+if ras_manager obj null, don't print NBIO err data
 
 Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Suggested-by: Tim Huang <Tim.Huang@amd.com>
 Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-index be4b7b64f878..44c5f8585f1e 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -2058,6 +2058,8 @@ static int smu_v13_0_6_mode2_reset(struct smu_context *smu)
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c
+index 685abf57ffdd..977b956bf930 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c
+@@ -384,7 +384,7 @@ static void nbio_v7_4_handle_ras_controller_intr_no_bifring(struct amdgpu_device
+ 		else
+ 			WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
  
- 	index = smu_cmn_to_asic_specific_index(smu, CMN2ASIC_MAPPING_MSG,
- 					       SMU_MSG_GfxDeviceDriverReset);
-+	if (index < 0)
-+		return index;
- 
- 	mutex_lock(&smu->message_lock);
- 
+-		if (!ras->disable_ras_err_cnt_harvest) {
++		if (ras && !ras->disable_ras_err_cnt_harvest && obj) {
+ 			/*
+ 			 * clear error status after ras_controller_intr
+ 			 * according to hw team and count ue number
 -- 
 2.43.0
 
