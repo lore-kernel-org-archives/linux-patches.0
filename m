@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA80198E93;
-	Thu,  5 Sep 2024 09:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B43C19884A;
+	Thu,  5 Sep 2024 09:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529712; cv=none; b=aU4Lj0hxpCqCfHJFjGbpK3Y/A6GpkcpQDjMMpEEQ5952WhtfEdv3vgaY/zGZGpvYMXPTcGr6kenw27oHADVWvrYmfj9zs5dvw7O5vYIgFvQmOjx37g6lMz6pM8NWNbCK8ewM6MN3EpV5ADtsd5vVRVTDVSTDHaPl7DU9HgQRL+M=
+	t=1725529715; cv=none; b=bELX3HlKn5AXEK4oVjbivSicNV7ppEDtX96nRC0+CNodBtxOCXO6pIOwsTv8NLWw3haEZ8pWinrfqP3cXv9wCKyWJtXfZgRo0WTbSd9u2qfovpL/jVE3T8zmh01wtB773OIUY2N0QOHvAZjotmeKafUenED5hFB1b0na2ojWq0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529712; c=relaxed/simple;
-	bh=sAvZvj2FyUw9D6tRBizVzvuG6LbAscZ4sKQGDK872Dk=;
+	s=arc-20240116; t=1725529715; c=relaxed/simple;
+	bh=z6aIbhkez88722s3WPZM5k4/X8bXBH4pv50yZvr4vPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rb1T7uAsX50JK+9Nnd4snw9T0+xLgA1z7m+kOqpfxRYrNbKHR9ix6teFrwPEX0VcAN2driD+Q1+4WQsWMh7/DYyMkRbniJwJhx2Kdz+xRyvnQb2xKuOozFtFfUrbkPOW6PzRkjPQkiVgn9CO6QwO7h4FvAOVUwxoQ6RcgnWhLB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHc3QK3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FO5XkQ5ifdHY5e5XbHAW+2pwjYH+xDzuw5kaQIqQhWYEffmh4+Uki+SXaoM0mO7wWAZZmf31XGz0jTsWY4spkG12jhu0vfnAfZKGyEJViA3nFWVL1sMTIag/8G+hM62AdI1eIirUag3RRP/GBkIkuhN+kj58O+q4WJfbcA+ZcnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpVqP7eb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHc3QK3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D936C4CEC3;
-	Thu,  5 Sep 2024 09:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpVqP7eb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20CAC4CEC3;
+	Thu,  5 Sep 2024 09:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529712;
-	bh=sAvZvj2FyUw9D6tRBizVzvuG6LbAscZ4sKQGDK872Dk=;
+	s=korg; t=1725529715;
+	bh=z6aIbhkez88722s3WPZM5k4/X8bXBH4pv50yZvr4vPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHc3QK3MHcbwWIq0xEvDSed6Tp7OHeaxbshSYUTLocjcfMaVtL3jTsRto79B73dR+
-	 pBWVzL6ztiKt0+QOHa/Tzs+Wreq0Iqq1tKb/UcXxisbTMNEBmUjSyJ0Aco/1Iyzk8w
-	 vXDv1X/IoM9ZAjT2lunYgxgYFWLBezTJLMzDUp8w=
+	b=JpVqP7ebAzDcb7TfRU3dYU13gKLV4JPQsO7OA2k7ObXLKfAiubGwOm1nAoJJhc/mH
+	 BJkhFAE5lpa4cfRAd8OXnKFrafhZy3jzoCq6VeslDIsNafNsFGifjFXbmiHkph8Wt5
+	 qcDmz/xU0ODF/NL6CLNappJMxjN/zYHNAo0xcVq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 119/184] wifi: cfg80211: restrict operation during radar detection
-Date: Thu,  5 Sep 2024 11:40:32 +0200
-Message-ID: <20240905093736.874777422@linuxfoundation.org>
+Subject: [PATCH 6.10 093/184] drm/amdgpu: fix mc_data out-of-bounds read warning
+Date: Thu,  5 Sep 2024 11:40:06 +0200
+Message-ID: <20240905093735.872299249@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -51,120 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit 2d33ecf5d0148671c74e68e18755b9411a7ba923 ]
+[ Upstream commit 51dfc0a4d609fe700750a62f41447f01b8c9ea50 ]
 
-Just like it's not currently possible to start radar
-detection while already operating, it shouldn't be
-possible to start operating while radar detection is
-running. Fix that.
+Clear warning that read mc_data[i-1] may out-of-bounds.
 
-Also, improve the check whether operating (carrier
-might not be up if e.g. attempting to join IBSS).
-
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240506211158.ae8dca3d0d6c.I7c70a66a5fbdbc63a78fee8a34f31d1995491bc3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/ibss.c    |  5 ++++-
- net/wireless/mesh.c    |  5 ++++-
- net/wireless/nl80211.c | 21 +++++++++++++++------
- 3 files changed, 23 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/wireless/ibss.c b/net/wireless/ibss.c
-index 9f02ee5f08be..34e5acff3935 100644
---- a/net/wireless/ibss.c
-+++ b/net/wireless/ibss.c
-@@ -3,7 +3,7 @@
-  * Some IBSS support code for cfg80211.
-  *
-  * Copyright 2009	Johannes Berg <johannes@sipsolutions.net>
-- * Copyright (C) 2020-2023 Intel Corporation
-+ * Copyright (C) 2020-2024 Intel Corporation
-  */
- 
- #include <linux/etherdevice.h>
-@@ -94,6 +94,9 @@ int __cfg80211_join_ibss(struct cfg80211_registered_device *rdev,
- 
- 	lockdep_assert_held(&rdev->wiphy.mtx);
- 
-+	if (wdev->cac_started)
-+		return -EBUSY;
-+
- 	if (wdev->u.ibss.ssid_len)
- 		return -EALREADY;
- 
-diff --git a/net/wireless/mesh.c b/net/wireless/mesh.c
-index 83306979fbe2..aaca65b66af4 100644
---- a/net/wireless/mesh.c
-+++ b/net/wireless/mesh.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-  * Portions
-- * Copyright (C) 2022-2023 Intel Corporation
-+ * Copyright (C) 2022-2024 Intel Corporation
-  */
- #include <linux/ieee80211.h>
- #include <linux/export.h>
-@@ -127,6 +127,9 @@ int __cfg80211_join_mesh(struct cfg80211_registered_device *rdev,
- 	if (!rdev->ops->join_mesh)
- 		return -EOPNOTSUPP;
- 
-+	if (wdev->cac_started)
-+		return -EBUSY;
-+
- 	if (!setup->chandef.chan) {
- 		/* if no channel explicitly given, use preset channel */
- 		setup->chandef = wdev->u.mesh.preset_chandef;
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index c2829d673bc7..967bc4935b4e 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -5965,6 +5965,9 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
- 	if (!rdev->ops->start_ap)
- 		return -EOPNOTSUPP;
- 
-+	if (wdev->cac_started)
-+		return -EBUSY;
-+
- 	if (wdev->links[link_id].ap.beacon_interval)
- 		return -EALREADY;
- 
-@@ -9957,6 +9960,17 @@ static int nl80211_start_radar_detection(struct sk_buff *skb,
- 
- 	flush_delayed_work(&rdev->dfs_update_channels_wk);
- 
-+	switch (wdev->iftype) {
-+	case NL80211_IFTYPE_AP:
-+	case NL80211_IFTYPE_P2P_GO:
-+	case NL80211_IFTYPE_MESH_POINT:
-+	case NL80211_IFTYPE_ADHOC:
-+		break;
-+	default:
-+		/* caution - see cfg80211_beaconing_iface_active() below */
-+		return -EINVAL;
-+	}
-+
- 	wiphy_lock(wiphy);
- 
- 	dfs_region = reg_get_dfs_region(wiphy);
-@@ -9987,12 +10001,7 @@ static int nl80211_start_radar_detection(struct sk_buff *skb,
- 		goto unlock;
- 	}
- 
--	if (netif_carrier_ok(dev)) {
--		err = -EBUSY;
--		goto unlock;
--	}
--
--	if (wdev->cac_started) {
-+	if (cfg80211_beaconing_iface_active(wdev) || wdev->cac_started) {
- 		err = -EBUSY;
- 		goto unlock;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+index 52b12c1718eb..7dc102f0bc1d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+@@ -1484,6 +1484,8 @@ int amdgpu_atombios_init_mc_reg_table(struct amdgpu_device *adev,
+ 										(u32)le32_to_cpu(*((u32 *)reg_data + j));
+ 									j++;
+ 								} else if ((reg_table->mc_reg_address[i].pre_reg_data & LOW_NIBBLE_MASK) == DATA_EQU_PREV) {
++									if (i == 0)
++										continue;
+ 									reg_table->mc_reg_table_entry[num_ranges].mc_data[i] =
+ 										reg_table->mc_reg_table_entry[num_ranges].mc_data[i - 1];
+ 								}
 -- 
 2.43.0
 
