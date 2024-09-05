@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DAF19922D;
-	Thu,  5 Sep 2024 09:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8AC18732F;
+	Thu,  5 Sep 2024 09:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529908; cv=none; b=Du/OA58SL7eEhQdJidy7bkeM/D25i4W0MhTSWzM2lcKe2WDJt7Xm0+IyJ7vSgCPh+2awY+sejPRx/jGJtrayG9yYxp1tscslJDgllvMLFHuO+nYcCADFmM2XtU+eLdqndoFOHBsg+0MogSH18CpYj5pGWDdd/rw7xkIi5DCHY74=
+	t=1725529911; cv=none; b=TBtE5pMkedgGdVegfevy3ExUYqsarklR0NgtQxGb+D5ErY5Tww6wxP6ALDgJCfkcZPo1ZFH1dnFhf2DCVaOhjgIB6BwoUG6uKwzO5frVH1BI59wAwQV8/Nvz99rH4bOmURG9UwuBLhuXLCiK3pt91fothQQ4mXhPIlCMI0PeuSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529908; c=relaxed/simple;
-	bh=CxH+nQzC6iwKAeBH6cnDhQA8OLIAbbPJpUEaY9osKV4=;
+	s=arc-20240116; t=1725529911; c=relaxed/simple;
+	bh=V18sXFBVJa8T/CaVmE2SLTZqz898N0d96CkxwUxTTX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASu3o72sZkbtRBjvW4wQCwsjwLlH8YmVWt49jo4YoL4oE3WY8mTpGIgzx+bB8wPEXf86ozMtrY5yIXi9G+nkx9o+arAygA5Fn09SPU2wGTkBK8c4mBU4GdfOXLRdBQw3sozNIJSxaxLr/8XwfWu4SwBVloXkTk4EM2AYEPioZhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDpDOi0f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W8TrDYFibgMDWPyQ+hjvdfZFizdpTlL0gb0ifDIks6j82TI4ArX2Alk9bQ4Paif/bOtjOpfj6NPtWN7EWOLptU8HiIrm8xBOKza9Fp6Pi/HsjliN2MtBEV7AU+rBSslvMDtgRpIPel69QTkrqeGciKKpmr38ySuSsP89y9mk4uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYnmL5Zo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDpDOi0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FB6C4CEC3;
-	Thu,  5 Sep 2024 09:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYnmL5Zo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBF8C4CEC3;
+	Thu,  5 Sep 2024 09:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529908;
-	bh=CxH+nQzC6iwKAeBH6cnDhQA8OLIAbbPJpUEaY9osKV4=;
+	s=korg; t=1725529910;
+	bh=V18sXFBVJa8T/CaVmE2SLTZqz898N0d96CkxwUxTTX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDpDOi0f0FX1Ibg7BWXAFZfuiBk8DlCJl6gYnYmkhUkxxrwRiuQUljQSQfGVTGBd5
-	 YTEt1p4ywHIRWan2R7ZtwxMBupOt86D5BhrQ3oRMtPh5l+soB5cGnS5VwXc3inIciA
-	 q7EcAPWK70Cvn/prFrzfEHul+dWrQ8YaICdUURPc=
+	b=gYnmL5ZoR2msiuVcH6fSI7eeIfdU29HA5YhG6uebyVZmKlUrpj79S/kyjMxW9RyaX
+	 M5DQkP2mCEzMCW1IQXEm1Wyz0YzSvrF8PfcCEhQfHZNIUp/87M45G5jiSyRdSsGpAc
+	 ABF6F8eg3j45OXxSrCYBZLE9+AjlFwfa2UbsaxSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	=?UTF-8?q?L=C3=A9o=20DUBOIN?= <lduboin@freebox.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 179/184] media: uvcvideo: Enforce alignment of frame and interval
-Date: Thu,  5 Sep 2024 11:41:32 +0200
-Message-ID: <20240905093739.319548766@linuxfoundation.org>
+Subject: [PATCH 6.10 180/184] pinctrl: core: reset gpio_device in loop in pinctrl_pins_show()
+Date: Thu,  5 Sep 2024 11:41:33 +0200
+Message-ID: <20240905093739.357048701@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -45,72 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Léo DUBOIN <lduboin@freebox.fr>
 
-[ Upstream commit c8931ef55bd325052ec496f242aea7f6de47dc9c ]
+[ Upstream commit 9dfbcf2fc566c0be2de1c7685f29effd25696b75 ]
 
-Struct uvc_frame and interval (u32*) are packaged together on
-streaming->formats on a single contiguous allocation.
+We were not resetting the pointer to the associated gpio_device once
+we are done displaying a pin's information.
 
-Right now they are allocated right after uvc_format, without taking into
-consideration their required alignment.
+This meant that once we reached the end of a gpio-range, if there
+were pins right after it that did not belong to any known range,
+they would be associated with the previous range's gpio device.
 
-This is working fine because both structures have a field with a
-pointer, but it will stop working when the sizeof() of any of those
-structs is not a multiple of the sizeof(void*).
+This resulted in those pins appearing as <4294966783:old_gdev> instead
+of the expected <0:?> (due to gpio_num being -1).
 
-Enforce that alignment during the allocation.
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240404-uvc-align-v2-1-9e104b0ecfbd@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Léo DUBOIN <lduboin@freebox.fr>
+Link: https://lore.kernel.org/r/c40d0634abefa19e689ffd450e0f48a8d63c4fc4.1714049455.git.lduboin@freebox.fr
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/pinctrl/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index d435b6a6c295..13c2c11cfdf6 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -687,16 +687,26 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 		goto error;
- 	}
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index 4438f3b4b5ef..60f866f1e6d7 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1670,6 +1670,7 @@ static int pinctrl_pins_show(struct seq_file *s, void *what)
+ 		seq_printf(s, "pin %d (%s) ", pin, desc->name);
  
--	size = nformats * sizeof(*format) + nframes * sizeof(*frame)
-+	/*
-+	 * Allocate memory for the formats, the frames and the intervals,
-+	 * plus any required padding to guarantee that everything has the
-+	 * correct alignment.
-+	 */
-+	size = nformats * sizeof(*format);
-+	size = ALIGN(size, __alignof__(*frame)) + nframes * sizeof(*frame);
-+	size = ALIGN(size, __alignof__(*interval))
- 	     + nintervals * sizeof(*interval);
-+
- 	format = kzalloc(size, GFP_KERNEL);
--	if (format == NULL) {
-+	if (!format) {
- 		ret = -ENOMEM;
- 		goto error;
- 	}
- 
--	frame = (struct uvc_frame *)&format[nformats];
--	interval = (u32 *)&frame[nframes];
-+	frame = (void *)format + nformats * sizeof(*format);
-+	frame = PTR_ALIGN(frame, __alignof__(*frame));
-+	interval = (void *)frame + nframes * sizeof(*frame);
-+	interval = PTR_ALIGN(interval, __alignof__(*interval));
- 
- 	streaming->formats = format;
- 	streaming->nformats = 0;
+ #ifdef CONFIG_GPIOLIB
++		gdev = NULL;
+ 		gpio_num = -1;
+ 		list_for_each_entry(range, &pctldev->gpio_ranges, node) {
+ 			if ((pin >= range->pin_base) &&
 -- 
 2.43.0
 
