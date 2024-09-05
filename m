@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8A5199222;
-	Thu,  5 Sep 2024 09:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130AD19922D;
+	Thu,  5 Sep 2024 09:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529901; cv=none; b=Lb7fuRNH26QxZ8lGkVUCEGjQtu6W7rEjyUvrVgNxcOSM5zg1yWjphA2MOPmlxu9W9hCuMSbe8igfWVoRC+8bez1h5B084U8G9G6sgwl+w7ppulkBA/APcnrZ/CFRUUUssKvixKessRf5NZ2qSfHCRsKKbMG0pJVj80F1Vczw8Mw=
+	t=1725529905; cv=none; b=uHKJ62KwlOvpDABTZkOFAXBb483Z0N+rii1UnLOEx4UGYgjcnyoRq3ScByNkg5bwpTqK91yPsK2YE8c61woiwgKJKHjy8G30JGoWkE052b/hrc4d1trbshNlFzGdfaMffERpXN9oLfl4yXDypJDC3oGm7/4BJi2S24XuZytrRU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529901; c=relaxed/simple;
-	bh=JXG5M4AUdJg0P97ifYxRfbitbfQun0/Jlpsw3Xf5mKU=;
+	s=arc-20240116; t=1725529905; c=relaxed/simple;
+	bh=yE0IHqc3dEH1WXw1hfTRgtFDWASDIzVgsRgGBiqylWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2EsFh/iac/UZB7I2RU5/YcUrMhTp4Ijq6M88P+7ezl9WmIgMjAH4aczBs09UVIYhk0KY3mOmUDrCr20ZaOq6J/hK/eT0SfhBVL8+iSja8fRXh4sVi8kfnYBhmhcs0Cmk6GlDXuR6bomRHWwdzQV5C+S+HEI5vFkT9ZHu/mpcKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNImGJ3x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=exVMBHw4VID7/1unKeB8yTZO05euu7f4m7uNS0yq5fmA4oG8sGxoWnEPykwMdTIf77dE1zm7ncDLYz4KZ9LEB5L9GQJlP4ORT7PgsCHzeeit33ZGnTxqtN+tuw5yW6LD414SleysgdUMNeDw9RuMMshKd0nszk/M9l0BTccH4YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8Vwj/lC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNImGJ3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375D0C4CEC6;
-	Thu,  5 Sep 2024 09:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8Vwj/lC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4D5C4CEC3;
+	Thu,  5 Sep 2024 09:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529901;
-	bh=JXG5M4AUdJg0P97ifYxRfbitbfQun0/Jlpsw3Xf5mKU=;
+	s=korg; t=1725529905;
+	bh=yE0IHqc3dEH1WXw1hfTRgtFDWASDIzVgsRgGBiqylWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNImGJ3xKoXX4ZKlQmMActzpZ0lCOaZFhr7coPFWQUIrfgS0dJeiZnH2+GpWubNBZ
-	 9/cXPegKHGD5alsS/7dwcMxHNw9tszPpXMhgWYcMKWuYn+SWRjQ8mn3zkXso2Z6zrc
-	 Sf3UCAY6SJj4j/6YhV7xCkXEtrQo72UrjdkbsSn0=
+	b=n8Vwj/lCAZDIEJngt1wdvt5sqtAQuoWNp9iqTs6CtC+6GBUDICPthITxFd442UyRx
+	 cZB8dLkD18XMzohV8epaghREZJIQLHe7aItKRCGov0KQwMlTnSjG1pgT5pZI+xm98M
+	 xu3o7zMSJM/QUrTSHGItnT9vRfgorkOij+uztiJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 177/184] drm/amd/display: Skip wbscl_set_scaler_filter if filter is null
-Date: Thu,  5 Sep 2024 11:41:30 +0200
-Message-ID: <20240905093739.243466964@linuxfoundation.org>
+Subject: [PATCH 6.10 178/184] crypto: ecc - Fix off-by-one missing to clear most significant digit
+Date: Thu,  5 Sep 2024 11:41:31 +0200
+Message-ID: <20240905093739.281717744@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -53,39 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit c4d31653c03b90e51515b1380115d1aedad925dd ]
+[ Upstream commit 1dcf865d3bf5bff45e93cb2410911b3428dacb78 ]
 
-Callers can pass null in filter (i.e. from returned from the function
-wbscl_get_filter_coeffs_16p) and a null check is added to ensure that is
-not the case.
+Fix an off-by-one error where the most significant digit was not
+initialized leading to signature verification failures by the testmgr.
 
-This fixes 4 NULL_RETURNS issues reported by Coverity.
+Example: If a curve requires ndigits (=9) and diff (=2) indicates that
+2 digits need to be set to zero then start with digit 'ndigits - diff' (=7)
+and clear 'diff' digits starting from there, so 7 and 8.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>
+Closes: https://lore.kernel.org/linux-crypto/619bc2de-b18a-4939-a652-9ca886bf6349@linux.ibm.com/T/#m045d8812409ce233c17fcdb8b88b6629c671f9f4
+Fixes: 2fd2a82ccbfc ("crypto: ecdsa - Use ecc_digits_from_bytes to create hash digits array")
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ crypto/ecc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
-index 994fb732a7cb..a0d437f0ce2b 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
-@@ -690,6 +690,9 @@ static void wbscl_set_scaler_filter(
- 	int pair;
- 	uint16_t odd_coef, even_coef;
+diff --git a/crypto/ecc.c b/crypto/ecc.c
+index fe761256e335..dd48d9928a21 100644
+--- a/crypto/ecc.c
++++ b/crypto/ecc.c
+@@ -78,7 +78,7 @@ void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
+ 	/* diff > 0: not enough input bytes: set most significant digits to 0 */
+ 	if (diff > 0) {
+ 		ndigits -= diff;
+-		memset(&out[ndigits - 1], 0, diff * sizeof(u64));
++		memset(&out[ndigits], 0, diff * sizeof(u64));
+ 	}
  
-+	if (!filter)
-+		return;
-+
- 	for (phase = 0; phase < (NUM_PHASES / 2 + 1); phase++) {
- 		for (pair = 0; pair < tap_pairs; pair++) {
- 			even_coef = filter[phase * taps + 2 * pair];
+ 	if (o) {
 -- 
 2.43.0
 
