@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB0E1494DB;
-	Thu,  5 Sep 2024 10:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4BC1494DB;
+	Thu,  5 Sep 2024 10:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530680; cv=none; b=noWqbLuce/Tr4pOxw+HhlNTKNEKZyL9YHaIabSgTdcrP/h49GwPwjxjC0bCKV9Mc+Bhx3KVHdOQfqzzcL9wY19ZZhMXFpdQpBIzjPRnIHzWp9eAWIg+/a+QOsTt2hFcYiz2OP4pVVy0vx1aiAGb4zrTKn9oSnZNaoJ8oV21MqTg=
+	t=1725530683; cv=none; b=XlQKyPcZbAwsXZ9Urh1Rj+vcZ15xFEK4UzuvNAdUGeR9JxbHTk24+SygZP5RIAp51Y/rDfwfsE7+njYFDe5ep6k2NwJiAVy03yVJdRqZul58c4aZaPxgVk0gG5RmX1JMzcH132oEgtORNvQKn/+ZgCivPxpM0gEbdLAeQhDQGY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530680; c=relaxed/simple;
-	bh=AaE03rHbFxD9cZQTj3arJjz6kJMGUBKG2FjAYFReUzA=;
+	s=arc-20240116; t=1725530683; c=relaxed/simple;
+	bh=itC2OFMOYkCG5Qca6p5R2TH4GicBfWMfeUJvipf8kJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBMZXNAwXJ8Uv7bfLmh7IsbkmsUIxkxrbOP3yhT/DRn5u2Q3MtIDPQQUEUzoWgTQrCbi4zY1WNiKHiEW9X1obh1gl1rIk/NRGAgLqV4UMgeRwYCMaZs2heNfuYia7NfsSHd/kY+q2VroUI+X99jYY7YC6ayOvg4x282SfKn9asA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIIW5G4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwinUKzalL4gr3rGeU21oovxXhL///Tzn87YCCLELOPiMBrQbDt78AY6p6l3QK0gX+l+qldMbjYiNQ48lJ5tNasPRO2kNXVgiGCBkmXYwv73t8ysdHjk/RK3/k/msrjCOTz/SotUSHu8WwbPPpMYtzSptAj/SEzjMPZYRCZWYXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2hUeheN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIIW5G4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0C9C4CEC3;
-	Thu,  5 Sep 2024 10:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2hUeheN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD9C4CEC3;
+	Thu,  5 Sep 2024 10:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530680;
-	bh=AaE03rHbFxD9cZQTj3arJjz6kJMGUBKG2FjAYFReUzA=;
+	s=korg; t=1725530683;
+	bh=itC2OFMOYkCG5Qca6p5R2TH4GicBfWMfeUJvipf8kJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIIW5G4+JP8266cMl8rFfSRLiteQPGB+ZSKfNzod24aUahq/EUrzt4kaW2XmL8BSu
-	 fP/1bEw9uG+0nP65clb0e0RSczRYzrnK1HuxzcM7x0gXSdkNwBFuMrA37+HtHTJRdy
-	 bxCkNorstLVc+MCTVmsP7LHNjlWbPTF6+CtH9SDE=
+	b=g2hUeheNPmLIm3uKTNiMjFN4Wos3wdu9FWRXRWZM9obfLiSVfgKLWMvlDkExYEGkp
+	 VOO9sSlZ2/Tp/EdS88FvJeCYtlirz99zAltltgt8mDsycL5fgsL6zl89cHLTKLxqPB
+	 CTZynha9VW7YA8A67srD5kA4yRGm+9qk30MWzXkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 100/101] ext4: handle redirtying in ext4_bio_write_page()
-Date: Thu,  5 Sep 2024 11:42:12 +0200
-Message-ID: <20240905093720.031536225@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.1 101/101] i2c: Use IS_REACHABLE() for substituting empty ACPI functions
+Date: Thu,  5 Sep 2024 11:42:13 +0200
+Message-ID: <20240905093720.069139129@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,67 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 04e568a3b31cfbd545c04c8bfc35c20e5ccfce0f upstream.
+commit 71833e79a42178d8a50b5081c98c78ace9325628 upstream.
 
-Since we want to transition transaction commits to use ext4_writepages()
-for writing back ordered, add handling of page redirtying into
-ext4_bio_write_page(). Also move buffer dirty bit clearing into the same
-place other buffer state handling.
+Replace IS_ENABLED() with IS_REACHABLE() to substitute empty stubs for:
+    i2c_acpi_get_i2c_resource()
+    i2c_acpi_client_count()
+    i2c_acpi_find_bus_speed()
+    i2c_acpi_new_device_by_fwnode()
+    i2c_adapter *i2c_acpi_find_adapter_by_handle()
+    i2c_acpi_waive_d0_probe()
 
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221207112722.22220-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+commit f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI
+functions") partially fixed this conditional to depend on CONFIG_I2C,
+but used IS_ENABLED(), which is wrong since CONFIG_I2C is tristate.
+
+CONFIG_ACPI is boolean but let's also change it to use IS_REACHABLE()
+to future-proof it against becoming tristate.
+
+Somehow despite testing various combinations of CONFIG_I2C and CONFIG_ACPI
+we missed the combination CONFIG_I2C=m, CONFIG_ACPI=y.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI functions")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408141333.gYnaitcV-lkp@intel.com/
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/page-io.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/linux/i2c.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/page-io.c
-+++ b/fs/ext4/page-io.c
-@@ -484,6 +484,13 @@ int ext4_bio_write_page(struct ext4_io_s
- 			/* A hole? We can safely clear the dirty bit */
- 			if (!buffer_mapped(bh))
- 				clear_buffer_dirty(bh);
-+			/*
-+			 * Keeping dirty some buffer we cannot write? Make
-+			 * sure to redirty the page. This happens e.g. when
-+			 * doing writeout for transaction commit.
-+			 */
-+			if (buffer_dirty(bh) && !PageDirty(page))
-+				redirty_page_for_writepage(wbc, page);
- 			if (io->io_bio)
- 				ext4_io_submit(io);
- 			continue;
-@@ -491,6 +498,7 @@ int ext4_bio_write_page(struct ext4_io_s
- 		if (buffer_new(bh))
- 			clear_buffer_new(bh);
- 		set_buffer_async_write(bh);
-+		clear_buffer_dirty(bh);
- 		nr_to_submit++;
- 	} while ((bh = bh->b_this_page) != head);
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -1035,7 +1035,7 @@ static inline int of_i2c_get_board_info(
+ struct acpi_resource;
+ struct acpi_resource_i2c_serialbus;
  
-@@ -534,7 +542,10 @@ int ext4_bio_write_page(struct ext4_io_s
- 			printk_ratelimited(KERN_ERR "%s: ret = %d\n", __func__, ret);
- 			redirty_page_for_writepage(wbc, page);
- 			do {
--				clear_buffer_async_write(bh);
-+				if (buffer_async_write(bh)) {
-+					clear_buffer_async_write(bh);
-+					set_buffer_dirty(bh);
-+				}
- 				bh = bh->b_this_page;
- 			} while (bh != head);
- 			goto unlock;
-@@ -547,7 +558,6 @@ int ext4_bio_write_page(struct ext4_io_s
- 			continue;
- 		io_submit_add_bh(io, inode, page, bounce_page, bh);
- 		nr_submitted++;
--		clear_buffer_dirty(bh);
- 	} while ((bh = bh->b_this_page) != head);
- 
- unlock:
+-#if IS_ENABLED(CONFIG_ACPI) && IS_ENABLED(CONFIG_I2C)
++#if IS_REACHABLE(CONFIG_ACPI) && IS_REACHABLE(CONFIG_I2C)
+ bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
+ 			       struct acpi_resource_i2c_serialbus **i2c);
+ int i2c_acpi_client_count(struct acpi_device *adev);
 
 
