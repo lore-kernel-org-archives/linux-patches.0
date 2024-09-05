@@ -1,67 +1,67 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756851953BE
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 08:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9711198831
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 08:08:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725523695; cv=none; b=RaPQK4DOHQ80MZTrnr87+mGHx3XBmWDN213rsELDyAdY/cCS7oVZty4q0/qWDOfqhEEc3F++ATddlJkJm1fBvXdsNDzEuGzUF8m6sVJDY5GceiXKNW8SBROohPBniwlxYshquclET9gNPDqNJfeIgFi9UxokKqs6IGLfZZRZJsQ=
+	t=1725523726; cv=none; b=h9mJWZLj3Grsdyam1yBZfB54RLJUcaxJ31MN8bCfpYFaIk3S2mG25K1tArbALHk93yMz4gSZT19zLi8ifVxezKNDLLTkcwp5jaNCpPunh3L+6KlueoYLJyT8Z8WqdFc90auFQF6M4GdGYyektMLxiYCOnBa/BxlwCA9qtr0aqLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725523695; c=relaxed/simple;
-	bh=poBaygU7+HWiLDKkFSk+8ccL2GmYFP/9Qk2v9fz7F8E=;
+	s=arc-20240116; t=1725523726; c=relaxed/simple;
+	bh=xqZg/l2THvP8uncvI9Cu7hfQMDrgjo8lpwLhFau+B9w=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ay2p1P7CkL5aH/V5kjMK7oe4/mBWcsRMBTgzGTZ5zpOjmqXV0el7ws8QSviauMd0vwBjCxUwPuZe5etFOxOpcHWBWnzAfQXE2lqZ9Bu9hst1H9m3uyMgHqz71y9/eRmIWrTBaR673Lq0epFqPjqJsUR8KyGf1E+K3VaDfTrNSZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bFjWzsXD; arc=none smtp.client-ip=209.85.221.49
+	 To:Cc:Content-Type; b=OY2f69UYZhYBhbf/72y5RicjVIzp2wrtXGhY1WfeVE1szRLG84fBtwKkMZA9BsRu8wS2G8zjonECu1AHOloNb98B0hZWEU8r00ThMXlY+cmvZtY3sKTOhFYuLgbKExQOlpD9qiY0xnLlXbjT9uDXEZNruJVzqKXBG22ciM+5UuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pCIGkk+M; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bFjWzsXD"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-374c180d123so223062f8f.3
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 01:08:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pCIGkk+M"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-374ca7a10d4so243587f8f.3
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 01:08:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725523692; x=1726128492; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1725523722; x=1726128522; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=poBaygU7+HWiLDKkFSk+8ccL2GmYFP/9Qk2v9fz7F8E=;
-        b=bFjWzsXDodaO/3JyF8HiazwaIcERJgxyzPLte+IYwqv9T26OG5cdjTu7uu4noiMbpj
-         CtI1BoJT9bTfXpf+/X6LJhiGho+lKE6w636h3+8AR6aCWcrCkx+sZ+OWdKBYByY+q0In
-         CvDrQPqNty2Gs9J3b5hXYwKj+S7Aj0W+G4yQ+2vxW4iUI69U4Lct9wQulhyqzdcb2NaH
-         vDAdUrWaTlx5h3HpZjJRJkNsxSSc+TMRoyhBF3XZGnrzeSXSXuVDLoQj1jtfi6buAFIS
-         tOfI+WdWVGAoGMMOHcjNlXbeBRhQuzgqMMz1jWcOn8boXwfNlmRB77xIBnNxVR4BM0xr
-         m10w==
+        bh=ONdEvXfVoiXfsYQMbOpzUUsoqTAmilUWNgbBaxjquTY=;
+        b=pCIGkk+MTTaRpz2qDKuCc4z74Ur4EqL/AAZ+z4mZsXt4ZsG1qT4bP+caEdSgtDLVuz
+         47mE+zW2HMXqxsof/Xj9n1gANgdMfm/aCRYDSNe+sd16MAzrGEU10epnhz4wO0C6XUKe
+         qWUmwy5t0v1tFivCE2E3S/QLjVa0vOXfaOMZI96t1cu1DUlfp/a6MmVZHtFiN4EIlf69
+         bI4upOONtHDuJxqbRcYqfSdLlMhnfi0GB54dzXDB6dkLENkPiIrE5eWEmn/TjLR/cKCI
+         t52uN3BqRKTSsSfKb4npDrJXBNjCkAk5XL5kXmcvJVGpk3XY0KCKPYE1cGVhWaCz566s
+         2ORw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725523692; x=1726128492;
+        d=1e100.net; s=20230601; t=1725523722; x=1726128522;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=poBaygU7+HWiLDKkFSk+8ccL2GmYFP/9Qk2v9fz7F8E=;
-        b=oWLJREgAMRVvvvA+/40GTpo4ctUIVda6O0rkWowKToPc2co5MShJNbPBzuAGjGYFLt
-         jevPvx3+QNNG5ggEeUmROfeRGdwBgwL1/vTV3ROkdEbY5XVNFZvUtU7skaZP4vRZXcEB
-         tUDldiHxs5klK9DSiGdNzAmeX4lqjutKBpnzx7WaWkuBud+n7mjKnVdIR4Z4P1YLSenE
-         Cz6tElp2497cBxuSDsocy+FHNh8vxqtFKxMel3nq8y15H6XTx8naRulWI+7d6OU280En
-         uXtWiPofny0F4WlIQfJkXAcp4BfIXKyNzh21uIeXUCI+wZ22FGQgePhkXcGeXCJ2Ifp4
-         SEXg==
-X-Forwarded-Encrypted: i=1; AJvYcCXwJlfB+vJLjs3yWBoKOZjMuTDVAg6t7LLF5nDHd7IlZqWm/RZMGAZQx8CjfWeY6oyPM/awcp7a@lists.linux.dev
-X-Gm-Message-State: AOJu0YwtiljRG9APfJ44bbHMg4B5RPngr7oduYbzL7iKJJxcxQrTnKuG
-	Q7Mmg0EdKcOvkP165ahc+rkEU39hvhoxix/g99OrIVllg7Q6miRo+SY/Kw1KNRRafIclFNN0LSE
-	v9Ba/UQCT41WE7JnulsSGzssSlYN0T7qIeb2N
-X-Google-Smtp-Source: AGHT+IEQUylIRonA2uVlZFEoYTcRptbEOhXQeLWztRoXVHu9gmPqIPrVqsbgBqz3oJzQ8miyvaRCKs04O6ZvMsW8VkE=
-X-Received: by 2002:a5d:40c7:0:b0:374:c05a:4046 with SMTP id
- ffacd0b85a97d-374c05a41e8mr9249377f8f.19.1725523691535; Thu, 05 Sep 2024
- 01:08:11 -0700 (PDT)
+        bh=ONdEvXfVoiXfsYQMbOpzUUsoqTAmilUWNgbBaxjquTY=;
+        b=uyK3X2NKdk4Sks03CmdZNonqlQZOUuH9r+K/GHsFjZwxa8E2gk1Wrczonkcdf5tl5H
+         8/d3PxLVOdTZ7sw5+majGgsV6PbIMiVTjdjlRZM/bsaEhGrLROoa++m0a8K6+0OtuPDB
+         rDI5KVa6D6Jr+DIPuc7M/C9fX/HlzsFxMmQ4kq1dkfiU1xoVrgfDZkntSchVHwqrDwvq
+         dCxOcp3eZ9vIpMVJGp+c/IZ+19QP2JtdtFhYDoZvoOnd9zTBhjHzcEm1yzwxriAzquHT
+         ONuW4kcv/LIEBI3Ztzt3ncm9tlYIZRzeaklwHZujI3mkGFl9KGZRtzxfWGeXBnwWsI/U
+         H77g==
+X-Forwarded-Encrypted: i=1; AJvYcCXM0svLLnd9Wp1fdV0N/HIa5qVfbFTNe8qEG5tuyMglM+1mcxQVq6kOvwT+OAfj/Oyie/1zVRI2@lists.linux.dev
+X-Gm-Message-State: AOJu0YxhSR3Rx0OyKCWSJOreOjlmfZ136guckdb4At8YU99IPbxZbUwt
+	fW0IpnV8xIYB9dTMsp+h9S8agiF0KuwuTT2E6+aSkCbkpUXc/ArDpE5QLJxU8tcoOLF8t4f4Tld
+	7Ek2LpV9xBB9gNBuYIqbyJLQxwgV0LP9fEPeX
+X-Google-Smtp-Source: AGHT+IGsREicwoeAI200xxv8pWIQ63uvfqObyTQjW4hGxPg3+tWUrCKJv/mwyAASMfYa7V/peuF92e+l9osm8aA3AWk=
+X-Received: by 2002:adf:e2cb:0:b0:367:9881:7d66 with SMTP id
+ ffacd0b85a97d-3749b589884mr15156149f8f.41.1725523722016; Thu, 05 Sep 2024
+ 01:08:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-7-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-7-ojeda@kernel.org>
+References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-8-ojeda@kernel.org>
+In-Reply-To: <20240904204347.168520-8-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Thu, 5 Sep 2024 10:07:58 +0200
-Message-ID: <CAH5fLghKkzUpt0zDQVdpZCeUYRv+kUXCqkS7coUpFtaxNk7Bjw@mail.gmail.com>
-Subject: Re: [PATCH 06/19] rust: enable `clippy::unnecessary_safety_doc` lint
+Date: Thu, 5 Sep 2024 10:08:30 +0200
+Message-ID: <CAH5fLggDQzNx_uxT+Yw1tMP3fHZSRWTN0RcQEb40bcPL6KgT5A@mail.gmail.com>
+Subject: Re: [PATCH 07/19] rust: enable `clippy::ignored_unit_patterns` lint
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -75,15 +75,30 @@ Content-Transfer-Encoding: quoted-printable
 On Wed, Sep 4, 2024 at 10:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> In Rust 1.67.0, Clippy added the `unnecessary_safety_doc` lint [1],
-> which is similar to `unnecessary_safety_comment`, but for `# Safety`
-> sections, i.e. safety preconditions in the documentation.
+> In Rust 1.73.0, Clippy introduced the `ignored_unit_patterns` lint [1]:
 >
-> This is something that should not happen with our coding guidelines in
-> mind. Thus enable the lint to have it machine-checked.
+> > Matching with `()` explicitly instead of `_` outlines the fact that
+> > the pattern contains no data. Also it would detect a type change
+> > that `_` would ignore.
 >
-> Link: https://rust-lang.github.io/rust-clippy/master/index.html#/unnecess=
-ary_safety_doc [1]
+> There is only a single case that requires a change:
+>
+>     error: matching over `()` is more explicit
+>        --> rust/kernel/types.rs:176:45
+>         |
+>     176 |         ScopeGuard::new_with_data((), move |_| cleanup())
+>         |                                             ^ help: use `()` in=
+stead of `_`: `()`
+>         |
+>         =3D help: for further information visit https://rust-lang.github.=
+io/rust-clippy/master/index.html#ignored_unit_patterns
+>         =3D note: requested on the command line with `-D clippy::ignored-=
+unit-patterns`
+>
+> Thus clean it up and enable the lint -- no functional change intended.
+>
+> Link: https://rust-lang.github.io/rust-clippy/master/index.html#/ignored_=
+unit_patterns [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
