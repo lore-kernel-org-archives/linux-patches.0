@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC43718732F;
-	Thu,  5 Sep 2024 09:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8A5199222;
+	Thu,  5 Sep 2024 09:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529898; cv=none; b=XH429bd7gY0POjSISua8VJBOaXsyfUXv86B9rsiguBhTRBGU1a47MPDijCxuCrF/mJQQ18fV2H8u7hm2MQ1PqYk2dvRrtJdZVaChtvDRo+vpalgrugqiutUr/YUsLM6Ku1+69QFVce/sGjk4lmYiBnD3Gm1JdWizWjKgYOo8kGk=
+	t=1725529901; cv=none; b=Lb7fuRNH26QxZ8lGkVUCEGjQtu6W7rEjyUvrVgNxcOSM5zg1yWjphA2MOPmlxu9W9hCuMSbe8igfWVoRC+8bez1h5B084U8G9G6sgwl+w7ppulkBA/APcnrZ/CFRUUUssKvixKessRf5NZ2qSfHCRsKKbMG0pJVj80F1Vczw8Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529898; c=relaxed/simple;
-	bh=4XXjbyQJieJrE/VLBdR9GilwTDffCfVw7gBt++7ltas=;
+	s=arc-20240116; t=1725529901; c=relaxed/simple;
+	bh=JXG5M4AUdJg0P97ifYxRfbitbfQun0/Jlpsw3Xf5mKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=er8RsW4IiX0QBtlBXVJW5VsPfZgXx8AORP3GdzgVjzVPlcxM4QqUiHyhkgkp5k8zwuolVba6BKqKhi7ejArbopeZu+qldrZCy+2Mrn0QUMBFg4e731IN7zIywuI6ExY+ACbq4eVojZ3c3+0i8BOMHtohyMlyqjl+5uWHxD+yZBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQviBXTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2EsFh/iac/UZB7I2RU5/YcUrMhTp4Ijq6M88P+7ezl9WmIgMjAH4aczBs09UVIYhk0KY3mOmUDrCr20ZaOq6J/hK/eT0SfhBVL8+iSja8fRXh4sVi8kfnYBhmhcs0Cmk6GlDXuR6bomRHWwdzQV5C+S+HEI5vFkT9ZHu/mpcKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNImGJ3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQviBXTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E443BC4CEC3;
-	Thu,  5 Sep 2024 09:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNImGJ3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375D0C4CEC6;
+	Thu,  5 Sep 2024 09:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529898;
-	bh=4XXjbyQJieJrE/VLBdR9GilwTDffCfVw7gBt++7ltas=;
+	s=korg; t=1725529901;
+	bh=JXG5M4AUdJg0P97ifYxRfbitbfQun0/Jlpsw3Xf5mKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQviBXTsMSxyCgaV6dlYIZlCbVEwY0oFTVCJddy0vv9qulAQagRdV2knXZnykOvXL
-	 kmySg/g1rPXR+xhIXZw+6U8wfLqmM9i1+h46N6awarqFpZ6PLU6J1w81YJnoLvq/OA
-	 K4R+HKYMS5w7jeb7BvkduFUJcXgvCQJ4scmWNpgk=
+	b=fNImGJ3xKoXX4ZKlQmMActzpZ0lCOaZFhr7coPFWQUIrfgS0dJeiZnH2+GpWubNBZ
+	 9/cXPegKHGD5alsS/7dwcMxHNw9tszPpXMhgWYcMKWuYn+SWRjQ8mn3zkXso2Z6zrc
+	 Sf3UCAY6SJj4j/6YhV7xCkXEtrQo72UrjdkbsSn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 176/184] drm/amd/display: Check BIOS images before it is used
-Date: Thu,  5 Sep 2024 11:41:29 +0200
-Message-ID: <20240905093739.205575872@linuxfoundation.org>
+Subject: [PATCH 6.10 177/184] drm/amd/display: Skip wbscl_set_scaler_filter if filter is null
+Date: Thu,  5 Sep 2024 11:41:30 +0200
+Message-ID: <20240905093739.243466964@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -55,12 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 8b0ddf19cca2a352b2a7e01d99d3ba949a99c84c ]
+[ Upstream commit c4d31653c03b90e51515b1380115d1aedad925dd ]
 
-BIOS images may fail to load and null checks are added before they are
-used.
+Callers can pass null in filter (i.e. from returned from the function
+wbscl_get_filter_coeffs_16p) and a null check is added to ensure that is
+not the case.
 
-This fixes 6 NULL_RETURNS issues reported by Coverity.
+This fixes 4 NULL_RETURNS issues reported by Coverity.
 
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
@@ -68,69 +69,23 @@ Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-index 25fe1a124029..3bacf470f7c5 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-@@ -665,6 +665,9 @@ static enum bp_result get_ss_info_v3_1(
- 	ss_table_header_include = ((ATOM_ASIC_INTERNAL_SS_INFO_V3 *) bios_get_image(&bp->base,
- 				DATA_TABLES(ASIC_InternalSS_Info),
- 				struct_size(ss_table_header_include, asSpreadSpectrum, 1)));
-+	if (!ss_table_header_include)
-+		return BP_RESULT_UNSUPPORTED;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+index 994fb732a7cb..a0d437f0ce2b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+@@ -690,6 +690,9 @@ static void wbscl_set_scaler_filter(
+ 	int pair;
+ 	uint16_t odd_coef, even_coef;
+ 
++	if (!filter)
++		return;
 +
- 	table_size =
- 		(le16_to_cpu(ss_table_header_include->sHeader.usStructureSize)
- 				- sizeof(ATOM_COMMON_TABLE_HEADER))
-@@ -1034,6 +1037,8 @@ static enum bp_result get_ss_info_from_internal_ss_info_tbl_V2_1(
- 				&bp->base,
- 				DATA_TABLES(ASIC_InternalSS_Info),
- 				struct_size(header, asSpreadSpectrum, 1)));
-+	if (!header)
-+		return result;
- 
- 	memset(info, 0, sizeof(struct spread_spectrum_info));
- 
-@@ -1107,6 +1112,8 @@ static enum bp_result get_ss_info_from_ss_info_table(
- 	get_atom_data_table_revision(header, &revision);
- 
- 	tbl = GET_IMAGE(ATOM_SPREAD_SPECTRUM_INFO, DATA_TABLES(SS_Info));
-+	if (!tbl)
-+		return result;
- 
- 	if (1 != revision.major || 2 > revision.minor)
- 		return result;
-@@ -1634,6 +1641,8 @@ static uint32_t get_ss_entry_number_from_ss_info_tbl(
- 
- 	tbl = GET_IMAGE(ATOM_SPREAD_SPECTRUM_INFO,
- 			DATA_TABLES(SS_Info));
-+	if (!tbl)
-+		return number;
- 
- 	if (1 != revision.major || 2 > revision.minor)
- 		return number;
-@@ -1716,6 +1725,8 @@ static uint32_t get_ss_entry_number_from_internal_ss_info_tbl_v2_1(
- 				&bp->base,
- 				DATA_TABLES(ASIC_InternalSS_Info),
- 				struct_size(header_include, asSpreadSpectrum, 1)));
-+	if (!header_include)
-+		return 0;
- 
- 	size = (le16_to_cpu(header_include->sHeader.usStructureSize)
- 			- sizeof(ATOM_COMMON_TABLE_HEADER))
-@@ -1755,6 +1766,9 @@ static uint32_t get_ss_entry_number_from_internal_ss_info_tbl_V3_1(
- 	header_include = ((ATOM_ASIC_INTERNAL_SS_INFO_V3 *) bios_get_image(&bp->base,
- 				DATA_TABLES(ASIC_InternalSS_Info),
- 				struct_size(header_include, asSpreadSpectrum, 1)));
-+	if (!header_include)
-+		return number;
-+
- 	size = (le16_to_cpu(header_include->sHeader.usStructureSize) -
- 			sizeof(ATOM_COMMON_TABLE_HEADER)) /
- 					sizeof(ATOM_ASIC_SS_ASSIGNMENT_V3);
+ 	for (phase = 0; phase < (NUM_PHASES / 2 + 1); phase++) {
+ 		for (pair = 0; pair < tap_pairs; pair++) {
+ 			even_coef = filter[phase * taps + 2 * pair];
 -- 
 2.43.0
 
