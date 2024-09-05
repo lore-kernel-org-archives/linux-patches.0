@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA946198822;
-	Thu,  5 Sep 2024 09:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CAC156225;
+	Thu,  5 Sep 2024 09:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530058; cv=none; b=eZ8mv4M9oExznnqUHY2Be/5HRkdIbQJsz8OLuEE3aauMEzhraieO+pAP1RlzOHd/gfzk2lsa+K6twBxz92Gx+5MXt9KhNgwVgEbNuGeyOGviIaC1c3Mn7NpSkpcrQBtPp1wUOTJdo07iq/amrCw0jrZmvaAIFw8LZqXgDuhlnSo=
+	t=1725530062; cv=none; b=fubrDPsSSoXsuDVgClC74zzHXgNY80jykYapv1PLBrt0SZ17mMcoSISq9rEE5C8LbVFkV656YEwuoskYKd9xUVxm3QMqtgGC4D+tNC40dqYcyVTDJBSZ7gxsxXiz1s94B4DQkApgVYa3dLen7kmshMNKUZIpZqMDkCd4P2BTJdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530058; c=relaxed/simple;
-	bh=THbkKN1DzS7OCuMLSEeO0du2danEjS6e5OWwA8RbdPg=;
+	s=arc-20240116; t=1725530062; c=relaxed/simple;
+	bh=XR60+lv7BWNf9dkgGoIZIdCu5ZND67LQfOoQX2ONQYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DciQFNuRkjRLvS94yQ7eQdUgsYCTshwVwg/ZsQ71qcYkQsP/8TdRBH565L5LimLTZbC4QXHl7RBePNoP5IzTYLGzMDa0hrCXtF40wVPsKAHZVDno2bkNeq21SP4f18aKFF+dreF5pphLtE6iqwWJJLNdZy0OashmbdmQjZ/7MzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqTTVKZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVscsW9pbzdNxsRkOlrY57ca5xMGy4mPufSbkNadeAIIbm9aLofpAdjmGb7DjsCU72k0ZJ3Ek7GzRGqXoI2GR61ekBJ+0R5JZtJ2JSBlX4eNGi+a3ZWVWXBNOkCow4QG/aJnUfxw28oWr1YYPZMTPcfjXz5a0yhlYKxlpoC9RMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pM0gIlzA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqTTVKZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00987C4CEC4;
-	Thu,  5 Sep 2024 09:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pM0gIlzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1268CC4CEC3;
+	Thu,  5 Sep 2024 09:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530058;
-	bh=THbkKN1DzS7OCuMLSEeO0du2danEjS6e5OWwA8RbdPg=;
+	s=korg; t=1725530061;
+	bh=XR60+lv7BWNf9dkgGoIZIdCu5ZND67LQfOoQX2ONQYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqTTVKZUqZ4weNSK1ENe58PsZYmXWBho0UEOqcPTSr68pKd0vk1lE/2ZaV+PfMuHo
-	 pV+uuBLakIb9GpB7CDmh1ksN2UQntWw7bpDZd39E/MxFAxAW53G1TnsjeFllhZIf6/
-	 +Us/+NN2s2wGzIQv6QvT22YL+XowWCUAKbSk9cXA=
+	b=pM0gIlzAV5BiXRaWNqvuW6E/uM5seo/Jrk1Hj4jWy5LeDxiewOoHvfXNw4gHmkcM9
+	 UOe75BQizdAWOigURGAAGTJy3aFPzxNNzWqkIN3RvwX3e6eVWyVrAz0i1Tvya1nChd
+	 cfiZhjCFu/fRrBoLQIPf9oDDyYTGwokChfMZUAj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ma Jun <Jun.Ma2@amd.com>,
 	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/132] drm/amdgpu: fix overflowed array index read warning
-Date: Thu,  5 Sep 2024 11:40:29 +0200
-Message-ID: <20240905093723.894946115@linuxfoundation.org>
+Subject: [PATCH 6.6 043/132] drm/amdgpu/pm: Check the return value of smum_send_msg_to_smc
+Date: Thu,  5 Sep 2024 11:40:30 +0200
+Message-ID: <20240905093723.933213235@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -46,43 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit ebbc2ada5c636a6a63d8316a3408753768f5aa9f ]
+[ Upstream commit 579f0c21baec9e7506b6bb3f60f0a9b6d07693b4 ]
 
-Clear overflowed array index read warning by cast operation.
+Check the return value of smum_send_msg_to_smc, otherwise
+we might use an uninitialized variable "now"
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-index dbde3b41c088..0bedffc4eb43 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -469,8 +469,9 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 					size_t size, loff_t *pos)
- {
- 	struct amdgpu_ring *ring = file_inode(f)->i_private;
--	int r, i;
- 	uint32_t value, result, early[3];
-+	loff_t i;
-+	int r;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c
+index 02ba68d7c654..0b181bc8931c 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c
+@@ -1036,7 +1036,9 @@ static int smu10_print_clock_levels(struct pp_hwmgr *hwmgr,
  
- 	if (*pos & 3 || size & 3)
- 		return -EINVAL;
+ 	switch (type) {
+ 	case PP_SCLK:
+-		smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetGfxclkFrequency, &now);
++		ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetGfxclkFrequency, &now);
++		if (ret)
++			return ret;
+ 
+ 	/* driver only know min/max gfx_clk, Add level 1 for all other gfx clks */
+ 		if (now == data->gfx_max_freq_limit/100)
+@@ -1057,7 +1059,9 @@ static int smu10_print_clock_levels(struct pp_hwmgr *hwmgr,
+ 					i == 2 ? "*" : "");
+ 		break;
+ 	case PP_MCLK:
+-		smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetFclkFrequency, &now);
++		ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetFclkFrequency, &now);
++		if (ret)
++			return ret;
+ 
+ 		for (i = 0; i < mclk_table->count; i++)
+ 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 -- 
 2.43.0
 
