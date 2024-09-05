@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3F21957FC;
-	Thu,  5 Sep 2024 09:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3E114A08E;
+	Thu,  5 Sep 2024 09:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530051; cv=none; b=ZYbjJgAHqG++AaJO+WODy7RKaVMo1Sy4OzYW8GcdQD+SbfU1sIrkyUQhXTRaQr+HUsu5P2J7QZl+0ESZSXY5opr6yMUqAYvPi6XHZs+VJHkjFOm1SsGe2DnB90GwlJCa4mOGXRXOT0dgLou4FLFjOFlg8RgDCmjafOVdGaF/H0w=
+	t=1725530055; cv=none; b=GA00Xr1sbW6SgZcaQV8JP4Si8TLsmETS/G6PJd9imfIHKQjSHlvsBGAz4zpEPi1+UlaYVTTSeheGI+2DTheBwxwdbvxBp104XzZXSrNCLOqS2m70zcqP8QPc0GdQhSiJxJOvBCKH46Yh2cx5aaf/TSa1NWlwnUzSoPA2Tm3st/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530051; c=relaxed/simple;
-	bh=WHqYPXT269RcQ7Bnya/IsQTtpHUDHONDfLpzv2D7Na4=;
+	s=arc-20240116; t=1725530055; c=relaxed/simple;
+	bh=Sc9i6+wkx5SVsO8OCIO9kDzGyJfjiPYeiVivjbXv0T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q6LSwJi1964Z4q1xFIMxDFECgwyvUnUyFR5zsSfBSUoC1NKX7iYjp3WIMpVMI8wBssI1/nb+NDUZJV3OAZx9qrEC0NM3RKvRf2Yz8FeMxWiT+tfy7sAuABRK9WzIrT5EH53rwoIcCSgUc82dQUL+uYnNLwgUZlp2lodBI4zs2jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbCLQ24I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aRoM1CpdvorDU2vEPQ8H5F43O0Nn8v9A2vzBXP5r5Q1Ve3gsWvTloEeNytv9ANOF48DCnoVEfBOUiQd8cdCb7Tjb5fW+8BkBXWIsssErU+5uFnr/6Sxo2ob5314LKp01MX+KUZ1Q/BcR/idSM6vnZWV+fbeFpu0zgTIhFmpNnbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKCGxvJ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbCLQ24I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD17C4CEC3;
-	Thu,  5 Sep 2024 09:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKCGxvJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B8BC4CEC3;
+	Thu,  5 Sep 2024 09:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530051;
-	bh=WHqYPXT269RcQ7Bnya/IsQTtpHUDHONDfLpzv2D7Na4=;
+	s=korg; t=1725530055;
+	bh=Sc9i6+wkx5SVsO8OCIO9kDzGyJfjiPYeiVivjbXv0T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbCLQ24I5mEwT+7ALxZSjER0EkHzEoJQXpXZYI6ofc1dZHiJlDXZkRZ8Zax2TjONa
-	 fQhlRJ6N6qB04PJjwTybGhmHIi5gnoZ4y8aYFmQPOxB4nzCUQBIEYf3bbaM2NNDXGB
-	 o3/H1ArbYyyxTrZUN9uZFuXX7nn9XT/T0s67bTek=
+	b=NKCGxvJ5k8UDhiFIMZ9JHsv0UL7PoiyJlPNc0BilwTivXIqL60wRC8T0o6vnwBJwY
+	 CMtrVuQDt4/THKpJFO6hFL2HnuBePVu3ZDC0DPUQyIY88RNSNCcS7syOIlZT85h49S
+	 Emx9lg+FNEslngOaK3AUS8VxvPIQjREwjYx15jWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
+	Sohaib Nadeem <sohaib.nadeem@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/132] drm/amdgpu: Fix uninitialized variable warning in amdgpu_afmt_acr
-Date: Thu,  5 Sep 2024 11:40:27 +0200
-Message-ID: <20240905093723.817465991@linuxfoundation.org>
+Subject: [PATCH 6.6 041/132] drm/amd/display: Assign linear_pitch_alignment even for VM
+Date: Thu,  5 Sep 2024 11:40:28 +0200
+Message-ID: <20240905093723.856333348@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -51,33 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Alvin Lee <alvin.lee2@amd.com>
 
-[ Upstream commit c0d6bd3cd209419cc46ac49562bef1db65d90e70 ]
+[ Upstream commit 984debc133efa05e62f5aa1a7a1dd8ca0ef041f4 ]
 
-Assign value to clock to fix the warning below:
-"Using uninitialized value res. Field res.clock is uninitialized"
+[Description]
+Assign linear_pitch_alignment so we don't cause a divide by 0
+error in VM environments
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c | 1 +
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c
-index a4d65973bf7c..80771b1480ff 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_afmt.c
-@@ -100,6 +100,7 @@ struct amdgpu_afmt_acr amdgpu_afmt_acr(uint32_t clock)
- 	amdgpu_afmt_calc_cts(clock, &res.cts_32khz, &res.n_32khz, 32000);
- 	amdgpu_afmt_calc_cts(clock, &res.cts_44_1khz, &res.n_44_1khz, 44100);
- 	amdgpu_afmt_calc_cts(clock, &res.cts_48khz, &res.n_48khz, 48000);
-+	res.clock = clock;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 72db370e2f21..50e643bfdfba 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1298,6 +1298,7 @@ struct dc *dc_create(const struct dc_init_data *init_params)
+ 		return NULL;
  
- 	return res;
- }
+ 	if (init_params->dce_environment == DCE_ENV_VIRTUAL_HW) {
++		dc->caps.linear_pitch_alignment = 64;
+ 		if (!dc_construct_ctx(dc, init_params))
+ 			goto destruct_dc;
+ 	} else {
 -- 
 2.43.0
 
