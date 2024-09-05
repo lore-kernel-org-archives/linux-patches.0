@@ -1,96 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EC91494DB;
-	Thu,  5 Sep 2024 10:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D319A298
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 11:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530712; cv=none; b=pcknFWAOA3z1t8kNgXE771TFWNuL2/d942STxJV0aLrlO3MFe4uJPVU0YCMLkg3zInrthVqIunZl7LHgCt7fdtoPq1DljuBMshTOqQuEyJa/+Hfbtum+uMZqrQLFNQi4Su6q2JoKQj84xk6cz0HrYpT+wZ4vRu5Aj0V1FBRj0rY=
+	t=1725537347; cv=none; b=qX3lk9KOTZIHZLX/vpowdJ8S2PvQxa3mFSJJ2K1Gl6XJxx/hVmJT1jkoIKNryuxzZI6tfz9Tk3WsQDGimUGNa9wCBIOkAaZuA5/NmuOmPuZ+H2JhrCbHeNm4/u0dzSsokuAuyhkNhJ9RDDydW/ox33X7FJqr1VxY/LR8y1LSC2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530712; c=relaxed/simple;
-	bh=TIJWgG4TSa9XC+S02/lqXg1DWJfIwOxfdtTLKav0mZ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMumUuAKIA9UhbcR3BYeT8omkU63HHTjXvjifCdi3OE8felkT+JabjYWvJOFNbh0GoosR79hFVtb5TN3bvV1DushegCtcyZlvZFC+i+M53yMUuYvngW15hxKSBWG1/uq87qz65uBFAmGKql/ErGgy5oT7KbjVMa1v5Sypo3jJow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8y5whjy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725537347; c=relaxed/simple;
+	bh=9NJQoo4LMVMggcZzkDEPcmdJE9FtDyLAQZGKEsY1FLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bjpXJPcEkH6sQrIt7NwWWym53lFgbJA2i1J708BE/XpGXsAE0TVA+43qF0x9ap1redwht/MpwZ6gHOIClWnJU9k9vBBglo5BoY0W2hcMJC0lcQl3PeL5Mbno6W1/gM4Cl3piBEimLkfQH3DwuVqAuXdbEUKgxsx196SL1tdBNSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VBB7qJ3X; arc=none smtp.client-ip=209.85.222.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8y5whjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5714C4CEC3;
-	Thu,  5 Sep 2024 10:05:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530712;
-	bh=TIJWgG4TSa9XC+S02/lqXg1DWJfIwOxfdtTLKav0mZ8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8y5whjyTrpdGBqQElYoDbcA8wetj8R3gJ04B4AdTi6ygSVImiCMFr5WTvG38VFim
-	 2l4tfdPVWVDSHrmho/ITtWM+UdaJp6z62z//SoI/obHmZpqiTzoT/eSsCZdGjnjP0n
-	 nfBYSZq0+F0xsUzaCGJpixupbD8qpH9qG7KMn63E=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	winstang <winstang@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/101] drm/amd/display: added NULL check at start of dc_validate_stream
-Date: Thu,  5 Sep 2024 11:42:02 +0200
-Message-ID: <20240905093719.647567780@linuxfoundation.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
-References: <20240905093716.075835938@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VBB7qJ3X"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-846be74b299so201889241.3
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 04:55:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725537344; x=1726142144; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qRJcGcRJNx1TW5diCULQtEUQCwcWsO+dA/2EMfBnxLI=;
+        b=VBB7qJ3XTG7EaguQ8nGRydWk4jlwEquU0g4gV9S1jEYwSlEmFBJPY6T96WaxgkCfvc
+         JEnF19Jgog+bKwz7ZMJgJf8nDR4PtS1pNJqFcXwdFtBD7WNzgMSj+1/eAixuyTx8MSJo
+         N3uRIIekqBSRga1Ctqj9DG7dNQ48BlwT25Hg1fWPUxc12hhce6ptAbnDmyjtnE0uHwZT
+         G44NAWF2YEEDF7jxZukmV3/YN9NUWivleGGUo25MtWtzDicPMukvvzBF3LL8x+EhSq6o
+         6C3vyGvd/GA0OnIJYyhWeLSP6R0OwwjfgeUYnKVOYVJFAT/CZnWXFpl4UIcfDQ7jlfXz
+         zACA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725537344; x=1726142144;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qRJcGcRJNx1TW5diCULQtEUQCwcWsO+dA/2EMfBnxLI=;
+        b=X6EFjachAK5uoxZ5iDis1OvOUah0rG1yDRnj+4jKJAKu4z3jgKXIJJU9sCTvREF8FD
+         O56WLRhfSKeOskY+Jw9z6H4Pzib5QdR6CcN9tVwUbRAmIlZQiHZ3eqfS2GvKwyNfU1nt
+         9VQldYPfEvgDCZcB6SBs9RGYhgiI36JzXROVjHdq13029XC73lSUgG2kp1AP8yQhcC/I
+         oOLwa07CQ/fSa7kevT+4QRLURKmDCYjA25QELksngp6NAgEpWwdeiyz9pPgyh6bCYEmw
+         Zp5Jylj64GY1JOJCyV+o1aEuai0NY2wbNjAAcjWRzzMCDbEO9ADo9E5lV2GBt3j+Hdpr
+         RGaA==
+X-Forwarded-Encrypted: i=1; AJvYcCXLrPa4tKQ9ebiHOyYuQbKxZFeXpwDqkKwl2VypnDHY9yxqQT0CH82OzNmz+MPmBduRKvaVqh2/@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy8A4mGpznm7N850YWFUWJRz5ivLP/g4IriEtu7YnbSxpMJHYEr
+	h5O3AWaGyw1uy2iUbT1T3f4S5/7HS2uoF1lGLKxzZpN6AO3WBlo8exQVxrLUFZXlUTVqX1h4Tsf
+	J+sB6NYhM7TFly3CTjKZHwG+aKlRFqJHmNnc7Ng==
+X-Google-Smtp-Source: AGHT+IF81MA398iZ6b4Y3eucXQLIDL+C3dpW3/7905P6ameFiZ7xV/TUXSEnEfZ4bjIqf/xqhw7rYHJecNOySvu0Zrs=
+X-Received: by 2002:a05:6102:26ca:b0:49b:d24a:6860 with SMTP id
+ ada2fe7eead31-49bd24a6c82mr1314728137.8.1725537343801; Thu, 05 Sep 2024
+ 04:55:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240905093732.239411633@linuxfoundation.org>
+In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 5 Sep 2024 17:25:32 +0530
+Message-ID: <CA+G9fYsppY-GyoCFFbAu1q7PdynMLKn024J3CenbN12eefaDwA@mail.gmail.com>
+Subject: Re: [PATCH 6.10 000/184] 6.10.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On Thu, 5 Sept 2024 at 15:13, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.10.9 release.
+> There are 184 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 07 Sep 2024 09:36:50 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.9-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-------------------
+The following build errors noticed on arm64 on
+stable-rc linux.6.6.y and linux.6.10.y
 
-From: winstang <winstang@amd.com>
+drivers/ufs/host/ufs-qcom.c: In function 'ufs_qcom_advertise_quirks':
+drivers/ufs/host/ufs-qcom.c:862:32: error:
+'UFSHCD_QUIRK_BROKEN_LSDBS_CAP' undeclared (first use in this
+function); did you mean 'UFSHCD_QUIRK_BROKEN_UIC_CMD'?
+  862 |                 hba->quirks |= UFSHCD_QUIRK_BROKEN_LSDBS_CAP;
+      |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                UFSHCD_QUIRK_BROKEN_UIC_CMD
 
-[ Upstream commit 26c56049cc4f1705b498df013949427692a4b0d5 ]
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-[Why]
-prevent invalid memory access
-
-[How]
-check if dc and stream are NULL
-
-Co-authored-by: winstang <winstang@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Signed-off-by: winstang <winstang@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 83898e46bcad..29400db42bb2 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -3629,6 +3629,9 @@ void resource_build_bit_depth_reduction_params(struct dc_stream_state *stream,
- 
- enum dc_status dc_validate_stream(struct dc *dc, struct dc_stream_state *stream)
- {
-+	if (dc == NULL || stream == NULL)
-+		return DC_ERROR_UNEXPECTED;
-+
- 	struct dc_link *link = stream->link;
- 	struct timing_generator *tg = dc->res_pool->timing_generators[0];
- 	enum dc_status res = DC_OK;
--- 
-2.43.0
-
-
-
+--
+Linaro LKFT
+https://lkft.linaro.org
