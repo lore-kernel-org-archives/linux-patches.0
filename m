@@ -1,123 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FB8198845;
-	Thu,  5 Sep 2024 09:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAA619882F
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 09:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529530; cv=none; b=bwW5TBxGgT6bdhluyblL6EdBeM27yL8t+d0ldvUKKaWc7Xw5mS6EXTmtcS4/mKIr+dmq8rVBAoyLo6d5tWvBnUCNfrvCK3nGL+g8kRLyU1A4MC3WKbt0GywKett3ESbcL76LRX9TVkZGfLPZntD0jp3+gM6H58ZNF7BTAB2DRrg=
+	t=1725529532; cv=none; b=bKYiuGqQ62/ITX/BU52/uFYw/Ci/orEBfGrnk3JpV5r78SYD95uFh2PjMCVOsqH9VMcBPlaHMCocHq1NpkbndTGffrmGku274RJiZRVsC77lhpKw9Td8cLRs445cy6PqS6lJNV9+v98QKgRqi7Nq0RGmcMcDMqKEVRt5xZYxLX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529530; c=relaxed/simple;
-	bh=xgN/UAPER5Knh+ixeNqS2eS3meUscQVG+E7YmI2py7Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+lpOFUCmhDWnFWjOb1HJi4vR+R4sJxXDv0zNHvCTTDrMJSaqZ8QiggX7YX5rrcygJT5dMOQwhSPH/MHxyUGCTOHSaFaKdch83UDhL9oDo//UasCnCUbqQ9i+hBBx245akanRWD84pO5j4EvJlYPU6kBgDuCsdR7Dmo5wyKXsvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rg6L0pgO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725529532; c=relaxed/simple;
+	bh=T9uAT6P2XJVZAdZnyx/4GZlbV0cbx0PWvTakz+ui324=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=m+Jc888/E0GyuwLc0jJ0eF5ybyVUa3HZM9Ymo8Etin/GWzslJuCkEYqNUtUB5TtVc5wxQNLTrA2vEHs6wjBeej/LyUtX/7C7mqsB0kP8aiNFALE4FLh+HXxcbIkP+gYYqEa81++h4vGBDcZJwMa/kl8eN2clG5b9R0aqK18vQGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fiwlFWrN; arc=none smtp.client-ip=209.85.160.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rg6L0pgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D60C4CEC3;
-	Thu,  5 Sep 2024 09:45:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529530;
-	bh=xgN/UAPER5Knh+ixeNqS2eS3meUscQVG+E7YmI2py7Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rg6L0pgOcJDozvcmVO8uT5C0FnY2lbM4C8ttzvZ5wB/VO7dieht5jFuATVmlDNlOw
-	 KCOCK3GZtlmtgBp8YRd1UaS8rd449JY41ojfPrR7aXKXROlnWlyKl7t5G6X82NwCn2
-	 VzoxSUzuIWyOcvNk0J3znjCapBzQ4fZ9uVsfeDRE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 031/184] arm64: dts: qcom: x1e80100-crd: fix missing PCIe4 gpios
-Date: Thu,  5 Sep 2024 11:39:04 +0200
-Message-ID: <20240905093733.461532785@linuxfoundation.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
-References: <20240905093732.239411633@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiwlFWrN"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-26110765976so42063fac.1
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 02:45:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725529530; x=1726134330; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T9uAT6P2XJVZAdZnyx/4GZlbV0cbx0PWvTakz+ui324=;
+        b=fiwlFWrN6zhjzaJznDIX1qj5j9dhJU2ewtxyLBG0fed/XttVguzEVd2+hcgNLBby+R
+         Lmc+xEwqgsMNuQ15Q80TXpnWh3iMA/ng+rWE06pDK9/cs6Rwz0zN2ShQTDuvpwyVATkx
+         Y5uWF0WSKbfcBFbzMvF3Ll4thTHLt9Qg7SvD/I9zZCLo16IMSx9hwA2h2nCSjh7Yucqw
+         WCn7DxF7Ak4ppFdFfwQ0RrVw5/xVdJ+pABS8tgi2hIgITMTAiJ1XvwImasSHFxTTxibQ
+         iXDyDid+0pOlF47eWLD7RWWF9pLBfmu2yQcARumTwB+zObrTwukgjHPH94+p7jXr52nZ
+         aZMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725529530; x=1726134330;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T9uAT6P2XJVZAdZnyx/4GZlbV0cbx0PWvTakz+ui324=;
+        b=iAPT5nAa3ZNGRAcBTiAdViJKSdQIf7+kqJeTihG5bH0JkICegLbYwJGu7jrFAmBzcz
+         oBsCl4cNkYgeegt8f7dysySAanIb55VNzK7NbG3J648kwV3FOiMvMWs9ABWzcNEyKl4i
+         bPRHF5cbgWH2PyRm7WYHI3Blxzskamyi6eRK9fXzYThw8oMqR+NRZ1FFtZsO5qksztkY
+         e/1QESKUrh5ah7hoJFMATQDTIr7kyfAWxv9Qxjy/fBYsAA3QTNNn4XOrWgt0qPQYmRwa
+         EJE7EV8q63XmWhGM5awpsUemNsIdCuxe2KAhLSZVrb4sYOwoL3bQEWc33EC8D7ZSGKeR
+         v5xw==
+X-Forwarded-Encrypted: i=1; AJvYcCXChtojXX/NLcmyNaqkOeZ279VwN00g63GWuKpnfyoXzqt/ZnmgFwTQV2pn7LmdutGsszbRpJdD@lists.linux.dev
+X-Gm-Message-State: AOJu0YydAreQiPzhKWzEeLoz0PtzvNStcBTsvuK0GPsZTIHi/KaJoQlr
+	trp5L2ohzbDtbxA2+9O+uPhNhL+JG2lrUrlYvE7S2pbSJQ/SGMh0b5+OHesIhdZM/e70nKoFvEA
+	M0Uj+VhtJLitZqSB8+VLpnyWFOp0=
+X-Google-Smtp-Source: AGHT+IF4/iqCXFx0YZniYl3ZSu+g9OE3IT6hrjrMVy3pCALICpQGkQrU5kNPgWw9rFg6Yzz1lTOlB0WKywfTKVKf050=
+X-Received: by 2002:a05:6871:54a:b0:278:6e3:934c with SMTP id
+ 586e51a60fabf-27806e3966fmr6728709fac.5.1725529530073; Thu, 05 Sep 2024
+ 02:45:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-17-ojeda@kernel.org>
+ <CAH5fLgg20kDCJfD_6+fTSogOnpqK0x3a6eKaTahgSvdgfFzSEw@mail.gmail.com>
+In-Reply-To: <CAH5fLgg20kDCJfD_6+fTSogOnpqK0x3a6eKaTahgSvdgfFzSEw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 5 Sep 2024 11:45:17 +0200
+Message-ID: <CANiq72ktnMSfMfGEhN1kO0F+C5O_KsUY1y_eb7ZL+qzzSkg9bw@mail.gmail.com>
+Subject: Re: [PATCH 16/19] Documentation: rust: add coding guidelines on lints
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Sep 5, 2024 at 10:16=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> w=
+rote:
+>
+> Wow, does C really not have an easier way to do it?
 
-------------------
+Yeah, it would be nice to get a similar system in C.
 
-From: Johan Hovold <johan+linaro@kernel.org>
+There are targeted attributes that can annotate certain things, like
+`[[maybe_unused]]` in C23 (and vendor attributes too like our
+`__maybe_unused` macro), so `-Wunused-function` is not really the best
+example in that sense -- I will think of a better one (it was nice to
+use the same as in the other examples I wrote for `expect` later on,
+which is why I used it).
 
-[ Upstream commit 42b33ad188466292eaac9825544b8be8deddb3cb ]
+But, as far as I am aware, there is no way to handle lints (and levels
+and so on) in a simple and consistent way like Rust does.
 
-Add the missing PCIe4 perst, wake and clkreq GPIOs and pin config.
-
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Cc: stable@vger.kernel.org	# 6.9
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240722094249.26471-7-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 29 +++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 4096bb1ee4d3a..9f72e748c8041 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -658,6 +658,12 @@
- };
- 
- &pcie4 {
-+	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-0 = <&pcie4_default>;
-+	pinctrl-names = "default";
-+
- 	status = "okay";
- };
- 
-@@ -833,6 +839,29 @@
- 		bias-disable;
- 	};
- 
-+	pcie4_default: pcie4-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio147";
-+			function = "pcie4_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio146";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio148";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie6a_default: pcie6a-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio153";
--- 
-2.43.0
-
-
-
+Cheers,
+Miguel
