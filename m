@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8A318732F;
-	Thu,  5 Sep 2024 09:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70358155730;
+	Thu,  5 Sep 2024 09:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529994; cv=none; b=eqzHcuH3OlUuKIuyzpsnL+oXMgNDpBkZefA6BUZNSGiJs8pQQjUyUf8Ej3WLwqqKxb8jaKVj+YoapQPqttfNZ8GsaHytC5pTqulMMOWodd0eBJL4rQZ+JDZ/Bc8pvK8FeSmL6EOWMNbJfO1Qghc7y4sqFDUJcj+GMKL7shQSjNU=
+	t=1725529997; cv=none; b=kV0l5GXUUPi8W/Uqt07qnTK87bzFU910EIh8/HvruSVSeyT17HKUvxJ8oaV9fmUMD3JR+B5Jph67CetQieuZFxFzLOdSGz6yPdQ8rE5U0dzY8e3ECEPXJrWsKQf9vMG59zlwcKmvqppvkKVOE97yMeSWAGpKCcUw/MdJkuTtXho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529994; c=relaxed/simple;
-	bh=oJnd94uyNeeQ6+ww0yNg1pzEJhOVsh7In5ZPqLJNcN8=;
+	s=arc-20240116; t=1725529997; c=relaxed/simple;
+	bh=GcIKeNnu5SPjxoe9uc1HraLIknM2YkpIL4WR7RtmhQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+FdqbFtOj4YLLs51jW92HpdsZ/haruB1reqL5zvwfPBPlfVrWFh5nCmIeSu/HPdsSS/nJbQFMW+Iriea8wMnAgAIowrRnNr/noxxDrZ2H5Co2Y67WCI/psbGnsgentDY2qFXGu7z+EPnkh166A1ge1z7mk9pRjlU704dVSmNG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhROg3hx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4g8S22gIHB7j1psmnTunEm9XWMeQTEENIKfnmCd0sFlVBi+nRG2EzLwF1oMSrwF7mOFlEE+BtpSb+kvkhHFZHc4m/SfqMkEXhw3Fc9eyIAYykHFBDDR3z9T0o+sjIhG4YVFqi+0j5U5pdPC0DIxwUlZbvgN6H/xm9hGGLfstOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzJuW3Vt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhROg3hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45726C4CEC3;
-	Thu,  5 Sep 2024 09:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzJuW3Vt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F0DC4CEC3;
+	Thu,  5 Sep 2024 09:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529993;
-	bh=oJnd94uyNeeQ6+ww0yNg1pzEJhOVsh7In5ZPqLJNcN8=;
+	s=korg; t=1725529997;
+	bh=GcIKeNnu5SPjxoe9uc1HraLIknM2YkpIL4WR7RtmhQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhROg3hxPBQ3/rzagMrtUzGhOZInOkd8NoTmRBJ5YpwSUmfoGv8RQjvVTWz3eQ6ZF
-	 vYO0uAKRRHqoen3An1wk5rqS1e2wprVe9RkVHtSciNBMcnSL7j2phj7+QnLms8tfRd
-	 Gba+w8eRXRtAQm//luQCeEqJ1ELHy3uao7EuZuGE=
+	b=OzJuW3VtirqCjSl59sdXGuR0LvSHrye1ijdgNCMXe5ceXlk/XpUlG4wYLxQX4GETS
+	 +Ik8vW45BffeAz4976ABTItlUl2LhJ7VcT/7HLpoojid9+Wl4TITUUSd7PCp4h0B1w
+	 Jv8O5R/08YH0SgtxNtcjIhUtcdGbSZn2Os5keHOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <zhangyi@everest-semi.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/132] ASoC: codecs: ES8326: button detect issue
-Date: Thu,  5 Sep 2024 11:40:08 +0200
-Message-ID: <20240905093723.062060642@linuxfoundation.org>
+Subject: [PATCH 6.6 022/132] mptcp: make pm_remove_addrs_and_subflows static
+Date: Thu,  5 Sep 2024 11:40:09 +0200
+Message-ID: <20240905093723.099513346@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -51,34 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <zhangyi@everest-semi.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 4684a2df9c5b3fc914377127faf2515aa9049093 ]
+[ Upstream commit e38b117d7f3b4a5d810f6d0069ad0f643e503796 ]
 
-We find that we need to set snd_jack_types to 0. If not,
-there will be a probability of button detection errors
+mptcp_pm_remove_addrs_and_subflows() is only used in pm_netlink.c, it's
+no longer used in pm_userspace.c any more since the commit 8b1c94da1e48
+("mptcp: only send RM_ADDR in nl_cmd_remove"). So this patch changes it
+to a static function.
 
-Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
-Link: https://patch.msgid.link/20240807025356.24904-2-zhangyi@everest-semi.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 87b5896f3f78 ("mptcp: pm: fix RM_ADDR ID for the initial subflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8326.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/pm_netlink.c | 4 ++--
+ net/mptcp/protocol.h   | 2 --
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
-index 6c263086c44d2..32a9b26ee2c89 100644
---- a/sound/soc/codecs/es8326.c
-+++ b/sound/soc/codecs/es8326.c
-@@ -617,6 +617,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
- 		es8326_disable_micbias(es8326->component);
- 		if (es8326->jack->status & SND_JACK_HEADPHONE) {
- 			dev_dbg(comp->dev, "Report hp remove event\n");
-+			snd_soc_jack_report(es8326->jack, 0,
-+				    SND_JACK_BTN_0 | SND_JACK_BTN_1 | SND_JACK_BTN_2);
- 			snd_soc_jack_report(es8326->jack, 0, SND_JACK_HEADSET);
- 			/* mute adc when mic path switch */
- 			regmap_write(es8326->regmap, ES8326_ADC_SCALE, 0x33);
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 7dd10bacc8d28..e40c06a51b167 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1701,8 +1701,8 @@ void mptcp_pm_remove_addrs(struct mptcp_sock *msk, struct list_head *rm_list)
+ 	}
+ }
+ 
+-void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
+-					struct list_head *rm_list)
++static void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
++					       struct list_head *rm_list)
+ {
+ 	struct mptcp_rm_list alist = { .nr = 0 }, slist = { .nr = 0 };
+ 	struct mptcp_pm_addr_entry *entry;
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index 20736f31dc534..940fd94006489 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -948,8 +948,6 @@ int mptcp_pm_announce_addr(struct mptcp_sock *msk,
+ 			   bool echo);
+ int mptcp_pm_remove_addr(struct mptcp_sock *msk, const struct mptcp_rm_list *rm_list);
+ void mptcp_pm_remove_addrs(struct mptcp_sock *msk, struct list_head *rm_list);
+-void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
+-					struct list_head *rm_list);
+ 
+ void mptcp_free_local_addr_list(struct mptcp_sock *msk);
+ int mptcp_nl_cmd_announce(struct sk_buff *skb, struct genl_info *info);
 -- 
 2.43.0
 
