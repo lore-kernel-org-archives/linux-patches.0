@@ -1,98 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7718E18A6B0;
-	Thu,  5 Sep 2024 19:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EF617C9B5
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 19:12:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725563466; cv=none; b=SVEx/++lyxKXXOjwCaO4BInyGIX9v1iwIh775Sf01VDlUuPF4Tyd2kVDGnw9Ocpb97OhPXRnjN32WHGRzCwiYsD0ZfGnpBaLBeLuLbsyo9B8oBJG9kaVOqpWXsVRncDz51U2piYI+eEWauDjD7qmu87/Ze8Bpj9wLzkVmqL5bpo=
+	t=1725563556; cv=none; b=L4T919MweqD9XSyPufXWH5U9qLnhv72uONoPMhrE5Z6bXLGonlRtWH+NoHzmYw2DOfenXjt82PF6AFsITDuPjZFZ3Hn8bIrcsNzFLNndcZtw1puK0KjN0juNVjDT1RohP4T7lULlQ8wcxO90Y/V7Zy/0cRo0Ng+iY2Dd16+6IwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725563466; c=relaxed/simple;
-	bh=a+2l3lUJXsVo9C6MHsAUuRf8wIiXOv+aWoA+7tw5gHs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OHnmE1u4Ysh6XGuvtrTnlbUYHivUYg1WM+wxYD/6C9QPuhD2h8Ie40jHU1PiiMt/23vt7tiPtbsFDsqbmLipWy+gtmG1BU0gRtGdcFdt32TdK5hO0c/zfIOJ1I+mTMGoCLfy6d/uOjT3aA7arj7T7PYoYfW9smBiiGNevEww/x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BFDQ+Aev; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BFDQ+Aev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9152DC4CEC3;
-	Thu,  5 Sep 2024 19:11:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725563466;
-	bh=a+2l3lUJXsVo9C6MHsAUuRf8wIiXOv+aWoA+7tw5gHs=;
-	h=From:Date:Subject:To:Cc:From;
-	b=BFDQ+Aevsz0K7BTHQ6JbJLC5GHetlcJxA7JEcZdPBzG7oqn29PrB7N1j5AXqPf0vr
-	 sKYREc99tBsQMl+erfVtIWyN16G3UxeloA4GZx24d/4jndRwfw6uvearDUdIwfT4F/
-	 DslnihxyUGBUnXXKY5UQp2EK19TMt9F/SfTUXtUWxmULT1RIfilWrlhiunefu0C+7L
-	 0tOPHUo4/fFhCXUKcGEELrIitMua4SwI2s0+zbrh9IqiuRf4aPFN8/8ffS+PsojuJJ
-	 dnsEYEAcILwHSl5so07LdgRf3gprI7aNqrJuTpAt/7OJbV7b0mQ9FRBqkatNP/AyuO
-	 LDxa4fTtcudzQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 05 Sep 2024 12:10:56 -0700
-Subject: [PATCH] KVM: x86: Avoid clang -Wimplicit-fallthrough in
- kvm_vm_ioctl_check_extension()
+	s=arc-20240116; t=1725563556; c=relaxed/simple;
+	bh=RY+285Jvos3Lce3KrWnNw6KwCdu7/GEnZ9+YO6AgHtI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fB1/UZLKir5rcemXEtvWjjgosBZn8b0WmBHlnG3guR8aE0ckNIYJU/L5S6Yz8tZnyLF9IoWEz8vtZBiq+LJl0csc38xAlYEAdRH1a33D8vDuI17JHxDKd4dbaut9PBJWFYRkljpWVUhrixp1/vxpeM/+lf8qw6VUr4Sn6mVqD6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 24AA41C009B; Thu,  5 Sep 2024 21:12:32 +0200 (CEST)
+Date: Thu, 5 Sep 2024 21:12:31 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.10 000/183] 6.10.9-rc2 review
+Message-ID: <ZtoCnyqAzR4U53nC@duo.ucw.cz>
+References: <20240905163542.314666063@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240905-kvm-x86-avoid-clang-implicit-fallthrough-v1-1-f2e785f1aa45@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAD8C2mYC/x2NzQqDMBAGX0X23IUYf7B9leIhxNV8NBpJbBDEd
- 2/ocWCYuShJhCR6VRdFyUgIW4H6UZF1ZluEMRUmrXSrnqrjT175HHo2OWBi64vDWHcPi4Nn4/3
- hYvgujnvdDtIY2zW6ppLbo8w4/6v3eN8/SJLeknoAAAA=
-To: Sean Christopherson <seanjc@google.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Tom Dohrmann <erbse.13@gmx.de>, kvm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1350; i=nathan@kernel.org;
- h=from:subject:message-id; bh=a+2l3lUJXsVo9C6MHsAUuRf8wIiXOv+aWoA+7tw5gHs=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGm3mDw72FxMTS58WrLP4attWd16I94jh++8/Zpvbf6Xx
- T3vbmNrRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIrzyGf2rad9gux4Wo9W7s
- CVk+NfJ7zJRztxMNi3c63phwpGtXVwYjw9uyWT8Zcjn12U4Gf5plqMJ41tL4TFjshQK1qkuXS0X
- 6WAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="wfZdgS/jjDdO1Cjo"
+Content-Disposition: inline
+In-Reply-To: <20240905163542.314666063@linuxfoundation.org>
 
-Clang warns (or errors with CONFIG_WERROR):
 
-  arch/x86/kvm/x86.c:4819:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-   4819 |         default:
-        |         ^
+--wfZdgS/jjDdO1Cjo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Clang is a little more pedantic than GCC, which does not warn when
-falling through to a case that is just break or return. Clang's version
-is more in line with the kernel's own stance in deprecated.rst, which
-states that all switch/case blocks must end in either break,
-fallthrough, continue, goto, or return. Add the missing break to silence
-the warning.
+Hi!
 
-Fixes: d30d9ee94cc0 ("KVM: x86: Only advertise KVM_CAP_READONLY_MEM when supported by VM")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/x86/kvm/x86.c | 1 +
- 1 file changed, 1 insertion(+)
+> This is the start of the stable review cycle for the 6.10.9 release.
+> There are 183 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 0f801804150e..c983c8e434b8 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -4816,6 +4816,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
- 		break;
- 	case KVM_CAP_READONLY_MEM:
- 		r = kvm ? kvm_arch_has_readonly_mem(kvm) : 1;
-+		break;
- 	default:
- 		break;
- 	}
+CIP testing did not find any problems here:
 
----
-base-commit: 59cbd4eea48fdbc68fc17a29ad71188fea74b28b
-change-id: 20240905-kvm-x86-avoid-clang-implicit-fallthrough-6248e3ac5321
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.10.y
+
+6.6 passes our testing, too:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.6.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
 Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
+--wfZdgS/jjDdO1Cjo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZtoCnwAKCRAw5/Bqldv6
+8gd7AJ4snB18i7j0boxsfoFJjnC6etZliQCZAUruRiQBj62GsWYUlIZiDlk8W0M=
+=lhjw
+-----END PGP SIGNATURE-----
+
+--wfZdgS/jjDdO1Cjo--
