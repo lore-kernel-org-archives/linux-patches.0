@@ -1,174 +1,161 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CA7139590
-	for <patches@lists.linux.dev>; Wed,  4 Sep 2024 21:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF2A747F
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725486340; cv=none; b=UaT3uyE/5fsIUfrNhbk8ThAkzZj6SzWA7+8Tyr4KowiXR3pUPGQh76rTCJF3pizUED6KIJgQSvv/DWdvSAzuXolhJ+0k5A2lp9sn/zuGw97Ho7pbu0wepoqkWxrbFuzFZJpNvigIdbZ7Qtq9kybaXTcDgoHq1yy/j2Aw+0C9md0=
+	t=1725498528; cv=none; b=R9h3GXvurhZOA/rvWcwTbzQBhTN2odAYsca7elew555WvNl16Le3Au6hqbApSkWBH6XL6NUgJlnPl+6ajnWbVHvff9VON+G2IoMI+hftAGmuIoT7aXNcp262rQZmFSxaxVU++EgHX9Jk7LsP8uFttXH4COmF52YgjJ/Jcd2I2wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725486340; c=relaxed/simple;
-	bh=R6UUe3TKwZrNrftTEihL/R7hIMY02P3GHWSniiD2wQk=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t9nh5oZsZbC9T0i5BDS3Ed//GEZMk4JVvKxa31yAA53Tl6zidCNrkTzlaYHZsp1EfjTglYOePU9REh/ubdS+Z12ITRZpiNEJDHVKJV01iZEf3fRqonFRtscmOkfb7amyA0zx4RxpLy4GxEoHO1ay+e7311YqwVW//twl90rWotI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=g1DQjHIY; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1725498528; c=relaxed/simple;
+	bh=0eAygMpYMUKKaVFYb0b+bSm3rV9+kxvO8ubLJ0QOGA8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F5v82HI8GWcgElrthC87EQjFx1QDmhVfyjgldRMzz76kk6xcn4Zrawk1fqHtfG+GCkQItK/m9nY5aSGyi8tuETS9SEv0xLHJ4xOlymqco+5b2GcAdAlFRy/MXAfKL4R8xKzFxRDAAgSZ50w7O8dk550sLqT5vpH5TKC4mS+YAM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nyY5zIoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="g1DQjHIY"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7a977bf0290so5200285a.3
-        for <patches@lists.linux.dev>; Wed, 04 Sep 2024 14:45:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725486338; x=1726091138; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f4gRtmbeYp5evTSGdV4aMzXH03sVn24oEBxx8YLA2ew=;
-        b=g1DQjHIY1FiLtx83uVQ/joLeeLgnFRFQNWsQz8sUu+bnFdKVVW0II0Lp5yRgT3BI95
-         3xI302aJdc+EOBjp/wvFUlkdadociAgAsoFxTSFwZtsz0JIedHeQNnsicRtcZyZ5WqL7
-         rsuFt1IXQQGC6r/cH3hVdBtXN9JzZ4ZF0auvE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725486338; x=1726091138;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f4gRtmbeYp5evTSGdV4aMzXH03sVn24oEBxx8YLA2ew=;
-        b=nkgivgglB25/xY6cf45xL+FBglinz8wiMlz0QSzgTbi5sYsSAeT9kyjRY42Fa2fgr9
-         P1F07M9Oxa8oC4zMuwwg1/lcVeSjFo6M9vF0hof+BS8fki1cg8L9Vv5rX5FUtGQg9ef1
-         Hes/LS0HEvc4HWHyAG6SO3PwJv6jz1qcypa9pdbiY9LdxRU911Ob3Dh9+2s1KdMmHN0S
-         rIPP6qsuC3EPov5BqiswqfWMOMBZAISXCXf9Bud8Umm1DOZDB27J8gseJmqboypU+uA7
-         OxCsqOwJJLWGqUnTyzmXqx7KTyIJTw3bM3kRfc59VUDQ9SKCD2MiIli/ZbKpF722PS76
-         bMTA==
-X-Forwarded-Encrypted: i=1; AJvYcCWF6/YQjWW78XAO1GknAAlUN79ZbpjcuN0zRcfX04h5Mbq29SdgP9NK1SPb06NWGg2UaDtMQzib@lists.linux.dev
-X-Gm-Message-State: AOJu0YzYJCZliCUeFaZS1BLj8o9aqNJfHa6Xnh1hbx9tqqTTLHY/qHF7
-	RRSF9sYqGmv1VVm9AQCMcK3NwLa2RD96W90ttoWh2T4cU1P2SvkVTkGlL25F8apSgAhCAeB7cO6
-	05uthnbXfz8910XMjvx/P0Cw/oQ5syCUaQA1XiE0gqvPjApE=
-X-Google-Smtp-Source: AGHT+IE3j/hFyhOgq6UHD/BuDzpg0SIVGw+m/kAN1oVv8xhNaZUR6LUlzSWku14uLG7tUpAnX8c5Trg6ijcjDc3jYq8=
-X-Received: by 2002:a05:620a:19a6:b0:79d:569a:699f with SMTP id
- af79cd13be357-7a8041da30cmr2373807985a.39.1725486337639; Wed, 04 Sep 2024
- 14:45:37 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 Sep 2024 14:45:36 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nyY5zIoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF9BC4AF09
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:08:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725498528;
+	bh=0eAygMpYMUKKaVFYb0b+bSm3rV9+kxvO8ubLJ0QOGA8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=nyY5zIoBI5TvuW78FqWVdu7BNa5qbyRC6QJkDznQIRa9ktn5a8hS9/R4SUqCLoqWJ
+	 gIiItndm7j86axv5Pufk+DumtrDqlK6QEg7zVed0YOn5sAALSOL74VYS9GJ4oJY+SK
+	 4AnW4nIZxt2YQwoxeEPU51OMMYFaPNXKzTuTw6HCf6mGw/RQC862NBEPvqjBkqFswa
+	 nFtlv8fi+LXHTvTyVxNANbhrvLjC8/4HiIp2zfYHrO4tTzpsTwxjyuxgDFtL7Nc837
+	 /sbaiXyzUG9e6MwE75upY2ijY7LQBykCvC7fiHb01MvvfvH3/lzTc+4mnDcbzOgLDO
+	 l+5qvqsTxrBsQ==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5334c4d6829so153869e87.2
+        for <patches@lists.linux.dev>; Wed, 04 Sep 2024 18:08:47 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUhEwEGzfXo9DdtnFFYEEcwXTCpOMBHmJ1Z3r0zyB3p+cCW0fuREHKg45U5yYLrNOneVc2neki8@lists.linux.dev
+X-Gm-Message-State: AOJu0YzG28yT3UX5lVrt/Po/Ua+fcYHEdLFS23wYmXdH/QzpH4cxRw9u
+	HJaV9GFKmlRxzPznPhqJeVO/IjBK5jAlgGi2P/v/NXskSFFK6sqzqkm5rgRqtzRCtBUVCz3FGt8
+	kkz5z+Ir+L5C7QIBKDn+ebkTzljw=
+X-Google-Smtp-Source: AGHT+IHVMo+ONycK3UXEft3pK8yg79GjhZ75/GGU3cZa9yMkIhsCrhbO46PszfxVAOdcSPUpUyvUy5lf5PYym5BvIY4=
+X-Received: by 2002:a05:6512:2807:b0:536:14a1:d660 with SMTP id
+ 2adb3069b0e04-53614a1d71cmr333883e87.6.1725498526672; Wed, 04 Sep 2024
+ 18:08:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZtgqLZXbJbpG65vD@google.com>
-References: <20240901040658.157425-1-swboyd@chromium.org> <20240901040658.157425-19-swboyd@chromium.org>
- <ZtgqLZXbJbpG65vD@google.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 4 Sep 2024 14:45:36 -0700
-Message-ID: <CAE-0n51w3AAtLPq5M-i8F6z2jSOT3xFw3g8HM1h48xXBSeoZnA@mail.gmail.com>
-Subject: Re: [PATCH v4 18/18] platform/chrome: cros_ec_typec: Handle lack of
- HPD information
-To: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, dri-devel@lists.freedesktop.org, 
-	Guenter Roeck <groeck@chromium.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
-	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
-	Vinod Koul <vkoul@kernel.org>
+References: <20240902165535.1101978-1-ojeda@kernel.org> <20240902165535.1101978-2-ojeda@kernel.org>
+In-Reply-To: <20240902165535.1101978-2-ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Thu, 5 Sep 2024 10:08:10 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAR5Fz=qf1Srf=RJhGANQZDmiKkuHPeTbqyT+SEwjtDZWQ@mail.gmail.com>
+Message-ID: <CAK7LNAR5Fz=qf1Srf=RJhGANQZDmiKkuHPeTbqyT+SEwjtDZWQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] kbuild: rust: add `CONFIG_RUSTC_VERSION`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Quoting Tzung-Bi Shih (2024-09-04 02:36:45)
-> On Sat, Aug 31, 2024 at 09:06:56PM -0700, Stephen Boyd wrote:
-> > +static void cros_typec_inject_hpd(struct cros_typec_data *typec,
-> > +                               struct ec_response_usb_pd_mux_info *resp,
-> > +                               struct cros_typec_port *port)
-> > +{
-> [...]
-> > +     /*
-> > +      * Only read the mux GPIO setting if we need to change the active port.
-> > +      * Otherwise, an active port is already set and HPD going high or low
-> > +      * doesn't change the muxed port until DP mode is exited.
-> > +      */
-> > +     if (!typec->active_dp_port) {
+On Tue, Sep 3, 2024 at 1:56=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wrot=
+e:
 >
-> Given that cros_typec_inject_hpd() is called before `typec->active_dp_port`
-> would be set (from previous patch "platform/chrome: ...  Support DP muxing"),
-> would it possibly wrongly fall into here at the beginning?  (E.g.:
-> cros_typec_probe() -> cros_typec_port_update() -> cros_typec_configure_mux()
-> -> cros_typec_inject_hpd().)
-
-We wouldn't get here if 'hpd_asserted' is false though. We want to fall
-into this case in the beginning, i.e. 'active_dp_port' is NULL, so that
-we can read the mux and figure out which port is actually selected.
-
-If we don't have a mux gpio we assume that we aren't muxing and that
-there's only one port to begin with. I'll add a comment after the if
-(mux_gpio) condition with this info.
-
+> Now that we support several Rust versions, introduce
+> `CONFIG_RUSTC_VERSION` so that it can be used in Kconfig to enable and
+> disable configuration options based on the `rustc` version.
 >
-> > [...]
-> > +     /* Inject HPD from the GPIO state if EC firmware is broken. */
-> > +     if (typec->hpd_asserted)
-> > +             resp->flags |= USB_PD_MUX_HPD_LVL;
+> The approach taken resembles `pahole`'s -- see commit 613fe1692377
+> ("kbuild: Add CONFIG_PAHOLE_VERSION"), i.e. a simple version parsing
+> without trying to identify several kinds of compilers, since so far
+> there is only one (`rustc`).
 >
-> `typec->hpd_asserted` is shared between all typec->ports[...].  Would it be
-> possible that a HPD is asserted for another port but not current `port`?
-> E.g.: cros_typec_inject_hpd() for port 2 and cros_typec_dp_bridge_hpd_notify()
-> gets called due to port 1 at the same time?
+> However, unlike `pahole`'s, we also print a zero if executing failed for
+> any reason, rather than checking if the command is found and executable
+> (which still leaves things like a file that exists and is executable,
+> but e.g. is built for another platform [1]). An equivalent approach to
+> the one here was also submitted for `pahole` [2].
+>
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72=3D4vX_tJMJLE6e+bg7ZE=
+CHkS-AQpm8GBzuK75G1EB7+Nw@mail.gmail.com/ [1]
+> Link: https://lore.kernel.org/linux-kbuild/20240728125527.690726-1-ojeda@=
+kernel.org/ [2]
+> Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+> Tested-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  init/Kconfig             |  7 +++++++
+>  scripts/rustc-version.sh | 26 ++++++++++++++++++++++++++
+>  2 files changed, 33 insertions(+)
+>  create mode 100755 scripts/rustc-version.sh
+>
+> diff --git a/init/Kconfig b/init/Kconfig
+> index 839c83034006..38c1cfcce821 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -60,6 +60,13 @@ config LLD_VERSION
+>         default $(ld-version) if LD_IS_LLD
+>         default 0
+>
+> +config RUSTC_VERSION
+> +       int
+> +       default $(shell,$(srctree)/scripts/rustc-version.sh $(RUSTC))
+> +       help
+> +         It does not depend on `RUST` since that one may need to use the=
+ version
+> +         in a `depends on`.
+> +
+>  config RUST_IS_AVAILABLE
+>         def_bool $(success,$(srctree)/scripts/rust_is_available.sh)
+>         help
+> diff --git a/scripts/rustc-version.sh b/scripts/rustc-version.sh
+> new file mode 100755
+> index 000000000000..62ea510be71b
+> --- /dev/null
+> +++ b/scripts/rustc-version.sh
+> @@ -0,0 +1,26 @@
+> +#!/bin/sh
+> +# SPDX-License-Identifier: GPL-2.0
+> +#
+> +# Usage: $ ./rustc-version.sh rustc
+> +#
+> +# Print the Rust compiler name and its version in a 6 or 7-digit form.
 
-I'd like to avoid synchronizing the hpd notify and this injection code,
-if that's what you're asking. Thinking about this though, I've realized
-that it's broken even when HPD is working on the EC. Consider this
-scenario with two type-c ports C0 and C1:
 
-	Plug in C1
-	EC notifies AP
-	AP queues cros_typec_port_work()
-	HPD asserted
-	EC picks C1 for DP // First to have hpd asserted
-	EC notifies AP
-	AP tries to queue cros_typec_port_work() but it's pending. Skip.
-	Plug in C0
-	EC notifies AP
-	AP tries to queue cros_typec_port_work() but it's pending. Skip.
-	HPD asserted
-	EC notifies AP
-	AP tries to queue cros_typec_port_work() but it's pending. Skip.
-	Finally cros_typec_port_work() runs!
-	 for (i = 0; i < typec->num_ports; i++) // typec->num_ports = 2
-	  cros_typec_port_update(port_num=0)
-	   cros_ec_cmd(EC_CMD_USB_PD_CONTROL.port=0) // In DP mode
-	   cros_typec_configure_mux(port_num=0)
-	    cros_ec_cmd(EC_CMD_USB_PD_MUX_INFO.port=0) // hpd asserted
-	    if (!active_dp_port)
-	     active_dp_port = port0
+This script does not print the name.
 
-This is bad. The worker could be significantly delayed, although it's
-really unlikely in practice. It would be better if the EC pushed a
-message to AP about what happened, instead of having to query the EC
-about the state of USB. Or the EC could have a sequence number or
-something so AP could ask for the history of events. We can't fix all
-the EC firmwares though, so we get what we get.
+Only the version.
 
-I think one solution would be to read the mux all the time and ignore
-tracking the active port based on hpd state. If we do that then we don't
-get tripped up by a delayed work iterating over both typec ports. The
-logic will be a bit more complicated though, because we'll have to
-consider all the ports when entering and exiting DP mode on one port so
-that we don't assign DP to the wrong port.
 
-Also, when hpd is broken on the EC I see an error message when I unplug
-the DP cable. It's the "No valid DP mode provided." error from
-cros_typec_enable_dp(). When I inject hpd that error goes away. I'll
-need to look closer to understand why, but I suspect I'll need to keep
-injecting hpd to avoid it.
+
+
+> +
+> +# Convert the version string x.y.z to a canonical up-to-7-digits form.
+> +#
+> +# Note that this function uses one more digit (compared to other
+> +# instances in other version scripts) to give a bit more space to
+> +# `rustc` since it will reach 1.100.0 in late 2026.
+> +get_canonical_version()
+> +{
+> +       IFS=3D.
+> +       set -- $1
+> +       echo $((100000 * $1 + 100 * $2 + $3))
+> +}
+> +
+> +if output=3D$("$@" --version 2>/dev/null); then
+> +       set -- $output
+> +       get_canonical_version $2
+> +else
+> +       echo 0
+> +       exit 1
+> +fi
+> --
+> 2.46.0
+>
+
+
+--=20
+Best Regards
+Masahiro Yamada
