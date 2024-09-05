@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C201494DB;
-	Thu,  5 Sep 2024 10:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F81494DB;
+	Thu,  5 Sep 2024 10:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530690; cv=none; b=I0Hz4OmIkd2mR7YD68Df1fXdLc0B+5gE9X8zvdFmavPeyFfZsbe4ge9yIX1JECdphuFiUhFUdY2OemeHBsHO+0XGVkzyG/3A1AUg51oGt7yzdcEE8fI8vcWs4NV022o53d6vBfWUbSpICcIF6Zx06BoRr3op53GrmFIgVstOalk=
+	t=1725530693; cv=none; b=LZlu/LOd/T50s9WefQWfKbfC7J/ljFercNtnT2wcVatPq8eIH+VVKCKfzy0O/nmiXM3fVkL5bGwWMaGmwB03vsNSdKdaMeENGhbhH2X9qiCJgkPOZS/QF6wA4A0Vb/tVF5SmzLcB59ikxPWUcFODm3ngPoQJswmuhQwE4Lfbxo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530690; c=relaxed/simple;
-	bh=TJI2wB9AYWEcxR5j0rz7Ym1GOpJfFG6rNqCYMNPBeYw=;
+	s=arc-20240116; t=1725530693; c=relaxed/simple;
+	bh=aPLu29U1T0r8kD4mUdsbD8P7POKdL6ibeV+lZA5nEuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfIpO0kaMttQFEVuqaaunPUH/dqReGDmf7bXXp6gB64UyaitLiJg8W+imPHrM+NbKJlh9S2v+K8yuEySKESUxml4bmUSg4lpx0/Xe8qRc70UFqMg/pahIngIS+Yir0c6bqZvdVLdDRi+kJ6MIFWXpXeAusBqsLETDupY8PIHVjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pg4YwfO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jyTe2sx8fRYxX6rQ8oNh6zwP6T5DBjwAL6zz/jojwsKjIEZGQNgoCsLetsoVezNJL5fu88uhXdC0DCRcJDhPpCOm1I4Tt/TcoiUYCNkbmOcuHB1rVIgmjdfL7vgcfITIs/mRjXc0bn7L9ZTw/SRSSla0XsfPuAVOGhGtCUzKIqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X83Ep1lp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pg4YwfO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C86C4CEC3;
-	Thu,  5 Sep 2024 10:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X83Ep1lp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96578C4CEC3;
+	Thu,  5 Sep 2024 10:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530689;
-	bh=TJI2wB9AYWEcxR5j0rz7Ym1GOpJfFG6rNqCYMNPBeYw=;
+	s=korg; t=1725530693;
+	bh=aPLu29U1T0r8kD4mUdsbD8P7POKdL6ibeV+lZA5nEuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pg4YwfO89ugcDDB7ex919sIcG5sZ7lMffdWrpRUOHFEmo/25LQ03YBo0SUO9X3RDw
-	 CHTPN1ms3q46adXNasgJGFc4D9+hoLVu4UWHx8T16lNk36jE7b0AVfw6o/jVRBIfvW
-	 PGFRNBLddjWnGzpByhhFp75LSO8eth9moNLbocAo=
+	b=X83Ep1lpHJHqkFfh0lE6Qw7ERQbhfGijJRJ5ecRmGqQw3GqRsYHgStwulgtPO8ZAr
+	 O31Qw5RPdZGjK2x6Np8xGAPatlKYhI0eqtGsaXfKJVYn5vLP5i0hGwL1uyAbcfGAN/
+	 qZ9RTgw5jTkEpZ0vjuh93L8MvFUmEV5tXm6N/Azs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/101] media: uvcvideo: Enforce alignment of frame and interval
-Date: Thu,  5 Sep 2024 11:42:05 +0200
-Message-ID: <20240905093719.762694800@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.1 094/101] virtio_net: Fix napi_skb_cache_put warning
+Date: Thu,  5 Sep 2024 11:42:06 +0200
+Message-ID: <20240905093719.800298913@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,68 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c8931ef55bd325052ec496f242aea7f6de47dc9c ]
+commit f8321fa75102246d7415a6af441872f6637c93ab upstream.
 
-Struct uvc_frame and interval (u32*) are packaged together on
-streaming->formats on a single contiguous allocation.
+After the commit bdacf3e34945 ("net: Use nested-BH locking for
+napi_alloc_cache.") was merged, the following warning began to appear:
 
-Right now they are allocated right after uvc_format, without taking into
-consideration their required alignment.
+	 WARNING: CPU: 5 PID: 1 at net/core/skbuff.c:1451 napi_skb_cache_put+0x82/0x4b0
 
-This is working fine because both structures have a field with a
-pointer, but it will stop working when the sizeof() of any of those
-structs is not a multiple of the sizeof(void*).
+	  __warn+0x12f/0x340
+	  napi_skb_cache_put+0x82/0x4b0
+	  napi_skb_cache_put+0x82/0x4b0
+	  report_bug+0x165/0x370
+	  handle_bug+0x3d/0x80
+	  exc_invalid_op+0x1a/0x50
+	  asm_exc_invalid_op+0x1a/0x20
+	  __free_old_xmit+0x1c8/0x510
+	  napi_skb_cache_put+0x82/0x4b0
+	  __free_old_xmit+0x1c8/0x510
+	  __free_old_xmit+0x1c8/0x510
+	  __pfx___free_old_xmit+0x10/0x10
 
-Enforce that alignment during the allocation.
+The issue arises because virtio is assuming it's running in NAPI context
+even when it's not, such as in the netpoll case.
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240404-uvc-align-v2-1-9e104b0ecfbd@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To resolve this, modify virtnet_poll_tx() to only set NAPI when budget
+is available. Same for virtnet_poll_cleantx(), which always assumed that
+it was in a NAPI context.
+
+Fixes: df133f3f9625 ("virtio_net: bulk free tx skbs")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Link: https://patch.msgid.link/20240712115325.54175-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Shivani: Modified to apply on v6.6.y]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/net/virtio_net.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 191db831d760..004511d918c6 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -666,16 +666,26 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 		goto error;
- 	}
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1638,7 +1638,7 @@ static bool is_xdp_raw_buffer_queue(stru
+ 		return false;
+ }
  
--	size = nformats * sizeof(*format) + nframes * sizeof(*frame)
-+	/*
-+	 * Allocate memory for the formats, the frames and the intervals,
-+	 * plus any required padding to guarantee that everything has the
-+	 * correct alignment.
-+	 */
-+	size = nformats * sizeof(*format);
-+	size = ALIGN(size, __alignof__(*frame)) + nframes * sizeof(*frame);
-+	size = ALIGN(size, __alignof__(*interval))
- 	     + nintervals * sizeof(*interval);
-+
- 	format = kzalloc(size, GFP_KERNEL);
--	if (format == NULL) {
-+	if (!format) {
- 		ret = -ENOMEM;
- 		goto error;
- 	}
+-static void virtnet_poll_cleantx(struct receive_queue *rq)
++static void virtnet_poll_cleantx(struct receive_queue *rq, int budget)
+ {
+ 	struct virtnet_info *vi = rq->vq->vdev->priv;
+ 	unsigned int index = vq2rxq(rq->vq);
+@@ -1656,7 +1656,7 @@ static void virtnet_poll_cleantx(struct
  
--	frame = (struct uvc_frame *)&format[nformats];
--	interval = (u32 *)&frame[nframes];
-+	frame = (void *)format + nformats * sizeof(*format);
-+	frame = PTR_ALIGN(frame, __alignof__(*frame));
-+	interval = (void *)frame + nframes * sizeof(*frame);
-+	interval = PTR_ALIGN(interval, __alignof__(*interval));
+ 		do {
+ 			virtqueue_disable_cb(sq->vq);
+-			free_old_xmit_skbs(sq, true);
++			free_old_xmit_skbs(sq, !!budget);
+ 		} while (unlikely(!virtqueue_enable_cb_delayed(sq->vq)));
  
- 	streaming->format = format;
- 	streaming->nformats = 0;
--- 
-2.43.0
-
+ 		if (sq->vq->num_free >= 2 + MAX_SKB_FRAGS)
+@@ -1675,7 +1675,7 @@ static int virtnet_poll(struct napi_stru
+ 	unsigned int received;
+ 	unsigned int xdp_xmit = 0;
+ 
+-	virtnet_poll_cleantx(rq);
++	virtnet_poll_cleantx(rq, budget);
+ 
+ 	received = virtnet_receive(rq, budget, &xdp_xmit);
+ 
+@@ -1778,7 +1778,7 @@ static int virtnet_poll_tx(struct napi_s
+ 	txq = netdev_get_tx_queue(vi->dev, index);
+ 	__netif_tx_lock(txq, raw_smp_processor_id());
+ 	virtqueue_disable_cb(sq->vq);
+-	free_old_xmit_skbs(sq, true);
++	free_old_xmit_skbs(sq, !!budget);
+ 
+ 	if (sq->vq->num_free >= 2 + MAX_SKB_FRAGS)
+ 		netif_tx_wake_queue(txq);
 
 
