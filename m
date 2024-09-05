@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AEF198832;
-	Thu,  5 Sep 2024 09:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88700194A60;
+	Thu,  5 Sep 2024 09:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529437; cv=none; b=ED49Di7mdmlynTWeFg92ZCekt9TpTYN7FwuGAu2YXXtlp5XMKftdpCPBGuFqZ/CYQxbJnPou+8W11cUcd5cSyiJXLpLLCjOtz1xHITuzpHuu2z1pNadiAuNkIsB6nuYihMWh/CXsIsMKRN9t07CsomGHRUbsu2Ubb865zj1izjM=
+	t=1725529440; cv=none; b=WD0uML4Nvf+dxevtxpUMIg14dAKAwdlFajfch8mN67AzdBtczVJlpUU93+Dk7tjdupIimkBm1UOaCKBazMfYetM9zetJvcEyhSHHFYb9F/NSoT6By3dgs8/FkPegfPEyqdfxqlTzvfqesXBB01sZP+iV/LEx9FloZEUe1/wClaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529437; c=relaxed/simple;
-	bh=APSU7dTciiAP7ByDVV5XCDpaVkdDIeufEMcHH2wdz6o=;
+	s=arc-20240116; t=1725529440; c=relaxed/simple;
+	bh=7oFF82MaUCXIDKWwI0wXfc97OvOk1ZUuecmP2OU5L8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gk/X/sAgzJl8i42ueylcYoJv4/+B/9n987Uoa6EGhH2wUqzhw2lfrvxBVu0UzlwmZlplVy+sJp6UgGgAic4Cf54yNyLrp4Eq7Ces7hwxpmKpHmCwVVdWFmOPJnRSlqIYR4vBjoE0SmB8wamaT6YVQhXUMKfp9nuru3WyR04YvjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxUWp58d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWLy6gfO72fkqbdV+1lrqMsiXU5YjJijlKma8qc+FYxrwo7jw+HtP1NT0tTn4PgppAR7NNhjj5fyMl8k5HKBJ1JipfzJTpJKhpVou9P5J2K8NnNUn4EhO6gsc68Pe3WvKUlx9xN7RVJjBezrqYXyFMVWiEwP+Rwuz8AQuNU/4Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j65EX1+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxUWp58d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C84C4CEC6;
-	Thu,  5 Sep 2024 09:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j65EX1+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60FE6C4CEC6;
+	Thu,  5 Sep 2024 09:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529436;
-	bh=APSU7dTciiAP7ByDVV5XCDpaVkdDIeufEMcHH2wdz6o=;
+	s=korg; t=1725529440;
+	bh=7oFF82MaUCXIDKWwI0wXfc97OvOk1ZUuecmP2OU5L8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxUWp58dFndZCMpsFTvZsB4ZU1bIR1TTyySO9/axR/lmtvtMuGqBW418LK17MAt9d
-	 bdVU79uc6XXm5g0EOF5NbJIegVw7rq2pdFfEu5IJ1Hu2gdCmbAAOec9QqkcWEpTlV0
-	 8UjBE66OCtJZJA7/P5HlVPvTyPmhe/PdlFAD9e2k=
+	b=j65EX1+lwRmpS1uIBv5omyMGSYaP/JYpzGIbuTyZyUMuRI5hPgnbFIMyouiwQ7fpp
+	 95kNJCp4u+qhvySOWOGHHoiluY1bI7Ec9TfmOvn0W08JbuhPDO+5ABTh2HionzphEC
+	 kfo4jgQBzI24Qj63RfqFP8aYX6JH6MF9sLLe//Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 033/184] arm64: dts: qcom: x1e80100-qcp: fix missing PCIe4 gpios
-Date: Thu,  5 Sep 2024 11:39:06 +0200
-Message-ID: <20240905093733.540925119@linuxfoundation.org>
+Subject: [PATCH 6.10 034/184] selftests: mptcp: add explicit test case for remove/readd
+Date: Thu,  5 Sep 2024 11:39:07 +0200
+Message-ID: <20240905093733.579703966@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,70 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 2ac90e4d2b6d6823ca10642ef39595ff1181c3fa ]
+[ Upstream commit b5e2fb832f48bc01d937a053e0550a1465a2f05d ]
 
-Add the missing PCIe4 perst, wake and clkreq GPIOs and pin config.
+Delete and re-create a signal endpoint and ensure that the PM
+actually deletes and re-create the subflow.
 
-Fixes: f9a9c11471da ("arm64: dts: qcom: x1e80100-qcp: Enable more support")
-Cc: stable@vger.kernel.org	# 6.9
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240722095459.27437-5-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 1c2326fcae4f ("selftests: mptcp: join: check re-adding init endp with != id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 29 +++++++++++++++++++++++
+ .../testing/selftests/net/mptcp/mptcp_join.sh | 29 +++++++++++++++++++
  1 file changed, 29 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 2cf3ea4f6e2e6..f90177a662b7d 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -469,6 +469,12 @@
- };
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index c0ba79a8ad6da..fb2d8326109ef 100755
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3626,6 +3626,35 @@ endpoint_tests()
+ 		chk_join_nr 6 6 6
+ 		chk_rm_nr 4 4
+ 	fi
++
++	# remove and re-add
++	if reset "delete re-add signal" &&
++	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
++		pm_nl_set_limits $ns1 1 1
++		pm_nl_set_limits $ns2 1 1
++		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
++		test_linkfail=4 speed=20 \
++			run_tests $ns1 $ns2 10.0.1.1 &
++		local tests_pid=$!
++
++		wait_mpj $ns2
++		pm_nl_check_endpoint "creation" \
++			$ns1 10.0.2.1 id 1 flags signal
++		chk_subflow_nr "before delete" 2
++		chk_mptcp_info subflows 1 subflows 1
++
++		pm_nl_del_endpoint $ns1 1 10.0.2.1
++		sleep 0.5
++		chk_subflow_nr "after delete" 1
++		chk_mptcp_info subflows 0 subflows 0
++
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
++		wait_mpj $ns2
++		chk_subflow_nr "after re-add" 2
++		chk_mptcp_info subflows 1 subflows 1
++		mptcp_lib_kill_wait $tests_pid
++	fi
++
+ }
  
- &pcie4 {
-+	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-0 = <&pcie4_default>;
-+	pinctrl-names = "default";
-+
- 	status = "okay";
- };
- 
-@@ -558,6 +564,29 @@
- 		bias-disable;
- 	};
- 
-+	pcie4_default: pcie4-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio147";
-+			function = "pcie4_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio146";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio148";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie6a_default: pcie6a-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio153";
+ # [$1: error message]
 -- 
 2.43.0
 
