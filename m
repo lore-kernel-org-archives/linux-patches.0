@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2821018D65E;
-	Thu,  5 Sep 2024 09:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A571155730;
+	Thu,  5 Sep 2024 09:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529581; cv=none; b=qJw8xM2GlTCQa/Ig6WAmFaXupr81lAOf/T1p4ij9VbnWimpqV6DciQCbHh3IvOdIWHwQldlVtE9VXQxMcXHw6brEw4UWr9dZB+EMA7defDgu3GbnarGRyVOGT4qLirU7bWlI5GZNdbrRRyKJyOJExqXP5J6zwGNSJTq22ZnYOq8=
+	t=1725529584; cv=none; b=k7oGla7hba9h8qZVrfaHq9roL8POVCQfWppk5Skp9Md1AH0rxtNg/v1CaSiQrC62y9dFEV+2vQEpiQoZC+6ipzI13CMipGjLZHnPs9+GrREAzBbhUtgqKUdRRBn6vgdGBlpuLM10wIPr9LTpFC+qFskrfDBw4Vn/zumZCheindE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529581; c=relaxed/simple;
-	bh=Dx5hwGxMznzgwSIFSC9VOrQOFdte3PPyaB66t1gXGqY=;
+	s=arc-20240116; t=1725529584; c=relaxed/simple;
+	bh=MCZ2P3bBJ8FjrpxLGDjAM7yrDn1kIdOj2pmrLBHkJ4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5pZs7aJGsEWYQYYT9kTYOakJMOjsbOnYheRJFoZXD32E3wLwgBiOXsB83f01SFjDsS7JsXDHV/Sumciqw/PHPCoidPMH4LtZ6uKWbPNWU9dLYNRPeMFtBRs78OO1e41eSavA/YmwXaAfz299PUGmwoNwChHEj6AnUMb0iRYJtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysDE+9kt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TwwWnmncb/ZDVjp+6gv24jYsmST9YLOvgoFUxP/iGFtayALOiVSJcXr8oG2rJA2iDPkV0eqV0CvuJ3v0gerT8vwUW4chTxTj9q01Ea77G2UsqJsDWL6IBjmWcse9h/ubMTrU7NyZsbr95CLHcJxMGkG3ktIHiDjVu2Vq3m6Eipc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGFrG11v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysDE+9kt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EC9C4CEC3;
-	Thu,  5 Sep 2024 09:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGFrG11v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733CBC4CEC3;
+	Thu,  5 Sep 2024 09:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529580;
-	bh=Dx5hwGxMznzgwSIFSC9VOrQOFdte3PPyaB66t1gXGqY=;
+	s=korg; t=1725529583;
+	bh=MCZ2P3bBJ8FjrpxLGDjAM7yrDn1kIdOj2pmrLBHkJ4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ysDE+9kt3ahGWCc7od0iS2XAl7Q59eL1MP9gAabr+YMUAvoK5JzbjQWSQeoyHitAG
-	 byV/w6NVAZUB0JMTPZOgDZklwPTChWzQvhqmAAiKMR+061dGCJGilWe0OtlTRlQIHc
-	 bHJtSvGRe8XATqrWygFqZoBMiirZ5+Jd2E0nlTIk=
+	b=mGFrG11vTVxXT2V/0uD+e2HzQxOTW/493vlVNnVbVrfpt1+5OciOfm0KZnyXppdkj
+	 +HyUwcY6QimlR/cS0e2fYg9z3je105myUg7MsWtzCaWpMPtMRwd00ywOUAYNy1ddsW
+	 R2V12r7glP1Qkvv1rUxI1Ezqwst2vaGTk3UWKyAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 078/184] drm/amd/display: Fix index may exceed array range within fpu_update_bw_bounding_box
-Date: Thu,  5 Sep 2024 11:39:51 +0200
-Message-ID: <20240905093735.286777457@linuxfoundation.org>
+Subject: [PATCH 6.10 079/184] drm/amd/amdgpu: Check tbo resource pointer
+Date: Thu,  5 Sep 2024 11:39:52 +0200
+Message-ID: <20240905093735.324517690@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -48,120 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 188fd1616ec43033cedbe343b6579e9921e2d898 ]
+[ Upstream commit 6cd2b872643bb29bba01a8ac739138db7bd79007 ]
 
-[Why]
-Coverity reports OVERRUN warning. soc.num_states could
-be 40. But array range of bw_params->clk_table.entries is 8.
+Validate tbo resource pointer, skip if NULL
 
-[How]
-Assert if soc.num_states greater than 8.
-
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c | 10 ++++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c | 10 ++++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c   | 10 ++++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c | 10 ++++++++++
- 4 files changed, 40 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c
-index e2bcd205aa93..8da97a96b1ce 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c
-@@ -304,6 +304,16 @@ void dcn302_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
- 			dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 89cf9ac6da17..13b54e00a247 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5012,7 +5012,8 @@ static int amdgpu_device_recover_vram(struct amdgpu_device *adev)
+ 		shadow = vmbo->shadow;
  
-+		/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+		 * MAX_NUM_DPM_LVL is 8.
-+		 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+		 * DC__VOLTAGE_STATES is 40.
-+		 */
-+		if (num_states > MAX_NUM_DPM_LVL) {
-+			ASSERT(0);
-+			return;
-+		}
-+
- 		dcn3_02_soc.num_states = num_states;
- 		for (i = 0; i < dcn3_02_soc.num_states; i++) {
- 			dcn3_02_soc.clock_limits[i].state = i;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c
-index 3f02bb806d42..e968870a4b81 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c
-@@ -310,6 +310,16 @@ void dcn303_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
- 			dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 		}
- 
-+		/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+		 * MAX_NUM_DPM_LVL is 8.
-+		 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+		 * DC__VOLTAGE_STATES is 40.
-+		 */
-+		if (num_states > MAX_NUM_DPM_LVL) {
-+			ASSERT(0);
-+			return;
-+		}
-+
- 		dcn3_03_soc.num_states = num_states;
- 		for (i = 0; i < dcn3_03_soc.num_states; i++) {
- 			dcn3_03_soc.clock_limits[i].state = i;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index f6fe0a64beac..ebcf5ece209a 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -3232,6 +3232,16 @@ void dcn32_update_bw_bounding_box_fpu(struct dc *dc, struct clk_bw_params *bw_pa
- 				dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 			}
- 
-+			/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+			 * MAX_NUM_DPM_LVL is 8.
-+			 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+			 * DC__VOLTAGE_STATES is 40.
-+			 */
-+			if (num_states > MAX_NUM_DPM_LVL) {
-+				ASSERT(0);
-+				return;
-+			}
-+
- 			dcn3_2_soc.num_states = num_states;
- 			for (i = 0; i < dcn3_2_soc.num_states; i++) {
- 				dcn3_2_soc.clock_limits[i].state = i;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-index ff4d795c7966..4297402bdab3 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-@@ -803,6 +803,16 @@ void dcn321_update_bw_bounding_box_fpu(struct dc *dc, struct clk_bw_params *bw_p
- 			dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 		}
- 
-+		/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+		 * MAX_NUM_DPM_LVL is 8.
-+		 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+		 * DC__VOLTAGE_STATES is 40.
-+		 */
-+		if (num_states > MAX_NUM_DPM_LVL) {
-+			ASSERT(0);
-+			return;
-+		}
-+
- 		dcn3_21_soc.num_states = num_states;
- 		for (i = 0; i < dcn3_21_soc.num_states; i++) {
- 			dcn3_21_soc.clock_limits[i].state = i;
+ 		/* No need to recover an evicted BO */
+-		if (shadow->tbo.resource->mem_type != TTM_PL_TT ||
++		if (!shadow->tbo.resource ||
++		    shadow->tbo.resource->mem_type != TTM_PL_TT ||
+ 		    shadow->tbo.resource->start == AMDGPU_BO_INVALID_OFFSET ||
+ 		    shadow->parent->tbo.resource->mem_type != TTM_PL_VRAM)
+ 			continue;
 -- 
 2.43.0
 
