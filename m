@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE371494DB;
-	Thu,  5 Sep 2024 10:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41384197A92;
+	Thu,  5 Sep 2024 10:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530468; cv=none; b=QhSlwEKa46q2KlUV+xwsFb/XyXzuS1iHjRqI6WwMRvoz0xEeyXzRx15V5jp11NTfLzkgYC4FmDGgIQD+4EwKKUhHwi4zOt16aiLc1hzJW08QTLcL4ZK9sa6Y02WYM6NX0XtaIxSADxsoS7sM/tZKQctgHEosfrfVRB4EvXgIevo=
+	t=1725530471; cv=none; b=GSl7ezaeE5eEM/sCh155l3DtkwDJvJlauyK3ILgTvLXtyYQ5Hn6w1EET5gq8kzZJHHxoGOQSrxAuzpYIcy1eKL5dRWOCXzZMZlUT9A8R7upN/666WUyBL252+/PYiyD89jdr/ff2NJFBUF4KW/4UsNzJb0KlSPa+PA90Gily6y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530468; c=relaxed/simple;
-	bh=TOP/n3ZNtGdBoYjw2otadeZqm3ukyL+HeqdQ3XuKGWk=;
+	s=arc-20240116; t=1725530471; c=relaxed/simple;
+	bh=V9EnYM7UkZsxi0OAbCLbjlnme9v42l9cenCvBKvunJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AKrNeoxgtm8CKo8+v1mY/MA/PN6ln4jIZ4fLL8Cp/1AWXHtmW7+sIahYGJFUbk8VB4MWbnxiSnCj2lAjJaPDyZiISzaXCr6DniN6NjEn7yirfrsVdUPe4SNg63OulM/yu17PfMdz9bVggFHSVSC6H3B8Ud7I25zylGTRqHHnotE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZEclqHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpsYnLCr8fIhMpftNDkcV/31Wg1PwIAndpuqcAL8hhG8roXAkcbQOYPUIurApb34UemCP9CXOjD3lq2QqhKQth54z2Gr6YbKk6Eryaq3LGf8qBW+SYMl49t7a9FzhJ04B5O0J8pfZdm1CuNNHMG9YwQNzRcGtQ1gMkTU2zcBkxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqIpGB4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZEclqHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8E6C4CEC3;
-	Thu,  5 Sep 2024 10:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqIpGB4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D54C4CEC3;
+	Thu,  5 Sep 2024 10:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530468;
-	bh=TOP/n3ZNtGdBoYjw2otadeZqm3ukyL+HeqdQ3XuKGWk=;
+	s=korg; t=1725530471;
+	bh=V9EnYM7UkZsxi0OAbCLbjlnme9v42l9cenCvBKvunJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZEclqHWHmRfwRild5v2I8sCXZyo5AiHhGwrja2Qgb7iArWlEMuoSK/fUkBkk/LUH
-	 M6ViLSoXoK7FLHjBIpR06yan5NWRrzAU5ti0S54pw99hrSNHRtDQQmpOd/tdlH6C+w
-	 WFmEDst6A6Uo4aZPaqa0L+INtTYQrsbRs7to4HJQ=
+	b=DqIpGB4C1cd0X0bSNwFTRclYb7+2Ug8uGBq+pZqYXVUKtOah+YLqTe+5jYFSzdXCY
+	 54e8YIGLdQBHOBR0FUSt9wObH37ff698N6pIdKa/WwdQD/TNtIGpq84ipO4k5OZlxe
+	 wTGnJKVB+HFcnOxMiViL0/fEicD3Rs23DU09bNpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Tim Huang <Tim.Huang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/101] drm/amd/pm: fix uninitialized variable warning for smu8_hwmgr
-Date: Thu,  5 Sep 2024 11:41:06 +0200
-Message-ID: <20240905093717.463096940@linuxfoundation.org>
+Subject: [PATCH 6.1 035/101] drm/amd/pm: fix warning using uninitialized value of max_vid_step
+Date: Thu,  5 Sep 2024 11:41:07 +0200
+Message-ID: <20240905093717.500769882@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -46,89 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 86df36b934640866eb249a4488abb148b985a0d9 ]
+[ Upstream commit 17e3bea65cdc453695b2fe4ff26d25d17f5339e9 ]
 
-Clear warnings that using uninitialized value level when fails
-to get the value from SMU.
+Check the return of pp_atomfwctrl_get_Voltage_table_v4
+as it may fail to initialize max_vid_step
+V2: change the check condition (Tim Huang)
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c   | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-index eb744401e056..7e1197420873 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-@@ -584,6 +584,7 @@ static int smu8_init_uvd_limit(struct pp_hwmgr *hwmgr)
- 				hwmgr->dyn_state.uvd_clock_voltage_dependency_table;
- 	unsigned long clock = 0;
- 	uint32_t level;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+index f8333410cc3e..d2ecf0244fa5 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -2575,8 +2575,11 @@ static int vega10_init_smc_table(struct pp_hwmgr *hwmgr)
+ 		}
+ 	}
  
- 	if (NULL == table || table->count <= 0)
- 		return -EINVAL;
-@@ -591,7 +592,9 @@ static int smu8_init_uvd_limit(struct pp_hwmgr *hwmgr)
- 	data->uvd_dpm.soft_min_clk = 0;
- 	data->uvd_dpm.hard_min_clk = 0;
+-	pp_atomfwctrl_get_voltage_table_v4(hwmgr, VOLTAGE_TYPE_VDDC,
++	result = pp_atomfwctrl_get_voltage_table_v4(hwmgr, VOLTAGE_TYPE_VDDC,
+ 			VOLTAGE_OBJ_SVID2,  &voltage_table);
++	PP_ASSERT_WITH_CODE(!result,
++			"Failed to get voltage table!",
++			return result);
+ 	pp_table->MaxVidStep = voltage_table.max_vid_step;
  
--	smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetMaxUvdLevel, &level);
-+	ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetMaxUvdLevel, &level);
-+	if (ret)
-+		return ret;
- 
- 	if (level < table->count)
- 		clock = table->entries[level].vclk;
-@@ -611,6 +614,7 @@ static int smu8_init_vce_limit(struct pp_hwmgr *hwmgr)
- 				hwmgr->dyn_state.vce_clock_voltage_dependency_table;
- 	unsigned long clock = 0;
- 	uint32_t level;
-+	int ret;
- 
- 	if (NULL == table || table->count <= 0)
- 		return -EINVAL;
-@@ -618,7 +622,9 @@ static int smu8_init_vce_limit(struct pp_hwmgr *hwmgr)
- 	data->vce_dpm.soft_min_clk = 0;
- 	data->vce_dpm.hard_min_clk = 0;
- 
--	smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetMaxEclkLevel, &level);
-+	ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetMaxEclkLevel, &level);
-+	if (ret)
-+		return ret;
- 
- 	if (level < table->count)
- 		clock = table->entries[level].ecclk;
-@@ -638,6 +644,7 @@ static int smu8_init_acp_limit(struct pp_hwmgr *hwmgr)
- 				hwmgr->dyn_state.acp_clock_voltage_dependency_table;
- 	unsigned long clock = 0;
- 	uint32_t level;
-+	int ret;
- 
- 	if (NULL == table || table->count <= 0)
- 		return -EINVAL;
-@@ -645,7 +652,9 @@ static int smu8_init_acp_limit(struct pp_hwmgr *hwmgr)
- 	data->acp_dpm.soft_min_clk = 0;
- 	data->acp_dpm.hard_min_clk = 0;
- 
--	smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetMaxAclkLevel, &level);
-+	ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_GetMaxAclkLevel, &level);
-+	if (ret)
-+		return ret;
- 
- 	if (level < table->count)
- 		clock = table->entries[level].acpclk;
+ 	pp_table->GfxDpmVoltageMode =
 -- 
 2.43.0
 
