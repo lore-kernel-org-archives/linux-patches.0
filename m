@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53BA198E89;
-	Thu,  5 Sep 2024 09:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31280194A45;
+	Thu,  5 Sep 2024 09:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529860; cv=none; b=ZZUYHVVzwmndmJMTSYzfv4zICYJR9ZkNR/P9IukaELqJ5nxsqjaDDI2nIsN6veR+fuv5iwCXZM5h43+p978d771Cvj4eQ/WkALYdAnAchE+dx5Hp4unZvI8DeBpsnVOwDBaXLoSxmapMZdkroIBkydG3MWbja2Nh6sm8jjjQVRg=
+	t=1725529863; cv=none; b=uYKVxgr6nGNS6PianXYqOqyZ6l3mYVlmR3LXbhWrQPUfjb9uGHW5ynWrVAo6+Xl/8tsX17Q97rCDRBURicnvz6mGl0Qft8d1Pv7Z7XJr/jESmGyNqUb8c44kmZYLZHp6Lao/apVyd/KsW9AXHRPAS+uIIZW7pYaEf/lzuWryk4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529860; c=relaxed/simple;
-	bh=QtbXbzpApyLggfDm34oQ9L85KtN6ARgHle8x5KqX1p4=;
+	s=arc-20240116; t=1725529863; c=relaxed/simple;
+	bh=8pbL2o1RADaQQx+35Me4kMZBy6EHb0nUQuqDSq3h2b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eiCRel/e8FS2jJ7nDATBtVyvLNhVk26hxMIBhSYVw/BKqxW5LpdN4pigh0JCoIWEbHWTCpilfqtEKMkiN1s5Z1UlFcwJCLoCBWwdW79QGpL1Hvdu+eZGBnFI61mymmv2RvQH5M3NJO+0MDSsyoiR0elZ3zE6caM4/4MTSSZ3VJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmMDLwhe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eVr57tTe9AcS73eFbgAV9/Cd+xy7DuXR1W/eJLX5HbxcmpgS0lEOCIDw9zdaVpyYyrcO/WGwQ/ZzdhWdvRi0IV5yTXKEvbN+uCXJfRTDPfxIUkmHW2/jJl3/vGBZbkjijriy9YNDUXbbOOPlwztmhZoclIHPX+9i2Iml7d5NNwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5B7zs5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmMDLwhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5518CC4CEC6;
-	Thu,  5 Sep 2024 09:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5B7zs5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65886C4CEC3;
+	Thu,  5 Sep 2024 09:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529859;
-	bh=QtbXbzpApyLggfDm34oQ9L85KtN6ARgHle8x5KqX1p4=;
+	s=korg; t=1725529862;
+	bh=8pbL2o1RADaQQx+35Me4kMZBy6EHb0nUQuqDSq3h2b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmMDLwheTQVCR+XUwReaND6kllriAWbjWpImJYvYmQBwklhgYCu9Y/MgsoHNF7rKC
-	 dryt9szFlfDE8kgRKdaizl9dACaXKvU825E1tLWS0G+RGwMXbC4oS9z6LgqPPddy49
-	 Ke/yKFx7Pec79mLjZKb3In7s015SulEdflNJLMmU=
+	b=j5B7zs5Oef4RU5svOtKM7h07eCursZjxqNAwQpe3LcRWm6E+jDCy23XCxMgiLYgSk
+	 dtF3BXs8SyrwftqJxqaKhFB9T4THLyPh+9DQLWYinZKf/R9/Yt/zEhaAt3YagrTuVR
+	 WENYLAIAOGqpqZ+RZRCzdLWrhY/5pJhP7+jijuXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Bob Zhou <bob.zhou@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 157/184] hwmon: (k10temp) Check return value of amd_smn_read()
-Date: Thu,  5 Sep 2024 11:41:10 +0200
-Message-ID: <20240905093738.474175990@linuxfoundation.org>
+Subject: [PATCH 6.10 166/184] drm/amdgpu: fix overflowed constant warning in mmhub_set_clockgating()
+Date: Thu,  5 Sep 2024 11:41:19 +0200
+Message-ID: <20240905093738.819827631@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -47,127 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Bob Zhou <bob.zhou@amd.com>
 
-[ Upstream commit c2d79cc5455c891de6c93e1e0c73d806e299c54f ]
+[ Upstream commit be6a69b21a3517122ba6cf7ab8f62f4803637dbe ]
 
-Check the return value of amd_smn_read() before saving a value. This
-ensures invalid values aren't saved or used.
+To fix potential overflowed constant warning, modify the variables to u32
+for getting the return value of RREG32_SOC15().
 
-There are three cases here with slightly different behavior:
-
-1) read_tempreg_nb_zen():
-	This is a function pointer which does not include a return code.
-	In this case, set the register value to 0 on failure. This
-	enforces Read-as-Zero behavior.
-
-2) k10temp_read_temp():
-	This function does have return codes, so return the error code
-	from the failed register read. Continued operation is not
-	necessary, since there is no valid data from the register.
-	Furthermore, if the register value was set to 0, then the
-	following operation would underflow.
-
-3) k10temp_get_ccd_support():
-	This function reads the same register from multiple CCD
-	instances in a loop. And a bitmask is formed if a specific bit
-	is set in each register instance. The loop should continue on a
-	failed register read, skipping the bit check.
-
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240606-fix-smn-bad-read-v4-3-ffde21931c3f@amd.com
+Signed-off-by: Bob Zhou <bob.zhou@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/k10temp.c | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v1_7.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_3.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v9_4.c | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
-index 8092312c0a87..6cad35e7f182 100644
---- a/drivers/hwmon/k10temp.c
-+++ b/drivers/hwmon/k10temp.c
-@@ -153,8 +153,9 @@ static void read_tempreg_nb_f15(struct pci_dev *pdev, u32 *regval)
+diff --git a/drivers/gpu/drm/amd/amdgpu/mmhub_v1_7.c b/drivers/gpu/drm/amd/amdgpu/mmhub_v1_7.c
+index 92432cd2c0c7..9689e2b5d4e5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v1_7.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v1_7.c
+@@ -544,7 +544,7 @@ static int mmhub_v1_7_set_clockgating(struct amdgpu_device *adev,
  
- static void read_tempreg_nb_zen(struct pci_dev *pdev, u32 *regval)
+ static void mmhub_v1_7_get_clockgating(struct amdgpu_device *adev, u64 *flags)
  {
--	amd_smn_read(amd_pci_dev_to_node_id(pdev),
--		     ZEN_REPORTED_TEMP_CTRL_BASE, regval);
-+	if (amd_smn_read(amd_pci_dev_to_node_id(pdev),
-+			 ZEN_REPORTED_TEMP_CTRL_BASE, regval))
-+		*regval = 0;
- }
+-	int data, data1;
++	u32 data, data1;
  
- static long get_raw_temp(struct k10temp_data *data)
-@@ -205,6 +206,7 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
- 			     long *val)
+ 	if (amdgpu_sriov_vf(adev))
+ 		*flags = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
+index 02fd45261399..a0cc8e218ca1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
+@@ -671,7 +671,7 @@ static int mmhub_v2_0_set_clockgating(struct amdgpu_device *adev,
+ 
+ static void mmhub_v2_0_get_clockgating(struct amdgpu_device *adev, u64 *flags)
  {
- 	struct k10temp_data *data = dev_get_drvdata(dev);
-+	int ret = -EOPNOTSUPP;
- 	u32 regval;
+-	int data, data1;
++	u32 data, data1;
  
- 	switch (attr) {
-@@ -221,13 +223,17 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
- 				*val = 0;
- 			break;
- 		case 2 ... 13:		/* Tccd{1-12} */
--			amd_smn_read(amd_pci_dev_to_node_id(data->pdev),
--				     ZEN_CCD_TEMP(data->ccd_offset, channel - 2),
--						  &regval);
-+			ret = amd_smn_read(amd_pci_dev_to_node_id(data->pdev),
-+					   ZEN_CCD_TEMP(data->ccd_offset, channel - 2),
-+					   &regval);
-+
-+			if (ret)
-+				return ret;
-+
- 			*val = (regval & ZEN_CCD_TEMP_MASK) * 125 - 49000;
- 			break;
- 		default:
--			return -EOPNOTSUPP;
-+			return ret;
- 		}
- 		break;
- 	case hwmon_temp_max:
-@@ -243,7 +249,7 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
- 			- ((regval >> 24) & 0xf)) * 500 + 52000;
- 		break;
- 	default:
--		return -EOPNOTSUPP;
-+		return ret;
- 	}
- 	return 0;
- }
-@@ -381,8 +387,20 @@ static void k10temp_get_ccd_support(struct pci_dev *pdev,
- 	int i;
+ 	if (amdgpu_sriov_vf(adev))
+ 		*flags = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_3.c b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_3.c
+index 238ea40c2450..d7c317825497 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_3.c
+@@ -560,7 +560,7 @@ static int mmhub_v3_3_set_clockgating(struct amdgpu_device *adev,
  
- 	for (i = 0; i < limit; i++) {
--		amd_smn_read(amd_pci_dev_to_node_id(pdev),
--			     ZEN_CCD_TEMP(data->ccd_offset, i), &regval);
-+		/*
-+		 * Ignore inaccessible CCDs.
-+		 *
-+		 * Some systems will return a register value of 0, and the TEMP_VALID
-+		 * bit check below will naturally fail.
-+		 *
-+		 * Other systems will return a PCI_ERROR_RESPONSE (0xFFFFFFFF) for
-+		 * the register value. And this will incorrectly pass the TEMP_VALID
-+		 * bit check.
-+		 */
-+		if (amd_smn_read(amd_pci_dev_to_node_id(pdev),
-+				 ZEN_CCD_TEMP(data->ccd_offset, i), &regval))
-+			continue;
-+
- 		if (regval & ZEN_CCD_TEMP_VALID)
- 			data->show_temp |= BIT(TCCD_BIT(i));
- 	}
+ static void mmhub_v3_3_get_clockgating(struct amdgpu_device *adev, u64 *flags)
+ {
+-	int data;
++	u32 data;
+ 
+ 	if (amdgpu_sriov_vf(adev))
+ 		*flags = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/mmhub_v9_4.c b/drivers/gpu/drm/amd/amdgpu/mmhub_v9_4.c
+index 1b7da4aff2b8..ff1b58e44689 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v9_4.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v9_4.c
+@@ -657,7 +657,7 @@ static int mmhub_v9_4_set_clockgating(struct amdgpu_device *adev,
+ 
+ static void mmhub_v9_4_get_clockgating(struct amdgpu_device *adev, u64 *flags)
+ {
+-	int data, data1;
++	u32 data, data1;
+ 
+ 	if (amdgpu_sriov_vf(adev))
+ 		*flags = 0;
 -- 
 2.43.0
 
