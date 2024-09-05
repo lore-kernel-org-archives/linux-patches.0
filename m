@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A266E14A08E;
-	Thu,  5 Sep 2024 09:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F64714A08E;
+	Thu,  5 Sep 2024 09:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529648; cv=none; b=YPLMe52nYnt6wVaP20nLZksOqVNlzlP4CyRIfaCn6n42+tBt48JA4dUaYbk0LwO5fSP/o3E/9Y3PNshq1Lf8MCIgFGXqqkSrpQsp3UwNTZXIqcQndMJxBAdkouMZpimKU606opVPMonbfF2BddphmGAKats9zwN/XIxD0TSS3s4=
+	t=1725529651; cv=none; b=EL0H6eDGi/tPR5YZhJGZkejhWDx9wpsfhffxCnoAGhS4Y/X8Qth/GXPVOIJTk0rbr1+RzLIOFhv2mGTWFRBsNUaTdi/lILNlrbOB1Yz09Cc3De9Jj89xpgYzcXg8OrtGcoZ10OpQIr4GWB7sO1MM5OAFIjCCVXXe0xZeiSZWmRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529648; c=relaxed/simple;
-	bh=b/O/VayLELR+U3J5jK7dlrsRrv6Q6Rrp0bnbYT00yyU=;
+	s=arc-20240116; t=1725529651; c=relaxed/simple;
+	bh=3g6SSVifSrTM/TpZnnsrLZ4UVBAILyUTGj1Xm9YAJHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovH2J0tzuvEBZcqpP5xtBdBfaVUeSZykuHqloJ0DHY8Ibx0Usdf71obdS27erma7zrl4u+EVLEtmugagPQX469qxq1KmpRpgxqLYs/L+QEOBFiJ6zZkmfmrfpIGQQS3dWnuYFlf3WNrNnMgsm2XjhmVf3OGPMyrzxPFWfBu9QXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yd1YeiKR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffd+ASywR2b6iqSDXie1vIRKrOG+HhXHoRelW1Hr3q7y2Vkw2PL1uH1tpFzmx1Py9XWNV2VkM5Tj2OWTVbuAZFlzeq1K4mze7iKY/DD8acajwR1YqibRzr6h/0F1OsNKApUxaxo+sqXw13EP9A+EXP5i7ERH06FMsTifGlM4w24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7qr6h+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yd1YeiKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A67C4CEC3;
-	Thu,  5 Sep 2024 09:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7qr6h+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED35C4CEC3;
+	Thu,  5 Sep 2024 09:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529648;
-	bh=b/O/VayLELR+U3J5jK7dlrsRrv6Q6Rrp0bnbYT00yyU=;
+	s=korg; t=1725529651;
+	bh=3g6SSVifSrTM/TpZnnsrLZ4UVBAILyUTGj1Xm9YAJHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yd1YeiKRgNf4GBzXzz5rHFOQV2KTaNndXBMmVxeox+AlQirZEXNUyuebtiLGzNjem
-	 OIRcq458o8NXEDDqbb0oWTIEyvmCilGU4wNq7JypuRA3WhNAImZqK2lUbYWb2O3WPM
-	 jNIGOiZLk+L8VbR2s0I7t31ltrqSsKS/aDpKtKUQ=
+	b=R7qr6h+epI6zV/BIgSYBPUn7Ylzb99Hzpf1oxT9PZnH5YuPlwzmldYHN4UYPMN4DK
+	 IXdFsSOgXcwM/qt95nLmY9+sBoRhDzMhNpMTPKAG2JYfis0hcuFzVvA6ka9lNMmCFP
+	 4NsryAUH8WMhxtl/JUPTmTwtHD97yOcWfCWHFi/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 100/184] drm/amdgpu/pm: Check input value for CUSTOM profile mode setting on legacy SOCs
-Date: Thu,  5 Sep 2024 11:40:13 +0200
-Message-ID: <20240905093736.142347266@linuxfoundation.org>
+Subject: [PATCH 6.10 101/184] drm/amdgpu/pm: Check input value for power profile setting on smu11, smu13 and smu14
+Date: Thu,  5 Sep 2024 11:40:14 +0200
+Message-ID: <20240905093736.180594335@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,60 +54,159 @@ Content-Transfer-Encoding: 8bit
 
 From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit df0a9bd92fbbd3fcafcb2bce6463c9228a3e6868 ]
+[ Upstream commit adb9de4dd207fb1264ea70b9eacab9f70ee4707a ]
 
-Check the input value for CUSTOM profile mode setting on legacy
-SOCs. Otherwise we may use uninitalized value of input[]
+Check the input value for CUSTOM profile mode setting on smu 11,
+smu13 and smu14. Otherwise we use uninitialized value of input[]
 
 Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
 Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 2 +-
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c | 8 ++++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c       | 5 +++++
+ drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c         | 4 ++++
+ drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c | 4 ++++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c    | 5 +++++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c    | 4 ++++
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c    | 5 +++++
+ 6 files changed, 27 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index f1c369945ac5..bc27a70a1224 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5641,7 +5641,7 @@ static int smu7_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, uint
- 	mode = input[size];
- 	switch (mode) {
- 	case PP_SMC_POWER_PROFILE_CUSTOM:
--		if (size < 8 && size != 0)
-+		if (size != 8 && size != 0)
- 			return -EINVAL;
- 		/* If only CUSTOM is passed in, use the saved values. Check
- 		 * that we actually have a CUSTOM profile by ensuring that
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-index bf1b829f9d68..baf251fe5d82 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-@@ -4102,9 +4102,11 @@ static int vega20_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
- 		struct vega20_hwmgr *data =
- 			(struct vega20_hwmgr *)(hwmgr->backend);
--		if (size == 0 && !data->is_custom_profile_set)
-+
-+		if (size != 10 && size != 0)
- 			return -EINVAL;
--		if (size < 10 && size != 0)
-+
-+		if (size == 0 && !data->is_custom_profile_set)
- 			return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+index 6d334a2aff67..623f6052f97e 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+@@ -1416,6 +1416,9 @@ static int arcturus_set_power_profile_mode(struct smu_context *smu,
  
- 		result = vega20_get_activity_monitor_coeff(hwmgr,
-@@ -4166,6 +4168,8 @@ static int vega20_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 			activity_monitor.Fclk_PD_Data_error_coeff = input[8];
- 			activity_monitor.Fclk_PD_Data_error_rate_coeff = input[9];
+ 	if ((profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) &&
+ 	     (smu->smc_fw_version >= 0x360d00)) {
++		if (size != 10)
++			return -EINVAL;
++
+ 		ret = smu_cmn_update_table(smu,
+ 				       SMU_TABLE_ACTIVITY_MONITOR_COEFF,
+ 				       WORKLOAD_PPLIB_CUSTOM_BIT,
+@@ -1449,6 +1452,8 @@ static int arcturus_set_power_profile_mode(struct smu_context *smu,
+ 			activity_monitor.Mem_PD_Data_error_coeff = input[8];
+ 			activity_monitor.Mem_PD_Data_error_rate_coeff = input[9];
  			break;
 +		default:
 +			return -EINVAL;
  		}
  
- 		result = vega20_set_activity_monitor_coeff(hwmgr,
+ 		ret = smu_cmn_update_table(smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
+index c06e0d6e3017..01039cdd456b 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
+@@ -2021,6 +2021,8 @@ static int navi10_set_power_profile_mode(struct smu_context *smu, long *input, u
+ 	}
+ 
+ 	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
++		if (size != 10)
++			return -EINVAL;
+ 
+ 		ret = smu_cmn_update_table(smu,
+ 				       SMU_TABLE_ACTIVITY_MONITOR_COEFF, WORKLOAD_PPLIB_CUSTOM_BIT,
+@@ -2064,6 +2066,8 @@ static int navi10_set_power_profile_mode(struct smu_context *smu, long *input, u
+ 			activity_monitor.Mem_PD_Data_error_coeff = input[8];
+ 			activity_monitor.Mem_PD_Data_error_rate_coeff = input[9];
+ 			break;
++		default:
++			return -EINVAL;
+ 		}
+ 
+ 		ret = smu_cmn_update_table(smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+index e426f457a017..d5a21d7836cc 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -1722,6 +1722,8 @@ static int sienna_cichlid_set_power_profile_mode(struct smu_context *smu, long *
+ 	}
+ 
+ 	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
++		if (size != 10)
++			return -EINVAL;
+ 
+ 		ret = smu_cmn_update_table(smu,
+ 				       SMU_TABLE_ACTIVITY_MONITOR_COEFF, WORKLOAD_PPLIB_CUSTOM_BIT,
+@@ -1765,6 +1767,8 @@ static int sienna_cichlid_set_power_profile_mode(struct smu_context *smu, long *
+ 			activity_monitor->Mem_PD_Data_error_coeff = input[8];
+ 			activity_monitor->Mem_PD_Data_error_rate_coeff = input[9];
+ 			break;
++		default:
++			return -EINVAL;
+ 		}
+ 
+ 		ret = smu_cmn_update_table(smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index 1e09d5f2d82f..f7e756ca36dc 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2495,6 +2495,9 @@ static int smu_v13_0_0_set_power_profile_mode(struct smu_context *smu,
+ 	}
+ 
+ 	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
++		if (size != 9)
++			return -EINVAL;
++
+ 		ret = smu_cmn_update_table(smu,
+ 					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
+ 					   WORKLOAD_PPLIB_CUSTOM_BIT,
+@@ -2526,6 +2529,8 @@ static int smu_v13_0_0_set_power_profile_mode(struct smu_context *smu,
+ 			activity_monitor->Fclk_PD_Data_error_coeff = input[7];
+ 			activity_monitor->Fclk_PD_Data_error_rate_coeff = input[8];
+ 			break;
++		default:
++			return -EINVAL;
+ 		}
+ 
+ 		ret = smu_cmn_update_table(smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+index e996a0a4d33e..4f98869e0284 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2450,6 +2450,8 @@ static int smu_v13_0_7_set_power_profile_mode(struct smu_context *smu, long *inp
+ 	}
+ 
+ 	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
++		if (size != 8)
++			return -EINVAL;
+ 
+ 		ret = smu_cmn_update_table(smu,
+ 				       SMU_TABLE_ACTIVITY_MONITOR_COEFF, WORKLOAD_PPLIB_CUSTOM_BIT,
+@@ -2478,6 +2480,8 @@ static int smu_v13_0_7_set_power_profile_mode(struct smu_context *smu, long *inp
+ 			activity_monitor->Fclk_MinActiveFreq = input[6];
+ 			activity_monitor->Fclk_BoosterFreq = input[7];
+ 			break;
++		default:
++			return -EINVAL;
+ 		}
+ 
+ 		ret = smu_cmn_update_table(smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+index 90703f4542ab..06b65159f7b4 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -1364,6 +1364,9 @@ static int smu_v14_0_2_set_power_profile_mode(struct smu_context *smu,
+ 	}
+ 
+ 	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
++		if (size != 9)
++			return -EINVAL;
++
+ 		ret = smu_cmn_update_table(smu,
+ 					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
+ 					   WORKLOAD_PPLIB_CUSTOM_BIT,
+@@ -1395,6 +1398,8 @@ static int smu_v14_0_2_set_power_profile_mode(struct smu_context *smu,
+ 			activity_monitor->Fclk_PD_Data_error_coeff = input[7];
+ 			activity_monitor->Fclk_PD_Data_error_rate_coeff = input[8];
+ 			break;
++		default:
++			return -EINVAL;
+ 		}
+ 
+ 		ret = smu_cmn_update_table(smu,
 -- 
 2.43.0
 
