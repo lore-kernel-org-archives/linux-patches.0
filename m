@@ -1,55 +1,55 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300F013AA2B
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 08:19:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7EC1990A3
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 09:27:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725524372; cv=none; b=JB3hIbet/ILc9aCPV8WaIvwjWGt2yvh0bv5dFwhUNDqik/fyFAtFn29AEaP6jAxm2aOYogj+fFcGu45fNCjfTP2FDZAxNU7fkpv5ve4MfvZcjAbfRfVYdSlNeF/zlC0facBJWGC0O5sn5EaDt/4YWlaKTE2b0wV3/6P1gev5gsQ=
+	t=1725528453; cv=none; b=TW6q2K7/jLsR2SImQqhdBdbvg1fas37wN7JpP3kviLErbAi2hUs/WVF01UKGIMTyYC6JAQzIj2UvtJQ+nGlLz0qNYzvFbSWjqzbjKly1bu7MljnVY+Ix/m1edUzOj69cByQb1XoZkCKAPfH+QdprrrVMDltvfsF4UYWGt9dLLeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725524372; c=relaxed/simple;
-	bh=+BWzxJkQFe8ihuC1pXeT6ySQPYwRlKg+/UwNcRKMcxU=;
+	s=arc-20240116; t=1725528453; c=relaxed/simple;
+	bh=sAZMwktIK3YKRAZVnZju0CX7HpP63pX1nZYVPNJfOVU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DdqRdHLnFdpKlTkuyojjwEqlgFiH8KISSo2qSd8603s3i6LIMvrqPqkcgceaJNwtA4dIvkAgi2uolNfY07Qadgg2eU8VKyHQ4V0r7dET6pyT1VxA2UD7YE4xx9hCWgfAwGv1ZQIsvmSa5un/eVLac5+yQtndpRxCwc2XkhM+GgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ibB1QwTj; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=h1rmIYtV9T4e3j6eciDLOzNNnqIB7mZ47IQgApcYF8VV6L7e18ONu6xVjDqg5S7NtcNIWvcrpNwGk8MC52ZX27+czWh52SdjiwQl9o3sRGk6mOXbqGpxp7SXMfFgpqWZluKuOpEjLvDeLfMq+EeNy8juzc1kpOLcxSiVmYrFwOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G5K7qe43; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ibB1QwTj"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-374c5bab490so1008971f8f.1
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 01:19:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G5K7qe43"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3df171a2588so75417b6e.3
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 02:27:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725524369; x=1726129169; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1725528451; x=1726133251; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+BWzxJkQFe8ihuC1pXeT6ySQPYwRlKg+/UwNcRKMcxU=;
-        b=ibB1QwTjy5OcqNjORBgwVBPs/fnCqpfKtd1YoUo7kYdBOo+Ea4hKQ47TI7TMThCro0
-         WlDviGKg4wDkcClfoiroq6GTMOD2RHGqw7G41HgTzTr3pCPQrSAZ3sPVsxNFw4ZBwgHM
-         00BhvFsdj+lJBlW8bpe7Ls/61ZGTCl5jqZRno2zuRfW3ReeVvgukJydWWuP05PW2j7sS
-         N9SHussM7dsErBXk6Na5LDxDIf3H4oCRPovdoX5QPhnKVLjXpDj1vCHvNbZ9Zj6MgcrX
-         cUfnBO1Pue147IdMiD9uaumISO9HX9KbZHv/u+zFBJc9CAwb7Rz/wx2G1VmYkZg5q0Eo
-         nvyg==
+        bh=sAZMwktIK3YKRAZVnZju0CX7HpP63pX1nZYVPNJfOVU=;
+        b=G5K7qe43DRtp0E9XvKS5zb7hI1tXmai/eO750hBkMSo0OGkpN18Dj2d83uzAlkLLuC
+         WmBaxNb5cUWREqxBRU8pzyS/cAd2MkEGvE89IenFKxI+Fg07qbflAaBnKiAS1HwpcXSW
+         zVtBbu4L02NCmV97kasC82MN/AHTbFbkB9Yi+bWAa8QFGYwO03M9VA2+J8WwmT4gb2sd
+         G3tmlPl2VpxkRg625WmhQJ+AMKJ0xGCv/lJpdDg7hqADlnRNDPGLOb4Lflw1eystiLNZ
+         JoBnHidEPE3P4uejWv3CC85SC0TV3NdYenQGwAia2K/d83LqbJx1+KcJgjZpCtXDC6uT
+         PPeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725524369; x=1726129169;
+        d=1e100.net; s=20230601; t=1725528451; x=1726133251;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+BWzxJkQFe8ihuC1pXeT6ySQPYwRlKg+/UwNcRKMcxU=;
-        b=UPNVPLyxMA35gYqpJqgPSyVP4btcGIhvFVG6mzCTnqpcL7sKyYqpHPYstOiBo+dDtm
-         0aU57zgaEsDfLo6GbtDpCcG+8QoUE9bDKnC0XdDjeCgZXtP3lzTBk0rVI9RXcP95OeTu
-         0alJzB8Zu/u4ahndN+bv7CnENtSGfsKEK5jI/4NeEVyAKSvhLKcChBEg0BeZ8J/b3Zpe
-         QFWR2nTicUifYemiX5sHRoVY2dOhWs+M9uPIaMmFL2VW6YIXjeL3zrnIhaEpx60ELYq4
-         qv3iCfeEER7jrUFSumPH53SXm56aNrFDqG8c2XFyBWKhpTuocTxhMHZzN18BCJEkP/d3
-         r6Qg==
-X-Forwarded-Encrypted: i=1; AJvYcCUK94o6cDjiHWPX5zvQmVCzbtjV0sfbxcjbDqmPNDozBqO5XLfrohPViv77eqrTtCDMFJYQlh/W@lists.linux.dev
-X-Gm-Message-State: AOJu0YymgAEInOXVY08APTbjgcjBtAbhiegvo1bLkCyjqRNrrF+OONLX
-	B3wVeJZbyptF40tIBnWLdZ0C+tXGBB+ua7AoeGqISDfQa056xBnQcv3TwxQcM7Qp5ekwiR511rM
-	ebyjfQ90yjEcgR8iWn3y1+85V7Hi+rhP+lcw1
-X-Google-Smtp-Source: AGHT+IFNtCG98xrOuozxty2PtnqpYGo4wzWpPlBR8g6UOkhcb7n2BIa3h2BXieak9ydWu3vH4GF9VvFlUfjcTo8Ol5I=
-X-Received: by 2002:a05:6000:1a47:b0:374:cb8e:4b43 with SMTP id
- ffacd0b85a97d-3779b37c460mr2850625f8f.32.1725524369228; Thu, 05 Sep 2024
- 01:19:29 -0700 (PDT)
+        bh=sAZMwktIK3YKRAZVnZju0CX7HpP63pX1nZYVPNJfOVU=;
+        b=tQHbFwC7PQ2TFYF0UGrmF9WyYmpGteaJ+lnz0tBsIX1/BkxsKa+jx55LF2bDzGOiPv
+         P06rlMlwgrQ6eI1M4NrjyVXBph6/kaAHwLjCMDKpdfiHeOsB9T5OK8k9PiR6zlI+C17u
+         W31KWb/pSampx760FLSlxq8q/MioaRdQi2UpVCRoqNNIRJ8vQioUzf/Z9oV0yFcWBXDQ
+         FxbBJ1EKp+uJk7HRUsovSmSgD0QgrfCPv+Gh8LMdmyKA+7Rl/JhO21v14/axGkyIUFlj
+         GVFQLqWjKgVpF208w0X1NW6uSOO9tKcv5I1g9KTHT8hsp5KqdjljWNEinzf+5VhlYE88
+         Ucwg==
+X-Forwarded-Encrypted: i=1; AJvYcCXu3mIl97P3xUV+5HHW8j/I+QBmK49wsrubqeBldrINBz0tn3UjgReRrk4v7f4zE+9CBL2Oz4yE@lists.linux.dev
+X-Gm-Message-State: AOJu0YyMPzJrA4bYsy656Ik5fECMtcVjb5viFhfKvWpoWc7cxdaQo5Vt
+	ZKMh3hFse4G9muUTEdSJY0csk1n+FznCJXuWkjo0ulHqzpfYKrakSsPEC7xLQaVao4dd0sVUJiC
+	BJu0qOIZArgi9+b5tVGTJw3zHy0g=
+X-Google-Smtp-Source: AGHT+IEsl6m7kT10HtKDX5CkoIfxB0mk5gmrU2avcA2Pe0aumkMklamu40nsU3C0izBc7uVm8+BhrHiVBvDiidH5JU0=
+X-Received: by 2002:a05:6871:8701:b0:277:c0b6:2224 with SMTP id
+ 586e51a60fabf-277c0b6642fmr7015378fac.2.1725528451020; Thu, 05 Sep 2024
+ 02:27:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,15 +57,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20240904204347.168520-1-ojeda@kernel.org> <20240904204347.168520-20-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-20-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Thu, 5 Sep 2024 10:19:17 +0200
-Message-ID: <CAH5fLgjfxSOmnPsk_673qNdnpVoj1W11LD+qgKqBG8J7sm-u3g@mail.gmail.com>
+ <CAH5fLgjfxSOmnPsk_673qNdnpVoj1W11LD+qgKqBG8J7sm-u3g@mail.gmail.com>
+In-Reply-To: <CAH5fLgjfxSOmnPsk_673qNdnpVoj1W11LD+qgKqBG8J7sm-u3g@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 5 Sep 2024 11:27:18 +0200
+Message-ID: <CANiq72m9y6agZyca0dhchr64xJYjuNL3G-NVSKO6=wyU=skJ=g@mail.gmail.com>
 Subject: Re: [PATCH 19/19] rust: std_vendor: simplify `{ .. macro! .. }` with
  inner attributes
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
 	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
@@ -73,16 +74,22 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.co
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 4, 2024 at 10:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On Thu, Sep 5, 2024 at 10:19=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> w=
+rote:
 >
-> It is cleaner to have a single inner attribute rather than needing
-> several hidden lines to wrap the macro invocations.
->
-> Thus simplify them.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Are we ok with changing std_vendor?
 
-Are we ok with changing std_vendor?
+Yeah, to some degree, i.e. the code is already adapted slightly (it is
+not intended to be a 1:1 copy). As long as we keep it more or less in
+sync with upstream, it should be fine.
 
-Alice
+Even if we had to diverge, it should not be a big deal, but it would
+be nice to be able to pick up improvements if any, e.g. there is `let
+else` being used now upstream, which we could replicate (I will create
+a "good first issue" for that).
+
+(These allows/expects are not there in the original anyway, for that reason=
+)
+
+Cheers,
+Miguel
