@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322AD1925AA;
-	Thu,  5 Sep 2024 09:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3641925AA;
+	Thu,  5 Sep 2024 09:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529400; cv=none; b=AASrhwR7q+cfh2gspby/zhI2kXQErcJPBXNQwwyPWYCZhR5ffCPBCaJHjwwGrnlE45IvsvWMUj296/rFfhaX+c28bicNH160Ky9oqc7AwfcX233U9w3dPITCDRxegbgT20JWybx6V5NJ/GFqMPfFdcCssYv3aTgpCFskreD+t2E=
+	t=1725529403; cv=none; b=EJUjUEsXI7t4sAhxXVAUTzBpM8lN9soPu5ouGYd/yKx3AW/wkstforC9n5oANTYB4S7OyXp6hB3MZ3uBu+46g/VqYRmv3XSn2rU8bo8nuwrC6QgVBj5YvSVnZQFxYufaKmIqk+4HG5Pibf1h/hajD83mG3FryMuCKud3pY6IYZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529400; c=relaxed/simple;
-	bh=odAYq1r0/4b49snAdubZk8TU/7AuuAJw3tM+qH6K0+s=;
+	s=arc-20240116; t=1725529403; c=relaxed/simple;
+	bh=VIEURbEv73xR+hhmeH5v8+k5BDrqzbI1dJYSy0VcA9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeLD7jO5rjkPtlSHrG63O/lLKvLOoQzK9iHJyCGmGjyCyAsNMsPGbDuRKSZlTvePWbOyvVueNlwOCN+HrXcFENmrnHVW2nHGscR5oaWUMQ5CQByj7C6vYT+RauG5XE2G2BSe0ecIQioNKKfN4slAyL3Sed6Z1f/LDfrGXUAKITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUVfFnL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=db1tyGJQ1g1R94/KZgmsJ36BT3xqzpuo90CgPlQp235pWQjJUR+8WiJ0KoSkk9fya9q89oxDI02LoAkJGKVP+NBGFKnutmIlBBUv8BCeB09fSX/CNCtk0jes3Je3HShlfY9GgjvPOPPcvMS7rg6HWre9eMBc8DE5+PUT4JByco8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4wYhvaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUVfFnL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B901C4CEC3;
-	Thu,  5 Sep 2024 09:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4wYhvaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11DBC4CEC6;
+	Thu,  5 Sep 2024 09:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529399;
-	bh=odAYq1r0/4b49snAdubZk8TU/7AuuAJw3tM+qH6K0+s=;
+	s=korg; t=1725529403;
+	bh=VIEURbEv73xR+hhmeH5v8+k5BDrqzbI1dJYSy0VcA9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUVfFnL11pD7D7LvLuM3/QROvpG1yPfPc9ab+eGsYkrXU/B6m60sEXcqiyAxTVeVn
-	 54/Np1oIODrolee5apEumFRXb760/+6j/bOYAL4V3IlfDYwdfdVjfIjn5bGlOUpa4b
-	 knzbljqo12I3TvWvAjL+99J02XSVtZ04nsKWcb6c=
+	b=j4wYhvaRy08ccfjki89zktSQbSA59vef7hnRfuGBJSXt0wwqrbDS93xAbR0TfUsnw
+	 KAFKWMPR2KmSmgjLYGsGoXkj1OxVYnOXjZ+ZyOWZ3xAjbbUiSRxdIfklyBGWowYT8X
+	 zVz1iS3Bc1YqcV92UJr3k9t7rey9F+VeUi3McjQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michel Palleau <michel.palleau@gmail.com>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 020/184] btrfs: factor out stripe length calculation into a helper
-Date: Thu,  5 Sep 2024 11:38:53 +0200
-Message-ID: <20240905093733.035433476@linuxfoundation.org>
+Subject: [PATCH 6.10 021/184] btrfs: scrub: update last_physical after scrubbing one stripe
+Date: Thu,  5 Sep 2024 11:38:54 +0200
+Message-ID: <20240905093733.074095654@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,62 +55,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 33eb1e5db351e2c0e652d878b66b8a6d4d013135 ]
+[ Upstream commit 63447b7dd40c6a9ae8d3bb70c11f4c46731823e3 ]
 
-Currently there are two locations which need to calculate the real
-length of a stripe (which can be at the end of a chunk, and the chunk
-size may not always be 64K aligned).
+Currently sctx->stat.last_physical only got updated in the following
+cases:
 
-Factor them into a helper as we're going to have a third user soon.
+- When the last stripe of a non-RAID56 chunk is scrubbed
+  This implies a pitfall, if the last stripe is at the chunk boundary,
+  and we finished the scrub of the whole chunk, we won't update
+  last_physical at all until the next chunk.
 
+- When a P/Q stripe of a RAID56 chunk is scrubbed
+
+This leads the following two problems:
+
+- sctx->stat.last_physical is not updated for a almost full chunk
+  This is especially bad, affecting scrub resume, as the resume would
+  start from last_physical, causing unnecessary re-scrub.
+
+- "btrfs scrub status" will not report any progress for a long time
+
+Fix the problem by properly updating @last_physical after each stripe is
+scrubbed.
+
+And since we're here, for the sake of consistency, use spin lock to
+protect the update of @last_physical, just like all the remaining
+call sites touching sctx->stat.
+
+Reported-by: Michel Palleau <michel.palleau@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAMFk-+igFTv2E8svg=cQ6o3e6CrR5QwgQ3Ok9EyRaEvvthpqCQ@mail.gmail.com/
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/btrfs/scrub.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index d7caa3732f074..9712169593980 100644
+index 9712169593980..731d7d562db1a 100644
 --- a/fs/btrfs/scrub.c
 +++ b/fs/btrfs/scrub.c
-@@ -1648,14 +1648,20 @@ static void scrub_reset_stripe(struct scrub_stripe *stripe)
+@@ -1875,6 +1875,9 @@ static int flush_scrub_stripes(struct scrub_ctx *sctx)
+ 		stripe = &sctx->stripes[i];
+ 
+ 		wait_scrub_stripe_io(stripe);
++		spin_lock(&sctx->stat_lock);
++		sctx->stat.last_physical = stripe->physical + stripe_length(stripe);
++		spin_unlock(&sctx->stat_lock);
+ 		scrub_reset_stripe(stripe);
  	}
- }
- 
-+static u32 stripe_length(const struct scrub_stripe *stripe)
-+{
-+	ASSERT(stripe->bg);
-+
-+	return min(BTRFS_STRIPE_LEN,
-+		   stripe->bg->start + stripe->bg->length - stripe->logical);
-+}
-+
- static void scrub_submit_extent_sector_read(struct scrub_ctx *sctx,
- 					    struct scrub_stripe *stripe)
- {
- 	struct btrfs_fs_info *fs_info = stripe->bg->fs_info;
- 	struct btrfs_bio *bbio = NULL;
--	unsigned int nr_sectors = min(BTRFS_STRIPE_LEN, stripe->bg->start +
--				      stripe->bg->length - stripe->logical) >>
--				  fs_info->sectorsize_bits;
-+	unsigned int nr_sectors = stripe_length(stripe) >> fs_info->sectorsize_bits;
- 	u64 stripe_len = BTRFS_STRIPE_LEN;
- 	int mirror = stripe->mirror_num;
- 	int i;
-@@ -1729,9 +1735,7 @@ static void scrub_submit_initial_read(struct scrub_ctx *sctx,
- {
- 	struct btrfs_fs_info *fs_info = sctx->fs_info;
- 	struct btrfs_bio *bbio;
--	unsigned int nr_sectors = min(BTRFS_STRIPE_LEN, stripe->bg->start +
--				      stripe->bg->length - stripe->logical) >>
--				  fs_info->sectorsize_bits;
-+	unsigned int nr_sectors = stripe_length(stripe) >> fs_info->sectorsize_bits;
- 	int mirror = stripe->mirror_num;
- 
- 	ASSERT(stripe->bg);
+ out:
+@@ -2143,7 +2146,9 @@ static int scrub_simple_mirror(struct scrub_ctx *sctx,
+ 					 cur_physical, &found_logical);
+ 		if (ret > 0) {
+ 			/* No more extent, just update the accounting */
++			spin_lock(&sctx->stat_lock);
+ 			sctx->stat.last_physical = physical + logical_length;
++			spin_unlock(&sctx->stat_lock);
+ 			ret = 0;
+ 			break;
+ 		}
+@@ -2340,6 +2345,10 @@ static noinline_for_stack int scrub_stripe(struct scrub_ctx *sctx,
+ 			stripe_logical += chunk_logical;
+ 			ret = scrub_raid56_parity_stripe(sctx, scrub_dev, bg,
+ 							 map, stripe_logical);
++			spin_lock(&sctx->stat_lock);
++			sctx->stat.last_physical = min(physical + BTRFS_STRIPE_LEN,
++						       physical_end);
++			spin_unlock(&sctx->stat_lock);
+ 			if (ret)
+ 				goto out;
+ 			goto next;
 -- 
 2.43.0
 
