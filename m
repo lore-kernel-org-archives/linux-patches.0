@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFED155730;
-	Thu,  5 Sep 2024 09:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C6B155730;
+	Thu,  5 Sep 2024 09:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529590; cv=none; b=euFijqEk4sUN+ry+K+0kMkn+P1yESo/9ME3+PyN3jJngQRVhM4CTHjiwBQS67EyF7O2ovVFXUUG3Irx+EZK0WaAHZXPCKCE7MD8kOYjo2H/MUio0yjUN2tnl9mnFlFXow25+R5QSDITCYqAQG2dubdzYtiiYRBXX7jBh5nlLyls=
+	t=1725529593; cv=none; b=ANRd/cVddwRESulvoujfErkk0i45xMr1NPVmnZKbfZqFUSYZjLr4n/gYdF4dq7VuShqhyoEpqV1x/gb11r+UAty1kQnwpLC6NuCpl3qBITO1fiy1NEriV1SNm8tkwGq9mnPlPfaQ/cmIlaYqnsTSrP4V9x+YuVahAZg/8UQu65o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529590; c=relaxed/simple;
-	bh=6oyG2xG7vme2ucmIrbDfvrNumJ4YdhKegTGx7xoUQrM=;
+	s=arc-20240116; t=1725529593; c=relaxed/simple;
+	bh=8ybKEC97ns+3qvuldX909w2P8rl5WJgzqVb6HTOH208=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4CTmaCcM16ZF93McOKTKW+o29r1rHAlliXJaDwrljah2a0xH/g0KwIf/l4/LsF6W64FFysEXQo6OWG7PRLJruD1MKvJIKhYbpmI1zSslyvu5MYVBpA6lk0s4lGsgjt2R+T2r9GYdHJpF8XShwuSAnv24AWt9yjRSu0aOSSzKro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eH/H58l2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icQmosEAmbtObCW6Ac72PFidsq3LcDyd0XdQWN8KWYdHfEFX2CiFN9St6V5OUsJqLXKpscXV6huQLXI+LawZBI5k1UO85x6E3xtfinQ7ehhmfnb/92GxHm6C+/VwuIcUa0JSfwHQL58JXy2DGZuH3FDmYZjX2zBFgOzSSe8CBMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBnERAnY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eH/H58l2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C256AC4CEC3;
-	Thu,  5 Sep 2024 09:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBnERAnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAADC4CEC3;
+	Thu,  5 Sep 2024 09:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529590;
-	bh=6oyG2xG7vme2ucmIrbDfvrNumJ4YdhKegTGx7xoUQrM=;
+	s=korg; t=1725529593;
+	bh=8ybKEC97ns+3qvuldX909w2P8rl5WJgzqVb6HTOH208=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eH/H58l29Wtrm6lqe4IqpmhXwJmBHaG6JRSEzUD5U6YFJhm+PlguBBmShgqoWIad5
-	 rBfuPSXnC6CcatG8I9156UCNl6RpafHLDUWu+YVZyCWwffkoZ5FuWj0yDnv+8n0vxR
-	 vIqP07oaeQ4dwRYum5rtIhbqL07to38t5fk/XjuU=
+	b=wBnERAnYCH2qKgAfy6NkNsFmWqkSZSY48M10FHM2fJQs98m3Xi7S1QtJDwVDw8N8r
+	 7YGIT9ricq4fLLEvSEj68dnRSrbnUPcegSr3SPn0YCR89hxWBzn2mW4X0fi0TmCO2U
+	 kvDn1VR51jALFNlhyLR8skqp6pTZOSlK0LCcIR3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 081/184] drm/drm-bridge: Drop conditionals around of_node pointers
-Date: Thu,  5 Sep 2024 11:39:54 +0200
-Message-ID: <20240905093735.405735823@linuxfoundation.org>
+Subject: [PATCH 6.10 082/184] drm/amd/pm: fix uninitialized variable warnings for vangogh_ppt
+Date: Thu,  5 Sep 2024 11:39:55 +0200
+Message-ID: <20240905093735.444550889@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,45 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
+From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit ad3323a6ccb7d43bbeeaa46d5311c43d5d361fc7 ]
+[ Upstream commit b2871de6961d24d421839fbfa4aa3008ec9170d5 ]
 
-Having conditional around the of_node pointer of the drm_bridge structure
-is not necessary, since drm_bridge structure always has the of_node as its
-member.
+1. Fix a issue that using uninitialized mask to get the ultimate frequency.
+2. Check return of smu_cmn_send_smc_msg_with_param to avoid using
+uninitialized variable residency.
 
-Let's drop the conditional to get a better looks, please also note that
-this is following the already accepted commitments. see commit d8dfccde2709
-("drm/bridge: Drop conditionals around of_node pointers") for reference.
-
-Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240507180001.1358816-1-sui.jingfeng@linux.dev
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 28abe9aa99ca..584d109330ab 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -353,13 +353,8 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
- 	bridge->encoder = NULL;
- 	list_del(&bridge->chain_node);
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+index 379e44eb0019..22737b11b1bf 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+@@ -976,6 +976,18 @@ static int vangogh_get_dpm_ultimate_freq(struct smu_context *smu,
+ 		}
+ 	}
+ 	if (min) {
++		ret = vangogh_get_profiling_clk_mask(smu,
++						     AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK,
++						     NULL,
++						     NULL,
++						     &mclk_mask,
++						     &fclk_mask,
++						     &soc_mask);
++		if (ret)
++			goto failed;
++
++		vclk_mask = dclk_mask = 0;
++
+ 		switch (clk_type) {
+ 		case SMU_UCLK:
+ 		case SMU_MCLK:
+@@ -2450,6 +2462,8 @@ static u32 vangogh_set_gfxoff_residency(struct smu_context *smu, bool start)
  
--#ifdef CONFIG_OF
- 	DRM_ERROR("failed to attach bridge %pOF to encoder %s: %d\n",
- 		  bridge->of_node, encoder->name, ret);
--#else
--	DRM_ERROR("failed to attach bridge to encoder %s: %d\n",
--		  encoder->name, ret);
--#endif
+ 	ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_LogGfxOffResidency,
+ 					      start, &residency);
++	if (ret)
++		return ret;
  
- 	return ret;
- }
+ 	if (!start)
+ 		adev->gfx.gfx_off_residency = residency;
 -- 
 2.43.0
 
