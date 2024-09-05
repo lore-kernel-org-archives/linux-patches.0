@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C361156225;
-	Thu,  5 Sep 2024 09:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441BB154BFF;
+	Thu,  5 Sep 2024 09:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530108; cv=none; b=ca5CJfrUwg3lIiKJ6YOEGKfnVrz0kzdXklrcBAFzo2mdtWBU67RKBdDhgXxTh+z0YY3qpNp7PXMMNqKS7vF2jQ+sEt41avFaPR8tI+LbSzDIQiLjY5NN5/nBpJZ/+HopKMSH/7bblP05nFucMzOkJEFFQjTt+Icx+ahGCPajYY4=
+	t=1725530111; cv=none; b=gxaRW49uG9K3JQ8Ks4ypVZUwXrKvYBWTAtJwPFxuMoqV27PQjgyxvfOMP5md0NScEpsMGGvuo6WYGaL5xDkWY8zPcqgtBkVSrpP7tDxb6jW9jU2kj1xHd5yPETN09duwyV9goiZv/oUelDf99k16Zu7ObYuFBpYE9+FQbUx76Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530108; c=relaxed/simple;
-	bh=j3pkfdKn5t8ewFvPILbPVT7t6d11tVnDOyB0JPuyD3U=;
+	s=arc-20240116; t=1725530111; c=relaxed/simple;
+	bh=OQN8Q4FDIh7Vu9lGwtG4ujwcW1KOCSrhYrl3frDwje8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEuO5XUkeyNG6ZToF4lgV7WXez941vumt38IS4rd+g9mwPJk+pnA4Vol+GWbdceQUR57l2oQfAkVLy9Iux+3cv7TyPdtkCPU5Xe7Grep6bWG9E3/NSYUoAFpkIsQQhK8CCMxoFbfSs0zZFXE1Rthad6aTlHJXr+0zIELV5aY/SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhRfEbaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DTFdFkPPPtk6fqgWFDcA0JC7Frny+EyNE0xNzGIQB9Fwa54Tv6ImYmFm6sJZ2UVFq1GEOWzCj4GksVsmiMUtlebs1UooFPN/tTM3amgQppNPcr2nEZLGalUBc8vI32FFz5w0aZuv/2+/PlhJnQ7avky7MfhFKM5jJloNDu4V6QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXQJl5py; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhRfEbaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4020BC4CEC3;
-	Thu,  5 Sep 2024 09:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXQJl5py"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4C0C4CEC3;
+	Thu,  5 Sep 2024 09:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530107;
-	bh=j3pkfdKn5t8ewFvPILbPVT7t6d11tVnDOyB0JPuyD3U=;
+	s=korg; t=1725530110;
+	bh=OQN8Q4FDIh7Vu9lGwtG4ujwcW1KOCSrhYrl3frDwje8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WhRfEbaNwr2ZcTAUPcLBrZbujA/dqoacV59JVk1MTP/epHkVpFIZFT9ay0w40pvzn
-	 lbSlOU5/eNaOrpyig7fOoPibxWw+/63itGoWf6W6sj/2vYHzljahx91iFA5SDUFA/x
-	 jITH54lN4sugAEpw6QhgUVYBzmLfDbj/cfdvR/Z4=
+	b=JXQJl5pyh/E9quxfsAzMKFniAhk3fwK/godPXLpmbo/OAXka4O7XJN3TrDtzHNvga
+	 vOH08H5h32cC8ov9+HhqZ3cptvmMcpXTrJOLd9Wgg1TUz9yknjaS10WsqXZ8h003iQ
+	 IepzXulDAPWQ56oSy+fY8UbGHi8ZA1misNm7S9DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/132] selftests: mptcp: add explicit test case for remove/readd
-Date: Thu,  5 Sep 2024 11:40:16 +0200
-Message-ID: <20240905093723.369637583@linuxfoundation.org>
+Subject: [PATCH 6.6 056/132] drm/amd/display: Check msg_id before processing transcation
+Date: Thu,  5 Sep 2024 11:40:43 +0200
+Message-ID: <20240905093724.436164775@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -52,63 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit b5e2fb832f48bc01d937a053e0550a1465a2f05d ]
+[ Upstream commit fa71face755e27dc44bc296416ebdf2c67163316 ]
 
-Delete and re-create a signal endpoint and ensure that the PM
-actually deletes and re-create the subflow.
+[WHY & HOW]
+HDCP_MESSAGE_ID_INVALID (-1) is not a valid msg_id nor is it a valid
+array index, and it needs checking before used.
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 1c2326fcae4f ("selftests: mptcp: join: check re-adding init endp with != id")
+This fixes 4 OVERRUN issues reported by Coverity.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/mptcp/mptcp_join.sh | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hdcp/hdcp_msg.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-index 59fdf308c8f14..b5ed323ed9c59 100755
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3734,6 +3734,35 @@ endpoint_tests()
- 		chk_join_nr 6 6 6
- 		chk_rm_nr 4 4
- 	fi
-+
-+	# remove and re-add
-+	if reset "delete re-add signal" &&
-+	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+		pm_nl_set_limits $ns1 1 1
-+		pm_nl_set_limits $ns2 1 1
-+		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
-+		test_linkfail=4 speed=20 \
-+			run_tests $ns1 $ns2 10.0.1.1 &
-+		local tests_pid=$!
-+
-+		wait_mpj $ns2
-+		pm_nl_check_endpoint "creation" \
-+			$ns1 10.0.2.1 id 1 flags signal
-+		chk_subflow_nr "before delete" 2
-+		chk_mptcp_info subflows 1 subflows 1
-+
-+		pm_nl_del_endpoint $ns1 1 10.0.2.1
-+		sleep 0.5
-+		chk_subflow_nr "after delete" 1
-+		chk_mptcp_info subflows 0 subflows 0
-+
-+		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-+		wait_mpj $ns2
-+		chk_subflow_nr "after re-add" 2
-+		chk_mptcp_info subflows 1 subflows 1
-+		mptcp_lib_kill_wait $tests_pid
-+	fi
-+
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/hdcp/hdcp_msg.c b/drivers/gpu/drm/amd/display/dc/hdcp/hdcp_msg.c
+index 25ffc052d53b..df2cb5279ce5 100644
+--- a/drivers/gpu/drm/amd/display/dc/hdcp/hdcp_msg.c
++++ b/drivers/gpu/drm/amd/display/dc/hdcp/hdcp_msg.c
+@@ -130,13 +130,21 @@ static bool hdmi_14_process_transaction(
+ 	const uint8_t hdcp_i2c_addr_link_primary = 0x3a; /* 0x74 >> 1*/
+ 	const uint8_t hdcp_i2c_addr_link_secondary = 0x3b; /* 0x76 >> 1*/
+ 	struct i2c_command i2c_command;
+-	uint8_t offset = hdcp_i2c_offsets[message_info->msg_id];
++	uint8_t offset;
+ 	struct i2c_payload i2c_payloads[] = {
+-		{ true, 0, 1, &offset },
++		{ true, 0, 1, 0 },
+ 		/* actual hdcp payload, will be filled later, zeroed for now*/
+ 		{ 0 }
+ 	};
  
- # [$1: error message]
++	if (message_info->msg_id == HDCP_MESSAGE_ID_INVALID) {
++		DC_LOG_ERROR("%s: Invalid message_info msg_id - %d\n", __func__, message_info->msg_id);
++		return false;
++	}
++
++	offset = hdcp_i2c_offsets[message_info->msg_id];
++	i2c_payloads[0].data = &offset;
++
+ 	switch (message_info->link) {
+ 	case HDCP_LINK_SECONDARY:
+ 		i2c_payloads[0].address = hdcp_i2c_addr_link_secondary;
+@@ -310,6 +318,11 @@ static bool dp_11_process_transaction(
+ 	struct dc_link *link,
+ 	struct hdcp_protection_message *message_info)
+ {
++	if (message_info->msg_id == HDCP_MESSAGE_ID_INVALID) {
++		DC_LOG_ERROR("%s: Invalid message_info msg_id - %d\n", __func__, message_info->msg_id);
++		return false;
++	}
++
+ 	return dpcd_access_helper(
+ 		link,
+ 		message_info->length,
 -- 
 2.43.0
 
