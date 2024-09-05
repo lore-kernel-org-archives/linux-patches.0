@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B5C198822;
-	Thu,  5 Sep 2024 09:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150514A08E;
+	Thu,  5 Sep 2024 09:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530013; cv=none; b=XwErSjGBhVmufc86HZ7hcswTb3AXI8kfqQ+ulonC4s/D4WB/gUxVK2B+AePjza00SgHfzOkHavwBJGy5RNfDhBTvc990jsQn6WAEQF86rDu6DIZGJnWhJkn31kg4KljUy1KARZ1u3pN7wyMy1f61NUdoFVmJSQ+cBgrHri/m/+c=
+	t=1725530016; cv=none; b=ZeEXxEn08BTJrdeFvnHwqOcmY2V31WcwebScZtV4Ui3ra0pip8FdoFii7R8QA2fosOxk3fpQXABaJ7gpfoVZfCCr68hiABHnFYqRukcVIef9fmrbgYLDMeEL4h/25/bwrA6pzBqkaY+r6Q1v0w1GDvJBnYOC5GrxnLDtFoGz9q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530013; c=relaxed/simple;
-	bh=qFB2KDThUZ1XIHJxgeNddAjbaK/vlxOFJDqwJ1txLC8=;
+	s=arc-20240116; t=1725530016; c=relaxed/simple;
+	bh=4JnQz5rCaBL5Uki9L5eRUcwAF4RBy+6PwvetKLTYOgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EV8b5/KX+ML2fF21ctO8aSP14YXjwmSU+6SC+VaiHfiwEz4TImIcGd7td7BDfz7VBmnc/NyVI9g5CfJlDWEWDMzD0zAH9piSMIED/tmfvHkGP9UeQNrPSaQrspjC2aWYgH3ipqSfOb2zbBkKfbOIDrw0LNx7Pnccqy6dPn5DIZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmnfKuhE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ltfFIe7xkhVgx8Q5qRBdAtf26OPe9BYAlFLMmYPpB8cXcu1Y49SQvUizwWPbh5n2SoV3URHf1v37WxepxVmucnhwQPdzL1AuLWxcaLuktHjqbVXTjCH9HcmXRYuydD2os2tYIMDVZmGKLJAhDThWSuv7feHvE3x7ZzblJzZTLlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kp1Yg76V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmnfKuhE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F29FC4CEC3;
-	Thu,  5 Sep 2024 09:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kp1Yg76V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374AAC4CEC3;
+	Thu,  5 Sep 2024 09:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530013;
-	bh=qFB2KDThUZ1XIHJxgeNddAjbaK/vlxOFJDqwJ1txLC8=;
+	s=korg; t=1725530016;
+	bh=4JnQz5rCaBL5Uki9L5eRUcwAF4RBy+6PwvetKLTYOgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmnfKuhE5/bNPH1DdpeURHKpFXt3n1OLSJNXcXnlMEwLYlgk5F8PIFT2GvVBBjvQ8
-	 7Vgr0loEXJN/S7Y7i76pO1sYwUrtcTMuAVNPVddlPlXmJUQZ0nMH8yIy+lRx4EtajI
-	 LYuVEvH919BMx/m7Uc/Sp+H1+rzgleX40m29wTBY=
+	b=Kp1Yg76VR6kYEOvswdK1fZQ54wd6a2+O2lzftBMnPSR3E+eZEid7hfpAhQhfAuljm
+	 Lj18bvo5t3CmCbXbQq2xqB3Kqyt7O4/xLVJowvxokUX98q99Nh4MR/sIcNunEnxnMu
+	 snSLtobhM5vEgP0BHxZYoAx4U4fFm1vlm6kNfEQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kai Krakow <hurikhan77@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/132] scsi: ufs: core: Bypass quick recovery if force reset is needed
-Date: Thu,  5 Sep 2024 11:39:51 +0200
-Message-ID: <20240905093722.406169380@linuxfoundation.org>
+Subject: [PATCH 6.6 005/132] btrfs: tree-checker: validate dref root and objectid
+Date: Thu,  5 Sep 2024 11:39:52 +0200
+Message-ID: <20240905093722.444952688@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -53,37 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 022587d8aec3da1d1698ddae9fb8cfe35f3ad49c ]
+[ Upstream commit f333a3c7e8323499aa65038e77fe8f3199d4e283 ]
 
-If force_reset is true, bypass quick recovery.  This will shorten error
-recovery time.
+[CORRUPTION]
+There is a bug report that btrfs flips RO due to a corruption in the
+extent tree, the involved dumps looks like this:
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20240712094506.11284-1-peter.wang@mediatek.com
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+ 	item 188 key (402811572224 168 4096) itemoff 14598 itemsize 79
+ 		extent refs 3 gen 3678544 flags 1
+ 		ref#0: extent data backref root 13835058055282163977 objectid 281473384125923 offset 81432576 count 1
+ 		ref#1: shared data backref parent 1947073626112 count 1
+ 		ref#2: shared data backref parent 1156030103552 count 1
+ BTRFS critical (device vdc1: state EA): unable to find ref byte nr 402811572224 parent 0 root 265 owner 28703026 offset 81432576 slot 189
+ BTRFS error (device vdc1: state EA): failed to run delayed ref for logical 402811572224 num_bytes 4096 type 178 action 2 ref_mod 1: -2
+
+[CAUSE]
+The corrupted entry is ref#0 of item 188.
+The root number 13835058055282163977 is beyond the upper limit for root
+items (the current limit is 1 << 48), and the objectid also looks
+suspicious.
+
+Only the offset and count is correct.
+
+[ENHANCEMENT]
+Although it's still unknown why we have such many bytes corrupted
+randomly, we can still enhance the tree-checker for data backrefs by:
+
+- Validate the root value
+  For now there should only be 3 types of roots can have data backref:
+  * subvolume trees
+  * data reloc trees
+  * root tree
+    Only for v1 space cache
+
+- validate the objectid value
+  The objectid should be a valid inode number.
+
+Hopefully we can catch such problem in the future with the new checkers.
+
+Reported-by: Kai Krakow <hurikhan77@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAMthOuPjg5RDT-G_LXeBBUUtzt3cq=JywF+D1_h+JYxe=WKp-Q@mail.gmail.com/#t
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/tree-checker.c | 47 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index bfa9f457f24ea..ad0ef5b6b8cf9 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6467,7 +6467,8 @@ static void ufshcd_err_handler(struct work_struct *work)
- 	if (ufshcd_err_handling_should_stop(hba))
- 		goto skip_err_handling;
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index 7ff61909648d7..46c1f74983956 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1266,6 +1266,19 @@ static void extent_err(const struct extent_buffer *eb, int slot,
+ 	va_end(args);
+ }
  
--	if (hba->dev_quirks & UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS) {
-+	if ((hba->dev_quirks & UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS) &&
-+	    !hba->force_reset) {
- 		bool ret;
++static bool is_valid_dref_root(u64 rootid)
++{
++	/*
++	 * The following tree root objectids are allowed to have a data backref:
++	 * - subvolume trees
++	 * - data reloc tree
++	 * - tree root
++	 *   For v1 space cache
++	 */
++	return is_fstree(rootid) || rootid == BTRFS_DATA_RELOC_TREE_OBJECTID ||
++	       rootid == BTRFS_ROOT_TREE_OBJECTID;
++}
++
+ static int check_extent_item(struct extent_buffer *leaf,
+ 			     struct btrfs_key *key, int slot,
+ 			     struct btrfs_key *prev_key)
+@@ -1418,6 +1431,8 @@ static int check_extent_item(struct extent_buffer *leaf,
+ 		struct btrfs_extent_data_ref *dref;
+ 		struct btrfs_shared_data_ref *sref;
+ 		u64 seq;
++		u64 dref_root;
++		u64 dref_objectid;
+ 		u64 dref_offset;
+ 		u64 inline_offset;
+ 		u8 inline_type;
+@@ -1461,11 +1476,26 @@ static int check_extent_item(struct extent_buffer *leaf,
+ 		 */
+ 		case BTRFS_EXTENT_DATA_REF_KEY:
+ 			dref = (struct btrfs_extent_data_ref *)(&iref->offset);
++			dref_root = btrfs_extent_data_ref_root(leaf, dref);
++			dref_objectid = btrfs_extent_data_ref_objectid(leaf, dref);
+ 			dref_offset = btrfs_extent_data_ref_offset(leaf, dref);
+ 			seq = hash_extent_data_ref(
+ 					btrfs_extent_data_ref_root(leaf, dref),
+ 					btrfs_extent_data_ref_objectid(leaf, dref),
+ 					btrfs_extent_data_ref_offset(leaf, dref));
++			if (unlikely(!is_valid_dref_root(dref_root))) {
++				extent_err(leaf, slot,
++					   "invalid data ref root value %llu",
++					   dref_root);
++				return -EUCLEAN;
++			}
++			if (unlikely(dref_objectid < BTRFS_FIRST_FREE_OBJECTID ||
++				     dref_objectid > BTRFS_LAST_FREE_OBJECTID)) {
++				extent_err(leaf, slot,
++					   "invalid data ref objectid value %llu",
++					   dref_root);
++				return -EUCLEAN;
++			}
+ 			if (unlikely(!IS_ALIGNED(dref_offset,
+ 						 fs_info->sectorsize))) {
+ 				extent_err(leaf, slot,
+@@ -1601,6 +1631,8 @@ static int check_extent_data_ref(struct extent_buffer *leaf,
+ 		return -EUCLEAN;
+ 	}
+ 	for (; ptr < end; ptr += sizeof(*dref)) {
++		u64 root;
++		u64 objectid;
+ 		u64 offset;
  
- 		spin_unlock_irqrestore(hba->host->host_lock, flags);
+ 		/*
+@@ -1608,7 +1640,22 @@ static int check_extent_data_ref(struct extent_buffer *leaf,
+ 		 * overflow from the leaf due to hash collisions.
+ 		 */
+ 		dref = (struct btrfs_extent_data_ref *)ptr;
++		root = btrfs_extent_data_ref_root(leaf, dref);
++		objectid = btrfs_extent_data_ref_objectid(leaf, dref);
+ 		offset = btrfs_extent_data_ref_offset(leaf, dref);
++		if (unlikely(!is_valid_dref_root(root))) {
++			extent_err(leaf, slot,
++				   "invalid extent data backref root value %llu",
++				   root);
++			return -EUCLEAN;
++		}
++		if (unlikely(objectid < BTRFS_FIRST_FREE_OBJECTID ||
++			     objectid > BTRFS_LAST_FREE_OBJECTID)) {
++			extent_err(leaf, slot,
++				   "invalid extent data backref objectid value %llu",
++				   root);
++			return -EUCLEAN;
++		}
+ 		if (unlikely(!IS_ALIGNED(offset, leaf->fs_info->sectorsize))) {
+ 			extent_err(leaf, slot,
+ 	"invalid extent data backref offset, have %llu expect aligned to %u",
 -- 
 2.43.0
 
