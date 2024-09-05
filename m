@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B358A13AD3F;
-	Thu,  5 Sep 2024 09:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20AF519885E;
+	Thu,  5 Sep 2024 09:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529561; cv=none; b=NXaESDrg56Q1SOwMMNkT49Snd3kx4kgFYL/Yke7He3m5XGGFXuuCC4iARSG5nve/hij0IqI/4WdG/qOBQMP6Pab+ZHrd4rfoJcsR8YLK2fj8UsTc/QeB77gVuYuc/BQ5SbwFcleXet+H1kgDZhhP+z4tfR0pqGAxLOdw7AhcW6w=
+	t=1725529565; cv=none; b=Dx2AEt5bOzXQLe/zi0Z0n3dDy3WJ8CZW4rsEf0UY6K6lRv3zVHScTn0d8NJ+0+ZBGWgmaIfPJXvVk4vPtgkBGsPcg5VIs5WSW4t2dSMp2MEYkQq2zgWg/RbAf6TxoclRW3haCJBlOzUCB7sXeYN6SmptneLXgoXKT1wMCqZ5dew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529561; c=relaxed/simple;
-	bh=yUkr/xid9/Ql63oiqOezeowIiLjPygvK6tH45N4/LdE=;
+	s=arc-20240116; t=1725529565; c=relaxed/simple;
+	bh=DvXORbj3uTWFeXtTAQRzLO99Euf7kpToHR4yiXbnrV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZOmiR0GcQLAx1Pprl+OX384ox+XcOSzI0kL8yy53ERmTV3mrmiC9+FGhjcRt06LOjlJx8naikCPP1e8cd/m2errqM4MqjIYNJlfXUllltnqWB8gRZ2/tVZK1ap41R7Mqcsp3hId73IVJ7CcOqgMrOY0rhWMWdQk/Yut5+rdRKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CK45pDuF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D92CR1V8H/jFCtVB5Zn7DlRAGPPGeOdhhDuS8urrp1t2p9AThTT/iQEgxq19AYhZOgnwlmBfMNO211l1ugtzxS7H2bhVMZ/bkD4g5sqUN2HQRGLrPGOszsb9GTgwfFpCBj5sXo2QcxGq3Gn9gCB2HtWdiGnlc3+ZVa0jTDuWFL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBR6xAhS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CK45pDuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7707C4CEC3;
-	Thu,  5 Sep 2024 09:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBR6xAhS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69285C4CEC4;
+	Thu,  5 Sep 2024 09:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529561;
-	bh=yUkr/xid9/Ql63oiqOezeowIiLjPygvK6tH45N4/LdE=;
+	s=korg; t=1725529564;
+	bh=DvXORbj3uTWFeXtTAQRzLO99Euf7kpToHR4yiXbnrV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CK45pDuFNGnXvxzLO+DO0vWrPD9o0RsxslZ6h5dsoN4jT3xk/lCTM46RQcpWlDnUV
-	 PkX8fh0r02YQ8BzNPIM2mGxj0shDQeXZuprqaSPcLZLVGp5JGKWLXLzVr0qFve7i/z
-	 QL7oNuJSi+pS4noOrXiO/zVyIDPL3BqvAu/0kW70=
+	b=QBR6xAhSaqW7MkcIhf+BlGpJV9qYxa38Q+qJFixHJ6jb7p1dNu7QCwGXIU+00wRRM
+	 2fdGq9w2vTKRMCZSc7vwW0RoN4ttEZniOb8L0/iPhBt+5pbTJ3iYH30y3lTpJ2pShu
+	 5zap2CQ3MJq7YKrvvh0EqmpdmikXAvYL6o10bmXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alex Hung <alex.hung@amd.com>,
 	Harry Wentland <harry.wentland@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 073/184] drm/amd/display: Spinlock before reading event
-Date: Thu,  5 Sep 2024 11:39:46 +0200
-Message-ID: <20240905093735.091967887@linuxfoundation.org>
+Subject: [PATCH 6.10 074/184] drm/amd/display: Fix Coverity INTEGER_OVERFLOW within decide_fallback_link_setting_max_bw_policy
+Date: Thu,  5 Sep 2024 11:39:47 +0200
+Message-ID: <20240905093735.131637979@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,52 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit ae13c8a5cff92015b9a3eb7cee65ebc75859487f ]
+[ Upstream commit 83c0c8361347cf43937348e8ca0a487679c003ae ]
 
-[WHY & HOW]
-A read of acrtc_attach->base.state->event was not locked so moving it
-inside the spinlock.
+[Why]
+For addtion (uint8_t) variable + constant 1,
+coverity generates message below:
+Truncation due to cast operation on "cur_idx + 1" from
+32 to 8 bits.
 
-This fixes a LOCK_EVASION issue reported by Coverity.
+Then Coverity assume result is 32 bits value be saved into
+8 bits variable. When result is used as index to access
+array, Coverity suspects index invalid.
 
+[How]
+Change varaible type to uint32_t.
+
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ .../gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index c00d96ec8be4..e3662f646baa 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8645,15 +8645,13 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
- 				bundle->stream_update.vrr_infopacket =
- 					&acrtc_state->stream->vrr_infopacket;
- 		}
--	} else if (cursor_update && acrtc_state->active_planes > 0 &&
--		   acrtc_attach->base.state->event) {
--		drm_crtc_vblank_get(pcrtc);
--
-+	} else if (cursor_update && acrtc_state->active_planes > 0) {
- 		spin_lock_irqsave(&pcrtc->dev->event_lock, flags);
--
--		acrtc_attach->event = acrtc_attach->base.state->event;
--		acrtc_attach->base.state->event = NULL;
--
-+		if (acrtc_attach->base.state->event) {
-+			drm_crtc_vblank_get(pcrtc);
-+			acrtc_attach->event = acrtc_attach->base.state->event;
-+			acrtc_attach->base.state->event = NULL;
-+		}
- 		spin_unlock_irqrestore(&pcrtc->dev->event_lock, flags);
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+index d487dfcd219b..b26faed3bb20 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -534,7 +534,7 @@ static bool decide_fallback_link_setting_max_bw_policy(
+ 		struct dc_link_settings *cur,
+ 		enum link_training_result training_result)
+ {
+-	uint8_t cur_idx = 0, next_idx;
++	uint32_t cur_idx = 0, next_idx;
+ 	bool found = false;
  
+ 	if (training_result == LINK_TRAINING_ABORT)
 -- 
 2.43.0
 
