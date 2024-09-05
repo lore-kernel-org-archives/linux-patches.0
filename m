@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D0E195FCE;
-	Thu,  5 Sep 2024 09:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1274A14A08E;
+	Thu,  5 Sep 2024 09:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529946; cv=none; b=JbzcMeV8iaLes9/n8DUMPAH6xUF6tTnH3USEWBrghJBbCSVgsNHGKpBPvTwSLCJP/yjJgQu//wszU7MRIoBuox9Jjj3KLP1ZWOHNlLsTi1jxXTLxxXOQ8ZVkx62wEXNgkG+cmi/3wKOGX6BMCvR91bC0L+UuZXM4KMnKTxZxz3U=
+	t=1725529950; cv=none; b=hARq5H9R8emfx4SIZcFp7u3e3vleSUILCgBe63M0NICgh/Wd1U5uoUyAAYIhZIaQNB1Y5I+ztCH5s5ScgnwhIVlOQCJ8f/MRoQo+h+agOhifybiHYNX6MnLmwCdTeaYYfVM1zgJXJtvJEFs5ZO2T8hqMkI9hp3qYqUE97rJ7zGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529946; c=relaxed/simple;
-	bh=zKXY+B/G3Gqj1+YBffMay+NNo9GmkFfMhRcoyKU6kY4=;
+	s=arc-20240116; t=1725529950; c=relaxed/simple;
+	bh=uVWGiM77UPzAImtresMYS5KjV93ovd6eYiZ8479etzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhGTi6Xm2Zjy2XoJpRGkm2EGQe+X7Mq555VU8opX3LVZKULxaoy0EKUaezj2GfNpT2IcCuNefB4RAE0PuBB5e6kwugyUKtgBFdUv0V4Ko2GCpdVhgavVLoTjI330Gh9bGlfx5MycQWNcmae5Om73nUAIvoxLrnH8YkR9YV46YKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRGyedrX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYqwJ8ErpfwUR597m6l7XdoOaMmzfOQDj02g7PGHBSxoDiu4p+7KaxJjaerSj74IorFQH8WkgX0wkjoYe3GHZIYjb4RgiTzDNqM6/74iqX23KksHwkJO7Zl9O0rcy2TWZ7DmM2EvhZNp5H5f8tWb3dHnqzJC9gFahDiG9joF/k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rW3FD4Me; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRGyedrX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D12C4CEC3;
-	Thu,  5 Sep 2024 09:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rW3FD4Me"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70241C4CEC3;
+	Thu,  5 Sep 2024 09:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529946;
-	bh=zKXY+B/G3Gqj1+YBffMay+NNo9GmkFfMhRcoyKU6kY4=;
+	s=korg; t=1725529949;
+	bh=uVWGiM77UPzAImtresMYS5KjV93ovd6eYiZ8479etzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRGyedrXanVm60P/avYMaQq0RUTAiIO235u89I/H2p1eL4zN03DlsLQLc0zDgyp/x
-	 wcriS3v+bqkkbZHlj6QYYnmJN6m0snR4QtN7wER87FUbUvvUr+EnOzoTQHHRzhB2fa
-	 2LKIRvQDW7RuC5Or7Rnm2D2pICVXC3RowkMqGMRQ=
+	b=rW3FD4Mepzp8LzwKEI2VWz73UfUjLyGZl5++ptLkwiS6qOieZzRiTWjvP0UnG5Kse
+	 dwDm9XxOFd/hrhAhP3BZXzyheJyyHIYy4ryePRkM5UelgDIOaTNk7ApKtkk1CMyZOL
+	 T2HpKHKcXAWQ74IouQBPAwgPiOm3SyZYUI+lLdiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 165/184] drm/amdgpu: add lock in kfd_process_dequeue_from_device
-Date: Thu,  5 Sep 2024 11:41:18 +0200
-Message-ID: <20240905093738.781794931@linuxfoundation.org>
+Subject: [PATCH 6.10 156/184] thermal: trip: Use READ_ONCE() for lockless access to trip properties
+Date: Thu,  5 Sep 2024 11:41:09 +0200
+Message-ID: <20240905093738.435471543@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,50 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunxiang Li <Yunxiang.Li@amd.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit d225960c2330e102370815367b877baaf8bb8b5d ]
+[ Upstream commit a52641bc6293a24f25956a597e7f32148b0e2bb8 ]
 
-We need to take the reset domain lock before talking to MES. While in
-this case we can take the lock inside the mes helper. We can't do so for
-most other mes helpers since they are used during reset. So for
-consistency sake we add the lock here.
+When accessing trip temperature and hysteresis without locking, it is
+better to use READ_ONCE() to prevent compiler optimizations possibly
+affecting the read from being applied.
 
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Of course, for the READ_ONCE() to be effective, WRITE_ONCE() needs to
+be used when updating their values.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_sysfs.c | 6 +++---
+ drivers/thermal/thermal_trip.c  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index 4858112f9a53..a5bdc3258ae5 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -28,6 +28,7 @@
- #include "kfd_priv.h"
- #include "kfd_kernel_queue.h"
- #include "amdgpu_amdkfd.h"
-+#include "amdgpu_reset.h"
+diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
+index 88211ccdfbd6..5be6113e7c80 100644
+--- a/drivers/thermal/thermal_sysfs.c
++++ b/drivers/thermal/thermal_sysfs.c
+@@ -150,7 +150,7 @@ trip_point_temp_show(struct device *dev, struct device_attribute *attr,
+ 	if (sscanf(attr->attr.name, "trip_point_%d_temp", &trip_id) != 1)
+ 		return -EINVAL;
  
- static inline struct process_queue_node *get_queue_by_qid(
- 			struct process_queue_manager *pqm, unsigned int qid)
-@@ -87,8 +88,12 @@ void kfd_process_dequeue_from_device(struct kfd_process_device *pdd)
- 		return;
- 
- 	dev->dqm->ops.process_termination(dev->dqm, &pdd->qpd);
--	if (dev->kfd->shared_resources.enable_mes)
--		amdgpu_mes_flush_shader_debugger(dev->adev, pdd->proc_ctx_gpu_addr);
-+	if (dev->kfd->shared_resources.enable_mes &&
-+	    down_read_trylock(&dev->adev->reset_domain->sem)) {
-+		amdgpu_mes_flush_shader_debugger(dev->adev,
-+						 pdd->proc_ctx_gpu_addr);
-+		up_read(&dev->adev->reset_domain->sem);
-+	}
- 	pdd->already_dequeued = true;
+-	return sprintf(buf, "%d\n", tz->trips[trip_id].trip.temperature);
++	return sprintf(buf, "%d\n", READ_ONCE(tz->trips[trip_id].trip.temperature));
  }
  
+ static ssize_t
+@@ -174,7 +174,7 @@ trip_point_hyst_store(struct device *dev, struct device_attribute *attr,
+ 	trip = &tz->trips[trip_id].trip;
+ 
+ 	if (hyst != trip->hysteresis) {
+-		trip->hysteresis = hyst;
++		WRITE_ONCE(trip->hysteresis, hyst);
+ 
+ 		thermal_zone_trip_updated(tz, trip);
+ 	}
+@@ -194,7 +194,7 @@ trip_point_hyst_show(struct device *dev, struct device_attribute *attr,
+ 	if (sscanf(attr->attr.name, "trip_point_%d_hyst", &trip_id) != 1)
+ 		return -EINVAL;
+ 
+-	return sprintf(buf, "%d\n", tz->trips[trip_id].trip.hysteresis);
++	return sprintf(buf, "%d\n", READ_ONCE(tz->trips[trip_id].trip.hysteresis));
+ }
+ 
+ static ssize_t
+diff --git a/drivers/thermal/thermal_trip.c b/drivers/thermal/thermal_trip.c
+index 49e63db68517..b4e7411b2fe7 100644
+--- a/drivers/thermal/thermal_trip.c
++++ b/drivers/thermal/thermal_trip.c
+@@ -152,7 +152,7 @@ void thermal_zone_set_trip_temp(struct thermal_zone_device *tz,
+ 	if (trip->temperature == temp)
+ 		return;
+ 
+-	trip->temperature = temp;
++	WRITE_ONCE(trip->temperature, temp);
+ 	thermal_notify_tz_trip_change(tz, trip);
+ 
+ 	if (temp == THERMAL_TEMP_INVALID) {
 -- 
 2.43.0
 
