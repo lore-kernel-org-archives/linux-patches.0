@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A578519884A;
-	Thu,  5 Sep 2024 09:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10B619884A;
+	Thu,  5 Sep 2024 09:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529844; cv=none; b=Jz1xCG1WIxFSIFXyMqrmVHuTmKj3pxM1yUd79xGUmQ9vU3hqpUdbhCK+UuPimOZOOAzVF0RknbOgRvUOg21+7jDOfKGXXhGLy27lOiqfD6P41zRBh1QRcPPcZc4Gf1LCZW7zCrYbRb0/Fyg4uwp+X35qR/zyfr9Jf9TwILPJvAo=
+	t=1725529847; cv=none; b=fhKqn99npA1121RFmXLTBg5I77Ov5in+SOwNBw3eoJHK+0jMOkwSHxUpFuKbfL6DQ3BgcZxwf2VfnYw8yYk5QZGAtJWoAZtiyFuqwp4B2Ii6VoalLdA5a9VwY+Y7d13VowgzTL8my5gud+6sBoGjRksMkvviFy24eENgy2rWcYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529844; c=relaxed/simple;
-	bh=jwgiMgX0WHEUmXc9yhx8WvTHurcKYHS/tjdyrH0MEbw=;
+	s=arc-20240116; t=1725529847; c=relaxed/simple;
+	bh=R0IQkmkCVvFvoR9LupYLtcopnM/VzfkMdirfnVSHYzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnJU6yP/3SpM5pVd8iD91jJyC+d878x9iSdIiiwoLtZEIGPwS8ZnCPinrXErhUqw3zHOTwq2ryDv/6kcWYZBzqpubhpxvBiLYoU+BWRhBeMFJbSeo454vF+w8kxS0CvTV46mBgX21p5wlo6QA6KGMkrGqe6XU1157uv/QQFLu1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVVz3qbO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdNqDfKe4I+AwLBA5z0Nj/G0lBWHIPCgnKYtZrrIkrAsklKkx1reP7Lr8inWLDAXr25kBEkSu1cKbGonC2vDuAEsegmP/l6TB3Y8I2rjl75QH9TSSMTbnwGgU4sMxbCEc44sRMQlrAaw7GufoegIZD/Q743UH2TXJDyOqOX13s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2F/KkGi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVVz3qbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F85C4CEC3;
-	Thu,  5 Sep 2024 09:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2F/KkGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8FFC4CEC3;
+	Thu,  5 Sep 2024 09:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529844;
-	bh=jwgiMgX0WHEUmXc9yhx8WvTHurcKYHS/tjdyrH0MEbw=;
+	s=korg; t=1725529847;
+	bh=R0IQkmkCVvFvoR9LupYLtcopnM/VzfkMdirfnVSHYzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVVz3qbOeLGtOsQyUIliuOy+mr14l+ebzju6HrwzXpZuATaO0AhVJMOp7L/uMdK6c
-	 oXLWVJz3+NKGzWbUIW+Vx+QW9PGppHosIOHjBtfvnNa8izvcIx/AllVg3Rgbb59Nzc
-	 6H15+98KKMWxgY7crcGtWZQystWHRso0gM+wz1gA=
+	b=H2F/KkGiTwZqwWxQnwBMkn3wEZv+yKihNVYehC1sBKSh7bUXY7yMkS1upS7UUjQon
+	 eVs9lNZ0tvsU9HI7UVt0FiiEog2Mp9nnNhkSWyLxc9z/yhRboAtpGgKxDUz2254JJ2
+	 HwSxHs1Sm7bTByfg3q23tkjT5oRGSfkUpMVGtCpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ken Sloat <ksloat@designlinxhs.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Sean Anderson <sean.anderson@seco.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 129/184] ionic: fix potential irq name truncation
-Date: Thu,  5 Sep 2024 11:40:42 +0200
-Message-ID: <20240905093737.261802946@linuxfoundation.org>
+Subject: [PATCH 6.10 130/184] pwm: xilinx: Fix u32 overflow issue in 32-bit width PWM mode.
+Date: Thu,  5 Sep 2024 11:40:43 +0200
+Message-ID: <20240905093737.301186949@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -51,36 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Ken Sloat <ksloat@designlinxhs.com>
 
-[ Upstream commit 3eb76e71b16e8ba5277bf97617aef51f5e64dbe4 ]
+[ Upstream commit 56f45266df67aa0f5b2a6881c8c4d16dbfff6b7d ]
 
-Address a warning about potential string truncation based on the
-string buffer sizes.  We can add some hints to the string format
-specifier to set limits on the resulting possible string to
-squelch the complaints.
+This timer HW supports 8, 16 and 32-bit timer widths. This
+driver currently uses a u32 to store the max possible value
+of the timer. However, statements perform addition of 2 in
+xilinx_pwm_apply() when calculating the period_cycles and
+duty_cycles values. Since priv->max is a u32, this will
+result in an overflow to 1 which will not only be incorrect
+but fail on range comparison. This results in making it
+impossible to set the PWM in this timer mode.
 
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Link: https://lore.kernel.org/r/20240529000259.25775-2-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+There are two obvious solutions to the current problem:
+1. Cast each instance where overflow occurs to u64.
+2. Change priv->max from a u32 to a u64.
+
+Solution #1 requires more code modifications, and leaves
+opportunity to introduce similar overflows if other math
+statements are added in the future. These may also go
+undetected if running in non 32-bit timer modes.
+
+Solution #2 is the much smaller and cleaner approach and
+thus the chosen method in this patch.
+
+This was tested on a Zynq UltraScale+ with multiple
+instances of the PWM IP.
+
+Signed-off-by: Ken Sloat <ksloat@designlinxhs.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Reviewed-by: Sean Anderson <sean.anderson@seco.com>
+Link: https://lore.kernel.org/r/SJ0P222MB0107490C5371B848EF04351CA1E19@SJ0P222MB0107.NAMP222.PROD.OUTLOOK.COM
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 2 +-
+ include/clocksource/timer-xilinx.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 1837a30ba08a..f64d18949f68 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -242,7 +242,7 @@ static int ionic_request_irq(struct ionic_lif *lif, struct ionic_qcq *qcq)
- 		name = dev_name(dev);
+diff --git a/include/clocksource/timer-xilinx.h b/include/clocksource/timer-xilinx.h
+index c0f56fe6d22a..d116f18de899 100644
+--- a/include/clocksource/timer-xilinx.h
++++ b/include/clocksource/timer-xilinx.h
+@@ -41,7 +41,7 @@ struct regmap;
+ struct xilinx_timer_priv {
+ 	struct regmap *map;
+ 	struct clk *clk;
+-	u32 max;
++	u64 max;
+ };
  
- 	snprintf(intr->name, sizeof(intr->name),
--		 "%s-%s-%s", IONIC_DRV_NAME, name, q->name);
-+		 "%.5s-%.16s-%.8s", IONIC_DRV_NAME, name, q->name);
- 
- 	return devm_request_irq(dev, intr->vector, ionic_isr,
- 				0, intr->name, &qcq->napi);
+ /**
 -- 
 2.43.0
 
