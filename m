@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC362198E90;
-	Thu,  5 Sep 2024 09:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53BA198E89;
+	Thu,  5 Sep 2024 09:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529856; cv=none; b=hViQBilO7Pg0s1/e06fD5fMv0t3+vNklnOtOXrBUd+76jpo7hKKQZASSmZ+AzErWu+rHDexEhiQIMVF8jSigcPfMYIKuG3/Kg/K3hFc48fMKiBg5XNnHlRUH3kPb0mT9pPJUdADXOY7qFVvtIO4xHa9PbNtgxCF3uFGxHy3v0Xw=
+	t=1725529860; cv=none; b=ZZUYHVVzwmndmJMTSYzfv4zICYJR9ZkNR/P9IukaELqJ5nxsqjaDDI2nIsN6veR+fuv5iwCXZM5h43+p978d771Cvj4eQ/WkALYdAnAchE+dx5Hp4unZvI8DeBpsnVOwDBaXLoSxmapMZdkroIBkydG3MWbja2Nh6sm8jjjQVRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529856; c=relaxed/simple;
-	bh=7QGrt5tQJib+Kdssd7E3soRWyCwWKpPO7ymHnQ2xM5g=;
+	s=arc-20240116; t=1725529860; c=relaxed/simple;
+	bh=QtbXbzpApyLggfDm34oQ9L85KtN6ARgHle8x5KqX1p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwUaP0mQ2xDXC3TlLVwUZpYnpie5w3Lw+syZ6In/aJ+BQ/L0KTZ4eRagaE/LH1pnm/t0kN2wEVYNd2nk1smMpwxGIsEEDDMJrs5iLyxICI81Lj0dyPM5NjBCJw4j8Fnt5+Vslvxqr7cVJfLNJ9g7zCwx3KynqF2UmgWzpIJqOoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SS0+hOUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eiCRel/e8FS2jJ7nDATBtVyvLNhVk26hxMIBhSYVw/BKqxW5LpdN4pigh0JCoIWEbHWTCpilfqtEKMkiN1s5Z1UlFcwJCLoCBWwdW79QGpL1Hvdu+eZGBnFI61mymmv2RvQH5M3NJO+0MDSsyoiR0elZ3zE6caM4/4MTSSZ3VJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmMDLwhe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SS0+hOUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C9FC4CEC3;
-	Thu,  5 Sep 2024 09:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmMDLwhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5518CC4CEC6;
+	Thu,  5 Sep 2024 09:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529856;
-	bh=7QGrt5tQJib+Kdssd7E3soRWyCwWKpPO7ymHnQ2xM5g=;
+	s=korg; t=1725529859;
+	bh=QtbXbzpApyLggfDm34oQ9L85KtN6ARgHle8x5KqX1p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SS0+hOUDAiHoOS0Y8MAoDsmE5y4Z20nQzIbS+S5OgLvHg4Dbzy5GyHBXmraXp09T8
-	 Osov/1rQImZsqJ6Lc8I5wt3Ipn7AAZZ1X31wkW3RuheOSvSejCUyVah8f+dcw+6hxb
-	 dqehEGjZiO/mUObao5h0i1LlFKYApVbUgScteEKU=
+	b=jmMDLwheTQVCR+XUwReaND6kllriAWbjWpImJYvYmQBwklhgYCu9Y/MgsoHNF7rKC
+	 dryt9szFlfDE8kgRKdaizl9dACaXKvU825E1tLWS0G+RGwMXbC4oS9z6LgqPPddy49
+	 Ke/yKFx7Pec79mLjZKb3In7s015SulEdflNJLMmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 123/184] wifi: iwlwifi: mvm: use only beacon BSS load for active links
-Date: Thu,  5 Sep 2024 11:40:36 +0200
-Message-ID: <20240905093737.030637966@linuxfoundation.org>
+Subject: [PATCH 6.10 157/184] hwmon: (k10temp) Check return value of amd_smn_read()
+Date: Thu,  5 Sep 2024 11:41:10 +0200
+Message-ID: <20240905093738.474175990@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -51,70 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit d9b7531fe98a0c2a0387270557cf0a514c28dd28 ]
+[ Upstream commit c2d79cc5455c891de6c93e1e0c73d806e299c54f ]
 
-For active links, don't take information that may have been
-received in probe responses, as those are not protected. For
-inactive links, there may not be a choice.
+Check the return value of amd_smn_read() before saving a value. This
+ensures invalid values aren't saved or used.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240527190228.6947dc462fa9.I2076961211d6785c8a15b4308e0e87a413148222@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+There are three cases here with slightly different behavior:
+
+1) read_tempreg_nb_zen():
+	This is a function pointer which does not include a return code.
+	In this case, set the register value to 0 on failure. This
+	enforces Read-as-Zero behavior.
+
+2) k10temp_read_temp():
+	This function does have return codes, so return the error code
+	from the failed register read. Continued operation is not
+	necessary, since there is no valid data from the register.
+	Furthermore, if the register value was set to 0, then the
+	following operation would underflow.
+
+3) k10temp_get_ccd_support():
+	This function reads the same register from multiple CCD
+	instances in a loop. And a bitmask is formed if a specific bit
+	is set in each register instance. The loop should continue on a
+	failed register read, skipping the bit check.
+
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20240606-fix-smn-bad-read-v4-3-ffde21931c3f@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/link.c      | 14 ++++++++++++--
- .../net/wireless/intel/iwlwifi/mvm/tests/links.c   |  1 +
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/hwmon/k10temp.c | 36 +++++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/link.c b/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-index 92ac6cc40faa..61b5648d3ab0 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-@@ -504,17 +504,27 @@ iwl_mvm_get_puncturing_factor(const struct ieee80211_bss_conf *link_conf)
- static unsigned int
- iwl_mvm_get_chan_load(struct ieee80211_bss_conf *link_conf)
+diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
+index 8092312c0a87..6cad35e7f182 100644
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -153,8 +153,9 @@ static void read_tempreg_nb_f15(struct pci_dev *pdev, u32 *regval)
+ 
+ static void read_tempreg_nb_zen(struct pci_dev *pdev, u32 *regval)
  {
-+	struct ieee80211_vif *vif = link_conf->vif;
- 	struct iwl_mvm_vif_link_info *mvm_link =
- 		iwl_mvm_vif_from_mac80211(link_conf->vif)->link[link_conf->link_id];
- 	const struct element *bss_load_elem;
- 	const struct ieee80211_bss_load_elem *bss_load;
- 	enum nl80211_band band = link_conf->chanreq.oper.chan->band;
-+	const struct cfg80211_bss_ies *ies;
- 	unsigned int chan_load;
- 	u32 chan_load_by_us;
- 
- 	rcu_read_lock();
--	bss_load_elem = ieee80211_bss_get_elem(link_conf->bss,
--					       WLAN_EID_QBSS_LOAD);
-+	if (ieee80211_vif_link_active(vif, link_conf->link_id))
-+		ies = rcu_dereference(link_conf->bss->beacon_ies);
-+	else
-+		ies = rcu_dereference(link_conf->bss->ies);
-+
-+	if (ies)
-+		bss_load_elem = cfg80211_find_elem(WLAN_EID_QBSS_LOAD,
-+						   ies->data, ies->len);
-+	else
-+		bss_load_elem = NULL;
- 
- 	/* If there isn't BSS Load element, take the defaults */
- 	if (!bss_load_elem ||
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tests/links.c b/drivers/net/wireless/intel/iwlwifi/mvm/tests/links.c
-index f49e3c98b1ba..991dc875a7ea 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tests/links.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tests/links.c
-@@ -208,6 +208,7 @@ static void setup_link_conf(struct kunit *test)
- 	bss_load->channel_util = params->channel_util;
- 
- 	rcu_assign_pointer(bss.ies, ies);
-+	rcu_assign_pointer(bss.beacon_ies, ies);
+-	amd_smn_read(amd_pci_dev_to_node_id(pdev),
+-		     ZEN_REPORTED_TEMP_CTRL_BASE, regval);
++	if (amd_smn_read(amd_pci_dev_to_node_id(pdev),
++			 ZEN_REPORTED_TEMP_CTRL_BASE, regval))
++		*regval = 0;
  }
  
- static void test_link_grading(struct kunit *test)
+ static long get_raw_temp(struct k10temp_data *data)
+@@ -205,6 +206,7 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
+ 			     long *val)
+ {
+ 	struct k10temp_data *data = dev_get_drvdata(dev);
++	int ret = -EOPNOTSUPP;
+ 	u32 regval;
+ 
+ 	switch (attr) {
+@@ -221,13 +223,17 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
+ 				*val = 0;
+ 			break;
+ 		case 2 ... 13:		/* Tccd{1-12} */
+-			amd_smn_read(amd_pci_dev_to_node_id(data->pdev),
+-				     ZEN_CCD_TEMP(data->ccd_offset, channel - 2),
+-						  &regval);
++			ret = amd_smn_read(amd_pci_dev_to_node_id(data->pdev),
++					   ZEN_CCD_TEMP(data->ccd_offset, channel - 2),
++					   &regval);
++
++			if (ret)
++				return ret;
++
+ 			*val = (regval & ZEN_CCD_TEMP_MASK) * 125 - 49000;
+ 			break;
+ 		default:
+-			return -EOPNOTSUPP;
++			return ret;
+ 		}
+ 		break;
+ 	case hwmon_temp_max:
+@@ -243,7 +249,7 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
+ 			- ((regval >> 24) & 0xf)) * 500 + 52000;
+ 		break;
+ 	default:
+-		return -EOPNOTSUPP;
++		return ret;
+ 	}
+ 	return 0;
+ }
+@@ -381,8 +387,20 @@ static void k10temp_get_ccd_support(struct pci_dev *pdev,
+ 	int i;
+ 
+ 	for (i = 0; i < limit; i++) {
+-		amd_smn_read(amd_pci_dev_to_node_id(pdev),
+-			     ZEN_CCD_TEMP(data->ccd_offset, i), &regval);
++		/*
++		 * Ignore inaccessible CCDs.
++		 *
++		 * Some systems will return a register value of 0, and the TEMP_VALID
++		 * bit check below will naturally fail.
++		 *
++		 * Other systems will return a PCI_ERROR_RESPONSE (0xFFFFFFFF) for
++		 * the register value. And this will incorrectly pass the TEMP_VALID
++		 * bit check.
++		 */
++		if (amd_smn_read(amd_pci_dev_to_node_id(pdev),
++				 ZEN_CCD_TEMP(data->ccd_offset, i), &regval))
++			continue;
++
+ 		if (regval & ZEN_CCD_TEMP_VALID)
+ 			data->show_temp |= BIT(TCCD_BIT(i));
+ 	}
 -- 
 2.43.0
 
