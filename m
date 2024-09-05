@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BB8198A3E;
-	Thu,  5 Sep 2024 09:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4818198E93;
+	Thu,  5 Sep 2024 09:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529768; cv=none; b=cBHcFOzrC/O5cTw6BBANsYz0Cnk7tUXPR/cjcjcBZd0z3HtRnQ5VOEYgpkunc5Djh7g9FcT+sOhnlNIDOdRql/eANn/71nVak296ZQfsgygdiPvTpDxYiUNXQQPRsjaKZ7x3ugKGGEDe/BvkWKsW265nG+2A9TGpqZZZjiK4MDg=
+	t=1725529771; cv=none; b=iVwFLMFETEKirq8p+3hxWNpEaUqENmh7sAD0RmETauxsawBDeQfGRvbKG23ZQeHLF15tjYfsqdLdEmlLwRXzgEMVuE3v5sSIxHPc5EbFqBoDzIf5tZsqADUo2CHmtBrDuJ3wgbkVZFF70HaXhBH9YbCHVmEr5XcU+vf1gjkVqlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529768; c=relaxed/simple;
-	bh=uiUE36HW3FVJFN0vSbGhLhrMS2u1VmrqPWT07akeWgY=;
+	s=arc-20240116; t=1725529771; c=relaxed/simple;
+	bh=TndsJC4PT8zMre6jyufq6CJXp38xh0n8+egDbpXQ+YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjDnfy1ClTLpqtQGRfyRazUemeaUeVXVkZ0UuvV0XorXhCdJNTXBoyGpHr9zcWqHY30m7OGtLkD8cv9zKiAPVkEnDy1fu3FrrOCge8Jl5jdzBezLvgTilrsWmZ/urs+PjsVvRwjgA9Q1r1Q5r/zMeESIuJBN99nfL6CQrilOHqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvQ8rqBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkP3Fnv85FzskYzRP7CPSlOVqj14SXF0j/8QJZfA76eRU0FhhBZi5CYOfSk5tZxGDVEpSQ8zXKgWhM+16zxGQlr5NRcrAqb6b4MhVygalFdfejW/Bpg/b1cvBU/rGVhl/DAWbikJqVd71q0J7olcQBxXJJ/o9Q2LUNCU0f8kGZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azyR+9iO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvQ8rqBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16D4C4CECD;
-	Thu,  5 Sep 2024 09:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azyR+9iO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236F2C4CEC6;
+	Thu,  5 Sep 2024 09:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529768;
-	bh=uiUE36HW3FVJFN0vSbGhLhrMS2u1VmrqPWT07akeWgY=;
+	s=korg; t=1725529771;
+	bh=TndsJC4PT8zMre6jyufq6CJXp38xh0n8+egDbpXQ+YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvQ8rqBz8mZo01mEYxA7D4nNB2XBiHPp+/UaARGMOaJDk3gcEWbCohK3qyFggEJVc
-	 tLArzbIwwl+3UgOzKoKfymgjGjkAoVcuzw/VVujgMGY8GLGTrDaTj1p23hweQ9ga1W
-	 uIjO5klHRl45pZ0K9OKi3DcgONmaGuLLI7/1YH0c=
+	b=azyR+9iOmEPN7ffI5+oxOaeQIo6Fh24vTU/6pmBTEJ8/Omt/i2jGAx012vXj9b8uz
+	 bLwIWsRGRxBdiufXq9uX3pohM2iCMdBZS7wzf5RlF/cc1OxlqDmOTLVP6mfZCW+cSb
+	 5GmbXZQAM28o+4fDK6hLuTnenHBwM0J73MnD+ibw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 137/184] net: remove NULL-pointer net parameter in ip_metrics_convert
-Date: Thu,  5 Sep 2024 11:40:50 +0200
-Message-ID: <20240905093737.567765375@linuxfoundation.org>
+Subject: [PATCH 6.10 138/184] tcp: annotate data-races around tw->tw_ts_recent and tw->tw_ts_recent_stamp
+Date: Thu,  5 Sep 2024 11:40:51 +0200
+Message-ID: <20240905093737.605616768@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,181 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 61e2bbafb00e4b9a5de45e6448a7b6b818658576 ]
+[ Upstream commit 69e0b33a7fce4d96649b9fa32e56b696921aa48e ]
 
-When I was doing some experiments, I found that when using the first
-parameter, namely, struct net, in ip_metrics_convert() always triggers NULL
-pointer crash. Then I digged into this part, realizing that we can remove
-this one due to its uselessness.
+These fields can be read and written locklessly, add annotations
+around these minor races.
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h         |  3 +--
- include/net/tcp.h        |  2 +-
- net/ipv4/fib_semantics.c |  5 ++---
- net/ipv4/metrics.c       |  8 ++++----
- net/ipv4/tcp_cong.c      | 11 +++++------
- net/ipv6/route.c         |  2 +-
- 6 files changed, 14 insertions(+), 17 deletions(-)
+ net/ipv4/tcp_ipv4.c      | 12 +++++++-----
+ net/ipv4/tcp_minisocks.c | 22 ++++++++++++++--------
+ net/ipv6/tcp_ipv6.c      |  6 +++---
+ 3 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 6d735e00d3f3..c5606cadb1a5 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -506,8 +506,7 @@ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
- 	return mtu - lwtunnel_headroom(skb_dst(skb)->lwtstate, mtu);
- }
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 8f8f93716ff8..3b7430201397 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -116,6 +116,7 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+ 	const struct inet_timewait_sock *tw = inet_twsk(sktw);
+ 	const struct tcp_timewait_sock *tcptw = tcp_twsk(sktw);
+ 	struct tcp_sock *tp = tcp_sk(sk);
++	int ts_recent_stamp;
  
--struct dst_metrics *ip_fib_metrics_init(struct net *net, struct nlattr *fc_mx,
--					int fc_mx_len,
-+struct dst_metrics *ip_fib_metrics_init(struct nlattr *fc_mx, int fc_mx_len,
- 					struct netlink_ext_ack *extack);
- static inline void ip_fib_metrics_put(struct dst_metrics *fib_metrics)
- {
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 32815a40dea1..45bbb54e42e8 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1216,7 +1216,7 @@ extern struct tcp_congestion_ops tcp_reno;
+ 	if (reuse == 2) {
+ 		/* Still does not detect *everything* that goes through
+@@ -154,9 +155,10 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+ 	   If TW bucket has been already destroyed we fall back to VJ's scheme
+ 	   and use initial timestamp retrieved from peer table.
+ 	 */
+-	if (tcptw->tw_ts_recent_stamp &&
++	ts_recent_stamp = READ_ONCE(tcptw->tw_ts_recent_stamp);
++	if (ts_recent_stamp &&
+ 	    (!twp || (reuse && time_after32(ktime_get_seconds(),
+-					    tcptw->tw_ts_recent_stamp)))) {
++					    ts_recent_stamp)))) {
+ 		/* inet_twsk_hashdance() sets sk_refcnt after putting twsk
+ 		 * and releasing the bucket lock.
+ 		 */
+@@ -180,8 +182,8 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+ 			if (!seq)
+ 				seq = 1;
+ 			WRITE_ONCE(tp->write_seq, seq);
+-			tp->rx_opt.ts_recent	   = tcptw->tw_ts_recent;
+-			tp->rx_opt.ts_recent_stamp = tcptw->tw_ts_recent_stamp;
++			tp->rx_opt.ts_recent	   = READ_ONCE(tcptw->tw_ts_recent);
++			tp->rx_opt.ts_recent_stamp = ts_recent_stamp;
+ 		}
  
- struct tcp_congestion_ops *tcp_ca_find(const char *name);
- struct tcp_congestion_ops *tcp_ca_find_key(u32 key);
--u32 tcp_ca_get_key_by_name(struct net *net, const char *name, bool *ecn_ca);
-+u32 tcp_ca_get_key_by_name(const char *name, bool *ecn_ca);
- #ifdef CONFIG_INET
- char *tcp_ca_get_name_by_key(u32 key, char *buffer);
- #else
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 8956026bc0a2..2b57cd2b96e2 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -1030,7 +1030,7 @@ bool fib_metrics_match(struct fib_config *cfg, struct fib_info *fi)
- 			bool ecn_ca = false;
+ 		return 1;
+@@ -1066,7 +1068,7 @@ static void tcp_v4_timewait_ack(struct sock *sk, struct sk_buff *skb)
+ 			tcptw->tw_snd_nxt, tcptw->tw_rcv_nxt,
+ 			tcptw->tw_rcv_wnd >> tw->tw_rcv_wscale,
+ 			tcp_tw_tsval(tcptw),
+-			tcptw->tw_ts_recent,
++			READ_ONCE(tcptw->tw_ts_recent),
+ 			tw->tw_bound_dev_if, &key,
+ 			tw->tw_transparent ? IP_REPLY_ARG_NOSRCCHECK : 0,
+ 			tw->tw_tos,
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 0fbebf6266e9..5e4a12d01622 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -101,16 +101,18 @@ tcp_timewait_state_process(struct inet_timewait_sock *tw, struct sk_buff *skb,
+ 	struct tcp_options_received tmp_opt;
+ 	struct tcp_timewait_sock *tcptw = tcp_twsk((struct sock *)tw);
+ 	bool paws_reject = false;
++	int ts_recent_stamp;
  
- 			nla_strscpy(tmp, nla, sizeof(tmp));
--			val = tcp_ca_get_key_by_name(fi->fib_net, tmp, &ecn_ca);
-+			val = tcp_ca_get_key_by_name(tmp, &ecn_ca);
- 		} else {
- 			if (nla_len(nla) != sizeof(u32))
- 				return false;
-@@ -1459,8 +1459,7 @@ struct fib_info *fib_create_info(struct fib_config *cfg,
- 	fi = kzalloc(struct_size(fi, fib_nh, nhs), GFP_KERNEL);
- 	if (!fi)
- 		goto failure;
--	fi->fib_metrics = ip_fib_metrics_init(fi->fib_net, cfg->fc_mx,
--					      cfg->fc_mx_len, extack);
-+	fi->fib_metrics = ip_fib_metrics_init(cfg->fc_mx, cfg->fc_mx_len, extack);
- 	if (IS_ERR(fi->fib_metrics)) {
- 		err = PTR_ERR(fi->fib_metrics);
- 		kfree(fi);
-diff --git a/net/ipv4/metrics.c b/net/ipv4/metrics.c
-index 0e3ee1532848..8ddac1f595ed 100644
---- a/net/ipv4/metrics.c
-+++ b/net/ipv4/metrics.c
-@@ -7,7 +7,7 @@
- #include <net/net_namespace.h>
- #include <net/tcp.h>
+ 	tmp_opt.saw_tstamp = 0;
+-	if (th->doff > (sizeof(*th) >> 2) && tcptw->tw_ts_recent_stamp) {
++	ts_recent_stamp = READ_ONCE(tcptw->tw_ts_recent_stamp);
++	if (th->doff > (sizeof(*th) >> 2) && ts_recent_stamp) {
+ 		tcp_parse_options(twsk_net(tw), skb, &tmp_opt, 0, NULL);
  
--static int ip_metrics_convert(struct net *net, struct nlattr *fc_mx,
-+static int ip_metrics_convert(struct nlattr *fc_mx,
- 			      int fc_mx_len, u32 *metrics,
- 			      struct netlink_ext_ack *extack)
- {
-@@ -31,7 +31,7 @@ static int ip_metrics_convert(struct net *net, struct nlattr *fc_mx,
- 			char tmp[TCP_CA_NAME_MAX];
+ 		if (tmp_opt.saw_tstamp) {
+ 			if (tmp_opt.rcv_tsecr)
+ 				tmp_opt.rcv_tsecr -= tcptw->tw_ts_offset;
+-			tmp_opt.ts_recent	= tcptw->tw_ts_recent;
+-			tmp_opt.ts_recent_stamp	= tcptw->tw_ts_recent_stamp;
++			tmp_opt.ts_recent	= READ_ONCE(tcptw->tw_ts_recent);
++			tmp_opt.ts_recent_stamp	= ts_recent_stamp;
+ 			paws_reject = tcp_paws_reject(&tmp_opt, th->rst);
+ 		}
+ 	}
+@@ -152,8 +154,10 @@ tcp_timewait_state_process(struct inet_timewait_sock *tw, struct sk_buff *skb,
+ 		twsk_rcv_nxt_update(tcptw, TCP_SKB_CB(skb)->end_seq);
  
- 			nla_strscpy(tmp, nla, sizeof(tmp));
--			val = tcp_ca_get_key_by_name(net, tmp, &ecn_ca);
-+			val = tcp_ca_get_key_by_name(tmp, &ecn_ca);
- 			if (val == TCP_CA_UNSPEC) {
- 				NL_SET_ERR_MSG(extack, "Unknown tcp congestion algorithm");
- 				return -EINVAL;
-@@ -63,7 +63,7 @@ static int ip_metrics_convert(struct net *net, struct nlattr *fc_mx,
- 	return 0;
- }
+ 		if (tmp_opt.saw_tstamp) {
+-			tcptw->tw_ts_recent_stamp = ktime_get_seconds();
+-			tcptw->tw_ts_recent	  = tmp_opt.rcv_tsval;
++			WRITE_ONCE(tcptw->tw_ts_recent_stamp,
++				  ktime_get_seconds());
++			WRITE_ONCE(tcptw->tw_ts_recent,
++				   tmp_opt.rcv_tsval);
+ 		}
  
--struct dst_metrics *ip_fib_metrics_init(struct net *net, struct nlattr *fc_mx,
-+struct dst_metrics *ip_fib_metrics_init(struct nlattr *fc_mx,
- 					int fc_mx_len,
- 					struct netlink_ext_ack *extack)
- {
-@@ -77,7 +77,7 @@ struct dst_metrics *ip_fib_metrics_init(struct net *net, struct nlattr *fc_mx,
- 	if (unlikely(!fib_metrics))
- 		return ERR_PTR(-ENOMEM);
+ 		inet_twsk_reschedule(tw, TCP_TIMEWAIT_LEN);
+@@ -197,8 +201,10 @@ tcp_timewait_state_process(struct inet_timewait_sock *tw, struct sk_buff *skb,
+ 		}
  
--	err = ip_metrics_convert(net, fc_mx, fc_mx_len, fib_metrics->metrics,
-+	err = ip_metrics_convert(fc_mx, fc_mx_len, fib_metrics->metrics,
- 				 extack);
- 	if (!err) {
- 		refcount_set(&fib_metrics->refcnt, 1);
-diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
-index 28ffcfbeef14..48617d99abb0 100644
---- a/net/ipv4/tcp_cong.c
-+++ b/net/ipv4/tcp_cong.c
-@@ -46,8 +46,7 @@ void tcp_set_ca_state(struct sock *sk, const u8 ca_state)
- }
+ 		if (tmp_opt.saw_tstamp) {
+-			tcptw->tw_ts_recent	  = tmp_opt.rcv_tsval;
+-			tcptw->tw_ts_recent_stamp = ktime_get_seconds();
++			WRITE_ONCE(tcptw->tw_ts_recent,
++				   tmp_opt.rcv_tsval);
++			WRITE_ONCE(tcptw->tw_ts_recent_stamp,
++				   ktime_get_seconds());
+ 		}
  
- /* Must be called with rcu lock held */
--static struct tcp_congestion_ops *tcp_ca_find_autoload(struct net *net,
--						       const char *name)
-+static struct tcp_congestion_ops *tcp_ca_find_autoload(const char *name)
- {
- 	struct tcp_congestion_ops *ca = tcp_ca_find(name);
+ 		inet_twsk_put(tw);
+@@ -225,7 +231,7 @@ tcp_timewait_state_process(struct inet_timewait_sock *tw, struct sk_buff *skb,
+ 	if (th->syn && !th->rst && !th->ack && !paws_reject &&
+ 	    (after(TCP_SKB_CB(skb)->seq, tcptw->tw_rcv_nxt) ||
+ 	     (tmp_opt.saw_tstamp &&
+-	      (s32)(tcptw->tw_ts_recent - tmp_opt.rcv_tsval) < 0))) {
++	      (s32)(READ_ONCE(tcptw->tw_ts_recent) - tmp_opt.rcv_tsval) < 0))) {
+ 		u32 isn = tcptw->tw_snd_nxt + 65535 + 2;
+ 		if (isn == 0)
+ 			isn++;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 3385faf1d5dc..66f6fe5afb03 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1196,9 +1196,9 @@ static void tcp_v6_timewait_ack(struct sock *sk, struct sk_buff *skb)
+ 	tcp_v6_send_ack(sk, skb, tcptw->tw_snd_nxt, tcptw->tw_rcv_nxt,
+ 			tcptw->tw_rcv_wnd >> tw->tw_rcv_wscale,
+ 			tcp_tw_tsval(tcptw),
+-			tcptw->tw_ts_recent, tw->tw_bound_dev_if, &key,
+-			tw->tw_tclass, cpu_to_be32(tw->tw_flowlabel), tw->tw_priority,
+-			tw->tw_txhash);
++			READ_ONCE(tcptw->tw_ts_recent), tw->tw_bound_dev_if,
++			&key, tw->tw_tclass, cpu_to_be32(tw->tw_flowlabel),
++			tw->tw_priority, tw->tw_txhash);
  
-@@ -178,7 +177,7 @@ int tcp_update_congestion_control(struct tcp_congestion_ops *ca, struct tcp_cong
- 	return ret;
- }
- 
--u32 tcp_ca_get_key_by_name(struct net *net, const char *name, bool *ecn_ca)
-+u32 tcp_ca_get_key_by_name(const char *name, bool *ecn_ca)
- {
- 	const struct tcp_congestion_ops *ca;
- 	u32 key = TCP_CA_UNSPEC;
-@@ -186,7 +185,7 @@ u32 tcp_ca_get_key_by_name(struct net *net, const char *name, bool *ecn_ca)
- 	might_sleep();
- 
- 	rcu_read_lock();
--	ca = tcp_ca_find_autoload(net, name);
-+	ca = tcp_ca_find_autoload(name);
- 	if (ca) {
- 		key = ca->key;
- 		*ecn_ca = ca->flags & TCP_CONG_NEEDS_ECN;
-@@ -283,7 +282,7 @@ int tcp_set_default_congestion_control(struct net *net, const char *name)
- 	int ret;
- 
- 	rcu_read_lock();
--	ca = tcp_ca_find_autoload(net, name);
-+	ca = tcp_ca_find_autoload(name);
- 	if (!ca) {
- 		ret = -ENOENT;
- 	} else if (!bpf_try_module_get(ca, ca->owner)) {
-@@ -421,7 +420,7 @@ int tcp_set_congestion_control(struct sock *sk, const char *name, bool load,
- 	if (!load)
- 		ca = tcp_ca_find(name);
- 	else
--		ca = tcp_ca_find_autoload(sock_net(sk), name);
-+		ca = tcp_ca_find_autoload(name);
- 
- 	/* No change asking for existing value */
- 	if (ca == icsk->icsk_ca_ops) {
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index c9a9506b714d..a9644a8edb96 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3764,7 +3764,7 @@ static struct fib6_info *ip6_route_info_create(struct fib6_config *cfg,
- 	if (!rt)
- 		goto out;
- 
--	rt->fib6_metrics = ip_fib_metrics_init(net, cfg->fc_mx, cfg->fc_mx_len,
-+	rt->fib6_metrics = ip_fib_metrics_init(cfg->fc_mx, cfg->fc_mx_len,
- 					       extack);
- 	if (IS_ERR(rt->fib6_metrics)) {
- 		err = PTR_ERR(rt->fib6_metrics);
+ #ifdef CONFIG_TCP_AO
+ out:
 -- 
 2.43.0
 
