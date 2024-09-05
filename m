@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CEF1494DB;
-	Thu,  5 Sep 2024 10:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97A21922CC;
+	Thu,  5 Sep 2024 10:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530599; cv=none; b=rwGBXlhTajj1MnNw1yGfYNCGWAw3nh+smmxUbJd/0q4Q8r4nOQ6qOTEvYLAmGzdb2SPlbE99NCbJGrHG4sfp14It1lZ7LTcgd82QOwpjk4x4pBIbJpR5wQ2IKQzOMQWftTsxhw+vKgwlKvM2KxYW0fl0DV1NBKto1KnQTdd/I/Y=
+	t=1725530603; cv=none; b=fLBwmx9gUBquM3YlfUjWnKTrLQVBRZCqLj3ANpSQ7ra95EQR9wmqmnBnu0Ure3H4pWgvTU6BVIdx60p7t43iO4hVSUeyfCG+75KoZRfO9nXuKhVXCPkXYhwn71Q5Nda3jVU/D2VJXiIZEJvCVqfa/2kHYAvzhlTJtz/sWDdzl+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530599; c=relaxed/simple;
-	bh=DTm3fNwHR0gHQdNA6rMcAw8kOApN+Mxyl43vZSFO0XQ=;
+	s=arc-20240116; t=1725530603; c=relaxed/simple;
+	bh=fLV9+wD5NOJ5JX0X9a8iyHmvruc8ynzDKXoLRb4BvNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUz1/oSUuwNsEDHmPKeML5AueJphibYkO9zOBCdtczqUW2PvmQNzeIbvRruPS2WJpKnKWuGEU57Igyru6ssfbdxPDxqrl1wX4EFSGgpccdLFRqmlVboQ2Eg+y8Gvw/NiBIDeqMFqBD3BBO28fWJrBfP3o3BieSXdZEYTnD7vcA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDtjOkpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d43nZblVrQ7kkt5uuvKfgFxWJsukmbMquYCBmtjJpAO28uKvXBryhBRe+Bf0NxTDVn96Av9DLHnCUn6q1JB5aOgf6uLnQCXc9te0wHKf6nq2rCJ6bqUnw6r4+6vX9FLMraoN+c0CPpEMCZwQB1oXXvPC8yZmxXIE4Pi977cFyyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSxvzLIV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDtjOkpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16994C4CEC3;
-	Thu,  5 Sep 2024 10:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSxvzLIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F94FC4CEC3;
+	Thu,  5 Sep 2024 10:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530599;
-	bh=DTm3fNwHR0gHQdNA6rMcAw8kOApN+Mxyl43vZSFO0XQ=;
+	s=korg; t=1725530602;
+	bh=fLV9+wD5NOJ5JX0X9a8iyHmvruc8ynzDKXoLRb4BvNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDtjOkpxIasJM9Omvv2xuySCJz+NYskwM8qwGPhLZIkhol+0Q06v9vEA+kLmktq7q
-	 +xBL+qtav8rS5+cvySF4CgTzaxxv4hLU+wO/is9+jISb4q7A1ydhtrq5XwupadKusv
-	 6Bekeolz4v7rA3SJv13+fgCjDSLtlwttPYuMSDuk=
+	b=NSxvzLIV0FYNVNE9IrfxDos7tz/VD5ubbGPE5L9Hrkw+pF+jVWwdJ1T0l16ng/ZbB
+	 XGh+EGgvfWaAVbajxpHMz0STzz2XNMBWG0ZgbpGNth8vgiS/yfRTr+KlaMy4I8+niu
+	 4TfAK/Xv4Yyzu/fLVXNGQ0C72VCn73Rnjj2llP9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Leesoo Ahn <lsahn@ooseel.net>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/101] rcu/nocb: Remove buggy bypass lock contention mitigation
-Date: Thu,  5 Sep 2024 11:41:47 +0200
-Message-ID: <20240905093719.065888892@linuxfoundation.org>
+Subject: [PATCH 6.1 058/101] apparmor: fix possible NULL pointer dereference
+Date: Thu,  5 Sep 2024 11:41:30 +0200
+Message-ID: <20240905093718.407574924@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,138 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Leesoo Ahn <lsahn@ooseel.net>
 
-[ Upstream commit e4f78057291608f6968a6789c5ebb3bde7d95504 ]
+[ Upstream commit 3dd384108d53834002be5630132ad5c3f32166ad ]
 
-The bypass lock contention mitigation assumes there can be at most
-2 contenders on the bypass lock, following this scheme:
+profile->parent->dents[AAFS_PROF_DIR] could be NULL only if its parent is made
+from __create_missing_ancestors(..) and 'ent->old' is NULL in
+aa_replace_profiles(..).
+In that case, it must return an error code and the code, -ENOENT represents
+its state that the path of its parent is not existed yet.
 
-1) One kthread takes the bypass lock
-2) Another one spins on it and increment the contended counter
-3) A third one (a bypass enqueuer) sees the contended counter on and
-  busy loops waiting on it to decrement.
+BUG: kernel NULL pointer dereference, address: 0000000000000030
+PGD 0 P4D 0
+PREEMPT SMP PTI
+CPU: 4 PID: 3362 Comm: apparmor_parser Not tainted 6.8.0-24-generic #24
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:aafs_create.constprop.0+0x7f/0x130
+Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
+RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ ? show_regs+0x6d/0x80
+ ? __die+0x24/0x80
+ ? page_fault_oops+0x99/0x1b0
+ ? kernelmode_fixup_or_oops+0xb2/0x140
+ ? __bad_area_nosemaphore+0x1a5/0x2c0
+ ? find_vma+0x34/0x60
+ ? bad_area_nosemaphore+0x16/0x30
+ ? do_user_addr_fault+0x2a2/0x6b0
+ ? exc_page_fault+0x83/0x1b0
+ ? asm_exc_page_fault+0x27/0x30
+ ? aafs_create.constprop.0+0x7f/0x130
+ ? aafs_create.constprop.0+0x51/0x130
+ __aafs_profile_mkdir+0x3d6/0x480
+ aa_replace_profiles+0x83f/0x1270
+ policy_update+0xe3/0x180
+ profile_load+0xbc/0x150
+ ? rw_verify_area+0x47/0x140
+ vfs_write+0x100/0x480
+ ? __x64_sys_openat+0x55/0xa0
+ ? syscall_exit_to_user_mode+0x86/0x260
+ ksys_write+0x73/0x100
+ __x64_sys_write+0x19/0x30
+ x64_sys_call+0x7e/0x25c0
+ do_syscall_64+0x7f/0x180
+ entry_SYSCALL_64_after_hwframe+0x78/0x80
+RIP: 0033:0x7be9f211c574
+Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
+RSP: 002b:00007ffd26f2b8c8 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00005d504415e200 RCX: 00007be9f211c574
+RDX: 0000000000001fc1 RSI: 00005d504418bc80 RDI: 0000000000000004
+RBP: 0000000000001fc1 R08: 0000000000001fc1 R09: 0000000080000000
+R10: 0000000000000000 R11: 0000000000000202 R12: 00005d504418bc80
+R13: 0000000000000004 R14: 00007ffd26f2b9b0 R15: 00007ffd26f2ba30
+ </TASK>
+Modules linked in: snd_seq_dummy snd_hrtimer qrtr snd_hda_codec_generic snd_hda_intel snd_intel_dspcfg snd_intel_sdw_acpi snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_seq_midi snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device i2c_i801 snd_timer i2c_smbus qxl snd soundcore drm_ttm_helper lpc_ich ttm joydev input_leds serio_raw mac_hid binfmt_misc msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs qemu_fw_cfg ip_tables x_tables autofs4 hid_generic usbhid hid ahci libahci psmouse virtio_rng xhci_pci xhci_pci_renesas
+CR2: 0000000000000030
+---[ end trace 0000000000000000 ]---
+RIP: 0010:aafs_create.constprop.0+0x7f/0x130
+Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
+RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
 
-However this assumption is wrong. There can be only one CPU to find the
-lock contended because call_rcu() (the bypass enqueuer) is the only
-bypass lock acquire site that may not already hold the NOCB lock
-beforehand, all the other sites must first contend on the NOCB lock.
-Therefore step 2) is impossible.
-
-The other problem is that the mitigation assumes that contenders all
-belong to the same rdp CPU, which is also impossible for a raw spinlock.
-In theory the warning could trigger if the enqueuer holds the bypass
-lock and another CPU flushes the bypass queue concurrently but this is
-prevented from all flush users:
-
-1) NOCB kthreads only flush if they successfully _tried_ to lock the
-   bypass lock. So no contention management here.
-
-2) Flush on callbacks migration happen remotely when the CPU is offline.
-   No concurrency against bypass enqueue.
-
-3) Flush on deoffloading happen either locally with IRQs disabled or
-   remotely when the CPU is not yet online. No concurrency against
-   bypass enqueue.
-
-4) Flush on barrier entrain happen either locally with IRQs disabled or
-   remotely when the CPU is offline. No concurrency against
-   bypass enqueue.
-
-For those reasons, the bypass lock contention mitigation isn't needed
-and is even wrong. Remove it but keep the warning reporting a contended
-bypass lock on a remote CPU, to keep unexpected contention awareness.
-
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.h      |  1 -
- kernel/rcu/tree_nocb.h | 32 ++++++--------------------------
- 2 files changed, 6 insertions(+), 27 deletions(-)
+ security/apparmor/apparmorfs.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
-index 7b702220d81c..aa16d3cd62ba 100644
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -207,7 +207,6 @@ struct rcu_data {
- 	struct swait_queue_head nocb_state_wq; /* For offloading state changes */
- 	struct task_struct *nocb_gp_kthread;
- 	raw_spinlock_t nocb_lock;	/* Guard following pair of fields. */
--	atomic_t nocb_lock_contended;	/* Contention experienced. */
- 	int nocb_defer_wakeup;		/* Defer wakeup of nocb_kthread. */
- 	struct timer_list nocb_timer;	/* Enforce finite deferral. */
- 	unsigned long nocb_gp_adv_time;	/* Last call_rcu() CB adv (jiffies). */
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index 0a5f0ef41484..6499eefa0660 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -91,8 +91,7 @@ module_param(nocb_nobypass_lim_per_jiffy, int, 0);
- 
- /*
-  * Acquire the specified rcu_data structure's ->nocb_bypass_lock.  If the
-- * lock isn't immediately available, increment ->nocb_lock_contended to
-- * flag the contention.
-+ * lock isn't immediately available, perform minimal sanity check.
-  */
- static void rcu_nocb_bypass_lock(struct rcu_data *rdp)
- 	__acquires(&rdp->nocb_bypass_lock)
-@@ -100,29 +99,12 @@ static void rcu_nocb_bypass_lock(struct rcu_data *rdp)
- 	lockdep_assert_irqs_disabled();
- 	if (raw_spin_trylock(&rdp->nocb_bypass_lock))
- 		return;
--	atomic_inc(&rdp->nocb_lock_contended);
-+	/*
-+	 * Contention expected only when local enqueue collide with
-+	 * remote flush from kthreads.
-+	 */
- 	WARN_ON_ONCE(smp_processor_id() != rdp->cpu);
--	smp_mb__after_atomic(); /* atomic_inc() before lock. */
- 	raw_spin_lock(&rdp->nocb_bypass_lock);
--	smp_mb__before_atomic(); /* atomic_dec() after lock. */
--	atomic_dec(&rdp->nocb_lock_contended);
--}
--
--/*
-- * Spinwait until the specified rcu_data structure's ->nocb_lock is
-- * not contended.  Please note that this is extremely special-purpose,
-- * relying on the fact that at most two kthreads and one CPU contend for
-- * this lock, and also that the two kthreads are guaranteed to have frequent
-- * grace-period-duration time intervals between successive acquisitions
-- * of the lock.  This allows us to use an extremely simple throttling
-- * mechanism, and further to apply it only to the CPU doing floods of
-- * call_rcu() invocations.  Don't try this at home!
-- */
--static void rcu_nocb_wait_contended(struct rcu_data *rdp)
--{
--	WARN_ON_ONCE(smp_processor_id() != rdp->cpu);
--	while (WARN_ON_ONCE(atomic_read(&rdp->nocb_lock_contended)))
--		cpu_relax();
- }
- 
- /*
-@@ -452,7 +434,6 @@ static bool rcu_nocb_try_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
- 	}
- 
- 	// We need to use the bypass.
--	rcu_nocb_wait_contended(rdp);
- 	rcu_nocb_bypass_lock(rdp);
- 	ncbs = rcu_cblist_n_cbs(&rdp->nocb_bypass);
- 	rcu_segcblist_inc_len(&rdp->cblist); /* Must precede enqueue. */
-@@ -1476,12 +1457,11 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
- 
- 	sprintf(bufw, "%ld", rsclp->gp_seq[RCU_WAIT_TAIL]);
- 	sprintf(bufr, "%ld", rsclp->gp_seq[RCU_NEXT_READY_TAIL]);
--	pr_info("   CB %d^%d->%d %c%c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
-+	pr_info("   CB %d^%d->%d %c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
- 		rdp->cpu, rdp->nocb_gp_rdp->cpu,
- 		nocb_next_rdp ? nocb_next_rdp->cpu : -1,
- 		"kK"[!!rdp->nocb_cb_kthread],
- 		"bB"[raw_spin_is_locked(&rdp->nocb_bypass_lock)],
--		"cC"[!!atomic_read(&rdp->nocb_lock_contended)],
- 		"lL"[raw_spin_is_locked(&rdp->nocb_lock)],
- 		"sS"[!!rdp->nocb_cb_sleep],
- 		".W"[swait_active(&rdp->nocb_cb_wq)],
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index 7160e7aa58b9..ce7b2f43c319 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -1687,6 +1687,10 @@ int __aafs_profile_mkdir(struct aa_profile *profile, struct dentry *parent)
+ 		struct aa_profile *p;
+ 		p = aa_deref_parent(profile);
+ 		dent = prof_dir(p);
++		if (!dent) {
++			error = -ENOENT;
++			goto fail2;
++		}
+ 		/* adding to parent that previously didn't have children */
+ 		dent = aafs_create_dir("profiles", dent);
+ 		if (IS_ERR(dent))
 -- 
 2.43.0
 
