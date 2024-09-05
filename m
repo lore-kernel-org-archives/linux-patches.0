@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96EC19413B;
-	Thu,  5 Sep 2024 09:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A90883CC8;
+	Thu,  5 Sep 2024 09:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530367; cv=none; b=AYaRProeufcXZgWm1NdcGEWHufHp5EqTdEfEFiUmjt4VnA4WXfTsmv43hRtENF4uNfBU8yBn7+mS0C+lxmnwsruU6xCYq17R01hU61t3hwulEc/cQxbBieO/o3Mtiv/f2mxfnNeD4N4oxUPV091IXdyj1mnbSCADWjJtPq5dw+I=
+	t=1725530370; cv=none; b=Uzr14771+0iS1LDSdvOxs6oNr2Y37Oa3DrPFbQLe+nmNANZ6ebpoqWd7Y2OKIghZmlhY8eOfRBUmxeZkFYwg1Qfagw16w2reE9sTlQn3OdF5d53LigkV4Ixbxq/EX/gJfWhjNXROtnIdj9/+ivusj/AzV/hc7YvoGgJOlRRpdcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530367; c=relaxed/simple;
-	bh=Z/ZIRusNI8gGMBdD1SbcA7UKTBqq4Hoy3KN0OxaSOJQ=;
+	s=arc-20240116; t=1725530370; c=relaxed/simple;
+	bh=9mkBVQNwB1dlCJc3zzPHRf8qjOXkMrNcc0ofvS/MOnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU01DwvAmqXWJCq78lBIPzFo+rXsokSRKc4ZFMClbt6VRohRtiw6kyVrrM5p29E7yITBm+5mMX4/uHgru39sl7yJ9V1D5+Ar3MZHrSOVrgYWz25h3LJzjimPHpTn3oKwb6bXlYEkGFhfeFlKdIUAyGY9JxCCTmUa2cLwbyLU74w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtaewKJu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxt3/FwClELh/HF8x/pXcObaaCwxkd7lX/OeZoK+2hEEe3JZbJ8FWu0ONZUlsD7UC51xyriCBDYsA+yX9gZGVezxI1KblxVT4WJuas9TP0FFSRblR7tv+7azV9LvSRCnESh6gNEa0+MznfJgylkSU4vMOPfcMdwRl+Pj0J3TTRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17ZhzkB/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtaewKJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207BBC4CEC3;
-	Thu,  5 Sep 2024 09:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17ZhzkB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4926DC4CEC4;
+	Thu,  5 Sep 2024 09:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530366;
-	bh=Z/ZIRusNI8gGMBdD1SbcA7UKTBqq4Hoy3KN0OxaSOJQ=;
+	s=korg; t=1725530370;
+	bh=9mkBVQNwB1dlCJc3zzPHRf8qjOXkMrNcc0ofvS/MOnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BtaewKJuREg4HRpZuXAbNlUXEPndJgIGJYHr4Q1ePwymxOgfQ5QT3sUrohi0IvfRr
-	 IggW/yWby9g6AAujPit0r8CSER9DvNY6TIONAPcG3o5ey3aftPInuHVk57aGghybB+
-	 1+1x3b5Vpq1VUBc8O61h6RQ1UJJjUvqvitCzA+mo=
+	b=17ZhzkB/+5PcUKasZnpOsDI3hsVTJS5USt/kqaHV6qOSgmXj8dYcn4EHq9VfVFF4/
+	 o8IRw2h414BXUtBbIvitH5WwTN0Kthn5L7S1+C7yGSXgKtSqJ5/CFZ9xSPsqegDl09
+	 qd/g6tlNpCtp1IDv/+kd7OvnQpt9Vz0WB2qQ2eGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lew <quic_clew@quicinc.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/132] soc: qcom: smem: Add qcom_smem_bust_hwspin_lock_by_host()
-Date: Thu,  5 Sep 2024 11:41:21 +0200
-Message-ID: <20240905093725.900546578@linuxfoundation.org>
+Subject: [PATCH 6.6 129/132] media: uvcvideo: Enforce alignment of frame and interval
+Date: Thu,  5 Sep 2024 11:41:56 +0200
+Message-ID: <20240905093727.228538625@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -52,74 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lew <quic_clew@quicinc.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 2e3f0d693875db698891ffe89a18121bda5b95b8 ]
+[ Upstream commit c8931ef55bd325052ec496f242aea7f6de47dc9c ]
 
-Add qcom_smem_bust_hwspin_lock_by_host to enable remoteproc to bust the
-hwspin_lock owned by smem. In the event the remoteproc crashes
-unexpectedly, the remoteproc driver can invoke this API to try and bust
-the hwspin_lock and release the lock if still held by the remoteproc
-device.
+Struct uvc_frame and interval (u32*) are packaged together on
+streaming->formats on a single contiguous allocation.
 
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Link: https://lore.kernel.org/r/20240529-hwspinlock-bust-v3-3-c8b924ffa5a2@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Right now they are allocated right after uvc_format, without taking into
+consideration their required alignment.
+
+This is working fine because both structures have a field with a
+pointer, but it will stop working when the sizeof() of any of those
+structs is not a multiple of the sizeof(void*).
+
+Enforce that alignment during the allocation.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240404-uvc-align-v2-1-9e104b0ecfbd@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/smem.c       | 26 ++++++++++++++++++++++++++
- include/linux/soc/qcom/smem.h |  2 ++
- 2 files changed, 28 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index d4a89d2bb43b..2e8568d6cde9 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -359,6 +359,32 @@ static struct qcom_smem *__smem;
- /* Timeout (ms) for the trylock of remote spinlocks */
- #define HWSPINLOCK_TIMEOUT	1000
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 68bf41147a61..04e7f58553db 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -687,16 +687,26 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 		goto error;
+ 	}
  
-+/* The qcom hwspinlock id is always plus one from the smem host id */
-+#define SMEM_HOST_ID_TO_HWSPINLOCK_ID(__x) ((__x) + 1)
+-	size = nformats * sizeof(*format) + nframes * sizeof(*frame)
++	/*
++	 * Allocate memory for the formats, the frames and the intervals,
++	 * plus any required padding to guarantee that everything has the
++	 * correct alignment.
++	 */
++	size = nformats * sizeof(*format);
++	size = ALIGN(size, __alignof__(*frame)) + nframes * sizeof(*frame);
++	size = ALIGN(size, __alignof__(*interval))
+ 	     + nintervals * sizeof(*interval);
 +
-+/**
-+ * qcom_smem_bust_hwspin_lock_by_host() - bust the smem hwspinlock for a host
-+ * @host:	remote processor id
-+ *
-+ * Busts the hwspin_lock for the given smem host id. This helper is intended
-+ * for remoteproc drivers that manage remoteprocs with an equivalent smem
-+ * driver instance in the remote firmware. Drivers can force a release of the
-+ * smem hwspin_lock if the rproc unexpectedly goes into a bad state.
-+ *
-+ * Context: Process context.
-+ *
-+ * Returns: 0 on success, otherwise negative errno.
-+ */
-+int qcom_smem_bust_hwspin_lock_by_host(unsigned int host)
-+{
-+	/* This function is for remote procs, so ignore SMEM_HOST_APPS */
-+	if (host == SMEM_HOST_APPS || host >= SMEM_HOST_COUNT)
-+		return -EINVAL;
-+
-+	return hwspin_lock_bust(__smem->hwlock, SMEM_HOST_ID_TO_HWSPINLOCK_ID(host));
-+}
-+EXPORT_SYMBOL_GPL(qcom_smem_bust_hwspin_lock_by_host);
-+
- /**
-  * qcom_smem_is_available() - Check if SMEM is available
-  *
-diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
-index a36a3b9d4929..03187bc95851 100644
---- a/include/linux/soc/qcom/smem.h
-+++ b/include/linux/soc/qcom/smem.h
-@@ -14,4 +14,6 @@ phys_addr_t qcom_smem_virt_to_phys(void *p);
+ 	format = kzalloc(size, GFP_KERNEL);
+-	if (format == NULL) {
++	if (!format) {
+ 		ret = -ENOMEM;
+ 		goto error;
+ 	}
  
- int qcom_smem_get_soc_id(u32 *id);
+-	frame = (struct uvc_frame *)&format[nformats];
+-	interval = (u32 *)&frame[nframes];
++	frame = (void *)format + nformats * sizeof(*format);
++	frame = PTR_ALIGN(frame, __alignof__(*frame));
++	interval = (void *)frame + nframes * sizeof(*frame);
++	interval = PTR_ALIGN(interval, __alignof__(*interval));
  
-+int qcom_smem_bust_hwspin_lock_by_host(unsigned int host);
-+
- #endif
+ 	streaming->formats = format;
+ 	streaming->nformats = 0;
 -- 
 2.43.0
 
