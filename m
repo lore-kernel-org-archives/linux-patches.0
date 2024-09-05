@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCBC1494DB;
-	Thu,  5 Sep 2024 10:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CEF1494DB;
+	Thu,  5 Sep 2024 10:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530596; cv=none; b=KDmFItjp98lqd4pGNUx517oJlA/RDWMkgYDrmMTs5cQzBzDow2YlBjENsUo+fCllyLCy+u0BalCX+z/0tPtJPDx68e0qaOd10eA9WX+GLaInG69U75QoBXRQLGhgwxNvNEw3Z8Zn5HQh3Gy2XWla/rS45BvlBMtiOL34dlpLwV4=
+	t=1725530599; cv=none; b=rwGBXlhTajj1MnNw1yGfYNCGWAw3nh+smmxUbJd/0q4Q8r4nOQ6qOTEvYLAmGzdb2SPlbE99NCbJGrHG4sfp14It1lZ7LTcgd82QOwpjk4x4pBIbJpR5wQ2IKQzOMQWftTsxhw+vKgwlKvM2KxYW0fl0DV1NBKto1KnQTdd/I/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530596; c=relaxed/simple;
-	bh=TTW8Y7GOcMkg20RXwovJhN6v0CqKlDOYYVTSan7hxyA=;
+	s=arc-20240116; t=1725530599; c=relaxed/simple;
+	bh=DTm3fNwHR0gHQdNA6rMcAw8kOApN+Mxyl43vZSFO0XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=be5FOJXwI2AUtBsXL/nZpuVSN9cPOO1Ycbs1Z8tk1GPxmpMpLrn86mWp4xuvJ4B4Vi3T75VSLHLemrlEy3mm2DgtqGhM5dneefoaEh5T8ckooQTh6oi3L3K8bp+ZQHW/vcMkpSmnJN8MmyfHeHKgYQAgqfzMfnkS8Iul2UGoz+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FV6eVjFT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUz1/oSUuwNsEDHmPKeML5AueJphibYkO9zOBCdtczqUW2PvmQNzeIbvRruPS2WJpKnKWuGEU57Igyru6ssfbdxPDxqrl1wX4EFSGgpccdLFRqmlVboQ2Eg+y8Gvw/NiBIDeqMFqBD3BBO28fWJrBfP3o3BieSXdZEYTnD7vcA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDtjOkpx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FV6eVjFT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C70C4CEC3;
-	Thu,  5 Sep 2024 10:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDtjOkpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16994C4CEC3;
+	Thu,  5 Sep 2024 10:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530596;
-	bh=TTW8Y7GOcMkg20RXwovJhN6v0CqKlDOYYVTSan7hxyA=;
+	s=korg; t=1725530599;
+	bh=DTm3fNwHR0gHQdNA6rMcAw8kOApN+Mxyl43vZSFO0XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FV6eVjFT6TuOxUFC5kwK1y7cPzcUIyG0HATOOjjl1N9wUCoPNB8uc+DiZH/3ic/7y
-	 SHH26fFk+ZbOTUvg+RbON8PNULJ4qIFVX/nApI6FMHniPZcoFH4LiEhYQvUFGmPmxJ
-	 j3LfWbfIX059DTaHJ64bLvV+rThru9BySpChdFl8=
+	b=uDtjOkpxIasJM9Omvv2xuySCJz+NYskwM8qwGPhLZIkhol+0Q06v9vEA+kLmktq7q
+	 +xBL+qtav8rS5+cvySF4CgTzaxxv4hLU+wO/is9+jISb4q7A1ydhtrq5XwupadKusv
+	 6Bekeolz4v7rA3SJv13+fgCjDSLtlwttPYuMSDuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ken Sloat <ksloat@designlinxhs.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Sean Anderson <sean.anderson@seco.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/101] pwm: xilinx: Fix u32 overflow issue in 32-bit width PWM mode.
-Date: Thu,  5 Sep 2024 11:41:46 +0200
-Message-ID: <20240905093719.027782921@linuxfoundation.org>
+Subject: [PATCH 6.1 075/101] rcu/nocb: Remove buggy bypass lock contention mitigation
+Date: Thu,  5 Sep 2024 11:41:47 +0200
+Message-ID: <20240905093719.065888892@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -52,57 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ken Sloat <ksloat@designlinxhs.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 56f45266df67aa0f5b2a6881c8c4d16dbfff6b7d ]
+[ Upstream commit e4f78057291608f6968a6789c5ebb3bde7d95504 ]
 
-This timer HW supports 8, 16 and 32-bit timer widths. This
-driver currently uses a u32 to store the max possible value
-of the timer. However, statements perform addition of 2 in
-xilinx_pwm_apply() when calculating the period_cycles and
-duty_cycles values. Since priv->max is a u32, this will
-result in an overflow to 1 which will not only be incorrect
-but fail on range comparison. This results in making it
-impossible to set the PWM in this timer mode.
+The bypass lock contention mitigation assumes there can be at most
+2 contenders on the bypass lock, following this scheme:
 
-There are two obvious solutions to the current problem:
-1. Cast each instance where overflow occurs to u64.
-2. Change priv->max from a u32 to a u64.
+1) One kthread takes the bypass lock
+2) Another one spins on it and increment the contended counter
+3) A third one (a bypass enqueuer) sees the contended counter on and
+  busy loops waiting on it to decrement.
 
-Solution #1 requires more code modifications, and leaves
-opportunity to introduce similar overflows if other math
-statements are added in the future. These may also go
-undetected if running in non 32-bit timer modes.
+However this assumption is wrong. There can be only one CPU to find the
+lock contended because call_rcu() (the bypass enqueuer) is the only
+bypass lock acquire site that may not already hold the NOCB lock
+beforehand, all the other sites must first contend on the NOCB lock.
+Therefore step 2) is impossible.
 
-Solution #2 is the much smaller and cleaner approach and
-thus the chosen method in this patch.
+The other problem is that the mitigation assumes that contenders all
+belong to the same rdp CPU, which is also impossible for a raw spinlock.
+In theory the warning could trigger if the enqueuer holds the bypass
+lock and another CPU flushes the bypass queue concurrently but this is
+prevented from all flush users:
 
-This was tested on a Zynq UltraScale+ with multiple
-instances of the PWM IP.
+1) NOCB kthreads only flush if they successfully _tried_ to lock the
+   bypass lock. So no contention management here.
 
-Signed-off-by: Ken Sloat <ksloat@designlinxhs.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Reviewed-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/SJ0P222MB0107490C5371B848EF04351CA1E19@SJ0P222MB0107.NAMP222.PROD.OUTLOOK.COM
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+2) Flush on callbacks migration happen remotely when the CPU is offline.
+   No concurrency against bypass enqueue.
+
+3) Flush on deoffloading happen either locally with IRQs disabled or
+   remotely when the CPU is not yet online. No concurrency against
+   bypass enqueue.
+
+4) Flush on barrier entrain happen either locally with IRQs disabled or
+   remotely when the CPU is offline. No concurrency against
+   bypass enqueue.
+
+For those reasons, the bypass lock contention mitigation isn't needed
+and is even wrong. Remove it but keep the warning reporting a contended
+bypass lock on a remote CPU, to keep unexpected contention awareness.
+
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/clocksource/timer-xilinx.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/rcu/tree.h      |  1 -
+ kernel/rcu/tree_nocb.h | 32 ++++++--------------------------
+ 2 files changed, 6 insertions(+), 27 deletions(-)
 
-diff --git a/include/clocksource/timer-xilinx.h b/include/clocksource/timer-xilinx.h
-index c0f56fe6d22a..d116f18de899 100644
---- a/include/clocksource/timer-xilinx.h
-+++ b/include/clocksource/timer-xilinx.h
-@@ -41,7 +41,7 @@ struct regmap;
- struct xilinx_timer_priv {
- 	struct regmap *map;
- 	struct clk *clk;
--	u32 max;
-+	u64 max;
- };
+diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
+index 7b702220d81c..aa16d3cd62ba 100644
+--- a/kernel/rcu/tree.h
++++ b/kernel/rcu/tree.h
+@@ -207,7 +207,6 @@ struct rcu_data {
+ 	struct swait_queue_head nocb_state_wq; /* For offloading state changes */
+ 	struct task_struct *nocb_gp_kthread;
+ 	raw_spinlock_t nocb_lock;	/* Guard following pair of fields. */
+-	atomic_t nocb_lock_contended;	/* Contention experienced. */
+ 	int nocb_defer_wakeup;		/* Defer wakeup of nocb_kthread. */
+ 	struct timer_list nocb_timer;	/* Enforce finite deferral. */
+ 	unsigned long nocb_gp_adv_time;	/* Last call_rcu() CB adv (jiffies). */
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index 0a5f0ef41484..6499eefa0660 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -91,8 +91,7 @@ module_param(nocb_nobypass_lim_per_jiffy, int, 0);
  
- /**
+ /*
+  * Acquire the specified rcu_data structure's ->nocb_bypass_lock.  If the
+- * lock isn't immediately available, increment ->nocb_lock_contended to
+- * flag the contention.
++ * lock isn't immediately available, perform minimal sanity check.
+  */
+ static void rcu_nocb_bypass_lock(struct rcu_data *rdp)
+ 	__acquires(&rdp->nocb_bypass_lock)
+@@ -100,29 +99,12 @@ static void rcu_nocb_bypass_lock(struct rcu_data *rdp)
+ 	lockdep_assert_irqs_disabled();
+ 	if (raw_spin_trylock(&rdp->nocb_bypass_lock))
+ 		return;
+-	atomic_inc(&rdp->nocb_lock_contended);
++	/*
++	 * Contention expected only when local enqueue collide with
++	 * remote flush from kthreads.
++	 */
+ 	WARN_ON_ONCE(smp_processor_id() != rdp->cpu);
+-	smp_mb__after_atomic(); /* atomic_inc() before lock. */
+ 	raw_spin_lock(&rdp->nocb_bypass_lock);
+-	smp_mb__before_atomic(); /* atomic_dec() after lock. */
+-	atomic_dec(&rdp->nocb_lock_contended);
+-}
+-
+-/*
+- * Spinwait until the specified rcu_data structure's ->nocb_lock is
+- * not contended.  Please note that this is extremely special-purpose,
+- * relying on the fact that at most two kthreads and one CPU contend for
+- * this lock, and also that the two kthreads are guaranteed to have frequent
+- * grace-period-duration time intervals between successive acquisitions
+- * of the lock.  This allows us to use an extremely simple throttling
+- * mechanism, and further to apply it only to the CPU doing floods of
+- * call_rcu() invocations.  Don't try this at home!
+- */
+-static void rcu_nocb_wait_contended(struct rcu_data *rdp)
+-{
+-	WARN_ON_ONCE(smp_processor_id() != rdp->cpu);
+-	while (WARN_ON_ONCE(atomic_read(&rdp->nocb_lock_contended)))
+-		cpu_relax();
+ }
+ 
+ /*
+@@ -452,7 +434,6 @@ static bool rcu_nocb_try_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
+ 	}
+ 
+ 	// We need to use the bypass.
+-	rcu_nocb_wait_contended(rdp);
+ 	rcu_nocb_bypass_lock(rdp);
+ 	ncbs = rcu_cblist_n_cbs(&rdp->nocb_bypass);
+ 	rcu_segcblist_inc_len(&rdp->cblist); /* Must precede enqueue. */
+@@ -1476,12 +1457,11 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
+ 
+ 	sprintf(bufw, "%ld", rsclp->gp_seq[RCU_WAIT_TAIL]);
+ 	sprintf(bufr, "%ld", rsclp->gp_seq[RCU_NEXT_READY_TAIL]);
+-	pr_info("   CB %d^%d->%d %c%c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
++	pr_info("   CB %d^%d->%d %c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
+ 		rdp->cpu, rdp->nocb_gp_rdp->cpu,
+ 		nocb_next_rdp ? nocb_next_rdp->cpu : -1,
+ 		"kK"[!!rdp->nocb_cb_kthread],
+ 		"bB"[raw_spin_is_locked(&rdp->nocb_bypass_lock)],
+-		"cC"[!!atomic_read(&rdp->nocb_lock_contended)],
+ 		"lL"[raw_spin_is_locked(&rdp->nocb_lock)],
+ 		"sS"[!!rdp->nocb_cb_sleep],
+ 		".W"[swait_active(&rdp->nocb_cb_wq)],
 -- 
 2.43.0
 
