@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4BC1494DB;
-	Thu,  5 Sep 2024 10:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD751494DB;
+	Thu,  5 Sep 2024 10:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530683; cv=none; b=XlQKyPcZbAwsXZ9Urh1Rj+vcZ15xFEK4UzuvNAdUGeR9JxbHTk24+SygZP5RIAp51Y/rDfwfsE7+njYFDe5ep6k2NwJiAVy03yVJdRqZul58c4aZaPxgVk0gG5RmX1JMzcH132oEgtORNvQKn/+ZgCivPxpM0gEbdLAeQhDQGY4=
+	t=1725530686; cv=none; b=Wvlrb9h36Id8E8EVw0F0GIkD/jdW8Gw4sfGxcHRNZVugdKBgbhaGJN8mpgrfjQYal1rU68rYMIB+yb3rKofxmtZ79m6lsw+VbRp9s74wyjQv4RqBYiIAVf8gkKC/Na2st2+hHZW+6xF7F8GLh+uQntEvAR4GTsvpUvqYb5ycRDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530683; c=relaxed/simple;
-	bh=itC2OFMOYkCG5Qca6p5R2TH4GicBfWMfeUJvipf8kJU=;
+	s=arc-20240116; t=1725530686; c=relaxed/simple;
+	bh=THWQaUU66EdXipGvEMjmkf8B8uV4nP3AQFI0YH5XJKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwinUKzalL4gr3rGeU21oovxXhL///Tzn87YCCLELOPiMBrQbDt78AY6p6l3QK0gX+l+qldMbjYiNQ48lJ5tNasPRO2kNXVgiGCBkmXYwv73t8ysdHjk/RK3/k/msrjCOTz/SotUSHu8WwbPPpMYtzSptAj/SEzjMPZYRCZWYXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2hUeheN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ircKcvVg1w2czqbGlqP61ak9AFJXq4mIKZBOWj56dk8qdmZwAraaNUQCjF34KcPouotJdkCYBeKnDSXiaCUIVJ3Ed9/xKzQitJvcpIN/VW7muGpTe25rpvgVPxwj9WC84yZsf5SivXuZXjhzOHTiQwK2JVEpCCVdLM0GeV+Pggk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYvpVak+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2hUeheN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD9C4CEC3;
-	Thu,  5 Sep 2024 10:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYvpVak+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2060FC4CEC3;
+	Thu,  5 Sep 2024 10:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530683;
-	bh=itC2OFMOYkCG5Qca6p5R2TH4GicBfWMfeUJvipf8kJU=;
+	s=korg; t=1725530686;
+	bh=THWQaUU66EdXipGvEMjmkf8B8uV4nP3AQFI0YH5XJKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2hUeheNPmLIm3uKTNiMjFN4Wos3wdu9FWRXRWZM9obfLiSVfgKLWMvlDkExYEGkp
-	 VOO9sSlZ2/Tp/EdS88FvJeCYtlirz99zAltltgt8mDsycL5fgsL6zl89cHLTKLxqPB
-	 CTZynha9VW7YA8A67srD5kA4yRGm+9qk30MWzXkc=
+	b=LYvpVak+vx1+y8UNBAKjY5ptDP/u7kGlP/+Wd0tenrNpQe+X3xDvH5sJ2F/O8fONq
+	 1Wdf/x1qmCu+UVF+J1yb/OZb+64NrgSfms+QeDslK+F5xiSwqCXU+83DwR4/UAFv5o
+	 +ulU+XiFT7oyu4QP90yS6rvfYe/ynCAu4ed10SWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	kernel test robot <lkp@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.1 101/101] i2c: Use IS_REACHABLE() for substituting empty ACPI functions
-Date: Thu,  5 Sep 2024 11:42:13 +0200
-Message-ID: <20240905093720.069139129@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 092/101] drm/amd/display: Skip wbscl_set_scaler_filter if filter is null
+Date: Thu,  5 Sep 2024 11:42:04 +0200
+Message-ID: <20240905093719.724551589@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -52,49 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 71833e79a42178d8a50b5081c98c78ace9325628 upstream.
+[ Upstream commit c4d31653c03b90e51515b1380115d1aedad925dd ]
 
-Replace IS_ENABLED() with IS_REACHABLE() to substitute empty stubs for:
-    i2c_acpi_get_i2c_resource()
-    i2c_acpi_client_count()
-    i2c_acpi_find_bus_speed()
-    i2c_acpi_new_device_by_fwnode()
-    i2c_adapter *i2c_acpi_find_adapter_by_handle()
-    i2c_acpi_waive_d0_probe()
+Callers can pass null in filter (i.e. from returned from the function
+wbscl_get_filter_coeffs_16p) and a null check is added to ensure that is
+not the case.
 
-commit f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI
-functions") partially fixed this conditional to depend on CONFIG_I2C,
-but used IS_ENABLED(), which is wrong since CONFIG_I2C is tristate.
+This fixes 4 NULL_RETURNS issues reported by Coverity.
 
-CONFIG_ACPI is boolean but let's also change it to use IS_REACHABLE()
-to future-proof it against becoming tristate.
-
-Somehow despite testing various combinations of CONFIG_I2C and CONFIG_ACPI
-we missed the combination CONFIG_I2C=m, CONFIG_ACPI=y.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI functions")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408141333.gYnaitcV-lkp@intel.com/
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/i2c.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/linux/i2c.h
-+++ b/include/linux/i2c.h
-@@ -1035,7 +1035,7 @@ static inline int of_i2c_get_board_info(
- struct acpi_resource;
- struct acpi_resource_i2c_serialbus;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+index 994fb732a7cb..a0d437f0ce2b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+@@ -690,6 +690,9 @@ static void wbscl_set_scaler_filter(
+ 	int pair;
+ 	uint16_t odd_coef, even_coef;
  
--#if IS_ENABLED(CONFIG_ACPI) && IS_ENABLED(CONFIG_I2C)
-+#if IS_REACHABLE(CONFIG_ACPI) && IS_REACHABLE(CONFIG_I2C)
- bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
- 			       struct acpi_resource_i2c_serialbus **i2c);
- int i2c_acpi_client_count(struct acpi_device *adev);
++	if (!filter)
++		return;
++
+ 	for (phase = 0; phase < (NUM_PHASES / 2 + 1); phase++) {
+ 		for (pair = 0; pair < tap_pairs; pair++) {
+ 			even_coef = filter[phase * taps + 2 * pair];
+-- 
+2.43.0
+
 
 
