@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DCE198E81;
-	Thu,  5 Sep 2024 09:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AD2198841;
+	Thu,  5 Sep 2024 09:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529616; cv=none; b=Yn8txm9Ttqd9P5M6h+wW6lT5kgVISwGhmR9MIkZFV+OK6QdiuZax2769rEb0pMU8D0dLju1IgRTcDQRaRSt6bv7uvHLiFRP64RxfH1PGPc3Qc7J+ZypZGIYeiH+8KTC5Qhl6Elxa8rXy3/N7wNLkx1wnZTFWEb+7Wwjl4CX+gfk=
+	t=1725529619; cv=none; b=XZ5rvp6hPlnQgtfWU1zi/BqhV1xE2NOSgY87Vl+C/U/VDOOAtSe1051osledMQi18wRLBB26P41fVoTaFRvx5ry7otzPe/e7YC3eUS0zq39+ljaUilbDT8BIFcjXF7X0Gf/GlI4JXfPTSX09feq5NxQN5ttHTicNSsxJJqqSSW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529616; c=relaxed/simple;
-	bh=qbcDWiKUysSLf98S3DSv+YEpSYCH0SRJbUL9Rp07M/4=;
+	s=arc-20240116; t=1725529619; c=relaxed/simple;
+	bh=rrZbMF++nURR1t7b8VyaMHZ/npUitgmIWcNkW/tiHaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWpK+HmbPhdlXr0xm2JsWx0Lg1ULmAj+bo05SP3vJDwMQAJLGt/5CP5dtQ1Eq5ugNdFNFyKPoXpCe+53A/Ivxp25IKI0GohWa5R972Qdd7NE+wY2rw3i6Kn9YLEtJRJk7u5uW3AYsVc0rL3aPuQroYbFf2EGib7xHXCg/3iFzz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyFz7RR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4sK9GaPyofX8o+el5aClqjXWdMbDpIs0no6Syz2lWIw+7hjIMyFo68tPqq0KyV406UnNythFbhcrs8dpPN9tyvQY7LLahz2IsQ7L5j4wN7IwEtHQSvkNMnz1TRBnjehNP5n06HvHQDOX9EA7rvaO7CWhIwjR//Vry8eHNowkAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQzUO/z6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyFz7RR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8084CC4CEC3;
-	Thu,  5 Sep 2024 09:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQzUO/z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE41C4CEC6;
+	Thu,  5 Sep 2024 09:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529616;
-	bh=qbcDWiKUysSLf98S3DSv+YEpSYCH0SRJbUL9Rp07M/4=;
+	s=korg; t=1725529619;
+	bh=rrZbMF++nURR1t7b8VyaMHZ/npUitgmIWcNkW/tiHaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyFz7RR9gP1ZPRsQ7aI0l0yZ0txDhET7TitEy1rkqrc+fQ/bszuHuUeiwzl8Jwebm
-	 iWgjRrGO47nNMk2GkiHnhjYJLYKkguJMaxdnHJzMO2qhvoQ+S0vzaVEOFK7USa6ANt
-	 sSEnm32s74Ay3kUoIyzwdZGhdOSpEbCwBA5d0reg=
+	b=oQzUO/z6gvDCOdPO8hOr7MbpMOn1TjdxDjwZiL2RYANrcaPFuvbifaikLAMokB8tB
+	 hYsxSh69Yo1dyGVlforkD9TwYoleCbT2KnSTzuk42x2MLHmO4TvZsYAEi9C9xhjTgS
+	 qLxPtaRqFnvkvgJq8skl75zlmVl8PDuJMzIiDFAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 088/184] drm/amdgpu: fix uninitialized variable warning for amdgpu_xgmi
-Date: Thu,  5 Sep 2024 11:40:01 +0200
-Message-ID: <20240905093735.677195732@linuxfoundation.org>
+Subject: [PATCH 6.10 089/184] drm/amdgpu: fix uninitialized variable warning for jpeg_v4
+Date: Thu,  5 Sep 2024 11:40:02 +0200
+Message-ID: <20240905093735.717650339@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -53,32 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit 8f184f8e7a07fddc33ee4e6a38b717c770c3aedd ]
+[ Upstream commit 9e5da942594034ec377ba8c0caa9c15e1d26ba08 ]
 
-Clear warning that using uninitialized variable current_node.
+Clear warning that using uninitialized variable r.
 
 Signed-off-by: Tim Huang <Tim.Huang@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c
-index dd2ec48cf5c2..4a14f9c1bfe8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c
-@@ -434,6 +434,9 @@ static ssize_t amdgpu_xgmi_show_connected_port_num(struct device *dev,
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
+index da6bb9022b80..4c8f9772437b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
+@@ -187,7 +187,7 @@ static int jpeg_v4_0_5_hw_init(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 	struct amdgpu_ring *ring;
+-	int r, i;
++	int i, r = 0;
  
-+	if (i == top->num_nodes)
-+		return -EINVAL;
-+
- 	for (i = 0; i < top->num_nodes; i++) {
- 		for (j = 0; j < top->nodes[i].num_links; j++)
- 			/* node id in sysfs starts from 1 rather than 0 so +1 here */
+ 	// TODO: Enable ring test with DPG support
+ 	if (adev->pg_flags & AMD_PG_SUPPORT_JPEG_DPG) {
 -- 
 2.43.0
 
