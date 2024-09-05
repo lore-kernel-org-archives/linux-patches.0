@@ -1,159 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF2A747F
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022CF38C
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725498528; cv=none; b=R9h3GXvurhZOA/rvWcwTbzQBhTN2odAYsca7elew555WvNl16Le3Au6hqbApSkWBH6XL6NUgJlnPl+6ajnWbVHvff9VON+G2IoMI+hftAGmuIoT7aXNcp262rQZmFSxaxVU++EgHX9Jk7LsP8uFttXH4COmF52YgjJ/Jcd2I2wE=
+	t=1725499192; cv=none; b=QBZ6UkQbMMccS926cGnw8Ym+2i6h/1MwrLghqkLEuTCRJ1bhBFbLROktRGPBChG11g3sQHlBfcraP14qYBG3iwN2yNq7POZQRtbR4IAQUj2hLMPyhuf/Lwuu1w3Cu9sAdsokdh7WlG7U3UgqiSZ3+ZaQz3jcG/rE0CsUSysuz/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725498528; c=relaxed/simple;
-	bh=0eAygMpYMUKKaVFYb0b+bSm3rV9+kxvO8ubLJ0QOGA8=;
+	s=arc-20240116; t=1725499192; c=relaxed/simple;
+	bh=2030roQObHKMD07MYVmrkVNTgGeX8KWnT4BgIJmDcMU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F5v82HI8GWcgElrthC87EQjFx1QDmhVfyjgldRMzz76kk6xcn4Zrawk1fqHtfG+GCkQItK/m9nY5aSGyi8tuETS9SEv0xLHJ4xOlymqco+5b2GcAdAlFRy/MXAfKL4R8xKzFxRDAAgSZ50w7O8dk550sLqT5vpH5TKC4mS+YAM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nyY5zIoB; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=shFM6yfneWqOpT7nvo1DhsoPrcXhjEaznq7cRKJ5I4zVj77DL1IKf1sHrIqe2cAxcjGw+WUluBd5S0mgb2WhU/RDZIl5a8qOzv1aeYvfoln6jUe387VpK6vnDTiVDPtDxgDT2XDv0NA2Z8J07AH+xxA+G3foAhhedqF+j9fO6nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3MXffba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nyY5zIoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF9BC4AF09
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:08:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3MXffba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BBDC4AF09
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725498528;
-	bh=0eAygMpYMUKKaVFYb0b+bSm3rV9+kxvO8ubLJ0QOGA8=;
+	s=k20201202; t=1725499191;
+	bh=2030roQObHKMD07MYVmrkVNTgGeX8KWnT4BgIJmDcMU=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=nyY5zIoBI5TvuW78FqWVdu7BNa5qbyRC6QJkDznQIRa9ktn5a8hS9/R4SUqCLoqWJ
-	 gIiItndm7j86axv5Pufk+DumtrDqlK6QEg7zVed0YOn5sAALSOL74VYS9GJ4oJY+SK
-	 4AnW4nIZxt2YQwoxeEPU51OMMYFaPNXKzTuTw6HCf6mGw/RQC862NBEPvqjBkqFswa
-	 nFtlv8fi+LXHTvTyVxNANbhrvLjC8/4HiIp2zfYHrO4tTzpsTwxjyuxgDFtL7Nc837
-	 /sbaiXyzUG9e6MwE75upY2ijY7LQBykCvC7fiHb01MvvfvH3/lzTc+4mnDcbzOgLDO
-	 l+5qvqsTxrBsQ==
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5334c4d6829so153869e87.2
-        for <patches@lists.linux.dev>; Wed, 04 Sep 2024 18:08:47 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUhEwEGzfXo9DdtnFFYEEcwXTCpOMBHmJ1Z3r0zyB3p+cCW0fuREHKg45U5yYLrNOneVc2neki8@lists.linux.dev
-X-Gm-Message-State: AOJu0YzG28yT3UX5lVrt/Po/Ua+fcYHEdLFS23wYmXdH/QzpH4cxRw9u
-	HJaV9GFKmlRxzPznPhqJeVO/IjBK5jAlgGi2P/v/NXskSFFK6sqzqkm5rgRqtzRCtBUVCz3FGt8
-	kkz5z+Ir+L5C7QIBKDn+ebkTzljw=
-X-Google-Smtp-Source: AGHT+IHVMo+ONycK3UXEft3pK8yg79GjhZ75/GGU3cZa9yMkIhsCrhbO46PszfxVAOdcSPUpUyvUy5lf5PYym5BvIY4=
-X-Received: by 2002:a05:6512:2807:b0:536:14a1:d660 with SMTP id
- 2adb3069b0e04-53614a1d71cmr333883e87.6.1725498526672; Wed, 04 Sep 2024
- 18:08:46 -0700 (PDT)
+	b=G3MXffbazN9EZG5EMYdkQbXUjX91lqjSxqQwcqp/1CxDBoOc1VuLaLIme+BZ2roWd
+	 fT120jhuIQw18y07vxNuxa6LEgZzhh7jgOwV1g/q/ChReV8H4hO8sRJcQzloOMyGJg
+	 figU2AAjKXsvXOi1fXVB93bdQOzgNbtSNC2V+3FsOL08GaiqgW1CW8wlUEYSWU1AqB
+	 Ql6p9WRwtQPHXdOYVttYRC5J13wsm3Ncjlq70xNJlKFnf6i2uRHL090sAMsalLp+s1
+	 WFfIuKgsGHZ4OKYGiBiJdEyydAbNWR9T2LoAfe5AIOFTb6C6S0TcsT18D0Zd0Vf1eQ
+	 TzFrQkGLpKY9Q==
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53567b4c3f4so138288e87.2
+        for <patches@lists.linux.dev>; Wed, 04 Sep 2024 18:19:51 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCX3zbb4cPgYx+W34nVN3zkaG1txb6QfMeN/rGo1sb+IO4zAebDGFsD42iUZxYkLxw20ipsngtP+@lists.linux.dev
+X-Gm-Message-State: AOJu0YzxRvBUpfD/XTYN2hwdrv7VUKH8LcC2BIX5du06Ks87OiyPBD0N
+	kS+p6SX0a0KBDko00SyEXqx03ADixPuHtuOfd49gqr1eQ3uH2pKKh3NQ5ZRGZoPynv59QVs3Ifq
+	NFkc/nqUY7IkW9AG27p7iNgxGeQA=
+X-Google-Smtp-Source: AGHT+IF1S6v2KNIhGOZ4cv9q3lTpmiKDe9DRF/mzNEjxzA3Vdc+CY+N3vgCLk5zSrB3AtBSyj3C1NAQKG+yhUCoZzHo=
+X-Received: by 2002:a05:6512:1382:b0:530:da96:a986 with SMTP id
+ 2adb3069b0e04-53546b8dac1mr11309551e87.47.1725499190276; Wed, 04 Sep 2024
+ 18:19:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240902165535.1101978-1-ojeda@kernel.org> <20240902165535.1101978-2-ojeda@kernel.org>
-In-Reply-To: <20240902165535.1101978-2-ojeda@kernel.org>
+References: <20240808221138.873750-1-ojeda@kernel.org> <CAH5fLgh9Moq_9M+zMu300ohK=mPqkLyS6cpQ6An2Q3THCPFjaA@mail.gmail.com>
+ <CANiq72kUBPnua1Pob++-6SJ8MeGxQMfrePY9SQVd0DZp5VU-2A@mail.gmail.com>
+In-Reply-To: <CANiq72kUBPnua1Pob++-6SJ8MeGxQMfrePY9SQVd0DZp5VU-2A@mail.gmail.com>
 From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Thu, 5 Sep 2024 10:08:10 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAR5Fz=qf1Srf=RJhGANQZDmiKkuHPeTbqyT+SEwjtDZWQ@mail.gmail.com>
-Message-ID: <CAK7LNAR5Fz=qf1Srf=RJhGANQZDmiKkuHPeTbqyT+SEwjtDZWQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] kbuild: rust: add `CONFIG_RUSTC_VERSION`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+Date: Thu, 5 Sep 2024 10:19:14 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASHdd8Gv6OpXnP3tywrTA6iEZVqZGLb0V-vV_VUR-ksWQ@mail.gmail.com>
+Message-ID: <CAK7LNASHdd8Gv6OpXnP3tywrTA6iEZVqZGLb0V-vV_VUR-ksWQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] kbuild: rust: add `RUSTC_VERSION` and
+ reconfig/rebuild support
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 3, 2024 at 1:56=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
+On Tue, Sep 3, 2024 at 2:40=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> Now that we support several Rust versions, introduce
-> `CONFIG_RUSTC_VERSION` so that it can be used in Kconfig to enable and
-> disable configuration options based on the `rustc` version.
+> On Mon, Aug 19, 2024 at 9:29=E2=80=AFAM Alice Ryhl <aliceryhl@google.com>=
+ wrote:
+> >
+> > I tested this together with Rust Binder. I also ran this patchset
+> > through Android's CI setup to verify that it works in builds with
+> > CONFIG_RUST disabled. It passes both with and without a Rust compiler
+> > available to the build system.
+> >
+> > Tested-by: Alice Ryhl <aliceryhl@google.com>
+> >
+> > I'm happy to rerun these tests for new versions.
 >
-> The approach taken resembles `pahole`'s -- see commit 613fe1692377
-> ("kbuild: Add CONFIG_PAHOLE_VERSION"), i.e. a simple version parsing
-> without trying to identify several kinds of compilers, since so far
-> there is only one (`rustc`).
+> Thanks a lot Alice, that is very useful.
 >
-> However, unlike `pahole`'s, we also print a zero if executing failed for
-> any reason, rather than checking if the command is found and executable
-> (which still leaves things like a file that exists and is executable,
-> but e.g. is built for another platform [1]). An equivalent approach to
-> the one here was also submitted for `pahole` [2].
+> I sent v2, in case you have time to give it another go.
 >
-> Link: https://lore.kernel.org/rust-for-linux/CANiq72=3D4vX_tJMJLE6e+bg7ZE=
-CHkS-AQpm8GBzuK75G1EB7+Nw@mail.gmail.com/ [1]
-> Link: https://lore.kernel.org/linux-kbuild/20240728125527.690726-1-ojeda@=
-kernel.org/ [2]
-> Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-> Tested-by: Alice Ryhl <aliceryhl@google.com>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  init/Kconfig             |  7 +++++++
->  scripts/rustc-version.sh | 26 ++++++++++++++++++++++++++
->  2 files changed, 33 insertions(+)
->  create mode 100755 scripts/rustc-version.sh
->
-> diff --git a/init/Kconfig b/init/Kconfig
-> index 839c83034006..38c1cfcce821 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -60,6 +60,13 @@ config LLD_VERSION
->         default $(ld-version) if LD_IS_LLD
->         default 0
->
-> +config RUSTC_VERSION
-> +       int
-> +       default $(shell,$(srctree)/scripts/rustc-version.sh $(RUSTC))
-> +       help
-> +         It does not depend on `RUST` since that one may need to use the=
- version
-> +         in a `depends on`.
-> +
->  config RUST_IS_AVAILABLE
->         def_bool $(success,$(srctree)/scripts/rust_is_available.sh)
->         help
-> diff --git a/scripts/rustc-version.sh b/scripts/rustc-version.sh
-> new file mode 100755
-> index 000000000000..62ea510be71b
-> --- /dev/null
-> +++ b/scripts/rustc-version.sh
-> @@ -0,0 +1,26 @@
-> +#!/bin/sh
-> +# SPDX-License-Identifier: GPL-2.0
-> +#
-> +# Usage: $ ./rustc-version.sh rustc
-> +#
-> +# Print the Rust compiler name and its version in a 6 or 7-digit form.
+> Cheers,
+> Miguel
 
 
-This script does not print the name.
-
-Only the version.
+With the nit in 1/6 fixed (No need to resend if you fix it locally)
 
 
+Acked-by: Masahiro Yamada <masahiroy@kernel.org>
 
 
-> +
-> +# Convert the version string x.y.z to a canonical up-to-7-digits form.
-> +#
-> +# Note that this function uses one more digit (compared to other
-> +# instances in other version scripts) to give a bit more space to
-> +# `rustc` since it will reach 1.100.0 in late 2026.
-> +get_canonical_version()
-> +{
-> +       IFS=3D.
-> +       set -- $1
-> +       echo $((100000 * $1 + 100 * $2 + $3))
-> +}
-> +
-> +if output=3D$("$@" --version 2>/dev/null); then
-> +       set -- $output
-> +       get_canonical_version $2
-> +else
-> +       echo 0
-> +       exit 1
-> +fi
-> --
-> 2.46.0
->
 
 
 --=20
