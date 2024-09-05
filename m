@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD6D199943;
-	Thu,  5 Sep 2024 09:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34281990C1;
+	Thu,  5 Sep 2024 09:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529533; cv=none; b=J1XJA/s2obn8Y2T5kzVX7EZvP+6GVHmmdX3LAU3zHVHZjzyfCEhlhZbYSk8lbk+bEjhC3e3VifonWWzOvPBEZLyFrgJA7MtCkxB1NnJZ4GOhC99DrG/3RiyJlnHn/UEXGsY8b/mZPUEBlBkigpx8/0M7rK0iW2TDj1aD2OAq6J0=
+	t=1725529537; cv=none; b=Nia5mXb/oGN2cZOIP5ndMKC1jn78uxbSQn0YXGGqWoN9sY/IlpbMdkCDNBRckSWZ6O5gxc7GVY3DwCcyCFmTDd/s5NxY1hUV+gB5AP5Gl8++Ny4DAtPtSHpj7vU2f33mPBwVwqdTYiOBcuPHxf+ULRQSYiHVkDf0ZJczIbf01qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529533; c=relaxed/simple;
-	bh=QjBL4kpiD1N9ocrbZ2uTmu9R36/GxDKwp3x5yxfT9pQ=;
+	s=arc-20240116; t=1725529537; c=relaxed/simple;
+	bh=NwYKLjyFEZVZbAmuXxtBmVJoXqOVMlLoR9JVwvnjHBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8rPz3f0l0InfKCEdtIwpg77Mgwd7gPhhcOR8QM1JGM6H4loB/mVhEZc0fh068L9yhIhWCurpe69/nj9HXtRphfmgJ8KWXiwXOCqqmhoCzKpSo+iZYwHVg6SZSMbhQtNwrvEBuQyBuxV0CUc/aARSwd1TcWnOMDoxVUj8u1vEpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcIbEr0/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TkafFhjBLWl4U3NGrr5ZnlujDJF4piD4JoZwP6Y9U9gW/b1Tozgwve0ZL7qK9dt1fcgrKp1qcH6RV7UEsdwXwwOeIOfj6OhtHDfvP+VwCYAQSfNz0xTbr1KD7BbLT4wyU46POvEnECfCPtsl39ZvshUVTgsEMq5mzPlIiThKDK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vxhdP5/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcIbEr0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA92AC4CECC;
-	Thu,  5 Sep 2024 09:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vxhdP5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0806EC4CEC3;
+	Thu,  5 Sep 2024 09:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529533;
-	bh=QjBL4kpiD1N9ocrbZ2uTmu9R36/GxDKwp3x5yxfT9pQ=;
+	s=korg; t=1725529536;
+	bh=NwYKLjyFEZVZbAmuXxtBmVJoXqOVMlLoR9JVwvnjHBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GcIbEr0/1scmlr/Aeg+wJXt1FHbZ1rJynH7gNvOLomy21wYZBrXPz0prbXvZRDE2o
-	 GHRqAoGx2DP4DGfwkM5qKYXK4ySz2vDauYlS0HdAGDpECfRfY/TDjxEzn3LVTZXDKu
-	 Ki6A6KeKzrJYKpHtxBLrdXyRJlFD4V63T0k6N2wA=
+	b=1vxhdP5/ahBtPwClHwUOvIpVUkH204qjoZ2iIrOtq+xX9Tn1ThdpxLin5wxxmNjjM
+	 kjN4xLhJPBWnVWx1uUZWocMG8QSt1sN599FekR2LJ2RU3s+tySwWC5ES+QTlseEqfd
+	 Cr2HEKicE4jZLn+MUsT+3edDBI+cgeRij5Tq9/2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 022/184] btrfs: fix qgroup reserve leaks in cow_file_range
-Date: Thu,  5 Sep 2024 11:38:55 +0200
-Message-ID: <20240905093733.113478237@linuxfoundation.org>
+Subject: [PATCH 6.10 057/184] drm/amd/display: Ensure array index tg_inst wont be -1
+Date: Thu,  5 Sep 2024 11:39:30 +0200
+Message-ID: <20240905093734.468343704@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,105 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 30479f31d44d47ed00ae0c7453d9b253537005b2 ]
+[ Upstream commit 687fe329f18ab0ab0496b20ed2cb003d4879d931 ]
 
-In the buffered write path, the dirty page owns the qgroup reserve until
-it creates an ordered_extent.
+[WHY & HOW]
+tg_inst will be a negative if timing_generator_count equals 0, which
+should be checked before used.
 
-Therefore, any errors that occur before the ordered_extent is created
-must free that reservation, or else the space is leaked. The fstest
-generic/475 exercises various IO error paths, and is able to trigger
-errors in cow_file_range where we fail to get to allocating the ordered
-extent. Note that because we *do* clear delalloc, we are likely to
-remove the inode from the delalloc list, so the inodes/pages to not have
-invalidate/launder called on them in the commit abort path.
+This fixes 2 OVERRUN issues reported by Coverity.
 
-This results in failures at the unmount stage of the test that look like:
-
-  BTRFS: error (device dm-8 state EA) in cleanup_transaction:2018: errno=-5 IO failure
-  BTRFS: error (device dm-8 state EA) in btrfs_replace_file_extents:2416: errno=-5 IO failure
-  BTRFS warning (device dm-8 state EA): qgroup 0/5 has unreleased space, type 0 rsv 28672
-  ------------[ cut here ]------------
-  WARNING: CPU: 3 PID: 22588 at fs/btrfs/disk-io.c:4333 close_ctree+0x222/0x4d0 [btrfs]
-  Modules linked in: btrfs blake2b_generic libcrc32c xor zstd_compress raid6_pq
-  CPU: 3 PID: 22588 Comm: umount Kdump: loaded Tainted: G W          6.10.0-rc7-gab56fde445b8 #21
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-  RIP: 0010:close_ctree+0x222/0x4d0 [btrfs]
-  RSP: 0018:ffffb4465283be00 EFLAGS: 00010202
-  RAX: 0000000000000001 RBX: ffffa1a1818e1000 RCX: 0000000000000001
-  RDX: 0000000000000000 RSI: ffffb4465283bbe0 RDI: ffffa1a19374fcb8
-  RBP: ffffa1a1818e13c0 R08: 0000000100028b16 R09: 0000000000000000
-  R10: 0000000000000003 R11: 0000000000000003 R12: ffffa1a18ad7972c
-  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-  FS:  00007f9168312b80(0000) GS:ffffa1a4afcc0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f91683c9140 CR3: 000000010acaa000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   ? __warn.cold+0x8e/0xea
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   ? report_bug+0xff/0x140
-   ? handle_bug+0x3b/0x70
-   ? exc_invalid_op+0x17/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? close_ctree+0x222/0x4d0 [btrfs]
-   generic_shutdown_super+0x70/0x160
-   kill_anon_super+0x11/0x40
-   btrfs_kill_super+0x11/0x20 [btrfs]
-   deactivate_locked_super+0x2e/0xa0
-   cleanup_mnt+0xb5/0x150
-   task_work_run+0x57/0x80
-   syscall_exit_to_user_mode+0x121/0x130
-   do_syscall_64+0xab/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f916847a887
-  ---[ end trace 0000000000000000 ]---
-  BTRFS error (device dm-8 state EA): qgroup reserved space leaked
-
-Cases 2 and 3 in the out_reserve path both pertain to this type of leak
-and must free the reserved qgroup data. Because it is already an error
-path, I opted not to handle the possible errors in
-btrfs_free_qgroup_data.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 39d22693e47b6..c2f48fc159e5a 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1586,6 +1586,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 					     locked_page, &cached,
- 					     clear_bits,
- 					     page_ops);
-+		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
- 		start += cur_alloc_size;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index 8ed599324693..ce5adb8bc377 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -3508,7 +3508,7 @@ static bool acquire_otg_master_pipe_for_stream(
+ 		if (pool->dpps[pipe_idx])
+ 			pipe_ctx->plane_res.mpcc_inst = pool->dpps[pipe_idx]->inst;
  
-@@ -1599,6 +1600,7 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 		clear_bits |= EXTENT_CLEAR_DATA_RESV;
- 		extent_clear_unlock_delalloc(inode, start, end, locked_page,
- 					     &cached, clear_bits, page_ops);
-+		btrfs_qgroup_free_data(inode, NULL, start, cur_alloc_size, NULL);
- 	}
- 	return ret;
- }
-@@ -2269,6 +2271,7 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
- 					     EXTENT_DO_ACCOUNTING, PAGE_UNLOCK |
- 					     PAGE_START_WRITEBACK |
- 					     PAGE_END_WRITEBACK);
-+		btrfs_qgroup_free_data(inode, NULL, cur_offset, end - cur_offset + 1, NULL);
- 	}
- 	btrfs_free_path(path);
- 	return ret;
+-		if (pipe_idx >= pool->timing_generator_count) {
++		if (pipe_idx >= pool->timing_generator_count && pool->timing_generator_count != 0) {
+ 			int tg_inst = pool->timing_generator_count - 1;
+ 
+ 			pipe_ctx->stream_res.tg = pool->timing_generators[tg_inst];
 -- 
 2.43.0
 
