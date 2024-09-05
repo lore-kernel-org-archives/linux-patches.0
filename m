@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686B5194AD6;
-	Thu,  5 Sep 2024 09:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFED155730;
+	Thu,  5 Sep 2024 09:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529587; cv=none; b=pj0aEitbnHNg4yxvU3n82TsPp85ivA/vpY/xnRrjLBG2I7sjebk2yMACp/HjFoUxn82iinyRUNvBBjOIFNp+Y8bt20Vq+ySZnt0C3X+vbBpSm1bl5xtwSqTGCg/xJhFT29x6ZnOpfZe8G0atqkgV48H0GJYhaWrteJkB7FmyOFE=
+	t=1725529590; cv=none; b=euFijqEk4sUN+ry+K+0kMkn+P1yESo/9ME3+PyN3jJngQRVhM4CTHjiwBQS67EyF7O2ovVFXUUG3Irx+EZK0WaAHZXPCKCE7MD8kOYjo2H/MUio0yjUN2tnl9mnFlFXow25+R5QSDITCYqAQG2dubdzYtiiYRBXX7jBh5nlLyls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529587; c=relaxed/simple;
-	bh=clvZZcXHYDqVzSEiguDX89zGNZw74/CwQ0TrPydkFaM=;
+	s=arc-20240116; t=1725529590; c=relaxed/simple;
+	bh=6oyG2xG7vme2ucmIrbDfvrNumJ4YdhKegTGx7xoUQrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtAFdJ+2r+x4Vmqx6q/6B7IcLlORXJ481PnSAvI/W9EPKmIBeVuWfI/IH1TE7Se2wHf7rZ00UgJOYwEkiIHxxmsRD0yyekm9i9EvCcFiEPurcSxiclUQ/oQ2idhGe59oXKy6kc17VN8r9aiIHMtfmRgnggb8cgcy9TI48DqAcWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHEqvZam; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4CTmaCcM16ZF93McOKTKW+o29r1rHAlliXJaDwrljah2a0xH/g0KwIf/l4/LsF6W64FFysEXQo6OWG7PRLJruD1MKvJIKhYbpmI1zSslyvu5MYVBpA6lk0s4lGsgjt2R+T2r9GYdHJpF8XShwuSAnv24AWt9yjRSu0aOSSzKro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eH/H58l2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHEqvZam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F39C4CEC3;
-	Thu,  5 Sep 2024 09:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eH/H58l2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C256AC4CEC3;
+	Thu,  5 Sep 2024 09:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529587;
-	bh=clvZZcXHYDqVzSEiguDX89zGNZw74/CwQ0TrPydkFaM=;
+	s=korg; t=1725529590;
+	bh=6oyG2xG7vme2ucmIrbDfvrNumJ4YdhKegTGx7xoUQrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHEqvZamSwDDagfhtDJC0ba93x7PccM6gSXdvlJFIVjepzLtg41Tvlx94oxej69yF
-	 KvnuCtCKWQ5P/ljGkk7Siy4IRSsH3WZaVpqlAuCteR2hXdnfzluyO1qkH6bzL3FP6I
-	 oTQtBtX+wnwl6MIA2ZGJV2Umnc/l/KW2IRa2I6IA=
+	b=eH/H58l29Wtrm6lqe4IqpmhXwJmBHaG6JRSEzUD5U6YFJhm+PlguBBmShgqoWIad5
+	 rBfuPSXnC6CcatG8I9156UCNl6RpafHLDUWu+YVZyCWwffkoZ5FuWj0yDnv+8n0vxR
+	 vIqP07oaeQ4dwRYum5rtIhbqL07to38t5fk/XjuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 080/184] drm/xe: Demote CCS_MODE info to debug only
-Date: Thu,  5 Sep 2024 11:39:53 +0200
-Message-ID: <20240905093735.364686929@linuxfoundation.org>
+Subject: [PATCH 6.10 081/184] drm/drm-bridge: Drop conditionals around of_node pointers
+Date: Thu,  5 Sep 2024 11:39:54 +0200
+Message-ID: <20240905093735.405735823@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,38 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
 
-[ Upstream commit e9c190b9b8e7e07bc0ef0ba9b87321fa37b456c5 ]
+[ Upstream commit ad3323a6ccb7d43bbeeaa46d5311c43d5d361fc7 ]
 
-This information is printed in any gt_reset, which actually
-occurs in any runtime resume, what can be so verbose in
-production build. Let's demote it to debug only.
+Having conditional around the of_node pointer of the drm_bridge structure
+is not necessary, since drm_bridge structure always has the of_node as its
+member.
 
-Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240503190331.6690-1-rodrigo.vivi@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Let's drop the conditional to get a better looks, please also note that
+this is following the already accepted commitments. see commit d8dfccde2709
+("drm/bridge: Drop conditionals around of_node pointers") for reference.
+
+Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240507180001.1358816-1-sui.jingfeng@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_ccs_mode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_bridge.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_ccs_mode.c b/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-index 396aeb5b9924..a34c9a24dafc 100644
---- a/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-+++ b/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-@@ -68,8 +68,8 @@ static void __xe_gt_apply_ccs_mode(struct xe_gt *gt, u32 num_engines)
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index 28abe9aa99ca..584d109330ab 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -353,13 +353,8 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
+ 	bridge->encoder = NULL;
+ 	list_del(&bridge->chain_node);
  
- 	xe_mmio_write32(gt, CCS_MODE, mode);
+-#ifdef CONFIG_OF
+ 	DRM_ERROR("failed to attach bridge %pOF to encoder %s: %d\n",
+ 		  bridge->of_node, encoder->name, ret);
+-#else
+-	DRM_ERROR("failed to attach bridge to encoder %s: %d\n",
+-		  encoder->name, ret);
+-#endif
  
--	xe_gt_info(gt, "CCS_MODE=%x config:%08x, num_engines:%d, num_slices:%d\n",
--		   mode, config, num_engines, num_slices);
-+	xe_gt_dbg(gt, "CCS_MODE=%x config:%08x, num_engines:%d, num_slices:%d\n",
-+		  mode, config, num_engines, num_slices);
+ 	return ret;
  }
- 
- void xe_gt_apply_ccs_mode(struct xe_gt *gt)
 -- 
 2.43.0
 
