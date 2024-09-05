@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F78C1494DB;
-	Thu,  5 Sep 2024 10:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551171494DB;
+	Thu,  5 Sep 2024 10:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530548; cv=none; b=lw/PnUI/y4QIf6AggKnFlRw6sXhDgFy39yuKEIAFGafD1U6Gq9qdtaHCqb1h+k/6O+Ag5Vsf6/nG2Rt5A5NIGM73eKF/zDpytrDGgoeFia6NYDQ5hjGOYq0sG6iT5dYabRJ5m6TAzCJUeIl8E9UjC0Ho2pLPVrArFxdbabEAAeE=
+	t=1725530551; cv=none; b=H2fWRm4UJI+OriWYxtsTYUGZL+GWh67HYAj4rhEyM1t7w5+18DPTe05cb3gLqDZdqoXgw1Ir8CDbJeW9kS++Ts17+CKw9ksbDnvXwYthcknsR2EUPronltzDVgwOxPRQ6OjyeXBpxwGAEnSmaWgzgWMKoy3XW0GGbBKkO9qGzYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530548; c=relaxed/simple;
-	bh=fAaxR+XfTB/OAc3jU045XVdYIS1knnDTxeSKDJrQ1+s=;
+	s=arc-20240116; t=1725530551; c=relaxed/simple;
+	bh=3iQ6U2hOclO3mvu+/n2STBmfK7Eo6bSxMmKj9skeg+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CFgnYNZGPLsXdWJzhoQ1wqIhtmnSuaDG3FtHx8ZpOWxMn1IepdcRhSTya2ubwBiLJH/SmaqLf6V64kdFE+/lHhEYbTF+WrQKugvSQJ4JZsnbdxgkln/qJ22mt7OxGJIA9fM5rEHUZXAhqDmjBMdY7FKWuWxoEaznb8UBSG116Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1HVNQU4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajtVxcm3VXXYBdBmXVl7w+qIYMGHGJais5/Lz6GGl3WrXAgJkrdoNNJwA5jTMCdVcvXkj3RXGKjm9mM2q9TMtkYkdg1qltNMjlFa/8DZ8t/RCUZwOis45Q1Lg4OouaLrm/tFnrXmCbzpFqulaFB7d6oUSuQmSAe7uEV3GW7gUH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVCgqTmG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1HVNQU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0258C4CEC3;
-	Thu,  5 Sep 2024 10:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVCgqTmG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D408BC4CEC3;
+	Thu,  5 Sep 2024 10:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530548;
-	bh=fAaxR+XfTB/OAc3jU045XVdYIS1knnDTxeSKDJrQ1+s=;
+	s=korg; t=1725530551;
+	bh=3iQ6U2hOclO3mvu+/n2STBmfK7Eo6bSxMmKj9skeg+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1HVNQU4XlLgdbHyr3S7mYJ52Lm3Cf/3THo06NwXIVx4oXVi04YYuc19EgSWdzLU0
-	 BV+6lvwLSnd06MdJqs44+QcgW/aZIjxeH3MZcbKvQWKq6L4Fgd1nyyny7WGAYUB/FC
-	 S7VPeakkGO9rI7TMBlWAhiTpvXIgZwV8viSKAQE8=
+	b=sVCgqTmGds0OBIsh6hjUcyO7IEbsFzwoZyXqTOadAlzU75Unryl68fc1FK4m5cXtf
+	 ZoG/Th8Zv+0Bop98Aj5JxK0IcWLSlnb0YpbNx9L8PutNQw+eNctOBF/UqBoNFawaHb
+	 3Gl4UworNo8/ZNPIxv8XftzBfmbRvopI9VMVZStM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 027/101] selftests: mptcp: join: check re-re-adding ID 0 endp
-Date: Thu,  5 Sep 2024 11:40:59 +0200
-Message-ID: <20240905093717.187848280@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 028/101] selftests: mptcp: join: cannot rm sf if closed
+Date: Thu,  5 Sep 2024 11:41:00 +0200
+Message-ID: <20240905093717.228325628@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -53,81 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit d397d7246c11ca36c33c932bc36d38e3a79e9aa0 upstream.
+commit e93681afcb96864ec26c3b2ce94008ce93577373 upstream.
 
-This test extends "delete and re-add" to validate the previous commit:
-when the endpoint linked to the initial subflow (ID 0) is re-added
-multiple times, it was no longer being used, because the internal linked
-counters are not decremented for this special endpoint: it is not an
-additional endpoint.
+Thanks to the previous commit, the MPTCP subflows are now closed on both
+directions even when only the MPTCP path-manager of one peer asks for
+their closure.
 
-Here, the "del/add id 0" steps are done 3 times to unsure this case is
-validated.
+In the two tests modified here -- "userspace pm add & remove address"
+and "userspace pm create destroy subflow" -- one peer is controlled by
+the userspace PM, and the other one by the in-kernel PM. When the
+userspace PM sends a RM_ADDR notification, the in-kernel PM will
+automatically react by closing all subflows using this address. Now,
+thanks to the previous commit, the subflows are properly closed on both
+directions, the userspace PM can then no longer closes the same
+subflows if they are already closed. Before, it was OK to do that,
+because the subflows were still half-opened, still OK to send a RM_ADDR.
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+In other words, thanks to the previous commit closing the subflows, an
+error will be returned to the userspace if it tries to close a subflow
+that has already been closed. So no need to run this command, which mean
+that the linked counters will then not be incremented.
 
-Fixes: 3ad14f54bd74 ("mptcp: more accurate MPC endpoint tracking")
+These tests are then no longer sending both a RM_ADDR, then closing the
+linked subflow just after. The test with the userspace PM on the server
+side is now removing one subflow linked to one address, then sending
+a RM_ADDR for another address. The test with the userspace PM on the
+client side is now only removing the subflow that was previously
+created.
+
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Conflicts in mptcp_join.sh, because the helpers are different in this
-  version:
-  - run_tests has been modified a few times to reduce the number of
-    positional parameters
-  - no chk_mptcp_info helper
-  - chk_subflow_nr taking an extra parameter
-  - kill_tests_wait instead of mptcp_lib_kill_wait ]
+Link: https://patch.msgid.link/20240826-net-mptcp-close-extra-sf-fin-v1-2-905199fe1172@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 97040cf9806e ("selftests: mptcp: userspace pm address tests")
+Fixes: 5e986ec46874 ("selftests: mptcp: userspace pm subflow tests")
+[ It looks like this patch is needed for the same reasons as mentioned
+  above, but the resolution is different: the subflows and addresses are
+  removed elsewhere. The same type of adaptations have been applied
+  here. The Fixes tag has been replaced by better appropriated ones. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3341,7 +3341,7 @@ endpoint_tests()
- 		pm_nl_set_limits $ns2 0 3
- 		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
- 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
--		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_20 2>/dev/null &
-+		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_5 2>/dev/null &
+@@ -957,8 +957,6 @@ do_transfer()
+ 				dp=$(grep "type:10" "$evts_ns1" |
+ 				     sed -n 's/.*\(dport:\)\([[:digit:]]*\).*$/\2/p;q')
+ 				ip netns exec ${listener_ns} ./pm_nl_ctl rem token $tk id $id
+-				ip netns exec ${listener_ns} ./pm_nl_ctl dsf lip "$addr" \
+-							lport $sp rip $da rport $dp token $tk
+ 			fi
  
- 		wait_mpj $ns2
- 		pm_nl_del_endpoint $ns2 2 10.0.2.2
-@@ -3362,18 +3362,21 @@ endpoint_tests()
- 		wait_mpj $ns2
- 		chk_subflow_nr "" "after no reject" 3
- 
--		pm_nl_del_endpoint $ns2 1 10.0.1.2
--		sleep 0.5
--		chk_subflow_nr "" "after delete id 0" 2
--
--		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
--		wait_mpj $ns2
--		chk_subflow_nr "" "after re-add id 0" 3
-+		local i
-+		for i in $(seq 3); do
-+			pm_nl_del_endpoint $ns2 1 10.0.1.2
-+			sleep 0.5
-+			chk_subflow_nr "" "after delete id 0 ($i)" 2
-+
-+			pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
-+			wait_mpj $ns2
-+			chk_subflow_nr "" "after re-add id 0 ($i)" 3
-+		done
- 
- 		kill_tests_wait
- 
--		chk_join_nr 4 4 4
--		chk_rm_nr 2 2
-+		chk_join_nr 6 6 6
-+		chk_rm_nr 4 4
+ 			counter=$((counter + 1))
+@@ -1024,7 +1022,6 @@ do_transfer()
+ 				sleep 1
+ 				sp=$(grep "type:10" "$evts_ns2" |
+ 				     sed -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q')
+-				ip netns exec ${connector_ns} ./pm_nl_ctl rem token $tk id $id
+ 				ip netns exec ${connector_ns} ./pm_nl_ctl dsf lip $addr lport $sp \
+ 									rip $da rport $dp token $tk
+ 			fi
+@@ -3227,7 +3224,7 @@ userspace_tests()
+ 		run_tests $ns1 $ns2 10.0.1.1 0 userspace_1 0 slow
+ 		chk_join_nr 1 1 1
+ 		chk_add_nr 1 1
+-		chk_rm_nr 1 1 invert
++		chk_rm_nr 1 0 invert
  	fi
- }
  
+ 	# userspace pm create destroy subflow
+@@ -3237,7 +3234,7 @@ userspace_tests()
+ 		pm_nl_set_limits $ns1 0 1
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 userspace_1 slow
+ 		chk_join_nr 1 1 1
+-		chk_rm_nr 1 1
++		chk_rm_nr 0 1
+ 	fi
+ 
+ 	# remove and re-add
 
 
