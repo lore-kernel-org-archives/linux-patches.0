@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795B919538A;
-	Thu,  5 Sep 2024 09:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB79154BFF;
+	Thu,  5 Sep 2024 09:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530144; cv=none; b=eneqZRXT3jpg8ax0Tbe9mBclsL+a4uF849DI/nHQOZUA05KKldhhpJbqOBpQLBJlXvQ8SqOBW7vgQGPhwiHUAGaCs0zzvhLornjLH1hjYTm6t2XGWv49s/fFUxpHppEmtVDhD0BAIPG/TKAmrK3x786ZnhtBUg4fyy0r4kQny7E=
+	t=1725530147; cv=none; b=EP767b/Nd4OYuRKX9VbL7kiNfZX7wNC6pBKT2aO827FCuguvadJd0a2UvyZwzbHUriE+snO4ne6/iF/ty3uBeOMMkkO1G/DG492ZfKuDIWVB0sjHgm16hHdmMAqXw8Ob6SFVxiLUPAnClKgRsWe7h6UP2jXm9+Wu6yaXLi2kahg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530144; c=relaxed/simple;
-	bh=3djIWIBkZZsDqF/uaHa2Uy2uqb2ayR3UHWt+N1r6qAI=;
+	s=arc-20240116; t=1725530147; c=relaxed/simple;
+	bh=zsI3ehX0xi2B3kRvYfhhTr3QuCXOPPR+1qnS+0qsjY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/DJLvK7bYsX+9ncvZ/Z+cIMN1rmSefnbfW2/oXQoNGahsQR5pYFAySfkHh/YhMcjfqqX55xPCHgVUjIzRs7JMfnUw67JbHrsHC3vpcaOtkoWDp5aCSiC9WXTQSQp+l/HdsxyR3MGNSAzxqr+aEm95W2RBhi/eV9pFQ5DbjaE/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywVLORL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/s5RaE5CvjW+NKQ7dMc/JB7YIbHu4szfNJ2NwqL1dV8Sy4Fstb2cNCKDmW7mQUgvG/EmDYMt0f9rsnky7sVaGEER8tQdiK13lp3ZP1ryDB5/SStw01lOWibp4FpUbzzBwe3bEXLvsA8BfwxBfdIX85UoZniBGr6zC/C4nE+h2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgao/LTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywVLORL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6F8C4CEC3;
-	Thu,  5 Sep 2024 09:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgao/LTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEE3C4CEC3;
+	Thu,  5 Sep 2024 09:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530144;
-	bh=3djIWIBkZZsDqF/uaHa2Uy2uqb2ayR3UHWt+N1r6qAI=;
+	s=korg; t=1725530147;
+	bh=zsI3ehX0xi2B3kRvYfhhTr3QuCXOPPR+1qnS+0qsjY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywVLORL5TVwZn0lGVpt68QuRcc8ZpZkxTWpmUlpxb26AqwgAoco+TkkyAcoqARLkk
-	 +6rw3HWUD2absOD3TnP/oXdNpyAu6nbqPy56DhwezBC1RqqGSruEd2gRLwY9LPnliv
-	 Edk7akXhnfDtg+JhPcFI1+mCwc+kev2i4TKMWSz8=
+	b=bgao/LTiuIo0F6om/eZEw5z6ueQXXcdfGUDuD178pWznoFZUnsKwM5HwZK0JAzenn
+	 5GKsTs8k5db7D7mHAa5Kb7vK+sJFyhfXFBlHvRAUtflAXAnjaCoRQRUYMeAnvqvXJd
+	 LB3x/3/TqfRK6/bvWWEC4pceWzmU6LeFg9VxilW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/132] selftests: mptcp: userspace pm get addr tests
-Date: Thu,  5 Sep 2024 11:40:13 +0200
-Message-ID: <20240905093723.253866229@linuxfoundation.org>
+Subject: [PATCH 6.6 061/132] drm/amd/display: Ensure index calculation will not overflow
+Date: Thu,  5 Sep 2024 11:40:48 +0200
+Message-ID: <20240905093724.629605183@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -53,88 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 4cc5cc7ca052c816e20ed0cbc160299b454cbb75 ]
+[ Upstream commit 8e2734bf444767fed787305ccdcb36a2be5301a2 ]
 
-This patch adds a new helper userspace_pm_get_addr() in mptcp_join.sh.
-In it, parse the token value from the output of 'pm_nl_ctl events', then
-pass it to pm_nl_ctl get_addr command. Use this helper in userspace pm
-dump tests.
+[WHY & HOW]
+Make sure vmid0p72_idx, vnom0p8_idx and vmax0p9_idx calculation will
+never overflow and exceess array size.
 
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e93681afcb96 ("selftests: mptcp: join: cannot rm sf if closed")
+This fixes 3 OVERRUN and 1 INTEGER_OVERFLOW issues reported by Coverity.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/mptcp/mptcp_join.sh | 30 +++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-index df071b8c675fb..f03df10947c15 100755
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3454,6 +3454,18 @@ userspace_pm_dump()
- 	ip netns exec $1 ./pm_nl_ctl dump token $tk
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c b/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
+index 50b0434354f8..c08169de3660 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/calcs/dcn_calcs.c
+@@ -1453,10 +1453,9 @@ void dcn_bw_update_from_pplib_fclks(
+ 	ASSERT(fclks->num_levels);
  
-+# $1: ns ; $2: id
-+userspace_pm_get_addr()
-+{
-+	local evts=$evts_ns1
-+	local tk
-+
-+	[ "$1" == "$ns2" ] && evts=$evts_ns2
-+	tk=$(mptcp_lib_evts_get_info token "$evts")
-+
-+	ip netns exec $1 ./pm_nl_ctl get $2 token $tk
-+}
-+
- userspace_pm_chk_dump_addr()
- {
- 	local ns="${1}"
-@@ -3469,6 +3481,21 @@ userspace_pm_chk_dump_addr()
- 	fi
- }
+ 	vmin0p65_idx = 0;
+-	vmid0p72_idx = fclks->num_levels -
+-		(fclks->num_levels > 2 ? 3 : (fclks->num_levels > 1 ? 2 : 1));
+-	vnom0p8_idx = fclks->num_levels - (fclks->num_levels > 1 ? 2 : 1);
+-	vmax0p9_idx = fclks->num_levels - 1;
++	vmid0p72_idx = fclks->num_levels > 2 ? fclks->num_levels - 3 : 0;
++	vnom0p8_idx = fclks->num_levels > 1 ? fclks->num_levels - 2 : 0;
++	vmax0p9_idx = fclks->num_levels > 0 ? fclks->num_levels - 1 : 0;
  
-+userspace_pm_chk_get_addr()
-+{
-+	local ns="${1}"
-+	local id="${2}"
-+	local exp="${3}"
-+
-+	print_check "get id ${id} addr"
-+
-+	if mptcp_lib_kallsyms_has "mptcp_userspace_pm_get_addr$"; then
-+		check_output "userspace_pm_get_addr ${ns} ${id}" "${exp}"
-+	else
-+		print_skip
-+	fi
-+}
-+
- userspace_tests()
- {
- 	# userspace pm type prevents add_addr
-@@ -3563,6 +3590,8 @@ userspace_tests()
- 		userspace_pm_chk_dump_addr "${ns1}" \
- 			$'id 10 flags signal 10.0.2.1\nid 20 flags signal 10.0.3.1' \
- 			"signal"
-+		userspace_pm_chk_get_addr "${ns1}" "10" "id 10 flags signal 10.0.2.1"
-+		userspace_pm_chk_get_addr "${ns1}" "20" "id 20 flags signal 10.0.3.1"
- 		userspace_pm_rm_addr $ns1 10
- 		userspace_pm_rm_sf $ns1 "::ffff:10.0.2.1" $SUB_ESTABLISHED
- 		userspace_pm_chk_dump_addr "${ns1}" \
-@@ -3593,6 +3622,7 @@ userspace_tests()
- 		userspace_pm_chk_dump_addr "${ns2}" \
- 			"id 20 flags subflow 10.0.3.2" \
- 			"subflow"
-+		userspace_pm_chk_get_addr "${ns2}" "20" "id 20 flags subflow 10.0.3.2"
- 		userspace_pm_rm_addr $ns2 20
- 		userspace_pm_rm_sf $ns2 10.0.3.2 $SUB_ESTABLISHED
- 		userspace_pm_chk_dump_addr "${ns2}" \
+ 	dc->dcn_soc->fabric_and_dram_bandwidth_vmin0p65 =
+ 		32 * (fclks->data[vmin0p65_idx].clocks_in_khz / 1000.0) / 1000.0;
 -- 
 2.43.0
 
