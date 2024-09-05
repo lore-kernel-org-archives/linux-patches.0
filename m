@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8AC18732F;
-	Thu,  5 Sep 2024 09:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95AA1990C2;
+	Thu,  5 Sep 2024 09:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529911; cv=none; b=TBtE5pMkedgGdVegfevy3ExUYqsarklR0NgtQxGb+D5ErY5Tww6wxP6ALDgJCfkcZPo1ZFH1dnFhf2DCVaOhjgIB6BwoUG6uKwzO5frVH1BI59wAwQV8/Nvz99rH4bOmURG9UwuBLhuXLCiK3pt91fothQQ4mXhPIlCMI0PeuSs=
+	t=1725529914; cv=none; b=IrfGlG9w6FUji15x9YOFuImanesa+g6XCEgqNhcs9rskpGmhRcjgxmI6j8Bgz76tjeJFS3m/PnHjGNfSDkClxbs0mgetRT+8Xf/ic09oEuLW1ZzC/euNUg5RIvcojWaQ/WXeTlVvxoqoHvhoTu/AWBFs11JcVLyZYi6fsMbAfVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529911; c=relaxed/simple;
-	bh=V18sXFBVJa8T/CaVmE2SLTZqz898N0d96CkxwUxTTX8=;
+	s=arc-20240116; t=1725529914; c=relaxed/simple;
+	bh=/eCNOC97u0BQscr+7Vs8bpxdBwn4RYq/sinJaLLMzGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W8TrDYFibgMDWPyQ+hjvdfZFizdpTlL0gb0ifDIks6j82TI4ArX2Alk9bQ4Paif/bOtjOpfj6NPtWN7EWOLptU8HiIrm8xBOKza9Fp6Pi/HsjliN2MtBEV7AU+rBSslvMDtgRpIPel69QTkrqeGciKKpmr38ySuSsP89y9mk4uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYnmL5Zo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dz9/HgPWaTZwGJtwGCfRiltZqw+Kth+dtFbZD3z27uMvAgwNKduGxNkZ96/pPCwbq4WNxk5pNpEE1kL9f2xz9LCRDHRB5Yt/SEXn+jkhOEGObRUgwPefgNauZQum2MIhuhFdefuFnbLAp23JfMURvGUTu2qH4GIWLgkJ9hz3L84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJWFPVVW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYnmL5Zo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBF8C4CEC3;
-	Thu,  5 Sep 2024 09:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJWFPVVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A9BC4CEC3;
+	Thu,  5 Sep 2024 09:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529910;
-	bh=V18sXFBVJa8T/CaVmE2SLTZqz898N0d96CkxwUxTTX8=;
+	s=korg; t=1725529914;
+	bh=/eCNOC97u0BQscr+7Vs8bpxdBwn4RYq/sinJaLLMzGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYnmL5ZoR2msiuVcH6fSI7eeIfdU29HA5YhG6uebyVZmKlUrpj79S/kyjMxW9RyaX
-	 M5DQkP2mCEzMCW1IQXEm1Wyz0YzSvrF8PfcCEhQfHZNIUp/87M45G5jiSyRdSsGpAc
-	 ABF6F8eg3j45OXxSrCYBZLE9+AjlFwfa2UbsaxSc=
+	b=AJWFPVVWLcHfpsizWbz8T8Hfn013dySUHGfmkPdRx8TBnDyA11sgF+9RTkLBDt/Ki
+	 v2w/TZjyRfvlwahqn3BqphFd5Z223u+pD0OGvkN9HjH/jR8lXfaICYuHWl5T2UxI00
+	 C8fDdZ479HGvyBsc8jH0SJhs2SZbwEi4CGKHRlcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?L=C3=A9o=20DUBOIN?= <lduboin@freebox.fr>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 180/184] pinctrl: core: reset gpio_device in loop in pinctrl_pins_show()
-Date: Thu,  5 Sep 2024 11:41:33 +0200
-Message-ID: <20240905093739.357048701@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Miklos Szeredi <miklos@szeredi.hu>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org,
+	netfs@lists.linux.dev,
+	v9fs@lists.linux.dev,
+	linux-afs@lists.infradead.org,
+	ceph-devel@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
+	linux-nfs@vger.kernel.org,
+	devel@lists.orangefs.org
+Subject: [PATCH 6.10 181/184] mm: Fix filemap_invalidate_inode() to use invalidate_inode_pages2_range()
+Date: Thu,  5 Sep 2024 11:41:34 +0200
+Message-ID: <20240905093739.395261770@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -45,49 +60,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Léo DUBOIN <lduboin@freebox.fr>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 9dfbcf2fc566c0be2de1c7685f29effd25696b75 ]
+commit c26096ee0278c5e765009c5eee427bbafe6dc090 upstream.
 
-We were not resetting the pointer to the associated gpio_device once
-we are done displaying a pin's information.
+Fix filemap_invalidate_inode() to use invalidate_inode_pages2_range()
+rather than truncate_inode_pages_range().  The latter clears the
+invalidated bit of a partial pages rather than discarding it entirely.
+This causes copy_file_range() to fail on cifs because the partial pages at
+either end of the destination range aren't evicted and reread, but rather
+just partly cleared.
 
-This meant that once we reached the end of a gpio-range, if there
-were pins right after it that did not belong to any known range,
-they would be associated with the previous range's gpio device.
+This causes generic/075 and generic/112 xfstests to fail.
 
-This resulted in those pins appearing as <4294966783:old_gdev> instead
-of the expected <0:?> (due to gpio_num being -1).
-
-Signed-off-by: Léo DUBOIN <lduboin@freebox.fr>
-Link: https://lore.kernel.org/r/c40d0634abefa19e689ffd450e0f48a8d63c4fc4.1714049455.git.lduboin@freebox.fr
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 74e797d79cf1 ("mm: Provide a means of invalidation without using launder_folio")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20240828210249.1078637-5-dhowells@redhat.com
+cc: Matthew Wilcox <willy@infradead.org>
+cc: Miklos Szeredi <miklos@szeredi.hu>
+cc: Trond Myklebust <trond.myklebust@hammerspace.com>
+cc: Christoph Hellwig <hch@lst.de>
+cc: Andrew Morton <akpm@linux-foundation.org>
+cc: Alexander Viro <viro@zeniv.linux.org.uk>
+cc: Christian Brauner <brauner@kernel.org>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-mm@kvack.org
+cc: linux-fsdevel@vger.kernel.org
+cc: netfs@lists.linux.dev
+cc: v9fs@lists.linux.dev
+cc: linux-afs@lists.infradead.org
+cc: ceph-devel@vger.kernel.org
+cc: linux-cifs@vger.kernel.org
+cc: linux-nfs@vger.kernel.org
+cc: devel@lists.orangefs.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/filemap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
-index 4438f3b4b5ef..60f866f1e6d7 100644
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -1670,6 +1670,7 @@ static int pinctrl_pins_show(struct seq_file *s, void *what)
- 		seq_printf(s, "pin %d (%s) ", pin, desc->name);
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -4221,7 +4221,7 @@ int filemap_invalidate_inode(struct inod
+ 	}
  
- #ifdef CONFIG_GPIOLIB
-+		gdev = NULL;
- 		gpio_num = -1;
- 		list_for_each_entry(range, &pctldev->gpio_ranges, node) {
- 			if ((pin >= range->pin_base) &&
--- 
-2.43.0
-
+ 	/* Wait for writeback to complete on all folios and discard. */
+-	truncate_inode_pages_range(mapping, start, end);
++	invalidate_inode_pages2_range(mapping, start / PAGE_SIZE, end / PAGE_SIZE);
+ 
+ unlock:
+ 	filemap_invalidate_unlock(mapping);
 
 
