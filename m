@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8385D19413B;
-	Thu,  5 Sep 2024 09:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FDC192D73;
+	Thu,  5 Sep 2024 09:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530208; cv=none; b=hkIsxZVb6QsKpZEDjPxLmwajsxT1i+Q8qzPrMa3NVX1PY/JL8b0YrpuhOAuewtsD/TnVZN2dX5TSQv3g7Lpy5d06I8tJ2YVOoFa96SKAYcR8m3BGXxC/Pkf7/kBKvlYKVN8hGjoyCFCmtPf8HYbNvW3JJWr+VuXSNrvX2gutBhg=
+	t=1725530212; cv=none; b=MJWecW0Wnf2XDvN1DFeVF6C3j+yrpwAPsRjItpBZyafn2CT2P3TgdmCyUa/Wp/0Ig3zktV018ofiGUkMj/yXBsqbVb6hCS8cEWZgJ6G6pHMcifMzkDkKlGB4cy9rav4Mqgv1e3suI6ToxXIFftLOc6svrCvZHipyORFxJ+Baido=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530208; c=relaxed/simple;
-	bh=3v2dATf8EPapVefMfZmqadW7I7OrcciaIZXvqGwA0uY=;
+	s=arc-20240116; t=1725530212; c=relaxed/simple;
+	bh=0oTCcjni0pMR1F6YMO/FT8VTjjhC6rdJ+7SsmiNIt7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHPlnuxKTCLv7DSP272o2XHm3K96V86X974K1PBPdqPCBCi+2AAremXGZ9dcfO0bHXvKVRYPeLimPvyGgLjr/JkrKUlSbhoNlC1YQyOjvRnE8WhbARfrtPJh7FecPvoh4/DkuSMHzoBSumB+Nis/zlO64m1r1lglt5jv1stYvsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBkiowxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JYxqz/qrkNZzq+sMakDgOP9ZJ2g9K2P95czWvzwKHm6VkoSGLS96yHHvP7zzLr5jlfiYJbM2UtQraJd0nxNu452eRx52xMSmHtoPpi3REv5SBVBQUsWTVyhpXMQIygigpbmETca9TAiSq3Ea4+Aj5diP3SjXivm0HBvRjZmwnrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weivUI5D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBkiowxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0560FC4CEC3;
-	Thu,  5 Sep 2024 09:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weivUI5D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1650FC4CEC3;
+	Thu,  5 Sep 2024 09:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530208;
-	bh=3v2dATf8EPapVefMfZmqadW7I7OrcciaIZXvqGwA0uY=;
+	s=korg; t=1725530211;
+	bh=0oTCcjni0pMR1F6YMO/FT8VTjjhC6rdJ+7SsmiNIt7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBkiowxcVNgDLHAfE6xz75Oq8DWqD5/N5a+I9F8nhL/EUfN9L5bUwkun0mP4Z+2ob
-	 7Jyl43wiSsEiJZHeUSGvonL/vBsaignomMTMv0L/6hIpP8NJOrFAWsTBLcLYKYgiKH
-	 qsYeQ6yqpj2oTE9vJe4sAYW4cINZHllAz/PlOf5w=
+	b=weivUI5D9KJ0nSGgY8jbBXpW6Nbqg9OIxt+YQDp43WBEx0vny/7pTRQZoL2VmVlXs
+	 KIAuILqnYUad5Gs4Q2v26gmJKLn4EQMRvlBQ0DltjIMjjPaS/WXLz5pecr2bRhYFfV
+	 IJGaLxCg9OR29XIvTVf9o7/dnrrWmMqdif+TfQ+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <Xiaogang.Chen@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/132] drm/kfd: Correct pinned buffer handling at kfd restore and validate process
-Date: Thu,  5 Sep 2024 11:41:14 +0200
-Message-ID: <20240905093725.631398585@linuxfoundation.org>
+Subject: [PATCH 6.6 088/132] drm/amdgpu: update type of buf size to u32 for eeprom functions
+Date: Thu,  5 Sep 2024 11:41:15 +0200
+Message-ID: <20240905093725.670170732@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -52,56 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaogang Chen <xiaogang.chen@amd.com>
+From: Tao Zhou <tao.zhou1@amd.com>
 
-[ Upstream commit f326d7cc745683f53052b84382bd10567b45cd5d ]
+[ Upstream commit 2aadb520bfacec12527effce3566f8df55e5d08e ]
 
-This reverts commit 8a774fe912ff ("drm/amdgpu: avoid restore process run into dead loop")
-since buffer got pinned is not related whether it needs mapping
-And skip buffer validation at kfd driver if the buffer has been pinned.
+Avoid overflow issue.
 
-Signed-off-by: Xiaogang Chen <Xiaogang.Chen@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Tao Zhou <tao.zhou1@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c | 6 +++---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 9d72bb0a0eae..a1f35510d539 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -407,6 +407,10 @@ static int amdgpu_amdkfd_bo_validate(struct amdgpu_bo *bo, uint32_t domain,
- 		 "Called with userptr BO"))
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c
+index e71768661ca8..09a34c7258e2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c
+@@ -179,7 +179,7 @@ static int __amdgpu_eeprom_xfer(struct i2c_adapter *i2c_adap, u32 eeprom_addr,
+  * Returns the number of bytes read/written; -errno on error.
+  */
+ static int amdgpu_eeprom_xfer(struct i2c_adapter *i2c_adap, u32 eeprom_addr,
+-			      u8 *eeprom_buf, u16 buf_size, bool read)
++			      u8 *eeprom_buf, u32 buf_size, bool read)
+ {
+ 	const struct i2c_adapter_quirks *quirks = i2c_adap->quirks;
+ 	u16 limit;
+@@ -225,7 +225,7 @@ static int amdgpu_eeprom_xfer(struct i2c_adapter *i2c_adap, u32 eeprom_addr,
  
-+	/* bo has been pinned, not need validate it */
-+	if (bo->tbo.pin_count)
-+		return 0;
-+
- 	amdgpu_bo_placement_from_domain(bo, domain);
+ int amdgpu_eeprom_read(struct i2c_adapter *i2c_adap,
+ 		       u32 eeprom_addr, u8 *eeprom_buf,
+-		       u16 bytes)
++		       u32 bytes)
+ {
+ 	return amdgpu_eeprom_xfer(i2c_adap, eeprom_addr, eeprom_buf, bytes,
+ 				  true);
+@@ -233,7 +233,7 @@ int amdgpu_eeprom_read(struct i2c_adapter *i2c_adap,
  
- 	ret = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
-@@ -2631,7 +2635,7 @@ static int confirm_valid_user_pages_locked(struct amdkfd_process_info *process_i
+ int amdgpu_eeprom_write(struct i2c_adapter *i2c_adap,
+ 			u32 eeprom_addr, u8 *eeprom_buf,
+-			u16 bytes)
++			u32 bytes)
+ {
+ 	return amdgpu_eeprom_xfer(i2c_adap, eeprom_addr, eeprom_buf, bytes,
+ 				  false);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h
+index 6935adb2be1f..8083b8253ef4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h
+@@ -28,10 +28,10 @@
  
- 		/* keep mem without hmm range at userptr_inval_list */
- 		if (!mem->range)
--			 continue;
-+			continue;
+ int amdgpu_eeprom_read(struct i2c_adapter *i2c_adap,
+ 		       u32 eeprom_addr, u8 *eeprom_buf,
+-		       u16 bytes);
++		       u32 bytes);
  
- 		/* Only check mem with hmm range associated */
- 		valid = amdgpu_ttm_tt_get_user_pages_done(
-@@ -2848,9 +2852,6 @@ int amdgpu_amdkfd_gpuvm_restore_process_bos(void *info, struct dma_fence **ef)
- 			if (!attachment->is_mapped)
- 				continue;
+ int amdgpu_eeprom_write(struct i2c_adapter *i2c_adap,
+ 			u32 eeprom_addr, u8 *eeprom_buf,
+-			u16 bytes);
++			u32 bytes);
  
--			if (attachment->bo_va->base.bo->tbo.pin_count)
--				continue;
--
- 			kfd_mem_dmaunmap_attachment(mem, attachment);
- 			ret = update_gpuvm_pte(mem, attachment, &sync_obj);
- 			if (ret) {
+ #endif
 -- 
 2.43.0
 
