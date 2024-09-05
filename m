@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A944A154BFF;
-	Thu,  5 Sep 2024 09:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167F8154BFF;
+	Thu,  5 Sep 2024 09:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530088; cv=none; b=JaBrbTQlBFfmn2P8D45xPN5tSbFYi4pbsk/Y0qbQ5K1aNETaFqJK5cbChXLZaBeRcvXjC5eivJLF+7imMnbiUqBanSyJz1xHclx6BVMRpF+HfDDVI/vOEUI5B5k/154ohNk8LHWuzAde2PxgOVwhPfzr+9YI8dw0nkf1ZQwZmps=
+	t=1725530092; cv=none; b=TFlT0985DxGYPtR8HJaYnyXbMl7M/atsZ7IFDfha4bIvsTAELEuO283bUU+W0+tPyXcMZy2vU4g/ZYTqJbLA7ZRG/zUuqg/ldJAvxwQvUpnF62QvCGgOr6jDW17v7bwg26y2Z3z12zos+PPCssh1i7VA74n6oDiioLbcuXS11XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530088; c=relaxed/simple;
-	bh=gXgSJZvymUGswu72My0Cfft8XN895K2+0EwznoZozCk=;
+	s=arc-20240116; t=1725530092; c=relaxed/simple;
+	bh=vtD14hS9nHOL/45ekZhMWZ3b77fzwsKDIbb+OmzxbZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eo0irP8cV2pRpS6gBvrrfb7rKuMPfy3kQNUrpHcGpWlcjHIEiV9WyuRi/mSvAUNYzcB7GQWIkazC5IGBCSm4LQaSLPuJ/S0rgGFA/9qa62vkuT3apXl3KKosAX77RiNdVwDzebpc/vLOzLv0PNq5obSljDjm8SfZ5Y+/+cL5RWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze1HsKG1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rOJwVoXxVU65FqaibyAx0eKUK17jhz1pjAhTR0/17DWCe2vNZU0qidWgs75xV4dychsvKKN4XBdjIFaRbFLFEjdQcuiX+UmHjepZV6tCTlEKv/FJcPWB84NQBEu0i9Uv/Sm1P3bbjGo79JjJwjGtYnsLAKGUiqeTFc90o82RPQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pgl5cFgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze1HsKG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC77C4CEC3;
-	Thu,  5 Sep 2024 09:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pgl5cFgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEFFC4CEC3;
+	Thu,  5 Sep 2024 09:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530088;
-	bh=gXgSJZvymUGswu72My0Cfft8XN895K2+0EwznoZozCk=;
+	s=korg; t=1725530091;
+	bh=vtD14hS9nHOL/45ekZhMWZ3b77fzwsKDIbb+OmzxbZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ze1HsKG1H/uxzPWicXk6vJdJ78wLeuxDhmmXEhpgrpv8iyTyfivKsNQ8KwywoXefy
-	 80dAkVLg+ctg6bLwAvRAIzTE5JCIbvDg6fyjbki6pNxuOFhqe0NfYchM8xlcz4+KbI
-	 vKIRvOVJBWupHmLor9085QeQtNY+tRCyXG33Xie4=
+	b=Pgl5cFgtRj9r48TA69q9jHGGAbfXKMr/cEWGY4AVHjI/DocX4fpMMr0am+MbMqGW4
+	 LqClAB1fUz2Y+BwU5p232K3Rq9pO3RDo2Hw6v7y9MsifGvfqRTXztWqOAOUkfZD6ih
+	 qXol0vjZR+a280+6VlsaEI+IuTpdqnswcIkxnxSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhigang Luo <Zhigang.Luo@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/132] drm/amdgpu: avoid reading vf2pf info size from FB
-Date: Thu,  5 Sep 2024 11:40:37 +0200
-Message-ID: <20240905093724.205110892@linuxfoundation.org>
+Subject: [PATCH 6.6 051/132] drm/amd/display: Check gpio_id before used as array index
+Date: Thu,  5 Sep 2024 11:40:38 +0200
+Message-ID: <20240905093724.243023835@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -53,35 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhigang Luo <Zhigang.Luo@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 3bcc0ee14768d886cedff65da72d83d375a31a56 ]
+[ Upstream commit 2a5626eeb3b5eec7a36886f9556113dd93ec8ed6 ]
 
-VF can't access FB when host is doing mode1 reset. Using sizeof to get
-vf2pf info size, instead of reading it from vf2pf header stored in FB.
+[WHY & HOW]
+GPIO_ID_UNKNOWN (-1) is not a valid value for array index and therefore
+should be checked in advance.
 
-Signed-off-by: Zhigang Luo <Zhigang.Luo@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+This fixes 5 OVERRUN issues reported by Coverity.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index ff4f52e07cc0..7768c756fe88 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -615,7 +615,7 @@ static int amdgpu_virt_write_vf2pf_data(struct amdgpu_device *adev)
- 	vf2pf_info->dummy_page_addr = (uint64_t)adev->dummy_page_addr;
- 	vf2pf_info->checksum =
- 		amd_sriov_msg_checksum(
--		vf2pf_info, vf2pf_info->header.size, 0, 0);
-+		vf2pf_info, sizeof(*vf2pf_info), 0, 0);
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+index 3ede6e02c3a7..2f8ca831afa2 100644
+--- a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
++++ b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+@@ -239,6 +239,9 @@ static bool is_pin_busy(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
++	if (id == GPIO_ID_UNKNOWN)
++		return false;
++
+ 	return service->busyness[id][en];
  }
+ 
+@@ -247,6 +250,9 @@ static void set_pin_busy(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
++	if (id == GPIO_ID_UNKNOWN)
++		return;
++
+ 	service->busyness[id][en] = true;
+ }
+ 
+@@ -255,6 +261,9 @@ static void set_pin_free(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
++	if (id == GPIO_ID_UNKNOWN)
++		return;
++
+ 	service->busyness[id][en] = false;
+ }
+ 
+@@ -263,7 +272,7 @@ enum gpio_result dal_gpio_service_lock(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
+-	if (!service->busyness[id]) {
++	if (id != GPIO_ID_UNKNOWN && !service->busyness[id]) {
+ 		ASSERT_CRITICAL(false);
+ 		return GPIO_RESULT_OPEN_FAILED;
+ 	}
+@@ -277,7 +286,7 @@ enum gpio_result dal_gpio_service_unlock(
+ 	enum gpio_id id,
+ 	uint32_t en)
+ {
+-	if (!service->busyness[id]) {
++	if (id != GPIO_ID_UNKNOWN && !service->busyness[id]) {
+ 		ASSERT_CRITICAL(false);
+ 		return GPIO_RESULT_OPEN_FAILED;
+ 	}
 -- 
 2.43.0
 
