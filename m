@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187DB1990B3;
-	Thu,  5 Sep 2024 09:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FA718D65E;
+	Thu,  5 Sep 2024 09:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530039; cv=none; b=FYmYyxG7CAohx92gA7KCSlr+IpBUxE3E6MashwxzpX8R8WJpzn8Dk7Fl0BpNGTmT4qTGaAE5z7dHUT3T68UGNzOW7rpCY+r3pvdDAEmdy/40MnXzmghwSo6DiFRt2xuB0Kngzqxp2vYGw2ZVe/Ql+fxqft3k2WbsWfVdqBR5B2c=
+	t=1725530042; cv=none; b=No6/6x1iOZJHWAfSyez+PBfwxHrJpTRCOJ80Xhm3MpusVSe/nQ8Yqr1lqGBJH25wSXnr3yHdcEgxPqDtz6a/y9m4t4Y0SUAZo/Y+4Ut2aq0L60DzSHc4Bitn9Yy86z44F5YuhHmHTbxpPE03UtVrygfUwCh2yQjsFE5S7vBzcv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530039; c=relaxed/simple;
-	bh=LSUDRNvOclBYcRWNZURKvxpkdGS68O2gQekntXN/LV8=;
+	s=arc-20240116; t=1725530042; c=relaxed/simple;
+	bh=xboHx9Ew2AlkoTIktClepw5l9bjghKlkE13prnFwxDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FD+j5Rpe71uzOgiwHB3y9cLcf+xW/nrm/2r412weYMPlbvfaSlthk+ScRVCXSloSz6TfYVFfy2Q52CdsvTi8+cCu3tNmnuXYHMnXqznESFxHvR9Gy2ni/75pawq8RTzqVO+QrKYe+wTB3unfa6FIuNlCskvoQ0n3sS9rza6c+dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjormtvp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HDSbMiNb1l/DPvAtLEHqR5v9BOybSvVmK1Y4WhxDOgHnrgfSZEooImLxZXa1vh+OVy/xaizXT0moilurl63/c8wvA+1EjE0kcUN9LcHWRmwEg7/DKyU435YNv8e8QPw7AQoZC9WVRQFeN42PeEZNtJB37Fk9UKvP2NSd+0TmsDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqjpaqrT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjormtvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E2FC4CEC6;
-	Thu,  5 Sep 2024 09:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqjpaqrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D473C4CEC3;
+	Thu,  5 Sep 2024 09:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530038;
-	bh=LSUDRNvOclBYcRWNZURKvxpkdGS68O2gQekntXN/LV8=;
+	s=korg; t=1725530042;
+	bh=xboHx9Ew2AlkoTIktClepw5l9bjghKlkE13prnFwxDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjormtvp71wxZzY/5bLAi0fy6D+O/dioAl1lzXGFRpWNjK6/sG0fwk4FsPGWBm2+4
-	 xlAtPlqlKnWZsW7FuMeL5lQsOLt4HLrRds9nuY/7+km8/QO0UGGjcio6RgM0gmIKUL
-	 zh4NHpE5tpE/f7fRSST4lNX7GUjd6b1fs3znnV1g=
+	b=NqjpaqrTK7HQ+4ZPrfyl9Kb85wzdJIAJ8SvRijJfLLsgVQJ1WLUKaHIk9IPE6an7e
+	 rL/tE929SxSutXYQP5V6pVjpenjfsvG7Jtx0tWVuPuZ/UEJ8Zwkn5jrTWerWmWKyuX
+	 EmYw5PRD7a7bW6UI3k6fa81MFMHV+vrbhhqPf4Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.6 036/132] selftests: mptcp: join: disable get and dump addr checks
-Date: Thu,  5 Sep 2024 11:40:23 +0200
-Message-ID: <20240905093723.646972220@linuxfoundation.org>
+Subject: [PATCH 6.6 037/132] selftests: mptcp: join: stop transfer when check is done (part 2.2)
+Date: Thu,  5 Sep 2024 11:40:24 +0200
+Message-ID: <20240905093723.686356074@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -51,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-These new checks have been recently queued to v6.6 [1] with the backport
-of commit 38f027fca1b7 ("selftests: mptcp: dump userspace addrs list"),
-and commit 4cc5cc7ca052 ("selftests: mptcp: userspace pm get addr
-tests").
+Use mptcp_lib_kill_wait in "userspace pm create id 0 subflow" subtest.
 
-On v6.6, these checks will simply print 'skip', because the associated
-features are not available in this version. That's fine, except that the
-MPTCP CI sets the SELFTESTS_MPTCP_LIB_EXPECT_ALL_FEATURES=1 env var,
-which will force these subtests to fail when using the selftests from
-v6.6 on a v6.6 kernel, because the feature is not available.
+This new test has recently been queued to v6.6 [1] with the backport of
+commit b2e2248f365a ("selftests: mptcp: userspace pm create id 0
+subflow").
 
-To ease the backports (and possible future ones), I suggest to keep the
-recent backports, but skip calling mptcp_lib_kallsyms_has() not to have
-the CIs setting this env var complaining about the associated features
-not being available.
+The modification here was part of commit 04b57c9e096a ("selftests:
+mptcp: join: stop transfer when check is done (part 2)") that has been
+backported to v6.6 a few months ago -- see commit 358f02b84fbb
+("selftests: mptcp: join: stop transfer when check is done (part 2)") --
+but it was not modifying this subtest as it was not present in v6.6.
 
 Link: https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=bd2122541bd8 [1]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3472,7 +3472,7 @@ userspace_pm_chk_dump_addr()
+@@ -3678,7 +3678,7 @@ userspace_tests()
+ 		chk_mptcp_info subflows 1 subflows 1
+ 		chk_subflows_total 2 2
+ 		kill_events_pids
+-		wait $tests_pid
++		mptcp_lib_kill_wait $tests_pid
+ 	fi
+ }
  
- 	print_check "dump addrs ${check}"
- 
--	if mptcp_lib_kallsyms_has "mptcp_userspace_pm_dump_addr$"; then
-+	if false && mptcp_lib_kallsyms_has "mptcp_userspace_pm_dump_addr$"; then
- 		check_output "userspace_pm_dump ${ns}" "${exp}"
- 	else
- 		print_skip
-@@ -3487,7 +3487,7 @@ userspace_pm_chk_get_addr()
- 
- 	print_check "get id ${id} addr"
- 
--	if mptcp_lib_kallsyms_has "mptcp_userspace_pm_get_addr$"; then
-+	if false && mptcp_lib_kallsyms_has "mptcp_userspace_pm_get_addr$"; then
- 		check_output "userspace_pm_get_addr ${ns} ${id}" "${exp}"
- 	else
- 		print_skip
 
 
