@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6335583CC8;
-	Thu,  5 Sep 2024 09:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A109C83CC8;
+	Thu,  5 Sep 2024 09:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530390; cv=none; b=kYFBwrImbZNxWqmkvalKviP4D3fuwOGSy92b4aMMwNPxmd5ClNEsRwJoaYBg3Sqy9PHtNIAFPvzhlTFnRlgEKP2qH8q27dFflxf7dtXitQ0ThzYqff644kUMKzQHc5EsQ/GO/g3EqGdErRx+iUbG1nWpBKqyxnYfnqZMBOQrDm0=
+	t=1725530393; cv=none; b=HO726WfOxuMfZjx1HMjyvUGaoNLDWXd5vwFRp+5sbwqV4Tu6Pf2mhM8akMYETCKH/el6JnzQI03sgRhacsq0ceILKWX1N2IFiZhHjpGbtX4gt7ZGJ5JOkJXLfJvSr7CAnciU0xhAumvMfGtHoN7mxO/tPX2opc+rPZLTlG6eFq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530390; c=relaxed/simple;
-	bh=3Nm30wGv5ef2ik12h4W3bTV3KV6OQ46c66X8GmNRxdg=;
+	s=arc-20240116; t=1725530393; c=relaxed/simple;
+	bh=BqWWmzcuoQnnNv+WWCu8iUS9trxwwORdTXrNKSe5GBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLcvHO1eAPERLmv3pxbeM6K3SAgAejjlP2Bkqs9wWf5oiVNxexX1EP80/EJ8aS36a244p+8iS7zdwD6QwC3tGcpsVOOhKjdQGErUHYJJPqKME5pVtZhpiAq/CPGKWuW3/Zt5XTWfOQKdZvoAvYkTcCMSqLhlovURvPVrUjVv78E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkD/kOC6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XcTdspQmySZa7gIHBqzzsKJ+SNAMEaNw5hp/rP5SB54QWxG9tMWedcqewbKScg4eRhUrmIjhIcDo7sbHGeEvkaDO8u+CcVFk7XncY6PhdqQfMbzfHUcNgMLVm+j90O1SPablKkHrO1rTpTSbGtM/k5IGm0CzgdAW8fGuxYFCuU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTzyNd/C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkD/kOC6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCA6C4CEC3;
-	Thu,  5 Sep 2024 09:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTzyNd/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2BFC4CEC6;
+	Thu,  5 Sep 2024 09:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530390;
-	bh=3Nm30wGv5ef2ik12h4W3bTV3KV6OQ46c66X8GmNRxdg=;
+	s=korg; t=1725530393;
+	bh=BqWWmzcuoQnnNv+WWCu8iUS9trxwwORdTXrNKSe5GBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jkD/kOC6xbr/PtMM6Yki1sZJUvaZ6B2rgYTmVBSzDx67id3KMeORXBrrcecsvtwdW
-	 QDiU7icG5EHyFFxngYfqqWmYxTGW+ibo9IoJDghB/ALVRgh7mYClKqK0Jhr85jnTqy
-	 1xCbSOdjQYxdCOy4iGoCkWhst4w8KJEyW3LqZPM0=
+	b=yTzyNd/C6yzCL1Vu/uYPaqrvzIjiTmCBAHeCA4RSkvmSB+e5cAI3Jhx7HMHdL/x/B
+	 6Uk+N8CkHuDzUTOltY5lM2fEDSXR7Y7rIhiK92ERlEtjE+V4XPwWzh8oMuNOvdfsOz
+	 dur672vBpXvrutgaUw9gvPeZx28mSRfkHBXF/qbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/101] mptcp: pm: fix RM_ADDR ID for the initial subflow
-Date: Thu,  5 Sep 2024 11:40:42 +0200
-Message-ID: <20240905093716.491875718@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Mostafa Saleh <smostafa@google.com>,
+	Bjorn Heelgas <bhelgaas@google.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 6.1 011/101] PCI/MSI: Fix UAF in msi_capability_init
+Date: Thu,  5 Sep 2024 11:40:43 +0200
+Message-ID: <20240905093716.532619154@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -52,143 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit 87b5896f3f7848130095656739b05881904e2697 ]
+commit 9eee5330656bf92f51cb1f09b2dc9f8cf975b3d1 upstream.
 
-The initial subflow has a special local ID: 0. When an endpoint is being
-deleted, it is then important to check if its address is not linked to
-the initial subflow to send the right ID.
+KFENCE reports the following UAF:
 
-If there was an endpoint linked to the initial subflow, msk's
-mpc_endpoint_id field will be set. We can then use this info when an
-endpoint is being removed to see if it is linked to the initial subflow.
+ BUG: KFENCE: use-after-free read in __pci_enable_msi_range+0x2c0/0x488
 
-So now, the correct IDs are passed to mptcp_pm_nl_rm_addr_or_subflow(),
-it is no longer needed to use mptcp_local_id_match().
+ Use-after-free read at 0x0000000024629571 (in kfence-#12):
+  __pci_enable_msi_range+0x2c0/0x488
+  pci_alloc_irq_vectors_affinity+0xec/0x14c
+  pci_alloc_irq_vectors+0x18/0x28
 
-Fixes: 3ad14f54bd74 ("mptcp: more accurate MPC endpoint tracking")
+ kfence-#12: 0x0000000008614900-0x00000000e06c228d, size=104, cache=kmalloc-128
+
+ allocated by task 81 on cpu 7 at 10.808142s:
+  __kmem_cache_alloc_node+0x1f0/0x2bc
+  kmalloc_trace+0x44/0x138
+  msi_alloc_desc+0x3c/0x9c
+  msi_domain_insert_msi_desc+0x30/0x78
+  msi_setup_msi_desc+0x13c/0x184
+  __pci_enable_msi_range+0x258/0x488
+  pci_alloc_irq_vectors_affinity+0xec/0x14c
+  pci_alloc_irq_vectors+0x18/0x28
+
+ freed by task 81 on cpu 7 at 10.811436s:
+  msi_domain_free_descs+0xd4/0x10c
+  msi_domain_free_locked.part.0+0xc0/0x1d8
+  msi_domain_alloc_irqs_all_locked+0xb4/0xbc
+  pci_msi_setup_msi_irqs+0x30/0x4c
+  __pci_enable_msi_range+0x2a8/0x488
+  pci_alloc_irq_vectors_affinity+0xec/0x14c
+  pci_alloc_irq_vectors+0x18/0x28
+
+Descriptor allocation done in:
+__pci_enable_msi_range
+    msi_capability_init
+        msi_setup_msi_desc
+            msi_insert_msi_desc
+                msi_domain_insert_msi_desc
+                    msi_alloc_desc
+                        ...
+
+Freed in case of failure in __msi_domain_alloc_locked()
+__pci_enable_msi_range
+    msi_capability_init
+        pci_msi_setup_msi_irqs
+            msi_domain_alloc_irqs_all_locked
+                msi_domain_alloc_locked
+                    __msi_domain_alloc_locked => fails
+                    msi_domain_free_locked
+                        ...
+
+That failure propagates back to pci_msi_setup_msi_irqs() in
+msi_capability_init() which accesses the descriptor for unmasking in the
+error exit path.
+
+Cure it by copying the descriptor and using the copy for the error exit path
+unmask operation.
+
+[ tglx: Massaged change log ]
+
+Fixes: bf6e054e0e3f ("genirq/msi: Provide msi_device_populate/destroy_sysfs()")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Bjorn Heelgas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20240624203729.1094506-1-smostafa@google.com
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/pci/msi/msi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index fa0579c2a6ee2..7543abf02f0c7 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -797,11 +797,6 @@ int mptcp_pm_nl_mp_prio_send_ack(struct mptcp_sock *msk,
- 	return -EINVAL;
- }
- 
--static bool mptcp_local_id_match(const struct mptcp_sock *msk, u8 local_id, u8 id)
--{
--	return local_id == id || (!local_id && msk->mpc_endpoint_id == id);
--}
--
- static void mptcp_pm_nl_rm_addr_or_subflow(struct mptcp_sock *msk,
- 					   const struct mptcp_rm_list *rm_list,
- 					   enum linux_mptcp_mib_field rm_type)
-@@ -838,7 +833,7 @@ static void mptcp_pm_nl_rm_addr_or_subflow(struct mptcp_sock *msk,
- 				continue;
- 			if (rm_type == MPTCP_MIB_RMADDR && remote_id != rm_id)
- 				continue;
--			if (rm_type == MPTCP_MIB_RMSUBFLOW && !mptcp_local_id_match(msk, id, rm_id))
-+			if (rm_type == MPTCP_MIB_RMSUBFLOW && id != rm_id)
- 				continue;
- 
- 			pr_debug(" -> %s rm_list_ids[%d]=%u local_id=%u remote_id=%u mpc_id=%u",
-@@ -1472,6 +1467,12 @@ static bool remove_anno_list_by_saddr(struct mptcp_sock *msk,
- 	return false;
- }
- 
-+static u8 mptcp_endp_get_local_id(struct mptcp_sock *msk,
-+				  const struct mptcp_addr_info *addr)
-+{
-+	return msk->mpc_endpoint_id == addr->id ? 0 : addr->id;
-+}
-+
- static bool mptcp_pm_remove_anno_addr(struct mptcp_sock *msk,
- 				      const struct mptcp_addr_info *addr,
- 				      bool force)
-@@ -1479,7 +1480,7 @@ static bool mptcp_pm_remove_anno_addr(struct mptcp_sock *msk,
- 	struct mptcp_rm_list list = { .nr = 0 };
- 	bool ret;
- 
--	list.ids[list.nr++] = addr->id;
-+	list.ids[list.nr++] = mptcp_endp_get_local_id(msk, addr);
- 
- 	ret = remove_anno_list_by_saddr(msk, addr);
- 	if (ret || force) {
-@@ -1506,14 +1507,12 @@ static int mptcp_nl_remove_subflow_and_signal_addr(struct net *net,
- 						   const struct mptcp_pm_addr_entry *entry)
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -431,7 +431,7 @@ static int msi_capability_init(struct pc
+ 			       struct irq_affinity *affd)
  {
- 	const struct mptcp_addr_info *addr = &entry->addr;
--	struct mptcp_rm_list list = { .nr = 0 };
-+	struct mptcp_rm_list list = { .nr = 1 };
- 	long s_slot = 0, s_num = 0;
- 	struct mptcp_sock *msk;
+ 	struct irq_affinity_desc *masks = NULL;
+-	struct msi_desc *entry;
++	struct msi_desc *entry, desc;
+ 	int ret;
  
- 	pr_debug("remove_id=%d", addr->id);
+ 	/*
+@@ -452,6 +452,12 @@ static int msi_capability_init(struct pc
+ 	/* All MSIs are unmasked by default; mask them all */
+ 	entry = msi_first_desc(&dev->dev, MSI_DESC_ALL);
+ 	pci_msi_mask(entry, msi_multi_mask(entry));
++	/*
++	 * Copy the MSI descriptor for the error path because
++	 * pci_msi_setup_msi_irqs() will free it for the hierarchical
++	 * interrupt domain case.
++	 */
++	memcpy(&desc, entry, sizeof(desc));
  
--	list.ids[list.nr++] = addr->id;
--
- 	while ((msk = mptcp_token_iter_next(net, &s_slot, &s_num)) != NULL) {
- 		struct sock *sk = (struct sock *)msk;
- 		bool remove_subflow;
-@@ -1531,6 +1530,7 @@ static int mptcp_nl_remove_subflow_and_signal_addr(struct net *net,
- 		mptcp_pm_remove_anno_addr(msk, addr, remove_subflow &&
- 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
+ 	/* Configure MSI capability structure */
+ 	ret = pci_msi_setup_msi_irqs(dev, nvec, PCI_CAP_ID_MSI);
+@@ -471,7 +477,7 @@ static int msi_capability_init(struct pc
+ 	goto unlock;
  
-+		list.ids[0] = mptcp_endp_get_local_id(msk, addr);
- 		if (remove_subflow) {
- 			spin_lock_bh(&msk->pm.lock);
- 			mptcp_pm_nl_rm_subflow_received(msk, &list);
-@@ -1639,6 +1639,7 @@ static int mptcp_nl_cmd_del_addr(struct sk_buff *skb, struct genl_info *info)
- 	return ret;
- }
- 
-+/* Called from the userspace PM only */
- void mptcp_pm_remove_addrs(struct mptcp_sock *msk, struct list_head *rm_list)
- {
- 	struct mptcp_rm_list alist = { .nr = 0 };
-@@ -1667,6 +1668,7 @@ void mptcp_pm_remove_addrs(struct mptcp_sock *msk, struct list_head *rm_list)
- 	}
- }
- 
-+/* Called from the in-kernel PM only */
- static void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
- 					       struct list_head *rm_list)
- {
-@@ -1676,11 +1678,11 @@ static void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
- 	list_for_each_entry(entry, rm_list, list) {
- 		if (slist.nr < MPTCP_RM_IDS_MAX &&
- 		    lookup_subflow_by_saddr(&msk->conn_list, &entry->addr))
--			slist.ids[slist.nr++] = entry->addr.id;
-+			slist.ids[slist.nr++] = mptcp_endp_get_local_id(msk, &entry->addr);
- 
- 		if (alist.nr < MPTCP_RM_IDS_MAX &&
- 		    remove_anno_list_by_saddr(msk, &entry->addr))
--			alist.ids[alist.nr++] = entry->addr.id;
-+			alist.ids[alist.nr++] = mptcp_endp_get_local_id(msk, &entry->addr);
- 	}
- 
- 	spin_lock_bh(&msk->pm.lock);
-@@ -1968,7 +1970,7 @@ static void mptcp_pm_nl_fullmesh(struct mptcp_sock *msk,
- {
- 	struct mptcp_rm_list list = { .nr = 0 };
- 
--	list.ids[list.nr++] = addr->id;
-+	list.ids[list.nr++] = mptcp_endp_get_local_id(msk, addr);
- 
- 	spin_lock_bh(&msk->pm.lock);
- 	mptcp_pm_nl_rm_subflow_received(msk, &list);
--- 
-2.43.0
-
+ err:
+-	pci_msi_unmask(entry, msi_multi_mask(entry));
++	pci_msi_unmask(&desc, msi_multi_mask(&desc));
+ 	free_msi_irqs(dev);
+ fail:
+ 	dev->msi_enabled = 0;
 
 
