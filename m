@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A341319924F;
-	Thu,  5 Sep 2024 09:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E268F156225;
+	Thu,  5 Sep 2024 09:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529920; cv=none; b=YYzQtQY1vx4UEgTzgShaIFEUJqhfsXEHkTI1K+GHPSU+xElJz+GB+XpLT+wBQxeLP0GPv12uXi23dw6M94NM0EttUY4+KUC8aTGyTt8aUONS9hmHn4BeAfkTdDVj7rHJivZ7ybstWItNLNY0Y3CRIMGk+7BiLWbtF6+kDEkwqts=
+	t=1725529924; cv=none; b=hjmCtJegiwYa0HPWOsqIsoBGZfzhyjOF2oOV65Z6uPGMl9YUTjlPENWXTAbTDkBFOU5+w8hUXiHfSXLREh1yKdZSqGgoc4j6e1NEo1lwDyXioWYDYvxIzyU5lGxNeW+ri2q3/To8cZFUhUI0GNlZi6z1WoPrrDETfZDA9Vx5v9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529920; c=relaxed/simple;
-	bh=9mp4/VhyGcRTE023V6BU7HIcahVgsLbubyd56seoOuo=;
+	s=arc-20240116; t=1725529924; c=relaxed/simple;
+	bh=VKPRO6X51TFSyBHfGIe0qghA3NuvJ9j38l1dCHxaqzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCOhCeYwWPQ+Su0uEx1XrPF1i+GxIq221Ba8j74rctOoH1X1Bg9vprnYTSQoAzaypgkTGUt60RArbr8JYnLH8ryqOFmuQeGKuKz1W1AYfd6ppxdr0lYqqnRPHqlg+BLpNV+JkwetYX35KselBJPli8L/zpCA7OwzhBygbLBAx4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmQrIrLr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kSfIiz2gQ6Jjh3723zCgQaRPNy44HDe1w8TFOYbuvYk1xf1URJiGouLle/5WS2Zntah91V8/a3rUnH1xDuJh85P5S+NyQmU/TxawqktsixTZHj8Ll3qBNcN3Eu3ydmWznK2VSNFu1k9pD9lkmPmDrbMyMPccmjJu1Iog2iHolqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnLgJvGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmQrIrLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2998BC4CEC6;
-	Thu,  5 Sep 2024 09:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnLgJvGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68539C4CEC3;
+	Thu,  5 Sep 2024 09:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529920;
-	bh=9mp4/VhyGcRTE023V6BU7HIcahVgsLbubyd56seoOuo=;
+	s=korg; t=1725529923;
+	bh=VKPRO6X51TFSyBHfGIe0qghA3NuvJ9j38l1dCHxaqzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmQrIrLrTjt6vuGElgLlTClLIyg3rN2IwO7NSew1cbf8ox8MgleQO4LuYrAnTWIrV
-	 fgJSbqu+uJuFZ2zYOaKyhldkUUJUA81gwQY/48SEJ+IT5gTKJ9N7qjqGi5mA/RtUfd
-	 Of1hVmGx+ovc+kK6oMvFH5NCsOVRGotRBlOVg2+Y=
+	b=hnLgJvGoI40XDL6h6kcVBSeTNlvo5LqxBbWB8amiTUgTnvZ3WAZgQwJ1YlsEEWaSB
+	 S8Tqi65M0vaWXchkM2yMD30RZ6AtfrkZBPXljOJvvPnu5oVRJBrcr78YUGwTpTWz2X
+	 fRUQQuyM+vobci7qgT0crlWUYTAa7NFVYZuR3pYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	kernel test robot <lkp@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.10 183/184] i2c: Use IS_REACHABLE() for substituting empty ACPI functions
-Date: Thu,  5 Sep 2024 11:41:36 +0200
-Message-ID: <20240905093739.472243237@linuxfoundation.org>
+	Amit Pundir <amit.pundir@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.10 184/184] scsi: ufs: qcom: Add UFSHCD_QUIRK_BROKEN_LSDBS_CAP for SM8550 SoC
+Date: Thu,  5 Sep 2024 11:41:37 +0200
+Message-ID: <20240905093739.510266699@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,49 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 71833e79a42178d8a50b5081c98c78ace9325628 upstream.
+commit ea593e028a9cc523557b4084a61d87ae69e2f270 upstream.
 
-Replace IS_ENABLED() with IS_REACHABLE() to substitute empty stubs for:
-    i2c_acpi_get_i2c_resource()
-    i2c_acpi_client_count()
-    i2c_acpi_find_bus_speed()
-    i2c_acpi_new_device_by_fwnode()
-    i2c_adapter *i2c_acpi_find_adapter_by_handle()
-    i2c_acpi_waive_d0_probe()
+SM8550 SoC has the UFSHCI 4.0 compliant UFS controller and only supports
+legacy single doorbell mode without MCQ. But due to a hardware bug, it
+reports 1 in the 'Legacy Queue & Single Doorbell Support (LSDBS)' field of
+the Controller Capabilities register. This field is supposed to read as 0
+if legacy single doorbell mode is supported and 1 otherwise.
 
-commit f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI
-functions") partially fixed this conditional to depend on CONFIG_I2C,
-but used IS_ENABLED(), which is wrong since CONFIG_I2C is tristate.
+Starting with commit 0c60eb0cc320 ("scsi: ufs: core: Check LSDBS cap when
+!mcq"), ufshcd driver is now relying on the LSDBS field to decide when to
+use the legacy doorbell mode if MCQ is not supported. And this ends up
+breaking UFS on SM8550:
 
-CONFIG_ACPI is boolean but let's also change it to use IS_REACHABLE()
-to future-proof it against becoming tristate.
+ufshcd-qcom 1d84000.ufs: ufshcd_init: failed to initialize (legacy doorbell mode not supported)
+ufshcd-qcom 1d84000.ufs: error -EINVAL: Initialization failed with error -22
 
-Somehow despite testing various combinations of CONFIG_I2C and CONFIG_ACPI
-we missed the combination CONFIG_I2C=m, CONFIG_ACPI=y.
+So use the UFSHCD_QUIRK_BROKEN_LSDBS_CAP quirk for SM8550 SoC so that the
+ufshcd driver could use legacy doorbell mode correctly.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI functions")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408141333.gYnaitcV-lkp@intel.com/
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: 0c60eb0cc320 ("scsi: ufs: core: Check LSDBS cap when !mcq")
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240816-ufs-bug-fix-v3-2-e6fe0e18e2a3@linaro.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/i2c.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/linux/i2c.h
-+++ b/include/linux/i2c.h
-@@ -1053,7 +1053,7 @@ static inline int of_i2c_get_board_info(
- struct acpi_resource;
- struct acpi_resource_i2c_serialbus;
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -857,6 +857,9 @@ static void ufs_qcom_advertise_quirks(st
  
--#if IS_ENABLED(CONFIG_ACPI) && IS_ENABLED(CONFIG_I2C)
-+#if IS_REACHABLE(CONFIG_ACPI) && IS_REACHABLE(CONFIG_I2C)
- bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
- 			       struct acpi_resource_i2c_serialbus **i2c);
- int i2c_acpi_client_count(struct acpi_device *adev);
+ 	if (host->hw_ver.major > 0x3)
+ 		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
++
++	if (of_device_is_compatible(hba->dev->of_node, "qcom,sm8550-ufshc"))
++		hba->quirks |= UFSHCD_QUIRK_BROKEN_LSDBS_CAP;
+ }
+ 
+ static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
+@@ -1845,7 +1848,8 @@ static void ufs_qcom_remove(struct platf
+ }
+ 
+ static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
+-	{ .compatible = "qcom,ufshc"},
++	{ .compatible = "qcom,ufshc" },
++	{ .compatible = "qcom,sm8550-ufshc" },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, ufs_qcom_of_match);
 
 
