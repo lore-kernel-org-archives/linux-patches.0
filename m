@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF68B1925AA;
-	Thu,  5 Sep 2024 09:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174471925AA;
+	Thu,  5 Sep 2024 09:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529379; cv=none; b=DW815ue7iS7fmF6tfPqJ4i88USBzESU/GA3X6mI/MEv0vNL+YxdlvGHa9NXdlKGrI9IA8ciV1eUyKBp3h9itJO8bFlHnphGSAV6WTfA18hCQ2W9Uxdt07N/HVg/17qnFUO8BrW8TJG0YCtIIC59LpHyCkvJ/+n61hYUQVN7tYsg=
+	t=1725529382; cv=none; b=k76btYHkiZyVMvepkehR23x425BDVNrpvOD1dy8i48P+L66tnLYya1rJCwKYDb8Gv7Rt0mHyK2iEHlT1t/FNyvkca+EpNnCXkcd7WkKozUyW0UaV3BeoV4LxWj9rIFKUqQe8tDV5JMIenhwPbMX9ju16B1hjAHGekh+q2AntepQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529379; c=relaxed/simple;
-	bh=r8NH1EmK87BmBNBPhgUhQTZs9BvvWbhe33KVCLfB1cc=;
+	s=arc-20240116; t=1725529382; c=relaxed/simple;
+	bh=QoJcb+yzm0w4KNDUwAhr+IoagoyB/zm9qcMcv3TfTAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgWll8noyTHAUnazDLW4+acjW236kJAzL7TmVFGltzEIAfjnUTcZgR9nbX/vwWNmCA1jUNSmLtqVXJG8p/elBfrSvyGlLRQph1mc0GDd+j4UZmXeytzxut26ie3kJVHqllCpsdSszYQUsMhg0b7CjMZ7MolXDKWz6i6uW4IIvM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSdIbayq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BOnZ/B6aaqTkqKh/pUZ+ZJArnQc4Iq32TNRZlDTmhmWX7WMwBBeGuF3x60vLHOLMbXKn0K2p4j21ef8Llowq4ci6wex0W2NxsKzk3aNrxq618bdWmVFeMsAQWwQvm4bcUyASCfNUMfJLhHwpLAOk6LQDvIsDpfcresFZr8WPP4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4Vyqc8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSdIbayq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166EBC4CEC3;
-	Thu,  5 Sep 2024 09:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4Vyqc8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDB9C4CEC3;
+	Thu,  5 Sep 2024 09:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529378;
-	bh=r8NH1EmK87BmBNBPhgUhQTZs9BvvWbhe33KVCLfB1cc=;
+	s=korg; t=1725529381;
+	bh=QoJcb+yzm0w4KNDUwAhr+IoagoyB/zm9qcMcv3TfTAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSdIbayqbG0qxJjJ9OZY4WHU0druoZpkKwEUB/zWlq00nAqB7u7qJInMTNjgqD6an
-	 zFuJ/4dwTAMDyKHKTwWVWd/x1znW3gPomSHVEoPWuO0hw7IYaw1lXi7g1L8jthGx+o
-	 5z3pzpI/1h7fofUu1gdn7H9PBf1kdAP79NXahI8I=
+	b=C4Vyqc8B8sEq1VKdb69rFM0owOdb/ljytfYTPUB4t2Ao6A7R/F1U5xUn91ioDlejS
+	 DkE2gL+SDEIl6nvg+0PmKKuT+25PB9GpPn0ut7beU1mm0XHQC/4o5iPN04D/gKNgM0
+	 qnc0+94gNvwxVkrU7U+BfxWYg95ft/PYOmNnXT9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Alex Vesker <valex@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Steinbeisser <Sebastian.Steinbeisser@lrz.de>,
+	Tom Talpey <tom@talpey.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 014/184] net/mlx5: DR, Fix stack guard page was hit error in dr_rule
-Date: Thu,  5 Sep 2024 11:38:47 +0200
-Message-ID: <20240905093732.798162271@linuxfoundation.org>
+Subject: [PATCH 6.10 015/184] smb: client: fix FSCTL_GET_REPARSE_POINT against NetApp
+Date: Thu,  5 Sep 2024 11:38:48 +0200
+Message-ID: <20240905093732.837808723@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -54,40 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 94a3ad6c081381fa9ee523781789802b4ed00faf ]
+[ Upstream commit ddecea00f87f0c46e9c8339a7c89fb2ff891521a ]
 
-This patch reduces the size of hw_ste_arr_optimized array that is
-allocated on stack from 640 bytes (5 match STEs + 5 action STES)
-to 448 bytes (2 match STEs + 5 action STES).
-This fixes the 'stack guard page was hit' issue, while still fitting
-majority of the usecases (up to 2 match STEs).
+NetApp server requires the file to be open with FILE_READ_EA access in
+order to support FSCTL_GET_REPARSE_POINT, otherwise it will return
+STATUS_INVALID_DEVICE_REQUEST.  It doesn't make any sense because
+there's no requirement for FILE_READ_EA bit to be set nor
+STATUS_INVALID_DEVICE_REQUEST being used for something other than
+"unsupported reparse points" in MS-FSA.
 
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Alex Vesker <valex@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://patch.msgid.link/20240730061638.1831002-4-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To fix it and improve compatibility, set FILE_READ_EA & SYNCHRONIZE
+bits to match what Windows client currently does.
+
+Tested-by: Sebastian Steinbeisser <Sebastian.Steinbeisser@lrz.de>
+Acked-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/dr_rule.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2inode.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_rule.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_rule.c
-index 042ca03491243..d1db04baa1fa6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_rule.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_rule.c
-@@ -7,7 +7,7 @@
- /* don't try to optimize STE allocation if the stack is too constaraining */
- #define DR_RULE_MAX_STES_OPTIMIZED 0
- #else
--#define DR_RULE_MAX_STES_OPTIMIZED 5
-+#define DR_RULE_MAX_STES_OPTIMIZED 2
- #endif
- #define DR_RULE_MAX_STE_CHAIN_OPTIMIZED (DR_RULE_MAX_STES_OPTIMIZED + DR_ACTION_MAX_STES)
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index 062b86a4936fd..9f5bc41433c15 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -950,7 +950,8 @@ int smb2_query_path_info(const unsigned int xid,
+ 			cmds[num_cmds++] = SMB2_OP_GET_REPARSE;
  
+ 		oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
+-				     FILE_READ_ATTRIBUTES | FILE_READ_EA,
++				     FILE_READ_ATTRIBUTES |
++				     FILE_READ_EA | SYNCHRONIZE,
+ 				     FILE_OPEN, create_options |
+ 				     OPEN_REPARSE_POINT, ACL_NO_MODE);
+ 		cifs_get_readable_path(tcon, full_path, &cfile);
+@@ -1258,7 +1259,8 @@ int smb2_query_reparse_point(const unsigned int xid,
+ 	cifs_dbg(FYI, "%s: path: %s\n", __func__, full_path);
+ 
+ 	cifs_get_readable_path(tcon, full_path, &cfile);
+-	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path, FILE_READ_ATTRIBUTES,
++	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
++			     FILE_READ_ATTRIBUTES | FILE_READ_EA | SYNCHRONIZE,
+ 			     FILE_OPEN, OPEN_REPARSE_POINT, ACL_NO_MODE);
+ 	rc = smb2_compound_op(xid, tcon, cifs_sb,
+ 			      full_path, &oparms, &in_iov,
 -- 
 2.43.0
 
