@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAF71494DB;
-	Thu,  5 Sep 2024 10:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE7719413B;
+	Thu,  5 Sep 2024 10:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530567; cv=none; b=nXZ2WSK0QSWD60JiQQDcuQGHYtTVL4VZTvw3RzIUbie2WDLFm4uHQkvLfZQTyRr7sE4VuX04va1lKhAE+9TqMLzQXf8l1OcHqmfC6KFe2pDT4LI4Z0nc6o+w4yrPHIdbsqfklRxD7T+rmjSwtjMXEPGnRWo91bF4z/lTkbVNDG4=
+	t=1725530571; cv=none; b=F7ygkukWeQEZ0+f2Umcf9MYfATbryKfLHlI4vCoSIaIuk6lTYLEvdED5kbGFDugSTRFhdY3W2urr5FSHEjEYGjb/MdZ3RERue2pW66oWiIAY7MIRbYdvuQUwrWYLPcayfhWHulIhnxROcLOk1r0dVzxCxUI8w3iRpMHcdNP21nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530567; c=relaxed/simple;
-	bh=DGkqld5soaWy4Z7sikjmbzdwFQZwFZmRjbaEKWdFe8Q=;
+	s=arc-20240116; t=1725530571; c=relaxed/simple;
+	bh=M0OUV7kbuOsyNLlDQnnkuV/oU7rrhp3I1dCrKENd42w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ok3dj0svXX+fzvHXfqDfT9G2eoD0fJQ+hbHjtEPk7WeCqq15PYSxcGc6GHmYugAQUJRSjKfIQwHzXk/cHF7SPXd1EqRke4T71xr5Ysj/8uMJDtuxipO3CjFZcg3csZRB4JOVPGPKAdrgspkje12oNf3PrWCiJsaX+2BVW83zdrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5qEEMUP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxtsMAB5oTbTyEKxah1aG1yKsq36QRePgiw54mEZPe0b97yrkdhlIeFCCC1T0jFFna/2DwE4iQHZmUPQsnZ7dZklwT/iRbzgmN0loyPeV39M+7KXTOpp5bOWtYqZ+2Lg62bmhf9JQDN2leTKe1pBcJbcO4vkLyyfR11wiiOpL4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXgT3ASB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5qEEMUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B95FC4CEC4;
-	Thu,  5 Sep 2024 10:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXgT3ASB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCB5C4CEC3;
+	Thu,  5 Sep 2024 10:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530567;
-	bh=DGkqld5soaWy4Z7sikjmbzdwFQZwFZmRjbaEKWdFe8Q=;
+	s=korg; t=1725530571;
+	bh=M0OUV7kbuOsyNLlDQnnkuV/oU7rrhp3I1dCrKENd42w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5qEEMUPwJZiM34Zm5EiSfSjneq9vSzGXVipJeO6NlLe51/AwTEtzu9CRXyiEYGNi
-	 LOFA+xWtEXs0Hk8MKZtKOcJ6HGSn/mjommi2+Cc5bSMK55KkbO9sUR1PN3vfRWhpl4
-	 KDgiNaTvGl1FnLfS+MQA6fxIBUraONwh+nXe+/Z4=
+	b=TXgT3ASBSrTxN97zjk4lM1j8Zu5sI84Hyi93p60VX17Kooa61/FkRP4S7nJuhZsfD
+	 EzQrWn8m/N38iSUp0lUd+piLWtvkIFGsrpLY77aZE2wEEjywgOIKd06JpxfY+xb7pm
+	 bY0j8WqWNwpQ7WukFUjoRUV8UsOiWb2cOPfvRics=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chen <michael.chen@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/101] drm/amdkfd: Reconcile the definition and use of oem_id in struct kfd_topology_device
-Date: Thu,  5 Sep 2024 11:41:29 +0200
-Message-ID: <20240905093718.368565148@linuxfoundation.org>
+Subject: [PATCH 6.1 066/101] wifi: rtw89: ser: avoid multiple deinit on same CAM
+Date: Thu,  5 Sep 2024 11:41:38 +0200
+Message-ID: <20240905093718.722579815@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -52,68 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chen <michael.chen@amd.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 10f624ef239bd136cdcc5bbc626157a57b938a31 ]
+[ Upstream commit cea4066588308fa932b6b03486c608efff1d761c ]
 
-Currently oem_id is defined as uint8_t[6] and casted to uint64_t*
-in some use case. This would lead code scanner to complain about
-access beyond. Re-define it in union to enforce 8-byte size and
-alignment to avoid potential issue.
+We did deinit CAM in STA iteration in VIF loop. But, the STA iteration
+missed to restrict the target VIF. So, if there are multiple VIFs, we
+would deinit a CAM multiple times. Now, fix it.
 
-Signed-off-by: Michael Chen <michael.chen@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://msgid.link/20240509090646.35304-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.h     | 2 --
- drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 3 +--
- drivers/gpu/drm/amd/amdkfd/kfd_topology.h | 5 ++++-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw89/ser.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.h b/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
-index a8671061a175..bf90a6479867 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.h
-@@ -43,8 +43,6 @@
- #define CRAT_OEMTABLEID_LENGTH	8
- #define CRAT_RESERVED_LENGTH	6
+diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
+index c1a4bc1c64d1..afb1b41e1a9a 100644
+--- a/drivers/net/wireless/realtek/rtw89/ser.c
++++ b/drivers/net/wireless/realtek/rtw89/ser.c
+@@ -304,9 +304,13 @@ static void ser_reset_vif(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
  
--#define CRAT_OEMID_64BIT_MASK ((1ULL << (CRAT_OEMID_LENGTH * 8)) - 1)
--
- /* Compute Unit flags */
- #define COMPUTE_UNIT_CPU	(1 << 0)  /* Create Virtual CRAT for CPU */
- #define COMPUTE_UNIT_GPU	(1 << 1)  /* Create Virtual CRAT for GPU */
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-index 029916971bf6..d841200a405b 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-@@ -972,8 +972,7 @@ static void kfd_update_system_properties(void)
- 	dev = list_last_entry(&topology_device_list,
- 			struct kfd_topology_device, list);
- 	if (dev) {
--		sys_props.platform_id =
--			(*((uint64_t *)dev->oem_id)) & CRAT_OEMID_64BIT_MASK;
-+		sys_props.platform_id = dev->oem_id64;
- 		sys_props.platform_oem = *((uint64_t *)dev->oem_table_id);
- 		sys_props.platform_rev = dev->oem_revision;
- 	}
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.h b/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
-index 19283b8b1688..00a78c2ce686 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.h
-@@ -146,7 +146,10 @@ struct kfd_topology_device {
- 	struct attribute		attr_gpuid;
- 	struct attribute		attr_name;
- 	struct attribute		attr_props;
--	uint8_t				oem_id[CRAT_OEMID_LENGTH];
-+	union {
-+		uint8_t				oem_id[CRAT_OEMID_LENGTH];
-+		uint64_t			oem_id64;
-+	};
- 	uint8_t				oem_table_id[CRAT_OEMTABLEID_LENGTH];
- 	uint32_t			oem_revision;
- };
+ static void ser_sta_deinit_cam_iter(void *data, struct ieee80211_sta *sta)
+ {
+-	struct rtw89_vif *rtwvif = (struct rtw89_vif *)data;
+-	struct rtw89_dev *rtwdev = rtwvif->rtwdev;
++	struct rtw89_vif *target_rtwvif = (struct rtw89_vif *)data;
+ 	struct rtw89_sta *rtwsta = (struct rtw89_sta *)sta->drv_priv;
++	struct rtw89_vif *rtwvif = rtwsta->rtwvif;
++	struct rtw89_dev *rtwdev = rtwvif->rtwdev;
++
++	if (rtwvif != target_rtwvif)
++		return;
+ 
+ 	if (rtwvif->net_type == RTW89_NET_TYPE_AP_MODE || sta->tdls)
+ 		rtw89_cam_deinit_addr_cam(rtwdev, &rtwsta->addr_cam);
 -- 
 2.43.0
 
