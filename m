@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A5083CC8;
-	Thu,  5 Sep 2024 09:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6D883CC8;
+	Thu,  5 Sep 2024 09:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530380; cv=none; b=DkkaNX+x0/veLARRVNJcdzRCPBOm7bR3Ys1sl49Pc86Sxta9JSPz+ZuP0PFML1RlAVcgqm9647lUEpT7Qk9IdlCOKc8+zsJ65SL4i+s/HgqzG7BDXC+1MCC8PH0sFjOXaygKR+Qw7vLFebseuybCppz3Ep8mE0eUWw5mE9RbDPE=
+	t=1725530383; cv=none; b=WN5lqNLE3spOWRZaQkLAJ4tWmL0HdKAZOybLn0qC8JXhROQrUlpRaLwCtGYxGqmfxB5y16i0B6hZSBxioboHm1cctTJW/7fRJRJS9UPnyXrEDTmDYqFIeIOnpelKSQR8X2xmjL841E2zLvR4cuR+V//caLB65H0K8NzyOUkg18s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530380; c=relaxed/simple;
-	bh=YFSxQajHyq6uHEx+B+E4YWhzFzwPBNMvOYgCC1VIPqE=;
+	s=arc-20240116; t=1725530383; c=relaxed/simple;
+	bh=zmEsjU/Dlw1vicDrusbUhvgXK9zeDP533lv0GPsMEag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPypMjwQALf6aRtVS6vOPZDrYtPIcj+CYkka9VwWMKKYpApIv45OG0K7Bmt1J4qZPoKrukjtHyIe55OBHBeFlXZ7KYYjgfRjow2j1FnFKeIXX3c/ztHMIRTBYDV8psc3X8aCSpHvtrq9jk/g3zwGzoeaN5erqnkEUgBYx1vZ1ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBMibxmo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXziyQyrua+E8YBZ7OXf2IE9i4ZZXectBVZnoy+H5R8VGePVAjSnPL8BDGrr7bMQ6Jo9ZfQx8vx0PVhKWztxXm/hEKlBOHqIXXAsFeVHSiNBHv5hkfBYXsF5fMo7RjipaOklVscrSEgwCrjOYGsQohRif5wxpD6ynjh1KLbM20Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmozLa+L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBMibxmo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FD1C4CEC3;
-	Thu,  5 Sep 2024 09:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmozLa+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96051C4CEC3;
+	Thu,  5 Sep 2024 09:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530379;
-	bh=YFSxQajHyq6uHEx+B+E4YWhzFzwPBNMvOYgCC1VIPqE=;
+	s=korg; t=1725530383;
+	bh=zmEsjU/Dlw1vicDrusbUhvgXK9zeDP533lv0GPsMEag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBMibxmoO1CL6fgk50H2mceoSOJ2SqeK1UiZirlA6nYyp9Y7tPzB4isUQoJrX9Ye3
-	 EHWcyaL5aryIYkFHAalkF0XLAvAiQ4zhiaKjqbH36TSZwu02Na5Xy/8JCSRfPPsy4P
-	 sdoEJ7yn4O4Tn3CMcHxKSxxtUnPiGYbg6J7d9o3s=
+	b=LmozLa+LumoJ9JN/qbkRsAWAHta0KAd18BTOtfLUSJ7w3pzwned8l7tgMpplludWs
+	 lLWk/F3SqCocf8TA/BHteAnSh9yNx2IppxAmdPtaIxF2rmrWSKNwp6/W1+dcMs7Rff
+	 FV+GVvA24Ib9vq0YBfytW8lARFhSNEJZ/gFMhKQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 132/132] scsi: ufs: qcom: Add UFSHCD_QUIRK_BROKEN_LSDBS_CAP for SM8550 SoC
-Date: Thu,  5 Sep 2024 11:41:59 +0200
-Message-ID: <20240905093727.343543493@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 128/132] drm/amd/display: Skip wbscl_set_scaler_filter if filter is null
+Date: Thu,  5 Sep 2024 11:41:55 +0200
+Message-ID: <20240905093727.191050410@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093722.230767298@linuxfoundation.org>
 References: <20240905093722.230767298@linuxfoundation.org>
@@ -52,59 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Alex Hung <alex.hung@amd.com>
 
-commit ea593e028a9cc523557b4084a61d87ae69e2f270 upstream.
+[ Upstream commit c4d31653c03b90e51515b1380115d1aedad925dd ]
 
-SM8550 SoC has the UFSHCI 4.0 compliant UFS controller and only supports
-legacy single doorbell mode without MCQ. But due to a hardware bug, it
-reports 1 in the 'Legacy Queue & Single Doorbell Support (LSDBS)' field of
-the Controller Capabilities register. This field is supposed to read as 0
-if legacy single doorbell mode is supported and 1 otherwise.
+Callers can pass null in filter (i.e. from returned from the function
+wbscl_get_filter_coeffs_16p) and a null check is added to ensure that is
+not the case.
 
-Starting with commit 0c60eb0cc320 ("scsi: ufs: core: Check LSDBS cap when
-!mcq"), ufshcd driver is now relying on the LSDBS field to decide when to
-use the legacy doorbell mode if MCQ is not supported. And this ends up
-breaking UFS on SM8550:
+This fixes 4 NULL_RETURNS issues reported by Coverity.
 
-ufshcd-qcom 1d84000.ufs: ufshcd_init: failed to initialize (legacy doorbell mode not supported)
-ufshcd-qcom 1d84000.ufs: error -EINVAL: Initialization failed with error -22
-
-So use the UFSHCD_QUIRK_BROKEN_LSDBS_CAP quirk for SM8550 SoC so that the
-ufshcd driver could use legacy doorbell mode correctly.
-
-Fixes: 0c60eb0cc320 ("scsi: ufs: core: Check LSDBS cap when !mcq")
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240816-ufs-bug-fix-v3-2-e6fe0e18e2a3@linaro.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1038,6 +1038,9 @@ static void ufs_qcom_advertise_quirks(st
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+index 994fb732a7cb..a0d437f0ce2b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+@@ -690,6 +690,9 @@ static void wbscl_set_scaler_filter(
+ 	int pair;
+ 	uint16_t odd_coef, even_coef;
  
- 	if (host->hw_ver.major > 0x3)
- 		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
++	if (!filter)
++		return;
 +
-+	if (of_device_is_compatible(hba->dev->of_node, "qcom,sm8550-ufshc"))
-+		hba->quirks |= UFSHCD_QUIRK_BROKEN_LSDBS_CAP;
- }
- 
- static void ufs_qcom_set_caps(struct ufs_hba *hba)
-@@ -1931,7 +1934,8 @@ static int ufs_qcom_remove(struct platfo
- }
- 
- static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
--	{ .compatible = "qcom,ufshc"},
-+	{ .compatible = "qcom,ufshc" },
-+	{ .compatible = "qcom,sm8550-ufshc" },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, ufs_qcom_of_match);
+ 	for (phase = 0; phase < (NUM_PHASES / 2 + 1); phase++) {
+ 		for (pair = 0; pair < tap_pairs; pair++) {
+ 			even_coef = filter[phase * taps + 2 * pair];
+-- 
+2.43.0
+
 
 
