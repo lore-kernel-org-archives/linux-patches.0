@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80572198822;
-	Thu,  5 Sep 2024 09:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5E114A08E;
+	Thu,  5 Sep 2024 09:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529748; cv=none; b=gMCWkiFsVzo/CTCIF/m8OAhDOE8zudfK/EBcPwXfebsGSacoGhqPxYHwAX3PSVKCWoeLdq/O59QB6iNkRqT3sE6optHwQYJfHffpVHcKECFlh5BTcj0FTFVLHrRdVKisUGKPJ6oQwXdErlzjbDQAcIZRbBBnN5saZIHXYxjxiho=
+	t=1725529751; cv=none; b=l2BeCBnTchKbGW/uAbemiJPK7lDzk4NJ7fFnHNGawgvKpIEtZJxbuxgUneGOPfbRNKf8So+pbCAuoZ3P9MBxVEF/MF0qR+Q/mqB1UMRXpZikxP/WlLuAY8BQ+z35em9GkVxUt2DLKCty5RUDe3aBU+tWs04CDFQLEFjDFYmkrIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529748; c=relaxed/simple;
-	bh=2VZiO8n9KB+Ck3tDxX5jhxoMwcl0m6Mgq97nzisoCfQ=;
+	s=arc-20240116; t=1725529751; c=relaxed/simple;
+	bh=hFYSbozBNqQzIhcAxWnrNfE/9b7eX30okN1KCw+2n+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGT+DoSIDLJvP7lb2j5KTDtJwjDAGvMdl8PBV8ByhmFGRYAf6zoGNZ2SvpkKzS83wfCF8V9VqL/Zqs1cSxKOIj+iQrQamm+CBC2JxGHR5XImLLSg0wVGQOoojW2OZapNynLbEDd+nw/lGKGZ/6emb6UfhPdSIZAuOAI2tJD2h2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oh0CBNe4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nc93W5LVvt87Bv8S3v5LX+DWpk1JhD1ioPlFPISKy0VEC/vhryuMUDpeSW4+0VBeYFpO+rjc5w5Ajg//YAg6fi4QFFp9nL/VOraH2+LCseNJi0JUa+fTWYOamWSRptlj2mjNYIRmDFJPAbe+6knWfuuxWj6iMroDYHC5kW8GgqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0NeauvL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oh0CBNe4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949FBC4CEC3;
-	Thu,  5 Sep 2024 09:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0NeauvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3302C4CEC3;
+	Thu,  5 Sep 2024 09:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529748;
-	bh=2VZiO8n9KB+Ck3tDxX5jhxoMwcl0m6Mgq97nzisoCfQ=;
+	s=korg; t=1725529751;
+	bh=hFYSbozBNqQzIhcAxWnrNfE/9b7eX30okN1KCw+2n+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oh0CBNe4HpoDeWvV1MZuIG63N+nM8RLvl6CukHWlR1UhSRNF+/0HWZRMK4/Rj8Mq2
-	 vdyWAL+zKN/CWUgiQ6QmV6z3Ij7BKgUtSromuuC4777jH89/V/vnbxTGNBkRQPM85H
-	 0kZtsFZP0iJjeU3VqdkbUvafED+rmrBrovBOCzf4=
+	b=z0NeauvL/Lg7Kx+c/3zW9Bh0LMCKPmqWch3j4wpXkpBzYgnS9vKBjEAQZQ7XgMXlt
+	 MBbXM5RQRjAfk9dbXeSO1Ksbv3dPlZHf8JY1cUZUqnHAyHMov4V50evDFyfqebt/BO
+	 QYmiRWWDZNMVxlycAtWT3/ROqxbqgjhfvzILe5pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 090/184] drm/amdgpu: Fix out-of-bounds read of df_v1_7_channel_number
-Date: Thu,  5 Sep 2024 11:40:03 +0200
-Message-ID: <20240905093735.756585954@linuxfoundation.org>
+Subject: [PATCH 6.10 124/184] wifi: mac80211: check ieee80211_bss_info_change_notify() against MLD
+Date: Thu,  5 Sep 2024 11:40:37 +0200
+Message-ID: <20240905093737.068884196@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -52,34 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d768394fa99467bcf2703bde74ddc96eeb0b71fa ]
+[ Upstream commit a0ca76e5b7d550fcd74753d5fdaaf23f1a9bfdb4 ]
 
-Check the fb_channel_number range to avoid the array out-of-bounds
-read error
+It's not valid to call ieee80211_bss_info_change_notify() with
+an sdata that's an MLD, remove the FIXME comment (it's not true)
+and add a warning.
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240523121140.97a589b13d24.I61988788d81fb3cf97a490dfd3167f67a141d1fd@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/df_v1_7.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/df_v1_7.c b/drivers/gpu/drm/amd/amdgpu/df_v1_7.c
-index 5dfab80ffff2..cd298556f7a6 100644
---- a/drivers/gpu/drm/amd/amdgpu/df_v1_7.c
-+++ b/drivers/gpu/drm/amd/amdgpu/df_v1_7.c
-@@ -70,6 +70,8 @@ static u32 df_v1_7_get_hbm_channel_number(struct amdgpu_device *adev)
- 	int fb_channel_number;
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 7ba329ebdda9..e44b2a26354b 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -337,6 +337,8 @@ void ieee80211_bss_info_change_notify(struct ieee80211_sub_if_data *sdata,
  
- 	fb_channel_number = adev->df.funcs->get_fb_channel_number(adev);
-+	if (fb_channel_number >= ARRAY_SIZE(df_v1_7_channel_number))
-+		fb_channel_number = 0;
+ 	might_sleep();
  
- 	return df_v1_7_channel_number[fb_channel_number];
- }
++	WARN_ON_ONCE(ieee80211_vif_is_mld(&sdata->vif));
++
+ 	if (!changed || sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+ 		return;
+ 
+@@ -369,7 +371,6 @@ void ieee80211_bss_info_change_notify(struct ieee80211_sub_if_data *sdata,
+ 	if (changed & ~BSS_CHANGED_VIF_CFG_FLAGS) {
+ 		u64 ch = changed & ~BSS_CHANGED_VIF_CFG_FLAGS;
+ 
+-		/* FIXME: should be for each link */
+ 		trace_drv_link_info_changed(local, sdata, &sdata->vif.bss_conf,
+ 					    changed);
+ 		if (local->ops->link_info_changed)
 -- 
 2.43.0
 
