@@ -1,99 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hop.stappers.nl (hop.stappers.nl [141.105.120.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022CF38C
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B0C156250
+	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 05:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.105.120.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725499192; cv=none; b=QBZ6UkQbMMccS926cGnw8Ym+2i6h/1MwrLghqkLEuTCRJ1bhBFbLROktRGPBChG11g3sQHlBfcraP14qYBG3iwN2yNq7POZQRtbR4IAQUj2hLMPyhuf/Lwuu1w3Cu9sAdsokdh7WlG7U3UgqiSZ3+ZaQz3jcG/rE0CsUSysuz/M=
+	t=1725513654; cv=none; b=VlzzDHDPYkkGBY6oDTJD78339LXHu6MmQszyhQzps596IS1M1zkNWkuGJcsAIT4lkBLBUnM8pGAqzTr17J5yzI7/IwhYdfU2ZT8ZaXooDwAnUSwa4BlsbX1I80xlMxObr0hgwwQMh3DMWohWY+IyuskJBDffVgOOINFdfcqJGCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725499192; c=relaxed/simple;
-	bh=2030roQObHKMD07MYVmrkVNTgGeX8KWnT4BgIJmDcMU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=shFM6yfneWqOpT7nvo1DhsoPrcXhjEaznq7cRKJ5I4zVj77DL1IKf1sHrIqe2cAxcjGw+WUluBd5S0mgb2WhU/RDZIl5a8qOzv1aeYvfoln6jUe387VpK6vnDTiVDPtDxgDT2XDv0NA2Z8J07AH+xxA+G3foAhhedqF+j9fO6nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3MXffba; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3MXffba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BBDC4AF09
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 01:19:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725499191;
-	bh=2030roQObHKMD07MYVmrkVNTgGeX8KWnT4BgIJmDcMU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=G3MXffbazN9EZG5EMYdkQbXUjX91lqjSxqQwcqp/1CxDBoOc1VuLaLIme+BZ2roWd
-	 fT120jhuIQw18y07vxNuxa6LEgZzhh7jgOwV1g/q/ChReV8H4hO8sRJcQzloOMyGJg
-	 figU2AAjKXsvXOi1fXVB93bdQOzgNbtSNC2V+3FsOL08GaiqgW1CW8wlUEYSWU1AqB
-	 Ql6p9WRwtQPHXdOYVttYRC5J13wsm3Ncjlq70xNJlKFnf6i2uRHL090sAMsalLp+s1
-	 WFfIuKgsGHZ4OKYGiBiJdEyydAbNWR9T2LoAfe5AIOFTb6C6S0TcsT18D0Zd0Vf1eQ
-	 TzFrQkGLpKY9Q==
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53567b4c3f4so138288e87.2
-        for <patches@lists.linux.dev>; Wed, 04 Sep 2024 18:19:51 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCX3zbb4cPgYx+W34nVN3zkaG1txb6QfMeN/rGo1sb+IO4zAebDGFsD42iUZxYkLxw20ipsngtP+@lists.linux.dev
-X-Gm-Message-State: AOJu0YzxRvBUpfD/XTYN2hwdrv7VUKH8LcC2BIX5du06Ks87OiyPBD0N
-	kS+p6SX0a0KBDko00SyEXqx03ADixPuHtuOfd49gqr1eQ3uH2pKKh3NQ5ZRGZoPynv59QVs3Ifq
-	NFkc/nqUY7IkW9AG27p7iNgxGeQA=
-X-Google-Smtp-Source: AGHT+IF1S6v2KNIhGOZ4cv9q3lTpmiKDe9DRF/mzNEjxzA3Vdc+CY+N3vgCLk5zSrB3AtBSyj3C1NAQKG+yhUCoZzHo=
-X-Received: by 2002:a05:6512:1382:b0:530:da96:a986 with SMTP id
- 2adb3069b0e04-53546b8dac1mr11309551e87.47.1725499190276; Wed, 04 Sep 2024
- 18:19:50 -0700 (PDT)
+	s=arc-20240116; t=1725513654; c=relaxed/simple;
+	bh=EQcwm/zllP/nW9uFHAheM3MtUpsUsgD5LooMLUJVB9Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SvX2T59XgdbRRcJfK+B+ACctKX7YUXaIZKgXHQV1x11kmg+802ZlU0YRFrwiBRU8XOm0BsY4XGZ43du1EnehSwSxHCcuMFk9nYrx3z7aVpZcH+z/wujjubcJMOiEbIGMnZhhM6d3MgEzzsLDTNsK0VWZs97x4RqBa0mR+1Skr2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stappers.nl; spf=pass smtp.mailfrom=stappers.nl; arc=none smtp.client-ip=141.105.120.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stappers.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stappers.nl
+Received: from gpm.stappers.nl (gpm.stappers.nl [82.168.249.201])
+	by hop.stappers.nl (Postfix) with ESMTP id 4401B20203;
+	Thu,  5 Sep 2024 05:20:48 +0000 (UTC)
+Received: by gpm.stappers.nl (Postfix, from userid 1000)
+	id 68C8C30417C; Thu,  5 Sep 2024 07:20:47 +0200 (CEST)
+Date: Thu, 5 Sep 2024 07:20:46 +0200
+From: Geert Stappers <stappers@stappers.nl>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 12/19] rust: replace `clippy::dbg_macro` with
+ `disallowed_macros`
+Message-ID: <Ztk/rn+wztXYVTtd@gpm.stappers.nl>
+References: <20240904204347.168520-1-ojeda@kernel.org>
+ <20240904204347.168520-13-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240808221138.873750-1-ojeda@kernel.org> <CAH5fLgh9Moq_9M+zMu300ohK=mPqkLyS6cpQ6An2Q3THCPFjaA@mail.gmail.com>
- <CANiq72kUBPnua1Pob++-6SJ8MeGxQMfrePY9SQVd0DZp5VU-2A@mail.gmail.com>
-In-Reply-To: <CANiq72kUBPnua1Pob++-6SJ8MeGxQMfrePY9SQVd0DZp5VU-2A@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Thu, 5 Sep 2024 10:19:14 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASHdd8Gv6OpXnP3tywrTA6iEZVqZGLb0V-vV_VUR-ksWQ@mail.gmail.com>
-Message-ID: <CAK7LNASHdd8Gv6OpXnP3tywrTA6iEZVqZGLb0V-vV_VUR-ksWQ@mail.gmail.com>
-Subject: Re: [PATCH 0/6] kbuild: rust: add `RUSTC_VERSION` and
- reconfig/rebuild support
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	rust-for-linux@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240904204347.168520-13-ojeda@kernel.org>
 
-On Tue, Sep 3, 2024 at 2:40=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On Mon, Aug 19, 2024 at 9:29=E2=80=AFAM Alice Ryhl <aliceryhl@google.com>=
- wrote:
-> >
-> > I tested this together with Rust Binder. I also ran this patchset
-> > through Android's CI setup to verify that it works in builds with
-> > CONFIG_RUST disabled. It passes both with and without a Rust compiler
-> > available to the build system.
-> >
-> > Tested-by: Alice Ryhl <aliceryhl@google.com>
-> >
-> > I'm happy to rerun these tests for new versions.
->
-> Thanks a lot Alice, that is very useful.
->
-> I sent v2, in case you have time to give it another go.
->
-> Cheers,
-> Miguel
+On Wed, Sep 04, 2024 at 10:43:40PM +0200, Miguel Ojeda wrote:
+> diff --git a/.clippy.toml b/.clippy.toml
+> index f66554cd5c45..ad9f804fb677 100644
+> --- a/.clippy.toml
+> +++ b/.clippy.toml
+> @@ -1 +1,7 @@
+>  # SPDX-License-Identifier: GPL-2.0
+> +
+> +disallowed-macros = [
+> +    # The `clippy::dbg_macro` lint only works with `std::dbg!`, thus we simulate
+> +    # it here, see: https://github.com/rust-lang/rust-clippy/issues/11303.
+> +    { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool" },
+> +]
+> diff --git a/rust/kernel/std_vendor.rs b/rust/kernel/std_vendor.rs
+> index 67bf9d37ddb5..085b23312c65 100644
+> --- a/rust/kernel/std_vendor.rs
+> +++ b/rust/kernel/std_vendor.rs
+> @@ -14,7 +14,7 @@
+> -/// # #[allow(clippy::dbg_macro)]
+> +/// # #[allow(clippy::disallowed_macros)]
+> @@ -52,7 +52,7 @@
+> -/// # #[allow(clippy::dbg_macro)]
+> +/// # #[allow(clippy::disallowed_macros)]
+> @@ -71,7 +71,7 @@
+> -/// # #[allow(clippy::dbg_macro)]
+> +/// # #[allow(clippy::disallowed_macros)]
+> @@ -118,7 +118,7 @@
+>  /// a tuple (and return it, too):
+>  ///
+>  /// ```
+> -/// # #[allow(clippy::dbg_macro)]
+> +/// # #![allow(clippy::disallowed_macros)]
+>  /// assert_eq!(dbg!(1usize, 2u32), (1, 2));
+>  /// ```
+>  ///
 
-
-With the nit in 1/6 fixed (No need to resend if you fix it locally)
+For what it is worth, the exclamation mark did surprise me.
 
 
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
+> @@ -127,7 +127,7 @@
+>  ///
+>  /// ```
+> -/// # #[allow(clippy::dbg_macro)]
+> +/// # #[allow(clippy::disallowed_macros)]
+>  /// # {
+>  /// assert_eq!(1, dbg!(1u32,)); // trailing comma ignored
+>  /// assert_eq!((1,), dbg!((1u32,))); // 1-tuple
 
 
-
-
---=20
-Best Regards
-Masahiro Yamada
+Groeten
+Geert Stappers
+-- 
+Silence is hard to parse
