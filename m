@@ -1,136 +1,82 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26993823DE
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 21:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0551919409A;
+	Thu,  5 Sep 2024 21:49:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725572215; cv=none; b=LNUUaYODIuZz37qklNmYYvrC8nzG7j8JBWGySfa/v2zqyO8mjA22LEwzve1E8CaedUmobVcQD8I9f3O8O1zVvTcC5Ebt3loL3T+VwlVI16e5PXEoKflksWEyYLjApFim3ASwtzbSGASP9qRslJPNrq2Y/dUhP6HcX+dPInBOmfw=
+	t=1725572999; cv=none; b=BzwG8n+CqMfgx70001v2ConFCBfrAmvN882XMvZ39u9nxwXOlfrIpYlyS+12MrUj2d61REs8ixYLaB/F9DwBVyQpbdSurbZZKPuB/wV0wN8P8buOiJBRfW6T85iGRTdBPLrosfh4tu9tLJxNOVRH95CXwCs8GdSr0nPwxz12l9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725572215; c=relaxed/simple;
-	bh=HfRcHIwJv4F0IPLDyoAL7rOiNLK69bExKM3poN+22Zo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hiYcbusfSeyZs0ldXW1LHTufvp4Npsfg/jS8+07VTv5MQDXVkDZfyY2EfC4sUjhQQytHQTvD+aGBR5QUOtuV44xsGPTjZL8nMpRgVxrekFEDlVPJfKZVXhkVPGzeSxENRcXIK2XIjQIW/Cob2W6LAxxvWnXj+c7zc8i8PHGMP3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CyGqcDAv; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725572999; c=relaxed/simple;
+	bh=eZDA9JW727objTzfYZfMMPvf0u5yRSidlGU7zlzi9Fs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZzAt8l/p0Plf0gUbuC3uf4OTG7IygTxFbfzclKKWyjwOqBzTH+InWchM26WRzPFgq/TS+cHGwaoWvoHpCz0CSUoss1IIU1VyuuygvtChNtarv+lQYPqUlWTg4dgZrBBQ73fneRNkT1dtGKqtOuMVmFXvSHKFG2pwa0nL7va2uvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gu0j0b9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CyGqcDAv"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6c524b4a3aeso5091616d6.3
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 14:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725572212; x=1726177012; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=G2wXUPSGAMPRHzsZoiaWWBeRqq3qH4wpsBBTP6cJ+Uc=;
-        b=CyGqcDAvGgsLmXNwAdYrrz6nPkI/v+ddZk4D7JvwhRRoTaDQBU0Zrda0qDNtafea3h
-         KqpuKG0DcpADpGchDBrQf9sUpURuG8+FXArZIaaRvazP4iBfXTW8cPGrAfrbhJZSuWdG
-         N1cPiqOU5DmMaoVNTfhp05LH91OuRrAaX65iM4/xGUlQVz0FYe+4O/kaayJDemU3AFmR
-         TY7I5SV+R7qC399fwjKAV0ecqyDoSBIOCslOxkLTLTbqm4b6MLNrbwMxBJk+0/qTSqK4
-         26wOTbZqIDLELrUMxqQA7sSyd8vupV+4Oi4p2jkqrHdXt1B701oOKF/16FUqWwGufpCK
-         fKIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725572212; x=1726177012;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G2wXUPSGAMPRHzsZoiaWWBeRqq3qH4wpsBBTP6cJ+Uc=;
-        b=mh+TF0yTYQgiXS0e9rtyAWJFTQdjUsbA7Zg1mmf6T9HnuUqAjzER5Qhx8GbpmmQfMA
-         YjTVPhiOXdOyNvvTpyLsP4inNKTOPvaF5xeRi+g6WO0QntnO4I8EJXj6hzF5TcrV5WRD
-         L/hgYZv72nhydAVxJ0nUSm2ZbLdJaZ7tRmsMD4/up0KoTUwTCfoy02Ou17PNlCqGPdkV
-         T/EFPDy3PbGFw3PmieVgj/GKqj2/skbu22CNZ5hbtEtKMiI3kP80oZkW25+iIWk6LGTu
-         txg+4gkd2UgtUKFmdq+38JPLpV38CCCvZ9p45XOvwGGzaoasyLlMvR4I7WS946OrqBky
-         Vxew==
-X-Gm-Message-State: AOJu0Yw07TATgevbzkcfkcdxvj0Z1EOP99FMwzRPjWrcr2qyN44NbVzY
-	YvMeC8CpNVhOcATjQNoQH/YDISjZmg4TWZI2zpqhFoyqyi1J7Pge
-X-Google-Smtp-Source: AGHT+IFyZsFhEAevWqe8b+GSN0U0sq1LQ2/fPVkIl52oBHG4j5oWVVQpvo+w265rYfG+ZWFX8ZQJEQ==
-X-Received: by 2002:a05:6214:494f:b0:6c5:297c:da5f with SMTP id 6a1803df08f44-6c5297cdab6mr1138856d6.33.1725572212063;
-        Thu, 05 Sep 2024 14:36:52 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6c520419f27sm11103546d6.132.2024.09.05.14.36.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Sep 2024 14:36:51 -0700 (PDT)
-Message-ID: <9dac2a8f-b6f4-4a6d-aec3-803410756826@gmail.com>
-Date: Thu, 5 Sep 2024 14:36:48 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gu0j0b9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE87C4CEC3;
+	Thu,  5 Sep 2024 21:49:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725572998;
+	bh=eZDA9JW727objTzfYZfMMPvf0u5yRSidlGU7zlzi9Fs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Gu0j0b9sIPd+KqH7TAup5IVm/6e4IP6KLntljn7N7KOmRV33NbF18wYhYKh/Iy7u0
+	 DYUS11h13WovQxS7EmOZ4vpGYpNxCIonJFlx6IpJYe29UR96YngmiSyfr3GuXyLSeH
+	 6TXUR6XpuDWATHMgfFZscnOWx83ebadfjpHMABUgMO5dF3jQBXbT7FndWYl3Oa1GG1
+	 R2ZYTSPxPKZts4Gb67unhNsWLcR1S0i/lleKUjMCNg4zaWyjpswC4MjmJ9QkZ6iwvl
+	 SiWzr5B7Vda9QzVlJQTY7LkJOeR1YBvIX+ZX+0nwdd3cD2VCsjTddO7e7wUn+JXjFo
+	 JY5kDmbimDiFQ==
+Date: Thu, 5 Sep 2024 22:49:52 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.10 000/183] 6.10.9-rc2 review
+Message-ID: <969e33ef-c3af-4a88-a889-6c52391863eb@sirena.org.uk>
+References: <20240905163542.314666063@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.10 000/183] 6.10.9-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240905163542.314666063@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- HGuUuzv+GKZ6nsysJw==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3B/NmC7x0qSXSQJJ"
+Content-Disposition: inline
 In-Reply-To: <20240905163542.314666063@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Cookie: The horror... the horror!
 
-On 9/5/24 09:36, Greg Kroah-Hartman wrote:
+
+--3B/NmC7x0qSXSQJJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Thu, Sep 05, 2024 at 06:36:28PM +0200, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.10.9 release.
 > There are 183 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sat, 07 Sep 2024 16:35:01 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.9-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+--3B/NmC7x0qSXSQJJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbaJ38ACgkQJNaLcl1U
+h9ABSwf9HZF/eeyRI0sPXuO19mVEE4nwOCt6LyryJuPcbI4alypcPxaJzvnM+22L
+/nmjjKzgTQ/hr3i4aX7kD7sTcj3idp2h29z6BuScZ1iATOtKbItkJw91pwdvsN07
+UcL1mUGHYC3WqKExfEnAkV0o3HlXg2oxQSxe6V+Z2kJTZ1L36b5nOwS2A9AFpSyJ
+Zk/gp8shhxFEenHmenGvIwzhHC93WzjkRCY4kOOyRCbfrCfk3pvbdccPn5Do1gOs
+7Ms8pNdk2gyvzfGpt7zsFpu7AxvBnSZro5bVUCuoh9Gi+WS76VPq9YvTtQcCoI/i
+RU4I+P/TEyGPjsVKfmCMGpT4LHVBPg==
+=g0AZ
+-----END PGP SIGNATURE-----
+
+--3B/NmC7x0qSXSQJJ--
