@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1C6199229;
-	Thu,  5 Sep 2024 09:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6DA47796;
+	Thu,  5 Sep 2024 09:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725529517; cv=none; b=Kba4ziUhOTNJsHmHxPHNYwU2B31QzO6ERXvXu9iM/XcWr+/5ElWXQ/z5geBHeujUw/B6LmbMlxA9fUUClWyxYdYIcNnCDddorsmxvwWrNOTABFp4hu5rYhPLReoDThaMZtA2n464mqgIb7xvmfmGTRZnRLdKd8Wq6KrAipGN6Q4=
+	t=1725529521; cv=none; b=GWSd9pjCvH3EIuWlcssqohN1IHoy3E/owENj6+oAGNX2mvljTve42jZCvjgATwum1TZI8z3/kqt9KmBZ6KvRuUR4hsI8BvlHvr6KG8VMLFjzJ9KlbpN5zYYD8MggzNUiqRhvu5pQxa/UpiXHKIBigS6eH3s7Ref20xK4N1GG8Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725529517; c=relaxed/simple;
-	bh=8iv0FEGEX5gbGmXSULPt7/2vCLajrwdr9BSHXi/WJTc=;
+	s=arc-20240116; t=1725529521; c=relaxed/simple;
+	bh=cygvxqd3Ylo6D4Hyg0Q6C/twN2928jWHVnd6OEZ8htM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p4xeLMFDL2hUtLi344Wx/JxebHd7Pd8wCreu+FHmiFKw+SFM1z0Q5ApuMOrZM1/46HeSlh1nch9On7CxjtQiPsVNhidVMsGXJ01F4P8LOh0EyyTSnKF8rNi2AWokU3zeBEJgDsZUDYuaHBvzbetJ2zAnpDhx36MEksbzicG7eOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlDH1AXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AbEIPw5gGLsCD0MjySjDW02bKMYGhXDkvUm8agJhcypuePXP16DquNFRNwUnMvxAXiz8++gJjU9hS1Q0fPS8H+lhclTSIWN9RCcyOlGmmfYkSDxN8b/GRFCFL4Hf89MRmu+GcWWxM0FbJBFYL92SlZy5c6YD1zkrTydaYx9NN+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpnK818X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlDH1AXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A1AC4CEC7;
-	Thu,  5 Sep 2024 09:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpnK818X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EFAC4CEC3;
+	Thu,  5 Sep 2024 09:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725529517;
-	bh=8iv0FEGEX5gbGmXSULPt7/2vCLajrwdr9BSHXi/WJTc=;
+	s=korg; t=1725529520;
+	bh=cygvxqd3Ylo6D4Hyg0Q6C/twN2928jWHVnd6OEZ8htM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlDH1AXcdZJpxK9PwzAz9y4g/UNJ20gAZNMSksvUrAH8EGl9gIGrYmLUZfOnFMI4F
-	 NP59s3rbzFqLmRFSyJ+c3CfsgGGP/pNWWZeSGlJyhtqPWFoERjtEbYSVe/veC29fY7
-	 OqQihmeMu3UP297J9+50A8ETxtk+6mobj8Ar4Yj0=
+	b=cpnK818XzDSUYNmEeOWjqL54vGLQxb1jawmhoSUSLTc4te0NxGPmOj+Z4G3P6sXo2
+	 ZiYBimGdeVhedWvLw32iymkLL6QyVJdiRSf06oCBVObxNPdV7YKrZvtzjfq1t7A8R5
+	 Z4k0yZKAaw1nJifbND/6pw9h0bUsCKm2F+XwTRDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20St=C4=99pniak?= <kfs.szk@gmail.com>,
+	Zhang Yi <zhangyi@everest-semi.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 027/184] ASoC: amd: yc: Support mic on Lenovo Thinkpad E14 Gen 6
-Date: Thu,  5 Sep 2024 11:39:00 +0200
-Message-ID: <20240905093733.307418862@linuxfoundation.org>
+Subject: [PATCH 6.10 028/184] ASoC: codecs: ES8326: button detect issue
+Date: Thu,  5 Sep 2024 11:39:01 +0200
+Message-ID: <20240905093733.345864490@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
 References: <20240905093732.239411633@linuxfoundation.org>
@@ -45,46 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Stępniak <kfs.szk@gmail.com>
+From: Zhang Yi <zhangyi@everest-semi.com>
 
-[ Upstream commit 23a58b782f864951485d7a0018549729e007cb43 ]
+[ Upstream commit 4684a2df9c5b3fc914377127faf2515aa9049093 ]
 
-Lenovo Thinkpad E14 Gen 6 (model type 21M3)
-needs a quirk entry for internal mic to work.
+We find that we need to set snd_jack_types to 0. If not,
+there will be a probability of button detection errors
 
-Signed-off-by: Krzysztof Stępniak <kfs.szk@gmail.com>
-Link: https://patch.msgid.link/20240807001219.1147-1-kfs.szk@gmail.com
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+Link: https://patch.msgid.link/20240807025356.24904-2-zhangyi@everest-semi.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/codecs/es8326.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index e933d07614527..f6c1dbd0ebcf5 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -220,6 +220,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21J6"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21M3"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 6a4e42e5e35b9..e620af9b864cb 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -825,6 +825,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 		es8326_disable_micbias(es8326->component);
+ 		if (es8326->jack->status & SND_JACK_HEADPHONE) {
+ 			dev_dbg(comp->dev, "Report hp remove event\n");
++			snd_soc_jack_report(es8326->jack, 0,
++				    SND_JACK_BTN_0 | SND_JACK_BTN_1 | SND_JACK_BTN_2);
+ 			snd_soc_jack_report(es8326->jack, 0, SND_JACK_HEADSET);
+ 			/* mute adc when mic path switch */
+ 			regmap_write(es8326->regmap, ES8326_ADC1_SRC, 0x44);
 -- 
 2.43.0
 
