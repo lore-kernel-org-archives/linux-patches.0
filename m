@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2191922CC;
-	Thu,  5 Sep 2024 10:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD691922CC;
+	Thu,  5 Sep 2024 10:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530616; cv=none; b=P41j5r+pgL0BV+q6vcE/tzKzqp4pHQHBjVTYkuVABDlr5a4xgnbSAChKVdE22ijy2Vrlfz75wALs2B9cactJBbiGiBeW0CzYRg5CL+qD1N3RHoBsbLBlVDNpo18yjgWTAPVhC5rY1dx7U/SYPR5nV1+k334BDrC6LQkiFx7GJ/k=
+	t=1725530619; cv=none; b=EeNQ6rcYZaUyNIVaXaiZ8j4kWsnU4Ve1Kmgd/GqgQUl/1cksmsqPWZ4ijKNcjE+0t14MBuGfkFTT3sL+WVql4YLRefar8Fbr3XfuPwY09WOzLsPeK0aGNZpPCRnGH/GaZuHkksflXIuKP2rj9coRFuF7IidMZTyzn7ADzMTUgBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530616; c=relaxed/simple;
-	bh=uFfg4h6ZjF/8JSYqUllz50N3WyXxsTU7KypnoJ2fTK4=;
+	s=arc-20240116; t=1725530619; c=relaxed/simple;
+	bh=7MtHI5fOQ9WfW/K7z5lSnemPplaKTRM9lNRBXxK+zSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=injQzuAnn5mWA8ZvbO+Peg1kMeaQE86DAbFz/Ecvh3is287lhY5z8xHDbAWjl7v2TvuCb8hOpeC51dFHHRfDOOASnx5l9XJht15mPeXLCKdrzv3VcsIfSQ1W6EEvVmTljq2kbE0tRoGUnMcAUYEY1aIYX1owPzSwcnptfrmgGGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErdskQ5L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/y3RPjA71LK4Fg+OvzV09AwSmRR33n4bJkERblL3lcFArMMPgVkIWQhctLGVVB+McjyqHcQjA/3MLKJ5m8H/99e4+d3KsOfaBfkBxZOK0bVy/AzV7/SPUHw+quWkjDW8moUDvxoZvn0Ov7BfMCq6Jq94nNzXOX7dXUDKm1Rqoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFEpcnt5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErdskQ5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0B3C4CEC3;
-	Thu,  5 Sep 2024 10:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFEpcnt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B8CC4CEC3;
+	Thu,  5 Sep 2024 10:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530615;
-	bh=uFfg4h6ZjF/8JSYqUllz50N3WyXxsTU7KypnoJ2fTK4=;
+	s=korg; t=1725530618;
+	bh=7MtHI5fOQ9WfW/K7z5lSnemPplaKTRM9lNRBXxK+zSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErdskQ5Ll7w88N+cJsC5mtYpFZTW0xbGKNhAKOe4vHs1tCbk0GrObzvCPgMSZgUIi
-	 24CTDOuaI/EukNy2fvEih1sogFfJo4kXXkaTl5bT8quiG65VrYU3fsamnkRS1PyMrw
-	 eM+vN2/ataBJwW+KPIdMplFO3+6kIXmxuVnmhrF8=
+	b=dFEpcnt5mqbBV3nO08irVcFVWnLLgMpa/+cl5kcFYh6E57KHvX5q1uswERbDXQbgb
+	 8Lhm3bfXJT6CMu+Yb4HYSDigsH3sOAla0y7fe90tO7Tbo7evRG6Lp2MhPwZupcKZhY
+	 EfayBvPSpCu7WsZc5n30OR6UTr2n2y6Vp+LiUY/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/101] regmap: spi: Fix potential off-by-one when calculating reserved size
-Date: Thu,  5 Sep 2024 11:41:51 +0200
-Message-ID: <20240905093719.219351070@linuxfoundation.org>
+Subject: [PATCH 6.1 080/101] smack: tcp: ipv4, fix incorrect labeling
+Date: Thu,  5 Sep 2024 11:41:52 +0200
+Message-ID: <20240905093719.259822308@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -51,44 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
+From: Casey Schaufler <casey@schaufler-ca.com>
 
-[ Upstream commit d4ea1d504d2701ba04412f98dc00d45a104c52ab ]
+[ Upstream commit 2fe209d0ad2e2729f7e22b9b31a86cc3ff0db550 ]
 
-If we ever meet a hardware that uses weird register bits and padding,
-we may end up in off-by-one error since x/8 + y/8 might not be equal
-to (x + y)/8 in some cases.
+Currently, Smack mirrors the label of incoming tcp/ipv4 connections:
+when a label 'foo' connects to a label 'bar' with tcp/ipv4,
+'foo' always gets 'foo' in returned ipv4 packets. So,
+1) returned packets are incorrectly labeled ('foo' instead of 'bar')
+2) 'bar' can write to 'foo' without being authorized to write.
 
-bits    pad   x/8+y/8 (x+y)/8
-4..7    0..3    0       0 // x + y from 4 up to 7
-4..7    4..7    0       1 // x + y from 8 up to 11
-4..7    8..11   1       1 // x + y from 12 up to 15
-8..15   0..7    1       1 // x + y from 8 up to 15
-8..15   8..15   2       2 // x + y from 16 up to 23
+Here is a scenario how to see this:
 
-Fix this by using (x+y)/8.
+* Take two machines, let's call them C and S,
+   with active Smack in the default state
+   (no settings, no rules, no labeled hosts, only builtin labels)
 
-Signed-off-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://msgid.link/r/20240605205315.19132-1-andy.shevchenko@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+* At S, add Smack rule 'foo bar w'
+   (labels 'foo' and 'bar' are instantiated at S at this moment)
+
+* At S, at label 'bar', launch a program
+   that listens for incoming tcp/ipv4 connections
+
+* From C, at label 'foo', connect to the listener at S.
+   (label 'foo' is instantiated at C at this moment)
+   Connection succeedes and works.
+
+* Send some data in both directions.
+* Collect network traffic of this connection.
+
+All packets in both directions are labeled with the CIPSO
+of the label 'foo'. Hence, label 'bar' writes to 'foo' without
+being authorized, and even without ever being known at C.
+
+If anybody cares: exactly the same happens with DCCP.
+
+This behavior 1st manifested in release 2.6.29.4 (see Fixes below)
+and it looks unintentional. At least, no explanation was provided.
+
+I changed returned packes label into the 'bar',
+to bring it into line with the Smack documentation claims.
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-spi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ security/smack/smack_lsm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap-spi.c b/drivers/base/regmap/regmap-spi.c
-index 37ab23a9d034..7f14c5ed1e22 100644
---- a/drivers/base/regmap/regmap-spi.c
-+++ b/drivers/base/regmap/regmap-spi.c
-@@ -122,8 +122,7 @@ static const struct regmap_bus *regmap_get_spi_bus(struct spi_device *spi,
- 			return ERR_PTR(-ENOMEM);
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index b0a483e40c82..75b3e91d5a5f 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -4290,7 +4290,7 @@ static int smack_inet_conn_request(const struct sock *sk, struct sk_buff *skb,
+ 	rcu_read_unlock();
  
- 		max_msg_size = spi_max_message_size(spi);
--		reg_reserve_size = config->reg_bits / BITS_PER_BYTE
--				 + config->pad_bits / BITS_PER_BYTE;
-+		reg_reserve_size = (config->reg_bits + config->pad_bits) / BITS_PER_BYTE;
- 		if (max_size + reg_reserve_size > max_msg_size)
- 			max_size -= reg_reserve_size;
+ 	if (hskp == NULL)
+-		rc = netlbl_req_setattr(req, &skp->smk_netlabel);
++		rc = netlbl_req_setattr(req, &ssp->smk_out->smk_netlabel);
+ 	else
+ 		netlbl_req_delattr(req);
  
 -- 
 2.43.0
