@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EA513D28F;
-	Thu,  5 Sep 2024 10:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFD9198A08;
+	Thu,  5 Sep 2024 10:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530427; cv=none; b=Z+SITSBmPCyZ9F1sQFafJChGDkNcuD5zmAmTjQz1ZtrFblOSeoq+rOf+ObvhuRhXg2Tt9DAL4My8ooCGU0p7IazGwZp0BXwlUamqzusMA21Nj3D2iB9jZN06TsyBjDVSzYNyhVDghwBgCNwNfVWSnFBMc2cLTL1MkvQYTBD5w54=
+	t=1725530430; cv=none; b=diQywLeujn3pe9cS+zFIEsYKwTzwkcIf+4EeBW3N7N5NpCUFSpk0YB3aBre8K8wpyXPWBrWE8bIKAFVfQ5UXxEbefMkfGXrNy77T24BZxTIqfANCFziuMs0ZjfgXHkHr9b+o9fb06WZGrBP6R+bZ8bL4GW+P1rqybYTzjmqV+60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530427; c=relaxed/simple;
-	bh=1nuiIj0mevOe3y74RopIrmQ2tiDXvinm7XX2GbuHVmU=;
+	s=arc-20240116; t=1725530430; c=relaxed/simple;
+	bh=lv4VCMnCNOIexmGx39/jtYsQI0hCaWWwiy0bTNz27nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3TmsDmPSNCxhZe43uTgHVRww6GFMVTD4zpG3W7492bpMy1vrfbN3KsFDeb6xkPVUeQhWSbkpYel4Mvo+cwSUft4OIw0NJcN5BW+upZQD1UWnFvcus5XymmvX+gSften/Z5ffYwMT+A9Z6364oHrAkEv+FmJeBX43pOx0YBYy7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQ0pCNBH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0nVGFgEZvOF+mVVlRWat3EuimfvAFkNLPpU6YdmDIRP+vGO2SlPwSDIuZYDqmmQiuGwTif/ox29BIgsiZrrAZBOQHGrk2F+P+pybPq8Zs5cxBi4ecHMIJO5uiqGxOAx60k1bycski7UnxNseqHZ0KJCd2+RxXFUKF+bO+T7czA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b13YNn9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQ0pCNBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E47CC4CEC3;
-	Thu,  5 Sep 2024 10:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b13YNn9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6F4C4CEC6;
+	Thu,  5 Sep 2024 10:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725530427;
-	bh=1nuiIj0mevOe3y74RopIrmQ2tiDXvinm7XX2GbuHVmU=;
+	s=korg; t=1725530430;
+	bh=lv4VCMnCNOIexmGx39/jtYsQI0hCaWWwiy0bTNz27nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQ0pCNBHnQ/ouV2xMvKtSx9kY9aRUL+INCzMH6QpK0ZrRkQ0x0+5o96U6mBB6q9xl
-	 31L0vDgkZH1R522QOWD4cBSPJo6rPlxQJneMIM+tbK+X/Ig7zYrj8hZGNiVyTQDI1Y
-	 eNmK4Psy8Xj91JWI0I/QVjPWcYfVGu/bT5202YkQ=
+	b=b13YNn9jRO7yMlpkFkER3JYJQVZItdxGVlU5NjS/7gWndzme02QmWWpG05NoiuTw7
+	 KDyVkSY01cIfSmoCnNsS8KMXRRDHtS1GBJoWvkSY0zYAYyt49mzExnTCjTs24Zd4SV
+	 ly97snIeKidGSbQ+V30s3qEqZ4faVkteCS/31biI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 020/101] selftests: mptcp: join: test for flush/re-add endpoints
-Date: Thu,  5 Sep 2024 11:40:52 +0200
-Message-ID: <20240905093716.904198679@linuxfoundation.org>
+Subject: [PATCH 6.1 021/101] selftests: mptcp: join: check re-using ID of unused ADD_ADDR
+Date: Thu,  5 Sep 2024 11:40:53 +0200
+Message-ID: <20240905093716.944614047@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
 References: <20240905093716.075835938@linuxfoundation.org>
@@ -53,27 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit e06959e9eebdfea4654390f53b65cff57691872e upstream.
+commit a13d5aad4dd9a309eecdc33cfd75045bd5f376a3 upstream.
 
-After having flushed endpoints that didn't cause the creation of new
-subflows, it is important to check endpoints can be re-created, re-using
-previously used IDs.
+This test extends "delete re-add signal" to validate the previous
+commit. An extra address is announced by the server, but this address
+cannot be used by the client. The result is that no subflow will be
+established to this address.
 
-Before the previous commit, the client would not have been able to
-re-create the subflow that was previously rejected.
+Later, the server will delete this extra endpoint, and set a new one,
+with a valid address, but re-using the same ID. Before the previous
+commit, the server would not have been able to announce this new
+address.
+
+While at it, extra checks have been added to validate the expected
+numbers of MPJ, ADD_ADDR and RM_ADDR.
 
 The 'Fixes' tag here below is the same as the one from the previous
 commit: this patch here is not fixing anything wrong in the selftests,
 but it validates the previous fix for an issue introduced by this commit
 ID.
 
-Fixes: 06faa2271034 ("mptcp: remove multi addresses and subflows in PM")
+Fixes: b6c08380860b ("mptcp: remove addr and subflow in PM netlink")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-6-38035d40de5b@kernel.org
+Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-2-38035d40de5b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ No conflicts, but adapt the test to the helpers in this version:
+[ Conflicts in mptcp_join.sh, because the helpers are different in this
+  version:
   - run_tests has been modified a few times to reduce the number of
     positional parameters
   - no chk_mptcp_info helper
@@ -82,46 +89,46 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   29 ++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3262,6 +3262,35 @@ userspace_tests()
- 		kill_tests_wait
- 	fi
- 
-+	# flush and re-add
-+	if reset_with_tcp_filter "flush re-add" ns2 10.0.3.2 REJECT OUTPUT &&
-+	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
+@@ -3243,9 +3243,11 @@ userspace_tests()
+ 	# remove and re-add
+ 	if reset "delete re-add signal" &&
+ 	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
+-		pm_nl_set_limits $ns1 1 1
+-		pm_nl_set_limits $ns2 1 1
 +		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 1 2
++		pm_nl_set_limits $ns2 2 2
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
 +		# broadcast IP: no packet for this address will be received on ns1
 +		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
-+		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
-+		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_20 2>/dev/null &
-+		local tests_pid=$!
-+
-+		wait_attempt_fail $ns2
-+		chk_subflow_nr needtitle "before flush" 1
-+
-+		pm_nl_flush_endpoint $ns2
-+		pm_nl_flush_endpoint $ns1
-+		wait_rm_addr $ns2 0
-+		ip netns exec "${ns2}" ${iptables} -D OUTPUT -s "10.0.3.2" -p tcp -j REJECT
-+		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
-+		wait_mpj $ns2
-+		pm_nl_add_endpoint $ns1 10.0.3.1 id 2 flags signal
-+		wait_mpj $ns2
-+		kill_wait "${tests_pid}"
-+		kill_tests_wait
-+
-+		chk_join_nr 2 2 2
-+		chk_add_nr 2 2
-+		chk_rm_nr 1 0 invert
-+	fi
- }
+ 		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_20 2>/dev/null &
+ 		local tests_pid=$!
  
- endpoint_tests()
+@@ -3253,13 +3255,19 @@ userspace_tests()
+ 		chk_subflow_nr needtitle "before delete" 2
+ 
+ 		pm_nl_del_endpoint $ns1 1 10.0.2.1
++		pm_nl_del_endpoint $ns1 2 224.0.0.1
+ 		sleep 0.5
+ 		chk_subflow_nr "" "after delete" 1
+ 
+-		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
++		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
++		pm_nl_add_endpoint $ns1 10.0.3.1 id 2 flags signal
+ 		wait_mpj $ns2
+-		chk_subflow_nr "" "after re-add" 2
++		chk_subflow_nr "" "after re-add" 3
+ 		kill_tests_wait
++
++		chk_join_nr 3 3 3
++		chk_add_nr 4 4
++		chk_rm_nr 2 1 invert
+ 	fi
+ 
+ 	# flush and re-add
 
 
