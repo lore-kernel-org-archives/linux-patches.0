@@ -1,121 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7BE13B584;
-	Fri,  6 Sep 2024 20:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D839E15ADA4
+	for <patches@lists.linux.dev>; Fri,  6 Sep 2024 22:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725654408; cv=none; b=A5yT2x0eKcbdrsG1F8JH0v1cSPTvT6yN4LwDhWM13uTaOp+4OVcs5rcp3C3iGRpIGWC4vZF+0eOl/3+74+Wz4YjN3kkiQ1wDwZvV+GOkpk5dHWrH0LZFm2qlRijqnKTgWSTSABxMwYols0lCpgLIP7YaDkEywlbZzfXbd5ErLjA=
+	t=1725661148; cv=none; b=d/P0apmf1qm9dbbnIlmNRX8NdcPeeGe5OZRmvIQBoCX/mGb0QH19BaYEMDxQJ7v7iLoR5/v8glUmxOQa5Ath2Of/T+qoLwTi3ZpASiTudZycEKzNY6r0SODq0ifHjOAav7/Arevf1Cf0JuKTgikO7qYz/nH6ypZnacmmPpY2ay8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725654408; c=relaxed/simple;
-	bh=MPbtgiPJVj+l9qLuZhnBJN2NfyrB5fLloQlhRvm4ZxE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HY41rSk1wQCuqxNqOqDOJSlC6pGvfJzllSmEK7elysbOPs+A1rdy/234GhdvQiEn8j/T5Fh1fk05SwHlbJNU2sYXshvSfVjQE+0E3NwVhDOwv2tgLuxqhqpc/Peiyn6duIVgah6mbLgRkZpfgiKI3wVeuQ9QtdTyQ/9JyUwtP5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q29skeIB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725661148; c=relaxed/simple;
+	bh=wdO9ZZw+a3Svlepwm2sOo0Qrl/SinTrjpnoUCOM0w6w=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=MuwxX/YALWyvb2SUX5VeWpHUznwGfEvFC7wbiU2KJUQ4Cj9gEYGB0JNikIaLfJ/rvgf9EQoCAKZ38vPCK/w90unemF+iMoWW++n+RPZoapmQYqMhrWALIOhxBpMwXPVqhPXj/gh35p+4S78/efm03jNzyT0y9yIJCu1y/H1Jh9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=DXqNCius; arc=none smtp.client-ip=44.202.169.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q29skeIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822D9C4CEC4;
-	Fri,  6 Sep 2024 20:26:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725654408;
-	bh=MPbtgiPJVj+l9qLuZhnBJN2NfyrB5fLloQlhRvm4ZxE=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Q29skeIBfe/ADVoArWG1Z7hNhEn79RUO7d9jC8IzbYgH6bbtkp70z4T1432vtX+KP
-	 /YJTZ9AaIPxGj0LGEtN88z34p3gU7PdCYob0wv8lLlKPszV5sxhHmqplY+1kYDIiL0
-	 7HeD5+mtxvrc84AT+StpsQPdVrWpO+ZVTot4Rr6kMO+kIJYLtITBkHQEYiLTlg5uy4
-	 qBWPfEf2obH7Djd+hkHct1y65KfVd6yuD8gMtncSEz1sisJQ1KOGZtuIindbKNW8zO
-	 rc5TLhM8RehPOV7Gu2BOtXcGXPK4pL72Fb9prz1C7yEBhtQmC7z42HdIeV7oJLK9mr
-	 KmOUzsTowHfGQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 06 Sep 2024 13:26:41 -0700
-Subject: [PATCH] can: rockchip_canfd: fix return type of
- rkcanfd_start_xmit()
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="DXqNCius"
+Received: from eig-obgw-5005a.ext.cloudfilter.net ([10.0.29.234])
+	by cmsmtp with ESMTPS
+	id meFYsj6xs1zuHmhIAs8qJK; Fri, 06 Sep 2024 22:18:58 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id mhI9sDxa9eCxMmhI9sUWMs; Fri, 06 Sep 2024 22:18:57 +0000
+X-Authority-Analysis: v=2.4 cv=M/yGKDws c=1 sm=1 tr=0 ts=66db7fd1
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=9s_CLuLT88mpKrREZRYA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=W7RrPQYON4XjwYXcMB7R510ENbtkdUVss5oOseomJ1M=; b=DXqNCiusri8bPB1KdMMFb+IJQs
+	x317kprRjrCqD6PUpwWPKAwwEsVr23Q1+dMYeaxDisC/H5OZnMzlqL3B0AlYCVcVFJZhqMcEivdTC
+	UfbvkOuW+cb+0DB4qaUdWk1JHuQJhfXjM8hOtvSZ3RKnwqD14L0mi40rgGkJ+92uFFMcUBkz2kYfe
+	aM9hv6OICm7qz5i39GJA8rXiP39A1+4NFwiMA/SRZCpAh6E3XaWZ/HcEfo+MTaC4bcrgkfYDQwplW
+	18L+6OrV8zT1nIzRbeyq9ZTJdU0QGhZ4RmcLOHgsLmiyQvuTHcevxWQZv4Irn4dyOHdI7LpyrThdq
+	CdPNr55A==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:38790 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1smhI6-000VpV-2B;
+	Fri, 06 Sep 2024 16:18:54 -0600
+Subject: Re: [PATCH 6.10 000/183] 6.10.9-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240905163542.314666063@linuxfoundation.org>
+In-Reply-To: <20240905163542.314666063@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <bfeaf2a7-1bc5-69ed-2004-388d3c9f4130@w6rz.net>
+Date: Fri, 6 Sep 2024 15:18:52 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240906-rockchip-canfd-wifpts-v1-1-b1398da865b7@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAIBl22YC/x3MSwqAMAwA0atI1gZqFX9XERc1phqEWlpRQby7x
- eVbzDwQOQhH6LMHAp8SZXcJRZ4BrcYtjDIng1a6Up2qMey00SoeyTg74yXWHxFL001NzQ1p3UJ
- qfWAr9/8dxvf9AOTsc0xnAAAA
-X-Change-ID: 20240906-rockchip-canfd-wifpts-3a9b76e7c228
-To: Marc Kleine-Budde <mkl@pengutronix.de>, kernel@pengutronix.de, 
- Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Heiko Stuebner <heiko@sntech.de>
-Cc: linux-can@vger.kernel.org, netdev@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3084; i=nathan@kernel.org;
- h=from:subject:message-id; bh=MPbtgiPJVj+l9qLuZhnBJN2NfyrB5fLloQlhRvm4ZxE=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGm3U9szRYMXm7c84v3/ZNn6WTP2T6iQYVi3aNeksn/LY
- qpF9vxu7ChlYRDjYpAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATEa1l+Kd7zNbk8zyJx4ER
- BQcVQl5fKFF6dOPIzBk1p8T3G9nlWDIzMnwJnJfpp7pxdcWLS/ZrO2e1ydZZ1Qs6Ptx11P2OeZz
- 3ExYA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1smhI6-000VpV-2B
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:38790
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfG20JKfCBVhhU7XCknLQyLwy5AQ4dZtaijV7SAFrIA94IVeKjpVwnfAjKX3yptlCrRyr3MPZr5qUVjfBbI78hM2TRh/TTCsb7eyb/jpj+mysA3PgHzEx
+ rXg5v1tpc6KmmBjUWGLCotPScmcQwc0s2HR+R/sboV7qZQ0lSzhaP78/UHUEB69Fa1E90Uf6y57B/Q==
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-warning in clang aims to catch these at compile time, which reveals:
+On 9/5/24 9:36 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.9 release.
+> There are 183 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 07 Sep 2024 16:35:01 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.9-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-  drivers/net/can/rockchip/rockchip_canfd-core.c:770:20: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-    770 |         .ndo_start_xmit = rkcanfd_start_xmit,
-        |                           ^~~~~~~~~~~~~~~~~~
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int' (although the types are ABI compatible). Adjust
-the return type of rkcanfd_start_xmit() to match the prototype's to
-resolve the warning.
-
-Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/net/can/rockchip/rockchip_canfd-tx.c | 2 +-
- drivers/net/can/rockchip/rockchip_canfd.h    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/can/rockchip/rockchip_canfd-tx.c b/drivers/net/can/rockchip/rockchip_canfd-tx.c
-index f954f38b955f6dc26b856e4c2f40e20256a7f114..865a15e033a9e50f44af342eec43d4ba10b40fa7 100644
---- a/drivers/net/can/rockchip/rockchip_canfd-tx.c
-+++ b/drivers/net/can/rockchip/rockchip_canfd-tx.c
-@@ -63,7 +63,7 @@ void rkcanfd_xmit_retry(struct rkcanfd_priv *priv)
- 	rkcanfd_start_xmit_write_cmd(priv, reg_cmd);
- }
- 
--int rkcanfd_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+netdev_tx_t rkcanfd_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	struct rkcanfd_priv *priv = netdev_priv(ndev);
- 	u32 reg_frameinfo, reg_id, reg_cmd;
-diff --git a/drivers/net/can/rockchip/rockchip_canfd.h b/drivers/net/can/rockchip/rockchip_canfd.h
-index 3efd7f174e14c2b67b1feef897bc34336f578226..93131c7d7f54d036727356ca9a2d36dcf24d702b 100644
---- a/drivers/net/can/rockchip/rockchip_canfd.h
-+++ b/drivers/net/can/rockchip/rockchip_canfd.h
-@@ -546,7 +546,7 @@ void rkcanfd_timestamp_stop_sync(struct rkcanfd_priv *priv);
- 
- unsigned int rkcanfd_get_effective_tx_free(const struct rkcanfd_priv *priv);
- void rkcanfd_xmit_retry(struct rkcanfd_priv *priv);
--int rkcanfd_start_xmit(struct sk_buff *skb, struct net_device *ndev);
-+netdev_tx_t rkcanfd_start_xmit(struct sk_buff *skb, struct net_device *ndev);
- void rkcanfd_handle_tx_done_one(struct rkcanfd_priv *priv, const u32 ts,
- 				unsigned int *frame_len_p);
- 
-
----
-base-commit: 52fc70a32573707f70d6b1b5c5fe85cc91457393
-change-id: 20240906-rockchip-canfd-wifpts-3a9b76e7c228
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+Tested-by: Ron Economos <re@w6rz.net>
 
