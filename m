@@ -1,151 +1,101 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B2E14B08E
-	for <patches@lists.linux.dev>; Fri,  6 Sep 2024 11:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB1E1CB154
+	for <patches@lists.linux.dev>; Fri,  6 Sep 2024 11:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725621568; cv=none; b=ryD8/ajJ1GL23x2ji4e/f/Nxu6LH1uOVro8n4aEtwm9CVlwDMzs0fo5KONeUtjZISW5jV8yi8q3znA+awe0jB71VwbhWazT2FG6fwQSFfun57c2fN+xdAOE6xObrhFT9cZ/MYPYBcZQe37uYfxM69fIg7r99nplRfsnAW2Olu2Q=
+	t=1725623042; cv=none; b=sFxAIXWRg7QDhtUPX1yPjywdFRvqjKSEvExOk4s8G0E3lAfvVEo690H+WT1hAVduQnKmFw7U7uurBPr6ISjG0duEB+MCD4ORywWiPuM/89+LfkvMxtLfJAqbo+Ey1T0cBe/NkcGwDVfR/Fufcf+u5j2/NLeWZTyvbH4wk3Pz02Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725621568; c=relaxed/simple;
-	bh=vTXh2jfXglCKeDT3dSSr+fZshCnSK18p1ShB3uHeRz8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iF8MYnWMUA4l80avkplBx6TQjdrVRdiorLsEqMPh8Y8petqqPVRT27YGL5zdi9LLPTm4R08CeNXmN3wLW0/v6YnPj8c71n1CkCinKGj2I2pDJtI87thSHvZZUYoXnRQbdsumzxn6RLvRY84i0vZDyRadTQwAHGm6pJMu2+8DFVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YKmqFeVZ; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725623042; c=relaxed/simple;
+	bh=l8aLiUfVudm/vd/SUVGzTAzBmw1eCXX8xhWSjKpyNoQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XnTPXru2Nr2t03p6HXTg0G8qDnQNXHehCyS3vgxbt7aTjF7RO59DGFQaRIlgKy9czxz3uwa+hbji3d4AwnB0zhZTENcl0e6a31fVIqYXfIz7LpQ0ERIfttWyV2FNiVtqwaknzlasBznxdIes3e/Pl0K4+fpf+Fh5gL7VQ3N6nQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=jnByP5ZK; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YKmqFeVZ"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-427fc9834deso36565e9.0
-        for <patches@lists.linux.dev>; Fri, 06 Sep 2024 04:19:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="jnByP5ZK"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5c26815e174so2114171a12.0
+        for <patches@lists.linux.dev>; Fri, 06 Sep 2024 04:44:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725621565; x=1726226365; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Udbu1uIWP4j4MINPqgqM58X+79eAgEAS4xRqqOQw2xU=;
-        b=YKmqFeVZgsGJY8PuFH9xcIqSJJqlvZybHbWG7v5/ojf7A7+FrRt9/ad8z5VAvI5bDS
-         JP9PD9dN3HtzkGAKU9BlPHDs/9/EC5q/MEffAyBN/0kU00mZzeyRSrYf02NcLYtUXkbO
-         8IfM3xHCN3FQOEhMpVcQ6WuY1KoHV0dgkCuenvImSCYrO+afwCvwykESGelny4NxzNkN
-         aXX25/IUaZn1DTmU4dBBIqoMC4DVI0N8FkZoBk4DxT3sKeBc0I4xMgTPpBN8nWogWTji
-         9d0zUc8m2jUn2KjcZ4+40r670MNH4wdOUI/5FyP8C7yUIA11CbHmCqXC1TQcPegQeMOx
-         X54g==
+        d=googlemail.com; s=20230601; t=1725623039; x=1726227839; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oZFH4n8uj7LbYUyljomrXbAE8uZuiKQjDhK2lQm2YzI=;
+        b=jnByP5ZKZN25YaGUvTClWa05ta2hO79qlc5b51QPEuxyPlDHs+dAjmEXtgIkgpY811
+         CAu4BFz4J6Si0bZ/GXL1skfSW2+1jgHrPO0dmjsf9Lpi9yIAsH2TQHfmaaIFA8ujtKXV
+         ikCZgdwTiUeztW1pzgVXdGVZ/yMVP25YbOUK4trygTO9B5eu1j0LuNd4UbeC7wdnCAKs
+         W+LqTtsVthCfdubYnVCKwTaMP5dBMuNa8C7/LzFGqjWCBnWUr8c4AD5CwRYoktCM5Xzg
+         swNWK+yNn4NAVJmEN4w5AW5luQlydEKmqExc16XQ/jUcfJomQdKPAwU0dcM3HJsfIdeS
+         6wZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725621565; x=1726226365;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1725623039; x=1726227839;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Udbu1uIWP4j4MINPqgqM58X+79eAgEAS4xRqqOQw2xU=;
-        b=imaduq7x64vb0JHcY9u7nNkjYt9cxDOTwu7bhJc1h8gNekdl3iTrlDeR/8sLAsCGGd
-         4tTSIywql35YkEcykr1iJw8BgU7gFOWxYNEqZz7a74cYdP2HLqsS1+AAL4yHKCNsq+qh
-         2JiE6yOjqXVxjTyGEghRSO+XtQrtsro5qUKq4g6f1Ql2nZEXiEF5Khs7yR9cL0XIQTBk
-         8Bg2utUpydxd1rATwqPBzxBFt5wNRGx/yGh1i3c4kUZAjhXPNA4+bvJsHvwg36gf8PwO
-         CcrvzBYad1L9Kbr9TPEjZoyCO8tq5xyThwnhE6OD7fv6TRXSMaf/qUY0doSOw/0tJgto
-         D/UQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWGWLtxCnnapwv2C4Mve3/zYb/7aw1I9IHmcZViScP/pNXFdB7eygd5u9oTL4EwL19kVnAh3W8q@lists.linux.dev
-X-Gm-Message-State: AOJu0YyUainaJQWHHRzEMxTiuLyYoKTXxamyZc95IFEvRDqHLfymielr
-	LpwfhqTUMLbznP6jDO/MOsb6VhuPgBHVSc9yfKacWam8jZ1KcrCZ8uy41+X+6g==
-X-Google-Smtp-Source: AGHT+IF28frk+mNvBQvzqNFR1XDVIRQtdpQ86tusQ1uuAu2EpW1M17z6bTXUWoFUjfxKXzcEdY+eFA==
-X-Received: by 2002:a05:600c:cc3:b0:42c:9e35:cde6 with SMTP id 5b1f17b1804b1-42ca0592bbemr713575e9.2.1725621564295;
-        Fri, 06 Sep 2024 04:19:24 -0700 (PDT)
-Received: from google.com (109.36.187.35.bc.googleusercontent.com. [35.187.36.109])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42ca05ca63bsm17229795e9.12.2024.09.06.04.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 04:19:23 -0700 (PDT)
-Date: Fri, 6 Sep 2024 11:19:20 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	"acpica-devel@lists.linux.dev" <acpica-devel@lists.linux.dev>,
-	"Guohanjun (Hanjun Guo)" <guohanjun@huawei.com>,
-	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-	Len Brown <lenb@kernel.org>,
-	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v2 6/8] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via
- struct arm_smmu_hw_info
-Message-ID: <ZtrlOCUoUKNfHvd_@google.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <6-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHj_X6Gt91TlUZG@google.com>
- <20240830171602.GX3773488@nvidia.com>
- <ZtWPRDsQ-VV-6juL@google.com>
- <20240903001654.GE3773488@nvidia.com>
- <ZtbKCb9FTt5gjERf@google.com>
- <20240903234019.GI3773488@nvidia.com>
- <9e8153c95b664726bd7fcb6d0605610a@huawei.com>
- <20240904120103.GB3915968@nvidia.com>
+        bh=oZFH4n8uj7LbYUyljomrXbAE8uZuiKQjDhK2lQm2YzI=;
+        b=h+ytc9Xqk7GDZ0EqAUHIBQxBgxiviCkjzKPru7Hl/nYvdzEAEsC27z6NGh/1V3Qpiz
+         kRhrd/MYthBQVJO3+X4G1/5bWFdG98E6B29jdxx1X+u2wXNY/7VHN0pwV06BYoYkaCn2
+         ZrJ9eufun/LzjD2SNGz22np5KdOKznOhdbxp3iF6tAlgPN8YpfTHSUiWv2ImSkClDPdp
+         arJTajr/q5jNvaMPxOg/gaDHHI2sbGRlRMW6XYxHKobqPybSDil/D2IY7TlPtbeBvWm1
+         bX3IZK+Pjv1OJHi7Ghe/BuOFiKAB8zxK+D48oZ7Xw5qLrLvXKZ0DmHeNblFfNq1QX77Z
+         SyYg==
+X-Gm-Message-State: AOJu0Yz1IK9d6yRQk3E3S0HRwNHu9kFIeHxvHbFgC5z0N1BIM0fZYyyH
+	ZQPqlgpT2awK0u4KPrFo4r1xlwka3veE4Ed2hcWDimpxsvn5KRE=
+X-Google-Smtp-Source: AGHT+IFCw8zYSN000juj26FedmQuKiZajxfLCf0UF8fTvienYRXLIOxkWkuV3DS6cW+Fy2eAX6MWKg==
+X-Received: by 2002:a17:907:501d:b0:a8a:8d81:97ac with SMTP id a640c23a62f3a-a8a8d81a95fmr101434566b.4.1725623039218;
+        Fri, 06 Sep 2024 04:43:59 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b40f2.dip0.t-ipconnect.de. [91.43.64.242])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8a7af8e46dsm174836966b.16.2024.09.06.04.43.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Sep 2024 04:43:58 -0700 (PDT)
+Message-ID: <6cdc4ef9-8eee-4691-89e7-4d9fc5d27564@googlemail.com>
+Date: Fri, 6 Sep 2024 13:43:56 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/101] 6.1.109-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240905093716.075835938@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240905093716.075835938@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240904120103.GB3915968@nvidia.com>
 
-On Wed, Sep 04, 2024 at 09:01:03AM -0300, Jason Gunthorpe wrote:
-> On Wed, Sep 04, 2024 at 07:11:19AM +0000, Shameerali Kolothum Thodi wrote:
-> 
-> > > On Tue, Sep 03, 2024 at 08:34:17AM +0000, Mostafa Saleh wrote:
-> > > 
-> > > > > > For example, KVM doesn’t allow reading reading the CPU system
-> > > > > > registers to know if SVE(or other features) is supported but hides
-> > > > > > that by a CAP in KVM_CHECK_EXTENSION
-> > > > >
-> > > > > Do you know why?
-> > > >
-> > > > I am not really sure, but I believe it’s a useful abstraction
-> > > 
-> > > It seems odd to me, unpriv userspace can look in /proc/cpuinfo and see
-> > > SEV, why would kvm hide the same information behind a
-> > > CAP_SYS_ADMIN/whatever check?
-> > 
-> > I don’t think KVM hides SVE always. It also depends on whether the
-> > VMM has requested sve for a specific Guest or not(Qemu has option to
-> > turn sve on/off, similarly pmu as well).  Based on that KVM
-> > populates the Guest specific ID registers.  And Guest /proc/cpuinfo
-> > reflects that.
-> > 
-> > And for some features if KVM is not handling the feature properly or
-> > not making any sense to be exposed to Guest, those features are
-> > masked in ID registers.
-> > 
-> > Recently ARM64 ID registers has been made writable from userspace to
-> > allow VMM to turn on/off features, so that VMs can be migrated
-> > between hosts that differ in feature support.
-> > 
-> > https://lore.kernel.org/all/ZR2YfAixZgbCFnb8@linux.dev/T/#m7c2493fd2d43c13a3336d19f2dc06a89803c6fdb
-> 
-> I see, so there is a significant difference - in KVM the kernel
-> controls what ID values the VM observes and in vSMMU the VMM controls
-> it.
+Am 05.09.2024 um 11:40 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.109 release.
+> There are 101 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Yes, that’s for guests.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-What I meant is that the host sysregs are not read from userspace which
-is the synonym of reading SMMUv3 IDRs from userspace, instead the kernel
-controls what features are visible to userspace(VMM) which it can enable
-for guests if it wants, as SVE, MTE...
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Thanks,
-Mostafa
 
-> 
-> Jason
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
