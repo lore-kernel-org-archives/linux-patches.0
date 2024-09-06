@@ -1,91 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6601B5ED6
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 23:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAAC17BB6
+	for <patches@lists.linux.dev>; Fri,  6 Sep 2024 00:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725580785; cv=none; b=c+Ck3j1eeDcLF6Won2DpYhT+u35muqMMKsEHUvSCKtfzJ9mGjwx2UyV5A8PaO0ncO51vpGbOaQBD7giUpWNfrplo102QHIb1oyF+AB0veQ3+tmWBNMFU5nNfGt3BsFWbHaBI0yF98fwcMzNWzSFe4KbXz8qWHDNjMVZ+oyJtTXw=
+	t=1725581849; cv=none; b=cOlzCSKMih6Huppij3TFX9St3G9GxTkeT8sTJ+o6lOcd/PvmmJh0eKAtWvdv+qspZ+Hn3oWep+vVbH7q4X/NTkKa4kK7heZspRPlyH6kuuSdTCYqOtC2FgpMxNrLo6PVs7tX2y8RdszKsDm2CqfN6dK2QT5RzDj8Co+TQdsj9QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725580785; c=relaxed/simple;
-	bh=JYI3PA3KgTPpVbsypC8aLWWteQaLMLXfffjyWBRuqS0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k74sMwgdjONcSygIa0lUMcSuT+KmC4/GdOv/cafiOijiXwMxyPdRPPHAO8G1zJPjSvSmsJHz7qEEfr9zoc3J208NNU38GVypCgNVuy7P4kD4K7G9/Pz6rARJPTnF/B21F+bWeGj3h8f3Oq6z8fLa94dsO97h4I74+EYHMlm0HlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O3xM7nu4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725581849; c=relaxed/simple;
+	bh=OwpzBiS5Rmhz+J+NmaXY/hNNGB2eyD7rp4WviQc0kwg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mYIxRAZ2F3HRNhUm9V+7A2+sikEiMsHekBH7GJG/my4yEhZGTKuKkuyXyW6t2jHfnivj1OySEGeItbDin2eOjToVplkzecIeZzZ37/TGLHDP/AJoysaM0/YgaDmVHUmJ7Jz9whnfPOd7Nu8vZ7oz+299osn3GzfsnB0aIWaVxJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cg+mdJU9; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O3xM7nu4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF32C4AF09
-	for <patches@lists.linux.dev>; Thu,  5 Sep 2024 23:59:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725580785;
-	bh=JYI3PA3KgTPpVbsypC8aLWWteQaLMLXfffjyWBRuqS0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=O3xM7nu4IFH02RfX1ORJK79OOJl/TOM/ptr3rsOmFhoMyHwKW68AMEXGeSRU9HXer
-	 jc1ORwm0OyttgqBVliQx09jkS9nKjmsp1vfySnAF8ZOxEN5iCZAf/tPXIfgeprrDVW
-	 Ec9tlCWCMltZVByRL2khg2ufNSCs8K6ytYqwBPOZwr/io8TKcpkrnAL0fcXgMun+k0
-	 Vr+ZkrRJksaQ1/lS3BBkNLJBNIjs4gl0f72ZPWOdKo11EYsaF23EnaVNEgGxLGqLkX
-	 HeLxh6HkY5hSYRmlt8k8YoMKQtkOUMWEm1GtlCdki2bfuq4JKkN9QOJkXbkgulT7R5
-	 i+R2GYy962TCQ==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5334b0e1a8eso1628889e87.0
-        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 16:59:45 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUUxHOKH6pVOz5x2FIeGh5EsLBtYOOb+H3SPD4oUozBesFKr41dIx5hgee6rVX3ArjnSJEQmPAW@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQ9MfDJ8CdvULUzam7Ie/BZvEHJUJ4ojiVACFsYksH8CAl/LLX
-	mgKo6RQxpNHo/LCNsE3e/+/oEOjlAcIizmBy68SMgy28pzrR3GvVa/9lNYB4L8I7evK9s8vsj/H
-	xM4m6run979StGNHIyiy3Kf6Hapc=
-X-Google-Smtp-Source: AGHT+IFR8+IjtzXyDib8ZC6nUZHJtS5vrZ7G8gpcaYWONjJmQhbrk3/4JYCN102Pa4oHRqA2GKKSGJ1QjnvP2cUV3b0=
-X-Received: by 2002:a05:6512:124e:b0:533:3268:b959 with SMTP id
- 2adb3069b0e04-53658805f76mr262083e87.53.1725580784084; Thu, 05 Sep 2024
- 16:59:44 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cg+mdJU9"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-82a20efed34so65526839f.2
+        for <patches@lists.linux.dev>; Thu, 05 Sep 2024 17:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1725581847; x=1726186647; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CJk6oTxSmxqwstN1cixMUi88869s8uO6pmgB1F/UNZI=;
+        b=cg+mdJU9TLY8y3muWk/GDCZh+xyIPsq/+aul7ldMKdEbS7BsLuZOeE3B+ALCpRN+7a
+         u/WaBhItd4yDPL+K9nFV3KLPe+4ICop+8Tv84HF1jPNSFlJ0xrGOO7VMbq7+iN3AemBP
+         9QkB+NVUa+tezHSTDjHOsi3u3zRsD+wI4DrCc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725581847; x=1726186647;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CJk6oTxSmxqwstN1cixMUi88869s8uO6pmgB1F/UNZI=;
+        b=Ohh1U7CdxI1MlzzsDnxW3hkgP4Lv3jyeHYGcGtTijehK2q9H5/8Oi120uth3nwft9A
+         RpTu6/q65lnxxcll3rB2u4UMDtVHbB/yVUTDMnsOel8rkO3PeTHtZfUxLC+XD4l8Bo63
+         e7qGcnPhMbWh8qzFAEF4wIyK+Ud62GmFtXCabjfV9rTW5AsA7vJPEnS6lPXHv3zi7oCY
+         1KmW/KwbOe1Cdgbx5UEp/ICCgjd9rzU8vGnNpqoDkn4WcoJQiIciWDRtbGggQOLvkuFP
+         FQX+mksS9wvLDYHSWe7ZS2+6oT02QcNZEXhXi7fUq3kii2IDIRbHFPVqEIWfiCQ+HorE
+         PLbQ==
+X-Gm-Message-State: AOJu0YwzJnJl/8n0bEfFRoe3JbkfkBak78lQLPD72cs/up8SfWjtpKS6
+	EDl/rQdGcah33V7sLlJ0V2J6Kqwl2E9/9Vdwl99mMR1l3U22Y4T/qV5L7id8/5M=
+X-Google-Smtp-Source: AGHT+IEXq8EGlVXVAtKtQBZ7pubAV4csPUqD77cw2zVgWsBW729E+ZBWLC7j0DysrCw72mbjJsdPlw==
+X-Received: by 2002:a05:6602:26cc:b0:82a:173a:3cd0 with SMTP id ca18e2360f4ac-82a962494b2mr85462339f.16.1725581846670;
+        Thu, 05 Sep 2024 17:17:26 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d07b01fbb5sm376826173.123.2024.09.05.17.17.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Sep 2024 17:17:26 -0700 (PDT)
+Message-ID: <c808dd82-248f-46c6-a902-02d3527879f0@linuxfoundation.org>
+Date: Thu, 5 Sep 2024 18:17:25 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240808221138.873750-1-ojeda@kernel.org> <CAH5fLgh9Moq_9M+zMu300ohK=mPqkLyS6cpQ6An2Q3THCPFjaA@mail.gmail.com>
- <CANiq72kUBPnua1Pob++-6SJ8MeGxQMfrePY9SQVd0DZp5VU-2A@mail.gmail.com>
- <CAK7LNASHdd8Gv6OpXnP3tywrTA6iEZVqZGLb0V-vV_VUR-ksWQ@mail.gmail.com> <CANiq72mtaSGtDx5fn2VPYfyBNGVDm7adQAYxJh3tvd6esLiaRA@mail.gmail.com>
-In-Reply-To: <CANiq72mtaSGtDx5fn2VPYfyBNGVDm7adQAYxJh3tvd6esLiaRA@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Fri, 6 Sep 2024 08:59:07 +0900
-X-Gmail-Original-Message-ID: <CAK7LNATgbZB7e+3D+Mj2fAA-HXTOdsnf-AKcCzxL7DoE2cWdXg@mail.gmail.com>
-Message-ID: <CAK7LNATgbZB7e+3D+Mj2fAA-HXTOdsnf-AKcCzxL7DoE2cWdXg@mail.gmail.com>
-Subject: Re: [PATCH 0/6] kbuild: rust: add `RUSTC_VERSION` and
- reconfig/rebuild support
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	rust-for-linux@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.10 000/184] 6.10.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240905093732.239411633@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240905093732.239411633@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 6, 2024 at 5:47=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On Thu, Sep 5, 2024 at 3:19=E2=80=AFAM Masahiro Yamada <masahiroy@kernel.=
-org> wrote:
-> >
-> > With the nit in 1/6 fixed (No need to resend if you fix it locally)
-> >
-> > Acked-by: Masahiro Yamada <masahiroy@kernel.org>
->
-> Thanks a lot Masahiro (nit fixed and tag applied). I guess you meant
-> to reply to v2?
+On 9/5/24 03:38, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.9 release.
+> There are 184 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 07 Sep 2024 09:36:50 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.9-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
+Compiled and booted on my test system. No dmesg regressions.
 
-Yes, I meant Ack to v2.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Sorry for confusion.
-
-
-
-
-
---=20
-Best Regards
-Masahiro Yamada
+thanks,
+-- Shuah
