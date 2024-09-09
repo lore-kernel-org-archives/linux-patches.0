@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC62213CA81;
-	Mon,  9 Sep 2024 16:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB461487E2;
+	Mon,  9 Sep 2024 16:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725899070; cv=none; b=aqwEQ2fTGITdLeugXoJVVKh96Bgz9VSSMGag5ZYt58WWYed2sT4TgY9oNgo0AbaaIaOpiKRB9Ivf9a2r/T94YntZzIAK1MBJhnjmTH08G4IDszZfx581j16g0ZI+GY76iJaHzXH2mUq/B/9W0eCty4TyPlCjneYlot6n+ySEPIk=
+	t=1725899891; cv=none; b=Dtxytx3iQOa3+/3Q6AxSwiDC6NxDA+3rykrd8yspQuiGlRj32x+5StxdoXTcB1I274YLX06XaSOzt+i4qhM5yiQFvy1K4d5GZaV3QsJ1/jh4UIqlYWJGdRzBzZy5ptCTchJRoxqlikQ4YItFJ5Rq8ACqoZXpnosnETqovonEotI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725899070; c=relaxed/simple;
-	bh=Z9KQaBMYa5sFKDVDG6vipFDugxmhAcXo+x7jIXMTm4k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=REmk7t59vy/18VNlYbtBn6iBaEwRtRhpTB1p2ZYCNtfGwmhSpTBt6hvKxgYv8+I5bSrslwJFsV5adsDwjdyGy/+H50hIYOe3ID7NggPlfBc4YLKK1eqGyKTW5xBCI5ifXwhL7zq68H01tr2fq0JKHLlQsLl0AKROye5gamKivxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nUFhMo1a; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725899891; c=relaxed/simple;
+	bh=+w2uc10nohr4sGZItrTrIsH/kjRiwUW6Vy1YZKvOlPE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BzD3VkWBELDOgglPQUxB7sJRriNgNwV9wEKgaknmW9ME6XFrcWKrbSKxvwePu4KVz1mzoZQCaT5LmHIXfJJEREqLIos0LfEEk2A+GBlFkwNEcAtFGC6MO8afcnlu47UUOUKTO8GjsXMtpOQucD1SdGMecF9loEBhrhc8M2c+x9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jdg6Iz0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nUFhMo1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1663C4CEC5;
-	Mon,  9 Sep 2024 16:24:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jdg6Iz0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E3EC4CEC5;
+	Mon,  9 Sep 2024 16:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725899069;
-	bh=Z9KQaBMYa5sFKDVDG6vipFDugxmhAcXo+x7jIXMTm4k=;
+	s=k20201202; t=1725899889;
+	bh=+w2uc10nohr4sGZItrTrIsH/kjRiwUW6Vy1YZKvOlPE=;
 	h=From:Date:Subject:To:Cc:From;
-	b=nUFhMo1aVL0SZ26zu0BGprNSrg8esC9sKfr9Uhd9jg/awvZA907m1qU8mpnp64FFm
-	 ouQ7SY4t02QysCMRIwsc3Cvli6U6OYOyLAxkZWPaNs6rR6BSzK+EFOgjzsCuNcb1mk
-	 iLa0Q24Qk0dtrmGSlpQ0ezEsY9QySiqVvrvKN0H6QZhsqbgYns7JovokeAGHke5K+x
-	 Zav3hP4vtBFKiBC/8WC14H+TB4So04Mywvw8c42k4LRs2OOdkaFK/V7rBu8Y6Wxg8K
-	 unbMZg831bE/l0fBQX+VI6xlGGfX60RaxpFqjXeQdtQ1HKkLeBAbCNVvp5TygqfUhY
-	 Tp3ICMpAeku0Q==
+	b=jdg6Iz0DKMG7z8XkS2YNOT+yVE8HOcGEjDFu8Ff8hA9FR5PtXFBrv5oXh2Z1qOvnf
+	 Th3p4Ag0xGQVUybkNkfA6a2Zz6U8+Co94WOCBbgG1BcLU52VE7Fbm73M4ZS710KEo1
+	 z8Tsfxt6qIgMtUPn8i5TWRf2y1Thirr1FKPag08C+A3iWebTAaz2umFfk/iSAUWzQ8
+	 RSxGJpxERi+0mwaCJSMqmoQLuV9TRy+bO173pMn+xWu+EWb4bKqrEzk7vfX+y2e1zS
+	 5wueJ4bR9EgOI7abwb9XjJSunw24PNTTzVHo4ZMO7yFuXfKFJ0sk1wCdk/qEQLq+mr
+	 dOAr63pPssCWQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 09 Sep 2024 09:24:25 -0700
-Subject: [PATCH net-next] can: rockchip_canfd: Use div_s64() in
- rkcanfd_timestamp_init()
+Date: Mon, 09 Sep 2024 09:38:04 -0700
+Subject: [PATCH] iio: bmi323: Fix array reference in
+ bmi323_core_runtime_suspend()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,64 +37,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240909-rockchip-canfd-clang-div-libcall-v1-1-c6037ea0bb2b@kernel.org>
-X-B4-Tracking: v=1; b=H4sIADgh32YC/x2NQQqDMBAAvyJ7diFqKKRfKR6SzaYuDaskIoL4d
- 0OPA8PMBZWLcIV3d0HhQ6qs2mDoO6DF65dRYmMYzWiNMw7LSj9aZEPymiJSbhJGOTBLIJ8zBu/
- Sa3B2siFBy2yFk5z/xQeUd1Q+d5jv+wFsvFrEfAAAAA==
-X-Change-ID: 20240909-rockchip-canfd-clang-div-libcall-ba9f619434bf
-To: Marc Kleine-Budde <mkl@pengutronix.de>, kernel@pengutronix.de, 
- Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Heiko Stuebner <heiko@sntech.de>
-Cc: linux-can@vger.kernel.org, netdev@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
+Message-Id: <20240909-iio-bmi323-fix-array-ref-v1-1-51c220f22229@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAGsk32YC/x2MwQrCQAwFf6XkbCDNim39FfEQNdu+g61koVRK/
+ 93F4wzM7FQ84IWuzU7hKwqWuUJ7aug52Tw641WZVPQsgwwMLPx4I2nijI0twr4cntnk0qn12qY
+ sVPNPldj+69v9OH6h0Q+aagAAAA==
+X-Change-ID: 20240909-iio-bmi323-fix-array-ref-a0672a8213f0
+To: Jagath Jog J <jagathjog1996@gmail.com>, 
+ Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
+ Denis Benato <benato.denis96@gmail.com>
+Cc: linux-iio@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1692; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Z9KQaBMYa5sFKDVDG6vipFDugxmhAcXo+x7jIXMTm4k=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGn3FW0upoUKl7aqfFFYZn1Cp+1punwQ75573+3fRvc8n
- lCamsbRUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACYS4cHwP/MzDy/DIpdboSzX
- v/7dbybqzzFHbs7kO2aK7/8Ia4btb2X4n/BILDIvXeTg6i9OOXuMgt9enXpGUawva6FZ2/kE4QJ
- dZgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1784; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=+w2uc10nohr4sGZItrTrIsH/kjRiwUW6Vy1YZKvOlPE=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGn3VQqLlDLOf3nzzGV2dWo8v6PR7Exnp2t1x7PuyPoWp
+ W73fJnVUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACYSdJyR4XA85w/JGEFmr8J9
+ //jec60/P+f3RZbpUQsnb3ptfIDrzFNGhk3PZpx0jJ5e0dfYUO59Nf37NqvXE49MScx4H9EfdcX
+ CigUA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building with clang for a 32-bit target, such as arm, a libcall is
-generated when dividing the result of clocksource_cyc2ns(), which
-returns a signed 64-bit integer:
+Clang warns (or errors with CONFIG_WERROR):
 
-  ERROR: modpost: "__aeabi_ldivmod" [drivers/net/can/rockchip/rockchip_canfd.ko] undefined!
+  drivers/iio/imu/bmi323/bmi323_core.c:133:27: error: variable 'bmi323_ext_reg_savestate' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+    133 | static const unsigned int bmi323_ext_reg_savestate[] = {
+        |                           ^~~~~~~~~~~~~~~~~~~~~~~~
 
-Use div_s64() to avoid generating the libcall.
+bmi323_ext_reg_savestate is only used within sizeof() through
+ARRAY_SIZE(), so it is not unused, but it will not be emitted in the
+final binary because sizeof() is evaluated only at compile time.
+bmi323_ext_reg_savestate should have been used in the second parameter
+in the call to bmi323_read_ext_reg() in the second for loop in
+bmi323_core_runtime_suspend().
 
-Fixes: 4e1a18bab124 ("can: rockchip_canfd: add hardware timestamping support")
+Fixes: 16531118ba63 ("iio: bmi323: peripheral in lowest power state on suspend")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-This does not happen with GCC, likely because it implements
-optimizations for division by a constant that clang does not implement.
----
- drivers/net/can/rockchip/rockchip_canfd-timestamp.c | 2 +-
+ drivers/iio/imu/bmi323/bmi323_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/rockchip/rockchip_canfd-timestamp.c b/drivers/net/can/rockchip/rockchip_canfd-timestamp.c
-index 81cccc5fd8384ee1fec919077db48632f0fe7cc2..4ca01d385ffffdeec964b7fd954d8ba3ba3a1381 100644
---- a/drivers/net/can/rockchip/rockchip_canfd-timestamp.c
-+++ b/drivers/net/can/rockchip/rockchip_canfd-timestamp.c
-@@ -71,7 +71,7 @@ void rkcanfd_timestamp_init(struct rkcanfd_priv *priv)
+diff --git a/drivers/iio/imu/bmi323/bmi323_core.c b/drivers/iio/imu/bmi323/bmi323_core.c
+index 671401ce80dcf947b7b64ea3af112d2a42ca5501..64dbce23ce17bcdd11c0d4c454dbeb9de17ef56c 100644
+--- a/drivers/iio/imu/bmi323/bmi323_core.c
++++ b/drivers/iio/imu/bmi323/bmi323_core.c
+@@ -2199,7 +2199,7 @@ static int bmi323_core_runtime_suspend(struct device *dev)
+ 	}
  
- 	max_cycles = div_u64(ULLONG_MAX, cc->mult);
- 	max_cycles = min(max_cycles, cc->mask);
--	work_delay_ns = clocksource_cyc2ns(max_cycles, cc->mult, cc->shift) / 3;
-+	work_delay_ns = div_s64(clocksource_cyc2ns(max_cycles, cc->mult, cc->shift), 3);
- 	priv->work_delay_jiffies = nsecs_to_jiffies(work_delay_ns);
- 	INIT_DELAYED_WORK(&priv->timestamp, rkcanfd_timestamp_work);
- 
+ 	for (unsigned int i = 0; i < ARRAY_SIZE(bmi323_ext_reg_savestate); i++) {
+-		ret = bmi323_read_ext_reg(data, bmi323_reg_savestate[i],
++		ret = bmi323_read_ext_reg(data, bmi323_ext_reg_savestate[i],
+ 					  &savestate->reg_settings[i]);
+ 		if (ret) {
+ 			dev_err(data->dev,
 
 ---
-base-commit: bfba7bc8b7c2c100b76edb3a646fdce256392129
-change-id: 20240909-rockchip-canfd-clang-div-libcall-ba9f619434bf
+base-commit: 5ba0cb92584ba5e107c97001e09013c1da0772a8
+change-id: 20240909-iio-bmi323-fix-array-ref-a0672a8213f0
 
 Best regards,
 -- 
