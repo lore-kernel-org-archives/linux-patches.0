@@ -1,90 +1,119 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F065E76036
-	for <patches@lists.linux.dev>; Sun,  8 Sep 2024 08:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157701AE02A
+	for <patches@lists.linux.dev>; Mon,  9 Sep 2024 07:14:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725785425; cv=none; b=pI+uDdxbbBkC5T0tlyv8ZzVK9s1HJEyZPYSCYrPwNpyZ5wvOyaX+yiq+EiDRpzt2pQZOfT6XBdSTUmeYu+68xajIJLvBatGB/8+TAQFuVydy+t7DP2JN0EcDrb/a4y5Tq88432/jRh/wdlPEqXyda2uav0QEewLHLywPtsW8dMI=
+	t=1725866102; cv=none; b=IZIVhU7WdDN1wQ26qz9WXC8HNYfroAunPPpo5Z+aXYzQNGYcuU9QdGsAx5DWy/mdbP66LlrbY2JMt/knHjL4/rWgnX7x+IrE1JuFj/qnPAzfnOapbQnl+WCXx3srRu4DXDdaJYsOj09ch+zMYZQQRbgY1HXvvetVM4e9qwTPNSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725785425; c=relaxed/simple;
-	bh=IratKjSErCgP4bqKJwZyOcaZOPuZPbvpYf28ITxn7vc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=SLJ/nylz5k5Ncgzccq0oD0tuAxF1gDNUj203FHQIQThbiLwp14P7MCiC2FmRyva//4c38g4KFInYa7EkQnOcpDrLzd4p00+t46ZcH1/FRoz4505cRcEfUNri/HXlg5Kh8aDP1s4LcYPx0yUPWcySeIfGy11RcjbP3J+XfAUDoFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JSbvpVZ6; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JSbvpVZ6"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-374c84dcc90so1902066f8f.1
-        for <patches@lists.linux.dev>; Sun, 08 Sep 2024 01:50:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725785422; x=1726390222; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IratKjSErCgP4bqKJwZyOcaZOPuZPbvpYf28ITxn7vc=;
-        b=JSbvpVZ6p3RlH/97lwS6M59eyEdlAx9OeXpe/jle/LxFIoi6ULXRkFwUtY01Tv/+42
-         cc6eVQ/DJ7UYxJnW0AzvpnE7TYbH55REdQSlCa7Rl62F/x8RsnTav4fYhtHZcYdxRAwN
-         w6uZwrMa39+OpZ0mm3IKGVtLYwu4C4/StmfoL5M8YatgD6+mbtao7POJ3ZtERDj+P745
-         KTsMzDu3Z3QHO7Zh8qmEKlLgMm86HCVgfwDOlp1fb2bmpB6bSMFNYussnET0F8yAcxlX
-         362XKnhj2xewN9jPbAmVa5KZR+ByDhS3jeW9V0Y2ORQnf9OWoEzf0PzLBineEaOlXXSI
-         mOJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725785422; x=1726390222;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=IratKjSErCgP4bqKJwZyOcaZOPuZPbvpYf28ITxn7vc=;
-        b=tiZh3trnORUNamc3vsFhVhVqUa9hFF3mLNv1EFgGH2ZWrimwyp+VLCe6DMjvchI795
-         uWpBY2oUhchzXxJ01M7Yu36BM88+IweVzyXmrUFn7gxPCFtBzoHz8wrUCwlDU+nqAS0n
-         rv+7C+ftGHiycMVygDgsPqumK2EbSlALkJ6Hoakfk4TuhvAuLzU83k96UKTtv+jtczKu
-         iT1wbYPtWBEKUL7amwGt/Ur9t03L1oiAdXLU7/rf4aXaUuRF0hXnsy+bQdzB2tKf5Z5d
-         yfgtrpw50cvw9GwMJWeqlDD5ayTwqDVq6MTMdwf9uKobPRZF6/jcd+S1HgOz7rh+fZpM
-         EAqA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/hwHt+xIMAW5CjuULJ/8KJGFpC1bIvrgU4W2eRNuWHUJJVIZar0+sGioUBCFc6J6Ua4h4uI6c@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyxf/eQ5eLROWtWC8uyypme5TgaWFRdGGnMTH/IMqOZDmfNsfRG
-	gPkfT6ERupL5wqs++iSdaatqmnQuE/GJTZNqSrwZWYoPjuH0eu6T
-X-Google-Smtp-Source: AGHT+IFoZ1XBFN1TqW6neFNuQh1nG58pN2f5+yQJ4beQhi8+I8oR/Q1Ywr2WGGB/Rkv/6yFCkfse/Q==
-X-Received: by 2002:a05:6000:a91:b0:368:37e3:dff7 with SMTP id ffacd0b85a97d-3788960fe95mr5265498f8f.34.1725785421928;
-        Sun, 08 Sep 2024 01:50:21 -0700 (PDT)
-Received: from localhost ([194.127.167.96])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42caeb21b1bsm38396455e9.2.2024.09.08.01.50.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Sep 2024 01:50:21 -0700 (PDT)
+	s=arc-20240116; t=1725866102; c=relaxed/simple;
+	bh=snuoNvsrx2PKI9Nr4K54WSHcvlbHkfybutdtOuFAYKU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jv48OPh1HwyopPkhBpKJQjrofakzUvphAghZ6hUVd+2RlES5rotVeYO91fQDUTbW+EpEn3IklkbodaDKFV6OUoLR3v+XmgD5I9k2PRXHfS0unIp0B/jN/8do1IJswWos1Yy9DDy6yd0P3wKGzGPGq8prGSMGSDTqEpE8sniUAlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1snYbn-0005G9-Us; Mon, 09 Sep 2024 09:14:47 +0200
+Received: from [2a0a:edc0:0:b01:1d::7b] (helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1snYbn-006awm-4H; Mon, 09 Sep 2024 09:14:47 +0200
+Received: from pengutronix.de (pd9e595f8.dip0.t-ipconnect.de [217.229.149.248])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id AF69C33650C;
+	Mon, 09 Sep 2024 07:14:46 +0000 (UTC)
+Date: Mon, 9 Sep 2024 09:14:46 +0200
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: kernel@pengutronix.de, Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Heiko Stuebner <heiko@sntech.de>, linux-can@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev
+Subject: Re: [PATCH] can: rockchip_canfd: fix return type of
+ rkcanfd_start_xmit()
+Message-ID: <20240909-arcane-hopping-trogon-e66ce9-mkl@pengutronix.de>
+References: <20240906-rockchip-canfd-wifpts-v1-1-b1398da865b7@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5fw2ahjtdojmvq5a"
+Content-Disposition: inline
+In-Reply-To: <20240906-rockchip-canfd-wifpts-v1-1-b1398da865b7@kernel.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
+
+
+--5fw2ahjtdojmvq5a
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 08 Sep 2024 10:50:19 +0200
-Message-Id: <D40RVGTQMNLV.1GL02UF7AWB5P@gmail.com>
-From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
-To: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
- <alex.gaynor@gmail.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>
-Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
- <benno.lossin@proton.me>, "Andreas Hindborg" <a.hindborg@samsung.com>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- <rust-for-linux@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <patches@lists.linux.dev>
-Subject: Re: [PATCH 19/19] rust: std_vendor: simplify `{ .. macro! .. }`
- with inner attributes
-X-Mailer: aerc 0.15.2-211-g37d5fc691aff
-References: <20240904204347.168520-1-ojeda@kernel.org>
- <20240904204347.168520-20-ojeda@kernel.org>
-In-Reply-To: <20240904204347.168520-20-ojeda@kernel.org>
 
-On Wed Sep 4, 2024 at 10:43 PM CEST, Miguel Ojeda wrote:
-> It is cleaner to have a single inner attribute rather than needing
-> several hidden lines to wrap the macro invocations.
->
-> Thus simplify them.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
+On 06.09.2024 13:26:41, Nathan Chancellor wrote:
+> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> indirect call targets are validated against the expected function
+> pointer prototype to make sure the call target is valid to help mitigate
+> ROP attacks. If they are not identical, there is a failure at run time,
+> which manifests as either a kernel panic or thread getting killed. A
+> warning in clang aims to catch these at compile time, which reveals:
+>=20
+>   drivers/net/can/rockchip/rockchip_canfd-core.c:770:20: error: incompati=
+ble function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, =
+struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net=
+_device *)') with an expression of type 'int (struct sk_buff *, struct net_=
+device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>     770 |         .ndo_start_xmit =3D rkcanfd_start_xmit,
+>         |                           ^~~~~~~~~~~~~~~~~~
+>=20
+> ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+> 'netdev_tx_t', not 'int' (although the types are ABI compatible). Adjust
+> the return type of rkcanfd_start_xmit() to match the prototype's to
+> resolve the warning.
+>=20
+> Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD=
+ controller")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+Applied to linux-can-next.
+
+Thanks,
+Marc
+
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+
+--5fw2ahjtdojmvq5a
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUEC6huC2BN0pvD5fKDiiPnotvG8FAmbeoGMACgkQKDiiPnot
+vG8E7gf/XpZwpCzyzLr/XwHFG9RLcVnIdAp2UjKJAb9bt2OLqRFLpeg/sn4rvM6c
+sn/3WBHWjl1pOxih8/srCfm46JO86F4Z9WLduY5dFC2a9CiBWW6vB/+J0467HyIy
+T7iMjqhJpMOi/RW2xQIb3rm0DjewSxjhhGmmHgbtR8HS210U08AxZWCxq0dULR5u
+BmGC2rq5GyVhCoD2TVsUIpzKHIbwm7zk82CxeVgzXvWHVZ8/g71UN4qvWOvo6vsr
+U52Za8YFmERPv2WmuiHn2KdUht1aAJsyzIqWoCXXHWKoGo6WhuipCSLbLxL+UwAq
+AdnREoaojt9NTDFQXa1B1x67ftG8HA==
+=qgme
+-----END PGP SIGNATURE-----
+
+--5fw2ahjtdojmvq5a--
