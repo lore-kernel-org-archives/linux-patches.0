@@ -1,83 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8912E219F3;
-	Mon,  9 Sep 2024 15:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFD814D6FE;
+	Mon,  9 Sep 2024 16:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725895659; cv=none; b=s1ZJNMX2+ceRvBD32pXHemXR+Z1F86ejI9lGHIaZgQu8b1tdd589zH3/R2OfH2OIMxX9y72BVg+JBGtu1EkD3iWUJwegizx0NJc/YDDz8zUKHVGclKlmkC3vYzwfORR+ZNHb6hkRXk8dqFkBqOnS1SfKSdtDhIog9zSxRVopwcI=
+	t=1725898568; cv=none; b=lRBq3Fsh8aJGk8+mqbthA8ZmSCh+wifXa++1TB666UbCUBV6bdU+qQSfrkpzdnjUqtrAcSRg7kCiWS5YsZshMUDpVdjbnlayg0zIK3iT5zB1X2IwGq148CqIBqlhzNGf+DUkrY8BuUYwxH7LzLyL/a+foqWCtCiLlqkX4rloEpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725895659; c=relaxed/simple;
-	bh=bkf0FPBXI9ffG3pgzuSvrT/omg9CfDr3n4aP+Ydrft0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AXO2zILBfuQMgMFGQsMohjKinxPGbBMIH5W+3yTwuobyW8Tlkx2sNkNTQ8oEOx6hQwUEofKKdoUL7MK9rgP3z8Y3ATv4XPN0NbfLuy8awVyGDhVvTMx83kXoizT1ri2zUs/NATmve6A36/dprp9bCASISC/ajldiW3K2OzDW7Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=frarv78Y; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725898568; c=relaxed/simple;
+	bh=eovoPXc7aEQEHLLu97GHHuv31EVw6+SkozIo9mYcwDA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=di/kC6Yx/iXPsofq7Lpl5ExEGrEJpHLUqfHtyfZu4EkhVpyHKJlD2VDTTiXXlwSD8azevWzzFJ3XihitMq4ytOxR/OztSDwbHXjDsNMlZCcVEzNspdqYjWN0py0C3Pnp2c23S4F+Bb6GzMQw/P+M4o9AW3D8a3jVTj1fz7+Np9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XmunNZBK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="frarv78Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39236C4CEC5;
-	Mon,  9 Sep 2024 15:27:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XmunNZBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A85C4CEC5;
+	Mon,  9 Sep 2024 16:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725895659;
-	bh=bkf0FPBXI9ffG3pgzuSvrT/omg9CfDr3n4aP+Ydrft0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=frarv78YKu9T5tWlwTYmYfDLTkkR7U+/3o3Bys2C8DHmqmwnP4kfag/9hBM0O6KKb
-	 vi8KkYkqHU0/rO3NfdLgBNfSvQn+wCs5aU8S9P0amI9KEzw8g4LA+2oyjmn7D5DUzc
-	 a3imUOStMdC8AjO7RcUwiMzy/thY2xWuSP58mQV/URkEBNxTRkH+q064e38N/OMvr3
-	 vkfZ7g+Ra0Vqu6XMBBfCPKFch3Wj0aRX18jYGIDvHSRksO16P04xaekzRINf7BDyEk
-	 bOe1CKZDUGTvf2eCM50SHbgSL79CrZUEYkm4geGBjscqV0GNiE17Kaewgcfq1jH2j/
-	 Rx5H/UvGwxmDg==
-Date: Mon, 9 Sep 2024 08:27:36 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: Simon Horman <horms@kernel.org>, kernel@pengutronix.de,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Heiko Stuebner <heiko@sntech.de>, linux-can@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] can: rockchip_canfd: fix return type of
- rkcanfd_start_xmit()
-Message-ID: <20240909152736.GA1406978@thelio-3990X>
-References: <20240906-rockchip-canfd-wifpts-v1-1-b1398da865b7@kernel.org>
- <20240909084448.GU2097826@kernel.org>
- <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
+	s=k20201202; t=1725898567;
+	bh=eovoPXc7aEQEHLLu97GHHuv31EVw6+SkozIo9mYcwDA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XmunNZBKk0u7X9JO4E1WQ/4X0VG0TkfK0N6vHscKClCYOjVunXQnRmMTtoFJ5iNSh
+	 6eKpY7oTjFi4b/ViBXr/NEBRxQG+wZw3ACCn2VTrjE26I8eJipmpBwMyGHxNxjTzUs
+	 zhaYxA2ipCvv+Fiqwjdc+zCIsu3iIScprCTMMjF8DvuEfn77OGA0kTehiNCRCfGjav
+	 nFMdo5vl8gpa/bNhTPMniN5rZbwhOVdQIzBi0h8I6NPHHHQRdA2ghPRI/zyeONDzYL
+	 RQlG61QrQRPVNigzpE+LC6/4cnl0xAsq6uDDnSHZH0o5TcfXtCagkuA3EiBU4ZDRa4
+	 nteDA9GHsnHMQ==
+From: Will Deacon <will@kernel.org>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	patches@lists.linux.dev,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH v4 0/8] Tidy some minor things in the stream table/cd table area
+Date: Mon,  9 Sep 2024 17:15:46 +0100
+Message-Id: <172589323615.3415769.3962371038080294067.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <0-v4-6416877274e1+1af-smmuv3_tidy_jgg@nvidia.com>
+References: <0-v4-6416877274e1+1af-smmuv3_tidy_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Marc,
+On Fri, 06 Sep 2024 12:47:47 -0300, Jason Gunthorpe wrote:
+> Will pointed out that two places referring to the CD/STE struct did not
+> get the new types. While auditing this code a few more oddities were
+> noticed. Based on a feedback from Mostafa and Nicolin a few more things
+> were fixed up too
+> 
+> - Use types for all the HW structures everywhere even for the L1
+>   descriptors that are just a single 8 bytes. This helps with clarity of
+>   what everthing is pointing at
+> - Use indexing helpers for the STE/CD two level calculations
+> - Use sizeof(struct X) instead of open coded math on constants. The sizeof
+>   naturally follows the type of the related variable in almost all cases
+> - Remove redundant dma_addr_t's and save some memory
+> - Remove redundant devm usage
+> - Use the modern rbtree API
+> 
+> [...]
 
-On Mon, Sep 09, 2024 at 10:57:06AM +0200, Marc Kleine-Budde wrote:
-> On 09.09.2024 09:44:48, Simon Horman wrote:
-> > On Fri, Sep 06, 2024 at 01:26:41PM -0700, Nathan Chancellor wrote:
-> > >   drivers/net/can/rockchip/rockchip_canfd-core.c:770:20: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-> > >     770 |         .ndo_start_xmit = rkcanfd_start_xmit,
-> > >         |                           ^~~~~~~~~~~~~~~~~~
-...
-> FTR: the default clang in Debian unstable, clang-16.0.6 doesn't support
-> this. With clang-20 from experimental it works, haven't checked older
-> versions, though.
+Thanks Jason, I like the look of this a lot more now.
 
-Hmmm, interesting, the patch that added
--Wincompatible-function-pointer-types-strict was added in LLVM 16, so it
-should work for 16.0.6...
+Applied to will (for-joerg/arm-smmu/updates), thanks!
 
-https://github.com/llvm/llvm-project/commits/41ce74e6e983f523d44d3a80be5ae778c35df85a
-
-I don't have easy access to Debian at the moment so I can double check
-it later. I would like to get this turned on for the whole kernel soon
-but there is still one subsystem that has several instances that I have
-not been able to workaround at this point so I've just stuck to adding
-it via KCFLAGS when testing.
+[1/8] iommu/arm-smmu-v3: Add arm_smmu_strtab_l1/2_idx()
+      https://git.kernel.org/will/c/ce410410f1a7
+[2/8] iommu/arm-smmu-v3: Add types for each level of the 2 level stream table
+      https://git.kernel.org/will/c/abb4f9d323a8
+[3/8] iommu/arm-smmu-v3: Reorganize struct arm_smmu_strtab_cfg
+      https://git.kernel.org/will/c/85196f54743d
+[4/8] iommu/arm-smmu-v3: Remove strtab_base/cfg
+      https://git.kernel.org/will/c/8c153ef95697
+[5/8] iommu/arm-smmu-v3: Do not use devm for the cd table allocations
+      https://git.kernel.org/will/c/47b2de35cab2
+[6/8] iommu/arm-smmu-v3: Shrink the cdtab l1_desc array
+      https://git.kernel.org/will/c/c0a25a96dee9
+[7/8] iommu/arm-smmu-v3: Add types for each level of the CD table
+      https://git.kernel.org/will/c/7c567eb1e1d2
+[8/8] iommu/arm-smmu-v3: Reorganize struct arm_smmu_ctx_desc_cfg
+      https://git.kernel.org/will/c/e3b1be2e73db
 
 Cheers,
-Nathan
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
