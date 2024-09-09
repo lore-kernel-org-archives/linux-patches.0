@@ -1,126 +1,91 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322AE1B1D74
-	for <patches@lists.linux.dev>; Mon,  9 Sep 2024 08:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19591B253B;
+	Mon,  9 Sep 2024 14:35:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725872244; cv=none; b=Zgc+b5Fm4UauwDvyAq/vnKj5dx7wbRTki8ySob2yRYLI8dKLJv4Y+PuZVbK9K8DQJxL0ACvXKPaX9ITXs4YeG6oqCX8zhL1K0IdPIAW40gsY+CDQPicgSv7exJ/P/RFwU3urza/aIJ3dF+wDEctcpgXZRUThxQ3RUiqq3kXSEqE=
+	t=1725892551; cv=none; b=RROIkZ7cPot5Ub0ZyAgtaeiNjt4Zzsa66UTJr8DE8dAqCem5LLDQutPbsRLO15+B23BmKwaJG99znSGEyZO7pYJ5PbKFCJe3zW+8d45X3AflwJMRzF8RK9O/dSBv6hGI7IuIF5nRlIVfZygDI9Y/26Er4PgmKX10i6x0Y+KmW70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725872244; c=relaxed/simple;
-	bh=8xxXr+ro/u+DzU/FZBGhGxfHBvikVGquq4JzD94W42s=;
+	s=arc-20240116; t=1725892551; c=relaxed/simple;
+	bh=FZKxzFRyz9Op8EvuEP3cZ3bXtDG2HWdMHdwMe2g59vw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bFbO17vKn0g4Hy9rUjW4kU4Or4bMUh2om1J+9uM/9ve2ekYZa0jM3FnatU/i07YZzY1ZH62ds6NGoX1AZgXWoyiWLzmSPOFuV8OZcMIidr1M7l+/oh6WVsE2dGqSOwCwZp/NCI83jMr6yxTVCtz7hh0LOFQ3ZZgCJIlwnTc7k+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1snaCq-0004Ic-JM; Mon, 09 Sep 2024 10:57:08 +0200
-Received: from [2a0a:edc0:0:b01:1d::7b] (helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1snaCo-006btk-VB; Mon, 09 Sep 2024 10:57:06 +0200
-Received: from pengutronix.de (pd9e595f8.dip0.t-ipconnect.de [217.229.149.248])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 97BCB3366D4;
-	Mon, 09 Sep 2024 08:57:06 +0000 (UTC)
-Date: Mon, 9 Sep 2024 10:57:06 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Simon Horman <horms@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, kernel@pengutronix.de, 
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Heiko Stuebner <heiko@sntech.de>, linux-can@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-rockchip@lists.infradead.org, llvm@lists.linux.dev, patches@lists.linux.dev
+	 Content-Type:Content-Disposition:In-Reply-To; b=eI89YzlqKPco/tn6esbodzduIpvOGGaVRR+u7VsGS/kvjlHEtHOFGoLrfx28Xv1QTLHathTlGiO9ewI0q9XfnTeNdFeNgZxG8pNYLUoQuu4IGtsQiGjtDDLoYvSNOZ0N2Stv6hdtmucKOPNAKT4r/l/r3R+cIJ4gsxWqmNuyKKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s1v7sjN3; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s1v7sjN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70D5C4CEC5;
+	Mon,  9 Sep 2024 14:35:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725892551;
+	bh=FZKxzFRyz9Op8EvuEP3cZ3bXtDG2HWdMHdwMe2g59vw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=s1v7sjN3LNrEZl6o3gbfDHJL/srLbCjmQhFTT9iKdRjFei0qYil6a8RA/j709kphV
+	 5dt/5lLGlU4JUEf9HDqXDA13POjv3B1tsyQkm6HxD+ogSgqSlk2+fiDnRPWYcae0le
+	 E2/MgNhSOdJxBj5n/kowlKW1eAEzlfAhR66Qb+Qjalo8Nh1XuS01FvByl1Gv6CVO+b
+	 cBcNQMbEgp5Am40Xxh57lCui4kSPYtYgztxxydnF+MrtWp6rmQZM8HRjdAeoJKeyWz
+	 xkIwGRbL4dHCn0baIOZLiV4oILm1sVaSbi3zL6AqG79UPOnkNp2EDRKThVLbpQr2Bf
+	 I2TFUukUj/OqQ==
+Date: Mon, 9 Sep 2024 15:35:46 +0100
+From: Simon Horman <horms@kernel.org>
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Nathan Chancellor <nathan@kernel.org>, kernel@pengutronix.de,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Heiko Stuebner <heiko@sntech.de>, linux-can@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
 Subject: Re: [PATCH] can: rockchip_canfd: fix return type of
  rkcanfd_start_xmit()
-Message-ID: <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
+Message-ID: <20240909143546.GX2097826@kernel.org>
 References: <20240906-rockchip-canfd-wifpts-v1-1-b1398da865b7@kernel.org>
  <20240909084448.GU2097826@kernel.org>
+ <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fuepnusvih4poru2"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240909084448.GU2097826@kernel.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: patches@lists.linux.dev
+In-Reply-To: <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
+
+On Mon, Sep 09, 2024 at 10:57:06AM +0200, Marc Kleine-Budde wrote:
+> On 09.09.2024 09:44:48, Simon Horman wrote:
+> > On Fri, Sep 06, 2024 at 01:26:41PM -0700, Nathan Chancellor wrote:
+> > > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> > > indirect call targets are validated against the expected function
+> > > pointer prototype to make sure the call target is valid to help mitigate
+> > > ROP attacks. If they are not identical, there is a failure at run time,
+> > > which manifests as either a kernel panic or thread getting killed. A
+> > > warning in clang aims to catch these at compile time, which reveals:
+> > > 
+> > >   drivers/net/can/rockchip/rockchip_canfd-core.c:770:20: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+> > >     770 |         .ndo_start_xmit = rkcanfd_start_xmit,
+> > >         |                           ^~~~~~~~~~~~~~~~~~
+> > > 
+> > > ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+> > > 'netdev_tx_t', not 'int' (although the types are ABI compatible). Adjust
+> > > the return type of rkcanfd_start_xmit() to match the prototype's to
+> > > resolve the warning.
+> > > 
+> > > Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
+> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > 
+> > Thanks, I was able to reproduce this problem at build time
+> > and that your patch addresses it.
+> 
+> FTR: the default clang in Debian unstable, clang-16.0.6 doesn't support
+> this. With clang-20 from experimental it works, haven't checked older
+> versions, though.
+
+FTR: I checked using 18.1.8 from here [1][2].
+
+[1] https://mirrors.edge.kernel.org/pub/tools/llvm/
+[2] https://mirrors.edge.kernel.org/pub/tools/llvm/files/
 
 
---fuepnusvih4poru2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 09.09.2024 09:44:48, Simon Horman wrote:
-> On Fri, Sep 06, 2024 at 01:26:41PM -0700, Nathan Chancellor wrote:
-> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> > indirect call targets are validated against the expected function
-> > pointer prototype to make sure the call target is valid to help mitigate
-> > ROP attacks. If they are not identical, there is a failure at run time,
-> > which manifests as either a kernel panic or thread getting killed. A
-> > warning in clang aims to catch these at compile time, which reveals:
-> >=20
-> >   drivers/net/can/rockchip/rockchip_canfd-core.c:770:20: error: incompa=
-tible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *=
-, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct n=
-et_device *)') with an expression of type 'int (struct sk_buff *, struct ne=
-t_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-> >     770 |         .ndo_start_xmit =3D rkcanfd_start_xmit,
-> >         |                           ^~~~~~~~~~~~~~~~~~
-> >=20
-> > ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-> > 'netdev_tx_t', not 'int' (although the types are ABI compatible). Adjust
-> > the return type of rkcanfd_start_xmit() to match the prototype's to
-> > resolve the warning.
-> >=20
-> > Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-=
-FD controller")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->=20
-> Thanks, I was able to reproduce this problem at build time
-> and that your patch addresses it.
-
-FTR: the default clang in Debian unstable, clang-16.0.6 doesn't support
-this. With clang-20 from experimental it works, haven't checked older
-versions, though.
-
-regards,
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---fuepnusvih4poru2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUEC6huC2BN0pvD5fKDiiPnotvG8FAmbeuF8ACgkQKDiiPnot
-vG+3gQf+MluezEfY084GfE16SOshu37NwV1Ignu8Goqy9G7jmMndcoundvwxiosq
-9Hd/6ILhI4GzWIF4a7UKOP6e+QPHz3eJ4V2Mgbs13QYtoLDf1nT+h+14MkiIMipK
-s6z9Ee31ptiZbn2raC7J6f8Z72+F0iysurkx39ZT8vt7Okq70pBQUN+HzPgH4Ryv
-MPcMpvh6mRaSQyC3zUuTnO1fW6hTMQGhOjJ4/TH5yaQvSo2N4qJExjM05X6Zz7lx
-uXt78y+/LA7U3Ew4fXyEhStgIxPlFalFcR47lXQzuVBmIRiV3Z44PONYJHPjsS8m
-lUd5S51lrVQG5sCik6LNGoQvZst9Yg==
-=JBly
------END PGP SIGNATURE-----
-
---fuepnusvih4poru2--
