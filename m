@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19591B253B;
-	Mon,  9 Sep 2024 14:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C571CF9B;
+	Mon,  9 Sep 2024 15:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725892551; cv=none; b=RROIkZ7cPot5Ub0ZyAgtaeiNjt4Zzsa66UTJr8DE8dAqCem5LLDQutPbsRLO15+B23BmKwaJG99znSGEyZO7pYJ5PbKFCJe3zW+8d45X3AflwJMRzF8RK9O/dSBv6hGI7IuIF5nRlIVfZygDI9Y/26Er4PgmKX10i6x0Y+KmW70=
+	t=1725894577; cv=none; b=uGdgq7tAuSFkA928gYYfH8ZCJqXLtd123ynCYBvdJh1u9iWWdxEX6fv6ntfljg9C+HvmSHS3UEgCcszM0UTltZo3TL3Ftcb/o8Oe/g8cq3RyNDQa1hGlKo3hPsyfYHsZiq4kVaS+ix3xsduOdNDGLOSPDW2OAoXQ7l2e7GBlFKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725892551; c=relaxed/simple;
-	bh=FZKxzFRyz9Op8EvuEP3cZ3bXtDG2HWdMHdwMe2g59vw=;
+	s=arc-20240116; t=1725894577; c=relaxed/simple;
+	bh=Kc0K8mFNm7XDv1OvvGn2fVjEjW+2Hx4OIZ1+QD2rSd0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eI89YzlqKPco/tn6esbodzduIpvOGGaVRR+u7VsGS/kvjlHEtHOFGoLrfx28Xv1QTLHathTlGiO9ewI0q9XfnTeNdFeNgZxG8pNYLUoQuu4IGtsQiGjtDDLoYvSNOZ0N2Stv6hdtmucKOPNAKT4r/l/r3R+cIJ4gsxWqmNuyKKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s1v7sjN3; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=uagIdlSsuY9E5gwdXA9sMD+RLZMrik8sQk/m+8nEdjsGFICMmd10SdhXrRghsjzgQ7jL+0gomWxHDv0xQmFTxyaRjQFIHNK2wnD+NgJeudLl5yvRjgA/f6e9/616nhjsQONyKEUFVVWu5ZuVyI/9C8u+eXx9gCNKzAhFwVoU0FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IpSy66SG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s1v7sjN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70D5C4CEC5;
-	Mon,  9 Sep 2024 14:35:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IpSy66SG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23B2C4CECF;
+	Mon,  9 Sep 2024 15:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725892551;
-	bh=FZKxzFRyz9Op8EvuEP3cZ3bXtDG2HWdMHdwMe2g59vw=;
+	s=k20201202; t=1725894577;
+	bh=Kc0K8mFNm7XDv1OvvGn2fVjEjW+2Hx4OIZ1+QD2rSd0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s1v7sjN3LNrEZl6o3gbfDHJL/srLbCjmQhFTT9iKdRjFei0qYil6a8RA/j709kphV
-	 5dt/5lLGlU4JUEf9HDqXDA13POjv3B1tsyQkm6HxD+ogSgqSlk2+fiDnRPWYcae0le
-	 E2/MgNhSOdJxBj5n/kowlKW1eAEzlfAhR66Qb+Qjalo8Nh1XuS01FvByl1Gv6CVO+b
-	 cBcNQMbEgp5Am40Xxh57lCui4kSPYtYgztxxydnF+MrtWp6rmQZM8HRjdAeoJKeyWz
-	 xkIwGRbL4dHCn0baIOZLiV4oILm1sVaSbi3zL6AqG79UPOnkNp2EDRKThVLbpQr2Bf
-	 I2TFUukUj/OqQ==
-Date: Mon, 9 Sep 2024 15:35:46 +0100
-From: Simon Horman <horms@kernel.org>
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: Nathan Chancellor <nathan@kernel.org>, kernel@pengutronix.de,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Heiko Stuebner <heiko@sntech.de>, linux-can@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] can: rockchip_canfd: fix return type of
- rkcanfd_start_xmit()
-Message-ID: <20240909143546.GX2097826@kernel.org>
-References: <20240906-rockchip-canfd-wifpts-v1-1-b1398da865b7@kernel.org>
- <20240909084448.GU2097826@kernel.org>
- <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
+	b=IpSy66SGkZdNpeWZLl1Geezk+PGJLqZlE75pHTx6CMxZd8r0J5bJNLyqs81CpGDgz
+	 GimC+5Ai391bF3VUuc9GveHbzgsZsfxMqp1xCr5wv5gQ8sAowRTAardJ/QDZWPkio5
+	 vzrTU0wEzjUEvf6oUvqIqUukWYxYxfU61m13VnLBNXGxD4kQFcFO/ZJIkb/L6adpfl
+	 DnY3MVEdTlXl2jCjZvVabvvYwruRQ6ZxvFQMMu/vcPpBuWNWgpxQjFDexgRzY9tKEO
+	 uyEzUSo7zkKvWQx5kivp3xbrnoSeh3CkJnfP/2PBw4R6LZx5Qn+DyCLEi39ToNL3w1
+	 5daJ2d58GGPBg==
+Date: Mon, 9 Sep 2024 08:09:34 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Florian Westphal <fw@strlen.de>
+Cc: netdev@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH ipsec-next v2] xfrm: policy: Restore dir assignments in
+ xfrm_hash_rebuild()
+Message-ID: <20240909150934.GA1111756@thelio-3990X>
+References: <20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-v2-1-1cf8958f6e8e@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,40 +44,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240909-arcane-practical-petrel-015d24-mkl@pengutronix.de>
+In-Reply-To: <20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-v2-1-1cf8958f6e8e@kernel.org>
 
-On Mon, Sep 09, 2024 at 10:57:06AM +0200, Marc Kleine-Budde wrote:
-> On 09.09.2024 09:44:48, Simon Horman wrote:
-> > On Fri, Sep 06, 2024 at 01:26:41PM -0700, Nathan Chancellor wrote:
-> > > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> > > indirect call targets are validated against the expected function
-> > > pointer prototype to make sure the call target is valid to help mitigate
-> > > ROP attacks. If they are not identical, there is a failure at run time,
-> > > which manifests as either a kernel panic or thread getting killed. A
-> > > warning in clang aims to catch these at compile time, which reveals:
-> > > 
-> > >   drivers/net/can/rockchip/rockchip_canfd-core.c:770:20: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-> > >     770 |         .ndo_start_xmit = rkcanfd_start_xmit,
-> > >         |                           ^~~~~~~~~~~~~~~~~~
-> > > 
-> > > ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-> > > 'netdev_tx_t', not 'int' (although the types are ABI compatible). Adjust
-> > > the return type of rkcanfd_start_xmit() to match the prototype's to
-> > > resolve the warning.
-> > > 
-> > > Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
-> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > 
-> > Thanks, I was able to reproduce this problem at build time
-> > and that your patch addresses it.
+Ping? This is still seen on next-20240909.
+
+On Thu, Aug 29, 2024 at 11:14:54AM -0700, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR):
 > 
-> FTR: the default clang in Debian unstable, clang-16.0.6 doesn't support
-> this. With clang-20 from experimental it works, haven't checked older
-> versions, though.
-
-FTR: I checked using 18.1.8 from here [1][2].
-
-[1] https://mirrors.edge.kernel.org/pub/tools/llvm/
-[2] https://mirrors.edge.kernel.org/pub/tools/llvm/files/
-
-
+>   net/xfrm/xfrm_policy.c:1286:8: error: variable 'dir' is uninitialized when used here [-Werror,-Wuninitialized]
+>    1286 |                 if ((dir & XFRM_POLICY_MASK) == XFRM_POLICY_OUT) {
+>         |                      ^~~
+>   net/xfrm/xfrm_policy.c:1257:9: note: initialize the variable 'dir' to silence this warning
+>    1257 |         int dir;
+>         |                ^
+>         |                 = 0
+>   1 error generated.
+> 
+> A recent refactoring removed some assignments to dir because
+> xfrm_policy_is_dead_or_sk() has a dir assignment in it. However, dir is
+> used elsewhere in xfrm_hash_rebuild(), including within loops where it
+> needs to be reloaded for each policy. Restore the assignments before the
+> first use of dir to fix the warning and ensure dir is properly
+> initialized throughout the function.
+> 
+> Fixes: 08c2182cf0b4 ("xfrm: policy: use recently added helper in more places")
+> Acked-by: Florian Westphal <fw@strlen.de>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Changes in v2:
+> - Restore another dir assignment in
+>     list_for_each_entry_reverse(policy, ...
+>   loop, necessitating a value reload to avoid a stale value (thanks to
+>   Florian for the review).
+> - Reword commit message slightly based on above change.
+> - Pick up Florian's ack.
+> - Add 'ipsec-next' subject prefix.
+> - Link to v1: https://lore.kernel.org/r/20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-v1-1-a200865497b1@kernel.org
+> ---
+>  net/xfrm/xfrm_policy.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+> index 6336baa8a93c..63890c0628c4 100644
+> --- a/net/xfrm/xfrm_policy.c
+> +++ b/net/xfrm/xfrm_policy.c
+> @@ -1283,6 +1283,7 @@ static void xfrm_hash_rebuild(struct work_struct *work)
+>  		if (xfrm_policy_is_dead_or_sk(policy))
+>  			continue;
+>  
+> +		dir = xfrm_policy_id2dir(policy->index);
+>  		if ((dir & XFRM_POLICY_MASK) == XFRM_POLICY_OUT) {
+>  			if (policy->family == AF_INET) {
+>  				dbits = rbits4;
+> @@ -1337,6 +1338,7 @@ static void xfrm_hash_rebuild(struct work_struct *work)
+>  		hlist_del_rcu(&policy->bydst);
+>  
+>  		newpos = NULL;
+> +		dir = xfrm_policy_id2dir(policy->index);
+>  		chain = policy_hash_bysel(net, &policy->selector,
+>  					  policy->family, dir);
+>  
+> 
+> ---
+> base-commit: 17163f23678c7599e40758d7b96f68e3f3f2ea15
+> change-id: 20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-749ca2264581
+> 
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
+> 
