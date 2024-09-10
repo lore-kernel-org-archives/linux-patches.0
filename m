@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA8718B48A;
-	Tue, 10 Sep 2024 10:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4351191476;
+	Tue, 10 Sep 2024 10:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963065; cv=none; b=CDFu9btFjtlLt0bN9xUeojW/R4/9BDp9SbCvoJ6OZTM8X3wae6Hi0XKhQNfKN4fj8Wcy3SE+3EHacODIJyOx8nrf8NHuDP8f1clVyfxYTqgEmYrwwF0WpVAIoFx7lFPwM9ueEk6DceF0TFHd4Zxfebmx/xWktzkya8DbclGq5Ek=
+	t=1725963068; cv=none; b=swspum6PMga17Rgm9rOTZgw6bPIzvWIBoek9dE+BpErzQjQgvKtd2WSMj1+I58MoiAicqR5PMmv1yPu+SmHJOxdJ3lXUcNpbpzAVNpHI0c2SJj17kWHIXTYu3xYfw2yTwfIJnVU9oL/0ZrjdnxwasSI6lKWm8Mk6VYFMPcHFrGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963065; c=relaxed/simple;
-	bh=luO4wLotB+G5ZPncl8n3wvedJ7ut0zW6Kx+rDvCKA8g=;
+	s=arc-20240116; t=1725963068; c=relaxed/simple;
+	bh=c5Xizq0BHzUpJb2WHIbr0ijK9hxcANbAHWlaHmYnK7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQYZ/OXfsxlHESIs0vTm4bD0ekcX/syEW5xHO7dSWLoopc2RUqc4pfMbqalHDX6kE3Kl2fPcwacdFluXmKD84+p708Q6A0i3bqenpJ7VIRWfABFAiD5aHWzlYPYNJyJ5t1qTMFBe+02RTTSALZ2R0n4F7bZH0I7vEpUW5TiVKOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCeoGDZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2H7/eNu0O5lEVdWe/N/D2V2lMvQoLJ/ZbRDJ9UjPsIxJaPEhBj7/vDYTC8fIkkg0QqSL+AAKfMsuwu0uY6k8cKK1aJPk9vSJwr02Tu/8sxrCKqRe9xLHlBOjZl8p++MZe4ZJd5DPXvcYYTgKhiJHvu3wCzy/mCNw3AkOEGbNOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPVJ5BUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCeoGDZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D7FC4CEC3;
-	Tue, 10 Sep 2024 10:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPVJ5BUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109EBC4CEC3;
+	Tue, 10 Sep 2024 10:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963065;
-	bh=luO4wLotB+G5ZPncl8n3wvedJ7ut0zW6Kx+rDvCKA8g=;
+	s=korg; t=1725963068;
+	bh=c5Xizq0BHzUpJb2WHIbr0ijK9hxcANbAHWlaHmYnK7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCeoGDZYRLl22ZRomR40wijLzJ3/PzijkdKiB7Q9wrYN+ZGpQgjgW4pQ4D9SdwlAC
-	 pwtTFrc0IlFqe0hODB7P6Jh+SqFd4hzqK5yBKq4q1TU9LeL3W33Q+vAbgoKnqjUt4c
-	 ZQVFFvoKegB9cCa4Uxycy03Y+R1FTrGsmk+qJ8Ek=
+	b=yPVJ5BUpxW/h5Zt0PY4WVRgU6TKYpisLPpi4HYtddCe3FI8spFrKrUmeXeKwshCF+
+	 v7LDEskrGGCDsD5b+b5/tdgjvg1vQVrpVG9RbkBF8Twm+WtvjXRbbCqf1FRslLLO63
+	 s0xgZgqfilQWmSSvqc7kt/K5RUtMfehcVQwIV8fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	syzbot+24ac24ff58dc5b0d26b9@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/192] Squashfs: sanity check symbolic link size
-Date: Tue, 10 Sep 2024 11:32:28 +0200
-Message-ID: <20240910092603.137840846@linuxfoundation.org>
+Subject: [PATCH 6.1 107/192] smp: Add missing destroy_work_on_stack() call in smp_call_on_cpu()
+Date: Tue, 10 Sep 2024 11:32:11 +0200
+Message-ID: <20240910092602.400857587@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -53,66 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit 810ee43d9cd245d138a2733d87a24858a23f577d ]
+[ Upstream commit 77aeb1b685f9db73d276bad4bb30d48505a6fd23 ]
 
-Syzkiller reports a "KMSAN: uninit-value in pick_link" bug.
+For CONFIG_DEBUG_OBJECTS_WORK=y kernels sscs.work defined by
+INIT_WORK_ONSTACK() is initialized by debug_object_init_on_stack() for
+the debug check in __init_work() to work correctly.
 
-This is caused by an uninitialised page, which is ultimately caused
-by a corrupted symbolic link size read from disk.
+But this lacks the counterpart to remove the tracked object from debug
+objects again, which will cause a debug object warning once the stack is
+freed.
 
-The reason why the corrupted symlink size causes an uninitialised
-page is due to the following sequence of events:
+Add the missing destroy_work_on_stack() invocation to cure that.
 
-1. squashfs_read_inode() is called to read the symbolic
-   link from disk.  This assigns the corrupted value
-   3875536935 to inode->i_size.
+[ tglx: Massaged changelog ]
 
-2. Later squashfs_symlink_read_folio() is called, which assigns
-   this corrupted value to the length variable, which being a
-   signed int, overflows producing a negative number.
-
-3. The following loop that fills in the page contents checks that
-   the copied bytes is less than length, which being negative means
-   the loop is skipped, producing an uninitialised page.
-
-This patch adds a sanity check which checks that the symbolic
-link size is not larger than expected.
-
---
-
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Link: https://lore.kernel.org/r/20240811232821.13903-1-phillip@squashfs.org.uk
-Reported-by: Lizhi Xu <lizhi.xu@windriver.com>
-Reported-by: syzbot+24ac24ff58dc5b0d26b9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a90e8c061e86a76b@google.com/
-V2: fix spelling mistake.
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/20240704065213.13559-1-qiang.zhang1211@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/inode.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/smp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/squashfs/inode.c b/fs/squashfs/inode.c
-index 24463145b351..f31649080a88 100644
---- a/fs/squashfs/inode.c
-+++ b/fs/squashfs/inode.c
-@@ -276,8 +276,13 @@ int squashfs_read_inode(struct inode *inode, long long ino)
- 		if (err < 0)
- 			goto failed_read;
+diff --git a/kernel/smp.c b/kernel/smp.c
+index 63e466bb6b03..0acd433afa7b 100644
+--- a/kernel/smp.c
++++ b/kernel/smp.c
+@@ -1262,6 +1262,7 @@ int smp_call_on_cpu(unsigned int cpu, int (*func)(void *), void *par, bool phys)
  
--		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
- 		inode->i_size = le32_to_cpu(sqsh_ino->symlink_size);
-+		if (inode->i_size > PAGE_SIZE) {
-+			ERROR("Corrupted symlink\n");
-+			return -EINVAL;
-+		}
-+
-+		set_nlink(inode, le32_to_cpu(sqsh_ino->nlink));
- 		inode->i_op = &squashfs_symlink_inode_ops;
- 		inode_nohighmem(inode);
- 		inode->i_data.a_ops = &squashfs_symlink_aops;
+ 	queue_work_on(cpu, system_wq, &sscs.work);
+ 	wait_for_completion(&sscs.done);
++	destroy_work_on_stack(&sscs.work);
+ 
+ 	return sscs.ret;
+ }
 -- 
 2.43.0
 
