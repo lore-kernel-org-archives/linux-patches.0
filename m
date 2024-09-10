@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C943114D431;
-	Tue, 10 Sep 2024 10:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038A81DA4C;
+	Tue, 10 Sep 2024 10:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965166; cv=none; b=tX6nLE/uFo9IwSHWUARzgXzyMmok2Oiw4XOE+6B4+6zJvOBSFdWqxN5AGBxaHOENX5+IIFOwk8LS/WRZVJR3TQFbY3F2EqNbSwON216rSG0hBHhKEpA4yb09rvI4s8rtWeEJd0ocGhwUc/lvkeHyJKF9ee/8ye2bYg79Zq+QE4E=
+	t=1725965170; cv=none; b=usWU8dUmKk0bAyCdWcyEcRPqLlTQaXa8ngIRRdmBUo29M4zx/NwhUKhtnpgkuRTR9F1QiKxqUmlqk0gISn2tlPhFVllwGfuX+FqFnR3a4g4t2dRojnmD29oOxYRJoeuarzYws/L/wS1iKL+FjfOEGejEyfOshAfrrq5W7hWHSE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965166; c=relaxed/simple;
-	bh=pz1/8jgII0rdOeFXU6BrWQruLhm4L+uYVSuOeQKMhiY=;
+	s=arc-20240116; t=1725965170; c=relaxed/simple;
+	bh=kfsLZCpi+g9tfYhZl+DIALaUtZDF+yAV4M/J2kDMyJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWjDO2FEVf+dWhy/3k48IN1Am1P/gOdbJK8EBPAkfNELQKs5HSAG4rX3glE7Tue4Ug4+D5GSbenfmtyfVHwLvxomTd5ZJeBxx/XlhHi9RvQLgcPoB8rE9qbaIJJLoQa4joR+c0VTzyWgWZeMYLqehguBafcMdgL80QddjZ0pGco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQJm9dSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g2wZxMPVuauL0+6BwINw2vflRSdW2lGuSym1R9HPDr1FW4SM+sytPr/eYaKMc7SIEzyJrB6egYecRd5aGs/BtWeBGgOQ9rvqzZGP62IIJUI6TKkGGEgHdv+l82dFkk3kwFMPj0Xx5YloxxSwkTNxan73UMWd+gzI1NV579p+raA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tR3aq1m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQJm9dSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC5DC4CEC3;
-	Tue, 10 Sep 2024 10:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tR3aq1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C54C4CEC3;
+	Tue, 10 Sep 2024 10:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965166;
-	bh=pz1/8jgII0rdOeFXU6BrWQruLhm4L+uYVSuOeQKMhiY=;
+	s=korg; t=1725965169;
+	bh=kfsLZCpi+g9tfYhZl+DIALaUtZDF+yAV4M/J2kDMyJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQJm9dSmdRqM0NC1138PEaCurf7hlMSdHEa3U5JcMMFcxog6Y+D5Qo7HdaTcQ8ngs
-	 S4VytOecVgXEUK+Pd1oFKkpG52+sqJsww85a5IJswwbMVgIUKQXF8IfbqTWCgC0Iuo
-	 p2/bbld9x6uJ3XDFqqGAOprSbiamllDZF5tfYu1w=
+	b=0tR3aq1mJwOhMzs2bckUCt9FJpMUvClun5oIG83xbU/jKvaiEZTHtYMQLdHzR4WgF
+	 LWd6WiYiU6BBVcBMqSwrbXZIJ7T1THe3h72MLd/r4orVNCxclHDeGcsr/kaW905Kv3
+	 idFtuC8ZkboMy4hrrR2zYeZnkElVOkIjXVkQO5k4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Martelli <matteomartelli3@gmail.com>,
+	Guillaume Stols <gstols@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 160/186] iio: fix scale application in iio_convert_raw_to_processed_unlocked
-Date: Tue, 10 Sep 2024 11:34:15 +0200
-Message-ID: <20240910092601.207346481@linuxfoundation.org>
+Subject: [PATCH 5.10 161/186] iio: adc: ad7606: remove frstdata check for serial mode
+Date: Tue, 10 Sep 2024 11:34:16 +0200
+Message-ID: <20240910092601.246165284@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,48 +52,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matteo Martelli <matteomartelli3@gmail.com>
+From: Guillaume Stols <gstols@baylibre.com>
 
-commit 8a3dcc970dc57b358c8db2702447bf0af4e0d83a upstream.
+commit 90826e08468ba7fb35d8b39645b22d9e80004afe upstream.
 
-When the scale_type is IIO_VAL_INT_PLUS_MICRO or IIO_VAL_INT_PLUS_NANO
-the scale passed as argument is only applied to the fractional part of
-the value. Fix it by also multiplying the integer part by the scale
-provided.
+The current implementation attempts to recover from an eventual glitch
+in the clock by checking frstdata state after reading the first
+channel's sample: If frstdata is low, it will reset the chip and
+return -EIO.
 
-Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
-Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
-Link: https://patch.msgid.link/20240730-iio-fix-scale-v1-1-6246638c8daa@gmail.com
+This will only work in parallel mode, where frstdata pin is set low
+after the 2nd sample read starts.
+
+For the serial mode, according to the datasheet, "The FRSTDATA output
+returns to a logic low following the 16th SCLK falling edge.", thus
+after the Xth pulse, X being the number of bits in a sample, the check
+will always be true, and the driver will not work at all in serial
+mode if frstdata(optional) is defined in the devicetree as it will
+reset the chip, and return -EIO every time read_sample is called.
+
+Hence, this check must be removed for serial mode.
+
+Fixes: b9618c0cacd7 ("staging: IIO: ADC: New driver for AD7606/AD7606-6/AD7606-4")
+Signed-off-by: Guillaume Stols <gstols@baylibre.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20240702-cleanup-ad7606-v3-1-18d5ea18770e@baylibre.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/inkern.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7606.c     |   28 +------------------------
+ drivers/iio/adc/ad7606.h     |    2 +
+ drivers/iio/adc/ad7606_par.c |   48 ++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 49 insertions(+), 29 deletions(-)
 
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -610,17 +610,17 @@ static int iio_convert_raw_to_processed_
- 		break;
- 	case IIO_VAL_INT_PLUS_MICRO:
- 		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val;
-+			*processed = -raw64 * scale_val * scale;
- 		else
--			*processed = raw64 * scale_val;
-+			*processed = raw64 * scale_val * scale;
- 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
- 				      1000000LL);
- 		break;
- 	case IIO_VAL_INT_PLUS_NANO:
- 		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val;
-+			*processed = -raw64 * scale_val * scale;
- 		else
--			*processed = raw64 * scale_val;
-+			*processed = raw64 * scale_val * scale;
- 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
- 				      1000000000LL);
- 		break;
+--- a/drivers/iio/adc/ad7606.c
++++ b/drivers/iio/adc/ad7606.c
+@@ -48,7 +48,7 @@ static const unsigned int ad7616_oversam
+ 	1, 2, 4, 8, 16, 32, 64, 128,
+ };
+ 
+-static int ad7606_reset(struct ad7606_state *st)
++int ad7606_reset(struct ad7606_state *st)
+ {
+ 	if (st->gpio_reset) {
+ 		gpiod_set_value(st->gpio_reset, 1);
+@@ -59,6 +59,7 @@ static int ad7606_reset(struct ad7606_st
+ 
+ 	return -ENODEV;
+ }
++EXPORT_SYMBOL_NS_GPL(ad7606_reset, IIO_AD7606);
+ 
+ static int ad7606_reg_access(struct iio_dev *indio_dev,
+ 			     unsigned int reg,
+@@ -87,31 +88,6 @@ static int ad7606_read_samples(struct ad
+ {
+ 	unsigned int num = st->chip_info->num_channels - 1;
+ 	u16 *data = st->data;
+-	int ret;
+-
+-	/*
+-	 * The frstdata signal is set to high while and after reading the sample
+-	 * of the first channel and low for all other channels. This can be used
+-	 * to check that the incoming data is correctly aligned. During normal
+-	 * operation the data should never become unaligned, but some glitch or
+-	 * electrostatic discharge might cause an extra read or clock cycle.
+-	 * Monitoring the frstdata signal allows to recover from such failure
+-	 * situations.
+-	 */
+-
+-	if (st->gpio_frstdata) {
+-		ret = st->bops->read_block(st->dev, 1, data);
+-		if (ret)
+-			return ret;
+-
+-		if (!gpiod_get_value(st->gpio_frstdata)) {
+-			ad7606_reset(st);
+-			return -EIO;
+-		}
+-
+-		data++;
+-		num--;
+-	}
+ 
+ 	return st->bops->read_block(st->dev, num, data);
+ }
+--- a/drivers/iio/adc/ad7606.h
++++ b/drivers/iio/adc/ad7606.h
+@@ -153,6 +153,8 @@ int ad7606_probe(struct device *dev, int
+ 		 const char *name, unsigned int id,
+ 		 const struct ad7606_bus_ops *bops);
+ 
++int ad7606_reset(struct ad7606_state *st);
++
+ enum ad7606_supported_device_ids {
+ 	ID_AD7605_4,
+ 	ID_AD7606_8,
+--- a/drivers/iio/adc/ad7606_par.c
++++ b/drivers/iio/adc/ad7606_par.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/module.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/platform_device.h>
+ #include <linux/types.h>
+ #include <linux/err.h>
+@@ -20,8 +21,29 @@ static int ad7606_par16_read_block(struc
+ 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
+ 	struct ad7606_state *st = iio_priv(indio_dev);
+ 
+-	insw((unsigned long)st->base_address, buf, count);
+ 
++	/*
++	 * On the parallel interface, the frstdata signal is set to high while
++	 * and after reading the sample of the first channel and low for all
++	 * other channels.  This can be used to check that the incoming data is
++	 * correctly aligned.  During normal operation the data should never
++	 * become unaligned, but some glitch or electrostatic discharge might
++	 * cause an extra read or clock cycle.  Monitoring the frstdata signal
++	 * allows to recover from such failure situations.
++	 */
++	int num = count;
++	u16 *_buf = buf;
++
++	if (st->gpio_frstdata) {
++		insw((unsigned long)st->base_address, _buf, 1);
++		if (!gpiod_get_value(st->gpio_frstdata)) {
++			ad7606_reset(st);
++			return -EIO;
++		}
++		_buf++;
++		num--;
++	}
++	insw((unsigned long)st->base_address, _buf, num);
+ 	return 0;
+ }
+ 
+@@ -34,8 +56,28 @@ static int ad7606_par8_read_block(struct
+ {
+ 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
+ 	struct ad7606_state *st = iio_priv(indio_dev);
+-
+-	insb((unsigned long)st->base_address, buf, count * 2);
++	/*
++	 * On the parallel interface, the frstdata signal is set to high while
++	 * and after reading the sample of the first channel and low for all
++	 * other channels.  This can be used to check that the incoming data is
++	 * correctly aligned.  During normal operation the data should never
++	 * become unaligned, but some glitch or electrostatic discharge might
++	 * cause an extra read or clock cycle.  Monitoring the frstdata signal
++	 * allows to recover from such failure situations.
++	 */
++	int num = count;
++	u16 *_buf = buf;
++
++	if (st->gpio_frstdata) {
++		insb((unsigned long)st->base_address, _buf, 2);
++		if (!gpiod_get_value(st->gpio_frstdata)) {
++			ad7606_reset(st);
++			return -EIO;
++		}
++		_buf++;
++		num--;
++	}
++	insb((unsigned long)st->base_address, _buf, num * 2);
+ 
+ 	return 0;
+ }
 
 
