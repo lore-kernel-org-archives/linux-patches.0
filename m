@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420D318B462;
-	Tue, 10 Sep 2024 10:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B52A188A0C;
+	Tue, 10 Sep 2024 10:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962499; cv=none; b=HgfIxLcHpkxbN/B2784d9/dg0DhFwUbZHA3m/h03YTmmc8DIzNcVvchIh/fxEnmzD9ZEEXsRdq7iX+iFQ3MXO3EEXpIDnsMA6WzyRGBA8AxSPmkjKItVRD3GeV1neogEx3twINxDE0joGV/RpxZ1ynCuiVYmB86L2E6AvIvyXBI=
+	t=1725962502; cv=none; b=g2umtav0x3J1IZdOONpw+3ByCws3PMVv9fUHb5NHqC89+PW8gH+MGxAFbBbhWMB7shHHUMQI6U/DULfuu7X/mNfYeP3YAlMtcR5s16SO4ZvshZsSuZeqcAKJbVGd2NUkFPwqMZFxfpHK1BTtTBx/4dvndXOyTBzYC0xlnPF/t6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962499; c=relaxed/simple;
-	bh=ayfyuYUBpHDiNKwsWs4jkgDfbnfzz8jV5zeF8RZ/aY8=;
+	s=arc-20240116; t=1725962502; c=relaxed/simple;
+	bh=6Qzv4oKzCerCRDAFSNO1qfDcimomR2blLxXJHBc3d9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zz7o/g8TZDCwWfM0BcOiWlp1Hms4QM8ZX0UnvP6CJTkP2uxCDFZmlNepKrDGCHy0/G3kPXCLsGTx2FrAip4SAUzbrS5ctCtKgy+b7tr4BR9z/ExQcVe+B8SWJKNfLeI3/yyaMtW3iWD15wd5aQ2pjWz2oYDIuwOVyHPERy9Rse0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Zh0MLzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUrfzM7tBcak1JQ5cAFR/UZ/2tlHt9k3U8eFoWfs4z70RybuqDFnAE4xwasJ9u+D09vAq2wrYSXusHQsvXI3DqvKZkzj/eYfWXiLd5C874fyuactmbL28UyTigwDy+5cIXaXrJWcjWdlPSMHLTJyRNfORj7N2z3o9FfkpFLAWWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ktpb47TI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Zh0MLzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4D5C4CEC3;
-	Tue, 10 Sep 2024 10:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ktpb47TI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04BAC4CEC3;
+	Tue, 10 Sep 2024 10:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962499;
-	bh=ayfyuYUBpHDiNKwsWs4jkgDfbnfzz8jV5zeF8RZ/aY8=;
+	s=korg; t=1725962502;
+	bh=6Qzv4oKzCerCRDAFSNO1qfDcimomR2blLxXJHBc3d9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Zh0MLzRsRGIG0dXzqv7nWsehIH1jaUHAHHLbNkCapGKyax8cp833moE80r/rcweB
-	 tf6sbTh9MW1/ILiohB6WFLySV17lN4IAN+IBcg6q9Sx45a4dNyjhKTliS7nFFWHT0C
-	 Sri1dFEIGqB7vd/cougBwS5CZl+ohcLU8dfWHJUk=
+	b=Ktpb47TIrULyQP0DqrtTiyVQpvXUCZouCSFNjZZCT80zAwkKD1tXIgHx6Qu7LmGCi
+	 2MmtJuxeJlJogYT2yDfcw+gXjKCxVPYmdfIIrgrFxp42hIgqbL1AH5/UY7GjpBg/9i
+	 vlEzhcf/hW7ZuapIckKlYz1URbUNTmEEx7PSjzI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Simon Horman <horms@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 054/121] can: bcm: Remove proc entry when dev is unregistered.
-Date: Tue, 10 Sep 2024 11:32:09 +0200
-Message-ID: <20240910092548.363037976@linuxfoundation.org>
+	Daiwei Li <daiweili@google.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.4 055/121] igb: Fix not clearing TimeSync interrupts for 82580
+Date: Tue, 10 Sep 2024 11:32:10 +0200
+Message-ID: <20240910092548.424293830@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -53,97 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Daiwei Li <daiweili@google.com>
 
-[ Upstream commit 76fe372ccb81b0c89b6cd2fec26e2f38c958be85 ]
+[ Upstream commit ba8cf80724dbc09825b52498e4efacb563935408 ]
 
-syzkaller reported a warning in bcm_connect() below. [0]
+82580 NICs have a hardware bug that makes it
+necessary to write into the TSICR (TimeSync Interrupt Cause) register
+to clear it:
+https://lore.kernel.org/all/CDCB8BE0.1EC2C%25matthew.vick@intel.com/
 
-The repro calls connect() to vxcan1, removes vxcan1, and calls
-connect() with ifindex == 0.
+Add a conditional so only for 82580 we write into the TSICR register,
+so we don't risk losing events for other models.
 
-Calling connect() for a BCM socket allocates a proc entry.
-Then, bcm_sk(sk)->bound is set to 1 to prevent further connect().
+Without this change, when running ptp4l with an Intel 82580 card,
+I get the following output:
 
-However, removing the bound device resets bcm_sk(sk)->bound to 0
-in bcm_notify().
+> timed out while polling for tx timestamp increasing tx_timestamp_timeout or
+> increasing kworker priority may correct this issue, but a driver bug likely
+> causes it
 
-The 2nd connect() tries to allocate a proc entry with the same
-name and sets NULL to bcm_sk(sk)->bcm_proc_read, leaking the
-original proc entry.
+This goes away with this change.
 
-Since the proc entry is available only for connect()ed sockets,
-let's clean up the entry when the bound netdev is unregistered.
+This (partially) reverts commit ee14cc9ea19b ("igb: Fix missing time sync events").
 
-[0]:
-proc_dir_entry 'can-bcm/2456' already registered
-WARNING: CPU: 1 PID: 394 at fs/proc/generic.c:376 proc_register+0x645/0x8f0 fs/proc/generic.c:375
-Modules linked in:
-CPU: 1 PID: 394 Comm: syz-executor403 Not tainted 6.10.0-rc7-g852e42cc2dd4
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:proc_register+0x645/0x8f0 fs/proc/generic.c:375
-Code: 00 00 00 00 00 48 85 ed 0f 85 97 02 00 00 4d 85 f6 0f 85 9f 02 00 00 48 c7 c7 9b cb cf 87 48 89 de 4c 89 fa e8 1c 6f eb fe 90 <0f> 0b 90 90 48 c7 c7 98 37 99 89 e8 cb 7e 22 05 bb 00 00 00 10 48
-RSP: 0018:ffa0000000cd7c30 EFLAGS: 00010246
-RAX: 9e129be1950f0200 RBX: ff1100011b51582c RCX: ff1100011857cd80
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000002
-RBP: 0000000000000000 R08: ffd400000000000f R09: ff1100013e78cac0
-R10: ffac800000cd7980 R11: ff1100013e12b1f0 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000000 R15: ff1100011a99a2ec
-FS:  00007fbd7086f740(0000) GS:ff1100013fd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000200071c0 CR3: 0000000118556004 CR4: 0000000000771ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- proc_create_net_single+0x144/0x210 fs/proc/proc_net.c:220
- bcm_connect+0x472/0x840 net/can/bcm.c:1673
- __sys_connect_file net/socket.c:2049 [inline]
- __sys_connect+0x5d2/0x690 net/socket.c:2066
- __do_sys_connect net/socket.c:2076 [inline]
- __se_sys_connect net/socket.c:2073 [inline]
- __x64_sys_connect+0x8f/0x100 net/socket.c:2073
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1c0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-RIP: 0033:0x7fbd708b0e5d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
-RSP: 002b:00007fff8cd33f08 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007fbd708b0e5d
-RDX: 0000000000000010 RSI: 0000000020000040 RDI: 0000000000000003
-RBP: 0000000000000000 R08: 0000000000000040 R09: 0000000000000040
-R10: 0000000000000040 R11: 0000000000000246 R12: 00007fff8cd34098
-R13: 0000000000401280 R14: 0000000000406de8 R15: 00007fbd70ab9000
- </TASK>
-remove_proc_entry: removing non-empty directory 'net/can-bcm', leaking at least '2456'
-
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/all/20240722192842.37421-1-kuniyu@amazon.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: ee14cc9ea19b ("igb: Fix missing time sync events")
+Closes: https://lore.kernel.org/intel-wired-lan/CAN0jFd1kO0MMtOh8N2Ztxn6f7vvDKp2h507sMryobkBKe=xk=w@mail.gmail.com/
+Tested-by: Daiwei Li <daiweili@google.com>
+Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Daiwei Li <daiweili@google.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/igb/igb_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 5cb4b6129263..cc7fb30eafc0 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1425,6 +1425,10 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index cceff1515ea1..884beeb67a1f 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -6522,10 +6522,20 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
  
- 		/* remove device reference, if this is our bound device */
- 		if (bo->bound && bo->ifindex == dev->ifindex) {
-+#if IS_ENABLED(CONFIG_PROC_FS)
-+			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read)
-+				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
-+#endif
- 			bo->bound   = 0;
- 			bo->ifindex = 0;
- 			notify_enodev = 1;
+ static void igb_tsync_interrupt(struct igb_adapter *adapter)
+ {
++	const u32 mask = (TSINTR_SYS_WRAP | E1000_TSICR_TXTS |
++			  TSINTR_TT0 | TSINTR_TT1 |
++			  TSINTR_AUTT0 | TSINTR_AUTT1);
+ 	struct e1000_hw *hw = &adapter->hw;
+ 	u32 tsicr = rd32(E1000_TSICR);
+ 	struct ptp_clock_event event;
+ 
++	if (hw->mac.type == e1000_82580) {
++		/* 82580 has a hardware bug that requires an explicit
++		 * write to clear the TimeSync interrupt cause.
++		 */
++		wr32(E1000_TSICR, tsicr & mask);
++	}
++
+ 	if (tsicr & TSINTR_SYS_WRAP) {
+ 		event.type = PTP_CLOCK_PPS;
+ 		if (adapter->ptp_caps.pps)
 -- 
 2.43.0
 
