@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D9317BB01;
-	Tue, 10 Sep 2024 09:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04E2184101;
+	Tue, 10 Sep 2024 09:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961790; cv=none; b=ZrmEUP8/xl4F/IiXvF2LgHY58Vb4tS2X2GWAvTuS/e17ARsdaVeTixOnIZ50IO91/ldufEP/x7czVCl4lvvqnaHn1RWVhFBYFvi2XWWv1o+SOv/ABbgML9Z2Ea0SAv5aPpr/ohOnh6n0n+ie5DJDTMJvBCiR4R8FrRAGr6UUgMA=
+	t=1725961793; cv=none; b=e3Hh7Fu56xnLIU19Mg+9ww0zgJrY6JiHwuMeX/1Z1C5RHDP/QGK5hgXoC+z9TuL5Iaw6pCkrqJhwGeXLdEgHv0458VF86RzYj5UKVFwhfIHc9ymzA92vvqMGsExHrhe71QTFCqus2QfnTDonkZuJRuu1rojzLT2/KIVIx1FcxPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961790; c=relaxed/simple;
-	bh=S0h3WZ4F0ppAKiX4YAuBt8ckkwwWgh/0t4I7D/nIkLI=;
+	s=arc-20240116; t=1725961793; c=relaxed/simple;
+	bh=7KNmYdOW1B4l5paMU207/nubvjazwbpTl3bbgjG9lnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVvoRpdqGna+Q88roEA4m+AEZ9ZywrMd8VGT0Bwpu5ja5Z8xvBW2PLiRJFk0gLwxyCgZDTWqGhmrJ2w8pwctsiCCmzXPuWSm4xEYlqE6ZrSuq2Ww4lKhq2MbGr8HunWzXne+fdL9HztJ4OV8IEnc24e44MMmLYO50OkN26sP0VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmzfNgok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b2rA/5d0Bb33KHdl4o/BnQeWAgwkDfVyt/KT4Cx2A/9+GwZPhY3ZJQhnZNkn1VlaX5+x4du73Svq465yYAUO+2WagaS0yZ+BfgYpeGRuMjF6uKhRk8NDPI/CAu/ryksB7/CWtptZ0Odq+knJRK/QhSR+njRW3+CIvb8ejI2XOiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPN0PyE/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmzfNgok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEE6C4CEC3;
-	Tue, 10 Sep 2024 09:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPN0PyE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366C3C4CEC3;
+	Tue, 10 Sep 2024 09:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961790;
-	bh=S0h3WZ4F0ppAKiX4YAuBt8ckkwwWgh/0t4I7D/nIkLI=;
+	s=korg; t=1725961793;
+	bh=7KNmYdOW1B4l5paMU207/nubvjazwbpTl3bbgjG9lnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmzfNgokOyS1oE4t77GLRW/cd/hZ8x/Ch0njC4U/Jb7UFp/8ZQuJUjmBQDL7h5qgw
-	 6UjDgGMfaRExD4GZ7yI+fRAe120p/XW4jYVgwjob71CQb9w/z/2qKgTVv949Fc2LDi
-	 w/PcAIiZr3yfKEdKFUSkMiDKdQ0AIdmjsyxmH6W8=
+	b=cPN0PyE/TOmRx1fwKzz0zSBcvBikHH3GrzCj4TOzp94zrPZA0tqDHENgVE9ETQi5d
+	 L788veGyEQmcLwUaZTPt5MFrkkfJZ/Jorv8NL2jjJ3Lvcv2KhEcRs9OYKBQarPnFbu
+	 bUmX2ZicvYPq794pkuF/0Cyy0Hlcq13oKAFpMlN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanghui Li <yanghui.li@mediatek.com>,
-	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 189/375] bpf, net: Fix a potential race in do_sock_getsockopt()
-Date: Tue, 10 Sep 2024 11:29:46 +0200
-Message-ID: <20240910092628.838567579@linuxfoundation.org>
+Subject: [PATCH 6.10 164/375] regulator: core: Stub devm_regulator_bulk_get_const() if !CONFIG_REGULATOR
+Date: Tue, 10 Sep 2024 11:29:21 +0200
+Message-ID: <20240910092627.992966176@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -55,92 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 33f339a1ba54e56bba57ee9a77c71e385ab4825c ]
+[ Upstream commit 1a5caec7f80ca2e659c03f45378ee26915f4eda2 ]
 
-There's a potential race when `cgroup_bpf_enabled(CGROUP_GETSOCKOPT)` is
-false during the execution of `BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN`, but
-becomes true when `BPF_CGROUP_RUN_PROG_GETSOCKOPT` is called.
-This inconsistency can lead to `BPF_CGROUP_RUN_PROG_GETSOCKOPT` receiving
-an "-EFAULT" from `__cgroup_bpf_run_filter_getsockopt(max_optlen=0)`.
-Scenario shown as below:
+When adding devm_regulator_bulk_get_const() I missed adding a stub for
+when CONFIG_REGULATOR is not enabled. Under certain conditions (like
+randconfig testing) this can cause the compiler to reports errors
+like:
 
-           `process A`                      `process B`
-           -----------                      ------------
-  BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN
-                                            enable CGROUP_GETSOCKOPT
-  BPF_CGROUP_RUN_PROG_GETSOCKOPT (-EFAULT)
+  error: implicit declaration of function 'devm_regulator_bulk_get_const';
+  did you mean 'devm_regulator_bulk_get_enable'?
 
-To resolve this, remove the `BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN` macro and
-directly uses `copy_from_sockptr` to ensure that `max_optlen` is always
-set before `BPF_CGROUP_RUN_PROG_GETSOCKOPT` is invoked.
+Add the stub.
 
-Fixes: 0d01da6afc54 ("bpf: implement getsockopt and setsockopt hooks")
-Co-developed-by: Yanghui Li <yanghui.li@mediatek.com>
-Signed-off-by: Yanghui Li <yanghui.li@mediatek.com>
-Co-developed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20240830082518.23243-1-Tze-nan.Wu@mediatek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1de452a0edda ("regulator: core: Allow drivers to define their init data as const")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408301813.TesFuSbh-lkp@intel.com/
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20240830073511.1.Ib733229a8a19fad8179213c05e1af01b51e42328@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf-cgroup.h | 9 ---------
- net/socket.c               | 4 ++--
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ include/linux/regulator/consumer.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/linux/bpf-cgroup.h b/include/linux/bpf-cgroup.h
-index fb3c3e7181e6..ce91d9b2acb9 100644
---- a/include/linux/bpf-cgroup.h
-+++ b/include/linux/bpf-cgroup.h
-@@ -390,14 +390,6 @@ static inline bool cgroup_bpf_sock_enabled(struct sock *sk,
- 	__ret;								       \
- })
+diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+index 59d0b9a79e6e..e6ad927bb4a8 100644
+--- a/include/linux/regulator/consumer.h
++++ b/include/linux/regulator/consumer.h
+@@ -451,6 +451,14 @@ static inline int of_regulator_bulk_get_all(struct device *dev, struct device_no
+ 	return 0;
+ }
  
--#define BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN(optlen)			       \
--({									       \
--	int __ret = 0;							       \
--	if (cgroup_bpf_enabled(CGROUP_GETSOCKOPT))			       \
--		copy_from_sockptr(&__ret, optlen, sizeof(int));		       \
--	__ret;								       \
--})
--
- #define BPF_CGROUP_RUN_PROG_GETSOCKOPT(sock, level, optname, optval, optlen,   \
- 				       max_optlen, retval)		       \
- ({									       \
-@@ -518,7 +510,6 @@ static inline int bpf_percpu_cgroup_storage_update(struct bpf_map *map,
- #define BPF_CGROUP_RUN_PROG_SOCK_OPS(sock_ops) ({ 0; })
- #define BPF_CGROUP_RUN_PROG_DEVICE_CGROUP(atype, major, minor, access) ({ 0; })
- #define BPF_CGROUP_RUN_PROG_SYSCTL(head,table,write,buf,count,pos) ({ 0; })
--#define BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN(optlen) ({ 0; })
- #define BPF_CGROUP_RUN_PROG_GETSOCKOPT(sock, level, optname, optval, \
- 				       optlen, max_optlen, retval) ({ retval; })
- #define BPF_CGROUP_RUN_PROG_GETSOCKOPT_KERN(sock, level, optname, optval, \
-diff --git a/net/socket.c b/net/socket.c
-index e416920e9399..b5a003974058 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -2350,7 +2350,7 @@ INDIRECT_CALLABLE_DECLARE(bool tcp_bpf_bypass_getsockopt(int level,
- int do_sock_getsockopt(struct socket *sock, bool compat, int level,
- 		       int optname, sockptr_t optval, sockptr_t optlen)
++static inline int devm_regulator_bulk_get_const(
++	struct device *dev, int num_consumers,
++	const struct regulator_bulk_data *in_consumers,
++	struct regulator_bulk_data **out_consumers)
++{
++	return 0;
++}
++
+ static inline int regulator_bulk_enable(int num_consumers,
+ 					struct regulator_bulk_data *consumers)
  {
--	int max_optlen __maybe_unused;
-+	int max_optlen __maybe_unused = 0;
- 	const struct proto_ops *ops;
- 	int err;
- 
-@@ -2359,7 +2359,7 @@ int do_sock_getsockopt(struct socket *sock, bool compat, int level,
- 		return err;
- 
- 	if (!compat)
--		max_optlen = BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN(optlen);
-+		copy_from_sockptr(&max_optlen, optlen, sizeof(int));
- 
- 	ops = READ_ONCE(sock->ops);
- 	if (level == SOL_SOCKET) {
 -- 
 2.43.0
 
