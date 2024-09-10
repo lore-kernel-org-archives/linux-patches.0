@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C83F192D91;
-	Tue, 10 Sep 2024 10:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAA8192D91;
+	Tue, 10 Sep 2024 10:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964114; cv=none; b=AV6bNDDwYZ5SFfJpLCntpnlLI3zYgr1FlvtZLHOBRXys2YZHWrjxP6+TzjFNsw6+N1XGAOTyOZXTsJb1BUKH8TrDlLS0ws6Kvc0Tmk6YV66pUzops8SQMbhYpNF+WzivW+JdxANZcgzm9GTRt5y5nd4a4tN3jupvaYegkeCRR4A=
+	t=1725964117; cv=none; b=X6wZa1NRkX8PLIhPkSBqax3oMbuH9gtazOyrNJ9fgzGCZzi03+TaPoXQu5o1HA61+W+EtcLJr2VuD7qWFI65pSyxiH0mEt0VOabxCGtyQslYywf2k6eapSTZPywGCIiGrLFuOIaRUYHBGVJ3cOuw5WViw30heNamUArZSgyyda4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964114; c=relaxed/simple;
-	bh=7Fq8mxcXCX9lAPLaU+IzpR9Ug0YD1clQHKU/+jwftPY=;
+	s=arc-20240116; t=1725964117; c=relaxed/simple;
+	bh=wD7rDLTBkoMXx1eWbBMHqUc0VT7UdhSfGXesqGPPcGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b482fNID4FOBFYu9PnzQnQKfaR9EtBvwgPxYa3lRIrrCXBS+j6QzKG8lD5MmyH0X3CSRPMEuIX/TJQJ4k6ncUNZLsCp2lGIuDIo1oflkWNvrLQyWDuMbGXoEDlM0xnbQxi3s2XMLr4tOo5S1Ph1zaqPJ1s6ANlaeAMxtRLGx2CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW3ZnX6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OolcbCF+VuECkn8vnuidEJXY8ZbJQ9zljJiDVslzKyDgwmkxR6pigcHllW9OObqBm5kOxkhPYYLsxqT98hDfqburSUhqhqdGAmcRIn1rQFcOaEVGGu1U/l0DRyPbwRPmZwJuzBCle240ZzS5VEPWfk6cmEd5aeHzNCGyXGl9Y8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrozB8nd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW3ZnX6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236FDC4CEC3;
-	Tue, 10 Sep 2024 10:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrozB8nd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13302C4CEC3;
+	Tue, 10 Sep 2024 10:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964114;
-	bh=7Fq8mxcXCX9lAPLaU+IzpR9Ug0YD1clQHKU/+jwftPY=;
+	s=korg; t=1725964117;
+	bh=wD7rDLTBkoMXx1eWbBMHqUc0VT7UdhSfGXesqGPPcGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iW3ZnX6mwuVXdWlmyqhN7l9YCSj3hFTzGd5iU5GIySLGN8IE4xNWeVHjMZ59lXmSf
-	 jQmHB/9AYRckDiZvhGOf+tT634bMSvSHVPsB22A8w3ZDZfL21w2NMaVuPcsbGU3Vim
-	 urqDI38iDqSB2g/q6IvtcS2+u2VW1i8HPKSn3qXs=
+	b=JrozB8ndYJAYhAwn7qVux81tIPEKvYJHobsaxlErBW5Uo65wO4GIrUi8Gpw8/yhKC
+	 RrthrVVeetRq+PRXkJOrIpapN3OZw1/Xoppm5Hqz8OKrDH/lNZXyXP+uiGX3X7chu/
+	 8G2y6bXWXmc3fqjDvil6h8Ys/9xluTRQK8e/h1zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunjian Wang <wangyunjian@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/269] netfilter: nf_conncount: fix wrong variable type
-Date: Tue, 10 Sep 2024 11:31:00 +0200
-Message-ID: <20240910092610.810593719@linuxfoundation.org>
+Subject: [PATCH 6.6 074/269] wifi: iwlwifi: mvm: use IWL_FW_CHECK for link ID check
+Date: Tue, 10 Sep 2024 11:31:01 +0200
+Message-ID: <20240910092610.839949424@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -51,68 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunjian Wang <wangyunjian@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 0b88d1654d556264bcd24a9cb6383f0888e30131 ]
+[ Upstream commit 9215152677d4b321801a92b06f6d5248b2b4465f ]
 
-Now there is a issue is that code checks reports a warning: implicit
-narrowing conversion from type 'unsigned int' to small type 'u8' (the
-'keylen' variable). Fix it by removing the 'keylen' variable.
+The lookup function iwl_mvm_rcu_fw_link_id_to_link_conf() is
+normally called with input from the firmware, so it should use
+IWL_FW_CHECK() instead of WARN_ON().
 
-Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240625194805.4ea8fb7c47d4.I1c22af213f97f69bfc14674502511c1bc504adfb@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 5d8ed6c90b7e..5885810da412 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -321,7 +321,6 @@ insert_tree(struct net *net,
- 	struct nf_conncount_rb *rbconn;
- 	struct nf_conncount_tuple *conn;
- 	unsigned int count = 0, gc_count = 0;
--	u8 keylen = data->keylen;
- 	bool do_gc = true;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index c780e5ffcd59..bace9d01fd58 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -1318,7 +1318,8 @@ iwl_mvm_rcu_dereference_vif_id(struct iwl_mvm *mvm, u8 vif_id, bool rcu)
+ static inline struct ieee80211_bss_conf *
+ iwl_mvm_rcu_fw_link_id_to_link_conf(struct iwl_mvm *mvm, u8 link_id, bool rcu)
+ {
+-	if (WARN_ON(link_id >= ARRAY_SIZE(mvm->link_id_to_link_conf)))
++	if (IWL_FW_CHECK(mvm, link_id >= ARRAY_SIZE(mvm->link_id_to_link_conf),
++			 "erroneous FW link ID: %d\n", link_id))
+ 		return NULL;
  
- 	spin_lock_bh(&nf_conncount_locks[hash]);
-@@ -333,7 +332,7 @@ insert_tree(struct net *net,
- 		rbconn = rb_entry(*rbnode, struct nf_conncount_rb, node);
- 
- 		parent = *rbnode;
--		diff = key_diff(key, rbconn->key, keylen);
-+		diff = key_diff(key, rbconn->key, data->keylen);
- 		if (diff < 0) {
- 			rbnode = &((*rbnode)->rb_left);
- 		} else if (diff > 0) {
-@@ -378,7 +377,7 @@ insert_tree(struct net *net,
- 
- 	conn->tuple = *tuple;
- 	conn->zone = *zone;
--	memcpy(rbconn->key, key, sizeof(u32) * keylen);
-+	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
- 
- 	nf_conncount_list_init(&rbconn->list);
- 	list_add(&conn->node, &rbconn->list.head);
-@@ -403,7 +402,6 @@ count_tree(struct net *net,
- 	struct rb_node *parent;
- 	struct nf_conncount_rb *rbconn;
- 	unsigned int hash;
--	u8 keylen = data->keylen;
- 
- 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
- 	root = &data->root[hash];
-@@ -414,7 +412,7 @@ count_tree(struct net *net,
- 
- 		rbconn = rb_entry(parent, struct nf_conncount_rb, node);
- 
--		diff = key_diff(key, rbconn->key, keylen);
-+		diff = key_diff(key, rbconn->key, data->keylen);
- 		if (diff < 0) {
- 			parent = rcu_dereference_raw(parent->rb_left);
- 		} else if (diff > 0) {
+ 	if (rcu)
 -- 
 2.43.0
 
