@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B6C18C000;
-	Tue, 10 Sep 2024 09:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E19189B9C;
+	Tue, 10 Sep 2024 09:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961403; cv=none; b=Mr/X20tcqyVZRYcoc/JkqGfdxxKA/h0bkKjT+WoQnh6A99IJQa+RA4ke9yktHPGbvJTVNPGlP+HwzW8DhfwSAh1XnxO4FzIsLOlbyJwtKCiuPB+KUJDM6LEUZax3yd+nJKYvPhHdU6GBFvcUz+AcN4h97AocVWrXrkneIS/3nuA=
+	t=1725961406; cv=none; b=fWI0tRJRfH9dZ/9wx5pNMVyldLDs7+HC7VwLpDK5a+rUqGnP9XrNZ7XgC6uRSAnUnuZS8E5/eWoe+7vv7jcE2XB74Vjaz0qFzpaXl6+0FTgm2Fn25/ULYIOE90H/C5r+UJ2wYz7rAIltla71gPwjHg8/k3CNRkf21NujJ7SW6HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961403; c=relaxed/simple;
-	bh=tfI5Hp91y6Zq3WGq2DStjQK+9d6LZWkgaT9fpBfhIuc=;
+	s=arc-20240116; t=1725961406; c=relaxed/simple;
+	bh=84mqLbCEQ2/Q5EhiK3E1j5tLULVjRSUH6GNORWe8dmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfqQgEL4V/9SFjAaUoqzFC9Vm09c1riYioIZ4IeN0eu8M287Ur/pNDRUhQDCquTUhBwSXviWbMJMxGqYIBpf6SVAH8uw20+u+eDsyv9JyLoSzlHTjISTk1FBZj0L9qPEU3LJamWOEiF0UiwYqPKXE7ihU2LHq5TVHbFWH5Q7nFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkkwTlB2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7rPE9a85LNsaSia5UTL7Kvp6VrmkRkaVVeVvth+PWG+obVW2PRE4y7Yfjzbz6Jj02zn5M/ocWWatcyd0Z07vY8NRLhj8n9wySQ/E1oqFhCRzLkIzKR0vkbezOQPlrFDWDKcV9STAqssi1rNcezoGOVt6R1WtHRzkNEP3L60rr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVXJVNHu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkkwTlB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEEFC4CEC3;
-	Tue, 10 Sep 2024 09:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVXJVNHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55474C4CEC3;
+	Tue, 10 Sep 2024 09:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961403;
-	bh=tfI5Hp91y6Zq3WGq2DStjQK+9d6LZWkgaT9fpBfhIuc=;
+	s=korg; t=1725961405;
+	bh=84mqLbCEQ2/Q5EhiK3E1j5tLULVjRSUH6GNORWe8dmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkkwTlB2cia7NXiRSW5g0mLpfbcQH6Fei0YM34LvWCt7wWYG71BKc7+edn/B1zRDV
-	 lmMhAaUVjqJ8ihg9aycu02tJU50fLeomolQ5wd1flBW/9wJWPMPWBQFKUHgte2fWIY
-	 6e5S1LeeThgpKXlR6jVYHhbO2Wl5oUim1w9n+cnU=
+	b=dVXJVNHu8x5UTjUmpXDwoxz/rilZT9b5EAb+DdkT1+lrPRododmCDkuMIveStAGl2
+	 XlDQWcA9MC568/89bCZGhjpWfVEGu1ErVRTCyP+ntWkh43dz6dHHsmBh2qUyr6uYGH
+	 1GHsWNrTZ3N/HV/KvBwB82THZTLlXo0PWYJ2N+F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Baoquan He <bhe@redhat.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	"Hailong.Liu" <hailong.liu@oppo.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Hao Ge <gehao@kylinos.cn>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Kees Cook <kees@kernel.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 058/375] mm: vmalloc: ensure vmap_block is initialised before adding to queue
-Date: Tue, 10 Sep 2024 11:27:35 +0200
-Message-ID: <20240910092624.179472700@linuxfoundation.org>
+Subject: [PATCH 6.10 059/375] mm/slub: add check for s->flags in the alloc_tagging_slab_free_hook
+Date: Tue, 10 Sep 2024 11:27:36 +0200
+Message-ID: <20240910092624.211868189@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -57,72 +60,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit 3e3de7947c751509027d26b679ecd243bc9db255 upstream.
+commit ab7ca09520e9c41c219a4427fe0dae24024bfe7f upstream.
 
-Commit 8c61291fd850 ("mm: fix incorrect vbq reference in
-purge_fragmented_block") extended the 'vmap_block' structure to contain a
-'cpu' field which is set at allocation time to the id of the initialising
-CPU.
+When enable CONFIG_MEMCG & CONFIG_KFENCE & CONFIG_KMEMLEAK, the following
+warning always occurs,This is because the following call stack occurred:
+mem_pool_alloc
+    kmem_cache_alloc_noprof
+        slab_alloc_node
+            kfence_alloc
 
-When a new 'vmap_block' is being instantiated by new_vmap_block(), the
-partially initialised structure is added to the local 'vmap_block_queue'
-xarray before the 'cpu' field has been initialised.  If another CPU is
-concurrently walking the xarray (e.g.  via vm_unmap_aliases()), then it
-may perform an out-of-bounds access to the remote queue thanks to an
-uninitialised index.
+Once the kfence allocation is successful,slab->obj_exts will not be empty,
+because it has already been assigned a value in kfence_init_pool.
 
-This has been observed as UBSAN errors in Android:
+Since in the prepare_slab_obj_exts_hook function,we perform a check for
+s->flags & (SLAB_NO_OBJ_EXT | SLAB_NOLEAKTRACE),the alloc_tag_add function
+will not be called as a result.Therefore,ref->ct remains NULL.
 
- | Internal error: UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
- |
- | Call trace:
- |  purge_fragmented_block+0x204/0x21c
- |  _vm_unmap_aliases+0x170/0x378
- |  vm_unmap_aliases+0x1c/0x28
- |  change_memory_common+0x1dc/0x26c
- |  set_memory_ro+0x18/0x24
- |  module_enable_ro+0x98/0x238
- |  do_init_module+0x1b0/0x310
+However,when we call mem_pool_free,since obj_ext is not empty, it
+eventually leads to the alloc_tag_sub scenario being invoked.  This is
+where the warning occurs.
 
-Move the initialisation of 'vb->cpu' in new_vmap_block() ahead of the
-addition to the xarray.
+So we should add corresponding checks in the alloc_tagging_slab_free_hook.
+For __GFP_NO_OBJ_EXT case,I didn't see the specific case where it's using
+kfence,so I won't add the corresponding check in
+alloc_tagging_slab_free_hook for now.
 
-Link: https://lkml.kernel.org/r/20240812171606.17486-1-will@kernel.org
-Fixes: 8c61291fd850 ("mm: fix incorrect vbq reference in purge_fragmented_block")
-Signed-off-by: Will Deacon <will@kernel.org>
-Reviewed-by: Baoquan He <bhe@redhat.com>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Cc: Hailong.Liu <hailong.liu@oppo.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Lorenzo Stoakes <lstoakes@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
+[    3.734349] ------------[ cut here ]------------
+[    3.734807] alloc_tag was not set
+[    3.735129] WARNING: CPU: 4 PID: 40 at ./include/linux/alloc_tag.h:130 kmem_cache_free+0x444/0x574
+[    3.735866] Modules linked in: autofs4
+[    3.736211] CPU: 4 UID: 0 PID: 40 Comm: ksoftirqd/4 Tainted: G        W          6.11.0-rc3-dirty #1
+[    3.736969] Tainted: [W]=WARN
+[    3.737258] Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
+[    3.737875] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    3.738501] pc : kmem_cache_free+0x444/0x574
+[    3.738951] lr : kmem_cache_free+0x444/0x574
+[    3.739361] sp : ffff80008357bb60
+[    3.739693] x29: ffff80008357bb70 x28: 0000000000000000 x27: 0000000000000000
+[    3.740338] x26: ffff80008207f000 x25: ffff000b2eb2fd60 x24: ffff0000c0005700
+[    3.740982] x23: ffff8000804229e4 x22: ffff800082080000 x21: ffff800081756000
+[    3.741630] x20: fffffd7ff8253360 x19: 00000000000000a8 x18: ffffffffffffffff
+[    3.742274] x17: ffff800ab327f000 x16: ffff800083398000 x15: ffff800081756df0
+[    3.742919] x14: 0000000000000000 x13: 205d344320202020 x12: 5b5d373038343337
+[    3.743560] x11: ffff80008357b650 x10: 000000000000005d x9 : 00000000ffffffd0
+[    3.744231] x8 : 7f7f7f7f7f7f7f7f x7 : ffff80008237bad0 x6 : c0000000ffff7fff
+[    3.744907] x5 : ffff80008237ba78 x4 : ffff8000820bbad0 x3 : 0000000000000001
+[    3.745580] x2 : 68d66547c09f7800 x1 : 68d66547c09f7800 x0 : 0000000000000000
+[    3.746255] Call trace:
+[    3.746530]  kmem_cache_free+0x444/0x574
+[    3.746931]  mem_pool_free+0x44/0xf4
+[    3.747306]  free_object_rcu+0xc8/0xdc
+[    3.747693]  rcu_do_batch+0x234/0x8a4
+[    3.748075]  rcu_core+0x230/0x3e4
+[    3.748424]  rcu_core_si+0x14/0x1c
+[    3.748780]  handle_softirqs+0x134/0x378
+[    3.749189]  run_ksoftirqd+0x70/0x9c
+[    3.749560]  smpboot_thread_fn+0x148/0x22c
+[    3.749978]  kthread+0x10c/0x118
+[    3.750323]  ret_from_fork+0x10/0x20
+[    3.750696] ---[ end trace 0000000000000000 ]---
+
+Link: https://lkml.kernel.org/r/20240816013336.17505-1-hao.ge@linux.dev
+Fixes: 4b8736964640 ("mm/slab: add allocation accounting into slab allocation and free paths")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/slub.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -2628,6 +2628,7 @@ static void *new_vmap_block(unsigned int
- 	vb->dirty_max = 0;
- 	bitmap_set(vb->used_map, 0, (1UL << order));
- 	INIT_LIST_HEAD(&vb->free_list);
-+	vb->cpu = raw_smp_processor_id();
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -2044,6 +2044,10 @@ alloc_tagging_slab_free_hook(struct kmem
+ 	if (!mem_alloc_profiling_enabled())
+ 		return;
  
- 	xa = addr_to_vb_xa(va->va_start);
- 	vb_idx = addr_to_vb_idx(va->va_start);
-@@ -2644,7 +2645,6 @@ static void *new_vmap_block(unsigned int
- 	 * integrity together with list_for_each_rcu from read
- 	 * side.
- 	 */
--	vb->cpu = raw_smp_processor_id();
- 	vbq = per_cpu_ptr(&vmap_block_queue, vb->cpu);
- 	spin_lock(&vbq->lock);
- 	list_add_tail_rcu(&vb->free_list, &vbq->free);
++	/* slab->obj_exts might not be NULL if it was created for MEMCG accounting. */
++	if (s->flags & (SLAB_NO_OBJ_EXT | SLAB_NOLEAKTRACE))
++		return;
++
+ 	obj_exts = slab_obj_exts(slab);
+ 	if (!obj_exts)
+ 		return;
 
 
