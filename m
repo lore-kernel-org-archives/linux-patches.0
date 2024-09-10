@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BCA18A950;
-	Tue, 10 Sep 2024 09:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D637918A950;
+	Tue, 10 Sep 2024 09:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961219; cv=none; b=BcmGJGWlS6PBZzzy5XSf9eOt6KsKkP5foEcLmf+KfInLwrpe3+Vf75XaZg09PHefB0DXORf9YSjf07BN8vGwEDhdgvli4EN3qnOCZKaLhabAQgVbBCU6wuKbXAhujdVj1FNCEe6fzQY377BnsLaxSjHIFv/S45PAsPyYXDuTpog=
+	t=1725961222; cv=none; b=ACwMBtRR+MMwEGp3HYc/YV1zKKGLymyW1U4nhwFiUSimEWYuZsYF8zd3v91Ond/+bURr1o0BO9CvQ4MEy9WVg6bXVY7hxwh60pxJq/XQTO+tiNliHB/hCdynXa+OywptxeGpAIugGs2b2Q82/puNRUz3mcqXQMjvg4VcyNUnsAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961219; c=relaxed/simple;
-	bh=NHL/EpzapZC4pOMkH+O/EyH/LCNN30DpbBVqbOw+CcY=;
+	s=arc-20240116; t=1725961222; c=relaxed/simple;
+	bh=Alsbsj9QM8Yb4ioBRYgeyFCxjoBgJwNowsSz29aZumk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZJL4r5FNlAgh1ct7B0+HnLKK9zuypLL5d/H3488qqCdZIefIYykzNnTsanAIqC1ZYJwD8dvcfn711Az0DLrWZFFZ9dLemSGcopY8VI0zYq8Oak6de1hJqTWyPzIwn3PFtQ01QPSfZvnZR9lUc3L/NyoecmKj7dLmdyU34iNMTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0sr3ygk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKzRhKIB9iE2WeZBS3nVvDYlWogvoIyLwdmVmWWO5RMtuqTCdjA7pRfnXt10lhYYwcu5kbr/+vfE4ZV9Asvxz/SHZ9vJb2EDlq2r62RBJj6eMyhq1/oIKYJ9HWTegJDKN+3SugBE7FCwsi+dxSEWMD7g+i6z/7JEe5FCUmTiUbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNBV2488; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0sr3ygk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6E4C4CEC3;
-	Tue, 10 Sep 2024 09:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNBV2488"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D265C4CEC3;
+	Tue, 10 Sep 2024 09:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961219;
-	bh=NHL/EpzapZC4pOMkH+O/EyH/LCNN30DpbBVqbOw+CcY=;
+	s=korg; t=1725961222;
+	bh=Alsbsj9QM8Yb4ioBRYgeyFCxjoBgJwNowsSz29aZumk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0sr3ygk/aWpMRMkeiLdqq9Ydnl+39NUAdNchENf+B7d4hdFmoRZBPmTDS4P6Y8aj
-	 L2Ll10L69pe1DF7jhasPDzFnU0XAnm7Ed1EIhk6EqK09tl28A2YtCcV6qvjVHyn/Bt
-	 xrGi3Pggf7EjhjScF+oiBedOv0uE85mpFVNzmhUY=
+	b=TNBV2488j1mKlCXtiegQXCvsnEVusKhMKmRGXAiLtN5zN6n69kZNKvv+Ywkws0fbB
+	 2pbqRuofUZyhNqhxhqK3mM7Lkx9hdWCAUCZuOqIPIQDr/t8B8+Meelu1fMgwDCgx63
+	 LIt0GW6mUHniGkHt49Ow3U2dz5hiGrzvFoaEfnEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+24c0361074799d02c452@syzkaller.appspotmail.com,
-	Camila Alvarez <cam.alvarez.i@gmail.com>,
-	Silvan Jegen <s.jegen@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 67/96] HID: cougar: fix slab-out-of-bounds Read in cougar_report_fixup
-Date: Tue, 10 Sep 2024 11:32:09 +0200
-Message-ID: <20240910092544.490193180@linuxfoundation.org>
+Subject: [PATCH 4.19 68/96] Input: uinput - reject requests with unreasonable number of slots
+Date: Tue, 10 Sep 2024 11:32:10 +0200
+Message-ID: <20240910092544.530729806@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -53,36 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Camila Alvarez <cam.alvarez.i@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit a6e9c391d45b5865b61e569146304cff72821a5d ]
+[ Upstream commit 206f533a0a7c683982af473079c4111f4a0f9f5e ]
 
-report_fixup for the Cougar 500k Gaming Keyboard was not verifying
-that the report descriptor size was correct before accessing it
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-Reported-by: syzbot+24c0361074799d02c452@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=24c0361074799d02c452
-Signed-off-by: Camila Alvarez <cam.alvarez.i@gmail.com>
-Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+When exercising uinput interface syzkaller may try setting up device
+with a really large number of slots, which causes memory allocation
+failure in input_mt_init_slots(). While this allocation failure is
+handled properly and request is rejected, it results in syzkaller
+reports. Additionally, such request may put undue burden on the
+system which will try to free a lot of memory for a bogus request.
+
+Fix it by limiting allowed number of slots to 100. This can easily
+be extended if we see devices that can track more than 100 contacts.
+
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
+Link: https://lore.kernel.org/r/Zqgi7NYEbpRsJfa2@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-cougar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/misc/uinput.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/hid/hid-cougar.c b/drivers/hid/hid-cougar.c
-index ad2e87de7dc5..d58a108a96c0 100644
---- a/drivers/hid/hid-cougar.c
-+++ b/drivers/hid/hid-cougar.c
-@@ -104,7 +104,7 @@ static void cougar_fix_g6_mapping(struct hid_device *hdev)
- static __u8 *cougar_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 				 unsigned int *rsize)
- {
--	if (rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
-+	if (*rsize >= 117 && rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
- 	    (rdesc[115] | rdesc[116] << 8) >= HID_MAX_USAGES) {
- 		hid_info(hdev,
- 			"usage count exceeds max: fixing up report descriptor\n");
+diff --git a/drivers/input/misc/uinput.c b/drivers/input/misc/uinput.c
+index e746920872a4..50839c902518 100644
+--- a/drivers/input/misc/uinput.c
++++ b/drivers/input/misc/uinput.c
+@@ -429,6 +429,20 @@ static int uinput_validate_absinfo(struct input_dev *dev, unsigned int code,
+ 		return -EINVAL;
+ 	}
+ 
++	/*
++	 * Limit number of contacts to a reasonable value (100). This
++	 * ensures that we need less than 2 pages for struct input_mt
++	 * (we are not using in-kernel slot assignment so not going to
++	 * allocate memory for the "red" table), and we should have no
++	 * trouble getting this much memory.
++	 */
++	if (code == ABS_MT_SLOT && max > 99) {
++		printk(KERN_DEBUG
++		       "%s: unreasonably large number of slots requested: %d\n",
++		       UINPUT_NAME, max);
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
