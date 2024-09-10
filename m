@@ -1,194 +1,139 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DDB18C912;
-	Tue, 10 Sep 2024 11:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB261EB2F
+	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 12:55:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725967564; cv=none; b=Zdnddp119NVuqJMKvAAzBtgNKe5fDdqCkx1QrKctNaC1ucIcSFJWWPcWTtecjSmRsRLeOQPgKoz82m0DkNRRTQJ+AXhc0NyZVqG1XaZON45IJr3MnuKU7u5yGUkkkWxGag/qfnUrI2SHF7Hl+YubsHzL/t//bdhHpHLh6hizKNE=
+	t=1725972903; cv=none; b=vCtQW+faazHgX37APQSSSKmDgrB98xFkUbgBij/HNhzgrRCXqicm9KMMLIbmCCyZi1Q0Z5P62Q8KMRBaVzq9Mk8OiHmhCZJrk1XG1YSwqggkDo+e5A6NzFRbFloJBW85iPLUKCBaZ1EW6lr/fTeHqIipE8Ln9SPz9WcpVvBF01o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725967564; c=relaxed/simple;
-	bh=+q2bPFd6vBiv0igNdKQbKcSyGGd+Jk11U321LBkZs5Y=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=MO0gK7a/BegrWPelVoWbxfnAhrRWlYYUB1irHE0VT3ZODdomkMTbNYVR3wMehEddF7O/1Io4RanseVpVcVpfYCJu09TslGBU8fg2ekha0wcjC9E8zTknvudzkxWD7+90h7fnK/rdnO6VQMePCf7ZDyGryHgwLVv4Jk65OJcf9zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.48])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4X31YJ4ND8zfbxj;
-	Tue, 10 Sep 2024 19:23:48 +0800 (CST)
-Received: from dggpemf500001.china.huawei.com (unknown [7.185.36.173])
-	by mail.maildlp.com (Postfix) with ESMTPS id AEA9A180087;
-	Tue, 10 Sep 2024 19:25:58 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- dggpemf500001.china.huawei.com (7.185.36.173) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 10 Sep 2024 19:25:57 +0800
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
- Tue, 10 Sep 2024 12:25:55 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: "acpica-devel@lists.linux.dev" <acpica-devel@lists.linux.dev>, "Guohanjun
- (Hanjun Guo)" <guohanjun@huawei.com>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
-	<kevin.tian@intel.com>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "Len
- Brown" <lenb@kernel.org>, "linux-acpi@vger.kernel.org"
-	<linux-acpi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
- Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
- Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
-	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>, Nicolin Chen
-	<nicolinc@nvidia.com>, "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: RE: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Thread-Topic: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
-Thread-Index: AQHa+JkNXX8oIDp/tkauz0b2cgKn4bJHsELwgAAEFICACUCfAA==
-Date: Tue, 10 Sep 2024 11:25:55 +0000
-Message-ID: <7482d2b872304e0ebf0f8fe7424616ac@huawei.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <85aa5e8eb6f243fd9df754fdc96471b8@huawei.com>
- <20240904150015.GH3915968@nvidia.com>
-In-Reply-To: <20240904150015.GH3915968@nvidia.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1725972903; c=relaxed/simple;
+	bh=SxAkh8uwuAT5ozfDLH78xfu4BSQGaw3OBgkizGvRl1g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p9phPzc4QI3BpF1WYZQgjocZNglMrlrcKMQ9DN34T3i2swSIanEsKEDKp17hC8TYW2V9TXUHQfv3hyM0TwIdNvOMMepjDxmiRFWKeTuPDXR1gHXV3QBLQocdTMV01E0qC4I3t3N6cObIuVTaqn/jtdDZ3VE2VMbZeEH8GRFC6OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mIQ4wTwI; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mIQ4wTwI"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-502c8f50c5dso734659e0c.0
+        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 05:55:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725972901; x=1726577701; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VKyjedl/ddqMl2FSPgpGenJy9ELX4V7Sr7TvuPEW+L8=;
+        b=mIQ4wTwIkWyKv2eHiA4rTeQGzbyWUHwJ4X76gI96u/U0PgciQ81STsF6bbqZ+EKlIk
+         TpSBJfJN37zeDVj5872QgXwFgOl/LH4dr31sdPpPlCNT78LpN8uYXIfxBxRDOnErNDLH
+         OjSAZdzgg07nacFeB/x3x6WLaaUaYbd0GBVfetFB/yjoUo3VRUCyxMh28ymXx9D3rh3R
+         VSx3uYZCu5JoePclW5ycG6MMINTzvNTD9r+XKSeLQh1i6AoB2jqABfqoSoXR5HfDIBNO
+         tl9RD7iJWRpzx53pQsRPWcK6FGPM1N5dlpzpyJFiQFnGCg/GK7rxtmHYCkbQru6s1hZp
+         9iYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725972901; x=1726577701;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VKyjedl/ddqMl2FSPgpGenJy9ELX4V7Sr7TvuPEW+L8=;
+        b=PzKPwbOi55wX00O+yQwCCYCYfNXtu/RNHh4Uvvjp10WGpGeM1/clEg7rch4BD8eCi6
+         3Rqsbtlw0uzJCyJL7C6ZTOTKjP9ZUdkSqYeF9tphWH4PA2r71PcL1HDRkmj848f9W8lL
+         SZioevZRJSakkeZY4G8ZPK5Hv9P3lkk3HDjBLq2vF8kd/qDnGq5LzWnkycCT+ZgAAl9p
+         lYZ7t3BwQoADzXwAtNYoOVU1RXnnvi+NZrOSpJ7r9cg4DBRL8ktcnzOFWz7mimX4t1ft
+         7OYzgLNKHcLjskfkRZnzhBHRwjKLfyS81NhEbTtfJABb61TFv8/doWeCSJx9U39oR5Ax
+         vRDA==
+X-Forwarded-Encrypted: i=1; AJvYcCXYKq5pFsg+iRKXfe4nEHZuubl9+XZicjEXo/LeHLno2UUm6wLFI6THz2tRdNVplM7ndefIb8ya@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzbis+A8yMcTo+SDTaxbt5i4lo2NuED40d3DdMuK6tEmGV2OZWP
+	YChROTti60GOunLIhSIUTErrLFs5yKhlTFvteNDnqsRTEbcvPkDwrA591UKT0q1S9hTCqOmWn1K
+	BxJA9nLwuChvIX5yyaAlOnOb/UOYccMR7LMXNHg==
+X-Google-Smtp-Source: AGHT+IE9Y+kfYN5IvRsvDOEmVUj0DoGGOvJjlae15nGIZcPP3XpU1vBEgCqkifEGq8ljbZO+kQainr+wo6QGkyfH4b4=
+X-Received: by 2002:a05:6122:ca7:b0:4ed:12b:ec99 with SMTP id
+ 71dfb90a1353d-50207bfb04bmr11342577e0c.3.1725972900980; Tue, 10 Sep 2024
+ 05:55:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20240910092557.876094467@linuxfoundation.org>
+In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 10 Sep 2024 18:24:49 +0530
+Message-ID: <CA+G9fYufdd0MGMO1NbXgJwN1+wPHB24_Nrok9TMX=fYKXaxXLA@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/192] 6.1.110-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Linux-sh list <linux-sh@vger.kernel.org>, 
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, Yoshinori Sato <ysato@users.sourceforge.jp>, 
+	Peter Zijlstra <peterz@infradead.org>, Anders Roxell <anders.roxell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 10 Sept 2024 at 15:36, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.110 release.
+> There are 192 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 12 Sep 2024 09:25:22 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.110-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
+The SuperH defconfig builds failed due to following build warnings / errors
+on the stable-rc linux-6.1.y.
 
-> -----Original Message-----
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Wednesday, September 4, 2024 4:00 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: acpica-devel@lists.linux.dev; Guohanjun (Hanjun Guo)
-> <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
-> <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>; kvm@vger.kernel.org=
-;
-> Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; linux-arm-
-> kernel@lists.infradead.org; Lorenzo Pieralisi <lpieralisi@kernel.org>; Ra=
-fael J.
-> Wysocki <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>; Robin
-> Murphy <robin.murphy@arm.com>; Sudeep Holla <sudeep.holla@arm.com>;
-> Will Deacon <will@kernel.org>; Alex Williamson
-> <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>; Jean-
-> Philippe Brucker <jean-philippe@linaro.org>; Moritz Fischer <mdf@kernel.o=
-rg>;
-> Michael Shavit <mshavit@google.com>; Nicolin Chen <nicolinc@nvidia.com>;
-> patches@lists.linux.dev; Mostafa Saleh <smostafa@google.com>
-> Subject: Re: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
->=20
-> On Wed, Sep 04, 2024 at 02:20:36PM +0000, Shameerali Kolothum Thodi wrote=
-:
->=20
-> > This should be added to arm_64_lpae_alloc_pgtable_s2(), not here.
->=20
-> Woops! Yes:
->=20
-> -       /* The NS quirk doesn't apply at stage 2 */
-> -       if (cfg->quirks)
-> +       if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_S2FWB))
->                 return NULL;
->=20
-> > With the above fixed, I was able to assign a n/w VF dev to a Guest on
-> > a test hardware that supports S2FWB.
->=20
-> Okay great
->=20
-> > However host kernel has this WARN message:
-> > [ 1546.165105] WARNING: CPU: 5 PID: 7047 at
-> > drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1086
-> > arm_smmu_entry_qword_diff+0x124/0x138
-> > ....
->=20
-> Yes, my dumb mistake again, thanks for testing
->=20
-> @@ -1009,7 +1009,8 @@ void arm_smmu_get_ste_used(const __le64 *ent,
-> __le64 *used_bits)
->         /* S2 translates */
->         if (cfg & BIT(1)) {
->                 used_bits[1] |=3D
-> -                       cpu_to_le64(STRTAB_STE_1_EATS | STRTAB_STE_1_SHCF=
-G);
-> +                       cpu_to_le64(STRTAB_STE_1_S2FWB | STRTAB_STE_1_EAT=
-S |
-> +                                   STRTAB_STE_1_SHCFG);
->=20
-> > root@localhost:/# ping 150.0.124.42
-> > PING 150.0.124.42 (150.0.124.42): 56 data bytes
-> > 64 bytes from 150.0.124.42: seq=3D0 ttl=3D64 time=3D47.648 ms
->=20
-> So DMA is not totally broken if a packet flowed.
->=20
-> > [ 1395.958630] hns3 0000:c2:00.0 eth1: NETDEV WATCHDOG: CPU: 1:
-> > transmit queue 10 timed out 5260 ms
->=20
-> Timeout? Maybe interrupts are not working? Does /proc/interrupts suggest
-> that? That would point at the ITS mapping
+* SuperH, build
+  - gcc-8-defconfig
+  - gcc-11-shx3_defconfig
+  - gcc-11-defconfig
+  - gcc-8-shx3_defconfig
 
-Interrupt seems to be Ok in this case as I can see /proc/interrupts increas=
-ing.
+Build log:
+--------
+In file included from  include/linux/mm.h:29,
+                 from  arch/sh/kernel/asm-offsets.c:14:
+ include/linux/pgtable.h: In function 'pmdp_get_lockless':
+ include/linux/pgtable.h:379:20: error: 'pmd_t' has no member named 'pmd_low'
+  379 |                 pmd.pmd_low = pmdp->pmd_low;
+      |                    ^
+ include/linux/pgtable.h:379:35: error: 'pmd_t' has no member named 'pmd_low'
+  379 |                 pmd.pmd_low = pmdp->pmd_low;
+      |                                   ^~
 
-> Do you have all of Nicolin's extra patches in this kernel to make the ITS=
- work
-> with nesting?
 
-Yes. I am using his
- https://github.com/nicolinc/iommufd/commits/iommufd_viommu_p1-v2/
+Metadata:
+--------
+  build_name: gcc-11-defconfig
+  config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2lsNsLYIfqdkNQOzLLZO4lq580E/config
+  download_url:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2lsNsLYIfqdkNQOzLLZO4lq580E/
+  git_describe: v6.1.109-193-gb220bb28da0f
+  git_repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git_sha: b220bb28da0f6a629a0d88be3f8e57ea5025c728
+  compiler: {'name': 'sh4-linux-gnu-gcc', 'version': '11',
+'version_full': 'sh4-linux-gnu-gcc (Debian 11.4.0-5) 11.4.0'}
 
-> From a page table POV, iommu_dma_get_msi_page() has:
->=20
-> 	int prot =3D IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
->=20
-> So the ITS page should be:
->=20
-> 		if (prot & IOMMU_MMIO) {
-> 			pte |=3D ARM_LPAE_PTE_MEMATTR_DEV;
->=20
-> Which which still looks right under S2FWB unless I've misread the manual?
->=20
-> > [ 1395.960187] hns3 0000:c2:00.0 eth1: DQL info last_cnt: 42, queued:
-> > 42, adj_limit: 0, completed: 0 [ 1395.961758] hns3 0000:c2:00.0 eth1:
-> > queue state: 0x6, delta msecs: 5260 [ 1395.962925] hns3 0000:c2:00.0
-> > eth1: tx_timeout count: 1, queue id: 10, SW_NTU: 0x1, SW_NTC: 0x0,
-> > napi state: 16 [ 1395.964677] hns3 0000:c2:00.0 eth1: tx_pkts: 0,
-> > tx_bytes: 0, sw_err_cnt: 0, tx_pending: 0 [ 1395.966114] hns3
-> > 0000:c2:00.0 eth1: seg_pkt_cnt: 0, tx_more: 0, restart_queue: 0,
-> > tx_busy: 0 [ 1395.967598] hns3 0000:c2:00.0 eth1: tx_push: 1,
-> > tx_mem_doorbell: 0 [ 1395.968687] hns3 0000:c2:00.0 eth1: BD_NUM: 0x7f
-> > HW_HEAD: 0x0, HW_TAIL: 0x0, BD_ERR: 0x0, INT: 0x1 [ 1395.970291] hns3
-> > 0000:c2:00.0 eth1: RING_EN: 0x1, TC: 0x0, FBD_NUM: 0x0 FBD_OFT: 0x0,
-> > EBD_NUM: 0x400, EBD_OFT: 0x0 [ 1395.972134] hns3 0000:c2:00.0:
-> > received reset request from VF enet
-> >
-> > All this works fine on a hardware without S2FWB though.
-> >
-> > Also on this test hardware, it works fine with legacy VFIO assignment.
->=20
-> So.. Legacy VFIO assignment will use the S1, no nesting and not enable S2=
-FWB?
+Steps to reproduce:
+-------
+ - # tuxmake --runtime podman --target-arch sh --toolchain gcc-11
+--kconfig defconfig
 
-Yes S1
-=20
-> Try to isolate if S2FWB is the exact cause by disabling it in the kernel =
-on this
-> system vs something else wrong?
-
-It looks like not related to S2FWB. I tried  commenting out S2FWB and issue=
- is still
-there.  Probably something related to this test setup.
-
-Thanks,
-Shameer
+--
+Linaro LKFT
+https://lkft.linaro.org
