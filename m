@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2261917E1;
-	Tue, 10 Sep 2024 10:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC991917DE;
+	Tue, 10 Sep 2024 10:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964356; cv=none; b=gWFuP1maAyYkcLJxtPrwsw1xkU4dzxdEId+mN080E9vCgPafFEASucRfVN+qEC8lHGoHGZVuXlRT7PuQgWoU9/cspYHcwxToYAwdwL4LDa7/lsHAOmfCOu1YxpAFZBY5A3eHcILOMyjfSgrFA75EV8fu7QBWOMOf+ODEi+oWfDM=
+	t=1725964359; cv=none; b=Upg6mwLdmxtwa9cRCfjgPadG6bXDdMe1bxruoLbVZhT8y6hmJlqFviQ4Po5nwfaulijQeLhRaRQWvMy09pPnNrNKB8yGOKN/kVAV5zcRVNhuRztMsC4MS8XmNHT+sxhRjLvailRf+uauZ5gIaev8gf7UqHQQ3rtbrIzZTsxZgto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964356; c=relaxed/simple;
-	bh=p5V55hD9bLDoj8RjJwGIVZ4l90IPTtHOIOO/i9oPmMg=;
+	s=arc-20240116; t=1725964359; c=relaxed/simple;
+	bh=5a/2U4nAVDoJBZ6qcqfdF19s9JcZULs9xepZPdcCrRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJ6CQ1M3SiWDXe8kPFonooCKjvKV858jeeR4YYvbwC4J8eqnlgXfdcgw3gXY5VWaOiilpWtutRUYGDjrjAUTwt8AOhMarQSghyMs+jt0WGPxnxa+cISq4HVGYF0VE9yxvXeuRP/WKX2I/cChJp0gdDyvJMOSBy0D1UW/k6RbeU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdcrruLE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccGPrB+wX3IAfLzJm2XU8YNpln3fTJxhFkvIg/p+OClDQfb/5ZNT3xgKo2OxjoasG2A5UiqMKygUkMBiRfMfwS/r7JYGVmceFt6uT+aoSIr4jwDtGs1JlK+Th2j0XCtXBMl8Fd1FDjKVABXnHFLlttgTcB96DwvNvRwG1PznoYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgqMLw9o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdcrruLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61325C4CEC3;
-	Tue, 10 Sep 2024 10:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgqMLw9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49465C4CEC3;
+	Tue, 10 Sep 2024 10:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964355;
-	bh=p5V55hD9bLDoj8RjJwGIVZ4l90IPTtHOIOO/i9oPmMg=;
+	s=korg; t=1725964358;
+	bh=5a/2U4nAVDoJBZ6qcqfdF19s9JcZULs9xepZPdcCrRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdcrruLE7epuewR/o607hOfdx+b5GuvhGk9giSf59sSkPLyWEHBFKzcugJ2Vc9rDg
-	 +PpOVoDGYdLa8tQ6SVODj0zHQg9BYqQ4Fp/VMfFtzlhLhAySdOXlOKg9l0EatihP8/
-	 vEvxfYGnfjmeqI6dD4ANuqBVpz0R1aUmDYxqWBlc=
+	b=jgqMLw9ojpnekH8Q2hXdIp6b4ICPBeMLbaYxfdEWwwRXao8X2e9KzUWgwBocXIa7C
+	 3tQUzXVmAJGDjTR5hhMshzWp8rzoMkaZwjMT/wkNIRo/NWB1IHQNESBhbGBSaLwlp1
+	 vwdO2rDHOnws97M1bUk7kzHqp+3Ar8ZugJshdcQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Alexander Potapenko <glider@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 6.6 147/269] virtio_ring: fix KMSAN error for premapped mode
-Date: Tue, 10 Sep 2024 11:32:14 +0200
-Message-ID: <20240910092613.452975702@linuxfoundation.org>
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 156/269] ASoc: TAS2781: replace beXX_to_cpup with get_unaligned_beXX for potentially broken alignment
+Date: Tue, 10 Sep 2024 11:32:23 +0200
+Message-ID: <20240910092613.756698051@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -54,60 +51,309 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit 840b2d39a2dc1b96deb3f5c7fef76c9b24f08f51 ]
+[ Upstream commit 1cc509edbe23b61e8c245611bd15d88edb635a38 ]
 
-Add kmsan for virtqueue_dma_map_single_attrs to fix:
+Use get_unaligned_be16 instead of be16_to_cpup and get_unaligned_be32
+instead of be32_to_cpup for potentially broken alignment.
 
-BUG: KMSAN: uninit-value in receive_buf+0x45ca/0x6990
- receive_buf+0x45ca/0x6990
- virtnet_poll+0x17e0/0x3130
- net_rx_action+0x832/0x26e0
- handle_softirqs+0x330/0x10f0
- [...]
-
-Uninit was created at:
- __alloc_pages_noprof+0x62a/0xe60
- alloc_pages_noprof+0x392/0x830
- skb_page_frag_refill+0x21a/0x5c0
- virtnet_rq_alloc+0x50/0x1500
- try_fill_recv+0x372/0x54c0
- virtnet_open+0x210/0xbe0
- __dev_open+0x56e/0x920
- __dev_change_flags+0x39c/0x2000
- dev_change_flags+0xaa/0x200
- do_setlink+0x197a/0x7420
- rtnl_setlink+0x77c/0x860
- [...]
-
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Message-Id: <20240606111345.93600-1-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Ilya Leoshkevich <iii@linux.ibm.com>  # s390x
-Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20240707083011.98-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2781-fmwlib.c | 71 +++++++++++++++----------------
+ 1 file changed, 35 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 6f7e5010a673..80669e05bf0e 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -3126,8 +3126,10 @@ dma_addr_t virtqueue_dma_map_single_attrs(struct virtqueue *_vq, void *ptr,
- {
- 	struct vring_virtqueue *vq = to_vvq(_vq);
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 41ad82a42916..3639dcd0bbb2 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -21,7 +21,7 @@
+ #include <sound/soc.h>
+ #include <sound/tlv.h>
+ #include <sound/tas2781.h>
+-
++#include <asm/unaligned.h>
  
--	if (!vq->use_dma_api)
-+	if (!vq->use_dma_api) {
-+		kmsan_handle_dma(virt_to_page(ptr), offset_in_page(ptr), size, dir);
- 		return (dma_addr_t)virt_to_phys(ptr);
-+	}
+ #define ERROR_PRAM_CRCCHK			0x0000000
+ #define ERROR_YRAM_CRCCHK			0x0000001
+@@ -125,8 +125,7 @@ static struct tasdevice_config_info *tasdevice_add_config(
+ 	/* convert data[offset], data[offset + 1], data[offset + 2] and
+ 	 * data[offset + 3] into host
+ 	 */
+-	cfg_info->nblocks =
+-		be32_to_cpup((__be32 *)&config_data[config_offset]);
++	cfg_info->nblocks = get_unaligned_be32(&config_data[config_offset]);
+ 	config_offset += 4;
  
- 	return dma_map_single_attrs(vring_dma_dev(vq), ptr, size, dir, attrs);
- }
+ 	/* Several kinds of dsp/algorithm firmwares can run on tas2781,
+@@ -170,14 +169,14 @@ static struct tasdevice_config_info *tasdevice_add_config(
+ 
+ 		}
+ 		bk_da[i]->yram_checksum =
+-			be16_to_cpup((__be16 *)&config_data[config_offset]);
++			get_unaligned_be16(&config_data[config_offset]);
+ 		config_offset += 2;
+ 		bk_da[i]->block_size =
+-			be32_to_cpup((__be32 *)&config_data[config_offset]);
++			get_unaligned_be32(&config_data[config_offset]);
+ 		config_offset += 4;
+ 
+ 		bk_da[i]->n_subblks =
+-			be32_to_cpup((__be32 *)&config_data[config_offset]);
++			get_unaligned_be32(&config_data[config_offset]);
+ 
+ 		config_offset += 4;
+ 
+@@ -227,7 +226,7 @@ int tasdevice_rca_parser(void *context, const struct firmware *fmw)
+ 	}
+ 	buf = (unsigned char *)fmw->data;
+ 
+-	fw_hdr->img_sz = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->img_sz = get_unaligned_be32(&buf[offset]);
+ 	offset += 4;
+ 	if (fw_hdr->img_sz != fmw->size) {
+ 		dev_err(tas_priv->dev,
+@@ -238,9 +237,9 @@ int tasdevice_rca_parser(void *context, const struct firmware *fmw)
+ 		goto out;
+ 	}
+ 
+-	fw_hdr->checksum = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->checksum = get_unaligned_be32(&buf[offset]);
+ 	offset += 4;
+-	fw_hdr->binary_version_num = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->binary_version_num = get_unaligned_be32(&buf[offset]);
+ 	if (fw_hdr->binary_version_num < 0x103) {
+ 		dev_err(tas_priv->dev, "File version 0x%04x is too low",
+ 			fw_hdr->binary_version_num);
+@@ -249,7 +248,7 @@ int tasdevice_rca_parser(void *context, const struct firmware *fmw)
+ 		goto out;
+ 	}
+ 	offset += 4;
+-	fw_hdr->drv_fw_version = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->drv_fw_version = get_unaligned_be32(&buf[offset]);
+ 	offset += 8;
+ 	fw_hdr->plat_type = buf[offset];
+ 	offset += 1;
+@@ -277,11 +276,11 @@ int tasdevice_rca_parser(void *context, const struct firmware *fmw)
+ 	for (i = 0; i < TASDEVICE_DEVICE_SUM; i++, offset++)
+ 		fw_hdr->devs[i] = buf[offset];
+ 
+-	fw_hdr->nconfig = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->nconfig = get_unaligned_be32(&buf[offset]);
+ 	offset += 4;
+ 
+ 	for (i = 0; i < TASDEVICE_CONFIG_SUM; i++) {
+-		fw_hdr->config_size[i] = be32_to_cpup((__be32 *)&buf[offset]);
++		fw_hdr->config_size[i] = get_unaligned_be32(&buf[offset]);
+ 		offset += 4;
+ 		total_config_sz += fw_hdr->config_size[i];
+ 	}
+@@ -330,7 +329,7 @@ static int fw_parse_block_data_kernel(struct tasdevice_fw *tas_fmw,
+ 	/* convert data[offset], data[offset + 1], data[offset + 2] and
+ 	 * data[offset + 3] into host
+ 	 */
+-	block->type = be32_to_cpup((__be32 *)&data[offset]);
++	block->type = get_unaligned_be32(&data[offset]);
+ 	offset += 4;
+ 
+ 	block->is_pchksum_present = data[offset];
+@@ -345,10 +344,10 @@ static int fw_parse_block_data_kernel(struct tasdevice_fw *tas_fmw,
+ 	block->ychksum = data[offset];
+ 	offset++;
+ 
+-	block->blk_size = be32_to_cpup((__be32 *)&data[offset]);
++	block->blk_size = get_unaligned_be32(&data[offset]);
+ 	offset += 4;
+ 
+-	block->nr_subblocks = be32_to_cpup((__be32 *)&data[offset]);
++	block->nr_subblocks = get_unaligned_be32(&data[offset]);
+ 	offset += 4;
+ 
+ 	if (offset + block->blk_size > fmw->size) {
+@@ -381,7 +380,7 @@ static int fw_parse_data_kernel(struct tasdevice_fw *tas_fmw,
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+-	img_data->nr_blk = be32_to_cpup((__be32 *)&data[offset]);
++	img_data->nr_blk = get_unaligned_be32(&data[offset]);
+ 	offset += 4;
+ 
+ 	img_data->dev_blks = kcalloc(img_data->nr_blk,
+@@ -477,14 +476,14 @@ static int fw_parse_variable_header_kernel(
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+-	fw_hdr->device_family = be16_to_cpup((__be16 *)&buf[offset]);
++	fw_hdr->device_family = get_unaligned_be16(&buf[offset]);
+ 	if (fw_hdr->device_family != 0) {
+ 		dev_err(tas_priv->dev, "%s:not TAS device\n", __func__);
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+ 	offset += 2;
+-	fw_hdr->device = be16_to_cpup((__be16 *)&buf[offset]);
++	fw_hdr->device = get_unaligned_be16(&buf[offset]);
+ 	if (fw_hdr->device >= TASDEVICE_DSP_TAS_MAX_DEVICE ||
+ 		fw_hdr->device == 6) {
+ 		dev_err(tas_priv->dev, "Unsupported dev %d\n", fw_hdr->device);
+@@ -502,7 +501,7 @@ static int fw_parse_variable_header_kernel(
+ 		goto out;
+ 	}
+ 
+-	tas_fmw->nr_programs = be32_to_cpup((__be32 *)&buf[offset]);
++	tas_fmw->nr_programs = get_unaligned_be32(&buf[offset]);
+ 	offset += 4;
+ 
+ 	if (tas_fmw->nr_programs == 0 || tas_fmw->nr_programs >
+@@ -521,14 +520,14 @@ static int fw_parse_variable_header_kernel(
+ 
+ 	for (i = 0; i < tas_fmw->nr_programs; i++) {
+ 		program = &(tas_fmw->programs[i]);
+-		program->prog_size = be32_to_cpup((__be32 *)&buf[offset]);
++		program->prog_size = get_unaligned_be32(&buf[offset]);
+ 		offset += 4;
+ 	}
+ 
+ 	/* Skip the unused prog_size */
+ 	offset += 4 * (TASDEVICE_MAXPROGRAM_NUM_KERNEL - tas_fmw->nr_programs);
+ 
+-	tas_fmw->nr_configurations = be32_to_cpup((__be32 *)&buf[offset]);
++	tas_fmw->nr_configurations = get_unaligned_be32(&buf[offset]);
+ 	offset += 4;
+ 
+ 	/* The max number of config in firmware greater than 4 pieces of
+@@ -560,7 +559,7 @@ static int fw_parse_variable_header_kernel(
+ 
+ 	for (i = 0; i < tas_fmw->nr_programs; i++) {
+ 		config = &(tas_fmw->configs[i]);
+-		config->cfg_size = be32_to_cpup((__be32 *)&buf[offset]);
++		config->cfg_size = get_unaligned_be32(&buf[offset]);
+ 		offset += 4;
+ 	}
+ 
+@@ -598,7 +597,7 @@ static int tasdevice_process_block(void *context, unsigned char *data,
+ 		switch (subblk_typ) {
+ 		case TASDEVICE_CMD_SING_W: {
+ 			int i;
+-			unsigned short len = be16_to_cpup((__be16 *)&data[2]);
++			unsigned short len = get_unaligned_be16(&data[2]);
+ 
+ 			subblk_offset += 2;
+ 			if (subblk_offset + 4 * len > sublocksize) {
+@@ -624,7 +623,7 @@ static int tasdevice_process_block(void *context, unsigned char *data,
+ 		}
+ 			break;
+ 		case TASDEVICE_CMD_BURST: {
+-			unsigned short len = be16_to_cpup((__be16 *)&data[2]);
++			unsigned short len = get_unaligned_be16(&data[2]);
+ 
+ 			subblk_offset += 2;
+ 			if (subblk_offset + 4 + len > sublocksize) {
+@@ -665,7 +664,7 @@ static int tasdevice_process_block(void *context, unsigned char *data,
+ 				is_err = true;
+ 				break;
+ 			}
+-			sleep_time = be16_to_cpup((__be16 *)&data[2]) * 1000;
++			sleep_time = get_unaligned_be16(&data[2]) * 1000;
+ 			usleep_range(sleep_time, sleep_time + 50);
+ 			subblk_offset += 2;
+ 		}
+@@ -940,7 +939,7 @@ static int fw_parse_variable_hdr(struct tasdevice_priv
+ 
+ 	offset += len;
+ 
+-	fw_hdr->device_family = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->device_family = get_unaligned_be32(&buf[offset]);
+ 	if (fw_hdr->device_family != 0) {
+ 		dev_err(tas_priv->dev, "%s: not TAS device\n", __func__);
+ 		offset = -EINVAL;
+@@ -948,7 +947,7 @@ static int fw_parse_variable_hdr(struct tasdevice_priv
+ 	}
+ 	offset += 4;
+ 
+-	fw_hdr->device = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_hdr->device = get_unaligned_be32(&buf[offset]);
+ 	if (fw_hdr->device >= TASDEVICE_DSP_TAS_MAX_DEVICE ||
+ 		fw_hdr->device == 6) {
+ 		dev_err(tas_priv->dev, "Unsupported dev %d\n", fw_hdr->device);
+@@ -993,7 +992,7 @@ static int fw_parse_block_data(struct tasdevice_fw *tas_fmw,
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+-	block->type = be32_to_cpup((__be32 *)&data[offset]);
++	block->type = get_unaligned_be32(&data[offset]);
+ 	offset += 4;
+ 
+ 	if (tas_fmw->fw_hdr.fixed_hdr.drv_ver >= PPC_DRIVER_CRCCHK) {
+@@ -1018,7 +1017,7 @@ static int fw_parse_block_data(struct tasdevice_fw *tas_fmw,
+ 		block->is_ychksum_present = 0;
+ 	}
+ 
+-	block->nr_cmds = be32_to_cpup((__be32 *)&data[offset]);
++	block->nr_cmds = get_unaligned_be32(&data[offset]);
+ 	offset += 4;
+ 
+ 	n = block->nr_cmds * 4;
+@@ -1069,7 +1068,7 @@ static int fw_parse_data(struct tasdevice_fw *tas_fmw,
+ 		goto out;
+ 	}
+ 	offset += n;
+-	img_data->nr_blk = be16_to_cpup((__be16 *)&data[offset]);
++	img_data->nr_blk = get_unaligned_be16(&data[offset]);
+ 	offset += 2;
+ 
+ 	img_data->dev_blks = kcalloc(img_data->nr_blk,
+@@ -1106,7 +1105,7 @@ static int fw_parse_program_data(struct tasdevice_priv *tas_priv,
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+-	tas_fmw->nr_programs = be16_to_cpup((__be16 *)&buf[offset]);
++	tas_fmw->nr_programs = get_unaligned_be16(&buf[offset]);
+ 	offset += 2;
+ 
+ 	if (tas_fmw->nr_programs == 0) {
+@@ -1173,7 +1172,7 @@ static int fw_parse_configuration_data(
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+-	tas_fmw->nr_configurations = be16_to_cpup((__be16 *)&data[offset]);
++	tas_fmw->nr_configurations = get_unaligned_be16(&data[offset]);
+ 	offset += 2;
+ 
+ 	if (tas_fmw->nr_configurations == 0) {
+@@ -1805,7 +1804,7 @@ static int fw_parse_header(struct tasdevice_priv *tas_priv,
+ 	/* Convert data[offset], data[offset + 1], data[offset + 2] and
+ 	 * data[offset + 3] into host
+ 	 */
+-	fw_fixed_hdr->fwsize = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_fixed_hdr->fwsize = get_unaligned_be32(&buf[offset]);
+ 	offset += 4;
+ 	if (fw_fixed_hdr->fwsize != fmw->size) {
+ 		dev_err(tas_priv->dev, "File size not match, %lu %u",
+@@ -1814,9 +1813,9 @@ static int fw_parse_header(struct tasdevice_priv *tas_priv,
+ 		goto out;
+ 	}
+ 	offset += 4;
+-	fw_fixed_hdr->ppcver = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_fixed_hdr->ppcver = get_unaligned_be32(&buf[offset]);
+ 	offset += 8;
+-	fw_fixed_hdr->drv_ver = be32_to_cpup((__be32 *)&buf[offset]);
++	fw_fixed_hdr->drv_ver = get_unaligned_be32(&buf[offset]);
+ 	offset += 72;
+ 
+  out:
+@@ -1858,7 +1857,7 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
+ 		offset = -EINVAL;
+ 		goto out;
+ 	}
+-	tas_fmw->nr_calibrations = be16_to_cpup((__be16 *)&data[offset]);
++	tas_fmw->nr_calibrations = get_unaligned_be16(&data[offset]);
+ 	offset += 2;
+ 
+ 	if (tas_fmw->nr_calibrations != 1) {
 -- 
 2.43.0
 
