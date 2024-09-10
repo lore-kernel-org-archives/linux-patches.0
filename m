@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16484190666;
-	Tue, 10 Sep 2024 09:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E208F13B2B0;
+	Tue, 10 Sep 2024 09:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961532; cv=none; b=BHT0We028ZjzCKcExpfZlIGSAljc7+XSNrCc9rCAC9lww/nB1VmHLUYkcznujR9FEozvIRE28WxDYNWBgk+Bb9D6kxNRuAJhNy+Ps/DUVcvyOHew3qqmlcnwqhYBXznAyythtdf3hiqr9PV2txyEmKS4I21/TTfgFn1UXCa17L4=
+	t=1725961535; cv=none; b=Y0cmWTAzssEnW9YVhmhxtWOUUYKCdMelzFl3O7SeBj9kSx2vUW+iQqFCqCNp6EPJT2eUKjG7hmWurIsRcJXu8QQ0+dPqSKdENUv3s4ANsrr5nlkB4QZJBCuRKyW9ax6Y0bJFSufogw3PrvkPZccI8NPOg7RpzKLTMgJiLqtQTyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961532; c=relaxed/simple;
-	bh=cRvwcxWPWjDIhDUKzLPkGhLWmjo9VuohF7EDfJVOZtA=;
+	s=arc-20240116; t=1725961535; c=relaxed/simple;
+	bh=zXcY7N99zX/gJSThEtkj1vE9nlCdhUtNT70FyekDUEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKH473tR7Ca0Upm0QrBPZBR3jvnG2jooA+/Fm5sGfia8s5+K2jxHwOPDMUZsn+Z8wCEexWborXnIl4HZFsTDKs2RJ7qu+NAkZsgRWsTKD9139VnMWGvKMIoCPwMlGF9mSfebFhzdz0QH0n+XbsD3IivE+N7QvNWu3jqN8R0RmPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb/5wUEO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrEjkJFJHEp44w5+lbSGN93VYAAm0Nr3aib0rdZBC+g+9SD4/JooPeeazU6BiC+otbR7X5yIbqlrBzN82tMG3Se2DVVVIpw8zWZdoOpWyHQgXmGwYzo9mEituyjynHsaOXrrMXoYuLiL8kXzyKk/Wj/JX7RXRaeHDM2En8+vN+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wH1fJf7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb/5wUEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E39AC4CEC6;
-	Tue, 10 Sep 2024 09:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wH1fJf7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69934C4CEC3;
+	Tue, 10 Sep 2024 09:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961531;
-	bh=cRvwcxWPWjDIhDUKzLPkGhLWmjo9VuohF7EDfJVOZtA=;
+	s=korg; t=1725961534;
+	bh=zXcY7N99zX/gJSThEtkj1vE9nlCdhUtNT70FyekDUEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vb/5wUEO5R6ruxePzN2JuyB+7dh8U5r47NDFWYOYTD3V3PJh+fpUWuiMwiojJg9Ci
-	 sIg2sw+LD1ZCEjIJtCo//mqwfMsT0KT3HbG4hW2hq5MlrqTp/VefBp6ndNgFEnB6pj
-	 t7vKdy4dv0661HRo/dP9dWWUK+aBq3FRCmtQDo/8=
+	b=wH1fJf7wk1tGp7DFvybKqrgGAVQjvvHJVsPsHbwaJnSp4hv9Jqh2CHtIHWureMlHs
+	 FLZSdEK+JI31iqdJyRIrh2J+BXR9Cb8XoL7dKOkgujqvAybZ6V7vXZV7tugxgdOTLX
+	 LjcZeGB73NJ1AWwdmwNSn52/QmnMZYEjEsEb7UvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <hffilwlqm@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 101/375] bpf, verifier: Correct tail_call_reachable for bpf prog
-Date: Tue, 10 Sep 2024 11:28:18 +0200
-Message-ID: <20240910092625.640330219@linuxfoundation.org>
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>
+Subject: [PATCH 6.10 075/375] Revert "wifi: ath11k: restore country code during resume"
+Date: Tue, 10 Sep 2024 11:27:52 +0200
+Message-ID: <20240910092624.736148717@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,41 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <hffilwlqm@gmail.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 01793ed86b5d7df1e956520b5474940743eb7ed8 ]
+commit d3e154d7776ba57ab679fb816fb87b627fba21c9 upstream.
 
-It's confusing to inspect 'prog->aux->tail_call_reachable' with drgn[0],
-when bpf prog has tail call but 'tail_call_reachable' is false.
+This reverts commit 7f0343b7b8710436c1e6355c71782d32ada47e0c.
 
-This patch corrects 'tail_call_reachable' when bpf prog has tail call.
+We are going to revert commit 166a490f59ac ("wifi: ath11k: support hibernation"), on
+which this commit depends. With that commit reverted, this one is not needed any
+more, so revert this commit first.
 
-Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
-Link: https://lore.kernel.org/r/20240610124224.34673-2-hffilwlqm@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240830073420.5790-2-quic_bqiang@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/core.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 521bd7efae03..73f55f4b945e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2982,8 +2982,10 @@ static int check_subprogs(struct bpf_verifier_env *env)
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1009,16 +1009,6 @@ int ath11k_core_resume(struct ath11k_bas
+ 		return -ETIMEDOUT;
+ 	}
  
- 		if (code == (BPF_JMP | BPF_CALL) &&
- 		    insn[i].src_reg == 0 &&
--		    insn[i].imm == BPF_FUNC_tail_call)
-+		    insn[i].imm == BPF_FUNC_tail_call) {
- 			subprog[cur_subprog].has_tail_call = true;
-+			subprog[cur_subprog].tail_call_reachable = true;
-+		}
- 		if (BPF_CLASS(code) == BPF_LD &&
- 		    (BPF_MODE(code) == BPF_ABS || BPF_MODE(code) == BPF_IND))
- 			subprog[cur_subprog].has_ld_abs = true;
--- 
-2.43.0
-
+-	if (ab->hw_params.current_cc_support &&
+-	    ar->alpha2[0] != 0 && ar->alpha2[1] != 0) {
+-		ret = ath11k_reg_set_cc(ar);
+-		if (ret) {
+-			ath11k_warn(ab, "failed to set country code during resume: %d\n",
+-				    ret);
+-			return ret;
+-		}
+-	}
+-
+ 	ret = ath11k_dp_rx_pktlog_start(ab);
+ 	if (ret)
+ 		ath11k_warn(ab, "failed to start rx pktlog during resume: %d\n",
 
 
