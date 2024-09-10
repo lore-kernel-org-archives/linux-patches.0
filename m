@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D834C19DF67;
-	Tue, 10 Sep 2024 10:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB66B19DF67;
+	Tue, 10 Sep 2024 10:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963432; cv=none; b=Lx8Mh0YhY76bM5M9A8xBdjlrt2Q0ZQ7bNltSJjbjW+SLFXMK3pTM4gyWgEmDxVD0qX/NH83aJ6R6uZSqAouCUB9DtqY0S8aqA+GQavNMLY1O1xxJUVdCRPrx5i2jO18olHwJC+8yKgAd7R38MAGEAIenkYpWRzULGY8wCI9l31g=
+	t=1725963435; cv=none; b=kVo7aTYS1EmS5LLoN5A/kCNPdC95zwTXT2q5i8YKDkuhjaN5OiBRqScgVMgWbSTmY3VCHaEPg0k1xvQD3MPS44CyzqCDRW3xEPFdhcYlwHt7cA0dUnnTn6MVqsyqu9bpB5vjrFlYyD1tGNlmIueUmK9KTNNz0obOXxeY+M/cSO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963432; c=relaxed/simple;
-	bh=AmC2IiVJcfUF5hJ3rxpKTKTPndEgku8Yo3lQrXsz/7Y=;
+	s=arc-20240116; t=1725963435; c=relaxed/simple;
+	bh=Rw8NMzfkqf/b3xhjokbTwBKsjud+LNNTKVcPRfW1eM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHfqFMByLEJP7VAolisvQRgPi3pmFxo/qFVyajxTZUORi7HnBCfD7/uaxyDqhw8+hJfzppYSlxTrJxMQktyPDw7zMi++Y9/Gn/pBztkP+1HlZc66dekxlQ/v93t2LTnxCACzL2lnDdYMJ2sdlAsk4c38Rs37KauzTru7Ju5PXHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+Gxui4u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=isR1ARydujQy7PVwaipDCevF6Emcw7siPc3hul87FKD2feBiLma890LvM2xUQbHSCWX9TQuSdaMg+CSdjRt1m/JOFtAr/Nucdb5YZoh5uvwQpYWiuVoRdbVHeuwWufUc2xekydKYSbU7bOcWmMkdAjg3E6J7A/NaHqudQh+otcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1uijIkz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+Gxui4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591A1C4CECD;
-	Tue, 10 Sep 2024 10:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1uijIkz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E16C4CECE;
+	Tue, 10 Sep 2024 10:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963432;
-	bh=AmC2IiVJcfUF5hJ3rxpKTKTPndEgku8Yo3lQrXsz/7Y=;
+	s=korg; t=1725963435;
+	bh=Rw8NMzfkqf/b3xhjokbTwBKsjud+LNNTKVcPRfW1eM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+Gxui4uxtB+mdbTCyAZQ6G3fnILexflW8EbyNTynirmVg0CXcJcEH1PT8TJWoptk
-	 r3z8c0HDfM8/TAhfNHbueN/r4q0X3GHOL4QBVCIRICf8Q6YBjbAysL6XPTkUtrQE/S
-	 GVK1CBUbwZXrLcVOfH5ZH+KyySGHnIk+RFXzakZ8=
+	b=r1uijIkzKiG5h8vS/nDhaWFZwgMFO4vxvvt9hSc7kX/iuDCZ87nEbFiM7NfRKKXWq
+	 6VmRMN+//VfTDjlcmarYJ+o6FKHQoOfPbu9IThbaUcLnr+PUio4U6dDRWInQZ0J0b9
+	 SbZVypE3hvxBMpsR2ClfNw/7+tcJS/n9PwDxarMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/214] drm/amdgpu: fix ucode out-of-bounds read warning
-Date: Tue, 10 Sep 2024 11:30:50 +0200
-Message-ID: <20240910092559.929971648@linuxfoundation.org>
+Subject: [PATCH 5.15 029/214] drm/amdgpu: fix mc_data out-of-bounds read warning
+Date: Tue, 10 Sep 2024 11:30:51 +0200
+Message-ID: <20240910092559.977230996@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -53,32 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit 8944acd0f9db33e17f387fdc75d33bb473d7936f ]
+[ Upstream commit 51dfc0a4d609fe700750a62f41447f01b8c9ea50 ]
 
-Clear warning that read ucode[] may out-of-bounds.
+Clear warning that read mc_data[i-1] may out-of-bounds.
 
 Signed-off-by: Tim Huang <Tim.Huang@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c
-index f1a050379190..682de88cf91f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cgs.c
-@@ -213,6 +213,9 @@ static int amdgpu_cgs_get_firmware_info(struct cgs_device *cgs_device,
- 		struct amdgpu_firmware_info *ucode;
- 
- 		id = fw_type_convert(cgs_device, type);
-+		if (id >= AMDGPU_UCODE_ID_MAXIMUM)
-+			return -EINVAL;
-+
- 		ucode = &adev->firmware.ucode[id];
- 		if (ucode->fw == NULL)
- 			return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+index 96b7bb13a2dd..07b1d2460a85 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+@@ -1475,6 +1475,8 @@ int amdgpu_atombios_init_mc_reg_table(struct amdgpu_device *adev,
+ 										(u32)le32_to_cpu(*((u32 *)reg_data + j));
+ 									j++;
+ 								} else if ((reg_table->mc_reg_address[i].pre_reg_data & LOW_NIBBLE_MASK) == DATA_EQU_PREV) {
++									if (i == 0)
++										continue;
+ 									reg_table->mc_reg_table_entry[num_ranges].mc_data[i] =
+ 										reg_table->mc_reg_table_entry[num_ranges].mc_data[i - 1];
+ 								}
 -- 
 2.43.0
 
