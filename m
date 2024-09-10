@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D7918BC3F;
-	Tue, 10 Sep 2024 09:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6567D18C005;
+	Tue, 10 Sep 2024 09:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961273; cv=none; b=YZ9g5eeU0/fo+Cgty2NmyL7FjSScy/1X7BIPGSJrLDHxrmC9MlMGl54MvGSN3yZ13F7msU4NUcfQCqa+iVLUQ6KlsZEaQvZQK7jnaPfuQlDzwPoeiZvSjgBQfZSj5hCTeFEiLav3EQ1sNAInyuait4fri0JLo3U1WVmaVBN1D5g=
+	t=1725961276; cv=none; b=DjpotWQrgsOv7sUXDJ1qQxko4aOKfgdsyNJz322kwuqkzQlcEhw4FWRlYmT3AFYsUJ4KlxwJfrUqqKW3IwD/zM55IkB4WtgkB8QhbRBLBY76n/xE9F5k1sQp1+XzIEsqS5IsMXvgpTBe1YajQX8GEKupGBLuNgDQl1Po6M3gYgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961273; c=relaxed/simple;
-	bh=rMdJQRTokMcakdtxJ5TQKIDWjOOFIUOh1XQJqfSMP50=;
+	s=arc-20240116; t=1725961276; c=relaxed/simple;
+	bh=/jdKoRsvF/HP2mATDTjXJlnFsWOvakkiOiBx5zqwtaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aBH7izZW9BkToeIZwind8a0wa16L+EWAcGHzxmg8U2UVZcfO1Fa2dB9AK2qVqp4cZ3QXhLHW2VYMm8mes7tSqja9jK/Zyp3pyaL3SF5ZWneM8cyUfUnmhMyBRzwYOcbd9tzDaeihJqjYGfj7jyESCIIK4S1FnyUDBNG4G7bdGf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQ+ZonbD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qmbn56X/aZOVL9u0sFOaakX30dKAt3z2LhQMgy+3SzQXfOz/yupwoS9wq23L7qPySOssFf28yTh4Bk0//HLPENDKiiBps5kSvi/hjYj+u+6KyXiWyD7NrWmWSU8de1t8p3GhMw+zY1fp9QdoW5Bweohi8I+C3hngdLPz0GUsolU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8anwwbV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQ+ZonbD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E439AC4CEC3;
-	Tue, 10 Sep 2024 09:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8anwwbV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5CCC4CEC3;
+	Tue, 10 Sep 2024 09:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961273;
-	bh=rMdJQRTokMcakdtxJ5TQKIDWjOOFIUOh1XQJqfSMP50=;
+	s=korg; t=1725961276;
+	bh=/jdKoRsvF/HP2mATDTjXJlnFsWOvakkiOiBx5zqwtaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQ+ZonbDUtS1iSPfp4HXfIw99EHrP/4y84cF1mdN0D9THCjxJ/vRNb1cgmwxThLoC
-	 MyrvCSwsJ7GQsjBl100rvlvOeHVNWhba75KZijQbya4QT23vAbnW3ii9kedolyZ/Ho
-	 Faq40lH3Gr37KyOK9UZ9M8oGCc2vz5b5bPvLVXow=
+	b=J8anwwbVOT5/cqGeFtmPRKYNXRPDIyduuSJdYoWqs+LisW3vHl8630Iz9v2nfflNo
+	 fCyYGuvCVurbf/f32yoOSCj0g59d6twawX0KyM91NZj6F6vRzGdjVituygtR89l88r
+	 ACgB/OF2m52dbVyJpjKMJdOLlzELc7OO+U44BHmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	=?UTF-8?q?Jens=20Emil=20Schulz=20=C3=98stergaard?= <jensemil.schulzostergaard@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.10 005/375] net: microchip: vcap: Fix use-after-free error in kunit test
-Date: Tue, 10 Sep 2024 11:26:42 +0200
-Message-ID: <20240910092622.447004018@linuxfoundation.org>
+	Roger Quadros <rogerq@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Julien Panis <jpanis@baylibre.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.10 006/375] net: ethernet: ti: am65-cpsw: fix XDP_DROP, XDP_TX and XDP_REDIRECT
+Date: Tue, 10 Sep 2024 11:26:43 +0200
+Message-ID: <20240910092622.478344978@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -45,52 +47,232 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Emil Schulz Østergaard <jensemil.schulzostergaard@microchip.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-commit a3c1e45156ad39f225cd7ddae0f81230a3b1e657 upstream.
+commit 5e24db550bd6f484d2c7687ee488708260e1f84a upstream.
 
-This is a clear use-after-free error. We remove it, and rely on checking
-the return code of vcap_del_rule.
+The following XDP_DROP test from [1] stalls the interface after
+250 packets.
+~# xdb-bench drop -m native eth0
+This is because new RX requests are never queued. Fix that.
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/kernel-janitors/7bffefc6-219a-4f71-baa0-ad4526e5c198@kili.mountain/
-Fixes: c956b9b318d9 ("net: microchip: sparx5: Adding KUNIT tests of key/action values in VCAP API")
-Signed-off-by: Jens Emil Schulz Østergaard <jensemil.schulzostergaard@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The below XDP_TX test from [1] fails with a warning
+[  499.947381] XDP_WARN: xdp_update_frame_from_buff(line:277): Driver BUG: missing reserved tailroom
+~# xdb-bench tx -m native eth0
+Fix that by using PAGE_SIZE during xdp_init_buf().
+
+In XDP_REDIRECT case only 1 packet was processed in rx_poll.
+Fix it to process up to budget packets.
+
+Fix all XDP error cases to call trace_xdp_exception() and drop the packet
+in am65_cpsw_run_xdp().
+
+[1] xdp-tools suite https://github.com/xdp-project/xdp-tools
+
+Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Julien Panis <jpanis@baylibre.com>
+Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c |   62 +++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 28 deletions(-)
 
---- a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-@@ -1442,18 +1442,8 @@ static void vcap_api_encode_rule_test(st
- 	vcap_enable_lookups(&test_vctrl, &test_netdev, 0, 0,
- 			    rule->cookie, false);
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -156,12 +156,13 @@
+ #define AM65_CPSW_CPPI_TX_PKT_TYPE 0x7
  
--	vcap_free_rule(rule);
+ /* XDP */
+-#define AM65_CPSW_XDP_CONSUMED 2
+-#define AM65_CPSW_XDP_REDIRECT 1
++#define AM65_CPSW_XDP_CONSUMED BIT(1)
++#define AM65_CPSW_XDP_REDIRECT BIT(0)
+ #define AM65_CPSW_XDP_PASS     0
+ 
+ /* Include headroom compatible with both skb and xdpf */
+-#define AM65_CPSW_HEADROOM (max(NET_SKB_PAD, XDP_PACKET_HEADROOM) + NET_IP_ALIGN)
++#define AM65_CPSW_HEADROOM_NA (max(NET_SKB_PAD, XDP_PACKET_HEADROOM) + NET_IP_ALIGN)
++#define AM65_CPSW_HEADROOM ALIGN(AM65_CPSW_HEADROOM_NA, sizeof(long))
+ 
+ static void am65_cpsw_port_set_sl_mac(struct am65_cpsw_port *slave,
+ 				      const u8 *dev_addr)
+@@ -933,7 +934,7 @@ static int am65_cpsw_xdp_tx_frame(struct
+ 	host_desc = k3_cppi_desc_pool_alloc(tx_chn->desc_pool);
+ 	if (unlikely(!host_desc)) {
+ 		ndev->stats.tx_dropped++;
+-		return -ENOMEM;
++		return AM65_CPSW_XDP_CONSUMED;	/* drop */
+ 	}
+ 
+ 	am65_cpsw_nuss_set_buf_type(tx_chn, host_desc, buf_type);
+@@ -942,7 +943,7 @@ static int am65_cpsw_xdp_tx_frame(struct
+ 				 pkt_len, DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(tx_chn->dma_dev, dma_buf))) {
+ 		ndev->stats.tx_dropped++;
+-		ret = -ENOMEM;
++		ret = AM65_CPSW_XDP_CONSUMED;	/* drop */
+ 		goto pool_free;
+ 	}
+ 
+@@ -977,6 +978,7 @@ static int am65_cpsw_xdp_tx_frame(struct
+ 		/* Inform BQL */
+ 		netdev_tx_completed_queue(netif_txq, 1, pkt_len);
+ 		ndev->stats.tx_errors++;
++		ret = AM65_CPSW_XDP_CONSUMED; /* drop */
+ 		goto dma_unmap;
+ 	}
+ 
+@@ -1004,6 +1006,7 @@ static int am65_cpsw_run_xdp(struct am65
+ 	struct bpf_prog *prog;
+ 	struct page *page;
+ 	u32 act;
++	int err;
+ 
+ 	prog = READ_ONCE(port->xdp_prog);
+ 	if (!prog)
+@@ -1023,14 +1026,14 @@ static int am65_cpsw_run_xdp(struct am65
+ 
+ 		xdpf = xdp_convert_buff_to_frame(xdp);
+ 		if (unlikely(!xdpf))
+-			break;
++			goto drop;
+ 
+ 		__netif_tx_lock(netif_txq, cpu);
+-		ret = am65_cpsw_xdp_tx_frame(ndev, tx_chn, xdpf,
++		err = am65_cpsw_xdp_tx_frame(ndev, tx_chn, xdpf,
+ 					     AM65_CPSW_TX_BUF_TYPE_XDP_TX);
+ 		__netif_tx_unlock(netif_txq);
+-		if (ret)
+-			break;
++		if (err)
++			goto drop;
+ 
+ 		ndev->stats.rx_bytes += *len;
+ 		ndev->stats.rx_packets++;
+@@ -1038,7 +1041,7 @@ static int am65_cpsw_run_xdp(struct am65
+ 		goto out;
+ 	case XDP_REDIRECT:
+ 		if (unlikely(xdp_do_redirect(ndev, xdp, prog)))
+-			break;
++			goto drop;
+ 
+ 		ndev->stats.rx_bytes += *len;
+ 		ndev->stats.rx_packets++;
+@@ -1048,6 +1051,7 @@ static int am65_cpsw_run_xdp(struct am65
+ 		bpf_warn_invalid_xdp_action(ndev, prog, act);
+ 		fallthrough;
+ 	case XDP_ABORTED:
++drop:
+ 		trace_xdp_exception(ndev, prog, act);
+ 		fallthrough;
+ 	case XDP_DROP:
+@@ -1056,7 +1060,6 @@ static int am65_cpsw_run_xdp(struct am65
+ 
+ 	page = virt_to_head_page(xdp->data);
+ 	am65_cpsw_put_page(rx_chn, page, true, desc_idx);
 -
--	/* Check that the rule has been freed: tricky to access since this
--	 * memory should not be accessible anymore
--	 */
--	KUNIT_EXPECT_PTR_NE(test, NULL, rule);
--	ret = list_empty(&rule->keyfields);
--	KUNIT_EXPECT_EQ(test, true, ret);
--	ret = list_empty(&rule->actionfields);
--	KUNIT_EXPECT_EQ(test, true, ret);
--
--	vcap_del_rule(&test_vctrl, &test_netdev, id);
-+	ret = vcap_del_rule(&test_vctrl, &test_netdev, id);
-+	KUNIT_EXPECT_EQ(test, 0, ret);
+ out:
+ 	return ret;
+ }
+@@ -1095,7 +1098,7 @@ static void am65_cpsw_nuss_rx_csum(struc
  }
  
- static void vcap_api_set_rule_counter_test(struct kunit *test)
+ static int am65_cpsw_nuss_rx_packets(struct am65_cpsw_common *common,
+-				     u32 flow_idx, int cpu)
++				     u32 flow_idx, int cpu, int *xdp_state)
+ {
+ 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
+ 	u32 buf_dma_len, pkt_len, port_id = 0, csum_info;
+@@ -1114,6 +1117,7 @@ static int am65_cpsw_nuss_rx_packets(str
+ 	void **swdata;
+ 	u32 *psdata;
+ 
++	*xdp_state = AM65_CPSW_XDP_PASS;
+ 	ret = k3_udma_glue_pop_rx_chn(rx_chn->rx_chn, flow_idx, &desc_dma);
+ 	if (ret) {
+ 		if (ret != -ENODATA)
+@@ -1161,15 +1165,13 @@ static int am65_cpsw_nuss_rx_packets(str
+ 	}
+ 
+ 	if (port->xdp_prog) {
+-		xdp_init_buff(&xdp, AM65_CPSW_MAX_PACKET_SIZE, &port->xdp_rxq);
+-
+-		xdp_prepare_buff(&xdp, page_addr, skb_headroom(skb),
++		xdp_init_buff(&xdp, PAGE_SIZE, &port->xdp_rxq);
++		xdp_prepare_buff(&xdp, page_addr, AM65_CPSW_HEADROOM,
+ 				 pkt_len, false);
+-
+-		ret = am65_cpsw_run_xdp(common, port, &xdp, desc_idx,
+-					cpu, &pkt_len);
+-		if (ret != AM65_CPSW_XDP_PASS)
+-			return ret;
++		*xdp_state = am65_cpsw_run_xdp(common, port, &xdp, desc_idx,
++					       cpu, &pkt_len);
++		if (*xdp_state != AM65_CPSW_XDP_PASS)
++			goto allocate;
+ 
+ 		/* Compute additional headroom to be reserved */
+ 		headroom = (xdp.data - xdp.data_hard_start) - skb_headroom(skb);
+@@ -1193,9 +1195,13 @@ static int am65_cpsw_nuss_rx_packets(str
+ 	stats->rx_bytes += pkt_len;
+ 	u64_stats_update_end(&stats->syncp);
+ 
++allocate:
+ 	new_page = page_pool_dev_alloc_pages(rx_chn->page_pool);
+-	if (unlikely(!new_page))
++	if (unlikely(!new_page)) {
++		dev_err(dev, "page alloc failed\n");
+ 		return -ENOMEM;
++	}
++
+ 	rx_chn->pages[desc_idx] = new_page;
+ 
+ 	if (netif_dormant(ndev)) {
+@@ -1229,8 +1235,9 @@ static int am65_cpsw_nuss_rx_poll(struct
+ 	struct am65_cpsw_common *common = am65_cpsw_napi_to_common(napi_rx);
+ 	int flow = AM65_CPSW_MAX_RX_FLOWS;
+ 	int cpu = smp_processor_id();
+-	bool xdp_redirect = false;
++	int xdp_state_or = 0;
+ 	int cur_budget, ret;
++	int xdp_state;
+ 	int num_rx = 0;
+ 
+ 	/* process every flow */
+@@ -1238,12 +1245,11 @@ static int am65_cpsw_nuss_rx_poll(struct
+ 		cur_budget = budget - num_rx;
+ 
+ 		while (cur_budget--) {
+-			ret = am65_cpsw_nuss_rx_packets(common, flow, cpu);
+-			if (ret) {
+-				if (ret == AM65_CPSW_XDP_REDIRECT)
+-					xdp_redirect = true;
++			ret = am65_cpsw_nuss_rx_packets(common, flow, cpu,
++							&xdp_state);
++			xdp_state_or |= xdp_state;
++			if (ret)
+ 				break;
+-			}
+ 			num_rx++;
+ 		}
+ 
+@@ -1251,7 +1257,7 @@ static int am65_cpsw_nuss_rx_poll(struct
+ 			break;
+ 	}
+ 
+-	if (xdp_redirect)
++	if (xdp_state_or & AM65_CPSW_XDP_REDIRECT)
+ 		xdp_do_flush();
+ 
+ 	dev_dbg(common->dev, "%s num_rx:%d %d\n", __func__, num_rx, budget);
 
 
