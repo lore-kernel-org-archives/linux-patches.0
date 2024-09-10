@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158E718C036;
-	Tue, 10 Sep 2024 10:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E451922D0;
+	Tue, 10 Sep 2024 10:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963773; cv=none; b=B7/A59SoULhs9xgfGA9f0DAAFrKkPRm9Gy0f7D7MJqXicHlTugElhzsqhvDMmDP0xHTb6yI0oRPS5P4MBFjXfb1ZJZc9B9zTYxGkJc/oRfYAjSbxLIflxAU5d4wP6kgPgahHWjUhfos9Gu1ujJi/JfPPw4gedsNNbc1Nznt0qZs=
+	t=1725963776; cv=none; b=BndGC6nsWBk3PSUk3f9rZcsyDAUdu+/5sqlsauNmJUi1UQuFbg6lHq7wvle9tlWuoDbCI1rGFhHwLQzIJoldC6XjmzL7/8T4abfARmA8YIRLfhMaGObGIv2heZK+K96k7fkCxMfiTKnv5zOcLWwJvhgm/s8XLJw9x/ltIq1lY3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963773; c=relaxed/simple;
-	bh=+OJSst2OSQko4/qOokf4+5QiNNmRur/46OlMZTFXFyY=;
+	s=arc-20240116; t=1725963776; c=relaxed/simple;
+	bh=grd2TSZwhTrUi1t95a/ZFzuUq7e2Q/Csd7DJdonwH/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjnDttPQKR4QQUA1R7UEywmdZAonN8vr8GzC+2ZKCsWIXlC/ze37Y4zYACEN+ZC3jwRYnnQ7QRRRVBVB0NGBqGOMqNjmsGg2VpwCO9r5+7Lq8tbrPIJ742Y4cfyuMsvGM9zHfjby3TLTOTEejPPFn3hZEBauM/97PDSALq6W6Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYPkpCPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHIyIF+YyS9BfXpveEt4UeFFQcyV532TjzmTv6xp1wmMXUwhMOoYboMWvXMetrJSa7F+NKOv1AjDZT5B9ZV0pm4lGLbTmDKyOMb7K+njrvRIIcO7IBhWNssJXwPBxzswfA5J9tuOl+GCgDCQ+fdt42Nbx3/cuzIWpKihvHmIYms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzFb+67v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYPkpCPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCD3C4CEC3;
-	Tue, 10 Sep 2024 10:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzFb+67v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C1FC4CEC3;
+	Tue, 10 Sep 2024 10:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963772;
-	bh=+OJSst2OSQko4/qOokf4+5QiNNmRur/46OlMZTFXFyY=;
+	s=korg; t=1725963775;
+	bh=grd2TSZwhTrUi1t95a/ZFzuUq7e2Q/Csd7DJdonwH/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYPkpCPwUCvp++DJavF4fdrPhgixGCetXJoZVmcfweNYrlGwTFuY9iVS7Pu11EDh2
-	 IWfOOkHdAD0Ak7mb8i1y1U9nnmA6Q3q3/iuJCTGugH+383kFCrTtt0l1mP6Ml11EXe
-	 ILBvOOCQDw8HoW2KquEBzMN9pGLww2bEJG7mipoY=
+	b=tzFb+67vpeT5JwY4eUty9C0Vq26Wr6cF5vUka0kXuXMuqKT2B1LRebB6D9CZKR5Y/
+	 y+Dr/NX5fZ2qo+nbL5/6Vt6hCuPplbC9msY3ZEU2ARifBTlQXJBJDRB8d0K13vjwD2
+	 uUnlkv4q7Pi4d2fFGXKxsnDLM1EdqpK2N/RLCdNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/214] ata: pata_macio: Use WARN instead of BUG
-Date: Tue, 10 Sep 2024 11:33:13 +0200
-Message-ID: <20240910092605.663023330@linuxfoundation.org>
+Subject: [PATCH 5.15 145/214] hwmon: (w83627ehf) Fix underflows seen when writing limit attributes
+Date: Tue, 10 Sep 2024 11:32:47 +0200
+Message-ID: <20240910092604.680598381@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,51 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit d4bc0a264fb482b019c84fbc7202dd3cab059087 ]
+[ Upstream commit 5c1de37969b7bc0abcb20b86e91e70caebbd4f89 ]
 
-The overflow/underflow conditions in pata_macio_qc_prep() should never
-happen. But if they do there's no need to kill the system entirely, a
-WARN and failing the IO request should be sufficient and might allow the
-system to keep running.
+DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
+negative number such as -9223372036854775808 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_macio.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hwmon/w83627ehf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/pata_macio.c b/drivers/ata/pata_macio.c
-index be0ca8d5b345..eacebfc2ca08 100644
---- a/drivers/ata/pata_macio.c
-+++ b/drivers/ata/pata_macio.c
-@@ -540,7 +540,8 @@ static enum ata_completion_errors pata_macio_qc_prep(struct ata_queued_cmd *qc)
+diff --git a/drivers/hwmon/w83627ehf.c b/drivers/hwmon/w83627ehf.c
+index 705a59663d42..b6bae04d656e 100644
+--- a/drivers/hwmon/w83627ehf.c
++++ b/drivers/hwmon/w83627ehf.c
+@@ -895,7 +895,7 @@ store_target_temp(struct device *dev, struct device_attribute *attr,
+ 	if (err < 0)
+ 		return err;
  
- 		while (sg_len) {
- 			/* table overflow should never happen */
--			BUG_ON (pi++ >= MAX_DCMDS);
-+			if (WARN_ON_ONCE(pi >= MAX_DCMDS))
-+				return AC_ERR_SYSTEM;
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 127000), 1000);
  
- 			len = (sg_len < MAX_DBDMA_SEG) ? sg_len : MAX_DBDMA_SEG;
- 			table->command = cpu_to_le16(write ? OUTPUT_MORE: INPUT_MORE);
-@@ -552,11 +553,13 @@ static enum ata_completion_errors pata_macio_qc_prep(struct ata_queued_cmd *qc)
- 			addr += len;
- 			sg_len -= len;
- 			++table;
-+			++pi;
- 		}
- 	}
+ 	mutex_lock(&data->update_lock);
+ 	data->target_temp[nr] = val;
+@@ -920,7 +920,7 @@ store_tolerance(struct device *dev, struct device_attribute *attr,
+ 		return err;
  
- 	/* Should never happen according to Tejun */
--	BUG_ON(!pi);
-+	if (WARN_ON_ONCE(!pi))
-+		return AC_ERR_SYSTEM;
+ 	/* Limit the temp to 0C - 15C */
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 15);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 15000), 1000);
  
- 	/* Convert the last command to an input/output */
- 	table--;
+ 	mutex_lock(&data->update_lock);
+ 	reg = w83627ehf_read_value(data, W83627EHF_REG_TOLERANCE[nr]);
 -- 
 2.43.0
 
