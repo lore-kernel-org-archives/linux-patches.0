@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943DD1922F1;
-	Tue, 10 Sep 2024 10:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC24C1922E7;
+	Tue, 10 Sep 2024 10:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962955; cv=none; b=q91FBoYD49aO7rQeeh05cCJZcJGbV/N8O3nEbfk8TsUDsRcrZsh0grUQElG30jNTUyga1B+26ElCoxNXTzzvrCTDdp0JfPsO/1zC6QGZdZR5XdqmuwUenQfCsQO3VHndBux1zhK64dz6yTQrfJ/vyepwYsXi6AqTDsojMbcFXro=
+	t=1725962958; cv=none; b=VbG1CKN8XNugGQb3aGcDy4Q7hesNxAnt+Yj/lWjzeV/dyIvnG+bdHlkIELOMhWvKt+VTy1M30giOv6stQZ76A1HAdbBtfXQP7gX0L1ZvwY5lfA74LoBDGPBWi82VnaA93SeaEYeJqWLHsvvqX+iDc2+YbWkas8biw0OOLy9E80w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962955; c=relaxed/simple;
-	bh=7Bs5c99IHmfGNaUZmLOSCknEZvHqOf1/TcBOnVJRMlY=;
+	s=arc-20240116; t=1725962958; c=relaxed/simple;
+	bh=PHNBvCujV5+RSInz40RhrW5aAOr72uheOw/B1fS0ytc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ux5u1O89t0tEk+Of4kNY+akXAlX+0wvUcVjEiU8ZI2YS6t8qoR80LmNgqu561kwLgZnB3cZ3+BCW20ebA4f1/kG+A+1ffPXIU3Y4xOo59V9feuxecGpeSBi6/lf4krQ1t0PJNsJlHFPf+NxN6QRhTETpzw1emgCHP54f6OTMbII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiGRrs3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MtK+23Ro7N1iHZMpruJX+z9ktoSv5Cb/MoCldfVQZkt3UZhQvO/3qzZpG69zJG3W1boNPjZ27dvttANiMwX/oSD1NtMhhB/HqKMUO8aJvhNkKneik2kXejbePksmrXugWykJ5TayWGWn1Zjf3U+7uijvN4mYa1AL+BNmhMl1C0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czZ4Vd2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiGRrs3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0FEC4CEC6;
-	Tue, 10 Sep 2024 10:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czZ4Vd2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A56C4CECF;
+	Tue, 10 Sep 2024 10:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962955;
-	bh=7Bs5c99IHmfGNaUZmLOSCknEZvHqOf1/TcBOnVJRMlY=;
+	s=korg; t=1725962958;
+	bh=PHNBvCujV5+RSInz40RhrW5aAOr72uheOw/B1fS0ytc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LiGRrs3Y7syeC7nwYWuQIhkXI/FmAkNVh/h/k4Lz5GWj95q6cQvCI9Ms1CGSI+vfh
-	 ANSFarkwmoYPKCUbohsujcApv+KPb84lgMTE07PAALKt6YrJ/3F2/GYElA6H+u6irC
-	 0yQUpnbtg92pFUn1XumeWkQsdohcPgtRIF5iI7Eg=
+	b=czZ4Vd2xZMg1aoEtgiL+LWUAYy+XbOtzLnkXZc42mKhnzskzm2cYiJZnKiwNjUGFJ
+	 fkcwsuTLtt2qzLktEBHIIzBEVmMjwSlsDlrse/VUGWjxTc+xS+baGeZfxMVQdwFJ+l
+	 6tXZdd7icWJVP9x3YfwqYegh1Z+SukLNWKCj8Cqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Dembicki <paweldembicki@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/192] net: dsa: vsc73xx: fix possible subblocks range of CAPT block
-Date: Tue, 10 Sep 2024 11:31:51 +0200
-Message-ID: <20240910092601.581255925@linuxfoundation.org>
+Subject: [PATCH 6.1 088/192] firmware: cs_dsp: Dont allow writes to read-only controls
+Date: Tue, 10 Sep 2024 11:31:52 +0200
+Message-ID: <20240910092601.627641136@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,60 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Dembicki <paweldembicki@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 8e69c96df771ab469cec278edb47009351de4da6 ]
+[ Upstream commit 62412a9357b16a4e39dc582deb2e2a682b92524c ]
 
-CAPT block (CPU Capture Buffer) have 7 sublocks: 0-3, 4, 6, 7.
-Function 'vsc73xx_is_addr_valid' allows to use only block 0 at this
-moment.
+Add a check to cs_dsp_coeff_write_ctrl() to abort if the control
+is not writeable.
 
-This patch fix it.
+The cs_dsp code originated as an ASoC driver (wm_adsp) where all
+controls were exported as ALSA controls. It relied on ALSA to
+enforce the read-only permission. Now that the code has been
+separated from ALSA/ASoC it must perform its own permission check.
 
-Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
-Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20240903203340.1518789-1-paweldembicki@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This isn't currently causing any problems so there shouldn't be any
+need to backport this. If the client of cs_dsp exposes the control as
+an ALSA control, it should set permissions on that ALSA control to
+protect it. The few uses of cs_dsp_coeff_write_ctrl() inside drivers
+are for writable controls.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20240702110809.16836-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/vitesse-vsc73xx-core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/firmware/cirrus/cs_dsp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
-index c8e9ca5d5c28..de444d201e0f 100644
---- a/drivers/net/dsa/vitesse-vsc73xx-core.c
-+++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
-@@ -35,7 +35,7 @@
- #define VSC73XX_BLOCK_ANALYZER	0x2 /* Only subblock 0 */
- #define VSC73XX_BLOCK_MII	0x3 /* Subblocks 0 and 1 */
- #define VSC73XX_BLOCK_MEMINIT	0x3 /* Only subblock 2 */
--#define VSC73XX_BLOCK_CAPTURE	0x4 /* Only subblock 2 */
-+#define VSC73XX_BLOCK_CAPTURE	0x4 /* Subblocks 0-4, 6, 7 */
- #define VSC73XX_BLOCK_ARBITER	0x5 /* Only subblock 0 */
- #define VSC73XX_BLOCK_SYSTEM	0x7 /* Only subblock 0 */
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index 68005cce0136..cf4f4da0cb87 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -764,6 +764,9 @@ int cs_dsp_coeff_write_ctrl(struct cs_dsp_coeff_ctl *ctl,
  
-@@ -371,13 +371,19 @@ int vsc73xx_is_addr_valid(u8 block, u8 subblock)
- 		break;
+ 	lockdep_assert_held(&ctl->dsp->pwr_lock);
  
- 	case VSC73XX_BLOCK_MII:
--	case VSC73XX_BLOCK_CAPTURE:
- 	case VSC73XX_BLOCK_ARBITER:
- 		switch (subblock) {
- 		case 0 ... 1:
- 			return 1;
- 		}
- 		break;
-+	case VSC73XX_BLOCK_CAPTURE:
-+		switch (subblock) {
-+		case 0 ... 4:
-+		case 6 ... 7:
-+			return 1;
-+		}
-+		break;
- 	}
++	if (ctl->flags && !(ctl->flags & WMFW_CTL_FLAG_WRITEABLE))
++		return -EPERM;
++
+ 	if (len + off * sizeof(u32) > ctl->len)
+ 		return -EINVAL;
  
- 	return 0;
 -- 
 2.43.0
 
