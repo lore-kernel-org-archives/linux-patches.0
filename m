@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE16718C030;
-	Tue, 10 Sep 2024 09:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF92518B477;
+	Tue, 10 Sep 2024 09:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961198; cv=none; b=iMyQ/TWQw0b7+yKrhkWhpPYSr/LVFsV2tpUCoVyUw73GUYyl9gBWD/1rxtV37Ohak767vsQBn90U190VXtKSWl+YWwHz4n5triYss5gpTzz869WUdYhrZQtt1Vv9Y0Ea/yLlb5HbzE3GbXO9bbE+Q4czJCY/J88KgsBgJfjKN4U=
+	t=1725961201; cv=none; b=AX7qLrAIiLRDVNFqqIpAZSrXMfeWy4ufU7Oa+ZiipCZnKraJnyzV7i7PnqYHBOeSiuG49vb8h4pjLiEC5+ereKlgYc/UOP80Bckm1Ukop93IF7z6o2owj6rQeXaLDRqcuhSmEbzFt5gHL35L2xuZ++kBPN58nlW1A6+rWttRMA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961198; c=relaxed/simple;
-	bh=kyy/790lIBs5YW4W2PX9HpmyuiL/84qg79n3iA3SEVQ=;
+	s=arc-20240116; t=1725961201; c=relaxed/simple;
+	bh=iPnfE2qCYAlZNzJV4yDXTW6N+patMhlrRzd0ZNlXR2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1YrrTJx4PFfHe0joRRGqk9cAAcOkLix2gFsczNScNtR50aKndCdWGFY9RdpngxB9ZLXpGDNca2asnegqL12l6paQseyUsyfEIwAPC8VZ37QZTMO7IiNABzaOAFVIFOseJIFh9puFSbiwf7ar9gfcjMxoD5dijoJLgz7VLbNmdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMF1JbhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5kEeikfvzTmpSzxwe9YQrn4jOWUoVXbIPwUdnAIlk1ixzXY68TXZrZ6WIrLJXm7vTNit1CkbiVckHFzI4bzgYwYL3HiwcFK+JaEgJNeIeGTBDNgPK2Y6PQLnzx6eWY0bHAhouHFaYdM7CYeNEIlYtp8TzHHOasY4lJXNHb2YfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+4y4iMH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMF1JbhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56053C4CEC3;
-	Tue, 10 Sep 2024 09:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+4y4iMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459ACC4CEC3;
+	Tue, 10 Sep 2024 09:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961198;
-	bh=kyy/790lIBs5YW4W2PX9HpmyuiL/84qg79n3iA3SEVQ=;
+	s=korg; t=1725961201;
+	bh=iPnfE2qCYAlZNzJV4yDXTW6N+patMhlrRzd0ZNlXR2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMF1JbhHMVB4e33rZBw3QaCKIfMIZrvyDAfkHH2zzO3uld1wq5pSB25dQHMzxV335
-	 XA3b0k1kUWxPkEXC1SHt9YW9QfK4nN7PQJcOJZrvFzLQl96kqtTVly35+XYPyCW7H9
-	 SpGltRhU3GTOQpVnm5tCTEI8eblgxbdXJxK1SlWc=
+	b=v+4y4iMHclwlbnCTYrAImqsoGIP3jJYqDHiQnJbVCSJf4xASP1jaEqr0DLDlTM1oH
+	 iqckDYtlyQj7FoXt+8KnNFu3+gfzq/3ztGOY4rHsM2cMCwttV9ovrr869PnexjD/cp
+	 2nPR5l1lo0K4d9wPUPpbOwuJE2NUGJeZ4mP2cH0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 86/96] netns: add pre_exit method to struct pernet_operations
-Date: Tue, 10 Sep 2024 11:32:28 +0200
-Message-ID: <20240910092545.321536832@linuxfoundation.org>
+	Tom Herbert <tom@herbertland.com>,
+	Florian Westphal <fw@strlen.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 87/96] ila: call nf_unregister_net_hooks() sooner
+Date: Tue, 10 Sep 2024 11:32:29 +0200
+Message-ID: <20240910092545.360249777@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -52,131 +55,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit d7d99872c144a2c2f5d9c9d83627fa833836cba5 upstream.
+commit 031ae72825cef43e4650140b800ad58bf7a6a466 upstream.
 
-Current struct pernet_operations exit() handlers are highly
-discouraged to call synchronize_rcu().
+syzbot found an use-after-free Read in ila_nf_input [1]
 
-There are cases where we need them, and exit_batch() does
-not help the common case where a single netns is dismantled.
+Issue here is that ila_xlat_exit_net() frees the rhashtable,
+then call nf_unregister_net_hooks().
 
-This patch leverages the existing synchronize_rcu() call
-in cleanup_net()
+It should be done in the reverse way, with a synchronize_rcu().
 
-Calling optional ->pre_exit() method before ->exit() or
-->exit_batch() allows to benefit from a single synchronize_rcu()
-call.
+This is a good match for a pre_exit() method.
 
-Note that the synchronize_rcu() calls added in this patch
-are only in error paths or slow paths.
+[1]
+ BUG: KASAN: use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+ BUG: KASAN: use-after-free in __rhashtable_lookup include/linux/rhashtable.h:604 [inline]
+ BUG: KASAN: use-after-free in rhashtable_lookup include/linux/rhashtable.h:646 [inline]
+ BUG: KASAN: use-after-free in rhashtable_lookup_fast+0x77a/0x9b0 include/linux/rhashtable.h:672
+Read of size 4 at addr ffff888064620008 by task ksoftirqd/0/16
 
-Tested:
+CPU: 0 UID: 0 PID: 16 Comm: ksoftirqd/0 Not tainted 6.11.0-rc4-syzkaller-00238-g2ad6d23f465a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:93 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+  __rhashtable_lookup include/linux/rhashtable.h:604 [inline]
+  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
+  rhashtable_lookup_fast+0x77a/0x9b0 include/linux/rhashtable.h:672
+  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:132 [inline]
+  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
+  ila_nf_input+0x1fe/0x3c0 net/ipv6/ila/ila_xlat.c:190
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
+  nf_hook include/linux/netfilter.h:269 [inline]
+  NF_HOOK+0x29e/0x450 include/linux/netfilter.h:312
+  __netif_receive_skb_one_core net/core/dev.c:5661 [inline]
+  __netif_receive_skb+0x1ea/0x650 net/core/dev.c:5775
+  process_backlog+0x662/0x15b0 net/core/dev.c:6108
+  __napi_poll+0xcb/0x490 net/core/dev.c:6772
+  napi_poll net/core/dev.c:6841 [inline]
+  net_rx_action+0x89b/0x1240 net/core/dev.c:6963
+  handle_softirqs+0x2c4/0x970 kernel/softirq.c:554
+  run_ksoftirqd+0xca/0x130 kernel/softirq.c:928
+  smpboot_thread_fn+0x544/0xa30 kernel/smpboot.c:164
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
 
-$ time for i in {1..1000}; do unshare -n /bin/false;done
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x64620
+flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
+page_type: 0xbfffffff(buddy)
+raw: 00fff00000000000 ffffea0000959608 ffffea00019d9408 0000000000000000
+raw: 0000000000000000 0000000000000003 00000000bfffffff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as freed
+page last allocated via order 3, migratetype Unmovable, gfp_mask 0x52dc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_ZERO), pid 5242, tgid 5242 (syz-executor), ts 73611328570, free_ts 618981657187
+  set_page_owner include/linux/page_owner.h:32 [inline]
+  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1493
+  prep_new_page mm/page_alloc.c:1501 [inline]
+  get_page_from_freelist+0x2e4c/0x2f10 mm/page_alloc.c:3439
+  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4695
+  __alloc_pages_node_noprof include/linux/gfp.h:269 [inline]
+  alloc_pages_node_noprof include/linux/gfp.h:296 [inline]
+  ___kmalloc_large_node+0x8b/0x1d0 mm/slub.c:4103
+  __kmalloc_large_node_noprof+0x1a/0x80 mm/slub.c:4130
+  __do_kmalloc_node mm/slub.c:4146 [inline]
+  __kmalloc_node_noprof+0x2d2/0x440 mm/slub.c:4164
+  __kvmalloc_node_noprof+0x72/0x190 mm/util.c:650
+  bucket_table_alloc lib/rhashtable.c:186 [inline]
+  rhashtable_init_noprof+0x534/0xa60 lib/rhashtable.c:1071
+  ila_xlat_init_net+0xa0/0x110 net/ipv6/ila/ila_xlat.c:613
+  ops_init+0x359/0x610 net/core/net_namespace.c:139
+  setup_net+0x515/0xca0 net/core/net_namespace.c:343
+  copy_net_ns+0x4e2/0x7b0 net/core/net_namespace.c:508
+  create_new_namespaces+0x425/0x7b0 kernel/nsproxy.c:110
+  unshare_nsproxy_namespaces+0x124/0x180 kernel/nsproxy.c:228
+  ksys_unshare+0x619/0xc10 kernel/fork.c:3328
+  __do_sys_unshare kernel/fork.c:3399 [inline]
+  __se_sys_unshare kernel/fork.c:3397 [inline]
+  __x64_sys_unshare+0x38/0x40 kernel/fork.c:3397
+page last free pid 11846 tgid 11846 stack trace:
+  reset_page_owner include/linux/page_owner.h:25 [inline]
+  free_pages_prepare mm/page_alloc.c:1094 [inline]
+  free_unref_page+0xd22/0xea0 mm/page_alloc.c:2612
+  __folio_put+0x2c8/0x440 mm/swap.c:128
+  folio_put include/linux/mm.h:1486 [inline]
+  free_large_kmalloc+0x105/0x1c0 mm/slub.c:4565
+  kfree+0x1c4/0x360 mm/slub.c:4588
+  rhashtable_free_and_destroy+0x7c6/0x920 lib/rhashtable.c:1169
+  ila_xlat_exit_net+0x55/0x110 net/ipv6/ila/ila_xlat.c:626
+  ops_exit_list net/core/net_namespace.c:173 [inline]
+  cleanup_net+0x802/0xcc0 net/core/net_namespace.c:640
+  process_one_work kernel/workqueue.c:3231 [inline]
+  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
+  worker_thread+0x86d/0xd40 kernel/workqueue.c:3390
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-real	0m2.612s
-user	0m0.171s
-sys	0m2.216s
+Memory state around the buggy address:
+ ffff88806461ff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88806461ff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff888064620000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                      ^
+ ffff888064620080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff888064620100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
 
+Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Tom Herbert <tom@herbertland.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Link: https://patch.msgid.link/20240904144418.1162839-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/net_namespace.h |    5 +++++
- net/core/net_namespace.c    |   28 ++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+ net/ipv6/ila/ila.h      |    1 +
+ net/ipv6/ila/ila_main.c |    6 ++++++
+ net/ipv6/ila/ila_xlat.c |   13 +++++++++----
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
---- a/include/net/net_namespace.h
-+++ b/include/net/net_namespace.h
-@@ -353,8 +353,13 @@ struct pernet_operations {
- 	 * synchronize_rcu() related to these pernet_operations,
- 	 * instead of separate synchronize_rcu() for every net.
- 	 * Please, avoid synchronize_rcu() at all, where it's possible.
-+	 *
-+	 * Note that a combination of pre_exit() and exit() can
-+	 * be used, since a synchronize_rcu() is guaranteed between
-+	 * the calls.
- 	 */
- 	int (*init)(struct net *net);
-+	void (*pre_exit)(struct net *net);
- 	void (*exit)(struct net *net);
- 	void (*exit_batch)(struct list_head *net_exit_list);
- 	unsigned int *id;
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -154,6 +154,17 @@ static void ops_free(const struct pernet
- 	}
+--- a/net/ipv6/ila/ila.h
++++ b/net/ipv6/ila/ila.h
+@@ -118,6 +118,7 @@ int ila_lwt_init(void);
+ void ila_lwt_fini(void);
+ 
+ int ila_xlat_init_net(struct net *net);
++void ila_xlat_pre_exit_net(struct net *net);
+ void ila_xlat_exit_net(struct net *net);
+ 
+ int ila_xlat_nl_cmd_add_mapping(struct sk_buff *skb, struct genl_info *info);
+--- a/net/ipv6/ila/ila_main.c
++++ b/net/ipv6/ila/ila_main.c
+@@ -70,6 +70,11 @@ ila_xlat_init_fail:
+ 	return err;
  }
  
-+static void ops_pre_exit_list(const struct pernet_operations *ops,
-+			      struct list_head *net_exit_list)
++static __net_exit void ila_pre_exit_net(struct net *net)
 +{
-+	struct net *net;
-+
-+	if (ops->pre_exit) {
-+		list_for_each_entry(net, net_exit_list, exit_list)
-+			ops->pre_exit(net);
-+	}
++	ila_xlat_pre_exit_net(net);
 +}
 +
- static void ops_exit_list(const struct pernet_operations *ops,
- 			  struct list_head *net_exit_list)
+ static __net_exit void ila_exit_net(struct net *net)
  {
-@@ -342,6 +353,12 @@ out_undo:
- 	list_add(&net->exit_list, &net_exit_list);
- 	saved_ops = ops;
- 	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
-+		ops_pre_exit_list(ops, &net_exit_list);
-+
-+	synchronize_rcu();
-+
-+	saved_ops = ops;
-+	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
- 		ops_exit_list(ops, &net_exit_list);
+ 	ila_xlat_exit_net(net);
+@@ -77,6 +82,7 @@ static __net_exit void ila_exit_net(stru
  
- 	ops = saved_ops;
-@@ -554,10 +571,15 @@ static void cleanup_net(struct work_stru
- 		list_add_tail(&net->exit_list, &net_exit_list);
- 	}
- 
-+	/* Run all of the network namespace pre_exit methods */
-+	list_for_each_entry_reverse(ops, &pernet_list, list)
-+		ops_pre_exit_list(ops, &net_exit_list);
-+
- 	/*
- 	 * Another CPU might be rcu-iterating the list, wait for it.
- 	 * This needs to be before calling the exit() notifiers, so
- 	 * the rcu_barrier() below isn't sufficient alone.
-+	 * Also the pre_exit() and exit() methods need this barrier.
- 	 */
- 	synchronize_rcu();
- 
-@@ -977,6 +999,8 @@ static int __register_pernet_operations(
- out_undo:
- 	/* If I have an error cleanup all namespaces I initialized */
- 	list_del(&ops->list);
-+	ops_pre_exit_list(ops, &net_exit_list);
-+	synchronize_rcu();
- 	ops_exit_list(ops, &net_exit_list);
- 	ops_free_list(ops, &net_exit_list);
- 	return error;
-@@ -991,6 +1015,8 @@ static void __unregister_pernet_operatio
- 	/* See comment in __register_pernet_operations() */
- 	for_each_net(net)
- 		list_add_tail(&net->exit_list, &net_exit_list);
-+	ops_pre_exit_list(ops, &net_exit_list);
-+	synchronize_rcu();
- 	ops_exit_list(ops, &net_exit_list);
- 	ops_free_list(ops, &net_exit_list);
+ static struct pernet_operations ila_net_ops = {
+ 	.init = ila_init_net,
++	.pre_exit = ila_pre_exit_net,
+ 	.exit = ila_exit_net,
+ 	.id   = &ila_net_id,
+ 	.size = sizeof(struct ila_net),
+--- a/net/ipv6/ila/ila_xlat.c
++++ b/net/ipv6/ila/ila_xlat.c
+@@ -627,6 +627,15 @@ int ila_xlat_init_net(struct net *net)
+ 	return 0;
  }
-@@ -1015,6 +1041,8 @@ static void __unregister_pernet_operatio
- 	} else {
- 		LIST_HEAD(net_exit_list);
- 		list_add(&init_net.exit_list, &net_exit_list);
-+		ops_pre_exit_list(ops, &net_exit_list);
-+		synchronize_rcu();
- 		ops_exit_list(ops, &net_exit_list);
- 		ops_free_list(ops, &net_exit_list);
- 	}
+ 
++void ila_xlat_pre_exit_net(struct net *net)
++{
++	struct ila_net *ilan = net_generic(net, ila_net_id);
++
++	if (ilan->xlat.hooks_registered)
++		nf_unregister_net_hooks(net, ila_nf_hook_ops,
++					ARRAY_SIZE(ila_nf_hook_ops));
++}
++
+ void ila_xlat_exit_net(struct net *net)
+ {
+ 	struct ila_net *ilan = net_generic(net, ila_net_id);
+@@ -634,10 +643,6 @@ void ila_xlat_exit_net(struct net *net)
+ 	rhashtable_free_and_destroy(&ilan->xlat.rhash_table, ila_free_cb, NULL);
+ 
+ 	free_bucket_spinlocks(ilan->xlat.locks);
+-
+-	if (ilan->xlat.hooks_registered)
+-		nf_unregister_net_hooks(net, ila_nf_hook_ops,
+-					ARRAY_SIZE(ila_nf_hook_ops));
+ }
+ 
+ static int ila_xlat_addr(struct sk_buff *skb, bool sir2ila)
 
 
