@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7F118DF67;
-	Tue, 10 Sep 2024 09:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F283418C331;
+	Tue, 10 Sep 2024 09:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961444; cv=none; b=nEfmdKVkibWqkNSgcDmMFpty23SSQpoPu+6XcKne8f5N2CfDw9IQbZ6LV7QqqEIoH3irBbJekLRdKstiphS26viELFYBtWt75TUxVeWTEL9ytzFvkqkerNE9LJmvpvXNByRUa1AThPUpyI2SqATnh3fL1RqIwhi1kd4WXp3V6Gw=
+	t=1725961447; cv=none; b=VEmRrZdNlMXqBb1QSrHI1sqXl9Qz+iBpjm9ybsICS3tEoaDBkWbuv5wAbpeIcNS9nCWfbuCpuJpJBUKuMabFpEbkHyDINiloUSyFwdLhkcOB8KH3RcbBbNJPZ4/MTln3j5I7rTnVYuTSIIab22qV16mUEK+kzQS5RwT0ftA8ijw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961444; c=relaxed/simple;
-	bh=W26fGf70dipd75fEZWQcvTs/iq7IpINiofVfJS4zHZo=;
+	s=arc-20240116; t=1725961447; c=relaxed/simple;
+	bh=2sABbx0E7nRqwP27xA79WNC0dK8CNYtDAN9XjgARU+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1iVSiIUcckYdnHaKvTQ/DfpUlQVoyMu2Mp6vo4M58K8CcD/rJCKauzY03tON42vi5IcRHAehQSuOuCVCo3vR7BXOz+3PK+1Uc3sLZ12zUlKAvRxn7sxM5lzZmwnJkk14aYGdndpWzq10jP15agbe4aqyABE4Xzk4tIq3npTVKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oThKOmtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdV4ERFdhO1Cxu0N8CTX7KtscbHBVFQ3h/f9TkbSkYEPhWBUSzbWi81Hd9z88Lc+yTC7A9nK8Pt5ZEO6NgIefEnfENttpoWMN84b/mttkfCKn1c2SVbFFVludbEeIcOg6f759i4UE2OnFO4jClZZx1VQUuwAdTwaNbvMYikYoac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWZ/epwN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oThKOmtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86234C4CEC3;
-	Tue, 10 Sep 2024 09:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWZ/epwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7794AC4CEC3;
+	Tue, 10 Sep 2024 09:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961443;
-	bh=W26fGf70dipd75fEZWQcvTs/iq7IpINiofVfJS4zHZo=;
+	s=korg; t=1725961446;
+	bh=2sABbx0E7nRqwP27xA79WNC0dK8CNYtDAN9XjgARU+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oThKOmtu81hzKaPwiRGCJ3NO3CYqEwEqlfWP5SdzWGP38WAXSdD0gcwVAi9oxx/eB
-	 C8SjifRGf9ICqw0OIHYI5UQKeUarFFFmr/xFYi3plTcuuyYiBzhirTxtlC5voFhoiX
-	 4sf0bSQglcE0Aa6Ep1aMvE6QUH2YTTWeFzmdO5Ww=
+	b=BWZ/epwNVwr7cjk2OnGadqPB0ab+W6c9EiQZIEU7m2C8CkfXYdITneAHN4RQmnZP/
+	 aJBdSMMzIE4KnA5PSdI1dp+DFGuqNtTVdJc93ubDsjjeMgV0l3hAWbrvbXLYIlMLA4
+	 AaZ1skVOVWEM1ANnkFkF81wIoRC4lpBMokRHrya0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.10 071/375] net: mctp-serial: Fix missing escapes on transmit
-Date: Tue, 10 Sep 2024 11:27:48 +0200
-Message-ID: <20240910092624.605061474@linuxfoundation.org>
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Xingyu Wu <xingyu.wu@starfivetech.com>,
+	Hal Feng <hal.feng@starfivetech.com>,
+	Michael Jeanson <mjeanson@efficios.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.10 046/375] clk: starfive: jh7110-sys: Add notifier for PLL0 clock
+Date: Tue, 10 Sep 2024 11:27:23 +0200
+Message-ID: <20240910092623.788530003@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,55 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Xingyu Wu <xingyu.wu@starfivetech.com>
 
-commit f962e8361adfa84e8252d3fc3e5e6bb879f029b1 upstream.
+commit 538d5477b25289ac5d46ca37b9e5b4d685cbe019 upstream.
 
-0x7d and 0x7e bytes are meant to be escaped in the data portion of
-frames, but this didn't occur since next_chunk_len() had an off-by-one
-error. That also resulted in the final byte of a payload being written
-as a separate tty write op.
+Add notifier function for PLL0 clock. In the function, the cpu_root clock
+should be operated by saving its current parent and setting a new safe
+parent (osc clock) before setting the PLL0 clock rate. After setting PLL0
+rate, it should be switched back to the original parent clock.
 
-The chunk prior to an escaped byte would be one byte short, and the
-next call would never test the txpos+1 case, which is where the escaped
-byte was located. That meant it never hit the escaping case in
-mctp_serial_tx_work().
-
-Example Input: 01 00 08 c8 7e 80 02
-
-Previous incorrect chunks from next_chunk_len():
-
-01 00 08
-c8 7e 80
-02
-
-With this fix:
-
-01 00 08 c8
-7e
-80 02
-
+Fixes: e2c510d6d630 ("riscv: dts: starfive: Add cpu scaling for JH7110 SoC")
 Cc: stable@vger.kernel.org
-Fixes: a0c2ccd9b5ad ("mctp: Add MCTP-over-serial transport binding")
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Signed-off-by: Xingyu Wu <xingyu.wu@starfivetech.com>
+Link: https://lore.kernel.org/r/20240826080430.179788-2-xingyu.wu@starfivetech.com
+Reviewed-by: Hal Feng <hal.feng@starfivetech.com>
+Tested-by: Michael Jeanson <mjeanson@efficios.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mctp/mctp-serial.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/starfive/clk-starfive-jh7110-sys.c |   31 ++++++++++++++++++++++++-
+ drivers/clk/starfive/clk-starfive-jh71x0.h     |    2 +
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
---- a/drivers/net/mctp/mctp-serial.c
-+++ b/drivers/net/mctp/mctp-serial.c
-@@ -91,8 +91,8 @@ static int next_chunk_len(struct mctp_se
- 	 * will be those non-escaped bytes, and does not include the escaped
- 	 * byte.
- 	 */
--	for (i = 1; i + dev->txpos + 1 < dev->txlen; i++) {
--		if (needs_escape(dev->txbuf[dev->txpos + i + 1]))
-+	for (i = 1; i + dev->txpos < dev->txlen; i++) {
-+		if (needs_escape(dev->txbuf[dev->txpos + i]))
- 			break;
+--- a/drivers/clk/starfive/clk-starfive-jh7110-sys.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-sys.c
+@@ -385,6 +385,32 @@ int jh7110_reset_controller_register(str
+ }
+ EXPORT_SYMBOL_GPL(jh7110_reset_controller_register);
+ 
++/*
++ * This clock notifier is called when the rate of PLL0 clock is to be changed.
++ * The cpu_root clock should save the curent parent clock and switch its parent
++ * clock to osc before PLL0 rate will be changed. Then switch its parent clock
++ * back after the PLL0 rate is completed.
++ */
++static int jh7110_pll0_clk_notifier_cb(struct notifier_block *nb,
++				       unsigned long action, void *data)
++{
++	struct jh71x0_clk_priv *priv = container_of(nb, struct jh71x0_clk_priv, pll_clk_nb);
++	struct clk *cpu_root = priv->reg[JH7110_SYSCLK_CPU_ROOT].hw.clk;
++	int ret = 0;
++
++	if (action == PRE_RATE_CHANGE) {
++		struct clk *osc = clk_get(priv->dev, "osc");
++
++		priv->original_clk = clk_get_parent(cpu_root);
++		ret = clk_set_parent(cpu_root, osc);
++		clk_put(osc);
++	} else if (action == POST_RATE_CHANGE) {
++		ret = clk_set_parent(cpu_root, priv->original_clk);
++	}
++
++	return notifier_from_errno(ret);
++}
++
+ static int __init jh7110_syscrg_probe(struct platform_device *pdev)
+ {
+ 	struct jh71x0_clk_priv *priv;
+@@ -413,7 +439,10 @@ static int __init jh7110_syscrg_probe(st
+ 		if (IS_ERR(priv->pll[0]))
+ 			return PTR_ERR(priv->pll[0]);
+ 	} else {
+-		clk_put(pllclk);
++		priv->pll_clk_nb.notifier_call = jh7110_pll0_clk_notifier_cb;
++		ret = clk_notifier_register(pllclk, &priv->pll_clk_nb);
++		if (ret)
++			return ret;
+ 		priv->pll[0] = NULL;
  	}
  
+--- a/drivers/clk/starfive/clk-starfive-jh71x0.h
++++ b/drivers/clk/starfive/clk-starfive-jh71x0.h
+@@ -114,6 +114,8 @@ struct jh71x0_clk_priv {
+ 	spinlock_t rmw_lock;
+ 	struct device *dev;
+ 	void __iomem *base;
++	struct clk *original_clk;
++	struct notifier_block pll_clk_nb;
+ 	struct clk_hw *pll[3];
+ 	struct jh71x0_clk reg[];
+ };
 
 
