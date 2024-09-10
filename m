@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B0C189903;
-	Tue, 10 Sep 2024 09:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BDB189903;
+	Tue, 10 Sep 2024 09:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961879; cv=none; b=u4JHx3UrQXG0iUhN+9yl+KNM09LBqNXd0L9+D5ocQWxS9p5Q/U5szcuDshZRRM0dp0OlpFKp3VP7RTD5NJeq9mzQR9drJEBjXZoj85Nt7zOU88mRkTnpdY0mwORpAi/t8VChDDK7WAHOdH/agVEnqSylR0d38H98upQ4PLYQtWA=
+	t=1725961882; cv=none; b=aW/9xGsZ58EyeZ3rsSi/J9XY7ZtUTE5RBzAvsbF2HE3MDf5thtiiLwtWUMczzYoYx1UGOrqM/LXn1zDd1w/r/eso8mscee9mUDAkBX6o1gNKETcqLmJt/4a3ZX9emgu4wX/giYTGQsoA58rmHp5M/T4p5qDWC6/uT8RhrQW3Og8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961879; c=relaxed/simple;
-	bh=GFxBpOJZzI6ZwZguAZyI4jTohc2o1etGtWpPwYvw5R8=;
+	s=arc-20240116; t=1725961882; c=relaxed/simple;
+	bh=mPosmE1xKCXOMSia38omA/wHm9oZhKgOD8CKqt4qixA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEhRLaNgfxGpyccHPh70e0+Ji+gHjCwBAyDtNTubRDyKMH+N20ewskQE0GvVOteYVBMNbbgrWRPPQmbXrzzCZlzxPcnXex4QsKNuqwCutwho+2s/C9AtSQbsba95e9YZXawm4HtLnVivl7qx6hvODNg/ztbb1WL9ElmQW5HETMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3zLSPib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSsQ3jJk/JGO1Evsmci4ieRa7I6FkC0zZkeRRXJedshZUTRHrtq7cXjJ7vK9BbsvFGSxy0rmlShZddms7Nd0Aa/1sXYJAHK5xh6zhqKDtxYTtt6jFFLR2IdxQRRwkGtTvJjTCTW/VHNZ6Q3e4MnCSZgiF0GoET1zLc1hBBAYssg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7fwnko/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3zLSPib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F975C4CEC3;
-	Tue, 10 Sep 2024 09:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7fwnko/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E79C4CEC3;
+	Tue, 10 Sep 2024 09:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961878;
-	bh=GFxBpOJZzI6ZwZguAZyI4jTohc2o1etGtWpPwYvw5R8=;
+	s=korg; t=1725961881;
+	bh=mPosmE1xKCXOMSia38omA/wHm9oZhKgOD8CKqt4qixA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3zLSPibCi9Nq5/DIs1Q+YY8QQnmRb0eWwGkE/1lNox3lMMfNIIsJWNqLI6099Nub
-	 dUNY5UG/eYkiiRExYepb2i/FCiUT6h3zdSnn0weEh13t3gDL8O1lV2fHfCU8tYGIiD
-	 /fRT2LUlTT6c3+ztH7hELyAoLl2GT5mGzg5++gOg=
+	b=M7fwnko/7Cj2gDZ5I3KftBG6O+67DLsPBirc6T13EcqDAxEDusDxNNa/23M/zwrRj
+	 oOrWF3KCz6DoTzK4cGbLBqlpMOwJgwS8g/VLgiiVt4xik79Iwxewm3ne6kdX/Z4YR0
+	 Q6wSEAhzE3TGKO1kI6lDreSwrEQqzV+S+GIBHsVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 219/375] hwmon: (adc128d818) Fix underflows seen when writing limit attributes
-Date: Tue, 10 Sep 2024 11:30:16 +0200
-Message-ID: <20240910092629.894015028@linuxfoundation.org>
+Subject: [PATCH 6.10 193/375] r8152: fix the firmware doesnt work
+Date: Tue, 10 Sep 2024 11:29:50 +0200
+Message-ID: <20240910092628.984019536@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,42 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Hayes Wang <hayeswang@realtek.com>
 
-[ Upstream commit 8cad724c8537fe3e0da8004646abc00290adae40 ]
+[ Upstream commit 8487b4af59d4d7feda4b119dc2d92c67ca25c27e ]
 
-DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
-negative number such as -9223372036854775808 is provided by the user.
-Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
+generic_ocp_write() asks the parameter "size" must be 4 bytes align.
+Therefore, write the bp would fail, if the mac->bp_num is odd. Align the
+size to 4 for fixing it. The way may write an extra bp, but the
+rtl8152_is_fw_mac_ok() makes sure the value must be 0 for the bp whose
+index is more than mac->bp_num. That is, there is no influence for the
+firmware.
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Besides, I check the return value of generic_ocp_write() to make sure
+everything is correct.
+
+Fixes: e5c266a61186 ("r8152: set bp in bulk")
+Signed-off-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20240903063333.4502-1-hayeswang@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adc128d818.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/r8152.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/adc128d818.c b/drivers/hwmon/adc128d818.c
-index 8ac6e735ec5c..5e805d4ee76a 100644
---- a/drivers/hwmon/adc128d818.c
-+++ b/drivers/hwmon/adc128d818.c
-@@ -175,7 +175,7 @@ static ssize_t adc128_in_store(struct device *dev,
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 19df1cd9f072..51d5d4f0a8f9 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -5177,14 +5177,23 @@ static void rtl8152_fw_mac_apply(struct r8152 *tp, struct fw_mac *mac)
+ 	data = (u8 *)mac;
+ 	data += __le16_to_cpu(mac->fw_offset);
  
- 	mutex_lock(&data->update_lock);
- 	/* 10 mV LSB on limit registers */
--	regval = clamp_val(DIV_ROUND_CLOSEST(val, 10), 0, 255);
-+	regval = DIV_ROUND_CLOSEST(clamp_val(val, 0, 2550), 10);
- 	data->in[index][nr] = regval << 4;
- 	reg = index == 1 ? ADC128_REG_IN_MIN(nr) : ADC128_REG_IN_MAX(nr);
- 	i2c_smbus_write_byte_data(data->client, reg, regval);
-@@ -213,7 +213,7 @@ static ssize_t adc128_temp_store(struct device *dev,
- 		return err;
+-	generic_ocp_write(tp, __le16_to_cpu(mac->fw_reg), 0xff, length, data,
+-			  type);
++	if (generic_ocp_write(tp, __le16_to_cpu(mac->fw_reg), 0xff, length,
++			      data, type) < 0) {
++		dev_err(&tp->intf->dev, "Write %s fw fail\n",
++			type ? "PLA" : "USB");
++		return;
++	}
  
- 	mutex_lock(&data->update_lock);
--	regval = clamp_val(DIV_ROUND_CLOSEST(val, 1000), -128, 127);
-+	regval = DIV_ROUND_CLOSEST(clamp_val(val, -128000, 127000), 1000);
- 	data->temp[index] = regval << 1;
- 	i2c_smbus_write_byte_data(data->client,
- 				  index == 1 ? ADC128_REG_TEMP_MAX
+ 	ocp_write_word(tp, type, __le16_to_cpu(mac->bp_ba_addr),
+ 		       __le16_to_cpu(mac->bp_ba_value));
+ 
+-	generic_ocp_write(tp, __le16_to_cpu(mac->bp_start), BYTE_EN_DWORD,
+-			  __le16_to_cpu(mac->bp_num) << 1, mac->bp, type);
++	if (generic_ocp_write(tp, __le16_to_cpu(mac->bp_start), BYTE_EN_DWORD,
++			      ALIGN(__le16_to_cpu(mac->bp_num) << 1, 4),
++			      mac->bp, type) < 0) {
++		dev_err(&tp->intf->dev, "Write %s bp fail\n",
++			type ? "PLA" : "USB");
++		return;
++	}
+ 
+ 	bp_en_addr = __le16_to_cpu(mac->bp_en_addr);
+ 	if (bp_en_addr)
 -- 
 2.43.0
 
