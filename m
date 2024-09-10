@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38A31946A1;
-	Tue, 10 Sep 2024 10:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDCF1946C4;
+	Tue, 10 Sep 2024 10:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962887; cv=none; b=NodC/5QXEgmF8etmTDIFxPi3IhGhjGMHRbtso0G3TBGxvElOLbh6ROoiUewj2gCtBQq70MiV8YkhmVy+VDZPO5DGD3IpPttJ8dTFpJw2BhmxmWlZpTfhTjiUYu1TF2q4lKpllN1DTFqZIvLMvs7Z1tplc+aOz0otFyEzQ+DDClI=
+	t=1725962890; cv=none; b=cJTcd0o7HGyUxgXq7GunTOEVmLeSCk4EZaZSuL3ate2ak4mdb6yeH/vcTWR/vQtHxBv1RLziTksOoinxkdkPM93fLJVwB48Yx2ZtsUaa+eIqkyxo23xNmOP3192UAClzHVqkOWEyFFlYWKSQ0/z/S5bCnu5kL3EvxMlyTnPb3+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962887; c=relaxed/simple;
-	bh=IHu9mXJpPWDHROVhzRwB+eFyFIRGmSgjwAxvYI/68Rs=;
+	s=arc-20240116; t=1725962890; c=relaxed/simple;
+	bh=8ZMAa2ScooZye04cS9zcYL0U+sSZ+eaXLs48pjOlq90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3Aexh6Y9Q8xSLhVOzjHne3YX/I0H1/CO5ccvFW9oiWjoSFZl8UNOwHkCG/UgzwZYpisbqf0m3f6oEkib9SSxkJTauyFp9v8H6g0N4Y6uV+h8yoDltnwu5pnHn0GqXPrCSETXu3Goee98Z2A0yN98TMnC6xDzKMhutOOC2QKjgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6/imGSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rzTVJKDeoEM1CfzmwLqkm05J1JHzFj96QOWdratxb5YHNVV9ydBBHRLFn6dba6u+M7BrvIkDLRzUSnayFd+yxWT8yhj/Q7AYp1u0cSm2amEJ/enPxoFXqK6aaBFXxor+wTdOh0MNhQf80tj68LZRYuz3JzkKexxp90I+dddNVn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPTlL8/I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6/imGSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787A6C4CEC3;
-	Tue, 10 Sep 2024 10:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPTlL8/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7ECC4CEC3;
+	Tue, 10 Sep 2024 10:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962886;
-	bh=IHu9mXJpPWDHROVhzRwB+eFyFIRGmSgjwAxvYI/68Rs=;
+	s=korg; t=1725962890;
+	bh=8ZMAa2ScooZye04cS9zcYL0U+sSZ+eaXLs48pjOlq90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6/imGSOJOkQWWtj3d3EdujadD5IU4V4/KkJbe2IW/GcXHynI1XaZv0dSBRo9srog
-	 bX4uWg4ZYWGl2gZ30W83MENx8pG0Qxnw/Y+QDWUHP/Zx2F1WOfiIWHxHFAf2Dt/tFv
-	 0MiuUQ4Es2UghEPYuu8C10NkTNy8lyH9ZqucFjd8=
+	b=tPTlL8/IgX2PYyytmULNLJyT93MDLh9Ud/AjNwFrr7MbwyaGidtN11nmIe0PhVT0F
+	 Jm3nD3bJT7XqHMJHufd6++f/5CuFbVO0Mj31sxM6DWmuHDSD2X53omBVQLcudq6QEd
+	 MykBYG2OCIHnWCYddN+9gya8UkFt7P64IxJ9jsj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/192] media: qcom: camss: Add check for v4l2_fwnode_endpoint_parse
-Date: Tue, 10 Sep 2024 11:31:28 +0200
-Message-ID: <20240910092600.629042607@linuxfoundation.org>
+Subject: [PATCH 6.1 047/192] af_unix: Remove put_pid()/put_cred() in copy_peercred().
+Date: Tue, 10 Sep 2024 11:31:11 +0200
+Message-ID: <20240910092559.934676073@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,37 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 4caf6d93d9f2c11d6441c64e1c549c445fa322ed ]
+[ Upstream commit e4bd881d987121dbf1a288641491955a53d9f8f7 ]
 
-Add check for the return value of v4l2_fwnode_endpoint_parse() and
-return the error if it fails in order to catch the error.
+When (AF_UNIX, SOCK_STREAM) socket connect()s to a listening socket,
+the listener's sk_peer_pid/sk_peer_cred are copied to the client in
+copy_peercred().
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Then, the client's sk_peer_pid and sk_peer_cred are always NULL, so
+we need not call put_pid() and put_cred() there.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/unix/af_unix.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index a30461de3e84..d173ac80e01c 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1038,8 +1038,11 @@ static int camss_of_parse_endpoint_node(struct device *dev,
- 	struct v4l2_mbus_config_mipi_csi2 *mipi_csi2;
- 	struct v4l2_fwnode_endpoint vep = { { 0 } };
- 	unsigned int i;
-+	int ret;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 7d59f9a6c904..5ce60087086c 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -680,9 +680,6 @@ static void init_peercred(struct sock *sk)
  
--	v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
-+	ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
-+	if (ret)
-+		return ret;
+ static void copy_peercred(struct sock *sk, struct sock *peersk)
+ {
+-	const struct cred *old_cred;
+-	struct pid *old_pid;
+-
+ 	if (sk < peersk) {
+ 		spin_lock(&sk->sk_peer_lock);
+ 		spin_lock_nested(&peersk->sk_peer_lock, SINGLE_DEPTH_NESTING);
+@@ -690,16 +687,12 @@ static void copy_peercred(struct sock *sk, struct sock *peersk)
+ 		spin_lock(&peersk->sk_peer_lock);
+ 		spin_lock_nested(&sk->sk_peer_lock, SINGLE_DEPTH_NESTING);
+ 	}
+-	old_pid = sk->sk_peer_pid;
+-	old_cred = sk->sk_peer_cred;
++
+ 	sk->sk_peer_pid  = get_pid(peersk->sk_peer_pid);
+ 	sk->sk_peer_cred = get_cred(peersk->sk_peer_cred);
  
- 	csd->interface.csiphy_id = vep.base.port;
+ 	spin_unlock(&sk->sk_peer_lock);
+ 	spin_unlock(&peersk->sk_peer_lock);
+-
+-	put_pid(old_pid);
+-	put_cred(old_cred);
+ }
  
+ static int unix_listen(struct socket *sock, int backlog)
 -- 
 2.43.0
 
