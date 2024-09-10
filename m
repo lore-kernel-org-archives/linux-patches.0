@@ -1,87 +1,98 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D06318FC84
-	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 10:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F4419993F;
+	Tue, 10 Sep 2024 10:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964559; cv=none; b=kIqFqYzMB5WqJ+Vz5B5U5JbVEn8goumafUcasKkPlT68N2PBAHcqHB4sTwdquWBJuwQ4y7n+YrPlxruZbg6cHBYcxEOPBFTAfncg/cXEgiYEHFJB2wcgyvxhcUEbB70VFxZP27aIavwHOZ5S8K1RSNGdE8C8TBOUbUab/gzkiFM=
+	t=1725964561; cv=none; b=iZ1XDLKrVVjiL4ShUdPR9/bz+HhaExJd7mDZbX46qJ8yVGxGQ8+RsRfHz5yR35TSq1eh3+CbofSxndmKKmucOisRZY4b+AX7ZpOslupPZHUw/iohu5Unm73rdNh9QIOaGhKtqwtxHZ+9hPVfmcfORVVM51mWNlFPAZAY2OZoYX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964559; c=relaxed/simple;
-	bh=rXp9VPIWYwYxP3tRta0x35hYjF5C4uWsNb8Pc5MPAjU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hx/346YZkB17KbdkmlDd1sI1YAszzZPA8mMKuYve2KfFsnoSzWaDv6pFuloXIvb18ME0wLPpCqz/FNjIp1KGHkSuBmaoE89xeLSkx8bnCG9h91QNGSGKyY2TWvD1a5eamTCJAWJaYFgS3slrvZQKhmc4njqkuXvg6cMUzfHfwFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 3285E1C009E; Tue, 10 Sep 2024 12:35:55 +0200 (CEST)
-Date: Tue, 10 Sep 2024 12:35:54 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/192] 6.1.110-rc1 review
-Message-ID: <ZuAhCgJ3LUBROwBR@duo.ucw.cz>
-References: <20240910092557.876094467@linuxfoundation.org>
+	s=arc-20240116; t=1725964561; c=relaxed/simple;
+	bh=q4mXKdFRSGXwTnA1aCHMjeaNzAF3Lt293G3b4M9VfGc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IDfZydjpHAvs42aiZPKr9Xs+q9rS93Vfd/e02xwe51aCaS0ksN+dPFbYhpZ9k4yPET879rVwm4ZJ4s2lELVDGpK4RJOhSV8lOFF0pXqbQ1fo5w+W5NSbra4TodFh06AapGblbd3WWPYYFRSy8A1grIC84Ks4WMnLscbH+87M56Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anAV+GbU; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anAV+GbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB48C4CEC3;
+	Tue, 10 Sep 2024 10:36:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725964561;
+	bh=q4mXKdFRSGXwTnA1aCHMjeaNzAF3Lt293G3b4M9VfGc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=anAV+GbUTla1rcKdjBO/ZaBLYtQHOEES+wh+dC41BCHInd2sWGbTTELBBgsl5DYFB
+	 WfzYBwYsZfFN/PhKdCjjKjcydwj9y7g2ig1DMd7R5g6UPzeZ9+4kZfYE8QFEI1rWo7
+	 +V396uJY4FBtO4p7nOK+ICXBkL1zG3sJWI857CAY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Matteo Martelli <matteomartelli3@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 207/269] iio: fix scale application in iio_convert_raw_to_processed_unlocked
+Date: Tue, 10 Sep 2024 11:33:14 +0200
+Message-ID: <20240910092615.426080781@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
+References: <20240910092608.225137854@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZVbRxP2zarSARuXd"
-Content-Disposition: inline
-In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Matteo Martelli <matteomartelli3@gmail.com>
+
+commit 8a3dcc970dc57b358c8db2702447bf0af4e0d83a upstream.
+
+When the scale_type is IIO_VAL_INT_PLUS_MICRO or IIO_VAL_INT_PLUS_NANO
+the scale passed as argument is only applied to the fractional part of
+the value. Fix it by also multiplying the integer part by the scale
+provided.
+
+Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
+Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
+Link: https://patch.msgid.link/20240730-iio-fix-scale-v1-1-6246638c8daa@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/iio/inkern.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -680,17 +680,17 @@ static int iio_convert_raw_to_processed_
+ 		break;
+ 	case IIO_VAL_INT_PLUS_MICRO:
+ 		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val;
++			*processed = -raw64 * scale_val * scale;
+ 		else
+-			*processed = raw64 * scale_val;
++			*processed = raw64 * scale_val * scale;
+ 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+ 				      1000000LL);
+ 		break;
+ 	case IIO_VAL_INT_PLUS_NANO:
+ 		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val;
++			*processed = -raw64 * scale_val * scale;
+ 		else
+-			*processed = raw64 * scale_val;
++			*processed = raw64 * scale_val * scale;
+ 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+ 				      1000000000LL);
+ 		break;
 
 
---ZVbRxP2zarSARuXd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.110 release.
-> There are 192 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Can you quote git hash of the 6.1.110-rc1?
-
-We do have
-
-Linux 6.1.110-rc1 (244a97bb85be)
-Greg Kroah-Hartman authored 1 day ago
-
-passing tests
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
-
-=2E But that's 1 day old.
-
-Best regards,
-									Pavel
-								=09
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---ZVbRxP2zarSARuXd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZuAhCgAKCRAw5/Bqldv6
-8nInAKCAfDzvB/g7di65iJIiWwf1ut9eEQCdHD1aUpkZmIRykjHO2l2uq8zPlU4=
-=0bYm
------END PGP SIGNATURE-----
-
---ZVbRxP2zarSARuXd--
