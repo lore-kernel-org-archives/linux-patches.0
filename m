@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4EB18DF60;
-	Tue, 10 Sep 2024 10:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB8B18DF60;
+	Tue, 10 Sep 2024 10:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964901; cv=none; b=ZhmstE0YOD3xVTmHcuSIsAuCWZdvxzNnNuw/hnKdkCpxHqAUWHh4hpAXJbk60vKPIz6ybRlnvvvqN2++kcuC7gA8owt/sztnbFdxadjwBHrHkg8Q9zthkq7TQPZ4YhrTgLiUD/ujqzgSqaOgNTm5SqLcNCSNjz5n++EWE6oGG8E=
+	t=1725964904; cv=none; b=RXzcTSsNgkp9x36xVzBQYvuz6enRbyoe8V54KofkD/AG8fZiAAtB0r8GF5O0Hj1L9q/p0JZax4joywuFab7V3kjAUPw8F/ns/xhfhAmYv+qrw9F78mrw0Gmuyk+fGMY36V2n6h8UaFmgZ++oIBKX04bwvlWFI2i48r4w77EOYbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964901; c=relaxed/simple;
-	bh=uqRQiQp0SqwJg2uL5mpnwQVASOkDy7SDlS5M610sZgQ=;
+	s=arc-20240116; t=1725964904; c=relaxed/simple;
+	bh=vobF3BBNDtIeQnVsLAiK0qsfWz80TjxahMlZlPVxvkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOMQ/m6hCIuEKS+M0xKArJ/RGO9JV++lo4zSYxChZA76lkY36NkULV36qk/BlbnGsZ/peuCerm88s/YAgVNZABV7AHOoV5rn5pk9uXWhj6hCQHnbKAnQE29BN9df3LOlykwT8dTTDS2U5AxW+baENBL/h5YezJuCqR4HUTXsJAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cF38aNNt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BalLACqL8gTfGHnIUsRoGBnDql5DO+pQZ5a/FTEyoL+YfRWOVx6RHCKzZZVrGnlqway9RBAKa6LQSEPfADEh8V5mD8ZzPRa47tbwOChK/M0U+g7eQjfZGxd67buJNbftvBc0sRQd0f3v3sOsItvtcOBM6lUYLg51DU7Mb2o8Zlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXW4s1we; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF38aNNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039FDC4CEC3;
-	Tue, 10 Sep 2024 10:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXW4s1we"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85F2C4CEC3;
+	Tue, 10 Sep 2024 10:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964901;
-	bh=uqRQiQp0SqwJg2uL5mpnwQVASOkDy7SDlS5M610sZgQ=;
+	s=korg; t=1725964904;
+	bh=vobF3BBNDtIeQnVsLAiK0qsfWz80TjxahMlZlPVxvkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cF38aNNtdNk6YaGSUcWcLDe73SSgkkMKmczN7V0Z3NnrMEUmt/oF2F50R46RRnfL8
-	 e1GVWlDtMlM0qW3tRvLdEpOw9cPo3b2dGSUUWG+Ie2OvkUJvslvfqjvJkGkKEIYdjX
-	 JnMjUAN6306iXiwz/t2DmRrd8U50M971VXUKLu4Y=
+	b=hXW4s1weXI/VNWRvGrSZewEk0fO/p0X6IBSbGhPLjmY89JLnFDplGdB2ICVpVX+rE
+	 o/BJ18PPx5zNzq8+G++8rHRjmNWU17LNLxZbv9AzJKDY0foaoi7umSfao6en6ptVi0
+	 2P1VFDllo4lWS8ZtNS3/WEUjUP/fsovGmD/4JdgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian@huaweicloud.com>
-Subject: [PATCH 5.10 070/186] tracing: Avoid possible softlockup in tracing_iter_reset()
-Date: Tue, 10 Sep 2024 11:32:45 +0200
-Message-ID: <20240910092557.402774314@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Tom Herbert <tom@herbertland.com>,
+	Florian Westphal <fw@strlen.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 071/186] ila: call nf_unregister_net_hooks() sooner
+Date: Tue, 10 Sep 2024 11:32:46 +0200
+Message-ID: <20240910092557.448321635@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -50,40 +53,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian@huaweicloud.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 49aa8a1f4d6800721c7971ed383078257f12e8f9 upstream.
+commit 031ae72825cef43e4650140b800ad58bf7a6a466 upstream.
 
-In __tracing_open(), when max latency tracers took place on the cpu,
-the time start of its buffer would be updated, then event entries with
-timestamps being earlier than start of the buffer would be skipped
-(see tracing_iter_reset()).
+syzbot found an use-after-free Read in ila_nf_input [1]
 
-Softlockup will occur if the kernel is non-preemptible and too many
-entries were skipped in the loop that reset every cpu buffer, so add
-cond_resched() to avoid it.
+Issue here is that ila_xlat_exit_net() frees the rhashtable,
+then call nf_unregister_net_hooks().
 
-Cc: stable@vger.kernel.org
-Fixes: 2f26ebd549b9a ("tracing: use timestamp to determine start of latency traces")
-Link: https://lore.kernel.org/20240827124654.3817443-1-zhengyejian@huaweicloud.com
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian@huaweicloud.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+It should be done in the reverse way, with a synchronize_rcu().
+
+This is a good match for a pre_exit() method.
+
+[1]
+ BUG: KASAN: use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+ BUG: KASAN: use-after-free in __rhashtable_lookup include/linux/rhashtable.h:604 [inline]
+ BUG: KASAN: use-after-free in rhashtable_lookup include/linux/rhashtable.h:646 [inline]
+ BUG: KASAN: use-after-free in rhashtable_lookup_fast+0x77a/0x9b0 include/linux/rhashtable.h:672
+Read of size 4 at addr ffff888064620008 by task ksoftirqd/0/16
+
+CPU: 0 UID: 0 PID: 16 Comm: ksoftirqd/0 Not tainted 6.11.0-rc4-syzkaller-00238-g2ad6d23f465a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:93 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+  __rhashtable_lookup include/linux/rhashtable.h:604 [inline]
+  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
+  rhashtable_lookup_fast+0x77a/0x9b0 include/linux/rhashtable.h:672
+  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:132 [inline]
+  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
+  ila_nf_input+0x1fe/0x3c0 net/ipv6/ila/ila_xlat.c:190
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
+  nf_hook include/linux/netfilter.h:269 [inline]
+  NF_HOOK+0x29e/0x450 include/linux/netfilter.h:312
+  __netif_receive_skb_one_core net/core/dev.c:5661 [inline]
+  __netif_receive_skb+0x1ea/0x650 net/core/dev.c:5775
+  process_backlog+0x662/0x15b0 net/core/dev.c:6108
+  __napi_poll+0xcb/0x490 net/core/dev.c:6772
+  napi_poll net/core/dev.c:6841 [inline]
+  net_rx_action+0x89b/0x1240 net/core/dev.c:6963
+  handle_softirqs+0x2c4/0x970 kernel/softirq.c:554
+  run_ksoftirqd+0xca/0x130 kernel/softirq.c:928
+  smpboot_thread_fn+0x544/0xa30 kernel/smpboot.c:164
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x64620
+flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
+page_type: 0xbfffffff(buddy)
+raw: 00fff00000000000 ffffea0000959608 ffffea00019d9408 0000000000000000
+raw: 0000000000000000 0000000000000003 00000000bfffffff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as freed
+page last allocated via order 3, migratetype Unmovable, gfp_mask 0x52dc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_ZERO), pid 5242, tgid 5242 (syz-executor), ts 73611328570, free_ts 618981657187
+  set_page_owner include/linux/page_owner.h:32 [inline]
+  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1493
+  prep_new_page mm/page_alloc.c:1501 [inline]
+  get_page_from_freelist+0x2e4c/0x2f10 mm/page_alloc.c:3439
+  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4695
+  __alloc_pages_node_noprof include/linux/gfp.h:269 [inline]
+  alloc_pages_node_noprof include/linux/gfp.h:296 [inline]
+  ___kmalloc_large_node+0x8b/0x1d0 mm/slub.c:4103
+  __kmalloc_large_node_noprof+0x1a/0x80 mm/slub.c:4130
+  __do_kmalloc_node mm/slub.c:4146 [inline]
+  __kmalloc_node_noprof+0x2d2/0x440 mm/slub.c:4164
+  __kvmalloc_node_noprof+0x72/0x190 mm/util.c:650
+  bucket_table_alloc lib/rhashtable.c:186 [inline]
+  rhashtable_init_noprof+0x534/0xa60 lib/rhashtable.c:1071
+  ila_xlat_init_net+0xa0/0x110 net/ipv6/ila/ila_xlat.c:613
+  ops_init+0x359/0x610 net/core/net_namespace.c:139
+  setup_net+0x515/0xca0 net/core/net_namespace.c:343
+  copy_net_ns+0x4e2/0x7b0 net/core/net_namespace.c:508
+  create_new_namespaces+0x425/0x7b0 kernel/nsproxy.c:110
+  unshare_nsproxy_namespaces+0x124/0x180 kernel/nsproxy.c:228
+  ksys_unshare+0x619/0xc10 kernel/fork.c:3328
+  __do_sys_unshare kernel/fork.c:3399 [inline]
+  __se_sys_unshare kernel/fork.c:3397 [inline]
+  __x64_sys_unshare+0x38/0x40 kernel/fork.c:3397
+page last free pid 11846 tgid 11846 stack trace:
+  reset_page_owner include/linux/page_owner.h:25 [inline]
+  free_pages_prepare mm/page_alloc.c:1094 [inline]
+  free_unref_page+0xd22/0xea0 mm/page_alloc.c:2612
+  __folio_put+0x2c8/0x440 mm/swap.c:128
+  folio_put include/linux/mm.h:1486 [inline]
+  free_large_kmalloc+0x105/0x1c0 mm/slub.c:4565
+  kfree+0x1c4/0x360 mm/slub.c:4588
+  rhashtable_free_and_destroy+0x7c6/0x920 lib/rhashtable.c:1169
+  ila_xlat_exit_net+0x55/0x110 net/ipv6/ila/ila_xlat.c:626
+  ops_exit_list net/core/net_namespace.c:173 [inline]
+  cleanup_net+0x802/0xcc0 net/core/net_namespace.c:640
+  process_one_work kernel/workqueue.c:3231 [inline]
+  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
+  worker_thread+0x86d/0xd40 kernel/workqueue.c:3390
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Memory state around the buggy address:
+ ffff88806461ff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88806461ff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff888064620000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                      ^
+ ffff888064620080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff888064620100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Tom Herbert <tom@herbertland.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Link: https://patch.msgid.link/20240904144418.1162839-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/ila/ila.h      |    1 +
+ net/ipv6/ila/ila_main.c |    6 ++++++
+ net/ipv6/ila/ila_xlat.c |   13 +++++++++----
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -3742,6 +3742,8 @@ void tracing_iter_reset(struct trace_ite
- 			break;
- 		entries++;
- 		ring_buffer_iter_advance(buf_iter);
-+		/* This could be a big loop */
-+		cond_resched();
- 	}
+--- a/net/ipv6/ila/ila.h
++++ b/net/ipv6/ila/ila.h
+@@ -108,6 +108,7 @@ int ila_lwt_init(void);
+ void ila_lwt_fini(void);
  
- 	per_cpu_ptr(iter->array_buffer->data, cpu)->skipped_entries = entries;
+ int ila_xlat_init_net(struct net *net);
++void ila_xlat_pre_exit_net(struct net *net);
+ void ila_xlat_exit_net(struct net *net);
+ 
+ int ila_xlat_nl_cmd_add_mapping(struct sk_buff *skb, struct genl_info *info);
+--- a/net/ipv6/ila/ila_main.c
++++ b/net/ipv6/ila/ila_main.c
+@@ -71,6 +71,11 @@ ila_xlat_init_fail:
+ 	return err;
+ }
+ 
++static __net_exit void ila_pre_exit_net(struct net *net)
++{
++	ila_xlat_pre_exit_net(net);
++}
++
+ static __net_exit void ila_exit_net(struct net *net)
+ {
+ 	ila_xlat_exit_net(net);
+@@ -78,6 +83,7 @@ static __net_exit void ila_exit_net(stru
+ 
+ static struct pernet_operations ila_net_ops = {
+ 	.init = ila_init_net,
++	.pre_exit = ila_pre_exit_net,
+ 	.exit = ila_exit_net,
+ 	.id   = &ila_net_id,
+ 	.size = sizeof(struct ila_net),
+--- a/net/ipv6/ila/ila_xlat.c
++++ b/net/ipv6/ila/ila_xlat.c
+@@ -616,6 +616,15 @@ int ila_xlat_init_net(struct net *net)
+ 	return 0;
+ }
+ 
++void ila_xlat_pre_exit_net(struct net *net)
++{
++	struct ila_net *ilan = net_generic(net, ila_net_id);
++
++	if (ilan->xlat.hooks_registered)
++		nf_unregister_net_hooks(net, ila_nf_hook_ops,
++					ARRAY_SIZE(ila_nf_hook_ops));
++}
++
+ void ila_xlat_exit_net(struct net *net)
+ {
+ 	struct ila_net *ilan = net_generic(net, ila_net_id);
+@@ -623,10 +632,6 @@ void ila_xlat_exit_net(struct net *net)
+ 	rhashtable_free_and_destroy(&ilan->xlat.rhash_table, ila_free_cb, NULL);
+ 
+ 	free_bucket_spinlocks(ilan->xlat.locks);
+-
+-	if (ilan->xlat.hooks_registered)
+-		nf_unregister_net_hooks(net, ila_nf_hook_ops,
+-					ARRAY_SIZE(ila_nf_hook_ops));
+ }
+ 
+ static int ila_xlat_addr(struct sk_buff *skb, bool sir2ila)
 
 
