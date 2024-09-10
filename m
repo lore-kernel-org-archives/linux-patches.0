@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5E218FC9C;
-	Tue, 10 Sep 2024 10:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811C1190068;
+	Tue, 10 Sep 2024 10:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965081; cv=none; b=Kv5ENtLCxHng1lL05bG79SZs5yLlPz9zZHvQALhuUpYXlfWLxF2RGv4I7MZ1JngPekOC9MOtwpWCptzrpkoZutKjq56WEKfA/7NvP/ybbmZ8C9hJDdQGsPmvJixIGibPyJUh0Nxhqp6vJKlgYWZf3WB9BLwgbEv0VnSCqkwdxHg=
+	t=1725965084; cv=none; b=svr+yF26RFnZn4jSqu8DQYczOu8ZguS+17TFjiMKrBNIPaEQq3UmTiaMmVAhAiP1RvSFQq9skfixbKH6yzGxq4SSDRUZec1dCLIpMFs+dqJyYhtdxKY5axjY6/cWgjdkHJkCqIa3VL1CqHflWXPhdEoDg8Xi35XTDpmFxGadrkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965081; c=relaxed/simple;
-	bh=uBGU2fK8zcCEPXUR1U2/fxFOIKmqnYmueRoFdxHNyXM=;
+	s=arc-20240116; t=1725965084; c=relaxed/simple;
+	bh=AtjDi/hY+bhjNNPnfyZowrO4XzVA2F66BdMSIWlDbfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzFYMzjepFiTp0gy6oZCgyzJp76MMfAI1v0nMqi0uTuDfCArg9KK8iblErV9QZXyEaxM45JaDkkwsroN2dM1MP5oTEPL5zuCyJHdyy977/qcgSLsu5U/5ry2wt8ykpCrmIvRNeVWLEkFnb/u1fxjGQ0W5fbUkGfudzULD4J8834=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9MpHFZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JSmj9nxQUGhS/JUZuf3E4EMQtEmFAtQiIcDDwnunWFLT2t/K7LEERDyqabL5VugbxDUqTeJG5WC3koi/Ey5wxnM7m7tf5/EckdfUb2G4kGtTSXnfMG2kGjWQvPqY+v//XK1NvVWTQjBY/SoquBjqAUvich1TW9Z5a/BJbud3sO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnAMfp26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9MpHFZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156C8C4CEC3;
-	Tue, 10 Sep 2024 10:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnAMfp26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08841C4CEC3;
+	Tue, 10 Sep 2024 10:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965081;
-	bh=uBGU2fK8zcCEPXUR1U2/fxFOIKmqnYmueRoFdxHNyXM=;
+	s=korg; t=1725965084;
+	bh=AtjDi/hY+bhjNNPnfyZowrO4XzVA2F66BdMSIWlDbfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9MpHFZYu4vpq7or49sC35wzYmWzR9+k/9Zsx/csoNV2P221vLUhx0+4yMyt5/L/Q
-	 lhYdS+bWxfY+wD8qZNKr6V6aOVAmvHX6mg4X1X5QESyMmkEPNCIaWT3vSyWWfoE6px
-	 LlLcNufFEDB2OA5eu1FTJ3XcaoBTgDoh7kD/xHn0=
+	b=mnAMfp26zFA6wlYbvcZvw+URWu631ZThEC4RgXfplbJbQ4qtpFpL9u9jcNBmWkS9H
+	 v1WiuvRh0J/h1Sz1bvb3jDjWy8Nd4uIO6eGxeHu4nP8V4LmofXAswk0rlxDzRyin9r
+	 KMtftvXFTo5QrySYrwJ1zRP9zDQ2qW35KXZBqEv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/186] cgroup: Protect css->cgroup write under css_set_lock
-Date: Tue, 10 Sep 2024 11:33:46 +0200
-Message-ID: <20240910092559.978572661@linuxfoundation.org>
+Subject: [PATCH 5.10 132/186] um: line: always fill *error_out in setup_one_line()
+Date: Tue, 10 Sep 2024 11:33:47 +0200
+Message-ID: <20240910092600.023327682@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 57b56d16800e8961278ecff0dc755d46c4575092 ]
+[ Upstream commit 824ac4a5edd3f7494ab1996826c4f47f8ef0f63d ]
 
-The writing of css->cgroup associated with the cgroup root in
-rebind_subsystems() is currently protected only by cgroup_mutex.
-However, the reading of css->cgroup in both proc_cpuset_show() and
-proc_cgroup_show() is protected just by css_set_lock. That makes the
-readers susceptible to racing problems like data tearing or caching.
-It is also a problem that can be reported by KCSAN.
+The pointer isn't initialized by callers, but I have
+encountered cases where it's still printed; initialize
+it in all possible cases in setup_one_line().
 
-This can be fixed by using READ_ONCE() and WRITE_ONCE() to access
-css->cgroup. Alternatively, the writing of css->cgroup can be moved
-under css_set_lock as well which is done by this patch.
-
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20240703172235.ad863568b55f.Iaa1eba4db8265d7715ba71d5f6bb8c7ff63d27e9@changeid
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/drivers/line.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 030eaed1f06b..643d8e178f7b 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1773,9 +1773,9 @@ int rebind_subsystems(struct cgroup_root *dst_root, u16 ss_mask)
- 		RCU_INIT_POINTER(scgrp->subsys[ssid], NULL);
- 		rcu_assign_pointer(dcgrp->subsys[ssid], css);
- 		ss->root = dst_root;
--		css->cgroup = dcgrp;
- 
- 		spin_lock_irq(&css_set_lock);
-+		css->cgroup = dcgrp;
- 		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
- 		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
- 					 e_cset_node[ss->id]) {
+diff --git a/arch/um/drivers/line.c b/arch/um/drivers/line.c
+index 37e96ba0f5fb..d2beb4a497a2 100644
+--- a/arch/um/drivers/line.c
++++ b/arch/um/drivers/line.c
+@@ -378,6 +378,7 @@ int setup_one_line(struct line *lines, int n, char *init,
+ 			parse_chan_pair(NULL, line, n, opts, error_out);
+ 			err = 0;
+ 		}
++		*error_out = "configured as 'none'";
+ 	} else {
+ 		char *new = kstrdup(init, GFP_KERNEL);
+ 		if (!new) {
+@@ -401,6 +402,7 @@ int setup_one_line(struct line *lines, int n, char *init,
+ 			}
+ 		}
+ 		if (err) {
++			*error_out = "failed to parse channel pair";
+ 			line->init_str = NULL;
+ 			line->valid = 0;
+ 			kfree(new);
 -- 
 2.43.0
 
