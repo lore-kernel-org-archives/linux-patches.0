@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F150346444;
-	Tue, 10 Sep 2024 09:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3A7188CC1;
+	Tue, 10 Sep 2024 09:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961031; cv=none; b=qepE1PpVBlaywSiT4/BSvR/vjCYcCJP8BdZ9gkHM9E6w8COP4q1UKndRXpfG+Imc7fPD+NAkHW+C31iG0T7PYgQRl70R5tTPXIgNwm+I6uqHr+JqLQDBdGivsKU9e2UR/o7qSEFJ3dtgx42k8T+0zbNhpRGP3ixk5W3oZhN8/EQ=
+	t=1725961034; cv=none; b=N9ZmBnN3QZSR4X4XAHJZelvK4J+EMXmAjrxs3vVpa+S6q/anLGbnc/a9zhoD/DwiX9SVFYd4XDzvRPrtmN33VpnYk3XUyxLl7f67hsLYLX6ivAja1t38VWblwuq6qrtr/CudGMQyfRu9A8+RzCQBKCl3H15TJkaT+7QIo4Hkc1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961031; c=relaxed/simple;
-	bh=xfCS/yBynbX3CNradkBwglMhcQzATW13DqKhiu3fvSU=;
+	s=arc-20240116; t=1725961034; c=relaxed/simple;
+	bh=CeidDjqvh8AE7DiULYlFgfxAEN0q8MSoGx9+9aP4bK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ekub0HhVNsJR2smZ/6h5UuRJwWknJe696nfWE4VaLSo9hOGrdSRD7Pa6wFGpezOU2UDC6L0nUcfqh+T5s0UX9lCsAYfq9+tK3P6JwAzOmSHF4h9knDNqtX/BRmec+wG7znMIaljC8J6JDYx/MNHa5n7MiXpYPsCPHQuclNy7BHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmdso5pQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYYwMGFq+LSf2lMS+Y9B86MeEt+3hCh9pPMIoe9AS/1NtXNkXKEtXLxyGZMkgtMptw23V16B4WEM2olBzQ+2+A7nun5IKnwS6xBuWzoJhIiiaPfo4rqPafB7JkxUBBtGNz0x9FxctVzRKidgMdGTT/Qh8GYzQ8uDb2xI2Quy3tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXKLKDGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmdso5pQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E243C4CEC3;
-	Tue, 10 Sep 2024 09:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXKLKDGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B036C4CEC3;
+	Tue, 10 Sep 2024 09:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961030;
-	bh=xfCS/yBynbX3CNradkBwglMhcQzATW13DqKhiu3fvSU=;
+	s=korg; t=1725961033;
+	bh=CeidDjqvh8AE7DiULYlFgfxAEN0q8MSoGx9+9aP4bK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmdso5pQ9+u/6bzCMZV5N+iUHb/j8dJODGaoOX4SWHGcn0vMrH6LuQurDJR969F06
-	 wR6gxEJWYG31tVw/u1dM52rYYLs6C6v+s5M+64sNrnw1TaRMvCf36rjaJL2Zn1Ezqr
-	 0Yja0EHaSW332oNHnMLzS7D8gli8rs6gD9ofsRt4=
+	b=OXKLKDGnF5L6f+tnKN6IJwM4Hm7ocmfC5sd8RP4s6BHNguI44A7B1udKJ2TBvXUPZ
+	 wWmHO4zlP7RYzTvCGpkhuGiEP9933TT3qIkQI4E7EflvqCK+uhJhwCpoWsUA5rof2n
+	 9sgF1h5aOHvoN0cUPZ/Y1E7+HI28v2KoyJCq4/8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yunjian Wang <wangyunjian@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 29/96] af_unix: Remove put_pid()/put_cred() in copy_peercred().
-Date: Tue, 10 Sep 2024 11:31:31 +0200
-Message-ID: <20240910092542.769700774@linuxfoundation.org>
+Subject: [PATCH 4.19 30/96] netfilter: nf_conncount: fix wrong variable type
+Date: Tue, 10 Sep 2024 11:31:32 +0200
+Message-ID: <20240910092542.817712898@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,56 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Yunjian Wang <wangyunjian@huawei.com>
 
-[ Upstream commit e4bd881d987121dbf1a288641491955a53d9f8f7 ]
+[ Upstream commit 0b88d1654d556264bcd24a9cb6383f0888e30131 ]
 
-When (AF_UNIX, SOCK_STREAM) socket connect()s to a listening socket,
-the listener's sk_peer_pid/sk_peer_cred are copied to the client in
-copy_peercred().
+Now there is a issue is that code checks reports a warning: implicit
+narrowing conversion from type 'unsigned int' to small type 'u8' (the
+'keylen' variable). Fix it by removing the 'keylen' variable.
 
-Then, the client's sk_peer_pid and sk_peer_cred are always NULL, so
-we need not call put_pid() and put_cred() there.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ net/netfilter/nf_conncount.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index dfcafbb8cd0e..24fb6f00f597 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -610,9 +610,6 @@ static void init_peercred(struct sock *sk)
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 7554c56b2e63..d189ca7c2c02 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -309,7 +309,6 @@ insert_tree(struct net *net,
+ 	struct nf_conncount_rb *rbconn;
+ 	struct nf_conncount_tuple *conn;
+ 	unsigned int count = 0, gc_count = 0;
+-	u8 keylen = data->keylen;
+ 	bool do_gc = true;
  
- static void copy_peercred(struct sock *sk, struct sock *peersk)
- {
--	const struct cred *old_cred;
--	struct pid *old_pid;
--
- 	if (sk < peersk) {
- 		spin_lock(&sk->sk_peer_lock);
- 		spin_lock_nested(&peersk->sk_peer_lock, SINGLE_DEPTH_NESTING);
-@@ -620,16 +617,12 @@ static void copy_peercred(struct sock *sk, struct sock *peersk)
- 		spin_lock(&peersk->sk_peer_lock);
- 		spin_lock_nested(&sk->sk_peer_lock, SINGLE_DEPTH_NESTING);
- 	}
--	old_pid = sk->sk_peer_pid;
--	old_cred = sk->sk_peer_cred;
-+
- 	sk->sk_peer_pid  = get_pid(peersk->sk_peer_pid);
- 	sk->sk_peer_cred = get_cred(peersk->sk_peer_cred);
+ 	spin_lock_bh(&nf_conncount_locks[hash]);
+@@ -321,7 +320,7 @@ insert_tree(struct net *net,
+ 		rbconn = rb_entry(*rbnode, struct nf_conncount_rb, node);
  
- 	spin_unlock(&sk->sk_peer_lock);
- 	spin_unlock(&peersk->sk_peer_lock);
--
--	put_pid(old_pid);
--	put_cred(old_cred);
- }
+ 		parent = *rbnode;
+-		diff = key_diff(key, rbconn->key, keylen);
++		diff = key_diff(key, rbconn->key, data->keylen);
+ 		if (diff < 0) {
+ 			rbnode = &((*rbnode)->rb_left);
+ 		} else if (diff > 0) {
+@@ -366,7 +365,7 @@ insert_tree(struct net *net,
  
- static int unix_listen(struct socket *sock, int backlog)
+ 	conn->tuple = *tuple;
+ 	conn->zone = *zone;
+-	memcpy(rbconn->key, key, sizeof(u32) * keylen);
++	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
+ 
+ 	nf_conncount_list_init(&rbconn->list);
+ 	list_add(&conn->node, &rbconn->list.head);
+@@ -391,7 +390,6 @@ count_tree(struct net *net,
+ 	struct rb_node *parent;
+ 	struct nf_conncount_rb *rbconn;
+ 	unsigned int hash;
+-	u8 keylen = data->keylen;
+ 
+ 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
+ 	root = &data->root[hash];
+@@ -402,7 +400,7 @@ count_tree(struct net *net,
+ 
+ 		rbconn = rb_entry(parent, struct nf_conncount_rb, node);
+ 
+-		diff = key_diff(key, rbconn->key, keylen);
++		diff = key_diff(key, rbconn->key, data->keylen);
+ 		if (diff < 0) {
+ 			parent = rcu_dereference_raw(parent->rb_left);
+ 		} else if (diff > 0) {
 -- 
 2.43.0
 
