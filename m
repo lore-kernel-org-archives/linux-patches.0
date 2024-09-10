@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91041552FD;
-	Tue, 10 Sep 2024 10:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDBE1552FD;
+	Tue, 10 Sep 2024 10:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965119; cv=none; b=RTFSmJ82g6qP9OAve0/8BeEQgillGXupm2M5AOGBi4hy1WRTwRZw2Dnr/3PkoAm2A2yUpXSAxbgh8Kj2WV/tVwYITWvDiq83/YdASMi7dBbglqYVvUq761VS9GjlknqOvGf103l9kXfjbijQHqsGWNCl8w9D3UOU1Mec6vMlVs0=
+	t=1725965122; cv=none; b=M0DC67ARVe7LN8gDtFUziNUP0Xib85f+L+EyAmfVcSAXz8LkZDVFDrfEdnY4rT/f0o2lRb/9ElUGXr8xvtBySj/B1oY8PVIk3gy29olgaPLcer4ziIXai60ACD6J64l6SdyG+GUvGiYcv2K6DkFdgyD20pCgWSvGSl/yv/Z45go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965119; c=relaxed/simple;
-	bh=AuprMJEdAoAV/TK+xXJ5MyVrCVHE0dxzhpkOUTEQz/g=;
+	s=arc-20240116; t=1725965122; c=relaxed/simple;
+	bh=xLZRTOiHvyynuxW+tdiSLwf0Sbv2BCgiVK5KaU9lJic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pz7nO4FCxffENfZNMxwOtA9Ubgz5+wQl9fY3eUO5ZJcSX7HVfe5DiCq7IJohdQISrN8sBojQTNKwATUdpnJjAdYj6Qjkhz8OAoZtI4rCu0M404ZF6wtFydmKEVsLU/WXAcEpcXCFZWvucinWmGd9ccRRU2mizIDl2DUpvU4t5eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Je8at2V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XGy5htV8e4y3QTvXALFqtAMamNvKjZQq4rU9lBQSMLBz6Yg12iXMsTQiHBjqwOxs3R0b8GQxvCXmj5BkwmkYZ1fhE+ce/Om+47cD6R+qXjOWG6A/BCHNo5+vGKTtarbaJjqAcjJ4bB6a9a3YYJq+A2Rq3EKAsN+6CPhsjGhi0A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTYbkhM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Je8at2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390E2C4CECD;
-	Tue, 10 Sep 2024 10:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTYbkhM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236A7C4CEC3;
+	Tue, 10 Sep 2024 10:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965119;
-	bh=AuprMJEdAoAV/TK+xXJ5MyVrCVHE0dxzhpkOUTEQz/g=;
+	s=korg; t=1725965122;
+	bh=xLZRTOiHvyynuxW+tdiSLwf0Sbv2BCgiVK5KaU9lJic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Je8at2VMTQvGLG0v+yFTFfNRjPkHAbCfbABQTPlgnbiarwcWv8dGshvXBDEh/B2k
-	 bmq+BjD87guGtpu488EIzNj3nOhO9s+hoVtE+NjlhxlcxJCgU5trR4FlLQfhBDxNd2
-	 YEfi6KF7RJWrtdkF+FEnQYi6rum4kHYdhM+A/ehI=
+	b=FTYbkhM/Cw8Pg/hxEmiwVWTw7eyL1VikZ5pNDEx+KythNjj/s97XdUxq0Cwhr/0mp
+	 P2nHhlrZWUpJarsGxlrThNWTmORNB7Ngzu/57j9gqInjXS8MUU4LOSxJHkBmNRNMzw
+	 zRjujgfZKtUPUyMu6j3z5a2uKGsRPo2pi/dy6z30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/186] btrfs: clean up our handling of refs == 0 in snapshot delete
-Date: Tue, 10 Sep 2024 11:33:58 +0200
-Message-ID: <20240910092600.494368276@linuxfoundation.org>
+Subject: [PATCH 5.10 144/186] PCI: Add missing bridge lock to pci_bus_lock()
+Date: Tue, 10 Sep 2024 11:33:59 +0200
+Message-ID: <20240910092600.535369366@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,88 +56,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit b8ccef048354074a548f108e51d0557d6adfd3a3 ]
+[ Upstream commit a4e772898f8bf2e7e1cf661a12c60a5612c4afab ]
 
-In reada we BUG_ON(refs == 0), which could be unkind since we aren't
-holding a lock on the extent leaf and thus could get a transient
-incorrect answer.  In walk_down_proc we also BUG_ON(refs == 0), which
-could happen if we have extent tree corruption.  Change that to return
--EUCLEAN.  In do_walk_down() we catch this case and handle it correctly,
-however we return -EIO, which -EUCLEAN is a more appropriate error code.
-Finally in walk_up_proc we have the same BUG_ON(refs == 0), so convert
-that to proper error handling.  Also adjust the error message so we can
-actually do something with the information.
+One of the true positives that the cfg_access_lock lockdep effort
+identified is this sequence:
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  WARNING: CPU: 14 PID: 1 at drivers/pci/pci.c:4886 pci_bridge_secondary_bus_reset+0x5d/0x70
+  RIP: 0010:pci_bridge_secondary_bus_reset+0x5d/0x70
+  Call Trace:
+   <TASK>
+   ? __warn+0x8c/0x190
+   ? pci_bridge_secondary_bus_reset+0x5d/0x70
+   ? report_bug+0x1f8/0x200
+   ? handle_bug+0x3c/0x70
+   ? exc_invalid_op+0x18/0x70
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? pci_bridge_secondary_bus_reset+0x5d/0x70
+   pci_reset_bus+0x1d8/0x270
+   vmd_probe+0x778/0xa10
+   pci_device_probe+0x95/0x120
+
+Where pci_reset_bus() users are triggering unlocked secondary bus resets.
+Ironically pci_bus_reset(), several calls down from pci_reset_bus(), uses
+pci_bus_lock() before issuing the reset which locks everything *but* the
+bridge itself.
+
+For the same motivation as adding:
+
+  bridge = pci_upstream_bridge(dev);
+  if (bridge)
+    pci_dev_lock(bridge);
+
+to pci_reset_function() for the "bus" and "cxl_bus" reset cases, add
+pci_dev_lock() for @bus->self to pci_bus_lock().
+
+Link: https://lore.kernel.org/r/171711747501.1628941.15217746952476635316.stgit@dwillia2-xfh.jf.intel.com
+Reported-by: Imre Deak <imre.deak@intel.com>
+Closes: http://lore.kernel.org/r/6657833b3b5ae_14984b29437@dwillia2-xfh.jf.intel.com.notmuch
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[bhelgaas: squash in recursive locking deadlock fix from Keith Busch:
+https://lore.kernel.org/r/20240711193650.701834-1-kbusch@meta.com]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Hans de Goede <hdegoede@redhat.com>
+Tested-by: Kalle Valo <kvalo@kernel.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ drivers/pci/pci.c | 35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 22fee61bb51a..afa1eccd5e2d 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -4806,7 +4806,15 @@ static noinline void reada_walk_down(struct btrfs_trans_handle *trans,
- 		/* We don't care about errors in readahead. */
- 		if (ret < 0)
- 			continue;
--		BUG_ON(refs == 0);
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 09d5fa637b98..800df0f1417d 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5260,10 +5260,12 @@ static void pci_bus_lock(struct pci_bus *bus)
+ {
+ 	struct pci_dev *dev;
+ 
++	pci_dev_lock(bus->self);
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+-		pci_dev_lock(dev);
+ 		if (dev->subordinate)
+ 			pci_bus_lock(dev->subordinate);
++		else
++			pci_dev_lock(dev);
+ 	}
+ }
+ 
+@@ -5275,8 +5277,10 @@ static void pci_bus_unlock(struct pci_bus *bus)
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
+ 	}
++	pci_dev_unlock(bus->self);
+ }
+ 
+ /* Return 1 on successful lock, 0 on contention */
+@@ -5284,15 +5288,15 @@ static int pci_bus_trylock(struct pci_bus *bus)
+ {
+ 	struct pci_dev *dev;
+ 
++	if (!pci_dev_trylock(bus->self))
++		return 0;
 +
-+		/*
-+		 * This could be racey, it's conceivable that we raced and end
-+		 * up with a bogus refs count, if that's the case just skip, if
-+		 * we are actually corrupt we will notice when we look up
-+		 * everything again with our locks.
-+		 */
-+		if (refs == 0)
-+			continue;
- 
- 		if (wc->stage == DROP_REFERENCE) {
- 			if (refs == 1)
-@@ -4873,7 +4881,11 @@ static noinline int walk_down_proc(struct btrfs_trans_handle *trans,
- 		BUG_ON(ret == -ENOMEM);
- 		if (ret)
- 			return ret;
--		BUG_ON(wc->refs[level] == 0);
-+		if (unlikely(wc->refs[level] == 0)) {
-+			btrfs_err(fs_info, "bytenr %llu has 0 references, expect > 0",
-+				  eb->start);
-+			return -EUCLEAN;
-+		}
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+-		if (!pci_dev_trylock(dev))
+-			goto unlock;
+ 		if (dev->subordinate) {
+-			if (!pci_bus_trylock(dev->subordinate)) {
+-				pci_dev_unlock(dev);
++			if (!pci_bus_trylock(dev->subordinate))
+ 				goto unlock;
+-			}
+-		}
++		} else if (!pci_dev_trylock(dev))
++			goto unlock;
  	}
+ 	return 1;
  
- 	if (wc->stage == DROP_REFERENCE) {
-@@ -5006,8 +5018,9 @@ static noinline int do_walk_down(struct btrfs_trans_handle *trans,
- 		goto out_unlock;
- 
- 	if (unlikely(wc->refs[level - 1] == 0)) {
--		btrfs_err(fs_info, "Missing references.");
--		ret = -EIO;
-+		btrfs_err(fs_info, "bytenr %llu has 0 references, expect > 0",
-+			  bytenr);
-+		ret = -EUCLEAN;
- 		goto out_unlock;
+@@ -5300,8 +5304,10 @@ static int pci_bus_trylock(struct pci_bus *bus)
+ 	list_for_each_entry_continue_reverse(dev, &bus->devices, bus_list) {
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
  	}
- 	*lookup_info = 0;
-@@ -5209,7 +5222,12 @@ static noinline int walk_up_proc(struct btrfs_trans_handle *trans,
- 				path->locks[level] = 0;
- 				return ret;
++	pci_dev_unlock(bus->self);
+ 	return 0;
+ }
+ 
+@@ -5333,9 +5339,10 @@ static void pci_slot_lock(struct pci_slot *slot)
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+-		pci_dev_lock(dev);
+ 		if (dev->subordinate)
+ 			pci_bus_lock(dev->subordinate);
++		else
++			pci_dev_lock(dev);
+ 	}
+ }
+ 
+@@ -5361,14 +5368,13 @@ static int pci_slot_trylock(struct pci_slot *slot)
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+-		if (!pci_dev_trylock(dev))
+-			goto unlock;
+ 		if (dev->subordinate) {
+ 			if (!pci_bus_trylock(dev->subordinate)) {
+ 				pci_dev_unlock(dev);
+ 				goto unlock;
  			}
--			BUG_ON(wc->refs[level] == 0);
-+			if (unlikely(wc->refs[level] == 0)) {
-+				btrfs_tree_unlock_rw(eb, path->locks[level]);
-+				btrfs_err(fs_info, "bytenr %llu has 0 references, expect > 0",
-+					  eb->start);
-+				return -EUCLEAN;
-+			}
- 			if (wc->refs[level] == 1) {
- 				btrfs_tree_unlock_rw(eb, path->locks[level]);
- 				path->locks[level] = 0;
+-		}
++		} else if (!pci_dev_trylock(dev))
++			goto unlock;
+ 	}
+ 	return 1;
+ 
+@@ -5379,7 +5385,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
+ 			continue;
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
+ 	}
+ 	return 0;
+ }
 -- 
 2.43.0
 
