@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D080718787E;
-	Tue, 10 Sep 2024 10:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89EB18787E;
+	Tue, 10 Sep 2024 10:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962582; cv=none; b=pVSS/joFeOrEmc1NNrObqRhsuNUReohajR+5w9GSx56YhQDckK26kctalc6grhvi9lHK8fkWO2XUQXwMJYyrTbuUw1befgw7Irn8aTa3TblXyaSp4V3eYBcSFDVDKtU1H+Vt9uAbLjofRi6x/ddtkNma8YXBH0qoaZogPdmvpLQ=
+	t=1725962585; cv=none; b=Fq5RwFcZD3xYOecydiFm2naleyUueod1G171vXg42ffoY2o2YYP1n/00VL7JWQlqyKIpZRlgXXq+tkF4QvD3AzQyA9UgeRPkj3IHdr4WnKyRd2PdKKC38DR86WenuhcmksBm+ZqYOu8EGAJJhYTb2EIV/9lNVDvmd0K0GtIrk2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962582; c=relaxed/simple;
-	bh=YzR+n4RjazWTYJsaniI+2enOG3d2rWKhp9AQEJcnFBs=;
+	s=arc-20240116; t=1725962585; c=relaxed/simple;
+	bh=fwUhhzOpko19LD6G0IedDXbnZgqrgc69xDPtcSz0/gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNs3j0+NIJQ5cYgPz9OQZrDoZRFHTgBsjH8n7a7xLDS1NTHO5rU5C8vuP9IrB8IQAjvtptYnD9h95XprQEl5w6FdGofOygD5ZDap8GYdYl1lJhlnQN2edeNOZjKzn+B2fW3WSNjCiyU+R1zaJU+FM4ObYsoIBVquK4HV2DRu2ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vu6rbdKK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k+nfD/glDOW8cA1ckIbrNnl/P2jY3j4dEq7l9CfCOQ46U4GP2J6+YzrNXWtwFpOZMVCUtlmutCejxwc2tqroZQ0esOEJ5IqSd6yhZQfU4DuGuJfA3WTGf1yk3cxCrpnNfICilZmZL2/NvlSf4i9rQ/UXb8YTnNO86UmX7Pp3A88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2xBfmsq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vu6rbdKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55884C4CECE;
-	Tue, 10 Sep 2024 10:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2xBfmsq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E10BC4CEC3;
+	Tue, 10 Sep 2024 10:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962582;
-	bh=YzR+n4RjazWTYJsaniI+2enOG3d2rWKhp9AQEJcnFBs=;
+	s=korg; t=1725962585;
+	bh=fwUhhzOpko19LD6G0IedDXbnZgqrgc69xDPtcSz0/gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vu6rbdKKyMv09B96rSNqdaEoKpsS8CtmQYE+nQ9tUilQGMhWY59m/7eEESmwPXWnB
-	 +iZ7u/IFNO89s35Q+dq2vxa4eMHoftp3XcDDo84YpZEAlhClgsg9gJm3PeNMPuWiZe
-	 P737LU8FdAIMpKFdoV6QQLdH9AWoG6+6fzHXhuHs=
+	b=Y2xBfmsqEp/yTdXwIUZkMndisMHyWsMbdJ8jdPgXGcyx0ahPGft405kGSXRsCuRYi
+	 IjTl9IoiL1B/gaFxC/1HAZKfygXvGXg71TwLl5JBc2EmqHDEr0r/0+uNGV2gpk8nld
+	 Iyovj9txGGYZUGTSjKcEpBMZB2vCTTQfWE3i6KOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/121] smp: Add missing destroy_work_on_stack() call in smp_call_on_cpu()
-Date: Tue, 10 Sep 2024 11:32:37 +0200
-Message-ID: <20240910092549.797451149@linuxfoundation.org>
+Subject: [PATCH 5.4 083/121] btrfs: replace BUG_ON with ASSERT in walk_down_proc()
+Date: Tue, 10 Sep 2024 11:32:38 +0200
+Message-ID: <20240910092549.841793370@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -52,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 77aeb1b685f9db73d276bad4bb30d48505a6fd23 ]
+[ Upstream commit 1f9d44c0a12730a24f8bb75c5e1102207413cc9b ]
 
-For CONFIG_DEBUG_OBJECTS_WORK=y kernels sscs.work defined by
-INIT_WORK_ONSTACK() is initialized by debug_object_init_on_stack() for
-the debug check in __init_work() to work correctly.
+We have a couple of areas where we check to make sure the tree block is
+locked before looking up or messing with references.  This is old code
+so it has this as BUG_ON().  Convert this to ASSERT() for developers.
 
-But this lacks the counterpart to remove the tracked object from debug
-objects again, which will cause a debug object warning once the stack is
-freed.
-
-Add the missing destroy_work_on_stack() invocation to cure that.
-
-[ tglx: Massaged changelog ]
-
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/r/20240704065213.13559-1-qiang.zhang1211@gmail.com
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/smp.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/extent-tree.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/smp.c b/kernel/smp.c
-index be65b76cb803..76de88dc1699 100644
---- a/kernel/smp.c
-+++ b/kernel/smp.c
-@@ -813,6 +813,7 @@ int smp_call_on_cpu(unsigned int cpu, int (*func)(void *), void *par, bool phys)
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index a28b0eafb65a..202e6b6e2add 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -4743,7 +4743,7 @@ static noinline int walk_down_proc(struct btrfs_trans_handle *trans,
+ 	if (lookup_info &&
+ 	    ((wc->stage == DROP_REFERENCE && wc->refs[level] != 1) ||
+ 	     (wc->stage == UPDATE_BACKREF && !(wc->flags[level] & flag)))) {
+-		BUG_ON(!path->locks[level]);
++		ASSERT(path->locks[level]);
+ 		ret = btrfs_lookup_extent_info(trans, fs_info,
+ 					       eb->start, level, 1,
+ 					       &wc->refs[level],
+@@ -4767,7 +4767,7 @@ static noinline int walk_down_proc(struct btrfs_trans_handle *trans,
  
- 	queue_work_on(cpu, system_wq, &sscs.work);
- 	wait_for_completion(&sscs.done);
-+	destroy_work_on_stack(&sscs.work);
- 
- 	return sscs.ret;
- }
+ 	/* wc->stage == UPDATE_BACKREF */
+ 	if (!(wc->flags[level] & flag)) {
+-		BUG_ON(!path->locks[level]);
++		ASSERT(path->locks[level]);
+ 		ret = btrfs_inc_ref(trans, root, eb, 1);
+ 		BUG_ON(ret); /* -ENOMEM */
+ 		ret = btrfs_dec_ref(trans, root, eb, 0);
 -- 
 2.43.0
 
