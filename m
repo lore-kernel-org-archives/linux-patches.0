@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D20318C003;
-	Tue, 10 Sep 2024 10:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4F81917D7;
+	Tue, 10 Sep 2024 10:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964041; cv=none; b=kQh0wyW5S0qJEYAA4hYMewljcuaYuYCIQhbleJiVPWAJ42z6aPSmfvw2uugP7Gvn+kwwRMG7U2rVUX7RA8gfsM1DzPTRIUqLv5vatZtng3ll1xoT+veE5kr8lasaJkXJrYjWvY+2N1LSR/AGghQzk/uy3a2FClf1o5EdaZKP9vA=
+	t=1725964044; cv=none; b=Yq8N0QxXOcd47bMgQZX4mVZd2w48ev6hH4NmgFJcT//M6zJ/mOxD2YDyF5EQxIuYslUO327Itac10yfOvohoIDsCP5V7Y5nBAGNy66PitNi86IfpnM8OgERphGRx+pRTrHPyGHDcgUSf7AWZCLnjRdoZZ6zcMyjA9RjLUHx+K40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964041; c=relaxed/simple;
-	bh=eoNo7AZtGJYU5ksIqKiFekhAInnClN4/rdb43FRZaEk=;
+	s=arc-20240116; t=1725964044; c=relaxed/simple;
+	bh=tHbIM1d9C4i/28mvyrgykO8pkL/C3b7qhPNQAIkNSsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdCHdTh+W1HLbx7hHtVQmsBK3qNV6cIWt/Djv6ACyQunD7esI+b8tyhRxdW6p7D3mTnstgnG6HUjjGzlsIuW0sp0pDWCv+OuIhgm1dbS+AL3FxLqMXqp4p4WwVd5Fc4M11yGFghIPQItWviT3IGsXZ6caS0mSHteWx4JUFoX/2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxc1WHVN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o0TvEtqRrID5Neu4NWy8S3KrgnE8Ejo9+zSMXSOYRavu117K7AtgPj/fQeBLoxxrgLH2QcH1hCE2Zs+n9oi2c7nui+jVxX1EtwxnMjGDzItmDD7JFczc0FnjolZ2VkplQvxHYcjKq2TfS3yPzQVP3vVP5qU504HnzD2GGTnBdyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9yqKyj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxc1WHVN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8CAC4CEC3;
-	Tue, 10 Sep 2024 10:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9yqKyj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87942C4CEC3;
+	Tue, 10 Sep 2024 10:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964041;
-	bh=eoNo7AZtGJYU5ksIqKiFekhAInnClN4/rdb43FRZaEk=;
+	s=korg; t=1725964043;
+	bh=tHbIM1d9C4i/28mvyrgykO8pkL/C3b7qhPNQAIkNSsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxc1WHVNzr6vO7W52BVxQFbTjaqjMd1mRz5DMatkCVBRRrunxhB/7s2Xap3dlzGyV
-	 GfK0UK4pi2N/RpEHhAGLxI7BYvQVCep8eR2EHoqpsJrxEvGJYopN24D4yPzujcGNet
-	 9Pr5TlzEaQ9i/CyI35C4tbdze8hhOt9u4Ta0IE04=
+	b=o9yqKyj0LcJQN9jWebXryjgk+cQ1smLN0oVh/1a/v3zON6OA3ppIZtkY2m1HBhTi4
+	 0ymZXUMJd8ZAKJSZjb5RjJeXZUM0PSGnTifCW4zT+73NGqwxRc5sROLCj4R+2VKtuJ
+	 iWctP1Bj66gv6JYOE9ITch3oIPLurQazBfpbr0sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 047/269] fscache: delete fscache_cookie_lru_timer when fscache exits to avoid UAF
-Date: Tue, 10 Sep 2024 11:30:34 +0200
-Message-ID: <20240910092609.929071860@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 048/269] eventfs: Use list_del_rcu() for SRCU protected list variable
+Date: Tue, 10 Sep 2024 11:30:35 +0200
+Message-ID: <20240910092609.960004408@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,69 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 72a6e22c604c95ddb3b10b5d3bb85b6ff4dbc34f upstream.
+commit d2603279c7d645bf0d11fa253b23f1ab48fc8d3c upstream.
 
-The fscache_cookie_lru_timer is initialized when the fscache module
-is inserted, but is not deleted when the fscache module is removed.
-If timer_reduce() is called before removing the fscache module,
-the fscache_cookie_lru_timer will be added to the timer list of
-the current cpu. Afterwards, a use-after-free will be triggered
-in the softIRQ after removing the fscache module, as follows:
+Chi Zhiling reported:
 
-==================================================================
-BUG: unable to handle page fault for address: fffffbfff803c9e9
- PF: supervisor read access in kernel mode
- PF: error_code(0x0000) - not-present page
-PGD 21ffea067 P4D 21ffea067 PUD 21ffe6067 PMD 110a7c067 PTE 0
-Oops: Oops: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Tainted: G W 6.11.0-rc3 #855
-Tainted: [W]=WARN
-RIP: 0010:__run_timer_base.part.0+0x254/0x8a0
-Call Trace:
- <IRQ>
- tmigr_handle_remote_up+0x627/0x810
- __walk_groups.isra.0+0x47/0x140
- tmigr_handle_remote+0x1fa/0x2f0
- handle_softirqs+0x180/0x590
- irq_exit_rcu+0x84/0xb0
- sysvec_apic_timer_interrupt+0x6e/0x90
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20
-RIP: 0010:default_idle+0xf/0x20
- default_idle_call+0x38/0x60
- do_idle+0x2b5/0x300
- cpu_startup_entry+0x54/0x60
- start_secondary+0x20d/0x280
- common_startup_64+0x13e/0x148
- </TASK>
-Modules linked in: [last unloaded: netfs]
-==================================================================
+  We found a null pointer accessing in tracefs[1], the reason is that the
+  variable 'ei_child' is set to LIST_POISON1, that means the list was
+  removed in eventfs_remove_rec. so when access the ei_child->is_freed, the
+  panic triggered.
 
-Therefore delete fscache_cookie_lru_timer when removing the fscahe module.
+  by the way, the following script can reproduce this panic
 
-Fixes: 12bb21a29c19 ("fscache: Implement cookie user counting and resource pinning")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240826112056.2458299-1-libaokun@huaweicloud.com
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+  loop1 (){
+      while true
+      do
+          echo "p:kp submit_bio" > /sys/kernel/debug/tracing/kprobe_events
+          echo "" > /sys/kernel/debug/tracing/kprobe_events
+      done
+  }
+  loop2 (){
+      while true
+      do
+          tree /sys/kernel/debug/tracing/events/kprobes/
+      done
+  }
+  loop1 &
+  loop2
+
+  [1]:
+  [ 1147.959632][T17331] Unable to handle kernel paging request at virtual address dead000000000150
+  [ 1147.968239][T17331] Mem abort info:
+  [ 1147.971739][T17331]   ESR = 0x0000000096000004
+  [ 1147.976172][T17331]   EC = 0x25: DABT (current EL), IL = 32 bits
+  [ 1147.982171][T17331]   SET = 0, FnV = 0
+  [ 1147.985906][T17331]   EA = 0, S1PTW = 0
+  [ 1147.989734][T17331]   FSC = 0x04: level 0 translation fault
+  [ 1147.995292][T17331] Data abort info:
+  [ 1147.998858][T17331]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+  [ 1148.005023][T17331]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+  [ 1148.010759][T17331]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  [ 1148.016752][T17331] [dead000000000150] address between user and kernel address ranges
+  [ 1148.024571][T17331] Internal error: Oops: 0000000096000004 [#1] SMP
+  [ 1148.030825][T17331] Modules linked in: team_mode_loadbalance team nlmon act_gact cls_flower sch_ingress bonding tls macvlan dummy ib_core bridge stp llc veth amdgpu amdxcp mfd_core gpu_sched drm_exec drm_buddy radeon crct10dif_ce video drm_suballoc_helper ghash_ce drm_ttm_helper sha2_ce ttm sha256_arm64 i2c_algo_bit sha1_ce sbsa_gwdt cp210x drm_display_helper cec sr_mod cdrom drm_kms_helper binfmt_misc sg loop fuse drm dm_mod nfnetlink ip_tables autofs4 [last unloaded: tls]
+  [ 1148.072808][T17331] CPU: 3 PID: 17331 Comm: ls Tainted: G        W         ------- ----  6.6.43 #2
+  [ 1148.081751][T17331] Source Version: 21b3b386e948bedd29369af66f3e98ab01b1c650
+  [ 1148.088783][T17331] Hardware name: Greatwall GW-001M1A-FTF/GW-001M1A-FTF, BIOS KunLun BIOS V4.0 07/16/2020
+  [ 1148.098419][T17331] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  [ 1148.106060][T17331] pc : eventfs_iterate+0x2c0/0x398
+  [ 1148.111017][T17331] lr : eventfs_iterate+0x2fc/0x398
+  [ 1148.115969][T17331] sp : ffff80008d56bbd0
+  [ 1148.119964][T17331] x29: ffff80008d56bbf0 x28: ffff001ff5be2600 x27: 0000000000000000
+  [ 1148.127781][T17331] x26: ffff001ff52ca4e0 x25: 0000000000009977 x24: dead000000000100
+  [ 1148.135598][T17331] x23: 0000000000000000 x22: 000000000000000b x21: ffff800082645f10
+  [ 1148.143415][T17331] x20: ffff001fddf87c70 x19: ffff80008d56bc90 x18: 0000000000000000
+  [ 1148.151231][T17331] x17: 0000000000000000 x16: 0000000000000000 x15: ffff001ff52ca4e0
+  [ 1148.159048][T17331] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  [ 1148.166864][T17331] x11: 0000000000000000 x10: 0000000000000000 x9 : ffff8000804391d0
+  [ 1148.174680][T17331] x8 : 0000000180000000 x7 : 0000000000000018 x6 : 0000aaab04b92862
+  [ 1148.182498][T17331] x5 : 0000aaab04b92862 x4 : 0000000080000000 x3 : 0000000000000068
+  [ 1148.190314][T17331] x2 : 000000000000000f x1 : 0000000000007ea8 x0 : 0000000000000001
+  [ 1148.198131][T17331] Call trace:
+  [ 1148.201259][T17331]  eventfs_iterate+0x2c0/0x398
+  [ 1148.205864][T17331]  iterate_dir+0x98/0x188
+  [ 1148.210036][T17331]  __arm64_sys_getdents64+0x78/0x160
+  [ 1148.215161][T17331]  invoke_syscall+0x78/0x108
+  [ 1148.219593][T17331]  el0_svc_common.constprop.0+0x48/0xf0
+  [ 1148.224977][T17331]  do_el0_svc+0x24/0x38
+  [ 1148.228974][T17331]  el0_svc+0x40/0x168
+  [ 1148.232798][T17331]  el0t_64_sync_handler+0x120/0x130
+  [ 1148.237836][T17331]  el0t_64_sync+0x1a4/0x1a8
+  [ 1148.242182][T17331] Code: 54ffff6c f9400676 910006d6 f9000676 (b9405300)
+  [ 1148.248955][T17331] ---[ end trace 0000000000000000 ]---
+
+The issue is that list_del() is used on an SRCU protected list variable
+before the synchronization occurs. This can poison the list pointers while
+there is a reader iterating the list.
+
+This is simply fixed by using list_del_rcu() that is specifically made for
+this purpose.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240829085025.3600021-1-chizhiling@163.com/
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20240904131605.640d42b1@gandalf.local.home
+Fixes: 43aa6f97c2d03 ("eventfs: Get rid of dentry pointers without refcounts")
+Reported-by: Chi Zhiling <chizhiling@kylinos.cn>
+Tested-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fscache/main.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/tracefs/event_inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fscache/main.c
-+++ b/fs/fscache/main.c
-@@ -114,6 +114,7 @@ static void __exit fscache_exit(void)
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -935,7 +935,7 @@ static void eventfs_remove_rec(struct ev
+ 	list_for_each_entry(ei_child, &ei->children, list)
+ 		eventfs_remove_rec(ei_child, level + 1);
  
- 	kmem_cache_destroy(fscache_cookie_jar);
- 	fscache_proc_cleanup();
-+	timer_shutdown_sync(&fscache_cookie_lru_timer);
- 	destroy_workqueue(fscache_wq);
- 	pr_notice("Unloaded\n");
+-	list_del(&ei->list);
++	list_del_rcu(&ei->list);
+ 	free_ei(ei);
  }
+ 
 
 
