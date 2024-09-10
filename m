@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A035418595E;
-	Tue, 10 Sep 2024 10:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F50F18595E;
+	Tue, 10 Sep 2024 10:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962799; cv=none; b=EOIeXig0D9Va5PeXFdR4a8otmu5ndHB6wBJhD/IMibBT9D4a2wgTk46TJjBW87+CBeaYPZJ29LHks4ilWa6bsJVWmVjw/m/whsu/VWoIe9vSMisCHaw56O6Jc4nGfu8RROLLiELHKaNOl9evptwrmnWFTWBPOeOlMJICuQoocXY=
+	t=1725962802; cv=none; b=ZBbi1dnTF6ppFAnWcUX5OTiMm5kaMSXA79p7telbl4W1NdjULSIE7AM4VhnCBYouNJ1SlPMd9XUMh9LkclKXu3Ar5k62HhSolzDwJgFeKKOHC7+b5RR0J8xBmXGz3T+9pGbpLjWsIGBTm0cgVLZOlzdcOxew7uuTKHkyPbl+zAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962799; c=relaxed/simple;
-	bh=oyLXVX8de7CRFMbJLUP9K2fg3t7zbiHoQ9RIUp1bkAc=;
+	s=arc-20240116; t=1725962802; c=relaxed/simple;
+	bh=Z5ZWS5SH9LILjsMmDesr+hwsqvPpqJEkIktdEv8213U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqoVGciQoWU1T1/IkMaJ2kI3hOEgpqGtnFMnuuXv/tZEFElL4iKzIuSpmnF6XDGskgPBD9m1ZLSSaiUwgWy7B4OG6RP+fUQqRSTUwzhA/P3M948sJDIlLNdgB3p1MuoFURm23AZG9BlCc76vy+FSesPjyUfqFUojcGBnuC2dwaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvlWTarQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JoY8tLm4B9+9pYMSTe+ZBmS1e1SOjmb/wdfKcNbLrKewI7IBLJEHJtcbBrWWBYtkvy5vtSERW8Sp+1ZnUfMTO1ICTz91Ims5iRURK8n2pPK2sLkQPpF4T/nYu539Dvc6NlR0rT0OG4Rs1C62VzsBTzB/7YrKad7PkCiiSA/oeMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUGmxbXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvlWTarQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8673C4CEC3;
-	Tue, 10 Sep 2024 10:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUGmxbXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BD4C4CEC3;
+	Tue, 10 Sep 2024 10:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962799;
-	bh=oyLXVX8de7CRFMbJLUP9K2fg3t7zbiHoQ9RIUp1bkAc=;
+	s=korg; t=1725962802;
+	bh=Z5ZWS5SH9LILjsMmDesr+hwsqvPpqJEkIktdEv8213U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvlWTarQNU1Nqkd5okg0jNqULWgx3JDN83CdBQj5P++rdwbOdWFak7xS143XuUDKT
-	 zbHsHXdPCunYsnoOh5/VG6PM3VSoV62oGjXvFEReiCl14vwm8Gp9g7lJ4lqt0qwexQ
-	 tALhfAJHrDwosU6Zkro9CTBE7PCe1QdAXPq4uQoM=
+	b=OUGmxbXEAFXxEvvzBm00vxqc48l1MnhYCd8JbQwieDI7t33M35SgXTXi7xvFJGznm
+	 S2uWku0zjVgP4hhicABQbo2FHo34ykwntYTTyfqUDOnwKSyA7Pr5iU675KJIOdA/6l
+	 zjFU8FfcqizwakrUch5xD13NKs3No5Aj6HH2d+MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Mitchell Levy <levymitchell0@gmail.com>
-Subject: [PATCH 6.1 034/192] x86/fpu: Avoid writing LBR bit to IA32_XSS unless supported
-Date: Tue, 10 Sep 2024 11:30:58 +0200
-Message-ID: <20240910092559.357626185@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 035/192] Revert "drm/amdgpu: align pp_power_profile_mode with kernel docs"
+Date: Tue, 10 Sep 2024 11:30:59 +0200
+Message-ID: <20240910092559.411416413@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -50,91 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mitchell Levy <levymitchell0@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 2848ff28d180bd63a95da8e5dcbcdd76c1beeb7b upstream.
+commit 1a8d845470941f1b6de1b392227530c097dc5e0c upstream.
 
-There are two distinct CPU features related to the use of XSAVES and LBR:
-whether LBR is itself supported and whether XSAVES supports LBR. The LBR
-subsystem correctly checks both in intel_pmu_arch_lbr_init(), but the
-XSTATE subsystem does not.
+This reverts commit 8f614469de248a4bc55fb07e55d5f4c340c75b11.
 
-The LBR bit is only removed from xfeatures_mask_independent when LBR is not
-supported by the CPU, but there is no validation of XSTATE support.
+This breaks some manual setting of the profile mode in
+certain cases.
 
-If XSAVES does not support LBR the write to IA32_XSS causes a #GP fault,
-leaving the state of IA32_XSS unchanged, i.e. zero. The fault is handled
-with a warning and the boot continues.
-
-Consequently the next XRSTORS which tries to restore supervisor state fails
-with #GP because the RFBM has zero for all supervisor features, which does
-not match the XCOMP_BV field.
-
-As XFEATURE_MASK_FPSTATE includes supervisor features setting up the FPU
-causes a #GP, which ends up in fpu_reset_from_exception_fixup(). That fails
-due to the same problem resulting in recursive #GPs until the kernel runs
-out of stack space and double faults.
-
-Prevent this by storing the supported independent features in
-fpu_kernel_cfg during XSTATE initialization and use that cached value for
-retrieving the independent feature bits to be written into IA32_XSS.
-
-[ tglx: Massaged change log ]
-
-Fixes: f0dccc9da4c0 ("x86/fpu/xstate: Support dynamic supervisor feature for LBR")
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Mitchell Levy <levymitchell0@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3600
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7a199557643e993d4e7357860624b8aa5d8f4340)
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240812-xsave-lbr-fix-v3-1-95bac1bf62f4@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/fpu/types.h |    7 +++++++
- arch/x86/kernel/fpu/xstate.c     |    3 +++
- arch/x86/kernel/fpu/xstate.h     |    4 ++--
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/fpu/types.h
-+++ b/arch/x86/include/asm/fpu/types.h
-@@ -577,6 +577,13 @@ struct fpu_state_config {
- 	 * even without XSAVE support, i.e. legacy features FP + SSE
- 	 */
- 	u64 legacy_features;
-+	/*
-+	 * @independent_features:
-+	 *
-+	 * Features that are supported by XSAVES, but not managed as part of
-+	 * the FPU core, such as LBR
-+	 */
-+	u64 independent_features;
- };
- 
- /* FPU state configuration information */
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -792,6 +792,9 @@ void __init fpu__init_system_xstate(unsi
- 		goto out_disable;
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -1871,7 +1871,8 @@ static int smu_adjust_power_state_dynami
+ 		smu_dpm_ctx->dpm_level = level;
  	}
  
-+	fpu_kernel_cfg.independent_features = fpu_kernel_cfg.max_features &
-+					      XFEATURE_MASK_INDEPENDENT;
-+
- 	/*
- 	 * Clear XSAVE features that are disabled in the normal CPUID.
- 	 */
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -64,9 +64,9 @@ static inline u64 xfeatures_mask_supervi
- static inline u64 xfeatures_mask_independent(void)
- {
- 	if (!cpu_feature_enabled(X86_FEATURE_ARCH_LBR))
--		return XFEATURE_MASK_INDEPENDENT & ~XFEATURE_MASK_LBR;
-+		return fpu_kernel_cfg.independent_features & ~XFEATURE_MASK_LBR;
+-	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM) {
++	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL &&
++		smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM) {
+ 		index = fls(smu->workload_mask);
+ 		index = index > 0 && index <= WORKLOAD_POLICY_MAX ? index - 1 : 0;
+ 		workload[0] = smu->workload_setting[index];
+@@ -1950,7 +1951,8 @@ static int smu_switch_power_profile(void
+ 		workload[0] = smu->workload_setting[index];
+ 	}
  
--	return XFEATURE_MASK_INDEPENDENT;
-+	return fpu_kernel_cfg.independent_features;
- }
+-	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM)
++	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL &&
++		smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM)
+ 		smu_bump_power_profile_mode(smu, workload, 0);
  
- /* XSAVE/XRSTOR wrapper functions */
+ 	return 0;
 
 
