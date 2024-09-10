@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464A518C32B;
-	Tue, 10 Sep 2024 10:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B70818B46D;
+	Tue, 10 Sep 2024 10:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962481; cv=none; b=EG2yuY8+ReW+l0+WcaSsZWJkTzR9JMQhm8n0TZbxMVjX/umnI0sqpOmd7FRaJkbijV9OwO8arSbJQXf3wYXOrzk4dNbfEGcEGAEbnfFJsfVQVgcwjiJiyRNvT0wEc7E84jUPMGgbYQeeTLeTehclRjQWmkiMpkGXamZ04eJWYxM=
+	t=1725962484; cv=none; b=RzergeV1hJTOjiYaewTBFxEJ5Bp8u7NI3bJk3X5yINO4XN9cyu0IFaP6q4DBT3dDilHJpiyvX+nDMukEDrBj02ZlFTzcLil+kjmNw/eVvlq8xSrvLHWlOKslWwTh9lUTk15bS+aC5YjiGO0vhEQb++EXRm6GuuMLgpWGvGkLnLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962481; c=relaxed/simple;
-	bh=w3klz5fofMjW1Rb6b3KyngIFPWYM8rfePEdGxc4b2q0=;
+	s=arc-20240116; t=1725962484; c=relaxed/simple;
+	bh=RY3bD0uShHWVdAgz9NyHz1v9/ben1FHkgD9qDOUu7to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GrDgncHdouQ7K9oA1mmbN7x93TgKE4Bm3KJO3oDAqHXlQhO2QrYkiog+dWJ8rHluSdCPNeqm7FRIaFqQRStf1a6dkltHEIU4Yhw8wMVcFkQ168c4oaDXrZ0U4znlRun18gHCdWGVVETYoTsaaJpVmdB4NCY7KzgGzgzjB29rYjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL5NpkzN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EwH5LEx98gN8HlcXwiXP4lMIMqsLD9CXq/DT9BoQVAp7Vk83qjhB0+NE+sJBgsCL0tt1fzcl0UXM5N+3vn1gV0CD0J5lGgGj5UtLaWbfqMsVYMvfPgDGRz8psNqLMQFqP0M0wh1LvdVgu62bkb/206RJ6Unjd29M2zJJyG5aDe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WB+kkuBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL5NpkzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3937C4CEC3;
-	Tue, 10 Sep 2024 10:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WB+kkuBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5308C4CEC3;
+	Tue, 10 Sep 2024 10:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962481;
-	bh=w3klz5fofMjW1Rb6b3KyngIFPWYM8rfePEdGxc4b2q0=;
+	s=korg; t=1725962484;
+	bh=RY3bD0uShHWVdAgz9NyHz1v9/ben1FHkgD9qDOUu7to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wL5NpkzNpa+y7xmlMbYhRQY5sXwE8a9MMD4rZCgw0BiiFZzlsujgQci2D1BwXcFZp
-	 jQXImGZhrpjsLoBjUL229hjs+IZF/DlGT/Dd+nNaYgo31+rK37Uo9Ufw8ibHy0YVCS
-	 KiqXYWzmfo+NylaB4Yn6yzAz6zIgs7cU8bpF38gQ=
+	b=WB+kkuBC8CY0PQbsxi+a96JXCIo8yWNuOZP2m0u1+WfbgkF5vgq7HmLAtFYM0YIm3
+	 1TnP3OCEy474Y/ZuUKwWc5uBnP6/Fr2Gl1eBVJBS8nqskw7Xo6CsZVszeF/MjzASqS
+	 G4UTzOnGLOeHwxsdlpnXpFPw4CoRPSqofXio/ZEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Reijer Boekhoff <reijerboekhoff@protonmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 048/121] udf: Avoid excessive partition lengths
-Date: Tue, 10 Sep 2024 11:32:03 +0200
-Message-ID: <20240910092548.046690729@linuxfoundation.org>
+Subject: [PATCH 5.4 049/121] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+Date: Tue, 10 Sep 2024 11:32:04 +0200
+Message-ID: <20240910092548.090220212@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -50,61 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit ebbe26fd54a9621994bc16b14f2ba8f84c089693 ]
+[ Upstream commit dbb5265a5d7cca1cdba7736dba313ab7d07bc19d ]
 
-Avoid mounting filesystems where the partition would overflow the
-32-bits used for block number. Also refuse to mount filesystems where
-the partition length is so large we cannot safely index bits in a
-block bitmap.
+After being asked about support for WPA3 for BCM43224 chipset it
+was found that all it takes is setting the MFP_CAPABLE flag and
+mac80211 will take care of all that is needed [1].
 
-Link: https://patch.msgid.link/20240620130403.14731-1-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/ [1]
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240617122609.349582-1-arend.vanspriel@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index df0d10215225..a1962c93bd26 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1090,12 +1090,19 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 	struct udf_part_map *map;
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct partitionHeaderDesc *phd;
-+	u32 sum;
- 	int err;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index 288d4d4d4454..eb735b054790 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -1091,6 +1091,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
+ 	ieee80211_hw_set(hw, AMPDU_AGGREGATION);
+ 	ieee80211_hw_set(hw, SIGNAL_DBM);
+ 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
++	ieee80211_hw_set(hw, MFP_CAPABLE);
  
- 	map = &sbi->s_partmaps[p_index];
- 
- 	map->s_partition_len = le32_to_cpu(p->partitionLength); /* blocks */
- 	map->s_partition_root = le32_to_cpu(p->partitionStartingLocation);
-+	if (check_add_overflow(map->s_partition_root, map->s_partition_len,
-+			       &sum)) {
-+		udf_err(sb, "Partition %d has invalid location %u + %u\n",
-+			p_index, map->s_partition_root, map->s_partition_len);
-+		return -EFSCORRUPTED;
-+	}
- 
- 	if (p->accessType == cpu_to_le32(PD_ACCESS_TYPE_READ_ONLY))
- 		map->s_partition_flags |= UDF_PART_FLAG_READ_ONLY;
-@@ -1151,6 +1158,14 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 		bitmap->s_extPosition = le32_to_cpu(
- 				phd->unallocSpaceBitmap.extPosition);
- 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_BITMAP;
-+		/* Check whether math over bitmap won't overflow. */
-+		if (check_add_overflow(map->s_partition_len,
-+				       sizeof(struct spaceBitmapDesc) << 3,
-+				       &sum)) {
-+			udf_err(sb, "Partition %d is too long (%u)\n", p_index,
-+				map->s_partition_len);
-+			return -EFSCORRUPTED;
-+		}
- 		udf_debug("unallocSpaceBitmap (part %d) @ %u\n",
- 			  p_index, bitmap->s_extPosition);
- 	}
+ 	hw->extra_tx_headroom = brcms_c_get_header_len();
+ 	hw->queues = N_TX_QUEUES;
 -- 
 2.43.0
 
