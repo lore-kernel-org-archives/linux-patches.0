@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8539B188CC1;
-	Tue, 10 Sep 2024 09:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06AD188CC1;
+	Tue, 10 Sep 2024 09:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961379; cv=none; b=L09C/TC8P14/Va0+frpvKyF9nX6tSSRo8fdLuKmxZleZWh17jn0klFnbzSXipHxLhvGfIqSFddkorjjb8TGOg+bo+eFM5dDauSTGjRRyAsVbqo4NSPpSufBOAp2eVeWBJWJL2pOPmtvqCrSnpsHuaseYzSqOnf3QCMVB5vrcp4k=
+	t=1725961382; cv=none; b=nTE3vyyrzAo1C9WdOR8MM7ALOEDhTaeAKzzOMzTnulkWCvC78G/wOH8w1DvCfQX94eeZiVrvd9WqtEAM1AkvL46qT3LxIg9OuXvj+CMlAWIaRV7aMWB5tT1a1ifpWo3TeMk1aWjq4WoLYevuFIrs7hNF+DhuEeRaWkd5PnIMFZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961379; c=relaxed/simple;
-	bh=TeawhWoxNzzzIKseA8wA7aZs4RPWiBZ38Z4XnPy6wFk=;
+	s=arc-20240116; t=1725961382; c=relaxed/simple;
+	bh=HeUfKrp9recOQa1Z2dDsqRuM91Z8h4N8ZgyfhKqMqys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLOsYdrz/adM8leFSq/cjBIjFF70ruLgCtdJerrcwMkTqSqf11yNl4Zd9eQIAfJIoq754hhWMx2vauvO85lzyOPO7/xq8bvqkERF9CCDlSHQ5aW5o0z8Q5KpqquwgCNEvkWaXwezl+Ne1QOr7IXRmVj7INai8wBfnRaCa5ndG8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ge+WX5Eq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ioPdEzfcLEJKyn0DPYBcqIff0r0ZAJfFFiJUTk0X/8Mc3V3T7fW/zqKHNI18TVBTCIVQkEAEO8KqE/XJV6m83dt1E17P1Jdg/YlyL3cwNZ9CuaCXq5UsuNc554BOG1BLOBHbpa/Vl60W13ULOzfJjZhN1OiGIFVnszKtsmCPYFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI1Zzbnw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ge+WX5Eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C34C4CEC3;
-	Tue, 10 Sep 2024 09:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI1Zzbnw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEFEC4CEC3;
+	Tue, 10 Sep 2024 09:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961379;
-	bh=TeawhWoxNzzzIKseA8wA7aZs4RPWiBZ38Z4XnPy6wFk=;
+	s=korg; t=1725961382;
+	bh=HeUfKrp9recOQa1Z2dDsqRuM91Z8h4N8ZgyfhKqMqys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ge+WX5EqmwL+WOCjd5wjyVnf7Rn076Jgk+wRPkusrktkeQybJDif0FUhHPwySwpMP
-	 ucVPX64l5Hk0cDVMW3jX0dFluVPxXfr0kWrF9ma81IKgkGEcqVCIt9BfjgesHUsm55
-	 DQNdmBFB5y1g2nOqS2aDseW3tLdMi951fXwVfwv8=
+	b=fI1ZzbnwiIhP+hing3fKlqaYoImA2lgoznpqdAOv5tOuxswPS6ZRz0KLakqevMFHl
+	 WCLZiWWonERMCWAQYkimjUk5525bZ9U9GB+ocAMvkzHyPVb6dRJbyab0x0YXKmXbqQ
+	 gcCteeqmElxJCgQinXJwi6ApLt81H1wRt17mLKxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Cheong <htcheong@chromium.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 012/375] ALSA: hda/realtek: add patch for internal mic in Lenovo V145
-Date: Tue, 10 Sep 2024 11:26:49 +0200
-Message-ID: <20240910092622.672159617@linuxfoundation.org>
+	Samuel Holland <samuel.holland@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.10 044/375] riscv: misaligned: Restrict user access to kernel memory
+Date: Tue, 10 Sep 2024 11:27:21 +0200
+Message-ID: <20240910092623.728873565@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,61 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Cheong <htcheong@chromium.org>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit ef27e89e7f3015be2b3c124833fbd6d2e4686561 upstream.
+commit b686ecdeacf6658e1348c1a32a08e2e72f7c0f00 upstream.
 
-Lenovo V145 is having phase inverted dmic but simply applying inverted
-dmic fixups does not work. Chaining up verb fixes for ALC283 enables
-inverting dmic fixup to work properly.
+raw_copy_{to,from}_user() do not call access_ok(), so this code allowed
+userspace to access any virtual memory address.
 
-Signed-off-by: Terry Cheong <htcheong@chromium.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240830-lenovo-v145-fixes-v3-1-f7b7265068fa@chromium.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 7c83232161f6 ("riscv: add support for misaligned trap handling in S-mode")
+Fixes: 441381506ba7 ("riscv: misaligned: remove CONFIG_RISCV_M_MODE specific code")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240815005714.1163136-1-samuel.holland@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/riscv/kernel/traps_misaligned.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7428,6 +7428,7 @@ enum {
- 	ALC236_FIXUP_HP_GPIO_LED,
- 	ALC236_FIXUP_HP_MUTE_LED,
- 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
-+	ALC236_FIXUP_LENOVO_INV_DMIC,
- 	ALC298_FIXUP_SAMSUNG_AMP,
- 	ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET,
- 	ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET,
-@@ -9049,6 +9050,12 @@ static const struct hda_fixup alc269_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc236_fixup_hp_mute_led_micmute_vref,
- 	},
-+	[ALC236_FIXUP_LENOVO_INV_DMIC] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc_fixup_inv_dmic,
-+		.chained = true,
-+		.chain_id = ALC283_FIXUP_INT_MIC,
-+	},
- 	[ALC298_FIXUP_SAMSUNG_AMP] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc298_fixup_samsung_amp,
-@@ -10609,6 +10616,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x3bf8, "Quanta FL1", ALC269_FIXUP_PCM_44K),
-@@ -10860,6 +10868,7 @@ static const struct hda_model_fixup alc2
- 	{.id = ALC623_FIXUP_LENOVO_THINKSTATION_P340, .name = "alc623-lenovo-thinkstation-p340"},
- 	{.id = ALC255_FIXUP_ACER_HEADPHONE_AND_MIC, .name = "alc255-acer-headphone-and-mic"},
- 	{.id = ALC285_FIXUP_HP_GPIO_AMP_INIT, .name = "alc285-hp-amp-init"},
-+	{.id = ALC236_FIXUP_LENOVO_INV_DMIC, .name = "alc236-fixup-lenovo-inv-mic"},
- 	{}
- };
- #define ALC225_STANDARD_PINS \
+diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
+index 192cd5603e95..d4fd8af7aaf5 100644
+--- a/arch/riscv/kernel/traps_misaligned.c
++++ b/arch/riscv/kernel/traps_misaligned.c
+@@ -417,7 +417,7 @@ int handle_misaligned_load(struct pt_regs *regs)
+ 
+ 	val.data_u64 = 0;
+ 	if (user_mode(regs)) {
+-		if (raw_copy_from_user(&val, (u8 __user *)addr, len))
++		if (copy_from_user(&val, (u8 __user *)addr, len))
+ 			return -1;
+ 	} else {
+ 		memcpy(&val, (u8 *)addr, len);
+@@ -515,7 +515,7 @@ int handle_misaligned_store(struct pt_regs *regs)
+ 		return -EOPNOTSUPP;
+ 
+ 	if (user_mode(regs)) {
+-		if (raw_copy_to_user((u8 __user *)addr, &val, len))
++		if (copy_to_user((u8 __user *)addr, &val, len))
+ 			return -1;
+ 	} else {
+ 		memcpy((u8 *)addr, &val, len);
+-- 
+2.46.0
+
 
 
