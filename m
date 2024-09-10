@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C41183CB0;
-	Tue, 10 Sep 2024 10:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430E9183CB0;
+	Tue, 10 Sep 2024 10:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963189; cv=none; b=A+aBwsQot8LRQjrzxPzU/YnxHGhRGeVtVunSMw/FhEYDsTZKJ4t+wrq5WijVcsxh56NXibmMxXZB3aOsOHxz/tkOoNWJArMGs49P6xS+7eaxyRSRsWPBu+saNiR61yp1A4NPUaKmPUK1NQ8bi5tx5BLf0cVTksRWrI4pz/Os37I=
+	t=1725963192; cv=none; b=F2wC5uYFepM8526jLBENH+uU7fklD7LCLKZIm0TUCzv7qorsGoAOODbsaOF8lEmwiz7WyIRC2EiNvmhiy0giPTyiP7t4YNDcpibLdlgSNvv3dWVySFq60S3duLK1iQhSokC42pvzia3QCSFLo7skftuLW0SP9+ZksAbI5zM6dhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963189; c=relaxed/simple;
-	bh=pAZeCe6H0Qe43B63wH4zzOaMOzmHYPliw8jSGjRXFL8=;
+	s=arc-20240116; t=1725963192; c=relaxed/simple;
+	bh=V1lwqFmjD5w9CWac8U9TO3/d1xT2OXpNZ9RCGurnM9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MlJuecjz1C0aUqyBIIdFWdtJQP2VlTcNF4GkfuldEw5ornOod6feIe/L1fr3mTRn4P8DMcYp1eQ7/YSm6FrXkrb/I7kBQA04lPo6wjSsl4CQ8wFmjJn5zR2v0Us3ndeE/cLZIoaT6QJ6Tn0xM/2jxo/2qS52smYgCEqovYDNMV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yhLkIzP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=afWPnjYRto+5F/eYAXeZbafIJ1WRsEpQYy/w3A8V7YHwKGUKP5nXETZXcL+6ra6Zgp6k9LZhofV74iE6B65f1R4MTQ8mQSVd3MfPrLwqEOZtk8TPAd0LYkfgSTX06gmWygnyNJBugAsU0h/axf1Sp8a0Bcranqxrtf6IGjbk/Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piCdoV6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yhLkIzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E81C4CEC3;
-	Tue, 10 Sep 2024 10:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piCdoV6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3BDC4CEC3;
+	Tue, 10 Sep 2024 10:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963189;
-	bh=pAZeCe6H0Qe43B63wH4zzOaMOzmHYPliw8jSGjRXFL8=;
+	s=korg; t=1725963192;
+	bh=V1lwqFmjD5w9CWac8U9TO3/d1xT2OXpNZ9RCGurnM9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yhLkIzPkbsiWxfBwBODBgiUrit75GF6FtLkRJ0mDZmLnMAcNMtFkurFBz3mQ21uV
-	 xd2DTj+ZkaHc0u8+JW+tG4rkJzXoCGAVUkJ/AaEarPgLjb15aD+e+ua3NYYjoYfuGS
-	 b8dJJRUeKx3b7GOH+lR7GvM1lBojJhQnqueLE4uo=
+	b=piCdoV6rb2eNt/vAZql/ZONsrWk6oSO34OzTfCr64c1N6wdDOAMVTTexNxHd58y7g
+	 45jQi/bcRkuDnf399OiGA0VDK4NbQg5D/f9zcHoY3SAGY5KZtiiDzKN89YBqpApiOy
+	 JzcTo2UBgH4efjhWeWb/1ZuJCspR7Z362uidHFao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Martelli <matteomartelli3@gmail.com>,
+	Dumitru Ceclan <dumitru.ceclan@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 138/192] iio: fix scale application in iio_convert_raw_to_processed_unlocked
-Date: Tue, 10 Sep 2024 11:32:42 +0200
-Message-ID: <20240910092603.671402016@linuxfoundation.org>
+Subject: [PATCH 6.1 139/192] iio: adc: ad7124: fix config comparison
+Date: Tue, 10 Sep 2024 11:32:43 +0200
+Message-ID: <20240910092603.710851638@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,48 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matteo Martelli <matteomartelli3@gmail.com>
+From: Dumitru Ceclan <mitrutzceclan@gmail.com>
 
-commit 8a3dcc970dc57b358c8db2702447bf0af4e0d83a upstream.
+commit 2f6b92d0f69f04d9e2ea0db1228ab7f82f3173af upstream.
 
-When the scale_type is IIO_VAL_INT_PLUS_MICRO or IIO_VAL_INT_PLUS_NANO
-the scale passed as argument is only applied to the fractional part of
-the value. Fix it by also multiplying the integer part by the scale
-provided.
+The ad7124_find_similar_live_cfg() computes the compare size by
+substracting the address of the cfg struct from the address of the live
+field. Because the live field is the first field in the struct, the
+result is 0.
 
-Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
-Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
-Link: https://patch.msgid.link/20240730-iio-fix-scale-v1-1-6246638c8daa@gmail.com
+Also, the memcmp() call is made from the start of the cfg struct, which
+includes the live and cfg_slot fields, which are not relevant for the
+comparison.
+
+Fix by grouping the relevant fields with struct_group() and use the
+size of the group to compute the compare size; make the memcmp() call
+from the address of the group.
+
+Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
+Signed-off-by: Dumitru Ceclan <dumitru.ceclan@analog.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20240731-ad7124-fix-v1-2-46a76aa4b9be@analog.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/inkern.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7124.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -679,17 +679,17 @@ static int iio_convert_raw_to_processed_
- 		break;
- 	case IIO_VAL_INT_PLUS_MICRO:
- 		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val;
-+			*processed = -raw64 * scale_val * scale;
- 		else
--			*processed = raw64 * scale_val;
-+			*processed = raw64 * scale_val * scale;
- 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
- 				      1000000LL);
- 		break;
- 	case IIO_VAL_INT_PLUS_NANO:
- 		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val;
-+			*processed = -raw64 * scale_val * scale;
- 		else
--			*processed = raw64 * scale_val;
-+			*processed = raw64 * scale_val * scale;
- 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
- 				      1000000000LL);
- 		break;
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -146,15 +146,18 @@ struct ad7124_chip_info {
+ struct ad7124_channel_config {
+ 	bool live;
+ 	unsigned int cfg_slot;
+-	enum ad7124_ref_sel refsel;
+-	bool bipolar;
+-	bool buf_positive;
+-	bool buf_negative;
+-	unsigned int vref_mv;
+-	unsigned int pga_bits;
+-	unsigned int odr;
+-	unsigned int odr_sel_bits;
+-	unsigned int filter_type;
++	/* Following fields are used to compare equality. */
++	struct_group(config_props,
++		enum ad7124_ref_sel refsel;
++		bool bipolar;
++		bool buf_positive;
++		bool buf_negative;
++		unsigned int vref_mv;
++		unsigned int pga_bits;
++		unsigned int odr;
++		unsigned int odr_sel_bits;
++		unsigned int filter_type;
++	);
+ };
+ 
+ struct ad7124_channel {
+@@ -333,11 +336,12 @@ static struct ad7124_channel_config *ad7
+ 	ptrdiff_t cmp_size;
+ 	int i;
+ 
+-	cmp_size = (u8 *)&cfg->live - (u8 *)cfg;
++	cmp_size = sizeof_field(struct ad7124_channel_config, config_props);
+ 	for (i = 0; i < st->num_channels; i++) {
+ 		cfg_aux = &st->channels[i].cfg;
+ 
+-		if (cfg_aux->live && !memcmp(cfg, cfg_aux, cmp_size))
++		if (cfg_aux->live &&
++		    !memcmp(&cfg->config_props, &cfg_aux->config_props, cmp_size))
+ 			return cfg_aux;
+ 	}
+ 
 
 
