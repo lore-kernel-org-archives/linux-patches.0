@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B641891A1;
-	Tue, 10 Sep 2024 09:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F419514F12C;
+	Tue, 10 Sep 2024 09:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962205; cv=none; b=VrwgO8sCKlckw0GF5gsZpY426smuhMkL/vdNsiENX6EzXA1KPOhlgWdv0nRphojY8bR6NOzvgtnz48M2kSMLOP2jUtN3T7Ak3mq+2MW9ABKxOANqO1EUIzBk85VFIfW+a9NOfgTyjHMXLWHZDBkSBnczX6IWLvMYwywcVTJWl60=
+	t=1725962208; cv=none; b=MzJhsUIJhwisCx96vASJfOuKLZcG6jXr9MCAzmFHnftQcIAArose+iUnSoXkGXxAfEbRTQLXPgRlrcbUxOy5CAhtYsorscDb0NRSeON042uufWKaYsZqMoKpcJxwf8zeEh145O7s08Mmy3eApPxJ52+EVmiViDr4wUeMpnBaiH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962205; c=relaxed/simple;
-	bh=Z7LcgeHK3NTvKJ1WEEsQpAUZ4+U4G99tjxC8JdCQIFc=;
+	s=arc-20240116; t=1725962208; c=relaxed/simple;
+	bh=nBi0RoEanANkVfDIYBOAcc9VwdEvxpR4+Ck8UQyhtmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7nrbDX9CDrijrQJqrfhP93NqKaRa1NPARsRmBv9kqhHYeY1HdVv0fAfevT51gmxACW2MyCztH1Cx2siXi6mWK56Ka7+8Lw1taBlqQB576WDzS5FueGifmloTWE2giTDCe4hpiTw64LTRp/1bZXGKYHA/RWGbd8hyffWPpEFQRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSkVew++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSe0iKpHM+v5cxPp3Tqc1xdTsdV35+gw+f3yBbbtFirNZfzzbxL+1yLj8mZim/rlQko+UULdWcq8FlWGR5NesQjN3FtJPmp3GZvVExRCaTi8SouD312I/pWch8iWTJ9LgIlW91Mtron2g/CQA5c1+tTjJevLh5v6Rlh3v8fasoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPEn92x2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSkVew++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815BBC4CECD;
-	Tue, 10 Sep 2024 09:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPEn92x2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726B5C4CEC3;
+	Tue, 10 Sep 2024 09:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962204;
-	bh=Z7LcgeHK3NTvKJ1WEEsQpAUZ4+U4G99tjxC8JdCQIFc=;
+	s=korg; t=1725962207;
+	bh=nBi0RoEanANkVfDIYBOAcc9VwdEvxpR4+Ck8UQyhtmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSkVew++NCpPRXcGv5SteD0rocLPgP7rRYbU/uc0p0zjUfat1vdXIW5U/H4pw+Ia6
-	 fOmfbjpSNhTrSGoGc/FAynUS5CK6bemPEBnSk/5WMolka5RrYZ+FcIx2WG2uOP3Vy1
-	 OKVK3irbvE2elC/JZGj6rjMTwuwUGoKVoUKSxLOA=
+	b=QPEn92x2pXnL4wnhk2+7J8eDE0VMMCW3Hq7Q76f6K676e966h38osR+PwALwFBwFg
+	 TJxqqFsoiUnPlySuTqSuv1Ep8VkEiHJ8Gulgi6byAXZlCguLLLN9Mq6WnaWCLkRngU
+	 BW4koZAG+Gld/0nMmgpeUJkEvHLmFAwV1MouLxV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jie Ho <jiajie.ho@starfivetech.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 330/375] crypto: starfive - Fix nent assignment in rsa dec
-Date: Tue, 10 Sep 2024 11:32:07 +0200
-Message-ID: <20240910092633.663240187@linuxfoundation.org>
+Subject: [PATCH 6.10 331/375] hid: bpf: add BPF_JIT dependency
+Date: Tue, 10 Sep 2024 11:32:08 +0200
+Message-ID: <20240910092633.700322735@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,55 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jie Ho <jiajie.ho@starfivetech.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 8323c036789b8b4a61925fce439a89dba17b7f2f ]
+[ Upstream commit bacc15e010fc5a235fb2020b06a29a9961b5db82 ]
 
-Missing src scatterlist nent assignment in rsa decrypt function.
-Removing all unneeded assignment and use nents value from req->src
-instead.
+The module does not do anything when the JIT is disabled, but instead
+causes a warning:
 
-Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+In file included from include/linux/bpf_verifier.h:7,
+                 from drivers/hid/bpf/hid_bpf_struct_ops.c:10:
+drivers/hid/bpf/hid_bpf_struct_ops.c: In function 'hid_bpf_struct_ops_init':
+include/linux/bpf.h:1853:50: error: statement with no effect [-Werror=unused-value]
+ 1853 | #define register_bpf_struct_ops(st_ops, type) ({ (void *)(st_ops); 0; })
+      |                                                  ^~~~~~~~~~~~~~~~
+drivers/hid/bpf/hid_bpf_struct_ops.c:305:16: note: in expansion of macro 'register_bpf_struct_ops'
+  305 |         return register_bpf_struct_ops(&bpf_hid_bpf_ops, hid_bpf_ops);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~
+
+Add a Kconfig dependency to only allow building the HID-BPF support
+when a JIT is enabled.
+
+Fixes: ebc0d8093e8c ("HID: bpf: implement HID-BPF through bpf_struct_ops")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/96a00b6f-eb81-4c67-8c4b-6b1f3f045034@app.fastmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/starfive/jh7110-cryp.h | 1 -
- drivers/crypto/starfive/jh7110-rsa.c  | 3 +--
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/hid/bpf/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/starfive/jh7110-cryp.h b/drivers/crypto/starfive/jh7110-cryp.h
-index 85c65c6c0327..5ed4ba5da7f9 100644
---- a/drivers/crypto/starfive/jh7110-cryp.h
-+++ b/drivers/crypto/starfive/jh7110-cryp.h
-@@ -218,7 +218,6 @@ struct starfive_cryp_request_ctx {
- 	struct scatterlist			*out_sg;
- 	struct ahash_request			ahash_fbk_req;
- 	size_t					total;
--	size_t					nents;
- 	unsigned int				blksize;
- 	unsigned int				digsize;
- 	unsigned long				in_sg_len;
-diff --git a/drivers/crypto/starfive/jh7110-rsa.c b/drivers/crypto/starfive/jh7110-rsa.c
-index 59f5979e9360..a778c4846025 100644
---- a/drivers/crypto/starfive/jh7110-rsa.c
-+++ b/drivers/crypto/starfive/jh7110-rsa.c
-@@ -259,7 +259,7 @@ static int starfive_rsa_enc_core(struct starfive_cryp_ctx *ctx, int enc)
- 		memset(rctx->rsa_data, 0, shift);
- 	}
+diff --git a/drivers/hid/bpf/Kconfig b/drivers/hid/bpf/Kconfig
+index 83214bae6768..d65482e02a6c 100644
+--- a/drivers/hid/bpf/Kconfig
++++ b/drivers/hid/bpf/Kconfig
+@@ -3,7 +3,7 @@ menu "HID-BPF support"
  
--	rctx->total = sg_copy_to_buffer(rctx->in_sg, rctx->nents,
-+	rctx->total = sg_copy_to_buffer(rctx->in_sg, sg_nents(rctx->in_sg),
- 					rctx->rsa_data + shift, rctx->total);
- 
- 	if (enc) {
-@@ -309,7 +309,6 @@ static int starfive_rsa_enc(struct akcipher_request *req)
- 	rctx->in_sg = req->src;
- 	rctx->out_sg = req->dst;
- 	rctx->total = req->src_len;
--	rctx->nents = sg_nents(rctx->in_sg);
- 	ctx->rctx = rctx;
- 
- 	return starfive_rsa_enc_core(ctx, 1);
+ config HID_BPF
+ 	bool "HID-BPF support"
+-	depends on BPF
++	depends on BPF_JIT
+ 	depends on BPF_SYSCALL
+ 	depends on DYNAMIC_FTRACE_WITH_DIRECT_CALLS
+ 	help
 -- 
 2.43.0
 
