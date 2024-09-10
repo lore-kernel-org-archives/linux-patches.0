@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF2719005D;
-	Tue, 10 Sep 2024 10:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132DB19048A;
+	Tue, 10 Sep 2024 10:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964978; cv=none; b=mu7A5Ah6jcCTviVLQ/VhZjIcIXXlcUg6DSLkmFkn4FT6G0xKQlG9W1Rx1N/N6PBriswLDlj4XRGjv8TUeiAZLsFCDISeipl6KSueLAO8j1WzLeE5OxJ9nW+1Na54STXNk2w8dIF5Q9ynpVyzKuuUyhMGL4gkDr7UoNirwq6NVSU=
+	t=1725964981; cv=none; b=bgb6cVW1o0EmQHX+XTI23Wrd5g/GrGzBCPaKbq5ofCSY7bVyorTAW2Zx8j7eMDarSs9B7Lf/87LE2V4sgQIAGI2MYh96g9/wf4DGgvUXspX6Y/MBXyKd3bWjj7zEqA2oM/rm94AaE9qby/tHlvMG3xiEKy9mH58149O8nCMrtVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964978; c=relaxed/simple;
-	bh=xkv+YmfHMy5AKGTipmxwwJdx11s7luzjoFsferQfl6A=;
+	s=arc-20240116; t=1725964981; c=relaxed/simple;
+	bh=oHD67WEKSO/Vdr6Vcie1cgckRui2S5L0t9BEcUZ+Lm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETJVPch1pii4VjVxP3k2dxSWz8Quyne2ZiepkDI6GAN/DU+mJXTqPJ6g/7zHPpq8dDnQKAPGF3GVUTSYmYP+rzascxXJyowDB8o8d8fIcXBPLCe8XeC7b5+jLfREMGesYkrIk89arx7hOh2zfCzHbH1G6GXSNdfQZ9hAUVLUQCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ekc1G6dX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IEynHq0KQXoQ0hFNcm/h64ttgHBfiYoUgQg0BVv87kw8XIW9ef5EVpYbTN0XnI7SRTaDueoK2Tc2i/8q73eeNOVcxXXVWAEvAA+XTFkXIvNVbR/mqCMbPv5TVGAI/60r0nOt8BZLSEgsz+siJfus86lptUYfenZFB9rcOzIHxRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVRJdUOA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ekc1G6dX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA61DC4CEC3;
-	Tue, 10 Sep 2024 10:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVRJdUOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F92FC4CEC3;
+	Tue, 10 Sep 2024 10:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964978;
-	bh=xkv+YmfHMy5AKGTipmxwwJdx11s7luzjoFsferQfl6A=;
+	s=korg; t=1725964980;
+	bh=oHD67WEKSO/Vdr6Vcie1cgckRui2S5L0t9BEcUZ+Lm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ekc1G6dXUlBfRXBXY2GyBDGpf4VIzfB1HA2btBaVPA0WoerjP7SI4kSIIgPAPmsCq
-	 AH9aNgDCdwWBl8nsGxDu7bzR7tksGN38T+oTCzq6qiDuM7i5y8zJGRUWtivVSTUl2H
-	 XEWg9K9sxyajoZVsBB+kTJMDL1kZv/FjiGrBqH18=
+	b=AVRJdUOAG1bMou7t0KkmFm5RnWrI/jnR8Mzox42dB8xtxGo6slygTkhD6YAn3m5Vp
+	 CgxX8P3hK3vJYS6j6UwqyNebjCCqwdNuXDcEqzVZsi3hi9HRL50mvNPP6VnOu9aqVG
+	 PQKBPNQ510U8uLs3GLjT8ews7frSJXJgcZi0xUVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Arlott <simon@octiron.net>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 069/186] can: mcp251x: fix deadlock if an interrupt occurs during mcp251x_open
-Date: Tue, 10 Sep 2024 11:32:44 +0200
-Message-ID: <20240910092557.355168258@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.10 060/186] irqchip/gic-v2m: Fix refcount leak in gicv2m_of_init()
+Date: Tue, 10 Sep 2024 11:32:35 +0200
+Message-ID: <20240910092556.958159150@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Arlott <simon@octiron.net>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 7dd9c26bd6cf679bcfdef01a8659791aa6487a29 upstream.
+commit c5af2c90ba5629f0424a8d315f75fb8d91713c3c upstream.
 
-The mcp251x_hw_wake() function is called with the mpc_lock mutex held and
-disables the interrupt handler so that no interrupts can be processed while
-waking the device. If an interrupt has already occurred then waiting for
-the interrupt handler to complete will deadlock because it will be trying
-to acquire the same mutex.
+gicv2m_of_init() fails to perform an of_node_put() when
+of_address_to_resource() fails, leading to a refcount leak.
 
-CPU0                           CPU1
-----                           ----
-mcp251x_open()
- mutex_lock(&priv->mcp_lock)
-  request_threaded_irq()
-                               <interrupt>
-                               mcp251x_can_ist()
-                                mutex_lock(&priv->mcp_lock)
-  mcp251x_hw_wake()
-   disable_irq() <-- deadlock
+Address this by moving the error handling path outside of the loop and
+making it common to all failure modes.
 
-Use disable_irq_nosync() instead because the interrupt handler does
-everything while holding the mutex so it doesn't matter if it's still
-running.
-
-Fixes: 8ce8c0abcba3 ("can: mcp251x: only reset hardware as required")
-Signed-off-by: Simon Arlott <simon@octiron.net>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Fixes: 4266ab1a8ff5 ("irqchip/gic-v2m: Refactor to prepare for ACPI support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/4fc08687-1d80-43fe-9f0d-8ef8475e75f6@0882a8b5-c6c3-11e9-b005-00805fc181fe.uuid.home.arpa
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/all/20240820092843.1219933-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/spi/mcp251x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v2m.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -755,7 +755,7 @@ static int mcp251x_hw_wake(struct spi_de
- 	int ret;
+--- a/drivers/irqchip/irq-gic-v2m.c
++++ b/drivers/irqchip/irq-gic-v2m.c
+@@ -442,12 +442,12 @@ static int __init gicv2m_of_init(struct
  
- 	/* Force wakeup interrupt to wake device, but don't execute IST */
--	disable_irq(spi->irq);
-+	disable_irq_nosync(spi->irq);
- 	mcp251x_write_2regs(spi, CANINTE, CANINTE_WAKIE, CANINTF_WAKIF);
+ 		ret = gicv2m_init_one(&child->fwnode, spi_start, nr_spis,
+ 				      &res, 0);
+-		if (ret) {
+-			of_node_put(child);
++		if (ret)
+ 			break;
+-		}
+ 	}
  
- 	/* Wait for oscillator startup timer after wake up */
++	if (ret && child)
++		of_node_put(child);
+ 	if (!ret)
+ 		ret = gicv2m_allocate_domains(parent);
+ 	if (ret)
 
 
