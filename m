@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7B918B491;
-	Tue, 10 Sep 2024 10:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B771818CC17;
+	Tue, 10 Sep 2024 10:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962454; cv=none; b=sM66k0pPYCOmlpkv5lDAZ4ju9DoqVCP0xqKZBxUlXP2IGYoHvmevVcFemtX/zyGJ9C2JrmzkutNuJGKW6FpD12YBdVUJ5jvyy7m5CC2GqW36xvMS9jAOV0FOEhEqtEh+EZY53EjGIeIiEWyuLIASYx9VqaZv0bN7Y4DVOkVsGeg=
+	t=1725962457; cv=none; b=b4owaujJmGDMugE+1vqflRgAC55nGfrUq7nY6gxluEfy8xJjRSyxqNnyHWXqxf1Q7LW+47beRVj+myxtMcK16Ku7R2KQbZ9pzfgKIva/9nFCQiaBtjh5oF/6Q4GHHT8k7EczkKB/BceFxFZMX2oFRI2q0i5SsJl1bRPDVvBqxcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962454; c=relaxed/simple;
-	bh=JTYc2G7kKHukB39j/Om0IDhzKwge1eJGEp8siIprKeU=;
+	s=arc-20240116; t=1725962457; c=relaxed/simple;
+	bh=F1qkMEin5pd/7naO25IfzNXnLFvd6V4w6/wAFVOuEwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mQNghCZGywRaLaXUxiYVnpAYQVh1AIEoBgwQW/TqQ7ciDxV6Ox8oDOwAUJlfAAWIPJXTAtw46jPUlCmAVqYGVJs1eUJROfzVlA8VKpJG2SYcmzE5RoeWU9+lzYoEMqsblhRmupUNNBKKYbnpG3DkvVH20R/8qtcrhnMGIEmAOgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK0dZQuH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBI3UQrXtY8vOLLvuLYnzSKKuHaCdwvdSAZYWjvCmJRIO2u2BqStO8vZCiXXWdb4/rNbeBZLcitka/y6vOvuIX4sVj8NInfsIkLp7elnnX0aLPMfoAEgiWrGV0+cuEQqE4iL6xQ/KktD27p7/a4jkBSO5LpNjKtHPVTSHSE8n1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBeHWHi9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK0dZQuH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24CCC4CEC3;
-	Tue, 10 Sep 2024 10:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBeHWHi9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D865BC4CEC3;
+	Tue, 10 Sep 2024 10:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962454;
-	bh=JTYc2G7kKHukB39j/Om0IDhzKwge1eJGEp8siIprKeU=;
+	s=korg; t=1725962457;
+	bh=F1qkMEin5pd/7naO25IfzNXnLFvd6V4w6/wAFVOuEwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PK0dZQuH2zqJsjnay2MZy8rv+HKYvZb0MMpGKlMV+bsgpJotUDqAe3NmkGdatV6TF
-	 ALockNF1+s+h+PuXg6xHAioBVmkAE51kTYemGlmCWjqGxPL8TfE7QF4OTqBN8JGZGm
-	 ZiUTCD3RguJuqCDf1a5ECo+sPamvA8RqEd1Kcovc=
+	b=TBeHWHi9leY25jIQ7MylNuqDvieUrWCFF8lk49+a6SAJu3BiPTmFsd3a4BmUjuSKX
+	 U7P3S+7y+I57wbjv5j1Q+tchciCQCqHuJQYs9TYEYLXZP2v8JtlLeDKJtQHKogxLOP
+	 aHOdnwq5wT2oPbYKD3SiRENBCSv0O+TD1/7cf7Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7fe7b81d602cc1e6b94d@syzkaller.appspotmail.com,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 040/121] sched: sch_cake: fix bulk flow accounting logic for host fairness
-Date: Tue, 10 Sep 2024 11:31:55 +0200
-Message-ID: <20240910092547.639908493@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 041/121] nilfs2: fix missing cleanup on rollforward recovery error
+Date: Tue, 10 Sep 2024 11:31:56 +0200
+Message-ID: <20240910092547.689264195@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -45,87 +44,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 546ea84d07e3e324644025e2aae2d12ea4c5896e upstream.
+commit 5787fcaab9eb5930f5378d6a1dd03d916d146622 upstream.
 
-In sch_cake, we keep track of the count of active bulk flows per host,
-when running in dst/src host fairness mode, which is used as the
-round-robin weight when iterating through flows. The count of active
-bulk flows is updated whenever a flow changes state.
+In an error injection test of a routine for mount-time recovery, KASAN
+found a use-after-free bug.
 
-This has a peculiar interaction with the hash collision handling: when a
-hash collision occurs (after the set-associative hashing), the state of
-the hash bucket is simply updated to match the new packet that collided,
-and if host fairness is enabled, that also means assigning new per-host
-state to the flow. For this reason, the bulk flow counters of the
-host(s) assigned to the flow are decremented, before new state is
-assigned (and the counters, which may not belong to the same host
-anymore, are incremented again).
+It turned out that if data recovery was performed using partial logs
+created by dsync writes, but an error occurred before starting the log
+writer to create a recovered checkpoint, the inodes whose data had been
+recovered were left in the ns_dirty_files list of the nilfs object and
+were not freed.
 
-Back when this code was introduced, the host fairness mode was always
-enabled, so the decrement was unconditional. When the configuration
-flags were introduced the *increment* was made conditional, but
-the *decrement* was not. Which of course can lead to a spurious
-decrement (and associated wrap-around to U16_MAX).
+Fix this issue by cleaning up inodes that have read the recovery data if
+the recovery routine fails midway before the log writer starts.
 
-AFAICT, when host fairness is disabled, the decrement and wrap-around
-happens as soon as a hash collision occurs (which is not that common in
-itself, due to the set-associative hashing). However, in most cases this
-is harmless, as the value is only used when host fairness mode is
-enabled. So in order to trigger an array overflow, sch_cake has to first
-be configured with host fairness disabled, and while running in this
-mode, a hash collision has to occur to cause the overflow. Then, the
-qdisc has to be reconfigured to enable host fairness, which leads to the
-array out-of-bounds because the wrapped-around value is retained and
-used as an array index. It seems that syzbot managed to trigger this,
-which is quite impressive in its own right.
-
-This patch fixes the issue by introducing the same conditional check on
-decrement as is used on increment.
-
-The original bug predates the upstreaming of cake, but the commit listed
-in the Fixes tag touched that code, meaning that this patch won't apply
-before that.
-
-Fixes: 712639929912 ("sch_cake: Make the dual modes fairer")
-Reported-by: syzbot+7fe7b81d602cc1e6b94d@syzkaller.appspotmail.com
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20240903160846.20909-1-toke@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lkml.kernel.org/r/20240810065242.3701-1-konishi.ryusuke@gmail.com
+Fixes: 0f3e1c7f23f8 ("nilfs2: recovery functions")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_cake.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/nilfs2/recovery.c |   35 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 33 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -749,12 +749,15 @@ skip_hash:
- 		 * queue, accept the collision, update the host tags.
- 		 */
- 		q->way_collisions++;
--		if (q->flows[outer_hash + k].set == CAKE_SET_BULK) {
--			q->hosts[q->flows[reduced_hash].srchost].srchost_bulk_flow_count--;
--			q->hosts[q->flows[reduced_hash].dsthost].dsthost_bulk_flow_count--;
--		}
- 		allocate_src = cake_dsrc(flow_mode);
- 		allocate_dst = cake_ddst(flow_mode);
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -709,6 +709,33 @@ static void nilfs_finish_roll_forward(st
+ }
+ 
+ /**
++ * nilfs_abort_roll_forward - cleaning up after a failed rollforward recovery
++ * @nilfs: nilfs object
++ */
++static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
++{
++	struct nilfs_inode_info *ii, *n;
++	LIST_HEAD(head);
 +
-+		if (q->flows[outer_hash + k].set == CAKE_SET_BULK) {
-+			if (allocate_src)
-+				q->hosts[q->flows[reduced_hash].srchost].srchost_bulk_flow_count--;
-+			if (allocate_dst)
-+				q->hosts[q->flows[reduced_hash].dsthost].dsthost_bulk_flow_count--;
-+		}
- found:
- 		/* reserve queue for future packets in same flow */
- 		reduced_hash = outer_hash + k;
++	/* Abandon inodes that have read recovery data */
++	spin_lock(&nilfs->ns_inode_lock);
++	list_splice_init(&nilfs->ns_dirty_files, &head);
++	spin_unlock(&nilfs->ns_inode_lock);
++	if (list_empty(&head))
++		return;
++
++	set_nilfs_purging(nilfs);
++	list_for_each_entry_safe(ii, n, &head, i_dirty) {
++		spin_lock(&nilfs->ns_inode_lock);
++		list_del_init(&ii->i_dirty);
++		spin_unlock(&nilfs->ns_inode_lock);
++
++		iput(&ii->vfs_inode);
++	}
++	clear_nilfs_purging(nilfs);
++}
++
++/**
+  * nilfs_salvage_orphan_logs - salvage logs written after the latest checkpoint
+  * @nilfs: nilfs object
+  * @sb: super block instance
+@@ -766,15 +793,19 @@ int nilfs_salvage_orphan_logs(struct the
+ 		if (unlikely(err)) {
+ 			nilfs_err(sb, "error %d writing segment for recovery",
+ 				  err);
+-			goto failed;
++			goto put_root;
+ 		}
+ 
+ 		nilfs_finish_roll_forward(nilfs, ri);
+ 	}
+ 
+- failed:
++put_root:
+ 	nilfs_put_root(root);
+ 	return err;
++
++failed:
++	nilfs_abort_roll_forward(nilfs);
++	goto put_root;
+ }
+ 
+ /**
 
 
