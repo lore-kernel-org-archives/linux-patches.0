@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D2D18C02E;
-	Tue, 10 Sep 2024 10:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9C914D431;
+	Tue, 10 Sep 2024 10:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965264; cv=none; b=qsmK4EM9pNQWVdxSzkxMfjFW5sCrV6EsiuekvKs32bAYpmOZmfj3Tn2irw2dhLmGm3DoCKQbwp0FXijb60G4xcWyzojaTntlD7Fquca+h0m2BpfFFNE6jkgORajOUK1FuTAB4MwIC+LGHN2IpU9UcQMq/tx5TnaPEqyER/qcAHo=
+	t=1725965267; cv=none; b=R69V6f2aGgig/Kj698f3/N3k47HdrqnbxraEPhR9hoEowXAeSvAOXCToHs1YURE7FI3xshTpSwjr3RZHi9dObHbXZRMnplj6ZgWt0DtmfBRWiYqF5ymOFya9/6pfx7cJnk+rAKmL27v/bbz6/1K3SslwiDvDlLHQ4gLukxGBnJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965264; c=relaxed/simple;
-	bh=a8XD5TRWcV1GtBZTmmDxcshk9WGGvvUnEt9nj1nnqao=;
+	s=arc-20240116; t=1725965267; c=relaxed/simple;
+	bh=YWOOOftLFQUjR3LSpgNHlXLgR+GYXN8TfvyOyr/RBqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1xe9o8lxeMMo8pVvkUz9LRE9TLIRv3PoOOYeU/r7qFdwBaR/Flr2ZRNF2tN5ZhMw5Dq6HDWQi1gSgENTTvtgbFnmdBqKcn1+v9jeMF+1o/YdtCgzEgHkkqBWsoB49SO+jZu2bFZ3TAvqE7Lo3Lvt5G2pC8XLYGWhqxocBm9zwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=be/NQGLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niu66z0nbFco3PQUTmVX9TP8JInxY3oMUsvW6LNc4ghT4bd+DMxUSULd4BJ+RjPKRA6vAjr0xWgf8ay4E2eEoINzHyhYFn1roPYowSmxjSDtkMpOKtoe6m1wbwJszV4PQrqPMLTKVdAjOb9B3evbWKy+SsoWFA419JwTwYf7eWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWyQKmLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="be/NQGLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A25CC4CEC3;
-	Tue, 10 Sep 2024 10:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWyQKmLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDCEC4CEC3;
+	Tue, 10 Sep 2024 10:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965263;
-	bh=a8XD5TRWcV1GtBZTmmDxcshk9WGGvvUnEt9nj1nnqao=;
+	s=korg; t=1725965266;
+	bh=YWOOOftLFQUjR3LSpgNHlXLgR+GYXN8TfvyOyr/RBqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=be/NQGLbZ5qlwdCNM9EMzq83GmUlZIcfAJIs3OUfUS9hXLBdntlrWZE/sagx/4Mdq
-	 NfAFbzt6Abdhi9SZqV+LYHLwfXWJpM0rvcgk4odqQLFauz80JzMOiVC3vZM4TO3bCz
-	 cT581YsY8zwET4OQiaIKmfqKnM4j1O1TZUaDwVzQ=
+	b=XWyQKmLEG3WJx9yA7/8ffn8/AAButn17Fh5VmVTXiOMrUbUY2sQTASya9RPczlCEM
+	 giD6zPFcOaZioU4K/MJM/DibPjsnuTdwr1afQnvWscYlqAVJ77eAectHc4EbUoSTJC
+	 kcp+C5lJi5wN4g2DfJwjdTocrap+GRQG3mCIgsQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lex Siegel <usiegl00@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Neil Brown <neilb@suse.de>,
-	Trond Myklebust <trondmy@kernel.org>,
-	Anna Schumaker <anna@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 5.10 185/186] net, sunrpc: Remap EPERM in case of connection failure in xs_tcp_setup_socket
-Date: Tue, 10 Sep 2024 11:34:40 +0200
-Message-ID: <20240910092602.244454566@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tomas Krcka <krckatom@amazon.de>
+Subject: [PATCH 5.10 186/186] memcg: protect concurrent access to mem_cgroup_idr
+Date: Tue, 10 Sep 2024 11:34:41 +0200
+Message-ID: <20240910092602.278549799@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -55,59 +55,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 626dfed5fa3bfb41e0dffd796032b555b69f9cde upstream.
+commit 9972605a238339b85bd16b084eed5f18414d22db upstream.
 
-When using a BPF program on kernel_connect(), the call can return -EPERM. This
-causes xs_tcp_setup_socket() to loop forever, filling up the syslog and causing
-the kernel to potentially freeze up.
+Commit 73f576c04b94 ("mm: memcontrol: fix cgroup creation failure after
+many small jobs") decoupled the memcg IDs from the CSS ID space to fix the
+cgroup creation failures.  It introduced IDR to maintain the memcg ID
+space.  The IDR depends on external synchronization mechanisms for
+modifications.  For the mem_cgroup_idr, the idr_alloc() and idr_replace()
+happen within css callback and thus are protected through cgroup_mutex
+from concurrent modifications.  However idr_remove() for mem_cgroup_idr
+was not protected against concurrency and can be run concurrently for
+different memcgs when they hit their refcnt to zero.  Fix that.
 
-Neil suggested:
+We have been seeing list_lru based kernel crashes at a low frequency in
+our fleet for a long time.  These crashes were in different part of
+list_lru code including list_lru_add(), list_lru_del() and reparenting
+code.  Upon further inspection, it looked like for a given object (dentry
+and inode), the super_block's list_lru didn't have list_lru_one for the
+memcg of that object.  The initial suspicions were either the object is
+not allocated through kmem_cache_alloc_lru() or somehow
+memcg_list_lru_alloc() failed to allocate list_lru_one() for a memcg but
+returned success.  No evidence were found for these cases.
 
-  This will propagate -EPERM up into other layers which might not be ready
-  to handle it. It might be safer to map EPERM to an error we would be more
-  likely to expect from the network system - such as ECONNREFUSED or ENETDOWN.
+Looking more deeply, we started seeing situations where valid memcg's id
+is not present in mem_cgroup_idr and in some cases multiple valid memcgs
+have same id and mem_cgroup_idr is pointing to one of them.  So, the most
+reasonable explanation is that these situations can happen due to race
+between multiple idr_remove() calls or race between
+idr_alloc()/idr_replace() and idr_remove().  These races are causing
+multiple memcgs to acquire the same ID and then offlining of one of them
+would cleanup list_lrus on the system for all of them.  Later access from
+other memcgs to the list_lru cause crashes due to missing list_lru_one.
 
-ECONNREFUSED as error seems reasonable. For programs setting a different error
-can be out of reach (see handling in 4fbac77d2d09) in particular on kernels
-which do not have f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err
-instead of allow boolean"), thus given that it is better to simply remap for
-consistent behavior. UDP does handle EPERM in xs_udp_send_request().
-
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
-Co-developed-by: Lex Siegel <usiegl00@gmail.com>
-Signed-off-by: Lex Siegel <usiegl00@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Neil Brown <neilb@suse.de>
-Cc: Trond Myklebust <trondmy@kernel.org>
-Cc: Anna Schumaker <anna@kernel.org>
-Link: https://github.com/cilium/cilium/issues/33395
-Link: https://lore.kernel.org/bpf/171374175513.12877.8993642908082014881@noble.neil.brown.name
-Link: https://patch.msgid.link/9069ec1d59e4b2129fc23433349fd5580ad43921.1720075070.git.daniel@iogearbox.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Link: https://lkml.kernel.org/r/20240802235822.1830976-1-shakeel.butt@linux.dev
+Fixes: 73f576c04b94 ("mm: memcontrol: fix cgroup creation failure after many small jobs")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adapted due to commit be740503ed03 ("mm: memcontrol: fix cannot alloc the
+  maximum memcg ID") and 6f0df8e16eb5 ("memcontrol: ensure memcg acquired by id
+  is properly set up") not in the tree ]
+Signed-off-by: Tomas Krcka <krckatom@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtsock.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/memcontrol.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2314,6 +2314,13 @@ static void xs_tcp_setup_socket(struct w
- 	case -EALREADY:
- 		xprt_unlock_connect(xprt, transport);
- 		return;
-+	case -EPERM:
-+		/* Happens, for instance, if a BPF program is preventing
-+		 * the connect. Remap the error so upper layers can better
-+		 * deal with it.
-+		 */
-+		status = -ECONNREFUSED;
-+		fallthrough;
- 	case -EINVAL:
- 		/* Happens, for instance, if the user specified a link
- 		 * local IPv6 address without a scope-id.
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -5160,11 +5160,28 @@ static struct cftype mem_cgroup_legacy_f
+  */
+ 
+ static DEFINE_IDR(mem_cgroup_idr);
++static DEFINE_SPINLOCK(memcg_idr_lock);
++
++static int mem_cgroup_alloc_id(void)
++{
++	int ret;
++
++	idr_preload(GFP_KERNEL);
++	spin_lock(&memcg_idr_lock);
++	ret = idr_alloc(&mem_cgroup_idr, NULL, 1, MEM_CGROUP_ID_MAX + 1,
++			GFP_NOWAIT);
++	spin_unlock(&memcg_idr_lock);
++	idr_preload_end();
++	return ret;
++}
+ 
+ static void mem_cgroup_id_remove(struct mem_cgroup *memcg)
+ {
+ 	if (memcg->id.id > 0) {
++		spin_lock(&memcg_idr_lock);
+ 		idr_remove(&mem_cgroup_idr, memcg->id.id);
++		spin_unlock(&memcg_idr_lock);
++
+ 		memcg->id.id = 0;
+ 	}
+ }
+@@ -5294,9 +5311,7 @@ static struct mem_cgroup *mem_cgroup_all
+ 	if (!memcg)
+ 		return ERR_PTR(error);
+ 
+-	memcg->id.id = idr_alloc(&mem_cgroup_idr, NULL,
+-				 1, MEM_CGROUP_ID_MAX,
+-				 GFP_KERNEL);
++	memcg->id.id = mem_cgroup_alloc_id();
+ 	if (memcg->id.id < 0) {
+ 		error = memcg->id.id;
+ 		goto fail;
+@@ -5342,7 +5357,9 @@ static struct mem_cgroup *mem_cgroup_all
+ 	INIT_LIST_HEAD(&memcg->deferred_split_queue.split_queue);
+ 	memcg->deferred_split_queue.split_queue_len = 0;
+ #endif
++	spin_lock(&memcg_idr_lock);
+ 	idr_replace(&mem_cgroup_idr, memcg, memcg->id.id);
++	spin_unlock(&memcg_idr_lock);
+ 	return memcg;
+ fail:
+ 	mem_cgroup_id_remove(memcg);
 
 
