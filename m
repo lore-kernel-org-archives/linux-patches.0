@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9101518595E;
-	Tue, 10 Sep 2024 10:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A9B18595E;
+	Tue, 10 Sep 2024 10:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965022; cv=none; b=KbaJSrxf3GvwLOu+gYkGmsUYU1puo5zAjE0GNmJuqHW+dz2gRN8opXwOSf5VBiHpVyUJU4ImOHMYk/QYA4npwiHRw+d6KumRNaK6qbbrovXFoYphF82u8uX0vIe34WSGAbBOwggBpqJUlXfpflxrOiQjSb0DBSw/HzZrEYzP+0s=
+	t=1725965025; cv=none; b=JNrxYZ8WQ6Bg9D+RR/OWIzPgXPHCGRd9lWI7469AVZ15xSkYUz7AWEpx6svD0M6DP/wzN+BHnzTt43qlBO19f9q/QPEvdNe6IEz3tCSb7F9i3wPYpQFtBC0hIj9g3mdgqCYOLlnDBthI4I83gNhinAeGH59mM+nWqZp/i6hVoxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965022; c=relaxed/simple;
-	bh=jhlFT+NUkr1aBnvtAJ+oalwiEXRUN8NDvOEYfxEjU08=;
+	s=arc-20240116; t=1725965025; c=relaxed/simple;
+	bh=fsKdGrdnfocywnN7N2elFK00djXwPbsincLN5hvmPZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UD6ENe9oMwNPi10wDwl3Ps5HU32OrH5QuJD3w2IOhJGWpz/rFNNZeHTL8hPmwnnR/w9cvNM/zBtR3o07XrZJbj9uBPonmuUidlnZnVFnWXIUH/PxI3hol99k8CtYgArNO8Hzu+kNgWkU1z/1uYtxrAc7IDJNUzBRXd6r6MaO3KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ubGb5a3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QLraE1ytaQRPVX+J5f/xbyuvLzJgbizZ+5mT8+PDkF90LeD6/58FqnTyYtEWyY+FEuk25qg7L+4gXylKQixaakmkh+6AHJaVcaww2i8Cg9zK9ZzQ6M32/4Xvrh3lC93aYl+9ySKPD8A/ebR2W0qhcEnFlJzWm5kSDehexWYGv9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBlz4Wbg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ubGb5a3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180F6C4CEC3;
-	Tue, 10 Sep 2024 10:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBlz4Wbg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D143C4CEC3;
+	Tue, 10 Sep 2024 10:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965022;
-	bh=jhlFT+NUkr1aBnvtAJ+oalwiEXRUN8NDvOEYfxEjU08=;
+	s=korg; t=1725965025;
+	bh=fsKdGrdnfocywnN7N2elFK00djXwPbsincLN5hvmPZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ubGb5a3tmBVIonEu9C0Ou/okVPFsllZTvUBGIuE1Be+u3hJUwtsuBPeZPYa6c8Ub
-	 QyTxeA4+TafHACRZGAJi9KGcstozAMx7/qWx5J0sGPLFaYlyOq8OqRd1vGm2azAIlG
-	 Pe0BxIsBF4i82E83uGzPQSdiC8Gi0hNAqwKrdo9w=
+	b=HBlz4Wbg7EMH0r5Wjs+T5xbDH+IwJ2q7hlhdzj8QteYAqFQuIlsgoVvwWI6mOZCW+
+	 13caOQwgvUQewmk0RgSGdsP5m42G/3KyUYVmdPikPrLjPrQpmmhzO4qqJxh9UnnGhI
+	 nkqbjhRZfrqFs+uqFi3h0tr522SU5O3f6C0El3Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jules Irenge <jbi.octave@gmail.com>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/186] media: qcom: camss: Add check for v4l2_fwnode_endpoint_parse
-Date: Tue, 10 Sep 2024 11:33:25 +0200
-Message-ID: <20240910092559.055922409@linuxfoundation.org>
+Subject: [PATCH 5.10 111/186] pcmcia: Use resource_size function on resource object
+Date: Tue, 10 Sep 2024 11:33:26 +0200
+Message-ID: <20240910092559.097813626@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,37 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Jules Irenge <jbi.octave@gmail.com>
 
-[ Upstream commit 4caf6d93d9f2c11d6441c64e1c549c445fa322ed ]
+[ Upstream commit 24a025497e7e883bd2adef5d0ece1e9b9268009f ]
 
-Add check for the return value of v4l2_fwnode_endpoint_parse() and
-return the error if it fails in order to catch the error.
+Cocinnele reports a warning
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+WARNING: Suspicious code. resource_size is maybe missing with root
+
+The root cause is the function resource_size is not used when needed
+
+Use resource_size() on variable "root" of type resource
+
+Signed-off-by: Jules Irenge <jbi.octave@gmail.com>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pcmcia/yenta_socket.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 9186881afc98..d074f426980d 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -431,8 +431,11 @@ static int camss_of_parse_endpoint_node(struct device *dev,
- 	struct v4l2_fwnode_bus_mipi_csi2 *mipi_csi2;
- 	struct v4l2_fwnode_endpoint vep = { { 0 } };
- 	unsigned int i;
-+	int ret;
- 
--	v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
-+	ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
-+	if (ret)
-+		return ret;
- 
- 	csd->interface.csiphy_id = vep.base.port;
- 
+diff --git a/drivers/pcmcia/yenta_socket.c b/drivers/pcmcia/yenta_socket.c
+index 84bfc0e85d6b..f15b72c6e57e 100644
+--- a/drivers/pcmcia/yenta_socket.c
++++ b/drivers/pcmcia/yenta_socket.c
+@@ -636,11 +636,11 @@ static int yenta_search_one_res(struct resource *root, struct resource *res,
+ 		start = PCIBIOS_MIN_CARDBUS_IO;
+ 		end = ~0U;
+ 	} else {
+-		unsigned long avail = root->end - root->start;
++		unsigned long avail = resource_size(root);
+ 		int i;
+ 		size = BRIDGE_MEM_MAX;
+-		if (size > avail/8) {
+-			size = (avail+1)/8;
++		if (size > (avail - 1) / 8) {
++			size = avail / 8;
+ 			/* round size down to next power of 2 */
+ 			i = 0;
+ 			while ((size /= 2) != 0)
 -- 
 2.43.0
 
