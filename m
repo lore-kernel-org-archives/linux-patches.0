@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE34546444;
-	Tue, 10 Sep 2024 10:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC90418DF69;
+	Tue, 10 Sep 2024 10:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964056; cv=none; b=n4WRqAe9yt5/53iACz1ZoetE7VbXlk2wc97uraFq6vPSkM6ERKWK6CmhBnVNywK68g7zVCq45nH2x+yKnLIDXJ7PPtEP9R4GjtSkhyQaLy+HwlW4DSneLR5wrA9OkxLs1Bjl1sNg8eMsNckPSdntt3KcdVp13fm6CiHMzltdxo4=
+	t=1725964059; cv=none; b=UvexSPv9jk8fTJvVPdXpwLHziDJt/aoRBkw1ZMbO92IuR41MnMQmhJKZfViuh/+dFutPahiEZH1I2gumz2tCByEWI7y+9InXW57qmgWZxeZQdDTkOTJCi3uyLn8iu3c7L5oBkHojHdq0SASjvor/d2pV8V0gRarO/r3VrZAbcTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964056; c=relaxed/simple;
-	bh=tVS2r6GPdhy6NLRrGgxk6vcY66mfUmR3m/ykAAJkdMQ=;
+	s=arc-20240116; t=1725964059; c=relaxed/simple;
+	bh=lJ4AK61XLV746YOQFbkyByyr5ETkhevkfuzvgi0zSG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEd9hqBspFZAAtb4HsiU+I7NVzap0YG2+VrrcP7uCUM9akGu0HRiIYHb8px1NPH/FMY0cm9bGk9L7uEEVdCetgfVDjgd/irdxb10Ea6w73e3YJ4x+pNYz6uYTLZmTgNskopgbYVQOlDao/3WyLX1zLd2ZuIezFZSL3ep/N/Dxzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk988elG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wng888sihbi4H+n0LYQ62pEfo2fwT7gY2ZkqTVyA8/p/Wk2CuPMXStjK2ra1V9OGKqwKnRVTXetKs9fp3OcL74bXvzg9Ohl4+jY4qsqq66W//aMmKla6OJtav/xXRYh9NxnqcSAWXjRLxHZC6Yxbr4yMgVanrGLLwAk8dv9ndH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImfIz87V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk988elG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74834C4CEC3;
-	Tue, 10 Sep 2024 10:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImfIz87V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B936C4CEC3;
+	Tue, 10 Sep 2024 10:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964055;
-	bh=tVS2r6GPdhy6NLRrGgxk6vcY66mfUmR3m/ykAAJkdMQ=;
+	s=korg; t=1725964058;
+	bh=lJ4AK61XLV746YOQFbkyByyr5ETkhevkfuzvgi0zSG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk988elGzOrO9bBKARxM4brm5aB+2UrdF5ZceUu8fHUpsfzBuJJUdd4SyHw2XJSJd
-	 0oI3pHk3SgJwH3ScMLnU2ebM1F0NHP4JBVorJvYVMtWd+IX1HDM9ab1Ma/MzL594gz
-	 3kjiXh0By3j1zGghDmS+D3b8ECrUYXpzqq+zoUjQ=
+	b=ImfIz87V+XsLqLV2eZM0Rb7sucN44XZS7tiDczOHw/9xkiSkFTIpENe/UUZIhIKSX
+	 uw7avmDHeSUIAeSFwB9JQjSjZGN5so7CbykmcW6NnfVsrmi+MNv7Yy4uOxotVkgWGw
+	 pdOmQKJdKIcKg1rfxdTtqT9jAyHuCN7f+a2Jma2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <yuntao.wang@linux.dev>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 052/269] x86/apic: Make x2apic_disable() work correctly
-Date: Tue, 10 Sep 2024 11:30:39 +0200
-Message-ID: <20240910092610.093202438@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 053/269] Revert "drm/amdgpu: align pp_power_profile_mode with kernel docs"
+Date: Tue, 10 Sep 2024 11:30:40 +0200
+Message-ID: <20240910092610.125513754@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -50,60 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <yuntao.wang@linux.dev>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 0ecc5be200c84e67114f3640064ba2bae3ba2f5a upstream.
+commit 1a8d845470941f1b6de1b392227530c097dc5e0c upstream.
 
-x2apic_disable() clears x2apic_state and x2apic_mode unconditionally, even
-when the state is X2APIC_ON_LOCKED, which prevents the kernel to disable
-it thereby creating inconsistent state.
+This reverts commit 8f614469de248a4bc55fb07e55d5f4c340c75b11.
 
-Due to the early state check for X2APIC_ON, the code path which warns about
-a locked X2APIC cannot be reached.
+This breaks some manual setting of the profile mode in
+certain cases.
 
-Test for state < X2APIC_ON instead and move the clearing of the state and
-mode variables to the place which actually disables X2APIC.
-
-[ tglx: Massaged change log. Added Fixes tag. Moved clearing so it's at the
-  	right place for back ports ]
-
-Fixes: a57e456a7b28 ("x86/apic: Fix fallout from x2apic cleanup")
-Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3600
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7a199557643e993d4e7357860624b8aa5d8f4340)
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240813014827.895381-1-yuntao.wang@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1812,12 +1812,9 @@ static __init void apic_set_fixmap(bool
- 
- static __init void x2apic_disable(void)
- {
--	u32 x2apic_id, state = x2apic_state;
-+	u32 x2apic_id;
- 
--	x2apic_mode = 0;
--	x2apic_state = X2APIC_DISABLED;
--
--	if (state != X2APIC_ON)
-+	if (x2apic_state < X2APIC_ON)
- 		return;
- 
- 	x2apic_id = read_apic_id();
-@@ -1830,6 +1827,10 @@ static __init void x2apic_disable(void)
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -1883,7 +1883,8 @@ static int smu_adjust_power_state_dynami
+ 		smu_dpm_ctx->dpm_level = level;
  	}
  
- 	__x2apic_disable();
-+
-+	x2apic_mode = 0;
-+	x2apic_state = X2APIC_DISABLED;
-+
- 	/*
- 	 * Don't reread the APIC ID as it was already done from
- 	 * check_x2apic() and the APIC driver still is a x2APIC variant,
+-	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM) {
++	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL &&
++		smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM) {
+ 		index = fls(smu->workload_mask);
+ 		index = index > 0 && index <= WORKLOAD_POLICY_MAX ? index - 1 : 0;
+ 		workload[0] = smu->workload_setting[index];
+@@ -1962,7 +1963,8 @@ static int smu_switch_power_profile(void
+ 		workload[0] = smu->workload_setting[index];
+ 	}
+ 
+-	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM)
++	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL &&
++		smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM)
+ 		smu_bump_power_profile_mode(smu, workload, 0);
+ 
+ 	return 0;
 
 
