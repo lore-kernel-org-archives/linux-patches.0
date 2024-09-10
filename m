@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2032E18C90B;
-	Tue, 10 Sep 2024 09:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092F718C90B;
+	Tue, 10 Sep 2024 09:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961479; cv=none; b=iXqJG5clWzaKU54W1HaeVJOAw31yhlLnr8bFJKg8jrDVtEw06muP6hNaudWmIALHOg7fHeZT6UFqEOzkHK86pvUfVbZCi1qVwKr64gXF204WxW+NY2rIi91B9W6pyuifYi2IRXZECt+2VOlrO5P1kXs9x4RZCVJUBjF/uS2ey+E=
+	t=1725961482; cv=none; b=PS8YQzUal8nLeH1FRWv8CdXWHyNUlgOo+aPodGLi0b7RKBFKDRAlA99JglYgWaBo4dL6m1FUR1AQes7V1vhIG9XHuOaAx/fwaZuGeG4nj8pp3BwpOyoNDnAbkbZc2hm4evjGdyjzdzEu/oWMnOE9t8csgv86DIfueHIAFD8FG08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961479; c=relaxed/simple;
-	bh=xWKT/mh8p6g+URRHFxLj7nZcYMt/5c7NGwzmN4xMKTw=;
+	s=arc-20240116; t=1725961482; c=relaxed/simple;
+	bh=COrtyaolfIEWo+/xsutKYO4oL8Qc8tO4F00soq1H4Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enY64IXe8Zqgf2a6ago4cnXocLUfdXSLn8+0bdLIw2pffaXsgtaNwEIVb/bBxXx1sb4OgS5lrIXJ2fQWcEr+gOVAKpXUfFWZp5HNz8jjkTaseuqcn5HXzWV3IyKpyMm+OICBDJVbMGixBOAgwIf5VNOsPRBM5hzTLx1DgQQ0TOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvBfI/O5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdeT4Mguot51x/Fy65kmPUn47RuN7/quo2ED3OA7Bl1raEaycfIeKVOGIpSq+DnkSup5Mh5uUwCk1W+ExmWZWm8M6YM6/EOBi5wO6qo1sdPpoi8G5ynIGSaqCsVH/5m34wPXl9WrYnomgkNTs5s3zVerUXcRlGdtINM2mWuxxzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFtFKhV9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvBfI/O5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94736C4CEC3;
-	Tue, 10 Sep 2024 09:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFtFKhV9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BE4C4CEC3;
+	Tue, 10 Sep 2024 09:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961479;
-	bh=xWKT/mh8p6g+URRHFxLj7nZcYMt/5c7NGwzmN4xMKTw=;
+	s=korg; t=1725961481;
+	bh=COrtyaolfIEWo+/xsutKYO4oL8Qc8tO4F00soq1H4Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvBfI/O5g87OP/6t3piAvIC8XZItm566H4GejU3Gy5gunl1zY9bQ+3SvZVWQSy+fv
-	 Hbo5wRYEzBXAXFU/F5KHfVrjWSDoyPxPBW7u/nqYuR8bTDhdjXTeLd5eXalyemcZ5u
-	 E1X615+mSPmMH8OaqevxHLt9v4PPDIdFGYJNhV2A=
+	b=oFtFKhV9wQ7RM6CSzfOuOG5MIRRiVpKipNWNl4bR22ZqH5H7JBZtqqpByR7OG4wAv
+	 8OphFwj9OzcB1+q8ZsL3senGSjoa2xXoOoBfjmktwJaDQgwbwJnxb39uVaqLJm+h9/
+	 w5PTHsRhnWzc8d3K5cM/xJLv5XJI/HbWsUVfR8JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HAN Yuwei <hrx@bupt.moe>,
-	Xuefer <xuefer@gmail.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.10 084/375] btrfs: zoned: handle broken write pointer on zones
-Date: Tue, 10 Sep 2024 11:28:01 +0200
-Message-ID: <20240910092625.058445989@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.10 085/375] drm/xe/gsc: Do not attempt to load the GSC multiple times
+Date: Tue, 10 Sep 2024 11:28:02 +0200
+Message-ID: <20240910092625.090546879@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,118 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-commit b1934cd6069538db2255dc94ba573771ecf3b560 upstream.
+commit 529bf8d1118bbaa1aa835563a22b0b5c64ca9d68 upstream.
 
-Btrfs rejects to mount a FS if it finds a block group with a broken write
-pointer (e.g, unequal write pointers on two zones of RAID1 block group).
-Since such case can happen easily with a power-loss or crash of a system,
-we need to handle the case more gently.
+The GSC HW is only reset by driver FLR or D3cold entry. We don't support
+the former at runtime, while the latter is only supported on DGFX, for
+which we don't support GSC. Therefore, if GSC failed to load previously
+there is no need to try again because the HW is stuck in the error state.
 
-Handle such block group by making it unallocatable, so that there will be
-no writes into it. That can be done by setting the allocation pointer at
-the end of allocating region (= block_group->zone_capacity). Then, existing
-code handle zone_unusable properly.
+An assert has been added so that if we ever add DGFX support we'll know
+we need to handle the D3 case.
 
-Having proper zone_capacity is necessary for the change. So, set it as fast
-as possible.
+v2: use "< 0" instead of "!= 0" in the FW state error check (Julia).
 
-We cannot handle RAID0 and RAID10 case like this. But, they are anyway
-unable to read because of a missing stripe.
-
-Fixes: 265f7237dd25 ("btrfs: zoned: allow DUP on meta-data block groups")
-Fixes: 568220fa9657 ("btrfs: zoned: support RAID0/1/10 on top of raid stripe tree")
-CC: stable@vger.kernel.org # 6.1+
-Reported-by: HAN Yuwei <hrx@bupt.moe>
-Cc: Xuefer <xuefer@gmail.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: dd0e89e5edc2 ("drm/xe/gsc: GSC FW load")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240828215158.2743994-2-daniele.ceraolospurio@intel.com
+(cherry picked from commit 2160f6f6e3cf6893a83357c3b82ff8589bdc0f08)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |   30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_gsc.c   |   12 ++++++++++++
+ drivers/gpu/drm/xe/xe_uc_fw.h |    9 +++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1408,6 +1408,8 @@ static int btrfs_load_block_group_dup(st
- 		return -EINVAL;
- 	}
+--- a/drivers/gpu/drm/xe/xe_gsc.c
++++ b/drivers/gpu/drm/xe/xe_gsc.c
+@@ -511,10 +511,22 @@ out_bo:
+ void xe_gsc_load_start(struct xe_gsc *gsc)
+ {
+ 	struct xe_gt *gt = gsc_to_gt(gsc);
++	struct xe_device *xe = gt_to_xe(gt);
  
-+	bg->zone_capacity = min_not_zero(zone_info[0].capacity, zone_info[1].capacity);
+ 	if (!xe_uc_fw_is_loadable(&gsc->fw) || !gsc->q)
+ 		return;
+ 
++	/*
++	 * The GSC HW is only reset by driver FLR or D3cold entry. We don't
++	 * support the former at runtime, while the latter is only supported on
++	 * DGFX, for which we don't support GSC. Therefore, if GSC failed to
++	 * load previously there is no need to try again because the HW is
++	 * stuck in the error state.
++	 */
++	xe_assert(xe, !IS_DGFX(xe));
++	if (xe_uc_fw_is_in_error_state(&gsc->fw))
++		return;
 +
- 	if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
- 		btrfs_err(bg->fs_info,
- 			  "zoned: cannot recover write pointer for zone %llu",
-@@ -1434,7 +1436,6 @@ static int btrfs_load_block_group_dup(st
- 	}
- 
- 	bg->alloc_offset = zone_info[0].alloc_offset;
--	bg->zone_capacity = min(zone_info[0].capacity, zone_info[1].capacity);
- 	return 0;
+ 	/* GSC FW survives GT reset and D3Hot */
+ 	if (gsc_fw_is_loaded(gt)) {
+ 		xe_uc_fw_change_status(&gsc->fw, XE_UC_FIRMWARE_TRANSFERRED);
+--- a/drivers/gpu/drm/xe/xe_uc_fw.h
++++ b/drivers/gpu/drm/xe/xe_uc_fw.h
+@@ -65,7 +65,7 @@ const char *xe_uc_fw_status_repr(enum xe
+ 	return "<invalid>";
  }
  
-@@ -1452,6 +1453,9 @@ static int btrfs_load_block_group_raid1(
- 		return -EINVAL;
- 	}
+-static inline int xe_uc_fw_status_to_error(enum xe_uc_fw_status status)
++static inline int xe_uc_fw_status_to_error(const enum xe_uc_fw_status status)
+ {
+ 	switch (status) {
+ 	case XE_UC_FIRMWARE_NOT_SUPPORTED:
+@@ -108,7 +108,7 @@ static inline const char *xe_uc_fw_type_
+ }
  
-+	/* In case a device is missing we have a cap of 0, so don't use it. */
-+	bg->zone_capacity = min_not_zero(zone_info[0].capacity, zone_info[1].capacity);
+ static inline enum xe_uc_fw_status
+-__xe_uc_fw_status(struct xe_uc_fw *uc_fw)
++__xe_uc_fw_status(const struct xe_uc_fw *uc_fw)
+ {
+ 	/* shouldn't call this before checking hw/blob availability */
+ 	XE_WARN_ON(uc_fw->status == XE_UC_FIRMWARE_UNINITIALIZED);
+@@ -156,6 +156,11 @@ static inline bool xe_uc_fw_is_overridde
+ 	return uc_fw->user_overridden;
+ }
+ 
++static inline bool xe_uc_fw_is_in_error_state(const struct xe_uc_fw *uc_fw)
++{
++	return xe_uc_fw_status_to_error(__xe_uc_fw_status(uc_fw)) < 0;
++}
 +
- 	for (i = 0; i < map->num_stripes; i++) {
- 		if (zone_info[i].alloc_offset == WP_MISSING_DEV ||
- 		    zone_info[i].alloc_offset == WP_CONVENTIONAL)
-@@ -1473,9 +1477,6 @@ static int btrfs_load_block_group_raid1(
- 			if (test_bit(0, active))
- 				set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &bg->runtime_flags);
- 		}
--		/* In case a device is missing we have a cap of 0, so don't use it. */
--		bg->zone_capacity = min_not_zero(zone_info[0].capacity,
--						 zone_info[1].capacity);
- 	}
- 
- 	if (zone_info[0].alloc_offset != WP_MISSING_DEV)
-@@ -1565,6 +1566,7 @@ int btrfs_load_block_group_zone_info(str
- 	unsigned long *active = NULL;
- 	u64 last_alloc = 0;
- 	u32 num_sequential = 0, num_conventional = 0;
-+	u64 profile;
- 
- 	if (!btrfs_is_zoned(fs_info))
- 		return 0;
-@@ -1625,7 +1627,8 @@ int btrfs_load_block_group_zone_info(str
- 		}
- 	}
- 
--	switch (map->type & BTRFS_BLOCK_GROUP_PROFILE_MASK) {
-+	profile = map->type & BTRFS_BLOCK_GROUP_PROFILE_MASK;
-+	switch (profile) {
- 	case 0: /* single */
- 		ret = btrfs_load_block_group_single(cache, &zone_info[0], active);
- 		break;
-@@ -1652,6 +1655,23 @@ int btrfs_load_block_group_zone_info(str
- 		goto out;
- 	}
- 
-+	if (ret == -EIO && profile != 0 && profile != BTRFS_BLOCK_GROUP_RAID0 &&
-+	    profile != BTRFS_BLOCK_GROUP_RAID10) {
-+		/*
-+		 * Detected broken write pointer.  Make this block group
-+		 * unallocatable by setting the allocation pointer at the end of
-+		 * allocatable region. Relocating this block group will fix the
-+		 * mismatch.
-+		 *
-+		 * Currently, we cannot handle RAID0 or RAID10 case like this
-+		 * because we don't have a proper zone_capacity value. But,
-+		 * reading from this block group won't work anyway by a missing
-+		 * stripe.
-+		 */
-+		cache->alloc_offset = cache->zone_capacity;
-+		ret = 0;
-+	}
-+
- out:
- 	/* Reject non SINGLE data profiles without RST */
- 	if ((map->type & BTRFS_BLOCK_GROUP_DATA) &&
+ static inline void xe_uc_fw_sanitize(struct xe_uc_fw *uc_fw)
+ {
+ 	if (xe_uc_fw_is_loaded(uc_fw))
 
 
