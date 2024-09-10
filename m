@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15D214D280;
-	Tue, 10 Sep 2024 10:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35F414D280;
+	Tue, 10 Sep 2024 10:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964642; cv=none; b=eCnROWuKgKTR/UGnaf8kJayyRiAF2AkbPeLnBJ4AsysegRRCdcSAXpH4X6iv4lPZnx9Q6A8JC3iKBgy1V5kMec3Rlf/JPW018a3/7Njxz974TyS8tSt+9yyq8IPLAGckVnHMliGLo0WSogPoLr2xMbFaozwvPTL0Yv2sr93wAaQ=
+	t=1725964644; cv=none; b=LfH3Sb3NHp7P9rx6sFtoWMNDmHEu13QI8+J2Ub7i81LDvzm+pxJQjn5n8rZtQxCdQaOm/agsrjWiYIOaUpz+GeQ0zsjrCyt4xt9YYMzyy7a635m2iwHUPxiQFcn027PCvCD1OhIE8OA6EBOJXliJ6UsTRIoXUOZ1Cv0fK07ccmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964642; c=relaxed/simple;
-	bh=+NexW2TSgi+Yi6qKjNSebbjVF08kb5HHLJeYxBLj2Os=;
+	s=arc-20240116; t=1725964644; c=relaxed/simple;
+	bh=gWc/R6S/t8Pme/AvQg9rgckVsWtbn0WKB6HMoG6IqtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Evn0cGZu1Ps77HUmJYMBRe2xbGqOrhL5HlVo8JoZoYGcRwQTiHO2xamLww9Kq1KVxTZiLeELd+Et4/oRz87wn2qwT+7oDFHOl4tyky2QZzPtC1cQ5ZBEYkyB5DSwPXSW9taCjzZxlHQPPPht79MwDrU3hxn0Na8A3QPasieuWBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae3ADJAK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lnVqYS8rhwGLqjnQtMy/n0EphO7/BomEPv5hc5KPR+I2KR+nFMiC6bFDbhfsTOBBI84Fo5d39EPmHZrtSrkwrF57oi/kP8NIzU7yrp2BSdmsBrreojOi8RZB9McFJw+xqWfqc9stZIKrvYgaGACSfxkDRb5wtkYGR0DWKI9GOOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujJfmSJm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae3ADJAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B0CC4CEC3;
-	Tue, 10 Sep 2024 10:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujJfmSJm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C022C4CEC3;
+	Tue, 10 Sep 2024 10:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964641;
-	bh=+NexW2TSgi+Yi6qKjNSebbjVF08kb5HHLJeYxBLj2Os=;
+	s=korg; t=1725964644;
+	bh=gWc/R6S/t8Pme/AvQg9rgckVsWtbn0WKB6HMoG6IqtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ae3ADJAKl1wsX4Eah548tXXLPfkgYSxgW8ufWB+FrDEPFXdvh1Qm87vj/UvrwFiPZ
-	 eswPlBoHorN6gYYKYvOig5EzMpvBUK7hmBJmC8G8jjIZSqi7HpWpznZcZG76t7kvBt
-	 zmNeZt1Zt+OKRcGSHIpDQzpIZtrweOaarIptJi2Y=
+	b=ujJfmSJmiAVA3HJcN26qsJOoIhiGXSa9uBHraFs+YH7VFORyVbEbJPkVV5XNB6MWg
+	 OUcHp8FmZ6fFHXvtyFSJu6pQbRoPlVaR1k+yFpvMDeNagSnEZr0qu0bNz3MKwcyvw0
+	 elpnJg6+n5pzJ7WaZ10cTmmuUSxlvE29sMYJfarI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Martelli <matteomartelli3@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 252/269] ASoC: sunxi: sun4i-i2s: fix LRCLK polarity in i2s mode
-Date: Tue, 10 Sep 2024 11:33:59 +0200
-Message-ID: <20240910092616.789885845@linuxfoundation.org>
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.6 253/269] clk: qcom: gcc-sm8550: Dont use parking clk_ops for QUPs
+Date: Tue, 10 Sep 2024 11:34:00 +0200
+Message-ID: <20240910092616.821050549@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -51,270 +56,283 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matteo Martelli <matteomartelli3@gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 3e83957e8dd7433a69116780d9bad217b00913ea ]
+[ Upstream commit d10eeb75168b84ed9559c58efe2756c2e0bc052a ]
 
-This fixes the LRCLK polarity for sun8i-h3 and sun50i-h6 in i2s mode
-which was wrongly inverted.
+The QUPs aren't shared in a way that requires parking the RCG at an
+always on parent in case some other entity turns on the clk. The
+hardware is capable of setting a new frequency itself with the DFS mode,
+so parking is unnecessary. Furthermore, there aren't any GDSCs for these
+devices, so there isn't a possibility of the GDSC turning on the clks
+for housekeeping purposes.
 
-The LRCLK was being set in reversed logic compared to the DAI format:
-inverted LRCLK for SND_SOC_DAIFMT_IB_NF and SND_SOC_DAIFMT_NB_NF; normal
-LRCLK for SND_SOC_DAIFMT_IB_IF and SND_SOC_DAIFMT_NB_IF. Such reversed
-logic applies properly for DSP_A, DSP_B, LEFT_J and RIGHT_J modes but
-not for I2S mode, for which the LRCLK signal results reversed to what
-expected on the bus. The issue is due to a misinterpretation of the
-LRCLK polarity bit of the H3 and H6 i2s controllers. Such bit in this
-case does not mean "0 => normal" or "1 => inverted" according to the
-expected bus operation, but it means "0 => frame starts on low edge" and
-"1 => frame starts on high edge" (from the User Manuals).
+This wasn't a problem to mark these clks shared until we started parking
+shared RCGs at clk registration time in commit 01a0a6cc8cfd ("clk: qcom:
+Park shared RCGs upon registration"). Parking at init is actually
+harmful to the UART when earlycon is used. If the device is pumping out
+data while the frequency changes you'll see garbage on the serial
+console until the driver can probe and actually set a proper frequency.
 
-This commit fixes the LRCLK polarity by setting the LRCLK polarity bit
-according to the selected bus mode and renames the LRCLK polarity bit
-definition to avoid further confusion.
+Revert the QUP part of commit 929c75d57566 ("clk: qcom: gcc-sm8550: Mark
+RCGs shared where applicable") so that the QUPs don't get parked during
+clk registration and break UART operations.
 
-Fixes: dd657eae8164 ("ASoC: sun4i-i2s: Fix the LRCK polarity")
-Fixes: 73adf87b7a58 ("ASoC: sun4i-i2s: Add support for H6 I2S")
-Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
-Link: https://patch.msgid.link/20240801-asoc-fix-sun4i-i2s-v2-1-a8e4e9daa363@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
+Cc: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Reported-by: Amit Pundir <amit.pundir@linaro.org>
+Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20240819233628.2074654-2-swboyd@chromium.org
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sunxi/sun4i-i2s.c | 143 ++++++++++++++++++------------------
- 1 file changed, 73 insertions(+), 70 deletions(-)
+ drivers/clk/qcom/gcc-sm8550.c | 52 +++++++++++++++++------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/sound/soc/sunxi/sun4i-i2s.c b/sound/soc/sunxi/sun4i-i2s.c
-index 5124b6c9ceb4..d1cb49d54f00 100644
---- a/sound/soc/sunxi/sun4i-i2s.c
-+++ b/sound/soc/sunxi/sun4i-i2s.c
-@@ -100,8 +100,8 @@
- #define SUN8I_I2S_CTRL_MODE_PCM			(0 << 4)
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index b883dffe5f7a..bf7b7c5d4606 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -536,7 +536,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s0_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- #define SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK	BIT(19)
--#define SUN8I_I2S_FMT0_LRCLK_POLARITY_INVERTED		(1 << 19)
--#define SUN8I_I2S_FMT0_LRCLK_POLARITY_NORMAL		(0 << 19)
-+#define SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH	(1 << 19)
-+#define SUN8I_I2S_FMT0_LRCLK_POLARITY_START_LOW		(0 << 19)
- #define SUN8I_I2S_FMT0_LRCK_PERIOD_MASK		GENMASK(17, 8)
- #define SUN8I_I2S_FMT0_LRCK_PERIOD(period)	((period - 1) << 8)
- #define SUN8I_I2S_FMT0_BCLK_POLARITY_MASK	BIT(7)
-@@ -727,65 +727,37 @@ static int sun4i_i2s_set_soc_fmt(const struct sun4i_i2s *i2s,
- static int sun8i_i2s_set_soc_fmt(const struct sun4i_i2s *i2s,
- 				 unsigned int fmt)
- {
--	u32 mode, val;
-+	u32 mode, lrclk_pol, bclk_pol, val;
- 	u8 offset;
+@@ -551,7 +551,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s1_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
--	/*
--	 * DAI clock polarity
--	 *
--	 * The setup for LRCK contradicts the datasheet, but under a
--	 * scope it's clear that the LRCK polarity is reversed
--	 * compared to the expected polarity on the bus.
--	 */
--	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
--	case SND_SOC_DAIFMT_IB_IF:
--		/* Invert both clocks */
--		val = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED;
--		break;
--	case SND_SOC_DAIFMT_IB_NF:
--		/* Invert bit clock */
--		val = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED |
--		      SUN8I_I2S_FMT0_LRCLK_POLARITY_INVERTED;
--		break;
--	case SND_SOC_DAIFMT_NB_IF:
--		/* Invert frame clock */
--		val = 0;
--		break;
--	case SND_SOC_DAIFMT_NB_NF:
--		val = SUN8I_I2S_FMT0_LRCLK_POLARITY_INVERTED;
--		break;
--	default:
--		return -EINVAL;
--	}
--
--	regmap_update_bits(i2s->regmap, SUN4I_I2S_FMT0_REG,
--			   SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK |
--			   SUN8I_I2S_FMT0_BCLK_POLARITY_MASK,
--			   val);
--
- 	/* DAI Mode */
- 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_DSP_A:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_PCM;
- 		offset = 1;
- 		break;
+@@ -566,7 +566,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s2_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- 	case SND_SOC_DAIFMT_DSP_B:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_PCM;
- 		offset = 0;
- 		break;
+@@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s3_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- 	case SND_SOC_DAIFMT_I2S:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_LOW;
- 		mode = SUN8I_I2S_CTRL_MODE_LEFT;
- 		offset = 1;
- 		break;
+@@ -596,7 +596,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s4_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- 	case SND_SOC_DAIFMT_LEFT_J:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_LEFT;
- 		offset = 0;
- 		break;
+@@ -611,7 +611,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s5_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- 	case SND_SOC_DAIFMT_RIGHT_J:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_RIGHT;
- 		offset = 0;
- 		break;
-@@ -803,6 +775,35 @@ static int sun8i_i2s_set_soc_fmt(const struct sun4i_i2s *i2s,
- 			   SUN8I_I2S_TX_CHAN_OFFSET_MASK,
- 			   SUN8I_I2S_TX_CHAN_OFFSET(offset));
+@@ -626,7 +626,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s6_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
-+	/* DAI clock polarity */
-+	bclk_pol = SUN8I_I2S_FMT0_BCLK_POLARITY_NORMAL;
-+
-+	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
-+	case SND_SOC_DAIFMT_IB_IF:
-+		/* Invert both clocks */
-+		lrclk_pol ^= SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK;
-+		bclk_pol = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED;
-+		break;
-+	case SND_SOC_DAIFMT_IB_NF:
-+		/* Invert bit clock */
-+		bclk_pol = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED;
-+		break;
-+	case SND_SOC_DAIFMT_NB_IF:
-+		/* Invert frame clock */
-+		lrclk_pol ^= SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK;
-+		break;
-+	case SND_SOC_DAIFMT_NB_NF:
-+		/* No inversion */
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	regmap_update_bits(i2s->regmap, SUN4I_I2S_FMT0_REG,
-+			   SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK |
-+			   SUN8I_I2S_FMT0_BCLK_POLARITY_MASK,
-+			   lrclk_pol | bclk_pol);
-+
- 	/* DAI clock master masks */
- 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
- 	case SND_SOC_DAIFMT_BP_FP:
-@@ -834,65 +835,37 @@ static int sun8i_i2s_set_soc_fmt(const struct sun4i_i2s *i2s,
- static int sun50i_h6_i2s_set_soc_fmt(const struct sun4i_i2s *i2s,
- 				     unsigned int fmt)
- {
--	u32 mode, val;
-+	u32 mode, lrclk_pol, bclk_pol, val;
- 	u8 offset;
+@@ -641,7 +641,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s7_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
--	/*
--	 * DAI clock polarity
--	 *
--	 * The setup for LRCK contradicts the datasheet, but under a
--	 * scope it's clear that the LRCK polarity is reversed
--	 * compared to the expected polarity on the bus.
--	 */
--	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
--	case SND_SOC_DAIFMT_IB_IF:
--		/* Invert both clocks */
--		val = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED;
--		break;
--	case SND_SOC_DAIFMT_IB_NF:
--		/* Invert bit clock */
--		val = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED |
--		      SUN8I_I2S_FMT0_LRCLK_POLARITY_INVERTED;
--		break;
--	case SND_SOC_DAIFMT_NB_IF:
--		/* Invert frame clock */
--		val = 0;
--		break;
--	case SND_SOC_DAIFMT_NB_NF:
--		val = SUN8I_I2S_FMT0_LRCLK_POLARITY_INVERTED;
--		break;
--	default:
--		return -EINVAL;
--	}
--
--	regmap_update_bits(i2s->regmap, SUN4I_I2S_FMT0_REG,
--			   SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK |
--			   SUN8I_I2S_FMT0_BCLK_POLARITY_MASK,
--			   val);
--
- 	/* DAI Mode */
- 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_DSP_A:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_PCM;
- 		offset = 1;
- 		break;
+@@ -656,7 +656,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s8_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- 	case SND_SOC_DAIFMT_DSP_B:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_PCM;
- 		offset = 0;
- 		break;
+@@ -671,7 +671,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s9_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
  
- 	case SND_SOC_DAIFMT_I2S:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_LOW;
- 		mode = SUN8I_I2S_CTRL_MODE_LEFT;
- 		offset = 1;
- 		break;
+@@ -700,7 +700,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
- 	case SND_SOC_DAIFMT_LEFT_J:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_LEFT;
- 		offset = 0;
- 		break;
+ static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
+@@ -717,7 +717,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
- 	case SND_SOC_DAIFMT_RIGHT_J:
-+		lrclk_pol = SUN8I_I2S_FMT0_LRCLK_POLARITY_START_HIGH;
- 		mode = SUN8I_I2S_CTRL_MODE_RIGHT;
- 		offset = 0;
- 		break;
-@@ -910,6 +883,36 @@ static int sun50i_h6_i2s_set_soc_fmt(const struct sun4i_i2s *i2s,
- 			   SUN50I_H6_I2S_TX_CHAN_SEL_OFFSET_MASK,
- 			   SUN50I_H6_I2S_TX_CHAN_SEL_OFFSET(offset));
+ static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
+@@ -750,7 +750,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+	/* DAI clock polarity */
-+	bclk_pol = SUN8I_I2S_FMT0_BCLK_POLARITY_NORMAL;
-+
-+	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
-+	case SND_SOC_DAIFMT_IB_IF:
-+		/* Invert both clocks */
-+		lrclk_pol ^= SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK;
-+		bclk_pol = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED;
-+		break;
-+	case SND_SOC_DAIFMT_IB_NF:
-+		/* Invert bit clock */
-+		bclk_pol = SUN8I_I2S_FMT0_BCLK_POLARITY_INVERTED;
-+		break;
-+	case SND_SOC_DAIFMT_NB_IF:
-+		/* Invert frame clock */
-+		lrclk_pol ^= SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK;
-+		break;
-+	case SND_SOC_DAIFMT_NB_NF:
-+		/* No inversion */
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	regmap_update_bits(i2s->regmap, SUN4I_I2S_FMT0_REG,
-+			   SUN8I_I2S_FMT0_LRCLK_POLARITY_MASK |
-+			   SUN8I_I2S_FMT0_BCLK_POLARITY_MASK,
-+			   lrclk_pol | bclk_pol);
-+
-+
- 	/* DAI clock master masks */
- 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
- 	case SND_SOC_DAIFMT_BP_FP:
+ static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
+@@ -767,7 +767,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
+@@ -784,7 +784,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
+@@ -801,7 +801,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
+@@ -818,7 +818,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
+@@ -835,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
+@@ -852,7 +852,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s0_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s0_clk_src = {
+@@ -869,7 +869,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s1_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s1_clk_src = {
+@@ -886,7 +886,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s2_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s2_clk_src = {
+@@ -903,7 +903,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s3_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s3_clk_src = {
+@@ -920,7 +920,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s4_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s4_clk_src = {
+@@ -937,7 +937,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s5_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s5_clk_src = {
+@@ -975,7 +975,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s6_clk_src_init = {
+ 	.parent_data = gcc_parent_data_8,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_8),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s6_clk_src = {
+@@ -992,7 +992,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s7_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap2_s7_clk_src = {
 -- 
 2.43.0
 
