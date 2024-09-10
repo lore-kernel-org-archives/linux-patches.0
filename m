@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE55224F6;
-	Tue, 10 Sep 2024 09:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CD21885A6;
+	Tue, 10 Sep 2024 09:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962075; cv=none; b=iUj5tJ8qDp/xxhZp5uMRHnpFBYnED9Zh6fdOfA0mEvgZw0mr0webG5bwhNvaXZ2f4ZJp/TTjf29jlFvXeHdTXrnSSzK9ehqsl9+Qcvve/ZZgddkaK6H2CP2AE9eHf/4p6A2K7IPkI1hI3VWZHwsP0Zn3SdqWGW8Pon9K/+R4+e4=
+	t=1725962078; cv=none; b=taSEDo0ID5wKx3QgVmkouYysg+xyr5fGvD2b+PUNfZAA3mCDFwv1s/++/bATJAKxHX1MyFikaQTqPLBZ6oJNtOz3tdMvoZPjONN873Cz58f3a/JZi9+DsI1ASTQEsEs0EJZv8ib7h3UROrnLsTj21+bm3XjcA3XHvJYMAaYlaq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962075; c=relaxed/simple;
-	bh=RNl6bXccOtDjX9PIRXi+b+Zg+cb5Yw5Z9XUngmPtyC0=;
+	s=arc-20240116; t=1725962078; c=relaxed/simple;
+	bh=lG0CLnVG9DGA09crZE7BY7cwQ92ib9lEgxSgUnFykA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBamuYJHjeA/J+ETA/+oDRHr1CXy9R8IqOYLNiStJUNnJuGGP9ECN1jXRcLmS4SwjMyF2orLLKL1+SyJWUM+P/jyq+8O0b0Nv+Y4XpR6jwuodfnciFm6sAE3IlPAecIaiMZDVHe29TnBGksdkFOypy318TBVsTxTtbtnJQwurQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuOg942n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bk52ipgJ9MxtGauJuPHSsQxl2knM9+Bg6orOnWdtw3ue9fcwI9kh501WGvQT6B+yKjuTeWyBrsJ61Q2XGsPwEuNfqgnDZR/9oEK5plhokXKyfFMoQN823Hfypw4xud5hIYNSt3G2VlAhsP8Y8XL7CYp+GaM9ZEYbdXxdLjMhpO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw5XuDNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuOg942n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371DBC4CEC3;
-	Tue, 10 Sep 2024 09:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw5XuDNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EF2C4CEC3;
+	Tue, 10 Sep 2024 09:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962075;
-	bh=RNl6bXccOtDjX9PIRXi+b+Zg+cb5Yw5Z9XUngmPtyC0=;
+	s=korg; t=1725962078;
+	bh=lG0CLnVG9DGA09crZE7BY7cwQ92ib9lEgxSgUnFykA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuOg942n8NXZGPjTeJvqhDktBo+Q1tI44uSfDZNVsxWxOr94wh+L+8UkujjksWHKb
-	 1qaZsJ8yaTcnZH5PNL3rORHqqCr5mNop3IObS/C6AakM9TQEM5V4zIN9xeB2XGn+Oz
-	 EwGhNT1nJIo5QMwRsd49jQH78v2JgcomMJk5xuz8=
+	b=kw5XuDNjQbSb7LOrheVlXEGElQO3HqN73m2wpeiHQclXSgdI3rVgDfwlVlJYiUwI4
+	 mc9KFsaWaq7QGRwd+ZeXcqE+HVV/3UPH0tW5r92vxhp0erKMpedEyvAgJv0VuaxlHX
+	 DlhraZvsSjFWGk60vNqjMOh/UEwn524MYA1MhLEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Emily Deng <Emily.Deng@amd.com>,
+	Zhigang Luo <zhigang.luo@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 249/375] PCI: Add missing bridge lock to pci_bus_lock()
-Date: Tue, 10 Sep 2024 11:30:46 +0200
-Message-ID: <20240910092630.913209851@linuxfoundation.org>
+Subject: [PATCH 6.10 280/375] drm/amdgpu: Add reset_context flag for host FLR
+Date: Tue, 10 Sep 2024 11:31:17 +0200
+Message-ID: <20240910092631.967980401@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -56,161 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit a4e772898f8bf2e7e1cf661a12c60a5612c4afab ]
+[ Upstream commit 25c01191c2555351922e5515b6b6d31357975031 ]
 
-One of the true positives that the cfg_access_lock lockdep effort
-identified is this sequence:
+There are other reset sources that pass NULL as the job pointer, such as
+amdgpu_amdkfd_reset_work. Therefore, using the job pointer to check if
+the FLR comes from the host does not work.
 
-  WARNING: CPU: 14 PID: 1 at drivers/pci/pci.c:4886 pci_bridge_secondary_bus_reset+0x5d/0x70
-  RIP: 0010:pci_bridge_secondary_bus_reset+0x5d/0x70
-  Call Trace:
-   <TASK>
-   ? __warn+0x8c/0x190
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   ? report_bug+0x1f8/0x200
-   ? handle_bug+0x3c/0x70
-   ? exc_invalid_op+0x18/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   pci_reset_bus+0x1d8/0x270
-   vmd_probe+0x778/0xa10
-   pci_device_probe+0x95/0x120
+Add a flag in reset_context to explicitly mark host triggered reset, and
+set this flag when we receive host reset notification.
 
-Where pci_reset_bus() users are triggering unlocked secondary bus resets.
-Ironically pci_bus_reset(), several calls down from pci_reset_bus(), uses
-pci_bus_lock() before issuing the reset which locks everything *but* the
-bridge itself.
-
-For the same motivation as adding:
-
-  bridge = pci_upstream_bridge(dev);
-  if (bridge)
-    pci_dev_lock(bridge);
-
-to pci_reset_function() for the "bus" and "cxl_bus" reset cases, add
-pci_dev_lock() for @bus->self to pci_bus_lock().
-
-Link: https://lore.kernel.org/r/171711747501.1628941.15217746952476635316.stgit@dwillia2-xfh.jf.intel.com
-Reported-by: Imre Deak <imre.deak@intel.com>
-Closes: http://lore.kernel.org/r/6657833b3b5ae_14984b29437@dwillia2-xfh.jf.intel.com.notmuch
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[bhelgaas: squash in recursive locking deadlock fix from Keith Busch:
-https://lore.kernel.org/r/20240711193650.701834-1-kbusch@meta.com]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Kalle Valo <kvalo@kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Emily Deng <Emily.Deng@amd.com>
+Reviewed-by: Zhigang Luo <zhigang.luo@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6e4aa08fa9c6 ("drm/amdgpu: Fix amdgpu_device_reset_sriov retry logic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 13 ++++++++-----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h  |  1 +
+ drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c      |  1 +
+ drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c      |  1 +
+ drivers/gpu/drm/amd/amdgpu/mxgpu_vi.c      |  1 +
+ 5 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index dff09e4892d3..8db214d4b1d4 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5441,10 +5441,12 @@ static void pci_bus_lock(struct pci_bus *bus)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 9f7f96be1ac7..bd6f2aba0662 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5057,13 +5057,13 @@ static int amdgpu_device_recover_vram(struct amdgpu_device *adev)
+  * amdgpu_device_reset_sriov - reset ASIC for SR-IOV vf
+  *
+  * @adev: amdgpu_device pointer
+- * @from_hypervisor: request from hypervisor
++ * @reset_context: amdgpu reset context pointer
+  *
+  * do VF FLR and reinitialize Asic
+  * return 0 means succeeded otherwise failed
+  */
+ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
+-				     bool from_hypervisor)
++				     struct amdgpu_reset_context *reset_context)
  {
- 	struct pci_dev *dev;
+ 	int r;
+ 	struct amdgpu_hive_info *hive = NULL;
+@@ -5072,12 +5072,15 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
+ retry:
+ 	amdgpu_amdkfd_pre_reset(adev);
  
-+	pci_dev_lock(bus->self);
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
- 	}
- }
- 
-@@ -5456,8 +5458,10 @@ static void pci_bus_unlock(struct pci_bus *bus)
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- }
- 
- /* Return 1 on successful lock, 0 on contention */
-@@ -5465,15 +5469,15 @@ static int pci_bus_trylock(struct pci_bus *bus)
- {
- 	struct pci_dev *dev;
- 
-+	if (!pci_dev_trylock(bus->self))
-+		return 0;
+-	if (from_hypervisor)
++	if (test_bit(AMDGPU_HOST_FLR, &reset_context->flags)) {
++		clear_bit(AMDGPU_HOST_FLR, &reset_context->flags);
+ 		r = amdgpu_virt_request_full_gpu(adev, true);
+-	else
++	} else {
+ 		r = amdgpu_virt_reset_gpu(adev);
++	}
+ 	if (r)
+ 		return r;
 +
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
--			if (!pci_bus_trylock(dev->subordinate)) {
--				pci_dev_unlock(dev);
-+			if (!pci_bus_trylock(dev->subordinate))
- 				goto unlock;
--			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
+ 	amdgpu_ras_set_fed(adev, false);
+ 	amdgpu_irq_gpu_reset_resume_helper(adev);
  
-@@ -5481,8 +5485,10 @@ static int pci_bus_trylock(struct pci_bus *bus)
- 	list_for_each_entry_continue_reverse(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- 	return 0;
- }
+@@ -5831,7 +5834,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 	/* Actual ASIC resets if needed.*/
+ 	/* Host driver will handle XGMI hive reset for SRIOV */
+ 	if (amdgpu_sriov_vf(adev)) {
+-		r = amdgpu_device_reset_sriov(adev, job ? false : true);
++		r = amdgpu_device_reset_sriov(adev, reset_context);
+ 		if (r)
+ 			adev->asic_reset_res = r;
  
-@@ -5514,9 +5520,10 @@ static void pci_slot_lock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
- 	}
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h
+index b11d190ece53..5a9cc043b858 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_reset.h
+@@ -33,6 +33,7 @@ enum AMDGPU_RESET_FLAGS {
+ 	AMDGPU_NEED_FULL_RESET = 0,
+ 	AMDGPU_SKIP_HW_RESET = 1,
+ 	AMDGPU_SKIP_COREDUMP = 2,
++	AMDGPU_HOST_FLR = 3,
+ };
  
-@@ -5542,14 +5549,13 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
- 			if (!pci_bus_trylock(dev->subordinate)) {
- 				pci_dev_unlock(dev);
- 				goto unlock;
- 			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
+ struct amdgpu_reset_context {
+diff --git a/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c b/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
+index c5ba9c4757a8..f4c47492e0cd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
++++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
+@@ -292,6 +292,7 @@ static void xgpu_ai_mailbox_flr_work(struct work_struct *work)
+ 		reset_context.method = AMD_RESET_METHOD_NONE;
+ 		reset_context.reset_req_dev = adev;
+ 		clear_bit(AMDGPU_NEED_FULL_RESET, &reset_context.flags);
++		set_bit(AMDGPU_HOST_FLR, &reset_context.flags);
  
-@@ -5560,7 +5566,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
+ 		amdgpu_device_gpu_recover(adev, NULL, &reset_context);
  	}
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c b/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c
+index fa9d1b02f391..14cc7910e5cf 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c
+@@ -328,6 +328,7 @@ static void xgpu_nv_mailbox_flr_work(struct work_struct *work)
+ 		reset_context.method = AMD_RESET_METHOD_NONE;
+ 		reset_context.reset_req_dev = adev;
+ 		clear_bit(AMDGPU_NEED_FULL_RESET, &reset_context.flags);
++		set_bit(AMDGPU_HOST_FLR, &reset_context.flags);
+ 
+ 		amdgpu_device_gpu_recover(adev, NULL, &reset_context);
+ 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/mxgpu_vi.c b/drivers/gpu/drm/amd/amdgpu/mxgpu_vi.c
+index 14a065516ae4..78cd07744ebe 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mxgpu_vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_vi.c
+@@ -529,6 +529,7 @@ static void xgpu_vi_mailbox_flr_work(struct work_struct *work)
+ 		reset_context.method = AMD_RESET_METHOD_NONE;
+ 		reset_context.reset_req_dev = adev;
+ 		clear_bit(AMDGPU_NEED_FULL_RESET, &reset_context.flags);
++		set_bit(AMDGPU_HOST_FLR, &reset_context.flags);
+ 
+ 		amdgpu_device_gpu_recover(adev, NULL, &reset_context);
+ 	}
 -- 
 2.43.0
 
