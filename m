@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D157143880;
-	Tue, 10 Sep 2024 10:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486DD194088;
+	Tue, 10 Sep 2024 10:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964129; cv=none; b=F31C9H5NoPa86UTi/TPoiQmuybVbZNxfMffAT3vkc2dnmafaNhX79ypS5WZyz6h7LQP4z6dArtMrFbl9jhvx8A7YST9K+/ZCbnPw3GXY7X2KJSsJSCgcZiLG44VoXWMrOjuLS/uYLEBHx1vS3n/6gfTHeusZ6rBTbozDdUYYWIY=
+	t=1725964132; cv=none; b=Ij/1zpkuZ30NxTy42rVkinGuCRDyxnOyva8CjiHQRLSaUWe/oSF9mFEdqwzbJPw88F9FsjseLBNU+HnRijMPXB0YmitTYnYSBAyVRnspheKsehCKQu7DrJg/Q7GdTnNvuEBAq1JwSQrqfycufZINfQm+pbeP9XJzXqPN/MfQ/yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964129; c=relaxed/simple;
-	bh=9NarNk/SDvTNqFjRN9VmvCP6D/igQWU+M6oaQkWRfBU=;
+	s=arc-20240116; t=1725964132; c=relaxed/simple;
+	bh=3gGF9F7gRSFmIndZ+a/F7FJI/SCRgSohGnTCcoMHxA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kTOl5PAex4VjcM4uSgrn5ECx+99N/I659A0eXA9yMqoeLQxjgcCEvzQCEqiZ8GAiiipyg200SmaP0T/kq/9a1omS7rFw2x20LyqnBYWGiYJi5V4XsnhB/YhpHYwOC7JAEULuIs58dUQmkmg/9cjEhoJNaGR0Nn4xXjb+YIxnRJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkaLFNXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlsJaFnBNlr/37WrZ5nzguuzW2QrvN0Ct7RbXMsnPDETF+nXvxtX3BKxAYwXtIG37qtDihMWvxcRBPIEfreQOL6cjEENW/xAh7SJDneBZgQlUSAvrUSU2tEfd2nbHahda8aDdb6W/P0CM4oUA2nGqb2r48GktjztMAigQ1OM1OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orlqYm6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkaLFNXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65B5C4CEC3;
-	Tue, 10 Sep 2024 10:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orlqYm6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43FFC4CEC3;
+	Tue, 10 Sep 2024 10:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964129;
-	bh=9NarNk/SDvTNqFjRN9VmvCP6D/igQWU+M6oaQkWRfBU=;
+	s=korg; t=1725964132;
+	bh=3gGF9F7gRSFmIndZ+a/F7FJI/SCRgSohGnTCcoMHxA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MkaLFNXR/yX/9FqTSgeCPT/XxRRIVpdiXg1ImwbzJiYuHnfBx9fa9FpZA7eDWxosW
-	 5EAOvoC0LakK17atzN7ba08aA2ke5GqJSvZ83Insh3K2Cx2z3SUKObmUrpTlasEomI
-	 1rHpQpPMK6MIy5QQicY43fNhQWiq/xffaaRRGvDA=
+	b=orlqYm6q0O15fxiJpEa9BkJ1o+SpJCnSOkf9RrQPN6tTtRvXavHwpHNiTTTm17O4X
+	 2iCkKKGAVRjRPXo1Zpz7KTAib0P+PFuEmxorYanJ0vkYpPou0DDUWlNwgOZCKq7Wjr
+	 GoOcm07zW1uwPCducF/Fs58IWdF/SulPgvYjvioQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/269] riscv: kprobes: Use patch_text_nosync() for insn slots
-Date: Tue, 10 Sep 2024 11:31:04 +0200
-Message-ID: <20240910092610.938681545@linuxfoundation.org>
+Subject: [PATCH 6.6 078/269] media: vivid: fix wrong sizeimage value for mplane
+Date: Tue, 10 Sep 2024 11:31:05 +0200
+Message-ID: <20240910092610.973448898@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -46,45 +44,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit b1756750a397f36ddc857989d31887c3f5081fb0 ]
+[ Upstream commit 0fd7c0c2c156270dceb8c15fad3120cdce03e539 ]
 
-These instructions are not yet visible to the rest of the system,
-so there is no need to do the whole stop_machine() dance.
+In several places a division by fmt->vdownsampling[p] was
+missing in the sizeimage[p] calculation, causing incorrect
+behavior for multiplanar formats were some planes are smaller
+than the first plane.
 
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20240327160520.791322-4-samuel.holland@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Found by new v4l2-compliance tests.
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/probes/kprobes.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c |  5 +++--
+ drivers/media/test-drivers/vivid/vivid-vid-out.c | 16 +++++++++-------
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/arch/riscv/kernel/probes/kprobes.c b/arch/riscv/kernel/probes/kprobes.c
-index 2f08c14a933d..fecbbcf40ac3 100644
---- a/arch/riscv/kernel/probes/kprobes.c
-+++ b/arch/riscv/kernel/probes/kprobes.c
-@@ -28,9 +28,8 @@ static void __kprobes arch_prepare_ss_slot(struct kprobe *p)
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index 3a06df35a2d7..a81c17634daa 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -106,8 +106,9 @@ static int vid_cap_queue_setup(struct vb2_queue *vq,
+ 		if (*nplanes != buffers)
+ 			return -EINVAL;
+ 		for (p = 0; p < buffers; p++) {
+-			if (sizes[p] < tpg_g_line_width(&dev->tpg, p) * h +
+-						dev->fmt_cap->data_offset[p])
++			if (sizes[p] < tpg_g_line_width(&dev->tpg, p) * h /
++					dev->fmt_cap->vdownsampling[p] +
++					dev->fmt_cap->data_offset[p])
+ 				return -EINVAL;
+ 		}
+ 	} else {
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-out.c b/drivers/media/test-drivers/vivid/vivid-vid-out.c
+index 184a6df2c29f..d05f547a587c 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-out.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-out.c
+@@ -63,14 +63,16 @@ static int vid_out_queue_setup(struct vb2_queue *vq,
+ 		if (sizes[0] < size)
+ 			return -EINVAL;
+ 		for (p = 1; p < planes; p++) {
+-			if (sizes[p] < dev->bytesperline_out[p] * h +
+-				       vfmt->data_offset[p])
++			if (sizes[p] < dev->bytesperline_out[p] * h /
++					vfmt->vdownsampling[p] +
++					vfmt->data_offset[p])
+ 				return -EINVAL;
+ 		}
+ 	} else {
+ 		for (p = 0; p < planes; p++)
+-			sizes[p] = p ? dev->bytesperline_out[p] * h +
+-				       vfmt->data_offset[p] : size;
++			sizes[p] = p ? dev->bytesperline_out[p] * h /
++					vfmt->vdownsampling[p] +
++					vfmt->data_offset[p] : size;
+ 	}
  
- 	p->ainsn.api.restore = (unsigned long)p->addr + offset;
+ 	if (vq->num_buffers + *nbuffers < 2)
+@@ -127,7 +129,7 @@ static int vid_out_buf_prepare(struct vb2_buffer *vb)
  
--	patch_text(p->ainsn.api.insn, &p->opcode, 1);
--	patch_text((void *)((unsigned long)(p->ainsn.api.insn) + offset),
--		   &insn, 1);
-+	patch_text_nosync(p->ainsn.api.insn, &p->opcode, 1);
-+	patch_text_nosync(p->ainsn.api.insn + offset, &insn, 1);
- }
+ 	for (p = 0; p < planes; p++) {
+ 		if (p)
+-			size = dev->bytesperline_out[p] * h;
++			size = dev->bytesperline_out[p] * h / vfmt->vdownsampling[p];
+ 		size += vb->planes[p].data_offset;
  
- static void __kprobes arch_prepare_simulate(struct kprobe *p)
+ 		if (vb2_get_plane_payload(vb, p) < size) {
+@@ -334,8 +336,8 @@ int vivid_g_fmt_vid_out(struct file *file, void *priv,
+ 	for (p = 0; p < mp->num_planes; p++) {
+ 		mp->plane_fmt[p].bytesperline = dev->bytesperline_out[p];
+ 		mp->plane_fmt[p].sizeimage =
+-			mp->plane_fmt[p].bytesperline * mp->height +
+-			fmt->data_offset[p];
++			mp->plane_fmt[p].bytesperline * mp->height /
++			fmt->vdownsampling[p] + fmt->data_offset[p];
+ 	}
+ 	for (p = fmt->buffers; p < fmt->planes; p++) {
+ 		unsigned stride = dev->bytesperline_out[p];
 -- 
 2.43.0
 
