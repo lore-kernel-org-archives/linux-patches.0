@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5912818DF69;
-	Tue, 10 Sep 2024 10:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584FC1885A5;
+	Tue, 10 Sep 2024 10:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962731; cv=none; b=TwZ94WInHT6G5lv8HiWfT5T1krSNW5/E0njSWkWJhGxNJ8F5ksN7rPqCI8qIaIySgcLD5IzS51pSmiVo+h9aCusCh578UEzZTBvJeTiZjP8cR+G057JxEdb5dwrHkNoML0xv3d+Dqwq4JDyeGY6Qa+agv6C01xQjT4GwUzbz2Ms=
+	t=1725962734; cv=none; b=dHxoA7iAzlqOGcSGgSqoBePLAw5fuWjMRmaYM6bP5n9D/0hn3a/KBuqBTxsph5OWsbooYKzT/ZANBrotgxTXOQYUpJuLALQFQIHIkvQzoG38YidVpzddC2gq7Cq8URBZwhswP9aqvgTEY6fh8OtHXfhBofxAl6uMfVdsd5TwwkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962731; c=relaxed/simple;
-	bh=1uRGUE2Lvrt6U5Ry5pQaW/hknDCJtdiFEzYICTsWgT4=;
+	s=arc-20240116; t=1725962734; c=relaxed/simple;
+	bh=88TasyA5oWKc42jTl/fh1RwysqXXk6XyWhT/oCTNAY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjbiSvlNsyK4Coy4S/7PXBLAAlvPT2Rjlz908X1lF1t+S7SUuO39Uyoq5+KLNnKEVC9v6OMl0aatTlR7Q127Qm1koCqDaSSrXuMT9Kp8+zoSvR3L+CurpkPZbk/25FhusbmyloifSMhETl07hrI7xcWyBdrT97YcHGqFX+IcOSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaDrP/y5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MAgM8hVcmp2EdvuuxrHQxddSdApeWnswff00Kz76h0vjLwoSxWb1RCZY0LloRlliprz7fgO49Hs4IVCkHDlrjGBBArQT1OGmQvlQpAnipq6ajFQ5GxhYafxzCI+Jw4oJz/YCHGs3bHH6AeWW6SnhJWD4sUkF4cX+5pLWODX3d38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY1yr8/W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaDrP/y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28D8C4CEC3;
-	Tue, 10 Sep 2024 10:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY1yr8/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C925EC4CEC6;
+	Tue, 10 Sep 2024 10:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962731;
-	bh=1uRGUE2Lvrt6U5Ry5pQaW/hknDCJtdiFEzYICTsWgT4=;
+	s=korg; t=1725962734;
+	bh=88TasyA5oWKc42jTl/fh1RwysqXXk6XyWhT/oCTNAY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TaDrP/y5rZpjiSDYNVJ5iCJo6sWH6xwiWrHyOjW5s2L1sYU2acLDwJ3vq0BwZKanc
-	 W5ylkmd3yhIHKErVoc2gP57cnfMLLojfUcllHm2jfFWcHVNLpudi0Q7tpHKE2fqZFx
-	 YPOQUcl9JWnsyp4U7/WbASmRooz4bCgQxQW6taTE=
+	b=BY1yr8/WI/B5b5DMZzOUlMT3Fno0JQGiLyHkruky4ZUW7kB23A3zYRHxXEl507XDW
+	 Gl83GrN2IyTuVz+U0uqyFSTi//NMaHPpNd79J68jyw4TSAYj9QWqZrMOd4JTi8Ek9g
+	 e53YDxYW/4ksoUROFSOq7MgxtfIYeFYsGdR6ywpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.1 011/192] ata: libata: Fix memory leak for error path in ata_host_alloc()
-Date: Tue, 10 Sep 2024 11:30:35 +0200
-Message-ID: <20240910092558.387026976@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.1 012/192] x86/tdx: Fix data leak in mmio_read()
+Date: Tue, 10 Sep 2024 11:30:36 +0200
+Message-ID: <20240910092558.436732458@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,41 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 284b75a3d83c7631586d98f6dede1d90f128f0db upstream.
+commit b6fb565a2d15277896583d471b21bc14a0c99661 upstream.
 
-In ata_host_alloc(), if devres_alloc() fails to allocate the device host
-resource data pointer, the already allocated ata_host structure is not
-freed before returning from the function. This results in a potential
-memory leak.
+The mmio_read() function makes a TDVMCALL to retrieve MMIO data for an
+address from the VMM.
 
-Call kfree(host) before jumping to the error handling path to ensure
-that the ata_host structure is properly freed if devres_alloc() fails.
+Sean noticed that mmio_read() unintentionally exposes the value of an
+initialized variable (val) on the stack to the VMM.
 
-Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+This variable is only needed as an output value. It did not need to be
+passed to the VMM in the first place.
+
+Do not send the original value of *val to the VMM.
+
+[ dhansen: clarify what 'val' is used for. ]
+
+Fixes: 31d58c4e557d ("x86/tdx: Handle in-kernel MMIO")
+Reported-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240826125304.1566719-1-kirill.shutemov%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/coco/tdx/tdx.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5532,8 +5532,10 @@ struct ata_host *ata_host_alloc(struct d
- 	}
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -328,7 +328,6 @@ static bool mmio_read(int size, unsigned
+ 		.r12 = size,
+ 		.r13 = EPT_READ,
+ 		.r14 = addr,
+-		.r15 = *val,
+ 	};
  
- 	dr = devres_alloc(ata_devres_release, 0, GFP_KERNEL);
--	if (!dr)
-+	if (!dr) {
-+		kfree(host);
- 		goto err_out;
-+	}
- 
- 	devres_add(dev, dr);
- 	dev_set_drvdata(dev, host);
+ 	if (__tdx_hypercall(&args, TDX_HCALL_HAS_OUTPUT))
 
 
