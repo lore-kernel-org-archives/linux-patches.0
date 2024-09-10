@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B8918B487;
-	Tue, 10 Sep 2024 09:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F4D14D431;
+	Tue, 10 Sep 2024 09:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961767; cv=none; b=qNu9kzD0I5T2gNKMOFHAKpwbX8lkX31XXgx6qNBQ7Tikw4CGLRT+eSh+wRDQLC0yCivYrCnJ1Bowr78B5Gyl2KgNEsUO42Z7TNQ2gTygffvND+8AtALvE6gLtaNKR/qbMEwDkj7Nwseb6M/DvJcxQEZcyd7O0M9HquKgV/ll1uQ=
+	t=1725961770; cv=none; b=PnT3AzYPSrsWSKXYeTUYadi5Zjq1Hf82p4Pf8e0xO7A+8+xiYxDiWL62Wx07BQWYh9ssK+BMVEatTa+sQGGOxRmpOzg+USOnIdWQqHA932RF6qeOqLfs1fjrNGVFmZoUjb2ILN4fBu4RN7TmbgpVLTqXKpwKvn5xtbjZQ4ufTZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961767; c=relaxed/simple;
-	bh=ev+lkVt+LjHjMRGivQgTQ/8Bx4ZKzYiXwKKn1JtBefM=;
+	s=arc-20240116; t=1725961770; c=relaxed/simple;
+	bh=SLXCD7SMFwzTDomvtixUaetEahnGGIl+RDQ6RgLHJvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XY+LaVGyH2N8ikr050DuyJeMxpAih6f61nkFSBJ9r0LSdsZDeve5fb4p6hCrnXxtMujpMCU/uUjzlTq8XpG3gTUmSm6l3f1hq7KRi2u6XAG2KUpQ7Sinw4z0uPKyc7AwyfzCexcfH+epAyZB3o8iqkvX1W5mKUE7O/QvOzC+MmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzkrbBeF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qL4esUTCbn8JwlBUf5BEyPyFxVTRQTOj4W8NndUbY1q7vsnsvbH6bThZK7nQnmpbfUpt6auGL+uc8s5CDylWv4vm6kUmKjCfGWFM7vGYUkwprxTUDp1l46YXEQrcC2oa8+83SYWQXh701KflOB/mmz3JmnrZxgx146T8zkziu+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFo6AjTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzkrbBeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0066C4CEC3;
-	Tue, 10 Sep 2024 09:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFo6AjTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2B2C4CED2;
+	Tue, 10 Sep 2024 09:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961767;
-	bh=ev+lkVt+LjHjMRGivQgTQ/8Bx4ZKzYiXwKKn1JtBefM=;
+	s=korg; t=1725961770;
+	bh=SLXCD7SMFwzTDomvtixUaetEahnGGIl+RDQ6RgLHJvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UzkrbBeF1ecfJYYq3bFwNJRb9VyXJ9F41tJVum+zSJkuhNZKqNwkLH1uKzYz0BDOZ
-	 F5BnleaHJD925e9L0GtrHjUwC8yS6kaapi2Y+aQLAxXh8BAFG+a8FxVY+GmBMHl1bD
-	 lzoqGHZDAU0egLC14TOGL5NYLltmDGhSedKEGJMk=
+	b=hFo6AjTdbKlQE6rcE2Fe8xvh0OQXBi9xJBOdfxE2HvSXWg7yIgQnD9dXAeFNfU2cY
+	 j5EpqXTW9vDDiwutrzf0wQ71A7X0VNMoOwIMy6+8H21+JdhSjIAVI/BdokPKfPAfGg
+	 YFbJOWDuKV2F00r8jRecFKQDAyr3+dIYmxuatuAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Amritha Nambiar <amritha.nambiar@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	George Kuruvinakunnel <george.kuruvinakunnel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 181/375] ptp: ocp: adjust sysfs entries to expose tty information
-Date: Tue, 10 Sep 2024 11:29:38 +0200
-Message-ID: <20240910092628.566321901@linuxfoundation.org>
+Subject: [PATCH 6.10 182/375] ice: move netif_queue_set_napi to rtnl-protected sections
+Date: Tue, 10 Sep 2024 11:29:39 +0200
+Message-ID: <20240910092628.598637284@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,131 +56,376 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 82ace0c8fe9b025eaa273365e27057402cdaeb02 ]
+[ Upstream commit 2a5dc090b92cfa5270e20056074241c6db5c9cdd ]
 
-Implement additional attribute group to expose serial port information.
-Fixes tag points to the commit which introduced the change in serial
-port subsystem and made it impossible to use symlinks.
+Currently, netif_queue_set_napi() is called from ice_vsi_rebuild() that is
+not rtnl-locked when called from the reset. This creates the need to take
+the rtnl_lock just for a single function and complicates the
+synchronization with .ndo_bpf. At the same time, there no actual need to
+fill napi-to-queue information at this exact point.
 
-Fixes: b286f4e87e32 ("serial: core: Move tty and serdev to be children of serial core port device")
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fill napi-to-queue information when opening the VSI and clear it when the
+VSI is being closed. Those routines are already rtnl-locked.
+
+Also, rewrite napi-to-queue assignment in a way that prevents inclusion of
+XDP queues, as this leads to out-of-bounds writes, such as one below.
+
+[  +0.000004] BUG: KASAN: slab-out-of-bounds in netif_queue_set_napi+0x1c2/0x1e0
+[  +0.000012] Write of size 8 at addr ffff889881727c80 by task bash/7047
+[  +0.000006] CPU: 24 PID: 7047 Comm: bash Not tainted 6.10.0-rc2+ #2
+[  +0.000004] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0014.082620210524 08/26/2021
+[  +0.000003] Call Trace:
+[  +0.000003]  <TASK>
+[  +0.000002]  dump_stack_lvl+0x60/0x80
+[  +0.000007]  print_report+0xce/0x630
+[  +0.000007]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[  +0.000007]  ? __virt_addr_valid+0x1c9/0x2c0
+[  +0.000005]  ? netif_queue_set_napi+0x1c2/0x1e0
+[  +0.000003]  kasan_report+0xe9/0x120
+[  +0.000004]  ? netif_queue_set_napi+0x1c2/0x1e0
+[  +0.000004]  netif_queue_set_napi+0x1c2/0x1e0
+[  +0.000005]  ice_vsi_close+0x161/0x670 [ice]
+[  +0.000114]  ice_dis_vsi+0x22f/0x270 [ice]
+[  +0.000095]  ice_pf_dis_all_vsi.constprop.0+0xae/0x1c0 [ice]
+[  +0.000086]  ice_prepare_for_reset+0x299/0x750 [ice]
+[  +0.000087]  pci_dev_save_and_disable+0x82/0xd0
+[  +0.000006]  pci_reset_function+0x12d/0x230
+[  +0.000004]  reset_store+0xa0/0x100
+[  +0.000006]  ? __pfx_reset_store+0x10/0x10
+[  +0.000002]  ? __pfx_mutex_lock+0x10/0x10
+[  +0.000004]  ? __check_object_size+0x4c1/0x640
+[  +0.000007]  kernfs_fop_write_iter+0x30b/0x4a0
+[  +0.000006]  vfs_write+0x5d6/0xdf0
+[  +0.000005]  ? fd_install+0x180/0x350
+[  +0.000005]  ? __pfx_vfs_write+0x10/0xA10
+[  +0.000004]  ? do_fcntl+0x52c/0xcd0
+[  +0.000004]  ? kasan_save_track+0x13/0x60
+[  +0.000003]  ? kasan_save_free_info+0x37/0x60
+[  +0.000006]  ksys_write+0xfa/0x1d0
+[  +0.000003]  ? __pfx_ksys_write+0x10/0x10
+[  +0.000002]  ? __x64_sys_fcntl+0x121/0x180
+[  +0.000004]  ? _raw_spin_lock+0x87/0xe0
+[  +0.000005]  do_syscall_64+0x80/0x170
+[  +0.000007]  ? _raw_spin_lock+0x87/0xe0
+[  +0.000004]  ? __pfx__raw_spin_lock+0x10/0x10
+[  +0.000003]  ? file_close_fd_locked+0x167/0x230
+[  +0.000005]  ? syscall_exit_to_user_mode+0x7d/0x220
+[  +0.000005]  ? do_syscall_64+0x8c/0x170
+[  +0.000004]  ? do_syscall_64+0x8c/0x170
+[  +0.000003]  ? do_syscall_64+0x8c/0x170
+[  +0.000003]  ? fput+0x1a/0x2c0
+[  +0.000004]  ? filp_close+0x19/0x30
+[  +0.000004]  ? do_dup2+0x25a/0x4c0
+[  +0.000004]  ? __x64_sys_dup2+0x6e/0x2e0
+[  +0.000002]  ? syscall_exit_to_user_mode+0x7d/0x220
+[  +0.000004]  ? do_syscall_64+0x8c/0x170
+[  +0.000003]  ? __count_memcg_events+0x113/0x380
+[  +0.000005]  ? handle_mm_fault+0x136/0x820
+[  +0.000005]  ? do_user_addr_fault+0x444/0xa80
+[  +0.000004]  ? clear_bhb_loop+0x25/0x80
+[  +0.000004]  ? clear_bhb_loop+0x25/0x80
+[  +0.000002]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  +0.000005] RIP: 0033:0x7f2033593154
+
+Fixes: 080b0c8d6d26 ("ice: Fix ASSERT_RTNL() warning during certain scenarios")
+Fixes: 91fdbce7e8d6 ("ice: Add support in the driver for associating queue with napi")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Amritha Nambiar <amritha.nambiar@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: George Kuruvinakunnel <george.kuruvinakunnel@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 62 +++++++++++++++++++++++++++++++++++--------
- 1 file changed, 51 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c |  11 +-
+ drivers/net/ethernet/intel/ice/ice_lib.c  | 129 ++++++----------------
+ drivers/net/ethernet/intel/ice/ice_lib.h  |  10 +-
+ drivers/net/ethernet/intel/ice/ice_main.c |  17 ++-
+ 4 files changed, 49 insertions(+), 118 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index 46369de8e30b..e7479b9b90cb 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -3361,6 +3361,54 @@ static EXT_ATTR_RO(freq, frequency, 1);
- static EXT_ATTR_RO(freq, frequency, 2);
- static EXT_ATTR_RO(freq, frequency, 3);
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index f448d3a84564..c158749a80e0 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -190,16 +190,11 @@ static void ice_free_q_vector(struct ice_vsi *vsi, int v_idx)
+ 	}
+ 	q_vector = vsi->q_vectors[v_idx];
  
-+static ssize_t
-+ptp_ocp_tty_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	struct ptp_ocp *bp = dev_get_drvdata(dev);
+-	ice_for_each_tx_ring(tx_ring, q_vector->tx) {
+-		ice_queue_set_napi(vsi, tx_ring->q_index, NETDEV_QUEUE_TYPE_TX,
+-				   NULL);
++	ice_for_each_tx_ring(tx_ring, vsi->q_vectors[v_idx]->tx)
+ 		tx_ring->q_vector = NULL;
+-	}
+-	ice_for_each_rx_ring(rx_ring, q_vector->rx) {
+-		ice_queue_set_napi(vsi, rx_ring->q_index, NETDEV_QUEUE_TYPE_RX,
+-				   NULL);
 +
-+	return sysfs_emit(buf, "ttyS%d", bp->port[(uintptr_t)ea->var].line);
-+}
-+
-+static umode_t
-+ptp_ocp_timecard_tty_is_visible(struct kobject *kobj, struct attribute *attr, int n)
-+{
-+	struct ptp_ocp *bp = dev_get_drvdata(kobj_to_dev(kobj));
-+	struct ptp_ocp_serial_port *port;
-+	struct device_attribute *dattr;
-+	struct dev_ext_attribute *ea;
-+
-+	if (strncmp(attr->name, "tty", 3))
-+		return attr->mode;
-+
-+	dattr = container_of(attr, struct device_attribute, attr);
-+	ea = container_of(dattr, struct dev_ext_attribute, attr);
-+	port = &bp->port[(uintptr_t)ea->var];
-+	return port->line == -1 ? 0 : 0444;
-+}
-+
-+#define EXT_TTY_ATTR_RO(_name, _val)			\
-+	struct dev_ext_attribute dev_attr_tty##_name =	\
-+		{ __ATTR(tty##_name, 0444, ptp_ocp_tty_show, NULL), (void *)_val }
-+
-+static EXT_TTY_ATTR_RO(GNSS, PORT_GNSS);
-+static EXT_TTY_ATTR_RO(GNSS2, PORT_GNSS2);
-+static EXT_TTY_ATTR_RO(MAC, PORT_MAC);
-+static EXT_TTY_ATTR_RO(NMEA, PORT_NMEA);
-+static struct attribute *ptp_ocp_timecard_tty_attrs[] = {
-+	&dev_attr_ttyGNSS.attr.attr,
-+	&dev_attr_ttyGNSS2.attr.attr,
-+	&dev_attr_ttyMAC.attr.attr,
-+	&dev_attr_ttyNMEA.attr.attr,
-+	NULL,
-+};
-+
-+static const struct attribute_group ptp_ocp_timecard_tty_group = {
-+	.name = "tty",
-+	.attrs = ptp_ocp_timecard_tty_attrs,
-+	.is_visible = ptp_ocp_timecard_tty_is_visible,
-+};
-+
- static ssize_t
- serialnum_show(struct device *dev, struct device_attribute *attr, char *buf)
- {
-@@ -3790,6 +3838,7 @@ static const struct attribute_group fb_timecard_group = {
- 
- static const struct ocp_attr_group fb_timecard_groups[] = {
- 	{ .cap = OCP_CAP_BASIC,	    .group = &fb_timecard_group },
-+	{ .cap = OCP_CAP_BASIC,	    .group = &ptp_ocp_timecard_tty_group },
- 	{ .cap = OCP_CAP_SIGNAL,    .group = &fb_timecard_signal0_group },
- 	{ .cap = OCP_CAP_SIGNAL,    .group = &fb_timecard_signal1_group },
- 	{ .cap = OCP_CAP_SIGNAL,    .group = &fb_timecard_signal2_group },
-@@ -3829,6 +3878,7 @@ static const struct attribute_group art_timecard_group = {
- 
- static const struct ocp_attr_group art_timecard_groups[] = {
- 	{ .cap = OCP_CAP_BASIC,	    .group = &art_timecard_group },
-+	{ .cap = OCP_CAP_BASIC,	    .group = &ptp_ocp_timecard_tty_group },
- 	{ },
- };
- 
-@@ -3856,6 +3906,7 @@ static const struct attribute_group adva_timecard_group = {
- 
- static const struct ocp_attr_group adva_timecard_groups[] = {
- 	{ .cap = OCP_CAP_BASIC,	    .group = &adva_timecard_group },
-+	{ .cap = OCP_CAP_BASIC,	    .group = &ptp_ocp_timecard_tty_group },
- 	{ .cap = OCP_CAP_SIGNAL,    .group = &fb_timecard_signal0_group },
- 	{ .cap = OCP_CAP_SIGNAL,    .group = &fb_timecard_signal1_group },
- 	{ .cap = OCP_CAP_FREQ,	    .group = &fb_timecard_freq0_group },
-@@ -4361,14 +4412,6 @@ ptp_ocp_complete(struct ptp_ocp *bp)
- {
- 	struct pps_device *pps;
- 	char buf[32];
--	int i;
--
--	for (i = 0; i < __PORT_COUNT; i++) {
--		if (bp->port[i].line != -1) {
--			sprintf(buf, "ttyS%d", bp->port[i].line);
--			ptp_ocp_link_child(bp, buf, ptp_ocp_tty_port_name(i));
--		}
++	ice_for_each_rx_ring(rx_ring, vsi->q_vectors[v_idx]->rx)
+ 		rx_ring->q_vector = NULL;
 -	}
  
- 	sprintf(buf, "ptp%d", ptp_clock_index(bp->ptp));
- 	ptp_ocp_link_child(bp, buf, "ptp");
-@@ -4440,9 +4483,6 @@ ptp_ocp_detach_sysfs(struct ptp_ocp *bp)
- {
- 	struct device *dev = &bp->dev;
+ 	/* only VSI with an associated netdev is set up with NAPI */
+ 	if (vsi->netdev)
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 7629b0190578..cdf05e57499f 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -2286,9 +2286,6 @@ static int ice_vsi_cfg_def(struct ice_vsi *vsi)
  
--	sysfs_remove_link(&dev->kobj, "ttyGNSS");
--	sysfs_remove_link(&dev->kobj, "ttyGNSS2");
--	sysfs_remove_link(&dev->kobj, "ttyMAC");
- 	sysfs_remove_link(&dev->kobj, "ptp");
- 	sysfs_remove_link(&dev->kobj, "pps");
+ 		ice_vsi_map_rings_to_vectors(vsi);
+ 
+-		/* Associate q_vector rings to napi */
+-		ice_vsi_set_napi_queues(vsi);
+-
+ 		vsi->stat_offsets_loaded = false;
+ 
+ 		/* ICE_VSI_CTRL does not need RSS so skip RSS processing */
+@@ -2628,6 +2625,7 @@ void ice_vsi_close(struct ice_vsi *vsi)
+ 	if (!test_and_set_bit(ICE_VSI_DOWN, vsi->state))
+ 		ice_down(vsi);
+ 
++	ice_vsi_clear_napi_queues(vsi);
+ 	ice_vsi_free_irq(vsi);
+ 	ice_vsi_free_tx_rings(vsi);
+ 	ice_vsi_free_rx_rings(vsi);
+@@ -2694,120 +2692,55 @@ void ice_dis_vsi(struct ice_vsi *vsi, bool locked)
  }
+ 
+ /**
+- * __ice_queue_set_napi - Set the napi instance for the queue
+- * @dev: device to which NAPI and queue belong
+- * @queue_index: Index of queue
+- * @type: queue type as RX or TX
+- * @napi: NAPI context
+- * @locked: is the rtnl_lock already held
+- *
+- * Set the napi instance for the queue. Caller indicates the lock status.
+- */
+-static void
+-__ice_queue_set_napi(struct net_device *dev, unsigned int queue_index,
+-		     enum netdev_queue_type type, struct napi_struct *napi,
+-		     bool locked)
+-{
+-	if (!locked)
+-		rtnl_lock();
+-	netif_queue_set_napi(dev, queue_index, type, napi);
+-	if (!locked)
+-		rtnl_unlock();
+-}
+-
+-/**
+- * ice_queue_set_napi - Set the napi instance for the queue
+- * @vsi: VSI being configured
+- * @queue_index: Index of queue
+- * @type: queue type as RX or TX
+- * @napi: NAPI context
++ * ice_vsi_set_napi_queues - associate netdev queues with napi
++ * @vsi: VSI pointer
+  *
+- * Set the napi instance for the queue. The rtnl lock state is derived from the
+- * execution path.
++ * Associate queue[s] with napi for all vectors.
++ * The caller must hold rtnl_lock.
+  */
+-void
+-ice_queue_set_napi(struct ice_vsi *vsi, unsigned int queue_index,
+-		   enum netdev_queue_type type, struct napi_struct *napi)
++void ice_vsi_set_napi_queues(struct ice_vsi *vsi)
+ {
+-	struct ice_pf *pf = vsi->back;
++	struct net_device *netdev = vsi->netdev;
++	int q_idx, v_idx;
+ 
+-	if (!vsi->netdev)
++	if (!netdev)
+ 		return;
+ 
+-	if (current_work() == &pf->serv_task ||
+-	    test_bit(ICE_PREPARED_FOR_RESET, pf->state) ||
+-	    test_bit(ICE_DOWN, pf->state) ||
+-	    test_bit(ICE_SUSPENDED, pf->state))
+-		__ice_queue_set_napi(vsi->netdev, queue_index, type, napi,
+-				     false);
+-	else
+-		__ice_queue_set_napi(vsi->netdev, queue_index, type, napi,
+-				     true);
+-}
++	ice_for_each_rxq(vsi, q_idx)
++		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
++				     &vsi->rx_rings[q_idx]->q_vector->napi);
+ 
+-/**
+- * __ice_q_vector_set_napi_queues - Map queue[s] associated with the napi
+- * @q_vector: q_vector pointer
+- * @locked: is the rtnl_lock already held
+- *
+- * Associate the q_vector napi with all the queue[s] on the vector.
+- * Caller indicates the lock status.
+- */
+-void __ice_q_vector_set_napi_queues(struct ice_q_vector *q_vector, bool locked)
+-{
+-	struct ice_rx_ring *rx_ring;
+-	struct ice_tx_ring *tx_ring;
+-
+-	ice_for_each_rx_ring(rx_ring, q_vector->rx)
+-		__ice_queue_set_napi(q_vector->vsi->netdev, rx_ring->q_index,
+-				     NETDEV_QUEUE_TYPE_RX, &q_vector->napi,
+-				     locked);
+-
+-	ice_for_each_tx_ring(tx_ring, q_vector->tx)
+-		__ice_queue_set_napi(q_vector->vsi->netdev, tx_ring->q_index,
+-				     NETDEV_QUEUE_TYPE_TX, &q_vector->napi,
+-				     locked);
++	ice_for_each_txq(vsi, q_idx)
++		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
++				     &vsi->tx_rings[q_idx]->q_vector->napi);
+ 	/* Also set the interrupt number for the NAPI */
+-	netif_napi_set_irq(&q_vector->napi, q_vector->irq.virq);
+-}
++	ice_for_each_q_vector(vsi, v_idx) {
++		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
+ 
+-/**
+- * ice_q_vector_set_napi_queues - Map queue[s] associated with the napi
+- * @q_vector: q_vector pointer
+- *
+- * Associate the q_vector napi with all the queue[s] on the vector
+- */
+-void ice_q_vector_set_napi_queues(struct ice_q_vector *q_vector)
+-{
+-	struct ice_rx_ring *rx_ring;
+-	struct ice_tx_ring *tx_ring;
+-
+-	ice_for_each_rx_ring(rx_ring, q_vector->rx)
+-		ice_queue_set_napi(q_vector->vsi, rx_ring->q_index,
+-				   NETDEV_QUEUE_TYPE_RX, &q_vector->napi);
+-
+-	ice_for_each_tx_ring(tx_ring, q_vector->tx)
+-		ice_queue_set_napi(q_vector->vsi, tx_ring->q_index,
+-				   NETDEV_QUEUE_TYPE_TX, &q_vector->napi);
+-	/* Also set the interrupt number for the NAPI */
+-	netif_napi_set_irq(&q_vector->napi, q_vector->irq.virq);
++		netif_napi_set_irq(&q_vector->napi, q_vector->irq.virq);
++	}
+ }
+ 
+ /**
+- * ice_vsi_set_napi_queues
++ * ice_vsi_clear_napi_queues - dissociate netdev queues from napi
+  * @vsi: VSI pointer
+  *
+- * Associate queue[s] with napi for all vectors
++ * Clear the association between all VSI queues queue[s] and napi.
++ * The caller must hold rtnl_lock.
+  */
+-void ice_vsi_set_napi_queues(struct ice_vsi *vsi)
++void ice_vsi_clear_napi_queues(struct ice_vsi *vsi)
+ {
+-	int i;
++	struct net_device *netdev = vsi->netdev;
++	int q_idx;
+ 
+-	if (!vsi->netdev)
++	if (!netdev)
+ 		return;
+ 
+-	ice_for_each_q_vector(vsi, i)
+-		ice_q_vector_set_napi_queues(vsi->q_vectors[i]);
++	ice_for_each_txq(vsi, q_idx)
++		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX, NULL);
++
++	ice_for_each_rxq(vsi, q_idx)
++		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX, NULL);
+ }
+ 
+ /**
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.h b/drivers/net/ethernet/intel/ice/ice_lib.h
+index 94ce8964dda6..36d86535695d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.h
++++ b/drivers/net/ethernet/intel/ice/ice_lib.h
+@@ -44,16 +44,10 @@ void ice_vsi_cfg_netdev_tc(struct ice_vsi *vsi, u8 ena_tc);
+ struct ice_vsi *
+ ice_vsi_setup(struct ice_pf *pf, struct ice_vsi_cfg_params *params);
+ 
+-void
+-ice_queue_set_napi(struct ice_vsi *vsi, unsigned int queue_index,
+-		   enum netdev_queue_type type, struct napi_struct *napi);
+-
+-void __ice_q_vector_set_napi_queues(struct ice_q_vector *q_vector, bool locked);
+-
+-void ice_q_vector_set_napi_queues(struct ice_q_vector *q_vector);
+-
+ void ice_vsi_set_napi_queues(struct ice_vsi *vsi);
+ 
++void ice_vsi_clear_napi_queues(struct ice_vsi *vsi);
++
+ int ice_vsi_release(struct ice_vsi *vsi);
+ 
+ void ice_vsi_close(struct ice_vsi *vsi);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 209bfd70c430..0e0086494a54 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -3559,11 +3559,9 @@ static void ice_napi_add(struct ice_vsi *vsi)
+ 	if (!vsi->netdev)
+ 		return;
+ 
+-	ice_for_each_q_vector(vsi, v_idx) {
++	ice_for_each_q_vector(vsi, v_idx)
+ 		netif_napi_add(vsi->netdev, &vsi->q_vectors[v_idx]->napi,
+ 			       ice_napi_poll);
+-		__ice_q_vector_set_napi_queues(vsi->q_vectors[v_idx], false);
+-	}
+ }
+ 
+ /**
+@@ -5541,7 +5539,9 @@ static int ice_reinit_interrupt_scheme(struct ice_pf *pf)
+ 		if (ret)
+ 			goto err_reinit;
+ 		ice_vsi_map_rings_to_vectors(pf->vsi[v]);
++		rtnl_lock();
+ 		ice_vsi_set_napi_queues(pf->vsi[v]);
++		rtnl_unlock();
+ 	}
+ 
+ 	ret = ice_req_irq_msix_misc(pf);
+@@ -5555,8 +5555,12 @@ static int ice_reinit_interrupt_scheme(struct ice_pf *pf)
+ 
+ err_reinit:
+ 	while (v--)
+-		if (pf->vsi[v])
++		if (pf->vsi[v]) {
++			rtnl_lock();
++			ice_vsi_clear_napi_queues(pf->vsi[v]);
++			rtnl_unlock();
+ 			ice_vsi_free_q_vectors(pf->vsi[v]);
++		}
+ 
+ 	return ret;
+ }
+@@ -5621,6 +5625,9 @@ static int ice_suspend(struct device *dev)
+ 	ice_for_each_vsi(pf, v) {
+ 		if (!pf->vsi[v])
+ 			continue;
++		rtnl_lock();
++		ice_vsi_clear_napi_queues(pf->vsi[v]);
++		rtnl_unlock();
+ 		ice_vsi_free_q_vectors(pf->vsi[v]);
+ 	}
+ 	ice_clear_interrupt_scheme(pf);
+@@ -7456,6 +7463,8 @@ int ice_vsi_open(struct ice_vsi *vsi)
+ 		err = netif_set_real_num_rx_queues(vsi->netdev, vsi->num_rxq);
+ 		if (err)
+ 			goto err_set_qs;
++
++		ice_vsi_set_napi_queues(vsi);
+ 	}
+ 
+ 	err = ice_up_complete(vsi);
 -- 
 2.43.0
 
