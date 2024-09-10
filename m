@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C631885A5;
-	Tue, 10 Sep 2024 10:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A143C18EFFA;
+	Tue, 10 Sep 2024 10:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962740; cv=none; b=L6YLUGWcGshKJkzT5BiBFgZfjLdSFOHYqQPk3fp2rwMrx762aj1lDo6KnYIRoGO0w4oMRYvJFULzCPzMMoaD6pFqBccpmuGJ+bAuOvuKRtiODHvMXXuaQ5vCaZMTOKKECAolnF9/WgxsdCajS8COBg8Kjtg7Hc9tUbrGQlCw+Io=
+	t=1725962743; cv=none; b=uBc5y7Ypnwwmhhm4bC8Q4orV9B/QZdnCfS6F9CFmWzqhu5OLSJzvQbAiGEcG/0rAI7DpxzKYVcIdswyjwMQ+cnyjzaRH7dw1j9SYjffh0RmnmF3fZeGbZBZpFT8HJ9BSIpX1JWYrXme5dVt1JXh5lh0/o3N+Rpkhb6YHuXG3foM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962740; c=relaxed/simple;
-	bh=FiZl7rL1L0kCvRQICIRFEoweDpRAiTNKO1VqReBs6Jw=;
+	s=arc-20240116; t=1725962743; c=relaxed/simple;
+	bh=lsVI3R5doL7+TFU8dMBsYu9HaF5ZMJcUb8g05vrf0kU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwzDmsJAOOcWFUFMDskg0R2j/JBTO/8bNm94LwDUWisKNycI0DUmqbjMlfUOcGC+h9O6mFkC9XcmZvrBPzZ9WOTz2AfK1pqvzo0T9+ETGbD48irB9iP/35Mg7MRNLdtg6AGxmHd0xI8ifnEjCuZGZj/NHbyrEpXcK/sDh2jrgGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kuklftvu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlOdrkBBRKZS/i9jbXSOy/SULJko3KxcBIlMCmhHC44BJIBI1njvIDcX7KnK4r+ShueUxtTMDMAwss1avtu66yV3yatdvCurZi+KnB4iMRsjMYCsPvBPa/JcoOqPCn98XErsHUTaHlwWTJIRZNyTHwjqFfDGdyavR5HFUBxuUv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Qw9Au9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kuklftvu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7071C4CEC3;
-	Tue, 10 Sep 2024 10:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Qw9Au9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2024C4CECD;
+	Tue, 10 Sep 2024 10:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962740;
-	bh=FiZl7rL1L0kCvRQICIRFEoweDpRAiTNKO1VqReBs6Jw=;
+	s=korg; t=1725962743;
+	bh=lsVI3R5doL7+TFU8dMBsYu9HaF5ZMJcUb8g05vrf0kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuklftvuW5R3HWfHSphv+16AeNnWJFWm0dKK2E9zhvxeumLzBC5oADUTNVvoGp6Rm
-	 nxKlwGy0lbLSjrDrBoAxkxvEMEB63eeJH7yFEDdHL2uY4UnyggcEyrvdAF6gRSj8yI
-	 NDK5+TSt20LiFX+TZQUtAI3y1h9btFKvkLP8SqL8=
+	b=X6Qw9Au9/IM4yvPjGl3ygnRJBzyXpomKcC9jQGK9+MYfYDMB2teGaAP+TkWOj14fT
+	 ahzzJkRGiCDl8+lT0+K8/EaCVrNkhcLxUE2nr5FzGCmFRcp1APJrTMvc97PScBZYjp
+	 GXCMZqWw8af5MX/6kK5SmCnHLgjUzlDS/At2v7uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
+	Max Ramanouski <max8rr8@gmail.com>,
+	Alistair Popple <apopple@nvidia.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 014/192] irqchip/gic-v2m: Fix refcount leak in gicv2m_of_init()
-Date: Tue, 10 Sep 2024 11:30:38 +0200
-Message-ID: <20240910092558.533625817@linuxfoundation.org>
+	Dan Williams <dan.j.williams@intel.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.1 015/192] x86/kaslr: Expose and use the end of the physical memory address space
+Date: Tue, 10 Sep 2024 11:30:39 +0200
+Message-ID: <20240910092558.568932042@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,44 +53,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit c5af2c90ba5629f0424a8d315f75fb8d91713c3c upstream.
+commit ea72ce5da22806d5713f3ffb39a6d5ae73841f93 upstream.
 
-gicv2m_of_init() fails to perform an of_node_put() when
-of_address_to_resource() fails, leading to a refcount leak.
+iounmap() on x86 occasionally fails to unmap because the provided valid
+ioremap address is not below high_memory. It turned out that this
+happens due to KASLR.
 
-Address this by moving the error handling path outside of the loop and
-making it common to all failure modes.
+KASLR uses the full address space between PAGE_OFFSET and vaddr_end to
+randomize the starting points of the direct map, vmalloc and vmemmap
+regions.  It thereby limits the size of the direct map by using the
+installed memory size plus an extra configurable margin for hot-plug
+memory.  This limitation is done to gain more randomization space
+because otherwise only the holes between the direct map, vmalloc,
+vmemmap and vaddr_end would be usable for randomizing.
 
-Fixes: 4266ab1a8ff5 ("irqchip/gic-v2m: Refactor to prepare for ACPI support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+The limited direct map size is not exposed to the rest of the kernel, so
+the memory hot-plug and resource management related code paths still
+operate under the assumption that the available address space can be
+determined with MAX_PHYSMEM_BITS.
+
+request_free_mem_region() allocates from (1 << MAX_PHYSMEM_BITS) - 1
+downwards.  That means the first allocation happens past the end of the
+direct map and if unlucky this address is in the vmalloc space, which
+causes high_memory to become greater than VMALLOC_START and consequently
+causes iounmap() to fail for valid ioremap addresses.
+
+MAX_PHYSMEM_BITS cannot be changed for that because the randomization
+does not align with address bit boundaries and there are other places
+which actually require to know the maximum number of address bits.  All
+remaining usage sites of MAX_PHYSMEM_BITS have been analyzed and found
+to be correct.
+
+Cure this by exposing the end of the direct map via PHYSMEM_END and use
+that for the memory hot-plug and resource management related places
+instead of relying on MAX_PHYSMEM_BITS. In the KASLR case PHYSMEM_END
+maps to a variable which is initialized by the KASLR initialization and
+otherwise it is based on MAX_PHYSMEM_BITS as before.
+
+To prevent future hickups add a check into add_pages() to catch callers
+trying to add memory above PHYSMEM_END.
+
+Fixes: 0483e1fa6e09 ("x86/mm: Implement ASLR for kernel memory regions")
+Reported-by: Max Ramanouski <max8rr8@gmail.com>
+Reported-by: Alistair Popple <apopple@nvidia.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
+Tested-By: Max Ramanouski <max8rr8@gmail.com>
+Tested-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240820092843.1219933-1-make24@iscas.ac.cn
+Link: https://lore.kernel.org/all/87ed6soy3z.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v2m.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/page_64.h          |    1 +
+ arch/x86/include/asm/pgtable_64_types.h |    4 ++++
+ arch/x86/mm/init_64.c                   |    4 ++++
+ arch/x86/mm/kaslr.c                     |   32 ++++++++++++++++++++++++++------
+ include/linux/mm.h                      |    4 ++++
+ kernel/resource.c                       |    6 ++----
+ mm/memory_hotplug.c                     |    2 +-
+ mm/sparse.c                             |    2 +-
+ 8 files changed, 43 insertions(+), 12 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -438,12 +438,12 @@ static int __init gicv2m_of_init(struct
+--- a/arch/x86/include/asm/page_64.h
++++ b/arch/x86/include/asm/page_64.h
+@@ -17,6 +17,7 @@ extern unsigned long phys_base;
+ extern unsigned long page_offset_base;
+ extern unsigned long vmalloc_base;
+ extern unsigned long vmemmap_base;
++extern unsigned long physmem_end;
  
- 		ret = gicv2m_init_one(&child->fwnode, spi_start, nr_spis,
- 				      &res, 0);
--		if (ret) {
--			of_node_put(child);
-+		if (ret)
- 			break;
--		}
+ static __always_inline unsigned long __phys_addr_nodebug(unsigned long x)
+ {
+--- a/arch/x86/include/asm/pgtable_64_types.h
++++ b/arch/x86/include/asm/pgtable_64_types.h
+@@ -139,6 +139,10 @@ extern unsigned int ptrs_per_p4d;
+ # define VMEMMAP_START		__VMEMMAP_BASE_L4
+ #endif /* CONFIG_DYNAMIC_MEMORY_LAYOUT */
+ 
++#ifdef CONFIG_RANDOMIZE_MEMORY
++# define PHYSMEM_END		physmem_end
++#endif
++
+ /*
+  * End of the region for which vmalloc page tables are pre-allocated.
+  * For non-KMSAN builds, this is the same as VMALLOC_END.
+--- a/arch/x86/mm/init_64.c
++++ b/arch/x86/mm/init_64.c
+@@ -950,8 +950,12 @@ static void update_end_of_memory_vars(u6
+ int add_pages(int nid, unsigned long start_pfn, unsigned long nr_pages,
+ 	      struct mhp_params *params)
+ {
++	unsigned long end = ((start_pfn + nr_pages) << PAGE_SHIFT) - 1;
+ 	int ret;
+ 
++	if (WARN_ON_ONCE(end > PHYSMEM_END))
++		return -ERANGE;
++
+ 	ret = __add_pages(nid, start_pfn, nr_pages, params);
+ 	WARN_ON_ONCE(ret);
+ 
+--- a/arch/x86/mm/kaslr.c
++++ b/arch/x86/mm/kaslr.c
+@@ -47,13 +47,24 @@ static const unsigned long vaddr_end = C
+  */
+ static __initdata struct kaslr_memory_region {
+ 	unsigned long *base;
++	unsigned long *end;
+ 	unsigned long size_tb;
+ } kaslr_regions[] = {
+-	{ &page_offset_base, 0 },
+-	{ &vmalloc_base, 0 },
+-	{ &vmemmap_base, 0 },
++	{
++		.base	= &page_offset_base,
++		.end	= &physmem_end,
++	},
++	{
++		.base	= &vmalloc_base,
++	},
++	{
++		.base	= &vmemmap_base,
++	},
+ };
+ 
++/* The end of the possible address space for physical memory */
++unsigned long physmem_end __ro_after_init;
++
+ /* Get size in bytes used by the memory region */
+ static inline unsigned long get_padding(struct kaslr_memory_region *region)
+ {
+@@ -82,6 +93,8 @@ void __init kernel_randomize_memory(void
+ 	BUILD_BUG_ON(vaddr_end != CPU_ENTRY_AREA_BASE);
+ 	BUILD_BUG_ON(vaddr_end > __START_KERNEL_map);
+ 
++	/* Preset the end of the possible address space for physical memory */
++	physmem_end = ((1ULL << MAX_PHYSMEM_BITS) - 1);
+ 	if (!kaslr_memory_enabled())
+ 		return;
+ 
+@@ -128,11 +141,18 @@ void __init kernel_randomize_memory(void
+ 		vaddr += entropy;
+ 		*kaslr_regions[i].base = vaddr;
+ 
++		/* Calculate the end of the region */
++		vaddr += get_padding(&kaslr_regions[i]);
+ 		/*
+-		 * Jump the region and add a minimum padding based on
+-		 * randomization alignment.
++		 * KASLR trims the maximum possible size of the
++		 * direct-map. Update the physmem_end boundary.
++		 * No rounding required as the region starts
++		 * PUD aligned and size is in units of TB.
+ 		 */
+-		vaddr += get_padding(&kaslr_regions[i]);
++		if (kaslr_regions[i].end)
++			*kaslr_regions[i].end = __pa_nodebug(vaddr - 1);
++
++		/* Add a minimum padding based on randomization alignment. */
+ 		vaddr = round_up(vaddr + 1, PUD_SIZE);
+ 		remain_entropy -= entropy;
+ 	}
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -92,6 +92,10 @@ extern const int mmap_rnd_compat_bits_ma
+ extern int mmap_rnd_compat_bits __read_mostly;
+ #endif
+ 
++#ifndef PHYSMEM_END
++# define PHYSMEM_END	((1ULL << MAX_PHYSMEM_BITS) - 1)
++#endif
++
+ #include <asm/page.h>
+ #include <asm/processor.h>
+ 
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1781,8 +1781,7 @@ static resource_size_t gfr_start(struct
+ 	if (flags & GFR_DESCENDING) {
+ 		resource_size_t end;
+ 
+-		end = min_t(resource_size_t, base->end,
+-			    (1ULL << MAX_PHYSMEM_BITS) - 1);
++		end = min_t(resource_size_t, base->end, PHYSMEM_END);
+ 		return end - size + 1;
  	}
  
-+	if (ret && child)
-+		of_node_put(child);
- 	if (!ret)
- 		ret = gicv2m_allocate_domains(parent);
- 	if (ret)
+@@ -1799,8 +1798,7 @@ static bool gfr_continue(struct resource
+ 	 * @size did not wrap 0.
+ 	 */
+ 	return addr > addr - size &&
+-	       addr <= min_t(resource_size_t, base->end,
+-			     (1ULL << MAX_PHYSMEM_BITS) - 1);
++	       addr <= min_t(resource_size_t, base->end, PHYSMEM_END);
+ }
+ 
+ static resource_size_t gfr_next(resource_size_t addr, resource_size_t size,
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1530,7 +1530,7 @@ struct range __weak arch_get_mappable_ra
+ 
+ struct range mhp_get_pluggable_range(bool need_mapping)
+ {
+-	const u64 max_phys = (1ULL << MAX_PHYSMEM_BITS) - 1;
++	const u64 max_phys = PHYSMEM_END;
+ 	struct range mhp_range;
+ 
+ 	if (need_mapping) {
+--- a/mm/sparse.c
++++ b/mm/sparse.c
+@@ -129,7 +129,7 @@ static inline int sparse_early_nid(struc
+ static void __meminit mminit_validate_memmodel_limits(unsigned long *start_pfn,
+ 						unsigned long *end_pfn)
+ {
+-	unsigned long max_sparsemem_pfn = 1UL << (MAX_PHYSMEM_BITS-PAGE_SHIFT);
++	unsigned long max_sparsemem_pfn = (PHYSMEM_END + 1) >> PAGE_SHIFT;
+ 
+ 	/*
+ 	 * Sanity checks - do not allow an architecture to pass
 
 
