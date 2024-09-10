@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF95919068E;
-	Tue, 10 Sep 2024 10:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38C91917D2;
+	Tue, 10 Sep 2024 10:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962621; cv=none; b=IDqaonNs7apU2TGjrm6jDor/7A1emr49zKRlT68kXqvQGVPhD4lrBDsjt7wRNAh24NgDd22lGrT8qc3VKNZ37zJFokbvtX4SwSt0iQpY0DREJ7dph9E7apiB6K/hW84IDqtCeLgyN8yLvmw1Mx1zXkuUn+6y8ql80OM3TUDHTyQ=
+	t=1725962624; cv=none; b=l44dZ+sgQPj9y28UaGu/IQ1LKQfD3rhgQfIeEIx1mHCHKuInFdad9MgXVWCR9KsxhIptTuyjloVNB09KPUGQMn6ax8/8cTYQU0k86fUgv98GHOI45I9AYA9eh7sXrXYmiPhYD2lsm5voqvRMEcx7HZV8sqrfuiC+IC7UwZGlNpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962621; c=relaxed/simple;
-	bh=pofCuU6zGKWcoypWaCQnd81QBrR9BW8Mtn3wbhGxOF4=;
+	s=arc-20240116; t=1725962624; c=relaxed/simple;
+	bh=ycd+bECLST7H+QJKpu95eZ0FkDpGofvYWw/KixkTF1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nx0aWZUn8JsEkGkln2Cf7pU40reW0+NYCJ15h4QW2u1BWR8KYTzjdevnB5OBDvPgT5ZA5YuMm9Ec2K/ZLBeJLVtL/wjK2XeuQWHha3LTsnXtJjOW2KSmuJd7nbiNLXPNNo5r9i7Crvw47TxlnP+rD9rMBb+M2lDtIqze9Im1GIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT7mhRLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ww/chWRE9I0GuHscZ7wANiViKbZDyVmugieWGnR6LBUqlgFFx9H67JV6zEnpPKylwVsl5SRtiqgmLdUC55zwf6wGSXxXTqEivacJSaR540NPOcRmFxY2C6WfyDKlvfZa/GJDP4TxgBlt1yQK1E0RltgO8FCpt6gXVqa413YwVBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8pz3GWr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT7mhRLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB48C4CEC6;
-	Tue, 10 Sep 2024 10:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8pz3GWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E934BC4CECD;
+	Tue, 10 Sep 2024 10:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962621;
-	bh=pofCuU6zGKWcoypWaCQnd81QBrR9BW8Mtn3wbhGxOF4=;
+	s=korg; t=1725962624;
+	bh=ycd+bECLST7H+QJKpu95eZ0FkDpGofvYWw/KixkTF1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FT7mhRLmThKtTJNflX1aZncx8JPFANMwB7A0OLzXtbAtZlQORz39IY0vDTVqP6bOl
-	 pC7bx2ikl+h2isp38E3uSWDv7/N6poKVqKRUE/nIsFRZ7H/8cH7jHn5GpU33JPP4Oe
-	 G5XM/jyKpXiSGxnz8SNMno4ccIHlwXMxn1PypAjA=
+	b=b8pz3GWrj0Wtr4+QTK/mhJTAzpzYaKT4tG7b+sGNGLD6cuWMkKc2xlxkG7Z8WF+d1
+	 KUj8GLq0MNheTPN0Mk5o4/ax3hfyXetvEaGK7Tx8dSHCn820p6roHp57UpnZeiHYqt
+	 keu5mTOY/vCe1FgMpG26eG8fH9ye3GTlmhh+YLdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/121] Input: uinput - reject requests with unreasonable number of slots
-Date: Tue, 10 Sep 2024 11:32:43 +0200
-Message-ID: <20240910092550.046347384@linuxfoundation.org>
+	Matteo Martelli <matteomartelli3@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 097/121] iio: fix scale application in iio_convert_raw_to_processed_unlocked
+Date: Tue, 10 Sep 2024 11:32:52 +0200
+Message-ID: <20240910092550.443571754@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -52,59 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Matteo Martelli <matteomartelli3@gmail.com>
 
-[ Upstream commit 206f533a0a7c683982af473079c4111f4a0f9f5e ]
+commit 8a3dcc970dc57b358c8db2702447bf0af4e0d83a upstream.
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+When the scale_type is IIO_VAL_INT_PLUS_MICRO or IIO_VAL_INT_PLUS_NANO
+the scale passed as argument is only applied to the fractional part of
+the value. Fix it by also multiplying the integer part by the scale
+provided.
 
-When exercising uinput interface syzkaller may try setting up device
-with a really large number of slots, which causes memory allocation
-failure in input_mt_init_slots(). While this allocation failure is
-handled properly and request is rejected, it results in syzkaller
-reports. Additionally, such request may put undue burden on the
-system which will try to free a lot of memory for a bogus request.
-
-Fix it by limiting allowed number of slots to 100. This can easily
-be extended if we see devices that can track more than 100 contacts.
-
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
-Link: https://lore.kernel.org/r/Zqgi7NYEbpRsJfa2@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
+Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
+Link: https://patch.msgid.link/20240730-iio-fix-scale-v1-1-6246638c8daa@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/uinput.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/iio/inkern.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/input/misc/uinput.c b/drivers/input/misc/uinput.c
-index 002654ec7040..e707da0b1fe2 100644
---- a/drivers/input/misc/uinput.c
-+++ b/drivers/input/misc/uinput.c
-@@ -416,6 +416,20 @@ static int uinput_validate_absinfo(struct input_dev *dev, unsigned int code,
- 		return -EINVAL;
- 	}
- 
-+	/*
-+	 * Limit number of contacts to a reasonable value (100). This
-+	 * ensures that we need less than 2 pages for struct input_mt
-+	 * (we are not using in-kernel slot assignment so not going to
-+	 * allocate memory for the "red" table), and we should have no
-+	 * trouble getting this much memory.
-+	 */
-+	if (code == ABS_MT_SLOT && max > 99) {
-+		printk(KERN_DEBUG
-+		       "%s: unreasonably large number of slots requested: %d\n",
-+		       UINPUT_NAME, max);
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
- 
--- 
-2.43.0
-
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -637,17 +637,17 @@ static int iio_convert_raw_to_processed_
+ 		break;
+ 	case IIO_VAL_INT_PLUS_MICRO:
+ 		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val;
++			*processed = -raw64 * scale_val * scale;
+ 		else
+-			*processed = raw64 * scale_val;
++			*processed = raw64 * scale_val * scale;
+ 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+ 				      1000000LL);
+ 		break;
+ 	case IIO_VAL_INT_PLUS_NANO:
+ 		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val;
++			*processed = -raw64 * scale_val * scale;
+ 		else
+-			*processed = raw64 * scale_val;
++			*processed = raw64 * scale_val * scale;
+ 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+ 				      1000000000LL);
+ 		break;
 
 
