@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8698046444;
-	Tue, 10 Sep 2024 09:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3653184101;
+	Tue, 10 Sep 2024 09:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961908; cv=none; b=kMENO/taIc75OicPOFHRhyveP9AK1/IxVJwrOUVz7FMER7hyWudZc3o3AAARasTsy47NHahwVBkHSFce/rzl1gAD4YCO//XyUJlINN4U293DxN15MY8HuR5LRrR98y3ENr+6MqYhlobs+bnAIL7TepWHTCYDhRpXCsCYEyQ7L9c=
+	t=1725961911; cv=none; b=VZiLgcE47Hz7HU7zw7/vY3MSv7UAzIk3YQ2dvxf2/EiaPt+tQOctkWJvVnv1412gknS8CTcxm9s5coR8uRrqL0EsEJClmc/dV+XgEss1VdWJnxUORGJA02jA4e0HxVJi0tKZU4GKq23JrDhzp28OfLuQU6vUDS6guKnNGIpXtYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961908; c=relaxed/simple;
-	bh=cKwR32V0+wYCZrp0XNPS5grqr6XWm95stB9yGMk5PUg=;
+	s=arc-20240116; t=1725961911; c=relaxed/simple;
+	bh=mrY6uPgwX5m8f0dUv+0BrP4ivg3jneYiSOnu5moyjpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvdgaMZtzWbvBxRd6+2hJDQobe3eeKYCdcCPv4Bu+jNOlPbKV5taLX2XMleepR8lsW2SdKjY5GPguMxu8I0JZKse/FoZ79TZ1u5uvrYpPbeYR9jOGeOuLSvwc2p6CoM5gNd/xQF0gtFh6mRr7j7NqjAki782XoiBvvIDlr8+hg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9U6KwSi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mcKh4NqzsdWR8nvw3yEPEhoSBdekdm4ef3wi60rL4K+dZRwtfz72sPQfXjJ7VrlVVOhGjRk0CuwcioT3JEX0cGH2NmWlFrOLYE1A3C7P2fUMmGymrBBYCE8kk6Gu3EGVvGF3OkCNC5dyHEpqFLxnua6S+Y5oeoE8YS7lXhIs7qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCXA9PB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9U6KwSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C30FC4CEC3;
-	Tue, 10 Sep 2024 09:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCXA9PB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6569C4CEC6;
+	Tue, 10 Sep 2024 09:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961908;
-	bh=cKwR32V0+wYCZrp0XNPS5grqr6XWm95stB9yGMk5PUg=;
+	s=korg; t=1725961911;
+	bh=mrY6uPgwX5m8f0dUv+0BrP4ivg3jneYiSOnu5moyjpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9U6KwSipuCWQclf5ukNgSgw60BZi+gnH7GDD8L0NshBzC/9sX9IHCKFOgyhIvP7m
-	 d6oy6ggz9W3cxKJNCxVB0CdioMeX/UXQAF/zkQt6p4nkBP14rs2W8uP8a8RSFkj0qU
-	 hd6QqmAzI2T6UqwMwlFCLducgmIufakk4LPd0XHg=
+	b=tCXA9PB9k/IqjPRkUgZqKM2BDkRJdzR5c6Ej1NyzjWnMOR4+vVTLTptb6RVUVqF0/
+	 Su1Lkil47xtt1ugp1OWjWCwobK+AkccZOYuDjNIFc1QGPsXKwGV+sQ9tR75y1TaF0M
+	 HLxhAarRA98sQ1cv3XdnOh3z5uw32RYmQNSWQejg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 230/375] perf/x86/intel: Hide Topdown metrics events if the feature is not enumerated
-Date: Tue, 10 Sep 2024 11:30:27 +0200
-Message-ID: <20240910092630.267658204@linuxfoundation.org>
+Subject: [PATCH 6.10 231/375] PCI: qcom: Override NO_SNOOP attribute for SA8775P RC
+Date: Tue, 10 Sep 2024 11:30:28 +0200
+Message-ID: <20240910092630.301115867@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -46,103 +47,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 
-[ Upstream commit 556a7c039a52c21da33eaae9269984a1ef59189b ]
+[ Upstream commit 1d648bf79d4dca909f242b1a0cdc458e4f9d0253 ]
 
-The below error is observed on Ice Lake VM.
+Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
+in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
+the requester is indicating that no cache coherency issue exist for
+the addressed memory on the endpoint i.e., memory is not cached. But
+in reality, requester cannot assume this unless there is a complete
+control/visibility over the addressed memory on the endpoint.
 
-$ perf stat
-Error:
-The sys_perf_event_open() syscall returned with 22 (Invalid argument)
-for event (slots).
-/bin/dmesg | grep -i perf may provide additional information.
+And worst case, if the memory is cached on the endpoint, it may lead to
+memory corruption issues. It should be noted that the caching of memory
+on the endpoint is not solely dependent on the NO_SNOOP attribute in TLP.
 
-In a virtualization env, the Topdown metrics and the slots event haven't
-been supported yet. The guest CPUID doesn't enumerate them. However, the
-current kernel unconditionally exposes the slots event and the Topdown
-metrics events to sysfs, which misleads the perf tool and triggers the
-error.
+So to avoid the corruption, this patch overrides the NO_SNOOP attribute
+by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
+needed for other upstream supported platforms since they do not set
+NO_SNOOP attribute by default.
 
-Hide the perf-metrics topdown events and the slots event if the
-perf-metrics feature is not enumerated.
+8775 has IP version 1.34.0 so introduce a new cfg(cfg_1_34_0) for this
+platform. Assign override_no_snoop flag into struct qcom_pcie_cfg and
+set it true in cfg_1_34_0 and enable cache snooping if this particular
+flag is true.
 
-The big core of a hybrid platform can also supports the perf-metrics
-feature. Fix the hybrid platform as well.
-
-Closes: https://lore.kernel.org/lkml/CAM9d7cj8z+ryyzUHR+P1Dcpot2jjW+Qcc4CPQpfafTXN=LEU0Q@mail.gmail.com/
-Reported-by: Dongli Zhang <dongli.zhang@oracle.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Dongli Zhang <dongli.zhang@oracle.com>
-Link: https://lkml.kernel.org/r/20240708193336.1192217-2-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/linux-pci/1710166298-27144-2-git-send-email-quic_msarkar@quicinc.com
+Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: wrap comments to fit in 80 columns]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 05ec651663cb..dcac96133cb6 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -5733,8 +5733,22 @@ exra_is_visible(struct kobject *kobj, struct attribute *attr, int i)
- 	return x86_pmu.version >= 2 ? attr->mode : 0;
- }
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 14772edcf0d3..7fa1fe5a29e3 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -51,6 +51,7 @@
+ #define PARF_SID_OFFSET				0x234
+ #define PARF_BDF_TRANSLATE_CFG			0x24c
+ #define PARF_SLV_ADDR_SPACE_SIZE		0x358
++#define PARF_NO_SNOOP_OVERIDE			0x3d4
+ #define PARF_DEVICE_TYPE			0x1000
+ #define PARF_BDF_TO_SID_TABLE_N			0x2000
+ #define PARF_BDF_TO_SID_CFG			0x2c00
+@@ -118,6 +119,10 @@
+ /* PARF_LTSSM register fields */
+ #define LTSSM_EN				BIT(8)
  
-+static umode_t
-+td_is_visible(struct kobject *kobj, struct attribute *attr, int i)
-+{
-+	/*
-+	 * Hide the perf metrics topdown events
-+	 * if the feature is not enumerated.
-+	 */
-+	if (x86_pmu.num_topdown_events)
-+		return x86_pmu.intel_cap.perf_metrics ? attr->mode : 0;
++/* PARF_NO_SNOOP_OVERIDE register fields */
++#define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
++#define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
 +
-+	return attr->mode;
-+}
-+
- static struct attribute_group group_events_td  = {
- 	.name = "events",
-+	.is_visible = td_is_visible,
+ /* PARF_DEVICE_TYPE register fields */
+ #define DEVICE_TYPE_RC				0x4
+ 
+@@ -231,8 +236,15 @@ struct qcom_pcie_ops {
+ 	int (*config_sid)(struct qcom_pcie *pcie);
  };
  
- static struct attribute_group group_events_mem = {
-@@ -5936,9 +5950,27 @@ static umode_t hybrid_format_is_visible(struct kobject *kobj,
- 	return (cpu >= 0) && (pmu->pmu_type & pmu_attr->pmu_type) ? attr->mode : 0;
- }
- 
-+static umode_t hybrid_td_is_visible(struct kobject *kobj,
-+				    struct attribute *attr, int i)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct x86_hybrid_pmu *pmu =
-+		 container_of(dev_get_drvdata(dev), struct x86_hybrid_pmu, pmu);
-+
-+	if (!is_attr_for_this_pmu(kobj, attr))
-+		return 0;
-+
-+
-+	/* Only the big core supports perf metrics */
-+	if (pmu->pmu_type == hybrid_big)
-+		return pmu->intel_cap.perf_metrics ? attr->mode : 0;
-+
-+	return attr->mode;
-+}
-+
- static struct attribute_group hybrid_group_events_td  = {
- 	.name		= "events",
--	.is_visible	= hybrid_events_is_visible,
-+	.is_visible	= hybrid_td_is_visible,
++ /**
++  * struct qcom_pcie_cfg - Per SoC config struct
++  * @ops: qcom PCIe ops structure
++  * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
++  * snooping
++  */
+ struct qcom_pcie_cfg {
+ 	const struct qcom_pcie_ops *ops;
++	bool override_no_snoop;
+ 	bool no_l0s;
  };
  
- static struct attribute_group hybrid_group_events_mem = {
+@@ -986,6 +998,12 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+ 
+ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+ {
++	const struct qcom_pcie_cfg *pcie_cfg = pcie->cfg;
++
++	if (pcie_cfg->override_no_snoop)
++		writel(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
++				pcie->parf + PARF_NO_SNOOP_OVERIDE);
++
+ 	qcom_pcie_clear_aspm_l0s(pcie->pci);
+ 	qcom_pcie_clear_hpc(pcie->pci);
+ 
+@@ -1366,6 +1384,11 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
+ 	.ops = &ops_1_9_0,
+ };
+ 
++static const struct qcom_pcie_cfg cfg_1_34_0 = {
++	.ops = &ops_1_9_0,
++	.override_no_snoop = true,
++};
++
+ static const struct qcom_pcie_cfg cfg_2_1_0 = {
+ 	.ops = &ops_2_1_0,
+ };
+@@ -1667,7 +1690,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+ 	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+ 	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+-	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
++	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+ 	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+ 	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
+ 	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_sc8280xp },
 -- 
 2.43.0
 
