@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFEC18FDA3;
-	Tue, 10 Sep 2024 10:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3A318B498;
+	Tue, 10 Sep 2024 10:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963335; cv=none; b=i+pFK6qIaY9DSJNqbGOGJ3Nc88OIZde0p29QWsfOzqJPBDGRyyuxaCN1ejXeCfTbVl29pwAnHKPspiA4YyoKWnVmkAzdiXdYSiiUxypwhKzpEQydg1gBCVBmFBHDko3EFg0Sp84gCMUnbw4p+r5Ufob0G63qwtn2AWEdJfv0hq0=
+	t=1725963338; cv=none; b=aBe29G59kQbbf/ZSdPVePrcNp45o37qqcp0A+f9n8rXh+ekUWiA9TPX7A8b3TOTLxopFLM2E4kKNdXdBERIZmcI/cE1jrpyB00RZn3uPP4jBy284x8k8W+YqxjeFFg7MlwHJvPHz+hRFAfixOoNixc0XansPpVE7/DXY6qIleoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963335; c=relaxed/simple;
-	bh=qYoe0yvmlN8gccp/ld3eThvU0jWoJtJFsu4LGPwOF8g=;
+	s=arc-20240116; t=1725963338; c=relaxed/simple;
+	bh=x4U5I1eTBLqHFAVJhJRhsZ55T3OmfzmweYCbfvgTK2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGGIHksPtatrTTEOKFddIb3jcZ2WHior4jk7hK7J/bBn32zHogTrxVfv/gHtOCiWnG7+k4se2wcI59kCCIgEbBmTAdSiwlP2KZC0PCrsuqk/o66W/1MkxaR7MAVMTbYJCQ0Lk35QvClAp8lrBk/yh4V9eM8IjyNRVDeXKZWyjMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9joXQDQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IH/Vx1/RC91Z5ArD4wGz84lSvQz5SIx4igC/2eiURtCT+Uol9qaD7mB6U02dM9lgN7f5Zikh6uG/6VUSR8MkH9pfWvG/PNPjSlu88QOCmPhCzpf2neg9hejgNEa8ZnlUJzDV5Ll73DNyejGqhM+ulJSOUzdyj5eRSU5/BG4mNek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUDLvk7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9joXQDQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C84C4CEC3;
-	Tue, 10 Sep 2024 10:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUDLvk7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462F2C4CED0;
+	Tue, 10 Sep 2024 10:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963335;
-	bh=qYoe0yvmlN8gccp/ld3eThvU0jWoJtJFsu4LGPwOF8g=;
+	s=korg; t=1725963338;
+	bh=x4U5I1eTBLqHFAVJhJRhsZ55T3OmfzmweYCbfvgTK2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9joXQDQwiHljtt5prc5riCTD3N8joU5c+L+PACB5fQMM0vNtb5p8Xf83fIbu2IGs
-	 ydGEOkMRrRuVTYZ9BbTVh4qLtfogHFRonTiM9wm9WQ0d6FwRgjWBs5uAKwPO1r6U6H
-	 iQmOrrXSmrlkg1yVicZ5zLiA1ed94gbVgar0r178=
+	b=JUDLvk7j0zZNrgDKFWK9yoLPsyQSwb6n3jMtwxcvbqSAZp/xFeIEe2it8mf6ANWGU
+	 AO6MeLx/GY77l+GKbykgLsrxh8AowiubWfChfmI8SVE1zQ7RKGtCTBhaEQl49Byj3Z
+	 HXGAEsUcLoBM82jsJG1LOEKxDMqywog8quF4kghc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/214] drm/amd/display: Fix Coverity INTEGER_OVERFLOW within dal_gpio_service_create
-Date: Tue, 10 Sep 2024 11:30:44 +0200
-Message-ID: <20240910092559.686116351@linuxfoundation.org>
+Subject: [PATCH 5.15 003/214] ALSA: hda/conexant: Mute speakers at suspend / shutdown
+Date: Tue, 10 Sep 2024 11:30:25 +0200
+Message-ID: <20240910092558.853481425@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -54,49 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c6077aa66fa230d12f37fef01161ef080d13b726 ]
+[ Upstream commit 4f61c8fe35202702426cfc0003e15116a01ba885 ]
 
-[Why]
-For subtraction, coverity reports integer overflow
-warning message when variable type is uint32_t.
+Use the new helper to mute speakers at suspend / shutdown for avoiding
+click noises.
 
-[How]
-Change variable type to int32_t.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1228269
+Link: https://patch.msgid.link/20240726142625.2460-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_conexant.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
-index a7c92c64490c..a5de27908914 100644
---- a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
-+++ b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
-@@ -58,7 +58,7 @@ struct gpio_service *dal_gpio_service_create(
- 	struct dc_context *ctx)
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 09a272c65be11..802a33aaa0d62 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -205,6 +205,8 @@ static void cx_auto_shutdown(struct hda_codec *codec)
  {
- 	struct gpio_service *service;
--	uint32_t index_of_id;
-+	int32_t index_of_id;
+ 	struct conexant_spec *spec = codec->spec;
  
- 	service = kzalloc(sizeof(struct gpio_service), GFP_KERNEL);
- 
-@@ -114,7 +114,7 @@ struct gpio_service *dal_gpio_service_create(
- 	return service;
- 
- failure_2:
--	while (index_of_id) {
-+	while (index_of_id > 0) {
- 		--index_of_id;
- 		kfree(service->busyness[index_of_id]);
- 	}
++	snd_hda_gen_shutup_speakers(codec);
++
+ 	/* Turn the problematic codec into D3 to avoid spurious noises
+ 	   from the internal speaker during (and after) reboot */
+ 	cx_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, false);
 -- 
 2.43.0
 
