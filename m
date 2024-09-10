@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA12CEEC9;
-	Tue, 10 Sep 2024 09:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D58218FC90;
+	Tue, 10 Sep 2024 09:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961746; cv=none; b=ldyyaQFkIZ/2TsxXI3BzgHIcsOoxRROAVKctFOWqfJSBJlTWbLjo6z/gwzr5dqPdLuyhHv0947AC60HqnrXklIHWE98YrPPA7/sYDk2Qu0xew4iRheIgvT7plfW9S9uEHq3o4iv+MzN1BCdTvTLv3sw47yBMTOP41VFDRSmd8zo=
+	t=1725961749; cv=none; b=BbPwoD1hxIbKpbOlP15/5uPpH3SDdGFJQcnzxFpMqJ6NWdQNSsB0A/KSbxyCM6vy+FVDENrgTplf1qYCGJES1BhItJeAInLdPI7+fpraxonMNixyURH3+/o9ILMalNlCB3V/mC4sV8AXBI5RnJY4gCAVdK3I3aOYPEHLVZMNa40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961746; c=relaxed/simple;
-	bh=Zgcq8htuXuEnmDBsReJSwn3iMxZjgLdWCiwJXDXCQKI=;
+	s=arc-20240116; t=1725961749; c=relaxed/simple;
+	bh=RShlGfyD45rdmpvQyba4DT/na4y2RYC2mSQO9e2U0OQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkCVqg1MfATMDnhY+kF/UUWFSNIRea7uGcgPHuHEnQZkEJpkOAEcvvE0cZsqpioMKfBlII/dGUvbaC1E4sTpBbcFTjNlZy+H8yGw/LQ7e2jPQUkgIGEuQr5ZYO2cHwaQ1fFZTUdKppr+hmlhBTZ8RKM86OabYkDNdcr99ApnTgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYzFNVqC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o5CpaEgU/6/E9DLXW5DZrehSQ2dNLX7x//rv6j1Iyrm7Exy72Ql3xEhcerjHWAnvZOLktRnYcdGfWFVitVi1cylF5FiKARivxwsKScra1/TUDuJGHrcQSSTqalr/l+P/+mhnptfRMk4nYkYjy0ygWi7Xxo14bz4HVs24/mc87Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EK+AzwOF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYzFNVqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A8CC4CEC3;
-	Tue, 10 Sep 2024 09:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EK+AzwOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13191C4CEC3;
+	Tue, 10 Sep 2024 09:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961746;
-	bh=Zgcq8htuXuEnmDBsReJSwn3iMxZjgLdWCiwJXDXCQKI=;
+	s=korg; t=1725961749;
+	bh=RShlGfyD45rdmpvQyba4DT/na4y2RYC2mSQO9e2U0OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYzFNVqCyjFVOdUKcCopK0LhVKG9SVv5PD7NlspfJwk/3V1+FbSdgdrruOVVWDSyg
-	 zovoX1gC8Xgj2Bm11E+HCBs5EiPJ/8m5asXyrLoZ2LqLOZgQVKpzulw7To2NL4z5un
-	 MPzhkbCXghLsqCYZjtjJhEt8Trt7yLZ3F6jagQtw=
+	b=EK+AzwOFYDXc+080Y+SW2kNmiILm/ZC35ErmI8BBCyBDtvAcHyBnHm2Ub/FrXcSM9
+	 Bs4BhdtHC+Xlxd7i4eo5McxtdLxoO8jOjvdjiH7os0ybKl5UqPq54XeaPscPqjwrSW
+	 9SlRKEeUsfJY7oqV70D8h+y0MXOVn61eNf7foQf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 175/375] igc: Unlock on error in igc_io_resume()
-Date: Tue, 10 Sep 2024 11:29:32 +0200
-Message-ID: <20240910092628.356014217@linuxfoundation.org>
+Subject: [PATCH 6.10 176/375] hwmon: (hp-wmi-sensors) Check if WMI event data exists
+Date: Tue, 10 Sep 2024 11:29:33 +0200
+Message-ID: <20240910092628.390321582@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -46,39 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit ef4a99a0164e3972abb421cbb1b09ea6c61414df ]
+[ Upstream commit a54da9df75cd1b4b5028f6c60f9a211532680585 ]
 
-Call rtnl_unlock() on this error path, before returning.
+The BIOS can choose to return no event data in response to a
+WMI event, so the ACPI object passed to the WMI notify handler
+can be NULL.
 
-Fixes: bc23aa949aeb ("igc: Add pcie error handler support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Check for such a situation and ignore the event in such a case.
+
+Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Message-ID: <20240901031055.3030-2-W_Armin@gmx.de>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/hp-wmi-sensors.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 3041f8142324..773136925fd0 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -7417,6 +7417,7 @@ static void igc_io_resume(struct pci_dev *pdev)
- 	rtnl_lock();
- 	if (netif_running(netdev)) {
- 		if (igc_open(netdev)) {
-+			rtnl_unlock();
- 			netdev_err(netdev, "igc_open failed after reset\n");
- 			return;
- 		}
+diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
+index b5325d0e72b9..dfa1d6926dea 100644
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -1637,6 +1637,8 @@ static void hp_wmi_notify(u32 value, void *context)
+ 		goto out_unlock;
+ 
+ 	wobj = out.pointer;
++	if (!wobj)
++		goto out_unlock;
+ 
+ 	err = populate_event_from_wobj(dev, &event, wobj);
+ 	if (err) {
 -- 
 2.43.0
 
