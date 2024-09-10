@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB77A188A38;
-	Tue, 10 Sep 2024 09:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B538318B465;
+	Tue, 10 Sep 2024 09:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961605; cv=none; b=jZu4mPsWIbz+txzYNC2C6luK/QI/i2liUZo4sZSDStMujiBX+8ITTG1DIKaJlxcHTz6wI2JHbdynXdagakObzGRxmXLoUx4tOqINJzgDvTZYSmgesKGqgjFL+ZQPG4FhffDTQZwTWMS7kZCs2p6ile7s2UTjJjn9Ffii3flgXQU=
+	t=1725961608; cv=none; b=WXspX4HvrwT4zWa0VlNz4RUJ2vYLyUy0nvFV0fQGK9bRebwdQEHWUBkul4Tgpo4TlzLUlspA2BmAWsSpCs/jqSS5l6FCdXGFjXs/2jdrVAzTL6QO9MKJQ5tOjuImPV9i6pS3Nq8Q3HPP+Olf0e9ZPjjWqPRelOe4w1IOYYb3gvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961605; c=relaxed/simple;
-	bh=OI1OxHDJYxPcEjhH14mCT0vJPpNivGkDR01jUBQijao=;
+	s=arc-20240116; t=1725961608; c=relaxed/simple;
+	bh=3C0nHkmfx8IRE1apL76m8s9UWTDaQ3jCIN1kErE1BKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G80psdudeRDCOBeaKCwOElGGOgplHsQKmYHfNNLsHkSLlK2p6jmdnBpsEPTXRaQwVDJz6IYGSpISMkdzxuOpmdl3PgREQ6vEeye4CU+Sc1KxLeSx4RV9jTG8aRnwkdu+FbjFJZxeGy/TlyLNrWqjMkGyRghcpO7lPElqAL7nAyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iT/ir9mA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RFEvxrSo07UNhrlu1dqKtXhVo0+v1pnJvRbSjiAePDNm+xA/B1vcMcNEC6yb6sWw7Lzz3DT5WA/EFrm9t4DSgwJFTCKWzfMT6ClKlwOuuXvQxra9Zjl45Sefu5VmSOMtoTnwqjKbhZ2oYaTaV6bn8SU0wmPTuDq+O3PBNnk0fLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gT9uxF6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT/ir9mA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560ADC4CEC3;
-	Tue, 10 Sep 2024 09:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gT9uxF6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A85FC4CEC6;
+	Tue, 10 Sep 2024 09:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961605;
-	bh=OI1OxHDJYxPcEjhH14mCT0vJPpNivGkDR01jUBQijao=;
+	s=korg; t=1725961608;
+	bh=3C0nHkmfx8IRE1apL76m8s9UWTDaQ3jCIN1kErE1BKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iT/ir9mAXut2kXUwb19ubXqioDZynIzrveUe1PXwctPEQMHQqukKHLxaAG8/LkRt+
-	 gnt93bQfCT1Xm//h2ejrsQMDNv8tMyJTzOAd3EdjL8bkvFOW8CXiXGEKpNNENt86uA
-	 5ZyIhfxP7uwy2UI4L2ZEj/2rQjPvQbW42YG+sqfA=
+	b=gT9uxF6Ogwx9gXQm/ARr0vKpi4r6qzypVsXREn03ghbybs3tprp5oDzxCjoTdZtM9
+	 CG5CdPw3ks1z7UUGegeIrySdl+zrYBiffFLdB/2PivxuFxP/JiQqsbsE4cFMzpqesV
+	 XYsqkHxA7gIHBQD5OKR8hQderUcnEmFzOsF7/7oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Likun Gao <Likun.Gao@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 126/375] drm/amdgpu: add missing error handling in function amdgpu_gmc_flush_gpu_tlb_pasid
-Date: Tue, 10 Sep 2024 11:28:43 +0200
-Message-ID: <20240910092626.669846190@linuxfoundation.org>
+Subject: [PATCH 6.10 127/375] drm/amdgpu: Fix smatch static checker warning
+Date: Tue, 10 Sep 2024 11:28:44 +0200
+Message-ID: <20240910092626.697295693@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Zhou <bob.zhou@amd.com>
+From: Hawking Zhang <Hawking.Zhang@amd.com>
 
-[ Upstream commit 9ff2e14cf013fa887e269bdc5ea3cffacada8635 ]
+[ Upstream commit bdbdc7cecd00305dc844a361f9883d3a21022027 ]
 
-Fix the unchecked return value warning reported by Coverity,
-so add error handling.
+adev->gfx.imu.funcs could be NULL
 
-Signed-off-by: Bob Zhou <bob.zhou@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Likun Gao <Likun.Gao@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index 86b096ad0319..f4478f2d5305 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -720,7 +720,11 @@ int amdgpu_gmc_flush_gpu_tlb_pasid(struct amdgpu_device *adev, uint16_t pasid,
- 			ndw += kiq->pmf->invalidate_tlbs_size;
- 
- 		spin_lock(&adev->gfx.kiq[inst].ring_lock);
--		amdgpu_ring_alloc(ring, ndw);
-+		r = amdgpu_ring_alloc(ring, ndw);
-+		if (r) {
-+			spin_unlock(&adev->gfx.kiq[inst].ring_lock);
-+			goto error_unlock_reset;
-+		}
- 		if (adev->gmc.flush_tlb_needs_extra_type_2)
- 			kiq->pmf->kiq_invalidate_tlbs(ring, pasid, 2, all_hub);
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index ad6431013c73..4ba8eb45ac17 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -4293,11 +4293,11 @@ static int gfx_v11_0_hw_init(void *handle)
+ 			/* RLC autoload sequence 1: Program rlc ram */
+ 			if (adev->gfx.imu.funcs->program_rlc_ram)
+ 				adev->gfx.imu.funcs->program_rlc_ram(adev);
++			/* rlc autoload firmware */
++			r = gfx_v11_0_rlc_backdoor_autoload_enable(adev);
++			if (r)
++				return r;
+ 		}
+-		/* rlc autoload firmware */
+-		r = gfx_v11_0_rlc_backdoor_autoload_enable(adev);
+-		if (r)
+-			return r;
+ 	} else {
+ 		if (adev->firmware.load_type == AMDGPU_FW_LOAD_DIRECT) {
+ 			if (adev->gfx.imu.funcs && (amdgpu_dpm > 0)) {
 -- 
 2.43.0
 
