@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138BC18FC73;
-	Tue, 10 Sep 2024 10:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCB618FC73;
+	Tue, 10 Sep 2024 10:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963808; cv=none; b=uzWEHEFFagkaOpI0mRkg4iggL0ipfiCDX1n1ytmVdmxxpdkgB3M45NAt5mtwnF+Af9X5aegKdklfGrUPExTwN+ZvjSgKUN8RT3EYImTYhjFGNFPstOTFjAa2EVarlWbMq6TiX8RnPaq41WudWcD/qKNGS40oppr9gBGjpMdmFWs=
+	t=1725963811; cv=none; b=WuJ8FZjChIpiYUe/CQmIBEYhhg/mOjc5o+8z0YwXFCibKoKvk209C7kwVN7mc09GKKIcYj5ZAML8GXw544kTNZKSstj6qbu+Vaq96myLcINK7Slm8rbHgeH6CAk+GF4UoNPstjBjJUERwXMCMKB3/iGb0STMR04lWs8ka0T24gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963808; c=relaxed/simple;
-	bh=0F4MitRKD8PL/l9VtoMRlDhVtZmx0vhJojo0/ejh/Hw=;
+	s=arc-20240116; t=1725963811; c=relaxed/simple;
+	bh=qE3ptmzNXtapQ05AHW80AsYuXt/kmQPQ4bMdtSjR4i4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbvsDjsBZD7fpa6VU6zmCka5lu5rqHZtypuYOdOCPbHJbkETrcWaw+UlRxaoWDCndCrIbMJO5jcXyU6StsFmFsAlp3kidBC7a1SWSTgCWD9Y8nSUidicyUw83MVFkdWmB5U2x+gvh0kVChFNR30Jeg8sypGE4kxoDc+7gnA5Z/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA6BCXfA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kIQijgsQfICEB61SN/3O3A2dXEI64MDQVfnDWNtKonNnWu4079XgkC4otxUDX3OIV2FQreCcdwmu4erSZdRBqE4KbrtBmuKjzhdCcd6MfT9Z16CtuiMsa4CFqnCu0S+YYC34TWGaSzNQurATTD8mqEBeJN7Eq3I/Zfy3nLCZzzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qwpntOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA6BCXfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908BCC4CEC3;
-	Tue, 10 Sep 2024 10:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qwpntOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD8EC4CEC6;
+	Tue, 10 Sep 2024 10:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963808;
-	bh=0F4MitRKD8PL/l9VtoMRlDhVtZmx0vhJojo0/ejh/Hw=;
+	s=korg; t=1725963810;
+	bh=qE3ptmzNXtapQ05AHW80AsYuXt/kmQPQ4bMdtSjR4i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IA6BCXfA1kVkNYxfM18JyK37ZsPfB1IocFA3zMmEXln1pLDmGib1q5hRgrxF7jLwn
-	 15LsRlAAiIzDLER/b2z/a7ILB1v3apdHftLv5kj9FlabPRbd8PGlpVqT6XcIv5wLDf
-	 Mv+3Wqx6zWEkCSQGDEMQzey3Wuj+1thL6BofV//s=
+	b=1qwpntOCUJlu0bxbae8IjhL6g1cKFBaz5BB2RBE4VnM1cR7zC08jcyX6i3ykoz9FJ
+	 cVc7XC9YON/Qd0DUfj1punNMfPAvQOuNEuBUvq7mAJsa+MmvlzaGOA0k5AvAj9u9F0
+	 y897lE7JsAXPEawMmlOFD7UwZdN6UwM7Dg5wfNmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>
-Subject: [PATCH 5.15 184/214] Drivers: hv: vmbus: Fix rescind handling in uio_hv_generic
-Date: Tue, 10 Sep 2024 11:33:26 +0200
-Message-ID: <20240910092606.202032174@linuxfoundation.org>
+	George Kennedy <george.kennedy@oracle.com>,
+	David Fernandez Gonzalez <david.fernandez.gonzalez@oracle.com>
+Subject: [PATCH 5.15 185/214] VMCI: Fix use-after-free when removing resource in vmci_resource_remove()
+Date: Tue, 10 Sep 2024 11:33:27 +0200
+Message-ID: <20240910092606.234261153@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -50,57 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: David Fernandez Gonzalez <david.fernandez.gonzalez@oracle.com>
 
-commit 6fd28941447bf2c8ca0f26fda612a1cabc41663f upstream.
+commit 48b9a8dabcc3cf5f961b2ebcd8933bf9204babb7 upstream.
 
-Rescind offer handling relies on rescind callbacks for some of the
-resources cleanup, if they are registered. It does not unregister
-vmbus device for the primary channel closure, when callback is
-registered. Without it, next onoffer does not come, rescind flag
-remains set and device goes to unusable state.
+When removing a resource from vmci_resource_table in
+vmci_resource_remove(), the search is performed using the resource
+handle by comparing context and resource fields.
 
-Add logic to unregister vmbus for the primary channel in rescind callback
-to ensure channel removal and relid release, and to ensure that next
-onoffer can be received and handled properly.
+It is possible though to create two resources with different types
+but same handle (same context and resource fields).
 
+When trying to remove one of the resources, vmci_resource_remove()
+may not remove the intended one, but the object will still be freed
+as in the case of the datagram type in vmci_datagram_destroy_handle().
+vmci_resource_table will still hold a pointer to this freed resource
+leading to a use-after-free vulnerability.
+
+BUG: KASAN: use-after-free in vmci_handle_is_equal include/linux/vmw_vmci_defs.h:142 [inline]
+BUG: KASAN: use-after-free in vmci_resource_remove+0x3a1/0x410 drivers/misc/vmw_vmci/vmci_resource.c:147
+Read of size 4 at addr ffff88801c16d800 by task syz-executor197/1592
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x82/0xa9 lib/dump_stack.c:106
+ print_address_description.constprop.0+0x21/0x366 mm/kasan/report.c:239
+ __kasan_report.cold+0x7f/0x132 mm/kasan/report.c:425
+ kasan_report+0x38/0x51 mm/kasan/report.c:442
+ vmci_handle_is_equal include/linux/vmw_vmci_defs.h:142 [inline]
+ vmci_resource_remove+0x3a1/0x410 drivers/misc/vmw_vmci/vmci_resource.c:147
+ vmci_qp_broker_detach+0x89a/0x11b9 drivers/misc/vmw_vmci/vmci_queue_pair.c:2182
+ ctx_free_ctx+0x473/0xbe1 drivers/misc/vmw_vmci/vmci_context.c:444
+ kref_put include/linux/kref.h:65 [inline]
+ vmci_ctx_put drivers/misc/vmw_vmci/vmci_context.c:497 [inline]
+ vmci_ctx_destroy+0x170/0x1d6 drivers/misc/vmw_vmci/vmci_context.c:195
+ vmci_host_close+0x125/0x1ac drivers/misc/vmw_vmci/vmci_host.c:143
+ __fput+0x261/0xa34 fs/file_table.c:282
+ task_work_run+0xf0/0x194 kernel/task_work.c:164
+ tracehook_notify_resume include/linux/tracehook.h:189 [inline]
+ exit_to_user_mode_loop+0x184/0x189 kernel/entry/common.c:187
+ exit_to_user_mode_prepare+0x11b/0x123 kernel/entry/common.c:220
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:302 [inline]
+ syscall_exit_to_user_mode+0x18/0x42 kernel/entry/common.c:313
+ do_syscall_64+0x41/0x85 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x6e/0x0
+
+This change ensures the type is also checked when removing
+the resource from vmci_resource_table in vmci_resource_remove().
+
+Fixes: bc63dedb7d46 ("VMCI: resource object implementation.")
 Cc: stable@vger.kernel.org
-Fixes: ca3cda6fcf1e ("uio_hv_generic: add rescind support")
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240829071312.1595-3-namjain@linux.microsoft.com
+Reported-by: George Kennedy <george.kennedy@oracle.com>
+Signed-off-by: David Fernandez Gonzalez <david.fernandez.gonzalez@oracle.com>
+Link: https://lore.kernel.org/r/20240828154338.754746-1-david.fernandez.gonzalez@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/vmbus_drv.c       |    1 +
- drivers/uio/uio_hv_generic.c |    8 ++++++++
- 2 files changed, 9 insertions(+)
+ drivers/misc/vmw_vmci/vmci_resource.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2008,6 +2008,7 @@ static umode_t vmbus_chan_attr_is_visibl
+--- a/drivers/misc/vmw_vmci/vmci_resource.c
++++ b/drivers/misc/vmw_vmci/vmci_resource.c
+@@ -144,7 +144,8 @@ void vmci_resource_remove(struct vmci_re
+ 	spin_lock(&vmci_resource_table.lock);
  
- 	return attr->mode;
- }
-+EXPORT_SYMBOL_GPL(vmbus_device_unregister);
- 
- static struct attribute_group vmbus_chan_group = {
- 	.attrs = vmbus_chan_attrs,
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -119,6 +119,14 @@ static void hv_uio_rescind(struct vmbus_
- 
- 	/* Wake up reader */
- 	uio_event_notify(&pdata->info);
-+
-+	/*
-+	 * With rescind callback registered, rescind path will not unregister the device
-+	 * from vmbus when the primary channel is rescinded.
-+	 * Without it, rescind handling is incomplete and next onoffer msg does not come.
-+	 * Unregister the device from vmbus here.
-+	 */
-+	vmbus_device_unregister(channel->device_obj);
- }
- 
- /* Sysfs API to allow mmap of the ring buffers
+ 	hlist_for_each_entry(r, &vmci_resource_table.entries[idx], node) {
+-		if (vmci_handle_is_equal(r->handle, resource->handle)) {
++		if (vmci_handle_is_equal(r->handle, resource->handle) &&
++		    resource->type == r->type) {
+ 			hlist_del_init_rcu(&r->node);
+ 			break;
+ 		}
 
 
