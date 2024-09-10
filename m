@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF07919308E;
-	Tue, 10 Sep 2024 10:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACF8194ADB;
+	Tue, 10 Sep 2024 10:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962896; cv=none; b=VYgLf/mvYsOu1/y97R6SvF56CazAGmknb8HW9Bo56Ecx5b/MUy833kPVk7Of/lYQGR6XydsxGwaoD0DUID3IoKtfV3C3X6JXjstQudkyVqJBexQHpeFjqPBm29e5XrvP7YsE1HLy2FNCLOsCizQ7CqFLOcL5h9XdDPXilxiDBB8=
+	t=1725962898; cv=none; b=GNQZMn/TqEt9kb7RZcDhgvS4XBqU+MI+6lm6MhNgqhRPD23g1KG04fzzbrPw45rUq6da2uV+bhKwaqP7aJgp5rM+2LsR36srdCA3MIbZtDoQjgl+kY5DgttoekP/7zAYIYYY/sz3REQWK7pBgb04gPeYwkXW0YHhU0cDQV8q9yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962896; c=relaxed/simple;
-	bh=hHEYz3eJFDuXIWGm/n/EaFNJUhdQH2VTC2XCM0kcs5o=;
+	s=arc-20240116; t=1725962898; c=relaxed/simple;
+	bh=4LGTeVzRH9wsHQ1+gad8MazyvEyyNdZrAxzPJLWKtEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1hMFprU9qg6F0UD3eMgQLKir4RQ9RgJPp4cd5ANnw7CPMwmqoUoAdMkQTOY3FGvJI0ovlM97zc+HO1KoZg3SqTLN5F9Q6TJfylkMc6GKlbFbetPKq0zZ5Tiq6tQ2XFlC2FRu7tKcOyqpqzheNj5mDz2u46nvxklqwM5fNoZt0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLqHMtLp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WmLrBNTmTFIxJS5GKnHBduFAO1H+0OqiUllAsotFdImGbIiBL0+oQqQ3c0VJ+zkh2zU29bhsLpK65sn8VyrkF53flV4lQlLMHN73nO6YSOwL1bcgGbSffDWqhUd3BbE0+qEl0yGYC+vArgn3X5PH5okNkZsW0Rn7C0Q81uhcWeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIUnQ0q8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLqHMtLp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728E5C4CEC3;
-	Tue, 10 Sep 2024 10:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIUnQ0q8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A12C4CEC3;
+	Tue, 10 Sep 2024 10:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962895;
-	bh=hHEYz3eJFDuXIWGm/n/EaFNJUhdQH2VTC2XCM0kcs5o=;
+	s=korg; t=1725962898;
+	bh=4LGTeVzRH9wsHQ1+gad8MazyvEyyNdZrAxzPJLWKtEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLqHMtLp9zth3Cd1x28t49peaKTNlqgFCk2JjBPJDYqCGcl13I3OLXvLUYvr0VgC2
-	 CDkA6c3griKNf/sPRlr//+8HHS+kaVrz6IcUPvTGm7JC2wWSIA7CYhIz8RYAnTPkNU
-	 1nnfMotci1wxKj7J4OcOJXr4B9c1ygmYRY9weQy0=
+	b=UIUnQ0q8B93LToGjZQ/XtZYDXFN1dWhNBWH/UAVnE3uJ+3mJNzZvnIVs/Z8e8HaHC
+	 Ztok4oa8+IwlP1gT7W1He/+Yry0A/KyUw8B14rKhha/L85oyxiHwYPrnd9P/ShUfza
+	 0SjVFBkTGhHA9biG7OHxJI8B0bjn1oSaP4DKYWQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/192] drm/amd/display: Check denominator pbn_div before used
-Date: Tue, 10 Sep 2024 11:31:30 +0200
-Message-ID: <20240910092600.719870874@linuxfoundation.org>
+Subject: [PATCH 6.1 067/192] drm/amdgpu: check for LINEAR_ALIGNED correctly in check_tiling_flags_gfx6
+Date: Tue, 10 Sep 2024 11:31:31 +0200
+Message-ID: <20240910092600.753578828@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -48,44 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Marek Olšák <marek.olsak@amd.com>
 
-[ Upstream commit 116a678f3a9abc24f5c9d2525b7393d18d9eb58e ]
+[ Upstream commit 11317d2963fa79767cd7c6231a00a9d77f2e0f54 ]
 
-[WHAT & HOW]
-A denominator cannot be 0, and is checked before used.
+Fix incorrect check.
 
-This fixes 1 DIVIDE_BY_ZERO issue reported by Coverity.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Marek Olšák <marek.olsak@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 0be1a1149a3f..393e32259a77 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6767,7 +6767,7 @@ static int dm_update_mst_vcpi_slots_for_dsc(struct drm_atomic_state *state,
- 			}
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+index aabde6ebb190..ac773b191071 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+@@ -873,8 +873,7 @@ static int check_tiling_flags_gfx6(struct amdgpu_framebuffer *afb)
+ {
+ 	u64 micro_tile_mode;
  
--		if (j == dc_state->stream_count)
-+		if (j == dc_state->stream_count || pbn_div == 0)
- 			continue;
+-	/* Zero swizzle mode means linear */
+-	if (AMDGPU_TILING_GET(afb->tiling_flags, SWIZZLE_MODE) == 0)
++	if (AMDGPU_TILING_GET(afb->tiling_flags, ARRAY_MODE) == 1) /* LINEAR_ALIGNED */
+ 		return 0;
  
- 		slot_num = DIV_ROUND_UP(pbn, pbn_div);
+ 	micro_tile_mode = AMDGPU_TILING_GET(afb->tiling_flags, MICRO_TILE_MODE);
 -- 
 2.43.0
 
