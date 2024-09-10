@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A6D18C336;
-	Tue, 10 Sep 2024 10:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1F618C336;
+	Tue, 10 Sep 2024 10:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962904; cv=none; b=dV6n7qvBSQMSltMa5eViGh6g88d8zq5QbAuLQcL6dp2CG9xzrtDD5qwyddefmAHSvMQ7lCQBP5CywlPnPrdyYJPGCd9Odoi8mOUCwABIDsza3RELj3p0vHa5p4L3bsR4GGg24uJ2kyRsEfLVBUBhmAnT9szEt6s1xg4XLDXG4JI=
+	t=1725962907; cv=none; b=ekpD6RMbH+HQK7gN4fMbhqUx/wuL3licHFA8zg7gYe002L+Ma6CgAHrQ481I5mLZhCCTBFkjktOijDYaAurwgGIeShAXaQkBmI2/ztsPvvjr0tOopmLnbzVNdCoZH9Rme2r123RvFBxOlmsBQieGrsaNNmIRDXLeEzlcJLxfLUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962904; c=relaxed/simple;
-	bh=BFXJ7edtuQVGvpDgJA05nNtCEQNFhODpE5v5wFjgpDY=;
+	s=arc-20240116; t=1725962907; c=relaxed/simple;
+	bh=XU47M19cCmDCuKLAhjuTiIKJZ2K+ZgWZG3+R2L1Pobs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQNtMai7XdSuqiYjphA2NEUEmC3pVcxuhtDGwrfZ9q0rpLIvaNllPSBTieCAhu45UAGvBAeJhKS3DHEhWmcsE2d9ls9GDGm7ZbRkeOog4kP71O6mW0piDUP9p+Rs7Ck3sUlEK+0L50g8/vd0CFTSeORSAKS3LabBi1wQ58vdg48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbLyuV7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TtmuKFTrOw04vxwKj64HWKpeFrzNeVGhcmM9y/nrwN3gIjiOuc3H5RSM/AcAOrQGbGnf6yJbyV+onLdIJpg5eaZlvDU64swNOyY78GC7UGFPmd3eop9yyROHFouKMotz06lulMHAK/aBvf5KlikhEkJjs7FF57wi0Da8r/UJRuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqyXmCeX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbLyuV7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F795C4CEC3;
-	Tue, 10 Sep 2024 10:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqyXmCeX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33504C4CEC3;
+	Tue, 10 Sep 2024 10:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962904;
-	bh=BFXJ7edtuQVGvpDgJA05nNtCEQNFhODpE5v5wFjgpDY=;
+	s=korg; t=1725962907;
+	bh=XU47M19cCmDCuKLAhjuTiIKJZ2K+ZgWZG3+R2L1Pobs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbLyuV7rrTkv4Y0McF4bZyXLcvHBaLmr8Pvw7EJkVedmQI4n8V3Tcxz+RHHsJ1d7S
-	 MqCEH6S7+e4vQvOEVRy2pQ9BDhQzn/kBm4RZ/oWcEgCXzI+0NcwFHo2rjHC7bIC7Sb
-	 LhbTA3u2m18Iv924jr5heXpl7luoPcx3UQC3BcRo=
+	b=HqyXmCeX4EWIZ179dQ4Uwe8XcI7FPl7KVnyl8gM+SWDPk48oo5QwwR39gTVFtipNS
+	 YG0UQuR49H6YQrUo8WEaaE2aVyKcT3twbzBr0g3cZ8K+xdYx578d1/uWnEav62wWVU
+	 DnD4ClMAgZ1wEx4yn+0Eq/gK0rXjCaI2uMvPSDlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/192] can: m_can: Release irq on error in m_can_open
-Date: Tue, 10 Sep 2024 11:31:33 +0200
-Message-ID: <20240910092600.844735387@linuxfoundation.org>
+Subject: [PATCH 6.1 070/192] can: mcp251xfd: fix ring configuration when switching from CAN-CC to CAN-FD mode
+Date: Tue, 10 Sep 2024 11:31:34 +0200
+Message-ID: <20240910092600.886817316@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,52 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 06d4ef3056a7ac31be331281bb7a6302ef5a7f8a ]
+[ Upstream commit 50ea5449c56310d2d31c28ba91a59232116d3c1e ]
 
-It appears that the irq requested in m_can_open() may be leaked
-if an error subsequently occurs: if m_can_start() fails.
+If the ring (rx, tx) and/or coalescing parameters (rx-frames-irq,
+tx-frames-irq) have been configured while the interface was in CAN-CC
+mode, but the interface is brought up in CAN-FD mode, the ring
+parameters might be too big.
 
-Address this by calling free_irq in the unwind path for
-such cases.
+Use the default CAN-FD values in this case.
 
-Flagged by Smatch.
-Compile tested only.
-
-Fixes: eaacfeaca7ad ("can: m_can: Call the RAM init directly from m_can_chip_config")
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/all/20240805-mcan-irq-v2-1-7154c0484819@kernel.org
+Fixes: 9263c2e92be9 ("can: mcp251xfd: ring: add support for runtime configurable RX/TX ring parameters")
+Link: https://lore.kernel.org/all/20240805-mcp251xfd-fix-ringconfig-v1-1-72086f0ca5ee@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-ram.c | 11 +++++++++-
+ .../net/can/spi/mcp251xfd/mcp251xfd-ring.c    | 20 ++++++++++++++++---
+ 2 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index 2de998b98cb5..561f25cdad3f 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -1815,7 +1815,7 @@ static int m_can_open(struct net_device *dev)
- 	/* start the m_can controller */
- 	err = m_can_start(dev);
- 	if (err)
--		goto exit_irq_fail;
-+		goto exit_start_fail;
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ram.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ram.c
+index 9e8e82cdba46..61b0d6fa52dd 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ram.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ram.c
+@@ -97,7 +97,16 @@ void can_ram_get_layout(struct can_ram_layout *layout,
+ 	if (ring) {
+ 		u8 num_rx_coalesce = 0, num_tx_coalesce = 0;
  
- 	if (!cdev->is_peripheral)
- 		napi_enable(&cdev->napi);
-@@ -1824,6 +1824,9 @@ static int m_can_open(struct net_device *dev)
+-		num_rx = can_ram_rounddown_pow_of_two(config, &config->rx, 0, ring->rx_pending);
++		/* If the ring parameters have been configured in
++		 * CAN-CC mode, but and we are in CAN-FD mode now,
++		 * they might be to big. Use the default CAN-FD values
++		 * in this case.
++		 */
++		num_rx = ring->rx_pending;
++		if (num_rx > layout->max_rx)
++			num_rx = layout->default_rx;
++
++		num_rx = can_ram_rounddown_pow_of_two(config, &config->rx, 0, num_rx);
  
- 	return 0;
+ 		/* The ethtool doc says:
+ 		 * To disable coalescing, set usecs = 0 and max_frames = 1.
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
+index 4d0246a0779a..915d505a304f 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
+@@ -458,11 +458,25 @@ int mcp251xfd_ring_alloc(struct mcp251xfd_priv *priv)
  
-+exit_start_fail:
-+	if (cdev->is_peripheral || dev->irq)
-+		free_irq(dev->irq, dev);
- exit_irq_fail:
- 	if (cdev->is_peripheral)
- 		destroy_workqueue(cdev->tx_wq);
+ 	/* switching from CAN-2.0 to CAN-FD mode or vice versa */
+ 	if (fd_mode != test_bit(MCP251XFD_FLAGS_FD_MODE, priv->flags)) {
++		const struct ethtool_ringparam ring = {
++			.rx_pending = priv->rx_obj_num,
++			.tx_pending = priv->tx->obj_num,
++		};
++		const struct ethtool_coalesce ec = {
++			.rx_coalesce_usecs_irq = priv->rx_coalesce_usecs_irq,
++			.rx_max_coalesced_frames_irq = priv->rx_obj_num_coalesce_irq,
++			.tx_coalesce_usecs_irq = priv->tx_coalesce_usecs_irq,
++			.tx_max_coalesced_frames_irq = priv->tx_obj_num_coalesce_irq,
++		};
+ 		struct can_ram_layout layout;
+ 
+-		can_ram_get_layout(&layout, &mcp251xfd_ram_config, NULL, NULL, fd_mode);
+-		priv->rx_obj_num = layout.default_rx;
+-		tx_ring->obj_num = layout.default_tx;
++		can_ram_get_layout(&layout, &mcp251xfd_ram_config, &ring, &ec, fd_mode);
++
++		priv->rx_obj_num = layout.cur_rx;
++		priv->rx_obj_num_coalesce_irq = layout.rx_coalesce;
++
++		tx_ring->obj_num = layout.cur_tx;
++		priv->tx_obj_num_coalesce_irq = layout.tx_coalesce;
+ 	}
+ 
+ 	if (fd_mode) {
 -- 
 2.43.0
 
