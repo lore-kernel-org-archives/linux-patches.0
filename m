@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B527B192D86;
-	Tue, 10 Sep 2024 10:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A6C192D86;
+	Tue, 10 Sep 2024 10:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963825; cv=none; b=d6ENcUoB+8bqfzYzHQvqr82z9rvIFAAa34ZWJ5vq8udaDirae5lgdpa0qKJZbOb9pH//vH/s5hc5/WljRZbEOdzQeom7RqoODmTr0a2xqGZygA9oKFs9L4Dh/aHFMBx0lnjOvkHXYa+bhWCJBsqKVFU/Zto2TTwhrGTcAbeFhOM=
+	t=1725963828; cv=none; b=u5KDa5nzSQ3dnN/odRJ17qz5GGejDoICMdXPTCWMi1lftjSYCwvC1uxDZ+KoHMGs50WIx2DTTtVYJu0jyGvz52Lb7WcDuTurXG8y4I0SeifYdypS52L/A+D2KJJ3tsSJEMze+vZkVr4YXKqrfHFZWVEBRfLSYjxHDNWZooDAhe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963825; c=relaxed/simple;
-	bh=CmJEswzY9wX71W0P3DJO5c6Q65gs0YBCKR8eRE0WdGM=;
+	s=arc-20240116; t=1725963828; c=relaxed/simple;
+	bh=67FAteKJoUh0pfEnIWPZYPI8+/S+BbFb6gH+g9QKQZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/kjYP/wNX1PRRVVUBgduOhkEuooLewfuPcW9orG42tBsgmRwf4QwCSSNiSV/I6hUYADFMOAHDpvYBRrjM/wnTBt756Hc66ohXkgtPY5LKk+IY3tb7aIh8fM8/nhAU/3aIQ5R4jrZAOvr8LCnuPPmbGYtRa+B3JtL09oed9A5iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdN06+d7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBcJrqMmggKCy5ZL8YZRU2I1uJ5uqge3FflupfXPIhiv+LzE0YmeWhqR02vVVdNACmOnBnwaXGFzAuj99kaMUpkAsz7LRMjBGS5HomGBrrZVzoOkSu9tc8PJsmrGYNGZZQidkjNfMlGwayDy0yq3dozGVIuL+MA+HnIzQMY8cUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcOr2xAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdN06+d7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC26C4CEC3;
-	Tue, 10 Sep 2024 10:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcOr2xAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BF7C4CEC3;
+	Tue, 10 Sep 2024 10:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963825;
-	bh=CmJEswzY9wX71W0P3DJO5c6Q65gs0YBCKR8eRE0WdGM=;
+	s=korg; t=1725963828;
+	bh=67FAteKJoUh0pfEnIWPZYPI8+/S+BbFb6gH+g9QKQZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdN06+d7uR+6Nq4PgfkcVX1EQLUirzQU6A5ktP7vA4qe7GekQxTzDsHFs9drRnwtS
-	 OEDL8X7E1jaoQN06RUA61vq7gBtbb1meTEiuR6QweD30quT/32peGUYtJJ/0XPSW0f
-	 oP1pcci8ATzFB2GroqVz3/+fMHAWepUgZc9s4hb4=
+	b=RcOr2xABYw8XAcHXPOC04nwz/kIsJe34bEwWzth7TcV2vJEdUIIu5PxQgnkUeonY/
+	 UoTMaqJbldOXYsqUORedJNAfzy9s0l4sg5VmdkPzDaB6yoxI08G/ovBYFZ0tw115VO
+	 pOQSwwm8yOty3QNItraH4DhDKcTZQCuYZgwPPr30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ole <ole@binarygecko.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 5.15 190/214] perf/aux: Fix AUX buffer serialization
-Date: Tue, 10 Sep 2024 11:33:32 +0200
-Message-ID: <20240910092606.390702392@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 191/214] ksmbd: unset the binding mark of a reused connection
+Date: Tue, 10 Sep 2024 11:33:33 +0200
+Message-ID: <20240910092606.423910033@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,113 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 2ab9d830262c132ab5db2f571003d80850d56b2a upstream.
+[ Upstream commit 78c5a6f1f630172b19af4912e755e1da93ef0ab5 ]
 
-Ole reported that event->mmap_mutex is strictly insufficient to
-serialize the AUX buffer, add a per RB mutex to fully serialize it.
+Steve French reported null pointer dereference error from sha256 lib.
+cifs.ko can send session setup requests on reused connection.
+If reused connection is used for binding session, conn->binding can
+still remain true and generate_preauth_hash() will not set
+sess->Preauth_HashValue and it will be NULL.
+It is used as a material to create an encryption key in
+ksmbd_gen_smb311_encryptionkey. ->Preauth_HashValue cause null pointer
+dereference error from crypto_shash_update().
 
-Note that in the lock order comment the perf_event::mmap_mutex order
-was already wrong, that is, it nesting under mmap_lock is not new with
-this patch.
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+#PF: supervisor read access in kernel mode
+#PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 8 PID: 429254 Comm: kworker/8:39
+Hardware name: LENOVO 20MAS08500/20MAS08500, BIOS N2CET69W (1.52 )
+Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+RIP: 0010:lib_sha256_base_do_update.isra.0+0x11e/0x1d0 [sha256_ssse3]
+<TASK>
+? show_regs+0x6d/0x80
+? __die+0x24/0x80
+? page_fault_oops+0x99/0x1b0
+? do_user_addr_fault+0x2ee/0x6b0
+? exc_page_fault+0x83/0x1b0
+? asm_exc_page_fault+0x27/0x30
+? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
+? lib_sha256_base_do_update.isra.0+0x11e/0x1d0 [sha256_ssse3]
+? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
+? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
+_sha256_update+0x77/0xa0 [sha256_ssse3]
+sha256_avx2_update+0x15/0x30 [sha256_ssse3]
+crypto_shash_update+0x1e/0x40
+hmac_update+0x12/0x20
+crypto_shash_update+0x1e/0x40
+generate_key+0x234/0x380 [ksmbd]
+generate_smb3encryptionkey+0x40/0x1c0 [ksmbd]
+ksmbd_gen_smb311_encryptionkey+0x72/0xa0 [ksmbd]
+ntlm_authenticate.isra.0+0x423/0x5d0 [ksmbd]
+smb2_sess_setup+0x952/0xaa0 [ksmbd]
+__process_request+0xa3/0x1d0 [ksmbd]
+__handle_ksmbd_work+0x1c4/0x2f0 [ksmbd]
+handle_ksmbd_work+0x2d/0xa0 [ksmbd]
+process_one_work+0x16c/0x350
+worker_thread+0x306/0x440
+? __pfx_worker_thread+0x10/0x10
+kthread+0xef/0x120
+? __pfx_kthread+0x10/0x10
+ret_from_fork+0x44/0x70
+? __pfx_kthread+0x10/0x10
+ret_from_fork_asm+0x1b/0x30
+</TASK>
 
-Fixes: 45bfb2e50471 ("perf: Add AUX area to ring buffer for raw data streams")
-Reported-by: Ole <ole@binarygecko.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c        |   18 ++++++++++++------
- kernel/events/internal.h    |    1 +
- kernel/events/ring_buffer.c |    2 ++
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ fs/ksmbd/smb2pdu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1368,8 +1368,9 @@ static void put_ctx(struct perf_event_co
-  *	  perf_event_context::mutex
-  *	    perf_event::child_mutex;
-  *	      perf_event_context::lock
-- *	    perf_event::mmap_mutex
-  *	    mmap_lock
-+ *	      perf_event::mmap_mutex
-+ *	        perf_buffer::aux_mutex
-  *	      perf_addr_filters_head::lock
-  *
-  *    cpu_hotplug_lock
-@@ -6275,12 +6276,11 @@ static void perf_mmap_close(struct vm_ar
- 		event->pmu->event_unmapped(event, vma->vm_mm);
- 
- 	/*
--	 * rb->aux_mmap_count will always drop before rb->mmap_count and
--	 * event->mmap_count, so it is ok to use event->mmap_mutex to
--	 * serialize with perf_mmap here.
-+	 * The AUX buffer is strictly a sub-buffer, serialize using aux_mutex
-+	 * to avoid complications.
- 	 */
- 	if (rb_has_aux(rb) && vma->vm_pgoff == rb->aux_pgoff &&
--	    atomic_dec_and_mutex_lock(&rb->aux_mmap_count, &event->mmap_mutex)) {
-+	    atomic_dec_and_mutex_lock(&rb->aux_mmap_count, &rb->aux_mutex)) {
- 		/*
- 		 * Stop all AUX events that are writing to this buffer,
- 		 * so that we can free its AUX pages and corresponding PMU
-@@ -6297,7 +6297,7 @@ static void perf_mmap_close(struct vm_ar
- 		rb_free_aux(rb);
- 		WARN_ON_ONCE(refcount_read(&rb->aux_refcount));
- 
--		mutex_unlock(&event->mmap_mutex);
-+		mutex_unlock(&rb->aux_mutex);
- 	}
- 
- 	if (atomic_dec_and_test(&rb->mmap_count))
-@@ -6385,6 +6385,7 @@ static int perf_mmap(struct file *file,
- 	struct perf_event *event = file->private_data;
- 	unsigned long user_locked, user_lock_limit;
- 	struct user_struct *user = current_user();
-+	struct mutex *aux_mutex = NULL;
- 	struct perf_buffer *rb = NULL;
- 	unsigned long locked, lock_limit;
- 	unsigned long vma_size;
-@@ -6433,6 +6434,9 @@ static int perf_mmap(struct file *file,
- 		if (!rb)
- 			goto aux_unlock;
- 
-+		aux_mutex = &rb->aux_mutex;
-+		mutex_lock(aux_mutex);
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 57f59172d821..089dc2f51229 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1705,6 +1705,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		rc = ksmbd_session_register(conn, sess);
+ 		if (rc)
+ 			goto out_err;
 +
- 		aux_offset = READ_ONCE(rb->user_page->aux_offset);
- 		aux_size = READ_ONCE(rb->user_page->aux_size);
- 
-@@ -6583,6 +6587,8 @@ unlock:
- 		atomic_dec(&rb->mmap_count);
- 	}
- aux_unlock:
-+	if (aux_mutex)
-+		mutex_unlock(aux_mutex);
- 	mutex_unlock(&event->mmap_mutex);
- 
- 	/*
---- a/kernel/events/internal.h
-+++ b/kernel/events/internal.h
-@@ -40,6 +40,7 @@ struct perf_buffer {
- 	struct user_struct		*mmap_user;
- 
- 	/* AUX area */
-+	struct mutex			aux_mutex;
- 	long				aux_head;
- 	unsigned int			aux_nest;
- 	long				aux_wakeup;	/* last aux_watermark boundary crossed by aux_head */
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -332,6 +332,8 @@ ring_buffer_init(struct perf_buffer *rb,
- 	 */
- 	if (!rb->nr_pages)
- 		rb->paused = 1;
++		conn->binding = false;
+ 	} else if (conn->dialect >= SMB30_PROT_ID &&
+ 		   (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   req->Flags & SMB2_SESSION_REQ_FLAG_BINDING) {
+@@ -1783,6 +1785,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 			sess = NULL;
+ 			goto out_err;
+ 		}
 +
-+	mutex_init(&rb->aux_mutex);
- }
++		conn->binding = false;
+ 	}
+ 	work->sess = sess;
  
- void perf_aux_output_flag(struct perf_output_handle *handle, u64 flags)
+-- 
+2.43.0
+
 
 
