@@ -1,80 +1,114 @@
-Received: from a.mx.secunet.com (a.mx.secunet.com [62.96.220.36])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8E6149C61;
-	Tue, 10 Sep 2024 06:42:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.96.220.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757A414F12C;
+	Tue, 10 Sep 2024 09:36:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725950566; cv=none; b=d/XFbDxeZSfbaGucT5iq7hS5y/u/BWKd1B+sQrTogphrN203KkIZFPMxDOTrHaaqt5PdO2Q0IcrlQpX6VPiOw5qAB844Q528d4Jbg352kAv+9F5AjSCM3js/wLkfiZdeMFhSUqkUoMyl6E2MnkQawBNhdueSy0OiJGc9jVMtKTQ=
+	t=1725960968; cv=none; b=RjXQJKJZWi/rdbiH01AfwRguj247zicYVLMg44jpca5B/6+1KMdgCC0On06V+fEWYFvp6bewNfO8wNURLoqDrNnvqOihd5FxZARESb9v/ZIJW4lN0al1bjpb+WsgB6u5W0lUJaUuGZsfk4yOVvmOsLsS3ggEIfw7vTshV6SDNUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725950566; c=relaxed/simple;
-	bh=3hdYHGbHnGbQg+Pr7BAijZVjxBRDrGvUnInEP+LTUe4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rafKVAIDS5mic4ChJyfupklBM+qtJZEi6XWFCBVU4SQhMHlwx9SBM6CLhcTqN9ZI/EWn3Hng51RXWr3SrgLmgPH2XMmvSMLG3oi5vmRmpxOlNDFc8yu6JocYWMCi+hBzYnHJO8pKKogPs0mZ2IIJ40pVhdBUqwUXTIm6XL5dH9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=secunet.com; spf=pass smtp.mailfrom=secunet.com; dkim=pass (2048-bit key) header.d=secunet.com header.i=@secunet.com header.b=KIj/zcWl; arc=none smtp.client-ip=62.96.220.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=secunet.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=secunet.com
+	s=arc-20240116; t=1725960968; c=relaxed/simple;
+	bh=2JNLZrtyQo1oqdgTvnkSRTk66UgfJanCWAe4qQDzMyw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hjOLRY2Qn0YIQBaMIKhy5pr9PE99j7X7Z2WCv+OwuyE/F8K9ClcbNAc3+AIvyH7eznyWopa7SOCbRgaY3FV0HRCQhG/XZrhYc4K8N/VHcIbknQ2RUHGVHLheEOjkEPN31GK+RmLeUvEDOa1hDWTF8n4QpiPPoeiF81Tl2+JKOEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLjWFpWU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=secunet.com header.i=@secunet.com header.b="KIj/zcWl"
-Received: from localhost (localhost [127.0.0.1])
-	by a.mx.secunet.com (Postfix) with ESMTP id D50C220854;
-	Tue, 10 Sep 2024 08:42:41 +0200 (CEST)
-X-Virus-Scanned: by secunet
-Received: from a.mx.secunet.com ([127.0.0.1])
-	by localhost (a.mx.secunet.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Bz88uQcviNit; Tue, 10 Sep 2024 08:42:41 +0200 (CEST)
-Received: from cas-essen-01.secunet.de (rl1.secunet.de [10.53.40.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by a.mx.secunet.com (Postfix) with ESMTPS id 6799C2074A;
-	Tue, 10 Sep 2024 08:42:41 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com 6799C2074A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=secunet.com;
-	s=202301; t=1725950561;
-	bh=3hdYHGbHnGbQg+Pr7BAijZVjxBRDrGvUnInEP+LTUe4=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To:From;
-	b=KIj/zcWlaqG0OrZYafcHqhk0Gl4aFDFeShImgwDYEsUduaiI7UNvw5rDAdbR/vbzV
-	 vGQx0EZpPnBgZ8r9fufF2T3hs4GpnntuzsawkeqAoZPq+BFsu3FzJRThcXlRMO0t3y
-	 +tcND9JYz+V+8rnmo/ff6AdPhMPy3KBuXPf1W8hDAAfQiFW/MRMXZS4UCw1bBH0wqw
-	 hwpg/N8EItX655fMev/z2qTAe8aGRZGGSov7/BxTAM4B348//Bn2ppWL5V8fTb9jaQ
-	 aDp1o3LIZqbCQDj2RnnYGmIbhfv/So2Pmu3oAt3wTeWJzoi722amzHV24aIljUZu6o
-	 t+mV0ubettK0w==
-Received: from mbx-essen-02.secunet.de (10.53.40.198) by
- cas-essen-01.secunet.de (10.53.40.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 10 Sep 2024 08:42:41 +0200
-Received: from gauss2.secunet.de (10.182.7.193) by mbx-essen-02.secunet.de
- (10.53.40.198) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 10 Sep
- 2024 08:42:40 +0200
-Received: by gauss2.secunet.de (Postfix, from userid 1000)
-	id 1D0C2318146C; Tue, 10 Sep 2024 08:42:40 +0200 (CEST)
-Date: Tue, 10 Sep 2024 08:42:39 +0200
-From: Steffen Klassert <steffen.klassert@secunet.com>
-To: Nathan Chancellor <nathan@kernel.org>
-CC: Herbert Xu <herbert@gondor.apana.org.au>, Florian Westphal <fw@strlen.de>,
-	<netdev@vger.kernel.org>, <llvm@lists.linux.dev>, <patches@lists.linux.dev>
-Subject: Re: [PATCH ipsec-next v2] xfrm: policy: Restore dir assignments in
- xfrm_hash_rebuild()
-Message-ID: <Zt/qX2RoOWSkTwOF@gauss3.secunet.de>
-References: <20240829-xfrm-restore-dir-assign-xfrm_hash_rebuild-v2-1-1cf8958f6e8e@kernel.org>
- <20240909150934.GA1111756@thelio-3990X>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLjWFpWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B5BC4CEC3;
+	Tue, 10 Sep 2024 09:36:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1725960968;
+	bh=2JNLZrtyQo1oqdgTvnkSRTk66UgfJanCWAe4qQDzMyw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YLjWFpWULpjBabWav5wKD3wjyN5kD/4GYQ1R2PZvsWyEsB4ldYI2K8JdVWKolLzi2
+	 50ZPXkNkQB2HT0om81yg0yaXI6sGDXH6QoDzUWj90FBubbil7KWjmvujQUEpyCQZFT
+	 F6f2a0EXRZ3JcuKfpSzSDQOu54K6qv3W46fn8Lu0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	ZHANG Yuntian <yt@radxa.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 01/96] net: usb: qmi_wwan: add MeiG Smart SRM825L
+Date: Tue, 10 Sep 2024 11:31:03 +0200
+Message-ID: <20240910092541.444571952@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
+References: <20240910092541.383432924@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240909150934.GA1111756@thelio-3990X>
-X-ClientProxiedBy: cas-essen-01.secunet.de (10.53.40.201) To
- mbx-essen-02.secunet.de (10.53.40.198)
-X-EXCLAIMER-MD-CONFIG: 2c86f778-e09b-4440-8b15-867914633a10
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 09, 2024 at 08:09:34AM -0700, Nathan Chancellor wrote:
-> Ping? This is still seen on next-20240909.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
-Sorry, there was some delay due to travelling on my side.
+------------------
 
-This is now applied to ipsec-next, thanks Nathan!
+From: ZHANG Yuntian <yt@radxa.com>
+
+[ Upstream commit 1ca645a2f74a4290527ae27130c8611391b07dbf ]
+
+Add support for MeiG Smart SRM825L which is based on Qualcomm 315 chip.
+
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d22 Rev= 4.14
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=6f345e48
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+
+Signed-off-by: ZHANG Yuntian <yt@radxa.com>
+Link: https://patch.msgid.link/D1EB81385E405DFE+20240803074656.567061-1-yt@radxa.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 881240d939564..bbd5183e5e635 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1390,6 +1390,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+ 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
++	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
+ 
+ 	/* 4. Gobi 1000 devices */
+ 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+-- 
+2.43.0
+
+
+
