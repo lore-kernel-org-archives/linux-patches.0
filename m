@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC0A183CB0;
-	Tue, 10 Sep 2024 09:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE55224F6;
+	Tue, 10 Sep 2024 09:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962072; cv=none; b=g4YzxgjySZr+TaUQKlhGhHRD8g8EerpRej4/wggCczG986UWBvZ++H95VvZ6+LUqhTkSaGNLM7icQBZVqln395SkOUL7EnC3lusPb3OaWLRVaqSR7kT1GqgIPed2eW8RCpTQ0Nm91Wkqj+Z33Jo1CYBWXnN0SK4BNSmFerouNdE=
+	t=1725962075; cv=none; b=iUj5tJ8qDp/xxhZp5uMRHnpFBYnED9Zh6fdOfA0mEvgZw0mr0webG5bwhNvaXZ2f4ZJp/TTjf29jlFvXeHdTXrnSSzK9ehqsl9+Qcvve/ZZgddkaK6H2CP2AE9eHf/4p6A2K7IPkI1hI3VWZHwsP0Zn3SdqWGW8Pon9K/+R4+e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962072; c=relaxed/simple;
-	bh=rG3tpbi/ocN+XIIuDnFF10/bxYZkGyA0bnpN7uvqTA0=;
+	s=arc-20240116; t=1725962075; c=relaxed/simple;
+	bh=RNl6bXccOtDjX9PIRXi+b+Zg+cb5Yw5Z9XUngmPtyC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEONeuoOUeqrxkHg/l5ewquEtLwkXEUMkDB2JRAreQCVr/0IbEq6usjxRBBayfYRPpTLe5bggUObi5rzGhOBbHRN5DwTNuyPZxkIiuHfQxgEhw68t3rKO6/9SFEdFRYSkRnA3rd0Gq10imd0dcOIKmwunVFwL6rX2pv3FvpnyDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjUNn448; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WBamuYJHjeA/J+ETA/+oDRHr1CXy9R8IqOYLNiStJUNnJuGGP9ECN1jXRcLmS4SwjMyF2orLLKL1+SyJWUM+P/jyq+8O0b0Nv+Y4XpR6jwuodfnciFm6sAE3IlPAecIaiMZDVHe29TnBGksdkFOypy318TBVsTxTtbtnJQwurQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuOg942n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjUNn448"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5233C4CEC3;
-	Tue, 10 Sep 2024 09:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuOg942n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371DBC4CEC3;
+	Tue, 10 Sep 2024 09:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962072;
-	bh=rG3tpbi/ocN+XIIuDnFF10/bxYZkGyA0bnpN7uvqTA0=;
+	s=korg; t=1725962075;
+	bh=RNl6bXccOtDjX9PIRXi+b+Zg+cb5Yw5Z9XUngmPtyC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjUNn448Keongl+6FVFskFNSTVeaPDtrk9AwuLxVmC968XDA+5XMlQWX1WV1tY4CG
-	 HH+4OOEFkDjvkvxk9Hu0eh993/dUBPIDcPlqBP/q8ZnfWr0aUjlqiCmXw6oAWrq1lO
-	 AQs7oq38MrSETcrWzgkmcqjqRQnP/6O5x0ZYfTvg=
+	b=kuOg942n8NXZGPjTeJvqhDktBo+Q1tI44uSfDZNVsxWxOr94wh+L+8UkujjksWHKb
+	 1qaZsJ8yaTcnZH5PNL3rORHqqCr5mNop3IObS/C6AakM9TQEM5V4zIN9xeB2XGn+Oz
+	 EwGhNT1nJIo5QMwRsd49jQH78v2JgcomMJk5xuz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	Gao Xiang <xiang@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-erofs@lists.ozlabs.org,
-	linux-fsdevel@vger.kernel.org,
+	Imre Deak <imre.deak@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 258/375] vfs: Fix potential circular locking through setxattr() and removexattr()
-Date: Tue, 10 Sep 2024 11:30:55 +0200
-Message-ID: <20240910092631.232821998@linuxfoundation.org>
+Subject: [PATCH 6.10 249/375] PCI: Add missing bridge lock to pci_bus_lock()
+Date: Tue, 10 Sep 2024 11:30:46 +0200
+Message-ID: <20240910092630.913209851@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -59,378 +56,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit c3a5e3e872f3688ae0dc57bb78ca633921d96a91 ]
+[ Upstream commit a4e772898f8bf2e7e1cf661a12c60a5612c4afab ]
 
-When using cachefiles, lockdep may emit something similar to the circular
-locking dependency notice below.  The problem appears to stem from the
-following:
+One of the true positives that the cfg_access_lock lockdep effort
+identified is this sequence:
 
- (1) Cachefiles manipulates xattrs on the files in its cache when called
-     from ->writepages().
+  WARNING: CPU: 14 PID: 1 at drivers/pci/pci.c:4886 pci_bridge_secondary_bus_reset+0x5d/0x70
+  RIP: 0010:pci_bridge_secondary_bus_reset+0x5d/0x70
+  Call Trace:
+   <TASK>
+   ? __warn+0x8c/0x190
+   ? pci_bridge_secondary_bus_reset+0x5d/0x70
+   ? report_bug+0x1f8/0x200
+   ? handle_bug+0x3c/0x70
+   ? exc_invalid_op+0x18/0x70
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? pci_bridge_secondary_bus_reset+0x5d/0x70
+   pci_reset_bus+0x1d8/0x270
+   vmd_probe+0x778/0xa10
+   pci_device_probe+0x95/0x120
 
- (2) The setxattr() and removexattr() system call handlers get the name
-     (and value) from userspace after taking the sb_writers lock, putting
-     accesses of the vma->vm_lock and mm->mmap_lock inside of that.
+Where pci_reset_bus() users are triggering unlocked secondary bus resets.
+Ironically pci_bus_reset(), several calls down from pci_reset_bus(), uses
+pci_bus_lock() before issuing the reset which locks everything *but* the
+bridge itself.
 
- (3) The afs filesystem uses a per-inode lock to prevent multiple
-     revalidation RPCs and in writeback vs truncate to prevent parallel
-     operations from deadlocking against the server on one side and local
-     page locks on the other.
+For the same motivation as adding:
 
-Fix this by moving the getting of the name and value in {get,remove}xattr()
-outside of the sb_writers lock.  This also has the minor benefits that we
-don't need to reget these in the event of a retry and we never try to take
-the sb_writers lock in the event we can't pull the name and value into the
-kernel.
+  bridge = pci_upstream_bridge(dev);
+  if (bridge)
+    pci_dev_lock(bridge);
 
-Alternative approaches that might fix this include moving the dispatch of a
-write to the cache off to a workqueue or trying to do without the
-validation lock in afs.  Note that this might also affect other filesystems
-that use netfslib and/or cachefiles.
+to pci_reset_function() for the "bus" and "cxl_bus" reset cases, add
+pci_dev_lock() for @bus->self to pci_bus_lock().
 
- ======================================================
- WARNING: possible circular locking dependency detected
- 6.10.0-build2+ #956 Not tainted
- ------------------------------------------------------
- fsstress/6050 is trying to acquire lock:
- ffff888138fd82f0 (mapping.invalidate_lock#3){++++}-{3:3}, at: filemap_fault+0x26e/0x8b0
-
- but task is already holding lock:
- ffff888113f26d18 (&vma->vm_lock->lock){++++}-{3:3}, at: lock_vma_under_rcu+0x165/0x250
-
- which lock already depends on the new lock.
-
- the existing dependency chain (in reverse order) is:
-
- -> #4 (&vma->vm_lock->lock){++++}-{3:3}:
-        __lock_acquire+0xaf0/0xd80
-        lock_acquire.part.0+0x103/0x280
-        down_write+0x3b/0x50
-        vma_start_write+0x6b/0xa0
-        vma_link+0xcc/0x140
-        insert_vm_struct+0xb7/0xf0
-        alloc_bprm+0x2c1/0x390
-        kernel_execve+0x65/0x1a0
-        call_usermodehelper_exec_async+0x14d/0x190
-        ret_from_fork+0x24/0x40
-        ret_from_fork_asm+0x1a/0x30
-
- -> #3 (&mm->mmap_lock){++++}-{3:3}:
-        __lock_acquire+0xaf0/0xd80
-        lock_acquire.part.0+0x103/0x280
-        __might_fault+0x7c/0xb0
-        strncpy_from_user+0x25/0x160
-        removexattr+0x7f/0x100
-        __do_sys_fremovexattr+0x7e/0xb0
-        do_syscall_64+0x9f/0x100
-        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
- -> #2 (sb_writers#14){.+.+}-{0:0}:
-        __lock_acquire+0xaf0/0xd80
-        lock_acquire.part.0+0x103/0x280
-        percpu_down_read+0x3c/0x90
-        vfs_iocb_iter_write+0xe9/0x1d0
-        __cachefiles_write+0x367/0x430
-        cachefiles_issue_write+0x299/0x2f0
-        netfs_advance_write+0x117/0x140
-        netfs_write_folio.isra.0+0x5ca/0x6e0
-        netfs_writepages+0x230/0x2f0
-        afs_writepages+0x4d/0x70
-        do_writepages+0x1e8/0x3e0
-        filemap_fdatawrite_wbc+0x84/0xa0
-        __filemap_fdatawrite_range+0xa8/0xf0
-        file_write_and_wait_range+0x59/0x90
-        afs_release+0x10f/0x270
-        __fput+0x25f/0x3d0
-        __do_sys_close+0x43/0x70
-        do_syscall_64+0x9f/0x100
-        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
- -> #1 (&vnode->validate_lock){++++}-{3:3}:
-        __lock_acquire+0xaf0/0xd80
-        lock_acquire.part.0+0x103/0x280
-        down_read+0x95/0x200
-        afs_writepages+0x37/0x70
-        do_writepages+0x1e8/0x3e0
-        filemap_fdatawrite_wbc+0x84/0xa0
-        filemap_invalidate_inode+0x167/0x1e0
-        netfs_unbuffered_write_iter+0x1bd/0x2d0
-        vfs_write+0x22e/0x320
-        ksys_write+0xbc/0x130
-        do_syscall_64+0x9f/0x100
-        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
- -> #0 (mapping.invalidate_lock#3){++++}-{3:3}:
-        check_noncircular+0x119/0x160
-        check_prev_add+0x195/0x430
-        __lock_acquire+0xaf0/0xd80
-        lock_acquire.part.0+0x103/0x280
-        down_read+0x95/0x200
-        filemap_fault+0x26e/0x8b0
-        __do_fault+0x57/0xd0
-        do_pte_missing+0x23b/0x320
-        __handle_mm_fault+0x2d4/0x320
-        handle_mm_fault+0x14f/0x260
-        do_user_addr_fault+0x2a2/0x500
-        exc_page_fault+0x71/0x90
-        asm_exc_page_fault+0x22/0x30
-
- other info that might help us debug this:
-
- Chain exists of:
-   mapping.invalidate_lock#3 --> &mm->mmap_lock --> &vma->vm_lock->lock
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   rlock(&vma->vm_lock->lock);
-                                lock(&mm->mmap_lock);
-                                lock(&vma->vm_lock->lock);
-   rlock(mapping.invalidate_lock#3);
-
-  *** DEADLOCK ***
-
- 1 lock held by fsstress/6050:
-  #0: ffff888113f26d18 (&vma->vm_lock->lock){++++}-{3:3}, at: lock_vma_under_rcu+0x165/0x250
-
- stack backtrace:
- CPU: 0 PID: 6050 Comm: fsstress Not tainted 6.10.0-build2+ #956
- Hardware name: ASUS All Series/H97-PLUS, BIOS 2306 10/09/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x57/0x80
-  check_noncircular+0x119/0x160
-  ? queued_spin_lock_slowpath+0x4be/0x510
-  ? __pfx_check_noncircular+0x10/0x10
-  ? __pfx_queued_spin_lock_slowpath+0x10/0x10
-  ? mark_lock+0x47/0x160
-  ? init_chain_block+0x9c/0xc0
-  ? add_chain_block+0x84/0xf0
-  check_prev_add+0x195/0x430
-  __lock_acquire+0xaf0/0xd80
-  ? __pfx___lock_acquire+0x10/0x10
-  ? __lock_release.isra.0+0x13b/0x230
-  lock_acquire.part.0+0x103/0x280
-  ? filemap_fault+0x26e/0x8b0
-  ? __pfx_lock_acquire.part.0+0x10/0x10
-  ? rcu_is_watching+0x34/0x60
-  ? lock_acquire+0xd7/0x120
-  down_read+0x95/0x200
-  ? filemap_fault+0x26e/0x8b0
-  ? __pfx_down_read+0x10/0x10
-  ? __filemap_get_folio+0x25/0x1a0
-  filemap_fault+0x26e/0x8b0
-  ? __pfx_filemap_fault+0x10/0x10
-  ? find_held_lock+0x7c/0x90
-  ? __pfx___lock_release.isra.0+0x10/0x10
-  ? __pte_offset_map+0x99/0x110
-  __do_fault+0x57/0xd0
-  do_pte_missing+0x23b/0x320
-  __handle_mm_fault+0x2d4/0x320
-  ? __pfx___handle_mm_fault+0x10/0x10
-  handle_mm_fault+0x14f/0x260
-  do_user_addr_fault+0x2a2/0x500
-  exc_page_fault+0x71/0x90
-  asm_exc_page_fault+0x22/0x30
-
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/2136178.1721725194@warthog.procyon.org.uk
-cc: Alexander Viro <viro@zeniv.linux.org.uk>
-cc: Christian Brauner <brauner@kernel.org>
-cc: Jan Kara <jack@suse.cz>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Gao Xiang <xiang@kernel.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-erofs@lists.ozlabs.org
-cc: linux-fsdevel@vger.kernel.org
-[brauner: fix minor issues]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/r/171711747501.1628941.15217746952476635316.stgit@dwillia2-xfh.jf.intel.com
+Reported-by: Imre Deak <imre.deak@intel.com>
+Closes: http://lore.kernel.org/r/6657833b3b5ae_14984b29437@dwillia2-xfh.jf.intel.com.notmuch
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[bhelgaas: squash in recursive locking deadlock fix from Keith Busch:
+https://lore.kernel.org/r/20240711193650.701834-1-kbusch@meta.com]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Hans de Goede <hdegoede@redhat.com>
+Tested-by: Kalle Valo <kvalo@kernel.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xattr.c | 91 ++++++++++++++++++++++++++++--------------------------
- 1 file changed, 48 insertions(+), 43 deletions(-)
+ drivers/pci/pci.c | 35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/fs/xattr.c b/fs/xattr.c
-index f8b643f91a98..7672ce5486c5 100644
---- a/fs/xattr.c
-+++ b/fs/xattr.c
-@@ -630,10 +630,9 @@ int do_setxattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 			ctx->kvalue, ctx->size, ctx->flags);
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index dff09e4892d3..8db214d4b1d4 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5441,10 +5441,12 @@ static void pci_bus_lock(struct pci_bus *bus)
+ {
+ 	struct pci_dev *dev;
+ 
++	pci_dev_lock(bus->self);
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+-		pci_dev_lock(dev);
+ 		if (dev->subordinate)
+ 			pci_bus_lock(dev->subordinate);
++		else
++			pci_dev_lock(dev);
+ 	}
  }
  
--static long
--setxattr(struct mnt_idmap *idmap, struct dentry *d,
--	const char __user *name, const void __user *value, size_t size,
--	int flags)
-+static int path_setxattr(const char __user *pathname,
-+			 const char __user *name, const void __user *value,
-+			 size_t size, int flags, unsigned int lookup_flags)
- {
- 	struct xattr_name kname;
- 	struct xattr_ctx ctx = {
-@@ -643,33 +642,20 @@ setxattr(struct mnt_idmap *idmap, struct dentry *d,
- 		.kname    = &kname,
- 		.flags    = flags,
- 	};
-+	struct path path;
- 	int error;
- 
- 	error = setxattr_copy(name, &ctx);
- 	if (error)
- 		return error;
- 
--	error = do_setxattr(idmap, d, &ctx);
--
--	kvfree(ctx.kvalue);
--	return error;
--}
--
--static int path_setxattr(const char __user *pathname,
--			 const char __user *name, const void __user *value,
--			 size_t size, int flags, unsigned int lookup_flags)
--{
--	struct path path;
--	int error;
--
- retry:
- 	error = user_path_at(AT_FDCWD, pathname, lookup_flags, &path);
- 	if (error)
--		return error;
-+		goto out;
- 	error = mnt_want_write(path.mnt);
- 	if (!error) {
--		error = setxattr(mnt_idmap(path.mnt), path.dentry, name,
--				 value, size, flags);
-+		error = do_setxattr(mnt_idmap(path.mnt), path.dentry, &ctx);
- 		mnt_drop_write(path.mnt);
+@@ -5456,8 +5458,10 @@ static void pci_bus_unlock(struct pci_bus *bus)
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
  	}
- 	path_put(&path);
-@@ -677,6 +663,9 @@ static int path_setxattr(const char __user *pathname,
- 		lookup_flags |= LOOKUP_REVAL;
- 		goto retry;
- 	}
-+
-+out:
-+	kvfree(ctx.kvalue);
- 	return error;
++	pci_dev_unlock(bus->self);
  }
  
-@@ -697,20 +686,32 @@ SYSCALL_DEFINE5(lsetxattr, const char __user *, pathname,
- SYSCALL_DEFINE5(fsetxattr, int, fd, const char __user *, name,
- 		const void __user *,value, size_t, size, int, flags)
+ /* Return 1 on successful lock, 0 on contention */
+@@ -5465,15 +5469,15 @@ static int pci_bus_trylock(struct pci_bus *bus)
  {
--	struct fd f = fdget(fd);
--	int error = -EBADF;
-+	struct xattr_name kname;
-+	struct xattr_ctx ctx = {
-+		.cvalue   = value,
-+		.kvalue   = NULL,
-+		.size     = size,
-+		.kname    = &kname,
-+		.flags    = flags,
-+	};
-+	int error;
+ 	struct pci_dev *dev;
  
-+	CLASS(fd, f)(fd);
- 	if (!f.file)
--		return error;
-+		return -EBADF;
++	if (!pci_dev_trylock(bus->self))
++		return 0;
 +
- 	audit_file(f.file);
-+	error = setxattr_copy(name, &ctx);
-+	if (error)
-+		return error;
-+
- 	error = mnt_want_write_file(f.file);
- 	if (!error) {
--		error = setxattr(file_mnt_idmap(f.file),
--				 f.file->f_path.dentry, name,
--				 value, size, flags);
-+		error = do_setxattr(file_mnt_idmap(f.file),
-+				    f.file->f_path.dentry, &ctx);
- 		mnt_drop_write_file(f.file);
+ 	list_for_each_entry(dev, &bus->devices, bus_list) {
+-		if (!pci_dev_trylock(dev))
+-			goto unlock;
+ 		if (dev->subordinate) {
+-			if (!pci_bus_trylock(dev->subordinate)) {
+-				pci_dev_unlock(dev);
++			if (!pci_bus_trylock(dev->subordinate))
+ 				goto unlock;
+-			}
+-		}
++		} else if (!pci_dev_trylock(dev))
++			goto unlock;
  	}
--	fdput(f);
-+	kvfree(ctx.kvalue);
- 	return error;
+ 	return 1;
+ 
+@@ -5481,8 +5485,10 @@ static int pci_bus_trylock(struct pci_bus *bus)
+ 	list_for_each_entry_continue_reverse(dev, &bus->devices, bus_list) {
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
+ 	}
++	pci_dev_unlock(bus->self);
+ 	return 0;
  }
  
-@@ -899,9 +900,17 @@ SYSCALL_DEFINE3(flistxattr, int, fd, char __user *, list, size_t, size)
-  * Extended attribute REMOVE operations
-  */
- static long
--removexattr(struct mnt_idmap *idmap, struct dentry *d,
--	    const char __user *name)
-+removexattr(struct mnt_idmap *idmap, struct dentry *d, const char *name)
- {
-+	if (is_posix_acl_xattr(name))
-+		return vfs_remove_acl(idmap, d, name);
-+	return vfs_removexattr(idmap, d, name);
-+}
-+
-+static int path_removexattr(const char __user *pathname,
-+			    const char __user *name, unsigned int lookup_flags)
-+{
-+	struct path path;
- 	int error;
- 	char kname[XATTR_NAME_MAX + 1];
- 
-@@ -910,25 +919,13 @@ removexattr(struct mnt_idmap *idmap, struct dentry *d,
- 		error = -ERANGE;
- 	if (error < 0)
- 		return error;
--
--	if (is_posix_acl_xattr(kname))
--		return vfs_remove_acl(idmap, d, kname);
--
--	return vfs_removexattr(idmap, d, kname);
--}
--
--static int path_removexattr(const char __user *pathname,
--			    const char __user *name, unsigned int lookup_flags)
--{
--	struct path path;
--	int error;
- retry:
- 	error = user_path_at(AT_FDCWD, pathname, lookup_flags, &path);
- 	if (error)
- 		return error;
- 	error = mnt_want_write(path.mnt);
- 	if (!error) {
--		error = removexattr(mnt_idmap(path.mnt), path.dentry, name);
-+		error = removexattr(mnt_idmap(path.mnt), path.dentry, kname);
- 		mnt_drop_write(path.mnt);
+@@ -5514,9 +5520,10 @@ static void pci_slot_lock(struct pci_slot *slot)
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+-		pci_dev_lock(dev);
+ 		if (dev->subordinate)
+ 			pci_bus_lock(dev->subordinate);
++		else
++			pci_dev_lock(dev);
  	}
- 	path_put(&path);
-@@ -954,15 +951,23 @@ SYSCALL_DEFINE2(lremovexattr, const char __user *, pathname,
- SYSCALL_DEFINE2(fremovexattr, int, fd, const char __user *, name)
- {
- 	struct fd f = fdget(fd);
-+	char kname[XATTR_NAME_MAX + 1];
- 	int error = -EBADF;
+ }
  
- 	if (!f.file)
- 		return error;
- 	audit_file(f.file);
-+
-+	error = strncpy_from_user(kname, name, sizeof(kname));
-+	if (error == 0 || error == sizeof(kname))
-+		error = -ERANGE;
-+	if (error < 0)
-+		return error;
-+
- 	error = mnt_want_write_file(f.file);
- 	if (!error) {
- 		error = removexattr(file_mnt_idmap(f.file),
--				    f.file->f_path.dentry, name);
-+				    f.file->f_path.dentry, kname);
- 		mnt_drop_write_file(f.file);
+@@ -5542,14 +5549,13 @@ static int pci_slot_trylock(struct pci_slot *slot)
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+ 			continue;
+-		if (!pci_dev_trylock(dev))
+-			goto unlock;
+ 		if (dev->subordinate) {
+ 			if (!pci_bus_trylock(dev->subordinate)) {
+ 				pci_dev_unlock(dev);
+ 				goto unlock;
+ 			}
+-		}
++		} else if (!pci_dev_trylock(dev))
++			goto unlock;
  	}
- 	fdput(f);
+ 	return 1;
+ 
+@@ -5560,7 +5566,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
+ 			continue;
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
+ 	}
+ 	return 0;
+ }
 -- 
 2.43.0
 
