@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D77F18B474;
-	Tue, 10 Sep 2024 10:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7114C19580F;
+	Tue, 10 Sep 2024 10:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964205; cv=none; b=LbJjd01+48o/TtBETVpbCis+V0QyRuvBXicCAe3zB3aHvg6XD3J3c6mXBeHFV7VwI6RZV8RjRHj1/hrhac6ZX5Gvo8m+aXbz7HrHcABBfzGfN4LYQVUgXGYuhyfDKKncf9+CGZlpfWUp1R5yNPXdBg1NMDmfyjVwP8bHRw/l56s=
+	t=1725964208; cv=none; b=buvnEtbCKMuz8jvl/G5HUhP4Trxu+l4an/KGGpPQoUMC8fJD14kMQ2/7zZySs+x0jh2NEa0bsCMWuxA8dRS6P89of1Ky7Npg5rI09LG20uRg20ZV5I9DHD5JzUXCX/8VXYELhzVanEBrHfxoXdRIrWDTj0oxGb5ok1X8PxUmd4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964205; c=relaxed/simple;
-	bh=SnTxI0bf3H6hGhffUQx5U4oEekziEaHxV16L4T0a6Us=;
+	s=arc-20240116; t=1725964208; c=relaxed/simple;
+	bh=oqulEuBF1LUunxL4Ktm12n1f8/fAJ0Q+NAwI1zSbXbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XyM3epf9fxG5+IsXacIqPYbuJQJRu8GECR4ZxLYEevxWcgJnl/JFU6B9sYUci6gsBrYjI0KZV+4FyGOuyPryiT5dpiNVSWU5P28QLJt0X2ICOFMQ1Y6FNsK4M0UaAg5eIrKuBOXcVfMk/0yn9c8/IfAWHsOmkbjs5cgEuuja+Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ys/AQIoP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d4vFv1K/Xt5HhoT0EYbzh45tIl4xwZI9SVoaeYK/ROLXUCEeMicKg7awNU3Ynl56k8nWnDpJ8zK0YEk34J05rsG4a9W13ksBJKgvh/Y46Fs0xKn7OUTQUYbkK9AfLUtsV5rItWS0vCKaZvFCQFlGuSB2de8j1vdN6BODV2+Q0yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7hAETbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ys/AQIoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129BEC4CEC3;
-	Tue, 10 Sep 2024 10:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7hAETbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC5AC4CEC3;
+	Tue, 10 Sep 2024 10:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964205;
-	bh=SnTxI0bf3H6hGhffUQx5U4oEekziEaHxV16L4T0a6Us=;
+	s=korg; t=1725964208;
+	bh=oqulEuBF1LUunxL4Ktm12n1f8/fAJ0Q+NAwI1zSbXbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ys/AQIoPK40XzMsgi51rBNzmN8yVIddMgocONcURdcfLm5ngbYNoBBd1l5hvzzyNH
-	 L+EwqX44gb9Qd8otqNfYsJumAcvjEWNX1B1GJZee/6DOIAUpu4u4pUGFkG2J4PJN3D
-	 V7TIv8y4sFgq5DdKdI8xdkqcYiETHDcGOxg+fUVw=
+	b=R7hAETbD3SEiQ5W4bIiToFeHdTUX6JgdrlBKdfNyocuFgLPzkrzch9nt/W+avQjg1
+	 JdTB0UgD1EPUMp+XcyXZzRSpsGDE/4R2ZeokjCDTqNjC9eFtr012IrKiqOyhmNTWjK
+	 DrFf5NWYGea/jN4kZE8iC7NgW0tDogBFvrTPuwTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/269] platform/x86: dell-smbios: Fix error path in dell_smbios_init()
-Date: Tue, 10 Sep 2024 11:31:31 +0200
-Message-ID: <20240910092611.919999635@linuxfoundation.org>
+Subject: [PATCH 6.6 105/269] regulator: core: Stub devm_regulator_bulk_get_const() if !CONFIG_REGULATOR
+Date: Tue, 10 Sep 2024 11:31:32 +0200
+Message-ID: <20240910092611.954552887@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -45,56 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit ffc17e1479e8e9459b7afa80e5d9d40d0dd78abb ]
+[ Upstream commit 1a5caec7f80ca2e659c03f45378ee26915f4eda2 ]
 
-In case of error in build_tokens_sysfs(), all the memory that has been
-allocated is freed at end of this function. But then free_group() is
-called which performs memory deallocation again.
+When adding devm_regulator_bulk_get_const() I missed adding a stub for
+when CONFIG_REGULATOR is not enabled. Under certain conditions (like
+randconfig testing) this can cause the compiler to reports errors
+like:
 
-Also, instead of free_group() call, there should be exit_dell_smbios_smm()
-and exit_dell_smbios_wmi() calls, since there is initialization, but there
-is no release of resources in case of an error.
+  error: implicit declaration of function 'devm_regulator_bulk_get_const';
+  did you mean 'devm_regulator_bulk_get_enable'?
 
-Fix these issues by replacing free_group() call with
-exit_dell_smbios_wmi() and exit_dell_smbios_smm().
+Add the stub.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 33b9ca1e53b4 ("platform/x86: dell-smbios: Add a sysfs interface for SMBIOS tokens")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://lore.kernel.org/r/20240830065428.9544-1-amishin@t-argos.ru
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 1de452a0edda ("regulator: core: Allow drivers to define their init data as const")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408301813.TesFuSbh-lkp@intel.com/
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20240830073511.1.Ib733229a8a19fad8179213c05e1af01b51e42328@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-smbios-base.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/regulator/consumer.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/platform/x86/dell/dell-smbios-base.c b/drivers/platform/x86/dell/dell-smbios-base.c
-index 86b95206cb1b..6fb538a13868 100644
---- a/drivers/platform/x86/dell/dell-smbios-base.c
-+++ b/drivers/platform/x86/dell/dell-smbios-base.c
-@@ -590,7 +590,10 @@ static int __init dell_smbios_init(void)
+diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+index 2c526c8d10cc..25d0684d37b3 100644
+--- a/include/linux/regulator/consumer.h
++++ b/include/linux/regulator/consumer.h
+@@ -489,6 +489,14 @@ static inline int of_regulator_bulk_get_all(struct device *dev, struct device_no
  	return 0;
+ }
  
- fail_sysfs:
--	free_group(platform_device);
-+	if (!wmi)
-+		exit_dell_smbios_wmi();
-+	if (!smm)
-+		exit_dell_smbios_smm();
- 
- fail_create_group:
- 	platform_device_del(platform_device);
++static inline int devm_regulator_bulk_get_const(
++	struct device *dev, int num_consumers,
++	const struct regulator_bulk_data *in_consumers,
++	struct regulator_bulk_data **out_consumers)
++{
++	return 0;
++}
++
+ static inline int regulator_bulk_enable(int num_consumers,
+ 					struct regulator_bulk_data *consumers)
+ {
 -- 
 2.43.0
 
