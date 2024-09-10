@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13420198853;
-	Tue, 10 Sep 2024 10:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE5518C925;
+	Tue, 10 Sep 2024 10:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963248; cv=none; b=hoEPfDan2e56VZOpuD22iwrcFoLxaSfD4YuB6Di4J6IHalgFEuUxdG+XKyBIPpAcngL2z5Q3qm4Kn0O4pDfItpRl3BzXEvsSSAvcWEBlvV1yn337tfAVGIvJaurMZlC/H/IKzVOzAM1mx2zt+RB4OdCZvCNwGDXa2ReSLV4Ioa0=
+	t=1725963251; cv=none; b=TY60erlJFmZiFCfFbaKCRFKc3cl/lSrJqTQzHiqKUX/xAxX7iAiaLhnM/duqX+BQnF6pH+G1bS87G5Lr5NQN7jLrHAg0HNWqQgdy0E+6SkOcj2SFwP1+SObC8hGaqjxiWes7YYCrGRGqKQCLUmQf8OT+r+pT+VPV5faaf2u96Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963248; c=relaxed/simple;
-	bh=baw3PKk6fNYzAlutoa/kWz+6mvrHxsMuszGZ6rJb61M=;
+	s=arc-20240116; t=1725963251; c=relaxed/simple;
+	bh=8nav9rMnXIhF8YQT2GL3rPazRbBfkQrSyN68WNKnyrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZNj2C0OHoNrkYFWPk51+/ptwPXZzsQTenQLxMiK1QSwJJnaEppw0mxwgz0NeTXm01D/tuQmLbGIlx0vxxB6b17cdgpJ1qPk9cv5+GFuQNU7tIg86ys8rkXHAtgRsUyl8rVCfk5D8rWHzAe4OnyHoC/uB0wh32HB7zc+fzv+z4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwDAK+gA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lw2amX28vNrjO9UhHQT1YjD4Gpw29ZeMP6q6vkf28s29oPJe+clAcOQkYg4FFal2UmWMX31cDVJZapYGpxPoPkuWBlkPNXumUq5g7eny5JWNo7qyyRsi4QtnVQ7FuyUuKtNo/y+2Xp6qJQRkCXg1T+Y9h3xkJ14QYfQ9pRjcxEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRzg4srn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwDAK+gA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED79C4CEC3;
-	Tue, 10 Sep 2024 10:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRzg4srn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87431C4CECD;
+	Tue, 10 Sep 2024 10:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963248;
-	bh=baw3PKk6fNYzAlutoa/kWz+6mvrHxsMuszGZ6rJb61M=;
+	s=korg; t=1725963250;
+	bh=8nav9rMnXIhF8YQT2GL3rPazRbBfkQrSyN68WNKnyrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwDAK+gAScuVqKlIjk6MpWyf7EiswXMX47FiYpFLFGRxytHqNEKe86mfNf3Akv558
-	 dWU8S9EZNfalb1wI5/REcP5Ue+xZKu92+lhoikxo5clg4b77ZHYxUt4iyLyjGmwbFk
-	 KqH7giKuworCKce2aiUhnSbyIONfq4FfUb2VdxM0=
+	b=qRzg4srnD0ZHKEZbYLC+KDe+1tex/SXD7e7BMLFpTa3o/R2N/qpFSzqkJxGdc6nXR
+	 jqwKir6Dat9ASTqsDGTUola1BxhjEIuIHuoGgO1Vi+As29mnRGxxcg8GDBRBnArrMs
+	 vhitlks0F4/ftgHaWuxeZ1eIccuqELKGg0eShjNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chen <liaochen4@huawei.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/192] gpio: modepin: Enable module autoloading
-Date: Tue, 10 Sep 2024 11:33:29 +0200
-Message-ID: <20240910092605.422139661@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Li Nan <linan122@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>,
+	Changhui Zhong <czhong@redhat.com>
+Subject: [PATCH 6.1 186/192] ublk_drv: fix NULL pointer dereference in ublk_ctrl_start_recovery()
+Date: Tue, 10 Sep 2024 11:33:30 +0200
+Message-ID: <20240910092605.464064948@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,35 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chen <liaochen4@huawei.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit a5135526426df5319d5f4bcd15ae57c45a97714b ]
+[ Upstream commit e58f5142f88320a5b1449f96a146f2f24615c5c7 ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded based
-on the alias from of_device_id table.
+When two UBLK_CMD_START_USER_RECOVERY commands are submitted, the
+first one sets 'ubq->ubq_daemon' to NULL, and the second one triggers
+WARN in ublk_queue_reinit() and subsequently a NULL pointer dereference
+issue.
 
-Fixes: 7687a5b0ee93 ("gpio: modepin: Add driver support for modepin GPIO controller")
-Signed-off-by: Liao Chen <liaochen4@huawei.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20240902115848.904227-1-liaochen4@huawei.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fix it by adding the check in ublk_ctrl_start_recovery() and return
+immediately in case of zero 'ub->nr_queues_ready'.
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000028
+  RIP: 0010:ublk_ctrl_start_recovery.constprop.0+0x82/0x180
+  Call Trace:
+   <TASK>
+   ? __die+0x20/0x70
+   ? page_fault_oops+0x75/0x170
+   ? exc_page_fault+0x64/0x140
+   ? asm_exc_page_fault+0x22/0x30
+   ? ublk_ctrl_start_recovery.constprop.0+0x82/0x180
+   ublk_ctrl_uring_cmd+0x4f7/0x6c0
+   ? pick_next_task_idle+0x26/0x40
+   io_uring_cmd+0x9a/0x1b0
+   io_issue_sqe+0x193/0x3f0
+   io_wq_submit_work+0x9b/0x390
+   io_worker_handle_work+0x165/0x360
+   io_wq_worker+0xcb/0x2f0
+   ? finish_task_switch.isra.0+0x203/0x290
+   ? finish_task_switch.isra.0+0x203/0x290
+   ? __pfx_io_wq_worker+0x10/0x10
+   ret_from_fork+0x2d/0x50
+   ? __pfx_io_wq_worker+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+Fixes: c732a852b419 ("ublk_drv: add START_USER_RECOVERY and END_USER_RECOVERY support")
+Reported-and-tested-by: Changhui Zhong <czhong@redhat.com>
+Closes: https://lore.kernel.org/all/CAGVVp+UvLiS+bhNXV-h2icwX1dyybbYHeQUuH7RYqUvMQf6N3w@mail.gmail.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Link: https://lore.kernel.org/r/20240904031348.4139545-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zynqmp-modepin.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/ublk_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-zynqmp-modepin.c b/drivers/gpio/gpio-zynqmp-modepin.c
-index a0d69387c153..2f3c9ebfa78d 100644
---- a/drivers/gpio/gpio-zynqmp-modepin.c
-+++ b/drivers/gpio/gpio-zynqmp-modepin.c
-@@ -146,6 +146,7 @@ static const struct of_device_id modepin_platform_id[] = {
- 	{ .compatible = "xlnx,zynqmp-gpio-modepin", },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, modepin_platform_id);
- 
- static struct platform_driver modepin_platform_driver = {
- 	.driver = {
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 3fa74051f31b..bfd643856f64 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1915,6 +1915,8 @@ static int ublk_ctrl_start_recovery(struct ublk_device *ub,
+ 	mutex_lock(&ub->mutex);
+ 	if (!ublk_can_use_recovery(ub))
+ 		goto out_unlock;
++	if (!ub->nr_queues_ready)
++		goto out_unlock;
+ 	/*
+ 	 * START_RECOVERY is only allowd after:
+ 	 *
 -- 
 2.43.0
 
