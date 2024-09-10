@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6785381A;
-	Tue, 10 Sep 2024 10:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158E718C036;
+	Tue, 10 Sep 2024 10:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963770; cv=none; b=noVBbjQopb1Vz87PzGeJpbWkmNdn8/Ehjam4B9Rc7BlxejKlWnjLMSeEHS6KlXJoN0pB42lSir3omHqaPcgqc0VWnOQHgA+EiGDCDIn5BgTVMttT1DNN0OZFwP/cvgPlNABOJYRinx1DDNDNONHaFpz1XoEH8IvnW6+yNO7r/BE=
+	t=1725963773; cv=none; b=B7/A59SoULhs9xgfGA9f0DAAFrKkPRm9Gy0f7D7MJqXicHlTugElhzsqhvDMmDP0xHTb6yI0oRPS5P4MBFjXfb1ZJZc9B9zTYxGkJc/oRfYAjSbxLIflxAU5d4wP6kgPgahHWjUhfos9Gu1ujJi/JfPPw4gedsNNbc1Nznt0qZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963770; c=relaxed/simple;
-	bh=CKf2J/ASqGR/BZNvQk6vrmK49jSVbpBYWFITzFgkj4o=;
+	s=arc-20240116; t=1725963773; c=relaxed/simple;
+	bh=+OJSst2OSQko4/qOokf4+5QiNNmRur/46OlMZTFXFyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HIPj3rOLenaq855UouisXZoSMM5Xv+i1aCbqEFE4tHu5hqvqdlGSOtDg1vvBxtRCxOvTI8d3P9tACv6L0NrASchTWU4ujWJWr6AMOGr4PIOp8X6GjoI6miIkETVc2NZk7fqg5yy204ILBrO9FPjYjQbjMpunUOWCH4bRMbfIV0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+yx00zT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjnDttPQKR4QQUA1R7UEywmdZAonN8vr8GzC+2ZKCsWIXlC/ze37Y4zYACEN+ZC3jwRYnnQ7QRRRVBVB0NGBqGOMqNjmsGg2VpwCO9r5+7Lq8tbrPIJ742Y4cfyuMsvGM9zHfjby3TLTOTEejPPFn3hZEBauM/97PDSALq6W6Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYPkpCPw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+yx00zT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A4CC4CECD;
-	Tue, 10 Sep 2024 10:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYPkpCPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCD3C4CEC3;
+	Tue, 10 Sep 2024 10:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963770;
-	bh=CKf2J/ASqGR/BZNvQk6vrmK49jSVbpBYWFITzFgkj4o=;
+	s=korg; t=1725963772;
+	bh=+OJSst2OSQko4/qOokf4+5QiNNmRur/46OlMZTFXFyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+yx00zTQizZTAihaxVMXVZECElrS8cDnh+ouOyLPpKGmj1oATFLzZplUJjgFE8Vo
-	 lNS2vKVcMJ9BNqyFXX4J4joe4nlevUmu0dS8NyOTz2RvWooIILAsvneBMibK9Fjp2F
-	 5mm/JqCJ7uXCXYl9ckiYnpGeKkERF8PZfVPwT6ec=
+	b=ZYPkpCPwUCvp++DJavF4fdrPhgixGCetXJoZVmcfweNYrlGwTFuY9iVS7Pu11EDh2
+	 IWfOOkHdAD0Ak7mb8i1y1U9nnmA6Q3q3/iuJCTGugH+383kFCrTtt0l1mP6Ml11EXe
+	 ILBvOOCQDw8HoW2KquEBzMN9pGLww2bEJG7mipoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/214] MIPS: cevt-r4k: Dont call get_c0_compare_int if timer irq is installed
-Date: Tue, 10 Sep 2024 11:33:12 +0200
-Message-ID: <20240910092605.633369315@linuxfoundation.org>
+Subject: [PATCH 5.15 171/214] ata: pata_macio: Use WARN instead of BUG
+Date: Tue, 10 Sep 2024 11:33:13 +0200
+Message-ID: <20240910092605.663023330@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -47,79 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 50f2b98dc83de7809a5c5bf0ccf9af2e75c37c13 ]
+[ Upstream commit d4bc0a264fb482b019c84fbc7202dd3cab059087 ]
 
-This avoids warning:
+The overflow/underflow conditions in pata_macio_qc_prep() should never
+happen. But if they do there's no need to kill the system entirely, a
+WARN and failing the IO request should be sufficient and might allow the
+system to keep running.
 
-[    0.118053] BUG: sleeping function called from invalid context at kernel/locking/mutex.c:283
-
-Caused by get_c0_compare_int on secondary CPU.
-
-We also skipped saving IRQ number to struct clock_event_device *cd as
-it's never used by clockevent core, as per comments it's only meant
-for "non CPU local devices".
-
-Reported-by: Serge Semin <fancer.lancer@gmail.com>
-Closes: https://lore.kernel.org/linux-mips/6szkkqxpsw26zajwysdrwplpjvhl5abpnmxgu2xuj3dkzjnvsf@4daqrz4mf44k/
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Tested-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/cevt-r4k.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/ata/pata_macio.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/kernel/cevt-r4k.c b/arch/mips/kernel/cevt-r4k.c
-index 32ec67c9ab67..77028aa8c107 100644
---- a/arch/mips/kernel/cevt-r4k.c
-+++ b/arch/mips/kernel/cevt-r4k.c
-@@ -303,13 +303,6 @@ int r4k_clockevent_init(void)
- 	if (!c0_compare_int_usable())
- 		return -ENXIO;
+diff --git a/drivers/ata/pata_macio.c b/drivers/ata/pata_macio.c
+index be0ca8d5b345..eacebfc2ca08 100644
+--- a/drivers/ata/pata_macio.c
++++ b/drivers/ata/pata_macio.c
+@@ -540,7 +540,8 @@ static enum ata_completion_errors pata_macio_qc_prep(struct ata_queued_cmd *qc)
  
--	/*
--	 * With vectored interrupts things are getting platform specific.
--	 * get_c0_compare_int is a hook to allow a platform to return the
--	 * interrupt number of its liking.
--	 */
--	irq = get_c0_compare_int();
--
- 	cd = &per_cpu(mips_clockevent_device, cpu);
+ 		while (sg_len) {
+ 			/* table overflow should never happen */
+-			BUG_ON (pi++ >= MAX_DCMDS);
++			if (WARN_ON_ONCE(pi >= MAX_DCMDS))
++				return AC_ERR_SYSTEM;
  
- 	cd->name		= "MIPS";
-@@ -320,7 +313,6 @@ int r4k_clockevent_init(void)
- 	min_delta		= calculate_min_delta();
+ 			len = (sg_len < MAX_DBDMA_SEG) ? sg_len : MAX_DBDMA_SEG;
+ 			table->command = cpu_to_le16(write ? OUTPUT_MORE: INPUT_MORE);
+@@ -552,11 +553,13 @@ static enum ata_completion_errors pata_macio_qc_prep(struct ata_queued_cmd *qc)
+ 			addr += len;
+ 			sg_len -= len;
+ 			++table;
++			++pi;
+ 		}
+ 	}
  
- 	cd->rating		= 300;
--	cd->irq			= irq;
- 	cd->cpumask		= cpumask_of(cpu);
- 	cd->set_next_event	= mips_next_event;
- 	cd->event_handler	= mips_event_handler;
-@@ -332,6 +324,13 @@ int r4k_clockevent_init(void)
+ 	/* Should never happen according to Tejun */
+-	BUG_ON(!pi);
++	if (WARN_ON_ONCE(!pi))
++		return AC_ERR_SYSTEM;
  
- 	cp0_timer_irq_installed = 1;
- 
-+	/*
-+	 * With vectored interrupts things are getting platform specific.
-+	 * get_c0_compare_int is a hook to allow a platform to return the
-+	 * interrupt number of its liking.
-+	 */
-+	irq = get_c0_compare_int();
-+
- 	if (request_irq(irq, c0_compare_interrupt, flags, "timer",
- 			c0_compare_interrupt))
- 		pr_err("Failed to request irq %d (timer)\n", irq);
+ 	/* Convert the last command to an input/output */
+ 	table--;
 -- 
 2.43.0
 
