@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D9A189F58;
-	Tue, 10 Sep 2024 09:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27B9188CDC;
+	Tue, 10 Sep 2024 09:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961237; cv=none; b=M0XAuqAs0Harkkl9fdJezrcR8VLnkbJjXQTjS2+mSAHxmNSWZgqbSzqxykEt5qDOGxRQJthU+r1s7Q7DGPwxuNgPkMK8q9R9UuskQ3nj1meMAiy8gbNLuRMox9itudx/L4mk7wdN+ldm5B3JjOjOkxgHaoGW+ralmE3TKFeTLRI=
+	t=1725961240; cv=none; b=Dy8UdLhrDQ9ZBwU8etvXtOUizJLGy2njZ8rU0g0CNk0NrbFE+1/ettbjzOed/J42Qjy1r1ZcF+dqhBRhlDPYmY7Q4qifISgfxGAY9U6UkZfjbIIyIaOneJcHsM31+eBVwFpOzSG5PCug+iuOBYEQjzfXiMZK4mm0HDe4NDRInQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961237; c=relaxed/simple;
-	bh=FqjYZAP2KhPSLzg7AG9Yhk2MrgZfLsgFpMQAdoGYB9g=;
+	s=arc-20240116; t=1725961240; c=relaxed/simple;
+	bh=NBITYBYN6EJ7a+m5v7eY/NCAuOpYoia1mQosT7qjCxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4eVQwjwkryL4pviDzeWtaCMn1oQ4cu+6pSyrW31EJVfvbSHMw+ofTdQTtLcGraiNxrBGzDixIs8nVtOh5y1/SCJAHeSTBgw2+R5mpR/qvReo+p0PK3lzsE2uTkP241hH9lgQHeKT7HHWux4jdE5UZMOhl1EzRtDHHCexU08zOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSTvnOeA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggOlSE7wYILstzEwUut6ICeWBs1chvYUFjb/SDAFpthY3sXzlte1lDFOiaINKSVThG2zXLtYSLGY7dqS83SVniHiBSdph9QLKMYpXZyXGgUb0jfG/6quLUoJzXV+vwqrzr5guKCKSwCg4rdkp3IhX44vh+rE6BBErDPbYPR6vNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyU40kBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSTvnOeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAA8C4CECC;
-	Tue, 10 Sep 2024 09:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyU40kBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD85C4CEC6;
+	Tue, 10 Sep 2024 09:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961237;
-	bh=FqjYZAP2KhPSLzg7AG9Yhk2MrgZfLsgFpMQAdoGYB9g=;
+	s=korg; t=1725961240;
+	bh=NBITYBYN6EJ7a+m5v7eY/NCAuOpYoia1mQosT7qjCxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSTvnOeAs1sXLiZQZgB32TA97Cz4knmYLUklDh+8Z6yd1kepG3Cs/h/f18fpv+/yx
-	 T/ng6vktJZtnxvjXhEOXCWArwQv5id9nd2HwjW5iTxT7lJEboDqk1VfFntZQW6weCV
-	 3Zseal1g9q/QkkQrE94Cb1utyY/C9UMAkcV06BrA=
+	b=DyU40kBgq0Lw1x3pcgEyw2tlIx0zGJFFrYorC/MTRhgPmTGAIt2H4BLiKFYM9jYQw
+	 gyhCYB9RJ2JWQcOOm83rpS10AGpppM0WqWeu7wJ5eiCgmz3YZSJ38LC2DXPMfGi6iS
+	 ylOMwX0MSHlR1YYviF/z2Z/nw6LRqX/yK2MhWeEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roland Xu <mu001999@outlook.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.19 92/96] rtmutex: Drop rt_mutex::wait_lock before scheduling
-Date: Tue, 10 Sep 2024 11:32:34 +0200
-Message-ID: <20240910092545.582316529@linuxfoundation.org>
+	Lex Siegel <usiegl00@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Neil Brown <neilb@suse.de>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Anna Schumaker <anna@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 4.19 93/96] net, sunrpc: Remap EPERM in case of connection failure in xs_tcp_setup_socket
+Date: Tue, 10 Sep 2024 11:32:35 +0200
+Message-ID: <20240910092545.621723614@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -50,57 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roland Xu <mu001999@outlook.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit d33d26036a0274b472299d7dcdaa5fb34329f91b upstream.
+commit 626dfed5fa3bfb41e0dffd796032b555b69f9cde upstream.
 
-rt_mutex_handle_deadlock() is called with rt_mutex::wait_lock held.  In the
-good case it returns with the lock held and in the deadlock case it emits a
-warning and goes into an endless scheduling loop with the lock held, which
-triggers the 'scheduling in atomic' warning.
+When using a BPF program on kernel_connect(), the call can return -EPERM. This
+causes xs_tcp_setup_socket() to loop forever, filling up the syslog and causing
+the kernel to potentially freeze up.
 
-Unlock rt_mutex::wait_lock in the dead lock case before issuing the warning
-and dropping into the schedule for ever loop.
+Neil suggested:
 
-[ tglx: Moved unlock before the WARN(), removed the pointless comment,
-  	massaged changelog, added Fixes tag ]
+  This will propagate -EPERM up into other layers which might not be ready
+  to handle it. It might be safer to map EPERM to an error we would be more
+  likely to expect from the network system - such as ECONNREFUSED or ENETDOWN.
 
-Fixes: 3d5c9340d194 ("rtmutex: Handle deadlock detection smarter")
-Signed-off-by: Roland Xu <mu001999@outlook.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/ME0P300MB063599BEF0743B8FA339C2CECC802@ME0P300MB0635.AUSP300.PROD.OUTLOOK.COM
+ECONNREFUSED as error seems reasonable. For programs setting a different error
+can be out of reach (see handling in 4fbac77d2d09) in particular on kernels
+which do not have f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err
+instead of allow boolean"), thus given that it is better to simply remap for
+consistent behavior. UDP does handle EPERM in xs_udp_send_request().
+
+Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
+Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
+Co-developed-by: Lex Siegel <usiegl00@gmail.com>
+Signed-off-by: Lex Siegel <usiegl00@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Neil Brown <neilb@suse.de>
+Cc: Trond Myklebust <trondmy@kernel.org>
+Cc: Anna Schumaker <anna@kernel.org>
+Link: https://github.com/cilium/cilium/issues/33395
+Link: https://lore.kernel.org/bpf/171374175513.12877.8993642908082014881@noble.neil.brown.name
+Link: https://patch.msgid.link/9069ec1d59e4b2129fc23433349fd5580ad43921.1720075070.git.daniel@iogearbox.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtsock.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -1205,6 +1205,7 @@ __rt_mutex_slowlock(struct rt_mutex *loc
- }
- 
- static void rt_mutex_handle_deadlock(int res, int detect_deadlock,
-+				     struct rt_mutex *lock,
- 				     struct rt_mutex_waiter *w)
- {
- 	/*
-@@ -1214,6 +1215,7 @@ static void rt_mutex_handle_deadlock(int
- 	if (res != -EDEADLOCK || detect_deadlock)
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2466,6 +2466,13 @@ static void xs_tcp_setup_socket(struct w
+ 	case -EALREADY:
+ 		xprt_unlock_connect(xprt, transport);
  		return;
- 
-+	raw_spin_unlock_irq(&lock->wait_lock);
- 	/*
- 	 * Yell lowdly and stop the task right here.
- 	 */
-@@ -1269,7 +1271,7 @@ rt_mutex_slowlock(struct rt_mutex *lock,
- 	if (unlikely(ret)) {
- 		__set_current_state(TASK_RUNNING);
- 		remove_waiter(lock, &waiter);
--		rt_mutex_handle_deadlock(ret, chwalk, &waiter);
-+		rt_mutex_handle_deadlock(ret, chwalk, lock, &waiter);
- 	}
- 
- 	/*
++	case -EPERM:
++		/* Happens, for instance, if a BPF program is preventing
++		 * the connect. Remap the error so upper layers can better
++		 * deal with it.
++		 */
++		status = -ECONNREFUSED;
++		/* fall through */
+ 	case -EINVAL:
+ 		/* Happens, for instance, if the user specified a link
+ 		 * local IPv6 address without a scope-id.
 
 
