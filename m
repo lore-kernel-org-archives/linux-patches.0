@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B803314F12C;
-	Tue, 10 Sep 2024 09:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45B014F12C;
+	Tue, 10 Sep 2024 09:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961036; cv=none; b=fcVdAcawBqmuhejA94bYX9JfyrgVZeL+7FZPY8YsLGSVJJoUzMacK7Qh+tJ9kHQ6t3Z2/y7+NW/P6s/IVzuwqauWk7+dXoAOYofy5Kkj8QkfLXToqTyQeDmWfjeZcvmyhaC0WmCHMVLW1lQSTGrdX7Y5VO851t2oOqwBozSW6yY=
+	t=1725961039; cv=none; b=f70MU8o+r+ZQ6h1Ve85uO4ZjHpp7mJROxf+HDdlULqhT6Cb6tpIqzNegYeHvKOy/IXpDHAbaAZ3nNeVyvxJztUZFT03CGXh9i5bvWTCaBCkTwGVRTe/8MlCCpz9klNYqTMcL8hwRR7xFDfWf4wzo5QCCf8mSMzQpxjzK0iFES1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961036; c=relaxed/simple;
-	bh=uhAM2JZdJW1ORc1iEOW1T7hOwMeHFs2Ikrds2IEAPuo=;
+	s=arc-20240116; t=1725961039; c=relaxed/simple;
+	bh=6O98lpNwImYTZ1PySULLJVbr8Xj5h77Z/Nuo2GoNXok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QlrVnCJSYzs3QitI5MVsQL4e7bhmRle7MhvIyrc75vCfIKf8eZYcYpzEPYQqc53fWCgyaFWGPwQYKT38HqnhPlTObc1njaMpXxttg3Vc0DHe9GYax1HH0kuK66iO4qq/zEGY+baQZX/eFb0xxvncngGu4Prew7oAz+V7pYb3OBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgmJEX2Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lRzP/IIht/GCIZ6t/ooknckCnLyujsK0fIndIku7vn4Rp3BUopFrDEZ90vnhZqMyCS2SqjZ99cWmPVVoq3mthsvSH23rjVDTf8FeKBiwKTsXV74vKmmP8QDbrXn/WZh7S34RrL9UPh2xONwwTufj92HaqGhMQR574qebF6qb2YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHs8Qem7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgmJEX2Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEA2C4CEC3;
-	Tue, 10 Sep 2024 09:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHs8Qem7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27986C4CEC3;
+	Tue, 10 Sep 2024 09:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961036;
-	bh=uhAM2JZdJW1ORc1iEOW1T7hOwMeHFs2Ikrds2IEAPuo=;
+	s=korg; t=1725961039;
+	bh=6O98lpNwImYTZ1PySULLJVbr8Xj5h77Z/Nuo2GoNXok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IgmJEX2ZQiZfhA1oQj1XYX0J8lfXOLv/xrOY2jGWN6MWyOpPG3g8RhpbBNZJm9f7G
-	 m4fKP7SR+gfy5QATNaEB7esP2VZSMxsnTooSTK1D8wMoyx6e9GkYCnPCSE+r3HbyFO
-	 nYosL/UU2cBuID+mvXUep9UOtguLQVk109NkgOew=
+	b=WHs8Qem7NXmvLV7ebUc8569s0pTP1S7Tl4eGA9T+9+WHfRZfedWpQkL2WORFfKhA9
+	 sQ9/3e992KRA2ilG0JYGB8ybh06iez8XGGADdNtIvPV9xkXNTnGhGXXL2xdp+IXmAS
+	 q0OMxxlPXuDd60br4B+aWbnxy5BAzhFWUD1pYod0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 31/96] udf: Avoid excessive partition lengths
-Date: Tue, 10 Sep 2024 11:31:33 +0200
-Message-ID: <20240910092542.863861537@linuxfoundation.org>
+Subject: [PATCH 4.19 05/96] drm/amdgpu: fix overflowed array index read warning
+Date: Tue, 10 Sep 2024 11:31:07 +0200
+Message-ID: <20240910092541.622841666@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -44,67 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit ebbe26fd54a9621994bc16b14f2ba8f84c089693 ]
+[ Upstream commit ebbc2ada5c636a6a63d8316a3408753768f5aa9f ]
 
-Avoid mounting filesystems where the partition would overflow the
-32-bits used for block number. Also refuse to mount filesystems where
-the partition length is so large we cannot safely index bits in a
-block bitmap.
+Clear overflowed array index read warning by cast operation.
 
-Link: https://patch.msgid.link/20240620130403.14731-1-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 6273ffd312cc..22c76a33f6f3 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1054,12 +1054,19 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 	struct udf_part_map *map;
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct partitionHeaderDesc *phd;
-+	u32 sum;
- 	int err;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+index 93794a85f83d..d1efab227034 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -497,8 +497,9 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
+ 					size_t size, loff_t *pos)
+ {
+ 	struct amdgpu_ring *ring = file_inode(f)->i_private;
+-	int r, i;
+ 	uint32_t value, result, early[3];
++	loff_t i;
++	int r;
  
- 	map = &sbi->s_partmaps[p_index];
- 
- 	map->s_partition_len = le32_to_cpu(p->partitionLength); /* blocks */
- 	map->s_partition_root = le32_to_cpu(p->partitionStartingLocation);
-+	if (check_add_overflow(map->s_partition_root, map->s_partition_len,
-+			       &sum)) {
-+		udf_err(sb, "Partition %d has invalid location %u + %u\n",
-+			p_index, map->s_partition_root, map->s_partition_len);
-+		return -EFSCORRUPTED;
-+	}
- 
- 	if (p->accessType == cpu_to_le32(PD_ACCESS_TYPE_READ_ONLY))
- 		map->s_partition_flags |= UDF_PART_FLAG_READ_ONLY;
-@@ -1115,6 +1122,14 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 		bitmap->s_extPosition = le32_to_cpu(
- 				phd->unallocSpaceBitmap.extPosition);
- 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_BITMAP;
-+		/* Check whether math over bitmap won't overflow. */
-+		if (check_add_overflow(map->s_partition_len,
-+				       sizeof(struct spaceBitmapDesc) << 3,
-+				       &sum)) {
-+			udf_err(sb, "Partition %d is too long (%u)\n", p_index,
-+				map->s_partition_len);
-+			return -EFSCORRUPTED;
-+		}
- 		udf_debug("unallocSpaceBitmap (part %d) @ %u\n",
- 			  p_index, bitmap->s_extPosition);
- 	}
+ 	if (*pos & 3 || size & 3)
+ 		return -EINVAL;
 -- 
 2.43.0
 
