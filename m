@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF41318A6B9;
-	Tue, 10 Sep 2024 10:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA3F18C344;
+	Tue, 10 Sep 2024 10:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964685; cv=none; b=MkZ8dTtoRsrVjVoav05yqd7zaDzvAgXn0eVxRlbBXHxF4wxaa7aI6wV4yiHF0naNehCVAvF3nnAZVwoRd0Iu+lZer6gqWbtrzXLEAod7pA9Z6n/JWI18niO8i+cJtcfMTZV8DmlRySRnlPscbGkv07ezQ9p67rl5ZaAZ4hc+yU4=
+	t=1725964688; cv=none; b=vAQ1MsQ3ORI53OGUDXO9GjDrUZdD1IbuR1rL6lDbK5QUjBQg0jehSTlfCcSIoKWTow4uRvcVKFVVBec/iqIIyD8pb7aOoyfTD1uK2sW+wxRc6kMzGvXAqLaXSGYcONXBbn+5QERyPHV06SJA9Mh7Z1HQpshrTZoBTl7j1Yi6oqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964685; c=relaxed/simple;
-	bh=rwAaiLlT5BnoAs99eXIFhsd/+dQ+iTrMHEbL0UKqKio=;
+	s=arc-20240116; t=1725964688; c=relaxed/simple;
+	bh=vLsvtNQTyLhy/hLdSOQPs4jU1Me6tIK+vuuHXRLb/2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmGfKAbAqJUmLr76wJG9X7RhZcY/zp+XKPctgO2SUBJdvKGQhH4MGFH7z60KybpPBPrRWbMt8KqJsF7E74VJYpOmaEOWxxtfpPiP0iVkoqX+yOp7IP971K/CoYjw9NV64tTZgO9BoCK77QVqamsDpGr/OsdlOsCmnaoz3Zqm7uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPRXcK0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ng4c3d+FoSHa64z9FJA7h0ySXzgq7OrfBiwVxYqicA/qUjrLZ4ovY2N1AL0S/vmWQ0MvJw4wqzv8zranL0ZBGFEre2sCgmfhmhSfXc1tvktBMjlZJ7GmBgllDvvI0mdDE+bP8qd4oIIdEoxxh/OI8hc26A8msTSPHMDpPABcYcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXKNItIv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPRXcK0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A60C4CEC3;
-	Tue, 10 Sep 2024 10:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXKNItIv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4655DC4CEC3;
+	Tue, 10 Sep 2024 10:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964685;
-	bh=rwAaiLlT5BnoAs99eXIFhsd/+dQ+iTrMHEbL0UKqKio=;
+	s=korg; t=1725964688;
+	bh=vLsvtNQTyLhy/hLdSOQPs4jU1Me6tIK+vuuHXRLb/2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPRXcK0xad9zXEUQ+ew94+AgMcTDSLat9VrQ0q4OniOUPs0wYAIsUxK9KZgrmqcA7
-	 CicfYZB5MGPWmJufgDl7LImzV9LHxcyyYFSI3nMMdWu8SsW3eRCrplLTHFmdKHYiZO
-	 Jc5BUXmUc2DuIxw49SehD6CqWU2gs8go3NtLPnEw=
+	b=zXKNItIvfOVIC4oLkdFGOLPzOmRWBMTiCcXib16I787Ei3svDnp7xHH7J/uRr4loi
+	 WDGuI3LUVUVOAgAP20LUD/D9VJk6ZwMieiTw/C4lH2585yd11IRJEfrLIEPZZgJrgq
+	 kC+3TAQxeg6l7dvsrE5+cTx2JHoAtxwnOFP9x/HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>,
+	Jia Jie Ho <jiajie.ho@starfivetech.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/269] ata: libata-scsi: Check ATA_QCFLAG_RTF_FILLED before using result_tf
-Date: Tue, 10 Sep 2024 11:33:47 +0200
-Message-ID: <20240910092616.424536785@linuxfoundation.org>
+Subject: [PATCH 6.6 241/269] crypto: starfive - Align rsa input data to 32-bit
+Date: Tue, 10 Sep 2024 11:33:48 +0200
+Message-ID: <20240910092616.449533773@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -53,79 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 
-[ Upstream commit 816be86c7993d3c5832c3017c0056297e86f978c ]
+[ Upstream commit 6aad7019f697ab0bed98eba737d19bd7f67713de ]
 
-qc->result_tf contents are only valid when the ATA_QCFLAG_RTF_FILLED flag
-is set. The ATA_QCFLAG_RTF_FILLED flag should be always set for commands
-that failed or for commands that have the ATA_QCFLAG_RESULT_TF flag set.
+Hardware expects RSA input plain/ciphertext to be 32-bit aligned.
+Set fixed length for preallocated buffer to the maximum supported
+keysize of the hardware and shift input text accordingly.
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Link: https://lore.kernel.org/r/20240702024735.1152293-8-ipylypiv@google.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/crypto/starfive/jh7110-cryp.h |  3 ++-
+ drivers/crypto/starfive/jh7110-rsa.c  | 12 ++++++++----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 27e0c87236ac..c91f8746289f 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -242,10 +242,17 @@ void ata_scsi_set_sense_information(struct ata_device *dev,
-  */
- static void ata_scsi_set_passthru_sense_fields(struct ata_queued_cmd *qc)
- {
-+	struct ata_device *dev = qc->dev;
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 	struct ata_taskfile *tf = &qc->result_tf;
- 	unsigned char *sb = cmd->sense_buffer;
+diff --git a/drivers/crypto/starfive/jh7110-cryp.h b/drivers/crypto/starfive/jh7110-cryp.h
+index fe011d50473d..f386e9897896 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.h
++++ b/drivers/crypto/starfive/jh7110-cryp.h
+@@ -30,6 +30,7 @@
+ #define MAX_KEY_SIZE				SHA512_BLOCK_SIZE
+ #define STARFIVE_AES_IV_LEN			AES_BLOCK_SIZE
+ #define STARFIVE_AES_CTR_LEN			AES_BLOCK_SIZE
++#define STARFIVE_RSA_MAX_KEYSZ			256
  
-+	if (!(qc->flags & ATA_QCFLAG_RTF_FILLED)) {
-+		ata_dev_dbg(dev,
-+			    "missing result TF: can't set ATA PT sense fields\n");
-+		return;
-+	}
-+
- 	if ((sb[0] & 0x7f) >= 0x72) {
- 		unsigned char *desc;
- 		u8 len;
-@@ -924,10 +931,17 @@ static void ata_to_sense_error(unsigned id, u8 drv_stat, u8 drv_err, u8 *sk,
-  */
- static void ata_gen_passthru_sense(struct ata_queued_cmd *qc)
- {
-+	struct ata_device *dev = qc->dev;
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 	struct ata_taskfile *tf = &qc->result_tf;
- 	u8 sense_key, asc, ascq;
+ union starfive_aes_csr {
+ 	u32 v;
+@@ -217,7 +218,7 @@ struct starfive_cryp_request_ctx {
+ 	unsigned int				digsize;
+ 	unsigned long				in_sg_len;
+ 	unsigned char				*adata;
+-	u8 rsa_data[] __aligned(sizeof(u32));
++	u8 rsa_data[STARFIVE_RSA_MAX_KEYSZ] __aligned(sizeof(u32));
+ };
  
-+	if (!(qc->flags & ATA_QCFLAG_RTF_FILLED)) {
-+		ata_dev_dbg(dev,
-+			    "missing result TF: can't generate ATA PT sense data\n");
-+		return;
+ struct starfive_cryp_dev *starfive_cryp_find_dev(struct starfive_cryp_ctx *ctx);
+diff --git a/drivers/crypto/starfive/jh7110-rsa.c b/drivers/crypto/starfive/jh7110-rsa.c
+index f31bbd825f88..fbc06f8ee95f 100644
+--- a/drivers/crypto/starfive/jh7110-rsa.c
++++ b/drivers/crypto/starfive/jh7110-rsa.c
+@@ -37,7 +37,6 @@
+ // A * A * R mod N ==> A
+ #define CRYPTO_CMD_AARN			0x7
+ 
+-#define STARFIVE_RSA_MAX_KEYSZ		256
+ #define STARFIVE_RSA_RESET		0x2
+ 
+ static inline int starfive_pka_wait_done(struct starfive_cryp_ctx *ctx)
+@@ -91,7 +90,7 @@ static int starfive_rsa_montgomery_form(struct starfive_cryp_ctx *ctx,
+ {
+ 	struct starfive_cryp_dev *cryp = ctx->cryp;
+ 	struct starfive_cryp_request_ctx *rctx = ctx->rctx;
+-	int count = rctx->total / sizeof(u32) - 1;
++	int count = (ALIGN(rctx->total, 4) / 4) - 1;
+ 	int loop;
+ 	u32 temp;
+ 	u8 opsize;
+@@ -274,12 +273,17 @@ static int starfive_rsa_enc_core(struct starfive_cryp_ctx *ctx, int enc)
+ 	struct starfive_cryp_dev *cryp = ctx->cryp;
+ 	struct starfive_cryp_request_ctx *rctx = ctx->rctx;
+ 	struct starfive_rsa_key *key = &ctx->rsa_key;
+-	int ret = 0;
++	int ret = 0, shift = 0;
+ 
+ 	writel(STARFIVE_RSA_RESET, cryp->base + STARFIVE_PKA_CACR_OFFSET);
+ 
++	if (!IS_ALIGNED(rctx->total, sizeof(u32))) {
++		shift = sizeof(u32) - (rctx->total & 0x3);
++		memset(rctx->rsa_data, 0, shift);
 +	}
 +
- 	/*
- 	 * Use ata_to_sense_error() to map status register bits
- 	 * onto sense key, asc & ascq.
-@@ -979,6 +993,13 @@ static void ata_gen_ata_sense(struct ata_queued_cmd *qc)
- 		ata_scsi_set_sense(dev, cmd, NOT_READY, 0x04, 0x21);
- 		return;
- 	}
-+
-+	if (!(qc->flags & ATA_QCFLAG_RTF_FILLED)) {
-+		ata_dev_dbg(dev,
-+			    "missing result TF: can't generate sense data\n");
-+		return;
-+	}
-+
- 	/* Use ata_to_sense_error() to map status register bits
- 	 * onto sense key, asc & ascq.
- 	 */
+ 	rctx->total = sg_copy_to_buffer(rctx->in_sg, rctx->nents,
+-					rctx->rsa_data, rctx->total);
++					rctx->rsa_data + shift, rctx->total);
+ 
+ 	if (enc) {
+ 		key->bitlen = key->e_bitlen;
 -- 
 2.43.0
 
