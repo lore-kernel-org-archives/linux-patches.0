@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6567D18C005;
-	Tue, 10 Sep 2024 09:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DFE18CC17;
+	Tue, 10 Sep 2024 09:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961276; cv=none; b=DjpotWQrgsOv7sUXDJ1qQxko4aOKfgdsyNJz322kwuqkzQlcEhw4FWRlYmT3AFYsUJ4KlxwJfrUqqKW3IwD/zM55IkB4WtgkB8QhbRBLBY76n/xE9F5k1sQp1+XzIEsqS5IsMXvgpTBe1YajQX8GEKupGBLuNgDQl1Po6M3gYgQ=
+	t=1725961279; cv=none; b=KseTXY7m2hy3K8fBG611MvNkWdULg+RfkVd5EsfNrxWrIpOEHefCXYBl9Gl4k1/Ipylp/noglGSusvThIvlsSsu3GvRFTEtdvEGw3hEiyi6gXlwwPNOxrif61QAyDXmOK4n1C7+R+5e0+7Gr35yBJ77mRWhnEZZAl0SZtPYYvHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961276; c=relaxed/simple;
-	bh=/jdKoRsvF/HP2mATDTjXJlnFsWOvakkiOiBx5zqwtaY=;
+	s=arc-20240116; t=1725961279; c=relaxed/simple;
+	bh=uKqTaFvaeQ2oVb/uoYcKbEzlz4+Kd1xUGupgpTqPNjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qmbn56X/aZOVL9u0sFOaakX30dKAt3z2LhQMgy+3SzQXfOz/yupwoS9wq23L7qPySOssFf28yTh4Bk0//HLPENDKiiBps5kSvi/hjYj+u+6KyXiWyD7NrWmWSU8de1t8p3GhMw+zY1fp9QdoW5Bweohi8I+C3hngdLPz0GUsolU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8anwwbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4KkZHMHXC/6thDv4gNyIZ5ULMVlISzAAXi0NWaiVToOK8hTC3cYrRyHbnhrQdQyLqn40b6fTQPCKKvkR/Zk9su1yYGNc/o6yBJ8smuGgaek9NvdhfmanfCJei6a8KMq/RqTHRzfgV28v22y7gJe2QlJm8BCb0o4R4cXIoQBAqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5/ZsHYV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8anwwbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5CCC4CEC3;
-	Tue, 10 Sep 2024 09:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5/ZsHYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC020C4CEC6;
+	Tue, 10 Sep 2024 09:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961276;
-	bh=/jdKoRsvF/HP2mATDTjXJlnFsWOvakkiOiBx5zqwtaY=;
+	s=korg; t=1725961279;
+	bh=uKqTaFvaeQ2oVb/uoYcKbEzlz4+Kd1xUGupgpTqPNjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8anwwbVOT5/cqGeFtmPRKYNXRPDIyduuSJdYoWqs+LisW3vHl8630Iz9v2nfflNo
-	 fCyYGuvCVurbf/f32yoOSCj0g59d6twawX0KyM91NZj6F6vRzGdjVituygtR89l88r
-	 ACgB/OF2m52dbVyJpjKMJdOLlzELc7OO+U44BHmo=
+	b=m5/ZsHYVxPepQ0ySthQOHzkuaWT+y3gsGaN16XM8yRUorkP5V+jwoAnl1ozXtA9KB
+	 6pBPSIgqC5Co5sTEfdT7SDhcQlXZxS2K2TSz5UrG+E6S1VcDJnFHzCQ2MxtQp/lwDP
+	 mmpkbGez9aGSVFXzYU/RGLL3XMuUKvdq61dKbxis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Julien Panis <jpanis@baylibre.com>,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.10 006/375] net: ethernet: ti: am65-cpsw: fix XDP_DROP, XDP_TX and XDP_REDIRECT
-Date: Tue, 10 Sep 2024 11:26:43 +0200
-Message-ID: <20240910092622.478344978@linuxfoundation.org>
+	robelin <robelin@nvidia.com>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.10 007/375] ASoC: dapm: Fix UAF for snd_soc_pcm_runtime object
+Date: Tue, 10 Sep 2024 11:26:44 +0200
+Message-ID: <20240910092622.507167145@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,226 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: robelin <robelin@nvidia.com>
 
-commit 5e24db550bd6f484d2c7687ee488708260e1f84a upstream.
+commit b4a90b543d9f62d3ac34ec1ab97fc5334b048565 upstream.
 
-The following XDP_DROP test from [1] stalls the interface after
-250 packets.
-~# xdb-bench drop -m native eth0
-This is because new RX requests are never queued. Fix that.
+When using kernel with the following extra config,
 
-The below XDP_TX test from [1] fails with a warning
-[  499.947381] XDP_WARN: xdp_update_frame_from_buff(line:277): Driver BUG: missing reserved tailroom
-~# xdb-bench tx -m native eth0
-Fix that by using PAGE_SIZE during xdp_init_buf().
+  - CONFIG_KASAN=y
+  - CONFIG_KASAN_GENERIC=y
+  - CONFIG_KASAN_INLINE=y
+  - CONFIG_KASAN_VMALLOC=y
+  - CONFIG_FRAME_WARN=4096
 
-In XDP_REDIRECT case only 1 packet was processed in rx_poll.
-Fix it to process up to budget packets.
+kernel detects that snd_pcm_suspend_all() access a freed
+'snd_soc_pcm_runtime' object when the system is suspended, which
+leads to a use-after-free bug:
 
-Fix all XDP error cases to call trace_xdp_exception() and drop the packet
-in am65_cpsw_run_xdp().
+[   52.047746] BUG: KASAN: use-after-free in snd_pcm_suspend_all+0x1a8/0x270
+[   52.047765] Read of size 1 at addr ffff0000b9434d50 by task systemd-sleep/2330
 
-[1] xdp-tools suite https://github.com/xdp-project/xdp-tools
+[   52.047785] Call trace:
+[   52.047787]  dump_backtrace+0x0/0x3c0
+[   52.047794]  show_stack+0x34/0x50
+[   52.047797]  dump_stack_lvl+0x68/0x8c
+[   52.047802]  print_address_description.constprop.0+0x74/0x2c0
+[   52.047809]  kasan_report+0x210/0x230
+[   52.047815]  __asan_report_load1_noabort+0x3c/0x50
+[   52.047820]  snd_pcm_suspend_all+0x1a8/0x270
+[   52.047824]  snd_soc_suspend+0x19c/0x4e0
 
-Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Julien Panis <jpanis@baylibre.com>
-Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The snd_pcm_sync_stop() has a NULL check on 'substream->runtime' before
+making any access. So we need to always set 'substream->runtime' to NULL
+everytime we kfree() it.
+
+Fixes: a72706ed8208 ("ASoC: codec2codec: remove ephemeral variables")
+Signed-off-by: robelin <robelin@nvidia.com>
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+Link: https://patch.msgid.link/20240823144342.4123814-2-spujar@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c |   62 +++++++++++++++++--------------
- 1 file changed, 34 insertions(+), 28 deletions(-)
+ sound/soc/soc-dapm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -156,12 +156,13 @@
- #define AM65_CPSW_CPPI_TX_PKT_TYPE 0x7
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -4066,6 +4066,7 @@ static int snd_soc_dai_link_event(struct
  
- /* XDP */
--#define AM65_CPSW_XDP_CONSUMED 2
--#define AM65_CPSW_XDP_REDIRECT 1
-+#define AM65_CPSW_XDP_CONSUMED BIT(1)
-+#define AM65_CPSW_XDP_REDIRECT BIT(0)
- #define AM65_CPSW_XDP_PASS     0
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		kfree(substream->runtime);
++		substream->runtime = NULL;
+ 		break;
  
- /* Include headroom compatible with both skb and xdpf */
--#define AM65_CPSW_HEADROOM (max(NET_SKB_PAD, XDP_PACKET_HEADROOM) + NET_IP_ALIGN)
-+#define AM65_CPSW_HEADROOM_NA (max(NET_SKB_PAD, XDP_PACKET_HEADROOM) + NET_IP_ALIGN)
-+#define AM65_CPSW_HEADROOM ALIGN(AM65_CPSW_HEADROOM_NA, sizeof(long))
- 
- static void am65_cpsw_port_set_sl_mac(struct am65_cpsw_port *slave,
- 				      const u8 *dev_addr)
-@@ -933,7 +934,7 @@ static int am65_cpsw_xdp_tx_frame(struct
- 	host_desc = k3_cppi_desc_pool_alloc(tx_chn->desc_pool);
- 	if (unlikely(!host_desc)) {
- 		ndev->stats.tx_dropped++;
--		return -ENOMEM;
-+		return AM65_CPSW_XDP_CONSUMED;	/* drop */
- 	}
- 
- 	am65_cpsw_nuss_set_buf_type(tx_chn, host_desc, buf_type);
-@@ -942,7 +943,7 @@ static int am65_cpsw_xdp_tx_frame(struct
- 				 pkt_len, DMA_TO_DEVICE);
- 	if (unlikely(dma_mapping_error(tx_chn->dma_dev, dma_buf))) {
- 		ndev->stats.tx_dropped++;
--		ret = -ENOMEM;
-+		ret = AM65_CPSW_XDP_CONSUMED;	/* drop */
- 		goto pool_free;
- 	}
- 
-@@ -977,6 +978,7 @@ static int am65_cpsw_xdp_tx_frame(struct
- 		/* Inform BQL */
- 		netdev_tx_completed_queue(netif_txq, 1, pkt_len);
- 		ndev->stats.tx_errors++;
-+		ret = AM65_CPSW_XDP_CONSUMED; /* drop */
- 		goto dma_unmap;
- 	}
- 
-@@ -1004,6 +1006,7 @@ static int am65_cpsw_run_xdp(struct am65
- 	struct bpf_prog *prog;
- 	struct page *page;
- 	u32 act;
-+	int err;
- 
- 	prog = READ_ONCE(port->xdp_prog);
- 	if (!prog)
-@@ -1023,14 +1026,14 @@ static int am65_cpsw_run_xdp(struct am65
- 
- 		xdpf = xdp_convert_buff_to_frame(xdp);
- 		if (unlikely(!xdpf))
--			break;
-+			goto drop;
- 
- 		__netif_tx_lock(netif_txq, cpu);
--		ret = am65_cpsw_xdp_tx_frame(ndev, tx_chn, xdpf,
-+		err = am65_cpsw_xdp_tx_frame(ndev, tx_chn, xdpf,
- 					     AM65_CPSW_TX_BUF_TYPE_XDP_TX);
- 		__netif_tx_unlock(netif_txq);
--		if (ret)
--			break;
-+		if (err)
-+			goto drop;
- 
- 		ndev->stats.rx_bytes += *len;
- 		ndev->stats.rx_packets++;
-@@ -1038,7 +1041,7 @@ static int am65_cpsw_run_xdp(struct am65
- 		goto out;
- 	case XDP_REDIRECT:
- 		if (unlikely(xdp_do_redirect(ndev, xdp, prog)))
--			break;
-+			goto drop;
- 
- 		ndev->stats.rx_bytes += *len;
- 		ndev->stats.rx_packets++;
-@@ -1048,6 +1051,7 @@ static int am65_cpsw_run_xdp(struct am65
- 		bpf_warn_invalid_xdp_action(ndev, prog, act);
- 		fallthrough;
- 	case XDP_ABORTED:
-+drop:
- 		trace_xdp_exception(ndev, prog, act);
- 		fallthrough;
- 	case XDP_DROP:
-@@ -1056,7 +1060,6 @@ static int am65_cpsw_run_xdp(struct am65
- 
- 	page = virt_to_head_page(xdp->data);
- 	am65_cpsw_put_page(rx_chn, page, true, desc_idx);
--
- out:
- 	return ret;
- }
-@@ -1095,7 +1098,7 @@ static void am65_cpsw_nuss_rx_csum(struc
- }
- 
- static int am65_cpsw_nuss_rx_packets(struct am65_cpsw_common *common,
--				     u32 flow_idx, int cpu)
-+				     u32 flow_idx, int cpu, int *xdp_state)
- {
- 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
- 	u32 buf_dma_len, pkt_len, port_id = 0, csum_info;
-@@ -1114,6 +1117,7 @@ static int am65_cpsw_nuss_rx_packets(str
- 	void **swdata;
- 	u32 *psdata;
- 
-+	*xdp_state = AM65_CPSW_XDP_PASS;
- 	ret = k3_udma_glue_pop_rx_chn(rx_chn->rx_chn, flow_idx, &desc_dma);
- 	if (ret) {
- 		if (ret != -ENODATA)
-@@ -1161,15 +1165,13 @@ static int am65_cpsw_nuss_rx_packets(str
- 	}
- 
- 	if (port->xdp_prog) {
--		xdp_init_buff(&xdp, AM65_CPSW_MAX_PACKET_SIZE, &port->xdp_rxq);
--
--		xdp_prepare_buff(&xdp, page_addr, skb_headroom(skb),
-+		xdp_init_buff(&xdp, PAGE_SIZE, &port->xdp_rxq);
-+		xdp_prepare_buff(&xdp, page_addr, AM65_CPSW_HEADROOM,
- 				 pkt_len, false);
--
--		ret = am65_cpsw_run_xdp(common, port, &xdp, desc_idx,
--					cpu, &pkt_len);
--		if (ret != AM65_CPSW_XDP_PASS)
--			return ret;
-+		*xdp_state = am65_cpsw_run_xdp(common, port, &xdp, desc_idx,
-+					       cpu, &pkt_len);
-+		if (*xdp_state != AM65_CPSW_XDP_PASS)
-+			goto allocate;
- 
- 		/* Compute additional headroom to be reserved */
- 		headroom = (xdp.data - xdp.data_hard_start) - skb_headroom(skb);
-@@ -1193,9 +1195,13 @@ static int am65_cpsw_nuss_rx_packets(str
- 	stats->rx_bytes += pkt_len;
- 	u64_stats_update_end(&stats->syncp);
- 
-+allocate:
- 	new_page = page_pool_dev_alloc_pages(rx_chn->page_pool);
--	if (unlikely(!new_page))
-+	if (unlikely(!new_page)) {
-+		dev_err(dev, "page alloc failed\n");
- 		return -ENOMEM;
-+	}
-+
- 	rx_chn->pages[desc_idx] = new_page;
- 
- 	if (netif_dormant(ndev)) {
-@@ -1229,8 +1235,9 @@ static int am65_cpsw_nuss_rx_poll(struct
- 	struct am65_cpsw_common *common = am65_cpsw_napi_to_common(napi_rx);
- 	int flow = AM65_CPSW_MAX_RX_FLOWS;
- 	int cpu = smp_processor_id();
--	bool xdp_redirect = false;
-+	int xdp_state_or = 0;
- 	int cur_budget, ret;
-+	int xdp_state;
- 	int num_rx = 0;
- 
- 	/* process every flow */
-@@ -1238,12 +1245,11 @@ static int am65_cpsw_nuss_rx_poll(struct
- 		cur_budget = budget - num_rx;
- 
- 		while (cur_budget--) {
--			ret = am65_cpsw_nuss_rx_packets(common, flow, cpu);
--			if (ret) {
--				if (ret == AM65_CPSW_XDP_REDIRECT)
--					xdp_redirect = true;
-+			ret = am65_cpsw_nuss_rx_packets(common, flow, cpu,
-+							&xdp_state);
-+			xdp_state_or |= xdp_state;
-+			if (ret)
- 				break;
--			}
- 			num_rx++;
- 		}
- 
-@@ -1251,7 +1257,7 @@ static int am65_cpsw_nuss_rx_poll(struct
- 			break;
- 	}
- 
--	if (xdp_redirect)
-+	if (xdp_state_or & AM65_CPSW_XDP_REDIRECT)
- 		xdp_do_flush();
- 
- 	dev_dbg(common->dev, "%s num_rx:%d %d\n", __func__, num_rx, budget);
+ 	default:
 
 
