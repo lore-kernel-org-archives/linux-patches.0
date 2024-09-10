@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C07A18E778;
-	Tue, 10 Sep 2024 09:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16608188CB3;
+	Tue, 10 Sep 2024 09:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961588; cv=none; b=T6djL0A8IDMGAXUTsxeE1jE7Id5d7MM7EfCJLF8lUg8Lv4KD5ibm8UGO+YIWIabE0FvvzgxFso85z4bVTtsOcdsO9Sfs+jOjSRab2wVSyhlsG+rJOfczpIiLj2vBZsBmDG4H706PZIUdugFRSv52TsxJF8B5ShnpMQXatdvxCZ4=
+	t=1725961591; cv=none; b=F6SsPc+m9ObwUNlIdcX9iZlC9vl1nCAzhu2b1JzwOGyx2QgpqLwYTzj/6d/ctsOolGevnmPxD6rkNsaCXeF1aPfPeBsK62bf88NAxibkSBtjleqPl6oFN2RxyZIFQ+5ERwB6jqyWJ7oezfl69sBVI1Q9a4Snjva3zODEzu2J8NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961588; c=relaxed/simple;
-	bh=ioc2HpjzaxfoF/gn5OD5zjLMpDJ6WFyileA3HqfFIRw=;
+	s=arc-20240116; t=1725961591; c=relaxed/simple;
+	bh=tpU0BoNQSxMcLWrvmw+rgxf8DHAFnF2wJex/z0XKdOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1Plwegwr2b4WnvB20wGwxYJhoK2/2tfZY5temDd1C7laMClCC7MfQvAT8KOXHVpzQpOJhw9md794LsM6UljJVRx+OtZplF4Z1P9/CmOhdBn2psEhXWmqPXb1APPNUecf3GeujqC779hE0RiEgl/WzFV9SggdQuKKZGzZ7O+Eik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDzb4PD5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bp+2CJd5RCrTCjH3n0UoZ2yxFJrFproW5A2PqC3+42DokGkCypaQ3mohKWSt432g06vZ5aLXmsNveQ6X/sQ2wElA8xzsv1r4uzgjZac2z7o24ZNkQTR2UfAZrm12XL6o/l7y0uSVaU+zocfOuBykbf+EZdCDVj6shb/bVboanec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcasK0wf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDzb4PD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4AFC4CEC3;
-	Tue, 10 Sep 2024 09:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcasK0wf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9387AC4CEC3;
+	Tue, 10 Sep 2024 09:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961588;
-	bh=ioc2HpjzaxfoF/gn5OD5zjLMpDJ6WFyileA3HqfFIRw=;
+	s=korg; t=1725961591;
+	bh=tpU0BoNQSxMcLWrvmw+rgxf8DHAFnF2wJex/z0XKdOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDzb4PD51uvYNcTjsOf2d9//6PM6cKJaCBMj8acKqDfO2PQBnRc7YXadlxJsQGTnK
-	 vaiJh5iX87L/53Rsv1Px4Zs0Hj7/ohIhdXPT5W60Y+nyzNvWti1LClWzwoE3g/xtBQ
-	 bmV2urY7iekaJsP5lcgF9mKtUPP6kSDVFFiWRqLQ=
+	b=gcasK0wfmdrAEPS7cgOUrVCLZBCuViZDfrxRmxq02GU0y2J/WEzW3EFuAmwutiw2G
+	 xM9myqEaY39HEwYEM/mrUkazFqbYsrVhwkBSR7BpcTOVxUJWAZZ42qp6AneLU9j5Gk
+	 //apnE/0kORbNW9EQ/G8r8SCmGP+a6BbZbhGfZO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 121/375] usb: gadget: aspeed_udc: validate endpoint index for ast udc
-Date: Tue, 10 Sep 2024 11:28:38 +0200
-Message-ID: <20240910092626.501728101@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.10 104/375] irqchip/renesas-rzg2l: Reorder function calls in rzg2l_irqc_irq_disable()
+Date: Tue, 10 Sep 2024 11:28:21 +0200
+Message-ID: <20240910092625.882779350@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,38 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit ee0d382feb44ec0f445e2ad63786cd7f3f6a8199 ]
+[ Upstream commit 492eee82574b163fbb3f099c74ce3b4322d0af28 ]
 
-We should verify the bound of the array to assure that host
-may not manipulate the index to point past endpoint array.
+The order of function calls in the disable operation should be the reverse
+of that in the enable operation. Thus, reorder the function calls to first
+disable the parent IRQ chip before disabling the TINT IRQ.
 
-Found by static analysis.
-
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://lore.kernel.org/r/20240625022306.2568122-1-make24@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com> # on RZ/G3S
+Link: https://lore.kernel.org/r/20240606194813.676823-1-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed_udc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/irqchip/irq-renesas-rzg2l.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
-index 821a6ab5da56..f4781e611aaa 100644
---- a/drivers/usb/gadget/udc/aspeed_udc.c
-+++ b/drivers/usb/gadget/udc/aspeed_udc.c
-@@ -1009,6 +1009,8 @@ static void ast_udc_getstatus(struct ast_udc_dev *udc)
- 		break;
- 	case USB_RECIP_ENDPOINT:
- 		epnum = crq.wIndex & USB_ENDPOINT_NUMBER_MASK;
-+		if (epnum >= AST_UDC_NUM_ENDPOINTS)
-+			goto stall;
- 		status = udc->ep[epnum].stopped;
- 		break;
- 	default:
+diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
+index f6484bf15e0b..5a4521cf3ec6 100644
+--- a/drivers/irqchip/irq-renesas-rzg2l.c
++++ b/drivers/irqchip/irq-renesas-rzg2l.c
+@@ -162,8 +162,8 @@ static void rzg2l_tint_irq_endisable(struct irq_data *d, bool enable)
+ 
+ static void rzg2l_irqc_irq_disable(struct irq_data *d)
+ {
+-	rzg2l_tint_irq_endisable(d, false);
+ 	irq_chip_disable_parent(d);
++	rzg2l_tint_irq_endisable(d, false);
+ }
+ 
+ static void rzg2l_irqc_irq_enable(struct irq_data *d)
 -- 
 2.43.0
 
