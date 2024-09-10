@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81221922F1;
-	Tue, 10 Sep 2024 10:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D53143880;
+	Tue, 10 Sep 2024 10:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963514; cv=none; b=JhAF9Zs9F8PonQR+JqOznH0ZafX9hs8C1GwdOhdcR2jvhdmPmcE6Xow4rkp8MW9ez78Kld226BZSzwmXTmz9wtPHLGUkR9genvwozIYcprE9Y+ZVC3QXokmDXLfxYiO43Cg6RHHh9cE4EvvI4JJYsv4gJxgjZmeqVYuliyN3Orw=
+	t=1725963517; cv=none; b=fBcWMrMzMmRkvigQQDhvwr6GKI+TFTRWD7lVE9VYqluaiuPXRj21YmK8rJt1K07cDW8lJsJP25J5X+FD/HPVfWGiHSdAs9/CQxIiq4T5YgVDmjn97ytjZ+S+UNHGxxDtPH7aueh0SdBWJzu6e3rpMWy9vUWxuMtp+HJz0gJjR/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963514; c=relaxed/simple;
-	bh=mjp6gnWFcU7nq05pGJK7iDM3lQTWDhpEXR7SOylGA0c=;
+	s=arc-20240116; t=1725963517; c=relaxed/simple;
+	bh=jiB71eZ2UY4cXQ07Z/J3mk5u4L7/mvnmXYrgeIHcn6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJ+5v+GD9+4qQFOpLMuT+qIYzEDi5CPslhdr1Uf4EOrUY31ZJvqKpmSprGYv+ldIgWedOnlCsAQofJn6Rvzg5JBqSkUaSmiuuHwp68/IcqNcglB6fsxf1DzoxwnhIw8H4QiAFxVL8BDuUOeT8XTbKC+17uLjiTG9R66V2pqIkRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6SaD++e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+RIJpj1sg6zRLIJXmmQ3td8060UvhpHrchKN2z8uYMvlSHpdYSHWr7PRttpoATbrm+uUtPhUZR1fLvOK4p5YnrvYc1GPeHUZ7TlJxzbZJeZJSN0hvuGFHCTyoJwtVm0XHyh5Wm1VeCcgL5686Vx/I/pQmfcQmrGLDZ8f5Q2Vfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSJ1mx35; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6SaD++e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D326C4CEC6;
-	Tue, 10 Sep 2024 10:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSJ1mx35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E8AC4CEC3;
+	Tue, 10 Sep 2024 10:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963514;
-	bh=mjp6gnWFcU7nq05pGJK7iDM3lQTWDhpEXR7SOylGA0c=;
+	s=korg; t=1725963517;
+	bh=jiB71eZ2UY4cXQ07Z/J3mk5u4L7/mvnmXYrgeIHcn6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6SaD++eXSEh9WFpaVBNrieCv9vKx6iClzJ/tijNmPQe37CA125Tu228ah6TQIzO+
-	 +WBkejd1cnZpkaWMENy5i9HUU8X8jWin5iTNdWvV7m9Av334sNzsUHQHmApR29FGtP
-	 NQSHhNFafuXWtVr9nAK7tHADB67omMYqaKVOPdco=
+	b=YSJ1mx35eF07j3t8aDPQ5C20YSNST+EURAsIsxDkYWyVbJK2Hp6fNj80KzLm7Wbed
+	 JqjGPM6iMJ5KZuE2kNsIPyZqH73aMUsDzPiCP9EsHpsszYV+F06JFgdxq5OefUaeqB
+	 sIasxXdYpPcJoIcEexuwBqUZ/JAjvwAVTbpmi80I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.15 056/214] virtio_net: Fix napi_skb_cache_put warning
-Date: Tue, 10 Sep 2024 11:31:18 +0200
-Message-ID: <20240910092601.045506313@linuxfoundation.org>
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+Subject: [PATCH 5.15 057/214] rcu-tasks: Fix show_rcu_tasks_trace_gp_kthread buffer overflow
+Date: Tue, 10 Sep 2024 11:31:19 +0200
+Message-ID: <20240910092601.093140586@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -54,88 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-commit f8321fa75102246d7415a6af441872f6637c93ab upstream.
+commit cc5645fddb0ce28492b15520306d092730dffa48 upstream.
 
-After the commit bdacf3e34945 ("net: Use nested-BH locking for
-napi_alloc_cache.") was merged, the following warning began to appear:
+There is a possibility of buffer overflow in
+show_rcu_tasks_trace_gp_kthread() if counters, passed
+to sprintf() are huge. Counter numbers, needed for this
+are unrealistically high, but buffer overflow is still
+possible.
 
-	 WARNING: CPU: 5 PID: 1 at net/core/skbuff.c:1451 napi_skb_cache_put+0x82/0x4b0
+Use snprintf() with buffer size instead of sprintf().
 
-	  __warn+0x12f/0x340
-	  napi_skb_cache_put+0x82/0x4b0
-	  napi_skb_cache_put+0x82/0x4b0
-	  report_bug+0x165/0x370
-	  handle_bug+0x3d/0x80
-	  exc_invalid_op+0x1a/0x50
-	  asm_exc_invalid_op+0x1a/0x20
-	  __free_old_xmit+0x1c8/0x510
-	  napi_skb_cache_put+0x82/0x4b0
-	  __free_old_xmit+0x1c8/0x510
-	  __free_old_xmit+0x1c8/0x510
-	  __pfx___free_old_xmit+0x10/0x10
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-The issue arises because virtio is assuming it's running in NAPI context
-even when it's not, such as in the netpoll case.
-
-To resolve this, modify virtnet_poll_tx() to only set NAPI when budget
-is available. Same for virtnet_poll_cleantx(), which always assumed that
-it was in a NAPI context.
-
-Fixes: df133f3f9625 ("virtio_net: bulk free tx skbs")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Link: https://patch.msgid.link/20240712115325.54175-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Shivani: Modified to apply on v6.6.y]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Fixes: edf3775f0ad6 ("rcu-tasks: Add count for idle tasks on offline CPUs")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/rcu/tasks.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1548,7 +1548,7 @@ static bool is_xdp_raw_buffer_queue(stru
- 		return false;
- }
- 
--static void virtnet_poll_cleantx(struct receive_queue *rq)
-+static void virtnet_poll_cleantx(struct receive_queue *rq, int budget)
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -1323,7 +1323,7 @@ void show_rcu_tasks_trace_gp_kthread(voi
  {
- 	struct virtnet_info *vi = rq->vq->vdev->priv;
- 	unsigned int index = vq2rxq(rq->vq);
-@@ -1561,7 +1561,7 @@ static void virtnet_poll_cleantx(struct
- 	if (__netif_tx_trylock(txq)) {
- 		do {
- 			virtqueue_disable_cb(sq->vq);
--			free_old_xmit_skbs(sq, true);
-+			free_old_xmit_skbs(sq, !!budget);
- 		} while (unlikely(!virtqueue_enable_cb_delayed(sq->vq)));
+ 	char buf[64];
  
- 		if (sq->vq->num_free >= 2 + MAX_SKB_FRAGS)
-@@ -1580,7 +1580,7 @@ static int virtnet_poll(struct napi_stru
- 	unsigned int received;
- 	unsigned int xdp_xmit = 0;
- 
--	virtnet_poll_cleantx(rq);
-+	virtnet_poll_cleantx(rq, budget);
- 
- 	received = virtnet_receive(rq, budget, &xdp_xmit);
- 
-@@ -1683,7 +1683,7 @@ static int virtnet_poll_tx(struct napi_s
- 	txq = netdev_get_tx_queue(vi->dev, index);
- 	__netif_tx_lock(txq, raw_smp_processor_id());
- 	virtqueue_disable_cb(sq->vq);
--	free_old_xmit_skbs(sq, true);
-+	free_old_xmit_skbs(sq, !!budget);
- 
- 	if (sq->vq->num_free >= 2 + MAX_SKB_FRAGS)
- 		netif_tx_wake_queue(txq);
+-	sprintf(buf, "N%d h:%lu/%lu/%lu", atomic_read(&trc_n_readers_need_end),
++	snprintf(buf, sizeof(buf), "N%d h:%lu/%lu/%lu", atomic_read(&trc_n_readers_need_end),
+ 		data_race(n_heavy_reader_ofl_updates),
+ 		data_race(n_heavy_reader_updates),
+ 		data_race(n_heavy_reader_attempts));
 
 
