@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29779188921;
-	Tue, 10 Sep 2024 10:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D651922D0;
+	Tue, 10 Sep 2024 10:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963395; cv=none; b=bNzZ7KFTccnsU0jrsqp4im/RdSZSXRNqouCNli2WvcEQJcX1J0GOuLV3UXAPH/KnnGdmBetYhVOxuqEQ879c3vrMYYJcwr5dUyqD4seBBA31KIGbB9x9USg9S9Fmk5dbF46mCWtWZyTmTKafRkmDTx2FfL1RB4NgVVS2bW4uzFM=
+	t=1725963397; cv=none; b=iooo5H7Mj3q+MymdMdYk1kL78mfxp/N1QRRdzn23FC0FtEXfZeTuZjsOhxAWvMAyQQawKfix7mx8AT3pD7LFHVn+DvfjKNBtM/LZ/gJXvJMhdB06CwS8XRDCLAHGtdGnFhIHk4vWqPZvo1xmCi1AlAr30fZ+XnN10DJ2oVmdAr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963395; c=relaxed/simple;
-	bh=FegvPVOAgec5yL9kEG3lAlZLRmIoavSNsCqgv2FF4Zk=;
+	s=arc-20240116; t=1725963397; c=relaxed/simple;
+	bh=Jq3RGUjwGX40VVHQvGpmcG26ckjsU7lho7MZtNZlgb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdgvJvDh+8tmac74w34vxj5gQO/cyO53dclcea52Sir4s6oU+sEcnnW6fYH3FK0yHmcnkT1GAcp0mifM1Dve+oTMDyoC2wWFZX0yYMyCdeCBXhPKV8/TqdbR4Dc4gmlCaddak4suQc9xfApOg6ZXPIrUSDnB/ugWfGwFXi1qtEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnulWzgU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJqRS9jlN1dpQm5noFBo628Ahj4JT9SLDoSSZHleGUuR1Hp6j7eyfuql1Ns6QLs7P1uI83DMzHJOkOAbE5qW1uJ6h7h+6edG/hJ24yk7pEVqLaFHptRGRbI6dK8RTIa9yNzC8mnHkULN/8YnLtITeXnbJC4SUL8f+b58HtggXNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYM3lXDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnulWzgU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419D7C4CEC3;
-	Tue, 10 Sep 2024 10:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYM3lXDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C20EC4CEC3;
+	Tue, 10 Sep 2024 10:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963394;
-	bh=FegvPVOAgec5yL9kEG3lAlZLRmIoavSNsCqgv2FF4Zk=;
+	s=korg; t=1725963397;
+	bh=Jq3RGUjwGX40VVHQvGpmcG26ckjsU7lho7MZtNZlgb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnulWzgU05A94pzJcK3EzKj+ACEeKGYh32o+DoY1uFJgTiQX8ocvgRTA9IJlAlvD5
-	 oEJcSIvZk/8WmlT8UryYt3xq69amxYP6nCTD6qrWi92iVhMwzKxHMfSMHwibqbU+zm
-	 3IBYJ9E4mzq2BtLcVw4tmM6xZUxJ4OOy0MBJ9kfM=
+	b=TYM3lXDJaJPvXxeWOQvE4Hd/p2BZ4VmtuVrb7ancg+8lSjw1CwtWyWbWF+fwk41BS
+	 FUSc8+qbqXp2wBPLy+ecM68hnVz04sPUOZcKr//e16UEcevbLOfeyrH6BhWPzUQEdt
+	 dXA7OD4L6/0u0j4NiYoyiG6PPWlgaVKzp61F5X0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/214] drm/amdgpu/pm: Fix uninitialized variable agc_btc_response
-Date: Tue, 10 Sep 2024 11:30:47 +0200
-Message-ID: <20240910092559.810375617@linuxfoundation.org>
+Subject: [PATCH 5.15 043/214] ionic: fix potential irq name truncation
+Date: Tue, 10 Sep 2024 11:31:05 +0200
+Message-ID: <20240910092600.530758288@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit df4409d8a04dd39d7f2aa0c5f528a56b99eaaa13 ]
+[ Upstream commit 3eb76e71b16e8ba5277bf97617aef51f5e64dbe4 ]
 
-Assign an default value to agc_btc_response in failed case
+Address a warning about potential string truncation based on the
+string buffer sizes.  We can add some hints to the string format
+specifier to set limits on the resulting possible string to
+squelch the complaints.
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://lore.kernel.org/r/20240529000259.25775-2-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index fadceaba031e..81fd79a5fd7d 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -2365,15 +2365,20 @@ static int vega10_acg_enable(struct pp_hwmgr *hwmgr)
- {
- 	struct vega10_hwmgr *data = hwmgr->backend;
- 	uint32_t agc_btc_response;
-+	int ret;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index b791fba82c2f..910d8973a4b0 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -221,7 +221,7 @@ static int ionic_request_irq(struct ionic_lif *lif, struct ionic_qcq *qcq)
+ 		name = dev_name(dev);
  
- 	if (data->smu_features[GNLD_ACG].supported) {
- 		if (0 == vega10_enable_smc_features(hwmgr, true,
- 					data->smu_features[GNLD_DPM_PREFETCHER].smu_feature_bitmap))
- 			data->smu_features[GNLD_DPM_PREFETCHER].enabled = true;
+ 	snprintf(intr->name, sizeof(intr->name),
+-		 "%s-%s-%s", IONIC_DRV_NAME, name, q->name);
++		 "%.5s-%.16s-%.8s", IONIC_DRV_NAME, name, q->name);
  
--		smum_send_msg_to_smc(hwmgr, PPSMC_MSG_InitializeAcg, NULL);
-+		ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_InitializeAcg, NULL);
-+		if (ret)
-+			return ret;
- 
--		smum_send_msg_to_smc(hwmgr, PPSMC_MSG_RunAcgBtc, &agc_btc_response);
-+		ret = smum_send_msg_to_smc(hwmgr, PPSMC_MSG_RunAcgBtc, &agc_btc_response);
-+		if (ret)
-+			agc_btc_response = 0;
- 
- 		if (1 == agc_btc_response) {
- 			if (1 == data->acg_loop_state)
+ 	return devm_request_irq(dev, intr->vector, ionic_isr,
+ 				0, intr->name, &qcq->napi);
 -- 
 2.43.0
 
