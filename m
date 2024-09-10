@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3264218F2F0;
-	Tue, 10 Sep 2024 10:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6298517AE00;
+	Tue, 10 Sep 2024 10:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963846; cv=none; b=Z3gb9xSp0E/sCPrBvFnQXWYL2dUNUGXPNguZcfHdc3l9IeNlwBgCcT/T4f9cgSPVSNN4XU1ysOUl+WKcuT9efMP3NDBXu5imWyUcb0IZbdVXMor1nIhZdhs5ln4c1P9cutInPYVwamm8FJ9OH5gfPLbePi2SyH4aqrZ/NLzh6uU=
+	t=1725963849; cv=none; b=J4yUKnnUFngOUbvHzs0GDv9LAF1J83H4xh/bSgYCIgCPjeoAO1bC3fBTynCRdD/FIhv9TkETOP44kzPjh9QRPCNreS6kumjIzYJ2sAJv8Az4DSvHHgQaDM1XRbcgpj8BkxE03cqqG9o9rsuX9N9KAhtlRh3x3SIloN7JPnpDqcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963846; c=relaxed/simple;
-	bh=QBaaREHC8zWuvuOz4enQ5hOXgqUR6R0yUNjc+tuaB8Q=;
+	s=arc-20240116; t=1725963849; c=relaxed/simple;
+	bh=sa5gv1HTKuhk0mOj3EWMc/LBkzY2MvwmxRB0ZPKsRKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jw3jQyPR39d3NAxkVQ8xgE+K53td1mlED2M1zLw2mvVLzyryR3aYuQSzh8R1E7Bo1hKaJrgThS9slMj7m7mh/R1OXe7jnRnFRWNjJVRmaM2rBh71lvKGeZ0cGCMPfgLJS9aamhc7Qhbz7L1pEixrO5xK1lGzXyt+0jria0YhZWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7U3EqWK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvUfxk3JdvKMJ7/uqfKGQw0pws7XGU/zBLMqPzEb5KJAZBRpJMzQuqZ5RIY9ACGEAMh4qjEJft0+Z6TYpedITe9XCcgCW7SnRXlzKhTPyijlhDIaU47LMisBz/4qBXH9LNSCMO0t+8ZHod4znFFffxmbfCGdl69G2u5/6Fye6TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8IQ4s2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7U3EqWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6C0C4CEC3;
-	Tue, 10 Sep 2024 10:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8IQ4s2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D17BC4CEC3;
+	Tue, 10 Sep 2024 10:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963846;
-	bh=QBaaREHC8zWuvuOz4enQ5hOXgqUR6R0yUNjc+tuaB8Q=;
+	s=korg; t=1725963848;
+	bh=sa5gv1HTKuhk0mOj3EWMc/LBkzY2MvwmxRB0ZPKsRKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7U3EqWKYepgqodG5UskVRdi7zs0qHc8jfUN3EwlUHnRNvAIxNBq1Fiq828jeB3q/
-	 XFIAVDaoJq56GO8a+7dWNX+esqTRPPj+/ZUtbAhOAo4cQKCYe3bWT8mtA7mgNzf/Yj
-	 tq7iSLzeIa3nfuazyxBLgmQwoMHI8Ku6LgzHY2oc=
+	b=m8IQ4s2YtZo0Y518qjdqfSvNljDZxgTLrmh7jff3+VhejboTkoNyTdOrjuvkoAKqU
+	 IrSBF4FLm7/dmVwz5WmBmmesTJ/nPHFjxCHxGQ+iG9XyxtAQcUnBIFz8y7xtQL8KXu
+	 73bplKlgyMIUjPv00zRN96igdOQd2/XB2lnfMVRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 196/214] workqueue: Improve scalability of workqueue watchdog touch
-Date: Tue, 10 Sep 2024 11:33:38 +0200
-Message-ID: <20240910092606.605536099@linuxfoundation.org>
+Subject: [PATCH 5.15 197/214] ACPI: processor: Return an error if acpi_processor_get_info() fails in processor_add()
+Date: Tue, 10 Sep 2024 11:33:39 +0200
+Message-ID: <20240910092606.639362904@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -53,75 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 98f887f820c993e05a12e8aa816c80b8661d4c87 ]
+[ Upstream commit fadf231f0a06a6748a7fc4a2c29ac9ef7bca6bfd ]
 
-On a ~2000 CPU powerpc system, hard lockups have been observed in the
-workqueue code when stop_machine runs (in this case due to CPU hotplug).
-This is due to lots of CPUs spinning in multi_cpu_stop, calling
-touch_nmi_watchdog() which ends up calling wq_watchdog_touch().
-wq_watchdog_touch() writes to the global variable wq_watchdog_touched,
-and that can find itself in the same cacheline as other important
-workqueue data, which slows down operations to the point of lockups.
+Rafael observed [1] that returning 0 from processor_add() will result in
+acpi_default_enumeration() being called which will attempt to create a
+platform device, but that makes little sense when the processor is known
+to be not available.  So just return the error code from acpi_processor_get_info()
+instead.
 
-In the case of the following abridged trace, worker_pool_idr was in
-the hot line, causing the lockups to always appear at idr_find.
-
-  watchdog: CPU 1125 self-detected hard LOCKUP @ idr_find
-  Call Trace:
-  get_work_pool
-  __queue_work
-  call_timer_fn
-  run_timer_softirq
-  __do_softirq
-  do_softirq_own_stack
-  irq_exit
-  timer_interrupt
-  decrementer_common_virt
-  * interrupt: 900 (timer) at multi_cpu_stop
-  multi_cpu_stop
-  cpu_stopper_thread
-  smpboot_thread_fn
-  kthread
-
-Fix this by having wq_watchdog_touch() only write to the line if the
-last time a touch was recorded exceeds 1/4 of the watchdog threshold.
-
-Reported-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/all/CAJZ5v0iKU8ra9jR+EmgxbuNm=Uwx2m1-8vn_RAZ+aCiUVLe3Pw@mail.gmail.com/ [1]
+Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20240529133446.28446-5-Jonathan.Cameron@huawei.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/acpi/acpi_processor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index f7975a8f665f..73002260674f 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5935,12 +5935,18 @@ static void wq_watchdog_timer_fn(struct timer_list *unused)
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 6737b1cbf6d6..5662c157fda7 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -373,7 +373,7 @@ static int acpi_processor_add(struct acpi_device *device,
  
- notrace void wq_watchdog_touch(int cpu)
- {
-+	unsigned long thresh = READ_ONCE(wq_watchdog_thresh) * HZ;
-+	unsigned long touch_ts = READ_ONCE(wq_watchdog_touched);
-+	unsigned long now = jiffies;
-+
- 	if (cpu >= 0)
--		per_cpu(wq_watchdog_touched_cpu, cpu) = jiffies;
-+		per_cpu(wq_watchdog_touched_cpu, cpu) = now;
- 	else
- 		WARN_ONCE(1, "%s should be called with valid CPU", __func__);
+ 	result = acpi_processor_get_info(device);
+ 	if (result) /* Processor is not physically present or unavailable */
+-		return 0;
++		return result;
  
--	wq_watchdog_touched = jiffies;
-+	/* Don't unnecessarily store to global cacheline */
-+	if (time_after(now, touch_ts + thresh / 4))
-+		WRITE_ONCE(wq_watchdog_touched, jiffies);
- }
+ 	BUG_ON(pr->id >= nr_cpu_ids);
  
- static void wq_watchdog_set_thresh(unsigned long thresh)
 -- 
 2.43.0
 
