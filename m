@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9C018FDB1;
-	Tue, 10 Sep 2024 09:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B33218CBE8;
+	Tue, 10 Sep 2024 09:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961664; cv=none; b=eVJ1rlq5DvIzmO9eE4+YMoCplWCOdF8OFCz1Zh2BcTGC99GK7Wbcs7TRDF8qxkcpL076VgcHUbGEBbQhMMpe3LoOSr93gvQl+iSIK3hFGqnTEi9KZHuSAjpv7LCjhWqa3HtrkJuKqbneKLFuOhf+WxNJ3TEITS8cwT4uHfkH74g=
+	t=1725961667; cv=none; b=D7nsb5jVPlRkO2DczvkJk/ZeV/d74qVi+v/fj84Q3epB0aPwiKCFNmEAgNzaQtYySOUIEc9qrb1dSJN+Cd/iAWvCsmtmdzB3zp5S98HnXrZQKKG6IiDmwrtuJrKcMdAZbYkdWglu7cGLilGJYNIM7iixpfjwDO2SbsRCQXfeGFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961664; c=relaxed/simple;
-	bh=M/U36P/6vtCpUwuZ9DF4DpyfrFLCSCjVd4v7Stx5OyI=;
+	s=arc-20240116; t=1725961667; c=relaxed/simple;
+	bh=fxQpZcv3xPnRX6fi3VxbV9061gv0RU5gfST40Lw9w4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=igZ52E/tcOJdTd8NeQRXUp2QLsU1IGL68wwp8Q+/9hyGceDXz1zwBdTkQFThOzBn/4bT40NXLA+rIQAux3jwzKD7+sGi8/7cvJih9EVqDFVgTy4eWwsRzv02mOe2zS+hlwIJP7gtQf3/+0RdekhOuasu4Am7vXGZfWLVJUSUvVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dd690gT1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dWzhwpppoQMX7BWYbnEzLdpM295kvAO1/AplxKuEcbtV2LMbo4dATb3OU5ExXMZ4HczihNdCeaErsCZ8S+tWTws6Vb2LTWReQ4Dt6a/8x+Y61bBf2hoz8ncbh/pigareqpPUKNFW+PuEB5RZ8WkEkNHzl5xw7n9gcXN8QYi+Ytk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/hMTsF4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dd690gT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EFAC4CEC3;
-	Tue, 10 Sep 2024 09:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/hMTsF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28F1C4CEC3;
+	Tue, 10 Sep 2024 09:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961664;
-	bh=M/U36P/6vtCpUwuZ9DF4DpyfrFLCSCjVd4v7Stx5OyI=;
+	s=korg; t=1725961667;
+	bh=fxQpZcv3xPnRX6fi3VxbV9061gv0RU5gfST40Lw9w4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dd690gT1CL3r0N8TYUIEmj9Etzsv1E6fISGVRZ8nZwcMsyCzPbxf2kYzAF7BxCv9A
-	 l5TddBLNFecuJXZ1pLaBmuI3/Ahi0XWkPYC4vYLsick6WSZUOO+rP9GjNx9GDnSX3a
-	 ez5g+TDAITvkBzrGIpxraTe3YWlvqwvNKPZuaGcY=
+	b=P/hMTsF4GQEI8k9cVxLi50u/gWooqJCA3S6Xn39q87QXS+DNC/bpLePbPTfumZsIF
+	 aIEBGaW0Fh8upy3HJNfYISJFjZWUUFU4aezKxCY+cYEAHjq9SVYYHYASn1kDvqV8Cq
+	 V6gzCd4iyL9P/Sm7o1Yg3m432w8E1FBc7VDM+Tgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 147/375] can: m_can: Release irq on error in m_can_open
-Date: Tue, 10 Sep 2024 11:29:04 +0200
-Message-ID: <20240910092627.407220809@linuxfoundation.org>
+Subject: [PATCH 6.10 148/375] can: m_can: Reset coalescing during suspend/resume
+Date: Tue, 10 Sep 2024 11:29:05 +0200
+Message-ID: <20240910092627.440566400@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -45,58 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit 06d4ef3056a7ac31be331281bb7a6302ef5a7f8a ]
+[ Upstream commit a651261ac74298535f6d6316ebe27beceb6b17b1 ]
 
-It appears that the irq requested in m_can_open() may be leaked
-if an error subsequently occurs: if m_can_start() fails.
+During resume the interrupts are limited to IR_RF0N and the chip keeps
+running. In this case if coalescing is enabled and active we may miss
+waterlevel interrupts during suspend. It is safer to reset the
+coalescing by stopping the timer and adding IR_RF0N | IR_TEFN to the
+interrupts.
 
-Address this by calling free_irq in the unwind path for
-such cases.
+This is a theoratical issue and probably extremely rare.
 
-Flagged by Smatch.
-Compile tested only.
-
-Fixes: eaacfeaca7ad ("can: m_can: Call the RAM init directly from m_can_chip_config")
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/all/20240805-mcan-irq-v2-1-7154c0484819@kernel.org
+Cc: Martin Hundebøll <martin@geanix.com>
+Fixes: 4a94d7e31cf5 ("can: m_can: allow keeping the transceiver running in suspend")
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://lore.kernel.org/all/20240805183047.305630-2-msp@baylibre.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index 14b231c4d7ec..205a6cb4470f 100644
+index 205a6cb4470f..257d5bc0ae9e 100644
 --- a/drivers/net/can/m_can/m_can.c
 +++ b/drivers/net/can/m_can/m_can.c
-@@ -2009,7 +2009,7 @@ static int m_can_open(struct net_device *dev)
- 	/* start the m_can controller */
- 	err = m_can_start(dev);
- 	if (err)
--		goto exit_irq_fail;
-+		goto exit_start_fail;
+@@ -2387,12 +2387,15 @@ int m_can_class_suspend(struct device *dev)
+ 		netif_device_detach(ndev);
  
- 	if (!cdev->is_peripheral)
- 		napi_enable(&cdev->napi);
-@@ -2018,6 +2018,9 @@ static int m_can_open(struct net_device *dev)
+ 		/* leave the chip running with rx interrupt enabled if it is
+-		 * used as a wake-up source.
++		 * used as a wake-up source. Coalescing needs to be reset then,
++		 * the timer is cancelled here, interrupts are done in resume.
+ 		 */
+-		if (cdev->pm_wake_source)
++		if (cdev->pm_wake_source) {
++			hrtimer_cancel(&cdev->hrtimer);
+ 			m_can_write(cdev, M_CAN_IE, IR_RF0N);
+-		else
++		} else {
+ 			m_can_stop(ndev);
++		}
  
- 	return 0;
+ 		m_can_clk_stop(cdev);
+ 	}
+@@ -2422,6 +2425,13 @@ int m_can_class_resume(struct device *dev)
+ 			return ret;
  
-+exit_start_fail:
-+	if (cdev->is_peripheral || dev->irq)
-+		free_irq(dev->irq, dev);
- exit_irq_fail:
- 	if (cdev->is_peripheral)
- 		destroy_workqueue(cdev->tx_wq);
+ 		if (cdev->pm_wake_source) {
++			/* Restore active interrupts but disable coalescing as
++			 * we may have missed important waterlevel interrupts
++			 * between suspend and resume. Timers are already
++			 * stopped in suspend. Here we enable all interrupts
++			 * again.
++			 */
++			cdev->active_interrupts |= IR_RF0N | IR_TEFN;
+ 			m_can_write(cdev, M_CAN_IE, cdev->active_interrupts);
+ 		} else {
+ 			ret  = m_can_start(ndev);
 -- 
 2.43.0
 
