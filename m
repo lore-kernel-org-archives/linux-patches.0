@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC023190072;
-	Tue, 10 Sep 2024 10:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2CF190072;
+	Tue, 10 Sep 2024 10:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964615; cv=none; b=qGGhZYst6kilXfGwBo8Ks1j0mwFArrLjja4eFz7F/aBOnQa6DNgQkl54oepNqQFjjN1LL1N9Rl79DFrTFxuz2EnG1UoEywHRlpttzaPlvINecrTtdea0fn3eEiaAtBgE52sNnaZEZ3XF+uuguwiL79rR6dhcads2PMBJHNYumIM=
+	t=1725964618; cv=none; b=OnbTu9vTWnhktp0oBVONs2zVUWZMzMo0ntlnDArlkimCqbjBXAC6iXXqkMCvu72dGyWCLfN4W4djse2/BZwf+4IBGgNeUBKTfy94uplu+3M/jx0Cxt2oRpR/OtN+wyI5iwQN4FvdR1T9qSqqU/t1OJyzE9refr3iwAC93cjPe/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964615; c=relaxed/simple;
-	bh=x4hu3FWnrFDJSFLfYLJ5AF3+KAnfePZDTv7+vtsC5nM=;
+	s=arc-20240116; t=1725964618; c=relaxed/simple;
+	bh=s/zWoE3o8M8ocIbtbqmoYEpmvEQ90YlG85UNhhyEHGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfck+wxh7clMztGBuyUvc+/MXWZ7OCWVj96zyWRnBoHOgIa1N2rZBFPWd50j1mtNM8UMyccirFBNFfEDQNmLToydrFALaeYpOYxYXtto7cCabWU6OV9BJ0UOxWH2Nn3y5+iC/lS+tmYpTxfnoeEsn4xzpPRMuphOTJHY0Jgod/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6myK+4u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Anepk5MRx9u61g/XYFO99hBFW1XcQUY2qfCzA6d4hoQPgdadybUebbschAuWewzzAd749TgL+s91ZtQiWfhF8O96bxBsiacT9JiIQv/jkJRZqgY+FbTSgrkiRQcmsAGSNBKkWVnzRnLm8ImKeqtG1pH5qOd69LXAshfQscul8ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wr7wHpLJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6myK+4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15E9C4CEC6;
-	Tue, 10 Sep 2024 10:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wr7wHpLJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC10C4CEC3;
+	Tue, 10 Sep 2024 10:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964615;
-	bh=x4hu3FWnrFDJSFLfYLJ5AF3+KAnfePZDTv7+vtsC5nM=;
+	s=korg; t=1725964618;
+	bh=s/zWoE3o8M8ocIbtbqmoYEpmvEQ90YlG85UNhhyEHGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6myK+4urpccgdI29P09XviRTzjZrmYOUn+xMZfB8Vzs5/gHLLfa4a4u4nqahZzTR
-	 xG4cOtkThgd4imFlplXVG2K8xDbbJU62WeJe95nEvuelXBqKWrxXq6LCDzkPcoS4xE
-	 H5byEZTLHnv/h+8JkuxHD6H4WX3xd5urUH4TeRIQ=
+	b=wr7wHpLJxL9S7DIyaITIQz20bxSp69uboncRaX/wNRfha0Vw/HiVZ3+ufqp2EymrO
+	 MwehCBWPyKQSQPCork+A+c6w4Op7d9iQ5o4/boxLwtuztWqvk44LonzaoTEz1QpeHG
+	 y9LYvDqk1XZ04yqakHbsI4b+OtLxiomyTiblzVnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 205/269] staging: iio: frequency: ad9834: Validate frequency parameter value
-Date: Tue, 10 Sep 2024 11:33:12 +0200
-Message-ID: <20240910092615.366668309@linuxfoundation.org>
+	=?UTF-8?q?Stefan=20Alth=C3=B6fer?= <Stefan.Althoefer@janztec.com>,
+	Thomas Kopp <thomas.kopp@microchip.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 236/269] can: mcp251xfd: rx: add workaround for erratum DS80000789E 6 of mcp2518fd
+Date: Tue, 10 Sep 2024 11:33:43 +0200
+Message-ID: <20240910092616.294806230@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -46,48 +46,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit b48aa991758999d4e8f9296c5bbe388f293ef465 upstream.
+[ Upstream commit 24436be590c6fbb05f6161b0dfba7d9da60214aa ]
 
-In ad9834_write_frequency() clk_get_rate() can return 0. In such case
-ad9834_calc_freqreg() call will lead to division by zero. Checking
-'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
-ad9834_write_frequency() is called from ad9834_write(), where fout is
-taken from text buffer, which can contain any value.
+This patch tries to works around erratum DS80000789E 6 of the
+mcp2518fd, the other variants of the chip family (mcp2517fd and
+mcp251863) are probably also affected.
 
-Modify parameters checking.
+In the bad case, the driver reads a too large head index. In the
+original code, the driver always trusted the read value, which caused
+old, already processed CAN frames or new, incompletely written CAN
+frames to be (re-)processed.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+To work around this issue, keep a per FIFO timestamp [1] of the last
+valid received CAN frame and compare against the timestamp of every
+received CAN frame. If an old CAN frame is detected, abort the
+iteration and mark the number of valid CAN frames as processed in the
+chip by incrementing the FIFO's tail index.
 
-Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Further tests showed that this workaround can recognize old CAN
+frames, but a small time window remains in which partially written CAN
+frames [2] are not recognized but then processed. These CAN frames
+have the correct data and time stamps, but the DLC has not yet been
+updated.
+
+[1] As the raw timestamp overflows every 107 seconds (at the usual
+    clock rate of 40 MHz) convert it to nanoseconds with the
+    timecounter framework and use this to detect stale CAN frames.
+
+Link: https://lore.kernel.org/all/BL3PR11MB64844C1C95CA3BDADAE4D8CCFBC99@BL3PR11MB6484.namprd11.prod.outlook.com [2]
+Reported-by: Stefan Althöfer <Stefan.Althoefer@janztec.com>
+Closes: https://lore.kernel.org/all/FR0P281MB1966273C216630B120ABB6E197E89@FR0P281MB1966.DEUP281.PROD.OUTLOOK.COM
+Tested-by: Stefan Althöfer <Stefan.Althoefer@janztec.com>
+Tested-by: Thomas Kopp <thomas.kopp@microchip.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/frequency/ad9834.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/can/spi/mcp251xfd/mcp251xfd-ring.c    |  1 +
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c  | 32 +++++++++++++++++--
+ drivers/net/can/spi/mcp251xfd/mcp251xfd.h     |  3 ++
+ 3 files changed, 33 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/iio/frequency/ad9834.c
-+++ b/drivers/staging/iio/frequency/ad9834.c
-@@ -114,7 +114,7 @@ static int ad9834_write_frequency(struct
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
+index 5f92aed62ff9..f72582d4d3e8 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
+@@ -206,6 +206,7 @@ mcp251xfd_ring_init_rx(struct mcp251xfd_priv *priv, u16 *base, u8 *fifo_nr)
+ 	int i, j;
  
- 	clk_freq = clk_get_rate(st->mclk);
+ 	mcp251xfd_for_each_rx_ring(priv, rx_ring, i) {
++		rx_ring->last_valid = timecounter_read(&priv->tc);
+ 		rx_ring->head = 0;
+ 		rx_ring->tail = 0;
+ 		rx_ring->base = *base;
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
+index a79e6c661ecc..fe897f3e4c12 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
+@@ -159,8 +159,6 @@ mcp251xfd_hw_rx_obj_to_skb(const struct mcp251xfd_priv *priv,
  
--	if (fout > (clk_freq / 2))
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
+ 	if (!(hw_rx_obj->flags & MCP251XFD_OBJ_FLAGS_RTR))
+ 		memcpy(cfd->data, hw_rx_obj->data, cfd->len);
+-
+-	mcp251xfd_skb_set_timestamp_raw(priv, skb, hw_rx_obj->ts);
+ }
  
- 	regval = ad9834_calc_freqreg(clk_freq, fout);
+ static int
+@@ -171,8 +169,26 @@ mcp251xfd_handle_rxif_one(struct mcp251xfd_priv *priv,
+ 	struct net_device_stats *stats = &priv->ndev->stats;
+ 	struct sk_buff *skb;
+ 	struct canfd_frame *cfd;
++	u64 timestamp;
+ 	int err;
+ 
++	/* According to mcp2518fd erratum DS80000789E 6. the FIFOCI
++	 * bits of a FIFOSTA register, here the RX FIFO head index
++	 * might be corrupted and we might process past the RX FIFO's
++	 * head into old CAN frames.
++	 *
++	 * Compare the timestamp of currently processed CAN frame with
++	 * last valid frame received. Abort with -EBADMSG if an old
++	 * CAN frame is detected.
++	 */
++	timestamp = timecounter_cyc2time(&priv->tc, hw_rx_obj->ts);
++	if (timestamp <= ring->last_valid) {
++		stats->rx_fifo_errors++;
++
++		return -EBADMSG;
++	}
++	ring->last_valid = timestamp;
++
+ 	if (hw_rx_obj->flags & MCP251XFD_OBJ_FLAGS_FDF)
+ 		skb = alloc_canfd_skb(priv->ndev, &cfd);
+ 	else
+@@ -183,6 +199,7 @@ mcp251xfd_handle_rxif_one(struct mcp251xfd_priv *priv,
+ 		return 0;
+ 	}
+ 
++	mcp251xfd_skb_set_timestamp(skb, timestamp);
+ 	mcp251xfd_hw_rx_obj_to_skb(priv, hw_rx_obj, skb);
+ 	err = can_rx_offload_queue_timestamp(&priv->offload, skb, hw_rx_obj->ts);
+ 	if (err)
+@@ -265,7 +282,16 @@ mcp251xfd_handle_rxif_ring(struct mcp251xfd_priv *priv,
+ 			err = mcp251xfd_handle_rxif_one(priv, ring,
+ 							(void *)hw_rx_obj +
+ 							i * ring->obj_size);
+-			if (err)
++
++			/* -EBADMSG means we're affected by mcp2518fd
++			 * erratum DS80000789E 6., i.e. the timestamp
++			 * in the RX object is older that the last
++			 * valid received CAN frame. Don't process any
++			 * further and mark processed frames as good.
++			 */
++			if (err == -EBADMSG)
++				return mcp251xfd_handle_rxif_ring_uinc(priv, ring, i);
++			else if (err)
+ 				return err;
+ 		}
+ 
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
+index ae35845d4ce1..991662fbba42 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
+@@ -554,6 +554,9 @@ struct mcp251xfd_rx_ring {
+ 	unsigned int head;
+ 	unsigned int tail;
+ 
++	/* timestamp of the last valid received CAN frame */
++	u64 last_valid;
++
+ 	u16 base;
+ 	u8 nr;
+ 	u8 fifo_nr;
+-- 
+2.43.0
+
 
 
