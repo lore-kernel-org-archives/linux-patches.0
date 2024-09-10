@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B651A18B48A;
-	Tue, 10 Sep 2024 10:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8902AF15;
+	Tue, 10 Sep 2024 10:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965137; cv=none; b=PwuCgmnP4dSem+6e/4CyDaEQY7Kw7ybwvYDMsR7sQf3I24NccN0KLWJxcfzYfJ1Mwhm+uoJ6peT0cueftWs5jZLe+YDG/4OhZ7qtbYgHFMzqXp6Hq05JfyiiGKbkQsPo4cEipb6Dyu8FLEMWSJOzSYemPdGsF4kFnq3vm2iq5Zg=
+	t=1725965140; cv=none; b=nWZL9UJ1T6ByeCEkRS1eohAEwhtiF9cAuXhKkXMFNwmJoh+1zsQejfykh1nT3oDriSnT3RGLZOK8k0pfAApsnya67/gZeDf28D/a+x5zvtHMhp3HWv8NA5mY/vuujvg2Ze1kMU/5YZ/IXo/2X+k5bBurMzo5RtYBZv54zXrQaGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965137; c=relaxed/simple;
-	bh=YpjJfqbY+UKjW6+YjhTo9PyziV/Ld43mCCfmXlOM+fI=;
+	s=arc-20240116; t=1725965140; c=relaxed/simple;
+	bh=wKgyaSBCg5NI0rxzqjJ4M81znozMQ/KO5JKvSL5tILQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWHqtvfUd0X/T1RayGA/jmaERfoHV29YW4tUylYvWqzk2AYUfpzccmc4hOaVP6NINmN6oyraRnVk15nhUQYwUZqHiNnRI7l4tVVcYvRKbA7v7N0I439FSIgRBxD6KLoq1rEBF4Ksk77jWW8DLF1vftxN+ZZXGKxlhT3opejKzI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPRdzkQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFwh80KdhWBBEa1g+GTEF2g/uqsQFRJwMdlyHFIQFrcFL7wuDY2Irba5TCgx9YZ/Zda+uqZKANnxmtIuWLQGZWF6nmDWPrXgKHkW6KYkSS1WUN5cqBKb6wFm3VV1gvYzx/3S1iuE8VO9c9j0tuIEqX1HNVFJUIwHX+Sw0DBhUOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ohm82d9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPRdzkQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87F8C4CEC3;
-	Tue, 10 Sep 2024 10:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ohm82d9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D09C4CEC3;
+	Tue, 10 Sep 2024 10:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965137;
-	bh=YpjJfqbY+UKjW6+YjhTo9PyziV/Ld43mCCfmXlOM+fI=;
+	s=korg; t=1725965140;
+	bh=wKgyaSBCg5NI0rxzqjJ4M81znozMQ/KO5JKvSL5tILQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPRdzkQiV6T8AcO1MlEoAIsiBIxJeAkkv2/mdIut0KBC0biI/+spEZd5C0fRK79QN
-	 VOBVd4TNYmzBoe2KKjH9V2DS3SkBVcppdgXqQDSgH70KaZYdoFMCdX0DqKz0QN36Uh
-	 lKRE+sGmO4T3GlOZJwTKZ3apFzhclEVAqjPsdCuo=
+	b=1ohm82d9DEwL2Pf1R4ti3qi9nnnwZ6O9kbnB0wuky6Uxc/0Jrvn5eMSE2C1/rOi5q
+	 Qs1zboZXh9mmYrdqKrhXxxEypnkD4ONsDLdGyA1/IZF/iao8Eqvhvgk4uV66U7mwXE
+	 ThKabTK/4Jp3V8bnBf3J9YobWAC8T16a13ALnuns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 122/186] fou: remove sparse errors
-Date: Tue, 10 Sep 2024 11:33:37 +0200
-Message-ID: <20240910092559.594756531@linuxfoundation.org>
+Subject: [PATCH 5.10 123/186] gro: remove rcu_read_lock/rcu_read_unlock from gro_receive handlers
+Date: Tue, 10 Sep 2024 11:33:38 +0200
+Message-ID: <20240910092559.643591772@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -53,112 +53,292 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8d65cd8d25fa23951171094553901d69a88ccdff ]
+[ Upstream commit fc1ca3348a74a1afaa7ffebc2b2f2cc149e11278 ]
 
-We need to add __rcu qualifier to avoid these errors:
+All gro_receive() handlers are called from dev_gro_receive()
+while rcu_read_lock() has been called.
 
-net/ipv4/fou.c:250:18: warning: incorrect type in assignment (different address spaces)
-net/ipv4/fou.c:250:18:    expected struct net_offload const **offloads
-net/ipv4/fou.c:250:18:    got struct net_offload const [noderef] __rcu **
-net/ipv4/fou.c:251:15: error: incompatible types in comparison expression (different address spaces):
-net/ipv4/fou.c:251:15:    struct net_offload const [noderef] __rcu *
-net/ipv4/fou.c:251:15:    struct net_offload const *
-net/ipv4/fou.c:272:18: warning: incorrect type in assignment (different address spaces)
-net/ipv4/fou.c:272:18:    expected struct net_offload const **offloads
-net/ipv4/fou.c:272:18:    got struct net_offload const [noderef] __rcu **
-net/ipv4/fou.c:273:15: error: incompatible types in comparison expression (different address spaces):
-net/ipv4/fou.c:273:15:    struct net_offload const [noderef] __rcu *
-net/ipv4/fou.c:273:15:    struct net_offload const *
-net/ipv4/fou.c:442:18: warning: incorrect type in assignment (different address spaces)
-net/ipv4/fou.c:442:18:    expected struct net_offload const **offloads
-net/ipv4/fou.c:442:18:    got struct net_offload const [noderef] __rcu **
-net/ipv4/fou.c:443:15: error: incompatible types in comparison expression (different address spaces):
-net/ipv4/fou.c:443:15:    struct net_offload const [noderef] __rcu *
-net/ipv4/fou.c:443:15:    struct net_offload const *
-net/ipv4/fou.c:489:18: warning: incorrect type in assignment (different address spaces)
-net/ipv4/fou.c:489:18:    expected struct net_offload const **offloads
-net/ipv4/fou.c:489:18:    got struct net_offload const [noderef] __rcu **
-net/ipv4/fou.c:490:15: error: incompatible types in comparison expression (different address spaces):
-net/ipv4/fou.c:490:15:    struct net_offload const [noderef] __rcu *
-net/ipv4/fou.c:490:15:    struct net_offload const *
-net/ipv4/udp_offload.c:170:26: warning: incorrect type in assignment (different address spaces)
-net/ipv4/udp_offload.c:170:26:    expected struct net_offload const **offloads
-net/ipv4/udp_offload.c:170:26:    got struct net_offload const [noderef] __rcu **
-net/ipv4/udp_offload.c:171:23: error: incompatible types in comparison expression (different address spaces):
-net/ipv4/udp_offload.c:171:23:    struct net_offload const [noderef] __rcu *
-net/ipv4/udp_offload.c:171:23:    struct net_offload const *
+There is no point stacking more rcu_read_lock()
 
-Fixes: efc98d08e1ec ("fou: eliminate IPv4,v6 specific GRO functions")
-Fixes: 8bce6d7d0d1e ("udp: Generalize skb_udp_segment")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 7e4196935069 ("fou: Fix null-ptr-deref in GRO.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fou.c         | 10 +++++-----
- net/ipv4/udp_offload.c |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/geneve.c   |  5 +----
+ net/8021q/vlan_core.c  |  5 +----
+ net/ethernet/eth.c     |  5 +----
+ net/ipv4/af_inet.c     | 12 ++++--------
+ net/ipv4/fou.c         | 12 +++---------
+ net/ipv4/gre_offload.c |  9 +++------
+ net/ipv4/udp_offload.c |  2 --
+ net/ipv6/ip6_offload.c |  6 +-----
+ net/ipv6/udp_offload.c |  2 --
+ 9 files changed, 14 insertions(+), 44 deletions(-)
 
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index af35361a3dce..17989688f54b 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -528,18 +528,15 @@ static struct sk_buff *geneve_gro_receive(struct sock *sk,
+ 
+ 	type = gh->proto_type;
+ 
+-	rcu_read_lock();
+ 	ptype = gro_find_receive_by_type(type);
+ 	if (!ptype)
+-		goto out_unlock;
++		goto out;
+ 
+ 	skb_gro_pull(skb, gh_len);
+ 	skb_gro_postpull_rcsum(skb, gh, gh_len);
+ 	pp = call_gro_receive(ptype->callbacks.gro_receive, head, skb);
+ 	flush = 0;
+ 
+-out_unlock:
+-	rcu_read_unlock();
+ out:
+ 	skb_gro_flush_final(skb, pp, flush);
+ 
+diff --git a/net/8021q/vlan_core.c b/net/8021q/vlan_core.c
+index 43aea97c5762..ff0d3fc82c0f 100644
+--- a/net/8021q/vlan_core.c
++++ b/net/8021q/vlan_core.c
+@@ -482,10 +482,9 @@ static struct sk_buff *vlan_gro_receive(struct list_head *head,
+ 
+ 	type = vhdr->h_vlan_encapsulated_proto;
+ 
+-	rcu_read_lock();
+ 	ptype = gro_find_receive_by_type(type);
+ 	if (!ptype)
+-		goto out_unlock;
++		goto out;
+ 
+ 	flush = 0;
+ 
+@@ -504,8 +503,6 @@ static struct sk_buff *vlan_gro_receive(struct list_head *head,
+ 	skb_gro_postpull_rcsum(skb, vhdr, sizeof(*vhdr));
+ 	pp = call_gro_receive(ptype->callbacks.gro_receive, head, skb);
+ 
+-out_unlock:
+-	rcu_read_unlock();
+ out:
+ 	skb_gro_flush_final(skb, pp, flush);
+ 
+diff --git a/net/ethernet/eth.c b/net/ethernet/eth.c
+index 61cb40368723..2b0eb24199d6 100644
+--- a/net/ethernet/eth.c
++++ b/net/ethernet/eth.c
+@@ -430,19 +430,16 @@ struct sk_buff *eth_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 
+ 	type = eh->h_proto;
+ 
+-	rcu_read_lock();
+ 	ptype = gro_find_receive_by_type(type);
+ 	if (ptype == NULL) {
+ 		flush = 1;
+-		goto out_unlock;
++		goto out;
+ 	}
+ 
+ 	skb_gro_pull(skb, sizeof(*eh));
+ 	skb_gro_postpull_rcsum(skb, eh, sizeof(*eh));
+ 	pp = call_gro_receive(ptype->callbacks.gro_receive, head, skb);
+ 
+-out_unlock:
+-	rcu_read_unlock();
+ out:
+ 	skb_gro_flush_final(skb, pp, flush);
+ 
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index ce42626663de..cac63bb20c16 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1471,19 +1471,18 @@ struct sk_buff *inet_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 
+ 	proto = iph->protocol;
+ 
+-	rcu_read_lock();
+ 	ops = rcu_dereference(inet_offloads[proto]);
+ 	if (!ops || !ops->callbacks.gro_receive)
+-		goto out_unlock;
++		goto out;
+ 
+ 	if (*(u8 *)iph != 0x45)
+-		goto out_unlock;
++		goto out;
+ 
+ 	if (ip_is_fragment(iph))
+-		goto out_unlock;
++		goto out;
+ 
+ 	if (unlikely(ip_fast_csum((u8 *)iph, 5)))
+-		goto out_unlock;
++		goto out;
+ 
+ 	id = ntohl(*(__be32 *)&iph->id);
+ 	flush = (u16)((ntohl(*(__be32 *)iph) ^ skb_gro_len(skb)) | (id & ~IP_DF));
+@@ -1560,9 +1559,6 @@ struct sk_buff *inet_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 	pp = indirect_call_gro_receive(tcp4_gro_receive, udp4_gro_receive,
+ 				       ops->callbacks.gro_receive, head, skb);
+ 
+-out_unlock:
+-	rcu_read_unlock();
+-
+ out:
+ 	skb_gro_flush_final(skb, pp, flush);
+ 
 diff --git a/net/ipv4/fou.c b/net/ipv4/fou.c
-index e5f69b0bf3df..8fcbc6258ec5 100644
+index 8fcbc6258ec5..5aacc75e495c 100644
 --- a/net/ipv4/fou.c
 +++ b/net/ipv4/fou.c
-@@ -230,8 +230,8 @@ static struct sk_buff *fou_gro_receive(struct sock *sk,
- 				       struct list_head *head,
- 				       struct sk_buff *skb)
- {
-+	const struct net_offload __rcu **offloads;
- 	u8 proto = fou_from_sock(sk)->protocol;
--	const struct net_offload **offloads;
- 	const struct net_offload *ops;
- 	struct sk_buff *pp = NULL;
+@@ -246,17 +246,14 @@ static struct sk_buff *fou_gro_receive(struct sock *sk,
+ 	/* Flag this frame as already having an outer encap header */
+ 	NAPI_GRO_CB(skb)->is_fou = 1;
  
-@@ -263,10 +263,10 @@ static struct sk_buff *fou_gro_receive(struct sock *sk,
- static int fou_gro_complete(struct sock *sk, struct sk_buff *skb,
- 			    int nhoff)
- {
--	const struct net_offload *ops;
-+	const struct net_offload __rcu **offloads;
- 	u8 proto = fou_from_sock(sk)->protocol;
-+	const struct net_offload *ops;
- 	int err = -ENOSYS;
--	const struct net_offload **offloads;
- 
- 	rcu_read_lock();
+-	rcu_read_lock();
  	offloads = NAPI_GRO_CB(skb)->is_ipv6 ? inet6_offloads : inet_offloads;
-@@ -311,7 +311,7 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
- 				       struct list_head *head,
- 				       struct sk_buff *skb)
- {
--	const struct net_offload **offloads;
-+	const struct net_offload __rcu **offloads;
- 	const struct net_offload *ops;
- 	struct sk_buff *pp = NULL;
- 	struct sk_buff *p;
-@@ -457,8 +457,8 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
+ 	ops = rcu_dereference(offloads[proto]);
+ 	if (!ops || !ops->callbacks.gro_receive)
+-		goto out_unlock;
++		goto out;
  
- static int gue_gro_complete(struct sock *sk, struct sk_buff *skb, int nhoff)
- {
--	const struct net_offload **offloads;
- 	struct guehdr *guehdr = (struct guehdr *)(skb->data + nhoff);
-+	const struct net_offload __rcu **offloads;
- 	const struct net_offload *ops;
- 	unsigned int guehlen = 0;
- 	u8 proto;
+ 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
+ 
+-out_unlock:
+-	rcu_read_unlock();
+-
++out:
+ 	return pp;
+ }
+ 
+@@ -438,17 +435,14 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
+ 	/* Flag this frame as already having an outer encap header */
+ 	NAPI_GRO_CB(skb)->is_fou = 1;
+ 
+-	rcu_read_lock();
+ 	offloads = NAPI_GRO_CB(skb)->is_ipv6 ? inet6_offloads : inet_offloads;
+ 	ops = rcu_dereference(offloads[proto]);
+ 	if (WARN_ON_ONCE(!ops || !ops->callbacks.gro_receive))
+-		goto out_unlock;
++		goto out;
+ 
+ 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
+ 	flush = 0;
+ 
+-out_unlock:
+-	rcu_read_unlock();
+ out:
+ 	skb_gro_flush_final_remcsum(skb, pp, flush, &grc);
+ 
+diff --git a/net/ipv4/gre_offload.c b/net/ipv4/gre_offload.c
+index e0a246575887..e9dabf1affe9 100644
+--- a/net/ipv4/gre_offload.c
++++ b/net/ipv4/gre_offload.c
+@@ -158,10 +158,9 @@ static struct sk_buff *gre_gro_receive(struct list_head *head,
+ 
+ 	type = greh->protocol;
+ 
+-	rcu_read_lock();
+ 	ptype = gro_find_receive_by_type(type);
+ 	if (!ptype)
+-		goto out_unlock;
++		goto out;
+ 
+ 	grehlen = GRE_HEADER_SECTION;
+ 
+@@ -175,13 +174,13 @@ static struct sk_buff *gre_gro_receive(struct list_head *head,
+ 	if (skb_gro_header_hard(skb, hlen)) {
+ 		greh = skb_gro_header_slow(skb, hlen, off);
+ 		if (unlikely(!greh))
+-			goto out_unlock;
++			goto out;
+ 	}
+ 
+ 	/* Don't bother verifying checksum if we're going to flush anyway. */
+ 	if ((greh->flags & GRE_CSUM) && !NAPI_GRO_CB(skb)->flush) {
+ 		if (skb_gro_checksum_simple_validate(skb))
+-			goto out_unlock;
++			goto out;
+ 
+ 		skb_gro_checksum_try_convert(skb, IPPROTO_GRE,
+ 					     null_compute_pseudo);
+@@ -225,8 +224,6 @@ static struct sk_buff *gre_gro_receive(struct list_head *head,
+ 	pp = call_gro_receive(ptype->callbacks.gro_receive, head, skb);
+ 	flush = 0;
+ 
+-out_unlock:
+-	rcu_read_unlock();
+ out:
+ 	skb_gro_flush_final(skb, pp, flush);
+ 
 diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index a0b569d0085b..57168d4fa195 100644
+index 57168d4fa195..418da7a8a075 100644
 --- a/net/ipv4/udp_offload.c
 +++ b/net/ipv4/udp_offload.c
-@@ -149,8 +149,8 @@ struct sk_buff *skb_udp_tunnel_segment(struct sk_buff *skb,
- 				       netdev_features_t features,
- 				       bool is_ipv6)
- {
-+	const struct net_offload __rcu **offloads;
- 	__be16 protocol = skb->protocol;
--	const struct net_offload **offloads;
- 	const struct net_offload *ops;
- 	struct sk_buff *segs = ERR_PTR(-EINVAL);
- 	struct sk_buff *(*gso_inner_segment)(struct sk_buff *skb,
+@@ -606,13 +606,11 @@ struct sk_buff *udp4_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 					     inet_gro_compute_pseudo);
+ skip:
+ 	NAPI_GRO_CB(skb)->is_ipv6 = 0;
+-	rcu_read_lock();
+ 
+ 	if (static_branch_unlikely(&udp_encap_needed_key))
+ 		sk = udp4_gro_lookup_skb(skb, uh->source, uh->dest);
+ 
+ 	pp = udp_gro_receive(head, skb, uh, sk);
+-	rcu_read_unlock();
+ 	return pp;
+ 
+ flush:
+diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
+index 15c8eef1ef44..f67921e0dd56 100644
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -209,7 +209,6 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *ipv6_gro_receive(struct list_head *head,
+ 
+ 	flush += ntohs(iph->payload_len) != skb_gro_len(skb);
+ 
+-	rcu_read_lock();
+ 	proto = iph->nexthdr;
+ 	ops = rcu_dereference(inet6_offloads[proto]);
+ 	if (!ops || !ops->callbacks.gro_receive) {
+@@ -222,7 +221,7 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *ipv6_gro_receive(struct list_head *head,
+ 
+ 		ops = rcu_dereference(inet6_offloads[proto]);
+ 		if (!ops || !ops->callbacks.gro_receive)
+-			goto out_unlock;
++			goto out;
+ 
+ 		iph = ipv6_hdr(skb);
+ 	}
+@@ -280,9 +279,6 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *ipv6_gro_receive(struct list_head *head,
+ 	pp = indirect_call_gro_receive_l4(tcp6_gro_receive, udp6_gro_receive,
+ 					 ops->callbacks.gro_receive, head, skb);
+ 
+-out_unlock:
+-	rcu_read_unlock();
+-
+ out:
+ 	skb_gro_flush_final(skb, pp, flush);
+ 
+diff --git a/net/ipv6/udp_offload.c b/net/ipv6/udp_offload.c
+index 7752e1e921f8..1107782c083d 100644
+--- a/net/ipv6/udp_offload.c
++++ b/net/ipv6/udp_offload.c
+@@ -144,13 +144,11 @@ struct sk_buff *udp6_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 
+ skip:
+ 	NAPI_GRO_CB(skb)->is_ipv6 = 1;
+-	rcu_read_lock();
+ 
+ 	if (static_branch_unlikely(&udpv6_encap_needed_key))
+ 		sk = udp6_gro_lookup_skb(skb, uh->source, uh->dest);
+ 
+ 	pp = udp_gro_receive(head, skb, uh, sk);
+-	rcu_read_unlock();
+ 	return pp;
+ 
+ flush:
 -- 
 2.43.0
 
