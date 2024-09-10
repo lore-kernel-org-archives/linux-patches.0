@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D034171671;
-	Tue, 10 Sep 2024 09:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86447171671;
+	Tue, 10 Sep 2024 09:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962154; cv=none; b=pWa2KV+SxzJsRzyvFO0w87DPKJ/Ah9SuYi/3zsu1rgUQzvKgCKZVpUECJBocrhLWUWFHRgUqEccXg5dlHvMxmvmDbecgrcWDFtjc/Wc9FMVo2vqe+5DkXaHh0qUWzZy9477Ez/hh8vh5Au1g6hENYWZzZVRH7MH++tMRSLGqIaM=
+	t=1725962157; cv=none; b=CfmWb8ttNramG0PN7Gzt9Z5ELWDXx2mNmecCBMbbVPbiAzLJ1iTPsJZmCiTV2OnOZ8a0Q8oJv2SGZihZk71wweZ4g/2rhrr6rZM0swMXVV3Y1xFqXp64Tomgm5BA+xEGa3IM8L1FpHr9A5h7gDzmScAlpjoXWEls0QubkVOszTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962154; c=relaxed/simple;
-	bh=t+Mhe9RMw6QCVLyRtue7iKNcsUUlhsZMX3ogTzQY6Tg=;
+	s=arc-20240116; t=1725962157; c=relaxed/simple;
+	bh=Y7lSGduLu5si3zoKzzw2s+I/kDbjtIVlrMsRTSbb9q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=it2oKXTWCPO5aQM8bVLBX00kD9JHQpE+k3tEG6aqfqBPK1sKPQo0WATe0YVIPfzDrjSYUbVxOCBZNf6VFgBByus1ji9iqOeXogErspJR4e0PGLjtSpLhlI6i0SG8rg2L1A8XFqzU04aOCB4BnTpTVZ5QUpFQeDxZWswxhpp2+ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cV73rnQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTfSb/h4EFGYRiaWDMF58uJr8axwk1giSQvYrVsdhzoJT4k+iUn6mQw/7Drvjm5lNBOJNGO6NC2pMdloxnW+Cpnu1hIXXtacJ5CsjZX8Oz2ZoHwpwpMZG2YU2z5mEGIfXVfbNURA+MsVvrsiSfv9RxQ+8vUYxav0KDMuCtNNky0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zahvsli4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cV73rnQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223BBC4CEC3;
-	Tue, 10 Sep 2024 09:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zahvsli4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A865C4CEC3;
+	Tue, 10 Sep 2024 09:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962154;
-	bh=t+Mhe9RMw6QCVLyRtue7iKNcsUUlhsZMX3ogTzQY6Tg=;
+	s=korg; t=1725962157;
+	bh=Y7lSGduLu5si3zoKzzw2s+I/kDbjtIVlrMsRTSbb9q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cV73rnQYvY91HFF+BSGh10n7xsBffTrjieA8szxgpK9aF8qnvpQzPP8IC+7Zx4iom
-	 C7871su4hY+kXywfTw3uJ6yzqHaXFJ1nB1WqcHHxwI5TUyftF+Xjg8Fd5365JLhZeJ
-	 b3bW4b3nOd01iqxqEN5hpq341CDlzFLWchJ7OajQ=
+	b=zahvsli4muwvO7XymwSK7CSQyXywJrW+NcOYSI77FTsoyetqHIFj0BtZRHJK1pOru
+	 tCkpoKwvYfcPZw/HlonAvNUlUYrfUVfa/Vk2KiGelwrwgQri0Ah33If3ZpOSmFzLnK
+	 W3usDFg25aUoGKye3qxdzx0JQkEQwCdVSNRErzjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Martelli <matteomartelli3@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.10 286/375] iio: fix scale application in iio_convert_raw_to_processed_unlocked
-Date: Tue, 10 Sep 2024 11:31:23 +0200
-Message-ID: <20240910092632.173916971@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Andreas Westman Dorcsak <hedmoo@yahoo.com>
+Subject: [PATCH 6.10 287/375] iio: imu: inv_mpu6050: fix interrupt status read for old buggy chips
+Date: Tue, 10 Sep 2024 11:31:24 +0200
+Message-ID: <20240910092632.209565736@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,48 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matteo Martelli <matteomartelli3@gmail.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 8a3dcc970dc57b358c8db2702447bf0af4e0d83a upstream.
+commit 0a3b517c8089aa4cf339f41460d542c681409386 upstream.
 
-When the scale_type is IIO_VAL_INT_PLUS_MICRO or IIO_VAL_INT_PLUS_NANO
-the scale passed as argument is only applied to the fractional part of
-the value. Fix it by also multiplying the integer part by the scale
-provided.
+Interrupt status read seems to be broken on some old MPU-6050 like
+chips. Fix by reverting to previous driver behavior bypassing interrupt
+status read. This is working because these chips are not supporting
+WoM and data ready is the only interrupt source.
 
-Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
-Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
-Link: https://patch.msgid.link/20240730-iio-fix-scale-v1-1-6246638c8daa@gmail.com
-Cc: <Stable@vger.kernel.org>
+Fixes: 5537f653d9be ("iio: imu: inv_mpu6050: add new interrupt handler for WoM events")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Tested-by: Svyatoslav Ryhel <clamor95@gmail.com> # LG P895
+Tested-by: Andreas Westman Dorcsak <hedmoo@yahoo.com> # LG P880
+Link: https://patch.msgid.link/20240814143735.327302-1-inv.git-commit@tdk.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/inkern.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -647,17 +647,17 @@ static int iio_convert_raw_to_processed_
- 		break;
- 	case IIO_VAL_INT_PLUS_MICRO:
- 		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val;
-+			*processed = -raw64 * scale_val * scale;
- 		else
--			*processed = raw64 * scale_val;
-+			*processed = raw64 * scale_val * scale;
- 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
- 				      1000000LL);
- 		break;
- 	case IIO_VAL_INT_PLUS_NANO:
- 		if (scale_val2 < 0)
--			*processed = -raw64 * scale_val;
-+			*processed = -raw64 * scale_val * scale;
- 		else
--			*processed = raw64 * scale_val;
-+			*processed = raw64 * scale_val * scale;
- 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
- 				      1000000000LL);
- 		break;
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+@@ -248,12 +248,20 @@ static irqreturn_t inv_mpu6050_interrupt
+ 	int result;
+ 
+ 	switch (st->chip_type) {
++	case INV_MPU6000:
+ 	case INV_MPU6050:
++	case INV_MPU9150:
++		/*
++		 * WoM is not supported and interrupt status read seems to be broken for
++		 * some chips. Since data ready is the only interrupt, bypass interrupt
++		 * status read and always assert data ready bit.
++		 */
++		wom_bits = 0;
++		int_status = INV_MPU6050_BIT_RAW_DATA_RDY_INT;
++		goto data_ready_interrupt;
+ 	case INV_MPU6500:
+ 	case INV_MPU6515:
+ 	case INV_MPU6880:
+-	case INV_MPU6000:
+-	case INV_MPU9150:
+ 	case INV_MPU9250:
+ 	case INV_MPU9255:
+ 		wom_bits = INV_MPU6500_BIT_WOM_INT;
+@@ -279,6 +287,7 @@ static irqreturn_t inv_mpu6050_interrupt
+ 		}
+ 	}
+ 
++data_ready_interrupt:
+ 	/* handle raw data interrupt */
+ 	if (int_status & INV_MPU6050_BIT_RAW_DATA_RDY_INT) {
+ 		indio_dev->pollfunc->timestamp = st->it_timestamp;
 
 
