@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85F918B491;
-	Tue, 10 Sep 2024 10:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE076188A1E;
+	Tue, 10 Sep 2024 10:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965072; cv=none; b=VZRkITcHy+VScX9hgk5hrnMI9ZC6GFIJpQhz9ba9cJ0VvT+ytd6aYxeYC6H4OuILwPAyXxr0U0j3B09VQwpeYviHTrKHrilER9r/+eQ8oQnltVlkm0seCGlB0YR2pEOcHuVWKn9HKWapvxyMiK3a4fgwMVhls/e9WnRurh0cTYY=
+	t=1725965075; cv=none; b=ICMq0rC/pQlo4atlT6QQHDu1b71Cm5cGf0uLvuohbFmUNw2YImGZcWmoJS1bkz7YYryuZsRoQWMie5mWAl9YDSCh2gq9OMQfGOGeLLrJ97+hiKdGoMjzF/rreOfEHx6gySAn9YPSHQ/TEShWhkF0jmlm1mnKCCztnb4784ZqZEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965072; c=relaxed/simple;
-	bh=S+q8KxIEBwF4Q7DqjafNlQsKAwOH5k9Th5itgCqsCtc=;
+	s=arc-20240116; t=1725965075; c=relaxed/simple;
+	bh=sx0ThNUt+w9xBFtUA75Tb8yUEZy+QwcRa0rahTTIi9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMC1qT4+UkcYAtc5RwoP148aqP0o97898qFCRO6gU3M94BIEuxxSIbL9523umMkk13qKL942SVxy00U2BhIf79mW9CkQ3nFpkZ4ErPW7SaePpskKTB21wh/DSjJ/eVBUeSkWYl+TcL/WcAzqBAE4fKG1a5JyiBVM7oUjsvnhD8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2xgrgCE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L24JLyhFedUyxWnqsz62uB+VzEUFvGJLVUp+wUtjLB08VPOJgHHoKsZ+Y8MkwCC/iJEQKCDBA57rGOr8AOwnyYzq6uPL9Ak6hGpZIXqELrHE/JN1H8oc4r3zOJACdsJVVtskfCggQ1MWACcj+J3gfg1MWQutmHrLl+i8bAXHgyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaZCVVp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2xgrgCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39436C4CEC3;
-	Tue, 10 Sep 2024 10:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaZCVVp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FA1C4CEC3;
+	Tue, 10 Sep 2024 10:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965072;
-	bh=S+q8KxIEBwF4Q7DqjafNlQsKAwOH5k9Th5itgCqsCtc=;
+	s=korg; t=1725965075;
+	bh=sx0ThNUt+w9xBFtUA75Tb8yUEZy+QwcRa0rahTTIi9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2xgrgCEqHAclXFshuv5lshMp1CLWkrmy1jqpCt6q+wva02TrEfHSwKMYdi/pNZxC
-	 u0kXoDFSWgTsnJQU/3ZAE7GRpMfrNQWC21hOLnVx67xPtkQ1igAEHGSD9zdcNBIlv7
-	 63Gni6ldN0BYsVhDj5ddi+uwOmiydKKnY3S0sAvo=
+	b=HaZCVVp1UoFx/Ph3vyho8ip0GiUgF1p/FBi2/aUnuUvh+Cv/u+/H6qL7bvvUTTD1O
+	 3cEYbo8lApF1StTaHLFRSWOSrdNI6dhKjtbUXXQkBp7lHxvuEzjxHAD+YxWtO0H89Z
+	 R+UKuEira7MnKhZn0dnqfd+yBNBrkNq2M5SVtQR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/186] usbnet: modern method to get random MAC
-Date: Tue, 10 Sep 2024 11:33:35 +0200
-Message-ID: <20240910092559.517630637@linuxfoundation.org>
+Subject: [PATCH 5.10 129/186] dm init: Handle minors larger than 255
+Date: Tue, 10 Sep 2024 11:33:44 +0200
+Message-ID: <20240910092559.888214492@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,73 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit bab8eb0dd4cb995caa4a0529d5655531c2ec5e8e ]
+[ Upstream commit 140ce37fd78a629105377e17842465258a5459ef ]
 
-The driver generates a random MAC once on load
-and uses it over and over, including on two devices
-needing a random MAC at the same time.
+dm_parse_device_entry() simply copies the minor number into dmi.dev, but
+the dev_t format splits the minor number between the lowest 8 bytes and
+highest 12 bytes. If the minor number is larger than 255, part of it
+will end up getting treated as the major number
 
-Jakub suggested revamping the driver to the modern
-API for setting a random MAC rather than fixing
-the old stuff.
+Fix this by checking that the minor number is valid and then encoding it
+as a dev_t.
 
-The bug is as old as the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20240829175201.670718-1-oneukum@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/md/dm-init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index e87d3108ef05..669cd20cfe00 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -64,9 +64,6 @@
- 
- /*-------------------------------------------------------------------------*/
- 
--// randomly generated ethernet address
--static u8	node_id [ETH_ALEN];
--
- /* use ethtool to change the level for any given device */
- static int msg_level = -1;
- module_param (msg_level, int, 0);
-@@ -1696,7 +1693,6 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 
- 	dev->net = net;
- 	strscpy(net->name, "usb%d", sizeof(net->name));
--	eth_hw_addr_set(net, node_id);
- 
- 	/* rx and tx sides can use different message sizes;
- 	 * bind() should set rx_urb_size in that case.
-@@ -1770,9 +1766,9 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		goto out4;
+diff --git a/drivers/md/dm-init.c b/drivers/md/dm-init.c
+index b0c45c6ebe0b..f76477044ec1 100644
+--- a/drivers/md/dm-init.c
++++ b/drivers/md/dm-init.c
+@@ -207,8 +207,10 @@ static char __init *dm_parse_device_entry(struct dm_device *dev, char *str)
+ 	strscpy(dev->dmi.uuid, field[1], sizeof(dev->dmi.uuid));
+ 	/* minor */
+ 	if (strlen(field[2])) {
+-		if (kstrtoull(field[2], 0, &dev->dmi.dev))
++		if (kstrtoull(field[2], 0, &dev->dmi.dev) ||
++		    dev->dmi.dev >= (1 << MINORBITS))
+ 			return ERR_PTR(-EINVAL);
++		dev->dmi.dev = huge_encode_dev((dev_t)dev->dmi.dev);
+ 		dev->dmi.flags |= DM_PERSISTENT_DEV_FLAG;
  	}
- 
--	/* let userspace know we have a random address */
--	if (ether_addr_equal(net->dev_addr, node_id))
--		net->addr_assign_type = NET_ADDR_RANDOM;
-+	/* this flags the device for user space */
-+	if (!is_valid_ether_addr(net->dev_addr))
-+		eth_hw_addr_random(net);
- 
- 	if ((dev->driver_info->flags & FLAG_WLAN) != 0)
- 		SET_NETDEV_DEVTYPE(net, &wlan_type);
-@@ -2182,7 +2178,6 @@ static int __init usbnet_init(void)
- 	BUILD_BUG_ON(
- 		sizeof_field(struct sk_buff, cb) < sizeof(struct skb_data));
- 
--	eth_random_addr(node_id);
- 	return 0;
- }
- module_init(usbnet_init);
+ 	/* flags */
 -- 
 2.43.0
 
