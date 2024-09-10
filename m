@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B048218C03E;
-	Tue, 10 Sep 2024 10:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA0118C913;
+	Tue, 10 Sep 2024 10:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963620; cv=none; b=urzo/XbI/IPeY/DhVR759B8SddG8/YKZak1+GtqEA4ypcuoNcn192HXZ/yVuoY71L9MgXMkBYWlwbxSmY705FF2e10yuzzOtx/y7a44pSM4cVHDKoWLAhY+2O4MFJ9KKVt/QSKADV8m1Lu2v+R6Kz6jdSDS4TaoU2n+JeWJEYiQ=
+	t=1725963623; cv=none; b=dE+jwiBlhZTMwqJ277DXypPUNwan9o3wKmxIv6hd5c8SYOMc6L0BDbmMiTL9XY0NtDmbDI6f/1gxFPW1v65yxDBK5wHb6eH+f9ACYCFzfzrQ6MR9gm1Nrd4LdVE7vo5UVl/NbC12lWKqHt5qYy3TVGKYPOAEGHpv7lYjAaIJ+WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963620; c=relaxed/simple;
-	bh=fCYacT93f/SZoGv9SgJZ5V8MSpN3Y4hgOkegiH5VCaA=;
+	s=arc-20240116; t=1725963623; c=relaxed/simple;
+	bh=OgLYA1SxCFDceKFGDAeztagqXh3mCueKTjL04Jvv4os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpYYX97IHiPfgsgrFHAkNwEHVzLqyyEefhJA+oZfyvJ2p+CWprIJDc+Fi4q30L93v5Ty0AzS+KJDYO7Kon3SCVKvPbCDaMiYZ6D+/czYfHY/WMyf+OmWcHtykaAT6gApcM0pSDy+CuoXeJA3PD58nNFatdrNsE3bOpGJihqPnW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZP7/7OCe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwlTLaiTwz4f1YwNNkngCyY1LGhAvNxca0xA9dXpBqxD2WYf+qgqTxy2XCUpDTL20hkPjudYHMY2fe9TGPZcGfUOM9TV5lgDwQWktcsdQ2JSYJ4GKgfeiLkWY1WJotftYBEiq6kk+lxwGGEeCpkDnRnofZC0hwoukPcb/sHvXVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBJ+kyZk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZP7/7OCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD58C4CEC3;
-	Tue, 10 Sep 2024 10:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBJ+kyZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2861C4CEC3;
+	Tue, 10 Sep 2024 10:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963620;
-	bh=fCYacT93f/SZoGv9SgJZ5V8MSpN3Y4hgOkegiH5VCaA=;
+	s=korg; t=1725963623;
+	bh=OgLYA1SxCFDceKFGDAeztagqXh3mCueKTjL04Jvv4os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZP7/7OCeU5fvZGT56TqRsFdKhJccDfST4QCe7wLlto8gpxhqzOC7yAxU5B8nT5qzs
-	 Zs0b4KNbonT+k6mJay7wwftFJxeZ9izHSUpefYZqArushtHcTK2S2v38nCMqgRGMLU
-	 GqnOLSgqlyfcK9eqrdM2UlUv7q2vdGOni45F5UXw=
+	b=kBJ+kyZkQGrRnNyqofv5XSAyNIkoTU8AgQ+q27wu6BSFzzQ4TeXuGjy7XCy74WkAS
+	 GbKVAqp1w3EZTDAFtgSVzMetlNXdcCe0BNNUQLD99wdL6Cc4a1MQao3Rfd+npraFZ1
+	 50WLg93axylA/BO5Z7dUNbKHAj1TvwiVIg+0Lj4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 083/214] clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL
-Date: Tue, 10 Sep 2024 11:31:45 +0200
-Message-ID: <20240910092602.128357067@linuxfoundation.org>
+	Shantanu Goel <sgoel01@yahoo.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 113/214] usb: uas: set host status byte on data completion error
+Date: Tue, 10 Sep 2024 11:32:15 +0200
+Message-ID: <20240910092603.420441149@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,63 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+From: Shantanu Goel <sgoel01@yahoo.com>
 
-commit f4973130d255dd4811006f5822d4fa4d0de9d712 upstream.
+[ Upstream commit 9d32685a251a754f1823d287df233716aa23bcb9 ]
 
-The Zonda PLL has a 16 bit signed alpha and in the cases where the alpha
-value is greater than 0.5, the L value needs to be adjusted accordingly.
-Thus update the logic to handle the signed alpha val.
+Set the host status byte when a data completion error is encountered
+otherwise the upper layer may end up using the invalid zero'ed data.
+The following output was observed from scsi/sd.c prior to this fix.
 
-Fixes: f21b6bfecc27 ("clk: qcom: clk-alpha-pll: add support for zonda pll")
-Cc: stable@vger.kernel.org
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240731062916.2680823-5-quic_skakitap@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[   11.872824] sd 0:0:0:1: [sdf] tag#9 data cmplt err -75 uas-tag 1 inflight:
+[   11.872826] sd 0:0:0:1: [sdf] tag#9 CDB: Read capacity(16) 9e 10 00 00 00 00 00 00 00 00 00 00 00 20 00 00
+[   11.872830] sd 0:0:0:1: [sdf] Sector size 0 reported, assuming 512.
+
+Signed-off-by: Shantanu Goel <sgoel01@yahoo.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/87msnx4ec6.fsf@yahoo.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/usb/storage/uas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -39,6 +39,7 @@
- #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
- # define PLL_POST_DIV_SHIFT	8
- # define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
-+# define PLL_ALPHA_MSB		BIT(15)
- # define PLL_ALPHA_EN		BIT(24)
- # define PLL_ALPHA_MODE		BIT(25)
- # define PLL_VCO_SHIFT		20
-@@ -1913,6 +1914,18 @@ static void clk_zonda_pll_disable(struct
- 	regmap_write(regmap, PLL_OPMODE(pll), 0x0);
- }
- 
-+static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32 *l)
-+{
-+	u64 remainder, quotient;
-+
-+	quotient = rate;
-+	remainder = do_div(quotient, prate);
-+	*l = quotient;
-+
-+	if ((remainder * 2) / prate)
-+		*l = *l + 1;
-+}
-+
- static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
- 				  unsigned long prate)
- {
-@@ -1929,6 +1942,9 @@ static int clk_zonda_pll_set_rate(struct
- 	if (ret < 0)
- 		return ret;
- 
-+	if (a & PLL_ALPHA_MSB)
-+		zonda_pll_adjust_l_val(rate, prate, &l);
-+
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
- 
+diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
+index 11a551a9cd05..aa61b1041028 100644
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -422,6 +422,7 @@ static void uas_data_cmplt(struct urb *urb)
+ 			uas_log_cmd_state(cmnd, "data cmplt err", status);
+ 		/* error: no data transfered */
+ 		scsi_set_resid(cmnd, sdb->length);
++		set_host_byte(cmnd, DID_ERROR);
+ 	} else {
+ 		scsi_set_resid(cmnd, sdb->length - urb->actual_length);
+ 	}
+-- 
+2.43.0
+
 
 
