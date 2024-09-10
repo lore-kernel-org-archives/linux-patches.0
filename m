@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FAD1885A5;
-	Tue, 10 Sep 2024 10:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C631885A5;
+	Tue, 10 Sep 2024 10:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962737; cv=none; b=RdjDu0gbIVJmfhfXXozO0giCbuI2WM9MsfB0Bp8wijtukxV3nxGF4zJN9/MyCCaI/hydc5PjV5wfk93WEHtIJgnpspaSfEvakShHBQlpwJEKGYPc4cisSAaOweyGFTqA41OcOE4Vc1QeGSt33QxuarwLZJPQmo0JWlNL9M7LIFQ=
+	t=1725962740; cv=none; b=L6YLUGWcGshKJkzT5BiBFgZfjLdSFOHYqQPk3fp2rwMrx762aj1lDo6KnYIRoGO0w4oMRYvJFULzCPzMMoaD6pFqBccpmuGJ+bAuOvuKRtiODHvMXXuaQ5vCaZMTOKKECAolnF9/WgxsdCajS8COBg8Kjtg7Hc9tUbrGQlCw+Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962737; c=relaxed/simple;
-	bh=D3GdcjcM+/7N9ENok+lkiaaC49F3rj75DS2qrXVTN54=;
+	s=arc-20240116; t=1725962740; c=relaxed/simple;
+	bh=FiZl7rL1L0kCvRQICIRFEoweDpRAiTNKO1VqReBs6Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVXLy30wxactThwm5CtS/wbcwHA5rJVVhynQVA5BvUr4nNnXZ+0wk24Rt+mMeStD44ROSH+lPesay3qThny47pUtktBiJtN588Lj5wEmKXUCje0bax/vlrKu1tLNRxs/w+GehqR4kkh/5Vdlavuriv4MrbwXsBvTx/CB5TSSHIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkxhQWp0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SwzDmsJAOOcWFUFMDskg0R2j/JBTO/8bNm94LwDUWisKNycI0DUmqbjMlfUOcGC+h9O6mFkC9XcmZvrBPzZ9WOTz2AfK1pqvzo0T9+ETGbD48irB9iP/35Mg7MRNLdtg6AGxmHd0xI8ifnEjCuZGZj/NHbyrEpXcK/sDh2jrgGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kuklftvu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkxhQWp0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9AFC4CECF;
-	Tue, 10 Sep 2024 10:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kuklftvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7071C4CEC3;
+	Tue, 10 Sep 2024 10:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962737;
-	bh=D3GdcjcM+/7N9ENok+lkiaaC49F3rj75DS2qrXVTN54=;
+	s=korg; t=1725962740;
+	bh=FiZl7rL1L0kCvRQICIRFEoweDpRAiTNKO1VqReBs6Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wkxhQWp09VuCxJTJPgyM99vwvLSNzlbbj6pL9yLg1w4BawgkOPRFhuTm7X7WmYtKR
-	 4KuVCb/v7ZSluv0lStSwMW1FdDyDzT9mLoStubZ9UmnIcAvil293D5O8PhHLp13XOI
-	 /Hk7BXv2svc/E7sU6J+SY1/yPxDmpoATzxuu9too=
+	b=KuklftvuW5R3HWfHSphv+16AeNnWJFWm0dKK2E9zhvxeumLzBC5oADUTNVvoGp6Rm
+	 nxKlwGy0lbLSjrDrBoAxkxvEMEB63eeJH7yFEDdHL2uY4UnyggcEyrvdAF6gRSj8yI
+	 NDK5+TSt20LiFX+TZQUtAI3y1h9btFKvkLP8SqL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.1 013/192] perf/x86/intel: Limit the period on Haswell
-Date: Tue, 10 Sep 2024 11:30:37 +0200
-Message-ID: <20240910092558.482930644@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 014/192] irqchip/gic-v2m: Fix refcount leak in gicv2m_of_init()
+Date: Tue, 10 Sep 2024 11:30:38 +0200
+Message-ID: <20240910092558.533625817@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,112 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 25dfc9e357af8aed1ca79b318a73f2c59c1f0b2b upstream.
+commit c5af2c90ba5629f0424a8d315f75fb8d91713c3c upstream.
 
-Running the ltp test cve-2015-3290 concurrently reports the following
-warnings.
+gicv2m_of_init() fails to perform an of_node_put() when
+of_address_to_resource() fails, leading to a refcount leak.
 
-perfevents: irq loop stuck!
-  WARNING: CPU: 31 PID: 32438 at arch/x86/events/intel/core.c:3174
-  intel_pmu_handle_irq+0x285/0x370
-  Call Trace:
-   <NMI>
-   ? __warn+0xa4/0x220
-   ? intel_pmu_handle_irq+0x285/0x370
-   ? __report_bug+0x123/0x130
-   ? intel_pmu_handle_irq+0x285/0x370
-   ? __report_bug+0x123/0x130
-   ? intel_pmu_handle_irq+0x285/0x370
-   ? report_bug+0x3e/0xa0
-   ? handle_bug+0x3c/0x70
-   ? exc_invalid_op+0x18/0x50
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? irq_work_claim+0x1e/0x40
-   ? intel_pmu_handle_irq+0x285/0x370
-   perf_event_nmi_handler+0x3d/0x60
-   nmi_handle+0x104/0x330
+Address this by moving the error handling path outside of the loop and
+making it common to all failure modes.
 
-Thanks to Thomas Gleixner's analysis, the issue is caused by the low
-initial period (1) of the frequency estimation algorithm, which triggers
-the defects of the HW, specifically erratum HSW11 and HSW143. (For the
-details, please refer https://lore.kernel.org/lkml/87plq9l5d2.ffs@tglx/)
-
-The HSW11 requires a period larger than 100 for the INST_RETIRED.ALL
-event, but the initial period in the freq mode is 1. The erratum is the
-same as the BDM11, which has been supported in the kernel. A minimum
-period of 128 is enforced as well on HSW.
-
-HSW143 is regarding that the fixed counter 1 may overcount 32 with the
-Hyper-Threading is enabled. However, based on the test, the hardware
-has more issues than it tells. Besides the fixed counter 1, the message
-'interrupt took too long' can be observed on any counter which was armed
-with a period < 32 and two events expired in the same NMI. A minimum
-period of 32 is enforced for the rest of the events.
-The recommended workaround code of the HSW143 is not implemented.
-Because it only addresses the issue for the fixed counter. It brings
-extra overhead through extra MSR writing. No related overcounting issue
-has been reported so far.
-
-Fixes: 3a632cb229bf ("perf/x86/intel: Add simple Haswell PMU support")
-Reported-by: Li Huafei <lihuafei1@huawei.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Fixes: 4266ab1a8ff5 ("irqchip/gic-v2m: Refactor to prepare for ACPI support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240819183004.3132920-1-kan.liang@linux.intel.com
-Closes: https://lore.kernel.org/lkml/20240729223328.327835-1-lihuafei1@huawei.com/
+Link: https://lore.kernel.org/all/20240820092843.1219933-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-v2m.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4352,6 +4352,25 @@ static u8 adl_get_hybrid_cpu_type(void)
- 	return hybrid_big;
- }
+--- a/drivers/irqchip/irq-gic-v2m.c
++++ b/drivers/irqchip/irq-gic-v2m.c
+@@ -438,12 +438,12 @@ static int __init gicv2m_of_init(struct
  
-+static inline bool erratum_hsw11(struct perf_event *event)
-+{
-+	return (event->hw.config & INTEL_ARCH_EVENT_MASK) ==
-+		X86_CONFIG(.event=0xc0, .umask=0x01);
-+}
-+
-+/*
-+ * The HSW11 requires a period larger than 100 which is the same as the BDM11.
-+ * A minimum period of 128 is enforced as well for the INST_RETIRED.ALL.
-+ *
-+ * The message 'interrupt took too long' can be observed on any counter which
-+ * was armed with a period < 32 and two events expired in the same NMI.
-+ * A minimum period of 32 is enforced for the rest of the events.
-+ */
-+static void hsw_limit_period(struct perf_event *event, s64 *left)
-+{
-+	*left = max(*left, erratum_hsw11(event) ? 128 : 32);
-+}
-+
- /*
-  * Broadwell:
-  *
-@@ -4369,8 +4388,7 @@ static u8 adl_get_hybrid_cpu_type(void)
-  */
- static void bdw_limit_period(struct perf_event *event, s64 *left)
- {
--	if ((event->hw.config & INTEL_ARCH_EVENT_MASK) ==
--			X86_CONFIG(.event=0xc0, .umask=0x01)) {
-+	if (erratum_hsw11(event)) {
- 		if (*left < 128)
- 			*left = 128;
- 		*left &= ~0x3fULL;
-@@ -6180,6 +6198,7 @@ __init int intel_pmu_init(void)
+ 		ret = gicv2m_init_one(&child->fwnode, spi_start, nr_spis,
+ 				      &res, 0);
+-		if (ret) {
+-			of_node_put(child);
++		if (ret)
+ 			break;
+-		}
+ 	}
  
- 		x86_pmu.hw_config = hsw_hw_config;
- 		x86_pmu.get_event_constraints = hsw_get_event_constraints;
-+		x86_pmu.limit_period = hsw_limit_period;
- 		x86_pmu.lbr_double_abort = true;
- 		extra_attr = boot_cpu_has(X86_FEATURE_RTM) ?
- 			hsw_format_attr : nhm_format_attr;
++	if (ret && child)
++		of_node_put(child);
+ 	if (!ret)
+ 		ret = gicv2m_allocate_domains(parent);
+ 	if (ret)
 
 
