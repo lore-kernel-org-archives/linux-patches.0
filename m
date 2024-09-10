@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE219066E;
-	Tue, 10 Sep 2024 10:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234BA191461;
+	Tue, 10 Sep 2024 10:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962746; cv=none; b=sZkGMIEmihDm1K2e5BKmpIVuEozhnGrgyHStFmu7RUFE7EMfnersUfAcXGkEQdf2OqVnkhsqCb39YM2Vs9poDy4jnLgNxXD+SoVogZdcyvkYpLbtjc+Q4/3sBacts1hWjDaxxC8GPfPLy8z6k5MsZTJs/Ut18Pi48al+3P2YA/k=
+	t=1725962749; cv=none; b=ENt8x+qTumuAjIhYxCRiVWY71in5zfZUrArCH+WERnFOX26sfL7I2j2urKHaKaw32zl5MBj+nEVl9GEpgc1UxyG3FojtKLsdu4/jV2pmlPrvkOPsuiTmO9BWOHZtjFxIySDca99rloifeGuXqVNXDNphXwflmesY/poVrU87rtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962746; c=relaxed/simple;
-	bh=v9IK11ChxoyBewE22zgpCAcK5WDDQlgFsv2DHNO6KZk=;
+	s=arc-20240116; t=1725962749; c=relaxed/simple;
+	bh=bvrkx2KRaldV0tbfI84hXxaKuv8R3xhcYt/1Yq9ZKuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ea6Nm8e6lAYuFi94Do6CTnLuLKbCm8ZEIc7dSvxUg/9ke50uwK8GS/FogAgpXGvvSLECWzVRHbdM0YCV+MpecvovIdBSa6FEyILvzgzA0wtj9sNcgqmRARVTokPpbw5i6Bb9zSM3p+Iz/+7/L9UfhPYtkrOy/xmtRJxLHQLBxRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6rg6ud3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C98RgN2d7fafaIcGMhZXdt1YGjG7fn7F2b9gan5c4X2xCpDiEuHqSaE+foXMB2O0sQpi2ZRuyYYTVIDyv3NISKTJBu7+37aSa1DYlKnIVi3mrtxF/BX1twPxALPrctLETAD7tyBqfoC6Y+g77wNWRRFfm+01L6witva3whXEup8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySIB5OP6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6rg6ud3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC83C4CEC3;
-	Tue, 10 Sep 2024 10:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySIB5OP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AB9C4CEC3;
+	Tue, 10 Sep 2024 10:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962746;
-	bh=v9IK11ChxoyBewE22zgpCAcK5WDDQlgFsv2DHNO6KZk=;
+	s=korg; t=1725962749;
+	bh=bvrkx2KRaldV0tbfI84hXxaKuv8R3xhcYt/1Yq9ZKuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6rg6ud32G8PxQDl3HSKxuFKLr6TjhesFOVomKdLCx1RtbTMf2sj/rJEZyC9KhRGT
-	 Jpgsjov/Elr24Q0WYZLi0dfy2//lZvecS0Mwb0YkbpE1XI+y63fJx+8cUHtxM+iRgE
-	 qzLP/jCvfrZb4UnCmPXaQXPVKZdxqhVF2541vg2c=
+	b=ySIB5OP6LX/PAk7NxrEriFEJl8c1MHW2/VRKUXVPbnHbehK9hNSyd2qVHfrmWKaQI
+	 w5znQ9nG4rdKRdnOYWvVbimXSS2NVFAU+dDSWJ4o+MU8m3GH44Ni7t21Zwrhuidvwi
+	 +/WaMzlA1hMMgHs3Whff3AwWkjCh1Xhva/1eYlIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	robelin <robelin@nvidia.com>,
-	Sameer Pujar <spujar@nvidia.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 002/192] ASoC: dapm: Fix UAF for snd_soc_pcm_runtime object
-Date: Tue, 10 Sep 2024 11:30:26 +0200
-Message-ID: <20240910092557.990742674@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 003/192] KVM: x86: Acquire kvm->srcu when handling KVM_SET_VCPU_EVENTS
+Date: Tue, 10 Sep 2024 11:30:27 +0200
+Message-ID: <20240910092558.031364819@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,58 +49,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: robelin <robelin@nvidia.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit b4a90b543d9f62d3ac34ec1ab97fc5334b048565 upstream.
+commit 4bcdd831d9d01e0fb64faea50732b59b2ee88da1 upstream.
 
-When using kernel with the following extra config,
+Grab kvm->srcu when processing KVM_SET_VCPU_EVENTS, as KVM will forcibly
+leave nested VMX/SVM if SMM mode is being toggled, and leaving nested VMX
+reads guest memory.
 
-  - CONFIG_KASAN=y
-  - CONFIG_KASAN_GENERIC=y
-  - CONFIG_KASAN_INLINE=y
-  - CONFIG_KASAN_VMALLOC=y
-  - CONFIG_FRAME_WARN=4096
+Note, kvm_vcpu_ioctl_x86_set_vcpu_events() can also be called from KVM_RUN
+via sync_regs(), which already holds SRCU.  I.e. trying to precisely use
+kvm_vcpu_srcu_read_lock() around the problematic SMM code would cause
+problems.  Acquiring SRCU isn't all that expensive, so for simplicity,
+grab it unconditionally for KVM_SET_VCPU_EVENTS.
 
-kernel detects that snd_pcm_suspend_all() access a freed
-'snd_soc_pcm_runtime' object when the system is suspended, which
-leads to a use-after-free bug:
+ =============================
+ WARNING: suspicious RCU usage
+ 6.10.0-rc7-332d2c1d713e-next-vm #552 Not tainted
+ -----------------------------
+ include/linux/kvm_host.h:1027 suspicious rcu_dereference_check() usage!
 
-[   52.047746] BUG: KASAN: use-after-free in snd_pcm_suspend_all+0x1a8/0x270
-[   52.047765] Read of size 1 at addr ffff0000b9434d50 by task systemd-sleep/2330
+ other info that might help us debug this:
 
-[   52.047785] Call trace:
-[   52.047787]  dump_backtrace+0x0/0x3c0
-[   52.047794]  show_stack+0x34/0x50
-[   52.047797]  dump_stack_lvl+0x68/0x8c
-[   52.047802]  print_address_description.constprop.0+0x74/0x2c0
-[   52.047809]  kasan_report+0x210/0x230
-[   52.047815]  __asan_report_load1_noabort+0x3c/0x50
-[   52.047820]  snd_pcm_suspend_all+0x1a8/0x270
-[   52.047824]  snd_soc_suspend+0x19c/0x4e0
+ rcu_scheduler_active = 2, debug_locks = 1
+ 1 lock held by repro/1071:
+  #0: ffff88811e424430 (&vcpu->mutex){+.+.}-{3:3}, at: kvm_vcpu_ioctl+0x7d/0x970 [kvm]
 
-The snd_pcm_sync_stop() has a NULL check on 'substream->runtime' before
-making any access. So we need to always set 'substream->runtime' to NULL
-everytime we kfree() it.
+ stack backtrace:
+ CPU: 15 PID: 1071 Comm: repro Not tainted 6.10.0-rc7-332d2c1d713e-next-vm #552
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x7f/0x90
+  lockdep_rcu_suspicious+0x13f/0x1a0
+  kvm_vcpu_gfn_to_memslot+0x168/0x190 [kvm]
+  kvm_vcpu_read_guest+0x3e/0x90 [kvm]
+  nested_vmx_load_msr+0x6b/0x1d0 [kvm_intel]
+  load_vmcs12_host_state+0x432/0xb40 [kvm_intel]
+  vmx_leave_nested+0x30/0x40 [kvm_intel]
+  kvm_vcpu_ioctl_x86_set_vcpu_events+0x15d/0x2b0 [kvm]
+  kvm_arch_vcpu_ioctl+0x1107/0x1750 [kvm]
+  ? mark_held_locks+0x49/0x70
+  ? kvm_vcpu_ioctl+0x7d/0x970 [kvm]
+  ? kvm_vcpu_ioctl+0x497/0x970 [kvm]
+  kvm_vcpu_ioctl+0x497/0x970 [kvm]
+  ? lock_acquire+0xba/0x2d0
+  ? find_held_lock+0x2b/0x80
+  ? do_user_addr_fault+0x40c/0x6f0
+  ? lock_release+0xb7/0x270
+  __x64_sys_ioctl+0x82/0xb0
+  do_syscall_64+0x6c/0x170
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ RIP: 0033:0x7ff11eb1b539
+  </TASK>
 
-Fixes: a72706ed8208 ("ASoC: codec2codec: remove ephemeral variables")
-Signed-off-by: robelin <robelin@nvidia.com>
-Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Link: https://patch.msgid.link/20240823144342.4123814-2-spujar@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f7e570780efc ("KVM: x86: Forcibly leave nested virt when SMM state is toggled")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240723232055.3643811-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/soc-dapm.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/x86.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -4018,6 +4018,7 @@ static int snd_soc_dai_link_event(struct
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -5747,7 +5747,9 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 		if (copy_from_user(&events, argp, sizeof(struct kvm_vcpu_events)))
+ 			break;
  
- 	case SND_SOC_DAPM_POST_PMD:
- 		kfree(substream->runtime);
-+		substream->runtime = NULL;
++		kvm_vcpu_srcu_read_lock(vcpu);
+ 		r = kvm_vcpu_ioctl_x86_set_vcpu_events(vcpu, &events);
++		kvm_vcpu_srcu_read_unlock(vcpu);
  		break;
- 
- 	default:
+ 	}
+ 	case KVM_GET_DEBUGREGS: {
 
 
