@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6451917DC;
-	Tue, 10 Sep 2024 10:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284261917DC;
+	Tue, 10 Sep 2024 10:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962755; cv=none; b=u7GzXPb7qsxSavmNp7LdfueF7St+lLoZQ6pO1L5ASxrMA+PXbgj1q005Uez/iAUX1BCNc4cfBp0eb66lycryvtBrxAAjgCuItPcbtTiXrxvK6V19fnNs4TAJrQlV/PVjtQu7wfH6+YxG54BARshru5Gz9yqPoXbF7IoVL9MR458=
+	t=1725962758; cv=none; b=pqtZ7eVxlEeTbf0sWjNVZiEj1lqKflOLYsG2P8UVNnwlZh/dTrYYTsjAKtrzt/o9MXOUN5ZYKIxusxYoqndVz+Iph3iFRjX60QTTUShtYyC7BTWfKfIS8caxzTD2ZjXvSbDpLy2cLgrJt2FwZfTQrMh/p/Pdix4oEqgM6HrFnVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962755; c=relaxed/simple;
-	bh=Kfc8HSb0NGNcRg+3FfmQIfcdFdC6vr09axDjxnVSWcg=;
+	s=arc-20240116; t=1725962758; c=relaxed/simple;
+	bh=HxmFhvCYeq5MzbwtjrMOHBqbZqthCFHHummjHPtdSic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNfTIcuv6UzlIkltPoKgAK39rVRM8FOJhwmMUx0kbPdgCjChi8MGRg+scWoYzfUN6+pvCGpnqI1ugSwtC4ld9ppPIwQ1Cb0fnS4EK/Xm71iBQr17QihtrdXjczgprMvBhA2qE+D3nrQE6kEw8Ut2I16T/wjcrs6xnvZHZsQhhCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbwKUy3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKpHA2RCbMqQ1pXHV2RbFqFc5WF/8EAfyBhrjuWmMBJyi5hZN9qN6KUCRfLPWQWvC/TlQb+o43kIA7sSAm0YlFL44ZJgHP7tiJHp+WlJuIT4wPOUTBYMvDhRmvltaAbI0YtoJmMUmYsXWDsNCHo1OIay3JiYTFih246v4Fsuho4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzK0tbBq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbwKUy3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968F4C4CEC3;
-	Tue, 10 Sep 2024 10:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzK0tbBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99312C4CECD;
+	Tue, 10 Sep 2024 10:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962755;
-	bh=Kfc8HSb0NGNcRg+3FfmQIfcdFdC6vr09axDjxnVSWcg=;
+	s=korg; t=1725962758;
+	bh=HxmFhvCYeq5MzbwtjrMOHBqbZqthCFHHummjHPtdSic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbwKUy3/vl6k3PMQ6041NNY9VXqAp06H6IipO9uTb+RjJGM3hUPk98HJ7cZtakMTM
-	 l8mqw5f56ias80sz/n9yoDXGIwjXLtkTw+kxIUqDTn/z+iSVoXOPdS3OggXpazm7Fy
-	 4f3jzMzXymNtqwTq0fiOqKlQH0ncz+PuqOo7fBSc=
+	b=rzK0tbBqyOCJpE7SbimHdpy3pj1rHub5uvbNBwjE/b4NdyGZCtIUdPSBL8Ure5dK8
+	 qlQF/mUE+hsd6ac6VCDY2FKlLl/+OMCs284iu4Q9KFwKvvmJn1/TxE38AYKCLxcST+
+	 HEcMUcmD8yxFmoS0ZvrJVblQfk08ndyMKP32K9Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 005/192] KVM: SVM: Dont advertise Bus Lock Detect to guest if SVM support is missing
-Date: Tue, 10 Sep 2024 11:30:29 +0200
-Message-ID: <20240910092558.123831027@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 006/192] ALSA: hda/conexant: Add pincfg quirk to enable top speakers on Sirius devices
+Date: Tue, 10 Sep 2024 11:30:30 +0200
+Message-ID: <20240910092558.168884544@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,40 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit 54950bfe2b69cdc06ef753872b5225e54eb73506 upstream.
+commit 4178d78cd7a86510ba68d203f26fc01113c7f126 upstream.
 
-If host supports Bus Lock Detect, KVM advertises it to guests even if
-SVM support is absent. Additionally, guest wouldn't be able to use it
-despite guest CPUID bit being set. Fix it by unconditionally clearing
-the feature bit in KVM cpu capability.
+The Sirius notebooks have two sets of speakers 0x17 (sides) and
+0x1d (top center). The side speakers are active by default but
+the top speakers aren't.
 
-Reported-by: Jim Mattson <jmattson@google.com>
-Closes: https://lore.kernel.org/r/CALMp9eRet6+v8Y1Q-i6mqPm4hUow_kJNhmVHfOV8tMfuSS=tVg@mail.gmail.com
-Fixes: 76ea438b4afc ("KVM: X86: Expose bus lock debug exception to guest")
+This patch provides a pincfg quirk to activate the top speakers.
+
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20240808062937.1149-4-ravi.bangoria@amd.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20240827102540.9480-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_conexant.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4972,6 +4972,9 @@ static __init void svm_set_cpu_caps(void
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -311,6 +311,7 @@ enum {
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+ 	CXT_PINCFG_SWS_JS201D,
++	CXT_PINCFG_TOP_SPEAKER,
+ };
  
- 	/* CPUID 0x8000001F (SME/SEV features) */
- 	sev_set_cpu_caps();
-+
-+	/* Don't advertise Bus Lock Detect to guest if SVM support is absent */
-+	kvm_cpu_cap_clear(X86_FEATURE_BUS_LOCK_DETECT);
- }
+ /* for hda_fixup_thinkpad_acpi() */
+@@ -978,6 +979,13 @@ static const struct hda_fixup cxt_fixups
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
++	[CXT_PINCFG_TOP_SPEAKER] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1d, 0x82170111 },
++			{ }
++		},
++	},
+ };
  
- static __init int svm_hardware_setup(void)
+ static const struct snd_pci_quirk cxt5045_fixups[] = {
+@@ -1074,6 +1082,8 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", CXT_PINCFG_LEMOTE_A1004),
+ 	SND_PCI_QUIRK(0x1c06, 0x2012, "Lemote A1205", CXT_PINCFG_LEMOTE_A1205),
++	SND_PCI_QUIRK(0x2782, 0x12c3, "Sirius Gen1", CXT_PINCFG_TOP_SPEAKER),
++	SND_PCI_QUIRK(0x2782, 0x12c5, "Sirius Gen2", CXT_PINCFG_TOP_SPEAKER),
+ 	{}
+ };
+ 
+@@ -1093,6 +1103,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
+ 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
+ 	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
++	{ .id = CXT_PINCFG_TOP_SPEAKER, .name = "sirius-top-speaker" },
+ 	{}
+ };
+ 
 
 
