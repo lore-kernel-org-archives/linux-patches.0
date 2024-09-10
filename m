@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB9E1891A0;
-	Tue, 10 Sep 2024 09:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D334214F12C;
+	Tue, 10 Sep 2024 09:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961891; cv=none; b=Ejzw0zt4pZHObgjpN4GGtBNoLonYHwBYXU82LQPm1apBL3YBSA/lqzGufyHDlnoz4xqnn/EMsWm63m7L4dprC8CFVmlpaFt011wz5Myy3xLPSpKabxKTmlBhbh0IQapu+5VlIaPWN5/dfUVrnIzC4v1LvNPxn19Jprl/J9sJ+yg=
+	t=1725961893; cv=none; b=JSae92U5pa6ZoB150IhvZTS0xAvb7dOG10AukTwMcHNmV8GwMassnUFv1STz+gr8wCgw9mjAYeY+fF7//WbGxUgz54nddmfqDHRABfsFiAtcMRI7fHeY+ki/ohkUvu2Ynrh39/gB6wBuydUtx/ljt2sWDHkxyhkm0JF1cGvCkBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961891; c=relaxed/simple;
-	bh=+i9ynxDFgnQ2bqUnUppiGsMfqHBSxDycc+u98cESPRY=;
+	s=arc-20240116; t=1725961893; c=relaxed/simple;
+	bh=qzP12xfRuKMWGNTZI/5fSNC5FxX+VHZgVxgmH76aR9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QK53JVmZFoVW7/S4cX0gl92zSAODqnnit4SwoECaUy41B+dU6KeQeFPg72HplNneE1xi4ori8cjbwmZf3TPpvNTmoCs+DB8u3KIhgG/DYLv7BJM8PTJpDKk4fcMb6OHUeCtNzTgXzvHvdGYvuIY7UR5+A5HEtgDPon2klyehQn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaR7Zmi0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AmdwShDSiZQd2tcOhnFYsTLhXrSK2aUUfeaTapcjB6ZmbXLGvgyph5ObVI22mT/1D0rlyVh1eix/NQgpugzfWNCASRsx/wFrBwL6u3blaMgb4ybf9z2KOlnGv8LZRHFVSgHm2oO1mNmqVHw9/4sHYHbb/usnDYK6Bl8uZEY60EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQsNPF8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaR7Zmi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71382C4CEC3;
-	Tue, 10 Sep 2024 09:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQsNPF8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BECFC4CEC3;
+	Tue, 10 Sep 2024 09:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961890;
-	bh=+i9ynxDFgnQ2bqUnUppiGsMfqHBSxDycc+u98cESPRY=;
+	s=korg; t=1725961893;
+	bh=qzP12xfRuKMWGNTZI/5fSNC5FxX+VHZgVxgmH76aR9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaR7Zmi0I+28f/GKxvLUzbui4Po3bN4h5NlajsuEKgXlOu2TPg0ywB2afP/ebpmNS
-	 qWeM4Ufwzrq05uMslyybeQL0JNtpsGG3DAACKEFyvMrFMi01zapkAN+EVPOtTqpKYb
-	 sN9uNL++xxpEC84wTkWj6/WZnuQVgidKVwvbkJF4=
+	b=dQsNPF8S8fBUqCTWBto8eF9agSqWdZg5f9Bg9a+5NbbvW6BThPb+SCwNW79vCUnRr
+	 1T8WkY+QFKP1d3AnmILQRJphin73dCJ2HxZPVmwLTkQVXBsBP/tZxvt68wWPqSw8yv
+	 376PxIUQFZfQ2myJrSgeirXTQqn6DW7QgMq3bITo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Dembicki <paweldembicki@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 196/375] net: dsa: vsc73xx: fix possible subblocks range of CAPT block
-Date: Tue, 10 Sep 2024 11:29:53 +0200
-Message-ID: <20240910092629.086418775@linuxfoundation.org>
+Subject: [PATCH 6.10 197/375] selftests: net: enable bind tests
+Date: Tue, 10 Sep 2024 11:29:54 +0200
+Message-ID: <20240910092629.120159720@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,60 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Dembicki <paweldembicki@gmail.com>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit 8e69c96df771ab469cec278edb47009351de4da6 ]
+[ Upstream commit e4af74a53b7aa865e7fcc104630ebb7a9129b71f ]
 
-CAPT block (CPU Capture Buffer) have 7 sublocks: 0-3, 4, 6, 7.
-Function 'vsc73xx_is_addr_valid' allows to use only block 0 at this
-moment.
+bind_wildcard is compiled but not run, bind_timewait is not compiled.
 
-This patch fix it.
+These two tests complete in a very short time, use the test harness
+properly, and seem reasonable to enable.
 
-Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
-Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20240903203340.1518789-1-paweldembicki@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The author of the tests confirmed via email that these were
+intended to be run.
+
+Enable these two tests.
+
+Fixes: 13715acf8ab5 ("selftest: Add test for bind() conflicts.")
+Fixes: 2c042e8e54ef ("tcp: Add selftest for bind() and TIME_WAIT.")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/5a009b26cf5fb1ad1512d89c61b37e2fac702323.1725430322.git.jamie.bainbridge@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/vitesse-vsc73xx-core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
-index 56bb77dbd28a..cefddcf3cc6f 100644
---- a/drivers/net/dsa/vitesse-vsc73xx-core.c
-+++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
-@@ -34,7 +34,7 @@
- #define VSC73XX_BLOCK_ANALYZER	0x2 /* Only subblock 0 */
- #define VSC73XX_BLOCK_MII	0x3 /* Subblocks 0 and 1 */
- #define VSC73XX_BLOCK_MEMINIT	0x3 /* Only subblock 2 */
--#define VSC73XX_BLOCK_CAPTURE	0x4 /* Only subblock 2 */
-+#define VSC73XX_BLOCK_CAPTURE	0x4 /* Subblocks 0-4, 6, 7 */
- #define VSC73XX_BLOCK_ARBITER	0x5 /* Only subblock 0 */
- #define VSC73XX_BLOCK_SYSTEM	0x7 /* Only subblock 0 */
- 
-@@ -370,13 +370,19 @@ int vsc73xx_is_addr_valid(u8 block, u8 subblock)
- 		break;
- 
- 	case VSC73XX_BLOCK_MII:
--	case VSC73XX_BLOCK_CAPTURE:
- 	case VSC73XX_BLOCK_ARBITER:
- 		switch (subblock) {
- 		case 0 ... 1:
- 			return 1;
- 		}
- 		break;
-+	case VSC73XX_BLOCK_CAPTURE:
-+		switch (subblock) {
-+		case 0 ... 4:
-+		case 6 ... 7:
-+			return 1;
-+		}
-+		break;
- 	}
- 
- 	return 0;
+diff --git a/tools/testing/selftests/net/Makefile b/tools/testing/selftests/net/Makefile
+index d9393569d03a..ec5377ffda31 100644
+--- a/tools/testing/selftests/net/Makefile
++++ b/tools/testing/selftests/net/Makefile
+@@ -84,7 +84,8 @@ TEST_GEN_PROGS += so_incoming_cpu
+ TEST_PROGS += sctp_vrf.sh
+ TEST_GEN_FILES += sctp_hello
+ TEST_GEN_FILES += ip_local_port_range
+-TEST_GEN_FILES += bind_wildcard
++TEST_GEN_PROGS += bind_wildcard
++TEST_GEN_PROGS += bind_timewait
+ TEST_PROGS += test_vxlan_mdb.sh
+ TEST_PROGS += test_bridge_neigh_suppress.sh
+ TEST_PROGS += test_vxlan_nolocalbypass.sh
 -- 
 2.43.0
 
