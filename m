@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92D946444;
-	Tue, 10 Sep 2024 09:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56EA46444;
+	Tue, 10 Sep 2024 09:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961902; cv=none; b=otGALy7O0/Ie6n1O3gu0trRbSVPxVZ0IJlJ9Ypz+9WzuZGo069S+9AFs17XyCyyRAm2eWHOMO124S5xEpnAht6Z/7sY1eV84K3C+YN8kWM5JAHYhcC3YVbZg9yQzFZy+HmwKYr2cfM+ODMLBdSZPVSZ0pRkF6wVuIyydEqhJv+k=
+	t=1725961905; cv=none; b=Hs1E9PRYf5RGsbp4aYpZHZlC2VqhVIsHGPyhWGmId4DPkv1SdsV1wP3/4xXYhaTknIHC5WgTOhCIjb5Jy7Ej33cNQ7lwQs0j8lgzFohJ+DeF/gFOcEQ126ZrA0OBjWwkwKHxCsqRxLog5gDzifxUDCbnbOzWrfpM699+7j+NO7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961902; c=relaxed/simple;
-	bh=sK0iNmQP+wRgN+zy8jL5MGfOF26I6S2GuL2vdJd44iI=;
+	s=arc-20240116; t=1725961905; c=relaxed/simple;
+	bh=LxtSbMcO89GqqBTEU7oodrlVhpA9MSnvaQdjLGlCxEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mf3LgssZccaEaYn2s5inhv+kI9+CENHibWBce/OaVuWSBbp7PEMp3INPKWy3/a+FqwzJAU7mS1B2NImqSdu8zfjtXII7nQfd4DVMx/p4Vkim1D1qxgYAHuXNLhnPYhVcsOCpVUQhDB4b9xCDmNKD+s+Nvjq+0/X/jIzzvoJJMdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmySJCGe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCwa6B9cqLj7hf+VZjdQ4caboSU6wLGqmkszVOdtXuEJIRNDr6Rwu9gz9lRL1RteuhHKKTNhuwjGersdsRVjgLdBQZzcUGnkInHhRN1VlR+oinIDn5b+fyiOKNWI2FedpGECSdEFvfWHso93XCIwztdZCjRm8Qm+W7MO5stPUw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1b5Zzhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmySJCGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE14C4CEC3;
-	Tue, 10 Sep 2024 09:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1b5Zzhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251B3C4CEC3;
+	Tue, 10 Sep 2024 09:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961902;
-	bh=sK0iNmQP+wRgN+zy8jL5MGfOF26I6S2GuL2vdJd44iI=;
+	s=korg; t=1725961905;
+	bh=LxtSbMcO89GqqBTEU7oodrlVhpA9MSnvaQdjLGlCxEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmySJCGe5VFMctkrE2oNJCpVmojFlj+CH6B29JGlCi0QHXDwa+LA3N+HS5ZW4x7IQ
-	 UC9/QRzokNMt0eQvbuClaUeZQwrHh9/3vSck+hmQ5Ssgx/ApTlAjB1M4yKpe6Grt2U
-	 /0TxdZqduM27nEh1QU8a6GMvV+ya70lnGSB6vt/s=
+	b=T1b5Zzhd1q/6xyKcE4Gm8HgEKXxCjg0uXd6PBSGIHNvdfaYW3h//FuyKy+Tj9rxYs
+	 k6LZtg7dSG3DZNggVBxwuTY/EqFe3gga06511iZTiZ3HsJrMQ3jQTeC4ovhTZXSW8s
+	 jAfeuBdaMO5pa4tfUjFWhLJLDAADDkNrSfI8cEn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Jeongjun Park <aha310510@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 190/375] bpf: add check for invalid name in btf_name_valid_section()
-Date: Tue, 10 Sep 2024 11:29:47 +0200
-Message-ID: <20240910092628.875900536@linuxfoundation.org>
+Subject: [PATCH 6.10 221/375] hwmon: (nct6775-core) Fix underflows seen when writing limit attributes
+Date: Tue, 10 Sep 2024 11:30:18 +0200
+Message-ID: <20240910092629.966368317@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,45 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit bb6705c3f93bed2af03d43691743d4c43e3c8e6f ]
+[ Upstream commit 0403e10bf0824bf0ec2bb135d4cf1c0cc3bf4bf0 ]
 
-If the length of the name string is 1 and the value of name[0] is NULL
-byte, an OOB vulnerability occurs in btf_name_valid_section() and the
-return value is true, so the invalid name passes the check.
+DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
+negative number such as -9223372036854775808 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 
-To solve this, you need to check if the first position is NULL byte and
-if the first character is printable.
-
-Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
-Fixes: bd70a8fb7ca4 ("bpf: Allow all printable characters in BTF DATASEC names")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://lore.kernel.org/r/20240831054702.364455-1-aha310510@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/nct6775-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index fe360b5b211d..2f157ffbc67c 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -817,9 +817,11 @@ static bool btf_name_valid_section(const struct btf *btf, u32 offset)
- 	const char *src = btf_str_by_offset(btf, offset);
- 	const char *src_limit;
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index 9fbab8f02334..934fed3dd586 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -2262,7 +2262,7 @@ store_temp_offset(struct device *dev, struct device_attribute *attr,
+ 	if (err < 0)
+ 		return err;
  
-+	if (!*src)
-+		return false;
-+
- 	/* set a limit on identifier length */
- 	src_limit = src + KSYM_NAME_LEN;
--	src++;
- 	while (*src && src < src_limit) {
- 		if (!isprint(*src))
- 			return false;
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), -128, 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, -128000, 127000), 1000);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->temp_offset[nr] = val;
 -- 
 2.43.0
 
