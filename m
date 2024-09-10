@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3653184101;
-	Tue, 10 Sep 2024 09:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D811172BAE;
+	Tue, 10 Sep 2024 09:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961911; cv=none; b=VZiLgcE47Hz7HU7zw7/vY3MSv7UAzIk3YQ2dvxf2/EiaPt+tQOctkWJvVnv1412gknS8CTcxm9s5coR8uRrqL0EsEJClmc/dV+XgEss1VdWJnxUORGJA02jA4e0HxVJi0tKZU4GKq23JrDhzp28OfLuQU6vUDS6guKnNGIpXtYs=
+	t=1725961914; cv=none; b=mxQp2jmpfAPgBV4Dt74NmwfgMhRuFT2Os9Tz6XkYfZUj1Fq6ycr3YlXiIiBbGD7kHvmsxvndkSSUSwgPhTT6b2LMUJAZN6vrq2WuOrjbOpXJ79HcUR+em4CfJVo9dHUz6YhxLlcIan8lUOswZ7gFxV4sce8H8tNNW/Wkprb+F10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961911; c=relaxed/simple;
-	bh=mrY6uPgwX5m8f0dUv+0BrP4ivg3jneYiSOnu5moyjpU=;
+	s=arc-20240116; t=1725961914; c=relaxed/simple;
+	bh=5i+9K0JmCjrLFkSWOoaITAtd5gHygbWP4HoROczZ64g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mcKh4NqzsdWR8nvw3yEPEhoSBdekdm4ef3wi60rL4K+dZRwtfz72sPQfXjJ7VrlVVOhGjRk0CuwcioT3JEX0cGH2NmWlFrOLYE1A3C7P2fUMmGymrBBYCE8kk6Gu3EGVvGF3OkCNC5dyHEpqFLxnua6S+Y5oeoE8YS7lXhIs7qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCXA9PB9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nYif//NpvpRTGIdV8is+umubAfqUzMkkPNXZJKnisbFeMMIJtcNzHXB7RSDV9/iaP3xC4A/azliCZnsTZdYXj1EZsYEQyCCEdGllAIOFxAWhdy2vpcTJepzLWX780ONIgjzLh5sPRKV+kQ+9N56jEHiGoGHCfcZSmv3lEUKdqOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nai9pjjp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCXA9PB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6569C4CEC6;
-	Tue, 10 Sep 2024 09:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nai9pjjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3309C4CEC3;
+	Tue, 10 Sep 2024 09:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961911;
-	bh=mrY6uPgwX5m8f0dUv+0BrP4ivg3jneYiSOnu5moyjpU=;
+	s=korg; t=1725961914;
+	bh=5i+9K0JmCjrLFkSWOoaITAtd5gHygbWP4HoROczZ64g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tCXA9PB9k/IqjPRkUgZqKM2BDkRJdzR5c6Ej1NyzjWnMOR4+vVTLTptb6RVUVqF0/
-	 Su1Lkil47xtt1ugp1OWjWCwobK+AkccZOYuDjNIFc1QGPsXKwGV+sQ9tR75y1TaF0M
-	 HLxhAarRA98sQ1cv3XdnOh3z5uw32RYmQNSWQejg=
+	b=Nai9pjjpG1a7+H8hPJogbxLZYaJzitcGHUnrpJ8a7/5H8wdVodnaCDu49f9F8yO7g
+	 B6TVaQJztyQ1tJ3WxqjWuYoo71h6XgOgPQ61I84fC4CDNqE9e8j5dLebvIMJexGyOQ
+	 xW7U4PfwxHPYJ1iP0kpiXz27XfG/ch2E+ZEZgpKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Umang Jain <umang.jain@ideasonboard.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 231/375] PCI: qcom: Override NO_SNOOP attribute for SA8775P RC
-Date: Tue, 10 Sep 2024 11:30:28 +0200
-Message-ID: <20240910092630.301115867@linuxfoundation.org>
+Subject: [PATCH 6.10 232/375] staging: vchiq_core: Bubble up wait_event_interruptible() return value
+Date: Tue, 10 Sep 2024 11:30:29 +0200
+Message-ID: <20240910092630.336054248@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -47,122 +45,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+From: Umang Jain <umang.jain@ideasonboard.com>
 
-[ Upstream commit 1d648bf79d4dca909f242b1a0cdc458e4f9d0253 ]
+[ Upstream commit c22502cb84d4c963f754e6d943d3133cfa80ba97 ]
 
-Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
-in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
-the requester is indicating that no cache coherency issue exist for
-the addressed memory on the endpoint i.e., memory is not cached. But
-in reality, requester cannot assume this unless there is a complete
-control/visibility over the addressed memory on the endpoint.
+wait_event_interruptible() returns if the condition evaluates to true
+it receives a signal. However, the current code always assume that the
+wait_event_interruptible() returns only when the event is fired.
+This should not be the case as wait_event_interruptible() can
+return on receiving a signal (with -ERESTARTSYS as return value).
 
-And worst case, if the memory is cached on the endpoint, it may lead to
-memory corruption issues. It should be noted that the caching of memory
-on the endpoint is not solely dependent on the NO_SNOOP attribute in TLP.
+We should consider this and bubble up the return value of
+wait_event_interruptible() to exactly know if the wait has failed
+and error out. This will also help to properly stop kthreads in the
+subsequent patch.
 
-So to avoid the corruption, this patch overrides the NO_SNOOP attribute
-by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
-needed for other upstream supported platforms since they do not set
-NO_SNOOP attribute by default.
+Meanwhile at it, remote_wait_event() is modified to return 0 on success,
+and an error code (from wait_event_interruptible()) on failure. The
+return value is now checked for remote_wait_event() calls.
 
-8775 has IP version 1.34.0 so introduce a new cfg(cfg_1_34_0) for this
-platform. Assign override_no_snoop flag into struct qcom_pcie_cfg and
-set it true in cfg_1_34_0 and enable cache snooping if this particular
-flag is true.
-
-Link: https://lore.kernel.org/linux-pci/1710166298-27144-2-git-send-email-quic_msarkar@quicinc.com
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: wrap comments to fit in 80 columns]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
+Tested-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20240703131052.597443-2-umang.jain@ideasonboard.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ .../interface/vchiq_arm/vchiq_core.c          | 31 ++++++++++++++-----
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 14772edcf0d3..7fa1fe5a29e3 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -51,6 +51,7 @@
- #define PARF_SID_OFFSET				0x234
- #define PARF_BDF_TRANSLATE_CFG			0x24c
- #define PARF_SLV_ADDR_SPACE_SIZE		0x358
-+#define PARF_NO_SNOOP_OVERIDE			0x3d4
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_TABLE_N			0x2000
- #define PARF_BDF_TO_SID_CFG			0x2c00
-@@ -118,6 +119,10 @@
- /* PARF_LTSSM register fields */
- #define LTSSM_EN				BIT(8)
- 
-+/* PARF_NO_SNOOP_OVERIDE register fields */
-+#define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-+#define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
-+
- /* PARF_DEVICE_TYPE register fields */
- #define DEVICE_TYPE_RC				0x4
- 
-@@ -231,8 +236,15 @@ struct qcom_pcie_ops {
- 	int (*config_sid)(struct qcom_pcie *pcie);
- };
- 
-+ /**
-+  * struct qcom_pcie_cfg - Per SoC config struct
-+  * @ops: qcom PCIe ops structure
-+  * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
-+  * snooping
-+  */
- struct qcom_pcie_cfg {
- 	const struct qcom_pcie_ops *ops;
-+	bool override_no_snoop;
- 	bool no_l0s;
- };
- 
-@@ -986,6 +998,12 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 
- static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c
+index df3af821f218..fb1907414cc1 100644
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c
+@@ -501,16 +501,21 @@ remote_event_create(wait_queue_head_t *wq, struct remote_event *event)
+  * routines where switched to the "interruptible" family of functions, as the
+  * former was deemed unjustified and the use "killable" set all VCHIQ's
+  * threads in D state.
++ *
++ * Returns: 0 on success, a negative error code on failure
+  */
+ static inline int
+ remote_event_wait(wait_queue_head_t *wq, struct remote_event *event)
  {
-+	const struct qcom_pcie_cfg *pcie_cfg = pcie->cfg;
++	int ret = 0;
 +
-+	if (pcie_cfg->override_no_snoop)
-+		writel(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
-+				pcie->parf + PARF_NO_SNOOP_OVERIDE);
-+
- 	qcom_pcie_clear_aspm_l0s(pcie->pci);
- 	qcom_pcie_clear_hpc(pcie->pci);
+ 	if (!event->fired) {
+ 		event->armed = 1;
+ 		dsb(sy);
+-		if (wait_event_interruptible(*wq, event->fired)) {
++		ret = wait_event_interruptible(*wq, event->fired);
++		if (ret) {
+ 			event->armed = 0;
+-			return 0;
++			return ret;
+ 		}
+ 		event->armed = 0;
+ 		/* Ensure that the peer sees that we are not waiting (armed == 0). */
+@@ -518,7 +523,7 @@ remote_event_wait(wait_queue_head_t *wq, struct remote_event *event)
+ 	}
  
-@@ -1366,6 +1384,11 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
- 	.ops = &ops_1_9_0,
- };
+ 	event->fired = 0;
+-	return 1;
++	return ret;
+ }
  
-+static const struct qcom_pcie_cfg cfg_1_34_0 = {
-+	.ops = &ops_1_9_0,
-+	.override_no_snoop = true,
-+};
-+
- static const struct qcom_pcie_cfg cfg_2_1_0 = {
- 	.ops = &ops_2_1_0,
- };
-@@ -1667,7 +1690,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
- 	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
- 	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
--	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
-+	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
- 	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_sc8280xp },
+ /*
+@@ -1140,6 +1145,7 @@ queue_message_sync(struct vchiq_state *state, struct vchiq_service *service,
+ 	struct vchiq_header *header;
+ 	ssize_t callback_result;
+ 	int svc_fourcc;
++	int ret;
+ 
+ 	local = state->local;
+ 
+@@ -1147,7 +1153,9 @@ queue_message_sync(struct vchiq_state *state, struct vchiq_service *service,
+ 	    mutex_lock_killable(&state->sync_mutex))
+ 		return -EAGAIN;
+ 
+-	remote_event_wait(&state->sync_release_event, &local->sync_release);
++	ret = remote_event_wait(&state->sync_release_event, &local->sync_release);
++	if (ret)
++		return ret;
+ 
+ 	/* Ensure that reads don't overtake the remote_event_wait. */
+ 	rmb();
+@@ -1929,13 +1937,16 @@ slot_handler_func(void *v)
+ {
+ 	struct vchiq_state *state = v;
+ 	struct vchiq_shared_state *local = state->local;
++	int ret;
+ 
+ 	DEBUG_INITIALISE(local);
+ 
+ 	while (1) {
+ 		DEBUG_COUNT(SLOT_HANDLER_COUNT);
+ 		DEBUG_TRACE(SLOT_HANDLER_LINE);
+-		remote_event_wait(&state->trigger_event, &local->trigger);
++		ret = remote_event_wait(&state->trigger_event, &local->trigger);
++		if (ret)
++			return ret;
+ 
+ 		/* Ensure that reads don't overtake the remote_event_wait. */
+ 		rmb();
+@@ -1966,6 +1977,7 @@ recycle_func(void *v)
+ 	struct vchiq_shared_state *local = state->local;
+ 	u32 *found;
+ 	size_t length;
++	int ret;
+ 
+ 	length = sizeof(*found) * BITSET_SIZE(VCHIQ_MAX_SERVICES);
+ 
+@@ -1975,7 +1987,9 @@ recycle_func(void *v)
+ 		return -ENOMEM;
+ 
+ 	while (1) {
+-		remote_event_wait(&state->recycle_event, &local->recycle);
++		ret = remote_event_wait(&state->recycle_event, &local->recycle);
++		if (ret)
++			return ret;
+ 
+ 		process_free_queue(state, found, length);
+ 	}
+@@ -1992,6 +2006,7 @@ sync_func(void *v)
+ 		(struct vchiq_header *)SLOT_DATA_FROM_INDEX(state,
+ 			state->remote->slot_sync);
+ 	int svc_fourcc;
++	int ret;
+ 
+ 	while (1) {
+ 		struct vchiq_service *service;
+@@ -1999,7 +2014,9 @@ sync_func(void *v)
+ 		int type;
+ 		unsigned int localport, remoteport;
+ 
+-		remote_event_wait(&state->sync_trigger_event, &local->sync_trigger);
++		ret = remote_event_wait(&state->sync_trigger_event, &local->sync_trigger);
++		if (ret)
++			return ret;
+ 
+ 		/* Ensure that reads don't overtake the remote_event_wait. */
+ 		rmb();
 -- 
 2.43.0
 
