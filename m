@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694BF172BAE;
-	Tue, 10 Sep 2024 10:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B5219645C;
+	Tue, 10 Sep 2024 10:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963532; cv=none; b=AcC29SYeFE1hd2v2vaxGa6TNQaq3muTwyNwVzKycH8LqPK601G7r82BIFDMdoFzirHYfQEE3t68pwCExhScrxlKjqiR945Y7W0MTQftrdO5LN029ABnGJdpcqodkZfmwCGkFSAemT0Mejqgia0yP4Lp5i83ZvgZH77RtGkj0Gz4=
+	t=1725963535; cv=none; b=DLWA3GviBmbHeqt+tiGNtC7J6x/Ao9JH6sydF7ByYmb+JZCvbo/p6fdYBXpaHWpmYDpzZ38/BTUCgGC7NUEMl3GDHr58HG7jet3UHTsBOX+T8EPi09/oSmPHfgPQFSqlniT+PxF+cCtpJ2gTVcQWXU+LyUVhDY0jsdaTg+s0YtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963532; c=relaxed/simple;
-	bh=jp9GRj/Sz1wcYsPm0jkROLYU9zkL3JMb+WvcQcDRR0c=;
+	s=arc-20240116; t=1725963535; c=relaxed/simple;
+	bh=3pXmp+7MJ768E8ldcSa6FPz3aegJhP2QQ2bXlEEXmPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LbGuea/Xh4rGV3XwIpquAqjcvLiJC8ak1qBn0dwpkw2iktyMzDES2dkV/VvNbpcdxOUWVEhAXbajCP25WTunJ4d/05SZPRJQHZtJcCDWrrjfBNMKOixlh5kdtotHJnOJUex0Ut21zk8NyhTyjPFflmwHW5LIjwYC+mUSvfA4QzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejw+sQ4J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBZW9hBSvyaBjHoogUUJVbi6iac4aNDGVGobxFjXX+XYaD0uQ0AaqKVLJxBQrsyX/a8HhX8lStM1C+xAjfvVOwplT+Fo07zMuPWR90FX9N07yMbnGeKx1BlgIPCRtTqMNsF8g1vZyjvnA2pUMD8xD/dc6HKSVNjhcF/Ddrng5XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DruMwoLt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejw+sQ4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D3BC4CEC6;
-	Tue, 10 Sep 2024 10:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DruMwoLt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EF8C4CEC3;
+	Tue, 10 Sep 2024 10:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963532;
-	bh=jp9GRj/Sz1wcYsPm0jkROLYU9zkL3JMb+WvcQcDRR0c=;
+	s=korg; t=1725963535;
+	bh=3pXmp+7MJ768E8ldcSa6FPz3aegJhP2QQ2bXlEEXmPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejw+sQ4JRiWSJvVdsFyjm+gJQ69fs31j/Y69fqKkzeCMkLtHBIFSef1YV+qtLrjt1
-	 NjHbTQYAw3LFsx9GWX4/pxoUYl4OUzw3YCvwcQT6XvDBMZtu6pZ9SCFDtgNOZzj8Bx
-	 dwXc+eDhhy0vRxLhDwBDDY1sP4TSJUT8+QmOo5gQ=
+	b=DruMwoLtv4YEJrZIPPgTuMN1DMpaZqb+NiMUe5/HLMHkFvF0jFgBuEOUDWVh0WZyv
+	 skeSO1moaJSOQseHsjDludYrNyXd1mR+vhBOW5+sEWZAHQQj9QCqReWy/moR5Un3F1
+	 LnfEVnPP7XY4B+HGXhm7UdDEC8kZajuiHQl/QQdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 062/214] sch/netem: fix use after free in netem_dequeue
-Date: Tue, 10 Sep 2024 11:31:24 +0200
-Message-ID: <20240910092601.302877976@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 053/214] drm/amd/display: Skip wbscl_set_scaler_filter if filter is null
+Date: Tue, 10 Sep 2024 11:31:15 +0200
+Message-ID: <20240910092600.930572863@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,62 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 3b3a2a9c6349e25a025d2330f479bc33a6ccb54a upstream.
+[ Upstream commit c4d31653c03b90e51515b1380115d1aedad925dd ]
 
-If netem_dequeue() enqueues packet to inner qdisc and that qdisc
-returns __NET_XMIT_STOLEN. The packet is dropped but
-qdisc_tree_reduce_backlog() is not called to update the parent's
-q.qlen, leading to the similar use-after-free as Commit
-e04991a48dbaf382 ("netem: fix return value if duplicate enqueue
-fails")
+Callers can pass null in filter (i.e. from returned from the function
+wbscl_get_filter_coeffs_16p) and a null check is added to ensure that is
+not the case.
 
-Commands to trigger KASAN UaF:
+This fixes 4 NULL_RETURNS issues reported by Coverity.
 
-ip link add type dummy
-ip link set lo up
-ip link set dummy0 up
-tc qdisc add dev lo parent root handle 1: drr
-tc filter add dev lo parent 1: basic classid 1:1
-tc class add dev lo classid 1:1 drr
-tc qdisc add dev lo parent 1:1 handle 2: netem
-tc qdisc add dev lo parent 2: handle 3: drr
-tc filter add dev lo parent 3: basic classid 3:1 action mirred egress
-redirect dev dummy0
-tc class add dev lo classid 3:1 drr
-ping -c1 -W0.01 localhost # Trigger bug
-tc class del dev lo classid 1:1
-tc class add dev lo classid 1:1 drr
-ping -c1 -W0.01 localhost # UaF
-
-Fixes: 50612537e9ab ("netem: fix classful handling")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Link: https://patch.msgid.link/20240901182438.4992-1-stephen@networkplumber.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -733,11 +733,10 @@ deliver:
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+index 880954ac0b02..1b3cba5b1d74 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
+@@ -690,6 +690,9 @@ static void wbscl_set_scaler_filter(
+ 	int pair;
+ 	uint16_t odd_coef, even_coef;
  
- 				err = qdisc_enqueue(skb, q->qdisc, &to_free);
- 				kfree_skb_list(to_free);
--				if (err != NET_XMIT_SUCCESS &&
--				    net_xmit_drop_count(err)) {
--					qdisc_qstats_drop(sch);
--					qdisc_tree_reduce_backlog(sch, 1,
--								  pkt_len);
-+				if (err != NET_XMIT_SUCCESS) {
-+					if (net_xmit_drop_count(err))
-+						qdisc_qstats_drop(sch);
-+					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
- 				}
- 				goto tfifo_dequeue;
- 			}
++	if (!filter)
++		return;
++
+ 	for (phase = 0; phase < (NUM_PHASES / 2 + 1); phase++) {
+ 		for (pair = 0; pair < tap_pairs; pair++) {
+ 			even_coef = filter[phase * taps + 2 * pair];
+-- 
+2.43.0
+
 
 
