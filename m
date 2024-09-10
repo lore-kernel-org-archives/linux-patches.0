@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C136E13AD09;
-	Tue, 10 Sep 2024 09:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A722313AD09;
+	Tue, 10 Sep 2024 09:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961990; cv=none; b=kXUW5BeIZfN9dFUuiQVGBxrCn0Tj9Rr1F/kDYeqP8xt8upbj4sAhMVw83SkX+RU3XG0/SMm/uWmfjcjbPYrM4K58OPtmH4jAvmztLjwf5ZKwnL5Uy03U9jAUKNjcIsgMiSmEI05YLW3ttPPxn4MQhHo8ZCGRu8qX5xnGRU750bs=
+	t=1725961993; cv=none; b=G1DJwKNsXp9JzuXnSHa8zhBUjO++uGPGMFfJPudl8En1a4inIaBqo1Pz/FqLLNkkAQRndNeShmFfP5+x0BX8Bho6B6HQk4WtZMxgl7Y0Cv00tlx8vmYRRDng3RbRf7XcbrGje+QMXcQwzCa5ystNKRx/mOC/iCFUu6C/4yPv5PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961990; c=relaxed/simple;
-	bh=oXesFNotxDI4pws0fBMh53szUiMfiQ5N9soYw0rJaWw=;
+	s=arc-20240116; t=1725961993; c=relaxed/simple;
+	bh=nfYF1v0MIz7EnpjpMpsfYyrPp4XEFFkrIgGesKHSb5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCOUu9JT0DL9xJ5TsGWXPdkdgGXQ4UJN0azR4SyidTV1O/N0TcIg77URXRqG6ynPElM7A0Juu99N8iSVMsfs0wkvmYPVmWPj1zc+pmMsrvdTqLrXgzVOS0/YKzuGNlGkZysXvsFks9hMT2uETr8vlKZZfgeV7BvyIwaVvd6TMPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI39yiED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JxEb1QlXFAeRRQCk7P3oGGREuWfu+9EEEqioW3W8o8mIVVIbxbsOZ9g58eRfqVAbX3dSeQ3FNpO/C3brLlNyoSBTjVwP3+P2xm5P1rKMoRdfOCstTq03YwNwe9C8DP4rHPGf7OFcsbYWS+MDxtzQs6UXWyeOEy1H4dT4Jd7tpuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feLG6CCs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI39yiED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41645C4CEC3;
-	Tue, 10 Sep 2024 09:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feLG6CCs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECF9C4CEC3;
+	Tue, 10 Sep 2024 09:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961990;
-	bh=oXesFNotxDI4pws0fBMh53szUiMfiQ5N9soYw0rJaWw=;
+	s=korg; t=1725961993;
+	bh=nfYF1v0MIz7EnpjpMpsfYyrPp4XEFFkrIgGesKHSb5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YI39yiEDY2xVLNF9aFtE3POq+Rqb9fkW2GLxH9zBNyU/M1I+9WD3JhV3ex17UCtkT
-	 VI0GQBInXGyvby3o01bim7lnaNZXG72n3712eNeOT6/gsupyrlBB8NwneZT154iNAw
-	 pwt8llWtk7uXhSesQDSNt+5monqTD2ovVTzrGqB4=
+	b=feLG6CCsBh8GuF+QtB2vgThaf8rmObePNFV7TVFronKsfrfTLr0Wb98QAlFWSv7Qe
+	 85oJD6mGUCshyP7/VqcgtPXokVzvtOCVUBEbChC2fus1gteC1+pWwT+9EPTpKMHu46
+	 UVZJGzJ2XGrgHSMqnvsRFHaZshTVZNIg5eEvEQE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 250/375] tcp: Dont drop SYN+ACK for simultaneous connect().
-Date: Tue, 10 Sep 2024 11:30:47 +0200
-Message-ID: <20240910092630.944770087@linuxfoundation.org>
+Subject: [PATCH 6.10 259/375] i3c: master: svc: resend target address when get NACK
+Date: Tue, 10 Sep 2024 11:30:56 +0200
+Message-ID: <20240910092631.268864424@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,106 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 23e89e8ee7be73e21200947885a6d3a109a2c58d ]
+[ Upstream commit 9bc7501b0b90f4d0c34b97c14ff1f708ce7ad8f3 ]
 
-RFC 9293 states that in the case of simultaneous connect(), the connection
-gets established when SYN+ACK is received. [0]
+According to I3C Spec 1.1.1, 11-Jun-2021, section: 5.1.2.2.3:
 
-      TCP Peer A                                       TCP Peer B
+If the Controller chooses to start an I3C Message with an I3C Dynamic
+Address, then special provisions shall be made because that same I3C Target
+may be initiating an IBI or a Controller Role Request. So, one of three
+things may happen: (skip 1, 2)
 
-  1.  CLOSED                                           CLOSED
-  2.  SYN-SENT     --> <SEQ=100><CTL=SYN>              ...
-  3.  SYN-RECEIVED <-- <SEQ=300><CTL=SYN>              <-- SYN-SENT
-  4.               ... <SEQ=100><CTL=SYN>              --> SYN-RECEIVED
-  5.  SYN-RECEIVED --> <SEQ=100><ACK=301><CTL=SYN,ACK> ...
-  6.  ESTABLISHED  <-- <SEQ=300><ACK=101><CTL=SYN,ACK> <-- SYN-RECEIVED
-  7.               ... <SEQ=100><ACK=301><CTL=SYN,ACK> --> ESTABLISHED
+3. The Addresses match and the RnW bits also match, and so neither
+Controller nor Target will ACK since both are expecting the other side to
+provide ACK. As a result, each side might think it had "won" arbitration,
+but neither side would continue, as each would subsequently see that the
+other did not provide ACK.
+...
+For either value of RnW: Due to the NACK, the Controller shall defer the
+Private Write or Private Read, and should typically transmit the Target
+						    ^^^^^^^^^^^^^^^^^^^
+Address again after a Repeated START (i.e., the next one or any one prior
+^^^^^^^^^^^^^
+to a STOP in the Frame). Since the Address Header following a Repeated
+START is not arbitrated, the Controller will always win (see Section
+5.1.2.2.4).
 
-However, since commit 0c24604b68fc ("tcp: implement RFC 5961 4.2"), such a
-SYN+ACK is dropped in tcp_validate_incoming() and responded with Challenge
-ACK.
+Resend target address again if address is not 7E and controller get NACK.
 
-For example, the write() syscall in the following packetdrill script fails
-with -EAGAIN, and wrong SNMP stats get incremented.
-
-   0 socket(..., SOCK_STREAM|SOCK_NONBLOCK, IPPROTO_TCP) = 3
-  +0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
-
-  +0 > S  0:0(0) <mss 1460,sackOK,TS val 1000 ecr 0,nop,wscale 8>
-  +0 < S  0:0(0) win 1000 <mss 1000>
-  +0 > S. 0:0(0) ack 1 <mss 1460,sackOK,TS val 3308134035 ecr 0,nop,wscale 8>
-  +0 < S. 0:0(0) ack 1 win 1000
-
-  +0 write(3, ..., 100) = 100
-  +0 > P. 1:101(100) ack 1
-
-  --
-
-  # packetdrill cross-synack.pkt
-  cross-synack.pkt:13: runtime error in write call: Expected result 100 but got -1 with errno 11 (Resource temporarily unavailable)
-  # nstat
-  ...
-  TcpExtTCPChallengeACK           1                  0.0
-  TcpExtTCPSYNChallenge           1                  0.0
-
-The problem is that bpf_skops_established() is triggered by the Challenge
-ACK instead of SYN+ACK.  This causes the bpf prog to miss the chance to
-check if the peer supports a TCP option that is expected to be exchanged
-in SYN and SYN+ACK.
-
-Let's accept a bare SYN+ACK for active-open TCP_SYN_RECV sockets to avoid
-such a situation.
-
-Note that tcp_ack_snd_check() in tcp_rcv_state_process() is skipped not to
-send an unnecessary ACK, but this could be a bit risky for net.git, so this
-targets for net-next.
-
-Link: https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5-7 [0]
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240710171246.87533-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/i3c/master/svc-i3c-master.c | 58 ++++++++++++++++++++++-------
+ 1 file changed, 44 insertions(+), 14 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 2c52f6dcbd29..e0d870d3c9b8 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6004,6 +6004,11 @@ static bool tcp_validate_incoming(struct sock *sk, struct sk_buff *skb,
- 	 * RFC 5961 4.2 : Send a challenge ack
- 	 */
- 	if (th->syn) {
-+		if (sk->sk_state == TCP_SYN_RECV && sk->sk_socket && th->ack &&
-+		    TCP_SKB_CB(skb)->seq + 1 == TCP_SKB_CB(skb)->end_seq &&
-+		    TCP_SKB_CB(skb)->seq + 1 == tp->rcv_nxt &&
-+		    TCP_SKB_CB(skb)->ack_seq == tp->snd_nxt)
-+			goto pass;
- syn_challenge:
- 		if (syn_inerr)
- 			TCP_INC_STATS(sock_net(sk), TCP_MIB_INERRS);
-@@ -6013,6 +6018,7 @@ static bool tcp_validate_incoming(struct sock *sk, struct sk_buff *skb,
- 		goto discard;
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index bb299ce02ccc..f0362509319e 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -1052,29 +1052,59 @@ static int svc_i3c_master_xfer(struct svc_i3c_master *master,
+ 			       u8 *in, const u8 *out, unsigned int xfer_len,
+ 			       unsigned int *actual_len, bool continued)
+ {
++	int retry = 2;
+ 	u32 reg;
+ 	int ret;
+ 
+ 	/* clean SVC_I3C_MINT_IBIWON w1c bits */
+ 	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
+ 
+-	writel(SVC_I3C_MCTRL_REQUEST_START_ADDR |
+-	       xfer_type |
+-	       SVC_I3C_MCTRL_IBIRESP_NACK |
+-	       SVC_I3C_MCTRL_DIR(rnw) |
+-	       SVC_I3C_MCTRL_ADDR(addr) |
+-	       SVC_I3C_MCTRL_RDTERM(*actual_len),
+-	       master->regs + SVC_I3C_MCTRL);
+ 
+-	ret = readl_poll_timeout(master->regs + SVC_I3C_MSTATUS, reg,
++	while (retry--) {
++		writel(SVC_I3C_MCTRL_REQUEST_START_ADDR |
++		       xfer_type |
++		       SVC_I3C_MCTRL_IBIRESP_NACK |
++		       SVC_I3C_MCTRL_DIR(rnw) |
++		       SVC_I3C_MCTRL_ADDR(addr) |
++		       SVC_I3C_MCTRL_RDTERM(*actual_len),
++		       master->regs + SVC_I3C_MCTRL);
++
++		ret = readl_poll_timeout(master->regs + SVC_I3C_MSTATUS, reg,
+ 				 SVC_I3C_MSTATUS_MCTRLDONE(reg), 0, 1000);
+-	if (ret)
+-		goto emit_stop;
++		if (ret)
++			goto emit_stop;
+ 
+-	if (readl(master->regs + SVC_I3C_MERRWARN) & SVC_I3C_MERRWARN_NACK) {
+-		ret = -ENXIO;
+-		*actual_len = 0;
+-		goto emit_stop;
++		if (readl(master->regs + SVC_I3C_MERRWARN) & SVC_I3C_MERRWARN_NACK) {
++			/*
++			 * According to I3C Spec 1.1.1, 11-Jun-2021, section: 5.1.2.2.3.
++			 * If the Controller chooses to start an I3C Message with an I3C Dynamic
++			 * Address, then special provisions shall be made because that same I3C
++			 * Target may be initiating an IBI or a Controller Role Request. So, one of
++			 * three things may happen: (skip 1, 2)
++			 *
++			 * 3. The Addresses match and the RnW bits also match, and so neither
++			 * Controller nor Target will ACK since both are expecting the other side to
++			 * provide ACK. As a result, each side might think it had "won" arbitration,
++			 * but neither side would continue, as each would subsequently see that the
++			 * other did not provide ACK.
++			 * ...
++			 * For either value of RnW: Due to the NACK, the Controller shall defer the
++			 * Private Write or Private Read, and should typically transmit the Target
++			 * Address again after a Repeated START (i.e., the next one or any one prior
++			 * to a STOP in the Frame). Since the Address Header following a Repeated
++			 * START is not arbitrated, the Controller will always win (see Section
++			 * 5.1.2.2.4).
++			 */
++			if (retry && addr != 0x7e) {
++				writel(SVC_I3C_MERRWARN_NACK, master->regs + SVC_I3C_MERRWARN);
++			} else {
++				ret = -ENXIO;
++				*actual_len = 0;
++				goto emit_stop;
++			}
++		} else {
++			break;
++		}
  	}
  
-+pass:
- 	bpf_skops_parse_hdr(sk, skb);
- 
- 	return true;
-@@ -6819,6 +6825,9 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 		tcp_fast_path_on(tp);
- 		if (sk->sk_shutdown & SEND_SHUTDOWN)
- 			tcp_shutdown(sk, SEND_SHUTDOWN);
-+
-+		if (sk->sk_socket)
-+			goto consume;
- 		break;
- 
- 	case TCP_FIN_WAIT1: {
+ 	/*
 -- 
 2.43.0
 
