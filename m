@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6CA18C90B;
-	Tue, 10 Sep 2024 10:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FA1144D1A;
+	Tue, 10 Sep 2024 10:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963979; cv=none; b=Ojr7zOC1tuHfGZX+cZBjBYi1Nfy/LiqDScHJmr2P4SEdTuweEdKeUJUjwDTPbXwFRiaDU5Lj1b/44IlDAugsfzfXiSTV8TFL3hlYuhjJOweO7aZg4uf5NhPQL7G7YG/luT3OlSNmKO58NDAS1NGJZABjlECLOWRwHcmMsEokMK0=
+	t=1725963982; cv=none; b=vAexUF2kPV8wJIIsoMbnlwFfv/HabJMUP1cLanffNNX/rvQ3F0aIAXtrkBME6TsHTzaGMbF47xE6jfQYieZy6ztx+dpdeFl9i53eDBjGX30aPWSSS0Qhr1tEzZB8IBDX7tn2mKPJhc4JDIFRTqGhPmMg/9rekzmmORlBtOO0MBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963979; c=relaxed/simple;
-	bh=gSvu8cJPH3BzWDKRD/I7z/QtMO09xPa8cUnkYE7yO24=;
+	s=arc-20240116; t=1725963982; c=relaxed/simple;
+	bh=vZ7BcHkwcRdDQj5PJkwscCtWWyPoJ7zV2w9CHc2sifk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbDRpAZAZ9Hlwv+p18sOq4qI0TJ9Z49nSUAEbt7c4TUJyrjwHOgM8+El0eBMBshNPOqrp16GXMpgHmKL8mOi7G3XTDN5xz/1bHxhu7hAfTCUE6CDW7bzKJlxJ2DlugrXNp6Qv8qBLG6KnxLIdIXreDtJJeyc3eGKINtAJ3XJ8Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzewELw7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMVO/EjWLj3NeCJzDwCN0xyTm7lXL8IQubSs6DCCQThuPily8QAkrjRC+6Uzoh5SXEESV6Bt3uYrTvftyL0j6yxAWduV7zVseJhe6iNpyZKBb2urJcD7aR0klod7wAZW1WA8DUn6lq/yz2ZwDoM0tp2IIU0B/Lh9411pSu43+jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0atjuu2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzewELw7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1EAC4CEC3;
-	Tue, 10 Sep 2024 10:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0atjuu2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2784C4CEC3;
+	Tue, 10 Sep 2024 10:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963979;
-	bh=gSvu8cJPH3BzWDKRD/I7z/QtMO09xPa8cUnkYE7yO24=;
+	s=korg; t=1725963982;
+	bh=vZ7BcHkwcRdDQj5PJkwscCtWWyPoJ7zV2w9CHc2sifk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzewELw7liaM/EwwDYh/a/tP/aR4fp72A6HXnxBeRTwghdurnD1S+CzKolsKoKpyg
-	 SmSepVIDgtu2swgivA5kuby4maeh3cHx4/K3iz2i+7l6dNYaF9+bHOaf5ZRLb+CQMx
-	 MtwJqr0+TF590koqQ7a/nrmszEHh8Mbpe2qPLdc0=
+	b=0atjuu2uiRgipcCQXgMYdnPbnrNRsS1FMA12QR1YhBzolrIxiRHYH8Nm1hxvt6qPn
+	 u7spOVyjbXBptfp9yqWLOJwvX+YkEDdzws0LkS0u4utEUSFs9I/LD5fdxct8Gvk4F7
+	 nkJjj3sZu0kTTfunzeB2szHn+sEyJ4/xbGIyXGfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 026/269] mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K
-Date: Tue, 10 Sep 2024 11:30:13 +0200
-Message-ID: <20240910092609.175438997@linuxfoundation.org>
+	robelin <robelin@nvidia.com>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 003/269] ASoC: dapm: Fix UAF for snd_soc_pcm_runtime object
+Date: Tue, 10 Sep 2024 11:29:50 +0200
+Message-ID: <20240910092608.355411694@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,96 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Protsenko <semen.protsenko@linaro.org>
+From: robelin <robelin@nvidia.com>
 
-commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890 upstream.
+commit b4a90b543d9f62d3ac34ec1ab97fc5334b048565 upstream.
 
-Commit 616f87661792 ("mmc: pass queue_limits to blk_mq_alloc_disk") [1]
-revealed the long living issue in dw_mmc.c driver, existing since the
-time when it was first introduced in commit f95f3850f7a9 ("mmc: dw_mmc:
-Add Synopsys DesignWare mmc host driver."), also making kernel boot
-broken on platforms using dw_mmc driver with 16K or 64K pages enabled,
-with this message in dmesg:
+When using kernel with the following extra config,
 
-    mmcblk: probe of mmc0:0001 failed with error -22
+  - CONFIG_KASAN=y
+  - CONFIG_KASAN_GENERIC=y
+  - CONFIG_KASAN_INLINE=y
+  - CONFIG_KASAN_VMALLOC=y
+  - CONFIG_FRAME_WARN=4096
 
-That's happening because mmc_blk_probe() fails when it calls
-blk_validate_limits() consequently, which returns the error due to
-failed max_segment_size check in this code:
+kernel detects that snd_pcm_suspend_all() access a freed
+'snd_soc_pcm_runtime' object when the system is suspended, which
+leads to a use-after-free bug:
 
-    /*
-     * The maximum segment size has an odd historic 64k default that
-     * drivers probably should override.  Just like the I/O size we
-     * require drivers to at least handle a full page per segment.
-     */
-    ...
-    if (WARN_ON_ONCE(lim->max_segment_size < PAGE_SIZE))
-        return -EINVAL;
+[   52.047746] BUG: KASAN: use-after-free in snd_pcm_suspend_all+0x1a8/0x270
+[   52.047765] Read of size 1 at addr ffff0000b9434d50 by task systemd-sleep/2330
 
-In case when IDMAC (Internal DMA Controller) is used, dw_mmc.c always
-sets .max_seg_size to 4 KiB:
+[   52.047785] Call trace:
+[   52.047787]  dump_backtrace+0x0/0x3c0
+[   52.047794]  show_stack+0x34/0x50
+[   52.047797]  dump_stack_lvl+0x68/0x8c
+[   52.047802]  print_address_description.constprop.0+0x74/0x2c0
+[   52.047809]  kasan_report+0x210/0x230
+[   52.047815]  __asan_report_load1_noabort+0x3c/0x50
+[   52.047820]  snd_pcm_suspend_all+0x1a8/0x270
+[   52.047824]  snd_soc_suspend+0x19c/0x4e0
 
-    mmc->max_seg_size = 0x1000;
+The snd_pcm_sync_stop() has a NULL check on 'substream->runtime' before
+making any access. So we need to always set 'substream->runtime' to NULL
+everytime we kfree() it.
 
-The comment in the code above explains why it's incorrect. Arnd
-suggested setting .max_seg_size to .max_req_size to fix it, which is
-also what some other drivers are doing:
-
-   $ grep -rl 'max_seg_size.*=.*max_req_size' drivers/mmc/host/ | \
-     wc -l
-   18
-
-This change is not only fixing the boot with 16K/64K pages, but also
-leads to a better MMC performance. The linear write performance was
-tested on E850-96 board (eMMC only), before commit [1] (where it's
-possible to boot with 16K/64K pages without this fix, to be able to do
-a comparison). It was tested with this command:
-
-    # dd if=/dev/zero of=somefile bs=1M count=500 oflag=sync
-
-Test results are as follows:
-
-  - 4K pages,  .max_seg_size = 4 KiB:                   94.2 MB/s
-  - 4K pages,  .max_seg_size = .max_req_size = 512 KiB: 96.9 MB/s
-  - 16K pages, .max_seg_size = 4 KiB:                   126 MB/s
-  - 16K pages, .max_seg_size = .max_req_size = 2 MiB:   128 MB/s
-  - 64K pages, .max_seg_size = 4 KiB:                   138 MB/s
-  - 64K pages, .max_seg_size = .max_req_size = 8 MiB:   138 MB/s
-
-Unfortunately, SD card controller is not enabled in E850-96 yet, so it
-wasn't possible for me to run the test on some cheap SD cards to check
-this patch's impact on those. But it's possible that this change might
-also reduce the writes count, thus improving SD/eMMC longevity.
-
-All credit for the analysis and the suggested solution goes to Arnd.
-
-[1] https://lore.kernel.org/all/20240215070300.2200308-18-hch@lst.de/
-
-Fixes: f95f3850f7a9 ("mmc: dw_mmc: Add Synopsys DesignWare mmc host driver.")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/all/CA+G9fYtddf2Fd3be+YShHP6CmSDNcn0ptW8qg+stUKW+Cn0rjQ@mail.gmail.com/
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240306232052.21317-1-semen.protsenko@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: a72706ed8208 ("ASoC: codec2codec: remove ephemeral variables")
+Signed-off-by: robelin <robelin@nvidia.com>
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+Link: https://patch.msgid.link/20240823144342.4123814-2-spujar@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/soc-dapm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2952,8 +2952,8 @@ static int dw_mci_init_slot(struct dw_mc
- 	if (host->use_dma == TRANS_MODE_IDMAC) {
- 		mmc->max_segs = host->ring_size;
- 		mmc->max_blk_size = 65535;
--		mmc->max_seg_size = 0x1000;
--		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
-+		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
-+		mmc->max_seg_size = mmc->max_req_size;
- 		mmc->max_blk_count = mmc->max_req_size / 512;
- 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
- 		mmc->max_segs = 64;
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -4018,6 +4018,7 @@ static int snd_soc_dai_link_event(struct
+ 
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		kfree(substream->runtime);
++		substream->runtime = NULL;
+ 		break;
+ 
+ 	default:
 
 
