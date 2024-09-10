@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86447171671;
-	Tue, 10 Sep 2024 09:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EAB188A1E;
+	Tue, 10 Sep 2024 09:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962157; cv=none; b=CfmWb8ttNramG0PN7Gzt9Z5ELWDXx2mNmecCBMbbVPbiAzLJ1iTPsJZmCiTV2OnOZ8a0Q8oJv2SGZihZk71wweZ4g/2rhrr6rZM0swMXVV3Y1xFqXp64Tomgm5BA+xEGa3IM8L1FpHr9A5h7gDzmScAlpjoXWEls0QubkVOszTo=
+	t=1725962160; cv=none; b=ZMz+cX9tcWN+dedM/VTAbXPEzGQOWYZLWnnwpK8BKitMyGol7yCnWbj0kvOgnbugHHnk8KVoZnBNQxBn9jcto60E/c0tjMigH+DCbSj4B7/iYnf/XnY73MrpTAcN++YMg3Vi6VFB/mAGfjx2mX0KKK8uIJ7w5UHFvhNj2Djl0YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962157; c=relaxed/simple;
-	bh=Y7lSGduLu5si3zoKzzw2s+I/kDbjtIVlrMsRTSbb9q4=;
+	s=arc-20240116; t=1725962160; c=relaxed/simple;
+	bh=kOPQjb6pc+ktcEkrSlHu5deqeMFbi/hX00r4mZ6rWTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTfSb/h4EFGYRiaWDMF58uJr8axwk1giSQvYrVsdhzoJT4k+iUn6mQw/7Drvjm5lNBOJNGO6NC2pMdloxnW+Cpnu1hIXXtacJ5CsjZX8Oz2ZoHwpwpMZG2YU2z5mEGIfXVfbNURA+MsVvrsiSfv9RxQ+8vUYxav0KDMuCtNNky0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zahvsli4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2OiObJIooIi5ZtOr2Biw+to4BxILo04Evd/dLd0JJpyGYPrEsMnjxvOkm5ZcZzhzMuyZsbNFNGOvOMDIfMWY7LelCULQdAvtyMm09ZbWTWWRw8laidf3VnNIbec6jHQgYB/kW+Mf3XDZKmDEbHotPW6mGUHnUSLqQ1JLVqIaEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHXHyOI0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zahvsli4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A865C4CEC3;
-	Tue, 10 Sep 2024 09:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHXHyOI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A3CC4CEC3;
+	Tue, 10 Sep 2024 09:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962157;
-	bh=Y7lSGduLu5si3zoKzzw2s+I/kDbjtIVlrMsRTSbb9q4=;
+	s=korg; t=1725962160;
+	bh=kOPQjb6pc+ktcEkrSlHu5deqeMFbi/hX00r4mZ6rWTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zahvsli4muwvO7XymwSK7CSQyXywJrW+NcOYSI77FTsoyetqHIFj0BtZRHJK1pOru
-	 tCkpoKwvYfcPZw/HlonAvNUlUYrfUVfa/Vk2KiGelwrwgQri0Ah33If3ZpOSmFzLnK
-	 W3usDFg25aUoGKye3qxdzx0JQkEQwCdVSNRErzjo=
+	b=hHXHyOI0Ww4UjAPJhmQh0ACQJuO4WBxWToKPzNKWQYANNVChtipyYGbo66XGNKeT/
+	 0MZ3F1txBkNKGIm2xd/xg4rEQcKLU426BWbeHbjvNGvBJdv8fFV7imtFV5Hq+1A74x
+	 LcYmUQZWySfR6jZUDPkPmVFmgXxmkrJz18iMckxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Andreas Westman Dorcsak <hedmoo@yahoo.com>
-Subject: [PATCH 6.10 287/375] iio: imu: inv_mpu6050: fix interrupt status read for old buggy chips
-Date: Tue, 10 Sep 2024 11:31:24 +0200
-Message-ID: <20240910092632.209565736@linuxfoundation.org>
+	Dumitru Ceclan <dumitru.ceclan@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.10 288/375] iio: adc: ad7124: fix config comparison
+Date: Tue, 10 Sep 2024 11:31:25 +0200
+Message-ID: <20240910092632.243598077@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,59 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Dumitru Ceclan <mitrutzceclan@gmail.com>
 
-commit 0a3b517c8089aa4cf339f41460d542c681409386 upstream.
+commit 2f6b92d0f69f04d9e2ea0db1228ab7f82f3173af upstream.
 
-Interrupt status read seems to be broken on some old MPU-6050 like
-chips. Fix by reverting to previous driver behavior bypassing interrupt
-status read. This is working because these chips are not supporting
-WoM and data ready is the only interrupt source.
+The ad7124_find_similar_live_cfg() computes the compare size by
+substracting the address of the cfg struct from the address of the live
+field. Because the live field is the first field in the struct, the
+result is 0.
 
-Fixes: 5537f653d9be ("iio: imu: inv_mpu6050: add new interrupt handler for WoM events")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Tested-by: Svyatoslav Ryhel <clamor95@gmail.com> # LG P895
-Tested-by: Andreas Westman Dorcsak <hedmoo@yahoo.com> # LG P880
-Link: https://patch.msgid.link/20240814143735.327302-1-inv.git-commit@tdk.com
+Also, the memcmp() call is made from the start of the cfg struct, which
+includes the live and cfg_slot fields, which are not relevant for the
+comparison.
+
+Fix by grouping the relevant fields with struct_group() and use the
+size of the group to compute the compare size; make the memcmp() call
+from the address of the group.
+
+Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
+Signed-off-by: Dumitru Ceclan <dumitru.ceclan@analog.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20240731-ad7124-fix-v1-2-46a76aa4b9be@analog.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad7124.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
-@@ -248,12 +248,20 @@ static irqreturn_t inv_mpu6050_interrupt
- 	int result;
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -147,15 +147,18 @@ struct ad7124_chip_info {
+ struct ad7124_channel_config {
+ 	bool live;
+ 	unsigned int cfg_slot;
+-	enum ad7124_ref_sel refsel;
+-	bool bipolar;
+-	bool buf_positive;
+-	bool buf_negative;
+-	unsigned int vref_mv;
+-	unsigned int pga_bits;
+-	unsigned int odr;
+-	unsigned int odr_sel_bits;
+-	unsigned int filter_type;
++	/* Following fields are used to compare equality. */
++	struct_group(config_props,
++		enum ad7124_ref_sel refsel;
++		bool bipolar;
++		bool buf_positive;
++		bool buf_negative;
++		unsigned int vref_mv;
++		unsigned int pga_bits;
++		unsigned int odr;
++		unsigned int odr_sel_bits;
++		unsigned int filter_type;
++	);
+ };
  
- 	switch (st->chip_type) {
-+	case INV_MPU6000:
- 	case INV_MPU6050:
-+	case INV_MPU9150:
-+		/*
-+		 * WoM is not supported and interrupt status read seems to be broken for
-+		 * some chips. Since data ready is the only interrupt, bypass interrupt
-+		 * status read and always assert data ready bit.
-+		 */
-+		wom_bits = 0;
-+		int_status = INV_MPU6050_BIT_RAW_DATA_RDY_INT;
-+		goto data_ready_interrupt;
- 	case INV_MPU6500:
- 	case INV_MPU6515:
- 	case INV_MPU6880:
--	case INV_MPU6000:
--	case INV_MPU9150:
- 	case INV_MPU9250:
- 	case INV_MPU9255:
- 		wom_bits = INV_MPU6500_BIT_WOM_INT;
-@@ -279,6 +287,7 @@ static irqreturn_t inv_mpu6050_interrupt
- 		}
+ struct ad7124_channel {
+@@ -334,11 +337,12 @@ static struct ad7124_channel_config *ad7
+ 	ptrdiff_t cmp_size;
+ 	int i;
+ 
+-	cmp_size = (u8 *)&cfg->live - (u8 *)cfg;
++	cmp_size = sizeof_field(struct ad7124_channel_config, config_props);
+ 	for (i = 0; i < st->num_channels; i++) {
+ 		cfg_aux = &st->channels[i].cfg;
+ 
+-		if (cfg_aux->live && !memcmp(cfg, cfg_aux, cmp_size))
++		if (cfg_aux->live &&
++		    !memcmp(&cfg->config_props, &cfg_aux->config_props, cmp_size))
+ 			return cfg_aux;
  	}
  
-+data_ready_interrupt:
- 	/* handle raw data interrupt */
- 	if (int_status & INV_MPU6050_BIT_RAW_DATA_RDY_INT) {
- 		indio_dev->pollfunc->timestamp = st->it_timestamp;
 
 
