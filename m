@@ -1,111 +1,197 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A44185B43
-	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 10:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A25183CB0
+	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 11:12:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965878; cv=none; b=iMkSgte9EEtZXIUMFZsvS4KxEpHBb8k81pApBSUgOsaiQKa3uF5vq5fbseNPhpyqPlusH9nqju1Q0YkowJFYnjTwTewyutFJQ2nQiGT889Sl5nTx9kmHmMIecQOnVaYftfg6KHuXNBI51yD4DQed1yI998jO8PdS+Nh8QnxdOM4=
+	t=1725966749; cv=none; b=cvSxtv+/1N80NemQmnAVKzGJhE7yp/RfSLD2ak53mfOxCq4+0untpBOEr0tgm+FP1jf8pgyF+74Wu6+BQbA1EtSMQm14HqYvzvQyR4C/FyFSNhP6T345nxzgkJ/QmWW1P+vvvg06R6bjeaILwLjU/PUSyzNVOzOODJKbPR3plPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965878; c=relaxed/simple;
-	bh=tTecUmMwMV7vjPhIE1nH3KpDvjXUoOSU2QQBQRGtupE=;
+	s=arc-20240116; t=1725966749; c=relaxed/simple;
+	bh=UYj7aweKY056oMs7GM5XXWBsu2TkMRaSALM5bW7LDJc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EO6L4DEssrQiwL6RRz2XgKNbYI51EWcNyT2EOx2ww6/EPz6mC9yN/LeuMG9uyXlUrN2nbJg0UDFntwahXZ2wh9TrggBaWlzsI0T5DsS0ifdwd4XNzb+xmE84o7wxkZNUFGYRKVRTW9DlyAzs/2unaZ7/APqZ97JHn7uMGg57JNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1snyZ5-0001iF-C4; Tue, 10 Sep 2024 12:57:43 +0200
-Received: from [2a0a:edc0:0:b01:1d::7b] (helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1snyZ3-006sM6-QY; Tue, 10 Sep 2024 12:57:41 +0200
-Received: from pengutronix.de (pd9e595f8.dip0.t-ipconnect.de [217.229.149.248])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 6B267337707;
-	Tue, 10 Sep 2024 10:57:41 +0000 (UTC)
-Date: Tue, 10 Sep 2024 12:57:41 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: kernel@pengutronix.de, Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Heiko Stuebner <heiko@sntech.de>, linux-can@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Subject: Re: [PATCH net-next] can: rockchip_canfd: Use div_s64() in
- rkcanfd_timestamp_init()
-Message-ID: <20240910-therapeutic-olive-turkey-73dc3c-mkl@pengutronix.de>
-References: <20240909-rockchip-canfd-clang-div-libcall-v1-1-c6037ea0bb2b@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=m6rYbneS9FjOrVYPy1a7o2cfpARYZiT+r1DcjDVEJDk5ywA53FRrDzydk+decI5YZy3TNe/A5reht772onJ4+1mVN6YC3gsPJN/KYx0iI6wmAGoli5Gu1oeQo4LA+nDnzbPq3fGsZBRrNXds/RcsxFZV/fz99XZO/Sgbd2i2IOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=R+XesfXh; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R+XesfXh"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c247dd0899so6658a12.1
+        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 04:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1725966746; x=1726571546; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UYy4DmMGHFHCTGKn7bORTP8d4lFk3R5EHaNq4YeXwzM=;
+        b=R+XesfXh8B4AVb3ykIwSvW4kepJ4WfPCcVg3bUsVdhp9I1jcK6Hue/dc62GR4MABJM
+         sTEKzOIj+5V5u7uFEDonSYDIzYQwX035AcOMZG6Yi/YG36lPEoPvLGmyJ1Ml87wd+3xf
+         4vZiwLkkIzQcNn9L0Hikbny7CSTW727jElP1JZO8b9GjcQ3OgKL37DQ48MavVWVQfNkc
+         zjSnAsn/RoNtIlWK8ajUvfzGeN/GRLBgXDwHkzLwNwn9E006dxthaC3t5LQ1+8DLZL/E
+         47J0HYbpG2OLyYOkCjUusBiF0yOrpeYn0LvplfwV/MGvxRUBmh77iXCKZ7Y7tGON4M0M
+         NL0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725966746; x=1726571546;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UYy4DmMGHFHCTGKn7bORTP8d4lFk3R5EHaNq4YeXwzM=;
+        b=dYNgbVPhv9UqwejSUb0YqLu3wOqABy313O0pnql7xfSdzAVHe5653QdutFhvyiHg07
+         GXIY3E7oC9fMIkqrfeIgwUe4dUbF0xP1EAxJ/fgOI4TRs2twT2toRHQoidsD9D78v18P
+         uFhwaEIKHLfV8sXk+qBysvSR57/G6QMtrnS+/FWD2jOHdLg8UAYU+Scb5HZU4TPfOoXh
+         gopw77OeFuFIyQOXGvgdt+HoAvkfB3KVbEPC3ft9ItHr92lG+yWhKeH+5OK+Ry7n2li7
+         hjG84T8/EPGJugirDn6qeIaJ/bdRnDFdhWYxWZuyoLeeWzGBjoTloT6VaUp3BVQx8jAu
+         lPYg==
+X-Forwarded-Encrypted: i=1; AJvYcCWQASXuG5w0NXokvKlWesf+lr1j7/+tvwTgHGLE2ysfFQmJVpWNhTjEdz7gGYAoIrARg3QsxGmo@lists.linux.dev
+X-Gm-Message-State: AOJu0YzpYWslgx0uZ0AhmBG1bW7H/5LH3lx22pLFmlqr5GStzmnAYm1c
+	gwG120SVY0ey5mBXCH+slYK53tKDYKa1Kl8v79q3/aukb3lDrQly7tvrJBLIJw==
+X-Google-Smtp-Source: AGHT+IFie5nPTW6D5tNlRl7qFWvNiI/ySCh0zgRrb+aBAPhZhb7eVrcOK1eXSiw1bugwbN+BJ9aSog==
+X-Received: by 2002:a05:6402:1ec4:b0:59f:9f59:9b07 with SMTP id 4fb4d7f45d1cf-5c4029ef54amr158266a12.4.1725966745263;
+        Tue, 10 Sep 2024 04:12:25 -0700 (PDT)
+Received: from google.com (205.215.190.35.bc.googleusercontent.com. [35.190.215.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42caeb8120asm107512605e9.37.2024.09.10.04.12.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Sep 2024 04:12:24 -0700 (PDT)
+Date: Tue, 10 Sep 2024 11:12:20 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robert Moore <robert.moore@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v2 8/8] iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
+Message-ID: <ZuAplEO7wyFahr6Z@google.com>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <8-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <ZtHuoDWbe54H1nhZ@google.com>
+ <20240830170426.GV3773488@nvidia.com>
+ <ZtWMGQAdR6sjBmer@google.com>
+ <20240903003022.GF3773488@nvidia.com>
+ <ZtbQMDxKZUZCGfrR@google.com>
+ <20240903235532.GJ3773488@nvidia.com>
+ <Ztrigx4LmpbFiMba@google.com>
+ <20240906133444.GE1358970@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="25ff24i24dga7xbo"
-Content-Disposition: inline
-In-Reply-To: <20240909-rockchip-canfd-clang-div-libcall-v1-1-c6037ea0bb2b@kernel.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: patches@lists.linux.dev
-
-
---25ff24i24dga7xbo
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240906133444.GE1358970@nvidia.com>
 
-On 09.09.2024 09:24:25, Nathan Chancellor wrote:
-> When building with clang for a 32-bit target, such as arm, a libcall is
-> generated when dividing the result of clocksource_cyc2ns(), which
-> returns a signed 64-bit integer:
->=20
->   ERROR: modpost: "__aeabi_ldivmod" [drivers/net/can/rockchip/rockchip_ca=
-nfd.ko] undefined!
->=20
-> Use div_s64() to avoid generating the libcall.
->=20
-> Fixes: 4e1a18bab124 ("can: rockchip_canfd: add hardware timestamping supp=
-ort")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Fri, Sep 06, 2024 at 10:34:44AM -0300, Jason Gunthorpe wrote:
+> On Fri, Sep 06, 2024 at 11:07:47AM +0000, Mostafa Saleh wrote:
+> 
+> > However, I believe the UAPI can be more clear and solid in terms of
+> > what is supported (maybe a typical struct with the CD, and some
+> > extra configs?) I will give it a think.
+> 
+> I don't think breaking up the STE into fields in another struct is
+> going to be a big improvement, it adds more code and corner cases to
+> break up and reassemble it.
+> 
+> #define STRTAB_STE_0_NESTING_ALLOWED                                         \
+> 	cpu_to_le64(STRTAB_STE_0_V | STRTAB_STE_0_CFG | STRTAB_STE_0_S1FMT | \
+> 		    STRTAB_STE_0_S1CTXPTR_MASK | STRTAB_STE_0_S1CDMAX)
+> #define STRTAB_STE_1_NESTING_ALLOWED                            \
+> 	cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |   \
+> 		    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |   \
+> 		    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_EATS)
+> 
+> It is 11 fields that would need to be recoded, that's alot.. Even if
+> you say the 3 cache ones are not needed it is still alot.
 
-A similar patch by me is mainline:
+I was thinking of providing a higher level semantics
+(no need for caching, valid...), something like:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/commit/=
-?id=3D9c100bc3ec13914f9911a937ec5b38182a5c3d64
+struct smmu_user_table {
+	u64 cd_table;
+	u32 smmu_cd_cfg;  /* linear or 2lvl,.... */
+	u32 smmu_trans_cfg; /* Translate, bypass, abort */
+	u32 dev_feat; /*ATS, STALL, …*/
+};
 
-regards,
-Marc
+I feel that is a bit more clear for user space? Instead of
+partially setting the STE, and it should be easier to extend than
+masking the STE.
 
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+I’am not opposed to the vSTE, I just feel it's loosely defined,
+that's why I was asking for the docs.
 
---25ff24i24dga7xbo
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> > > Reporting a static kernel capability through GET_INFO output is
+> > > easier/saner than providing some kind of policy flags in the GET_INFO
+> > > input to specify how the sanitization should work.
+> > 
+> > I don’t think it’s “policy”, it’s just giving userspace the minimum
+> > knowledge it needs to create the vSMMU, but again no really strong
+> > opinion about that.
+> 
+> There is no single "minimum knowledge" though, it depends on what the
+> VMM is able to support. IMHO once you go over to the "VMM has to
+> ignore bits it doesn't understand" you may as well just show
+> everything. Then the kernel side can't be wrong.
+> 
+> If the kernel side can be wrong, then you are back to handshaking
+> policy because the kernel can't assume that all existing VMMs wil not
+> rely on the kernel to do the masking.
+>
 
------BEGIN PGP SIGNATURE-----
+I agree it’s tricky, again no strong opinion on that, although I doubt
+that a VMM would care about all the SMMU features.
 
-iQEzBAABCgAdFiEEUEC6huC2BN0pvD5fKDiiPnotvG8FAmbgJiIACgkQKDiiPnot
-vG8g4AgAiBik9dV5HcawcjdwbwyUqH/9YsohijhBpU0b0WuBDp/79XH3o4yu3jIv
-C8JcMkL8C9D6bSCdcgcbV94/qzeiBpBAGwRPqn+M+VyILvV0rkO76Em4vmLiCK/G
-uSJLElidOCNkLWkGOtVPH3k1lc90du2ZJh3peQ6V9E0tbv0RJamKrnRgIFiQP1Uf
-K1Ji2W0yk0VArkepwqO/rdVysFLoLJVtbJB1mHd0sK/mQ/M1PrbP2KAgWmMfv/4b
-YYrbgYMMcIhoprVc1ISs3ChOVywIlV6EvQE8G8zn0tYWIWARgcI7HpmXkpzoaAIl
-JOWrOfTk6792XowID33b/+Fni2RXYA==
-=FMZt
------END PGP SIGNATURE-----
+> > > > But this is a UAPI. How can userspace implement that if it has no
+> > > > documentation, and how can it be maintained if there is no clear
+> > > > interface with userspace with what is expected/returned...
+> > > 
+> > > I'm not sure what you are looking for here? I don't think an entire
+> > > tutorial on how to build a paravirtualized vSMMU is appropriate to
+> > > put in comments?
+> > 
+> > Sorry, I don’t think I was clear, I meant actual documentation for
+> > the UAPI, as in RST files for example. If I want to support that
+> > in kvmtool how can I implement it? 
+> 
+> Well, you need thousands of lines of code in kvtool to build a vIOMMU :)
+> 
+> Nicolin is looking at writing something, lets see.
+> 
+> I think for here we should focus on the comments being succinct but
+> sufficient to understand what the uAPI does itself.
+> 
+Actually I think the opposite, I think UAPI docs is more important
+here, especially for the vSTE, that's how we can compare the code to
+what is expected from user-space.
 
---25ff24i24dga7xbo--
+> > > I would *really* like everyone to sit down and figure out how to
+> > > manage virtual device lifecycle in a single language!
+> > 
+> > Yes, just like the guest_memfd work. There has been also
+> > some work to unify some of the guest HVC bits:
+> > https://lore.kernel.org/all/20240830130150.8568-1-will@kernel.org/
+> 
+> I think Dan Williams is being ringleader for the PCI side effort on CC
+
+Thanks, I will try to spend some time on the secure VFIO work.
+
+Thanks,
+Mostafa
+
+> 
+> Jason
