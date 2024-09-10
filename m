@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D661418C025;
-	Tue, 10 Sep 2024 10:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511B518C025;
+	Tue, 10 Sep 2024 10:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963153; cv=none; b=W+iFrU6zSYJ+u1WA0UnwoJetevFtFI0J2rNWEauDz6+RhslDg4gctgRGfu8qJWboOLGBSV4csy5/bTcUIqVUG47DQeI3ya5EpUCD6Q2inAGTykkFchsrJ//+nyPLC5i0rkPTMSmaW+CHMIMP/spjt+Ny1r1mFRVxxh61dDjfcC4=
+	t=1725963157; cv=none; b=kNnMN6flKmLM4lqfd20FzmKG0drlTXG4W40s/X4feLPO8+zNkSr5FJpp0QVio+SD269qWvW4u0diSxylo8X1bf1VqKkBRzkhXpyDNTbz9QDdnn08IUXuk9bo/mSTFGAZfApqXmr7oj9rBW/gsVt3TRGYp1Xi69tNsUH9voVJdns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963153; c=relaxed/simple;
-	bh=jWm/J9IKNt/ASNnDfDM70qj4bJ1uvuPy2ut+LlVfGrU=;
+	s=arc-20240116; t=1725963157; c=relaxed/simple;
+	bh=VNDKIEnWPeKRf+mW6atqeQHzVi7ZSdht0lDvFQm15qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOI7aGvfSujSq7Dr+Jefovjse3RHJO5np05XExxzpTawjIXHKV+Y/z6KHQfN1B23YIQaZ18zGvO3hthcytU4vreoPOjDpkaO2NxQt1uNvh0Xa6iWExVXkGLVEkG7+2h0+jE4epLJp6AtmttSLr1GM9JbeBLrnWObSq+z7k1JvGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJAog+ii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FmA+wTgxCFi7ktMXCFauXDyKzK+twcdaF842ruAf4JUR0wBv+4heyLeyipDOJabpm9fgik8asS32Y31n6jcq0M70EghRfBR7IFpblKuHitfXrBmjZq2JheDiMoPVitr2hCMnqOnSckrjBAgwRr0998nlmHhWzBZcZiKZpO1pi/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cE7AJ5mM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJAog+ii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D76FC4CECD;
-	Tue, 10 Sep 2024 10:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cE7AJ5mM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A21EC4CEC3;
+	Tue, 10 Sep 2024 10:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963153;
-	bh=jWm/J9IKNt/ASNnDfDM70qj4bJ1uvuPy2ut+LlVfGrU=;
+	s=korg; t=1725963156;
+	bh=VNDKIEnWPeKRf+mW6atqeQHzVi7ZSdht0lDvFQm15qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJAog+iiZ8hgVe9ECX5HGnpq6lyfUoRoMJJe7Ct7NHiyR/jipTQZnFkSyhDyeFa+/
-	 fWrF9tuphI6js/8gE9X3LGKY027Ydr9IB37eFp7ar6OxUQmmRlhFqWJ0G7+tthSyKa
-	 rJyinVF7WPn/bJcZBuhYzBB16V2u83xerVpN01Os=
+	b=cE7AJ5mMLnhA0f5eGrjZZqFJW/22PsdyhSPg3jjuzvnFyq/XyOpBhjt/9kpw6II/7
+	 OvhkNtY6MEyB6FDKdjT2rrYsXp1xGtSQTSUQKibe2o+sOmyOjb7C8rW0/7nZju+zoU
+	 nuBCwQNrfSceIWZ5Hpfa9DxBoCy9UYTqe5xEdx54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 136/192] staging: iio: frequency: ad9834: Validate frequency parameter value
-Date: Tue, 10 Sep 2024 11:32:40 +0200
-Message-ID: <20240910092603.605994354@linuxfoundation.org>
+	Jakob Blomer <jblomer@cern.ch>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 154/192] fuse: add "expire only" mode to FUSE_NOTIFY_INVAL_ENTRY
+Date: Tue, 10 Sep 2024 11:32:58 +0200
+Message-ID: <20240910092604.306065821@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,42 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit b48aa991758999d4e8f9296c5bbe388f293ef465 upstream.
+[ Upstream commit 4f8d37020e1fd0bf6ee9381ba918135ef3712efd ]
 
-In ad9834_write_frequency() clk_get_rate() can return 0. In such case
-ad9834_calc_freqreg() call will lead to division by zero. Checking
-'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
-ad9834_write_frequency() is called from ad9834_write(), where fout is
-taken from text buffer, which can contain any value.
+Add a flag to entry expiration that lets the filesystem expire a dentry
+without kicking it out from the cache immediately.
 
-Modify parameters checking.
+This makes a difference for overmounted dentries, where plain invalidation
+would detach all submounts before dropping the dentry from the cache.  If
+only expiry is set on the dentry, then any overmounts are left alone and
+until ->d_revalidate() is called.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Note: ->d_revalidate() is not called for the case of following a submount,
+so invalidation will only be triggered for the non-overmounted case.  The
+dentry could also be mounted in a different mount instance, in which case
+any submounts will still be detached.
 
-Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Jakob Blomer <jblomer@cern.ch>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: 3002240d1649 ("fuse: fix memory leak in fuse_create_open")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/frequency/ad9834.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/dev.c             |  4 ++--
+ fs/fuse/dir.c             |  6 ++++--
+ fs/fuse/fuse_i.h          |  2 +-
+ include/uapi/linux/fuse.h | 13 +++++++++++--
+ 4 files changed, 18 insertions(+), 7 deletions(-)
 
---- a/drivers/staging/iio/frequency/ad9834.c
-+++ b/drivers/staging/iio/frequency/ad9834.c
-@@ -114,7 +114,7 @@ static int ad9834_write_frequency(struct
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 96a717f73ce3..61bef919c042 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1498,7 +1498,7 @@ static int fuse_notify_inval_entry(struct fuse_conn *fc, unsigned int size,
+ 	buf[outarg.namelen] = 0;
  
- 	clk_freq = clk_get_rate(st->mclk);
+ 	down_read(&fc->killsb);
+-	err = fuse_reverse_inval_entry(fc, outarg.parent, 0, &name);
++	err = fuse_reverse_inval_entry(fc, outarg.parent, 0, &name, outarg.flags);
+ 	up_read(&fc->killsb);
+ 	kfree(buf);
+ 	return err;
+@@ -1546,7 +1546,7 @@ static int fuse_notify_delete(struct fuse_conn *fc, unsigned int size,
+ 	buf[outarg.namelen] = 0;
  
--	if (fout > (clk_freq / 2))
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
+ 	down_read(&fc->killsb);
+-	err = fuse_reverse_inval_entry(fc, outarg.parent, outarg.child, &name);
++	err = fuse_reverse_inval_entry(fc, outarg.parent, outarg.child, &name, 0);
+ 	up_read(&fc->killsb);
+ 	kfree(buf);
+ 	return err;
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index 936a24b646ce..8474003aa54d 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1174,7 +1174,7 @@ int fuse_update_attributes(struct inode *inode, struct file *file, u32 mask)
+ }
  
- 	regval = ad9834_calc_freqreg(clk_freq, fout);
+ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+-			     u64 child_nodeid, struct qstr *name)
++			     u64 child_nodeid, struct qstr *name, u32 flags)
+ {
+ 	int err = -ENOTDIR;
+ 	struct inode *parent;
+@@ -1201,7 +1201,9 @@ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+ 		goto unlock;
+ 
+ 	fuse_dir_changed(parent);
+-	fuse_invalidate_entry(entry);
++	if (!(flags & FUSE_EXPIRE_ONLY))
++		d_invalidate(entry);
++	fuse_invalidate_entry_cache(entry);
+ 
+ 	if (child_nodeid != 0 && d_really_is_positive(entry)) {
+ 		inode_lock(d_inode(entry));
+diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
+index 66c2a9999468..cb464e5b171a 100644
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -1235,7 +1235,7 @@ int fuse_reverse_inval_inode(struct fuse_conn *fc, u64 nodeid,
+  * then the dentry is unhashed (d_delete()).
+  */
+ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+-			     u64 child_nodeid, struct qstr *name);
++			     u64 child_nodeid, struct qstr *name, u32 flags);
+ 
+ int fuse_do_open(struct fuse_mount *fm, u64 nodeid, struct file *file,
+ 		 bool isdir);
+diff --git a/include/uapi/linux/fuse.h b/include/uapi/linux/fuse.h
+index 76ee8f9e024a..39cfb343faa8 100644
+--- a/include/uapi/linux/fuse.h
++++ b/include/uapi/linux/fuse.h
+@@ -197,6 +197,9 @@
+  *
+  *  7.37
+  *  - add FUSE_TMPFILE
++ *
++ *  7.38
++ *  - add FUSE_EXPIRE_ONLY flag to fuse_notify_inval_entry
+  */
+ 
+ #ifndef _LINUX_FUSE_H
+@@ -232,7 +235,7 @@
+ #define FUSE_KERNEL_VERSION 7
+ 
+ /** Minor version number of this interface */
+-#define FUSE_KERNEL_MINOR_VERSION 37
++#define FUSE_KERNEL_MINOR_VERSION 38
+ 
+ /** The node ID of the root inode */
+ #define FUSE_ROOT_ID 1
+@@ -491,6 +494,12 @@ struct fuse_file_lock {
+  */
+ #define FUSE_SETXATTR_ACL_KILL_SGID	(1 << 0)
+ 
++/**
++ * notify_inval_entry flags
++ * FUSE_EXPIRE_ONLY
++ */
++#define FUSE_EXPIRE_ONLY		(1 << 0)
++
+ enum fuse_opcode {
+ 	FUSE_LOOKUP		= 1,
+ 	FUSE_FORGET		= 2,  /* no reply */
+@@ -919,7 +928,7 @@ struct fuse_notify_inval_inode_out {
+ struct fuse_notify_inval_entry_out {
+ 	uint64_t	parent;
+ 	uint32_t	namelen;
+-	uint32_t	padding;
++	uint32_t	flags;
+ };
+ 
+ struct fuse_notify_delete_out {
+-- 
+2.43.0
+
 
 
