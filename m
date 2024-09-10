@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0AE46444;
-	Tue, 10 Sep 2024 10:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBB6188CDC;
+	Tue, 10 Sep 2024 10:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964385; cv=none; b=NtdbqaEYpUAfyJzmuQC1vaKm9jL3WcAK4kFA3wL1JfUQ/6z11J2d+1iU5hUWE637EjhLmw6Fd5yl62wvyhII5E+00fnqsNU8tCtNwlkuUk1DaMcHiKhApqqRyuFAc5Dxl3yUWQtv2KXzcukLYfgkI+0oZtrOGPLGqerwrgZW/70=
+	t=1725964388; cv=none; b=POfGplrM2c5QZDW6oBVz2Hjn7+tzI9iZF0TeO75uEGdXGzcxPZ/1C6SSH5thKAuSYX2DbXrUZRscMZqePgxyCv6FJJOlJs6E71Puu6CxIikdJh7mE2P0IhULoHjav7YHacZApAMKLCpctpcOZhoYp1/rKEZa+glbYeABIcWiy9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964385; c=relaxed/simple;
-	bh=XiL+YPDuuAh85q4exmgktBLlxyGGI+5u0z+RnYWiPmw=;
+	s=arc-20240116; t=1725964388; c=relaxed/simple;
+	bh=7D3jwrpP96Q5K7nglHD06YqlF5QzetIjOyhn7/Q2ols=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVnnVgTl01yGvAx0M4ic4AoUgyeLbbr/Ob+YqSCrA4maxAevId4yrRSk/E5/qnBJGyYEBtkZChR76R/+sndXhfhh+otFZM2MUObLgPl2lT8pv4hYVk5sqk0BVNNdcAApU3ApLaqaS7aOV9t8kpOoiuHLbpotfUN1CjT0YKdRru0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVXCeZST; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h3nU2MO24EEndneQnMXfvUc2Fzaf/kz791WNrw/zDbAoVP6/Ro+x9kfPynAEKIU+bvQughkn3C+RGvc8pDmJeDwZFpR9gOGtaJ0woLcHp5hyAcPz2DnFvZ5+TklcpUegtLYEt1dW4b2citpwDs34pwcBb2PWvKxZYlESigpflRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNar1SuX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVXCeZST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96371C4CEC3;
-	Tue, 10 Sep 2024 10:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNar1SuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B74C4CEC6;
+	Tue, 10 Sep 2024 10:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964385;
-	bh=XiL+YPDuuAh85q4exmgktBLlxyGGI+5u0z+RnYWiPmw=;
+	s=korg; t=1725964387;
+	bh=7D3jwrpP96Q5K7nglHD06YqlF5QzetIjOyhn7/Q2ols=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVXCeZSTqIXgmtvZifmiBXBMRfS/ocy4/r4IowmH43Ox/fzhgWiDBnBhGLjL2xobM
-	 LJKF7sULtcVfHDMOUp3WgmX6AG6loxY5KW752hLReJsuO8ktOvBwLBJAk3jvC4lI0E
-	 BVWxeGFBHubqn9uUEYKgwqV+LssyR56SslU/TfQY=
+	b=qNar1SuX/8qC21E1JTJpp48JmTSlq7M4pWAhvuJeB0ufVDS+y7YNufqbxG3YcgYK5
+	 ueCjwxAw7ZujIOyJMGdk2Qb/4xQN2+Tt7hV2T/TrzpTR0iabFYxp3JRAtaCuXPbT1n
+	 HNFFgUPOaSxPstIx2fjtjTUD/3AQ+kkF0EKyPiRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	=?UTF-8?q?Marcin=20=C5=9Alusarz?= <mslusarz@renau.com>,
+	Tim K <tpkuester@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Kalle Valo <kvalo@kernel.org>,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/269] fs/ntfs3: Check more cases when directory is corrupted
-Date: Tue, 10 Sep 2024 11:32:32 +0200
-Message-ID: <20240910092614.045287555@linuxfoundation.org>
+Subject: [PATCH 6.6 148/269] wifi: rtw88: usb: schedule rx work after everything is set up
+Date: Tue, 10 Sep 2024 11:32:15 +0200
+Message-ID: <20240910092613.493714797@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -44,166 +50,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Marcin Ślusarz <mslusarz@renau.com>
 
-[ Upstream commit 744375343662058cbfda96d871786e5a5cbe1947 ]
+[ Upstream commit adc539784c98a7cc602cbf557debfc2e7b9be8b3 ]
 
-Mark ntfs dirty in this case.
-Rename ntfs_filldir to ntfs_dir_emit.
+Right now it's possible to hit NULL pointer dereference in
+rtw_rx_fill_rx_status on hw object and/or its fields because
+initialization routine can start getting USB replies before
+rtw_dev is fully setup.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+The stack trace looks like this:
+
+rtw_rx_fill_rx_status
+rtw8821c_query_rx_desc
+rtw_usb_rx_handler
+...
+queue_work
+rtw_usb_read_port_complete
+...
+usb_submit_urb
+rtw_usb_rx_resubmit
+rtw_usb_init_rx
+rtw_usb_probe
+
+So while we do the async stuff rtw_usb_probe continues and calls
+rtw_register_hw, which does all kinds of initialization (e.g.
+via ieee80211_register_hw) that rtw_rx_fill_rx_status relies on.
+
+Fix this by moving the first usb_submit_urb after everything
+is set up.
+
+For me, this bug manifested as:
+[    8.893177] rtw_8821cu 1-1:1.2: band wrong, packet dropped
+[    8.910904] rtw_8821cu 1-1:1.2: hw->conf.chandef.chan NULL in rtw_rx_fill_rx_status
+because I'm using Larry's backport of rtw88 driver with the NULL
+checks in rtw_rx_fill_rx_status.
+
+Link: https://lore.kernel.org/linux-wireless/CA+shoWQ7P49jhQasofDcTdQhiuarPTjYEDa--NiVVx494WcuQw@mail.gmail.com/
+Signed-off-by: Marcin Ślusarz <mslusarz@renau.com>
+Cc: Tim K <tpkuester@gmail.com>
+Cc: Ping-Ke Shih <pkshih@realtek.com>
+Cc: Larry Finger <Larry.Finger@lwfinger.net>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240528110246.477321-1-marcin.slusarz@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c | 52 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 20 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index 9d0a09f00b38..e1b856ecce61 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -272,9 +272,12 @@ struct inode *dir_search_u(struct inode *dir, const struct cpu_str *uni,
- 	return err == -ENOENT ? NULL : err ? ERR_PTR(err) : inode;
- }
- 
--static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
--			       const struct NTFS_DE *e, u8 *name,
--			       struct dir_context *ctx)
-+/*
-+ * returns false if 'ctx' if full
-+ */
-+static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
-+				 struct ntfs_inode *ni, const struct NTFS_DE *e,
-+				 u8 *name, struct dir_context *ctx)
+diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
+index efd0c2915a05..04a64afcbf8a 100644
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -742,7 +742,6 @@ static struct rtw_hci_ops rtw_usb_ops = {
+ static int rtw_usb_init_rx(struct rtw_dev *rtwdev)
  {
- 	const struct ATTR_FILE_NAME *fname;
- 	unsigned long ino;
-@@ -284,29 +287,29 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 	fname = Add2Ptr(e, sizeof(struct NTFS_DE));
+ 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
+-	int i;
  
- 	if (fname->type == FILE_NAME_DOS)
--		return 0;
-+		return true;
+ 	rtwusb->rxwq = create_singlethread_workqueue("rtw88_usb: rx wq");
+ 	if (!rtwusb->rxwq) {
+@@ -754,13 +753,19 @@ static int rtw_usb_init_rx(struct rtw_dev *rtwdev)
  
- 	if (!mi_is_ref(&ni->mi, &fname->home))
--		return 0;
-+		return true;
+ 	INIT_WORK(&rtwusb->rx_work, rtw_usb_rx_handler);
  
- 	ino = ino_get(&e->ref);
++	return 0;
++}
++
++static void rtw_usb_setup_rx(struct rtw_dev *rtwdev)
++{
++	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
++	int i;
++
+ 	for (i = 0; i < RTW_USB_RXCB_NUM; i++) {
+ 		struct rx_usb_ctrl_block *rxcb = &rtwusb->rx_cb[i];
  
- 	if (ino == MFT_REC_ROOT)
--		return 0;
-+		return true;
- 
- 	/* Skip meta files. Unless option to show metafiles is set. */
- 	if (!sbi->options->showmeta && ntfs_is_meta_file(sbi, ino))
--		return 0;
-+		return true;
- 
- 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
--		return 0;
-+		return true;
- 
- 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
- 				     PATH_MAX);
- 	if (name_len <= 0) {
- 		ntfs_warn(sbi->sb, "failed to convert name for inode %lx.",
- 			  ino);
--		return 0;
-+		return true;
+ 		rtw_usb_rx_resubmit(rtwusb, rxcb);
  	}
- 
- 	/*
-@@ -336,17 +339,20 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 		}
- 	}
- 
--	return !dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
-+	return dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
+-
+-	return 0;
  }
  
- /*
-  * ntfs_read_hdr - Helper function for ntfs_readdir().
-+ *
-+ * returns 0 if ok.
-+ * returns -EINVAL if directory is corrupted.
-+ * returns +1 if 'ctx' is full.
-  */
- static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 			 const struct INDEX_HDR *hdr, u64 vbo, u64 pos,
- 			 u8 *name, struct dir_context *ctx)
- {
--	int err;
- 	const struct NTFS_DE *e;
- 	u32 e_size;
- 	u32 end = le32_to_cpu(hdr->used);
-@@ -354,12 +360,12 @@ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 
- 	for (;; off += e_size) {
- 		if (off + sizeof(struct NTFS_DE) > end)
--			return -1;
-+			return -EINVAL;
- 
- 		e = Add2Ptr(hdr, off);
- 		e_size = le16_to_cpu(e->size);
- 		if (e_size < sizeof(struct NTFS_DE) || off + e_size > end)
--			return -1;
-+			return -EINVAL;
- 
- 		if (de_is_last(e))
- 			return 0;
-@@ -369,14 +375,15 @@ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 			continue;
- 
- 		if (le16_to_cpu(e->key_size) < SIZEOF_ATTRIBUTE_FILENAME)
--			return -1;
-+			return -EINVAL;
- 
- 		ctx->pos = vbo + off;
- 
- 		/* Submit the name to the filldir callback. */
--		err = ntfs_filldir(sbi, ni, e, name, ctx);
--		if (err)
--			return err;
-+		if (!ntfs_dir_emit(sbi, ni, e, name, ctx)) {
-+			/* ctx is full. */
-+			return +1;
-+		}
- 	}
- }
- 
-@@ -475,8 +482,6 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
- 
- 		vbo = (u64)bit << index_bits;
- 		if (vbo >= i_size) {
--			ntfs_inode_err(dir, "Looks like your dir is corrupt");
--			ctx->pos = eod;
- 			err = -EINVAL;
- 			goto out;
- 		}
-@@ -499,9 +504,16 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
- 	__putname(name);
- 	put_indx_node(node);
- 
--	if (err == -ENOENT) {
-+	if (err == 1) {
-+		/* 'ctx' is full. */
-+		err = 0;
-+	} else if (err == -ENOENT) {
- 		err = 0;
- 		ctx->pos = pos;
-+	} else if (err < 0) {
-+		if (err == -EINVAL)
-+			ntfs_inode_err(dir, "directory corrupted");
-+		ctx->pos = eod;
+ static void rtw_usb_deinit_rx(struct rtw_dev *rtwdev)
+@@ -897,6 +902,8 @@ int rtw_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 		goto err_destroy_rxwq;
  	}
  
- 	return err;
++	rtw_usb_setup_rx(rtwdev);
++
+ 	return 0;
+ 
+ err_destroy_rxwq:
 -- 
 2.43.0
 
