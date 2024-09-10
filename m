@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0E719066D;
-	Tue, 10 Sep 2024 10:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7763188A28;
+	Tue, 10 Sep 2024 10:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963552; cv=none; b=XAmNun2VhWdUDdzVFA0QmannzOtAQCquG5G3nsWGpBXEy61XULesdZwsZx8XYsJdu7zcvZQXDsd+C7w/ka3GywazzjZF5tF4EAzHMmYyl4R4f1GNiRDf/IDZUMako21/+RqvgG+d7/08XPagM2ih6u40qNnaKyRctFDLpgrpTSA=
+	t=1725963555; cv=none; b=KBtkPNhnImTK4QSpgGA78DsGEHWD8s5izLdnSzL83tVxX8ErKBCXNcDemlz1BS3mQLOhv9scmcjQBVQjxHDgF6PEhIxx8sCqBWOQXqprkwZGVE5WQjENjxfQ7XdhqLq5KH/3U9GpC+zh7ZApNcBZn7nGg55BlWiyy7z7Hk6veck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963552; c=relaxed/simple;
-	bh=0XPUSgZiij6ypSkK3QGXsUGI1bvBbqpvOcvfZ/GfPIk=;
+	s=arc-20240116; t=1725963555; c=relaxed/simple;
+	bh=W4mH0/9x87S5i+UINUxDXEjQ5wEfIvzbcSTZhn4iK7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZm7w5WLxotoBs5TchSeB4heXUrAswB3dNiqHpBjvYEt+mwgnsS0O+qNd9EbU1GWNujG9oOZEFeT/YMbD66YsHXKpwYH/qvNRfhwWCxOP6ZcW+tOi1wJJCsJ9EVaPl0Wv05XpMGQNgsTxj1LEl2f0jpmhQT73iS4khDpCKMrX8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck92toxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pa8gOIoJGhN8fUFTQYNEaH68wzq6nrb0BAMSsTezu6dQXHBadeJiWJ4ud5v5cB8yR4/rcOK8Y5Ef3FuVW0LG8I4DMraScYYZgZpXe8A/ohkjyVvwlt2a7cDMjtPDQQqzQrLursa4C33Hvnxx01bSiSjA7iYFnWyrq7gixigIuRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtzvD05j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck92toxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFD9C4CEC3;
-	Tue, 10 Sep 2024 10:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtzvD05j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3261AC4CEC3;
+	Tue, 10 Sep 2024 10:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963552;
-	bh=0XPUSgZiij6ypSkK3QGXsUGI1bvBbqpvOcvfZ/GfPIk=;
+	s=korg; t=1725963555;
+	bh=W4mH0/9x87S5i+UINUxDXEjQ5wEfIvzbcSTZhn4iK7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ck92toxuzjrsq6l6zJZhnDIaqN1ltGunkMhF5duCLcF+sf5MYcWdn2IMwhQavr8zn
-	 3If1ErEGq5VzJYN4pQE9ia0Scaf+swBIA4aLRVALphfQJi6iJhW7c89EYlwDGFAQ9L
-	 YU4290NdbG6o2pSWftqx/DGIsdLfgSYFf6rN7mdg=
+	b=xtzvD05jqo6wfssECQLP/EFwztU1lC1rw/r5eM0irV7yw0Rcahwqky1oNCCVqQdlX
+	 x/b+2YjVGZyRGwU+IdGr8MY9OL5MU02yLIWCfJD0bWvPFjvCHVebikJLFmD/Ur7gwd
+	 VK/bGPkdsyo61rzjEbkbVoKYCy+VNhcBuJUBIkE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 097/214] mptcp: close subflow when receiving TCP+FIN
-Date: Tue, 10 Sep 2024 11:31:59 +0200
-Message-ID: <20240910092602.758111039@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 098/214] mptcp: pm: ADD_ADDR 0 is not a new address
+Date: Tue, 10 Sep 2024 11:32:00 +0200
+Message-ID: <20240910092602.794936322@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -53,85 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit f09b0ad55a1196f5891663f8888463c0541059cb upstream.
+commit 57f86203b41c98b322119dfdbb1ec54ce5e3369b upstream.
 
-When a peer decides to close one subflow in the middle of a connection
-having multiple subflows, the receiver of the first FIN should accept
-that, and close the subflow on its side as well. If not, the subflow
-will stay half closed, and would even continue to be used until the end
-of the MPTCP connection or a reset from the network.
+The ADD_ADDR 0 with the address from the initial subflow should not be
+considered as a new address: this is not something new. If the host
+receives it, it simply means that the address is available again.
 
-The issue has not been seen before, probably because the in-kernel
-path-manager always sends a RM_ADDR before closing the subflow. Upon the
-reception of this RM_ADDR, the other peer will initiate the closure on
-its side as well. On the other hand, if the RM_ADDR is lost, or if the
-path-manager of the other peer only closes the subflow without sending a
-RM_ADDR, the subflow would switch to TCP_CLOSE_WAIT, but that's it,
-leaving the subflow half-closed.
+When receiving an ADD_ADDR for the ID 0, the PM already doesn't consider
+it as new by not incrementing the 'add_addr_accepted' counter. But the
+'accept_addr' might not be set if the limit has already been reached:
+this can be bypassed in this case. But before, it is important to check
+that this ADD_ADDR for the ID 0 is for the same address as the initial
+subflow. If not, it is not something that should happen, and the
+ADD_ADDR can be ignored.
 
-So now, when the subflow switches to the TCP_CLOSE_WAIT state, and if
-the MPTCP connection has not been closed before with a DATA_FIN, the
-kernel owning the subflow schedules its worker to initiate the closure
-on its side as well.
+Note that if an ADD_ADDR is received while there is already a subflow
+opened using the same address, this ADD_ADDR is ignored as well. It
+means that if multiple ADD_ADDR for ID 0 are received, there will not be
+any duplicated subflows created by the client.
 
-This issue can be easily reproduced with packetdrill, as visible in [1],
-by creating an additional subflow, injecting a FIN+ACK before sending
-the DATA_FIN, and expecting a FIN+ACK in return.
-
-Fixes: 40947e13997a ("mptcp: schedule worker when subflow is closed")
+Fixes: d0876b2284cf ("mptcp: add the incoming RM_ADDR support")
 Cc: stable@vger.kernel.org
-Link: https://github.com/multipath-tcp/packetdrill/pull/154 [1]
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240826-net-mptcp-close-extra-sf-fin-v1-1-905199fe1172@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ No conflicts but 'sk' is not available in __mptcp_close_subflow in
-  this version. It would require b6985b9b8295 ("mptcp: use the workqueue
-  to destroy unaccepted sockets") which has not been backported to this
-  version. It is easier to get 'sk' by casting 'msk' into a 'struct
-  sock'. ]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Conflicts in pm.c, due to commit 4d25247d3ae4 ("mptcp: bypass
+  in-kernel PM restrictions for non-kernel PMs"), which is not in this
+  version, and changes the context. The same fix can be applied here by
+  adding the new check at the same place. Note that addresses_equal()
+  has been used instead of mptcp_addresses_equal(), renamed in commit
+  4638de5aefe5 ("mptcp: handle local addrs announced by userspace PMs"),
+  not in this version. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    5 ++++-
- net/mptcp/subflow.c  |    8 ++++++--
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ net/mptcp/pm.c         |    4 +++-
+ net/mptcp/pm_netlink.c |    9 +++++++++
+ net/mptcp/protocol.h   |    2 ++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2361,8 +2361,11 @@ static void __mptcp_close_subflow(struct
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -189,7 +189,9 @@ void mptcp_pm_add_addr_received(struct m
  
- 	list_for_each_entry_safe(subflow, tmp, &msk->conn_list, node) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		int ssk_state = inet_sk_state_load(ssk);
+ 	spin_lock_bh(&pm->lock);
  
--		if (inet_sk_state_load(ssk) != TCP_CLOSE)
-+		if (ssk_state != TCP_CLOSE &&
-+		    (ssk_state != TCP_CLOSE_WAIT ||
-+		     inet_sk_state_load((struct sock *)ssk) != TCP_ESTABLISHED))
- 			continue;
- 
- 		/* 'subflow_data_ready' will re-sched once rx queue is empty */
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1131,12 +1131,16 @@ out:
- /* sched mptcp worker to remove the subflow if no more data is pending */
- static void subflow_sched_work_if_closed(struct mptcp_sock *msk, struct sock *ssk)
- {
--	if (likely(ssk->sk_state != TCP_CLOSE))
-+	struct sock *sk = (struct sock *)msk;
-+
-+	if (likely(ssk->sk_state != TCP_CLOSE &&
-+		   (ssk->sk_state != TCP_CLOSE_WAIT ||
-+		    inet_sk_state_load(sk) != TCP_ESTABLISHED)))
- 		return;
- 
- 	if (skb_queue_empty(&ssk->sk_receive_queue) &&
- 	    !test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
--		mptcp_schedule_work((struct sock *)msk);
-+		mptcp_schedule_work(sk);
+-	if (!READ_ONCE(pm->accept_addr)) {
++	/* id0 should not have a different address */
++	if ((addr->id == 0 && !mptcp_pm_nl_is_init_remote_addr(msk, addr)) ||
++	    (addr->id > 0 && !READ_ONCE(pm->accept_addr))) {
+ 		mptcp_pm_announce_addr(msk, addr, true);
+ 		mptcp_pm_add_addr_send_ack(msk);
+ 	} else if (mptcp_pm_schedule_work(msk, MPTCP_PM_ADD_ADDR_RECEIVED)) {
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -669,6 +669,15 @@ add_addr_echo:
+ 	mptcp_pm_nl_addr_send_ack(msk);
  }
  
- static bool subflow_can_fallback(struct mptcp_subflow_context *subflow)
++bool mptcp_pm_nl_is_init_remote_addr(struct mptcp_sock *msk,
++				     const struct mptcp_addr_info *remote)
++{
++	struct mptcp_addr_info mpc_remote;
++
++	remote_address((struct sock_common *)msk, &mpc_remote);
++	return addresses_equal(&mpc_remote, remote, remote->port);
++}
++
+ void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk)
+ {
+ 	struct mptcp_subflow_context *subflow;
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -742,6 +742,8 @@ void mptcp_pm_add_addr_received(struct m
+ void mptcp_pm_add_addr_echoed(struct mptcp_sock *msk,
+ 			      const struct mptcp_addr_info *addr);
+ void mptcp_pm_add_addr_send_ack(struct mptcp_sock *msk);
++bool mptcp_pm_nl_is_init_remote_addr(struct mptcp_sock *msk,
++				     const struct mptcp_addr_info *remote);
+ void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk);
+ void mptcp_pm_rm_addr_received(struct mptcp_sock *msk,
+ 			       const struct mptcp_rm_list *rm_list);
 
 
