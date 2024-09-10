@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA91D46444;
-	Tue, 10 Sep 2024 09:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C869B1891A1;
+	Tue, 10 Sep 2024 09:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961124; cv=none; b=EaPRCpmGVy2LwsVgIwjTNaM9Win07y3Czl5+as1gts78uiEVY7Wn/DSm54FTnjVd8ah8lIJcaUjw6OOJ+ySjxBIfy0sgtB4/BI3TF+r8M+HWLLRN+87OLBdn3zqk7nVubryltxYTvWzapPBJqU+29bPbBHmEhnEvITqSQApjXIE=
+	t=1725961127; cv=none; b=Jp2hVHho+DHqpR3e4/jRPRgWC+FBNvNw/uvp2+Ga1XGDjyI6bA3Io08ZTJscGR46IBbFifBfwwWYMYVrh2g8MPLdzRxCD6uhDhjDeH8LTWMjsqtjyW2kKl06jy14Ogag/gik1kY0NhCvVNZkEfbemHaozGsnf8pIfh31Fv7t630=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961124; c=relaxed/simple;
-	bh=ixVdmBMq5+57P5jrZwrjW6EasJMu+adBRtiDlMi2EYk=;
+	s=arc-20240116; t=1725961127; c=relaxed/simple;
+	bh=a3D44cT4Ml7LcKl5pbaEPYM7NEJyWrhjq3Gv9tRxaDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XjqUWpNg4G8a2nIJSGNIac6kjGiaB66R++5ORzGo4aSwfCVuvZ3CudAz3tjjUkBAbFSssetEkLpKoFbnq8DWcy+R82Jo5BbRSTSt1MpVKHOyjMTzK89s6MiVtv5Utsf6CQ+U3DzXyIsuJEtnOOWtf5g7v8Y5X97ebixyOqq+vOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m99vDUXA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kM3SJfFt6GrTXmY4cCUVsE0cQriGysZ3r+mlV7uFohK+JDEJ3KeXJOqE45uu21OxzcSQXL92xx/J4PbyBH00S38IevuBybYfOVmZ8DOTy1bbA337iHMiEz9stUjfod4bodqUsuVWs77QmHaCCLmel5urRgUpf9yuo2/nJwoz6Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFgHAuBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m99vDUXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D655C4CEC3;
-	Tue, 10 Sep 2024 09:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFgHAuBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52762C4CEC3;
+	Tue, 10 Sep 2024 09:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961124;
-	bh=ixVdmBMq5+57P5jrZwrjW6EasJMu+adBRtiDlMi2EYk=;
+	s=korg; t=1725961127;
+	bh=a3D44cT4Ml7LcKl5pbaEPYM7NEJyWrhjq3Gv9tRxaDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m99vDUXAmPNt6550fC72wku+OJ+Kvkmb4v0MTzKPz/4obwDiZXKJwxY1ESXItt3AW
-	 nQCGhBssE+20yKCFyjogrWxYuFXlp2orcGtiUcXFKwQYCqk/qkE3/qIqo44u/Vzr1g
-	 cHedpsgSVDy/Bdyf4Ept8RpF5L9+gkfuIsCQ3Cfc=
+	b=mFgHAuBgNOS5g2zI1v5vgoaGSX4NRVbfV+PFI8K/y4blspWWeGfZ/FuTGZArBF+kq
+	 DfkSGejC7FCc1HD47AJCxUmodMRY1nSnxznV7noGGT1ehc54ouAukx5DFzk1xxZ+9O
+	 UKmGONQUb2DwYdEZOn8FtFoO3R7ROgReue0nt2I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Brian Norris <briannorris@chromium.org>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Simon Horman <horms@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 61/96] wifi: mwifiex: Do not return unused priv in mwifiex_get_priv_by_id()
-Date: Tue, 10 Sep 2024 11:32:03 +0200
-Message-ID: <20240910092544.223114552@linuxfoundation.org>
+Subject: [PATCH 4.19 35/96] can: bcm: Remove proc entry when dev is unregistered.
+Date: Tue, 10 Sep 2024 11:31:37 +0200
+Message-ID: <20240910092543.052214940@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -53,110 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c145eea2f75ff7949392aebecf7ef0a81c1f6c14 ]
+[ Upstream commit 76fe372ccb81b0c89b6cd2fec26e2f38c958be85 ]
 
-mwifiex_get_priv_by_id() returns the priv pointer corresponding to
-the bss_num and bss_type, but without checking if the priv is actually
-currently in use.
-Unused priv pointers do not have a wiphy attached to them which can
-lead to NULL pointer dereferences further down the callstack.  Fix
-this by returning only used priv pointers which have priv->bss_mode
-set to something else than NL80211_IFTYPE_UNSPECIFIED.
+syzkaller reported a warning in bcm_connect() below. [0]
 
-Said NULL pointer dereference happened when an Accesspoint was started
-with wpa_supplicant -i mlan0 with this config:
+The repro calls connect() to vxcan1, removes vxcan1, and calls
+connect() with ifindex == 0.
 
-network={
-        ssid="somessid"
-        mode=2
-        frequency=2412
-        key_mgmt=WPA-PSK WPA-PSK-SHA256
-        proto=RSN
-        group=CCMP
-        pairwise=CCMP
-        psk="12345678"
-}
+Calling connect() for a BCM socket allocates a proc entry.
+Then, bcm_sk(sk)->bound is set to 1 to prevent further connect().
 
-When waiting for the AP to be established, interrupting wpa_supplicant
-with <ctrl-c> and starting it again this happens:
+However, removing the bound device resets bcm_sk(sk)->bound to 0
+in bcm_notify().
 
-| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000140
-| Mem abort info:
-|   ESR = 0x0000000096000004
-|   EC = 0x25: DABT (current EL), IL = 32 bits
-|   SET = 0, FnV = 0
-|   EA = 0, S1PTW = 0
-|   FSC = 0x04: level 0 translation fault
-| Data abort info:
-|   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-|   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-| user pgtable: 4k pages, 48-bit VAs, pgdp=0000000046d96000
-| [0000000000000140] pgd=0000000000000000, p4d=0000000000000000
-| Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-| Modules linked in: caam_jr caamhash_desc spidev caamalg_desc crypto_engine authenc libdes mwifiex_sdio
-+mwifiex crct10dif_ce cdc_acm onboard_usb_hub fsl_imx8_ddr_perf imx8m_ddrc rtc_ds1307 lm75 rtc_snvs
-+imx_sdma caam imx8mm_thermal spi_imx error imx_cpufreq_dt fuse ip_tables x_tables ipv6
-| CPU: 0 PID: 8 Comm: kworker/0:1 Not tainted 6.9.0-00007-g937242013fce-dirty #18
-| Hardware name: somemachine (DT)
-| Workqueue: events sdio_irq_work
-| pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-| pc : mwifiex_get_cfp+0xd8/0x15c [mwifiex]
-| lr : mwifiex_get_cfp+0x34/0x15c [mwifiex]
-| sp : ffff8000818b3a70
-| x29: ffff8000818b3a70 x28: ffff000006bfd8a5 x27: 0000000000000004
-| x26: 000000000000002c x25: 0000000000001511 x24: 0000000002e86bc9
-| x23: ffff000006bfd996 x22: 0000000000000004 x21: ffff000007bec000
-| x20: 000000000000002c x19: 0000000000000000 x18: 0000000000000000
-| x17: 000000040044ffff x16: 00500072b5503510 x15: ccc283740681e517
-| x14: 0201000101006d15 x13: 0000000002e8ff43 x12: 002c01000000ffb1
-| x11: 0100000000000000 x10: 02e8ff43002c0100 x9 : 0000ffb100100157
-| x8 : ffff000003d20000 x7 : 00000000000002f1 x6 : 00000000ffffe124
-| x5 : 0000000000000001 x4 : 0000000000000003 x3 : 0000000000000000
-| x2 : 0000000000000000 x1 : 0001000000011001 x0 : 0000000000000000
-| Call trace:
-|  mwifiex_get_cfp+0xd8/0x15c [mwifiex]
-|  mwifiex_parse_single_response_buf+0x1d0/0x504 [mwifiex]
-|  mwifiex_handle_event_ext_scan_report+0x19c/0x2f8 [mwifiex]
-|  mwifiex_process_sta_event+0x298/0xf0c [mwifiex]
-|  mwifiex_process_event+0x110/0x238 [mwifiex]
-|  mwifiex_main_process+0x428/0xa44 [mwifiex]
-|  mwifiex_sdio_interrupt+0x64/0x12c [mwifiex_sdio]
-|  process_sdio_pending_irqs+0x64/0x1b8
-|  sdio_irq_work+0x4c/0x7c
-|  process_one_work+0x148/0x2a0
-|  worker_thread+0x2fc/0x40c
-|  kthread+0x110/0x114
-|  ret_from_fork+0x10/0x20
-| Code: a94153f3 a8c37bfd d50323bf d65f03c0 (f940a000)
-| ---[ end trace 0000000000000000 ]---
+The 2nd connect() tries to allocate a proc entry with the same
+name and sets NULL to bcm_sk(sk)->bcm_proc_read, leaking the
+original proc entry.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240703072409.556618-1-s.hauer@pengutronix.de
+Since the proc entry is available only for connect()ed sockets,
+let's clean up the entry when the bound netdev is unregistered.
+
+[0]:
+proc_dir_entry 'can-bcm/2456' already registered
+WARNING: CPU: 1 PID: 394 at fs/proc/generic.c:376 proc_register+0x645/0x8f0 fs/proc/generic.c:375
+Modules linked in:
+CPU: 1 PID: 394 Comm: syz-executor403 Not tainted 6.10.0-rc7-g852e42cc2dd4
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+RIP: 0010:proc_register+0x645/0x8f0 fs/proc/generic.c:375
+Code: 00 00 00 00 00 48 85 ed 0f 85 97 02 00 00 4d 85 f6 0f 85 9f 02 00 00 48 c7 c7 9b cb cf 87 48 89 de 4c 89 fa e8 1c 6f eb fe 90 <0f> 0b 90 90 48 c7 c7 98 37 99 89 e8 cb 7e 22 05 bb 00 00 00 10 48
+RSP: 0018:ffa0000000cd7c30 EFLAGS: 00010246
+RAX: 9e129be1950f0200 RBX: ff1100011b51582c RCX: ff1100011857cd80
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000002
+RBP: 0000000000000000 R08: ffd400000000000f R09: ff1100013e78cac0
+R10: ffac800000cd7980 R11: ff1100013e12b1f0 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: ff1100011a99a2ec
+FS:  00007fbd7086f740(0000) GS:ff1100013fd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000200071c0 CR3: 0000000118556004 CR4: 0000000000771ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ proc_create_net_single+0x144/0x210 fs/proc/proc_net.c:220
+ bcm_connect+0x472/0x840 net/can/bcm.c:1673
+ __sys_connect_file net/socket.c:2049 [inline]
+ __sys_connect+0x5d2/0x690 net/socket.c:2066
+ __do_sys_connect net/socket.c:2076 [inline]
+ __se_sys_connect net/socket.c:2073 [inline]
+ __x64_sys_connect+0x8f/0x100 net/socket.c:2073
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd9/0x1c0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7fbd708b0e5d
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
+RSP: 002b:00007fff8cd33f08 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007fbd708b0e5d
+RDX: 0000000000000010 RSI: 0000000020000040 RDI: 0000000000000003
+RBP: 0000000000000000 R08: 0000000000000040 R09: 0000000000000040
+R10: 0000000000000040 R11: 0000000000000246 R12: 00007fff8cd34098
+R13: 0000000000401280 R14: 0000000000406de8 R15: 00007fbd70ab9000
+ </TASK>
+remove_proc_entry: removing non-empty directory 'net/can-bcm', leaking at least '2456'
+
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/all/20240722192842.37421-1-kuniyu@amazon.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/main.h | 3 +++
- 1 file changed, 3 insertions(+)
+ net/can/bcm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
-index 7e526014b638..89774e0316bd 100644
---- a/drivers/net/wireless/marvell/mwifiex/main.h
-+++ b/drivers/net/wireless/marvell/mwifiex/main.h
-@@ -1306,6 +1306,9 @@ mwifiex_get_priv_by_id(struct mwifiex_adapter *adapter,
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 1c9953c68f09..095f68536c14 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1422,6 +1422,10 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
  
- 	for (i = 0; i < adapter->priv_num; i++) {
- 		if (adapter->priv[i]) {
-+			if (adapter->priv[i]->bss_mode == NL80211_IFTYPE_UNSPECIFIED)
-+				continue;
-+
- 			if ((adapter->priv[i]->bss_num == bss_num) &&
- 			    (adapter->priv[i]->bss_type == bss_type))
- 				break;
+ 		/* remove device reference, if this is our bound device */
+ 		if (bo->bound && bo->ifindex == dev->ifindex) {
++#if IS_ENABLED(CONFIG_PROC_FS)
++			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read)
++				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
++#endif
+ 			bo->bound   = 0;
+ 			bo->ifindex = 0;
+ 			notify_enodev = 1;
 -- 
 2.43.0
 
