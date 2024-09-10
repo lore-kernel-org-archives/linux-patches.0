@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A3618C32F;
-	Tue, 10 Sep 2024 10:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6005C18C331;
+	Tue, 10 Sep 2024 10:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962869; cv=none; b=Z7aa1zSv31x/2guu5OmE686S7D97LunffJpnFLquf2Ww8KMPFZ0+6zSYhSwM0ldzllFwgZlFtUWDkvUsjd4FRSMDbFbBGflM5RC3JMrFSurK/k2tqpPaZ+iESJqNtX6bA1QHCqkx1r2Cg8jFS9+vzySj+AZkhwTvAsKri6gVk3A=
+	t=1725962872; cv=none; b=evI47PCKqFbXymw00MKPIPwBwZNmvsM+WEPYUpnxkIHXtcxgQK4fk3MvcXnSFrOmwyEhWpWyR2BNHcY7vM7kMIaC6Ge9f4e+dRwy01tI51Lr2f/IUH5Xmsr7IFSsEILC77HIbAN/bFJUQVnXd9Mj6ppwvSe4StpO6uf9Y2GQT6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962869; c=relaxed/simple;
-	bh=B0z/GThXao3MHHbtzZzA2vhcfySkr1jzj7vKe9SuvS8=;
+	s=arc-20240116; t=1725962872; c=relaxed/simple;
+	bh=Wr+SzdIvNrXuXiP0MF0itxeo51LqNaA/gCPxHBWUEsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V926JBLMOVelEQI0uU0PUoNoJGCNiGyQ/ZLDU34J4VU/geiAI8SnDQe4DE5NlC4jYnBBRRhS80ZaPwhtBIcl/2rjp0Dv44rUiL0HHGXMmWlxnwBK1+7vQv6Jf5yeVjllYMwQREB/vAyqB9J2NBht2eNz5aWE9DLcc//sqQChRvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU+Ei57y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ab9hFLkfxSnnANea0GH4Tn4saWR8IBIvPk7R2HfETa3YQ581h+5Jb4gQVafQdT9ZYZl4L6RweM4Hs74lc2bKo7s7BgxdCC4Z9QH54TrfC48nGhxL4ZL42rBupMcDhQiIjverm74OmC7/xRl+h3tuj0Mqsko6jNCleoPrfLJtTFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIZCi21l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU+Ei57y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067F9C4CEC3;
-	Tue, 10 Sep 2024 10:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIZCi21l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0316C4CEC3;
+	Tue, 10 Sep 2024 10:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962869;
-	bh=B0z/GThXao3MHHbtzZzA2vhcfySkr1jzj7vKe9SuvS8=;
+	s=korg; t=1725962872;
+	bh=Wr+SzdIvNrXuXiP0MF0itxeo51LqNaA/gCPxHBWUEsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qU+Ei57yq2f8oXcviCQdG8BS1FdT5KYoOE3lB6XNCBj1FazaurW6ucnQ9dd5sOucV
-	 ujq5MNRKYJRAxVJl8sqTIenjGwUVxiOPT0thIChPZ21hZUGABEEHKpLf34E0VU09q1
-	 eP1Nmu2GGoElxShqG8HqIHysatgKJmIyvQK4A3Mo=
+	b=CIZCi21lXFd1JqQK+VrxHeqKQobejzVwZtrrx9Tgl7VNp7/2QXndIZv+DQVE2EY3F
+	 wyPpFEmGBQmlkXhKdEmzZr2aLuo1W6oxKe6g79Hu0oOXPfZtGUrXvg94YUoUR3hfKS
+	 5Z+36QB+Abg130UKfSdl9LvC87ksUBUhTAJPQISA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Likun Gao <Likun.Gao@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/192] drm/amd/display: Check HDCP returned status
-Date: Tue, 10 Sep 2024 11:31:22 +0200
-Message-ID: <20240910092600.361951045@linuxfoundation.org>
+Subject: [PATCH 6.1 059/192] drm/amdgpu: Fix smatch static checker warning
+Date: Tue, 10 Sep 2024 11:31:23 +0200
+Message-ID: <20240910092600.404961357@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -53,55 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Hawking Zhang <Hawking.Zhang@amd.com>
 
-[ Upstream commit 5d93060d430b359e16e7c555c8f151ead1ac614b ]
+[ Upstream commit bdbdc7cecd00305dc844a361f9883d3a21022027 ]
 
-[WHAT & HOW]
-Check mod_hdcp_execute_and_set() return values in authenticated_dp.
+adev->gfx.imu.funcs could be NULL
 
-This fixes 3 CHECKED_RETURN issues reported by Coverity.
-
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Likun Gao <Likun.Gao@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/modules/hdcp/hdcp1_execution.c    | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c
-index 1ddb4f5eac8e..93c0455766dd 100644
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c
-@@ -433,17 +433,20 @@ static enum mod_hdcp_status authenticated_dp(struct mod_hdcp *hdcp,
- 	}
- 
- 	if (status == MOD_HDCP_STATUS_SUCCESS)
--		mod_hdcp_execute_and_set(mod_hdcp_read_bstatus,
-+		if (!mod_hdcp_execute_and_set(mod_hdcp_read_bstatus,
- 				&input->bstatus_read, &status,
--				hdcp, "bstatus_read");
-+				hdcp, "bstatus_read"))
-+			goto out;
- 	if (status == MOD_HDCP_STATUS_SUCCESS)
--		mod_hdcp_execute_and_set(check_link_integrity_dp,
-+		if (!mod_hdcp_execute_and_set(check_link_integrity_dp,
- 				&input->link_integrity_check, &status,
--				hdcp, "link_integrity_check");
-+				hdcp, "link_integrity_check"))
-+			goto out;
- 	if (status == MOD_HDCP_STATUS_SUCCESS)
--		mod_hdcp_execute_and_set(check_no_reauthentication_request_dp,
-+		if (!mod_hdcp_execute_and_set(check_no_reauthentication_request_dp,
- 				&input->reauth_request_check, &status,
--				hdcp, "reauth_request_check");
-+				hdcp, "reauth_request_check"))
-+			goto out;
- out:
- 	return status;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index 1f9f7fdd4b8e..c76895cca4d9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -4330,11 +4330,11 @@ static int gfx_v11_0_hw_init(void *handle)
+ 			/* RLC autoload sequence 1: Program rlc ram */
+ 			if (adev->gfx.imu.funcs->program_rlc_ram)
+ 				adev->gfx.imu.funcs->program_rlc_ram(adev);
++			/* rlc autoload firmware */
++			r = gfx_v11_0_rlc_backdoor_autoload_enable(adev);
++			if (r)
++				return r;
+ 		}
+-		/* rlc autoload firmware */
+-		r = gfx_v11_0_rlc_backdoor_autoload_enable(adev);
+-		if (r)
+-			return r;
+ 	} else {
+ 		if (adev->firmware.load_type == AMDGPU_FW_LOAD_DIRECT) {
+ 			if (adev->gfx.imu.funcs && (amdgpu_dpm > 0)) {
 -- 
 2.43.0
 
