@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE63224F6;
-	Tue, 10 Sep 2024 09:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4779D224F6;
+	Tue, 10 Sep 2024 09:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961929; cv=none; b=HABOPDoeiBwwPw9vJB+kir8r5qQ7qM26Hvchm8VGJntrD6utFbL2Rq+zNy/1mTyAiasNdic8MmbrDvLAl8RsVm9d380xcAT73EvvP8RznNRR3oOrVhEt+8TTKRwJ5EELHhQoqC8ASJgPzRlLoSDDWgWUuiVD+x1x9tLX576w/k8=
+	t=1725961932; cv=none; b=f8dK26tRwp3MvSPThnjs7JQ8LBWTFsC/mC5e3tI2c3AtOCksuJ9mPg7ruQgXmfaz85tSwLB7KBX2A1Tu3WHlwH5Gy+l44/tz/+8isjyNK9kG5asLhFbAP8MGayA3DfhiWmF3VGE/wdiNEr3byEsgBzAHTS4It+icFqeaBTeXSSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961929; c=relaxed/simple;
-	bh=kJacjjkSZhq5O5+jxKynx0onfEhoDrV9zVAuzhc51Qw=;
+	s=arc-20240116; t=1725961932; c=relaxed/simple;
+	bh=pWrDQhLZ0zYbN8OCfxuCEXNA8gu8BaGeIEDO9Pxv74w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaITRRpGA/qXyd/GPU2ZIt7aFseQXOa5lGPNOoHMboWhrEBLO/Q8Arw/lcYr4REKgRw63aVVqUVVMh6T/Swn3ENEiPJR6dDT/7l1FBxPqT6Rfk1F54J9WYV3VNvdfKo15YJAcKqV8K8cF3YdCAqN6zCG3b/aaDr0D0TTdtbZKRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F63g+D4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a1y3V/HxwIwxYogV+ZpQ05NKNHzxowK/5aVGQgysUgmTlu4i1ZajdJC/peS6ZGYetJKGiSvlRG6GV0NiQJHd+e02V+H7Idj+d3Tv/QzVYeyhZH6qVUmLP5Az9OYxLLzuuF8qekvIWnoUFPAfWX4jjMSwrK3/nVsktv5jV/wWM/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqW1dU6M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F63g+D4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8525AC4CEC3;
-	Tue, 10 Sep 2024 09:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqW1dU6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A22C4CEC3;
+	Tue, 10 Sep 2024 09:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961928;
-	bh=kJacjjkSZhq5O5+jxKynx0onfEhoDrV9zVAuzhc51Qw=;
+	s=korg; t=1725961931;
+	bh=pWrDQhLZ0zYbN8OCfxuCEXNA8gu8BaGeIEDO9Pxv74w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F63g+D4h06+3Z+rizg8OBt3VLFp0xh79bs6F5Ywy5YYEQ3WK2wgvDjIuswhPN+kkw
-	 sUks0uOvBeMEy0TMPecZAuX5oXWIt+VTXDo7iuY/YnUFZG2GlpRQm2XbqxDChC6gom
-	 oepi7YHwdkwbntO1wEysxUCl8Rd2Sy7nG3dkB6uY=
+	b=BqW1dU6MUm5L8pAbexrUpwOBo4mGpMNar/QjWFdXmKRAMO4JVSBTBnVJrPSwNovPq
+	 K2xcupAL7qpLxzND0EDrg/FSSvy3nst3Id7BtE00yc1IJFBVBdFfVSF+y8dFgDtLCV
+	 rB1hFCGtS/rIPepfGIAMaZVow//9zx/SyX/8S5LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 237/375] smp: Add missing destroy_work_on_stack() call in smp_call_on_cpu()
-Date: Tue, 10 Sep 2024 11:30:34 +0200
-Message-ID: <20240910092630.510273471@linuxfoundation.org>
+Subject: [PATCH 6.10 238/375] fs/ntfs3: Check more cases when directory is corrupted
+Date: Tue, 10 Sep 2024 11:30:35 +0200
+Message-ID: <20240910092630.547478398@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,43 +50,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 77aeb1b685f9db73d276bad4bb30d48505a6fd23 ]
+[ Upstream commit 744375343662058cbfda96d871786e5a5cbe1947 ]
 
-For CONFIG_DEBUG_OBJECTS_WORK=y kernels sscs.work defined by
-INIT_WORK_ONSTACK() is initialized by debug_object_init_on_stack() for
-the debug check in __init_work() to work correctly.
+Mark ntfs dirty in this case.
+Rename ntfs_filldir to ntfs_dir_emit.
 
-But this lacks the counterpart to remove the tracked object from debug
-objects again, which will cause a debug object warning once the stack is
-freed.
-
-Add the missing destroy_work_on_stack() invocation to cure that.
-
-[ tglx: Massaged changelog ]
-
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/r/20240704065213.13559-1-qiang.zhang1211@gmail.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/smp.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/dir.c | 52 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/smp.c b/kernel/smp.c
-index f085ebcdf9e7..af9b2d0736c8 100644
---- a/kernel/smp.c
-+++ b/kernel/smp.c
-@@ -1119,6 +1119,7 @@ int smp_call_on_cpu(unsigned int cpu, int (*func)(void *), void *par, bool phys)
- 
- 	queue_work_on(cpu, system_wq, &sscs.work);
- 	wait_for_completion(&sscs.done);
-+	destroy_work_on_stack(&sscs.work);
- 
- 	return sscs.ret;
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 858efe255f6f..1ec09f2fca64 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -272,9 +272,12 @@ struct inode *dir_search_u(struct inode *dir, const struct cpu_str *uni,
+ 	return err == -ENOENT ? NULL : err ? ERR_PTR(err) : inode;
  }
+ 
+-static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+-			       const struct NTFS_DE *e, u8 *name,
+-			       struct dir_context *ctx)
++/*
++ * returns false if 'ctx' if full
++ */
++static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
++				 struct ntfs_inode *ni, const struct NTFS_DE *e,
++				 u8 *name, struct dir_context *ctx)
+ {
+ 	const struct ATTR_FILE_NAME *fname;
+ 	unsigned long ino;
+@@ -284,29 +287,29 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 	fname = Add2Ptr(e, sizeof(struct NTFS_DE));
+ 
+ 	if (fname->type == FILE_NAME_DOS)
+-		return 0;
++		return true;
+ 
+ 	if (!mi_is_ref(&ni->mi, &fname->home))
+-		return 0;
++		return true;
+ 
+ 	ino = ino_get(&e->ref);
+ 
+ 	if (ino == MFT_REC_ROOT)
+-		return 0;
++		return true;
+ 
+ 	/* Skip meta files. Unless option to show metafiles is set. */
+ 	if (!sbi->options->showmeta && ntfs_is_meta_file(sbi, ino))
+-		return 0;
++		return true;
+ 
+ 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
+-		return 0;
++		return true;
+ 
+ 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
+ 				     PATH_MAX);
+ 	if (name_len <= 0) {
+ 		ntfs_warn(sbi->sb, "failed to convert name for inode %lx.",
+ 			  ino);
+-		return 0;
++		return true;
+ 	}
+ 
+ 	/*
+@@ -336,17 +339,20 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 		}
+ 	}
+ 
+-	return !dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
++	return dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
+ }
+ 
+ /*
+  * ntfs_read_hdr - Helper function for ntfs_readdir().
++ *
++ * returns 0 if ok.
++ * returns -EINVAL if directory is corrupted.
++ * returns +1 if 'ctx' is full.
+  */
+ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 			 const struct INDEX_HDR *hdr, u64 vbo, u64 pos,
+ 			 u8 *name, struct dir_context *ctx)
+ {
+-	int err;
+ 	const struct NTFS_DE *e;
+ 	u32 e_size;
+ 	u32 end = le32_to_cpu(hdr->used);
+@@ -354,12 +360,12 @@ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 
+ 	for (;; off += e_size) {
+ 		if (off + sizeof(struct NTFS_DE) > end)
+-			return -1;
++			return -EINVAL;
+ 
+ 		e = Add2Ptr(hdr, off);
+ 		e_size = le16_to_cpu(e->size);
+ 		if (e_size < sizeof(struct NTFS_DE) || off + e_size > end)
+-			return -1;
++			return -EINVAL;
+ 
+ 		if (de_is_last(e))
+ 			return 0;
+@@ -369,14 +375,15 @@ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 			continue;
+ 
+ 		if (le16_to_cpu(e->key_size) < SIZEOF_ATTRIBUTE_FILENAME)
+-			return -1;
++			return -EINVAL;
+ 
+ 		ctx->pos = vbo + off;
+ 
+ 		/* Submit the name to the filldir callback. */
+-		err = ntfs_filldir(sbi, ni, e, name, ctx);
+-		if (err)
+-			return err;
++		if (!ntfs_dir_emit(sbi, ni, e, name, ctx)) {
++			/* ctx is full. */
++			return +1;
++		}
+ 	}
+ }
+ 
+@@ -475,8 +482,6 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 
+ 		vbo = (u64)bit << index_bits;
+ 		if (vbo >= i_size) {
+-			ntfs_inode_err(dir, "Looks like your dir is corrupt");
+-			ctx->pos = eod;
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
+@@ -499,9 +504,16 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 	__putname(name);
+ 	put_indx_node(node);
+ 
+-	if (err == -ENOENT) {
++	if (err == 1) {
++		/* 'ctx' is full. */
++		err = 0;
++	} else if (err == -ENOENT) {
+ 		err = 0;
+ 		ctx->pos = pos;
++	} else if (err < 0) {
++		if (err == -EINVAL)
++			ntfs_inode_err(dir, "directory corrupted");
++		ctx->pos = eod;
+ 	}
+ 
+ 	return err;
 -- 
 2.43.0
 
