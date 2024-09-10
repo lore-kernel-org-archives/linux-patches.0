@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA01118C91B;
-	Tue, 10 Sep 2024 10:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E13F18CBE9;
+	Tue, 10 Sep 2024 10:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964523; cv=none; b=cbTbT114W9vlYav4JV6G+C+Z+qPLEpq8bO3mp7sN9cKBDYUAXcIumNSG7XCYxVKHNWahNSieqI2aE3HDirUSH6I/ttXeIvnEP8eBGr0XaKLZTnQuZzejlLnkNhtDsr0aMrN1fEpdX5E94+e1cerJK4tWbSksZ7trVteKNzLegyc=
+	t=1725964526; cv=none; b=ZiWT8aiYG9qs1lK8kVMCopP5gYQHd4k9eWICWH5DTrbiochcmVJenpBgaIVgQd99QkyIy4FB79qfOERkF+ogxkdG3Z6MDLKMz2nxiLUq2XVU1/djmJqEfm/imKWIWtYiSYND4Cx3C0GPGIyPRjKiix3XVeNwm3gcZyP3Q0ML/NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964523; c=relaxed/simple;
-	bh=JkNCxfBmqFei7oUET/PsgF0I5NSca6Z9cTlqjgwDCw4=;
+	s=arc-20240116; t=1725964526; c=relaxed/simple;
+	bh=QvVuqXpBd7vYQUpk9b/13aPrJKJgpVPh3p5iJoY0BRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bU6bH4F4o+P2AWf9GZYp3epQuOumLqJgAcmQcRnSZxWOKifgNiCJU6zk+zaJw9PcbQfyOcDJw+KHtpSEmNkmpla8Kdlqu9F5lzgzPS4juNFbCy6E+7UCn7ogiD0D70TXRKUaprGscTSfL5MHiTgv1UrfSudiZ4bs/yXf0VrcvyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJj9S/nG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzymX/tMmVtIsAFo12OeUhGozFa8oaak+25N9bUj7kg7L/OpaWyOpGbJOu5wf55EBWlQ6qkAsAgsT+V7xS75ugYMBflelROaLKl2QVj6x8+6HZn11PJPF8r1847pMUoFlIHB0Usj+FjXfiNKTqddoHSp0o80qJFyzVtFTq3h3M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyCpjkRD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJj9S/nG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BFAC4CEC3;
-	Tue, 10 Sep 2024 10:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyCpjkRD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D157C4CEC3;
+	Tue, 10 Sep 2024 10:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964522;
-	bh=JkNCxfBmqFei7oUET/PsgF0I5NSca6Z9cTlqjgwDCw4=;
+	s=korg; t=1725964525;
+	bh=QvVuqXpBd7vYQUpk9b/13aPrJKJgpVPh3p5iJoY0BRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJj9S/nGDEfZQvcTnSzy/Rq3qPfnySQCjPz8SFEKeD5n8ei7vGfvPoIWzLs8hsRvF
-	 fR7HvfLahJZOxh7gEzA6CVRhNjdM5nQpzRO4MJGQROWHsXwF0puiI8Wgzb0uyI4oP2
-	 RJCFmEYv4214H+xaybU8JaGGdpgvcQrmrdsK6pmg=
+	b=NyCpjkRDJqXP0nBEMQTIVp76PNy9Pg/Cc5urmGVxz1Psn8sGaB6nggwerAwJWC3Xb
+	 aWti4uLvb2yRSy3L4OgCbumZQKBsVDJzAXiTNN4HrLeiSGfutX0rrtMhVH/54LxuzJ
+	 8NHKDA4597sYQw0KBWqcPV3068WYME4M3B1njvC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+24c0361074799d02c452@syzkaller.appspotmail.com,
-	Camila Alvarez <cam.alvarez.i@gmail.com>,
-	Silvan Jegen <s.jegen@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/269] HID: cougar: fix slab-out-of-bounds Read in cougar_report_fixup
-Date: Tue, 10 Sep 2024 11:32:51 +0200
-Message-ID: <20240910092614.691352232@linuxfoundation.org>
+Subject: [PATCH 6.6 175/269] LoongArch: Use correct API to map cmdline in relocate_kernel()
+Date: Tue, 10 Sep 2024 11:32:42 +0200
+Message-ID: <20240910092614.415313966@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -53,36 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Camila Alvarez <cam.alvarez.i@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit a6e9c391d45b5865b61e569146304cff72821a5d ]
+[ Upstream commit 0124fbb4c6dba23dbdf80c829be68adbccde2722 ]
 
-report_fixup for the Cougar 500k Gaming Keyboard was not verifying
-that the report descriptor size was correct before accessing it
+fw_arg1 is in memory space rather than I/O space, so we should use
+early_memremap_ro() instead of early_ioremap() to map the cmdline.
+Moreover, we should unmap it after using.
 
-Reported-by: syzbot+24c0361074799d02c452@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=24c0361074799d02c452
-Signed-off-by: Camila Alvarez <cam.alvarez.i@gmail.com>
-Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Suggested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-cougar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/relocate.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-cougar.c b/drivers/hid/hid-cougar.c
-index cb8bd8aae15b..0fa785f52707 100644
---- a/drivers/hid/hid-cougar.c
-+++ b/drivers/hid/hid-cougar.c
-@@ -106,7 +106,7 @@ static void cougar_fix_g6_mapping(void)
- static __u8 *cougar_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 				 unsigned int *rsize)
- {
--	if (rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
-+	if (*rsize >= 117 && rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
- 	    (rdesc[115] | rdesc[116] << 8) >= HID_MAX_USAGES) {
- 		hid_info(hdev,
- 			"usage count exceeds max: fixing up report descriptor\n");
+diff --git a/arch/loongarch/kernel/relocate.c b/arch/loongarch/kernel/relocate.c
+index 1acfa704c8d0..0eddd4a66b87 100644
+--- a/arch/loongarch/kernel/relocate.c
++++ b/arch/loongarch/kernel/relocate.c
+@@ -13,6 +13,7 @@
+ #include <asm/bootinfo.h>
+ #include <asm/early_ioremap.h>
+ #include <asm/inst.h>
++#include <asm/io.h>
+ #include <asm/sections.h>
+ #include <asm/setup.h>
+ 
+@@ -170,7 +171,7 @@ unsigned long __init relocate_kernel(void)
+ 	unsigned long kernel_length;
+ 	unsigned long random_offset = 0;
+ 	void *location_new = _text; /* Default to original kernel start */
+-	char *cmdline = early_ioremap(fw_arg1, COMMAND_LINE_SIZE); /* Boot command line is passed in fw_arg1 */
++	char *cmdline = early_memremap_ro(fw_arg1, COMMAND_LINE_SIZE); /* Boot command line is passed in fw_arg1 */
+ 
+ 	strscpy(boot_command_line, cmdline, COMMAND_LINE_SIZE);
+ 
+@@ -182,6 +183,7 @@ unsigned long __init relocate_kernel(void)
+ 		random_offset = (unsigned long)location_new - (unsigned long)(_text);
+ #endif
+ 	reloc_offset = (unsigned long)_text - VMLINUX_LOAD_ADDRESS;
++	early_memunmap(cmdline, COMMAND_LINE_SIZE);
+ 
+ 	if (random_offset) {
+ 		kernel_length = (long)(_end) - (long)(_text);
 -- 
 2.43.0
 
