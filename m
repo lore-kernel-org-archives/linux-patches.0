@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE8A192D65;
-	Tue, 10 Sep 2024 10:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6E117A589;
+	Tue, 10 Sep 2024 10:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964780; cv=none; b=MLe/2VsP9vBFStYRTaoaIX1kDG6psE3S3vQsU1W3BYVuetJ+NVW0ZAa4S2NKmsjTgFbdX6x666G+AAVQ9vrn5ZIr//z72ntBKRw7QGlniyEdKIBVfY2rbcX0jHw+uDKiXsF5vMn/JTr6jsruNLTEhTrFcUs6CxBAohdP8kAipQY=
+	t=1725964783; cv=none; b=eMTV04imPpFqq2bHkxKNz9tmEP03ry66/N475cV2GWZFRqWA+2/9n2H7TdBbHdINf0xhmgxLbg44nRiwH0g3vLMaOfIL74T+lRqH4C04K3Jt5aUxyweSuPbAQD0kJsTH3uTJqknIME5t6b3W/6XiDFlKPB2mnuki09w35RZpPHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964780; c=relaxed/simple;
-	bh=2ZxBILL8rcCkavK+1nvhJM48du7T2eWtBgmdmxo2Mcs=;
+	s=arc-20240116; t=1725964783; c=relaxed/simple;
+	bh=uKZ4Mf4tyOda3Xpt9QCkFJl718zRGsto1sAXwid/JLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJGQ3o+YhsmZxA1C5b4JcIxcXSD/OfLtDhuDvpr6wPj24mBFemrpfeq2XO0a1S4pR1cWJZ74JgVuMFnLhQJX7xNAFRo3R2oc+GAQDoOWL3GzD66Alj/Q2jbcQFcryguq7KAiB+TXvXLuRgkkmT71i3N/TFRY2+sVsPIAakF/ni0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqTKR0cg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2SRBenGavWLKb9lB4DVlm764+j2U/2RcW/R1YvSkGXppQiW6f52d2xt3dPFaYv/3GOcLp/AbQ6U/J/WCVt5k6vzP36e+WMqTShyP1lFKHJQk1tDaat4M78gPc45pdnOTaIcom0Bu5H6L7S33KKf4KLXnW5lCY3RdHHfsY7WiGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ba1L9/9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqTKR0cg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82211C4CEC3;
-	Tue, 10 Sep 2024 10:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ba1L9/9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7289CC4CED2;
+	Tue, 10 Sep 2024 10:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964779;
-	bh=2ZxBILL8rcCkavK+1nvhJM48du7T2eWtBgmdmxo2Mcs=;
+	s=korg; t=1725964782;
+	bh=uKZ4Mf4tyOda3Xpt9QCkFJl718zRGsto1sAXwid/JLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqTKR0cgN/ar601YiKhw++XZ4X7BGM9TDHrY86tg2ykdaI2tCfuXzVMK91Y9ebzep
-	 ON7eoXta7QSjt+AqRHphjvvEHt7pufu/jym+co8nyh7MQf4VXmXNRC6JX86liWmKmw
-	 0PYjuCQPW8mCmeiEYG5/DEgcxgXYMJh/jjYlxhfg=
+	b=ba1L9/9tGj0mDJBzk9LuVaKFdsWq3NRS75sHad2aLT2sHcUX3TbU3Un4DYco9nuO6
+	 wTBke/invHwXm6rX7BRZp3s65JpKQuGpaMRFzep0Gl+tAWWJdGSAZ90Hph1bhPxsTU
+	 UoIPQrvDbIV/epbBq+z79WjEbc74/gSHG8DkPKcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/186] drm/amdgpu/pm: Check input value for CUSTOM profile mode setting on legacy SOCs
-Date: Tue, 10 Sep 2024 11:32:03 +0200
-Message-ID: <20240910092555.747845270@linuxfoundation.org>
+Subject: [PATCH 5.10 029/186] drm/amdgpu: the warning dereferencing obj for nbio_v7_4
+Date: Tue, 10 Sep 2024 11:32:04 +0200
+Message-ID: <20240910092555.785653857@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,62 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit df0a9bd92fbbd3fcafcb2bce6463c9228a3e6868 ]
+[ Upstream commit d190b459b2a4304307c3468ed97477b808381011 ]
 
-Check the input value for CUSTOM profile mode setting on legacy
-SOCs. Otherwise we may use uninitalized value of input[]
+if ras_manager obj null, don't print NBIO err data
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Suggested-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 2 +-
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c | 8 ++++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index 5e72b7555eda..3673a9e7ba44 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5190,7 +5190,7 @@ static int smu7_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, uint
- 	mode = input[size];
- 	switch (mode) {
- 	case PP_SMC_POWER_PROFILE_CUSTOM:
--		if (size < 8 && size != 0)
-+		if (size != 8 && size != 0)
- 			return -EINVAL;
- 		/* If only CUSTOM is passed in, use the saved values. Check
- 		 * that we actually have a CUSTOM profile by ensuring that
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-index 57a354a03e8a..a55dc6ec4f76 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-@@ -4095,9 +4095,11 @@ static int vega20_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
- 		struct vega20_hwmgr *data =
- 			(struct vega20_hwmgr *)(hwmgr->backend);
--		if (size == 0 && !data->is_custom_profile_set)
-+
-+		if (size != 10 && size != 0)
- 			return -EINVAL;
--		if (size < 10 && size != 0)
-+
-+		if (size == 0 && !data->is_custom_profile_set)
- 			return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c
+index eadc9526d33f..b81572dc115f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_4.c
+@@ -313,7 +313,7 @@ static void nbio_v7_4_handle_ras_controller_intr_no_bifring(struct amdgpu_device
+ 						RAS_CNTLR_INTERRUPT_CLEAR, 1);
+ 		WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
  
- 		result = vega20_get_activity_monitor_coeff(hwmgr,
-@@ -4159,6 +4161,8 @@ static int vega20_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 			activity_monitor.Fclk_PD_Data_error_coeff = input[8];
- 			activity_monitor.Fclk_PD_Data_error_rate_coeff = input[9];
- 			break;
-+		default:
-+			return -EINVAL;
- 		}
- 
- 		result = vega20_set_activity_monitor_coeff(hwmgr,
+-		if (!ras->disable_ras_err_cnt_harvest) {
++		if (ras && !ras->disable_ras_err_cnt_harvest && obj) {
+ 			/*
+ 			 * clear error status after ras_controller_intr
+ 			 * according to hw team and count ue number
 -- 
 2.43.0
 
