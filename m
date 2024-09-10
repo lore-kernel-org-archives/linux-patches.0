@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC3F18B487;
-	Tue, 10 Sep 2024 10:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA718DF99;
+	Tue, 10 Sep 2024 10:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962416; cv=none; b=F/dfetLB+4SZs+whF6oEU2iFK7yemZpJv79gg3im6W7ck/azJrO2rJIGch7XH+WBOQieBB6ko2s6GdeK68n6RLYmn/DKbyCXglZdEWCa+pIWUKtjk5g9/5oGoT5pp1jTBIp+8+knhKUhX34EEujvlC5Ni1iQ1DPiNh+GzcM5by0=
+	t=1725962419; cv=none; b=joLFCIX6vtUkwUtK+SxfgIRAOMIihy8ErmFtKJzNEyxqLuygNAfI0G56u01LGlm9ZIn5y2XOYPsByirxsLzt1XXfYKt0Ay4IGCb+kAzV2haErN9NqxGNuwrSxwknwAC1eZH3E5bHOnzUJw1zPUcC6gB5cssjho/GSgGcUWqKhgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962416; c=relaxed/simple;
-	bh=CnuRlBRCoi6uZb8bN95LoX6ZUy/sXy1AN0OwQYu2EaE=;
+	s=arc-20240116; t=1725962419; c=relaxed/simple;
+	bh=F5myLYcC+cvZjYi9/noIQRiqjUR+Nn8CTgY4QvxFdsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K45oz4J2uLQsJU93NI4ZzhoVTQOtVyH36V7A+po5kSlcLRiHCihKhAF/iK+J1vYLAegHmRoXu0rkiD1qjgAcx1APyQbKMaUvAQHDFvhhJg3aeIu9F8h90wXpEcO5Wd2Jd6mHnthuDkiSnIZlHqAQNQGdOwWbtmEOUBhs9Wghb/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgWynHYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fplgPTxdapsoXmNV0BUnICMTKFCc3MkJvOHzfK3IDmXZX4ZDgM1ZfGUfyHj+YTEc1LqnCMOB2JoiqyxdzhUGVoPNJDFNSHh7JWJ0F33d2oy79bDgYhF3zDR4Bd7gm6Gdg0sFY21yDbeO8ugKGm21CeDiJj8W8Nv/nyI82JAwMx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJD0n178; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgWynHYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C921AC4CEC3;
-	Tue, 10 Sep 2024 10:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJD0n178"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C6C4CEC3;
+	Tue, 10 Sep 2024 10:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962416;
-	bh=CnuRlBRCoi6uZb8bN95LoX6ZUy/sXy1AN0OwQYu2EaE=;
+	s=korg; t=1725962419;
+	bh=F5myLYcC+cvZjYi9/noIQRiqjUR+Nn8CTgY4QvxFdsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgWynHYJ4wHhqh65SoR06kjjD5xaBRsebvwmJrpnZi6r/dGjR6UBKp7esP2xzJ/i3
-	 oJnTqGdcU1mA5SXgns1dLKw6ap99aVdn8023c+SHFLVGTMB+fQzk8dRsdeEHZwJjwZ
-	 eW7IHJ0AKI7P9DdYpgZ01s0X3MdQCH7Q1TabWNG0=
+	b=cJD0n178FYri10sK8yhi+FvubxYlO/vkxUeCRCCOnxD5+Xm2Sz0KdFwS3E2mfr1E0
+	 t2Ctc1Cfcq8irUdeCDIYTk0xezq0FFvMI2uGT/F1LNm60SdlaMLcYrEB9TRQf26Cpy
+	 Dhqj/PloT7i3Mrp9td6PPEu839bgels0JvcFf+Rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 026/121] sch/netem: fix use after free in netem_dequeue
-Date: Tue, 10 Sep 2024 11:31:41 +0200
-Message-ID: <20240910092546.959113816@linuxfoundation.org>
+	robelin <robelin@nvidia.com>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 027/121] ASoC: dapm: Fix UAF for snd_soc_pcm_runtime object
+Date: Tue, 10 Sep 2024 11:31:42 +0200
+Message-ID: <20240910092547.018907001@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -51,62 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: robelin <robelin@nvidia.com>
 
-commit 3b3a2a9c6349e25a025d2330f479bc33a6ccb54a upstream.
+commit b4a90b543d9f62d3ac34ec1ab97fc5334b048565 upstream.
 
-If netem_dequeue() enqueues packet to inner qdisc and that qdisc
-returns __NET_XMIT_STOLEN. The packet is dropped but
-qdisc_tree_reduce_backlog() is not called to update the parent's
-q.qlen, leading to the similar use-after-free as Commit
-e04991a48dbaf382 ("netem: fix return value if duplicate enqueue
-fails")
+When using kernel with the following extra config,
 
-Commands to trigger KASAN UaF:
+  - CONFIG_KASAN=y
+  - CONFIG_KASAN_GENERIC=y
+  - CONFIG_KASAN_INLINE=y
+  - CONFIG_KASAN_VMALLOC=y
+  - CONFIG_FRAME_WARN=4096
 
-ip link add type dummy
-ip link set lo up
-ip link set dummy0 up
-tc qdisc add dev lo parent root handle 1: drr
-tc filter add dev lo parent 1: basic classid 1:1
-tc class add dev lo classid 1:1 drr
-tc qdisc add dev lo parent 1:1 handle 2: netem
-tc qdisc add dev lo parent 2: handle 3: drr
-tc filter add dev lo parent 3: basic classid 3:1 action mirred egress
-redirect dev dummy0
-tc class add dev lo classid 3:1 drr
-ping -c1 -W0.01 localhost # Trigger bug
-tc class del dev lo classid 1:1
-tc class add dev lo classid 1:1 drr
-ping -c1 -W0.01 localhost # UaF
+kernel detects that snd_pcm_suspend_all() access a freed
+'snd_soc_pcm_runtime' object when the system is suspended, which
+leads to a use-after-free bug:
 
-Fixes: 50612537e9ab ("netem: fix classful handling")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Link: https://patch.msgid.link/20240901182438.4992-1-stephen@networkplumber.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[   52.047746] BUG: KASAN: use-after-free in snd_pcm_suspend_all+0x1a8/0x270
+[   52.047765] Read of size 1 at addr ffff0000b9434d50 by task systemd-sleep/2330
+
+[   52.047785] Call trace:
+[   52.047787]  dump_backtrace+0x0/0x3c0
+[   52.047794]  show_stack+0x34/0x50
+[   52.047797]  dump_stack_lvl+0x68/0x8c
+[   52.047802]  print_address_description.constprop.0+0x74/0x2c0
+[   52.047809]  kasan_report+0x210/0x230
+[   52.047815]  __asan_report_load1_noabort+0x3c/0x50
+[   52.047820]  snd_pcm_suspend_all+0x1a8/0x270
+[   52.047824]  snd_soc_suspend+0x19c/0x4e0
+
+The snd_pcm_sync_stop() has a NULL check on 'substream->runtime' before
+making any access. So we need to always set 'substream->runtime' to NULL
+everytime we kfree() it.
+
+Fixes: a72706ed8208 ("ASoC: codec2codec: remove ephemeral variables")
+Signed-off-by: robelin <robelin@nvidia.com>
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+Link: https://patch.msgid.link/20240823144342.4123814-2-spujar@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ sound/soc/soc-dapm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -733,11 +733,10 @@ deliver:
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -4003,6 +4003,7 @@ static int snd_soc_dai_link_event(struct
  
- 				err = qdisc_enqueue(skb, q->qdisc, &to_free);
- 				kfree_skb_list(to_free);
--				if (err != NET_XMIT_SUCCESS &&
--				    net_xmit_drop_count(err)) {
--					qdisc_qstats_drop(sch);
--					qdisc_tree_reduce_backlog(sch, 1,
--								  pkt_len);
-+				if (err != NET_XMIT_SUCCESS) {
-+					if (net_xmit_drop_count(err))
-+						qdisc_qstats_drop(sch);
-+					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
- 				}
- 				goto tfifo_dequeue;
- 			}
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		kfree(substream->runtime);
++		substream->runtime = NULL;
+ 		break;
+ 
+ 	default:
 
 
