@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3A318B498;
-	Tue, 10 Sep 2024 10:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4258191F63;
+	Tue, 10 Sep 2024 10:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963338; cv=none; b=aBe29G59kQbbf/ZSdPVePrcNp45o37qqcp0A+f9n8rXh+ekUWiA9TPX7A8b3TOTLxopFLM2E4kKNdXdBERIZmcI/cE1jrpyB00RZn3uPP4jBy284x8k8W+YqxjeFFg7MlwHJvPHz+hRFAfixOoNixc0XansPpVE7/DXY6qIleoc=
+	t=1725963341; cv=none; b=JICYdSTcTQX7hsG19YFk3becVBfEz4ltdZjaX7Wvpr/KqtOwTgrCkHgwfdqQfAqC9mEzGdNQYWAjpppugNAf4PgaNI7JBPuR0LHs1iV2UTpIka8pUKvcKMnyYZMw+mlSy24qj9AhyGSJToA4I+Ud/iOoSDXuR1sv3+WYp/S1Glc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963338; c=relaxed/simple;
-	bh=x4U5I1eTBLqHFAVJhJRhsZ55T3OmfzmweYCbfvgTK2I=;
+	s=arc-20240116; t=1725963341; c=relaxed/simple;
+	bh=meN74/PHQFCBOiXFfRVG2SKP63x6MuOSliIiNiF8P0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IH/Vx1/RC91Z5ArD4wGz84lSvQz5SIx4igC/2eiURtCT+Uol9qaD7mB6U02dM9lgN7f5Zikh6uG/6VUSR8MkH9pfWvG/PNPjSlu88QOCmPhCzpf2neg9hejgNEa8ZnlUJzDV5Ll73DNyejGqhM+ulJSOUzdyj5eRSU5/BG4mNek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUDLvk7j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pSe5BrLMmwyCIMGLV+J5faQnv7JoqbyMwv0V4s3gZDVvvjS27QZhwjA32i0OBL/dMHd9dZNbJBdPNjyVkpK2XAxi76k6AJP7SwhwQUogSP983ANbPHK+K/j7C8V8emvFX7v3HUn6vHJdEiROXqSOt/6m3K/97XSc66rai3oUwQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UN53klti; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUDLvk7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462F2C4CED0;
-	Tue, 10 Sep 2024 10:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UN53klti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A98CC4CEC3;
+	Tue, 10 Sep 2024 10:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963338;
-	bh=x4U5I1eTBLqHFAVJhJRhsZ55T3OmfzmweYCbfvgTK2I=;
+	s=korg; t=1725963341;
+	bh=meN74/PHQFCBOiXFfRVG2SKP63x6MuOSliIiNiF8P0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUDLvk7j0zZNrgDKFWK9yoLPsyQSwb6n3jMtwxcvbqSAZp/xFeIEe2it8mf6ANWGU
-	 AO6MeLx/GY77l+GKbykgLsrxh8AowiubWfChfmI8SVE1zQ7RKGtCTBhaEQl49Byj3Z
-	 HXGAEsUcLoBM82jsJG1LOEKxDMqywog8quF4kghc=
+	b=UN53klti0wTS2cYKbozObPyOnLecDn/NuwDy6SxrN7PEwYNUre6rdy/NgKoqHFP9w
+	 wZg5nBzExCkKRtJ6iH7eT6i0bukq9DAv7n/yV1hi6mfarnM3QHjX/R/W59N0F9ygpd
+	 NKQ28KTy5huokb0hoPTSQtpdIysplIffln076ZCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/214] ALSA: hda/conexant: Mute speakers at suspend / shutdown
-Date: Tue, 10 Sep 2024 11:30:25 +0200
-Message-ID: <20240910092558.853481425@linuxfoundation.org>
+Subject: [PATCH 5.15 004/214] i2c: Fix conditional for substituting empty ACPI functions
+Date: Tue, 10 Sep 2024 11:30:26 +0200
+Message-ID: <20240910092558.893809285@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -50,34 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 4f61c8fe35202702426cfc0003e15116a01ba885 ]
+[ Upstream commit f17c06c6608ad4ecd2ccf321753fb511812d821b ]
 
-Use the new helper to mute speakers at suspend / shutdown for avoiding
-click noises.
+Add IS_ENABLED(CONFIG_I2C) to the conditional around a bunch of ACPI
+functions.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1228269
-Link: https://patch.msgid.link/20240726142625.2460-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The conditional around these functions depended only on CONFIG_ACPI.
+But the functions are implemented in I2C core, so are only present if
+CONFIG_I2C is enabled.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/i2c.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 09a272c65be11..802a33aaa0d62 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -205,6 +205,8 @@ static void cx_auto_shutdown(struct hda_codec *codec)
- {
- 	struct conexant_spec *spec = codec->spec;
+diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+index f071a121ed914..dbb6aa3daf89b 100644
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -1025,7 +1025,7 @@ static inline int of_i2c_get_board_info(struct device *dev,
+ struct acpi_resource;
+ struct acpi_resource_i2c_serialbus;
  
-+	snd_hda_gen_shutup_speakers(codec);
-+
- 	/* Turn the problematic codec into D3 to avoid spurious noises
- 	   from the internal speaker during (and after) reboot */
- 	cx_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, false);
+-#if IS_ENABLED(CONFIG_ACPI)
++#if IS_ENABLED(CONFIG_ACPI) && IS_ENABLED(CONFIG_I2C)
+ bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
+ 			       struct acpi_resource_i2c_serialbus **i2c);
+ int i2c_acpi_client_count(struct acpi_device *adev);
 -- 
 2.43.0
 
