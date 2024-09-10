@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944DF17A589;
-	Tue, 10 Sep 2024 10:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD2317C7A3;
+	Tue, 10 Sep 2024 10:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963318; cv=none; b=u4eBKRasfTzHAxdsuGAhqzj1IU0r2SuNJZULodDIwb55Wao9ndzJmZ6XkK4z7Wg4/gcKL/jA18yqDxNd1CS4jtemuqHoXCFO47MU6Vhx/z4Kf2LAzQxIspv6b5NHizS1qBW19bijM6qPdqrYsd1WezIzPpWHHiqlVZ3OBsjr0sQ=
+	t=1725963321; cv=none; b=KI6lzC+qALu36LktWl9PCQsw8cvF5174ZiDGQUs+15UNjmc/YMiYRwtWJ0EUA5Sn1jnheq05vK4zgzA/LFvrwilbgoJVGg80NYa51irkLdERgbiwzKOCWRqGqeor+meEatgsnxNdNpvip8ycqNf18O5tzrb9RxB2WGNw/VNunzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963318; c=relaxed/simple;
-	bh=KGrTCApl2YCG/DslEmPKcz28liXL4W6S6C8to+cGXCU=;
+	s=arc-20240116; t=1725963321; c=relaxed/simple;
+	bh=bwCqCxyg2qnKEpAqbE2JLIJIS7xfK0lKFV4aaVLjzls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2rQ2lT71RsZ4vzQBkNfWp6FG7x2cpx/cqYI2EZOkLDka40IBEig6Dqx8eIYkEpm/UK+bSNV7YKqonqSgBNNTV9M10aXx0OqWwVJbmtsFk4UQe9QP7jvMP3wQR/iYTr6dkmN4VxIRg1CvfWWdmys9lgMf236WfQDNneQH6bzzms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkE/h2Yh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sla89BLvftN1eEIEwPK6em/SKv9AyO40vPkt1Phr2r6YkcS+U7UlrVQz5hWnT2rsH3PpPIJei+yCDoPXUqfLxtUwyDR7oXQIF0zgy0MUGnj3ab7wDmI9jEVRpwh31W/VmN4Wn9var37dVFaEJmQm8CgR2gaduORs7wBqO2UhmsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQuMUxcw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkE/h2Yh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F28C4CEC3;
-	Tue, 10 Sep 2024 10:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQuMUxcw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82E9C4CEC3;
+	Tue, 10 Sep 2024 10:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963318;
-	bh=KGrTCApl2YCG/DslEmPKcz28liXL4W6S6C8to+cGXCU=;
+	s=korg; t=1725963321;
+	bh=bwCqCxyg2qnKEpAqbE2JLIJIS7xfK0lKFV4aaVLjzls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UkE/h2Yh4paW3SVFezKBMNgY45+39QQQrFe7PqMfPDSdc+aAPrPaRbYjlQteqHnOG
-	 8Az/23n5/lQxX8xHd7+wOLcCVQPog//t6PW0zmsF7PxkNr6kfJFhNhyrQL2U3kFPWh
-	 rBsg2jTGLsIvaCjSeIIT1bdazmYv66yJe+Sf8WYQ=
+	b=gQuMUxcwfESi5bKaNL9OYpaCPHobpyHvrTilf9EwRrleFBk1vwQPDCs5dZ3LPl3aI
+	 PCsccctulWCBRjz/smILZFPnmyw+4u6y3n/I4/MbIawVGTwTF9+5S4Qpl3R/Uax65e
+	 kK/68pDyOuwL8v7JyGnCaYTQwcwF46H8lpCvTVNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Harry Wentland <harry.wentland@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/214] drm/amd/display: Check gpio_id before used as array index
-Date: Tue, 10 Sep 2024 11:30:39 +0200
-Message-ID: <20240910092559.476934583@linuxfoundation.org>
+Subject: [PATCH 5.15 018/214] drm/amd/display: Stop amdgpu_dm initialize when stream nums greater than 6
+Date: Tue, 10 Sep 2024 11:30:40 +0200
+Message-ID: <20240910092559.510017432@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -54,78 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit 2a5626eeb3b5eec7a36886f9556113dd93ec8ed6 ]
+[ Upstream commit 84723eb6068c50610c5c0893980d230d7afa2105 ]
 
-[WHY & HOW]
-GPIO_ID_UNKNOWN (-1) is not a valid value for array index and therefore
-should be checked in advance.
+[Why]
+Coverity reports OVERRUN warning. Should abort amdgpu_dm
+initialize.
 
-This fixes 5 OVERRUN issues reported by Coverity.
+[How]
+Return failure to amdgpu_dm_init.
 
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
-index dae8e489c8cf..a7c92c64490c 100644
---- a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
-+++ b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
-@@ -241,6 +241,9 @@ static bool is_pin_busy(
- 	enum gpio_id id,
- 	uint32_t en)
- {
-+	if (id == GPIO_ID_UNKNOWN)
-+		return false;
-+
- 	return service->busyness[id][en];
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 333be0541893..b4ae90c3ed23 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4211,7 +4211,10 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
  
-@@ -249,6 +252,9 @@ static void set_pin_busy(
- 	enum gpio_id id,
- 	uint32_t en)
- {
-+	if (id == GPIO_ID_UNKNOWN)
-+		return;
-+
- 	service->busyness[id][en] = true;
- }
+ 	/* There is one primary plane per CRTC */
+ 	primary_planes = dm->dc->caps.max_streams;
+-	ASSERT(primary_planes <= AMDGPU_MAX_PLANES);
++	if (primary_planes > AMDGPU_MAX_PLANES) {
++		DRM_ERROR("DM: Plane nums out of 6 planes\n");
++		return -EINVAL;
++	}
  
-@@ -257,6 +263,9 @@ static void set_pin_free(
- 	enum gpio_id id,
- 	uint32_t en)
- {
-+	if (id == GPIO_ID_UNKNOWN)
-+		return;
-+
- 	service->busyness[id][en] = false;
- }
- 
-@@ -265,7 +274,7 @@ enum gpio_result dal_gpio_service_lock(
- 	enum gpio_id id,
- 	uint32_t en)
- {
--	if (!service->busyness[id]) {
-+	if (id != GPIO_ID_UNKNOWN && !service->busyness[id]) {
- 		ASSERT_CRITICAL(false);
- 		return GPIO_RESULT_OPEN_FAILED;
- 	}
-@@ -279,7 +288,7 @@ enum gpio_result dal_gpio_service_unlock(
- 	enum gpio_id id,
- 	uint32_t en)
- {
--	if (!service->busyness[id]) {
-+	if (id != GPIO_ID_UNKNOWN && !service->busyness[id]) {
- 		ASSERT_CRITICAL(false);
- 		return GPIO_RESULT_OPEN_FAILED;
- 	}
+ 	/*
+ 	 * Initialize primary planes, implicit planes for legacy IOCTLS.
 -- 
 2.43.0
 
