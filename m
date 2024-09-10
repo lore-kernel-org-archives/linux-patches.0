@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C3818B49E;
-	Tue, 10 Sep 2024 09:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F8418C928;
+	Tue, 10 Sep 2024 09:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962099; cv=none; b=OqSb3WuQKuUE7IBnOjcjDM/OYeIGuauv8ipXj6vpXbjaXdDCsCIb9tDSvwj09fNV/+EpBzGkK0tlXjlOUo7BCWGXDDO1ViirOsEB8Va1Zr0kXlmFrrx+nCVJHuWxrqDdw5zpBd/MMYl/4W/dQHudljSjx77bkP0v/a0bhGhFntg=
+	t=1725962102; cv=none; b=Hv+nTPPzVQmLhYfyJ3zXFVUgc8/BT2/0Nq8CEMExJPe1VywOxR140mqzWOK5HxH4WV6/eilMYoLPH2mWvTYU2lNLHNdr6rfsWXZlIIxqbgjepdZJN7IKfAopRRpPO/Jqcf1ycn8Njbb4zEZGzA4P1jDoqsTWD2isHm+puuI7W9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962099; c=relaxed/simple;
-	bh=gH+1p7scMrruxLNe5y8rM/rHoEZu46hFQot8ldbzA4o=;
+	s=arc-20240116; t=1725962102; c=relaxed/simple;
+	bh=0JnFlbD8aJ5qxbmUzmcs7V5Kqj4pKUIa66PUU8YARKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAnw/k8W5JFHMonNGrBfTq3voyGU9K/ttPIAO1loELtAXwlAda7OvcDyPBXS66SpmaC6+h9smdf2OsUK2eOLW/7VBMiFl7PN3/b+h6ka8O1iRyMrHXyrK+t9v2u08xdivDzUWqxtJB68ZQYowROK66/2+mCXSL5kuHo/eGSBW88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CR2+EDlE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvt5cOk/vMwEbWmNFUVvdWu1/NWwufch8h+2rUFgyy9AsshP0qHUNkdK5yJEHa+Fjf1EF/oCz75Q9C3TcQjoPaOFa62LBM1WLvpt54LlOEds/gveADb2zLaAJRDludoiCuQ0msGZF8WY3mVX6+bShiEHy+7Ib33X4juQqUpdPCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yVa9zBq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CR2+EDlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22D4C4CEC3;
-	Tue, 10 Sep 2024 09:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yVa9zBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6D9C4CEC3;
+	Tue, 10 Sep 2024 09:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962099;
-	bh=gH+1p7scMrruxLNe5y8rM/rHoEZu46hFQot8ldbzA4o=;
+	s=korg; t=1725962101;
+	bh=0JnFlbD8aJ5qxbmUzmcs7V5Kqj4pKUIa66PUU8YARKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CR2+EDlECRoDLCxmIADh846j6HAFgVP9EpM94j9+vIgEjB8sHVNKWFW1jkFhxv0Yd
-	 qugYpNmeyGjfavg/Bbrf9Hno0PJHsXiy5FAKsuuoNnZigKQqlOiabXacfg18c7Q5RK
-	 1H5LZ6zDqeC6jJLZGxjFBv+tqHtl95ubBbmMhW/o=
+	b=0yVa9zBqu7QYECcNDHxhfKeT1qPrUr1Ay/2gKwjooe6qAs6WLxxxo4uP1yAKo0AGm
+	 Dt9YkjKJXslii8XB/HhZ8VqZgUM40pnWaShtpTMh3/16OBa/HvKF3QRwJzjrg9Jbb+
+	 tDmX4uTdYVnW1MMBmv8cb2NhUinhCX5N/dj9wpCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH 6.10 295/375] usb: dwc3: Avoid waking up gadget during startxfer
-Date: Tue, 10 Sep 2024 11:31:32 +0200
-Message-ID: <20240910092632.471343058@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.10 296/375] usb: typec: ucsi: Fix the partner PD revision
+Date: Tue, 10 Sep 2024 11:31:33 +0200
+Message-ID: <20240910092632.500802531@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,86 +49,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 00dcf2fa449f23a263343d7fe051741bdde65d0b upstream.
+commit de3d7969f6a80aa5abbbc0f39897495ae35548d0 upstream.
 
-When operating in High-Speed, it is observed that DSTS[USBLNKST] doesn't
-update link state immediately after receiving the wakeup interrupt. Since
-wakeup event handler calls the resume callbacks, there is a chance that
-function drivers can perform an ep queue, which in turn tries to perform
-remote wakeup from send_gadget_ep_cmd(STARTXFER). This happens because
-DSTS[[21:18] wasn't updated to U0 yet, it's observed that the latency of
-DSTS can be in order of milli-seconds. Hence avoid calling gadget_wakeup
-during startxfer to prevent unnecessarily issuing remote wakeup to host.
+The Partner PD Revision field in GET_CONNECTOR_CAPABILITY
+data structure was introduced in UCSI v2.1. In
+ucsi_check_connector_capability() the version was assumed to
+be 2.0, and in ucsi_register_partner() the field is accessed
+completely unconditionally.
 
-Fixes: c36d8e947a56 ("usb: dwc3: gadget: put link to U0 before Start Transfer")
+Fixing the version in ucsi_check_connector_capability(), and
+replacing the unconditional pd_revision assignment with a
+direct call to ucsi_check_connector_capability() in
+ucsi_register_port(). After this the revision is also
+checked only if there is a PD contract.
+
+Fixes: b9fccfdb4ebb ("usb: typec: ucsi: Get PD revision for partner")
 Cc: stable@vger.kernel.org
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240828064302.3796315-1-quic_prashk@quicinc.com
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240830111645.2134301-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   41 +++++++++++++++++------------------------
- 1 file changed, 17 insertions(+), 24 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   50 +++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -287,6 +287,23 @@ static int __dwc3_gadget_wakeup(struct d
-  *
-  * Caller should handle locking. This function will issue @cmd with given
-  * @params to @dep and wait for its completion.
-+ *
-+ * According to the programming guide, if the link state is in L1/L2/U3,
-+ * then sending the Start Transfer command may not complete. The
-+ * programming guide suggested to bring the link state back to ON/U0 by
-+ * performing remote wakeup prior to sending the command. However, don't
-+ * initiate remote wakeup when the user/function does not send wakeup
-+ * request via wakeup ops. Send the command when it's allowed.
-+ *
-+ * Notes:
-+ * For L1 link state, issuing a command requires the clearing of
-+ * GUSB2PHYCFG.SUSPENDUSB2, which turns on the signal required to complete
-+ * the given command (usually within 50us). This should happen within the
-+ * command timeout set by driver. No additional step is needed.
-+ *
-+ * For L2 or U3 link state, the gadget is in USB suspend. Care should be
-+ * taken when sending Start Transfer command to ensure that it's done after
-+ * USB resume.
-  */
- int dwc3_send_gadget_ep_cmd(struct dwc3_ep *dep, unsigned int cmd,
- 		struct dwc3_gadget_ep_cmd_params *params)
-@@ -327,30 +344,6 @@ int dwc3_send_gadget_ep_cmd(struct dwc3_
- 			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
- 	}
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -961,6 +961,27 @@ static void ucsi_unregister_cable(struct
+ 	con->cable = NULL;
+ }
  
--	if (DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_STARTTRANSFER) {
--		int link_state;
++static int ucsi_check_connector_capability(struct ucsi_connector *con)
++{
++	u64 command;
++	int ret;
++
++	if (!con->partner || con->ucsi->version < UCSI_VERSION_2_1)
++		return 0;
++
++	command = UCSI_GET_CONNECTOR_CAPABILITY | UCSI_CONNECTOR_NUMBER(con->num);
++	ret = ucsi_send_command(con->ucsi, command, &con->cap, sizeof(con->cap));
++	if (ret < 0) {
++		dev_err(con->ucsi->dev, "GET_CONNECTOR_CAPABILITY failed (%d)\n", ret);
++		return ret;
++	}
++
++	typec_partner_set_pd_revision(con->partner,
++		UCSI_CONCAP_FLAG_PARTNER_PD_MAJOR_REV_AS_BCD(con->cap.flags));
++
++	return ret;
++}
++
+ static void ucsi_pwr_opmode_change(struct ucsi_connector *con)
+ {
+ 	switch (UCSI_CONSTAT_PWR_OPMODE(con->status.flags)) {
+@@ -970,6 +991,7 @@ static void ucsi_pwr_opmode_change(struc
+ 		ucsi_partner_task(con, ucsi_get_src_pdos, 30, 0);
+ 		ucsi_partner_task(con, ucsi_check_altmodes, 30, 0);
+ 		ucsi_partner_task(con, ucsi_register_partner_pdos, 1, HZ);
++		ucsi_partner_task(con, ucsi_check_connector_capability, 1, HZ);
+ 		break;
+ 	case UCSI_CONSTAT_PWR_OPMODE_TYPEC1_5:
+ 		con->rdo = 0;
+@@ -1013,7 +1035,6 @@ static int ucsi_register_partner(struct
+ 
+ 	desc.identity = &con->partner_identity;
+ 	desc.usb_pd = pwr_opmode == UCSI_CONSTAT_PWR_OPMODE_PD;
+-	desc.pd_revision = UCSI_CONCAP_FLAG_PARTNER_PD_MAJOR_REV_AS_BCD(con->cap.flags);
+ 
+ 	partner = typec_register_partner(con->port, &desc);
+ 	if (IS_ERR(partner)) {
+@@ -1090,27 +1111,6 @@ static void ucsi_partner_change(struct u
+ 			con->num, u_role);
+ }
+ 
+-static int ucsi_check_connector_capability(struct ucsi_connector *con)
+-{
+-	u64 command;
+-	int ret;
 -
--		/*
--		 * Initiate remote wakeup if the link state is in U3 when
--		 * operating in SS/SSP or L1/L2 when operating in HS/FS. If the
--		 * link state is in U1/U2, no remote wakeup is needed. The Start
--		 * Transfer command will initiate the link recovery.
--		 */
--		link_state = dwc3_gadget_get_link_state(dwc);
--		switch (link_state) {
--		case DWC3_LINK_STATE_U2:
--			if (dwc->gadget->speed >= USB_SPEED_SUPER)
--				break;
+-	if (!con->partner || con->ucsi->version < UCSI_VERSION_2_0)
+-		return 0;
 -
--			fallthrough;
--		case DWC3_LINK_STATE_U3:
--			ret = __dwc3_gadget_wakeup(dwc, false);
--			dev_WARN_ONCE(dwc->dev, ret, "wakeup failed --> %d\n",
--					ret);
--			break;
--		}
+-	command = UCSI_GET_CONNECTOR_CAPABILITY | UCSI_CONNECTOR_NUMBER(con->num);
+-	ret = ucsi_send_command(con->ucsi, command, &con->cap, sizeof(con->cap));
+-	if (ret < 0) {
+-		dev_err(con->ucsi->dev, "GET_CONNECTOR_CAPABILITY failed (%d)\n", ret);
+-		return ret;
 -	}
 -
- 	/*
- 	 * For some commands such as Update Transfer command, DEPCMDPARn
- 	 * registers are reserved. Since the driver often sends Update Transfer
+-	typec_partner_set_pd_revision(con->partner,
+-		UCSI_CONCAP_FLAG_PARTNER_PD_MAJOR_REV_AS_BCD(con->cap.flags));
+-
+-	return ret;
+-}
+-
+ static int ucsi_check_connection(struct ucsi_connector *con)
+ {
+ 	u8 prev_flags = con->status.flags;
+@@ -1225,15 +1225,16 @@ static void ucsi_handle_connector_change
+ 		if (con->status.flags & UCSI_CONSTAT_CONNECTED) {
+ 			ucsi_register_partner(con);
+ 			ucsi_partner_task(con, ucsi_check_connection, 1, HZ);
+-			ucsi_partner_task(con, ucsi_check_connector_capability, 1, HZ);
+ 			if (con->ucsi->cap.features & UCSI_CAP_GET_PD_MESSAGE)
+ 				ucsi_partner_task(con, ucsi_get_partner_identity, 1, HZ);
+ 			if (con->ucsi->cap.features & UCSI_CAP_CABLE_DETAILS)
+ 				ucsi_partner_task(con, ucsi_check_cable, 1, HZ);
+ 
+ 			if (UCSI_CONSTAT_PWR_OPMODE(con->status.flags) ==
+-			    UCSI_CONSTAT_PWR_OPMODE_PD)
++			    UCSI_CONSTAT_PWR_OPMODE_PD) {
+ 				ucsi_partner_task(con, ucsi_register_partner_pdos, 1, HZ);
++				ucsi_partner_task(con, ucsi_check_connector_capability, 1, HZ);
++			}
+ 		} else {
+ 			ucsi_unregister_partner(con);
+ 		}
+@@ -1650,6 +1651,7 @@ static int ucsi_register_port(struct ucs
+ 		ucsi_register_device_pdos(con);
+ 		ucsi_get_src_pdos(con);
+ 		ucsi_check_altmodes(con);
++		ucsi_check_connector_capability(con);
+ 	}
+ 
+ 	trace_ucsi_register_port(con->num, &con->status);
 
 
