@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B834191F96;
-	Tue, 10 Sep 2024 10:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726DA18F2DF;
+	Tue, 10 Sep 2024 10:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964405; cv=none; b=Lar3RBReCACVPFOOnZ624dCW6K/tq3lGUVUCxT5D+2i6/INP6TNGn6Wrc+AUhcmGASYx1Hs7XpsBJHZG8i6rBaaI8f4U+N8EPxeGqhKUciwSnCW/lwHQQdLC9+I64KAQoLzIb+ulCuFyDjonxJJ6KItJKvyWbscVoGczL9KWCTY=
+	t=1725964408; cv=none; b=KW2HMbLdmwCtlRgEWaZMkAzpNqSI8trU731GsU5zIFBbMQtcGBao9Kz/PkOjbY2ph1uqlm5ldITa//sDO7pRFzZa4Sg3w8Zhy4HYsJ3LQ2UJd5CgEes9XvUY9dSk7TpGVQGEiH7dGGxwNo9Exn0d0uFgzHwhGBB6zfa93gxCfFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964405; c=relaxed/simple;
-	bh=HzyGxUdumqEddtiIvfiqqVOiEkOCizGF0SpWQCzrEx8=;
+	s=arc-20240116; t=1725964408; c=relaxed/simple;
+	bh=a0w8fPhnIoDFWX49bcoClVpTLEphNBx9BoTcVvEPNP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuueepN1cqWIVGMVv1vcxplHwNYlz96s8TZsn66vyFKCIds11Sx2Y0o8yYuH/teYLM7c/NU9tPtScd2m4SmyyZ5OECYpJtZnc9LamjVvWOxt6EDnfWTyOYK6rtOBGdH1DZt+Jw/Cu1YbXPkZKuQBJ22u9Wx0G2vFextM1EUTVkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWkKsTWs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZKc2+inNhrD2SU4L3Ee/Yf8Fv9sGNYKEiYuW21cRjdNV/P2Hv4UjXmU6zHTRHvJZ3SJvuu2r7lbslBjP6LZgz7a1Bit2TR7iEnuhaaRmgNXpWIEX/uuLLlRYlf5AkwATyirMqkH88WAD+koPnk9RPpm+5v9Al43GCWieHwwspU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFSCBUbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWkKsTWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13799C4CEC3;
-	Tue, 10 Sep 2024 10:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFSCBUbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBCBC4CEC3;
+	Tue, 10 Sep 2024 10:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964405;
-	bh=HzyGxUdumqEddtiIvfiqqVOiEkOCizGF0SpWQCzrEx8=;
+	s=korg; t=1725964408;
+	bh=a0w8fPhnIoDFWX49bcoClVpTLEphNBx9BoTcVvEPNP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WWkKsTWsj1Pvou42y+iS+x8pQ+0Xous0c/P/ayvy8yW8rL7oiTXVWLfCupqGRUnqU
-	 CXhVdIhSVnWXEly1eIsuXjqHvtZWXUIyN/jHE0Pm1MePuGV75BZHtBHmn+vZy4Z+YG
-	 rYv+1UDc3ZTKgHBdnCxtdcIFUVA7oCir58rYHZYE=
+	b=gFSCBUbSRBdIzcdgI1HBL263mTHyBLoa82yhEBG0hl1q7NVWn+WDCVEd6RKdhWnqj
+	 DZSlMdrnijfo6rFanCa5+3+m/Ob8dgNb6f5yHEn6qHPEmICyC+WPXLy9q7DhMHOcfD
+	 FCWZOChf0vOlodgH8CIwvb2Q7zeaRh3QHueCcw1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/269] PCI: Add missing bridge lock to pci_bus_lock()
-Date: Tue, 10 Sep 2024 11:32:38 +0200
-Message-ID: <20240910092614.245390416@linuxfoundation.org>
+Subject: [PATCH 6.6 172/269] tcp: Dont drop SYN+ACK for simultaneous connect().
+Date: Tue, 10 Sep 2024 11:32:39 +0200
+Message-ID: <20240910092614.306177193@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -56,161 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a4e772898f8bf2e7e1cf661a12c60a5612c4afab ]
+[ Upstream commit 23e89e8ee7be73e21200947885a6d3a109a2c58d ]
 
-One of the true positives that the cfg_access_lock lockdep effort
-identified is this sequence:
+RFC 9293 states that in the case of simultaneous connect(), the connection
+gets established when SYN+ACK is received. [0]
 
-  WARNING: CPU: 14 PID: 1 at drivers/pci/pci.c:4886 pci_bridge_secondary_bus_reset+0x5d/0x70
-  RIP: 0010:pci_bridge_secondary_bus_reset+0x5d/0x70
-  Call Trace:
-   <TASK>
-   ? __warn+0x8c/0x190
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   ? report_bug+0x1f8/0x200
-   ? handle_bug+0x3c/0x70
-   ? exc_invalid_op+0x18/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   pci_reset_bus+0x1d8/0x270
-   vmd_probe+0x778/0xa10
-   pci_device_probe+0x95/0x120
+      TCP Peer A                                       TCP Peer B
 
-Where pci_reset_bus() users are triggering unlocked secondary bus resets.
-Ironically pci_bus_reset(), several calls down from pci_reset_bus(), uses
-pci_bus_lock() before issuing the reset which locks everything *but* the
-bridge itself.
+  1.  CLOSED                                           CLOSED
+  2.  SYN-SENT     --> <SEQ=100><CTL=SYN>              ...
+  3.  SYN-RECEIVED <-- <SEQ=300><CTL=SYN>              <-- SYN-SENT
+  4.               ... <SEQ=100><CTL=SYN>              --> SYN-RECEIVED
+  5.  SYN-RECEIVED --> <SEQ=100><ACK=301><CTL=SYN,ACK> ...
+  6.  ESTABLISHED  <-- <SEQ=300><ACK=101><CTL=SYN,ACK> <-- SYN-RECEIVED
+  7.               ... <SEQ=100><ACK=301><CTL=SYN,ACK> --> ESTABLISHED
 
-For the same motivation as adding:
+However, since commit 0c24604b68fc ("tcp: implement RFC 5961 4.2"), such a
+SYN+ACK is dropped in tcp_validate_incoming() and responded with Challenge
+ACK.
 
-  bridge = pci_upstream_bridge(dev);
-  if (bridge)
-    pci_dev_lock(bridge);
+For example, the write() syscall in the following packetdrill script fails
+with -EAGAIN, and wrong SNMP stats get incremented.
 
-to pci_reset_function() for the "bus" and "cxl_bus" reset cases, add
-pci_dev_lock() for @bus->self to pci_bus_lock().
+   0 socket(..., SOCK_STREAM|SOCK_NONBLOCK, IPPROTO_TCP) = 3
+  +0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
 
-Link: https://lore.kernel.org/r/171711747501.1628941.15217746952476635316.stgit@dwillia2-xfh.jf.intel.com
-Reported-by: Imre Deak <imre.deak@intel.com>
-Closes: http://lore.kernel.org/r/6657833b3b5ae_14984b29437@dwillia2-xfh.jf.intel.com.notmuch
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[bhelgaas: squash in recursive locking deadlock fix from Keith Busch:
-https://lore.kernel.org/r/20240711193650.701834-1-kbusch@meta.com]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Kalle Valo <kvalo@kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+  +0 > S  0:0(0) <mss 1460,sackOK,TS val 1000 ecr 0,nop,wscale 8>
+  +0 < S  0:0(0) win 1000 <mss 1000>
+  +0 > S. 0:0(0) ack 1 <mss 1460,sackOK,TS val 3308134035 ecr 0,nop,wscale 8>
+  +0 < S. 0:0(0) ack 1 win 1000
+
+  +0 write(3, ..., 100) = 100
+  +0 > P. 1:101(100) ack 1
+
+  --
+
+  # packetdrill cross-synack.pkt
+  cross-synack.pkt:13: runtime error in write call: Expected result 100 but got -1 with errno 11 (Resource temporarily unavailable)
+  # nstat
+  ...
+  TcpExtTCPChallengeACK           1                  0.0
+  TcpExtTCPSYNChallenge           1                  0.0
+
+The problem is that bpf_skops_established() is triggered by the Challenge
+ACK instead of SYN+ACK.  This causes the bpf prog to miss the chance to
+check if the peer supports a TCP option that is expected to be exchanged
+in SYN and SYN+ACK.
+
+Let's accept a bare SYN+ACK for active-open TCP_SYN_RECV sockets to avoid
+such a situation.
+
+Note that tcp_ack_snd_check() in tcp_rcv_state_process() is skipped not to
+send an unnecessary ACK, but this could be a bit risky for net.git, so this
+targets for net-next.
+
+Link: https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5-7 [0]
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240710171246.87533-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ net/ipv4/tcp_input.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index a0f961a380fa..53e9e9788bd5 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5718,10 +5718,12 @@ static void pci_bus_lock(struct pci_bus *bus)
- {
- 	struct pci_dev *dev;
- 
-+	pci_dev_lock(bus->self);
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 24c7c955dc95..336bc97e86d5 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -5880,6 +5880,11 @@ static bool tcp_validate_incoming(struct sock *sk, struct sk_buff *skb,
+ 	 * RFC 5961 4.2 : Send a challenge ack
+ 	 */
+ 	if (th->syn) {
++		if (sk->sk_state == TCP_SYN_RECV && sk->sk_socket && th->ack &&
++		    TCP_SKB_CB(skb)->seq + 1 == TCP_SKB_CB(skb)->end_seq &&
++		    TCP_SKB_CB(skb)->seq + 1 == tp->rcv_nxt &&
++		    TCP_SKB_CB(skb)->ack_seq == tp->snd_nxt)
++			goto pass;
+ syn_challenge:
+ 		if (syn_inerr)
+ 			TCP_INC_STATS(sock_net(sk), TCP_MIB_INERRS);
+@@ -5889,6 +5894,7 @@ static bool tcp_validate_incoming(struct sock *sk, struct sk_buff *skb,
+ 		goto discard;
  	}
- }
  
-@@ -5733,8 +5735,10 @@ static void pci_bus_unlock(struct pci_bus *bus)
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- }
++pass:
+ 	bpf_skops_parse_hdr(sk, skb);
  
- /* Return 1 on successful lock, 0 on contention */
-@@ -5742,15 +5746,15 @@ static int pci_bus_trylock(struct pci_bus *bus)
- {
- 	struct pci_dev *dev;
- 
-+	if (!pci_dev_trylock(bus->self))
-+		return 0;
+ 	return true;
+@@ -6673,6 +6679,9 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		tcp_fast_path_on(tp);
+ 		if (sk->sk_shutdown & SEND_SHUTDOWN)
+ 			tcp_shutdown(sk, SEND_SHUTDOWN);
 +
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
--			if (!pci_bus_trylock(dev->subordinate)) {
--				pci_dev_unlock(dev);
-+			if (!pci_bus_trylock(dev->subordinate))
- 				goto unlock;
--			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
++		if (sk->sk_socket)
++			goto consume;
+ 		break;
  
-@@ -5758,8 +5762,10 @@ static int pci_bus_trylock(struct pci_bus *bus)
- 	list_for_each_entry_continue_reverse(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- 	return 0;
- }
- 
-@@ -5791,9 +5797,10 @@ static void pci_slot_lock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
- 	}
- }
- 
-@@ -5819,14 +5826,13 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
- 			if (!pci_bus_trylock(dev->subordinate)) {
- 				pci_dev_unlock(dev);
- 				goto unlock;
- 			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
- 
-@@ -5837,7 +5843,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
- 	return 0;
- }
+ 	case TCP_FIN_WAIT1: {
 -- 
 2.43.0
 
