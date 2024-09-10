@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B6C18C331;
-	Tue, 10 Sep 2024 09:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6530E18B481;
+	Tue, 10 Sep 2024 09:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961095; cv=none; b=S9ii8xQ9f592ndUDebNzCl760CeDMaR3V35ajE+jZML23cCtZfYiUWVykcaszXVCsw5V8szJksUjeA/CMTeMT+3O9U7eNGfRX3DR/WuhMKrdEjI0PkkdWlO0XnCCDKCrT/dBclxC+zdF2tP1X67W/O6lCfoR3ua6VbVEmCR4g20=
+	t=1725961098; cv=none; b=fYqutUaI4ACW3GYmnWa5TqGYZyFe1lp26Me29yhaRvkengcRgALLkYrHDQhESrEwDe0hEBnrMTtBRQDCXdHkg27DduZIzR8DP3OQugwb/MoGFseAaduZf2FXJoz9LeUdah+g9NadEfwHm+n3gzwAReZSMXwgCR/4UnVzPLC3dro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961095; c=relaxed/simple;
-	bh=gLVg1aSuOmJTRoWitdSZjipeIGmXRHqKiFxDe7LdfhU=;
+	s=arc-20240116; t=1725961098; c=relaxed/simple;
+	bh=8Uj8lWpVvhTX33w5GJT1qTpMn1UYleJMzpa6qeSFPPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ua2ZbnjTWglUSqpORWWVYUbFbZsDGQuDvo3a9QPZHVvdq+1KR7xq3mlCVwK3FlKx41OJcN6f0sMHndafbLwU5MnsW2DTvS5QaNBtfNN79FUvWrJBkX6JwOW030Ijg7XASKAqk9jcWMtKtUxSZLuOM2vhDGWmTWdF+q1rFIrCHhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJQuHWyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBif1a8LhIudL37OzsMsndXYOjEo8hIYNpAqVSoladvsdCmyLI1bshDKjMFPbsUOEDlgBktGudbSlRwbBtHnlgO9FosTeVaj345JIAiRAuH2dcpnhixVW9AZ+UkKetjSoE9YyDn1TM/D1LUKrjfxCkoji7vc3miLtKUir00NOU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaWavkcV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJQuHWyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0633C4CEC3;
-	Tue, 10 Sep 2024 09:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaWavkcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A68BC4CECE;
+	Tue, 10 Sep 2024 09:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961095;
-	bh=gLVg1aSuOmJTRoWitdSZjipeIGmXRHqKiFxDe7LdfhU=;
+	s=korg; t=1725961098;
+	bh=8Uj8lWpVvhTX33w5GJT1qTpMn1UYleJMzpa6qeSFPPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJQuHWybYFekedIJdxxgBNjteek+8zAsRy6/XK8NKO5paV0vnFhvjf7lDHYdvikzQ
-	 Nz/zD48EGzZa2TNPMk88m1g0GSkfLHb7TdK0+kJlGMxX/Bvb/ePaAB9aMAB/bgDrO1
-	 v2vMi6ijzVSHDjgdTMjEpHNB659zC6wS3W94LfxI=
+	b=TaWavkcVbxruxqh8PL0QOIp6u0KKIobxpJi13lnMIJ5prIiXuOHiLWkIznoAtLr6Z
+	 fBkFuvJkTPuxDyBdh10SwkZKKs6lHa9/Ujl7CAezHyL6jTu0OVN2sGg/zcQJuwaE//
+	 MIpX1huLJQioVmFpl+iDtYOBh5Qf6s2IG6UrpLkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jules Irenge <jbi.octave@gmail.com>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 34/96] pcmcia: Use resource_size function on resource object
-Date: Tue, 10 Sep 2024 11:31:36 +0200
-Message-ID: <20240910092543.010992146@linuxfoundation.org>
+Subject: [PATCH 4.19 52/96] iommu/vt-d: Handle volatile descriptor status read
+Date: Tue, 10 Sep 2024 11:31:54 +0200
+Message-ID: <20240910092543.814634764@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,44 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jules Irenge <jbi.octave@gmail.com>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit 24a025497e7e883bd2adef5d0ece1e9b9268009f ]
+[ Upstream commit b5e86a95541cea737394a1da967df4cd4d8f7182 ]
 
-Cocinnele reports a warning
+Queued invalidation wait descriptor status is volatile in that IOMMU
+hardware writes the data upon completion.
 
-WARNING: Suspicious code. resource_size is maybe missing with root
+Use READ_ONCE() to prevent compiler optimizations which ensures memory
+reads every time. As a side effect, READ_ONCE() also enforces strict
+types and may add an extra instruction. But it should not have negative
+performance impact since we use cpu_relax anyway and the extra time(by
+adding an instruction) may allow IOMMU HW request cacheline ownership
+easier.
 
-The root cause is the function resource_size is not used when needed
+e.g. gcc 12.3
+BEFORE:
+	81 38 ad de 00 00       cmpl   $0x2,(%rax)
 
-Use resource_size() on variable "root" of type resource
+AFTER (with READ_ONCE())
+    772f:       8b 00                   mov    (%rax),%eax
+    7731:       3d ad de 00 00          cmp    $0x2,%eax
+                                        //status data is 32 bit
 
-Signed-off-by: Jules Irenge <jbi.octave@gmail.com>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20240607173817.3914600-1-jacob.jun.pan@linux.intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20240702130839.108139-2-baolu.lu@linux.intel.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/yenta_socket.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iommu/dmar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pcmcia/yenta_socket.c b/drivers/pcmcia/yenta_socket.c
-index ac6a3f46b1e6..738660002ef3 100644
---- a/drivers/pcmcia/yenta_socket.c
-+++ b/drivers/pcmcia/yenta_socket.c
-@@ -636,11 +636,11 @@ static int yenta_search_one_res(struct resource *root, struct resource *res,
- 		start = PCIBIOS_MIN_CARDBUS_IO;
- 		end = ~0U;
- 	} else {
--		unsigned long avail = root->end - root->start;
-+		unsigned long avail = resource_size(root);
- 		int i;
- 		size = BRIDGE_MEM_MAX;
--		if (size > avail/8) {
--			size = (avail+1)/8;
-+		if (size > (avail - 1) / 8) {
-+			size = avail / 8;
- 			/* round size down to next power of 2 */
- 			i = 0;
- 			while ((size /= 2) != 0)
+diff --git a/drivers/iommu/dmar.c b/drivers/iommu/dmar.c
+index 3ea851583724..865847546f8e 100644
+--- a/drivers/iommu/dmar.c
++++ b/drivers/iommu/dmar.c
+@@ -1292,7 +1292,7 @@ int qi_submit_sync(struct qi_desc *desc, struct intel_iommu *iommu)
+ 	 */
+ 	writel(qi->free_head << DMAR_IQ_SHIFT, iommu->reg + DMAR_IQT_REG);
+ 
+-	while (qi->desc_status[wait_index] != QI_DONE) {
++	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
+ 		/*
+ 		 * We will leave the interrupts disabled, to prevent interrupt
+ 		 * context to queue another cmd while a cmd is already submitted
 -- 
 2.43.0
 
