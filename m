@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE9F13AD09;
-	Tue, 10 Sep 2024 09:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E3B13AD09;
+	Tue, 10 Sep 2024 09:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961831; cv=none; b=opWxQraAzPsubxjUX7TBypqRJf6wRvSkDxtUMoJYyqpC0gU9dart4N1M4EFIF9X9sKhnbJ3mpgjSnv1gnD6XHdPNEbr/HNwBtOMTfp/mcc6W/sZ8rb2rj74j5LnY304ipJdQ4iI+SNR/pN6HtV9eyIVPwuuIhnyrq1+VybYYddE=
+	t=1725961834; cv=none; b=RtKWx7O2uvLIIlf1v97K3AIhPx8l8oPn4zIovR2Guikn4SIWnfo1rMG1rihNB50bc1RUitf9T4F5T8/zyr0vzGAPZA0b5f8774chPJ7lXJsaJ3tlTQ8x/1H/Zu+rOr7MNvKQiuca3tF8Z4skkau+Fx6WZCzU65mtg0LTv+sjK6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961831; c=relaxed/simple;
-	bh=raxOPTX28mnqcZslbFQvSvRyi3Y/cWED+AFcSIoFDMo=;
+	s=arc-20240116; t=1725961834; c=relaxed/simple;
+	bh=AwhZ8/pKCAKxpYxxMTQV2fJmuSm/yZj6pYU58zEhKDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WkCLGY/yo9H/41ZlQhYsHtXKcGCngydbw6+bhlGRjG5lWfMKOEKZnY6rV+mhGXaz0a55dAuZCWfAVOSt731Qh+UCBhfCH1Z1pk1hSe6vY2XXAIzOnhvx/+hdntxh7wSwisikTL2buwQqsnLgisWEvBgjaDLE0YyDipLyAmiauE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhX1f385; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSH3VCJCd16sfIK7kAvSZoypy2ypVYGA926xd8Za2JFAkjblf0b/9fzg5H287DmHH95qbcbQSe6oWlBFBY/K0MKhLLcdVdJpFBbovReO+tP92mXlCQMwbt4GrLrAylDaUbQEWQiSn5XDKku9632b6ZWnXX9r3G+kIAKZUemsVwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRovMVNk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhX1f385"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2500AC4CEC3;
-	Tue, 10 Sep 2024 09:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRovMVNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35919C4CEC3;
+	Tue, 10 Sep 2024 09:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961831;
-	bh=raxOPTX28mnqcZslbFQvSvRyi3Y/cWED+AFcSIoFDMo=;
+	s=korg; t=1725961834;
+	bh=AwhZ8/pKCAKxpYxxMTQV2fJmuSm/yZj6pYU58zEhKDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UhX1f385x9LyhXQD+PI6VkuE/E9K5nGvKpiyrrg4S7mQ9HPVTq8Kdl8p/hxBZCAQ9
-	 01rIRNsTNMK1QHQJ+R4oWHrbkI9/mnJANPzIpfMOmRG05z6frlpFF8tN9AvCyJ72F8
-	 NqGhMqPdshk356k7IKtgGT1Q7IHWrsG6RHpEIimk=
+	b=uRovMVNkxyoj+v1cTtd35c9hOkex+QKf3II0kPCM47UWUxBWpT6GQ35iCwE4pSAms
+	 NWY1pL1EocM7CFaX5KaY6Mr+hATJw0iXXUG+td7/soOQzzR6NvTdgAQKpX/h+waP09
+	 ClmSA00DLIg2V2jKJ74C92hMvn5/IO6EF7DJMDRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Bharata B Rao <bharata@amd.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 204/375] cxl/region: Fix a race condition in memory hotplug notifier
-Date: Tue, 10 Sep 2024 11:30:01 +0200
-Message-ID: <20240910092629.360469600@linuxfoundation.org>
+Subject: [PATCH 6.10 205/375] iommu/vt-d: Handle volatile descriptor status read
+Date: Tue, 10 Sep 2024 11:30:02 +0200
+Message-ID: <20240910092629.392788318@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -61,88 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Ying <ying.huang@intel.com>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit a3483ee7e6a7f2d12b5950246f4e0ef94f4a5df0 ]
+[ Upstream commit b5e86a95541cea737394a1da967df4cd4d8f7182 ]
 
-In the memory hotplug notifier function of the CXL region,
-cxl_region_perf_attrs_callback(), the node ID is obtained by checking
-the host address range of the region. However, the address range
-information is not available when the region is registered in
-devm_cxl_add_region(). Additionally, this information may be removed
-or added under the protection of cxl_region_rwsem during runtime. If
-the memory notifier is called for nodes other than that backed by the
-region, a race condition may occur, potentially leading to a NULL
-dereference or an invalid address range.
+Queued invalidation wait descriptor status is volatile in that IOMMU
+hardware writes the data upon completion.
 
-The race condition is addressed by checking the availability of the
-address range information under the protection of cxl_region_rwsem. To
-enhance code readability and use guard(), the relevant code has been
-moved into a newly added function: cxl_region_nid().
+Use READ_ONCE() to prevent compiler optimizations which ensures memory
+reads every time. As a side effect, READ_ONCE() also enforces strict
+types and may add an extra instruction. But it should not have negative
+performance impact since we use cpu_relax anyway and the extra time(by
+adding an instruction) may allow IOMMU HW request cacheline ownership
+easier.
 
-Fixes: 067353a46d8c ("cxl/region: Add memory hotplug notifier for cxl region")
-Signed-off-by: Huang, Ying <ying.huang@intel.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Bharata B Rao <bharata@amd.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://patch.msgid.link/20240618084639.1419629-2-ying.huang@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+e.g. gcc 12.3
+BEFORE:
+	81 38 ad de 00 00       cmpl   $0x2,(%rax)
+
+AFTER (with READ_ONCE())
+    772f:       8b 00                   mov    (%rax),%eax
+    7731:       3d ad de 00 00          cmp    $0x2,%eax
+                                        //status data is 32 bit
+
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20240607173817.3914600-1-jacob.jun.pan@linux.intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20240702130839.108139-2-baolu.lu@linux.intel.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/iommu/intel/dmar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 538ebd5a64fd..cd9ccdc6bc81 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2386,14 +2386,25 @@ static bool cxl_region_update_coordinates(struct cxl_region *cxlr, int nid)
- 	return true;
- }
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index 304e84949ca7..1c8d3141cb55 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1446,7 +1446,7 @@ int qi_submit_sync(struct intel_iommu *iommu, struct qi_desc *desc,
+ 	 */
+ 	writel(qi->free_head << shift, iommu->reg + DMAR_IQT_REG);
  
-+static int cxl_region_nid(struct cxl_region *cxlr)
-+{
-+	struct cxl_region_params *p = &cxlr->params;
-+	struct cxl_endpoint_decoder *cxled;
-+	struct cxl_decoder *cxld;
-+
-+	guard(rwsem_read)(&cxl_region_rwsem);
-+	cxled = p->targets[0];
-+	if (!cxled)
-+		return NUMA_NO_NODE;
-+	cxld = &cxled->cxld;
-+	return phys_to_target_node(cxld->hpa_range.start);
-+}
-+
- static int cxl_region_perf_attrs_callback(struct notifier_block *nb,
- 					  unsigned long action, void *arg)
- {
- 	struct cxl_region *cxlr = container_of(nb, struct cxl_region,
- 					       memory_notifier);
--	struct cxl_region_params *p = &cxlr->params;
--	struct cxl_endpoint_decoder *cxled = p->targets[0];
--	struct cxl_decoder *cxld = &cxled->cxld;
- 	struct memory_notify *mnb = arg;
- 	int nid = mnb->status_change_nid;
- 	int region_nid;
-@@ -2401,7 +2412,7 @@ static int cxl_region_perf_attrs_callback(struct notifier_block *nb,
- 	if (nid == NUMA_NO_NODE || action != MEM_ONLINE)
- 		return NOTIFY_DONE;
- 
--	region_nid = phys_to_target_node(cxld->hpa_range.start);
-+	region_nid = cxl_region_nid(cxlr);
- 	if (nid != region_nid)
- 		return NOTIFY_DONE;
- 
+-	while (qi->desc_status[wait_index] != QI_DONE) {
++	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
+ 		/*
+ 		 * We will leave the interrupts disabled, to prevent interrupt
+ 		 * context to queue another cmd while a cmd is already submitted
 -- 
 2.43.0
 
