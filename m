@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF9018B488;
-	Tue, 10 Sep 2024 10:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD561925AC;
+	Tue, 10 Sep 2024 10:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963911; cv=none; b=F9mkPjSIvR6Gf43onGQv29Odk7p4UqkeDA32+glV+LWRFxcRLtUiNumFHjrSKU7/ox+BH9i8pn837Rk+07VEoygPeOiamFNH5tKmL94Jd6rePQwyFSmPHidZsGFUB7maTjEC5gyNd1D8pCsvAqYs7C4+IQFgL+WkWzuGRsInnHg=
+	t=1725963914; cv=none; b=ISqrb2KbdaeDPXUjEjdadboZui7NMYpBjJbGbVyB8bc+Cc2B5ZTKG4Oo+NOpyG3+rznwF2XSCuerOUzv4x1JVSUhGRFcXKxB4pe851CM8yy/WCWphLghtMzczsN3sfqCifiDEFj1kQGfG61vTTSkIxI1vk6s64jzpH4Yhdnn6PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963911; c=relaxed/simple;
-	bh=tEZG4ccmUCynyqM7ckIsvY1HQT44jD+WHtPMYt/jH4w=;
+	s=arc-20240116; t=1725963914; c=relaxed/simple;
+	bh=fvWNfUxw0nMW2QV38lVXtHjaDh2WJLTHhCE15M6bejs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZeD4jr/+aK9hnKqmMVHoNKPepraBfFZW45vVdQQjMlO8Dvd6H+hnWHC12RG9nOf0dWJgBW7gfyjTwNPhDMm/qUG65XV6M1GFSL8q8dUhOrqf9DWgKN7QNu5mJO98RXO8Rj1cTQTjZHt8fdHNF8JH44i6LxKhqsp12jl8DscehI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsu0o1BW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEu564QoXdx8q1MY0tW/fSFAtRzl4YHaK/4Kil8kWkJuNBjsWE96WJEllC467lTEw8jLpM6rn4lSu6dKDcStWDqWb10b5fhbwkim3fYqy/32Vh+lQBoePEJ7WOvpagyaepqkPAL4vnPfs/d6cZmbETiqq+5uX0U2TjKXsr5KsHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7OvNMBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsu0o1BW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F36C4CEC3;
-	Tue, 10 Sep 2024 10:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7OvNMBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C93C4CEC3;
+	Tue, 10 Sep 2024 10:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963911;
-	bh=tEZG4ccmUCynyqM7ckIsvY1HQT44jD+WHtPMYt/jH4w=;
+	s=korg; t=1725963914;
+	bh=fvWNfUxw0nMW2QV38lVXtHjaDh2WJLTHhCE15M6bejs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsu0o1BW918l0baKlwnpNvWbenWe9XpLTzKzglt+D6Io2qy6Z5faArMT487C7tb+1
-	 1sLWaiaw9Rp8FUQgtmIDCYauj6g9U8ckdkUnMN+2KrpRRb5Q6XZ28I36ZfwNrluMRe
-	 C5IphgcMxJ34tyfSXuL/IZXhXnvKvzQrEXTCY+gY=
+	b=A7OvNMBgrmeBGdcx0yhSZpZlllu9/u7UJRJWfuveFDcW5t25E4n24saFdnS1Fvj2X
+	 ddkfWGFKNXB8qpnDxRyhIMo3KlxYAIccBvTGtI9ewFwce3b7D2sa1yn9w8ooMYJCit
+	 ETePBejB7ed40wcVq3Jfu+aK4JWHnWMSMKcKC5gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuri Benditovich <yuri.benditovich@daynix.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Yan Zhai <yan@cloudflare.com>,
 	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 207/214] net: change maximum number of UDP segments to 128
-Date: Tue, 10 Sep 2024 11:33:49 +0200
-Message-ID: <20240910092606.970151688@linuxfoundation.org>
+Subject: [PATCH 5.15 208/214] gso: fix dodgy bit handling for GSO_UDP_L4
+Date: Tue, 10 Sep 2024 11:33:50 +0200
+Message-ID: <20240910092607.009399882@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,68 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit 1382e3b6a3500c245e5278c66d210c02926f804f ]
+[ Upstream commit 9840036786d90cea11a90d1f30b6dc003b34ee67 ]
 
-The commit fc8b2a619469
-("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
-adds check of potential number of UDP segments vs
-UDP_MAX_SEGMENTS in linux/virtio_net.h.
-After this change certification test of USO guest-to-guest
-transmit on Windows driver for virtio-net device fails,
-for example with packet size of ~64K and mss of 536 bytes.
-In general the USO should not be more restrictive than TSO.
-Indeed, in case of unreasonably small mss a lot of segments
-can cause queue overflow and packet loss on the destination.
-Limit of 128 segments is good for any practical purpose,
-with minimal meaningful mss of 536 the maximal UDP packet will
-be divided to ~120 segments.
-The number of segments for UDP packets is validated vs
-UDP_MAX_SEGMENTS also in udp.c (v4,v6), this does not affect
-quest-to-guest path but does affect packets sent to host, for
-example.
-It is important to mention that UDP_MAX_SEGMENTS is kernel-only
-define and not available to user mode socket applications.
-In order to request MSS smaller than MTU the applications
-just uses setsockopt with SOL_UDP and UDP_SEGMENT and there is
-no limitations on socket API level.
+Commit 1fd54773c267 ("udp: allow header check for dodgy GSO_UDP_L4
+packets.") checks DODGY bit for UDP, but for packets that can be fed
+directly to the device after gso_segs reset, it actually falls through
+to fragmentation:
 
-Fixes: fc8b2a619469 ("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
-Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+https://lore.kernel.org/all/CAJPywTKDdjtwkLVUW6LRA2FU912qcDmQOQGt2WaDo28KzYDg+A@mail.gmail.com/
+
+This change restores the expected behavior of GSO_UDP_L4 packets.
+
+Fixes: 1fd54773c267 ("udp: allow header check for dodgy GSO_UDP_L4 packets.")
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 
-[5.15-stable: fix conflict with neighboring but unrelated code from
-              e2a4392b61f6 ("udp: introduce udp->udp_flags")
+[5.15 stable: clean backport]
 Signed-off-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/udp.h                  |    2 +-
- tools/testing/selftests/net/udpgso.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/udp_offload.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/include/linux/udp.h
-+++ b/include/linux/udp.h
-@@ -94,7 +94,7 @@ struct udp_sock {
- 	int		forward_deficit;
- };
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -272,13 +272,20 @@ struct sk_buff *__udp_gso_segment(struct
+ 	__sum16 check;
+ 	__be16 newlen;
  
--#define UDP_MAX_SEGMENTS	(1 << 6UL)
-+#define UDP_MAX_SEGMENTS	(1 << 7UL)
+-	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
+-		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
+-
+ 	mss = skb_shinfo(gso_skb)->gso_size;
+ 	if (gso_skb->len <= sizeof(*uh) + mss)
+ 		return ERR_PTR(-EINVAL);
  
- static inline struct udp_sock *udp_sk(const struct sock *sk)
- {
---- a/tools/testing/selftests/net/udpgso.c
-+++ b/tools/testing/selftests/net/udpgso.c
-@@ -34,7 +34,7 @@
- #endif
++	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
++		/* Packet is from an untrusted source, reset gso_segs. */
++		skb_shinfo(gso_skb)->gso_segs = DIV_ROUND_UP(gso_skb->len - sizeof(*uh),
++							     mss);
++		return NULL;
++	}
++
++	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
++		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
++
+ 	skb_pull(gso_skb, sizeof(*uh));
  
- #ifndef UDP_MAX_SEGMENTS
--#define UDP_MAX_SEGMENTS	(1 << 6UL)
-+#define UDP_MAX_SEGMENTS	(1 << 7UL)
- #endif
- 
- #define CONST_MTU_TEST	1500
+ 	/* clear destructor to avoid skb_segment assigning it to tail */
 
 
