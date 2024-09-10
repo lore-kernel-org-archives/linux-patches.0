@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A29188A0C;
-	Tue, 10 Sep 2024 10:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1606A188A0C;
+	Tue, 10 Sep 2024 10:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963024; cv=none; b=cvmmWn/pKHlfta/gAbPFjpHw+RsXt2n6qT+ekXHFa3NjEUVherid90FQoAO42tG40SgbInhanwIO72S1SBzy4fhfL+z+5mcDua8y7ekNQE++wajnRw0BGP/OOBiMa9vimhwJnEgsEEoSi82ggoGScZ7HtM6HLF2qwOgkZnxUS5E=
+	t=1725963027; cv=none; b=Cu7siC978PcEZoZhf/M+WwTJ58g4VuJpnerG8EK5oiH09PnplS4/uEMgYHBOIf9dffCDJPbXulez2UurWcU9c4G4tHVM8RYlr+CH10xTSQNo1On95Z/JZrLKtUqUsI+cTeB1qzTyH+Chs1WlYqbAJ0s0xf38YDwlARxdYhWjne0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963024; c=relaxed/simple;
-	bh=5LuRBdKnTXEmlGMYHMgJVZF3E9FebiJ+jOIQZ9zMDi0=;
+	s=arc-20240116; t=1725963027; c=relaxed/simple;
+	bh=gU/ww9U8LtCqcoalfInV1+ATQYmyFhXG0rIv029wrTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pk8Hhs0NCNrI85ieWERtX7ZLGC9u9wH7hh3YkOLL/0mLHRpdMlazsO89c2qgoAdr/uyZbaJwjdWEHwNWlau2RNk3VskVV8qgOlgf8aDYIlrOOjq+cNSJMt5otK8POPcupzFkY6APe7U6+1x12wSez5GUX79htVzujqyGNPfezjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQMmM0HZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5RUR0Aj0wb7Ll5CrEHL74Z4dcO1PppdboECEFnGtYNTQPcirIthEIUwtm04p262lDgd8X5oLQDtifxLJVwikg2sOs1WPno161lG7w7Hh0nTELrgJjG/qukbclFQx8NdRHlwNwe8YlIXyqorvRGNhhTOlioZPAdUZHp9snvSoAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qMKwo16; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQMmM0HZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0BDC4CEC3;
-	Tue, 10 Sep 2024 10:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qMKwo16"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C05EC4CEC6;
+	Tue, 10 Sep 2024 10:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963024;
-	bh=5LuRBdKnTXEmlGMYHMgJVZF3E9FebiJ+jOIQZ9zMDi0=;
+	s=korg; t=1725963026;
+	bh=gU/ww9U8LtCqcoalfInV1+ATQYmyFhXG0rIv029wrTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQMmM0HZnY+oH2qshIEGmLzYIjiFVvhSc0NkHyNL9YPRmgJZB28s0YDlGYTWyPodk
-	 Y/Z8WVkQS2N1s3lVNycO7nwwIwFLGY0xPmavLP7h83R/hhHZWg3FbDg1INKQ6y4gK+
-	 6Mzhf4FvtxqnEJ6mEx98VK+K++6Yoz+3b+MuRRpo=
+	b=2qMKwo16pdP3RpTpxzmXlhogZfercQZRXcwbDDb+im/B0XZfETqONdViD6h308ZlU
+	 Gbjfn9Do3jbW11lGZvd1OIREmmrR00CBiyJrrsAzc9EfnHQBzxeHJ28hQ6ciEnXC23
+	 Jt+eZZYXpAeqbLkVcaAqDv2PfOyLDNBcriPx+kPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/192] ice: do not bring the VSI up, if it was down before the XDP setup
-Date: Tue, 10 Sep 2024 11:31:46 +0200
-Message-ID: <20240910092601.370125349@linuxfoundation.org>
+Subject: [PATCH 6.1 083/192] usbnet: modern method to get random MAC
+Date: Tue, 10 Sep 2024 11:31:47 +0200
+Message-ID: <20240910092601.410755827@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -55,55 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 04c7e14e5b0b6227e7b00d7a96ca2f2426ab9171 ]
+[ Upstream commit bab8eb0dd4cb995caa4a0529d5655531c2ec5e8e ]
 
-After XDP configuration is completed, we bring the interface up
-unconditionally, regardless of its state before the call to .ndo_bpf().
+The driver generates a random MAC once on load
+and uses it over and over, including on two devices
+needing a random MAC at the same time.
 
-Preserve the information whether the interface had to be brought down and
-later bring it up only in such case.
+Jakub suggested revamping the driver to the modern
+API for setting a random MAC rather than fixing
+the old stuff.
 
-Fixes: efc2214b6047 ("ice: Add support for XDP")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+The bug is as old as the driver.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://patch.msgid.link/20240829175201.670718-1-oneukum@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/usb/usbnet.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 1973b032fe05..3f01942e4982 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -2909,8 +2909,8 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		   struct netlink_ext_ack *extack)
- {
- 	unsigned int frame_size = vsi->netdev->mtu + ICE_ETH_PKT_HDR_PAD;
--	bool if_running = netif_running(vsi->netdev);
- 	int ret = 0, xdp_ring_err = 0;
-+	bool if_running;
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 405e588f8a3a..0f848d318544 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -61,9 +61,6 @@
  
- 	if (frame_size > ice_max_xdp_frame_size(vsi)) {
- 		NL_SET_ERR_MSG_MOD(extack, "MTU too large for loading XDP");
-@@ -2923,8 +2923,11 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		return 0;
+ /*-------------------------------------------------------------------------*/
+ 
+-// randomly generated ethernet address
+-static u8	node_id [ETH_ALEN];
+-
+ /* use ethtool to change the level for any given device */
+ static int msg_level = -1;
+ module_param (msg_level, int, 0);
+@@ -1726,7 +1723,6 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 
+ 	dev->net = net;
+ 	strscpy(net->name, "usb%d", sizeof(net->name));
+-	eth_hw_addr_set(net, node_id);
+ 
+ 	/* rx and tx sides can use different message sizes;
+ 	 * bind() should set rx_urb_size in that case.
+@@ -1800,9 +1796,9 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 		goto out4;
  	}
  
-+	if_running = netif_running(vsi->netdev) &&
-+		     !test_and_set_bit(ICE_VSI_DOWN, vsi->state);
-+
- 	/* need to stop netdev while setting up the program for Rx rings */
--	if (if_running && !test_and_set_bit(ICE_VSI_DOWN, vsi->state)) {
-+	if (if_running) {
- 		ret = ice_down(vsi);
- 		if (ret) {
- 			NL_SET_ERR_MSG_MOD(extack, "Preparing device for XDP attach failed");
+-	/* let userspace know we have a random address */
+-	if (ether_addr_equal(net->dev_addr, node_id))
+-		net->addr_assign_type = NET_ADDR_RANDOM;
++	/* this flags the device for user space */
++	if (!is_valid_ether_addr(net->dev_addr))
++		eth_hw_addr_random(net);
+ 
+ 	if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+ 		SET_NETDEV_DEVTYPE(net, &wlan_type);
+@@ -2212,7 +2208,6 @@ static int __init usbnet_init(void)
+ 	BUILD_BUG_ON(
+ 		sizeof_field(struct sk_buff, cb) < sizeof(struct skb_data));
+ 
+-	eth_random_addr(node_id);
+ 	return 0;
+ }
+ module_init(usbnet_init);
 -- 
 2.43.0
 
