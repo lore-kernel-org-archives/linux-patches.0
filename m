@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48D9188A1E;
-	Tue, 10 Sep 2024 10:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A5D14D431;
+	Tue, 10 Sep 2024 10:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962651; cv=none; b=FpscrlYzs7oZMXg1KpXaIwVNlJxD1vEVzo/M/vyKf0tm+bPO0O3cIMS0cB2s89xaEBjNtjUOlMFD4dXsa5Lbxx4iqo2I7fxGLgBMPdsyHTfagSdPveGUEJf70FMFXTSsrpne3G0P4A1TOKTwZfqp8d0rhY1jP3OU/8hniqFGlXM=
+	t=1725962654; cv=none; b=bxTRcd2MnEZKBKT9hDo3UTeUGtlovTJrGPf2+DXDdAEpo5nGQakwdm5nI5FmhaY3aQPPd0gM5jSvGAY65pUeMVwUIn/h499BviuECHu1LwFHhuzQ8j4xr8cSfqN6FpnZzeeVvk5CP3zdrMzEmYDXfYrimKVVgSlaXUxHUteTGOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962651; c=relaxed/simple;
-	bh=zY3og8rbEMYucf4BCIE2A2DQ+p6qfKz2QKRF6lX9qfk=;
+	s=arc-20240116; t=1725962654; c=relaxed/simple;
+	bh=PIpqTZ+0z/P7K38JGRkj8fQ+7Yxx9K718+MYgm2sgpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MApYLZ+ibRnv+9om4aVOzkM4hdqQKhA/PCL9sCVG0lXX2WnRKeQUpn7o3yZ2v7+1E7of4+M/WNsNh65GTIiZRmirS7ciBy5Pik6BI1AwhyfD1tA1fPSvrRVf+XmJGiYq16VzyKHUo/s3kRsXkck0B8TsMhlEz41h3/9gIMmkldc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDhdHkE9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SN3CUjr6d0/UMSPm1LPn24Ph4j4NypHqyo8zRsZLt2MvcP0BZ51N/t1rVaKtrO8FedtGBDHGetvXuI179Bc9mApVP3swBrY7jFqpiz2RLEy3hv0pOZE/3z4a5swsWx50RA0wXp4WA+hOyhWtwxmuxadPNHtMju7BnRozKSabirI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyM8yqa0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDhdHkE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D69C4CED0;
-	Tue, 10 Sep 2024 10:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyM8yqa0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AFCC4CEC3;
+	Tue, 10 Sep 2024 10:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962651;
-	bh=zY3og8rbEMYucf4BCIE2A2DQ+p6qfKz2QKRF6lX9qfk=;
+	s=korg; t=1725962654;
+	bh=PIpqTZ+0z/P7K38JGRkj8fQ+7Yxx9K718+MYgm2sgpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDhdHkE9bbnVn0MHbPzEn/tHuACdBy62PXqlvX9WFpEwPsVjKLY7NK/fDKGnAB9UZ
-	 KcQsDg1t8GX05OyhjUJUnMHSq0eYPvv5a+/oKkelreZvPX/IJi4OpJV1xtpUNIoodq
-	 0Qb9JRHr8KQ5cRYK/DgqdsUChx2HSM0snzDLeWNs=
+	b=WyM8yqa05YghP8q9Q8tAiP9OJFehs8CgGSfnE9qdCUqVdDBfXI9CYINV4i2ndNsy5
+	 5IdWjBoHsDc/ke9Gu0jx8yyPPN09B6NHBxyXWBb5fSNi6D32iD0OSV6l/Ai/6rMgWH
+	 CvOZ6AoAQebpqkLM6hgJtdhgrDwFyZV5HbEk7hkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 5.4 106/121] clocksource/drivers/timer-of: Remove percpu irq related code
-Date: Tue, 10 Sep 2024 11:33:01 +0200
-Message-ID: <20240910092550.858215327@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Foster Snowhill <forst@pen.gy>,
+	Georgi Valkov <gvalkov@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 089/121] usbnet: ipheth: race between ipheth_close and error handling
+Date: Tue, 10 Sep 2024 11:32:44 +0200
+Message-ID: <20240910092550.096747448@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -44,117 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 471ef0b5a8aaca4296108e756b970acfc499ede4 upstream.
+[ Upstream commit e5876b088ba03a62124266fa20d00e65533c7269 ]
 
-GCC's named address space checks errors out with:
+ipheth_sndbulk_callback() can submit carrier_work
+as a part of its error handling. That means that
+the driver must make sure that the work is cancelled
+after it has made sure that no more URB can terminate
+with an error condition.
 
-drivers/clocksource/timer-of.c: In function ‘timer_of_irq_exit’:
-drivers/clocksource/timer-of.c:29:46: error: passing argument 2 of
-‘free_percpu_irq’ from pointer to non-enclosed address space
-  29 |                 free_percpu_irq(of_irq->irq, clkevt);
-     |                                              ^~~~~~
-In file included from drivers/clocksource/timer-of.c:8:
-./include/linux/interrupt.h:201:43: note: expected ‘__seg_gs void *’
-but argument is of type ‘struct clock_event_device *’
- 201 | extern void free_percpu_irq(unsigned int, void __percpu *);
-     |                                           ^~~~~~~~~~~~~~~
-drivers/clocksource/timer-of.c: In function ‘timer_of_irq_init’:
-drivers/clocksource/timer-of.c:74:51: error: passing argument 4 of
-‘request_percpu_irq’ from pointer to non-enclosed address space
-  74 |                                    np->full_name, clkevt) :
-     |                                                   ^~~~~~
-./include/linux/interrupt.h:190:56: note: expected ‘__seg_gs void *’
-but argument is of type ‘struct clock_event_device *’
- 190 |                    const char *devname, void __percpu *percpu_dev_id)
+Hence the order of actions in ipheth_close() needs
+to be inverted.
 
-Sparse warns about:
-
-timer-of.c:29:46: warning: incorrect type in argument 2 (different address spaces)
-timer-of.c:29:46:    expected void [noderef] __percpu *
-timer-of.c:29:46:    got struct clock_event_device *clkevt
-timer-of.c:74:51: warning: incorrect type in argument 4 (different address spaces)
-timer-of.c:74:51:    expected void [noderef] __percpu *percpu_dev_id
-timer-of.c:74:51:    got struct clock_event_device *clkevt
-
-It appears the code is incorrect as reported by Uros Bizjak:
-
-"The referred code is questionable as it tries to reuse
-the clkevent pointer once as percpu pointer and once as generic
-pointer, which should be avoided."
-
-This change removes the percpu related code as no drivers is using it.
-
-[Daniel: Fixed the description]
-
-Fixes: dc11bae785295 ("clocksource/drivers: Add timer-of common init routine")
-Reported-by: Uros Bizjak <ubizjak@gmail.com>
-Tested-by: Uros Bizjak <ubizjak@gmail.com>
-Link: https://lore.kernel.org/r/20240819100335.2394751-1-daniel.lezcano@linaro.org
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Foster Snowhill <forst@pen.gy>
+Tested-by: Georgi Valkov <gvalkov@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-of.c |   17 ++++-------------
- drivers/clocksource/timer-of.h |    1 -
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ drivers/net/usb/ipheth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clocksource/timer-of.c
-+++ b/drivers/clocksource/timer-of.c
-@@ -25,10 +25,7 @@ static __init void timer_of_irq_exit(str
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 9887eb282beb..05576f66f73d 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -353,8 +353,8 @@ static int ipheth_close(struct net_device *net)
+ {
+ 	struct ipheth_device *dev = netdev_priv(net);
  
- 	struct clock_event_device *clkevt = &to->clkevt;
- 
--	if (of_irq->percpu)
--		free_percpu_irq(of_irq->irq, clkevt);
--	else
--		free_irq(of_irq->irq, clkevt);
-+	free_irq(of_irq->irq, clkevt);
+-	cancel_delayed_work_sync(&dev->carrier_work);
+ 	netif_stop_queue(net);
++	cancel_delayed_work_sync(&dev->carrier_work);
+ 	return 0;
  }
  
- /**
-@@ -42,9 +39,6 @@ static __init void timer_of_irq_exit(str
-  * - Get interrupt number by name
-  * - Get interrupt number by index
-  *
-- * When the interrupt is per CPU, 'request_percpu_irq()' is called,
-- * otherwise 'request_irq()' is used.
-- *
-  * Returns 0 on success, < 0 otherwise
-  */
- static __init int timer_of_irq_init(struct device_node *np,
-@@ -69,12 +63,9 @@ static __init int timer_of_irq_init(stru
- 		return -EINVAL;
- 	}
- 
--	ret = of_irq->percpu ?
--		request_percpu_irq(of_irq->irq, of_irq->handler,
--				   np->full_name, clkevt) :
--		request_irq(of_irq->irq, of_irq->handler,
--			    of_irq->flags ? of_irq->flags : IRQF_TIMER,
--			    np->full_name, clkevt);
-+	ret = request_irq(of_irq->irq, of_irq->handler,
-+			  of_irq->flags ? of_irq->flags : IRQF_TIMER,
-+			  np->full_name, clkevt);
- 	if (ret) {
- 		pr_err("Failed to request irq %d for %pOF\n", of_irq->irq, np);
- 		return ret;
---- a/drivers/clocksource/timer-of.h
-+++ b/drivers/clocksource/timer-of.h
-@@ -11,7 +11,6 @@
- struct of_timer_irq {
- 	int irq;
- 	int index;
--	int percpu;
- 	const char *name;
- 	unsigned long flags;
- 	irq_handler_t handler;
+-- 
+2.43.0
+
 
 
