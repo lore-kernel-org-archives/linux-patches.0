@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A11190696;
-	Tue, 10 Sep 2024 10:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD5D172BA8;
+	Tue, 10 Sep 2024 10:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963746; cv=none; b=MYImLb/29Prz1qi15pyTBn+v8BPj5LeqXyl0OjVEFAbeVwcyV0cCa1bk0pT20m9Fn0/Ac85myRkjlIvPMusL02Y/L2TBixJ6flIb0ozbDKp7xBPx93d2rzPd7FDN5wkKLFxsqXvSGV2VrAY01tSybjlpmiQbnsN5PVQHtsb/PuA=
+	t=1725963749; cv=none; b=E4MO7tDgM+/mzjgW61fYY9RFUuP1SGxEAqJVxAQWafeEAb/VPmHhU8A0qu8qQFddSYdyaez+VJXyU8826H06fnekOt2wBGByhzIhxDiHuYTeUZ8NDI5lVwulvNgcqDsXPs3pDJ3TRzzwxXW8cFufkC59iVdEtisuSy1JimdBoZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963746; c=relaxed/simple;
-	bh=fW7uasRWsIE3UMyES8pmyio0/nIg/IC6h9AWbc3ruwo=;
+	s=arc-20240116; t=1725963749; c=relaxed/simple;
+	bh=h6CYhKJnTBJOQGROUJE4UrpXxzfMZDKBIp2/DbqPoDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHFPUd4jNT6oB7EjZRWLKHmAY8SCamHzZqYVkbxLZTM7e5iylAHN+Cczfe6u5XRKCgyR1o8IFV+Sbznpve6/YXtLzS1f8wdauxXOVcjusxmJPm3nJDtyCQYiFGQwqTrpzf5w1MhbY53n4tsSlhBl1jYAItWGuH7TZVNzQp0vpUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MAJ1/Ae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9rH4QMNQw50U1N5TpZJLe5nkx7Ad7wkmUGd8P76HtujDnfAJeY61PGlPpo6mx9w9lC0rmgP71xsW7qPvg3KkqlII5gBOWqic7W7DHv3jmlUGxegISidvmn/ehSrTmMT8aj2eZhdQbdGHJP8nJFt5O4RERWXgP8nFD2rXQirtXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ltc7pBBS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MAJ1/Ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A4FC4CEC3;
-	Tue, 10 Sep 2024 10:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ltc7pBBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FD9C4CEC3;
+	Tue, 10 Sep 2024 10:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963746;
-	bh=fW7uasRWsIE3UMyES8pmyio0/nIg/IC6h9AWbc3ruwo=;
+	s=korg; t=1725963749;
+	bh=h6CYhKJnTBJOQGROUJE4UrpXxzfMZDKBIp2/DbqPoDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MAJ1/Aek5WS0H42XfJfae25/HchuzPi25y9ILp/3TLowmFqGANDBF5MkrNGSbdjN
-	 GVC7fKuo4etmkC49zdC1q2zc9AblSn4/aMMVeKGRvUHLBlzQeLJuW8Pph7syXGVvZG
-	 2E1sToK7hDWrzi9f+KbJMMYU0Mqh8t1zp8VIzuu8=
+	b=Ltc7pBBS9CUKWz7D5Bklms9QlobHN2ldFftN+buCD8yzD80/UJK6SNJN3mze4Fp+p
+	 TuquYm62/he5XgdueqhSLKB6YugPMJzhbkgyZRcTmpotDhJpr02GxxPqqOW7Ks0Kgg
+	 l7/YTNUaG7y2rvGpC6QeX08QxuxtHirEGYftM9nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	syzbot+24c0361074799d02c452@syzkaller.appspotmail.com,
+	Camila Alvarez <cam.alvarez.i@gmail.com>,
+	Silvan Jegen <s.jegen@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/214] s390/vmlinux.lds.S: Move ro_after_init section behind rodata section
-Date: Tue, 10 Sep 2024 11:33:04 +0200
-Message-ID: <20240910092605.316770539@linuxfoundation.org>
+Subject: [PATCH 5.15 163/214] HID: cougar: fix slab-out-of-bounds Read in cougar_report_fixup
+Date: Tue, 10 Sep 2024 11:33:05 +0200
+Message-ID: <20240910092605.347147903@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,73 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Camila Alvarez <cam.alvarez.i@gmail.com>
 
-[ Upstream commit 75c10d5377d8821efafed32e4d72068d9c1f8ec0 ]
+[ Upstream commit a6e9c391d45b5865b61e569146304cff72821a5d ]
 
-The .data.rel.ro and .got section were added between the rodata and
-ro_after_init data section, which adds an RW mapping in between all RO
-mapping of the kernel image:
+report_fixup for the Cougar 500k Gaming Keyboard was not verifying
+that the report descriptor size was correct before accessing it
 
----[ Kernel Image Start ]---
-0x000003ffe0000000-0x000003ffe0e00000        14M PMD RO X
-0x000003ffe0e00000-0x000003ffe0ec7000       796K PTE RO X
-0x000003ffe0ec7000-0x000003ffe0f00000       228K PTE RO NX
-0x000003ffe0f00000-0x000003ffe1300000         4M PMD RO NX
-0x000003ffe1300000-0x000003ffe1331000       196K PTE RO NX
-0x000003ffe1331000-0x000003ffe13b3000       520K PTE RW NX <---
-0x000003ffe13b3000-0x000003ffe13d5000       136K PTE RO NX
-0x000003ffe13d5000-0x000003ffe1400000       172K PTE RW NX
-0x000003ffe1400000-0x000003ffe1500000         1M PMD RW NX
-0x000003ffe1500000-0x000003ffe1700000         2M PTE RW NX
-0x000003ffe1700000-0x000003ffe1800000         1M PMD RW NX
-0x000003ffe1800000-0x000003ffe187e000       504K PTE RW NX
----[ Kernel Image End ]---
-
-Move the ro_after_init data section again right behind the rodata
-section to prevent interleaving RO and RW mappings:
-
----[ Kernel Image Start ]---
-0x000003ffe0000000-0x000003ffe0e00000        14M PMD RO X
-0x000003ffe0e00000-0x000003ffe0ec7000       796K PTE RO X
-0x000003ffe0ec7000-0x000003ffe0f00000       228K PTE RO NX
-0x000003ffe0f00000-0x000003ffe1300000         4M PMD RO NX
-0x000003ffe1300000-0x000003ffe1353000       332K PTE RO NX
-0x000003ffe1353000-0x000003ffe1400000       692K PTE RW NX
-0x000003ffe1400000-0x000003ffe1500000         1M PMD RW NX
-0x000003ffe1500000-0x000003ffe1700000         2M PTE RW NX
-0x000003ffe1700000-0x000003ffe1800000         1M PMD RW NX
-0x000003ffe1800000-0x000003ffe187e000       504K PTE RW NX
----[ Kernel Image End ]---
-
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reported-by: syzbot+24c0361074799d02c452@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=24c0361074799d02c452
+Signed-off-by: Camila Alvarez <cam.alvarez.i@gmail.com>
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vmlinux.lds.S | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-cougar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index 853b80770c6d..bf509f6194d0 100644
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -72,6 +72,15 @@ SECTIONS
- 	. = ALIGN(PAGE_SIZE);
- 	__end_ro_after_init = .;
- 
-+	.data.rel.ro : {
-+		*(.data.rel.ro .data.rel.ro.*)
-+	}
-+	.got : {
-+		__got_start = .;
-+		*(.got)
-+		__got_end = .;
-+	}
-+
- 	RW_DATA(0x100, PAGE_SIZE, THREAD_SIZE)
- 	BOOT_DATA_PRESERVED
- 
+diff --git a/drivers/hid/hid-cougar.c b/drivers/hid/hid-cougar.c
+index 28d671c5e0ca..d173b13ff198 100644
+--- a/drivers/hid/hid-cougar.c
++++ b/drivers/hid/hid-cougar.c
+@@ -106,7 +106,7 @@ static void cougar_fix_g6_mapping(void)
+ static __u8 *cougar_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 				 unsigned int *rsize)
+ {
+-	if (rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
++	if (*rsize >= 117 && rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
+ 	    (rdesc[115] | rdesc[116] << 8) >= HID_MAX_USAGES) {
+ 		hid_info(hdev,
+ 			"usage count exceeds max: fixing up report descriptor\n");
 -- 
 2.43.0
 
