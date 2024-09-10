@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C89218FDAF;
-	Tue, 10 Sep 2024 10:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBF5191F89;
+	Tue, 10 Sep 2024 10:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963723; cv=none; b=F2hz7Gwmt0FLZqMrIelEDbLVu4ueF0nAUwE6zUGutDOwGy0KFLYoFOIwRqvMT7kx1Bq41L2gwL0VA2WI1rtUYy4PAITseJnVpZryKxbFWd1SXIqaaRQCEqdX3gh1W1asZtAPLG6wjx0so1kP1gyD3I1GErwuL1IpvQZ6vdKaywA=
+	t=1725963726; cv=none; b=aIp/TG6qiisiikTWTpMSfr2bZau9IUGWigFVHQQ9Jeic7nAwT/L3NoMNufNmapgg/r5xD+CCjJqogCe6OON408g7/T/Rgmke3v9VlSwz2sIRky7UYNaB7iQNQUtVNNwt63vRCtSK/ZP4F+0sjrFaNRaZ5aBuudThEkSlq1UyBL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963723; c=relaxed/simple;
-	bh=FMSRezxVBTvwlBoCpYcJIgQ+h5JKCZnFvEpS/zYrgj8=;
+	s=arc-20240116; t=1725963726; c=relaxed/simple;
+	bh=UJvC1N5rWgJzlm9X/FisgdyKB6kd0dM9OdLeB0uHCJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzkcVr6stuuE/LanUAZR8IMyt5Ht/AhIguUpZ5jrw5U7Y1setWYTKBwMxuM3nT6n1ebJrnX1PHgNGzLGpmp9246XoFQnpkpT/DeJbn/dBeW/+gOpAXSY4euhP92aESSKgLLdb3jIe+9PoZAp/9/x+nhFAtDIwp+WYZFQTFijWw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSEhZOVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nINBstsKL7Wyo6OgWALlScstYFWDodkvcmkGzKvQHdbTGt7r2bwkvA9MHarxztyfsKTfW14tsu6+lbG5bwMfTI1wH1+1ms2vK/rbBsQwQslCXdytWfrP55HwF17QTFfwZfWXe6OVyzbGR0HDN58QreET4zEC7+q/54WZyv2PtsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFAUYRPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSEhZOVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9982C4CECD;
-	Tue, 10 Sep 2024 10:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFAUYRPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EAFC4CEC6;
+	Tue, 10 Sep 2024 10:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963723;
-	bh=FMSRezxVBTvwlBoCpYcJIgQ+h5JKCZnFvEpS/zYrgj8=;
+	s=korg; t=1725963726;
+	bh=UJvC1N5rWgJzlm9X/FisgdyKB6kd0dM9OdLeB0uHCJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uSEhZOVbG6DG6Rh0kq1+AKxDY3wKLt58gNJgiw8e8yqxN9IUmEAVol/BkTwI6bSuB
-	 m+rGdcBpB0Nb9uZAG3fPZI+rq+4Ou/pBp4SMBf1xk2/6XJbIuau6+lsNjYKD3CyIoS
-	 I+MTyHopuah8b4DIKmoKC6EmIpXNeP0vwizRkbMc=
+	b=bFAUYRPkeT+9FvbtBcuckSQBdU1MW3CIzDf/8si79XexkSla8cKZgc4cdAhAYD2+F
+	 Ic/2yqgIlBWpIOLrNrPNLJ6aGg8SagKvir11AJvE+8PfTS7olsb4iodY+TRlyT7h9Y
+	 QEffUDLsq3IXq+vmYtj4QyYOm7Kknk2TFltEGXj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	"yang.zhang" <yang.zhang@hexintek.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 155/214] btrfs: replace BUG_ON() with error handling at update_ref_for_cow()
-Date: Tue, 10 Sep 2024 11:32:57 +0200
-Message-ID: <20240910092605.065703217@linuxfoundation.org>
+Subject: [PATCH 5.15 156/214] riscv: set trap vector earlier
+Date: Tue, 10 Sep 2024 11:32:58 +0200
+Message-ID: <20240910092605.107281306@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,48 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: yang.zhang <yang.zhang@hexintek.com>
 
-[ Upstream commit b56329a782314fde5b61058e2a25097af7ccb675 ]
+[ Upstream commit 6ad8735994b854b23c824dd6b1dd2126e893a3b4 ]
 
-Instead of a BUG_ON() just return an error, log an error message and
-abort the transaction in case we find an extent buffer belonging to the
-relocation tree that doesn't have the full backref flag set. This is
-unexpected and should never happen (save for bugs or a potential bad
-memory).
+The exception vector of the booting hart is not set before enabling
+the mmu and then still points to the value of the previous firmware,
+typically _start. That makes it hard to debug setup_vm() when bad
+things happen. So fix that by setting the exception vector earlier.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
+Link: https://lore.kernel.org/r/20240508022445.6131-1-gaoshanliukou@163.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/head.S | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 8b53313bf3b2..0b8c8b5094ef 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -306,8 +306,16 @@ static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
- 	}
- 
- 	owner = btrfs_header_owner(buf);
--	BUG_ON(owner == BTRFS_TREE_RELOC_OBJECTID &&
--	       !(flags & BTRFS_BLOCK_FLAG_FULL_BACKREF));
-+	if (unlikely(owner == BTRFS_TREE_RELOC_OBJECTID &&
-+		     !(flags & BTRFS_BLOCK_FLAG_FULL_BACKREF))) {
-+		btrfs_crit(fs_info,
-+"found tree block at bytenr %llu level %d root %llu refs %llu flags %llx without full backref flag set",
-+			   buf->start, btrfs_header_level(buf),
-+			   btrfs_root_id(root), refs, flags);
-+		ret = -EUCLEAN;
-+		btrfs_abort_transaction(trans, ret);
-+		return ret;
-+	}
- 
- 	if (refs > 1) {
- 		if ((owner == root->root_key.objectid ||
+diff --git a/arch/riscv/kernel/head.S b/arch/riscv/kernel/head.S
+index 4c3c7592b6fc..a89c59fb08ba 100644
+--- a/arch/riscv/kernel/head.S
++++ b/arch/riscv/kernel/head.S
+@@ -309,6 +309,9 @@ clear_bss_done:
+ #else
+ 	mv a0, s1
+ #endif /* CONFIG_BUILTIN_DTB */
++	/* Set trap vector to spin forever to help debug */
++	la a3, .Lsecondary_park
++	csrw CSR_TVEC, a3
+ 	call setup_vm
+ #ifdef CONFIG_MMU
+ 	la a0, early_pg_dir
 -- 
 2.43.0
 
