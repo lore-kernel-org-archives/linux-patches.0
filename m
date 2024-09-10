@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C9614D431;
-	Tue, 10 Sep 2024 10:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B81C1DA4C;
+	Tue, 10 Sep 2024 10:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965160; cv=none; b=ZYrTD6ifvihAvYzDIFk5i0xge7mA+jJm4hFQkN87GPuFmX6mzGbL1q2eECgXAGeuDScItN5lD/V/AYY3WTmweArPOMnwwoBsbktrM2QiDfWtFDfAh0egYqxJ6r7rqvT1/r4kms01+67iTRqgYKpsiPNiHQuigBkWr2DsLo4Pj6I=
+	t=1725965164; cv=none; b=IryTfB3f53q5Tt8BX/m4P+aShJO/tdVfrwHlKLHUMd7Nhhen4YgOgphXnC4X0XryGm+LaMusAjn3nbi5iJ1OanRTUb9tWs6/FLvb9sSuHM1otzEjGCe9TIQbD0rbV7/liENoq7OTV/iDJr1oRny9T3Hu2Ifkkabeu5Fhr1p971A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965160; c=relaxed/simple;
-	bh=gbNJBW1bagVSgyNLCIPRZC/Z3/rj+1sk7icdlSSWqf4=;
+	s=arc-20240116; t=1725965164; c=relaxed/simple;
+	bh=LkOYRH5x8fgreIPIEB01AgVfi5Oc/3+ZFCqIf3FTg3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+HOvRna3WCPglr8LtCkQ0JhFiLyjrPkLvkjN1QFEvfdwAHat0xEHbY1N8Zruik8umdpJXoHXQ5ruN6SZpwR+fV26FsAQBpKyHvbnjPyE+HiNW0Z/4I/DpYokxxr9do2bA05+OO+sejf7TpzitZ75U4MKE+3zL/jHSBUzZBHrqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlTPBg3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TP9nBru7DId/AhOGozezBohsoRbbmLih6VzaijiZgs4tCEfSJ9m21yvQ7Urmks9mA+JcfftNh09ujBtj7blNVyvRZjmjOo9gb/fQQqd+EKxX7V2vNr0MesnYoud9AzaAVybOvjGmudBxbpVQZfEfbjk9K7s/+JSfCw7DaZrqUWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doSu482L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlTPBg3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B371C4CEC3;
-	Tue, 10 Sep 2024 10:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doSu482L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30033C4CEC3;
+	Tue, 10 Sep 2024 10:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965160;
-	bh=gbNJBW1bagVSgyNLCIPRZC/Z3/rj+1sk7icdlSSWqf4=;
+	s=korg; t=1725965163;
+	bh=LkOYRH5x8fgreIPIEB01AgVfi5Oc/3+ZFCqIf3FTg3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlTPBg3KdKt5y+/HPgUyl9c+9HRys3Aust+1ejAZ7+mgiOSKLgC6RJE+iP5ZGBUGi
-	 CsyaNbCYjc6hQRHxpzRGLsTnkS4iNw3OSGjszBDEV0/OIvG1y1EuBUuIPZBdczQ9dB
-	 UrFU4adua0f5HDODNhb0eLq7u5huTAJ96d1uYf6M=
+	b=doSu482LcK/DlvUA7d+u5AWL+L1GnOcPNlt5sd1Q+YAsxQd3DU9Ol+r2OA66b0nJp
+	 9WdgPayDSD1znyoIG/ZqMHddPhi44IMsZvIwXs3ZdGuL2QUmsjC2b9yW97otpAOGJd
+	 uFuOvILbChpfp6dYO7TLJrmnyf3AUybh5JLnVIFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 150/186] Input: uinput - reject requests with unreasonable number of slots
-Date: Tue, 10 Sep 2024 11:34:05 +0200
-Message-ID: <20240910092600.768267788@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 159/186] iio: buffer-dmaengine: fix releasing dma channel on error
+Date: Tue, 10 Sep 2024 11:34:14 +0200
+Message-ID: <20240910092601.166189826@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,59 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 206f533a0a7c683982af473079c4111f4a0f9f5e ]
+commit 84c65d8008764a8fb4e627ff02de01ec4245f2c4 upstream.
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+If dma_get_slave_caps() fails, we need to release the dma channel before
+returning an error to avoid leaking the channel.
 
-When exercising uinput interface syzkaller may try setting up device
-with a really large number of slots, which causes memory allocation
-failure in input_mt_init_slots(). While this allocation failure is
-handled properly and request is rejected, it results in syzkaller
-reports. Additionally, such request may put undue burden on the
-system which will try to free a lot of memory for a bogus request.
-
-Fix it by limiting allowed number of slots to 100. This can easily
-be extended if we see devices that can track more than 100 contacts.
-
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
-Link: https://lore.kernel.org/r/Zqgi7NYEbpRsJfa2@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2d6ca60f3284 ("iio: Add a DMAengine framework based buffer")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20240723-iio-fix-dmaengine-free-on-error-v1-1-2c7cbc9b92ff@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/uinput.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/iio/buffer/industrialio-buffer-dmaengine.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/misc/uinput.c b/drivers/input/misc/uinput.c
-index f2593133e524..790db3ceb208 100644
---- a/drivers/input/misc/uinput.c
-+++ b/drivers/input/misc/uinput.c
-@@ -416,6 +416,20 @@ static int uinput_validate_absinfo(struct input_dev *dev, unsigned int code,
- 		return -EINVAL;
- 	}
+--- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
++++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+@@ -180,7 +180,7 @@ static struct iio_buffer *iio_dmaengine_
  
-+	/*
-+	 * Limit number of contacts to a reasonable value (100). This
-+	 * ensures that we need less than 2 pages for struct input_mt
-+	 * (we are not using in-kernel slot assignment so not going to
-+	 * allocate memory for the "red" table), and we should have no
-+	 * trouble getting this much memory.
-+	 */
-+	if (code == ABS_MT_SLOT && max > 99) {
-+		printk(KERN_DEBUG
-+		       "%s: unreasonably large number of slots requested: %d\n",
-+		       UINPUT_NAME, max);
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
+ 	ret = dma_get_slave_caps(chan, &caps);
+ 	if (ret < 0)
+-		goto err_free;
++		goto err_release;
  
--- 
-2.43.0
-
+ 	/* Needs to be aligned to the maximum of the minimums */
+ 	if (caps.src_addr_widths)
+@@ -207,6 +207,8 @@ static struct iio_buffer *iio_dmaengine_
+ 
+ 	return &dmaengine_buffer->queue.buffer;
+ 
++err_release:
++	dma_release_channel(chan);
+ err_free:
+ 	kfree(dmaengine_buffer);
+ 	return ERR_PTR(ret);
 
 
