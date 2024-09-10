@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B85118B48A;
-	Tue, 10 Sep 2024 10:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D3818A6AA;
+	Tue, 10 Sep 2024 10:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964892; cv=none; b=f14jH1+i5YZTcNwuPccan6lGaxv1zk9+bsh1Hs43Rc38c6xnmzmZCgimdREJrAZj08CHdVz1EwHMI8kWDP7UWATzGM6lPLcjD3+rrnj9KnlXZG+cgAJ9xqgsqHq1ZttQQP8MZTbGSJaupv2NLVbYJgAHJeULgr37rpNyXlAjLdU=
+	t=1725964895; cv=none; b=SQikftjyF5AAiKZJ5w0odn21Kk7I37GyWGGB+71TS2CI8JyBhoPrfnwc59MGY9C5WVHzR4UBJLkKvw8Ne8Nt2ajRyQ9uLx6qiUrzriQIvfJ80eRz+pWXrVKGIIBNHVWbiwStHxe+KsUxHklOvt6v/zrWb5ifmKIvzxTUGa2Mv9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964892; c=relaxed/simple;
-	bh=9+WZCmNRZgULOuUp1PUgXt+bcS2AvULUKmwPx3czs+o=;
+	s=arc-20240116; t=1725964895; c=relaxed/simple;
+	bh=s1iQGj9y/azcqLEG1F5C5Wy00Ytl69BFFtcwR2iLgCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XptZLT7j1RN9VAibTBWDdOVhc5xAOfKtn4n3mWfrFhKouCM0VEX4ZOEyPU4iozMBfA/0arBSVBivDKmUgATBMP/BABgE/yiAyjlT/3HvF3+lzb9zsHh93DA2Kx3nfg8cGLsQJd5lYckeeKCf9akZjZcdI8e+x9wkcDnPVlTktGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvjY/pfr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFAnwJgXyiYbCbEgtY+gyCby1mBWeb7h7vooJF/Hj/cJ3fIzJ4ufKSJFMGIlFWZC8bs2VZr2IbzfOoIf1JxiAYIEXaJd6PErcpGJyrmCP7L3DOAe7a6c66BXzscgGzUSSuyq790YZwXb8ec1Db4yTOCWMOb4QIJxqXVipEhzh1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qs3h6uI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvjY/pfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36D9C4CEC3;
-	Tue, 10 Sep 2024 10:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qs3h6uI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85F3C4CEC3;
+	Tue, 10 Sep 2024 10:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964892;
-	bh=9+WZCmNRZgULOuUp1PUgXt+bcS2AvULUKmwPx3czs+o=;
+	s=korg; t=1725964895;
+	bh=s1iQGj9y/azcqLEG1F5C5Wy00Ytl69BFFtcwR2iLgCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NvjY/pfreq97AtRIzETwfBOi4Q4wlHOITrZCYusXOP7tuBPvBTmkhWjhjMDWwqGhh
-	 +F1swOhrmVqhhU6kTA/SFhZl9vyEqDYFlUSXhnq7HIHk2kyzDyudxim6QCvYDA0f2B
-	 MmjrsnWfqAQkh5iKjuR+NHkXp002z6R6MhQ/O3so=
+	b=Qs3h6uI3+9pl7CaHzIR8d4EVzDxsUDYV9VZnIWBHUCtn7WBmj2vkUaCVR0ahOHToV
+	 5wdBH7VyKIC30gwFLPtxXeiRFezqSTS4USnAKrO7gJ2MOOTMjZLBbA54bDqeBFvzhJ
+	 RF2cmwzaP+38678JegNfKm7Fq8v6D1Fu+fJpirDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Liu <liuhaoran14@163.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/186] drm/meson: plane: Add error handling
-Date: Tue, 10 Sep 2024 11:32:14 +0200
-Message-ID: <20240910092556.150012759@linuxfoundation.org>
+Subject: [PATCH 5.10 030/186] drm/amd/pm: check negtive return for table entries
+Date: Tue, 10 Sep 2024 11:32:05 +0200
+Message-ID: <20240910092555.826214443@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,61 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Liu <liuhaoran14@163.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 3c28b239620e249b68beeca17f429e317fa6b8d4 ]
+[ Upstream commit f76059fe14395b37ba8d997eb0381b1b9e80a939 ]
 
-This patch adds robust error handling to the meson_plane_create
-function in drivers/gpu/drm/meson/meson_plane.c. The function
-previously lacked proper handling for potential failure scenarios
-of the drm_universal_plane_init call.
+Function hwmgr->hwmgr_func->get_num_of_pp_table_entries(hwmgr) returns a negative number
 
-Signed-off-by: Haoran Liu <liuhaoran14@163.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20231129113405.33057-1-liuhaoran14@163.com
-[narmstrong: fixe the commit subject]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231129113405.33057-1-liuhaoran14@163.com
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Suggested-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_plane.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_plane.c
-index 255c6b863f8d..6d54c565b34f 100644
---- a/drivers/gpu/drm/meson/meson_plane.c
-+++ b/drivers/gpu/drm/meson/meson_plane.c
-@@ -529,6 +529,7 @@ int meson_plane_create(struct meson_drm *priv)
- 	struct meson_plane *meson_plane;
- 	struct drm_plane *plane;
- 	const uint64_t *format_modifiers = format_modifiers_default;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
+index 31a32a79cfc2..fe70ab4e65bb 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
+@@ -30,9 +30,8 @@ int psm_init_power_state_table(struct pp_hwmgr *hwmgr)
+ {
+ 	int result;
+ 	unsigned int i;
+-	unsigned int table_entries;
+ 	struct pp_power_state *state;
+-	int size;
++	int size, table_entries;
  
- 	meson_plane = devm_kzalloc(priv->drm->dev, sizeof(*meson_plane),
- 				   GFP_KERNEL);
-@@ -543,12 +544,16 @@ int meson_plane_create(struct meson_drm *priv)
- 	else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
- 		format_modifiers = format_modifiers_afbc_g12a;
+ 	if (hwmgr->hwmgr_func->get_num_of_pp_table_entries == NULL)
+ 		return 0;
+@@ -40,15 +39,19 @@ int psm_init_power_state_table(struct pp_hwmgr *hwmgr)
+ 	if (hwmgr->hwmgr_func->get_power_state_size == NULL)
+ 		return 0;
  
--	drm_universal_plane_init(priv->drm, plane, 0xFF,
--				 &meson_plane_funcs,
--				 supported_drm_formats,
--				 ARRAY_SIZE(supported_drm_formats),
--				 format_modifiers,
--				 DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
-+	ret = drm_universal_plane_init(priv->drm, plane, 0xFF,
-+					&meson_plane_funcs,
-+					supported_drm_formats,
-+					ARRAY_SIZE(supported_drm_formats),
-+					format_modifiers,
-+					DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
-+	if (ret) {
-+		devm_kfree(priv->drm->dev, meson_plane);
-+		return ret;
-+	}
+-	hwmgr->num_ps = table_entries = hwmgr->hwmgr_func->get_num_of_pp_table_entries(hwmgr);
++	table_entries = hwmgr->hwmgr_func->get_num_of_pp_table_entries(hwmgr);
  
- 	drm_plane_helper_add(plane, &meson_plane_helper_funcs);
+-	hwmgr->ps_size = size = hwmgr->hwmgr_func->get_power_state_size(hwmgr) +
++	size = hwmgr->hwmgr_func->get_power_state_size(hwmgr) +
+ 					  sizeof(struct pp_power_state);
  
+-	if (table_entries == 0 || size == 0) {
++	if (table_entries <= 0 || size == 0) {
+ 		pr_warn("Please check whether power state management is supported on this asic\n");
++		hwmgr->num_ps = 0;
++		hwmgr->ps_size = 0;
+ 		return 0;
+ 	}
++	hwmgr->num_ps = table_entries;
++	hwmgr->ps_size = size;
+ 
+ 	hwmgr->ps = kcalloc(table_entries, size, GFP_KERNEL);
+ 	if (hwmgr->ps == NULL)
 -- 
 2.43.0
 
