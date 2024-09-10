@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A143C18EFFA;
-	Tue, 10 Sep 2024 10:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE219066E;
+	Tue, 10 Sep 2024 10:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962743; cv=none; b=uBc5y7Ypnwwmhhm4bC8Q4orV9B/QZdnCfS6F9CFmWzqhu5OLSJzvQbAiGEcG/0rAI7DpxzKYVcIdswyjwMQ+cnyjzaRH7dw1j9SYjffh0RmnmF3fZeGbZBZpFT8HJ9BSIpX1JWYrXme5dVt1JXh5lh0/o3N+Rpkhb6YHuXG3foM=
+	t=1725962746; cv=none; b=sZkGMIEmihDm1K2e5BKmpIVuEozhnGrgyHStFmu7RUFE7EMfnersUfAcXGkEQdf2OqVnkhsqCb39YM2Vs9poDy4jnLgNxXD+SoVogZdcyvkYpLbtjc+Q4/3sBacts1hWjDaxxC8GPfPLy8z6k5MsZTJs/Ut18Pi48al+3P2YA/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962743; c=relaxed/simple;
-	bh=lsVI3R5doL7+TFU8dMBsYu9HaF5ZMJcUb8g05vrf0kU=;
+	s=arc-20240116; t=1725962746; c=relaxed/simple;
+	bh=v9IK11ChxoyBewE22zgpCAcK5WDDQlgFsv2DHNO6KZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlOdrkBBRKZS/i9jbXSOy/SULJko3KxcBIlMCmhHC44BJIBI1njvIDcX7KnK4r+ShueUxtTMDMAwss1avtu66yV3yatdvCurZi+KnB4iMRsjMYCsPvBPa/JcoOqPCn98XErsHUTaHlwWTJIRZNyTHwjqFfDGdyavR5HFUBxuUv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Qw9Au9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ea6Nm8e6lAYuFi94Do6CTnLuLKbCm8ZEIc7dSvxUg/9ke50uwK8GS/FogAgpXGvvSLECWzVRHbdM0YCV+MpecvovIdBSa6FEyILvzgzA0wtj9sNcgqmRARVTokPpbw5i6Bb9zSM3p+Iz/+7/L9UfhPYtkrOy/xmtRJxLHQLBxRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6rg6ud3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Qw9Au9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2024C4CECD;
-	Tue, 10 Sep 2024 10:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6rg6ud3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC83C4CEC3;
+	Tue, 10 Sep 2024 10:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962743;
-	bh=lsVI3R5doL7+TFU8dMBsYu9HaF5ZMJcUb8g05vrf0kU=;
+	s=korg; t=1725962746;
+	bh=v9IK11ChxoyBewE22zgpCAcK5WDDQlgFsv2DHNO6KZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6Qw9Au9/IM4yvPjGl3ygnRJBzyXpomKcC9jQGK9+MYfYDMB2teGaAP+TkWOj14fT
-	 ahzzJkRGiCDl8+lT0+K8/EaCVrNkhcLxUE2nr5FzGCmFRcp1APJrTMvc97PScBZYjp
-	 GXCMZqWw8af5MX/6kK5SmCnHLgjUzlDS/At2v7uI=
+	b=E6rg6ud32G8PxQDl3HSKxuFKLr6TjhesFOVomKdLCx1RtbTMf2sj/rJEZyC9KhRGT
+	 Jpgsjov/Elr24Q0WYZLi0dfy2//lZvecS0Mwb0YkbpE1XI+y63fJx+8cUHtxM+iRgE
+	 qzLP/jCvfrZb4UnCmPXaQXPVKZdxqhVF2541vg2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Ramanouski <max8rr8@gmail.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.1 015/192] x86/kaslr: Expose and use the end of the physical memory address space
-Date: Tue, 10 Sep 2024 11:30:39 +0200
-Message-ID: <20240910092558.568932042@linuxfoundation.org>
+	robelin <robelin@nvidia.com>,
+	Sameer Pujar <spujar@nvidia.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 002/192] ASoC: dapm: Fix UAF for snd_soc_pcm_runtime object
+Date: Tue, 10 Sep 2024 11:30:26 +0200
+Message-ID: <20240910092557.990742674@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -53,226 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: robelin <robelin@nvidia.com>
 
-commit ea72ce5da22806d5713f3ffb39a6d5ae73841f93 upstream.
+commit b4a90b543d9f62d3ac34ec1ab97fc5334b048565 upstream.
 
-iounmap() on x86 occasionally fails to unmap because the provided valid
-ioremap address is not below high_memory. It turned out that this
-happens due to KASLR.
+When using kernel with the following extra config,
 
-KASLR uses the full address space between PAGE_OFFSET and vaddr_end to
-randomize the starting points of the direct map, vmalloc and vmemmap
-regions.  It thereby limits the size of the direct map by using the
-installed memory size plus an extra configurable margin for hot-plug
-memory.  This limitation is done to gain more randomization space
-because otherwise only the holes between the direct map, vmalloc,
-vmemmap and vaddr_end would be usable for randomizing.
+  - CONFIG_KASAN=y
+  - CONFIG_KASAN_GENERIC=y
+  - CONFIG_KASAN_INLINE=y
+  - CONFIG_KASAN_VMALLOC=y
+  - CONFIG_FRAME_WARN=4096
 
-The limited direct map size is not exposed to the rest of the kernel, so
-the memory hot-plug and resource management related code paths still
-operate under the assumption that the available address space can be
-determined with MAX_PHYSMEM_BITS.
+kernel detects that snd_pcm_suspend_all() access a freed
+'snd_soc_pcm_runtime' object when the system is suspended, which
+leads to a use-after-free bug:
 
-request_free_mem_region() allocates from (1 << MAX_PHYSMEM_BITS) - 1
-downwards.  That means the first allocation happens past the end of the
-direct map and if unlucky this address is in the vmalloc space, which
-causes high_memory to become greater than VMALLOC_START and consequently
-causes iounmap() to fail for valid ioremap addresses.
+[   52.047746] BUG: KASAN: use-after-free in snd_pcm_suspend_all+0x1a8/0x270
+[   52.047765] Read of size 1 at addr ffff0000b9434d50 by task systemd-sleep/2330
 
-MAX_PHYSMEM_BITS cannot be changed for that because the randomization
-does not align with address bit boundaries and there are other places
-which actually require to know the maximum number of address bits.  All
-remaining usage sites of MAX_PHYSMEM_BITS have been analyzed and found
-to be correct.
+[   52.047785] Call trace:
+[   52.047787]  dump_backtrace+0x0/0x3c0
+[   52.047794]  show_stack+0x34/0x50
+[   52.047797]  dump_stack_lvl+0x68/0x8c
+[   52.047802]  print_address_description.constprop.0+0x74/0x2c0
+[   52.047809]  kasan_report+0x210/0x230
+[   52.047815]  __asan_report_load1_noabort+0x3c/0x50
+[   52.047820]  snd_pcm_suspend_all+0x1a8/0x270
+[   52.047824]  snd_soc_suspend+0x19c/0x4e0
 
-Cure this by exposing the end of the direct map via PHYSMEM_END and use
-that for the memory hot-plug and resource management related places
-instead of relying on MAX_PHYSMEM_BITS. In the KASLR case PHYSMEM_END
-maps to a variable which is initialized by the KASLR initialization and
-otherwise it is based on MAX_PHYSMEM_BITS as before.
+The snd_pcm_sync_stop() has a NULL check on 'substream->runtime' before
+making any access. So we need to always set 'substream->runtime' to NULL
+everytime we kfree() it.
 
-To prevent future hickups add a check into add_pages() to catch callers
-trying to add memory above PHYSMEM_END.
-
-Fixes: 0483e1fa6e09 ("x86/mm: Implement ASLR for kernel memory regions")
-Reported-by: Max Ramanouski <max8rr8@gmail.com>
-Reported-by: Alistair Popple <apopple@nvidia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-By: Max Ramanouski <max8rr8@gmail.com>
-Tested-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/87ed6soy3z.ffs@tglx
+Fixes: a72706ed8208 ("ASoC: codec2codec: remove ephemeral variables")
+Signed-off-by: robelin <robelin@nvidia.com>
+Signed-off-by: Sameer Pujar <spujar@nvidia.com>
+Link: https://patch.msgid.link/20240823144342.4123814-2-spujar@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/page_64.h          |    1 +
- arch/x86/include/asm/pgtable_64_types.h |    4 ++++
- arch/x86/mm/init_64.c                   |    4 ++++
- arch/x86/mm/kaslr.c                     |   32 ++++++++++++++++++++++++++------
- include/linux/mm.h                      |    4 ++++
- kernel/resource.c                       |    6 ++----
- mm/memory_hotplug.c                     |    2 +-
- mm/sparse.c                             |    2 +-
- 8 files changed, 43 insertions(+), 12 deletions(-)
+ sound/soc/soc-dapm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/include/asm/page_64.h
-+++ b/arch/x86/include/asm/page_64.h
-@@ -17,6 +17,7 @@ extern unsigned long phys_base;
- extern unsigned long page_offset_base;
- extern unsigned long vmalloc_base;
- extern unsigned long vmemmap_base;
-+extern unsigned long physmem_end;
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -4018,6 +4018,7 @@ static int snd_soc_dai_link_event(struct
  
- static __always_inline unsigned long __phys_addr_nodebug(unsigned long x)
- {
---- a/arch/x86/include/asm/pgtable_64_types.h
-+++ b/arch/x86/include/asm/pgtable_64_types.h
-@@ -139,6 +139,10 @@ extern unsigned int ptrs_per_p4d;
- # define VMEMMAP_START		__VMEMMAP_BASE_L4
- #endif /* CONFIG_DYNAMIC_MEMORY_LAYOUT */
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		kfree(substream->runtime);
++		substream->runtime = NULL;
+ 		break;
  
-+#ifdef CONFIG_RANDOMIZE_MEMORY
-+# define PHYSMEM_END		physmem_end
-+#endif
-+
- /*
-  * End of the region for which vmalloc page tables are pre-allocated.
-  * For non-KMSAN builds, this is the same as VMALLOC_END.
---- a/arch/x86/mm/init_64.c
-+++ b/arch/x86/mm/init_64.c
-@@ -950,8 +950,12 @@ static void update_end_of_memory_vars(u6
- int add_pages(int nid, unsigned long start_pfn, unsigned long nr_pages,
- 	      struct mhp_params *params)
- {
-+	unsigned long end = ((start_pfn + nr_pages) << PAGE_SHIFT) - 1;
- 	int ret;
- 
-+	if (WARN_ON_ONCE(end > PHYSMEM_END))
-+		return -ERANGE;
-+
- 	ret = __add_pages(nid, start_pfn, nr_pages, params);
- 	WARN_ON_ONCE(ret);
- 
---- a/arch/x86/mm/kaslr.c
-+++ b/arch/x86/mm/kaslr.c
-@@ -47,13 +47,24 @@ static const unsigned long vaddr_end = C
-  */
- static __initdata struct kaslr_memory_region {
- 	unsigned long *base;
-+	unsigned long *end;
- 	unsigned long size_tb;
- } kaslr_regions[] = {
--	{ &page_offset_base, 0 },
--	{ &vmalloc_base, 0 },
--	{ &vmemmap_base, 0 },
-+	{
-+		.base	= &page_offset_base,
-+		.end	= &physmem_end,
-+	},
-+	{
-+		.base	= &vmalloc_base,
-+	},
-+	{
-+		.base	= &vmemmap_base,
-+	},
- };
- 
-+/* The end of the possible address space for physical memory */
-+unsigned long physmem_end __ro_after_init;
-+
- /* Get size in bytes used by the memory region */
- static inline unsigned long get_padding(struct kaslr_memory_region *region)
- {
-@@ -82,6 +93,8 @@ void __init kernel_randomize_memory(void
- 	BUILD_BUG_ON(vaddr_end != CPU_ENTRY_AREA_BASE);
- 	BUILD_BUG_ON(vaddr_end > __START_KERNEL_map);
- 
-+	/* Preset the end of the possible address space for physical memory */
-+	physmem_end = ((1ULL << MAX_PHYSMEM_BITS) - 1);
- 	if (!kaslr_memory_enabled())
- 		return;
- 
-@@ -128,11 +141,18 @@ void __init kernel_randomize_memory(void
- 		vaddr += entropy;
- 		*kaslr_regions[i].base = vaddr;
- 
-+		/* Calculate the end of the region */
-+		vaddr += get_padding(&kaslr_regions[i]);
- 		/*
--		 * Jump the region and add a minimum padding based on
--		 * randomization alignment.
-+		 * KASLR trims the maximum possible size of the
-+		 * direct-map. Update the physmem_end boundary.
-+		 * No rounding required as the region starts
-+		 * PUD aligned and size is in units of TB.
- 		 */
--		vaddr += get_padding(&kaslr_regions[i]);
-+		if (kaslr_regions[i].end)
-+			*kaslr_regions[i].end = __pa_nodebug(vaddr - 1);
-+
-+		/* Add a minimum padding based on randomization alignment. */
- 		vaddr = round_up(vaddr + 1, PUD_SIZE);
- 		remain_entropy -= entropy;
- 	}
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -92,6 +92,10 @@ extern const int mmap_rnd_compat_bits_ma
- extern int mmap_rnd_compat_bits __read_mostly;
- #endif
- 
-+#ifndef PHYSMEM_END
-+# define PHYSMEM_END	((1ULL << MAX_PHYSMEM_BITS) - 1)
-+#endif
-+
- #include <asm/page.h>
- #include <asm/processor.h>
- 
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -1781,8 +1781,7 @@ static resource_size_t gfr_start(struct
- 	if (flags & GFR_DESCENDING) {
- 		resource_size_t end;
- 
--		end = min_t(resource_size_t, base->end,
--			    (1ULL << MAX_PHYSMEM_BITS) - 1);
-+		end = min_t(resource_size_t, base->end, PHYSMEM_END);
- 		return end - size + 1;
- 	}
- 
-@@ -1799,8 +1798,7 @@ static bool gfr_continue(struct resource
- 	 * @size did not wrap 0.
- 	 */
- 	return addr > addr - size &&
--	       addr <= min_t(resource_size_t, base->end,
--			     (1ULL << MAX_PHYSMEM_BITS) - 1);
-+	       addr <= min_t(resource_size_t, base->end, PHYSMEM_END);
- }
- 
- static resource_size_t gfr_next(resource_size_t addr, resource_size_t size,
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1530,7 +1530,7 @@ struct range __weak arch_get_mappable_ra
- 
- struct range mhp_get_pluggable_range(bool need_mapping)
- {
--	const u64 max_phys = (1ULL << MAX_PHYSMEM_BITS) - 1;
-+	const u64 max_phys = PHYSMEM_END;
- 	struct range mhp_range;
- 
- 	if (need_mapping) {
---- a/mm/sparse.c
-+++ b/mm/sparse.c
-@@ -129,7 +129,7 @@ static inline int sparse_early_nid(struc
- static void __meminit mminit_validate_memmodel_limits(unsigned long *start_pfn,
- 						unsigned long *end_pfn)
- {
--	unsigned long max_sparsemem_pfn = 1UL << (MAX_PHYSMEM_BITS-PAGE_SHIFT);
-+	unsigned long max_sparsemem_pfn = (PHYSMEM_END + 1) >> PAGE_SHIFT;
- 
- 	/*
- 	 * Sanity checks - do not allow an architecture to pass
+ 	default:
 
 
