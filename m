@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208C718C038;
-	Tue, 10 Sep 2024 09:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192B318B493;
+	Tue, 10 Sep 2024 09:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961312; cv=none; b=RjwpB+nbTpehxH3rJxzwnmVkOdFgUxdbmyZErMMjngHfQNzeJqyilsqh0vAmXuk+VxHpubFwh8XZG5o4jkKUNMx+R99mcDf9Y/akenaJqwb+DiSdARHh3rKIN5CDvQpP7jowZKFRVBek6ufjbFSmw90U8FLHhF9Ad5tEEz5CTg0=
+	t=1725961315; cv=none; b=aOlNo7bBj8UMLAHBj2LdWtX35q322m6tcxsv7Or5gEeumip7iCGX3a82mIorbm0OHiCdISzCUPMDb5hyL6yi/X5tUD0/rPtfYy/BXtApcTsn1joPfLni+8fyDGiQIIifjqvrS+r/81hthOyjCBUj43F3YQnpJ2MyCw6HrRvS4GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961312; c=relaxed/simple;
-	bh=HtTPsXEPlxMbQo7zVv0IraitIevDzdxyAI23zT6YZsA=;
+	s=arc-20240116; t=1725961315; c=relaxed/simple;
+	bh=SN2u/geByY/vZ5cE7YFhp8NWMiU1r3PQZFAmjxu0MSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5coBTzP+pfZKbFgLhIVcUVxCSzfFatPasBrp79HgZsS8Y2NXDAGAErToRf7T1aobf+R39xfo5kciXAZfzq97ZNU+ftZ2zMORSTa8wpl77Q44okcca3LrdSF/PNrjmqZ0UIbqniUaDKyG0QiS0PM8oTPESy4t8nbC+kYwfofS6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHvO1aWq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXrOF6G1zv/PgEnAvOB7FoKplZiI2MOlLzkD5BUdbCefEs4JR2208pqywskpGsbBPm/hAsBZ5YkcbIpeohLoqpe8tiDY26uj0ragS0aQm8qm6ULbJz6E9eV5/u9req6qzk0ZOYZwOM19lNzDFTOJceGQCVWmbkoI5dTqlOOXp7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MA0uxoGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHvO1aWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9520CC4CEC3;
-	Tue, 10 Sep 2024 09:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MA0uxoGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABE4C4CEC3;
+	Tue, 10 Sep 2024 09:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961312;
-	bh=HtTPsXEPlxMbQo7zVv0IraitIevDzdxyAI23zT6YZsA=;
+	s=korg; t=1725961314;
+	bh=SN2u/geByY/vZ5cE7YFhp8NWMiU1r3PQZFAmjxu0MSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHvO1aWqEo7i2MU4SuPY8Gnq1iUluS72Gf8zOs3MQZd8y4txYZ7ZrO9T2VU9XHHiS
-	 XUL0/SjRfJERGTvP7MSusAzq3AO69EcYyT/wQx+wm6NC3rb5jagtg4fFxMhaz3pwfg
-	 NhxCMnM9yvm0w/00UrkpSSftdb0riSSs7z+Swfyk=
+	b=MA0uxoGpVnAU5rTaK+zCG+btkPsazHxtuY4ZujlcQiwRab4MbPEB/vDObjr/R6/IG
+	 L904E8JF+rOOhMAjYbYx/qdnbpa5uDwNeW0VdxjMcVYmhGOw5WfHkaXiprvpzTq14z
+	 JtwhVXqzZYfzpo8vDLdU9CyvjD3vUdS2RZqpq5tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georg Gottleuber <ggo@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.10 028/375] nvme-pci: Add sleep quirk for Samsung 990 Evo
-Date: Tue, 10 Sep 2024 11:27:05 +0200
-Message-ID: <20240910092623.199245332@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.10 029/375] rust: macros: provide correct provenance when constructing THIS_MODULE
+Date: Tue, 10 Sep 2024 11:27:06 +0200
+Message-ID: <20240910092623.229286743@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,44 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georg Gottleuber <ggo@tuxedocomputers.com>
+From: Boqun Feng <boqun.feng@gmail.com>
 
-commit 61aa894e7a2fda4ee026523b01d07e83ce2abb72 upstream.
+commit a5a3c952e82c1ada12bf8c55b73af26f1a454bd2 upstream.
 
-On some TUXEDO platforms, a Samsung 990 Evo NVMe leads to a high
-power consumption in s2idle sleep (2-3 watts).
+Currently while defining `THIS_MODULE` symbol in `module!()`, the
+pointer used to construct `ThisModule` is derived from an immutable
+reference of `__this_module`, which means the pointer doesn't have
+the provenance for writing, and that means any write to that pointer
+is UB regardless of data races or not. However, the usage of
+`THIS_MODULE` includes passing this pointer to functions that may write
+to it (probably in unsafe code), and this will create soundness issues.
 
-This patch applies 'Force No Simple Suspend' quirk to achieve a
-sleep with a lower power consumption, typically around 0.5 watts.
+One way to fix this is using `addr_of_mut!()` but that requires the
+unstable feature "const_mut_refs". So instead of `addr_of_mut()!`,
+an extern static `Opaque` is used here: since `Opaque<T>` is transparent
+to `T`, an extern static `Opaque` will just wrap the C symbol (defined
+in a C compile unit) in an `Opaque`, which provides a pointer with
+writable provenance via `Opaque::get()`. This fix the potential UBs
+because of pointer provenance unmatched.
 
-Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Closes: https://rust-for-linux.zulipchat.com/#narrow/stream/x/topic/x/near/465412664
+Fixes: 1fbde52bde73 ("rust: add `macros` crate")
+Cc: stable@vger.kernel.org # 6.6.x: be2ca1e03965: ("rust: types: Make Opaque::get const")
+Link: https://lore.kernel.org/r/20240828180129.4046355-1-boqun.feng@gmail.com
+[ Fixed two typos, reworded title. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ rust/macros/module.rs |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2931,6 +2931,17 @@ static unsigned long check_vendor_combin
- 		    dmi_match(DMI_BOARD_NAME, "NS5x_7xPU") ||
- 		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1"))
- 			return NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND;
-+	} else if (pdev->vendor == 0x144d && pdev->device == 0xa80d) {
-+		/*
-+		 * Exclude Samsung 990 Evo from NVME_QUIRK_SIMPLE_SUSPEND
-+		 * because of high power consumption (> 2 Watt) in s2idle
-+		 * sleep. Only some boards with Intel CPU are affected.
-+		 */
-+		if (dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
-+		    dmi_match(DMI_BOARD_NAME, "PH4PG31") ||
-+		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1") ||
-+		    dmi_match(DMI_BOARD_NAME, "PH6PG01_PH6PG71"))
-+			return NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND;
- 	}
- 
- 	/*
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -203,7 +203,11 @@ pub(crate) fn module(ts: TokenStream) ->
+             // freed until the module is unloaded.
+             #[cfg(MODULE)]
+             static THIS_MODULE: kernel::ThisModule = unsafe {{
+-                kernel::ThisModule::from_ptr(&kernel::bindings::__this_module as *const _ as *mut _)
++                extern \"C\" {{
++                    static __this_module: kernel::types::Opaque<kernel::bindings::module>;
++                }}
++
++                kernel::ThisModule::from_ptr(__this_module.get())
+             }};
+             #[cfg(not(MODULE))]
+             static THIS_MODULE: kernel::ThisModule = unsafe {{
 
 
