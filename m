@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC02E190056;
-	Tue, 10 Sep 2024 10:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B10046444;
+	Tue, 10 Sep 2024 10:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964600; cv=none; b=oInjqypsWWbGjkCtGCspXt2WzcY8ThTTMTcmX11vrOaitD1hV3vl9Tsig8jZfm8Q/wIbkjcmAHX8zQTOJxzbxDrR/7vZXZJWiYo6px4JlAvizZdyg4IkMAeLvAFnTlx8JJbdhqE2JoP10FzH69Rdq8KqNSDjCkyT5wtCxMExIWM=
+	t=1725964603; cv=none; b=BNnTq8rkpCbdhBFQlSCsOEn/TAgn54Jdv892PUb2RclVncpwBO9ZSjoc1ZcJnoCxsohETGBG6xuE7u4gAAt6F2axDwLQNBg+gQHMxeAkcP3xTOu9iqgGDPYcHplZFq2X5ZXuku+ImaPNibWK3tQYvJNdah14HxFs0LNtn6xk2BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964600; c=relaxed/simple;
-	bh=8mkKRW92D3VcBti5yddysPtJpuHqDG0VF0y4v6Byiiw=;
+	s=arc-20240116; t=1725964603; c=relaxed/simple;
+	bh=N5g//AtEN4PsZeYUfvbbAGHMEgf1v5qHV7OMF0iKw28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOkZaQXqPjuiL802dqQyXfxRP6xfNzMLY3MbgE8vJRIxVnvkrQqqXBvj5jhhWUGSTDD3a/dRl8pKbbJ+0+/uPy2ccLbyhT61y1WN4Y14svj15Y+kmDxWxYaWHMOXplIJkZKPWGI54dgyurG8rwr+szbYU1PqzoG9Jnstgao2RcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/qwRDqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fr6zPZDC+XGZfFKjHhbO47HXdQTveXdYMF9rNa2AGE2zqR7vHWvoWCgufXeDnQJ7e/cME3m2ET/jHHJar2LUTA8IPFGSKue1C3ycgc4OgWliRNPvmwhPvX2flvpnH+azvGVrRA5xFfv+yiiqjYVbENF5oZk9uq8/KrPFD4zm0FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h30UlA5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/qwRDqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EDBC4CEC3;
-	Tue, 10 Sep 2024 10:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h30UlA5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DB1C4CEC3;
+	Tue, 10 Sep 2024 10:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964600;
-	bh=8mkKRW92D3VcBti5yddysPtJpuHqDG0VF0y4v6Byiiw=;
+	s=korg; t=1725964603;
+	bh=N5g//AtEN4PsZeYUfvbbAGHMEgf1v5qHV7OMF0iKw28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/qwRDqI26ddSlc+cyq0XXZyN3wOI+chDXrMEc/h8jC0DfXjYzChqd3fABrFZpy7u
-	 umm2S316uMQvXDRQnffsiYY38LTy1VtbUHC/8IspI4jZ+PHPcdknaY49PU/kxI3BwW
-	 fFGRCBYiTXllXV1jXuQa6RIzRUEFLwWIVYQoZ0UU=
+	b=h30UlA5K+Px0lFJemXT/cARQhzqjJqDM16B9GjPS3tC1wrctFP+JQgQFVVZWDbXDk
+	 6Uxv/MV54fCx9a/O4Obf32ysDx9ot1RhtiXDYT8z8gD1Jg05W0EFbpDFoXrkXPyitv
+	 aRxaABfz/l6TvkKfCoZFLNOzRJPtkMDdllGgHDzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dumitru Ceclan <dumitru.ceclan@analog.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 210/269] iio: adc: ad7124: fix chip ID mismatch
-Date: Tue, 10 Sep 2024 11:33:17 +0200
-Message-ID: <20240910092615.514080133@linuxfoundation.org>
+	Faisal Hassan <quic_faisalh@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 211/269] usb: dwc3: core: update LC timer as per USB Spec V3.2
+Date: Tue, 10 Sep 2024 11:33:18 +0200
+Message-ID: <20240910092615.544883961@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,41 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dumitru Ceclan <mitrutzceclan@gmail.com>
+From: Faisal Hassan <quic_faisalh@quicinc.com>
 
-commit 96f9ab0d5933c1c00142dd052f259fce0bc3ced2 upstream.
+commit 9149c9b0c7e046273141e41eebd8a517416144ac upstream.
 
-The ad7124_soft_reset() function has the assumption that the chip will
-assert the "power-on reset" bit in the STATUS register after a software
-reset without any delay. The POR bit =0 is used to check if the chip
-initialization is done.
+This fix addresses STAR 9001285599, which only affects DWC_usb3 version
+3.20a. The timer value for PM_LC_TIMER in DWC_usb3 3.20a for the Link
+ECN changes is incorrect. If the PM TIMER ECN is enabled via GUCTL2[19],
+the link compliance test (TD7.21) may fail. If the ECN is not enabled
+(GUCTL2[19] = 0), the controller will use the old timer value (5us),
+which is still acceptable for the link compliance test. Therefore, clear
+GUCTL2[19] to pass the USB link compliance test: TD 7.21.
 
-A chip ID mismatch probe error appears intermittently when the probe
-continues too soon and the ID register does not contain the expected
-value.
-
-Fix by adding a 200us delay after the software reset command is issued.
-
-Fixes: b3af341bbd96 ("iio: adc: Add ad7124 support")
-Signed-off-by: Dumitru Ceclan <dumitru.ceclan@analog.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20240731-ad7124-fix-v1-1-46a76aa4b9be@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240829094502.26502-1-quic_faisalh@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7124.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/core.c |   15 +++++++++++++++
+ drivers/usb/dwc3/core.h |    2 ++
+ 2 files changed, 17 insertions(+)
 
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -765,6 +765,7 @@ static int ad7124_soft_reset(struct ad71
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1289,6 +1289,21 @@ static int dwc3_core_init(struct dwc3 *d
+ 	}
  
-+	fsleep(200);
- 	timeout = 100;
- 	do {
- 		ret = ad_sd_read_reg(&st->sd, AD7124_STATUS, 1, &readval);
+ 	/*
++	 * STAR 9001285599: This issue affects DWC_usb3 version 3.20a
++	 * only. If the PM TIMER ECM is enabled through GUCTL2[19], the
++	 * link compliance test (TD7.21) may fail. If the ECN is not
++	 * enabled (GUCTL2[19] = 0), the controller will use the old timer
++	 * value (5us), which is still acceptable for the link compliance
++	 * test. Therefore, do not enable PM TIMER ECM in 3.20a by
++	 * setting GUCTL2[19] by default; instead, use GUCTL2[19] = 0.
++	 */
++	if (DWC3_VER_IS(DWC3, 320A)) {
++		reg = dwc3_readl(dwc->regs, DWC3_GUCTL2);
++		reg &= ~DWC3_GUCTL2_LC_TIMER;
++		dwc3_writel(dwc->regs, DWC3_GUCTL2, reg);
++	}
++
++	/*
+ 	 * When configured in HOST mode, after issuing U3/L2 exit controller
+ 	 * fails to send proper CRC checksum in CRC5 feild. Because of this
+ 	 * behaviour Transaction Error is generated, resulting in reset and
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -408,6 +408,7 @@
+ 
+ /* Global User Control Register 2 */
+ #define DWC3_GUCTL2_RST_ACTBITLATER		BIT(14)
++#define DWC3_GUCTL2_LC_TIMER			BIT(19)
+ 
+ /* Global User Control Register 3 */
+ #define DWC3_GUCTL3_SPLITDISABLE		BIT(14)
+@@ -1238,6 +1239,7 @@ struct dwc3 {
+ #define DWC3_REVISION_290A	0x5533290a
+ #define DWC3_REVISION_300A	0x5533300a
+ #define DWC3_REVISION_310A	0x5533310a
++#define DWC3_REVISION_320A	0x5533320a
+ #define DWC3_REVISION_330A	0x5533330a
+ 
+ #define DWC31_REVISION_ANY	0x0
 
 
