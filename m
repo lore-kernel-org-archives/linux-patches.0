@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B0F172BAE;
-	Tue, 10 Sep 2024 10:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A48E18E773;
+	Tue, 10 Sep 2024 10:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964200; cv=none; b=ngbErdxAMHKHre3ONRFt7hAr2indS2qmEmZDG/xHFpKEFF0IYzvXD6QQUPyHHN+YMEo3ojdXpJ5qOY6h/rP2xnktYHLeNo7s7a3ZgYO4MBPEuBkp8mLh0C+1wmo39y3QtATAt4S4XjwaFnXbV5/enXQat08b//IZhx25XXCmdfY=
+	t=1725964202; cv=none; b=BTribVqtv8qYiL+6szEJKw9nfxkZLpmjPQgH/TUD+K82c6EUN3btK2G7+hV4fFoEckpmp6QSJIaPxmRThN4a1hVxPmByMs0tlxXC+ZCOmoGAb3RL3uk6iquu5ha+qmMTinDHHhHv99aDDldQrGAzE9GoUqf9LBXDk0J5eIrUJ2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964200; c=relaxed/simple;
-	bh=VnIPpREegfzX0MczdY0PpgtWcq8qn8RldPe3dSX7O/Q=;
+	s=arc-20240116; t=1725964202; c=relaxed/simple;
+	bh=0mZBC1j/kZqLfSG9sJKw53rDVBXUvQKV5z+XFwtD2p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNqCRFkvOhe60MimUMoxuBeYK+ffRwM1f01PggZklsUw89kvSs4RRvsyuPgMgxkKd/P/NEumvUu5FgsCBtUCVaOy9RgfwlQoBcret8seFYgjdAA4L1MNq6KMSw9NE+3COS56imkCvAOwUxO7Ai+ATfMtinvvuLKR1NTl5ImybXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3oE/bD5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPHgugOFhEHjYD+D9x/gAFVUwgck03hQ6YfTcqsng1rUw2S2LWAkBKUTwDm4jgUA8wK2M3JhnV0867y56WcTurpQ97Mp0I+nBe6N7bPgORxxItEU/uLTuaSb7tJNx6Idon326bnl/y+nY9ZejMRaPdSQoYcwRb/wPu4p1FOxTjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5udiC/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3oE/bD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27655C4CEC3;
-	Tue, 10 Sep 2024 10:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5udiC/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C20DC4CEC6;
+	Tue, 10 Sep 2024 10:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964199;
-	bh=VnIPpREegfzX0MczdY0PpgtWcq8qn8RldPe3dSX7O/Q=;
+	s=korg; t=1725964202;
+	bh=0mZBC1j/kZqLfSG9sJKw53rDVBXUvQKV5z+XFwtD2p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3oE/bD5Fr0jUAQY+6Nvl9lxg/wp+yACawx8VdCpT92hrrWk4MueSiJNdpbzc7N4G
-	 1Jr88IOm3153X7Ei0jCo43q3jV0FctrwwUHfWf29PT5AH9E5zW4IBs349GKEPK/47E
-	 DLkjR1mdROWCbqgHAQ7ag8CELqHi8HYQISplILvg=
+	b=F5udiC/b5bLd0ME/Bfqjb6r+JCD5pVNluv2u5BYI8jBoItRGKVEwvNd8LI7+VuGH6
+	 +FOayNtYm7ARTezrFVYwMfGVUwU6FfL8vDQu/Ejcw4c0H/NAnR5ZC/AtK3Jbr29Ff6
+	 XzVMiVLyyEDVXFn8fws0a2T6TBRXZie3RoVvSwSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daiwei Li <daiweili@google.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Igor Bagnucki <igor.bagnucki@intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 102/269] igb: Fix not clearing TimeSync interrupts for 82580
-Date: Tue, 10 Sep 2024 11:31:29 +0200
-Message-ID: <20240910092611.848369062@linuxfoundation.org>
+Subject: [PATCH 6.6 103/269] ice: Add netif_device_attach/detach into PF reset flow
+Date: Tue, 10 Sep 2024 11:31:30 +0200
+Message-ID: <20240910092611.883053813@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -54,68 +55,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daiwei Li <daiweili@google.com>
+From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
 
-[ Upstream commit ba8cf80724dbc09825b52498e4efacb563935408 ]
+[ Upstream commit d11a67634227f9f9da51938af085fb41a733848f ]
 
-82580 NICs have a hardware bug that makes it
-necessary to write into the TSICR (TimeSync Interrupt Cause) register
-to clear it:
-https://lore.kernel.org/all/CDCB8BE0.1EC2C%25matthew.vick@intel.com/
+Ethtool callbacks can be executed while reset is in progress and try to
+access deleted resources, e.g. getting coalesce settings can result in a
+NULL pointer dereference seen below.
 
-Add a conditional so only for 82580 we write into the TSICR register,
-so we don't risk losing events for other models.
+Reproduction steps:
+Once the driver is fully initialized, trigger reset:
+	# echo 1 > /sys/class/net/<interface>/device/reset
+when reset is in progress try to get coalesce settings using ethtool:
+	# ethtool -c <interface>
 
-Without this change, when running ptp4l with an Intel 82580 card,
-I get the following output:
+BUG: kernel NULL pointer dereference, address: 0000000000000020
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 11 PID: 19713 Comm: ethtool Tainted: G S                 6.10.0-rc7+ #7
+RIP: 0010:ice_get_q_coalesce+0x2e/0xa0 [ice]
+RSP: 0018:ffffbab1e9bcf6a8 EFLAGS: 00010206
+RAX: 000000000000000c RBX: ffff94512305b028 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffff9451c3f2e588 RDI: ffff9451c3f2e588
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: ffff9451c3f2e580 R11: 000000000000001f R12: ffff945121fa9000
+R13: ffffbab1e9bcf760 R14: 0000000000000013 R15: ffffffff9e65dd40
+FS:  00007faee5fbe740(0000) GS:ffff94546fd80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000020 CR3: 0000000106c2e005 CR4: 00000000001706f0
+Call Trace:
+<TASK>
+ice_get_coalesce+0x17/0x30 [ice]
+coalesce_prepare_data+0x61/0x80
+ethnl_default_doit+0xde/0x340
+genl_family_rcv_msg_doit+0xf2/0x150
+genl_rcv_msg+0x1b3/0x2c0
+netlink_rcv_skb+0x5b/0x110
+genl_rcv+0x28/0x40
+netlink_unicast+0x19c/0x290
+netlink_sendmsg+0x222/0x490
+__sys_sendto+0x1df/0x1f0
+__x64_sys_sendto+0x24/0x30
+do_syscall_64+0x82/0x160
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7faee60d8e27
 
-> timed out while polling for tx timestamp increasing tx_timestamp_timeout or
-> increasing kworker priority may correct this issue, but a driver bug likely
-> causes it
+Calling netif_device_detach() before reset makes the net core not call
+the driver when ethtool command is issued, the attempt to execute an
+ethtool command during reset will result in the following message:
 
-This goes away with this change.
+    netlink error: No such device
 
-This (partially) reverts commit ee14cc9ea19b ("igb: Fix missing time sync events").
+instead of NULL pointer dereference. Once reset is done and
+ice_rebuild() is executing, the netif_device_attach() is called to allow
+for ethtool operations to occur again in a safe manner.
 
-Fixes: ee14cc9ea19b ("igb: Fix missing time sync events")
-Closes: https://lore.kernel.org/intel-wired-lan/CAN0jFd1kO0MMtOh8N2Ztxn6f7vvDKp2h507sMryobkBKe=xk=w@mail.gmail.com/
-Tested-by: Daiwei Li <daiweili@google.com>
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Daiwei Li <daiweili@google.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Igor Bagnucki <igor.bagnucki@intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 8c8894ef3388..fa268d7bd1bc 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -6985,10 +6985,20 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
- 
- static void igb_tsync_interrupt(struct igb_adapter *adapter)
- {
-+	const u32 mask = (TSINTR_SYS_WRAP | E1000_TSICR_TXTS |
-+			  TSINTR_TT0 | TSINTR_TT1 |
-+			  TSINTR_AUTT0 | TSINTR_AUTT1);
- 	struct e1000_hw *hw = &adapter->hw;
- 	u32 tsicr = rd32(E1000_TSICR);
- 	struct ptp_clock_event event;
- 
-+	if (hw->mac.type == e1000_82580) {
-+		/* 82580 has a hardware bug that requires an explicit
-+		 * write to clear the TimeSync interrupt cause.
-+		 */
-+		wr32(E1000_TSICR, tsicr & mask);
-+	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 3f254ce0d6db..ffe6e74b9fea 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -606,6 +606,9 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 			memset(&vsi->mqprio_qopt, 0, sizeof(vsi->mqprio_qopt));
+ 		}
+ 	}
 +
- 	if (tsicr & TSINTR_SYS_WRAP) {
- 		event.type = PTP_CLOCK_PPS;
- 		if (adapter->ptp_caps.pps)
++	if (vsi->netdev)
++		netif_device_detach(vsi->netdev);
+ skip:
+ 
+ 	/* clear SW filtering DB */
+@@ -7295,6 +7298,7 @@ static void ice_update_pf_netdev_link(struct ice_pf *pf)
+  */
+ static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
+ {
++	struct ice_vsi *vsi = ice_get_main_vsi(pf);
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	struct ice_hw *hw = &pf->hw;
+ 	bool dvm;
+@@ -7447,6 +7451,9 @@ static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 		ice_rebuild_arfs(pf);
+ 	}
+ 
++	if (vsi && vsi->netdev)
++		netif_device_attach(vsi->netdev);
++
+ 	ice_update_pf_netdev_link(pf);
+ 
+ 	/* tell the firmware we are up */
 -- 
 2.43.0
 
