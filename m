@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EC346444;
-	Tue, 10 Sep 2024 09:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304D446444;
+	Tue, 10 Sep 2024 09:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961010; cv=none; b=EGYjPNjF4/ajPn+lgXGG9p5Q4WpWHSSCUWCtWa9nNJ4QSys3+F6Gyt6Fv5LCBOR5ISqVh086nLgWY4/wEvBu/Ndw1gPLO2T0L83a3vE5YBc1OId8ZKYrB5wokyAotwlze2lpVy8srWRaTcj4Svog3oiegMm4qx96J3muux+pyns=
+	t=1725961013; cv=none; b=YvBM+GQgMEXHk/bhmSNgtuOvrF+wHbNElYyhSaPCmIP/mufzXGI5T7CI7OZ2lu88QNPVbpCHS4SCRDSuQqiGEik8KGeVuS74Kh272zAk0C0GU/jQ0DCjzBdKrounWJA/KKTYOzhJKM6k2AmycO7y1XLoisOkrxoU+ZBrSwvl2+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961010; c=relaxed/simple;
-	bh=oocNm9dgaajSwYGTtWzrbTNIi6RkD6/YlKiCSMo/MvM=;
+	s=arc-20240116; t=1725961013; c=relaxed/simple;
+	bh=ZJxPS8uXUNyUGM+7JHWp98vh7kSfExq+Jn2D7Wpbcew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMhC22YGeJQ0xGTc1kEX1sjOlkwLYLICtggvUcETwqRYO/xJuHoioCnXDevG04feAY1ZnQwbBKUl9bA3dlGBE+Eek87QnV909bikz6jAZ1FsX7ET2wMWj8yxla5oxF4kwgQL3LFCPXF9ad0eB85CrLEoMGgp+KZTBwzz/QJbAsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBTLhWDQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbLd/2KWfymtqcRR4t4tTlPfft4lQQMqciC1QsILI6tayJpZPFabq/QHhphRkZMfFVrK52aOTRH1U88rDcyAw9tDHoCk88Bg3V6fWbP16kPPDdZ3ofP50xa9Qu0sw2g5zf84ZkLzTL7Siv0pqywiLwNzGyAbbG3Q34UI1ZiOQdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzThSGea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBTLhWDQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4342C4CEC3;
-	Tue, 10 Sep 2024 09:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzThSGea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B0EC4CEC3;
+	Tue, 10 Sep 2024 09:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961010;
-	bh=oocNm9dgaajSwYGTtWzrbTNIi6RkD6/YlKiCSMo/MvM=;
+	s=korg; t=1725961013;
+	bh=ZJxPS8uXUNyUGM+7JHWp98vh7kSfExq+Jn2D7Wpbcew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBTLhWDQ7hJ4lU8aClj3aARYyl6ID6Qney84AVu/SIWSqiKpyMaKkVYVpqjIMIsKX
-	 vHKknWtFc3YDIMLeB9FfsjEr1pgJ5WrM0CKEfi4J6hS8w/nDLsoprFtLAqPmd/T/fW
-	 dcyhk/QkJG+u3wVLrgwLxCZBex/QK1nmmah0HqyQ=
+	b=rzThSGea+GBngiJ5QOKzCEjYna274X3fF0wjv1x5vOV0q8Q0Dr0EVDek38x2OIVOv
+	 64Ep2PC8Bo0NHJCqUOftABIs3lWakIxe9/z9DigVygpxJU2YGZny3kSiV96GO0YE+u
+	 ebENzzcS7eMy0ZQ7a78LfLNOwaLy0kLFxl0VdIuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 4.19 22/96] fuse: use unsigned type for getxattr/listxattr size truncation
-Date: Tue, 10 Sep 2024 11:31:24 +0200
-Message-ID: <20240910092542.414130483@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 4.19 23/96] clk: qcom: clk-alpha-pll: Fix the pll post div mask
+Date: Tue, 10 Sep 2024 11:31:25 +0200
+Message-ID: <20240910092542.464818810@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -50,68 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit b18915248a15eae7d901262f108d6ff0ffb4ffc1 upstream.
+commit 2c4553e6c485a96b5d86989eb9654bf20e51e6dd upstream.
 
-The existing code uses min_t(ssize_t, outarg.size, XATTR_LIST_MAX) when
-parsing the FUSE daemon's response to a zero-length getxattr/listxattr
-request.
-On 32-bit kernels, where ssize_t and outarg.size are the same size, this is
-wrong: The min_t() will pass through any size values that are negative when
-interpreted as signed.
-fuse_listxattr() will then return this userspace-supplied negative value,
-which callers will treat as an error value.
+The PLL_POST_DIV_MASK should be 0 to (width - 1) bits. Fix it.
 
-This kind of bug pattern can lead to fairly bad security bugs because of
-how error codes are used in the Linux kernel. If a caller were to convert
-the numeric error into an error pointer, like so:
-
-    struct foo *func(...) {
-      int len = fuse_getxattr(..., NULL, 0);
-      if (len < 0)
-        return ERR_PTR(len);
-      ...
-    }
-
-then it would end up returning this userspace-supplied negative value cast
-to a pointer - but the caller of this function wouldn't recognize it as an
-error pointer (IS_ERR_VALUE() only detects values in the narrow range in
-which legitimate errno values are), and so it would just be treated as a
-kernel pointer.
-
-I think there is at least one theoretical codepath where this could happen,
-but that path would involve virtio-fs with submounts plus some weird
-SELinux configuration, so I think it's probably not a concern in practice.
-
-Cc: stable@vger.kernel.org # v4.9
-Fixes: 63401ccdb2ca ("fuse: limit xattr returned size")
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
+Cc: stable@vger.kernel.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240731062916.2680823-2-quic_skakitap@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/xattr.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fuse/xattr.c
-+++ b/fs/fuse/xattr.c
-@@ -79,7 +79,7 @@ ssize_t fuse_getxattr(struct inode *inod
- 	}
- 	ret = fuse_simple_request(fc, &args);
- 	if (!ret && !size)
--		ret = min_t(ssize_t, outarg.size, XATTR_SIZE_MAX);
-+		ret = min_t(size_t, outarg.size, XATTR_SIZE_MAX);
- 	if (ret == -ENOSYS) {
- 		fc->no_getxattr = 1;
- 		ret = -EOPNOTSUPP;
-@@ -141,7 +141,7 @@ ssize_t fuse_listxattr(struct dentry *en
- 	}
- 	ret = fuse_simple_request(fc, &args);
- 	if (!ret && !size)
--		ret = min_t(ssize_t, outarg.size, XATTR_LIST_MAX);
-+		ret = min_t(size_t, outarg.size, XATTR_LIST_MAX);
- 	if (ret > 0 && size)
- 		ret = fuse_verify_xattr_list(list, ret);
- 	if (ret == -ENOSYS) {
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -37,7 +37,7 @@
+ 
+ #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
+ # define PLL_POST_DIV_SHIFT	8
+-# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width, 0)
++# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
+ # define PLL_ALPHA_EN		BIT(24)
+ # define PLL_ALPHA_MODE		BIT(25)
+ # define PLL_VCO_SHIFT		20
 
 
