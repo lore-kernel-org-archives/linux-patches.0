@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37008190667;
-	Tue, 10 Sep 2024 10:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748D619066D;
+	Tue, 10 Sep 2024 10:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962968; cv=none; b=R5Xn/6JAPQS34oFnUG9eYHt8hQJEcDIlVCGLROZoEu/0P/4qkSFcxBNBIMd+avqM7XI1tjoHVuII197HwoozTOQjGNpE7aioZyI1oNLh/VJZawrNn9OGlLuHnNr4mJizjWrLd4ORKCbuvpd9WiryfCOA94J3aW1Q/fCJbMjQ4mA=
+	t=1725962971; cv=none; b=Q3kR3DVqGJSlJF8oyMdcWjFjaxFL4f7FgKJS48TC9FUeKq9RZn70plSSUihyPUshHVsZ/vIFtBQy/sDwAG43+GGlt0d3IdswTzngXMbomZ07ksidGCnxE0o1VRdZewPwrdftwka5IcjcBTXjzPnxisuFo2HXX2ddrsZMI1t03Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962968; c=relaxed/simple;
-	bh=WtCxVucatc299nPxR4mSEJJ/ZWS1je7Hr4/TKwhSWfk=;
+	s=arc-20240116; t=1725962971; c=relaxed/simple;
+	bh=OUKG4WZZrWdiAxN/s9soPXn+MIdAc0mfrs6xGZPVVlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHkDgi8L2rb2gso0aPbZW3sssEkkHv6qcG5NeJ+YLOrL9IxuwPVWlq9gkdLXj+hOL4RPT2BdsYK4pAo6dyjBxzq4d1Xr9VmeoqjKDJPGJb7eZTXXbIwzJjzTdRfCh9HnVEuWrf2/oLxPyBepFVSE/s3bb/HTKz67IUq0VFQcD/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM0SHPEz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aT1a1GU8CtJrPBXX8sTM82JOAvp2bBB08Kc+ICii1mM1U74nHX0qNg49qjB/C2jEN6LWORY02PmFvmoU9vTC8pDuhrRK7xYYWgaBpsM23UJ8WgC1SXM54jYltBr4o1zfKmgddOIhZoZbWDcZ7Lyi/ShBX9g3O7a1dL2vmJAMyoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxE08SgP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM0SHPEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44BBC4CEC3;
-	Tue, 10 Sep 2024 10:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxE08SgP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF18BC4CEC3;
+	Tue, 10 Sep 2024 10:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962968;
-	bh=WtCxVucatc299nPxR4mSEJJ/ZWS1je7Hr4/TKwhSWfk=;
+	s=korg; t=1725962971;
+	bh=OUKG4WZZrWdiAxN/s9soPXn+MIdAc0mfrs6xGZPVVlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mM0SHPEzlShjoEmtbT/sy1eqCib04wj5OEXyT+dg9kEhu1dnOmo8yOozlDzVtPyFv
-	 tSIdbIgy7fLCuPQWeKT0J8jDY/kpwxdyW6RN7SOcAu4roXic5MpUbmxpb5dHQPdqSA
-	 J5/JKs2C3SxqFI5ZfrZE99FnIEwCAQtHzbFR2JZs=
+	b=HxE08SgPHZeAXuxTMA+la5UswL55d4UgZ22fHYMOHLmU5giH+E1cPRki1cq0JcrYn
+	 Jjw/InALE/dPa9MpD8KuCtmk2LNCUgwG5QwIsHA7QHGWlI4Pt6r6bnPySp/hjTS9V+
+	 F6nQ3y/7BBx4F8cVZ63sues5hVGHuB9veLwRIGnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/192] dm init: Handle minors larger than 255
-Date: Tue, 10 Sep 2024 11:31:55 +0200
-Message-ID: <20240910092601.746259931@linuxfoundation.org>
+Subject: [PATCH 6.1 092/192] iommu/vt-d: Handle volatile descriptor status read
+Date: Tue, 10 Sep 2024 11:31:56 +0200
+Message-ID: <20240910092601.792085378@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,41 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit 140ce37fd78a629105377e17842465258a5459ef ]
+[ Upstream commit b5e86a95541cea737394a1da967df4cd4d8f7182 ]
 
-dm_parse_device_entry() simply copies the minor number into dmi.dev, but
-the dev_t format splits the minor number between the lowest 8 bytes and
-highest 12 bytes. If the minor number is larger than 255, part of it
-will end up getting treated as the major number
+Queued invalidation wait descriptor status is volatile in that IOMMU
+hardware writes the data upon completion.
 
-Fix this by checking that the minor number is valid and then encoding it
-as a dev_t.
+Use READ_ONCE() to prevent compiler optimizations which ensures memory
+reads every time. As a side effect, READ_ONCE() also enforces strict
+types and may add an extra instruction. But it should not have negative
+performance impact since we use cpu_relax anyway and the extra time(by
+adding an instruction) may allow IOMMU HW request cacheline ownership
+easier.
 
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+e.g. gcc 12.3
+BEFORE:
+	81 38 ad de 00 00       cmpl   $0x2,(%rax)
+
+AFTER (with READ_ONCE())
+    772f:       8b 00                   mov    (%rax),%eax
+    7731:       3d ad de 00 00          cmp    $0x2,%eax
+                                        //status data is 32 bit
+
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20240607173817.3914600-1-jacob.jun.pan@linux.intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20240702130839.108139-2-baolu.lu@linux.intel.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/intel/dmar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-init.c b/drivers/md/dm-init.c
-index dc4381d68313..6e9e73a55874 100644
---- a/drivers/md/dm-init.c
-+++ b/drivers/md/dm-init.c
-@@ -213,8 +213,10 @@ static char __init *dm_parse_device_entry(struct dm_device *dev, char *str)
- 	strscpy(dev->dmi.uuid, field[1], sizeof(dev->dmi.uuid));
- 	/* minor */
- 	if (strlen(field[2])) {
--		if (kstrtoull(field[2], 0, &dev->dmi.dev))
-+		if (kstrtoull(field[2], 0, &dev->dmi.dev) ||
-+		    dev->dmi.dev >= (1 << MINORBITS))
- 			return ERR_PTR(-EINVAL);
-+		dev->dmi.dev = huge_encode_dev((dev_t)dev->dmi.dev);
- 		dev->dmi.flags |= DM_PERSISTENT_DEV_FLAG;
- 	}
- 	/* flags */
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index 4759f79ad7b9..345c161ffb27 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1402,7 +1402,7 @@ int qi_submit_sync(struct intel_iommu *iommu, struct qi_desc *desc,
+ 	 */
+ 	writel(qi->free_head << shift, iommu->reg + DMAR_IQT_REG);
+ 
+-	while (qi->desc_status[wait_index] != QI_DONE) {
++	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
+ 		/*
+ 		 * We will leave the interrupts disabled, to prevent interrupt
+ 		 * context to queue another cmd while a cmd is already submitted
 -- 
 2.43.0
 
