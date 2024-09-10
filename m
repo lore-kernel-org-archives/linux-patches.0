@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0A6144D1A;
-	Tue, 10 Sep 2024 10:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D2D18C02E;
+	Tue, 10 Sep 2024 10:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965261; cv=none; b=ootpjmS6wE305bxh3A6Iv4UGKTtUruGAGeYszG4JsVSITMtakr4Ecsi+NYi9+3ApVFEtSDpH2ljiSGFl4xdtWwzPBu0hUMLFgZy+zWqY424ILEzSeCSUbCnuuhiH9yxbtzB7rXOHGG1Kr0eyfl3Yh/rzmSn1HzOYmwX0irQ14bQ=
+	t=1725965264; cv=none; b=qsmK4EM9pNQWVdxSzkxMfjFW5sCrV6EsiuekvKs32bAYpmOZmfj3Tn2irw2dhLmGm3DoCKQbwp0FXijb60G4xcWyzojaTntlD7Fquca+h0m2BpfFFNE6jkgORajOUK1FuTAB4MwIC+LGHN2IpU9UcQMq/tx5TnaPEqyER/qcAHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965261; c=relaxed/simple;
-	bh=GbFcnv6ni1S0oTeIAA6n3oNsrfArzBC6JcquXg4qyyM=;
+	s=arc-20240116; t=1725965264; c=relaxed/simple;
+	bh=a8XD5TRWcV1GtBZTmmDxcshk9WGGvvUnEt9nj1nnqao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWCqLslk5PTcxH0nlICJFQvUjgOCj6wHrKP8EXNXvTNXdZmjVMlOTNuj4DrXvBN62a5ahNPlUPGk6ieYEARKprngHeda/60SJfTl6ZozznTsrG9k2CDmkbCZJJGHGQ84gXE6ay8u7joaREthSnis5N/judauLEA11AxLnCAeGpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBGnjpSv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1xe9o8lxeMMo8pVvkUz9LRE9TLIRv3PoOOYeU/r7qFdwBaR/Flr2ZRNF2tN5ZhMw5Dq6HDWQi1gSgENTTvtgbFnmdBqKcn1+v9jeMF+1o/YdtCgzEgHkkqBWsoB49SO+jZu2bFZ3TAvqE7Lo3Lvt5G2pC8XLYGWhqxocBm9zwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=be/NQGLb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBGnjpSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75337C4CEC3;
-	Tue, 10 Sep 2024 10:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="be/NQGLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A25CC4CEC3;
+	Tue, 10 Sep 2024 10:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965260;
-	bh=GbFcnv6ni1S0oTeIAA6n3oNsrfArzBC6JcquXg4qyyM=;
+	s=korg; t=1725965263;
+	bh=a8XD5TRWcV1GtBZTmmDxcshk9WGGvvUnEt9nj1nnqao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBGnjpSvTHog7X1+RL/9+FOyh8ghvDkY/mny4GfiRmbnU7B8KhXdHCIrPmsHomy9G
-	 vxYIpf8NAraiUWKG0pp72oOlkj5bfXJePR6DKeL6uuVgWAYkT7Lax8VCHq72cwvWYt
-	 tTSizDy2zNGOQD83Ilj9eszOCvwitcM2sQ75jH5M=
+	b=be/NQGLbZ5qlwdCNM9EMzq83GmUlZIcfAJIs3OUfUS9hXLBdntlrWZE/sagx/4Mdq
+	 NfAFbzt6Abdhi9SZqV+LYHLwfXWJpM0rvcgk4odqQLFauz80JzMOiVC3vZM4TO3bCz
+	 cT581YsY8zwET4OQiaIKmfqKnM4j1O1TZUaDwVzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.10 184/186] x86/mm: Fix PTI for i386 some more
-Date: Tue, 10 Sep 2024 11:34:39 +0200
-Message-ID: <20240910092602.203187385@linuxfoundation.org>
+	Lex Siegel <usiegl00@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Neil Brown <neilb@suse.de>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Anna Schumaker <anna@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 5.10 185/186] net, sunrpc: Remap EPERM in case of connection failure in xs_tcp_setup_socket
+Date: Tue, 10 Sep 2024 11:34:40 +0200
+Message-ID: <20240910092602.244454566@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,160 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit c48b5a4cf3125adb679e28ef093f66ff81368d05 upstream.
+commit 626dfed5fa3bfb41e0dffd796032b555b69f9cde upstream.
 
-So it turns out that we have to do two passes of
-pti_clone_entry_text(), once before initcalls, such that device and
-late initcalls can use user-mode-helper / modprobe and once after
-free_initmem() / mark_readonly().
+When using a BPF program on kernel_connect(), the call can return -EPERM. This
+causes xs_tcp_setup_socket() to loop forever, filling up the syslog and causing
+the kernel to potentially freeze up.
 
-Now obviously mark_readonly() can cause PMD splits, and
-pti_clone_pgtable() doesn't like that much.
+Neil suggested:
 
-Allow the late clone to split PMDs so that pagetables stay in sync.
+  This will propagate -EPERM up into other layers which might not be ready
+  to handle it. It might be safer to map EPERM to an error we would be more
+  likely to expect from the network system - such as ECONNREFUSED or ENETDOWN.
 
-[peterz: Changelog and comments]
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lkml.kernel.org/r/20240806184843.GX37996@noisy.programming.kicks-ass.net
+ECONNREFUSED as error seems reasonable. For programs setting a different error
+can be out of reach (see handling in 4fbac77d2d09) in particular on kernels
+which do not have f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err
+instead of allow boolean"), thus given that it is better to simply remap for
+consistent behavior. UDP does handle EPERM in xs_udp_send_request().
+
+Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
+Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
+Co-developed-by: Lex Siegel <usiegl00@gmail.com>
+Signed-off-by: Lex Siegel <usiegl00@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Neil Brown <neilb@suse.de>
+Cc: Trond Myklebust <trondmy@kernel.org>
+Cc: Anna Schumaker <anna@kernel.org>
+Link: https://github.com/cilium/cilium/issues/33395
+Link: https://lore.kernel.org/bpf/171374175513.12877.8993642908082014881@noble.neil.brown.name
+Link: https://patch.msgid.link/9069ec1d59e4b2129fc23433349fd5580ad43921.1720075070.git.daniel@iogearbox.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pti.c |   45 +++++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ net/sunrpc/xprtsock.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/x86/mm/pti.c
-+++ b/arch/x86/mm/pti.c
-@@ -241,7 +241,7 @@ static pmd_t *pti_user_pagetable_walk_pm
-  *
-  * Returns a pointer to a PTE on success, or NULL on failure.
-  */
--static pte_t *pti_user_pagetable_walk_pte(unsigned long address)
-+static pte_t *pti_user_pagetable_walk_pte(unsigned long address, bool late_text)
- {
- 	gfp_t gfp = (GFP_KERNEL | __GFP_NOTRACK | __GFP_ZERO);
- 	pmd_t *pmd;
-@@ -251,10 +251,15 @@ static pte_t *pti_user_pagetable_walk_pt
- 	if (!pmd)
- 		return NULL;
- 
--	/* We can't do anything sensible if we hit a large mapping. */
-+	/* Large PMD mapping found */
- 	if (pmd_large(*pmd)) {
--		WARN_ON(1);
--		return NULL;
-+		/* Clear the PMD if we hit a large mapping from the first round */
-+		if (late_text) {
-+			set_pmd(pmd, __pmd(0));
-+		} else {
-+			WARN_ON_ONCE(1);
-+			return NULL;
-+		}
- 	}
- 
- 	if (pmd_none(*pmd)) {
-@@ -283,7 +288,7 @@ static void __init pti_setup_vsyscall(vo
- 	if (!pte || WARN_ON(level != PG_LEVEL_4K) || pte_none(*pte))
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2314,6 +2314,13 @@ static void xs_tcp_setup_socket(struct w
+ 	case -EALREADY:
+ 		xprt_unlock_connect(xprt, transport);
  		return;
- 
--	target_pte = pti_user_pagetable_walk_pte(VSYSCALL_ADDR);
-+	target_pte = pti_user_pagetable_walk_pte(VSYSCALL_ADDR, false);
- 	if (WARN_ON(!target_pte))
- 		return;
- 
-@@ -301,7 +306,7 @@ enum pti_clone_level {
- 
- static void
- pti_clone_pgtable(unsigned long start, unsigned long end,
--		  enum pti_clone_level level)
-+		  enum pti_clone_level level, bool late_text)
- {
- 	unsigned long addr;
- 
-@@ -390,7 +395,7 @@ pti_clone_pgtable(unsigned long start, u
- 				return;
- 
- 			/* Allocate PTE in the user page-table */
--			target_pte = pti_user_pagetable_walk_pte(addr);
-+			target_pte = pti_user_pagetable_walk_pte(addr, late_text);
- 			if (WARN_ON(!target_pte))
- 				return;
- 
-@@ -453,7 +458,7 @@ static void __init pti_clone_user_shared
- 		phys_addr_t pa = per_cpu_ptr_to_phys((void *)va);
- 		pte_t *target_pte;
- 
--		target_pte = pti_user_pagetable_walk_pte(va);
-+		target_pte = pti_user_pagetable_walk_pte(va, false);
- 		if (WARN_ON(!target_pte))
- 			return;
- 
-@@ -476,7 +481,7 @@ static void __init pti_clone_user_shared
- 	start = CPU_ENTRY_AREA_BASE;
- 	end   = start + (PAGE_SIZE * CPU_ENTRY_AREA_PAGES);
- 
--	pti_clone_pgtable(start, end, PTI_CLONE_PMD);
-+	pti_clone_pgtable(start, end, PTI_CLONE_PMD, false);
- }
- #endif /* CONFIG_X86_64 */
- 
-@@ -493,11 +498,11 @@ static void __init pti_setup_espfix64(vo
- /*
-  * Clone the populated PMDs of the entry text and force it RO.
-  */
--static void pti_clone_entry_text(void)
-+static void pti_clone_entry_text(bool late)
- {
- 	pti_clone_pgtable((unsigned long) __entry_text_start,
- 			  (unsigned long) __entry_text_end,
--			  PTI_LEVEL_KERNEL_IMAGE);
-+			  PTI_LEVEL_KERNEL_IMAGE, late);
- }
- 
- /*
-@@ -572,7 +577,7 @@ static void pti_clone_kernel_text(void)
- 	 * pti_set_kernel_image_nonglobal() did to clear the
- 	 * global bit.
- 	 */
--	pti_clone_pgtable(start, end_clone, PTI_LEVEL_KERNEL_IMAGE);
-+	pti_clone_pgtable(start, end_clone, PTI_LEVEL_KERNEL_IMAGE, false);
- 
- 	/*
- 	 * pti_clone_pgtable() will set the global bit in any PMDs
-@@ -639,8 +644,15 @@ void __init pti_init(void)
- 
- 	/* Undo all global bits from the init pagetables in head_64.S: */
- 	pti_set_kernel_image_nonglobal();
-+
- 	/* Replace some of the global bits just for shared entry text: */
--	pti_clone_entry_text();
-+	/*
-+	 * This is very early in boot. Device and Late initcalls can do
-+	 * modprobe before free_initmem() and mark_readonly(). This
-+	 * pti_clone_entry_text() allows those user-mode-helpers to function,
-+	 * but notably the text is still RW.
-+	 */
-+	pti_clone_entry_text(false);
- 	pti_setup_espfix64();
- 	pti_setup_vsyscall();
- }
-@@ -657,10 +669,11 @@ void pti_finalize(void)
- 	if (!boot_cpu_has(X86_FEATURE_PTI))
- 		return;
- 	/*
--	 * We need to clone everything (again) that maps parts of the
--	 * kernel image.
-+	 * This is after free_initmem() (all initcalls are done) and we've done
-+	 * mark_readonly(). Text is now NX which might've split some PMDs
-+	 * relative to the early clone.
- 	 */
--	pti_clone_entry_text();
-+	pti_clone_entry_text(true);
- 	pti_clone_kernel_text();
- 
- 	debug_checkwx_user();
++	case -EPERM:
++		/* Happens, for instance, if a BPF program is preventing
++		 * the connect. Remap the error so upper layers can better
++		 * deal with it.
++		 */
++		status = -ECONNREFUSED;
++		fallthrough;
+ 	case -EINVAL:
+ 		/* Happens, for instance, if the user specified a link
+ 		 * local IPv6 address without a scope-id.
 
 
