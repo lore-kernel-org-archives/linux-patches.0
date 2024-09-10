@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B002188CB3;
-	Tue, 10 Sep 2024 09:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F008EEEC9;
+	Tue, 10 Sep 2024 09:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962287; cv=none; b=QTeEMZbMJXpf/NTJVDPZkY7ohppMdTGG+rcXFH6DcBZeUEn3sd8enVhDC14sxUXbK5geRjxz1PXUaeLSm8kXojqpe8YmvUdj0LKyJPRlvekJTg8CTLrPEYoKMuU6isSbfDTZ6hUw7FtMQwq5aEPZGss4ywsfLDQI18IpSkDILy0=
+	t=1725962290; cv=none; b=ALXFrN/9UC6boreA253jfaIJnaubLGrDiTIuFKVLubOHZ9mnHv10B79/p9G/AbV6xVWME7ly/CBdRiXJtF3xUupchNX4QcKQ2GHjoEpSzouOwppkQQDw/JLDGsRAPlzEVUmEDq3U3oTC0ZKUo3QrsoSFLLDeG9si+xkMiFVPZq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962287; c=relaxed/simple;
-	bh=l0BI7y3mJVaX1SEj5uNtcJCY9AJBnxZljr+gG4cLkWI=;
+	s=arc-20240116; t=1725962290; c=relaxed/simple;
+	bh=yZdNvDOe//RMPkbr9tWt8jrYVCFc21cM2ppPVkq5XQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlP+FIPtXIRWEkMaOFwIskeUNkhNkGeKsxtKNedpQE/SysDQtXyVCPjC0b/xPROMzl5lsJ3Y5HxLZCesj6yQ2slRRGFnQvOCewETT7oIgzfmX37zLiwz5wAUTmWiadvh5uzHLmpUQZAcz/icXJKaBYJZ1XWQJCKRTA+pjlFTvsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XhcLSdj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DhzDhGlvdLIIYXnsAsXCcIWz2LkKMuAWCqbl2dVxHQGc23QJRPbGQOPex9lxTHENGfvjsZSwLdZQS9MW5FSQdOLUZpemui5GKL/u8AVDyDCGqLK9ezp7kx7Ly/1Ja7MO8GR2SzOQUz8bNou/C0T+zBIS5JtQgMAD7fimaxJoEZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJx1Wcmo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XhcLSdj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9A0C4CEC3;
-	Tue, 10 Sep 2024 09:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJx1Wcmo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6900CC4CEC3;
+	Tue, 10 Sep 2024 09:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962286;
-	bh=l0BI7y3mJVaX1SEj5uNtcJCY9AJBnxZljr+gG4cLkWI=;
+	s=korg; t=1725962289;
+	bh=yZdNvDOe//RMPkbr9tWt8jrYVCFc21cM2ppPVkq5XQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XhcLSdjK+aOwZ+nH/APD7vsJ+bybsKMiloYR67vmrcVJRGqVMmT+5t+OxSBukqdS
-	 DqgWzrIsyAwAaOTUISeIbNBoNipzOtNBfNMhMkmKEnI5eRkwsDAWuSh6Tn8PZTH5CB
-	 BpoMwoqOQ+hzxopln9tdiNEJPpYLaiIOVyb2HSN0=
+	b=HJx1WcmorKY31UwCnMASMNOtzutJyc7ZaqgbyQF/1jAtKMI+H93xz4qmJr5S9xMPv
+	 rWgrl7FOhzMotf+3jk5C85SjBju3E9hqSGFVC+EUiTkbJdVVSrkqwlsx+LKRIlR2if
+	 pul1A7wA60Z1rTy7oBn2QWY8r575WMn3nfS3gSdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 341/375] powerpc/vdso: Dont discard rela sections
-Date: Tue, 10 Sep 2024 11:32:18 +0200
-Message-ID: <20240910092634.041425922@linuxfoundation.org>
+Subject: [PATCH 6.10 359/375] riscv: Do not restrict memory size because of linear mapping on nommu
+Date: Tue, 10 Sep 2024 11:32:36 +0200
+Message-ID: <20240910092634.667876509@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,71 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 6114139c3bdde992f4a19264e4f9bfc100d8d776 ]
+[ Upstream commit 5f771088a2b5edd6f2c5c9f34484ca18dc389f3e ]
 
-After building the VDSO, there is a verification that it contains
-no dynamic relocation, see commit aff69273af61 ("vdso: Improve
-cmd_vdso_check to check all dynamic relocations").
+It makes no sense to restrict physical memory size because of linear
+mapping size constraints when there is no linear mapping, so only do
+that when mmu is enabled.
 
-This verification uses readelf -r and doesn't work if rela sections
-are discarded.
-
-Fixes: 8ad57add77d3 ("powerpc/build: vdso linker warning for orphan sections")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/45c3e6fc76cad05ad2cac0f5b5dfb4fae86dc9d6.1724153239.git.christophe.leroy@csgroup.eu
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Closes: https://lore.kernel.org/linux-riscv/CAMuHMdW0bnJt5GMRtOZGkTiM7GK4UaLJCDMF_Ouq++fnDKi3_A@mail.gmail.com/
+Fixes: 3b6564427aea ("riscv: Fix linear mapping checks for non-contiguous memory regions")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20240827065230.145021-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/vdso/vdso32.lds.S | 4 +++-
- arch/powerpc/kernel/vdso/vdso64.lds.S | 4 ++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ arch/riscv/mm/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/vdso/vdso32.lds.S b/arch/powerpc/kernel/vdso/vdso32.lds.S
-index 426e1ccc6971..8f57107000a2 100644
---- a/arch/powerpc/kernel/vdso/vdso32.lds.S
-+++ b/arch/powerpc/kernel/vdso/vdso32.lds.S
-@@ -74,6 +74,8 @@ SECTIONS
- 	.got		: { *(.got) }			:text
- 	.plt		: { *(.plt) }
- 
-+	.rela.dyn	: { *(.rela .rela*) }
-+
- 	_end = .;
- 	__end = .;
- 	PROVIDE(end = .);
-@@ -87,7 +89,7 @@ SECTIONS
- 		*(.branch_lt)
- 		*(.data .data.* .gnu.linkonce.d.* .sdata*)
- 		*(.bss .sbss .dynbss .dynsbss)
--		*(.got1 .glink .iplt .rela*)
-+		*(.got1 .glink .iplt)
- 	}
- }
- 
-diff --git a/arch/powerpc/kernel/vdso/vdso64.lds.S b/arch/powerpc/kernel/vdso/vdso64.lds.S
-index bda6c8cdd459..400819258c06 100644
---- a/arch/powerpc/kernel/vdso/vdso64.lds.S
-+++ b/arch/powerpc/kernel/vdso/vdso64.lds.S
-@@ -69,7 +69,7 @@ SECTIONS
- 	.eh_frame_hdr	: { *(.eh_frame_hdr) }		:text	:eh_frame_hdr
- 	.eh_frame	: { KEEP (*(.eh_frame)) }	:text
- 	.gcc_except_table : { *(.gcc_except_table) }
--	.rela.dyn ALIGN(8) : { *(.rela.dyn) }
-+	.rela.dyn ALIGN(8) : { *(.rela .rela*) }
- 
- 	.got ALIGN(8)	: { *(.got .toc) }
- 
-@@ -86,7 +86,7 @@ SECTIONS
- 		*(.data .data.* .gnu.linkonce.d.* .sdata*)
- 		*(.bss .sbss .dynbss .dynsbss)
- 		*(.opd)
--		*(.glink .iplt .plt .rela*)
-+		*(.glink .iplt .plt)
- 	}
- }
- 
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index c5c66f53971a..91346c9da8ef 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -251,7 +251,7 @@ static void __init setup_bootmem(void)
+ 	 * The size of the linear page mapping may restrict the amount of
+ 	 * usable RAM.
+ 	 */
+-	if (IS_ENABLED(CONFIG_64BIT)) {
++	if (IS_ENABLED(CONFIG_64BIT) && IS_ENABLED(CONFIG_MMU)) {
+ 		max_mapped_addr = __pa(PAGE_OFFSET) + KERN_VIRT_SIZE;
+ 		memblock_cap_memory_range(phys_ram_base,
+ 					  max_mapped_addr - phys_ram_base);
 -- 
 2.43.0
 
