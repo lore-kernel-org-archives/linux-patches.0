@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D33718BC3F;
-	Tue, 10 Sep 2024 09:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9767B18C005;
+	Tue, 10 Sep 2024 09:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961264; cv=none; b=T7pGbTU2nNTUA/uWYICn1tlOykNrihVs1GEfruKGXXNMufGxOmnsIOqE7OvOHFjgwCKdoepMgbbZOMaljAF89XvqMTurD2Zfm5TtMQYbf2vuH4PsqHt4mzky/9pdt24PVui2he8QETPvk/XPVk+PKiFsM8wY18/o3eYMxDbR5cU=
+	t=1725961267; cv=none; b=M7McJbnRBXZZTLf4dfXJECYVViJoEcRpW/756AW+DaO2Yjf8Tugsl0WJToWYTfgPPvW19AUpm+ulhBiGPOkDzdY8LmmNQ52pRMimVc2FSmP/U4ByRo/6MaGnJ7Ida5L1iyGlQQbFS13hQKh7W7RqyvFCueyB0vdlVTwEWh12sDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961264; c=relaxed/simple;
-	bh=BS7t31bScJUiJVp3UeC/yjbOCh+TM0XYw0Ur7PdFcTs=;
+	s=arc-20240116; t=1725961267; c=relaxed/simple;
+	bh=qRUEGVMC9b5co553SuUBEG/St9NIQhDRypoy25uu0eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xs2tlKQ0C+fufo9N2GhsXRJXSq5Cbwmf2pugRehYgvEJkhH73a2X+dFVhTtQi6+RwziZ0RmU0d8uyibwpiK6DYI8pzfSAy6IqOfVtVX4I0XMlgKle/5Ced0B/YV5wacOLv9p28pjwreCpM1L8GY2ilokoAdKX3kZKNRLcKI32eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DW/duXMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpUe7jMvYNSum6sYA9Pr/zmG153C8l5+MNL9u3SRafDItAg9eKnjBjaDqrTZJGAX2G+Si1W1ZHS6Pg2pPk9in0Au0+D0WnBhqsuvNZ/8sDuZT7hKhNy/RBZ0YFVs3MKDJnSzTgtc/6zoT6JaF1EreQh5K04tSo1TRLIEM0hW/X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qmbguv+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DW/duXMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20007C4CEC6;
-	Tue, 10 Sep 2024 09:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmbguv+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15763C4CEC3;
+	Tue, 10 Sep 2024 09:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961264;
-	bh=BS7t31bScJUiJVp3UeC/yjbOCh+TM0XYw0Ur7PdFcTs=;
+	s=korg; t=1725961267;
+	bh=qRUEGVMC9b5co553SuUBEG/St9NIQhDRypoy25uu0eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DW/duXMyldzDDgUuMEXYiVhRjbHjk1ZXJo0ej/ilEVo3mq87pu+C5qTlF96l4rZCp
-	 v+j1Y2Ivg/jmmTHNvEIA2j+Tub6tUZPiypwemjxBlhFXphKQxD7OcIEnCNoyZXa/q2
-	 pjxVq0mItvw4qYzgd33uXiIyIG0khZwKUzMYi/qI=
+	b=Qmbguv+MMGC2XHnAjrTg1qdpUlr+HhoEp3/VwqDQDTvOtLfSedZTdvvzPLugwURI3
+	 078hsZnEnkKn48ZI60YzOxZ1ZVrDiQCFJCtZ8uSsnDCQa8sgoC08F1mTnxJfDJ9p1D
+	 Baxu98c2vV0rJwA0m0mHsA571KmW0+oF4jDvC0XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 002/375] sch/netem: fix use after free in netem_dequeue
-Date: Tue, 10 Sep 2024 11:26:39 +0200
-Message-ID: <20240910092622.345291144@linuxfoundation.org>
+	Anders Blomdell <anders.blomdell@gmail.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>
+Subject: [PATCH 6.10 003/375] xfs: xfs_finobt_count_blocks() walks the wrong btree
+Date: Tue, 10 Sep 2024 11:26:40 +0200
+Message-ID: <20240910092622.384379986@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,62 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Dave Chinner <dchinner@redhat.com>
 
-commit 3b3a2a9c6349e25a025d2330f479bc33a6ccb54a upstream.
+commit 95179935beadccaf0f0bb461adb778731e293da4 upstream.
 
-If netem_dequeue() enqueues packet to inner qdisc and that qdisc
-returns __NET_XMIT_STOLEN. The packet is dropped but
-qdisc_tree_reduce_backlog() is not called to update the parent's
-q.qlen, leading to the similar use-after-free as Commit
-e04991a48dbaf382 ("netem: fix return value if duplicate enqueue
-fails")
+As a result of the factoring in commit 14dd46cf31f4 ("xfs: split
+xfs_inobt_init_cursor"), mount started taking a long time on a
+user's filesystem.  For Anders, this made mount times regress from
+under a second to over 15 minutes for a filesystem with only 30
+million inodes in it.
 
-Commands to trigger KASAN UaF:
+Anders bisected it down to the above commit, but even then the bug
+was not obvious. In this commit, over 20 calls to
+xfs_inobt_init_cursor() were modified, and some we modified to call
+a new function named xfs_finobt_init_cursor().
 
-ip link add type dummy
-ip link set lo up
-ip link set dummy0 up
-tc qdisc add dev lo parent root handle 1: drr
-tc filter add dev lo parent 1: basic classid 1:1
-tc class add dev lo classid 1:1 drr
-tc qdisc add dev lo parent 1:1 handle 2: netem
-tc qdisc add dev lo parent 2: handle 3: drr
-tc filter add dev lo parent 3: basic classid 3:1 action mirred egress
-redirect dev dummy0
-tc class add dev lo classid 3:1 drr
-ping -c1 -W0.01 localhost # Trigger bug
-tc class del dev lo classid 1:1
-tc class add dev lo classid 1:1 drr
-ping -c1 -W0.01 localhost # UaF
+If that takes you a moment to reread those function names to see
+what the rename was, then you have realised why this bug wasn't
+spotted during review. And it wasn't spotted on inspection even
+after the bisect pointed at this commit - a single missing "f" isn't
+the easiest thing for a human eye to notice....
 
-Fixes: 50612537e9ab ("netem: fix classful handling")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Link: https://patch.msgid.link/20240901182438.4992-1-stephen@networkplumber.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The result is that xfs_finobt_count_blocks() now incorrectly calls
+xfs_inobt_init_cursor() so it is now walking the inobt instead of
+the finobt. Hence when there are lots of allocated inodes in a
+filesystem, mount takes a -long- time run because it now walks a
+massive allocated inode btrees instead of the small, nearly empty
+free inode btrees. It also means all the finobt space reservations
+are wrong, so mount could potentially given ENOSPC on kernel
+upgrade.
+
+In hindsight, commit 14dd46cf31f4 should have been two commits - the
+first to convert the finobt callers to the new API, the second to
+modify the xfs_inobt_init_cursor() API for the inobt callers. That
+would have made the bug very obvious during review.
+
+Fixes: 14dd46cf31f4 ("xfs: split xfs_inobt_init_cursor")
+Reported-by: Anders Blomdell <anders.blomdell@gmail.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/xfs/libxfs/xfs_ialloc_btree.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -742,11 +742,10 @@ deliver:
+--- a/fs/xfs/libxfs/xfs_ialloc_btree.c
++++ b/fs/xfs/libxfs/xfs_ialloc_btree.c
+@@ -749,7 +749,7 @@ xfs_finobt_count_blocks(
+ 	if (error)
+ 		return error;
  
- 				err = qdisc_enqueue(skb, q->qdisc, &to_free);
- 				kfree_skb_list(to_free);
--				if (err != NET_XMIT_SUCCESS &&
--				    net_xmit_drop_count(err)) {
--					qdisc_qstats_drop(sch);
--					qdisc_tree_reduce_backlog(sch, 1,
--								  pkt_len);
-+				if (err != NET_XMIT_SUCCESS) {
-+					if (net_xmit_drop_count(err))
-+						qdisc_qstats_drop(sch);
-+					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
- 				}
- 				goto tfifo_dequeue;
- 			}
+-	cur = xfs_inobt_init_cursor(pag, tp, agbp);
++	cur = xfs_finobt_init_cursor(pag, tp, agbp);
+ 	error = xfs_btree_count_blocks(cur, tree_blocks);
+ 	xfs_btree_del_cursor(cur, error);
+ 	xfs_trans_brelse(tp, agbp);
 
 
