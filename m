@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA435188CC4;
-	Tue, 10 Sep 2024 09:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25F7188CAD;
+	Tue, 10 Sep 2024 09:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961364; cv=none; b=UXT9X1XyNvXCdxEKUP+Ov+WBDeP+41IWTVMuIEzUH7m+G+tbRYU0tOgekYiob7p+IqhsietWw+jRFaak7hC+1JhZi5mrU+5eH5MYrvty3bf8VVPGiM+Sqe+FLcRjxUrdAxSM+nhMb9UnqEieDXaSxN8VLmDBksTefnLpIlM/W90=
+	t=1725961367; cv=none; b=qo1GEDd83S2GDEw8BvT0IeDXM2TB4MNY+t5+9IEROGqfqyPQCyZ1MIy7NywdnVXxcGkHXuOPZgAijaNUuMAeIkL1ZgaVeUNGudZHYbhUIVbHQ9cZuKzOVtw8kpUfRGrXGAFz1gTXVt+vFLaLrBzqfETWi4yBXIyxhbfYK5NFo2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961364; c=relaxed/simple;
-	bh=3HrTE1JEcFoEeGesYAvz9f+v9T+9Or22t3SmoPyk5Ak=;
+	s=arc-20240116; t=1725961367; c=relaxed/simple;
+	bh=5Kfb+qErQRYSzjTE9ujhAIyL0YUHsCglPpexTAnSd3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fLE07VbD8U9gVW6NVXeY991GoM7IZnCtfUpJUufhzkO25Pv88PTaandUXpV0pImhsFlyV0BATcDICYKEc13v0TWBF9Gp4ZCnX+WVuJkwv8PnyR43sKRQLxXtN/+scN6v7T/xjhxxXALVuBDGLn66RzhmjTOS2GDFbWVgE/Q8I7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gruCQWrZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imEKrG/uOUZNvjc6jNMUxrMOWIjSnveKCTmXiag1zSE5yA5bGoVbDmnrzxOyXK/+PmWWP7Wn6Qj23FxI9vrwDOVbG0H2TcfmGDS4d9UWfe/FRCP6AnfUUsh35F5CuKQipjjWXb37fck8voHWTCembQibdTaN0oGEbOpj6eX99DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pw2yvG6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gruCQWrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528FBC4CEC3;
-	Tue, 10 Sep 2024 09:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pw2yvG6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8C1C4CEC3;
+	Tue, 10 Sep 2024 09:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961364;
-	bh=3HrTE1JEcFoEeGesYAvz9f+v9T+9Or22t3SmoPyk5Ak=;
+	s=korg; t=1725961367;
+	bh=5Kfb+qErQRYSzjTE9ujhAIyL0YUHsCglPpexTAnSd3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gruCQWrZlZEEXLo1BNH8kYM5U2GQGOdenFV9umGYjoYUQWi/Sta1CLTJlTi7ejdSL
-	 ri+ovXvYVW3LOh0cp1YJ2wwv4fF5QRtnFCu7O/N8MEXYqiqspNypCaNAnn//6NoTq2
-	 9NWzhfc7kaveBoQ20GmcFiW+9zXCzYFT9b4WGwyg=
+	b=pw2yvG6JVI6jt22xGXG5aJ4D4OU6NGpvbU5rFsU8HqCNZfoz8L/4+6arBWwaWwKSF
+	 tvbAcTWO0SKq3TjzooEKidI5FoFBykWx9JQ8ubrr4skHzAQecMoRD8sczEfYqE9yAX
+	 YMQsACMHSLcLwPM/vTj7JBCO0GbK5rW15nCTwEYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 017/375] smb: client: fix double put of @cfile in smb2_set_path_size()
-Date: Tue, 10 Sep 2024 11:26:54 +0200
-Message-ID: <20240910092622.845973321@linuxfoundation.org>
+Subject: [PATCH 6.10 018/375] ksmbd: unset the binding mark of a reused connection
+Date: Tue, 10 Sep 2024 11:26:55 +0200
+Message-ID: <20240910092622.880012292@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,133 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit f9c169b51b6ce20394594ef674d6b10efba31220 upstream.
+commit 78c5a6f1f630172b19af4912e755e1da93ef0ab5 upstream.
 
-If smb2_compound_op() is called with a valid @cfile and returned
--EINVAL, we need to call cifs_get_writable_path() before retrying it
-as the reference of @cfile was already dropped by previous call.
+Steve French reported null pointer dereference error from sha256 lib.
+cifs.ko can send session setup requests on reused connection.
+If reused connection is used for binding session, conn->binding can
+still remain true and generate_preauth_hash() will not set
+sess->Preauth_HashValue and it will be NULL.
+It is used as a material to create an encryption key in
+ksmbd_gen_smb311_encryptionkey. ->Preauth_HashValue cause null pointer
+dereference error from crypto_shash_update().
 
-This fixes the following KASAN splat when running fstests generic/013
-against Windows Server 2022:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+#PF: supervisor read access in kernel mode
+#PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 8 PID: 429254 Comm: kworker/8:39
+Hardware name: LENOVO 20MAS08500/20MAS08500, BIOS N2CET69W (1.52 )
+Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+RIP: 0010:lib_sha256_base_do_update.isra.0+0x11e/0x1d0 [sha256_ssse3]
+<TASK>
+? show_regs+0x6d/0x80
+? __die+0x24/0x80
+? page_fault_oops+0x99/0x1b0
+? do_user_addr_fault+0x2ee/0x6b0
+? exc_page_fault+0x83/0x1b0
+? asm_exc_page_fault+0x27/0x30
+? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
+? lib_sha256_base_do_update.isra.0+0x11e/0x1d0 [sha256_ssse3]
+? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
+? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
+_sha256_update+0x77/0xa0 [sha256_ssse3]
+sha256_avx2_update+0x15/0x30 [sha256_ssse3]
+crypto_shash_update+0x1e/0x40
+hmac_update+0x12/0x20
+crypto_shash_update+0x1e/0x40
+generate_key+0x234/0x380 [ksmbd]
+generate_smb3encryptionkey+0x40/0x1c0 [ksmbd]
+ksmbd_gen_smb311_encryptionkey+0x72/0xa0 [ksmbd]
+ntlm_authenticate.isra.0+0x423/0x5d0 [ksmbd]
+smb2_sess_setup+0x952/0xaa0 [ksmbd]
+__process_request+0xa3/0x1d0 [ksmbd]
+__handle_ksmbd_work+0x1c4/0x2f0 [ksmbd]
+handle_ksmbd_work+0x2d/0xa0 [ksmbd]
+process_one_work+0x16c/0x350
+worker_thread+0x306/0x440
+? __pfx_worker_thread+0x10/0x10
+kthread+0xef/0x120
+? __pfx_kthread+0x10/0x10
+ret_from_fork+0x44/0x70
+? __pfx_kthread+0x10/0x10
+ret_from_fork_asm+0x1b/0x30
+</TASK>
 
-  CIFS: Attempting to mount //w22-fs0/scratch
-  run fstests generic/013 at 2024-09-02 19:48:59
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in detach_if_pending+0xab/0x200
-  Write of size 8 at addr ffff88811f1a3730 by task kworker/3:2/176
-
-  CPU: 3 UID: 0 PID: 176 Comm: kworker/3:2 Not tainted 6.11.0-rc6 #2
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40
-  04/01/2014
-  Workqueue: cifsoplockd cifs_oplock_break [cifs]
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5d/0x80
-   ? detach_if_pending+0xab/0x200
-   print_report+0x156/0x4d9
-   ? detach_if_pending+0xab/0x200
-   ? __virt_addr_valid+0x145/0x300
-   ? __phys_addr+0x46/0x90
-   ? detach_if_pending+0xab/0x200
-   kasan_report+0xda/0x110
-   ? detach_if_pending+0xab/0x200
-   detach_if_pending+0xab/0x200
-   timer_delete+0x96/0xe0
-   ? __pfx_timer_delete+0x10/0x10
-   ? rcu_is_watching+0x20/0x50
-   try_to_grab_pending+0x46/0x3b0
-   __cancel_work+0x89/0x1b0
-   ? __pfx___cancel_work+0x10/0x10
-   ? kasan_save_track+0x14/0x30
-   cifs_close_deferred_file+0x110/0x2c0 [cifs]
-   ? __pfx_cifs_close_deferred_file+0x10/0x10 [cifs]
-   ? __pfx_down_read+0x10/0x10
-   cifs_oplock_break+0x4c1/0xa50 [cifs]
-   ? __pfx_cifs_oplock_break+0x10/0x10 [cifs]
-   ? lock_is_held_type+0x85/0xf0
-   ? mark_held_locks+0x1a/0x90
-   process_one_work+0x4c6/0x9f0
-   ? find_held_lock+0x8a/0xa0
-   ? __pfx_process_one_work+0x10/0x10
-   ? lock_acquired+0x220/0x550
-   ? __list_add_valid_or_report+0x37/0x100
-   worker_thread+0x2e4/0x570
-   ? __kthread_parkme+0xd1/0xf0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x17f/0x1c0
-   ? kthread+0xda/0x1c0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x31/0x60
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-
-  Allocated by task 1118:
-   kasan_save_stack+0x30/0x50
-   kasan_save_track+0x14/0x30
-   __kasan_kmalloc+0xaa/0xb0
-   cifs_new_fileinfo+0xc8/0x9d0 [cifs]
-   cifs_atomic_open+0x467/0x770 [cifs]
-   lookup_open.isra.0+0x665/0x8b0
-   path_openat+0x4c3/0x1380
-   do_filp_open+0x167/0x270
-   do_sys_openat2+0x129/0x160
-   __x64_sys_creat+0xad/0xe0
-   do_syscall_64+0xbb/0x1d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  Freed by task 83:
-   kasan_save_stack+0x30/0x50
-   kasan_save_track+0x14/0x30
-   kasan_save_free_info+0x3b/0x70
-   poison_slab_object+0xe9/0x160
-   __kasan_slab_free+0x32/0x50
-   kfree+0xf2/0x300
-   process_one_work+0x4c6/0x9f0
-   worker_thread+0x2e4/0x570
-   kthread+0x17f/0x1c0
-   ret_from_fork+0x31/0x60
-   ret_from_fork_asm+0x1a/0x30
-
-  Last potentially related work creation:
-   kasan_save_stack+0x30/0x50
-   __kasan_record_aux_stack+0xad/0xc0
-   insert_work+0x29/0xe0
-   __queue_work+0x5ea/0x760
-   queue_work_on+0x6d/0x90
-   _cifsFileInfo_put+0x3f6/0x770 [cifs]
-   smb2_compound_op+0x911/0x3940 [cifs]
-   smb2_set_path_size+0x228/0x270 [cifs]
-   cifs_set_file_size+0x197/0x460 [cifs]
-   cifs_setattr+0xd9c/0x14b0 [cifs]
-   notify_change+0x4e3/0x740
-   do_truncate+0xfa/0x180
-   vfs_truncate+0x195/0x200
-   __x64_sys_truncate+0x109/0x150
-   do_syscall_64+0xbb/0x1d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 71f15c90e785 ("smb: client: retry compound request without reusing lease")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Cc: David Howells <dhowells@redhat.com>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/smb2pdu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -1149,6 +1149,7 @@ smb2_set_path_size(const unsigned int xi
- 			      cfile, NULL, NULL, dentry);
- 	if (rc == -EINVAL) {
- 		cifs_dbg(FYI, "invalid lease key, resending request without lease");
-+		cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
- 		rc = smb2_compound_op(xid, tcon, cifs_sb,
- 				      full_path, &oparms, &in_iov,
- 				      &(int){SMB2_OP_SET_EOF}, 1,
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1687,6 +1687,8 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		rc = ksmbd_session_register(conn, sess);
+ 		if (rc)
+ 			goto out_err;
++
++		conn->binding = false;
+ 	} else if (conn->dialect >= SMB30_PROT_ID &&
+ 		   (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   req->Flags & SMB2_SESSION_REQ_FLAG_BINDING) {
+@@ -1765,6 +1767,8 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 			sess = NULL;
+ 			goto out_err;
+ 		}
++
++		conn->binding = false;
+ 	}
+ 	work->sess = sess;
+ 
 
 
