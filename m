@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F95918C025;
-	Tue, 10 Sep 2024 10:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2084D193067;
+	Tue, 10 Sep 2024 10:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962840; cv=none; b=Rs9MDBJCnT1kJzQwNSQDplBv4YRPuw1uRCCy4XbIscw+0IJ939uWz2OXvc9Wk0iTFFSijom2rG1bM5Uq5nvn3sg9qeRMatgqWcakdbuBZFklx4e6y1oMTkfAN7oEhTNDL8TrCGvlmjb8+TlzetX7FCQnKsdIEjE7mNp53uNy7+k=
+	t=1725962843; cv=none; b=XIUGBVUEvm+y7n402FDHK3iRZdkCenXhplKYiaBxui6JxNbQnR6C9xktOspkufLI/HQBteISU3v3WI39eOAqmPv2MGl85azG/xd4qdRASJTseUhvhgAAqx/RcxyPyjGmYj5HOI0Y7oQXmRjuV1j8x1+jK8xMPdpi/hLrLK584OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962840; c=relaxed/simple;
-	bh=bnfvcQcqxyDPwsPnnnDeV6oCMyppmm4tVMFVGSXAm2I=;
+	s=arc-20240116; t=1725962843; c=relaxed/simple;
+	bh=NTmw6OyjjVm/aNPOxtDF+fl7n/D+BPSZKyuVddo8YpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bf9Yo9SEDd9tQKu8Xk3fd6sWnS1d71RM6ArxbEmMVwgZIcGIhFQ9aA6veNa40A2I+C4iVFZCmxGlSKN2ZvGwSjgMdoFUJ0tzXPWUn/ZeFrYjmnQ+GB/baM/hxNjPEpEO+9ftRlqMsz8sUU2dXMbwMgxFtt4Z7+DSe3uZ/wqGYWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZWMJv5q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2GvDbgQb0Uas0rnjwhj4K2CtAW5ragXAndvEWUV3QfJFeHJRqJnyeGkfsHi/6u/GzdVtEvpZ1HA4FQJEZme4rbM9hsWkMbzZ8BryYcdsQEuXMh8FDDYlR4NV7F7ooZUTI1WYBaF/RlQX2aedxGtDE6Ybn6BmulYgi9C7ISFhag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYDSR64I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZWMJv5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC45C4CEC3;
-	Tue, 10 Sep 2024 10:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYDSR64I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B85AC4CEC3;
+	Tue, 10 Sep 2024 10:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962840;
-	bh=bnfvcQcqxyDPwsPnnnDeV6oCMyppmm4tVMFVGSXAm2I=;
+	s=korg; t=1725962843;
+	bh=NTmw6OyjjVm/aNPOxtDF+fl7n/D+BPSZKyuVddo8YpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZWMJv5qZgL6N9X3yY+QIAf/gvMLsgf10CvuyYIwW4tX1adGQdSxqJC9yXlFM63ZP
-	 uyRyz44RU875BvGziCsfZh9SOvYx99Nm3VJKP0pSKyRBcF5RAb1bswfT2zs+zu8EIg
-	 QRhNZ/L9mSR8F/mavMx33y7spah4x9XPkI5+CDgg=
+	b=YYDSR64Ism8lwW9h2zFsFzQyuk4TFsnOB2f1VSZp/VBleaYldQXwPqRyrFf250Uqu
+	 yQWywaaBnZZfmRa0su4F9JOO2c+RTKEEr8EhFfqVRpwZ191dyjE3kch38FoA7dVMgE
+	 xvvbQJelLIvmFjMCo+lgfYwJsUKvnmZrY+a1T6ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Sam Protsenko <semen.protsenko@linaro.org>,
+	Liao Chen <liaochen4@huawei.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 021/192] mmc: dw_mmc: Fix IDMAC operation with pages bigger than 4K
-Date: Tue, 10 Sep 2024 11:30:45 +0200
-Message-ID: <20240910092558.818019765@linuxfoundation.org>
+Subject: [PATCH 6.1 022/192] mmc: sdhci-of-aspeed: fix module autoloading
+Date: Tue, 10 Sep 2024 11:30:46 +0200
+Message-ID: <20240910092558.867880031@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,96 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Protsenko <semen.protsenko@linaro.org>
+From: Liao Chen <liaochen4@huawei.com>
 
-commit 8396c793ffdf28bb8aee7cfe0891080f8cab7890 upstream.
+commit 6e540da4c1db7b840e347c4dfe48359b18b7e376 upstream.
 
-Commit 616f87661792 ("mmc: pass queue_limits to blk_mq_alloc_disk") [1]
-revealed the long living issue in dw_mmc.c driver, existing since the
-time when it was first introduced in commit f95f3850f7a9 ("mmc: dw_mmc:
-Add Synopsys DesignWare mmc host driver."), also making kernel boot
-broken on platforms using dw_mmc driver with 16K or 64K pages enabled,
-with this message in dmesg:
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from of_device_id table.
 
-    mmcblk: probe of mmc0:0001 failed with error -22
-
-That's happening because mmc_blk_probe() fails when it calls
-blk_validate_limits() consequently, which returns the error due to
-failed max_segment_size check in this code:
-
-    /*
-     * The maximum segment size has an odd historic 64k default that
-     * drivers probably should override.  Just like the I/O size we
-     * require drivers to at least handle a full page per segment.
-     */
-    ...
-    if (WARN_ON_ONCE(lim->max_segment_size < PAGE_SIZE))
-        return -EINVAL;
-
-In case when IDMAC (Internal DMA Controller) is used, dw_mmc.c always
-sets .max_seg_size to 4 KiB:
-
-    mmc->max_seg_size = 0x1000;
-
-The comment in the code above explains why it's incorrect. Arnd
-suggested setting .max_seg_size to .max_req_size to fix it, which is
-also what some other drivers are doing:
-
-   $ grep -rl 'max_seg_size.*=.*max_req_size' drivers/mmc/host/ | \
-     wc -l
-   18
-
-This change is not only fixing the boot with 16K/64K pages, but also
-leads to a better MMC performance. The linear write performance was
-tested on E850-96 board (eMMC only), before commit [1] (where it's
-possible to boot with 16K/64K pages without this fix, to be able to do
-a comparison). It was tested with this command:
-
-    # dd if=/dev/zero of=somefile bs=1M count=500 oflag=sync
-
-Test results are as follows:
-
-  - 4K pages,  .max_seg_size = 4 KiB:                   94.2 MB/s
-  - 4K pages,  .max_seg_size = .max_req_size = 512 KiB: 96.9 MB/s
-  - 16K pages, .max_seg_size = 4 KiB:                   126 MB/s
-  - 16K pages, .max_seg_size = .max_req_size = 2 MiB:   128 MB/s
-  - 64K pages, .max_seg_size = 4 KiB:                   138 MB/s
-  - 64K pages, .max_seg_size = .max_req_size = 8 MiB:   138 MB/s
-
-Unfortunately, SD card controller is not enabled in E850-96 yet, so it
-wasn't possible for me to run the test on some cheap SD cards to check
-this patch's impact on those. But it's possible that this change might
-also reduce the writes count, thus improving SD/eMMC longevity.
-
-All credit for the analysis and the suggested solution goes to Arnd.
-
-[1] https://lore.kernel.org/all/20240215070300.2200308-18-hch@lst.de/
-
-Fixes: f95f3850f7a9 ("mmc: dw_mmc: Add Synopsys DesignWare mmc host driver.")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/all/CA+G9fYtddf2Fd3be+YShHP6CmSDNcn0ptW8qg+stUKW+Cn0rjQ@mail.gmail.com/
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Fixes: bb7b8ec62dfb ("mmc: sdhci-of-aspeed: Add support for the ASPEED SD controller")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240306232052.21317-1-semen.protsenko@linaro.org
+Link: https://lore.kernel.org/r/20240826124851.379759-1-liaochen4@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-of-aspeed.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2952,8 +2952,8 @@ static int dw_mci_init_slot(struct dw_mc
- 	if (host->use_dma == TRANS_MODE_IDMAC) {
- 		mmc->max_segs = host->ring_size;
- 		mmc->max_blk_size = 65535;
--		mmc->max_seg_size = 0x1000;
--		mmc->max_req_size = mmc->max_seg_size * host->ring_size;
-+		mmc->max_req_size = DW_MCI_DESC_DATA_LENGTH * host->ring_size;
-+		mmc->max_seg_size = mmc->max_req_size;
- 		mmc->max_blk_count = mmc->max_req_size / 512;
- 	} else if (host->use_dma == TRANS_MODE_EDMAC) {
- 		mmc->max_segs = 64;
+--- a/drivers/mmc/host/sdhci-of-aspeed.c
++++ b/drivers/mmc/host/sdhci-of-aspeed.c
+@@ -513,6 +513,7 @@ static const struct of_device_id aspeed_
+ 	{ .compatible = "aspeed,ast2600-sdhci", .data = &ast2600_sdhci_pdata, },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, aspeed_sdhci_of_match);
+ 
+ static struct platform_driver aspeed_sdhci_driver = {
+ 	.driver		= {
 
 
