@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272D818661A;
-	Tue, 10 Sep 2024 09:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4C318F2D6;
+	Tue, 10 Sep 2024 09:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961629; cv=none; b=o/ibzp73hmlrvFQc6CTs5qcBL69fsCytN4QJfJpL0Gy7eYFhQR0N0D/AEV3Fs9J6ntJAc9VR37mVASfTtnDPLh0eNT3ddgcXgEv49bVhG3jnfzeAdpt8f0xIrt0pQvBgIXRJNZkjCouE14K8z8Xn57ZnP1bK/Wmv/34x3vwRycU=
+	t=1725961632; cv=none; b=ieNMQ/kwnmK0PTzv/fLbPzvB0wLtevAPjbJIXbQCNkZm+gEwBeH3o/tfRJUrRLfKeaZ+hv4j5GmAX3LenrrR1O2dsNuO7TRNfQtoojIZUjza2s4hZ/K/BI3KY6yUljpSBphx4Jrmwnu24bMwkuNxZeYtQ7Z/P3B16UIJb2bDfwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961629; c=relaxed/simple;
-	bh=k5OMA1WOpGwXMPmYp0fd2vQbNq9avIn1qt0HrA8oJUk=;
+	s=arc-20240116; t=1725961632; c=relaxed/simple;
+	bh=mMrK18X7WIlV6FinZr2UBNVrfvLPuzV5Rch5PxQ6S5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHPgwdo7w9mh79xPegCz2vcppy7HO4sxJoFTIGbV1Z4UnMA33e/fsjiLgwBxV6bQ0xsTAVKoc0gv5hquKo0+WseMcWAAnAJ01IpaWL6nwUPew1OJdo+f4ohB9GdOKERLAM04xH0wvF7pCmXioyb3XgwnFAbHrEpWfwqpoZObdVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayW0CuFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YrK2cKnl5TAt7ng7OtKRGdiRqyprSO7dd4sY8+bYEdd3neNYSsvoW4cd/jVzN0Ny7MNfenm7X6UZThDZKC2IdoEZHqphMRwe0iaxsUQm2/lnnL/0/XpjmE4Mub5PyYB/g0K1oCHKNWNJxLZ15B/jVnG3jN64OXyY/zgxwTovTIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ksp03Bo7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayW0CuFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FAEC4CEC3;
-	Tue, 10 Sep 2024 09:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ksp03Bo7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1D4C4CEC3;
+	Tue, 10 Sep 2024 09:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961629;
-	bh=k5OMA1WOpGwXMPmYp0fd2vQbNq9avIn1qt0HrA8oJUk=;
+	s=korg; t=1725961632;
+	bh=mMrK18X7WIlV6FinZr2UBNVrfvLPuzV5Rch5PxQ6S5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayW0CuFbl1iarvVZJxEYBNzi/GPuXSTxwLwdA/LjfaPSgIw1tehquW9Hg8RdsW++b
-	 Cc0pkz742NHGZTn75v5NGEb+ZAQrfXO9YgnHbEox/APbp0RdKSu590MAcB7dkyz56C
-	 DkYRzn5F4izRxFYvFptCm2WY2fs73dP0CL6j8/uQ=
+	b=Ksp03Bo79uVEUHs+EH8PqXXj6KOBwLmWrUS7Lkgw/dvjrVUoHZN8K7aKeqjqIFJgO
+	 UQcPKHa1KTsHf1j2rZgNoxFNF5vLkqIqJOh7rfPX3FGgA10l/YUbj7hyAFDAEjH5EX
+	 hRknz2XFndhvSHw0EGIOSsNdTHX6lhyCq2F9A4Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Brian Johannesmeyer <bjohannesmeyer@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Alexander Potapenko <glider@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 107/375] af_unix: Remove put_pid()/put_cred() in copy_peercred().
-Date: Tue, 10 Sep 2024 11:28:24 +0200
-Message-ID: <20240910092625.988412047@linuxfoundation.org>
+Subject: [PATCH 6.10 108/375] x86/kmsan: Fix hook for unaligned accesses
+Date: Tue, 10 Sep 2024 11:28:25 +0200
+Message-ID: <20240910092626.025202079@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,56 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
 
-[ Upstream commit e4bd881d987121dbf1a288641491955a53d9f8f7 ]
+[ Upstream commit bf6ab33d8487f5e2a0998ce75286eae65bb0a6d6 ]
 
-When (AF_UNIX, SOCK_STREAM) socket connect()s to a listening socket,
-the listener's sk_peer_pid/sk_peer_cred are copied to the client in
-copy_peercred().
+When called with a 'from' that is not 4-byte-aligned, string_memcpy_fromio()
+calls the movs() macro to copy the first few bytes, so that 'from' becomes
+4-byte-aligned before calling rep_movs(). This movs() macro modifies 'to', and
+the subsequent line modifies 'n'.
 
-Then, the client's sk_peer_pid and sk_peer_cred are always NULL, so
-we need not call put_pid() and put_cred() there.
+As a result, on unaligned accesses, kmsan_unpoison_memory() uses the updated
+(aligned) values of 'to' and 'n'. Hence, it does not unpoison the entire
+region.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Save the original values of 'to' and 'n', and pass those to
+kmsan_unpoison_memory(), so that the entire region is unpoisoned.
+
+Signed-off-by: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Link: https://lore.kernel.org/r/20240523215029.4160518-1-bjohannesmeyer@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ arch/x86/lib/iomem.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index be5266007b48..84a332f95aa8 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -692,9 +692,6 @@ static void init_peercred(struct sock *sk)
+diff --git a/arch/x86/lib/iomem.c b/arch/x86/lib/iomem.c
+index e0411a3774d4..5eecb45d05d5 100644
+--- a/arch/x86/lib/iomem.c
++++ b/arch/x86/lib/iomem.c
+@@ -25,6 +25,9 @@ static __always_inline void rep_movs(void *to, const void *from, size_t n)
  
- static void copy_peercred(struct sock *sk, struct sock *peersk)
+ static void string_memcpy_fromio(void *to, const volatile void __iomem *from, size_t n)
  {
--	const struct cred *old_cred;
--	struct pid *old_pid;
--
- 	if (sk < peersk) {
- 		spin_lock(&sk->sk_peer_lock);
- 		spin_lock_nested(&peersk->sk_peer_lock, SINGLE_DEPTH_NESTING);
-@@ -702,16 +699,12 @@ static void copy_peercred(struct sock *sk, struct sock *peersk)
- 		spin_lock(&peersk->sk_peer_lock);
- 		spin_lock_nested(&sk->sk_peer_lock, SINGLE_DEPTH_NESTING);
- 	}
--	old_pid = sk->sk_peer_pid;
--	old_cred = sk->sk_peer_cred;
++	const void *orig_to = to;
++	const size_t orig_n = n;
 +
- 	sk->sk_peer_pid  = get_pid(peersk->sk_peer_pid);
- 	sk->sk_peer_cred = get_cred(peersk->sk_peer_cred);
+ 	if (unlikely(!n))
+ 		return;
  
- 	spin_unlock(&sk->sk_peer_lock);
- 	spin_unlock(&peersk->sk_peer_lock);
--
--	put_pid(old_pid);
--	put_cred(old_cred);
+@@ -39,7 +42,7 @@ static void string_memcpy_fromio(void *to, const volatile void __iomem *from, si
+ 	}
+ 	rep_movs(to, (const void *)from, n);
+ 	/* KMSAN must treat values read from devices as initialized. */
+-	kmsan_unpoison_memory(to, n);
++	kmsan_unpoison_memory(orig_to, orig_n);
  }
  
- static int unix_listen(struct socket *sock, int backlog)
+ static void string_memcpy_toio(volatile void __iomem *to, const void *from, size_t n)
 -- 
 2.43.0
 
