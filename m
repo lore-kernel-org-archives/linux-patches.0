@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DAC188A0C;
-	Tue, 10 Sep 2024 10:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA4F18E778;
+	Tue, 10 Sep 2024 10:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963036; cv=none; b=WZr1dEHj9NjOYgBNKeaPyoixhaoImqkp2f+OQmKtf8mGbE1g4h3ghY6dSaOnciAnCyiX//bbiXtlNrMvEPYWf8qFsLzcsnAdxwDO+nSRJb2ouwKA2c8oglKN6K2RGuZqM8VnCf7OBIMt4nbB0V7m7pOVhsAvB1FKyYfK43FGqAg=
+	t=1725963038; cv=none; b=tIf5vW0HJfSTI3z1uU7yqZSL0dJf0pZgCNGE99MNheHw681mNha+xbmOusqnMyCub84wFjgHGRiiDdiyYNoPhEjb1kxvahA0V1/FaEzqh2nFCAJglrBCu6EtgQjxi4GL1vjMsB9a+98DBPX7Cqovs9QqoeL9AJUzDVf92OrCa3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963036; c=relaxed/simple;
-	bh=EZq+B6Zp5jWYMZuvb/dRx+rvqQtQoAz7QVhF721ifw0=;
+	s=arc-20240116; t=1725963038; c=relaxed/simple;
+	bh=2RUjtSQvTa3Ur6XLYscVz5OWt8Qid7JyRXdYpzWkwgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+pTAdNcHzsTdyfZYHeIMPcqMxK1Bs3r0mi/OIWT3OtIkXXoUTqquHSjn0U/wxuorNa1AtIfV1S7nBO4e4D4LFdHt/QTVOcc58o5ed5YV8QWm+wwqPrg4/fju3IP8miMM8HE6qkqHiqFyeRSSz/nJhsKPFM85Gjsx1h+CVP3ReI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPHn9Ho9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFBvvVtLgM5wy8UhxvtLZMCDidtwLPQDSBdEhq0zYYG3OEyWFIxUJeFF/sqSf4VuxIgbyfTd1d/o5qMtM/31dzq8YCzeX+kmNcjmFCVc01M812tWwd8t1wMUjRinl0a4SYxO4xqlSZ97dtO3qYswqSAQ0xs9R8Z2u/8JAlDfLHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBO1RdKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPHn9Ho9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8BDC4CEC3;
-	Tue, 10 Sep 2024 10:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBO1RdKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E47C4CEC6;
+	Tue, 10 Sep 2024 10:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963035;
-	bh=EZq+B6Zp5jWYMZuvb/dRx+rvqQtQoAz7QVhF721ifw0=;
+	s=korg; t=1725963038;
+	bh=2RUjtSQvTa3Ur6XLYscVz5OWt8Qid7JyRXdYpzWkwgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IPHn9Ho9UvmvYvR+MZeGgd1qJ3soMPJUjeN3nVbhkRAIqu290f2dXGM4dnp9dsBAp
-	 S59GfU0+A8MAemkKnz1HhunprL53U8+RjgQgTVgIWZHJLU/aSretvyLc69U2qaugz2
-	 LcWW/6JtLJqoIJ0Htk6e2trqW/JDVAxglrfUbBf4=
+	b=vBO1RdKyQqOvTSrXAzRTkrX01fhdvj1vwiBSuUvdEKcVvkhPnlHDv8TazNa3YZZqC
+	 WJ+WyZP/RZx9uG/4Qy9DvpXKcsV9Zc5K1UA2zTEzMQDg5mNQZp5aGMFEz2ec8RdDsW
+	 7eysiCLc7p4y88hYw4MEoO2Ez8ZP7cV+0TwUdKdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Brian Norris <briannorris@chromium.org>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Breno Leitao <leitao@debian.org>,
+	Madalin Bucur <madalin.bucur@oss.nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/192] wifi: mwifiex: Do not return unused priv in mwifiex_get_priv_by_id()
-Date: Tue, 10 Sep 2024 11:32:10 +0200
-Message-ID: <20240910092602.355150219@linuxfoundation.org>
+Subject: [PATCH 6.1 115/192] net: dpaa: avoid on-stack arrays of NR_CPUS elements
+Date: Tue, 10 Sep 2024 11:32:19 +0200
+Message-ID: <20240910092602.750976724@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -53,110 +53,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit c145eea2f75ff7949392aebecf7ef0a81c1f6c14 ]
+[ Upstream commit 555a05d84ca2c587e2d4777006e2c2fb3dfbd91d ]
 
-mwifiex_get_priv_by_id() returns the priv pointer corresponding to
-the bss_num and bss_type, but without checking if the priv is actually
-currently in use.
-Unused priv pointers do not have a wiphy attached to them which can
-lead to NULL pointer dereferences further down the callstack.  Fix
-this by returning only used priv pointers which have priv->bss_mode
-set to something else than NL80211_IFTYPE_UNSPECIFIED.
+The dpaa-eth driver is written for PowerPC and Arm SoCs which have 1-24
+CPUs. It depends on CONFIG_NR_CPUS having a reasonably small value in
+Kconfig. Otherwise, there are 2 functions which allocate on-stack arrays
+of NR_CPUS elements, and these can quickly explode in size, leading to
+warnings such as:
 
-Said NULL pointer dereference happened when an Accesspoint was started
-with wpa_supplicant -i mlan0 with this config:
+  drivers/net/ethernet/freescale/dpaa/dpaa_eth.c:3280:12: warning:
+  stack frame size (16664) exceeds limit (2048) in 'dpaa_eth_probe' [-Wframe-larger-than]
 
-network={
-        ssid="somessid"
-        mode=2
-        frequency=2412
-        key_mgmt=WPA-PSK WPA-PSK-SHA256
-        proto=RSN
-        group=CCMP
-        pairwise=CCMP
-        psk="12345678"
-}
+The problem is twofold:
+- Reducing the array size to the boot-time num_possible_cpus() (rather
+  than the compile-time NR_CPUS) creates a variable-length array,
+  which should be avoided in the Linux kernel.
+- Using NR_CPUS as an array size makes the driver blow up in stack
+  consumption with generic, as opposed to hand-crafted, .config files.
 
-When waiting for the AP to be established, interrupting wpa_supplicant
-with <ctrl-c> and starting it again this happens:
+A simple solution is to use dynamic allocation for num_possible_cpus()
+elements (aka a small number determined at runtime).
 
-| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000140
-| Mem abort info:
-|   ESR = 0x0000000096000004
-|   EC = 0x25: DABT (current EL), IL = 32 bits
-|   SET = 0, FnV = 0
-|   EA = 0, S1PTW = 0
-|   FSC = 0x04: level 0 translation fault
-| Data abort info:
-|   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-|   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-| user pgtable: 4k pages, 48-bit VAs, pgdp=0000000046d96000
-| [0000000000000140] pgd=0000000000000000, p4d=0000000000000000
-| Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-| Modules linked in: caam_jr caamhash_desc spidev caamalg_desc crypto_engine authenc libdes mwifiex_sdio
-+mwifiex crct10dif_ce cdc_acm onboard_usb_hub fsl_imx8_ddr_perf imx8m_ddrc rtc_ds1307 lm75 rtc_snvs
-+imx_sdma caam imx8mm_thermal spi_imx error imx_cpufreq_dt fuse ip_tables x_tables ipv6
-| CPU: 0 PID: 8 Comm: kworker/0:1 Not tainted 6.9.0-00007-g937242013fce-dirty #18
-| Hardware name: somemachine (DT)
-| Workqueue: events sdio_irq_work
-| pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-| pc : mwifiex_get_cfp+0xd8/0x15c [mwifiex]
-| lr : mwifiex_get_cfp+0x34/0x15c [mwifiex]
-| sp : ffff8000818b3a70
-| x29: ffff8000818b3a70 x28: ffff000006bfd8a5 x27: 0000000000000004
-| x26: 000000000000002c x25: 0000000000001511 x24: 0000000002e86bc9
-| x23: ffff000006bfd996 x22: 0000000000000004 x21: ffff000007bec000
-| x20: 000000000000002c x19: 0000000000000000 x18: 0000000000000000
-| x17: 000000040044ffff x16: 00500072b5503510 x15: ccc283740681e517
-| x14: 0201000101006d15 x13: 0000000002e8ff43 x12: 002c01000000ffb1
-| x11: 0100000000000000 x10: 02e8ff43002c0100 x9 : 0000ffb100100157
-| x8 : ffff000003d20000 x7 : 00000000000002f1 x6 : 00000000ffffe124
-| x5 : 0000000000000001 x4 : 0000000000000003 x3 : 0000000000000000
-| x2 : 0000000000000000 x1 : 0001000000011001 x0 : 0000000000000000
-| Call trace:
-|  mwifiex_get_cfp+0xd8/0x15c [mwifiex]
-|  mwifiex_parse_single_response_buf+0x1d0/0x504 [mwifiex]
-|  mwifiex_handle_event_ext_scan_report+0x19c/0x2f8 [mwifiex]
-|  mwifiex_process_sta_event+0x298/0xf0c [mwifiex]
-|  mwifiex_process_event+0x110/0x238 [mwifiex]
-|  mwifiex_main_process+0x428/0xa44 [mwifiex]
-|  mwifiex_sdio_interrupt+0x64/0x12c [mwifiex_sdio]
-|  process_sdio_pending_irqs+0x64/0x1b8
-|  sdio_irq_work+0x4c/0x7c
-|  process_one_work+0x148/0x2a0
-|  worker_thread+0x2fc/0x40c
-|  kthread+0x110/0x114
-|  ret_from_fork+0x10/0x20
-| Code: a94153f3 a8c37bfd d50323bf d65f03c0 (f940a000)
-| ---[ end trace 0000000000000000 ]---
-
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240703072409.556618-1-s.hauer@pengutronix.de
+Link: https://lore.kernel.org/all/202406261920.l5pzM1rj-lkp@intel.com/
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Acked-by: Madalin Bucur <madalin.bucur@oss.nxp.com>
+Link: https://patch.msgid.link/20240713225336.1746343-2-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/main.h | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/ethernet/freescale/dpaa/dpaa_eth.c    | 20 ++++++++++++++-----
+ .../ethernet/freescale/dpaa/dpaa_ethtool.c    | 10 +++++++++-
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
-index 63f861e6b28a..fb98eb342bd9 100644
---- a/drivers/net/wireless/marvell/mwifiex/main.h
-+++ b/drivers/net/wireless/marvell/mwifiex/main.h
-@@ -1301,6 +1301,9 @@ mwifiex_get_priv_by_id(struct mwifiex_adapter *adapter,
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+index 981cc3248047..19506f2be4d4 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+@@ -916,14 +916,18 @@ static inline void dpaa_setup_egress(const struct dpaa_priv *priv,
+ 	}
+ }
  
- 	for (i = 0; i < adapter->priv_num; i++) {
- 		if (adapter->priv[i]) {
-+			if (adapter->priv[i]->bss_mode == NL80211_IFTYPE_UNSPECIFIED)
-+				continue;
+-static void dpaa_fq_setup(struct dpaa_priv *priv,
+-			  const struct dpaa_fq_cbs *fq_cbs,
+-			  struct fman_port *tx_port)
++static int dpaa_fq_setup(struct dpaa_priv *priv,
++			 const struct dpaa_fq_cbs *fq_cbs,
++			 struct fman_port *tx_port)
+ {
+ 	int egress_cnt = 0, conf_cnt = 0, num_portals = 0, portal_cnt = 0, cpu;
+ 	const cpumask_t *affine_cpus = qman_affine_cpus();
+-	u16 channels[NR_CPUS];
+ 	struct dpaa_fq *fq;
++	u16 *channels;
 +
- 			if ((adapter->priv[i]->bss_num == bss_num) &&
- 			    (adapter->priv[i]->bss_type == bss_type))
++	channels = kcalloc(num_possible_cpus(), sizeof(u16), GFP_KERNEL);
++	if (!channels)
++		return -ENOMEM;
+ 
+ 	for_each_cpu_and(cpu, affine_cpus, cpu_online_mask)
+ 		channels[num_portals++] = qman_affine_channel(cpu);
+@@ -982,6 +986,10 @@ static void dpaa_fq_setup(struct dpaa_priv *priv,
  				break;
+ 		}
+ 	}
++
++	kfree(channels);
++
++	return 0;
+ }
+ 
+ static inline int dpaa_tx_fq_to_id(const struct dpaa_priv *priv,
+@@ -3454,7 +3462,9 @@ static int dpaa_eth_probe(struct platform_device *pdev)
+ 	 */
+ 	dpaa_eth_add_channel(priv->channel, &pdev->dev);
+ 
+-	dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
++	err = dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
++	if (err)
++		goto free_dpaa_bps;
+ 
+ 	/* Create a congestion group for this netdev, with
+ 	 * dynamically-allocated CGR ID.
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
+index 769e936a263c..fcb0cba4611e 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
+@@ -515,12 +515,16 @@ static int dpaa_set_coalesce(struct net_device *dev,
+ 			     struct netlink_ext_ack *extack)
+ {
+ 	const cpumask_t *cpus = qman_affine_cpus();
+-	bool needs_revert[NR_CPUS] = {false};
+ 	struct qman_portal *portal;
+ 	u32 period, prev_period;
+ 	u8 thresh, prev_thresh;
++	bool *needs_revert;
+ 	int cpu, res;
+ 
++	needs_revert = kcalloc(num_possible_cpus(), sizeof(bool), GFP_KERNEL);
++	if (!needs_revert)
++		return -ENOMEM;
++
+ 	period = c->rx_coalesce_usecs;
+ 	thresh = c->rx_max_coalesced_frames;
+ 
+@@ -543,6 +547,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
+ 		needs_revert[cpu] = true;
+ 	}
+ 
++	kfree(needs_revert);
++
+ 	return 0;
+ 
+ revert_values:
+@@ -556,6 +562,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
+ 		qman_dqrr_set_ithresh(portal, prev_thresh);
+ 	}
+ 
++	kfree(needs_revert);
++
+ 	return res;
+ }
+ 
 -- 
 2.43.0
 
