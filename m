@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E74188A0C;
-	Tue, 10 Sep 2024 10:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A29188A0C;
+	Tue, 10 Sep 2024 10:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963021; cv=none; b=CqHcEn3socOzp0d9+MGgRqKSBcIiIv4Jo+uVSpjIy00eKu5IUD15JalqcUR6dDcjKBhD/tDdw9hbAbHj26zUEmjtKI5Fx0piuB3OOYN6sfrJs0xDhPiKp/Bv5U7wljSQ9yP6OSitSnAdWD4+o42rGHEorQIJdnBpX6mqW4KN65o=
+	t=1725963024; cv=none; b=cvmmWn/pKHlfta/gAbPFjpHw+RsXt2n6qT+ekXHFa3NjEUVherid90FQoAO42tG40SgbInhanwIO72S1SBzy4fhfL+z+5mcDua8y7ekNQE++wajnRw0BGP/OOBiMa9vimhwJnEgsEEoSi82ggoGScZ7HtM6HLF2qwOgkZnxUS5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963021; c=relaxed/simple;
-	bh=YxJS8bTn3aPEUe6n6GXhXzJD/ZHM+31RpdbSj0J66tE=;
+	s=arc-20240116; t=1725963024; c=relaxed/simple;
+	bh=5LuRBdKnTXEmlGMYHMgJVZF3E9FebiJ+jOIQZ9zMDi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iMRa42gXb0oh7Aq07TyslCYEl0LDcc4FU62F2LIb2pEQaAhbRE4STmCc+APtcDHFIl6TvdbGzaI8ai+T91t/X+UjOOI2vFlJMc6dCmfigmobeTA548sxRw7jMCbt+ArkUfCzzc/aa997otInNErue8/kw6SMwqTRW9/Pfhd6jt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylhLEaUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pk8Hhs0NCNrI85ieWERtX7ZLGC9u9wH7hh3YkOLL/0mLHRpdMlazsO89c2qgoAdr/uyZbaJwjdWEHwNWlau2RNk3VskVV8qgOlgf8aDYIlrOOjq+cNSJMt5otK8POPcupzFkY6APe7U6+1x12wSez5GUX79htVzujqyGNPfezjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQMmM0HZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylhLEaUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B398AC4CEC3;
-	Tue, 10 Sep 2024 10:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQMmM0HZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0BDC4CEC3;
+	Tue, 10 Sep 2024 10:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963021;
-	bh=YxJS8bTn3aPEUe6n6GXhXzJD/ZHM+31RpdbSj0J66tE=;
+	s=korg; t=1725963024;
+	bh=5LuRBdKnTXEmlGMYHMgJVZF3E9FebiJ+jOIQZ9zMDi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylhLEaUbaP/tlcezWojLU2/5GNiCtIC1HYYEgcdqMczVo1F/OVCkUFGp4NcxyQd5r
-	 nN75AfhVFgSCnEaT30ytGzIakd+GKQBpK4YyDvdS4za5ATswsqOnG1vWnEfdNPfRS6
-	 y3ezocF0p3yCHXJ1aTv6TrTAvGMsdaLw5LfhXCts=
+	b=sQMmM0HZnY+oH2qshIEGmLzYIjiFVvhSc0NkHyNL9YPRmgJZB28s0YDlGYTWyPodk
+	 Y/Z8WVkQS2N1s3lVNycO7nwwIwFLGY0xPmavLP7h83R/hhHZWg3FbDg1INKQ6y4gK+
+	 6Mzhf4FvtxqnEJ6mEx98VK+K++6Yoz+3b+MuRRpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.1 081/192] ice: allow hot-swapping XDP programs
-Date: Tue, 10 Sep 2024 11:31:45 +0200
-Message-ID: <20240910092601.324897521@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 082/192] ice: do not bring the VSI up, if it was down before the XDP setup
+Date: Tue, 10 Sep 2024 11:31:46 +0200
+Message-ID: <20240910092601.370125349@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -48,89 +49,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 469748429ac81f0a6a344637fc9d3b1d16a9f3d8 ]
+[ Upstream commit 04c7e14e5b0b6227e7b00d7a96ca2f2426ab9171 ]
 
-Currently ice driver's .ndo_bpf callback brings interface down and up
-independently of XDP resources' presence. This is only needed when
-either these resources have to be configured or removed. It means that
-if one is switching XDP programs on-the-fly with running traffic,
-packets will be dropped.
+After XDP configuration is completed, we bring the interface up
+unconditionally, regardless of its state before the call to .ndo_bpf().
 
-To avoid this, compare early on ice_xdp_setup_prog() state of incoming
-bpf_prog pointer vs the bpf_prog pointer that is already assigned to
-VSI. Do the swap in case VSI has bpf_prog and incoming one are non-NULL.
+Preserve the information whether the interface had to be brought down and
+later bring it up only in such case.
 
-Lastly, while at it, put old bpf_prog *after* the update of Rx ring's
-bpf_prog pointer. In theory previous code could expose us to a state
-where Rx ring's bpf_prog would still be referring to old_prog that got
-released with earlier bpf_prog_put().
-
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 04c7e14e5b0b ("ice: do not bring the VSI up, if it was down before the XDP setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index cd9bcc3536fb..1973b032fe05 100644
+index 1973b032fe05..3f01942e4982 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -2633,11 +2633,11 @@ static void ice_vsi_assign_bpf_prog(struct ice_vsi *vsi, struct bpf_prog *prog)
- 	int i;
+@@ -2909,8 +2909,8 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 		   struct netlink_ext_ack *extack)
+ {
+ 	unsigned int frame_size = vsi->netdev->mtu + ICE_ETH_PKT_HDR_PAD;
+-	bool if_running = netif_running(vsi->netdev);
+ 	int ret = 0, xdp_ring_err = 0;
++	bool if_running;
  
- 	old_prog = xchg(&vsi->xdp_prog, prog);
--	if (old_prog)
--		bpf_prog_put(old_prog);
--
- 	ice_for_each_rxq(vsi, i)
- 		WRITE_ONCE(vsi->rx_rings[i]->xdp_prog, vsi->xdp_prog);
-+
-+	if (old_prog)
-+		bpf_prog_put(old_prog);
- }
- 
- /**
-@@ -2917,6 +2917,12 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		return -EOPNOTSUPP;
+ 	if (frame_size > ice_max_xdp_frame_size(vsi)) {
+ 		NL_SET_ERR_MSG_MOD(extack, "MTU too large for loading XDP");
+@@ -2923,8 +2923,11 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 		return 0;
  	}
  
-+	/* hot swap progs and avoid toggling link */
-+	if (ice_is_xdp_ena_vsi(vsi) == !!prog) {
-+		ice_vsi_assign_bpf_prog(vsi, prog);
-+		return 0;
-+	}
++	if_running = netif_running(vsi->netdev) &&
++		     !test_and_set_bit(ICE_VSI_DOWN, vsi->state);
 +
  	/* need to stop netdev while setting up the program for Rx rings */
- 	if (if_running && !test_and_set_bit(ICE_VSI_DOWN, vsi->state)) {
+-	if (if_running && !test_and_set_bit(ICE_VSI_DOWN, vsi->state)) {
++	if (if_running) {
  		ret = ice_down(vsi);
-@@ -2947,13 +2953,6 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		xdp_ring_err = ice_realloc_zc_buf(vsi, false);
- 		if (xdp_ring_err)
- 			NL_SET_ERR_MSG_MOD(extack, "Freeing XDP Rx resources failed");
--	} else {
--		/* safe to call even when prog == vsi->xdp_prog as
--		 * dev_xdp_install in net/core/dev.c incremented prog's
--		 * refcount so corresponding bpf_prog_put won't cause
--		 * underflow
--		 */
--		ice_vsi_assign_bpf_prog(vsi, prog);
- 	}
- 
- 	if (if_running)
+ 		if (ret) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Preparing device for XDP attach failed");
 -- 
 2.43.0
 
