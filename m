@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA9214D431;
-	Tue, 10 Sep 2024 10:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FFB14D431;
+	Tue, 10 Sep 2024 10:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963470; cv=none; b=oxDvEDLP0qTtw8Pmev7/8kATh2895Mpmz1gXidxLSfytw+WcFS7Y6JkHNqBQkLsPEVvo57omlur6Nos4vFTiX0vEMcY2mtB2n9HWOwiglVKdOQPn9t976eYAqYzEhKwQB6pFRuqPz0rBk2iRtESCSLYrpYv8GC2AVaxbjqH1NOs=
+	t=1725963473; cv=none; b=RuNkAGxRXmLnBULM+hUdgODrHASB9ce/NEXmDqASsaANM/WpW2/wzl86x+Gq+Z8qX8uHlp05RsK3TkuFUyq7oh2SZJUWEBELZeG90jEeJo+vtGpKAzlPtd/NZ8ViPzTmtSjJm4WgM2j7wr2zRyccyhmHg7cMnTa3u+LBQTjXf7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963470; c=relaxed/simple;
-	bh=BvDG3R4clfk2OqnTEcqsPdgtRpRs6mEMZMrnMUNIFas=;
+	s=arc-20240116; t=1725963473; c=relaxed/simple;
+	bh=weEaM2sYHcGSc5Cbnds7lV1WRs+PgM0SMXLDIe/5lqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG2UiUOH0FP16WjImUSVkhyHfSjf/SWqiIlgSscQek8cbNfHibrazBRyL/yOEsbktLMGfDX29XYYu3klGEuiqEP94E4Z/WKmUH3sAV1IJAJ/5poWKo1alK3U5jyLmUd92fLU09nFDvCeXZEfyZidsvReVVL9ZLYBS3mW8iTe4OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4WHgReh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lb5HvmrH8Ct9R9JZnwy2dFVkfTh1vW4o29VcNN8BZBgIzMIfjUKjia/1O2NGc9i6Tf/KA73RnOf2qrd05eRSKbnA6wvozSx/9WNCaN9lM0djGc12qxj8ngz2s+XSzkO8yY7zd8SMF51BJWvNW8WPiTxo/9eZyuZk7fONmtRVEhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YV1SJ/eR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4WHgReh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7A3C4CEC3;
-	Tue, 10 Sep 2024 10:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YV1SJ/eR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CA6C4CEC6;
+	Tue, 10 Sep 2024 10:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963470;
-	bh=BvDG3R4clfk2OqnTEcqsPdgtRpRs6mEMZMrnMUNIFas=;
+	s=korg; t=1725963473;
+	bh=weEaM2sYHcGSc5Cbnds7lV1WRs+PgM0SMXLDIe/5lqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4WHgRehLiDkbobc+aWZFOvxDGPXHOqmEcpddNKzIQMpj8LPEtLKSh3csJDu375ZQ
-	 h7+QbPjqg3I/gMUnyQ2fM1k8ZdXz5rgW9qBzG8+XeyofhJF7GCriMbnX+GTJsSmZWx
-	 1J9gk8Z+vmzgiArp9VoptZwvSHNXwjhLlUJeNMcc=
+	b=YV1SJ/eR7PbRg3gADh/LXDfrD7Dp3V5tFjS+HUDX2G06flvWnPjs3E2PaH2PU9gXb
+	 G7osIHPeeMMmgAB6LKvliLMEiGFvCmafMRzIMzrLyVDX9qz7izIjJa9AjrlyyexipA
+	 /VBUSVxLOYrevpfR5IBWpjK+JIvA9GVyvnJqh0/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.15 069/214] ata: libata: Fix memory leak for error path in ata_host_alloc()
-Date: Tue, 10 Sep 2024 11:31:31 +0200
-Message-ID: <20240910092601.566959555@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.15 070/214] irqchip/gic-v2m: Fix refcount leak in gicv2m_of_init()
+Date: Tue, 10 Sep 2024 11:31:32 +0200
+Message-ID: <20240910092601.604131292@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 284b75a3d83c7631586d98f6dede1d90f128f0db upstream.
+commit c5af2c90ba5629f0424a8d315f75fb8d91713c3c upstream.
 
-In ata_host_alloc(), if devres_alloc() fails to allocate the device host
-resource data pointer, the already allocated ata_host structure is not
-freed before returning from the function. This results in a potential
-memory leak.
+gicv2m_of_init() fails to perform an of_node_put() when
+of_address_to_resource() fails, leading to a refcount leak.
 
-Call kfree(host) before jumping to the error handling path to ensure
-that the ata_host structure is properly freed if devres_alloc() fails.
+Address this by moving the error handling path outside of the loop and
+making it common to all failure modes.
 
-Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
+Fixes: 4266ab1a8ff5 ("irqchip/gic-v2m: Refactor to prepare for ACPI support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/all/20240820092843.1219933-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v2m.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5454,8 +5454,10 @@ struct ata_host *ata_host_alloc(struct d
+--- a/drivers/irqchip/irq-gic-v2m.c
++++ b/drivers/irqchip/irq-gic-v2m.c
+@@ -439,12 +439,12 @@ static int __init gicv2m_of_init(struct
+ 
+ 		ret = gicv2m_init_one(&child->fwnode, spi_start, nr_spis,
+ 				      &res, 0);
+-		if (ret) {
+-			of_node_put(child);
++		if (ret)
+ 			break;
+-		}
  	}
  
- 	dr = devres_alloc(ata_devres_release, 0, GFP_KERNEL);
--	if (!dr)
-+	if (!dr) {
-+		kfree(host);
- 		goto err_out;
-+	}
- 
- 	devres_add(dev, dr);
- 	dev_set_drvdata(dev, host);
++	if (ret && child)
++		of_node_put(child);
+ 	if (!ret)
+ 		ret = gicv2m_allocate_domains(parent);
+ 	if (ret)
 
 
