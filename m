@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED2E17A924;
-	Tue, 10 Sep 2024 10:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DC7188CDC;
+	Tue, 10 Sep 2024 10:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964987; cv=none; b=ao+LsSVSbX5zbrlbZ8eqf0CXF2yMjKD1b3/luMkt8P5PJWkkTLKpXnT896aC06tN+3XfNjIewabJIJe9v7TtI8+g9mwoX5r+/DOVmiQKXuFFyscYznKOjRLt6xJZQraTdCoGdHlHJngXELOs+aNt7IftqUifX365yVUPcSKHx4c=
+	t=1725964989; cv=none; b=pGrh9YDWe133SN8np466Phdiuid5g7AqoVnQWwrC7lKt7X00ui/JuxcYnvsFmn5C+mYXrSTullBBgDzsiwmTn4xNZfE3rU3i66GNLERh9yIf0iNhMrCd9o4zSqCP/V/S4aukkuT+N8cQYEYltNJ28tfZqm2VwA7VS91u8GyScNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964987; c=relaxed/simple;
-	bh=rUM5gl37fPw5b/2mfR6qYgoAwBqkoEUe2opCySo3xXg=;
+	s=arc-20240116; t=1725964989; c=relaxed/simple;
+	bh=ITsd97sE25Ha4wacZOwexsOXne8Dl7Im3AyumKV3Ays=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BRhbzfAyUlN6pUL/O52i1bGO7SHjok/Gro5YSmHTITbawILC0LGEAa0bGmPQdMJFUN4+nDYkut2/zCssHGxtNqaB/VOUq0ulPHO+G/o9lHolgfHf6PVlPxjh8hzV7kyi9WwtnxsRMk7WP45YC7CIavZUDDWOopBTz7OeDvcp50k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wi374CnF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXF/Ery/Oh+iPk6QYVOcrxRt8YINGZ1zDojrBacD8dN6wAs+AtLLksd9tC0+9xo5TDI43E/rv+Xxw0hgku0nHwj6RsPUD+FWGYtrAidEUd9zAl4/62qust5b3Gi4p3BXZ4fqK6s/dboKCZc2gNjbMjm/YiMBES/SGFmEdI/Qu/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrBT4RBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wi374CnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684A3C4CEC6;
-	Tue, 10 Sep 2024 10:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrBT4RBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C45DC4CEC3;
+	Tue, 10 Sep 2024 10:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964986;
-	bh=rUM5gl37fPw5b/2mfR6qYgoAwBqkoEUe2opCySo3xXg=;
+	s=korg; t=1725964989;
+	bh=ITsd97sE25Ha4wacZOwexsOXne8Dl7Im3AyumKV3Ays=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wi374CnFPtndqOdEIIgJLoJxv3jmavUQuXqo6UPMVXxR4TOIjNnBQQkhF9n6x0TcV
-	 X1wJaWTS+qN91ifhd+s6oFT3JwMpcBKl2TGfGaWTX3LENXEYgPvhejxU8HH7WrPbCV
-	 nn4SOVMuPfqFhoQo5QZaPLLT2XVenX6J0civ57Wg=
+	b=WrBT4RBJk1X+eEsmra0kfgfQ9EzJ5MzdwSHKSfIweLWwl+etf2Q1o2Ays9ACQjSGp
+	 PM7Q+Vr2XWMtXcF+YhFh8MCOoaM5KZZSlZ9I1pVHJz9S/GCGGT+m7KyKADv/fCpvaF
+	 gXb9gNDfxyysGe4gnKYmaWL9xn3oIST2qYrmvIwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 099/186] irqchip/armada-370-xp: Do not allow mapping IRQ 0 and 1
-Date: Tue, 10 Sep 2024 11:33:14 +0200
-Message-ID: <20240910092558.606482840@linuxfoundation.org>
+Subject: [PATCH 5.10 100/186] af_unix: Remove put_pid()/put_cred() in copy_peercred().
+Date: Tue, 10 Sep 2024 11:33:15 +0200
+Message-ID: <20240910092558.645591335@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -47,48 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 3cef738208e5c3cb7084e208caf9bbf684f24feb ]
+[ Upstream commit e4bd881d987121dbf1a288641491955a53d9f8f7 ]
 
-IRQs 0 (IPI) and 1 (MSI) are handled internally by this driver,
-generic_handle_domain_irq() is never called for these IRQs.
+When (AF_UNIX, SOCK_STREAM) socket connect()s to a listening socket,
+the listener's sk_peer_pid/sk_peer_cred are copied to the client in
+copy_peercred().
 
-Disallow mapping these IRQs.
+Then, the client's sk_peer_pid and sk_peer_cred are always NULL, so
+we need not call put_pid() and put_cred() there.
 
-[ Marek: changed commit message ]
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-armada-370-xp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/unix/af_unix.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-armada-370-xp.c b/drivers/irqchip/irq-armada-370-xp.c
-index c76fb70c70bb..e865a43428b8 100644
---- a/drivers/irqchip/irq-armada-370-xp.c
-+++ b/drivers/irqchip/irq-armada-370-xp.c
-@@ -546,6 +546,10 @@ static struct irq_chip armada_370_xp_irq_chip = {
- static int armada_370_xp_mpic_irq_map(struct irq_domain *h,
- 				      unsigned int virq, irq_hw_number_t hw)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index e2ff610d2776..b7e9c1238516 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -603,9 +603,6 @@ static void init_peercred(struct sock *sk)
+ 
+ static void copy_peercred(struct sock *sk, struct sock *peersk)
  {
-+	/* IRQs 0 and 1 cannot be mapped, they are handled internally */
-+	if (hw <= 1)
-+		return -EINVAL;
+-	const struct cred *old_cred;
+-	struct pid *old_pid;
+-
+ 	if (sk < peersk) {
+ 		spin_lock(&sk->sk_peer_lock);
+ 		spin_lock_nested(&peersk->sk_peer_lock, SINGLE_DEPTH_NESTING);
+@@ -613,16 +610,12 @@ static void copy_peercred(struct sock *sk, struct sock *peersk)
+ 		spin_lock(&peersk->sk_peer_lock);
+ 		spin_lock_nested(&sk->sk_peer_lock, SINGLE_DEPTH_NESTING);
+ 	}
+-	old_pid = sk->sk_peer_pid;
+-	old_cred = sk->sk_peer_cred;
 +
- 	armada_370_xp_irq_mask(irq_get_irq_data(virq));
- 	if (!is_percpu_irq(hw))
- 		writel(hw, per_cpu_int_base +
+ 	sk->sk_peer_pid  = get_pid(peersk->sk_peer_pid);
+ 	sk->sk_peer_cred = get_cred(peersk->sk_peer_cred);
+ 
+ 	spin_unlock(&sk->sk_peer_lock);
+ 	spin_unlock(&peersk->sk_peer_lock);
+-
+-	put_pid(old_pid);
+-	put_cred(old_cred);
+ }
+ 
+ static int unix_listen(struct socket *sock, int backlog)
 -- 
 2.43.0
 
