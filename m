@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F050B18C03D;
-	Tue, 10 Sep 2024 09:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35440188921;
+	Tue, 10 Sep 2024 09:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962170; cv=none; b=T/8wyw2Ptq/y9HmC82NJGz0f40J7o4OSOVm53n+SSIgW28xlcahmjHjBhyoqvizpvfZktIqC8tYyhRlYbL5egF0oMm4hN+AB8sf/JbOu7PMtytJEHT6iwDWBJRi0nnaCYOp3Y0/2sAnHn+7iKGvbDPh/EOTWy3WhRSVWkaB2Bso=
+	t=1725962173; cv=none; b=npZ9IHVkmi+xXNDXnyfi9TnnOzAK5QFQZqjAP6Lb23CjWnWmjtZZRPiimiT86WzQ+KtM9WQumIZh9Lv+KyBy5hbblW26aHpytIXZJPjwI+/gHeTAy8fIi34svP6gaOdmy2yvv6mJn5F9LQ4J+rsyWADQ9PA1EQUwLP6o1JUw3P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962170; c=relaxed/simple;
-	bh=37UF3WiLWi6TitBydMjue6tD02Ym2dtzIsbfqajNw5o=;
+	s=arc-20240116; t=1725962173; c=relaxed/simple;
+	bh=6tcACk8gDMvJ64I6DIn5AfVIjLQMl2bUzMU3v/3BozU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skLQqknDN48aiqwuKCql4ynZ2J7tOQGPD2ueGymf4ZVpAZvk+sAkPnous7GBpDDR4eLeqL+Iu+9V8sAxzp9vBveKQqdlHH6EI07Dg4tYihWJPjb78Fq5iWidRpGdff9JDq9ukL4GgIrwgVezvFwe7/Db1xBFoNucHhQD0+5BDSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSMz/9eU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZnz4pGeqEPJ6dhEeoJ4nfgPZw9gHwNHP7nu6V1vHssA3++p9kmkoLkQ49ClptTA0DHQepJ0qmIlHxewzAsftkNxHYoAnSstiidtkKLFEFxYjl+4dB1zo6eCWD/LVWf/jQJ9Kz/roOLBgoQrucyO8Jj0aQQBdIi35cJKq8BFLxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pChSZKwl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSMz/9eU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49266C4CEC3;
-	Tue, 10 Sep 2024 09:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pChSZKwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65277C4CEC3;
+	Tue, 10 Sep 2024 09:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962169;
-	bh=37UF3WiLWi6TitBydMjue6tD02Ym2dtzIsbfqajNw5o=;
+	s=korg; t=1725962172;
+	bh=6tcACk8gDMvJ64I6DIn5AfVIjLQMl2bUzMU3v/3BozU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSMz/9eUxqBbkpd0J/klNQExzzKNyDfuhsr55+7vyRZKcG1Q0osRRthINl18qlqs4
-	 e9o5VEI2WQhN5vWIrAMMZQqijuzS+c761axLbMytJZeqsfglf3Jnydri1OrTY2gHU0
-	 ZVTN0bxzbQbD0+nBECPWMy6SZUeT4jmPFGOY0a9k=
+	b=pChSZKwlVnLBLWBS0YjAlbHFk/Z+ylVaRbrDqt7fdvwcbBsHGp0l9RdAcwWv+7mob
+	 u3UCORJanAS0vY87cwgDEOCunoQvv2AbmLJXRuzYaA0WA3y2fZIFDyYWSthEtwyfZr
+	 DY1TayFbcQKUc0Isp8ZKe+v2VwmCfKH7CmQvUCQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Gavin Shan <gshan@redhat.com>,
-	Miguel Luis <miguel.luis@oracle.com>,
-	Vishnu Pajjuri <vishnu@os.amperecomputing.com>,
-	Jianyong Wu <jianyong.wu@arm.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 319/375] arm64: acpi: Move get_cpu_for_acpi_id() to a header
-Date: Tue, 10 Sep 2024 11:31:56 +0200
-Message-ID: <20240910092633.285056285@linuxfoundation.org>
+Subject: [PATCH 6.10 320/375] arm64: acpi: Harden get_cpu_for_acpi_id() against missing CPU entry
+Date: Tue, 10 Sep 2024 11:31:57 +0200
+Message-ID: <20240910092633.316333720@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -59,81 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 8d34b6f17b9ac93faa2791eb037dcb08bdf755de ]
+[ Upstream commit 2488444274c70038eb6b686cba5f1ce48ebb9cdd ]
 
-ACPI identifies CPUs by UID. get_cpu_for_acpi_id() maps the ACPI UID
-to the Linux CPU number.
+In a review discussion of the changes to support vCPU hotplug where
+a check was added on the GICC being enabled if was online, it was
+noted that there is need to map back to the cpu and use that to index
+into a cpumask. As such, a valid ID is needed.
 
-The helper to retrieve this mapping is only available in arm64's NUMA
-code.
+If an MPIDR check fails in acpi_map_gic_cpu_interface() it is possible
+for the entry in cpu_madt_gicc[cpu] == NULL.  This function would
+then cause a NULL pointer dereference.   Whilst a path to trigger
+this has not been established, harden this caller against the
+possibility.
 
-Move it to live next to get_acpi_id_for_cpu().
-
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
-Tested-by: Miguel Luis <miguel.luis@oracle.com>
-Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Tested-by: Jianyong Wu <jianyong.wu@arm.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Acked-by: Hanjun Guo <guohanjun@huawei.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Link: https://lore.kernel.org/r/20240529133446.28446-12-Jonathan.Cameron@huawei.com
+Link: https://lore.kernel.org/r/20240529133446.28446-13-Jonathan.Cameron@huawei.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Stable-dep-of: 2488444274c7 ("arm64: acpi: Harden get_cpu_for_acpi_id() against missing CPU entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/acpi.h | 11 +++++++++++
- arch/arm64/kernel/acpi_numa.c | 11 -----------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/include/asm/acpi.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index 6792a1f83f2a..bc9a6656fc0c 100644
+index bc9a6656fc0c..a407f9cd549e 100644
 --- a/arch/arm64/include/asm/acpi.h
 +++ b/arch/arm64/include/asm/acpi.h
-@@ -119,6 +119,17 @@ static inline u32 get_acpi_id_for_cpu(unsigned int cpu)
- 	return	acpi_cpu_get_madt_gicc(cpu)->uid;
- }
+@@ -124,7 +124,8 @@ static inline int get_cpu_for_acpi_id(u32 uid)
+ 	int cpu;
  
-+static inline int get_cpu_for_acpi_id(u32 uid)
-+{
-+	int cpu;
-+
-+	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
-+		if (uid == get_acpi_id_for_cpu(cpu))
-+			return cpu;
-+
-+	return -EINVAL;
-+}
-+
- static inline void arch_fix_phys_package_id(int num, u32 slot) { }
- void __init acpi_init_cpus(void);
- int apei_claim_sea(struct pt_regs *regs);
-diff --git a/arch/arm64/kernel/acpi_numa.c b/arch/arm64/kernel/acpi_numa.c
-index ccbff21ce1fa..2465f291c7e1 100644
---- a/arch/arm64/kernel/acpi_numa.c
-+++ b/arch/arm64/kernel/acpi_numa.c
-@@ -34,17 +34,6 @@ int __init acpi_numa_get_nid(unsigned int cpu)
- 	return acpi_early_node_map[cpu];
- }
- 
--static inline int get_cpu_for_acpi_id(u32 uid)
--{
--	int cpu;
--
--	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
+ 	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
 -		if (uid == get_acpi_id_for_cpu(cpu))
--			return cpu;
--
--	return -EINVAL;
--}
--
- static int __init acpi_parse_gicc_pxm(union acpi_subtable_headers *header,
- 				      const unsigned long end)
- {
++		if (acpi_cpu_get_madt_gicc(cpu) &&
++		    uid == get_acpi_id_for_cpu(cpu))
+ 			return cpu;
+ 
+ 	return -EINVAL;
 -- 
 2.43.0
 
