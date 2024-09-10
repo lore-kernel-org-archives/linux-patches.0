@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A0C190496;
-	Tue, 10 Sep 2024 10:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CB5190496;
+	Tue, 10 Sep 2024 10:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963377; cv=none; b=oNUVQwE6IRDfscnISzdZvX2HqLAIgH0FPdCA5pZ3E/uLVjyxmjxjF4OSxEXqawWF1gaxERG6vEFdJJgysRopRBqffGNku6UO/rmc5G+U6KrjXdwCYEeZSe+/ANYFF3SAUXeDD0HAAz0Z1DE+0m3O1f2ZPByD6iIjJurL7pJ8Hks=
+	t=1725963380; cv=none; b=AxUvc66ZpOXJB3BlfTH8YHBcosNQQvRQou5U8/WogLOetx6NeTIhT5NoxEvuazBrwIh2BvnCI/uPrdhQ30l44/3Q5m8BfbZmiIaoDOUKS0hosuu2DLPDnC3Eqh448DiJGYKrMgb+5MDQWSrF6NtHmKdCZMN3kwx1RmJksFU4ObI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963377; c=relaxed/simple;
-	bh=YRFiVaEDBaQLwgzBflWcbu69EA3xdjXdQ9NRjSjGNbU=;
+	s=arc-20240116; t=1725963380; c=relaxed/simple;
+	bh=KyllZ4P6qUSM9MFlr+qyGEl9ITI4Xc6l+9Rvu9arFFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eW82DjR8fE1jIMQYhGRXr/SxoT4A0bXoEpEkcPjbWXcelc/ahUrwCxkn1FtL7S46xiJputmY8kRj3R2mOy2FnWDHxl03kKouAZUlVhYKvkYyN5lcbp3LoXijRMTcnEAkqXC2xI6awuNyr0b8A8BpwQoshEAZIZPuWL9ChP+McH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bH04vNC5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gj1kVQIIklR8dFpjIGjUinmJ/ShA+/gkhAPx1d9davm0vGJkvzO+DU1wXGXVHOCLDlcMSVtP6dux77x9r3XfzX25fz98jGlRlFq2qVuYN00GnxnPNq4UOfl5Bmh/5RrfEOAtklDpQicmIoDH0kPXYIm40Kpi84IBZyl/yWHbpUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjfjWoju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bH04vNC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B289EC4CEC3;
-	Tue, 10 Sep 2024 10:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjfjWoju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E834C4CEC3;
+	Tue, 10 Sep 2024 10:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963377;
-	bh=YRFiVaEDBaQLwgzBflWcbu69EA3xdjXdQ9NRjSjGNbU=;
+	s=korg; t=1725963380;
+	bh=KyllZ4P6qUSM9MFlr+qyGEl9ITI4Xc6l+9Rvu9arFFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bH04vNC5wcaZo84KQHnOXOkJblrmsZS5vRYpEdnrpuB9qw3kpwxaRvCLNtjgKOjLz
-	 xS0d5MgK/G5jsPXLEdpw9GfjM9x7uFE1EeEsr6TP7tR4U6Hlf+94QIJlnFwWVY+e/D
-	 xAmPWvYNol07DRpBDHnJgJXbG8rjqkxES/V+NIXI=
+	b=PjfjWojuZszMkNxmeoaylnZW+Oz7dOdBGvrfCP85bcuvEF0n5pV8lT1XDE9fOSpSm
+	 cp8CaA0VVFhlCl+5YS9JbwqvuA5/UFdFGHRMhKNlWQpel6paVU1Qmx8hlsegizVCGH
+	 irxPJScY09riqjQ+UaHjnX/oiLm+AYC3RT7pEgE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Shahar S Matityahu <shahar.s.matityahu@intel.com>,
+	Luciano Coelho <luciano.coelho@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/214] drm/amdgpu: update type of buf size to u32 for eeprom functions
-Date: Tue, 10 Sep 2024 11:30:59 +0200
-Message-ID: <20240910092600.280245969@linuxfoundation.org>
+Subject: [PATCH 5.15 038/214] wifi: iwlwifi: remove fw_running op
+Date: Tue, 10 Sep 2024 11:31:00 +0200
+Message-ID: <20240910092600.326587627@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,69 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Zhou <tao.zhou1@amd.com>
+From: Shahar S Matityahu <shahar.s.matityahu@intel.com>
 
-[ Upstream commit 2aadb520bfacec12527effce3566f8df55e5d08e ]
+[ Upstream commit 37733bffda3285d18bd1d72c14b3a1cf39c56a5e ]
 
-Avoid overflow issue.
+fw_running assumes that memory can be retrieved only after alive.
+This assumption is no longer true as we support dump before alive.
+To avoid invalid access to the NIC, check that STATUS_DEVICE_ENABLED
+bit in trans status is set before dumping instead of the prior check.
 
-Signed-off-by: Tao Zhou <tao.zhou1@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Shahar S Matityahu <shahar.s.matityahu@intel.com>
+Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240510170500.ca07138cedeb.I090e31d3eaeb4ba19f5f84aba997ccd36927e9ac@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c | 6 +++---
- drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 3 +--
+ drivers/net/wireless/intel/iwlwifi/fw/runtime.h | 1 -
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c    | 6 ------
+ 3 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c
-index 4d9eb0137f8c..48652c2a17cc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.c
-@@ -177,7 +177,7 @@ static int __amdgpu_eeprom_xfer(struct i2c_adapter *i2c_adap, u32 eeprom_addr,
-  * Returns the number of bytes read/written; -errno on error.
-  */
- static int amdgpu_eeprom_xfer(struct i2c_adapter *i2c_adap, u32 eeprom_addr,
--			      u8 *eeprom_buf, u16 buf_size, bool read)
-+			      u8 *eeprom_buf, u32 buf_size, bool read)
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+index 6419fbfec5ac..6da3934b8e9a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+@@ -252,8 +252,7 @@ static ssize_t iwl_dbgfs_send_hcmd_write(struct iwl_fw_runtime *fwrt, char *buf,
+ 		.data = { NULL, },
+ 	};
+ 
+-	if (fwrt->ops && fwrt->ops->fw_running &&
+-	    !fwrt->ops->fw_running(fwrt->ops_ctx))
++	if (!iwl_trans_fw_running(fwrt->trans))
+ 		return -EIO;
+ 
+ 	if (count < header_size + 1 || count > 1024 * 4)
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/runtime.h b/drivers/net/wireless/intel/iwlwifi/fw/runtime.h
+index 35af85a5430b..297ff92de928 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/runtime.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/runtime.h
+@@ -18,7 +18,6 @@
+ struct iwl_fw_runtime_ops {
+ 	int (*dump_start)(void *ctx);
+ 	void (*dump_end)(void *ctx);
+-	bool (*fw_running)(void *ctx);
+ 	int (*send_hcmd)(void *ctx, struct iwl_host_cmd *host_cmd);
+ 	bool (*d3_debug_enable)(void *ctx);
+ };
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index 01f65c9789e7..0b0022dabc7b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -653,11 +653,6 @@ static void iwl_mvm_fwrt_dump_end(void *ctx)
+ 	mutex_unlock(&mvm->mutex);
+ }
+ 
+-static bool iwl_mvm_fwrt_fw_running(void *ctx)
+-{
+-	return iwl_mvm_firmware_running(ctx);
+-}
+-
+ static int iwl_mvm_fwrt_send_hcmd(void *ctx, struct iwl_host_cmd *host_cmd)
  {
- 	const struct i2c_adapter_quirks *quirks = i2c_adap->quirks;
- 	u16 limit;
-@@ -224,7 +224,7 @@ static int amdgpu_eeprom_xfer(struct i2c_adapter *i2c_adap, u32 eeprom_addr,
- 
- int amdgpu_eeprom_read(struct i2c_adapter *i2c_adap,
- 		       u32 eeprom_addr, u8 *eeprom_buf,
--		       u16 bytes)
-+		       u32 bytes)
- {
- 	return amdgpu_eeprom_xfer(i2c_adap, eeprom_addr, eeprom_buf, bytes,
- 				  true);
-@@ -232,7 +232,7 @@ int amdgpu_eeprom_read(struct i2c_adapter *i2c_adap,
- 
- int amdgpu_eeprom_write(struct i2c_adapter *i2c_adap,
- 			u32 eeprom_addr, u8 *eeprom_buf,
--			u16 bytes)
-+			u32 bytes)
- {
- 	return amdgpu_eeprom_xfer(i2c_adap, eeprom_addr, eeprom_buf, bytes,
- 				  false);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h
-index 6935adb2be1f..8083b8253ef4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_eeprom.h
-@@ -28,10 +28,10 @@
- 
- int amdgpu_eeprom_read(struct i2c_adapter *i2c_adap,
- 		       u32 eeprom_addr, u8 *eeprom_buf,
--		       u16 bytes);
-+		       u32 bytes);
- 
- int amdgpu_eeprom_write(struct i2c_adapter *i2c_adap,
- 			u32 eeprom_addr, u8 *eeprom_buf,
--			u16 bytes);
-+			u32 bytes);
- 
- #endif
+ 	struct iwl_mvm *mvm = (struct iwl_mvm *)ctx;
+@@ -678,7 +673,6 @@ static bool iwl_mvm_d3_debug_enable(void *ctx)
+ static const struct iwl_fw_runtime_ops iwl_mvm_fwrt_ops = {
+ 	.dump_start = iwl_mvm_fwrt_dump_start,
+ 	.dump_end = iwl_mvm_fwrt_dump_end,
+-	.fw_running = iwl_mvm_fwrt_fw_running,
+ 	.send_hcmd = iwl_mvm_fwrt_send_hcmd,
+ 	.d3_debug_enable = iwl_mvm_d3_debug_enable,
+ };
 -- 
 2.43.0
 
