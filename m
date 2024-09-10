@@ -1,93 +1,194 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1CE1F956
-	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 11:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DDB18C912;
+	Tue, 10 Sep 2024 11:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725966888; cv=none; b=bBDXoK3O3owH92ggJGLYHGn+qeL5MiQCn4u66qoBnQhcdXmrwQOJ1KmT9v5N157Oxv6sc2UF9MnwPXCsjkX0zSy+9pkg1snU8MRQaNmEaZZGpTOYG3fBQFtI0684bELcCVCmUBesk44NyxIsgaVoR5GJr0UKsnZUSqdOVMM+7VU=
+	t=1725967564; cv=none; b=Zdnddp119NVuqJMKvAAzBtgNKe5fDdqCkx1QrKctNaC1ucIcSFJWWPcWTtecjSmRsRLeOQPgKoz82m0DkNRRTQJ+AXhc0NyZVqG1XaZON45IJr3MnuKU7u5yGUkkkWxGag/qfnUrI2SHF7Hl+YubsHzL/t//bdhHpHLh6hizKNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725966888; c=relaxed/simple;
-	bh=7R70qvFxYRQKCjHDlVjVMuioejDKgflNF55Yu8sguNM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eKuaRnl07cs7QsF105uG6HK6FjYvnqApifBGk5WtANfu75tVhC58ElZdUJEmPCKigIYaLclzi+Au/0DuUoOP82xmQRb7ijMjUY2HJ9f9kdkzFq2YdWF9wmV3u3ZyDXp8V2OhkpkEPtTFF0JSI6aRrihesHn86qiEagsu3TitKOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kvq7Yw5z; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kvq7Yw5z"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2d883286bd2so296594a91.2
-        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 04:14:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725966887; x=1726571687; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7R70qvFxYRQKCjHDlVjVMuioejDKgflNF55Yu8sguNM=;
-        b=kvq7Yw5zzFFiKNk+SB2gk4fjq2XCDe0EzlgTpW7OMH0UARTEYCkBsta7CzvstrOOND
-         QBiv9b1Q8GuIMC3KOTOU9Pe8nI7AITMifWMWYlwoZNSiD6kVeW95yow1wvzrV1QpydIq
-         KP8po09c5iix6bmjWWga8/hINQNsvl2WMtW1kJYNBNk1FxEG7C/r1nRjaFpnivH27h6s
-         bpOzYO8bNgOQV9p/4jf06xmzoz94VYfhClYaeNQ1wwei96ctUCDRtRl79aeZQkpzKFAd
-         dosUnPZXWHpcKqCXGp4IXSU8okvf+hWPD85ulVc0NDh4HqVPpApf2Wg400MnlMa50EVV
-         YlAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725966887; x=1726571687;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7R70qvFxYRQKCjHDlVjVMuioejDKgflNF55Yu8sguNM=;
-        b=avDbLk2/hCoHvkVoBtRXZq+1I8n1xUj4nKECXxlToCrBaV68nitRhto0o3wV/RuN17
-         YwA3Y35RRyuwMG9tArOSTWd+hs+3RkjvG8ckDp1dM4i0sHwmW3/ff1jMsiXzm/zUIyQJ
-         uRgPwBHxr7fJoUstOv3V9u0qe15l9i+TKkmqhalWTY74y3NVmQqU90WZSfZi5HPAZUrz
-         SHgcwJZtbyvImWbeXvjWIHm+PF28ikPHarVKfbWVOzPXlkYeD5i/Po/ZCceoc4o0U2ok
-         wq7RXK1TkJnbawl1HFqC7NH5yzz0A8Ln24HaFcKzZ8tvLpEKWPSWg/BF4Kq5ybkfM526
-         5kSA==
-X-Forwarded-Encrypted: i=1; AJvYcCUFKUOprEOsRNj3wWHXSE1Vwtg6sMkgAQJky9CCrCZZuB5Ud11xIZvxx4rKRLmwa8lvMchZS9oi@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx932o1OMbfGADdKoYFXW8Z/2+s8OGzV0yt8QuGDxDasnLYabXo
-	pLlroH+eEH8x/epSuaO5aiAOvrOqOAUCzOFSbLKibSfRHrhplIvLsl/vbhGRDzMmMtAfSPvFiVo
-	GSBjHqDbDNTDqrzslHyL5l71zpo0=
-X-Google-Smtp-Source: AGHT+IFA9BIl5K6nzzFm26HbZ/XWC2bq8ZUkUz+X7SI61EMsnik7yYHU0TsUVMbVKdAcFYqRNR1EofIDip33sDTGX0Y=
-X-Received: by 2002:a17:90a:604a:b0:2db:60b:3668 with SMTP id
- 98e67ed59e1d1-2db060b3bd2mr4322899a91.7.1725966886696; Tue, 10 Sep 2024
- 04:14:46 -0700 (PDT)
+	s=arc-20240116; t=1725967564; c=relaxed/simple;
+	bh=+q2bPFd6vBiv0igNdKQbKcSyGGd+Jk11U321LBkZs5Y=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=MO0gK7a/BegrWPelVoWbxfnAhrRWlYYUB1irHE0VT3ZODdomkMTbNYVR3wMehEddF7O/1Io4RanseVpVcVpfYCJu09TslGBU8fg2ekha0wcjC9E8zTknvudzkxWD7+90h7fnK/rdnO6VQMePCf7ZDyGryHgwLVv4Jk65OJcf9zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.48])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4X31YJ4ND8zfbxj;
+	Tue, 10 Sep 2024 19:23:48 +0800 (CST)
+Received: from dggpemf500001.china.huawei.com (unknown [7.185.36.173])
+	by mail.maildlp.com (Postfix) with ESMTPS id AEA9A180087;
+	Tue, 10 Sep 2024 19:25:58 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
+ dggpemf500001.china.huawei.com (7.185.36.173) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 10 Sep 2024 19:25:57 +0800
+Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
+ lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
+ Tue, 10 Sep 2024 12:25:55 +0100
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: "acpica-devel@lists.linux.dev" <acpica-devel@lists.linux.dev>, "Guohanjun
+ (Hanjun Guo)" <guohanjun@huawei.com>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
+	<kevin.tian@intel.com>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "Len
+ Brown" <lenb@kernel.org>, "linux-acpi@vger.kernel.org"
+	<linux-acpi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
+	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
+ Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
+ Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, Alex Williamson
+	<alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
+	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>, Nicolin Chen
+	<nicolinc@nvidia.com>, "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: RE: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+Thread-Topic: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+Thread-Index: AQHa+JkNXX8oIDp/tkauz0b2cgKn4bJHsELwgAAEFICACUCfAA==
+Date: Tue, 10 Sep 2024 11:25:55 +0000
+Message-ID: <7482d2b872304e0ebf0f8fe7424616ac@huawei.com>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <85aa5e8eb6f243fd9df754fdc96471b8@huawei.com>
+ <20240904150015.GH3915968@nvidia.com>
+In-Reply-To: <20240904150015.GH3915968@nvidia.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240910092557.876094467@linuxfoundation.org> <20240910092604.257546283@linuxfoundation.org>
- <CAH5fLgi7_=3W3WdPR2KcUW73Ma=SXo-dX20z0xx+AK4S_N3SwQ@mail.gmail.com>
-In-Reply-To: <CAH5fLgi7_=3W3WdPR2KcUW73Ma=SXo-dX20z0xx+AK4S_N3SwQ@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 10 Sep 2024 13:14:34 +0200
-Message-ID: <CANiq72kvESNP0StA6DRukSJ7K4q2a4EtTsNTDECSAsWjmhp5-g@mail.gmail.com>
-Subject: Re: [PATCH 6.1 153/192] rust: macros: provide correct provenance when
- constructing THIS_MODULE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Boqun Feng <boqun.feng@gmail.com>, Trevor Gross <tmgross@umich.edu>, 
-	Benno Lossin <benno.lossin@proton.me>, Gary Guo <gary@garyguo.net>, 
-	Miguel Ojeda <ojeda@kernel.org>, Alice Ryhl <aliceryhl@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 10, 2024 at 12:25=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> =
-wrote:
->
-> On Tue, Sep 10, 2024 at 12:12=E2=80=AFPM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+
+
+> -----Original Message-----
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Wednesday, September 4, 2024 4:00 PM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: acpica-devel@lists.linux.dev; Guohanjun (Hanjun Guo)
+> <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
+> <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>; kvm@vger.kernel.org=
+;
+> Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; linux-arm-
+> kernel@lists.infradead.org; Lorenzo Pieralisi <lpieralisi@kernel.org>; Ra=
+fael J.
+> Wysocki <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>; Robin
+> Murphy <robin.murphy@arm.com>; Sudeep Holla <sudeep.holla@arm.com>;
+> Will Deacon <will@kernel.org>; Alex Williamson
+> <alex.williamson@redhat.com>; Eric Auger <eric.auger@redhat.com>; Jean-
+> Philippe Brucker <jean-philippe@linaro.org>; Moritz Fischer <mdf@kernel.o=
+rg>;
+> Michael Shavit <mshavit@google.com>; Nicolin Chen <nicolinc@nvidia.com>;
+> patches@lists.linux.dev; Mostafa Saleh <smostafa@google.com>
+> Subject: Re: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+>=20
+> On Wed, Sep 04, 2024 at 02:20:36PM +0000, Shameerali Kolothum Thodi wrote=
+:
+>=20
+> > This should be added to arm_64_lpae_alloc_pgtable_s2(), not here.
+>=20
+> Woops! Yes:
+>=20
+> -       /* The NS quirk doesn't apply at stage 2 */
+> -       if (cfg->quirks)
+> +       if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_S2FWB))
+>                 return NULL;
+>=20
+> > With the above fixed, I was able to assign a n/w VF dev to a Guest on
+> > a test hardware that supports S2FWB.
+>=20
+> Okay great
+>=20
+> > However host kernel has this WARN message:
+> > [ 1546.165105] WARNING: CPU: 5 PID: 7047 at
+> > drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1086
+> > arm_smmu_entry_qword_diff+0x124/0x138
+> > ....
+>=20
+> Yes, my dumb mistake again, thanks for testing
+>=20
+> @@ -1009,7 +1009,8 @@ void arm_smmu_get_ste_used(const __le64 *ent,
+> __le64 *used_bits)
+>         /* S2 translates */
+>         if (cfg & BIT(1)) {
+>                 used_bits[1] |=3D
+> -                       cpu_to_le64(STRTAB_STE_1_EATS | STRTAB_STE_1_SHCF=
+G);
+> +                       cpu_to_le64(STRTAB_STE_1_S2FWB | STRTAB_STE_1_EAT=
+S |
+> +                                   STRTAB_STE_1_SHCFG);
+>=20
+> > root@localhost:/# ping 150.0.124.42
+> > PING 150.0.124.42 (150.0.124.42): 56 data bytes
+> > 64 bytes from 150.0.124.42: seq=3D0 ttl=3D64 time=3D47.648 ms
+>=20
+> So DMA is not totally broken if a packet flowed.
+>=20
+> > [ 1395.958630] hns3 0000:c2:00.0 eth1: NETDEV WATCHDOG: CPU: 1:
+> > transmit queue 10 timed out 5260 ms
+>=20
+> Timeout? Maybe interrupts are not working? Does /proc/interrupts suggest
+> that? That would point at the ITS mapping
+
+Interrupt seems to be Ok in this case as I can see /proc/interrupts increas=
+ing.
+
+> Do you have all of Nicolin's extra patches in this kernel to make the ITS=
+ work
+> with nesting?
+
+Yes. I am using his
+ https://github.com/nicolinc/iommufd/commits/iommufd_viommu_p1-v2/
+
+> From a page table POV, iommu_dma_get_msi_page() has:
+>=20
+> 	int prot =3D IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
+>=20
+> So the ITS page should be:
+>=20
+> 		if (prot & IOMMU_MMIO) {
+> 			pte |=3D ARM_LPAE_PTE_MEMATTR_DEV;
+>=20
+> Which which still looks right under S2FWB unless I've misread the manual?
+>=20
+> > [ 1395.960187] hns3 0000:c2:00.0 eth1: DQL info last_cnt: 42, queued:
+> > 42, adj_limit: 0, completed: 0 [ 1395.961758] hns3 0000:c2:00.0 eth1:
+> > queue state: 0x6, delta msecs: 5260 [ 1395.962925] hns3 0000:c2:00.0
+> > eth1: tx_timeout count: 1, queue id: 10, SW_NTU: 0x1, SW_NTC: 0x0,
+> > napi state: 16 [ 1395.964677] hns3 0000:c2:00.0 eth1: tx_pkts: 0,
+> > tx_bytes: 0, sw_err_cnt: 0, tx_pending: 0 [ 1395.966114] hns3
+> > 0000:c2:00.0 eth1: seg_pkt_cnt: 0, tx_more: 0, restart_queue: 0,
+> > tx_busy: 0 [ 1395.967598] hns3 0000:c2:00.0 eth1: tx_push: 1,
+> > tx_mem_doorbell: 0 [ 1395.968687] hns3 0000:c2:00.0 eth1: BD_NUM: 0x7f
+> > HW_HEAD: 0x0, HW_TAIL: 0x0, BD_ERR: 0x0, INT: 0x1 [ 1395.970291] hns3
+> > 0000:c2:00.0 eth1: RING_EN: 0x1, TC: 0x0, FBD_NUM: 0x0 FBD_OFT: 0x0,
+> > EBD_NUM: 0x400, EBD_OFT: 0x0 [ 1395.972134] hns3 0000:c2:00.0:
+> > received reset request from VF enet
 > >
-> > Fixes: 1fbde52bde73 ("rust: add `macros` crate")
-> > Cc: stable@vger.kernel.org # 6.6.x: be2ca1e03965: ("rust: types: Make O=
-paque::get const")
->
-> The opaque type doesn't exist yet on 6.1, so this needs to be changed
-> for the 6.1 backport. It won't compile as-is.
+> > All this works fine on a hardware without S2FWB though.
+> >
+> > Also on this test hardware, it works fine with legacy VFIO assignment.
+>=20
+> So.. Legacy VFIO assignment will use the S1, no nesting and not enable S2=
+FWB?
 
-+1 -- Greg/Sasha: for context, this is the one I asked about using
-Option 3 since otherwise the list of cherry-picks for 6.1 would be
-quite long.
+Yes S1
+=20
+> Try to isolate if S2FWB is the exact cause by disabling it in the kernel =
+on this
+> system vs something else wrong?
 
-Cheers,
-Miguel
+It looks like not related to S2FWB. I tried  commenting out S2FWB and issue=
+ is still
+there.  Probably something related to this test setup.
+
+Thanks,
+Shameer
