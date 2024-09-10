@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1627619885D;
-	Tue, 10 Sep 2024 10:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD6918C340;
+	Tue, 10 Sep 2024 10:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963917; cv=none; b=tyCdfm6AY2lpgkQIca4tIutMuiC09zSBS+cjhyUlKU+SctTKUagH94cyHfViwRAKSP9YLXvThKD21Cj6rq5OYlO0NA13Jc+igdvp7mDz7jAvNasnUGiuAREQ/2i9LkoElyyJvo4U75/hTuCDfCZwHe62JRaoyjjMCntTDU75vPI=
+	t=1725963920; cv=none; b=MVkU/kX8u4F2se8neN6+xRJT/JPLO7wx82BDjl7Z4BlrF/5IkcZO8ooENsCDkyzgmfAmQe3r4CmyBQM0iQXjZ/vLSMYUBaeQk0mPpKNXQA8RhG0E6+pDTxWkHpiFg1d2X3Yt2DznrU8xoa+LNZI0wMacYw6DgHtQE1GWKPAOCTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963917; c=relaxed/simple;
-	bh=QpwPijMxw4+NiI/BcUA5+6VQ3dDdGgZo7dN/QOSm2no=;
+	s=arc-20240116; t=1725963920; c=relaxed/simple;
+	bh=VATHSERS+G0af4ptlhKsvS7W5YlaspWNkwfCcgYoC+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roT4tSOktHL5fe4XcwzqlBGwcI4kP3241D+zAMqLjImQoFO3JNpFWOh1yJGAhrii2hNADoHp3abSDi7tjAAT/t17QRX3R3+r8+cvewEH6Kd2/kZNuwb9Jmv7/TvFtaXTvM3SpDRKoBTYg6qKVh0+/Ra3zAo65K1YkGJ/ZBU7MbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0z/W2dL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqJgFshnBACoFaN3IzO5c8w+57pGmwfgBOGS9pGlLxcG9MArVN/R16pLGmEsRucxtzqgYQZ+Cqw+HiH626LkbAt9eI65LVqmx5vGr7w1NsN2GJEGGHvhu1Pkv9KZheMJZCXcHw/tcJ2dRnGz00JeWz0HwSH/e42cto73pcK38fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsivjDJZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0z/W2dL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918C9C4CEC3;
-	Tue, 10 Sep 2024 10:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsivjDJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8241FC4CEC3;
+	Tue, 10 Sep 2024 10:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963917;
-	bh=QpwPijMxw4+NiI/BcUA5+6VQ3dDdGgZo7dN/QOSm2no=;
+	s=korg; t=1725963919;
+	bh=VATHSERS+G0af4ptlhKsvS7W5YlaspWNkwfCcgYoC+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0z/W2dLJKk2TjpUpHcFUPxSeNn2yNIdYmr5WFtvfBnh6Eo0wyr47bZtf9t+BsCi2
-	 dyfEwYdXlKGhd3YRrC7YeOjbklanOdqDxWE5/PEudQjW91kkznk+cdA7gHxJrBWjfq
-	 z5vv3HXykGjn0+G/8TNvSrSfER/gqFCSz+MF3cmQ=
+	b=WsivjDJZBrTnvctaxkutF4oMtpBNSIlXrET5dGwwzl+rzDKgA4shFaOxqLJ6w8SyN
+	 kELPqKzdIbH225eCjaRLJSATYz16Md7z00jrkVwraGfofic+f+uCd/1bzqUWd2NCe1
+	 uCqaAolxoBzA+cpn8WkGex1YZss7WDogfkXufL5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 209/214] net: drop bad gso csum_start and offset in virtio_net_hdr
-Date: Tue, 10 Sep 2024 11:33:51 +0200
-Message-ID: <20240910092607.040498134@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 210/214] x86/mm: Fix PTI for i386 some more
+Date: Tue, 10 Sep 2024 11:33:52 +0200
+Message-ID: <20240910092607.081560838@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -50,150 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 89add40066f9ed9abe5f7f886fe5789ff7e0c50e ]
+commit c48b5a4cf3125adb679e28ef093f66ff81368d05 upstream.
 
-Tighten csum_start and csum_offset checks in virtio_net_hdr_to_skb
-for GSO packets.
+So it turns out that we have to do two passes of
+pti_clone_entry_text(), once before initcalls, such that device and
+late initcalls can use user-mode-helper / modprobe and once after
+free_initmem() / mark_readonly().
 
-The function already checks that a checksum requested with
-VIRTIO_NET_HDR_F_NEEDS_CSUM is in skb linear. But for GSO packets
-this might not hold for segs after segmentation.
+Now obviously mark_readonly() can cause PMD splits, and
+pti_clone_pgtable() doesn't like that much.
 
-Syzkaller demonstrated to reach this warning in skb_checksum_help
+Allow the late clone to split PMDs so that pagetables stay in sync.
 
-	offset = skb_checksum_start_offset(skb);
-	ret = -EINVAL;
-	if (WARN_ON_ONCE(offset >= skb_headlen(skb)))
-
-By injecting a TSO packet:
-
-WARNING: CPU: 1 PID: 3539 at net/core/dev.c:3284 skb_checksum_help+0x3d0/0x5b0
- ip_do_fragment+0x209/0x1b20 net/ipv4/ip_output.c:774
- ip_finish_output_gso net/ipv4/ip_output.c:279 [inline]
- __ip_finish_output+0x2bd/0x4b0 net/ipv4/ip_output.c:301
- iptunnel_xmit+0x50c/0x930 net/ipv4/ip_tunnel_core.c:82
- ip_tunnel_xmit+0x2296/0x2c70 net/ipv4/ip_tunnel.c:813
- __gre_xmit net/ipv4/ip_gre.c:469 [inline]
- ipgre_xmit+0x759/0xa60 net/ipv4/ip_gre.c:661
- __netdev_start_xmit include/linux/netdevice.h:4850 [inline]
- netdev_start_xmit include/linux/netdevice.h:4864 [inline]
- xmit_one net/core/dev.c:3595 [inline]
- dev_hard_start_xmit+0x261/0x8c0 net/core/dev.c:3611
- __dev_queue_xmit+0x1b97/0x3c90 net/core/dev.c:4261
- packet_snd net/packet/af_packet.c:3073 [inline]
-
-The geometry of the bad input packet at tcp_gso_segment:
-
-[   52.003050][ T8403] skb len=12202 headroom=244 headlen=12093 tailroom=0
-[   52.003050][ T8403] mac=(168,24) mac_len=24 net=(192,52) trans=244
-[   52.003050][ T8403] shinfo(txflags=0 nr_frags=1 gso(size=1552 type=3 segs=0))
-[   52.003050][ T8403] csum(0x60000c7 start=199 offset=1536
-ip_summed=3 complete_sw=0 valid=0 level=0)
-
-Mitigate with stricter input validation.
-
-csum_offset: for GSO packets, deduce the correct value from gso_type.
-This is already done for USO. Extend it to TSO. Let UFO be:
-udp[46]_ufo_fragment ignores these fields and always computes the
-checksum in software.
-
-csum_start: finding the real offset requires parsing to the transport
-header. Do not add a parser, use existing segmentation parsing. Thanks
-to SKB_GSO_DODGY, that also catches bad packets that are hw offloaded.
-Again test both TSO and USO. Do not test UFO for the above reason, and
-do not test UDP tunnel offload.
-
-GSO packet are almost always CHECKSUM_PARTIAL. USO packets may be
-CHECKSUM_NONE since commit 10154dbded6d6 ("udp: Allow GSO transmit
-from devices with no checksum offload"), but then still these fields
-are initialized correctly in udp4_hwcsum/udp6_hwcsum_outgoing. So no
-need to test for ip_summed == CHECKSUM_PARTIAL first.
-
-This revises an existing fix mentioned in the Fixes tag, which broke
-small packets with GSO offload, as detected by kselftests.
-
-Link: https://syzkaller.appspot.com/bug?extid=e1db31216c789f552871
-Link: https://lore.kernel.org/netdev/20240723223109.2196886-1-kuba@kernel.org
-Fixes: e269d79c7d35 ("net: missing check virtio")
-Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240729201108.1615114-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-[5.15 stable: clean backport]
-Signed-off-by: Willem de Bruijn <willemb@google.com>
+[peterz: Changelog and comments]
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lkml.kernel.org/r/20240806184843.GX37996@noisy.programming.kicks-ass.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/virtio_net.h |   16 +++++-----------
- net/ipv4/tcp_offload.c     |    3 +++
- net/ipv4/udp_offload.c     |    4 ++++
- 3 files changed, 12 insertions(+), 11 deletions(-)
+ arch/x86/mm/pti.c |   45 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -51,7 +51,6 @@ static inline int virtio_net_hdr_to_skb(
- 	unsigned int thlen = 0;
- 	unsigned int p_off = 0;
- 	unsigned int ip_proto;
--	u64 ret, remainder, gso_size;
+--- a/arch/x86/mm/pti.c
++++ b/arch/x86/mm/pti.c
+@@ -241,7 +241,7 @@ static pmd_t *pti_user_pagetable_walk_pm
+  *
+  * Returns a pointer to a PTE on success, or NULL on failure.
+  */
+-static pte_t *pti_user_pagetable_walk_pte(unsigned long address)
++static pte_t *pti_user_pagetable_walk_pte(unsigned long address, bool late_text)
+ {
+ 	gfp_t gfp = (GFP_KERNEL | __GFP_NOTRACK | __GFP_ZERO);
+ 	pmd_t *pmd;
+@@ -251,10 +251,15 @@ static pte_t *pti_user_pagetable_walk_pt
+ 	if (!pmd)
+ 		return NULL;
  
- 	if (hdr->gso_type != VIRTIO_NET_HDR_GSO_NONE) {
- 		switch (hdr->gso_type & ~VIRTIO_NET_HDR_GSO_ECN) {
-@@ -88,16 +87,6 @@ static inline int virtio_net_hdr_to_skb(
- 		u32 off = __virtio16_to_cpu(little_endian, hdr->csum_offset);
- 		u32 needed = start + max_t(u32, thlen, off + sizeof(__sum16));
+-	/* We can't do anything sensible if we hit a large mapping. */
++	/* Large PMD mapping found */
+ 	if (pmd_large(*pmd)) {
+-		WARN_ON(1);
+-		return NULL;
++		/* Clear the PMD if we hit a large mapping from the first round */
++		if (late_text) {
++			set_pmd(pmd, __pmd(0));
++		} else {
++			WARN_ON_ONCE(1);
++			return NULL;
++		}
+ 	}
  
--		if (hdr->gso_size) {
--			gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
--			ret = div64_u64_rem(skb->len, gso_size, &remainder);
--			if (!(ret && (hdr->gso_size > needed) &&
--						((remainder > needed) || (remainder == 0)))) {
--				return -EINVAL;
--			}
--			skb_shinfo(skb)->tx_flags |= SKBFL_SHARED_FRAG;
--		}
--
- 		if (!pskb_may_pull(skb, needed))
- 			return -EINVAL;
+ 	if (pmd_none(*pmd)) {
+@@ -283,7 +288,7 @@ static void __init pti_setup_vsyscall(vo
+ 	if (!pte || WARN_ON(level != PG_LEVEL_4K) || pte_none(*pte))
+ 		return;
  
-@@ -170,6 +159,11 @@ retry:
- 			if (gso_type != SKB_GSO_UDP_L4)
- 				return -EINVAL;
- 			break;
-+		case SKB_GSO_TCPV4:
-+		case SKB_GSO_TCPV6:
-+			if (skb->csum_offset != offsetof(struct tcphdr, check))
-+				return -EINVAL;
-+			break;
- 		}
+-	target_pte = pti_user_pagetable_walk_pte(VSYSCALL_ADDR);
++	target_pte = pti_user_pagetable_walk_pte(VSYSCALL_ADDR, false);
+ 	if (WARN_ON(!target_pte))
+ 		return;
  
- 		/* Kernel has a special handling for GSO_BY_FRAGS. */
---- a/net/ipv4/tcp_offload.c
-+++ b/net/ipv4/tcp_offload.c
-@@ -71,6 +71,9 @@ struct sk_buff *tcp_gso_segment(struct s
- 	if (thlen < sizeof(*th))
- 		goto out;
+@@ -301,7 +306,7 @@ enum pti_clone_level {
  
-+	if (unlikely(skb_checksum_start(skb) != skb_transport_header(skb)))
-+		goto out;
+ static void
+ pti_clone_pgtable(unsigned long start, unsigned long end,
+-		  enum pti_clone_level level)
++		  enum pti_clone_level level, bool late_text)
+ {
+ 	unsigned long addr;
+ 
+@@ -390,7 +395,7 @@ pti_clone_pgtable(unsigned long start, u
+ 				return;
+ 
+ 			/* Allocate PTE in the user page-table */
+-			target_pte = pti_user_pagetable_walk_pte(addr);
++			target_pte = pti_user_pagetable_walk_pte(addr, late_text);
+ 			if (WARN_ON(!target_pte))
+ 				return;
+ 
+@@ -452,7 +457,7 @@ static void __init pti_clone_user_shared
+ 		phys_addr_t pa = per_cpu_ptr_to_phys((void *)va);
+ 		pte_t *target_pte;
+ 
+-		target_pte = pti_user_pagetable_walk_pte(va);
++		target_pte = pti_user_pagetable_walk_pte(va, false);
+ 		if (WARN_ON(!target_pte))
+ 			return;
+ 
+@@ -475,7 +480,7 @@ static void __init pti_clone_user_shared
+ 	start = CPU_ENTRY_AREA_BASE;
+ 	end   = start + (PAGE_SIZE * CPU_ENTRY_AREA_PAGES);
+ 
+-	pti_clone_pgtable(start, end, PTI_CLONE_PMD);
++	pti_clone_pgtable(start, end, PTI_CLONE_PMD, false);
+ }
+ #endif /* CONFIG_X86_64 */
+ 
+@@ -492,11 +497,11 @@ static void __init pti_setup_espfix64(vo
+ /*
+  * Clone the populated PMDs of the entry text and force it RO.
+  */
+-static void pti_clone_entry_text(void)
++static void pti_clone_entry_text(bool late)
+ {
+ 	pti_clone_pgtable((unsigned long) __entry_text_start,
+ 			  (unsigned long) __entry_text_end,
+-			  PTI_LEVEL_KERNEL_IMAGE);
++			  PTI_LEVEL_KERNEL_IMAGE, late);
+ }
+ 
+ /*
+@@ -571,7 +576,7 @@ static void pti_clone_kernel_text(void)
+ 	 * pti_set_kernel_image_nonglobal() did to clear the
+ 	 * global bit.
+ 	 */
+-	pti_clone_pgtable(start, end_clone, PTI_LEVEL_KERNEL_IMAGE);
++	pti_clone_pgtable(start, end_clone, PTI_LEVEL_KERNEL_IMAGE, false);
+ 
+ 	/*
+ 	 * pti_clone_pgtable() will set the global bit in any PMDs
+@@ -638,8 +643,15 @@ void __init pti_init(void)
+ 
+ 	/* Undo all global bits from the init pagetables in head_64.S: */
+ 	pti_set_kernel_image_nonglobal();
 +
- 	if (!pskb_may_pull(skb, thlen))
- 		goto out;
+ 	/* Replace some of the global bits just for shared entry text: */
+-	pti_clone_entry_text();
++	/*
++	 * This is very early in boot. Device and Late initcalls can do
++	 * modprobe before free_initmem() and mark_readonly(). This
++	 * pti_clone_entry_text() allows those user-mode-helpers to function,
++	 * but notably the text is still RW.
++	 */
++	pti_clone_entry_text(false);
+ 	pti_setup_espfix64();
+ 	pti_setup_vsyscall();
+ }
+@@ -656,10 +668,11 @@ void pti_finalize(void)
+ 	if (!boot_cpu_has(X86_FEATURE_PTI))
+ 		return;
+ 	/*
+-	 * We need to clone everything (again) that maps parts of the
+-	 * kernel image.
++	 * This is after free_initmem() (all initcalls are done) and we've done
++	 * mark_readonly(). Text is now NX which might've split some PMDs
++	 * relative to the early clone.
+ 	 */
+-	pti_clone_entry_text();
++	pti_clone_entry_text(true);
+ 	pti_clone_kernel_text();
  
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -276,6 +276,10 @@ struct sk_buff *__udp_gso_segment(struct
- 	if (gso_skb->len <= sizeof(*uh) + mss)
- 		return ERR_PTR(-EINVAL);
- 
-+	if (unlikely(skb_checksum_start(gso_skb) !=
-+		     skb_transport_header(gso_skb)))
-+		return ERR_PTR(-EINVAL);
-+
- 	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
- 		/* Packet is from an untrusted source, reset gso_segs. */
- 		skb_shinfo(gso_skb)->gso_segs = DIV_ROUND_UP(gso_skb->len - sizeof(*uh),
+ 	debug_checkwx_user();
 
 
