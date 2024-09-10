@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CD9186E4B;
-	Tue, 10 Sep 2024 09:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8539B188CC1;
+	Tue, 10 Sep 2024 09:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961377; cv=none; b=mpNhty5wPHLoMjrfkMFrhrXc1nKCzsUb+E69W6l2256x9DdNLN9CTcrEsW36AGsry0KhjF0ViBxJ6Dvetc0n7d2Ixc26AUF6ODyu0SftaC6IJRDDR8Jh/qkdjkLFk4dKfg++KwnZE2hfe4xzwgISICNdXT6sOwoxWegSS9lzUZw=
+	t=1725961379; cv=none; b=L09C/TC8P14/Va0+frpvKyF9nX6tSSRo8fdLuKmxZleZWh17jn0klFnbzSXipHxLhvGfIqSFddkorjjb8TGOg+bo+eFM5dDauSTGjRRyAsVbqo4NSPpSufBOAp2eVeWBJWJL2pOPmtvqCrSnpsHuaseYzSqOnf3QCMVB5vrcp4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961377; c=relaxed/simple;
-	bh=s6+nW3jAgUwgXTgkD70/UI1eiE/UzFfuPrM972Vu4rc=;
+	s=arc-20240116; t=1725961379; c=relaxed/simple;
+	bh=TeawhWoxNzzzIKseA8wA7aZs4RPWiBZ38Z4XnPy6wFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ttaq6cCKwVZQIH34aCk13rXRvaR+vaLr3HkP8mzLfUloXX8wXNegROxUrBLywqPOKcnlwTUHEhRKMzy6vHZtTX4XQcf62RIBTSC/wk3xf26TnGXKidR/U4wdy5BXtvKtyM/FrDuxFoDcQFUknvi0X8epFjp3yf/34a6LmRjoyLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ljh30IHj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cLOsYdrz/adM8leFSq/cjBIjFF70ruLgCtdJerrcwMkTqSqf11yNl4Zd9eQIAfJIoq754hhWMx2vauvO85lzyOPO7/xq8bvqkERF9CCDlSHQ5aW5o0z8Q5KpqquwgCNEvkWaXwezl+Ne1QOr7IXRmVj7INai8wBfnRaCa5ndG8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ge+WX5Eq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ljh30IHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E99C4CEC3;
-	Tue, 10 Sep 2024 09:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ge+WX5Eq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C34C4CEC3;
+	Tue, 10 Sep 2024 09:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961376;
-	bh=s6+nW3jAgUwgXTgkD70/UI1eiE/UzFfuPrM972Vu4rc=;
+	s=korg; t=1725961379;
+	bh=TeawhWoxNzzzIKseA8wA7aZs4RPWiBZ38Z4XnPy6wFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ljh30IHj9QP7UpZpBMxR/hsBS5+RHqsKGdD7aFqBtb2MkfBGY1sLC2xrO0Y0MBF7i
-	 XjE/XZgV7Rp93TWJU2igBntaywMTCV5LrUMaM4XUi2P/OcJsfp9rYN/tbV6ENfu7Gz
-	 JvzTWOlP48ciF9E83ymuS691EFfEVhYO3uKDwuas=
+	b=Ge+WX5EqmwL+WOCjd5wjyVnf7Rn076Jgk+wRPkusrktkeQybJDif0FUhHPwySwpMP
+	 ucVPX64l5Hk0cDVMW3jX0dFluVPxXfr0kWrF9ma81IKgkGEcqVCIt9BfjgesHUsm55
+	 DQNdmBFB5y1g2nOqS2aDseW3tLdMi951fXwVfwv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.10 021/375] x86/tdx: Fix data leak in mmio_read()
-Date: Tue, 10 Sep 2024 11:26:58 +0200
-Message-ID: <20240910092622.982364958@linuxfoundation.org>
+	Terry Cheong <htcheong@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 012/375] ALSA: hda/realtek: add patch for internal mic in Lenovo V145
+Date: Tue, 10 Sep 2024 11:26:49 +0200
+Message-ID: <20240910092622.672159617@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,43 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Terry Cheong <htcheong@chromium.org>
 
-commit b6fb565a2d15277896583d471b21bc14a0c99661 upstream.
+commit ef27e89e7f3015be2b3c124833fbd6d2e4686561 upstream.
 
-The mmio_read() function makes a TDVMCALL to retrieve MMIO data for an
-address from the VMM.
+Lenovo V145 is having phase inverted dmic but simply applying inverted
+dmic fixups does not work. Chaining up verb fixes for ALC283 enables
+inverting dmic fixup to work properly.
 
-Sean noticed that mmio_read() unintentionally exposes the value of an
-initialized variable (val) on the stack to the VMM.
-
-This variable is only needed as an output value. It did not need to be
-passed to the VMM in the first place.
-
-Do not send the original value of *val to the VMM.
-
-[ dhansen: clarify what 'val' is used for. ]
-
-Fixes: 31d58c4e557d ("x86/tdx: Handle in-kernel MMIO")
-Reported-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240826125304.1566719-1-kirill.shutemov%40linux.intel.com
+Signed-off-by: Terry Cheong <htcheong@chromium.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240830-lenovo-v145-fixes-v3-1-f7b7265068fa@chromium.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/tdx/tdx.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -385,7 +385,6 @@ static bool mmio_read(int size, unsigned
- 		.r12 = size,
- 		.r13 = EPT_READ,
- 		.r14 = addr,
--		.r15 = *val,
- 	};
- 
- 	if (__tdx_hypercall(&args))
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7428,6 +7428,7 @@ enum {
+ 	ALC236_FIXUP_HP_GPIO_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
++	ALC236_FIXUP_LENOVO_INV_DMIC,
+ 	ALC298_FIXUP_SAMSUNG_AMP,
+ 	ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET,
+ 	ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET,
+@@ -9049,6 +9050,12 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc236_fixup_hp_mute_led_micmute_vref,
+ 	},
++	[ALC236_FIXUP_LENOVO_INV_DMIC] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc_fixup_inv_dmic,
++		.chained = true,
++		.chain_id = ALC283_FIXUP_INT_MIC,
++	},
+ 	[ALC298_FIXUP_SAMSUNG_AMP] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc298_fixup_samsung_amp,
+@@ -10609,6 +10616,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
++	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x3bf8, "Quanta FL1", ALC269_FIXUP_PCM_44K),
+@@ -10860,6 +10868,7 @@ static const struct hda_model_fixup alc2
+ 	{.id = ALC623_FIXUP_LENOVO_THINKSTATION_P340, .name = "alc623-lenovo-thinkstation-p340"},
+ 	{.id = ALC255_FIXUP_ACER_HEADPHONE_AND_MIC, .name = "alc255-acer-headphone-and-mic"},
+ 	{.id = ALC285_FIXUP_HP_GPIO_AMP_INIT, .name = "alc285-hp-amp-init"},
++	{.id = ALC236_FIXUP_LENOVO_INV_DMIC, .name = "alc236-fixup-lenovo-inv-mic"},
+ 	{}
+ };
+ #define ALC225_STANDARD_PINS \
 
 
