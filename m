@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC9218C91B;
-	Tue, 10 Sep 2024 10:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C696F18C325;
+	Tue, 10 Sep 2024 10:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962708; cv=none; b=p1VtywDfVqehhut2wUMJCB5B6Kd8xlp9Gysh9Wu/0r4j/fcYTB130SCb64jfpYN4rwvxtW0GWjA3clAcifOz34zctjgO3Apprt5ju4NEXZGeirEJjBIRHu8LnOmMHTa58wHTjrO9TK9n5xxeCBLnKBcE3T0FR5r9hMrOIpo6U7s=
+	t=1725962710; cv=none; b=m1an2DVsch2WTQo2Icvg8JzANRofPRyTwqgg2Xwmmcv2BuQUhUsfQnJCLcSoGCvdUBQcAs+dqfTv8QPcKaTGFyheP3VYlbG3EWIyUVPWQsuvmfRG3QTlFlOxFpqKSPaJFvPPLoed/81OU7YvIdtVdfQEQCZmHJ8geQDTDw04zFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962708; c=relaxed/simple;
-	bh=lX9Fn67jE+Tn8Bbdx1lUR5YaynhTy6+hthx8SpvOmYI=;
+	s=arc-20240116; t=1725962710; c=relaxed/simple;
+	bh=gAHcY62WEcD0uhdinERFGXn0MFAum+wQ0PtsmJJaRB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFUMeHrFpIfOsYWSn+Df18mCiYba6EA2stoDMWyFXV3OaZuaXuaryjWVtMNrt32nVvYDUtjkxNojLqx+dDR9M3+LlimUJeZAVkk4Lasg15nlRqmGJcsht6ILKQkiLuCgEDYvvuAay1lwmEAFBF2y0oit526GSaj0vM9+sQXigZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fVHe6JU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IB1E1XYuqo/UYNR/4k7cdUzNQ5ef6Frlan7YgPjm/bmeCCakMi3uynALE1LGs71AX/+nFUi7ZzimI/K5c6TTBEiDwq3+vj92h7pq9NZPCl4VJrgatHDeZgvwIleiY4Gs7BozQ0wiikrzxSZPs8099lvTjAy/5mu1aCGqPPXK69I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ggvI9J5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fVHe6JU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1ECC4CEC3;
-	Tue, 10 Sep 2024 10:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ggvI9J5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E406C4CEC3;
+	Tue, 10 Sep 2024 10:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962707;
-	bh=lX9Fn67jE+Tn8Bbdx1lUR5YaynhTy6+hthx8SpvOmYI=;
+	s=korg; t=1725962710;
+	bh=gAHcY62WEcD0uhdinERFGXn0MFAum+wQ0PtsmJJaRB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fVHe6JUAlV5JS+ZbXc7H9Uq0kjiZjs7PuudGOOaK7AGmOKeGG7/xeCCuRyGB4l2U
-	 IEJ/2LG62BCW+jkVhi0o1SRenis40A4lVAup6R43tziySqSVfijRqvj1LQWWVJtN16
-	 oytrI+oXT9DCqx93PvNpwd3RGDb1QzCqcDcqJKNA=
+	b=1ggvI9J5jP7KYon1Vm99+xcIMNLQ/0OfiAe4yInsgocI0PLYG99IawpLszPIfOC/M
+	 O+JGP9BJ6gzfFgSiEIM3t+m4oIWgF497sYvEKJXx/6nFbYptyi0pqsc1bc4gRekCHO
+	 wVUWNuApa0Flfv1wbf75SoullQANcWRP9cLSPqvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+24c0361074799d02c452@syzkaller.appspotmail.com,
-	Camila Alvarez <cam.alvarez.i@gmail.com>,
-	Silvan Jegen <s.jegen@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/121] HID: cougar: fix slab-out-of-bounds Read in cougar_report_fixup
-Date: Tue, 10 Sep 2024 11:32:42 +0200
-Message-ID: <20240910092550.005086776@linuxfoundation.org>
+Subject: [PATCH 5.4 118/121] drm/i915/fence: Mark debug_fence_free() with __maybe_unused
+Date: Tue, 10 Sep 2024 11:33:13 +0200
+Message-ID: <20240910092551.404209844@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -53,36 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Camila Alvarez <cam.alvarez.i@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a6e9c391d45b5865b61e569146304cff72821a5d ]
+[ Upstream commit f99999536128b14b5d765a9982763b5134efdd79 ]
 
-report_fixup for the Cougar 500k Gaming Keyboard was not verifying
-that the report descriptor size was correct before accessing it
+When debug_fence_free() is unused
+(CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n), it prevents kernel builds
+with clang, `make W=1` and CONFIG_WERROR=y:
 
-Reported-by: syzbot+24c0361074799d02c452@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=24c0361074799d02c452
-Signed-off-by: Camila Alvarez <cam.alvarez.i@gmail.com>
-Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+.../i915_sw_fence.c:118:20: error: unused function 'debug_fence_free' [-Werror,-Wunused-function]
+  118 | static inline void debug_fence_free(struct i915_sw_fence *fence)
+      |                    ^~~~~~~~~~~~~~~~
+
+Fix this by marking debug_fence_free() with __maybe_unused.
+
+See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
+inline functions for W=1 build").
+
+Fixes: fc1584059d6c ("drm/i915: Integrate i915_sw_fence with debugobjects")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 8be4dce5ea6f2368cc25edc71989c4690fa66964)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-cougar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-cougar.c b/drivers/hid/hid-cougar.c
-index 4ff3bc1d25e2..5294299afb26 100644
---- a/drivers/hid/hid-cougar.c
-+++ b/drivers/hid/hid-cougar.c
-@@ -106,7 +106,7 @@ static void cougar_fix_g6_mapping(void)
- static __u8 *cougar_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 				 unsigned int *rsize)
+diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
+index 475e4b9485af..8f20668a860e 100644
+--- a/drivers/gpu/drm/i915/i915_sw_fence.c
++++ b/drivers/gpu/drm/i915/i915_sw_fence.c
+@@ -64,7 +64,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
+ 	debug_object_destroy(fence, &i915_sw_fence_debug_descr);
+ }
+ 
+-static inline void debug_fence_free(struct i915_sw_fence *fence)
++static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
  {
--	if (rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
-+	if (*rsize >= 117 && rdesc[2] == 0x09 && rdesc[3] == 0x02 &&
- 	    (rdesc[115] | rdesc[116] << 8) >= HID_MAX_USAGES) {
- 		hid_info(hdev,
- 			"usage count exceeds max: fixing up report descriptor\n");
+ 	debug_object_free(fence, &i915_sw_fence_debug_descr);
+ 	smp_wmb(); /* flush the change in state before reallocation */
+@@ -102,7 +102,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
+ {
+ }
+ 
+-static inline void debug_fence_free(struct i915_sw_fence *fence)
++static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
+ {
+ }
+ 
 -- 
 2.43.0
 
