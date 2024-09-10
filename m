@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0A5198853;
-	Tue, 10 Sep 2024 10:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF6719259F;
+	Tue, 10 Sep 2024 10:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963239; cv=none; b=O4DoOk4LCiIsn2VgRoTe6tmtHFxl3obtHNkwZMK0Y+DBhQ3CrTu2aGHdHQdaBrsFGJdgE/4EamWZk4H3YjMf+hYG1TatTiA1ibpnJ87yVsLy1TJYdlv8ETgvCWjJdGdDvWwi0IiwRJ4zgFsPybWHp+eEag5XbMAOhnJrdl1sAvI=
+	t=1725963242; cv=none; b=V9Ym2f7hBniLW5pkMszyy3vHoR74XxA7lL3VhK8ItJJkauUJcEvpkAg2QkMiZkVkI1lcnAQR9RzJVwqxA7H80U1T3ZeVPSE/qM1zEMg5Oh7yIyOoiKc2iyCRoCtdd1WHo2aSHI+ESbTN2E44nR46mLLEgsjLSc+rVDSfpyYCItc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963239; c=relaxed/simple;
-	bh=FRmMt2O9DBjnD0XjEj2/1rBXHM65zd3ftpCorAyHYGc=;
+	s=arc-20240116; t=1725963242; c=relaxed/simple;
+	bh=KWMO3XNKw+BrPYVIyEjbzVp+htLwhP9bBgPndzd+ODA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwmNcOf3LlMBp/tqQNx61zLV3r/SvbdVGi6nX4/A9I1hwFK/Mo4FTbFibeVZfF4eUp+d0IoWcpbeMdmynwyZxbxAD4m4Rg5x1D6DZmL/bRh6kwVxoYrw+2j5Oo/DQAQFw75IKVY+USazWgyCHq4dxRoEQNvquPzT6arzAqjL/t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbiqZaA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOLMFAdXy7cFcbhg8sq36iJBtbQwc24OV/hN5mG/7WKRj91EGyLI7rsMNacaOlG0aGlZAK49KDlG7t/VOH2XTzj/1Qx0LYrPeNrtX54CRpKKw4u6D5SBESfe9VH3EJIOnsFTqfbJpUgkxDmPjOOZNOn1VL1bq4Gm+vhqaKpN/54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbAMeAMb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbiqZaA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C700FC4CEC3;
-	Tue, 10 Sep 2024 10:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbAMeAMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D37C4CEC3;
+	Tue, 10 Sep 2024 10:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963239;
-	bh=FRmMt2O9DBjnD0XjEj2/1rBXHM65zd3ftpCorAyHYGc=;
+	s=korg; t=1725963242;
+	bh=KWMO3XNKw+BrPYVIyEjbzVp+htLwhP9bBgPndzd+ODA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbiqZaA0aiepdVqZxqe069smQXaW41T4+6fCGqRv3m0mXTP/miY92YeBcMEnG7WKx
-	 oDKW9DT/9I5Ifqlx++KBY95PgpoymWjh2njNopi/I1vigQYMBn8AIZk3DrCqkE6/vg
-	 1E9nhUbSxddbCKaEgeXXSYVUIjXfRH7IWH/Fya30=
+	b=ZbAMeAMb4072NDR1MeDErz2kKFJKd0C+1wu7EL5zcRBoY6xPo+XXlAP7Zj1XMstJ/
+	 WunwsiAvcCN3nvFPFar6EbmM2PDNcu0y/CC8focC3uqYF2cizIeSqHZd8Jmg+vkKPZ
+	 R/JPGuInb2Rr56rMvUcXT5+/b7f/fb6jAMGNy9iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/192] drm/i915/fence: Mark debug_fence_free() with __maybe_unused
-Date: Tue, 10 Sep 2024 11:33:27 +0200
-Message-ID: <20240910092605.359540755@linuxfoundation.org>
+Subject: [PATCH 6.1 166/192] ACPI: processor: Fix memory leaks in error paths of processor_add()
+Date: Tue, 10 Sep 2024 11:33:10 +0200
+Message-ID: <20240910092604.746526850@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,57 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit f99999536128b14b5d765a9982763b5134efdd79 ]
+[ Upstream commit 47ec9b417ed9b6b8ec2a941cd84d9de62adc358a ]
 
-When debug_fence_free() is unused
-(CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n), it prevents kernel builds
-with clang, `make W=1` and CONFIG_WERROR=y:
+If acpi_processor_get_info() returned an error, pr and the associated
+pr->throttling.shared_cpu_map were leaked.
 
-.../i915_sw_fence.c:118:20: error: unused function 'debug_fence_free' [-Werror,-Wunused-function]
-  118 | static inline void debug_fence_free(struct i915_sw_fence *fence)
-      |                    ^~~~~~~~~~~~~~~~
+The unwind code was in the wrong order wrt to setup, relying on
+some unwind actions having no affect (clearing variables that were
+never set etc).  That makes it harder to reason about so reorder
+and add appropriate labels to only undo what was actually set up
+in the first place.
 
-Fix this by marking debug_fence_free() with __maybe_unused.
-
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: fc1584059d6c ("drm/i915: Integrate i915_sw_fence with debugobjects")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 8be4dce5ea6f2368cc25edc71989c4690fa66964)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20240529133446.28446-6-Jonathan.Cameron@huawei.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/acpi_processor.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
-index c2ac1900d73e..e664f8e461e6 100644
---- a/drivers/gpu/drm/i915/i915_sw_fence.c
-+++ b/drivers/gpu/drm/i915/i915_sw_fence.c
-@@ -77,7 +77,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- 	debug_object_destroy(fence, &i915_sw_fence_debug_descr);
- }
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 5662c157fda7..8bd5c4fa91f2 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -373,7 +373,7 @@ static int acpi_processor_add(struct acpi_device *device,
  
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- 	debug_object_free(fence, &i915_sw_fence_debug_descr);
- 	smp_wmb(); /* flush the change in state before reallocation */
-@@ -115,7 +115,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- {
- }
+ 	result = acpi_processor_get_info(device);
+ 	if (result) /* Processor is not physically present or unavailable */
+-		return result;
++		goto err_clear_driver_data;
  
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- }
+ 	BUG_ON(pr->id >= nr_cpu_ids);
  
+@@ -388,7 +388,7 @@ static int acpi_processor_add(struct acpi_device *device,
+ 			"BIOS reported wrong ACPI id %d for the processor\n",
+ 			pr->id);
+ 		/* Give up, but do not abort the namespace scan. */
+-		goto err;
++		goto err_clear_driver_data;
+ 	}
+ 	/*
+ 	 * processor_device_array is not cleared on errors to allow buggy BIOS
+@@ -400,12 +400,12 @@ static int acpi_processor_add(struct acpi_device *device,
+ 	dev = get_cpu_device(pr->id);
+ 	if (!dev) {
+ 		result = -ENODEV;
+-		goto err;
++		goto err_clear_per_cpu;
+ 	}
+ 
+ 	result = acpi_bind_one(dev, device);
+ 	if (result)
+-		goto err;
++		goto err_clear_per_cpu;
+ 
+ 	pr->dev = dev;
+ 
+@@ -416,10 +416,11 @@ static int acpi_processor_add(struct acpi_device *device,
+ 	dev_err(dev, "Processor driver could not be attached\n");
+ 	acpi_unbind_one(dev);
+ 
+- err:
+-	free_cpumask_var(pr->throttling.shared_cpu_map);
+-	device->driver_data = NULL;
++ err_clear_per_cpu:
+ 	per_cpu(processors, pr->id) = NULL;
++ err_clear_driver_data:
++	device->driver_data = NULL;
++	free_cpumask_var(pr->throttling.shared_cpu_map);
+  err_free_pr:
+ 	kfree(pr);
+ 	return result;
 -- 
 2.43.0
 
