@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DFE14F12C;
-	Tue, 10 Sep 2024 09:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB283184101;
+	Tue, 10 Sep 2024 09:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961858; cv=none; b=n9Fdyahlu1an1kf3zj4M3M2liuee6r8QJb9HnnYRwvmo2Rjkm6L0yksDbb8IeKn9iye4IevY3OnSx59fYdOv1uRV7eu4bQGpFSxvsouHicAPp9RUYab8+DtMH7cWRIsOAYshntwrJaNEkPqb+6+x7cU5KUqhP7F7PstIhAzFonY=
+	t=1725961861; cv=none; b=LKXD5uY7XMI3vUeums2bG6+uQvWkpdfCCVBQcDGR8VDii7wWgVFSZT28HORkb4mppA4a/HCNbTt3cTrn8AiV/aol7wc6RiuCgj52eyqXfR6sTbMoyRm6+/B583tdWp347SQYFdJH0Uew8vIITJ8/omd8k+4UZvilycLSXgVwlxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961858; c=relaxed/simple;
-	bh=pkjUAg19oljSiy5GYBj59PkCwnVUkE33E2m5mo66C3s=;
+	s=arc-20240116; t=1725961861; c=relaxed/simple;
+	bh=3Pj8QcmA0Z7A7wynd6iaoEDBiyrJZyhqJlkcETNNd40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnXoLjCuFKNA88dooCLdhAwLyUYcvhNW47X9izDmPKw/Yyaqf+DaJAVscG/l4ffuTS+MJ+CLpVaCFR5TpNVUSFoauBTQXrJsseLSHpZkQ5SuqC6KO9laOBpKWhp5bz7xeDLjwVgauljVCvuBPt9Nh6JeC/bvLvpQoyJY2mzKP1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LR09ru9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pJarnVaKC5dyyCeikJurmVXLMr+5ukPJMGM3+3rHXgxK3bIzxKvFAgY0ecDVElE4OO0fNty8IwWJTGdqK/Xn1LNZfAYCy6v3XliL457LVpSfHEoos8Qzyh3xGhXnbUd3tKFzP5xg0mnCrSwYqgy+LyN6HluQV0QeZchpMxS4oV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpLghcPa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LR09ru9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD27C4CEC3;
-	Tue, 10 Sep 2024 09:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpLghcPa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6067C4CEC3;
+	Tue, 10 Sep 2024 09:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961858;
-	bh=pkjUAg19oljSiy5GYBj59PkCwnVUkE33E2m5mo66C3s=;
+	s=korg; t=1725961861;
+	bh=3Pj8QcmA0Z7A7wynd6iaoEDBiyrJZyhqJlkcETNNd40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LR09ru9V0OnlfzjwdoohtAiYIo07bmivlijt1phim1MWvraM7dAZ73D+BPKSks5mI
-	 QSoc0vxW3lkhsiuVQu93E1sUoTNrdn3SWDpuCT87p0Pm5sB+3K0olPVkpNDzr/qg13
-	 NilKgxQ229DEoEeURIUGxLqAckOxCngKPS9v34/c=
+	b=QpLghcPayv8PaQIM1ZPqEfO1n7b9Rnjjmn90t+JEW9YtEMIp9hkaNjX1M6HiWlXvk
+	 RcHgcwRUfn8ZCQfdw5ehTrkU1j7XvAocbjZnygioerVw/Ni90ksb5ykUwB09IwbrxT
+	 PC5pvTDhpgZooHzC/7YGjg3LP1AYNQn1LoWw7+3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Alexander Potapenko <glider@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 6.10 212/375] virtio_ring: fix KMSAN error for premapped mode
-Date: Tue, 10 Sep 2024 11:30:09 +0200
-Message-ID: <20240910092629.644022884@linuxfoundation.org>
+	=?UTF-8?q?Marcin=20=C5=9Alusarz?= <mslusarz@renau.com>,
+	Tim K <tpkuester@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Kalle Valo <kvalo@kernel.org>,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 213/375] wifi: rtw88: usb: schedule rx work after everything is set up
+Date: Tue, 10 Sep 2024 11:30:10 +0200
+Message-ID: <20240910092629.679284973@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -48,66 +50,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Marcin Ślusarz <mslusarz@renau.com>
 
-[ Upstream commit 840b2d39a2dc1b96deb3f5c7fef76c9b24f08f51 ]
+[ Upstream commit adc539784c98a7cc602cbf557debfc2e7b9be8b3 ]
 
-Add kmsan for virtqueue_dma_map_single_attrs to fix:
+Right now it's possible to hit NULL pointer dereference in
+rtw_rx_fill_rx_status on hw object and/or its fields because
+initialization routine can start getting USB replies before
+rtw_dev is fully setup.
 
-BUG: KMSAN: uninit-value in receive_buf+0x45ca/0x6990
- receive_buf+0x45ca/0x6990
- virtnet_poll+0x17e0/0x3130
- net_rx_action+0x832/0x26e0
- handle_softirqs+0x330/0x10f0
- [...]
+The stack trace looks like this:
 
-Uninit was created at:
- __alloc_pages_noprof+0x62a/0xe60
- alloc_pages_noprof+0x392/0x830
- skb_page_frag_refill+0x21a/0x5c0
- virtnet_rq_alloc+0x50/0x1500
- try_fill_recv+0x372/0x54c0
- virtnet_open+0x210/0xbe0
- __dev_open+0x56e/0x920
- __dev_change_flags+0x39c/0x2000
- dev_change_flags+0xaa/0x200
- do_setlink+0x197a/0x7420
- rtnl_setlink+0x77c/0x860
- [...]
+rtw_rx_fill_rx_status
+rtw8821c_query_rx_desc
+rtw_usb_rx_handler
+...
+queue_work
+rtw_usb_read_port_complete
+...
+usb_submit_urb
+rtw_usb_rx_resubmit
+rtw_usb_init_rx
+rtw_usb_probe
 
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Message-Id: <20240606111345.93600-1-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Ilya Leoshkevich <iii@linux.ibm.com>  # s390x
-Acked-by: Jason Wang <jasowang@redhat.com>
+So while we do the async stuff rtw_usb_probe continues and calls
+rtw_register_hw, which does all kinds of initialization (e.g.
+via ieee80211_register_hw) that rtw_rx_fill_rx_status relies on.
+
+Fix this by moving the first usb_submit_urb after everything
+is set up.
+
+For me, this bug manifested as:
+[    8.893177] rtw_8821cu 1-1:1.2: band wrong, packet dropped
+[    8.910904] rtw_8821cu 1-1:1.2: hw->conf.chandef.chan NULL in rtw_rx_fill_rx_status
+because I'm using Larry's backport of rtw88 driver with the NULL
+checks in rtw_rx_fill_rx_status.
+
+Link: https://lore.kernel.org/linux-wireless/CA+shoWQ7P49jhQasofDcTdQhiuarPTjYEDa--NiVVx494WcuQw@mail.gmail.com/
+Signed-off-by: Marcin Ślusarz <mslusarz@renau.com>
+Cc: Tim K <tpkuester@gmail.com>
+Cc: Ping-Ke Shih <pkshih@realtek.com>
+Cc: Larry Finger <Larry.Finger@lwfinger.net>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240528110246.477321-1-marcin.slusarz@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 2a972752ff1b..9d3a9942c8c8 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -3121,8 +3121,10 @@ dma_addr_t virtqueue_dma_map_single_attrs(struct virtqueue *_vq, void *ptr,
+diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
+index 0001a1ab6f38..edc1507514f6 100644
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -744,7 +744,6 @@ static struct rtw_hci_ops rtw_usb_ops = {
+ static int rtw_usb_init_rx(struct rtw_dev *rtwdev)
  {
- 	struct vring_virtqueue *vq = to_vvq(_vq);
+ 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
+-	int i;
  
--	if (!vq->use_dma_api)
-+	if (!vq->use_dma_api) {
-+		kmsan_handle_dma(virt_to_page(ptr), offset_in_page(ptr), size, dir);
- 		return (dma_addr_t)virt_to_phys(ptr);
-+	}
+ 	rtwusb->rxwq = create_singlethread_workqueue("rtw88_usb: rx wq");
+ 	if (!rtwusb->rxwq) {
+@@ -756,13 +755,19 @@ static int rtw_usb_init_rx(struct rtw_dev *rtwdev)
  
- 	return dma_map_single_attrs(vring_dma_dev(vq), ptr, size, dir, attrs);
+ 	INIT_WORK(&rtwusb->rx_work, rtw_usb_rx_handler);
+ 
++	return 0;
++}
++
++static void rtw_usb_setup_rx(struct rtw_dev *rtwdev)
++{
++	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
++	int i;
++
+ 	for (i = 0; i < RTW_USB_RXCB_NUM; i++) {
+ 		struct rx_usb_ctrl_block *rxcb = &rtwusb->rx_cb[i];
+ 
+ 		rtw_usb_rx_resubmit(rtwusb, rxcb);
+ 	}
+-
+-	return 0;
  }
+ 
+ static void rtw_usb_deinit_rx(struct rtw_dev *rtwdev)
+@@ -899,6 +904,8 @@ int rtw_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 		goto err_destroy_rxwq;
+ 	}
+ 
++	rtw_usb_setup_rx(rtwdev);
++
+ 	return 0;
+ 
+ err_destroy_rxwq:
 -- 
 2.43.0
 
