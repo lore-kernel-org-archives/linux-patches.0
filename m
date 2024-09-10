@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319AC18C324;
-	Tue, 10 Sep 2024 10:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2077F18C324;
+	Tue, 10 Sep 2024 10:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965252; cv=none; b=WedIgjnEcX3iZWi+Lnaf0Oyfh6hixxGIB03ygB0aBw40IGt5VW5M/AyNLUKBBaMeX/dDI37nc6DCF1W7OjEp46z9vf1Er5zv1J7X1+H+26TkZulv3P6Ttr9hebadxDNDX638ae6/Uobmy7F9Ydx8M5+nV6MeqbkbaqQmtF25UWk=
+	t=1725965255; cv=none; b=hs2QX0L1XuA8bJKcNUbHizimV1ydqKsG0hMvg4YuLbMFh7YPrTy7oOKU5BwWFyjGxT6t+1AoJJMKDUEz/S/wiRskXy9BNr1B/LsbkmUBz1gT2H1lcyoFc8qtbufR0OdBPf3E/kcyPtZLhA9IfYQN2OnlpL2caY+1YEJ9BLav/94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965252; c=relaxed/simple;
-	bh=dImi5/FdCHS+VmPb+qzsUJl7XffkkWtUAKx5nIXauP4=;
+	s=arc-20240116; t=1725965255; c=relaxed/simple;
+	bh=+vvOlCD832ca6ZnthwkpRiuBYoiLXlaCjRudzf41qu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oeao8MpbwBWS4VfWIIZGKIu+1RDaz9tZG9978H9PHjyw0Nq+BQuLBPxTWuB43ndt360tMe+EaDekIsEzjZ7sLIAV7DF+T2n801quHDyfiDzKyBc8SLNUrxM5IKZ4rHE6iWsolBj3tNtomo1apWAksq/6XHamMVoZqjaqhE2XTCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHRun03J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tRk5a/1fv8fVAjl/NaFYvTU83Zgu9Vq3NNwC09x8zMaoPfAnpX50ick1eSTPhUaiXZ4ZeUNC5YVir3OgxHr8rAlZ+ktOXtcvaow0hdrOcPZ8/mawxVkg3Nfc/XEMay6p4Vy46cRFA4Mo7bcHovGKO15TzAcTS3NJ78HZgCdPrL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wCNx4VF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHRun03J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAA3C4CEC3;
-	Tue, 10 Sep 2024 10:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wCNx4VF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFB6C4CEC3;
+	Tue, 10 Sep 2024 10:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965252;
-	bh=dImi5/FdCHS+VmPb+qzsUJl7XffkkWtUAKx5nIXauP4=;
+	s=korg; t=1725965255;
+	bh=+vvOlCD832ca6ZnthwkpRiuBYoiLXlaCjRudzf41qu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHRun03JqenUcbEBKpkMrc9s2h6MkVzvyYEc1+zQ8BiXG9umUGZ5hrOWv4puTVosC
-	 Ro22pXOPazo5LzgJ736PilCF4WbZOUdgONc3WBRruEgVeQtB31Fy+C+XlUYr4ZYJGJ
-	 oAqmImF34WkA1iw0WSAPhV2SBdYsm7NCFvS7bKMA=
+	b=2wCNx4VFBTvoPSKjOp84M99ZnOmRvGi4Tnzbs2nU/JF1kge168tDJnTpyAacLk9hg
+	 1QshikIPBHsocmwLEjMrLidx+ZgW0SZ4rOjly+CXzOx9QQcqDS0AF/ySd/V86L1HDD
+	 cesNxh6Db54ijLvLx7gz5kJzdP3BlYMk7J59kpDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/186] drm/i915/fence: Mark debug_fence_free() with __maybe_unused
-Date: Tue, 10 Sep 2024 11:34:36 +0200
-Message-ID: <20240910092602.077629585@linuxfoundation.org>
+	Seunghwan Baek <sh8267.baek@samsung.com>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 182/186] mmc: cqhci: Fix checking of CQHCI_HALT state
+Date: Tue, 10 Sep 2024 11:34:37 +0200
+Message-ID: <20240910092602.125082647@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,59 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Seunghwan Baek <sh8267.baek@samsung.com>
 
-[ Upstream commit f99999536128b14b5d765a9982763b5134efdd79 ]
+commit aea62c744a9ae2a8247c54ec42138405216414da upstream.
 
-When debug_fence_free() is unused
-(CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n), it prevents kernel builds
-with clang, `make W=1` and CONFIG_WERROR=y:
+To check if mmc cqe is in halt state, need to check set/clear of CQHCI_HALT
+bit. At this time, we need to check with &, not &&.
 
-.../i915_sw_fence.c:118:20: error: unused function 'debug_fence_free' [-Werror,-Wunused-function]
-  118 | static inline void debug_fence_free(struct i915_sw_fence *fence)
-      |                    ^~~~~~~~~~~~~~~~
-
-Fix this by marking debug_fence_free() with __maybe_unused.
-
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: fc1584059d6c ("drm/i915: Integrate i915_sw_fence with debugobjects")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 8be4dce5ea6f2368cc25edc71989c4690fa66964)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+Cc: stable@vger.kernel.org
+Signed-off-by: Seunghwan Baek <sh8267.baek@samsung.com>
+Reviewed-by: Ritesh Harjani <ritesh.list@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240829061823.3718-2-sh8267.baek@samsung.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/cqhci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
-index 1c4498c29f25..136a7163477d 100644
---- a/drivers/gpu/drm/i915/i915_sw_fence.c
-+++ b/drivers/gpu/drm/i915/i915_sw_fence.c
-@@ -70,7 +70,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- 	debug_object_destroy(fence, &i915_sw_fence_debug_descr);
- }
- 
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- 	debug_object_free(fence, &i915_sw_fence_debug_descr);
- 	smp_wmb(); /* flush the change in state before reallocation */
-@@ -108,7 +108,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- {
- }
- 
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- }
- 
--- 
-2.43.0
-
+--- a/drivers/mmc/host/cqhci.c
++++ b/drivers/mmc/host/cqhci.c
+@@ -592,7 +592,7 @@ static int cqhci_request(struct mmc_host
+ 		cqhci_writel(cq_host, 0, CQHCI_CTL);
+ 		mmc->cqe_on = true;
+ 		pr_debug("%s: cqhci: CQE on\n", mmc_hostname(mmc));
+-		if (cqhci_readl(cq_host, CQHCI_CTL) && CQHCI_HALT) {
++		if (cqhci_readl(cq_host, CQHCI_CTL) & CQHCI_HALT) {
+ 			pr_err("%s: cqhci: CQE failed to exit halt state\n",
+ 			       mmc_hostname(mmc));
+ 		}
 
 
