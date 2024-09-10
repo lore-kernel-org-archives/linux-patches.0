@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A41191F88;
-	Tue, 10 Sep 2024 10:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F4418FC7E;
+	Tue, 10 Sep 2024 10:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962636; cv=none; b=h+p5gNhsrMQybxOHu91xfW3iS+OA+mwzkE2a3p7EHu3Yu97WslLPGH0Xu9ZG7W4gg74Aw82FxRMKHDl9rum7tAn56VkfXIhQvOSfiYT69mtbgUn7ahFayk4Vszu7+s3Ccx3IrWAh6BnKvEZ9ockNddhpCM9kHKm2ckdqSIfyU74=
+	t=1725962639; cv=none; b=gywvStG05tlnGmk2+WaJM8ixsJWQWPOFMEzngN0pLM1QVOyROd+QfYALRaZXgIBVuuvLJwgaaS4/phk5x6FI5qnkbdU/DCeVco29RIp3guH0PooINHCfP6ZDaEgEc/M+TIHM/TEy6cM389W0Gf6Jdyb5aXyCYHI7d0+ZLJqwU3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962636; c=relaxed/simple;
-	bh=PukoYfYXxtX7JJGPcPvMgF96YY+SDiZSlL3R8Zy813E=;
+	s=arc-20240116; t=1725962639; c=relaxed/simple;
+	bh=Rk9anvR38O3DWGETWYri+MsUG171rIS/dBtKP9dCiVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uU60KzfBWt8KtPqK5Yk9IsMSwo0yJycd5hnDbgccQ/D9waCEeBJjKBTxK7bC9HoZbks+aHQWnri1PJ7AT3ln4ahQpP6JEyJ7y6p9vwGN7b9fc8hy9uA4gP53X2ZTWFFohh/Pvhj/gG/O3U2LInZLNYLCQFFfM+vHVJZcYEc+rU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzPxmr3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djtf4m9ZnIe2AsVIDfIrLgB4xtclvYrKrne/GT2W0iFVh9jryzCGsTkMluDXU47Ogwp5ZbvGzO0rWgBggGgqI48aUD2WsKSlipJuhd1/nk7Fk4tIA22r2qfSbY1ayZdQvP32Rs29RkjJlk944vYXZZlArlnp/32pBSyUEecUnPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCUCLK/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzPxmr3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC0FC4CEDB;
-	Tue, 10 Sep 2024 10:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCUCLK/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B76C4CEC6;
+	Tue, 10 Sep 2024 10:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962636;
-	bh=PukoYfYXxtX7JJGPcPvMgF96YY+SDiZSlL3R8Zy813E=;
+	s=korg; t=1725962639;
+	bh=Rk9anvR38O3DWGETWYri+MsUG171rIS/dBtKP9dCiVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzPxmr3Eh49KjaRaE/li1RNtNTEuH5nmMsretuql06E2RnLhHOtkJiX0kKuHARlYk
-	 fYmfVQOfspVEeXVm7uah9KddimZaOk8w63ygqFOi/JT2BdcNmf91JKC36a+DIHTa/f
-	 45zMOmNqAnRV8ZY2Lzf2AcKgQPD2lAGk+RO2RnW4=
+	b=sCUCLK/jNacBB84ZOUv9EwJYnorfVFlPWcTxFQigHtyvilUJixMYRiq1PJ80rsZCQ
+	 Usd1lPbN6vvykKdRhUx+gQh0j99ffJKAC3ySdeGb21ubBATJyYPjzl/5IhmnFhA3RN
+	 1CE4KmK+uQPp0Hrt9VGQsBnG3uj+vz/zr21xfdAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>
-Subject: [PATCH 5.4 101/121] uio_hv_generic: Fix kernel NULL pointer dereference in hv_uio_rescind
-Date: Tue, 10 Sep 2024 11:32:56 +0200
-Message-ID: <20240910092550.639569101@linuxfoundation.org>
+	Naman Jain <namjain@linux.microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>
+Subject: [PATCH 5.4 102/121] Drivers: hv: vmbus: Fix rescind handling in uio_hv_generic
+Date: Tue, 10 Sep 2024 11:32:57 +0200
+Message-ID: <20240910092550.679374727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -50,41 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-commit fb1adbd7e50f3d2de56d0a2bb0700e2e819a329e upstream.
+commit 6fd28941447bf2c8ca0f26fda612a1cabc41663f upstream.
 
-For primary VM Bus channels, primary_channel pointer is always NULL. This
-pointer is valid only for the secondary channels. Also, rescind callback
-is meant for primary channels only.
+Rescind offer handling relies on rescind callbacks for some of the
+resources cleanup, if they are registered. It does not unregister
+vmbus device for the primary channel closure, when callback is
+registered. Without it, next onoffer does not come, rescind flag
+remains set and device goes to unusable state.
 
-Fix NULL pointer dereference by retrieving the device_obj from the parent
-for the primary channel.
+Add logic to unregister vmbus for the primary channel in rescind callback
+to ensure channel removal and relid release, and to ensure that next
+onoffer can be received and handled properly.
 
 Cc: stable@vger.kernel.org
 Fixes: ca3cda6fcf1e ("uio_hv_generic: add rescind support")
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
 Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240829071312.1595-2-namjain@linux.microsoft.com
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20240829071312.1595-3-namjain@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hv/vmbus_drv.c       |    1 +
+ drivers/uio/uio_hv_generic.c |    8 ++++++++
+ 2 files changed, 9 insertions(+)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -104,10 +104,11 @@ static void hv_uio_channel_cb(void *cont
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1908,6 +1908,7 @@ void vmbus_device_unregister(struct hv_d
+ 	 */
+ 	device_unregister(&device_obj->device);
+ }
++EXPORT_SYMBOL_GPL(vmbus_device_unregister);
+ 
  
  /*
-  * Callback from vmbus_event when channel is rescinded.
-+ * It is meant for rescind of primary channels only.
-  */
- static void hv_uio_rescind(struct vmbus_channel *channel)
- {
--	struct hv_device *hv_dev = channel->primary_channel->device_obj;
-+	struct hv_device *hv_dev = channel->device_obj;
- 	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -119,6 +119,14 @@ static void hv_uio_rescind(struct vmbus_
  
- 	/*
+ 	/* Wake up reader */
+ 	uio_event_notify(&pdata->info);
++
++	/*
++	 * With rescind callback registered, rescind path will not unregister the device
++	 * from vmbus when the primary channel is rescinded.
++	 * Without it, rescind handling is incomplete and next onoffer msg does not come.
++	 * Unregister the device from vmbus here.
++	 */
++	vmbus_device_unregister(channel->device_obj);
+ }
+ 
+ /* Sysfs API to allow mmap of the ring buffers
 
 
