@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D00818E77F;
-	Tue, 10 Sep 2024 09:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C07A18E778;
+	Tue, 10 Sep 2024 09:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961585; cv=none; b=M5VsG/fyN7J+jQw1xEVgqwvtwMSwnIHvjNLHM3FNHCCs/tmec+zb927cUYY16VFUXnAHc5Xpk+4ISZPqnx56sRxQsnCxJFaSTQinq2hwvzErBmFtPrgR5NQNqJmBHdG9nWs+Y2s2nuluqFZhnwjipgNV7YAR0TRgXkKYg6+U8Yw=
+	t=1725961588; cv=none; b=T6djL0A8IDMGAXUTsxeE1jE7Id5d7MM7EfCJLF8lUg8Lv4KD5ibm8UGO+YIWIabE0FvvzgxFso85z4bVTtsOcdsO9Sfs+jOjSRab2wVSyhlsG+rJOfczpIiLj2vBZsBmDG4H706PZIUdugFRSv52TsxJF8B5ShnpMQXatdvxCZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961585; c=relaxed/simple;
-	bh=qKa1Ei56f0OHXxshoXvOg/r6X6zTe26QCoIG+vhjwd4=;
+	s=arc-20240116; t=1725961588; c=relaxed/simple;
+	bh=ioc2HpjzaxfoF/gn5OD5zjLMpDJ6WFyileA3HqfFIRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqXG3hyxjQOVUM3MHcbDUiTQIk3he03hI+FyphHAnRypdsZoAPjkXVFFMvHuvGKp3a6D7N+tBHPCJR5eZ3qxmBehOOnMzBqr7ihHoMK84hGvtpbBxT7Bibtal5FfTcp+uXXHbaNCS0KIX0TDNpWzzUrnYowjKpbiQaSEIXKVD0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLT/9E2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1Plwegwr2b4WnvB20wGwxYJhoK2/2tfZY5temDd1C7laMClCC7MfQvAT8KOXHVpzQpOJhw9md794LsM6UljJVRx+OtZplF4Z1P9/CmOhdBn2psEhXWmqPXb1APPNUecf3GeujqC779hE0RiEgl/WzFV9SggdQuKKZGzZ7O+Eik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDzb4PD5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLT/9E2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61CCC4CEC6;
-	Tue, 10 Sep 2024 09:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDzb4PD5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4AFC4CEC3;
+	Tue, 10 Sep 2024 09:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961585;
-	bh=qKa1Ei56f0OHXxshoXvOg/r6X6zTe26QCoIG+vhjwd4=;
+	s=korg; t=1725961588;
+	bh=ioc2HpjzaxfoF/gn5OD5zjLMpDJ6WFyileA3HqfFIRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLT/9E2xegqP7fB4UBBx8f89d+F2p3pGugelAXxTGjK3pWzFV/G6rgvm7I1NlyuFw
-	 F9pUVTJP3s1bPLtsZ3WnT8Lk0PfROEWCQiGvPuq+2e127jXzJz7pSVZjcLLzrJYZAl
-	 jYFmvbJoHP9xHNvQQUpYEkI1LTfhNxfjoPIwP2w4=
+	b=hDzb4PD51uvYNcTjsOf2d9//6PM6cKJaCBMj8acKqDfO2PQBnRc7YXadlxJsQGTnK
+	 vaiJh5iX87L/53Rsv1Px4Zs0Hj7/ohIhdXPT5W60Y+nyzNvWti1LClWzwoE3g/xtBQ
+	 bmV2urY7iekaJsP5lcgF9mKtUPP6kSDVFFiWRqLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shantanu Goel <sgoel01@yahoo.com>,
-	Oliver Neukum <oneukum@suse.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 120/375] usb: uas: set host status byte on data completion error
-Date: Tue, 10 Sep 2024 11:28:37 +0200
-Message-ID: <20240910092626.467061678@linuxfoundation.org>
+Subject: [PATCH 6.10 121/375] usb: gadget: aspeed_udc: validate endpoint index for ast udc
+Date: Tue, 10 Sep 2024 11:28:38 +0200
+Message-ID: <20240910092626.501728101@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shantanu Goel <sgoel01@yahoo.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 9d32685a251a754f1823d287df233716aa23bcb9 ]
+[ Upstream commit ee0d382feb44ec0f445e2ad63786cd7f3f6a8199 ]
 
-Set the host status byte when a data completion error is encountered
-otherwise the upper layer may end up using the invalid zero'ed data.
-The following output was observed from scsi/sd.c prior to this fix.
+We should verify the bound of the array to assure that host
+may not manipulate the index to point past endpoint array.
 
-[   11.872824] sd 0:0:0:1: [sdf] tag#9 data cmplt err -75 uas-tag 1 inflight:
-[   11.872826] sd 0:0:0:1: [sdf] tag#9 CDB: Read capacity(16) 9e 10 00 00 00 00 00 00 00 00 00 00 00 20 00 00
-[   11.872830] sd 0:0:0:1: [sdf] Sector size 0 reported, assuming 512.
+Found by static analysis.
 
-Signed-off-by: Shantanu Goel <sgoel01@yahoo.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/87msnx4ec6.fsf@yahoo.com
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Link: https://lore.kernel.org/r/20240625022306.2568122-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/uas.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/udc/aspeed_udc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
-index b610a2de4ae5..a04b4cb1382d 100644
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -423,6 +423,7 @@ static void uas_data_cmplt(struct urb *urb)
- 			uas_log_cmd_state(cmnd, "data cmplt err", status);
- 		/* error: no data transfered */
- 		scsi_set_resid(cmnd, sdb->length);
-+		set_host_byte(cmnd, DID_ERROR);
- 	} else {
- 		scsi_set_resid(cmnd, sdb->length - urb->actual_length);
- 	}
+diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
+index 821a6ab5da56..f4781e611aaa 100644
+--- a/drivers/usb/gadget/udc/aspeed_udc.c
++++ b/drivers/usb/gadget/udc/aspeed_udc.c
+@@ -1009,6 +1009,8 @@ static void ast_udc_getstatus(struct ast_udc_dev *udc)
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+ 		epnum = crq.wIndex & USB_ENDPOINT_NUMBER_MASK;
++		if (epnum >= AST_UDC_NUM_ENDPOINTS)
++			goto stall;
+ 		status = udc->ep[epnum].stopped;
+ 		break;
+ 	default:
 -- 
 2.43.0
 
