@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7668A1DA4C;
-	Tue, 10 Sep 2024 10:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6413217A589;
+	Tue, 10 Sep 2024 10:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965131; cv=none; b=GFzSco5Rj/89z4+FFgafBzHO9ok9//dQg4J588q1dP5IgHtzRNzGH9Cy+g47rtLrr0hzTf3Ip4NDxnTE99qnR2etUKBCtS1zDXxsaNzoJRxITweL2HAB4krQ8xIeXlwNdnHOseN7s9RjP0dNDmK9Gg6wETGg52elmCW39TWbjcc=
+	t=1725965134; cv=none; b=OMpMomjTPyRFph/iuEXY3cSFGKEPkJC4xqpzvI0rE3XUGx6Ot2rVZ7P4vWZ7zjpBxqbYVHPG6KyFxlrKyvf6NTyK2Ajtj+2c4Hu3FZeSzeowRbpnwhk9KbUdIksgRGAw6oh86jpW9xCdkMlq+VY5AQUmQGqaN+qMY2IdaDqzERY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965131; c=relaxed/simple;
-	bh=q0AennzIc/1s39LuIGlQ0iX9gCNjSfzA10/kSlf2SzM=;
+	s=arc-20240116; t=1725965134; c=relaxed/simple;
+	bh=9FIMi/lSVXmrHASRyPiRd2Rngb6W+O3A44i6Lo42F3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvRwG/isfjegeOlwiEATFxV5uxnX+lce+h6RXSLOetvAfveZh9SoyNyBGWeCvkBtohnFIXIsmMy4O2RqCp5qvSDir7emruIPsCgw4RHEplz6TU7tD5cn0rCk64K72dANiOFKMaP1+ltHdxiqOoOaWCdtr4QQ7u+PZhDrnVwpaU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sxe+fb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrtECU+FaXn2qxXTE7cAGjD647kbeAt/l5oMdVVqN5wp0P7MCmNlThZyZPS7nklkqCiQY7hXc2i9xlFsBpMRun85o/tWiGH7y1SP4Icwkj7uL2pk3IVUueg9jyOsrAg1P5SnWP4bPH/c3mjnAc/lOG+DwdqGPLxws89QZ8EJseA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiFPWrE5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sxe+fb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24A8C4CEC3;
-	Tue, 10 Sep 2024 10:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiFPWrE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF140C4CEC3;
+	Tue, 10 Sep 2024 10:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965131;
-	bh=q0AennzIc/1s39LuIGlQ0iX9gCNjSfzA10/kSlf2SzM=;
+	s=korg; t=1725965134;
+	bh=9FIMi/lSVXmrHASRyPiRd2Rngb6W+O3A44i6Lo42F3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sxe+fb78csD2yaif75gN8ipZ4HSb8PFskblUKzBhHYywA2vjUmqA2W5e21d1bfa5
-	 2ed5JNAwO9wfot6ipThm5loEhkhOM9VDEGtn5r8cfO4USSswCmIFibixOnvwbx8zwB
-	 0KK00MIcZRM6P8vwgSc7u89Bu49ZPpsOVbu0NazE=
+	b=GiFPWrE5FljRJ0uKnuVhvhliyL3w5X0REU3qD67bnxXu8EXVAoPMkZ4b0fRwCLurp
+	 XUdu6G++zGnwQw0b4sT1GvY3UVROw5KkGZWuruFZxmnhO5QNSz8SX0fXkETRqdV6i7
+	 uofvbaK1KFFpQR+TfFCdwlJwgMT283Evzm39GmNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 147/186] btrfs: initialize location to fix -Wmaybe-uninitialized in btrfs_lookup_dentry()
-Date: Tue, 10 Sep 2024 11:34:02 +0200
-Message-ID: <20240910092600.655505758@linuxfoundation.org>
+Subject: [PATCH 5.10 148/186] s390/vmlinux.lds.S: Move ro_after_init section behind rodata section
+Date: Tue, 10 Sep 2024 11:34:03 +0200
+Message-ID: <20240910092600.698314049@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,52 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit b8e947e9f64cac9df85a07672b658df5b2bcff07 ]
+[ Upstream commit 75c10d5377d8821efafed32e4d72068d9c1f8ec0 ]
 
-Some arch + compiler combinations report a potentially unused variable
-location in btrfs_lookup_dentry(). This is a false alert as the variable
-is passed by value and always valid or there's an error. The compilers
-cannot probably reason about that although btrfs_inode_by_name() is in
-the same file.
+The .data.rel.ro and .got section were added between the rodata and
+ro_after_init data section, which adds an RW mapping in between all RO
+mapping of the kernel image:
 
-   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.objectid' may be used
-   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5603:9
-   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.type' may be used
-   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5674:5
+---[ Kernel Image Start ]---
+0x000003ffe0000000-0x000003ffe0e00000        14M PMD RO X
+0x000003ffe0e00000-0x000003ffe0ec7000       796K PTE RO X
+0x000003ffe0ec7000-0x000003ffe0f00000       228K PTE RO NX
+0x000003ffe0f00000-0x000003ffe1300000         4M PMD RO NX
+0x000003ffe1300000-0x000003ffe1331000       196K PTE RO NX
+0x000003ffe1331000-0x000003ffe13b3000       520K PTE RW NX <---
+0x000003ffe13b3000-0x000003ffe13d5000       136K PTE RO NX
+0x000003ffe13d5000-0x000003ffe1400000       172K PTE RW NX
+0x000003ffe1400000-0x000003ffe1500000         1M PMD RW NX
+0x000003ffe1500000-0x000003ffe1700000         2M PTE RW NX
+0x000003ffe1700000-0x000003ffe1800000         1M PMD RW NX
+0x000003ffe1800000-0x000003ffe187e000       504K PTE RW NX
+---[ Kernel Image End ]---
 
-   m68k-gcc8/m68k-allmodconfig
-   mips-gcc8/mips-allmodconfig
-   powerpc-gcc5/powerpc-all{mod,yes}config
-   powerpc-gcc5/ppc64_defconfig
+Move the ro_after_init data section again right behind the rodata
+section to prevent interleaving RO and RW mappings:
 
-Initialize it to zero, this should fix the warnings and won't change the
-behaviour as btrfs_inode_by_name() accepts only a root or inode item
-types, otherwise returns an error.
+---[ Kernel Image Start ]---
+0x000003ffe0000000-0x000003ffe0e00000        14M PMD RO X
+0x000003ffe0e00000-0x000003ffe0ec7000       796K PTE RO X
+0x000003ffe0ec7000-0x000003ffe0f00000       228K PTE RO NX
+0x000003ffe0f00000-0x000003ffe1300000         4M PMD RO NX
+0x000003ffe1300000-0x000003ffe1353000       332K PTE RO NX
+0x000003ffe1353000-0x000003ffe1400000       692K PTE RW NX
+0x000003ffe1400000-0x000003ffe1500000         1M PMD RW NX
+0x000003ffe1500000-0x000003ffe1700000         2M PTE RW NX
+0x000003ffe1700000-0x000003ffe1800000         1M PMD RW NX
+0x000003ffe1800000-0x000003ffe187e000       504K PTE RW NX
+---[ Kernel Image End ]---
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/linux-btrfs/bd4e9928-17b3-9257-8ba7-6b7f9bbb639a@linux-m68k.org/
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/vmlinux.lds.S | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 4bf28f74605f..cd3156a9a268 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -5527,7 +5527,7 @@ struct inode *btrfs_lookup_dentry(struct inode *dir, struct dentry *dentry)
- 	struct inode *inode;
- 	struct btrfs_root *root = BTRFS_I(dir)->root;
- 	struct btrfs_root *sub_root = root;
--	struct btrfs_key location;
-+	struct btrfs_key location = { 0 };
- 	u8 di_type = 0;
- 	int ret = 0;
+diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+index 1c65c38ec9a3..c4bf95371f49 100644
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -69,6 +69,15 @@ SECTIONS
+ 	. = ALIGN(PAGE_SIZE);
+ 	__end_ro_after_init = .;
+ 
++	.data.rel.ro : {
++		*(.data.rel.ro .data.rel.ro.*)
++	}
++	.got : {
++		__got_start = .;
++		*(.got)
++		__got_end = .;
++	}
++
+ 	RW_DATA(0x100, PAGE_SIZE, THREAD_SIZE)
+ 	BOOT_DATA_PRESERVED
  
 -- 
 2.43.0
