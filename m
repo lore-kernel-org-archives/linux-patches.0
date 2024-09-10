@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A063618B48A;
-	Tue, 10 Sep 2024 09:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EDB18A6DF;
+	Tue, 10 Sep 2024 09:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725960974; cv=none; b=gfssHVsSFWa8y6B1MtC2hqXWMdQqkhs65bAP4r1vplIk+BL0D3Ziczkia3jbcFoXoGzF1E9H36Goz7zEl4ORwoD04l1oBxLuQch9tp4pQys+G1ewjfjOZUqjKTg6Lyr2Kk0Y3yCwPdXfYOVdEk5U7IsGkQnaaR30tV4+wyFNCeI=
+	t=1725960977; cv=none; b=bdxg630IHPO3DfjKxC5+zqmuFhS+NJif/3UX+HPq3M3kF7SF8vKdyegWSPBHRV/XBR6Wp4cKCzq9F0RZaKXL/wLOQTYvhw2SULsvaFRGV6PCNvgisCL84BY0yKEvuVWuzGSEz/yl3confshv5ynC/QxyTcFHcy5ewaY9E2mFMTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725960974; c=relaxed/simple;
-	bh=omOz/qI0381w6A2hCkKtpA6OVKxPxuGMEY8e0UNAwKY=;
+	s=arc-20240116; t=1725960977; c=relaxed/simple;
+	bh=MuskqV41sBIoHxhI4Rfh0D6SzlJjKydpSZfvV6tMxZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0NrreG8abgdUtRn3J2AyXizTPQgQycLJsiYhNwncg3twthSVlWAhPLgldgId0VGYJ4crn8ZAp9gg7XncypITSHncgT711PM79v7gBkFsGykfHllDAZeupUL5Vztu0/wc2sgFoHD5/kt6BF4l6A7P+z5Dp9G5Wb7F9icUCwaEC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeKHFaY4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I+mA3Tv915b3t3p455MVD2igaM2/e41DX+k2ZrHSDaSYzqL2UkJAl1rq6RFU230zIqlFmClQdPiKQcYVknSx2awDc6h85P2PeL2+3rE3rjhnDl9mR80HbNaa5DlBw4NxcZzsB1Xibc0trNN6gZ2RVmx1guPrjaHfk5o7azwbDvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0gCMNbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeKHFaY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CD3C4CECC;
-	Tue, 10 Sep 2024 09:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0gCMNbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3A5C4CEC3;
+	Tue, 10 Sep 2024 09:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725960974;
-	bh=omOz/qI0381w6A2hCkKtpA6OVKxPxuGMEY8e0UNAwKY=;
+	s=korg; t=1725960977;
+	bh=MuskqV41sBIoHxhI4Rfh0D6SzlJjKydpSZfvV6tMxZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PeKHFaY4Q0SyVR5UvAQSgeNm8PAYPIh4CkomYWb5jv+AEbA3oycVMc6vGM/BG9KbN
-	 FKm195DS3YgSvLALlMiw7f8XA/Id4Iw+/K7C3SdwbiO7d9eg+W0IiMsso5v4EBkMc7
-	 AKbg45t2D1Uovj73zrt+eQkpRmfJsYd3RyDIaNqU=
+	b=X0gCMNbETyXWjmvZFiCFncW22j82vV/4GCPBkkE2EssFzuwLsaf+jAxegI2kVyioz
+	 Zml0qx+yXbERNs62fqBD+bkxaHSeXlIt5vB+hhIQA5rVOTMb5DtDpz63Kj4ZckP3Q6
+	 L95Oh4fupuCx/gJgQSgT4C/yT+MSnIO8uGfvAo6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/96] usb: dwc3: st: add missing depopulate in probe error path
-Date: Tue, 10 Sep 2024 11:31:05 +0200
-Message-ID: <20240910092541.534713655@linuxfoundation.org>
+Subject: [PATCH 4.19 12/96] media: uvcvideo: Enforce alignment of frame and interval
+Date: Tue, 10 Sep 2024 11:31:14 +0200
+Message-ID: <20240910092541.954827966@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -52,55 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit cd4897bfd14f6a5388b21ba45a066541a0425199 ]
+[ Upstream commit c8931ef55bd325052ec496f242aea7f6de47dc9c ]
 
-Depopulate device in probe error paths to fix leak of children
-resources.
+Struct uvc_frame and interval (u32*) are packaged together on
+streaming->formats on a single contiguous allocation.
 
-Fixes: f83fca0707c6 ("usb: dwc3: add ST dwc3 glue layer to manage dwc3 HC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240814093957.37940-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Right now they are allocated right after uvc_format, without taking into
+consideration their required alignment.
+
+This is working fine because both structures have a field with a
+pointer, but it will stop working when the sizeof() of any of those
+structs is not a multiple of the sizeof(void*).
+
+Enforce that alignment during the allocation.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240404-uvc-align-v2-1-9e104b0ecfbd@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-st.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_driver.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-st.c b/drivers/usb/dwc3/dwc3-st.c
-index 770f80f53c356..d355c784f1f18 100644
---- a/drivers/usb/dwc3/dwc3-st.c
-+++ b/drivers/usb/dwc3/dwc3-st.c
-@@ -266,7 +266,7 @@ static int st_dwc3_probe(struct platform_device *pdev)
- 	if (!child_pdev) {
- 		dev_err(dev, "failed to find dwc3 core device\n");
- 		ret = -ENODEV;
--		goto err_node_put;
-+		goto depopulate;
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 775d67720648..6367ee9c0066 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -860,16 +860,26 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 		goto error;
  	}
  
- 	dwc3_data->dr_mode = usb_get_dr_mode(&child_pdev->dev);
-@@ -281,6 +281,7 @@ static int st_dwc3_probe(struct platform_device *pdev)
- 	ret = st_dwc3_drd_init(dwc3_data);
- 	if (ret) {
- 		dev_err(dev, "drd initialisation failed\n");
-+		of_platform_depopulate(dev);
- 		goto undo_softreset;
+-	size = nformats * sizeof(*format) + nframes * sizeof(*frame)
++	/*
++	 * Allocate memory for the formats, the frames and the intervals,
++	 * plus any required padding to guarantee that everything has the
++	 * correct alignment.
++	 */
++	size = nformats * sizeof(*format);
++	size = ALIGN(size, __alignof__(*frame)) + nframes * sizeof(*frame);
++	size = ALIGN(size, __alignof__(*interval))
+ 	     + nintervals * sizeof(*interval);
++
+ 	format = kzalloc(size, GFP_KERNEL);
+-	if (format == NULL) {
++	if (!format) {
+ 		ret = -ENOMEM;
+ 		goto error;
  	}
  
-@@ -290,6 +291,8 @@ static int st_dwc3_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, dwc3_data);
- 	return 0;
+-	frame = (struct uvc_frame *)&format[nformats];
+-	interval = (u32 *)&frame[nframes];
++	frame = (void *)format + nformats * sizeof(*format);
++	frame = PTR_ALIGN(frame, __alignof__(*frame));
++	interval = (void *)frame + nframes * sizeof(*frame);
++	interval = PTR_ALIGN(interval, __alignof__(*interval));
  
-+depopulate:
-+	of_platform_depopulate(dev);
- err_node_put:
- 	of_node_put(child);
- undo_softreset:
+ 	streaming->format = format;
+ 	streaming->nformats = nformats;
 -- 
 2.43.0
 
