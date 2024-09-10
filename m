@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6873913AD09;
-	Tue, 10 Sep 2024 09:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AB418C025;
+	Tue, 10 Sep 2024 09:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962002; cv=none; b=a6IctofWBPQd45jHx9QiZySbiJQzWWu5jJ1fzUJPs+8KFDx4Kb5An8gjqHYGpocnWagmKF3fKxw4eAaF3mvw+3DC4mzf0L/z6jBWiKN+QwJT74yOLCc53WuXfh+RmoKWngMI2s0ngXBve5Xv1W9qCQrAhF/Dga5uY50ra8vLy8E=
+	t=1725962005; cv=none; b=amSXAZAg20wH0ea6ntfrPs9Ehw7DvU6UXM7gEFrsLLsSby0xnv/Z3EOM1y9JhoPs9tfXkEQJdOd2j+GI+mJSIRdXbvx6Vs3Qv046vgv1nKDscmd0EMVHJypH1qktSXZv+/jz6U1t1CvrAnyLoY4a2BKjUExZ7XcMIMTUGCcN2KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962002; c=relaxed/simple;
-	bh=BP8nN0RgORjDB+Co5YwBc+pKtKGtfQar0Lmh0DB2xk4=;
+	s=arc-20240116; t=1725962005; c=relaxed/simple;
+	bh=+9Q8Q2srzjx+xTIQ7ez1ZzCDjhsT5luQXzCqt2x3JV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnqNDHbP1DL17ylvuWyqplH4Ue3MBTZh65M7kSASdpbKSfE5pMR26yn7KIe9/LT9IDFiUbt0nATtp/A4AqgxSBSVCCNBTCF5fFSFbC9z43rO4AQXx9zinBTMg3kuXZyvuhu/NYELecta+ZllyQvl7/QlnQTmXN3YJwTHcJnpu94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6yX3orp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9qWdUCYLy1GvXJzahhu2MUheIYFpg3vVIyxWETaF9YGYvKNoSXoDXcI2RFISHyYM/+Oad2Jm6wCP/7CVpEAFCeoY1feQrAQfAN7tFzBpYfuzx68eEM++4s15N1S4lfHffe8x0fiWrsAJFG46xthlk6xsN5QN24MpHvuTVJU8UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVadsjPb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6yX3orp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51F3C4CEC3;
-	Tue, 10 Sep 2024 09:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVadsjPb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC61BC4CECD;
+	Tue, 10 Sep 2024 09:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962002;
-	bh=BP8nN0RgORjDB+Co5YwBc+pKtKGtfQar0Lmh0DB2xk4=;
+	s=korg; t=1725962005;
+	bh=+9Q8Q2srzjx+xTIQ7ez1ZzCDjhsT5luQXzCqt2x3JV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6yX3orpbiTYSegjhvCYdmZVncqEu9PftT7S/xpLJ2f7MrwmqSZvtvI6sQeOEx12n
-	 Ql21VQaIf/QwYcR4mcCS8kf1HmBjPmfwLl1ddD899g2mULcQLeH5j5jew7wizrh295
-	 v4Y+rTUGIGFQnoHqJwUkK4yKgaapmfKkFS6b8vA4=
+	b=aVadsjPbCJf2eKRzE7JEZmUw0BsEn+wAWBLZvG4El/lbUJWsoEBPHCnCBG0dnHWSz
+	 nBPvMPIdWTxt43ic7vEg3bKkP8+bFCRh6kmQzcTBZ66tZ7G+Exz/rU6HCWxJcnDI17
+	 4owuzRN8OzwtVpN+olcPcW7Va++OMEuHtHHlSmaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devyn Liu <liudingyuan@huawei.com>,
-	Jay Fang <f.fangjian@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 262/375] spi: hisi-kunpeng: Add verification for the max_frequency provided by the firmware
-Date: Tue, 10 Sep 2024 11:30:59 +0200
-Message-ID: <20240910092631.359476118@linuxfoundation.org>
+Subject: [PATCH 6.10 263/375] btrfs: initialize location to fix -Wmaybe-uninitialized in btrfs_lookup_dentry()
+Date: Tue, 10 Sep 2024 11:31:00 +0200
+Message-ID: <20240910092631.394549169@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,41 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devyn Liu <liudingyuan@huawei.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 5127c42c77de18651aa9e8e0a3ced190103b449c ]
+[ Upstream commit b8e947e9f64cac9df85a07672b658df5b2bcff07 ]
 
-If the value of max_speed_hz is 0, it may cause a division by zero
-error in hisi_calc_effective_speed().
-The value of max_speed_hz is provided by firmware.
-Firmware is generally considered as a trusted domain. However, as
-division by zero errors can cause system failure, for defense measure,
-the value of max_speed is validated here. So 0 is regarded as invalid
-and an error code is returned.
+Some arch + compiler combinations report a potentially unused variable
+location in btrfs_lookup_dentry(). This is a false alert as the variable
+is passed by value and always valid or there's an error. The compilers
+cannot probably reason about that although btrfs_inode_by_name() is in
+the same file.
 
-Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
-Reviewed-by: Jay Fang <f.fangjian@huawei.com>
-Link: https://patch.msgid.link/20240730032040.3156393-3-liudingyuan@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.objectid' may be used
+   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5603:9
+   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.type' may be used
+   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5674:5
+
+   m68k-gcc8/m68k-allmodconfig
+   mips-gcc8/mips-allmodconfig
+   powerpc-gcc5/powerpc-all{mod,yes}config
+   powerpc-gcc5/ppc64_defconfig
+
+Initialize it to zero, this should fix the warnings and won't change the
+behaviour as btrfs_inode_by_name() accepts only a root or inode item
+types, otherwise returns an error.
+
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/linux-btrfs/bd4e9928-17b3-9257-8ba7-6b7f9bbb639a@linux-m68k.org/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-hisi-kunpeng.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index 6910b4d4c427..16054695bdb0 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -481,6 +481,9 @@ static int hisi_spi_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index c2f48fc159e5..2951aa0039fc 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -5699,7 +5699,7 @@ struct inode *btrfs_lookup_dentry(struct inode *dir, struct dentry *dentry)
+ 	struct inode *inode;
+ 	struct btrfs_root *root = BTRFS_I(dir)->root;
+ 	struct btrfs_root *sub_root = root;
+-	struct btrfs_key location;
++	struct btrfs_key location = { 0 };
+ 	u8 di_type = 0;
+ 	int ret = 0;
  
-+	if (host->max_speed_hz == 0)
-+		return dev_err_probe(dev, -EINVAL, "spi-max-frequency can't be 0\n");
-+
- 	ret = device_property_read_u16(dev, "num-cs",
- 					&host->num_chipselect);
- 	if (ret)
 -- 
 2.43.0
 
