@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDBE1552FD;
-	Tue, 10 Sep 2024 10:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920AB1DA4C;
+	Tue, 10 Sep 2024 10:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965122; cv=none; b=M0DC67ARVe7LN8gDtFUziNUP0Xib85f+L+EyAmfVcSAXz8LkZDVFDrfEdnY4rT/f0o2lRb/9ElUGXr8xvtBySj/B1oY8PVIk3gy29olgaPLcer4ziIXai60ACD6J64l6SdyG+GUvGiYcv2K6DkFdgyD20pCgWSvGSl/yv/Z45go=
+	t=1725965125; cv=none; b=iCRQ2nE0SP1ojRKUiyIm/k++m49YvMz8rop1Xni/IVDjFEJiru013Hv9EHjZtenkTT5zKZ6GBdKMmMthqbIh4kAujzvJEkyS8zYcDBp3Gn5XRhDFrPY9leK4cSIpIIjLW2IOqWCHvmuv+y4S0XZbYjjJPoAG7WTQEGV+fty3UYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965122; c=relaxed/simple;
-	bh=xLZRTOiHvyynuxW+tdiSLwf0Sbv2BCgiVK5KaU9lJic=;
+	s=arc-20240116; t=1725965125; c=relaxed/simple;
+	bh=XMskYKe1tnMhpIqz8vemvOpzB7jIWP44iHpQB2bBPPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGy5htV8e4y3QTvXALFqtAMamNvKjZQq4rU9lBQSMLBz6Yg12iXMsTQiHBjqwOxs3R0b8GQxvCXmj5BkwmkYZ1fhE+ce/Om+47cD6R+qXjOWG6A/BCHNo5+vGKTtarbaJjqAcjJ4bB6a9a3YYJq+A2Rq3EKAsN+6CPhsjGhi0A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTYbkhM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I84kAVgkKafKgkZ8vFU4baTfxj9+dX/SfaKwLmkBh+LBRSUJ+Qpv5VlpPxOqGiKD3PNjL3hsWaRu1qzHmquLNlZxA+A5ccFOFMGjHfXLPQgCkVV1cgv7lyN87fzyp+NjypVSD7xCMp3YnhSqA9gnZzSSBaF8VjG3I70sGGdjLM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuysmPQ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTYbkhM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236A7C4CEC3;
-	Tue, 10 Sep 2024 10:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuysmPQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F04C4CEC3;
+	Tue, 10 Sep 2024 10:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965122;
-	bh=xLZRTOiHvyynuxW+tdiSLwf0Sbv2BCgiVK5KaU9lJic=;
+	s=korg; t=1725965125;
+	bh=XMskYKe1tnMhpIqz8vemvOpzB7jIWP44iHpQB2bBPPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTYbkhM/Cw8Pg/hxEmiwVWTw7eyL1VikZ5pNDEx+KythNjj/s97XdUxq0Cwhr/0mp
-	 P2nHhlrZWUpJarsGxlrThNWTmORNB7Ngzu/57j9gqInjXS8MUU4LOSxJHkBmNRNMzw
-	 zRjujgfZKtUPUyMu6j3z5a2uKGsRPo2pi/dy6z30=
+	b=KuysmPQ+uhwXJsR8oQEc+J+vsdQf/uglI9buAnrAeIagICVMtPSxEor2EvJla8Fb3
+	 OxU99Tk1++bGqreeE74l8DrDoFNq102Rn0HcoUY0+3wBNhgWebUgx9ercnfsYZk2SB
+	 GY1q79aAK+NciIvIIvq2PQduzWrA3zvxcba8T6Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Breno Leitao <leitao@debian.org>,
+	Madalin Bucur <madalin.bucur@oss.nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 144/186] PCI: Add missing bridge lock to pci_bus_lock()
-Date: Tue, 10 Sep 2024 11:33:59 +0200
-Message-ID: <20240910092600.535369366@linuxfoundation.org>
+Subject: [PATCH 5.10 145/186] net: dpaa: avoid on-stack arrays of NR_CPUS elements
+Date: Tue, 10 Sep 2024 11:34:00 +0200
+Message-ID: <20240910092600.569817625@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -56,161 +53,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a4e772898f8bf2e7e1cf661a12c60a5612c4afab ]
+[ Upstream commit 555a05d84ca2c587e2d4777006e2c2fb3dfbd91d ]
 
-One of the true positives that the cfg_access_lock lockdep effort
-identified is this sequence:
+The dpaa-eth driver is written for PowerPC and Arm SoCs which have 1-24
+CPUs. It depends on CONFIG_NR_CPUS having a reasonably small value in
+Kconfig. Otherwise, there are 2 functions which allocate on-stack arrays
+of NR_CPUS elements, and these can quickly explode in size, leading to
+warnings such as:
 
-  WARNING: CPU: 14 PID: 1 at drivers/pci/pci.c:4886 pci_bridge_secondary_bus_reset+0x5d/0x70
-  RIP: 0010:pci_bridge_secondary_bus_reset+0x5d/0x70
-  Call Trace:
-   <TASK>
-   ? __warn+0x8c/0x190
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   ? report_bug+0x1f8/0x200
-   ? handle_bug+0x3c/0x70
-   ? exc_invalid_op+0x18/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   pci_reset_bus+0x1d8/0x270
-   vmd_probe+0x778/0xa10
-   pci_device_probe+0x95/0x120
+  drivers/net/ethernet/freescale/dpaa/dpaa_eth.c:3280:12: warning:
+  stack frame size (16664) exceeds limit (2048) in 'dpaa_eth_probe' [-Wframe-larger-than]
 
-Where pci_reset_bus() users are triggering unlocked secondary bus resets.
-Ironically pci_bus_reset(), several calls down from pci_reset_bus(), uses
-pci_bus_lock() before issuing the reset which locks everything *but* the
-bridge itself.
+The problem is twofold:
+- Reducing the array size to the boot-time num_possible_cpus() (rather
+  than the compile-time NR_CPUS) creates a variable-length array,
+  which should be avoided in the Linux kernel.
+- Using NR_CPUS as an array size makes the driver blow up in stack
+  consumption with generic, as opposed to hand-crafted, .config files.
 
-For the same motivation as adding:
+A simple solution is to use dynamic allocation for num_possible_cpus()
+elements (aka a small number determined at runtime).
 
-  bridge = pci_upstream_bridge(dev);
-  if (bridge)
-    pci_dev_lock(bridge);
-
-to pci_reset_function() for the "bus" and "cxl_bus" reset cases, add
-pci_dev_lock() for @bus->self to pci_bus_lock().
-
-Link: https://lore.kernel.org/r/171711747501.1628941.15217746952476635316.stgit@dwillia2-xfh.jf.intel.com
-Reported-by: Imre Deak <imre.deak@intel.com>
-Closes: http://lore.kernel.org/r/6657833b3b5ae_14984b29437@dwillia2-xfh.jf.intel.com.notmuch
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[bhelgaas: squash in recursive locking deadlock fix from Keith Busch:
-https://lore.kernel.org/r/20240711193650.701834-1-kbusch@meta.com]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Kalle Valo <kvalo@kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/all/202406261920.l5pzM1rj-lkp@intel.com/
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Acked-by: Madalin Bucur <madalin.bucur@oss.nxp.com>
+Link: https://patch.msgid.link/20240713225336.1746343-2-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ .../net/ethernet/freescale/dpaa/dpaa_eth.c    | 20 ++++++++++++++-----
+ .../ethernet/freescale/dpaa/dpaa_ethtool.c    | 10 +++++++++-
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 09d5fa637b98..800df0f1417d 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5260,10 +5260,12 @@ static void pci_bus_lock(struct pci_bus *bus)
- {
- 	struct pci_dev *dev;
- 
-+	pci_dev_lock(bus->self);
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+index cb7c028b1bf5..90bd5583ac34 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+@@ -908,14 +908,18 @@ static inline void dpaa_setup_egress(const struct dpaa_priv *priv,
  	}
  }
  
-@@ -5275,8 +5277,10 @@ static void pci_bus_unlock(struct pci_bus *bus)
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- }
- 
- /* Return 1 on successful lock, 0 on contention */
-@@ -5284,15 +5288,15 @@ static int pci_bus_trylock(struct pci_bus *bus)
+-static void dpaa_fq_setup(struct dpaa_priv *priv,
+-			  const struct dpaa_fq_cbs *fq_cbs,
+-			  struct fman_port *tx_port)
++static int dpaa_fq_setup(struct dpaa_priv *priv,
++			 const struct dpaa_fq_cbs *fq_cbs,
++			 struct fman_port *tx_port)
  {
- 	struct pci_dev *dev;
- 
-+	if (!pci_dev_trylock(bus->self))
-+		return 0;
+ 	int egress_cnt = 0, conf_cnt = 0, num_portals = 0, portal_cnt = 0, cpu;
+ 	const cpumask_t *affine_cpus = qman_affine_cpus();
+-	u16 channels[NR_CPUS];
+ 	struct dpaa_fq *fq;
++	u16 *channels;
 +
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
--			if (!pci_bus_trylock(dev->subordinate)) {
--				pci_dev_unlock(dev);
-+			if (!pci_bus_trylock(dev->subordinate))
- 				goto unlock;
--			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
++	channels = kcalloc(num_possible_cpus(), sizeof(u16), GFP_KERNEL);
++	if (!channels)
++		return -ENOMEM;
  
-@@ -5300,8 +5304,10 @@ static int pci_bus_trylock(struct pci_bus *bus)
- 	list_for_each_entry_continue_reverse(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
+ 	for_each_cpu_and(cpu, affine_cpus, cpu_online_mask)
+ 		channels[num_portals++] = qman_affine_channel(cpu);
+@@ -974,6 +978,10 @@ static void dpaa_fq_setup(struct dpaa_priv *priv,
+ 				break;
+ 		}
  	}
-+	pci_dev_unlock(bus->self);
++
++	kfree(channels);
++
++	return 0;
+ }
+ 
+ static inline int dpaa_tx_fq_to_id(const struct dpaa_priv *priv,
+@@ -3015,7 +3023,9 @@ static int dpaa_eth_probe(struct platform_device *pdev)
+ 	 */
+ 	dpaa_eth_add_channel(priv->channel, &pdev->dev);
+ 
+-	dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
++	err = dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
++	if (err)
++		goto free_dpaa_bps;
+ 
+ 	/* Create a congestion group for this netdev, with
+ 	 * dynamically-allocated CGR ID.
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
+index 2f9075429c43..d8cb0b99684a 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
+@@ -537,12 +537,16 @@ static int dpaa_set_coalesce(struct net_device *dev,
+ 			     struct ethtool_coalesce *c)
+ {
+ 	const cpumask_t *cpus = qman_affine_cpus();
+-	bool needs_revert[NR_CPUS] = {false};
+ 	struct qman_portal *portal;
+ 	u32 period, prev_period;
+ 	u8 thresh, prev_thresh;
++	bool *needs_revert;
+ 	int cpu, res;
+ 
++	needs_revert = kcalloc(num_possible_cpus(), sizeof(bool), GFP_KERNEL);
++	if (!needs_revert)
++		return -ENOMEM;
++
+ 	period = c->rx_coalesce_usecs;
+ 	thresh = c->rx_max_coalesced_frames;
+ 
+@@ -565,6 +569,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
+ 		needs_revert[cpu] = true;
+ 	}
+ 
++	kfree(needs_revert);
++
  	return 0;
+ 
+ revert_values:
+@@ -578,6 +584,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
+ 		qman_dqrr_set_ithresh(portal, prev_thresh);
+ 	}
+ 
++	kfree(needs_revert);
++
+ 	return res;
  }
  
-@@ -5333,9 +5339,10 @@ static void pci_slot_lock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
- 	}
- }
- 
-@@ -5361,14 +5368,13 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
- 			if (!pci_bus_trylock(dev->subordinate)) {
- 				pci_dev_unlock(dev);
- 				goto unlock;
- 			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
- 
-@@ -5379,7 +5385,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
- 	return 0;
- }
 -- 
 2.43.0
 
