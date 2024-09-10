@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92039188A38;
-	Tue, 10 Sep 2024 10:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA62188A38;
+	Tue, 10 Sep 2024 10:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963831; cv=none; b=oKENd8eHvfodiN5zO7BdM13lWQQRaY1uM2gFyeC+c3lyFF3srpKFFqraEFEiUFiPAa49zQ0slLhAyCEU7eDUYrfvRSRtHmA8aTHSC8wApqvyRAM1lu6XaeK47GdUag1WB4KscQvPPB22ub65FP+XEjvK7X4lUebcDAYzvI+Ge/g=
+	t=1725963834; cv=none; b=k3Py//C3RjUrNQI5xu7AOlzTVrdORlbbIuzIaWu1JCVsESyK2LI6y8tv4VZgNBSx4bJxNI3eJzi/AU6QizoL/0qQnNH2eZuYe1WpcANFQ3dexJFhthohY9mJ/vN8Caanpyhwrm3A46ped6OKTncdngAYEFEMuXnBfwGOHTMk2/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963831; c=relaxed/simple;
-	bh=aNCFUXENEqIqOPN5dR/fUw8b+Y8s6GavrD2XKOE+gDI=;
+	s=arc-20240116; t=1725963834; c=relaxed/simple;
+	bh=IbImy3v4duGMe39mEa36WJ2Qygp2nJUsfBDoindqFBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNXAxVaZn1nBHsAsCcIo8zbeFbj2poSgYShh0b0+cY1Yjpc/pKrL5PrAPz3zwM5Gz4M5/wN/iy746qwzHDxX+Ps9jayY1TU9U6JWsSo1VDYVVoiH/gbv0i5+hrNfVz4dchnvA8h8cBgNfDrjA3xcOikXEwf3QPUVniX3wVoYh8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSNFvTaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IEcVUre3A0RNXDLlCtjCgUZ+tZdHQSHh0/RCDlG2lam1Nq6GF1h6I9hWDCLi8MvF5pxcxWZpk5TRJJr6BCo7zkQyMcP2YtlFbxogFet0m5rWoRhai48hALYngebj50vF/ZBJLjMhxraI319RewpVO6V8+L17F89ro9mZ8QdclnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXFEzXt+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSNFvTaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186F2C4CEC3;
-	Tue, 10 Sep 2024 10:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXFEzXt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9880C4CEC3;
+	Tue, 10 Sep 2024 10:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963831;
-	bh=aNCFUXENEqIqOPN5dR/fUw8b+Y8s6GavrD2XKOE+gDI=;
+	s=korg; t=1725963834;
+	bh=IbImy3v4duGMe39mEa36WJ2Qygp2nJUsfBDoindqFBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSNFvTaqS2kqS+QssBfP9nUBgjMWjsReYa5Qc+vJlPCVRAk7+H2M4ogKpecGJtdgH
-	 TmZ9FqtfI7cGLQ4MMuCddNknjUhKi1ChwatfxgNndtNQfk8oEHMJt43lqGoJRRQDYR
-	 gncHlUy7XjppjgcWj58fhW1QoRpvgGLjDSfuaFds=
+	b=zXFEzXt+eZLhbiyW1IgnPm6SFrLO3xRIXhR+nzk9jDTIy+paiBz1JNAovDMG/o6Kb
+	 QLdSpVxXSM8KOylQMvgsoHX86+zWhG2DEOJJ7oOah6VK5iVJjxMPCHncbMoDZ/JKSj
+	 PTFusgNyv3TnD3H1XDvdRm15hS+xalzUW03ZEM6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 174/214] staging: iio: frequency: ad9834: Validate frequency parameter value
-Date: Tue, 10 Sep 2024 11:33:16 +0200
-Message-ID: <20240910092605.819857219@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 192/214] ksmbd: Unlock on in ksmbd_tcp_set_interfaces()
+Date: Tue, 10 Sep 2024 11:33:34 +0200
+Message-ID: <20240910092606.457191792@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit b48aa991758999d4e8f9296c5bbe388f293ef465 upstream.
+[ Upstream commit 844436e045ac2ab7895d8b281cb784a24de1d14d ]
 
-In ad9834_write_frequency() clk_get_rate() can return 0. In such case
-ad9834_calc_freqreg() call will lead to division by zero. Checking
-'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
-ad9834_write_frequency() is called from ad9834_write(), where fout is
-taken from text buffer, which can contain any value.
+Unlock before returning an error code if this allocation fails.
 
-Modify parameters checking.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/frequency/ad9834.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/transport_tcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/iio/frequency/ad9834.c
-+++ b/drivers/staging/iio/frequency/ad9834.c
-@@ -114,7 +114,7 @@ static int ad9834_write_frequency(struct
- 
- 	clk_freq = clk_get_rate(st->mclk);
- 
--	if (fout > (clk_freq / 2))
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
- 
- 	regval = ad9834_calc_freqreg(clk_freq, fout);
+diff --git a/fs/ksmbd/transport_tcp.c b/fs/ksmbd/transport_tcp.c
+index 9d4222154dcc..176295137045 100644
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -618,8 +618,10 @@ int ksmbd_tcp_set_interfaces(char *ifc_list, int ifc_list_sz)
+ 		for_each_netdev(&init_net, netdev) {
+ 			if (netif_is_bridge_port(netdev))
+ 				continue;
+-			if (!alloc_iface(kstrdup(netdev->name, GFP_KERNEL)))
++			if (!alloc_iface(kstrdup(netdev->name, GFP_KERNEL))) {
++				rtnl_unlock();
+ 				return -ENOMEM;
++			}
+ 		}
+ 		rtnl_unlock();
+ 		bind_additional_ifaces = 1;
+-- 
+2.43.0
+
 
 
