@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36057194C8B;
-	Tue, 10 Sep 2024 10:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B5018C02F;
+	Tue, 10 Sep 2024 10:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962940; cv=none; b=YQdj7R3Rb/z+zPkkqFNEK7atnIcadR67sFg8T8EbEc/3C85AUJ/2k6TAXDQdwCdoLlnxCSPdd2MQ6XL8hq0nbi46I4+j6vuPCsAYiXE4u9QXZ1mRKV9AcJM5UewiIjljGqgMwxJwcV035rvuoVJIma2Q6bHwU+tpH2LBbmM7mnI=
+	t=1725962943; cv=none; b=Kextqvww+ybrn1CeA4JCO9eSIPabg7YWevqUk6ig20gpzhd4k+v4iFTxmmlxpMmHlYFa2rJN1XsZO2uG5/Cse3IKYgw+nZ7AjrggGxYfBkF3K7CA+34JBHqqaxrHwBIt4KbMsfWfbOjfzmBuWgnztX/FBlbyW2+gniMrQA7JNnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962940; c=relaxed/simple;
-	bh=OT6gIzIuSp6zIzSvFj3Nxad2hg3cYhH7b2l+i6o8SuY=;
+	s=arc-20240116; t=1725962943; c=relaxed/simple;
+	bh=6v/sqXENfCyxxAzpVn/30tb/CP8FcQo7sfEBYkndsHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXApgPD7nYZ8ksHfZ77s0Ye5mCI7dcpcuPhVs2Q7T/qRcycf5IQPpuQhVLK9z3SF8SFZwCTprgj2W5bZQoixrQTD56WvNpm0tUw47DxcUh+HF0yFdfOL9Id9I9eL55lT+N1ZI7gzFo0OtbImov9WKq8a+KSg51aeVimO29EvRkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4wvBBAs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OohSwTfYlrruB73SXl4s06UlMPr3x9VLlkb0kPbzvPcryf/t4l4MJrApWiARdoCDRDO1PDi0ttTaIjWNsPfo4nCQN/rChEB1hPQqAuAUcTARIgVfWUQV9wHWJ9qbaCcZNsRVGMSfo2U4ZNSMwnn1N7jdPTXycmQmIaDBNOtk0sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imisfRa3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4wvBBAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCFDC4CEC3;
-	Tue, 10 Sep 2024 10:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imisfRa3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B06DC4CEC3;
+	Tue, 10 Sep 2024 10:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962939;
-	bh=OT6gIzIuSp6zIzSvFj3Nxad2hg3cYhH7b2l+i6o8SuY=;
+	s=korg; t=1725962942;
+	bh=6v/sqXENfCyxxAzpVn/30tb/CP8FcQo7sfEBYkndsHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4wvBBAs4jicIFblKiGKx6ENbMppAUKDy8MPld+ca/OKLWaAQ8T4H2K2sazFbgLpo
-	 F587tlyn2hiKd4dFbyFt6z9YjnmoTosRKltZRQXwJovDxGOWVwwROphgF738DfV1et
-	 3yeN5mJlBZuVsJkRiLh9ViuaBpHa/p7hq520FXhY=
+	b=imisfRa3g2F5AsktqbBeevFvKDkj7ZzIWV0Eob5zCPBKKPssZa3qdBE74YqL/tV4b
+	 myP0EFZ1BPCvwNnaGRd7qRK/chzwX3C8RkyV79PaiGXAONdYzBplEg0xEuGBpRtmaA
+	 E3L0sojXoNTvXac4Y4tOZ+wNJU6AnTGKM5SvDp60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/192] leds: spi-byte: Call of_node_put() on error path
-Date: Tue, 10 Sep 2024 11:31:18 +0200
-Message-ID: <20240910092600.211418747@linuxfoundation.org>
+Subject: [PATCH 6.1 045/192] ELF: fix kernel.randomize_va_space double read
+Date: Tue, 10 Sep 2024 11:31:09 +0200
+Message-ID: <20240910092559.857086406@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,59 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 7f9ab862e05c5bc755f65bf6db7edcffb3b49dfc ]
+[ Upstream commit 2a97388a807b6ab5538aa8f8537b2463c6988bd2 ]
 
-Add a missing call to of_node_put(np) on error.
+ELF loader uses "randomize_va_space" twice. It is sysctl and can change
+at any moment, so 2 loads could see 2 different values in theory with
+unpredictable consequences.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240606173037.3091598-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Issue exactly one load for consistent value across one exec.
+
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Link: https://lore.kernel.org/r/3329905c-7eb8-400a-8f0a-d87cff979b5b@p183
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-spi-byte.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/binfmt_elf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-spi-byte.c b/drivers/leds/leds-spi-byte.c
-index 2bc5c99daf51..6883d3ba382f 100644
---- a/drivers/leds/leds-spi-byte.c
-+++ b/drivers/leds/leds-spi-byte.c
-@@ -91,7 +91,6 @@ static int spi_byte_probe(struct spi_device *spi)
- 		dev_err(dev, "Device must have exactly one LED sub-node.");
- 		return -EINVAL;
- 	}
--	child = of_get_next_available_child(dev_of_node(dev), NULL);
+diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
+index e6c9c0e08448..89e7e4826efc 100644
+--- a/fs/binfmt_elf.c
++++ b/fs/binfmt_elf.c
+@@ -1009,7 +1009,8 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	if (elf_read_implies_exec(*elf_ex, executable_stack))
+ 		current->personality |= READ_IMPLIES_EXEC;
  
- 	led = devm_kzalloc(dev, sizeof(*led), GFP_KERNEL);
- 	if (!led)
-@@ -107,11 +106,13 @@ static int spi_byte_probe(struct spi_device *spi)
- 	led->ldev.max_brightness = led->cdef->max_value - led->cdef->off_value;
- 	led->ldev.brightness_set_blocking = spi_byte_brightness_set_blocking;
+-	if (!(current->personality & ADDR_NO_RANDOMIZE) && randomize_va_space)
++	const int snapshot_randomize_va_space = READ_ONCE(randomize_va_space);
++	if (!(current->personality & ADDR_NO_RANDOMIZE) && snapshot_randomize_va_space)
+ 		current->flags |= PF_RANDOMIZE;
  
-+	child = of_get_next_available_child(dev_of_node(dev), NULL);
- 	state = of_get_property(child, "default-state", NULL);
- 	if (state) {
- 		if (!strcmp(state, "on")) {
- 			led->ldev.brightness = led->ldev.max_brightness;
- 		} else if (strcmp(state, "off")) {
-+			of_node_put(child);
- 			/* all other cases except "off" */
- 			dev_err(dev, "default-state can only be 'on' or 'off'");
- 			return -EINVAL;
-@@ -122,9 +123,12 @@ static int spi_byte_probe(struct spi_device *spi)
+ 	setup_new_exec(bprm);
+@@ -1301,7 +1302,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	mm->end_data = end_data;
+ 	mm->start_stack = bprm->p;
  
- 	ret = devm_led_classdev_register(&spi->dev, &led->ldev);
- 	if (ret) {
-+		of_node_put(child);
- 		mutex_destroy(&led->mutex);
- 		return ret;
- 	}
-+
-+	of_node_put(child);
- 	spi_set_drvdata(spi, led);
- 
- 	return 0;
+-	if ((current->flags & PF_RANDOMIZE) && (randomize_va_space > 1)) {
++	if ((current->flags & PF_RANDOMIZE) && (snapshot_randomize_va_space > 1)) {
+ 		/*
+ 		 * For architectures with ELF randomization, when executing
+ 		 * a loader directly (i.e. no interpreter listed in ELF
 -- 
 2.43.0
 
