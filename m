@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673EC224F6;
-	Tue, 10 Sep 2024 09:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47532224F6;
+	Tue, 10 Sep 2024 09:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961952; cv=none; b=AkPmbGjonUSmy1UqMXMbALMBrmzpmVdHSkFhpQlnJx+4xiP/CvwPmHjrvQkWFFtMrAC9oXTu6Ejm35vecV1U7lpo2pHBpV2rELDW8X1OT/sXY2e1MqumF/Wz+WeCvkLEu1pvVwh1hjCWJKswuBxyS9aDfAzzVptksL8BXQoQXiE=
+	t=1725961955; cv=none; b=dh+y2w4rcvnqTfr03WAqqyzh4bqLc4KjIs3YbgO935pxJNkf36tf2ZP6AaW/viSSCnYE1cqIMDFHThXGM7cMAbecpCyyHcy2f8Lc9jQ8cSaVahRd4DAKSQ5yKQGthdpc4o9grQNvr08Eed9rMsKck9na6xiDn/y73wKiCFYX6jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961952; c=relaxed/simple;
-	bh=33tJgdjbRJxYfOhpllHzk7/W916DKSROQb1yCSd+bf4=;
+	s=arc-20240116; t=1725961955; c=relaxed/simple;
+	bh=bUeBP8omTkx3B9cGUqOH3ooagufij4Lp0IjDSMvR/0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAeH7IpmiWN2XULnpZPh0UkrOuSlILSHGd6S6ICBcV34zwsxvwMX9aJzthNozU2/iJrfHxmrxpsmrfRfnedv/Dnlg8DHGDGQ58cMawrA42lLSIZQrNJmh73RfAhNnu9eZNZpQiaxhWlyqwk1rq3rOVJhBt7KbKHACYra7Msj/f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/kLzdK4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UFsogrR7hXVdQA+SsJ2JKUsjCuwVRrf6e1e7FvXS+f08A7dsBvMNYB73xF3jq20QhqdlUBlSVD+Hsw4w9lafLyi12hvPocuyxivzwllm/ft6REtC7v8RiEGl/iyLCALkBwr4yIfuReJI1HgoWjddVmQxbGT010Hm6m71SI60qWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzFXHosK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/kLzdK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC68BC4CEC3;
-	Tue, 10 Sep 2024 09:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzFXHosK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13FCC4CEC3;
+	Tue, 10 Sep 2024 09:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961952;
-	bh=33tJgdjbRJxYfOhpllHzk7/W916DKSROQb1yCSd+bf4=;
+	s=korg; t=1725961955;
+	bh=bUeBP8omTkx3B9cGUqOH3ooagufij4Lp0IjDSMvR/0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/kLzdK4ObsEfU8mQvT6y6Rpmclr3eRS2x2rI19i4dXADLMwMbR+QXM9vPIQbCmp2
-	 7bj8Zp+1RxQ0idrt5yqmHHwTDTlZZkqDYEMuUuT332fqNaGiJNCDfy1M+hl5noL8+x
-	 bFRyp70Fknex0jgXdwOtiv5TYHIoPFB9d+17JC1w=
+	b=nzFXHosKtOgi3UGKj4noZOLc6PdeMCfNjc2BxEMQIJkjM0+QIHwM/g+TwRxIyi/4y
+	 yU1nZ7DkDWfq6DZYHTc8FAIjKN9cChQliajIE+kJVWufKmKJ4IBF+cA2dOzVgd2ep9
+	 GcReSTdYbXpQPfrq5qb8HyRwMz4d48WSTvHaYYnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 244/375] btrfs: replace BUG_ON() with error handling at update_ref_for_cow()
-Date: Tue, 10 Sep 2024 11:30:41 +0200
-Message-ID: <20240910092630.746704500@linuxfoundation.org>
+Subject: [PATCH 6.10 245/375] btrfs: dont BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
+Date: Tue, 10 Sep 2024 11:30:42 +0200
+Message-ID: <20240910092630.780087688@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -54,46 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit b56329a782314fde5b61058e2a25097af7ccb675 ]
+[ Upstream commit 28cb13f29faf6290597b24b728dc3100c019356f ]
 
-Instead of a BUG_ON() just return an error, log an error message and
-abort the transaction in case we find an extent buffer belonging to the
-relocation tree that doesn't have the full backref flag set. This is
-unexpected and should never happen (save for bugs or a potential bad
-memory).
+Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
+aborting the transaction and logging an error message.
 
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/btrfs/extent-tree.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 8a791b648ac5..f56914507fce 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -462,8 +462,16 @@ static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
- 	}
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 033eb428ffcd..55be8a7f0bb1 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -173,9 +173,16 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
  
- 	owner = btrfs_header_owner(buf);
--	BUG_ON(owner == BTRFS_TREE_RELOC_OBJECTID &&
--	       !(flags & BTRFS_BLOCK_FLAG_FULL_BACKREF));
-+	if (unlikely(owner == BTRFS_TREE_RELOC_OBJECTID &&
-+		     !(flags & BTRFS_BLOCK_FLAG_FULL_BACKREF))) {
-+		btrfs_crit(fs_info,
-+"found tree block at bytenr %llu level %d root %llu refs %llu flags %llx without full backref flag set",
-+			   buf->start, btrfs_header_level(buf),
-+			   btrfs_root_id(root), refs, flags);
-+		ret = -EUCLEAN;
-+		btrfs_abort_transaction(trans, ret);
-+		return ret;
-+	}
+ 		ei = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_extent_item);
+ 		num_refs = btrfs_extent_refs(leaf, ei);
++		if (unlikely(num_refs == 0)) {
++			ret = -EUCLEAN;
++			btrfs_err(fs_info,
++		"unexpected zero reference count for extent item (%llu %u %llu)",
++				  key.objectid, key.type, key.offset);
++			btrfs_abort_transaction(trans, ret);
++			goto out_free;
++		}
+ 		extent_flags = btrfs_extent_flags(leaf, ei);
+ 		owner = btrfs_get_extent_owner_root(fs_info, leaf, path->slots[0]);
+-		BUG_ON(num_refs == 0);
+ 	} else {
+ 		num_refs = 0;
+ 		extent_flags = 0;
+@@ -205,10 +212,19 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+ 			goto search_again;
+ 		}
+ 		spin_lock(&head->lock);
+-		if (head->extent_op && head->extent_op->update_flags)
++		if (head->extent_op && head->extent_op->update_flags) {
+ 			extent_flags |= head->extent_op->flags_to_set;
+-		else
+-			BUG_ON(num_refs == 0);
++		} else if (unlikely(num_refs == 0)) {
++			spin_unlock(&head->lock);
++			mutex_unlock(&head->mutex);
++			spin_unlock(&delayed_refs->lock);
++			ret = -EUCLEAN;
++			btrfs_err(fs_info,
++			  "unexpected zero reference count for extent %llu (%s)",
++				  bytenr, metadata ? "metadata" : "data");
++			btrfs_abort_transaction(trans, ret);
++			goto out_free;
++		}
  
- 	if (refs > 1) {
- 		if ((owner == btrfs_root_id(root) ||
+ 		num_refs += head->ref_mod;
+ 		spin_unlock(&head->lock);
 -- 
 2.43.0
 
