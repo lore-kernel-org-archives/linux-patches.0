@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B25218B462;
-	Tue, 10 Sep 2024 10:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF27718B462;
+	Tue, 10 Sep 2024 10:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964476; cv=none; b=H9cazLvPAxKQQLgrAzpwE41kCLfF3b7SgT4tfF2sa1zVv6pOral11vsy8vXZi0/uQNUQ4F6uqODoFXLhokJz1q/0XD7oGMB6fJwJ/CYALRELpjM9bj+8GWdR7FGs5Q1jKcMC6D9ZRm9LlnlrIHH+QmERQSHPGKIDVOlrtMzQ/38=
+	t=1725964478; cv=none; b=HStxg44bmfxMkumqTVuk0RGVVlFgYDOcENJzCjr0DHLFkSZwYm3KNDXfKFn7Qwvc091hDPozIoHsHxTaDncYtKPJA/ERCsm0to2BZ3/VfS/EsYeWOUS71wNntEVF/DzP+yqMyni2sPbuN/82QMC7Txa/jhAJjkI5dO/FVjD2wuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964476; c=relaxed/simple;
-	bh=tLXxtWgc1TYnMrOhG+UfGo9ZGYmbrR80MIqWX/kFuoU=;
+	s=arc-20240116; t=1725964478; c=relaxed/simple;
+	bh=8suC4PMMCm6AFIMZYmMkG6BSihA1xyRVLFeT9QPv6Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIL0CqRT9LJXIidmt6hIq4/o2K9zCehC6JmROuwgRwHaNzCTthJHJDRAgEYNUN60DtiFLUgnHwpmzr06CrHpBQd5pgLyp5Y1Zt54kuM6h9rWSRfMqNinhAomGgqZQC4xgQRMr+4Ryllvzqa6l9iZTuDr0DY4z2diADKva4+MZgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUIFxP1J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gpBaYwIRfFSKqIIgAw9esc2RQjZpdvZUf2vAamF+tbnLVXLThBpfDw3XOIsAMOldlX1EEdHorUfiOwYXyRycHfuTz+a+wa+YFQNEceDkYXIavrlWl9nrAST7MjUgCLqVkstNMd3NOZAjH3+t1mJu2b4IqMc36xVaFZP773oyIq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVfxRVRd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUIFxP1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DC8C4CEC3;
-	Tue, 10 Sep 2024 10:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVfxRVRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37884C4CEC3;
+	Tue, 10 Sep 2024 10:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964475;
-	bh=tLXxtWgc1TYnMrOhG+UfGo9ZGYmbrR80MIqWX/kFuoU=;
+	s=korg; t=1725964478;
+	bh=8suC4PMMCm6AFIMZYmMkG6BSihA1xyRVLFeT9QPv6Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUIFxP1JrRMT8fL2ZEY8ZIoUIGPF39mGcMX6zipYcuW+y5ThGcK8PQBoej1K/HeSF
-	 EZFAT/X64lf8njSzBWbBKB+D51+tHGmVbi6FYF6+Hd5H1iyi4c/39e8fVWlmKZK75f
-	 0stwVzT1QNSC88hLuiFnYW0Kxo/xWlq+wXeYj/h0=
+	b=JVfxRVRdf0AK3AJeVVKIeoUS4nQY1VIThPXRdB9KJ7YmdP4Bml3hak3ZoEGKz4nwO
+	 dI4HjRQ5RKn7jX8in/skNFoZfO/ZtpYDBZgA3BCfn6fhNadCI11a46Zg+FHgHpYwAv
+	 GDcrt4+B066i/yKqk+5N06odhphq6jmcqjn7GMzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 195/269] NFSv4: Add missing rescheduling points in nfs_client_return_marked_delegations
-Date: Tue, 10 Sep 2024 11:33:02 +0200
-Message-ID: <20240910092615.060678437@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	WangYuli <wangyuli@uniontech.com>
+Subject: [PATCH 6.6 196/269] riscv: Use WRITE_ONCE() when setting page table entries
+Date: Tue, 10 Sep 2024 11:33:03 +0200
+Message-ID: <20240910092615.094075592@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,43 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit a017ad1313fc91bdf235097fd0a02f673fc7bb11 ]
+commit c30fa83b49897e708a52e122dd10616a52a4c82b upstream.
 
-We're seeing reports of soft lockups when iterating through the loops,
-so let's add rescheduling points.
+To avoid any compiler "weirdness" when accessing page table entries which
+are concurrently modified by the HW, let's use WRITE_ONCE() macro
+(commit 20a004e7b017 ("arm64: mm: Use READ_ONCE/WRITE_ONCE when accessing
+page tables") gives a great explanation with more details).
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20231213203001.179237-2-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/include/asm/pgtable-64.h |    6 +++---
+ arch/riscv/include/asm/pgtable.h    |    4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index 0d6473cb00cb..f63513e477c5 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -47,6 +47,7 @@
- #include <linux/vfs.h>
- #include <linux/inet.h>
- #include <linux/in6.h>
-+#include <linux/sched.h>
- #include <linux/slab.h>
- #include <net/ipv6.h>
- #include <linux/netdevice.h>
-@@ -223,6 +224,7 @@ static int __nfs_list_for_each_server(struct list_head *head,
- 		ret = fn(server, data);
- 		if (ret)
- 			goto out;
-+		cond_resched();
- 		rcu_read_lock();
- 	}
- 	rcu_read_unlock();
--- 
-2.43.0
-
+--- a/arch/riscv/include/asm/pgtable-64.h
++++ b/arch/riscv/include/asm/pgtable-64.h
+@@ -198,7 +198,7 @@ static inline int pud_user(pud_t pud)
+ 
+ static inline void set_pud(pud_t *pudp, pud_t pud)
+ {
+-	*pudp = pud;
++	WRITE_ONCE(*pudp, pud);
+ }
+ 
+ static inline void pud_clear(pud_t *pudp)
+@@ -274,7 +274,7 @@ static inline unsigned long _pmd_pfn(pmd
+ static inline void set_p4d(p4d_t *p4dp, p4d_t p4d)
+ {
+ 	if (pgtable_l4_enabled)
+-		*p4dp = p4d;
++		WRITE_ONCE(*p4dp, p4d);
+ 	else
+ 		set_pud((pud_t *)p4dp, (pud_t){ p4d_val(p4d) });
+ }
+@@ -347,7 +347,7 @@ static inline pud_t *pud_offset(p4d_t *p
+ static inline void set_pgd(pgd_t *pgdp, pgd_t pgd)
+ {
+ 	if (pgtable_l5_enabled)
+-		*pgdp = pgd;
++		WRITE_ONCE(*pgdp, pgd);
+ 	else
+ 		set_p4d((p4d_t *)pgdp, (p4d_t){ pgd_val(pgd) });
+ }
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -248,7 +248,7 @@ static inline int pmd_leaf(pmd_t pmd)
+ 
+ static inline void set_pmd(pmd_t *pmdp, pmd_t pmd)
+ {
+-	*pmdp = pmd;
++	WRITE_ONCE(*pmdp, pmd);
+ }
+ 
+ static inline void pmd_clear(pmd_t *pmdp)
+@@ -515,7 +515,7 @@ static inline int pte_same(pte_t pte_a,
+  */
+ static inline void set_pte(pte_t *ptep, pte_t pteval)
+ {
+-	*ptep = pteval;
++	WRITE_ONCE(*ptep, pteval);
+ }
+ 
+ void flush_icache_pte(pte_t pte);
 
 
