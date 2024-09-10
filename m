@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E411922DD;
-	Tue, 10 Sep 2024 10:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BF914D280;
+	Tue, 10 Sep 2024 10:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964650; cv=none; b=kGfrtYGolrnOUiAfRK3AZCjJJMD8xYVbsXV/c7cCqiYqMDBSwMJimrmERC3D18tASQpg5VGAbd/6U/v1MnyUYIPUYQwLmF+5FeAeYVC3XsNj91HRb1YtfpoXqi95PY9o7veEOaY5dONrsc6OOwVHxeWU1zczmCxUYt+m2SSTyi8=
+	t=1725964653; cv=none; b=Mx6UPKNsnX9wQxD1aACkqfY9AkrRlVYqG/xfzAevy/WvfT9BXwQm8YBd1GNEjpgmqwAAA4PiRvJbdz2bXDxpT1iJmqqiQ2P6pApx8C/3oCCoGZVgmji6zRvPnanVELJf0fNoOvQk0J/BnggvCYs9UKMuy0Jzo8NGp9gJscpkH+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964650; c=relaxed/simple;
-	bh=QerYU6RMC39iFHVOdbjySceGj5C/b0sn93y0deuKLkE=;
+	s=arc-20240116; t=1725964653; c=relaxed/simple;
+	bh=KcvamTlO8D40B+Bgs/rLyASDPFiG9Tfqm7FUgn/l9mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwjxgEDOz9jwkmhqDThT046ua9qjqzcjvdCAk+GM8+SjypkFfJY1SujUsfGoJ+5FnKSgeMXa6cylbkL/NdWiRJknnQUmADlt2iTYL6BIFLVaRoYpfXeI4+l+XnTTGcT0Y2taQa0IGgtHoFkZpciSGqiSkOj/XUbWVgan9QjAuMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ywc08xlu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHoEIrNRPIkBjsOntfUphl56KFFUfSH/OUksV8uheV09hTEFS0OsN+E2Y0N701Kp8oQofd0t/Lz1tU5SL6MfAKg1m3PigTqV+0flszYHKi2FjsQjX2eOKFoJD7TRGNdOqi+bt4HlU/Y+lRYK2h9pOhU2DP+JDt7O01tGW/8adCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USag/dtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ywc08xlu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFEEC4CEC3;
-	Tue, 10 Sep 2024 10:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USag/dtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272A6C4CEC3;
+	Tue, 10 Sep 2024 10:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964650;
-	bh=QerYU6RMC39iFHVOdbjySceGj5C/b0sn93y0deuKLkE=;
+	s=korg; t=1725964653;
+	bh=KcvamTlO8D40B+Bgs/rLyASDPFiG9Tfqm7FUgn/l9mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ywc08xluxUNA61gf57IaUB7BW3wDF+zyEPzEYhHL3MdTWMg2zcu7W2eVOBBwScFXf
-	 /w2BMARz2sObnhOudrQrh18ZM7Zsu45q3KKBUfEqnnDwq/y8duEOoqORncciFTT49x
-	 7P/+SqmxY46l76J+CMggFVgLy8ZCqqsuF7f18u3k=
+	b=USag/dtHe/adVoz574Q2kc2BPRTO5jIHPrcncHEpNYyYbvZkXjdBRxxQ+ek4FhUla
+	 Y69jn9M9Bo9+plRRLpVTyQB300XNcBY3EqaH2d2JvOvbGF4TQfX0Qen8MCLw+PryKf
+	 QIwbQRaJUG1VRZUly1cPNxqMtT/Yx9QXXn3E1Vmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 237/269] drm/amd: Add gfx12 swizzle mode defs
-Date: Tue, 10 Sep 2024 11:33:44 +0200
-Message-ID: <20240910092616.327692891@linuxfoundation.org>
+Subject: [PATCH 6.6 255/269] drm/i915/fence: Mark debug_fence_init_onstack() with __maybe_unused
+Date: Tue, 10 Sep 2024 11:34:02 +0200
+Message-ID: <20240910092616.884580558@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,61 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7ceb94e87bffff7c12b61eb29749e1d8ac976896 ]
+[ Upstream commit fcd9e8afd546f6ced378d078345a89bf346d065e ]
 
-Add GFX12 swizzle mode definitions for use with DCN401
+When debug_fence_init_onstack() is unused (CONFIG_DRM_I915_SELFTEST=n),
+it prevents kernel builds with clang, `make W=1` and CONFIG_WERROR=y:
 
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+.../i915_sw_fence.c:97:20: error: unused function 'debug_fence_init_onstack' [-Werror,-Wunused-function]
+   97 | static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+
+Fix this by marking debug_fence_init_onstack() with __maybe_unused.
+
+See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
+inline functions for W=1 build").
+
+Fixes: 214707fc2ce0 ("drm/i915/selftests: Wrap a timer into a i915_sw_fence")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 5bf472058ffb43baf6a4cdfe1d7f58c4c194c688)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/drm/drm_fourcc.h | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/drm/drm_fourcc.h b/include/uapi/drm/drm_fourcc.h
-index 8db7fd3f743e..fb3040677815 100644
---- a/include/uapi/drm/drm_fourcc.h
-+++ b/include/uapi/drm/drm_fourcc.h
-@@ -1474,6 +1474,7 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
- #define AMD_FMT_MOD_TILE_VER_GFX10 2
- #define AMD_FMT_MOD_TILE_VER_GFX10_RBPLUS 3
- #define AMD_FMT_MOD_TILE_VER_GFX11 4
-+#define AMD_FMT_MOD_TILE_VER_GFX12 5
+diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
+index 8a9aad523eec..d4020ff3549a 100644
+--- a/drivers/gpu/drm/i915/i915_sw_fence.c
++++ b/drivers/gpu/drm/i915/i915_sw_fence.c
+@@ -51,7 +51,7 @@ static inline void debug_fence_init(struct i915_sw_fence *fence)
+ 	debug_object_init(fence, &i915_sw_fence_debug_descr);
+ }
  
- /*
-  * 64K_S is the same for GFX9/GFX10/GFX10_RBPLUS and hence has GFX9 as canonical
-@@ -1484,6 +1485,8 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
- /*
-  * 64K_D for non-32 bpp is the same for GFX9/GFX10/GFX10_RBPLUS and hence has
-  * GFX9 as canonical version.
-+ *
-+ * 64K_D_2D on GFX12 is identical to 64K_D on GFX11.
-  */
- #define AMD_FMT_MOD_TILE_GFX9_64K_D 10
- #define AMD_FMT_MOD_TILE_GFX9_64K_S_X 25
-@@ -1491,6 +1494,19 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
- #define AMD_FMT_MOD_TILE_GFX9_64K_R_X 27
- #define AMD_FMT_MOD_TILE_GFX11_256K_R_X 31
+-static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
++static inline __maybe_unused void debug_fence_init_onstack(struct i915_sw_fence *fence)
+ {
+ 	debug_object_init_on_stack(fence, &i915_sw_fence_debug_descr);
+ }
+@@ -94,7 +94,7 @@ static inline void debug_fence_init(struct i915_sw_fence *fence)
+ {
+ }
  
-+/* Gfx12 swizzle modes:
-+ *    0 - LINEAR
-+ *    1 - 256B_2D  - 2D block dimensions
-+ *    2 - 4KB_2D
-+ *    3 - 64KB_2D
-+ *    4 - 256KB_2D
-+ *    5 - 4KB_3D   - 3D block dimensions
-+ *    6 - 64KB_3D
-+ *    7 - 256KB_3D
-+ */
-+#define AMD_FMT_MOD_TILE_GFX12_64K_2D 3
-+#define AMD_FMT_MOD_TILE_GFX12_256K_2D 4
-+
- #define AMD_FMT_MOD_DCC_BLOCK_64B 0
- #define AMD_FMT_MOD_DCC_BLOCK_128B 1
- #define AMD_FMT_MOD_DCC_BLOCK_256B 2
+-static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
++static inline __maybe_unused void debug_fence_init_onstack(struct i915_sw_fence *fence)
+ {
+ }
+ 
 -- 
 2.43.0
 
