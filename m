@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4C318F2D6;
-	Tue, 10 Sep 2024 09:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C91518F2F9;
+	Tue, 10 Sep 2024 09:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961632; cv=none; b=ieNMQ/kwnmK0PTzv/fLbPzvB0wLtevAPjbJIXbQCNkZm+gEwBeH3o/tfRJUrRLfKeaZ+hv4j5GmAX3LenrrR1O2dsNuO7TRNfQtoojIZUjza2s4hZ/K/BI3KY6yUljpSBphx4Jrmwnu24bMwkuNxZeYtQ7Z/P3B16UIJb2bDfwE=
+	t=1725961635; cv=none; b=bEmthaF/kpK74WOioWYOslu3tMwHndIx66D6Rc7FRRD+XIXBbSjW6GgiDYno9/a7hQE3szfTgDqAAb/g6FCHXYjKsmgRnqT8bP0vCI81CyJoEk8fljv2CqbByVkY7d37NObBwPLY5QnWBE0uIy6BTIwfA9IOcfy7O1P21ljUlPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961632; c=relaxed/simple;
-	bh=mMrK18X7WIlV6FinZr2UBNVrfvLPuzV5Rch5PxQ6S5w=;
+	s=arc-20240116; t=1725961635; c=relaxed/simple;
+	bh=KTCPI9t+nR56sSKDqEmwuR6GiEFbQOdJfYbgkVRlgNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YrK2cKnl5TAt7ng7OtKRGdiRqyprSO7dd4sY8+bYEdd3neNYSsvoW4cd/jVzN0Ny7MNfenm7X6UZThDZKC2IdoEZHqphMRwe0iaxsUQm2/lnnL/0/XpjmE4Mub5PyYB/g0K1oCHKNWNJxLZ15B/jVnG3jN64OXyY/zgxwTovTIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ksp03Bo7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nBIv3vasKlDI+EkSzJoeXiBQ/3AaVztStEfGmb/H0lMLGmh60nq2pCD6fRV+UqJB9+UJAfsZfnj7RMqoX6acqLbYBKYlLpUIlL+8e8jR/AFuwIQrNv5OAaKBtJQPQep+zY+HJBQHuTC/gq30NtfQRqauT634LFj8HoQxXqtsc2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkLg2YUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ksp03Bo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1D4C4CEC3;
-	Tue, 10 Sep 2024 09:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkLg2YUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DE2C4CEC3;
+	Tue, 10 Sep 2024 09:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961632;
-	bh=mMrK18X7WIlV6FinZr2UBNVrfvLPuzV5Rch5PxQ6S5w=;
+	s=korg; t=1725961635;
+	bh=KTCPI9t+nR56sSKDqEmwuR6GiEFbQOdJfYbgkVRlgNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ksp03Bo79uVEUHs+EH8PqXXj6KOBwLmWrUS7Lkgw/dvjrVUoHZN8K7aKeqjqIFJgO
-	 UQcPKHa1KTsHf1j2rZgNoxFNF5vLkqIqJOh7rfPX3FGgA10l/YUbj7hyAFDAEjH5EX
-	 hRknz2XFndhvSHw0EGIOSsNdTHX6lhyCq2F9A4Sk=
+	b=AkLg2YUqXgBVkrQqaCPkfcqf5Vn97gNdL/VIpzddF9x3i2Ckj07kH6e2tgPhuFjJ/
+	 5iViHwvn08VcYgwPu+RuEoKQ6y7jB2YWbuLk2v+VOwT//51v9NuKjSMB9VLozXG7R0
+	 +MAkqH4xaiEpRfV8ZjxJxXUQtrGC624avNlDnGh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Johannesmeyer <bjohannesmeyer@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Alexander Potapenko <glider@google.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 108/375] x86/kmsan: Fix hook for unaligned accesses
-Date: Tue, 10 Sep 2024 11:28:25 +0200
-Message-ID: <20240910092626.025202079@linuxfoundation.org>
+Subject: [PATCH 6.10 109/375] iommu: sun50i: clear bypass register
+Date: Tue, 10 Sep 2024 11:28:26 +0200
+Message-ID: <20240910092626.059599712@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,54 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit bf6ab33d8487f5e2a0998ce75286eae65bb0a6d6 ]
+[ Upstream commit 927c70c93d929f4c2dcaf72f51b31bb7d118a51a ]
 
-When called with a 'from' that is not 4-byte-aligned, string_memcpy_fromio()
-calls the movs() macro to copy the first few bytes, so that 'from' becomes
-4-byte-aligned before calling rep_movs(). This movs() macro modifies 'to', and
-the subsequent line modifies 'n'.
+The Allwinner H6 IOMMU has a bypass register, which allows to circumvent
+the page tables for each possible master. The reset value for this
+register is 0, which disables the bypass.
+The Allwinner H616 IOMMU resets this register to 0x7f, which activates
+the bypass for all masters, which is not what we want.
 
-As a result, on unaligned accesses, kmsan_unpoison_memory() uses the updated
-(aligned) values of 'to' and 'n'. Hence, it does not unpoison the entire
-region.
+Always clear this register to 0, to enforce the usage of page tables,
+and make this driver compatible with the H616 in this respect.
 
-Save the original values of 'to' and 'n', and pass those to
-kmsan_unpoison_memory(), so that the entire region is unpoisoned.
-
-Signed-off-by: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Link: https://lore.kernel.org/r/20240523215029.4160518-1-bjohannesmeyer@gmail.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20240616224056.29159-2-andre.przywara@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/iomem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iommu/sun50i-iommu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/lib/iomem.c b/arch/x86/lib/iomem.c
-index e0411a3774d4..5eecb45d05d5 100644
---- a/arch/x86/lib/iomem.c
-+++ b/arch/x86/lib/iomem.c
-@@ -25,6 +25,9 @@ static __always_inline void rep_movs(void *to, const void *from, size_t n)
- 
- static void string_memcpy_fromio(void *to, const volatile void __iomem *from, size_t n)
- {
-+	const void *orig_to = to;
-+	const size_t orig_n = n;
-+
- 	if (unlikely(!n))
- 		return;
- 
-@@ -39,7 +42,7 @@ static void string_memcpy_fromio(void *to, const volatile void __iomem *from, si
- 	}
- 	rep_movs(to, (const void *)from, n);
- 	/* KMSAN must treat values read from devices as initialized. */
--	kmsan_unpoison_memory(to, n);
-+	kmsan_unpoison_memory(orig_to, orig_n);
- }
- 
- static void string_memcpy_toio(volatile void __iomem *to, const void *from, size_t n)
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index c519b991749d..dd3f07384624 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -452,6 +452,7 @@ static int sun50i_iommu_enable(struct sun50i_iommu *iommu)
+ 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(3) |
+ 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(4) |
+ 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(5));
++	iommu_write(iommu, IOMMU_BYPASS_REG, 0);
+ 	iommu_write(iommu, IOMMU_INT_ENABLE_REG, IOMMU_INT_MASK);
+ 	iommu_write(iommu, IOMMU_DM_AUT_CTRL_REG(SUN50I_IOMMU_ACI_NONE),
+ 		    IOMMU_DM_AUT_CTRL_RD_UNAVAIL(SUN50I_IOMMU_ACI_NONE, 0) |
 -- 
 2.43.0
 
