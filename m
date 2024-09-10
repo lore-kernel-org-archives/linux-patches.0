@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D54192581;
-	Tue, 10 Sep 2024 10:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1755518C039;
+	Tue, 10 Sep 2024 10:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962699; cv=none; b=Hs22GLaL+gpeenLIhKFpT97CarxyjMkEsJiwBGBGXxiE08bFUQFS7ZSSQRw4VcKNeTWuZrKeKiRxHhZsk6AM02Vl60pl8zqNYDKBdl5OaqGRRD3Ug5soXn4r0H1VfcEjj4RuKUarj6fRUMKzxAX6FiQbw58l1D0fGERDwP8843U=
+	t=1725962702; cv=none; b=BLTAV7CXSifJ7IZjZNNciQHxRw0GZ7KtD/cH/OR5wCPS0dF/AA0DaHfhaDF5jD/PawdwMR9MF0yYV2beLrH+jCIkpzPhtyqx51sHNvJP4VQDITEmXzW9WCitPl0bSdoBOfTGOqIMHSJ591wuqnxyaCK2JBoHB05dNtNcJk/smBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962699; c=relaxed/simple;
-	bh=tAPfoqS4TtI5qJjxu/6jrIfOZzIvcfKjxWD5mx/T//M=;
+	s=arc-20240116; t=1725962702; c=relaxed/simple;
+	bh=ARpILm6jpiaJ6m6IF/u0sCt7CRZB2XLEfeHs2dHPzPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOvEp9uujZkde0FuwrMYQaHjfkGiaWDCzhyPkT5BIAKkCbPS+oIfXPF7V2WTXlYF812duaBFzYaUpw1RyeP6GcGMGBE4uI05KE0UjGAyijUCvFiES0/BdytXTehdFHX1TINJitplX1ILTt1IBnIlj/83KdXeJQGR2Y0N0sjTHdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qjv/Y84v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZlVhadJqivdaKUrFHYqGKYvSwcPChJ1KSnpkUsm8vVnW8YDp2Q5QLtmgtmi+/nt91jWWNOENB16DNK/kG7ojbjL1JCOrYhjIy8Ebb8CB2/bnXmmShu/7yTVmvyr8m2QtuBJ32bi8OSxVrArmPGSdm14ygJsdaY9Fmec9v+4z+mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBlwR0Bv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qjv/Y84v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BCEC4CEC3;
-	Tue, 10 Sep 2024 10:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBlwR0Bv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936F7C4CEC3;
+	Tue, 10 Sep 2024 10:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962699;
-	bh=tAPfoqS4TtI5qJjxu/6jrIfOZzIvcfKjxWD5mx/T//M=;
+	s=korg; t=1725962702;
+	bh=ARpILm6jpiaJ6m6IF/u0sCt7CRZB2XLEfeHs2dHPzPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qjv/Y84v3lLnYJCKZ8xw5dVTuZVlY08dYZbpVu2qvzSl3wl6yj3yLiTytD2CXKZJ5
-	 nhH2BYQ+XqlM4DMr+jpFJUvzKYzH2jEKTpnKFae6ZRTfXKgQw0RfKwMq1ZBlPzk4xJ
-	 8lzkHMoFdHKOm9Fo/PPHIqNhvSDiNmAlvynB3cGw=
+	b=lBlwR0BvVmXYWMxKhcR5HBn5xo6vD5FI/o7Lby9Kw4djj7svBumbo3XvjR6EQOgfM
+	 BQEK1Bo7jJb/gynRO7vPmAxgTyeIGo6JcGLFkPbLf/G+zaPuEVa1oy/6Sq4454JeAY
+	 6Ekdx+S9D3+GySiMTnIv6HmF3OWf53yqO4ovon04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/121] NFSv4: Add missing rescheduling points in nfs_client_return_marked_delegations
-Date: Tue, 10 Sep 2024 11:32:49 +0200
-Message-ID: <20240910092550.312265443@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 095/121] staging: iio: frequency: ad9834: Validate frequency parameter value
+Date: Tue, 10 Sep 2024 11:32:50 +0200
+Message-ID: <20240910092550.349938266@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -52,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit a017ad1313fc91bdf235097fd0a02f673fc7bb11 ]
+commit b48aa991758999d4e8f9296c5bbe388f293ef465 upstream.
 
-We're seeing reports of soft lockups when iterating through the loops,
-so let's add rescheduling points.
+In ad9834_write_frequency() clk_get_rate() can return 0. In such case
+ad9834_calc_freqreg() call will lead to division by zero. Checking
+'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
+ad9834_write_frequency() is called from ad9834_write(), where fout is
+taken from text buffer, which can contain any value.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Modify parameters checking.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/iio/frequency/ad9834.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index c7ca8cdc8801..98fbd2c5d7b7 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -47,6 +47,7 @@
- #include <linux/vfs.h>
- #include <linux/inet.h>
- #include <linux/in6.h>
-+#include <linux/sched.h>
- #include <linux/slab.h>
- #include <net/ipv6.h>
- #include <linux/netdevice.h>
-@@ -454,6 +455,7 @@ static int __nfs_list_for_each_server(struct list_head *head,
- 		ret = fn(server, data);
- 		if (ret)
- 			goto out;
-+		cond_resched();
- 		rcu_read_lock();
- 	}
- 	rcu_read_unlock();
--- 
-2.43.0
-
+--- a/drivers/staging/iio/frequency/ad9834.c
++++ b/drivers/staging/iio/frequency/ad9834.c
+@@ -115,7 +115,7 @@ static int ad9834_write_frequency(struct
+ 
+ 	clk_freq = clk_get_rate(st->mclk);
+ 
+-	if (fout > (clk_freq / 2))
++	if (!clk_freq || fout > (clk_freq / 2))
+ 		return -EINVAL;
+ 
+ 	regval = ad9834_calc_freqreg(clk_freq, fout);
 
 
