@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9D318C91B;
-	Tue, 10 Sep 2024 09:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32F818FDDC;
+	Tue, 10 Sep 2024 09:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961327; cv=none; b=VlE+lb/+AZpZov9goj8sscNCP+AU3UHzebrXvAzqeqgerGPMdFxtQ+mpCovZ6LNf4K/AK0OppdZKrTiVopcCyDxBX/DsNt86+OseD4STGzlCTuflUrT0lBnCIg5jBm9xq6nxGAwZNz7si9uXmG0yH2QCKOEqTcph1mEVbvb0aG8=
+	t=1725961329; cv=none; b=iVIAf4sVM4sslTdBM+pUTuucV3e33C2gGfnVR0NyJ8b1j4AEbNipoA5s8z5uVRGvEv4s2XV8dY9xDvRcadCGkMZzAINU0CMCGUKSOzSK2+kmhxIEBzhl1R+O4z775V8od8qwlPmEvmol6f/HDfU7oht9zw8YYkcCGHfrCN2f+jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961327; c=relaxed/simple;
-	bh=ZKJbdoMae/ztHh35b/5h2T3/a0eIt+Xy+NCjf0pqwU8=;
+	s=arc-20240116; t=1725961329; c=relaxed/simple;
+	bh=DCKAYerc7HoR7FY3T/EKwGc2YC/5MCcXH0HBsl+BIEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7dJ8dWxHEQ6yPiWc7jsw2qu3Y4f001vsH3b0rWkgArWUkwER0DBfWHrweOKFXnip+O75ArvfIq98gh0GR5gUlr4+Ik+r/enlh1Lnt1n/p5X65NXXrbGtnl824wQjh8XiWi0CCD9JhQq4vzLy6A62/U+pkhyQUTDyTotrWFAGJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWGdf/xD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fA+MUX3oke65c+UhErOhMQWKBOt/o+7PA403rFhlPjdJ/A7PJ58XfbHoPqHqQkkpikYgfxkZSo9obaJ22QrSBY+rI4ta1UKIL8mx/JnzltWfSTGZ7zLTc0CNTEbbt9je5MVsuQGm/iYUg0rzjwHOA3JWc4opSOlcydWUMbr1pUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHWgEZvY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWGdf/xD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1BBC4CEC3;
-	Tue, 10 Sep 2024 09:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHWgEZvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A04C4CECC;
+	Tue, 10 Sep 2024 09:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961326;
-	bh=ZKJbdoMae/ztHh35b/5h2T3/a0eIt+Xy+NCjf0pqwU8=;
+	s=korg; t=1725961329;
+	bh=DCKAYerc7HoR7FY3T/EKwGc2YC/5MCcXH0HBsl+BIEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWGdf/xDMKQLnfJ7L/RmOIbwuGvZT0dTxUVuzo5FymF37WyJLm8yvJGkOhCIoTFa/
-	 QA5T/PPbvdeTz/5HyOzF3K3s36WpZM4ZTyHC9+UrBtb83nEYStpju0JXW5LOwHP0ol
-	 Po5PJfJHgCt7iY9tSawo2xAYUmmV0Yc7mxePt1SY=
+	b=PHWgEZvY2/BrjQAnCB0wMeXrJL390FWo+tMO1V2RJOz7/XR74qrpeZH5cPM89WvIu
+	 VELoiCwyRIyREcJ9rqf2IWwb1mvqJ3b5R+WfiM96e7ZeM8YKkPGRqrjas3SKrdSVeX
+	 MflwQwIbz0ldJ97CV/shbwJ1/EL4ev/F0/r/2low=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Jeff Xu <jeffxu@chromium.org>,
-	Kees Cook <kees@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 032/375] selftests: mm: fix build errors on armhf
-Date: Tue, 10 Sep 2024 11:27:09 +0200
-Message-ID: <20240910092623.314101083@linuxfoundation.org>
+	Jonathan Bell <jonathan@raspberrypi.com>,
+	Keita Aihara <keita.aihara@sony.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.10 033/375] mmc: core: apply SD quirks earlier during probe
+Date: Tue, 10 Sep 2024 11:27:10 +0200
+Message-ID: <20240910092623.348710723@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -54,184 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Jonathan Bell <jonathan@raspberrypi.com>
 
-commit b808f629215685c1941b1cd567c7b7ccb3c90278 upstream.
+commit 469e5e4713989fdd5e3e502b922e7be0da2464b9 upstream.
 
-The __NR_mmap isn't found on armhf.  The mmap() is commonly available
-system call and its wrapper is present on all architectures.  So it should
-be used directly.  It solves problem for armhf and doesn't create problem
-for other architectures.
+Applying MMC_QUIRK_BROKEN_SD_CACHE is broken, as the card's SD quirks are
+referenced in sd_parse_ext_reg_perf() prior to the quirks being initialized
+in mmc_blk_probe().
 
-Remove sys_mmap() functions as they aren't doing anything else other than
-calling mmap().  There is no need to set errno = 0 manually as glibc
-always resets it.
+To fix this problem, let's split out an SD-specific list of quirks and
+apply in mmc_sd_init_card() instead. In this way, sd_read_ext_regs() to has
+the available information for not assigning the SD_EXT_PERF_CACHE as one of
+the (un)supported features, which in turn allows mmc_sd_init_card() to
+properly skip execution of sd_enable_cache().
 
-For reference errors are as following:
-
-  CC       seal_elf
-seal_elf.c: In function 'sys_mmap':
-seal_elf.c:39:33: error: '__NR_mmap' undeclared (first use in this function)
-   39 |         sret = (void *) syscall(__NR_mmap, addr, len, prot,
-      |                                 ^~~~~~~~~
-
-mseal_test.c: In function 'sys_mmap':
-mseal_test.c:90:33: error: '__NR_mmap' undeclared (first use in this function)
-   90 |         sret = (void *) syscall(__NR_mmap, addr, len, prot,
-      |                                 ^~~~~~~~~
-
-Link: https://lkml.kernel.org/r/20240809082511.497266-1-usama.anjum@collabora.com
-Fixes: 4926c7a52de7 ("selftest mm/mseal memory sealing")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Cc: Jeff Xu <jeffxu@chromium.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c467c8f08185 ("mmc: Add MMC_QUIRK_BROKEN_SD_CACHE for Kingston Canvas Go Plus from 11/2019")
+Signed-off-by: Jonathan Bell <jonathan@raspberrypi.com>
+Co-developed-by: Keita Aihara <keita.aihara@sony.com>
+Signed-off-by: Keita Aihara <keita.aihara@sony.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240820230631.GA436523@sony.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/mseal_test.c |   37 +++++++++++---------------------
- tools/testing/selftests/mm/seal_elf.c   |   13 -----------
- 2 files changed, 14 insertions(+), 36 deletions(-)
+ drivers/mmc/core/quirks.h |   22 +++++++++++++---------
+ drivers/mmc/core/sd.c     |    4 ++++
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
---- a/tools/testing/selftests/mm/mseal_test.c
-+++ b/tools/testing/selftests/mm/mseal_test.c
-@@ -128,17 +128,6 @@ static int sys_mprotect_pkey(void *ptr,
- 	return sret;
- }
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -15,6 +15,19 @@
  
--static void *sys_mmap(void *addr, unsigned long len, unsigned long prot,
--	unsigned long flags, unsigned long fd, unsigned long offset)
--{
--	void *sret;
+ #include "card.h"
+ 
++static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
++	/*
++	 * Kingston Canvas Go! Plus microSD cards never finish SD cache flush.
++	 * This has so far only been observed on cards from 11/2019, while new
++	 * cards from 2023/05 do not exhibit this behavior.
++	 */
++	_FIXUP_EXT("SD64G", CID_MANFID_KINGSTON_SD, 0x5449, 2019, 11,
++		   0, -1ull, SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd,
++		   MMC_QUIRK_BROKEN_SD_CACHE, EXT_CSD_REV_ANY),
++
++	END_FIXUP
++};
++
+ static const struct mmc_fixup __maybe_unused mmc_blk_fixups[] = {
+ #define INAND_CMD38_ARG_EXT_CSD  113
+ #define INAND_CMD38_ARG_ERASE    0x00
+@@ -54,15 +67,6 @@ static const struct mmc_fixup __maybe_un
+ 		  MMC_QUIRK_BLK_NO_CMD23),
+ 
+ 	/*
+-	 * Kingston Canvas Go! Plus microSD cards never finish SD cache flush.
+-	 * This has so far only been observed on cards from 11/2019, while new
+-	 * cards from 2023/05 do not exhibit this behavior.
+-	 */
+-	_FIXUP_EXT("SD64G", CID_MANFID_KINGSTON_SD, 0x5449, 2019, 11,
+-		   0, -1ull, SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd,
+-		   MMC_QUIRK_BROKEN_SD_CACHE, EXT_CSD_REV_ANY),
 -
--	errno = 0;
--	sret = (void *) syscall(__NR_mmap, addr, len, prot,
--		flags, fd, offset);
--	return sret;
--}
--
- static int sys_munmap(void *ptr, size_t size)
- {
- 	int sret;
-@@ -219,7 +208,7 @@ static void setup_single_address(int siz
- {
- 	void *ptr;
+-	/*
+ 	 * Some SD cards lockup while using CMD23 multiblock transfers.
+ 	 */
+ 	MMC_FIXUP("AF SD", CID_MANFID_ATP, CID_OEMID_ANY, add_quirk_sd,
+--- a/drivers/mmc/core/sd.c
++++ b/drivers/mmc/core/sd.c
+@@ -26,6 +26,7 @@
+ #include "host.h"
+ #include "bus.h"
+ #include "mmc_ops.h"
++#include "quirks.h"
+ #include "sd.h"
+ #include "sd_ops.h"
  
--	ptr = sys_mmap(NULL, size, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-+	ptr = mmap(NULL, size, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
- 	*ptrOut = ptr;
- }
- 
-@@ -228,7 +217,7 @@ static void setup_single_address_rw(int
- 	void *ptr;
- 	unsigned long mapflags = MAP_ANONYMOUS | MAP_PRIVATE;
- 
--	ptr = sys_mmap(NULL, size, PROT_READ | PROT_WRITE, mapflags, -1, 0);
-+	ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, mapflags, -1, 0);
- 	*ptrOut = ptr;
- }
- 
-@@ -252,7 +241,7 @@ bool seal_support(void)
- 	void *ptr;
- 	unsigned long page_size = getpagesize();
- 
--	ptr = sys_mmap(NULL, page_size, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-+	ptr = mmap(NULL, page_size, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
- 	if (ptr == (void *) -1)
- 		return false;
- 
-@@ -528,8 +517,8 @@ static void test_seal_zero_address(void)
- 	int prot;
- 
- 	/* use mmap to change protection. */
--	ptr = sys_mmap(0, size, PROT_NONE,
--			MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
-+	ptr = mmap(0, size, PROT_NONE,
-+		   MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
- 	FAIL_TEST_IF_FALSE(ptr == 0);
- 
- 	size = get_vma_size(ptr, &prot);
-@@ -1256,8 +1245,8 @@ static void test_seal_mmap_overwrite_pro
+@@ -1475,6 +1476,9 @@ retry:
+ 			goto free_card;
  	}
  
- 	/* use mmap to change protection. */
--	ret2 = sys_mmap(ptr, size, PROT_NONE,
--			MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
-+	ret2 = mmap(ptr, size, PROT_NONE,
-+		    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
-@@ -1287,8 +1276,8 @@ static void test_seal_mmap_expand(bool s
- 	}
- 
- 	/* use mmap to expand. */
--	ret2 = sys_mmap(ptr, size, PROT_READ,
--			MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
-+	ret2 = mmap(ptr, size, PROT_READ,
-+		    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
-@@ -1315,8 +1304,8 @@ static void test_seal_mmap_shrink(bool s
- 	}
- 
- 	/* use mmap to shrink. */
--	ret2 = sys_mmap(ptr, 8 * page_size, PROT_READ,
--			MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
-+	ret2 = mmap(ptr, 8 * page_size, PROT_READ,
-+		    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
- 	if (seal) {
- 		FAIL_TEST_IF_FALSE(ret2 == MAP_FAILED);
- 		FAIL_TEST_IF_FALSE(errno == EPERM);
-@@ -1697,7 +1686,7 @@ static void test_seal_discard_ro_anon_on
- 	ret = fallocate(fd, 0, 0, size);
- 	FAIL_TEST_IF_FALSE(!ret);
- 
--	ptr = sys_mmap(NULL, size, PROT_READ, mapflags, fd, 0);
-+	ptr = mmap(NULL, size, PROT_READ, mapflags, fd, 0);
- 	FAIL_TEST_IF_FALSE(ptr != MAP_FAILED);
- 
- 	if (seal) {
-@@ -1727,7 +1716,7 @@ static void test_seal_discard_ro_anon_on
- 	int ret;
- 	unsigned long mapflags = MAP_ANONYMOUS | MAP_SHARED;
- 
--	ptr = sys_mmap(NULL, size, PROT_READ, mapflags, -1, 0);
-+	ptr = mmap(NULL, size, PROT_READ, mapflags, -1, 0);
- 	FAIL_TEST_IF_FALSE(ptr != (void *)-1);
- 
- 	if (seal) {
---- a/tools/testing/selftests/mm/seal_elf.c
-+++ b/tools/testing/selftests/mm/seal_elf.c
-@@ -61,17 +61,6 @@ static int sys_mseal(void *start, size_t
- 	return sret;
- }
- 
--static void *sys_mmap(void *addr, unsigned long len, unsigned long prot,
--	unsigned long flags, unsigned long fd, unsigned long offset)
--{
--	void *sret;
--
--	errno = 0;
--	sret = (void *) syscall(__NR_mmap, addr, len, prot,
--		flags, fd, offset);
--	return sret;
--}
--
- static inline int sys_mprotect(void *ptr, size_t size, unsigned long prot)
- {
- 	int sret;
-@@ -87,7 +76,7 @@ static bool seal_support(void)
- 	void *ptr;
- 	unsigned long page_size = getpagesize();
- 
--	ptr = sys_mmap(NULL, page_size, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-+	ptr = mmap(NULL, page_size, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
- 	if (ptr == (void *) -1)
- 		return false;
- 
++	/* Apply quirks prior to card setup */
++	mmc_fixup_device(card, mmc_sd_fixups);
++
+ 	err = mmc_sd_setup_card(host, card, oldcard != NULL);
+ 	if (err)
+ 		goto free_card;
 
 
