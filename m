@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BFC18C33D;
-	Tue, 10 Sep 2024 09:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581E817BEAE;
+	Tue, 10 Sep 2024 09:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961246; cv=none; b=u61hTKYZS+6EfCa+Ky1PvoKojcgm6t186WsQAfUXQ/PL2/Tkjq3B19ETu7XF/iEIGNkfZ6xPpAAqic4jwXvQwjKiySAoYt5r//iJDRUGbVSx3G9cdToisl1y9S8MxeFS/LJJzE05yd9bdsYUJOyrtcbymcYn0gScG2xMstLp83E=
+	t=1725961249; cv=none; b=r6yvPEAZ11GtYeD0NBVpbI8GelO336e35wjKSs+mk6vx0nGR7uUN3yk0EmLJj5HR2CYV/x+GmWYD/bUn/g5Vb3w/8K7Af1l2QPxi6qxMK9ZwiJyx4xwQc4IVyOp9/I73qmAIi3fN5lsHIK1lJZ2SsbGD3w3JA5I88FWM87ytf68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961246; c=relaxed/simple;
-	bh=wWgp9fi5HVJHQjwlOorlnJSSZhKIlUvbI7fkRwT0pyk=;
+	s=arc-20240116; t=1725961249; c=relaxed/simple;
+	bh=dkPHUEsMr/curxItgoO4PwGRKXwCDRhS2MjUH5sBfJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZUsZjOoJ5PrrP7C4QFBJ9ewnqKoZvyJEGyM/LieVeC76Xxxnm1IpHl5pRZSyDj09no/wtDokZRwbD2ZP+UPcFWS367dhD6+R+I51c02+qiR0btnLXwQBjWYdt2up7dEpHJHoAUggfndeRX/EOWWVaRqaZjpK0Vg8RpDUwnuYSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyjcQEvd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmXd+v1QbUogbohZllJrQ4RSTb21CeCCeJCVvPm5+Rq1HKfXHpjLxyCil17nHGql2JNtDymblMSRI9GUt8/Ms1SVXe8gHM+1NJ970rojBgoawb6Q3NtAGSNXvT0UhflHb9NUokfElV058enrw9C8n4snDBBua8RDpGwy8kLWDeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrdY8xDQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyjcQEvd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5277C4CEC3;
-	Tue, 10 Sep 2024 09:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrdY8xDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D71C4CEC3;
+	Tue, 10 Sep 2024 09:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961246;
-	bh=wWgp9fi5HVJHQjwlOorlnJSSZhKIlUvbI7fkRwT0pyk=;
+	s=korg; t=1725961249;
+	bh=dkPHUEsMr/curxItgoO4PwGRKXwCDRhS2MjUH5sBfJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyjcQEvdyy5XsNlplNyVAqwMTtp6FHHg7dzUHwIOV2dA84mU9xNQIGqXdOXzxDLOs
-	 qNTQJ+1oAyP6w3Kz5C5i/irF4IqaYNv2NsV8iNpjdY5ZW/AkUj4KfWxcgNOatyXj4y
-	 elqjZkl6XQWuBRbGgNi2GW46qyF2uugmLsaFLaBE=
+	b=KrdY8xDQ7XA1E6mWkjn7Tia7gmr5tgqc+lIFF8fs64gnKrLBp22S/GxIHY0yWQPu4
+	 fm3X2txF+e+cUXoGhQtFokI2sSR7SaMbgIkXe5ICQDlHCWy0hW8BfnV0oeBsT63lk6
+	 E98xk2g8E3N2K3jDT5vLzneN/A5QY7WAEkh2i2VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <nikolay@cumulusnetworks.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 95/96] net: bridge: explicitly zero is_sticky in fdb_create
-Date: Tue, 10 Sep 2024 11:32:37 +0200
-Message-ID: <20240910092545.712352624@linuxfoundation.org>
+Subject: [PATCH 4.19 96/96] netns: restore ops before calling ops_exit_list
+Date: Tue, 10 Sep 2024 11:32:38 +0200
+Message-ID: <20240910092545.754655127@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -50,30 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <nikolay@cumulusnetworks.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-commit 1288aa7af20cfa25cb00cf0d77f94d1891644c83 upstream.
+commit b272a0ad730103e84fb735fd0a8cc050cdf7f77c upstream.
 
-We need to explicitly zero is_sticky when creating a new fdb, otherwise
-we might get a stale value for a new entry.
+ops has been iterated to first element when call pre_exit, and
+it needs to restore from save_ops, not save ops to save_ops
 
-Fixes: 435f2e7cc0b7 ("net: bridge: add support for sticky fdb entries")
-Signed-off-by: Nikolay Aleksandrov <nikolay@cumulusnetworks.com>
+Fixes: d7d99872c144 ("netns: add pre_exit method to struct pernet_operations")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_fdb.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/core/net_namespace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/br_fdb.c
-+++ b/net/bridge/br_fdb.c
-@@ -512,6 +512,7 @@ static struct net_bridge_fdb_entry *fdb_
- 		if (is_static)
- 			set_bit(BR_FDB_STATIC, &fdb->flags);
- 		fdb->offloaded = 0;
-+		fdb->is_sticky = 0;
- 		fdb->updated = fdb->used = jiffies;
- 		if (rhashtable_lookup_insert_fast(&br->fdb_hash_tbl,
- 						  &fdb->rhnode,
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -357,7 +357,7 @@ out_undo:
+ 
+ 	synchronize_rcu();
+ 
+-	saved_ops = ops;
++	ops = saved_ops;
+ 	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+ 		ops_exit_list(ops, &net_exit_list);
+ 
 
 
