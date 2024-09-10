@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD561925AC;
-	Tue, 10 Sep 2024 10:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1627619885D;
+	Tue, 10 Sep 2024 10:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963914; cv=none; b=ISqrb2KbdaeDPXUjEjdadboZui7NMYpBjJbGbVyB8bc+Cc2B5ZTKG4Oo+NOpyG3+rznwF2XSCuerOUzv4x1JVSUhGRFcXKxB4pe851CM8yy/WCWphLghtMzczsN3sfqCifiDEFj1kQGfG61vTTSkIxI1vk6s64jzpH4Yhdnn6PA=
+	t=1725963917; cv=none; b=tyCdfm6AY2lpgkQIca4tIutMuiC09zSBS+cjhyUlKU+SctTKUagH94cyHfViwRAKSP9YLXvThKD21Cj6rq5OYlO0NA13Jc+igdvp7mDz7jAvNasnUGiuAREQ/2i9LkoElyyJvo4U75/hTuCDfCZwHe62JRaoyjjMCntTDU75vPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963914; c=relaxed/simple;
-	bh=fvWNfUxw0nMW2QV38lVXtHjaDh2WJLTHhCE15M6bejs=;
+	s=arc-20240116; t=1725963917; c=relaxed/simple;
+	bh=QpwPijMxw4+NiI/BcUA5+6VQ3dDdGgZo7dN/QOSm2no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEu564QoXdx8q1MY0tW/fSFAtRzl4YHaK/4Kil8kWkJuNBjsWE96WJEllC467lTEw8jLpM6rn4lSu6dKDcStWDqWb10b5fhbwkim3fYqy/32Vh+lQBoePEJ7WOvpagyaepqkPAL4vnPfs/d6cZmbETiqq+5uX0U2TjKXsr5KsHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7OvNMBg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=roT4tSOktHL5fe4XcwzqlBGwcI4kP3241D+zAMqLjImQoFO3JNpFWOh1yJGAhrii2hNADoHp3abSDi7tjAAT/t17QRX3R3+r8+cvewEH6Kd2/kZNuwb9Jmv7/TvFtaXTvM3SpDRKoBTYg6qKVh0+/Ra3zAo65K1YkGJ/ZBU7MbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0z/W2dL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7OvNMBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C93C4CEC3;
-	Tue, 10 Sep 2024 10:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0z/W2dL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918C9C4CEC3;
+	Tue, 10 Sep 2024 10:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963914;
-	bh=fvWNfUxw0nMW2QV38lVXtHjaDh2WJLTHhCE15M6bejs=;
+	s=korg; t=1725963917;
+	bh=QpwPijMxw4+NiI/BcUA5+6VQ3dDdGgZo7dN/QOSm2no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7OvNMBgrmeBGdcx0yhSZpZlllu9/u7UJRJWfuveFDcW5t25E4n24saFdnS1Fvj2X
-	 ddkfWGFKNXB8qpnDxRyhIMo3KlxYAIccBvTGtI9ewFwce3b7D2sa1yn9w8ooMYJCit
-	 ETePBejB7ed40wcVq3Jfu+aK4JWHnWMSMKcKC5gY=
+	b=O0z/W2dLJKk2TjpUpHcFUPxSeNn2yNIdYmr5WFtvfBnh6Eo0wyr47bZtf9t+BsCi2
+	 dyfEwYdXlKGhd3YRrC7YeOjbklanOdqDxWE5/PEudQjW91kkznk+cdA7gHxJrBWjfq
+	 z5vv3HXykGjn0+G/8TNvSrSfER/gqFCSz+MF3cmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Yan Zhai <yan@cloudflare.com>,
 	Willem de Bruijn <willemb@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 208/214] gso: fix dodgy bit handling for GSO_UDP_L4
-Date: Tue, 10 Sep 2024 11:33:50 +0200
-Message-ID: <20240910092607.009399882@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 209/214] net: drop bad gso csum_start and offset in virtio_net_hdr
+Date: Tue, 10 Sep 2024 11:33:51 +0200
+Message-ID: <20240910092607.040498134@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -53,58 +50,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 9840036786d90cea11a90d1f30b6dc003b34ee67 ]
+[ Upstream commit 89add40066f9ed9abe5f7f886fe5789ff7e0c50e ]
 
-Commit 1fd54773c267 ("udp: allow header check for dodgy GSO_UDP_L4
-packets.") checks DODGY bit for UDP, but for packets that can be fed
-directly to the device after gso_segs reset, it actually falls through
-to fragmentation:
+Tighten csum_start and csum_offset checks in virtio_net_hdr_to_skb
+for GSO packets.
 
-https://lore.kernel.org/all/CAJPywTKDdjtwkLVUW6LRA2FU912qcDmQOQGt2WaDo28KzYDg+A@mail.gmail.com/
+The function already checks that a checksum requested with
+VIRTIO_NET_HDR_F_NEEDS_CSUM is in skb linear. But for GSO packets
+this might not hold for segs after segmentation.
 
-This change restores the expected behavior of GSO_UDP_L4 packets.
+Syzkaller demonstrated to reach this warning in skb_checksum_help
 
-Fixes: 1fd54773c267 ("udp: allow header check for dodgy GSO_UDP_L4 packets.")
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+	offset = skb_checksum_start_offset(skb);
+	ret = -EINVAL;
+	if (WARN_ON_ONCE(offset >= skb_headlen(skb)))
+
+By injecting a TSO packet:
+
+WARNING: CPU: 1 PID: 3539 at net/core/dev.c:3284 skb_checksum_help+0x3d0/0x5b0
+ ip_do_fragment+0x209/0x1b20 net/ipv4/ip_output.c:774
+ ip_finish_output_gso net/ipv4/ip_output.c:279 [inline]
+ __ip_finish_output+0x2bd/0x4b0 net/ipv4/ip_output.c:301
+ iptunnel_xmit+0x50c/0x930 net/ipv4/ip_tunnel_core.c:82
+ ip_tunnel_xmit+0x2296/0x2c70 net/ipv4/ip_tunnel.c:813
+ __gre_xmit net/ipv4/ip_gre.c:469 [inline]
+ ipgre_xmit+0x759/0xa60 net/ipv4/ip_gre.c:661
+ __netdev_start_xmit include/linux/netdevice.h:4850 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4864 [inline]
+ xmit_one net/core/dev.c:3595 [inline]
+ dev_hard_start_xmit+0x261/0x8c0 net/core/dev.c:3611
+ __dev_queue_xmit+0x1b97/0x3c90 net/core/dev.c:4261
+ packet_snd net/packet/af_packet.c:3073 [inline]
+
+The geometry of the bad input packet at tcp_gso_segment:
+
+[   52.003050][ T8403] skb len=12202 headroom=244 headlen=12093 tailroom=0
+[   52.003050][ T8403] mac=(168,24) mac_len=24 net=(192,52) trans=244
+[   52.003050][ T8403] shinfo(txflags=0 nr_frags=1 gso(size=1552 type=3 segs=0))
+[   52.003050][ T8403] csum(0x60000c7 start=199 offset=1536
+ip_summed=3 complete_sw=0 valid=0 level=0)
+
+Mitigate with stricter input validation.
+
+csum_offset: for GSO packets, deduce the correct value from gso_type.
+This is already done for USO. Extend it to TSO. Let UFO be:
+udp[46]_ufo_fragment ignores these fields and always computes the
+checksum in software.
+
+csum_start: finding the real offset requires parsing to the transport
+header. Do not add a parser, use existing segmentation parsing. Thanks
+to SKB_GSO_DODGY, that also catches bad packets that are hw offloaded.
+Again test both TSO and USO. Do not test UFO for the above reason, and
+do not test UDP tunnel offload.
+
+GSO packet are almost always CHECKSUM_PARTIAL. USO packets may be
+CHECKSUM_NONE since commit 10154dbded6d6 ("udp: Allow GSO transmit
+from devices with no checksum offload"), but then still these fields
+are initialized correctly in udp4_hwcsum/udp6_hwcsum_outgoing. So no
+need to test for ip_summed == CHECKSUM_PARTIAL first.
+
+This revises an existing fix mentioned in the Fixes tag, which broke
+small packets with GSO offload, as detected by kselftests.
+
+Link: https://syzkaller.appspot.com/bug?extid=e1db31216c789f552871
+Link: https://lore.kernel.org/netdev/20240723223109.2196886-1-kuba@kernel.org
+Fixes: e269d79c7d35 ("net: missing check virtio")
+Cc: stable@vger.kernel.org
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240729201108.1615114-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
 [5.15 stable: clean backport]
 Signed-off-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp_offload.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ include/linux/virtio_net.h |   16 +++++-----------
+ net/ipv4/tcp_offload.c     |    3 +++
+ net/ipv4/udp_offload.c     |    4 ++++
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -51,7 +51,6 @@ static inline int virtio_net_hdr_to_skb(
+ 	unsigned int thlen = 0;
+ 	unsigned int p_off = 0;
+ 	unsigned int ip_proto;
+-	u64 ret, remainder, gso_size;
+ 
+ 	if (hdr->gso_type != VIRTIO_NET_HDR_GSO_NONE) {
+ 		switch (hdr->gso_type & ~VIRTIO_NET_HDR_GSO_ECN) {
+@@ -88,16 +87,6 @@ static inline int virtio_net_hdr_to_skb(
+ 		u32 off = __virtio16_to_cpu(little_endian, hdr->csum_offset);
+ 		u32 needed = start + max_t(u32, thlen, off + sizeof(__sum16));
+ 
+-		if (hdr->gso_size) {
+-			gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
+-			ret = div64_u64_rem(skb->len, gso_size, &remainder);
+-			if (!(ret && (hdr->gso_size > needed) &&
+-						((remainder > needed) || (remainder == 0)))) {
+-				return -EINVAL;
+-			}
+-			skb_shinfo(skb)->tx_flags |= SKBFL_SHARED_FRAG;
+-		}
+-
+ 		if (!pskb_may_pull(skb, needed))
+ 			return -EINVAL;
+ 
+@@ -170,6 +159,11 @@ retry:
+ 			if (gso_type != SKB_GSO_UDP_L4)
+ 				return -EINVAL;
+ 			break;
++		case SKB_GSO_TCPV4:
++		case SKB_GSO_TCPV6:
++			if (skb->csum_offset != offsetof(struct tcphdr, check))
++				return -EINVAL;
++			break;
+ 		}
+ 
+ 		/* Kernel has a special handling for GSO_BY_FRAGS. */
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -71,6 +71,9 @@ struct sk_buff *tcp_gso_segment(struct s
+ 	if (thlen < sizeof(*th))
+ 		goto out;
+ 
++	if (unlikely(skb_checksum_start(skb) != skb_transport_header(skb)))
++		goto out;
++
+ 	if (!pskb_may_pull(skb, thlen))
+ 		goto out;
+ 
 --- a/net/ipv4/udp_offload.c
 +++ b/net/ipv4/udp_offload.c
-@@ -272,13 +272,20 @@ struct sk_buff *__udp_gso_segment(struct
- 	__sum16 check;
- 	__be16 newlen;
- 
--	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
--		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
--
- 	mss = skb_shinfo(gso_skb)->gso_size;
+@@ -276,6 +276,10 @@ struct sk_buff *__udp_gso_segment(struct
  	if (gso_skb->len <= sizeof(*uh) + mss)
  		return ERR_PTR(-EINVAL);
  
-+	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
-+		/* Packet is from an untrusted source, reset gso_segs. */
-+		skb_shinfo(gso_skb)->gso_segs = DIV_ROUND_UP(gso_skb->len - sizeof(*uh),
-+							     mss);
-+		return NULL;
-+	}
++	if (unlikely(skb_checksum_start(gso_skb) !=
++		     skb_transport_header(gso_skb)))
++		return ERR_PTR(-EINVAL);
 +
-+	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
-+		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
-+
- 	skb_pull(gso_skb, sizeof(*uh));
- 
- 	/* clear destructor to avoid skb_segment assigning it to tail */
+ 	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
+ 		/* Packet is from an untrusted source, reset gso_segs. */
+ 		skb_shinfo(gso_skb)->gso_segs = DIV_ROUND_UP(gso_skb->len - sizeof(*uh),
 
 
