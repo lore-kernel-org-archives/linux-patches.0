@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E675188A0C;
-	Tue, 10 Sep 2024 10:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DAC188A0C;
+	Tue, 10 Sep 2024 10:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963033; cv=none; b=fp/63/NGT2eximNrTAhllAHlBaOEAYIeDdVboJbrBncD1N+5olQK1I3vcNbol1QxjSgd/U3qxQ+KZM8CfYcG3Vhgjh4KKN7sCqA0GH775VU6daMr9E2pius8Lmkym1wJcmSqzbQw+kNl3v0dF7ZxD+nFVasm5JQxgCdY1WHz1hA=
+	t=1725963036; cv=none; b=WZr1dEHj9NjOYgBNKeaPyoixhaoImqkp2f+OQmKtf8mGbE1g4h3ghY6dSaOnciAnCyiX//bbiXtlNrMvEPYWf8qFsLzcsnAdxwDO+nSRJb2ouwKA2c8oglKN6K2RGuZqM8VnCf7OBIMt4nbB0V7m7pOVhsAvB1FKyYfK43FGqAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963033; c=relaxed/simple;
-	bh=q1pBRI6/wlfLqSX91pR6Bbts8B5nxAn9XkA9I0mKjZY=;
+	s=arc-20240116; t=1725963036; c=relaxed/simple;
+	bh=EZq+B6Zp5jWYMZuvb/dRx+rvqQtQoAz7QVhF721ifw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jI7HdOflxUc2UfnfqUrWk6smPxOt7CrTwBUaqj12qxbd3Br2vVkakWgbhxLdQHJDZsWoddou3NSWzDNMMYFwevl7oSWB4nuyh/hzD4+m4L9C8w3/I9B3Q1w8pPxHlBbB2aEfOnfkhboidV19Pm3pg4qJl+DehUR/XnEcx1dQR9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2P9xuNuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j+pTAdNcHzsTdyfZYHeIMPcqMxK1Bs3r0mi/OIWT3OtIkXXoUTqquHSjn0U/wxuorNa1AtIfV1S7nBO4e4D4LFdHt/QTVOcc58o5ed5YV8QWm+wwqPrg4/fju3IP8miMM8HE6qkqHiqFyeRSSz/nJhsKPFM85Gjsx1h+CVP3ReI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPHn9Ho9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2P9xuNuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8E9C4CEC3;
-	Tue, 10 Sep 2024 10:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPHn9Ho9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8BDC4CEC3;
+	Tue, 10 Sep 2024 10:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963032;
-	bh=q1pBRI6/wlfLqSX91pR6Bbts8B5nxAn9XkA9I0mKjZY=;
+	s=korg; t=1725963035;
+	bh=EZq+B6Zp5jWYMZuvb/dRx+rvqQtQoAz7QVhF721ifw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2P9xuNuAjjGIzyF9G9vz+8V0FkZFEI13VC1PjuZIXA3G8uorq8rRcTmX1TbIyHLSJ
-	 clwbqtPlU81Ank3POWva0sVnuDfAnf+Ca2dZdGwiKGubq1EzBbCtA78x+Bf82J+Vz7
-	 tx44QONqsQGc9Rh4XOpzusGtEWFQ3YaHTxcyd8Yw=
+	b=IPHn9Ho9UvmvYvR+MZeGgd1qJ3soMPJUjeN3nVbhkRAIqu290f2dXGM4dnp9dsBAp
+	 S59GfU0+A8MAemkKnz1HhunprL53U8+RjgQgTVgIWZHJLU/aSretvyLc69U2qaugz2
+	 LcWW/6JtLJqoIJ0Htk6e2trqW/JDVAxglrfUbBf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Igor Bagnucki <igor.bagnucki@intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.1 075/192] ice: Add netif_device_attach/detach into PF reset flow
-Date: Tue, 10 Sep 2024 11:31:39 +0200
-Message-ID: <20240910092601.077648311@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Brian Norris <briannorris@chromium.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 106/192] wifi: mwifiex: Do not return unused priv in mwifiex_get_priv_by_id()
+Date: Tue, 10 Sep 2024 11:32:10 +0200
+Message-ID: <20240910092602.355150219@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -55,105 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit d11a67634227f9f9da51938af085fb41a733848f ]
+[ Upstream commit c145eea2f75ff7949392aebecf7ef0a81c1f6c14 ]
 
-Ethtool callbacks can be executed while reset is in progress and try to
-access deleted resources, e.g. getting coalesce settings can result in a
-NULL pointer dereference seen below.
+mwifiex_get_priv_by_id() returns the priv pointer corresponding to
+the bss_num and bss_type, but without checking if the priv is actually
+currently in use.
+Unused priv pointers do not have a wiphy attached to them which can
+lead to NULL pointer dereferences further down the callstack.  Fix
+this by returning only used priv pointers which have priv->bss_mode
+set to something else than NL80211_IFTYPE_UNSPECIFIED.
 
-Reproduction steps:
-Once the driver is fully initialized, trigger reset:
-	# echo 1 > /sys/class/net/<interface>/device/reset
-when reset is in progress try to get coalesce settings using ethtool:
-	# ethtool -c <interface>
+Said NULL pointer dereference happened when an Accesspoint was started
+with wpa_supplicant -i mlan0 with this config:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000020
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 11 PID: 19713 Comm: ethtool Tainted: G S                 6.10.0-rc7+ #7
-RIP: 0010:ice_get_q_coalesce+0x2e/0xa0 [ice]
-RSP: 0018:ffffbab1e9bcf6a8 EFLAGS: 00010206
-RAX: 000000000000000c RBX: ffff94512305b028 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffff9451c3f2e588 RDI: ffff9451c3f2e588
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: ffff9451c3f2e580 R11: 000000000000001f R12: ffff945121fa9000
-R13: ffffbab1e9bcf760 R14: 0000000000000013 R15: ffffffff9e65dd40
-FS:  00007faee5fbe740(0000) GS:ffff94546fd80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000020 CR3: 0000000106c2e005 CR4: 00000000001706f0
-Call Trace:
-<TASK>
-ice_get_coalesce+0x17/0x30 [ice]
-coalesce_prepare_data+0x61/0x80
-ethnl_default_doit+0xde/0x340
-genl_family_rcv_msg_doit+0xf2/0x150
-genl_rcv_msg+0x1b3/0x2c0
-netlink_rcv_skb+0x5b/0x110
-genl_rcv+0x28/0x40
-netlink_unicast+0x19c/0x290
-netlink_sendmsg+0x222/0x490
-__sys_sendto+0x1df/0x1f0
-__x64_sys_sendto+0x24/0x30
-do_syscall_64+0x82/0x160
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7faee60d8e27
+network={
+        ssid="somessid"
+        mode=2
+        frequency=2412
+        key_mgmt=WPA-PSK WPA-PSK-SHA256
+        proto=RSN
+        group=CCMP
+        pairwise=CCMP
+        psk="12345678"
+}
 
-Calling netif_device_detach() before reset makes the net core not call
-the driver when ethtool command is issued, the attempt to execute an
-ethtool command during reset will result in the following message:
+When waiting for the AP to be established, interrupting wpa_supplicant
+with <ctrl-c> and starting it again this happens:
 
-    netlink error: No such device
+| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000140
+| Mem abort info:
+|   ESR = 0x0000000096000004
+|   EC = 0x25: DABT (current EL), IL = 32 bits
+|   SET = 0, FnV = 0
+|   EA = 0, S1PTW = 0
+|   FSC = 0x04: level 0 translation fault
+| Data abort info:
+|   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+|   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+| user pgtable: 4k pages, 48-bit VAs, pgdp=0000000046d96000
+| [0000000000000140] pgd=0000000000000000, p4d=0000000000000000
+| Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+| Modules linked in: caam_jr caamhash_desc spidev caamalg_desc crypto_engine authenc libdes mwifiex_sdio
++mwifiex crct10dif_ce cdc_acm onboard_usb_hub fsl_imx8_ddr_perf imx8m_ddrc rtc_ds1307 lm75 rtc_snvs
++imx_sdma caam imx8mm_thermal spi_imx error imx_cpufreq_dt fuse ip_tables x_tables ipv6
+| CPU: 0 PID: 8 Comm: kworker/0:1 Not tainted 6.9.0-00007-g937242013fce-dirty #18
+| Hardware name: somemachine (DT)
+| Workqueue: events sdio_irq_work
+| pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : mwifiex_get_cfp+0xd8/0x15c [mwifiex]
+| lr : mwifiex_get_cfp+0x34/0x15c [mwifiex]
+| sp : ffff8000818b3a70
+| x29: ffff8000818b3a70 x28: ffff000006bfd8a5 x27: 0000000000000004
+| x26: 000000000000002c x25: 0000000000001511 x24: 0000000002e86bc9
+| x23: ffff000006bfd996 x22: 0000000000000004 x21: ffff000007bec000
+| x20: 000000000000002c x19: 0000000000000000 x18: 0000000000000000
+| x17: 000000040044ffff x16: 00500072b5503510 x15: ccc283740681e517
+| x14: 0201000101006d15 x13: 0000000002e8ff43 x12: 002c01000000ffb1
+| x11: 0100000000000000 x10: 02e8ff43002c0100 x9 : 0000ffb100100157
+| x8 : ffff000003d20000 x7 : 00000000000002f1 x6 : 00000000ffffe124
+| x5 : 0000000000000001 x4 : 0000000000000003 x3 : 0000000000000000
+| x2 : 0000000000000000 x1 : 0001000000011001 x0 : 0000000000000000
+| Call trace:
+|  mwifiex_get_cfp+0xd8/0x15c [mwifiex]
+|  mwifiex_parse_single_response_buf+0x1d0/0x504 [mwifiex]
+|  mwifiex_handle_event_ext_scan_report+0x19c/0x2f8 [mwifiex]
+|  mwifiex_process_sta_event+0x298/0xf0c [mwifiex]
+|  mwifiex_process_event+0x110/0x238 [mwifiex]
+|  mwifiex_main_process+0x428/0xa44 [mwifiex]
+|  mwifiex_sdio_interrupt+0x64/0x12c [mwifiex_sdio]
+|  process_sdio_pending_irqs+0x64/0x1b8
+|  sdio_irq_work+0x4c/0x7c
+|  process_one_work+0x148/0x2a0
+|  worker_thread+0x2fc/0x40c
+|  kthread+0x110/0x114
+|  ret_from_fork+0x10/0x20
+| Code: a94153f3 a8c37bfd d50323bf d65f03c0 (f940a000)
+| ---[ end trace 0000000000000000 ]---
 
-instead of NULL pointer dereference. Once reset is done and
-ice_rebuild() is executing, the netif_device_attach() is called to allow
-for ethtool operations to occur again in a safe manner.
-
-Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Igor Bagnucki <igor.bagnucki@intel.com>
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240703072409.556618-1-s.hauer@pengutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/main.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 9dbfbc90485e..15876f388d68 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -611,6 +611,9 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
- 			memset(&vsi->mqprio_qopt, 0, sizeof(vsi->mqprio_qopt));
- 		}
- 	}
+diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
+index 63f861e6b28a..fb98eb342bd9 100644
+--- a/drivers/net/wireless/marvell/mwifiex/main.h
++++ b/drivers/net/wireless/marvell/mwifiex/main.h
+@@ -1301,6 +1301,9 @@ mwifiex_get_priv_by_id(struct mwifiex_adapter *adapter,
+ 
+ 	for (i = 0; i < adapter->priv_num; i++) {
+ 		if (adapter->priv[i]) {
++			if (adapter->priv[i]->bss_mode == NL80211_IFTYPE_UNSPECIFIED)
++				continue;
 +
-+	if (vsi->netdev)
-+		netif_device_detach(vsi->netdev);
- skip:
- 
- 	/* clear SW filtering DB */
-@@ -7140,6 +7143,7 @@ static void ice_update_pf_netdev_link(struct ice_pf *pf)
-  */
- static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
- {
-+	struct ice_vsi *vsi = ice_get_main_vsi(pf);
- 	struct device *dev = ice_pf_to_dev(pf);
- 	struct ice_hw *hw = &pf->hw;
- 	bool dvm;
-@@ -7292,6 +7296,9 @@ static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
- 		ice_rebuild_arfs(pf);
- 	}
- 
-+	if (vsi && vsi->netdev)
-+		netif_device_attach(vsi->netdev);
-+
- 	ice_update_pf_netdev_link(pf);
- 
- 	/* tell the firmware we are up */
+ 			if ((adapter->priv[i]->bss_num == bss_num) &&
+ 			    (adapter->priv[i]->bss_type == bss_type))
+ 				break;
 -- 
 2.43.0
 
