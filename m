@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA376171671;
-	Tue, 10 Sep 2024 09:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B819A171671;
+	Tue, 10 Sep 2024 09:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962113; cv=none; b=hREfGsAh0/dHpzwTfkh5Ps8agCo0KSt4ODaKAGWtXBgm+86EAlZKuwOnnt8nUc5RdS8s4uoYi1xE33g1lL91/tBfGI7sz2DheHFiy1jWwY2tPnI6XX9RQlHQ7JmQdhL2gkETj/ae2h3jW9/YQ8H2jakK6CfrvGAmvyQP9mIT9Oc=
+	t=1725962116; cv=none; b=azuw+9rgolqqVlSuGsnz6phUDnvG5ExmOV/3c9qDzIX+brVk3PKwYiuAhIaKTcLDxo1BGA0TB5HnhKgKRPEJ4AZcZPC0IghWymldRgzLn077qaIKaos7AoSgH9zIb1ORqTVbFKaxKEAGerFAPnJ0x691RfYFoLRhnQgUgcVfXuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962113; c=relaxed/simple;
-	bh=oet/RAHOIHlZ9BsfNZDcc4KEUC5saFAGh5OVHEV0qIQ=;
+	s=arc-20240116; t=1725962116; c=relaxed/simple;
+	bh=O/Bl08oIhLGEFj4S+fygYsH/T0y318yCZTEgd/UTYq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgeqzXfboid4JoMHLU58ovM/0xaIkjOS/W8HosWThuLvah6mFGT2JHeh3ypiqhWt4ODY/ec28GeT4h11jwb1jRXd6/N/X7/7FvRmwiMKjD/XG1p7tS6EeUoVzdIWYjCCMpb2XbxAdhmteTsIJEbx9eULneA4GpJ1hgHlf62r65c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3ukiFlB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ln2mL/JHNhQsgw6UregQtQUkKMb/pQUsYUU0AJ1UW7FKPQ3oI8kEr24sRAc5w6w8f49Or7QSuxYPpt/j7NGVrf94wjEpJzz+pSppQRi0iMdQgGaKHv53ly1CUQWTlf/tdwwSkvLhnFgAGZ3kfyGnX0lTWUw+CtjUN7WoEYodkTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uB9++rwI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3ukiFlB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54201C4CEC6;
-	Tue, 10 Sep 2024 09:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB9++rwI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425CCC4CEC3;
+	Tue, 10 Sep 2024 09:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962113;
-	bh=oet/RAHOIHlZ9BsfNZDcc4KEUC5saFAGh5OVHEV0qIQ=;
+	s=korg; t=1725962116;
+	bh=O/Bl08oIhLGEFj4S+fygYsH/T0y318yCZTEgd/UTYq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3ukiFlBVqsMGsln/GZfboCx+50VNdA+wqLHid+OpUJc7zzR/IZ7RngvznzTegvx5
-	 5bRs7D6ocbgD83tuMb8+keyZqP1h16njUwVqbaBiI/Mnm9uLqQ/N2gb73c+cm3ZISC
-	 A+tk7gK6PJJwI1Mnysb2JJkBGuXLKmcYW/PLM8kc=
+	b=uB9++rwI7MdFRnp/0uoXxd5gRg909RzXy/mAFcYGfqtEbU2H5uoxPXfM7cJ2xCoyb
+	 k4Ot9MEt0IpqyQh0ijcrFPKi0oj9wNWdkZNiIiKbXpPD6vw/8BfRwZnmECe21blrPL
+	 +GkdVFPeM1ap9yHKfWdTmxMDAkelEPnQ2E+27JUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Thomson <git@johnthomson.fastmail.com.au>,
 	stable <stable@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.10 299/375] dt-bindings: nvmem: Use soc-nvmem node name instead of nvmem
-Date: Tue, 10 Sep 2024 11:31:36 +0200
-Message-ID: <20240910092632.603005317@linuxfoundation.org>
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.10 300/375] nvmem: u-boot-env: error if NVMEM device is too small
+Date: Tue, 10 Sep 2024 11:31:37 +0200
+Message-ID: <20240910092632.636183481@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -47,47 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: John Thomson <git@johnthomson.fastmail.com.au>
 
-commit a759d1f25182f51210c8831d71ce7ee81e0930f4 upstream.
+commit 8679e8b4a1ebdb40c4429e49368d29353e07b601 upstream.
 
-Based on commit d8764d347bd7 ("dt-bindings: firmware: xilinx: Describe
-soc-nvmem subnode") soc-nvmem should be used instead of simple nvmem that's
-why also update example to have it described correctly everywhere.
+Verify data size before trying to parse it to avoid reading out of
+buffer. This could happen in case of problems at MTD level or invalid DT
+bindings.
 
-Fixes: c7f99cd8fb6b ("dt-bindings: nvmem: Convert xlnx,zynqmp-nvmem.txt to yaml")
+Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: d5542923f200 ("nvmem: add driver handling U-Boot environment variables")
+[rmilecki: simplify commit description & rebase]
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20240902142510.71096-4-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20240902142510.71096-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/u-boot-env.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml b/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml
-index 917c40d5c382..1cbe44ab23b1 100644
---- a/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml
-@@ -28,7 +28,7 @@ unevaluatedProperties: false
- 
- examples:
-   - |
--    nvmem {
-+    soc-nvmem {
-         compatible = "xlnx,zynqmp-nvmem-fw";
-         nvmem-layout {
-             compatible = "fixed-layout";
--- 
-2.46.0
-
+--- a/drivers/nvmem/u-boot-env.c
++++ b/drivers/nvmem/u-boot-env.c
+@@ -176,6 +176,13 @@ static int u_boot_env_parse(struct u_boo
+ 		data_offset = offsetof(struct u_boot_env_image_broadcom, data);
+ 		break;
+ 	}
++
++	if (dev_size < data_offset) {
++		dev_err(dev, "Device too small for u-boot-env\n");
++		err = -EIO;
++		goto err_kfree;
++	}
++
+ 	crc32_addr = (__le32 *)(buf + crc32_offset);
+ 	crc32 = le32_to_cpu(*crc32_addr);
+ 	crc32_data_len = dev_size - crc32_data_offset;
 
 
