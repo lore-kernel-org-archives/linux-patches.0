@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C041940B5;
-	Tue, 10 Sep 2024 10:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053911940B5;
+	Tue, 10 Sep 2024 10:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964138; cv=none; b=lNECBfomYvGzvaZ3kc+MNed7it2Gj4qwnEVaC8l6vM6D5VKlfmQsg4y7N7t4Lyw5jIaAARQ5uM2bktdxdGMvtPSc4i3kEVgVWIFOqQWTm1wbDvot1HZQlrFf+Vz4SCMFPzH+5yjU4ZnQFK3Ap3vj7QatN5z6PTb7Ug5fsl18nxw=
+	t=1725964141; cv=none; b=bFWyawMAxpKjh7HODlLCfO6E2UjsrX6QhO24nJqG994FG21+Y+6183JoVhMhteK1nOhWh9LV8/M+8a6VS+wFBvC4ehLFrJM/aITt/hIka19w7kcWEBGro1SGhyKOdI8GnsIZ44FfNV0QrBPt2pReCQxVY6Uh05s9Rp0yPHMihJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964138; c=relaxed/simple;
-	bh=S5SkFz4R1ynHMb+JCX416P9IYCEDi2hLUYRfS9udJjk=;
+	s=arc-20240116; t=1725964141; c=relaxed/simple;
+	bh=WVBdfIXqA37TAQKxPishu3WdOPBmYMvXlTsVlqS/X2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItyrxwFY79+yvwt3D7RjGowT3IQot5+0Mv1zUo1qQkkUIsZE5YPEJfyKBzaCq7uFqlKX/C6srge4oZZ2kK+NaV7I3P88Tcx8YaJZ90jU69NggBYo1AUhgn6LD9/R9L43h+So1dMtNw4VxwLqVhg9q02VCn7uEIB2Q45S6sesk8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydqAmSaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oNCvpLlTw+XB9DcqqHxXkASuWxG8gUh5uHjGvyjIlFBEyb6/xwzsTY4yU5Bb70ituGERWEWiOu8hBgoj36/qdv5KmfE3d+RLn8T5mk6rd6MCIivp64rR3vS7SdG3SacoQJrWa9CKJcJMLmVl4WxcDjZC/yBtrXX9/2vdw/VCd24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCdEISzX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydqAmSaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F945C4CEC3;
-	Tue, 10 Sep 2024 10:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCdEISzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0A8C4CEC3;
+	Tue, 10 Sep 2024 10:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964138;
-	bh=S5SkFz4R1ynHMb+JCX416P9IYCEDi2hLUYRfS9udJjk=;
+	s=korg; t=1725964140;
+	bh=WVBdfIXqA37TAQKxPishu3WdOPBmYMvXlTsVlqS/X2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ydqAmSaY7qIeYAQs6iLkJvn6kvLmi7VF2fLs3UsFPVuejFFOkHjIC8Oz1KaXTRmo9
-	 skHuwop0THbDzO8Bn5XwflE39elJ7Cn3duaNytvYDxIqHBpsR4anr5smb31dqonyNM
-	 r9Oa6PchRbGKdp/9rB1/jPIyD4Itj2vAWPrv49zU=
+	b=MCdEISzXJXeTx33mi4TNoOamQKru6d8eEIHgfjMdqwdUi4/czfznt9mp6O6v2DhVY
+	 0EJR8r72VpNzEaKpYnpehiYmLApPgWqplur1dx8oDAL94szJ/pn3wOHq2cEqKkoCGV
+	 WXKtYB18iNHa+JwwAmHyLw2VxEJ7wNwOBk9unL1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Reijer Boekhoff <reijerboekhoff@protonmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Shantanu Goel <sgoel01@yahoo.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/269] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
-Date: Tue, 10 Sep 2024 11:31:07 +0200
-Message-ID: <20240910092611.046406761@linuxfoundation.org>
+Subject: [PATCH 6.6 081/269] usb: uas: set host status byte on data completion error
+Date: Tue, 10 Sep 2024 11:31:08 +0200
+Message-ID: <20240910092611.082473962@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,36 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Shantanu Goel <sgoel01@yahoo.com>
 
-[ Upstream commit dbb5265a5d7cca1cdba7736dba313ab7d07bc19d ]
+[ Upstream commit 9d32685a251a754f1823d287df233716aa23bcb9 ]
 
-After being asked about support for WPA3 for BCM43224 chipset it
-was found that all it takes is setting the MFP_CAPABLE flag and
-mac80211 will take care of all that is needed [1].
+Set the host status byte when a data completion error is encountered
+otherwise the upper layer may end up using the invalid zero'ed data.
+The following output was observed from scsi/sd.c prior to this fix.
 
-Link: https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/ [1]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240617122609.349582-1-arend.vanspriel@broadcom.com
+[   11.872824] sd 0:0:0:1: [sdf] tag#9 data cmplt err -75 uas-tag 1 inflight:
+[   11.872826] sd 0:0:0:1: [sdf] tag#9 CDB: Read capacity(16) 9e 10 00 00 00 00 00 00 00 00 00 00 00 20 00 00
+[   11.872830] sd 0:0:0:1: [sdf] Sector size 0 reported, assuming 512.
+
+Signed-off-by: Shantanu Goel <sgoel01@yahoo.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/87msnx4ec6.fsf@yahoo.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
+ drivers/usb/storage/uas.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-index 543e93ec49d2..9ab669487de4 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-@@ -1086,6 +1086,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
- 	ieee80211_hw_set(hw, AMPDU_AGGREGATION);
- 	ieee80211_hw_set(hw, SIGNAL_DBM);
- 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
-+	ieee80211_hw_set(hw, MFP_CAPABLE);
- 
- 	hw->extra_tx_headroom = brcms_c_get_header_len();
- 	hw->queues = N_TX_QUEUES;
+diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
+index 451d9569163a..f794cb39cc31 100644
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -422,6 +422,7 @@ static void uas_data_cmplt(struct urb *urb)
+ 			uas_log_cmd_state(cmnd, "data cmplt err", status);
+ 		/* error: no data transfered */
+ 		scsi_set_resid(cmnd, sdb->length);
++		set_host_byte(cmnd, DID_ERROR);
+ 	} else {
+ 		scsi_set_resid(cmnd, sdb->length - urb->actual_length);
+ 	}
 -- 
 2.43.0
 
