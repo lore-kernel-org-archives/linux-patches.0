@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744CFEEC9;
-	Tue, 10 Sep 2024 09:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B4318D640;
+	Tue, 10 Sep 2024 09:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961752; cv=none; b=p5QhvFYo14QoauMdAwrQsGERIjBYn8u2iKg0I3L6092pzoUwGg7plLtTZ0d+Pqb5Ftk0UQstALhg75F8pwEpvx/SX+bN5SCuey7IHGj5qPeKf/KVJcbp5uFk8MN/hyqhn/hF4b+Ot4/mkck0SjBruGXybTcbiSKe8GFi6/gazR0=
+	t=1725961755; cv=none; b=Igp3FkFlpvxFEYGS+7Fgh9HIuLhliseq50C7X/V+qVweOPYDPG98AY8dqRyBz6vuC/BxKQ7e2aveC3bhDe7q66xOFl+Ar7i31cjM0OzzeoaBTZ2f52fmATjPngG4xzQPhlAdYutuia56GtcCPa8pnZnWU/xzUTMM+LmNBAdqhkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961752; c=relaxed/simple;
-	bh=lupSH6x0eVPPc8WQr7Gn4FRJWeqYOhgQHJaEvPAegDA=;
+	s=arc-20240116; t=1725961755; c=relaxed/simple;
+	bh=YInuxiD9gCkJhRflB3XgCa4KMXJCU9N3aEW8d+WlAKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRxONc8ashmh3C+EAO0R5QyMohaZ+8l+NH4I5z7XN3QXq4Km9YSdNiuD1Bp/M/2Gfc6U1UsZ2H8/cnISpU0V9d2evgH64nb8ETlVKSA6fdNPmArRIhgBDm3BwbrhENMNNibCnwBETzkBdczFCHVT66GX/Cow4Dja7sv6q/Elyw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CR998XMH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRaaMLcQBvLx3d7TOij5WI7HcgqAjqRJQLj0WjFmYdViiqZPD/1JA0QyDuqEBUZ5m4prGyMYSo9wvBIisT7MtsLRXYBgmB0ep2LtB7ANEVKxcGHwKB8baWIboBrQ6nitrywNIxUKnP14WdUX7wJILjwq3InUv/BwTKL8cTqhfGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miFDmkr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CR998XMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F069EC4CEC3;
-	Tue, 10 Sep 2024 09:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miFDmkr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE34AC4CEC3;
+	Tue, 10 Sep 2024 09:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961752;
-	bh=lupSH6x0eVPPc8WQr7Gn4FRJWeqYOhgQHJaEvPAegDA=;
+	s=korg; t=1725961755;
+	bh=YInuxiD9gCkJhRflB3XgCa4KMXJCU9N3aEW8d+WlAKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CR998XMH+6WfGtsfXtqm76USuVSnRoud04L9dOcP3ODRj7irp/R+oalI2m/VpUahv
-	 xK7E10+WFP3I1g2wqCkjhDxtS+bcGVx9C0At3BT4D+ZUnkqGpBZTXyGC4e0JhPxUcm
-	 ucNYys1KQ+bTyxXa9bIAuBLNmPTeDXWz7ecxMKWw=
+	b=miFDmkr3SPj5f8dZBE0h9BLNrMDu9ao3HgO07BUt6GeA86ELCa7s9/peKt5QJ7FKG
+	 XR0HiLWYcDKvNO91aB3GiJldF07xeq6u+KNEYiSwi4HqWtPiVMfe9FbxuF1XnbGCeM
+	 Jfec2DqFkCrxTNJfwxjb52Du5zpNXpmrpj4TQkTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Wang <xii@google.com>,
-	Song Liu <song@kernel.org>,
-	bpf@vger.kernel.org,
-	Namhyung Kim <namhyung@kernel.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Julien Panis <jpanis@baylibre.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 177/375] perf lock contention: Fix spinlock and rwlock accounting
-Date: Tue, 10 Sep 2024 11:29:34 +0200
-Message-ID: <20240910092628.425618468@linuxfoundation.org>
+Subject: [PATCH 6.10 178/375] net: ethernet: ti: am65-cpsw: Fix RX statistics for XDP_TX and XDP_REDIRECT
+Date: Tue, 10 Sep 2024 11:29:35 +0200
+Message-ID: <20240910092628.458036209@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,72 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 287bd5cf06e0f2c02293ce942777ad1f18059ed3 ]
+[ Upstream commit 624d3291484f9cada10660f820db926c0bce7741 ]
 
-The spinlock and rwlock use a single-element per-cpu array to track
-current locks due to performance reason.  But this means the key is
-always available and it cannot simply account lock stats in the array
-because some of them are invalid.
+We are not using ndev->stats for rx_packets and rx_bytes anymore.
+Instead, we use per CPU stats which are collated in
+am65_cpsw_nuss_ndo_get_stats().
 
-In fact, the contention_end() program in the BPF invalidates the entry
-by setting the 'lock' value to 0 instead of deleting the entry for the
-hashmap.  So it should skip entries with the lock value of 0 in the
-account_end_timestamp().
+Fix RX statistics for XDP_TX and XDP_REDIRECT cases.
 
-Otherwise, it'd have spurious high contention on an idle machine:
-
-  $ sudo perf lock con -ab -Y spinlock sleep 3
-   contended   total wait     max wait     avg wait         type   caller
-
-           8      4.72 s       1.84 s     590.46 ms     spinlock   rcu_core+0xc7
-           8      1.87 s       1.87 s     233.48 ms     spinlock   process_one_work+0x1b5
-           2      1.87 s       1.87 s     933.92 ms     spinlock   worker_thread+0x1a2
-           3      1.81 s       1.81 s     603.93 ms     spinlock   tmigr_update_events+0x13c
-           2      1.72 s       1.72 s     861.98 ms     spinlock   tick_do_update_jiffies64+0x25
-           6     42.48 us     13.02 us      7.08 us     spinlock   futex_q_lock+0x2a
-           1     13.03 us     13.03 us     13.03 us     spinlock   futex_wake+0xce
-           1     11.61 us     11.61 us     11.61 us     spinlock   rcu_core+0xc7
-
-I don't believe it has contention on a spinlock longer than 1 second.
-After this change, it only reports some small contentions.
-
-  $ sudo perf lock con -ab -Y spinlock sleep 3
-   contended   total wait     max wait     avg wait         type   caller
-
-           4    133.51 us     43.29 us     33.38 us     spinlock   tick_do_update_jiffies64+0x25
-           4     69.06 us     31.82 us     17.27 us     spinlock   process_one_work+0x1b5
-           2     50.66 us     25.77 us     25.33 us     spinlock   rcu_core+0xc7
-           1     28.45 us     28.45 us     28.45 us     spinlock   rcu_core+0xc7
-           1     24.77 us     24.77 us     24.77 us     spinlock   tmigr_update_events+0x13c
-           1     23.34 us     23.34 us     23.34 us     spinlock   raw_spin_rq_lock_nested+0x15
-
-Fixes: b5711042a1c8 ("perf lock contention: Use per-cpu array map for spinlocks")
-Reported-by: Xi Wang <xii@google.com>
-Cc: Song Liu <song@kernel.org>
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20240828052953.1445862-1-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Julien Panis <jpanis@baylibre.com>
+Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_lock_contention.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/bpf_lock_contention.c b/tools/perf/util/bpf_lock_contention.c
-index b4cb3fe5cc25..bc4e92c0c08b 100644
---- a/tools/perf/util/bpf_lock_contention.c
-+++ b/tools/perf/util/bpf_lock_contention.c
-@@ -286,6 +286,9 @@ static void account_end_timestamp(struct lock_contention *con)
- 			goto next;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 902b22de61d1..330eea349caa 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -998,7 +998,9 @@ static int am65_cpsw_run_xdp(struct am65_cpsw_common *common,
+ 			     int desc_idx, int cpu, int *len)
+ {
+ 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
++	struct am65_cpsw_ndev_priv *ndev_priv;
+ 	struct net_device *ndev = port->ndev;
++	struct am65_cpsw_ndev_stats *stats;
+ 	int ret = AM65_CPSW_XDP_CONSUMED;
+ 	struct am65_cpsw_tx_chn *tx_chn;
+ 	struct netdev_queue *netif_txq;
+@@ -1016,6 +1018,9 @@ static int am65_cpsw_run_xdp(struct am65_cpsw_common *common,
+ 	/* XDP prog might have changed packet data and boundaries */
+ 	*len = xdp->data_end - xdp->data;
  
- 		for (int i = 0; i < total_cpus; i++) {
-+			if (cpu_data[i].lock == 0)
-+				continue;
++	ndev_priv = netdev_priv(ndev);
++	stats = this_cpu_ptr(ndev_priv->stats);
 +
- 			update_lock_stat(stat_fd, -1, end_ts, aggr_mode,
- 					 &cpu_data[i]);
- 		}
+ 	switch (act) {
+ 	case XDP_PASS:
+ 		ret = AM65_CPSW_XDP_PASS;
+@@ -1035,16 +1040,20 @@ static int am65_cpsw_run_xdp(struct am65_cpsw_common *common,
+ 		if (err)
+ 			goto drop;
+ 
+-		ndev->stats.rx_bytes += *len;
+-		ndev->stats.rx_packets++;
++		u64_stats_update_begin(&stats->syncp);
++		stats->rx_bytes += *len;
++		stats->rx_packets++;
++		u64_stats_update_end(&stats->syncp);
+ 		ret = AM65_CPSW_XDP_CONSUMED;
+ 		goto out;
+ 	case XDP_REDIRECT:
+ 		if (unlikely(xdp_do_redirect(ndev, xdp, prog)))
+ 			goto drop;
+ 
+-		ndev->stats.rx_bytes += *len;
+-		ndev->stats.rx_packets++;
++		u64_stats_update_begin(&stats->syncp);
++		stats->rx_bytes += *len;
++		stats->rx_packets++;
++		u64_stats_update_end(&stats->syncp);
+ 		ret = AM65_CPSW_XDP_REDIRECT;
+ 		goto out;
+ 	default:
 -- 
 2.43.0
 
