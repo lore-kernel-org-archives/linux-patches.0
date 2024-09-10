@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F02E18C02E;
-	Tue, 10 Sep 2024 10:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A863818C02E;
+	Tue, 10 Sep 2024 10:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964309; cv=none; b=hwri6OtGwMu9UmWyaC0ikwBjoZXjcx4SrmaskyIoTqgaTmgUCnkufXCA1kwHRg28C7eXn2mYzhd6F/UOg8qvXQKRk2rceg4CNXaFvq8H/Q05iM4bB2iykQ402PrviCNuPH04XxByHfddRPFA6T8sCvyPTrKa2LZGUbz/hii6Shk=
+	t=1725964311; cv=none; b=iZsBReuJcVuf8wLVU6r2sJLQKXlE5y/fsK9yP9rNqKXOsNhHv7tUwyqBCZ3Yo1RBeupRUhxo6XFCTA9qNASgj5bjd95ZKeSA1zNaVPugF3PI9gs78JULAuqLFkIYYR9foEwVeASDqwPV/0y2WASdjx1sydLoMDmG0LcebFrGOh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964309; c=relaxed/simple;
-	bh=b4z6qL0jXogsBKdpVO6zXYlFZSzKUvun+WjlbpZpjdY=;
+	s=arc-20240116; t=1725964311; c=relaxed/simple;
+	bh=oyvT+4TQra6uc2nf/FcIrlNaSvBoufV9y2VGuDuJIQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDQPMNEK+4qxEufOuLwKTvr+1/F3e1Wu9vwtSgaVaiZ+uEWR0Ga+cZgTdoZsuFfiebUwUFmjZ7CeLoiT+uQZsKnKMMQAcm+3a1fOpWCw/ovrcC27xsioQT/waPOofJLVt6CO26+tHOqU5az/zBgRg5lriyVl+QkFV9JK79/G2aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIeom02c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qn3Kq5ZhIuu+bk66QrVg5qFkMKnJe+OS/EBxNMFT3KR9oXlaFrILBdmSZZNeYsi2bJzaynQBRtBpLpFK6Q/XE3oO196MqieHhZ2CwtuyHd69BdrKLnzwjDbtQdlEvt3WhGQ8Mm1AC5tXTRkwTN23OPB4eLDEBZOWuYvxq1SkJmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWchx1oC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIeom02c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4070EC4CEC3;
-	Tue, 10 Sep 2024 10:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWchx1oC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AA7C4CEC3;
+	Tue, 10 Sep 2024 10:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964308;
-	bh=b4z6qL0jXogsBKdpVO6zXYlFZSzKUvun+WjlbpZpjdY=;
+	s=korg; t=1725964311;
+	bh=oyvT+4TQra6uc2nf/FcIrlNaSvBoufV9y2VGuDuJIQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIeom02csTyzY0218307UT4iU3IC0DMi/xntep27woAv6x9lgrFDYjmHxEjjw9LhP
-	 iNrkTenTNg4p+gCbbBXAeZsldKhUOLERLjz1FJUrdb9SRl2KKALlmM5cxI4eeqPmBS
-	 oVJx9gfN63JhfrKio9kTv+fkOez+64DVSejUUL9o=
+	b=oWchx1oC+q0/SkDCcL2joW0qoIB4OlFGiQ+0SO6JqWie9/aiCMse+/BQqnD766x/H
+	 T7/q4YVoJN30828w3rBPIOHwuw6tm4avMaCYsx5dk3SesAZ7sUMglGH2K9tgENvFx/
+	 c3ZGJ1ZYtnAuWLn9dJ2u1yraEO7WsYgOnndX0Ons=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 138/269] firmware: cs_dsp: Dont allow writes to read-only controls
-Date: Tue, 10 Sep 2024 11:32:05 +0200
-Message-ID: <20240910092613.124756603@linuxfoundation.org>
+Subject: [PATCH 6.6 139/269] phy: zynqmp: Take the phy mutex in xlate
+Date: Tue, 10 Sep 2024 11:32:06 +0200
+Message-ID: <20240910092613.157122821@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -51,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 62412a9357b16a4e39dc582deb2e2a682b92524c ]
+[ Upstream commit d79c6840917097285e03a49f709321f5fb972750 ]
 
-Add a check to cs_dsp_coeff_write_ctrl() to abort if the control
-is not writeable.
+Take the phy mutex in xlate to protect against concurrent
+modification/access to gtr_phy. This does not typically cause any
+issues, since in most systems the phys are only xlated once and
+thereafter accessed with the phy API (which takes the locks). However,
+we are about to allow userspace to access phys for debugging, so it's
+important to avoid any data races.
 
-The cs_dsp code originated as an ASoC driver (wm_adsp) where all
-controls were exported as ALSA controls. It relied on ALSA to
-enforce the read-only permission. Now that the code has been
-separated from ALSA/ASoC it must perform its own permission check.
-
-This isn't currently causing any problems so there shouldn't be any
-need to backport this. If the client of cs_dsp exposes the control as
-an ALSA control, it should set permissions on that ALSA control to
-protect it. The few uses of cs_dsp_coeff_write_ctrl() inside drivers
-are for writable controls.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20240702110809.16836-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://lore.kernel.org/r/20240628205540.3098010-5-sean.anderson@linux.dev
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/phy/xilinx/phy-zynqmp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index a1da7581adb0..e62ffffe5fb8 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -796,6 +796,9 @@ int cs_dsp_coeff_write_ctrl(struct cs_dsp_coeff_ctl *ctl,
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index 8c8b1ca31e4c..c72b52955a86 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -846,6 +846,7 @@ static struct phy *xpsgtr_xlate(struct device *dev,
+ 	phy_type = args->args[1];
+ 	phy_instance = args->args[2];
  
- 	lockdep_assert_held(&ctl->dsp->pwr_lock);
- 
-+	if (ctl->flags && !(ctl->flags & WMFW_CTL_FLAG_WRITEABLE))
-+		return -EPERM;
-+
- 	if (len + off * sizeof(u32) > ctl->len)
- 		return -EINVAL;
- 
++	guard(mutex)(&gtr_phy->phy->mutex);
+ 	ret = xpsgtr_set_lane_type(gtr_phy, phy_type, phy_instance);
+ 	if (ret < 0) {
+ 		dev_err(gtr_dev->dev, "Invalid PHY type and/or instance\n");
 -- 
 2.43.0
 
