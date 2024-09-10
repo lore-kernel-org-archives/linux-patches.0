@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8017172BAE;
-	Tue, 10 Sep 2024 09:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25D9172BAE;
+	Tue, 10 Sep 2024 09:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962148; cv=none; b=LNg1m/xgES3/hNsvvdnyhu+kuGosZVKqsIJWJN0sJD4BhTW0qKuu2aZ7p7iF+YuZGw8VdRawoI0Snr/vjF++IZthRxxnULxn1uyC06+WN2j4uYT8Be1VkhG4q1lwrBb+lZfjA1quoO4K0GTedL2LrvAvNMH37gUeGpyR0z66ueQ=
+	t=1725962151; cv=none; b=ckqQJvOBfs5VtrqBTx8LCq6oFguqt9Q0CVuMiyp9xg6O+M3fxvUW8LoNp8b1z2gmgUhavrkM2V27rpVa9VfiYdmVsez9LlZdAxb9A7J/yI6E9Rjkv3feWmvqou2CIuKscE5IMyJS6opHEgFmbxbgEFpy4EKj0O9rvWoVbYRQTaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962148; c=relaxed/simple;
-	bh=EMYc2OSxeG28nYasKDjVVCGHxuQLXrsvzDaPB5EWdd8=;
+	s=arc-20240116; t=1725962151; c=relaxed/simple;
+	bh=GVmueibNSKdZFHBRtI1SjHK1jAqEyfP5VW2JWpFqItg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mo8RB2TKfZdAhGIVNDOdqrURdrlcISBCj6zWGdD8CQJRSJFtjBzGxmyV+I0kC1+VpQkpFt852sjV6FmvlF2nlVjduNR/7v5aPoTmJqBTHwFwj2FDck9Lk7vNJWkM12o9i84DUFnf/Fe/Yqb3XjmJImGr1l3H2ScEyidKxmlSU1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zf2/nZv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ip0AXmM6SoK6ikHpCZJQb+fQn7EoLofUNoyToIUqGmtJYDz/sAj46uCGP/q5A6aEbc3rQniBE/j631TRWTVjmQZ18TTApvP7eutTZH5S28Z6Xls5L0KnCWhCUNkN6NAmS/K8LYSxUhYaR0QX9YjcFzeyb0Jhbmk7/2goLRAH8Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4ovg0d1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zf2/nZv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DBEC4CEC3;
-	Tue, 10 Sep 2024 09:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4ovg0d1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE53C4CEC3;
+	Tue, 10 Sep 2024 09:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962148;
-	bh=EMYc2OSxeG28nYasKDjVVCGHxuQLXrsvzDaPB5EWdd8=;
+	s=korg; t=1725962151;
+	bh=GVmueibNSKdZFHBRtI1SjHK1jAqEyfP5VW2JWpFqItg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf2/nZv48HV1NdnrOVC2PIPwJ8nsD9b4JmVQXI+73yn7ktFp/IyEGdzESLME8HtWb
-	 VLAiRksuzMPKMcbWxJaDwWlIUjJOujHhxKRyj8kdfyKUmEUh3IJ5SGpyBBz/lcIx55
-	 9u+i4qo2uOqlDz8AvJxtY0te3hwQS5KhECfKt+5Q=
+	b=m4ovg0d1erjFmffInmSi8+7ulBsB/9bzs6NFXEM0k6hNVgur/7ofpHYBya1GcznUD
+	 4OfvN+nz4mSAkzA26ac36ILAznJKvqRvLgSaMqUZWF1NloZkOiYccKDgrFA8Yk8pFs
+	 lp0xqQLIS70DcX2JPqpIapM689dUxpPILDLf+c8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
+	David Lechner <dlechner@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.10 284/375] staging: iio: frequency: ad9834: Validate frequency parameter value
-Date: Tue, 10 Sep 2024 11:31:21 +0200
-Message-ID: <20240910092632.104486785@linuxfoundation.org>
+Subject: [PATCH 6.10 285/375] iio: buffer-dmaengine: fix releasing dma channel on error
+Date: Tue, 10 Sep 2024 11:31:22 +0200
+Message-ID: <20240910092632.141881654@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: David Lechner <dlechner@baylibre.com>
 
-commit b48aa991758999d4e8f9296c5bbe388f293ef465 upstream.
+commit 84c65d8008764a8fb4e627ff02de01ec4245f2c4 upstream.
 
-In ad9834_write_frequency() clk_get_rate() can return 0. In such case
-ad9834_calc_freqreg() call will lead to division by zero. Checking
-'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
-ad9834_write_frequency() is called from ad9834_write(), where fout is
-taken from text buffer, which can contain any value.
+If dma_get_slave_caps() fails, we need to release the dma channel before
+returning an error to avoid leaking the channel.
 
-Modify parameters checking.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
+Fixes: 2d6ca60f3284 ("iio: Add a DMAengine framework based buffer")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20240723-iio-fix-dmaengine-free-on-error-v1-1-2c7cbc9b92ff@baylibre.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/frequency/ad9834.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/buffer/industrialio-buffer-dmaengine.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/iio/frequency/ad9834.c
-+++ b/drivers/staging/iio/frequency/ad9834.c
-@@ -114,7 +114,7 @@ static int ad9834_write_frequency(struct
+--- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
++++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+@@ -193,7 +193,7 @@ static struct iio_buffer *iio_dmaengine_
  
- 	clk_freq = clk_get_rate(st->mclk);
+ 	ret = dma_get_slave_caps(chan, &caps);
+ 	if (ret < 0)
+-		goto err_free;
++		goto err_release;
  
--	if (fout > (clk_freq / 2))
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
+ 	/* Needs to be aligned to the maximum of the minimums */
+ 	if (caps.src_addr_widths)
+@@ -219,6 +219,8 @@ static struct iio_buffer *iio_dmaengine_
  
- 	regval = ad9834_calc_freqreg(clk_freq, fout);
+ 	return &dmaengine_buffer->queue.buffer;
+ 
++err_release:
++	dma_release_channel(chan);
+ err_free:
+ 	kfree(dmaengine_buffer);
+ 	return ERR_PTR(ret);
 
 
