@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D971246444;
-	Tue, 10 Sep 2024 09:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA91D46444;
+	Tue, 10 Sep 2024 09:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961121; cv=none; b=SzjHfGCyWyBPSpnJmDmX6cSWgs3DmChIxgPlmcNIwt6TbB1g55lGPwnvzspgeqRGdL1100gk6kdGZFSZXGWx+o78C6Sc50hScOgdGY8nahFODBUUzHGz6EkzC44G9rfIeHe5zBJCyR8BaXjOkXFMEOzBCapjXlyZKR90a3TbdeA=
+	t=1725961124; cv=none; b=EaPRCpmGVy2LwsVgIwjTNaM9Win07y3Czl5+as1gts78uiEVY7Wn/DSm54FTnjVd8ah8lIJcaUjw6OOJ+ySjxBIfy0sgtB4/BI3TF+r8M+HWLLRN+87OLBdn3zqk7nVubryltxYTvWzapPBJqU+29bPbBHmEhnEvITqSQApjXIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961121; c=relaxed/simple;
-	bh=J8nZW/RuLz58uwgYX9XaG/09Fw6+IBqGeVfgROxUwO4=;
+	s=arc-20240116; t=1725961124; c=relaxed/simple;
+	bh=ixVdmBMq5+57P5jrZwrjW6EasJMu+adBRtiDlMi2EYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JamgtQSFXceke/PZUwhLLA7pdPduPFWTUqQC04EOYtBxBYO+/3IAav3FmOQWXEEuW7kmzlXTu6x1zNGwM0ncXUJuJmNf/ifs+R8UbPxjI7pkJ7UUZdsX/EFoJQNmDsGPd62WYCrakTrnhKm0rVAmKtG0q5Q4L0UvL5lyw5XBRXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXlx23z9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjqUWpNg4G8a2nIJSGNIac6kjGiaB66R++5ORzGo4aSwfCVuvZ3CudAz3tjjUkBAbFSssetEkLpKoFbnq8DWcy+R82Jo5BbRSTSt1MpVKHOyjMTzK89s6MiVtv5Utsf6CQ+U3DzXyIsuJEtnOOWtf5g7v8Y5X97ebixyOqq+vOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m99vDUXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXlx23z9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60965C4CEC3;
-	Tue, 10 Sep 2024 09:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m99vDUXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D655C4CEC3;
+	Tue, 10 Sep 2024 09:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961121;
-	bh=J8nZW/RuLz58uwgYX9XaG/09Fw6+IBqGeVfgROxUwO4=;
+	s=korg; t=1725961124;
+	bh=ixVdmBMq5+57P5jrZwrjW6EasJMu+adBRtiDlMi2EYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXlx23z9Wy7u/U5z7mJsUOIxNd0ds70IDuashxSM3pTjSoj4KslB7NbShhClFiBNv
-	 aF0i7x9yaGisu+5VYKmXOXBMlXPhJfbXTDsUoF+vEB2O/F3VQOn2LZe1qMKGHLUjTY
-	 KG8hVT4JKnAaJOee6hSEfXOMja/rgrZHG0AnoVIA=
+	b=m99vDUXAmPNt6550fC72wku+OJ+Kvkmb4v0MTzKPz/4obwDiZXKJwxY1ESXItt3AW
+	 nQCGhBssE+20yKCFyjogrWxYuFXlp2orcGtiUcXFKwQYCqk/qkE3/qIqo44u/Vzr1g
+	 cHedpsgSVDy/Bdyf4Ept8RpF5L9+gkfuIsCQ3Cfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Brian Norris <briannorris@chromium.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 60/96] hwmon: (w83627ehf) Fix underflows seen when writing limit attributes
-Date: Tue, 10 Sep 2024 11:32:02 +0200
-Message-ID: <20240910092544.177747571@linuxfoundation.org>
+Subject: [PATCH 4.19 61/96] wifi: mwifiex: Do not return unused priv in mwifiex_get_priv_by_id()
+Date: Tue, 10 Sep 2024 11:32:03 +0200
+Message-ID: <20240910092544.223114552@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -50,42 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit 5c1de37969b7bc0abcb20b86e91e70caebbd4f89 ]
+[ Upstream commit c145eea2f75ff7949392aebecf7ef0a81c1f6c14 ]
 
-DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
-negative number such as -9223372036854775808 is provided by the user.
-Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
+mwifiex_get_priv_by_id() returns the priv pointer corresponding to
+the bss_num and bss_type, but without checking if the priv is actually
+currently in use.
+Unused priv pointers do not have a wiphy attached to them which can
+lead to NULL pointer dereferences further down the callstack.  Fix
+this by returning only used priv pointers which have priv->bss_mode
+set to something else than NL80211_IFTYPE_UNSPECIFIED.
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Said NULL pointer dereference happened when an Accesspoint was started
+with wpa_supplicant -i mlan0 with this config:
+
+network={
+        ssid="somessid"
+        mode=2
+        frequency=2412
+        key_mgmt=WPA-PSK WPA-PSK-SHA256
+        proto=RSN
+        group=CCMP
+        pairwise=CCMP
+        psk="12345678"
+}
+
+When waiting for the AP to be established, interrupting wpa_supplicant
+with <ctrl-c> and starting it again this happens:
+
+| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000140
+| Mem abort info:
+|   ESR = 0x0000000096000004
+|   EC = 0x25: DABT (current EL), IL = 32 bits
+|   SET = 0, FnV = 0
+|   EA = 0, S1PTW = 0
+|   FSC = 0x04: level 0 translation fault
+| Data abort info:
+|   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+|   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+| user pgtable: 4k pages, 48-bit VAs, pgdp=0000000046d96000
+| [0000000000000140] pgd=0000000000000000, p4d=0000000000000000
+| Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+| Modules linked in: caam_jr caamhash_desc spidev caamalg_desc crypto_engine authenc libdes mwifiex_sdio
++mwifiex crct10dif_ce cdc_acm onboard_usb_hub fsl_imx8_ddr_perf imx8m_ddrc rtc_ds1307 lm75 rtc_snvs
++imx_sdma caam imx8mm_thermal spi_imx error imx_cpufreq_dt fuse ip_tables x_tables ipv6
+| CPU: 0 PID: 8 Comm: kworker/0:1 Not tainted 6.9.0-00007-g937242013fce-dirty #18
+| Hardware name: somemachine (DT)
+| Workqueue: events sdio_irq_work
+| pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : mwifiex_get_cfp+0xd8/0x15c [mwifiex]
+| lr : mwifiex_get_cfp+0x34/0x15c [mwifiex]
+| sp : ffff8000818b3a70
+| x29: ffff8000818b3a70 x28: ffff000006bfd8a5 x27: 0000000000000004
+| x26: 000000000000002c x25: 0000000000001511 x24: 0000000002e86bc9
+| x23: ffff000006bfd996 x22: 0000000000000004 x21: ffff000007bec000
+| x20: 000000000000002c x19: 0000000000000000 x18: 0000000000000000
+| x17: 000000040044ffff x16: 00500072b5503510 x15: ccc283740681e517
+| x14: 0201000101006d15 x13: 0000000002e8ff43 x12: 002c01000000ffb1
+| x11: 0100000000000000 x10: 02e8ff43002c0100 x9 : 0000ffb100100157
+| x8 : ffff000003d20000 x7 : 00000000000002f1 x6 : 00000000ffffe124
+| x5 : 0000000000000001 x4 : 0000000000000003 x3 : 0000000000000000
+| x2 : 0000000000000000 x1 : 0001000000011001 x0 : 0000000000000000
+| Call trace:
+|  mwifiex_get_cfp+0xd8/0x15c [mwifiex]
+|  mwifiex_parse_single_response_buf+0x1d0/0x504 [mwifiex]
+|  mwifiex_handle_event_ext_scan_report+0x19c/0x2f8 [mwifiex]
+|  mwifiex_process_sta_event+0x298/0xf0c [mwifiex]
+|  mwifiex_process_event+0x110/0x238 [mwifiex]
+|  mwifiex_main_process+0x428/0xa44 [mwifiex]
+|  mwifiex_sdio_interrupt+0x64/0x12c [mwifiex_sdio]
+|  process_sdio_pending_irqs+0x64/0x1b8
+|  sdio_irq_work+0x4c/0x7c
+|  process_one_work+0x148/0x2a0
+|  worker_thread+0x2fc/0x40c
+|  kthread+0x110/0x114
+|  ret_from_fork+0x10/0x20
+| Code: a94153f3 a8c37bfd d50323bf d65f03c0 (f940a000)
+| ---[ end trace 0000000000000000 ]---
+
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240703072409.556618-1-s.hauer@pengutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/w83627ehf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/main.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwmon/w83627ehf.c b/drivers/hwmon/w83627ehf.c
-index ad68b6d9ff17..8da5f77b8987 100644
---- a/drivers/hwmon/w83627ehf.c
-+++ b/drivers/hwmon/w83627ehf.c
-@@ -1519,7 +1519,7 @@ store_target_temp(struct device *dev, struct device_attribute *attr,
- 	if (err < 0)
- 		return err;
+diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
+index 7e526014b638..89774e0316bd 100644
+--- a/drivers/net/wireless/marvell/mwifiex/main.h
++++ b/drivers/net/wireless/marvell/mwifiex/main.h
+@@ -1306,6 +1306,9 @@ mwifiex_get_priv_by_id(struct mwifiex_adapter *adapter,
  
--	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 127);
-+	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 127000), 1000);
- 
- 	mutex_lock(&data->update_lock);
- 	data->target_temp[nr] = val;
-@@ -1545,7 +1545,7 @@ store_tolerance(struct device *dev, struct device_attribute *attr,
- 		return err;
- 
- 	/* Limit the temp to 0C - 15C */
--	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 15);
-+	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 15000), 1000);
- 
- 	mutex_lock(&data->update_lock);
- 	if (sio_data->kind == nct6775 || sio_data->kind == nct6776) {
+ 	for (i = 0; i < adapter->priv_num; i++) {
+ 		if (adapter->priv[i]) {
++			if (adapter->priv[i]->bss_mode == NL80211_IFTYPE_UNSPECIFIED)
++				continue;
++
+ 			if ((adapter->priv[i]->bss_num == bss_num) &&
+ 			    (adapter->priv[i]->bss_type == bss_type))
+ 				break;
 -- 
 2.43.0
 
