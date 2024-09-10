@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A6C192D86;
-	Tue, 10 Sep 2024 10:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92039188A38;
+	Tue, 10 Sep 2024 10:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963828; cv=none; b=u5KDa5nzSQ3dnN/odRJ17qz5GGejDoICMdXPTCWMi1lftjSYCwvC1uxDZ+KoHMGs50WIx2DTTtVYJu0jyGvz52Lb7WcDuTurXG8y4I0SeifYdypS52L/A+D2KJJ3tsSJEMze+vZkVr4YXKqrfHFZWVEBRfLSYjxHDNWZooDAhe8=
+	t=1725963831; cv=none; b=oKENd8eHvfodiN5zO7BdM13lWQQRaY1uM2gFyeC+c3lyFF3srpKFFqraEFEiUFiPAa49zQ0slLhAyCEU7eDUYrfvRSRtHmA8aTHSC8wApqvyRAM1lu6XaeK47GdUag1WB4KscQvPPB22ub65FP+XEjvK7X4lUebcDAYzvI+Ge/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963828; c=relaxed/simple;
-	bh=67FAteKJoUh0pfEnIWPZYPI8+/S+BbFb6gH+g9QKQZw=;
+	s=arc-20240116; t=1725963831; c=relaxed/simple;
+	bh=aNCFUXENEqIqOPN5dR/fUw8b+Y8s6GavrD2XKOE+gDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBcJrqMmggKCy5ZL8YZRU2I1uJ5uqge3FflupfXPIhiv+LzE0YmeWhqR02vVVdNACmOnBnwaXGFzAuj99kaMUpkAsz7LRMjBGS5HomGBrrZVzoOkSu9tc8PJsmrGYNGZZQidkjNfMlGwayDy0yq3dozGVIuL+MA+HnIzQMY8cUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcOr2xAB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNXAxVaZn1nBHsAsCcIo8zbeFbj2poSgYShh0b0+cY1Yjpc/pKrL5PrAPz3zwM5Gz4M5/wN/iy746qwzHDxX+Ps9jayY1TU9U6JWsSo1VDYVVoiH/gbv0i5+hrNfVz4dchnvA8h8cBgNfDrjA3xcOikXEwf3QPUVniX3wVoYh8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSNFvTaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcOr2xAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BF7C4CEC3;
-	Tue, 10 Sep 2024 10:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSNFvTaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186F2C4CEC3;
+	Tue, 10 Sep 2024 10:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963828;
-	bh=67FAteKJoUh0pfEnIWPZYPI8+/S+BbFb6gH+g9QKQZw=;
+	s=korg; t=1725963831;
+	bh=aNCFUXENEqIqOPN5dR/fUw8b+Y8s6GavrD2XKOE+gDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcOr2xABYw8XAcHXPOC04nwz/kIsJe34bEwWzth7TcV2vJEdUIIu5PxQgnkUeonY/
-	 UoTMaqJbldOXYsqUORedJNAfzy9s0l4sg5VmdkPzDaB6yoxI08G/ovBYFZ0tw115VO
-	 pOQSwwm8yOty3QNItraH4DhDKcTZQCuYZgwPPr30=
+	b=dSNFvTaqS2kqS+QssBfP9nUBgjMWjsReYa5Qc+vJlPCVRAk7+H2M4ogKpecGJtdgH
+	 TmZ9FqtfI7cGLQ4MMuCddNknjUhKi1ChwatfxgNndtNQfk8oEHMJt43lqGoJRRQDYR
+	 gncHlUy7XjppjgcWj58fhW1QoRpvgGLjDSfuaFds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/214] ksmbd: unset the binding mark of a reused connection
-Date: Tue, 10 Sep 2024 11:33:33 +0200
-Message-ID: <20240910092606.423910033@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 174/214] staging: iio: frequency: ad9834: Validate frequency parameter value
+Date: Tue, 10 Sep 2024 11:33:16 +0200
+Message-ID: <20240910092605.819857219@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,95 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 78c5a6f1f630172b19af4912e755e1da93ef0ab5 ]
+commit b48aa991758999d4e8f9296c5bbe388f293ef465 upstream.
 
-Steve French reported null pointer dereference error from sha256 lib.
-cifs.ko can send session setup requests on reused connection.
-If reused connection is used for binding session, conn->binding can
-still remain true and generate_preauth_hash() will not set
-sess->Preauth_HashValue and it will be NULL.
-It is used as a material to create an encryption key in
-ksmbd_gen_smb311_encryptionkey. ->Preauth_HashValue cause null pointer
-dereference error from crypto_shash_update().
+In ad9834_write_frequency() clk_get_rate() can return 0. In such case
+ad9834_calc_freqreg() call will lead to division by zero. Checking
+'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
+ad9834_write_frequency() is called from ad9834_write(), where fout is
+taken from text buffer, which can contain any value.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-#PF: supervisor read access in kernel mode
-#PF: error_code(0x0000) - not-present page
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 8 PID: 429254 Comm: kworker/8:39
-Hardware name: LENOVO 20MAS08500/20MAS08500, BIOS N2CET69W (1.52 )
-Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
-RIP: 0010:lib_sha256_base_do_update.isra.0+0x11e/0x1d0 [sha256_ssse3]
-<TASK>
-? show_regs+0x6d/0x80
-? __die+0x24/0x80
-? page_fault_oops+0x99/0x1b0
-? do_user_addr_fault+0x2ee/0x6b0
-? exc_page_fault+0x83/0x1b0
-? asm_exc_page_fault+0x27/0x30
-? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
-? lib_sha256_base_do_update.isra.0+0x11e/0x1d0 [sha256_ssse3]
-? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
-? __pfx_sha256_transform_rorx+0x10/0x10 [sha256_ssse3]
-_sha256_update+0x77/0xa0 [sha256_ssse3]
-sha256_avx2_update+0x15/0x30 [sha256_ssse3]
-crypto_shash_update+0x1e/0x40
-hmac_update+0x12/0x20
-crypto_shash_update+0x1e/0x40
-generate_key+0x234/0x380 [ksmbd]
-generate_smb3encryptionkey+0x40/0x1c0 [ksmbd]
-ksmbd_gen_smb311_encryptionkey+0x72/0xa0 [ksmbd]
-ntlm_authenticate.isra.0+0x423/0x5d0 [ksmbd]
-smb2_sess_setup+0x952/0xaa0 [ksmbd]
-__process_request+0xa3/0x1d0 [ksmbd]
-__handle_ksmbd_work+0x1c4/0x2f0 [ksmbd]
-handle_ksmbd_work+0x2d/0xa0 [ksmbd]
-process_one_work+0x16c/0x350
-worker_thread+0x306/0x440
-? __pfx_worker_thread+0x10/0x10
-kthread+0xef/0x120
-? __pfx_kthread+0x10/0x10
-ret_from_fork+0x44/0x70
-? __pfx_kthread+0x10/0x10
-ret_from_fork_asm+0x1b/0x30
-</TASK>
+Modify parameters checking.
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/iio/frequency/ad9834.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 57f59172d821..089dc2f51229 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -1705,6 +1705,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 		rc = ksmbd_session_register(conn, sess);
- 		if (rc)
- 			goto out_err;
-+
-+		conn->binding = false;
- 	} else if (conn->dialect >= SMB30_PROT_ID &&
- 		   (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
- 		   req->Flags & SMB2_SESSION_REQ_FLAG_BINDING) {
-@@ -1783,6 +1785,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 			sess = NULL;
- 			goto out_err;
- 		}
-+
-+		conn->binding = false;
- 	}
- 	work->sess = sess;
+--- a/drivers/staging/iio/frequency/ad9834.c
++++ b/drivers/staging/iio/frequency/ad9834.c
+@@ -114,7 +114,7 @@ static int ad9834_write_frequency(struct
  
--- 
-2.43.0
-
+ 	clk_freq = clk_get_rate(st->mclk);
+ 
+-	if (fout > (clk_freq / 2))
++	if (!clk_freq || fout > (clk_freq / 2))
+ 		return -EINVAL;
+ 
+ 	regval = ad9834_calc_freqreg(clk_freq, fout);
 
 
