@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCD71891A5;
-	Tue, 10 Sep 2024 09:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB211885A6;
+	Tue, 10 Sep 2024 09:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961157; cv=none; b=gtROy1UQS8IqxavZyDSIacVqztQBLwX4f+RaVn6wQKuXjnasYXc0odngV+JXAiQxjNvrxtGfEBtLBEyr5vZQ4qBBFB3Nm487w+kxBqLNg2JM2WWn7JiM0NOzayP4+nk1GrfbNecp/pNKGcKjCdsHQ0kwYRdNcIzaZI3+NUSQ5Vg=
+	t=1725961160; cv=none; b=oXo4jGxtDMcZdiYriXdJ/qbaaUhrUAZHCw3JcJ33pQPD1oZxo7Y+flv7GYsB8vCmtroJPITIrs9Dy9PQdzT67s6GvDPBHdOpIgZuqAQV894HAHbCUrI1VDs9+zl0hcYS8j5ieAoDEyviaYY75b7nzeMmKweNeWu1PIVF1bsNJBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961157; c=relaxed/simple;
-	bh=cnw1NvE75DN2vfC3XZ+uAb6A16PNEAK7m/px1fu3gdc=;
+	s=arc-20240116; t=1725961160; c=relaxed/simple;
+	bh=FLpEExGs3wM4NQUckVFchWcoS6SFPr4htfAQudOXLc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wn8VANdH/FzGSZE5Mv+3+wh492xQlq0R9zEqbNpMBf/c7+l1RVoPPnDbU/sIPM3hj/3fOydSSOANmZPp04i+n74uNHdC6dP5eOUXSh9USpC3mw+Nonw8gHVNYr95qiPLdH3b7PthyyddFlXxOZZcMy+f/VIf7aNlezp2qRqQkjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLu0o0Uh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ckxfo/kMb5CqXoctPK3ht+e3RYKehdU9D/RpYk7SeB1K+fOA60dwYBP0GWBEB2vM94UJsMVk4J6CVPsrqZjPYXRqVvCQTt2AdrTxqzJQLkmCY8oeSvy4cRz9lEQKKIyxUui8ScZG+HKT9xbS9aQ+SjpQ76vtpHpmlkbjV1mWV3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGXJlneF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLu0o0Uh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13974C4CEC3;
-	Tue, 10 Sep 2024 09:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGXJlneF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125FEC4CECE;
+	Tue, 10 Sep 2024 09:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961157;
-	bh=cnw1NvE75DN2vfC3XZ+uAb6A16PNEAK7m/px1fu3gdc=;
+	s=korg; t=1725961160;
+	bh=FLpEExGs3wM4NQUckVFchWcoS6SFPr4htfAQudOXLc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLu0o0UhcLzVrkF0aAYT8bQyQylXtGtXW0naS0PoxEw4tRQk0su5rd7OLlulWqIef
-	 ohtyGewjpCF1tVR7QjPhgPUEAGr9uxrf/aRdTneKFgI5DCwEN7w2Cft9vcVdNs87Qs
-	 UO4PxH2fjUb7UbIXJZq8mILQKVGjbN2bBUtz4Xxg=
+	b=FGXJlneF64DdTZuxe9zjgjX+MJMCVBYBSqzGtKNzZ2CSlJjIoujXCqStrd7xaXS5p
+	 22xuaQCGVWZUD4bRqpwiXjcuAnDJwx0RyE0pGsYeX/ULNX/Oo5E0vUB9gUUZaF+riO
+	 c4CtpjIFjnQzj0a5VLvf+N/6VN9Hb9PzA5CiPzd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
+	Matteo Martelli <matteomartelli3@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 73/96] iio: buffer-dmaengine: fix releasing dma channel on error
-Date: Tue, 10 Sep 2024 11:32:15 +0200
-Message-ID: <20240910092544.765207189@linuxfoundation.org>
+Subject: [PATCH 4.19 74/96] iio: fix scale application in iio_convert_raw_to_processed_unlocked
+Date: Tue, 10 Sep 2024 11:32:16 +0200
+Message-ID: <20240910092544.801537327@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,42 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Matteo Martelli <matteomartelli3@gmail.com>
 
-commit 84c65d8008764a8fb4e627ff02de01ec4245f2c4 upstream.
+commit 8a3dcc970dc57b358c8db2702447bf0af4e0d83a upstream.
 
-If dma_get_slave_caps() fails, we need to release the dma channel before
-returning an error to avoid leaking the channel.
+When the scale_type is IIO_VAL_INT_PLUS_MICRO or IIO_VAL_INT_PLUS_NANO
+the scale passed as argument is only applied to the fractional part of
+the value. Fix it by also multiplying the integer part by the scale
+provided.
 
-Fixes: 2d6ca60f3284 ("iio: Add a DMAengine framework based buffer")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20240723-iio-fix-dmaengine-free-on-error-v1-1-2c7cbc9b92ff@baylibre.com
+Fixes: 48e44ce0f881 ("iio:inkern: Add function to read the processed value")
+Signed-off-by: Matteo Martelli <matteomartelli3@gmail.com>
+Link: https://patch.msgid.link/20240730-iio-fix-scale-v1-1-6246638c8daa@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-buffer-dmaengine.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/inkern.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
-+++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
-@@ -159,7 +159,7 @@ struct iio_buffer *iio_dmaengine_buffer_
- 
- 	ret = dma_get_slave_caps(chan, &caps);
- 	if (ret < 0)
--		goto err_free;
-+		goto err_release;
- 
- 	/* Needs to be aligned to the maximum of the minimums */
- 	if (caps.src_addr_widths)
-@@ -184,6 +184,8 @@ struct iio_buffer *iio_dmaengine_buffer_
- 
- 	return &dmaengine_buffer->queue.buffer;
- 
-+err_release:
-+	dma_release_channel(chan);
- err_free:
- 	kfree(dmaengine_buffer);
- 	return ERR_PTR(ret);
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -640,17 +640,17 @@ static int iio_convert_raw_to_processed_
+ 		break;
+ 	case IIO_VAL_INT_PLUS_MICRO:
+ 		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val;
++			*processed = -raw64 * scale_val * scale;
+ 		else
+-			*processed = raw64 * scale_val;
++			*processed = raw64 * scale_val * scale;
+ 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+ 				      1000000LL);
+ 		break;
+ 	case IIO_VAL_INT_PLUS_NANO:
+ 		if (scale_val2 < 0)
+-			*processed = -raw64 * scale_val;
++			*processed = -raw64 * scale_val * scale;
+ 		else
+-			*processed = raw64 * scale_val;
++			*processed = raw64 * scale_val * scale;
+ 		*processed += div_s64(raw64 * (s64)scale_val2 * scale,
+ 				      1000000000LL);
+ 		break;
 
 
