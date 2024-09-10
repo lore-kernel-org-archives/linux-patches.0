@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5C4199920;
-	Tue, 10 Sep 2024 10:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178A1199920;
+	Tue, 10 Sep 2024 10:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963582; cv=none; b=j3rRponmW6593e7Z8OANXRBrKO95+Ju+1Qw0NfJiyaEOWEWRcQzhZLWKiBBoDCac6mHtwL8D6EB+QxTcDzOPCN/oG/n3MGRlEG5ncC0j0XoTlI5cumRREIrejYOXOIsf0ZTDs/U8/w6IlAPtrHHI9kb6BKYhQdQOYpx4yjkp384=
+	t=1725963585; cv=none; b=fJ4s3XK7BZ8pBMBpUbGL5IccemoFT5J7/YGfRmKtSeyOhicDkjwWCIbVZiLZC1UtAk/sv6emHTYYIkQx/71Zeaf8WEfmi72/2M2UbZAY0x5lu6grIID8rQRTP9WwxAKlEcNxxmVkImvnQ20DyE9wGhkXZy/vscCc5RUf7xX5iys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963582; c=relaxed/simple;
-	bh=Iuy+xfp9lSD7ybKTF9iilCJTBXF27W68SXVYn4y2RPY=;
+	s=arc-20240116; t=1725963585; c=relaxed/simple;
+	bh=rRlUq/FbnfStU1QqmCm4TPvwSWJACGpJWUFSuaxFMSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pkeKiP8kfPNALmrZRpJLwALPxHbHQaoLhCysJvYGpf/3mpO6u9z7ajtS/Ju+tT4zRto8diePFA+72yHiDWdvj8wTONOULWE7zuXJb2ZzOO66MuR3EUSbAeZ9GAHbURKwP306xYz5mWMMYERLEDaa2ks1QdDzD9hwq96wQR3Q8wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNAW4BYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ft/rRoStcpWRlNhl55LJT8+sEDBc7Se9Snj0puhDI7KKSqwz4Iqb7CZfg7fJirnL6a5T0FoNxNHq+fvB6k3PQFjEX1sZCDGvK5nqSovLKFo603CKezfPxQgbBep6PEti9mvG/qWzlI1EglFshvMrqmpSPJeMARe+x4AXPVk4uFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjur5Fm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNAW4BYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8891C4CEC3;
-	Tue, 10 Sep 2024 10:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjur5Fm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AF3C4CEC3;
+	Tue, 10 Sep 2024 10:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963582;
-	bh=Iuy+xfp9lSD7ybKTF9iilCJTBXF27W68SXVYn4y2RPY=;
+	s=korg; t=1725963585;
+	bh=rRlUq/FbnfStU1QqmCm4TPvwSWJACGpJWUFSuaxFMSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kNAW4BYS4YU9VrO2ECFBYBzHMssdXqt4Cht2QVgKyDqd7EYUlKtPDJHRoEBYyIOaT
-	 8uKlFQ+dkAbY+xWs9ILpL1KM7pzChDpHNlCGWYAH1NKtKgqcq3hsOSBwIc2hnyayvf
-	 OYs8DEXVEakLVCDCiZHOHbobD3QBc8eM4r+DHIYE=
+	b=rjur5Fm+iZuNy6tGuVRxyfsj77Ebsg/N+i/X2xCHmM7mBKRMHqo3Ba0NGewSNlgln
+	 jxPvjA7qeABH6eVp96oT51bMuX1BIFXV6NRHyluWYOcQ3Jx2PBJChkowGZtymq5uZY
+	 jB5C7hrjvmpNVOcN9BHvZbNKIaEq91mQTjlNGCLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/214] af_unix: Remove put_pid()/put_cred() in copy_peercred().
-Date: Tue, 10 Sep 2024 11:32:08 +0200
-Message-ID: <20240910092603.134027913@linuxfoundation.org>
+Subject: [PATCH 5.15 107/214] iommu: sun50i: clear bypass register
+Date: Tue, 10 Sep 2024 11:32:09 +0200
+Message-ID: <20240910092603.176402879@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,56 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit e4bd881d987121dbf1a288641491955a53d9f8f7 ]
+[ Upstream commit 927c70c93d929f4c2dcaf72f51b31bb7d118a51a ]
 
-When (AF_UNIX, SOCK_STREAM) socket connect()s to a listening socket,
-the listener's sk_peer_pid/sk_peer_cred are copied to the client in
-copy_peercred().
+The Allwinner H6 IOMMU has a bypass register, which allows to circumvent
+the page tables for each possible master. The reset value for this
+register is 0, which disables the bypass.
+The Allwinner H616 IOMMU resets this register to 0x7f, which activates
+the bypass for all masters, which is not what we want.
 
-Then, the client's sk_peer_pid and sk_peer_cred are always NULL, so
-we need not call put_pid() and put_cred() there.
+Always clear this register to 0, to enforce the usage of page tables,
+and make this driver compatible with the H616 in this respect.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20240616224056.29159-2-andre.przywara@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/iommu/sun50i-iommu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index e73c1bbc5ff8..eb916b2eb673 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -616,9 +616,6 @@ static void init_peercred(struct sock *sk)
- 
- static void copy_peercred(struct sock *sk, struct sock *peersk)
- {
--	const struct cred *old_cred;
--	struct pid *old_pid;
--
- 	if (sk < peersk) {
- 		spin_lock(&sk->sk_peer_lock);
- 		spin_lock_nested(&peersk->sk_peer_lock, SINGLE_DEPTH_NESTING);
-@@ -626,16 +623,12 @@ static void copy_peercred(struct sock *sk, struct sock *peersk)
- 		spin_lock(&peersk->sk_peer_lock);
- 		spin_lock_nested(&sk->sk_peer_lock, SINGLE_DEPTH_NESTING);
- 	}
--	old_pid = sk->sk_peer_pid;
--	old_cred = sk->sk_peer_cred;
-+
- 	sk->sk_peer_pid  = get_pid(peersk->sk_peer_pid);
- 	sk->sk_peer_cred = get_cred(peersk->sk_peer_cred);
- 
- 	spin_unlock(&sk->sk_peer_lock);
- 	spin_unlock(&peersk->sk_peer_lock);
--
--	put_pid(old_pid);
--	put_cred(old_cred);
- }
- 
- static int unix_listen(struct socket *sock, int backlog)
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index ed3574195599..8593c79cfaeb 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -379,6 +379,7 @@ static int sun50i_iommu_enable(struct sun50i_iommu *iommu)
+ 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(3) |
+ 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(4) |
+ 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(5));
++	iommu_write(iommu, IOMMU_BYPASS_REG, 0);
+ 	iommu_write(iommu, IOMMU_INT_ENABLE_REG, IOMMU_INT_MASK);
+ 	iommu_write(iommu, IOMMU_DM_AUT_CTRL_REG(SUN50I_IOMMU_ACI_NONE),
+ 		    IOMMU_DM_AUT_CTRL_RD_UNAVAIL(SUN50I_IOMMU_ACI_NONE, 0) |
 -- 
 2.43.0
 
