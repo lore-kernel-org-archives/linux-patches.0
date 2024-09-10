@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69137172BA8;
-	Tue, 10 Sep 2024 10:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93D8172BA8;
+	Tue, 10 Sep 2024 10:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964076; cv=none; b=poQxoZ3wy1CggjY1dDtDCHgge/x1oUQG7w2NDEtJ5ujFAN725i9a0Ns6sIwC8HllllgjrW+Oa9cm/+PLYQphu/A1cOCTRjKqpA0LsT56WL+6wvfsvtt1/63gm0Z6fP6nyD1dGxqxKn2gRFHVXghWTkcsY1uImYq92B2j1VcQusk=
+	t=1725964079; cv=none; b=CszCPK54EGhdhGLfsJUriW6bny8IMxscidOr3d/DmoN0zAzq9cxUt8MdKjt95K/5QhQ2H54oeJOHv4JLqMFFSTM5GMEDJRzbbinrjr61wdVQSrPAj/ELgl1uGKcv6Za+e/OwZ5chKey6K64d3mamcAESV5Rvqqvy8W7ELf9ZGg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964076; c=relaxed/simple;
-	bh=Xp2xHTpxPlVMXrl1KmLpDEB+pMx6nEB5+rpIrgxyNBU=;
+	s=arc-20240116; t=1725964079; c=relaxed/simple;
+	bh=nTyZiDoLgNTF1Wu2D+UjsHL1/M762X+caBhSCXAvUyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfqoFORf8OpV4tpHbeg8jCVBlNIk+94AM1XyyVRJRGYUTgoYUR6L+yI/zVF+Tz24okyxk8iX7/GAK+7cy3b9ilg9oezOLMhL2IFxmglQxrx5EsEslXUGDqLuXy6cZzls1GVLBH4FDJGv/mKgg0xhAectQSwEbCpQu/r4YtH8noY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdQX8yT6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6dcimKCCGhyDPYaZXcDxQ5GO2is8kWsHOpTIunnHpNoJikzbFUehaLJYd2ZhX5fTetpR8GfX7Am9r72kE+fV93PzkkL3Vw0vUrhXAgCdxtuO5aCyoNrOAjwYCRFyWfr9RMT7n1UG+9wSnNM+pQ5reuEkfvspELpj2wOGqVWEeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeqLzQa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdQX8yT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA01BC4CEC3;
-	Tue, 10 Sep 2024 10:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeqLzQa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEB2C4CEC3;
+	Tue, 10 Sep 2024 10:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964076;
-	bh=Xp2xHTpxPlVMXrl1KmLpDEB+pMx6nEB5+rpIrgxyNBU=;
+	s=korg; t=1725964079;
+	bh=nTyZiDoLgNTF1Wu2D+UjsHL1/M762X+caBhSCXAvUyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdQX8yT6858mom73FY9w27dU7/EmWwEmTnlYK3sy1T+RZH6LlpoGLTgWXm7V6E/kd
-	 hRTGwEaVYGVtI+vqG9eTUI+Do/rytJiooayeQ513HxSzk26xatUQBLhe5NWFtg9lcB
-	 cVkb1IySTuId7NJAcgW4ECq4Z76EbUTdj/7Q0ce0=
+	b=NeqLzQa2LAhnf2OcIrNyHE7dBETKLXms111fme/mP8vBKQBOLSObKQRcDpCsfvely
+	 u6wbPta/e08Sh5YxzBIP8WPZCXLaYOoWtUJBtPcpX+VMLPwXJAjDgMB4/K2lQ+jpth
+	 qeV3yuJkJTNhqquS7WuDEibmaRUFPjE5MSri9jTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 033/269] clk: qcom: clk-alpha-pll: Fix the pll post div mask
-Date: Tue, 10 Sep 2024 11:30:20 +0200
-Message-ID: <20240910092609.427106846@linuxfoundation.org>
+Subject: [PATCH 6.6 034/269] clk: qcom: clk-alpha-pll: Fix the trion pll postdiv set rate API
+Date: Tue, 10 Sep 2024 11:30:21 +0200
+Message-ID: <20240910092609.459716845@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -53,31 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit 2c4553e6c485a96b5d86989eb9654bf20e51e6dd upstream.
+commit 4ad1ed6ef27cab94888bb3c740c14042d5c0dff2 upstream.
 
-The PLL_POST_DIV_MASK should be 0 to (width - 1) bits. Fix it.
+Correct the pll postdiv shift used in clk_trion_pll_postdiv_set_rate
+API. The shift value is not same for different types of plls and
+should be taken from the pll's .post_div_shift member.
 
-Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
+Fixes: 548a909597d5 ("clk: qcom: clk-alpha-pll: Add support for Trion PLLs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Link: https://lore.kernel.org/r/20240731062916.2680823-2-quic_skakitap@quicinc.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240731062916.2680823-3-quic_skakitap@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/clk-alpha-pll.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/clk/qcom/clk-alpha-pll.c
 +++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -40,7 +40,7 @@
+@@ -1478,8 +1478,8 @@ clk_trion_pll_postdiv_set_rate(struct cl
+ 	}
  
- #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
- # define PLL_POST_DIV_SHIFT	8
--# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width, 0)
-+# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
- # define PLL_ALPHA_EN		BIT(24)
- # define PLL_ALPHA_MODE		BIT(25)
- # define PLL_VCO_SHIFT		20
+ 	return regmap_update_bits(regmap, PLL_USER_CTL(pll),
+-				  PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_SHIFT,
+-				  val << PLL_POST_DIV_SHIFT);
++				  PLL_POST_DIV_MASK(pll) << pll->post_div_shift,
++				  val << pll->post_div_shift);
+ }
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_trion_ops = {
 
 
