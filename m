@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421FB188CC1;
-	Tue, 10 Sep 2024 10:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31841172BA8;
+	Tue, 10 Sep 2024 10:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964420; cv=none; b=JXLeE7Hi3nRO99Lo3qiRY3e9A7PSV1/baJb2qUC286TYYDAvEy97c8SU7iuVBNjHxfcWb2haPYpNitF3VbXnb5RcWKGzhiZqv72qLxqQ34ONQOF51lDIvFGhvYiR7Vzai3cci15p9/TzF+cvLsviB684aE13lUfljzMQB2mSXUc=
+	t=1725964423; cv=none; b=iuo9h0pps8ApHDPAtmyqSsDRtUeW5eBOd/z7/R0ckmb9pEd2FT09t1VI8SEgAcDsYwYz4yWsY7IJCjEpSsenHOZeR7zSztVF3PJjg7UQk0kDiq2Hm6i+MSxyCI9qBhDRza9fGbOFWwEKwzvNEkZgeyfKD8V2LM2edRj+W3bG/j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964420; c=relaxed/simple;
-	bh=/2bwFQU0qcwQi/ESdckhZgNcnQM/IPc7hMcfOzrdbzs=;
+	s=arc-20240116; t=1725964423; c=relaxed/simple;
+	bh=IpKsCMASEGoVWn7pyIpULflRdAQCXlVQaRsyv68zh60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSywDMCC/FOnkcFKFwoLNeBkt9unKs7/fxbsxfeW49W+SWw2sjED6NzTqUCrhtQ0B/9/2N9eAadVAYio5qpWFsCjgFyEaHHE0e82WhSEyd2YkkZqgQg/zY19/LxcUOyCrDXpIakJVUnDYfWYkPnowQryAe6BZs+6i/hMNFbAh2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPAbGIuF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTxKRTTjHlfreJU0ymKQprs/QTVt7tcaGCkyvSJoN5QNSBoc+dOgbQuXCm8iFh2H7+mRE5AOs93/d84Wzs9+qx3l5XaZwRQuVcOIiHwOjyaGx0MVSxxpLBYdWyRV1VYIc0DgCGnjZFGXo44n9Kj8PV6/+gf+ZhXeBZVRlJ3/z78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTtCizq+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPAbGIuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC048C4CEC3;
-	Tue, 10 Sep 2024 10:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTtCizq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1BEC4CEC3;
+	Tue, 10 Sep 2024 10:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964420;
-	bh=/2bwFQU0qcwQi/ESdckhZgNcnQM/IPc7hMcfOzrdbzs=;
+	s=korg; t=1725964423;
+	bh=IpKsCMASEGoVWn7pyIpULflRdAQCXlVQaRsyv68zh60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPAbGIuFMDP1St7gSQW8SqYITWEH5VX2uIId+Tk6Yo8mU0nSiQ4yGbSa4ZujiD/Xu
-	 fLc7vDuSpNeJQbQ83L1RFpC2bgxdxtO2dCbC93m/tZIkSLtywoafcFn3QVCBqLiSCu
-	 KIa3rYWG21GUA0UPJrMtL/zwa0VYJVPH6zmYfCTI=
+	b=WTtCizq+ibR6gcnvaTP2CNH3WU7jYKhOwCEj8y3+07Ww8jDzd4m4Swxo66JfSqGOm
+	 +zf2f3cuHp3S8Fd7oXDVU89GdkrKBZapBLz0LiP0YfCz0jbvS37Unq6qstkzVjaZg9
+	 uDGZwqPz9axzxje2aborkXhGmupvbRXLE7bE+AAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Terrence Adams <tadamsjr@google.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/269] scsi: pm80xx: Set phy->enable_completion only when we wait for it
-Date: Tue, 10 Sep 2024 11:32:17 +0200
-Message-ID: <20240910092613.572411854@linuxfoundation.org>
+Subject: [PATCH 6.6 151/269] crypto: qat - fix unintentional re-enabling of error interrupts
+Date: Tue, 10 Sep 2024 11:32:18 +0200
+Message-ID: <20240910092613.603654629@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -53,64 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
 
-[ Upstream commit e4f949ef1516c0d74745ee54a0f4882c1f6c7aea ]
+[ Upstream commit f0622894c59458fceb33c4197462bc2006f3fc6b ]
 
-pm8001_phy_control() populates the enable_completion pointer with a stack
-address, sends a PHY_LINK_RESET / PHY_HARD_RESET, waits 300 ms, and
-returns. The problem arises when a phy control response comes late.  After
-300 ms the pm8001_phy_control() function returns and the passed
-enable_completion stack address is no longer valid. Late phy control
-response invokes complete() on a dangling enable_completion pointer which
-leads to a kernel crash.
+The logic that detects pending VF2PF interrupts unintentionally clears
+the section of the error mask register(s) not related to VF2PF.
+This might cause interrupts unrelated to VF2PF, reported through
+errsou3 and errsou5, to be reported again after the execution
+of the function disable_pending_vf2pf_interrupts() in dh895xcc
+and GEN2 devices.
 
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Signed-off-by: Terrence Adams <tadamsjr@google.com>
-Link: https://lore.kernel.org/r/20240627155924.2361370-2-tadamsjr@google.com
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fix by updating only section of errmsk3 and errmsk5 related to VF2PF.
+
+Signed-off-by: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
+Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_sas.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c       | 4 +++-
+ .../crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c  | 8 ++++++--
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index a5a31dfa4512..ee2da8e49d4c 100644
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -166,7 +166,6 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
- 	unsigned long flags;
- 	pm8001_ha = sas_phy->ha->lldd_ha;
- 	phy = &pm8001_ha->phy[phy_id];
--	pm8001_ha->phy[phy_id].enable_completion = &completion;
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c b/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c
+index 70ef11963938..43af81fcab86 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c
+@@ -100,7 +100,9 @@ static u32 adf_gen2_disable_pending_vf2pf_interrupts(void __iomem *pmisc_addr)
+ 	errmsk3 |= ADF_GEN2_ERR_MSK_VF2PF(ADF_GEN2_VF_MSK);
+ 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
  
- 	if (PM8001_CHIP_DISP->fatal_errors(pm8001_ha)) {
- 		/*
-@@ -190,6 +189,7 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
- 				rates->maximum_linkrate;
- 		}
- 		if (pm8001_ha->phy[phy_id].phy_state ==  PHY_LINK_DISABLE) {
-+			pm8001_ha->phy[phy_id].enable_completion = &completion;
- 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
- 			wait_for_completion(&completion);
- 		}
-@@ -198,6 +198,7 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
- 		break;
- 	case PHY_FUNC_HARD_RESET:
- 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
-+			pm8001_ha->phy[phy_id].enable_completion = &completion;
- 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
- 			wait_for_completion(&completion);
- 		}
-@@ -206,6 +207,7 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
- 		break;
- 	case PHY_FUNC_LINK_RESET:
- 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
-+			pm8001_ha->phy[phy_id].enable_completion = &completion;
- 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
- 			wait_for_completion(&completion);
- 		}
+-	errmsk3 &= ADF_GEN2_ERR_MSK_VF2PF(sources | disabled);
++	/* Update only section of errmsk3 related to VF2PF */
++	errmsk3 &= ~ADF_GEN2_ERR_MSK_VF2PF(ADF_GEN2_VF_MSK);
++	errmsk3 |= ADF_GEN2_ERR_MSK_VF2PF(sources | disabled);
+ 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
+ 
+ 	/* Return the sources of the (new) interrupt(s) */
+diff --git a/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c b/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c
+index 09551f949126..0e40897cc983 100644
+--- a/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c
++++ b/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c
+@@ -191,8 +191,12 @@ static u32 disable_pending_vf2pf_interrupts(void __iomem *pmisc_addr)
+ 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
+ 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK5, errmsk5);
+ 
+-	errmsk3 &= ADF_DH895XCC_ERR_MSK_VF2PF_L(sources | disabled);
+-	errmsk5 &= ADF_DH895XCC_ERR_MSK_VF2PF_U(sources | disabled);
++	/* Update only section of errmsk3 and errmsk5 related to VF2PF */
++	errmsk3 &= ~ADF_DH895XCC_ERR_MSK_VF2PF_L(ADF_DH895XCC_VF_MSK);
++	errmsk5 &= ~ADF_DH895XCC_ERR_MSK_VF2PF_U(ADF_DH895XCC_VF_MSK);
++
++	errmsk3 |= ADF_DH895XCC_ERR_MSK_VF2PF_L(sources | disabled);
++	errmsk5 |= ADF_DH895XCC_ERR_MSK_VF2PF_U(sources | disabled);
+ 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
+ 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK5, errmsk5);
+ 
 -- 
 2.43.0
 
