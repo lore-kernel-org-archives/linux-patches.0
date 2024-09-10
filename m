@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A6A1885A6;
-	Tue, 10 Sep 2024 09:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC191885A6;
+	Tue, 10 Sep 2024 09:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962055; cv=none; b=e8fRf+qC6r79RQsocQ8c/C1KSzVD/z5SsQyZbe6efmvuWTjX9U70hNiTIV9lafcBLk/XLwobxCB0+1yVBBjviC2jeVZCXwAd15RWbamPUYRYvet8R1WAO77joC+5LssK9GkfyLLaeqDnptJWp34Vq40sKNaZlB7l8HsPXFyIBhA=
+	t=1725962058; cv=none; b=gcHGOezdlUCIVJfsqye7wnXmsqX5hcSGU6FDmY34A4R+E29Kj6jzRR+6vGXfzKTzBN6+0mSGFGUEzRfyC8udR+QEbupx7A6xn43R5FTbxuFOayAuwIPzgHNTQDAN58F6QUj+bPDqbLQ2g2+E9Py47t14tKuJATJhwg2Rqn5oqFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962055; c=relaxed/simple;
-	bh=WgaREfgLxUc+m0kA0IZ2hs2+zsU2rVtm/jRj8evy7pQ=;
+	s=arc-20240116; t=1725962058; c=relaxed/simple;
+	bh=QZSk8L0OVbuKpb7COSVYaSghHmOyFheJTPlksjFkLfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJp1rg3RyW/h6nRIq48LObHk3E/2l12tiBHdcM0YhxIvawCEmSE+jtDOXWs0SjGy+dF4vVIcxnw6V1Hd7eGHSCNrmDhawz6F/J0FawKYkGxgFCN6UW2DUYixELIJy5GtY+LfZYQkvdboM/UqzSk4SxxT8i22FVlXBSoZDwlGKuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/PgHxJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XvxTDP5dlH3FuhQVEj8DUTRCigwVRVx2hS3ZMxwAUsEHq2e61Z4IfIdKjionM+anQdzrgtUFDBJBo3x+F/dzbf0fH2tZRm6CUUjiybdrH4imwaL+fG8QZnTGUxVxSwFqA4e8VCRFXO+x3Llqq10QDTHp1Iw5dFcxEiEKxOokfcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DclTbkXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/PgHxJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF58C4CEC6;
-	Tue, 10 Sep 2024 09:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DclTbkXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E34DC4CEC3;
+	Tue, 10 Sep 2024 09:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962055;
-	bh=WgaREfgLxUc+m0kA0IZ2hs2+zsU2rVtm/jRj8evy7pQ=;
+	s=korg; t=1725962057;
+	bh=QZSk8L0OVbuKpb7COSVYaSghHmOyFheJTPlksjFkLfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/PgHxJrjLkf9a8//LPZ//cc+QcBqmpm+wf39CZCTRY+/tBZvXGx9mxCcWBTj1y8K
-	 0HwbL23K2S3O4CrsOfBCfRzAo9n3y6Q09BNJox3s8MANvIV9Bwktr+fUD+cWqOj1A0
-	 a5vQ5ITtMs543Kcoa1/tbKDTbUNSkeH7UZnOuIjY=
+	b=DclTbkXGeyDR0fRfhM208NCMa+2Lfj/Ka7siT1/sBMuGZ6QfPlJzJjO/krrSYv2+n
+	 RjwljHrNy/3UZOOHysPeg+dxnntVrghphzEaGJTj4Jv9vupC6dPCkX97KDB2OMK7yi
+	 VN8vLuL9FIzzPSCc9YpxtxQEXVNZg5BqBnVbR1N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Breno Leitao <leitao@debian.org>,
-	Madalin Bucur <madalin.bucur@oss.nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	YiPeng Chai <YiPeng.Chai@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 252/375] net: dpaa: avoid on-stack arrays of NR_CPUS elements
-Date: Tue, 10 Sep 2024 11:30:49 +0200
-Message-ID: <20240910092631.015305942@linuxfoundation.org>
+Subject: [PATCH 6.10 253/375] drm/amdgpu: add mutex to protect ras shared memory
+Date: Tue, 10 Sep 2024 11:30:50 +0200
+Message-ID: <20240910092631.048788711@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,130 +52,256 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: YiPeng Chai <YiPeng.Chai@amd.com>
 
-[ Upstream commit 555a05d84ca2c587e2d4777006e2c2fb3dfbd91d ]
+[ Upstream commit b3fb79cda5688a44a423c27b791f5456d801e49c ]
 
-The dpaa-eth driver is written for PowerPC and Arm SoCs which have 1-24
-CPUs. It depends on CONFIG_NR_CPUS having a reasonably small value in
-Kconfig. Otherwise, there are 2 functions which allocate on-stack arrays
-of NR_CPUS elements, and these can quickly explode in size, leading to
-warnings such as:
+Add mutex to protect ras shared memory.
 
-  drivers/net/ethernet/freescale/dpaa/dpaa_eth.c:3280:12: warning:
-  stack frame size (16664) exceeds limit (2048) in 'dpaa_eth_probe' [-Wframe-larger-than]
+v2:
+  Add TA_RAS_COMMAND__TRIGGER_ERROR command call
+  status check.
 
-The problem is twofold:
-- Reducing the array size to the boot-time num_possible_cpus() (rather
-  than the compile-time NR_CPUS) creates a variable-length array,
-  which should be avoided in the Linux kernel.
-- Using NR_CPUS as an array size makes the driver blow up in stack
-  consumption with generic, as opposed to hand-crafted, .config files.
-
-A simple solution is to use dynamic allocation for num_possible_cpus()
-elements (aka a small number determined at runtime).
-
-Link: https://lore.kernel.org/all/202406261920.l5pzM1rj-lkp@intel.com/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Acked-by: Madalin Bucur <madalin.bucur@oss.nxp.com>
-Link: https://patch.msgid.link/20240713225336.1746343-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa/dpaa_eth.c    | 20 ++++++++++++++-----
- .../ethernet/freescale/dpaa/dpaa_ethtool.c    | 10 +++++++++-
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c    | 123 ++++++++++++++-------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h    |   1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c |   2 +
+ 3 files changed, 86 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-index baa0b3c2ce6f..946c3d3b69d9 100644
---- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-@@ -931,14 +931,18 @@ static inline void dpaa_setup_egress(const struct dpaa_priv *priv,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index b3df27ce7663..ee19af2d20fb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -1584,6 +1584,68 @@ static void psp_ras_ta_check_status(struct psp_context *psp)
  	}
  }
  
--static void dpaa_fq_setup(struct dpaa_priv *priv,
--			  const struct dpaa_fq_cbs *fq_cbs,
--			  struct fman_port *tx_port)
-+static int dpaa_fq_setup(struct dpaa_priv *priv,
-+			 const struct dpaa_fq_cbs *fq_cbs,
-+			 struct fman_port *tx_port)
++static int psp_ras_send_cmd(struct psp_context *psp,
++		enum ras_command cmd_id, void *in, void *out)
++{
++	struct ta_ras_shared_memory *ras_cmd;
++	uint32_t cmd = cmd_id;
++	int ret = 0;
++
++	if (!in)
++		return -EINVAL;
++
++	mutex_lock(&psp->ras_context.mutex);
++	ras_cmd = (struct ta_ras_shared_memory *)psp->ras_context.context.mem_context.shared_buf;
++	memset(ras_cmd, 0, sizeof(struct ta_ras_shared_memory));
++
++	switch (cmd) {
++	case TA_RAS_COMMAND__ENABLE_FEATURES:
++	case TA_RAS_COMMAND__DISABLE_FEATURES:
++		memcpy(&ras_cmd->ras_in_message,
++			in, sizeof(ras_cmd->ras_in_message));
++		break;
++	case TA_RAS_COMMAND__TRIGGER_ERROR:
++		memcpy(&ras_cmd->ras_in_message.trigger_error,
++			in, sizeof(ras_cmd->ras_in_message.trigger_error));
++		break;
++	case TA_RAS_COMMAND__QUERY_ADDRESS:
++		memcpy(&ras_cmd->ras_in_message.address,
++			in, sizeof(ras_cmd->ras_in_message.address));
++		break;
++	default:
++		dev_err(psp->adev->dev, "Invalid ras cmd id: %u\n", cmd);
++		ret = -EINVAL;
++		goto err_out;
++	}
++
++	ras_cmd->cmd_id = cmd;
++	ret = psp_ras_invoke(psp, ras_cmd->cmd_id);
++
++	switch (cmd) {
++	case TA_RAS_COMMAND__TRIGGER_ERROR:
++		if (ret || psp->cmd_buf_mem->resp.status)
++			ret = -EINVAL;
++		else if (out)
++			memcpy(out, &ras_cmd->ras_status, sizeof(ras_cmd->ras_status));
++		break;
++	case TA_RAS_COMMAND__QUERY_ADDRESS:
++		if (ret || ras_cmd->ras_status || psp->cmd_buf_mem->resp.status)
++			ret = -EINVAL;
++		else if (out)
++			memcpy(out,
++				&ras_cmd->ras_out_message.address,
++				sizeof(ras_cmd->ras_out_message.address));
++		break;
++	default:
++		break;
++	}
++
++err_out:
++	mutex_unlock(&psp->ras_context.mutex);
++
++	return ret;
++}
++
+ int psp_ras_invoke(struct psp_context *psp, uint32_t ta_cmd_id)
  {
- 	int egress_cnt = 0, conf_cnt = 0, num_portals = 0, portal_cnt = 0, cpu;
- 	const cpumask_t *affine_cpus = qman_affine_cpus();
--	u16 channels[NR_CPUS];
- 	struct dpaa_fq *fq;
-+	u16 *channels;
-+
-+	channels = kcalloc(num_possible_cpus(), sizeof(u16), GFP_KERNEL);
-+	if (!channels)
-+		return -ENOMEM;
+ 	struct ta_ras_shared_memory *ras_cmd;
+@@ -1625,23 +1687,15 @@ int psp_ras_invoke(struct psp_context *psp, uint32_t ta_cmd_id)
+ int psp_ras_enable_features(struct psp_context *psp,
+ 		union ta_ras_cmd_input *info, bool enable)
+ {
+-	struct ta_ras_shared_memory *ras_cmd;
++	enum ras_command cmd_id;
+ 	int ret;
  
- 	for_each_cpu_and(cpu, affine_cpus, cpu_online_mask)
- 		channels[num_portals++] = qman_affine_channel(cpu);
-@@ -997,6 +1001,10 @@ static void dpaa_fq_setup(struct dpaa_priv *priv,
- 				break;
- 		}
- 	}
+-	if (!psp->ras_context.context.initialized)
++	if (!psp->ras_context.context.initialized || !info)
+ 		return -EINVAL;
+ 
+-	ras_cmd = (struct ta_ras_shared_memory *)psp->ras_context.context.mem_context.shared_buf;
+-	memset(ras_cmd, 0, sizeof(struct ta_ras_shared_memory));
+-
+-	if (enable)
+-		ras_cmd->cmd_id = TA_RAS_COMMAND__ENABLE_FEATURES;
+-	else
+-		ras_cmd->cmd_id = TA_RAS_COMMAND__DISABLE_FEATURES;
+-
+-	ras_cmd->ras_in_message = *info;
+-
+-	ret = psp_ras_invoke(psp, ras_cmd->cmd_id);
++	cmd_id = enable ?
++		TA_RAS_COMMAND__ENABLE_FEATURES : TA_RAS_COMMAND__DISABLE_FEATURES;
++	ret = psp_ras_send_cmd(psp, cmd_id, info, NULL);
+ 	if (ret)
+ 		return -EINVAL;
+ 
+@@ -1665,6 +1719,8 @@ int psp_ras_terminate(struct psp_context *psp)
+ 
+ 	psp->ras_context.context.initialized = false;
+ 
++	mutex_destroy(&psp->ras_context.mutex);
 +
-+	kfree(channels);
-+
-+	return 0;
+ 	return ret;
  }
  
- static inline int dpaa_tx_fq_to_id(const struct dpaa_priv *priv,
-@@ -3416,7 +3424,9 @@ static int dpaa_eth_probe(struct platform_device *pdev)
- 	 */
- 	dpaa_eth_add_channel(priv->channel, &pdev->dev);
+@@ -1749,9 +1805,10 @@ int psp_ras_initialize(struct psp_context *psp)
  
--	dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
-+	err = dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
-+	if (err)
-+		goto free_dpaa_bps;
+ 	ret = psp_ta_load(psp, &psp->ras_context.context);
  
- 	/* Create a congestion group for this netdev, with
- 	 * dynamically-allocated CGR ID.
-diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
-index 5bd0b36d1feb..3f8cd4a7d845 100644
---- a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
-+++ b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
-@@ -457,12 +457,16 @@ static int dpaa_set_coalesce(struct net_device *dev,
- 			     struct netlink_ext_ack *extack)
+-	if (!ret && !ras_cmd->ras_status)
++	if (!ret && !ras_cmd->ras_status) {
+ 		psp->ras_context.context.initialized = true;
+-	else {
++		mutex_init(&psp->ras_context.mutex);
++	} else {
+ 		if (ras_cmd->ras_status)
+ 			dev_warn(adev->dev, "RAS Init Status: 0x%X\n", ras_cmd->ras_status);
+ 
+@@ -1765,12 +1822,12 @@ int psp_ras_initialize(struct psp_context *psp)
+ int psp_ras_trigger_error(struct psp_context *psp,
+ 			  struct ta_ras_trigger_error_input *info, uint32_t instance_mask)
  {
- 	const cpumask_t *cpus = qman_affine_cpus();
--	bool needs_revert[NR_CPUS] = {false};
- 	struct qman_portal *portal;
- 	u32 period, prev_period;
- 	u8 thresh, prev_thresh;
-+	bool *needs_revert;
- 	int cpu, res;
+-	struct ta_ras_shared_memory *ras_cmd;
+ 	struct amdgpu_device *adev = psp->adev;
+ 	int ret;
+ 	uint32_t dev_mask;
++	uint32_t ras_status = 0;
  
-+	needs_revert = kcalloc(num_possible_cpus(), sizeof(bool), GFP_KERNEL);
-+	if (!needs_revert)
-+		return -ENOMEM;
-+
- 	period = c->rx_coalesce_usecs;
- 	thresh = c->rx_max_coalesced_frames;
+-	if (!psp->ras_context.context.initialized)
++	if (!psp->ras_context.context.initialized || !info)
+ 		return -EINVAL;
  
-@@ -485,6 +489,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
- 		needs_revert[cpu] = true;
- 	}
+ 	switch (info->block_id) {
+@@ -1794,13 +1851,8 @@ int psp_ras_trigger_error(struct psp_context *psp,
+ 	dev_mask &= AMDGPU_RAS_INST_MASK;
+ 	info->sub_block_index |= dev_mask;
  
-+	kfree(needs_revert);
-+
+-	ras_cmd = (struct ta_ras_shared_memory *)psp->ras_context.context.mem_context.shared_buf;
+-	memset(ras_cmd, 0, sizeof(struct ta_ras_shared_memory));
+-
+-	ras_cmd->cmd_id = TA_RAS_COMMAND__TRIGGER_ERROR;
+-	ras_cmd->ras_in_message.trigger_error = *info;
+-
+-	ret = psp_ras_invoke(psp, ras_cmd->cmd_id);
++	ret = psp_ras_send_cmd(psp,
++			TA_RAS_COMMAND__TRIGGER_ERROR, info, &ras_status);
+ 	if (ret)
+ 		return -EINVAL;
+ 
+@@ -1810,9 +1862,9 @@ int psp_ras_trigger_error(struct psp_context *psp,
+ 	if (amdgpu_ras_intr_triggered())
+ 		return 0;
+ 
+-	if (ras_cmd->ras_status == TA_RAS_STATUS__TEE_ERROR_ACCESS_DENIED)
++	if (ras_status == TA_RAS_STATUS__TEE_ERROR_ACCESS_DENIED)
+ 		return -EACCES;
+-	else if (ras_cmd->ras_status)
++	else if (ras_status)
+ 		return -EINVAL;
+ 
  	return 0;
+@@ -1822,25 +1874,16 @@ int psp_ras_query_address(struct psp_context *psp,
+ 			  struct ta_ras_query_address_input *addr_in,
+ 			  struct ta_ras_query_address_output *addr_out)
+ {
+-	struct ta_ras_shared_memory *ras_cmd;
+ 	int ret;
  
- revert_values:
-@@ -498,6 +504,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
- 		qman_dqrr_set_ithresh(portal, prev_thresh);
- 	}
+-	if (!psp->ras_context.context.initialized)
+-		return -EINVAL;
+-
+-	ras_cmd = (struct ta_ras_shared_memory *)psp->ras_context.context.mem_context.shared_buf;
+-	memset(ras_cmd, 0, sizeof(struct ta_ras_shared_memory));
+-
+-	ras_cmd->cmd_id = TA_RAS_COMMAND__QUERY_ADDRESS;
+-	ras_cmd->ras_in_message.address = *addr_in;
+-
+-	ret = psp_ras_invoke(psp, ras_cmd->cmd_id);
+-	if (ret || ras_cmd->ras_status || psp->cmd_buf_mem->resp.status)
++	if (!psp->ras_context.context.initialized ||
++		!addr_in || !addr_out)
+ 		return -EINVAL;
  
-+	kfree(needs_revert);
-+
- 	return res;
+-	*addr_out = ras_cmd->ras_out_message.address;
++	ret = psp_ras_send_cmd(psp,
++			TA_RAS_COMMAND__QUERY_ADDRESS, addr_in, addr_out);
+ 
+-	return 0;
++	return ret;
  }
+ // ras end
  
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
+index 3635303e6548..74a96516c913 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
+@@ -200,6 +200,7 @@ struct psp_xgmi_context {
+ struct psp_ras_context {
+ 	struct ta_context		context;
+ 	struct amdgpu_ras		*ras;
++	struct mutex			mutex;
+ };
+ 
+ #define MEM_TRAIN_SYSTEM_SIGNATURE		0x54534942
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
+index 9aff579c6abf..38face981c3e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
+@@ -351,6 +351,7 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
+ 
+ 	context->session_id = ta_id;
+ 
++	mutex_lock(&psp->ras_context.mutex);
+ 	ret = prep_ta_mem_context(&context->mem_context, shared_buf, shared_buf_len);
+ 	if (ret)
+ 		goto err_free_shared_buf;
+@@ -369,6 +370,7 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
+ 		ret = -EFAULT;
+ 
+ err_free_shared_buf:
++	mutex_unlock(&psp->ras_context.mutex);
+ 	kfree(shared_buf);
+ 
+ 	return ret;
 -- 
 2.43.0
 
