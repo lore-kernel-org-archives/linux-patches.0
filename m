@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF4D188CC1;
-	Tue, 10 Sep 2024 09:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67D4187560;
+	Tue, 10 Sep 2024 09:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961145; cv=none; b=DAEhcqZzISZG9vnDrXh5wKE9u6SUVzoW9vT+59YD9E3Vm4dwim2OdI1vdRSi4g2EqpjGlcctMBdwf+M5bgoDTIxIdidC1BxPl/KGJQSAN1uyA90/p7G+hCWrQgmwkxJ76vE6GolLTszZ309GxS/fA6Fon4btOXJrD2pLWtiWVL8=
+	t=1725961148; cv=none; b=C6vExvLGNMGxwyJZ/3esTZaeEPHgKpZwNYOjBm4k4DZ7rQNvSmNh0qhq3c+1Cxs8L44HHRhjoEt6y2TjDxlC5XTamIyAiO/1fWqasRixeztlwwWUCEN7lV9S39UExeB57v/4yuBMxfRje4YdTo6WjgPuhRbI/tqiOA5cOkKEVgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961145; c=relaxed/simple;
-	bh=s5sMqgvBgxMphbkMJ/6+ZvwMLfHSHMNEXz3LJ1PF2aQ=;
+	s=arc-20240116; t=1725961148; c=relaxed/simple;
+	bh=w17ntVGz14HRrY+1Cs/npkzqbSnTrZqsN2Rz9tzb9lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJqzMwJAY/tT6Rl9ce0ZoaMBfCrorDwLxDWxTZnsi+5zdMP6U7dlYaoQQNwoqiIQ3cLYw9IREpS8LKZ9yoDuAqs6bsI0FpWOrk02QyJeYu5SueQd6Fx7afZgiABp9NnQSiLfmyT0ND9J3vy+AQIDaqEKmBe+wceB3obrDquslDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgAdbEd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6YSag/ELEzQN9shvGGeUvRkWdK4eM5pPXj1Q7xPN7PP3E/IfUNy9tOVFLhCYR/FuqsBB1hg3Aej8n1m8pDbPmXM05/YCNZqTU6iDmTRP/576eqfCAgqdXCEtRK6V5xnP4w9yl86ABViugylXiAqrVbt/fDvLntZnYNvEq/Ju1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+rSCQNG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgAdbEd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F69C4CEC3;
-	Tue, 10 Sep 2024 09:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+rSCQNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA30C4CEC3;
+	Tue, 10 Sep 2024 09:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961145;
-	bh=s5sMqgvBgxMphbkMJ/6+ZvwMLfHSHMNEXz3LJ1PF2aQ=;
+	s=korg; t=1725961148;
+	bh=w17ntVGz14HRrY+1Cs/npkzqbSnTrZqsN2Rz9tzb9lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UgAdbEd/zfxW5jwBERGJt5K1PFstPZLwEybtKR9jooSPM9FEbRg2plloHDGjFZ0E2
-	 vPVPZnEgnBsook8rbPen3wSBI3TOVN0RsoNimnnAvt/VSk2cjbAKVY+4cIV91tV49V
-	 1P4tEEEoDVjrH6iRPrTkL5uCMz2BF68S8tEm6cpw=
+	b=I+rSCQNGF2uGuIhH6IDIlnf7RUplTc2zPxw59Y0v3Q64eC2Ey9iHfMQvP8dBF28Bf
+	 N33WwFoV0sZ+OZam3BaCAJ47jozpwtRmoQ/gdyV0/X0sS51rWDvzoGn4U7tb+6mAMX
+	 w+nUeI8u4W+Fgz4j1WbTrtuUuGyLkzrNVunT6LXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Reijer Boekhoff <reijerboekhoff@protonmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 41/96] usbnet: modern method to get random MAC
-Date: Tue, 10 Sep 2024 11:31:43 +0200
-Message-ID: <20240910092543.334987980@linuxfoundation.org>
+Subject: [PATCH 4.19 32/96] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+Date: Tue, 10 Sep 2024 11:31:34 +0200
+Message-ID: <20240910092542.918594069@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -52,73 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit bab8eb0dd4cb995caa4a0529d5655531c2ec5e8e ]
+[ Upstream commit dbb5265a5d7cca1cdba7736dba313ab7d07bc19d ]
 
-The driver generates a random MAC once on load
-and uses it over and over, including on two devices
-needing a random MAC at the same time.
+After being asked about support for WPA3 for BCM43224 chipset it
+was found that all it takes is setting the MFP_CAPABLE flag and
+mac80211 will take care of all that is needed [1].
 
-Jakub suggested revamping the driver to the modern
-API for setting a random MAC rather than fixing
-the old stuff.
-
-The bug is as old as the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20240829175201.670718-1-oneukum@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/ [1]
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240617122609.349582-1-arend.vanspriel@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 16225654d88c..938335f4738d 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -79,9 +79,6 @@
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index 288d4d4d4454..eb735b054790 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -1091,6 +1091,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
+ 	ieee80211_hw_set(hw, AMPDU_AGGREGATION);
+ 	ieee80211_hw_set(hw, SIGNAL_DBM);
+ 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
++	ieee80211_hw_set(hw, MFP_CAPABLE);
  
- /*-------------------------------------------------------------------------*/
- 
--// randomly generated ethernet address
--static u8	node_id [ETH_ALEN];
--
- /* use ethtool to change the level for any given device */
- static int msg_level = -1;
- module_param (msg_level, int, 0);
-@@ -1725,7 +1722,6 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 
- 	dev->net = net;
- 	strscpy(net->name, "usb%d", sizeof(net->name));
--	eth_hw_addr_set(net, node_id);
- 
- 	/* rx and tx sides can use different message sizes;
- 	 * bind() should set rx_urb_size in that case.
-@@ -1799,9 +1795,9 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		goto out4;
- 	}
- 
--	/* let userspace know we have a random address */
--	if (ether_addr_equal(net->dev_addr, node_id))
--		net->addr_assign_type = NET_ADDR_RANDOM;
-+	/* this flags the device for user space */
-+	if (!is_valid_ether_addr(net->dev_addr))
-+		eth_hw_addr_random(net);
- 
- 	if ((dev->driver_info->flags & FLAG_WLAN) != 0)
- 		SET_NETDEV_DEVTYPE(net, &wlan_type);
-@@ -2211,7 +2207,6 @@ static int __init usbnet_init(void)
- 	BUILD_BUG_ON(
- 		FIELD_SIZEOF(struct sk_buff, cb) < sizeof(struct skb_data));
- 
--	eth_random_addr(node_id);
- 	return 0;
- }
- module_init(usbnet_init);
+ 	hw->extra_tx_headroom = brcms_c_get_header_len();
+ 	hw->queues = N_TX_QUEUES;
 -- 
 2.43.0
 
