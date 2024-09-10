@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B10046444;
-	Tue, 10 Sep 2024 10:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945A146444;
+	Tue, 10 Sep 2024 10:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964603; cv=none; b=BNnTq8rkpCbdhBFQlSCsOEn/TAgn54Jdv892PUb2RclVncpwBO9ZSjoc1ZcJnoCxsohETGBG6xuE7u4gAAt6F2axDwLQNBg+gQHMxeAkcP3xTOu9iqgGDPYcHplZFq2X5ZXuku+ImaPNibWK3tQYvJNdah14HxFs0LNtn6xk2BQ=
+	t=1725964606; cv=none; b=LGBj4u93OyvNRNirtd5I0318+ZoCyjNMFZmxHRaKT9Tr2PCakfieI5aa7F1HbgyM7kEgXoXLKY3ChBnFn/ymOEZaj/7mXXMkMPbjIRAfGQkoWIGeefiS9/KTslhdbVzm1qcpmBXLKFwqtQN4sYjLOfvqu2dbriMxVsozWR8b0aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964603; c=relaxed/simple;
-	bh=N5g//AtEN4PsZeYUfvbbAGHMEgf1v5qHV7OMF0iKw28=;
+	s=arc-20240116; t=1725964606; c=relaxed/simple;
+	bh=5RdPCRze4CaUIs7aKPY9ci1qrsRtgUPvjsdjxHCfebs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr6zPZDC+XGZfFKjHhbO47HXdQTveXdYMF9rNa2AGE2zqR7vHWvoWCgufXeDnQJ7e/cME3m2ET/jHHJar2LUTA8IPFGSKue1C3ycgc4OgWliRNPvmwhPvX2flvpnH+azvGVrRA5xFfv+yiiqjYVbENF5oZk9uq8/KrPFD4zm0FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h30UlA5K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NTc/stbTLmx8z7xTc5jAxv8gAb1/A2NqfyzZO2mocYvJEx4hzdm6FsJoBsE1vhzlrHW3klcunMjHTjBzncoizdOdGRzzkoemh9NbNXDBKQ10MuBAFrW/H/iRCzPMhVTf95kegRvtXtTXbruX95EoNnCTkloKNVLXQZ1GsyJBX6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piFDSyvT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h30UlA5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DB1C4CEC3;
-	Tue, 10 Sep 2024 10:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piFDSyvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C87BC4CECF;
+	Tue, 10 Sep 2024 10:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964603;
-	bh=N5g//AtEN4PsZeYUfvbbAGHMEgf1v5qHV7OMF0iKw28=;
+	s=korg; t=1725964606;
+	bh=5RdPCRze4CaUIs7aKPY9ci1qrsRtgUPvjsdjxHCfebs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h30UlA5K+Px0lFJemXT/cARQhzqjJqDM16B9GjPS3tC1wrctFP+JQgQFVVZWDbXDk
-	 6Uxv/MV54fCx9a/O4Obf32ysDx9ot1RhtiXDYT8z8gD1Jg05W0EFbpDFoXrkXPyitv
-	 aRxaABfz/l6TvkKfCoZFLNOzRJPtkMDdllGgHDzI=
+	b=piFDSyvTMX6kPTLgonr9ISBS6xy1uwR9MsO4APGD57bjNLxy8/rCjDhlcfdxrbTfC
+	 qTJLzSmwKKkzoNOjZrP8TQG0w4UgM29SzOiElTKVyaC6YaBITr5SLv0YLdQGHPhX1U
+	 hEQiY5bQgS9pss3zhanyQj09wNNOSAawFAvsomTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faisal Hassan <quic_faisalh@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 211/269] usb: dwc3: core: update LC timer as per USB Spec V3.2
-Date: Tue, 10 Sep 2024 11:33:18 +0200
-Message-ID: <20240910092615.544883961@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 6.6 212/269] usb: cdns2: Fix controller reset issue
+Date: Tue, 10 Sep 2024 11:33:19 +0200
+Message-ID: <20240910092615.570161730@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -44,75 +43,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faisal Hassan <quic_faisalh@quicinc.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit 9149c9b0c7e046273141e41eebd8a517416144ac upstream.
+commit e2940928115e83d707b21bf00b0db7d6c15f8341 upstream.
 
-This fix addresses STAR 9001285599, which only affects DWC_usb3 version
-3.20a. The timer value for PM_LC_TIMER in DWC_usb3 3.20a for the Link
-ECN changes is incorrect. If the PM TIMER ECN is enabled via GUCTL2[19],
-the link compliance test (TD7.21) may fail. If the ECN is not enabled
-(GUCTL2[19] = 0), the controller will use the old timer value (5us),
-which is still acceptable for the link compliance test. Therefore, clear
-GUCTL2[19] to pass the USB link compliance test: TD 7.21.
+Patch fixes the procedure of resetting controller.
+The CPUCTRL register is write only and reading returns 0.
+Waiting for reset to complite is incorrect.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240829094502.26502-1-quic_faisalh@quicinc.com
+Fixes: 3eb1f1efe204 ("usb: cdns2: Add main part of Cadence USBHS driver")
+cc: stable@vger.kernel.org
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Link: https://lore.kernel.org/r/PH7PR07MB9538D56D75F1F399D0BB96F0DD922@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   15 +++++++++++++++
- drivers/usb/dwc3/core.h |    2 ++
- 2 files changed, 17 insertions(+)
+ drivers/usb/gadget/udc/cdns2/cdns2-gadget.c |   12 +++---------
+ drivers/usb/gadget/udc/cdns2/cdns2-gadget.h |    9 +++++++++
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1289,6 +1289,21 @@ static int dwc3_core_init(struct dwc3 *d
- 	}
+--- a/drivers/usb/gadget/udc/cdns2/cdns2-gadget.c
++++ b/drivers/usb/gadget/udc/cdns2/cdns2-gadget.c
+@@ -2251,7 +2251,6 @@ static int cdns2_gadget_start(struct cdn
+ {
+ 	u32 max_speed;
+ 	void *buf;
+-	int val;
+ 	int ret;
  
- 	/*
-+	 * STAR 9001285599: This issue affects DWC_usb3 version 3.20a
-+	 * only. If the PM TIMER ECM is enabled through GUCTL2[19], the
-+	 * link compliance test (TD7.21) may fail. If the ECN is not
-+	 * enabled (GUCTL2[19] = 0), the controller will use the old timer
-+	 * value (5us), which is still acceptable for the link compliance
-+	 * test. Therefore, do not enable PM TIMER ECM in 3.20a by
-+	 * setting GUCTL2[19] by default; instead, use GUCTL2[19] = 0.
-+	 */
-+	if (DWC3_VER_IS(DWC3, 320A)) {
-+		reg = dwc3_readl(dwc->regs, DWC3_GUCTL2);
-+		reg &= ~DWC3_GUCTL2_LC_TIMER;
-+		dwc3_writel(dwc->regs, DWC3_GUCTL2, reg);
-+	}
+ 	pdev->usb_regs = pdev->regs;
+@@ -2261,14 +2260,9 @@ static int cdns2_gadget_start(struct cdn
+ 	pdev->adma_regs = pdev->regs + CDNS2_ADMA_REGS_OFFSET;
+ 
+ 	/* Reset controller. */
+-	set_reg_bit_8(&pdev->usb_regs->cpuctrl, CPUCTRL_SW_RST);
+-
+-	ret = readl_poll_timeout_atomic(&pdev->usb_regs->cpuctrl, val,
+-					!(val & CPUCTRL_SW_RST), 1, 10000);
+-	if (ret) {
+-		dev_err(pdev->dev, "Error: reset controller timeout\n");
+-		return -EINVAL;
+-	}
++	writeb(CPUCTRL_SW_RST | CPUCTRL_UPCLK | CPUCTRL_WUEN,
++	       &pdev->usb_regs->cpuctrl);
++	usleep_range(5, 10);
+ 
+ 	usb_initialize_gadget(pdev->dev, &pdev->gadget, NULL);
+ 
+--- a/drivers/usb/gadget/udc/cdns2/cdns2-gadget.h
++++ b/drivers/usb/gadget/udc/cdns2/cdns2-gadget.h
+@@ -292,8 +292,17 @@ struct cdns2_usb_regs {
+ #define SPEEDCTRL_HSDISABLE	BIT(7)
+ 
+ /* CPUCTRL- bitmasks. */
++/* UP clock enable */
++#define CPUCTRL_UPCLK		BIT(0)
+ /* Controller reset bit. */
+ #define CPUCTRL_SW_RST		BIT(1)
++/**
++ * If the wuen bit is ‘1’, the upclken is automatically set to ‘1’ after
++ * detecting rising edge of wuintereq interrupt. If the wuen bit is ‘0’,
++ * the wuintereq interrupt is ignored.
++ */
++#define CPUCTRL_WUEN		BIT(7)
 +
-+	/*
- 	 * When configured in HOST mode, after issuing U3/L2 exit controller
- 	 * fails to send proper CRC checksum in CRC5 feild. Because of this
- 	 * behaviour Transaction Error is generated, resulting in reset and
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -408,6 +408,7 @@
  
- /* Global User Control Register 2 */
- #define DWC3_GUCTL2_RST_ACTBITLATER		BIT(14)
-+#define DWC3_GUCTL2_LC_TIMER			BIT(19)
- 
- /* Global User Control Register 3 */
- #define DWC3_GUCTL3_SPLITDISABLE		BIT(14)
-@@ -1238,6 +1239,7 @@ struct dwc3 {
- #define DWC3_REVISION_290A	0x5533290a
- #define DWC3_REVISION_300A	0x5533300a
- #define DWC3_REVISION_310A	0x5533310a
-+#define DWC3_REVISION_320A	0x5533320a
- #define DWC3_REVISION_330A	0x5533330a
- 
- #define DWC31_REVISION_ANY	0x0
+ /**
+  * struct cdns2_adma_regs - ADMA controller registers.
 
 
