@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382121891A1;
-	Tue, 10 Sep 2024 09:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C2646444;
+	Tue, 10 Sep 2024 09:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961970; cv=none; b=SIoFb+on0/GTMJhEeU32U7nr20Cnrb8PJzlt1UKqzTNC4Tip1JvZ/l1QWlBQWyMcRIZSWMtIH3YUJHFVMzGJ00aIPNwwXENkHsIQ69ch+8RwylvsZBas0eLSf7pC63A/lUINKCaYitOVs6kcXBvWWiwrW9V3Uaavnm8joSVsxbA=
+	t=1725961973; cv=none; b=pZYX0p2N+WD2jj/+TxyfqqefsbiS1Sp0ca1LOSEUWtY6K+JBjAnd90L+7Ua6e1L6hE+No/bY6vCWz7EBZhbKrFAwzm/3Ar+y7TEhKyW5lZFs/wBL7a4zHrn1R6XovpBfWcS3shiWVWxA8qha0uv5RBi1Vj50CaPyZgEnS1IqTE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961970; c=relaxed/simple;
-	bh=qB8TuhsTj6/hDjBJkFdQ01z8V9tnxGI+/PbmtXTlJa8=;
+	s=arc-20240116; t=1725961973; c=relaxed/simple;
+	bh=wYjIpljZcuWuWbjelac492Ozs4ube78pczWBr+lnarA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkr9lSGP0avYmgZxz7zOGYQ/HwK//gNDarHc9qS0cDR483Fvx1/Z6SwgJFiFKnsoEJi373EaCaVYAjwiGAyc65vbsumEZX8r4d+vaZESIWe20bOXrg99e/eBpXXlnVsaxwY87NNiOt8dv+42+j+LbwUvzhU8WvgNZNf9S3AvT7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyJEDj/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9BOUYFyp1HeGuSsu94Nnv8Y1AX/Tj4YB52YFBZjj0znDFKhhQzvOScQL12SzF/ae/9UNhe3xXFG2k2qm0xAZ55kWnIj+rNY+qEaSwzh2NudkJ8TMXyi6qr5oR3p2EZ9yPPxBc+x28JHGtB7r6Yk+CJyr0hM8FUaI7oQrEivqMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=astx0GhL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyJEDj/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27F4C4CECD;
-	Tue, 10 Sep 2024 09:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="astx0GhL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F85FC4CEC6;
+	Tue, 10 Sep 2024 09:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961970;
-	bh=qB8TuhsTj6/hDjBJkFdQ01z8V9tnxGI+/PbmtXTlJa8=;
+	s=korg; t=1725961973;
+	bh=wYjIpljZcuWuWbjelac492Ozs4ube78pczWBr+lnarA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HyJEDj/uK715kCP4AgpHwvIMHYFGTFqBH0cZxGogydMH5qyKJxy6B9B2KP+NFfpKk
-	 ApOs9MKdP7Sy3BvkYC9ap7B57sHSO1+5/YC7rkV38xi+g9hVgdQjQPsfJaeu4D7oqM
-	 esOFaNCAs2jL7/1gEOJ3dkvSqXsSBAbRZNkBwrkA=
+	b=astx0GhL2f9sxvKJc/O9bxKKQOZZ2MsWI014Yh3vWY6nBSauDnW25bAvGIsIu+SRT
+	 tn+GbvgMkeOi/s4KERRFz0HX2EGLfoyL7LvCg8cC7ePA4c43sUuevY1MMGgpdeP3de
+	 cqvGG2m+IpB7DaRjfLWIBHCgBdt0KKee0JLxSCoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Ziegler <ziegler.andreas@siemens.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Yifan Zha <Yifan.Zha@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 224/375] libbpf: Add NULL checks to bpf_object__{prev_map,next_map}
-Date: Tue, 10 Sep 2024 11:30:21 +0200
-Message-ID: <20240910092630.068003218@linuxfoundation.org>
+Subject: [PATCH 6.10 225/375] drm/amdgpu: Set no_hw_access when VF request full GPU fails
+Date: Tue, 10 Sep 2024 11:30:22 +0200
+Message-ID: <20240910092630.103514950@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,57 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Ziegler <ziegler.andreas@siemens.com>
+From: Yifan Zha <Yifan.Zha@amd.com>
 
-[ Upstream commit cedc12c5b57f7efa6dbebfb2b140e8675f5a2616 ]
+[ Upstream commit 33f23fc3155b13c4a96d94a0a22dc26db767440b ]
 
-In the current state, an erroneous call to
-bpf_object__find_map_by_name(NULL, ...) leads to a segmentation
-fault through the following call chain:
+[Why]
+If VF request full GPU access and the request failed,
+the VF driver can get stuck accessing registers for an extended period during
+the unload of KMS.
 
-  bpf_object__find_map_by_name(obj = NULL, ...)
-  -> bpf_object__for_each_map(pos, obj = NULL)
-  -> bpf_object__next_map((obj = NULL), NULL)
-  -> return (obj = NULL)->maps
+[How]
+Set no_hw_access flag when VF request for full GPU access fails
+This prevents further hardware access attempts, avoiding the prolonged
+stuck state.
 
-While calling bpf_object__find_map_by_name with obj = NULL is
-obviously incorrect, this should not lead to a segmentation
-fault but rather be handled gracefully.
-
-As __bpf_map__iter already handles this situation correctly, we
-can delegate the check for the regular case there and only add
-a check in case the prev or next parameter is NULL.
-
-Signed-off-by: Andreas Ziegler <ziegler.andreas@siemens.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240703083436.505124-1-ziegler.andreas@siemens.com
+Signed-off-by: Yifan Zha <Yifan.Zha@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 5401f2df463d..5edb71764784 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -10336,7 +10336,7 @@ __bpf_map__iter(const struct bpf_map *m, const struct bpf_object *obj, int i)
- struct bpf_map *
- bpf_object__next_map(const struct bpf_object *obj, const struct bpf_map *prev)
- {
--	if (prev == NULL)
-+	if (prev == NULL && obj != NULL)
- 		return obj->maps;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+index 2359d1d60275..26cea0076c9b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -86,8 +86,10 @@ int amdgpu_virt_request_full_gpu(struct amdgpu_device *adev, bool init)
  
- 	return __bpf_map__iter(prev, obj, 1);
-@@ -10345,7 +10345,7 @@ bpf_object__next_map(const struct bpf_object *obj, const struct bpf_map *prev)
- struct bpf_map *
- bpf_object__prev_map(const struct bpf_object *obj, const struct bpf_map *next)
- {
--	if (next == NULL) {
-+	if (next == NULL && obj != NULL) {
- 		if (!obj->nr_maps)
- 			return NULL;
- 		return obj->maps + obj->nr_maps - 1;
+ 	if (virt->ops && virt->ops->req_full_gpu) {
+ 		r = virt->ops->req_full_gpu(adev, init);
+-		if (r)
++		if (r) {
++			adev->no_hw_access = true;
+ 			return r;
++		}
+ 
+ 		adev->virt.caps &= ~AMDGPU_SRIOV_CAPS_RUNTIME;
+ 	}
 -- 
 2.43.0
 
