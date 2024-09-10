@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E2F194145;
-	Tue, 10 Sep 2024 10:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F1C196455;
+	Tue, 10 Sep 2024 10:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962913; cv=none; b=UFxZGzoSCGMsnpL/JSRAfDRFD8XktPc+WcfEiXVAL5Bu3/2I+rgAVsZ6MywXhRZkdt6d3FQRYgcHN8hnoHISme8bcKxSTbUB3z8Bvv4sRmwSSX8brM1Tm1UUy0P3wsVmnhLnXDi6N9J1rxIMKygpNaqRI7Wo8Jx/LuOmZ19oadk=
+	t=1725962916; cv=none; b=glKJkxiwDwhH7QI6Z/j6xhXlcVEkRUit+nYqrUtFJ7d9iSx7923qK4rtPI45q3/CnpDxC9NGxrvkfKU0ZXoV8p3+mIcPo0mXKbg6WCGI416G9gpt+8A62okOvqbV4nvtaeFKlx/NISjiiZaVF7y5k52iBlosQUWPQSOawXWxPHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962913; c=relaxed/simple;
-	bh=GE0NdSROubGgU2k0XoCo4RJOumUVc6ZUbxceCBWlOOc=;
+	s=arc-20240116; t=1725962916; c=relaxed/simple;
+	bh=tAE2+XoFiNgHteoUTtc7fp/JUHaErHH1wQ23bYs4q3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eM/793lBuTL7G3kaXFLpA32dMv/dPdIgPJO410fgiL+VQIDRYKrjg872xjpgt0r3NKOtepNlw7xHuJTfaHDUExteJZsvD6C0Hi+cS4O2Eyaz8G70tJwRpTH6ajGQCSM5jH+Pe03TjKXWC2hOAFEJmmNmHxc07AN9GYGMGTDwkdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSF2NG8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nG7B54eLTrGRxmdtiIhpJl+8MGf+wG8lbJevIATbqGdkSLX6B3W7UyLdy0Xnbd0hg1DiQGp3AduS+5cYTFUHWVIiNxxE+dK3f5UqhbHxU0LAoN6qdt0mbt0Sogk3XoAOzZZnv2szlmHcP7lP2543PcCA59BjNIjg1KPZq90YilQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MY/puQK8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSF2NG8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0030BC4CEC3;
-	Tue, 10 Sep 2024 10:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MY/puQK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14FDC4CEC3;
+	Tue, 10 Sep 2024 10:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962913;
-	bh=GE0NdSROubGgU2k0XoCo4RJOumUVc6ZUbxceCBWlOOc=;
+	s=korg; t=1725962916;
+	bh=tAE2+XoFiNgHteoUTtc7fp/JUHaErHH1wQ23bYs4q3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSF2NG8isKtSgjv4jxOhYyQTupjOSnNtN3WYrzt385Wpcun2ag3PJXVYnKZIAUR3V
-	 bSvwpk7o3tfWLgmOPBCRl2LMmJN+RLcEhrmaibvrfm0/WjboICEBqK9FnFxa+q09jF
-	 TFwVg/0hSMECPbE4OIZOm4V4W59rcGNrAILgALGk=
+	b=MY/puQK89+QMB1+LH/TUoH7Dk60iaMaA8Mb70UXcf2I0RW7J6jsDWG9Awune8KooM
+	 dHFiX/xgoy/5exc+/gtnpgR9T2RZ+JWoaFdt3HGUMqX7yXv4kMUgK9XENqR01ADsJO
+	 5KD3xS3tl9YF/WZo9hUCY58BOgGBfH/6kejIJgwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Pavel Shilovsky <pshilov@microsoft.com>,
+	Paulo Alcantara <pc@manguebit.com>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Rohith Surabattula <rohiths.msft@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	linux-mm@kvack.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/192] rust: kbuild: fix export of bss symbols
-Date: Tue, 10 Sep 2024 11:31:36 +0200
-Message-ID: <20240910092600.965317871@linuxfoundation.org>
+Subject: [PATCH 6.1 073/192] cifs: Fix FALLOC_FL_ZERO_RANGE to preflush buffered part of target region
+Date: Tue, 10 Sep 2024 11:31:37 +0200
+Message-ID: <20240910092601.000270539@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -53,40 +59,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Hindborg <a.hindborg@samsung.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b8673d56935c32a4e0a1a0b40951fdd313dbf340 ]
+[ Upstream commit 91d1dfae464987aaf6c79ff51d8674880fb3be77 ]
 
-Symbols in the bss segment are not currently exported. This is a problem
-for Rust modules that link against statics, that are resident in the kernel
-image. Thus export symbols in the bss segment.
+Under certain conditions, the range to be cleared by FALLOC_FL_ZERO_RANGE
+may only be buffered locally and not yet have been flushed to the server.
+For example:
 
-Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
-Signed-off-by: Andreas Hindborg <a.hindborg@samsung.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240815074519.2684107-2-nmi@metaspace.dk
-[ Reworded slightly. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+	xfs_io -f -t -c "pwrite -S 0x41 0 4k" \
+		     -c "pwrite -S 0x42 4k 4k" \
+		     -c "fzero 0 4k" \
+		     -c "pread -v 0 8k" /xfstest.test/foo
+
+will write two 4KiB blocks of data, which get buffered in the pagecache,
+and then fallocate() is used to clear the first 4KiB block on the server -
+but we don't flush the data first, which means the EOF position on the
+server is wrong, and so the FSCTL_SET_ZERO_DATA RPC fails (and xfs_io
+ignores the error), but then when we try to read it, we see the old data.
+
+Fix this by preflushing any part of the target region that above the
+server's idea of the EOF position to force the server to update its EOF
+position.
+
+Note, however, that we don't want to simply expand the file by moving the
+EOF before doing the FSCTL_SET_ZERO_DATA[*] because someone else might see
+the zeroed region or if the RPC fails we then have to try to clean it up or
+risk getting corruption.
+
+[*] And we have to move the EOF first otherwise FSCTL_SET_ZERO_DATA won't
+do what we want.
+
+This fixes the generic/008 xfstest.
+
+[!] Note: A better way to do this might be to split the operation into two
+parts: we only do FSCTL_SET_ZERO_DATA for the part of the range below the
+server's EOF and then, if that worked, invalidate the buffered pages for the
+part above the range.
+
+Fixes: 6b69040247e1 ("cifs/smb3: Fix data inconsistent when zero file range")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Steve French <stfrench@microsoft.com>
+cc: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+cc: Pavel Shilovsky <pshilov@microsoft.com>
+cc: Paulo Alcantara <pc@manguebit.com>
+cc: Shyam Prasad N <nspmangalore@gmail.com>
+cc: Rohith Surabattula <rohiths.msft@gmail.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: linux-mm@kvack.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 9321a4c83b71..28ba3b9ee18d 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -303,7 +303,7 @@ $(obj)/bindings/bindings_helpers_generated.rs: $(src)/helpers.c FORCE
- quiet_cmd_exports = EXPORTS $@
-       cmd_exports = \
- 	$(NM) -p --defined-only $< \
--		| awk '/ (T|R|D) / {printf "EXPORT_SYMBOL_RUST_GPL(%s);\n",$$3}' > $@
-+		| awk '/ (T|R|D|B) / {printf "EXPORT_SYMBOL_RUST_GPL(%s);\n",$$3}' > $@
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 2291081653a8..5e9478f31d47 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3443,13 +3443,15 @@ static long smb3_zero_data(struct file *file, struct cifs_tcon *tcon,
+ }
  
- $(obj)/exports_core_generated.h: $(obj)/core.o FORCE
- 	$(call if_changed,exports)
+ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+-			    loff_t offset, loff_t len, bool keep_size)
++			    unsigned long long offset, unsigned long long len,
++			    bool keep_size)
+ {
+ 	struct cifs_ses *ses = tcon->ses;
+ 	struct inode *inode = file_inode(file);
+ 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
+ 	struct cifsFileInfo *cfile = file->private_data;
+-	unsigned long long new_size;
++	struct netfs_inode *ictx = netfs_inode(inode);
++	unsigned long long i_size, new_size, remote_size;
+ 	long rc;
+ 	unsigned int xid;
+ 	__le64 eof;
+@@ -3462,6 +3464,16 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	inode_lock(inode);
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
++	i_size = i_size_read(inode);
++	remote_size = ictx->remote_i_size;
++	if (offset + len >= remote_size && offset < i_size) {
++		unsigned long long top = umin(offset + len, i_size);
++
++		rc = filemap_write_and_wait_range(inode->i_mapping, offset, top - 1);
++		if (rc < 0)
++			goto zero_range_exit;
++	}
++
+ 	/*
+ 	 * We zero the range through ioctl, so we need remove the page caches
+ 	 * first, otherwise the data may be inconsistent with the server.
 -- 
 2.43.0
 
