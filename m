@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B771818CC17;
-	Tue, 10 Sep 2024 10:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BFC18B491;
+	Tue, 10 Sep 2024 10:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962457; cv=none; b=b4owaujJmGDMugE+1vqflRgAC55nGfrUq7nY6gxluEfy8xJjRSyxqNnyHWXqxf1Q7LW+47beRVj+myxtMcK16Ku7R2KQbZ9pzfgKIva/9nFCQiaBtjh5oF/6Q4GHHT8k7EczkKB/BceFxFZMX2oFRI2q0i5SsJl1bRPDVvBqxcc=
+	t=1725962460; cv=none; b=XD934GyjZYv+Osx6T0bIPUmyqs0t0Ek5D+Ptqu9i0rWdI1E+pKKoNzWnfJYd1aO4eSgDWI6k8ifn115kNxIL6Fl4IoYosbd7hkE3DuKHd6kRgrdYDzL8VvEcrL+Nhj8F4WWkV5zMZMql7TzqJoWsYmRFugnaMxeLCr+5t4GPiS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962457; c=relaxed/simple;
-	bh=F1qkMEin5pd/7naO25IfzNXnLFvd6V4w6/wAFVOuEwo=;
+	s=arc-20240116; t=1725962460; c=relaxed/simple;
+	bh=LwxhHQeZhKoG+lJOP2HtGIkgymxv5LjW8BzId0Mer64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBI3UQrXtY8vOLLvuLYnzSKKuHaCdwvdSAZYWjvCmJRIO2u2BqStO8vZCiXXWdb4/rNbeBZLcitka/y6vOvuIX4sVj8NInfsIkLp7elnnX0aLPMfoAEgiWrGV0+cuEQqE4iL6xQ/KktD27p7/a4jkBSO5LpNjKtHPVTSHSE8n1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBeHWHi9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLeJqNhIZLqbsM7E9oKbMBXfGou0m13Zcw/iR4G7m8hhWmQDILtBWNr3fbEeft/hiWx0vHUr/ViEdpoFG/chGp00O2Cd3c1epYOXuSEBoAYyK71QFv8Ev0ltHcVbDi/j1VqzkDOW2dybz/KU+O9Y4A1JJimt78JNyThD8NTl9AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZnk5gsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBeHWHi9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D865BC4CEC3;
-	Tue, 10 Sep 2024 10:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZnk5gsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D342EC4CEC3;
+	Tue, 10 Sep 2024 10:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962457;
-	bh=F1qkMEin5pd/7naO25IfzNXnLFvd6V4w6/wAFVOuEwo=;
+	s=korg; t=1725962460;
+	bh=LwxhHQeZhKoG+lJOP2HtGIkgymxv5LjW8BzId0Mer64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBeHWHi9leY25jIQ7MylNuqDvieUrWCFF8lk49+a6SAJu3BiPTmFsd3a4BmUjuSKX
-	 U7P3S+7y+I57wbjv5j1Q+tchciCQCqHuJQYs9TYEYLXZP2v8JtlLeDKJtQHKogxLOP
-	 aHOdnwq5wT2oPbYKD3SiRENBCSv0O+TD1/7cf7Lw=
+	b=FZnk5gsMpOk2PekBbg90XxUC44HkFBnLCUKMkZaeOjCp3pGfewqxX1aBRFtGIssdl
+	 ylmBfNUqKA+fBu3h+4Qf8Ecw63bPZllixfjBy3h3oWqloiFPVMIBV1v2Tqm3wflzfw
+	 cX8oS05ZVjeQDask2b9X5CwOxRuSUXjbXaBsqRME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 041/121] nilfs2: fix missing cleanup on rollforward recovery error
-Date: Tue, 10 Sep 2024 11:31:56 +0200
-Message-ID: <20240910092547.689264195@linuxfoundation.org>
+Subject: [PATCH 5.4 042/121] nilfs2: fix state management in error path of log writing function
+Date: Tue, 10 Sep 2024 11:31:57 +0200
+Message-ID: <20240910092547.741540931@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -52,88 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 5787fcaab9eb5930f5378d6a1dd03d916d146622 upstream.
+commit 6576dd6695f2afca3f4954029ac4a64f82ba60ab upstream.
 
-In an error injection test of a routine for mount-time recovery, KASAN
-found a use-after-free bug.
+After commit a694291a6211 ("nilfs2: separate wait function from
+nilfs_segctor_write") was applied, the log writing function
+nilfs_segctor_do_construct() was able to issue I/O requests continuously
+even if user data blocks were split into multiple logs across segments,
+but two potential flaws were introduced in its error handling.
 
-It turned out that if data recovery was performed using partial logs
-created by dsync writes, but an error occurred before starting the log
-writer to create a recovered checkpoint, the inodes whose data had been
-recovered were left in the ns_dirty_files list of the nilfs object and
-were not freed.
+First, if nilfs_segctor_begin_construction() fails while creating the
+second or subsequent logs, the log writing function returns without
+calling nilfs_segctor_abort_construction(), so the writeback flag set on
+pages/folios will remain uncleared.  This causes page cache operations to
+hang waiting for the writeback flag.  For example,
+truncate_inode_pages_final(), which is called via nilfs_evict_inode() when
+an inode is evicted from memory, will hang.
 
-Fix this issue by cleaning up inodes that have read the recovery data if
-the recovery routine fails midway before the log writer starts.
+Second, the NILFS_I_COLLECTED flag set on normal inodes remain uncleared.
+As a result, if the next log write involves checkpoint creation, that's
+fine, but if a partial log write is performed that does not, inodes with
+NILFS_I_COLLECTED set are erroneously removed from the "sc_dirty_files"
+list, and their data and b-tree blocks may not be written to the device,
+corrupting the block mapping.
 
-Link: https://lkml.kernel.org/r/20240810065242.3701-1-konishi.ryusuke@gmail.com
-Fixes: 0f3e1c7f23f8 ("nilfs2: recovery functions")
+Fix these issues by uniformly calling nilfs_segctor_abort_construction()
+on failure of each step in the loop in nilfs_segctor_do_construct(),
+having it clean up logs and segment usages according to progress, and
+correcting the conditions for calling nilfs_redirty_inodes() to ensure
+that the NILFS_I_COLLECTED flag is cleared.
+
+Link: https://lkml.kernel.org/r/20240814101119.4070-1-konishi.ryusuke@gmail.com
+Fixes: a694291a6211 ("nilfs2: separate wait function from nilfs_segctor_write")
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/recovery.c |   35 +++++++++++++++++++++++++++++++++--
- 1 file changed, 33 insertions(+), 2 deletions(-)
+ fs/nilfs2/segment.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -709,6 +709,33 @@ static void nilfs_finish_roll_forward(st
- }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -1828,6 +1828,9 @@ static void nilfs_segctor_abort_construc
+ 	nilfs_abort_logs(&logs, ret ? : err);
  
- /**
-+ * nilfs_abort_roll_forward - cleaning up after a failed rollforward recovery
-+ * @nilfs: nilfs object
-+ */
-+static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
-+{
-+	struct nilfs_inode_info *ii, *n;
-+	LIST_HEAD(head);
+ 	list_splice_tail_init(&sci->sc_segbufs, &logs);
++	if (list_empty(&logs))
++		return; /* if the first segment buffer preparation failed */
 +
-+	/* Abandon inodes that have read recovery data */
-+	spin_lock(&nilfs->ns_inode_lock);
-+	list_splice_init(&nilfs->ns_dirty_files, &head);
-+	spin_unlock(&nilfs->ns_inode_lock);
-+	if (list_empty(&head))
-+		return;
-+
-+	set_nilfs_purging(nilfs);
-+	list_for_each_entry_safe(ii, n, &head, i_dirty) {
-+		spin_lock(&nilfs->ns_inode_lock);
-+		list_del_init(&ii->i_dirty);
-+		spin_unlock(&nilfs->ns_inode_lock);
-+
-+		iput(&ii->vfs_inode);
-+	}
-+	clear_nilfs_purging(nilfs);
-+}
-+
-+/**
-  * nilfs_salvage_orphan_logs - salvage logs written after the latest checkpoint
-  * @nilfs: nilfs object
-  * @sb: super block instance
-@@ -766,15 +793,19 @@ int nilfs_salvage_orphan_logs(struct the
- 		if (unlikely(err)) {
- 			nilfs_err(sb, "error %d writing segment for recovery",
- 				  err);
--			goto failed;
-+			goto put_root;
- 		}
+ 	nilfs_cancel_segusage(&logs, nilfs->ns_sufile);
+ 	nilfs_free_incomplete_logs(&logs, nilfs);
  
- 		nilfs_finish_roll_forward(nilfs, ri);
- 	}
+@@ -2072,7 +2075,7 @@ static int nilfs_segctor_do_construct(st
  
-- failed:
-+put_root:
- 	nilfs_put_root(root);
+ 		err = nilfs_segctor_begin_construction(sci, nilfs);
+ 		if (unlikely(err))
+-			goto out;
++			goto failed;
+ 
+ 		/* Update time stamp */
+ 		sci->sc_seg_ctime = ktime_get_real_seconds();
+@@ -2135,10 +2138,9 @@ static int nilfs_segctor_do_construct(st
  	return err;
-+
-+failed:
-+	nilfs_abort_roll_forward(nilfs);
-+	goto put_root;
- }
  
- /**
+  failed_to_write:
+-	if (sci->sc_stage.flags & NILFS_CF_IFILE_STARTED)
+-		nilfs_redirty_inodes(&sci->sc_dirty_files);
+-
+  failed:
++	if (mode == SC_LSEG_SR && nilfs_sc_cstage_get(sci) >= NILFS_ST_IFILE)
++		nilfs_redirty_inodes(&sci->sc_dirty_files);
+ 	if (nilfs_doing_gc())
+ 		nilfs_redirty_inodes(&sci->sc_gc_inodes);
+ 	nilfs_segctor_abort_construction(sci, nilfs, err);
 
 
