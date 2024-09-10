@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C2B18A6B9;
-	Tue, 10 Sep 2024 09:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0540186E4B;
+	Tue, 10 Sep 2024 09:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961458; cv=none; b=d3BcS8FpqZzsT9tDrqPHH5Gt+XQcLmoP+HpiCNTZxHdACL1rDR5OeYgCymgAD2vDPoiESDpHwNGy56sCR8UfOh+wbz0hkzECDJBhqdACkC2KNE5wc5RVremVc9diygeZagaYLpluSc7U70y9nA+4oVuSq46v1KSkT175iQovkwA=
+	t=1725961462; cv=none; b=fR21aSYRi6fS+7b/b+afKGOw3wfPMa+e2zrz3PJvLPVJ+GsOiBEZniDLaVWzQaikSMjb4BBkPIGxZC6S5I8kqqv2hvWMLoMqtm0YhSFG9b/CRi7YriO/aYUe0AToVYkxc0rgSBOI7Mq2nSDkuPsonwaH4G9ZVpKXQiPemacfDAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961458; c=relaxed/simple;
-	bh=gR4U9aMzMI9kDJ5z7x0zT2F9zfLNFNDEXzQOzxlhkd8=;
+	s=arc-20240116; t=1725961462; c=relaxed/simple;
+	bh=iMmmk7j12qrZtUQHGeO/HluJ7znfWYu8kY+H4nXz8M0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSj2zY2QWypHHV4izCBLEB8J+VRolVfJA73b0wWgFnsUuyKxEPtrqAntnYG2UgJwKUFtZrgkkMBIgBf1mpx68ZogfygX6PJKF5LB2zA2yGA6/Hc/DuO99Ezq/es4xmGLAm5wS8yqN822mvb9MTf5toPxMD/NYlPFtZ6ImX+KamI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHZMfQxh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqmNV/TW186juuvNO8do6jJpbS7bYRp8ei34i9xU7QeK7JiMwMamwmFGJm6hZd+7nQ/HuKR1XPhnSXMWPxgkZWe/Dr4KG7Sj8LVgato4eF1kTUgHG9z7b7qwpp6AYz7OhIfmepZuGUcDGac9WyP8y5rlVpRpCaQA8Yqc3byl1SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmXaSO3n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHZMfQxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CD6C4CEC3;
-	Tue, 10 Sep 2024 09:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmXaSO3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A52EC4CEC3;
+	Tue, 10 Sep 2024 09:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961458;
-	bh=gR4U9aMzMI9kDJ5z7x0zT2F9zfLNFNDEXzQOzxlhkd8=;
+	s=korg; t=1725961461;
+	bh=iMmmk7j12qrZtUQHGeO/HluJ7znfWYu8kY+H4nXz8M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kHZMfQxhDeiKk7AOOedcqRIrA9y+5MzXZRbVFP9oal7Gj5mxb6Coua6iH0ZCPjCr1
-	 QdV+79f7cPCXWZX/q13y1VCiIcXb4ZAagVCT1uX89Vr/21rHe+58+YfE/JyyWrxycK
-	 EVdcmFcce6gZjxlfsuIgcPHAHUymbUoFRc98KIkc=
+	b=QmXaSO3nQt7qBW2htwa8Aw+xBFejJW91lMa/Dc7CJWEvmRiLS0eqi22HIL6+ju1nb
+	 57kTGnVMRPiSrNxDnpwPtuGoNzVslCvERSpMbqyX8hTdUCC+4a18bdAwO0/hsg81Rx
+	 0j8xTMQ+FOpxLbMNA/mYGhs9H0tTDuQr154vu75Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 050/375] clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL
-Date: Tue, 10 Sep 2024 11:27:27 +0200
-Message-ID: <20240910092623.926733538@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.10 051/375] pinctrl: qcom: x1e80100: Bypass PDC wakeup parent for now
+Date: Tue, 10 Sep 2024 11:27:28 +0200
+Message-ID: <20240910092623.953986727@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,63 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit f4973130d255dd4811006f5822d4fa4d0de9d712 upstream.
+commit 602cb14e310a7a32c4f27d1f16c4614c790c7f6f upstream.
 
-The Zonda PLL has a 16 bit signed alpha and in the cases where the alpha
-value is greater than 0.5, the L value needs to be adjusted accordingly.
-Thus update the logic to handle the signed alpha val.
+On X1E80100, GPIO interrupts for wakeup-capable pins have been broken since
+the introduction of the pinctrl driver. This prevents keyboard and touchpad
+from working on most of the X1E laptops. So far we have worked around this
+by manually building a kernel with the "wakeup-parent" removed from the
+pinctrl node in the device tree, but we cannot expect all users to do that.
 
-Fixes: f21b6bfecc27 ("clk: qcom: clk-alpha-pll: add support for zonda pll")
+Implement a similar workaround in the driver by clearing the wakeirq_map
+for X1E80100. This avoids using the PDC wakeup parent for all GPIOs
+and handles the interrupts directly in the pinctrl driver instead.
+
+The PDC driver needs additional changes to support X1E80100 properly.
+Adding a workaround separately first allows to land the necessary PDC
+changes through the normal release cycle, while still solving the more
+critical problem with keyboard and touchpad on the current stable kernel
+versions. Bypassing the PDC is enough for now, because we have not yet
+enabled the deep idle states where using the PDC becomes necessary.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240731062916.2680823-5-quic_skakitap@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 05e4941d97ef ("pinctrl: qcom: Add X1E80100 pinctrl driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/20240830-x1e80100-bypass-pdc-v1-1-d4c00be0c3e3@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-x1e80100.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -41,6 +41,7 @@
- #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
- # define PLL_POST_DIV_SHIFT	8
- # define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
-+# define PLL_ALPHA_MSB		BIT(15)
- # define PLL_ALPHA_EN		BIT(24)
- # define PLL_ALPHA_MODE		BIT(25)
- # define PLL_VCO_SHIFT		20
-@@ -2070,6 +2071,18 @@ static void clk_zonda_pll_disable(struct
- 	regmap_write(regmap, PLL_OPMODE(pll), 0x0);
- }
+diff --git a/drivers/pinctrl/qcom/pinctrl-x1e80100.c b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
+index 65ed933f05ce..abfcdd3da9e8 100644
+--- a/drivers/pinctrl/qcom/pinctrl-x1e80100.c
++++ b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
+@@ -1839,7 +1839,9 @@ static const struct msm_pinctrl_soc_data x1e80100_pinctrl = {
+ 	.ngroups = ARRAY_SIZE(x1e80100_groups),
+ 	.ngpios = 239,
+ 	.wakeirq_map = x1e80100_pdc_map,
+-	.nwakeirq_map = ARRAY_SIZE(x1e80100_pdc_map),
++	/* TODO: Enabling PDC currently breaks GPIO interrupts */
++	.nwakeirq_map = 0,
++	/* .nwakeirq_map = ARRAY_SIZE(x1e80100_pdc_map), */
+ 	.egpio_func = 9,
+ };
  
-+static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32 *l)
-+{
-+	u64 remainder, quotient;
-+
-+	quotient = rate;
-+	remainder = do_div(quotient, prate);
-+	*l = quotient;
-+
-+	if ((remainder * 2) / prate)
-+		*l = *l + 1;
-+}
-+
- static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
- 				  unsigned long prate)
- {
-@@ -2086,6 +2099,9 @@ static int clk_zonda_pll_set_rate(struct
- 	if (ret < 0)
- 		return ret;
- 
-+	if (a & PLL_ALPHA_MSB)
-+		zonda_pll_adjust_l_val(rate, prate, &l);
-+
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
- 
+-- 
+2.46.0
+
 
 
