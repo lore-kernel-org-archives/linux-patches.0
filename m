@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F800186615;
-	Tue, 10 Sep 2024 10:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B4A186615;
+	Tue, 10 Sep 2024 10:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964496; cv=none; b=bvxmqAMdGUe+bTjTVEZNsnvH4IlZpboQz06IQQtYn8hyAmFltQJTWuquhEQLuUmUcioM3FpR0jKyhloL7Jy5YCz1Sa8xSv8JHZVYqYyEYiUkuz2QJgHPE28rkG5tOYvxzKD72t/QYCUAFsvXLkOfGQ6BnktGWsANwp/Tilw7uFU=
+	t=1725964499; cv=none; b=Ox2Eucuz2iewEkiTYe7gV3hGZATZY7gPD+c5w/7TzBCc4KZ8RhB55iFIaq5TSj233E1Ysp1AAQ23WYykdMOBsRiGtjpJ/XoauMR7jTda3kC/gyRbY0v229MkHuGcMiS0NccI1dcxw76l+BSeZNJ1CbJpGqFXmH7N18u7E1snGaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964496; c=relaxed/simple;
-	bh=gSRjgsCvm8ORDIkSBTVBbzvWqkjKmcK1ImP/amZff+M=;
+	s=arc-20240116; t=1725964499; c=relaxed/simple;
+	bh=YGjRCu9bLMNZqmxyV1tSgIHUwVI5o0GFEowgVAj4K1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXYIb0ddIxuz95sSxCDtNZ5Bti1QdQ1A4+qaSwE0kU90b09M09CtGbL7BeniTZrs4cAKoL1ybexAjTmqsGzHhLVC8t9uXKM8N0Sn4Xevn7ujKOMDBn1EclWlOrwzRoZfZSMr5NUFjdSgpBA3yoJzIr/oJ7bxoz5WYxNf1tyCBZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7ahuqns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsvNp/Bay9rHqy/b8TA+KjZ0PdZFh/41mJ7gIGeuUUip8XgAk483CrD26QmJcCJ9YFyDkwYy8PV3OBQLO/soDN/2pGXnAn8PxQmr0P4BVLHUUea/LPKZEAXogLYN/Eo9kZRxUw/W5gU+eQODZ4Guw0JJQImNS9t+5DSPr1roFYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FE9Vhqnp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7ahuqns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9C9C4CEC3;
-	Tue, 10 Sep 2024 10:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FE9Vhqnp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD908C4CEC3;
+	Tue, 10 Sep 2024 10:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964496;
-	bh=gSRjgsCvm8ORDIkSBTVBbzvWqkjKmcK1ImP/amZff+M=;
+	s=korg; t=1725964499;
+	bh=YGjRCu9bLMNZqmxyV1tSgIHUwVI5o0GFEowgVAj4K1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7ahuqnsbB9hobfR9dITv1lePt5KZj6UKf+FouuBfQuy5VQKNQJlASXsV08S0ER18
-	 BBL8I/734omvFhN94hSgRGG06CFlLcLsiS9xfosMF2crqJ9ovbvDizeJbv6b5xvNXe
-	 /BVJGfW7P/mzfIHVaXtlyilSIsszJJE7H/CDJ+bs=
+	b=FE9VhqnpU6OD/sSdKgiE5IYLD9nCcP3NC38gCC+H0t8OlfV7jDx0c4cPPHl4B9bgd
+	 eVbtwZLcPmqsC48Xen2Y857AprrNgpVZCioqwfqFnkOETx7BK52vwr25wC6wioMZuO
+	 xufOKrs4CqQkWcjssNAHk2lraSZUQwsGXavESww8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Gaha Bana <gahabana@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 202/269] cpufreq: amd-pstate: fix the highest frequency issue which limits performance
-Date: Tue, 10 Sep 2024 11:33:09 +0200
-Message-ID: <20240910092615.277134427@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.6 203/269] tcp: process the 3rd ACK with sk_socket for TFO/MPTCP
+Date: Tue, 10 Sep 2024 11:33:10 +0200
+Message-ID: <20240910092615.307230832@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,92 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit bf202e654bfa57fb8cf9d93d4c6855890b70b9c4 upstream.
+commit c1668292689ad2ee16c9c1750a8044b0b0aad663 upstream.
 
-To address the performance drop issue, an optimization has been
-implemented. The incorrect highest performance value previously set by the
-low-level power firmware for AMD CPUs with Family ID 0x19 and Model ID
-ranging from 0x70 to 0x7F series has been identified as the cause.
+The 'Fixes' commit recently changed the behaviour of TCP by skipping the
+processing of the 3rd ACK when a sk->sk_socket is set. The goal was to
+skip tcp_ack_snd_check() in tcp_rcv_state_process() not to send an
+unnecessary ACK in case of simultaneous connect(). Unfortunately, that
+had an impact on TFO and MPTCP.
 
-To resolve this, a check has been implemented to accurately determine the
-CPU family and model ID. The correct highest performance value is now set
-and the performance drop caused by the incorrect highest performance value
-are eliminated.
+I started to look at the impact on MPTCP, because the MPTCP CI found
+some issues with the MPTCP Packetdrill tests [1]. Then Paolo Abeni
+suggested me to look at the impact on TFO with "plain" TCP.
 
-Before the fix, the highest frequency was set to 4200MHz, now it is set
-to 4971MHz which is correct.
+For MPTCP, when receiving the 3rd ACK of a request adding a new path
+(MP_JOIN), sk->sk_socket will be set, and point to the MPTCP sock that
+has been created when the MPTCP connection got established before with
+the first path. The newly added 'goto' will then skip the processing of
+the segment text (step 7) and not go through tcp_data_queue() where the
+MPTCP options are validated, and some actions are triggered, e.g.
+sending the MPJ 4th ACK [2] as demonstrated by the new errors when
+running a packetdrill test [3] establishing a second subflow.
 
-CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ   MINMHZ       MHZ
-  0    0      0    0 0:0:0:0          yes 4971.0000 400.0000  400.0000
-  1    0      0    0 0:0:0:0          yes 4971.0000 400.0000  400.0000
-  2    0      0    1 1:1:1:0          yes 4971.0000 400.0000 4865.8140
-  3    0      0    1 1:1:1:0          yes 4971.0000 400.0000  400.0000
+This doesn't fully break MPTCP, mainly the 4th MPJ ACK that will be
+delayed. Still, we don't want to have this behaviour as it delays the
+switch to the fully established mode, and invalid MPTCP options in this
+3rd ACK will not be caught any more. This modification also affects the
+MPTCP + TFO feature as well, and being the reason why the selftests
+started to be unstable the last few days [4].
 
-Fixes: f3a052391822 ("cpufreq: amd-pstate: Enable amd-pstate preferred core support")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218759
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Gaha Bana <gahabana@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+For TFO, the existing 'basic-cookie-not-reqd' test [5] was no longer
+passing: if the 3rd ACK contains data, and the connection is accept()ed
+before receiving them, these data would no longer be processed, and thus
+not ACKed.
+
+One last thing about MPTCP, in case of simultaneous connect(), a
+fallback to TCP will be done, which seems fine:
+
+  `../common/defaults.sh`
+
+   0 socket(..., SOCK_STREAM|SOCK_NONBLOCK, IPPROTO_MPTCP) = 3
+  +0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
+
+  +0 > S  0:0(0)                 <mss 1460, sackOK, TS val 100 ecr 0,   nop, wscale 8, mpcapable v1 flags[flag_h] nokey>
+  +0 < S  0:0(0) win 1000        <mss 1460, sackOK, TS val 407 ecr 0,   nop, wscale 8, mpcapable v1 flags[flag_h] nokey>
+  +0 > S. 0:0(0) ack 1           <mss 1460, sackOK, TS val 330 ecr 0,   nop, wscale 8, mpcapable v1 flags[flag_h] nokey>
+  +0 < S. 0:0(0) ack 1 win 65535 <mss 1460, sackOK, TS val 700 ecr 100, nop, wscale 8, mpcapable v1 flags[flag_h] key[skey=2]>
+  +0 >  . 1:1(0) ack 1           <nop, nop, TS val 845707014 ecr 700, nop, nop, sack 0:1>
+
+Simultaneous SYN-data crossing is also not supported by TFO, see [6].
+
+Kuniyuki Iwashima suggested to restrict the processing to SYN+ACK only:
+that's a more generic solution than the one initially proposed, and
+also enough to fix the issues described above.
+
+Later on, Eric Dumazet mentioned that an ACK should still be sent in
+reaction to the second SYN+ACK that is received: not sending a DUPACK
+here seems wrong and could hurt:
+
+   0 socket(..., SOCK_STREAM|SOCK_NONBLOCK, IPPROTO_TCP) = 3
+  +0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
+
+  +0 > S  0:0(0)                <mss 1460, sackOK, TS val 1000 ecr 0,nop,wscale 8>
+  +0 < S  0:0(0)       win 1000 <mss 1000, sackOK, nop, nop>
+  +0 > S. 0:0(0) ack 1          <mss 1460, sackOK, TS val 3308134035 ecr 0,nop,wscale 8>
+  +0 < S. 0:0(0) ack 1 win 1000 <mss 1000, sackOK, nop, nop>
+  +0 >  . 1:1(0) ack 1          <nop, nop, sack 0:1>  // <== Here
+
+So in this version, the 'goto consume' is dropped, to always send an ACK
+when switching from TCP_SYN_RECV to TCP_ESTABLISHED. This ACK will be
+seen as a DUPACK -- with DSACK if SACK has been negotiated -- in case of
+simultaneous SYN crossing: that's what is expected here.
+
+Link: https://github.com/multipath-tcp/mptcp_net-next/actions/runs/9936227696 [1]
+Link: https://datatracker.ietf.org/doc/html/rfc8684#fig_tokens [2]
+Link: https://github.com/multipath-tcp/packetdrill/blob/mptcp-net-next/gtests/net/mptcp/syscalls/accept.pkt#L28 [3]
+Link: https://netdev.bots.linux.dev/contest.html?executor=vmksft-mptcp-dbg&test=mptcp-connect-sh [4]
+Link: https://github.com/google/packetdrill/blob/master/gtests/net/tcp/fastopen/server/basic-cookie-not-reqd.pkt#L21 [5]
+Link: https://github.com/google/packetdrill/blob/master/gtests/net/tcp/fastopen/client/simultaneous-fast-open.pkt [6]
+Fixes: 23e89e8ee7be ("tcp: Don't drop SYN+ACK for simultaneous connect().")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240724-upstream-net-next-20240716-tcp-3rd-ack-consume-sk_socket-v3-1-d48339764ce9@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |   22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_input.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -50,7 +50,8 @@
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6679,9 +6679,6 @@ int tcp_rcv_state_process(struct sock *s
+ 		tcp_fast_path_on(tp);
+ 		if (sk->sk_shutdown & SEND_SHUTDOWN)
+ 			tcp_shutdown(sk, SEND_SHUTDOWN);
+-
+-		if (sk->sk_socket)
+-			goto consume;
+ 		break;
  
- #define AMD_PSTATE_TRANSITION_LATENCY	20000
- #define AMD_PSTATE_TRANSITION_DELAY	1000
--#define AMD_PSTATE_PREFCORE_THRESHOLD	166
-+#define CPPC_HIGHEST_PERF_PERFORMANCE	196
-+#define CPPC_HIGHEST_PERF_DEFAULT	166
- 
- /*
-  * TODO: We need more time to fine tune processors with shared memory solution
-@@ -313,6 +314,21 @@ static inline int amd_pstate_enable(bool
- 	return static_call(amd_pstate_enable)(enable);
- }
- 
-+static u32 amd_pstate_highest_perf_set(struct amd_cpudata *cpudata)
-+{
-+	struct cpuinfo_x86 *c = &cpu_data(0);
-+
-+	/*
-+	 * For AMD CPUs with Family ID 19H and Model ID range 0x70 to 0x7f,
-+	 * the highest performance level is set to 196.
-+	 * https://bugzilla.kernel.org/show_bug.cgi?id=218759
-+	 */
-+	if (c->x86 == 0x19 && (c->x86_model >= 0x70 && c->x86_model <= 0x7f))
-+		return CPPC_HIGHEST_PERF_PERFORMANCE;
-+
-+	return CPPC_HIGHEST_PERF_DEFAULT;
-+}
-+
- static int pstate_init_perf(struct amd_cpudata *cpudata)
- {
- 	u64 cap1;
-@@ -329,7 +345,7 @@ static int pstate_init_perf(struct amd_c
- 	 * the default max perf.
- 	 */
- 	if (cpudata->hw_prefcore)
--		highest_perf = AMD_PSTATE_PREFCORE_THRESHOLD;
-+		highest_perf = amd_pstate_highest_perf_set(cpudata);
- 	else
- 		highest_perf = AMD_CPPC_HIGHEST_PERF(cap1);
- 
-@@ -352,7 +368,7 @@ static int cppc_init_perf(struct amd_cpu
- 		return ret;
- 
- 	if (cpudata->hw_prefcore)
--		highest_perf = AMD_PSTATE_PREFCORE_THRESHOLD;
-+		highest_perf = amd_pstate_highest_perf_set(cpudata);
- 	else
- 		highest_perf = cppc_perf.highest_perf;
- 
+ 	case TCP_FIN_WAIT1: {
 
 
