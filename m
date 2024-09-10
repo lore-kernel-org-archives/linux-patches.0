@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF8D1885A5;
-	Tue, 10 Sep 2024 10:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AAF1885A5;
+	Tue, 10 Sep 2024 10:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962723; cv=none; b=Zt3Oq8wwbQI5PpfrYhHQ/L1TMOz1ff9fHmEYOsbIUQZVmqvnjWAyyMWvuDtX+hGN06q1FnzVPxED5n93evvLC+FCcKKd5JRBfvhw1D9zjMqAGSVA6AJTgIAWgQXMkj0Y295uSLXXTp9Bdjr52MzVWq9QpHRcH3RUTdJvk4hpqoo=
+	t=1725962725; cv=none; b=n7q4HEahqfdyaxfmzTDmw3jS7/bwZD9rBeJGHNkh2YyFGg9xjVL3qTq8+rFdBXMZKrkb6H7ce+7RnyQMK0T9TOdQX9XX2UDkG2MUPsQBf1CPPwitlGJdu5YTOS6AVdUbZ6DnmpgfjIHke7pblNajypBWT0puKgv4jcvxlJkb07k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962723; c=relaxed/simple;
-	bh=qI9xEda6GTNWaOUjwjob4rGrxLZLEIakXBvjrsPuJAA=;
+	s=arc-20240116; t=1725962725; c=relaxed/simple;
+	bh=XXRA0mBpTqniW9/tijckUyUC/wcAzA0+M8YDdz7iXBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOWGM6BgycOinGT1oFo3+j3cR++PpF/umnzOIr76+o4JZKmOhHrnBpsWv04/jbbIHqBRbRkCbUnGexFi3HHgDnmp5OYjuEmlCf7/+TJwwLJwjBsNOlbLHKIydRWWaOLRo1lHiGN4kzsYk3Vct1bD7EGAatCZ1jl2EhvqBZ5ZeCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvqOfV1B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KC+q5ylyFKLzaJg0uDf4Qt9BzhQStzgehiOjAtTkSBEY6zHqVdzfDmhm8075msR/T647v7cHYPEiBptIhgwvWNlHaWJ5LOnG5sYqwUkUPpH1QAVqPDtSZ211nXfZn6VtxlVWV12GXhPSxTC8RyvKM+/CYBURMDxEvPLQxog0HUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUdy2Yeu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvqOfV1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D921C4CEC3;
-	Tue, 10 Sep 2024 10:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUdy2Yeu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC80C4CEC6;
+	Tue, 10 Sep 2024 10:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962722;
-	bh=qI9xEda6GTNWaOUjwjob4rGrxLZLEIakXBvjrsPuJAA=;
+	s=korg; t=1725962725;
+	bh=XXRA0mBpTqniW9/tijckUyUC/wcAzA0+M8YDdz7iXBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvqOfV1BT9oujhhqfvPMFQ2gzlB8W+jUhheQV0sLsH2dWQosxhM97+1vbfzGKPqP4
-	 CJUUFde7+WCaZ3qsvVb077tn5dcMiMJAffF1E+TpgYl2xgLuN23rChSea/+EdGuKDo
-	 UJ+Fg5/ndq/JcJfxsgK+QsqT5LWrPCac956gb3+E=
+	b=TUdy2YeuBDfUz98NeeoBUMjPhjswICX3yOjOP5KFbe3/neBRvBmJ0uLTzLWfuhGsg
+	 BDFnTi9TbtDN0h253qb4jBGSI1ToF6oMY1ZNVwTTmgddlHByS62yworj6mleExOCyc
+	 lrE9VdWp0bqPbeCUctAS813W7f543RsXme7vwB6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 117/121] drm/i915/fence: Mark debug_fence_init_onstack() with __maybe_unused
-Date: Tue, 10 Sep 2024 11:33:12 +0200
-Message-ID: <20240910092551.353143466@linuxfoundation.org>
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 001/192] sch/netem: fix use after free in netem_dequeue
+Date: Tue, 10 Sep 2024 11:30:25 +0200
+Message-ID: <20240910092557.944134672@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
-References: <20240910092545.737864202@linuxfoundation.org>
+In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
+References: <20240910092557.876094467@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit fcd9e8afd546f6ced378d078345a89bf346d065e ]
+commit 3b3a2a9c6349e25a025d2330f479bc33a6ccb54a upstream.
 
-When debug_fence_init_onstack() is unused (CONFIG_DRM_I915_SELFTEST=n),
-it prevents kernel builds with clang, `make W=1` and CONFIG_WERROR=y:
+If netem_dequeue() enqueues packet to inner qdisc and that qdisc
+returns __NET_XMIT_STOLEN. The packet is dropped but
+qdisc_tree_reduce_backlog() is not called to update the parent's
+q.qlen, leading to the similar use-after-free as Commit
+e04991a48dbaf382 ("netem: fix return value if duplicate enqueue
+fails")
 
-.../i915_sw_fence.c:97:20: error: unused function 'debug_fence_init_onstack' [-Werror,-Wunused-function]
-   97 | static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
-      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+Commands to trigger KASAN UaF:
 
-Fix this by marking debug_fence_init_onstack() with __maybe_unused.
+ip link add type dummy
+ip link set lo up
+ip link set dummy0 up
+tc qdisc add dev lo parent root handle 1: drr
+tc filter add dev lo parent 1: basic classid 1:1
+tc class add dev lo classid 1:1 drr
+tc qdisc add dev lo parent 1:1 handle 2: netem
+tc qdisc add dev lo parent 2: handle 3: drr
+tc filter add dev lo parent 3: basic classid 3:1 action mirred egress
+redirect dev dummy0
+tc class add dev lo classid 3:1 drr
+ping -c1 -W0.01 localhost # Trigger bug
+tc class del dev lo classid 1:1
+tc class add dev lo classid 1:1 drr
+ping -c1 -W0.01 localhost # UaF
 
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: 214707fc2ce0 ("drm/i915/selftests: Wrap a timer into a i915_sw_fence")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 5bf472058ffb43baf6a4cdfe1d7f58c4c194c688)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 50612537e9ab ("netem: fix classful handling")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Link: https://patch.msgid.link/20240901182438.4992-1-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_netem.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
-index b3fd6ff665da..475e4b9485af 100644
---- a/drivers/gpu/drm/i915/i915_sw_fence.c
-+++ b/drivers/gpu/drm/i915/i915_sw_fence.c
-@@ -38,7 +38,7 @@ static inline void debug_fence_init(struct i915_sw_fence *fence)
- 	debug_object_init(fence, &i915_sw_fence_debug_descr);
- }
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -733,11 +733,10 @@ deliver:
  
--static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_init_onstack(struct i915_sw_fence *fence)
- {
- 	debug_object_init_on_stack(fence, &i915_sw_fence_debug_descr);
- }
-@@ -81,7 +81,7 @@ static inline void debug_fence_init(struct i915_sw_fence *fence)
- {
- }
- 
--static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_init_onstack(struct i915_sw_fence *fence)
- {
- }
- 
--- 
-2.43.0
-
+ 				err = qdisc_enqueue(skb, q->qdisc, &to_free);
+ 				kfree_skb_list(to_free);
+-				if (err != NET_XMIT_SUCCESS &&
+-				    net_xmit_drop_count(err)) {
+-					qdisc_qstats_drop(sch);
+-					qdisc_tree_reduce_backlog(sch, 1,
+-								  pkt_len);
++				if (err != NET_XMIT_SUCCESS) {
++					if (net_xmit_drop_count(err))
++						qdisc_qstats_drop(sch);
++					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
+ 				}
+ 				goto tfifo_dequeue;
+ 			}
 
 
