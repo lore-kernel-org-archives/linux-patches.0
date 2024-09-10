@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F651885A6;
-	Tue, 10 Sep 2024 09:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92D946444;
+	Tue, 10 Sep 2024 09:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961900; cv=none; b=LaXf0Ihg08063IeTRUlxFc39XAnjvXNXUDZcihSszPA89+GdSMvPwC0W/oMAkEYu38npIfOH09V3Rcml4czi2fwR1KGBVumX3JcL6hkHvN3WSZ66+EUXCjhqokgPr31r5sKraFbi9sTYpsKQN7AD5VqaN0ggXcKdpBgaN6yHjsY=
+	t=1725961902; cv=none; b=otGALy7O0/Ie6n1O3gu0trRbSVPxVZ0IJlJ9Ypz+9WzuZGo069S+9AFs17XyCyyRAm2eWHOMO124S5xEpnAht6Z/7sY1eV84K3C+YN8kWM5JAHYhcC3YVbZg9yQzFZy+HmwKYr2cfM+ODMLBdSZPVSZ0pRkF6wVuIyydEqhJv+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961900; c=relaxed/simple;
-	bh=WpzR8rjLNyGpJvUnaf33v0VmBNc98ZB6bkc9BIdGmzc=;
+	s=arc-20240116; t=1725961902; c=relaxed/simple;
+	bh=sK0iNmQP+wRgN+zy8jL5MGfOF26I6S2GuL2vdJd44iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbGJ9//fa7/4AmI6TYq94INPqz8AGpllhqzAGkaTgF9iUhCPkG5iBn9uSfafaaBbIw9FKKx3hzsuOd5vp2iEWt6VIFef01AYezUJ/wZBMn1Uuoiu7tFOI+RfILmOW1K15PobfaLFNs3VxEQShNWPCXg3upnlVHlyDucKstfEE1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYy45+6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mf3LgssZccaEaYn2s5inhv+kI9+CENHibWBce/OaVuWSBbp7PEMp3INPKWy3/a+FqwzJAU7mS1B2NImqSdu8zfjtXII7nQfd4DVMx/p4Vkim1D1qxgYAHuXNLhnPYhVcsOCpVUQhDB4b9xCDmNKD+s+Nvjq+0/X/jIzzvoJJMdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmySJCGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYy45+6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D90BC4CEC3;
-	Tue, 10 Sep 2024 09:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmySJCGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE14C4CEC3;
+	Tue, 10 Sep 2024 09:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961899;
-	bh=WpzR8rjLNyGpJvUnaf33v0VmBNc98ZB6bkc9BIdGmzc=;
+	s=korg; t=1725961902;
+	bh=sK0iNmQP+wRgN+zy8jL5MGfOF26I6S2GuL2vdJd44iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYy45+6kEGbHZsz4Z8QCSs/oVKEb1FtsjP5rhOeEv64YZDcGln3iS0KJiC/AEedt3
-	 gbLZVbi9W8muDsBvn1PHqwXcyDkdx9XoRlTjvtXAi+eqEFWRberybQzliy7WRuIfBB
-	 pmif3NRdf5dyGL4zfuba83d2gCTQYg3QHxt0O7cg=
+	b=qmySJCGe5VFMctkrE2oNJCpVmojFlj+CH6B29JGlCi0QHXDwa+LA3N+HS5ZW4x7IQ
+	 UC9/QRzokNMt0eQvbuClaUeZQwrHh9/3vSck+hmQ5Ssgx/ApTlAjB1M4yKpe6Grt2U
+	 /0TxdZqduM27nEh1QU8a6GMvV+ya70lnGSB6vt/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Juergen Gross <jgross@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 199/375] xen: privcmd: Fix possible access to a freed kirqfd instance
-Date: Tue, 10 Sep 2024 11:29:56 +0200
-Message-ID: <20240910092629.184563717@linuxfoundation.org>
+Subject: [PATCH 6.10 190/375] bpf: add check for invalid name in btf_name_valid_section()
+Date: Tue, 10 Sep 2024 11:29:47 +0200
+Message-ID: <20240910092628.875900536@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,89 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 611ff1b1ae989a7bcce3e2a8e132ee30e968c557 ]
+[ Upstream commit bb6705c3f93bed2af03d43691743d4c43e3c8e6f ]
 
-Nothing prevents simultaneous ioctl calls to privcmd_irqfd_assign() and
-privcmd_irqfd_deassign(). If that happens, it is possible that a kirqfd
-created and added to the irqfds_list by privcmd_irqfd_assign() may get
-removed by another thread executing privcmd_irqfd_deassign(), while the
-former is still using it after dropping the locks.
+If the length of the name string is 1 and the value of name[0] is NULL
+byte, an OOB vulnerability occurs in btf_name_valid_section() and the
+return value is true, so the invalid name passes the check.
 
-This can lead to a situation where an already freed kirqfd instance may
-be accessed and cause kernel oops.
+To solve this, you need to check if the first position is NULL byte and
+if the first character is printable.
 
-Use SRCU locking to prevent the same, as is done for the KVM
-implementation for irqfds.
-
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/9e884af1f1f842eacbb7afc5672c8feb4dea7f3f.1718703669.git.viresh.kumar@linaro.org
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: bd70a8fb7ca4 ("bpf: Allow all printable characters in BTF DATASEC names")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20240831054702.364455-1-aha310510@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/privcmd.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index c9c620e32fa8..39e726d7280e 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -17,6 +17,7 @@
- #include <linux/poll.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
-+#include <linux/srcu.h>
- #include <linux/string.h>
- #include <linux/workqueue.h>
- #include <linux/errno.h>
-@@ -846,6 +847,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
- /* Irqfd support */
- static struct workqueue_struct *irqfd_cleanup_wq;
- static DEFINE_SPINLOCK(irqfds_lock);
-+DEFINE_STATIC_SRCU(irqfds_srcu);
- static LIST_HEAD(irqfds_list);
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index fe360b5b211d..2f157ffbc67c 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -817,9 +817,11 @@ static bool btf_name_valid_section(const struct btf *btf, u32 offset)
+ 	const char *src = btf_str_by_offset(btf, offset);
+ 	const char *src_limit;
  
- struct privcmd_kernel_irqfd {
-@@ -873,6 +875,9 @@ static void irqfd_shutdown(struct work_struct *work)
- 		container_of(work, struct privcmd_kernel_irqfd, shutdown);
- 	u64 cnt;
- 
-+	/* Make sure irqfd has been initialized in assign path */
-+	synchronize_srcu(&irqfds_srcu);
++	if (!*src)
++		return false;
 +
- 	eventfd_ctx_remove_wait_queue(kirqfd->eventfd, &kirqfd->wait, &cnt);
- 	eventfd_ctx_put(kirqfd->eventfd);
- 	kfree(kirqfd);
-@@ -935,7 +940,7 @@ static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
- 	__poll_t events;
- 	struct fd f;
- 	void *dm_op;
--	int ret;
-+	int ret, idx;
- 
- 	kirqfd = kzalloc(sizeof(*kirqfd) + irqfd->size, GFP_KERNEL);
- 	if (!kirqfd)
-@@ -981,6 +986,7 @@ static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
- 		}
- 	}
- 
-+	idx = srcu_read_lock(&irqfds_srcu);
- 	list_add_tail(&kirqfd->list, &irqfds_list);
- 	spin_unlock_irqrestore(&irqfds_lock, flags);
- 
-@@ -992,6 +998,8 @@ static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
- 	if (events & EPOLLIN)
- 		irqfd_inject(kirqfd);
- 
-+	srcu_read_unlock(&irqfds_srcu, idx);
-+
- 	/*
- 	 * Do not drop the file until the kirqfd is fully initialized, otherwise
- 	 * we might race against the EPOLLHUP.
+ 	/* set a limit on identifier length */
+ 	src_limit = src + KSYM_NAME_LEN;
+-	src++;
+ 	while (*src && src < src_limit) {
+ 		if (!isprint(*src))
+ 			return false;
 -- 
 2.43.0
 
