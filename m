@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7878F187325;
-	Tue, 10 Sep 2024 09:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F5E18D627;
+	Tue, 10 Sep 2024 09:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961426; cv=none; b=SpdvhhHxKTfXVpMfnkbTX8NgQOavTVF5Fj1dACStPf0sHBMjcqXkv1BwJWNUorjiRuhab30iKduZARZjHrbR2YRqJ92JsnKdbDTO25p2/qSWevS+RfQBvooZG4jaCdhkoBbvNZaq8mZDccd07ZWhvhUULZRyomaKrwX6FyxHMJY=
+	t=1725961429; cv=none; b=tvuQ2Rq7dhVzITwnNDVDXpyt3B9aFfRbwzEuvhyKeoGFBds8JWIgKNGdYywoKz9LCdfMhdHtkdC3XTUSabA7zMMjrLm3L3KVYwDcoCAMeAU3CHwi6pLjVLgqQBhR2W29dpLkQZEQbEVCX46BY25z1Rk+fPqjzIg1+Pfuq7tQ9Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961426; c=relaxed/simple;
-	bh=BrBh0h85vBs/9iShEHVmC6TF8JucMf2Ehy+f21UGSAs=;
+	s=arc-20240116; t=1725961429; c=relaxed/simple;
+	bh=rALygXtakYD2lAqgCfF5dKGrlayQtF6/XVfM4u2kG/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqgQaaZ08y11iuqWB4V1kcrHm5SF77FL45YMq8H8nWx3ABoq0UIcNNdjM5GAXPQOxE7v0ymsBdAyIHoi81WJSgFuC8Atkob6JlqDzoktZBYdmCICK2M4Mksj+8KaVvobo0OOo2ffdIW9sQVulD+CvTCvIcg4eEnBVAZ2CiBOWHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDUVz4P4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZjHFTh/TgbMTCEC9Yt/aCDkzOKKW1K6Hn94IwmH0sj6owrMdIUoSh4+gKPOzLDu4lpO5V7a8hGrCZ0OhOvbJPaZErphjEw9pZByvnTiypyxC2NBG4AXFW4bHEUNj+dZWDmGJ0srKg7W29j51G4fFiDiNZ7aOE7qlHYMVUa2hW+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtkJASc0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDUVz4P4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31B6C4CEC6;
-	Tue, 10 Sep 2024 09:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtkJASc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28E7C4CECC;
+	Tue, 10 Sep 2024 09:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961426;
-	bh=BrBh0h85vBs/9iShEHVmC6TF8JucMf2Ehy+f21UGSAs=;
+	s=korg; t=1725961429;
+	bh=rALygXtakYD2lAqgCfF5dKGrlayQtF6/XVfM4u2kG/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDUVz4P4aE3CnUINhGviScqhzeHq+pPbsPRRdgY0J2uoq61IOoKT2/X6ujj7tpy0T
-	 XIdYnarw2jPyhcWygaU8wulo32hOKZeoFdG+1YYWq7n9WesySonaieYWYLorR1veFz
-	 PVj29a+o7MQPX7u5SsRMF1JNIFeVZWeE7eavR6U0=
+	b=WtkJASc07v0VYNED7ZhNcsZI0Tix0oPG911IbD11gqc2F20wgCOCxOMvKOXAvMPBD
+	 IdZ8uv8Vk3giIfiDETXjflbcHr+5Z6BVgaorn0SHBe+AHZCFg6o9vtYIYmOtPQyRzs
+	 /c50ePUIZnL3jA4PLdyMWyyS7/NBJKMoTq4Fj30c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tomas Glozar <tglozar@redhat.com>,
-	John Kacur <jkacur@redhat.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.10 065/375] tracing/timerlat: Add interface_lock around clearing of kthread in stop_kthread()
-Date: Tue, 10 Sep 2024 11:27:42 +0200
-Message-ID: <20240910092624.406245992@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Pavel Emelyanov <xemul@virtuozzo.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 066/375] userfaultfd: dont BUG_ON() if khugepaged yanks our page table
+Date: Tue, 10 Sep 2024 11:27:43 +0200
+Message-ID: <20240910092624.441231246@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -54,88 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jann Horn <jannh@google.com>
 
-commit 5bfbcd1ee57b607fd29e4645c7f350dd385dd9ad upstream.
+commit 4828d207dc5161dc7ddf9a4f6dcfd80c7dd7d20a upstream.
 
-The timerlat interface will get and put the task that is part of the
-"kthread" field of the osn_var to keep it around until all references are
-released. But here's a race in the "stop_kthread()" code that will call
-put_task_struct() on the kthread if it is not a kernel thread. This can
-race with the releasing of the references to that task struct and the
-put_task_struct() can be called twice when it should have been called just
-once.
+Since khugepaged was changed to allow retracting page tables in file
+mappings without holding the mmap lock, these BUG_ON()s are wrong - get
+rid of them.
 
-Take the interface_lock() in stop_kthread() to synchronize this change.
-But to do so, the function stop_per_cpu_kthreads() needs to change the
-loop from for_each_online_cpu() to for_each_possible_cpu() and remove the
-cpu_read_lock(), as the interface_lock can not be taken while the cpu
-locks are held. The only side effect of this change is that it may do some
-extra work, as the per_cpu variables of the offline CPUs would not be set
-anyway, and would simply be skipped in the loop.
+We could also remove the preceding "if (unlikely(...))" block, but then we
+could reach pte_offset_map_lock() with transhuge pages not just for file
+mappings but also for anonymous mappings - which would probably be fine
+but I think is not necessarily expected.
 
-Remove unneeded "return;" in stop_kthread().
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tomas Glozar <tglozar@redhat.com>
-Cc: John Kacur <jkacur@redhat.com>
-Cc: "Luis Claudio R. Goncalves" <lgoncalv@redhat.com>
-Link: https://lore.kernel.org/20240905113359.2b934242@gandalf.local.home
-Fixes: e88ed227f639e ("tracing/timerlat: Add user-space interface")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-2-5efa61078a41@google.com
+Fixes: 1d65b771bc08 ("mm/khugepaged: retract_page_tables() without mmap or vma lock")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Pavel Emelyanov <xemul@virtuozzo.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ mm/userfaultfd.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -1953,8 +1953,12 @@ static void stop_kthread(unsigned int cp
- {
- 	struct task_struct *kthread;
- 
-+	mutex_lock(&interface_lock);
- 	kthread = per_cpu(per_cpu_osnoise_var, cpu).kthread;
- 	if (kthread) {
-+		per_cpu(per_cpu_osnoise_var, cpu).kthread = NULL;
-+		mutex_unlock(&interface_lock);
-+
- 		if (cpumask_test_and_clear_cpu(cpu, &kthread_cpumask) &&
- 		    !WARN_ON(!test_bit(OSN_WORKLOAD, &osnoise_options))) {
- 			kthread_stop(kthread);
-@@ -1967,8 +1971,8 @@ static void stop_kthread(unsigned int cp
- 			kill_pid(kthread->thread_pid, SIGKILL, 1);
- 			put_task_struct(kthread);
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -805,9 +805,10 @@ retry:
+ 			err = -EFAULT;
+ 			break;
  		}
--		per_cpu(per_cpu_osnoise_var, cpu).kthread = NULL;
- 	} else {
-+		mutex_unlock(&interface_lock);
- 		/* if no workload, just return */
- 		if (!test_bit(OSN_WORKLOAD, &osnoise_options)) {
- 			/*
-@@ -1976,7 +1980,6 @@ static void stop_kthread(unsigned int cp
- 			 */
- 			per_cpu(per_cpu_osnoise_var, cpu).sampling = false;
- 			barrier();
--			return;
- 		}
- 	}
- }
-@@ -1991,12 +1994,8 @@ static void stop_per_cpu_kthreads(void)
- {
- 	int cpu;
- 
--	cpus_read_lock();
 -
--	for_each_online_cpu(cpu)
-+	for_each_possible_cpu(cpu)
- 		stop_kthread(cpu);
--
--	cpus_read_unlock();
- }
+-		BUG_ON(pmd_none(*dst_pmd));
+-		BUG_ON(pmd_trans_huge(*dst_pmd));
++		/*
++		 * For shmem mappings, khugepaged is allowed to remove page
++		 * tables under us; pte_offset_map_lock() will deal with that.
++		 */
  
- /*
+ 		err = mfill_atomic_pte(dst_pmd, dst_vma, dst_addr,
+ 				       src_addr, flags, &folio);
 
 
