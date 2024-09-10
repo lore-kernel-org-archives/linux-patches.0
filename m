@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C03183CB0;
-	Tue, 10 Sep 2024 10:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD5B183CB0;
+	Tue, 10 Sep 2024 10:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963209; cv=none; b=DFdOnIU5S+lZyCNzkw2b0nqTy97GNtaqT/nw8oXfTRkgf7kW9uGBwanQbVOKb8f1hvPdFf9CXM8wguK0uQdmfkUnfhHgwxKXk1dNmS1m7d/DCjij/6b/2gE0UZvJR/epc2ahw626/sHeUDxJ/XA8zHhohzXB7K7mJeHhOZzBK1k=
+	t=1725963212; cv=none; b=NXrH3H2f6QwCDUg5K2wN+6OEQuBgrIuusWv7g4v2jFkQ1lNkOvwAc5Fd+je3O/NPuY7jiXZ2YggMozk79v5UpkwrT/sEP9TuBGW0HIa9XFufspQBxF0d2mm5q6Opujq20CXVaeogHEbnRnvo4UHQVWuBlGznvXZ2H56+PKE0xBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963209; c=relaxed/simple;
-	bh=GgnBOozT+zwLo0/pnghz2NSmTZh2+pOz/n8U0rniOzU=;
+	s=arc-20240116; t=1725963212; c=relaxed/simple;
+	bh=vP9AYutE3SVWF/NO0vVG8GggnrLVwwvRlZsKXq0s98g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdja0LbKR2I2JcCzFu1o63zBjGUrCRgmDIpbTrSjDtQkok/Beyqmu8ovGeV811jlyk7RwBr8XQypfkEYbLRpyd+EKd98QGoQiToD0qSGu0ea4TLqywI/JZuR5m5DqPxClFD05e71c+Hx4Qcb5P7z5vKTTrtYzdfwg7O3sy/nXlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfR923Ar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J1S0+qshYgbE++3wcrsD+nVUPkeeT/xPlG4NQpUCdsaIHAU9Gwl3NBTyEwWWxVgkfxvMLXqr59CgyylEJa/w/foQscdvANlKU5rglKfoEpmXHHJiZd2KBBaL+hmPI59eBPYzyjxEOEkqaUwFxPcD2hOoW3SS4kazxwkMxnksXwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5B7nUlQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfR923Ar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B6AC4CEC3;
-	Tue, 10 Sep 2024 10:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5B7nUlQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458DBC4CEC6;
+	Tue, 10 Sep 2024 10:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963209;
-	bh=GgnBOozT+zwLo0/pnghz2NSmTZh2+pOz/n8U0rniOzU=;
+	s=korg; t=1725963212;
+	bh=vP9AYutE3SVWF/NO0vVG8GggnrLVwwvRlZsKXq0s98g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lfR923ArdumeYfsYbtXPf6+OzFOoyni6Lf/r5zc3nsjOGJzfWWi0/inzPnqN55hmb
-	 Ni+RbBw5MxGvI/OX639ZOrdLa/DOK5/x0xJVgym6s0M3xevNjv3uXvSGn4fPH9pCTa
-	 zcfNW+Q6xrxMslg+GKqNP1FJD5VjYNpoMYTQMois=
+	b=a5B7nUlQ74F/tMZbq390tSpi7kMHJHYqgzvcGn6Yvwy6xH/9CE0Zs8MlY9y/ucTJM
+	 svsWULnLZTuiBupwye1BHT5ziosZOKHCpQuFKwxFNkHMR1X80Jfh9qxJbTOcgdTc0A
+	 G05InGnyg1ONa0ZJhRPBep52LxW95wstT1uMsh00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/192] ACPI: processor: Return an error if acpi_processor_get_info() fails in processor_add()
-Date: Tue, 10 Sep 2024 11:33:09 +0200
-Message-ID: <20240910092604.712333487@linuxfoundation.org>
+Subject: [PATCH 6.1 174/192] drm/amdgpu: handle gfx12 in amdgpu_display_verify_sizes
+Date: Tue, 10 Sep 2024 11:33:18 +0200
+Message-ID: <20240910092605.021304128@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -48,46 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Marek Olšák <marek.olsak@amd.com>
 
-[ Upstream commit fadf231f0a06a6748a7fc4a2c29ac9ef7bca6bfd ]
+[ Upstream commit 8dd1426e2c80e32ac1995007330c8f95ffa28ebb ]
 
-Rafael observed [1] that returning 0 from processor_add() will result in
-acpi_default_enumeration() being called which will attempt to create a
-platform device, but that makes little sense when the processor is known
-to be not available.  So just return the error code from acpi_processor_get_info()
-instead.
+It verified GFX9-11 swizzle modes on GFX12, which has undefined behavior.
 
-Link: https://lore.kernel.org/all/CAJZ5v0iKU8ra9jR+EmgxbuNm=Uwx2m1-8vn_RAZ+aCiUVLe3Pw@mail.gmail.com/ [1]
-Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240529133446.28446-5-Jonathan.Cameron@huawei.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Marek Olšák <marek.olsak@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_processor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c | 27 ++++++++++++++++++++-
+ include/uapi/drm/drm_fourcc.h               |  2 ++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
-index 6737b1cbf6d6..5662c157fda7 100644
---- a/drivers/acpi/acpi_processor.c
-+++ b/drivers/acpi/acpi_processor.c
-@@ -373,7 +373,7 @@ static int acpi_processor_add(struct acpi_device *device,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+index ac773b191071..cd0bccc95205 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+@@ -997,6 +997,30 @@ static int amdgpu_display_verify_sizes(struct amdgpu_framebuffer *rfb)
+ 			block_width = 256 / format_info->cpp[i];
+ 			block_height = 1;
+ 			block_size_log2 = 8;
++		} else if (AMD_FMT_MOD_GET(TILE_VERSION, modifier) >= AMD_FMT_MOD_TILE_VER_GFX12) {
++			int swizzle = AMD_FMT_MOD_GET(TILE, modifier);
++
++			switch (swizzle) {
++			case AMD_FMT_MOD_TILE_GFX12_256B_2D:
++				block_size_log2 = 8;
++				break;
++			case AMD_FMT_MOD_TILE_GFX12_4K_2D:
++				block_size_log2 = 12;
++				break;
++			case AMD_FMT_MOD_TILE_GFX12_64K_2D:
++				block_size_log2 = 16;
++				break;
++			case AMD_FMT_MOD_TILE_GFX12_256K_2D:
++				block_size_log2 = 18;
++				break;
++			default:
++				drm_dbg_kms(rfb->base.dev,
++					    "Gfx12 swizzle mode with unknown block size: %d\n", swizzle);
++				return -EINVAL;
++			}
++
++			get_block_dimensions(block_size_log2, format_info->cpp[i],
++					     &block_width, &block_height);
+ 		} else {
+ 			int swizzle = AMD_FMT_MOD_GET(TILE, modifier);
  
- 	result = acpi_processor_get_info(device);
- 	if (result) /* Processor is not physically present or unavailable */
--		return 0;
-+		return result;
+@@ -1032,7 +1056,8 @@ static int amdgpu_display_verify_sizes(struct amdgpu_framebuffer *rfb)
+ 			return ret;
+ 	}
  
- 	BUG_ON(pr->id >= nr_cpu_ids);
+-	if (AMD_FMT_MOD_GET(DCC, modifier)) {
++	if (AMD_FMT_MOD_GET(TILE_VERSION, modifier) <= AMD_FMT_MOD_TILE_VER_GFX11 &&
++	    AMD_FMT_MOD_GET(DCC, modifier)) {
+ 		if (AMD_FMT_MOD_GET(DCC_RETILE, modifier)) {
+ 			block_size_log2 = get_dcc_block_size(modifier, false, false);
+ 			get_block_dimensions(block_size_log2 + 8, format_info->cpp[0],
+diff --git a/include/uapi/drm/drm_fourcc.h b/include/uapi/drm/drm_fourcc.h
+index 52ce13488eaf..6245928d76ee 100644
+--- a/include/uapi/drm/drm_fourcc.h
++++ b/include/uapi/drm/drm_fourcc.h
+@@ -1420,6 +1420,8 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
+  *    6 - 64KB_3D
+  *    7 - 256KB_3D
+  */
++#define AMD_FMT_MOD_TILE_GFX12_256B_2D 1
++#define AMD_FMT_MOD_TILE_GFX12_4K_2D 2
+ #define AMD_FMT_MOD_TILE_GFX12_64K_2D 3
+ #define AMD_FMT_MOD_TILE_GFX12_256K_2D 4
  
 -- 
 2.43.0
