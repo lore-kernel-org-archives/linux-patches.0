@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D34913AD09;
-	Tue, 10 Sep 2024 09:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D63946444;
+	Tue, 10 Sep 2024 09:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961811; cv=none; b=aF/C24wyVE9K6UaS5IwG9Tl+nVStZ8V1Nnz3tcqfHjdpy5hzF3LZ23RgAByKS7a4R9mOaFXLpeXbVoiMxwN+9Kq3fo6R+7hsvj3CaJBsyc3lD6TXFH9wTEjMpoteBmQtd2mzi2Hc5JT6ELfadxFn4zakrSFcqpQ4+U6s2R9OitA=
+	t=1725961814; cv=none; b=ENNdTAbeShpVTVfB0wRuIglDIGWdk8dzBtedhHSqizswU0UHkgE72ZDFjP0q9oKrhh12HUHRrdJunEDTJIAKO+7A/Jd50DaSpj6REGRSRlH5h6olbfNOw4dVqHSQbOtN/yArD6KbF6YnNOmmah7lVoq0NfRp0nUwOlQktvI5b1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961811; c=relaxed/simple;
-	bh=QWOu/UejiMCpKmGZ8CiWH4yNZFE65s5WU7GJd7DV7C8=;
+	s=arc-20240116; t=1725961814; c=relaxed/simple;
+	bh=obSTcqWTZG8PJs9675NmCDrpMBbi/rjtp6zoWKrER6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQA5pm1BZCzz1vFrvelWWFyjZpxnfNkyz1zhFKfiCGaEjo4kohtrzid/EtpF+44chuDzh4dnHuyPA5n0iR9N9MHH2giM5+sNXSqNGhI19LF1Z6l5pcQPd7gjsHCzZYXWc+iksi8Fqlq6vTHCkGFCeEyK4l3Kk8k1L+FjOQzSDV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb6sz9w3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BW5NqWqZaEXsqrAuHAo4e2IhlJOJz+JJLT/bXSSzXD01Lw38LkWd6+ahGrxAAHLKsSugZvSZ2jMyE4pu3vyh5L/+OjGtWYb/PUr9reobsl9i327B0zFX6VgPz01rpzsktJ46eZlCTileYO44Lqsxtpayfsb06Tem2dc3iAGCcP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghZdS47y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb6sz9w3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D59C4CEC3;
-	Tue, 10 Sep 2024 09:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghZdS47y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79FDC4CEC3;
+	Tue, 10 Sep 2024 09:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961811;
-	bh=QWOu/UejiMCpKmGZ8CiWH4yNZFE65s5WU7GJd7DV7C8=;
+	s=korg; t=1725961814;
+	bh=obSTcqWTZG8PJs9675NmCDrpMBbi/rjtp6zoWKrER6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vb6sz9w38dhzvWH+S++BMeQ5ewaUxH+8j799KzEcAR23SYYN9hTrZaxwQxhSW2Crv
-	 JBzrkKRr1f8D96CnFRzHWEqlvR1I2neOdu6Zq0ThxdtYuw4b0gVHMaxy/k0szTz8sL
-	 WvjsPMxsHVble3UQcL9wLw/UNRusvjNHYiHdrfjY=
+	b=ghZdS47yVZPBsE3tMNNoCxEbk12wl/ntFONTdagtbHIqTu4koKLdbfi/0Jv3AxwI0
+	 PBSf9rangSQn8DKxBJ07xExmvsk5QiM5XBlVlrVb2U8+Awd0+z7MwSuNfneVeo4MGg
+	 ltyvPupu3gqFyPpLL/vY7eCGnLR7YfGUZQm0qAjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 170/375] Bluetooth: qca: If memdump doesnt work, re-enable IBS
-Date: Tue, 10 Sep 2024 11:29:27 +0200
-Message-ID: <20240910092628.184568390@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Igor Bagnucki <igor.bagnucki@intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.10 161/375] ice: Add netif_device_attach/detach into PF reset flow
+Date: Tue, 10 Sep 2024 11:29:18 +0200
+Message-ID: <20240910092627.887058566@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,45 +55,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
 
-[ Upstream commit 8ae22de9d2eae3c432de64bf2b3a5a69cf1d1124 ]
+[ Upstream commit d11a67634227f9f9da51938af085fb41a733848f ]
 
-On systems in the field, we are seeing this sometimes in the kernel logs:
-  Bluetooth: qca_controller_memdump() hci0: hci_devcd_init Return:-95
+Ethtool callbacks can be executed while reset is in progress and try to
+access deleted resources, e.g. getting coalesce settings can result in a
+NULL pointer dereference seen below.
 
-This means that _something_ decided that it wanted to get a memdump
-but then hci_devcd_init() returned -EOPNOTSUPP (AKA -95).
+Reproduction steps:
+Once the driver is fully initialized, trigger reset:
+	# echo 1 > /sys/class/net/<interface>/device/reset
+when reset is in progress try to get coalesce settings using ethtool:
+	# ethtool -c <interface>
 
-The cleanup code in qca_controller_memdump() when we get back an error
-from hci_devcd_init() undoes most things but forgets to clear
-QCA_IBS_DISABLED. One side effect of this is that, during the next
-suspend, qca_suspend() will always get a timeout.
+BUG: kernel NULL pointer dereference, address: 0000000000000020
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 11 PID: 19713 Comm: ethtool Tainted: G S                 6.10.0-rc7+ #7
+RIP: 0010:ice_get_q_coalesce+0x2e/0xa0 [ice]
+RSP: 0018:ffffbab1e9bcf6a8 EFLAGS: 00010206
+RAX: 000000000000000c RBX: ffff94512305b028 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffff9451c3f2e588 RDI: ffff9451c3f2e588
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: ffff9451c3f2e580 R11: 000000000000001f R12: ffff945121fa9000
+R13: ffffbab1e9bcf760 R14: 0000000000000013 R15: ffffffff9e65dd40
+FS:  00007faee5fbe740(0000) GS:ffff94546fd80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000020 CR3: 0000000106c2e005 CR4: 00000000001706f0
+Call Trace:
+<TASK>
+ice_get_coalesce+0x17/0x30 [ice]
+coalesce_prepare_data+0x61/0x80
+ethnl_default_doit+0xde/0x340
+genl_family_rcv_msg_doit+0xf2/0x150
+genl_rcv_msg+0x1b3/0x2c0
+netlink_rcv_skb+0x5b/0x110
+genl_rcv+0x28/0x40
+netlink_unicast+0x19c/0x290
+netlink_sendmsg+0x222/0x490
+__sys_sendto+0x1df/0x1f0
+__x64_sys_sendto+0x24/0x30
+do_syscall_64+0x82/0x160
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7faee60d8e27
 
-Let's fix it so that we clear the bit.
+Calling netif_device_detach() before reset makes the net core not call
+the driver when ethtool command is issued, the attempt to execute an
+ethtool command during reset will result in the following message:
 
-Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    netlink error: No such device
+
+instead of NULL pointer dereference. Once reset is done and
+ice_rebuild() is executing, the netif_device_attach() is called to allow
+for ethtool operations to occur again in a safe manner.
+
+Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Igor Bagnucki <igor.bagnucki@intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 34c36f0f781e..c5606a62f230 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1090,6 +1090,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 				qca->memdump_state = QCA_MEMDUMP_COLLECTED;
- 				cancel_delayed_work(&qca->ctrl_memdump_timeout);
- 				clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+				clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
- 			}
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 253689dbf6c3..209bfd70c430 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -609,6 +609,9 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 			memset(&vsi->mqprio_qopt, 0, sizeof(vsi->mqprio_qopt));
+ 		}
+ 	}
++
++	if (vsi->netdev)
++		netif_device_detach(vsi->netdev);
+ skip:
+ 
+ 	/* clear SW filtering DB */
+@@ -7590,6 +7593,7 @@ static void ice_update_pf_netdev_link(struct ice_pf *pf)
+  */
+ static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
+ {
++	struct ice_vsi *vsi = ice_get_main_vsi(pf);
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	struct ice_hw *hw = &pf->hw;
+ 	bool dvm;
+@@ -7734,6 +7738,9 @@ static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 		ice_rebuild_arfs(pf);
+ 	}
+ 
++	if (vsi && vsi->netdev)
++		netif_device_attach(vsi->netdev);
++
+ 	ice_update_pf_netdev_link(pf);
+ 
+ 	/* tell the firmware we are up */
 -- 
 2.43.0
 
