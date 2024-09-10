@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E767814D431;
-	Tue, 10 Sep 2024 10:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA9214D431;
+	Tue, 10 Sep 2024 10:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963468; cv=none; b=ZA2kKxXOlkYhqCjUORI8wM3pAJFArEyiWO29m2Y/oDB3z9dDaZWovnuPW0VJyM+Fo/JNNBVZ6ZUqRUywSM7Sr1AQwkgekgvo4mzuIW7QzY5pqDXHWMoCbMI5RVniJn75t9Zjse3+L9l9jLRtRtEoj4/FZzy/C7lfmGwez4uHofU=
+	t=1725963470; cv=none; b=oxDvEDLP0qTtw8Pmev7/8kATh2895Mpmz1gXidxLSfytw+WcFS7Y6JkHNqBQkLsPEVvo57omlur6Nos4vFTiX0vEMcY2mtB2n9HWOwiglVKdOQPn9t976eYAqYzEhKwQB6pFRuqPz0rBk2iRtESCSLYrpYv8GC2AVaxbjqH1NOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963468; c=relaxed/simple;
-	bh=T3egVNj0GnVN3z4hze2XhPcDi1jsZYhPUGpYEdHRzyk=;
+	s=arc-20240116; t=1725963470; c=relaxed/simple;
+	bh=BvDG3R4clfk2OqnTEcqsPdgtRpRs6mEMZMrnMUNIFas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyM3jLeDkdFsZW+8b9yP05zRBmDl7HCw5KZ4m3jRRus7Le0IzlSJXjoR5DoMvF0pplr5C8F01J92bjgALktc5eawmYPPTBVjAhVat0gFo2zE656P+AKvQbkGy7GEaG1kN/5c58dtf2jfyPxplMY9x73bhE9ZnOXji8MW/hSOobo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNeQa0nh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qG2UiUOH0FP16WjImUSVkhyHfSjf/SWqiIlgSscQek8cbNfHibrazBRyL/yOEsbktLMGfDX29XYYu3klGEuiqEP94E4Z/WKmUH3sAV1IJAJ/5poWKo1alK3U5jyLmUd92fLU09nFDvCeXZEfyZidsvReVVL9ZLYBS3mW8iTe4OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4WHgReh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNeQa0nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B668C4CEC3;
-	Tue, 10 Sep 2024 10:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4WHgReh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7A3C4CEC3;
+	Tue, 10 Sep 2024 10:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963467;
-	bh=T3egVNj0GnVN3z4hze2XhPcDi1jsZYhPUGpYEdHRzyk=;
+	s=korg; t=1725963470;
+	bh=BvDG3R4clfk2OqnTEcqsPdgtRpRs6mEMZMrnMUNIFas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNeQa0nhp9/4f6hVUWZeDZxZNal3NfwD7VTsucZgtpR9yKmnVmfYwKOmrv1XgGUOU
-	 JpXhiSku/U176Tw9viIVXcIfsZYXPAi1rlU55jZjOm2yMseBFRUH3JtjJKQJGgPdS7
-	 OxwKb3TU27JjyXOlhPLGiE0UcqN9AKGxj8iG5Ea8=
+	b=f4WHgRehLiDkbobc+aWZFOvxDGPXHOqmEcpddNKzIQMpj8LPEtLKSh3csJDu375ZQ
+	 h7+QbPjqg3I/gMUnyQ2fM1k8ZdXz5rgW9qBzG8+XeyofhJF7GCriMbnX+GTJsSmZWx
+	 1J9gk8Z+vmzgiArp9VoptZwvSHNXwjhLlUJeNMcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilien Perreault <maximilienperreault@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 068/214] ALSA: hda/realtek: Support mute LED on HP Laptop 14-dq2xxx
-Date: Tue, 10 Sep 2024 11:31:30 +0200
-Message-ID: <20240910092601.527250762@linuxfoundation.org>
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 5.15 069/214] ata: libata: Fix memory leak for error path in ata_host_alloc()
+Date: Tue, 10 Sep 2024 11:31:31 +0200
+Message-ID: <20240910092601.566959555@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -50,30 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilien Perreault <maximilienperreault@gmail.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-commit 47a9e8dbb8d4713a9aac7cc6ce3c82dcc94217d8 upstream.
+commit 284b75a3d83c7631586d98f6dede1d90f128f0db upstream.
 
-The mute LED on this HP laptop uses ALC236 and requires a quirk to function. This patch enables the existing quirk for the device.
+In ata_host_alloc(), if devres_alloc() fails to allocate the device host
+resource data pointer, the already allocated ata_host structure is not
+freed before returning from the function. This results in a potential
+memory leak.
 
-Signed-off-by: Maximilien Perreault <maximilienperreault@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240904031013.21220-1-maximilienperreault@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Call kfree(host) before jumping to the error handling path to ensure
+that the ata_host structure is properly freed if devres_alloc() fails.
+
+Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/libata-core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9177,6 +9177,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x87f5, "HP", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87f6, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
- 	SND_PCI_QUIRK(0x103c, 0x87f7, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
-+	SND_PCI_QUIRK(0x103c, 0x87fd, "HP Laptop 14-dq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87fe, "HP Laptop 15s-fq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8805, "HP ProBook 650 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x880d, "HP EliteBook 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5454,8 +5454,10 @@ struct ata_host *ata_host_alloc(struct d
+ 	}
+ 
+ 	dr = devres_alloc(ata_devres_release, 0, GFP_KERNEL);
+-	if (!dr)
++	if (!dr) {
++		kfree(host);
+ 		goto err_out;
++	}
+ 
+ 	devres_add(dev, dr);
+ 	dev_set_drvdata(dev, host);
 
 
