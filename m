@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132DB19048A;
-	Tue, 10 Sep 2024 10:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0270819005D;
+	Tue, 10 Sep 2024 10:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964981; cv=none; b=bgb6cVW1o0EmQHX+XTI23Wrd5g/GrGzBCPaKbq5ofCSY7bVyorTAW2Zx8j7eMDarSs9B7Lf/87LE2V4sgQIAGI2MYh96g9/wf4DGgvUXspX6Y/MBXyKd3bWjj7zEqA2oM/rm94AaE9qby/tHlvMG3xiEKy9mH58149O8nCMrtVM=
+	t=1725964984; cv=none; b=hRAT31Qp7UztUCaEH8cmqJhnJUG+wCtxibKdo1M9HigDi3bsJ021gCNt9yurCIc0rnQpI/6HI+RYGP1BJAQB70WmMT+JC/LU5L3EtIwJQ+kL5b2fedhsOiI5Um0LKtys61CyemLWt2koO9W6gAvZf0/kESrJ/a4Idfn5Som0pn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964981; c=relaxed/simple;
-	bh=oHD67WEKSO/Vdr6Vcie1cgckRui2S5L0t9BEcUZ+Lm4=;
+	s=arc-20240116; t=1725964984; c=relaxed/simple;
+	bh=BrZ7peaJmggHbeFVM22cvuM4SETB+dwu9/PGTBp5yF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEynHq0KQXoQ0hFNcm/h64ttgHBfiYoUgQg0BVv87kw8XIW9ef5EVpYbTN0XnI7SRTaDueoK2Tc2i/8q73eeNOVcxXXVWAEvAA+XTFkXIvNVbR/mqCMbPv5TVGAI/60r0nOt8BZLSEgsz+siJfus86lptUYfenZFB9rcOzIHxRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVRJdUOA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jg0dCrpRWSHnL3ygOudxNy/95ixfGZIT7XF0a3gdDt+T4QRewDcTz4zBSoyRIu7glSVHa/EmwWM9PyQl2QXxLmOHP8cyKK9GwcjTkJRWcq6oTdFCp6rFZfJuYJPTal4yCmTyoxOzmmsB5w+ZCWXRTJz4kar5vZK0Ax9yTXUMDQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVXiCjdX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVRJdUOA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F92FC4CEC3;
-	Tue, 10 Sep 2024 10:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVXiCjdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759BCC4CEC3;
+	Tue, 10 Sep 2024 10:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964980;
-	bh=oHD67WEKSO/Vdr6Vcie1cgckRui2S5L0t9BEcUZ+Lm4=;
+	s=korg; t=1725964983;
+	bh=BrZ7peaJmggHbeFVM22cvuM4SETB+dwu9/PGTBp5yF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVRJdUOAG1bMou7t0KkmFm5RnWrI/jnR8Mzox42dB8xtxGo6slygTkhD6YAn3m5Vp
-	 CgxX8P3hK3vJYS6j6UwqyNebjCCqwdNuXDcEqzVZsi3hi9HRL50mvNPP6VnOu9aqVG
-	 PQKBPNQ510U8uLs3GLjT8ews7frSJXJgcZi0xUVU=
+	b=TVXiCjdX+Mbhjsk8pOJzpExxD5xcaCUyrvqI3AceQ8heeJQxsZX6pd584EyA9aw5R
+	 0+yAkUk9cMQmjl1XyUD60c+WyFd7m3Ej+tZBJV6j2YR2gDSMCGKIeqXPbUWcyroWvi
+	 USg7PFvG4qmRGc0UQMTps1UAc7zqXuNTk+BbcYgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 5.10 060/186] irqchip/gic-v2m: Fix refcount leak in gicv2m_of_init()
-Date: Tue, 10 Sep 2024 11:32:35 +0200
-Message-ID: <20240910092556.958159150@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 090/186] sunrpc: remove ->pg_stats from svc_program
+Date: Tue, 10 Sep 2024 11:33:05 +0200
+Message-ID: <20240910092558.210357992@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,44 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit c5af2c90ba5629f0424a8d315f75fb8d91713c3c upstream.
+[ Upstream commit 3f6ef182f144dcc9a4d942f97b6a8ed969f13c95 ]
 
-gicv2m_of_init() fails to perform an of_node_put() when
-of_address_to_resource() fails, leading to a refcount leak.
+Now that this isn't used anywhere, remove it.
 
-Address this by moving the error handling path outside of the loop and
-making it common to all failure modes.
-
-Fixes: 4266ab1a8ff5 ("irqchip/gic-v2m: Refactor to prepare for ACPI support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240820092843.1219933-1-make24@iscas.ac.cn
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+[ cel: adjusted to apply to v5.10.y ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v2m.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/nfsd/nfssvc.c           |    1 -
+ include/linux/sunrpc/svc.h |    1 -
+ 2 files changed, 2 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -442,12 +442,12 @@ static int __init gicv2m_of_init(struct
- 
- 		ret = gicv2m_init_one(&child->fwnode, spi_start, nr_spis,
- 				      &res, 0);
--		if (ret) {
--			of_node_put(child);
-+		if (ret)
- 			break;
--		}
- 	}
- 
-+	if (ret && child)
-+		of_node_put(child);
- 	if (!ret)
- 		ret = gicv2m_allocate_domains(parent);
- 	if (ret)
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -136,7 +136,6 @@ struct svc_program		nfsd_program = {
+ 	.pg_vers		= nfsd_version,		/* version table */
+ 	.pg_name		= "nfsd",		/* program name */
+ 	.pg_class		= "nfsd",		/* authentication class */
+-	.pg_stats		= &nfsd_svcstats,	/* version table */
+ 	.pg_authenticate	= &svc_set_client,	/* export authentication */
+ 	.pg_init_request	= nfsd_init_request,
+ 	.pg_rpcbind_set		= nfsd_rpcbind_set,
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -410,7 +410,6 @@ struct svc_program {
+ 	const struct svc_version **pg_vers;	/* version array */
+ 	char *			pg_name;	/* service name */
+ 	char *			pg_class;	/* class name: services sharing authentication */
+-	struct svc_stat *	pg_stats;	/* rpc statistics */
+ 	int			(*pg_authenticate)(struct svc_rqst *);
+ 	__be32			(*pg_init_request)(struct svc_rqst *,
+ 						   const struct svc_program *,
 
 
