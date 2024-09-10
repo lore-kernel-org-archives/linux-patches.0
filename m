@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8239C19148D;
-	Tue, 10 Sep 2024 10:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819365381A;
+	Tue, 10 Sep 2024 10:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965004; cv=none; b=ASXa+aMLpo1duD1CWd/6bTh5Fo4wtDDNmiS+krxqfcRNz66v1ddlTMlHuJRYdajyRDJF+laN2hEwF/DsUizg95fYLJ9On3jxiimfko4jJDt2jMexak+tPrUuBRxMcyzredAzcNYYQ3WvuUk1MuSjAkjHBVZMAsCchM23X2yfeS0=
+	t=1725965007; cv=none; b=WLzhHG5SoWzB0rNmL/z6YjcxWD81jjt/6fxwcZ9hODwrX4s2OFXz+VlPsFC55f8Mdr3TrI7BukDtCgPk6E+Ra+ftJERzbZTd/HqIgg+vDyTvOxSY3BMrO2KwOtaNc6YxPNlAyPDAN4EZFxU/zN9raiD3y57WJnNiP45gFsAb4Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965004; c=relaxed/simple;
-	bh=IsCdSFpDrhkXwqpXSXTL543kMcYwxA2JixTM7BZIN00=;
+	s=arc-20240116; t=1725965007; c=relaxed/simple;
+	bh=y6h8+IChJyJ3X2G3+kKHDpCj+nPwh+2zzqi+vl1i+5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQkVa9KhgR90hodOQY/RRvt60msyHvWbGOPWaR7FNx7AjgflDTQsN+wdOGyIpisSwBAXN7GfFAZK2OcSO66y8Hf4OdDQjOuflYIlcjVFNVupOyqFfZ417QjyKuJQACzwQ4yaQ+yFIIp/f16qmvZZdTSvBBQkJTh9tfEiOhvNZl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JF3KYPL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNoTW6P8pyJYCmUmMO79h6z++Tn1MTrylDpT4iqHqHyiSHkNodCdinodguNW0ihHEBc1plPQmf1YgaY6qRjW9lrebmE/s5UOY17HkpzgqTmOzV8K/6f7/Cd22wU2dfaU0y0SpFV1BVqr1ry5t9OYv1O2UF/ATL6E4e088Jv1mr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGIKd+cA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JF3KYPL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093AAC4CEC3;
-	Tue, 10 Sep 2024 10:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGIKd+cA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CDAC4CEC3;
+	Tue, 10 Sep 2024 10:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965004;
-	bh=IsCdSFpDrhkXwqpXSXTL543kMcYwxA2JixTM7BZIN00=;
+	s=korg; t=1725965007;
+	bh=y6h8+IChJyJ3X2G3+kKHDpCj+nPwh+2zzqi+vl1i+5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JF3KYPL3Hdhq7MSra0mrKq1otLlhbrtYkhm0z1LHMuEcVmGt2bVXaJj0MXPDwyG5L
-	 5cqLO3JggzybMK6OhKuUfQeaRVwQ1VnIqCcJGFr8DSokINeC16iAHKOOihrqgQL6lS
-	 iX1NCE0ULG0YzTAej7/A3XZZpJ/9j9IqvCu7f69Y=
+	b=bGIKd+cA1p/EbLSngCT2GGujxrFMUe/b8QtR12glEcFFA5cY6SvFV7PVDFVMa6n7c
+	 jg3pChfoNyGiw7Mws/zw+pUGz9EAc5On7wN1WW6uZ/7zIiXrE2XA6udX1GywJ1GOKx
+	 aOyPvaVsG5+7Er2srWFIvPha9b/JxzZCSPS00jRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Reijer Boekhoff <reijerboekhoff@protonmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/186] leds: spi-byte: Call of_node_put() on error path
-Date: Tue, 10 Sep 2024 11:33:20 +0200
-Message-ID: <20240910092558.864611843@linuxfoundation.org>
+Subject: [PATCH 5.10 106/186] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+Date: Tue, 10 Sep 2024 11:33:21 +0200
+Message-ID: <20240910092558.899835788@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,59 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit 7f9ab862e05c5bc755f65bf6db7edcffb3b49dfc ]
+[ Upstream commit dbb5265a5d7cca1cdba7736dba313ab7d07bc19d ]
 
-Add a missing call to of_node_put(np) on error.
+After being asked about support for WPA3 for BCM43224 chipset it
+was found that all it takes is setting the MFP_CAPABLE flag and
+mac80211 will take care of all that is needed [1].
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240606173037.3091598-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/ [1]
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240617122609.349582-1-arend.vanspriel@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-spi-byte.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/leds/leds-spi-byte.c b/drivers/leds/leds-spi-byte.c
-index f1964c96fb15..82696e0607a5 100644
---- a/drivers/leds/leds-spi-byte.c
-+++ b/drivers/leds/leds-spi-byte.c
-@@ -91,7 +91,6 @@ static int spi_byte_probe(struct spi_device *spi)
- 		dev_err(dev, "Device must have exactly one LED sub-node.");
- 		return -EINVAL;
- 	}
--	child = of_get_next_available_child(dev_of_node(dev), NULL);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index fb76b4a69a05..ad3893d45058 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -1089,6 +1089,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
+ 	ieee80211_hw_set(hw, AMPDU_AGGREGATION);
+ 	ieee80211_hw_set(hw, SIGNAL_DBM);
+ 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
++	ieee80211_hw_set(hw, MFP_CAPABLE);
  
- 	led = devm_kzalloc(dev, sizeof(*led), GFP_KERNEL);
- 	if (!led)
-@@ -107,11 +106,13 @@ static int spi_byte_probe(struct spi_device *spi)
- 	led->ldev.max_brightness = led->cdef->max_value - led->cdef->off_value;
- 	led->ldev.brightness_set_blocking = spi_byte_brightness_set_blocking;
- 
-+	child = of_get_next_available_child(dev_of_node(dev), NULL);
- 	state = of_get_property(child, "default-state", NULL);
- 	if (state) {
- 		if (!strcmp(state, "on")) {
- 			led->ldev.brightness = led->ldev.max_brightness;
- 		} else if (strcmp(state, "off")) {
-+			of_node_put(child);
- 			/* all other cases except "off" */
- 			dev_err(dev, "default-state can only be 'on' or 'off'");
- 			return -EINVAL;
-@@ -122,9 +123,12 @@ static int spi_byte_probe(struct spi_device *spi)
- 
- 	ret = devm_led_classdev_register(&spi->dev, &led->ldev);
- 	if (ret) {
-+		of_node_put(child);
- 		mutex_destroy(&led->mutex);
- 		return ret;
- 	}
-+
-+	of_node_put(child);
- 	spi_set_drvdata(spi, led);
- 
- 	return 0;
+ 	hw->extra_tx_headroom = brcms_c_get_header_len();
+ 	hw->queues = N_TX_QUEUES;
 -- 
 2.43.0
 
