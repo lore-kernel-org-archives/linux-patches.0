@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811C1190068;
-	Tue, 10 Sep 2024 10:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E60A18FC9F;
+	Tue, 10 Sep 2024 10:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965084; cv=none; b=svr+yF26RFnZn4jSqu8DQYczOu8ZguS+17TFjiMKrBNIPaEQq3UmTiaMmVAhAiP1RvSFQq9skfixbKH6yzGxq4SSDRUZec1dCLIpMFs+dqJyYhtdxKY5axjY6/cWgjdkHJkCqIa3VL1CqHflWXPhdEoDg8Xi35XTDpmFxGadrkc=
+	t=1725965087; cv=none; b=lPQjzEo0tjqNm+/03VSKPLVGCn66/xDlJ1jJJjAWA/chlChAl2FbPQuCffubmHYLlP7ucK6jlLW238mvXIL+k/eEqu/5WB5uWgQ1tvRaPMMGZeYVxc/8hTygrBfViryxgbQYcuXcHJOaR+/1fLgHs8ruh6C9XMWMjSpoUMPINao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965084; c=relaxed/simple;
-	bh=AtjDi/hY+bhjNNPnfyZowrO4XzVA2F66BdMSIWlDbfA=;
+	s=arc-20240116; t=1725965087; c=relaxed/simple;
+	bh=IBBnYYlfsny63xncUVgp1fJnKZeSvUQYxU32GyKrlgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSmj9nxQUGhS/JUZuf3E4EMQtEmFAtQiIcDDwnunWFLT2t/K7LEERDyqabL5VugbxDUqTeJG5WC3koi/Ey5wxnM7m7tf5/EckdfUb2G4kGtTSXnfMG2kGjWQvPqY+v//XK1NvVWTQjBY/SoquBjqAUvich1TW9Z5a/BJbud3sO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnAMfp26; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juROkmt/tCpaiA6orJchicYKMBH2TaCOanu/2Hf4UxfSkXdn1EYAYYuMYHrvgTfh2QkOcG8/piMJWPlR5OmLZ44djaKoYFBHgfxhI7glNtcbSNGnkEcmC0zNSV7wJqhHaKlKO6b4Thz8q/D5OP/o2zbCSkwbf3s7xSWLomgY9hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKGyUEmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnAMfp26"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08841C4CEC3;
-	Tue, 10 Sep 2024 10:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKGyUEmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24E3C4CEC3;
+	Tue, 10 Sep 2024 10:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965084;
-	bh=AtjDi/hY+bhjNNPnfyZowrO4XzVA2F66BdMSIWlDbfA=;
+	s=korg; t=1725965087;
+	bh=IBBnYYlfsny63xncUVgp1fJnKZeSvUQYxU32GyKrlgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mnAMfp26zFA6wlYbvcZvw+URWu631ZThEC4RgXfplbJbQ4qtpFpL9u9jcNBmWkS9H
-	 v1WiuvRh0J/h1Sz1bvb3jDjWy8Nd4uIO6eGxeHu4nP8V4LmofXAswk0rlxDzRyin9r
-	 KMtftvXFTo5QrySYrwJ1zRP9zDQ2qW35KXZBqEv4=
+	b=aKGyUEmPcI/29z3JHC17ci+b60dajExFPQBZNnAuK2AjfyFQKSD5mtaVBTHSAxYWE
+	 qluY4jj1LDDDc7QsTpRir31+IRblGKQq9Z5ynuLMcK4srZe5n9hmFVO1250vXE7H7x
+	 A2PCZiJnCFLagFe7gD4zWtz4UCBc1snb2MMofs2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/186] um: line: always fill *error_out in setup_one_line()
-Date: Tue, 10 Sep 2024 11:33:47 +0200
-Message-ID: <20240910092600.023327682@linuxfoundation.org>
+Subject: [PATCH 5.10 133/186] devres: Initialize an uninitialized struct member
+Date: Tue, 10 Sep 2024 11:33:48 +0200
+Message-ID: <20240910092600.065240991@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,42 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 824ac4a5edd3f7494ab1996826c4f47f8ef0f63d ]
+[ Upstream commit 56a20ad349b5c51909cf8810f7c79b288864ad33 ]
 
-The pointer isn't initialized by callers, but I have
-encountered cases where it's still printed; initialize
-it in all possible cases in setup_one_line().
+Initialize an uninitialized struct member for driver API
+devres_open_group().
 
-Link: https://patch.msgid.link/20240703172235.ad863568b55f.Iaa1eba4db8265d7715ba71d5f6bb8c7ff63d27e9@changeid
-Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/1719931914-19035-4-git-send-email-quic_zijuhu@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/line.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/devres.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/um/drivers/line.c b/arch/um/drivers/line.c
-index 37e96ba0f5fb..d2beb4a497a2 100644
---- a/arch/um/drivers/line.c
-+++ b/arch/um/drivers/line.c
-@@ -378,6 +378,7 @@ int setup_one_line(struct line *lines, int n, char *init,
- 			parse_chan_pair(NULL, line, n, opts, error_out);
- 			err = 0;
- 		}
-+		*error_out = "configured as 'none'";
- 	} else {
- 		char *new = kstrdup(init, GFP_KERNEL);
- 		if (!new) {
-@@ -401,6 +402,7 @@ int setup_one_line(struct line *lines, int n, char *init,
- 			}
- 		}
- 		if (err) {
-+			*error_out = "failed to parse channel pair";
- 			line->init_str = NULL;
- 			line->valid = 0;
- 			kfree(new);
+diff --git a/drivers/base/devres.c b/drivers/base/devres.c
+index 8a74008c13c4..e3a735d0213a 100644
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -577,6 +577,7 @@ void * devres_open_group(struct device *dev, void *id, gfp_t gfp)
+ 	grp->id = grp;
+ 	if (id)
+ 		grp->id = id;
++	grp->color = 0;
+ 
+ 	spin_lock_irqsave(&dev->devres_lock, flags);
+ 	add_dr(dev, &grp->node[0]);
 -- 
 2.43.0
 
