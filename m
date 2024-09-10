@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014BE46444;
-	Tue, 10 Sep 2024 10:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB91B1922FC;
+	Tue, 10 Sep 2024 10:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963547; cv=none; b=kk/fdLY67FWODwW0M3oaHHmewB0/hi53+q4WCk1btwMUrGYG1owz8KKeo+hVWW5AbGhkslkFXyyE5j6UKlBe1/RCjE0BicwjAjl3GFDq5EkB8xVkkrl1BpAEzEN8Toe9gTAqEeswkU7Ix0mksQzLwcAvpwO1VtcJJnl1gunD5gw=
+	t=1725963549; cv=none; b=mBcghlPi6hzgkE+x2Le0gG86tlHkmsyA6OFeKnpPRGlZYbvzYM/OhfvZD7eSH8k8vOdseWPcjAc5B/c6LKI7TIyEESEmxc3WAkPyv9R3SusIlsOJ5j2QP7yGE1z4btrKTbV2NnccivXw7MkmrIiDcgwnxGVUxUnb28KpbcxHUDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963547; c=relaxed/simple;
-	bh=Tk/NIlc93CodWEDjMPEPLJTDBHCzhVEdcgcB5uxU4C0=;
+	s=arc-20240116; t=1725963549; c=relaxed/simple;
+	bh=+yIkudfKEIkmZaqSuJ0oYNNetEeLG8l0ivhMzjv2h8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZW0C2hlPP3iJnvMmX4yG1qkmeC7mmA48I9ahWf2w9F5ezvEEOntMlzGQrF5qBn4iU9MUBaADWJPJ0jlLTiHwEhvz3AwZ84RSgeEneSXlPNTEr+BhdT50El5YVfFqS7nc4xObMApMXMKR+6fZdf5+ZZlnS/qw9x/3ebKyffxNYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwAHZpH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iaYtSEVywy0cEuGSvxTBWFnZlyHZSHbjpxjPVkbscXGInoaWAQG4i4ejYzGfAanI8KrHF/xe2GIQ7MKZ95sa7RQUS98Bjo/4GrsIM5ytHksRPXAXwJNX6Wkg2adFUtCo1JfOp7hM25m6qaiqyt/q2WkaiTQwRbncsobBgp8wf9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCAH2MXo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwAHZpH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2C7C4CEC3;
-	Tue, 10 Sep 2024 10:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCAH2MXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E76C4CEC3;
+	Tue, 10 Sep 2024 10:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963546;
-	bh=Tk/NIlc93CodWEDjMPEPLJTDBHCzhVEdcgcB5uxU4C0=;
+	s=korg; t=1725963549;
+	bh=+yIkudfKEIkmZaqSuJ0oYNNetEeLG8l0ivhMzjv2h8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwAHZpH45HNiwmBGfchPcTdF4VEysgxltyGRVQYncRwLNQr9nMc+VgYofi6F4yaIi
-	 xEwzsSQQmPmtXCOIcLYS8GctRTdUthRwhYElou0CfLDNfvftLX8Fzf8UwLlYqV4nzS
-	 JQpuNNrUL0nvC7EGppoFPh37b6Rk0j8Abret7yoc=
+	b=fCAH2MXogdYcYC48pUygUnptqEm7rZstcOM8SJXc+LwbKgus+UcloR6q4lRUKhTZm
+	 IbZLeDHAnP+9PPrzxSgQgUeTa+tcyvbHncV+y7YDIsfnNlqUpCbTlCB3CXL+S77YDn
+	 sLx4SA6o80MJEV2CMiJaK+/VMNL251GtK+QP/ik0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 095/214] mptcp: pm: avoid possible UaF when selecting endp
-Date: Tue, 10 Sep 2024 11:31:57 +0200
-Message-ID: <20240910092602.661407615@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 096/214] mptcp: avoid duplicated SUB_CLOSED events
+Date: Tue, 10 Sep 2024 11:31:58 +0200
+Message-ID: <20240910092602.711737064@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -54,151 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 48e50dcbcbaaf713d82bf2da5c16aeced94ad07d upstream.
+commit d82809b6c5f2676b382f77a5cbeb1a5d91ed2235 upstream.
 
-select_local_address() and select_signal_address() both select an
-endpoint entry from the list inside an RCU protected section, but return
-a reference to it, to be read later on. If the entry is dereferenced
-after the RCU unlock, reading info could cause a Use-after-Free.
+The initial subflow might have already been closed, but still in the
+connection list. When the worker is instructed to close the subflows
+that have been marked as closed, it might then try to close the initial
+subflow again.
 
-A simple solution is to copy the required info while inside the RCU
-protected section to avoid any risk of UaF later. The address ID might
-need to be modified later to handle the ID0 case later, so a copy seems
-OK to deal with.
+ A consequence of that is that the SUB_CLOSED event can be seen twice:
 
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Closes: https://lore.kernel.org/45cd30d3-7710-491c-ae4d-a1368c00beb1@redhat.com
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+  # ip mptcp endpoint
+  1.1.1.1 id 1 subflow dev eth0
+  2.2.2.2 id 2 subflow dev eth1
+
+  # ip mptcp monitor &
+  [         CREATED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+  [     ESTABLISHED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+  [  SF_ESTABLISHED] remid=0 locid=2 saddr4=2.2.2.2 daddr4=9.9.9.9
+
+  # ip mptcp endpoint delete id 1
+  [       SF_CLOSED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+  [       SF_CLOSED] remid=0 locid=0 saddr4=1.1.1.1 daddr4=9.9.9.9
+
+The first one is coming from mptcp_pm_nl_rm_subflow_received(), and the
+second one from __mptcp_close_subflow().
+
+To avoid doing the post-closed processing twice, the subflow is now
+marked as closed the first time.
+
+Note that it is not enough to check if we are dealing with the first
+subflow and check its sk_state: the subflow might have been reset or
+closed before calling mptcp_close_ssk().
+
+Fixes: b911c97c7dc7 ("mptcp: add netlink event support")
 Cc: stable@vger.kernel.org
+Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240819-net-mptcp-pm-reusing-id-v1-14-38035d40de5b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in pm_netlink.c, because quite a bit of new code has been
-  added around since commit 86e39e04482b ("mptcp: keep track of local
-  endpoint still available for each msk"). But the issue is still there.
-  The conflicts have been resolved using the same way: by adding a new
-  parameter to select_local_address() and select_signal_address(), and
-  use it instead of the pointer they were previously returning. The code
-  is simpler in this version, this conflict resolution looks safe. ]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Conflict in protocol.h due to commit f1f26512a9bf ("mptcp: use plain
+  bool instead of custom binary enum"), commit dfc8d0603033 ("mptcp:
+  implement delayed seq generation for passive fastopen") and more that
+  are not in this version, because they modify the context and the size
+  of __unused. The conflict is easy to resolve, by not only adding the
+  new field (close_event_done), and __unused. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   47 ++++++++++++++++++++++++++---------------------
- 1 file changed, 26 insertions(+), 21 deletions(-)
+ net/mptcp/protocol.c |    6 ++++++
+ net/mptcp/protocol.h |    4 +++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -158,12 +158,14 @@ static bool lookup_subflow_by_daddr(cons
- 	return false;
- }
- 
--static struct mptcp_pm_addr_entry *
-+static bool
- select_local_address(const struct pm_nl_pernet *pernet,
--		     struct mptcp_sock *msk)
-+		     struct mptcp_sock *msk,
-+		     struct mptcp_pm_addr_entry *new_entry)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2337,6 +2337,12 @@ static void __mptcp_close_ssk(struct soc
+ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		     struct mptcp_subflow_context *subflow)
  {
- 	const struct sock *sk = (const struct sock *)msk;
--	struct mptcp_pm_addr_entry *entry, *ret = NULL;
-+	struct mptcp_pm_addr_entry *entry;
-+	bool found = false;
- 
- 	msk_owned_by_me(msk);
- 
-@@ -187,18 +189,22 @@ select_local_address(const struct pm_nl_
- 		 * pending join
- 		 */
- 		if (!lookup_subflow_by_saddr(&msk->conn_list, &entry->addr)) {
--			ret = entry;
-+			*new_entry = *entry;
-+			found = true;
- 			break;
- 		}
- 	}
- 	rcu_read_unlock();
--	return ret;
++	/* The first subflow can already be closed and still in the list */
++	if (subflow->close_event_done)
++		return;
 +
-+	return found;
- }
- 
--static struct mptcp_pm_addr_entry *
--select_signal_address(struct pm_nl_pernet *pernet, unsigned int pos)
-+static bool
-+select_signal_address(struct pm_nl_pernet *pernet, unsigned int pos,
-+		      struct mptcp_pm_addr_entry *new_entry)
- {
--	struct mptcp_pm_addr_entry *entry, *ret = NULL;
-+	struct mptcp_pm_addr_entry *entry;
-+	bool found = false;
- 	int i = 0;
- 
- 	rcu_read_lock();
-@@ -211,12 +217,14 @@ select_signal_address(struct pm_nl_perne
- 		if (!(entry->flags & MPTCP_PM_ADDR_FLAG_SIGNAL))
- 			continue;
- 		if (i++ == pos) {
--			ret = entry;
-+			*new_entry = *entry;
-+			found = true;
- 			break;
- 		}
- 	}
- 	rcu_read_unlock();
--	return ret;
++	subflow->close_event_done = true;
 +
-+	return found;
- }
- 
- unsigned int mptcp_pm_get_add_addr_signal_max(const struct mptcp_sock *msk)
-@@ -474,7 +482,7 @@ __lookup_addr(struct pm_nl_pernet *perne
- static void mptcp_pm_create_subflow_or_signal_addr(struct mptcp_sock *msk)
- {
- 	struct sock *sk = (struct sock *)msk;
--	struct mptcp_pm_addr_entry *local;
-+	struct mptcp_pm_addr_entry local;
- 	unsigned int add_addr_signal_max;
- 	unsigned int local_addr_max;
- 	struct pm_nl_pernet *pernet;
-@@ -493,13 +501,11 @@ static void mptcp_pm_create_subflow_or_s
- 
- 	/* check first for announce */
- 	if (msk->pm.add_addr_signaled < add_addr_signal_max) {
--		local = select_signal_address(pernet,
--					      msk->pm.add_addr_signaled);
--
--		if (local) {
--			if (mptcp_pm_alloc_anno_list(msk, local)) {
-+		if (select_signal_address(pernet, msk->pm.add_addr_signaled,
-+					  &local)) {
-+			if (mptcp_pm_alloc_anno_list(msk, &local)) {
- 				msk->pm.add_addr_signaled++;
--				mptcp_pm_announce_addr(msk, &local->addr, false);
-+				mptcp_pm_announce_addr(msk, &local.addr, false);
- 				mptcp_pm_nl_addr_send_ack(msk);
- 			}
- 		} else {
-@@ -514,9 +520,8 @@ static void mptcp_pm_create_subflow_or_s
- 	if (msk->pm.local_addr_used < local_addr_max &&
- 	    msk->pm.subflows < subflows_max &&
- 	    !READ_ONCE(msk->pm.remote_deny_join_id0)) {
--		local = select_local_address(pernet, msk);
--		if (local) {
--			bool fullmesh = !!(local->flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
-+		if (select_local_address(pernet, msk, &local)) {
-+			bool fullmesh = !!(local.flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
- 			struct mptcp_addr_info addrs[MPTCP_PM_ADDR_MAX];
- 			int i, nr;
- 
-@@ -525,7 +530,7 @@ static void mptcp_pm_create_subflow_or_s
- 			nr = fill_remote_addresses_vec(msk, fullmesh, addrs);
- 			spin_unlock_bh(&msk->pm.lock);
- 			for (i = 0; i < nr; i++)
--				__mptcp_subflow_connect(sk, &local->addr, &addrs[i]);
-+				__mptcp_subflow_connect(sk, &local.addr, &addrs[i]);
- 			spin_lock_bh(&msk->pm.lock);
- 			return;
- 		}
+ 	if (sk->sk_state == TCP_ESTABLISHED)
+ 		mptcp_event(MPTCP_EVENT_SUB_CLOSED, mptcp_sk(sk), ssk, GFP_KERNEL);
+ 	__mptcp_close_ssk(sk, ssk, subflow);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -441,7 +441,9 @@ struct mptcp_subflow_context {
+ 		can_ack : 1,        /* only after processing the remote a key */
+ 		disposable : 1,	    /* ctx can be free at ulp release time */
+ 		stale : 1,	    /* unable to snd/rcv data, do not use for xmit */
+-		valid_csum_seen : 1;        /* at least one csum validated */
++		valid_csum_seen : 1,        /* at least one csum validated */
++		close_event_done : 1,       /* has done the post-closed part */
++		__unused : 11;
+ 	enum mptcp_data_avail data_avail;
+ 	u32	remote_nonce;
+ 	u64	thmac;
 
 
