@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9239171671;
-	Tue, 10 Sep 2024 09:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A150F172BAE;
+	Tue, 10 Sep 2024 09:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962119; cv=none; b=i843JSV9qItq4wlaoWcUeR8i3xBHD4i5VBC8w128cVGBsifAiZlXas6LBOwqEYm3Ps7dKAp37H/SjkMAEtPU6xFQrQllDuWlVPc9Spb2pTmh+mBX+wC22ttXXhXXfE+b+2awA0gLCfheN4SahUt5Pa0Mr34j14TXTA3vvbI7Bek=
+	t=1725962122; cv=none; b=S4m0Ks7IFycDzf3D7Knw+ssHkvS33Ai4D1Ka9XpyvkCuAK4VeIV22I3gU8F3rywg9KGim4y82Cpcqr58IO8KCumaba5/DbSOSuJMeZakffgOj+AjKx02HAZrFbQhWK1NEem8rDrB/0ZRs88vry+BW1nPfyDSjiRw4PRcDEbLBEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962119; c=relaxed/simple;
-	bh=HqmrULg8Cz+NyFP8/7yEvuR3uIbp+yQHpGfYEm2x5/c=;
+	s=arc-20240116; t=1725962122; c=relaxed/simple;
+	bh=Ssl1CwVTycDR3E2yoZF52rTEGwIk08f+a/ZYc+HeZm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwhcO9ha/+l0COYRMvt85fCMjD1bToB6koHcUffr8XUplOcv9bbKaX2CZ9il7SaCjN2U9dEFiCIycOtbgXMuQJfkce1jlnVFRJCpg51yBmCUCRoxXhKj2yZc2dsZr6tLB3id87uMbGE5TO0PH9gIvTj/fwTT6yHuaXccvmtl1f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fekjROsv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNraCe8Q8ARU+SQT1CV9mg6Aqid4U34NWipj2BjKL0l1YKiBGGMjVsZpnVDFL5U95zozvdQWhp89CQUDq2m7lF2/MtXBhFiu+X1bSJ5WQFHYuTrqaAnQgdBybBkgrWz9c0VSp/YrjlpMstAifxQa9eyXlpN2XEW0Ukp6im5qfA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfYQI4yN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fekjROsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311DBC4CEC3;
-	Tue, 10 Sep 2024 09:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfYQI4yN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2286AC4CEC3;
+	Tue, 10 Sep 2024 09:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962119;
-	bh=HqmrULg8Cz+NyFP8/7yEvuR3uIbp+yQHpGfYEm2x5/c=;
+	s=korg; t=1725962122;
+	bh=Ssl1CwVTycDR3E2yoZF52rTEGwIk08f+a/ZYc+HeZm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fekjROsv+ECBmrZrj+BjOp3zMn7J6x5QzW93D90p++n2FtwZwIz8TtrO2T+jm+H9p
-	 UXfJ2ThSf5Oy9nK08rOuKS4zThplUej6LwA8SWdz16J/CYBZRP1u0IKZ3sWhPBzjPT
-	 iZWpKDQGf+5ULCpaAFMzWQeiMJzm68HJThNkTopM=
+	b=mfYQI4yNGuWO6I7jyHXcWwMkh32KEhmPJMROv8PFPaTK05OSN4uIoxc7kb6AbFygz
+	 FqXSJViOF1LKHKK4Hos74/cdfhAAd5yMz+bwgBEJ7F5TYR/tU1g+fAcy8hmLxjCRav
+	 TB9AtCY/bwriDC2TAQxEVFcYz7fvc+4IxUiQUOos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.10 301/375] nvmem: Fix return type of devm_nvmem_device_get() in kerneldoc
-Date: Tue, 10 Sep 2024 11:31:38 +0200
-Message-ID: <20240910092632.667872348@linuxfoundation.org>
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>
+Subject: [PATCH 6.10 302/375] uio_hv_generic: Fix kernel NULL pointer dereference in hv_uio_rescind
+Date: Tue, 10 Sep 2024 11:31:39 +0200
+Message-ID: <20240910092632.703483435@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,40 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-commit c69f37f6559a8948d70badd2b179db7714dedd62 upstream.
+commit fb1adbd7e50f3d2de56d0a2bb0700e2e819a329e upstream.
 
-devm_nvmem_device_get() returns an nvmem device, not an nvmem cell.
+For primary VM Bus channels, primary_channel pointer is always NULL. This
+pointer is valid only for the secondary channels. Also, rescind callback
+is meant for primary channels only.
 
-Fixes: e2a5402ec7c6d044 ("nvmem: Add nvmem_device based consumer apis.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240902142510.71096-3-srinivas.kandagatla@linaro.org
+Fix NULL pointer dereference by retrieving the device_obj from the parent
+for the primary channel.
+
+Cc: stable@vger.kernel.org
+Fixes: ca3cda6fcf1e ("uio_hv_generic: add rescind support")
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20240829071312.1595-2-namjain@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/uio/uio_hv_generic.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -1258,13 +1258,13 @@ void nvmem_device_put(struct nvmem_devic
- EXPORT_SYMBOL_GPL(nvmem_device_put);
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -106,10 +106,11 @@ static void hv_uio_channel_cb(void *cont
  
- /**
-- * devm_nvmem_device_get() - Get nvmem cell of device form a given id
-+ * devm_nvmem_device_get() - Get nvmem device of device form a given id
-  *
-  * @dev: Device that requests the nvmem device.
-  * @id: name id for the requested nvmem device.
-  *
-- * Return: ERR_PTR() on error or a valid pointer to a struct nvmem_cell
-- * on success.  The nvmem_cell will be freed by the automatically once the
-+ * Return: ERR_PTR() on error or a valid pointer to a struct nvmem_device
-+ * on success.  The nvmem_device will be freed by the automatically once the
-  * device is freed.
+ /*
+  * Callback from vmbus_event when channel is rescinded.
++ * It is meant for rescind of primary channels only.
   */
- struct nvmem_device *devm_nvmem_device_get(struct device *dev, const char *id)
+ static void hv_uio_rescind(struct vmbus_channel *channel)
+ {
+-	struct hv_device *hv_dev = channel->primary_channel->device_obj;
++	struct hv_device *hv_dev = channel->device_obj;
+ 	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
+ 
+ 	/*
 
 
