@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE4413B2B0;
-	Tue, 10 Sep 2024 09:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4972224F6;
+	Tue, 10 Sep 2024 09:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961552; cv=none; b=ZR5XxtOpwS4l3tMa9GaOTKENpyMohDdFCbx1EVEmsP94RuzhyXST6D+oHZAJ6v3u+LNfhMQ3AU75CmX0t5q3tw4YKu10iuMgEdyj3K3kRpwM5KeirqC5ruq8tlrnHT9ccWKcZZc0Qa2Fe6XzeuLZHl3WEXu/mbI0BrlneADIeUo=
+	t=1725961556; cv=none; b=Pb6o4VCnO+dqV24QVerD5EcB2SW/3AsbxruZdDA/BTtLp1dttKb9nTsM+yldamWmPSqEhaGC+T/phMnT4dTWUL/MohdoFMxwmTTYQAQMn4s0WD5XUfCIEjt5vaCUdGFcrhpIbul/4PveeTqvrBC04lSs0Yv203wJPnbbhc8Chr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961552; c=relaxed/simple;
-	bh=RQf/NvaQ3XYBc11dQ6UGmjzy2WJG6ewrxjahUSTccvk=;
+	s=arc-20240116; t=1725961556; c=relaxed/simple;
+	bh=qzndcszZ5hGO/ntVRxFMxTOmZ6IEkanE03q5nYUYBEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teOlcKzx8uN4Dsvg5tsuvqrqGQ99EqMRB4QfKXq6R/MQ02f+Bt/EBRqStzU17rOR16DIcB2Y5rnXkth4LsEo6wuxHE7Q+V9gL9TDHHxPQpM6LFUI6mxAiK4anW20f9RKfwmvoMNe0aVZad0EC6jx5WXc6EVGuYzNt8ThGVPKre0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqPBHZmi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MB/dumaPO1ozWbqwSdwm5mj3k6yr00jnFrtmmeLdmu62RZm2uoqmsYB6KxSEq/d0XU2ot11wQFKwzqQTSM73vLJNdPio7O7wvJVUOXzLz9KXSfj8EC9XQol0d2Lt2ZlAqvb587rHWyWA1rQgh2lGv3QrRyi/fFcDDHrWMQI1CnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlOx6e9T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqPBHZmi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1081AC4CEC3;
-	Tue, 10 Sep 2024 09:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlOx6e9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477FEC4CEC3;
+	Tue, 10 Sep 2024 09:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961552;
-	bh=RQf/NvaQ3XYBc11dQ6UGmjzy2WJG6ewrxjahUSTccvk=;
+	s=korg; t=1725961555;
+	bh=qzndcszZ5hGO/ntVRxFMxTOmZ6IEkanE03q5nYUYBEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqPBHZmiNqsXtdMMnEDDQateWTKehvT/wnuyFYOYLdpXjadWXe6daVX3AGmyTeZI3
-	 qJXr/zklxHro5vWJ9Vb91GyBy/io/eOVT96zsdPZoCBEpQx6yKEZd6C0ZdX5MMWfSR
-	 7Oi93VU0H2/S84r1Jhn0z+BeTDgjfvy3Xq/mF+54=
+	b=PlOx6e9TB8RlkFwhkG/KuJfg37D5pPrX4C4lkaU4xXiHHNepZp2WgOYiAJmad+Ftl
+	 jS3JWgwiAlUTenDy7hgPk7JLzHUxutzw+Lh7rLSmsma45KVh5mAJU6uBxh8+fS2UVw
+	 fPESpgACa1HYtXkz7VPqdmHx4Sgy0cz34ZPFDK3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 081/375] nilfs2: protect references to superblock parameters exposed in sysfs
-Date: Tue, 10 Sep 2024 11:27:58 +0200
-Message-ID: <20240910092624.949486824@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Mitchell Levy <levymitchell0@gmail.com>
+Subject: [PATCH 6.10 072/375] x86/fpu: Avoid writing LBR bit to IA32_XSS unless supported
+Date: Tue, 10 Sep 2024 11:27:49 +0200
+Message-ID: <20240910092624.638421976@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,104 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Mitchell Levy <levymitchell0@gmail.com>
 
-commit 683408258917541bdb294cd717c210a04381931e upstream.
+commit 2848ff28d180bd63a95da8e5dcbcdd76c1beeb7b upstream.
 
-The superblock buffers of nilfs2 can not only be overwritten at runtime
-for modifications/repairs, but they are also regularly swapped, replaced
-during resizing, and even abandoned when degrading to one side due to
-backing device issues.  So, accessing them requires mutual exclusion using
-the reader/writer semaphore "nilfs->ns_sem".
+There are two distinct CPU features related to the use of XSAVES and LBR:
+whether LBR is itself supported and whether XSAVES supports LBR. The LBR
+subsystem correctly checks both in intel_pmu_arch_lbr_init(), but the
+XSTATE subsystem does not.
 
-Some sysfs attribute show methods read this superblock buffer without the
-necessary mutual exclusion, which can cause problems with pointer
-dereferencing and memory access, so fix it.
+The LBR bit is only removed from xfeatures_mask_independent when LBR is not
+supported by the CPU, but there is no validation of XSTATE support.
 
-Link: https://lkml.kernel.org/r/20240811100320.9913-1-konishi.ryusuke@gmail.com
-Fixes: da7141fb78db ("nilfs2: add /sys/fs/nilfs2/<device> group")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+If XSAVES does not support LBR the write to IA32_XSS causes a #GP fault,
+leaving the state of IA32_XSS unchanged, i.e. zero. The fault is handled
+with a warning and the boot continues.
+
+Consequently the next XRSTORS which tries to restore supervisor state fails
+with #GP because the RFBM has zero for all supervisor features, which does
+not match the XCOMP_BV field.
+
+As XFEATURE_MASK_FPSTATE includes supervisor features setting up the FPU
+causes a #GP, which ends up in fpu_reset_from_exception_fixup(). That fails
+due to the same problem resulting in recursive #GPs until the kernel runs
+out of stack space and double faults.
+
+Prevent this by storing the supported independent features in
+fpu_kernel_cfg during XSTATE initialization and use that cached value for
+retrieving the independent feature bits to be written into IA32_XSS.
+
+[ tglx: Massaged change log ]
+
+Fixes: f0dccc9da4c0 ("x86/fpu/xstate: Support dynamic supervisor feature for LBR")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Mitchell Levy <levymitchell0@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240812-xsave-lbr-fix-v3-1-95bac1bf62f4@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sysfs.c |   43 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/fpu/types.h |    7 +++++++
+ arch/x86/kernel/fpu/xstate.c     |    3 +++
+ arch/x86/kernel/fpu/xstate.h     |    4 ++--
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/sysfs.c
-+++ b/fs/nilfs2/sysfs.c
-@@ -836,9 +836,15 @@ ssize_t nilfs_dev_revision_show(struct n
- 				struct the_nilfs *nilfs,
- 				char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
--	u32 major = le32_to_cpu(sbp[0]->s_rev_level);
--	u16 minor = le16_to_cpu(sbp[0]->s_minor_rev_level);
-+	struct nilfs_super_block *raw_sb;
-+	u32 major;
-+	u16 minor;
-+
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	major = le32_to_cpu(raw_sb->s_rev_level);
-+	minor = le16_to_cpu(raw_sb->s_minor_rev_level);
-+	up_read(&nilfs->ns_sem);
+--- a/arch/x86/include/asm/fpu/types.h
++++ b/arch/x86/include/asm/fpu/types.h
+@@ -591,6 +591,13 @@ struct fpu_state_config {
+ 	 * even without XSAVE support, i.e. legacy features FP + SSE
+ 	 */
+ 	u64 legacy_features;
++	/*
++	 * @independent_features:
++	 *
++	 * Features that are supported by XSAVES, but not managed as part of
++	 * the FPU core, such as LBR
++	 */
++	u64 independent_features;
+ };
  
- 	return sysfs_emit(buf, "%d.%d\n", major, minor);
- }
-@@ -856,8 +862,13 @@ ssize_t nilfs_dev_device_size_show(struc
- 				    struct the_nilfs *nilfs,
- 				    char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
--	u64 dev_size = le64_to_cpu(sbp[0]->s_dev_size);
-+	struct nilfs_super_block *raw_sb;
-+	u64 dev_size;
-+
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	dev_size = le64_to_cpu(raw_sb->s_dev_size);
-+	up_read(&nilfs->ns_sem);
+ /* FPU state configuration information */
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -788,6 +788,9 @@ void __init fpu__init_system_xstate(unsi
+ 		goto out_disable;
+ 	}
  
- 	return sysfs_emit(buf, "%llu\n", dev_size);
- }
-@@ -879,9 +890,15 @@ ssize_t nilfs_dev_uuid_show(struct nilfs
- 			    struct the_nilfs *nilfs,
- 			    char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
-+	struct nilfs_super_block *raw_sb;
-+	ssize_t len;
++	fpu_kernel_cfg.independent_features = fpu_kernel_cfg.max_features &
++					      XFEATURE_MASK_INDEPENDENT;
 +
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	len = sysfs_emit(buf, "%pUb\n", raw_sb->s_uuid);
-+	up_read(&nilfs->ns_sem);
+ 	/*
+ 	 * Clear XSAVE features that are disabled in the normal CPUID.
+ 	 */
+--- a/arch/x86/kernel/fpu/xstate.h
++++ b/arch/x86/kernel/fpu/xstate.h
+@@ -62,9 +62,9 @@ static inline u64 xfeatures_mask_supervi
+ static inline u64 xfeatures_mask_independent(void)
+ {
+ 	if (!cpu_feature_enabled(X86_FEATURE_ARCH_LBR))
+-		return XFEATURE_MASK_INDEPENDENT & ~XFEATURE_MASK_LBR;
++		return fpu_kernel_cfg.independent_features & ~XFEATURE_MASK_LBR;
  
--	return sysfs_emit(buf, "%pUb\n", sbp[0]->s_uuid);
-+	return len;
+-	return XFEATURE_MASK_INDEPENDENT;
++	return fpu_kernel_cfg.independent_features;
  }
  
- static
-@@ -889,10 +906,16 @@ ssize_t nilfs_dev_volume_name_show(struc
- 				    struct the_nilfs *nilfs,
- 				    char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
-+	struct nilfs_super_block *raw_sb;
-+	ssize_t len;
-+
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	len = scnprintf(buf, sizeof(raw_sb->s_volume_name), "%s\n",
-+			raw_sb->s_volume_name);
-+	up_read(&nilfs->ns_sem);
- 
--	return scnprintf(buf, sizeof(sbp[0]->s_volume_name), "%s\n",
--			 sbp[0]->s_volume_name);
-+	return len;
- }
- 
- static const char dev_readme_str[] =
+ /* XSAVE/XRSTOR wrapper functions */
 
 
