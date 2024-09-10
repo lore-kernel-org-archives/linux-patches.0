@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920AB1DA4C;
-	Tue, 10 Sep 2024 10:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DFF18C34B;
+	Tue, 10 Sep 2024 10:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965125; cv=none; b=iCRQ2nE0SP1ojRKUiyIm/k++m49YvMz8rop1Xni/IVDjFEJiru013Hv9EHjZtenkTT5zKZ6GBdKMmMthqbIh4kAujzvJEkyS8zYcDBp3Gn5XRhDFrPY9leK4cSIpIIjLW2IOqWCHvmuv+y4S0XZbYjjJPoAG7WTQEGV+fty3UYQ=
+	t=1725965128; cv=none; b=p+AsLAeCnlx/etgyP3dE7WNrX4HI1zHunVaCd843qTxYO5WvL5hE7lm6xyYa0V1JAvkGqFCSehiH0U+ugIZTXz3/2rQjodungtOF+OS29mkWx17XKJwyGhFBmZza4Jrnkl72PJ1OVMBVLzN7g+/8mkKMmhCW7/dRxxC32qh10Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965125; c=relaxed/simple;
-	bh=XMskYKe1tnMhpIqz8vemvOpzB7jIWP44iHpQB2bBPPQ=;
+	s=arc-20240116; t=1725965128; c=relaxed/simple;
+	bh=CuxxlbMrVXyqIuGfWoX0PN0cbZIp4KME5Qrt7mFz/gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I84kAVgkKafKgkZ8vFU4baTfxj9+dX/SfaKwLmkBh+LBRSUJ+Qpv5VlpPxOqGiKD3PNjL3hsWaRu1qzHmquLNlZxA+A5ccFOFMGjHfXLPQgCkVV1cgv7lyN87fzyp+NjypVSD7xCMp3YnhSqA9gnZzSSBaF8VjG3I70sGGdjLM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuysmPQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mXb62YUuKFw0slmfo08P0d5zSjJjebyiS/oGkM8V7cur6j0OdO94QHuvhzjtYhLIqO7Fv2MYiHsQWRpoUPtb5HGM3jn9Gv5AbwK0foBHCt+2/52+rHpBQXntjwz1QDiDnvIeZ9I+eFm/HNah2bRi+vL83HZ4G/Ir75iE3CVfP3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jejhuVh+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuysmPQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F04C4CEC3;
-	Tue, 10 Sep 2024 10:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jejhuVh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D99CC4CEC3;
+	Tue, 10 Sep 2024 10:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965125;
-	bh=XMskYKe1tnMhpIqz8vemvOpzB7jIWP44iHpQB2bBPPQ=;
+	s=korg; t=1725965128;
+	bh=CuxxlbMrVXyqIuGfWoX0PN0cbZIp4KME5Qrt7mFz/gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuysmPQ+uhwXJsR8oQEc+J+vsdQf/uglI9buAnrAeIagICVMtPSxEor2EvJla8Fb3
-	 OxU99Tk1++bGqreeE74l8DrDoFNq102Rn0HcoUY0+3wBNhgWebUgx9ercnfsYZk2SB
-	 GY1q79aAK+NciIvIIvq2PQduzWrA3zvxcba8T6Cs=
+	b=jejhuVh+ImtLquaCiOFR1qqqbc4HcibEh94diZe9nnUTpM8zvd9tDIFdFIr1RHWaf
+	 BRtkfmx6rvGcnFbhW8W3zvlv47UZcwSWslLo0dEIebMw+34jK+h3gscXmf2Cz3FhxY
+	 ZXGVlJH6zdXaSXtZULfJ7vuRMxDO6CSoaKmiexB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Breno Leitao <leitao@debian.org>,
-	Madalin Bucur <madalin.bucur@oss.nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/186] net: dpaa: avoid on-stack arrays of NR_CPUS elements
-Date: Tue, 10 Sep 2024 11:34:00 +0200
-Message-ID: <20240910092600.569817625@linuxfoundation.org>
+Subject: [PATCH 5.10 146/186] kselftests: dmabuf-heaps: Ensure the driver name is null-terminated
+Date: Tue, 10 Sep 2024 11:34:01 +0200
+Message-ID: <20240910092600.605270948@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -53,128 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-[ Upstream commit 555a05d84ca2c587e2d4777006e2c2fb3dfbd91d ]
+[ Upstream commit 291e4baf70019f17a81b7b47aeb186b27d222159 ]
 
-The dpaa-eth driver is written for PowerPC and Arm SoCs which have 1-24
-CPUs. It depends on CONFIG_NR_CPUS having a reasonably small value in
-Kconfig. Otherwise, there are 2 functions which allocate on-stack arrays
-of NR_CPUS elements, and these can quickly explode in size, leading to
-warnings such as:
+Even if a vgem device is configured in, we will skip the import_vgem_fd()
+test almost every time.
 
-  drivers/net/ethernet/freescale/dpaa/dpaa_eth.c:3280:12: warning:
-  stack frame size (16664) exceeds limit (2048) in 'dpaa_eth_probe' [-Wframe-larger-than]
+  TAP version 13
+  1..11
+  # Testing heap: system
+  # =======================================
+  # Testing allocation and importing:
+  ok 1 # SKIP Could not open vgem -1
 
-The problem is twofold:
-- Reducing the array size to the boot-time num_possible_cpus() (rather
-  than the compile-time NR_CPUS) creates a variable-length array,
-  which should be avoided in the Linux kernel.
-- Using NR_CPUS as an array size makes the driver blow up in stack
-  consumption with generic, as opposed to hand-crafted, .config files.
+The problem is that we use the DRM_IOCTL_VERSION ioctl to query the driver
+version information but leave the name field a non-null-terminated string.
+Terminate it properly to actually test against the vgem device.
 
-A simple solution is to use dynamic allocation for num_possible_cpus()
-elements (aka a small number determined at runtime).
+While at it, let's check the length of the driver name is exactly 4 bytes
+and return early otherwise (in case there is a name like "vgemfoo" that
+gets converted to "vgem\0" unexpectedly).
 
-Link: https://lore.kernel.org/all/202406261920.l5pzM1rj-lkp@intel.com/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Acked-by: Madalin Bucur <madalin.bucur@oss.nxp.com>
-Link: https://patch.msgid.link/20240713225336.1746343-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240729024604.2046-1-yuzenghui@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa/dpaa_eth.c    | 20 ++++++++++++++-----
- .../ethernet/freescale/dpaa/dpaa_ethtool.c    | 10 +++++++++-
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-index cb7c028b1bf5..90bd5583ac34 100644
---- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-@@ -908,14 +908,18 @@ static inline void dpaa_setup_egress(const struct dpaa_priv *priv,
- 	}
- }
+diff --git a/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c b/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
+index 909da9cdda97..aa4be40f7d49 100644
+--- a/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
++++ b/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
+@@ -29,9 +29,11 @@ static int check_vgem(int fd)
+ 	version.name = name;
  
--static void dpaa_fq_setup(struct dpaa_priv *priv,
--			  const struct dpaa_fq_cbs *fq_cbs,
--			  struct fman_port *tx_port)
-+static int dpaa_fq_setup(struct dpaa_priv *priv,
-+			 const struct dpaa_fq_cbs *fq_cbs,
-+			 struct fman_port *tx_port)
- {
- 	int egress_cnt = 0, conf_cnt = 0, num_portals = 0, portal_cnt = 0, cpu;
- 	const cpumask_t *affine_cpus = qman_affine_cpus();
--	u16 channels[NR_CPUS];
- 	struct dpaa_fq *fq;
-+	u16 *channels;
+ 	ret = ioctl(fd, DRM_IOCTL_VERSION, &version);
+-	if (ret)
++	if (ret || version.name_len != 4)
+ 		return 0;
+ 
++	name[4] = '\0';
 +
-+	channels = kcalloc(num_possible_cpus(), sizeof(u16), GFP_KERNEL);
-+	if (!channels)
-+		return -ENOMEM;
- 
- 	for_each_cpu_and(cpu, affine_cpus, cpu_online_mask)
- 		channels[num_portals++] = qman_affine_channel(cpu);
-@@ -974,6 +978,10 @@ static void dpaa_fq_setup(struct dpaa_priv *priv,
- 				break;
- 		}
- 	}
-+
-+	kfree(channels);
-+
-+	return 0;
- }
- 
- static inline int dpaa_tx_fq_to_id(const struct dpaa_priv *priv,
-@@ -3015,7 +3023,9 @@ static int dpaa_eth_probe(struct platform_device *pdev)
- 	 */
- 	dpaa_eth_add_channel(priv->channel, &pdev->dev);
- 
--	dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
-+	err = dpaa_fq_setup(priv, &dpaa_fq_cbs, priv->mac_dev->port[TX]);
-+	if (err)
-+		goto free_dpaa_bps;
- 
- 	/* Create a congestion group for this netdev, with
- 	 * dynamically-allocated CGR ID.
-diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
-index 2f9075429c43..d8cb0b99684a 100644
---- a/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
-+++ b/drivers/net/ethernet/freescale/dpaa/dpaa_ethtool.c
-@@ -537,12 +537,16 @@ static int dpaa_set_coalesce(struct net_device *dev,
- 			     struct ethtool_coalesce *c)
- {
- 	const cpumask_t *cpus = qman_affine_cpus();
--	bool needs_revert[NR_CPUS] = {false};
- 	struct qman_portal *portal;
- 	u32 period, prev_period;
- 	u8 thresh, prev_thresh;
-+	bool *needs_revert;
- 	int cpu, res;
- 
-+	needs_revert = kcalloc(num_possible_cpus(), sizeof(bool), GFP_KERNEL);
-+	if (!needs_revert)
-+		return -ENOMEM;
-+
- 	period = c->rx_coalesce_usecs;
- 	thresh = c->rx_max_coalesced_frames;
- 
-@@ -565,6 +569,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
- 		needs_revert[cpu] = true;
- 	}
- 
-+	kfree(needs_revert);
-+
- 	return 0;
- 
- revert_values:
-@@ -578,6 +584,8 @@ static int dpaa_set_coalesce(struct net_device *dev,
- 		qman_dqrr_set_ithresh(portal, prev_thresh);
- 	}
- 
-+	kfree(needs_revert);
-+
- 	return res;
+ 	return !strcmp(name, "vgem");
  }
  
 -- 
