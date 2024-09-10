@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E689B18C340;
-	Tue, 10 Sep 2024 10:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A36A18C340;
+	Tue, 10 Sep 2024 10:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963923; cv=none; b=JkMQLa27cBzbxZgVZMJ7TKX7l6spKuHqkBRd7DWnfwwESxzJRCjE0qbZXIZRmfnqEC1zVz0ZJaDJoc2N18MlnIGDnkRoXlQ3C92+804+jcI1uo4M9zLc+HI0jYKe/PjRYydseochlGA9MiyxGqPdX+t+IiaclI/Gu87QNlh3NO4=
+	t=1725963926; cv=none; b=R/+wSwlbNgqcGY8Gm2xrn1UAr0vofG8trZfjgQ0s9YRc592sZV8+s34IoxHrJ7KpmCS1EP7Im8vS/HyQ/DVen2cEfQlsJm77m6GyT2rAz/H8spAWGWOL173hELF7Ikgf0eaE0FHLTWE8ExVBgqHjOYvxhQLaQLHPbI9WFOCzYpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963923; c=relaxed/simple;
-	bh=DHRkT8q+lQTwzW9RXOplr3xgtPg9BAItMSXXdKReKHA=;
+	s=arc-20240116; t=1725963926; c=relaxed/simple;
+	bh=iD9AHU4YK0yFjlEcVDdwBdMrUc/2hklVw6hWGmTbZSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uM49twDRTmin6zNjYCDafq4pzuqAfc9cfrip2g3Vieb/EhrLUqjoYtdBICHElzdaFe8SaOYoQfZCzo4yWDgUBY++0Wa/Po8oZ0k+AVx2kUkxxPTatrvm1yme0AWe9UKVIl6RdHUAVly8SfFSRvWWMBaSg5d0T3I1DCi4J9hwVK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbKnYlnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqyMkBvWnZfy2yMBqQFpzxYVxWgJvaFmnvm3sU7T4RC+3UJviwVlcMwkX/M9zRDLffp9bGioCOoZx5yBdPiBNJeH4RBXscwKKbRRRNz3/Joar2U9I0BZLkcdHhhHJBju0GKGGsZcB154hoB+ar/i/zBAy26t49d1i+bXdUuIdsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pc8oE0He; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbKnYlnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCC5C4CEC3;
-	Tue, 10 Sep 2024 10:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pc8oE0He"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951CBC4CEC3;
+	Tue, 10 Sep 2024 10:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963922;
-	bh=DHRkT8q+lQTwzW9RXOplr3xgtPg9BAItMSXXdKReKHA=;
+	s=korg; t=1725963926;
+	bh=iD9AHU4YK0yFjlEcVDdwBdMrUc/2hklVw6hWGmTbZSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WbKnYlnL2xeqdS8+EFpZzkJ59KLBVOXi+UOKNeGLGIqHTfb/BXq0paj8QyUDiUseR
-	 8C6AhsId2P8Wr1wca8OqKvF8qK2r6z8ZWFPGyTtwk1TN5ZqZwwFF5D7DCpvfvRHGHJ
-	 IYsF20Mf54eXy5DaPUWIwHMlGjFHeZve4KM3/MGI=
+	b=Pc8oE0He4Gp3f8R262ZVXPFVWLjgIRcx7TCVsoutFsV4QHY5xg3+ExZ52ENcW6N9E
+	 /RlPlzgMyek3K6palB6owJx0/AUyWlBfAZe67f7RuFKF2qxLBGErGXDPfIc1qbLkll
+	 fVAOzUML2iXVq89HbKJ4GH+ZUWwPZm1AreQ7aDZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/214] nvmet-tcp: fix kernel crash if commands allocation fails
-Date: Tue, 10 Sep 2024 11:33:43 +0200
-Message-ID: <20240910092606.771513795@linuxfoundation.org>
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 001/269] sch/netem: fix use after free in netem_dequeue
+Date: Tue, 10 Sep 2024 11:29:48 +0200
+Message-ID: <20240910092608.282967714@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
-References: <20240910092558.714365667@linuxfoundation.org>
+In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
+References: <20240910092608.225137854@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 5572a55a6f830ee3f3a994b6b962a5c327d28cb3 ]
+commit 3b3a2a9c6349e25a025d2330f479bc33a6ccb54a upstream.
 
-If the commands allocation fails in nvmet_tcp_alloc_cmds()
-the kernel crashes in nvmet_tcp_release_queue_work() because of
-a NULL pointer dereference.
+If netem_dequeue() enqueues packet to inner qdisc and that qdisc
+returns __NET_XMIT_STOLEN. The packet is dropped but
+qdisc_tree_reduce_backlog() is not called to update the parent's
+q.qlen, leading to the similar use-after-free as Commit
+e04991a48dbaf382 ("netem: fix return value if duplicate enqueue
+fails")
 
-  nvmet: failed to install queue 0 cntlid 1 ret 6
-  Unable to handle kernel NULL pointer dereference at
-         virtual address 0000000000000008
+Commands to trigger KASAN UaF:
 
-Fix the bug by setting queue->nr_cmds to zero in case
-nvmet_tcp_alloc_cmd() fails.
+ip link add type dummy
+ip link set lo up
+ip link set dummy0 up
+tc qdisc add dev lo parent root handle 1: drr
+tc filter add dev lo parent 1: basic classid 1:1
+tc class add dev lo classid 1:1 drr
+tc qdisc add dev lo parent 1:1 handle 2: netem
+tc qdisc add dev lo parent 2: handle 3: drr
+tc filter add dev lo parent 3: basic classid 3:1 action mirred egress
+redirect dev dummy0
+tc class add dev lo classid 3:1 drr
+ping -c1 -W0.01 localhost # Trigger bug
+tc class del dev lo classid 1:1
+tc class add dev lo classid 1:1 drr
+ping -c1 -W0.01 localhost # UaF
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 50612537e9ab ("netem: fix classful handling")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Link: https://patch.msgid.link/20240901182438.4992-1-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/sch_netem.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index df044a79a734..809b03b86a00 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1819,8 +1819,10 @@ static u16 nvmet_tcp_install_queue(struct nvmet_sq *sq)
- 	}
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -742,11 +742,10 @@ deliver:
  
- 	queue->nr_cmds = sq->size * 2;
--	if (nvmet_tcp_alloc_cmds(queue))
-+	if (nvmet_tcp_alloc_cmds(queue)) {
-+		queue->nr_cmds = 0;
- 		return NVME_SC_INTERNAL;
-+	}
- 	return 0;
- }
- 
--- 
-2.43.0
-
+ 				err = qdisc_enqueue(skb, q->qdisc, &to_free);
+ 				kfree_skb_list(to_free);
+-				if (err != NET_XMIT_SUCCESS &&
+-				    net_xmit_drop_count(err)) {
+-					qdisc_qstats_drop(sch);
+-					qdisc_tree_reduce_backlog(sch, 1,
+-								  pkt_len);
++				if (err != NET_XMIT_SUCCESS) {
++					if (net_xmit_drop_count(err))
++						qdisc_qstats_drop(sch);
++					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
+ 				}
+ 				goto tfifo_dequeue;
+ 			}
 
 
