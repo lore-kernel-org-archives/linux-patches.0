@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2FA18595E;
-	Tue, 10 Sep 2024 10:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A9818595E;
+	Tue, 10 Sep 2024 10:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962523; cv=none; b=YF/6eOAc0+fgRtbcLfRawqxTvyntQfX5qs8usZYaWOl9zbtQmNYWB2lWVe5pHhKDhfCcdWCZLPVw1tjRO1qSlSwLY7tCtNY3JSlap1OFD66OQMUGJmSWA7TtieP0iFviaYTT4Hg4oPtlaUht6SZq2ftsMOr1i5UnG+UsE7onsRI=
+	t=1725962526; cv=none; b=bSrJuMLckbsWyS37lG8F9o5j8zxHruZYkxCnAOdorKhbnS4Ze3C3oV2pZ8WUw9vTo+O0D6rzY/tg72LIOn+6Ai0Ak8aM6aYBJZbkqbF6JjZjE1RZYMFXCmHSQw1E5Tgtn2l+xqA2rl1XwyE1RpwlQJODmsk4eG35ur0F/KMtG4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962523; c=relaxed/simple;
-	bh=3pR5qFbMDZp7RMD8CVZfO6mHmCVoboCDIu0tJQtJAKM=;
+	s=arc-20240116; t=1725962526; c=relaxed/simple;
+	bh=xjmmxg5//wFj/ENC2qBnKlKDXKdklL3AW6L9ygHIE6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI7IXh8Am1uUD1Nl5/lTejHa8FUvO1nSifQZNezbyac5sSLyCrL65BTbLRlQKW/9srhrkVSOZ7stJy2zgFY8kKrDLthiZbPhMbgBhWYka9h47XvJNkJwB3NrX2caCCv8/IYgOt7k4dha0St4R0TArIedkTqTdNKRfEaGC+y+F3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMHJ4Dpw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p4W4dA9pTRwsmqH+Gikl33gMTLFaEX7syXpce0X99k0Ufcs8iGoTRCZ58aUoGmQdSlrSymH2v+8sWsbM/GxkdXHWXl4VPjF2hHjRlVpAc67cJekULT4lQDaKK6a5ZNar/IKHOu1uMx0M7jVJ9h7m5PSi1kBtNPyU32mP+qIxLR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQK4Sd1B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMHJ4Dpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D736FC4CEC3;
-	Tue, 10 Sep 2024 10:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQK4Sd1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F093BC4CEC3;
+	Tue, 10 Sep 2024 10:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962523;
-	bh=3pR5qFbMDZp7RMD8CVZfO6mHmCVoboCDIu0tJQtJAKM=;
+	s=korg; t=1725962526;
+	bh=xjmmxg5//wFj/ENC2qBnKlKDXKdklL3AW6L9ygHIE6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMHJ4Dpw9mc5GOgQeb3NdCiALwd77hNLUeWiuN0lAhq9dXk0nlaMRxhj12UebQlhT
-	 iNKtG1iY3RAdChXudKfRQxS6GFVvWp9jqVyPnln7MOIClJ16cTwl2nx5BgvgWXYt94
-	 bXFQ+uzc+L0q3zgW68qdHF6Lst1dWk4vG2GnNuzc=
+	b=uQK4Sd1BRUONPzz5PqteeZk7EIB5HaG7Nw+wqtr3JHgfBeDAhWEXRDo5vlBwpN6u3
+	 3STs8YPNHXDfFQ39CMAc1KWmAX1p3oNVDY3URLcYWPtk1v9avIeO7sLIgjK1woC9j1
+	 MN7/1NhMfQsxAgFQgBtp4KvLUyYo1kWlcbpj5n0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Allison Randal <allison@lohutok.net>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	linux-clk@vger.kernel.org,
-	John Stultz <john.stultz@linaro.org>,
-	Yongqin Liu <yongqin.liu@linaro.org>
-Subject: [PATCH 5.4 036/121] clk: hi6220: use CLK_OF_DECLARE_DRIVER
-Date: Tue, 10 Sep 2024 11:31:51 +0200
-Message-ID: <20240910092547.439507139@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.4 037/121] clk: qcom: clk-alpha-pll: Fix the pll post div mask
+Date: Tue, 10 Sep 2024 11:31:52 +0200
+Message-ID: <20240910092547.480621399@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -55,39 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-commit f1edb498bd9f25936ae3540a8dbd86e6019fdb95 upstream.
+commit 2c4553e6c485a96b5d86989eb9654bf20e51e6dd upstream.
 
-As now we also need to probe in the reset driver as well.
+The PLL_POST_DIV_MASK should be 0 to (width - 1) bits. Fix it.
 
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: Allison Randal <allison@lohutok.net>
-Cc: Peter Griffin <peter.griffin@linaro.org>
-Cc: linux-clk@vger.kernel.org
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Signed-off-by: John Stultz <john.stultz@linaro.org>
-Link: https://lkml.kernel.org/r/20191001182546.70090-1-john.stultz@linaro.org
-[sboyd@kernel.org: Add comment about reset driver]
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Cc: Yongqin Liu <yongqin.liu@linaro.org>
+Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
+Cc: stable@vger.kernel.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240731062916.2680823-2-quic_skakitap@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/hisilicon/clk-hi6220.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/clk-alpha-pll.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/hisilicon/clk-hi6220.c
-+++ b/drivers/clk/hisilicon/clk-hi6220.c
-@@ -86,7 +86,8 @@ static void __init hi6220_clk_ao_init(st
- 	hisi_clk_register_gate_sep(hi6220_separated_gate_clks_ao,
- 				ARRAY_SIZE(hi6220_separated_gate_clks_ao), clk_data_ao);
- }
--CLK_OF_DECLARE(hi6220_clk_ao, "hisilicon,hi6220-aoctrl", hi6220_clk_ao_init);
-+/* Allow reset driver to probe as well */
-+CLK_OF_DECLARE_DRIVER(hi6220_clk_ao, "hisilicon,hi6220-aoctrl", hi6220_clk_ao_init);
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -38,7 +38,7 @@
  
- 
- /* clocks in sysctrl */
+ #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
+ # define PLL_POST_DIV_SHIFT	8
+-# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width, 0)
++# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
+ # define PLL_ALPHA_EN		BIT(24)
+ # define PLL_ALPHA_MODE		BIT(25)
+ # define PLL_VCO_SHIFT		20
 
 
