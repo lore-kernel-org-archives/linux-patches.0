@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA718DF99;
-	Tue, 10 Sep 2024 10:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EE7181B8D;
+	Tue, 10 Sep 2024 10:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962419; cv=none; b=joLFCIX6vtUkwUtK+SxfgIRAOMIihy8ErmFtKJzNEyxqLuygNAfI0G56u01LGlm9ZIn5y2XOYPsByirxsLzt1XXfYKt0Ay4IGCb+kAzV2haErN9NqxGNuwrSxwknwAC1eZH3E5bHOnzUJw1zPUcC6gB5cssjho/GSgGcUWqKhgE=
+	t=1725962422; cv=none; b=U+7FcmIJFL8qK6xonQDSYWWijxi8iKTtzuuwmagRQHBy/KukUTGVES2659fhaAfbrjM1rwF8z6dYMoDiIvt+NyT6vbr9tpnud1fXqwm6nOh+HUiSmxIEhUp0y0Li08ZjYAcXf2KD4B/Fa11uEetZtyM7ilEO0qXCzIHCF6HxZxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962419; c=relaxed/simple;
-	bh=F5myLYcC+cvZjYi9/noIQRiqjUR+Nn8CTgY4QvxFdsc=;
+	s=arc-20240116; t=1725962422; c=relaxed/simple;
+	bh=6ytOFr7FsnX36YyruQS2jXZ2YkgHXc47syGc1Np+oKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fplgPTxdapsoXmNV0BUnICMTKFCc3MkJvOHzfK3IDmXZX4ZDgM1ZfGUfyHj+YTEc1LqnCMOB2JoiqyxdzhUGVoPNJDFNSHh7JWJ0F33d2oy79bDgYhF3zDR4Bd7gm6Gdg0sFY21yDbeO8ugKGm21CeDiJj8W8Nv/nyI82JAwMx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJD0n178; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXzldBoisC5a5/Ck+Pcpb//CVcn/avw7pXQIu2YNGjqPxNDZFktvMWY5PdmGji5HiMbJ8Vb9/WMOnhbOaU1IwHL+IoZrtwH8pvGKb1+9g1xuTl0nAIZ2DIo0cm8YZxImi/4Pe0w0/nbg3bY8MFgjbx+Ypogp35jhr1QehRYsNtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibyEQLN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJD0n178"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C6C4CEC3;
-	Tue, 10 Sep 2024 10:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibyEQLN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC910C4CEC3;
+	Tue, 10 Sep 2024 10:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962419;
-	bh=F5myLYcC+cvZjYi9/noIQRiqjUR+Nn8CTgY4QvxFdsc=;
+	s=korg; t=1725962422;
+	bh=6ytOFr7FsnX36YyruQS2jXZ2YkgHXc47syGc1Np+oKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJD0n178FYri10sK8yhi+FvubxYlO/vkxUeCRCCOnxD5+Xm2Sz0KdFwS3E2mfr1E0
-	 t2Ctc1Cfcq8irUdeCDIYTk0xezq0FFvMI2uGT/F1LNm60SdlaMLcYrEB9TRQf26Cpy
-	 Dhqj/PloT7i3Mrp9td6PPEu839bgels0JvcFf+Rc=
+	b=ibyEQLN7H6bCVjuDbr8GKEHlyo/KOKkIzxX06pY1OTIA1GqcyXP9bGTD6FWjsH7cl
+	 uSkKsaoNxLsUI96Iw1EEy4Hbie1nE/kcIaDQIMTU4mzW7j18K3htT2Q5MH6hjMbSwi
+	 zKOgxvJgShEqfByOfNMo0phCn0zHWuAVMzCtPS20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	robelin <robelin@nvidia.com>,
-	Sameer Pujar <spujar@nvidia.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.4 027/121] ASoC: dapm: Fix UAF for snd_soc_pcm_runtime object
-Date: Tue, 10 Sep 2024 11:31:42 +0200
-Message-ID: <20240910092547.018907001@linuxfoundation.org>
+	ZHANG Yuntian <yt@radxa.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 003/121] net: usb: qmi_wwan: add MeiG Smart SRM825L
+Date: Tue, 10 Sep 2024 11:31:18 +0200
+Message-ID: <20240910092545.897628647@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -51,58 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: robelin <robelin@nvidia.com>
+From: ZHANG Yuntian <yt@radxa.com>
 
-commit b4a90b543d9f62d3ac34ec1ab97fc5334b048565 upstream.
+[ Upstream commit 1ca645a2f74a4290527ae27130c8611391b07dbf ]
 
-When using kernel with the following extra config,
+Add support for MeiG Smart SRM825L which is based on Qualcomm 315 chip.
 
-  - CONFIG_KASAN=y
-  - CONFIG_KASAN_GENERIC=y
-  - CONFIG_KASAN_INLINE=y
-  - CONFIG_KASAN_VMALLOC=y
-  - CONFIG_FRAME_WARN=4096
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d22 Rev= 4.14
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=6f345e48
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-kernel detects that snd_pcm_suspend_all() access a freed
-'snd_soc_pcm_runtime' object when the system is suspended, which
-leads to a use-after-free bug:
-
-[   52.047746] BUG: KASAN: use-after-free in snd_pcm_suspend_all+0x1a8/0x270
-[   52.047765] Read of size 1 at addr ffff0000b9434d50 by task systemd-sleep/2330
-
-[   52.047785] Call trace:
-[   52.047787]  dump_backtrace+0x0/0x3c0
-[   52.047794]  show_stack+0x34/0x50
-[   52.047797]  dump_stack_lvl+0x68/0x8c
-[   52.047802]  print_address_description.constprop.0+0x74/0x2c0
-[   52.047809]  kasan_report+0x210/0x230
-[   52.047815]  __asan_report_load1_noabort+0x3c/0x50
-[   52.047820]  snd_pcm_suspend_all+0x1a8/0x270
-[   52.047824]  snd_soc_suspend+0x19c/0x4e0
-
-The snd_pcm_sync_stop() has a NULL check on 'substream->runtime' before
-making any access. So we need to always set 'substream->runtime' to NULL
-everytime we kfree() it.
-
-Fixes: a72706ed8208 ("ASoC: codec2codec: remove ephemeral variables")
-Signed-off-by: robelin <robelin@nvidia.com>
-Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Link: https://patch.msgid.link/20240823144342.4123814-2-spujar@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: ZHANG Yuntian <yt@radxa.com>
+Link: https://patch.msgid.link/D1EB81385E405DFE+20240803074656.567061-1-yt@radxa.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dapm.c |    1 +
+ drivers/net/usb/qmi_wwan.c | 1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -4003,6 +4003,7 @@ static int snd_soc_dai_link_event(struct
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 3e219cf4dd851..cce5ee84d29d3 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1387,6 +1387,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+ 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
++	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
  
- 	case SND_SOC_DAPM_POST_PMD:
- 		kfree(substream->runtime);
-+		substream->runtime = NULL;
- 		break;
- 
- 	default:
+ 	/* 4. Gobi 1000 devices */
+ 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+-- 
+2.43.0
+
 
 
