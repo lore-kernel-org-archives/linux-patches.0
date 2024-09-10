@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB7A18A6B9;
-	Tue, 10 Sep 2024 10:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC2918A6B9;
+	Tue, 10 Sep 2024 10:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964691; cv=none; b=Y57V+hqzrl0gN7NGpbpYR8Amp66HcATuf4mCorzepS+dnQESgjURZaXuxspgm9iIrMH6VPtspMpSzxbGR9yuOVRIy46Dz6sc8fzKnM6JeSIh9qXmhSBVnspBp+JsOG9yfJzeXhNn+tIwbpopR21Hb6XPbphAuNlU4ZooKgo8o+E=
+	t=1725964694; cv=none; b=pypCLjUUgfQ2xFi96pAhJc8auCfJDN6HZwiPpXjHUHBEDIhb9eHgW+iU3L9IpAGXBlH7tsby/LToSYDvWGLX5JlatGSc2Vgs6N9y4aUgWe5eek5MxXRUZ5zXYvf3A7U1t1hO1OZWz5L/zCH5nvioXrkWSlddAUqHDzeoLR/+H04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964691; c=relaxed/simple;
-	bh=YTcUVjnjHf5PQul2GMNrR3MIPEe6X41fKoZ+4HpzJFw=;
+	s=arc-20240116; t=1725964694; c=relaxed/simple;
+	bh=ifdGWo664eVzvkjZs4iB+kjUBi+J34JBWp8PNAKwfZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+gNXnCZqsc8tfqBvCCB15GUZ2fMQRDWHiv7cWQe+F9O+t3iNi1qxR3qexi+FMv+PtvgvFFk4vD9KR92vxIK+Tc45E93JKb9EtQLBjJP33l0K985PQ3+YIoopX8N7d8siw6Wn7nbgPyLykEc7gkmkCLh5Wh3xiFbSAjHDpQ2m0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3gSm3DR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+apKf9BL9lcA6wyS7QpgOwp3vy7BlPa76Ujl5ButSpB/THiDlal+XIVT+xl68YwrSpg31NqPYC1hvrJ/3rcd95QoDAJbXs0kqGvrz89eSVyO9Dc3WdEjUtD3nBcsvGuS4yrPOALDcX30f1larXwFUKyEzu1ClzzMQcXqC7v8z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAdsukbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3gSm3DR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350B5C4CEC3;
-	Tue, 10 Sep 2024 10:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAdsukbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2385BC4CEC3;
+	Tue, 10 Sep 2024 10:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964691;
-	bh=YTcUVjnjHf5PQul2GMNrR3MIPEe6X41fKoZ+4HpzJFw=;
+	s=korg; t=1725964694;
+	bh=ifdGWo664eVzvkjZs4iB+kjUBi+J34JBWp8PNAKwfZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3gSm3DRM87CwvIjG9yQ0DNusTXANGfATtsCMvq/E7tX5ZcpJ3Krco2W7LaZGgl2n
-	 yMDb/b/lHtGTXR0Aub94D6XjwncrOeTRZQvQM9EmWPRK8T10fHM5NC8WkoEcL6GZcj
-	 gz86qywpi2h6U2LrFjbkzLShqcvW9A4oRJZb5Un8=
+	b=GAdsukbDRfZjhG5a5rh1NJlxhE0h5YLxN9js/WdkHhVmUb3qNN3npMa26KInnU2zw
+	 MVp5IvMzGWmLq8vpNNfuATXHa4/NcPJcyteYkCAH4RNfT3dlezGZHt5iu4XvnJINNU
+	 XAjQMo3JtojWbYCkreMdcpvmyaL2LwpldINJ0muM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jie Ho <jiajie.ho@starfivetech.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	devi priya <quic_devipriy@quicinc.com>,
+	Amandeep Singh <quic_amansing@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 242/269] crypto: starfive - Fix nent assignment in rsa dec
-Date: Tue, 10 Sep 2024 11:33:49 +0200
-Message-ID: <20240910092616.487048555@linuxfoundation.org>
+Subject: [PATCH 6.6 243/269] clk: qcom: ipq9574: Update the alpha PLL type for GPLLs
+Date: Tue, 10 Sep 2024 11:33:50 +0200
+Message-ID: <20240910092616.520394839@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -51,55 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jie Ho <jiajie.ho@starfivetech.com>
+From: devi priya <quic_devipriy@quicinc.com>
 
-[ Upstream commit 8323c036789b8b4a61925fce439a89dba17b7f2f ]
+[ Upstream commit 6357efe3abead68048729adf11a9363881657939 ]
 
-Missing src scatterlist nent assignment in rsa decrypt function.
-Removing all unneeded assignment and use nents value from req->src
-instead.
+Update PLL offsets to DEFAULT_EVO to configure MDIO to 800MHz.
 
-Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The incorrect clock frequency leads to an incorrect MDIO clock. This,
+in turn, affects the MDIO hardware configurations as the divider is
+calculated from the MDIO clock frequency. If the clock frequency is
+not as expected, the MDIO register fails due to the generation of an
+incorrect MDIO frequency.
+
+This issue is critical as it results in incorrect MDIO configurations
+and ultimately leads to the MDIO function not working. This results in
+a complete feature failure affecting all Ethernet PHYs. Specifically,
+Ethernet will not work on IPQ9574 due to this issue.
+
+Currently, the clock frequency is set to CLK_ALPHA_PLL_TYPE_DEFAULT.
+However, this setting does not yield the expected clock frequency.
+To rectify this, we need to change this to CLK_ALPHA_PLL_TYPE_DEFAULT_EVO.
+
+This modification ensures that the clock frequency aligns with our
+expectations, thereby resolving the MDIO register failure and ensuring
+the proper functioning of the Ethernet on IPQ9574.
+
+Fixes: d75b82cff488 ("clk: qcom: Add Global Clock Controller driver for IPQ9574")
+Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
+Link: https://lore.kernel.org/r/20240806061105.2849944-1-quic_amansing@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/starfive/jh7110-cryp.h | 1 -
- drivers/crypto/starfive/jh7110-rsa.c  | 3 +--
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/clk/qcom/gcc-ipq9574.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/starfive/jh7110-cryp.h b/drivers/crypto/starfive/jh7110-cryp.h
-index f386e9897896..607f70292b21 100644
---- a/drivers/crypto/starfive/jh7110-cryp.h
-+++ b/drivers/crypto/starfive/jh7110-cryp.h
-@@ -213,7 +213,6 @@ struct starfive_cryp_request_ctx {
- 	struct scatterlist			*out_sg;
- 	struct ahash_request			ahash_fbk_req;
- 	size_t					total;
--	size_t					nents;
- 	unsigned int				blksize;
- 	unsigned int				digsize;
- 	unsigned long				in_sg_len;
-diff --git a/drivers/crypto/starfive/jh7110-rsa.c b/drivers/crypto/starfive/jh7110-rsa.c
-index fbc06f8ee95f..1db9a3d02848 100644
---- a/drivers/crypto/starfive/jh7110-rsa.c
-+++ b/drivers/crypto/starfive/jh7110-rsa.c
-@@ -282,7 +282,7 @@ static int starfive_rsa_enc_core(struct starfive_cryp_ctx *ctx, int enc)
- 		memset(rctx->rsa_data, 0, shift);
- 	}
+diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+index f8b9a1e93bef..cdbbf2cc9c5d 100644
+--- a/drivers/clk/qcom/gcc-ipq9574.c
++++ b/drivers/clk/qcom/gcc-ipq9574.c
+@@ -65,7 +65,7 @@ static const struct clk_parent_data gcc_sleep_clk_data[] = {
  
--	rctx->total = sg_copy_to_buffer(rctx->in_sg, rctx->nents,
-+	rctx->total = sg_copy_to_buffer(rctx->in_sg, sg_nents(rctx->in_sg),
- 					rctx->rsa_data + shift, rctx->total);
+ static struct clk_alpha_pll gpll0_main = {
+ 	.offset = 0x20000,
+-	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
+ 	.clkr = {
+ 		.enable_reg = 0x0b000,
+ 		.enable_mask = BIT(0),
+@@ -93,7 +93,7 @@ static struct clk_fixed_factor gpll0_out_main_div2 = {
  
- 	if (enc) {
-@@ -333,7 +333,6 @@ static int starfive_rsa_enc(struct akcipher_request *req)
- 	rctx->in_sg = req->src;
- 	rctx->out_sg = req->dst;
- 	rctx->total = req->src_len;
--	rctx->nents = sg_nents(rctx->in_sg);
- 	ctx->rctx = rctx;
+ static struct clk_alpha_pll_postdiv gpll0 = {
+ 	.offset = 0x20000,
+-	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
+ 	.width = 4,
+ 	.clkr.hw.init = &(const struct clk_init_data) {
+ 		.name = "gpll0",
+@@ -107,7 +107,7 @@ static struct clk_alpha_pll_postdiv gpll0 = {
  
- 	return starfive_rsa_enc_core(ctx, 1);
+ static struct clk_alpha_pll gpll4_main = {
+ 	.offset = 0x22000,
+-	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
+ 	.clkr = {
+ 		.enable_reg = 0x0b000,
+ 		.enable_mask = BIT(2),
+@@ -122,7 +122,7 @@ static struct clk_alpha_pll gpll4_main = {
+ 
+ static struct clk_alpha_pll_postdiv gpll4 = {
+ 	.offset = 0x22000,
+-	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
+ 	.width = 4,
+ 	.clkr.hw.init = &(const struct clk_init_data) {
+ 		.name = "gpll4",
+@@ -136,7 +136,7 @@ static struct clk_alpha_pll_postdiv gpll4 = {
+ 
+ static struct clk_alpha_pll gpll2_main = {
+ 	.offset = 0x21000,
+-	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
+ 	.clkr = {
+ 		.enable_reg = 0x0b000,
+ 		.enable_mask = BIT(1),
+@@ -151,7 +151,7 @@ static struct clk_alpha_pll gpll2_main = {
+ 
+ static struct clk_alpha_pll_postdiv gpll2 = {
+ 	.offset = 0x21000,
+-	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
+ 	.width = 4,
+ 	.clkr.hw.init = &(const struct clk_init_data) {
+ 		.name = "gpll2",
 -- 
 2.43.0
 
