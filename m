@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BD917A924;
-	Tue, 10 Sep 2024 10:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE0C14B06C;
+	Tue, 10 Sep 2024 10:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964942; cv=none; b=IwVOWVuatjS7s0P4rj+r+jqupaW8//ZPfIeP99wqZAHLUHZQFKvlkBWEhXJkJAdsAuHWOIGW3cocBeTrzdLo6JzVSWWuOD9As65QXW/CG3Is9HWOgidmspNoepIdLF77wnFYGV9I70g4SSF7U6Yl1Fdbbf5m8vvjeXBD6Lia2cg=
+	t=1725964945; cv=none; b=ISf3N0WKU5H1AAJ9kBJ7s+T+89UvFz5YW6rWoqb7/3PloY6M7P176Ec54ZgjS39FigGzczAItovBP6eCrg9XDCag/VcrjMp7i3qbS+SY3u2MHu/EM/3Yse+/PwTTs+YEal4JT13fZKeCdsM8d+/RQahuRSC+hcC5CyOclNvG4I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964942; c=relaxed/simple;
-	bh=NK6KBoTPQHkiQ/ABOfyKwHr3eqJFbINk47r+fAzrp6E=;
+	s=arc-20240116; t=1725964945; c=relaxed/simple;
+	bh=a2sEPcO0pnf5BtHIg3EvSU9ZN5iNeMXoU0fYQmVss0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBJysSPV3wcs4zsfCocIyjPdR4py3br3WgzM4vjUmoUf/u7XG1/MIakaV2bheGuRiZ+x2s4yqI5xSnED8DYyIN0ShrDKDH4Vuz/946dEpHI775eKTwBihzeuT1paPyaK10ktfuC5P9mDjXohN7T7DlHfsZyMoiqXWuI9LoZ5cAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/u8PGgN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/Zj8Z1rCwTGHRvIFtjI/00MYc61kQcodqhf5QLEa4HmXAOCuXeLQgyu7eKGZ+RXfh+zTQYqBGJgU7GGstf0onsPcFLkVQzOVu4rP4sWCNNvnENqjLpZiTraobps9298eSVW2td325904uuQVpUS6YEFexebzQCOKXUUcHjf2fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toKrH3dQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/u8PGgN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424F5C4CEC3;
-	Tue, 10 Sep 2024 10:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toKrH3dQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF38C4CEC3;
+	Tue, 10 Sep 2024 10:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964942;
-	bh=NK6KBoTPQHkiQ/ABOfyKwHr3eqJFbINk47r+fAzrp6E=;
+	s=korg; t=1725964945;
+	bh=a2sEPcO0pnf5BtHIg3EvSU9ZN5iNeMXoU0fYQmVss0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/u8PGgNaUdBPGr2nmhDmDHa4zzylog9PGlcaGvuxfgA4yQcQKf4cnAFjqpvnIP2n
-	 eP7Vn1yjedlt8zczm7puz7r/Nk5Lc7HwcTmq7rtYyCo6e5iEUx3LN1z0fjQ6GltVSM
-	 gFzwIdf3xi+AdE4+Di8KG97TyDzcnareDVYJStCw=
+	b=toKrH3dQQCtTcnFpUq7Ti+3m30vjJgCF+0Gea4Ffp5oGo6gsUIapJEMjN/0T9/tgL
+	 MGMb1wwjNjITBhRPki7y36rfQT/jvgGOCkB2l8faJ2E768fe+hPTVmPXFOZxbAXre9
+	 gWmyIKlVbVOMVxagbg9xyIIL5bf/wKaDYYz3xdd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	NeilBrown <neilb@suse.de>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 083/186] NFSD: Refactor the duplicate reply cache shrinker
-Date: Tue, 10 Sep 2024 11:32:58 +0200
-Message-ID: <20240910092557.928692752@linuxfoundation.org>
+Subject: [PATCH 5.10 084/186] NFSD: simplify error paths in nfsd_svc()
+Date: Tue, 10 Sep 2024 11:32:59 +0200
+Message-ID: <20240910092557.973203067@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -50,131 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit c135e1269f34dfdea4bd94c11060c83a3c0b3c12 ]
+[ Upstream commit bf32075256e9dd9c6b736859e2c5813981339908 ]
 
-Avoid holding the bucket lock while freeing cache entries. This
-change also caps the number of entries that are freed when the
-shrinker calls to reduce the shrinker's impact on the cache's
-effectiveness.
+The error paths in nfsd_svc() are needlessly complex and can result in a
+final call to svc_put() without nfsd_last_thread() being called.  This
+results in the listening sockets not being closed properly.
 
+The per-netns setup provided by nfsd_startup_new() and removed by
+nfsd_shutdown_net() is needed precisely when there are running threads.
+So we don't need nfsd_up_before.  We don't need to know if it *was* up.
+We only need to know if any threads are left.  If none are, then we must
+call nfsd_shutdown_net().  But we don't need to do that explicitly as
+nfsd_last_thread() does that for us.
+
+So simply call nfsd_last_thread() before the last svc_put() if there are
+no running threads.  That will always do the right thing.
+
+Also discard:
+ pr_info("nfsd: last server has exited, flushing export cache\n");
+It may not be true if an attempt to start the first server failed, and
+it isn't particularly helpful and it simply reports normal behaviour.
+
+Signed-off-by: NeilBrown <neilb@suse.de>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfscache.c |   82 +++++++++++++++++++++++++----------------------------
- 1 file changed, 39 insertions(+), 43 deletions(-)
+ fs/nfsd/nfssvc.c |   14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/fs/nfsd/nfscache.c
-+++ b/fs/nfsd/nfscache.c
-@@ -309,68 +309,64 @@ nfsd_prune_bucket_locked(struct nfsd_net
- 	}
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -567,7 +567,6 @@ void nfsd_last_thread(struct net *net)
+ 		return;
+ 
+ 	nfsd_shutdown_net(net);
+-	pr_info("nfsd: last server has exited, flushing export cache\n");
+ 	nfsd_export_flush(net);
  }
  
--static long prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn,
--			 unsigned int max)
-+/**
-+ * nfsd_reply_cache_count - count_objects method for the DRC shrinker
-+ * @shrink: our registered shrinker context
-+ * @sc: garbage collection parameters
-+ *
-+ * Returns the total number of entries in the duplicate reply cache. To
-+ * keep things simple and quick, this is not the number of expired entries
-+ * in the cache (ie, the number that would be removed by a call to
-+ * nfsd_reply_cache_scan).
-+ */
-+static unsigned long
-+nfsd_reply_cache_count(struct shrinker *shrink, struct shrink_control *sc)
+@@ -782,7 +781,6 @@ int
+ nfsd_svc(int nrservs, struct net *net, const struct cred *cred)
  {
--	struct svc_cacherep *rp, *tmp;
--	long freed = 0;
-+	struct nfsd_net *nn = container_of(shrink,
-+				struct nfsd_net, nfsd_reply_cache_shrinker);
+ 	int	error;
+-	bool	nfsd_up_before;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct svc_serv *serv;
  
--	list_for_each_entry_safe(rp, tmp, &b->lru_head, c_lru) {
--		/*
--		 * Don't free entries attached to calls that are still
--		 * in-progress, but do keep scanning the list.
--		 */
--		if (rp->c_state == RC_INPROG)
--			continue;
--		if (atomic_read(&nn->num_drc_entries) <= nn->max_drc_entries &&
--		    time_before(jiffies, rp->c_timestamp + RC_EXPIRE))
--			break;
--		nfsd_reply_cache_free_locked(b, rp, nn);
--		if (max && freed++ > max)
--			break;
--	}
--	return freed;
-+	return atomic_read(&nn->num_drc_entries);
- }
- 
--/*
-- * Walk the LRU list and prune off entries that are older than RC_EXPIRE.
-- * Also prune the oldest ones when the total exceeds the max number of entries.
-+/**
-+ * nfsd_reply_cache_scan - scan_objects method for the DRC shrinker
-+ * @shrink: our registered shrinker context
-+ * @sc: garbage collection parameters
-+ *
-+ * Free expired entries on each bucket's LRU list until we've released
-+ * nr_to_scan freed objects. Nothing will be released if the cache
-+ * has not exceeded it's max_drc_entries limit.
-+ *
-+ * Returns the number of entries released by this call.
-  */
--static long
--prune_cache_entries(struct nfsd_net *nn)
-+static unsigned long
-+nfsd_reply_cache_scan(struct shrinker *shrink, struct shrink_control *sc)
- {
-+	struct nfsd_net *nn = container_of(shrink,
-+				struct nfsd_net, nfsd_reply_cache_shrinker);
-+	unsigned long freed = 0;
-+	LIST_HEAD(dispose);
- 	unsigned int i;
--	long freed = 0;
- 
- 	for (i = 0; i < nn->drc_hashsize; i++) {
- 		struct nfsd_drc_bucket *b = &nn->drc_hashtbl[i];
- 
- 		if (list_empty(&b->lru_head))
- 			continue;
-+
- 		spin_lock(&b->cache_lock);
--		freed += prune_bucket(b, nn, 0);
-+		nfsd_prune_bucket_locked(nn, b, 0, &dispose);
- 		spin_unlock(&b->cache_lock);
--	}
--	return freed;
--}
- 
--static unsigned long
--nfsd_reply_cache_count(struct shrinker *shrink, struct shrink_control *sc)
--{
--	struct nfsd_net *nn = container_of(shrink,
--				struct nfsd_net, nfsd_reply_cache_shrinker);
-+		freed += nfsd_cacherep_dispose(&dispose);
-+		if (freed > sc->nr_to_scan)
-+			break;
-+	}
- 
--	return atomic_read(&nn->num_drc_entries);
-+	trace_nfsd_drc_gc(nn, freed);
-+	return freed;
- }
- 
--static unsigned long
--nfsd_reply_cache_scan(struct shrinker *shrink, struct shrink_control *sc)
--{
--	struct nfsd_net *nn = container_of(shrink,
--				struct nfsd_net, nfsd_reply_cache_shrinker);
+@@ -802,8 +800,6 @@ nfsd_svc(int nrservs, struct net *net, c
+ 	error = nfsd_create_serv(net);
+ 	if (error)
+ 		goto out;
 -
--	return prune_cache_entries(nn);
--}
- /*
-  * Walk an xdr_buf and get a CRC for at most the first RC_CSUMLEN bytes
-  */
+-	nfsd_up_before = nn->nfsd_net_up;
+ 	serv = nn->nfsd_serv;
+ 
+ 	error = nfsd_startup_net(net, cred);
+@@ -811,17 +807,15 @@ nfsd_svc(int nrservs, struct net *net, c
+ 		goto out_put;
+ 	error = svc_set_num_threads(serv, NULL, nrservs);
+ 	if (error)
+-		goto out_shutdown;
++		goto out_put;
+ 	error = serv->sv_nrthreads;
+-	if (error == 0)
+-		nfsd_last_thread(net);
+-out_shutdown:
+-	if (error < 0 && !nfsd_up_before)
+-		nfsd_shutdown_net(net);
+ out_put:
+ 	/* Threads now hold service active */
+ 	if (xchg(&nn->keep_active, 0))
+ 		svc_put(serv);
++
++	if (serv->sv_nrthreads == 0)
++		nfsd_last_thread(net);
+ 	svc_put(serv);
+ out:
+ 	mutex_unlock(&nfsd_mutex);
 
 
