@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1D519A281;
-	Tue, 10 Sep 2024 10:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE3E19DF44;
+	Tue, 10 Sep 2024 10:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962681; cv=none; b=Y0budExAGO4Xr+iW6354FUlMPTFkyHL9JsqbQ05PjijAO0976bDQxh/4buerwRQQJDvjEvlRV4BosjHBWuyy64GunctnYZ8QbI6HXH8Th2h9lRMP4xga34/00/Mgs7a/8x/GEph9Z6EvvPXNPQ6aE8PVbyf/d/aa/+VjDKXlXEQ=
+	t=1725962684; cv=none; b=gCpEErPqEGynEvkQr6st+6RNE4URblLaHyEE7aTeInb0c93RpGcqZ/8mZebE1eR7yzltc5l7ErkhGKzWU5R+Q5Ar30Bd0if4cClLERC0QW6HXpdK+SEJKkZZScaafzHYMpbbMnaSwWPR/ak6S297t2cmO0CJwI27u2fWCecfiL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962681; c=relaxed/simple;
-	bh=kTJIwBmwGpkC+yRAKbSse2szuPhxB9MucxLwZAUnoXE=;
+	s=arc-20240116; t=1725962684; c=relaxed/simple;
+	bh=fNu5J9oT4NvD8TH9s+8Z1s7xu+k73yEO9Osbk9+NnhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nwf4kpOeZPYZJx/hnVBrRroYsf6QSkVrF6zgyo7GqFE9xcoKusV7subjJof58F9RLujtefFKGWO2t2J/s/CBsZnFC6SrJYNqKqsVsq6aj6Vzpp2c9bx74xBUxRzkQOGOuxlhTKKP0W+pDubfCV7RxorEqBcjFbbCB4UjCzpvrPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unNrjQz8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZaeOo/mF5NeJb9nesPyYQvOSj5jLi5J0piqQpCHnH4XOQ67ajKwzpqlJUDfDnhT6xZGPqXo1qiwk4a6rzYPG+j3nCtQI77iRwknkxU2iz1FvmNXnaik4jiPd9vY6qpojRgsq1JvENiXnaILL3nGb5Yh5WCTjNN0QpHr2T9JnHXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQNzAgpL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unNrjQz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB6DC4CEC6;
-	Tue, 10 Sep 2024 10:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQNzAgpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FADC4CEC3;
+	Tue, 10 Sep 2024 10:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962681;
-	bh=kTJIwBmwGpkC+yRAKbSse2szuPhxB9MucxLwZAUnoXE=;
+	s=korg; t=1725962684;
+	bh=fNu5J9oT4NvD8TH9s+8Z1s7xu+k73yEO9Osbk9+NnhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=unNrjQz8SxZe5/beMVodTbpbXM724y/oQfWYcEMnECbl6Oi6r5ml18gCk5/uVFopP
-	 pfsuSqwGds917mxq1+Om9ehN7Fp685YLiw9xAnzDHkt7q5JCvRVIY5fQOnvnH1g4oD
-	 ebw9KB7w73BKu2q8x1UFvQaXnc/+mX0Cz0RFuHjI=
+	b=MQNzAgpLY9IKMQkX8pi0ZEDusycdga4Vut0LpZNcFiLSda7muSKlQEUHuV5pqI+LD
+	 +bgDA7/dZj2Gx5poIJlrI3d/DoW7pKaLpwb1sOTnzeQ2YB3UAs8kQHlNgnGX0ReABI
+	 o5rVSKKdHblInGdTyDz6alHagPRuOCF/5gz7do44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/121] arm64: acpi: Harden get_cpu_for_acpi_id() against missing CPU entry
-Date: Tue, 10 Sep 2024 11:33:10 +0200
-Message-ID: <20240910092551.266156888@linuxfoundation.org>
+Subject: [PATCH 5.4 116/121] nvmet-tcp: fix kernel crash if commands allocation fails
+Date: Tue, 10 Sep 2024 11:33:11 +0200
+Message-ID: <20240910092551.307928586@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -52,44 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 2488444274c70038eb6b686cba5f1ce48ebb9cdd ]
+[ Upstream commit 5572a55a6f830ee3f3a994b6b962a5c327d28cb3 ]
 
-In a review discussion of the changes to support vCPU hotplug where
-a check was added on the GICC being enabled if was online, it was
-noted that there is need to map back to the cpu and use that to index
-into a cpumask. As such, a valid ID is needed.
+If the commands allocation fails in nvmet_tcp_alloc_cmds()
+the kernel crashes in nvmet_tcp_release_queue_work() because of
+a NULL pointer dereference.
 
-If an MPIDR check fails in acpi_map_gic_cpu_interface() it is possible
-for the entry in cpu_madt_gicc[cpu] == NULL.  This function would
-then cause a NULL pointer dereference.   Whilst a path to trigger
-this has not been established, harden this caller against the
-possibility.
+  nvmet: failed to install queue 0 cntlid 1 ret 6
+  Unable to handle kernel NULL pointer dereference at
+         virtual address 0000000000000008
 
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240529133446.28446-13-Jonathan.Cameron@huawei.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fix the bug by setting queue->nr_cmds to zero in case
+nvmet_tcp_alloc_cmd() fails.
+
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/acpi.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index f391ea7a5409..cbf97e648d19 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -115,7 +115,8 @@ static inline int get_cpu_for_acpi_id(u32 uid)
- 	int cpu;
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index fa6e7fbf356e..11c8506e04ca 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1751,8 +1751,10 @@ static u16 nvmet_tcp_install_queue(struct nvmet_sq *sq)
+ 	}
  
- 	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
--		if (uid == get_acpi_id_for_cpu(cpu))
-+		if (acpi_cpu_get_madt_gicc(cpu) &&
-+		    uid == get_acpi_id_for_cpu(cpu))
- 			return cpu;
+ 	queue->nr_cmds = sq->size * 2;
+-	if (nvmet_tcp_alloc_cmds(queue))
++	if (nvmet_tcp_alloc_cmds(queue)) {
++		queue->nr_cmds = 0;
+ 		return NVME_SC_INTERNAL;
++	}
+ 	return 0;
+ }
  
- 	return -EINVAL;
 -- 
 2.43.0
 
