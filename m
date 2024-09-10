@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5281974EA;
-	Tue, 10 Sep 2024 10:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376A51917DD;
+	Tue, 10 Sep 2024 10:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964818; cv=none; b=FOA5HkNcUQe0H31sV6ivFbCVnPQySolqsiYXBFSu0nja6hCJpEWWEycmFisjhEPl7eQALstuf7TBzyFWqygzUatIFGS1a9exyTO/5xGejbdunMd7MQWqOwtcnuH/Sr41rUzN9KNhuKDFq3YIh4KOlGXqR+aJk7+qXiBuXoS2Fic=
+	t=1725964821; cv=none; b=C9F/WUL2yAuZCU9Dly3doF8TmA/Bd7tkajCh7O7uyNb7iDQ70dK/6NkG7gFoPWqNU763rakics9/B4upz4BY46whNA2QVOktBgy1MpYZCF53D/oKlpZP2NTVLMXtZTtR5VOcGgY8B1bw4gv3BSGzUzPVbNQIUz+JCQ5xyMHu+rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964818; c=relaxed/simple;
-	bh=z+8tp9jCzf/fdrbR2ykl7OLgYacfOJ1ihKi2hs8d5wM=;
+	s=arc-20240116; t=1725964821; c=relaxed/simple;
+	bh=N5bFS1rKIKjN/64NgzSlFVclkrdTGyFYePA0Du+qISI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8ymFPgifvCKE5EBITjwGw8XMvNQeBFltYQ+a3dBQMbiMRdedKpPDioA6sWQvN0lWsPyhwp8xjz0CxuU0uLKrpWHKgW2O8flzaqKKMaUp9ZQebYyu7/SYQmZ1mi+uw8u1r1JLQnaUkjXnwDezP2yky8V9pdIQBda4zNNixbO/fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXFgKlO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C5Fpeh30KORpAYuTIp2t7ffiwyy/Gawyw//Kz1QcZPSoA7/HRxK/hxf2o/qUZNzkufK6xm8m9RozXpKQWdqfdo6YT2aelPogtNoLI6Zl/eaUYX1mnRLVJ2JC9f1XH/J+K9S4rlybsCEfuRI2rLijVt0vTreVTObMPVmGkPh6dmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNn/65XU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXFgKlO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CFCC4CECD;
-	Tue, 10 Sep 2024 10:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNn/65XU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B214BC4CECE;
+	Tue, 10 Sep 2024 10:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964818;
-	bh=z+8tp9jCzf/fdrbR2ykl7OLgYacfOJ1ihKi2hs8d5wM=;
+	s=korg; t=1725964821;
+	bh=N5bFS1rKIKjN/64NgzSlFVclkrdTGyFYePA0Du+qISI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXFgKlO9yKbD0wqtSBKyN/BnM7RZdumpPGpuJN7An78VwIrixmdI/QG7EPiknjLdt
-	 jHR3+RTwDBSsLmZxxcMtKyHITPEozusHXyM6z/xvRAgfoRog+2nPbClDEf1urfioT5
-	 SeNi64N/DiiyWALPI+mUy3KOCo1FxfuP3dwEWrnE=
+	b=oNn/65XUIUCv/Sum52XKLktKOEL5Muj9gERoamhE+9LPjSbyf8MB4myfn6d0EMJPE
+	 VjoCTGYGS1cGXxaqZp2HPByWyJb5DjDtc0URMksA3Ieda52XxDXMYIeuv3GGDQBZKX
+	 5v0BoR77FFxGLRSL0obBHpSp/z7D5EIIyD82Leh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/186] drm/amd/display: Skip wbscl_set_scaler_filter if filter is null
-Date: Tue, 10 Sep 2024 11:32:17 +0200
-Message-ID: <20240910092556.263338927@linuxfoundation.org>
+Subject: [PATCH 5.10 043/186] media: uvcvideo: Enforce alignment of frame and interval
+Date: Tue, 10 Sep 2024 11:32:18 +0200
+Message-ID: <20240910092556.303056003@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -53,39 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit c4d31653c03b90e51515b1380115d1aedad925dd ]
+[ Upstream commit c8931ef55bd325052ec496f242aea7f6de47dc9c ]
 
-Callers can pass null in filter (i.e. from returned from the function
-wbscl_get_filter_coeffs_16p) and a null check is added to ensure that is
-not the case.
+Struct uvc_frame and interval (u32*) are packaged together on
+streaming->formats on a single contiguous allocation.
 
-This fixes 4 NULL_RETURNS issues reported by Coverity.
+Right now they are allocated right after uvc_format, without taking into
+consideration their required alignment.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This is working fine because both structures have a field with a
+pointer, but it will stop working when the sizeof() of any of those
+structs is not a multiple of the sizeof(void*).
+
+Enforce that alignment during the allocation.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240404-uvc-align-v2-1-9e104b0ecfbd@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
-index 880954ac0b02..1b3cba5b1d74 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_dwb_scl.c
-@@ -690,6 +690,9 @@ static void wbscl_set_scaler_filter(
- 	int pair;
- 	uint16_t odd_coef, even_coef;
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 6334f99f1854..cfbc7595cd0b 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -948,16 +948,26 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 		goto error;
+ 	}
  
-+	if (!filter)
-+		return;
+-	size = nformats * sizeof(*format) + nframes * sizeof(*frame)
++	/*
++	 * Allocate memory for the formats, the frames and the intervals,
++	 * plus any required padding to guarantee that everything has the
++	 * correct alignment.
++	 */
++	size = nformats * sizeof(*format);
++	size = ALIGN(size, __alignof__(*frame)) + nframes * sizeof(*frame);
++	size = ALIGN(size, __alignof__(*interval))
+ 	     + nintervals * sizeof(*interval);
 +
- 	for (phase = 0; phase < (NUM_PHASES / 2 + 1); phase++) {
- 		for (pair = 0; pair < tap_pairs; pair++) {
- 			even_coef = filter[phase * taps + 2 * pair];
+ 	format = kzalloc(size, GFP_KERNEL);
+-	if (format == NULL) {
++	if (!format) {
+ 		ret = -ENOMEM;
+ 		goto error;
+ 	}
+ 
+-	frame = (struct uvc_frame *)&format[nformats];
+-	interval = (u32 *)&frame[nframes];
++	frame = (void *)format + nformats * sizeof(*format);
++	frame = PTR_ALIGN(frame, __alignof__(*frame));
++	interval = (void *)frame + nframes * sizeof(*frame);
++	interval = PTR_ALIGN(interval, __alignof__(*interval));
+ 
+ 	streaming->format = format;
+ 	streaming->nformats = nformats;
 -- 
 2.43.0
 
