@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2FB18E754;
-	Tue, 10 Sep 2024 09:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1D618E021;
+	Tue, 10 Sep 2024 09:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962387; cv=none; b=JBW9+G+v8oUtBzxEPF+p01HdnF3RGjYoy+fj/9d82cUjatwvYeK3+c7SkLdWLd45F4xxwP7NFxY+MsRd5dQMwIb6vyZM0Ev37CXdhoSK77Lb82j6vxQKeTi5IHwhunX984lAqoxNPyDCZOV240YaVTjfprEAoTITvbNtebXNfdY=
+	t=1725962390; cv=none; b=rNX+UtMPcoN+vYoxWXv0/r1IXaJOpCfim0Mhl5377JjKnRN6xYROoG0XHfrzQiCwjzAIjxHWbxWHPVMMJW+kYxewozmPw8pwNsuqqIlmTs7tc3EcxmBN7wcR9XPevEnGSUovwJk44Y6bDQAaKWaPKUtQlO8XAhU6G0x/36zLyy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962387; c=relaxed/simple;
-	bh=29dBkXU4A/NlltPgdZTeSneE7XFsqDZSMrvVDi2Adw8=;
+	s=arc-20240116; t=1725962390; c=relaxed/simple;
+	bh=jOqfpA3xMmn9L9An1KuEWsWCL6zb8JTBoOWYCEOqt2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaojkp2h6NKuUk7DXak7Uzs4kwal2j1YP3x5tl/2KbVBCAWGe8nnUnG7OB+SRTpFreoALxAaTGBILVuX+/cRqFe1vQsNs2+CgzT72mOBDXvszXa5AxY04PI2sbM1F9GGGpA1zk3aQ5qL/uVhm1B7eL+HfiOGK7MpM6Cr+G3WgsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phfrlFCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XO5Bbfd3vu2i4gZSijpwj9vRLOeBXybidRDBdtROipliK6wBtfHZLK+czW+i4MxQH3iepzexoU3xf8pd1xCXvNT1Vn+mAT3bSAjcQQO3LIsCd/tSUXFEjUFUfTTrwi82qfaRDgKRLfFzxDYAl61v8GNwlPxJky6/dhtuDdzTRRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqy9mj0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phfrlFCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D398C4CEC6;
-	Tue, 10 Sep 2024 09:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqy9mj0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607D5C4CEC3;
+	Tue, 10 Sep 2024 09:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962386;
-	bh=29dBkXU4A/NlltPgdZTeSneE7XFsqDZSMrvVDi2Adw8=;
+	s=korg; t=1725962389;
+	bh=jOqfpA3xMmn9L9An1KuEWsWCL6zb8JTBoOWYCEOqt2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phfrlFCGLeULtqTau6aPZmeUq9zdQnDX33ukJN0EO7wE6hSsKqbp0k851/bffXuK6
-	 SVlC8ex8jhq1akRc4YTVmK92VGZ+Spd5tGHJD3XwC2Nk3n6OMpzkLqQQ372Vr4dvz+
-	 nS6ZtPdXV5O5x/HcXOFdTQx5AQMGEK46CKLz9DTw=
+	b=eqy9mj0Du3ZMiz1bD6LLMRmbcif/KId9om3LxDuQ48gK/SMGTJGjyZDrrXgGsXEEe
+	 fjgI1sE+gn64syI55omtXPX0Vp1F+Yz2fY5Nhs9HPj56BvPORHI4pC9aNA97RPxnth
+	 8ob4WC1N+0HMr3HhPbgXkVJGPcyGpsYwuiNX77EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 017/121] smack: tcp: ipv4, fix incorrect labeling
-Date: Tue, 10 Sep 2024 11:31:32 +0200
-Message-ID: <20240910092546.560501695@linuxfoundation.org>
+Subject: [PATCH 5.4 018/121] wifi: cfg80211: make hash table duplicates more survivable
+Date: Tue, 10 Sep 2024 11:31:33 +0200
+Message-ID: <20240910092546.600896301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -51,67 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Schaufler <casey@schaufler-ca.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2fe209d0ad2e2729f7e22b9b31a86cc3ff0db550 ]
+[ Upstream commit 7f12e26a194d0043441f870708093d9c2c3bad7d ]
 
-Currently, Smack mirrors the label of incoming tcp/ipv4 connections:
-when a label 'foo' connects to a label 'bar' with tcp/ipv4,
-'foo' always gets 'foo' in returned ipv4 packets. So,
-1) returned packets are incorrectly labeled ('foo' instead of 'bar')
-2) 'bar' can write to 'foo' without being authorized to write.
+Jiazi Li reported that they occasionally see hash table duplicates
+as evidenced by the WARN_ON() in rb_insert_bss() in this code.  It
+isn't clear how that happens, nor have I been able to reproduce it,
+but if it does happen, the kernel crashes later, when it tries to
+unhash the entry that's now not hashed.
 
-Here is a scenario how to see this:
+Try to make this situation more survivable by removing the BSS from
+the list(s) as well, that way it's fully leaked here (as had been
+the intent in the hash insert error path), and no longer reachable
+through the list(s) so it shouldn't be unhashed again later.
 
-* Take two machines, let's call them C and S,
-   with active Smack in the default state
-   (no settings, no rules, no labeled hosts, only builtin labels)
-
-* At S, add Smack rule 'foo bar w'
-   (labels 'foo' and 'bar' are instantiated at S at this moment)
-
-* At S, at label 'bar', launch a program
-   that listens for incoming tcp/ipv4 connections
-
-* From C, at label 'foo', connect to the listener at S.
-   (label 'foo' is instantiated at C at this moment)
-   Connection succeedes and works.
-
-* Send some data in both directions.
-* Collect network traffic of this connection.
-
-All packets in both directions are labeled with the CIPSO
-of the label 'foo'. Hence, label 'bar' writes to 'foo' without
-being authorized, and even without ever being known at C.
-
-If anybody cares: exactly the same happens with DCCP.
-
-This behavior 1st manifested in release 2.6.29.4 (see Fixes below)
-and it looks unintentional. At least, no explanation was provided.
-
-I changed returned packes label into the 'bar',
-to bring it into line with the Smack documentation claims.
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Link: https://lore.kernel.org/r/20231026013528.GA24122@Jiazi.Li
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://msgid.link/20240607181726.36835-2-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/scan.c | 46 +++++++++++++++++++++++++++++++++------------
+ 1 file changed, 34 insertions(+), 12 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 072ce1ef6efb..7d04b21737cf 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4196,7 +4196,7 @@ static int smack_inet_conn_request(struct sock *sk, struct sk_buff *skb,
- 	rcu_read_unlock();
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index c74882e3c309..b28e652514e8 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1003,7 +1003,7 @@ struct cfg80211_bss *cfg80211_get_bss(struct wiphy *wiphy,
+ }
+ EXPORT_SYMBOL(cfg80211_get_bss);
  
- 	if (hskp == NULL)
--		rc = netlbl_req_setattr(req, &skp->smk_netlabel);
-+		rc = netlbl_req_setattr(req, &ssp->smk_out->smk_netlabel);
- 	else
- 		netlbl_req_delattr(req);
+-static void rb_insert_bss(struct cfg80211_registered_device *rdev,
++static bool rb_insert_bss(struct cfg80211_registered_device *rdev,
+ 			  struct cfg80211_internal_bss *bss)
+ {
+ 	struct rb_node **p = &rdev->bss_tree.rb_node;
+@@ -1019,7 +1019,7 @@ static void rb_insert_bss(struct cfg80211_registered_device *rdev,
  
+ 		if (WARN_ON(!cmp)) {
+ 			/* will sort of leak this BSS */
+-			return;
++			return false;
+ 		}
+ 
+ 		if (cmp < 0)
+@@ -1030,6 +1030,7 @@ static void rb_insert_bss(struct cfg80211_registered_device *rdev,
+ 
+ 	rb_link_node(&bss->rbn, parent, p);
+ 	rb_insert_color(&bss->rbn, &rdev->bss_tree);
++	return true;
+ }
+ 
+ static struct cfg80211_internal_bss *
+@@ -1056,6 +1057,34 @@ rb_find_bss(struct cfg80211_registered_device *rdev,
+ 	return NULL;
+ }
+ 
++static void cfg80211_insert_bss(struct cfg80211_registered_device *rdev,
++				struct cfg80211_internal_bss *bss)
++{
++	lockdep_assert_held(&rdev->bss_lock);
++
++	if (!rb_insert_bss(rdev, bss))
++		return;
++	list_add_tail(&bss->list, &rdev->bss_list);
++	rdev->bss_entries++;
++}
++
++static void cfg80211_rehash_bss(struct cfg80211_registered_device *rdev,
++                                struct cfg80211_internal_bss *bss)
++{
++	lockdep_assert_held(&rdev->bss_lock);
++
++	rb_erase(&bss->rbn, &rdev->bss_tree);
++	if (!rb_insert_bss(rdev, bss)) {
++		list_del(&bss->list);
++		if (!list_empty(&bss->hidden_list))
++			list_del_init(&bss->hidden_list);
++		if (!list_empty(&bss->pub.nontrans_list))
++			list_del_init(&bss->pub.nontrans_list);
++		rdev->bss_entries--;
++	}
++	rdev->bss_generation++;
++}
++
+ static bool cfg80211_combine_bsses(struct cfg80211_registered_device *rdev,
+ 				   struct cfg80211_internal_bss *new)
+ {
+@@ -1331,9 +1360,7 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
+ 			bss_ref_get(rdev, pbss);
+ 		}
+ 
+-		list_add_tail(&new->list, &rdev->bss_list);
+-		rdev->bss_entries++;
+-		rb_insert_bss(rdev, new);
++		cfg80211_insert_bss(rdev, new);
+ 		found = new;
+ 	}
+ 
+@@ -2142,10 +2169,7 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
+ 		if (!WARN_ON(!__cfg80211_unlink_bss(rdev, new)))
+ 			rdev->bss_generation++;
+ 	}
+-
+-	rb_erase(&cbss->rbn, &rdev->bss_tree);
+-	rb_insert_bss(rdev, cbss);
+-	rdev->bss_generation++;
++	cfg80211_rehash_bss(rdev, cbss);
+ 
+ 	list_for_each_entry_safe(nontrans_bss, tmp,
+ 				 &cbss->pub.nontrans_list,
+@@ -2153,9 +2177,7 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
+ 		bss = container_of(nontrans_bss,
+ 				   struct cfg80211_internal_bss, pub);
+ 		bss->pub.channel = chan;
+-		rb_erase(&bss->rbn, &rdev->bss_tree);
+-		rb_insert_bss(rdev, bss);
+-		rdev->bss_generation++;
++		cfg80211_rehash_bss(rdev, bss);
+ 	}
+ 
+ done:
 -- 
 2.43.0
 
