@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6029D18E76B;
-	Tue, 10 Sep 2024 09:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4713C18A6D1;
+	Tue, 10 Sep 2024 09:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961864; cv=none; b=dO6EIbLn6ol1N5IFjXN3PYHqhOts8uv5X8JllgCygYrAhWjsYSuNPDcvkn7rAbDRxXpc20WHD+valxK92Fr4CXMkOoBKINm0yPH0I4M86K4bMXRHgHuEh8ASyfbrvGfchdk9zNiak+tuYOISIg3d+Vb2165LHJSWyoqxeplsc/Q=
+	t=1725961867; cv=none; b=qg5IoBdcyC6C8gowlkh4l1YvouWaDS3dse4msJ67qg73oEZXWWsCERYrNVFJe0y+8OlTKxo9ci6Da+FC68RQSE79HC6nO/E20IrYD8XKybUo8PNgCEcSgmeC5Abde5VsH+urpetgsb3cuhPP/r1Yx9/D8quilIrhnSMe+C+pVdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961864; c=relaxed/simple;
-	bh=8myMmm9nA8uOFweoQewOTi040oNYdZPBys9lDjdUTCA=;
+	s=arc-20240116; t=1725961867; c=relaxed/simple;
+	bh=Wzj2mSMAXauS9cv8BtWLxbgwoJGeJzRS/+WaT/cJbeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPSm/BwtuHqgYSjpFhMa+k3GwspPIFF/+xBF1VamoFDLMwYE8V5dBLHyYff7KKBsaEINly9fRIUuxHbJbvzgpgbWW350r2ezK188oY8FdRFcypFZliZPwbCHqTFjW5n0aV22DQ8dNyRDUVLqaSUr5HlcA41cQcctY2m9owYmSbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwQgNebw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tByIgapvnl6pkaUG/ZXQVyBLrVePDDHRUedepeYCMXGrK6zGyb8GA71A/nisJ9A1oAy5TmbfJbf7Ix1fj1kaopCZLe1IPPdRq/xOnR2iY8aw5+H96ZhRdML+Jem2fgRZ+ACQz6XF2zGUe5sfGN7MW4D+n6tZMYPPHI1JeYEYW9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1/mli5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwQgNebw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D899EC4CECE;
-	Tue, 10 Sep 2024 09:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1/mli5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B949EC4CECE;
+	Tue, 10 Sep 2024 09:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961864;
-	bh=8myMmm9nA8uOFweoQewOTi040oNYdZPBys9lDjdUTCA=;
+	s=korg; t=1725961867;
+	bh=Wzj2mSMAXauS9cv8BtWLxbgwoJGeJzRS/+WaT/cJbeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwQgNebwbfiwyfmTBWTcKFvNvntlfMb+MAmPj62prPMMAjmYs8LHuDzXwi1cXHyUe
-	 qOUtLN3VlB3JKygKAorzh3jly65NiEZv6iNDPXcYMwWOk+kLmWZOCCFdytif622A+p
-	 hdiOPoFWERUewnpQSKvgc3aCNef/cgrqCikcicNg=
+	b=H1/mli5wWtj80v39TpEF2FutXG7h5gt8xcBMYETIzro7aEoQNmoLU++dAGyVAM9Zg
+	 vAtWu6g2YlDwZIxjDEJDasBlPZCPkJJAV3o65J/nz+xSyvJrqhsP0l53pV6U7uNT/Q
+	 LpsxGLRnMcHIMVJeHmFXOnl8pbmnsmxIPUyzwUtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyoungrul Kim <k831.kim@samsung.com>,
-	Minwoo Im <minwoo.im@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Terrence Adams <tadamsjr@google.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 214/375] scsi: ufs: core: Remove SCSI host only if added
-Date: Tue, 10 Sep 2024 11:30:11 +0200
-Message-ID: <20240910092629.713576565@linuxfoundation.org>
+Subject: [PATCH 6.10 215/375] scsi: pm80xx: Set phy->enable_completion only when we wait for it
+Date: Tue, 10 Sep 2024 11:30:12 +0200
+Message-ID: <20240910092629.752087145@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,62 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyoungrul Kim <k831.kim@samsung.com>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 7cbff570dbe8907e23bba06f6414899a0fbb2fcc ]
+[ Upstream commit e4f949ef1516c0d74745ee54a0f4882c1f6c7aea ]
 
-If host tries to remove ufshcd driver from a UFS device it would cause a
-kernel panic if ufshcd_async_scan fails during ufshcd_probe_hba before
-adding a SCSI host with scsi_add_host and MCQ is enabled since SCSI host
-has been defered after MCQ configuration introduced by commit 0cab4023ec7b
-("scsi: ufs: core: Defer adding host to SCSI if MCQ is supported").
+pm8001_phy_control() populates the enable_completion pointer with a stack
+address, sends a PHY_LINK_RESET / PHY_HARD_RESET, waits 300 ms, and
+returns. The problem arises when a phy control response comes late.  After
+300 ms the pm8001_phy_control() function returns and the passed
+enable_completion stack address is no longer valid. Late phy control
+response invokes complete() on a dangling enable_completion pointer which
+leads to a kernel crash.
 
-To guarantee that SCSI host is removed only if it has been added, set the
-scsi_host_added flag to true after adding a SCSI host and check whether it
-is set or not before removing it.
-
-Signed-off-by: Kyoungrul Kim <k831.kim@samsung.com>
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Link: https://lore.kernel.org/r/20240627085104epcms2p5897a3870ea5c6416aa44f94df6c543d7@epcms2p5
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Link: https://lore.kernel.org/r/20240627155924.2361370-2-tadamsjr@google.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/pm8001/pm8001_sas.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 91bfdc17eedb..b9c436a002a1 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10196,7 +10196,8 @@ void ufshcd_remove(struct ufs_hba *hba)
- 	blk_mq_destroy_queue(hba->tmf_queue);
- 	blk_put_queue(hba->tmf_queue);
- 	blk_mq_free_tag_set(&hba->tmf_tag_set);
--	scsi_remove_host(hba->host);
-+	if (hba->scsi_host_added)
-+		scsi_remove_host(hba->host);
- 	/* disable interrupts */
- 	ufshcd_disable_intr(hba, hba->intr_mask);
- 	ufshcd_hba_stop(hba);
-@@ -10478,6 +10479,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 			dev_err(hba->dev, "scsi_add_host failed\n");
- 			goto out_disable;
- 		}
-+		hba->scsi_host_added = true;
- 	}
+diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
+index a5a31dfa4512..ee2da8e49d4c 100644
+--- a/drivers/scsi/pm8001/pm8001_sas.c
++++ b/drivers/scsi/pm8001/pm8001_sas.c
+@@ -166,7 +166,6 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
+ 	unsigned long flags;
+ 	pm8001_ha = sas_phy->ha->lldd_ha;
+ 	phy = &pm8001_ha->phy[phy_id];
+-	pm8001_ha->phy[phy_id].enable_completion = &completion;
  
- 	hba->tmf_tag_set = (struct blk_mq_tag_set) {
-@@ -10560,7 +10562,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- free_tmf_tag_set:
- 	blk_mq_free_tag_set(&hba->tmf_tag_set);
- out_remove_scsi_host:
--	scsi_remove_host(hba->host);
-+	if (hba->scsi_host_added)
-+		scsi_remove_host(hba->host);
- out_disable:
- 	hba->is_irq_enabled = false;
- 	ufshcd_hba_exit(hba);
+ 	if (PM8001_CHIP_DISP->fatal_errors(pm8001_ha)) {
+ 		/*
+@@ -190,6 +189,7 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
+ 				rates->maximum_linkrate;
+ 		}
+ 		if (pm8001_ha->phy[phy_id].phy_state ==  PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
+@@ -198,6 +198,7 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
+ 		break;
+ 	case PHY_FUNC_HARD_RESET:
+ 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
+@@ -206,6 +207,7 @@ int pm8001_phy_control(struct asd_sas_phy *sas_phy, enum phy_func func,
+ 		break;
+ 	case PHY_FUNC_LINK_RESET:
+ 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
 -- 
 2.43.0
 
