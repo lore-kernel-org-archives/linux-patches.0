@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7AA1885A6;
-	Tue, 10 Sep 2024 09:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7DB18C024;
+	Tue, 10 Sep 2024 09:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961996; cv=none; b=nAgpofFEO1MtYBPVgp3Mp/xKQgol5ChxU3auTBz5QQH6I2saeKTIGhHX/iIS8mnYEjunXxeYp7iGblJCAWObIWe0+hmxRAg5ishT7u4mCeNjuu3CActgPXm0eFPtgxE5hoJJFLj3fuHH7LINHXGAMjObYCfSYUujVXDwEjfuY8o=
+	t=1725961999; cv=none; b=GdE0l/x8XRw69vHFwuc+R4p0nVRiAfNg3mUKQN7Y7T5zCR6Eiy4sJntujXsoliTCMs4vAw975LLAjirUdU5v50qHKdjH+1qIMd5fK11DSyxJaoyadDKmsLbcoY76XjAd2KZh5lrxuHCU5V8Qh6NlLe4Lhy58d5wCt1r1pKIyhP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961996; c=relaxed/simple;
-	bh=AlHI9sfNtYJHKIPBhYVrA+mb8rSiOcWkztyNOi+9gJY=;
+	s=arc-20240116; t=1725961999; c=relaxed/simple;
+	bh=Z9nZU2mXJg5yk0y/sfTVG4hbk5+4xnIQyIXl4jLLfjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lX8N0UWIwiKcekImOwshDVDXJFGjYj8CE8RlIoGLV3ZsrkbMxE3P+qt7RdsZornWN3BO+4z1nuC/lqN0vaPDUo4PnD1cKa1Zr3+a4nXfu/Ow+gpLz/amSi26uwHlAt1MY8yWuvq21K4RaNN8q6/EH2SgDx6+NAb9O9rCLpDyM64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNDHKPd+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+1hoK+tbHrH77TDnx0eJ25vZV3w91yLr64l+LXAle01oyEHFJwt2PHLnHXRWegxz3aZkv2gVFEzNw/Gmssc00haLivJfSHiRvBdf9rPmjqDJL9wtSp+A1T6Ekw1GYMxiCKIdngqScsMnaLsC1Sa0kHb8OGAOWatOrQu043aNMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wRNVfpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNDHKPd+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FE0C4CEC3;
-	Tue, 10 Sep 2024 09:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wRNVfpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050B8C4CEC6;
+	Tue, 10 Sep 2024 09:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961996;
-	bh=AlHI9sfNtYJHKIPBhYVrA+mb8rSiOcWkztyNOi+9gJY=;
+	s=korg; t=1725961999;
+	bh=Z9nZU2mXJg5yk0y/sfTVG4hbk5+4xnIQyIXl4jLLfjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNDHKPd+7FDVApPFRPFn9bUyhnzAagcUx7iArsocJA5Vj0d6Geg24+ZP6KqzUfzsS
-	 KZ92fq3XvVJsvxDatVO4p7Wgka3SPoLHpFHWrvpW+oD1WgHv40qQ/FdgkQJQ5kY1yf
-	 yWxgsBW0V8w8LdY11FLbRo/O42V7rg21w0mKgseU=
+	b=0wRNVfppLqeQ7brAVrCL2Nzi4RQItdzt6o+NTHzJK7G8zzP2IMg2Kb+y1RTWboLeG
+	 w/G/0li4MSMUVrh6/8I0Qjez6BsuokBKT+KODNYj4uyl6ZAwzKN8F6UaBfAro1u0iO
+	 EJxjy8YLu5AHBDC6uOxI1Q25N+dH6PpURo9u4Lpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 260/375] i3c: mipi-i3c-hci: Error out instead on BUG_ON() in IBI DMA setup
-Date: Tue, 10 Sep 2024 11:30:57 +0200
-Message-ID: <20240910092631.296144011@linuxfoundation.org>
+Subject: [PATCH 6.10 261/375] kselftests: dmabuf-heaps: Ensure the driver name is null-terminated
+Date: Tue, 10 Sep 2024 11:30:58 +0200
+Message-ID: <20240910092631.327774295@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,38 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-[ Upstream commit 8a2be2f1db268ec735419e53ef04ca039fc027dc ]
+[ Upstream commit 291e4baf70019f17a81b7b47aeb186b27d222159 ]
 
-Definitely condition dma_get_cache_alignment * defined value > 256
-during driver initialization is not reason to BUG_ON(). Turn that to
-graceful error out with -EINVAL.
+Even if a vgem device is configured in, we will skip the import_vgem_fd()
+test almost every time.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20240628131559.502822-3-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  TAP version 13
+  1..11
+  # Testing heap: system
+  # =======================================
+  # Testing allocation and importing:
+  ok 1 # SKIP Could not open vgem -1
+
+The problem is that we use the DRM_IOCTL_VERSION ioctl to query the driver
+version information but leave the name field a non-null-terminated string.
+Terminate it properly to actually test against the vgem device.
+
+While at it, let's check the length of the driver name is exactly 4 bytes
+and return early otherwise (in case there is a name like "vgemfoo" that
+gets converted to "vgem\0" unexpectedly).
+
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240729024604.2046-1-yuzenghui@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 4e01a95cc4d0..1a96bf5a0bf8 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -294,7 +294,10 @@ static int hci_dma_init(struct i3c_hci *hci)
+diff --git a/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c b/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
+index 5f541522364f..5d0a809dc2df 100644
+--- a/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
++++ b/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
+@@ -29,9 +29,11 @@ static int check_vgem(int fd)
+ 	version.name = name;
  
- 		rh->ibi_chunk_sz = dma_get_cache_alignment();
- 		rh->ibi_chunk_sz *= IBI_CHUNK_CACHELINES;
--		BUG_ON(rh->ibi_chunk_sz > 256);
-+		if (rh->ibi_chunk_sz > 256) {
-+			ret = -EINVAL;
-+			goto err_out;
-+		}
+ 	ret = ioctl(fd, DRM_IOCTL_VERSION, &version);
+-	if (ret)
++	if (ret || version.name_len != 4)
+ 		return 0;
  
- 		ibi_status_ring_sz = rh->ibi_status_sz * rh->ibi_status_entries;
- 		ibi_data_ring_sz = rh->ibi_chunk_sz * rh->ibi_chunks_total;
++	name[4] = '\0';
++
+ 	return !strcmp(name, "vgem");
+ }
+ 
 -- 
 2.43.0
 
