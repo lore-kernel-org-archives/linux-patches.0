@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D637918A950;
-	Tue, 10 Sep 2024 09:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E5318B46D;
+	Tue, 10 Sep 2024 09:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961222; cv=none; b=ACwMBtRR+MMwEGp3HYc/YV1zKKGLymyW1U4nhwFiUSimEWYuZsYF8zd3v91Ond/+bURr1o0BO9CvQ4MEy9WVg6bXVY7hxwh60pxJq/XQTO+tiNliHB/hCdynXa+OywptxeGpAIugGs2b2Q82/puNRUz3mcqXQMjvg4VcyNUnsAE=
+	t=1725961225; cv=none; b=dteus7js8W/kWkhn6b3w8x7DAylOigtaTrZ1eOv0L7QVjAF5oPkU6MwOirQr82VebpUShemhM3eRb3dfS1zsQpVZ2X8qgzvjCJi6+BAyTghO7bbLTv5OUQq+lTqh9CjXGFQ1RTv5kJBCbfvBn4t0QZTlFEWQsY9jk3SvlzQ0ofY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961222; c=relaxed/simple;
-	bh=Alsbsj9QM8Yb4ioBRYgeyFCxjoBgJwNowsSz29aZumk=;
+	s=arc-20240116; t=1725961225; c=relaxed/simple;
+	bh=kX4CaXxGfg/qCO3hvIjR//RSmvb8/UCdLEtq5Rgwwkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKzRhKIB9iE2WeZBS3nVvDYlWogvoIyLwdmVmWWO5RMtuqTCdjA7pRfnXt10lhYYwcu5kbr/+vfE4ZV9Asvxz/SHZ9vJb2EDlq2r62RBJj6eMyhq1/oIKYJ9HWTegJDKN+3SugBE7FCwsi+dxSEWMD7g+i6z/7JEe5FCUmTiUbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNBV2488; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gg/Tx8O5OAFKk9TOwU7nplk+2eCJSCLzF6Fd84WowQTOBkpkQPBS/sZ40OMOOIyQC7MFl5Q35mde1p79IDWcUPJNPhq3EY8pWNqeFO2qeEL83v2yjUX8npnOYLu0+q+4fBBUES9AQFxbAkZdiVFkkIaEaOPjUnAh6VMkUv4uPf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EG8km3l5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNBV2488"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D265C4CEC3;
-	Tue, 10 Sep 2024 09:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EG8km3l5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4004AC4CEC3;
+	Tue, 10 Sep 2024 09:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961222;
-	bh=Alsbsj9QM8Yb4ioBRYgeyFCxjoBgJwNowsSz29aZumk=;
+	s=korg; t=1725961225;
+	bh=kX4CaXxGfg/qCO3hvIjR//RSmvb8/UCdLEtq5Rgwwkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNBV2488j1mKlCXtiegQXCvsnEVusKhMKmRGXAiLtN5zN6n69kZNKvv+Ywkws0fbB
-	 2pbqRuofUZyhNqhxhqK3mM7Lkx9hdWCAUCZuOqIPIQDr/t8B8+Meelu1fMgwDCgx63
-	 LIt0GW6mUHniGkHt49Ow3U2dz5hiGrzvFoaEfnEs=
+	b=EG8km3l5bK5QuWFrGy7JzYobRjwUB8MgCe0tpcQvzudiwMwn+K4Yz5kEhRHgQ6O9M
+	 mjqrLCI+8Z3Go2BlKjvY0K9wDWQ9KBMc+8olOS8yxiX4ERXeAzPZ48c7IB6LYjWiDJ
+	 UFprwLzFc3sXj1BJoVrj2biuv0RxNGVxzo9rMU2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Foster Snowhill <forst@pen.gy>,
+	Georgi Valkov <gvalkov@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 68/96] Input: uinput - reject requests with unreasonable number of slots
-Date: Tue, 10 Sep 2024 11:32:10 +0200
-Message-ID: <20240910092544.530729806@linuxfoundation.org>
+Subject: [PATCH 4.19 69/96] usbnet: ipheth: race between ipheth_close and error handling
+Date: Tue, 10 Sep 2024 11:32:11 +0200
+Message-ID: <20240910092544.584176435@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -52,54 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 206f533a0a7c683982af473079c4111f4a0f9f5e ]
+[ Upstream commit e5876b088ba03a62124266fa20d00e65533c7269 ]
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+ipheth_sndbulk_callback() can submit carrier_work
+as a part of its error handling. That means that
+the driver must make sure that the work is cancelled
+after it has made sure that no more URB can terminate
+with an error condition.
 
-When exercising uinput interface syzkaller may try setting up device
-with a really large number of slots, which causes memory allocation
-failure in input_mt_init_slots(). While this allocation failure is
-handled properly and request is rejected, it results in syzkaller
-reports. Additionally, such request may put undue burden on the
-system which will try to free a lot of memory for a bogus request.
+Hence the order of actions in ipheth_close() needs
+to be inverted.
 
-Fix it by limiting allowed number of slots to 100. This can easily
-be extended if we see devices that can track more than 100 contacts.
-
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot <syzbot+0122fa359a69694395d5@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=0122fa359a69694395d5
-Link: https://lore.kernel.org/r/Zqgi7NYEbpRsJfa2@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Foster Snowhill <forst@pen.gy>
+Tested-by: Georgi Valkov <gvalkov@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/uinput.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/usb/ipheth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/misc/uinput.c b/drivers/input/misc/uinput.c
-index e746920872a4..50839c902518 100644
---- a/drivers/input/misc/uinput.c
-+++ b/drivers/input/misc/uinput.c
-@@ -429,6 +429,20 @@ static int uinput_validate_absinfo(struct input_dev *dev, unsigned int code,
- 		return -EINVAL;
- 	}
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 5e8fd2aa1888..0a86ba028c4d 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -407,8 +407,8 @@ static int ipheth_close(struct net_device *net)
+ {
+ 	struct ipheth_device *dev = netdev_priv(net);
  
-+	/*
-+	 * Limit number of contacts to a reasonable value (100). This
-+	 * ensures that we need less than 2 pages for struct input_mt
-+	 * (we are not using in-kernel slot assignment so not going to
-+	 * allocate memory for the "red" table), and we should have no
-+	 * trouble getting this much memory.
-+	 */
-+	if (code == ABS_MT_SLOT && max > 99) {
-+		printk(KERN_DEBUG
-+		       "%s: unreasonably large number of slots requested: %d\n",
-+		       UINPUT_NAME, max);
-+		return -EINVAL;
-+	}
-+
+-	cancel_delayed_work_sync(&dev->carrier_work);
+ 	netif_stop_queue(net);
++	cancel_delayed_work_sync(&dev->carrier_work);
  	return 0;
  }
  
