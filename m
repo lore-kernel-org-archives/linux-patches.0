@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A2618C91B;
-	Tue, 10 Sep 2024 10:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C358A17B50F;
+	Tue, 10 Sep 2024 10:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964529; cv=none; b=hRB/AonAbBuESDzO7JTJ4efL1FESJow/rgoII+23UhzmPjlEbF36AmJZAP+k1TeUYeiwLh67t4j5LSEpoErlMiZ6ELBb2Oh/Sn4H8y+mdgL7JxQAkzkO4NiS5QwFgOhdyS5RsRbBM9dUJ8jP/P2Pu8SnV5wCz05EtE6DpCL/aUE=
+	t=1725964531; cv=none; b=Tq0Rguti1EGtWUdDUdQQ55fNsaov3ZKmRms3TFWkpcwSNF6/x4rrFZbf3c55WiNmf2UipMZGZziwJmz0YgTppFvzJaxt+/XPnQNPV8iMliyDVstZmZuPdvM4v9qzhL1MA4IN44PDl1Sj8jaG7NoJly58Z96LjTvQp2fay1TpUtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964529; c=relaxed/simple;
-	bh=desCQJwzoRvMUqAfdjGBIuH9xqy46Eyx2cg6SuW+2AE=;
+	s=arc-20240116; t=1725964531; c=relaxed/simple;
+	bh=OMOWRkMrGUrEySa1CXFDUJ1V57O17NBI5RYzwfeaI7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb9x7L2R3wx0ZVRhIyszp8/0RNQ8/MxpZ6JPdJzOAMxJLWZzSyTCeTeMv5pG50qtcPaUOxS+H15VCErQDN1GYox588dDqBoNDzdkVXgFW6OT2kqkXBCmRHIDRzIxtwm3rtUNDNmLnV9xRIsv0rdz4FdUV7kVzjFg8MBvMyHX7pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVlhw2Tu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hl80+Som3ryr5JMP1rteZBV54kPsitCsWvjnvPhCfJUT6fJ1qjvNTWYVSOvng/vWKBHErwBw/VcgqpISK95N7iSyGN+reMoG8hJTc2ddeDiX16Fw+ke+qtUKII+BT0tDeQpKQMVAgzBvIBZ8MUG35jp2LNZaaboW+U4uFYcdX88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdqtzxV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVlhw2Tu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AE3C4CECD;
-	Tue, 10 Sep 2024 10:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdqtzxV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8A5C4CECD;
+	Tue, 10 Sep 2024 10:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964528;
-	bh=desCQJwzoRvMUqAfdjGBIuH9xqy46Eyx2cg6SuW+2AE=;
+	s=korg; t=1725964531;
+	bh=OMOWRkMrGUrEySa1CXFDUJ1V57O17NBI5RYzwfeaI7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVlhw2TuAbZIGCn8xI2f8duHmHA/i4WeGya1E0X4ukoJsZv5WICNUfR3S1gAoM+3D
-	 pCZKDzghtbqaXkUbizcfBj/zgw+IuowsPnN2tHm4SvTEe4KtkjgORLysr5vrXFigox
-	 DgIaJxDGXyFyIfNjdRTSBpwO9CYDFDScBDlBGVIM=
+	b=JdqtzxV3N4czzbd+if2bcOz73ua6/SYg30FDwU4N1cj5dG8b8l9iYpfYUobC1NEBa
+	 NfyjttUmi7pbw5bLkDQrGkoiXctIaNQKrtN/rUYKVJgRS43/3MvYN9SMaWyQqZ3aI4
+	 VpZCDNRUuDQFYRaee+9s90hUUbwoS9iSw7bcZ4so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 206/269] iio: buffer-dmaengine: fix releasing dma channel on error
-Date: Tue, 10 Sep 2024 11:33:13 +0200
-Message-ID: <20240910092615.400273524@linuxfoundation.org>
+	Todd Kjos <tkjos@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.6 215/269] binder: fix UAF caused by offsets overwrite
+Date: Tue, 10 Sep 2024 11:33:22 +0200
+Message-ID: <20240910092615.666007717@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -51,42 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 84c65d8008764a8fb4e627ff02de01ec4245f2c4 upstream.
+commit 4df153652cc46545722879415937582028c18af5 upstream.
 
-If dma_get_slave_caps() fails, we need to release the dma channel before
-returning an error to avoid leaking the channel.
+Binder objects are processed and copied individually into the target
+buffer during transactions. Any raw data in-between these objects is
+copied as well. However, this raw data copy lacks an out-of-bounds
+check. If the raw data exceeds the data section size then the copy
+overwrites the offsets section. This eventually triggers an error that
+attempts to unwind the processed objects. However, at this point the
+offsets used to index these objects are now corrupted.
 
-Fixes: 2d6ca60f3284 ("iio: Add a DMAengine framework based buffer")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20240723-iio-fix-dmaengine-free-on-error-v1-1-2c7cbc9b92ff@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Unwinding with corrupted offsets can result in decrements of arbitrary
+nodes and lead to their premature release. Other users of such nodes are
+left with a dangling pointer triggering a use-after-free. This issue is
+made evident by the following KASAN report (trimmed):
+
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x19c
+  Write of size 4 at addr ffff47fc91598f04 by task binder-util/743
+
+  CPU: 9 UID: 0 PID: 743 Comm: binder-util Not tainted 6.11.0-rc4 #1
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   _raw_spin_lock+0xe4/0x19c
+   binder_free_buf+0x128/0x434
+   binder_thread_write+0x8a4/0x3260
+   binder_ioctl+0x18f0/0x258c
+  [...]
+
+  Allocated by task 743:
+   __kmalloc_cache_noprof+0x110/0x270
+   binder_new_node+0x50/0x700
+   binder_transaction+0x413c/0x6da8
+   binder_thread_write+0x978/0x3260
+   binder_ioctl+0x18f0/0x258c
+  [...]
+
+  Freed by task 745:
+   kfree+0xbc/0x208
+   binder_thread_read+0x1c5c/0x37d4
+   binder_ioctl+0x16d8/0x258c
+  [...]
+  ==================================================================
+
+To avoid this issue, let's check that the raw data copy is within the
+boundaries of the data section.
+
+Fixes: 6d98eb95b450 ("binder: avoid potential data leakage when copying txn")
+Cc: Todd Kjos <tkjos@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20240822182353.2129600-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-buffer-dmaengine.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/android/binder.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
-+++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
-@@ -180,7 +180,7 @@ struct iio_buffer *iio_dmaengine_buffer_
- 
- 	ret = dma_get_slave_caps(chan, &caps);
- 	if (ret < 0)
--		goto err_free;
-+		goto err_release;
- 
- 	/* Needs to be aligned to the maximum of the minimums */
- 	if (caps.src_addr_widths)
-@@ -206,6 +206,8 @@ struct iio_buffer *iio_dmaengine_buffer_
- 
- 	return &dmaengine_buffer->queue.buffer;
- 
-+err_release:
-+	dma_release_channel(chan);
- err_free:
- 	kfree(dmaengine_buffer);
- 	return ERR_PTR(ret);
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -3342,6 +3342,7 @@ static void binder_transaction(struct bi
+ 		 */
+ 		copy_size = object_offset - user_offset;
+ 		if (copy_size && (user_offset > object_offset ||
++				object_offset > tr->data_size ||
+ 				binder_alloc_copy_user_to_buffer(
+ 					&target_proc->alloc,
+ 					t->buffer, user_offset,
 
 
