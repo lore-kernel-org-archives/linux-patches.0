@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F82188A1E;
-	Tue, 10 Sep 2024 09:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B002188CB3;
+	Tue, 10 Sep 2024 09:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962284; cv=none; b=efAdqWMtWMXgeHcFglAiZ/RAzH2Q9NUBrYJcKSumYjmmpT/RgMsuPBeNEjMCJZkBReuaCioPe/7WAfqXcpEpoMXvO89LwgVOboWLBVh9j78cbAbLsysdiXlkk+OpPI1RafzHddimCR5h4QY1UIg3rc1amznhWEEurE5q/oqWimI=
+	t=1725962287; cv=none; b=QTeEMZbMJXpf/NTJVDPZkY7ohppMdTGG+rcXFH6DcBZeUEn3sd8enVhDC14sxUXbK5geRjxz1PXUaeLSm8kXojqpe8YmvUdj0LKyJPRlvekJTg8CTLrPEYoKMuU6isSbfDTZ6hUw7FtMQwq5aEPZGss4ywsfLDQI18IpSkDILy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962284; c=relaxed/simple;
-	bh=Z3baw4p3LQqNsy1Rx9pUBXUw/AS2zmZ64f7TUkC7FFM=;
+	s=arc-20240116; t=1725962287; c=relaxed/simple;
+	bh=l0BI7y3mJVaX1SEj5uNtcJCY9AJBnxZljr+gG4cLkWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNmIb5y0SXJG3pL3MEO5nSxKS+azlTmbXis1UQ96h6iv3OB+NJkt1lof/lvUj0Esq2L85wSCMpF/wIhMX0XzWKES9dhUP6mzgFQCTWQktfni7YJnAcQQM9qWGKw5FyRPaaeAq2nLE0lLQ5s71ZESCjF7fcoo++0dBYBt0umN4I4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afuLcrD9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlP+FIPtXIRWEkMaOFwIskeUNkhNkGeKsxtKNedpQE/SysDQtXyVCPjC0b/xPROMzl5lsJ3Y5HxLZCesj6yQ2slRRGFnQvOCewETT7oIgzfmX37zLiwz5wAUTmWiadvh5uzHLmpUQZAcz/icXJKaBYJZ1XWQJCKRTA+pjlFTvsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XhcLSdj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afuLcrD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F61CC4CEC3;
-	Tue, 10 Sep 2024 09:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XhcLSdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9A0C4CEC3;
+	Tue, 10 Sep 2024 09:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962284;
-	bh=Z3baw4p3LQqNsy1Rx9pUBXUw/AS2zmZ64f7TUkC7FFM=;
+	s=korg; t=1725962286;
+	bh=l0BI7y3mJVaX1SEj5uNtcJCY9AJBnxZljr+gG4cLkWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afuLcrD92sgk+R9Ct1aYWb+7/r1mz68MzTH8e1YWC+EgsQotkUavryOTgXFp9Mns8
-	 iEKDHDKu6qpMUfcllONRLWwcy6AUuOOeXE0soopLfScBk7aA/ncU3a8ClhZkMQPePI
-	 IsBOarKx1hUQtIUDT7pqRoO3/NhN3AkcHedTAa70=
+	b=1XhcLSdjK+aOwZ+nH/APD7vsJ+bybsKMiloYR67vmrcVJRGqVMmT+5t+OxSBukqdS
+	 DqgWzrIsyAwAaOTUISeIbNBoNipzOtNBfNMhMkmKEnI5eRkwsDAWuSh6Tn8PZTH5CB
+	 BpoMwoqOQ+hzxopln9tdiNEJPpYLaiIOVyb2HSN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Blanchard <antonb@tenstorrent.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 358/375] riscv: Fix toolchain vector detection
-Date: Tue, 10 Sep 2024 11:32:35 +0200
-Message-ID: <20240910092634.630835135@linuxfoundation.org>
+Subject: [PATCH 6.10 341/375] powerpc/vdso: Dont discard rela sections
+Date: Tue, 10 Sep 2024 11:32:18 +0200
+Message-ID: <20240910092634.041425922@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,41 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Blanchard <antonb@tenstorrent.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 5ba7a75a53dffbf727e842b5847859bb482ac4aa ]
+[ Upstream commit 6114139c3bdde992f4a19264e4f9bfc100d8d776 ]
 
-A recent change to gcc flags rv64iv as no longer valid:
+After building the VDSO, there is a verification that it contains
+no dynamic relocation, see commit aff69273af61 ("vdso: Improve
+cmd_vdso_check to check all dynamic relocations").
 
-   cc1: sorry, unimplemented: Currently the 'V' implementation
-   requires the 'M' extension
+This verification uses readelf -r and doesn't work if rela sections
+are discarded.
 
-and as a result vector support is disabled. Fix this by adding m
-to our toolchain vector detection code.
-
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-Fixes: fa8e7cce55da ("riscv: Enable Vector code to be built")
-Link: https://lore.kernel.org/r/20240819001131.1738806-1-antonb@tenstorrent.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 8ad57add77d3 ("powerpc/build: vdso linker warning for orphan sections")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/45c3e6fc76cad05ad2cac0f5b5dfb4fae86dc9d6.1724153239.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/vdso/vdso32.lds.S | 4 +++-
+ arch/powerpc/kernel/vdso/vdso64.lds.S | 4 ++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index 0525ee2d63c7..006232b67b46 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -545,8 +545,8 @@ config RISCV_ISA_SVPBMT
- config TOOLCHAIN_HAS_V
- 	bool
- 	default y
--	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64iv)
--	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32iv)
-+	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64imv)
-+	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32imv)
- 	depends on LLD_VERSION >= 140000 || LD_VERSION >= 23800
- 	depends on AS_HAS_OPTION_ARCH
+diff --git a/arch/powerpc/kernel/vdso/vdso32.lds.S b/arch/powerpc/kernel/vdso/vdso32.lds.S
+index 426e1ccc6971..8f57107000a2 100644
+--- a/arch/powerpc/kernel/vdso/vdso32.lds.S
++++ b/arch/powerpc/kernel/vdso/vdso32.lds.S
+@@ -74,6 +74,8 @@ SECTIONS
+ 	.got		: { *(.got) }			:text
+ 	.plt		: { *(.plt) }
+ 
++	.rela.dyn	: { *(.rela .rela*) }
++
+ 	_end = .;
+ 	__end = .;
+ 	PROVIDE(end = .);
+@@ -87,7 +89,7 @@ SECTIONS
+ 		*(.branch_lt)
+ 		*(.data .data.* .gnu.linkonce.d.* .sdata*)
+ 		*(.bss .sbss .dynbss .dynsbss)
+-		*(.got1 .glink .iplt .rela*)
++		*(.got1 .glink .iplt)
+ 	}
+ }
+ 
+diff --git a/arch/powerpc/kernel/vdso/vdso64.lds.S b/arch/powerpc/kernel/vdso/vdso64.lds.S
+index bda6c8cdd459..400819258c06 100644
+--- a/arch/powerpc/kernel/vdso/vdso64.lds.S
++++ b/arch/powerpc/kernel/vdso/vdso64.lds.S
+@@ -69,7 +69,7 @@ SECTIONS
+ 	.eh_frame_hdr	: { *(.eh_frame_hdr) }		:text	:eh_frame_hdr
+ 	.eh_frame	: { KEEP (*(.eh_frame)) }	:text
+ 	.gcc_except_table : { *(.gcc_except_table) }
+-	.rela.dyn ALIGN(8) : { *(.rela.dyn) }
++	.rela.dyn ALIGN(8) : { *(.rela .rela*) }
+ 
+ 	.got ALIGN(8)	: { *(.got .toc) }
+ 
+@@ -86,7 +86,7 @@ SECTIONS
+ 		*(.data .data.* .gnu.linkonce.d.* .sdata*)
+ 		*(.bss .sbss .dynbss .dynsbss)
+ 		*(.opd)
+-		*(.glink .iplt .plt .rela*)
++		*(.glink .iplt .plt)
+ 	}
+ }
  
 -- 
 2.43.0
