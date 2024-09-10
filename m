@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04D218C340;
-	Tue, 10 Sep 2024 10:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7360A188A0C;
+	Tue, 10 Sep 2024 10:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963009; cv=none; b=o1tz9+FXrxIGloEv8QxwIw3PXQt3sbjJk3JBhWHZF9CWoWDP2rWmm+NnlaeI+Jf9UsoThLqpZ0WtVoOhZ8sIhqFSQg9y5FDXd3uJdSRoJMpZ2dykqbfnnN+N3IUhPLDCxUiAyq81K7/Uw0CKr8ZTN6nI2Z7Wb9v2RlN5swGODQs=
+	t=1725963012; cv=none; b=WJlOGpOdP1cLmnrki2gjsqLGoo2R8PCszyWiQmtOox+DTxSUuEelL4hzB34rGgyvMXghYG0OT3RRK+4oGT3Dt7UMbIwir/INWmUBSXvqCU5DIxYD4yKaazsBjECzpBz13GMsQY3KzYu4GMs8h7XMbCThgGHI0gTwSuioUsZOeGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963009; c=relaxed/simple;
-	bh=f4niePS9t6N73OrgaQVlGXCwDejeP9mV/gZ259yd0Qw=;
+	s=arc-20240116; t=1725963012; c=relaxed/simple;
+	bh=90z/axrDm+hkA+qL82K3ImBkMnA/xhvQ07mXmNiksJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTsKhf/Af2fVnMGW8lI/o2pLsPFLkhB/FzKAqWsWUy0S9AhnQQXqMCgC2TPipeTtdCgCbAEAoeC7dLMj7m4e/mtV5lQewlwP7oAl1FePPN0xZ3jCaBuXO8lYNAjzL6rT+EEybtjNos2F/BozMV8V1bdERqoVNgJEAwlIgnSvUAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM9xZL4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hj5De4WJkYkqTcUABo4Bhm4Ih3QR5zpojISIVxUKzEJrtJQ+1kne5D2OPMsSv96GVUoLfD9uOm8PW3bPVbiHNQ0LQRBI+YbeY3zqiB0E7lJn9NdrNyCNDFVSiNBR/KSuHQAMwxM9KqgvyqifWovdJ/fHQPnDX5sKul5o1fGDL7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxOsIm40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM9xZL4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059E7C4CEC3;
-	Tue, 10 Sep 2024 10:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxOsIm40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB218C4CEC3;
+	Tue, 10 Sep 2024 10:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963009;
-	bh=f4niePS9t6N73OrgaQVlGXCwDejeP9mV/gZ259yd0Qw=;
+	s=korg; t=1725963012;
+	bh=90z/axrDm+hkA+qL82K3ImBkMnA/xhvQ07mXmNiksJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UM9xZL4ClMgwEfHpPVIE+rpI0E7f1y8ObSpszP0gScUepUhmoVdipEbbsx16h8RSL
-	 0bYRi5QB4xQfxOpcUvJC/Ql6PGAgjMIld97Z+LjZt9CXSEmEUURnns7+rNty0guuQ8
-	 hIjmjZLeu9eXlnedFTOdFM07YVzCCR9xAibjoOtM=
+	b=qxOsIm40Q5Nnsb4CLfHxNTAnrQN0j8peQNFuwd8yivxPzi0QLkVvB4/ouuWwnRd9s
+	 r9+vQpsOQJc7JEDRvJM/H5sxZ8fZX9XEBMV2g9UcUE67mk11lPjXjLPghj0JRnDzKU
+	 l7xrWDD43XawXfoDxbhS+DNXtGCXJQz1ZrlX3Vo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	Harshad Shirwadkar <harshadshirwadkar@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	kernel test robot <lkp@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/192] ext4: fix possible tid_t sequence overflows
-Date: Tue, 10 Sep 2024 11:32:08 +0200
-Message-ID: <20240910092602.279633239@linuxfoundation.org>
+Subject: [PATCH 6.1 078/192] regulator: core: Stub devm_regulator_bulk_get_const() if !CONFIG_REGULATOR
+Date: Tue, 10 Sep 2024 11:31:42 +0200
+Message-ID: <20240910092601.196677355@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -53,65 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 63469662cc45d41705f14b4648481d5d29cf5999 ]
+[ Upstream commit 1a5caec7f80ca2e659c03f45378ee26915f4eda2 ]
 
-In the fast commit code there are a few places where tid_t variables are
-being compared without taking into account the fact that these sequence
-numbers may wrap.  Fix this issue by using the helper functions tid_gt()
-and tid_geq().
+When adding devm_regulator_bulk_get_const() I missed adding a stub for
+when CONFIG_REGULATOR is not enabled. Under certain conditions (like
+randconfig testing) this can cause the compiler to reports errors
+like:
 
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Harshad Shirwadkar <harshadshirwadkar@gmail.com>
-Link: https://patch.msgid.link/20240529092030.9557-3-luis.henriques@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+  error: implicit declaration of function 'devm_regulator_bulk_get_const';
+  did you mean 'devm_regulator_bulk_get_enable'?
+
+Add the stub.
+
+Fixes: 1de452a0edda ("regulator: core: Allow drivers to define their init data as const")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202408301813.TesFuSbh-lkp@intel.com/
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20240830073511.1.Ib733229a8a19fad8179213c05e1af01b51e42328@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/fast_commit.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/regulator/consumer.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index 19353a2f44bb..2ef773d40ffd 100644
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -353,7 +353,7 @@ void ext4_fc_mark_ineligible(struct super_block *sb, int reason, handle_t *handl
- 		read_unlock(&sbi->s_journal->j_state_lock);
- 	}
- 	spin_lock(&sbi->s_fc_lock);
--	if (sbi->s_fc_ineligible_tid < tid)
-+	if (tid_gt(tid, sbi->s_fc_ineligible_tid))
- 		sbi->s_fc_ineligible_tid = tid;
- 	spin_unlock(&sbi->s_fc_lock);
- 	WARN_ON(reason >= EXT4_FC_REASON_MAX);
-@@ -1235,7 +1235,7 @@ int ext4_fc_commit(journal_t *journal, tid_t commit_tid)
- 	if (ret == -EALREADY) {
- 		/* There was an ongoing commit, check if we need to restart */
- 		if (atomic_read(&sbi->s_fc_subtid) <= subtid &&
--			commit_tid > journal->j_commit_sequence)
-+		    tid_gt(commit_tid, journal->j_commit_sequence))
- 			goto restart_fc;
- 		ext4_fc_update_stats(sb, EXT4_FC_STATUS_SKIPPED, 0, 0,
- 				commit_tid);
-@@ -1310,7 +1310,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 		list_del_init(&iter->i_fc_list);
- 		ext4_clear_inode_state(&iter->vfs_inode,
- 				       EXT4_STATE_FC_COMMITTING);
--		if (iter->i_sync_tid <= tid)
-+		if (tid_geq(tid, iter->i_sync_tid))
- 			ext4_fc_reset_inode(&iter->vfs_inode);
- 		/* Make sure EXT4_STATE_FC_COMMITTING bit is clear */
- 		smp_mb();
-@@ -1341,7 +1341,7 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	list_splice_init(&sbi->s_fc_q[FC_Q_STAGING],
- 				&sbi->s_fc_q[FC_Q_MAIN]);
+diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+index 40c80c844ce5..60bc7e143869 100644
+--- a/include/linux/regulator/consumer.h
++++ b/include/linux/regulator/consumer.h
+@@ -487,6 +487,14 @@ static inline int of_regulator_bulk_get_all(struct device *dev, struct device_no
+ 	return 0;
+ }
  
--	if (tid >= sbi->s_fc_ineligible_tid) {
-+	if (tid_geq(tid, sbi->s_fc_ineligible_tid)) {
- 		sbi->s_fc_ineligible_tid = 0;
- 		ext4_clear_mount_flag(sb, EXT4_MF_FC_INELIGIBLE);
- 	}
++static inline int devm_regulator_bulk_get_const(
++	struct device *dev, int num_consumers,
++	const struct regulator_bulk_data *in_consumers,
++	struct regulator_bulk_data **out_consumers)
++{
++	return 0;
++}
++
+ static inline int regulator_bulk_enable(int num_consumers,
+ 					struct regulator_bulk_data *consumers)
+ {
 -- 
 2.43.0
 
