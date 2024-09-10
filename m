@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC763EEC9;
-	Tue, 10 Sep 2024 09:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1991118C003;
+	Tue, 10 Sep 2024 09:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962342; cv=none; b=ocpkqBCossQFkAcF2p1LRRuCUamFiTCc8kHwrP+PodtyeEMX5FYOFzXxz6FY+19QLQ4AQlI6GXnDPCeqtomjrJNySV0h4QKhOXGgUR8cdp4p84rkvXcwL5JarFRPJ0EU60oNb+8KZGJaPJtpQU6KrXeqOdHjuWwqDfmNx9mydBg=
+	t=1725962346; cv=none; b=vAsJH2W8nFu5Ve9z8VGUar9Rl1olkAyw/8zAlvVcAX08+t5eLh2qvCaIJP6c/wZwnYJVFBFz4LUzLS1o0rVGm0y0mnGtyUY60/bfBTzHnRnYMyAtWSZTy+GLqOxTcrvhIIpI7uZkaMCApdyxvMy1YIwpjEMlt1CmoCGFVAukyaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962342; c=relaxed/simple;
-	bh=r4JWF5Eu0qiO8H9HVAQV1k21h0EsE1hpAPlp7LPUT34=;
+	s=arc-20240116; t=1725962346; c=relaxed/simple;
+	bh=+3uaeVXRA6nKbBS2d8vT+wzacX3Hlku9HR26ToVdoZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECbpP0fEUAnkoY06wQk9a1R6usdWNRl363T8vxPRCRabUdUPMcFhcyym2lHVsLIFMLZKkL58zpkxqSPFhlcn3/vMEbd9mECy7POxPb1w1LAZ8lSPNzQYaZP7F1WnNOAlxUdwsUSUMxNGuuuW5diG0q8rT43lwljCprsNl5xPbf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYkiBa23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I1uV9NiXSHasX3tN5HIRVMZr1rfTlpfDiYOKQIRsI8pWLdYdZ0kblZvMXYTwMlK3Xxkrrzx6fzxcjPkV8ATCRyeJ58CaOdylcejXV4ckiF5XT+qJmHffV/44IekrPlpuPmQij3W3XjamhHlNFb9DNUo02+LGUs4N0vPRmedsXw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuDdls9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYkiBa23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508BFC4CEC3;
-	Tue, 10 Sep 2024 09:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuDdls9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486A2C4CEC6;
+	Tue, 10 Sep 2024 09:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962342;
-	bh=r4JWF5Eu0qiO8H9HVAQV1k21h0EsE1hpAPlp7LPUT34=;
+	s=korg; t=1725962345;
+	bh=+3uaeVXRA6nKbBS2d8vT+wzacX3Hlku9HR26ToVdoZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYkiBa23e0HRB+IY/OTNLcsJ1t7SmfR+HP+n5IW2VNFmDwAAchKW23pf02v3QO9pl
-	 VZ1f4ZDnzT63Ix7DBBd/+wReqaPe2hcuNA8vvHjCfvW1ackeHvCAQXk1K+VI0FTbkZ
-	 C7KFyWEI6AmXpoVlyNiEes40QZssRlhLBfVVeEjg=
+	b=WuDdls9OBLR4lF5P8lAzbT7RUIfTkwLsfIPK7xlID0SmiX6l+6kwGMsOF6RnnLQMZ
+	 aYcjkBl7S8jEhN8Bt3vc+Z6xCJ0Yjx6FqVJd9wYWp2ZD8mHa3pORIEZtH0Ko9Hx+g7
+	 4LHXrY/JDoGcV4P93spYYrHMTXJ+fQfrpyP1Rrf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.10 370/375] x86/mm: Fix PTI for i386 some more
-Date: Tue, 10 Sep 2024 11:32:47 +0200
-Message-ID: <20240910092635.054653038@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.10 371/375] drm/i915/display: Add mechanism to use sink model when applying quirk
+Date: Tue, 10 Sep 2024 11:32:48 +0200
+Message-ID: <20240910092635.087218969@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -45,166 +45,185 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit c48b5a4cf3125adb679e28ef093f66ff81368d05 upstream.
+commit 43cf50eb1408ccb99cab01521263e8cb4cfdc023 upstream.
 
-So it turns out that we have to do two passes of
-pti_clone_entry_text(), once before initcalls, such that device and
-late initcalls can use user-mode-helper / modprobe and once after
-free_initmem() / mark_readonly().
+Currently there is no way to apply quirk on device only if certain panel
+model is installed. This patch implements such mechanism by adding new
+quirk type intel_dpcd_quirk which contains also sink_oui and sink_device_id
+fields and using also them to figure out if applying quirk is needed.
 
-Now obviously mark_readonly() can cause PMD splits, and
-pti_clone_pgtable() doesn't like that much.
+New intel_init_dpcd_quirks is added and called after drm_dp_read_desc with
+proper sink device identity read from dpcdc.
 
-Allow the late clone to split PMDs so that pagetables stay in sync.
+v3:
+  - !mem_is_zero fixed to mem_is_zero
+v2:
+  - instead of using struct intel_quirk add new struct intel_dpcd_quirk
 
-[peterz: Changelog and comments]
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lkml.kernel.org/r/20240806184843.GX37996@noisy.programming.kicks-ass.net
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240902064241.1020965-2-jouni.hogander@intel.com
+(cherry picked from commit b3b91369908ac63be6f64905448b8ba5cd151875)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pti.c |   45 +++++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_types.h |    4 +
+ drivers/gpu/drm/i915/display/intel_dp.c            |    4 +
+ drivers/gpu/drm/i915/display/intel_quirks.c        |   51 +++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_quirks.h        |    5 ++
+ 4 files changed, 64 insertions(+)
 
---- a/arch/x86/mm/pti.c
-+++ b/arch/x86/mm/pti.c
-@@ -241,7 +241,7 @@ static pmd_t *pti_user_pagetable_walk_pm
-  *
-  * Returns a pointer to a PTE on success, or NULL on failure.
-  */
--static pte_t *pti_user_pagetable_walk_pte(unsigned long address)
-+static pte_t *pti_user_pagetable_walk_pte(unsigned long address, bool late_text)
- {
- 	gfp_t gfp = (GFP_KERNEL | __GFP_NOTRACK | __GFP_ZERO);
- 	pmd_t *pmd;
-@@ -251,10 +251,15 @@ static pte_t *pti_user_pagetable_walk_pt
- 	if (!pmd)
- 		return NULL;
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1840,6 +1840,10 @@ struct intel_dp {
+ 	unsigned long last_oui_write;
  
--	/* We can't do anything sensible if we hit a large mapping. */
-+	/* Large PMD mapping found */
- 	if (pmd_leaf(*pmd)) {
--		WARN_ON(1);
--		return NULL;
-+		/* Clear the PMD if we hit a large mapping from the first round */
-+		if (late_text) {
-+			set_pmd(pmd, __pmd(0));
-+		} else {
-+			WARN_ON_ONCE(1);
-+			return NULL;
-+		}
+ 	bool colorimetry_support;
++
++	struct {
++		unsigned long mask;
++	} quirks;
+ };
+ 
+ enum lspcon_vendor {
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -79,6 +79,7 @@
+ #include "intel_pch_display.h"
+ #include "intel_pps.h"
+ #include "intel_psr.h"
++#include "intel_quirks.h"
+ #include "intel_tc.h"
+ #include "intel_vdsc.h"
+ #include "intel_vrr.h"
+@@ -3941,6 +3942,7 @@ intel_edp_init_dpcd(struct intel_dp *int
+ 
+ 	drm_dp_read_desc(&intel_dp->aux, &intel_dp->desc,
+ 			 drm_dp_is_branch(intel_dp->dpcd));
++	intel_init_dpcd_quirks(intel_dp, &intel_dp->desc.ident);
+ 
+ 	/*
+ 	 * Read the eDP display control registers.
+@@ -4053,6 +4055,8 @@ intel_dp_get_dpcd(struct intel_dp *intel
+ 		drm_dp_read_desc(&intel_dp->aux, &intel_dp->desc,
+ 				 drm_dp_is_branch(intel_dp->dpcd));
+ 
++		intel_init_dpcd_quirks(intel_dp, &intel_dp->desc.ident);
++
+ 		intel_dp_update_sink_caps(intel_dp);
  	}
  
- 	if (pmd_none(*pmd)) {
-@@ -283,7 +288,7 @@ static void __init pti_setup_vsyscall(vo
- 	if (!pte || WARN_ON(level != PG_LEVEL_4K) || pte_none(*pte))
- 		return;
- 
--	target_pte = pti_user_pagetable_walk_pte(VSYSCALL_ADDR);
-+	target_pte = pti_user_pagetable_walk_pte(VSYSCALL_ADDR, false);
- 	if (WARN_ON(!target_pte))
- 		return;
- 
-@@ -301,7 +306,7 @@ enum pti_clone_level {
- 
- static void
- pti_clone_pgtable(unsigned long start, unsigned long end,
--		  enum pti_clone_level level)
-+		  enum pti_clone_level level, bool late_text)
- {
- 	unsigned long addr;
- 
-@@ -390,7 +395,7 @@ pti_clone_pgtable(unsigned long start, u
- 				return;
- 
- 			/* Allocate PTE in the user page-table */
--			target_pte = pti_user_pagetable_walk_pte(addr);
-+			target_pte = pti_user_pagetable_walk_pte(addr, late_text);
- 			if (WARN_ON(!target_pte))
- 				return;
- 
-@@ -452,7 +457,7 @@ static void __init pti_clone_user_shared
- 		phys_addr_t pa = per_cpu_ptr_to_phys((void *)va);
- 		pte_t *target_pte;
- 
--		target_pte = pti_user_pagetable_walk_pte(va);
-+		target_pte = pti_user_pagetable_walk_pte(va, false);
- 		if (WARN_ON(!target_pte))
- 			return;
- 
-@@ -475,7 +480,7 @@ static void __init pti_clone_user_shared
- 	start = CPU_ENTRY_AREA_BASE;
- 	end   = start + (PAGE_SIZE * CPU_ENTRY_AREA_PAGES);
- 
--	pti_clone_pgtable(start, end, PTI_CLONE_PMD);
-+	pti_clone_pgtable(start, end, PTI_CLONE_PMD, false);
- }
- #endif /* CONFIG_X86_64 */
- 
-@@ -492,11 +497,11 @@ static void __init pti_setup_espfix64(vo
- /*
-  * Clone the populated PMDs of the entry text and force it RO.
-  */
--static void pti_clone_entry_text(void)
-+static void pti_clone_entry_text(bool late)
- {
- 	pti_clone_pgtable((unsigned long) __entry_text_start,
- 			  (unsigned long) __entry_text_end,
--			  PTI_LEVEL_KERNEL_IMAGE);
-+			  PTI_LEVEL_KERNEL_IMAGE, late);
+--- a/drivers/gpu/drm/i915/display/intel_quirks.c
++++ b/drivers/gpu/drm/i915/display/intel_quirks.c
+@@ -14,6 +14,11 @@ static void intel_set_quirk(struct intel
+ 	display->quirks.mask |= BIT(quirk);
  }
  
- /*
-@@ -571,7 +576,7 @@ static void pti_clone_kernel_text(void)
- 	 * pti_set_kernel_image_nonglobal() did to clear the
- 	 * global bit.
- 	 */
--	pti_clone_pgtable(start, end_clone, PTI_LEVEL_KERNEL_IMAGE);
-+	pti_clone_pgtable(start, end_clone, PTI_LEVEL_KERNEL_IMAGE, false);
- 
- 	/*
- 	 * pti_clone_pgtable() will set the global bit in any PMDs
-@@ -638,8 +643,15 @@ void __init pti_init(void)
- 
- 	/* Undo all global bits from the init pagetables in head_64.S: */
- 	pti_set_kernel_image_nonglobal();
++static void intel_set_dpcd_quirk(struct intel_dp *intel_dp, enum intel_quirk_id quirk)
++{
++	intel_dp->quirks.mask |= BIT(quirk);
++}
 +
- 	/* Replace some of the global bits just for shared entry text: */
--	pti_clone_entry_text();
-+	/*
-+	 * This is very early in boot. Device and Late initcalls can do
-+	 * modprobe before free_initmem() and mark_readonly(). This
-+	 * pti_clone_entry_text() allows those user-mode-helpers to function,
-+	 * but notably the text is still RW.
-+	 */
-+	pti_clone_entry_text(false);
- 	pti_setup_espfix64();
- 	pti_setup_vsyscall();
- }
-@@ -656,10 +668,11 @@ void pti_finalize(void)
- 	if (!boot_cpu_has(X86_FEATURE_PTI))
- 		return;
- 	/*
--	 * We need to clone everything (again) that maps parts of the
--	 * kernel image.
-+	 * This is after free_initmem() (all initcalls are done) and we've done
-+	 * mark_readonly(). Text is now NX which might've split some PMDs
-+	 * relative to the early clone.
- 	 */
--	pti_clone_entry_text();
-+	pti_clone_entry_text(true);
- 	pti_clone_kernel_text();
+ /*
+  * Some machines (Lenovo U160) do not work with SSC on LVDS for some reason
+  */
+@@ -72,6 +77,21 @@ struct intel_quirk {
+ 	void (*hook)(struct intel_display *display);
+ };
  
- 	debug_checkwx_user();
++struct intel_dpcd_quirk {
++	int device;
++	int subsystem_vendor;
++	int subsystem_device;
++	u8 sink_oui[3];
++	u8 sink_device_id[6];
++	void (*hook)(struct intel_dp *intel_dp);
++};
++
++#define SINK_OUI(first, second, third) { (first), (second), (third) }
++#define SINK_DEVICE_ID(first, second, third, fourth, fifth, sixth) \
++	{ (first), (second), (third), (fourth), (fifth), (sixth) }
++
++#define SINK_DEVICE_ID_ANY	SINK_DEVICE_ID(0, 0, 0, 0, 0, 0)
++
+ /* For systems that don't have a meaningful PCI subdevice/subvendor ID */
+ struct intel_dmi_quirk {
+ 	void (*hook)(struct intel_display *display);
+@@ -203,6 +223,9 @@ static struct intel_quirk intel_quirks[]
+ 	{ 0x0f31, 0x103c, 0x220f, quirk_invert_brightness },
+ };
+ 
++static struct intel_dpcd_quirk intel_dpcd_quirks[] = {
++};
++
+ void intel_init_quirks(struct intel_display *display)
+ {
+ 	struct pci_dev *d = to_pci_dev(display->drm->dev);
+@@ -224,7 +247,35 @@ void intel_init_quirks(struct intel_disp
+ 	}
+ }
+ 
++void intel_init_dpcd_quirks(struct intel_dp *intel_dp,
++			    const struct drm_dp_dpcd_ident *ident)
++{
++	struct intel_display *display = to_intel_display(intel_dp);
++	struct pci_dev *d = to_pci_dev(display->drm->dev);
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(intel_dpcd_quirks); i++) {
++		struct intel_dpcd_quirk *q = &intel_dpcd_quirks[i];
++
++		if (d->device == q->device &&
++		    (d->subsystem_vendor == q->subsystem_vendor ||
++		     q->subsystem_vendor == PCI_ANY_ID) &&
++		    (d->subsystem_device == q->subsystem_device ||
++		     q->subsystem_device == PCI_ANY_ID) &&
++		    !memcmp(q->sink_oui, ident->oui, sizeof(ident->oui)) &&
++		    (!memcmp(q->sink_device_id, ident->device_id,
++			    sizeof(ident->device_id)) ||
++		     mem_is_zero(q->sink_device_id, sizeof(q->sink_device_id))))
++			q->hook(intel_dp);
++	}
++}
++
+ bool intel_has_quirk(struct intel_display *display, enum intel_quirk_id quirk)
+ {
+ 	return display->quirks.mask & BIT(quirk);
+ }
++
++bool intel_has_dpcd_quirk(struct intel_dp *intel_dp, enum intel_quirk_id quirk)
++{
++	return intel_dp->quirks.mask & BIT(quirk);
++}
+--- a/drivers/gpu/drm/i915/display/intel_quirks.h
++++ b/drivers/gpu/drm/i915/display/intel_quirks.h
+@@ -9,6 +9,8 @@
+ #include <linux/types.h>
+ 
+ struct intel_display;
++struct intel_dp;
++struct drm_dp_dpcd_ident;
+ 
+ enum intel_quirk_id {
+ 	QUIRK_BACKLIGHT_PRESENT,
+@@ -20,6 +22,9 @@ enum intel_quirk_id {
+ };
+ 
+ void intel_init_quirks(struct intel_display *display);
++void intel_init_dpcd_quirks(struct intel_dp *intel_dp,
++			    const struct drm_dp_dpcd_ident *ident);
+ bool intel_has_quirk(struct intel_display *display, enum intel_quirk_id quirk);
++bool intel_has_dpcd_quirk(struct intel_dp *intel_dp, enum intel_quirk_id quirk);
+ 
+ #endif /* __INTEL_QUIRKS_H__ */
 
 
