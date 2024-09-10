@@ -1,163 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A8E18C324;
-	Tue, 10 Sep 2024 10:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D06318FC84
+	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 10:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964558; cv=none; b=UpKELm07eV0VarKNQ+cvtJh2G/UulzuQTp4ZP6fV7B5BihCfoY/3cJ/JVmNrXB6FDvGYeXwlMpw4ztltJPMTkLuErRPFwrgUpciiycYTWyQQAkMui3WD+3L4pK+C2XySfTVm+0Xk4I8744o73lPXDV3fPn/hHV6L46Eojwe4GJA=
+	t=1725964559; cv=none; b=kIqFqYzMB5WqJ+Vz5B5U5JbVEn8goumafUcasKkPlT68N2PBAHcqHB4sTwdquWBJuwQ4y7n+YrPlxruZbg6cHBYcxEOPBFTAfncg/cXEgiYEHFJB2wcgyvxhcUEbB70VFxZP27aIavwHOZ5S8K1RSNGdE8C8TBOUbUab/gzkiFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964558; c=relaxed/simple;
-	bh=R0LHvsQwowd7ebHltVA7QMmbf3v6OsD23Eo2DMxZIW8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/d7P8w1e8/O3v3uxLQkGjUcNdY4k0TB82YlA9+IYDlAE+gVbsHxaLpzLJpkcA/1IDRryFovKJO8adZt8v0b5/Xh1qx3Gc1Vpqdlfy9KBfzKRNxJnKtwKztub13sRKDKHoBUgp7rRve+YaSbpgB2UK+stR+BzcRuOVQE/PuCWgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBol7TfC; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBol7TfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BB6C4CEC6;
-	Tue, 10 Sep 2024 10:35:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964558;
-	bh=R0LHvsQwowd7ebHltVA7QMmbf3v6OsD23Eo2DMxZIW8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBol7TfCefi87q8ZO2s80nWAh0NdvX4C17PfRZVfXdn5vFxDW4qW5V5T296Kd+GCY
-	 iP2MD5/K1ABkeQXOrmU4GvjE92TaikrwS7d9MeXgHnH0xnEiKm7CfchQVBSfhx1Wcp
-	 2hHCRqNwYq/yk+V60FQTCj6bNZ3PTAm0O43GbrfY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Ole <ole@binarygecko.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.6 224/269] perf/aux: Fix AUX buffer serialization
-Date: Tue, 10 Sep 2024 11:33:31 +0200
-Message-ID: <20240910092615.940498550@linuxfoundation.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
-References: <20240910092608.225137854@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1725964559; c=relaxed/simple;
+	bh=rXp9VPIWYwYxP3tRta0x35hYjF5C4uWsNb8Pc5MPAjU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hx/346YZkB17KbdkmlDd1sI1YAszzZPA8mMKuYve2KfFsnoSzWaDv6pFuloXIvb18ME0wLPpCqz/FNjIp1KGHkSuBmaoE89xeLSkx8bnCG9h91QNGSGKyY2TWvD1a5eamTCJAWJaYFgS3slrvZQKhmc4njqkuXvg6cMUzfHfwFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 3285E1C009E; Tue, 10 Sep 2024 12:35:55 +0200 (CEST)
+Date: Tue, 10 Sep 2024 12:35:54 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/192] 6.1.110-rc1 review
+Message-ID: <ZuAhCgJ3LUBROwBR@duo.ucw.cz>
+References: <20240910092557.876094467@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-6.6-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Peter Zijlstra <peterz@infradead.org>
-
-commit 2ab9d830262c132ab5db2f571003d80850d56b2a upstream.
-
-Ole reported that event->mmap_mutex is strictly insufficient to
-serialize the AUX buffer, add a per RB mutex to fully serialize it.
-
-Note that in the lock order comment the perf_event::mmap_mutex order
-was already wrong, that is, it nesting under mmap_lock is not new with
-this patch.
-
-Fixes: 45bfb2e50471 ("perf: Add AUX area to ring buffer for raw data streams")
-Reported-by: Ole <ole@binarygecko.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- kernel/events/core.c        |   18 ++++++++++++------
- kernel/events/internal.h    |    1 +
- kernel/events/ring_buffer.c |    2 ++
- 3 files changed, 15 insertions(+), 6 deletions(-)
-
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1255,8 +1255,9 @@ static void put_ctx(struct perf_event_co
-  *	  perf_event_context::mutex
-  *	    perf_event::child_mutex;
-  *	      perf_event_context::lock
-- *	    perf_event::mmap_mutex
-  *	    mmap_lock
-+ *	      perf_event::mmap_mutex
-+ *	        perf_buffer::aux_mutex
-  *	      perf_addr_filters_head::lock
-  *
-  *    cpu_hotplug_lock
-@@ -6352,12 +6353,11 @@ static void perf_mmap_close(struct vm_ar
- 		event->pmu->event_unmapped(event, vma->vm_mm);
- 
- 	/*
--	 * rb->aux_mmap_count will always drop before rb->mmap_count and
--	 * event->mmap_count, so it is ok to use event->mmap_mutex to
--	 * serialize with perf_mmap here.
-+	 * The AUX buffer is strictly a sub-buffer, serialize using aux_mutex
-+	 * to avoid complications.
- 	 */
- 	if (rb_has_aux(rb) && vma->vm_pgoff == rb->aux_pgoff &&
--	    atomic_dec_and_mutex_lock(&rb->aux_mmap_count, &event->mmap_mutex)) {
-+	    atomic_dec_and_mutex_lock(&rb->aux_mmap_count, &rb->aux_mutex)) {
- 		/*
- 		 * Stop all AUX events that are writing to this buffer,
- 		 * so that we can free its AUX pages and corresponding PMU
-@@ -6374,7 +6374,7 @@ static void perf_mmap_close(struct vm_ar
- 		rb_free_aux(rb);
- 		WARN_ON_ONCE(refcount_read(&rb->aux_refcount));
- 
--		mutex_unlock(&event->mmap_mutex);
-+		mutex_unlock(&rb->aux_mutex);
- 	}
- 
- 	if (atomic_dec_and_test(&rb->mmap_count))
-@@ -6462,6 +6462,7 @@ static int perf_mmap(struct file *file,
- 	struct perf_event *event = file->private_data;
- 	unsigned long user_locked, user_lock_limit;
- 	struct user_struct *user = current_user();
-+	struct mutex *aux_mutex = NULL;
- 	struct perf_buffer *rb = NULL;
- 	unsigned long locked, lock_limit;
- 	unsigned long vma_size;
-@@ -6510,6 +6511,9 @@ static int perf_mmap(struct file *file,
- 		if (!rb)
- 			goto aux_unlock;
- 
-+		aux_mutex = &rb->aux_mutex;
-+		mutex_lock(aux_mutex);
-+
- 		aux_offset = READ_ONCE(rb->user_page->aux_offset);
- 		aux_size = READ_ONCE(rb->user_page->aux_size);
- 
-@@ -6660,6 +6664,8 @@ unlock:
- 		atomic_dec(&rb->mmap_count);
- 	}
- aux_unlock:
-+	if (aux_mutex)
-+		mutex_unlock(aux_mutex);
- 	mutex_unlock(&event->mmap_mutex);
- 
- 	/*
---- a/kernel/events/internal.h
-+++ b/kernel/events/internal.h
-@@ -40,6 +40,7 @@ struct perf_buffer {
- 	struct user_struct		*mmap_user;
- 
- 	/* AUX area */
-+	struct mutex			aux_mutex;
- 	long				aux_head;
- 	unsigned int			aux_nest;
- 	long				aux_wakeup;	/* last aux_watermark boundary crossed by aux_head */
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -333,6 +333,8 @@ ring_buffer_init(struct perf_buffer *rb,
- 	 */
- 	if (!rb->nr_pages)
- 		rb->paused = 1;
-+
-+	mutex_init(&rb->aux_mutex);
- }
- 
- void perf_aux_output_flag(struct perf_output_handle *handle, u64 flags)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZVbRxP2zarSARuXd"
+Content-Disposition: inline
+In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 
 
+--ZVbRxP2zarSARuXd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi!
+
+> This is the start of the stable review cycle for the 6.1.110 release.
+> There are 192 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Can you quote git hash of the 6.1.110-rc1?
+
+We do have
+
+Linux 6.1.110-rc1 (244a97bb85be)
+Greg Kroah-Hartman authored 1 day ago
+
+passing tests
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+=2E But that's 1 day old.
+
+Best regards,
+									Pavel
+								=09
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--ZVbRxP2zarSARuXd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZuAhCgAKCRAw5/Bqldv6
+8nInAKCAfDzvB/g7di65iJIiWwf1ut9eEQCdHD1aUpkZmIRykjHO2l2uq8zPlU4=
+=0bYm
+-----END PGP SIGNATURE-----
+
+--ZVbRxP2zarSARuXd--
