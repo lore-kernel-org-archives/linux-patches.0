@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D207118C928;
-	Tue, 10 Sep 2024 09:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D9317C22F;
+	Tue, 10 Sep 2024 09:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962107; cv=none; b=M2BU1cSlhSYAUh8PjtNwkG9P4K99/yUyWBhxIPA7XTRmeJgpUYJnpz5GPUalm8XOWzd0AtebMYAG+lqbTV7hvui6iAgrkxlRwb+HNg3xiVdYxZ4WDfxr2XCBmY+yAwlyqoYZ+AH/GkRethzUyQj5yZfiN90eODGzqPsC6xvg5wA=
+	t=1725962111; cv=none; b=odoW+5GLofo/kPUtbd48e6ER/fdP6RnMLaPCANGF5jzmDndZSqyjUNrZKXmORjIy1bpDPeZnDhn7/KkCO13QptvoNKh0hxuk7sLTwP/Ezo4BiTpDFP9A2vk1zVlR7J47P4o/lqjgAZAVtN8EzCi7t3EXFCdRpvD9IU1GIE3DZao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962107; c=relaxed/simple;
-	bh=bJ0G7uSSYEp5biKNqH7G63BtGYlPkCEmZ9mm7MHChbw=;
+	s=arc-20240116; t=1725962111; c=relaxed/simple;
+	bh=HAECwACYruzgMeyMlVOwoBvXK5M/6h/Vz2QNUOYvcPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mI2IMFm4hN7Q1Ln5i4vqmRerlnIzjHTOKuW+IXbF5G9U+yOjd8d4u8lKnBjvbdO16TfB0qbW8qzcz4dhDdLfbbLGkcThtRS+jr6ksMYpSIQEHV7o9yyaTWaNRmA2luOpvkv+J75ZG0gFfX+3aScJLxB7+QlDlhT3MFT9uy08fGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfFBsUQo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Alja6AdUDXkGNysxrVWGbFvfQoxpQ3z+B1GIYGXlNtKnof455mO0mRTuXs3a0BcTGEA3VRsYJjAq7eo9lKYHk2wvcy5cV4CF3mr/mBDk9ykztEskvcrGmaJiOYlqo1NUMH/EqrZovJKjBat1A019p4QrO/N3iMq6IkCp+Z4XJH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtnfRUYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfFBsUQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A8BC4CEC3;
-	Tue, 10 Sep 2024 09:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtnfRUYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2A2C4CEC6;
+	Tue, 10 Sep 2024 09:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962107;
-	bh=bJ0G7uSSYEp5biKNqH7G63BtGYlPkCEmZ9mm7MHChbw=;
+	s=korg; t=1725962110;
+	bh=HAECwACYruzgMeyMlVOwoBvXK5M/6h/Vz2QNUOYvcPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfFBsUQoBuWTfcOT4KcuLVP+cJbj5oW3cALNjEQ8r8/uQ78G0wRqlhau51T2LDKs5
-	 a1b7QjKbqYGxKlopaQPnT1MwWl0uT41QVatgxcxHG/CO9mcN3Jiwr+KBtM7mUIhBeN
-	 pjO0iJk11R1eVRqqje0jjQreq6JnIE/DVe6/97ro=
+	b=rtnfRUYmHqdzFs6rP8X0Iq+Sb5taZGFpe1KxP/eTykexf9brhfkE0jucehkuYd18A
+	 QyX0GL0BGk5Czv+Hvx1ArV5MGmNey7kqPQlrTnTOkPqk8KxItC3JgtAvg4FmOkhkv1
+	 i0fm+WmmuEr1weMqd/jCLK+t5hSL1Ql8rGntY0LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.10 298/375] binder: fix UAF caused by offsets overwrite
-Date: Tue, 10 Sep 2024 11:31:35 +0200
-Message-ID: <20240910092632.569255280@linuxfoundation.org>
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Emily Deng <Emily.Deng@amd.com>,
+	Zhigang Luo <zhigang.luo@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 281/375] drm/amdgpu: Fix amdgpu_device_reset_sriov retry logic
+Date: Tue, 10 Sep 2024 11:31:18 +0200
+Message-ID: <20240910092631.999564594@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,73 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-commit 4df153652cc46545722879415937582028c18af5 upstream.
+[ Upstream commit 6e4aa08fa9c6c0c027fc86f242517c925d159393 ]
 
-Binder objects are processed and copied individually into the target
-buffer during transactions. Any raw data in-between these objects is
-copied as well. However, this raw data copy lacks an out-of-bounds
-check. If the raw data exceeds the data section size then the copy
-overwrites the offsets section. This eventually triggers an error that
-attempts to unwind the processed objects. However, at this point the
-offsets used to index these objects are now corrupted.
+The retry loop for SRIOV reset have refcount and memory leak issue.
+Depending on which function call fails it can potentially call
+amdgpu_amdkfd_pre/post_reset different number of times and causes
+kfd_locked count to be wrong. This will block all future attempts at
+opening /dev/kfd. The retry loop also leakes resources by calling
+amdgpu_virt_init_data_exchange multiple times without calling the
+corresponding fini function.
 
-Unwinding with corrupted offsets can result in decrements of arbitrary
-nodes and lead to their premature release. Other users of such nodes are
-left with a dangling pointer triggering a use-after-free. This issue is
-made evident by the following KASAN report (trimmed):
+Align with the bare-metal reset path which doesn't have these issues.
+This means taking the amdgpu_amdkfd_pre/post_reset functions out of the
+reset loop and calling amdgpu_device_pre_asic_reset each retry which
+properly free the resources from previous try by calling
+amdgpu_virt_fini_data_exchange.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x19c
-  Write of size 4 at addr ffff47fc91598f04 by task binder-util/743
-
-  CPU: 9 UID: 0 PID: 743 Comm: binder-util Not tainted 6.11.0-rc4 #1
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x19c
-   binder_free_buf+0x128/0x434
-   binder_thread_write+0x8a4/0x3260
-   binder_ioctl+0x18f0/0x258c
-  [...]
-
-  Allocated by task 743:
-   __kmalloc_cache_noprof+0x110/0x270
-   binder_new_node+0x50/0x700
-   binder_transaction+0x413c/0x6da8
-   binder_thread_write+0x978/0x3260
-   binder_ioctl+0x18f0/0x258c
-  [...]
-
-  Freed by task 745:
-   kfree+0xbc/0x208
-   binder_thread_read+0x1c5c/0x37d4
-   binder_ioctl+0x16d8/0x258c
-  [...]
-  ==================================================================
-
-To avoid this issue, let's check that the raw data copy is within the
-boundaries of the data section.
-
-Fixes: 6d98eb95b450 ("binder: avoid potential data leakage when copying txn")
-Cc: Todd Kjos <tkjos@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20240822182353.2129600-1-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Emily Deng <Emily.Deng@amd.com>
+Reviewed-by: Zhigang Luo <zhigang.luo@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 47 ++++++++++------------
+ 1 file changed, 22 insertions(+), 25 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -3342,6 +3342,7 @@ static void binder_transaction(struct bi
- 		 */
- 		copy_size = object_offset - user_offset;
- 		if (copy_size && (user_offset > object_offset ||
-+				object_offset > tr->data_size ||
- 				binder_alloc_copy_user_to_buffer(
- 					&target_proc->alloc,
- 					t->buffer, user_offset,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index bd6f2aba0662..e66546df0bc1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5067,10 +5067,6 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
+ {
+ 	int r;
+ 	struct amdgpu_hive_info *hive = NULL;
+-	int retry_limit = 0;
+-
+-retry:
+-	amdgpu_amdkfd_pre_reset(adev);
+ 
+ 	if (test_bit(AMDGPU_HOST_FLR, &reset_context->flags)) {
+ 		clear_bit(AMDGPU_HOST_FLR, &reset_context->flags);
+@@ -5090,7 +5086,7 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
+ 	/* Resume IP prior to SMC */
+ 	r = amdgpu_device_ip_reinit_early_sriov(adev);
+ 	if (r)
+-		goto error;
++		return r;
+ 
+ 	amdgpu_virt_init_data_exchange(adev);
+ 
+@@ -5101,38 +5097,35 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
+ 	/* now we are okay to resume SMC/CP/SDMA */
+ 	r = amdgpu_device_ip_reinit_late_sriov(adev);
+ 	if (r)
+-		goto error;
++		return r;
+ 
+ 	hive = amdgpu_get_xgmi_hive(adev);
+ 	/* Update PSP FW topology after reset */
+ 	if (hive && adev->gmc.xgmi.num_physical_nodes > 1)
+ 		r = amdgpu_xgmi_update_topology(hive, adev);
+-
+ 	if (hive)
+ 		amdgpu_put_xgmi_hive(hive);
++	if (r)
++		return r;
+ 
+-	if (!r) {
+-		r = amdgpu_ib_ring_tests(adev);
+-
+-		amdgpu_amdkfd_post_reset(adev);
+-	}
++	r = amdgpu_ib_ring_tests(adev);
++	if (r)
++		return r;
+ 
+-error:
+-	if (!r && adev->virt.gim_feature & AMDGIM_FEATURE_GIM_FLR_VRAMLOST) {
++	if (adev->virt.gim_feature & AMDGIM_FEATURE_GIM_FLR_VRAMLOST) {
+ 		amdgpu_inc_vram_lost(adev);
+ 		r = amdgpu_device_recover_vram(adev);
+ 	}
+-	amdgpu_virt_release_full_gpu(adev, true);
++	if (r)
++		return r;
+ 
+-	if (AMDGPU_RETRY_SRIOV_RESET(r)) {
+-		if (retry_limit < AMDGPU_MAX_RETRY_LIMIT) {
+-			retry_limit++;
+-			goto retry;
+-		} else
+-			DRM_ERROR("GPU reset retry is beyond the retry limit\n");
+-	}
++	/* need to be called during full access so we can't do it later like
++	 * bare-metal does.
++	 */
++	amdgpu_amdkfd_post_reset(adev);
++	amdgpu_virt_release_full_gpu(adev, true);
+ 
+-	return r;
++	return 0;
+ }
+ 
+ /**
+@@ -5694,6 +5687,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 	int i, r = 0;
+ 	bool need_emergency_restart = false;
+ 	bool audio_suspended = false;
++	int retry_limit = AMDGPU_MAX_RETRY_LIMIT;
+ 
+ 	/*
+ 	 * Special case: RAS triggered and full reset isn't supported
+@@ -5775,8 +5769,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 
+ 		cancel_delayed_work_sync(&tmp_adev->delayed_init_work);
+ 
+-		if (!amdgpu_sriov_vf(tmp_adev))
+-			amdgpu_amdkfd_pre_reset(tmp_adev);
++		amdgpu_amdkfd_pre_reset(tmp_adev);
+ 
+ 		/*
+ 		 * Mark these ASICs to be reseted as untracked first
+@@ -5835,6 +5828,10 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 	/* Host driver will handle XGMI hive reset for SRIOV */
+ 	if (amdgpu_sriov_vf(adev)) {
+ 		r = amdgpu_device_reset_sriov(adev, reset_context);
++		if (AMDGPU_RETRY_SRIOV_RESET(r) && (retry_limit--) > 0) {
++			amdgpu_virt_release_full_gpu(adev, true);
++			goto retry;
++		}
+ 		if (r)
+ 			adev->asic_reset_res = r;
+ 
+-- 
+2.43.0
+
 
 
