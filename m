@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4972224F6;
-	Tue, 10 Sep 2024 09:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8C817BEAE;
+	Tue, 10 Sep 2024 09:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961556; cv=none; b=Pb6o4VCnO+dqV24QVerD5EcB2SW/3AsbxruZdDA/BTtLp1dttKb9nTsM+yldamWmPSqEhaGC+T/phMnT4dTWUL/MohdoFMxwmTTYQAQMn4s0WD5XUfCIEjt5vaCUdGFcrhpIbul/4PveeTqvrBC04lSs0Yv203wJPnbbhc8Chr4=
+	t=1725961559; cv=none; b=AZqr3T0mbQMQe+Nv7ynlCdimC6s9YVsZF3V+HZwgD98BmkxKFrq61kMfgKvoVM3+KfZDe7UFm2PNriaN8v5hIw6XOg/i6JHjDoAqk5UypRb0NirC/QdQ7zQUxa0VjKeP/8f/NM6BzKfSWSO3LWdL5Ks/ZtlvsaDv2OJ8ry/vdVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961556; c=relaxed/simple;
-	bh=qzndcszZ5hGO/ntVRxFMxTOmZ6IEkanE03q5nYUYBEI=;
+	s=arc-20240116; t=1725961559; c=relaxed/simple;
+	bh=0S76bNUtu/cwnZKcz84SW0nMCEeB1hjeN/vZL8Wuetw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MB/dumaPO1ozWbqwSdwm5mj3k6yr00jnFrtmmeLdmu62RZm2uoqmsYB6KxSEq/d0XU2ot11wQFKwzqQTSM73vLJNdPio7O7wvJVUOXzLz9KXSfj8EC9XQol0d2Lt2ZlAqvb587rHWyWA1rQgh2lGv3QrRyi/fFcDDHrWMQI1CnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlOx6e9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5IV25VWpW9kujWsF9Y2TW5fL5/xG9kOCHMRvMu72lXB3spri8lAAM4MRtNL7bw0J7sjIvqHSG5Lw5Z26mXz+Kt1KkozWVbO5rNlBmHYBNnXF0ZBINlDspZFxZEkoJoIVVTSMFdeRsBRwMbln2ESi1uxjWofKBc6KOeVhUCiZQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLPy8HGD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlOx6e9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477FEC4CEC3;
-	Tue, 10 Sep 2024 09:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLPy8HGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627BEC4CEC3;
+	Tue, 10 Sep 2024 09:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961555;
-	bh=qzndcszZ5hGO/ntVRxFMxTOmZ6IEkanE03q5nYUYBEI=;
+	s=korg; t=1725961558;
+	bh=0S76bNUtu/cwnZKcz84SW0nMCEeB1hjeN/vZL8Wuetw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlOx6e9TB8RlkFwhkG/KuJfg37D5pPrX4C4lkaU4xXiHHNepZp2WgOYiAJmad+Ftl
-	 jS3JWgwiAlUTenDy7hgPk7JLzHUxutzw+Lh7rLSmsma45KVh5mAJU6uBxh8+fS2UVw
-	 fPESpgACa1HYtXkz7VPqdmHx4Sgy0cz34ZPFDK3s=
+	b=dLPy8HGD6nPWrh65JAnZBqdSbiV3aML08uOPODtN444oQd4gcFn+mLQuuN29LT+p8
+	 e8Pn3QhP0LVaT/1r4cuS/dKhyBL5YOqDogiloYF1CUQTRPye4FnKfQ/c+5vbZrr3uX
+	 0yH8Tx+79T3rgwvX+g9ca0zjufR+A8yasn7SY834=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Mitchell Levy <levymitchell0@gmail.com>
-Subject: [PATCH 6.10 072/375] x86/fpu: Avoid writing LBR bit to IA32_XSS unless supported
-Date: Tue, 10 Sep 2024 11:27:49 +0200
-Message-ID: <20240910092624.638421976@linuxfoundation.org>
+	Rakesh Ughreja <rughreja@habana.ai>,
+	Ofir Bitton <obitton@habana.ai>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 103/375] accel/habanalabs/gaudi2: unsecure edma max outstanding register
+Date: Tue, 10 Sep 2024 11:28:20 +0200
+Message-ID: <20240910092625.844649635@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,91 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mitchell Levy <levymitchell0@gmail.com>
+From: Rakesh Ughreja <rughreja@habana.ai>
 
-commit 2848ff28d180bd63a95da8e5dcbcdd76c1beeb7b upstream.
+[ Upstream commit 3309887c6ff8ca2ac05a74e1ee5d1c44829f63f2 ]
 
-There are two distinct CPU features related to the use of XSAVES and LBR:
-whether LBR is itself supported and whether XSAVES supports LBR. The LBR
-subsystem correctly checks both in intel_pmu_arch_lbr_init(), but the
-XSTATE subsystem does not.
+Netowrk EDMAs uses more outstanding transfers so this needs to be
+programmed by EDMA firmware.
 
-The LBR bit is only removed from xfeatures_mask_independent when LBR is not
-supported by the CPU, but there is no validation of XSTATE support.
-
-If XSAVES does not support LBR the write to IA32_XSS causes a #GP fault,
-leaving the state of IA32_XSS unchanged, i.e. zero. The fault is handled
-with a warning and the boot continues.
-
-Consequently the next XRSTORS which tries to restore supervisor state fails
-with #GP because the RFBM has zero for all supervisor features, which does
-not match the XCOMP_BV field.
-
-As XFEATURE_MASK_FPSTATE includes supervisor features setting up the FPU
-causes a #GP, which ends up in fpu_reset_from_exception_fixup(). That fails
-due to the same problem resulting in recursive #GPs until the kernel runs
-out of stack space and double faults.
-
-Prevent this by storing the supported independent features in
-fpu_kernel_cfg during XSTATE initialization and use that cached value for
-retrieving the independent feature bits to be written into IA32_XSS.
-
-[ tglx: Massaged change log ]
-
-Fixes: f0dccc9da4c0 ("x86/fpu/xstate: Support dynamic supervisor feature for LBR")
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Mitchell Levy <levymitchell0@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240812-xsave-lbr-fix-v3-1-95bac1bf62f4@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Rakesh Ughreja <rughreja@habana.ai>
+Reviewed-by: Ofir Bitton <obitton@habana.ai>
+Signed-off-by: Ofir Bitton <obitton@habana.ai>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/fpu/types.h |    7 +++++++
- arch/x86/kernel/fpu/xstate.c     |    3 +++
- arch/x86/kernel/fpu/xstate.h     |    4 ++--
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/accel/habanalabs/gaudi2/gaudi2_security.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/include/asm/fpu/types.h
-+++ b/arch/x86/include/asm/fpu/types.h
-@@ -591,6 +591,13 @@ struct fpu_state_config {
- 	 * even without XSAVE support, i.e. legacy features FP + SSE
- 	 */
- 	u64 legacy_features;
-+	/*
-+	 * @independent_features:
-+	 *
-+	 * Features that are supported by XSAVES, but not managed as part of
-+	 * the FPU core, such as LBR
-+	 */
-+	u64 independent_features;
- };
- 
- /* FPU state configuration information */
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -788,6 +788,9 @@ void __init fpu__init_system_xstate(unsi
- 		goto out_disable;
- 	}
- 
-+	fpu_kernel_cfg.independent_features = fpu_kernel_cfg.max_features &
-+					      XFEATURE_MASK_INDEPENDENT;
-+
- 	/*
- 	 * Clear XSAVE features that are disabled in the normal CPUID.
- 	 */
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -62,9 +62,9 @@ static inline u64 xfeatures_mask_supervi
- static inline u64 xfeatures_mask_independent(void)
- {
- 	if (!cpu_feature_enabled(X86_FEATURE_ARCH_LBR))
--		return XFEATURE_MASK_INDEPENDENT & ~XFEATURE_MASK_LBR;
-+		return fpu_kernel_cfg.independent_features & ~XFEATURE_MASK_LBR;
- 
--	return XFEATURE_MASK_INDEPENDENT;
-+	return fpu_kernel_cfg.independent_features;
- }
- 
- /* XSAVE/XRSTOR wrapper functions */
+diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2_security.c b/drivers/accel/habanalabs/gaudi2/gaudi2_security.c
+index 34bf80c5a44b..307ccb912ccd 100644
+--- a/drivers/accel/habanalabs/gaudi2/gaudi2_security.c
++++ b/drivers/accel/habanalabs/gaudi2/gaudi2_security.c
+@@ -479,6 +479,7 @@ static const u32 gaudi2_pb_dcr0_edma0_unsecured_regs[] = {
+ 	mmDCORE0_EDMA0_CORE_CTX_TE_NUMROWS,
+ 	mmDCORE0_EDMA0_CORE_CTX_IDX,
+ 	mmDCORE0_EDMA0_CORE_CTX_IDX_INC,
++	mmDCORE0_EDMA0_CORE_WR_COMP_MAX_OUTSTAND,
+ 	mmDCORE0_EDMA0_CORE_RD_LBW_RATE_LIM_CFG,
+ 	mmDCORE0_EDMA0_QM_CQ_CFG0_0,
+ 	mmDCORE0_EDMA0_QM_CQ_CFG0_1,
+-- 
+2.43.0
+
 
 
