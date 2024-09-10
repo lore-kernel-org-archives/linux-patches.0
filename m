@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C141946BA;
-	Tue, 10 Sep 2024 10:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38A31946A1;
+	Tue, 10 Sep 2024 10:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962884; cv=none; b=o25M/o1xbXpJh1TDcROp0/O4m2QD+hc3xJIYJvnAiUg7dQEu+u+kDmyEVNTZLaTrjfbOHMz3Iz1xzJeP8pgJyP4QiNjbcPULmw+f+Lb3UkxvxxB1GVFiEIEW1QYtxdSZz9CY3Zik2GFE6R/DXTjlFT+EoNf6SpoEbvjztzi5/iM=
+	t=1725962887; cv=none; b=NodC/5QXEgmF8etmTDIFxPi3IhGhjGMHRbtso0G3TBGxvElOLbh6ROoiUewj2gCtBQq70MiV8YkhmVy+VDZPO5DGD3IpPttJ8dTFpJw2BhmxmWlZpTfhTjiUYu1TF2q4lKpllN1DTFqZIvLMvs7Z1tplc+aOz0otFyEzQ+DDClI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962884; c=relaxed/simple;
-	bh=+9jXXW0TpGUgwNBKgCem2tbLcGWzT+bXSFWJLxLqUTU=;
+	s=arc-20240116; t=1725962887; c=relaxed/simple;
+	bh=IHu9mXJpPWDHROVhzRwB+eFyFIRGmSgjwAxvYI/68Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPFyBys9+Jf2kzCm4BmRTJt1NIZVJWvdhkCt8q5aTGU1u5WnT5Y22zBYZJxyp/hrDRjlnN1jvT5c/Qszk3I/iT8C51IgRPuxpaanV+lXqabX4oPhkZeFxsKAos/TIRkOhcny3GH8E+eKOV5PyLyMXzq+WH/jKR/r32UktpGMZ6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoRl1+nG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m3Aexh6Y9Q8xSLhVOzjHne3YX/I0H1/CO5ccvFW9oiWjoSFZl8UNOwHkCG/UgzwZYpisbqf0m3f6oEkib9SSxkJTauyFp9v8H6g0N4Y6uV+h8yoDltnwu5pnHn0GqXPrCSETXu3Goee98Z2A0yN98TMnC6xDzKMhutOOC2QKjgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6/imGSO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoRl1+nG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9479AC4CEC3;
-	Tue, 10 Sep 2024 10:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6/imGSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787A6C4CEC3;
+	Tue, 10 Sep 2024 10:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962884;
-	bh=+9jXXW0TpGUgwNBKgCem2tbLcGWzT+bXSFWJLxLqUTU=;
+	s=korg; t=1725962886;
+	bh=IHu9mXJpPWDHROVhzRwB+eFyFIRGmSgjwAxvYI/68Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UoRl1+nGeIj3rgxaJBs7yPBu9X9N2FLUYr1I+wqvwj/xcdck8EcL0uTU7XP9c4mAv
-	 I11+ZYpKZKi8JT9y7vSi3aS7wNVRvuo5FVuhT68An3OWOELys13tWkT+N+kMLFYj9D
-	 ARUTv8znPvEiE+8RVQ0dIqjtd10fScTp7pewSdgs=
+	b=h6/imGSOJOkQWWtj3d3EdujadD5IU4V4/KkJbe2IW/GcXHynI1XaZv0dSBRo9srog
+	 bX4uWg4ZYWGl2gZ30W83MENx8pG0Qxnw/Y+QDWUHP/Zx2F1WOfiIWHxHFAf2Dt/tFv
+	 0MiuUQ4Es2UghEPYuu8C10NkTNy8lyH9ZqucFjd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/192] Input: ili210x - use kvmalloc() to allocate buffer for firmware update
-Date: Tue, 10 Sep 2024 11:31:27 +0200
-Message-ID: <20240910092600.591017944@linuxfoundation.org>
+Subject: [PATCH 6.1 064/192] media: qcom: camss: Add check for v4l2_fwnode_endpoint_parse
+Date: Tue, 10 Sep 2024 11:31:28 +0200
+Message-ID: <20240910092600.629042607@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -50,54 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 17f5eebf6780eee50f887542e1833fda95f53e4d ]
+[ Upstream commit 4caf6d93d9f2c11d6441c64e1c549c445fa322ed ]
 
-Allocating a contiguous buffer of 64K may fail if memory is sufficiently
-fragmented, and may cause OOM kill of an unrelated process. However we
-do not need to have contiguous memory. We also do not need to zero
-out the buffer since it will be overwritten with firmware data.
+Add check for the return value of v4l2_fwnode_endpoint_parse() and
+return the error if it fails in order to catch the error.
 
-Switch to using kvmalloc() instead of kzalloc().
-
-Link: https://lore.kernel.org/r/20240609234757.610273-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/ili210x.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/touchscreen/ili210x.c b/drivers/input/touchscreen/ili210x.c
-index e3a36cd3656c..8c8eea5173f7 100644
---- a/drivers/input/touchscreen/ili210x.c
-+++ b/drivers/input/touchscreen/ili210x.c
-@@ -586,7 +586,7 @@ static int ili251x_firmware_to_buffer(const struct firmware *fw,
- 	 * once, copy them all into this buffer at the right locations, and then
- 	 * do all operations on this linear buffer.
- 	 */
--	fw_buf = kzalloc(SZ_64K, GFP_KERNEL);
-+	fw_buf = kvmalloc(SZ_64K, GFP_KERNEL);
- 	if (!fw_buf)
- 		return -ENOMEM;
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index a30461de3e84..d173ac80e01c 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1038,8 +1038,11 @@ static int camss_of_parse_endpoint_node(struct device *dev,
+ 	struct v4l2_mbus_config_mipi_csi2 *mipi_csi2;
+ 	struct v4l2_fwnode_endpoint vep = { { 0 } };
+ 	unsigned int i;
++	int ret;
  
-@@ -616,7 +616,7 @@ static int ili251x_firmware_to_buffer(const struct firmware *fw,
- 	return 0;
+-	v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
++	ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
++	if (ret)
++		return ret;
  
- err_big:
--	kfree(fw_buf);
-+	kvfree(fw_buf);
- 	return error;
- }
- 
-@@ -859,7 +859,7 @@ static ssize_t ili210x_firmware_update_store(struct device *dev,
- 	ili210x_hardware_reset(priv->reset_gpio);
- 	dev_dbg(dev, "Firmware update ended, error=%i\n", error);
- 	enable_irq(client->irq);
--	kfree(fwbuf);
-+	kvfree(fwbuf);
- 	return error;
- }
+ 	csd->interface.csiphy_id = vep.base.port;
  
 -- 
 2.43.0
