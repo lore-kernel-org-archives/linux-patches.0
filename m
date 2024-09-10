@@ -1,82 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4078617BB3D;
-	Tue, 10 Sep 2024 22:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A32B1A4F3A
+	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 23:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726005915; cv=none; b=O0n+AqwVGZ3l5gRU14Ipoc3AL+ct43bbmjDhedjf1jw0ytTTjssi37wgnzJXFETcSiax1nFO2ko71peCjLCFNeGHitp4X0fPmgK5ZsP/Hi4K9xyYc8xV/y5Oz9pK2jV/Ttzlm9DcZYlR00rm4v+WINdJg7pyClNbLu2LKv4lnz0=
+	t=1726009392; cv=none; b=ozkPILWp+ifzXQOnIHoJK9E4+mjxpuITUsDrySQcpSrlvFAKBcQzfR8dJLLrGUneUEZ+WglR0JS7Eao+dSNuiLjOfxGcXqFbbooL7DsB9Cr13ivWUE4Zpx0Chk5IrgIBBKWvDdbaHa3S6uH7jhZdsjPp4MpMH5PI49dIyEEa8KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726005915; c=relaxed/simple;
-	bh=NRLEHkoUp4iA1+zIm4JewpKZibG28aKp1yzvDTqM6F0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wbv6rzLAxJnHH7RNsEQwu7XKcqv9P4IL/UQ4Bivy5wOGfrB6NEEC3uQ42p/Fcj+9LKGHPig77BSbf1cHuwIDRk0f7qgdyJ4lgNlr2STgOdRraEz0BT3781eewl0Y8wB4tFNBiBuMoh8D6RiVR7J8KoCyRbyeg50bsY+Q2cF59fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QfpDMTbz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1726009392; c=relaxed/simple;
+	bh=01XXCU8JIt+/LolNj9F9a66tCdxaL1YDcBc+c1mPPQ4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WdneB3IL6GNv5Tk3eYDwJ93FHR1qsN+B2+DeG3RUv2M61s9cCmyJ0ig7O9FxX+LFvCox6I5/6LLa2JGxEmEdh1V+/fNfEWhwVNXClXb/+DjUrbb/kxXup6NalqCA2FcHT+wG+TtyNbvOX0igR/gNfaQCo8262cLjxJibe1U+JKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUs2nKaQ; arc=none smtp.client-ip=209.85.166.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QfpDMTbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC21C4CEC3;
-	Tue, 10 Sep 2024 22:05:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726005915;
-	bh=NRLEHkoUp4iA1+zIm4JewpKZibG28aKp1yzvDTqM6F0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QfpDMTbzaIFpaCUfJciulQOrsSBF78SGRfK2Cxmt0YGdI4vpyzJftvvrKD3v4vS1E
-	 xoiHPaerNZVdaBfFzS+QVJjePMvaESihhtP5EWnhOQ1+B8F0qOdePDwlM9txshaJSh
-	 XdhlEpgVg8ghClMj1Jh44vVneN/T/Pexqx1TpoqnjOHj6FSaMwavfe13aUAnkbFWMS
-	 OiXiRMTyaqhGj8Wz2xo12o94/qypYiOIi5YTtHAINI/5K0FOmD4vjpIibWHgcScR9F
-	 wHM5pGBihAvuf7aoF/2VpmfJxq2z37jkwtJ1wVohHdCQdUnZVcE90OQoZbzfP4dse/
-	 /EES3xDlZhomA==
-Date: Tue, 10 Sep 2024 23:05:07 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/192] 6.1.110-rc1 review
-Message-ID: <ea450041-b282-4667-b29d-22e633e2f034@sirena.org.uk>
-References: <20240910092557.876094467@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUs2nKaQ"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-82ce603d8b5so130308739f.0
+        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 16:03:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1726009389; x=1726614189; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Our0i5FAN8M9eyBuwGhZmOhmd7tZTzv8n7Ma5HUwtUY=;
+        b=ZUs2nKaQATLwiIjPA+dvtxK0vbTsXH12QXoBTz4h1GM/ivzvA566e7rrT6Q6dZmPNa
+         teFM0hC1zCRVlbe/CUbuM8kF1IewiaE32l0fPexNomWbtl949APC8G65WlDXIg+5FDmu
+         MPVInK9W8rpGJdW6T2Px63DmqExUOOjfPBD1g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726009389; x=1726614189;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Our0i5FAN8M9eyBuwGhZmOhmd7tZTzv8n7Ma5HUwtUY=;
+        b=w9KJnBMAy25t780vFXNC/4jY4XoqYbgx8Sg+QZeFtxiByrdvtmyKPEvMT6z2brrZEj
+         N6qGeXqErpvfEVX5SAWwXkmYzX0qVYdbqIt8CHegvIpHGpfT4K7X49YLKJmekA1lFnT7
+         a+bAj+Tnj/VoPQ/fARZ4JiksxIQ3mlfB4emasJfEvs8feowxtP62WjPt49x7OPNqpyx3
+         SWNhsXVEJ11xgOQ63tsi51QoUVFfjrKT8ciUvjPCVi3N7AYm8OyaGSJf9MxgEL3Q4Jku
+         PT44qr21EP+86o/g5y34gfN1S+52OaTNeGE2AdBRranH/Aqg8QwlOvfMdL6FiZ4tryLk
+         Y1/w==
+X-Gm-Message-State: AOJu0YwG8lSMXT0h1pw90AOAbP/RHh2N05c5e7bzkxXgMi9km2FY5t6V
+	3NjtfzA1M7ktcgX0JvHEfUoxoqAqZozAm/U9BSp4livWHIXN9/u3/A1ynqfEnU8=
+X-Google-Smtp-Source: AGHT+IHTzytd/BXjhulGOFJeDN5N2Y/iSixDSXEeNyCm+5M2O3H39PajIp3Y22RsVR4SC9HtjYRdKQ==
+X-Received: by 2002:a05:6602:2dc8:b0:82c:ef21:91de with SMTP id ca18e2360f4ac-82cef219385mr890886539f.14.1726009389357;
+        Tue, 10 Sep 2024 16:03:09 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-82aa7385633sm228261539f.33.2024.09.10.16.03.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Sep 2024 16:03:07 -0700 (PDT)
+Message-ID: <f2b4e304-2a9a-46ee-a56f-c7669bb891af@linuxfoundation.org>
+Date: Tue, 10 Sep 2024 17:03:06 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RhBarRI6VwanoEjX"
-Content-Disposition: inline
-In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
-X-Cookie: You're not Dave.  Who are you?
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4.19 00/96] 4.19.322-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240910092541.383432924@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
---RhBarRI6VwanoEjX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Tue, Sep 10, 2024 at 11:30:24AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.110 release.
-> There are 192 patches in this series, all will be posted as a response
+On 9/10/24 03:31, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.322 release.
+> There are 96 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Thu, 12 Sep 2024 09:25:22 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.322-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Build failed with on AMD Ryzen 7 4700G with Radeon Graphics
 
---RhBarRI6VwanoEjX
-Content-Type: application/pgp-signature; name="signature.asc"
+   CC [M]  drivers/gpu/drm/amd/amdgpu/ci_smc.o
+net/bridge/br_fdb.c: In function ‘fdb_create’:
+net/bridge/br_fdb.c:515:20: error: ‘struct net_bridge_fdb_entry’ has no member n
+amed ‘is_sticky’
+   515 |                 fdb->is_sticky = 0;
+       |                    ^~
+make[2]: *** [scripts/Makefile.build:303: net/bridge/br_fdb.o] Error 1
+make[1]: *** [scripts/Makefile.build:544: net/bridge] Error 2
+make: *** [Makefile:1086: net] Error 2
 
------BEGIN PGP SIGNATURE-----
+Possible problem commit:
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbgwpMACgkQJNaLcl1U
-h9CLswf/SxTNjChCzJGQauDu4Yy+LP1470itfUPiXzilyZpn9fY2qrb5Fy+VjNSO
-UdeCMgdUdXLJgSpysdmo3x2L6fPUGE0pY2Aqd/AZ6Tp1tUYXV2FC6PSF0GTUgmf1
-gh1t1qFKLePZ2qKAbq4Nk+NChWHNB+ELYxs0SmEJGoa3sXiYVK9dEtI8yHTN4Sox
-3a+6kVgJJu3dqSXOUS+eo4Olbrw1eY7+L6v7h94WG5/LA7RHvnThp+3bpEz4nuNI
-zBI42PtYEGS83gtDkBis2g6ZqplvZv98EmivjVFWx5Nl50UckaqCvVlVHPVatHqK
-3NI8nkQZRnxEkQNX8hZ0OCGQD86Ymw==
-=R0/4
------END PGP SIGNATURE-----
+Nikolay Aleksandrov <nikolay@cumulusnetworks.com>
+     net: bridge: add support for sticky fdb entries
 
---RhBarRI6VwanoEjX--
+thanks,
+-- Shuah
