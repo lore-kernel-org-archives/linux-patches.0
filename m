@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C358A17B50F;
-	Tue, 10 Sep 2024 10:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B730517B50F;
+	Tue, 10 Sep 2024 10:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964531; cv=none; b=Tq0Rguti1EGtWUdDUdQQ55fNsaov3ZKmRms3TFWkpcwSNF6/x4rrFZbf3c55WiNmf2UipMZGZziwJmz0YgTppFvzJaxt+/XPnQNPV8iMliyDVstZmZuPdvM4v9qzhL1MA4IN44PDl1Sj8jaG7NoJly58Z96LjTvQp2fay1TpUtw=
+	t=1725964534; cv=none; b=cbhiImXHKcbLHuFTGvPnue8Hz5XfZGnhVzudwSsB41OYZk8gcK1IuSo/KMz97yy4vthE2j9W+ARWmxO+WBvGwp4JaISHv7UhVPisKSpS0e7iqtYBApeS02o9yuDXBBxDAw166CzhXsMdABE9T0zF8xyrKVUBaS3YiY6GsqRaEKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964531; c=relaxed/simple;
-	bh=OMOWRkMrGUrEySa1CXFDUJ1V57O17NBI5RYzwfeaI7Y=;
+	s=arc-20240116; t=1725964534; c=relaxed/simple;
+	bh=He4qJXx1y3Z37yMCQ90ekQi8Sa1fkuGVP7eMrbMhrl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hl80+Som3ryr5JMP1rteZBV54kPsitCsWvjnvPhCfJUT6fJ1qjvNTWYVSOvng/vWKBHErwBw/VcgqpISK95N7iSyGN+reMoG8hJTc2ddeDiX16Fw+ke+qtUKII+BT0tDeQpKQMVAgzBvIBZ8MUG35jp2LNZaaboW+U4uFYcdX88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdqtzxV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o8Cs38oOD+AK+JcADnoIegGI9ZzbFhE5nSIsMHH3gzfYRD3oGAf7+d52eXDdb+GEMy1Za5Q4UGnYnAs/ZDGmotjKG7zPixsv0xCabykVW1QeGkJVBm5zG6FCEzRDon69aIsx92KBJnn41LNWAvMK7JnCOd4OQtmYacqrdCvwlLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6l7ypwY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdqtzxV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8A5C4CECD;
-	Tue, 10 Sep 2024 10:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6l7ypwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4101AC4CEC3;
+	Tue, 10 Sep 2024 10:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964531;
-	bh=OMOWRkMrGUrEySa1CXFDUJ1V57O17NBI5RYzwfeaI7Y=;
+	s=korg; t=1725964534;
+	bh=He4qJXx1y3Z37yMCQ90ekQi8Sa1fkuGVP7eMrbMhrl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdqtzxV3N4czzbd+if2bcOz73ua6/SYg30FDwU4N1cj5dG8b8l9iYpfYUobC1NEBa
-	 NfyjttUmi7pbw5bLkDQrGkoiXctIaNQKrtN/rUYKVJgRS43/3MvYN9SMaWyQqZ3aI4
-	 VpZCDNRUuDQFYRaee+9s90hUUbwoS9iSw7bcZ4so=
+	b=X6l7ypwYM1xPWifIGuk/MeAAWHSSqelgqoq3Dl1JeUnAD1gOuLJcbTghXXaidBwCz
+	 5IhXtfwDTDBMksHyVIyM7Av2fVyt4KINtZD1Z7y0jMH/6YvMEBZBEb4DhmXQkYkTqF
+	 QjZv1x1jLD6jYDvt7jAlAgKkduvv3Fh0CTj5xVyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.6 215/269] binder: fix UAF caused by offsets overwrite
-Date: Tue, 10 Sep 2024 11:33:22 +0200
-Message-ID: <20240910092615.666007717@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.6 216/269] nvmem: Fix return type of devm_nvmem_device_get() in kerneldoc
+Date: Tue, 10 Sep 2024 11:33:23 +0200
+Message-ID: <20240910092615.693107066@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -50,73 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 4df153652cc46545722879415937582028c18af5 upstream.
+commit c69f37f6559a8948d70badd2b179db7714dedd62 upstream.
 
-Binder objects are processed and copied individually into the target
-buffer during transactions. Any raw data in-between these objects is
-copied as well. However, this raw data copy lacks an out-of-bounds
-check. If the raw data exceeds the data section size then the copy
-overwrites the offsets section. This eventually triggers an error that
-attempts to unwind the processed objects. However, at this point the
-offsets used to index these objects are now corrupted.
+devm_nvmem_device_get() returns an nvmem device, not an nvmem cell.
 
-Unwinding with corrupted offsets can result in decrements of arbitrary
-nodes and lead to their premature release. Other users of such nodes are
-left with a dangling pointer triggering a use-after-free. This issue is
-made evident by the following KASAN report (trimmed):
-
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x19c
-  Write of size 4 at addr ffff47fc91598f04 by task binder-util/743
-
-  CPU: 9 UID: 0 PID: 743 Comm: binder-util Not tainted 6.11.0-rc4 #1
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x19c
-   binder_free_buf+0x128/0x434
-   binder_thread_write+0x8a4/0x3260
-   binder_ioctl+0x18f0/0x258c
-  [...]
-
-  Allocated by task 743:
-   __kmalloc_cache_noprof+0x110/0x270
-   binder_new_node+0x50/0x700
-   binder_transaction+0x413c/0x6da8
-   binder_thread_write+0x978/0x3260
-   binder_ioctl+0x18f0/0x258c
-  [...]
-
-  Freed by task 745:
-   kfree+0xbc/0x208
-   binder_thread_read+0x1c5c/0x37d4
-   binder_ioctl+0x16d8/0x258c
-  [...]
-  ==================================================================
-
-To avoid this issue, let's check that the raw data copy is within the
-boundaries of the data section.
-
-Fixes: 6d98eb95b450 ("binder: avoid potential data leakage when copying txn")
-Cc: Todd Kjos <tkjos@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20240822182353.2129600-1-cmllamas@google.com
+Fixes: e2a5402ec7c6d044 ("nvmem: Add nvmem_device based consumer apis.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240902142510.71096-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvmem/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -3342,6 +3342,7 @@ static void binder_transaction(struct bi
- 		 */
- 		copy_size = object_offset - user_offset;
- 		if (copy_size && (user_offset > object_offset ||
-+				object_offset > tr->data_size ||
- 				binder_alloc_copy_user_to_buffer(
- 					&target_proc->alloc,
- 					t->buffer, user_offset,
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1253,13 +1253,13 @@ void nvmem_device_put(struct nvmem_devic
+ EXPORT_SYMBOL_GPL(nvmem_device_put);
+ 
+ /**
+- * devm_nvmem_device_get() - Get nvmem cell of device form a given id
++ * devm_nvmem_device_get() - Get nvmem device of device form a given id
+  *
+  * @dev: Device that requests the nvmem device.
+  * @id: name id for the requested nvmem device.
+  *
+- * Return: ERR_PTR() on error or a valid pointer to a struct nvmem_cell
+- * on success.  The nvmem_cell will be freed by the automatically once the
++ * Return: ERR_PTR() on error or a valid pointer to a struct nvmem_device
++ * on success.  The nvmem_device will be freed by the automatically once the
+  * device is freed.
+  */
+ struct nvmem_device *devm_nvmem_device_get(struct device *dev, const char *id)
 
 
