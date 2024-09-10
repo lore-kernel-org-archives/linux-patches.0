@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E19189B9C;
-	Tue, 10 Sep 2024 09:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4FA190077;
+	Tue, 10 Sep 2024 09:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961406; cv=none; b=fWI0tRJRfH9dZ/9wx5pNMVyldLDs7+HC7VwLpDK5a+rUqGnP9XrNZ7XgC6uRSAnUnuZS8E5/eWoe+7vv7jcE2XB74Vjaz0qFzpaXl6+0FTgm2Fn25/ULYIOE90H/C5r+UJ2wYz7rAIltla71gPwjHg8/k3CNRkf21NujJ7SW6HY=
+	t=1725961409; cv=none; b=P2TMcTGzZZKXi4lIX+z5Pa6ic9zgOu+YWzkebDXu0glygug+L9AlbeHfyTBARNLvduw3sc8hqeyI4aO5w7XJiooxIR0xrC0xmcxM/4+lzdZwTXteTJK2H/kbdj6l1CO7zf3VrYIK4iH7iKABFugN9ScZmX7gDBMOcjPKUWjM9Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961406; c=relaxed/simple;
-	bh=84mqLbCEQ2/Q5EhiK3E1j5tLULVjRSUH6GNORWe8dmU=;
+	s=arc-20240116; t=1725961409; c=relaxed/simple;
+	bh=XwueBSFHdj5FztlJRUO2AWtiSLqDOOxjpyYC1qORy2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7rPE9a85LNsaSia5UTL7Kvp6VrmkRkaVVeVvth+PWG+obVW2PRE4y7Yfjzbz6Jj02zn5M/ocWWatcyd0Z07vY8NRLhj8n9wySQ/E1oqFhCRzLkIzKR0vkbezOQPlrFDWDKcV9STAqssi1rNcezoGOVt6R1WtHRzkNEP3L60rr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVXJVNHu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ITKCV+xYdiMEtM0CQI2+3Q+XEA2JyXKyi1n5RUzytaH0qTQ/qMDzIDDq1aOQzkD2n/x2tjvVR2IAR35ht7aBXoVYMaOUrsrqD47edeyG41Bh8rR9YIqkXjl5zodH4M/TUr9eY4644+u4xoBOei2ElhjZKDCYmd27keR1Nt13jdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ5hM/L2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVXJVNHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55474C4CEC3;
-	Tue, 10 Sep 2024 09:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ5hM/L2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4611DC4CEC3;
+	Tue, 10 Sep 2024 09:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961405;
-	bh=84mqLbCEQ2/Q5EhiK3E1j5tLULVjRSUH6GNORWe8dmU=;
+	s=korg; t=1725961408;
+	bh=XwueBSFHdj5FztlJRUO2AWtiSLqDOOxjpyYC1qORy2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVXJVNHu8x5UTjUmpXDwoxz/rilZT9b5EAb+DdkT1+lrPRododmCDkuMIveStAGl2
-	 XlDQWcA9MC568/89bCZGhjpWfVEGu1ErVRTCyP+ntWkh43dz6dHHsmBh2qUyr6uYGH
-	 1GHsWNrTZ3N/HV/KvBwB82THZTLlXo0PWYJ2N+F8=
+	b=JZ5hM/L21YZ7k7J+26FQGiXufIUMXkEpRHZFlPkCslm9TIxsIcBjyopqMem8p+jEU
+	 2OJWRLBmGnf7oZW0RM3Rg8iU+yDoHQBZkL7DL7oTkI2VkyB+vFIKaxwZOr/Y6FdXpx
+	 YX5p2S4nkrhoLcgX3Ly1JrV/pRJ9gJvUKUG2bPL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <gehao@kylinos.cn>,
-	Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Kees Cook <kees@kernel.org>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Bharata B Rao <bharata@amd.com>,
+	Breno Leitao <leitao@debian.org>,
+	David Hildenbrand <david@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
 	Vlastimil Babka <vbabka@suse.cz>,
+	Yu Zhao <yuzhao@google.com>,
+	Zhaoyang Huang <huangzhaoyang@gmail.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 059/375] mm/slub: add check for s->flags in the alloc_tagging_slab_free_hook
-Date: Tue, 10 Sep 2024 11:27:36 +0200
-Message-ID: <20240910092624.211868189@linuxfoundation.org>
+Subject: [PATCH 6.10 060/375] Revert "mm: skip CMA pages when they are not available"
+Date: Tue, 10 Sep 2024 11:27:37 +0200
+Message-ID: <20240910092624.239613557@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -60,100 +60,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <gehao@kylinos.cn>
+From: Usama Arif <usamaarif642@gmail.com>
 
-commit ab7ca09520e9c41c219a4427fe0dae24024bfe7f upstream.
+commit bfe0857c20c663fcc1592fa4e3a61ca12b07dac9 upstream.
 
-When enable CONFIG_MEMCG & CONFIG_KFENCE & CONFIG_KMEMLEAK, the following
-warning always occurs,This is because the following call stack occurred:
-mem_pool_alloc
-    kmem_cache_alloc_noprof
-        slab_alloc_node
-            kfence_alloc
+This reverts commit 5da226dbfce3 ("mm: skip CMA pages when they are not
+available") and b7108d66318a ("Multi-gen LRU: skip CMA pages when they are
+not eligible").
 
-Once the kfence allocation is successful,slab->obj_exts will not be empty,
-because it has already been assigned a value in kfence_init_pool.
+lruvec->lru_lock is highly contended and is held when calling
+isolate_lru_folios.  If the lru has a large number of CMA folios
+consecutively, while the allocation type requested is not MIGRATE_MOVABLE,
+isolate_lru_folios can hold the lock for a very long time while it skips
+those.  For FIO workload, ~150million order=0 folios were skipped to
+isolate a few ZONE_DMA folios [1].  This can cause lockups [1] and high
+memory pressure for extended periods of time [2].
 
-Since in the prepare_slab_obj_exts_hook function,we perform a check for
-s->flags & (SLAB_NO_OBJ_EXT | SLAB_NOLEAKTRACE),the alloc_tag_add function
-will not be called as a result.Therefore,ref->ct remains NULL.
+Remove skipping CMA for MGLRU as well, as it was introduced in sort_folio
+for the same resaon as 5da226dbfce3a2f44978c2c7cf88166e69a6788b.
 
-However,when we call mem_pool_free,since obj_ext is not empty, it
-eventually leads to the alloc_tag_sub scenario being invoked.  This is
-where the warning occurs.
+[1] https://lore.kernel.org/all/CAOUHufbkhMZYz20aM_3rHZ3OcK4m2puji2FGpUpn_-DevGk3Kg@mail.gmail.com/
+[2] https://lore.kernel.org/all/ZrssOrcJIDy8hacI@gmail.com/
 
-So we should add corresponding checks in the alloc_tagging_slab_free_hook.
-For __GFP_NO_OBJ_EXT case,I didn't see the specific case where it's using
-kfence,so I won't add the corresponding check in
-alloc_tagging_slab_free_hook for now.
-
-[    3.734349] ------------[ cut here ]------------
-[    3.734807] alloc_tag was not set
-[    3.735129] WARNING: CPU: 4 PID: 40 at ./include/linux/alloc_tag.h:130 kmem_cache_free+0x444/0x574
-[    3.735866] Modules linked in: autofs4
-[    3.736211] CPU: 4 UID: 0 PID: 40 Comm: ksoftirqd/4 Tainted: G        W          6.11.0-rc3-dirty #1
-[    3.736969] Tainted: [W]=WARN
-[    3.737258] Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-[    3.737875] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    3.738501] pc : kmem_cache_free+0x444/0x574
-[    3.738951] lr : kmem_cache_free+0x444/0x574
-[    3.739361] sp : ffff80008357bb60
-[    3.739693] x29: ffff80008357bb70 x28: 0000000000000000 x27: 0000000000000000
-[    3.740338] x26: ffff80008207f000 x25: ffff000b2eb2fd60 x24: ffff0000c0005700
-[    3.740982] x23: ffff8000804229e4 x22: ffff800082080000 x21: ffff800081756000
-[    3.741630] x20: fffffd7ff8253360 x19: 00000000000000a8 x18: ffffffffffffffff
-[    3.742274] x17: ffff800ab327f000 x16: ffff800083398000 x15: ffff800081756df0
-[    3.742919] x14: 0000000000000000 x13: 205d344320202020 x12: 5b5d373038343337
-[    3.743560] x11: ffff80008357b650 x10: 000000000000005d x9 : 00000000ffffffd0
-[    3.744231] x8 : 7f7f7f7f7f7f7f7f x7 : ffff80008237bad0 x6 : c0000000ffff7fff
-[    3.744907] x5 : ffff80008237ba78 x4 : ffff8000820bbad0 x3 : 0000000000000001
-[    3.745580] x2 : 68d66547c09f7800 x1 : 68d66547c09f7800 x0 : 0000000000000000
-[    3.746255] Call trace:
-[    3.746530]  kmem_cache_free+0x444/0x574
-[    3.746931]  mem_pool_free+0x44/0xf4
-[    3.747306]  free_object_rcu+0xc8/0xdc
-[    3.747693]  rcu_do_batch+0x234/0x8a4
-[    3.748075]  rcu_core+0x230/0x3e4
-[    3.748424]  rcu_core_si+0x14/0x1c
-[    3.748780]  handle_softirqs+0x134/0x378
-[    3.749189]  run_ksoftirqd+0x70/0x9c
-[    3.749560]  smpboot_thread_fn+0x148/0x22c
-[    3.749978]  kthread+0x10c/0x118
-[    3.750323]  ret_from_fork+0x10/0x20
-[    3.750696] ---[ end trace 0000000000000000 ]---
-
-Link: https://lkml.kernel.org/r/20240816013336.17505-1-hao.ge@linux.dev
-Fixes: 4b8736964640 ("mm/slab: add allocation accounting into slab allocation and free paths")
-Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
+[usamaarif642@gmail.com: also revert b7108d66318a, per Johannes]
+  Link: https://lkml.kernel.org/r/9060a32d-b2d7-48c0-8626-1db535653c54@gmail.com
+  Link: https://lkml.kernel.org/r/357ac325-4c61-497a-92a3-bdbd230d5ec9@gmail.com
+Link: https://lkml.kernel.org/r/9060a32d-b2d7-48c0-8626-1db535653c54@gmail.com
+Fixes: 5da226dbfce3 ("mm: skip CMA pages when they are not available")
+Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Bharata B Rao <bharata@amd.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
 Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Zhaoyang Huang <huangzhaoyang@gmail.com>
+Cc: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ mm/vmscan.c |   24 ++----------------------
+ 1 file changed, 2 insertions(+), 22 deletions(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -2044,6 +2044,10 @@ alloc_tagging_slab_free_hook(struct kmem
- 	if (!mem_alloc_profiling_enabled())
- 		return;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1587,25 +1587,6 @@ static __always_inline void update_lru_s
  
-+	/* slab->obj_exts might not be NULL if it was created for MEMCG accounting. */
-+	if (s->flags & (SLAB_NO_OBJ_EXT | SLAB_NOLEAKTRACE))
-+		return;
-+
- 	obj_exts = slab_obj_exts(slab);
- 	if (!obj_exts)
- 		return;
+ }
+ 
+-#ifdef CONFIG_CMA
+-/*
+- * It is waste of effort to scan and reclaim CMA pages if it is not available
+- * for current allocation context. Kswapd can not be enrolled as it can not
+- * distinguish this scenario by using sc->gfp_mask = GFP_KERNEL
+- */
+-static bool skip_cma(struct folio *folio, struct scan_control *sc)
+-{
+-	return !current_is_kswapd() &&
+-			gfp_migratetype(sc->gfp_mask) != MIGRATE_MOVABLE &&
+-			folio_migratetype(folio) == MIGRATE_CMA;
+-}
+-#else
+-static bool skip_cma(struct folio *folio, struct scan_control *sc)
+-{
+-	return false;
+-}
+-#endif
+-
+ /*
+  * Isolating page from the lruvec to fill in @dst list by nr_to_scan times.
+  *
+@@ -1652,8 +1633,7 @@ static unsigned long isolate_lru_folios(
+ 		nr_pages = folio_nr_pages(folio);
+ 		total_scan += nr_pages;
+ 
+-		if (folio_zonenum(folio) > sc->reclaim_idx ||
+-				skip_cma(folio, sc)) {
++		if (folio_zonenum(folio) > sc->reclaim_idx) {
+ 			nr_skipped[folio_zonenum(folio)] += nr_pages;
+ 			move_to = &folios_skipped;
+ 			goto move;
+@@ -4314,7 +4294,7 @@ static bool sort_folio(struct lruvec *lr
+ 	}
+ 
+ 	/* ineligible */
+-	if (zone > sc->reclaim_idx || skip_cma(folio, sc)) {
++	if (zone > sc->reclaim_idx) {
+ 		gen = folio_inc_gen(lruvec, folio, false);
+ 		list_move_tail(&folio->lru, &lrugen->folios[gen][type][zone]);
+ 		return true;
 
 
