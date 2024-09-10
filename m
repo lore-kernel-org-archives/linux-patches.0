@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E633192B6A;
-	Tue, 10 Sep 2024 10:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE8A192D65;
+	Tue, 10 Sep 2024 10:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964777; cv=none; b=RpXDeZVJ5YqlolaKmlrarLfvUmtdctu0Dp7Xrw9xSwG1d6V4puRiQpL0LyBsXObjpc2DivDlZDYED7Bcz/vBgGqNSyMHHTMmv5ljMi8rMk1oAyQTwHwMK2OO/k74eO+CAvZG24ceTCj9IH5Qy1jkOV0Kg6u6k7QP+ucXYlOa9fY=
+	t=1725964780; cv=none; b=MLe/2VsP9vBFStYRTaoaIX1kDG6psE3S3vQsU1W3BYVuetJ+NVW0ZAa4S2NKmsjTgFbdX6x666G+AAVQ9vrn5ZIr//z72ntBKRw7QGlniyEdKIBVfY2rbcX0jHw+uDKiXsF5vMn/JTr6jsruNLTEhTrFcUs6CxBAohdP8kAipQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964777; c=relaxed/simple;
-	bh=UACaiUzfh1B1qZaZspLhLtKWffnn8govMUeABjpI5GQ=;
+	s=arc-20240116; t=1725964780; c=relaxed/simple;
+	bh=2ZxBILL8rcCkavK+1nvhJM48du7T2eWtBgmdmxo2Mcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2Tazo70JUCow9Fxl4/ad953xyZTkHn/VIVRlqzEGuPFXlOA0jAW/NbjDPvZOYrxf3/Yf/ZtHZTtMubNLzxoMHc4WaDwjKNBsxAGxmBg0oe/wQdtiNgZI9wErc7w96p+MwomGxe7aOh9VJKyFF43PL3pklcIKo6La8n7krcdHxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX7o8t4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJGQ3o+YhsmZxA1C5b4JcIxcXSD/OfLtDhuDvpr6wPj24mBFemrpfeq2XO0a1S4pR1cWJZ74JgVuMFnLhQJX7xNAFRo3R2oc+GAQDoOWL3GzD66Alj/Q2jbcQFcryguq7KAiB+TXvXLuRgkkmT71i3N/TFRY2+sVsPIAakF/ni0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqTKR0cg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX7o8t4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0657C4CEC3;
-	Tue, 10 Sep 2024 10:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqTKR0cg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82211C4CEC3;
+	Tue, 10 Sep 2024 10:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964777;
-	bh=UACaiUzfh1B1qZaZspLhLtKWffnn8govMUeABjpI5GQ=;
+	s=korg; t=1725964779;
+	bh=2ZxBILL8rcCkavK+1nvhJM48du7T2eWtBgmdmxo2Mcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xX7o8t4/aEaphFo/dJSuofeWNak22UJJrlghiFmK4qgR7z0jEzlOj8Wjt9tdSklti
-	 Yw+HQfDCBPl6LX1iFVXMpd3hmy1WnND49iVeeS9UCcGXTiIqZeDdA7Px7n9LDBmHzD
-	 Gc6iAqwmM/9mA805QfXs8n03WrjlBR7BfbtobYpM=
+	b=tqTKR0cgN/ar601YiKhw++XZ4X7BGM9TDHrY86tg2ykdaI2tCfuXzVMK91Y9ebzep
+	 ON7eoXta7QSjt+AqRHphjvvEHt7pufu/jym+co8nyh7MQf4VXmXNRC6JX86liWmKmw
+	 0PYjuCQPW8mCmeiEYG5/DEgcxgXYMJh/jjYlxhfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leesoo Ahn <lsahn@ooseel.net>,
-	John Johansen <john.johansen@canonical.com>,
+	Ma Jun <Jun.Ma2@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/186] apparmor: fix possible NULL pointer dereference
-Date: Tue, 10 Sep 2024 11:32:02 +0200
-Message-ID: <20240910092555.714934997@linuxfoundation.org>
+Subject: [PATCH 5.10 028/186] drm/amdgpu/pm: Check input value for CUSTOM profile mode setting on legacy SOCs
+Date: Tue, 10 Sep 2024 11:32:03 +0200
+Message-ID: <20240910092555.747845270@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,105 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leesoo Ahn <lsahn@ooseel.net>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit 3dd384108d53834002be5630132ad5c3f32166ad ]
+[ Upstream commit df0a9bd92fbbd3fcafcb2bce6463c9228a3e6868 ]
 
-profile->parent->dents[AAFS_PROF_DIR] could be NULL only if its parent is made
-from __create_missing_ancestors(..) and 'ent->old' is NULL in
-aa_replace_profiles(..).
-In that case, it must return an error code and the code, -ENOENT represents
-its state that the path of its parent is not existed yet.
+Check the input value for CUSTOM profile mode setting on legacy
+SOCs. Otherwise we may use uninitalized value of input[]
 
-BUG: kernel NULL pointer dereference, address: 0000000000000030
-PGD 0 P4D 0
-PREEMPT SMP PTI
-CPU: 4 PID: 3362 Comm: apparmor_parser Not tainted 6.8.0-24-generic #24
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? show_regs+0x6d/0x80
- ? __die+0x24/0x80
- ? page_fault_oops+0x99/0x1b0
- ? kernelmode_fixup_or_oops+0xb2/0x140
- ? __bad_area_nosemaphore+0x1a5/0x2c0
- ? find_vma+0x34/0x60
- ? bad_area_nosemaphore+0x16/0x30
- ? do_user_addr_fault+0x2a2/0x6b0
- ? exc_page_fault+0x83/0x1b0
- ? asm_exc_page_fault+0x27/0x30
- ? aafs_create.constprop.0+0x7f/0x130
- ? aafs_create.constprop.0+0x51/0x130
- __aafs_profile_mkdir+0x3d6/0x480
- aa_replace_profiles+0x83f/0x1270
- policy_update+0xe3/0x180
- profile_load+0xbc/0x150
- ? rw_verify_area+0x47/0x140
- vfs_write+0x100/0x480
- ? __x64_sys_openat+0x55/0xa0
- ? syscall_exit_to_user_mode+0x86/0x260
- ksys_write+0x73/0x100
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x7e/0x25c0
- do_syscall_64+0x7f/0x180
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7be9f211c574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007ffd26f2b8c8 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00005d504415e200 RCX: 00007be9f211c574
-RDX: 0000000000001fc1 RSI: 00005d504418bc80 RDI: 0000000000000004
-RBP: 0000000000001fc1 R08: 0000000000001fc1 R09: 0000000080000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00005d504418bc80
-R13: 0000000000000004 R14: 00007ffd26f2b9b0 R15: 00007ffd26f2ba30
- </TASK>
-Modules linked in: snd_seq_dummy snd_hrtimer qrtr snd_hda_codec_generic snd_hda_intel snd_intel_dspcfg snd_intel_sdw_acpi snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_seq_midi snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device i2c_i801 snd_timer i2c_smbus qxl snd soundcore drm_ttm_helper lpc_ich ttm joydev input_leds serio_raw mac_hid binfmt_misc msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs qemu_fw_cfg ip_tables x_tables autofs4 hid_generic usbhid hid ahci libahci psmouse virtio_rng xhci_pci xhci_pci_renesas
-CR2: 0000000000000030
----[ end trace 0000000000000000 ]---
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
-
-Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 2 +-
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c | 8 ++++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index 49d97b331abc..06eac2266565 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -1679,6 +1679,10 @@ int __aafs_profile_mkdir(struct aa_profile *profile, struct dentry *parent)
- 		struct aa_profile *p;
- 		p = aa_deref_parent(profile);
- 		dent = prof_dir(p);
-+		if (!dent) {
-+			error = -ENOENT;
-+			goto fail2;
-+		}
- 		/* adding to parent that previously didn't have children */
- 		dent = aafs_create_dir("profiles", dent);
- 		if (IS_ERR(dent))
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index 5e72b7555eda..3673a9e7ba44 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -5190,7 +5190,7 @@ static int smu7_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, uint
+ 	mode = input[size];
+ 	switch (mode) {
+ 	case PP_SMC_POWER_PROFILE_CUSTOM:
+-		if (size < 8 && size != 0)
++		if (size != 8 && size != 0)
+ 			return -EINVAL;
+ 		/* If only CUSTOM is passed in, use the saved values. Check
+ 		 * that we actually have a CUSTOM profile by ensuring that
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+index 57a354a03e8a..a55dc6ec4f76 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+@@ -4095,9 +4095,11 @@ static int vega20_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
+ 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
+ 		struct vega20_hwmgr *data =
+ 			(struct vega20_hwmgr *)(hwmgr->backend);
+-		if (size == 0 && !data->is_custom_profile_set)
++
++		if (size != 10 && size != 0)
+ 			return -EINVAL;
+-		if (size < 10 && size != 0)
++
++		if (size == 0 && !data->is_custom_profile_set)
+ 			return -EINVAL;
+ 
+ 		result = vega20_get_activity_monitor_coeff(hwmgr,
+@@ -4159,6 +4161,8 @@ static int vega20_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
+ 			activity_monitor.Fclk_PD_Data_error_coeff = input[8];
+ 			activity_monitor.Fclk_PD_Data_error_rate_coeff = input[9];
+ 			break;
++		default:
++			return -EINVAL;
+ 		}
+ 
+ 		result = vega20_set_activity_monitor_coeff(hwmgr,
 -- 
 2.43.0
 
