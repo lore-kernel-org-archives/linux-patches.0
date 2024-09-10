@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA511188A28;
-	Tue, 10 Sep 2024 10:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A16217BB0C;
+	Tue, 10 Sep 2024 10:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964698; cv=none; b=na1GJ7TtU5VpUGwHlXFoRnVJQQ6S6CaiKDJtk1ZfdFHKuAx2s5fkR4uYcMVzOfYwRy37oJ95DeqHOGxhSguXqsxPB+FG2p4UBwO7M3tkpwfktBPKYYQBDL0S+YGkFxmuVtYtynKTuGK/sJaXz5DuCc/3AuUwTq6n+UUsbAusrdI=
+	t=1725964700; cv=none; b=u3/wavKRfR5xqaq0xnrzDLqDEnkgJPEK/2ATpCgiKvZ2BwVSTtAK7W5J9gSRpwxrXtNwvljjBNfxZ9F2E7ew9RlcoNmlRjOrSM1ufdHUtL2DQl28cWR4yVpQHD8sb5JLzHTpFXZ1CkjHAXx79KFKoHtLgkxclfk2gG0n56EgcFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964698; c=relaxed/simple;
-	bh=PQ3zJIhCUhe7WQReQmMhfwsW2WCPCNpJHbZmKZI+rpk=;
+	s=arc-20240116; t=1725964700; c=relaxed/simple;
+	bh=DiHnIUBoobK4t4fAG53/aEckjAtoTkE5lYBqYdLn7OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FxD2hoXL3VJDky0c68FaD6/BPA/JpLtz2R70qNIXuVBAd7ALMW7CroXYWRLbTNJDlFc3IgjWvJ2KWLaDhud9Ut4riwswgFI9Cx4VBOFIle9tud6Qi6+MUdLDj1RawlUeSqvF94+Idmsp74KOKTPhSgDSq21AZJEaTjLpW0rVfnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPTWq+7T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YC5BWItfGxvUP2EJ+G69FXdrYGnKCZqSMUw3UfkQxIL6Ku4vUTg89I0dEKpFQy7vmOqUXoMtzcONykVky1UKxfrDeVvGtm/pBeDFTIB02LURCbrr+ulnyfN7Jf9uYJj+jpO+fMDWheVdx+wR31+UPnZXDNrTGj9EQSOxjmnfQX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQBzuZQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPTWq+7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10966C4CEC3;
-	Tue, 10 Sep 2024 10:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQBzuZQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CEFC4CEC3;
+	Tue, 10 Sep 2024 10:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964697;
-	bh=PQ3zJIhCUhe7WQReQmMhfwsW2WCPCNpJHbZmKZI+rpk=;
+	s=korg; t=1725964700;
+	bh=DiHnIUBoobK4t4fAG53/aEckjAtoTkE5lYBqYdLn7OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPTWq+7TO4B+IREpVrEGQZcKicPQH0bJfcST8deUiLb57dtGtWeABV78BwEexTmrD
-	 GENYZev6aVc6DDRqLlgdMvxfmh3x1gBUEh7ThfphlZd3cCb9h0BoxvS1BAnmH9lRS8
-	 j4u3HO+etblVLB4GiaXbYt5D0yans/amjNwhkX6Q=
+	b=DQBzuZQOdV4kZ2EBgJyO6v23iRObMf12buEAlm/B0+kXm9Ry25zm+OzQwZ7302oW3
+	 BJJeCoAzMyf1K5tcySLbcMOEQ4ma/+ODDvrIegcWCEs8g/YdBVUY9xYLesrFpCN5ED
+	 g9pCI0l/rX2oBa+Jn2ZPPaoxKGuKhE6CtujQq6WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Stefan=20Alth=C3=B6fer?= <Stefan.Althoefer@janztec.com>,
+	Thomas Kopp <thomas.kopp@microchip.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 244/269] powerpc/64e: remove unused IBM HTW code
-Date: Tue, 10 Sep 2024 11:33:51 +0200
-Message-ID: <20240910092616.550310677@linuxfoundation.org>
+Subject: [PATCH 6.6 235/269] can: mcp251xfd: clarify the meaning of timestamp
+Date: Tue, 10 Sep 2024 11:33:42 +0200
+Message-ID: <20240910092616.266264692@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -50,384 +46,298 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 88715b6e5d529f4ef3830ad2a893e4624c6af0b8 ]
+[ Upstream commit e793c724b48ca8cae9693bc3be528e85284c126a ]
 
-Patch series "Reimplement huge pages without hugepd on powerpc (8xx, e500,
-book3s/64)", v7.
+The mcp251xfd chip is configured to provide a timestamp with each
+received and transmitted CAN frame. The timestamp is derived from the
+internal free-running timer, which can also be read from the TBC
+register via SPI. The timer is 32 bits wide and is clocked by the
+external oscillator (typically 20 or 40 MHz).
 
-Unlike most architectures, powerpc 8xx HW requires a two-level pagetable
-topology for all page sizes.  So a leaf PMD-contig approach is not
-feasible as such.
+To avoid confusion, we call this timestamp "timestamp_raw" or "ts_raw"
+for short.
 
-Possible sizes on 8xx are 4k, 16k, 512k and 8M.
+Using the timecounter framework, the "ts_raw" is converted to 64 bit
+nanoseconds since the epoch. This is what we call "timestamp".
 
-First level (PGD/PMD) covers 4M per entry.  For 8M pages, two PMD entries
-must point to a single entry level-2 page table.  Until now that was done
-using hugepd.  This series changes it to use standard page tables where
-the entry is replicated 1024 times on each of the two pagetables refered
-by the two associated PMD entries for that 8M page.
+This is a preparation for the next patches which use the "timestamp"
+to work around a bug where so far only the "ts_raw" is used.
 
-For e500 and book3s/64 there are less constraints because it is not tied
-to the HW assisted tablewalk like on 8xx, so it is easier to use leaf PMDs
-(and PUDs).
-
-On e500 the supported page sizes are 4M, 16M, 64M, 256M and 1G.  All at
-PMD level on e500/32 (mpc85xx) and mix of PMD and PUD for e500/64.  We
-encode page size with 4 available bits in PTE entries.  On e300/32 PGD
-entries size is increases to 64 bits in order to allow leaf-PMD entries
-because PTE are 64 bits on e500.
-
-On book3s/64 only the hash-4k mode is concerned.  It supports 16M pages as
-cont-PMD and 16G pages as cont-PUD.  In other modes (radix-4k, radix-6k
-and hash-64k) the sizes match with PMD and PUD sizes so that's just leaf
-entries.  The hash processing make things a bit more complex.  To ease
-things, __hash_page_huge() is modified to bail out when DIRTY or ACCESSED
-bits are missing, leaving it to mm core to fix it.
-
-This patch (of 23):
-
-The nohash HTW_IBM (Hardware Table Walk) code is unused since support for
-A2 was removed in commit fb5a515704d7 ("powerpc: Remove platforms/ wsp and
-associated pieces") (2014).
-
-The remaining supported CPUs use either no HTW (data_tlb_miss_bolted), or
-the e6500 HTW (data_tlb_miss_e6500).
-
-Link: https://lkml.kernel.org/r/cover.1719928057.git.christophe.leroy@csgroup.eu
-Link: https://lkml.kernel.org/r/820dd1385ecc931f07b0d7a0fa827b1613917ab6.1719928057.git.christophe.leroy@csgroup.eu
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: d92b5cc29c79 ("powerpc/64e: Define mmu_pte_psize static")
+Tested-by: Stefan Althöfer <Stefan.Althoefer@janztec.com>
+Tested-by: Thomas Kopp <thomas.kopp@microchip.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/nohash/mmu-e500.h |   3 +-
- arch/powerpc/mm/nohash/tlb.c               |  57 +-----
- arch/powerpc/mm/nohash/tlb_low_64e.S       | 195 ---------------------
- 3 files changed, 2 insertions(+), 253 deletions(-)
+ .../net/can/spi/mcp251xfd/mcp251xfd-core.c    | 28 +++++++++----------
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c  |  2 +-
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c |  2 +-
+ .../can/spi/mcp251xfd/mcp251xfd-timestamp.c   | 22 ++++-----------
+ drivers/net/can/spi/mcp251xfd/mcp251xfd.h     | 27 ++++++++++++++----
+ 5 files changed, 43 insertions(+), 38 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/nohash/mmu-e500.h b/arch/powerpc/include/asm/nohash/mmu-e500.h
-index 6ddced0415cb..7dc24b8632d7 100644
---- a/arch/powerpc/include/asm/nohash/mmu-e500.h
-+++ b/arch/powerpc/include/asm/nohash/mmu-e500.h
-@@ -303,8 +303,7 @@ extern unsigned long linear_map_top;
- extern int book3e_htw_mode;
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+index 1665f78abb5c..a9bafa96e2f9 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+@@ -2,7 +2,7 @@
+ //
+ // mcp251xfd - Microchip MCP251xFD Family CAN controller driver
+ //
+-// Copyright (c) 2019, 2020, 2021 Pengutronix,
++// Copyright (c) 2019, 2020, 2021, 2023 Pengutronix,
+ //               Marc Kleine-Budde <kernel@pengutronix.de>
+ //
+ // Based on:
+@@ -867,18 +867,18 @@ static int mcp251xfd_get_berr_counter(const struct net_device *ndev,
  
- #define PPC_HTW_NONE	0
--#define PPC_HTW_IBM	1
--#define PPC_HTW_E6500	2
-+#define PPC_HTW_E6500	1
- 
- /*
-  * 64-bit booke platforms don't load the tlb in the tlb miss handler code.
-diff --git a/arch/powerpc/mm/nohash/tlb.c b/arch/powerpc/mm/nohash/tlb.c
-index 5ffa0af4328a..a5bb87ec8578 100644
---- a/arch/powerpc/mm/nohash/tlb.c
-+++ b/arch/powerpc/mm/nohash/tlb.c
-@@ -400,9 +400,8 @@ void tlb_flush_pgtable(struct mmu_gather *tlb, unsigned long address)
- static void __init setup_page_sizes(void)
+ static struct sk_buff *
+ mcp251xfd_alloc_can_err_skb(struct mcp251xfd_priv *priv,
+-			    struct can_frame **cf, u32 *timestamp)
++			    struct can_frame **cf, u32 *ts_raw)
  {
- 	unsigned int tlb0cfg;
--	unsigned int tlb0ps;
- 	unsigned int eptcfg;
--	int i, psize;
-+	int psize;
+ 	struct sk_buff *skb;
+ 	int err;
  
- #ifdef CONFIG_PPC_E500
- 	unsigned int mmucfg = mfspr(SPRN_MMUCFG);
-@@ -471,50 +470,6 @@ static void __init setup_page_sizes(void)
- 		goto out;
+-	err = mcp251xfd_get_timestamp(priv, timestamp);
++	err = mcp251xfd_get_timestamp_raw(priv, ts_raw);
+ 	if (err)
+ 		return NULL;
+ 
+ 	skb = alloc_can_err_skb(priv->ndev, cf);
+ 	if (skb)
+-		mcp251xfd_skb_set_timestamp(priv, skb, *timestamp);
++		mcp251xfd_skb_set_timestamp_raw(priv, skb, *ts_raw);
+ 
+ 	return skb;
+ }
+@@ -889,7 +889,7 @@ static int mcp251xfd_handle_rxovif(struct mcp251xfd_priv *priv)
+ 	struct mcp251xfd_rx_ring *ring;
+ 	struct sk_buff *skb;
+ 	struct can_frame *cf;
+-	u32 timestamp, rxovif;
++	u32 ts_raw, rxovif;
+ 	int err, i;
+ 
+ 	stats->rx_over_errors++;
+@@ -924,14 +924,14 @@ static int mcp251xfd_handle_rxovif(struct mcp251xfd_priv *priv)
+ 			return err;
  	}
- #endif
--
--	tlb0cfg = mfspr(SPRN_TLB0CFG);
--	tlb0ps = mfspr(SPRN_TLB0PS);
--	eptcfg = mfspr(SPRN_EPTCFG);
--
--	/* Look for supported direct sizes */
--	for (psize = 0; psize < MMU_PAGE_COUNT; ++psize) {
--		struct mmu_psize_def *def = &mmu_psize_defs[psize];
--
--		if (tlb0ps & (1U << (def->shift - 10)))
--			def->flags |= MMU_PAGE_SIZE_DIRECT;
--	}
--
--	/* Indirect page sizes supported ? */
--	if ((tlb0cfg & TLBnCFG_IND) == 0 ||
--	    (tlb0cfg & TLBnCFG_PT) == 0)
--		goto out;
--
--	book3e_htw_mode = PPC_HTW_IBM;
--
--	/* Now, we only deal with one IND page size for each
--	 * direct size. Hopefully all implementations today are
--	 * unambiguous, but we might want to be careful in the
--	 * future.
--	 */
--	for (i = 0; i < 3; i++) {
--		unsigned int ps, sps;
--
--		sps = eptcfg & 0x1f;
--		eptcfg >>= 5;
--		ps = eptcfg & 0x1f;
--		eptcfg >>= 5;
--		if (!ps || !sps)
--			continue;
--		for (psize = 0; psize < MMU_PAGE_COUNT; psize++) {
--			struct mmu_psize_def *def = &mmu_psize_defs[psize];
--
--			if (ps == (def->shift - 10))
--				def->flags |= MMU_PAGE_SIZE_INDIRECT;
--			if (sps == (def->shift - 10))
--				def->ind = ps + 10;
--		}
--	}
--
- out:
- 	/* Cleanup array and print summary */
- 	pr_info("MMU: Supported page sizes\n");
-@@ -543,10 +498,6 @@ static void __init setup_mmu_htw(void)
+ 
+-	skb = mcp251xfd_alloc_can_err_skb(priv, &cf, &timestamp);
++	skb = mcp251xfd_alloc_can_err_skb(priv, &cf, &ts_raw);
+ 	if (!skb)
+ 		return 0;
+ 
+ 	cf->can_id |= CAN_ERR_CRTL;
+ 	cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
+ 
+-	err = can_rx_offload_queue_timestamp(&priv->offload, skb, timestamp);
++	err = can_rx_offload_queue_timestamp(&priv->offload, skb, ts_raw);
+ 	if (err)
+ 		stats->rx_fifo_errors++;
+ 
+@@ -948,12 +948,12 @@ static int mcp251xfd_handle_txatif(struct mcp251xfd_priv *priv)
+ static int mcp251xfd_handle_ivmif(struct mcp251xfd_priv *priv)
+ {
+ 	struct net_device_stats *stats = &priv->ndev->stats;
+-	u32 bdiag1, timestamp;
++	u32 bdiag1, ts_raw;
+ 	struct sk_buff *skb;
+ 	struct can_frame *cf = NULL;
+ 	int err;
+ 
+-	err = mcp251xfd_get_timestamp(priv, &timestamp);
++	err = mcp251xfd_get_timestamp_raw(priv, &ts_raw);
+ 	if (err)
+ 		return err;
+ 
+@@ -1035,8 +1035,8 @@ static int mcp251xfd_handle_ivmif(struct mcp251xfd_priv *priv)
+ 	if (!cf)
+ 		return 0;
+ 
+-	mcp251xfd_skb_set_timestamp(priv, skb, timestamp);
+-	err = can_rx_offload_queue_timestamp(&priv->offload, skb, timestamp);
++	mcp251xfd_skb_set_timestamp_raw(priv, skb, ts_raw);
++	err = can_rx_offload_queue_timestamp(&priv->offload, skb, ts_raw);
+ 	if (err)
+ 		stats->rx_fifo_errors++;
+ 
+@@ -1049,7 +1049,7 @@ static int mcp251xfd_handle_cerrif(struct mcp251xfd_priv *priv)
+ 	struct sk_buff *skb;
+ 	struct can_frame *cf = NULL;
+ 	enum can_state new_state, rx_state, tx_state;
+-	u32 trec, timestamp;
++	u32 trec, ts_raw;
+ 	int err;
+ 
+ 	err = regmap_read(priv->map_reg, MCP251XFD_REG_TREC, &trec);
+@@ -1079,7 +1079,7 @@ static int mcp251xfd_handle_cerrif(struct mcp251xfd_priv *priv)
+ 	/* The skb allocation might fail, but can_change_state()
+ 	 * handles cf == NULL.
  	 */
+-	skb = mcp251xfd_alloc_can_err_skb(priv, &cf, &timestamp);
++	skb = mcp251xfd_alloc_can_err_skb(priv, &cf, &ts_raw);
+ 	can_change_state(priv->ndev, cf, tx_state, rx_state);
  
- 	switch (book3e_htw_mode) {
--	case PPC_HTW_IBM:
--		patch_exception(0x1c0, exc_data_tlb_miss_htw_book3e);
--		patch_exception(0x1e0, exc_instruction_tlb_miss_htw_book3e);
--		break;
- #ifdef CONFIG_PPC_E500
- 	case PPC_HTW_E6500:
- 		extlb_level_exc = EX_TLB_SIZE;
-@@ -577,12 +528,6 @@ static void early_init_this_mmu(void)
- 		mmu_pte_psize = MMU_PAGE_2M;
- 		break;
+ 	if (new_state == CAN_STATE_BUS_OFF) {
+@@ -1110,7 +1110,7 @@ static int mcp251xfd_handle_cerrif(struct mcp251xfd_priv *priv)
+ 		cf->data[7] = bec.rxerr;
+ 	}
  
--	case PPC_HTW_IBM:
--		mas4 |= MAS4_INDD;
--		mas4 |=	BOOK3E_PAGESZ_1M << MAS4_TSIZED_SHIFT;
--		mmu_pte_psize = MMU_PAGE_1M;
--		break;
--
- 	case PPC_HTW_NONE:
- 		mas4 |=	BOOK3E_PAGESZ_4K << MAS4_TSIZED_SHIFT;
- 		mmu_pte_psize = mmu_virtual_psize;
-diff --git a/arch/powerpc/mm/nohash/tlb_low_64e.S b/arch/powerpc/mm/nohash/tlb_low_64e.S
-index 7e0b8fe1c279..b0eb3f7eaed1 100644
---- a/arch/powerpc/mm/nohash/tlb_low_64e.S
-+++ b/arch/powerpc/mm/nohash/tlb_low_64e.S
-@@ -893,201 +893,6 @@ virt_page_table_tlb_miss_whacko_fault:
- 	TLB_MISS_EPILOG_ERROR
- 	b	exc_data_storage_book3e
+-	err = can_rx_offload_queue_timestamp(&priv->offload, skb, timestamp);
++	err = can_rx_offload_queue_timestamp(&priv->offload, skb, ts_raw);
+ 	if (err)
+ 		stats->rx_fifo_errors++;
  
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
+index 5d0fb1c454cd..a79e6c661ecc 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
+@@ -160,7 +160,7 @@ mcp251xfd_hw_rx_obj_to_skb(const struct mcp251xfd_priv *priv,
+ 	if (!(hw_rx_obj->flags & MCP251XFD_OBJ_FLAGS_RTR))
+ 		memcpy(cfd->data, hw_rx_obj->data, cfd->len);
+ 
+-	mcp251xfd_skb_set_timestamp(priv, skb, hw_rx_obj->ts);
++	mcp251xfd_skb_set_timestamp_raw(priv, skb, hw_rx_obj->ts);
+ }
+ 
+ static int
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
+index 5b0c7890d4b4..3886476a8f8e 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
+@@ -97,7 +97,7 @@ mcp251xfd_handle_tefif_one(struct mcp251xfd_priv *priv,
+ 	tef_tail = mcp251xfd_get_tef_tail(priv);
+ 	skb = priv->can.echo_skb[tef_tail];
+ 	if (skb)
+-		mcp251xfd_skb_set_timestamp(priv, skb, hw_tef_obj->ts);
++		mcp251xfd_skb_set_timestamp_raw(priv, skb, hw_tef_obj->ts);
+ 	stats->tx_bytes +=
+ 		can_rx_offload_get_echo_skb_queue_timestamp(&priv->offload,
+ 							    tef_tail, hw_tef_obj->ts,
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
+index 712e09186987..1db99aabe85c 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-timestamp.c
+@@ -2,7 +2,7 @@
+ //
+ // mcp251xfd - Microchip MCP251xFD Family CAN controller driver
+ //
+-// Copyright (c) 2021 Pengutronix,
++// Copyright (c) 2021, 2023 Pengutronix,
+ //               Marc Kleine-Budde <kernel@pengutronix.de>
+ //
+ 
+@@ -11,20 +11,20 @@
+ 
+ #include "mcp251xfd.h"
+ 
+-static u64 mcp251xfd_timestamp_read(const struct cyclecounter *cc)
++static u64 mcp251xfd_timestamp_raw_read(const struct cyclecounter *cc)
+ {
+ 	const struct mcp251xfd_priv *priv;
+-	u32 timestamp = 0;
++	u32 ts_raw = 0;
+ 	int err;
+ 
+ 	priv = container_of(cc, struct mcp251xfd_priv, cc);
+-	err = mcp251xfd_get_timestamp(priv, &timestamp);
++	err = mcp251xfd_get_timestamp_raw(priv, &ts_raw);
+ 	if (err)
+ 		netdev_err(priv->ndev,
+ 			   "Error %d while reading timestamp. HW timestamps may be inaccurate.",
+ 			   err);
+ 
+-	return timestamp;
++	return ts_raw;
+ }
+ 
+ static void mcp251xfd_timestamp_work(struct work_struct *work)
+@@ -39,21 +39,11 @@ static void mcp251xfd_timestamp_work(struct work_struct *work)
+ 			      MCP251XFD_TIMESTAMP_WORK_DELAY_SEC * HZ);
+ }
+ 
+-void mcp251xfd_skb_set_timestamp(const struct mcp251xfd_priv *priv,
+-				 struct sk_buff *skb, u32 timestamp)
+-{
+-	struct skb_shared_hwtstamps *hwtstamps = skb_hwtstamps(skb);
+-	u64 ns;
 -
--/**************************************************************
-- *                                                            *
-- * TLB miss handling for Book3E with hw page table support    *
-- *                                                            *
-- **************************************************************/
+-	ns = timecounter_cyc2time(&priv->tc, timestamp);
+-	hwtstamps->hwtstamp = ns_to_ktime(ns);
+-}
 -
--
--/* Data TLB miss */
--	START_EXCEPTION(data_tlb_miss_htw)
--	TLB_MISS_PROLOG
--
--	/* Now we handle the fault proper. We only save DEAR in normal
--	 * fault case since that's the only interesting values here.
--	 * We could probably also optimize by not saving SRR0/1 in the
--	 * linear mapping case but I'll leave that for later
--	 */
--	mfspr	r14,SPRN_ESR
--	mfspr	r16,SPRN_DEAR		/* get faulting address */
--	srdi	r11,r16,44		/* get region */
--	xoris	r11,r11,0xc
--	cmpldi	cr0,r11,0		/* linear mapping ? */
--	beq	tlb_load_linear		/* yes -> go to linear map load */
--	cmpldi	cr1,r11,1		/* vmalloc mapping ? */
--
--	/* We do the user/kernel test for the PID here along with the RW test
--	 */
--	srdi.	r11,r16,60		/* Check for user region */
--	ld	r15,PACAPGD(r13)	/* Load user pgdir */
--	beq	htw_tlb_miss
--
--	/* XXX replace the RMW cycles with immediate loads + writes */
--1:	mfspr	r10,SPRN_MAS1
--	rlwinm	r10,r10,0,16,1		/* Clear TID */
--	mtspr	SPRN_MAS1,r10
--	ld	r15,PACA_KERNELPGD(r13)	/* Load kernel pgdir */
--	beq+	cr1,htw_tlb_miss
--
--	/* We got a crappy address, just fault with whatever DEAR and ESR
--	 * are here
--	 */
--	TLB_MISS_EPILOG_ERROR
--	b	exc_data_storage_book3e
--
--/* Instruction TLB miss */
--	START_EXCEPTION(instruction_tlb_miss_htw)
--	TLB_MISS_PROLOG
--
--	/* If we take a recursive fault, the second level handler may need
--	 * to know whether we are handling a data or instruction fault in
--	 * order to get to the right store fault handler. We provide that
--	 * info by keeping a crazy value for ESR in r14
--	 */
--	li	r14,-1	/* store to exception frame is done later */
--
--	/* Now we handle the fault proper. We only save DEAR in the non
--	 * linear mapping case since we know the linear mapping case will
--	 * not re-enter. We could indeed optimize and also not save SRR0/1
--	 * in the linear mapping case but I'll leave that for later
--	 *
--	 * Faulting address is SRR0 which is already in r16
--	 */
--	srdi	r11,r16,44		/* get region */
--	xoris	r11,r11,0xc
--	cmpldi	cr0,r11,0		/* linear mapping ? */
--	beq	tlb_load_linear		/* yes -> go to linear map load */
--	cmpldi	cr1,r11,1		/* vmalloc mapping ? */
--
--	/* We do the user/kernel test for the PID here along with the RW test
--	 */
--	srdi.	r11,r16,60		/* Check for user region */
--	ld	r15,PACAPGD(r13)		/* Load user pgdir */
--	beq	htw_tlb_miss
--
--	/* XXX replace the RMW cycles with immediate loads + writes */
--1:	mfspr	r10,SPRN_MAS1
--	rlwinm	r10,r10,0,16,1			/* Clear TID */
--	mtspr	SPRN_MAS1,r10
--	ld	r15,PACA_KERNELPGD(r13)		/* Load kernel pgdir */
--	beq+	htw_tlb_miss
--
--	/* We got a crappy address, just fault */
--	TLB_MISS_EPILOG_ERROR
--	b	exc_instruction_storage_book3e
--
--
--/*
-- * This is the guts of the second-level TLB miss handler for direct
-- * misses. We are entered with:
-- *
-- * r16 = virtual page table faulting address
-- * r15 = PGD pointer
-- * r14 = ESR
-- * r13 = PACA
-- * r12 = TLB exception frame in PACA
-- * r11 = crap (free to use)
-- * r10 = crap (free to use)
-- *
-- * It can be re-entered by the linear mapping miss handler. However, to
-- * avoid too much complication, it will save/restore things for us
-- */
--htw_tlb_miss:
--#ifdef CONFIG_PPC_KUAP
--	mfspr	r10,SPRN_MAS1
--	rlwinm.	r10,r10,0,0x3fff0000
--	beq-	htw_tlb_miss_fault /* KUAP fault */
--#endif
--	/* Search if we already have a TLB entry for that virtual address, and
--	 * if we do, bail out.
--	 *
--	 * MAS1:IND should be already set based on MAS4
--	 */
--	PPC_TLBSRX_DOT(0,R16)
--	beq	htw_tlb_miss_done
--
--	/* Now, we need to walk the page tables. First check if we are in
--	 * range.
--	 */
--	rldicl.	r10,r16,64-PGTABLE_EADDR_SIZE,PGTABLE_EADDR_SIZE+4
--	bne-	htw_tlb_miss_fault
--
--	/* Get the PGD pointer */
--	cmpldi	cr0,r15,0
--	beq-	htw_tlb_miss_fault
--
--	/* Get to PGD entry */
--	rldicl	r11,r16,64-(PGDIR_SHIFT-3),64-PGD_INDEX_SIZE-3
--	clrrdi	r10,r11,3
--	ldx	r15,r10,r15
--	cmpdi	cr0,r15,0
--	bge	htw_tlb_miss_fault
--
--	/* Get to PUD entry */
--	rldicl	r11,r16,64-(PUD_SHIFT-3),64-PUD_INDEX_SIZE-3
--	clrrdi	r10,r11,3
--	ldx	r15,r10,r15
--	cmpdi	cr0,r15,0
--	bge	htw_tlb_miss_fault
--
--	/* Get to PMD entry */
--	rldicl	r11,r16,64-(PMD_SHIFT-3),64-PMD_INDEX_SIZE-3
--	clrrdi	r10,r11,3
--	ldx	r15,r10,r15
--	cmpdi	cr0,r15,0
--	bge	htw_tlb_miss_fault
--
--	/* Ok, we're all right, we can now create an indirect entry for
--	 * a 1M or 256M page.
--	 *
--	 * The last trick is now that because we use "half" pages for
--	 * the HTW (1M IND is 2K and 256M IND is 32K) we need to account
--	 * for an added LSB bit to the RPN. For 64K pages, there is no
--	 * problem as we already use 32K arrays (half PTE pages), but for
--	 * 4K page we need to extract a bit from the virtual address and
--	 * insert it into the "PA52" bit of the RPN.
--	 */
--	rlwimi	r15,r16,32-9,20,20
--	/* Now we build the MAS:
--	 *
--	 * MAS 0   :	Fully setup with defaults in MAS4 and TLBnCFG
--	 * MAS 1   :	Almost fully setup
--	 *               - PID already updated by caller if necessary
--	 *               - TSIZE for now is base ind page size always
--	 * MAS 2   :	Use defaults
--	 * MAS 3+7 :	Needs to be done
--	 */
--	ori	r10,r15,(BOOK3E_PAGESZ_4K << MAS3_SPSIZE_SHIFT)
--
--	srdi	r16,r10,32
--	mtspr	SPRN_MAS3,r10
--	mtspr	SPRN_MAS7,r16
--
--	tlbwe
--
--htw_tlb_miss_done:
--	/* We don't bother with restoring DEAR or ESR since we know we are
--	 * level 0 and just going back to userland. They are only needed
--	 * if you are going to take an access fault
--	 */
--	TLB_MISS_EPILOG_SUCCESS
--	rfi
--
--htw_tlb_miss_fault:
--	/* We need to check if it was an instruction miss. We know this
--	 * though because r14 would contain -1
--	 */
--	cmpdi	cr0,r14,-1
--	beq	1f
--	mtspr	SPRN_DEAR,r16
--	mtspr	SPRN_ESR,r14
--	TLB_MISS_EPILOG_ERROR
--	b	exc_data_storage_book3e
--1:	TLB_MISS_EPILOG_ERROR
--	b	exc_instruction_storage_book3e
--
- /*
-  * This is the guts of "any" level TLB miss handler for kernel linear
-  * mapping misses. We are entered with:
+ void mcp251xfd_timestamp_init(struct mcp251xfd_priv *priv)
+ {
+ 	struct cyclecounter *cc = &priv->cc;
+ 
+-	cc->read = mcp251xfd_timestamp_read;
++	cc->read = mcp251xfd_timestamp_raw_read;
+ 	cc->mask = CYCLECOUNTER_MASK(32);
+ 	cc->shift = 1;
+ 	cc->mult = clocksource_hz2mult(priv->can.clock.freq, cc->shift);
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
+index 2e5cee6ad0c4..ae35845d4ce1 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
+@@ -2,7 +2,7 @@
+  *
+  * mcp251xfd - Microchip MCP251xFD Family CAN controller driver
+  *
+- * Copyright (c) 2019, 2020, 2021 Pengutronix,
++ * Copyright (c) 2019, 2020, 2021, 2023 Pengutronix,
+  *               Marc Kleine-Budde <kernel@pengutronix.de>
+  * Copyright (c) 2019 Martin Sperl <kernel@martin.sperl.org>
+  */
+@@ -812,10 +812,27 @@ mcp251xfd_spi_cmd_write(const struct mcp251xfd_priv *priv,
+ 	return data;
+ }
+ 
+-static inline int mcp251xfd_get_timestamp(const struct mcp251xfd_priv *priv,
+-					  u32 *timestamp)
++static inline int mcp251xfd_get_timestamp_raw(const struct mcp251xfd_priv *priv,
++					      u32 *ts_raw)
+ {
+-	return regmap_read(priv->map_reg, MCP251XFD_REG_TBC, timestamp);
++	return regmap_read(priv->map_reg, MCP251XFD_REG_TBC, ts_raw);
++}
++
++static inline void mcp251xfd_skb_set_timestamp(struct sk_buff *skb, u64 ns)
++{
++	struct skb_shared_hwtstamps *hwtstamps = skb_hwtstamps(skb);
++
++	hwtstamps->hwtstamp = ns_to_ktime(ns);
++}
++
++static inline
++void mcp251xfd_skb_set_timestamp_raw(const struct mcp251xfd_priv *priv,
++				     struct sk_buff *skb, u32 ts_raw)
++{
++	u64 ns;
++
++	ns = timecounter_cyc2time(&priv->tc, ts_raw);
++	mcp251xfd_skb_set_timestamp(skb, ns);
+ }
+ 
+ static inline u16 mcp251xfd_get_tef_obj_addr(u8 n)
+@@ -936,8 +953,6 @@ void mcp251xfd_ring_free(struct mcp251xfd_priv *priv);
+ int mcp251xfd_ring_alloc(struct mcp251xfd_priv *priv);
+ int mcp251xfd_handle_rxif(struct mcp251xfd_priv *priv);
+ int mcp251xfd_handle_tefif(struct mcp251xfd_priv *priv);
+-void mcp251xfd_skb_set_timestamp(const struct mcp251xfd_priv *priv,
+-				 struct sk_buff *skb, u32 timestamp);
+ void mcp251xfd_timestamp_init(struct mcp251xfd_priv *priv);
+ void mcp251xfd_timestamp_stop(struct mcp251xfd_priv *priv);
+ 
 -- 
 2.43.0
 
