@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B23187FF9;
-	Tue, 10 Sep 2024 10:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E9C17BEAD;
+	Tue, 10 Sep 2024 10:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963643; cv=none; b=YTC89fKa07HTXmMajGcrFmKvrBKgPqrnf284Jk2gYTK99ya+LnoKgCVKfMGbqfnhl9OdOlaQShCrw4XG1QS4tUbA90gIm+H0EQdANn0/MOqmgWqa3Y1EQ7VGX8XsXWUeuBxqjlmmqfyde/l/+bnNMu7cU8TvchhrEint3KJHVdc=
+	t=1725963646; cv=none; b=CQh7KiLSzgfSGLaPAe1ss4pu4yQ2g/l7YYeZs+7wFjgRjhrGlelOoqcioKTFkfabZylgrEP3JQFBiKnSstCPO8nHFZ6yC33JY0EL06eKgN2JqoeTR5FFrTd5K+67bpOYU2l0+DkfdyYBePaiDaiQ55rhgEfuTgRZh5jRymSQKpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963643; c=relaxed/simple;
-	bh=YBijp4GNy4XkUJsd+Up//J7Xecscd20Foy/xCzY/U6A=;
+	s=arc-20240116; t=1725963646; c=relaxed/simple;
+	bh=US75updc8WxL8RVUWtmwIDAeYO1ZYmLY31XhjjlA9pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpuamyYj62ivf0GINzwZ5iGUOORqtpO7c8bBAR5j41qV0ZZiJ0zDuhVtWMhACLZ+b/f5+FUAjzILfzodSTK/Cb7c5qRsqj3zLOw2AVZBo8j3HSrjVuttsLSt3SUblAfnVCMPRAikJkaP1ovC/T4FSfhtGFHedGp65zN5M5ZiUwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhWvZJp5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQrpA2U0ld3EpDU/F/p4KkQYTPbdqhk8gZq+/3PN7i3iIY5ylph+dJDaxBK8I9nO+AXqp5skcqu0UP5VRkmjQNEaXGEqcibjfVM2qxvVsitaVbXCj2pOeCrec7ZXH1TT/acEdFUMCKdmCq+wtF5OEDUG8Ml4J+yG0q7fOi9kprc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJ8QBZl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhWvZJp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4023FC4CEC3;
-	Tue, 10 Sep 2024 10:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJ8QBZl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3ECC4CEC3;
+	Tue, 10 Sep 2024 10:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963643;
-	bh=YBijp4GNy4XkUJsd+Up//J7Xecscd20Foy/xCzY/U6A=;
+	s=korg; t=1725963646;
+	bh=US75updc8WxL8RVUWtmwIDAeYO1ZYmLY31XhjjlA9pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhWvZJp5hi+qjqnigMJf2SZS+VHonl2kK+vpCePIDhSC8VsQFHbfWz3A3E9FeY4L1
-	 bXkcICamk3AGI29ZsL1Vkc2FgtaPLNt98mdSOMGFh5Ap+HpEOEx3o8wUKzlLh4ptYS
-	 ntiuDtBEs1zvd88l93dtgSM/Z6RItTVlL97x14G0=
+	b=DJ8QBZl1B5cz5Vy2I8eL8K29oiAyjtK4flET2gdELpoBgTo/iQM+eZxrJsms8u4/1
+	 GjCPDbfKNkB4OVa7Odf2Yo4lhhLlDARXIOtQlIeiEb6cQWE7CB33Gfq7lypWu3E8id
+	 E6ezV/1OaYt1DdeRmQgFNeHwRJwzjqnH5/5zN63A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Simon Horman <horms@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/214] usbnet: modern method to get random MAC
-Date: Tue, 10 Sep 2024 11:32:30 +0200
-Message-ID: <20240910092603.982368964@linuxfoundation.org>
+Subject: [PATCH 5.15 129/214] bareudp: Fix device stats updates.
+Date: Tue, 10 Sep 2024 11:32:31 +0200
+Message-ID: <20240910092604.017805880@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,73 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit bab8eb0dd4cb995caa4a0529d5655531c2ec5e8e ]
+[ Upstream commit 4963d2343af81f493519f9c3ea9f2169eaa7353a ]
 
-The driver generates a random MAC once on load
-and uses it over and over, including on two devices
-needing a random MAC at the same time.
+Bareudp devices update their stats concurrently.
+Therefore they need proper atomic increments.
 
-Jakub suggested revamping the driver to the modern
-API for setting a random MAC rather than fixing
-the old stuff.
-
-The bug is as old as the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20240829175201.670718-1-oneukum@suse.com
+Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/04b7b9d0b480158eb3ab4366ec80aa2ab7e41fcb.1725031794.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/net/bareudp.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 95b8c612a179..8e4f85fb8c77 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -64,9 +64,6 @@
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index 98c915943f32..43d038a5123e 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -75,7 +75,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
  
- /*-------------------------------------------------------------------------*/
- 
--// randomly generated ethernet address
--static u8	node_id [ETH_ALEN];
--
- /* use ethtool to change the level for any given device */
- static int msg_level = -1;
- module_param (msg_level, int, 0);
-@@ -1729,7 +1726,6 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 
- 	dev->net = net;
- 	strscpy(net->name, "usb%d", sizeof(net->name));
--	eth_hw_addr_set(net, node_id);
- 
- 	/* rx and tx sides can use different message sizes;
- 	 * bind() should set rx_urb_size in that case.
-@@ -1803,9 +1799,9 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		goto out4;
+ 		if (skb_copy_bits(skb, BAREUDP_BASE_HLEN, &ipversion,
+ 				  sizeof(ipversion))) {
+-			bareudp->dev->stats.rx_dropped++;
++			DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 			goto drop;
+ 		}
+ 		ipversion >>= 4;
+@@ -85,7 +85,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 		} else if (ipversion == 6 && bareudp->multi_proto_mode) {
+ 			proto = htons(ETH_P_IPV6);
+ 		} else {
+-			bareudp->dev->stats.rx_dropped++;
++			DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 			goto drop;
+ 		}
+ 	} else if (bareudp->ethertype == htons(ETH_P_MPLS_UC)) {
+@@ -99,7 +99,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 				   ipv4_is_multicast(tunnel_hdr->daddr)) {
+ 				proto = htons(ETH_P_MPLS_MC);
+ 			} else {
+-				bareudp->dev->stats.rx_dropped++;
++				DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 				goto drop;
+ 			}
+ 		} else {
+@@ -115,7 +115,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 				   (addr_type & IPV6_ADDR_MULTICAST)) {
+ 				proto = htons(ETH_P_MPLS_MC);
+ 			} else {
+-				bareudp->dev->stats.rx_dropped++;
++				DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 				goto drop;
+ 			}
+ 		}
+@@ -127,12 +127,12 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 				 proto,
+ 				 !net_eq(bareudp->net,
+ 				 dev_net(bareudp->dev)))) {
+-		bareudp->dev->stats.rx_dropped++;
++		DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 		goto drop;
  	}
+ 	tun_dst = udp_tun_rx_dst(skb, family, TUNNEL_KEY, 0, 0);
+ 	if (!tun_dst) {
+-		bareudp->dev->stats.rx_dropped++;
++		DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 		goto drop;
+ 	}
+ 	skb_dst_set(skb, &tun_dst->dst);
+@@ -158,8 +158,8 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 						     &((struct ipv6hdr *)oiph)->saddr);
+ 		}
+ 		if (err > 1) {
+-			++bareudp->dev->stats.rx_frame_errors;
+-			++bareudp->dev->stats.rx_errors;
++			DEV_STATS_INC(bareudp->dev, rx_frame_errors);
++			DEV_STATS_INC(bareudp->dev, rx_errors);
+ 			goto drop;
+ 		}
+ 	}
+@@ -455,11 +455,11 @@ static netdev_tx_t bareudp_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	dev_kfree_skb(skb);
  
--	/* let userspace know we have a random address */
--	if (ether_addr_equal(net->dev_addr, node_id))
--		net->addr_assign_type = NET_ADDR_RANDOM;
-+	/* this flags the device for user space */
-+	if (!is_valid_ether_addr(net->dev_addr))
-+		eth_hw_addr_random(net);
+ 	if (err == -ELOOP)
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 	else if (err == -ENETUNREACH)
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
  
- 	if ((dev->driver_info->flags & FLAG_WLAN) != 0)
- 		SET_NETDEV_DEVTYPE(net, &wlan_type);
-@@ -2215,7 +2211,6 @@ static int __init usbnet_init(void)
- 	BUILD_BUG_ON(
- 		sizeof_field(struct sk_buff, cb) < sizeof(struct skb_data));
- 
--	eth_random_addr(node_id);
- 	return 0;
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
  }
- module_init(usbnet_init);
+ 
 -- 
 2.43.0
 
