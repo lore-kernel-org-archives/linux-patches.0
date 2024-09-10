@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E6E18893C;
-	Tue, 10 Sep 2024 10:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FF518661A;
+	Tue, 10 Sep 2024 10:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965013; cv=none; b=fQ9Vs23UMs5qSliB6qUJmltipfLi1f1FOWR8s5Hf684QaezPyM/IH6jgt+zLBPp8uFV5ytl8mh/T2ftC25N7QPzSt8OBK1FEQ+is87aTckZs905lUmhwgv3fM4RynXMVTVyodCP1qJe7Gvm7oHHxtnOGVMgUtuRAO/HDVh2zn9w=
+	t=1725965016; cv=none; b=uyMYMG1FB4HURUoXUtq2aStC+47+eyLj9cGqX0QZXcdTzwFhoGS4RWkaKqUZGqwGGa3pt0unaBHoMuYOTbZa+02dLEn4qYKaHX8fRQEtM4ZTcpIiwyI0qHu0VmcusMiVNjYORntvSxu1QPKd009Y9NbQKe7goGiI2AYZV4+XUuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965013; c=relaxed/simple;
-	bh=RQ5vC85m/T23st9yL+3Nq7ChicN1/gMUkjJb2CB+rWQ=;
+	s=arc-20240116; t=1725965016; c=relaxed/simple;
+	bh=T7iPF4fvz9r3dKCitfDunrZqflZV/XSff0bZUAzISL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IaH88J4jdriurM43HBKip/AqFD994i/CjE4m8OP0ADFcGG7OAVMIw9LFC+nRT048/W3nQblz8E1R9SwKvK7LxXI2jgzwwoI93js+/SY9MEXRC+UiOprRK/VClidKi3d+yPXEwE1iSYjGqvam68sekXrLP4N0kAOYe4yurjy8iWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkC4dEyH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nbazkfvYMrzchlOPTziLMdsbEHjsImitq0WpM0a2BJoz2oGM+CZW1l/fRBO2UMfKKqmSRqXhCNTt2YzAsIIitjVSlsNTVfG0u1QvfVKoFl0KAKpc8/H3SF58EoYM1xOmu5btHq3Mqm6+LdZPYwUsjv2bj9etBL+8CJzFda5hWvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSicev52; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkC4dEyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10069C4CEC3;
-	Tue, 10 Sep 2024 10:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSicev52"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CA3C4CEC3;
+	Tue, 10 Sep 2024 10:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965013;
-	bh=RQ5vC85m/T23st9yL+3Nq7ChicN1/gMUkjJb2CB+rWQ=;
+	s=korg; t=1725965016;
+	bh=T7iPF4fvz9r3dKCitfDunrZqflZV/XSff0bZUAzISL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkC4dEyHx9A/14k2p4FgaXADh5B1FRipSQy8phZ3oJv2n5YXy7QD5cU859Xo/YdyW
-	 FVXk4HxWVBcODihwU9sJa7MzAMW6vvYOPpbvP1EV8pN0NMLMR0LQHMb0N1bsYrkTwL
-	 Q44hb1kXkICUzOhuHa0xIDOqF/jCUomirq61OsU0=
+	b=vSicev52iqt4LESvrVbBjyqnPU8wb6PAaJWnR5FgGTT97+H9Oi69yKJO42XRum0wk
+	 Ze4ajD1AfW0em7TZ/QIKkuIJONY5HMTr6ldQ5dawiquHjH9ewm244JwF9bE6aD3lO3
+	 U/bGrrk9V9a60fRbBAzm2BOCpVxgdn7dBqNz6QO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/186] media: vivid: dont set HDMI TX controls if there are no HDMI outputs
-Date: Tue, 10 Sep 2024 11:33:23 +0200
-Message-ID: <20240910092558.982574710@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 091/186] sunrpc: use the struct net as the svc proc private
+Date: Tue, 10 Sep 2024 11:33:06 +0200
+Message-ID: <20240910092558.261668887@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -50,56 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 17763960b1784578e8fe915304b330922f646209 ]
+[ Upstream commit 418b9687dece5bd763c09b5c27a801a7e3387be9 ]
 
-When setting the EDID it would attempt to update two controls
-that are only present if there is an HDMI output configured.
+nfsd is the only thing using this helper, and it doesn't use the private
+currently.  When we switch to per-network namespace stats we will need
+the struct net * in order to get to the nfsd_net.  Use the net as the
+proc private so we can utilize this when we make the switch over.
 
-If there isn't any (e.g. when the vivid module is loaded with
-node_types=1), then calling VIDIOC_S_EDID would crash.
-
-Fix this by first checking if outputs are present.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/sunrpc/stats.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index 907781c2e613..2ce7f5567f51 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -1802,8 +1802,10 @@ int vidioc_s_edid(struct file *file, void *_fh,
- 		return -EINVAL;
- 	if (edid->blocks == 0) {
- 		dev->edid_blocks = 0;
--		v4l2_ctrl_s_ctrl(dev->ctrl_tx_edid_present, 0);
--		v4l2_ctrl_s_ctrl(dev->ctrl_tx_hotplug, 0);
-+		if (dev->num_outputs) {
-+			v4l2_ctrl_s_ctrl(dev->ctrl_tx_edid_present, 0);
-+			v4l2_ctrl_s_ctrl(dev->ctrl_tx_hotplug, 0);
-+		}
- 		phys_addr = CEC_PHYS_ADDR_INVALID;
- 		goto set_phys_addr;
- 	}
-@@ -1827,8 +1829,10 @@ int vidioc_s_edid(struct file *file, void *_fh,
- 			display_present |=
- 				dev->display_present[i] << j++;
+--- a/net/sunrpc/stats.c
++++ b/net/sunrpc/stats.c
+@@ -309,7 +309,7 @@ EXPORT_SYMBOL_GPL(rpc_proc_unregister);
+ struct proc_dir_entry *
+ svc_proc_register(struct net *net, struct svc_stat *statp, const struct proc_ops *proc_ops)
+ {
+-	return do_register(net, statp->program->pg_name, statp, proc_ops);
++	return do_register(net, statp->program->pg_name, net, proc_ops);
+ }
+ EXPORT_SYMBOL_GPL(svc_proc_register);
  
--	v4l2_ctrl_s_ctrl(dev->ctrl_tx_edid_present, display_present);
--	v4l2_ctrl_s_ctrl(dev->ctrl_tx_hotplug, display_present);
-+	if (dev->num_outputs) {
-+		v4l2_ctrl_s_ctrl(dev->ctrl_tx_edid_present, display_present);
-+		v4l2_ctrl_s_ctrl(dev->ctrl_tx_hotplug, display_present);
-+	}
- 
- set_phys_addr:
- 	/* TODO: a proper hotplug detect cycle should be emulated here */
--- 
-2.43.0
-
 
 
