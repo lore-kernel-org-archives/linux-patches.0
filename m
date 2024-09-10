@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBE017BEAE;
-	Tue, 10 Sep 2024 09:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2319D18595E;
+	Tue, 10 Sep 2024 09:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962199; cv=none; b=TKco8lUdZAREqtbIkV9af8FS2ox6eWy2htsLVIohqXuVAvqEpYjmzdixr8aSPwROYObI0xM3BTP5R4yPbsjsMFRvmpoOqSngEKkCAgU/tLQwJC20rQq9XWyTIwOT5vOjHNMBLSIhwc7SI5PNJIXbcr4K7boQt8QCD00Effbf1dw=
+	t=1725962202; cv=none; b=U935TPJb8Hgt3A9HHilw+QPQ5hiPI/PxwLqpElkTG4aG7Z1O0948KrZoPiTULOlhuXRy54UcO1JJXuDAAdxXzN1pHbEhV5jMbIWiy4Ryu4Ga2caau17Dgs8ovg0dMnRmHcuRjQyJshvnNk2tfxDBMrKyy4d7YJvFUbeHk+t8sQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962199; c=relaxed/simple;
-	bh=QUfbPhhLGRuxzmSmLiBKoM7VsOCtgqT35BvVZIFxqfg=;
+	s=arc-20240116; t=1725962202; c=relaxed/simple;
+	bh=PI2nNlE2f+BoSyTo0XYUTeiWkbEHvZTouGjJpSUGXuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iNeQhRaPoD4hXIFLXTxUvKy/hHX5COoybnts2wPvmL9IR+zMEEXxp21dfh70H/Oy0t69eNgeOovK2Lylcj580AAFkM9NgiUSPzSsL3O+YLK/Mm5uLBAUOeEoTg3GdGK8MOt3l4akOrkVRVSHIEeaXzK9rk0sBcf4rxxWR41qz/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+EB9ZGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvz4xEE/a58edk6ewcbGRz9ll324zkyAU76ABYtnJUhLqYwWgWFjtLYsoNFjei63aaDbbjbOuemOYq8nCYYwQa+icf/TFfcgbC65RNq8L8+bXDDfxZGpFv/Pk9k8EYK/b9hPNah2FDlQYXvm4F8psfeGYcnhvOCg5NBfeTJ+xCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeZUsQx5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+EB9ZGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B7CC4CECD;
-	Tue, 10 Sep 2024 09:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeZUsQx5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9298AC4CECD;
+	Tue, 10 Sep 2024 09:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962199;
-	bh=QUfbPhhLGRuxzmSmLiBKoM7VsOCtgqT35BvVZIFxqfg=;
+	s=korg; t=1725962202;
+	bh=PI2nNlE2f+BoSyTo0XYUTeiWkbEHvZTouGjJpSUGXuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+EB9ZGTq4zj75Yw5SQeHAYqWSxiDjGhvxLotsSfUkc+VLSNcOfR+mq5DfVIKiRbu
-	 +doc6eT83Yl3hbjSx9OGC2him75UFJMple33rnGsxngOu1T4iQ5GvwZ8ePgpOW5uUF
-	 lYDP+R0/McwpPu2AKey7FDN/FUR5ttEr9RLVObhM=
+	b=EeZUsQx5kMOSA4metx78Fcv3MBbhLQfcT5w5n2hyia2kbzeBbhKqTlAike1d8xXrl
+	 XxXUK2i9mKfCuzDiPhaD3aujpBu8ddw+Ni+/BZvuYYnGdQuIfVRk8HlPdrRvYxJqPu
+	 CtuPCI4yjNWWo875ArD4/tQjIvCIIkY1d0q5V4J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Yuan <me@yhndnzj.com>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jia Jie Ho <jiajie.ho@starfivetech.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 311/375] mm/memcontrol: respect zswap.writeback setting from parent cg too
-Date: Tue, 10 Sep 2024 11:31:48 +0200
-Message-ID: <20240910092633.004017679@linuxfoundation.org>
+Subject: [PATCH 6.10 329/375] crypto: starfive - Align rsa input data to 32-bit
+Date: Tue, 10 Sep 2024 11:32:06 +0200
+Message-ID: <20240910092633.627888734@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,101 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Yuan <me@yhndnzj.com>
+From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 
-[ Upstream commit e399257349098bf7c84343f99efb2bc9c22eb9fd ]
+[ Upstream commit 6aad7019f697ab0bed98eba737d19bd7f67713de ]
 
-Currently, the behavior of zswap.writeback wrt.  the cgroup hierarchy
-seems a bit odd.  Unlike zswap.max, it doesn't honor the value from parent
-cgroups.  This surfaced when people tried to globally disable zswap
-writeback, i.e.  reserve physical swap space only for hibernation [1] -
-disabling zswap.writeback only for the root cgroup results in subcgroups
-with zswap.writeback=1 still performing writeback.
+Hardware expects RSA input plain/ciphertext to be 32-bit aligned.
+Set fixed length for preallocated buffer to the maximum supported
+keysize of the hardware and shift input text accordingly.
 
-The inconsistency became more noticeable after I introduced the
-MemoryZSwapWriteback= systemd unit setting [2] for controlling the knob.
-The patch assumed that the kernel would enforce the value of parent
-cgroups.  It could probably be workarounded from systemd's side, by going
-up the slice unit tree and inheriting the value.  Yet I think it's more
-sensible to make it behave consistently with zswap.max and friends.
-
-[1] https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Disable_zswap_writeback_to_use_the_swap_space_only_for_hibernation
-[2] https://github.com/systemd/systemd/pull/31734
-
-Link: https://lkml.kernel.org/r/20240823162506.12117-1-me@yhndnzj.com
-Fixes: 501a06fe8e4c ("zswap: memcontrol: implement zswap writeback disabling")
-Signed-off-by: Mike Yuan <me@yhndnzj.com>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Acked-by: Yosry Ahmed <yosryahmed@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Michal Koutný <mkoutny@suse.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 8323c036789b ("crypto: starfive - Fix nent assignment in rsa dec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/cgroup-v2.rst |  7 ++++---
- mm/memcontrol.c                         | 12 +++++++++---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/crypto/starfive/jh7110-cryp.h |  3 ++-
+ drivers/crypto/starfive/jh7110-rsa.c  | 12 ++++++++----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
-index b69f701b2485..4a7a59bbf76f 100644
---- a/Documentation/admin-guide/cgroup-v2.rst
-+++ b/Documentation/admin-guide/cgroup-v2.rst
-@@ -1706,9 +1706,10 @@ PAGE_SIZE multiple when read back.
- 	entries fault back in or are written out to disk.
+diff --git a/drivers/crypto/starfive/jh7110-cryp.h b/drivers/crypto/starfive/jh7110-cryp.h
+index 494a74f52706..85c65c6c0327 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.h
++++ b/drivers/crypto/starfive/jh7110-cryp.h
+@@ -30,6 +30,7 @@
+ #define MAX_KEY_SIZE				SHA512_BLOCK_SIZE
+ #define STARFIVE_AES_IV_LEN			AES_BLOCK_SIZE
+ #define STARFIVE_AES_CTR_LEN			AES_BLOCK_SIZE
++#define STARFIVE_RSA_MAX_KEYSZ			256
  
-   memory.zswap.writeback
--	A read-write single value file. The default value is "1". The
--	initial value of the root cgroup is 1, and when a new cgroup is
--	created, it inherits the current value of its parent.
-+	A read-write single value file. The default value is "1".
-+	Note that this setting is hierarchical, i.e. the writeback would be
-+	implicitly disabled for child cgroups if the upper hierarchy
-+	does so.
+ union starfive_aes_csr {
+ 	u32 v;
+@@ -222,7 +223,7 @@ struct starfive_cryp_request_ctx {
+ 	unsigned int				digsize;
+ 	unsigned long				in_sg_len;
+ 	unsigned char				*adata;
+-	u8 rsa_data[] __aligned(sizeof(u32));
++	u8 rsa_data[STARFIVE_RSA_MAX_KEYSZ] __aligned(sizeof(u32));
+ };
  
- 	When this is set to 0, all swapping attempts to swapping devices
- 	are disabled. This included both zswap writebacks, and swapping due
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index ff1e7d2260ab..5c44d3d304da 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -5804,8 +5804,7 @@ mem_cgroup_css_alloc(struct cgroup_subsys_state *parent_css)
- 	WRITE_ONCE(memcg->soft_limit, PAGE_COUNTER_MAX);
- #if defined(CONFIG_MEMCG_KMEM) && defined(CONFIG_ZSWAP)
- 	memcg->zswap_max = PAGE_COUNTER_MAX;
--	WRITE_ONCE(memcg->zswap_writeback,
--		!parent || READ_ONCE(parent->zswap_writeback));
-+	WRITE_ONCE(memcg->zswap_writeback, true);
- #endif
- 	page_counter_set_high(&memcg->swap, PAGE_COUNTER_MAX);
- 	if (parent) {
-@@ -8444,7 +8443,14 @@ void obj_cgroup_uncharge_zswap(struct obj_cgroup *objcg, size_t size)
- bool mem_cgroup_zswap_writeback_enabled(struct mem_cgroup *memcg)
+ struct starfive_cryp_dev *starfive_cryp_find_dev(struct starfive_cryp_ctx *ctx);
+diff --git a/drivers/crypto/starfive/jh7110-rsa.c b/drivers/crypto/starfive/jh7110-rsa.c
+index 33093ba4b13a..59f5979e9360 100644
+--- a/drivers/crypto/starfive/jh7110-rsa.c
++++ b/drivers/crypto/starfive/jh7110-rsa.c
+@@ -31,7 +31,6 @@
+ /* A * A * R mod N ==> A */
+ #define CRYPTO_CMD_AARN			0x7
+ 
+-#define STARFIVE_RSA_MAX_KEYSZ		256
+ #define STARFIVE_RSA_RESET		0x2
+ 
+ static inline int starfive_pka_wait_done(struct starfive_cryp_ctx *ctx)
+@@ -74,7 +73,7 @@ static int starfive_rsa_montgomery_form(struct starfive_cryp_ctx *ctx,
  {
- 	/* if zswap is disabled, do not block pages going to the swapping device */
--	return !zswap_is_enabled() || !memcg || READ_ONCE(memcg->zswap_writeback);
-+	if (!zswap_is_enabled())
-+		return true;
-+
-+	for (; memcg; memcg = parent_mem_cgroup(memcg))
-+		if (!READ_ONCE(memcg->zswap_writeback))
-+			return false;
-+
-+	return true;
- }
+ 	struct starfive_cryp_dev *cryp = ctx->cryp;
+ 	struct starfive_cryp_request_ctx *rctx = ctx->rctx;
+-	int count = rctx->total / sizeof(u32) - 1;
++	int count = (ALIGN(rctx->total, 4) / 4) - 1;
+ 	int loop;
+ 	u32 temp;
+ 	u8 opsize;
+@@ -251,12 +250,17 @@ static int starfive_rsa_enc_core(struct starfive_cryp_ctx *ctx, int enc)
+ 	struct starfive_cryp_dev *cryp = ctx->cryp;
+ 	struct starfive_cryp_request_ctx *rctx = ctx->rctx;
+ 	struct starfive_rsa_key *key = &ctx->rsa_key;
+-	int ret = 0;
++	int ret = 0, shift = 0;
  
- static u64 zswap_current_read(struct cgroup_subsys_state *css,
+ 	writel(STARFIVE_RSA_RESET, cryp->base + STARFIVE_PKA_CACR_OFFSET);
+ 
++	if (!IS_ALIGNED(rctx->total, sizeof(u32))) {
++		shift = sizeof(u32) - (rctx->total & 0x3);
++		memset(rctx->rsa_data, 0, shift);
++	}
++
+ 	rctx->total = sg_copy_to_buffer(rctx->in_sg, rctx->nents,
+-					rctx->rsa_data, rctx->total);
++					rctx->rsa_data + shift, rctx->total);
+ 
+ 	if (enc) {
+ 		key->bitlen = key->e_bitlen;
 -- 
 2.43.0
 
