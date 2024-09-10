@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3A7188CC1;
-	Tue, 10 Sep 2024 09:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B803314F12C;
+	Tue, 10 Sep 2024 09:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961034; cv=none; b=N9ZmBnN3QZSR4X4XAHJZelvK4J+EMXmAjrxs3vVpa+S6q/anLGbnc/a9zhoD/DwiX9SVFYd4XDzvRPrtmN33VpnYk3XUyxLl7f67hsLYLX6ivAja1t38VWblwuq6qrtr/CudGMQyfRu9A8+RzCQBKCl3H15TJkaT+7QIo4Hkc1A=
+	t=1725961036; cv=none; b=fcVdAcawBqmuhejA94bYX9JfyrgVZeL+7FZPY8YsLGSVJJoUzMacK7Qh+tJ9kHQ6t3Z2/y7+NW/P6s/IVzuwqauWk7+dXoAOYofy5Kkj8QkfLXToqTyQeDmWfjeZcvmyhaC0WmCHMVLW1lQSTGrdX7Y5VO851t2oOqwBozSW6yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961034; c=relaxed/simple;
-	bh=CeidDjqvh8AE7DiULYlFgfxAEN0q8MSoGx9+9aP4bK4=;
+	s=arc-20240116; t=1725961036; c=relaxed/simple;
+	bh=uhAM2JZdJW1ORc1iEOW1T7hOwMeHFs2Ikrds2IEAPuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYYwMGFq+LSf2lMS+Y9B86MeEt+3hCh9pPMIoe9AS/1NtXNkXKEtXLxyGZMkgtMptw23V16B4WEM2olBzQ+2+A7nun5IKnwS6xBuWzoJhIiiaPfo4rqPafB7JkxUBBtGNz0x9FxctVzRKidgMdGTT/Qh8GYzQ8uDb2xI2Quy3tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXKLKDGn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlrVnCJSYzs3QitI5MVsQL4e7bhmRle7MhvIyrc75vCfIKf8eZYcYpzEPYQqc53fWCgyaFWGPwQYKT38HqnhPlTObc1njaMpXxttg3Vc0DHe9GYax1HH0kuK66iO4qq/zEGY+baQZX/eFb0xxvncngGu4Prew7oAz+V7pYb3OBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgmJEX2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXKLKDGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B036C4CEC3;
-	Tue, 10 Sep 2024 09:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgmJEX2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEA2C4CEC3;
+	Tue, 10 Sep 2024 09:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961033;
-	bh=CeidDjqvh8AE7DiULYlFgfxAEN0q8MSoGx9+9aP4bK4=;
+	s=korg; t=1725961036;
+	bh=uhAM2JZdJW1ORc1iEOW1T7hOwMeHFs2Ikrds2IEAPuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OXKLKDGnF5L6f+tnKN6IJwM4Hm7ocmfC5sd8RP4s6BHNguI44A7B1udKJ2TBvXUPZ
-	 wWmHO4zlP7RYzTvCGpkhuGiEP9933TT3qIkQI4E7EflvqCK+uhJhwCpoWsUA5rof2n
-	 9sgF1h5aOHvoN0cUPZ/Y1E7+HI28v2KoyJCq4/8g=
+	b=IgmJEX2ZQiZfhA1oQj1XYX0J8lfXOLv/xrOY2jGWN6MWyOpPG3g8RhpbBNZJm9f7G
+	 m4fKP7SR+gfy5QATNaEB7esP2VZSMxsnTooSTK1D8wMoyx6e9GkYCnPCSE+r3HbyFO
+	 nYosL/UU2cBuID+mvXUep9UOtguLQVk109NkgOew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunjian Wang <wangyunjian@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 30/96] netfilter: nf_conncount: fix wrong variable type
-Date: Tue, 10 Sep 2024 11:31:32 +0200
-Message-ID: <20240910092542.817712898@linuxfoundation.org>
+Subject: [PATCH 4.19 31/96] udf: Avoid excessive partition lengths
+Date: Tue, 10 Sep 2024 11:31:33 +0200
+Message-ID: <20240910092542.863861537@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,68 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunjian Wang <wangyunjian@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 0b88d1654d556264bcd24a9cb6383f0888e30131 ]
+[ Upstream commit ebbe26fd54a9621994bc16b14f2ba8f84c089693 ]
 
-Now there is a issue is that code checks reports a warning: implicit
-narrowing conversion from type 'unsigned int' to small type 'u8' (the
-'keylen' variable). Fix it by removing the 'keylen' variable.
+Avoid mounting filesystems where the partition would overflow the
+32-bits used for block number. Also refuse to mount filesystems where
+the partition length is so large we cannot safely index bits in a
+block bitmap.
 
-Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20240620130403.14731-1-jack@suse.cz
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/udf/super.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 7554c56b2e63..d189ca7c2c02 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -309,7 +309,6 @@ insert_tree(struct net *net,
- 	struct nf_conncount_rb *rbconn;
- 	struct nf_conncount_tuple *conn;
- 	unsigned int count = 0, gc_count = 0;
--	u8 keylen = data->keylen;
- 	bool do_gc = true;
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index 6273ffd312cc..22c76a33f6f3 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1054,12 +1054,19 @@ static int udf_fill_partdesc_info(struct super_block *sb,
+ 	struct udf_part_map *map;
+ 	struct udf_sb_info *sbi = UDF_SB(sb);
+ 	struct partitionHeaderDesc *phd;
++	u32 sum;
+ 	int err;
  
- 	spin_lock_bh(&nf_conncount_locks[hash]);
-@@ -321,7 +320,7 @@ insert_tree(struct net *net,
- 		rbconn = rb_entry(*rbnode, struct nf_conncount_rb, node);
+ 	map = &sbi->s_partmaps[p_index];
  
- 		parent = *rbnode;
--		diff = key_diff(key, rbconn->key, keylen);
-+		diff = key_diff(key, rbconn->key, data->keylen);
- 		if (diff < 0) {
- 			rbnode = &((*rbnode)->rb_left);
- 		} else if (diff > 0) {
-@@ -366,7 +365,7 @@ insert_tree(struct net *net,
+ 	map->s_partition_len = le32_to_cpu(p->partitionLength); /* blocks */
+ 	map->s_partition_root = le32_to_cpu(p->partitionStartingLocation);
++	if (check_add_overflow(map->s_partition_root, map->s_partition_len,
++			       &sum)) {
++		udf_err(sb, "Partition %d has invalid location %u + %u\n",
++			p_index, map->s_partition_root, map->s_partition_len);
++		return -EFSCORRUPTED;
++	}
  
- 	conn->tuple = *tuple;
- 	conn->zone = *zone;
--	memcpy(rbconn->key, key, sizeof(u32) * keylen);
-+	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
- 
- 	nf_conncount_list_init(&rbconn->list);
- 	list_add(&conn->node, &rbconn->list.head);
-@@ -391,7 +390,6 @@ count_tree(struct net *net,
- 	struct rb_node *parent;
- 	struct nf_conncount_rb *rbconn;
- 	unsigned int hash;
--	u8 keylen = data->keylen;
- 
- 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
- 	root = &data->root[hash];
-@@ -402,7 +400,7 @@ count_tree(struct net *net,
- 
- 		rbconn = rb_entry(parent, struct nf_conncount_rb, node);
- 
--		diff = key_diff(key, rbconn->key, keylen);
-+		diff = key_diff(key, rbconn->key, data->keylen);
- 		if (diff < 0) {
- 			parent = rcu_dereference_raw(parent->rb_left);
- 		} else if (diff > 0) {
+ 	if (p->accessType == cpu_to_le32(PD_ACCESS_TYPE_READ_ONLY))
+ 		map->s_partition_flags |= UDF_PART_FLAG_READ_ONLY;
+@@ -1115,6 +1122,14 @@ static int udf_fill_partdesc_info(struct super_block *sb,
+ 		bitmap->s_extPosition = le32_to_cpu(
+ 				phd->unallocSpaceBitmap.extPosition);
+ 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_BITMAP;
++		/* Check whether math over bitmap won't overflow. */
++		if (check_add_overflow(map->s_partition_len,
++				       sizeof(struct spaceBitmapDesc) << 3,
++				       &sum)) {
++			udf_err(sb, "Partition %d is too long (%u)\n", p_index,
++				map->s_partition_len);
++			return -EFSCORRUPTED;
++		}
+ 		udf_debug("unallocSpaceBitmap (part %d) @ %u\n",
+ 			  p_index, bitmap->s_extPosition);
+ 	}
 -- 
 2.43.0
 
