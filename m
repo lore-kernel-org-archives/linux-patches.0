@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629F118E77F;
-	Tue, 10 Sep 2024 10:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3B018E77F;
+	Tue, 10 Sep 2024 10:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965093; cv=none; b=mfdspTWWhWlzlYBdnQT97UKkPz6HKmq9S1iPna7IuT8dHeyNqdylhMvu3OuR6uo9R37BJaAgyZsr9oX9zVddRGRiz5dKBQf4X1xY1nukACPYeNb2zfF92Bz5fsgNgnED1NpBU/VBgxzLUrHvHgom0UVa0gkG2IrE9U6Zkaj2RaQ=
+	t=1725965096; cv=none; b=Vy5BTNVb2xwIq779G7+uOQHBSpd5V6ws/B4jOEDm9M6j/vtimP+1QygJhLyLAx187oEizeaGDX5HPTPU6PSLRSnPKkxmGnZnMZo1zP+alOhUyBESN7eoEHA+9FMIkstDG2pSvsSTlnUoVa8loZRHtFzdtiOaGluaXrGxYxyhCZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965093; c=relaxed/simple;
-	bh=9ubCA5lKKznGG/ueIGP2o64cG5uJGRPPjFV8XRaPbv0=;
+	s=arc-20240116; t=1725965096; c=relaxed/simple;
+	bh=tVMvoQCbdtZjBRKn2C3eiTosiFEe6Ld/Rswo/SAmMXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/J5Otb0JB+SenO8cyjrCnZAABILyrtUoYx0hXNR0d0N3tlpI47x/DPkRyzoG/7BH6Zhn6pKCBQ35g/I0FLieuRKpJ4msSKD0wFLwV9pp4U9gmt8ESiGnt0P/MsSynABlDvKsR7f4Xog7lWGUmS06qTD17aBSFWkK90uKHDIy5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6gq2/v+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2mABK2LgNkcVV2H8FvdSM5aVzrzsAM9++1TT3mXVR19reQ4TRhLSBsQq302xEG+7hHMXTrQKYQkZa3OiATpfj7vB+0aNj2Y+6rcw3GUApDkCbOdqFCpucUQ2uGhj37M7vPc9Xrd0CKCgkc4KLhBo9QcmtZ/T/w+3TJh/2ImH0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3GPkggk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6gq2/v+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F94C4CEC3;
-	Tue, 10 Sep 2024 10:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3GPkggk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DB9C4CEC3;
+	Tue, 10 Sep 2024 10:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965093;
-	bh=9ubCA5lKKznGG/ueIGP2o64cG5uJGRPPjFV8XRaPbv0=;
+	s=korg; t=1725965096;
+	bh=tVMvoQCbdtZjBRKn2C3eiTosiFEe6Ld/Rswo/SAmMXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6gq2/v+9a2mJqJ+jpm3NXyCvItvAEWOtdJrsiiu7J/EnicJZ0F/3ZA9KIZMBMBB9
-	 e+79BaWYDDswcA8dLTw2/UKEDvg4TUF1YmlANhz/g7olasWjF2uMBUs1B7tRMdSszU
-	 qcs6ce88Wz1o9pyAbeaIAEkQ1xaZZtPkefW0E9jc=
+	b=L3GPkggkxF6k5ifCl9+C+M6ixYg9in9MorAbuj8vMw+TvO4e/6QM9E3oA34m1HUeJ
+	 ZiFaKjta5inzEqCgn2IRDH6tAuVSp0sb36SzFTkZcH/fHUGFPNbw18MbHzwYxS36g7
+	 EN8YMse/AoDb5MWP7FwJRghvfKZXyKvx33zyYlLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/186] hwmon: (adc128d818) Fix underflows seen when writing limit attributes
-Date: Tue, 10 Sep 2024 11:33:50 +0200
-Message-ID: <20240910092600.155589496@linuxfoundation.org>
+Subject: [PATCH 5.10 136/186] hwmon: (lm95234) Fix underflows seen when writing limit attributes
+Date: Tue, 10 Sep 2024 11:33:51 +0200
+Message-ID: <20240910092600.201657781@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 8cad724c8537fe3e0da8004646abc00290adae40 ]
+[ Upstream commit af64e3e1537896337405f880c1e9ac1f8c0c6198 ]
 
 DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
 negative number such as -9223372036854775808 is provided by the user.
@@ -61,31 +61,50 @@ Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adc128d818.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/lm95234.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/adc128d818.c b/drivers/hwmon/adc128d818.c
-index 6c9a906631b8..e73c4de9471f 100644
---- a/drivers/hwmon/adc128d818.c
-+++ b/drivers/hwmon/adc128d818.c
-@@ -176,7 +176,7 @@ static ssize_t adc128_in_store(struct device *dev,
+diff --git a/drivers/hwmon/lm95234.c b/drivers/hwmon/lm95234.c
+index ac169a994ae0..db2aecdfbd17 100644
+--- a/drivers/hwmon/lm95234.c
++++ b/drivers/hwmon/lm95234.c
+@@ -301,7 +301,8 @@ static ssize_t tcrit2_store(struct device *dev, struct device_attribute *attr,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, index ? 255 : 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, (index ? 255 : 127) * 1000),
++				1000);
  
  	mutex_lock(&data->update_lock);
- 	/* 10 mV LSB on limit registers */
--	regval = clamp_val(DIV_ROUND_CLOSEST(val, 10), 0, 255);
-+	regval = DIV_ROUND_CLOSEST(clamp_val(val, 0, 2550), 10);
- 	data->in[index][nr] = regval << 4;
- 	reg = index == 1 ? ADC128_REG_IN_MIN(nr) : ADC128_REG_IN_MAX(nr);
- 	i2c_smbus_write_byte_data(data->client, reg, regval);
-@@ -214,7 +214,7 @@ static ssize_t adc128_temp_store(struct device *dev,
- 		return err;
+ 	data->tcrit2[index] = val;
+@@ -350,7 +351,7 @@ static ssize_t tcrit1_store(struct device *dev, struct device_attribute *attr,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 255);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 255000), 1000);
  
  	mutex_lock(&data->update_lock);
--	regval = clamp_val(DIV_ROUND_CLOSEST(val, 1000), -128, 127);
-+	regval = DIV_ROUND_CLOSEST(clamp_val(val, -128000, 127000), 1000);
- 	data->temp[index] = regval << 1;
- 	i2c_smbus_write_byte_data(data->client,
- 				  index == 1 ? ADC128_REG_TEMP_MAX
+ 	data->tcrit1[index] = val;
+@@ -391,7 +392,7 @@ static ssize_t tcrit1_hyst_store(struct device *dev,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	val = DIV_ROUND_CLOSEST(val, 1000);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, -255000, 255000), 1000);
+ 	val = clamp_val((int)data->tcrit1[index] - val, 0, 31);
+ 
+ 	mutex_lock(&data->update_lock);
+@@ -431,7 +432,7 @@ static ssize_t offset_store(struct device *dev, struct device_attribute *attr,
+ 		return ret;
+ 
+ 	/* Accuracy is 1/2 degrees C */
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 500), -128, 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, -64000, 63500), 500);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->toffset[index] = val;
 -- 
 2.43.0
 
