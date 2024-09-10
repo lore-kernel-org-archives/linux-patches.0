@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4D3191478;
-	Tue, 10 Sep 2024 09:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E835191466;
+	Tue, 10 Sep 2024 09:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961432; cv=none; b=eKGLWDxCUK1lDftK6p3CGimgGz/3l2Ma3LfruwozFUXisxtXG/PczKjvpUTvqouj/HWzykbKAigpo8vC7nMkiqUcenBquLXKLHyZVnj3b0OuLyBuRptmBiMv3m3QQVQ0Kd4uTZGfaWJG7k2c+HeLOY1B7xLxdwxCFOWsQB3hSjM=
+	t=1725961435; cv=none; b=c7bnyxr5Mlp/zULApoznZuL5Uck8G9LznUKCXxOL+xI4RxcOaNtfyRnGLYFqMUombSzyQ3nO1tqfIXtA8ckWiFW9+sS75AId0iTcI12JxIvsjsCzZ5QWH7LZlOFmT6TaGH9UIVP0TCCCxkurTQ3cjx+XY3YV2LHV6+Lxq2KlHJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961432; c=relaxed/simple;
-	bh=AHOqOdNkU7/euDqsgTEo3pZrpARlBA8vXfpYYzFgOMk=;
+	s=arc-20240116; t=1725961435; c=relaxed/simple;
+	bh=2HE8F5Tqbq4u/nwny2GAFND5QFbqgdrxaFU/1LR2+5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G94hc4mt/Cx88BKqNul9/qseKOF0jehlmYCG9yonDKNc7uKcx/DmwMN3ZVTL6LhQOovoeWc7t8hadpR2U4v77BItW66biB/4I+glD8JEFGQljeAjjanI+zjvcd3CAXcZLsCfON6/5D9jzWWdoYGFv6IgBWCFV8C9MgDOsHFde7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzI/YpGi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FsOSRBPk69JaPu6FFMyYKj2nMA6q2BJ9+ITO6GlNE+9KEy/hNH53Z0e+pFqzbiIUzHYt49lWzX9BU6tq7asFWGmN7I4kE1y+bTsU3pakVuw3EI9poDmE+tWzcGC3Dn9u8b0BgLMbtccvYzRaNC6fFDmRGjWoDFqdbMGT/GmGCog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEQNF9ui; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzI/YpGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42B7C4CEC3;
-	Tue, 10 Sep 2024 09:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEQNF9ui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDB4C4CEC3;
+	Tue, 10 Sep 2024 09:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961432;
-	bh=AHOqOdNkU7/euDqsgTEo3pZrpARlBA8vXfpYYzFgOMk=;
+	s=korg; t=1725961435;
+	bh=2HE8F5Tqbq4u/nwny2GAFND5QFbqgdrxaFU/1LR2+5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzI/YpGiCvudBOO1IlPOCuw6v4I7dv8d973IpuzpcW1FjtqXVbxGscMKk+c5fVRRF
-	 CzzXkn3x49lbCjTWTBRy3oyVSZTFfiHyqy+2sCUvTjyFPrURWOYsMNjimhKwhqB5Rc
-	 u30zXU8/HBDqppM5Z+kg8D9cUz1z3BCezw42G4WA=
+	b=rEQNF9ui0eZ6+n2JqhyQALTQISotn2wUfz6+/DdZu91iTH36BuzstUhX1Q2Tf+pah
+	 mmSnQE+QzeWHppzukIKcSGZ8Ck/iOhx9uZdZW1dz46aJ/3V+SkSWadauEo3sjoB0lh
+	 w+fTjvZK9TiC5cOQ3he+e9RsYOgLwmPkyuRvbEcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Pavel Emelyanov <xemul@virtuozzo.com>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 067/375] userfaultfd: fix checks for huge PMDs
-Date: Tue, 10 Sep 2024 11:27:44 +0200
-Message-ID: <20240910092624.472103441@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.10 068/375] fscache: delete fscache_cookie_lru_timer when fscache exits to avoid UAF
+Date: Tue, 10 Sep 2024 11:27:45 +0200
+Message-ID: <20240910092624.499929110@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -55,142 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 71c186efc1b2cf1aeabfeff3b9bd5ac4c5ac14d8 upstream.
+commit 72a6e22c604c95ddb3b10b5d3bb85b6ff4dbc34f upstream.
 
-Patch series "userfaultfd: fix races around pmd_trans_huge() check", v2.
+The fscache_cookie_lru_timer is initialized when the fscache module
+is inserted, but is not deleted when the fscache module is removed.
+If timer_reduce() is called before removing the fscache module,
+the fscache_cookie_lru_timer will be added to the timer list of
+the current cpu. Afterwards, a use-after-free will be triggered
+in the softIRQ after removing the fscache module, as follows:
 
-The pmd_trans_huge() code in mfill_atomic() is wrong in three different
-ways depending on kernel version:
+==================================================================
+BUG: unable to handle page fault for address: fffffbfff803c9e9
+ PF: supervisor read access in kernel mode
+ PF: error_code(0x0000) - not-present page
+PGD 21ffea067 P4D 21ffea067 PUD 21ffe6067 PMD 110a7c067 PTE 0
+Oops: Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Tainted: G W 6.11.0-rc3 #855
+Tainted: [W]=WARN
+RIP: 0010:__run_timer_base.part.0+0x254/0x8a0
+Call Trace:
+ <IRQ>
+ tmigr_handle_remote_up+0x627/0x810
+ __walk_groups.isra.0+0x47/0x140
+ tmigr_handle_remote+0x1fa/0x2f0
+ handle_softirqs+0x180/0x590
+ irq_exit_rcu+0x84/0xb0
+ sysvec_apic_timer_interrupt+0x6e/0x90
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20
+RIP: 0010:default_idle+0xf/0x20
+ default_idle_call+0x38/0x60
+ do_idle+0x2b5/0x300
+ cpu_startup_entry+0x54/0x60
+ start_secondary+0x20d/0x280
+ common_startup_64+0x13e/0x148
+ </TASK>
+Modules linked in: [last unloaded: netfs]
+==================================================================
 
-1. The pmd_trans_huge() check is racy and can lead to a BUG_ON() (if you hit
-   the right two race windows) - I've tested this in a kernel build with
-   some extra mdelay() calls. See the commit message for a description
-   of the race scenario.
-   On older kernels (before 6.5), I think the same bug can even
-   theoretically lead to accessing transhuge page contents as a page table
-   if you hit the right 5 narrow race windows (I haven't tested this case).
-2. As pointed out by Qi Zheng, pmd_trans_huge() is not sufficient for
-   detecting PMDs that don't point to page tables.
-   On older kernels (before 6.5), you'd just have to win a single fairly
-   wide race to hit this.
-   I've tested this on 6.1 stable by racing migration (with a mdelay()
-   patched into try_to_migrate()) against UFFDIO_ZEROPAGE - on my x86
-   VM, that causes a kernel oops in ptlock_ptr().
-3. On newer kernels (>=6.5), for shmem mappings, khugepaged is allowed
-   to yank page tables out from under us (though I haven't tested that),
-   so I think the BUG_ON() checks in mfill_atomic() are just wrong.
+Therefore delete fscache_cookie_lru_timer when removing the fscahe module.
 
-I decided to write two separate fixes for these (one fix for bugs 1+2, one
-fix for bug 3), so that the first fix can be backported to kernels
-affected by bugs 1+2.
-
-
-This patch (of 2):
-
-This fixes two issues.
-
-I discovered that the following race can occur:
-
-  mfill_atomic                other thread
-  ============                ============
-                              <zap PMD>
-  pmdp_get_lockless() [reads none pmd]
-  <bail if trans_huge>
-  <if none:>
-                              <pagefault creates transhuge zeropage>
-    __pte_alloc [no-op]
-                              <zap PMD>
-  <bail if pmd_trans_huge(*dst_pmd)>
-  BUG_ON(pmd_none(*dst_pmd))
-
-I have experimentally verified this in a kernel with extra mdelay() calls;
-the BUG_ON(pmd_none(*dst_pmd)) triggers.
-
-On kernels newer than commit 0d940a9b270b ("mm/pgtable: allow
-pte_offset_map[_lock]() to fail"), this can't lead to anything worse than
-a BUG_ON(), since the page table access helpers are actually designed to
-deal with page tables concurrently disappearing; but on older kernels
-(<=6.4), I think we could probably theoretically race past the two
-BUG_ON() checks and end up treating a hugepage as a page table.
-
-The second issue is that, as Qi Zheng pointed out, there are other types
-of huge PMDs that pmd_trans_huge() can't catch: devmap PMDs and swap PMDs
-(in particular, migration PMDs).
-
-On <=6.4, this is worse than the first issue: If mfill_atomic() runs on a
-PMD that contains a migration entry (which just requires winning a single,
-fairly wide race), it will pass the PMD to pte_offset_map_lock(), which
-assumes that the PMD points to a page table.
-
-Breakage follows: First, the kernel tries to take the PTE lock (which will
-crash or maybe worse if there is no "struct page" for the address bits in
-the migration entry PMD - I think at least on X86 there usually is no
-corresponding "struct page" thanks to the PTE inversion mitigation, amd64
-looks different).
-
-If that didn't crash, the kernel would next try to write a PTE into what
-it wrongly thinks is a page table.
-
-As part of fixing these issues, get rid of the check for pmd_trans_huge()
-before __pte_alloc() - that's redundant, we're going to have to check for
-that after the __pte_alloc() anyway.
-
-Backport note: pmdp_get_lockless() is pmd_read_atomic() in older kernels.
-
-Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-0-5efa61078a41@google.com
-Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-1-5efa61078a41@google.com
-Fixes: c1a4de99fada ("userfaultfd: mcopy_atomic|mfill_zeropage: UFFDIO_COPY|UFFDIO_ZEROPAGE preparation")
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pavel Emelyanov <xemul@virtuozzo.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 12bb21a29c19 ("fscache: Implement cookie user counting and resource pinning")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240826112056.2458299-1-libaokun@huaweicloud.com
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/userfaultfd.c |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ fs/netfs/fscache_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -787,21 +787,23 @@ retry:
- 		}
+--- a/fs/netfs/fscache_main.c
++++ b/fs/netfs/fscache_main.c
+@@ -103,6 +103,7 @@ void __exit fscache_exit(void)
  
- 		dst_pmdval = pmdp_get_lockless(dst_pmd);
--		/*
--		 * If the dst_pmd is mapped as THP don't
--		 * override it and just be strict.
--		 */
--		if (unlikely(pmd_trans_huge(dst_pmdval))) {
--			err = -EEXIST;
--			break;
--		}
- 		if (unlikely(pmd_none(dst_pmdval)) &&
- 		    unlikely(__pte_alloc(dst_mm, dst_pmd))) {
- 			err = -ENOMEM;
- 			break;
- 		}
--		/* If an huge pmd materialized from under us fail */
--		if (unlikely(pmd_trans_huge(*dst_pmd))) {
-+		dst_pmdval = pmdp_get_lockless(dst_pmd);
-+		/*
-+		 * If the dst_pmd is THP don't override it and just be strict.
-+		 * (This includes the case where the PMD used to be THP and
-+		 * changed back to none after __pte_alloc().)
-+		 */
-+		if (unlikely(!pmd_present(dst_pmdval) || pmd_trans_huge(dst_pmdval) ||
-+			     pmd_devmap(dst_pmdval))) {
-+			err = -EEXIST;
-+			break;
-+		}
-+		if (unlikely(pmd_bad(dst_pmdval))) {
- 			err = -EFAULT;
- 			break;
- 		}
+ 	kmem_cache_destroy(fscache_cookie_jar);
+ 	fscache_proc_cleanup();
++	timer_shutdown_sync(&fscache_cookie_lru_timer);
+ 	destroy_workqueue(fscache_wq);
+ 	pr_notice("FS-Cache unloaded\n");
+ }
 
 
