@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51D918C344;
-	Tue, 10 Sep 2024 10:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D7E144D1A;
+	Tue, 10 Sep 2024 10:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963257; cv=none; b=ktuyhpHtZXS+WsYdA/iSuAInCgkL5SJ5LpOcxrHaLNKBk2iToiAxj12PcGmjvcsX54qoTukAyvQuROOKL9khfY4J6pFOVpyk/TDV1CUc6X70OHEejxCHE25SuVzbWmt9gV4L4t4UCI52BV5Kp4Qv0OstYrZ9Olgg09m+sFcc1UM=
+	t=1725963259; cv=none; b=IcoHm3a/XL1B0XgluFSMwZ8M/BQlb2bNHmHqgrNCwZpGt0amtFYuPi+U+jtAzfdoXAp9FgwuKDKtkel23zst9f2+698auoylPLWftHZyEuiqbXzqMlUHQcMc+U4yDfli7E6qFsN74beNvoN74Rn0Zg/Q+kpRxejDEYIyeSnTtno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963257; c=relaxed/simple;
-	bh=XuEb8XLCkHiEXlLWSx0vaPTj0Sk2+3DvDSW/0hEEvoU=;
+	s=arc-20240116; t=1725963259; c=relaxed/simple;
+	bh=5/ewN1PwmusyqIwQhhhrCDcU2cZzuoBQA/L86r18Pes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJi2yXsm0mKiJoIMc+2PiQPPLGbswzM2ovPiK7w0D0c5yNUo1Zw9gOupmlMx2908di2q/hTDsWmsG0yZZkw9liLTPlPDsydrGfWjT2trsHJMbHRlL1p5Td31/O7X0VBZ/6cTT9NRGtp/oS7PmnGksb5K1FXceVmi1pa0+2ujWv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZorKCNXZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKHwX8Va/CZ2tZFZ4Kyaol2RQzG8jY5sY8i8OK7r5p2bk1z1ErstsHPVz4zAmxs+PRmiSoZnRxGvY0+wgRU1ilqwIyY4E4CaheEJBpSekOntb561uB+GyI2CiPooRpE0jI+C2SSVaBeRpBmuJVUF/QNURykx/r/F91btapzOVBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqCzKIv9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZorKCNXZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692B0C4CEC3;
-	Tue, 10 Sep 2024 10:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqCzKIv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA78C4CEC3;
+	Tue, 10 Sep 2024 10:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963256;
-	bh=XuEb8XLCkHiEXlLWSx0vaPTj0Sk2+3DvDSW/0hEEvoU=;
+	s=korg; t=1725963259;
+	bh=5/ewN1PwmusyqIwQhhhrCDcU2cZzuoBQA/L86r18Pes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZorKCNXZ4eDcamM7VRg2dI2iXAP9YRAoxbQss+bQvBcy4NhzqPk5w9TJvnvZivGPZ
-	 UmHikjp6wyOYtRnHcX8Y89GDZaQTojt3fjl5Q1yAysbqJYM7CEY0gyXmzdUrnxC9zL
-	 vk3sot5c2nRaRPmVTHlEpXFS14vwcYVvUAhlAJFA=
+	b=IqCzKIv9XHQ7VVZrtg1r8ETmWHovhWdo2cdkDQRxsaMX2M4rWEx20b2pc81dZtfQR
+	 Omzx+0s4EmdpnDira5BFyFWJ3ijsihPi/YTlLGAQyip0Wa1yos/I7vKakAW+3KZesG
+	 xySWb4KRPwbhEd38oF1WgZmJOqaiK+CE8a7qpGv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Dias <paulo.miguel.dias@gmail.com>,
-	Andreas Jahn <jahn-andi@web.de>,
-	syzbot+4704b3cc972bd76024f1@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 188/192] btrfs: fix race between direct IO write and fsync when using same fd
-Date: Tue, 10 Sep 2024 11:33:32 +0200
-Message-ID: <20240910092605.545353129@linuxfoundation.org>
+	syzbot+958967f249155967d42a@syzkaller.appspotmail.com,
+	Yonghong Song <yhs@fb.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Diogo Jahchan Koike <djahchankoike@gmail.com>
+Subject: [PATCH 6.1 189/192] bpf: Silence a warning in btf_type_id_size()
+Date: Tue, 10 Sep 2024 11:33:33 +0200
+Message-ID: <20240910092605.575977092@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -54,315 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Yonghong Song <yhs@fb.com>
 
-commit cd9253c23aedd61eb5ff11f37a36247cd46faf86 upstream.
+commit e6c2f594ed961273479505b42040782820190305 upstream.
 
-If we have 2 threads that are using the same file descriptor and one of
-them is doing direct IO writes while the other is doing fsync, we have a
-race where we can end up either:
+syzbot reported a warning in [1] with the following stacktrace:
+  WARNING: CPU: 0 PID: 5005 at kernel/bpf/btf.c:1988 btf_type_id_size+0x2d9/0x9d0 kernel/bpf/btf.c:1988
+  ...
+  RIP: 0010:btf_type_id_size+0x2d9/0x9d0 kernel/bpf/btf.c:1988
+  ...
+  Call Trace:
+   <TASK>
+   map_check_btf kernel/bpf/syscall.c:1024 [inline]
+   map_create+0x1157/0x1860 kernel/bpf/syscall.c:1198
+   __sys_bpf+0x127f/0x5420 kernel/bpf/syscall.c:5040
+   __do_sys_bpf kernel/bpf/syscall.c:5162 [inline]
+   __se_sys_bpf kernel/bpf/syscall.c:5160 [inline]
+   __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5160
+   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+   do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-1) Attempt a fsync without holding the inode's lock, triggering an
-   assertion failures when assertions are enabled;
+With the following btf
+  [1] DECL_TAG 'a' type_id=4 component_idx=-1
+  [2] PTR '(anon)' type_id=0
+  [3] TYPE_TAG 'a' type_id=2
+  [4] VAR 'a' type_id=3, linkage=static
+and when the bpf_attr.btf_key_type_id = 1 (DECL_TAG),
+the following WARN_ON_ONCE in btf_type_id_size() is triggered:
+  if (WARN_ON_ONCE(!btf_type_is_modifier(size_type) &&
+                   !btf_type_is_var(size_type)))
+          return NULL;
 
-2) Do an invalid memory access from the fsync task because the file private
-   points to memory allocated on stack by the direct IO task and it may be
-   used by the fsync task after the stack was destroyed.
+Note that 'return NULL' is the correct behavior as we don't want
+a DECL_TAG type to be used as a btf_{key,value}_type_id even
+for the case like 'DECL_TAG -> STRUCT'. So there
+is no correctness issue here, we just want to silence warning.
 
-The race happens like this:
+To silence the warning, I added DECL_TAG as one of kinds in
+btf_type_nosize() which will cause btf_type_id_size() returning
+NULL earlier without the warning.
 
-1) A user space program opens a file descriptor with O_DIRECT;
+  [1] https://lore.kernel.org/bpf/000000000000e0df8d05fc75ba86@google.com/
 
-2) The program spawns 2 threads using libpthread for example;
-
-3) One of the threads uses the file descriptor to do direct IO writes,
-   while the other calls fsync using the same file descriptor.
-
-4) Call task A the thread doing direct IO writes and task B the thread
-   doing fsyncs;
-
-5) Task A does a direct IO write, and at btrfs_direct_write() sets the
-   file's private to an on stack allocated private with the member
-   'fsync_skip_inode_lock' set to true;
-
-6) Task B enters btrfs_sync_file() and sees that there's a private
-   structure associated to the file which has 'fsync_skip_inode_lock' set
-   to true, so it skips locking the inode's VFS lock;
-
-7) Task A completes the direct IO write, and resets the file's private to
-   NULL since it had no prior private and our private was stack allocated.
-   Then it unlocks the inode's VFS lock;
-
-8) Task B enters btrfs_get_ordered_extents_for_logging(), then the
-   assertion that checks the inode's VFS lock is held fails, since task B
-   never locked it and task A has already unlocked it.
-
-The stack trace produced is the following:
-
-   assertion failed: inode_is_locked(&inode->vfs_inode), in fs/btrfs/ordered-data.c:983
-   ------------[ cut here ]------------
-   kernel BUG at fs/btrfs/ordered-data.c:983!
-   Oops: invalid opcode: 0000 [#1] PREEMPT SMP PTI
-   CPU: 9 PID: 5072 Comm: worker Tainted: G     U     OE      6.10.5-1-default #1 openSUSE Tumbleweed 69f48d427608e1c09e60ea24c6c55e2ca1b049e8
-   Hardware name: Acer Predator PH315-52/Covini_CFS, BIOS V1.12 07/28/2020
-   RIP: 0010:btrfs_get_ordered_extents_for_logging.cold+0x1f/0x42 [btrfs]
-   Code: 50 d6 86 c0 e8 (...)
-   RSP: 0018:ffff9e4a03dcfc78 EFLAGS: 00010246
-   RAX: 0000000000000054 RBX: ffff9078a9868e98 RCX: 0000000000000000
-   RDX: 0000000000000000 RSI: ffff907dce4a7800 RDI: ffff907dce4a7800
-   RBP: ffff907805518800 R08: 0000000000000000 R09: ffff9e4a03dcfb38
-   R10: ffff9e4a03dcfb30 R11: 0000000000000003 R12: ffff907684ae7800
-   R13: 0000000000000001 R14: ffff90774646b600 R15: 0000000000000000
-   FS:  00007f04b96006c0(0000) GS:ffff907dce480000(0000) knlGS:0000000000000000
-   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-   CR2: 00007f32acbfc000 CR3: 00000001fd4fa005 CR4: 00000000003726f0
-   Call Trace:
-    <TASK>
-    ? __die_body.cold+0x14/0x24
-    ? die+0x2e/0x50
-    ? do_trap+0xca/0x110
-    ? do_error_trap+0x6a/0x90
-    ? btrfs_get_ordered_extents_for_logging.cold+0x1f/0x42 [btrfs bb26272d49b4cdc847cf3f7faadd459b62caee9a]
-    ? exc_invalid_op+0x50/0x70
-    ? btrfs_get_ordered_extents_for_logging.cold+0x1f/0x42 [btrfs bb26272d49b4cdc847cf3f7faadd459b62caee9a]
-    ? asm_exc_invalid_op+0x1a/0x20
-    ? btrfs_get_ordered_extents_for_logging.cold+0x1f/0x42 [btrfs bb26272d49b4cdc847cf3f7faadd459b62caee9a]
-    ? btrfs_get_ordered_extents_for_logging.cold+0x1f/0x42 [btrfs bb26272d49b4cdc847cf3f7faadd459b62caee9a]
-    btrfs_sync_file+0x21a/0x4d0 [btrfs bb26272d49b4cdc847cf3f7faadd459b62caee9a]
-    ? __seccomp_filter+0x31d/0x4f0
-    __x64_sys_fdatasync+0x4f/0x90
-    do_syscall_64+0x82/0x160
-    ? do_futex+0xcb/0x190
-    ? __x64_sys_futex+0x10e/0x1d0
-    ? switch_fpu_return+0x4f/0xd0
-    ? syscall_exit_to_user_mode+0x72/0x220
-    ? do_syscall_64+0x8e/0x160
-    ? syscall_exit_to_user_mode+0x72/0x220
-    ? do_syscall_64+0x8e/0x160
-    ? syscall_exit_to_user_mode+0x72/0x220
-    ? do_syscall_64+0x8e/0x160
-    ? syscall_exit_to_user_mode+0x72/0x220
-    ? do_syscall_64+0x8e/0x160
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Another problem here is if task B grabs the private pointer and then uses
-it after task A has finished, since the private was allocated in the stack
-of task A, it results in some invalid memory access with a hard to predict
-result.
-
-This issue, triggering the assertion, was observed with QEMU workloads by
-two users in the Link tags below.
-
-Fix this by not relying on a file's private to pass information to fsync
-that it should skip locking the inode and instead pass this information
-through a special value stored in current->journal_info. This is safe
-because in the relevant section of the direct IO write path we are not
-holding a transaction handle, so current->journal_info is NULL.
-
-The following C program triggers the issue:
-
-   $ cat repro.c
-   /* Get the O_DIRECT definition. */
-   #ifndef _GNU_SOURCE
-   #define _GNU_SOURCE
-   #endif
-
-   #include <stdio.h>
-   #include <stdlib.h>
-   #include <unistd.h>
-   #include <stdint.h>
-   #include <fcntl.h>
-   #include <errno.h>
-   #include <string.h>
-   #include <pthread.h>
-
-   static int fd;
-
-   static ssize_t do_write(int fd, const void *buf, size_t count, off_t offset)
-   {
-       while (count > 0) {
-           ssize_t ret;
-
-           ret = pwrite(fd, buf, count, offset);
-           if (ret < 0) {
-               if (errno == EINTR)
-                   continue;
-               return ret;
-           }
-           count -= ret;
-           buf += ret;
-       }
-       return 0;
-   }
-
-   static void *fsync_loop(void *arg)
-   {
-       while (1) {
-           int ret;
-
-           ret = fsync(fd);
-           if (ret != 0) {
-               perror("Fsync failed");
-               exit(6);
-           }
-       }
-   }
-
-   int main(int argc, char *argv[])
-   {
-       long pagesize;
-       void *write_buf;
-       pthread_t fsyncer;
-       int ret;
-
-       if (argc != 2) {
-           fprintf(stderr, "Use: %s <file path>\n", argv[0]);
-           return 1;
-       }
-
-       fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC | O_DIRECT, 0666);
-       if (fd == -1) {
-           perror("Failed to open/create file");
-           return 1;
-       }
-
-       pagesize = sysconf(_SC_PAGE_SIZE);
-       if (pagesize == -1) {
-           perror("Failed to get page size");
-           return 2;
-       }
-
-       ret = posix_memalign(&write_buf, pagesize, pagesize);
-       if (ret) {
-           perror("Failed to allocate buffer");
-           return 3;
-       }
-
-       ret = pthread_create(&fsyncer, NULL, fsync_loop, NULL);
-       if (ret != 0) {
-           fprintf(stderr, "Failed to create writer thread: %d\n", ret);
-           return 4;
-       }
-
-       while (1) {
-           ret = do_write(fd, write_buf, pagesize, 0);
-           if (ret != 0) {
-               perror("Write failed");
-               exit(5);
-           }
-       }
-
-       return 0;
-   }
-
-   $ mkfs.btrfs -f /dev/sdi
-   $ mount /dev/sdi /mnt/sdi
-   $ timeout 10 ./repro /mnt/sdi/foo
-
-Usually the race is triggered within less than 1 second. A test case for
-fstests will follow soon.
-
-Reported-by: Paulo Dias <paulo.miguel.dias@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219187
-Reported-by: Andreas Jahn <jahn-andi@web.de>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219199
-Reported-by: syzbot+4704b3cc972bd76024f1@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/00000000000044ff540620d7dee2@google.com/
-Fixes: 939b656bc8ab ("btrfs: fix corruption after buffer fault in during direct IO append write")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: syzbot+958967f249155967d42a@syzkaller.appspotmail.com
+Signed-off-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/r/20230530205029.264910-1-yhs@fb.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Diogo Jahchan Koike <djahchankoike@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ kernel/bpf/btf.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
----
- fs/btrfs/ctree.h       |    1 -
- fs/btrfs/file.c        |   25 ++++++++++---------------
- fs/btrfs/transaction.h |    6 ++++++
- 3 files changed, 16 insertions(+), 16 deletions(-)
-
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -1553,7 +1553,6 @@ struct btrfs_drop_extents_args {
- struct btrfs_file_private {
- 	void *filldir_buf;
- 	u64 last_index;
--	bool fsync_skip_inode_lock;
- };
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -466,10 +466,16 @@ static bool btf_type_is_fwd(const struct
+ 	return BTF_INFO_KIND(t->info) == BTF_KIND_FWD;
+ }
  
- 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1534,13 +1534,6 @@ again:
- 	if (IS_ERR_OR_NULL(dio)) {
- 		err = PTR_ERR_OR_ZERO(dio);
- 	} else {
--		struct btrfs_file_private stack_private = { 0 };
--		struct btrfs_file_private *private;
--		const bool have_private = (file->private_data != NULL);
--
--		if (!have_private)
--			file->private_data = &stack_private;
--
- 		/*
- 		 * If we have a synchoronous write, we must make sure the fsync
- 		 * triggered by the iomap_dio_complete() call below doesn't
-@@ -1549,13 +1542,10 @@ again:
- 		 * partial writes due to the input buffer (or parts of it) not
- 		 * being already faulted in.
- 		 */
--		private = file->private_data;
--		private->fsync_skip_inode_lock = true;
-+		ASSERT(current->journal_info == NULL);
-+		current->journal_info = BTRFS_TRANS_DIO_WRITE_STUB;
- 		err = iomap_dio_complete(dio);
--		private->fsync_skip_inode_lock = false;
--
--		if (!have_private)
--			file->private_data = NULL;
-+		current->journal_info = NULL;
- 	}
- 
- 	/* No increment (+=) because iomap returns a cumulative value. */
-@@ -1795,7 +1785,6 @@ static inline bool skip_inode_logging(co
-  */
- int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
++static bool btf_type_is_decl_tag(const struct btf_type *t)
++{
++	return BTF_INFO_KIND(t->info) == BTF_KIND_DECL_TAG;
++}
++
+ static bool btf_type_nosize(const struct btf_type *t)
  {
--	struct btrfs_file_private *private = file->private_data;
- 	struct dentry *dentry = file_dentry(file);
- 	struct inode *inode = d_inode(dentry);
- 	struct btrfs_fs_info *fs_info = btrfs_sb(inode->i_sb);
-@@ -1805,7 +1794,13 @@ int btrfs_sync_file(struct file *file, l
- 	int ret = 0, err;
- 	u64 len;
- 	bool full_sync;
--	const bool skip_ilock = (private ? private->fsync_skip_inode_lock : false);
-+	bool skip_ilock = false;
-+
-+	if (current->journal_info == BTRFS_TRANS_DIO_WRITE_STUB) {
-+		skip_ilock = true;
-+		current->journal_info = NULL;
-+		lockdep_assert_held(&inode->i_rwsem);
-+	}
+ 	return btf_type_is_void(t) || btf_type_is_fwd(t) ||
+-	       btf_type_is_func(t) || btf_type_is_func_proto(t);
++	       btf_type_is_func(t) || btf_type_is_func_proto(t) ||
++	       btf_type_is_decl_tag(t);
+ }
  
- 	trace_btrfs_sync_file(file, datasync);
+ static bool btf_type_nosize_or_null(const struct btf_type *t)
+@@ -492,11 +498,6 @@ static bool btf_type_is_datasec(const st
+ 	return BTF_INFO_KIND(t->info) == BTF_KIND_DATASEC;
+ }
  
---- a/fs/btrfs/transaction.h
-+++ b/fs/btrfs/transaction.h
-@@ -11,6 +11,12 @@
- #include "delayed-ref.h"
- #include "ctree.h"
- 
-+/*
-+ * Signal that a direct IO write is in progress, to avoid deadlock for sync
-+ * direct IO writes when fsync is called during the direct IO write path.
-+ */
-+#define BTRFS_TRANS_DIO_WRITE_STUB	((void *) 1)
-+
- enum btrfs_trans_state {
- 	TRANS_STATE_RUNNING,
- 	TRANS_STATE_COMMIT_START,
+-static bool btf_type_is_decl_tag(const struct btf_type *t)
+-{
+-	return BTF_INFO_KIND(t->info) == BTF_KIND_DECL_TAG;
+-}
+-
+ static bool btf_type_is_decl_tag_target(const struct btf_type *t)
+ {
+ 	return btf_type_is_func(t) || btf_type_is_struct(t) ||
 
 
