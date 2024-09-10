@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19751DA4C;
-	Tue, 10 Sep 2024 10:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B039117A589;
+	Tue, 10 Sep 2024 10:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963667; cv=none; b=MHW0N04tjufoLASe9QOc89l4Gl59aBg4eMza+if8T793WHiZzqV8d8s+yDO3X8Plogem2JFHEeQxBCJwvNNtWaJwqdN//RRYgqlxOqnYCco5khQY8mcAuR+u/a8KTkaUTrIyROEigHu/2r/slHrkgzoT20vZX0CLxgfwTPORcBM=
+	t=1725963670; cv=none; b=PPf+GywUnZ0xiGYu5tM8i8dxAnMQPePHJlYGkGfGOIy97ZxyFCFZBkrbLREZFUM/xW9fpa3taXdEfjqZAnHmF7oL/ekthz8qd0xwtEN3nNbu/QedHvQeude7b/l7iiGfXndl78q6qTIo2ZlhTAoTU5mAmzZA/vB221rIRu7PMUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963667; c=relaxed/simple;
-	bh=xiTh985ezUFuMp7vWkt3J36snwULRLNtyowAbwXmWBg=;
+	s=arc-20240116; t=1725963670; c=relaxed/simple;
+	bh=MOXvf3aLsdKaj7T1rtA74W5FtSJ19AvJ5LvilmURmVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qCicugpfWCmNYNUYdMzgd2h6h22TC3qWQQChdMB78WSUMJEITLeAWGq0kTPOo6MatatRfwdWhu7vEvVTZhFy7/NqzuiET5YkZ0YjrwVV5xh9eJM4thB0r0loFOGADS4ZbtzkhQyf3jw9EDMWFGQXEIiiZ5OcIKHmB4GBJlBify4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DReyJ7yO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l6P1FlKX4ztC4Hi6CxRp57RcDRlbSwrgXtHL/zVXuvJwnJbLsXBKSZ1UeXmlm6tnv3xEbexHgGI4NrRmmVo/+SLydZ2rZbU+h7/3+iE1xR/iFvajFiqS/QV6TqJD6yJPsAMNdveUKZUErFSQxelhowlDl0bIIx0t7LcdXP8psnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOFf3329; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DReyJ7yO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C13C4CEC3;
-	Tue, 10 Sep 2024 10:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOFf3329"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311C1C4CEC3;
+	Tue, 10 Sep 2024 10:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963667;
-	bh=xiTh985ezUFuMp7vWkt3J36snwULRLNtyowAbwXmWBg=;
+	s=korg; t=1725963670;
+	bh=MOXvf3aLsdKaj7T1rtA74W5FtSJ19AvJ5LvilmURmVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DReyJ7yOyysP30W9uWCyPYsfwQxb10lztI076GZR77zhlqjktLLCaxfwDuOOQRzon
-	 HDoaiTSYeIYTr+akBebBDmU+oIB99FnciuiYqy0dylzX/qXQqkA3BjWS82oQmVvuor
-	 X+K31KV2IcpvbG2/9g6chqa/F7feoD1QRRcu85pU=
+	b=cOFf3329ufyjNSLhYRqD28UiMZRf35kD05uXPbBlV6fdxbsTc12VPVCtNijjcC5GV
+	 8PKSz2MwvaVFlOKW8mfEOAo51arBwM+e6luvzAABu+fhiJQosaFa4FmswkD/AkgVck
+	 yJDE2zn5THOayrwzvDb/EPYt3qTXfrw3lWq1YA9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/214] ASoC: topology: Properly initialize soc_enum values
-Date: Tue, 10 Sep 2024 11:32:37 +0200
-Message-ID: <20240910092604.283622859@linuxfoundation.org>
+Subject: [PATCH 5.15 136/214] dm init: Handle minors larger than 255
+Date: Tue, 10 Sep 2024 11:32:38 +0200
+Message-ID: <20240910092604.321939877@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -45,40 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 8ec2a2643544ce352f012ad3d248163199d05dfc ]
+[ Upstream commit 140ce37fd78a629105377e17842465258a5459ef ]
 
-soc_tplg_denum_create_values() should properly set its values field.
+dm_parse_device_entry() simply copies the minor number into dmi.dev, but
+the dev_t format splits the minor number between the lowest 8 bytes and
+highest 12 bytes. If the minor number is larger than 255, part of it
+will end up getting treated as the major number
 
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://patch.msgid.link/20240627101850.2191513-4-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by checking that the minor number is valid and then encoding it
+as a dev_t.
+
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-topology.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
-index 55b69e3c6718..765024564e2b 100644
---- a/sound/soc/soc-topology.c
-+++ b/sound/soc/soc-topology.c
-@@ -913,6 +913,8 @@ static int soc_tplg_denum_create_values(struct soc_tplg *tplg, struct soc_enum *
- 		se->dobj.control.dvalues[i] = le32_to_cpu(ec->values[i]);
+diff --git a/drivers/md/dm-init.c b/drivers/md/dm-init.c
+index dc4381d68313..6e9e73a55874 100644
+--- a/drivers/md/dm-init.c
++++ b/drivers/md/dm-init.c
+@@ -213,8 +213,10 @@ static char __init *dm_parse_device_entry(struct dm_device *dev, char *str)
+ 	strscpy(dev->dmi.uuid, field[1], sizeof(dev->dmi.uuid));
+ 	/* minor */
+ 	if (strlen(field[2])) {
+-		if (kstrtoull(field[2], 0, &dev->dmi.dev))
++		if (kstrtoull(field[2], 0, &dev->dmi.dev) ||
++		    dev->dmi.dev >= (1 << MINORBITS))
+ 			return ERR_PTR(-EINVAL);
++		dev->dmi.dev = huge_encode_dev((dev_t)dev->dmi.dev);
+ 		dev->dmi.flags |= DM_PERSISTENT_DEV_FLAG;
  	}
- 
-+	se->items = le32_to_cpu(ec->items);
-+	se->values = (const unsigned int *)se->dobj.control.dvalues;
- 	return 0;
- }
- 
+ 	/* flags */
 -- 
 2.43.0
 
