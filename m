@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3C318C038;
-	Tue, 10 Sep 2024 09:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E4518C35F;
+	Tue, 10 Sep 2024 09:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962375; cv=none; b=S71pfBSxgUQZQqHXhMlbrLFDUr/pDyvfL8Vu462Y8gfQj+xFXpLXyxmyfsyBxVWNoJDqxdu9GRQVl2MLnnXrc053s7859GLnfFFVMYW8URxChd5jqLKmOtA0hsoycQV4RI+W4xUo9wn/JMCl4S+xQNwLmDepCxBjaU2avZ50OSA=
+	t=1725962378; cv=none; b=u8DtzRxy2OWE1j4S6WMVYapHZHSNSPcgU4qrXruJSmzi6TJ3JOY7MecnhZOnCo86KqEcSze3Elm64LkB21O5vMNYlfMtoWMzYMGA7WuSquuIy6R3FMt8rB9w74flRpOFjQBlZGa+EkVnBA8MnHoSrBDiRwX7LvDwq5BagZ85spU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962375; c=relaxed/simple;
-	bh=oDqPS5pWPkBz4NMwXyEkxXpTLeg0rYYhWm4XyIERXOE=;
+	s=arc-20240116; t=1725962378; c=relaxed/simple;
+	bh=s7K0ZvOhzvG8y3YWXvRYdhlXTzpWIpndfu5LfePIJhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p63vG9EoMk6M2VsQwupZ351mCwB42Za1CIO2GoUmc+/80/V6L6SF/SoUVQfkyXs5ddF7SoBnG2jrvRawjRrPUlC/1yPt+3b2nlNMv3eXO6LZSFSf9e2C6rjR6XvQDHqMDHAQDYhcyppEkRhzH4DTHF+2xoV5cpMm8FVg5TCFNVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaP+e93B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMoZ/FRQPXoqRcKs/ig8q4yAYTktueh48DG3EGKJzZPGk/AB6tWuXQai7YJpqhX4iKJZmWFjnXW3Hfk6B38++LjUFeJsL1NvRd+k5ftfw5Usgd4PJGRaXpSrU4DHXIYdyuD4+4jZT4Tvtan5lY5u08oSzKIcayv/wjvzlJbDwO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGXccNRw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaP+e93B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A802EC4CEC3;
-	Tue, 10 Sep 2024 09:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGXccNRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4A2C4CED4;
+	Tue, 10 Sep 2024 09:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962375;
-	bh=oDqPS5pWPkBz4NMwXyEkxXpTLeg0rYYhWm4XyIERXOE=;
+	s=korg; t=1725962377;
+	bh=s7K0ZvOhzvG8y3YWXvRYdhlXTzpWIpndfu5LfePIJhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaP+e93BHc5Md0e+h+o7LexwGJgrNRMebXm3KW81p9CDlM+U8XxJTDidVkqeDA2wU
-	 AFGNrU27HWwb+pXv4SX7FLIgcE+xBtp7EhRNs6i3Qj48woGqFjMyCLn15+sDwZmqWq
-	 3k7K5XkBaFyeFl+MEzS4jURcOFqk/t0XzfiO9zCc=
+	b=MGXccNRwIaFoCCgnUHqkDBVxDSmO6avndbF2X1yVpK4uh9EKuw/BbM96Iyadow581
+	 CpTQxoptcNgtf9LoF7ZgqkAiuJYMAzLswq3NyjMO7GQwu4ix256dWEV2A20+02SlBR
+	 EzjcKrS+x1KBgg7btczV3Qonvrtj8R+CREXwgLfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leesoo Ahn <lsahn@ooseel.net>,
-	John Johansen <john.johansen@canonical.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 013/121] apparmor: fix possible NULL pointer dereference
-Date: Tue, 10 Sep 2024 11:31:28 +0200
-Message-ID: <20240910092546.374035462@linuxfoundation.org>
+Subject: [PATCH 5.4 014/121] ionic: fix potential irq name truncation
+Date: Tue, 10 Sep 2024 11:31:29 +0200
+Message-ID: <20240910092546.426265960@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -51,105 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leesoo Ahn <lsahn@ooseel.net>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 3dd384108d53834002be5630132ad5c3f32166ad ]
+[ Upstream commit 3eb76e71b16e8ba5277bf97617aef51f5e64dbe4 ]
 
-profile->parent->dents[AAFS_PROF_DIR] could be NULL only if its parent is made
-from __create_missing_ancestors(..) and 'ent->old' is NULL in
-aa_replace_profiles(..).
-In that case, it must return an error code and the code, -ENOENT represents
-its state that the path of its parent is not existed yet.
+Address a warning about potential string truncation based on the
+string buffer sizes.  We can add some hints to the string format
+specifier to set limits on the resulting possible string to
+squelch the complaints.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000030
-PGD 0 P4D 0
-PREEMPT SMP PTI
-CPU: 4 PID: 3362 Comm: apparmor_parser Not tainted 6.8.0-24-generic #24
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? show_regs+0x6d/0x80
- ? __die+0x24/0x80
- ? page_fault_oops+0x99/0x1b0
- ? kernelmode_fixup_or_oops+0xb2/0x140
- ? __bad_area_nosemaphore+0x1a5/0x2c0
- ? find_vma+0x34/0x60
- ? bad_area_nosemaphore+0x16/0x30
- ? do_user_addr_fault+0x2a2/0x6b0
- ? exc_page_fault+0x83/0x1b0
- ? asm_exc_page_fault+0x27/0x30
- ? aafs_create.constprop.0+0x7f/0x130
- ? aafs_create.constprop.0+0x51/0x130
- __aafs_profile_mkdir+0x3d6/0x480
- aa_replace_profiles+0x83f/0x1270
- policy_update+0xe3/0x180
- profile_load+0xbc/0x150
- ? rw_verify_area+0x47/0x140
- vfs_write+0x100/0x480
- ? __x64_sys_openat+0x55/0xa0
- ? syscall_exit_to_user_mode+0x86/0x260
- ksys_write+0x73/0x100
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x7e/0x25c0
- do_syscall_64+0x7f/0x180
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7be9f211c574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007ffd26f2b8c8 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00005d504415e200 RCX: 00007be9f211c574
-RDX: 0000000000001fc1 RSI: 00005d504418bc80 RDI: 0000000000000004
-RBP: 0000000000001fc1 R08: 0000000000001fc1 R09: 0000000080000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00005d504418bc80
-R13: 0000000000000004 R14: 00007ffd26f2b9b0 R15: 00007ffd26f2ba30
- </TASK>
-Modules linked in: snd_seq_dummy snd_hrtimer qrtr snd_hda_codec_generic snd_hda_intel snd_intel_dspcfg snd_intel_sdw_acpi snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_seq_midi snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device i2c_i801 snd_timer i2c_smbus qxl snd soundcore drm_ttm_helper lpc_ich ttm joydev input_leds serio_raw mac_hid binfmt_misc msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs qemu_fw_cfg ip_tables x_tables autofs4 hid_generic usbhid hid ahci libahci psmouse virtio_rng xhci_pci xhci_pci_renesas
-CR2: 0000000000000030
----[ end trace 0000000000000000 ]---
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
-
-Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://lore.kernel.org/r/20240529000259.25775-2-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index 62736465ac82..efe04f54be9e 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -1593,6 +1593,10 @@ int __aafs_profile_mkdir(struct aa_profile *profile, struct dentry *parent)
- 		struct aa_profile *p;
- 		p = aa_deref_parent(profile);
- 		dent = prof_dir(p);
-+		if (!dent) {
-+			error = -ENOENT;
-+			goto fail2;
-+		}
- 		/* adding to parent that previously didn't have children */
- 		dent = aafs_create_dir("profiles", dent);
- 		if (IS_ERR(dent))
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 7adad91617d8..20e5e0406c88 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -143,7 +143,7 @@ static int ionic_request_irq(struct ionic_lif *lif, struct ionic_qcq *qcq)
+ 		name = dev_name(dev);
+ 
+ 	snprintf(intr->name, sizeof(intr->name),
+-		 "%s-%s-%s", IONIC_DRV_NAME, name, q->name);
++		 "%.5s-%.16s-%.8s", IONIC_DRV_NAME, name, q->name);
+ 
+ 	return devm_request_irq(dev, intr->vector, ionic_isr,
+ 				0, intr->name, &qcq->napi);
 -- 
 2.43.0
 
