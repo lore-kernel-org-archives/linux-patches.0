@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA243188CC4;
-	Tue, 10 Sep 2024 09:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CD1188CC1;
+	Tue, 10 Sep 2024 09:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961840; cv=none; b=cYKNgL4w7B3D+u/G4BuTpbZG63c3CwC4YLrG9uVPggF5UCSxdRoSq0hXAL86/XhzkLYbYU9Gqi80OvWKlPjvPrOeAhmu21ySbJVYm6tylph7Y5P3GTuI/Jilcf/JKxp4AoqBbzIZFMc6qgvjdW+eY1MR9SNOTpY6tIag/jIyUn8=
+	t=1725961843; cv=none; b=uX1IQEeym81hEDXvH+ZNNH4XPbY/mPeaBdl2gV4nQgrlEe8wa5yRn1MSh43rnOHRolL7yMQ91eJ2B4MxA53jhVk03LJ+T8J/mr4pDs8/5x6d4Cfq0QaUJbGgBwQkOGYsd6OyjBtxXgQA+JXbO1ViySSvsM8wEvu2dShyg20cWss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961840; c=relaxed/simple;
-	bh=VcveBPWE5aeME1lSkqoWweZyuypu6gL6WDTFmT2iMho=;
+	s=arc-20240116; t=1725961843; c=relaxed/simple;
+	bh=nA3olkvI+lWlF1BrjGr+B8DP/suqe+aXMf/NCQYpefM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBLo9bTdKalv9orZDAGzgCQvZu3nBb+clo2kRRWlvJqK6dYrGrJv0HTkRSu4vfaEfNu8sQlykNk1b7Zw0UpxL2JSzlmAVDSTwXElqXhleqHvE685MXPYqg/bKSjRixRwr8rs5wXf0gkfuT/vip2gSBxkG+XrIc+QdSr2jhU/OUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tm7lDarp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S42zmmXeVpxIon771VQuufrtx0RzlZ6nCqpidCF3/aOsKzesU7g3ZRU69cC0eWs5Yf0LUR+FTjxrfrUUYDTa7SvOiDFsqpUc1loH9/+L9KjbpxCosZ9lMv4rlRdhNEoC+CNekYeirTRcvCz+5bnXWUtN1NAClTvN+rD0+EQJTkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD0Y3vXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tm7lDarp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38D9C4CEC3;
-	Tue, 10 Sep 2024 09:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD0Y3vXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFE3C4CEC6;
+	Tue, 10 Sep 2024 09:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961840;
-	bh=VcveBPWE5aeME1lSkqoWweZyuypu6gL6WDTFmT2iMho=;
+	s=korg; t=1725961843;
+	bh=nA3olkvI+lWlF1BrjGr+B8DP/suqe+aXMf/NCQYpefM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tm7lDarpND1f0hSS+Us6v1hxfJTwfCuyaIQPzVffr9bneeIFPAsA4t7/RgSnydV+C
-	 0+HY19/1PX1tcPTbuRbPJ+pV5Ja9JEzMAXqP33IVCtGqOmPfT7esM/m+znUeFOpXUN
-	 pTBxUntNfyXT6mcjguwmBGICbSde9/WLmZqAwp58=
+	b=QD0Y3vXMw9kWjgM609OVQkSXQLYhCw9tIA4VPE2npl7ZP4sO8QPZrMFfeXCYIENgB
+	 jew5myJPRAC3VpIV8KDDqYyCrT7/LmKoQgp4pE9B/Cm+laEjN3Cue2m2eZkCOm3oTr
+	 h5v1dB6oYHDOJZiBGA7SZK0AusIhERjz0cc4+Eqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 207/375] block: dont call bio_uninit from bio_endio
-Date: Tue, 10 Sep 2024 11:30:04 +0200
-Message-ID: <20240910092629.459841129@linuxfoundation.org>
+Subject: [PATCH 6.10 208/375] cgroup: Protect css->cgroup write under css_set_lock
+Date: Tue, 10 Sep 2024 11:30:05 +0200
+Message-ID: <20240910092629.496448412@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,58 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit bf4c89fc8797f5c0964a0c3d561fbe7e8483b62f ]
+[ Upstream commit 57b56d16800e8961278ecff0dc755d46c4575092 ]
 
-Commit b222dd2fdd53 ("block: call bio_uninit in bio_endio") added a call
-to bio_uninit in bio_endio to work around callers that use bio_init but
-fail to call bio_uninit after they are done to release the resources.
-While this is an abuse of the bio_init API we still have quite a few of
-those left.  But this early uninit causes a problem for integrity data,
-as at least some users need the bio_integrity_payload.  Right now the
-only one is the NVMe passthrough which archives this by adding a special
-case to skip the freeing if the BIP_INTEGRITY_USER flag is set.
+The writing of css->cgroup associated with the cgroup root in
+rebind_subsystems() is currently protected only by cgroup_mutex.
+However, the reading of css->cgroup in both proc_cpuset_show() and
+proc_cgroup_show() is protected just by css_set_lock. That makes the
+readers susceptible to racing problems like data tearing or caching.
+It is also a problem that can be reported by KCSAN.
 
-Sort this out by only putting bi_blkg in bio_endio as that is the cause
-of the actual leaks - the few users of the crypto context and integrity
-data all properly call bio_uninit, usually through bio_put for
-dynamically allocated bios.
+This can be fixed by using READ_ONCE() and WRITE_ONCE() to access
+css->cgroup. Alternatively, the writing of css->cgroup can be moved
+under css_set_lock as well which is done by this patch.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20240702151047.1746127-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ kernel/cgroup/cgroup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index e9e809a63c59..c7a4bc05c43e 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1630,8 +1630,18 @@ void bio_endio(struct bio *bio)
- 		goto again;
- 	}
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index e32b6972c478..278889170f94 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1839,9 +1839,9 @@ int rebind_subsystems(struct cgroup_root *dst_root, u16 ss_mask)
+ 		RCU_INIT_POINTER(scgrp->subsys[ssid], NULL);
+ 		rcu_assign_pointer(dcgrp->subsys[ssid], css);
+ 		ss->root = dst_root;
+-		css->cgroup = dcgrp;
  
--	/* release cgroup info */
--	bio_uninit(bio);
-+#ifdef CONFIG_BLK_CGROUP
-+	/*
-+	 * Release cgroup info.  We shouldn't have to do this here, but quite
-+	 * a few callers of bio_init fail to call bio_uninit, so we cover up
-+	 * for that here at least for now.
-+	 */
-+	if (bio->bi_blkg) {
-+		blkg_put(bio->bi_blkg);
-+		bio->bi_blkg = NULL;
-+	}
-+#endif
-+
- 	if (bio->bi_end_io)
- 		bio->bi_end_io(bio);
- }
+ 		spin_lock_irq(&css_set_lock);
++		css->cgroup = dcgrp;
+ 		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
+ 		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
+ 					 e_cset_node[ss->id]) {
 -- 
 2.43.0
 
