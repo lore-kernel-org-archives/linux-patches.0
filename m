@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532D7188CDC;
-	Tue, 10 Sep 2024 09:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4965C189BBA;
+	Tue, 10 Sep 2024 09:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961089; cv=none; b=jgkpdfFJV0J3U/OM4Xj1Ueb129q+4deOjrTWZQhrM5IK2C0CDoQ8x8GQE2bm4nYzUK1ymBStW4uQ63X8K9Prhwed+7JyPhYLHH1Mwiiy5IL1Z2LvBovO26I9vB6sjTB4d0UoG0kVFNw0kGB6+scQQVWSiGM4AZ94l1kwLT3oyh4=
+	t=1725961092; cv=none; b=Iw1Mw+Q7OGNE2qU+YFXo08kfrunC5Pf3bXzOfE0vFjL5khrkgc2bdlacQdLo+qDslLjKOq00Rt7+GfKeeuh/DV98HsyP7ygPssVZozodhVHFGiAOvoKQmrY68WYXLWJi0RTChjlaz5MJGHE21bvsaETgPpVPW47g5zuGHinBf8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961089; c=relaxed/simple;
-	bh=lTx73lCS79Xjo09Xp4ZDnt5Zv6V/Rnu98oe02emVgy0=;
+	s=arc-20240116; t=1725961092; c=relaxed/simple;
+	bh=v/jGjQhHXWhkRYYsy5NtXj5jcR0sqZ30roB7n5tUNFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3ruGJ6Qr+zITpOyHhUUn390xLfK7TAF7oQttXV/pizBHxMbFD7R6we86xC5Az0oITkthf5igfuZ6VdvcyBYm08ltNfKQm9InM1OsK84nwL/pqzR3iCbQO7i9zRb83OaGkAyiujZg9Pyh/pHRncP35x6jVSUMSchKryFXt46DC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BE+W/Frp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxMSp1p8b0lHwYbkD068ELyq96lntKEpsHDytT2VFa2LgwOjThQ4BHg1kDnAntdFKUCZKbOWSvYSTuXlBJp037FjbviP9mneRIOOACBD5qhfKt8KIZZceHApTzJh/klJiykDOm7EgOTX7bn7gUoXe0dPrnz/q2JYN9sndVHVEGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOeE+PmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BE+W/Frp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE58EC4CEC3;
-	Tue, 10 Sep 2024 09:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOeE+PmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5ADFC4CEC3;
+	Tue, 10 Sep 2024 09:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961089;
-	bh=lTx73lCS79Xjo09Xp4ZDnt5Zv6V/Rnu98oe02emVgy0=;
+	s=korg; t=1725961092;
+	bh=v/jGjQhHXWhkRYYsy5NtXj5jcR0sqZ30roB7n5tUNFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BE+W/Frpu1AYSmsvQetmr3Doz/Tcqz6Uy1AN4vBQvdQdHqFOk5f+7YYXs742U3brv
-	 EGrB8VtAweh4df/PlmCMTdPHZwtp5V691hrPTfo+zlqbJkaR1VS90RRgumLbtA6nqe
-	 NCzm6viCqQ9/woft69koZloNdATI2k++xeh5F5ik=
+	b=iOeE+PmEml2pLP6LxH2msV64/nvKBb0J41vSjMakZhrf+p38HwvUEFxaPioo+oZX4
+	 TXG6LxMa8lrx+PckU/ZZRRDXFFtU5uOKx4psfd0EVCGjstruN0GTa3l/BZErdMNFEP
+	 5ryIIwYis5lDoLNhiuVvfYEzKz8AIzGel8+xtBYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pawel Dembicki <paweldembicki@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 50/96] net: bridge: br_fdb_external_learn_add(): always set EXT_LEARN
-Date: Tue, 10 Sep 2024 11:31:52 +0200
-Message-ID: <20240910092543.721220384@linuxfoundation.org>
+Subject: [PATCH 4.19 51/96] net: dsa: vsc73xx: fix possible subblocks range of CAPT block
+Date: Tue, 10 Sep 2024 11:31:53 +0200
+Message-ID: <20240910092543.764521564@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -53,56 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Pawel Dembicki <paweldembicki@gmail.com>
 
-[ Upstream commit bee2ef946d3184e99077be526567d791c473036f ]
+[ Upstream commit 8e69c96df771ab469cec278edb47009351de4da6 ]
 
-When userspace wants to take over a fdb entry by setting it as
-EXTERN_LEARNED, we set both flags BR_FDB_ADDED_BY_EXT_LEARN and
-BR_FDB_ADDED_BY_USER in br_fdb_external_learn_add().
+CAPT block (CPU Capture Buffer) have 7 sublocks: 0-3, 4, 6, 7.
+Function 'vsc73xx_is_addr_valid' allows to use only block 0 at this
+moment.
 
-If the bridge updates the entry later because its port changed, we clear
-the BR_FDB_ADDED_BY_EXT_LEARN flag, but leave the BR_FDB_ADDED_BY_USER
-flag set.
+This patch fix it.
 
-If userspace then wants to take over the entry again,
-br_fdb_external_learn_add() sees that BR_FDB_ADDED_BY_USER and skips
-setting the BR_FDB_ADDED_BY_EXT_LEARN flags, thus silently ignores the
-update.
-
-Fix this by always allowing to set BR_FDB_ADDED_BY_EXT_LEARN regardless
-if this was a user fdb entry or not.
-
-Fixes: 710ae7287737 ("net: bridge: Mark FDB entries that were added by user as such")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20240903081958.29951-1-jonas.gorski@bisdn.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 05bd97fc559d ("net: dsa: Add Vitesse VSC73xx DSA router driver")
+Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20240903203340.1518789-1-paweldembicki@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_fdb.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/dsa/vitesse-vsc73xx.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_fdb.c b/net/bridge/br_fdb.c
-index d898e3814f91..a6e4901909e3 100644
---- a/net/bridge/br_fdb.c
-+++ b/net/bridge/br_fdb.c
-@@ -1116,12 +1116,10 @@ int br_fdb_external_learn_add(struct net_bridge *br, struct net_bridge_port *p,
- 			modified = true;
- 		}
+diff --git a/drivers/net/dsa/vitesse-vsc73xx.c b/drivers/net/dsa/vitesse-vsc73xx.c
+index eaafb1c30c91..c91f989165ad 100644
+--- a/drivers/net/dsa/vitesse-vsc73xx.c
++++ b/drivers/net/dsa/vitesse-vsc73xx.c
+@@ -38,7 +38,7 @@
+ #define VSC73XX_BLOCK_ANALYZER	0x2 /* Only subblock 0 */
+ #define VSC73XX_BLOCK_MII	0x3 /* Subblocks 0 and 1 */
+ #define VSC73XX_BLOCK_MEMINIT	0x3 /* Only subblock 2 */
+-#define VSC73XX_BLOCK_CAPTURE	0x4 /* Only subblock 2 */
++#define VSC73XX_BLOCK_CAPTURE	0x4 /* Subblocks 0-4, 6, 7 */
+ #define VSC73XX_BLOCK_ARBITER	0x5 /* Only subblock 0 */
+ #define VSC73XX_BLOCK_SYSTEM	0x7 /* Only subblock 0 */
  
--		if (test_bit(BR_FDB_ADDED_BY_EXT_LEARN, &fdb->flags)) {
-+		if (test_and_set_bit(BR_FDB_ADDED_BY_EXT_LEARN, &fdb->flags)) {
- 			/* Refresh entry */
- 			fdb->used = jiffies;
--		} else if (!test_bit(BR_FDB_ADDED_BY_USER, &fdb->flags)) {
--			/* Take over SW learned entry */
--			set_bit(BR_FDB_ADDED_BY_EXT_LEARN, &fdb->flags);
-+		} else {
- 			modified = true;
- 		}
+@@ -385,13 +385,19 @@ static int vsc73xx_is_addr_valid(u8 block, u8 subblock)
+ 		break;
  
+ 	case VSC73XX_BLOCK_MII:
+-	case VSC73XX_BLOCK_CAPTURE:
+ 	case VSC73XX_BLOCK_ARBITER:
+ 		switch (subblock) {
+ 		case 0 ... 1:
+ 			return 1;
+ 		}
+ 		break;
++	case VSC73XX_BLOCK_CAPTURE:
++		switch (subblock) {
++		case 0 ... 4:
++		case 6 ... 7:
++			return 1;
++		}
++		break;
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
