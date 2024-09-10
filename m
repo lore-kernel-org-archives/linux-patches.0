@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5574184549;
-	Tue, 10 Sep 2024 10:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0A046444;
+	Tue, 10 Sep 2024 10:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964592; cv=none; b=Bdqdk9zP+mxPNOcj1j+Sow3Yb91VaixWdfJv18Qoz7SvkCf+pFwS0KwJLYo8AeqIdD1JMjwhIHOmNn2aITrk7Z9ydb8IbR7IF6NaefRDjcyM5I57+eLrF1xYvdf8BFwg/SQAOl4HYX8zOPlsuL9VULUwoi0zJWJjECelLFhvBKE=
+	t=1725964594; cv=none; b=UE3Pc1SeNpslRmIc169BrDnLc1SMevbGRaCAAr/KifWGL99xmfRGiORJjTZBb5oKdzfxxGubnk1K6Nmf6O83dIwm+c4oxH4ay50uprQQzDEmiQOaOCcNXrDYRdvtAjrdvXAzAoXFRtX7LXCJBulYwPL3r9jy0dDKMNXGj5x4kQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964592; c=relaxed/simple;
-	bh=+m5013he/b4/Hl9enmq8S9zbtZhRAitU0P9tdbMVJps=;
+	s=arc-20240116; t=1725964594; c=relaxed/simple;
+	bh=Nto8s5FmooZs9x9l6oh6pAiyL5mEBcw8xa7TpZHXxis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rbb0Oud/9cjydVhFL2FcVGzEiU7QyEm2q9CDUSEoa8Ce2oi7BCSdTRUqHexs0Q2yO5A1GJS9zXj2fyzsiuYSNlqre8Z6IfZJkaOtK1KC7o4IDwbOQitORj7+stjaEmmXwtZLuau1f/wy++ysPab5rcH+PwG7xeVkeKgP7YCsHHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nu5xu7JC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amRwobOTEDzT+vxhqdsPnBPs/7ylJmXjyAR+8Lpa4/Cif4+8VgmC1nAixtGOoSf9XkxBkHUqW4m37af+aCQ242utgzU2QCPOKJCCLkVAEo0GXc68FKxi4peKwq+Na9iLG7DTLe6IsE7vKQVMATVg09cuWPxQOTkiTA3MpLffvY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOjriLI6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nu5xu7JC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE21C4CEC3;
-	Tue, 10 Sep 2024 10:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOjriLI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50545C4CECD;
+	Tue, 10 Sep 2024 10:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964591;
-	bh=+m5013he/b4/Hl9enmq8S9zbtZhRAitU0P9tdbMVJps=;
+	s=korg; t=1725964594;
+	bh=Nto8s5FmooZs9x9l6oh6pAiyL5mEBcw8xa7TpZHXxis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nu5xu7JCyq9GGftUS3oSKj5Hws13gnG4EVTCewV3V/eAZk4EbQyujY2tEeucDbcPe
-	 5hApbylr7t+1Ed8C/TVoxlYBn/AVqwsMrduTk/jwDxd2a7d5wNEF2YgDZaS4TIvYOh
-	 tsD8aIW8VmWJ2d8kDnhqSbdcv30Y5hkUkbrALTGU=
+	b=HOjriLI6gi8G4oZvqvaKB313SdQuA77cklG0VMxzN7ObBvqi9gIikofcW2PAShTBU
+	 K2c9vvNi+YcR4T0j6RsVsEufzmXrfR1v0iGUFbyljcbz5f0iu3J+/TIPFuhRgawWJh
+	 IVTPkXUeM4B+5+oCMjbrmyHelUZFIqcE8p6CJuhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Stefan=20Alth=C3=B6fer?= <Stefan.Althoefer@janztec.com>,
-	Thomas Kopp <thomas.kopp@microchip.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 234/269] can: mcp251xfd: rx: prepare to workaround broken RX FIFO head index erratum
-Date: Tue, 10 Sep 2024 11:33:41 +0200
-Message-ID: <20240910092616.238545162@linuxfoundation.org>
+	Dumitru Ceclan <dumitru.ceclan@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 208/269] iio: adc: ad7124: fix config comparison
+Date: Tue, 10 Sep 2024 11:33:15 +0200
+Message-ID: <20240910092615.458038290@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -46,258 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Dumitru Ceclan <mitrutzceclan@gmail.com>
 
-[ Upstream commit 85505e585637a737e4713c1386c30e37c325b82e ]
+commit 2f6b92d0f69f04d9e2ea0db1228ab7f82f3173af upstream.
 
-This is a preparatory patch to work around erratum DS80000789E 6 of
-the mcp2518fd, the other variants of the chip family (mcp2517fd and
-mcp251863) are probably also affected.
+The ad7124_find_similar_live_cfg() computes the compare size by
+substracting the address of the cfg struct from the address of the live
+field. Because the live field is the first field in the struct, the
+result is 0.
 
-When handling the RX interrupt, the driver iterates over all pending
-FIFOs (which are implemented as ring buffers in hardware) and reads
-the FIFO header index from the RX FIFO STA register of the chip.
+Also, the memcmp() call is made from the start of the cfg struct, which
+includes the live and cfg_slot fields, which are not relevant for the
+comparison.
 
-In the bad case, the driver reads a too large head index. In the
-original code, the driver always trusted the read value, which caused
-old CAN frames that were already processed, or new, incompletely
-written CAN frames to be (re-)processed.
+Fix by grouping the relevant fields with struct_group() and use the
+size of the group to compute the compare size; make the memcmp() call
+from the address of the group.
 
-Instead of reading and trusting the head index, read the head index
-and calculate the number of CAN frames that were supposedly received -
-replace mcp251xfd_rx_ring_update() with mcp251xfd_get_rx_len().
-
-The mcp251xfd_handle_rxif_ring() function reads the received CAN
-frames from the chip, iterates over them and pushes them into the
-network stack. Prepare that the iteration can be stopped if an old CAN
-frame is detected. The actual code to detect old or incomplete frames
-and abort will be added in the next patch.
-
-Link: https://lore.kernel.org/all/BL3PR11MB64844C1C95CA3BDADAE4D8CCFBC99@BL3PR11MB6484.namprd11.prod.outlook.com
-Reported-by: Stefan Althöfer <Stefan.Althoefer@janztec.com>
-Closes: https://lore.kernel.org/all/FR0P281MB1966273C216630B120ABB6E197E89@FR0P281MB1966.DEUP281.PROD.OUTLOOK.COM
-Tested-by: Stefan Althöfer <Stefan.Althoefer@janztec.com>
-Tested-by: Thomas Kopp <thomas.kopp@microchip.com>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
+Signed-off-by: Dumitru Ceclan <dumitru.ceclan@analog.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20240731-ad7124-fix-v1-2-46a76aa4b9be@analog.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/can/spi/mcp251xfd/mcp251xfd-ring.c    |  2 +
- drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c  | 89 +++++++++++--------
- drivers/net/can/spi/mcp251xfd/mcp251xfd.h     | 12 +--
- 3 files changed, 56 insertions(+), 47 deletions(-)
+ drivers/iio/adc/ad7124.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
-index 3a941a71c78f..5f92aed62ff9 100644
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
-@@ -523,6 +523,8 @@ int mcp251xfd_ring_alloc(struct mcp251xfd_priv *priv)
- 		}
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -146,15 +146,18 @@ struct ad7124_chip_info {
+ struct ad7124_channel_config {
+ 	bool live;
+ 	unsigned int cfg_slot;
+-	enum ad7124_ref_sel refsel;
+-	bool bipolar;
+-	bool buf_positive;
+-	bool buf_negative;
+-	unsigned int vref_mv;
+-	unsigned int pga_bits;
+-	unsigned int odr;
+-	unsigned int odr_sel_bits;
+-	unsigned int filter_type;
++	/* Following fields are used to compare equality. */
++	struct_group(config_props,
++		enum ad7124_ref_sel refsel;
++		bool bipolar;
++		bool buf_positive;
++		bool buf_negative;
++		unsigned int vref_mv;
++		unsigned int pga_bits;
++		unsigned int odr;
++		unsigned int odr_sel_bits;
++		unsigned int filter_type;
++	);
+ };
  
- 		rx_ring->obj_num = rx_obj_num;
-+		rx_ring->obj_num_shift_to_u8 = BITS_PER_TYPE(rx_ring->obj_num_shift_to_u8) -
-+			ilog2(rx_obj_num);
- 		rx_ring->obj_size = rx_obj_size;
- 		priv->rx[i] = rx_ring;
- 	}
-diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
-index 5e2f39de88f3..5d0fb1c454cd 100644
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
-@@ -2,7 +2,7 @@
- //
- // mcp251xfd - Microchip MCP251xFD Family CAN controller driver
- //
--// Copyright (c) 2019, 2020, 2021 Pengutronix,
-+// Copyright (c) 2019, 2020, 2021, 2023 Pengutronix,
- //               Marc Kleine-Budde <kernel@pengutronix.de>
- //
- // Based on:
-@@ -16,23 +16,14 @@
+ struct ad7124_channel {
+@@ -333,11 +336,12 @@ static struct ad7124_channel_config *ad7
+ 	ptrdiff_t cmp_size;
+ 	int i;
  
- #include "mcp251xfd.h"
+-	cmp_size = (u8 *)&cfg->live - (u8 *)cfg;
++	cmp_size = sizeof_field(struct ad7124_channel_config, config_props);
+ 	for (i = 0; i < st->num_channels; i++) {
+ 		cfg_aux = &st->channels[i].cfg;
  
--static inline int
--mcp251xfd_rx_head_get_from_chip(const struct mcp251xfd_priv *priv,
--				const struct mcp251xfd_rx_ring *ring,
--				u8 *rx_head, bool *fifo_empty)
-+static inline bool mcp251xfd_rx_fifo_sta_empty(const u32 fifo_sta)
- {
--	u32 fifo_sta;
--	int err;
--
--	err = regmap_read(priv->map_reg, MCP251XFD_REG_FIFOSTA(ring->fifo_nr),
--			  &fifo_sta);
--	if (err)
--		return err;
--
--	*rx_head = FIELD_GET(MCP251XFD_REG_FIFOSTA_FIFOCI_MASK, fifo_sta);
--	*fifo_empty = !(fifo_sta & MCP251XFD_REG_FIFOSTA_TFNRFNIF);
-+	return !(fifo_sta & MCP251XFD_REG_FIFOSTA_TFNRFNIF);
-+}
- 
--	return 0;
-+static inline bool mcp251xfd_rx_fifo_sta_full(const u32 fifo_sta)
-+{
-+	return fifo_sta & MCP251XFD_REG_FIFOSTA_TFERFFIF;
- }
- 
- static inline int
-@@ -80,29 +71,49 @@ mcp251xfd_check_rx_tail(const struct mcp251xfd_priv *priv,
- }
- 
- static int
--mcp251xfd_rx_ring_update(const struct mcp251xfd_priv *priv,
--			 struct mcp251xfd_rx_ring *ring)
-+mcp251xfd_get_rx_len(const struct mcp251xfd_priv *priv,
-+		     const struct mcp251xfd_rx_ring *ring,
-+		     u8 *len_p)
- {
--	u32 new_head;
--	u8 chip_rx_head;
--	bool fifo_empty;
-+	const u8 shift = ring->obj_num_shift_to_u8;
-+	u8 chip_head, tail, len;
-+	u32 fifo_sta;
- 	int err;
- 
--	err = mcp251xfd_rx_head_get_from_chip(priv, ring, &chip_rx_head,
--					      &fifo_empty);
--	if (err || fifo_empty)
-+	err = regmap_read(priv->map_reg, MCP251XFD_REG_FIFOSTA(ring->fifo_nr),
-+			  &fifo_sta);
-+	if (err)
-+		return err;
-+
-+	if (mcp251xfd_rx_fifo_sta_empty(fifo_sta)) {
-+		*len_p = 0;
-+		return 0;
-+	}
-+
-+	if (mcp251xfd_rx_fifo_sta_full(fifo_sta)) {
-+		*len_p = ring->obj_num;
-+		return 0;
-+	}
-+
-+	chip_head = FIELD_GET(MCP251XFD_REG_FIFOSTA_FIFOCI_MASK, fifo_sta);
-+
-+	err =  mcp251xfd_check_rx_tail(priv, ring);
-+	if (err)
- 		return err;
-+	tail = mcp251xfd_get_rx_tail(ring);
- 
--	/* chip_rx_head, is the next RX-Object filled by the HW.
--	 * The new RX head must be >= the old head.
-+	/* First shift to full u8. The subtraction works on signed
-+	 * values, that keeps the difference steady around the u8
-+	 * overflow. The right shift acts on len, which is an u8.
- 	 */
--	new_head = round_down(ring->head, ring->obj_num) + chip_rx_head;
--	if (new_head <= ring->head)
--		new_head += ring->obj_num;
-+	BUILD_BUG_ON(sizeof(ring->obj_num) != sizeof(chip_head));
-+	BUILD_BUG_ON(sizeof(ring->obj_num) != sizeof(tail));
-+	BUILD_BUG_ON(sizeof(ring->obj_num) != sizeof(len));
- 
--	ring->head = new_head;
-+	len = (chip_head << shift) - (tail << shift);
-+	*len_p = len >> shift;
- 
--	return mcp251xfd_check_rx_tail(priv, ring);
-+	return 0;
- }
- 
- static void
-@@ -208,6 +219,8 @@ mcp251xfd_handle_rxif_ring_uinc(const struct mcp251xfd_priv *priv,
- 	if (!len)
- 		return 0;
- 
-+	ring->head += len;
-+
- 	/* Increment the RX FIFO tail pointer 'len' times in a
- 	 * single SPI message.
- 	 *
-@@ -233,22 +246,22 @@ mcp251xfd_handle_rxif_ring(struct mcp251xfd_priv *priv,
- 			   struct mcp251xfd_rx_ring *ring)
- {
- 	struct mcp251xfd_hw_rx_obj_canfd *hw_rx_obj = ring->obj;
--	u8 rx_tail, len;
-+	u8 rx_tail, len, l;
- 	int err, i;
- 
--	err = mcp251xfd_rx_ring_update(priv, ring);
-+	err = mcp251xfd_get_rx_len(priv, ring, &len);
- 	if (err)
- 		return err;
- 
--	while ((len = mcp251xfd_get_rx_linear_len(ring))) {
-+	while ((l = mcp251xfd_get_rx_linear_len(ring, len))) {
- 		rx_tail = mcp251xfd_get_rx_tail(ring);
- 
- 		err = mcp251xfd_rx_obj_read(priv, ring, hw_rx_obj,
--					    rx_tail, len);
-+					    rx_tail, l);
- 		if (err)
- 			return err;
- 
--		for (i = 0; i < len; i++) {
-+		for (i = 0; i < l; i++) {
- 			err = mcp251xfd_handle_rxif_one(priv, ring,
- 							(void *)hw_rx_obj +
- 							i * ring->obj_size);
-@@ -256,9 +269,11 @@ mcp251xfd_handle_rxif_ring(struct mcp251xfd_priv *priv,
- 				return err;
- 		}
- 
--		err = mcp251xfd_handle_rxif_ring_uinc(priv, ring, len);
-+		err = mcp251xfd_handle_rxif_ring_uinc(priv, ring, l);
- 		if (err)
- 			return err;
-+
-+		len -= l;
+-		if (cfg_aux->live && !memcmp(cfg, cfg_aux, cmp_size))
++		if (cfg_aux->live &&
++		    !memcmp(&cfg->config_props, &cfg_aux->config_props, cmp_size))
+ 			return cfg_aux;
  	}
  
- 	return 0;
-diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-index 4628bf847bc9..2e5cee6ad0c4 100644
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd.h
-@@ -558,6 +558,7 @@ struct mcp251xfd_rx_ring {
- 	u8 nr;
- 	u8 fifo_nr;
- 	u8 obj_num;
-+	u8 obj_num_shift_to_u8;
- 	u8 obj_size;
- 
- 	union mcp251xfd_write_reg_buf irq_enable_buf;
-@@ -907,18 +908,9 @@ static inline u8 mcp251xfd_get_rx_tail(const struct mcp251xfd_rx_ring *ring)
- 	return ring->tail & (ring->obj_num - 1);
- }
- 
--static inline u8 mcp251xfd_get_rx_len(const struct mcp251xfd_rx_ring *ring)
--{
--	return ring->head - ring->tail;
--}
--
- static inline u8
--mcp251xfd_get_rx_linear_len(const struct mcp251xfd_rx_ring *ring)
-+mcp251xfd_get_rx_linear_len(const struct mcp251xfd_rx_ring *ring, u8 len)
- {
--	u8 len;
--
--	len = mcp251xfd_get_rx_len(ring);
--
- 	return min_t(u8, len, ring->obj_num - mcp251xfd_get_rx_tail(ring));
- }
- 
--- 
-2.43.0
-
 
 
