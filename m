@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D811172BAE;
-	Tue, 10 Sep 2024 09:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5357E46444;
+	Tue, 10 Sep 2024 09:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961914; cv=none; b=mxQp2jmpfAPgBV4Dt74NmwfgMhRuFT2Os9Tz6XkYfZUj1Fq6ycr3YlXiIiBbGD7kHvmsxvndkSSUSwgPhTT6b2LMUJAZN6vrq2WuOrjbOpXJ79HcUR+em4CfJVo9dHUz6YhxLlcIan8lUOswZ7gFxV4sce8H8tNNW/Wkprb+F10=
+	t=1725961917; cv=none; b=i7+/nXRLoaPCKwIcTfGG3fcj6Aq/xmxGou9kaN5LI/SmrGb+rp9DSFA3vSu9cBnVX+7dRVvKl9Y6sOv4i7qfS2Qy4ADucrcgT4cw8XaYakswMljjhkQbrozol63BbFqrZ7irTtKVzdBF8Z2gvBVA62TAxtCj97s1WgQB7zerYjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961914; c=relaxed/simple;
-	bh=5i+9K0JmCjrLFkSWOoaITAtd5gHygbWP4HoROczZ64g=;
+	s=arc-20240116; t=1725961917; c=relaxed/simple;
+	bh=4M80gBnWJSktkWO5Lp3R0Ci1+qNHHZURNPuwi4pY28I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYif//NpvpRTGIdV8is+umubAfqUzMkkPNXZJKnisbFeMMIJtcNzHXB7RSDV9/iaP3xC4A/azliCZnsTZdYXj1EZsYEQyCCEdGllAIOFxAWhdy2vpcTJepzLWX780ONIgjzLh5sPRKV+kQ+9N56jEHiGoGHCfcZSmv3lEUKdqOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nai9pjjp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdU4V/k3eSKdB/jM7LGtbzTBL3qI8dcEwI/j8Niw7hDQaEyzWyz8ZYZpw0SAhXMhHXIodHdLX3NrqKY4Nz3LA1xsR9ALd44IRyi5NfANWQgXmuS7d+Os+h4ljDVJCB0NzblbWNmKSmNenrlS3pzsQKce2LTTUsvOSHVnxIZgEzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXXC1bOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nai9pjjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3309C4CEC3;
-	Tue, 10 Sep 2024 09:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXXC1bOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41AAC4CEC3;
+	Tue, 10 Sep 2024 09:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961914;
-	bh=5i+9K0JmCjrLFkSWOoaITAtd5gHygbWP4HoROczZ64g=;
+	s=korg; t=1725961917;
+	bh=4M80gBnWJSktkWO5Lp3R0Ci1+qNHHZURNPuwi4pY28I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nai9pjjpG1a7+H8hPJogbxLZYaJzitcGHUnrpJ8a7/5H8wdVodnaCDu49f9F8yO7g
-	 B6TVaQJztyQ1tJ3WxqjWuYoo71h6XgOgPQ61I84fC4CDNqE9e8j5dLebvIMJexGyOQ
-	 xW7U4PfwxHPYJ1iP0kpiXz27XfG/ch2E+ZEZgpKw=
+	b=lXXC1bOyMAqiWDbdxZtTvTXC5NmDBeSvOtEQfPOY4L7Cd1wqKZaq8+7/eebfprabF
+	 g8GvGS9qlfgOZNSiomi9P62QZrLJ5Op0tdGfMF57sPsGbenVmDL1lu0Zp2L0G4topS
+	 PiuSCdq2N3XM5ehkQ8tPvgxf5NWKwjpeksjf4WhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umang Jain <umang.jain@ideasonboard.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 232/375] staging: vchiq_core: Bubble up wait_event_interruptible() return value
-Date: Tue, 10 Sep 2024 11:30:29 +0200
-Message-ID: <20240910092630.336054248@linuxfoundation.org>
+Subject: [PATCH 6.10 233/375] iommufd: Require drivers to supply the cache_invalidate_user ops
+Date: Tue, 10 Sep 2024 11:30:30 +0200
+Message-ID: <20240910092630.371899427@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,146 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umang Jain <umang.jain@ideasonboard.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c22502cb84d4c963f754e6d943d3133cfa80ba97 ]
+[ Upstream commit a11dda723c6493bb1853bbc61c093377f96e2d47 ]
 
-wait_event_interruptible() returns if the condition evaluates to true
-it receives a signal. However, the current code always assume that the
-wait_event_interruptible() returns only when the event is fired.
-This should not be the case as wait_event_interruptible() can
-return on receiving a signal (with -ERESTARTSYS as return value).
+If drivers don't do this then iommufd will oops invalidation ioctls with
+something like:
 
-We should consider this and bubble up the return value of
-wait_event_interruptible() to exactly know if the wait has failed
-and error out. This will also help to properly stop kthreads in the
-subsequent patch.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Mem abort info:
+    ESR = 0x0000000086000004
+    EC = 0x21: IABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x04: level 0 translation fault
+  user pgtable: 4k pages, 48-bit VAs, pgdp=0000000101059000
+  [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+  Internal error: Oops: 0000000086000004 [#1] PREEMPT SMP
+  Modules linked in:
+  CPU: 2 PID: 371 Comm: qemu-system-aar Not tainted 6.8.0-rc7-gde77230ac23a #9
+  Hardware name: linux,dummy-virt (DT)
+  pstate: 81400809 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=-c)
+  pc : 0x0
+  lr : iommufd_hwpt_invalidate+0xa4/0x204
+  sp : ffff800080f3bcc0
+  x29: ffff800080f3bcf0 x28: ffff0000c369b300 x27: 0000000000000000
+  x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+  x23: 0000000000000000 x22: 00000000c1e334a0 x21: ffff0000c1e334a0
+  x20: ffff800080f3bd38 x19: ffff800080f3bd58 x18: 0000000000000000
+  x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffff8240d6d8
+  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+  x8 : 0000001000000002 x7 : 0000fffeac1ec950 x6 : 0000000000000000
+  x5 : ffff800080f3bd78 x4 : 0000000000000003 x3 : 0000000000000002
+  x2 : 0000000000000000 x1 : ffff800080f3bcc8 x0 : ffff0000c6034d80
+  Call trace:
+   0x0
+   iommufd_fops_ioctl+0x154/0x274
+   __arm64_sys_ioctl+0xac/0xf0
+   invoke_syscall+0x48/0x110
+   el0_svc_common.constprop.0+0x40/0xe0
+   do_el0_svc+0x1c/0x28
+   el0_svc+0x34/0xb4
+   el0t_64_sync_handler+0x120/0x12c
+   el0t_64_sync+0x190/0x194
 
-Meanwhile at it, remote_wait_event() is modified to return 0 on success,
-and an error code (from wait_event_interruptible()) on failure. The
-return value is now checked for remote_wait_event() calls.
+All existing drivers implement this op for nesting, this is mostly a
+bisection aid.
 
-Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20240703131052.597443-2-umang.jain@ideasonboard.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8c6eabae3807 ("iommufd: Add IOMMU_HWPT_INVALIDATE")
+Link: https://lore.kernel.org/r/0-v1-e153859bd707+61-iommufd_check_ops_jgg@nvidia.com
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../interface/vchiq_arm/vchiq_core.c          | 31 ++++++++++++++-----
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/iommu/iommufd/hw_pagetable.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c
-index df3af821f218..fb1907414cc1 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_core.c
-@@ -501,16 +501,21 @@ remote_event_create(wait_queue_head_t *wq, struct remote_event *event)
-  * routines where switched to the "interruptible" family of functions, as the
-  * former was deemed unjustified and the use "killable" set all VCHIQ's
-  * threads in D state.
-+ *
-+ * Returns: 0 on success, a negative error code on failure
-  */
- static inline int
- remote_event_wait(wait_queue_head_t *wq, struct remote_event *event)
- {
-+	int ret = 0;
-+
- 	if (!event->fired) {
- 		event->armed = 1;
- 		dsb(sy);
--		if (wait_event_interruptible(*wq, event->fired)) {
-+		ret = wait_event_interruptible(*wq, event->fired);
-+		if (ret) {
- 			event->armed = 0;
--			return 0;
-+			return ret;
- 		}
- 		event->armed = 0;
- 		/* Ensure that the peer sees that we are not waiting (armed == 0). */
-@@ -518,7 +523,7 @@ remote_event_wait(wait_queue_head_t *wq, struct remote_event *event)
+diff --git a/drivers/iommu/iommufd/hw_pagetable.c b/drivers/iommu/iommufd/hw_pagetable.c
+index 33d142f8057d..a9f1fe44c4c0 100644
+--- a/drivers/iommu/iommufd/hw_pagetable.c
++++ b/drivers/iommu/iommufd/hw_pagetable.c
+@@ -236,7 +236,8 @@ iommufd_hwpt_nested_alloc(struct iommufd_ctx *ictx,
  	}
+ 	hwpt->domain->owner = ops;
  
- 	event->fired = 0;
--	return 1;
-+	return ret;
- }
- 
- /*
-@@ -1140,6 +1145,7 @@ queue_message_sync(struct vchiq_state *state, struct vchiq_service *service,
- 	struct vchiq_header *header;
- 	ssize_t callback_result;
- 	int svc_fourcc;
-+	int ret;
- 
- 	local = state->local;
- 
-@@ -1147,7 +1153,9 @@ queue_message_sync(struct vchiq_state *state, struct vchiq_service *service,
- 	    mutex_lock_killable(&state->sync_mutex))
- 		return -EAGAIN;
- 
--	remote_event_wait(&state->sync_release_event, &local->sync_release);
-+	ret = remote_event_wait(&state->sync_release_event, &local->sync_release);
-+	if (ret)
-+		return ret;
- 
- 	/* Ensure that reads don't overtake the remote_event_wait. */
- 	rmb();
-@@ -1929,13 +1937,16 @@ slot_handler_func(void *v)
- {
- 	struct vchiq_state *state = v;
- 	struct vchiq_shared_state *local = state->local;
-+	int ret;
- 
- 	DEBUG_INITIALISE(local);
- 
- 	while (1) {
- 		DEBUG_COUNT(SLOT_HANDLER_COUNT);
- 		DEBUG_TRACE(SLOT_HANDLER_LINE);
--		remote_event_wait(&state->trigger_event, &local->trigger);
-+		ret = remote_event_wait(&state->trigger_event, &local->trigger);
-+		if (ret)
-+			return ret;
- 
- 		/* Ensure that reads don't overtake the remote_event_wait. */
- 		rmb();
-@@ -1966,6 +1977,7 @@ recycle_func(void *v)
- 	struct vchiq_shared_state *local = state->local;
- 	u32 *found;
- 	size_t length;
-+	int ret;
- 
- 	length = sizeof(*found) * BITSET_SIZE(VCHIQ_MAX_SERVICES);
- 
-@@ -1975,7 +1987,9 @@ recycle_func(void *v)
- 		return -ENOMEM;
- 
- 	while (1) {
--		remote_event_wait(&state->recycle_event, &local->recycle);
-+		ret = remote_event_wait(&state->recycle_event, &local->recycle);
-+		if (ret)
-+			return ret;
- 
- 		process_free_queue(state, found, length);
+-	if (WARN_ON_ONCE(hwpt->domain->type != IOMMU_DOMAIN_NESTED)) {
++	if (WARN_ON_ONCE(hwpt->domain->type != IOMMU_DOMAIN_NESTED ||
++			 !hwpt->domain->ops->cache_invalidate_user)) {
+ 		rc = -EINVAL;
+ 		goto out_abort;
  	}
-@@ -1992,6 +2006,7 @@ sync_func(void *v)
- 		(struct vchiq_header *)SLOT_DATA_FROM_INDEX(state,
- 			state->remote->slot_sync);
- 	int svc_fourcc;
-+	int ret;
- 
- 	while (1) {
- 		struct vchiq_service *service;
-@@ -1999,7 +2014,9 @@ sync_func(void *v)
- 		int type;
- 		unsigned int localport, remoteport;
- 
--		remote_event_wait(&state->sync_trigger_event, &local->sync_trigger);
-+		ret = remote_event_wait(&state->sync_trigger_event, &local->sync_trigger);
-+		if (ret)
-+			return ret;
- 
- 		/* Ensure that reads don't overtake the remote_event_wait. */
- 		rmb();
 -- 
 2.43.0
 
