@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B69192591;
-	Tue, 10 Sep 2024 10:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5EE18C913;
+	Tue, 10 Sep 2024 10:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962562; cv=none; b=SSjR5jZ7g64ZRRE9pZD6kpvgnMOhtiKHR7+TzeaSSqnTaC7jFhg4lQmPTmI4DJcLWdYnBaWti2HCzS75uArhayr1uBIcpIg4mhtvMskuGj2XuqQM70SJqzd+XwKSXGDe66ZAhMSRcK6LUEeATDA+mSde2WkFoJozHO2T8YOPfoE=
+	t=1725962564; cv=none; b=EZkOQyOEN6sbdUxlI3e1EImZckmNE3AI/nCxgRgKH5MS4fTgrlLrOHDN0QjqsV3dDQx/mwPg0XlJ4qha5HLQoxdEWT/XDf+yIiwxFEMuLxVxnM0HkgLu15RuF/ihwaM89M0WPT8IEe9NRZRRU5j+vcbWWU7ykTL0X9ffLGaVvgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962562; c=relaxed/simple;
-	bh=zDtsRKqKtTLcqWHP0SD4/oYBRE9bcF3V4tNOhRFl1hw=;
+	s=arc-20240116; t=1725962564; c=relaxed/simple;
+	bh=0EPPkxMTyfPfECd0+5LdNElXui3bQRPGTd98q/IsZgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFRBLdb+69euly1ru536iQmlzFvzDll5XT5iz87jzgkkrJ61nr/0I/RYUs/PTiobkklPy3LRNi52suoSQr0g9BFaEcAiwRdzd5YgCrFttqucRGpLCInv8r+iZM6MYECQt7R2tPFLxFNtruoNp+Qw05trC3SX1jT+FEAi019YMtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRkSe4JL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EIwincHzssh9zzumxOFmR9d4x9RGT7RBsoUgEuUmzhdxZSZPJmDOHyVKvjH7EX6tL92VvrrJvjSF1yae8dig0SW49ptM3HyPOcTU4KyMHQGxKNrcwbVNvnnX8I3Y7Q4oTDe81HORInt3AaBoJ9rHJxO7F05j50Ax2GqnDBZrQPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw+tqzM3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRkSe4JL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20656C4CEC3;
-	Tue, 10 Sep 2024 10:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw+tqzM3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11555C4CEC6;
+	Tue, 10 Sep 2024 10:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962561;
-	bh=zDtsRKqKtTLcqWHP0SD4/oYBRE9bcF3V4tNOhRFl1hw=;
+	s=korg; t=1725962564;
+	bh=0EPPkxMTyfPfECd0+5LdNElXui3bQRPGTd98q/IsZgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRkSe4JL9wuCEyzNPk9wtbWKeEIoyFVhMGgP0/LPiRpuXoA3XgioGILxE83ysMl8p
-	 kn7aDK/OvOFqsV2z6/381UhAas8Wr5fwDY/YX+Dwryk+pPvWVOFrn+Qc7BLvPeDlmL
-	 kjcutjWd9z043e4f/QymdnDmRrz9FcoJ0uv9/xBs=
+	b=Dw+tqzM3XG29NGlALook0xPw30eJFmj1KyqSY/u6hpuEdEqGIj/qaj+AeQt+wjXiG
+	 knAse+Wvv4GQ9mpFcKauy8kWSsmMEpqaV1Gj2msD5wlRTLT/CxcMgzbO0zjbzKW7lv
+	 2VC68sTBW8gyxTCPPazpgkArn2wspQMRWg5qb6Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Len Baker <len.baker@gmx.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 076/121] hwmon: (adc128d818) Fix underflows seen when writing limit attributes
-Date: Tue, 10 Sep 2024 11:32:31 +0200
-Message-ID: <20240910092549.517256470@linuxfoundation.org>
+Subject: [PATCH 5.4 059/121] drivers/net/usb: Remove all strcpy() uses
+Date: Tue, 10 Sep 2024 11:32:14 +0200
+Message-ID: <20240910092548.635466426@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -50,42 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Len Baker <len.baker@gmx.com>
 
-[ Upstream commit 8cad724c8537fe3e0da8004646abc00290adae40 ]
+[ Upstream commit 493c3ca6bd754d8587604496eb814f72e933075d ]
 
-DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
-negative number such as -9223372036854775808 is provided by the user.
-Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
+strcpy() performs no bounds checking on the destination buffer. This
+could result in linear overflows beyond the end of the buffer, leading
+to all kinds of misbehaviors. The safe replacement is strscpy().
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Len Baker <len.baker@gmx.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: bab8eb0dd4cb ("usbnet: modern method to get random MAC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adc128d818.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/ipheth.c | 2 +-
+ drivers/net/usb/usbnet.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/adc128d818.c b/drivers/hwmon/adc128d818.c
-index f9edec195c35..08d8bd72ec0e 100644
---- a/drivers/hwmon/adc128d818.c
-+++ b/drivers/hwmon/adc128d818.c
-@@ -176,7 +176,7 @@ static ssize_t adc128_in_store(struct device *dev,
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 73ad78f47763..9887eb282beb 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -443,7 +443,7 @@ static int ipheth_probe(struct usb_interface *intf,
  
- 	mutex_lock(&data->update_lock);
- 	/* 10 mV LSB on limit registers */
--	regval = clamp_val(DIV_ROUND_CLOSEST(val, 10), 0, 255);
-+	regval = DIV_ROUND_CLOSEST(clamp_val(val, 0, 2550), 10);
- 	data->in[index][nr] = regval << 4;
- 	reg = index == 1 ? ADC128_REG_IN_MIN(nr) : ADC128_REG_IN_MAX(nr);
- 	i2c_smbus_write_byte_data(data->client, reg, regval);
-@@ -214,7 +214,7 @@ static ssize_t adc128_temp_store(struct device *dev,
- 		return err;
+ 	netdev->netdev_ops = &ipheth_netdev_ops;
+ 	netdev->watchdog_timeo = IPHETH_TX_TIMEOUT;
+-	strcpy(netdev->name, "eth%d");
++	strscpy(netdev->name, "eth%d", sizeof(netdev->name));
  
- 	mutex_lock(&data->update_lock);
--	regval = clamp_val(DIV_ROUND_CLOSEST(val, 1000), -128, 127);
-+	regval = DIV_ROUND_CLOSEST(clamp_val(val, -128000, 127000), 1000);
- 	data->temp[index] = regval << 1;
- 	i2c_smbus_write_byte_data(data->client,
- 				  index == 1 ? ADC128_REG_TEMP_MAX
+ 	dev = netdev_priv(netdev);
+ 	dev->udev = udev;
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index bc37e268a15e..bf018f7ca445 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1711,7 +1711,7 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 	dev->interrupt_count = 0;
+ 
+ 	dev->net = net;
+-	strcpy (net->name, "usb%d");
++	strscpy(net->name, "usb%d", sizeof(net->name));
+ 	memcpy (net->dev_addr, node_id, sizeof node_id);
+ 
+ 	/* rx and tx sides can use different message sizes;
+@@ -1738,13 +1738,13 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
+ 		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
+ 		     (net->dev_addr [0] & 0x02) == 0))
+-			strcpy (net->name, "eth%d");
++			strscpy(net->name, "eth%d", sizeof(net->name));
+ 		/* WLAN devices should always be named "wlan%d" */
+ 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+-			strcpy(net->name, "wlan%d");
++			strscpy(net->name, "wlan%d", sizeof(net->name));
+ 		/* WWAN devices should always be named "wwan%d" */
+ 		if ((dev->driver_info->flags & FLAG_WWAN) != 0)
+-			strcpy(net->name, "wwan%d");
++			strscpy(net->name, "wwan%d", sizeof(net->name));
+ 
+ 		/* devices that cannot do ARP */
+ 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
 -- 
 2.43.0
 
