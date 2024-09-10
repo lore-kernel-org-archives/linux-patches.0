@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C6C46444;
-	Tue, 10 Sep 2024 09:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6B946444;
+	Tue, 10 Sep 2024 09:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961723; cv=none; b=jHXA6tajDW6NLUm7bDLTtKOgq6vI0jRVEbUHo6jc4PCNg1WjJP8A0NKZsWhCSqkiKYXulpDZvFgzZ/I/2Z7ByLEs9Kdu8rli3vInsUbKFTWhNznKJ5zuQ1lhn9vseOGVvqiErHEeKKXSHfSrIvGXahVCIsapiIOuhLMkkdT2WmE=
+	t=1725961726; cv=none; b=fdJB8Nun19q6dpbgX1Ss//qQqHfj9DPS5derFotxpyl0dkSN/JlvoQafwMF7a/gCGv/IOBOipe+G0cioIYRBa1IaGoJY/HWjsfNBUdIyQT9pzZyb2eScIbd44uI+JGq2IDLBN3sy7zK5S1oJ4Rzom7g1ya4yBczE0Ypyjx9U4wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961723; c=relaxed/simple;
-	bh=FysTjGnawa2rEOEJiLyOp03E0YluMFCbV5yrYAbLNro=;
+	s=arc-20240116; t=1725961726; c=relaxed/simple;
+	bh=6BRlDBYX3JN/8erFKomtD4TPYjYBPaturLuoGv/FohY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9vSvtRqhi/NnQGLVj4SlpUiIDN3EFGtQb9Q3VurVFpNnegN4KVlyhMeu/ERWLXcm201c7pmtVIgO4Jv7mEbbaht/KnomV8aUtEvOsN2EMo1C4+HL/4x8ntZ+ssrzPG4aTfDFkEYw+NOzDOIj5uezxsH4zJi5hCuU6k62VYrHuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDxe0aXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0cDR5BA51MG6ROJ9GivmjnrekmwsWQJuMXsEezgPge9xrQeusjwfWIR7m+UMlOxdvqKtlSL2yvD2lKek4j04Q7T3qbnuhknasMgdFHIli+L0Z/Z+xy8nYJD+LNb1Bha3ZmZx7bxRtMYudX1/r8LDdRvNAYDGuMEdmbskVbaeyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXmufjLG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDxe0aXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E5FC4CEC3;
-	Tue, 10 Sep 2024 09:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXmufjLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A33C4CEC6;
+	Tue, 10 Sep 2024 09:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961723;
-	bh=FysTjGnawa2rEOEJiLyOp03E0YluMFCbV5yrYAbLNro=;
+	s=korg; t=1725961726;
+	bh=6BRlDBYX3JN/8erFKomtD4TPYjYBPaturLuoGv/FohY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDxe0aXcy4N11tLbY4wFi8vs73OcW0MRfj/nIYMJMXnr6D6Tkbz06IsAXuFeLBu0i
-	 2xDlou2PHytlWg8pSj9gSWG00f5BVEoviBXHWET+4nxPWiGJBx2HSRBrsduAvClFDC
-	 yEMbsU36TkzceU6kDRuYH0b5apMfM01rQ8+QzuiY=
+	b=xXmufjLG+GiraRUUb70pjA+cbibp/AASPTAzFnxqUkzYAfMfccG/YnFrfkGlp7Vxn
+	 DtJpOr6Kp1l1ghjKxmb25EgyHxNWQQ4EbigwmeoFkpI7k63vrX1EEqiv5YEYsgyyfP
+	 wZ4ay1YS+qUdECCIc3KyyO9OKOn0DSUHTlS1or9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jules Irenge <jbi.octave@gmail.com>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 140/375] pcmcia: Use resource_size function on resource object
-Date: Tue, 10 Sep 2024 11:28:57 +0200
-Message-ID: <20240910092627.156878284@linuxfoundation.org>
+Subject: [PATCH 6.10 141/375] drm/amd/display: Check denominator pbn_div before used
+Date: Tue, 10 Sep 2024 11:28:58 +0200
+Message-ID: <20240910092627.199842494@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,44 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jules Irenge <jbi.octave@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 24a025497e7e883bd2adef5d0ece1e9b9268009f ]
+[ Upstream commit 116a678f3a9abc24f5c9d2525b7393d18d9eb58e ]
 
-Cocinnele reports a warning
+[WHAT & HOW]
+A denominator cannot be 0, and is checked before used.
 
-WARNING: Suspicious code. resource_size is maybe missing with root
+This fixes 1 DIVIDE_BY_ZERO issue reported by Coverity.
 
-The root cause is the function resource_size is not used when needed
-
-Use resource_size() on variable "root" of type resource
-
-Signed-off-by: Jules Irenge <jbi.octave@gmail.com>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/yenta_socket.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pcmcia/yenta_socket.c b/drivers/pcmcia/yenta_socket.c
-index 1365eaa20ff4..ff169124929c 100644
---- a/drivers/pcmcia/yenta_socket.c
-+++ b/drivers/pcmcia/yenta_socket.c
-@@ -638,11 +638,11 @@ static int yenta_search_one_res(struct resource *root, struct resource *res,
- 		start = PCIBIOS_MIN_CARDBUS_IO;
- 		end = ~0U;
- 	} else {
--		unsigned long avail = root->end - root->start;
-+		unsigned long avail = resource_size(root);
- 		int i;
- 		size = BRIDGE_MEM_MAX;
--		if (size > avail/8) {
--			size = (avail+1)/8;
-+		if (size > (avail - 1) / 8) {
-+			size = avail / 8;
- 			/* round size down to next power of 2 */
- 			i = 0;
- 			while ((size /= 2) != 0)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 0627961b7115..27e641f17628 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7302,7 +7302,7 @@ static int dm_update_mst_vcpi_slots_for_dsc(struct drm_atomic_state *state,
+ 			}
+ 		}
+ 
+-		if (j == dc_state->stream_count)
++		if (j == dc_state->stream_count || pbn_div == 0)
+ 			continue;
+ 
+ 		slot_num = DIV_ROUND_UP(pbn, pbn_div);
 -- 
 2.43.0
 
