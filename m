@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A6018595E;
-	Tue, 10 Sep 2024 10:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016DE18FDB0;
+	Tue, 10 Sep 2024 10:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963095; cv=none; b=TuRfam+W/JylRGxf107wuLTe4BBUBXFp+HRhO0H4fN9qRk/J9I1rBV5Z2la43S/mHMLoFU5qRo4LKPaI9o/ygb3rg8s2YhZ0bAZLAV4zLtdnSEjKf1z2Sg2FY//wOti5OmDXPraOtj9BaqRd2lJme2elM4H9V0jrWYXdfm4/QAQ=
+	t=1725963098; cv=none; b=XZxnEbGBoEhnw/k2+N+nkKsTV7FxKK5GALJTBRj+cU6oJ3XpyKHd/AuABiF+iOUb79ts4FaO0WhkFXN96eaYlelC+lgbDFjN9KPA+aDZNNgN2lVnN0bqLAemCGt/VmJKZmzTTCQLGO3xeEbv1fjAkbpAp9z2wvj/kaM7gSL/LGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963095; c=relaxed/simple;
-	bh=CpHE0Z62MiQeMMMioKi78z7hgwqvZqlFbpx4D6btdtI=;
+	s=arc-20240116; t=1725963098; c=relaxed/simple;
+	bh=oxAMr8ySKixxC3sYw3npg8tMWDDAqDQT/dWQDW1AeQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sp2Bp83gUr1x0nucfsgeSIVY5qp6EJdnldectJmcuq4iRk8hLYqEXCf9qOpcA1jDjyAvyyOiy6M3dCzZu0/RsmtErjOAGue5/0Yrj5IBiFCJOEHczh3f2i2QYfVda15hi9C2hMm+Mhkai8C3MmYjP64NB+COugLw3AATYd7zxYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QLbbbVA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B70E/cKqXYPZ4A3ZlYw6kx2MIpe5kfzHs9RHa5EUPhPfW2FxprdCqCMeHZwApNUuZlOM0vnok5vrl0acUkoOZB1lstVhlAl20cg9mhRIJNjN1FrEZST0MaeAyHXasiwMFq8kl8VdiQm8cVkSY35Oto7ykjKRmxXdJQiz28YbkUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VtFYK4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QLbbbVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECBFC4CEC3;
-	Tue, 10 Sep 2024 10:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VtFYK4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C874C4CECD;
+	Tue, 10 Sep 2024 10:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963095;
-	bh=CpHE0Z62MiQeMMMioKi78z7hgwqvZqlFbpx4D6btdtI=;
+	s=korg; t=1725963097;
+	bh=oxAMr8ySKixxC3sYw3npg8tMWDDAqDQT/dWQDW1AeQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QLbbbVAhFhM9UnsyiQsiflyPWKlEtjWncxzekSLQ21pQtK8yhXKk1HYTrFpxwGYO
-	 9IFv0/TvjgBpcaJZ/C6Pv+H4AzrZlyZFjlwlLdpzJltamNlHvikutXpmt2SWjp+P/o
-	 CVpXdDD7nWPKYr/yihlnN+fKJHPNM4t0xZNPcBxU=
+	b=1VtFYK4KQJo0hl6YyKOPWAoP6U4+3LwVpPLwdDnseqx9yYr20Hc8+IVAhmSI5zfWo
+	 J+hzdWL5iNgJcnEVHqXcWgmUr70/W7tVy7tGsh8uPtemSvPvdY4VPKmW29sB89N25z
+	 SQyaZghz2sPEtiYxiOosUpejgC1gPkJOD2GPlT8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Dao <dqminh@cloudflare.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Felix Moessbauer <felix.moessbauer@siemens.com>
-Subject: [PATCH 6.1 133/192] io_uring/io-wq: stop setting PF_NO_SETAFFINITY on io-wq workers
-Date: Tue, 10 Sep 2024 11:32:37 +0200
-Message-ID: <20240910092603.494892123@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 108/192] fs/ntfs3: Check more cases when directory is corrupted
+Date: Tue, 10 Sep 2024 11:32:12 +0200
+Message-ID: <20240910092602.439143810@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,77 +50,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 01e68ce08a30db3d842ce7a55f7f6e0474a55f9a upstream.
+[ Upstream commit 744375343662058cbfda96d871786e5a5cbe1947 ]
 
-Every now and then reports come in that are puzzled on why changing
-affinity on the io-wq workers fails with EINVAL. This happens because they
-set PF_NO_SETAFFINITY as part of their creation, as io-wq organizes
-workers into groups based on what CPU they are running on.
+Mark ntfs dirty in this case.
+Rename ntfs_filldir to ntfs_dir_emit.
 
-However, this is purely an optimization and not a functional requirement.
-We can allow setting affinity, and just lazily update our worker to wqe
-mappings. If a given io-wq thread times out, it normally exits if there's
-no more work to do. The exception is if it's the last worker available.
-For the timeout case, check the affinity of the worker against group mask
-and exit even if it's the last worker. New workers should be created with
-the right mask and in the right location.
-
-Reported-by:Daniel Dao <dqminh@cloudflare.com>
-Link: https://lore.kernel.org/io-uring/CA+wXwBQwgxB3_UphSny-yAP5b26meeOu1W4TwYVcD_+5gOhvPw@mail.gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/ntfs3/dir.c | 52 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 20 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -628,7 +628,7 @@ static int io_wqe_worker(void *data)
- 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
- 	struct io_wqe *wqe = worker->wqe;
- 	struct io_wq *wq = wqe->wq;
--	bool last_timeout = false;
-+	bool exit_mask = false, last_timeout = false;
- 	char buf[TASK_COMM_LEN];
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index dcd689ed4baa..a4ab0164d150 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -272,9 +272,12 @@ struct inode *dir_search_u(struct inode *dir, const struct cpu_str *uni,
+ 	return err == -ENOENT ? NULL : err ? ERR_PTR(err) : inode;
+ }
  
- 	worker->flags |= (IO_WORKER_F_UP | IO_WORKER_F_RUNNING);
-@@ -644,8 +644,11 @@ static int io_wqe_worker(void *data)
- 			io_worker_handle_work(worker);
+-static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+-			       const struct NTFS_DE *e, u8 *name,
+-			       struct dir_context *ctx)
++/*
++ * returns false if 'ctx' if full
++ */
++static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
++				 struct ntfs_inode *ni, const struct NTFS_DE *e,
++				 u8 *name, struct dir_context *ctx)
+ {
+ 	const struct ATTR_FILE_NAME *fname;
+ 	unsigned long ino;
+@@ -284,29 +287,29 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 	fname = Add2Ptr(e, sizeof(struct NTFS_DE));
  
- 		raw_spin_lock(&wqe->lock);
--		/* timed out, exit unless we're the last worker */
--		if (last_timeout && acct->nr_workers > 1) {
-+		/*
-+		 * Last sleep timed out. Exit if we're not the last worker,
-+		 * or if someone modified our affinity.
-+		 */
-+		if (last_timeout && (exit_mask || acct->nr_workers > 1)) {
- 			acct->nr_workers--;
- 			raw_spin_unlock(&wqe->lock);
- 			__set_current_state(TASK_RUNNING);
-@@ -664,7 +667,11 @@ static int io_wqe_worker(void *data)
- 				continue;
- 			break;
- 		}
--		last_timeout = !ret;
-+		if (!ret) {
-+			last_timeout = true;
-+			exit_mask = !cpumask_test_cpu(raw_smp_processor_id(),
-+							wqe->cpu_mask);
-+		}
+ 	if (fname->type == FILE_NAME_DOS)
+-		return 0;
++		return true;
+ 
+ 	if (!mi_is_ref(&ni->mi, &fname->home))
+-		return 0;
++		return true;
+ 
+ 	ino = ino_get(&e->ref);
+ 
+ 	if (ino == MFT_REC_ROOT)
+-		return 0;
++		return true;
+ 
+ 	/* Skip meta files. Unless option to show metafiles is set. */
+ 	if (!sbi->options->showmeta && ntfs_is_meta_file(sbi, ino))
+-		return 0;
++		return true;
+ 
+ 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
+-		return 0;
++		return true;
+ 
+ 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
+ 				     PATH_MAX);
+ 	if (name_len <= 0) {
+ 		ntfs_warn(sbi->sb, "failed to convert name for inode %lx.",
+ 			  ino);
+-		return 0;
++		return true;
  	}
  
- 	if (test_bit(IO_WQ_BIT_EXIT, &wq->state))
-@@ -716,7 +723,6 @@ static void io_init_new_worker(struct io
- 	tsk->worker_private = worker;
- 	worker->task = tsk;
- 	set_cpus_allowed_ptr(tsk, wqe->cpu_mask);
--	tsk->flags |= PF_NO_SETAFFINITY;
+ 	/*
+@@ -336,17 +339,20 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 		}
+ 	}
  
- 	raw_spin_lock(&wqe->lock);
- 	hlist_nulls_add_head_rcu(&worker->nulls_node, &wqe->free_list);
+-	return !dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
++	return dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
+ }
+ 
+ /*
+  * ntfs_read_hdr - Helper function for ntfs_readdir().
++ *
++ * returns 0 if ok.
++ * returns -EINVAL if directory is corrupted.
++ * returns +1 if 'ctx' is full.
+  */
+ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 			 const struct INDEX_HDR *hdr, u64 vbo, u64 pos,
+ 			 u8 *name, struct dir_context *ctx)
+ {
+-	int err;
+ 	const struct NTFS_DE *e;
+ 	u32 e_size;
+ 	u32 end = le32_to_cpu(hdr->used);
+@@ -354,12 +360,12 @@ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 
+ 	for (;; off += e_size) {
+ 		if (off + sizeof(struct NTFS_DE) > end)
+-			return -1;
++			return -EINVAL;
+ 
+ 		e = Add2Ptr(hdr, off);
+ 		e_size = le16_to_cpu(e->size);
+ 		if (e_size < sizeof(struct NTFS_DE) || off + e_size > end)
+-			return -1;
++			return -EINVAL;
+ 
+ 		if (de_is_last(e))
+ 			return 0;
+@@ -369,14 +375,15 @@ static int ntfs_read_hdr(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 			continue;
+ 
+ 		if (le16_to_cpu(e->key_size) < SIZEOF_ATTRIBUTE_FILENAME)
+-			return -1;
++			return -EINVAL;
+ 
+ 		ctx->pos = vbo + off;
+ 
+ 		/* Submit the name to the filldir callback. */
+-		err = ntfs_filldir(sbi, ni, e, name, ctx);
+-		if (err)
+-			return err;
++		if (!ntfs_dir_emit(sbi, ni, e, name, ctx)) {
++			/* ctx is full. */
++			return +1;
++		}
+ 	}
+ }
+ 
+@@ -475,8 +482,6 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 
+ 		vbo = (u64)bit << index_bits;
+ 		if (vbo >= i_size) {
+-			ntfs_inode_err(dir, "Looks like your dir is corrupt");
+-			ctx->pos = eod;
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
+@@ -499,9 +504,16 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 	__putname(name);
+ 	put_indx_node(node);
+ 
+-	if (err == -ENOENT) {
++	if (err == 1) {
++		/* 'ctx' is full. */
++		err = 0;
++	} else if (err == -ENOENT) {
+ 		err = 0;
+ 		ctx->pos = pos;
++	} else if (err < 0) {
++		if (err == -EINVAL)
++			ntfs_inode_err(dir, "directory corrupted");
++		ctx->pos = eod;
+ 	}
+ 
+ 	return err;
+-- 
+2.43.0
+
 
 
