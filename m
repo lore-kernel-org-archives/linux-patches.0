@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF55EEC9;
-	Tue, 10 Sep 2024 09:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7393017BEAE;
+	Tue, 10 Sep 2024 09:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962272; cv=none; b=Gyb2yHhTFY/JkYbLmpRKfhM6jtj/z8O5IPfw/2ch5bm+UluQTW4lHfgQOlVKgaEEtjUSPjgyggoJh2vh6son1HJoaNLbjcfBH1LuCnFX9wE1xBlrsg5bMHr+mKMIkEE2p3c4id91+ndRYGKyPZSwxzDrx6effwxYDYx1AhAmZkE=
+	t=1725962275; cv=none; b=Fd6q6BOZIfC9nG5mRD2wTx6ikeudA2Q5XeF4dEmyDu7Pa/RmHyyitDqEX/oGs1Yz/Xe9o8JjEWResH4cp9t84oX+xiLdPojfbatSv9cv9P14WWH2smh2BOh0udNRF2sGsIPQ06GAvnesnDm5WqwvBxKh6kPAI2vyDtVuSM5cI2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962272; c=relaxed/simple;
-	bh=wlQZ9+WhDYb+Q9qWpaTQxnUgP0OXfJso1Yjj7dEQasI=;
+	s=arc-20240116; t=1725962275; c=relaxed/simple;
+	bh=KqMJub701axtq+9xYqB6y7zvgyNB7bQHPKBqkUkDq7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+qGn9qLpurCWhF+b6rYVeZkcba6F4nQcaLXLPlB8xW7kWhQvVNqJbyi0bAfC+bDwpmosfq8totHiSshUJUX8pKR1y82//SFVjlP/a31Irl7FvI9ENq4QgVaJZlqY7JggaJ3IQunnztMj1qhT8GypV8Ej+TpecQNB96Bdc5BIoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuNydIn6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jb2F8JSqOUKEeXHip9GJ52wxLb3CBcVMOZPxY1SIodzhfAi9yg6dlUYDYC9IQF+WPWrpqX3GJyhFP5y+Ei7VO43J5PefojyA+mpdUDBSVOJD4ujXb3OFSo4KX9qCsBmU5Wu/7Nzl/BKbrjUvjF+3/qeNHUxiEae1aFKByuJrfiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXFlKYtb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuNydIn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D50C4CEC3;
-	Tue, 10 Sep 2024 09:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXFlKYtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB41FC4CEC3;
+	Tue, 10 Sep 2024 09:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962272;
-	bh=wlQZ9+WhDYb+Q9qWpaTQxnUgP0OXfJso1Yjj7dEQasI=;
+	s=korg; t=1725962275;
+	bh=KqMJub701axtq+9xYqB6y7zvgyNB7bQHPKBqkUkDq7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uuNydIn6OAAgtbgF3lBTuCDKvuE1P1U4KsPooZ2CJgmnvnfEhr8AJZcuJwx9IJ8eV
-	 4zbifSkgH8b7iKhAsxHBm3K8GMVDdBVFsiU+bvbjHYWI2sMjPfgl6n6fxPWp0/xupp
-	 RBix3ZjpTFysDtqTqWFlLh9s815ENo3FZuxEEZR0=
+	b=dXFlKYtbyXxTcuOJMUbZVHTq7HUMzybwslA2ve80CEUZPRkK+QYBEN3dt8sQKH/h2
+	 EKTlFSyGl8FhW3XIgJT5hAjCTUDY9JJfd4n9xgJwVZM/zVGmjn1XWkcH2Cl78dx8Oz
+	 +90Dn7uRdie23w+tuQ2axVBxTL1vK7g0rR72OH9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 354/375] drm/i915/fence: Mark debug_fence_free() with __maybe_unused
-Date: Tue, 10 Sep 2024 11:32:31 +0200
-Message-ID: <20240910092634.489812385@linuxfoundation.org>
+Subject: [PATCH 6.10 355/375] gpio: rockchip: fix OF node leak in probe()
+Date: Tue, 10 Sep 2024 11:32:32 +0200
+Message-ID: <20240910092634.522934141@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,56 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit f99999536128b14b5d765a9982763b5134efdd79 ]
+[ Upstream commit adad2e460e505a556f5ea6f0dc16fe95e62d5d76 ]
 
-When debug_fence_free() is unused
-(CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n), it prevents kernel builds
-with clang, `make W=1` and CONFIG_WERROR=y:
+Driver code is leaking OF node reference from of_get_parent() in
+probe().
 
-.../i915_sw_fence.c:118:20: error: unused function 'debug_fence_free' [-Werror,-Wunused-function]
-  118 | static inline void debug_fence_free(struct i915_sw_fence *fence)
-      |                    ^~~~~~~~~~~~~~~~
-
-Fix this by marking debug_fence_free() with __maybe_unused.
-
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: fc1584059d6c ("drm/i915: Integrate i915_sw_fence with debugobjects")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 8be4dce5ea6f2368cc25edc71989c4690fa66964)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://lore.kernel.org/r/20240826150832.65657-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-rockchip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
-index d4020ff3549a..1d4cc91c0e40 100644
---- a/drivers/gpu/drm/i915/i915_sw_fence.c
-+++ b/drivers/gpu/drm/i915/i915_sw_fence.c
-@@ -77,7 +77,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- 	debug_object_destroy(fence, &i915_sw_fence_debug_descr);
- }
+diff --git a/drivers/gpio/gpio-rockchip.c b/drivers/gpio/gpio-rockchip.c
+index 0bd339813110..365ab947983c 100644
+--- a/drivers/gpio/gpio-rockchip.c
++++ b/drivers/gpio/gpio-rockchip.c
+@@ -713,6 +713,7 @@ static int rockchip_gpio_probe(struct platform_device *pdev)
+ 		return -ENODEV;
  
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- 	debug_object_free(fence, &i915_sw_fence_debug_descr);
- 	smp_wmb(); /* flush the change in state before reallocation */
-@@ -115,7 +115,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- {
- }
- 
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- }
+ 	pctldev = of_pinctrl_get(pctlnp);
++	of_node_put(pctlnp);
+ 	if (!pctldev)
+ 		return -EPROBE_DEFER;
  
 -- 
 2.43.0
