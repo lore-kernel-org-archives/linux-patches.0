@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C71922D6;
-	Tue, 10 Sep 2024 10:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1A7192B7B;
+	Tue, 10 Sep 2024 10:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964396; cv=none; b=ewweL6oCWsIKUNyyjG64ZX4FbAytXuJNd3ZQwdNLOGqDp2Xbfq6WmUJRAbavwiDer8GbRo8/nhkX0UCObNwMoNWTytkaacdRBcrr2aXeEGiy3v6tay+ViuW2WGGEmzCHMxG5Gx/MHLepHtJSEu3ScV06dGoii2Z8sUX/SySEExk=
+	t=1725964399; cv=none; b=lEe+ZqcUnl59iOKNTk13kTRkKyPIejYL9pgd+mpGMuo47CHDByrcfGPzjqH32mYm+0St1Juui9CodBojKhr90h9nSvcMzkucqklU7AQB8ai2+p9wL6nW6Kvo8SOWCScpT+sy1EATBEPJEjieu/31U31UZr6X7Qa6Suj+eo/Dlj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964396; c=relaxed/simple;
-	bh=X7P6mGIhtpkZL2SnuW163H2P6YWCc0A3g33NmJyeAI4=;
+	s=arc-20240116; t=1725964399; c=relaxed/simple;
+	bh=nJG/HJiXyrElPFehPKZZlS+VrglqQt7LDX/wtaUTeJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P613xndRwT1WeOAADH/7htr01pieZqT8LFAPcTlYhJX9cLCvYxtPeKDvqwmseecGbw8X3Xj2WGWrCzkb5UID8RHyfZH47iYqq3gVlA4XUZGrX0ABJN8+stiMcFzbV1g5Pdzf38lDKvtvw4ATYJf1ilCIkITNsKE/dPUD9mhu1SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APosx2eY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TrXT81LWj64hzxJ/1JhGoh4uWoDdsGm5WECNp9ysq0dQaVkWL1x3qJmTRXc1AdIhDDUYEnmbG94fPqwcYXUmxhBBenKPsLFAkojZ2jFtwmIRVtLu9JhpCuiA7KNcW1g2SIRbbljIdj4vsFTVwLQ3Gat+IQSCUQZxVRml510x/fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeSJbHng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APosx2eY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C643C4CEC6;
-	Tue, 10 Sep 2024 10:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeSJbHng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C43AC4CEC3;
+	Tue, 10 Sep 2024 10:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964396;
-	bh=X7P6mGIhtpkZL2SnuW163H2P6YWCc0A3g33NmJyeAI4=;
+	s=korg; t=1725964399;
+	bh=nJG/HJiXyrElPFehPKZZlS+VrglqQt7LDX/wtaUTeJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APosx2eYKcqz8dCV4pzVir3qa5LhJFA3Fp/ALKf+ZLRURhPgjhNpRe1k4ZXYXETNs
-	 hWf1aK1uKsxsC+M2IlbOxeMQfI6lG3eFziNulTwCH/xIvM0uOILqNUnlbvxj3TNoY3
-	 Qo/VLNBVd9U0w9rscEpMsHbpzhjVmQa0IcM/k5FY=
+	b=WeSJbHngS00uWa8r02Y1ekgT7FyZVS52HJ4sp6fqDEt/AQdecUh5EFNYSHvVKtMK+
+	 78fyGkcsu239jclnf6kOLao4mSuw7qXpBlxqAFF/Ds2semmsIRWT2HUZzAc1G4HnwN
+	 MQkDDKpAQuM/hSWlfoDmZJDDVfwnPBRrkwmhw160=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/269] btrfs: replace BUG_ON() with error handling at update_ref_for_cow()
-Date: Tue, 10 Sep 2024 11:32:35 +0200
-Message-ID: <20240910092614.146011126@linuxfoundation.org>
+Subject: [PATCH 6.6 169/269] cxl/region: Verify target positions using the ordered target list
+Date: Tue, 10 Sep 2024 11:32:36 +0200
+Message-ID: <20240910092614.174883304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,48 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit b56329a782314fde5b61058e2a25097af7ccb675 ]
+[ Upstream commit 82a3e3a235633aa0575fac9507d648dd80f3437f ]
 
-Instead of a BUG_ON() just return an error, log an error message and
-abort the transaction in case we find an extent buffer belonging to the
-relocation tree that doesn't have the full backref flag set. This is
-unexpected and should never happen (save for bugs or a potential bad
-memory).
+When a root decoder is configured the interleave target list is read
+from the BIOS populated CFMWS structure. Per the CXL spec 3.1 Table
+9-22 the target list is in interleave order. The CXL driver populates
+its decoder target list in the same order and stores it in 'struct
+cxl_switch_decoder' field "@target: active ordered target list in
+current decoder configuration"
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Given the promise of an ordered list, the driver can stop duplicating
+the work of BIOS and simply check target positions against the ordered
+list during region configuration.
+
+The simplified check against the ordered list is presented here.
+A follow-on patch will remove the unused code.
+
+For Modulo arithmetic this is not a fix, only a simplification.
+For XOR arithmetic this is a fix for HB IW of 3,6,12.
+
+Fixes: f9db85bfec0d ("cxl/acpi: Support CXL XOR Interleave Math (CXIMS)")
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/35d08d3aba08fee0f9b86ab1cef0c25116ca8a55.1719980933.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/cxl/core/region.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 118ad4d2cbbe..2eb4e03080ac 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -451,8 +451,16 @@ static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
- 	}
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index bc5a43897d57..5060d9802795 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1528,10 +1528,13 @@ static int cxl_region_attach_position(struct cxl_region *cxlr,
+ 				      const struct cxl_dport *dport, int pos)
+ {
+ 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
++	struct cxl_switch_decoder *cxlsd = &cxlrd->cxlsd;
++	struct cxl_decoder *cxld = &cxlsd->cxld;
++	int iw = cxld->interleave_ways;
+ 	struct cxl_port *iter;
+ 	int rc;
  
- 	owner = btrfs_header_owner(buf);
--	BUG_ON(owner == BTRFS_TREE_RELOC_OBJECTID &&
--	       !(flags & BTRFS_BLOCK_FLAG_FULL_BACKREF));
-+	if (unlikely(owner == BTRFS_TREE_RELOC_OBJECTID &&
-+		     !(flags & BTRFS_BLOCK_FLAG_FULL_BACKREF))) {
-+		btrfs_crit(fs_info,
-+"found tree block at bytenr %llu level %d root %llu refs %llu flags %llx without full backref flag set",
-+			   buf->start, btrfs_header_level(buf),
-+			   btrfs_root_id(root), refs, flags);
-+		ret = -EUCLEAN;
-+		btrfs_abort_transaction(trans, ret);
-+		return ret;
-+	}
- 
- 	if (refs > 1) {
- 		if ((owner == root->root_key.objectid ||
+-	if (cxlrd->calc_hb(cxlrd, pos) != dport) {
++	if (dport != cxlrd->cxlsd.target[pos % iw]) {
+ 		dev_dbg(&cxlr->dev, "%s:%s invalid target position for %s\n",
+ 			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev),
+ 			dev_name(&cxlrd->cxlsd.cxld.dev));
 -- 
 2.43.0
 
