@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E37D188CC1;
-	Tue, 10 Sep 2024 09:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B6C18C000;
+	Tue, 10 Sep 2024 09:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961400; cv=none; b=a+HNOBsTAUpsc0ihDvzsbe3HX7fhM74bRAgLkriq0sF30Ml8w5BFJVOs9ODI+0XejHlLESz3MskHXbr6bC1zNJ/Jm9VrRzibnomBr48XHqS94kY0dcoTimV+YNRxb0SE0U7MVi9R2NnY9nLQ21SMFtLACJ2z0kcIkCp+fYEMg2A=
+	t=1725961403; cv=none; b=Mr/X20tcqyVZRYcoc/JkqGfdxxKA/h0bkKjT+WoQnh6A99IJQa+RA4ke9yktHPGbvJTVNPGlP+HwzW8DhfwSAh1XnxO4FzIsLOlbyJwtKCiuPB+KUJDM6LEUZax3yd+nJKYvPhHdU6GBFvcUz+AcN4h97AocVWrXrkneIS/3nuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961400; c=relaxed/simple;
-	bh=D9vNFYiW0hRlc+a2pqiicVtkdo/fMer/oTLUFPLRiTg=;
+	s=arc-20240116; t=1725961403; c=relaxed/simple;
+	bh=tfI5Hp91y6Zq3WGq2DStjQK+9d6LZWkgaT9fpBfhIuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SywTgCm1dhCJILmkWu6XdvTvJpSvMG95TJTTaqAITko14vPO6O/1cBKBT889xz6nCg14m5pFII+DL/11X0XI524eEuw4qW4LkcgtxV2dPFouOynM+m/NGX0YBSooE5yy/Al9BnNj5Y6W26V8gdJt9UuHSJigF18iLUb6uOFK3As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYo1xF2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfqQgEL4V/9SFjAaUoqzFC9Vm09c1riYioIZ4IeN0eu8M287Ur/pNDRUhQDCquTUhBwSXviWbMJMxGqYIBpf6SVAH8uw20+u+eDsyv9JyLoSzlHTjISTk1FBZj0L9qPEU3LJamWOEiF0UiwYqPKXE7ihU2LHq5TVHbFWH5Q7nFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkkwTlB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYo1xF2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A41C4CEC3;
-	Tue, 10 Sep 2024 09:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkkwTlB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEEFC4CEC3;
+	Tue, 10 Sep 2024 09:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961400;
-	bh=D9vNFYiW0hRlc+a2pqiicVtkdo/fMer/oTLUFPLRiTg=;
+	s=korg; t=1725961403;
+	bh=tfI5Hp91y6Zq3WGq2DStjQK+9d6LZWkgaT9fpBfhIuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYo1xF2DATM1SoIQLCR0HPjwmKtr4ssFCMcUJHsuBjO56fPpHFz7X9F7oBJ4MqhMJ
-	 pcmHeVYpN4gs8bprMdGVRiuKL5/7QMOJndMB9ZuMyLIu5peiE+hKw9CctaFfjMzgNA
-	 YxuLdmS5hLo9Wuh1P7MMbRWGf0RyUgP7fc0NZIhY=
+	b=VkkwTlB2cia7NXiRSW5g0mLpfbcQH6Fei0YM34LvWCt7wWYG71BKc7+edn/B1zRDV
+	 lmMhAaUVjqJ8ihg9aycu02tJU50fLeomolQ5wd1flBW/9wJWPMPWBQFKUHgte2fWIY
+	 6e5S1LeeThgpKXlR6jVYHhbO2Wl5oUim1w9n+cnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <ptesarik@suse.com>,
+	Will Deacon <will@kernel.org>,
 	Baoquan He <bhe@redhat.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Eric DeVolder <eric_devolder@yahoo.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
+	"Hailong.Liu" <hailong.liu@oppo.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 057/375] kexec_file: fix elfcorehdr digest exclusion when CONFIG_CRASH_HOTPLUG=y
-Date: Tue, 10 Sep 2024 11:27:34 +0200
-Message-ID: <20240910092624.148346137@linuxfoundation.org>
+Subject: [PATCH 6.10 058/375] mm: vmalloc: ensure vmap_block is initialised before adding to queue
+Date: Tue, 10 Sep 2024 11:27:35 +0200
+Message-ID: <20240910092624.179472700@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -55,44 +57,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <ptesarik@suse.com>
+From: Will Deacon <will@kernel.org>
 
-commit 6dacd79d28842ff01f18b4900d897741aac5999e upstream.
+commit 3e3de7947c751509027d26b679ecd243bc9db255 upstream.
 
-Fix the condition to exclude the elfcorehdr segment from the SHA digest
-calculation.
+Commit 8c61291fd850 ("mm: fix incorrect vbq reference in
+purge_fragmented_block") extended the 'vmap_block' structure to contain a
+'cpu' field which is set at allocation time to the id of the initialising
+CPU.
 
-The j iterator is an index into the output sha_regions[] array, not into
-the input image->segment[] array.  Once it reaches
-image->elfcorehdr_index, all subsequent segments are excluded.  Besides,
-if the purgatory segment precedes the elfcorehdr segment, the elfcorehdr
-may be wrongly included in the calculation.
+When a new 'vmap_block' is being instantiated by new_vmap_block(), the
+partially initialised structure is added to the local 'vmap_block_queue'
+xarray before the 'cpu' field has been initialised.  If another CPU is
+concurrently walking the xarray (e.g.  via vm_unmap_aliases()), then it
+may perform an out-of-bounds access to the remote queue thanks to an
+uninitialised index.
 
-Link: https://lkml.kernel.org/r/20240805150750.170739-1-petr.tesarik@suse.com
-Fixes: f7cc804a9fd4 ("kexec: exclude elfcorehdr from the segment digest")
-Signed-off-by: Petr Tesarik <ptesarik@suse.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Hari Bathini <hbathini@linux.ibm.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: Eric DeVolder <eric_devolder@yahoo.com>
+This has been observed as UBSAN errors in Android:
+
+ | Internal error: UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
+ |
+ | Call trace:
+ |  purge_fragmented_block+0x204/0x21c
+ |  _vm_unmap_aliases+0x170/0x378
+ |  vm_unmap_aliases+0x1c/0x28
+ |  change_memory_common+0x1dc/0x26c
+ |  set_memory_ro+0x18/0x24
+ |  module_enable_ro+0x98/0x238
+ |  do_init_module+0x1b0/0x310
+
+Move the initialisation of 'vb->cpu' in new_vmap_block() ahead of the
+addition to the xarray.
+
+Link: https://lkml.kernel.org/r/20240812171606.17486-1-will@kernel.org
+Fixes: 8c61291fd850 ("mm: fix incorrect vbq reference in purge_fragmented_block")
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Baoquan He <bhe@redhat.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Cc: Hailong.Liu <hailong.liu@oppo.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Lorenzo Stoakes <lstoakes@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kexec_file.c |    2 +-
+ mm/vmalloc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/kexec_file.c
-+++ b/kernel/kexec_file.c
-@@ -752,7 +752,7 @@ static int kexec_calculate_store_digests
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -2628,6 +2628,7 @@ static void *new_vmap_block(unsigned int
+ 	vb->dirty_max = 0;
+ 	bitmap_set(vb->used_map, 0, (1UL << order));
+ 	INIT_LIST_HEAD(&vb->free_list);
++	vb->cpu = raw_smp_processor_id();
  
- #ifdef CONFIG_CRASH_HOTPLUG
- 		/* Exclude elfcorehdr segment to allow future changes via hotplug */
--		if (j == image->elfcorehdr_index)
-+		if (i == image->elfcorehdr_index)
- 			continue;
- #endif
- 
+ 	xa = addr_to_vb_xa(va->va_start);
+ 	vb_idx = addr_to_vb_idx(va->va_start);
+@@ -2644,7 +2645,6 @@ static void *new_vmap_block(unsigned int
+ 	 * integrity together with list_for_each_rcu from read
+ 	 * side.
+ 	 */
+-	vb->cpu = raw_smp_processor_id();
+ 	vbq = per_cpu_ptr(&vmap_block_queue, vb->cpu);
+ 	spin_lock(&vbq->lock);
+ 	list_add_tail_rcu(&vb->free_list, &vbq->free);
 
 
