@@ -1,197 +1,93 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A25183CB0
-	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 11:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1CE1F956
+	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 11:14:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725966749; cv=none; b=cvSxtv+/1N80NemQmnAVKzGJhE7yp/RfSLD2ak53mfOxCq4+0untpBOEr0tgm+FP1jf8pgyF+74Wu6+BQbA1EtSMQm14HqYvzvQyR4C/FyFSNhP6T345nxzgkJ/QmWW1P+vvvg06R6bjeaILwLjU/PUSyzNVOzOODJKbPR3plPM=
+	t=1725966888; cv=none; b=bBDXoK3O3owH92ggJGLYHGn+qeL5MiQCn4u66qoBnQhcdXmrwQOJ1KmT9v5N157Oxv6sc2UF9MnwPXCsjkX0zSy+9pkg1snU8MRQaNmEaZZGpTOYG3fBQFtI0684bELcCVCmUBesk44NyxIsgaVoR5GJr0UKsnZUSqdOVMM+7VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725966749; c=relaxed/simple;
-	bh=UYj7aweKY056oMs7GM5XXWBsu2TkMRaSALM5bW7LDJc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m6rYbneS9FjOrVYPy1a7o2cfpARYZiT+r1DcjDVEJDk5ywA53FRrDzydk+decI5YZy3TNe/A5reht772onJ4+1mVN6YC3gsPJN/KYx0iI6wmAGoli5Gu1oeQo4LA+nDnzbPq3fGsZBRrNXds/RcsxFZV/fz99XZO/Sgbd2i2IOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=R+XesfXh; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725966888; c=relaxed/simple;
+	bh=7R70qvFxYRQKCjHDlVjVMuioejDKgflNF55Yu8sguNM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eKuaRnl07cs7QsF105uG6HK6FjYvnqApifBGk5WtANfu75tVhC58ElZdUJEmPCKigIYaLclzi+Au/0DuUoOP82xmQRb7ijMjUY2HJ9f9kdkzFq2YdWF9wmV3u3ZyDXp8V2OhkpkEPtTFF0JSI6aRrihesHn86qiEagsu3TitKOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kvq7Yw5z; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R+XesfXh"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c247dd0899so6658a12.1
-        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 04:12:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kvq7Yw5z"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2d883286bd2so296594a91.2
+        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 04:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725966746; x=1726571546; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UYy4DmMGHFHCTGKn7bORTP8d4lFk3R5EHaNq4YeXwzM=;
-        b=R+XesfXh8B4AVb3ykIwSvW4kepJ4WfPCcVg3bUsVdhp9I1jcK6Hue/dc62GR4MABJM
-         sTEKzOIj+5V5u7uFEDonSYDIzYQwX035AcOMZG6Yi/YG36lPEoPvLGmyJ1Ml87wd+3xf
-         4vZiwLkkIzQcNn9L0Hikbny7CSTW727jElP1JZO8b9GjcQ3OgKL37DQ48MavVWVQfNkc
-         zjSnAsn/RoNtIlWK8ajUvfzGeN/GRLBgXDwHkzLwNwn9E006dxthaC3t5LQ1+8DLZL/E
-         47J0HYbpG2OLyYOkCjUusBiF0yOrpeYn0LvplfwV/MGvxRUBmh77iXCKZ7Y7tGON4M0M
-         NL0w==
+        d=gmail.com; s=20230601; t=1725966887; x=1726571687; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7R70qvFxYRQKCjHDlVjVMuioejDKgflNF55Yu8sguNM=;
+        b=kvq7Yw5zzFFiKNk+SB2gk4fjq2XCDe0EzlgTpW7OMH0UARTEYCkBsta7CzvstrOOND
+         QBiv9b1Q8GuIMC3KOTOU9Pe8nI7AITMifWMWYlwoZNSiD6kVeW95yow1wvzrV1QpydIq
+         KP8po09c5iix6bmjWWga8/hINQNsvl2WMtW1kJYNBNk1FxEG7C/r1nRjaFpnivH27h6s
+         bpOzYO8bNgOQV9p/4jf06xmzoz94VYfhClYaeNQ1wwei96ctUCDRtRl79aeZQkpzKFAd
+         dosUnPZXWHpcKqCXGp4IXSU8okvf+hWPD85ulVc0NDh4HqVPpApf2Wg400MnlMa50EVV
+         YlAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725966746; x=1726571546;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UYy4DmMGHFHCTGKn7bORTP8d4lFk3R5EHaNq4YeXwzM=;
-        b=dYNgbVPhv9UqwejSUb0YqLu3wOqABy313O0pnql7xfSdzAVHe5653QdutFhvyiHg07
-         GXIY3E7oC9fMIkqrfeIgwUe4dUbF0xP1EAxJ/fgOI4TRs2twT2toRHQoidsD9D78v18P
-         uFhwaEIKHLfV8sXk+qBysvSR57/G6QMtrnS+/FWD2jOHdLg8UAYU+Scb5HZU4TPfOoXh
-         gopw77OeFuFIyQOXGvgdt+HoAvkfB3KVbEPC3ft9ItHr92lG+yWhKeH+5OK+Ry7n2li7
-         hjG84T8/EPGJugirDn6qeIaJ/bdRnDFdhWYxWZuyoLeeWzGBjoTloT6VaUp3BVQx8jAu
-         lPYg==
-X-Forwarded-Encrypted: i=1; AJvYcCWQASXuG5w0NXokvKlWesf+lr1j7/+tvwTgHGLE2ysfFQmJVpWNhTjEdz7gGYAoIrARg3QsxGmo@lists.linux.dev
-X-Gm-Message-State: AOJu0YzpYWslgx0uZ0AhmBG1bW7H/5LH3lx22pLFmlqr5GStzmnAYm1c
-	gwG120SVY0ey5mBXCH+slYK53tKDYKa1Kl8v79q3/aukb3lDrQly7tvrJBLIJw==
-X-Google-Smtp-Source: AGHT+IFie5nPTW6D5tNlRl7qFWvNiI/ySCh0zgRrb+aBAPhZhb7eVrcOK1eXSiw1bugwbN+BJ9aSog==
-X-Received: by 2002:a05:6402:1ec4:b0:59f:9f59:9b07 with SMTP id 4fb4d7f45d1cf-5c4029ef54amr158266a12.4.1725966745263;
-        Tue, 10 Sep 2024 04:12:25 -0700 (PDT)
-Received: from google.com (205.215.190.35.bc.googleusercontent.com. [35.190.215.205])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42caeb8120asm107512605e9.37.2024.09.10.04.12.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Sep 2024 04:12:24 -0700 (PDT)
-Date: Tue, 10 Sep 2024 11:12:20 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v2 8/8] iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
-Message-ID: <ZuAplEO7wyFahr6Z@google.com>
-References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <8-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
- <ZtHuoDWbe54H1nhZ@google.com>
- <20240830170426.GV3773488@nvidia.com>
- <ZtWMGQAdR6sjBmer@google.com>
- <20240903003022.GF3773488@nvidia.com>
- <ZtbQMDxKZUZCGfrR@google.com>
- <20240903235532.GJ3773488@nvidia.com>
- <Ztrigx4LmpbFiMba@google.com>
- <20240906133444.GE1358970@nvidia.com>
+        d=1e100.net; s=20230601; t=1725966887; x=1726571687;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7R70qvFxYRQKCjHDlVjVMuioejDKgflNF55Yu8sguNM=;
+        b=avDbLk2/hCoHvkVoBtRXZq+1I8n1xUj4nKECXxlToCrBaV68nitRhto0o3wV/RuN17
+         YwA3Y35RRyuwMG9tArOSTWd+hs+3RkjvG8ckDp1dM4i0sHwmW3/ff1jMsiXzm/zUIyQJ
+         uRgPwBHxr7fJoUstOv3V9u0qe15l9i+TKkmqhalWTY74y3NVmQqU90WZSfZi5HPAZUrz
+         SHgcwJZtbyvImWbeXvjWIHm+PF28ikPHarVKfbWVOzPXlkYeD5i/Po/ZCceoc4o0U2ok
+         wq7RXK1TkJnbawl1HFqC7NH5yzz0A8Ln24HaFcKzZ8tvLpEKWPSWg/BF4Kq5ybkfM526
+         5kSA==
+X-Forwarded-Encrypted: i=1; AJvYcCUFKUOprEOsRNj3wWHXSE1Vwtg6sMkgAQJky9CCrCZZuB5Ud11xIZvxx4rKRLmwa8lvMchZS9oi@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx932o1OMbfGADdKoYFXW8Z/2+s8OGzV0yt8QuGDxDasnLYabXo
+	pLlroH+eEH8x/epSuaO5aiAOvrOqOAUCzOFSbLKibSfRHrhplIvLsl/vbhGRDzMmMtAfSPvFiVo
+	GSBjHqDbDNTDqrzslHyL5l71zpo0=
+X-Google-Smtp-Source: AGHT+IFA9BIl5K6nzzFm26HbZ/XWC2bq8ZUkUz+X7SI61EMsnik7yYHU0TsUVMbVKdAcFYqRNR1EofIDip33sDTGX0Y=
+X-Received: by 2002:a17:90a:604a:b0:2db:60b:3668 with SMTP id
+ 98e67ed59e1d1-2db060b3bd2mr4322899a91.7.1725966886696; Tue, 10 Sep 2024
+ 04:14:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240906133444.GE1358970@nvidia.com>
+References: <20240910092557.876094467@linuxfoundation.org> <20240910092604.257546283@linuxfoundation.org>
+ <CAH5fLgi7_=3W3WdPR2KcUW73Ma=SXo-dX20z0xx+AK4S_N3SwQ@mail.gmail.com>
+In-Reply-To: <CAH5fLgi7_=3W3WdPR2KcUW73Ma=SXo-dX20z0xx+AK4S_N3SwQ@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 10 Sep 2024 13:14:34 +0200
+Message-ID: <CANiq72kvESNP0StA6DRukSJ7K4q2a4EtTsNTDECSAsWjmhp5-g@mail.gmail.com>
+Subject: Re: [PATCH 6.1 153/192] rust: macros: provide correct provenance when
+ constructing THIS_MODULE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Boqun Feng <boqun.feng@gmail.com>, Trevor Gross <tmgross@umich.edu>, 
+	Benno Lossin <benno.lossin@proton.me>, Gary Guo <gary@garyguo.net>, 
+	Miguel Ojeda <ojeda@kernel.org>, Alice Ryhl <aliceryhl@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 06, 2024 at 10:34:44AM -0300, Jason Gunthorpe wrote:
-> On Fri, Sep 06, 2024 at 11:07:47AM +0000, Mostafa Saleh wrote:
-> 
-> > However, I believe the UAPI can be more clear and solid in terms of
-> > what is supported (maybe a typical struct with the CD, and some
-> > extra configs?) I will give it a think.
-> 
-> I don't think breaking up the STE into fields in another struct is
-> going to be a big improvement, it adds more code and corner cases to
-> break up and reassemble it.
-> 
-> #define STRTAB_STE_0_NESTING_ALLOWED                                         \
-> 	cpu_to_le64(STRTAB_STE_0_V | STRTAB_STE_0_CFG | STRTAB_STE_0_S1FMT | \
-> 		    STRTAB_STE_0_S1CTXPTR_MASK | STRTAB_STE_0_S1CDMAX)
-> #define STRTAB_STE_1_NESTING_ALLOWED                            \
-> 	cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |   \
-> 		    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |   \
-> 		    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_EATS)
-> 
-> It is 11 fields that would need to be recoded, that's alot.. Even if
-> you say the 3 cache ones are not needed it is still alot.
-
-I was thinking of providing a higher level semantics
-(no need for caching, valid...), something like:
-
-struct smmu_user_table {
-	u64 cd_table;
-	u32 smmu_cd_cfg;  /* linear or 2lvl,.... */
-	u32 smmu_trans_cfg; /* Translate, bypass, abort */
-	u32 dev_feat; /*ATS, STALL, …*/
-};
-
-I feel that is a bit more clear for user space? Instead of
-partially setting the STE, and it should be easier to extend than
-masking the STE.
-
-I’am not opposed to the vSTE, I just feel it's loosely defined,
-that's why I was asking for the docs.
-
-> 
-> > > Reporting a static kernel capability through GET_INFO output is
-> > > easier/saner than providing some kind of policy flags in the GET_INFO
-> > > input to specify how the sanitization should work.
-> > 
-> > I don’t think it’s “policy”, it’s just giving userspace the minimum
-> > knowledge it needs to create the vSMMU, but again no really strong
-> > opinion about that.
-> 
-> There is no single "minimum knowledge" though, it depends on what the
-> VMM is able to support. IMHO once you go over to the "VMM has to
-> ignore bits it doesn't understand" you may as well just show
-> everything. Then the kernel side can't be wrong.
-> 
-> If the kernel side can be wrong, then you are back to handshaking
-> policy because the kernel can't assume that all existing VMMs wil not
-> rely on the kernel to do the masking.
+On Tue, Sep 10, 2024 at 12:25=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> =
+wrote:
 >
+> On Tue, Sep 10, 2024 at 12:12=E2=80=AFPM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > Fixes: 1fbde52bde73 ("rust: add `macros` crate")
+> > Cc: stable@vger.kernel.org # 6.6.x: be2ca1e03965: ("rust: types: Make O=
+paque::get const")
+>
+> The opaque type doesn't exist yet on 6.1, so this needs to be changed
+> for the 6.1 backport. It won't compile as-is.
 
-I agree it’s tricky, again no strong opinion on that, although I doubt
-that a VMM would care about all the SMMU features.
++1 -- Greg/Sasha: for context, this is the one I asked about using
+Option 3 since otherwise the list of cherry-picks for 6.1 would be
+quite long.
 
-> > > > But this is a UAPI. How can userspace implement that if it has no
-> > > > documentation, and how can it be maintained if there is no clear
-> > > > interface with userspace with what is expected/returned...
-> > > 
-> > > I'm not sure what you are looking for here? I don't think an entire
-> > > tutorial on how to build a paravirtualized vSMMU is appropriate to
-> > > put in comments?
-> > 
-> > Sorry, I don’t think I was clear, I meant actual documentation for
-> > the UAPI, as in RST files for example. If I want to support that
-> > in kvmtool how can I implement it? 
-> 
-> Well, you need thousands of lines of code in kvtool to build a vIOMMU :)
-> 
-> Nicolin is looking at writing something, lets see.
-> 
-> I think for here we should focus on the comments being succinct but
-> sufficient to understand what the uAPI does itself.
-> 
-Actually I think the opposite, I think UAPI docs is more important
-here, especially for the vSTE, that's how we can compare the code to
-what is expected from user-space.
-
-> > > I would *really* like everyone to sit down and figure out how to
-> > > manage virtual device lifecycle in a single language!
-> > 
-> > Yes, just like the guest_memfd work. There has been also
-> > some work to unify some of the guest HVC bits:
-> > https://lore.kernel.org/all/20240830130150.8568-1-will@kernel.org/
-> 
-> I think Dan Williams is being ringleader for the PCI side effort on CC
-
-Thanks, I will try to spend some time on the secure VFIO work.
-
-Thanks,
-Mostafa
-
-> 
-> Jason
+Cheers,
+Miguel
