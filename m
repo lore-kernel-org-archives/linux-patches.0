@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1D9144D1A;
-	Tue, 10 Sep 2024 10:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79938143880;
+	Tue, 10 Sep 2024 10:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964850; cv=none; b=gZEWHayNhPO5M5zMw3Xok92AJJ9THs9sBL6Zin2RVvmWQnwjCv3DW4lyi8mg4MM1iMHhZb3f0JGpVlojBG5VK9cuvAwq62veZztVYZrT3a7DAdWfPhxcgQXiBRYb8zLt8QYMXl53yXusRhEh2sq/mhJ47G3Rrt3q8Gxvz7uoG8o=
+	t=1725964853; cv=none; b=YqYYIlWzsdwO8sY3IDTLkXa0tgVqgSaaotOWPYGGvn5fglrj2JGLq96NfxQ/smhN3T2H1B5uKm2nxEL4LexrfxwfC2yHLxzdv3sgXW14kePwOU2v8quI2iPBLU7Jm2RPjGVcfH+MD32QxkMQRIDyE/Fd5Hg5TiYygBvSV0BxOoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964850; c=relaxed/simple;
-	bh=MCMVM8E91wpOLhwZ4XWPrGwIlLUjuJesDfuQ1pVhEUQ=;
+	s=arc-20240116; t=1725964853; c=relaxed/simple;
+	bh=03DkKXnuDbWDEBJ9RPRr8qIScedb/x85o9MmbZXOug4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTxOhVs/12AQUOeMV3hxnJLQtlO1Ryu+y4wLfTUOGBO2Kul7X8KkYRLz+RX+J7/YVmbhVE4VppujHfM801ho2K6FEDDFDZ17EARA3C7RghiF154FpIv12NWfikkNjOlKrjvHN4VCeYuLZRJWXKYt7nmPdp15iOwMiSpYcTcOyuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gANt9MY0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlJs+3hdCGZP4YZv08WTtYmINBgPIXIirmhI4VUU8FbEiUrorebNOTvzntwuSI0Awt58Zj5AvUhH1zT4t2DVu4XujkJORN5rdZwEoAcQ4un9OV2fQoI61pZttEKIkf/d/hXDTjIOVa7EJH3L0FlW5lSQR65rUgXUxn2RzTZePdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSog3xpQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gANt9MY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125A8C4CEC3;
-	Tue, 10 Sep 2024 10:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSog3xpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007AFC4CEC3;
+	Tue, 10 Sep 2024 10:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964850;
-	bh=MCMVM8E91wpOLhwZ4XWPrGwIlLUjuJesDfuQ1pVhEUQ=;
+	s=korg; t=1725964853;
+	bh=03DkKXnuDbWDEBJ9RPRr8qIScedb/x85o9MmbZXOug4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gANt9MY0Sg79YtF7oLD5b7kBCEuSazaGMWsZ1PG0BtjiyHHIqNoMZTvT1IJPHhoyp
-	 kV9gQ0Qd1LJyFMQH5QAgcMgVlr0wOZav9I1DZqco0x9Js9u0Dqd9XJ+Xdwa+QJNJzj
-	 QpefdiyCoyXueD0Cnxx4fxHCNk+SiPY91bKP19qA=
+	b=ZSog3xpQexUmZDpTp0GDDqZ/SujPFYdVdQdeFEkH6jGcKujaiib6oQqPRqg5zznqT
+	 LDu9/hxSoeKzPmCSmADl3m+VoQsRMzG3kMoxDyOTnj0NUWZZJnyx8KvdLjQdLELseW
+	 AAWYLJhcYPfQ6pC2vrycLMwBE5I4mhZaKDSDakB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	kernel test robot <lkp@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 5.10 052/186] i2c: Use IS_REACHABLE() for substituting empty ACPI functions
-Date: Tue, 10 Sep 2024 11:32:27 +0200
-Message-ID: <20240910092556.647142300@linuxfoundation.org>
+	syzbot+df709157a4ecaf192b03@syzkaller.appspotmail.com,
+	syzbot+533f389d4026d86a2a95@syzkaller.appspotmail.com,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Connor OBrien <connor.obrien@crowdstrike.com>
+Subject: [PATCH 5.10 053/186] bpf, cgroup: Assign cgroup in cgroup_sk_alloc when called from interrupt
+Date: Tue, 10 Sep 2024 11:32:28 +0200
+Message-ID: <20240910092556.682986100@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -52,49 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Connor O'Brien <connor.obrien@crowdstrike.com>
 
-commit 71833e79a42178d8a50b5081c98c78ace9325628 upstream.
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-Replace IS_ENABLED() with IS_REACHABLE() to substitute empty stubs for:
-    i2c_acpi_get_i2c_resource()
-    i2c_acpi_client_count()
-    i2c_acpi_find_bus_speed()
-    i2c_acpi_new_device_by_fwnode()
-    i2c_adapter *i2c_acpi_find_adapter_by_handle()
-    i2c_acpi_waive_d0_probe()
+commit 78cc316e9583067884eb8bd154301dc1e9ee945c upstream.
 
-commit f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI
-functions") partially fixed this conditional to depend on CONFIG_I2C,
-but used IS_ENABLED(), which is wrong since CONFIG_I2C is tristate.
+If cgroup_sk_alloc() is called from interrupt context, then just assign the
+root cgroup to skcd->cgroup. Prior to commit 8520e224f547 ("bpf, cgroups:
+Fix cgroup v2 fallback on v1/v2 mixed mode") we would just return, and later
+on in sock_cgroup_ptr(), we were NULL-testing the cgroup in fast-path, and
+iff indeed NULL returning the root cgroup (v ?: &cgrp_dfl_root.cgrp). Rather
+than re-adding the NULL-test to the fast-path we can just assign it once from
+cgroup_sk_alloc() given v1/v2 handling has been simplified. The migration from
+NULL test with returning &cgrp_dfl_root.cgrp to assigning &cgrp_dfl_root.cgrp
+directly does /not/ change behavior for callers of sock_cgroup_ptr().
 
-CONFIG_ACPI is boolean but let's also change it to use IS_REACHABLE()
-to future-proof it against becoming tristate.
+syzkaller was able to trigger a splat in the legacy netrom code base, where
+the RX handler in nr_rx_frame() calls nr_make_new() which calls sk_alloc()
+and therefore cgroup_sk_alloc() with in_interrupt() condition. Thus the NULL
+skcd->cgroup, where it trips over on cgroup_sk_free() side given it expects
+a non-NULL object. There are a few other candidates aside from netrom which
+have similar pattern where in their accept-like implementation, they just call
+to sk_alloc() and thus cgroup_sk_alloc() instead of sk_clone_lock() with the
+corresponding cgroup_sk_clone() which then inherits the cgroup from the parent
+socket. None of them are related to core protocols where BPF cgroup programs
+are running from. However, in future, they should follow to implement a similar
+inheritance mechanism.
 
-Somehow despite testing various combinations of CONFIG_I2C and CONFIG_ACPI
-we missed the combination CONFIG_I2C=m, CONFIG_ACPI=y.
+Additionally, with a !CONFIG_CGROUP_NET_PRIO and !CONFIG_CGROUP_NET_CLASSID
+configuration, the same issue was exposed also prior to 8520e224f547 due to
+commit e876ecc67db8 ("cgroup: memcg: net: do not associate sock with unrelated
+cgroup") which added the early in_interrupt() return back then.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: f17c06c6608a ("i2c: Fix conditional for substituting empty ACPI functions")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408141333.gYnaitcV-lkp@intel.com/
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: 8520e224f547 ("bpf, cgroups: Fix cgroup v2 fallback on v1/v2 mixed mode")
+Fixes: e876ecc67db8 ("cgroup: memcg: net: do not associate sock with unrelated cgroup")
+Reported-by: syzbot+df709157a4ecaf192b03@syzkaller.appspotmail.com
+Reported-by: syzbot+533f389d4026d86a2a95@syzkaller.appspotmail.com
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Tested-by: syzbot+df709157a4ecaf192b03@syzkaller.appspotmail.com
+Tested-by: syzbot+533f389d4026d86a2a95@syzkaller.appspotmail.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/bpf/20210927123921.21535-1-daniel@iogearbox.net
+Signed-off-by: Connor O'Brien <connor.obrien@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/i2c.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/cgroup.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/include/linux/i2c.h
-+++ b/include/linux/i2c.h
-@@ -991,7 +991,7 @@ static inline int of_i2c_get_board_info(
- struct acpi_resource;
- struct acpi_resource_i2c_serialbus;
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -6559,22 +6559,29 @@ int cgroup_parse_float(const char *input
  
--#if IS_ENABLED(CONFIG_ACPI) && IS_ENABLED(CONFIG_I2C)
-+#if IS_REACHABLE(CONFIG_ACPI) && IS_REACHABLE(CONFIG_I2C)
- bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
- 			       struct acpi_resource_i2c_serialbus **i2c);
- u32 i2c_acpi_find_bus_speed(struct device *dev);
+ void cgroup_sk_alloc(struct sock_cgroup_data *skcd)
+ {
+-	/* Don't associate the sock with unrelated interrupted task's cgroup. */
+-	if (in_interrupt())
+-		return;
++	struct cgroup *cgroup;
+ 
+ 	rcu_read_lock();
++	/* Don't associate the sock with unrelated interrupted task's cgroup. */
++	if (in_interrupt()) {
++		cgroup = &cgrp_dfl_root.cgrp;
++		cgroup_get(cgroup);
++		goto out;
++	}
++
+ 	while (true) {
+ 		struct css_set *cset;
+ 
+ 		cset = task_css_set(current);
+ 		if (likely(cgroup_tryget(cset->dfl_cgrp))) {
+-			skcd->cgroup = cset->dfl_cgrp;
+-			cgroup_bpf_get(cset->dfl_cgrp);
++			cgroup = cset->dfl_cgrp;
+ 			break;
+ 		}
+ 		cpu_relax();
+ 	}
++out:
++	skcd->cgroup = cgroup;
++	cgroup_bpf_get(cgroup);
+ 	rcu_read_unlock();
+ }
+ 
 
 
