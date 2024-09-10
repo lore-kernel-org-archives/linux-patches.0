@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF16199FA0;
-	Tue, 10 Sep 2024 10:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C8A199FA0;
+	Tue, 10 Sep 2024 10:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963599; cv=none; b=h2y/2/Uo5IQMRUyd90ChVmL5v4npX11xJX4mhctbj84wpXocMpwU8gnsJtx7S0tYXm+k8M7ZU0sg8nPdZ5+y8aexugeq81r4WsU2oiWrwQf+DfyMpvC/O5B65wAWZvKbac07W/8Nqw48RVeij8Z731J4Oeke/VIgRBXUf3OalMo=
+	t=1725963602; cv=none; b=qsjvK9wZwtYvIe9aU8SrhlAiLRDMqv/EWSndl68SPd6lw6Pel4HcSqoOPvHZ5W6ReoDXx7prhwCCai51pZWuh3SrE3T+FfHQLxt8oAmHLoqd41UKcENZXgv4RjpXUJtFRFxCKQAIxDss5G78o1u52mPC2t29JU7OuCcBJNSTqhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963599; c=relaxed/simple;
-	bh=lqohw9Yyj3HEnNXHS88+nbMJxFxBn5Rdb9Xjf1QPuTw=;
+	s=arc-20240116; t=1725963602; c=relaxed/simple;
+	bh=MVYozCpN+Q/i/mHV314skEOtDhEQyz+sPxMyDHhz98k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxPr4MiNR0OpBsR4e+HVE6LiQT2r6nVGfDN3Xq5hg7LM3ZPeTLP2CqjIgAezaX1mHlNpbvLWMHB2ZYFgwkoIBlTMUHQiNuWFYGSsQK5TjSWkZDavvmvhE+uNgywZzSBOBXJr81CbWfafZ0E7SgojE8oDIZUA0XBY+yQOZbh2a0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3NPz+tD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P0Qk8YDsH1xoURulAoumA2YjWK3/vK9zAVoEocYr/aHWI+s80xOZw555zLDVQhiHrcbUFKUIX6LDcGOhWqlpgYnklQTNMTequHb60FheeM6AC36T1SBu++C6YQ5AYC6Ck/ugNVDRIL/PdzJLj7OyZiuh7TnaGUqdmxnIigyEwa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pcx55CG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3NPz+tD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424F5C4CEC3;
-	Tue, 10 Sep 2024 10:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pcx55CG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF40C4CEC6;
+	Tue, 10 Sep 2024 10:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963599;
-	bh=lqohw9Yyj3HEnNXHS88+nbMJxFxBn5Rdb9Xjf1QPuTw=;
+	s=korg; t=1725963602;
+	bh=MVYozCpN+Q/i/mHV314skEOtDhEQyz+sPxMyDHhz98k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3NPz+tDRxuTSaI4Olr7iFHigAHKRANjvGeGvOQalfmFFpawjN4AKBkH+MYGg4/Dt
-	 RKZgkmKaqAaINFkvHT9isE12Z2sPWdtBBtLG+f6a3T8kvHq+7wMWQyHqYzCdVeNaW2
-	 4b4Pl3BI2+In3ahENJFowVPikiE2Ndgu0znhDFqU=
+	b=Pcx55CG8nSK5kcpjFx6aOjGVOHRcsOXP3IWOTk8YwGV9S98u8fWwcjFGml7rJmJTv
+	 gwG1zPkXhW0vD6JA8863oSneKZB/O10VkqO1Jc/az3Gbq4ftj4HLSvuQOnkrXRS0qB
+	 FdflhdfsMVKIP4Xu1fDq14zyEiCEIA/wwPLXIohM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Tom Herbert <tom@herbertland.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 086/214] ila: call nf_unregister_net_hooks() sooner
-Date: Tue, 10 Sep 2024 11:31:48 +0200
-Message-ID: <20240910092602.271372448@linuxfoundation.org>
+	syzbot+7fe7b81d602cc1e6b94d@syzkaller.appspotmail.com,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 087/214] sched: sch_cake: fix bulk flow accounting logic for host fairness
+Date: Tue, 10 Sep 2024 11:31:49 +0200
+Message-ID: <20240910092602.308824254@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -47,200 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit 031ae72825cef43e4650140b800ad58bf7a6a466 upstream.
+commit 546ea84d07e3e324644025e2aae2d12ea4c5896e upstream.
 
-syzbot found an use-after-free Read in ila_nf_input [1]
+In sch_cake, we keep track of the count of active bulk flows per host,
+when running in dst/src host fairness mode, which is used as the
+round-robin weight when iterating through flows. The count of active
+bulk flows is updated whenever a flow changes state.
 
-Issue here is that ila_xlat_exit_net() frees the rhashtable,
-then call nf_unregister_net_hooks().
+This has a peculiar interaction with the hash collision handling: when a
+hash collision occurs (after the set-associative hashing), the state of
+the hash bucket is simply updated to match the new packet that collided,
+and if host fairness is enabled, that also means assigning new per-host
+state to the flow. For this reason, the bulk flow counters of the
+host(s) assigned to the flow are decremented, before new state is
+assigned (and the counters, which may not belong to the same host
+anymore, are incremented again).
 
-It should be done in the reverse way, with a synchronize_rcu().
+Back when this code was introduced, the host fairness mode was always
+enabled, so the decrement was unconditional. When the configuration
+flags were introduced the *increment* was made conditional, but
+the *decrement* was not. Which of course can lead to a spurious
+decrement (and associated wrap-around to U16_MAX).
 
-This is a good match for a pre_exit() method.
+AFAICT, when host fairness is disabled, the decrement and wrap-around
+happens as soon as a hash collision occurs (which is not that common in
+itself, due to the set-associative hashing). However, in most cases this
+is harmless, as the value is only used when host fairness mode is
+enabled. So in order to trigger an array overflow, sch_cake has to first
+be configured with host fairness disabled, and while running in this
+mode, a hash collision has to occur to cause the overflow. Then, the
+qdisc has to be reconfigured to enable host fairness, which leads to the
+array out-of-bounds because the wrapped-around value is retained and
+used as an array index. It seems that syzbot managed to trigger this,
+which is quite impressive in its own right.
 
-[1]
- BUG: KASAN: use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
- BUG: KASAN: use-after-free in __rhashtable_lookup include/linux/rhashtable.h:604 [inline]
- BUG: KASAN: use-after-free in rhashtable_lookup include/linux/rhashtable.h:646 [inline]
- BUG: KASAN: use-after-free in rhashtable_lookup_fast+0x77a/0x9b0 include/linux/rhashtable.h:672
-Read of size 4 at addr ffff888064620008 by task ksoftirqd/0/16
+This patch fixes the issue by introducing the same conditional check on
+decrement as is used on increment.
 
-CPU: 0 UID: 0 PID: 16 Comm: ksoftirqd/0 Not tainted 6.11.0-rc4-syzkaller-00238-g2ad6d23f465a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:93 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
-  print_address_description mm/kasan/report.c:377 [inline]
-  print_report+0x169/0x550 mm/kasan/report.c:488
-  kasan_report+0x143/0x180 mm/kasan/report.c:601
-  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
-  __rhashtable_lookup include/linux/rhashtable.h:604 [inline]
-  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
-  rhashtable_lookup_fast+0x77a/0x9b0 include/linux/rhashtable.h:672
-  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:132 [inline]
-  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
-  ila_nf_input+0x1fe/0x3c0 net/ipv6/ila/ila_xlat.c:190
-  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
-  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
-  nf_hook include/linux/netfilter.h:269 [inline]
-  NF_HOOK+0x29e/0x450 include/linux/netfilter.h:312
-  __netif_receive_skb_one_core net/core/dev.c:5661 [inline]
-  __netif_receive_skb+0x1ea/0x650 net/core/dev.c:5775
-  process_backlog+0x662/0x15b0 net/core/dev.c:6108
-  __napi_poll+0xcb/0x490 net/core/dev.c:6772
-  napi_poll net/core/dev.c:6841 [inline]
-  net_rx_action+0x89b/0x1240 net/core/dev.c:6963
-  handle_softirqs+0x2c4/0x970 kernel/softirq.c:554
-  run_ksoftirqd+0xca/0x130 kernel/softirq.c:928
-  smpboot_thread_fn+0x544/0xa30 kernel/smpboot.c:164
-  kthread+0x2f0/0x390 kernel/kthread.c:389
-  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
+The original bug predates the upstreaming of cake, but the commit listed
+in the Fixes tag touched that code, meaning that this patch won't apply
+before that.
 
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x64620
-flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
-page_type: 0xbfffffff(buddy)
-raw: 00fff00000000000 ffffea0000959608 ffffea00019d9408 0000000000000000
-raw: 0000000000000000 0000000000000003 00000000bfffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as freed
-page last allocated via order 3, migratetype Unmovable, gfp_mask 0x52dc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_ZERO), pid 5242, tgid 5242 (syz-executor), ts 73611328570, free_ts 618981657187
-  set_page_owner include/linux/page_owner.h:32 [inline]
-  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1493
-  prep_new_page mm/page_alloc.c:1501 [inline]
-  get_page_from_freelist+0x2e4c/0x2f10 mm/page_alloc.c:3439
-  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4695
-  __alloc_pages_node_noprof include/linux/gfp.h:269 [inline]
-  alloc_pages_node_noprof include/linux/gfp.h:296 [inline]
-  ___kmalloc_large_node+0x8b/0x1d0 mm/slub.c:4103
-  __kmalloc_large_node_noprof+0x1a/0x80 mm/slub.c:4130
-  __do_kmalloc_node mm/slub.c:4146 [inline]
-  __kmalloc_node_noprof+0x2d2/0x440 mm/slub.c:4164
-  __kvmalloc_node_noprof+0x72/0x190 mm/util.c:650
-  bucket_table_alloc lib/rhashtable.c:186 [inline]
-  rhashtable_init_noprof+0x534/0xa60 lib/rhashtable.c:1071
-  ila_xlat_init_net+0xa0/0x110 net/ipv6/ila/ila_xlat.c:613
-  ops_init+0x359/0x610 net/core/net_namespace.c:139
-  setup_net+0x515/0xca0 net/core/net_namespace.c:343
-  copy_net_ns+0x4e2/0x7b0 net/core/net_namespace.c:508
-  create_new_namespaces+0x425/0x7b0 kernel/nsproxy.c:110
-  unshare_nsproxy_namespaces+0x124/0x180 kernel/nsproxy.c:228
-  ksys_unshare+0x619/0xc10 kernel/fork.c:3328
-  __do_sys_unshare kernel/fork.c:3399 [inline]
-  __se_sys_unshare kernel/fork.c:3397 [inline]
-  __x64_sys_unshare+0x38/0x40 kernel/fork.c:3397
-page last free pid 11846 tgid 11846 stack trace:
-  reset_page_owner include/linux/page_owner.h:25 [inline]
-  free_pages_prepare mm/page_alloc.c:1094 [inline]
-  free_unref_page+0xd22/0xea0 mm/page_alloc.c:2612
-  __folio_put+0x2c8/0x440 mm/swap.c:128
-  folio_put include/linux/mm.h:1486 [inline]
-  free_large_kmalloc+0x105/0x1c0 mm/slub.c:4565
-  kfree+0x1c4/0x360 mm/slub.c:4588
-  rhashtable_free_and_destroy+0x7c6/0x920 lib/rhashtable.c:1169
-  ila_xlat_exit_net+0x55/0x110 net/ipv6/ila/ila_xlat.c:626
-  ops_exit_list net/core/net_namespace.c:173 [inline]
-  cleanup_net+0x802/0xcc0 net/core/net_namespace.c:640
-  process_one_work kernel/workqueue.c:3231 [inline]
-  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
-  worker_thread+0x86d/0xd40 kernel/workqueue.c:3390
-  kthread+0x2f0/0x390 kernel/kthread.c:389
-  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Memory state around the buggy address:
- ffff88806461ff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88806461ff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff888064620000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                      ^
- ffff888064620080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888064620100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Tom Herbert <tom@herbertland.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20240904144418.1162839-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 712639929912 ("sch_cake: Make the dual modes fairer")
+Reported-by: syzbot+7fe7b81d602cc1e6b94d@syzkaller.appspotmail.com
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20240903160846.20909-1-toke@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ila/ila.h      |    1 +
- net/ipv6/ila/ila_main.c |    6 ++++++
- net/ipv6/ila/ila_xlat.c |   13 +++++++++----
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ net/sched/sch_cake.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/net/ipv6/ila/ila.h
-+++ b/net/ipv6/ila/ila.h
-@@ -108,6 +108,7 @@ int ila_lwt_init(void);
- void ila_lwt_fini(void);
- 
- int ila_xlat_init_net(struct net *net);
-+void ila_xlat_pre_exit_net(struct net *net);
- void ila_xlat_exit_net(struct net *net);
- 
- int ila_xlat_nl_cmd_add_mapping(struct sk_buff *skb, struct genl_info *info);
---- a/net/ipv6/ila/ila_main.c
-+++ b/net/ipv6/ila/ila_main.c
-@@ -71,6 +71,11 @@ ila_xlat_init_fail:
- 	return err;
- }
- 
-+static __net_exit void ila_pre_exit_net(struct net *net)
-+{
-+	ila_xlat_pre_exit_net(net);
-+}
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -785,12 +785,15 @@ skip_hash:
+ 		 * queue, accept the collision, update the host tags.
+ 		 */
+ 		q->way_collisions++;
+-		if (q->flows[outer_hash + k].set == CAKE_SET_BULK) {
+-			q->hosts[q->flows[reduced_hash].srchost].srchost_bulk_flow_count--;
+-			q->hosts[q->flows[reduced_hash].dsthost].dsthost_bulk_flow_count--;
+-		}
+ 		allocate_src = cake_dsrc(flow_mode);
+ 		allocate_dst = cake_ddst(flow_mode);
 +
- static __net_exit void ila_exit_net(struct net *net)
- {
- 	ila_xlat_exit_net(net);
-@@ -78,6 +83,7 @@ static __net_exit void ila_exit_net(stru
- 
- static struct pernet_operations ila_net_ops = {
- 	.init = ila_init_net,
-+	.pre_exit = ila_pre_exit_net,
- 	.exit = ila_exit_net,
- 	.id   = &ila_net_id,
- 	.size = sizeof(struct ila_net),
---- a/net/ipv6/ila/ila_xlat.c
-+++ b/net/ipv6/ila/ila_xlat.c
-@@ -616,6 +616,15 @@ int ila_xlat_init_net(struct net *net)
- 	return 0;
- }
- 
-+void ila_xlat_pre_exit_net(struct net *net)
-+{
-+	struct ila_net *ilan = net_generic(net, ila_net_id);
-+
-+	if (ilan->xlat.hooks_registered)
-+		nf_unregister_net_hooks(net, ila_nf_hook_ops,
-+					ARRAY_SIZE(ila_nf_hook_ops));
-+}
-+
- void ila_xlat_exit_net(struct net *net)
- {
- 	struct ila_net *ilan = net_generic(net, ila_net_id);
-@@ -623,10 +632,6 @@ void ila_xlat_exit_net(struct net *net)
- 	rhashtable_free_and_destroy(&ilan->xlat.rhash_table, ila_free_cb, NULL);
- 
- 	free_bucket_spinlocks(ilan->xlat.locks);
--
--	if (ilan->xlat.hooks_registered)
--		nf_unregister_net_hooks(net, ila_nf_hook_ops,
--					ARRAY_SIZE(ila_nf_hook_ops));
- }
- 
- static int ila_xlat_addr(struct sk_buff *skb, bool sir2ila)
++		if (q->flows[outer_hash + k].set == CAKE_SET_BULK) {
++			if (allocate_src)
++				q->hosts[q->flows[reduced_hash].srchost].srchost_bulk_flow_count--;
++			if (allocate_dst)
++				q->hosts[q->flows[reduced_hash].dsthost].dsthost_bulk_flow_count--;
++		}
+ found:
+ 		/* reserve queue for future packets in same flow */
+ 		reduced_hash = outer_hash + k;
 
 
