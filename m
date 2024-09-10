@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D7E144D1A;
-	Tue, 10 Sep 2024 10:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1211E199FDD;
+	Tue, 10 Sep 2024 10:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963259; cv=none; b=IcoHm3a/XL1B0XgluFSMwZ8M/BQlb2bNHmHqgrNCwZpGt0amtFYuPi+U+jtAzfdoXAp9FgwuKDKtkel23zst9f2+698auoylPLWftHZyEuiqbXzqMlUHQcMc+U4yDfli7E6qFsN74beNvoN74Rn0Zg/Q+kpRxejDEYIyeSnTtno=
+	t=1725963263; cv=none; b=h720SZWaff8VT+oIois4BYuJB1dR8LDG7KRZEiGqa6T1etaLz5ilPu0/igFZ82yhKmXUTav/m4vqH0tE0qSn2zoJsNzc+lfN7vFspz1GvKYMMNlGAbMDXtl01xHOhl/zcue2t+a0S+dqWQFrMiEl704Ue72gmzuicAmGD+faqrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963259; c=relaxed/simple;
-	bh=5/ewN1PwmusyqIwQhhhrCDcU2cZzuoBQA/L86r18Pes=;
+	s=arc-20240116; t=1725963263; c=relaxed/simple;
+	bh=BQsIBGKgcU7J3Jvtu+ZTRMFzGKo655sRLZ6m2fnyX5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKHwX8Va/CZ2tZFZ4Kyaol2RQzG8jY5sY8i8OK7r5p2bk1z1ErstsHPVz4zAmxs+PRmiSoZnRxGvY0+wgRU1ilqwIyY4E4CaheEJBpSekOntb561uB+GyI2CiPooRpE0jI+C2SSVaBeRpBmuJVUF/QNURykx/r/F91btapzOVBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqCzKIv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQD4ThAvMlsYB5NYui89luDn41lYOn154phvMbopjwJvW5Wr9Cfbyvja1UjvDCxK3XSraIbE8yAi3xcABZ5JII0t4LQkPaS/pogwQ8nPQBw89tm2akMdswNvA1oLvzsNbn451w074yugJv7axszJhaKA//y4hJWLy51pHVw9oqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnUzYqRX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqCzKIv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA78C4CEC3;
-	Tue, 10 Sep 2024 10:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnUzYqRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADA2C4CEC6;
+	Tue, 10 Sep 2024 10:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963259;
-	bh=5/ewN1PwmusyqIwQhhhrCDcU2cZzuoBQA/L86r18Pes=;
+	s=korg; t=1725963262;
+	bh=BQsIBGKgcU7J3Jvtu+ZTRMFzGKo655sRLZ6m2fnyX5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqCzKIv9XHQ7VVZrtg1r8ETmWHovhWdo2cdkDQRxsaMX2M4rWEx20b2pc81dZtfQR
-	 Omzx+0s4EmdpnDira5BFyFWJ3ijsihPi/YTlLGAQyip0Wa1yos/I7vKakAW+3KZesG
-	 xySWb4KRPwbhEd38oF1WgZmJOqaiK+CE8a7qpGv4=
+	b=YnUzYqRXE83IkPWtj/Yfl7Spy4D+1SpF9wpHIfkoWuOg/S0PKXBrmZBV0OsfRFgsC
+	 QGOlAUXT0XD37a0FBp1geNYDsGpGTd2kS77grCGnFkVd/VREs4izlI2LCAYYUiTzX7
+	 ZgjTU4ojfMx2gmDyPPZqUeKkbwW2Alz5xmc5mDM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+958967f249155967d42a@syzkaller.appspotmail.com,
-	Yonghong Song <yhs@fb.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Diogo Jahchan Koike <djahchankoike@gmail.com>
-Subject: [PATCH 6.1 189/192] bpf: Silence a warning in btf_type_id_size()
-Date: Tue, 10 Sep 2024 11:33:33 +0200
-Message-ID: <20240910092605.575977092@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tomas Krcka <krckatom@amazon.de>
+Subject: [PATCH 6.1 190/192] memcg: protect concurrent access to mem_cgroup_idr
+Date: Tue, 10 Sep 2024 11:33:34 +0200
+Message-ID: <20240910092605.613147364@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -52,90 +55,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yhs@fb.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit e6c2f594ed961273479505b42040782820190305 upstream.
+commit 9972605a238339b85bd16b084eed5f18414d22db upstream.
 
-syzbot reported a warning in [1] with the following stacktrace:
-  WARNING: CPU: 0 PID: 5005 at kernel/bpf/btf.c:1988 btf_type_id_size+0x2d9/0x9d0 kernel/bpf/btf.c:1988
-  ...
-  RIP: 0010:btf_type_id_size+0x2d9/0x9d0 kernel/bpf/btf.c:1988
-  ...
-  Call Trace:
-   <TASK>
-   map_check_btf kernel/bpf/syscall.c:1024 [inline]
-   map_create+0x1157/0x1860 kernel/bpf/syscall.c:1198
-   __sys_bpf+0x127f/0x5420 kernel/bpf/syscall.c:5040
-   __do_sys_bpf kernel/bpf/syscall.c:5162 [inline]
-   __se_sys_bpf kernel/bpf/syscall.c:5160 [inline]
-   __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5160
-   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-   do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Commit 73f576c04b94 ("mm: memcontrol: fix cgroup creation failure after
+many small jobs") decoupled the memcg IDs from the CSS ID space to fix the
+cgroup creation failures.  It introduced IDR to maintain the memcg ID
+space.  The IDR depends on external synchronization mechanisms for
+modifications.  For the mem_cgroup_idr, the idr_alloc() and idr_replace()
+happen within css callback and thus are protected through cgroup_mutex
+from concurrent modifications.  However idr_remove() for mem_cgroup_idr
+was not protected against concurrency and can be run concurrently for
+different memcgs when they hit their refcnt to zero.  Fix that.
 
-With the following btf
-  [1] DECL_TAG 'a' type_id=4 component_idx=-1
-  [2] PTR '(anon)' type_id=0
-  [3] TYPE_TAG 'a' type_id=2
-  [4] VAR 'a' type_id=3, linkage=static
-and when the bpf_attr.btf_key_type_id = 1 (DECL_TAG),
-the following WARN_ON_ONCE in btf_type_id_size() is triggered:
-  if (WARN_ON_ONCE(!btf_type_is_modifier(size_type) &&
-                   !btf_type_is_var(size_type)))
-          return NULL;
+We have been seeing list_lru based kernel crashes at a low frequency in
+our fleet for a long time.  These crashes were in different part of
+list_lru code including list_lru_add(), list_lru_del() and reparenting
+code.  Upon further inspection, it looked like for a given object (dentry
+and inode), the super_block's list_lru didn't have list_lru_one for the
+memcg of that object.  The initial suspicions were either the object is
+not allocated through kmem_cache_alloc_lru() or somehow
+memcg_list_lru_alloc() failed to allocate list_lru_one() for a memcg but
+returned success.  No evidence were found for these cases.
 
-Note that 'return NULL' is the correct behavior as we don't want
-a DECL_TAG type to be used as a btf_{key,value}_type_id even
-for the case like 'DECL_TAG -> STRUCT'. So there
-is no correctness issue here, we just want to silence warning.
+Looking more deeply, we started seeing situations where valid memcg's id
+is not present in mem_cgroup_idr and in some cases multiple valid memcgs
+have same id and mem_cgroup_idr is pointing to one of them.  So, the most
+reasonable explanation is that these situations can happen due to race
+between multiple idr_remove() calls or race between
+idr_alloc()/idr_replace() and idr_remove().  These races are causing
+multiple memcgs to acquire the same ID and then offlining of one of them
+would cleanup list_lrus on the system for all of them.  Later access from
+other memcgs to the list_lru cause crashes due to missing list_lru_one.
 
-To silence the warning, I added DECL_TAG as one of kinds in
-btf_type_nosize() which will cause btf_type_id_size() returning
-NULL earlier without the warning.
-
-  [1] https://lore.kernel.org/bpf/000000000000e0df8d05fc75ba86@google.com/
-
-Reported-by: syzbot+958967f249155967d42a@syzkaller.appspotmail.com
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230530205029.264910-1-yhs@fb.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Diogo Jahchan Koike <djahchankoike@gmail.com>
+Link: https://lkml.kernel.org/r/20240802235822.1830976-1-shakeel.butt@linux.dev
+Fixes: 73f576c04b94 ("mm: memcontrol: fix cgroup creation failure after many small jobs")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adapted over commit 6f0df8e16eb5 ("memcontrol: ensure memcg acquired by id is
+  properly set up") not in the tree ]
+Signed-off-by: Tomas Krcka <krckatom@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/btf.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ mm/memcontrol.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -466,10 +466,16 @@ static bool btf_type_is_fwd(const struct
- 	return BTF_INFO_KIND(t->info) == BTF_KIND_FWD;
- }
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -5143,11 +5143,28 @@ static struct cftype mem_cgroup_legacy_f
+  */
  
-+static bool btf_type_is_decl_tag(const struct btf_type *t)
-+{
-+	return BTF_INFO_KIND(t->info) == BTF_KIND_DECL_TAG;
-+}
+ static DEFINE_IDR(mem_cgroup_idr);
++static DEFINE_SPINLOCK(memcg_idr_lock);
 +
- static bool btf_type_nosize(const struct btf_type *t)
- {
- 	return btf_type_is_void(t) || btf_type_is_fwd(t) ||
--	       btf_type_is_func(t) || btf_type_is_func_proto(t);
-+	       btf_type_is_func(t) || btf_type_is_func_proto(t) ||
-+	       btf_type_is_decl_tag(t);
- }
++static int mem_cgroup_alloc_id(void)
++{
++	int ret;
++
++	idr_preload(GFP_KERNEL);
++	spin_lock(&memcg_idr_lock);
++	ret = idr_alloc(&mem_cgroup_idr, NULL, 1, MEM_CGROUP_ID_MAX + 1,
++			GFP_NOWAIT);
++	spin_unlock(&memcg_idr_lock);
++	idr_preload_end();
++	return ret;
++}
  
- static bool btf_type_nosize_or_null(const struct btf_type *t)
-@@ -492,11 +498,6 @@ static bool btf_type_is_datasec(const st
- 	return BTF_INFO_KIND(t->info) == BTF_KIND_DATASEC;
- }
- 
--static bool btf_type_is_decl_tag(const struct btf_type *t)
--{
--	return BTF_INFO_KIND(t->info) == BTF_KIND_DECL_TAG;
--}
--
- static bool btf_type_is_decl_tag_target(const struct btf_type *t)
+ static void mem_cgroup_id_remove(struct mem_cgroup *memcg)
  {
- 	return btf_type_is_func(t) || btf_type_is_struct(t) ||
+ 	if (memcg->id.id > 0) {
++		spin_lock(&memcg_idr_lock);
+ 		idr_remove(&mem_cgroup_idr, memcg->id.id);
++		spin_unlock(&memcg_idr_lock);
++
+ 		memcg->id.id = 0;
+ 	}
+ }
+@@ -5270,8 +5287,7 @@ static struct mem_cgroup *mem_cgroup_all
+ 	if (!memcg)
+ 		return ERR_PTR(error);
+ 
+-	memcg->id.id = idr_alloc(&mem_cgroup_idr, NULL,
+-				 1, MEM_CGROUP_ID_MAX + 1, GFP_KERNEL);
++	memcg->id.id = mem_cgroup_alloc_id();
+ 	if (memcg->id.id < 0) {
+ 		error = memcg->id.id;
+ 		goto fail;
+@@ -5316,7 +5332,9 @@ static struct mem_cgroup *mem_cgroup_all
+ 	INIT_LIST_HEAD(&memcg->deferred_split_queue.split_queue);
+ 	memcg->deferred_split_queue.split_queue_len = 0;
+ #endif
++	spin_lock(&memcg_idr_lock);
+ 	idr_replace(&mem_cgroup_idr, memcg, memcg->id.id);
++	spin_unlock(&memcg_idr_lock);
+ 	lru_gen_init_memcg(memcg);
+ 	return memcg;
+ fail:
 
 
