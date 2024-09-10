@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7081A14D431;
-	Tue, 10 Sep 2024 09:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309AC18A6D2;
+	Tue, 10 Sep 2024 09:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961679; cv=none; b=W4FsUVz+o68EJqBto6/p1oJUtwBZwjJh+AZrgNXL54wmCAO2hnOsxWBNiXv3Bw453Rf5107WHsn14WGFf465EIE6edycDdoi+jWZ2mlryxRMqS9pUo4tzxcfEqL6QviooZ9Ud+fIpRsRRh8rtBafaHvbUPlghOW15vvzA4S1mBo=
+	t=1725961682; cv=none; b=IpOEWP39bipnzOQ21xVwSDmvTbHMm0uE13uwYiJwdGdOPsUi54oWe2BtboSglQyZS76Vt0wPZ2pVMKNFOfbjgXP2CQj8PtUtRjdgPhpoRveFAbtg6d2eUKQrHhBRtK/JxpQVIIsCGLgLP+UdZcJEnKhMkfTohhwkUCbpwlxJNQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961679; c=relaxed/simple;
-	bh=awxfpA49x9lHnxEzT92iu1qaCjXyPCcZkUvjLcZ1xM8=;
+	s=arc-20240116; t=1725961682; c=relaxed/simple;
+	bh=T57nclyuoISE1CquRsqgWhSFuTtZnh+dn5Ml7DrP9NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPLG4whwobNsM0zg0j6uBpoBiqj5OzaSfXd9/zSUgdJqLt5LLPxgkWbg0fGaObYhHiHysFeJMYQN3CMqKMdLpKvApMOIBUQaAqrk9ZyGGOSjV6I3ZtUBE8VcteQAnhWA8Dl/OW7AlgDIAwiUzWQY7sLMbdxg6I9Xn2e+SAzOrc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8tTTEty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q2Q1uG+cXKQZglgkbDDKwAhvy82BayjyzVAgRrTT6/dr4upvAH2VHEkWBMjY4MfBm97PX27tIUDwLrzKvjcqXh1gDMuTOfWPxgj30o4cEE4kVcTd7szzIL7/dq0s7E7Muw9U6gJbLh9JbFsf3l26fMieWfx7afz3OKS9ygAWA6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzQ/4nf/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8tTTEty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A56C4CEC3;
-	Tue, 10 Sep 2024 09:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzQ/4nf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7CBC4CEC6;
+	Tue, 10 Sep 2024 09:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961679;
-	bh=awxfpA49x9lHnxEzT92iu1qaCjXyPCcZkUvjLcZ1xM8=;
+	s=korg; t=1725961682;
+	bh=T57nclyuoISE1CquRsqgWhSFuTtZnh+dn5Ml7DrP9NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8tTTEtyGm4jkjEzSYXY8xHXRnOElGD1i8hT4EMIB4XzQ/CvUOmjRmzkRikjym0io
-	 bu2mxAfinCJHoh73t8pJwbTqs5V1M/c4qvwD/b4cgQtWdHL/8OrGGkXUoy46xOpCxm
-	 FCaxCBFirDvJMKzcqffX7x0lxZ0VLVT46zvuzbmQ=
+	b=MzQ/4nf/4CcSh/SUuLhb84iB+XroYq0492acj1jlE6bNERJYaWzA9zICsIXXrcn7X
+	 ZBoZPOwBrfTgWts21yDd7BT9MU5HJJ2vNvdy5sGloSSGWv4ID9kiQGX/rV7vIDIogU
+	 cQrTcldJNKFtH6ln9ijvD29j8ICz6XSOHDP9Y+NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 134/375] powerpc/rtas: Prevent Spectre v1 gadget construction in sys_rtas()
-Date: Tue, 10 Sep 2024 11:28:51 +0200
-Message-ID: <20240910092626.938549146@linuxfoundation.org>
+Subject: [PATCH 6.10 152/375] can: m_can: disable_all_interrupts, not clear active_interrupts
+Date: Tue, 10 Sep 2024 11:29:09 +0200
+Message-ID: <20240910092627.576722865@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,54 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit 0974d03eb479384466d828d65637814bee6b26d7 ]
+[ Upstream commit a572fea86c9b06cd3e6e89d79d565b52cb7e7cff ]
 
-Smatch warns:
+active_interrupts is a cache for the enabled interrupts and not the
+global masking of interrupts. Do not clear this variable otherwise we
+may loose the state of the interrupts.
 
-  arch/powerpc/kernel/rtas.c:1932 __do_sys_rtas() warn: potential
-  spectre issue 'args.args' [r] (local cap)
-
-The 'nargs' and 'nret' locals come directly from a user-supplied
-buffer and are used as indexes into a small stack-based array and as
-inputs to copy_to_user() after they are subject to bounds checks.
-
-Use array_index_nospec() after the bounds checks to clamp these values
-for speculative execution.
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reported-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240530-sys_rtas-nargs-nret-v1-1-129acddd4d89@linux.ibm.com
+Fixes: 07f25091ca02 ("can: m_can: Implement receive coalescing")
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://lore.kernel.org/all/20240805183047.305630-6-msp@baylibre.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/can/m_can/m_can.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
-index 8064d9c3de86..f7e86e09c49f 100644
---- a/arch/powerpc/kernel/rtas.c
-+++ b/arch/powerpc/kernel/rtas.c
-@@ -19,6 +19,7 @@
- #include <linux/lockdep.h>
- #include <linux/memblock.h>
- #include <linux/mutex.h>
-+#include <linux/nospec.h>
- #include <linux/of.h>
- #include <linux/of_fdt.h>
- #include <linux/reboot.h>
-@@ -1916,6 +1917,9 @@ SYSCALL_DEFINE1(rtas, struct rtas_args __user *, uargs)
- 	    || nargs + nret > ARRAY_SIZE(args.args))
- 		return -EINVAL;
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index d15655df6393..073842ab210d 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -449,7 +449,6 @@ static inline void m_can_disable_all_interrupts(struct m_can_classdev *cdev)
+ {
+ 	m_can_coalescing_disable(cdev);
+ 	m_can_write(cdev, M_CAN_ILE, 0x0);
+-	cdev->active_interrupts = 0x0;
  
-+	nargs = array_index_nospec(nargs, ARRAY_SIZE(args.args));
-+	nret = array_index_nospec(nret, ARRAY_SIZE(args.args) - nargs);
-+
- 	/* Copy in args. */
- 	if (copy_from_user(args.args, uargs->args,
- 			   nargs * sizeof(rtas_arg_t)) != 0)
+ 	if (!cdev->net->irq) {
+ 		dev_dbg(cdev->dev, "Stop hrtimer\n");
 -- 
 2.43.0
 
