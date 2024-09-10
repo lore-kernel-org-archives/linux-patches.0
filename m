@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16B0183CB0;
-	Tue, 10 Sep 2024 09:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70AC18F2F9;
+	Tue, 10 Sep 2024 09:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961643; cv=none; b=iP7yiRXMjEqObEJJeSHw+6RDIhrYq5yWIMyzlLmjzf77DOTa8T4Gj2xwj2xx9M3fCmQsrx1TUe8U4xYexadh+Q3XWBtlgbuZy9fcTf4ZUPFmKnm1zscfu6FLsJTaXiqf+etiWRBVWyFXuMsZ+M3SZ0LLPyBdS+O0txI5Vzq2+/o=
+	t=1725961646; cv=none; b=syiO24eaJOuJT1bkZpZU9IdYrty/44n5tRqZPjYiTR+3GhLt7FUL6+UDdUnX3VF52joSyTcicGoCexC1DM5uaJysccq+hVnuwOXFZljmGQJpkyTt2XP718unMErpjjBeh4L3sA+D8HIvuMiiDIItnMaQKPgOaf6QchzmFp40LFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961643; c=relaxed/simple;
-	bh=uQpgVo7RTLr5ry9Gqbgs69JAKFwIAXcrD3ZfRxWL+jU=;
+	s=arc-20240116; t=1725961646; c=relaxed/simple;
+	bh=nGl+EPYMZJt4rXSrEpEQ3SSmQyk/6+oUDt9D6i7P9mY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcYWiVI538uoXO7BSXVyFBiqYBOXu50z+h78O08cssx+Bn1D2cfXutO4ZL5QxpZhn3+bXc9cYXTulLM+nW0HGzqFAEKXXTfhY3tqYWOV+Q9q8BKVEJlSpoR1kZ4wlnrAuXYT82cQkbI63EAMbT3P8OZqIdgGnFe0b3yFJ8wuMZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pswU86vK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBV61QoSWV+IjkagaUqLL8svxrUUDjHR3Dk9N3OxLMdmxCyrQGYCBa7kYsVATQH+FBUqf4IPQUSKkSTh3OTol+dHjGz3WXFCxocCz8tGNBFVquaizug8pBAb1GjfkPZyk924syq2EFEbe/lysS/fD2GnC9p5NEfQRVhBb7FnCr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4moKbzf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pswU86vK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D9EC4CEC3;
-	Tue, 10 Sep 2024 09:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4moKbzf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47135C4CEC6;
+	Tue, 10 Sep 2024 09:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961643;
-	bh=uQpgVo7RTLr5ry9Gqbgs69JAKFwIAXcrD3ZfRxWL+jU=;
+	s=korg; t=1725961646;
+	bh=nGl+EPYMZJt4rXSrEpEQ3SSmQyk/6+oUDt9D6i7P9mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pswU86vKhGKva0nu3+QvNjQNUc9jhqyplLf1PzES3yilW0waRWo0a+dZyzOGhr366
-	 L2PyX+bt2NPFVNSrPm/sUFh16/TwBuBnODnX6hrgJvrd6b843nV+geHSoMqofAGOVa
-	 EkkQjh4YUISzKzU3bT3hofSQk/wUB4pRiqzkCavs=
+	b=X4moKbzfk9wW9P+dlJ5Ym/ndmPLsx5efVbYFF8TELfPbLPyDTFqs06YHPxx3O7dlG
+	 IZu7937acPBCQmxdRSDpKtdNb2L/xQiM4RpvYLPAIJ4C6KTRGRWRv+Xg9TozPvnjOV
+	 RUujXLc3zDzNRdGWBcBjwa8wsCwPWUk2Ext+LqFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 102/375] ELF: fix kernel.randomize_va_space double read
-Date: Tue, 10 Sep 2024 11:28:19 +0200
-Message-ID: <20240910092625.695301340@linuxfoundation.org>
+Subject: [PATCH 6.10 133/375] fs: relax permissions for statmount()
+Date: Tue, 10 Sep 2024 11:28:50 +0200
+Message-ID: <20240910092626.903119072@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,47 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 2a97388a807b6ab5538aa8f8537b2463c6988bd2 ]
+[ Upstream commit f3107df39df123328a9d3c8f40c006834b37287d ]
 
-ELF loader uses "randomize_va_space" twice. It is sysctl and can change
-at any moment, so 2 loads could see 2 different values in theory with
-unpredictable consequences.
+It is sufficient to have capabilities in the owning user namespace of
+the mount namespace to stat a mount regardless of whether it's reachable
+or not.
 
-Issue exactly one load for consistent value across one exec.
-
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Link: https://lore.kernel.org/r/3329905c-7eb8-400a-8f0a-d87cff979b5b@p183
-Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/bf5961d71ec479ba85806766b0d8d96043e67bba.1719243756.git.josef@toxicpanda.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_elf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/namespace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
-index a43897b03ce9..777405719de8 100644
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -1003,7 +1003,8 @@ static int load_elf_binary(struct linux_binprm *bprm)
- 	if (elf_read_implies_exec(*elf_ex, executable_stack))
- 		current->personality |= READ_IMPLIES_EXEC;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 57311ecbdf5a..4494064205a6 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4906,6 +4906,7 @@ static int copy_statmount_to_user(struct kstatmount *s)
+ static int do_statmount(struct kstatmount *s)
+ {
+ 	struct mount *m = real_mount(s->mnt);
++	struct mnt_namespace *ns = m->mnt_ns;
+ 	int err;
  
--	if (!(current->personality & ADDR_NO_RANDOMIZE) && randomize_va_space)
-+	const int snapshot_randomize_va_space = READ_ONCE(randomize_va_space);
-+	if (!(current->personality & ADDR_NO_RANDOMIZE) && snapshot_randomize_va_space)
- 		current->flags |= PF_RANDOMIZE;
+ 	/*
+@@ -4913,7 +4914,7 @@ static int do_statmount(struct kstatmount *s)
+ 	 * mounts to show users.
+ 	 */
+ 	if (!is_path_reachable(m, m->mnt.mnt_root, &s->root) &&
+-	    !ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN))
++	    !ns_capable_noaudit(ns->user_ns, CAP_SYS_ADMIN))
+ 		return -EPERM;
  
- 	setup_new_exec(bprm);
-@@ -1251,7 +1252,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
- 	mm->end_data = end_data;
- 	mm->start_stack = bprm->p;
- 
--	if ((current->flags & PF_RANDOMIZE) && (randomize_va_space > 1)) {
-+	if ((current->flags & PF_RANDOMIZE) && (snapshot_randomize_va_space > 1)) {
- 		/*
- 		 * For architectures with ELF randomization, when executing
- 		 * a loader directly (i.e. no interpreter listed in ELF
+ 	err = security_sb_statfs(s->mnt->mnt_root);
 -- 
 2.43.0
 
