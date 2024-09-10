@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040E6EEC9;
-	Tue, 10 Sep 2024 09:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927B17BEAE;
+	Tue, 10 Sep 2024 09:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962299; cv=none; b=H3oIEFN9+1uE37LfdTVs953I8EwcpuNvYfY+W19nIUrS3JxTH4CVws+fC8irivXa+/56vBKUruaj1SUB9IxWId+oUdY94vvAVfBsnb3gEcT1YGTvhgyqCtM+dgMr3Ebw4ZloACJ+fs07TvCwbcEjCVKDO2oLQ1br9NU6I8QStb4=
+	t=1725962301; cv=none; b=bsqoHgxKNwRGkpWb0jclu/6HkXPzYAOhQBupDl2Umad2ALKy07ILh8xEw/oef4gY39AY184KIAk3rNJlTYWNwcn7xu2DLVxeW9PiRo51w+CTXnc+JE/Dam6Aaj2sfiLLNdpJ+sp9R4K/r4ZW/CMx61oub03p1hpO2slqi4SfTcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962299; c=relaxed/simple;
-	bh=HECrWKUQsX9A7GhIvMCsLCu0FKRponCk6uTXaHZKBa8=;
+	s=arc-20240116; t=1725962301; c=relaxed/simple;
+	bh=AJPoBcw23VNzAXCIiEEQNEeHjlkcIqc5VzJ3ifWhQhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KT3hG0cNfmkaOYZ6Qrcsb2YYEs1VZAZ5OTcBWg1V47WJuXJyUsYOAjMJLbVsFXU43HN3bqXhdYpVwZgusJOUh+UdyhkzvzGG6DeAzNpUzgCoqzQMIIS5hVHwQDAtySPAAsSwQmSBEVd8v5QTx7BxMmtGtCuyVZKroBBRdtfyb98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ4FbIKD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NkPN38w/8l3cTDSY0ongdnLx0URqrzOf60MrL71LrK9ofA1/CIJB/0Z59hsrM2FHvoNzjkZwgEFjGOfXGJmW5L0bxKWY/LQs3H4qN2XMwvx1Yipisyzjp6uyHRfVQJ4eeL/0E9/1Ii0mr12zILU1pfP93sIBDRf9a2GyGANRQ5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+ksN+ZW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ4FbIKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2159EC4CEC3;
-	Tue, 10 Sep 2024 09:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+ksN+ZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101CFC4CEC3;
+	Tue, 10 Sep 2024 09:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962298;
-	bh=HECrWKUQsX9A7GhIvMCsLCu0FKRponCk6uTXaHZKBa8=;
+	s=korg; t=1725962301;
+	bh=AJPoBcw23VNzAXCIiEEQNEeHjlkcIqc5VzJ3ifWhQhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZ4FbIKDkq6UFkBjyg+RaCqiT8lFWOiMGjp9g252EN4Snna49+AwCzN3QQkEZjTEC
-	 KyJL3OWWx8Nb3mCfeJZk/sBgM++CcRs6AES+UYEIxT4x12C7fRUtgwYAoqn1YDR60y
-	 8cBnLrd96Fpfrvfqud5hjHdVh7f4SkXqokwB/nqI=
+	b=o+ksN+ZWC0yH4Y/gQrj+gV4A5M7kg/gh3oHuzCRKdVcNCOrASLcq47/xGVXPlnXek
+	 6PDiLq/qqE5mEDA1WlqRWdcsQwUvhlZ3iGxoPK9faFVkg4z0nIHuJ/zg1j9MTErFVM
+	 lAOf5sOQDkEajzVtFjIFqwmjHgvXWiKkGyopQoP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	syzbot+cfbcb82adf6d7279fd35@syzkaller.appspotmail.com,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 362/375] riscv: Fix RISCV_ALTERNATIVE_EARLY
-Date: Tue, 10 Sep 2024 11:32:39 +0200
-Message-ID: <20240910092634.777296413@linuxfoundation.org>
+Subject: [PATCH 6.10 363/375] cifs: Fix zero_point init on inode initialisation
+Date: Tue, 10 Sep 2024 11:32:40 +0200
+Message-ID: <20240910092634.816997553@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,260 +57,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 1ff95eb2bebda50c4c5406caaf201e0fcb24cc8f ]
+[ Upstream commit 517b58c1f9242a6b4ac9443d95569dee58bf6b8b ]
 
-RISCV_ALTERNATIVE_EARLY will issue sbi_ecall() very early in the boot
-process, before the first memory mapping is setup so we can't have any
-instrumentation happening here.
+Fix cifs_fattr_to_inode() such that the ->zero_point tracking variable
+is initialised when the inode is initialised.
 
-In addition, when the kernel is relocatable, we must also not issue any
-relocation this early since they would have been patched virtually only.
-
-So, instead of disabling instrumentation for the whole kernel/sbi.c file
-and compiling it with -fno-pie, simply move __sbi_ecall() and
-__sbi_base_ecall() into their own file where this is fixed.
-
-Reported-by: Conor Dooley <conor.dooley@microchip.com>
-Closes: https://lore.kernel.org/linux-riscv/20240813-pony-truck-3e7a83e9759e@spud/
-Reported-by: syzbot+cfbcb82adf6d7279fd35@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-riscv/00000000000065062c061fcec37b@google.com/
-Fixes: 1745cfafebdf ("riscv: don't use global static vars to store alternative data")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240829165048.49756-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+cc: linux-mm@kvack.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/sbi.h  | 20 ++++++++++-
- arch/riscv/kernel/Makefile    |  6 +++-
- arch/riscv/kernel/sbi.c       | 63 -----------------------------------
- arch/riscv/kernel/sbi_ecall.c | 48 ++++++++++++++++++++++++++
- 4 files changed, 72 insertions(+), 65 deletions(-)
- create mode 100644 arch/riscv/kernel/sbi_ecall.c
+ fs/smb/client/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/include/asm/sbi.h b/arch/riscv/include/asm/sbi.h
-index 7cffd4ffecd0..7bd3746028c9 100644
---- a/arch/riscv/include/asm/sbi.h
-+++ b/arch/riscv/include/asm/sbi.h
-@@ -9,6 +9,7 @@
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index dd0afa23734c..73e2e6c230b7 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -172,6 +172,8 @@ cifs_fattr_to_inode(struct inode *inode, struct cifs_fattr *fattr,
+ 		CIFS_I(inode)->time = 0; /* force reval */
+ 		return -ESTALE;
+ 	}
++	if (inode->i_state & I_NEW)
++		CIFS_I(inode)->netfs.zero_point = fattr->cf_eof;
  
- #include <linux/types.h>
- #include <linux/cpumask.h>
-+#include <linux/jump_label.h>
+ 	cifs_revalidate_cache(inode, fattr);
  
- #ifdef CONFIG_RISCV_SBI
- enum sbi_ext_id {
-@@ -304,6 +305,7 @@ struct sbiret {
- };
- 
- void sbi_init(void);
-+long __sbi_base_ecall(int fid);
- struct sbiret __sbi_ecall(unsigned long arg0, unsigned long arg1,
- 			  unsigned long arg2, unsigned long arg3,
- 			  unsigned long arg4, unsigned long arg5,
-@@ -373,7 +375,23 @@ static inline unsigned long sbi_mk_version(unsigned long major,
- 		| (minor & SBI_SPEC_VERSION_MINOR_MASK);
- }
- 
--int sbi_err_map_linux_errno(int err);
-+static inline int sbi_err_map_linux_errno(int err)
-+{
-+	switch (err) {
-+	case SBI_SUCCESS:
-+		return 0;
-+	case SBI_ERR_DENIED:
-+		return -EPERM;
-+	case SBI_ERR_INVALID_PARAM:
-+		return -EINVAL;
-+	case SBI_ERR_INVALID_ADDRESS:
-+		return -EFAULT;
-+	case SBI_ERR_NOT_SUPPORTED:
-+	case SBI_ERR_FAILURE:
-+	default:
-+		return -ENOTSUPP;
-+	};
-+}
- 
- extern bool sbi_debug_console_available;
- int sbi_debug_console_write(const char *bytes, unsigned int num_bytes);
-diff --git a/arch/riscv/kernel/Makefile b/arch/riscv/kernel/Makefile
-index 5b243d46f4b1..1d71002e4f7b 100644
---- a/arch/riscv/kernel/Makefile
-+++ b/arch/riscv/kernel/Makefile
-@@ -20,17 +20,21 @@ endif
- ifdef CONFIG_RISCV_ALTERNATIVE_EARLY
- CFLAGS_alternative.o := -mcmodel=medany
- CFLAGS_cpufeature.o := -mcmodel=medany
-+CFLAGS_sbi_ecall.o := -mcmodel=medany
- ifdef CONFIG_FTRACE
- CFLAGS_REMOVE_alternative.o = $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_cpufeature.o = $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
- endif
- ifdef CONFIG_RELOCATABLE
- CFLAGS_alternative.o += -fno-pie
- CFLAGS_cpufeature.o += -fno-pie
-+CFLAGS_sbi_ecall.o += -fno-pie
- endif
- ifdef CONFIG_KASAN
- KASAN_SANITIZE_alternative.o := n
- KASAN_SANITIZE_cpufeature.o := n
-+KASAN_SANITIZE_sbi_ecall.o := n
- endif
- endif
- 
-@@ -86,7 +90,7 @@ obj-$(CONFIG_DYNAMIC_FTRACE)	+= mcount-dyn.o
- 
- obj-$(CONFIG_PERF_EVENTS)	+= perf_callchain.o
- obj-$(CONFIG_HAVE_PERF_REGS)	+= perf_regs.o
--obj-$(CONFIG_RISCV_SBI)		+= sbi.o
-+obj-$(CONFIG_RISCV_SBI)		+= sbi.o sbi_ecall.o
- ifeq ($(CONFIG_RISCV_SBI), y)
- obj-$(CONFIG_SMP)		+= sbi-ipi.o
- obj-$(CONFIG_SMP) += cpu_ops_sbi.o
-diff --git a/arch/riscv/kernel/sbi.c b/arch/riscv/kernel/sbi.c
-index 837bdab2601b..1989b8cade1b 100644
---- a/arch/riscv/kernel/sbi.c
-+++ b/arch/riscv/kernel/sbi.c
-@@ -14,9 +14,6 @@
- #include <asm/smp.h>
- #include <asm/tlbflush.h>
- 
--#define CREATE_TRACE_POINTS
--#include <asm/trace.h>
--
- /* default SBI version is 0.1 */
- unsigned long sbi_spec_version __ro_after_init = SBI_SPEC_VERSION_DEFAULT;
- EXPORT_SYMBOL(sbi_spec_version);
-@@ -27,55 +24,6 @@ static int (*__sbi_rfence)(int fid, const struct cpumask *cpu_mask,
- 			   unsigned long start, unsigned long size,
- 			   unsigned long arg4, unsigned long arg5) __ro_after_init;
- 
--struct sbiret __sbi_ecall(unsigned long arg0, unsigned long arg1,
--			  unsigned long arg2, unsigned long arg3,
--			  unsigned long arg4, unsigned long arg5,
--			  int fid, int ext)
--{
--	struct sbiret ret;
--
--	trace_sbi_call(ext, fid);
--
--	register uintptr_t a0 asm ("a0") = (uintptr_t)(arg0);
--	register uintptr_t a1 asm ("a1") = (uintptr_t)(arg1);
--	register uintptr_t a2 asm ("a2") = (uintptr_t)(arg2);
--	register uintptr_t a3 asm ("a3") = (uintptr_t)(arg3);
--	register uintptr_t a4 asm ("a4") = (uintptr_t)(arg4);
--	register uintptr_t a5 asm ("a5") = (uintptr_t)(arg5);
--	register uintptr_t a6 asm ("a6") = (uintptr_t)(fid);
--	register uintptr_t a7 asm ("a7") = (uintptr_t)(ext);
--	asm volatile ("ecall"
--		      : "+r" (a0), "+r" (a1)
--		      : "r" (a2), "r" (a3), "r" (a4), "r" (a5), "r" (a6), "r" (a7)
--		      : "memory");
--	ret.error = a0;
--	ret.value = a1;
--
--	trace_sbi_return(ext, ret.error, ret.value);
--
--	return ret;
--}
--EXPORT_SYMBOL(__sbi_ecall);
--
--int sbi_err_map_linux_errno(int err)
--{
--	switch (err) {
--	case SBI_SUCCESS:
--		return 0;
--	case SBI_ERR_DENIED:
--		return -EPERM;
--	case SBI_ERR_INVALID_PARAM:
--		return -EINVAL;
--	case SBI_ERR_INVALID_ADDRESS:
--		return -EFAULT;
--	case SBI_ERR_NOT_SUPPORTED:
--	case SBI_ERR_FAILURE:
--	default:
--		return -ENOTSUPP;
--	};
--}
--EXPORT_SYMBOL(sbi_err_map_linux_errno);
--
- #ifdef CONFIG_RISCV_SBI_V01
- static unsigned long __sbi_v01_cpumask_to_hartmask(const struct cpumask *cpu_mask)
- {
-@@ -535,17 +483,6 @@ long sbi_probe_extension(int extid)
- }
- EXPORT_SYMBOL(sbi_probe_extension);
- 
--static long __sbi_base_ecall(int fid)
--{
--	struct sbiret ret;
--
--	ret = sbi_ecall(SBI_EXT_BASE, fid, 0, 0, 0, 0, 0, 0);
--	if (!ret.error)
--		return ret.value;
--	else
--		return sbi_err_map_linux_errno(ret.error);
--}
--
- static inline long sbi_get_spec_version(void)
- {
- 	return __sbi_base_ecall(SBI_EXT_BASE_GET_SPEC_VERSION);
-diff --git a/arch/riscv/kernel/sbi_ecall.c b/arch/riscv/kernel/sbi_ecall.c
-new file mode 100644
-index 000000000000..24aabb4fbde3
---- /dev/null
-+++ b/arch/riscv/kernel/sbi_ecall.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright (c) 2024 Rivos Inc. */
-+
-+#include <asm/sbi.h>
-+#define CREATE_TRACE_POINTS
-+#include <asm/trace.h>
-+
-+long __sbi_base_ecall(int fid)
-+{
-+	struct sbiret ret;
-+
-+	ret = sbi_ecall(SBI_EXT_BASE, fid, 0, 0, 0, 0, 0, 0);
-+	if (!ret.error)
-+		return ret.value;
-+	else
-+		return sbi_err_map_linux_errno(ret.error);
-+}
-+EXPORT_SYMBOL(__sbi_base_ecall);
-+
-+struct sbiret __sbi_ecall(unsigned long arg0, unsigned long arg1,
-+			  unsigned long arg2, unsigned long arg3,
-+			  unsigned long arg4, unsigned long arg5,
-+			  int fid, int ext)
-+{
-+	struct sbiret ret;
-+
-+	trace_sbi_call(ext, fid);
-+
-+	register uintptr_t a0 asm ("a0") = (uintptr_t)(arg0);
-+	register uintptr_t a1 asm ("a1") = (uintptr_t)(arg1);
-+	register uintptr_t a2 asm ("a2") = (uintptr_t)(arg2);
-+	register uintptr_t a3 asm ("a3") = (uintptr_t)(arg3);
-+	register uintptr_t a4 asm ("a4") = (uintptr_t)(arg4);
-+	register uintptr_t a5 asm ("a5") = (uintptr_t)(arg5);
-+	register uintptr_t a6 asm ("a6") = (uintptr_t)(fid);
-+	register uintptr_t a7 asm ("a7") = (uintptr_t)(ext);
-+	asm volatile ("ecall"
-+		       : "+r" (a0), "+r" (a1)
-+		       : "r" (a2), "r" (a3), "r" (a4), "r" (a5), "r" (a6), "r" (a7)
-+		       : "memory");
-+	ret.error = a0;
-+	ret.value = a1;
-+
-+	trace_sbi_return(ext, ret.error, ret.value);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL(__sbi_ecall);
 -- 
 2.43.0
 
