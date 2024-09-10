@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B7B186E4B;
-	Tue, 10 Sep 2024 09:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFED18EFF9;
+	Tue, 10 Sep 2024 09:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962049; cv=none; b=WnI13drdOQu8Wpg5CoID/0Cmfi1QZiCNa9hWGzRyeReaz3JsE7SeVbNHRiWq8Mqn6RRal3XQ7yJ5qidmizk0phdLLG7REW2vVzqwmzY5tqO0TbnzBRAhS8bJlD3mAM/gd2rzsFtlNaXnTe8sW6QwNPqHhpH4RNAE/+1ewor0QrM=
+	t=1725962052; cv=none; b=gc9PQqHuj5rzLJFZOsa06AEA1l/jSHlkVvaJpPXNOfsAQaSeBUybsUeE5XOAD0r71zUViedijHeUIBolQ0i2+gT6PncZKSX2WGDXoIzPNxLvK1Fn5nGlzivzpbVTGb/YeGb5lf9Z9Nbtom5NUeqkTQt60X5GrONgZ2ArSYxlDXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962049; c=relaxed/simple;
-	bh=wuFwNbC1CGuNsjQx1ytw5JHtKGyvFTbUsPQcSD1iPk4=;
+	s=arc-20240116; t=1725962052; c=relaxed/simple;
+	bh=dtp3Xo1p3wUy/eE+p1AsOIITrQ44uD2BFwQJk0qA334=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lzPvGfuyqj2lZXAncCIpJkS8bRGsjrEcT9UTNiu4qElOUZkSUttQCzrjiXCoOa4Yh+eo9Sa8G2weeMb1+8uh/cNF2Sp1EgqaNwE1VCsRkqdFZvVSvqnuLMXj54FSREIXY5jBvEWxrzQeu26dOVk0/gw3FTQNNKtmKbFvapeV7BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0Wr+I/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aGvKjr+pjrA5w75o0ybaw5lJwd3Nt5oUZY9cjWVR1TzRu5+x6ANF3qCoBtJ0oTg6WH4+wpzygTxsm2EgiaCLmksiH3dnThLPLUGUacKPewukGj0m3XWjEEAoTDNiRuUi7iZr6KwjEtMna6FERtQ9q/XtfHpfil/aYp0ycg1YgWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAeczxi4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0Wr+I/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31E9C4CEC6;
-	Tue, 10 Sep 2024 09:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAeczxi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5D6C4CED4;
+	Tue, 10 Sep 2024 09:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962049;
-	bh=wuFwNbC1CGuNsjQx1ytw5JHtKGyvFTbUsPQcSD1iPk4=;
+	s=korg; t=1725962052;
+	bh=dtp3Xo1p3wUy/eE+p1AsOIITrQ44uD2BFwQJk0qA334=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0Wr+I/2Edg6vOs5sjJKkEMfGT2PYVT9Q2UbAwrx81ZbkevtLGMMCRXkgOx4lN23J
-	 kCCoM2yz6riXVtuuthUGAIszuwNNUUhlxhT9OS96RtUFf/7QaED6+lnpxsXy6XMSDg
-	 y8l0da5iDppeiGqXwiG6gnvP4Pw2BmlI4IdQJv9M=
+	b=uAeczxi4g+IuTT8yY6dDX5afcp2YWYCTno0kW3OK+cgfXEG2QYwqSb0fvZZiv822w
+	 R1c5cF2Qcscwc0/0maBX8u6v6f6ZcPi7Wd1wAMfbiDjT2SvchCx/aW2bRl6IyaxJgr
+	 IZKE7rYlTBK1OreypYVvXnf3TVycR8vH7oao9Mw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 277/375] smb/server: fix potential null-ptr-deref of lease_ctx_info in smb2_open()
-Date: Tue, 10 Sep 2024 11:31:14 +0200
-Message-ID: <20240910092631.865789194@linuxfoundation.org>
+Subject: [PATCH 6.10 278/375] NFSv4: Add missing rescheduling points in nfs_client_return_marked_delegations
+Date: Tue, 10 Sep 2024 11:31:15 +0200
+Message-ID: <20240910092631.896985071@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,74 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 4e8771a3666c8f216eefd6bd2fd50121c6c437db ]
+[ Upstream commit a017ad1313fc91bdf235097fd0a02f673fc7bb11 ]
 
-null-ptr-deref will occur when (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
-and parse_lease_state() return NULL.
+We're seeing reports of soft lockups when iterating through the loops,
+so let's add rescheduling points.
 
-Fix this by check if 'lease_ctx_info' is NULL.
-
-Additionally, remove the redundant parentheses in
-parse_durable_handle_context().
-
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c  |  2 +-
- fs/smb/server/smb2pdu.c | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ fs/nfs/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index a8f52c4ebbda..e546ffa57b55 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1510,7 +1510,7 @@ void create_lease_buf(u8 *rbuf, struct lease *lease)
-  * parse_lease_state() - parse lease context containted in file open request
-  * @open_req:	buffer containing smb2 file open(create) request
-  *
-- * Return:  oplock state, -ENOENT if create lease context not found
-+ * Return: allocated lease context object on success, otherwise NULL
-  */
- struct lease_ctx_info *parse_lease_state(void *open_req)
- {
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index bc69b94df40f..39dfecf082ba 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2771,8 +2771,8 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
- 				}
- 			}
- 
--			if (((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
--			     req_op_level == SMB2_OPLOCK_LEVEL_BATCH)) {
-+			if ((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
-+			    req_op_level == SMB2_OPLOCK_LEVEL_BATCH) {
- 				dh_info->CreateGuid =
- 					durable_v2_blob->CreateGuid;
- 				dh_info->persistent =
-@@ -2792,8 +2792,8 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
- 				goto out;
- 			}
- 
--			if (((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
--			     req_op_level == SMB2_OPLOCK_LEVEL_BATCH)) {
-+			if ((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
-+			    req_op_level == SMB2_OPLOCK_LEVEL_BATCH) {
- 				ksmbd_debug(SMB, "Request for durable open\n");
- 				dh_info->type = dh_idx;
- 			}
-@@ -3415,7 +3415,7 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out1;
- 		}
- 	} else {
--		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE) {
-+		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE && lc) {
- 			if (S_ISDIR(file_inode(filp)->i_mode)) {
- 				lc->req_state &= ~SMB2_LEASE_WRITE_CACHING_LE;
- 				lc->is_dir = true;
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index cbbd4866b0b7..97b386032b71 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -47,6 +47,7 @@
+ #include <linux/vfs.h>
+ #include <linux/inet.h>
+ #include <linux/in6.h>
++#include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <net/ipv6.h>
+ #include <linux/netdevice.h>
+@@ -228,6 +229,7 @@ static int __nfs_list_for_each_server(struct list_head *head,
+ 		ret = fn(server, data);
+ 		if (ret)
+ 			goto out;
++		cond_resched();
+ 		rcu_read_lock();
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.43.0
 
