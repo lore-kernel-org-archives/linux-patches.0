@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61BD18FC93;
-	Tue, 10 Sep 2024 10:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D1D18FC93;
+	Tue, 10 Sep 2024 10:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963708; cv=none; b=MIHZbfvzqFaNYXLD0da6Hj0C++LeQphUnIUN3wzTHq97KkHJm4PpIncFF40Z371tunIhmcQetBP+vVMKaNiAhNjoR+YaUVDEI3iX4mO/shX11uEOr75z6QgqsbltkklhnC8Q+8SrYVssbPIY7KssCT8GW5ljWmWjYre+yRoOLIU=
+	t=1725963711; cv=none; b=EStm3L0M8jXCubn25+E3CD8e/Empxh8a4C8oQf/GuLPMdMoAstwyUVbkiueAfbBst85l0oI7GAdNzxBmckRqhe/AfDfWu2Otzlbm53mp/AuI7OaN9FONppNr5KQwVRBZNtA8N4weq0jd8AL0jj+P5vWpCKOKZSi2U4HNdafwmeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963708; c=relaxed/simple;
-	bh=PMKoHF658eP4LM1hWjvbAdiIcloQOmpOjmkP11ClRnQ=;
+	s=arc-20240116; t=1725963711; c=relaxed/simple;
+	bh=HI6MekB+u2iWUs+RNWCpnzjTQvh4DQaZk8O/tFx6uLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSyED6l0ZoeLUebr1nzf775qd5CYIullDQl8nMXH1vSq1WRP0n+MfdkB0TqiJ6knDQy8eLFeBPdfVEYM52nOGFbR+mH6oeumzKRIkDut5/STqifXHIbcOPCo6oiPhwhYnWorUgPUKWzS2PyUtv1jQvXr0fTOkthYROf3j/07POs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kum2nlRB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eMiIgWhSfqsj1j3KYt8WYFx4t3DVmEBfAC5M77lccN0y7nTpj0ob0TGQgJi7U3F7kIoGP0CyGFT2/kWfLxiqtX8oExaSm5jRP+62uPE74ORs8NWBURDQzJTJV1Qhww1jYjCOsZZH4vrmViI+zKexn74Xl+m00lnZ+LmbJ5sxXCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDeFEaGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kum2nlRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E08FC4CEC3;
-	Tue, 10 Sep 2024 10:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDeFEaGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5024CC4CEC6;
+	Tue, 10 Sep 2024 10:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963708;
-	bh=PMKoHF658eP4LM1hWjvbAdiIcloQOmpOjmkP11ClRnQ=;
+	s=korg; t=1725963711;
+	bh=HI6MekB+u2iWUs+RNWCpnzjTQvh4DQaZk8O/tFx6uLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kum2nlRBoIajXIXKZvF+5P35pWWPz9kagUduIAZXyAVhONMDJQS4OuQ93P4SlE2SO
-	 2lvxC1kUDr3h4n1zhKdmujmcIIaoM7jISI0CDD9I2RJXO3EWOX9P7E6NweMgPUvRFB
-	 qFrGFH/4xvfBZZzRrVijI1iCwMideLFD8LUlUi9Y=
+	b=GDeFEaGVBkmTwQKHKyqRqx/Bot+1GdMoWjx7wz0eb43lLl9lJP/3sYct4LwZtJbwn
+	 AtNja9ZbGJuedXYf06olIEuiDT0FYOazqdZ4mE844TbOsvFF9kYFiOfcLgZz3fJEDx
+	 ZCC+2KxqG/8z0f+aRT2i6oZnZx9gDUBUw5W30jak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Reijer Boekhoff <reijerboekhoff@protonmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/214] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
-Date: Tue, 10 Sep 2024 11:32:14 +0200
-Message-ID: <20240910092603.380592249@linuxfoundation.org>
+Subject: [PATCH 5.15 143/214] hwmon: (lm95234) Fix underflows seen when writing limit attributes
+Date: Tue, 10 Sep 2024 11:32:45 +0200
+Message-ID: <20240910092604.599647481@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,36 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit dbb5265a5d7cca1cdba7736dba313ab7d07bc19d ]
+[ Upstream commit af64e3e1537896337405f880c1e9ac1f8c0c6198 ]
 
-After being asked about support for WPA3 for BCM43224 chipset it
-was found that all it takes is setting the MFP_CAPABLE flag and
-mac80211 will take care of all that is needed [1].
+DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
+negative number such as -9223372036854775808 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 
-Link: https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/ [1]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240617122609.349582-1-arend.vanspriel@broadcom.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/lm95234.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-index eadac0f5590f..e09f5416abe7 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-@@ -1088,6 +1088,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
- 	ieee80211_hw_set(hw, AMPDU_AGGREGATION);
- 	ieee80211_hw_set(hw, SIGNAL_DBM);
- 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
-+	ieee80211_hw_set(hw, MFP_CAPABLE);
+diff --git a/drivers/hwmon/lm95234.c b/drivers/hwmon/lm95234.c
+index ac169a994ae0..db2aecdfbd17 100644
+--- a/drivers/hwmon/lm95234.c
++++ b/drivers/hwmon/lm95234.c
+@@ -301,7 +301,8 @@ static ssize_t tcrit2_store(struct device *dev, struct device_attribute *attr,
+ 	if (ret < 0)
+ 		return ret;
  
- 	hw->extra_tx_headroom = brcms_c_get_header_len();
- 	hw->queues = N_TX_QUEUES;
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, index ? 255 : 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, (index ? 255 : 127) * 1000),
++				1000);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->tcrit2[index] = val;
+@@ -350,7 +351,7 @@ static ssize_t tcrit1_store(struct device *dev, struct device_attribute *attr,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 255);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 255000), 1000);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->tcrit1[index] = val;
+@@ -391,7 +392,7 @@ static ssize_t tcrit1_hyst_store(struct device *dev,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	val = DIV_ROUND_CLOSEST(val, 1000);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, -255000, 255000), 1000);
+ 	val = clamp_val((int)data->tcrit1[index] - val, 0, 31);
+ 
+ 	mutex_lock(&data->update_lock);
+@@ -431,7 +432,7 @@ static ssize_t offset_store(struct device *dev, struct device_attribute *attr,
+ 		return ret;
+ 
+ 	/* Accuracy is 1/2 degrees C */
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 500), -128, 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, -64000, 63500), 500);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	data->toffset[index] = val;
 -- 
 2.43.0
 
