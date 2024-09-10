@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35440188921;
-	Tue, 10 Sep 2024 09:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBDC172BAE;
+	Tue, 10 Sep 2024 09:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962173; cv=none; b=npZ9IHVkmi+xXNDXnyfi9TnnOzAK5QFQZqjAP6Lb23CjWnWmjtZZRPiimiT86WzQ+KtM9WQumIZh9Lv+KyBy5hbblW26aHpytIXZJPjwI+/gHeTAy8fIi34svP6gaOdmy2yvv6mJn5F9LQ4J+rsyWADQ9PA1EQUwLP6o1JUw3P4=
+	t=1725962175; cv=none; b=bOvvmTYQ6H+fz0Jpm4e8zjpz4AqC2syAEz2s02J7eod1bFVazTUGMY6YI6Y2+jKQX0sbLLejrDjsBjqowoMC8nnRMyAfN9ZvZt8jy29sFm7WCdp21TEVVluQDQEGYgVM0HohKEZnZ7jblWbdugDzH/fNGmbfUKHvOX9Sbz+AqNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962173; c=relaxed/simple;
-	bh=6tcACk8gDMvJ64I6DIn5AfVIjLQMl2bUzMU3v/3BozU=;
+	s=arc-20240116; t=1725962175; c=relaxed/simple;
+	bh=3aGLPJnIlHcd+F7S2nCnS2SFyNM866lA79Tp6iSK2jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZnz4pGeqEPJ6dhEeoJ4nfgPZw9gHwNHP7nu6V1vHssA3++p9kmkoLkQ49ClptTA0DHQepJ0qmIlHxewzAsftkNxHYoAnSstiidtkKLFEFxYjl+4dB1zo6eCWD/LVWf/jQJ9Kz/roOLBgoQrucyO8Jj0aQQBdIi35cJKq8BFLxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pChSZKwl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D2xZiia7n5TTcIghoEbmY2zCbp8PABjO8vLlroM1LEyA1odJzksqt1FMS4pJC6P7Bwce5d9NK20it8bGJq6bVFAi0/Z/mdJw5utqg8GZxJR1rXu4L0Ok1sEAtMk4ndr8Q53VvR1mKXoNZFbHC+P2f2mSlR659YpkeeQvvEjiyZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo2nD1Aj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pChSZKwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65277C4CEC3;
-	Tue, 10 Sep 2024 09:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo2nD1Aj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C9DC4CEC3;
+	Tue, 10 Sep 2024 09:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962172;
-	bh=6tcACk8gDMvJ64I6DIn5AfVIjLQMl2bUzMU3v/3BozU=;
+	s=korg; t=1725962175;
+	bh=3aGLPJnIlHcd+F7S2nCnS2SFyNM866lA79Tp6iSK2jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pChSZKwlVnLBLWBS0YjAlbHFk/Z+ylVaRbrDqt7fdvwcbBsHGp0l9RdAcwWv+7mob
-	 u3UCORJanAS0vY87cwgDEOCunoQvv2AbmLJXRuzYaA0WA3y2fZIFDyYWSthEtwyfZr
-	 DY1TayFbcQKUc0Isp8ZKe+v2VwmCfKH7CmQvUCQs=
+	b=Yo2nD1Aj0Ebb4WfXhh/GEGjqXUts3SWVndmlXTIAsxK0V9lVT2olF5DHTuQQQbUgi
+	 WW6ccC5F45EzMJsMwNufgtbtbKBdLSSOoOZfRdu/axwjUjFvMnrtlz6jww//S5JQks
+	 H1J4VSBu9HeeU0uxXnimb45Zd9qQeQkR3fgdReAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	=?UTF-8?q?Stefan=20Alth=C3=B6fer?= <Stefan.Althoefer@janztec.com>,
+	Thomas Kopp <thomas.kopp@microchip.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 320/375] arm64: acpi: Harden get_cpu_for_acpi_id() against missing CPU entry
-Date: Tue, 10 Sep 2024 11:31:57 +0200
-Message-ID: <20240910092633.316333720@linuxfoundation.org>
+Subject: [PATCH 6.10 321/375] can: mcp251xfd: mcp251xfd_handle_rxif_ring_uinc(): factor out in separate function
+Date: Tue, 10 Sep 2024 11:31:58 +0200
+Message-ID: <20240910092633.348662836@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -46,50 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 2488444274c70038eb6b686cba5f1ce48ebb9cdd ]
+[ Upstream commit d49184b7b585f9da7ee546b744525f62117019f6 ]
 
-In a review discussion of the changes to support vCPU hotplug where
-a check was added on the GICC being enabled if was online, it was
-noted that there is need to map back to the cpu and use that to index
-into a cpumask. As such, a valid ID is needed.
+This is a preparation patch.
 
-If an MPIDR check fails in acpi_map_gic_cpu_interface() it is possible
-for the entry in cpu_madt_gicc[cpu] == NULL.  This function would
-then cause a NULL pointer dereference.   Whilst a path to trigger
-this has not been established, harden this caller against the
-possibility.
+Sending the UINC messages followed by incrementing the tail pointer
+will be called in more than one place in upcoming patches, so factor
+this out into a separate function.
 
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240529133446.28446-13-Jonathan.Cameron@huawei.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Also make mcp251xfd_handle_rxif_ring_uinc() safe to be called with a
+"len" of 0.
+
+Tested-by: Stefan Althöfer <Stefan.Althoefer@janztec.com>
+Tested-by: Thomas Kopp <thomas.kopp@microchip.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 85505e585637 ("can: mcp251xfd: rx: prepare to workaround broken RX FIFO head index erratum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/acpi.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c | 48 +++++++++++++-------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index bc9a6656fc0c..a407f9cd549e 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -124,7 +124,8 @@ static inline int get_cpu_for_acpi_id(u32 uid)
- 	int cpu;
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
+index ced8d9c81f8c..5e2f39de88f3 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-rx.c
+@@ -197,6 +197,37 @@ mcp251xfd_rx_obj_read(const struct mcp251xfd_priv *priv,
+ 	return err;
+ }
  
- 	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
--		if (uid == get_acpi_id_for_cpu(cpu))
-+		if (acpi_cpu_get_madt_gicc(cpu) &&
-+		    uid == get_acpi_id_for_cpu(cpu))
- 			return cpu;
++static int
++mcp251xfd_handle_rxif_ring_uinc(const struct mcp251xfd_priv *priv,
++				struct mcp251xfd_rx_ring *ring,
++				u8 len)
++{
++	int offset;
++	int err;
++
++	if (!len)
++		return 0;
++
++	/* Increment the RX FIFO tail pointer 'len' times in a
++	 * single SPI message.
++	 *
++	 * Note:
++	 * Calculate offset, so that the SPI transfer ends on
++	 * the last message of the uinc_xfer array, which has
++	 * "cs_change == 0", to properly deactivate the chip
++	 * select.
++	 */
++	offset = ARRAY_SIZE(ring->uinc_xfer) - len;
++	err = spi_sync_transfer(priv->spi,
++				ring->uinc_xfer + offset, len);
++	if (err)
++		return err;
++
++	ring->tail += len;
++
++	return 0;
++}
++
+ static int
+ mcp251xfd_handle_rxif_ring(struct mcp251xfd_priv *priv,
+ 			   struct mcp251xfd_rx_ring *ring)
+@@ -210,8 +241,6 @@ mcp251xfd_handle_rxif_ring(struct mcp251xfd_priv *priv,
+ 		return err;
  
- 	return -EINVAL;
+ 	while ((len = mcp251xfd_get_rx_linear_len(ring))) {
+-		int offset;
+-
+ 		rx_tail = mcp251xfd_get_rx_tail(ring);
+ 
+ 		err = mcp251xfd_rx_obj_read(priv, ring, hw_rx_obj,
+@@ -227,22 +256,9 @@ mcp251xfd_handle_rxif_ring(struct mcp251xfd_priv *priv,
+ 				return err;
+ 		}
+ 
+-		/* Increment the RX FIFO tail pointer 'len' times in a
+-		 * single SPI message.
+-		 *
+-		 * Note:
+-		 * Calculate offset, so that the SPI transfer ends on
+-		 * the last message of the uinc_xfer array, which has
+-		 * "cs_change == 0", to properly deactivate the chip
+-		 * select.
+-		 */
+-		offset = ARRAY_SIZE(ring->uinc_xfer) - len;
+-		err = spi_sync_transfer(priv->spi,
+-					ring->uinc_xfer + offset, len);
++		err = mcp251xfd_handle_rxif_ring_uinc(priv, ring, len);
+ 		if (err)
+ 			return err;
+-
+-		ring->tail += len;
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
