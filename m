@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C54144D1A;
-	Tue, 10 Sep 2024 10:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F1D18E77F;
+	Tue, 10 Sep 2024 10:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964238; cv=none; b=BGV5Ah+l0/jBe1jp+I8Ao0AP0Edli5btlAvS14kEm/qqF+j+TjoiP+1xFoTqQxF10x/b8vIvYlS+zDurL9qAD+CWwHjPWA6VU3JigJsueBuv5jMNICDykyi4NNTpXccgn8HfFbgpMPJzdZ7BuE4LB26AIGqT0mQ+sOrKcazrVgs=
+	t=1725964241; cv=none; b=i5nXKJIRgnpO+4u3K1L3z4mYk+byhQ0wZvPuZ0d5B4Md6g8f6+/5WyJLZDpM2pU+IE1UtymS4ql4De2ivBe7d7GPkkk8RhwIiku709tGuF77wAGNL9b5unQCUabqc+XSIYk7CncoZD8mq13zX8SNGZbVMEFEwGfmJ8mQVYoaWYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964238; c=relaxed/simple;
-	bh=bo9euLSEawJtzimmu20ZIihWo0QjqfXiPGDlvu71WT4=;
+	s=arc-20240116; t=1725964241; c=relaxed/simple;
+	bh=hZ5bZhLuK3NX174YHWIdu4g9yuXPvO5xCRNYWKFA0LU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=chhOnexHypfKPLqrXefs2YzxqlradvaCxNQAPDhyj36PCkVyWXGN1JpZt/rFLEnnvDaTesZArMy+OnDjAhW1I4bqtf6zYqx0DHXA+qR9wetTubH5tNyz9HycaZpv+aiZ+eeXEfpvagPQ5SGXlJq/JCT/PQlw9bwjiJmviBtLlJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTHx0cO1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWcBmzFlvrQkyUPcrevBeUyd4YmNC9j3mg/1/arkCFD5EyByHYCptfZ59Ds0akvAJzz0b9bxHU61QJjIw+4CtZ13tK1UdC8r8KqC2iyY3q3S/t3nKzGsGUkurI7LWpvKxnPGoS5sx1bFZO/wcFuQXF+o3973RsXqaptZ6TjXy/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKT9GBQV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTHx0cO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB2DC4CEC3;
-	Tue, 10 Sep 2024 10:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKT9GBQV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53EFC4CEC3;
+	Tue, 10 Sep 2024 10:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964238;
-	bh=bo9euLSEawJtzimmu20ZIihWo0QjqfXiPGDlvu71WT4=;
+	s=korg; t=1725964241;
+	bh=hZ5bZhLuK3NX174YHWIdu4g9yuXPvO5xCRNYWKFA0LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OTHx0cO1JbMiue1BBX2T3kXegWeIGnXyvJF/cdQFbLCcj1+HdUl15JqUB7f97dIYa
-	 iVrxEqj2TrxXNW++oZ7Pow0CbyVIXjQXo5rRXv9h1hBqYgrGhcuZqKrqM+YLtC3u/M
-	 KEMLdp3PPSb2eFyyDZuijXMPty03yNGsSHGZRLuQ=
+	b=sKT9GBQViS5ebkMaNzZ7HrE6I5K2m4ViH0hx6UN55EOQGHGv0p2YzU2mvYJetUhCV
+	 EvTOUzIwo2km8a+AskJbL1MHwiyc4vMEfsvK90Lym7XtHJS+wjjybTKoApL+kXv14K
+	 6I+eBBN8EacMnZW5LGkmOsgyu17e//o+pFE9vejQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>,
+	syzbot+3f0a39be7a2035700868@syzkaller.appspotmail.com,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 114/269] Bluetooth: Remove pending ACL connection attempts
-Date: Tue, 10 Sep 2024 11:31:41 +0200
-Message-ID: <20240910092612.258483803@linuxfoundation.org>
+Subject: [PATCH 6.6 115/269] Bluetooth: hci_conn: Fix UAF Write in __hci_acl_create_connection_sync
+Date: Tue, 10 Sep 2024 11:31:42 +0200
+Message-ID: <20240910092612.291505620@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -45,154 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Dreßler <verdre@v0yd.nl>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 4aa42119d971603dc9e4d8cf4f53d5fcf082ea7d ]
+[ Upstream commit 5f641f03abccddd1a37233ff1b8e774b9ff1f4e8 ]
 
-With the last commit we moved to using the hci_sync queue for "Create
-Connection" requests, removing the need for retrying the paging after
-finished/failed "Create Connection" requests and after the end of
-inquiries.
+This fixes the UAF on __hci_acl_create_connection_sync caused by
+connection abortion, it uses the same logic as to LE_LINK which uses
+hci_cmd_sync_cancel to prevent the callback to run if the connection is
+abort prematurely.
 
-hci_conn_check_pending() was used to trigger this retry, we can remove it
-now.
-
-Note that we can also remove the special handling for COMMAND_DISALLOWED
-errors in the completion handler of "Create Connection", because "Create
-Connection" requests are now always serialized.
-
-This is somewhat reverting commit 4c67bc74f016 ("[Bluetooth] Support
-concurrent connect requests").
-
-With this, the BT_CONNECT2 state of ACL hci_conn objects should now be
-back to meaning only one thing: That we received a "Connection Request"
-from another device (see hci_conn_request_evt), but the response to that
-is going to be deferred.
-
-Signed-off-by: Jonas Dreßler <verdre@v0yd.nl>
+Reported-by: syzbot+3f0a39be7a2035700868@syzkaller.appspotmail.com
+Fixes: 45340097ce6e ("Bluetooth: hci_conn: Only do ACL connections sequentially")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 227a0cdf4a02 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  1 -
- net/bluetooth/hci_conn.c         | 16 ----------------
- net/bluetooth/hci_event.c        | 21 ++++-----------------
- 3 files changed, 4 insertions(+), 34 deletions(-)
+ include/net/bluetooth/hci_sync.h |  3 +--
+ net/bluetooth/hci_conn.c         |  3 ++-
+ net/bluetooth/hci_sync.c         | 16 ++++++++++------
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 070c794e6a42..850f0e46aecf 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1417,7 +1417,6 @@ struct hci_conn *hci_conn_add_unset(struct hci_dev *hdev, int type,
- 				    bdaddr_t *dst, u8 role);
- void hci_conn_del(struct hci_conn *conn);
- void hci_conn_hash_flush(struct hci_dev *hdev);
--void hci_conn_check_pending(struct hci_dev *hdev);
+diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
+index 532230150cc9..37ca8477b3f4 100644
+--- a/include/net/bluetooth/hci_sync.h
++++ b/include/net/bluetooth/hci_sync.h
+@@ -141,5 +141,4 @@ int hci_le_big_terminate_sync(struct hci_dev *hdev, u8 handle);
  
- struct hci_chan *hci_chan_create(struct hci_conn *conn);
- void hci_chan_del(struct hci_chan *chan);
+ int hci_le_pa_terminate_sync(struct hci_dev *hdev, u16 handle);
+ 
+-int hci_acl_create_connection_sync(struct hci_dev *hdev,
+-				   struct hci_conn *conn);
++int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn);
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 04fe901a47f7..36731d047f16 100644
+index 36731d047f16..d15c8ce4b418 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -2565,22 +2565,6 @@ void hci_conn_hash_flush(struct hci_dev *hdev)
- 	}
+@@ -1650,7 +1650,7 @@ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 		acl->pending_sec_level = sec_level;
+ 		acl->auth_type = auth_type;
+ 
+-		err = hci_acl_create_connection_sync(hdev, acl);
++		err = hci_connect_acl_sync(hdev, acl);
+ 		if (err) {
+ 			hci_conn_del(acl);
+ 			return ERR_PTR(err);
+@@ -2913,6 +2913,7 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 	 */
+ 	if (conn->state == BT_CONNECT && hdev->req_status == HCI_REQ_PEND) {
+ 		switch (hci_skb_event(hdev->sent_cmd)) {
++		case HCI_EV_CONN_COMPLETE:
+ 		case HCI_EV_LE_CONN_COMPLETE:
+ 		case HCI_EV_LE_ENHANCED_CONN_COMPLETE:
+ 		case HCI_EVT_LE_CIS_ESTABLISHED:
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 165c532fa2a2..19ceb7ce66bf 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6578,13 +6578,18 @@ int hci_update_adv_data(struct hci_dev *hdev, u8 instance)
+ 				  UINT_PTR(instance), NULL);
  }
  
--/* Check pending connect attempts */
--void hci_conn_check_pending(struct hci_dev *hdev)
--{
--	struct hci_conn *conn;
--
--	BT_DBG("hdev %s", hdev->name);
--
--	hci_dev_lock(hdev);
--
--	conn = hci_conn_hash_lookup_state(hdev, ACL_LINK, BT_CONNECT2);
--	if (conn)
--		hci_acl_create_connection_sync(hdev, conn);
--
--	hci_dev_unlock(hdev);
--}
--
- static u32 get_link_mode(struct hci_conn *conn)
+-static int __hci_acl_create_connection_sync(struct hci_dev *hdev, void *data)
++static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
  {
- 	u32 link_mode = 0;
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index dc80c1560357..d81c7fccdd40 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -118,8 +118,6 @@ static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
- 		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
- 	hci_dev_unlock(hdev);
+-	struct hci_conn *conn = data;
++	struct hci_conn *conn;
++	u16 handle = PTR_UINT(data);
+ 	struct inquiry_entry *ie;
+ 	struct hci_cp_create_conn cp;
+ 	int err;
  
--	hci_conn_check_pending(hdev);
--
- 	return rp->status;
++	conn = hci_conn_hash_lookup_handle(hdev, handle);
++	if (!conn)
++		return 0;
++
+ 	/* Many controllers disallow HCI Create Connection while it is doing
+ 	 * HCI Inquiry. So we cancel the Inquiry first before issuing HCI Create
+ 	 * Connection. This may cause the MGMT discovering state to become false
+@@ -6641,9 +6646,8 @@ static int __hci_acl_create_connection_sync(struct hci_dev *hdev, void *data)
+ 	return err;
  }
  
-@@ -150,8 +148,6 @@ static u8 hci_cc_exit_periodic_inq(struct hci_dev *hdev, void *data,
- 
- 	hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);
- 
--	hci_conn_check_pending(hdev);
--
- 	return rp->status;
- }
- 
-@@ -2257,10 +2253,8 @@ static void hci_cs_inquiry(struct hci_dev *hdev, __u8 status)
+-int hci_acl_create_connection_sync(struct hci_dev *hdev,
+-				   struct hci_conn *conn)
++int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
  {
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
- 
--	if (status) {
--		hci_conn_check_pending(hdev);
-+	if (status)
- 		return;
--	}
- 
- 	if (hci_sent_cmd_data(hdev, HCI_OP_INQUIRY))
- 		set_bit(HCI_INQUIRY, &hdev->flags);
-@@ -2285,12 +2279,9 @@ static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
- 
- 	if (status) {
- 		if (conn && conn->state == BT_CONNECT) {
--			if (status != HCI_ERROR_COMMAND_DISALLOWED || conn->attempt > 2) {
--				conn->state = BT_CLOSED;
--				hci_connect_cfm(conn, status);
--				hci_conn_del(conn);
--			} else
--				conn->state = BT_CONNECT2;
-+			conn->state = BT_CLOSED;
-+			hci_connect_cfm(conn, status);
-+			hci_conn_del(conn);
- 		}
- 	} else {
- 		if (!conn) {
-@@ -2980,8 +2971,6 @@ static void hci_inquiry_complete_evt(struct hci_dev *hdev, void *data,
- 
- 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
- 
--	hci_conn_check_pending(hdev);
--
- 	if (!test_and_clear_bit(HCI_INQUIRY, &hdev->flags))
- 		return;
- 
-@@ -3228,8 +3217,6 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
- 
- unlock:
- 	hci_dev_unlock(hdev);
--
--	hci_conn_check_pending(hdev);
+-	return hci_cmd_sync_queue(hdev, __hci_acl_create_connection_sync,
+-				  conn, NULL);
++	return hci_cmd_sync_queue(hdev, hci_acl_create_conn_sync,
++				  UINT_PTR(conn->handle), NULL);
  }
- 
- static void hci_reject_conn(struct hci_dev *hdev, bdaddr_t *bdaddr)
 -- 
 2.43.0
 
