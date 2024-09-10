@@ -1,36 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DBB18CC11;
-	Tue, 10 Sep 2024 10:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ECA18CC11;
+	Tue, 10 Sep 2024 10:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963269; cv=none; b=ot5yV1jxdbkp1Yziy+yxyGHOI2/5VvCiYXjUk9Li4WKtL+F7Kiia0FY1zFGb1sSPAMbRa7jlsF1DqN96vtvIHRhvZslwtYZSK783oAIv7d4smygUqgkHf+Ik+HebpDcRiJWSkulJwXZMCoU4js3V4fza6zjSlH8iDRO3cLDmZKE=
+	t=1725963271; cv=none; b=nwVDKIIi0OhejvdDDOyvW7P5u5HjtQmw16lCgcRFVrCvmLI6wOoBWuUzS8TWoWR5+0OzrbSmJD58+OMacLJVebFj/lzrne4vIoBRKEiLbWd99uEzUO3ng0r9YpT4Qeu36B0rFclRhdqlQYGoC+lsxbYY0nE5/rBi2lcbF7H7l8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963269; c=relaxed/simple;
-	bh=tHkmUJMmAoUy04VKw/IMvWDnuK/ef1Ddox1TBx/uNjU=;
+	s=arc-20240116; t=1725963271; c=relaxed/simple;
+	bh=M2efppk0WhIMGlK05U9z+gRWRgeJo6Zt3tia2oDNbGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VStsIVpTlg9CkKpn0Gwe11W2/ZltLRTfDcPUIOPC5Dp3HHWAv+LixrUsZohCaAZqobI05Sp9QPHvSfsKysX0GFXmJc1sK5t0pqCAr05uODwCw8/DIiULnua94EyKDd9Wbtp1THqbn1dKSwPYGiiMNXq2UO69vMOqKO78VMmqa8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAutv/0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEdXmhpeeMmQ38c6es49hGd9MQJjyYgEHrdSZP0zYf0OMndRSjwUS/VPSSzaYt3Gx/1bnGUVO4AlANyUMluN+/SU7nk+y6cgUWZ91KSbkD2pZ7SZCtpTlQ/ECBb26fl3GXxnti5KxcdmZs/4cIy8hLMveOn4cjUK0Jpdnqi0ZXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okeQYDm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAutv/0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F86C4CEC3;
-	Tue, 10 Sep 2024 10:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okeQYDm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5871C4CEC3;
+	Tue, 10 Sep 2024 10:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963268;
-	bh=tHkmUJMmAoUy04VKw/IMvWDnuK/ef1Ddox1TBx/uNjU=;
+	s=korg; t=1725963271;
+	bh=M2efppk0WhIMGlK05U9z+gRWRgeJo6Zt3tia2oDNbGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAutv/0HIfhOs1HpLF9HpGMeqbpflFK4QSu8xTApiuZSvVc3VJoife0Tbhx/zKb2r
-	 k5kGNT8vGBRklFZEyNxFlcek1oMgM7PJmdt3cCg/gsk4ijHkPs++ozZXS6a0f2ApwJ
-	 VXanrR/CykLnQ9GSr+rUGxrrfaW5Yob1ev0VdDwg=
+	b=okeQYDm0xYLHa7qpNMuNnPUfvYAcm6Gjwr8zXjYuwYnlPLO0Rw6fLhZ+VO6FeyyGP
+	 4UjTtueWjXemquTBS/DXTaN0waLccDMgkz2VmOgvGGumcaR+oqskFYX3sBwMqFNLIS
+	 NfZn1/SxWk5AoA9xoY9rAAWcuh5wdWAi09o6PLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.1 192/192] fuse: add feature flag for expire-only
-Date: Tue, 10 Sep 2024 11:33:36 +0200
-Message-ID: <20240910092605.689955946@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Miguel Luis <miguel.luis@oracle.com>,
+	Vishnu Pajjuri <vishnu@os.amperecomputing.com>,
+	Jianyong Wu <jianyong.wu@arm.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 167/192] arm64: acpi: Move get_cpu_for_acpi_id() to a header
+Date: Tue, 10 Sep 2024 11:33:11 +0200
+Message-ID: <20240910092604.778919674@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -49,54 +59,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: James Morse <james.morse@arm.com>
 
-commit 5cadfbd5a11e5495cac217534c5f788168b1afd7 upstream.
+[ Upstream commit 8d34b6f17b9ac93faa2791eb037dcb08bdf755de ]
 
-Add an init flag idicating whether the FUSE_EXPIRE_ONLY flag of
-FUSE_NOTIFY_INVAL_ENTRY is effective.
+ACPI identifies CPUs by UID. get_cpu_for_acpi_id() maps the ACPI UID
+to the Linux CPU number.
 
-This is needed for backports of this feature, otherwise the server could
-just check the protocol version.
+The helper to retrieve this mapping is only available in arm64's NUMA
+code.
 
-Fixes: 4f8d37020e1f ("fuse: add "expire only" mode to FUSE_NOTIFY_INVAL_ENTRY")
-Cc: <stable@vger.kernel.org> # v6.2
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Move it to live next to get_acpi_id_for_cpu().
+
+Signed-off-by: James Morse <james.morse@arm.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Miguel Luis <miguel.luis@oracle.com>
+Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Tested-by: Jianyong Wu <jianyong.wu@arm.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Acked-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Link: https://lore.kernel.org/r/20240529133446.28446-12-Jonathan.Cameron@huawei.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/inode.c           |    3 ++-
- include/uapi/linux/fuse.h |    2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/acpi.h | 11 +++++++++++
+ arch/arm64/kernel/acpi_numa.c | 11 -----------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1327,7 +1327,8 @@ void fuse_send_init(struct fuse_mount *f
- 		FUSE_ABORT_ERROR | FUSE_MAX_PAGES | FUSE_CACHE_SYMLINKS |
- 		FUSE_NO_OPENDIR_SUPPORT | FUSE_EXPLICIT_INVAL_DATA |
- 		FUSE_HANDLE_KILLPRIV_V2 | FUSE_SETXATTR_EXT | FUSE_INIT_EXT |
--		FUSE_SECURITY_CTX;
-+		FUSE_SECURITY_CTX |
-+		FUSE_HAS_EXPIRE_ONLY;
- #ifdef CONFIG_FUSE_DAX
- 	if (fm->fc->dax)
- 		flags |= FUSE_MAP_ALIGNMENT;
---- a/include/uapi/linux/fuse.h
-+++ b/include/uapi/linux/fuse.h
-@@ -365,6 +365,7 @@ struct fuse_file_lock {
-  * FUSE_SECURITY_CTX:	add security context to create, mkdir, symlink, and
-  *			mknod
-  * FUSE_HAS_INODE_DAX:  use per inode DAX
-+ * FUSE_HAS_EXPIRE_ONLY: kernel supports expiry-only entry invalidation
-  */
- #define FUSE_ASYNC_READ		(1 << 0)
- #define FUSE_POSIX_LOCKS	(1 << 1)
-@@ -401,6 +402,7 @@ struct fuse_file_lock {
- /* bits 32..63 get shifted down 32 bits into the flags2 field */
- #define FUSE_SECURITY_CTX	(1ULL << 32)
- #define FUSE_HAS_INODE_DAX	(1ULL << 33)
-+#define FUSE_HAS_EXPIRE_ONLY	(1ULL << 35)
+diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
+index bd68e1b7f29f..0d1da93a5bad 100644
+--- a/arch/arm64/include/asm/acpi.h
++++ b/arch/arm64/include/asm/acpi.h
+@@ -97,6 +97,17 @@ static inline u32 get_acpi_id_for_cpu(unsigned int cpu)
+ 	return	acpi_cpu_get_madt_gicc(cpu)->uid;
+ }
  
- /**
-  * CUSE INIT request/reply flags
++static inline int get_cpu_for_acpi_id(u32 uid)
++{
++	int cpu;
++
++	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
++		if (uid == get_acpi_id_for_cpu(cpu))
++			return cpu;
++
++	return -EINVAL;
++}
++
+ static inline void arch_fix_phys_package_id(int num, u32 slot) { }
+ void __init acpi_init_cpus(void);
+ int apei_claim_sea(struct pt_regs *regs);
+diff --git a/arch/arm64/kernel/acpi_numa.c b/arch/arm64/kernel/acpi_numa.c
+index ccbff21ce1fa..2465f291c7e1 100644
+--- a/arch/arm64/kernel/acpi_numa.c
++++ b/arch/arm64/kernel/acpi_numa.c
+@@ -34,17 +34,6 @@ int __init acpi_numa_get_nid(unsigned int cpu)
+ 	return acpi_early_node_map[cpu];
+ }
+ 
+-static inline int get_cpu_for_acpi_id(u32 uid)
+-{
+-	int cpu;
+-
+-	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
+-		if (uid == get_acpi_id_for_cpu(cpu))
+-			return cpu;
+-
+-	return -EINVAL;
+-}
+-
+ static int __init acpi_parse_gicc_pxm(union acpi_subtable_headers *header,
+ 				      const unsigned long end)
+ {
+-- 
+2.43.0
+
 
 
