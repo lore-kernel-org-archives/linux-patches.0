@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3B718595E;
-	Tue, 10 Sep 2024 10:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A6118B491;
+	Tue, 10 Sep 2024 10:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962784; cv=none; b=e0GftjfAoqKd+iXPUnwX0p75ZY7hAEOnvu0+81GnigKsDflUDHjPmmpBXsIFFC4Bk85qDN+QE66TDAdAQN/N3zBrO4WFw/a29E4W+JnYUYmou2jMEh/0ZIFlmCNSMXAmDFRUp77dal/JetYCsrgj+bax2+nNdKkREZFpmt37AGI=
+	t=1725962787; cv=none; b=SSD+jka6ODRfV73AxDTUCMxNhxLpJI/XmWR3wW4JUs7bCgeLwYNb0QLBTf1TsJ20i2b/wUAPioUeVi8kGD5i5OSRcSGuku4jWWb/Gim37J5lBWC4XzEHMxfPzF+fnIYi5W0+gwJQnwVXa49h7dSEaY3OCJuqPjFnA7sgsSLL5xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962784; c=relaxed/simple;
-	bh=vz7dtBm3I0GxSE4AhoUvlasf4suJFGmyVKrwaT0bWyE=;
+	s=arc-20240116; t=1725962787; c=relaxed/simple;
+	bh=2cdPaha8tvOjkzVeNbcwbwtRkYpkZJilQwu4rzGM7JM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5T8DRKFfFpt0ojbtL/fvGQRQJ9p2+Nh0aOdIChJpwG5D+AkDH2uVvMHJERbI8eUJXHUO6IzHY4Hv4HuPBnYtnTD3rVQSjhjxWpWZ7dO84b9qoShsDcej81vE9RuRQjzkhR5BwEFxG6ytNJLibjyXXZnEz+r01WSua1Rsk/OxYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ravHgq8U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XkseJPGtdUasYypIPZB9mu2Q+2gVwiRELdJd1tOxb7u4MInNMN9+ON6fbbUzh5B1dLxD2eaShuqRcpkaOOxxa9+aGN2tg/WxluZxGXPKKXpixmLiGDrGdlqGGSJiVIQRbhb0ufkLHc19La9VxQyfZnleE1i6vU29/Lf2Ox6nUJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAJLpBQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ravHgq8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF50C4CEC3;
-	Tue, 10 Sep 2024 10:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAJLpBQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A999C4CEC3;
+	Tue, 10 Sep 2024 10:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962784;
-	bh=vz7dtBm3I0GxSE4AhoUvlasf4suJFGmyVKrwaT0bWyE=;
+	s=korg; t=1725962787;
+	bh=2cdPaha8tvOjkzVeNbcwbwtRkYpkZJilQwu4rzGM7JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ravHgq8UZcygvP5RFT0vJ1UgaqP5EzI9XneNUsQLryFZexhhrnOiXG/Ujx9qlbWOB
-	 yJWA1VEwo6f7PhG3Ya9cJfPOpa41CGBZR2XDByx+o7ZNDSoxdjQmdSO+GP5pz1xCql
-	 8XvuP8p+2WYmGQkc27k4/4ycNBlFX6YAJFRuTEkY=
+	b=hAJLpBQLRg5BM5mhk1IRswiyiUTUHBLF3uqp9GS+jf6e2mBUJ74qWijcxe4rWz/L+
+	 k5n7ivmmG19G4E22IVEJKxQE4jiNHBzuZMhJ+9qbFgieg4KkA4F45PCpL+PrslZa2C
+	 j9O+CSGA3YRZi4W3f0sZZu9AfjJJdcfeHaz9dXkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 029/192] clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL
-Date: Tue, 10 Sep 2024 11:30:53 +0200
-Message-ID: <20240910092559.146663434@linuxfoundation.org>
+	Simon Arlott <simon@octiron.net>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 030/192] can: mcp251x: fix deadlock if an interrupt occurs during mcp251x_open
+Date: Tue, 10 Sep 2024 11:30:54 +0200
+Message-ID: <20240910092559.192256351@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -51,63 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+From: Simon Arlott <simon@octiron.net>
 
-commit f4973130d255dd4811006f5822d4fa4d0de9d712 upstream.
+commit 7dd9c26bd6cf679bcfdef01a8659791aa6487a29 upstream.
 
-The Zonda PLL has a 16 bit signed alpha and in the cases where the alpha
-value is greater than 0.5, the L value needs to be adjusted accordingly.
-Thus update the logic to handle the signed alpha val.
+The mcp251x_hw_wake() function is called with the mpc_lock mutex held and
+disables the interrupt handler so that no interrupts can be processed while
+waking the device. If an interrupt has already occurred then waiting for
+the interrupt handler to complete will deadlock because it will be trying
+to acquire the same mutex.
 
-Fixes: f21b6bfecc27 ("clk: qcom: clk-alpha-pll: add support for zonda pll")
+CPU0                           CPU1
+----                           ----
+mcp251x_open()
+ mutex_lock(&priv->mcp_lock)
+  request_threaded_irq()
+                               <interrupt>
+                               mcp251x_can_ist()
+                                mutex_lock(&priv->mcp_lock)
+  mcp251x_hw_wake()
+   disable_irq() <-- deadlock
+
+Use disable_irq_nosync() instead because the interrupt handler does
+everything while holding the mutex so it doesn't matter if it's still
+running.
+
+Fixes: 8ce8c0abcba3 ("can: mcp251x: only reset hardware as required")
+Signed-off-by: Simon Arlott <simon@octiron.net>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240731062916.2680823-5-quic_skakitap@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/all/4fc08687-1d80-43fe-9f0d-8ef8475e75f6@0882a8b5-c6c3-11e9-b005-00805fc181fe.uuid.home.arpa
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/can/spi/mcp251x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -41,6 +41,7 @@
- #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
- # define PLL_POST_DIV_SHIFT	8
- # define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
-+# define PLL_ALPHA_MSB		BIT(15)
- # define PLL_ALPHA_EN		BIT(24)
- # define PLL_ALPHA_MODE		BIT(25)
- # define PLL_VCO_SHIFT		20
-@@ -1986,6 +1987,18 @@ static void clk_zonda_pll_disable(struct
- 	regmap_write(regmap, PLL_OPMODE(pll), 0x0);
- }
+--- a/drivers/net/can/spi/mcp251x.c
++++ b/drivers/net/can/spi/mcp251x.c
+@@ -753,7 +753,7 @@ static int mcp251x_hw_wake(struct spi_de
+ 	int ret;
  
-+static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32 *l)
-+{
-+	u64 remainder, quotient;
-+
-+	quotient = rate;
-+	remainder = do_div(quotient, prate);
-+	*l = quotient;
-+
-+	if ((remainder * 2) / prate)
-+		*l = *l + 1;
-+}
-+
- static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
- 				  unsigned long prate)
- {
-@@ -2002,6 +2015,9 @@ static int clk_zonda_pll_set_rate(struct
- 	if (ret < 0)
- 		return ret;
+ 	/* Force wakeup interrupt to wake device, but don't execute IST */
+-	disable_irq(spi->irq);
++	disable_irq_nosync(spi->irq);
+ 	mcp251x_write_2regs(spi, CANINTE, CANINTE_WAKIE, CANINTF_WAKIF);
  
-+	if (a & PLL_ALPHA_MSB)
-+		zonda_pll_adjust_l_val(rate, prate, &l);
-+
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
- 
+ 	/* Wait for oscillator startup timer after wake up */
 
 
