@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086BF1891A1;
-	Tue, 10 Sep 2024 09:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC42188CDC;
+	Tue, 10 Sep 2024 09:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961597; cv=none; b=WmC1e43qF4XNHBt5feSpB3wGReAfzED3SQ3vgGZUmd0JAGaGTFO2JJ8lap2400qmpvE33ffGe3RT75B0P/+fMT8x2LGVDPD0k8NTZ/BxCSnMNhTIjszAyhxKS7QULpBEN0ogbgXrs7N/0wUnoiMJXQQUnHn2GGlodTerHUHi4YI=
+	t=1725961600; cv=none; b=SvGDL2waTMhBb9PI8ggmXEVS/LpGT8t9l+4lgl20mOVfim6ohrt/pTV4lwH8/yrTdj6Vmt0Us+iZT/W9g7+XZ7o/kftvlxmihSKcU9D4curSdtlTpxyDCRUdnvq6BTtCBZr7tfN03wJGFeqLmYSFAHjLUUmdvDfHgPosB/VFahk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961597; c=relaxed/simple;
-	bh=2mFhcHm8yPE2AGBE9e3O/amFqLbo5UsxBDRnHamiwlQ=;
+	s=arc-20240116; t=1725961600; c=relaxed/simple;
+	bh=EcFnz6gHxUrBWJ6yoIUqyysI9wfFbDu3qoGXzesPo94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rgbo5GsZCFrh/RCZv93QAGx3laT/a8HMYkxDdyq+a6ZTy44JC7MC4Eoz2h23IB59NVCe5r1VLAxDjoZ5IBJIZir/lK369mEDq9SM/IGsQSGxTZA2pch5Zby37KWnfIIyKmQKaJNA2A5Vdv4a+tta9rspJ/tmKZcg7sE+rgBfaE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxsTUYDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9zeX2OtHIn7YmjpSGw/Rph/UX0LZ1wzdcUc06pDu3k6aaVgnpd0Qb1Kc+k99WnCfA7CJr1Dq/e3ajJGu/4R9LxtMnwrcX/pGyFAMSvgrhd5FLbN+08izGFjbZXa768Ki6oIqEzGUm181JKpWRrh0LXIuq7XXfo2BMAUO09tSUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1730pUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxsTUYDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD53C4CEC3;
-	Tue, 10 Sep 2024 09:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1730pUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF15C4CEC3;
+	Tue, 10 Sep 2024 09:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961596;
-	bh=2mFhcHm8yPE2AGBE9e3O/amFqLbo5UsxBDRnHamiwlQ=;
+	s=korg; t=1725961599;
+	bh=EcFnz6gHxUrBWJ6yoIUqyysI9wfFbDu3qoGXzesPo94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxsTUYDsQmPNFRm5ZWXfwWAG+y9MTxrwp/jXZSTaPLN2DSMYkvQgdwPAo4xlovLw3
-	 KS51S/FSgOEYXCsAvg39TBqgnFFRRFmsZzTSFnPNclfDBm0X3sN5Riv+l5OaKZGO0F
-	 znkp9xtZ/MUgdwV7fTClXTOkmiKikUSBX+ddNhmg=
+	b=o1730pUnT7eUBHdKpWE+VFkPwNtexsBsZtOikkSziD0HiHfjRrB8+P3cD61p3D/ix
+	 G6nFOTb42XYzqHDFyyZc29YjUZyNYUduFMVRUvRFIGuO3kRpnImkNKJba/9DGBg5Rf
+	 ScSnssyCnVbZlBElVheW3+QZGd7+2NdVC1L6AU1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 123/375] drm/amd/display: Run DC_LOG_DC after checking link->link_enc
-Date: Tue, 10 Sep 2024 11:28:40 +0200
-Message-ID: <20240910092626.569397432@linuxfoundation.org>
+Subject: [PATCH 6.10 124/375] drm/amd/display: Check HDCP returned status
+Date: Tue, 10 Sep 2024 11:28:41 +0200
+Message-ID: <20240910092626.603881992@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -55,12 +55,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 3a82f62b0d9d7687eac47603bb6cd14a50fa718b ]
+[ Upstream commit 5d93060d430b359e16e7c555c8f151ead1ac614b ]
 
-[WHAT]
-The DC_LOG_DC should be run after link->link_enc is checked, not before.
+[WHAT & HOW]
+Check mod_hdcp_execute_and_set() return values in authenticated_dp.
 
-This fixes 1 REVERSE_INULL issue reported by Coverity.
+This fixes 3 CHECKED_RETURN issues reported by Coverity.
 
 Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Signed-off-by: Alex Hung <alex.hung@amd.com>
@@ -68,31 +68,40 @@ Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_factory.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../amd/display/modules/hdcp/hdcp1_execution.c    | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_factory.c b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-index cf22b8f28ba6..72df9bdfb23f 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-@@ -611,14 +611,14 @@ static bool construct_phy(struct dc_link *link,
- 	link->link_enc =
- 		link->dc->res_pool->funcs->link_enc_create(dc_ctx, &enc_init_data);
- 
--	DC_LOG_DC("BIOS object table - DP_IS_USB_C: %d", link->link_enc->features.flags.bits.DP_IS_USB_C);
--	DC_LOG_DC("BIOS object table - IS_DP2_CAPABLE: %d", link->link_enc->features.flags.bits.IS_DP2_CAPABLE);
--
- 	if (!link->link_enc) {
- 		DC_ERROR("Failed to create link encoder!\n");
- 		goto link_enc_create_fail;
+diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c
+index 182e7532dda8..d77836cef563 100644
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp1_execution.c
+@@ -433,17 +433,20 @@ static enum mod_hdcp_status authenticated_dp(struct mod_hdcp *hdcp,
  	}
  
-+	DC_LOG_DC("BIOS object table - DP_IS_USB_C: %d", link->link_enc->features.flags.bits.DP_IS_USB_C);
-+	DC_LOG_DC("BIOS object table - IS_DP2_CAPABLE: %d", link->link_enc->features.flags.bits.IS_DP2_CAPABLE);
-+
- 	/* Update link encoder tracking variables. These are used for the dynamic
- 	 * assignment of link encoders to streams.
- 	 */
+ 	if (status == MOD_HDCP_STATUS_SUCCESS)
+-		mod_hdcp_execute_and_set(mod_hdcp_read_bstatus,
++		if (!mod_hdcp_execute_and_set(mod_hdcp_read_bstatus,
+ 				&input->bstatus_read, &status,
+-				hdcp, "bstatus_read");
++				hdcp, "bstatus_read"))
++			goto out;
+ 	if (status == MOD_HDCP_STATUS_SUCCESS)
+-		mod_hdcp_execute_and_set(check_link_integrity_dp,
++		if (!mod_hdcp_execute_and_set(check_link_integrity_dp,
+ 				&input->link_integrity_check, &status,
+-				hdcp, "link_integrity_check");
++				hdcp, "link_integrity_check"))
++			goto out;
+ 	if (status == MOD_HDCP_STATUS_SUCCESS)
+-		mod_hdcp_execute_and_set(check_no_reauthentication_request_dp,
++		if (!mod_hdcp_execute_and_set(check_no_reauthentication_request_dp,
+ 				&input->reauth_request_check, &status,
+-				hdcp, "reauth_request_check");
++				hdcp, "reauth_request_check"))
++			goto out;
+ out:
+ 	return status;
+ }
 -- 
 2.43.0
 
