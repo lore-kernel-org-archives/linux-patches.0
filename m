@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6B018FC73;
-	Tue, 10 Sep 2024 10:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265EB18A950;
+	Tue, 10 Sep 2024 10:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964094; cv=none; b=bXJhoF/2RxamKSshd6a3hfyl131TMjefhgYzrGUXgrzLi1SbqeU/6r4GRzno4MkeA9GOqwcHIkwnHcgDet3ohVUBtv5VET/1tnxzbwgyeeUbI2GhWVyojR1WfD+q4ePEFAy6e1EbZy8CvdRNTFirK8G/ByWgDVf1Qw7v6frO/2g=
+	t=1725964097; cv=none; b=ZicjrbSH20iJsYc0xxKGRcaIkkDXnSCXC+EnohnJrx+CCzPKsmiznF6pcyAcGtYqzCuY+HeyvQJEKIvd6/qEmB4IIzlboqeFWw9qRpzUvGO6UvHYgUIKW+GaTcSuK9eLydLb4ywqaLRH3ZH63oOgfM8SQLjD9aWHDRDrK8NPp1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964094; c=relaxed/simple;
-	bh=WGdW5pqQ3kc0TYKtekXhtwOa4E8qy825AkjoAXhSEV4=;
+	s=arc-20240116; t=1725964097; c=relaxed/simple;
+	bh=DCs2NxwlgTsHqXxYmSyg5uT2Fjso/4A3pIx3v12NhQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IldVlPcincbwkpW7mAVCIQE3cxwjeqDTeKaXyWA/LuUKGoBWvTOs1CHlTu5M1UZuqZWglHKItzgxhavFVcd6z74fLgPU5WozGufN179ZE1Qz8kRw8/Rb5K0BcdPn8XTZpAQymPCGh/MO+OzSoH+WN7+6etPGODtERFROzIisTUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQqdT65w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6eLJtzI+jaO+8PMVV+MNjq/nNJfyb9EkfD/oLLucD2tkWcsLFaNQxYVTj9iBkPHIcBK5kSr34TZJxXJ4euyKLN3kmvSnlFoQkee8DbXWZOuNJgzpMFNLFlj6cowy33MzcwWPdFiXvl43HkPQBLKQocHKjXdLGJET3PAPBvrtyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7dqIcNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQqdT65w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77A4C4CEC6;
-	Tue, 10 Sep 2024 10:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7dqIcNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BF8C4CEC3;
+	Tue, 10 Sep 2024 10:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964094;
-	bh=WGdW5pqQ3kc0TYKtekXhtwOa4E8qy825AkjoAXhSEV4=;
+	s=korg; t=1725964097;
+	bh=DCs2NxwlgTsHqXxYmSyg5uT2Fjso/4A3pIx3v12NhQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQqdT65wdjbyW0AaMVSxin5tdQq1Tb5S4knZ/gj1jFZTovmkOOJHS3nD5HFSWxKxN
-	 XLUo4MxTB9supZmUYp+onPaLkbqoQ4av8yKIIePuGFOA0oXk2fLQCEEfo95+LnFPvx
-	 AIdmXSArohbiCdUR5emqTHvaP2mANtWN4CAMSKoU=
+	b=C7dqIcNWV2q8pNnTk0+MxXzccgSdGcVvBRWtu+VPCb2P9PCaaGKZPOzcqVm2grNDZ
+	 f0iAD1l1oiFeytsiUa/h+PsNE3sOqgiHjU/NAccr8TJztciexN5YU/OpFKldObUTrE
+	 D4vIaT1cfh29eGTyW8hloxQCuVJHVz/DJg6njzAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <hffilwlqm@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/269] bpf, verifier: Correct tail_call_reachable for bpf prog
-Date: Tue, 10 Sep 2024 11:30:53 +0200
-Message-ID: <20240910092610.545824362@linuxfoundation.org>
+Subject: [PATCH 6.6 067/269] ELF: fix kernel.randomize_va_space double read
+Date: Tue, 10 Sep 2024 11:30:54 +0200
+Message-ID: <20240910092610.583985324@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -51,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <hffilwlqm@gmail.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 01793ed86b5d7df1e956520b5474940743eb7ed8 ]
+[ Upstream commit 2a97388a807b6ab5538aa8f8537b2463c6988bd2 ]
 
-It's confusing to inspect 'prog->aux->tail_call_reachable' with drgn[0],
-when bpf prog has tail call but 'tail_call_reachable' is false.
+ELF loader uses "randomize_va_space" twice. It is sysctl and can change
+at any moment, so 2 loads could see 2 different values in theory with
+unpredictable consequences.
 
-This patch corrects 'tail_call_reachable' when bpf prog has tail call.
+Issue exactly one load for consistent value across one exec.
 
-Signed-off-by: Leon Hwang <hffilwlqm@gmail.com>
-Link: https://lore.kernel.org/r/20240610124224.34673-2-hffilwlqm@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Link: https://lore.kernel.org/r/3329905c-7eb8-400a-8f0a-d87cff979b5b@p183
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/binfmt_elf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 3f1a9cd7fc9e..9d5699942273 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3064,8 +3064,10 @@ static int check_subprogs(struct bpf_verifier_env *env)
+diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
+index 7b3d2d491407..fb2c8d14327a 100644
+--- a/fs/binfmt_elf.c
++++ b/fs/binfmt_elf.c
+@@ -1008,7 +1008,8 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	if (elf_read_implies_exec(*elf_ex, executable_stack))
+ 		current->personality |= READ_IMPLIES_EXEC;
  
- 		if (code == (BPF_JMP | BPF_CALL) &&
- 		    insn[i].src_reg == 0 &&
--		    insn[i].imm == BPF_FUNC_tail_call)
-+		    insn[i].imm == BPF_FUNC_tail_call) {
- 			subprog[cur_subprog].has_tail_call = true;
-+			subprog[cur_subprog].tail_call_reachable = true;
-+		}
- 		if (BPF_CLASS(code) == BPF_LD &&
- 		    (BPF_MODE(code) == BPF_ABS || BPF_MODE(code) == BPF_IND))
- 			subprog[cur_subprog].has_ld_abs = true;
+-	if (!(current->personality & ADDR_NO_RANDOMIZE) && randomize_va_space)
++	const int snapshot_randomize_va_space = READ_ONCE(randomize_va_space);
++	if (!(current->personality & ADDR_NO_RANDOMIZE) && snapshot_randomize_va_space)
+ 		current->flags |= PF_RANDOMIZE;
+ 
+ 	setup_new_exec(bprm);
+@@ -1300,7 +1301,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	mm->end_data = end_data;
+ 	mm->start_stack = bprm->p;
+ 
+-	if ((current->flags & PF_RANDOMIZE) && (randomize_va_space > 1)) {
++	if ((current->flags & PF_RANDOMIZE) && (snapshot_randomize_va_space > 1)) {
+ 		/*
+ 		 * For architectures with ELF randomization, when executing
+ 		 * a loader directly (i.e. no interpreter listed in ELF
 -- 
 2.43.0
 
