@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6905018595E;
-	Tue, 10 Sep 2024 10:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5613218FDB0;
+	Tue, 10 Sep 2024 10:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962529; cv=none; b=Y9zxoz30s1f1O0rR7j01sf09xLV//cA+VSadfzoWLoqcKOgK9FUFGVD7cVIUWtpvX5yUCYoxnx/wMKo+BOI4a43OKbh2QJpgDmZCpv4S6HeAS2fiYs38SvdZJINYfVxC8Wf2VaeHjuALDG/id0k8N4BW/6ceEpoC11HEs55d2Xk=
+	t=1725962532; cv=none; b=VRazgigyrccICpf1NYF3OGOLfH4uIoCRHgedJ5QsfHQFRzQjO2pbuAiS62JwsARKcBid+EYCBdPSCC3uwoqk9SIbUKSmTf9eHBZX5RzhrgHF68mlUN/GB6ZCyaugzdf/+fbDxPEdW/Ut0Pdr2TfkWAj6zQK8eXT/7GzvabTD2wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962529; c=relaxed/simple;
-	bh=9fDB8FmAT7KL0FCjaYGEf/EepoE1uDxQym/Ax97hJgQ=;
+	s=arc-20240116; t=1725962532; c=relaxed/simple;
+	bh=1RCGrKyY03JM1dpr8uTmlqCXS6KKh/zegw/MiAUnbBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rPQk6jfQC35RH2vq+g9qqU+7Ua8RzPUv2ns3QmuvG0DRmLdOxehONPXnbYVAfIex5WicTbkD+PNflmr7WY+45HPkQAErKDskbjEJC5GJK9uFp61KGs7O0JBCfNOByKwaXx6ASx7bkY4Sourx75RoSzYl6jniqZTA6cZojKRWVwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ETpziWk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsEfpIq9+XFRt51IQr5EPzEL5X9xS6UCtBClcad0o1nyIkMbF1Qht32HoxQIa+7Qs2pcADaK8YHWNlsyBpPaxeliHy30tjdPbQ53t5WuZiQBzzhlSRN6dHY+VJw5e57G5lTau1t5Iae0ccPx1xjzxravV+3JXe/7XpJYaw1BTiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09muwfgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ETpziWk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE14EC4CEC3;
-	Tue, 10 Sep 2024 10:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09muwfgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA3CC4CEC3;
+	Tue, 10 Sep 2024 10:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962529;
-	bh=9fDB8FmAT7KL0FCjaYGEf/EepoE1uDxQym/Ax97hJgQ=;
+	s=korg; t=1725962532;
+	bh=1RCGrKyY03JM1dpr8uTmlqCXS6KKh/zegw/MiAUnbBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ETpziWkymLxEB8EXT98xjXBBsIUljAle9REfBAjJb5ldgHyyP6mNoIRrulmKriHU
-	 twk2+ivzJFdepIgrl6VRf9s9zrCX5uy4jaqTPL6cJ+0wsmrdGEy73c1iiz53b9z4r0
-	 zFeCFLT1VnjJUl0OYvvWwaFsjjV41ntt3xvRCFV8=
+	b=09muwfgpvYZqFEP7QdoOOFpX8Gps0SnljX56lI0uB5nV4QrVbe7lCgYlNDwBlyRgE
+	 i6VfsZN6sPHxzhfjj0KFNBUCz01XMNaU7soGO2mML3jK1KvLTOhUetl1fWWf5z1qiy
+	 jO4de6sfAJGEQiHNfuNEboBAv33kymey865+dI/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 028/121] ALSA: hda/conexant: Add pincfg quirk to enable top speakers on Sirius devices
-Date: Tue, 10 Sep 2024 11:31:43 +0200
-Message-ID: <20240910092547.066291897@linuxfoundation.org>
+	Ondrej Zary <linux@zary.sk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 058/121] cx82310_eth: re-enable ethernet mode after router reboot
+Date: Tue, 10 Sep 2024 11:32:13 +0200
+Message-ID: <20240910092548.577297718@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -51,66 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Ondrej Zary <linux@zary.sk>
 
-commit 4178d78cd7a86510ba68d203f26fc01113c7f126 upstream.
+[ Upstream commit ca139d76b0d9e59d18f2d2ec8f0d81b82acd6808 ]
 
-The Sirius notebooks have two sets of speakers 0x17 (sides) and
-0x1d (top center). The side speakers are active by default but
-the top speakers aren't.
+When the router is rebooted without a power cycle, the USB device
+remains connected but its configuration is reset. This results in
+a non-working ethernet connection with messages like this in syslog:
+	usb 2-2: RX packet too long: 65535 B
 
-This patch provides a pincfg quirk to activate the top speakers.
+Re-enable ethernet mode when receiving a packet with invalid size of
+0xffff.
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20240827102540.9480-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ondrej Zary <linux@zary.sk>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: bab8eb0dd4cb ("usbnet: modern method to get random MAC")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/usb/cx82310_eth.c | 50 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 44 insertions(+), 6 deletions(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -217,6 +217,7 @@ enum {
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
- 	CXT_PINCFG_SWS_JS201D,
-+	CXT_PINCFG_TOP_SPEAKER,
- };
+diff --git a/drivers/net/usb/cx82310_eth.c b/drivers/net/usb/cx82310_eth.c
+index 32b08b18e120..043679311399 100644
+--- a/drivers/net/usb/cx82310_eth.c
++++ b/drivers/net/usb/cx82310_eth.c
+@@ -40,6 +40,11 @@ enum cx82310_status {
+ #define CX82310_MTU	1514
+ #define CMD_EP		0x01
  
- /* for hda_fixup_thinkpad_acpi() */
-@@ -871,6 +872,13 @@ static const struct hda_fixup cxt_fixups
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = cxt_pincfg_sws_js201d,
- 	},
-+	[CXT_PINCFG_TOP_SPEAKER] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1d, 0x82170111 },
-+			{ }
-+		},
-+	},
- };
++struct cx82310_priv {
++	struct work_struct reenable_work;
++	struct usbnet *dev;
++};
++
+ /*
+  * execute control command
+  *  - optionally send some data (command parameters)
+@@ -115,6 +120,23 @@ static int cx82310_cmd(struct usbnet *dev, enum cx82310_cmd cmd, bool reply,
+ 	return ret;
+ }
  
- static const struct snd_pci_quirk cxt5045_fixups[] = {
-@@ -965,6 +973,8 @@ static const struct snd_pci_quirk cxt506
- 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", CXT_FIXUP_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", CXT_PINCFG_LEMOTE_A1004),
- 	SND_PCI_QUIRK(0x1c06, 0x2012, "Lemote A1205", CXT_PINCFG_LEMOTE_A1205),
-+	SND_PCI_QUIRK(0x2782, 0x12c3, "Sirius Gen1", CXT_PINCFG_TOP_SPEAKER),
-+	SND_PCI_QUIRK(0x2782, 0x12c5, "Sirius Gen2", CXT_PINCFG_TOP_SPEAKER),
- 	{}
- };
++static int cx82310_enable_ethernet(struct usbnet *dev)
++{
++	int ret = cx82310_cmd(dev, CMD_ETHERNET_MODE, true, "\x01", 1, NULL, 0);
++
++	if (ret)
++		netdev_err(dev->net, "unable to enable ethernet mode: %d\n",
++			   ret);
++	return ret;
++}
++
++static void cx82310_reenable_work(struct work_struct *work)
++{
++	struct cx82310_priv *priv = container_of(work, struct cx82310_priv,
++						 reenable_work);
++	cx82310_enable_ethernet(priv->dev);
++}
++
+ #define partial_len	data[0]		/* length of partial packet data */
+ #define partial_rem	data[1]		/* remaining (missing) data length */
+ #define partial_data	data[2]		/* partial packet data */
+@@ -126,6 +148,7 @@ static int cx82310_bind(struct usbnet *dev, struct usb_interface *intf)
+ 	struct usb_device *udev = dev->udev;
+ 	u8 link[3];
+ 	int timeout = 50;
++	struct cx82310_priv *priv;
  
-@@ -983,6 +993,7 @@ static const struct hda_model_fixup cxt5
- 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
- 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
- 	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
-+	{ .id = CXT_PINCFG_TOP_SPEAKER, .name = "sirius-top-speaker" },
- 	{}
- };
+ 	/* avoid ADSL modems - continue only if iProduct is "USB NET CARD" */
+ 	if (usb_string(udev, udev->descriptor.iProduct, buf, sizeof(buf)) > 0
+@@ -152,6 +175,15 @@ static int cx82310_bind(struct usbnet *dev, struct usb_interface *intf)
+ 	if (!dev->partial_data)
+ 		return -ENOMEM;
  
++	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
++	if (!priv) {
++		ret = -ENOMEM;
++		goto err_partial;
++	}
++	dev->driver_priv = priv;
++	INIT_WORK(&priv->reenable_work, cx82310_reenable_work);
++	priv->dev = dev;
++
+ 	/* wait for firmware to become ready (indicated by the link being up) */
+ 	while (--timeout) {
+ 		ret = cx82310_cmd(dev, CMD_GET_LINK_STATUS, true, NULL, 0,
+@@ -168,12 +200,8 @@ static int cx82310_bind(struct usbnet *dev, struct usb_interface *intf)
+ 	}
+ 
+ 	/* enable ethernet mode (?) */
+-	ret = cx82310_cmd(dev, CMD_ETHERNET_MODE, true, "\x01", 1, NULL, 0);
+-	if (ret) {
+-		dev_err(&udev->dev, "unable to enable ethernet mode: %d\n",
+-			ret);
++	if (cx82310_enable_ethernet(dev))
+ 		goto err;
+-	}
+ 
+ 	/* get the MAC address */
+ 	ret = cx82310_cmd(dev, CMD_GET_MAC_ADDR, true, NULL, 0,
+@@ -190,13 +218,19 @@ static int cx82310_bind(struct usbnet *dev, struct usb_interface *intf)
+ 
+ 	return 0;
+ err:
++	kfree(dev->driver_priv);
++err_partial:
+ 	kfree((void *)dev->partial_data);
+ 	return ret;
+ }
+ 
+ static void cx82310_unbind(struct usbnet *dev, struct usb_interface *intf)
+ {
++	struct cx82310_priv *priv = dev->driver_priv;
++
+ 	kfree((void *)dev->partial_data);
++	cancel_work_sync(&priv->reenable_work);
++	kfree(dev->driver_priv);
+ }
+ 
+ /*
+@@ -211,6 +245,7 @@ static int cx82310_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ {
+ 	int len;
+ 	struct sk_buff *skb2;
++	struct cx82310_priv *priv = dev->driver_priv;
+ 
+ 	/*
+ 	 * If the last skb ended with an incomplete packet, this skb contains
+@@ -245,7 +280,10 @@ static int cx82310_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			break;
+ 		}
+ 
+-		if (len > CX82310_MTU) {
++		if (len == 0xffff) {
++			netdev_info(dev->net, "router was rebooted, re-enabling ethernet mode");
++			schedule_work(&priv->reenable_work);
++		} else if (len > CX82310_MTU) {
+ 			dev_err(&dev->udev->dev, "RX packet too long: %d B\n",
+ 				len);
+ 			return 0;
+-- 
+2.43.0
+
 
 
