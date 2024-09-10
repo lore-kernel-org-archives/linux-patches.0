@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B8318C03F;
-	Tue, 10 Sep 2024 09:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE4A18C327;
+	Tue, 10 Sep 2024 09:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961388; cv=none; b=MUOuIvuDYM9W+f7uCkkHAPHYmRe9pZNJLjemZLkWHEdBA52ONyKAxmpQ6o4GYQ05Pz3TY31jnoVWtjiLvorrgrD4OtpQwoiQtPFhdpE87akvpry3Otm7SbOO4wsMn1IKU/TlKnaFIaNGXYPK995geoR5h3I+Q6SXPnk0u76J11k=
+	t=1725961391; cv=none; b=KtF2emM2B2IP4A1SkHHVU2Uu9jSaHnunQd9D/WhHTdGDT68CBbD64Oe7TtMT1sJNhtC8SefbcwQOfFkaVI0U3OdeoDfIjtvym6RGpsI11Ixjuj/qUCOqmm/uwS5Q9iKIAeyr1/Uw620ADR/Oa5su6B/TtoioGI3gl4u+TjVVxcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961388; c=relaxed/simple;
-	bh=uKV0yIsLEuKto7mecUXSpgmUSfNNFM7k3caxNFTqpZk=;
+	s=arc-20240116; t=1725961391; c=relaxed/simple;
+	bh=p5fxnqD9U9RO5p7/Abr5PJI0iwjfBAsuj1pw1R2BVrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRRtjzr0QWmSZxt3n9fGvy+YFmsMo2vjGWe32Tvz+J7pnJs5TIAZdW+RyLZR9j4ZvuszejnLrXlm9kV3sDVLjfL11L43A76Ny+QEIqTTg7BOGFHiYJnEAJg+GWaTsK1sbRuEzByjCkS0BTR69A7AlKiCdS9Vtpa5liMN6zsOROY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShIZK/qv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWE2RlXSdBwnu6nG5zHlfYA2+TfuPGdj7FVfFaauyHSMeM9ZX6O7HSi+t3IfdT7mPC6yJ+b5NiUoEwZJ/SFJ0ej79+33ZtgfKvFs5QGJnN5TMfycmgfemoRaQ1eEgTMtJF3xHRhZORZsS4tXCyhHPn/3oMoesjqOhYmF1Beszz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNxuMwT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShIZK/qv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D78C4CEC3;
-	Tue, 10 Sep 2024 09:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNxuMwT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82DAC4CEC3;
+	Tue, 10 Sep 2024 09:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961388;
-	bh=uKV0yIsLEuKto7mecUXSpgmUSfNNFM7k3caxNFTqpZk=;
+	s=korg; t=1725961391;
+	bh=p5fxnqD9U9RO5p7/Abr5PJI0iwjfBAsuj1pw1R2BVrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShIZK/qv+d36TW1WhVBj/8V+lrgpYQcjSAEtjw5t9UA04wwiIgNWtk6xlCS9Mo5VT
-	 J3cVyFMmKwVVRdhz9r/GrJWQ4TgZKYsZ8ACoN7o8Di+4Vq3sR1JH1HEBTlSyNIvNlS
-	 dHgJHrpKygaVjQpV+K0XYVs8esyc8xBFSdPc5zwA=
+	b=YNxuMwT6JPtFbZvvlFqeHb5+5Bm2D4yQLNU58c1m2Z9g95tdBTcg9RK0eZBeTplad
+	 dY1eBgGnAqP/sczTFD+E0M16vzqxnrhzkkkPKHlE+sP7kUbL4KvgrD426g2f3b6KOu
+	 VE3A8U5Sl/tsQfpa9SrNh8+gXRD3PFUbpL896fjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hao Ge <gehao@kylinos.cn>,
+	Miaohe Lin <linmiaohe@huawei.com>,
 	Suren Baghdasaryan <surenb@google.com>,
 	David Hildenbrand <david@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
 	Kent Overstreet <kent.overstreet@linux.dev>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Sourav Panda <souravpanda@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 054/375] alloc_tag: fix allocation tag reporting when CONFIG_MODULES=n
-Date: Tue, 10 Sep 2024 11:27:31 +0200
-Message-ID: <20240910092624.048866769@linuxfoundation.org>
+Subject: [PATCH 6.10 055/375] codetag: debug: mark codetags for poisoned page as empty
+Date: Tue, 10 Sep 2024 11:27:32 +0200
+Message-ID: <20240910092624.083752513@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -56,92 +56,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suren Baghdasaryan <surenb@google.com>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit 052a45c1cb1b32f05dd63a295d65496d8b403283 upstream.
+commit 5e9784e997620af7c1399029282f5d6964b41942 upstream.
 
-codetag_module_init() is used to initialize sections containing allocation
-tags.  This function is used to initialize module sections as well as core
-kernel sections, in which case the module parameter is set to NULL.  This
-function has to be called even when CONFIG_MODULES=n to initialize core
-kernel allocation tag sections.  When CONFIG_MODULES=n, this function is a
-NOP, which is wrong.  This leads to /proc/allocinfo reported as empty.
-Fix this by making it independent of CONFIG_MODULES.
+When PG_hwpoison pages are freed they are treated differently in
+free_pages_prepare() and instead of being released they are isolated.
 
-Link: https://lkml.kernel.org/r/20240828231536.1770519-1-surenb@google.com
-Fixes: 916cc5167cc6 ("lib: code tagging framework")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Page allocation tag counters are decremented at this point since the page
+is considered not in use.  Later on when such pages are released by
+unpoison_memory(), the allocation tag counters will be decremented again
+and the following warning gets reported:
+
+[  113.930443][ T3282] ------------[ cut here ]------------
+[  113.931105][ T3282] alloc_tag was not set
+[  113.931576][ T3282] WARNING: CPU: 2 PID: 3282 at ./include/linux/alloc_tag.h:130 pgalloc_tag_sub.part.66+0x154/0x164
+[  113.932866][ T3282] Modules linked in: hwpoison_inject fuse ip6t_rpfilter ip6t_REJECT nf_reject_ipv6 ipt_REJECT nf_reject_ipv4 xt_conntrack ebtable_nat ebtable_broute ip6table_nat ip6table_man4
+[  113.941638][ T3282] CPU: 2 UID: 0 PID: 3282 Comm: madvise11 Kdump: loaded Tainted: G        W          6.11.0-rc4-dirty #18
+[  113.943003][ T3282] Tainted: [W]=WARN
+[  113.943453][ T3282] Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
+[  113.944378][ T3282] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  113.945319][ T3282] pc : pgalloc_tag_sub.part.66+0x154/0x164
+[  113.946016][ T3282] lr : pgalloc_tag_sub.part.66+0x154/0x164
+[  113.946706][ T3282] sp : ffff800087093a10
+[  113.947197][ T3282] x29: ffff800087093a10 x28: ffff0000d7a9d400 x27: ffff80008249f0a0
+[  113.948165][ T3282] x26: 0000000000000000 x25: ffff80008249f2b0 x24: 0000000000000000
+[  113.949134][ T3282] x23: 0000000000000001 x22: 0000000000000001 x21: 0000000000000000
+[  113.950597][ T3282] x20: ffff0000c08fcad8 x19: ffff80008251e000 x18: ffffffffffffffff
+[  113.952207][ T3282] x17: 0000000000000000 x16: 0000000000000000 x15: ffff800081746210
+[  113.953161][ T3282] x14: 0000000000000000 x13: 205d323832335420 x12: 5b5d353031313339
+[  113.954120][ T3282] x11: ffff800087093500 x10: 000000000000005d x9 : 00000000ffffffd0
+[  113.955078][ T3282] x8 : 7f7f7f7f7f7f7f7f x7 : ffff80008236ba90 x6 : c0000000ffff7fff
+[  113.956036][ T3282] x5 : ffff000b34bf4dc8 x4 : ffff8000820aba90 x3 : 0000000000000001
+[  113.956994][ T3282] x2 : ffff800ab320f000 x1 : 841d1e35ac932e00 x0 : 0000000000000000
+[  113.957962][ T3282] Call trace:
+[  113.958350][ T3282]  pgalloc_tag_sub.part.66+0x154/0x164
+[  113.959000][ T3282]  pgalloc_tag_sub+0x14/0x1c
+[  113.959539][ T3282]  free_unref_page+0xf4/0x4b8
+[  113.960096][ T3282]  __folio_put+0xd4/0x120
+[  113.960614][ T3282]  folio_put+0x24/0x50
+[  113.961103][ T3282]  unpoison_memory+0x4f0/0x5b0
+[  113.961678][ T3282]  hwpoison_unpoison+0x30/0x48 [hwpoison_inject]
+[  113.962436][ T3282]  simple_attr_write_xsigned.isra.34+0xec/0x1cc
+[  113.963183][ T3282]  simple_attr_write+0x38/0x48
+[  113.963750][ T3282]  debugfs_attr_write+0x54/0x80
+[  113.964330][ T3282]  full_proxy_write+0x68/0x98
+[  113.964880][ T3282]  vfs_write+0xdc/0x4d0
+[  113.965372][ T3282]  ksys_write+0x78/0x100
+[  113.965875][ T3282]  __arm64_sys_write+0x24/0x30
+[  113.966440][ T3282]  invoke_syscall+0x7c/0x104
+[  113.966984][ T3282]  el0_svc_common.constprop.1+0x88/0x104
+[  113.967652][ T3282]  do_el0_svc+0x2c/0x38
+[  113.968893][ T3282]  el0_svc+0x3c/0x1b8
+[  113.969379][ T3282]  el0t_64_sync_handler+0x98/0xbc
+[  113.969980][ T3282]  el0t_64_sync+0x19c/0x1a0
+[  113.970511][ T3282] ---[ end trace 0000000000000000 ]---
+
+To fix this, clear the page tag reference after the page got isolated
+and accounted for.
+
+Link: https://lkml.kernel.org/r/20240825163649.33294-1-hao.ge@linux.dev
+Fixes: d224eb0287fb ("codetag: debug: mark codetags for reserved pages as empty")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
 Cc: David Hildenbrand <david@redhat.com>
-Cc: Kees Cook <keescook@chromium.org>
+Cc: Hao Ge <gehao@kylinos.cn>
 Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
 Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Sourav Panda <souravpanda@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>	[6.10+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/codetag.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ mm/page_alloc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/lib/codetag.c b/lib/codetag.c
-index 5ace625f2328..afa8a2d4f317 100644
---- a/lib/codetag.c
-+++ b/lib/codetag.c
-@@ -125,7 +125,6 @@ static inline size_t range_size(const struct codetag_type *cttype,
- 			cttype->desc.tag_size;
- }
- 
--#ifdef CONFIG_MODULES
- static void *get_symbol(struct module *mod, const char *prefix, const char *name)
- {
- 	DECLARE_SEQ_BUF(sb, KSYM_NAME_LEN);
-@@ -155,6 +154,15 @@ static struct codetag_range get_section_range(struct module *mod,
- 	};
- }
- 
-+static const char *get_mod_name(__maybe_unused struct module *mod)
-+{
-+#ifdef CONFIG_MODULES
-+	if (mod)
-+		return mod->name;
-+#endif
-+	return "(built-in)";
-+}
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1053,6 +1053,13 @@ __always_inline bool free_pages_prepare(
+ 		reset_page_owner(page, order);
+ 		page_table_check_free(page, order);
+ 		pgalloc_tag_sub(page, 1 << order);
 +
- static int codetag_module_init(struct codetag_type *cttype, struct module *mod)
- {
- 	struct codetag_range range;
-@@ -164,8 +172,7 @@ static int codetag_module_init(struct codetag_type *cttype, struct module *mod)
- 	range = get_section_range(mod, cttype->desc.section);
- 	if (!range.start || !range.stop) {
- 		pr_warn("Failed to load code tags of type %s from the module %s\n",
--			cttype->desc.section,
--			mod ? mod->name : "(built-in)");
-+			cttype->desc.section, get_mod_name(mod));
- 		return -EINVAL;
++		/*
++		 * The page is isolated and accounted for.
++		 * Mark the codetag as empty to avoid accounting error
++		 * when the page is freed by unpoison_memory().
++		 */
++		clear_page_tag_ref(page);
+ 		return false;
  	}
  
-@@ -199,6 +206,7 @@ static int codetag_module_init(struct codetag_type *cttype, struct module *mod)
- 	return 0;
- }
- 
-+#ifdef CONFIG_MODULES
- void codetag_load_module(struct module *mod)
- {
- 	struct codetag_type *cttype;
-@@ -248,9 +256,6 @@ bool codetag_unload_module(struct module *mod)
- 
- 	return unload_ok;
- }
--
--#else /* CONFIG_MODULES */
--static int codetag_module_init(struct codetag_type *cttype, struct module *mod) { return 0; }
- #endif /* CONFIG_MODULES */
- 
- struct codetag_type *
--- 
-2.46.0
-
 
 
