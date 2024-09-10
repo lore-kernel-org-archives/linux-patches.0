@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E85918C336;
-	Tue, 10 Sep 2024 10:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E29193418;
+	Tue, 10 Sep 2024 10:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964120; cv=none; b=cirQFp1c350Vl/MP9Z/Wb/AUOp5d7Jvl1fRXOzDeFcpcCZVQou7Yl9nvxGJSwyTES7JlAZEw+S1vLLb+uZTHahj48syN8faKVauZ3HxyITpXPOz4idmkrIYdasHW3zmjSIR/vw/uHCfi0BIgC4IbpnxJwWAwWwH0mroO2c6ncpM=
+	t=1725964123; cv=none; b=LQAbQDtx7WiJi6+4poLz7JIa18urO4hAegchX8LG4tQr44QxhqmUM2nS6NKni+J+7f5gb9eUUmoZbt4G/YRM9IRjiUo6H4duuGfKzAqfOeu/CDUCZigv/HNUqxRxR/QQKGHzpoul5pxL19/jqkISdu8biCYwUBvykWbdVxr5tT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964120; c=relaxed/simple;
-	bh=3KT11esrjMtMlfo/2XRK74pS4LjnUtMv3VDK7Ihx3Po=;
+	s=arc-20240116; t=1725964123; c=relaxed/simple;
+	bh=UTMfh45jex3eBPH3jYzkMYNzl3c6t8cUgaUyrgDMHFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAvEcBGbtzN1vIVdGzt5ukj/fo1wgVH8WAFLfwlE1Avvdlz2bRH4fKP6pNf7DcoJ+PMSdkdbd9QfawhsrKZ6NqYs+vacCITLD+ERE27u+jYnVnDQlZFJiMOqxFHY5fDw7ndF+Q3N4cDnRh0qp8A5BMb8So8J0shM73CQ7kjVhRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xl1kDof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XcwQi2QwM7sj8WHfDnAKzfJVx7/NLja4snkKDFyjcZvszIyeCtuNZf5Uw5EAPM5eR5FsLVeHXG5KAU+2vsrByUObEiK5we4UJQMwpvkMhvlD1X4fhnyuTKsU8zRkDk2S4mBVcT/xp+gx/qFn4XQvBQ1z02bAS/l4NR+WsORy7XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDMNCA26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xl1kDof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DC6C4CEC3;
-	Tue, 10 Sep 2024 10:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDMNCA26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006CEC4CEC6;
+	Tue, 10 Sep 2024 10:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964120;
-	bh=3KT11esrjMtMlfo/2XRK74pS4LjnUtMv3VDK7Ihx3Po=;
+	s=korg; t=1725964123;
+	bh=UTMfh45jex3eBPH3jYzkMYNzl3c6t8cUgaUyrgDMHFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1xl1kDofOnNRM0TdjNJL/5Rs80hnRj71oTH5Ob/na2BG40VDGwbCkr3AtmviJ0f5v
-	 PT/W7nhkEt3sUzDQhMGzDZ1laALwClB9IyMDI+eNeQeKMhccYwLoF+BHR9U5waErN+
-	 RTpSXt+drDdOHNBYdh9MrPVVgqmYICUOmuWPtl3Y=
+	b=NDMNCA263ZQ9CPD3X465UKS1FXKx80q2gBtPeCZpkr/8QMmKyvbTfa6pD2d1z9Vea
+	 tPYisWfjRdDkUDl+MbvPrn5o4qXnZetCKDyd6JYy/qUrDOvgYnABJ0yKneWIn83sX2
+	 cD4S2PTQfScsmwO7eZcrjXAJ1C9mtoLgjgQfYapM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/269] udf: Avoid excessive partition lengths
-Date: Tue, 10 Sep 2024 11:31:02 +0200
-Message-ID: <20240910092610.876306741@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 058/269] nilfs2: protect references to superblock parameters exposed in sysfs
+Date: Tue, 10 Sep 2024 11:30:45 +0200
+Message-ID: <20240910092610.280913605@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -50,63 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit ebbe26fd54a9621994bc16b14f2ba8f84c089693 ]
+commit 683408258917541bdb294cd717c210a04381931e upstream.
 
-Avoid mounting filesystems where the partition would overflow the
-32-bits used for block number. Also refuse to mount filesystems where
-the partition length is so large we cannot safely index bits in a
-block bitmap.
+The superblock buffers of nilfs2 can not only be overwritten at runtime
+for modifications/repairs, but they are also regularly swapped, replaced
+during resizing, and even abandoned when degrading to one side due to
+backing device issues.  So, accessing them requires mutual exclusion using
+the reader/writer semaphore "nilfs->ns_sem".
 
-Link: https://patch.msgid.link/20240620130403.14731-1-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Some sysfs attribute show methods read this superblock buffer without the
+necessary mutual exclusion, which can cause problems with pointer
+dereferencing and memory access, so fix it.
+
+Link: https://lkml.kernel.org/r/20240811100320.9913-1-konishi.ryusuke@gmail.com
+Fixes: da7141fb78db ("nilfs2: add /sys/fs/nilfs2/<device> group")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/super.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/nilfs2/sysfs.c |   43 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index e0080fda2526..3c78535f406b 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1080,12 +1080,19 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 	struct udf_part_map *map;
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct partitionHeaderDesc *phd;
-+	u32 sum;
- 	int err;
+--- a/fs/nilfs2/sysfs.c
++++ b/fs/nilfs2/sysfs.c
+@@ -836,9 +836,15 @@ ssize_t nilfs_dev_revision_show(struct n
+ 				struct the_nilfs *nilfs,
+ 				char *buf)
+ {
+-	struct nilfs_super_block **sbp = nilfs->ns_sbp;
+-	u32 major = le32_to_cpu(sbp[0]->s_rev_level);
+-	u16 minor = le16_to_cpu(sbp[0]->s_minor_rev_level);
++	struct nilfs_super_block *raw_sb;
++	u32 major;
++	u16 minor;
++
++	down_read(&nilfs->ns_sem);
++	raw_sb = nilfs->ns_sbp[0];
++	major = le32_to_cpu(raw_sb->s_rev_level);
++	minor = le16_to_cpu(raw_sb->s_minor_rev_level);
++	up_read(&nilfs->ns_sem);
  
- 	map = &sbi->s_partmaps[p_index];
+ 	return sysfs_emit(buf, "%d.%d\n", major, minor);
+ }
+@@ -856,8 +862,13 @@ ssize_t nilfs_dev_device_size_show(struc
+ 				    struct the_nilfs *nilfs,
+ 				    char *buf)
+ {
+-	struct nilfs_super_block **sbp = nilfs->ns_sbp;
+-	u64 dev_size = le64_to_cpu(sbp[0]->s_dev_size);
++	struct nilfs_super_block *raw_sb;
++	u64 dev_size;
++
++	down_read(&nilfs->ns_sem);
++	raw_sb = nilfs->ns_sbp[0];
++	dev_size = le64_to_cpu(raw_sb->s_dev_size);
++	up_read(&nilfs->ns_sem);
  
- 	map->s_partition_len = le32_to_cpu(p->partitionLength); /* blocks */
- 	map->s_partition_root = le32_to_cpu(p->partitionStartingLocation);
-+	if (check_add_overflow(map->s_partition_root, map->s_partition_len,
-+			       &sum)) {
-+		udf_err(sb, "Partition %d has invalid location %u + %u\n",
-+			p_index, map->s_partition_root, map->s_partition_len);
-+		return -EFSCORRUPTED;
-+	}
+ 	return sysfs_emit(buf, "%llu\n", dev_size);
+ }
+@@ -879,9 +890,15 @@ ssize_t nilfs_dev_uuid_show(struct nilfs
+ 			    struct the_nilfs *nilfs,
+ 			    char *buf)
+ {
+-	struct nilfs_super_block **sbp = nilfs->ns_sbp;
++	struct nilfs_super_block *raw_sb;
++	ssize_t len;
++
++	down_read(&nilfs->ns_sem);
++	raw_sb = nilfs->ns_sbp[0];
++	len = sysfs_emit(buf, "%pUb\n", raw_sb->s_uuid);
++	up_read(&nilfs->ns_sem);
  
- 	if (p->accessType == cpu_to_le32(PD_ACCESS_TYPE_READ_ONLY))
- 		map->s_partition_flags |= UDF_PART_FLAG_READ_ONLY;
-@@ -1141,6 +1148,14 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 		bitmap->s_extPosition = le32_to_cpu(
- 				phd->unallocSpaceBitmap.extPosition);
- 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_BITMAP;
-+		/* Check whether math over bitmap won't overflow. */
-+		if (check_add_overflow(map->s_partition_len,
-+				       sizeof(struct spaceBitmapDesc) << 3,
-+				       &sum)) {
-+			udf_err(sb, "Partition %d is too long (%u)\n", p_index,
-+				map->s_partition_len);
-+			return -EFSCORRUPTED;
-+		}
- 		udf_debug("unallocSpaceBitmap (part %d) @ %u\n",
- 			  p_index, bitmap->s_extPosition);
- 	}
--- 
-2.43.0
-
+-	return sysfs_emit(buf, "%pUb\n", sbp[0]->s_uuid);
++	return len;
+ }
+ 
+ static
+@@ -889,10 +906,16 @@ ssize_t nilfs_dev_volume_name_show(struc
+ 				    struct the_nilfs *nilfs,
+ 				    char *buf)
+ {
+-	struct nilfs_super_block **sbp = nilfs->ns_sbp;
++	struct nilfs_super_block *raw_sb;
++	ssize_t len;
++
++	down_read(&nilfs->ns_sem);
++	raw_sb = nilfs->ns_sbp[0];
++	len = scnprintf(buf, sizeof(raw_sb->s_volume_name), "%s\n",
++			raw_sb->s_volume_name);
++	up_read(&nilfs->ns_sem);
+ 
+-	return scnprintf(buf, sizeof(sbp[0]->s_volume_name), "%s\n",
+-			 sbp[0]->s_volume_name);
++	return len;
+ }
+ 
+ static const char dev_readme_str[] =
 
 
