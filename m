@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31841172BA8;
-	Tue, 10 Sep 2024 10:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5F418F2F0;
+	Tue, 10 Sep 2024 10:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964423; cv=none; b=iuo9h0pps8ApHDPAtmyqSsDRtUeW5eBOd/z7/R0ckmb9pEd2FT09t1VI8SEgAcDsYwYz4yWsY7IJCjEpSsenHOZeR7zSztVF3PJjg7UQk0kDiq2Hm6i+MSxyCI9qBhDRza9fGbOFWwEKwzvNEkZgeyfKD8V2LM2edRj+W3bG/j8=
+	t=1725964426; cv=none; b=DRzvwk0xAoinjatAJ5s85aOQbiNt09Q/nIFXjjNYFSHN4aPxVi8fBPnhZUCqD8uVV2gLp3Tpb7Qbc/tqBKKaJpq/Nmzfb4RStWfq8SNd5pcKxANw7s8FAT6imQaUYTM3RMezbbgneUnDqm6HvujkxFx2z1yTAhp0wDeFLMFHQLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964423; c=relaxed/simple;
-	bh=IpKsCMASEGoVWn7pyIpULflRdAQCXlVQaRsyv68zh60=;
+	s=arc-20240116; t=1725964426; c=relaxed/simple;
+	bh=CxYTFAC3uCrrepRDcx88oVVWHal5rxgoPCSD8zLcuWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTxKRTTjHlfreJU0ymKQprs/QTVt7tcaGCkyvSJoN5QNSBoc+dOgbQuXCm8iFh2H7+mRE5AOs93/d84Wzs9+qx3l5XaZwRQuVcOIiHwOjyaGx0MVSxxpLBYdWyRV1VYIc0DgCGnjZFGXo44n9Kj8PV6/+gf+ZhXeBZVRlJ3/z78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTtCizq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azEDWBwHWsTi6CHzXfsHYUBn0nAXsXm9JfFcysZmclGJsDCpC8kZ6LYuhjzscATzXbkCXwZ1NTBB2S72Yv06PZvfnKhYM+wrXWDkV4XhAvd46T/woF2UciUFMDPslDeXrFo7Wj+DbbZF9GzORrupsNTzzUDIe3BDYcb4RqAVprE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUNchu7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTtCizq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1BEC4CEC3;
-	Tue, 10 Sep 2024 10:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUNchu7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AB9C4CEC3;
+	Tue, 10 Sep 2024 10:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964423;
-	bh=IpKsCMASEGoVWn7pyIpULflRdAQCXlVQaRsyv68zh60=;
+	s=korg; t=1725964426;
+	bh=CxYTFAC3uCrrepRDcx88oVVWHal5rxgoPCSD8zLcuWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTtCizq+ibR6gcnvaTP2CNH3WU7jYKhOwCEj8y3+07Ww8jDzd4m4Swxo66JfSqGOm
-	 +zf2f3cuHp3S8Fd7oXDVU89GdkrKBZapBLz0LiP0YfCz0jbvS37Unq6qstkzVjaZg9
-	 uDGZwqPz9axzxje2aborkXhGmupvbRXLE7bE+AAc=
+	b=WUNchu7xUVyP12ULJS84COC5+FAAYrqLN24ritFZ6hTEFIJ7I6rsLjmKQhhOCLs46
+	 lPy/WLaBUhmczqx0K1qstNDhIhsgFVCQYlFnBjQfh5p9X95lB1s2KuIrA/EINS6v+c
+	 V0Bxl0gSTtO/SCghY222qc3rXrOJJSwJ+IjjE2EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/269] crypto: qat - fix unintentional re-enabling of error interrupts
-Date: Tue, 10 Sep 2024 11:32:18 +0200
-Message-ID: <20240910092613.603654629@linuxfoundation.org>
+Subject: [PATCH 6.6 152/269] hwmon: (adc128d818) Fix underflows seen when writing limit attributes
+Date: Tue, 10 Sep 2024 11:32:19 +0200
+Message-ID: <20240910092613.636456548@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -53,63 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit f0622894c59458fceb33c4197462bc2006f3fc6b ]
+[ Upstream commit 8cad724c8537fe3e0da8004646abc00290adae40 ]
 
-The logic that detects pending VF2PF interrupts unintentionally clears
-the section of the error mask register(s) not related to VF2PF.
-This might cause interrupts unrelated to VF2PF, reported through
-errsou3 and errsou5, to be reported again after the execution
-of the function disable_pending_vf2pf_interrupts() in dh895xcc
-and GEN2 devices.
+DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
+negative number such as -9223372036854775808 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 
-Fix by updating only section of errmsk3 and errmsk5 related to VF2PF.
-
-Signed-off-by: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c       | 4 +++-
- .../crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c  | 8 ++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/hwmon/adc128d818.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c b/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c
-index 70ef11963938..43af81fcab86 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_gen2_pfvf.c
-@@ -100,7 +100,9 @@ static u32 adf_gen2_disable_pending_vf2pf_interrupts(void __iomem *pmisc_addr)
- 	errmsk3 |= ADF_GEN2_ERR_MSK_VF2PF(ADF_GEN2_VF_MSK);
- 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
+diff --git a/drivers/hwmon/adc128d818.c b/drivers/hwmon/adc128d818.c
+index 46e3c8c50765..73fd96799847 100644
+--- a/drivers/hwmon/adc128d818.c
++++ b/drivers/hwmon/adc128d818.c
+@@ -176,7 +176,7 @@ static ssize_t adc128_in_store(struct device *dev,
  
--	errmsk3 &= ADF_GEN2_ERR_MSK_VF2PF(sources | disabled);
-+	/* Update only section of errmsk3 related to VF2PF */
-+	errmsk3 &= ~ADF_GEN2_ERR_MSK_VF2PF(ADF_GEN2_VF_MSK);
-+	errmsk3 |= ADF_GEN2_ERR_MSK_VF2PF(sources | disabled);
- 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
+ 	mutex_lock(&data->update_lock);
+ 	/* 10 mV LSB on limit registers */
+-	regval = clamp_val(DIV_ROUND_CLOSEST(val, 10), 0, 255);
++	regval = DIV_ROUND_CLOSEST(clamp_val(val, 0, 2550), 10);
+ 	data->in[index][nr] = regval << 4;
+ 	reg = index == 1 ? ADC128_REG_IN_MIN(nr) : ADC128_REG_IN_MAX(nr);
+ 	i2c_smbus_write_byte_data(data->client, reg, regval);
+@@ -214,7 +214,7 @@ static ssize_t adc128_temp_store(struct device *dev,
+ 		return err;
  
- 	/* Return the sources of the (new) interrupt(s) */
-diff --git a/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c b/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c
-index 09551f949126..0e40897cc983 100644
---- a/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c
-+++ b/drivers/crypto/intel/qat/qat_dh895xcc/adf_dh895xcc_hw_data.c
-@@ -191,8 +191,12 @@ static u32 disable_pending_vf2pf_interrupts(void __iomem *pmisc_addr)
- 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
- 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK5, errmsk5);
- 
--	errmsk3 &= ADF_DH895XCC_ERR_MSK_VF2PF_L(sources | disabled);
--	errmsk5 &= ADF_DH895XCC_ERR_MSK_VF2PF_U(sources | disabled);
-+	/* Update only section of errmsk3 and errmsk5 related to VF2PF */
-+	errmsk3 &= ~ADF_DH895XCC_ERR_MSK_VF2PF_L(ADF_DH895XCC_VF_MSK);
-+	errmsk5 &= ~ADF_DH895XCC_ERR_MSK_VF2PF_U(ADF_DH895XCC_VF_MSK);
-+
-+	errmsk3 |= ADF_DH895XCC_ERR_MSK_VF2PF_L(sources | disabled);
-+	errmsk5 |= ADF_DH895XCC_ERR_MSK_VF2PF_U(sources | disabled);
- 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK3, errmsk3);
- 	ADF_CSR_WR(pmisc_addr, ADF_GEN2_ERRMSK5, errmsk5);
- 
+ 	mutex_lock(&data->update_lock);
+-	regval = clamp_val(DIV_ROUND_CLOSEST(val, 1000), -128, 127);
++	regval = DIV_ROUND_CLOSEST(clamp_val(val, -128000, 127000), 1000);
+ 	data->temp[index] = regval << 1;
+ 	i2c_smbus_write_byte_data(data->client,
+ 				  index == 1 ? ADC128_REG_TEMP_MAX
 -- 
 2.43.0
 
