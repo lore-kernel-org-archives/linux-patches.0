@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8755118C90B;
-	Tue, 10 Sep 2024 09:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC7F186E4B;
+	Tue, 10 Sep 2024 09:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961473; cv=none; b=o9BHDiJ2gXiYAhpDgENBPXzQrnqOU7fpMK6Iy473wmLIo+V1REAkNq4MrhHCGl1K5nsvzQE31j9OkMPtF/lSf0hh7eMdjjRWn1/yR44gKaH6L0pBdFkHKOkhfHUa9uMk8zPvnl/F4r0+g2JoracQzX7V4TOTrZmnbfoDJR6kENY=
+	t=1725961476; cv=none; b=g4X8985pDHcE7tDyJ0TIJVcm3B4NiwRgB5MU1nzS14I0Qj/6fBdmYv9t8hQDqmHRQp/6CZAwjyTKwnW5SS/lYXgTc1+xnutfZJjQOswwdLb2PZHcQFxVvw0SMx3Dc4M2jAmw375ZjavLl49Yvd9oGdhAgL3GyGyaHlrvn/KrfGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961473; c=relaxed/simple;
-	bh=OdxywKxIGphR2ualk4QmHi1D/EljslKPVXFontwCLtk=;
+	s=arc-20240116; t=1725961476; c=relaxed/simple;
+	bh=uReB2FsC1dEgdY17Rwby9TJjKbmWkeKCVmOt96U45hQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awSm/o0jzpCDDSUG+/8prYXcMuiTfLBraKXOfYX6LutzaQZKkVf3Q+u0dryYy7fCJJsoNclfzMRDFL0R1HPV/H2Lu9SdJW2epyTRcDrqhpHhCSQT+q2W1QPbin0gxfQK85eHjQuHIEqTsuQ+Y35a6puq5I3dpWBlj/v6mcrHfr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRtXxyZO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IzHfLtnal1TeLpSq9DbtW96ZzWZGNETfTrLQJ59jl8qNiEu9ksbOlLV1xljpesEwNZvwZHmuqsy1PJGTgEmV5dhEcWwlEw7ar1Renq9GcYh6Y6MVWSS5rGq+Y317ATcsZ3MN9VV5JhZ2mOHuwIEskdiGaDp89+OvBk9b13YJdpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQMn4/d5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRtXxyZO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28C2C4CEC3;
-	Tue, 10 Sep 2024 09:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQMn4/d5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7150C4CEC3;
+	Tue, 10 Sep 2024 09:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961473;
-	bh=OdxywKxIGphR2ualk4QmHi1D/EljslKPVXFontwCLtk=;
+	s=korg; t=1725961476;
+	bh=uReB2FsC1dEgdY17Rwby9TJjKbmWkeKCVmOt96U45hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRtXxyZOB0q+y7Rmd17zJTUC7LCDigLh+eJqHQY5cNhyA1KyQOQqHPsYUXi/uOCVl
-	 Y+lmgSeOjRMw+TIVCuukA72x6DGfw/n5VuvYTfeJawsrBzUsavMfa7/7Sk/ymjzYQm
-	 9JFA8sWwuyrwpxF9fKaNF96p+xfL6FXrPueuY9p0=
+	b=IQMn4/d5umo0F3STNCcvp8PNL6QgoDqS3/3Y51yxflEqLi5j+OS2xowhtRgEM0YtY
+	 y2DckI+KyaI1um5lxAT8VIz4NuJlZuJGK6JzYqKJkcvZMETXZBfejnohsduUd7IwG6
+	 W3mV+2yIOh/3fcU8dRNhHqgxWMxvIsO0FAyiRuwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 082/375] nilfs2: fix state management in error path of log writing function
-Date: Tue, 10 Sep 2024 11:27:59 +0200
-Message-ID: <20240910092624.988641717@linuxfoundation.org>
+	syzbot+81670362c283f3dd889c@syzkaller.appspotmail.com,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.10 083/375] btrfs: qgroup: dont use extent changeset when not needed
+Date: Tue, 10 Sep 2024 11:28:00 +0200
+Message-ID: <20240910092625.024402866@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,81 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 6576dd6695f2afca3f4954029ac4a64f82ba60ab upstream.
+commit c346c629765ab982967017e2ae859156d0e235cf upstream.
 
-After commit a694291a6211 ("nilfs2: separate wait function from
-nilfs_segctor_write") was applied, the log writing function
-nilfs_segctor_do_construct() was able to issue I/O requests continuously
-even if user data blocks were split into multiple logs across segments,
-but two potential flaws were introduced in its error handling.
+The local extent changeset is passed to clear_record_extent_bits() where
+it may have some additional memory dynamically allocated for ulist. When
+qgroup is disabled, the memory is leaked because in this case the
+changeset is not released upon __btrfs_qgroup_release_data() return.
 
-First, if nilfs_segctor_begin_construction() fails while creating the
-second or subsequent logs, the log writing function returns without
-calling nilfs_segctor_abort_construction(), so the writeback flag set on
-pages/folios will remain uncleared.  This causes page cache operations to
-hang waiting for the writeback flag.  For example,
-truncate_inode_pages_final(), which is called via nilfs_evict_inode() when
-an inode is evicted from memory, will hang.
+Since the recorded contents of the changeset are not used thereafter, just
+don't pass it.
 
-Second, the NILFS_I_COLLECTED flag set on normal inodes remain uncleared.
-As a result, if the next log write involves checkpoint creation, that's
-fine, but if a partial log write is performed that does not, inodes with
-NILFS_I_COLLECTED set are erroneously removed from the "sc_dirty_files"
-list, and their data and b-tree blocks may not be written to the device,
-corrupting the block mapping.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fix these issues by uniformly calling nilfs_segctor_abort_construction()
-on failure of each step in the loop in nilfs_segctor_do_construct(),
-having it clean up logs and segment usages according to progress, and
-correcting the conditions for calling nilfs_redirty_inodes() to ensure
-that the NILFS_I_COLLECTED flag is cleared.
-
-Link: https://lkml.kernel.org/r/20240814101119.4070-1-konishi.ryusuke@gmail.com
-Fixes: a694291a6211 ("nilfs2: separate wait function from nilfs_segctor_write")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+81670362c283f3dd889c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/000000000000aa8c0c060ade165e@google.com
+Fixes: af0e2aab3b70 ("btrfs: qgroup: flush reservations during quota disable")
+CC: stable@vger.kernel.org # 6.10+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/btrfs/qgroup.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -1788,6 +1788,9 @@ static void nilfs_segctor_abort_construc
- 	nilfs_abort_logs(&logs, ret ? : err);
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -4269,10 +4269,9 @@ static int __btrfs_qgroup_release_data(s
+ 	int ret;
  
- 	list_splice_tail_init(&sci->sc_segbufs, &logs);
-+	if (list_empty(&logs))
-+		return; /* if the first segment buffer preparation failed */
-+
- 	nilfs_cancel_segusage(&logs, nilfs->ns_sufile);
- 	nilfs_free_incomplete_logs(&logs, nilfs);
+ 	if (btrfs_qgroup_mode(inode->root->fs_info) == BTRFS_QGROUP_MODE_DISABLED) {
+-		extent_changeset_init(&changeset);
+ 		return clear_record_extent_bits(&inode->io_tree, start,
+ 						start + len - 1,
+-						EXTENT_QGROUP_RESERVED, &changeset);
++						EXTENT_QGROUP_RESERVED, NULL);
+ 	}
  
-@@ -2032,7 +2035,7 @@ static int nilfs_segctor_do_construct(st
- 
- 		err = nilfs_segctor_begin_construction(sci, nilfs);
- 		if (unlikely(err))
--			goto out;
-+			goto failed;
- 
- 		/* Update time stamp */
- 		sci->sc_seg_ctime = ktime_get_real_seconds();
-@@ -2099,10 +2102,9 @@ static int nilfs_segctor_do_construct(st
- 	return err;
- 
-  failed_to_write:
--	if (sci->sc_stage.flags & NILFS_CF_IFILE_STARTED)
--		nilfs_redirty_inodes(&sci->sc_dirty_files);
--
-  failed:
-+	if (mode == SC_LSEG_SR && nilfs_sc_cstage_get(sci) >= NILFS_ST_IFILE)
-+		nilfs_redirty_inodes(&sci->sc_dirty_files);
- 	if (nilfs_doing_gc())
- 		nilfs_redirty_inodes(&sci->sc_gc_inodes);
- 	nilfs_segctor_abort_construction(sci, nilfs, err);
+ 	/* In release case, we shouldn't have @reserved */
 
 
