@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71871196446;
-	Tue, 10 Sep 2024 10:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ACE172BAE;
+	Tue, 10 Sep 2024 10:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963899; cv=none; b=RuFwOnG7kcxUd/lkvT6CePz/HHDWOTC2bOemFARdu8+xfOLxFFzNaq8nxwcvKkcZSzvVL799MF7udfHxTmTL1A2sS7w+80VUxaBcWjq669o30g4+Tj506hhqplmvLD/QANiP2OPkll5h6qjvA9+XOya6/rGbdyp7efyMtUF1QqA=
+	t=1725963902; cv=none; b=XcOQyQIBEQLGQu+GjvF8ZlJ3aLhkuyUnA/YIRWhaVAPxKCDUiQE0og/v68gWfSikUkJaOop+iEaDweONZjp1QmLpJS0EpVwKN3n9ohOveU7lv+tFINaVX7r/ZF6TW/nfFfXq0lw+b50Lqdmua+2K3SvUhgiSyLOAlQwANqXy7MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963899; c=relaxed/simple;
-	bh=M4L8lf+AqzeaFg6hia6HzJZ3u386eRt4XVOuxfxZAlQ=;
+	s=arc-20240116; t=1725963902; c=relaxed/simple;
+	bh=Jjsg/1XGcUyV9hRLJ6yScRNwsnkEMw4CpfCezYzX3VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CBNjOZaaciyzF+6Lmq8srDiD+1y1uRbaOBteINwZMOn5J19AnAj6yAB0zmG6CaHY2xh+DjdQ2NdgkuXDC6pK/Vsy9+4GAoV+MuFZDudyAEKp3Wizw0p8seDv9Q9wrD6WvzY6Zo6t0ZKmeecF54eQcp2mzpbT5KN/W656YKAGpco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPo+OUYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GRvUQTPh6sA32aetEA3xeAk8j0chLaynqcH0/x4cawiwTLITWeCMO7IhJJP+96BmRrhsQXAKTgXx5+HzFPdv4pFbToA4Fvz51QM32Lwb+VVdMdzOF/aStUgqDtioBorb06qIYjrwx1PUnP0ut9hVC+Wix1s1Gmb6pA0UJos+Gvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiOdcIa5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPo+OUYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF59FC4CEC3;
-	Tue, 10 Sep 2024 10:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiOdcIa5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D631CC4CEC3;
+	Tue, 10 Sep 2024 10:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963899;
-	bh=M4L8lf+AqzeaFg6hia6HzJZ3u386eRt4XVOuxfxZAlQ=;
+	s=korg; t=1725963902;
+	bh=Jjsg/1XGcUyV9hRLJ6yScRNwsnkEMw4CpfCezYzX3VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPo+OUYmTzOTr1nN2MEKH/gPKB4XwwRtv6TqvTORUv0/PlBT9UibGMUMxUqCbCxyt
-	 OmCrQaa2nZeQA2KpESsFSZOwBRg8Kenp6b1hmlPFD3o//K4u7oe7WuSPeo2M056Vty
-	 RHF22tF378it47dEROeMulBgSfhWiqUrXIr0pZeY=
+	b=IiOdcIa51apQSk9nRyd8IGUWGBst6GR83WaESDdEsZEdbYSjHxWzruQryCRgxgh4U
+	 O5fcMkWsxMsVJxNz0byaHkJoBtLz9fz/AACQnknMF+b6PJMTz1gFVS/F/rDyQ/tluf
+	 ZMhGn32G4oRO4v0GyOasRhtOh2H3Vk+jo1U/Jx1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 203/214] drm/i915/fence: Mark debug_fence_init_onstack() with __maybe_unused
-Date: Tue, 10 Sep 2024 11:33:45 +0200
-Message-ID: <20240910092606.837271208@linuxfoundation.org>
+Subject: [PATCH 5.15 204/214] drm/i915/fence: Mark debug_fence_free() with __maybe_unused
+Date: Tue, 10 Sep 2024 11:33:46 +0200
+Message-ID: <20240910092606.867745947@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -54,26 +54,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit fcd9e8afd546f6ced378d078345a89bf346d065e ]
+[ Upstream commit f99999536128b14b5d765a9982763b5134efdd79 ]
 
-When debug_fence_init_onstack() is unused (CONFIG_DRM_I915_SELFTEST=n),
-it prevents kernel builds with clang, `make W=1` and CONFIG_WERROR=y:
+When debug_fence_free() is unused
+(CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n), it prevents kernel builds
+with clang, `make W=1` and CONFIG_WERROR=y:
 
-.../i915_sw_fence.c:97:20: error: unused function 'debug_fence_init_onstack' [-Werror,-Wunused-function]
-   97 | static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
-      |                    ^~~~~~~~~~~~~~~~~~~~~~~~
+.../i915_sw_fence.c:118:20: error: unused function 'debug_fence_free' [-Werror,-Wunused-function]
+  118 | static inline void debug_fence_free(struct i915_sw_fence *fence)
+      |                    ^~~~~~~~~~~~~~~~
 
-Fix this by marking debug_fence_init_onstack() with __maybe_unused.
+Fix this by marking debug_fence_free() with __maybe_unused.
 
 See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
 inline functions for W=1 build").
 
-Fixes: 214707fc2ce0 ("drm/i915/selftests: Wrap a timer into a i915_sw_fence")
+Fixes: fc1584059d6c ("drm/i915: Integrate i915_sw_fence with debugobjects")
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-2-andriy.shevchenko@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 5bf472058ffb43baf6a4cdfe1d7f58c4c194c688)
+(cherry picked from commit 8be4dce5ea6f2368cc25edc71989c4690fa66964)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -81,24 +82,24 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
-index c589a681da77..11d1f9136c41 100644
+index 11d1f9136c41..cce8a7be11f2 100644
 --- a/drivers/gpu/drm/i915/i915_sw_fence.c
 +++ b/drivers/gpu/drm/i915/i915_sw_fence.c
-@@ -49,7 +49,7 @@ static inline void debug_fence_init(struct i915_sw_fence *fence)
- 	debug_object_init(fence, &i915_sw_fence_debug_descr);
+@@ -75,7 +75,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
+ 	debug_object_destroy(fence, &i915_sw_fence_debug_descr);
  }
  
--static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_init_onstack(struct i915_sw_fence *fence)
+-static inline void debug_fence_free(struct i915_sw_fence *fence)
++static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
  {
- 	debug_object_init_on_stack(fence, &i915_sw_fence_debug_descr);
- }
-@@ -92,7 +92,7 @@ static inline void debug_fence_init(struct i915_sw_fence *fence)
+ 	debug_object_free(fence, &i915_sw_fence_debug_descr);
+ 	smp_wmb(); /* flush the change in state before reallocation */
+@@ -113,7 +113,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
  {
  }
  
--static inline void debug_fence_init_onstack(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_init_onstack(struct i915_sw_fence *fence)
+-static inline void debug_fence_free(struct i915_sw_fence *fence)
++static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
  {
  }
  
