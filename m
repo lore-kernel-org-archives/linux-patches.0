@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3818C32E;
-	Tue, 10 Sep 2024 09:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8755118C90B;
+	Tue, 10 Sep 2024 09:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961470; cv=none; b=nh5lw1Db+slbIUfeK2n4+FS46Q7QspKyKT3YZVhmJQv8WvYYkUj/xudN17jiAJQ6JRBJlIdVgqi7NukOWn3GPqmnHD/cCaLqwFzYlKwj8hyB4oZvctr7TUbXbRYlUkwYjD22FDwAbdfsd9/b4r0UkMuYRoIMvMEXoWztHb5iEn4=
+	t=1725961473; cv=none; b=o9BHDiJ2gXiYAhpDgENBPXzQrnqOU7fpMK6Iy473wmLIo+V1REAkNq4MrhHCGl1K5nsvzQE31j9OkMPtF/lSf0hh7eMdjjRWn1/yR44gKaH6L0pBdFkHKOkhfHUa9uMk8zPvnl/F4r0+g2JoracQzX7V4TOTrZmnbfoDJR6kENY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961470; c=relaxed/simple;
-	bh=t1v7bSrlXKkk1f3U4YQj85vFs++4uhTIlm3juxLSh6c=;
+	s=arc-20240116; t=1725961473; c=relaxed/simple;
+	bh=OdxywKxIGphR2ualk4QmHi1D/EljslKPVXFontwCLtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWMveCN8nRh79jTEreg+PYgZFGHHhhlwS1ayQ9gLNSZPgoqntbU20PkuPLm8POkd8th95Rlu0BjYba7Uk+GHC5CgYyyvWtBPPtYF8dX8xm7YCC4/wsEKoyid7vZl+AwFwVC37QMR+LNzypxlLCkWh9eQqudhFL/f1rwlcDJGLwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5kgdUK4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awSm/o0jzpCDDSUG+/8prYXcMuiTfLBraKXOfYX6LutzaQZKkVf3Q+u0dryYy7fCJJsoNclfzMRDFL0R1HPV/H2Lu9SdJW2epyTRcDrqhpHhCSQT+q2W1QPbin0gxfQK85eHjQuHIEqTsuQ+Y35a6puq5I3dpWBlj/v6mcrHfr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRtXxyZO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5kgdUK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B05C4CEC3;
-	Tue, 10 Sep 2024 09:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRtXxyZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28C2C4CEC3;
+	Tue, 10 Sep 2024 09:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961470;
-	bh=t1v7bSrlXKkk1f3U4YQj85vFs++4uhTIlm3juxLSh6c=;
+	s=korg; t=1725961473;
+	bh=OdxywKxIGphR2ualk4QmHi1D/EljslKPVXFontwCLtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5kgdUK4RLGIC+iOt2nPb+zXEOElXiXEsR1WdfrXm9VyXb6P0fxEh5YSYelDO5Lan
-	 NTukv3Ed2wink7/rtiEoO9Hv36bOhYxerKebYVTGH4t8oGZ+ELo6oBrj4z3TeiIdSw
-	 vY4S7/tw1PWdQGHLj+l/mwNZtk8phTgYo4iHGUaw=
+	b=vRtXxyZOB0q+y7Rmd17zJTUC7LCDigLh+eJqHQY5cNhyA1KyQOQqHPsYUXi/uOCVl
+	 Y+lmgSeOjRMw+TIVCuukA72x6DGfw/n5VuvYTfeJawsrBzUsavMfa7/7Sk/ymjzYQm
+	 9JFA8sWwuyrwpxF9fKaNF96p+xfL6FXrPueuY9p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <yuntao.wang@linux.dev>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.10 073/375] x86/apic: Make x2apic_disable() work correctly
-Date: Tue, 10 Sep 2024 11:27:50 +0200
-Message-ID: <20240910092624.674818557@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 082/375] nilfs2: fix state management in error path of log writing function
+Date: Tue, 10 Sep 2024 11:27:59 +0200
+Message-ID: <20240910092624.988641717@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,60 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <yuntao.wang@linux.dev>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 0ecc5be200c84e67114f3640064ba2bae3ba2f5a upstream.
+commit 6576dd6695f2afca3f4954029ac4a64f82ba60ab upstream.
 
-x2apic_disable() clears x2apic_state and x2apic_mode unconditionally, even
-when the state is X2APIC_ON_LOCKED, which prevents the kernel to disable
-it thereby creating inconsistent state.
+After commit a694291a6211 ("nilfs2: separate wait function from
+nilfs_segctor_write") was applied, the log writing function
+nilfs_segctor_do_construct() was able to issue I/O requests continuously
+even if user data blocks were split into multiple logs across segments,
+but two potential flaws were introduced in its error handling.
 
-Due to the early state check for X2APIC_ON, the code path which warns about
-a locked X2APIC cannot be reached.
+First, if nilfs_segctor_begin_construction() fails while creating the
+second or subsequent logs, the log writing function returns without
+calling nilfs_segctor_abort_construction(), so the writeback flag set on
+pages/folios will remain uncleared.  This causes page cache operations to
+hang waiting for the writeback flag.  For example,
+truncate_inode_pages_final(), which is called via nilfs_evict_inode() when
+an inode is evicted from memory, will hang.
 
-Test for state < X2APIC_ON instead and move the clearing of the state and
-mode variables to the place which actually disables X2APIC.
+Second, the NILFS_I_COLLECTED flag set on normal inodes remain uncleared.
+As a result, if the next log write involves checkpoint creation, that's
+fine, but if a partial log write is performed that does not, inodes with
+NILFS_I_COLLECTED set are erroneously removed from the "sc_dirty_files"
+list, and their data and b-tree blocks may not be written to the device,
+corrupting the block mapping.
 
-[ tglx: Massaged change log. Added Fixes tag. Moved clearing so it's at the
-  	right place for back ports ]
+Fix these issues by uniformly calling nilfs_segctor_abort_construction()
+on failure of each step in the loop in nilfs_segctor_do_construct(),
+having it clean up logs and segment usages according to progress, and
+correcting the conditions for calling nilfs_redirty_inodes() to ensure
+that the NILFS_I_COLLECTED flag is cleared.
 
-Fixes: a57e456a7b28 ("x86/apic: Fix fallout from x2apic cleanup")
-Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240813014827.895381-1-yuntao.wang@linux.dev
+Link: https://lkml.kernel.org/r/20240814101119.4070-1-konishi.ryusuke@gmail.com
+Fixes: a694291a6211 ("nilfs2: separate wait function from nilfs_segctor_write")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/nilfs2/segment.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1775,12 +1775,9 @@ static __init void apic_set_fixmap(bool
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -1788,6 +1788,9 @@ static void nilfs_segctor_abort_construc
+ 	nilfs_abort_logs(&logs, ret ? : err);
  
- static __init void x2apic_disable(void)
- {
--	u32 x2apic_id, state = x2apic_state;
-+	u32 x2apic_id;
+ 	list_splice_tail_init(&sci->sc_segbufs, &logs);
++	if (list_empty(&logs))
++		return; /* if the first segment buffer preparation failed */
++
+ 	nilfs_cancel_segusage(&logs, nilfs->ns_sufile);
+ 	nilfs_free_incomplete_logs(&logs, nilfs);
  
--	x2apic_mode = 0;
--	x2apic_state = X2APIC_DISABLED;
+@@ -2032,7 +2035,7 @@ static int nilfs_segctor_do_construct(st
+ 
+ 		err = nilfs_segctor_begin_construction(sci, nilfs);
+ 		if (unlikely(err))
+-			goto out;
++			goto failed;
+ 
+ 		/* Update time stamp */
+ 		sci->sc_seg_ctime = ktime_get_real_seconds();
+@@ -2099,10 +2102,9 @@ static int nilfs_segctor_do_construct(st
+ 	return err;
+ 
+  failed_to_write:
+-	if (sci->sc_stage.flags & NILFS_CF_IFILE_STARTED)
+-		nilfs_redirty_inodes(&sci->sc_dirty_files);
 -
--	if (state != X2APIC_ON)
-+	if (x2apic_state < X2APIC_ON)
- 		return;
- 
- 	x2apic_id = read_apic_id();
-@@ -1793,6 +1790,10 @@ static __init void x2apic_disable(void)
- 	}
- 
- 	__x2apic_disable();
-+
-+	x2apic_mode = 0;
-+	x2apic_state = X2APIC_DISABLED;
-+
- 	/*
- 	 * Don't reread the APIC ID as it was already done from
- 	 * check_x2apic() and the APIC driver still is a x2APIC variant,
+  failed:
++	if (mode == SC_LSEG_SR && nilfs_sc_cstage_get(sci) >= NILFS_ST_IFILE)
++		nilfs_redirty_inodes(&sci->sc_dirty_files);
+ 	if (nilfs_doing_gc())
+ 		nilfs_redirty_inodes(&sci->sc_gc_inodes);
+ 	nilfs_segctor_abort_construction(sci, nilfs, err);
 
 
