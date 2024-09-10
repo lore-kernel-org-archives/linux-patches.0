@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801E7190664;
-	Tue, 10 Sep 2024 10:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFB617AE00;
+	Tue, 10 Sep 2024 10:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963482; cv=none; b=Ggr1MRa3j7dquJliB2tKY3feO47JLaX0QOquFtcSt/SNiFxBqTcYf3+i6+YYttyo4TCg0iecG5rNpdt0IOdfZJG7ASedITDESkEx+yBLWIc2Q3Gn6hBoQHl3KnHDdIhVf/WgryEtYQ9N44p8Bw6PH+npluSNuWNvrTwznC9Nqo8=
+	t=1725963485; cv=none; b=lWlHH2+gQ2LjgSmTBnNuP8IgYuDJbHEcMgECvPeMUmm66ZQwfK/xRBRt1f/mEEDo0XF3v9QqKX1pjwLWh0V8P9eDokAv6jxdMB0KpaTIZtg8kBn4nLLeS565H/AthtW/+WuZptS7kDWcXUg46vL4F/qgagG7rS5CDkWuBFMn+cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963482; c=relaxed/simple;
-	bh=vTl3M/eKCFdE2xx4iycU6AHeYbqykOSatZW5x/Jr7QU=;
+	s=arc-20240116; t=1725963485; c=relaxed/simple;
+	bh=zONF7ZYAh95lwA0qlXsKE72Ing8rs47PxZGrOygVnWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4TyezmWSbrN+X0FEiAjYfTF5v1YXZg8vrxTWABh9KduJBIZhhNcEM94L4wX2uxAzgIQuDm5XWMGWrhUjjchQ+elpA+WEbSeCMwI3njuw+N22AqBSEGVgHLGS4KujHlpfUGioMQg+JAtXdgPy2MxM4EEPxDqdwyGiAkp645FYU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOujIPwQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AE3cbNy6DqcEDoK5bvhZ2gdLaudCxH837h0HXUdS0mVhkFZjvcewLw8BZ2I3FSve8nBP6jcoWA4uM5cfvZs+nfq0/K2O2zCZHrI1l210gdQYiSxS7EUiCqf9DrswvaCnLwLBrP6/OUscLTSgVGQmbLkQXvpytG00CvU1bUUCo6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVd4OiKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOujIPwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0507AC4CEC3;
-	Tue, 10 Sep 2024 10:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVd4OiKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2118C4CED1;
+	Tue, 10 Sep 2024 10:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963482;
-	bh=vTl3M/eKCFdE2xx4iycU6AHeYbqykOSatZW5x/Jr7QU=;
+	s=korg; t=1725963485;
+	bh=zONF7ZYAh95lwA0qlXsKE72Ing8rs47PxZGrOygVnWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOujIPwQb0z0ZAaIX8tq/CDqnK2g5eaEWKMuZ0a6TMp2i9hIAFQ1jgAGscRsMn6Ok
-	 qtqiUgzG1NsVfxOAV2KjqjM6FZgR8/j5SEh4KBtP5QcAxSuMg+2DUmIncFx6i0Ddqb
-	 MgzY785xhLchliTMXhEF3qLvIZ4V0AIlXR1hYMjA=
+	b=LVd4OiKeOv1UK7MOqUIX7+n4N8VOrqfbhV0Dw8qDXZ5ag4f3OFtM/RMIqW7sFL9i7
+	 pSYOUIMMy9z/NyRUTUzSZGunXRduE6aZdo3G5X/7PkJpqXJs2bm8DDhVmeRydNXU8l
+	 DqHNr6I17N7NXrnt6O/j4ad6a/viQ+5H+e0YT3Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Mukul Sikka <mukul.sikka@broadcom.com>
-Subject: [PATCH 5.15 055/214] drm/amd/pm: Fix the null pointer dereference for vega10_hwmgr
-Date: Tue, 10 Sep 2024 11:31:17 +0200
-Message-ID: <20240910092601.012024452@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 073/214] Revert "Bluetooth: MGMT/SMP: Fix address type when using SMP over BREDR/LE"
+Date: Tue, 10 Sep 2024 11:31:35 +0200
+Message-ID: <20240910092601.721297784@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -53,112 +49,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Zhou <bob.zhou@amd.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 50151b7f1c79a09117837eb95b76c2de76841dab upstream.
+commit 532f8bcd1c2c4e8112f62e1922fd1703bc0ffce0 upstream.
 
-Check return value and conduct null pointer handling to avoid null pointer dereference.
+This reverts commit 59b047bc98084f8af2c41483e4d68a5adf2fa7f7 which
+breaks compatibility with commands like:
 
-Signed-off-by: Bob Zhou <bob.zhou@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Mukul Sikka <mukul.sikka@broadcom.com>
+bluetoothd[46328]: @ MGMT Command: Load.. (0x0013) plen 74  {0x0001} [hci0]
+        Keys: 2
+        BR/EDR Address: C0:DC:DA:A5:E5:47 (Samsung Electronics Co.,Ltd)
+        Key type: Authenticated key from P-256 (0x03)
+        Central: 0x00
+        Encryption size: 16
+        Diversifier[2]: 0000
+        Randomizer[8]: 0000000000000000
+        Key[16]: 6ed96089bd9765be2f2c971b0b95f624
+        LE Address: D7:2A:DE:1E:73:A2 (Static)
+        Key type: Unauthenticated key from P-256 (0x02)
+        Central: 0x00
+        Encryption size: 16
+        Diversifier[2]: 0000
+        Randomizer[8]: 0000000000000000
+        Key[16]: 87dd2546ededda380ffcdc0a8faa4597
+@ MGMT Event: Command Status (0x0002) plen 3                {0x0001} [hci0]
+      Load Long Term Keys (0x0013)
+        Status: Invalid Parameters (0x0d)
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/bluez/bluez/issues/875
+Fixes: 59b047bc9808 ("Bluetooth: MGMT/SMP: Fix address type when using SMP over BREDR/LE")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c |   30 +++++++++++++++---
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ include/net/bluetooth/hci_core.h |    5 -----
+ net/bluetooth/mgmt.c             |   25 +++++++------------------
+ net/bluetooth/smp.c              |    7 -------
+ 3 files changed, 7 insertions(+), 30 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -3415,13 +3415,17 @@ static int vega10_find_dpm_states_clocks
- 	const struct vega10_power_state *vega10_ps =
- 			cast_const_phw_vega10_power_state(states->pnew_state);
- 	struct vega10_single_dpm_table *sclk_table = &(data->dpm_table.gfx_table);
--	uint32_t sclk = vega10_ps->performance_levels
--			[vega10_ps->performance_level_count - 1].gfx_clock;
- 	struct vega10_single_dpm_table *mclk_table = &(data->dpm_table.mem_table);
--	uint32_t mclk = vega10_ps->performance_levels
--			[vega10_ps->performance_level_count - 1].mem_clock;
-+	uint32_t sclk, mclk;
- 	uint32_t i;
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -176,7 +176,6 @@ struct blocked_key {
+ struct smp_csrk {
+ 	bdaddr_t bdaddr;
+ 	u8 bdaddr_type;
+-	u8 link_type;
+ 	u8 type;
+ 	u8 val[16];
+ };
+@@ -186,7 +185,6 @@ struct smp_ltk {
+ 	struct rcu_head rcu;
+ 	bdaddr_t bdaddr;
+ 	u8 bdaddr_type;
+-	u8 link_type;
+ 	u8 authenticated;
+ 	u8 type;
+ 	u8 enc_size;
+@@ -201,7 +199,6 @@ struct smp_irk {
+ 	bdaddr_t rpa;
+ 	bdaddr_t bdaddr;
+ 	u8 addr_type;
+-	u8 link_type;
+ 	u8 val[16];
+ };
  
-+	if (vega10_ps == NULL)
-+		return -EINVAL;
-+	sclk = vega10_ps->performance_levels
-+			[vega10_ps->performance_level_count - 1].gfx_clock;
-+	mclk = vega10_ps->performance_levels
-+			[vega10_ps->performance_level_count - 1].mem_clock;
-+
- 	for (i = 0; i < sclk_table->count; i++) {
- 		if (sclk == sclk_table->dpm_levels[i].value)
- 			break;
-@@ -3728,6 +3732,9 @@ static int vega10_generate_dpm_level_ena
- 			cast_const_phw_vega10_power_state(states->pnew_state);
- 	int i;
+@@ -209,8 +206,6 @@ struct link_key {
+ 	struct list_head list;
+ 	struct rcu_head rcu;
+ 	bdaddr_t bdaddr;
+-	u8 bdaddr_type;
+-	u8 link_type;
+ 	u8 type;
+ 	u8 val[HCI_LINK_KEY_SIZE];
+ 	u8 pin_len;
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2378,8 +2378,7 @@ static int load_link_keys(struct sock *s
+ 	for (i = 0; i < key_count; i++) {
+ 		struct mgmt_link_key_info *key = &cp->keys[i];
  
-+	if (vega10_ps == NULL)
-+		return -EINVAL;
-+
- 	PP_ASSERT_WITH_CODE(!vega10_trim_dpm_states(hwmgr, vega10_ps),
- 			"Attempt to Trim DPM States Failed!",
- 			return -1);
-@@ -4865,6 +4872,9 @@ static int vega10_check_states_equal(str
+-		/* Considering SMP over BREDR/LE, there is no need to check addr_type */
+-		if (key->type > 0x08)
++		if (key->addr.type != BDADDR_BREDR || key->type > 0x08)
+ 			return mgmt_cmd_status(sk, hdev->id,
+ 					       MGMT_OP_LOAD_LINK_KEYS,
+ 					       MGMT_STATUS_INVALID_PARAMS);
+@@ -6185,7 +6184,6 @@ static int load_irks(struct sock *sk, st
  
- 	psa = cast_const_phw_vega10_power_state(pstate1);
- 	psb = cast_const_phw_vega10_power_state(pstate2);
-+	if (psa == NULL || psb == NULL)
-+		return -EINVAL;
-+
- 	/* If the two states don't even have the same number of performance levels they cannot be the same state. */
- 	if (psa->performance_level_count != psb->performance_level_count) {
- 		*equal = false;
-@@ -4990,6 +5000,8 @@ static int vega10_set_sclk_od(struct pp_
- 		return -EINVAL;
+ 	for (i = 0; i < irk_count; i++) {
+ 		struct mgmt_irk_info *irk = &cp->irks[i];
+-		u8 addr_type = le_addr_type(irk->addr.type);
  
- 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
-+	if (vega10_ps == NULL)
-+		return -EINVAL;
+ 		if (hci_is_blocked_key(hdev,
+ 				       HCI_BLOCKED_KEY_TYPE_IRK,
+@@ -6195,12 +6193,8 @@ static int load_irks(struct sock *sk, st
+ 			continue;
+ 		}
  
- 	vega10_ps->performance_levels
- 	[vega10_ps->performance_level_count - 1].gfx_clock =
-@@ -5041,6 +5053,8 @@ static int vega10_set_mclk_od(struct pp_
- 		return -EINVAL;
+-		/* When using SMP over BR/EDR, the addr type should be set to BREDR */
+-		if (irk->addr.type == BDADDR_BREDR)
+-			addr_type = BDADDR_BREDR;
+-
+ 		hci_add_irk(hdev, &irk->addr.bdaddr,
+-			    addr_type, irk->val,
++			    le_addr_type(irk->addr.type), irk->val,
+ 			    BDADDR_ANY);
+ 	}
  
- 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
-+	if (vega10_ps == NULL)
-+		return -EINVAL;
+@@ -6281,7 +6275,6 @@ static int load_long_term_keys(struct so
+ 	for (i = 0; i < key_count; i++) {
+ 		struct mgmt_ltk_info *key = &cp->keys[i];
+ 		u8 type, authenticated;
+-		u8 addr_type = le_addr_type(key->addr.type);
  
- 	vega10_ps->performance_levels
- 	[vega10_ps->performance_level_count - 1].mem_clock =
-@@ -5278,6 +5292,9 @@ static void vega10_odn_update_power_stat
- 		return;
+ 		if (hci_is_blocked_key(hdev,
+ 				       HCI_BLOCKED_KEY_TYPE_LTK,
+@@ -6316,12 +6309,8 @@ static int load_long_term_keys(struct so
+ 			continue;
+ 		}
  
- 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
-+	if (vega10_ps == NULL)
-+		return;
-+
- 	max_level = vega10_ps->performance_level_count - 1;
+-		/* When using SMP over BR/EDR, the addr type should be set to BREDR */
+-		if (key->addr.type == BDADDR_BREDR)
+-			addr_type = BDADDR_BREDR;
+-
+ 		hci_add_ltk(hdev, &key->addr.bdaddr,
+-			    addr_type, type, authenticated,
++			    le_addr_type(key->addr.type), type, authenticated,
+ 			    key->val, key->enc_size, key->ediv, key->rand);
+ 	}
  
- 	if (vega10_ps->performance_levels[max_level].gfx_clock !=
-@@ -5300,6 +5317,9 @@ static void vega10_odn_update_power_stat
+@@ -8688,7 +8677,7 @@ void mgmt_new_link_key(struct hci_dev *h
  
- 	ps = (struct pp_power_state *)((unsigned long)(hwmgr->ps) + hwmgr->ps_size * (hwmgr->num_ps - 1));
- 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
-+	if (vega10_ps == NULL)
-+		return;
-+
- 	max_level = vega10_ps->performance_level_count - 1;
+ 	ev.store_hint = persistent;
+ 	bacpy(&ev.key.addr.bdaddr, &key->bdaddr);
+-	ev.key.addr.type = link_to_bdaddr(key->link_type, key->bdaddr_type);
++	ev.key.addr.type = BDADDR_BREDR;
+ 	ev.key.type = key->type;
+ 	memcpy(ev.key.val, key->val, HCI_LINK_KEY_SIZE);
+ 	ev.key.pin_len = key->pin_len;
+@@ -8739,7 +8728,7 @@ void mgmt_new_ltk(struct hci_dev *hdev,
+ 		ev.store_hint = persistent;
  
- 	if (vega10_ps->performance_levels[max_level].gfx_clock !=
-@@ -5490,6 +5510,8 @@ static int vega10_get_performance_level(
- 		return -EINVAL;
+ 	bacpy(&ev.key.addr.bdaddr, &key->bdaddr);
+-	ev.key.addr.type = link_to_bdaddr(key->link_type, key->bdaddr_type);
++	ev.key.addr.type = link_to_bdaddr(LE_LINK, key->bdaddr_type);
+ 	ev.key.type = mgmt_ltk_type(key);
+ 	ev.key.enc_size = key->enc_size;
+ 	ev.key.ediv = key->ediv;
+@@ -8768,7 +8757,7 @@ void mgmt_new_irk(struct hci_dev *hdev,
  
- 	ps = cast_const_phw_vega10_power_state(state);
-+	if (ps == NULL)
-+		return -EINVAL;
+ 	bacpy(&ev.rpa, &irk->rpa);
+ 	bacpy(&ev.irk.addr.bdaddr, &irk->bdaddr);
+-	ev.irk.addr.type = link_to_bdaddr(irk->link_type, irk->addr_type);
++	ev.irk.addr.type = link_to_bdaddr(LE_LINK, irk->addr_type);
+ 	memcpy(ev.irk.val, irk->val, sizeof(irk->val));
  
- 	i = index > ps->performance_level_count - 1 ?
- 			ps->performance_level_count - 1 : index;
+ 	mgmt_event(MGMT_EV_NEW_IRK, hdev, &ev, sizeof(ev), NULL);
+@@ -8797,7 +8786,7 @@ void mgmt_new_csrk(struct hci_dev *hdev,
+ 		ev.store_hint = persistent;
+ 
+ 	bacpy(&ev.key.addr.bdaddr, &csrk->bdaddr);
+-	ev.key.addr.type = link_to_bdaddr(csrk->link_type, csrk->bdaddr_type);
++	ev.key.addr.type = link_to_bdaddr(LE_LINK, csrk->bdaddr_type);
+ 	ev.key.type = csrk->type;
+ 	memcpy(ev.key.val, csrk->val, sizeof(csrk->val));
+ 
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -1059,7 +1059,6 @@ static void smp_notify_keys(struct l2cap
+ 	}
+ 
+ 	if (smp->remote_irk) {
+-		smp->remote_irk->link_type = hcon->type;
+ 		mgmt_new_irk(hdev, smp->remote_irk, persistent);
+ 
+ 		/* Now that user space can be considered to know the
+@@ -1074,28 +1073,24 @@ static void smp_notify_keys(struct l2cap
+ 	}
+ 
+ 	if (smp->csrk) {
+-		smp->csrk->link_type = hcon->type;
+ 		smp->csrk->bdaddr_type = hcon->dst_type;
+ 		bacpy(&smp->csrk->bdaddr, &hcon->dst);
+ 		mgmt_new_csrk(hdev, smp->csrk, persistent);
+ 	}
+ 
+ 	if (smp->responder_csrk) {
+-		smp->responder_csrk->link_type = hcon->type;
+ 		smp->responder_csrk->bdaddr_type = hcon->dst_type;
+ 		bacpy(&smp->responder_csrk->bdaddr, &hcon->dst);
+ 		mgmt_new_csrk(hdev, smp->responder_csrk, persistent);
+ 	}
+ 
+ 	if (smp->ltk) {
+-		smp->ltk->link_type = hcon->type;
+ 		smp->ltk->bdaddr_type = hcon->dst_type;
+ 		bacpy(&smp->ltk->bdaddr, &hcon->dst);
+ 		mgmt_new_ltk(hdev, smp->ltk, persistent);
+ 	}
+ 
+ 	if (smp->responder_ltk) {
+-		smp->responder_ltk->link_type = hcon->type;
+ 		smp->responder_ltk->bdaddr_type = hcon->dst_type;
+ 		bacpy(&smp->responder_ltk->bdaddr, &hcon->dst);
+ 		mgmt_new_ltk(hdev, smp->responder_ltk, persistent);
+@@ -1115,8 +1110,6 @@ static void smp_notify_keys(struct l2cap
+ 		key = hci_add_link_key(hdev, smp->conn->hcon, &hcon->dst,
+ 				       smp->link_key, type, 0, &persistent);
+ 		if (key) {
+-			key->link_type = hcon->type;
+-			key->bdaddr_type = hcon->dst_type;
+ 			mgmt_new_link_key(hdev, key, persistent);
+ 
+ 			/* Don't keep debug keys around if the relevant
 
 
