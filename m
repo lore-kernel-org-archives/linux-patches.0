@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BFC18B491;
-	Tue, 10 Sep 2024 10:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F5B18B491;
+	Tue, 10 Sep 2024 10:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962460; cv=none; b=XD934GyjZYv+Osx6T0bIPUmyqs0t0Ek5D+Ptqu9i0rWdI1E+pKKoNzWnfJYd1aO4eSgDWI6k8ifn115kNxIL6Fl4IoYosbd7hkE3DuKHd6kRgrdYDzL8VvEcrL+Nhj8F4WWkV5zMZMql7TzqJoWsYmRFugnaMxeLCr+5t4GPiS8=
+	t=1725962463; cv=none; b=fuarA2xVGOP8KMidDV3TISDBnL7SJSkV4NEMqjv86CRR0QE9qMxE69skXbM/CkCtOijcV04qO67ilmTKsPhDKfBm04qku/nHzSNgvg75ePdztFTeXeuX7YF335qc+is8DuNJ5dBjpIVO4xYO/o4C1rNoSjZf4Slm0B7kjFs7NUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962460; c=relaxed/simple;
-	bh=LwxhHQeZhKoG+lJOP2HtGIkgymxv5LjW8BzId0Mer64=;
+	s=arc-20240116; t=1725962463; c=relaxed/simple;
+	bh=rIj1dCZttI+tGvdK2mWqse0vcEMGoVBPvHyKm8rC/kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLeJqNhIZLqbsM7E9oKbMBXfGou0m13Zcw/iR4G7m8hhWmQDILtBWNr3fbEeft/hiWx0vHUr/ViEdpoFG/chGp00O2Cd3c1epYOXuSEBoAYyK71QFv8Ev0ltHcVbDi/j1VqzkDOW2dybz/KU+O9Y4A1JJimt78JNyThD8NTl9AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZnk5gsM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYYcZal0fPnzmaz1eeWddTZgReQ08epUQIdWc5eZEdTF26vGx3jKcvkjsINFUPS+djYFjrzsB3JPp9r6XRfIi/m2zzIjklmBV5rYZcg5RCtS4QrhsWnQuog6yqVfjna67MHrXprTLBw+dHV3Xf3NDl5QXSVMzan4p1AEhxsCRx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOz7l/yk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZnk5gsM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D342EC4CEC3;
-	Tue, 10 Sep 2024 10:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOz7l/yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EB1C4CEC3;
+	Tue, 10 Sep 2024 10:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962460;
-	bh=LwxhHQeZhKoG+lJOP2HtGIkgymxv5LjW8BzId0Mer64=;
+	s=korg; t=1725962463;
+	bh=rIj1dCZttI+tGvdK2mWqse0vcEMGoVBPvHyKm8rC/kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZnk5gsMpOk2PekBbg90XxUC44HkFBnLCUKMkZaeOjCp3pGfewqxX1aBRFtGIssdl
-	 ylmBfNUqKA+fBu3h+4Qf8Ecw63bPZllixfjBy3h3oWqloiFPVMIBV1v2Tqm3wflzfw
-	 cX8oS05ZVjeQDask2b9X5CwOxRuSUXjbXaBsqRME=
+	b=IOz7l/ykplKsFNMQV4NAKntIY8L5srvTowi3HYSmPqkGwWJwREWCe6q6Ayp+kALXw
+	 l/XaiJZSJaJ430lY4bCT0oRIDZVkxjZCqGrvvMAmnWGPtPNvbJY4KyA1nB7QZ0Owgq
+	 OUrZ1d893tzxgOOW3/sY5MM5/ieJUCnZXurozTDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 042/121] nilfs2: fix state management in error path of log writing function
-Date: Tue, 10 Sep 2024 11:31:57 +0200
-Message-ID: <20240910092547.741540931@linuxfoundation.org>
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 043/121] ALSA: hda: Add input value sanity checks to HDMI channel map controls
+Date: Tue, 10 Sep 2024 11:31:58 +0200
+Message-ID: <20240910092547.786408666@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -50,81 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 6576dd6695f2afca3f4954029ac4a64f82ba60ab upstream.
+[ Upstream commit 6278056e42d953e207e2afd416be39d09ed2d496 ]
 
-After commit a694291a6211 ("nilfs2: separate wait function from
-nilfs_segctor_write") was applied, the log writing function
-nilfs_segctor_do_construct() was able to issue I/O requests continuously
-even if user data blocks were split into multiple logs across segments,
-but two potential flaws were introduced in its error handling.
+Add a simple sanity check to HD-audio HDMI Channel Map controls.
+Although the value might not be accepted for the actual connection, we
+can filter out some bogus values beforehand, and that should be enough
+for making kselftest happier.
 
-First, if nilfs_segctor_begin_construction() fails while creating the
-second or subsequent logs, the log writing function returns without
-calling nilfs_segctor_abort_construction(), so the writeback flag set on
-pages/folios will remain uncleared.  This causes page cache operations to
-hang waiting for the writeback flag.  For example,
-truncate_inode_pages_final(), which is called via nilfs_evict_inode() when
-an inode is evicted from memory, will hang.
-
-Second, the NILFS_I_COLLECTED flag set on normal inodes remain uncleared.
-As a result, if the next log write involves checkpoint creation, that's
-fine, but if a partial log write is performed that does not, inodes with
-NILFS_I_COLLECTED set are erroneously removed from the "sc_dirty_files"
-list, and their data and b-tree blocks may not be written to the device,
-corrupting the block mapping.
-
-Fix these issues by uniformly calling nilfs_segctor_abort_construction()
-on failure of each step in the loop in nilfs_segctor_do_construct(),
-having it clean up logs and segment usages according to progress, and
-correcting the conditions for calling nilfs_redirty_inodes() to ensure
-that the NILFS_I_COLLECTED flag is cleared.
-
-Link: https://lkml.kernel.org/r/20240814101119.4070-1-konishi.ryusuke@gmail.com
-Fixes: a694291a6211 ("nilfs2: separate wait function from nilfs_segctor_write")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/20240616073454.16512-7-tiwai@suse.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/hda/hdmi_chmap.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -1828,6 +1828,9 @@ static void nilfs_segctor_abort_construc
- 	nilfs_abort_logs(&logs, ret ? : err);
+diff --git a/sound/hda/hdmi_chmap.c b/sound/hda/hdmi_chmap.c
+index 2efee794cac6..79ccec2da387 100644
+--- a/sound/hda/hdmi_chmap.c
++++ b/sound/hda/hdmi_chmap.c
+@@ -753,6 +753,20 @@ static int hdmi_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 	return 0;
+ }
  
- 	list_splice_tail_init(&sci->sc_segbufs, &logs);
-+	if (list_empty(&logs))
-+		return; /* if the first segment buffer preparation failed */
++/* a simple sanity check for input values to chmap kcontrol */
++static int chmap_value_check(struct hdac_chmap *hchmap,
++			     const struct snd_ctl_elem_value *ucontrol)
++{
++	int i;
 +
- 	nilfs_cancel_segusage(&logs, nilfs->ns_sufile);
- 	nilfs_free_incomplete_logs(&logs, nilfs);
++	for (i = 0; i < hchmap->channels_max; i++) {
++		if (ucontrol->value.integer.value[i] < 0 ||
++		    ucontrol->value.integer.value[i] > SNDRV_CHMAP_LAST)
++			return -EINVAL;
++	}
++	return 0;
++}
++
+ static int hdmi_chmap_ctl_put(struct snd_kcontrol *kcontrol,
+ 			      struct snd_ctl_elem_value *ucontrol)
+ {
+@@ -764,6 +778,10 @@ static int hdmi_chmap_ctl_put(struct snd_kcontrol *kcontrol,
+ 	unsigned char chmap[8], per_pin_chmap[8];
+ 	int i, err, ca, prepared = 0;
  
-@@ -2072,7 +2075,7 @@ static int nilfs_segctor_do_construct(st
- 
- 		err = nilfs_segctor_begin_construction(sci, nilfs);
- 		if (unlikely(err))
--			goto out;
-+			goto failed;
- 
- 		/* Update time stamp */
- 		sci->sc_seg_ctime = ktime_get_real_seconds();
-@@ -2135,10 +2138,9 @@ static int nilfs_segctor_do_construct(st
- 	return err;
- 
-  failed_to_write:
--	if (sci->sc_stage.flags & NILFS_CF_IFILE_STARTED)
--		nilfs_redirty_inodes(&sci->sc_dirty_files);
--
-  failed:
-+	if (mode == SC_LSEG_SR && nilfs_sc_cstage_get(sci) >= NILFS_ST_IFILE)
-+		nilfs_redirty_inodes(&sci->sc_dirty_files);
- 	if (nilfs_doing_gc())
- 		nilfs_redirty_inodes(&sci->sc_gc_inodes);
- 	nilfs_segctor_abort_construction(sci, nilfs, err);
++	err = chmap_value_check(hchmap, ucontrol);
++	if (err < 0)
++		return err;
++
+ 	/* No monitor is connected in dyn_pcm_assign.
+ 	 * It's invalid to setup the chmap
+ 	 */
+-- 
+2.43.0
+
 
 
