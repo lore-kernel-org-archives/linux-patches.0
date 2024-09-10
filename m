@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4048118F2D6;
-	Tue, 10 Sep 2024 09:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272D818661A;
+	Tue, 10 Sep 2024 09:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961626; cv=none; b=Ner9hgNKGs55oibpNBcVtTSjrG/FvGXIw+o9Y80+nptMMAdIUvPn26BADgBHJ7CIYRoeSc5LicHiEx/7635RC9B6XFGIKjTNrbJdRZP+Fvxciz8fmGQt02nW9j7kctzCm9dchxlobDZQg5at2k6hyaw4XJjceybsaEpRqOFKJZE=
+	t=1725961629; cv=none; b=o/ibzp73hmlrvFQc6CTs5qcBL69fsCytN4QJfJpL0Gy7eYFhQR0N0D/AEV3Fs9J6ntJAc9VR37mVASfTtnDPLh0eNT3ddgcXgEv49bVhG3jnfzeAdpt8f0xIrt0pQvBgIXRJNZkjCouE14K8z8Xn57ZnP1bK/Wmv/34x3vwRycU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961626; c=relaxed/simple;
-	bh=2GsOpvStnZ/+EJYi355do8D89gh1TGddlGsFK8swonA=;
+	s=arc-20240116; t=1725961629; c=relaxed/simple;
+	bh=k5OMA1WOpGwXMPmYp0fd2vQbNq9avIn1qt0HrA8oJUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YeOUDUZxSba7aQXJhpxchgEGU1QUyAL5N5BeIyoKFqpel7NxEwEGSZzkBkDfTQtM/j7yig6RKw4akEitdqKSvmhpEfo8YYJjQ2/GeHdNhbQIiyXx/kJ4FVpUE6PjhLaXMr31p1grGvQxNU7YOq1+ns5w8ejihkhZWdxlVlaUQnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBG9bddS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHPgwdo7w9mh79xPegCz2vcppy7HO4sxJoFTIGbV1Z4UnMA33e/fsjiLgwBxV6bQ0xsTAVKoc0gv5hquKo0+WseMcWAAnAJ01IpaWL6nwUPew1OJdo+f4ohB9GdOKERLAM04xH0wvF7pCmXioyb3XgwnFAbHrEpWfwqpoZObdVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayW0CuFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBG9bddS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA645C4CEC3;
-	Tue, 10 Sep 2024 09:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayW0CuFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FAEC4CEC3;
+	Tue, 10 Sep 2024 09:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961626;
-	bh=2GsOpvStnZ/+EJYi355do8D89gh1TGddlGsFK8swonA=;
+	s=korg; t=1725961629;
+	bh=k5OMA1WOpGwXMPmYp0fd2vQbNq9avIn1qt0HrA8oJUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBG9bddSQUcDBwJO3d2VgjD/JDP6xsdYlxVt4NR31K2gf2TUiy2voaLUPSgprnZHs
-	 5CEDp+ckWXfVC9i9kPA6ASRWufhPr1HknT8poG1bW3/2S/9lIFq54ehITFOW0UV/oI
-	 XU2rQzu86gAS5xVDiae6CW5isGa67IUJggUYnWsw=
+	b=ayW0CuFbl1iarvVZJxEYBNzi/GPuXSTxwLwdA/LjfaPSgIw1tehquW9Hg8RdsW++b
+	 Cc0pkz742NHGZTn75v5NGEb+ZAQrfXO9YgnHbEox/APbp0RdKSu590MAcB7dkyz56C
+	 DkYRzn5F4izRxFYvFptCm2WY2fs73dP0CL6j8/uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 106/375] media: b2c2: flexcop-usb: fix flexcop_usb_memory_req
-Date: Tue, 10 Sep 2024 11:28:23 +0200
-Message-ID: <20240910092625.954199045@linuxfoundation.org>
+Subject: [PATCH 6.10 107/375] af_unix: Remove put_pid()/put_cred() in copy_peercred().
+Date: Tue, 10 Sep 2024 11:28:24 +0200
+Message-ID: <20240910092625.988412047@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,66 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit b178aa6f333b07bda0548d7e45085660a112414d ]
+[ Upstream commit e4bd881d987121dbf1a288641491955a53d9f8f7 ]
 
-smatch generated this warning:
+When (AF_UNIX, SOCK_STREAM) socket connect()s to a listening socket,
+the listener's sk_peer_pid/sk_peer_cred are copied to the client in
+copy_peercred().
 
-drivers/media/usb/b2c2/flexcop-usb.c:199 flexcop_usb_memory_req() warn: iterator 'i' not incremented
+Then, the client's sk_peer_pid and sk_peer_cred are always NULL, so
+we need not call put_pid() and put_cred() there.
 
-and indeed the function is not using i or updating buf.
-
-The reason this always worked is that this function is called to write just
-6 bytes (a MAC address) to the USB device, and so in practice there is only
-a single chunk written. If we ever would need to write more than one chunk,
-this function would fail since each chunk would read from or write to the
-same buf address.
-
-Rewrite the function to properly handle this.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/b2c2/flexcop-usb.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/unix/af_unix.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/media/usb/b2c2/flexcop-usb.c b/drivers/media/usb/b2c2/flexcop-usb.c
-index 90f1aea99dac..8033622543f2 100644
---- a/drivers/media/usb/b2c2/flexcop-usb.c
-+++ b/drivers/media/usb/b2c2/flexcop-usb.c
-@@ -179,7 +179,7 @@ static int flexcop_usb_memory_req(struct flexcop_usb *fc_usb,
- 		flexcop_usb_request_t req, flexcop_usb_mem_page_t page_start,
- 		u32 addr, int extended, u8 *buf, u32 len)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index be5266007b48..84a332f95aa8 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -692,9 +692,6 @@ static void init_peercred(struct sock *sk)
+ 
+ static void copy_peercred(struct sock *sk, struct sock *peersk)
  {
--	int i, ret = 0;
-+	int ret = 0;
- 	u16 wMax;
- 	u32 pagechunk = 0;
- 
-@@ -196,7 +196,7 @@ static int flexcop_usb_memory_req(struct flexcop_usb *fc_usb,
- 	default:
- 		return -EINVAL;
+-	const struct cred *old_cred;
+-	struct pid *old_pid;
+-
+ 	if (sk < peersk) {
+ 		spin_lock(&sk->sk_peer_lock);
+ 		spin_lock_nested(&peersk->sk_peer_lock, SINGLE_DEPTH_NESTING);
+@@ -702,16 +699,12 @@ static void copy_peercred(struct sock *sk, struct sock *peersk)
+ 		spin_lock(&peersk->sk_peer_lock);
+ 		spin_lock_nested(&sk->sk_peer_lock, SINGLE_DEPTH_NESTING);
  	}
--	for (i = 0; i < len;) {
-+	while (len) {
- 		pagechunk = min(wMax, bytes_left_to_read_on_page(addr, len));
- 		deb_info("%x\n",
- 			(addr & V8_MEMORY_PAGE_MASK) |
-@@ -206,11 +206,12 @@ static int flexcop_usb_memory_req(struct flexcop_usb *fc_usb,
- 			page_start + (addr / V8_MEMORY_PAGE_SIZE),
- 			(addr & V8_MEMORY_PAGE_MASK) |
- 				(V8_MEMORY_EXTENDED*extended),
--			&buf[i], pagechunk);
-+			buf, pagechunk);
+-	old_pid = sk->sk_peer_pid;
+-	old_cred = sk->sk_peer_cred;
++
+ 	sk->sk_peer_pid  = get_pid(peersk->sk_peer_pid);
+ 	sk->sk_peer_cred = get_cred(peersk->sk_peer_cred);
  
- 		if (ret < 0)
- 			return ret;
- 		addr += pagechunk;
-+		buf += pagechunk;
- 		len -= pagechunk;
- 	}
- 	return 0;
+ 	spin_unlock(&sk->sk_peer_lock);
+ 	spin_unlock(&peersk->sk_peer_lock);
+-
+-	put_pid(old_pid);
+-	put_cred(old_cred);
+ }
+ 
+ static int unix_listen(struct socket *sock, int backlog)
 -- 
 2.43.0
 
