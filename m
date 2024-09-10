@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E641C188CC1;
-	Tue, 10 Sep 2024 10:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AC7188CC1;
+	Tue, 10 Sep 2024 10:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962858; cv=none; b=nyHj5LINRi5SVcypbSA347MVpf1/o75hqBWhfRZA61MbuYjI5UNXvuqzI5o8AcCUPA1IgEzy7EYpDs82hNLTmKKwaXoflddoGiGFXuM0a+HOntcn3DXL7IR/uBSQEP5mAa3dfKa+vAax8l/sVB/FezELGEcgdYTorCXzr4OMAEI=
+	t=1725962860; cv=none; b=bBKZUQgEGyu+rgPdFNpZcsYt+FwA2r6m+v3X+bV4eIz9YgdyAEOTgib07wDL42mGYrXwADj58SV2xj/GXgCudpJdHc7VpA7ncUV/46aTx29hNjiVTfWHNIKD2J+AUm8h/HHAk41JiNwNDxk9o7OVjGWB7Zz/NutkhZ1eqyQmxsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962858; c=relaxed/simple;
-	bh=Mrfl+YDbRNyRzFTZ000QJzgKJDod9PDE50aZuUDoR6Y=;
+	s=arc-20240116; t=1725962860; c=relaxed/simple;
+	bh=FoCWUZPMU8wbpWcOvW5tjY7yPDZirI6IUPmq7oxo8Pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lLgISxcjVEn3lrSK2mv/UXhtZOD4HsFPv3OkrDN/zwN8HxJi7rGMfTOTYneeEvN15nPdwA2VnhBgLauS4YExeFYqkqqSJDfF3FP22HXYoXy12zvC2l148m/O+/tBGeH1mQ5hGP/oJhH/6AY8RJP74ZCs8NKTHuUSDTSQ+77b+5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8UIOQzE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aeHLDx+4FOboXMX3ufhQY45oHaH/ayDhg/Sl876ir7m8+14VUmhDR8mvZwZatj3S38tvTnTOUj5UpLL1DYJQSyL47B55bqrjdWDpBJOT5lR6EiDmElwLcSPnUUkRUO4PCC8zlbcIH0TqRDZENpOZIxSLXS7cQO0EUR3Jcx4LRo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rG3ftGU+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8UIOQzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3674EC4CEC3;
-	Tue, 10 Sep 2024 10:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rG3ftGU+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B625C4CEC3;
+	Tue, 10 Sep 2024 10:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962857;
-	bh=Mrfl+YDbRNyRzFTZ000QJzgKJDod9PDE50aZuUDoR6Y=;
+	s=korg; t=1725962860;
+	bh=FoCWUZPMU8wbpWcOvW5tjY7yPDZirI6IUPmq7oxo8Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8UIOQzE5XWLyiUpkp0SqwJRmzKUH+mMTzwAFHyWxZ3+AP9pvlYsqq1WyrSKSf8fU
-	 DaC+s0xA4dTF4Ta45EIjfMIxBFGTx0xDJ2FNG3YLc8Ntca4daTKNVqn+P8GEoU0eYQ
-	 84lLVFXGilZFcZwpD94ZgQSMGSq/iAJKo4AXsytU=
+	b=rG3ftGU+jHVQoBjUa1yO3JaWTmVNre40HkHMPTLT0FpH7jTjclxaU6XvqZUBlIBiF
+	 m5yCTESMmQQ8h2cCTJmJ20O67IO2EoYSqxC2P/SEMTKP8tE4HVAt7ZYHsTyYgpYKCQ
+	 HvD8lc3vuXm7dIfeuzhSeF3tUCYWHwS4lsHCfEX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Reijer Boekhoff <reijerboekhoff@protonmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/192] irqchip/armada-370-xp: Do not allow mapping IRQ 0 and 1
-Date: Tue, 10 Sep 2024 11:31:10 +0200
-Message-ID: <20240910092559.893833367@linuxfoundation.org>
+Subject: [PATCH 6.1 055/192] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+Date: Tue, 10 Sep 2024 11:31:19 +0200
+Message-ID: <20240910092600.245193181@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -47,48 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit 3cef738208e5c3cb7084e208caf9bbf684f24feb ]
+[ Upstream commit dbb5265a5d7cca1cdba7736dba313ab7d07bc19d ]
 
-IRQs 0 (IPI) and 1 (MSI) are handled internally by this driver,
-generic_handle_domain_irq() is never called for these IRQs.
+After being asked about support for WPA3 for BCM43224 chipset it
+was found that all it takes is setting the MFP_CAPABLE flag and
+mac80211 will take care of all that is needed [1].
 
-Disallow mapping these IRQs.
-
-[ Marek: changed commit message ]
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/ [1]
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240617122609.349582-1-arend.vanspriel@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-armada-370-xp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-armada-370-xp.c b/drivers/irqchip/irq-armada-370-xp.c
-index ee18eb3e72b7..ab02b44a3b4e 100644
---- a/drivers/irqchip/irq-armada-370-xp.c
-+++ b/drivers/irqchip/irq-armada-370-xp.c
-@@ -567,6 +567,10 @@ static struct irq_chip armada_370_xp_irq_chip = {
- static int armada_370_xp_mpic_irq_map(struct irq_domain *h,
- 				      unsigned int virq, irq_hw_number_t hw)
- {
-+	/* IRQs 0 and 1 cannot be mapped, they are handled internally */
-+	if (hw <= 1)
-+		return -EINVAL;
-+
- 	armada_370_xp_irq_mask(irq_get_irq_data(virq));
- 	if (!is_percpu_irq(hw))
- 		writel(hw, per_cpu_int_base +
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index a4034d44609b..94b1e4f15b41 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -1089,6 +1089,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
+ 	ieee80211_hw_set(hw, AMPDU_AGGREGATION);
+ 	ieee80211_hw_set(hw, SIGNAL_DBM);
+ 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
++	ieee80211_hw_set(hw, MFP_CAPABLE);
+ 
+ 	hw->extra_tx_headroom = brcms_c_get_header_len();
+ 	hw->queues = N_TX_QUEUES;
 -- 
 2.43.0
 
