@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00447190496;
-	Tue, 10 Sep 2024 10:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8720C188921;
+	Tue, 10 Sep 2024 10:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963401; cv=none; b=VIWxmgjEyXNFUMZ2gr8uEykLclrZDl3FicvFgsWNK1NvfQhomLmgZ18zzk/fueIo7Bug1tQjkuP0bZHCSOwdU+z58PwcoOkcDhzz79E6kjNK6lf8ib1Rh1bVA17y8zON8CXYmDf/AMjao6CWwBV5mWipetg2V2u0gmrsoKTzGvk=
+	t=1725963403; cv=none; b=DHmhvVK+iUyFcqJL6thMc35VXW8nB+giH/+SGwyAqu6/G0ewfyjt4rkkFu3My3JSDSGqVhDvDhxcrbQUANNS7mKHZT2el1y7to4EP9aiDoW1AYKHM43G+vDdnkaRd0+5JD+kk4+y2i/baZW+3/R5mwg+7v2bE/eC6jn2js9Hj8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963401; c=relaxed/simple;
-	bh=I1J7JRIPGddsHWlhju2TyJDWfvJXIatak1T17To+KPc=;
+	s=arc-20240116; t=1725963403; c=relaxed/simple;
+	bh=i5hJrVI20VNtGYCZYI7SOV55fNENm9dkkB6scHw+haI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhpsFBtIsqvczZtlpHnId5mfjWsqvWAeG2tONy2UpeWFy9rrUjxjFmAnuWbyfSfczbD2UlAvzKkN8WM9ql5zf+02bBDbUwStsl/mAus1uoc3VotuHR5AnIkbqf4dKql5DI0Ylka34MGSSOQdlOlU8AQQKJGe/G+PVKb+jW4uvoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cK68WSFm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XKjPlrzeAAUxhxIaXuT++ipP8eaWRuw/3o3JDJDlg/j9hna8frqiEE2j+ma2IN/ZowQOcwyJ2Bqfi17cnnJ+No9YHEy5WX+FX0BxC7n1vVQHtg+Oew/eI3Nt5TamrSARBNqNH18tpJsYJR3emidYsQ2nzC3kXRLGaJoIYaPYiyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpXMwN+s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cK68WSFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB9DC4CEC3;
-	Tue, 10 Sep 2024 10:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpXMwN+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1B6C4CEC3;
+	Tue, 10 Sep 2024 10:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963400;
-	bh=I1J7JRIPGddsHWlhju2TyJDWfvJXIatak1T17To+KPc=;
+	s=korg; t=1725963403;
+	bh=i5hJrVI20VNtGYCZYI7SOV55fNENm9dkkB6scHw+haI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cK68WSFmRzpRsQfTIX3Rb4Q1qzeAB5w5c0BDOQlj0zoCWInCqj3n3tkRmpCPFxbrP
-	 5+fLpNBisdEgtcS5DfDrsOKiBln3+Gc8GEe8mTdOqci9V3m5XU9MdtxbZbSqAa30ck
-	 iimg6UDKG6cgopJuASvUSGu5LQP/veN5TNHA9EFs=
+	b=QpXMwN+sb9ehpA/u2W4DY+0tXPahiy7FgrJ4qFkmNffpthKcX6hwI9gscaTl1NSDZ
+	 +QbtZomNeESFgAqYz6vvpJvYg/pq02LDc3Zb/BN+qGKxEKJm0WjLjC250LHq9ovQJT
+	 N8oPFde1c/Way36P9MSblIDHBNidKcBwZQpj9uys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Simon Holesch <simon@holesch.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Hongren Zheng <i@zenithal.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/214] rcu/nocb: Remove buggy bypass lock contention mitigation
-Date: Tue, 10 Sep 2024 11:31:06 +0200
-Message-ID: <20240910092600.578321134@linuxfoundation.org>
+Subject: [PATCH 5.15 045/214] usbip: Dont submit special requests twice
+Date: Tue, 10 Sep 2024 11:31:07 +0200
+Message-ID: <20240910092600.619460135@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,138 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Simon Holesch <simon@holesch.de>
 
-[ Upstream commit e4f78057291608f6968a6789c5ebb3bde7d95504 ]
+[ Upstream commit 8b6b386f9aa936ed0c190446c71cf59d4a507690 ]
 
-The bypass lock contention mitigation assumes there can be at most
-2 contenders on the bypass lock, following this scheme:
+Skip submitting URBs, when identical requests were already sent in
+tweak_special_requests(). Instead call the completion handler directly
+to return the result of the URB.
 
-1) One kthread takes the bypass lock
-2) Another one spins on it and increment the contended counter
-3) A third one (a bypass enqueuer) sees the contended counter on and
-  busy loops waiting on it to decrement.
+Even though submitting those requests twice should be harmless, there
+are USB devices that react poorly to some duplicated requests.
 
-However this assumption is wrong. There can be only one CPU to find the
-lock contended because call_rcu() (the bypass enqueuer) is the only
-bypass lock acquire site that may not already hold the NOCB lock
-beforehand, all the other sites must first contend on the NOCB lock.
-Therefore step 2) is impossible.
+One example is the ChipIdea controller implementation in U-Boot: The
+second SET_CONFIGURATION request makes U-Boot disable and re-enable all
+endpoints. Re-enabling an endpoint in the ChipIdea controller, however,
+was broken until U-Boot commit b272c8792502 ("usb: ci: Fix gadget
+reinit").
 
-The other problem is that the mitigation assumes that contenders all
-belong to the same rdp CPU, which is also impossible for a raw spinlock.
-In theory the warning could trigger if the enqueuer holds the bypass
-lock and another CPU flushes the bypass queue concurrently but this is
-prevented from all flush users:
-
-1) NOCB kthreads only flush if they successfully _tried_ to lock the
-   bypass lock. So no contention management here.
-
-2) Flush on callbacks migration happen remotely when the CPU is offline.
-   No concurrency against bypass enqueue.
-
-3) Flush on deoffloading happen either locally with IRQs disabled or
-   remotely when the CPU is not yet online. No concurrency against
-   bypass enqueue.
-
-4) Flush on barrier entrain happen either locally with IRQs disabled or
-   remotely when the CPU is offline. No concurrency against
-   bypass enqueue.
-
-For those reasons, the bypass lock contention mitigation isn't needed
-and is even wrong. Remove it but keep the warning reporting a contended
-bypass lock on a remote CPU, to keep unexpected contention awareness.
-
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Simon Holesch <simon@holesch.de>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Hongren Zheng <i@zenithal.me>
+Tested-by: Hongren Zheng <i@zenithal.me>
+Link: https://lore.kernel.org/r/20240519141922.171460-1-simon@holesch.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.h      |  1 -
- kernel/rcu/tree_nocb.h | 32 ++++++--------------------------
- 2 files changed, 6 insertions(+), 27 deletions(-)
+ drivers/usb/usbip/stub_rx.c | 77 ++++++++++++++++++++++++-------------
+ 1 file changed, 50 insertions(+), 27 deletions(-)
 
-diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
-index 2da96d8b894a..f27d3e3fe4ed 100644
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -205,7 +205,6 @@ struct rcu_data {
- 	struct swait_queue_head nocb_state_wq; /* For offloading state changes */
- 	struct task_struct *nocb_gp_kthread;
- 	raw_spinlock_t nocb_lock;	/* Guard following pair of fields. */
--	atomic_t nocb_lock_contended;	/* Contention experienced. */
- 	int nocb_defer_wakeup;		/* Defer wakeup of nocb_kthread. */
- 	struct timer_list nocb_timer;	/* Enforce finite deferral. */
- 	unsigned long nocb_gp_adv_time;	/* Last call_rcu() CB adv (jiffies). */
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index 8fdf44f8523f..d170dc1f3719 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -88,8 +88,7 @@ module_param(nocb_nobypass_lim_per_jiffy, int, 0);
+diff --git a/drivers/usb/usbip/stub_rx.c b/drivers/usb/usbip/stub_rx.c
+index 5dd41e8215e0..bb34d647cf13 100644
+--- a/drivers/usb/usbip/stub_rx.c
++++ b/drivers/usb/usbip/stub_rx.c
+@@ -144,53 +144,62 @@ static int tweak_set_configuration_cmd(struct urb *urb)
+ 	if (err && err != -ENODEV)
+ 		dev_err(&sdev->udev->dev, "can't set config #%d, error %d\n",
+ 			config, err);
+-	return 0;
++	return err;
+ }
  
- /*
-  * Acquire the specified rcu_data structure's ->nocb_bypass_lock.  If the
-- * lock isn't immediately available, increment ->nocb_lock_contended to
-- * flag the contention.
-+ * lock isn't immediately available, perform minimal sanity check.
-  */
- static void rcu_nocb_bypass_lock(struct rcu_data *rdp)
- 	__acquires(&rdp->nocb_bypass_lock)
-@@ -97,29 +96,12 @@ static void rcu_nocb_bypass_lock(struct rcu_data *rdp)
- 	lockdep_assert_irqs_disabled();
- 	if (raw_spin_trylock(&rdp->nocb_bypass_lock))
- 		return;
--	atomic_inc(&rdp->nocb_lock_contended);
-+	/*
-+	 * Contention expected only when local enqueue collide with
-+	 * remote flush from kthreads.
-+	 */
- 	WARN_ON_ONCE(smp_processor_id() != rdp->cpu);
--	smp_mb__after_atomic(); /* atomic_inc() before lock. */
- 	raw_spin_lock(&rdp->nocb_bypass_lock);
--	smp_mb__before_atomic(); /* atomic_dec() after lock. */
--	atomic_dec(&rdp->nocb_lock_contended);
--}
--
--/*
-- * Spinwait until the specified rcu_data structure's ->nocb_lock is
-- * not contended.  Please note that this is extremely special-purpose,
-- * relying on the fact that at most two kthreads and one CPU contend for
-- * this lock, and also that the two kthreads are guaranteed to have frequent
-- * grace-period-duration time intervals between successive acquisitions
-- * of the lock.  This allows us to use an extremely simple throttling
-- * mechanism, and further to apply it only to the CPU doing floods of
-- * call_rcu() invocations.  Don't try this at home!
-- */
--static void rcu_nocb_wait_contended(struct rcu_data *rdp)
--{
--	WARN_ON_ONCE(smp_processor_id() != rdp->cpu);
--	while (WARN_ON_ONCE(atomic_read(&rdp->nocb_lock_contended)))
--		cpu_relax();
+ static int tweak_reset_device_cmd(struct urb *urb)
+ {
+ 	struct stub_priv *priv = (struct stub_priv *) urb->context;
+ 	struct stub_device *sdev = priv->sdev;
++	int err;
+ 
+ 	dev_info(&urb->dev->dev, "usb_queue_reset_device\n");
+ 
+-	if (usb_lock_device_for_reset(sdev->udev, NULL) < 0) {
++	err = usb_lock_device_for_reset(sdev->udev, NULL);
++	if (err < 0) {
+ 		dev_err(&urb->dev->dev, "could not obtain lock to reset device\n");
+-		return 0;
++		return err;
+ 	}
+-	usb_reset_device(sdev->udev);
++	err = usb_reset_device(sdev->udev);
+ 	usb_unlock_device(sdev->udev);
+ 
+-	return 0;
++	return err;
  }
  
  /*
-@@ -457,7 +439,6 @@ static bool rcu_nocb_try_bypass(struct rcu_data *rdp, struct rcu_head *rhp,
+  * clear_halt, set_interface, and set_configuration require special tricks.
++ * Returns 1 if request was tweaked, 0 otherwise.
+  */
+-static void tweak_special_requests(struct urb *urb)
++static int tweak_special_requests(struct urb *urb)
+ {
++	int err;
++
+ 	if (!urb || !urb->setup_packet)
+-		return;
++		return 0;
+ 
+ 	if (usb_pipetype(urb->pipe) != PIPE_CONTROL)
+-		return;
++		return 0;
+ 
+ 	if (is_clear_halt_cmd(urb))
+ 		/* tweak clear_halt */
+-		 tweak_clear_halt_cmd(urb);
++		err = tweak_clear_halt_cmd(urb);
+ 
+ 	else if (is_set_interface_cmd(urb))
+ 		/* tweak set_interface */
+-		tweak_set_interface_cmd(urb);
++		err = tweak_set_interface_cmd(urb);
+ 
+ 	else if (is_set_configuration_cmd(urb))
+ 		/* tweak set_configuration */
+-		tweak_set_configuration_cmd(urb);
++		err = tweak_set_configuration_cmd(urb);
+ 
+ 	else if (is_reset_device_cmd(urb))
+-		tweak_reset_device_cmd(urb);
+-	else
++		err = tweak_reset_device_cmd(urb);
++	else {
+ 		usbip_dbg_stub_rx("no need to tweak\n");
++		return 0;
++	}
++
++	return !err;
+ }
+ 
+ /*
+@@ -468,6 +477,7 @@ static void stub_recv_cmd_submit(struct stub_device *sdev,
+ 	int support_sg = 1;
+ 	int np = 0;
+ 	int ret, i;
++	int is_tweaked;
+ 
+ 	if (pipe == -1)
+ 		return;
+@@ -580,8 +590,11 @@ static void stub_recv_cmd_submit(struct stub_device *sdev,
+ 		priv->urbs[i]->pipe = pipe;
+ 		priv->urbs[i]->complete = stub_complete;
+ 
+-		/* no need to submit an intercepted request, but harmless? */
+-		tweak_special_requests(priv->urbs[i]);
++		/*
++		 * all URBs belong to a single PDU, so a global is_tweaked flag is
++		 * enough
++		 */
++		is_tweaked = tweak_special_requests(priv->urbs[i]);
+ 
+ 		masking_bogus_flags(priv->urbs[i]);
+ 	}
+@@ -594,22 +607,32 @@ static void stub_recv_cmd_submit(struct stub_device *sdev,
+ 
+ 	/* urb is now ready to submit */
+ 	for (i = 0; i < priv->num_urbs; i++) {
+-		ret = usb_submit_urb(priv->urbs[i], GFP_KERNEL);
++		if (!is_tweaked) {
++			ret = usb_submit_urb(priv->urbs[i], GFP_KERNEL);
+ 
+-		if (ret == 0)
+-			usbip_dbg_stub_rx("submit urb ok, seqnum %u\n",
+-					pdu->base.seqnum);
+-		else {
+-			dev_err(&udev->dev, "submit_urb error, %d\n", ret);
+-			usbip_dump_header(pdu);
+-			usbip_dump_urb(priv->urbs[i]);
++			if (ret == 0)
++				usbip_dbg_stub_rx("submit urb ok, seqnum %u\n",
++						pdu->base.seqnum);
++			else {
++				dev_err(&udev->dev, "submit_urb error, %d\n", ret);
++				usbip_dump_header(pdu);
++				usbip_dump_urb(priv->urbs[i]);
+ 
++				/*
++				 * Pessimistic.
++				 * This connection will be discarded.
++				 */
++				usbip_event_add(ud, SDEV_EVENT_ERROR_SUBMIT);
++				break;
++			}
++		} else {
+ 			/*
+-			 * Pessimistic.
+-			 * This connection will be discarded.
++			 * An identical URB was already submitted in
++			 * tweak_special_requests(). Skip submitting this URB to not
++			 * duplicate the request.
+ 			 */
+-			usbip_event_add(ud, SDEV_EVENT_ERROR_SUBMIT);
+-			break;
++			priv->urbs[i]->status = 0;
++			stub_complete(priv->urbs[i]);
+ 		}
  	}
  
- 	// We need to use the bypass.
--	rcu_nocb_wait_contended(rdp);
- 	rcu_nocb_bypass_lock(rdp);
- 	ncbs = rcu_cblist_n_cbs(&rdp->nocb_bypass);
- 	rcu_segcblist_inc_len(&rdp->cblist); /* Must precede enqueue. */
-@@ -1361,12 +1342,11 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
- 
- 	sprintf(bufw, "%ld", rsclp->gp_seq[RCU_WAIT_TAIL]);
- 	sprintf(bufr, "%ld", rsclp->gp_seq[RCU_NEXT_READY_TAIL]);
--	pr_info("   CB %d^%d->%d %c%c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
-+	pr_info("   CB %d^%d->%d %c%c%c%c%c F%ld L%ld C%d %c%c%s%c%s%c%c q%ld %c CPU %d%s\n",
- 		rdp->cpu, rdp->nocb_gp_rdp->cpu,
- 		rdp->nocb_next_cb_rdp ? rdp->nocb_next_cb_rdp->cpu : -1,
- 		"kK"[!!rdp->nocb_cb_kthread],
- 		"bB"[raw_spin_is_locked(&rdp->nocb_bypass_lock)],
--		"cC"[!!atomic_read(&rdp->nocb_lock_contended)],
- 		"lL"[raw_spin_is_locked(&rdp->nocb_lock)],
- 		"sS"[!!rdp->nocb_cb_sleep],
- 		".W"[swait_active(&rdp->nocb_cb_wq)],
 -- 
 2.43.0
 
