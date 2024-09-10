@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCF718C005;
-	Tue, 10 Sep 2024 09:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228AD18B49E;
+	Tue, 10 Sep 2024 09:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961353; cv=none; b=Q9uxnNyJ4ymILLMVR9b2GkuzppYXHSf7v/9dIKOC2SrQS2gL6eE32sv2H0iGdup3BR/k3C8I4jYuXFXZnsanLo2TA8Ub+MRA4n8kB44ApxBOe1ViYiK6xJVnLiWV2H33YEd/FM2dZmO0vqdDx0HVVAtbdvzAXYBkBkt7Hr+s7YU=
+	t=1725961356; cv=none; b=oTRTxH2xEkxEDvhN9z7LavagP6abHsnYHQaJxFkyVRLtmH+keumtz9JegdsmbEJ53SgK00gmoI0MaJwOEsQRUVEoC9nrPienCO9Wc++zL/9D6GKNcfaXWA7UMA7njPZ0enawU0tW6Ke2lvfo7IP2eHuPDwHUNgUd56AS8234zDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961353; c=relaxed/simple;
-	bh=btXLsy69zPGclKHtmx1Z0UgcALBpGRADs5odnJexWPM=;
+	s=arc-20240116; t=1725961356; c=relaxed/simple;
+	bh=W1oPZ0x2JuGtnXmLLt6IYlCqf4mgQUP+lKfUDt/ikBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oeki9AbmCEzvCeM8UOPCUHlRi2kO6RRD2Pttpbwu15f0mWBBwx6uVGunGe7fDTUoFXmNMvZA4L82QtzXvMHu8rcQ5WDmXN3x5fBspHmh/imAjsDUYAKFS9yTanZhqmHoo1XN1tkxbA/TZsQenya1N6Et/vWuUNcRozoITcYI7s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwNxtY7E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tlQFRe1Pd4cxkiRAErwxfimE6BIauMYFhqyDkeaSDIft2qZPJ18IhL24CW7HaU8sVkHzGHE/eJJ30AoQArh9IvjIwjCfiy42tHDG43OKkpx3Y/RDLeTGVMaTAaGAS9i0bgDYJUHoB6097AkLc1lA+mt/ww0EmX+p40QLD2rsP3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5ngKwVf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwNxtY7E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27D2C4CEC3;
-	Tue, 10 Sep 2024 09:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5ngKwVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FDDC4CEC3;
+	Tue, 10 Sep 2024 09:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961353;
-	bh=btXLsy69zPGclKHtmx1Z0UgcALBpGRADs5odnJexWPM=;
+	s=korg; t=1725961356;
+	bh=W1oPZ0x2JuGtnXmLLt6IYlCqf4mgQUP+lKfUDt/ikBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uwNxtY7E4QVrAoqfVReaabV1kk5Us1GjhjjtaX8jXOIjsAH9yZeEYUEsFm2w4kRjk
-	 FmpL9IoXx4MNwhpl+xT0dPEavSgnu7qc2yCH02fDUJTzxD7UK9rp72DV99YLkYqDjf
-	 O3YP4/Of/b//trtJ7qh/1JlsdRlK7jEHWmH2BllI=
+	b=H5ngKwVfHzgVG9Coh3b8Dj4DsO08xuMblIpCykvdqj9k8gBZWc1x4IA4bdTmFB63F
+	 ZDBR9cBvPZDuOqJsromUSjE9hVoFssjNgHDbK1VH+78VmW190BeUzmef4t28HzrIFQ
+	 Sq1LxugQLKIxDgVd0LzOvSlIDoyyssVbkpkJXeAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangyun <yangyun50@huawei.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.10 041/375] fuse: fix memory leak in fuse_create_open
-Date: Tue, 10 Sep 2024 11:27:18 +0200
-Message-ID: <20240910092623.618188016@linuxfoundation.org>
+	Maximilien Perreault <maximilienperreault@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 015/375] ALSA: hda/realtek: Support mute LED on HP Laptop 14-dq2xxx
+Date: Tue, 10 Sep 2024 11:26:52 +0200
+Message-ID: <20240910092622.778649005@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -50,32 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yangyun <yangyun50@huawei.com>
+From: Maximilien Perreault <maximilienperreault@gmail.com>
 
-commit 3002240d16494d798add0575e8ba1f284258ab34 upstream.
+commit 47a9e8dbb8d4713a9aac7cc6ce3c82dcc94217d8 upstream.
 
-The memory of struct fuse_file is allocated but not freed
-when get_create_ext return error.
+The mute LED on this HP laptop uses ALC236 and requires a quirk to function. This patch enables the existing quirk for the device.
 
-Fixes: 3e2b6fdbdc9a ("fuse: send security context of inode on file")
-Cc: stable@vger.kernel.org # v5.17
-Signed-off-by: yangyun <yangyun50@huawei.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Maximilien Perreault <maximilienperreault@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240904031013.21220-1-maximilienperreault@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -670,7 +670,7 @@ static int fuse_create_open(struct inode
- 
- 	err = get_create_ext(&args, dir, entry, mode);
- 	if (err)
--		goto out_put_forget_req;
-+		goto out_free_ff;
- 
- 	err = fuse_simple_request(fm, &args);
- 	free_ext_value(&args);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10105,6 +10105,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x87f5, "HP", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87f6, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
+ 	SND_PCI_QUIRK(0x103c, 0x87f7, "HP Spectre x360 14", ALC245_FIXUP_HP_X360_AMP),
++	SND_PCI_QUIRK(0x103c, 0x87fd, "HP Laptop 14-dq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87fe, "HP Laptop 15s-fq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8805, "HP ProBook 650 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x880d, "HP EliteBook 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
 
 
