@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11CD13B2B0;
-	Tue, 10 Sep 2024 09:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE82119068E;
+	Tue, 10 Sep 2024 09:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961537; cv=none; b=TFj/shSFRJWsBf94dwtoDP9mySM4+++jM9xTiPkRBz3nLldaJJR3mOEJfyLKoJUzTveSH8QSAe4iSz//C8olnHSEodoMw2VBAm/YjtJ4ZS4S0N5FqzTfIHwD3ATRJksCclWPlx+/e9fqP370pweEttuF2Rw7CxqP998wcOp+j8Y=
+	t=1725961540; cv=none; b=Vf/nDLhEanQNxTWXcpaBTAKfZPHIcB237uAFNuQlMmE+vFDnQpXzsD9JJq3V9lW3yWeyiukW9a3xxFX0X2e6R1qPeTIfcfM4q6bzhC7apIV8usAeSiKQ9ENJtthXksof/4s/ldj2qDdmwzZcDN/e4/BJmWDc00pxJz0D23pUxkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961537; c=relaxed/simple;
-	bh=LYilvmt/LwK1C9i9sW8W6ZUnMNvJZ/D/GpZrBIbqcNU=;
+	s=arc-20240116; t=1725961540; c=relaxed/simple;
+	bh=vm1JgefTiNe3DaHftLGMscAoTHhvWjxrHqMwiUTgW3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoszlbMudK7pq7QNFLZSjaNbuVvNaOYLqc2SVy/3Osia5f5+eYRE/iieAt//VyDjSBLHouwDAz5CkkzH1w4GrdZmbeZddq3rnp6PecjsmPS5X5W7OYo1/9fjP+TxnXk+BokRkhAWAn51/3nGBNdrm2QV1KHktI7kXqNW0xTndRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzpzoUDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFZgEfsd+JW9TqG9iNCP0EC6DM+SY9n20LsdypCm0fq+i/lmOl1WgbIofl+tZwKFWbp+v3ck74z+MTkRLEqk5fDdynu5kbtZBQTuWJdm0aWPiXVn9k9sCajGhSUSGXTo90R7ELiNuoCs7A9L0kmAMhS4WB+C7jTYmJwcX79RrPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/Yed3KC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzpzoUDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59833C4CEC3;
-	Tue, 10 Sep 2024 09:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/Yed3KC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D29C4CEC3;
+	Tue, 10 Sep 2024 09:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961537;
-	bh=LYilvmt/LwK1C9i9sW8W6ZUnMNvJZ/D/GpZrBIbqcNU=;
+	s=korg; t=1725961540;
+	bh=vm1JgefTiNe3DaHftLGMscAoTHhvWjxrHqMwiUTgW3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzpzoUDoTZu3gdAGEtnJQIhXvi+i9JgaxTbBGuoJUDDe6aawt6N0MLz7s6juW9Ll2
-	 Ylnv0X1sAOxrD1QVGOjn5RsqzQgio4sNjNc3wK+sIgb2EHvgzZl4iJivtntz1S7lr1
-	 k/x/+Ke/9zh/WTKmMaLgTeJJp1n7NvbDn5DtuIQE=
+	b=Z/Yed3KCtwDQWeyqNP2UKy1t6ebTFhQiLDGg1DsnQVaL4Xv/NzliSi99Md4vLrZM2
+	 yYw3VVtMqhg4cl2oUikz1Q8KOxs00S7GjtX+tsyDKji30uVoh7tso1bSNpKLp5FBT7
+	 D12ObO+bhJeCWVK1NnRLnNgdAn66jUdHsdyOc7jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.10 076/375] Revert "wifi: ath11k: support hibernation"
-Date: Tue, 10 Sep 2024 11:27:53 +0200
-Message-ID: <20240910092624.766770141@linuxfoundation.org>
+	syzbot+58c03971700330ce14d8@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 077/375] tcp_bpf: fix return value of tcp_bpf_sendmsg()
+Date: Tue, 10 Sep 2024 11:27:54 +0200
+Message-ID: <20240910092624.801735828@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,420 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-commit 2f833e8948d6c88a3a257d4e426c9897b4907d5a upstream.
+commit fe1910f9337bd46a9343967b547ccab26b4b2c6e upstream.
 
-This reverts commit 166a490f59ac10340ee5330e51c15188ce2a7f8f.
+When we cork messages in psock->cork, the last message triggers the
+flushing will result in sending a sk_msg larger than the current
+message size. In this case, in tcp_bpf_send_verdict(), 'copied' becomes
+negative at least in the following case:
 
-There are several reports that this commit breaks system suspend on some specific
-Lenovo platforms. Since there is no fix available, for now revert this commit
-to make suspend work again on those platforms.
+468         case __SK_DROP:
+469         default:
+470                 sk_msg_free_partial(sk, msg, tosend);
+471                 sk_msg_apply_bytes(psock, tosend);
+472                 *copied -= (tosend + delta); // <==== HERE
+473                 return -EACCES;
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219196
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2301921
-Cc: <stable@vger.kernel.org> # 6.10.x: d3e154d7776b: Revert "wifi: ath11k: restore country code during resume"
-Cc: <stable@vger.kernel.org> # 6.10.x
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240830073420.5790-3-quic_bqiang@quicinc.com
+Therefore, it could lead to the following BUG with a proper value of
+'copied' (thanks to syzbot). We should not use negative 'copied' as a
+return value here.
+
+  ------------[ cut here ]------------
+  kernel BUG at net/socket.c:733!
+  Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 3265 Comm: syz-executor510 Not tainted 6.11.0-rc3-syzkaller-00060-gd07b43284ab3 #0
+  Hardware name: linux,dummy-virt (DT)
+  pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : sock_sendmsg_nosec net/socket.c:733 [inline]
+  pc : sock_sendmsg_nosec net/socket.c:728 [inline]
+  pc : __sock_sendmsg+0x5c/0x60 net/socket.c:745
+  lr : sock_sendmsg_nosec net/socket.c:730 [inline]
+  lr : __sock_sendmsg+0x54/0x60 net/socket.c:745
+  sp : ffff800088ea3b30
+  x29: ffff800088ea3b30 x28: fbf00000062bc900 x27: 0000000000000000
+  x26: ffff800088ea3bc0 x25: ffff800088ea3bc0 x24: 0000000000000000
+  x23: f9f00000048dc000 x22: 0000000000000000 x21: ffff800088ea3d90
+  x20: f9f00000048dc000 x19: ffff800088ea3d90 x18: 0000000000000001
+  x17: 0000000000000000 x16: 0000000000000000 x15: 000000002002ffaf
+  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  x11: 0000000000000000 x10: ffff8000815849c0 x9 : ffff8000815b49c0
+  x8 : 0000000000000000 x7 : 000000000000003f x6 : 0000000000000000
+  x5 : 00000000000007e0 x4 : fff07ffffd239000 x3 : fbf00000062bc900
+  x2 : 0000000000000000 x1 : 0000000000000000 x0 : 00000000fffffdef
+  Call trace:
+   sock_sendmsg_nosec net/socket.c:733 [inline]
+   __sock_sendmsg+0x5c/0x60 net/socket.c:745
+   ____sys_sendmsg+0x274/0x2ac net/socket.c:2597
+   ___sys_sendmsg+0xac/0x100 net/socket.c:2651
+   __sys_sendmsg+0x84/0xe0 net/socket.c:2680
+   __do_sys_sendmsg net/socket.c:2689 [inline]
+   __se_sys_sendmsg net/socket.c:2687 [inline]
+   __arm64_sys_sendmsg+0x24/0x30 net/socket.c:2687
+   __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+   invoke_syscall+0x48/0x110 arch/arm64/kernel/syscall.c:49
+   el0_svc_common.constprop.0+0x40/0xe0 arch/arm64/kernel/syscall.c:132
+   do_el0_svc+0x1c/0x28 arch/arm64/kernel/syscall.c:151
+   el0_svc+0x34/0xec arch/arm64/kernel/entry-common.c:712
+   el0t_64_sync_handler+0x100/0x12c arch/arm64/kernel/entry-common.c:730
+   el0t_64_sync+0x19c/0x1a0 arch/arm64/kernel/entry.S:598
+  Code: f9404463 d63f0060 3108441f 54fffe81 (d4210000)
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 4f738adba30a ("bpf: create tcp_bpf_ulp allowing BPF to monitor socket TX/RX data")
+Reported-by: syzbot+58c03971700330ce14d8@syzkaller.appspotmail.com
+Cc: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20240821030744.320934-1-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/ahb.c  |    4 -
- drivers/net/wireless/ath/ath11k/core.c |  107 +++++++++------------------------
- drivers/net/wireless/ath/ath11k/core.h |    4 -
- drivers/net/wireless/ath/ath11k/hif.h  |   12 ---
- drivers/net/wireless/ath/ath11k/mhi.c  |   12 ---
- drivers/net/wireless/ath/ath11k/mhi.h  |    3 
- drivers/net/wireless/ath/ath11k/pci.c  |   44 ++-----------
- drivers/net/wireless/ath/ath11k/qmi.c  |    2 
- 8 files changed, 49 insertions(+), 139 deletions(-)
+ net/ipv4/tcp_bpf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -413,7 +413,7 @@ static int ath11k_ahb_power_up(struct at
- 	return ret;
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -577,7 +577,7 @@ out_err:
+ 		err = sk_stream_error(sk, msg->msg_flags, err);
+ 	release_sock(sk);
+ 	sk_psock_put(sk, psock);
+-	return copied ? copied : err;
++	return copied > 0 ? copied : err;
  }
  
--static void ath11k_ahb_power_down(struct ath11k_base *ab, bool is_suspend)
-+static void ath11k_ahb_power_down(struct ath11k_base *ab)
- {
- 	struct ath11k_ahb *ab_ahb = ath11k_ahb_priv(ab);
- 
-@@ -1261,7 +1261,7 @@ static void ath11k_ahb_remove(struct pla
- 	struct ath11k_base *ab = platform_get_drvdata(pdev);
- 
- 	if (test_bit(ATH11K_FLAG_QMI_FAIL, &ab->dev_flags)) {
--		ath11k_ahb_power_down(ab, false);
-+		ath11k_ahb_power_down(ab);
- 		ath11k_debugfs_soc_destroy(ab);
- 		ath11k_qmi_deinit_service(ab);
- 		goto qmi_fail;
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -906,6 +906,12 @@ int ath11k_core_suspend(struct ath11k_ba
- 		return ret;
- 	}
- 
-+	ret = ath11k_wow_enable(ab);
-+	if (ret) {
-+		ath11k_warn(ab, "failed to enable wow during suspend: %d\n", ret);
-+		return ret;
-+	}
-+
- 	ret = ath11k_dp_rx_pktlog_stop(ab, false);
- 	if (ret) {
- 		ath11k_warn(ab, "failed to stop dp rx pktlog during suspend: %d\n",
-@@ -916,85 +922,29 @@ int ath11k_core_suspend(struct ath11k_ba
- 	ath11k_ce_stop_shadow_timers(ab);
- 	ath11k_dp_stop_shadow_timers(ab);
- 
--	/* PM framework skips suspend_late/resume_early callbacks
--	 * if other devices report errors in their suspend callbacks.
--	 * However ath11k_core_resume() would still be called because
--	 * here we return success thus kernel put us on dpm_suspended_list.
--	 * Since we won't go through a power down/up cycle, there is
--	 * no chance to call complete(&ab->restart_completed) in
--	 * ath11k_core_restart(), making ath11k_core_resume() timeout.
--	 * So call it here to avoid this issue. This also works in case
--	 * no error happens thus suspend_late/resume_early get called,
--	 * because it will be reinitialized in ath11k_core_resume_early().
--	 */
--	complete(&ab->restart_completed);
--
--	return 0;
--}
--EXPORT_SYMBOL(ath11k_core_suspend);
--
--int ath11k_core_suspend_late(struct ath11k_base *ab)
--{
--	struct ath11k_pdev *pdev;
--	struct ath11k *ar;
--
--	if (!ab->hw_params.supports_suspend)
--		return -EOPNOTSUPP;
--
--	/* so far single_pdev_only chips have supports_suspend as true
--	 * and only the first pdev is valid.
--	 */
--	pdev = ath11k_core_get_single_pdev(ab);
--	ar = pdev->ar;
--	if (!ar || ar->state != ATH11K_STATE_OFF)
--		return 0;
--
- 	ath11k_hif_irq_disable(ab);
- 	ath11k_hif_ce_irq_disable(ab);
- 
--	ath11k_hif_power_down(ab, true);
-+	ret = ath11k_hif_suspend(ab);
-+	if (ret) {
-+		ath11k_warn(ab, "failed to suspend hif: %d\n", ret);
-+		return ret;
-+	}
- 
- 	return 0;
- }
--EXPORT_SYMBOL(ath11k_core_suspend_late);
--
--int ath11k_core_resume_early(struct ath11k_base *ab)
--{
--	int ret;
--	struct ath11k_pdev *pdev;
--	struct ath11k *ar;
--
--	if (!ab->hw_params.supports_suspend)
--		return -EOPNOTSUPP;
--
--	/* so far single_pdev_only chips have supports_suspend as true
--	 * and only the first pdev is valid.
--	 */
--	pdev = ath11k_core_get_single_pdev(ab);
--	ar = pdev->ar;
--	if (!ar || ar->state != ATH11K_STATE_OFF)
--		return 0;
--
--	reinit_completion(&ab->restart_completed);
--	ret = ath11k_hif_power_up(ab);
--	if (ret)
--		ath11k_warn(ab, "failed to power up hif during resume: %d\n", ret);
--
--	return ret;
--}
--EXPORT_SYMBOL(ath11k_core_resume_early);
-+EXPORT_SYMBOL(ath11k_core_suspend);
- 
- int ath11k_core_resume(struct ath11k_base *ab)
- {
- 	int ret;
- 	struct ath11k_pdev *pdev;
- 	struct ath11k *ar;
--	long time_left;
- 
- 	if (!ab->hw_params.supports_suspend)
- 		return -EOPNOTSUPP;
- 
--	/* so far single_pdev_only chips have supports_suspend as true
-+	/* so far signle_pdev_only chips have supports_suspend as true
- 	 * and only the first pdev is valid.
- 	 */
- 	pdev = ath11k_core_get_single_pdev(ab);
-@@ -1002,19 +952,29 @@ int ath11k_core_resume(struct ath11k_bas
- 	if (!ar || ar->state != ATH11K_STATE_OFF)
- 		return 0;
- 
--	time_left = wait_for_completion_timeout(&ab->restart_completed,
--						ATH11K_RESET_TIMEOUT_HZ);
--	if (time_left == 0) {
--		ath11k_warn(ab, "timeout while waiting for restart complete");
--		return -ETIMEDOUT;
-+	ret = ath11k_hif_resume(ab);
-+	if (ret) {
-+		ath11k_warn(ab, "failed to resume hif during resume: %d\n", ret);
-+		return ret;
- 	}
- 
-+	ath11k_hif_ce_irq_enable(ab);
-+	ath11k_hif_irq_enable(ab);
-+
- 	ret = ath11k_dp_rx_pktlog_start(ab);
--	if (ret)
-+	if (ret) {
- 		ath11k_warn(ab, "failed to start rx pktlog during resume: %d\n",
- 			    ret);
-+		return ret;
-+	}
- 
--	return ret;
-+	ret = ath11k_wow_wakeup(ab);
-+	if (ret) {
-+		ath11k_warn(ab, "failed to wakeup wow during resume: %d\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- EXPORT_SYMBOL(ath11k_core_resume);
- 
-@@ -2109,8 +2069,6 @@ static void ath11k_core_restart(struct w
- 
- 	if (!ab->is_reset)
- 		ath11k_core_post_reconfigure_recovery(ab);
--
--	complete(&ab->restart_completed);
- }
- 
- static void ath11k_core_reset(struct work_struct *work)
-@@ -2180,7 +2138,7 @@ static void ath11k_core_reset(struct wor
- 	ath11k_hif_irq_disable(ab);
- 	ath11k_hif_ce_irq_disable(ab);
- 
--	ath11k_hif_power_down(ab, false);
-+	ath11k_hif_power_down(ab);
- 	ath11k_hif_power_up(ab);
- 
- 	ath11k_dbg(ab, ATH11K_DBG_BOOT, "reset started\n");
-@@ -2253,7 +2211,7 @@ void ath11k_core_deinit(struct ath11k_ba
- 
- 	mutex_unlock(&ab->core_lock);
- 
--	ath11k_hif_power_down(ab, false);
-+	ath11k_hif_power_down(ab);
- 	ath11k_mac_destroy(ab);
- 	ath11k_core_soc_destroy(ab);
- 	ath11k_fw_destroy(ab);
-@@ -2306,7 +2264,6 @@ struct ath11k_base *ath11k_core_alloc(st
- 	timer_setup(&ab->rx_replenish_retry, ath11k_ce_rx_replenish_retry, 0);
- 	init_completion(&ab->htc_suspend);
- 	init_completion(&ab->wow.wakeup_completed);
--	init_completion(&ab->restart_completed);
- 
- 	ab->dev = dev;
- 	ab->hif.bus = bus;
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -1033,8 +1033,6 @@ struct ath11k_base {
- 		DECLARE_BITMAP(fw_features, ATH11K_FW_FEATURE_COUNT);
- 	} fw;
- 
--	struct completion restart_completed;
--
- #ifdef CONFIG_NL80211_TESTMODE
- 	struct {
- 		u32 data_pos;
-@@ -1234,10 +1232,8 @@ void ath11k_core_free_bdf(struct ath11k_
- int ath11k_core_check_dt(struct ath11k_base *ath11k);
- int ath11k_core_check_smbios(struct ath11k_base *ab);
- void ath11k_core_halt(struct ath11k *ar);
--int ath11k_core_resume_early(struct ath11k_base *ab);
- int ath11k_core_resume(struct ath11k_base *ab);
- int ath11k_core_suspend(struct ath11k_base *ab);
--int ath11k_core_suspend_late(struct ath11k_base *ab);
- void ath11k_core_pre_reconfigure_recovery(struct ath11k_base *ab);
- bool ath11k_core_coldboot_cal_support(struct ath11k_base *ab);
- 
---- a/drivers/net/wireless/ath/ath11k/hif.h
-+++ b/drivers/net/wireless/ath/ath11k/hif.h
-@@ -18,7 +18,7 @@ struct ath11k_hif_ops {
- 	int (*start)(struct ath11k_base *ab);
- 	void (*stop)(struct ath11k_base *ab);
- 	int (*power_up)(struct ath11k_base *ab);
--	void (*power_down)(struct ath11k_base *ab, bool is_suspend);
-+	void (*power_down)(struct ath11k_base *ab);
- 	int (*suspend)(struct ath11k_base *ab);
- 	int (*resume)(struct ath11k_base *ab);
- 	int (*map_service_to_pipe)(struct ath11k_base *ab, u16 service_id,
-@@ -67,18 +67,12 @@ static inline void ath11k_hif_irq_disabl
- 
- static inline int ath11k_hif_power_up(struct ath11k_base *ab)
- {
--	if (!ab->hif.ops->power_up)
--		return -EOPNOTSUPP;
--
- 	return ab->hif.ops->power_up(ab);
- }
- 
--static inline void ath11k_hif_power_down(struct ath11k_base *ab, bool is_suspend)
-+static inline void ath11k_hif_power_down(struct ath11k_base *ab)
- {
--	if (!ab->hif.ops->power_down)
--		return;
--
--	ab->hif.ops->power_down(ab, is_suspend);
-+	ab->hif.ops->power_down(ab);
- }
- 
- static inline int ath11k_hif_suspend(struct ath11k_base *ab)
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -453,17 +453,9 @@ int ath11k_mhi_start(struct ath11k_pci *
- 	return 0;
- }
- 
--void ath11k_mhi_stop(struct ath11k_pci *ab_pci, bool is_suspend)
-+void ath11k_mhi_stop(struct ath11k_pci *ab_pci)
- {
--	/* During suspend we need to use mhi_power_down_keep_dev()
--	 * workaround, otherwise ath11k_core_resume() will timeout
--	 * during resume.
--	 */
--	if (is_suspend)
--		mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
--	else
--		mhi_power_down(ab_pci->mhi_ctrl, true);
--
-+	mhi_power_down(ab_pci->mhi_ctrl, true);
- 	mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
- }
- 
---- a/drivers/net/wireless/ath/ath11k/mhi.h
-+++ b/drivers/net/wireless/ath/ath11k/mhi.h
-@@ -18,7 +18,7 @@
- #define MHICTRL_RESET_MASK			0x2
- 
- int ath11k_mhi_start(struct ath11k_pci *ar_pci);
--void ath11k_mhi_stop(struct ath11k_pci *ar_pci, bool is_suspend);
-+void ath11k_mhi_stop(struct ath11k_pci *ar_pci);
- int ath11k_mhi_register(struct ath11k_pci *ar_pci);
- void ath11k_mhi_unregister(struct ath11k_pci *ar_pci);
- void ath11k_mhi_set_mhictrl_reset(struct ath11k_base *ab);
-@@ -26,4 +26,5 @@ void ath11k_mhi_clear_vector(struct ath1
- 
- int ath11k_mhi_suspend(struct ath11k_pci *ar_pci);
- int ath11k_mhi_resume(struct ath11k_pci *ar_pci);
-+
- #endif
---- a/drivers/net/wireless/ath/ath11k/pci.c
-+++ b/drivers/net/wireless/ath/ath11k/pci.c
-@@ -638,7 +638,7 @@ static int ath11k_pci_power_up(struct at
- 	return 0;
- }
- 
--static void ath11k_pci_power_down(struct ath11k_base *ab, bool is_suspend)
-+static void ath11k_pci_power_down(struct ath11k_base *ab)
- {
- 	struct ath11k_pci *ab_pci = ath11k_pci_priv(ab);
- 
-@@ -649,7 +649,7 @@ static void ath11k_pci_power_down(struct
- 
- 	ath11k_pci_msi_disable(ab_pci);
- 
--	ath11k_mhi_stop(ab_pci, is_suspend);
-+	ath11k_mhi_stop(ab_pci);
- 	clear_bit(ATH11K_FLAG_DEVICE_INIT_DONE, &ab->dev_flags);
- 	ath11k_pci_sw_reset(ab_pci->ab, false);
- }
-@@ -970,7 +970,7 @@ static void ath11k_pci_remove(struct pci
- 	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
- 
- 	if (test_bit(ATH11K_FLAG_QMI_FAIL, &ab->dev_flags)) {
--		ath11k_pci_power_down(ab, false);
-+		ath11k_pci_power_down(ab);
- 		ath11k_debugfs_soc_destroy(ab);
- 		ath11k_qmi_deinit_service(ab);
- 		goto qmi_fail;
-@@ -998,7 +998,7 @@ static void ath11k_pci_shutdown(struct p
- 	struct ath11k_pci *ab_pci = ath11k_pci_priv(ab);
- 
- 	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
--	ath11k_pci_power_down(ab, false);
-+	ath11k_pci_power_down(ab);
- }
- 
- static __maybe_unused int ath11k_pci_pm_suspend(struct device *dev)
-@@ -1035,39 +1035,9 @@ static __maybe_unused int ath11k_pci_pm_
- 	return ret;
- }
- 
--static __maybe_unused int ath11k_pci_pm_suspend_late(struct device *dev)
--{
--	struct ath11k_base *ab = dev_get_drvdata(dev);
--	int ret;
--
--	ret = ath11k_core_suspend_late(ab);
--	if (ret)
--		ath11k_warn(ab, "failed to late suspend core: %d\n", ret);
--
--	/* Similar to ath11k_pci_pm_suspend(), we return success here
--	 * even error happens, to allow system suspend/hibernation survive.
--	 */
--	return 0;
--}
--
--static __maybe_unused int ath11k_pci_pm_resume_early(struct device *dev)
--{
--	struct ath11k_base *ab = dev_get_drvdata(dev);
--	int ret;
--
--	ret = ath11k_core_resume_early(ab);
--	if (ret)
--		ath11k_warn(ab, "failed to early resume core: %d\n", ret);
--
--	return ret;
--}
--
--static const struct dev_pm_ops __maybe_unused ath11k_pci_pm_ops = {
--	SET_SYSTEM_SLEEP_PM_OPS(ath11k_pci_pm_suspend,
--				ath11k_pci_pm_resume)
--	SET_LATE_SYSTEM_SLEEP_PM_OPS(ath11k_pci_pm_suspend_late,
--				     ath11k_pci_pm_resume_early)
--};
-+static SIMPLE_DEV_PM_OPS(ath11k_pci_pm_ops,
-+			 ath11k_pci_pm_suspend,
-+			 ath11k_pci_pm_resume);
- 
- static struct pci_driver ath11k_pci_driver = {
- 	.name = "ath11k_pci",
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -2877,7 +2877,7 @@ int ath11k_qmi_fwreset_from_cold_boot(st
- 	}
- 
- 	/* reset the firmware */
--	ath11k_hif_power_down(ab, false);
-+	ath11k_hif_power_down(ab);
- 	ath11k_hif_power_up(ab);
- 	ath11k_dbg(ab, ATH11K_DBG_QMI, "exit wait for cold boot done\n");
- 	return 0;
+ enum {
 
 
