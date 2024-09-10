@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298EC18F2F0;
-	Tue, 10 Sep 2024 10:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1892172BA8;
+	Tue, 10 Sep 2024 10:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964432; cv=none; b=DUmXQRYl7Tk1fHmrlYp7tO/YJ9q9P87qxYB3hTism5cunkQL8jA/tLMRwcHJZcffsH6cEQ22BKVMLmVmUjQJePPAsx8POtHZYQZnNgcL80onnU5+O6Y5OfiTG1fT+kkIrVoBkq0smkLi5wLEYeXMyd/4owsmLv6CFUt/qncqIJc=
+	t=1725964434; cv=none; b=rlB7Wda1dJmHQhkwXmyTQEe7vVbeIExDEtOwn66sjBECmvpJbqFnehrjX7au27KGjBUVwq1yTHP7LDvuomgCtWXpnCMKETml798giPdQHqx0iajUg8radTjpeQ6tHwzSLW4atoDy152kz0zIZLuZHtHd2DKnwBLhom8xf5UzIqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964432; c=relaxed/simple;
-	bh=dUWR+zLobtDhikyPNh4kRUNCF1m6W2cIceZa16GWQfc=;
+	s=arc-20240116; t=1725964434; c=relaxed/simple;
+	bh=wSbXyWWdt33nIdDWSXRdQF8aB0ORh0Dk5br/SKVeqA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2C4TDxBfvwYeUXoV82v0LXkJhILsBHnkjJKJqBV8eQ/U7y/6nkR+mtpGRnnYiFYLlN9GjZBsm8BkHVCNSvLWmLZgyfcUPIHMLGbir06t+LHWOl5fD2NA7+aFhLoyoSOaKi0tljHatP+6w6s05Eo5A/HC1QlIBa+bJveaNhzwYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbBgKwAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TRgS6dc10Br17ngrurzLmR8xcGlWYk76Had/2Ty0EyOvISXrl2KGtryfqa7oM1dNC+x62UjGONJ/DjxeRGWeiNUWgwK8iWFAj84I14Cm1BByaZpvOc1pc8hB1KACdY1R/DLFvdNEsJzwviLJ/GsL+RmYKVbiPC+G4AofYO1wtug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csMx+VBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbBgKwAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC62C4CEC3;
-	Tue, 10 Sep 2024 10:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csMx+VBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F68C4CEC6;
+	Tue, 10 Sep 2024 10:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964431;
-	bh=dUWR+zLobtDhikyPNh4kRUNCF1m6W2cIceZa16GWQfc=;
+	s=korg; t=1725964434;
+	bh=wSbXyWWdt33nIdDWSXRdQF8aB0ORh0Dk5br/SKVeqA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbBgKwASDN/Zu2vjGhEdGv4RCvYmO9Rt/gZ8EKt7O3tkXxXP0UVNVtD4rRmBVc8FL
-	 JONzcub/Dk67m3tNbFGs0vh4JqRgB6D60Z9YtiDWaRDplnF6sX8lJoOQ5L8A8//MX5
-	 3LWcVin7RWgCNSbd03hTt/IsSwiVjQn4gwltQcmk=
+	b=csMx+VBjHmNRg+zpG5/kihgrc8VDjIIubccp/1hdKANU85BptMG6umQpwTNq34MPW
+	 2DkOMwY21jNmBSJYYcQmyYnTxSD0KP4jf5Uu3UPQ5RQsoSeTf4X2rmYYqkgqR4vHqY
+	 /7KjBOR4Nd4ti11ZvwWkmgTpj8iaoorva23QHgnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/269] hwmon: (nct6775-core) Fix underflows seen when writing limit attributes
-Date: Tue, 10 Sep 2024 11:32:21 +0200
-Message-ID: <20240910092613.697206265@linuxfoundation.org>
+Subject: [PATCH 6.6 155/269] hwmon: (w83627ehf) Fix underflows seen when writing limit attributes
+Date: Tue, 10 Sep 2024 11:32:22 +0200
+Message-ID: <20240910092613.726163423@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0403e10bf0824bf0ec2bb135d4cf1c0cc3bf4bf0 ]
+[ Upstream commit 5c1de37969b7bc0abcb20b86e91e70caebbd4f89 ]
 
 DIV_ROUND_CLOSEST() after kstrtol() results in an underflow if a large
 negative number such as -9223372036854775808 is provided by the user.
@@ -61,22 +61,31 @@ Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/w83627ehf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index f3bf2e4701c3..8da7aa1614d7 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -2262,7 +2262,7 @@ store_temp_offset(struct device *dev, struct device_attribute *attr,
+diff --git a/drivers/hwmon/w83627ehf.c b/drivers/hwmon/w83627ehf.c
+index fe960c0a624f..7d7d70afde65 100644
+--- a/drivers/hwmon/w83627ehf.c
++++ b/drivers/hwmon/w83627ehf.c
+@@ -895,7 +895,7 @@ store_target_temp(struct device *dev, struct device_attribute *attr,
  	if (err < 0)
  		return err;
  
--	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), -128, 127);
-+	val = DIV_ROUND_CLOSEST(clamp_val(val, -128000, 127000), 1000);
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 127);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 127000), 1000);
  
  	mutex_lock(&data->update_lock);
- 	data->temp_offset[nr] = val;
+ 	data->target_temp[nr] = val;
+@@ -920,7 +920,7 @@ store_tolerance(struct device *dev, struct device_attribute *attr,
+ 		return err;
+ 
+ 	/* Limit the temp to 0C - 15C */
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 0, 15);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 0, 15000), 1000);
+ 
+ 	mutex_lock(&data->update_lock);
+ 	reg = w83627ehf_read_value(data, W83627EHF_REG_TOLERANCE[nr]);
 -- 
 2.43.0
 
