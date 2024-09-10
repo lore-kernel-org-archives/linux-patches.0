@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2561546444;
-	Tue, 10 Sep 2024 09:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B93B46444;
+	Tue, 10 Sep 2024 09:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725960980; cv=none; b=YYNbe6iJqcXzwsXoWLcPN7b+6jU2VsE35sII6NvJvSB5rx1x+r2LZE8oQ2lK2AzzWe2oHRHF7KBL0nN/QBnl7HUOmYREWFYlETPABGJ2ADeosD0xjajQK69Y8D4j1kq4pWp67uST8QCJnB3QJqzzdnxSR7tzdemlDzp2Xei4K4Y=
+	t=1725960983; cv=none; b=nYJtYDWKC71L/0x38Kj1JbvlRcnRcdbj7d1+oEjNl4S8m3uO9OvMvKcU3hApg31yCrmguOR8Xy0b6xncCd1CWQCz9RzaixDsszLlXXoIhO6tKKQ7rfaItduXyEO3oeml+u/aXwNHuQqBRpP9P3jgLRr4i6UK902gi8HQaeJEFys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725960980; c=relaxed/simple;
-	bh=VeIhCLhbl2dZHyTpfSg9KcZC2kjnkxjTS4ewwlrcSsE=;
+	s=arc-20240116; t=1725960983; c=relaxed/simple;
+	bh=vR86I937CbA2+ZZLY0J4MJbSb0qKNBrNEg5Y9TyY3Gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Et6DBh5vZpBWR4e/+jFlGSZliCUYEpNE0PQkahmr0vnFidzHPf+xSLJVv9l/V2C8LZX6Axyd2b5SqN379fXHe6KuSarFWe/SyeBRFLjnZ8EpTn324ZTUU8H7LpLDFBxno3EJovPe6Nc/Xot+pTrGWKNAia3IlSKlxYm+hO6z3c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bql/aF8U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iG6yuik4cJF6zjSxIo6nIl0pjJI70kdky2NwgXVOibzeEC3P+9+uiDg/JCCWWyUURIyRN6LB/E40UlzIFIzC/NEkxfPW1brnxdSAoSF+J5O4tv6cGwpiYt5HWo2APxAcZ5VspxX4D5IaEOKKQCpq94doxxcWwy2s/ywjBLsvcSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrRL9Elk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bql/aF8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7DFC4CEC3;
-	Tue, 10 Sep 2024 09:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrRL9Elk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8BEC4CEC3;
+	Tue, 10 Sep 2024 09:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725960980;
-	bh=VeIhCLhbl2dZHyTpfSg9KcZC2kjnkxjTS4ewwlrcSsE=;
+	s=korg; t=1725960983;
+	bh=vR86I937CbA2+ZZLY0J4MJbSb0qKNBrNEg5Y9TyY3Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bql/aF8UBlPiWISoDTaHOGd61ucrDRCUSjjOlQw6E63snv+B0JAo8yJdTaWvG17I6
-	 I2xb7kgAkf5HpTjEqKZ3XRF6CjGYrSqsrholQZqs6HYgPp3VkbsB/NB9tTijxe4qaA
-	 mBXbdEZjD80Y+wa0rdrUVlBd2TENi1Fze6G3yNKU=
+	b=CrRL9ElkOfgx1Vrd+bi7tuwY+P6GoHOWLqNy0FQh9OrNeSrsnNfwcJXaPdk82ZljG
+	 Y6V244Q0f5Trb4ci+qnrql9TRYUkrOSoSqkoXBv3jh6zWKb52dfzL+cCb+DMS1BCLV
+	 3koV6c6FghpRRuolswj/Pmt+riy4ni18e/g1BOIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Heng Qi <hengqi@linux.alibaba.com>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 4.19 13/96] block: initialize integrity buffer to zero before writing it to media
-Date: Tue, 10 Sep 2024 11:31:15 +0200
-Message-ID: <20240910092541.996999705@linuxfoundation.org>
+Subject: [PATCH 4.19 14/96] virtio_net: Fix napi_skb_cache_put warning
+Date: Tue, 10 Sep 2024 11:31:16 +0200
+Message-ID: <20240910092542.050513879@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -54,61 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Breno Leitao <leitao@debian.org>
 
-commit 899ee2c3829c5ac14bfc7d3c4a5846c0b709b78f upstream.
+commit f8321fa75102246d7415a6af441872f6637c93ab upstream.
 
-Metadata added by bio_integrity_prep is using plain kmalloc, which leads
-to random kernel memory being written media.  For PI metadata this is
-limited to the app tag that isn't used by kernel generated metadata,
-but for non-PI metadata the entire buffer leaks kernel memory.
+After the commit bdacf3e34945 ("net: Use nested-BH locking for
+napi_alloc_cache.") was merged, the following warning began to appear:
 
-Fix this by adding the __GFP_ZERO flag to allocations for writes.
+	 WARNING: CPU: 5 PID: 1 at net/core/skbuff.c:1451 napi_skb_cache_put+0x82/0x4b0
 
-Fixes: 7ba1ba12eeef ("block: Block layer data integrity support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20240613084839.1044015-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+	  __warn+0x12f/0x340
+	  napi_skb_cache_put+0x82/0x4b0
+	  napi_skb_cache_put+0x82/0x4b0
+	  report_bug+0x165/0x370
+	  handle_bug+0x3d/0x80
+	  exc_invalid_op+0x1a/0x50
+	  asm_exc_invalid_op+0x1a/0x20
+	  __free_old_xmit+0x1c8/0x510
+	  napi_skb_cache_put+0x82/0x4b0
+	  __free_old_xmit+0x1c8/0x510
+	  __free_old_xmit+0x1c8/0x510
+	  __pfx___free_old_xmit+0x10/0x10
+
+The issue arises because virtio is assuming it's running in NAPI context
+even when it's not, such as in the netpoll case.
+
+To resolve this, modify virtnet_poll_tx() to only set NAPI when budget
+is available. Same for virtnet_poll_cleantx(), which always assumed that
+it was in a NAPI context.
+
+Fixes: df133f3f9625 ("virtio_net: bulk free tx skbs")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Link: https://patch.msgid.link/20240712115325.54175-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Shivani: Modified to apply on v4.19.y-v5.10.y]
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio-integrity.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/virtio_net.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -227,6 +227,7 @@ bool bio_integrity_prep(struct bio *bio)
- 	unsigned int bytes, offset, i;
- 	unsigned int intervals;
- 	blk_status_t status;
-+	gfp_t gfp = GFP_NOIO;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1428,7 +1428,7 @@ static bool is_xdp_raw_buffer_queue(stru
+ 		return false;
+ }
  
- 	if (!bi)
- 		return true;
-@@ -249,12 +250,20 @@ bool bio_integrity_prep(struct bio *bio)
- 		if (!bi->profile->generate_fn ||
- 		    !(bi->flags & BLK_INTEGRITY_GENERATE))
- 			return true;
-+
-+		/*
-+		 * Zero the memory allocated to not leak uninitialized kernel
-+		 * memory to disk.  For PI this only affects the app tag, but
-+		 * for non-integrity metadata it affects the entire metadata
-+		 * buffer.
-+		 */
-+		gfp |= __GFP_ZERO;
+-static void virtnet_poll_cleantx(struct receive_queue *rq)
++static void virtnet_poll_cleantx(struct receive_queue *rq, int budget)
+ {
+ 	struct virtnet_info *vi = rq->vq->vdev->priv;
+ 	unsigned int index = vq2rxq(rq->vq);
+@@ -1439,7 +1439,7 @@ static void virtnet_poll_cleantx(struct
+ 		return;
+ 
+ 	if (__netif_tx_trylock(txq)) {
+-		free_old_xmit_skbs(sq, true);
++		free_old_xmit_skbs(sq, !!budget);
+ 		__netif_tx_unlock(txq);
  	}
- 	intervals = bio_integrity_intervals(bi, bio_sectors(bio));
  
- 	/* Allocate kernel buffer for protection data */
- 	len = intervals * bi->tuple_size;
--	buf = kmalloc(len, GFP_NOIO | q->bounce_gfp);
-+	buf = kmalloc(len, gfp | q->bounce_gfp);
- 	status = BLK_STS_RESOURCE;
- 	if (unlikely(buf == NULL)) {
- 		printk(KERN_ERR "could not allocate integrity buffer\n");
+@@ -1456,7 +1456,7 @@ static int virtnet_poll(struct napi_stru
+ 	unsigned int received;
+ 	unsigned int xdp_xmit = 0;
+ 
+-	virtnet_poll_cleantx(rq);
++	virtnet_poll_cleantx(rq, budget);
+ 
+ 	received = virtnet_receive(rq, budget, &xdp_xmit);
+ 
+@@ -1526,7 +1526,7 @@ static int virtnet_poll_tx(struct napi_s
+ 	txq = netdev_get_tx_queue(vi->dev, index);
+ 	__netif_tx_lock(txq, raw_smp_processor_id());
+ 	virtqueue_disable_cb(sq->vq);
+-	free_old_xmit_skbs(sq, true);
++	free_old_xmit_skbs(sq, !!budget);
+ 
+ 	opaque = virtqueue_enable_cb_prepare(sq->vq);
+ 
 
 
