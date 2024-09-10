@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486DD194088;
-	Tue, 10 Sep 2024 10:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F0818F2FF;
+	Tue, 10 Sep 2024 10:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964132; cv=none; b=Ij/1zpkuZ30NxTy42rVkinGuCRDyxnOyva8CjiHQRLSaUWe/oSF9mFEdqwzbJPw88F9FsjseLBNU+HnRijMPXB0YmitTYnYSBAyVRnspheKsehCKQu7DrJg/Q7GdTnNvuEBAq1JwSQrqfycufZINfQm+pbeP9XJzXqPN/MfQ/yA=
+	t=1725964135; cv=none; b=hBzZ8ozzqIrQ5y9Qm3vFVxUAepP+XqIJU6x2oQYuo3M3gloMxEyGqo4wLV0NX5QLGoyrefR8pf+uYm6rUMGaaNsu+/Fr8N8m1QlMKnDVDRkXhGfd7sTyTOFKE4kSqBGWVO17EnallXmvBqfU90UvK63t8UFLhAtcM9W4pS+49Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964132; c=relaxed/simple;
-	bh=3gGF9F7gRSFmIndZ+a/F7FJI/SCRgSohGnTCcoMHxA8=;
+	s=arc-20240116; t=1725964135; c=relaxed/simple;
+	bh=5wbYMewsyoqFOGakh4MPtl/1IGiPHLkBjtdNFBdqckk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlsJaFnBNlr/37WrZ5nzguuzW2QrvN0Ct7RbXMsnPDETF+nXvxtX3BKxAYwXtIG37qtDihMWvxcRBPIEfreQOL6cjEENW/xAh7SJDneBZgQlUSAvrUSU2tEfd2nbHahda8aDdb6W/P0CM4oUA2nGqb2r48GktjztMAigQ1OM1OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orlqYm6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BR3S/PZwjCB3R7j8jldHqlVTbJGu9izUpf3EGqkIi2x/1lnOpxFw20fYPQVgKDw/gr0FrkCEGbXJ0iQ6CdP23Tty9ERRYSPGZgIc2yDHZNPJ1J9HYIolxMgOeKnFfwWPdWDOsZvM69p2yCDa0dzXAVyongI1i3WBDBdTBIZsCkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhLg5w1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orlqYm6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43FFC4CEC3;
-	Tue, 10 Sep 2024 10:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhLg5w1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7C7C4CEC3;
+	Tue, 10 Sep 2024 10:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964132;
-	bh=3gGF9F7gRSFmIndZ+a/F7FJI/SCRgSohGnTCcoMHxA8=;
+	s=korg; t=1725964135;
+	bh=5wbYMewsyoqFOGakh4MPtl/1IGiPHLkBjtdNFBdqckk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orlqYm6q0O15fxiJpEa9BkJ1o+SpJCnSOkf9RrQPN6tTtRvXavHwpHNiTTTm17O4X
-	 2iCkKKGAVRjRPXo1Zpz7KTAib0P+PFuEmxorYanJ0vkYpPou0DDUWlNwgOZCKq7Wjr
-	 GoOcm07zW1uwPCducF/Fs58IWdF/SulPgvYjvioQ=
+	b=fhLg5w1yfDqvCBwys25arf3jI7IpZIX04zxOXlkFckwzqmIio7rbdl8BkxhkLnBcl
+	 lLbqALtrCU+zJd0B7O8RmEp6yhjxTsuRlLDMqV4qszj5/eFpQ1y4/NKoyJtgU8ITNK
+	 m2ImGfScMeOt3hx3cVRgt1hxnQG12CdXBf4g0il0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/269] media: vivid: fix wrong sizeimage value for mplane
-Date: Tue, 10 Sep 2024 11:31:05 +0200
-Message-ID: <20240910092610.973448898@linuxfoundation.org>
+Subject: [PATCH 6.6 079/269] leds: spi-byte: Call of_node_put() on error path
+Date: Tue, 10 Sep 2024 11:31:06 +0200
+Message-ID: <20240910092611.007980114@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -50,85 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0fd7c0c2c156270dceb8c15fad3120cdce03e539 ]
+[ Upstream commit 7f9ab862e05c5bc755f65bf6db7edcffb3b49dfc ]
 
-In several places a division by fmt->vdownsampling[p] was
-missing in the sizeimage[p] calculation, causing incorrect
-behavior for multiplanar formats were some planes are smaller
-than the first plane.
+Add a missing call to of_node_put(np) on error.
 
-Found by new v4l2-compliance tests.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240606173037.3091598-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c |  5 +++--
- drivers/media/test-drivers/vivid/vivid-vid-out.c | 16 +++++++++-------
- 2 files changed, 12 insertions(+), 9 deletions(-)
+ drivers/leds/leds-spi-byte.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index 3a06df35a2d7..a81c17634daa 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -106,8 +106,9 @@ static int vid_cap_queue_setup(struct vb2_queue *vq,
- 		if (*nplanes != buffers)
- 			return -EINVAL;
- 		for (p = 0; p < buffers; p++) {
--			if (sizes[p] < tpg_g_line_width(&dev->tpg, p) * h +
--						dev->fmt_cap->data_offset[p])
-+			if (sizes[p] < tpg_g_line_width(&dev->tpg, p) * h /
-+					dev->fmt_cap->vdownsampling[p] +
-+					dev->fmt_cap->data_offset[p])
- 				return -EINVAL;
- 		}
- 	} else {
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-out.c b/drivers/media/test-drivers/vivid/vivid-vid-out.c
-index 184a6df2c29f..d05f547a587c 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-out.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-out.c
-@@ -63,14 +63,16 @@ static int vid_out_queue_setup(struct vb2_queue *vq,
- 		if (sizes[0] < size)
- 			return -EINVAL;
- 		for (p = 1; p < planes; p++) {
--			if (sizes[p] < dev->bytesperline_out[p] * h +
--				       vfmt->data_offset[p])
-+			if (sizes[p] < dev->bytesperline_out[p] * h /
-+					vfmt->vdownsampling[p] +
-+					vfmt->data_offset[p])
- 				return -EINVAL;
- 		}
- 	} else {
- 		for (p = 0; p < planes; p++)
--			sizes[p] = p ? dev->bytesperline_out[p] * h +
--				       vfmt->data_offset[p] : size;
-+			sizes[p] = p ? dev->bytesperline_out[p] * h /
-+					vfmt->vdownsampling[p] +
-+					vfmt->data_offset[p] : size;
+diff --git a/drivers/leds/leds-spi-byte.c b/drivers/leds/leds-spi-byte.c
+index 9d91f21842f2..afe9bff7c7c1 100644
+--- a/drivers/leds/leds-spi-byte.c
++++ b/drivers/leds/leds-spi-byte.c
+@@ -91,7 +91,6 @@ static int spi_byte_probe(struct spi_device *spi)
+ 		dev_err(dev, "Device must have exactly one LED sub-node.");
+ 		return -EINVAL;
  	}
+-	child = of_get_next_available_child(dev_of_node(dev), NULL);
  
- 	if (vq->num_buffers + *nbuffers < 2)
-@@ -127,7 +129,7 @@ static int vid_out_buf_prepare(struct vb2_buffer *vb)
+ 	led = devm_kzalloc(dev, sizeof(*led), GFP_KERNEL);
+ 	if (!led)
+@@ -107,11 +106,13 @@ static int spi_byte_probe(struct spi_device *spi)
+ 	led->ldev.max_brightness = led->cdef->max_value - led->cdef->off_value;
+ 	led->ldev.brightness_set_blocking = spi_byte_brightness_set_blocking;
  
- 	for (p = 0; p < planes; p++) {
- 		if (p)
--			size = dev->bytesperline_out[p] * h;
-+			size = dev->bytesperline_out[p] * h / vfmt->vdownsampling[p];
- 		size += vb->planes[p].data_offset;
++	child = of_get_next_available_child(dev_of_node(dev), NULL);
+ 	state = of_get_property(child, "default-state", NULL);
+ 	if (state) {
+ 		if (!strcmp(state, "on")) {
+ 			led->ldev.brightness = led->ldev.max_brightness;
+ 		} else if (strcmp(state, "off")) {
++			of_node_put(child);
+ 			/* all other cases except "off" */
+ 			dev_err(dev, "default-state can only be 'on' or 'off'");
+ 			return -EINVAL;
+@@ -122,9 +123,12 @@ static int spi_byte_probe(struct spi_device *spi)
  
- 		if (vb2_get_plane_payload(vb, p) < size) {
-@@ -334,8 +336,8 @@ int vivid_g_fmt_vid_out(struct file *file, void *priv,
- 	for (p = 0; p < mp->num_planes; p++) {
- 		mp->plane_fmt[p].bytesperline = dev->bytesperline_out[p];
- 		mp->plane_fmt[p].sizeimage =
--			mp->plane_fmt[p].bytesperline * mp->height +
--			fmt->data_offset[p];
-+			mp->plane_fmt[p].bytesperline * mp->height /
-+			fmt->vdownsampling[p] + fmt->data_offset[p];
+ 	ret = devm_led_classdev_register(&spi->dev, &led->ldev);
+ 	if (ret) {
++		of_node_put(child);
+ 		mutex_destroy(&led->mutex);
+ 		return ret;
  	}
- 	for (p = fmt->buffers; p < fmt->planes; p++) {
- 		unsigned stride = dev->bytesperline_out[p];
++
++	of_node_put(child);
+ 	spi_set_drvdata(spi, led);
+ 
+ 	return 0;
 -- 
 2.43.0
 
