@@ -1,125 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAEC23A6;
-	Tue, 10 Sep 2024 10:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8B1185B43
+	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 10:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965465; cv=none; b=D5/p7dNuFnZNALydfspP8id3Ao9CaoD/L12RYNTPKy5BrsbeUiRm5pk58MLrR9Oy+LBZiakvSW0PJ0rccXKvmPdLMGQt3tTTa7an+ox6wobNnp4lUIpAjMY1TU/Xl3XzwX61DkLPgjWp1tXNnWcX3RffTzNIjjD2ALa+VfNG76U=
+	t=1725965762; cv=none; b=fDaDkCyKIISr+EJ/2blaWryTp6pFZrURyfu2c3rDBAJOlror1sUR8gtvRVf/VvfB4evQ1duqv8Q4a/P/Evb5ri4ohKVD0bQEvxFnMkX9/By9gbZFIk+vOH6H4P8szTstyvVgdjZ/GHGKWWleouQOq3kUwnoFf6yZKPzrY/h5zOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965465; c=relaxed/simple;
-	bh=mSbXh2gyZ7liAeMoQfvB79p/PvzkQVJ1yQBqaZvwphQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IHrQzF/UP5Zm977gPhHwWUD/fxM4Fr79pdSewyZAc4gvEH7/g16ABSjW+R9lWE3ezHoZPiPYgPdHJFq86yGJ80dYsQTHfYn69h/ua5XkAe+pJdq01MNwu2ocw82rj3IaLvbwl3FZ+QH9xbugoqw1T9N8C+MIfDMEXWNe8krEYY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iw1h04fM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725965762; c=relaxed/simple;
+	bh=E0rU2Bx/jS99DDu2M3sefvBWt8JU8LAOi0vcShQGr6c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QoYkpOxm1LHCLaySLumnTmLBmHbaJG8lRKDoa/r8TruMyKm5RbRr1BWj/qUsHdGL4mFuAonhdDvzZU3baPkBrZRXGBwMuxCnQUcqTbV06alsgJqAJBObwuB6NF0BJrLS+SzlHZSSrq4dZElYGP4Y2d3Tv+uHT9d9EoyuOgOYJMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tccIYrXe; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iw1h04fM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DE0C4CEC3;
-	Tue, 10 Sep 2024 10:51:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725965464;
-	bh=mSbXh2gyZ7liAeMoQfvB79p/PvzkQVJ1yQBqaZvwphQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iw1h04fMwKQQ4oF9FMEggfLYIH2QslhSSal/d2Edv2cBDIWlSLlA0HtL8tEGkj89/
-	 LvoF9nluBiyjLLSpVsYhqVQN8RVfFhGswwBTIVC75Yo80Q/NH5zwPPrF+Zl90N92gr
-	 AjyjfdtGacJ0U1g7JydFPBuRTaDzMh+SRG0fsozTxbld5TFVdarXPqh7pmU6UZ2KkW
-	 5HeLMzNiEcuLggjexN9fJ18bI9UHFQyYiGpB0FXJrsytYovtL8Of4Ed2GgNMpUJtrJ
-	 x0saFKTEPG9nCi+97H+JJ9H7i9F20cMcPTIQijcVCeo11v6/DDc5WSQhfGYmsN3CEv
-	 H6TvmzFni8Zwg==
-Message-ID: <abd39210-9abf-4dc5-a2f9-6c9304cf2a52@kernel.org>
-Date: Tue, 10 Sep 2024 12:51:01 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tccIYrXe"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5c247dd0899so6444a12.1
+        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 03:56:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1725965759; x=1726570559; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vHmk114QIZCjlFSKd2nx+MtW7wZ0G3Zn0tQIsPkVXhc=;
+        b=tccIYrXeJRbx6bDXptKACn3OD7VEG4KYRlc/aeUX4L0sqiy9gWinrOjXF5zIamGU64
+         RtlGMfIinJ+UR+qVR9xiyaR3pTko4CuWhkqLq/zxBpql5bwqgiKxnLPem7DTMxwCmeoX
+         JbLCNfVd1MvWO+ywmF/qPomvI6gMOvTDk0zguvI/c6xXYhNf2xyq9D5jTxVpUurxC7r7
+         QfcX5o6vF2LBIvqA2qBCOg6E6pZpe1EnoYVU3ND3Juq1W6YE7MiRrQlfq1v5UC7F9l/V
+         Is9ubnJccQ3X1UUOtS5wE/32rbxGkEmTjenjQ5UP3uJzEkT57CcNgvzCmaPCEBbschpL
+         qBvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725965759; x=1726570559;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vHmk114QIZCjlFSKd2nx+MtW7wZ0G3Zn0tQIsPkVXhc=;
+        b=wmZUBS+vmyEEgsctVrvlZYjfx6kIfAUDqkrGYZS7NZJaEfL2b33Y1j2wmOloatDgWS
+         Ov7aBIxXaSCW0i446w0ZQZTUB52Ql/czZwEb2fy6GtLHaNouCEkEqFCbuf6eJqLhIHDm
+         V5XtYrNp6jh2sKCRNHg1ZJHdlPelE/QwhUigyGAwHbaixJXUqCoGjsuoD3KX/JievTdE
+         ZYS/sz3MyfPcsvbUfnHI8rIwuyZfTxI8Xc18IWuKtobOdwb1XOZWq8H641AcZZDsB+YU
+         8DLO8IwSNE0jzTgvhKDUFNndaHqFaoWvD8AGJJNjseUXiGzyprcBopsqfTqU7TGH411G
+         kBAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXFwkVmSU8NQv8onTcuyEsOcKWvrpAa/nAAnfHRMv9J2HJBwBpaP4Otv1DsHwOePmK66mSFYDrQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YzYwrwh5seJ6MFarEcAZaMBSoin9pq58PbtxKtwS7oYKyi84SwM
+	G8OlTX5Nxyr3RVm8ASSbjyJogDwiKaqPtW4bfagRCUq38rncafA1W+Z6MzZZyg==
+X-Google-Smtp-Source: AGHT+IH5Z6CO+MKfDYUG1iOU31Fa2e8Ac+77rN2VKHvSd6OZvtfGFA8hOAHmo3xhEkofbaoqsCkAhQ==
+X-Received: by 2002:a05:6402:34d5:b0:58b:15e4:d786 with SMTP id 4fb4d7f45d1cf-5c4040d9d24mr152948a12.5.1725965758834;
+        Tue, 10 Sep 2024 03:55:58 -0700 (PDT)
+Received: from google.com (205.215.190.35.bc.googleusercontent.com. [35.190.215.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42caeb8afc9sm108460105e9.44.2024.09.10.03.55.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Sep 2024 03:55:58 -0700 (PDT)
+Date: Tue, 10 Sep 2024 10:55:51 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robert Moore <robert.moore@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v2 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+Message-ID: <ZuAlt9SsijRxuGLk@google.com>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <2-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+ <ZtHhdj6RAKACBCUG@google.com>
+ <20240830164019.GU3773488@nvidia.com>
+ <ZtWFkR0eSRM4ogJL@google.com>
+ <20240903000546.GD3773488@nvidia.com>
+ <ZtbBTX96OWdONhaQ@google.com>
+ <20240903233340.GH3773488@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 6.10 250/375] tcp: Dont drop SYN+ACK for simultaneous
- connect().
-Content-Language: en-GB
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
-References: <20240910092622.245959861@linuxfoundation.org>
- <20240910092630.944770087@linuxfoundation.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20240910092630.944770087@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240903233340.GH3773488@nvidia.com>
 
-Hi Greg,
+On Tue, Sep 03, 2024 at 08:33:40PM -0300, Jason Gunthorpe wrote:
+> On Tue, Sep 03, 2024 at 07:57:01AM +0000, Mostafa Saleh wrote:
+> 
+> > Basically, I believe we shouldn’t set FWB blindly just because it’s supported,
+> > I don’t see how it’s useful for stage-2 only domains.
+> 
+> And the only problem we can see is some niche scenario where incoming
+> memory attributes that are already requesting cachable combine to a
+> different kind of cachable?
 
--Cc netdev devs for this issue, not to create confusions.
+No, it’s not about the niche scenario, as I mentioned I don’t think
+we should enable FWB because it just exists. One can argue the opposite,
+if S2FWB is no different why enable it?
 
-On 10/09/2024 11:30, Greg Kroah-Hartman wrote:
-> [ Upstream commit 23e89e8ee7be73e21200947885a6d3a109a2c58d ]
+AFAIU, FWB would be useful in cases where the hypervisor(or VMM) knows
+better than the VM, for example some devices MMIO space are emulated so
+they are normal memory and it’s more efficient to use memory attributes.
 
-I just noticed that your scripts stripped the simple quotes from the
-subject: "Don't" -> "Dont". It's not a big issue, because the commit
-titles are correct in the Git tree:
+Taking into consideration all the hassle that can happen if non-coherent
+devices use the wrong attribute, I’d suggest either set FWB only for
+coherent devices (I know it’s not easy to define, but maybe be should?)
+or we have a new CAP where the caller is aware of that. But I don’t think
+the driver should decide that on behalf of the caller.
 
+> 
+> > And I believe making assumptions about VFIO (which actually is not correctly
+> > enforced at the moment) is fragile.
+> 
+> VFIO requiring cachable is definately not fragile, and it also sets
+> the IOMMU_CACHE flag to indicate this. Revising VFIO to allow
+> non-cachable would be a signficant change and would also change what
+> IOMMU_CACHE flag it sets.
+> 
 
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?h=linux-6.10.y&id=5b05b62f9376
+I meant the driver shouldn't assume the caller behaviour, if it's VFIO
+or something new.
 
+> > and we should only set FWB for coherent
+> > devices in nested setup only where the VMM(or hypervisor) knows better than
+> > the VM.
+> 
+> I don't want to touch the 'only coherent devices' question. Last time
+> I tried to do that I got told every option was wrong.
+> 
+> I would be fine to only enable for nesting parent domains. It is
+> mandatory here and we definitely don't support non-cachable nesting
+> today.  Can we agree on that?
+> 
+Why is it mandatory?
 
-The subject is also correct in the queue:
+I think a supporting point for this, is that KVM does the same for
+the CPU, where it enables FWB for VMs if supported. I have this on
+my list to study if that can be improved. But may be if we are out
+of options that would be a start.
 
+> Keep in mind SMMU S2FWB is really new and probably very little HW
+> supports it right now. So we are not breaking anything existing
+> here. IMHO it is better to always enable the stricter features going
+> forward, and then evaluate an in-kernel opt-out if someone comes with
+> a concrete use case.
+> 
 
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/queue-6.10/tcp-don-t-drop-syn-ack-for-simultaneous-connect.patch
+I agree, it’s unlikely that this breaks existing hardware, but I’d
+be concerned if FWB is enabled unconditionally it breaks devices in
+the future and we end up restricting it more.
 
-
-So it is only an issue in the emails, just confusing not to find this
-patch in lore when looking at the subject with the quote :)
-
-
-https://lore.kernel.org/stable/?q=s%3A%22tcp%3A+Don%27t+drop+SYN%2BACK+for+simultaneous+connect%28%29.%22
-
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
-
+Thanks,
+Mostafa
+> Jason
