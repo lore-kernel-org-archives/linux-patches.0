@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178A1199920;
-	Tue, 10 Sep 2024 10:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B61B199941;
+	Tue, 10 Sep 2024 10:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963585; cv=none; b=fJ4s3XK7BZ8pBMBpUbGL5IccemoFT5J7/YGfRmKtSeyOhicDkjwWCIbVZiLZC1UtAk/sv6emHTYYIkQx/71Zeaf8WEfmi72/2M2UbZAY0x5lu6grIID8rQRTP9WwxAKlEcNxxmVkImvnQ20DyE9wGhkXZy/vscCc5RUf7xX5iys=
+	t=1725963588; cv=none; b=mHnUW10nRSFq9pVrgQHTbfmyPFK8J/yQaxN48MNGfsLBHj2pZJChCv/WF2P28igFdCHBQK/2pKZYFFFFueAPOLHlH0pDdtfwEisUIcg8u5SG4pFuybywVRmnUQygvvawoL95XVg+8v08WCj6jSs8i+PPnPY+9M9sQCC9trztjno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963585; c=relaxed/simple;
-	bh=rRlUq/FbnfStU1QqmCm4TPvwSWJACGpJWUFSuaxFMSU=;
+	s=arc-20240116; t=1725963588; c=relaxed/simple;
+	bh=K/W4cWDg7mFWJnKHmH9C53LT0dv1Zk+MB12X/Wo6tpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ft/rRoStcpWRlNhl55LJT8+sEDBc7Se9Snj0puhDI7KKSqwz4Iqb7CZfg7fJirnL6a5T0FoNxNHq+fvB6k3PQFjEX1sZCDGvK5nqSovLKFo603CKezfPxQgbBep6PEti9mvG/qWzlI1EglFshvMrqmpSPJeMARe+x4AXPVk4uFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjur5Fm+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ol6eFP5ca08o9eqhEqPg9DENvGwzvEXt5E9vkOVdvh+TcOB9JpkBzK31cjSY9vdEJwl3la2aN39o8Ym8YQqwkQnxduTI8tSvpmSi2uPqKMU0OVJG6Org21kLbvwwjWov6j7za/kDMoNANwrymgB0FjtGIO1oTPbRL5UE1IgW1tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08Ym72aC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjur5Fm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AF3C4CEC3;
-	Tue, 10 Sep 2024 10:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08Ym72aC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AD1C4CEC3;
+	Tue, 10 Sep 2024 10:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963585;
-	bh=rRlUq/FbnfStU1QqmCm4TPvwSWJACGpJWUFSuaxFMSU=;
+	s=korg; t=1725963587;
+	bh=K/W4cWDg7mFWJnKHmH9C53LT0dv1Zk+MB12X/Wo6tpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjur5Fm+iZuNy6tGuVRxyfsj77Ebsg/N+i/X2xCHmM7mBKRMHqo3Ba0NGewSNlgln
-	 jxPvjA7qeABH6eVp96oT51bMuX1BIFXV6NRHyluWYOcQ3Jx2PBJChkowGZtymq5uZY
-	 jB5C7hrjvmpNVOcN9BHvZbNKIaEq91mQTjlNGCLw=
+	b=08Ym72aC+gGUuk9tbeg6TBxehd7U8k6OkbKx7UbLAPPRy6p0HDnetuU2To+7ffXif
+	 6Je/FF0riIS1pTb/uYwICWTACx8pddurRw78liMb8lCF7TRSnILqBvFVOB/poewtFG
+	 aYWFFZZg1Q5+0FsfclMHCzmgXrO9j4vUXfGUhcLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yunjian Wang <wangyunjian@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/214] iommu: sun50i: clear bypass register
-Date: Tue, 10 Sep 2024 11:32:09 +0200
-Message-ID: <20240910092603.176402879@linuxfoundation.org>
+Subject: [PATCH 5.15 108/214] netfilter: nf_conncount: fix wrong variable type
+Date: Tue, 10 Sep 2024 11:32:10 +0200
+Message-ID: <20240910092603.218896198@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -53,41 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Yunjian Wang <wangyunjian@huawei.com>
 
-[ Upstream commit 927c70c93d929f4c2dcaf72f51b31bb7d118a51a ]
+[ Upstream commit 0b88d1654d556264bcd24a9cb6383f0888e30131 ]
 
-The Allwinner H6 IOMMU has a bypass register, which allows to circumvent
-the page tables for each possible master. The reset value for this
-register is 0, which disables the bypass.
-The Allwinner H616 IOMMU resets this register to 0x7f, which activates
-the bypass for all masters, which is not what we want.
+Now there is a issue is that code checks reports a warning: implicit
+narrowing conversion from type 'unsigned int' to small type 'u8' (the
+'keylen' variable). Fix it by removing the 'keylen' variable.
 
-Always clear this register to 0, to enforce the usage of page tables,
-and make this driver compatible with the H616 in this respect.
-
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20240616224056.29159-2-andre.przywara@arm.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_conncount.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index ed3574195599..8593c79cfaeb 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -379,6 +379,7 @@ static int sun50i_iommu_enable(struct sun50i_iommu *iommu)
- 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(3) |
- 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(4) |
- 		    IOMMU_TLB_PREFETCH_MASTER_ENABLE(5));
-+	iommu_write(iommu, IOMMU_BYPASS_REG, 0);
- 	iommu_write(iommu, IOMMU_INT_ENABLE_REG, IOMMU_INT_MASK);
- 	iommu_write(iommu, IOMMU_DM_AUT_CTRL_REG(SUN50I_IOMMU_ACI_NONE),
- 		    IOMMU_DM_AUT_CTRL_RD_UNAVAIL(SUN50I_IOMMU_ACI_NONE, 0) |
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 82f36beb2e76..0ce12a33ffda 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -310,7 +310,6 @@ insert_tree(struct net *net,
+ 	struct nf_conncount_rb *rbconn;
+ 	struct nf_conncount_tuple *conn;
+ 	unsigned int count = 0, gc_count = 0;
+-	u8 keylen = data->keylen;
+ 	bool do_gc = true;
+ 
+ 	spin_lock_bh(&nf_conncount_locks[hash]);
+@@ -322,7 +321,7 @@ insert_tree(struct net *net,
+ 		rbconn = rb_entry(*rbnode, struct nf_conncount_rb, node);
+ 
+ 		parent = *rbnode;
+-		diff = key_diff(key, rbconn->key, keylen);
++		diff = key_diff(key, rbconn->key, data->keylen);
+ 		if (diff < 0) {
+ 			rbnode = &((*rbnode)->rb_left);
+ 		} else if (diff > 0) {
+@@ -367,7 +366,7 @@ insert_tree(struct net *net,
+ 
+ 	conn->tuple = *tuple;
+ 	conn->zone = *zone;
+-	memcpy(rbconn->key, key, sizeof(u32) * keylen);
++	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
+ 
+ 	nf_conncount_list_init(&rbconn->list);
+ 	list_add(&conn->node, &rbconn->list.head);
+@@ -392,7 +391,6 @@ count_tree(struct net *net,
+ 	struct rb_node *parent;
+ 	struct nf_conncount_rb *rbconn;
+ 	unsigned int hash;
+-	u8 keylen = data->keylen;
+ 
+ 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
+ 	root = &data->root[hash];
+@@ -403,7 +401,7 @@ count_tree(struct net *net,
+ 
+ 		rbconn = rb_entry(parent, struct nf_conncount_rb, node);
+ 
+-		diff = key_diff(key, rbconn->key, keylen);
++		diff = key_diff(key, rbconn->key, data->keylen);
+ 		if (diff < 0) {
+ 			parent = rcu_dereference_raw(parent->rb_left);
+ 		} else if (diff > 0) {
 -- 
 2.43.0
 
