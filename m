@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DA3188A1E;
-	Tue, 10 Sep 2024 09:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB331891A5;
+	Tue, 10 Sep 2024 09:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961057; cv=none; b=WeQDbhFiz0yetOw8bNc1lMPbZ8NPK/pIhv5pNSjnsAqHsq8Hq2sTklyAa2Ao/tP+QH1pCxjGRAIXmGbLalkMbSXAFbF6vZY8pf+ufdCg/j8UZ2Kx7PHRIcFgBvimMQNd3Gwd8TqmvJSwqVpFIBFI6SUI/ziPoAmY7HXkmYEj5AY=
+	t=1725961060; cv=none; b=hHO8T4uMyTba23DWvt6YIJU658irgKdVP9JBgK57ZTpLGv0FstWfOTjatsJpspdk3OJ8Jyor4HGKycPj+kXLPctci2EESt+PettGjFktknhjddCjE8LS9F09/VCEJwChHtrEATYVnISYwQH1WZoEVBFWHZd/mPhv9S+dP9hVx/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961057; c=relaxed/simple;
-	bh=JwxEE8/YApkEvH75SUSwYErhZRCCk7E3t1u66GYnESc=;
+	s=arc-20240116; t=1725961060; c=relaxed/simple;
+	bh=lwx1u+VOvH7TVJX3+uMliJxjcBjftnYNv+ZeCSK8rxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNzpZdanO3pKXrUnAbvrI4AKvwOs9ke7Z4PhlSio6KRWKb7KMe3oriTNruQ8IKiYhIrVoQ7+yFzcdEEPzZm+yDsc31u6Wyp6hSH/oSEkVM20H7yNjJrgeGSyNIRYxjD8ac5jCihieBprF+7T+RQ7Q4ZVhXk0pfiewNpxxRttq00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhmdOXlw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hjUaq1U5W0WD8v359AiM1OeEC7EAwa0M9QV8sf2cjD9eJR9fEn3Y4WfQoywOoNbCs5xxNpmGbPcN42cgl6WGvil1T/A0n0RFmwPtH6gcQxi7m/YI/8ejAt8Mtv6+tNBpRFgRk/K1mF+FsJy5D1fetgvilkVCK/wQ0vhRyDnmLGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUeT3gKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhmdOXlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89F3C4CEC3;
-	Tue, 10 Sep 2024 09:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUeT3gKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8CBC4CEC3;
+	Tue, 10 Sep 2024 09:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961057;
-	bh=JwxEE8/YApkEvH75SUSwYErhZRCCk7E3t1u66GYnESc=;
+	s=korg; t=1725961060;
+	bh=lwx1u+VOvH7TVJX3+uMliJxjcBjftnYNv+ZeCSK8rxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhmdOXlwPVXhIWBLq2tE8mylEDAFvAeXGSEkH7kEYQDdvl7THyKmtrWpmdurQc7ED
-	 Bj7n0aJhFhz3Re3Sjt7KAyIInzZ/dQQjtstD3uqMu8YWmBDv/Rrot9C1wsJQVi/kMo
-	 Tpj5lDK8iyLp/vcaDAHqyZLOOydEdVbc6Holl4xQ=
+	b=PUeT3gKAtUuj2LXdGbM5hIEwL2ABNS2MQdh4nlRSr/hELSJbQdDfEtiGZ2usq6Hu4
+	 D/Rb9EtRu/df6ceF4FL4DTid/t7dqn1ubpdd8S5NIXWb2lDyjRgGtiK3/wXdmCLeDE
+	 Om4qlpiq7GLgM6mXOeMscCWZco2Q2ZXSBWaJXBuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Patrice Chotard <patrice.chotard@st.com>,
+	Nishka Dasgupta <nishkadg.linux@gmail.com>,
+	Felipe Balbi <felipe.balbi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 11/96] smack: tcp: ipv4, fix incorrect labeling
-Date: Tue, 10 Sep 2024 11:31:13 +0200
-Message-ID: <20240910092541.899440805@linuxfoundation.org>
+Subject: [PATCH 4.19 02/96] usb: dwc3: st: Add of_node_put() before return in probe function
+Date: Tue, 10 Sep 2024 11:31:04 +0200
+Message-ID: <20240910092541.498011841@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,67 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Schaufler <casey@schaufler-ca.com>
+From: Nishka Dasgupta <nishkadg.linux@gmail.com>
 
-[ Upstream commit 2fe209d0ad2e2729f7e22b9b31a86cc3ff0db550 ]
+[ Upstream commit e36721b90144bb46e1b6477be3ab63439c7fb79b ]
 
-Currently, Smack mirrors the label of incoming tcp/ipv4 connections:
-when a label 'foo' connects to a label 'bar' with tcp/ipv4,
-'foo' always gets 'foo' in returned ipv4 packets. So,
-1) returned packets are incorrectly labeled ('foo' instead of 'bar')
-2) 'bar' can write to 'foo' without being authorized to write.
+The local variable child in the function st_dwc3_probe takes the return
+value of of_get_child_by_name, which gets a node and does not put it. If
+the function returns without releasing child, this could cause a memory
+error. Hence put child as soon as there is no more use for it. Also
+create a new label, err_node_put, just before label undo_softreset; so
+that err_node_put puts child. In between initialisation of child and its
+first put, modify all statements that go to undo_softreset to now go to
+err_node_put instead, from where they can fall through to
+undo_softreset.
+Issue found with Coccinelle.
 
-Here is a scenario how to see this:
-
-* Take two machines, let's call them C and S,
-   with active Smack in the default state
-   (no settings, no rules, no labeled hosts, only builtin labels)
-
-* At S, add Smack rule 'foo bar w'
-   (labels 'foo' and 'bar' are instantiated at S at this moment)
-
-* At S, at label 'bar', launch a program
-   that listens for incoming tcp/ipv4 connections
-
-* From C, at label 'foo', connect to the listener at S.
-   (label 'foo' is instantiated at C at this moment)
-   Connection succeedes and works.
-
-* Send some data in both directions.
-* Collect network traffic of this connection.
-
-All packets in both directions are labeled with the CIPSO
-of the label 'foo'. Hence, label 'bar' writes to 'foo' without
-being authorized, and even without ever being known at C.
-
-If anybody cares: exactly the same happens with DCCP.
-
-This behavior 1st manifested in release 2.6.29.4 (see Fixes below)
-and it looks unintentional. At least, no explanation was provided.
-
-I changed returned packes label into the 'bar',
-to bring it into line with the Smack documentation claims.
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Reviewed-by: Patrice Chotard <patrice.chotard@st.com>
+Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
+Stable-dep-of: cd4897bfd14f ("usb: dwc3: st: add missing depopulate in probe error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-st.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index d9bff4ba7f2e..158f4df39be4 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4291,7 +4291,7 @@ static int smack_inet_conn_request(struct sock *sk, struct sk_buff *skb,
- 	rcu_read_unlock();
+diff --git a/drivers/usb/dwc3/dwc3-st.c b/drivers/usb/dwc3/dwc3-st.c
+index 6127505770cec..770f80f53c356 100644
+--- a/drivers/usb/dwc3/dwc3-st.c
++++ b/drivers/usb/dwc3/dwc3-st.c
+@@ -252,24 +252,25 @@ static int st_dwc3_probe(struct platform_device *pdev)
+ 	if (!child) {
+ 		dev_err(&pdev->dev, "failed to find dwc3 core node\n");
+ 		ret = -ENODEV;
+-		goto undo_softreset;
++		goto err_node_put;
+ 	}
  
- 	if (hskp == NULL)
--		rc = netlbl_req_setattr(req, &skp->smk_netlabel);
-+		rc = netlbl_req_setattr(req, &ssp->smk_out->smk_netlabel);
- 	else
- 		netlbl_req_delattr(req);
+ 	/* Allocate and initialize the core */
+ 	ret = of_platform_populate(node, NULL, NULL, dev);
+ 	if (ret) {
+ 		dev_err(dev, "failed to add dwc3 core\n");
+-		goto undo_softreset;
++		goto err_node_put;
+ 	}
  
+ 	child_pdev = of_find_device_by_node(child);
+ 	if (!child_pdev) {
+ 		dev_err(dev, "failed to find dwc3 core device\n");
+ 		ret = -ENODEV;
+-		goto undo_softreset;
++		goto err_node_put;
+ 	}
+ 
+ 	dwc3_data->dr_mode = usb_get_dr_mode(&child_pdev->dev);
++	of_node_put(child);
+ 
+ 	/*
+ 	 * Configure the USB port as device or host according to the static
+@@ -289,6 +290,8 @@ static int st_dwc3_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, dwc3_data);
+ 	return 0;
+ 
++err_node_put:
++	of_node_put(child);
+ undo_softreset:
+ 	reset_control_assert(dwc3_data->rstc_rst);
+ undo_powerdown:
 -- 
 2.43.0
 
