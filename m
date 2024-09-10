@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DFF18C34B;
-	Tue, 10 Sep 2024 10:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7668A1DA4C;
+	Tue, 10 Sep 2024 10:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965128; cv=none; b=p+AsLAeCnlx/etgyP3dE7WNrX4HI1zHunVaCd843qTxYO5WvL5hE7lm6xyYa0V1JAvkGqFCSehiH0U+ugIZTXz3/2rQjodungtOF+OS29mkWx17XKJwyGhFBmZza4Jrnkl72PJ1OVMBVLzN7g+/8mkKMmhCW7/dRxxC32qh10Pk=
+	t=1725965131; cv=none; b=GFzSco5Rj/89z4+FFgafBzHO9ok9//dQg4J588q1dP5IgHtzRNzGH9Cy+g47rtLrr0hzTf3Ip4NDxnTE99qnR2etUKBCtS1zDXxsaNzoJRxITweL2HAB4krQ8xIeXlwNdnHOseN7s9RjP0dNDmK9Gg6wETGg52elmCW39TWbjcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965128; c=relaxed/simple;
-	bh=CuxxlbMrVXyqIuGfWoX0PN0cbZIp4KME5Qrt7mFz/gY=;
+	s=arc-20240116; t=1725965131; c=relaxed/simple;
+	bh=q0AennzIc/1s39LuIGlQ0iX9gCNjSfzA10/kSlf2SzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXb62YUuKFw0slmfo08P0d5zSjJjebyiS/oGkM8V7cur6j0OdO94QHuvhzjtYhLIqO7Fv2MYiHsQWRpoUPtb5HGM3jn9Gv5AbwK0foBHCt+2/52+rHpBQXntjwz1QDiDnvIeZ9I+eFm/HNah2bRi+vL83HZ4G/Ir75iE3CVfP3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jejhuVh+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvRwG/isfjegeOlwiEATFxV5uxnX+lce+h6RXSLOetvAfveZh9SoyNyBGWeCvkBtohnFIXIsmMy4O2RqCp5qvSDir7emruIPsCgw4RHEplz6TU7tD5cn0rCk64K72dANiOFKMaP1+ltHdxiqOoOaWCdtr4QQ7u+PZhDrnVwpaU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sxe+fb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jejhuVh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D99CC4CEC3;
-	Tue, 10 Sep 2024 10:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sxe+fb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24A8C4CEC3;
+	Tue, 10 Sep 2024 10:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965128;
-	bh=CuxxlbMrVXyqIuGfWoX0PN0cbZIp4KME5Qrt7mFz/gY=;
+	s=korg; t=1725965131;
+	bh=q0AennzIc/1s39LuIGlQ0iX9gCNjSfzA10/kSlf2SzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jejhuVh+ImtLquaCiOFR1qqqbc4HcibEh94diZe9nnUTpM8zvd9tDIFdFIr1RHWaf
-	 BRtkfmx6rvGcnFbhW8W3zvlv47UZcwSWslLo0dEIebMw+34jK+h3gscXmf2Cz3FhxY
-	 ZXGVlJH6zdXaSXtZULfJ7vuRMxDO6CSoaKmiexB0=
+	b=0sxe+fb78csD2yaif75gN8ipZ4HSb8PFskblUKzBhHYywA2vjUmqA2W5e21d1bfa5
+	 2ed5JNAwO9wfot6ipThm5loEhkhOM9VDEGtn5r8cfO4USSswCmIFibixOnvwbx8zwB
+	 0KK00MIcZRM6P8vwgSc7u89Bu49ZPpsOVbu0NazE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/186] kselftests: dmabuf-heaps: Ensure the driver name is null-terminated
-Date: Tue, 10 Sep 2024 11:34:01 +0200
-Message-ID: <20240910092600.605270948@linuxfoundation.org>
+Subject: [PATCH 5.10 147/186] btrfs: initialize location to fix -Wmaybe-uninitialized in btrfs_lookup_dentry()
+Date: Tue, 10 Sep 2024 11:34:02 +0200
+Message-ID: <20240910092600.655505758@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,52 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 291e4baf70019f17a81b7b47aeb186b27d222159 ]
+[ Upstream commit b8e947e9f64cac9df85a07672b658df5b2bcff07 ]
 
-Even if a vgem device is configured in, we will skip the import_vgem_fd()
-test almost every time.
+Some arch + compiler combinations report a potentially unused variable
+location in btrfs_lookup_dentry(). This is a false alert as the variable
+is passed by value and always valid or there's an error. The compilers
+cannot probably reason about that although btrfs_inode_by_name() is in
+the same file.
 
-  TAP version 13
-  1..11
-  # Testing heap: system
-  # =======================================
-  # Testing allocation and importing:
-  ok 1 # SKIP Could not open vgem -1
+   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.objectid' may be used
+   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5603:9
+   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.type' may be used
+   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5674:5
 
-The problem is that we use the DRM_IOCTL_VERSION ioctl to query the driver
-version information but leave the name field a non-null-terminated string.
-Terminate it properly to actually test against the vgem device.
+   m68k-gcc8/m68k-allmodconfig
+   mips-gcc8/mips-allmodconfig
+   powerpc-gcc5/powerpc-all{mod,yes}config
+   powerpc-gcc5/ppc64_defconfig
 
-While at it, let's check the length of the driver name is exactly 4 bytes
-and return early otherwise (in case there is a name like "vgemfoo" that
-gets converted to "vgem\0" unexpectedly).
+Initialize it to zero, this should fix the warnings and won't change the
+behaviour as btrfs_inode_by_name() accepts only a root or inode item
+types, otherwise returns an error.
 
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240729024604.2046-1-yuzenghui@huawei.com
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/linux-btrfs/bd4e9928-17b3-9257-8ba7-6b7f9bbb639a@linux-m68k.org/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c b/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
-index 909da9cdda97..aa4be40f7d49 100644
---- a/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
-+++ b/tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
-@@ -29,9 +29,11 @@ static int check_vgem(int fd)
- 	version.name = name;
- 
- 	ret = ioctl(fd, DRM_IOCTL_VERSION, &version);
--	if (ret)
-+	if (ret || version.name_len != 4)
- 		return 0;
- 
-+	name[4] = '\0';
-+
- 	return !strcmp(name, "vgem");
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 4bf28f74605f..cd3156a9a268 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -5527,7 +5527,7 @@ struct inode *btrfs_lookup_dentry(struct inode *dir, struct dentry *dentry)
+ 	struct inode *inode;
+ 	struct btrfs_root *root = BTRFS_I(dir)->root;
+ 	struct btrfs_root *sub_root = root;
+-	struct btrfs_key location;
++	struct btrfs_key location = { 0 };
+ 	u8 di_type = 0;
+ 	int ret = 0;
  
 -- 
 2.43.0
