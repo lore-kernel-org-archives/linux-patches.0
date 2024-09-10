@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1991118C003;
-	Tue, 10 Sep 2024 09:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F008718EFE4;
+	Tue, 10 Sep 2024 09:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962346; cv=none; b=vAsJH2W8nFu5Ve9z8VGUar9Rl1olkAyw/8zAlvVcAX08+t5eLh2qvCaIJP6c/wZwnYJVFBFz4LUzLS1o0rVGm0y0mnGtyUY60/bfBTzHnRnYMyAtWSZTy+GLqOxTcrvhIIpI7uZkaMCApdyxvMy1YIwpjEMlt1CmoCGFVAukyaw=
+	t=1725962349; cv=none; b=dW837g1Y+OtCQm695zZDJyfwImLmEV+YsdbG6p7QwE5nvz48kku1xyMZ67mi3+DWqteKgzRQRYP24B87uAfXixYp4pXB5yNGnGlEzBlAWcYL/RFaVCjMUAbORfWw6XmD7UOMKP7tKFv6qYsCOrxDJBIkfmOEbE304jqnx3JtQFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962346; c=relaxed/simple;
-	bh=+3uaeVXRA6nKbBS2d8vT+wzacX3Hlku9HR26ToVdoZY=;
+	s=arc-20240116; t=1725962349; c=relaxed/simple;
+	bh=6gJ/SkqNdxOoK3tFmBLNOHDmQEXsyzWbBSPZGUIExB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I1uV9NiXSHasX3tN5HIRVMZr1rfTlpfDiYOKQIRsI8pWLdYdZ0kblZvMXYTwMlK3Xxkrrzx6fzxcjPkV8ATCRyeJ58CaOdylcejXV4ckiF5XT+qJmHffV/44IekrPlpuPmQij3W3XjamhHlNFb9DNUo02+LGUs4N0vPRmedsXw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuDdls9O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Tl06HfYa2zIs92wqxMY1sZzVTi8k76+l5QdBw81iizBSlkbFiaQP8+AWCnMMuPgnVT5/qsZkPX/sqXwTWSq8OKFCn+VKOo1Mvp879FYR0C4jg/LYJaTI7mqBUHtP00MRTts6DaUQT+U8Il3s5h0kMqTjjJP423rp5nABX1nk8RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj2A4hQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuDdls9O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486A2C4CEC6;
-	Tue, 10 Sep 2024 09:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj2A4hQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0EEC4CED0;
+	Tue, 10 Sep 2024 09:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962345;
-	bh=+3uaeVXRA6nKbBS2d8vT+wzacX3Hlku9HR26ToVdoZY=;
+	s=korg; t=1725962348;
+	bh=6gJ/SkqNdxOoK3tFmBLNOHDmQEXsyzWbBSPZGUIExB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuDdls9OBLR4lF5P8lAzbT7RUIfTkwLsfIPK7xlID0SmiX6l+6kwGMsOF6RnnLQMZ
-	 aYcjkBl7S8jEhN8Bt3vc+Z6xCJ0Yjx6FqVJd9wYWp2ZD8mHa3pORIEZtH0Ko9Hx+g7
-	 4LHXrY/JDoGcV4P93spYYrHMTXJ+fQfrpyP1Rrf0=
+	b=Tj2A4hQn3g0CjTL42pzulq8+ZEaObwGeS61j+I2Ty1bb+YBk81ByuXbHrqD9uJdI7
+	 aD/+JmGbVEoG3E4VWnirYK+9tEIr4+WwJpDD+QZVv9p7IWlbl854+zCdACDP1yoUuk
+	 mK+bActmDQ1PzwkgN2EJ77cxYURBgRkS5l2ESccM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.10 371/375] drm/i915/display: Add mechanism to use sink model when applying quirk
-Date: Tue, 10 Sep 2024 11:32:48 +0200
-Message-ID: <20240910092635.087218969@linuxfoundation.org>
+Subject: [PATCH 6.10 372/375] drm/i915/display: Increase Fast Wake Sync length as a quirk
+Date: Tue, 10 Sep 2024 11:32:49 +0200
+Message-ID: <20240910092635.120931368@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -54,176 +55,154 @@ Content-Transfer-Encoding: 8bit
 
 From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 43cf50eb1408ccb99cab01521263e8cb4cfdc023 upstream.
+commit a13494de53258d8cf82ed3bcd69176bbf7f2640e upstream.
 
-Currently there is no way to apply quirk on device only if certain panel
-model is installed. This patch implements such mechanism by adding new
-quirk type intel_dpcd_quirk which contains also sink_oui and sink_device_id
-fields and using also them to figure out if applying quirk is needed.
+In commit "drm/i915/display: Increase number of fast wake precharge pulses"
+we were increasing Fast Wake sync pulse length to fix problems observed on
+Dell Precision 5490 laptop with AUO panel. Later we have observed this is
+causing problems on other panels.
 
-New intel_init_dpcd_quirks is added and called after drm_dp_read_desc with
-proper sink device identity read from dpcdc.
+Fix these problems by increasing Fast Wake sync pulse length as a quirk
+applied for Dell Precision 5490 with problematic panel.
 
-v3:
-  - !mem_is_zero fixed to mem_is_zero
-v2:
-  - instead of using struct intel_quirk add new struct intel_dpcd_quirk
-
+Fixes: f77772866385 ("drm/i915/display: Increase number of fast wake precharge pulses")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Closes: http://gitlab.freedesktop.org/drm/i915/kernel/-/issues/9739
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2246
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11762
 Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
 Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240902064241.1020965-2-jouni.hogander@intel.com
-(cherry picked from commit b3b91369908ac63be6f64905448b8ba5cd151875)
+Cc: <stable@vger.kernel.org> # v6.10+
+Link: https://patchwork.freedesktop.org/patch/msgid/20240902064241.1020965-3-jouni.hogander@intel.com
+(cherry picked from commit fcba2ed66b39252210f4e739722ebcc5398c2197)
+Requires: 43cf50eb1408 ("drm/i915/display: Add mechanism to use sink model when applying quirk")
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_types.h |    4 +
- drivers/gpu/drm/i915/display/intel_dp.c            |    4 +
- drivers/gpu/drm/i915/display/intel_quirks.c        |   51 +++++++++++++++++++++
- drivers/gpu/drm/i915/display/intel_quirks.h        |    5 ++
- 4 files changed, 64 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dp_aux.c |   16 +++++++++++-----
+ drivers/gpu/drm/i915/display/intel_dp_aux.h |    2 +-
+ drivers/gpu/drm/i915/display/intel_psr.c    |    2 +-
+ drivers/gpu/drm/i915/display/intel_quirks.c |   19 ++++++++++++++++++-
+ drivers/gpu/drm/i915/display/intel_quirks.h |    1 +
+ 5 files changed, 32 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -1840,6 +1840,10 @@ struct intel_dp {
- 	unsigned long last_oui_write;
- 
- 	bool colorimetry_support;
-+
-+	struct {
-+		unsigned long mask;
-+	} quirks;
- };
- 
- enum lspcon_vendor {
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -79,6 +79,7 @@
- #include "intel_pch_display.h"
+--- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+@@ -13,6 +13,7 @@
+ #include "intel_dp_aux.h"
+ #include "intel_dp_aux_regs.h"
  #include "intel_pps.h"
- #include "intel_psr.h"
 +#include "intel_quirks.h"
  #include "intel_tc.h"
- #include "intel_vdsc.h"
- #include "intel_vrr.h"
-@@ -3941,6 +3942,7 @@ intel_edp_init_dpcd(struct intel_dp *int
  
- 	drm_dp_read_desc(&intel_dp->aux, &intel_dp->desc,
- 			 drm_dp_is_branch(intel_dp->dpcd));
-+	intel_init_dpcd_quirks(intel_dp, &intel_dp->desc.ident);
+ #define AUX_CH_NAME_BUFSIZE	6
+@@ -142,16 +143,21 @@ static int intel_dp_aux_sync_len(void)
+ 	return precharge + preamble;
+ }
  
- 	/*
- 	 * Read the eDP display control registers.
-@@ -4053,6 +4055,8 @@ intel_dp_get_dpcd(struct intel_dp *intel
- 		drm_dp_read_desc(&intel_dp->aux, &intel_dp->desc,
- 				 drm_dp_is_branch(intel_dp->dpcd));
- 
-+		intel_init_dpcd_quirks(intel_dp, &intel_dp->desc.ident);
+-int intel_dp_aux_fw_sync_len(void)
++int intel_dp_aux_fw_sync_len(struct intel_dp *intel_dp)
+ {
++	int precharge = 10; /* 10-16 */
++	int preamble = 8;
 +
- 		intel_dp_update_sink_caps(intel_dp);
- 	}
+ 	/*
+ 	 * We faced some glitches on Dell Precision 5490 MTL laptop with panel:
+ 	 * "Manufacturer: AUO, Model: 63898" when using HW default 18. Using 20
+ 	 * is fixing these problems with the panel. It is still within range
+-	 * mentioned in eDP specification.
++	 * mentioned in eDP specification. Increasing Fast Wake sync length is
++	 * causing problems with other panels: increase length as a quirk for
++	 * this specific laptop.
+ 	 */
+-	int precharge = 12; /* 10-16 */
+-	int preamble = 8;
++	if (intel_has_dpcd_quirk(intel_dp, QUIRK_FW_SYNC_LEN))
++		precharge += 2;
  
+ 	return precharge + preamble;
+ }
+@@ -211,7 +217,7 @@ static u32 skl_get_aux_send_ctl(struct i
+ 		DP_AUX_CH_CTL_TIME_OUT_MAX |
+ 		DP_AUX_CH_CTL_RECEIVE_ERROR |
+ 		DP_AUX_CH_CTL_MESSAGE_SIZE(send_bytes) |
+-		DP_AUX_CH_CTL_FW_SYNC_PULSE_SKL(intel_dp_aux_fw_sync_len()) |
++		DP_AUX_CH_CTL_FW_SYNC_PULSE_SKL(intel_dp_aux_fw_sync_len(intel_dp)) |
+ 		DP_AUX_CH_CTL_SYNC_PULSE_SKL(intel_dp_aux_sync_len());
+ 
+ 	if (intel_tc_port_in_tbt_alt_mode(dig_port))
+--- a/drivers/gpu/drm/i915/display/intel_dp_aux.h
++++ b/drivers/gpu/drm/i915/display/intel_dp_aux.h
+@@ -20,6 +20,6 @@ enum aux_ch intel_dp_aux_ch(struct intel
+ 
+ void intel_dp_aux_irq_handler(struct drm_i915_private *i915);
+ u32 intel_dp_aux_pack(const u8 *src, int src_bytes);
+-int intel_dp_aux_fw_sync_len(void);
++int intel_dp_aux_fw_sync_len(struct intel_dp *intel_dp);
+ 
+ #endif /* __INTEL_DP_AUX_H__ */
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1356,7 +1356,7 @@ static bool _compute_alpm_params(struct
+ 	int tfw_exit_latency = 20; /* eDP spec */
+ 	int phy_wake = 4;	   /* eDP spec */
+ 	int preamble = 8;	   /* eDP spec */
+-	int precharge = intel_dp_aux_fw_sync_len() - preamble;
++	int precharge = intel_dp_aux_fw_sync_len(intel_dp) - preamble;
+ 	u8 max_wake_lines;
+ 
+ 	io_wake_time = max(precharge, io_buffer_wake_time(crtc_state)) +
 --- a/drivers/gpu/drm/i915/display/intel_quirks.c
 +++ b/drivers/gpu/drm/i915/display/intel_quirks.c
-@@ -14,6 +14,11 @@ static void intel_set_quirk(struct intel
- 	display->quirks.mask |= BIT(quirk);
+@@ -70,6 +70,14 @@ static void quirk_no_pps_backlight_power
+ 	drm_info(display->drm, "Applying no pps backlight power quirk\n");
  }
  
-+static void intel_set_dpcd_quirk(struct intel_dp *intel_dp, enum intel_quirk_id quirk)
-+{
-+	intel_dp->quirks.mask |= BIT(quirk);
-+}
-+
- /*
-  * Some machines (Lenovo U160) do not work with SSC on LVDS for some reason
-  */
-@@ -72,6 +77,21 @@ struct intel_quirk {
- 	void (*hook)(struct intel_display *display);
- };
- 
-+struct intel_dpcd_quirk {
-+	int device;
-+	int subsystem_vendor;
-+	int subsystem_device;
-+	u8 sink_oui[3];
-+	u8 sink_device_id[6];
-+	void (*hook)(struct intel_dp *intel_dp);
-+};
-+
-+#define SINK_OUI(first, second, third) { (first), (second), (third) }
-+#define SINK_DEVICE_ID(first, second, third, fourth, fifth, sixth) \
-+	{ (first), (second), (third), (fourth), (fifth), (sixth) }
-+
-+#define SINK_DEVICE_ID_ANY	SINK_DEVICE_ID(0, 0, 0, 0, 0, 0)
-+
- /* For systems that don't have a meaningful PCI subdevice/subvendor ID */
- struct intel_dmi_quirk {
- 	void (*hook)(struct intel_display *display);
-@@ -203,6 +223,9 @@ static struct intel_quirk intel_quirks[]
- 	{ 0x0f31, 0x103c, 0x220f, quirk_invert_brightness },
- };
- 
-+static struct intel_dpcd_quirk intel_dpcd_quirks[] = {
-+};
-+
- void intel_init_quirks(struct intel_display *display)
- {
- 	struct pci_dev *d = to_pci_dev(display->drm->dev);
-@@ -224,7 +247,35 @@ void intel_init_quirks(struct intel_disp
- 	}
- }
- 
-+void intel_init_dpcd_quirks(struct intel_dp *intel_dp,
-+			    const struct drm_dp_dpcd_ident *ident)
++static void quirk_fw_sync_len(struct intel_dp *intel_dp)
 +{
 +	struct intel_display *display = to_intel_display(intel_dp);
-+	struct pci_dev *d = to_pci_dev(display->drm->dev);
-+	int i;
 +
-+	for (i = 0; i < ARRAY_SIZE(intel_dpcd_quirks); i++) {
-+		struct intel_dpcd_quirk *q = &intel_dpcd_quirks[i];
-+
-+		if (d->device == q->device &&
-+		    (d->subsystem_vendor == q->subsystem_vendor ||
-+		     q->subsystem_vendor == PCI_ANY_ID) &&
-+		    (d->subsystem_device == q->subsystem_device ||
-+		     q->subsystem_device == PCI_ANY_ID) &&
-+		    !memcmp(q->sink_oui, ident->oui, sizeof(ident->oui)) &&
-+		    (!memcmp(q->sink_device_id, ident->device_id,
-+			    sizeof(ident->device_id)) ||
-+		     mem_is_zero(q->sink_device_id, sizeof(q->sink_device_id))))
-+			q->hook(intel_dp);
-+	}
++	intel_set_dpcd_quirk(intel_dp, QUIRK_FW_SYNC_LEN);
++	drm_info(display->drm, "Applying Fast Wake sync pulse count quirk\n");
 +}
 +
- bool intel_has_quirk(struct intel_display *display, enum intel_quirk_id quirk)
- {
- 	return display->quirks.mask & BIT(quirk);
+ struct intel_quirk {
+ 	int device;
+ 	int subsystem_vendor;
+@@ -224,6 +232,15 @@ static struct intel_quirk intel_quirks[]
+ };
+ 
+ static struct intel_dpcd_quirk intel_dpcd_quirks[] = {
++	/* Dell Precision 5490 */
++	{
++		.device = 0x7d55,
++		.subsystem_vendor = 0x1028,
++		.subsystem_device = 0x0cc7,
++		.sink_oui = SINK_OUI(0x38, 0xec, 0x11),
++		.hook = quirk_fw_sync_len,
++	},
++
+ };
+ 
+ void intel_init_quirks(struct intel_display *display)
+@@ -265,7 +282,7 @@ void intel_init_dpcd_quirks(struct intel
+ 		    !memcmp(q->sink_oui, ident->oui, sizeof(ident->oui)) &&
+ 		    (!memcmp(q->sink_device_id, ident->device_id,
+ 			    sizeof(ident->device_id)) ||
+-		     mem_is_zero(q->sink_device_id, sizeof(q->sink_device_id))))
++		     !memchr_inv(q->sink_device_id, 0, sizeof(q->sink_device_id))))
+ 			q->hook(intel_dp);
+ 	}
  }
-+
-+bool intel_has_dpcd_quirk(struct intel_dp *intel_dp, enum intel_quirk_id quirk)
-+{
-+	return intel_dp->quirks.mask & BIT(quirk);
-+}
 --- a/drivers/gpu/drm/i915/display/intel_quirks.h
 +++ b/drivers/gpu/drm/i915/display/intel_quirks.h
-@@ -9,6 +9,8 @@
- #include <linux/types.h>
- 
- struct intel_display;
-+struct intel_dp;
-+struct drm_dp_dpcd_ident;
- 
- enum intel_quirk_id {
- 	QUIRK_BACKLIGHT_PRESENT,
-@@ -20,6 +22,9 @@ enum intel_quirk_id {
+@@ -19,6 +19,7 @@ enum intel_quirk_id {
+ 	QUIRK_INVERT_BRIGHTNESS,
+ 	QUIRK_LVDS_SSC_DISABLE,
+ 	QUIRK_NO_PPS_BACKLIGHT_POWER_HOOK,
++	QUIRK_FW_SYNC_LEN,
  };
  
  void intel_init_quirks(struct intel_display *display);
-+void intel_init_dpcd_quirks(struct intel_dp *intel_dp,
-+			    const struct drm_dp_dpcd_ident *ident);
- bool intel_has_quirk(struct intel_display *display, enum intel_quirk_id quirk);
-+bool intel_has_dpcd_quirk(struct intel_dp *intel_dp, enum intel_quirk_id quirk);
- 
- #endif /* __INTEL_QUIRKS_H__ */
 
 
