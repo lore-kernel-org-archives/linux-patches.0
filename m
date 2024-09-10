@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C696F18C325;
-	Tue, 10 Sep 2024 10:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C454718B46D;
+	Tue, 10 Sep 2024 10:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962710; cv=none; b=m1an2DVsch2WTQo2Icvg8JzANRofPRyTwqgg2Xwmmcv2BuQUhUsfQnJCLcSoGCvdUBQcAs+dqfTv8QPcKaTGFyheP3VYlbG3EWIyUVPWQsuvmfRG3QTlFlOxFpqKSPaJFvPPLoed/81OU7YvIdtVdfQEQCZmHJ8geQDTDw04zFc=
+	t=1725962713; cv=none; b=KUuKIKWuyW6NYpKe2NvY75Nbnl9K7eJYhBuwUN/ikmBCuNiNqv7Dk4DEsVg3XJAPh0T3AqtgVcz+o8l+YPH5zFqKpFzdU817/RqsWC9RwzKRU+rP8htD/degq5mRqkCXWVCoP6A7KizAu2NGHE/18Ckadnb1/EDw5TslGBFps8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962710; c=relaxed/simple;
-	bh=gAHcY62WEcD0uhdinERFGXn0MFAum+wQ0PtsmJJaRB4=;
+	s=arc-20240116; t=1725962713; c=relaxed/simple;
+	bh=oEv3vMhlaCqgaRTIAgvgmNM63QnOipi81b/eFRC7lIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IB1E1XYuqo/UYNR/4k7cdUzNQ5ef6Frlan7YgPjm/bmeCCakMi3uynALE1LGs71AX/+nFUi7ZzimI/K5c6TTBEiDwq3+vj92h7pq9NZPCl4VJrgatHDeZgvwIleiY4Gs7BozQ0wiikrzxSZPs8099lvTjAy/5mu1aCGqPPXK69I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ggvI9J5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cIL75SqMYwPFcvgNKwnvJIbaKO1RfrsGRfvzCpNVl1rrct0dTHae/fNeYsq5pRfDLs3xCS3vClVLkXbSRfzRxePVr396kR11e7HF6ehtsBeLi59IneW/9o0zFpKfDYRU+/vAtVG5Z6N5nIeEeain2slXBbxagixFLon0AbhOpi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9k+VJZA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ggvI9J5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E406C4CEC3;
-	Tue, 10 Sep 2024 10:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9k+VJZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF17C4CEC3;
+	Tue, 10 Sep 2024 10:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962710;
-	bh=gAHcY62WEcD0uhdinERFGXn0MFAum+wQ0PtsmJJaRB4=;
+	s=korg; t=1725962713;
+	bh=oEv3vMhlaCqgaRTIAgvgmNM63QnOipi81b/eFRC7lIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ggvI9J5jP7KYon1Vm99+xcIMNLQ/0OfiAe4yInsgocI0PLYG99IawpLszPIfOC/M
-	 O+JGP9BJ6gzfFgSiEIM3t+m4oIWgF497sYvEKJXx/6nFbYptyi0pqsc1bc4gRekCHO
-	 wVUWNuApa0Flfv1wbf75SoullQANcWRP9cLSPqvM=
+	b=p9k+VJZA3pJ6NyJ8++VFUOuGFhiftLy9ILIR/onyOMQ4JpfvWp/mNAUn3SMltG0jQ
+	 i3I7xig5jpMpQ04Vgnj+64HrgtxdYhV9PrnV1R4Cvv2J3qDbgZ8VFH19+wyGnIFx+q
+	 zxV4X/PO9ZJH/bGNIbQe6Mp9UihkOwMsIyGj315o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 118/121] drm/i915/fence: Mark debug_fence_free() with __maybe_unused
-Date: Tue, 10 Sep 2024 11:33:13 +0200
-Message-ID: <20240910092551.404209844@linuxfoundation.org>
+	Roland Xu <mu001999@outlook.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.4 119/121] rtmutex: Drop rt_mutex::wait_lock before scheduling
+Date: Tue, 10 Sep 2024 11:33:14 +0200
+Message-ID: <20240910092551.450115510@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -52,59 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Roland Xu <mu001999@outlook.com>
 
-[ Upstream commit f99999536128b14b5d765a9982763b5134efdd79 ]
+commit d33d26036a0274b472299d7dcdaa5fb34329f91b upstream.
 
-When debug_fence_free() is unused
-(CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n), it prevents kernel builds
-with clang, `make W=1` and CONFIG_WERROR=y:
+rt_mutex_handle_deadlock() is called with rt_mutex::wait_lock held.  In the
+good case it returns with the lock held and in the deadlock case it emits a
+warning and goes into an endless scheduling loop with the lock held, which
+triggers the 'scheduling in atomic' warning.
 
-.../i915_sw_fence.c:118:20: error: unused function 'debug_fence_free' [-Werror,-Wunused-function]
-  118 | static inline void debug_fence_free(struct i915_sw_fence *fence)
-      |                    ^~~~~~~~~~~~~~~~
+Unlock rt_mutex::wait_lock in the dead lock case before issuing the warning
+and dropping into the schedule for ever loop.
 
-Fix this by marking debug_fence_free() with __maybe_unused.
+[ tglx: Moved unlock before the WARN(), removed the pointless comment,
+  	massaged changelog, added Fixes tag ]
 
-See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
-
-Fixes: fc1584059d6c ("drm/i915: Integrate i915_sw_fence with debugobjects")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240829155950.1141978-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 8be4dce5ea6f2368cc25edc71989c4690fa66964)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3d5c9340d194 ("rtmutex: Handle deadlock detection smarter")
+Signed-off-by: Roland Xu <mu001999@outlook.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/ME0P300MB063599BEF0743B8FA339C2CECC802@ME0P300MB0635.AUSP300.PROD.OUTLOOK.COM
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_sw_fence.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/locking/rtmutex.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_sw_fence.c b/drivers/gpu/drm/i915/i915_sw_fence.c
-index 475e4b9485af..8f20668a860e 100644
---- a/drivers/gpu/drm/i915/i915_sw_fence.c
-+++ b/drivers/gpu/drm/i915/i915_sw_fence.c
-@@ -64,7 +64,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- 	debug_object_destroy(fence, &i915_sw_fence_debug_descr);
+--- a/kernel/locking/rtmutex.c
++++ b/kernel/locking/rtmutex.c
+@@ -1204,6 +1204,7 @@ __rt_mutex_slowlock(struct rt_mutex *loc
  }
  
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
+ static void rt_mutex_handle_deadlock(int res, int detect_deadlock,
++				     struct rt_mutex *lock,
+ 				     struct rt_mutex_waiter *w)
  {
- 	debug_object_free(fence, &i915_sw_fence_debug_descr);
- 	smp_wmb(); /* flush the change in state before reallocation */
-@@ -102,7 +102,7 @@ static inline void debug_fence_destroy(struct i915_sw_fence *fence)
- {
- }
+ 	/*
+@@ -1213,6 +1214,7 @@ static void rt_mutex_handle_deadlock(int
+ 	if (res != -EDEADLOCK || detect_deadlock)
+ 		return;
  
--static inline void debug_fence_free(struct i915_sw_fence *fence)
-+static inline __maybe_unused void debug_fence_free(struct i915_sw_fence *fence)
- {
- }
++	raw_spin_unlock_irq(&lock->wait_lock);
+ 	/*
+ 	 * Yell lowdly and stop the task right here.
+ 	 */
+@@ -1268,7 +1270,7 @@ rt_mutex_slowlock(struct rt_mutex *lock,
+ 	if (unlikely(ret)) {
+ 		__set_current_state(TASK_RUNNING);
+ 		remove_waiter(lock, &waiter);
+-		rt_mutex_handle_deadlock(ret, chwalk, &waiter);
++		rt_mutex_handle_deadlock(ret, chwalk, lock, &waiter);
+ 	}
  
--- 
-2.43.0
-
+ 	/*
 
 
