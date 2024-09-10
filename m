@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB56B18B491;
-	Tue, 10 Sep 2024 10:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E887214D431;
+	Tue, 10 Sep 2024 10:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962547; cv=none; b=TlVORlpEZQ7INZyqhmGVROd1KcEspXbj0+8hSpb3wFj1Fe7P3dskJKXN4fwS4fTH7yzdZJZcn4U8zE5xvT2gc5y6hwnA+BNMdRi8sANOPnJXGqq+pg5yFDK0fj/YyuBRWAgVm/g1pjeQpS1IwWeRCV1DaXCTt9vh1kpPoeiK2Yo=
+	t=1725962550; cv=none; b=DZLUO7MTYJosPJb+brl/vgR1lLfc4A2werLpE+lJol6e4mp29ReigKurS5IhduWtILlxJKwMtQdJSKa6QSHsTHHNT4bcBjG5F5oISiDVn8q1dl4QOLvxR+u/dA/VqChvdBJt6GyoLqOzhQOc1ZR2G+I7yViniE7bwPDag7wnw+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962547; c=relaxed/simple;
-	bh=NR5vkcZFMIWPj3Zeowq/7ykdEvbbD1+/B1wwl/AJfgY=;
+	s=arc-20240116; t=1725962550; c=relaxed/simple;
+	bh=9VuAzwegBgxkPbmHkmBOYSyXFQR0R7H8iMfNbYPQ/Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihIGnILzltWctcWsj/hlbls5fAnCGYA/UmiYtGt7ccrlKrMNT6BS2hvzeXNr7xQD6Iglsb82CWgd9CIQ3XRWGY1mxrW6eMi2EZsDLhYwU9WuGIef1SFzpMyI/Qb/Ay3PiNjAc0oa5IL9MQrjY5S3dAp9+CW5tYYxOdp3W248biU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9o9Tqqt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J22Vvv1l1XDfNx38SVPswFR5Rz15MF94hcZOLG4xFoCrWBgj0GjHFgdP3rl/0fjH4jrjaIXcbz7gLva9yNsWYRZ6TQWsgxtyyrabuZWFZ7BeiWjimUmhmHJnptzrWQM/wigUOW9hTqfMiWeCOlCr3JHzvVaLhLD39XsZSJoUNF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jko4v4Gz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9o9Tqqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D71C4CEC3;
-	Tue, 10 Sep 2024 10:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jko4v4Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BFDC4CEC3;
+	Tue, 10 Sep 2024 10:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962546;
-	bh=NR5vkcZFMIWPj3Zeowq/7ykdEvbbD1+/B1wwl/AJfgY=;
+	s=korg; t=1725962549;
+	bh=9VuAzwegBgxkPbmHkmBOYSyXFQR0R7H8iMfNbYPQ/Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9o9TqqtiVRBISvLSps76g3xhKyBHZBqEYMkYxNgvIluwoMQfKP/EkQMj9PxWRorE
-	 tjuwCqYrfPmuR9nqGLtYEGFSMZg5n6XDI0cKrDqSbsArwKBU9Meffm7BNpp1xst7k8
-	 JMteyOQVPIFt4FB5lypoMOeAG5/wLXgvIkiA1XBs=
+	b=Jko4v4Gz/odYgLFBCdTDwTuGwJilHTBKd+zQ8TrDEL8TjnPrQW92wsCKv4iiZUxk9
+	 d3TwXDbf06mrGv5vEuTtCN3eonQgZzXwGFi7/1Cw3oOp9e8/vo9y1Op/A+RIMVh4bE
+	 roJs++6lsuaj004gaBxKoNIQWABWq9Q+m+tyQjdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Will Deacon <will@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/121] iommu/vt-d: Handle volatile descriptor status read
-Date: Tue, 10 Sep 2024 11:32:26 +0200
-Message-ID: <20240910092549.254966941@linuxfoundation.org>
+Subject: [PATCH 5.4 072/121] cgroup: Protect css->cgroup write under css_set_lock
+Date: Tue, 10 Sep 2024 11:32:27 +0200
+Message-ID: <20240910092549.303843427@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -54,54 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit b5e86a95541cea737394a1da967df4cd4d8f7182 ]
+[ Upstream commit 57b56d16800e8961278ecff0dc755d46c4575092 ]
 
-Queued invalidation wait descriptor status is volatile in that IOMMU
-hardware writes the data upon completion.
+The writing of css->cgroup associated with the cgroup root in
+rebind_subsystems() is currently protected only by cgroup_mutex.
+However, the reading of css->cgroup in both proc_cpuset_show() and
+proc_cgroup_show() is protected just by css_set_lock. That makes the
+readers susceptible to racing problems like data tearing or caching.
+It is also a problem that can be reported by KCSAN.
 
-Use READ_ONCE() to prevent compiler optimizations which ensures memory
-reads every time. As a side effect, READ_ONCE() also enforces strict
-types and may add an extra instruction. But it should not have negative
-performance impact since we use cpu_relax anyway and the extra time(by
-adding an instruction) may allow IOMMU HW request cacheline ownership
-easier.
+This can be fixed by using READ_ONCE() and WRITE_ONCE() to access
+css->cgroup. Alternatively, the writing of css->cgroup can be moved
+under css_set_lock as well which is done by this patch.
 
-e.g. gcc 12.3
-BEFORE:
-	81 38 ad de 00 00       cmpl   $0x2,(%rax)
-
-AFTER (with READ_ONCE())
-    772f:       8b 00                   mov    (%rax),%eax
-    7731:       3d ad de 00 00          cmp    $0x2,%eax
-                                        //status data is 32 bit
-
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Link: https://lore.kernel.org/r/20240607173817.3914600-1-jacob.jun.pan@linux.intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20240702130839.108139-2-baolu.lu@linux.intel.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dmar.c | 2 +-
+ kernel/cgroup/cgroup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/dmar.c b/drivers/iommu/dmar.c
-index 36900d65386f..a4805d17317d 100644
---- a/drivers/iommu/dmar.c
-+++ b/drivers/iommu/dmar.c
-@@ -1294,7 +1294,7 @@ int qi_submit_sync(struct qi_desc *desc, struct intel_iommu *iommu)
- 	 */
- 	writel(qi->free_head << shift, iommu->reg + DMAR_IQT_REG);
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 62a7a5075014..16ae86894121 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1783,9 +1783,9 @@ int rebind_subsystems(struct cgroup_root *dst_root, u16 ss_mask)
+ 		RCU_INIT_POINTER(scgrp->subsys[ssid], NULL);
+ 		rcu_assign_pointer(dcgrp->subsys[ssid], css);
+ 		ss->root = dst_root;
+-		css->cgroup = dcgrp;
  
--	while (qi->desc_status[wait_index] != QI_DONE) {
-+	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
- 		/*
- 		 * We will leave the interrupts disabled, to prevent interrupt
- 		 * context to queue another cmd while a cmd is already submitted
+ 		spin_lock_irq(&css_set_lock);
++		css->cgroup = dcgrp;
+ 		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
+ 		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
+ 					 e_cset_node[ss->id]) {
 -- 
 2.43.0
 
