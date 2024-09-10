@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726DA18F2DF;
-	Tue, 10 Sep 2024 10:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC0A172BA8;
+	Tue, 10 Sep 2024 10:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964408; cv=none; b=KW2HMbLdmwCtlRgEWaZMkAzpNqSI8trU731GsU5zIFBbMQtcGBao9Kz/PkOjbY2ph1uqlm5ldITa//sDO7pRFzZa4Sg3w8Zhy4HYsJ3LQ2UJd5CgEes9XvUY9dSk7TpGVQGEiH7dGGxwNo9Exn0d0uFgzHwhGBB6zfa93gxCfFs=
+	t=1725964411; cv=none; b=jBE7b69jKs82jPZHL9pVkMqpOJ3F4BYo/0k1bulWPipi+i64w17o8FI59Q3WGiJV2JlAtYlGJ5vSjRLvQN8JhjIrzlZHPfpol5FMpZzr+vyL0YayUucL3ISVcLhfhTWxcjUDre2ws2JVrWeLItwxp9pi51Eg2QpzZMW41Jmw0Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964408; c=relaxed/simple;
-	bh=a0w8fPhnIoDFWX49bcoClVpTLEphNBx9BoTcVvEPNP0=;
+	s=arc-20240116; t=1725964411; c=relaxed/simple;
+	bh=hYKaeq6mQun0qPhmmKR9esSrGJdN1xeggk9VCnYY14o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKc2+inNhrD2SU4L3Ee/Yf8Fv9sGNYKEiYuW21cRjdNV/P2Hv4UjXmU6zHTRHvJZ3SJvuu2r7lbslBjP6LZgz7a1Bit2TR7iEnuhaaRmgNXpWIEX/uuLLlRYlf5AkwATyirMqkH88WAD+koPnk9RPpm+5v9Al43GCWieHwwspU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFSCBUbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEwOMPtu6cOQ95uB6/NhVyflC4pPV2g8mJoyY6WdZFveXq9lCBNpyXWEMRxWRe/SAFVY16Lgz+mb2mIbxsNQDqD/hUgfjozW3PanfDAehFN6jUDZkOY/OAO54nPuMSDo//L1eQ3sNuVMYcmBe0BMtEXaseTUD4AZRjbbEiB/1Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qf3k2+aQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFSCBUbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBCBC4CEC3;
-	Tue, 10 Sep 2024 10:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qf3k2+aQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C56C4CEC3;
+	Tue, 10 Sep 2024 10:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964408;
-	bh=a0w8fPhnIoDFWX49bcoClVpTLEphNBx9BoTcVvEPNP0=;
+	s=korg; t=1725964411;
+	bh=hYKaeq6mQun0qPhmmKR9esSrGJdN1xeggk9VCnYY14o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFSCBUbSRBdIzcdgI1HBL263mTHyBLoa82yhEBG0hl1q7NVWn+WDCVEd6RKdhWnqj
-	 DZSlMdrnijfo6rFanCa5+3+m/Ob8dgNb6f5yHEn6qHPEmICyC+WPXLy9q7DhMHOcfD
-	 FCWZOChf0vOlodgH8CIwvb2Q7zeaRh3QHueCcw1c=
+	b=Qf3k2+aQDAVavY+QIppyC1ZeLzZRq38yPIIIpsfqjdwtVd8anDZkdwmaQHiMN58Cx
+	 0Kk4vT8x0hO86UfiG6aS9qnMpgPYPVfj2DHCWz5r1j7hXFGNSQLqVFsd9Gxzt9RCgS
+	 qQMk87XVOcMxjKmyH1JTnjIz6VnTzPwq2g+wg2Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Guillaume Legoupil <guillaume.legoupil@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/269] tcp: Dont drop SYN+ACK for simultaneous connect().
-Date: Tue, 10 Sep 2024 11:32:39 +0200
-Message-ID: <20240910092614.306177193@linuxfoundation.org>
+Subject: [PATCH 6.6 173/269] Bluetooth: btnxpuart: Fix Null pointer dereference in btnxpuart_flush()
+Date: Tue, 10 Sep 2024 11:32:40 +0200
+Message-ID: <20240910092614.342874670@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -52,106 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 
-[ Upstream commit 23e89e8ee7be73e21200947885a6d3a109a2c58d ]
+[ Upstream commit c68bbf5e334b35b36ac5b9f0419f1f93f796bad1 ]
 
-RFC 9293 states that in the case of simultaneous connect(), the connection
-gets established when SYN+ACK is received. [0]
+This adds a check before freeing the rx->skb in flush and close
+functions to handle the kernel crash seen while removing driver after FW
+download fails or before FW download completes.
 
-      TCP Peer A                                       TCP Peer B
+dmesg log:
+[   54.634586] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000080
+[   54.643398] Mem abort info:
+[   54.646204]   ESR = 0x0000000096000004
+[   54.649964]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   54.655286]   SET = 0, FnV = 0
+[   54.658348]   EA = 0, S1PTW = 0
+[   54.661498]   FSC = 0x04: level 0 translation fault
+[   54.666391] Data abort info:
+[   54.669273]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[   54.674768]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   54.674771]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   54.674775] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000048860000
+[   54.674780] [0000000000000080] pgd=0000000000000000, p4d=0000000000000000
+[   54.703880] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[   54.710152] Modules linked in: btnxpuart(-) overlay fsl_jr_uio caam_jr caamkeyblob_desc caamhash_desc caamalg_desc crypto_engine authenc libdes crct10dif_ce polyval_ce polyval_generic snd_soc_imx_spdif snd_soc_imx_card snd_soc_ak5558 snd_soc_ak4458 caam secvio error snd_soc_fsl_micfil snd_soc_fsl_spdif snd_soc_fsl_sai snd_soc_fsl_utils imx_pcm_dma gpio_ir_recv rc_core sch_fq_codel fuse
+[   54.744357] CPU: 3 PID: 72 Comm: kworker/u9:0 Not tainted 6.6.3-otbr-g128004619037 #2
+[   54.744364] Hardware name: FSL i.MX8MM EVK board (DT)
+[   54.744368] Workqueue: hci0 hci_power_on
+[   54.757244] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   54.757249] pc : kfree_skb_reason+0x18/0xb0
+[   54.772299] lr : btnxpuart_flush+0x40/0x58 [btnxpuart]
+[   54.782921] sp : ffff8000805ebca0
+[   54.782923] x29: ffff8000805ebca0 x28: ffffa5c6cf1869c0 x27: ffffa5c6cf186000
+[   54.782931] x26: ffff377b84852400 x25: ffff377b848523c0 x24: ffff377b845e7230
+[   54.782938] x23: ffffa5c6ce8dbe08 x22: ffffa5c6ceb65410 x21: 00000000ffffff92
+[   54.782945] x20: ffffa5c6ce8dbe98 x19: ffffffffffffffac x18: ffffffffffffffff
+[   54.807651] x17: 0000000000000000 x16: ffffa5c6ce2824ec x15: ffff8001005eb857
+[   54.821917] x14: 0000000000000000 x13: ffffa5c6cf1a02e0 x12: 0000000000000642
+[   54.821924] x11: 0000000000000040 x10: ffffa5c6cf19d690 x9 : ffffa5c6cf19d688
+[   54.821931] x8 : ffff377b86000028 x7 : 0000000000000000 x6 : 0000000000000000
+[   54.821938] x5 : ffff377b86000000 x4 : 0000000000000000 x3 : 0000000000000000
+[   54.843331] x2 : 0000000000000000 x1 : 0000000000000002 x0 : ffffffffffffffac
+[   54.857599] Call trace:
+[   54.857601]  kfree_skb_reason+0x18/0xb0
+[   54.863878]  btnxpuart_flush+0x40/0x58 [btnxpuart]
+[   54.863888]  hci_dev_open_sync+0x3a8/0xa04
+[   54.872773]  hci_power_on+0x54/0x2e4
+[   54.881832]  process_one_work+0x138/0x260
+[   54.881842]  worker_thread+0x32c/0x438
+[   54.881847]  kthread+0x118/0x11c
+[   54.881853]  ret_from_fork+0x10/0x20
+[   54.896406] Code: a9be7bfd 910003fd f9000bf3 aa0003f3 (b940d400)
+[   54.896410] ---[ end trace 0000000000000000 ]---
 
-  1.  CLOSED                                           CLOSED
-  2.  SYN-SENT     --> <SEQ=100><CTL=SYN>              ...
-  3.  SYN-RECEIVED <-- <SEQ=300><CTL=SYN>              <-- SYN-SENT
-  4.               ... <SEQ=100><CTL=SYN>              --> SYN-RECEIVED
-  5.  SYN-RECEIVED --> <SEQ=100><ACK=301><CTL=SYN,ACK> ...
-  6.  ESTABLISHED  <-- <SEQ=300><ACK=101><CTL=SYN,ACK> <-- SYN-RECEIVED
-  7.               ... <SEQ=100><ACK=301><CTL=SYN,ACK> --> ESTABLISHED
-
-However, since commit 0c24604b68fc ("tcp: implement RFC 5961 4.2"), such a
-SYN+ACK is dropped in tcp_validate_incoming() and responded with Challenge
-ACK.
-
-For example, the write() syscall in the following packetdrill script fails
-with -EAGAIN, and wrong SNMP stats get incremented.
-
-   0 socket(..., SOCK_STREAM|SOCK_NONBLOCK, IPPROTO_TCP) = 3
-  +0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
-
-  +0 > S  0:0(0) <mss 1460,sackOK,TS val 1000 ecr 0,nop,wscale 8>
-  +0 < S  0:0(0) win 1000 <mss 1000>
-  +0 > S. 0:0(0) ack 1 <mss 1460,sackOK,TS val 3308134035 ecr 0,nop,wscale 8>
-  +0 < S. 0:0(0) ack 1 win 1000
-
-  +0 write(3, ..., 100) = 100
-  +0 > P. 1:101(100) ack 1
-
-  --
-
-  # packetdrill cross-synack.pkt
-  cross-synack.pkt:13: runtime error in write call: Expected result 100 but got -1 with errno 11 (Resource temporarily unavailable)
-  # nstat
-  ...
-  TcpExtTCPChallengeACK           1                  0.0
-  TcpExtTCPSYNChallenge           1                  0.0
-
-The problem is that bpf_skops_established() is triggered by the Challenge
-ACK instead of SYN+ACK.  This causes the bpf prog to miss the chance to
-check if the peer supports a TCP option that is expected to be exchanged
-in SYN and SYN+ACK.
-
-Let's accept a bare SYN+ACK for active-open TCP_SYN_RECV sockets to avoid
-such a situation.
-
-Note that tcp_ack_snd_check() in tcp_rcv_state_process() is skipped not to
-send an unnecessary ACK, but this could be a bit risky for net.git, so this
-targets for net-next.
-
-Link: https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5-7 [0]
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240710171246.87533-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Tested-by: Guillaume Legoupil <guillaume.legoupil@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/bluetooth/btnxpuart.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 24c7c955dc95..336bc97e86d5 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5880,6 +5880,11 @@ static bool tcp_validate_incoming(struct sock *sk, struct sk_buff *skb,
- 	 * RFC 5961 4.2 : Send a challenge ack
- 	 */
- 	if (th->syn) {
-+		if (sk->sk_state == TCP_SYN_RECV && sk->sk_socket && th->ack &&
-+		    TCP_SKB_CB(skb)->seq + 1 == TCP_SKB_CB(skb)->end_seq &&
-+		    TCP_SKB_CB(skb)->seq + 1 == tp->rcv_nxt &&
-+		    TCP_SKB_CB(skb)->ack_seq == tp->snd_nxt)
-+			goto pass;
- syn_challenge:
- 		if (syn_inerr)
- 			TCP_INC_STATS(sock_net(sk), TCP_MIB_INERRS);
-@@ -5889,6 +5894,7 @@ static bool tcp_validate_incoming(struct sock *sk, struct sk_buff *skb,
- 		goto discard;
- 	}
+diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
+index 814dd966b1a4..5ee9a8b8dcfd 100644
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1326,8 +1326,10 @@ static int btnxpuart_close(struct hci_dev *hdev)
  
-+pass:
- 	bpf_skops_parse_hdr(sk, skb);
+ 	serdev_device_close(nxpdev->serdev);
+ 	skb_queue_purge(&nxpdev->txq);
+-	kfree_skb(nxpdev->rx_skb);
+-	nxpdev->rx_skb = NULL;
++	if (!IS_ERR_OR_NULL(nxpdev->rx_skb)) {
++		kfree_skb(nxpdev->rx_skb);
++		nxpdev->rx_skb = NULL;
++	}
+ 	clear_bit(BTNXPUART_SERDEV_OPEN, &nxpdev->tx_state);
+ 	return 0;
+ }
+@@ -1342,8 +1344,10 @@ static int btnxpuart_flush(struct hci_dev *hdev)
  
- 	return true;
-@@ -6673,6 +6679,9 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 		tcp_fast_path_on(tp);
- 		if (sk->sk_shutdown & SEND_SHUTDOWN)
- 			tcp_shutdown(sk, SEND_SHUTDOWN);
-+
-+		if (sk->sk_socket)
-+			goto consume;
- 		break;
+ 	cancel_work_sync(&nxpdev->tx_work);
  
- 	case TCP_FIN_WAIT1: {
+-	kfree_skb(nxpdev->rx_skb);
+-	nxpdev->rx_skb = NULL;
++	if (!IS_ERR_OR_NULL(nxpdev->rx_skb)) {
++		kfree_skb(nxpdev->rx_skb);
++		nxpdev->rx_skb = NULL;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
