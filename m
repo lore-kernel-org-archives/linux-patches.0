@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D9317C22F;
-	Tue, 10 Sep 2024 09:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA376171671;
+	Tue, 10 Sep 2024 09:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962111; cv=none; b=odoW+5GLofo/kPUtbd48e6ER/fdP6RnMLaPCANGF5jzmDndZSqyjUNrZKXmORjIy1bpDPeZnDhn7/KkCO13QptvoNKh0hxuk7sLTwP/Ezo4BiTpDFP9A2vk1zVlR7J47P4o/lqjgAZAVtN8EzCi7t3EXFCdRpvD9IU1GIE3DZao=
+	t=1725962113; cv=none; b=hREfGsAh0/dHpzwTfkh5Ps8agCo0KSt4ODaKAGWtXBgm+86EAlZKuwOnnt8nUc5RdS8s4uoYi1xE33g1lL91/tBfGI7sz2DheHFiy1jWwY2tPnI6XX9RQlHQ7JmQdhL2gkETj/ae2h3jW9/YQ8H2jakK6CfrvGAmvyQP9mIT9Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962111; c=relaxed/simple;
-	bh=HAECwACYruzgMeyMlVOwoBvXK5M/6h/Vz2QNUOYvcPU=;
+	s=arc-20240116; t=1725962113; c=relaxed/simple;
+	bh=oet/RAHOIHlZ9BsfNZDcc4KEUC5saFAGh5OVHEV0qIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Alja6AdUDXkGNysxrVWGbFvfQoxpQ3z+B1GIYGXlNtKnof455mO0mRTuXs3a0BcTGEA3VRsYJjAq7eo9lKYHk2wvcy5cV4CF3mr/mBDk9ykztEskvcrGmaJiOYlqo1NUMH/EqrZovJKjBat1A019p4QrO/N3iMq6IkCp+Z4XJH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtnfRUYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NgeqzXfboid4JoMHLU58ovM/0xaIkjOS/W8HosWThuLvah6mFGT2JHeh3ypiqhWt4ODY/ec28GeT4h11jwb1jRXd6/N/X7/7FvRmwiMKjD/XG1p7tS6EeUoVzdIWYjCCMpb2XbxAdhmteTsIJEbx9eULneA4GpJ1hgHlf62r65c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3ukiFlB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtnfRUYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2A2C4CEC6;
-	Tue, 10 Sep 2024 09:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3ukiFlB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54201C4CEC6;
+	Tue, 10 Sep 2024 09:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962110;
-	bh=HAECwACYruzgMeyMlVOwoBvXK5M/6h/Vz2QNUOYvcPU=;
+	s=korg; t=1725962113;
+	bh=oet/RAHOIHlZ9BsfNZDcc4KEUC5saFAGh5OVHEV0qIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtnfRUYmHqdzFs6rP8X0Iq+Sb5taZGFpe1KxP/eTykexf9brhfkE0jucehkuYd18A
-	 QyX0GL0BGk5Czv+Hvx1ArV5MGmNey7kqPQlrTnTOkPqk8KxItC3JgtAvg4FmOkhkv1
-	 i0fm+WmmuEr1weMqd/jCLK+t5hSL1Ql8rGntY0LQ=
+	b=u3ukiFlBVqsMGsln/GZfboCx+50VNdA+wqLHid+OpUJc7zzR/IZ7RngvznzTegvx5
+	 5bRs7D6ocbgD83tuMb8+keyZqP1h16njUwVqbaBiI/Mnm9uLqQ/N2gb73c+cm3ZISC
+	 A+tk7gK6PJJwI1Mnysb2JJkBGuXLKmcYW/PLM8kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Emily Deng <Emily.Deng@amd.com>,
-	Zhigang Luo <zhigang.luo@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 281/375] drm/amdgpu: Fix amdgpu_device_reset_sriov retry logic
-Date: Tue, 10 Sep 2024 11:31:18 +0200
-Message-ID: <20240910092631.999564594@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Michal Simek <michal.simek@amd.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 6.10 299/375] dt-bindings: nvmem: Use soc-nvmem node name instead of nvmem
+Date: Tue, 10 Sep 2024 11:31:36 +0200
+Message-ID: <20240910092632.603005317@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,142 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunxiang Li <Yunxiang.Li@amd.com>
+From: Michal Simek <michal.simek@amd.com>
 
-[ Upstream commit 6e4aa08fa9c6c0c027fc86f242517c925d159393 ]
+commit a759d1f25182f51210c8831d71ce7ee81e0930f4 upstream.
 
-The retry loop for SRIOV reset have refcount and memory leak issue.
-Depending on which function call fails it can potentially call
-amdgpu_amdkfd_pre/post_reset different number of times and causes
-kfd_locked count to be wrong. This will block all future attempts at
-opening /dev/kfd. The retry loop also leakes resources by calling
-amdgpu_virt_init_data_exchange multiple times without calling the
-corresponding fini function.
+Based on commit d8764d347bd7 ("dt-bindings: firmware: xilinx: Describe
+soc-nvmem subnode") soc-nvmem should be used instead of simple nvmem that's
+why also update example to have it described correctly everywhere.
 
-Align with the bare-metal reset path which doesn't have these issues.
-This means taking the amdgpu_amdkfd_pre/post_reset functions out of the
-reset loop and calling amdgpu_device_pre_asic_reset each retry which
-properly free the resources from previous try by calling
-amdgpu_virt_fini_data_exchange.
-
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Reviewed-by: Emily Deng <Emily.Deng@amd.com>
-Reviewed-by: Zhigang Luo <zhigang.luo@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c7f99cd8fb6b ("dt-bindings: nvmem: Convert xlnx,zynqmp-nvmem.txt to yaml")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20240902142510.71096-4-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 47 ++++++++++------------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index bd6f2aba0662..e66546df0bc1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5067,10 +5067,6 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
- {
- 	int r;
- 	struct amdgpu_hive_info *hive = NULL;
--	int retry_limit = 0;
--
--retry:
--	amdgpu_amdkfd_pre_reset(adev);
+diff --git a/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml b/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml
+index 917c40d5c382..1cbe44ab23b1 100644
+--- a/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml
++++ b/Documentation/devicetree/bindings/nvmem/xlnx,zynqmp-nvmem.yaml
+@@ -28,7 +28,7 @@ unevaluatedProperties: false
  
- 	if (test_bit(AMDGPU_HOST_FLR, &reset_context->flags)) {
- 		clear_bit(AMDGPU_HOST_FLR, &reset_context->flags);
-@@ -5090,7 +5086,7 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
- 	/* Resume IP prior to SMC */
- 	r = amdgpu_device_ip_reinit_early_sriov(adev);
- 	if (r)
--		goto error;
-+		return r;
- 
- 	amdgpu_virt_init_data_exchange(adev);
- 
-@@ -5101,38 +5097,35 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
- 	/* now we are okay to resume SMC/CP/SDMA */
- 	r = amdgpu_device_ip_reinit_late_sriov(adev);
- 	if (r)
--		goto error;
-+		return r;
- 
- 	hive = amdgpu_get_xgmi_hive(adev);
- 	/* Update PSP FW topology after reset */
- 	if (hive && adev->gmc.xgmi.num_physical_nodes > 1)
- 		r = amdgpu_xgmi_update_topology(hive, adev);
--
- 	if (hive)
- 		amdgpu_put_xgmi_hive(hive);
-+	if (r)
-+		return r;
- 
--	if (!r) {
--		r = amdgpu_ib_ring_tests(adev);
--
--		amdgpu_amdkfd_post_reset(adev);
--	}
-+	r = amdgpu_ib_ring_tests(adev);
-+	if (r)
-+		return r;
- 
--error:
--	if (!r && adev->virt.gim_feature & AMDGIM_FEATURE_GIM_FLR_VRAMLOST) {
-+	if (adev->virt.gim_feature & AMDGIM_FEATURE_GIM_FLR_VRAMLOST) {
- 		amdgpu_inc_vram_lost(adev);
- 		r = amdgpu_device_recover_vram(adev);
- 	}
--	amdgpu_virt_release_full_gpu(adev, true);
-+	if (r)
-+		return r;
- 
--	if (AMDGPU_RETRY_SRIOV_RESET(r)) {
--		if (retry_limit < AMDGPU_MAX_RETRY_LIMIT) {
--			retry_limit++;
--			goto retry;
--		} else
--			DRM_ERROR("GPU reset retry is beyond the retry limit\n");
--	}
-+	/* need to be called during full access so we can't do it later like
-+	 * bare-metal does.
-+	 */
-+	amdgpu_amdkfd_post_reset(adev);
-+	amdgpu_virt_release_full_gpu(adev, true);
- 
--	return r;
-+	return 0;
- }
- 
- /**
-@@ -5694,6 +5687,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	int i, r = 0;
- 	bool need_emergency_restart = false;
- 	bool audio_suspended = false;
-+	int retry_limit = AMDGPU_MAX_RETRY_LIMIT;
- 
- 	/*
- 	 * Special case: RAS triggered and full reset isn't supported
-@@ -5775,8 +5769,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 
- 		cancel_delayed_work_sync(&tmp_adev->delayed_init_work);
- 
--		if (!amdgpu_sriov_vf(tmp_adev))
--			amdgpu_amdkfd_pre_reset(tmp_adev);
-+		amdgpu_amdkfd_pre_reset(tmp_adev);
- 
- 		/*
- 		 * Mark these ASICs to be reseted as untracked first
-@@ -5835,6 +5828,10 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	/* Host driver will handle XGMI hive reset for SRIOV */
- 	if (amdgpu_sriov_vf(adev)) {
- 		r = amdgpu_device_reset_sriov(adev, reset_context);
-+		if (AMDGPU_RETRY_SRIOV_RESET(r) && (retry_limit--) > 0) {
-+			amdgpu_virt_release_full_gpu(adev, true);
-+			goto retry;
-+		}
- 		if (r)
- 			adev->asic_reset_res = r;
- 
+ examples:
+   - |
+-    nvmem {
++    soc-nvmem {
+         compatible = "xlnx,zynqmp-nvmem-fw";
+         nvmem-layout {
+             compatible = "fixed-layout";
 -- 
-2.43.0
+2.46.0
 
 
 
