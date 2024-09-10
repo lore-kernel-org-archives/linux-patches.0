@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B4318D640;
-	Tue, 10 Sep 2024 09:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C0613B2B0;
+	Tue, 10 Sep 2024 09:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961755; cv=none; b=Igp3FkFlpvxFEYGS+7Fgh9HIuLhliseq50C7X/V+qVweOPYDPG98AY8dqRyBz6vuC/BxKQ7e2aveC3bhDe7q66xOFl+Ar7i31cjM0OzzeoaBTZ2f52fmATjPngG4xzQPhlAdYutuia56GtcCPa8pnZnWU/xzUTMM+LmNBAdqhkg=
+	t=1725961758; cv=none; b=H/vchilLPjyiNkzd9Hf4gfr9J8as1wvBl74/dTSalVkdRQxs/+INRP67AoyKOsEmbYBusqVEESfL7ZQdG3RzkP5ptj5/yBw81hY9l8NNpNaSpxpK7jAFnQfG/9zRarxP1uXa6X5J+o59Of/FWSNcndvkzLyHBleMRanVyEfKRpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961755; c=relaxed/simple;
-	bh=YInuxiD9gCkJhRflB3XgCa4KMXJCU9N3aEW8d+WlAKE=;
+	s=arc-20240116; t=1725961758; c=relaxed/simple;
+	bh=yjOFxmmsvCTYSEFpsZBhKemS1sMWk57hDTSoF7BQvhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRaaMLcQBvLx3d7TOij5WI7HcgqAjqRJQLj0WjFmYdViiqZPD/1JA0QyDuqEBUZ5m4prGyMYSo9wvBIisT7MtsLRXYBgmB0ep2LtB7ANEVKxcGHwKB8baWIboBrQ6nitrywNIxUKnP14WdUX7wJILjwq3InUv/BwTKL8cTqhfGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miFDmkr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pA+TFB1bmtqSJTP5HOyAGvnv8xL2iOyr0Dk1KBPw9GXh9rOc44CClYrDHTu0AYBSaV/r/X4aAkNa1c5WxWygITCgsyi4xuAxqpnQrN24OFlmcaRxI7huCNBWfIapM6WD6c5z9UgcOpTAPm6RTaFHH8cGMXkOYc8JhhrKl+Om4Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3ZCPv2e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miFDmkr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE34AC4CEC3;
-	Tue, 10 Sep 2024 09:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3ZCPv2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C77C4CED7;
+	Tue, 10 Sep 2024 09:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961755;
-	bh=YInuxiD9gCkJhRflB3XgCa4KMXJCU9N3aEW8d+WlAKE=;
+	s=korg; t=1725961758;
+	bh=yjOFxmmsvCTYSEFpsZBhKemS1sMWk57hDTSoF7BQvhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miFDmkr3SPj5f8dZBE0h9BLNrMDu9ao3HgO07BUt6GeA86ELCa7s9/peKt5QJ7FKG
-	 XR0HiLWYcDKvNO91aB3GiJldF07xeq6u+KNEYiSwi4HqWtPiVMfe9FbxuF1XnbGCeM
-	 Jfec2DqFkCrxTNJfwxjb52Du5zpNXpmrpj4TQkTM=
+	b=T3ZCPv2eHy8eDDhtTgOVq0UlweO/58HO3zI3Ww5IBIzcLqvmrN0/FKT3beNJqBL6N
+	 DALhq0+MX/WXDdTrfUECBv9/r33cjhz1+qYQusEVb44o4ccqF4EBfqvOuRC0omHdcw
+	 5pxZJqlscza4swzMR+7AE5snwTbjw+7uUK9dEBCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Julien Panis <jpanis@baylibre.com>,
-	MD Danish Anwar <danishanwar@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 178/375] net: ethernet: ti: am65-cpsw: Fix RX statistics for XDP_TX and XDP_REDIRECT
-Date: Tue, 10 Sep 2024 11:29:35 +0200
-Message-ID: <20240910092628.458036209@linuxfoundation.org>
+Subject: [PATCH 6.10 179/375] net: phy: Fix missing of_node_put() for leds
+Date: Tue, 10 Sep 2024 11:29:36 +0200
+Message-ID: <20240910092628.496870865@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -54,76 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 624d3291484f9cada10660f820db926c0bce7741 ]
+[ Upstream commit 2560db6ede1aaf162a73b2df43e0b6c5ed8819f7 ]
 
-We are not using ndev->stats for rx_packets and rx_bytes anymore.
-Instead, we use per CPU stats which are collated in
-am65_cpsw_nuss_ndo_get_stats().
+The call of of_get_child_by_name() will cause refcount incremented
+for leds, if it succeeds, it should call of_node_put() to decrease
+it, fix it.
 
-Fix RX statistics for XDP_TX and XDP_REDIRECT cases.
-
-Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Julien Panis <jpanis@baylibre.com>
-Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Fixes: 01e5b728e9e4 ("net: phy: Add a binding for PHY LEDs")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240830022025.610844-1-ruanjinjie@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/net/phy/phy_device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 902b22de61d1..330eea349caa 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -998,7 +998,9 @@ static int am65_cpsw_run_xdp(struct am65_cpsw_common *common,
- 			     int desc_idx, int cpu, int *len)
- {
- 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
-+	struct am65_cpsw_ndev_priv *ndev_priv;
- 	struct net_device *ndev = port->ndev;
-+	struct am65_cpsw_ndev_stats *stats;
- 	int ret = AM65_CPSW_XDP_CONSUMED;
- 	struct am65_cpsw_tx_chn *tx_chn;
- 	struct netdev_queue *netif_txq;
-@@ -1016,6 +1018,9 @@ static int am65_cpsw_run_xdp(struct am65_cpsw_common *common,
- 	/* XDP prog might have changed packet data and boundaries */
- 	*len = xdp->data_end - xdp->data;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 6c6ec9475709..2c0ee5cf8b6e 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3346,11 +3346,13 @@ static int of_phy_leds(struct phy_device *phydev)
+ 		err = of_phy_led(phydev, led);
+ 		if (err) {
+ 			of_node_put(led);
++			of_node_put(leds);
+ 			phy_leds_unregister(phydev);
+ 			return err;
+ 		}
+ 	}
  
-+	ndev_priv = netdev_priv(ndev);
-+	stats = this_cpu_ptr(ndev_priv->stats);
-+
- 	switch (act) {
- 	case XDP_PASS:
- 		ret = AM65_CPSW_XDP_PASS;
-@@ -1035,16 +1040,20 @@ static int am65_cpsw_run_xdp(struct am65_cpsw_common *common,
- 		if (err)
- 			goto drop;
++	of_node_put(leds);
+ 	return 0;
+ }
  
--		ndev->stats.rx_bytes += *len;
--		ndev->stats.rx_packets++;
-+		u64_stats_update_begin(&stats->syncp);
-+		stats->rx_bytes += *len;
-+		stats->rx_packets++;
-+		u64_stats_update_end(&stats->syncp);
- 		ret = AM65_CPSW_XDP_CONSUMED;
- 		goto out;
- 	case XDP_REDIRECT:
- 		if (unlikely(xdp_do_redirect(ndev, xdp, prog)))
- 			goto drop;
- 
--		ndev->stats.rx_bytes += *len;
--		ndev->stats.rx_packets++;
-+		u64_stats_update_begin(&stats->syncp);
-+		stats->rx_bytes += *len;
-+		stats->rx_packets++;
-+		u64_stats_update_end(&stats->syncp);
- 		ret = AM65_CPSW_XDP_REDIRECT;
- 		goto out;
- 	default:
 -- 
 2.43.0
 
