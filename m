@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7114C19580F;
-	Tue, 10 Sep 2024 10:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693ED17BB0C;
+	Tue, 10 Sep 2024 10:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964208; cv=none; b=buvnEtbCKMuz8jvl/G5HUhP4Trxu+l4an/KGGpPQoUMC8fJD14kMQ2/7zZySs+x0jh2NEa0bsCMWuxA8dRS6P89of1Ky7Npg5rI09LG20uRg20ZV5I9DHD5JzUXCX/8VXYELhzVanEBrHfxoXdRIrWDTj0oxGb5ok1X8PxUmd4w=
+	t=1725964211; cv=none; b=JCMrTl/s3k8jDcn0PN68xso1b6FSQRIUPxVmfM6XN01fHRzJIyg5tEpak8hKpfr70Cg5CExMlZ8Qdz515+t63RhQQnl1e2Zs5yDv9zsnamLkwZLArzmQhSj8DMA5OKGOw5MMbL8G9n7Cb3h+sIRdo1aUMiAsFF0fyEpl4I3PnIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964208; c=relaxed/simple;
-	bh=oqulEuBF1LUunxL4Ktm12n1f8/fAJ0Q+NAwI1zSbXbE=;
+	s=arc-20240116; t=1725964211; c=relaxed/simple;
+	bh=l27zFQaenzKLLNNiKssM0jamu2280H9eJ+MHyVZ95I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4vFv1K/Xt5HhoT0EYbzh45tIl4xwZI9SVoaeYK/ROLXUCEeMicKg7awNU3Ynl56k8nWnDpJ8zK0YEk34J05rsG4a9W13ksBJKgvh/Y46Fs0xKn7OUTQUYbkK9AfLUtsV5rItWS0vCKaZvFCQFlGuSB2de8j1vdN6BODV2+Q0yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7hAETbD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nFSjSo2y6jFXVAvwazyGTU6WGTDXOu+fv5VxT2F/nnJSCKo2NNmJRLB5mmSxxDerLjjnifSshWSUYzs4t24CoUpL3AosPPHplDkr0eHkGvSYA887V3CMFgIWwWCV5rUu2ucxKmJI7AAnAwm+PBVB4jQu8dGSQPK9/54jWXIta0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyvtAAGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7hAETbD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC5AC4CEC3;
-	Tue, 10 Sep 2024 10:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyvtAAGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DB4C4CEC6;
+	Tue, 10 Sep 2024 10:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964208;
-	bh=oqulEuBF1LUunxL4Ktm12n1f8/fAJ0Q+NAwI1zSbXbE=;
+	s=korg; t=1725964211;
+	bh=l27zFQaenzKLLNNiKssM0jamu2280H9eJ+MHyVZ95I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7hAETbD3SEiQ5W4bIiToFeHdTUX6JgdrlBKdfNyocuFgLPzkrzch9nt/W+avQjg1
-	 JdTB0UgD1EPUMp+XcyXZzRSpsGDE/4R2ZeokjCDTqNjC9eFtr012IrKiqOyhmNTWjK
-	 DrFf5NWYGea/jN4kZE8iC7NgW0tDogBFvrTPuwTU=
+	b=xyvtAAGcCO3N8N3P8kfI9OGtCg2NTMFEU/2D4MzsobRb2UQQBocapzb9KXVRfsCGU
+	 pvtXDm0l61OLi+jNeys7lw+q+jgf/vFNaIAOEeJWSln7RcRJ4bE4sjdWOPMAr66cGH
+	 r40S8Zl/fDWhln+MRL44PkzrmlAuvO51vpBbtesI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/269] regulator: core: Stub devm_regulator_bulk_get_const() if !CONFIG_REGULATOR
-Date: Tue, 10 Sep 2024 11:31:32 +0200
-Message-ID: <20240910092611.954552887@linuxfoundation.org>
+Subject: [PATCH 6.6 088/269] vfio/spapr: Always clear TCEs before unsetting the window
+Date: Tue, 10 Sep 2024 11:31:15 +0200
+Message-ID: <20240910092611.343253550@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -53,51 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-[ Upstream commit 1a5caec7f80ca2e659c03f45378ee26915f4eda2 ]
+[ Upstream commit 4ba2fdff2eb174114786784926d0efb6903c88a6 ]
 
-When adding devm_regulator_bulk_get_const() I missed adding a stub for
-when CONFIG_REGULATOR is not enabled. Under certain conditions (like
-randconfig testing) this can cause the compiler to reports errors
-like:
+The PAPR expects the TCE table to have no entries at the time of
+unset window(i.e. remove-pe). The TCE clear right now is done
+before freeing the iommu table. On pSeries, the unset window
+makes those entries inaccessible to the OS and the H_PUT/GET calls
+fail on them with H_CONSTRAINED.
 
-  error: implicit declaration of function 'devm_regulator_bulk_get_const';
-  did you mean 'devm_regulator_bulk_get_enable'?
+On PowerNV, this has no side effect as the TCE clear can be done
+before the DMA window removal as well.
 
-Add the stub.
-
-Fixes: 1de452a0edda ("regulator: core: Allow drivers to define their init data as const")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408301813.TesFuSbh-lkp@intel.com/
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20240830073511.1.Ib733229a8a19fad8179213c05e1af01b51e42328@changeid
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/171923273535.1397.1236742071894414895.stgit@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/regulator/consumer.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/vfio/vfio_iommu_spapr_tce.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
-index 2c526c8d10cc..25d0684d37b3 100644
---- a/include/linux/regulator/consumer.h
-+++ b/include/linux/regulator/consumer.h
-@@ -489,6 +489,14 @@ static inline int of_regulator_bulk_get_all(struct device *dev, struct device_no
- 	return 0;
+diff --git a/drivers/vfio/vfio_iommu_spapr_tce.c b/drivers/vfio/vfio_iommu_spapr_tce.c
+index a94ec6225d31..5f9e7e477078 100644
+--- a/drivers/vfio/vfio_iommu_spapr_tce.c
++++ b/drivers/vfio/vfio_iommu_spapr_tce.c
+@@ -364,7 +364,6 @@ static void tce_iommu_release(void *iommu_data)
+ 		if (!tbl)
+ 			continue;
+ 
+-		tce_iommu_clear(container, tbl, tbl->it_offset, tbl->it_size);
+ 		tce_iommu_free_table(container, tbl);
+ 	}
+ 
+@@ -720,6 +719,8 @@ static long tce_iommu_remove_window(struct tce_container *container,
+ 
+ 	BUG_ON(!tbl->it_size);
+ 
++	tce_iommu_clear(container, tbl, tbl->it_offset, tbl->it_size);
++
+ 	/* Detach groups from IOMMUs */
+ 	list_for_each_entry(tcegrp, &container->group_list, next) {
+ 		table_group = iommu_group_get_iommudata(tcegrp->grp);
+@@ -738,7 +739,6 @@ static long tce_iommu_remove_window(struct tce_container *container,
+ 	}
+ 
+ 	/* Free table */
+-	tce_iommu_clear(container, tbl, tbl->it_offset, tbl->it_size);
+ 	tce_iommu_free_table(container, tbl);
+ 	container->tables[num] = NULL;
+ 
+@@ -1197,9 +1197,14 @@ static void tce_iommu_release_ownership(struct tce_container *container,
+ 		return;
+ 	}
+ 
+-	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i)
+-		if (container->tables[i])
++	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i) {
++		if (container->tables[i]) {
++			tce_iommu_clear(container, container->tables[i],
++					container->tables[i]->it_offset,
++					container->tables[i]->it_size);
+ 			table_group->ops->unset_window(table_group, i);
++		}
++	}
  }
  
-+static inline int devm_regulator_bulk_get_const(
-+	struct device *dev, int num_consumers,
-+	const struct regulator_bulk_data *in_consumers,
-+	struct regulator_bulk_data **out_consumers)
-+{
-+	return 0;
-+}
-+
- static inline int regulator_bulk_enable(int num_consumers,
- 					struct regulator_bulk_data *consumers)
- {
+ static long tce_iommu_take_ownership(struct tce_container *container,
 -- 
 2.43.0
 
