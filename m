@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0640B13AD09;
-	Tue, 10 Sep 2024 09:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B97813AD09;
+	Tue, 10 Sep 2024 09:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962067; cv=none; b=QPOse5GtDigCdIKGDkuj2l/pDUvNjpNUwyt+GE2jl5E7fLbSOh18Pk+U4eSdUSXggaN5jBSDH6ynZpqQoiIbctHO8LzO3X/ORxUrQ9xsXbMnEM42oiws/eL0f1LZbfcvwZxdsJxrUOwqRqUOxXy6LVx+S/+Xsx+D//NbTgMnUTY=
+	t=1725962070; cv=none; b=EfVcXsc92pNYm9F5mtYoTNhC6GkXXNJb4LDdIJ/ZOcKE4o6NKls2I5zbMCPv0iKRQ1Ep4lBStorRckHDm4Rh+ZYG1thziyq8tLWEnPWPhfOaLnTTomSH2w30BpeExoENp2kj/Y9zP5XO4bJTBLnWGdG56VyoVIkQNlRrWzs9r9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962067; c=relaxed/simple;
-	bh=HBUeo32rqXxK+iyRaaVGJ6NKZhaV5t3k6urekQsh39g=;
+	s=arc-20240116; t=1725962070; c=relaxed/simple;
+	bh=275ct4EYOnTW30H/G/Z5IJpK46v7KMEYsYtplV0pPWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfWMUCrDk7k1qU2qfzz8oQ6Pzfsf9tUaNRlqr/V90vyqQhz0ymXaA4A7kk9Vq7S+krAZne5awKsXsehrHX9IUE5K41Bpv4UVvUEkMC1StlNyOvQnQkwQdjmFi//a/z7kasT19luMymG43QDe5Vx+06gjlefeWvUV3Sc+7bXD2ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UN5ErY+L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAy7ACgDNOaB7OmecD8PdDp++2RKZo5KWSuCZmXJXUAKSwDzG8e1Xd0NYgRNePB2jGGREnDScQN7X1Qa54rn98odpRQZJgA9NRbQU38W//CtD7Ks4BYSAzLDZ3eKR253Nz87fFV4ZbYBKkxPu6jcceV3gbMzKu7O9Kg3iLIPZY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG1S8I0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UN5ErY+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE86C4CEC3;
-	Tue, 10 Sep 2024 09:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG1S8I0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30532C4CEC3;
+	Tue, 10 Sep 2024 09:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962066;
-	bh=HBUeo32rqXxK+iyRaaVGJ6NKZhaV5t3k6urekQsh39g=;
+	s=korg; t=1725962069;
+	bh=275ct4EYOnTW30H/G/Z5IJpK46v7KMEYsYtplV0pPWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UN5ErY+LS0nHWbzN17FVfOldnV+nxZ//kpve2PykMebolzbCW9B65g/Zbaf/tX5GM
-	 57WTuHwQF/Z9FuuGf7y/dvwY+FAJeVaeT+BP15gAQF+T5THderaB/9O3fa6H32H17o
-	 AZudtz3eptUbI8wB0mkWg4i8nfZrVTwq/94zhiW4=
+	b=tG1S8I0GNZUycaJkKjwSytfvbd/MzgkSDdtgUHGthn2LuVQ3dPa9aTtLePy0BGQkW
+	 Yi8PUjkkaNRR17WO58SDSJpc06NqpyAp5SY19O4iKSEz2MbmShKQGQA7Ub1ttdtcoK
+	 btgFJSuPP20qkTTm1GptfOgG5tORNzzt54HR9CXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 256/375] s390/boot: Do not assume the decompressor range is reserved
-Date: Tue, 10 Sep 2024 11:30:53 +0200
-Message-ID: <20240910092631.156557589@linuxfoundation.org>
+Subject: [PATCH 6.10 257/375] cachefiles: Set the max subreq size for cache writes to MAX_RW_COUNT
+Date: Tue, 10 Sep 2024 11:30:54 +0200
+Message-ID: <20240910092631.194962558@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,48 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b798b685b42c9dbe508e59a74250d97c41bec35e ]
+[ Upstream commit 51d37982bbac3ea0ca21b2797a9cb0044272b3aa ]
 
-When allocating a random memory range for .amode31 sections
-the minimal randomization address is 0. That does not lead
-to a possible overlap with the decompressor image (which also
-starts from 0) since by that time the image range is already
-reserved.
+Set the maximum size of a subrequest that writes to cachefiles to be
+MAX_RW_COUNT so that we don't overrun the maximum write we can make to the
+backing filesystem.
 
-Do not assume the decompressor range is reserved and always
-provide the minimal randomization address for .amode31
-sections beyond the decompressor. That is a prerequisite
-for moving the lowcore memory address from NULL elsewhere.
-
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/1599005.1721398742@warthog.procyon.org.uk
+cc: Jeff Layton <jlayton@kernel.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/startup.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/cachefiles/io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 6d88f241dd43..66ee97ac803d 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -476,8 +476,12 @@ void startup_kernel(void)
- 	 * before the kernel started. Therefore, in case the two sections
- 	 * overlap there is no risk of corrupting any data.
- 	 */
--	if (kaslr_enabled())
--		amode31_lma = randomize_within_range(vmlinux.amode31_size, PAGE_SIZE, 0, SZ_2G);
-+	if (kaslr_enabled()) {
-+		unsigned long amode31_min;
-+
-+		amode31_min = (unsigned long)_decompressor_end;
-+		amode31_lma = randomize_within_range(vmlinux.amode31_size, PAGE_SIZE, amode31_min, SZ_2G);
-+	}
- 	if (!amode31_lma)
- 		amode31_lma = text_lma - vmlinux.amode31_size;
- 	physmem_reserve(RR_AMODE31, amode31_lma, vmlinux.amode31_size);
+diff --git a/fs/cachefiles/io.c b/fs/cachefiles/io.c
+index e667dbcd20e8..a91acd03ee12 100644
+--- a/fs/cachefiles/io.c
++++ b/fs/cachefiles/io.c
+@@ -630,7 +630,7 @@ static void cachefiles_prepare_write_subreq(struct netfs_io_subrequest *subreq)
+ 
+ 	_enter("W=%x[%x] %llx", wreq->debug_id, subreq->debug_index, subreq->start);
+ 
+-	subreq->max_len = ULONG_MAX;
++	subreq->max_len = MAX_RW_COUNT;
+ 	subreq->max_nr_segs = BIO_MAX_VECS;
+ 
+ 	if (!cachefiles_cres_file(cres)) {
 -- 
 2.43.0
 
