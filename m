@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C26224F6;
-	Tue, 10 Sep 2024 09:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D04E224F6;
+	Tue, 10 Sep 2024 09:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961958; cv=none; b=ADjt8U6K0+Nm8pvxkEelkPKYmoND6D1r21/25ajQh+EPwncoBKdQqbC3DAMjLovXpOSiF3IuMaIdsW8d5S4gJGpsH51t/8CmxRua/6DJgCQoMZDSjGs/Ze13hxYY8iBr6eiZ7eDhAeg1tgyeWOLkWSnlhJ1x1dkz+Pbf5olsXlI=
+	t=1725961961; cv=none; b=HPGDSfN1mOShKWp0DI3Qkg1MnNdZz8aZxCvH+yHpNRy01bDctchWr79npxtleRlnnDeUVF/RsbtEySTjNsHulC/UuAcc6g9uBqFVY8i6OtfV+99Uax6rMIdUQVBevDpmgOOf6ch0JEJ7arlIelI6zt+3mRBjvPSAVwybX3v7qlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961958; c=relaxed/simple;
-	bh=KJqvWugf6E8tQUtvc4gJoh/+gM70k5LH8NxHgqRbO+k=;
+	s=arc-20240116; t=1725961961; c=relaxed/simple;
+	bh=wESd22amO+aS6SiorTVpK/P8LPcUL1RZ5/wUfEwmaOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3Kh+oJYV744fL+Bg+3FA5bgc5T+ExV5dvaZ7qNploDws2EI2vGx4Bq3XIXuyii55v3CcRj8+5OrXSfA3DBiANuIrMDoAmwyYzMm/HcBapyXsh7/ZdUQM2Ikb5FpsF9VCPwxkP0Qh1B34MxKzhzvCdMA4grzQMvEbreueRkPeXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxdQ1qJC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imHetf2R5yaAoYSRLxv6gSPsj32Jd9VM1AJkKPFcCg0tOKoq2IEC8EUMfOJrNXfOET8UP8rWHySrhm2k5DVRMt1m0/7Pa2lNPMEkNs+TQwSjwkX6ZmiIjtM5S637mdO+qvVrVUGdGxG4fcQ/NngZova0I4ov4gzSyEMZQSzAkOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBXPHzR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxdQ1qJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA57C4CEC3;
-	Tue, 10 Sep 2024 09:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBXPHzR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B167C4CEC3;
+	Tue, 10 Sep 2024 09:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961958;
-	bh=KJqvWugf6E8tQUtvc4gJoh/+gM70k5LH8NxHgqRbO+k=;
+	s=korg; t=1725961960;
+	bh=wESd22amO+aS6SiorTVpK/P8LPcUL1RZ5/wUfEwmaOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxdQ1qJCHnn8ODPy71QXJa1g2/ISJjDfnJKANQ/9dCq5wVmuuhsB0YEPvQbJV6QE+
-	 bL1baHHL7u8mqzt9alsHRhNWVmInkgDKp4dFAd0QotB1ovhvqZR6LkWgtTpmj8OLsY
-	 M1H6ioQB1jStQ/eoD8csndJGVOyMVlCsOzfkA924=
+	b=oBXPHzR+2iFgER8IH1JWDHjj31TDkpx2YNxbIxCMCA9bFExheSAAQGnCaBR4uyq/g
+	 YS7wsIvpchIaS7jyO9CD3AFh+NdLVuIXcYXay5G7iDuA++DzWYfF17rtznhCOwx6KE
+	 dT6z+gVqxsQAJ2rKVvrudDo9IwiyH5vMkeXOvx7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 246/375] ethtool: fail closed if we cant get max channel used in indirection tables
-Date: Tue, 10 Sep 2024 11:30:43 +0200
-Message-ID: <20240910092630.810973307@linuxfoundation.org>
+Subject: [PATCH 6.10 247/375] cxl/region: Verify target positions using the ordered target list
+Date: Tue, 10 Sep 2024 11:30:44 +0200
+Message-ID: <20240910092630.847878118@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,131 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 2899d58462ba868287d6ff3acad3675e7adf934f ]
+[ Upstream commit 82a3e3a235633aa0575fac9507d648dd80f3437f ]
 
-Commit 0d1b7d6c9274 ("bnxt: fix crashes when reducing ring count with
-active RSS contexts") proves that allowing indirection table to contain
-channels with out of bounds IDs may lead to crashes. Currently the
-max channel check in the core gets skipped if driver can't fetch
-the indirection table or when we can't allocate memory.
+When a root decoder is configured the interleave target list is read
+from the BIOS populated CFMWS structure. Per the CXL spec 3.1 Table
+9-22 the target list is in interleave order. The CXL driver populates
+its decoder target list in the same order and stores it in 'struct
+cxl_switch_decoder' field "@target: active ordered target list in
+current decoder configuration"
 
-Both of those conditions should be extremely rare but if they do
-happen we should try to be safe and fail the channel change.
+Given the promise of an ordered list, the driver can stop duplicating
+the work of BIOS and simply check target positions against the ordered
+list during region configuration.
 
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240710174043.754664-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The simplified check against the ordered list is presented here.
+A follow-on patch will remove the unused code.
+
+For Modulo arithmetic this is not a fix, only a simplification.
+For XOR arithmetic this is a fix for HB IW of 3,6,12.
+
+Fixes: f9db85bfec0d ("cxl/acpi: Support CXL XOR Interleave Math (CXIMS)")
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/35d08d3aba08fee0f9b86ab1cef0c25116ca8a55.1719980933.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/channels.c |  6 ++----
- net/ethtool/common.c   | 26 +++++++++++++++-----------
- net/ethtool/common.h   |  2 +-
- net/ethtool/ioctl.c    |  4 +---
- 4 files changed, 19 insertions(+), 19 deletions(-)
+ drivers/cxl/core/region.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ethtool/channels.c b/net/ethtool/channels.c
-index 7b4bbd674bae..cee188da54f8 100644
---- a/net/ethtool/channels.c
-+++ b/net/ethtool/channels.c
-@@ -171,11 +171,9 @@ ethnl_set_channels(struct ethnl_req_info *req_info, struct genl_info *info)
- 	 */
- 	if (ethtool_get_max_rxnfc_channel(dev, &max_rxnfc_in_use))
- 		max_rxnfc_in_use = 0;
--	if (!netif_is_rxfh_configured(dev) ||
--	    ethtool_get_max_rxfh_channel(dev, &max_rxfh_in_use))
--		max_rxfh_in_use = 0;
-+	max_rxfh_in_use = ethtool_get_max_rxfh_channel(dev);
- 	if (channels.combined_count + channels.rx_count <= max_rxfh_in_use) {
--		GENL_SET_ERR_MSG(info, "requested channel counts are too low for existing indirection table settings");
-+		GENL_SET_ERR_MSG_FMT(info, "requested channel counts are too low for existing indirection table (%d)", max_rxfh_in_use);
- 		return -EINVAL;
- 	}
- 	if (channels.combined_count + channels.rx_count <= max_rxnfc_in_use) {
-diff --git a/net/ethtool/common.c b/net/ethtool/common.c
-index 6b2a360dcdf0..8a62375ebd1f 100644
---- a/net/ethtool/common.c
-+++ b/net/ethtool/common.c
-@@ -587,35 +587,39 @@ int ethtool_get_max_rxnfc_channel(struct net_device *dev, u64 *max)
- 	return err;
- }
- 
--int ethtool_get_max_rxfh_channel(struct net_device *dev, u32 *max)
-+u32 ethtool_get_max_rxfh_channel(struct net_device *dev)
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index cd9ccdc6bc81..0e30e0a29d40 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1632,10 +1632,13 @@ static int cxl_region_attach_position(struct cxl_region *cxlr,
+ 				      const struct cxl_dport *dport, int pos)
  {
- 	struct ethtool_rxfh_param rxfh = {};
--	u32 dev_size, current_max = 0;
-+	u32 dev_size, current_max;
- 	int ret;
+ 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
++	struct cxl_switch_decoder *cxlsd = &cxlrd->cxlsd;
++	struct cxl_decoder *cxld = &cxlsd->cxld;
++	int iw = cxld->interleave_ways;
+ 	struct cxl_port *iter;
+ 	int rc;
  
-+	if (!netif_is_rxfh_configured(dev))
-+		return 0;
-+
- 	if (!dev->ethtool_ops->get_rxfh_indir_size ||
- 	    !dev->ethtool_ops->get_rxfh)
--		return -EOPNOTSUPP;
-+		return 0;
- 	dev_size = dev->ethtool_ops->get_rxfh_indir_size(dev);
- 	if (dev_size == 0)
--		return -EOPNOTSUPP;
-+		return 0;
- 
- 	rxfh.indir = kcalloc(dev_size, sizeof(rxfh.indir[0]), GFP_USER);
- 	if (!rxfh.indir)
--		return -ENOMEM;
-+		return U32_MAX;
- 
- 	ret = dev->ethtool_ops->get_rxfh(dev, &rxfh);
--	if (ret)
--		goto out;
-+	if (ret) {
-+		current_max = U32_MAX;
-+		goto out_free;
-+	}
- 
-+	current_max = 0;
- 	while (dev_size--)
- 		current_max = max(current_max, rxfh.indir[dev_size]);
- 
--	*max = current_max;
--
--out:
-+out_free:
- 	kfree(rxfh.indir);
--	return ret;
-+	return current_max;
- }
- 
- int ethtool_check_ops(const struct ethtool_ops *ops)
-diff --git a/net/ethtool/common.h b/net/ethtool/common.h
-index 28b8aaaf9bcb..b55705a9ad5a 100644
---- a/net/ethtool/common.h
-+++ b/net/ethtool/common.h
-@@ -42,7 +42,7 @@ int __ethtool_get_link(struct net_device *dev);
- bool convert_legacy_settings_to_link_ksettings(
- 	struct ethtool_link_ksettings *link_ksettings,
- 	const struct ethtool_cmd *legacy_settings);
--int ethtool_get_max_rxfh_channel(struct net_device *dev, u32 *max);
-+u32 ethtool_get_max_rxfh_channel(struct net_device *dev);
- int ethtool_get_max_rxnfc_channel(struct net_device *dev, u64 *max);
- int __ethtool_get_ts_info(struct net_device *dev, struct ethtool_ts_info *info);
- 
-diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
-index f99fd564d0ee..2f5b69d5d4b0 100644
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -1928,9 +1928,7 @@ static noinline_for_stack int ethtool_set_channels(struct net_device *dev,
- 	 * indirection table/rxnfc settings */
- 	if (ethtool_get_max_rxnfc_channel(dev, &max_rxnfc_in_use))
- 		max_rxnfc_in_use = 0;
--	if (!netif_is_rxfh_configured(dev) ||
--	    ethtool_get_max_rxfh_channel(dev, &max_rxfh_in_use))
--		max_rxfh_in_use = 0;
-+	max_rxfh_in_use = ethtool_get_max_rxfh_channel(dev);
- 	if (channels.combined_count + channels.rx_count <=
- 	    max_t(u64, max_rxnfc_in_use, max_rxfh_in_use))
- 		return -EINVAL;
+-	if (cxlrd->calc_hb(cxlrd, pos) != dport) {
++	if (dport != cxlrd->cxlsd.target[pos % iw]) {
+ 		dev_dbg(&cxlr->dev, "%s:%s invalid target position for %s\n",
+ 			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev),
+ 			dev_name(&cxlrd->cxlsd.cxld.dev));
 -- 
 2.43.0
 
