@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9767B18C005;
-	Tue, 10 Sep 2024 09:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A4B18C005;
+	Tue, 10 Sep 2024 09:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961267; cv=none; b=M7McJbnRBXZZTLf4dfXJECYVViJoEcRpW/756AW+DaO2Yjf8Tugsl0WJToWYTfgPPvW19AUpm+ulhBiGPOkDzdY8LmmNQ52pRMimVc2FSmP/U4ByRo/6MaGnJ7Ida5L1iyGlQQbFS13hQKh7W7RqyvFCueyB0vdlVTwEWh12sDk=
+	t=1725961270; cv=none; b=Z9NyTEyP558UDnJ80RKBVPzGzYIxFvImj1TZ9xdegQmiCBzk9b1Fon71dA15JcbeP8AfoBXQEJMpOCivWBiaqC+o5wCJCC6ipStXo3NFBOfGvgWRs8f7LAyzNveX5SiZMR6jCXyTq+HZ2LeTKkl9lIN/MRZEh7bdPFwIjWoGCg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961267; c=relaxed/simple;
-	bh=qRUEGVMC9b5co553SuUBEG/St9NIQhDRypoy25uu0eo=;
+	s=arc-20240116; t=1725961270; c=relaxed/simple;
+	bh=KBBjihkbmNOyV0dX8IJEOv4QvJTjghomZKm8hbIGnuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpUe7jMvYNSum6sYA9Pr/zmG153C8l5+MNL9u3SRafDItAg9eKnjBjaDqrTZJGAX2G+Si1W1ZHS6Pg2pPk9in0Au0+D0WnBhqsuvNZ/8sDuZT7hKhNy/RBZ0YFVs3MKDJnSzTgtc/6zoT6JaF1EreQh5K04tSo1TRLIEM0hW/X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qmbguv+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nuMvCfoSEl9dyNV56FrNyNxrO37rdTvMe0V6yEAycH1S5bDG8i3TR0W5amc8D74d+ncVbPDkj/YvEHgGalYgi4vtE6q/eL6qmkquo/a9aHrBLoaSrraQJiO/jReSJT2RG4RF2hCg2blnzx7p05pS76A/We38oE5dMInP5C96noA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a07Oz9iW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmbguv+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15763C4CEC3;
-	Tue, 10 Sep 2024 09:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a07Oz9iW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00234C4CEC3;
+	Tue, 10 Sep 2024 09:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961267;
-	bh=qRUEGVMC9b5co553SuUBEG/St9NIQhDRypoy25uu0eo=;
+	s=korg; t=1725961270;
+	bh=KBBjihkbmNOyV0dX8IJEOv4QvJTjghomZKm8hbIGnuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qmbguv+MMGC2XHnAjrTg1qdpUlr+HhoEp3/VwqDQDTvOtLfSedZTdvvzPLugwURI3
-	 078hsZnEnkKn48ZI60YzOxZ1ZVrDiQCFJCtZ8uSsnDCQa8sgoC08F1mTnxJfDJ9p1D
-	 Baxu98c2vV0rJwA0m0mHsA571KmW0+oF4jDvC0XU=
+	b=a07Oz9iWhFGm9Lto7vNr5UvHz4z3ZFwYCKiQjKIXaV4lmlPT+WggRMq09dIvoFEoF
+	 eXVeZoeXfc2YDEqeHV+7aVJ34n53bW9yYAqRewxHwlqx49VIbdtkwUWjcvywT2AWgT
+	 rE4lGbde93WHxrnQxxJk189SB3szA4rG85jvIBsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anders Blomdell <anders.blomdell@gmail.com>,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>
-Subject: [PATCH 6.10 003/375] xfs: xfs_finobt_count_blocks() walks the wrong btree
-Date: Tue, 10 Sep 2024 11:26:40 +0200
-Message-ID: <20240910092622.384379986@linuxfoundation.org>
+	Roger Quadros <rogerq@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Julien Panis <jpanis@baylibre.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.10 004/375] net: ethernet: ti: am65-cpsw: Fix NULL dereference on XDP_TX
+Date: Tue, 10 Sep 2024 11:26:41 +0200
+Message-ID: <20240910092622.416028901@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -53,63 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-commit 95179935beadccaf0f0bb461adb778731e293da4 upstream.
+commit 0a50c35277f96481a5a6ed5faf347f282040c57d upstream.
 
-As a result of the factoring in commit 14dd46cf31f4 ("xfs: split
-xfs_inobt_init_cursor"), mount started taking a long time on a
-user's filesystem.  For Anders, this made mount times regress from
-under a second to over 15 minutes for a filesystem with only 30
-million inodes in it.
+If number of TX queues are set to 1 we get a NULL pointer
+dereference during XDP_TX.
 
-Anders bisected it down to the above commit, but even then the bug
-was not obvious. In this commit, over 20 calls to
-xfs_inobt_init_cursor() were modified, and some we modified to call
-a new function named xfs_finobt_init_cursor().
+~# ethtool -L eth0 tx 1
+~# ./xdp-trafficgen udp -A <ipv6-src> -a <ipv6-dst> eth0 -t 2
+Transmitting on eth0 (ifindex 2)
+[  241.135257] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
 
-If that takes you a moment to reread those function names to see
-what the rename was, then you have realised why this bug wasn't
-spotted during review. And it wasn't spotted on inspection even
-after the bisect pointed at this commit - a single missing "f" isn't
-the easiest thing for a human eye to notice....
+Fix this by using actual TX queues instead of max TX queues
+when picking the TX channel in am65_cpsw_ndo_xdp_xmit().
 
-The result is that xfs_finobt_count_blocks() now incorrectly calls
-xfs_inobt_init_cursor() so it is now walking the inobt instead of
-the finobt. Hence when there are lots of allocated inodes in a
-filesystem, mount takes a -long- time run because it now walks a
-massive allocated inode btrees instead of the small, nearly empty
-free inode btrees. It also means all the finobt space reservations
-are wrong, so mount could potentially given ENOSPC on kernel
-upgrade.
-
-In hindsight, commit 14dd46cf31f4 should have been two commits - the
-first to convert the finobt callers to the new API, the second to
-modify the xfs_inobt_init_cursor() API for the inobt callers. That
-would have made the bug very obvious during review.
-
-Fixes: 14dd46cf31f4 ("xfs: split xfs_inobt_init_cursor")
-Reported-by: Anders Blomdell <anders.blomdell@gmail.com>
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Julien Panis <jpanis@baylibre.com>
+Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_ialloc_btree.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_ialloc_btree.c
-+++ b/fs/xfs/libxfs/xfs_ialloc_btree.c
-@@ -749,7 +749,7 @@ xfs_finobt_count_blocks(
- 	if (error)
- 		return error;
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -1918,12 +1918,13 @@ static int am65_cpsw_ndo_bpf(struct net_
+ static int am65_cpsw_ndo_xdp_xmit(struct net_device *ndev, int n,
+ 				  struct xdp_frame **frames, u32 flags)
+ {
++	struct am65_cpsw_common *common = am65_ndev_to_common(ndev);
+ 	struct am65_cpsw_tx_chn *tx_chn;
+ 	struct netdev_queue *netif_txq;
+ 	int cpu = smp_processor_id();
+ 	int i, nxmit = 0;
  
--	cur = xfs_inobt_init_cursor(pag, tp, agbp);
-+	cur = xfs_finobt_init_cursor(pag, tp, agbp);
- 	error = xfs_btree_count_blocks(cur, tree_blocks);
- 	xfs_btree_del_cursor(cur, error);
- 	xfs_trans_brelse(tp, agbp);
+-	tx_chn = &am65_ndev_to_common(ndev)->tx_chns[cpu % AM65_CPSW_MAX_TX_QUEUES];
++	tx_chn = &common->tx_chns[cpu % common->tx_ch_num];
+ 	netif_txq = netdev_get_tx_queue(ndev, tx_chn->id);
+ 
+ 	__netif_tx_lock(netif_txq, cpu);
 
 
