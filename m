@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC900184101;
-	Tue, 10 Sep 2024 09:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D935817BB01;
+	Tue, 10 Sep 2024 09:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961785; cv=none; b=NRUV22JU0BUXpF0RVC62Nzhjxd5Ygudq/wiexypt6gfCNNE+cZVARBg/yrnFxV+QsWfZ3cnKigtQVr2hFpPo7oePjYnoq1uwEDodwqLdz5k7v+j8uY66kl779/3CwNCffazAOvzr9WY8Iw5YMXy8NmG93YRSpVAboctNO1TUGCw=
+	t=1725961787; cv=none; b=XkJJVFZ/e2M4BgOZOsOB/HRXhn7btOBBwqR7df1Dk8pY3x9bfpqFVDtZo8pXy2XuTMMOThP2WyNvTinOTRWrOjXpg4O+g5zBou5dQwETU4r4J/r0hABAKLBRb49/lOonWMglpytAPjGXVcsY7S+RVHLX0filfczLJhmZ2barG+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961785; c=relaxed/simple;
-	bh=qmfi21eCDYiGNHWe+UR4wFrCwSucZUVg0nKzg4+X9LM=;
+	s=arc-20240116; t=1725961787; c=relaxed/simple;
+	bh=bFMO1Z0DDkzsr/NNjETRFeA6LElEdvlVXCeiucxpMIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNoxueOmX7Ly89IZE+FqUe9SudvHFJlFefXJ+0n9e2sjISeV0FvtA1mgIQMYe5wI+WSUDnQbjeu0stIlwgGowoNLNkpXwicZD9iuFrR33yyW1zlmC2u8DCWDcAPTst70RxzouPUcT0R9xe9U0UJ2jymamil0RyOkSorSdR5bgZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGtG2QF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PxBmF9fTI+Rr0VnQmggP1DqsbCl8Bkz1R/D1jq/82ir6fBx3TrnHZCzfU7k4p8r0RHoBTy5aXIsDv4pvGX089Y/xGzc2wyX3w5QjJR44jZKsvk+esaDqrw6kZsqKKN+e+SZsX29ok3EOI4JJyCcLI8rrcT7nW2vcxKdYhVtSgBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0dN/06/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGtG2QF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C7C4CEC3;
-	Tue, 10 Sep 2024 09:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0dN/06/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB54C4CEC3;
+	Tue, 10 Sep 2024 09:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961784;
-	bh=qmfi21eCDYiGNHWe+UR4wFrCwSucZUVg0nKzg4+X9LM=;
+	s=korg; t=1725961787;
+	bh=bFMO1Z0DDkzsr/NNjETRFeA6LElEdvlVXCeiucxpMIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGtG2QF8wmofF+JULmZ5xR7edLM6GJ71oN9Zjuj3LFaAAKQO8fBBmDgf6v5uffsAv
-	 6VSoZHZGWFNgXGG+yVdncNsu8lYcVJZCKTA3ttjI5SrzdRwcGht5RGtGI7ctDjqEDe
-	 tcCJ2CiMGybjKICQTVoE1yFu22Y9XMUjV8EAd49A=
+	b=Q0dN/06/D7HiDCtPTOvayAIffnw4Zpc7mCjPoM/ZYmz8X+S/tDNQteNFF1292U4gT
+	 ABbP6Xy2WqrUMYa7VFAqIZB+ngGI5COT8k63ZOCrYELlPrPkyQrgbT428w+cg53L9G
+	 KhPG/Wf3Luj2MYUa60NMxFaTO+RW9JMTpcryBxRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	kernel test robot <lkp@intel.com>,
+	Breno Leitao <leitao@debian.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 187/375] usbnet: modern method to get random MAC
-Date: Tue, 10 Sep 2024 11:29:44 +0200
-Message-ID: <20240910092628.772087985@linuxfoundation.org>
+Subject: [PATCH 6.10 188/375] net: dqs: Do not use extern for unused dql_group
+Date: Tue, 10 Sep 2024 11:29:45 +0200
+Message-ID: <20240910092628.806528882@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -52,73 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit bab8eb0dd4cb995caa4a0529d5655531c2ec5e8e ]
+[ Upstream commit 77461c10819103eaee7b33c744174b32a8c78b40 ]
 
-The driver generates a random MAC once on load
-and uses it over and over, including on two devices
-needing a random MAC at the same time.
+When CONFIG_DQL is not enabled, dql_group should be treated as a dead
+declaration. However, its current extern declaration assumes the linker
+will ignore it, which is generally true across most compiler and
+architecture combinations.
 
-Jakub suggested revamping the driver to the modern
-API for setting a random MAC rather than fixing
-the old stuff.
+But in certain cases, the linker still attempts to resolve the extern
+struct, even when the associated code is dead, resulting in a linking
+error. For instance the following error in loongarch64:
 
-The bug is as old as the driver.
+>> loongarch64-linux-ld: net-sysfs.c:(.text+0x589c): undefined reference to `dql_group'
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Modify the declaration of the dead object to be an empty declaration
+instead of an extern. This change will prevent the linker from
+attempting to resolve an undefined reference.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202409012047.eCaOdfQJ-lkp@intel.com/
+Fixes: 74293ea1c4db ("net: sysfs: Do not create sysfs for non BQL device")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20240829175201.670718-1-oneukum@suse.com
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Link: https://patch.msgid.link/20240902101734.3260455-1-leitao@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ net/core/net-sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 9fd516e8bb10..18eb5ba436df 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -61,9 +61,6 @@
+diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
+index dc91921da4ea..15ad775ddd3c 100644
+--- a/net/core/net-sysfs.c
++++ b/net/core/net-sysfs.c
+@@ -1524,7 +1524,7 @@ static const struct attribute_group dql_group = {
+ };
+ #else
+ /* Fake declaration, all the code using it should be dead */
+-extern const struct attribute_group dql_group;
++static const struct attribute_group dql_group = {};
+ #endif /* CONFIG_BQL */
  
- /*-------------------------------------------------------------------------*/
- 
--// randomly generated ethernet address
--static u8	node_id [ETH_ALEN];
--
- /* use ethtool to change the level for any given device */
- static int msg_level = -1;
- module_param (msg_level, int, 0);
-@@ -1725,7 +1722,6 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 
- 	dev->net = net;
- 	strscpy(net->name, "usb%d", sizeof(net->name));
--	eth_hw_addr_set(net, node_id);
- 
- 	/* rx and tx sides can use different message sizes;
- 	 * bind() should set rx_urb_size in that case.
-@@ -1801,9 +1797,9 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		goto out4;
- 	}
- 
--	/* let userspace know we have a random address */
--	if (ether_addr_equal(net->dev_addr, node_id))
--		net->addr_assign_type = NET_ADDR_RANDOM;
-+	/* this flags the device for user space */
-+	if (!is_valid_ether_addr(net->dev_addr))
-+		eth_hw_addr_random(net);
- 
- 	if ((dev->driver_info->flags & FLAG_WLAN) != 0)
- 		SET_NETDEV_DEVTYPE(net, &wlan_type);
-@@ -2211,7 +2207,6 @@ static int __init usbnet_init(void)
- 	BUILD_BUG_ON(
- 		sizeof_field(struct sk_buff, cb) < sizeof(struct skb_data));
- 
--	eth_random_addr(node_id);
- 	return 0;
- }
- module_init(usbnet_init);
+ #ifdef CONFIG_XPS
 -- 
 2.43.0
 
