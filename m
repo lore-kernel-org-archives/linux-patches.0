@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549CD18B491;
-	Tue, 10 Sep 2024 09:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A110189903;
+	Tue, 10 Sep 2024 09:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961051; cv=none; b=uKKDhH3TuygIYntzC1A1QlVl9nm6Y38UKiq3/FsNTgkJ1KXUXPdNq/crDUKaPceIZF69/OGNTCkRZkM5TTctXGQjbBLbPoa9CBWEgVdZqRXPmnQ+2WQtghlrtRmYPcuULpB5EgXBvOqsC1NXHKOY3KP9dvjbbqM5haII//DOfjU=
+	t=1725961054; cv=none; b=EeYJhDOFNnI+bzJY9u/Q0dY2sC8GWMBIHv3XsYcaIFnok3pg7pBkwEtxl2AMKYsKBP6YVRuZiaxkYOA0Cebvyrab+7AGX6n4ZD0YuqDpes5fzhYmPV2Vsv+MuvHEK3ptJQHXasAg4NyWxfWlZjrSRwUWqD99FonSXSbZmUpdsJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961051; c=relaxed/simple;
-	bh=/ahXXUWs6JUgzAhwYUUu+vQZSMJDwVClMCxpyO3NRxc=;
+	s=arc-20240116; t=1725961054; c=relaxed/simple;
+	bh=6X+4r6CO7k6XJVDJL3n9KSnHVjsUxZpZxrpYdUmYr/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4d+1Lt0MErQexBQTicxR9gKZdeYfgKNdzqTbWWVbFIVkQ3Ii4gIVXzxKbLitepEPosxENoQk3bWEZ/N/+34USyWS87sLCoL9nc03I/FzSAVtzoNAH5TfK/SjJrc+FRtYJprjOpjipye++iNZj9cCYfCwLvFNo1E6Dq9qGguexY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjA4TOr8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GfuFp7Ykq1T9SuLjV9Z3o9Ba5NPltx3/el4yH/+6Ptysy24YJ0QbjL3hP5RBDJ20hkb45s9gS5kZCnITm9qSegQ4Q6gbj7gk7QvZ6Z47psroMDdooU3BG9540TI/qb/OIH7/BV4/5UOaTdcbVD84o5cULQZEvFf8hhpyDXT4sbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lr0WA4vd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjA4TOr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9ABC4CEC6;
-	Tue, 10 Sep 2024 09:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lr0WA4vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE75C4CEC6;
+	Tue, 10 Sep 2024 09:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961051;
-	bh=/ahXXUWs6JUgzAhwYUUu+vQZSMJDwVClMCxpyO3NRxc=;
+	s=korg; t=1725961054;
+	bh=6X+4r6CO7k6XJVDJL3n9KSnHVjsUxZpZxrpYdUmYr/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjA4TOr8pxkEYfZWBMH15/nVsgOK5lACiV913/w2vmr3Q6uWpGmSmBJBd8i3OzA8U
-	 +bIo3V9jqA7oZDWyklWkoxV2YrtHplIVFppu7rvsRYNAf16aIlSsGOtlunxDVycN3+
-	 29cA3hU1L1V+0Q+X+ItICwfw2D/w8Xi9+HARG3rU=
+	b=Lr0WA4vd37ByAdnulIJy+cJbzI4QDrNHlFObhPWks1W9KHDOsglxJHGOQY1kMk610
+	 1wdzMh2U3wu/LwE7ESADnh+k0tgyEnVarKM+6BsFVDk0AdDye5PunH4u9jCNb5Pwtc
+	 KTNoyta48SVJO3P4kJb+r6F0aSBFYXqBN4NptY48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leesoo Ahn <lsahn@ooseel.net>,
-	John Johansen <john.johansen@canonical.com>,
+	Simon Holesch <simon@holesch.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Hongren Zheng <i@zenithal.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 09/96] apparmor: fix possible NULL pointer dereference
-Date: Tue, 10 Sep 2024 11:31:11 +0200
-Message-ID: <20240910092541.801676516@linuxfoundation.org>
+Subject: [PATCH 4.19 10/96] usbip: Dont submit special requests twice
+Date: Tue, 10 Sep 2024 11:31:12 +0200
+Message-ID: <20240910092541.855766303@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,105 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leesoo Ahn <lsahn@ooseel.net>
+From: Simon Holesch <simon@holesch.de>
 
-[ Upstream commit 3dd384108d53834002be5630132ad5c3f32166ad ]
+[ Upstream commit 8b6b386f9aa936ed0c190446c71cf59d4a507690 ]
 
-profile->parent->dents[AAFS_PROF_DIR] could be NULL only if its parent is made
-from __create_missing_ancestors(..) and 'ent->old' is NULL in
-aa_replace_profiles(..).
-In that case, it must return an error code and the code, -ENOENT represents
-its state that the path of its parent is not existed yet.
+Skip submitting URBs, when identical requests were already sent in
+tweak_special_requests(). Instead call the completion handler directly
+to return the result of the URB.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000030
-PGD 0 P4D 0
-PREEMPT SMP PTI
-CPU: 4 PID: 3362 Comm: apparmor_parser Not tainted 6.8.0-24-generic #24
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? show_regs+0x6d/0x80
- ? __die+0x24/0x80
- ? page_fault_oops+0x99/0x1b0
- ? kernelmode_fixup_or_oops+0xb2/0x140
- ? __bad_area_nosemaphore+0x1a5/0x2c0
- ? find_vma+0x34/0x60
- ? bad_area_nosemaphore+0x16/0x30
- ? do_user_addr_fault+0x2a2/0x6b0
- ? exc_page_fault+0x83/0x1b0
- ? asm_exc_page_fault+0x27/0x30
- ? aafs_create.constprop.0+0x7f/0x130
- ? aafs_create.constprop.0+0x51/0x130
- __aafs_profile_mkdir+0x3d6/0x480
- aa_replace_profiles+0x83f/0x1270
- policy_update+0xe3/0x180
- profile_load+0xbc/0x150
- ? rw_verify_area+0x47/0x140
- vfs_write+0x100/0x480
- ? __x64_sys_openat+0x55/0xa0
- ? syscall_exit_to_user_mode+0x86/0x260
- ksys_write+0x73/0x100
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x7e/0x25c0
- do_syscall_64+0x7f/0x180
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7be9f211c574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007ffd26f2b8c8 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00005d504415e200 RCX: 00007be9f211c574
-RDX: 0000000000001fc1 RSI: 00005d504418bc80 RDI: 0000000000000004
-RBP: 0000000000001fc1 R08: 0000000000001fc1 R09: 0000000080000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00005d504418bc80
-R13: 0000000000000004 R14: 00007ffd26f2b9b0 R15: 00007ffd26f2ba30
- </TASK>
-Modules linked in: snd_seq_dummy snd_hrtimer qrtr snd_hda_codec_generic snd_hda_intel snd_intel_dspcfg snd_intel_sdw_acpi snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_seq_midi snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device i2c_i801 snd_timer i2c_smbus qxl snd soundcore drm_ttm_helper lpc_ich ttm joydev input_leds serio_raw mac_hid binfmt_misc msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs qemu_fw_cfg ip_tables x_tables autofs4 hid_generic usbhid hid ahci libahci psmouse virtio_rng xhci_pci xhci_pci_renesas
-CR2: 0000000000000030
----[ end trace 0000000000000000 ]---
-RIP: 0010:aafs_create.constprop.0+0x7f/0x130
-Code: 4c 63 e0 48 83 c4 18 4c 89 e0 5b 41 5c 41 5d 41 5e 41 5f 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 45 31 d2 c3 cc cc cc cc <4d> 8b 55 30 4d 8d ba a0 00 00 00 4c 89 55 c0 4c 89 ff e8 7a 6a ae
-RSP: 0018:ffffc9000b2c7c98 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000041ed RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000b2c7cd8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffffff82baac10
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007be9f22cf740(0000) GS:ffff88817bc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000030 CR3: 0000000134b08000 CR4: 00000000000006f0
+Even though submitting those requests twice should be harmless, there
+are USB devices that react poorly to some duplicated requests.
 
-Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+One example is the ChipIdea controller implementation in U-Boot: The
+second SET_CONFIGURATION request makes U-Boot disable and re-enable all
+endpoints. Re-enabling an endpoint in the ChipIdea controller, however,
+was broken until U-Boot commit b272c8792502 ("usb: ci: Fix gadget
+reinit").
+
+Signed-off-by: Simon Holesch <simon@holesch.de>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Hongren Zheng <i@zenithal.me>
+Tested-by: Hongren Zheng <i@zenithal.me>
+Link: https://lore.kernel.org/r/20240519141922.171460-1-simon@holesch.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/usbip/stub_rx.c | 77 ++++++++++++++++++++++++-------------
+ 1 file changed, 50 insertions(+), 27 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index 80012d21f038..1223b2648a54 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -1593,6 +1593,10 @@ int __aafs_profile_mkdir(struct aa_profile *profile, struct dentry *parent)
- 		struct aa_profile *p;
- 		p = aa_deref_parent(profile);
- 		dent = prof_dir(p);
-+		if (!dent) {
-+			error = -ENOENT;
-+			goto fail2;
-+		}
- 		/* adding to parent that previously didn't have children */
- 		dent = aafs_create_dir("profiles", dent);
- 		if (IS_ERR(dent))
+diff --git a/drivers/usb/usbip/stub_rx.c b/drivers/usb/usbip/stub_rx.c
+index b88eeaee637a..72501198be45 100644
+--- a/drivers/usb/usbip/stub_rx.c
++++ b/drivers/usb/usbip/stub_rx.c
+@@ -144,53 +144,62 @@ static int tweak_set_configuration_cmd(struct urb *urb)
+ 	if (err && err != -ENODEV)
+ 		dev_err(&sdev->udev->dev, "can't set config #%d, error %d\n",
+ 			config, err);
+-	return 0;
++	return err;
+ }
+ 
+ static int tweak_reset_device_cmd(struct urb *urb)
+ {
+ 	struct stub_priv *priv = (struct stub_priv *) urb->context;
+ 	struct stub_device *sdev = priv->sdev;
++	int err;
+ 
+ 	dev_info(&urb->dev->dev, "usb_queue_reset_device\n");
+ 
+-	if (usb_lock_device_for_reset(sdev->udev, NULL) < 0) {
++	err = usb_lock_device_for_reset(sdev->udev, NULL);
++	if (err < 0) {
+ 		dev_err(&urb->dev->dev, "could not obtain lock to reset device\n");
+-		return 0;
++		return err;
+ 	}
+-	usb_reset_device(sdev->udev);
++	err = usb_reset_device(sdev->udev);
+ 	usb_unlock_device(sdev->udev);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ /*
+  * clear_halt, set_interface, and set_configuration require special tricks.
++ * Returns 1 if request was tweaked, 0 otherwise.
+  */
+-static void tweak_special_requests(struct urb *urb)
++static int tweak_special_requests(struct urb *urb)
+ {
++	int err;
++
+ 	if (!urb || !urb->setup_packet)
+-		return;
++		return 0;
+ 
+ 	if (usb_pipetype(urb->pipe) != PIPE_CONTROL)
+-		return;
++		return 0;
+ 
+ 	if (is_clear_halt_cmd(urb))
+ 		/* tweak clear_halt */
+-		 tweak_clear_halt_cmd(urb);
++		err = tweak_clear_halt_cmd(urb);
+ 
+ 	else if (is_set_interface_cmd(urb))
+ 		/* tweak set_interface */
+-		tweak_set_interface_cmd(urb);
++		err = tweak_set_interface_cmd(urb);
+ 
+ 	else if (is_set_configuration_cmd(urb))
+ 		/* tweak set_configuration */
+-		tweak_set_configuration_cmd(urb);
++		err = tweak_set_configuration_cmd(urb);
+ 
+ 	else if (is_reset_device_cmd(urb))
+-		tweak_reset_device_cmd(urb);
+-	else
++		err = tweak_reset_device_cmd(urb);
++	else {
+ 		usbip_dbg_stub_rx("no need to tweak\n");
++		return 0;
++	}
++
++	return !err;
+ }
+ 
+ /*
+@@ -468,6 +477,7 @@ static void stub_recv_cmd_submit(struct stub_device *sdev,
+ 	int support_sg = 1;
+ 	int np = 0;
+ 	int ret, i;
++	int is_tweaked;
+ 
+ 	if (pipe == -1)
+ 		return;
+@@ -580,8 +590,11 @@ static void stub_recv_cmd_submit(struct stub_device *sdev,
+ 		priv->urbs[i]->pipe = pipe;
+ 		priv->urbs[i]->complete = stub_complete;
+ 
+-		/* no need to submit an intercepted request, but harmless? */
+-		tweak_special_requests(priv->urbs[i]);
++		/*
++		 * all URBs belong to a single PDU, so a global is_tweaked flag is
++		 * enough
++		 */
++		is_tweaked = tweak_special_requests(priv->urbs[i]);
+ 
+ 		masking_bogus_flags(priv->urbs[i]);
+ 	}
+@@ -594,22 +607,32 @@ static void stub_recv_cmd_submit(struct stub_device *sdev,
+ 
+ 	/* urb is now ready to submit */
+ 	for (i = 0; i < priv->num_urbs; i++) {
+-		ret = usb_submit_urb(priv->urbs[i], GFP_KERNEL);
++		if (!is_tweaked) {
++			ret = usb_submit_urb(priv->urbs[i], GFP_KERNEL);
+ 
+-		if (ret == 0)
+-			usbip_dbg_stub_rx("submit urb ok, seqnum %u\n",
+-					pdu->base.seqnum);
+-		else {
+-			dev_err(&udev->dev, "submit_urb error, %d\n", ret);
+-			usbip_dump_header(pdu);
+-			usbip_dump_urb(priv->urbs[i]);
++			if (ret == 0)
++				usbip_dbg_stub_rx("submit urb ok, seqnum %u\n",
++						pdu->base.seqnum);
++			else {
++				dev_err(&udev->dev, "submit_urb error, %d\n", ret);
++				usbip_dump_header(pdu);
++				usbip_dump_urb(priv->urbs[i]);
+ 
++				/*
++				 * Pessimistic.
++				 * This connection will be discarded.
++				 */
++				usbip_event_add(ud, SDEV_EVENT_ERROR_SUBMIT);
++				break;
++			}
++		} else {
+ 			/*
+-			 * Pessimistic.
+-			 * This connection will be discarded.
++			 * An identical URB was already submitted in
++			 * tweak_special_requests(). Skip submitting this URB to not
++			 * duplicate the request.
+ 			 */
+-			usbip_event_add(ud, SDEV_EVENT_ERROR_SUBMIT);
+-			break;
++			priv->urbs[i]->status = 0;
++			stub_complete(priv->urbs[i]);
+ 		}
+ 	}
+ 
 -- 
 2.43.0
 
