@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC247581D;
-	Tue, 10 Sep 2024 10:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBB07581D;
+	Tue, 10 Sep 2024 10:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964338; cv=none; b=Tc8Suv5WJNzTOsDsvOHgiedDEn6MnHXJOb3Wcd0ckcFuIIGaWUAYcUkXmGTGa7sDomZj2GJGZQHCLBHY52+ecPH2u8JIJkbxfWt/qegbNSfB/4r/cmEGY1NZVi2Z4bm2T8kjK0Jzr3yh1jHOkzPT2Og0qzaLbnCREVd0jdVMg8k=
+	t=1725964341; cv=none; b=sdj9tZgg99hgaSki4E+1mduegL6RxjFqrKDJntd7sV58NjbW6tkjIP3SBkHRMc+SRu5AfwR/C34iC8u5zAtraFGZXswSwNyXsv4varR6U/4hTh1IdyOSILL4ROt18q+kujWyukqbYQvhV9VhVHcAuXsjorTxYspHqtO5JO1rshI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964338; c=relaxed/simple;
-	bh=dehxKEjuFZGAZDeWeqAZvu4TSCe/fxvO60R0+u5T3Cg=;
+	s=arc-20240116; t=1725964341; c=relaxed/simple;
+	bh=/tNEC6dWs9w4qbISY4/pRT2RKGc6UK70mT6C6xQUAjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ghNOZf3q8IwYhc8H5p96Dpx7g1ZXi2dsXiJ/r3KdXiftObQ1nm3ROmy+NfTuxZgdOuwllzTVTjAYRhK+yi5ZQm/mWUtIQWXFfRVTEbkjHIzHx305APWQea1IG9UgWqbbz06BsPvi+bKnoI0IE4hipo+CsyLiRsHXl5k9jmtwPA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I53HlgQA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ldpZSKi0avg+ZQpxpZ0hnV2gkYTkPKANITd3S408dQrr9gzbAGFbI4FyWtwwVG2M4drowctOOI+wEEQsL8SGc9GkyxDCxiEenGbkbqAP7Gb0c6E1swUzDbrQA1+zW/4YI0+xuPeoylyNlLlq5FFI1gcCtDSKL3x8kEONq6grX2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5T8P291; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I53HlgQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949E4C4CEC6;
-	Tue, 10 Sep 2024 10:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5T8P291"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F321C4CEC3;
+	Tue, 10 Sep 2024 10:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964338;
-	bh=dehxKEjuFZGAZDeWeqAZvu4TSCe/fxvO60R0+u5T3Cg=;
+	s=korg; t=1725964341;
+	bh=/tNEC6dWs9w4qbISY4/pRT2RKGc6UK70mT6C6xQUAjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I53HlgQAuyaEBDPg8dQEATA3GsFRhM356lki7R+QyjlNfm0/n7pVRdNR6aV9tzULl
-	 oyDsuRWkhnA4nS8J0eynMVglOM3ICidC3ViFSht3LSxsPDrphDSa42nAnHYUVvfahS
-	 5DJhkYoy1mCs6o8iQ+qgqwyvaSHRX8tPxpPzqP90=
+	b=w5T8P291b/tVuG7PsOgRMRZM9ENDaHS00r5GE1wiPYTniOM9Fc9JmTyf9Gilhz2Xn
+	 oTX/NqBUjZQKRgAVeuY24fimolse0lqhfK79RqVaI06AZFjAy7hYeMNU+uWcvMWX/w
+	 aU9gg3jmePKJ4LLmpOj7H4gx9GxJaIQZLjiT0TD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/269] hwmon: (hp-wmi-sensors) Check if WMI event data exists
-Date: Tue, 10 Sep 2024 11:31:48 +0200
-Message-ID: <20240910092612.488468032@linuxfoundation.org>
+Subject: [PATCH 6.6 122/269] net: phy: Fix missing of_node_put() for leds
+Date: Tue, 10 Sep 2024 11:31:49 +0200
+Message-ID: <20240910092612.523898755@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -46,46 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit a54da9df75cd1b4b5028f6c60f9a211532680585 ]
+[ Upstream commit 2560db6ede1aaf162a73b2df43e0b6c5ed8819f7 ]
 
-The BIOS can choose to return no event data in response to a
-WMI event, so the ACPI object passed to the WMI notify handler
-can be NULL.
+The call of of_get_child_by_name() will cause refcount incremented
+for leds, if it succeeds, it should call of_node_put() to decrease
+it, fix it.
 
-Check for such a situation and ignore the event in such a case.
-
-Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Message-ID: <20240901031055.3030-2-W_Armin@gmx.de>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 01e5b728e9e4 ("net: phy: Add a binding for PHY LEDs")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240830022025.610844-1-ruanjinjie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/hp-wmi-sensors.c | 2 ++
+ drivers/net/phy/phy_device.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
-index b5325d0e72b9..dfa1d6926dea 100644
---- a/drivers/hwmon/hp-wmi-sensors.c
-+++ b/drivers/hwmon/hp-wmi-sensors.c
-@@ -1637,6 +1637,8 @@ static void hp_wmi_notify(u32 value, void *context)
- 		goto out_unlock;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index c895cd178e6a..2e4bff6055e2 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3164,11 +3164,13 @@ static int of_phy_leds(struct phy_device *phydev)
+ 		err = of_phy_led(phydev, led);
+ 		if (err) {
+ 			of_node_put(led);
++			of_node_put(leds);
+ 			phy_leds_unregister(phydev);
+ 			return err;
+ 		}
+ 	}
  
- 	wobj = out.pointer;
-+	if (!wobj)
-+		goto out_unlock;
++	of_node_put(leds);
+ 	return 0;
+ }
  
- 	err = populate_event_from_wobj(dev, &event, wobj);
- 	if (err) {
 -- 
 2.43.0
 
