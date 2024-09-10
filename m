@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1092518CBE8;
-	Tue, 10 Sep 2024 09:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F507187325;
+	Tue, 10 Sep 2024 09:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961418; cv=none; b=BqQzmRRzGjy4F4ohU3wieGYdf3To35Ftzt92ZyxeR/zfhYoL8BqmJez/v1baX/mBvYcc7vWwvOf5G2f6XKfOtXkd26EY0MEZl07WCtqz1ay8Iw+Rnz+8wMk0uzWnRNEBddvRLwDEQtVak+Rc4FcZCzHkyJVs1lTshvdFBunNT+4=
+	t=1725961420; cv=none; b=fMRD6saKpNN9xInMjTU43Xqqha9oo3ActQ0pVJBNlU8wx2yhZND24h4JZIRIoNxkgtu6B4g16Syi7V1dokF3Yh1YnzYY0h52wUnUK6kO9pRY3boHlvS9I0cmEBSFpXh3N8Rvfad7vdNRapC+GkPpnoDDOeVXfOIZ6xUiaLYRx0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961418; c=relaxed/simple;
-	bh=DoHC+vPt73EE3Z5a0j7BWSfpj107f68UKM6mdgWlhHA=;
+	s=arc-20240116; t=1725961420; c=relaxed/simple;
+	bh=elpOTbvEEqPVUWJhjAr4JrbvApgrDq/h76jWtfQfOoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OuNroRAPV1LyWbkAxc11Pm4q14BR6Fikcx3hrO2CGoho7LQ2+jLSsqe2byQwW6jgRJT6wISxzrMtp7RmO0ye+aQX8sjoD42HNFIfZWdmc/4IHShzgDZRlwVb4shWDE9xlDP3qk5ZbAL5+CQI5EPDFh/StfYHeWSFeuWV2vOOppQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpRXMn4b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TDpkyaaUy4Wpwp4ohIj4tMi/d3Yqz43d7LhCJQTUwdukHykJg2B/EZay0xsGon9YnG6ZrBssHomnlWbAQ5fIKAC16FtnxqAP2//b9oLcGx03T4ZBrxbgJJHH33qViVd7zjKYYfUFdBbaSSgga+4NCKr8NRCsMEWNDJO7SxMQXIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYMv520d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpRXMn4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6D5C4CEC3;
-	Tue, 10 Sep 2024 09:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYMv520d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21743C4CEC3;
+	Tue, 10 Sep 2024 09:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961417;
-	bh=DoHC+vPt73EE3Z5a0j7BWSfpj107f68UKM6mdgWlhHA=;
+	s=korg; t=1725961420;
+	bh=elpOTbvEEqPVUWJhjAr4JrbvApgrDq/h76jWtfQfOoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpRXMn4bVXMSTCHsvk+Yk4pC5xdDnHJxjGgRBwByntoS6wfG+7ShIidqX8GF23kRC
-	 EwyJYjNZB9YjDIv31pEgFRum/TwHevyznoxRzTLSkpbZrN9dtWIcPHYaJiAyr5zsAo
-	 h2kEneGnsEhJLr5H+Kqy2bF3xOTAAbmAOitQCIn8=
+	b=KYMv520dOdysV9B5/0e+UiSJlI/6Mrnep/KV7euQaGm66xCMv/1HX0fvWv0sJnq1B
+	 LrQ0lkAWixoBlRCblBYMK00IBOmuseHd6r1Kz4z+iVCJngxUg6/no80Jbl0Jeqn9JU
+	 bNFBZNsEfZ/GMPmuZNHktspl8QW1frsJyKO/6PUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	matoro <matoro_mailinglist_kernel@matoro.tk>,
-	Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
-Subject: [PATCH 6.10 045/375] parisc: Delay write-protection until mark_rodata_ro() call
-Date: Tue, 10 Sep 2024 11:27:22 +0200
-Message-ID: <20240910092623.756313629@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.10 063/375] tracing/timerlat: Only clear timer if a kthread exists
+Date: Tue, 10 Sep 2024 11:27:40 +0200
+Message-ID: <20240910092624.341716088@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,66 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 213aa670153ed675a007c1f35c5db544b0fefc94 upstream.
+commit e6a53481da292d970d1edf0d8831121d1c5e2f0d upstream.
 
-Do not write-protect the kernel read-only and __ro_after_init sections
-earlier than before mark_rodata_ro() is called.  This fixes a boot issue on
-parisc which is triggered by commit 91a1d97ef482 ("jump_label,module: Don't
-alloc static_key_mod for __ro_after_init keys"). That commit may modify
-static key contents in the __ro_after_init section at bootup, so this
-section needs to be writable at least until mark_rodata_ro() is called.
+The timerlat tracer can use user space threads to check for osnoise and
+timer latency. If the program using this is killed via a SIGTERM, the
+threads are shutdown one at a time and another tracing instance can start
+up resetting the threads before they are fully closed. That causes the
+hrtimer assigned to the kthread to be shutdown and freed twice when the
+dying thread finally closes the file descriptors, causing a use-after-free
+bug.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: matoro <matoro_mailinglist_kernel@matoro.tk>
-Reported-by: Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
-Tested-by: Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
-Link: https://lore.kernel.org/linux-parisc/096cad5aada514255cd7b0b9dbafc768@matoro.tk/#r
-Fixes: 91a1d97ef482 ("jump_label,module: Don't alloc static_key_mod for __ro_after_init keys")
-Cc: stable@vger.kernel.org # v6.10+
+Only cancel the hrtimer if the associated thread is still around. Also add
+the interface_lock around the resetting of the tlat_var->kthread.
+
+Note, this is just a quick fix that can be backported to stable. A real
+fix is to have a better synchronization between the shutdown of old
+threads and the starting of new ones.
+
+Link: https://lore.kernel.org/all/20240820130001.124768-1-tglozar@redhat.com/
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: "Luis Claudio R. Goncalves" <lgoncalv@redhat.com>
+Link: https://lore.kernel.org/20240905085330.45985730@gandalf.local.home
+Fixes: e88ed227f639e ("tracing/timerlat: Add user-space interface")
+Reported-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/mm/init.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ kernel/trace/trace_osnoise.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/arch/parisc/mm/init.c b/arch/parisc/mm/init.c
-index 34d91cb8b259..96970fa75e4a 100644
---- a/arch/parisc/mm/init.c
-+++ b/arch/parisc/mm/init.c
-@@ -459,7 +459,6 @@ void free_initmem(void)
- 	unsigned long kernel_end  = (unsigned long)&_end;
- 
- 	/* Remap kernel text and data, but do not touch init section yet. */
--	kernel_set_to_readonly = true;
- 	map_pages(init_end, __pa(init_end), kernel_end - init_end,
- 		  PAGE_KERNEL, 0);
- 
-@@ -493,11 +492,18 @@ void free_initmem(void)
- #ifdef CONFIG_STRICT_KERNEL_RWX
- void mark_rodata_ro(void)
- {
--	/* rodata memory was already mapped with KERNEL_RO access rights by
--           pagetable_init() and map_pages(). No need to do additional stuff here */
--	unsigned long roai_size = __end_ro_after_init - __start_ro_after_init;
-+	unsigned long start = (unsigned long) &__start_rodata;
-+	unsigned long end = (unsigned long) &__end_rodata;
- 
--	pr_info("Write protected read-only-after-init data: %luk\n", roai_size >> 10);
-+	pr_info("Write protecting the kernel read-only data: %luk\n",
-+	       (end - start) >> 10);
-+
-+	kernel_set_to_readonly = true;
-+	map_pages(start, __pa(start), end - start, PAGE_KERNEL, 0);
-+
-+	/* force the kernel to see the new page table entries */
-+	flush_cache_all();
-+	flush_tlb_all();
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -253,20 +253,31 @@ static inline struct timerlat_variables
  }
+ 
+ /*
++ * Protect the interface.
++ */
++static struct mutex interface_lock;
++
++/*
+  * tlat_var_reset - Reset the values of the given timerlat_variables
+  */
+ static inline void tlat_var_reset(void)
+ {
+ 	struct timerlat_variables *tlat_var;
+ 	int cpu;
++
++	/* Synchronize with the timerlat interfaces */
++	mutex_lock(&interface_lock);
+ 	/*
+ 	 * So far, all the values are initialized as 0, so
+ 	 * zeroing the structure is perfect.
+ 	 */
+ 	for_each_cpu(cpu, cpu_online_mask) {
+ 		tlat_var = per_cpu_ptr(&per_cpu_timerlat_var, cpu);
++		if (tlat_var->kthread)
++			hrtimer_cancel(&tlat_var->timer);
+ 		memset(tlat_var, 0, sizeof(*tlat_var));
+ 	}
++	mutex_unlock(&interface_lock);
+ }
+ #else /* CONFIG_TIMERLAT_TRACER */
+ #define tlat_var_reset()	do {} while (0)
+@@ -332,11 +343,6 @@ struct timerlat_sample {
  #endif
  
--- 
-2.46.0
-
+ /*
+- * Protect the interface.
+- */
+-static struct mutex interface_lock;
+-
+-/*
+  * Tracer data.
+  */
+ static struct osnoise_data {
+@@ -2591,7 +2597,8 @@ static int timerlat_fd_release(struct in
+ 	osn_var = per_cpu_ptr(&per_cpu_osnoise_var, cpu);
+ 	tlat_var = per_cpu_ptr(&per_cpu_timerlat_var, cpu);
+ 
+-	hrtimer_cancel(&tlat_var->timer);
++	if (tlat_var->kthread)
++		hrtimer_cancel(&tlat_var->timer);
+ 	memset(tlat_var, 0, sizeof(*tlat_var));
+ 
+ 	osn_var->sampling = 0;
 
 
