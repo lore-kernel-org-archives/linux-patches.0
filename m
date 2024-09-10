@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15B718C025;
-	Tue, 10 Sep 2024 10:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99B9183CB0;
+	Tue, 10 Sep 2024 10:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963174; cv=none; b=d59VkJ3HM/Snec+MJYniLsPkyREfrlE84PHZzRqaWr6TGIeIpHwlJJPXo2E1oqywTDq/87xKwtRpyMsdssngG6mnoRWAeGHErWxW02vL6SdZbwGMa9ZCI0OBdPSaSPmTWT/GbfeYbfmreJM5cQpG5gjj8M9vcXUkbXIFat6K9XY=
+	t=1725963178; cv=none; b=aBUZL87OcJB0ybw1GDuPKXDdtydiKzMnro3GmXJVOqqoyQIrxCKMSr4taZGbcMvnCuApRsJ4ULqPRve95pFnya5JOuFADMPm9/cDewUH0tPd37eZ8T+6oKc7d9Nqw37i9i5U6sEO4kfnoYq4pTRksOmoVSx+yv716Cy7j+rc/hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963174; c=relaxed/simple;
-	bh=YLcCfIFZ2Ot5qKbNPYKW7ZlpHuRQU0CnMEfMFB7JoVQ=;
+	s=arc-20240116; t=1725963178; c=relaxed/simple;
+	bh=4hF4zcaQVb7f0qLL5CJiM4r9G1P2oAoXIjmhDLUqcMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVwE0+LXx7UUO3zWQGlXVrDzWL6hPMaM8CX/1jvOmbUoIK5ctrbdQzb9ZbGKI/PyMRcxRrET7rT/UFf51vRKF5Q+Q+wCMWlk/wQcKwQZkDBX5EytbQ/gseKr/2RRt0wKlMTh+8gme8UoA+gJ1QdNeEcP1yint4TGRuipfBNuzlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybzEi9bG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ofoboO7xRCgYRtBbwvcQJxNiPIKgIbqIMr67uGGqwIxzvsdQcanr5lTTzUbFp3qsswHjtzUd0ZO7JJoahYBti5QB/WFIULyGsS/8aNRyrUqXK66F/VwvQXYJaO2T//e4EBngQqbv3VTkjpGp47XvYEUgj+e476ZFyexxX1wQrHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cnNB/+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybzEi9bG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCDFC4CEC3;
-	Tue, 10 Sep 2024 10:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cnNB/+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25197C4CEC3;
+	Tue, 10 Sep 2024 10:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963174;
-	bh=YLcCfIFZ2Ot5qKbNPYKW7ZlpHuRQU0CnMEfMFB7JoVQ=;
+	s=korg; t=1725963177;
+	bh=4hF4zcaQVb7f0qLL5CJiM4r9G1P2oAoXIjmhDLUqcMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybzEi9bGkJJwNoaHhsF7avWkCLanZvMJaCbGIHXhGtYxQAnRiOflHrUG7P8sH37dq
-	 YfsdfuLN7eO3gTVNilcNH3Jfh/4pzfPKNn6QUQ2pB5bJ+z5vcag/TWZggpDyDEiHIV
-	 Chkj3MjEUgjPWDiZlXwyqDZ8/9WPFwOESqRyB9uE=
+	b=1cnNB/+hKqnyQZ+sBRPQsoCFdapgEBeDy9EqSc/V+ILGgC6O7ll/rO7Hf+D8jFYfR
+	 B2WGmg3D5VV7gyGZGhoPpzxjcYPpworyzryL2r6caQpEO0NXZFfZfLlX/ACWjICRtS
+	 7FJJuuERGaotG24F0H4Ui8s8jdpsDyvl2m7LXpUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jann Horn <jannh@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Pavel Emelyanov <xemul@virtuozzo.com>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 160/192] mm: Rename pmd_read_atomic()
-Date: Tue, 10 Sep 2024 11:33:04 +0200
-Message-ID: <20240910092604.534760140@linuxfoundation.org>
+Subject: [PATCH 6.1 161/192] userfaultfd: fix checks for huge PMDs
+Date: Tue, 10 Sep 2024 11:33:05 +0200
+Message-ID: <20240910092604.575528946@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -50,140 +56,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit dab6e717429e5ec795d558a0e9a5337a1ed33a3d ]
+[ Upstream commit 71c186efc1b2cf1aeabfeff3b9bd5ac4c5ac14d8 ]
 
-There's no point in having the identical routines for PTE/PMD have
-different names.
+Patch series "userfaultfd: fix races around pmd_trans_huge() check", v2.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20221022114424.841277397%40infradead.org
-Stable-dep-of: 71c186efc1b2 ("userfaultfd: fix checks for huge PMDs")
+The pmd_trans_huge() code in mfill_atomic() is wrong in three different
+ways depending on kernel version:
+
+1. The pmd_trans_huge() check is racy and can lead to a BUG_ON() (if you hit
+   the right two race windows) - I've tested this in a kernel build with
+   some extra mdelay() calls. See the commit message for a description
+   of the race scenario.
+   On older kernels (before 6.5), I think the same bug can even
+   theoretically lead to accessing transhuge page contents as a page table
+   if you hit the right 5 narrow race windows (I haven't tested this case).
+2. As pointed out by Qi Zheng, pmd_trans_huge() is not sufficient for
+   detecting PMDs that don't point to page tables.
+   On older kernels (before 6.5), you'd just have to win a single fairly
+   wide race to hit this.
+   I've tested this on 6.1 stable by racing migration (with a mdelay()
+   patched into try_to_migrate()) against UFFDIO_ZEROPAGE - on my x86
+   VM, that causes a kernel oops in ptlock_ptr().
+3. On newer kernels (>=6.5), for shmem mappings, khugepaged is allowed
+   to yank page tables out from under us (though I haven't tested that),
+   so I think the BUG_ON() checks in mfill_atomic() are just wrong.
+
+I decided to write two separate fixes for these (one fix for bugs 1+2, one
+fix for bug 3), so that the first fix can be backported to kernels
+affected by bugs 1+2.
+
+This patch (of 2):
+
+This fixes two issues.
+
+I discovered that the following race can occur:
+
+  mfill_atomic                other thread
+  ============                ============
+                              <zap PMD>
+  pmdp_get_lockless() [reads none pmd]
+  <bail if trans_huge>
+  <if none:>
+                              <pagefault creates transhuge zeropage>
+    __pte_alloc [no-op]
+                              <zap PMD>
+  <bail if pmd_trans_huge(*dst_pmd)>
+  BUG_ON(pmd_none(*dst_pmd))
+
+I have experimentally verified this in a kernel with extra mdelay() calls;
+the BUG_ON(pmd_none(*dst_pmd)) triggers.
+
+On kernels newer than commit 0d940a9b270b ("mm/pgtable: allow
+pte_offset_map[_lock]() to fail"), this can't lead to anything worse than
+a BUG_ON(), since the page table access helpers are actually designed to
+deal with page tables concurrently disappearing; but on older kernels
+(<=6.4), I think we could probably theoretically race past the two
+BUG_ON() checks and end up treating a hugepage as a page table.
+
+The second issue is that, as Qi Zheng pointed out, there are other types
+of huge PMDs that pmd_trans_huge() can't catch: devmap PMDs and swap PMDs
+(in particular, migration PMDs).
+
+On <=6.4, this is worse than the first issue: If mfill_atomic() runs on a
+PMD that contains a migration entry (which just requires winning a single,
+fairly wide race), it will pass the PMD to pte_offset_map_lock(), which
+assumes that the PMD points to a page table.
+
+Breakage follows: First, the kernel tries to take the PTE lock (which will
+crash or maybe worse if there is no "struct page" for the address bits in
+the migration entry PMD - I think at least on X86 there usually is no
+corresponding "struct page" thanks to the PTE inversion mitigation, amd64
+looks different).
+
+If that didn't crash, the kernel would next try to write a PTE into what
+it wrongly thinks is a page table.
+
+As part of fixing these issues, get rid of the check for pmd_trans_huge()
+before __pte_alloc() - that's redundant, we're going to have to check for
+that after the __pte_alloc() anyway.
+
+Backport note: pmdp_get_lockless() is pmd_read_atomic() in older kernels.
+
+Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-0-5efa61078a41@google.com
+Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-1-5efa61078a41@google.com
+Fixes: c1a4de99fada ("userfaultfd: mcopy_atomic|mfill_zeropage: UFFDIO_COPY|UFFDIO_ZEROPAGE preparation")
+Signed-off-by: Jann Horn <jannh@google.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pavel Emelyanov <xemul@virtuozzo.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pgtable.h    | 9 ++-------
- mm/hmm.c                   | 2 +-
- mm/khugepaged.c            | 2 +-
- mm/mapping_dirty_helpers.c | 2 +-
- mm/mprotect.c              | 2 +-
- mm/userfaultfd.c           | 2 +-
- mm/vmscan.c                | 4 ++--
- 7 files changed, 9 insertions(+), 14 deletions(-)
+ mm/userfaultfd.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
-index 8f31e2ff6b58..3e3c00e80b65 100644
---- a/include/linux/pgtable.h
-+++ b/include/linux/pgtable.h
-@@ -1373,11 +1373,6 @@ static inline int pud_trans_unstable(pud_t *pud)
- #endif
- }
- 
--static inline pmd_t pmd_read_atomic(pmd_t *pmdp)
--{
--	return pmdp_get_lockless(pmdp);
--}
--
- #ifndef arch_needs_pgtable_deposit
- #define arch_needs_pgtable_deposit() (false)
- #endif
-@@ -1404,13 +1399,13 @@ static inline pmd_t pmd_read_atomic(pmd_t *pmdp)
-  */
- static inline int pmd_none_or_trans_huge_or_clear_bad(pmd_t *pmd)
- {
--	pmd_t pmdval = pmd_read_atomic(pmd);
-+	pmd_t pmdval = pmdp_get_lockless(pmd);
- 	/*
- 	 * The barrier will stabilize the pmdval in a register or on
- 	 * the stack so that it will stop changing under the code.
- 	 *
- 	 * When CONFIG_TRANSPARENT_HUGEPAGE=y on x86 32bit PAE,
--	 * pmd_read_atomic is allowed to return a not atomic pmdval
-+	 * pmdp_get_lockless is allowed to return a not atomic pmdval
- 	 * (for example pointing to an hugepage that has never been
- 	 * mapped in the pmd). The below checks will only care about
- 	 * the low part of the pmd with 32bit PAE x86 anyway, with the
-diff --git a/mm/hmm.c b/mm/hmm.c
-index 3850fb625dda..39cf50de76d7 100644
---- a/mm/hmm.c
-+++ b/mm/hmm.c
-@@ -361,7 +361,7 @@ static int hmm_vma_walk_pmd(pmd_t *pmdp,
- 		 * huge or device mapping one and compute corresponding pfn
- 		 * values.
- 		 */
--		pmd = pmd_read_atomic(pmdp);
-+		pmd = pmdp_get_lockless(pmdp);
- 		barrier();
- 		if (!pmd_devmap(pmd) && !pmd_trans_huge(pmd))
- 			goto again;
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 085fca1fa27a..47010c3b5c4d 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -866,7 +866,7 @@ static int find_pmd_or_thp_or_none(struct mm_struct *mm,
- 	if (!*pmd)
- 		return SCAN_PMD_NULL;
- 
--	pmde = pmd_read_atomic(*pmd);
-+	pmde = pmdp_get_lockless(*pmd);
- 
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
- 	/* See comments in pmd_none_or_trans_huge_or_clear_bad() */
-diff --git a/mm/mapping_dirty_helpers.c b/mm/mapping_dirty_helpers.c
-index 1b0ab8fcfd8b..175e424b9ab1 100644
---- a/mm/mapping_dirty_helpers.c
-+++ b/mm/mapping_dirty_helpers.c
-@@ -126,7 +126,7 @@ static int clean_record_pte(pte_t *pte, unsigned long addr,
- static int wp_clean_pmd_entry(pmd_t *pmd, unsigned long addr, unsigned long end,
- 			      struct mm_walk *walk)
- {
--	pmd_t pmdval = pmd_read_atomic(pmd);
-+	pmd_t pmdval = pmdp_get_lockless(pmd);
- 
- 	if (!pmd_trans_unstable(&pmdval))
- 		return 0;
-diff --git a/mm/mprotect.c b/mm/mprotect.c
-index 668bfaa6ed2a..f006bafe338f 100644
---- a/mm/mprotect.c
-+++ b/mm/mprotect.c
-@@ -294,7 +294,7 @@ static unsigned long change_pte_range(struct mmu_gather *tlb,
-  */
- static inline int pmd_none_or_clear_bad_unless_trans_huge(pmd_t *pmd)
- {
--	pmd_t pmdval = pmd_read_atomic(pmd);
-+	pmd_t pmdval = pmdp_get_lockless(pmd);
- 
- 	/* See pmd_none_or_trans_huge_or_clear_bad for info on barrier */
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
 diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
-index 992a0a16846f..5d873aadec76 100644
+index 5d873aadec76..50c01a7eb705 100644
 --- a/mm/userfaultfd.c
 +++ b/mm/userfaultfd.c
-@@ -641,7 +641,7 @@ static __always_inline ssize_t __mcopy_atomic(struct mm_struct *dst_mm,
- 			break;
+@@ -642,21 +642,23 @@ static __always_inline ssize_t __mcopy_atomic(struct mm_struct *dst_mm,
  		}
  
--		dst_pmdval = pmd_read_atomic(dst_pmd);
+ 		dst_pmdval = pmdp_get_lockless(dst_pmd);
+-		/*
+-		 * If the dst_pmd is mapped as THP don't
+-		 * override it and just be strict.
+-		 */
+-		if (unlikely(pmd_trans_huge(dst_pmdval))) {
+-			err = -EEXIST;
+-			break;
+-		}
+ 		if (unlikely(pmd_none(dst_pmdval)) &&
+ 		    unlikely(__pte_alloc(dst_mm, dst_pmd))) {
+ 			err = -ENOMEM;
+ 			break;
+ 		}
+-		/* If an huge pmd materialized from under us fail */
+-		if (unlikely(pmd_trans_huge(*dst_pmd))) {
 +		dst_pmdval = pmdp_get_lockless(dst_pmd);
- 		/*
- 		 * If the dst_pmd is mapped as THP don't
- 		 * override it and just be strict.
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 4cd0cbf9c121..f5fa1c76d9e6 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4068,9 +4068,9 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
- 	/* walk_pte_range() may call get_next_vma() */
- 	vma = args->vma;
- 	for (i = pmd_index(start), addr = start; addr != end; i++, addr = next) {
--		pmd_t val = pmd_read_atomic(pmd + i);
-+		pmd_t val = pmdp_get_lockless(pmd + i);
- 
--		/* for pmd_read_atomic() */
-+		/* for pmdp_get_lockless() */
- 		barrier();
- 
- 		next = pmd_addr_end(addr, end);
++		/*
++		 * If the dst_pmd is THP don't override it and just be strict.
++		 * (This includes the case where the PMD used to be THP and
++		 * changed back to none after __pte_alloc().)
++		 */
++		if (unlikely(!pmd_present(dst_pmdval) || pmd_trans_huge(dst_pmdval) ||
++			     pmd_devmap(dst_pmdval))) {
++			err = -EEXIST;
++			break;
++		}
++		if (unlikely(pmd_bad(dst_pmdval))) {
+ 			err = -EFAULT;
+ 			break;
+ 		}
 -- 
 2.43.0
 
