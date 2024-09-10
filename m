@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B3217AE00;
-	Tue, 10 Sep 2024 10:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7187E181B8D;
+	Tue, 10 Sep 2024 10:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962407; cv=none; b=pSS+ACtgQD+g0suKgByvKi4mLKaSN0JFfr9MG8ntJDoDdX5Ut9MIoqRQ1aoxqFDa5cMoWP5+PmQ+zZN7fYfVXyxqO4nfMFl1yIn3BYDUfzqH9N1gWe6ZlTqWWIk8um2gRaOaJreRKNyre3xdkwGPJ2CRHCVKYWmvR2cmPp8v6TE=
+	t=1725962410; cv=none; b=QvAur4Ttlfn82e01jIe/mXCA70IqqdC18uft0EzMzTIda5k7WNwHMftBf3pxSmyFu83Hf7AyqVZww2/mDa9PExwjDMHsAL31dF39AZZmOvz+DaqT+CSH+EQHxp5DP/wszcyU1ilVzaPCHn376JUAxV7o8U1H5XVL8X/S2krle3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962407; c=relaxed/simple;
-	bh=TpdSuptpqqDTm4klHbghUFTJpZ5GtUqmZz2xYCQVOBc=;
+	s=arc-20240116; t=1725962410; c=relaxed/simple;
+	bh=66U8mezrOnbG37ykK7lU7KG1h4AN0CT5tAjqqqauA4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZtTi8sczSCMygEA0brjCHPnGB3uHa1BQXg0J3Zb4LwG4JojqWVslzXGX9eRVwr4ViKNeW2FmrTjgZTasQMC4Uo4B1l/7pB+Iz/lQWs3QrLFtX/WEDdlkk4LB8N/ht4yprov+QqtlmgHHC+Zl8DoVt1UFDAJgU8fzBoBsLGyXso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=symlzPOh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a540/3WoiaRL+UFgR+ewNyj5d2+AtOCEPqzKznQYKerhlYCvQjg9CCzc6u1rZgJxmxNZouB0hx/o6UsQJySdwV1/GrJarso2GhR0YMevmzkbrCecmyy+/oj49BT1o9XDguff4mBbjgop6eV/bP62rV1GyQzvZnXUtT/VghspZlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2U9sCdo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="symlzPOh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC54C4CEC3;
-	Tue, 10 Sep 2024 10:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2U9sCdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EBBC4CEC3;
+	Tue, 10 Sep 2024 10:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962407;
-	bh=TpdSuptpqqDTm4klHbghUFTJpZ5GtUqmZz2xYCQVOBc=;
+	s=korg; t=1725962410;
+	bh=66U8mezrOnbG37ykK7lU7KG1h4AN0CT5tAjqqqauA4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=symlzPOhvt5oZz3x/+H112UzInuCo4g+b7tZIN0aU6QQ3XEyDXRC0BJ6IFfnrVpaO
-	 YrCaTrGgO7tYvFI3DcbmGlaR67vRuDibsSWXDt2bfelmqgBHFbfomkDk4+nZtaOamy
-	 ChUjNgPG2WdhdhId6gqDvOqapm3GO2eXbLaf/TwI=
+	b=O2U9sCdok3h1Vssxy2m+wiNRfEX0YB0farkNUXXij215WT8ASqIJmlcYNxPBSB8mD
+	 FBBrm9b+n3gPpAxOwqdrmjVNNAuCkpWa/RySMz9LBzPGngcGIC4TpG11nrfCtGgsG+
+	 UoUF9Y+ghugjUhBKQN0pbMltKqWY+pwm31FJcZ30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.4 023/121] virtio_net: Fix napi_skb_cache_put warning
-Date: Tue, 10 Sep 2024 11:31:38 +0200
-Message-ID: <20240910092546.813146598@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 024/121] udf: Limit file size to 4TB
+Date: Tue, 10 Sep 2024 11:31:39 +0200
+Message-ID: <20240910092546.858911920@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -54,88 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Jan Kara <jack@suse.cz>
 
-commit f8321fa75102246d7415a6af441872f6637c93ab upstream.
+commit c2efd13a2ed4f29bf9ef14ac2fbb7474084655f8 upstream.
 
-After the commit bdacf3e34945 ("net: Use nested-BH locking for
-napi_alloc_cache.") was merged, the following warning began to appear:
+UDF disk format supports in principle file sizes up to 1<<64-1. However
+the file space (including holes) is described by a linked list of
+extents, each of which can have at most 1GB. Thus the creation and
+handling of extents gets unusably slow beyond certain point. Limit the
+file size to 4TB to avoid locking up the kernel too easily.
 
-	 WARNING: CPU: 5 PID: 1 at net/core/skbuff.c:1451 napi_skb_cache_put+0x82/0x4b0
-
-	  __warn+0x12f/0x340
-	  napi_skb_cache_put+0x82/0x4b0
-	  napi_skb_cache_put+0x82/0x4b0
-	  report_bug+0x165/0x370
-	  handle_bug+0x3d/0x80
-	  exc_invalid_op+0x1a/0x50
-	  asm_exc_invalid_op+0x1a/0x20
-	  __free_old_xmit+0x1c8/0x510
-	  napi_skb_cache_put+0x82/0x4b0
-	  __free_old_xmit+0x1c8/0x510
-	  __free_old_xmit+0x1c8/0x510
-	  __pfx___free_old_xmit+0x10/0x10
-
-The issue arises because virtio is assuming it's running in NAPI context
-even when it's not, such as in the netpoll case.
-
-To resolve this, modify virtnet_poll_tx() to only set NAPI when budget
-is available. Same for virtnet_poll_cleantx(), which always assumed that
-it was in a NAPI context.
-
-Fixes: df133f3f9625 ("virtio_net: bulk free tx skbs")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Link: https://patch.msgid.link/20240712115325.54175-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Shivani: Modified to apply on v4.19.y-v5.10.y]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/udf/super.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1479,7 +1479,7 @@ static bool is_xdp_raw_buffer_queue(stru
- 		return false;
- }
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -86,6 +86,13 @@ enum {
+ #define UDF_MAX_LVID_NESTING 1000
  
--static void virtnet_poll_cleantx(struct receive_queue *rq)
-+static void virtnet_poll_cleantx(struct receive_queue *rq, int budget)
- {
- 	struct virtnet_info *vi = rq->vq->vdev->priv;
- 	unsigned int index = vq2rxq(rq->vq);
-@@ -1490,7 +1490,7 @@ static void virtnet_poll_cleantx(struct
- 		return;
+ enum { UDF_MAX_LINKS = 0xffff };
++/*
++ * We limit filesize to 4TB. This is arbitrary as the on-disk format supports
++ * more but because the file space is described by a linked list of extents,
++ * each of which can have at most 1GB, the creation and handling of extents
++ * gets unusably slow beyond certain point...
++ */
++#define UDF_MAX_FILESIZE (1ULL << 42)
  
- 	if (__netif_tx_trylock(txq)) {
--		free_old_xmit_skbs(sq, true);
-+		free_old_xmit_skbs(sq, !!budget);
- 		__netif_tx_unlock(txq);
+ /* These are the "meat" - everything else is stuffing */
+ static int udf_fill_super(struct super_block *, void *, int);
+@@ -2308,7 +2315,7 @@ static int udf_fill_super(struct super_b
+ 		ret = -ENOMEM;
+ 		goto error_out;
  	}
- 
-@@ -1507,7 +1507,7 @@ static int virtnet_poll(struct napi_stru
- 	unsigned int received;
- 	unsigned int xdp_xmit = 0;
- 
--	virtnet_poll_cleantx(rq);
-+	virtnet_poll_cleantx(rq, budget);
- 
- 	received = virtnet_receive(rq, budget, &xdp_xmit);
- 
-@@ -1580,7 +1580,7 @@ static int virtnet_poll_tx(struct napi_s
- 	txq = netdev_get_tx_queue(vi->dev, index);
- 	__netif_tx_lock(txq, raw_smp_processor_id());
- 	virtqueue_disable_cb(sq->vq);
--	free_old_xmit_skbs(sq, true);
-+	free_old_xmit_skbs(sq, !!budget);
- 
- 	opaque = virtqueue_enable_cb_prepare(sq->vq);
+-	sb->s_maxbytes = MAX_LFS_FILESIZE;
++	sb->s_maxbytes = UDF_MAX_FILESIZE;
+ 	sb->s_max_links = UDF_MAX_LINKS;
+ 	return 0;
  
 
 
