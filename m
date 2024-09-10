@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A50C18C036;
-	Tue, 10 Sep 2024 10:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9178B192D6D;
+	Tue, 10 Sep 2024 10:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963415; cv=none; b=a1z2eOV2Rjr78zw/5k84qHg+7WjBFCMoByf57LJ9HmwHCUILLGKPers4lJ02UTj2HdgDWnSC45If8XBjGSOitEe7P2Lp5nFNyNEwVZouIFyT6VVpITLQxJhYAo0pjgmbEGfKLdVY7f3NhXrHW6+e/In7qFivEb+1sZnWZIMv1Ik=
+	t=1725963418; cv=none; b=Cstfqo7NQvAjdZXoiG3Dk2+h8LR2hd8t1sem5mnCNqGZkoPiRxAqhlCfwd179Qu4SYwxDcJNVObIq26RyEViGpqAPXr0pDMeQ7An8slBNpd4zjNFPHEf8OhRcSBTbbx/6+HW8psS7eOxPOhFldLoBy6t6F2JcfXe60eBUWtAdL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963415; c=relaxed/simple;
-	bh=VpaXhrOf75cnTk2Y77Ev2/QD3IvEK1Q1SdKiyGwGIhw=;
+	s=arc-20240116; t=1725963418; c=relaxed/simple;
+	bh=wDwkZoxsFg/zVfRxSKt1dW8Epso7WGxAVMMz8iVzasQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuUlfVg3ly3Pe0PDWV3X++YYGBxKjNQBTcyKbWXBLeIBhFLUYklHp375pf2GFjgTX8RqLEXny9rrOYWR+I8yufyyocMbzJBcRPhx3Inj9Jq53r/H/wx3UFzqYg22qJKjssTGv09C+jYszsTh5NAcyVQrOE+cTQrYC7cXBzieCNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gas5EtmV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jhXmZGT4DZF8j1eoFOpWs2pSdM7SHtyJsPTgv/0Yr8qcpIMx9eCA1iGxXn3/r1c7UWv4YuN7uXU8pu0uS3Uw1vkbBy1QoGMcVvcTKal5XAkSENSBppczpCftLZrSspAvTnjkkmn66NKkwgmbsElp0/BUeTh/vid7MPjDDh1qyEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baEX9RqL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gas5EtmV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EC9C4CEC3;
-	Tue, 10 Sep 2024 10:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baEX9RqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2156C4CEC3;
+	Tue, 10 Sep 2024 10:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963415;
-	bh=VpaXhrOf75cnTk2Y77Ev2/QD3IvEK1Q1SdKiyGwGIhw=;
+	s=korg; t=1725963418;
+	bh=wDwkZoxsFg/zVfRxSKt1dW8Epso7WGxAVMMz8iVzasQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gas5EtmVAmdbjz00HrwnnyDGaMQ/Uu1Rsc/KiEQnaT8enc6UYy1G8z95DBVsHCeh5
-	 XzYHd278CrxX7fZHzym1mibYjOl/5IlSgHsgdOc1Ludi8ziU3KvtVIGTcHZFDsb759
-	 JiIws2nxDJbfN2ke+9wV5cqA4LmxhlGHtfUQbt9I=
+	b=baEX9RqL9A4O0Cn9umk4vo3sOBMD4tG57sEBO9Q645K0H1DrDXnynlZ2UVJCI4nWa
+	 J4eHW0agFQg/NcQemHrCLzTiTpp1lkxYn9/eic/eRFSallHy5ohnSf7gR718DePWsL
+	 RbN5dA5jWbmZKILF5w6NAk6Hc1ttA1JdC2zQIn7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Liu <liuhaoran14@163.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Vasut <marex@denx.de>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/214] drm/meson: plane: Add error handling
-Date: Tue, 10 Sep 2024 11:31:11 +0200
-Message-ID: <20240910092600.775576825@linuxfoundation.org>
+Subject: [PATCH 5.15 050/214] drm/bridge: tc358767: Check if fully initialized before signalling HPD event via IRQ
+Date: Tue, 10 Sep 2024 11:31:12 +0200
+Message-ID: <20240910092600.814663922@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,61 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Liu <liuhaoran14@163.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 3c28b239620e249b68beeca17f429e317fa6b8d4 ]
+[ Upstream commit 162e48cb1d84c2c966b649b8ac5c9d4f75f6d44f ]
 
-This patch adds robust error handling to the meson_plane_create
-function in drivers/gpu/drm/meson/meson_plane.c. The function
-previously lacked proper handling for potential failure scenarios
-of the drm_universal_plane_init call.
+Make sure the connector is fully initialized before signalling any
+HPD events via drm_kms_helper_hotplug_event(), otherwise this may
+lead to NULL pointer dereference.
 
-Signed-off-by: Haoran Liu <liuhaoran14@163.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20231129113405.33057-1-liuhaoran14@163.com
-[narmstrong: fixe the commit subject]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231129113405.33057-1-liuhaoran14@163.com
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240531203333.277476-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_plane.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_plane.c
-index 44aa52629443..c17abaf9b54d 100644
---- a/drivers/gpu/drm/meson/meson_plane.c
-+++ b/drivers/gpu/drm/meson/meson_plane.c
-@@ -533,6 +533,7 @@ int meson_plane_create(struct meson_drm *priv)
- 	struct meson_plane *meson_plane;
- 	struct drm_plane *plane;
- 	const uint64_t *format_modifiers = format_modifiers_default;
-+	int ret;
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 4c6f3052156b..3436d39c90b4 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1527,7 +1527,7 @@ static irqreturn_t tc_irq_handler(int irq, void *arg)
+ 		dev_err(tc->dev, "syserr %x\n", stat);
+ 	}
  
- 	meson_plane = devm_kzalloc(priv->drm->dev, sizeof(*meson_plane),
- 				   GFP_KERNEL);
-@@ -547,12 +548,16 @@ int meson_plane_create(struct meson_drm *priv)
- 	else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
- 		format_modifiers = format_modifiers_afbc_g12a;
- 
--	drm_universal_plane_init(priv->drm, plane, 0xFF,
--				 &meson_plane_funcs,
--				 supported_drm_formats,
--				 ARRAY_SIZE(supported_drm_formats),
--				 format_modifiers,
--				 DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
-+	ret = drm_universal_plane_init(priv->drm, plane, 0xFF,
-+					&meson_plane_funcs,
-+					supported_drm_formats,
-+					ARRAY_SIZE(supported_drm_formats),
-+					format_modifiers,
-+					DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
-+	if (ret) {
-+		devm_kfree(priv->drm->dev, meson_plane);
-+		return ret;
-+	}
- 
- 	drm_plane_helper_add(plane, &meson_plane_helper_funcs);
- 
+-	if (tc->hpd_pin >= 0 && tc->bridge.dev) {
++	if (tc->hpd_pin >= 0 && tc->bridge.dev && tc->aux.drm_dev) {
+ 		/*
+ 		 * H is triggered when the GPIO goes high.
+ 		 *
 -- 
 2.43.0
 
