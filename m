@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40CB19EEB4;
-	Tue, 10 Sep 2024 10:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FFE1A00CF;
+	Tue, 10 Sep 2024 10:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963447; cv=none; b=RUDvR57dKAc5HX+xpfArIi9G99Cfe5KFhn4T7qTTXfg3WFfOcykVI8CJQw+5CTrLcqpEPoX+Y4en13n/mIl8Bs2++N1YeDwLUgEd2sk+BrnXjyqgjLI4RaGZAsQgWR5W3ZnFs9nIOjJ4/g3eYiQ3ib9tlmNf9jh5zryS2RsZWLY=
+	t=1725963450; cv=none; b=Hi4r1fhCwCXuB5iDg1aoRBIh0Md2WE7iH1th7wQPhmE+lGJRyq937D3+XUTaxeOkueZqDqa0MQGTXZBR7qv7r5C1+GEG2V/gQXm5yRt1bnNoU27j9smgHsn3in21x8lBmk5ClN2DQMRqr0/7OQFJUd+IijAdE3AcVTWr/zlCx7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963447; c=relaxed/simple;
-	bh=G7rJmVe3mZBW0b6oq/WCplhGfENX794JUXrtZfMz4Do=;
+	s=arc-20240116; t=1725963450; c=relaxed/simple;
+	bh=AkqDv6iQwvq74hDAOYoxTeJVLHVDX/8BF6konN3OOs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B9VX/HoB3hFR6gZfPfFyP6JLp4G6X6y4WEEF4wRDN4fBcH2mMZW/wUHAlNGxTlh25pxpntPUpTpzpPnNpbXt3WF2DTvVPp+QAJsVayalBljpxJx6tdvLddNCaTxjgPOo6AZK14jaTejF3PSOT+fU1j2xHknEtIet3CCWbn2NCcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HE9kJKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=df9J2/Eo0z8K8QlMk+figjorVDsYmPVayRedvLuNcBm6CitvdlQkkkWAOyF8SKXK9w7seBWls1ahBfG+6+1VH1n5eKtS+0ch0ySAo5xNCbkXuiOThMZ3TNbca3vRsDjxQNiFtOEnuDt36bOYZ8Ox+5m91bVP+lVH8fILjexy3mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wydP23Rf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HE9kJKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0868EC4CEC3;
-	Tue, 10 Sep 2024 10:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wydP23Rf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC80CC4CEC3;
+	Tue, 10 Sep 2024 10:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963447;
-	bh=G7rJmVe3mZBW0b6oq/WCplhGfENX794JUXrtZfMz4Do=;
+	s=korg; t=1725963450;
+	bh=AkqDv6iQwvq74hDAOYoxTeJVLHVDX/8BF6konN3OOs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1HE9kJKXVflB1n9MWzHseDNrNLTAj+HI/woXQ5hrnpvoYeGvR2NBseY5KyS9eYOjx
-	 UIOX5qdUVPRYWDM2rgnfcj2l3sWRuLsiLpb/DCveonzdWZbH5b+iyQXRUPa4bkj83v
-	 yq42psivGT2oczS0Z1mJ1ojj/ktr72koKTMqDZaI=
+	b=wydP23RfkEU0dEhjdgRuALQlIbMxAZgMpi4d6Nq7p9tJKCMxSYOdSQVljT5tMdcHv
+	 uGllV+/yL0dt7LoHk9LI+Gp/lsKRYnhvKAJum3EkuESZXtiF1ZuBzY1+lUvmMyNGdJ
+	 +ULvi4FdNQo+88c4GCrGrnT0nt3LIaLwE/BogPQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/214] drm/amd/amdgpu: Check tbo resource pointer
-Date: Tue, 10 Sep 2024 11:30:45 +0200
-Message-ID: <20240910092559.722242382@linuxfoundation.org>
+Subject: [PATCH 5.15 054/214] media: uvcvideo: Enforce alignment of frame and interval
+Date: Tue, 10 Sep 2024 11:31:16 +0200
+Message-ID: <20240910092600.971564051@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -47,44 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 6cd2b872643bb29bba01a8ac739138db7bd79007 ]
+[ Upstream commit c8931ef55bd325052ec496f242aea7f6de47dc9c ]
 
-Validate tbo resource pointer, skip if NULL
+Struct uvc_frame and interval (u32*) are packaged together on
+streaming->formats on a single contiguous allocation.
 
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Right now they are allocated right after uvc_format, without taking into
+consideration their required alignment.
+
+This is working fine because both structures have a field with a
+pointer, but it will stop working when the sizeof() of any of those
+structs is not a multiple of the sizeof(void*).
+
+Enforce that alignment during the allocation.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240404-uvc-align-v2-1-9e104b0ecfbd@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_driver.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 300d3b236bb3..042f27af6856 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4406,7 +4406,8 @@ static int amdgpu_device_recover_vram(struct amdgpu_device *adev)
- 		shadow = vmbo->shadow;
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -936,16 +936,26 @@ static int uvc_parse_streaming(struct uv
+ 		goto error;
+ 	}
  
- 		/* No need to recover an evicted BO */
--		if (shadow->tbo.resource->mem_type != TTM_PL_TT ||
-+		if (!shadow->tbo.resource ||
-+		    shadow->tbo.resource->mem_type != TTM_PL_TT ||
- 		    shadow->tbo.resource->start == AMDGPU_BO_INVALID_OFFSET ||
- 		    shadow->parent->tbo.resource->mem_type != TTM_PL_VRAM)
- 			continue;
--- 
-2.43.0
-
+-	size = nformats * sizeof(*format) + nframes * sizeof(*frame)
++	/*
++	 * Allocate memory for the formats, the frames and the intervals,
++	 * plus any required padding to guarantee that everything has the
++	 * correct alignment.
++	 */
++	size = nformats * sizeof(*format);
++	size = ALIGN(size, __alignof__(*frame)) + nframes * sizeof(*frame);
++	size = ALIGN(size, __alignof__(*interval))
+ 	     + nintervals * sizeof(*interval);
++
+ 	format = kzalloc(size, GFP_KERNEL);
+-	if (format == NULL) {
++	if (!format) {
+ 		ret = -ENOMEM;
+ 		goto error;
+ 	}
+ 
+-	frame = (struct uvc_frame *)&format[nformats];
+-	interval = (u32 *)&frame[nframes];
++	frame = (void *)format + nformats * sizeof(*format);
++	frame = PTR_ALIGN(frame, __alignof__(*frame));
++	interval = (void *)frame + nframes * sizeof(*frame);
++	interval = PTR_ALIGN(interval, __alignof__(*interval));
+ 
+ 	streaming->format = format;
+ 	streaming->nformats = 0;
 
 
