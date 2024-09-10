@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9875518FDA9;
-	Tue, 10 Sep 2024 09:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739B818C03F;
+	Tue, 10 Sep 2024 09:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961496; cv=none; b=XqtthlJPO8pnuKuruSUQpZ74Cq2GkutCfTAOqdFUWw0kRS7iPrwSNYIz/Q8hrZkUZ5ls+aLElFTvrxkND+JsDz7LENpAr5A9/E0VSR2hJW1edr0BjxVV1iQT42RodW6m3KwTGM6R6TqfwC9JyKFVRFWwpBW04HM2GUKZHkG5qrE=
+	t=1725961499; cv=none; b=AY7LmTOpLfTRI2Zp2FSlL3emfgWDCXkqTfVshq437b8Jm+cAmVpNcmRqsb/gFkc/pk/e9ruFTBs56z0U5mKyMENrtZ+0UZ//0NCySI1lWQJs/P2ylUhkHZvTTaBFzKXA9xbY+RUnTgFeavmvjSf4QLQcmVPk/SYjmv9ynRlJGs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961496; c=relaxed/simple;
-	bh=CF0ILf67XqdMRJ7L+tAd2reiq4o0b0k8oZFEEB6sXoQ=;
+	s=arc-20240116; t=1725961499; c=relaxed/simple;
+	bh=ad0QAjPkANkMefGKmprfFX7k8hmc7XQ183q5lDgWtUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AamIatdGQZeDsqMlDzUlKY6k7ac0xzPiMGXd3110sojcqrwAdX9vLP9V9N9/+uBzo7xgFoQl3bJdwswtwfBgDMCj2qexK0QGGiUg2sa8Cyh/NvlGV47ZLITsSNx8JR+O1fUuN95DdRMWRtPfYRODK26YmmqN5WiEYmZOfB2wMH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMFoHFsN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhmb6wmWLYpHxx/N5ljTWGDP4dJ580p1sIT2ZkGVqH6Y6hfQhEPVfMqLcYDde3cC5VH1nzur8GEKx1P8o9UuniWDQNW5jbcuoo5LTbGpgTHBbbgTR0srsYu0yuQVg26lZ9qweU8obE9S+cuspOrAWcmekuX7tPhBHfAElZOzRCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhqEIZyh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMFoHFsN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA95C4CEC3;
-	Tue, 10 Sep 2024 09:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhqEIZyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C12C4CECE;
+	Tue, 10 Sep 2024 09:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961496;
-	bh=CF0ILf67XqdMRJ7L+tAd2reiq4o0b0k8oZFEEB6sXoQ=;
+	s=korg; t=1725961499;
+	bh=ad0QAjPkANkMefGKmprfFX7k8hmc7XQ183q5lDgWtUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMFoHFsNHB+pKn4MB+cgYdRNuGklzP9GUJGcJ6vgh2sysJdKbDUhp/OkzNfS1G/1/
-	 MbaWyrokxoVWYtbA+Xs6Xy+gzuKyn+xN+Fq3FDRmm6NcMJ41Jmr1OOzbILd4L6UmPk
-	 KeSa/4aqf0Dfgo5MmHywRqQQpUBwLmhHl7xHvI9M=
+	b=EhqEIZyhR/TsPOMxmHv32vnZEGb4XEn3oH6qfSzFOgNc76ZJWKeP2fzLoABQQGVov
+	 XxgW2PQvzfpqDN8WRfKa4Yb520ajIYExJSPRZ8DO6EcVmhL2XZel+ew5M1AEmBxwRQ
+	 nMKh4uikrtahCq2/Yy5HHuENECf5KFNX0ALAWuAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.10 090/375] drm/i915: Do not attempt to load the GSC multiple times
-Date: Tue, 10 Sep 2024 11:28:07 +0200
-Message-ID: <20240910092625.263261803@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 091/375] drm/amd/display: Lock DC and exit IPS when changing backlight
+Date: Tue, 10 Sep 2024 11:28:08 +0200
+Message-ID: <20240910092625.301209885@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -54,63 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit 59d3cfdd7f9655a0400ac453bf92199204f8b2a1 upstream.
+commit 53c3685f5307967a62517ace10e69d66520d0fc5 upstream.
 
-If the GSC FW fails to load the GSC HW hangs permanently; the only ways
-to recover it are FLR or D3cold entry, with the former only being
-supported on driver unload and the latter only on DGFX, for which we
-don't need to load the GSC. Therefore, if GSC fails to load there is no
-need to try again because the HW is stuck in the error state and the
-submission to load the FW would just hang the GSCCS.
+Backlight updates require aux and/or register access. Therefore, driver
+needs to disallow IPS beforehand.
 
-Note that, due to wa_14015076503, on MTL the GuC escalates all GSCCS
-hangs to full GT resets, which would trigger a new attempt to load the
-GSC FW in the post-reset HW re-init; this issue is also fixed by not
-attempting to load the GSC FW after an error.
+So, acquire the dc lock before calling into dc to update backlight - we
+should be doing this regardless of IPS. Then, while the lock is held,
+disallow IPS before calling into dc, then allow IPS afterwards (if it
+was previously allowed).
 
-Fixes: 15bd4a67e914 ("drm/i915/gsc: GSC firmware loading")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: <stable@vger.kernel.org> # v6.3+
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240820215952.2290807-1-daniele.ceraolospurio@intel.com
-(cherry picked from commit 03ded4d432a1fb7bb6c44c5856d14115f6f6c3b9)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 988fe2862635c1b1b40e41c85c24db44ab337c13)
+Cc: stable@vger.kernel.org # 6.10+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_gsc_uc.c |    2 +-
- drivers/gpu/drm/i915/gt/uc/intel_uc_fw.h  |    5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/uc/intel_gsc_uc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_gsc_uc.c
-@@ -302,7 +302,7 @@ void intel_gsc_uc_load_start(struct inte
- {
- 	struct intel_gt *gt = gsc_uc_to_gt(gsc);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4237,7 +4237,7 @@ static void amdgpu_dm_backlight_set_leve
+ 	struct amdgpu_dm_backlight_caps caps;
+ 	struct dc_link *link;
+ 	u32 brightness;
+-	bool rc;
++	bool rc, reallow_idle = false;
  
--	if (!intel_uc_fw_is_loadable(&gsc->fw))
-+	if (!intel_uc_fw_is_loadable(&gsc->fw) || intel_uc_fw_is_in_error(&gsc->fw))
- 		return;
+ 	amdgpu_dm_update_backlight_caps(dm, bl_idx);
+ 	caps = dm->backlight_caps[bl_idx];
+@@ -4250,6 +4250,12 @@ static void amdgpu_dm_backlight_set_leve
+ 	link = (struct dc_link *)dm->backlight_link[bl_idx];
  
- 	if (intel_gsc_uc_fw_init_done(gsc))
---- a/drivers/gpu/drm/i915/gt/uc/intel_uc_fw.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_uc_fw.h
-@@ -258,6 +258,11 @@ static inline bool intel_uc_fw_is_runnin
- 	return __intel_uc_fw_status(uc_fw) == INTEL_UC_FIRMWARE_RUNNING;
- }
- 
-+static inline bool intel_uc_fw_is_in_error(struct intel_uc_fw *uc_fw)
-+{
-+	return intel_uc_fw_status_to_error(__intel_uc_fw_status(uc_fw)) != 0;
-+}
+ 	/* Change brightness based on AUX property */
++	mutex_lock(&dm->dc_lock);
++	if (dm->dc->caps.ips_support && dm->dc->ctx->dmub_srv->idle_allowed) {
++		dc_allow_idle_optimizations(dm->dc, false);
++		reallow_idle = true;
++	}
 +
- static inline bool intel_uc_fw_is_overridden(const struct intel_uc_fw *uc_fw)
- {
- 	return uc_fw->user_overridden;
+ 	if (caps.aux_support) {
+ 		rc = dc_link_set_backlight_level_nits(link, true, brightness,
+ 						      AUX_BL_DEFAULT_TRANSITION_TIME_MS);
+@@ -4261,6 +4267,11 @@ static void amdgpu_dm_backlight_set_leve
+ 			DRM_DEBUG("DM: Failed to update backlight on eDP[%d]\n", bl_idx);
+ 	}
+ 
++	if (dm->dc->caps.ips_support && reallow_idle)
++		dc_allow_idle_optimizations(dm->dc, true);
++
++	mutex_unlock(&dm->dc_lock);
++
+ 	if (rc)
+ 		dm->actual_brightness[bl_idx] = user_brightness;
+ }
 
 
