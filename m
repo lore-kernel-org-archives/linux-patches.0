@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFCA2AF15;
-	Tue, 10 Sep 2024 10:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B85118B48A;
+	Tue, 10 Sep 2024 10:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964889; cv=none; b=KotRKsvKnjeAup+2R1bYPSuf3XvWZ4tp8UzyrwVbMhY0c3gn1vKcUAFvaXsQo/TQswTaD5+Y2R7wKOMvmC1euPyAyj4gEI2mq+x4G2hfvqWcrMt7e3noVyrn++mxXuGq+djbsfW7Hmq3TikejyxN+pNVosGcaUGjmrAkuoJQF7o=
+	t=1725964892; cv=none; b=f14jH1+i5YZTcNwuPccan6lGaxv1zk9+bsh1Hs43Rc38c6xnmzmZCgimdREJrAZj08CHdVz1EwHMI8kWDP7UWATzGM6lPLcjD3+rrnj9KnlXZG+cgAJ9xqgsqHq1ZttQQP8MZTbGSJaupv2NLVbYJgAHJeULgr37rpNyXlAjLdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964889; c=relaxed/simple;
-	bh=eFnGCDAFaDj8H2r2W7Jaq7uRrLzEKAhmyD6wU+SwsKw=;
+	s=arc-20240116; t=1725964892; c=relaxed/simple;
+	bh=9+WZCmNRZgULOuUp1PUgXt+bcS2AvULUKmwPx3czs+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqkeAbKJ0QqUkuFhtAzxwP92J2FoMyMaHdrf2L/lX8/+lOrAu6LYsFyKVFWEB2rxy2YOwyerMTiLn3VdJLA6mqC7MSoGR0u/G87O2Avb/ikwjmHrG3x6m9aU4yfJYXizbhcESSUoAcB9cb5yhvQQkIIz2eNbUja929mV4nGlpy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T26MIJIJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XptZLT7j1RN9VAibTBWDdOVhc5xAOfKtn4n3mWfrFhKouCM0VEX4ZOEyPU4iozMBfA/0arBSVBivDKmUgATBMP/BABgE/yiAyjlT/3HvF3+lzb9zsHh93DA2Kx3nfg8cGLsQJd5lYckeeKCf9akZjZcdI8e+x9wkcDnPVlTktGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvjY/pfr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T26MIJIJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE50C4CEC3;
-	Tue, 10 Sep 2024 10:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvjY/pfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36D9C4CEC3;
+	Tue, 10 Sep 2024 10:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964889;
-	bh=eFnGCDAFaDj8H2r2W7Jaq7uRrLzEKAhmyD6wU+SwsKw=;
+	s=korg; t=1725964892;
+	bh=9+WZCmNRZgULOuUp1PUgXt+bcS2AvULUKmwPx3czs+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T26MIJIJnPxV9VNycfEgM76iL0nVsEr0PSPFEhm6Y10FLv4age33HSKUZHdUVSr1X
-	 Wjq3z6Q2L7kyQFdHHMPX8eDtEYV3IPcXBdoeswfHLNlBi3MwvOuboLbqU16lEN4Ku9
-	 yGtOrB2SoaFvPoljV89wmuddwvhiIDPcDFxgziuA=
+	b=NvjY/pfreq97AtRIzETwfBOi4Q4wlHOITrZCYusXOP7tuBPvBTmkhWjhjMDWwqGhh
+	 +F1swOhrmVqhhU6kTA/SFhZl9vyEqDYFlUSXhnq7HIHk2kyzDyudxim6QCvYDA0f2B
+	 MmjrsnWfqAQkh5iKjuR+NHkXp002z6R6MhQ/O3so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Haoran Liu <liuhaoran14@163.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/186] smack: tcp: ipv4, fix incorrect labeling
-Date: Tue, 10 Sep 2024 11:32:13 +0200
-Message-ID: <20240910092556.112509909@linuxfoundation.org>
+Subject: [PATCH 5.10 039/186] drm/meson: plane: Add error handling
+Date: Tue, 10 Sep 2024 11:32:14 +0200
+Message-ID: <20240910092556.150012759@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -51,66 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Schaufler <casey@schaufler-ca.com>
+From: Haoran Liu <liuhaoran14@163.com>
 
-[ Upstream commit 2fe209d0ad2e2729f7e22b9b31a86cc3ff0db550 ]
+[ Upstream commit 3c28b239620e249b68beeca17f429e317fa6b8d4 ]
 
-Currently, Smack mirrors the label of incoming tcp/ipv4 connections:
-when a label 'foo' connects to a label 'bar' with tcp/ipv4,
-'foo' always gets 'foo' in returned ipv4 packets. So,
-1) returned packets are incorrectly labeled ('foo' instead of 'bar')
-2) 'bar' can write to 'foo' without being authorized to write.
+This patch adds robust error handling to the meson_plane_create
+function in drivers/gpu/drm/meson/meson_plane.c. The function
+previously lacked proper handling for potential failure scenarios
+of the drm_universal_plane_init call.
 
-Here is a scenario how to see this:
-
-* Take two machines, let's call them C and S,
-   with active Smack in the default state
-   (no settings, no rules, no labeled hosts, only builtin labels)
-
-* At S, add Smack rule 'foo bar w'
-   (labels 'foo' and 'bar' are instantiated at S at this moment)
-
-* At S, at label 'bar', launch a program
-   that listens for incoming tcp/ipv4 connections
-
-* From C, at label 'foo', connect to the listener at S.
-   (label 'foo' is instantiated at C at this moment)
-   Connection succeedes and works.
-
-* Send some data in both directions.
-* Collect network traffic of this connection.
-
-All packets in both directions are labeled with the CIPSO
-of the label 'foo'. Hence, label 'bar' writes to 'foo' without
-being authorized, and even without ever being known at C.
-
-If anybody cares: exactly the same happens with DCCP.
-
-This behavior 1st manifested in release 2.6.29.4 (see Fixes below)
-and it looks unintentional. At least, no explanation was provided.
-
-I changed returned packes label into the 'bar',
-to bring it into line with the Smack documentation claims.
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Haoran Liu <liuhaoran14@163.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20231129113405.33057-1-liuhaoran14@163.com
+[narmstrong: fixe the commit subject]
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231129113405.33057-1-liuhaoran14@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_plane.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 8c790563b33a..88bcda1f07bf 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4228,7 +4228,7 @@ static int smack_inet_conn_request(struct sock *sk, struct sk_buff *skb,
- 	rcu_read_unlock();
+diff --git a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_plane.c
+index 255c6b863f8d..6d54c565b34f 100644
+--- a/drivers/gpu/drm/meson/meson_plane.c
++++ b/drivers/gpu/drm/meson/meson_plane.c
+@@ -529,6 +529,7 @@ int meson_plane_create(struct meson_drm *priv)
+ 	struct meson_plane *meson_plane;
+ 	struct drm_plane *plane;
+ 	const uint64_t *format_modifiers = format_modifiers_default;
++	int ret;
  
- 	if (hskp == NULL)
--		rc = netlbl_req_setattr(req, &skp->smk_netlabel);
-+		rc = netlbl_req_setattr(req, &ssp->smk_out->smk_netlabel);
- 	else
- 		netlbl_req_delattr(req);
+ 	meson_plane = devm_kzalloc(priv->drm->dev, sizeof(*meson_plane),
+ 				   GFP_KERNEL);
+@@ -543,12 +544,16 @@ int meson_plane_create(struct meson_drm *priv)
+ 	else if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
+ 		format_modifiers = format_modifiers_afbc_g12a;
+ 
+-	drm_universal_plane_init(priv->drm, plane, 0xFF,
+-				 &meson_plane_funcs,
+-				 supported_drm_formats,
+-				 ARRAY_SIZE(supported_drm_formats),
+-				 format_modifiers,
+-				 DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
++	ret = drm_universal_plane_init(priv->drm, plane, 0xFF,
++					&meson_plane_funcs,
++					supported_drm_formats,
++					ARRAY_SIZE(supported_drm_formats),
++					format_modifiers,
++					DRM_PLANE_TYPE_PRIMARY, "meson_primary_plane");
++	if (ret) {
++		devm_kfree(priv->drm->dev, meson_plane);
++		return ret;
++	}
+ 
+ 	drm_plane_helper_add(plane, &meson_plane_helper_funcs);
  
 -- 
 2.43.0
