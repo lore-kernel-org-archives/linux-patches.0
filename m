@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4982918FC72;
-	Tue, 10 Sep 2024 10:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389B7199932;
+	Tue, 10 Sep 2024 10:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725964282; cv=none; b=JzIDXzNWOghUtWG02cTWvn906MK/DHTp8+nMt2R0iYcUdKxH7YY/ISVXqbm1Z0COV9qk5NgNRGaf7+fTxGmZSi5LGsfeB5xb7etCvWhleyvK4VPfbff5UO+X/9K6Mz0+AgQrBEj4rfYaQjogkymrUY3CyLoQ/qxis46VQrYGeZg=
+	t=1725964285; cv=none; b=d994cFpk14YK08NTbnz0Q2vk/l3Bs6pGBXVM8rDSxA/mLJQQURG3JdaBmj251ZjzYBPD5LwNu71R9L5QjdMoBoSrCkpxQTVT70FHNiP75hq1YYI4b4H4r/IkxYS7fBRPQ5AraUPyZ8XjNbLM/Gs3dQ8ooVNt/+HCT7RpIjYAsaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725964282; c=relaxed/simple;
-	bh=kjkFbMKwTR5hC/LPuo0motOxixG+vydoK+U9Km2bvZw=;
+	s=arc-20240116; t=1725964285; c=relaxed/simple;
+	bh=FnJhkU84Ml1FwcPSGYs1c0S8nfWHSvGApbQhPVG7jG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqzhv26Qel06o+S2hQu2bdu2gcg1VNqA/CxpwO0t57IfVxv+dZ6hPV2zf1w4CqrzTnmjxyHEbOqzLmfUGKGLHYRWyefDHusoKKUEbvDd+B58pkPW7VPKzR5dAjlsXHbBBKhbMpovKnQ/DjQxoIVcVcuHzZFklmFluavRebHJMLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+4hAD9Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NMwA873qLIvP4uvpywDaT+Bt0y7z4k5SHW3qfE9dLpVIAwZ/iWQSzbOBIWsCHUS4QF+OCHNvpO1btTe7gvpvxRnIhoWFQpdGUTlLOs8Y7JvXKzcTgYgspMrIS1xOm1DwlrNsW1dJxuK7sDvd/gtCDI0z3v7RulPDFT3wXgGq/Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbpAon57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+4hAD9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4267C4CEC3;
-	Tue, 10 Sep 2024 10:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbpAon57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE18C4CEC6;
+	Tue, 10 Sep 2024 10:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725964282;
-	bh=kjkFbMKwTR5hC/LPuo0motOxixG+vydoK+U9Km2bvZw=;
+	s=korg; t=1725964285;
+	bh=FnJhkU84Ml1FwcPSGYs1c0S8nfWHSvGApbQhPVG7jG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+4hAD9ZmrtKtvcQB1NkZ6D5EW0lDxAZHQT+tdUac2nqfNPi1Q0unu77y2zTU8QXI
-	 rC1viVMOsjt1FJgr0rv4DvDksdKZH7fiNhJTPDro0nOoKG/6WjMGxgGfp3Q/mOF/1f
-	 fD43Xvvt5auk6avYpFHZZGPikHWWO2zJ1fxyXH5w=
+	b=YbpAon57dsWKATSuGsNAcaLrPttwcfd5enae9WLC0IDzdPsKSpN5PEHz364VYQ38S
+	 29w7w3kqQUAIQDaBy+Wr6tnZ1NJKVnO1PTeTUeDXqgWPOaML4yuHpZcIV4ASYphme3
+	 bQdb2f1E/xIaRvkjKJqmnz3+rHjC9pDyUGt/4/7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanghui Li <yanghui.li@mediatek.com>,
-	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/269] bpf, net: Fix a potential race in do_sock_getsockopt()
-Date: Tue, 10 Sep 2024 11:31:57 +0200
-Message-ID: <20240910092612.820612939@linuxfoundation.org>
+Subject: [PATCH 6.6 131/269] bareudp: Fix device stats updates.
+Date: Tue, 10 Sep 2024 11:31:58 +0200
+Message-ID: <20240910092612.866218114@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092608.225137854@linuxfoundation.org>
 References: <20240910092608.225137854@linuxfoundation.org>
@@ -55,92 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 33f339a1ba54e56bba57ee9a77c71e385ab4825c ]
+[ Upstream commit 4963d2343af81f493519f9c3ea9f2169eaa7353a ]
 
-There's a potential race when `cgroup_bpf_enabled(CGROUP_GETSOCKOPT)` is
-false during the execution of `BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN`, but
-becomes true when `BPF_CGROUP_RUN_PROG_GETSOCKOPT` is called.
-This inconsistency can lead to `BPF_CGROUP_RUN_PROG_GETSOCKOPT` receiving
-an "-EFAULT" from `__cgroup_bpf_run_filter_getsockopt(max_optlen=0)`.
-Scenario shown as below:
+Bareudp devices update their stats concurrently.
+Therefore they need proper atomic increments.
 
-           `process A`                      `process B`
-           -----------                      ------------
-  BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN
-                                            enable CGROUP_GETSOCKOPT
-  BPF_CGROUP_RUN_PROG_GETSOCKOPT (-EFAULT)
-
-To resolve this, remove the `BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN` macro and
-directly uses `copy_from_sockptr` to ensure that `max_optlen` is always
-set before `BPF_CGROUP_RUN_PROG_GETSOCKOPT` is invoked.
-
-Fixes: 0d01da6afc54 ("bpf: implement getsockopt and setsockopt hooks")
-Co-developed-by: Yanghui Li <yanghui.li@mediatek.com>
-Signed-off-by: Yanghui Li <yanghui.li@mediatek.com>
-Co-developed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20240830082518.23243-1-Tze-nan.Wu@mediatek.com
+Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/04b7b9d0b480158eb3ab4366ec80aa2ab7e41fcb.1725031794.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf-cgroup.h | 9 ---------
- net/socket.c               | 4 ++--
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ drivers/net/bareudp.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/bpf-cgroup.h b/include/linux/bpf-cgroup.h
-index 2aa82b7aed89..d4f2c8706042 100644
---- a/include/linux/bpf-cgroup.h
-+++ b/include/linux/bpf-cgroup.h
-@@ -375,14 +375,6 @@ static inline bool cgroup_bpf_sock_enabled(struct sock *sk,
- 	__ret;								       \
- })
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index 683203f87ae2..277493e41b07 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -82,7 +82,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
  
--#define BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN(optlen)			       \
--({									       \
--	int __ret = 0;							       \
--	if (cgroup_bpf_enabled(CGROUP_GETSOCKOPT))			       \
--		copy_from_sockptr(&__ret, optlen, sizeof(int));		       \
--	__ret;								       \
--})
--
- #define BPF_CGROUP_RUN_PROG_GETSOCKOPT(sock, level, optname, optval, optlen,   \
- 				       max_optlen, retval)		       \
- ({									       \
-@@ -500,7 +492,6 @@ static inline int bpf_percpu_cgroup_storage_update(struct bpf_map *map,
- #define BPF_CGROUP_RUN_PROG_SOCK_OPS(sock_ops) ({ 0; })
- #define BPF_CGROUP_RUN_PROG_DEVICE_CGROUP(atype, major, minor, access) ({ 0; })
- #define BPF_CGROUP_RUN_PROG_SYSCTL(head,table,write,buf,count,pos) ({ 0; })
--#define BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN(optlen) ({ 0; })
- #define BPF_CGROUP_RUN_PROG_GETSOCKOPT(sock, level, optname, optval, \
- 				       optlen, max_optlen, retval) ({ retval; })
- #define BPF_CGROUP_RUN_PROG_GETSOCKOPT_KERN(sock, level, optname, optval, \
-diff --git a/net/socket.c b/net/socket.c
-index d275f5f14882..9db33cd4a71b 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -2355,7 +2355,7 @@ INDIRECT_CALLABLE_DECLARE(bool tcp_bpf_bypass_getsockopt(int level,
- int do_sock_getsockopt(struct socket *sock, bool compat, int level,
- 		       int optname, sockptr_t optval, sockptr_t optlen)
- {
--	int max_optlen __maybe_unused;
-+	int max_optlen __maybe_unused = 0;
- 	const struct proto_ops *ops;
- 	int err;
+ 		if (skb_copy_bits(skb, BAREUDP_BASE_HLEN, &ipversion,
+ 				  sizeof(ipversion))) {
+-			bareudp->dev->stats.rx_dropped++;
++			DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 			goto drop;
+ 		}
+ 		ipversion >>= 4;
+@@ -92,7 +92,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 		} else if (ipversion == 6 && bareudp->multi_proto_mode) {
+ 			proto = htons(ETH_P_IPV6);
+ 		} else {
+-			bareudp->dev->stats.rx_dropped++;
++			DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 			goto drop;
+ 		}
+ 	} else if (bareudp->ethertype == htons(ETH_P_MPLS_UC)) {
+@@ -106,7 +106,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 				   ipv4_is_multicast(tunnel_hdr->daddr)) {
+ 				proto = htons(ETH_P_MPLS_MC);
+ 			} else {
+-				bareudp->dev->stats.rx_dropped++;
++				DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 				goto drop;
+ 			}
+ 		} else {
+@@ -122,7 +122,7 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 				   (addr_type & IPV6_ADDR_MULTICAST)) {
+ 				proto = htons(ETH_P_MPLS_MC);
+ 			} else {
+-				bareudp->dev->stats.rx_dropped++;
++				DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 				goto drop;
+ 			}
+ 		}
+@@ -134,12 +134,12 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 				 proto,
+ 				 !net_eq(bareudp->net,
+ 				 dev_net(bareudp->dev)))) {
+-		bareudp->dev->stats.rx_dropped++;
++		DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 		goto drop;
+ 	}
+ 	tun_dst = udp_tun_rx_dst(skb, family, TUNNEL_KEY, 0, 0);
+ 	if (!tun_dst) {
+-		bareudp->dev->stats.rx_dropped++;
++		DEV_STATS_INC(bareudp->dev, rx_dropped);
+ 		goto drop;
+ 	}
+ 	skb_dst_set(skb, &tun_dst->dst);
+@@ -165,8 +165,8 @@ static int bareudp_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 						     &((struct ipv6hdr *)oiph)->saddr);
+ 		}
+ 		if (err > 1) {
+-			++bareudp->dev->stats.rx_frame_errors;
+-			++bareudp->dev->stats.rx_errors;
++			DEV_STATS_INC(bareudp->dev, rx_frame_errors);
++			DEV_STATS_INC(bareudp->dev, rx_errors);
+ 			goto drop;
+ 		}
+ 	}
+@@ -462,11 +462,11 @@ static netdev_tx_t bareudp_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	dev_kfree_skb(skb);
  
-@@ -2364,7 +2364,7 @@ int do_sock_getsockopt(struct socket *sock, bool compat, int level,
- 		return err;
+ 	if (err == -ELOOP)
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 	else if (err == -ENETUNREACH)
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
  
- 	if (!compat)
--		max_optlen = BPF_CGROUP_GETSOCKOPT_MAX_OPTLEN(optlen);
-+		copy_from_sockptr(&max_optlen, optlen, sizeof(int));
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
  
- 	ops = READ_ONCE(sock->ops);
- 	if (level == SOL_SOCKET) {
 -- 
 2.43.0
 
