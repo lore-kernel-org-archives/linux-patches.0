@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5911518C039;
-	Tue, 10 Sep 2024 09:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D00818E77F;
+	Tue, 10 Sep 2024 09:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961582; cv=none; b=SxBKRLGo/QcXDlwtZ4Hff6j5VsmV8q1+hOQMbTCkC1PXLqu8aYB6OlynCoxVpHBuszMGYqQ9QKQlYF2l0MB+KDlQ9B/RBkSS30kH8aHXjMZRzEI6am0VFsVVwlNzL7ULqIIguMgayFq8lDYFUWf1KrJf7Io+klRLbtmMevsq+iA=
+	t=1725961585; cv=none; b=M5VsG/fyN7J+jQw1xEVgqwvtwMSwnIHvjNLHM3FNHCCs/tmec+zb927cUYY16VFUXnAHc5Xpk+4ISZPqnx56sRxQsnCxJFaSTQinq2hwvzErBmFtPrgR5NQNqJmBHdG9nWs+Y2s2nuluqFZhnwjipgNV7YAR0TRgXkKYg6+U8Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961582; c=relaxed/simple;
-	bh=RjIEzxGQ1n+UcwMSR9oJdT815yxNt/g4oA5W+rWYIwU=;
+	s=arc-20240116; t=1725961585; c=relaxed/simple;
+	bh=qKa1Ei56f0OHXxshoXvOg/r6X6zTe26QCoIG+vhjwd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOaAHNL/YY2PNPL8XPONWkBdfs2+WF4xLwkuLO81Ed0yQn6E1vSs+55SGnGWEdSPJzTGRn77i2yvV3SFI+PFlVAqnUyldWGRpupDVkTO4txH16k3kas8V9T0Ob5GOqxMX5uO3b3W/HEl1iBv2EgO/GXGv3dRYz5Nv7GcP3Yc90U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUyFdWBi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZqXG3hyxjQOVUM3MHcbDUiTQIk3he03hI+FyphHAnRypdsZoAPjkXVFFMvHuvGKp3a6D7N+tBHPCJR5eZ3qxmBehOOnMzBqr7ihHoMK84hGvtpbBxT7Bibtal5FfTcp+uXXHbaNCS0KIX0TDNpWzzUrnYowjKpbiQaSEIXKVD0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLT/9E2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUyFdWBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20DBC4CEC3;
-	Tue, 10 Sep 2024 09:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLT/9E2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61CCC4CEC6;
+	Tue, 10 Sep 2024 09:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961582;
-	bh=RjIEzxGQ1n+UcwMSR9oJdT815yxNt/g4oA5W+rWYIwU=;
+	s=korg; t=1725961585;
+	bh=qKa1Ei56f0OHXxshoXvOg/r6X6zTe26QCoIG+vhjwd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUyFdWBiRwnSIaVnesf6j8QZYmjljbYgyLkOT99ZcEWgxkia5g535Z6V01ohz1xlA
-	 9UzT8gWyikJas+BjKM/d+Fb29PqsnqB35goUIQTyHLDTR0JkGL1v8cR42qqc0k0F/A
-	 gwAWWIflzcIO9RHWTu2JS8j73SeHo92HK5q4GEo0=
+	b=ZLT/9E2xegqP7fB4UBBx8f89d+F2p3pGugelAXxTGjK3pWzFV/G6rgvm7I1NlyuFw
+	 F9pUVTJP3s1bPLtsZ3WnT8Lk0PfROEWCQiGvPuq+2e127jXzJz7pSVZjcLLzrJYZAl
+	 jYFmvbJoHP9xHNvQQUpYEkI1LTfhNxfjoPIwP2w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Shantanu Goel <sgoel01@yahoo.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 119/375] wifi: rtw89: wow: prevent to send unexpected H2C during download Firmware
-Date: Tue, 10 Sep 2024 11:28:36 +0200
-Message-ID: <20240910092626.429416122@linuxfoundation.org>
+Subject: [PATCH 6.10 120/375] usb: uas: set host status byte on data completion error
+Date: Tue, 10 Sep 2024 11:28:37 +0200
+Message-ID: <20240910092626.467061678@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Shantanu Goel <sgoel01@yahoo.com>
 
-[ Upstream commit 60757f28408bcc63c4c0676b2a69a38adce30fc7 ]
+[ Upstream commit 9d32685a251a754f1823d287df233716aa23bcb9 ]
 
-While downloading Firmware in the resume flow, it is possible to receive
-beacon and send H2C to Firmware. However, if Firmware receives unexpected
-H2C during the download process, it will fail. Therefore, we prevent to
-send unexpected H2C during download Firmware in WoWLAN mode.
+Set the host status byte when a data completion error is encountered
+otherwise the upper layer may end up using the invalid zero'ed data.
+The following output was observed from scsi/sd.c prior to this fix.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240620055825.17592-6-pkshih@realtek.com
+[   11.872824] sd 0:0:0:1: [sdf] tag#9 data cmplt err -75 uas-tag 1 inflight:
+[   11.872826] sd 0:0:0:1: [sdf] tag#9 CDB: Read capacity(16) 9e 10 00 00 00 00 00 00 00 00 00 00 00 20 00 00
+[   11.872830] sd 0:0:0:1: [sdf] Sector size 0 reported, assuming 512.
+
+Signed-off-by: Shantanu Goel <sgoel01@yahoo.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/87msnx4ec6.fsf@yahoo.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/storage/uas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index ddc390d24ec1..ddf45828086d 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1917,7 +1917,8 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
- 		return;
- 
- 	if (ieee80211_is_beacon(hdr->frame_control)) {
--		if (vif->type == NL80211_IFTYPE_STATION) {
-+		if (vif->type == NL80211_IFTYPE_STATION &&
-+		    !test_bit(RTW89_FLAG_WOWLAN, rtwdev->flags)) {
- 			rtw89_vif_sync_bcn_tsf(rtwvif, hdr, skb->len);
- 			rtw89_fw_h2c_rssi_offload(rtwdev, phy_ppdu);
- 		}
+diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
+index b610a2de4ae5..a04b4cb1382d 100644
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -423,6 +423,7 @@ static void uas_data_cmplt(struct urb *urb)
+ 			uas_log_cmd_state(cmnd, "data cmplt err", status);
+ 		/* error: no data transfered */
+ 		scsi_set_resid(cmnd, sdb->length);
++		set_host_byte(cmnd, DID_ERROR);
+ 	} else {
+ 		scsi_set_resid(cmnd, sdb->length - urb->actual_length);
+ 	}
 -- 
 2.43.0
 
