@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1C91974EA;
-	Tue, 10 Sep 2024 10:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02F2194C8B;
+	Tue, 10 Sep 2024 10:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962931; cv=none; b=IA3akZRb/ddq/T1zA3VDrGAGf4xE0ibuyUlCeyK3K/aISPADlrYs+1uLw3tYnTb6y8jV4fTcqCeMQXEw7S6wRBJXnNSnCZHcBgY6TgKHiO54UacciQq4tzI1zxLnVTYDm0ed/otawPtQ29C02cN9LNy3pnjaBxzOFFw8c9jebqo=
+	t=1725962934; cv=none; b=BcojRCQ0db2SU903UmwJ+HKKNDLSujdwLLk+FRXLxN6BYtyeZcNqdRgnKsp/GkB3RPcN/yUCx5xhKo1BOVX1u56/N8jCMxDWTteS3uUBqFazUyijZBlk8YErX7AxqyN+YtT35k6LuuogtCqOX5moaGpECGHH1fue5A24sPqw9DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962931; c=relaxed/simple;
-	bh=4XHbwMNb+hk/6TF7mV8+0taj7XSzvjSsv06NObfcdbE=;
+	s=arc-20240116; t=1725962934; c=relaxed/simple;
+	bh=mxebgZ4SubVvsfIAON/TviTKWRZkHjBs/e1P67vgWBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8Z8Ya3LSSc9YVJ07iVUAbHdG/Fep5rZB1Mqm5Tv9fBuWUYQ2AxG/uArxUmWMBsdXaQUiJHybhwmjxuvxj7meO4yZCD3JM6tZdC45ohej6HNidpqxTVvmtHt1CWA06Fznv3oXOJ3UBxhn6xM5AFMM4cSmilsGQKaVVzKQbqYM0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ryJU2D4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QjB0jGqqAwHcMTbKqGnJTD+nrlm8u007y5P0djPDp9M7AEmiSxmOO9Zu3d+l+8RPPVuxIsnRoTbaAhqFFfQXvyQiScW2eeJIPic2qnkgsczkig9VpyQ19+Kff3m/Pn5BMQKub5gnJ835YfAtKbxu5LfR/fxBvWTqhgy74waQHQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oP2d4Yru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ryJU2D4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8993AC4CEC3;
-	Tue, 10 Sep 2024 10:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oP2d4Yru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC91C4CEC6;
+	Tue, 10 Sep 2024 10:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962930;
-	bh=4XHbwMNb+hk/6TF7mV8+0taj7XSzvjSsv06NObfcdbE=;
+	s=korg; t=1725962933;
+	bh=mxebgZ4SubVvsfIAON/TviTKWRZkHjBs/e1P67vgWBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ryJU2D4yUWWvZ9lk/8jUIOkPQ+umdIt5QyP4caL3HBzy3ckrt3xpey7aAubGlEjF
-	 gtGY/cUo3XpvHFxFjHoCHuqp5Spq8bgYy0ygB97j9bOsAM6lTRSIWljzA+dqYedFu0
-	 MALzvkdnJFfhtmQKWMstKFHLvLbIjSy5IMylv8ao=
+	b=oP2d4YruTe2EVqrkLbCz4wU/UKQWllZ5JR74/wWHf6vl3poZtc0s+s96J3XyPqe9W
+	 rXeWFlnBK3CPOL9LH9RWLricwIs2sf0e5sfknAG1Xyj9NiT1nTDtAPYrvb4dtt0uMl
+	 fBR4KEn/qevmLgerCjP43McR/YDurYxjtjMfy82E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/192] udf: Avoid excessive partition lengths
-Date: Tue, 10 Sep 2024 11:31:15 +0200
-Message-ID: <20240910092600.085741752@linuxfoundation.org>
+Subject: [PATCH 6.1 052/192] fs/ntfs3: One more reason to mark inode bad
+Date: Tue, 10 Sep 2024 11:31:16 +0200
+Message-ID: <20240910092600.134523298@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
 References: <20240910092557.876094467@linuxfoundation.org>
@@ -50,61 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit ebbe26fd54a9621994bc16b14f2ba8f84c089693 ]
+[ Upstream commit a0dde5d7a58b6bf9184ef3d8c6e62275c3645584 ]
 
-Avoid mounting filesystems where the partition would overflow the
-32-bits used for block number. Also refuse to mount filesystems where
-the partition length is so large we cannot safely index bits in a
-block bitmap.
+In addition to returning an error, mark the node as bad.
 
-Link: https://patch.msgid.link/20240620130403.14731-1-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/ntfs3/frecord.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 3b6419f29a4c..fa790be4f19f 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1084,12 +1084,19 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 	struct udf_part_map *map;
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct partitionHeaderDesc *phd;
-+	u32 sum;
- 	int err;
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 6cce71cc750e..7bfdc91fae1e 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1601,8 +1601,10 @@ int ni_delete_all(struct ntfs_inode *ni)
+ 		asize = le32_to_cpu(attr->size);
+ 		roff = le16_to_cpu(attr->nres.run_off);
  
- 	map = &sbi->s_partmaps[p_index];
- 
- 	map->s_partition_len = le32_to_cpu(p->partitionLength); /* blocks */
- 	map->s_partition_root = le32_to_cpu(p->partitionStartingLocation);
-+	if (check_add_overflow(map->s_partition_root, map->s_partition_len,
-+			       &sum)) {
-+		udf_err(sb, "Partition %d has invalid location %u + %u\n",
-+			p_index, map->s_partition_root, map->s_partition_len);
-+		return -EFSCORRUPTED;
-+	}
- 
- 	if (p->accessType == cpu_to_le32(PD_ACCESS_TYPE_READ_ONLY))
- 		map->s_partition_flags |= UDF_PART_FLAG_READ_ONLY;
-@@ -1145,6 +1152,14 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 		bitmap->s_extPosition = le32_to_cpu(
- 				phd->unallocSpaceBitmap.extPosition);
- 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_BITMAP;
-+		/* Check whether math over bitmap won't overflow. */
-+		if (check_add_overflow(map->s_partition_len,
-+				       sizeof(struct spaceBitmapDesc) << 3,
-+				       &sum)) {
-+			udf_err(sb, "Partition %d is too long (%u)\n", p_index,
-+				map->s_partition_len);
-+			return -EFSCORRUPTED;
+-		if (roff > asize)
++		if (roff > asize) {
++			_ntfs_bad_inode(&ni->vfs_inode);
+ 			return -EINVAL;
 +		}
- 		udf_debug("unallocSpaceBitmap (part %d) @ %u\n",
- 			  p_index, bitmap->s_extPosition);
- 	}
+ 
+ 		/* run==1 means unpack and deallocate. */
+ 		run_unpack_ex(RUN_DEALLOCATE, sbi, ni->mi.rno, svcn, evcn, svcn,
 -- 
 2.43.0
 
