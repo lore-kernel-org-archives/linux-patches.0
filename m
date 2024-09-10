@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FC417BEAE;
-	Tue, 10 Sep 2024 09:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE16718C030;
+	Tue, 10 Sep 2024 09:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725961195; cv=none; b=uffmWATWR8JCAbi7ZId4BgALlxhjpLIQtXE/jVdWjKmc0P6jK65rmYaO1yNojefsjoHM9d8RSpasXjZXcMtsFSqqV22kaY628ZC3jJecTfVXgp+IpcQBvTlzTGTZ/Zcf2EGBRQXnHbFFlFqxd2uscNvIWjbERzkO3DC7dbTm5CE=
+	t=1725961198; cv=none; b=iMyQ/TWQw0b7+yKrhkWhpPYSr/LVFsV2tpUCoVyUw73GUYyl9gBWD/1rxtV37Ohak767vsQBn90U190VXtKSWl+YWwHz4n5triYss5gpTzz869WUdYhrZQtt1Vv9Y0Ea/yLlb5HbzE3GbXO9bbE+Q4czJCY/J88KgsBgJfjKN4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725961195; c=relaxed/simple;
-	bh=MKNAs+rlQvfHH9+VyudlVUyN6WclftiBrKLp6eSbWQo=;
+	s=arc-20240116; t=1725961198; c=relaxed/simple;
+	bh=kyy/790lIBs5YW4W2PX9HpmyuiL/84qg79n3iA3SEVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsycO1w/mjDA3vKw/VoAKmXMNRgm6OJzgCQFz5s02PGISFJqL3Zx/+o74J+GNe26Jgjp+dTIegHicI1Vw8DZz0mptvK/9idxN0W18m9wzkg9Pq3koGp/1XgCnMxhc2VkOVtTl3mEN6iLUVGkA7FGb3RwgeVnGU3Px5ukDpgmkeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enlT6s7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d1YrrTJx4PFfHe0joRRGqk9cAAcOkLix2gFsczNScNtR50aKndCdWGFY9RdpngxB9ZLXpGDNca2asnegqL12l6paQseyUsyfEIwAPC8VZ37QZTMO7IiNABzaOAFVIFOseJIFh9puFSbiwf7ar9gfcjMxoD5dijoJLgz7VLbNmdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMF1JbhH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enlT6s7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61227C4CEC3;
-	Tue, 10 Sep 2024 09:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMF1JbhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56053C4CEC3;
+	Tue, 10 Sep 2024 09:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725961195;
-	bh=MKNAs+rlQvfHH9+VyudlVUyN6WclftiBrKLp6eSbWQo=;
+	s=korg; t=1725961198;
+	bh=kyy/790lIBs5YW4W2PX9HpmyuiL/84qg79n3iA3SEVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enlT6s7KX2nAzjf0Bew328aB/DjfPisErwC6+zp70a4IFe4pZ7lft4BylzS/WpYXu
-	 wK4L6GWzutf6u5PGuW740cTQhUHapVWno7tGOFnQG+tTi8CKlBY9MPTVfiIsur7QtA
-	 jp+khDSn5vpWXUH+ZfZPg9or/hhAYCHZyKodud6U=
+	b=bMF1JbhHMVB4e33rZBw3QaCKIfMIZrvyDAfkHH2zzO3uld1wq5pSB25dQHMzxV335
+	 XA3b0k1kUWxPkEXC1SHt9YW9QfK4nN7PQJcOJZrvFzLQl96kqtTVly35+XYPyCW7H9
+	 SpGltRhU3GTOQpVnm5tCTEI8eblgxbdXJxK1SlWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 85/96] nilfs2: protect references to superblock parameters exposed in sysfs
-Date: Tue, 10 Sep 2024 11:32:27 +0200
-Message-ID: <20240910092545.265624232@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 86/96] netns: add pre_exit method to struct pernet_operations
+Date: Tue, 10 Sep 2024 11:32:28 +0200
+Message-ID: <20240910092545.321536832@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -51,109 +50,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 683408258917541bdb294cd717c210a04381931e ]
+commit d7d99872c144a2c2f5d9c9d83627fa833836cba5 upstream.
 
-The superblock buffers of nilfs2 can not only be overwritten at runtime
-for modifications/repairs, but they are also regularly swapped, replaced
-during resizing, and even abandoned when degrading to one side due to
-backing device issues.  So, accessing them requires mutual exclusion using
-the reader/writer semaphore "nilfs->ns_sem".
+Current struct pernet_operations exit() handlers are highly
+discouraged to call synchronize_rcu().
 
-Some sysfs attribute show methods read this superblock buffer without the
-necessary mutual exclusion, which can cause problems with pointer
-dereferencing and memory access, so fix it.
+There are cases where we need them, and exit_batch() does
+not help the common case where a single netns is dismantled.
 
-Link: https://lkml.kernel.org/r/20240811100320.9913-1-konishi.ryusuke@gmail.com
-Fixes: da7141fb78db ("nilfs2: add /sys/fs/nilfs2/<device> group")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch leverages the existing synchronize_rcu() call
+in cleanup_net()
+
+Calling optional ->pre_exit() method before ->exit() or
+->exit_batch() allows to benefit from a single synchronize_rcu()
+call.
+
+Note that the synchronize_rcu() calls added in this patch
+are only in error paths or slow paths.
+
+Tested:
+
+$ time for i in {1..1000}; do unshare -n /bin/false;done
+
+real	0m2.612s
+user	0m0.171s
+sys	0m2.216s
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sysfs.c | 43 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ include/net/net_namespace.h |    5 +++++
+ net/core/net_namespace.c    |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/fs/nilfs2/sysfs.c b/fs/nilfs2/sysfs.c
-index 63ab8f9e6db3..64ea44be0a64 100644
---- a/fs/nilfs2/sysfs.c
-+++ b/fs/nilfs2/sysfs.c
-@@ -843,9 +843,15 @@ ssize_t nilfs_dev_revision_show(struct nilfs_dev_attr *attr,
- 				struct the_nilfs *nilfs,
- 				char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
--	u32 major = le32_to_cpu(sbp[0]->s_rev_level);
--	u16 minor = le16_to_cpu(sbp[0]->s_minor_rev_level);
-+	struct nilfs_super_block *raw_sb;
-+	u32 major;
-+	u16 minor;
-+
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	major = le32_to_cpu(raw_sb->s_rev_level);
-+	minor = le16_to_cpu(raw_sb->s_minor_rev_level);
-+	up_read(&nilfs->ns_sem);
- 
- 	return sysfs_emit(buf, "%d.%d\n", major, minor);
- }
-@@ -863,8 +869,13 @@ ssize_t nilfs_dev_device_size_show(struct nilfs_dev_attr *attr,
- 				    struct the_nilfs *nilfs,
- 				    char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
--	u64 dev_size = le64_to_cpu(sbp[0]->s_dev_size);
-+	struct nilfs_super_block *raw_sb;
-+	u64 dev_size;
-+
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	dev_size = le64_to_cpu(raw_sb->s_dev_size);
-+	up_read(&nilfs->ns_sem);
- 
- 	return sysfs_emit(buf, "%llu\n", dev_size);
- }
-@@ -886,9 +897,15 @@ ssize_t nilfs_dev_uuid_show(struct nilfs_dev_attr *attr,
- 			    struct the_nilfs *nilfs,
- 			    char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
-+	struct nilfs_super_block *raw_sb;
-+	ssize_t len;
- 
--	return sysfs_emit(buf, "%pUb\n", sbp[0]->s_uuid);
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	len = sysfs_emit(buf, "%pUb\n", raw_sb->s_uuid);
-+	up_read(&nilfs->ns_sem);
-+
-+	return len;
+--- a/include/net/net_namespace.h
++++ b/include/net/net_namespace.h
+@@ -353,8 +353,13 @@ struct pernet_operations {
+ 	 * synchronize_rcu() related to these pernet_operations,
+ 	 * instead of separate synchronize_rcu() for every net.
+ 	 * Please, avoid synchronize_rcu() at all, where it's possible.
++	 *
++	 * Note that a combination of pre_exit() and exit() can
++	 * be used, since a synchronize_rcu() is guaranteed between
++	 * the calls.
+ 	 */
+ 	int (*init)(struct net *net);
++	void (*pre_exit)(struct net *net);
+ 	void (*exit)(struct net *net);
+ 	void (*exit_batch)(struct list_head *net_exit_list);
+ 	unsigned int *id;
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -154,6 +154,17 @@ static void ops_free(const struct pernet
+ 	}
  }
  
- static
-@@ -896,10 +913,16 @@ ssize_t nilfs_dev_volume_name_show(struct nilfs_dev_attr *attr,
- 				    struct the_nilfs *nilfs,
- 				    char *buf)
- {
--	struct nilfs_super_block **sbp = nilfs->ns_sbp;
-+	struct nilfs_super_block *raw_sb;
-+	ssize_t len;
++static void ops_pre_exit_list(const struct pernet_operations *ops,
++			      struct list_head *net_exit_list)
++{
++	struct net *net;
 +
-+	down_read(&nilfs->ns_sem);
-+	raw_sb = nilfs->ns_sbp[0];
-+	len = scnprintf(buf, sizeof(raw_sb->s_volume_name), "%s\n",
-+			raw_sb->s_volume_name);
-+	up_read(&nilfs->ns_sem);
++	if (ops->pre_exit) {
++		list_for_each_entry(net, net_exit_list, exit_list)
++			ops->pre_exit(net);
++	}
++}
++
+ static void ops_exit_list(const struct pernet_operations *ops,
+ 			  struct list_head *net_exit_list)
+ {
+@@ -342,6 +353,12 @@ out_undo:
+ 	list_add(&net->exit_list, &net_exit_list);
+ 	saved_ops = ops;
+ 	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
++		ops_pre_exit_list(ops, &net_exit_list);
++
++	synchronize_rcu();
++
++	saved_ops = ops;
++	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+ 		ops_exit_list(ops, &net_exit_list);
  
--	return scnprintf(buf, sizeof(sbp[0]->s_volume_name), "%s\n",
--			 sbp[0]->s_volume_name);
-+	return len;
+ 	ops = saved_ops;
+@@ -554,10 +571,15 @@ static void cleanup_net(struct work_stru
+ 		list_add_tail(&net->exit_list, &net_exit_list);
+ 	}
+ 
++	/* Run all of the network namespace pre_exit methods */
++	list_for_each_entry_reverse(ops, &pernet_list, list)
++		ops_pre_exit_list(ops, &net_exit_list);
++
+ 	/*
+ 	 * Another CPU might be rcu-iterating the list, wait for it.
+ 	 * This needs to be before calling the exit() notifiers, so
+ 	 * the rcu_barrier() below isn't sufficient alone.
++	 * Also the pre_exit() and exit() methods need this barrier.
+ 	 */
+ 	synchronize_rcu();
+ 
+@@ -977,6 +999,8 @@ static int __register_pernet_operations(
+ out_undo:
+ 	/* If I have an error cleanup all namespaces I initialized */
+ 	list_del(&ops->list);
++	ops_pre_exit_list(ops, &net_exit_list);
++	synchronize_rcu();
+ 	ops_exit_list(ops, &net_exit_list);
+ 	ops_free_list(ops, &net_exit_list);
+ 	return error;
+@@ -991,6 +1015,8 @@ static void __unregister_pernet_operatio
+ 	/* See comment in __register_pernet_operations() */
+ 	for_each_net(net)
+ 		list_add_tail(&net->exit_list, &net_exit_list);
++	ops_pre_exit_list(ops, &net_exit_list);
++	synchronize_rcu();
+ 	ops_exit_list(ops, &net_exit_list);
+ 	ops_free_list(ops, &net_exit_list);
  }
- 
- static const char dev_readme_str[] =
--- 
-2.43.0
-
+@@ -1015,6 +1041,8 @@ static void __unregister_pernet_operatio
+ 	} else {
+ 		LIST_HEAD(net_exit_list);
+ 		list_add(&init_net.exit_list, &net_exit_list);
++		ops_pre_exit_list(ops, &net_exit_list);
++		synchronize_rcu();
+ 		ops_exit_list(ops, &net_exit_list);
+ 		ops_free_list(ops, &net_exit_list);
+ 	}
 
 
