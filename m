@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2442017BEAE;
-	Tue, 10 Sep 2024 09:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4545146444;
+	Tue, 10 Sep 2024 09:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725960986; cv=none; b=dJ7MbiLCMUnazr5DiUL57aR+o9IRMBn4RuG0vKQ4Ep7JWP3aDjIZl5hfRztnrTVPRl5vW2U3/ZD9VbkYGaPBTg4UX9mha5pbA5iyUMK+fckKY1yFZRKm8V99JAAAFYQcSBk/bIjxRKbutO5jM03OB05Tq97JecVhKP10VxrKLwQ=
+	t=1725960989; cv=none; b=LXWAiH/rjHWaP2uO61DOR6WrSGAWByG+rJVk4PshGtbRw36BRKaU8/pGt6e8ASkHhqX+EzLwx5F7quu1Fo/nVqF7lazPpkOLLVaqPkB56L/V73kULvbuW7EPHVThSD2MOMZmN6BMwX+gPTMuw3hsMv30g1MZnHKAMvr2OrsKmBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725960986; c=relaxed/simple;
-	bh=wKtmImX3N8Oiii/AlY62kug3cjVfEJfa+ExNVqE2Ik4=;
+	s=arc-20240116; t=1725960989; c=relaxed/simple;
+	bh=zuqfhiAFze72Yd9RR0w6pMhjAdlO/d25hCbmwUCWvjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Efqe68r2TZPp8B7/cDmbz2wx0gqIhkc5+NK1wyDRylBlpyqm+L0oLHNPxRbdX47PZx/TdojU8D7gNGCxWUKGTRBFs+LYW8MiUBdFI24fSsf6AFl6eaupRZkES6gKVfnWR5Fpa2YCrCJrUn/JS3FW22M9CKy6PssmK7vF+guPZXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTm3tYKJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NO6n/6tWFbUOexkRDJc0oNYKsbq7Gnj1/QXEyQUBR+zLSO1kO5ED4jp7Lumwfo1FbTqoe/YjF1IKVfYp+LLkRlB/dQb1zl1hlItucOZYX4TqaZcGz6FkTZKKFVIxOpygPrROmPQ2oinjmBi/ElowWAyqrF044httV37o46AVjC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLOq/8U5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTm3tYKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA4CC4CEC3;
-	Tue, 10 Sep 2024 09:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLOq/8U5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB0EC4CEC6;
+	Tue, 10 Sep 2024 09:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725960986;
-	bh=wKtmImX3N8Oiii/AlY62kug3cjVfEJfa+ExNVqE2Ik4=;
+	s=korg; t=1725960989;
+	bh=zuqfhiAFze72Yd9RR0w6pMhjAdlO/d25hCbmwUCWvjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VTm3tYKJKXSYP2jePe8b/U1ceZCEG66huCcm+9eOpw/8FhkIW+5s/PqAysYvkxBpx
-	 QtzvtRgZvu+WPTPaewao8idbOe/eNjtlMCo3JmITPn7pt0byACJXkoel6tsuUodSDa
-	 d50xT391+vS/9BpMtOB8u6r7vkw5066lqWlYJj2M=
+	b=JLOq/8U5KcOAzeSCkHIuMQMcnnFv6vXHT0cHaY6m4Q+CAkYoWgEjy+Zy6SgXO+y3S
+	 eiR+im2d9fIyZd95fzFLSDG6SVbep555tOTQ5osaA0IXdMV5ddDNVNVOpwSOPy1XEc
+	 n27Y3SB8EyJ3K6viYCiWK3e8PeVy/27aw8ISC9p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	Jaroslav Kysela <perex@perex.cz>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.19 15/96] udf: Limit file size to 4TB
-Date: Tue, 10 Sep 2024 11:31:17 +0200
-Message-ID: <20240910092542.090898060@linuxfoundation.org>
+	syzbot+d952e5e28f5fb7718d23@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 4.19 16/96] ALSA: usb-audio: Sanity checks for each pipe and EP types
+Date: Tue, 10 Sep 2024 11:31:18 +0200
+Message-ID: <20240910092542.128616144@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092541.383432924@linuxfoundation.org>
 References: <20240910092541.383432924@linuxfoundation.org>
@@ -49,46 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit c2efd13a2ed4f29bf9ef14ac2fbb7474084655f8 upstream.
+[ Upstream commit 801ebf1043ae7b182588554cc9b9ad3c14bc2ab5 ]
 
-UDF disk format supports in principle file sizes up to 1<<64-1. However
-the file space (including holes) is described by a linked list of
-extents, each of which can have at most 1GB. Thus the creation and
-handling of extents gets unusably slow beyond certain point. Limit the
-file size to 4TB to avoid locking up the kernel too easily.
+The recent USB core code performs sanity checks for the given pipe and
+EP types, and it can be hit by manipulated USB descriptors by syzbot.
+For making syzbot happier, this patch introduces a local helper for a
+sanity check in the driver side and calls it at each place before the
+message handling, so that we can avoid the WARNING splats.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+Reported-by: syzbot+d952e5e28f5fb7718d23@syzkaller.appspotmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/super.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/usb/helper.c |   17 +++++++++++++++++
+ sound/usb/helper.h |    1 +
+ sound/usb/quirks.c |   14 +++++++++++---
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -86,6 +86,13 @@ enum {
- #define UDF_MAX_LVID_NESTING 1000
+--- a/sound/usb/helper.c
++++ b/sound/usb/helper.c
+@@ -76,6 +76,20 @@ void *snd_usb_find_csint_desc(void *buff
+ 	return NULL;
+ }
  
- enum { UDF_MAX_LINKS = 0xffff };
-+/*
-+ * We limit filesize to 4TB. This is arbitrary as the on-disk format supports
-+ * more but because the file space is described by a linked list of extents,
-+ * each of which can have at most 1GB, the creation and handling of extents
-+ * gets unusably slow beyond certain point...
-+ */
-+#define UDF_MAX_FILESIZE (1ULL << 42)
++/* check the validity of pipe and EP types */
++int snd_usb_pipe_sanity_check(struct usb_device *dev, unsigned int pipe)
++{
++	static const int pipetypes[4] = {
++		PIPE_CONTROL, PIPE_ISOCHRONOUS, PIPE_BULK, PIPE_INTERRUPT
++	};
++	struct usb_host_endpoint *ep;
++
++	ep = usb_pipe_endpoint(dev, pipe);
++	if (usb_pipetype(pipe) != pipetypes[usb_endpoint_type(&ep->desc)])
++		return -EINVAL;
++	return 0;
++}
++
+ /*
+  * Wrapper for usb_control_msg().
+  * Allocates a temp buffer to prevent dmaing from/to the stack.
+@@ -88,6 +102,9 @@ int snd_usb_ctl_msg(struct usb_device *d
+ 	void *buf = NULL;
+ 	int timeout;
  
- /* These are the "meat" - everything else is stuffing */
- static int udf_fill_super(struct super_block *, void *, int);
-@@ -2307,7 +2314,7 @@ static int udf_fill_super(struct super_b
- 		ret = -ENOMEM;
- 		goto error_out;
- 	}
--	sb->s_maxbytes = MAX_LFS_FILESIZE;
-+	sb->s_maxbytes = UDF_MAX_FILESIZE;
- 	sb->s_max_links = UDF_MAX_LINKS;
- 	return 0;
++	if (snd_usb_pipe_sanity_check(dev, pipe))
++		return -EINVAL;
++
+ 	if (size > 0) {
+ 		buf = kmemdup(data, size, GFP_KERNEL);
+ 		if (!buf)
+--- a/sound/usb/helper.h
++++ b/sound/usb/helper.h
+@@ -7,6 +7,7 @@ unsigned int snd_usb_combine_bytes(unsig
+ void *snd_usb_find_desc(void *descstart, int desclen, void *after, u8 dtype);
+ void *snd_usb_find_csint_desc(void *descstart, int desclen, void *after, u8 dsubtype);
  
++int snd_usb_pipe_sanity_check(struct usb_device *dev, unsigned int pipe);
+ int snd_usb_ctl_msg(struct usb_device *dev, unsigned int pipe,
+ 		    __u8 request, __u8 requesttype, __u16 value, __u16 index,
+ 		    void *data, __u16 size);
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -743,11 +743,13 @@ static int snd_usb_novation_boot_quirk(s
+ static int snd_usb_accessmusic_boot_quirk(struct usb_device *dev)
+ {
+ 	int err, actual_length;
+-
+ 	/* "midi send" enable */
+ 	static const u8 seq[] = { 0x4e, 0x73, 0x52, 0x01 };
++	void *buf;
+ 
+-	void *buf = kmemdup(seq, ARRAY_SIZE(seq), GFP_KERNEL);
++	if (snd_usb_pipe_sanity_check(dev, usb_sndintpipe(dev, 0x05)))
++		return -EINVAL;
++	buf = kmemdup(seq, ARRAY_SIZE(seq), GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 	err = usb_interrupt_msg(dev, usb_sndintpipe(dev, 0x05), buf,
+@@ -772,7 +774,11 @@ static int snd_usb_accessmusic_boot_quir
+ 
+ static int snd_usb_nativeinstruments_boot_quirk(struct usb_device *dev)
+ {
+-	int ret = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
++	int ret;
++
++	if (snd_usb_pipe_sanity_check(dev, usb_sndctrlpipe(dev, 0)))
++		return -EINVAL;
++	ret = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
+ 				  0xaf, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				  1, 0, NULL, 0, 1000);
+ 
+@@ -879,6 +885,8 @@ static int snd_usb_axefx3_boot_quirk(str
+ 
+ 	dev_dbg(&dev->dev, "Waiting for Axe-Fx III to boot up...\n");
+ 
++	if (snd_usb_pipe_sanity_check(dev, usb_sndctrlpipe(dev, 0)))
++		return -EINVAL;
+ 	/* If the Axe-Fx III has not fully booted, it will timeout when trying
+ 	 * to enable the audio streaming interface. A more generous timeout is
+ 	 * used here to detect when the Axe-Fx III has finished booting as the
 
 
