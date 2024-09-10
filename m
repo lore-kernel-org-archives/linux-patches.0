@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BA118C32E;
-	Tue, 10 Sep 2024 10:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC0C23A6;
+	Tue, 10 Sep 2024 10:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725965193; cv=none; b=uCqOCQaEjbWCxVVzAYFAB+SMf28ATT1er0mDExN0bL9zYfWflwDX9Y3RTznjBfytHMMEPOQ9DnV8duhms0YoHK+kK0h6HvgGv58rtXk6jVfrNny6toiUo/XyJHmrQ5C23enB8d+22z5d9U08ut0zIeZG1Qp/WQtljARtB+2X/xU=
+	t=1725965196; cv=none; b=P0VmdDvBYYV5C1zwOf6Oa79u8wqpf5Wd1/WLOLC32dqj38STEvZo/TcPpMIkEpDCTz1Dok2vCC+9QCBCz63/YXDOVB/xDSvYjwm3hPDZEsRQAq1/oV1bx2qUfcX7JMwmywn7nSs5l0wx8q8rIs6E6Egs2HtzomzwogSwha9YgMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725965193; c=relaxed/simple;
-	bh=mlJIBL7NROT8ca3PkWyivHuGo0yxHncUnabgCR4EIYM=;
+	s=arc-20240116; t=1725965196; c=relaxed/simple;
+	bh=5U8HOHp6AB+iYljGIFmVMViw7poxM3X1PiGJXBvVzMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcyIh7fl0OeHQ277PupHO/7ycLYgCyzoAaQbCKaahrXWRmitjKeFpM1xucWP2/AQHXaUErM22bQNXKFln3K2/E5Fxg8ylPpWFBu+1AQwv7+P8VuK+XvnGCLuJm5fG15kBOKzQvyqzQxosit1zpV7Sx23rko50HKawpkukyB1/Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKBALHCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHG5ti8q8DStgD+k8ubjBVrkI9RNNJlskW44Zqgss1fW1tdiO4UlfMnJw3USin/1kqFyyc0so/bJYBc/uMxNAQelT8QGxpUx/49WJ0jvr+VzGt4/08IwODF6hdIwjGYy5RPmIYqTDkT83VGFCiEXmYx+0PdzEacQLYL6ds9td6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbdrZ4Mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKBALHCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20823C4CEC3;
-	Tue, 10 Sep 2024 10:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbdrZ4Mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E71BC4CEC3;
+	Tue, 10 Sep 2024 10:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725965193;
-	bh=mlJIBL7NROT8ca3PkWyivHuGo0yxHncUnabgCR4EIYM=;
+	s=korg; t=1725965196;
+	bh=5U8HOHp6AB+iYljGIFmVMViw7poxM3X1PiGJXBvVzMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKBALHCVoBQcFUT5rOGdsBqpocNrkzCp6L+N47AYcjdN3bGe0g34HhmWPA8uXaV16
-	 YM2Gg4us55BamqJkob1R1dJzRZJf+p2E9lGqAlwd4aLLDrP51bE7MoyMV7qv+7kjHQ
-	 Dw+kSNsdBfaqpFRHv44ZiK+eBQQod61A0Id/2PDQ=
+	b=PbdrZ4Moo8l4bzYXG8SJhSSmlpeaM6qT2Lq1luKdqXcS85B6Q6i4VJPTlN6fb3RVx
+	 UocW2NJUfrMId8l14X+0Z3oOIgZ2mMNJOQTU/DtFCTSLvBQNgwKMTQBOLmF7yhXY7T
+	 dFKve6uyJ80oclnm1gHYDc4slNC4G17LBetOee7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Foster Snowhill <forst@pen.gy>,
-	Georgi Valkov <gvalkov@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 151/186] usbnet: ipheth: race between ipheth_close and error handling
-Date: Tue, 10 Sep 2024 11:34:06 +0200
-Message-ID: <20240910092600.803188054@linuxfoundation.org>
+	Jacky Bai <ping.bai@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Ye Li <ye.li@nxp.com>,
+	Jason Liu <jason.hui.liu@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 5.10 169/186] clocksource/drivers/imx-tpm: Fix next event not taking effect sometime
+Date: Tue, 10 Sep 2024 11:34:24 +0200
+Message-ID: <20240910092601.580714296@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092554.645718780@linuxfoundation.org>
 References: <20240910092554.645718780@linuxfoundation.org>
@@ -53,44 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Jacky Bai <ping.bai@nxp.com>
 
-[ Upstream commit e5876b088ba03a62124266fa20d00e65533c7269 ]
+commit 3d5c2f8e75a55cfb11a85086c71996af0354a1fb upstream.
 
-ipheth_sndbulk_callback() can submit carrier_work
-as a part of its error handling. That means that
-the driver must make sure that the work is cancelled
-after it has made sure that no more URB can terminate
-with an error condition.
+The value written into the TPM CnV can only be updated into the hardware
+when the counter increases. Additional writes to the CnV write buffer are
+ignored until the register has been updated. Therefore, we need to check
+if the CnV has been updated before continuing. This may require waiting for
+1 counter cycle in the worst case.
 
-Hence the order of actions in ipheth_close() needs
-to be inverted.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Foster Snowhill <forst@pen.gy>
-Tested-by: Georgi Valkov <gvalkov@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 059ab7b82eec ("clocksource/drivers/imx-tpm: Add imx tpm timer support")
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Ye Li <ye.li@nxp.com>
+Reviewed-by: Jason Liu <jason.hui.liu@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240725193355.1436005-2-Frank.Li@nxp.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ipheth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-imx-tpm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
-index d56e276e4d80..4485388dcff2 100644
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -353,8 +353,8 @@ static int ipheth_close(struct net_device *net)
- {
- 	struct ipheth_device *dev = netdev_priv(net);
+--- a/drivers/clocksource/timer-imx-tpm.c
++++ b/drivers/clocksource/timer-imx-tpm.c
+@@ -91,6 +91,14 @@ static int tpm_set_next_event(unsigned l
+ 	now = tpm_read_counter();
  
--	cancel_delayed_work_sync(&dev->carrier_work);
- 	netif_stop_queue(net);
-+	cancel_delayed_work_sync(&dev->carrier_work);
- 	return 0;
- }
- 
--- 
-2.43.0
-
+ 	/*
++	 * Need to wait CNT increase at least 1 cycle to make sure
++	 * the C0V has been updated into HW.
++	 */
++	if ((next & 0xffffffff) != readl(timer_base + TPM_C0V))
++		while (now == tpm_read_counter())
++			;
++
++	/*
+ 	 * NOTE: We observed in a very small probability, the bus fabric
+ 	 * contention between GPU and A7 may results a few cycles delay
+ 	 * of writing CNT registers which may cause the min_delta event got
 
 
