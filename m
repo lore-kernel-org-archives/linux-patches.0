@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC00E18B48A;
-	Tue, 10 Sep 2024 10:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B530118FC99;
+	Tue, 10 Sep 2024 10:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962436; cv=none; b=pg6/0smNotLONo/4WvVu/L8/yu+EPAIOIgB63cu9PGxTq1dd5lTeKOA0EHMOxR2r2b+qNH9eZgNHSoQ7xmou1T49BX1+uinYAIn4b7XnqpBZeaAA8xvzYq32QcPQ+LC/zlCX1cyced4G376QxieDOArxNmByIOwFNKjkIAsHyWE=
+	t=1725962439; cv=none; b=R6evJBr0rGPN8qDGR5HCvnrPZTYDUVlDR5IGir1akUqrmsNU/bBz3Qz9fhsz9zDwmocDrrSALGvgGEeCKa/bCA3szuzLz7mrInmpvsWCBTs/6QnYrLCwRH/rfyb54qCkyVi/ZDEz6PABYKgSNHhQD2TUyRpfSyrp2kaGauijiLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962436; c=relaxed/simple;
-	bh=QZu1EJEoN1Xdn7OrOnXrqst8q6YEAFq7XQckc/dUl1I=;
+	s=arc-20240116; t=1725962439; c=relaxed/simple;
+	bh=7eST+JtMmltYohE6OFgBe2L9m/IxpNjmHM++9Kkh8X0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDrskpfdQtdZPKN/Gf1xsrZLXX1whNf11dP89MnKnsyMUUxvlzKPEPTnY30gwlo1GjazM/lx3PHNveDuGXqN9VNtw40uPGRi7Mk96RDHLM+F+vz03DVatF3U8oBsnemZS1Xv3G3aziHjtjm81bhZXgZj24WRAaF4UsnIB0UojjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1fuZEa1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNLJDa+sPbuLPCJ1LXSzPoj0wlvKCVN8TrBSw9UmBYW2LOgNevPjuTH8KHX/xSFE2V8BamoPcAOQT9IQrEoU/hO5Qku3PoHXR68lL6xn2NgTUAWsJbswVbBftUvCjy3/wHAorJU8G+qyhq324mpq8qqRLJPHlIfGELHdMT1pThk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvjhztpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1fuZEa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D7CC4CEC3;
-	Tue, 10 Sep 2024 10:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvjhztpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B15AC4CEC3;
+	Tue, 10 Sep 2024 10:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962436;
-	bh=QZu1EJEoN1Xdn7OrOnXrqst8q6YEAFq7XQckc/dUl1I=;
+	s=korg; t=1725962439;
+	bh=7eST+JtMmltYohE6OFgBe2L9m/IxpNjmHM++9Kkh8X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1fuZEa1HRRIFnaEhHiAkg779YYVHQoyBHhoXfwV48pdNJNUSuxnJozIEJwrqqvyG
-	 9726HSyFn9CJkHoayo3YtdIvjZzynlfDq2PeCbqrXAzZVJxN8o1UViAiu3ab4ThoHt
-	 vyFjRwmTGnCKgjqIn44Frna2I/pUBSP8vSPJo8/M=
+	b=qvjhztpHoXGxJ6yA7QEXOcd5u9qR/141nHto7YJ0BhUF4teojSrhcMRJeqQbWNKnp
+	 Mn+8R6W16MsCrP1YNMISmzfUAi+YJYN6d673qNIFJ7bPMfr24tcCuIeK67zXozb5HX
+	 nmXhxsTrxbGImA5DjQzRctrK2lCmRLArJdZErGbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Harry Wentland <harry.wentland@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 008/121] drm/amd/display: Check num_valid_sets before accessing reader_wm_sets[]
-Date: Tue, 10 Sep 2024 11:31:23 +0200
-Message-ID: <20240910092546.139244852@linuxfoundation.org>
+Subject: [PATCH 5.4 009/121] drm/amd/display: Fix Coverity INTEGER_OVERFLOW within dal_gpio_service_create
+Date: Tue, 10 Sep 2024 11:31:24 +0200
+Message-ID: <20240910092546.188443164@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -54,39 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit b38a4815f79b87efb196cd5121579fc51e29a7fb ]
+[ Upstream commit c6077aa66fa230d12f37fef01161ef080d13b726 ]
 
-[WHY & HOW]
-num_valid_sets needs to be checked to avoid a negative index when
-accessing reader_wm_sets[num_valid_sets - 1].
+[Why]
+For subtraction, coverity reports integer overflow
+warning message when variable type is uint32_t.
 
-This fixes an OVERRUN issue reported by Coverity.
+[How]
+Change variable type to int32_t.
 
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
-index 9f301f8575a5..fec3ca955b26 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn21/rn_clk_mgr.c
-@@ -453,7 +453,8 @@ void build_watermark_ranges(struct clk_bw_params *bw_params, struct pp_smu_wm_ra
- 			ranges->reader_wm_sets[num_valid_sets].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
+diff --git a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+index f76ec0dd29e7..a61cec470d28 100644
+--- a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
++++ b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+@@ -58,7 +58,7 @@ struct gpio_service *dal_gpio_service_create(
+ 	struct dc_context *ctx)
+ {
+ 	struct gpio_service *service;
+-	uint32_t index_of_id;
++	int32_t index_of_id;
  
- 			/* Modify previous watermark range to cover up to max */
--			ranges->reader_wm_sets[num_valid_sets - 1].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
-+			if (num_valid_sets > 0)
-+				ranges->reader_wm_sets[num_valid_sets - 1].max_fill_clk_mhz = PP_SMU_WM_SET_RANGE_CLK_UNCONSTRAINED_MAX;
- 		}
- 		num_valid_sets++;
+ 	service = kzalloc(sizeof(struct gpio_service), GFP_KERNEL);
+ 
+@@ -114,7 +114,7 @@ struct gpio_service *dal_gpio_service_create(
+ 	return service;
+ 
+ failure_2:
+-	while (index_of_id) {
++	while (index_of_id > 0) {
+ 		--index_of_id;
+ 		kfree(service->busyness[index_of_id]);
  	}
 -- 
 2.43.0
