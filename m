@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E323B18787E;
-	Tue, 10 Sep 2024 10:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2266A18787E;
+	Tue, 10 Sep 2024 10:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962592; cv=none; b=jexZvXt7kXly0NddMNIuTDp/Lir72h80C+ubKZ5Z5YUs/LRjOJMlXYl2YOk0104qsNuBfsW5tE1vetrpYArbngvlz56JY3tSwYHpjEND/2JSRdSO0ZtllKLYIfwnUD6gOeDEkKe235cbuANqXYbXCR6vYSS9N6J6pxjNY+VOYJA=
+	t=1725962595; cv=none; b=O8I5Zcf0vvp7U0BDDLjXIxQppO5u10Awq8zsUNJa2LJaNvJ66ZCTXW8T9tNgMKjshW9BbMuxw4g2vDdknhC5JaQCATTGwkb7mLxTPt2lLWKR+Lzx0hXVfKs7MaDNp9OC03Dj+2x2i4gHMPyAV6nLI5+/BOsyJyUmtXoOukjrcOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962592; c=relaxed/simple;
-	bh=pQRARi3k0Nx9luEnlg2ZkluTpMoia+nGDp7YN3wSiMM=;
+	s=arc-20240116; t=1725962595; c=relaxed/simple;
+	bh=N8P+pxTkvZVhITh6Q1/3P9ea6LFPjffYoPGLZ9TE8rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DaKpldCDSJTq8QD1AJpOwczP6znvuhU+cas6wpqcEckloq2DuOS+ZvO9CWxZW8e8U7PDU2hC/WULDMXQIbWz7A55Ibzp8kULPnskTaN4n7+0pwtieefyrJF8ds8/rL/TQgDyMLTDgZZJ/z3cmcDR49MtwIC/NJwyJKtQeh/nxOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyERyydD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u66YO8/1auVIlyKremQiA5WT1iPgFntvSytdxT1HPir9s3qwbJ7Xw21tKonMg66Fucirz8cnKFQPSfynB9OylxvxnVpgJ+Gb8R5FMiiA2n1PaXZvVqKShi0CLTTlU+A13aPgRlDT9sA3At0Fiiy78WwyHkGXoi02h6JD/HuinW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LL5UpvWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyERyydD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFDDC4CEC3;
-	Tue, 10 Sep 2024 10:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LL5UpvWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDC2C4CEC3;
+	Tue, 10 Sep 2024 10:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962591;
-	bh=pQRARi3k0Nx9luEnlg2ZkluTpMoia+nGDp7YN3wSiMM=;
+	s=korg; t=1725962594;
+	bh=N8P+pxTkvZVhITh6Q1/3P9ea6LFPjffYoPGLZ9TE8rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyERyydDMjO2TFLNwPeMssn5i4g1Fe2AM1/WbhrCxm5jhPJ+wKKPKu8DWnQtOpmP+
-	 13HoeO8Z+xh4fiUKpQ2CxDKlwK3nFsQhFxrP0vv6DvU/ummsQzpMPQKn2CNFgIahxy
-	 tiY3rvJdDDaGAiFEoVOxNOSKtEaPzLVv2DM+FIbA=
+	b=LL5UpvWVQ/gPEsNCoM7+uBaVetkCxH+iI9xrjA0zXlfWULvr5zWkUYsmNU8ApHPav
+	 QOStp6oY43wuNUnJ8TGc6YotIdUKwji+Mz8ycy+/1u3eSVCfRTr2ERd9UZ+yOeAhIq
+	 K15Z7YWQ5cgUxhXZ76UowHFLomMt1JeQmHNe7bBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 085/121] PCI: Add missing bridge lock to pci_bus_lock()
-Date: Tue, 10 Sep 2024 11:32:40 +0200
-Message-ID: <20240910092549.923386286@linuxfoundation.org>
+Subject: [PATCH 5.4 086/121] btrfs: initialize location to fix -Wmaybe-uninitialized in btrfs_lookup_dentry()
+Date: Tue, 10 Sep 2024 11:32:41 +0200
+Message-ID: <20240910092549.959070700@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092545.737864202@linuxfoundation.org>
 References: <20240910092545.737864202@linuxfoundation.org>
@@ -56,161 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit a4e772898f8bf2e7e1cf661a12c60a5612c4afab ]
+[ Upstream commit b8e947e9f64cac9df85a07672b658df5b2bcff07 ]
 
-One of the true positives that the cfg_access_lock lockdep effort
-identified is this sequence:
+Some arch + compiler combinations report a potentially unused variable
+location in btrfs_lookup_dentry(). This is a false alert as the variable
+is passed by value and always valid or there's an error. The compilers
+cannot probably reason about that although btrfs_inode_by_name() is in
+the same file.
 
-  WARNING: CPU: 14 PID: 1 at drivers/pci/pci.c:4886 pci_bridge_secondary_bus_reset+0x5d/0x70
-  RIP: 0010:pci_bridge_secondary_bus_reset+0x5d/0x70
-  Call Trace:
-   <TASK>
-   ? __warn+0x8c/0x190
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   ? report_bug+0x1f8/0x200
-   ? handle_bug+0x3c/0x70
-   ? exc_invalid_op+0x18/0x70
-   ? asm_exc_invalid_op+0x1a/0x20
-   ? pci_bridge_secondary_bus_reset+0x5d/0x70
-   pci_reset_bus+0x1d8/0x270
-   vmd_probe+0x778/0xa10
-   pci_device_probe+0x95/0x120
+   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.objectid' may be used
+   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5603:9
+   >  + /kisskb/src/fs/btrfs/inode.c: error: 'location.type' may be used
+   +uninitialized in this function [-Werror=maybe-uninitialized]:  => 5674:5
 
-Where pci_reset_bus() users are triggering unlocked secondary bus resets.
-Ironically pci_bus_reset(), several calls down from pci_reset_bus(), uses
-pci_bus_lock() before issuing the reset which locks everything *but* the
-bridge itself.
+   m68k-gcc8/m68k-allmodconfig
+   mips-gcc8/mips-allmodconfig
+   powerpc-gcc5/powerpc-all{mod,yes}config
+   powerpc-gcc5/ppc64_defconfig
 
-For the same motivation as adding:
+Initialize it to zero, this should fix the warnings and won't change the
+behaviour as btrfs_inode_by_name() accepts only a root or inode item
+types, otherwise returns an error.
 
-  bridge = pci_upstream_bridge(dev);
-  if (bridge)
-    pci_dev_lock(bridge);
-
-to pci_reset_function() for the "bus" and "cxl_bus" reset cases, add
-pci_dev_lock() for @bus->self to pci_bus_lock().
-
-Link: https://lore.kernel.org/r/171711747501.1628941.15217746952476635316.stgit@dwillia2-xfh.jf.intel.com
-Reported-by: Imre Deak <imre.deak@intel.com>
-Closes: http://lore.kernel.org/r/6657833b3b5ae_14984b29437@dwillia2-xfh.jf.intel.com.notmuch
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[bhelgaas: squash in recursive locking deadlock fix from Keith Busch:
-https://lore.kernel.org/r/20240711193650.701834-1-kbusch@meta.com]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Kalle Valo <kvalo@kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/linux-btrfs/bd4e9928-17b3-9257-8ba7-6b7f9bbb639a@linux-m68k.org/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index deafd229ef8b..41050a35631f 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5200,10 +5200,12 @@ static void pci_bus_lock(struct pci_bus *bus)
- {
- 	struct pci_dev *dev;
- 
-+	pci_dev_lock(bus->self);
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
- 	}
- }
- 
-@@ -5215,8 +5217,10 @@ static void pci_bus_unlock(struct pci_bus *bus)
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- }
- 
- /* Return 1 on successful lock, 0 on contention */
-@@ -5224,15 +5228,15 @@ static int pci_bus_trylock(struct pci_bus *bus)
- {
- 	struct pci_dev *dev;
- 
-+	if (!pci_dev_trylock(bus->self))
-+		return 0;
-+
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
--			if (!pci_bus_trylock(dev->subordinate)) {
--				pci_dev_unlock(dev);
-+			if (!pci_bus_trylock(dev->subordinate))
- 				goto unlock;
--			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
- 
-@@ -5240,8 +5244,10 @@ static int pci_bus_trylock(struct pci_bus *bus)
- 	list_for_each_entry_continue_reverse(dev, &bus->devices, bus_list) {
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
-+	pci_dev_unlock(bus->self);
- 	return 0;
- }
- 
-@@ -5273,9 +5279,10 @@ static void pci_slot_lock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		pci_dev_lock(dev);
- 		if (dev->subordinate)
- 			pci_bus_lock(dev->subordinate);
-+		else
-+			pci_dev_lock(dev);
- 	}
- }
- 
-@@ -5301,14 +5308,13 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
--		if (!pci_dev_trylock(dev))
--			goto unlock;
- 		if (dev->subordinate) {
- 			if (!pci_bus_trylock(dev->subordinate)) {
- 				pci_dev_unlock(dev);
- 				goto unlock;
- 			}
--		}
-+		} else if (!pci_dev_trylock(dev))
-+			goto unlock;
- 	}
- 	return 1;
- 
-@@ -5319,7 +5325,8 @@ static int pci_slot_trylock(struct pci_slot *slot)
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
- 	return 0;
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index d2a988bf9c89..cd72409ccc94 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -6087,7 +6087,7 @@ struct inode *btrfs_lookup_dentry(struct inode *dir, struct dentry *dentry)
+ 	struct inode *inode;
+ 	struct btrfs_root *root = BTRFS_I(dir)->root;
+ 	struct btrfs_root *sub_root = root;
+-	struct btrfs_key location;
++	struct btrfs_key location = { 0 };
+ 	u8 di_type = 0;
+ 	int index;
+ 	int ret = 0;
 -- 
 2.43.0
 
