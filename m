@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA0118C913;
-	Tue, 10 Sep 2024 10:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBD818C03E;
+	Tue, 10 Sep 2024 10:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963623; cv=none; b=dE+jwiBlhZTMwqJ277DXypPUNwan9o3wKmxIv6hd5c8SYOMc6L0BDbmMiTL9XY0NtDmbDI6f/1gxFPW1v65yxDBK5wHb6eH+f9ACYCFzfzrQ6MR9gm1Nrd4LdVE7vo5UVl/NbC12lWKqHt5qYy3TVGKYPOAEGHpv7lYjAaIJ+WM=
+	t=1725963626; cv=none; b=oiB2onGbeZuh3PRugTQtutFNygHPU0kIDZiMjmoCoL3OyNMGISch1bAKzxpkgcXMkSHA1S5lnrIEtWTXY9z4bhB1inHdfhjbZeLDhbS+j3ZMvZfpQ4dbP2z/nCuwPVZYkbY7yV22nCQztpgCOMFuevUhTOPjlheLO/L2zFVJZFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963623; c=relaxed/simple;
-	bh=OgLYA1SxCFDceKFGDAeztagqXh3mCueKTjL04Jvv4os=;
+	s=arc-20240116; t=1725963626; c=relaxed/simple;
+	bh=UD0K6R2CdVjfn+fPLkLgoicTPmHSDBIOAFQvwNshDhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bwlTLaiTwz4f1YwNNkngCyY1LGhAvNxca0xA9dXpBqxD2WYf+qgqTxy2XCUpDTL20hkPjudYHMY2fe9TGPZcGfUOM9TV5lgDwQWktcsdQ2JSYJ4GKgfeiLkWY1WJotftYBEiq6kk+lxwGGEeCpkDnRnofZC0hwoukPcb/sHvXVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBJ+kyZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXiih8okzkQoqjvxj2oDBz32qRvqukVf9fmBP29PB9vXyWUrCUCwdg3sV8dHQYdfmdTb1FUUakQnpEv64UnbKND+gSkZbKfTGlVzMzcc1tsU5Sf+mCd3e3jaj6wq4ww1yeAAwG7JELXOrG+dXbzqx63sCWiIAqFKAtCSiPlf8UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evHrReCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBJ+kyZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2861C4CEC3;
-	Tue, 10 Sep 2024 10:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evHrReCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7FFC4CEC3;
+	Tue, 10 Sep 2024 10:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963623;
-	bh=OgLYA1SxCFDceKFGDAeztagqXh3mCueKTjL04Jvv4os=;
+	s=korg; t=1725963626;
+	bh=UD0K6R2CdVjfn+fPLkLgoicTPmHSDBIOAFQvwNshDhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBJ+kyZkQGrRnNyqofv5XSAyNIkoTU8AgQ+q27wu6BSFzzQ4TeXuGjy7XCy74WkAS
-	 GbKVAqp1w3EZTDAFtgSVzMetlNXdcCe0BNNUQLD99wdL6Cc4a1MQao3Rfd+npraFZ1
-	 50WLg93axylA/BO5Z7dUNbKHAj1TvwiVIg+0Lj4w=
+	b=evHrReCRehXwzr8iS37h5UBXdD1Xu/5R6HWlQceniLUWQsD9R0ExOTjqiR0Mhw2jW
+	 92ZZpwtJP467JjDqkn5wTnxXNWRZPs4ZiViTKt/QRmaKJNN1JdPnervnme78LbIoge
+	 k3LOigejUymZqg4DC3tvn96FzXNZcS2Y1sHc2SZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shantanu Goel <sgoel01@yahoo.com>,
-	Oliver Neukum <oneukum@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/214] usb: uas: set host status byte on data completion error
-Date: Tue, 10 Sep 2024 11:32:15 +0200
-Message-ID: <20240910092603.420441149@linuxfoundation.org>
+	Daiwei Li <daiweili@google.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 122/214] igb: Fix not clearing TimeSync interrupts for 82580
+Date: Tue, 10 Sep 2024 11:32:24 +0200
+Message-ID: <20240910092603.757086070@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -51,39 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shantanu Goel <sgoel01@yahoo.com>
+From: Daiwei Li <daiweili@google.com>
 
-[ Upstream commit 9d32685a251a754f1823d287df233716aa23bcb9 ]
+[ Upstream commit ba8cf80724dbc09825b52498e4efacb563935408 ]
 
-Set the host status byte when a data completion error is encountered
-otherwise the upper layer may end up using the invalid zero'ed data.
-The following output was observed from scsi/sd.c prior to this fix.
+82580 NICs have a hardware bug that makes it
+necessary to write into the TSICR (TimeSync Interrupt Cause) register
+to clear it:
+https://lore.kernel.org/all/CDCB8BE0.1EC2C%25matthew.vick@intel.com/
 
-[   11.872824] sd 0:0:0:1: [sdf] tag#9 data cmplt err -75 uas-tag 1 inflight:
-[   11.872826] sd 0:0:0:1: [sdf] tag#9 CDB: Read capacity(16) 9e 10 00 00 00 00 00 00 00 00 00 00 00 20 00 00
-[   11.872830] sd 0:0:0:1: [sdf] Sector size 0 reported, assuming 512.
+Add a conditional so only for 82580 we write into the TSICR register,
+so we don't risk losing events for other models.
 
-Signed-off-by: Shantanu Goel <sgoel01@yahoo.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/87msnx4ec6.fsf@yahoo.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Without this change, when running ptp4l with an Intel 82580 card,
+I get the following output:
+
+> timed out while polling for tx timestamp increasing tx_timestamp_timeout or
+> increasing kworker priority may correct this issue, but a driver bug likely
+> causes it
+
+This goes away with this change.
+
+This (partially) reverts commit ee14cc9ea19b ("igb: Fix missing time sync events").
+
+Fixes: ee14cc9ea19b ("igb: Fix missing time sync events")
+Closes: https://lore.kernel.org/intel-wired-lan/CAN0jFd1kO0MMtOh8N2Ztxn6f7vvDKp2h507sMryobkBKe=xk=w@mail.gmail.com/
+Tested-by: Daiwei Li <daiweili@google.com>
+Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Daiwei Li <daiweili@google.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/uas.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/igb/igb_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
-index 11a551a9cd05..aa61b1041028 100644
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -422,6 +422,7 @@ static void uas_data_cmplt(struct urb *urb)
- 			uas_log_cmd_state(cmnd, "data cmplt err", status);
- 		/* error: no data transfered */
- 		scsi_set_resid(cmnd, sdb->length);
-+		set_host_byte(cmnd, DID_ERROR);
- 	} else {
- 		scsi_set_resid(cmnd, sdb->length - urb->actual_length);
- 	}
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 03a4da6a1447..420bc34fb8c1 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -6799,10 +6799,20 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
+ 
+ static void igb_tsync_interrupt(struct igb_adapter *adapter)
+ {
++	const u32 mask = (TSINTR_SYS_WRAP | E1000_TSICR_TXTS |
++			  TSINTR_TT0 | TSINTR_TT1 |
++			  TSINTR_AUTT0 | TSINTR_AUTT1);
+ 	struct e1000_hw *hw = &adapter->hw;
+ 	u32 tsicr = rd32(E1000_TSICR);
+ 	struct ptp_clock_event event;
+ 
++	if (hw->mac.type == e1000_82580) {
++		/* 82580 has a hardware bug that requires an explicit
++		 * write to clear the TimeSync interrupt cause.
++		 */
++		wr32(E1000_TSICR, tsicr & mask);
++	}
++
+ 	if (tsicr & TSINTR_SYS_WRAP) {
+ 		event.type = PTP_CLOCK_PPS;
+ 		if (adapter->ptp_caps.pps)
 -- 
 2.43.0
 
