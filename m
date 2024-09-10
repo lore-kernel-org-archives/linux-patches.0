@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C6818E778;
-	Tue, 10 Sep 2024 09:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D76B186E4B;
+	Tue, 10 Sep 2024 09:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962043; cv=none; b=QlTxrf9dEXvOBfabEiZPdnaTshEEcT1XIghPvJuzHYBwlLd8XxyIHFl3Auf04Dhsi8h6kZVVAub6pa6p8XUgpFlu6RNAr/1jnBKiapFvBsvhy0pcsoqHedYssGigWH3L7H6G58FEb23/v93PqbXD8FYyvl8xTLxyzJZg6cJnuN4=
+	t=1725962046; cv=none; b=mz70KvUj/czmQRvTKorjV0td+qdovsQwqbkWmZ+kDX1R39R9Zw24Bi54ffF4/pob+lRcb9rFIzpaMETiawv4s5tMVDLiq8jaurgmHQqfOF4c9GcmFQT503Hu6YT8Q8AOTOMXaOqRMAPk3B/VQK/fldIjU0AsNhGIGCD/ZPUuTZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962043; c=relaxed/simple;
-	bh=7VjUgqY+WnRyP+nGTjirGeIRCfcBZaVuQCyDwPOv+f8=;
+	s=arc-20240116; t=1725962046; c=relaxed/simple;
+	bh=7Da91B8sJmkEGYR3w97032AJ7dYGPqhvPzZnP6taHQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkJ3Xs6SmL+Ln2J9zc/WOKcqVE50rV6kBA1Dw8MiqIGK4EGA7ORGsI2nq930Gr6XlP9RAShMBOsceTpPc5s0UucGouqXn4vZoOCVPf5GWGys85XZndiPtxgxMLvLUr0lLLX7dY8bORxazPQDbn4at7/fClDx3y+vkb8aeuw1JL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHbzX9CI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ip4JeSPNuw6wPKlsz2k51qm1CeZRs6EC6b2fV8Mm/ONpbinveltrLZNYxl3m4MNiw6OiLXe6EHpHgKUWMkIXe3tyvAcUAEoAsmxz3UWZzS10b5jc5+on4aDtGWMuD8GQr02CwLj5A6wEOUsG77kJpsNxSvi3NCcYOapCPVJQ61s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+YqpiFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHbzX9CI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AA9C4CEC3;
-	Tue, 10 Sep 2024 09:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+YqpiFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0431C4CEC6;
+	Tue, 10 Sep 2024 09:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725962043;
-	bh=7VjUgqY+WnRyP+nGTjirGeIRCfcBZaVuQCyDwPOv+f8=;
+	s=korg; t=1725962046;
+	bh=7Da91B8sJmkEGYR3w97032AJ7dYGPqhvPzZnP6taHQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHbzX9CI0sqoqXvmK3378btTFM+tC1HnXWpnDfh6XrlV7Z23VQhZvrQBvnNM7/jfV
-	 cKFSOR61M08uai3pPGOCjDGaHldOz/wIVydjbUXSnZulZgbb0oYWBJOv9sihlL2qyh
-	 +OOXSFckAytMwmhGH28szDxedHBnWVVrH8pBu5Yw=
+	b=p+YqpiFb9h3YoNtAcIvwAWf4hdqBb6f91FzLWCEcL9TxXsp99FMUXy9AeYfsQlmQy
+	 yDuedV+lNII154y0ie8TRGmr2GAwsHvrwE6e5xES+PlWHx8msNTCOc+Y59BkhrPe/h
+	 9XZV//Uqqe6RU8BhiIwURoheLAg6If6bF87QZ6ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 275/375] spi: spi-fsl-lpspi: limit PRESCALE bit in TCR register
-Date: Tue, 10 Sep 2024 11:31:12 +0200
-Message-ID: <20240910092631.799678791@linuxfoundation.org>
+Subject: [PATCH 6.10 276/375] ata: pata_macio: Use WARN instead of BUG
+Date: Tue, 10 Sep 2024 11:31:13 +0200
+Message-ID: <20240910092631.833354822@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092622.245959861@linuxfoundation.org>
 References: <20240910092622.245959861@linuxfoundation.org>
@@ -51,115 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 783bf5d09f86b9736605f3e01a3472e55ef98ff8 ]
+[ Upstream commit d4bc0a264fb482b019c84fbc7202dd3cab059087 ]
 
-Referring to the errata ERR051608 of I.MX93, LPSPI TCR[PRESCALE]
-can only be configured to be 0 or 1, other values are not valid
-and will cause LPSPI to not work.
+The overflow/underflow conditions in pata_macio_qc_prep() should never
+happen. But if they do there's no need to kill the system entirely, a
+WARN and failing the IO request should be sufficient and might allow the
+system to keep running.
 
-Add the prescale limitation for LPSPI in I.MX93. Other platforms
-are not affected.
-
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://patch.msgid.link/20240820070658.672127-1-carlos.song@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ drivers/ata/pata_macio.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index f2d7eedd324b..30d56f8775d7 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -82,6 +82,10 @@
- #define TCR_RXMSK	BIT(19)
- #define TCR_TXMSK	BIT(18)
+diff --git a/drivers/ata/pata_macio.c b/drivers/ata/pata_macio.c
+index 99fc5d9d95d7..cac022eb1492 100644
+--- a/drivers/ata/pata_macio.c
++++ b/drivers/ata/pata_macio.c
+@@ -554,7 +554,8 @@ static enum ata_completion_errors pata_macio_qc_prep(struct ata_queued_cmd *qc)
  
-+struct fsl_lpspi_devtype_data {
-+	u8 prescale_max;
-+};
-+
- struct lpspi_config {
- 	u8 bpw;
- 	u8 chip_select;
-@@ -119,10 +123,25 @@ struct fsl_lpspi_data {
- 	bool usedma;
- 	struct completion dma_rx_completion;
- 	struct completion dma_tx_completion;
-+
-+	const struct fsl_lpspi_devtype_data *devtype_data;
-+};
-+
-+/*
-+ * ERR051608 fixed or not:
-+ * https://www.nxp.com/docs/en/errata/i.MX93_1P87f.pdf
-+ */
-+static struct fsl_lpspi_devtype_data imx93_lpspi_devtype_data = {
-+	.prescale_max = 1,
-+};
-+
-+static struct fsl_lpspi_devtype_data imx7ulp_lpspi_devtype_data = {
-+	.prescale_max = 8,
- };
+ 		while (sg_len) {
+ 			/* table overflow should never happen */
+-			BUG_ON (pi++ >= MAX_DCMDS);
++			if (WARN_ON_ONCE(pi >= MAX_DCMDS))
++				return AC_ERR_SYSTEM;
  
- static const struct of_device_id fsl_lpspi_dt_ids[] = {
--	{ .compatible = "fsl,imx7ulp-spi", },
-+	{ .compatible = "fsl,imx7ulp-spi", .data = &imx7ulp_lpspi_devtype_data,},
-+	{ .compatible = "fsl,imx93-spi", .data = &imx93_lpspi_devtype_data,},
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, fsl_lpspi_dt_ids);
-@@ -297,9 +316,11 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- {
- 	struct lpspi_config config = fsl_lpspi->config;
- 	unsigned int perclk_rate, scldiv, div;
-+	u8 prescale_max;
- 	u8 prescale;
+ 			len = (sg_len < MAX_DBDMA_SEG) ? sg_len : MAX_DBDMA_SEG;
+ 			table->command = cpu_to_le16(write ? OUTPUT_MORE: INPUT_MORE);
+@@ -566,11 +567,13 @@ static enum ata_completion_errors pata_macio_qc_prep(struct ata_queued_cmd *qc)
+ 			addr += len;
+ 			sg_len -= len;
+ 			++table;
++			++pi;
+ 		}
+ 	}
  
- 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
-+	prescale_max = fsl_lpspi->devtype_data->prescale_max;
+ 	/* Should never happen according to Tejun */
+-	BUG_ON(!pi);
++	if (WARN_ON_ONCE(!pi))
++		return AC_ERR_SYSTEM;
  
- 	if (!config.speed_hz) {
- 		dev_err(fsl_lpspi->dev,
-@@ -315,7 +336,7 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 
- 	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
- 
--	for (prescale = 0; prescale < 8; prescale++) {
-+	for (prescale = 0; prescale < prescale_max; prescale++) {
- 		scldiv = div / (1 << prescale) - 2;
- 		if (scldiv < 256) {
- 			fsl_lpspi->config.prescale = prescale;
-@@ -822,6 +843,7 @@ static int fsl_lpspi_init_rpm(struct fsl_lpspi_data *fsl_lpspi)
- 
- static int fsl_lpspi_probe(struct platform_device *pdev)
- {
-+	const struct fsl_lpspi_devtype_data *devtype_data;
- 	struct fsl_lpspi_data *fsl_lpspi;
- 	struct spi_controller *controller;
- 	struct resource *res;
-@@ -830,6 +852,10 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	u32 temp;
- 	bool is_target;
- 
-+	devtype_data = of_device_get_match_data(&pdev->dev);
-+	if (!devtype_data)
-+		return -ENODEV;
-+
- 	is_target = of_property_read_bool((&pdev->dev)->of_node, "spi-slave");
- 	if (is_target)
- 		controller = devm_spi_alloc_target(&pdev->dev,
-@@ -848,6 +874,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	fsl_lpspi->is_target = is_target;
- 	fsl_lpspi->is_only_cs1 = of_property_read_bool((&pdev->dev)->of_node,
- 						"fsl,spi-only-use-cs1-sel");
-+	fsl_lpspi->devtype_data = devtype_data;
- 
- 	init_completion(&fsl_lpspi->xfer_done);
- 
+ 	/* Convert the last command to an input/output */
+ 	table--;
 -- 
 2.43.0
 
