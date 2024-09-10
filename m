@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1C418A6B9;
-	Tue, 10 Sep 2024 10:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB6018A6B9;
+	Tue, 10 Sep 2024 10:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725963857; cv=none; b=PMmHb0a8+fFmo+4/EyH1fEqDtM+s3NwpgMMzqggFq4suy4pKjASTTJRCo9PKrBlqTLsBvWYLWD2V1CQaJT+dBBIYYDcqV1JmMQqXJNZ4Yxkscy2LPMpXyT3/3MmiKrWNRdxTUdpoSxFJtsqj773AaSg/UKd0ThEwxCl9p/ZIzcI=
+	t=1725963860; cv=none; b=FDeQGXOCtfRefqseqU0QvCo8k3di0Tn486Wrf1J+BqRJZ7rnzgCXjhnCVg3t4i8/x/LGkGikJTKVwDhgyTLzGvhGpUEOdQ3Do9dUPRgpxF6tRhKAuxh0yYfNTzGn6yWHuccR2obSidnyBKc+RFHl4eZCkzZ682cdfTWfFKxesbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725963857; c=relaxed/simple;
-	bh=BIEgJn+w7WVneSKFJrw0z8N/aOsQ2C+Po2n5O/wOEpY=;
+	s=arc-20240116; t=1725963860; c=relaxed/simple;
+	bh=G9TFs1UOY1WdbrGbN5hJmDx8y8pvVGBFLxMAhsNjQv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6NMxOd2R445yerrh6BQBMiKbbnRvm7QTxcd9IwuzqbhOLrQSz+QGzfzIzducJ/H5q110oL9Jdq3J3b+72eVLDlJyhQrpP/7ef+5lL2wC5r6s6zeoMZ+BU++daz7j6GIXjllMig1Cmdb6KdZssyqeGa22mRvj/oUaQ4Kh65w1w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st6L9aA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sj+/zJFDqb82B0tKkXWpXGEbgB2FkhIG3byuxOKMgZ/crKvGoyikVID0a8DDDwyTf1xucTERhfY5VmQ8XM7i5RWLcS2ycTvSS8IfjvJPMiQwTqL0O6Dpo+Pu18vUPLOKam9ZXeiQ02E8NnDSPe0d/WcUxEi3V/QJlsbLefTWbUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7JpiS3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st6L9aA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9DBC4CEC3;
-	Tue, 10 Sep 2024 10:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7JpiS3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34805C4CEC3;
+	Tue, 10 Sep 2024 10:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1725963857;
-	bh=BIEgJn+w7WVneSKFJrw0z8N/aOsQ2C+Po2n5O/wOEpY=;
+	s=korg; t=1725963860;
+	bh=G9TFs1UOY1WdbrGbN5hJmDx8y8pvVGBFLxMAhsNjQv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=st6L9aA0NT05f7BhzKUxsEQM4oj2rG+CZTC3ywrFUs2jsF7dsFQWK+HXtKZXvyQ67
-	 j02oifXI0fBNaOo/Q/CBRvhKpFSR3rujvWXVPR3LeVeE5F9RBdM4SqJ6+c15MXTCWN
-	 IePWrzaCKsUoE6gE9iJviFpVBYiIl1Ry0mQdlNxY=
+	b=E7JpiS3WGqH3gzap1NsPcHYh7cVOc7pTTkI9SUBOnWTqZOkNqL2TNqMBZInULN6CY
+	 Qju9SlOMFexpNbVqBKXELKAuaiI/QJLH5zPYjoZ4vRe4MhlYvX8+x95TF3OBBMB6Ux
+	 K6ZrR2eKobyIGMbfmgUeWHzpb97pwTEezw8oG1wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 200/214] arm64: acpi: Harden get_cpu_for_acpi_id() against missing CPU entry
-Date: Tue, 10 Sep 2024 11:33:42 +0200
-Message-ID: <20240910092606.735648428@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 175/214] iio: buffer-dmaengine: fix releasing dma channel on error
+Date: Tue, 10 Sep 2024 11:33:17 +0200
+Message-ID: <20240910092605.861101832@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910092558.714365667@linuxfoundation.org>
 References: <20240910092558.714365667@linuxfoundation.org>
@@ -52,46 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 2488444274c70038eb6b686cba5f1ce48ebb9cdd ]
+commit 84c65d8008764a8fb4e627ff02de01ec4245f2c4 upstream.
 
-In a review discussion of the changes to support vCPU hotplug where
-a check was added on the GICC being enabled if was online, it was
-noted that there is need to map back to the cpu and use that to index
-into a cpumask. As such, a valid ID is needed.
+If dma_get_slave_caps() fails, we need to release the dma channel before
+returning an error to avoid leaking the channel.
 
-If an MPIDR check fails in acpi_map_gic_cpu_interface() it is possible
-for the entry in cpu_madt_gicc[cpu] == NULL.  This function would
-then cause a NULL pointer dereference.   Whilst a path to trigger
-this has not been established, harden this caller against the
-possibility.
-
-Reviewed-by: Gavin Shan <gshan@redhat.com>
+Fixes: 2d6ca60f3284 ("iio: Add a DMAengine framework based buffer")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20240723-iio-fix-dmaengine-free-on-error-v1-1-2c7cbc9b92ff@baylibre.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240529133446.28446-13-Jonathan.Cameron@huawei.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/acpi.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/buffer/industrialio-buffer-dmaengine.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index 0d1da93a5bad..702587fda70c 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -102,7 +102,8 @@ static inline int get_cpu_for_acpi_id(u32 uid)
- 	int cpu;
+--- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
++++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+@@ -180,7 +180,7 @@ static struct iio_buffer *iio_dmaengine_
  
- 	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
--		if (uid == get_acpi_id_for_cpu(cpu))
-+		if (acpi_cpu_get_madt_gicc(cpu) &&
-+		    uid == get_acpi_id_for_cpu(cpu))
- 			return cpu;
+ 	ret = dma_get_slave_caps(chan, &caps);
+ 	if (ret < 0)
+-		goto err_free;
++		goto err_release;
  
- 	return -EINVAL;
--- 
-2.43.0
-
+ 	/* Needs to be aligned to the maximum of the minimums */
+ 	if (caps.src_addr_widths)
+@@ -206,6 +206,8 @@ static struct iio_buffer *iio_dmaengine_
+ 
+ 	return &dmaengine_buffer->queue.buffer;
+ 
++err_release:
++	dma_release_channel(chan);
+ err_free:
+ 	kfree(dmaengine_buffer);
+ 	return ERR_PTR(ret);
 
 
