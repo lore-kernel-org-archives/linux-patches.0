@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED1716F8E9
-	for <patches@lists.linux.dev>; Wed, 11 Sep 2024 08:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D2413BC26
+	for <patches@lists.linux.dev>; Wed, 11 Sep 2024 09:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726043753; cv=none; b=f+54dHThy88OoL7wvD/h3nfAQqnZ9z+myeUTMbTl1/W+rw95S2aVWnc2J3WjF7MByE+RCoxnUo412PvJAzjEwTtd+rV0YRvLlv1trF8navUxN6DzvMiVmyr1tXa8yUBJG+r8gjGPvkmoWO2MFkmlqn1G6E2Fn5Fj4k9RMMhIqn0=
+	t=1726045572; cv=none; b=pIQgkaHkwPItWudrAMrwXlWaNbglBOf2G7zCoHrjPJ9RWc9HhKaHB3BM8saGQ0g/XYir65kOpOUo+2+kk8D/R1rxTFmCUKOSuxbxVUDC1sUECfn2VN3y1FUIKvaWcQr+f6doNl4PpHSb7w+B3EmT/MkjvRHi872rXJx0j9g8ALE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726043753; c=relaxed/simple;
-	bh=fS0/TQEfsBq11o4gEntfeFOaR1kB5IpuIzfVoCfvsQ8=;
+	s=arc-20240116; t=1726045572; c=relaxed/simple;
+	bh=Dg7iXYPSOb+Oh4WrqFtGmrufREXU/PScH4dMQQZcwH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9ukfHT3jzOyaGfaXF3BJxg7ELkYP+gGPgEuzKuyb1vkLGVV+b5ZRIX1catkUWsu3uh6cJ59M5N+IXmHcUHcAXED23Ho09wjippdcdYcjrsYfR4sECiMZOX22obc9Ph8yfxluh9/QtsXqM4f41EDPZ5TNxUA8NMt44c/2vVa0i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PqxdTF3i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fi0q1hcoRW8yFS8V/WJ3IgypLC0io15dktwwvOtuqKX1Q5usHzyRqxYv3/NqgHvWzJ9YUdgLNzcK0vCRgHqMMSiJlf7JNhTQBtJhXbkQ2TIMpyd+wxul4XXQZQ3EPIbONUAiOXDXG1uRqDn/PEemAu7cNixV+9FsHrDRrp/645w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C1GK5ZBE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PqxdTF3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FBAC4CECC;
-	Wed, 11 Sep 2024 08:35:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C1GK5ZBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B274C4CEC5;
+	Wed, 11 Sep 2024 09:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726043753;
-	bh=fS0/TQEfsBq11o4gEntfeFOaR1kB5IpuIzfVoCfvsQ8=;
+	s=k20201202; t=1726045572;
+	bh=Dg7iXYPSOb+Oh4WrqFtGmrufREXU/PScH4dMQQZcwH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PqxdTF3iRvNYR4tun9DAhHqslau7qlGUbqDxZPH46KKZwAkpvsh2iHevBEspTAoC7
-	 vdr6q0VzFz2T+FZlfTDBe9+pFpHI8OGjSnAmiMR5qo6H9ubsfzTasD9qgxn/BTusZA
-	 m3n2V69M84SCtxRjjmueaK6CyGOaVEp6nr/3ikxn7vH8CjbEj9raR/uTCAolUe6WbJ
-	 tIDEo2095d6ZxFqYqH4nfNdJhMJj7VlMITpZcDrG9XSvlfOYQReF0+TwlGnINLl1b3
-	 35y0V5ZkUBuTRVz7T2L/tKnq8bNIa8S6Pmn5hRO8+1zLZMi46J5VfF7FmHq/QMIeMH
-	 zT28ht/kFqg/g==
+	b=C1GK5ZBEB818FIhlPF3GRO+nWULRg9LwhDKMM4aGXNwXWIYSGiMNfe+ZYmaf4tDGB
+	 g3syko/I1T2d8Q9+J8jXAovjGKhQv/yUieOBw1XhBwVehvT02e47IQgZ0KOGCXpSRo
+	 KES0OR5huYSbMOy0bH9z5J0fN0/iLX+43A3S3VwYsfwhLEYMk4+opJ0ZN2lJLOXKVU
+	 YF+8J1shk6HVcqIHlHDYj+0PjA20J/xSU4/kPG5FW1CIHYpbvyUMTtWs+HymZBiOFW
+	 IRp61YyPg41EGzElJ+LS9y6P1Rkg+EiwrOQIl7MuUYtM4/nHSGb27qvzlRH2afLV5v
+	 VEbvs+3JgAFiQ==
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 To: syzbot+f4aacdfef2c6a6529c3e@syzkaller.appspotmail.com
 Cc: patches@lists.linux.dev
 Subject: [PATCH net v2] mptcp: initialize sock lock with its own lockdep keys
-Date: Wed, 11 Sep 2024 10:35:50 +0200
-Message-ID: <20240911083550.290915-2-matttbe@kernel.org>
+Date: Wed, 11 Sep 2024 11:06:10 +0200
+Message-ID: <20240911090609.339939-2-matttbe@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <00000000000047043b0621624565@google.com>
 References: <00000000000047043b0621624565@google.com>
@@ -41,7 +41,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5779; i=matttbe@kernel.org; h=from:subject; bh=+vx8TDphq+IZDaMq3ANbRPxHG0Q3v9XNGklm3oE2GQ4=; b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBm4VZmik8xlc2Fx7i86FHddibKaGeSJXwKiH1yW 4h4EMWdZoyJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZuFWZgAKCRD2t4JPQmmg c+moEACDB7LJrZcJOb5Ffkz3yNkBntTt6ATkHevS39jkH7eO2XgiafGWh205Z4ND9PiQyAgL3ZB FsxsMzEwsZx3O3tsbhfZ66pTrVJl1wJRsa0f/icTMftx7XRAWZ5/VVjmE28y9lhmDtnAGVFMQip qEEZ5XuyDqzclf0/Fz6WTAB8t1LUqZIjU5+ip/mz8mXNtlf9DTni3mxdahrpUC1CG4Yz9wAoPi0 36A17SVFclkH4SmfKhlMGs0LDm1CaSLJ/naoM7TdrY9LSxqmLOPgjVgUmuozB3LD6bxk//FDosT tHZnWVf96M6joy8mi3b+GvW1+3CiXTXqP9BmWlJBM0oNJNSkCneGuf64Zs/E/MtCcMqXjg4tvVq +APajDLVKX9nZOH9a20VurtXKkGZk/9jB9Ai0Ee2noIfYDeHKKAagyOBgFvmvLo2G99kOe+6/mT kmOSiWTK69nKLqsS09WNFqczEJSNVSCCGiYwHNy9RhOhsSx+1nbxKq5iQb/YzqSmqr109u7qf6V hJ9GsXo6u1uMH6i5nPDfH/wOrLRtfph56btRMGv2Xj8DpecwLDlyhGWXrtSorDqGqeILDr4mrgf 6xNvX+tzi/WstmxwofS4AwAx047mNvhe9CizGnHZX+7g+Flpf/iHJ+qk2Vt0+leGcsKvCeXk/CF iRGQuOhj4y1hVrQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5794; i=matttbe@kernel.org; h=from:subject; bh=MENoR4nA2jEVvZN5BRdWUJ6wcIkYVTfTe5YwairUd58=; b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBm4V2BF7TBajpJzbEiJ43qAW9WNOeB97IvFKPDH XkGcK9L2puJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZuFdgQAKCRD2t4JPQmmg c1OsEAC79fXdiAW6WFanVTi2puUaIkdaTVxI+KYh02I4s3Zg3kGGvWCJOdbbYY+bTA8uLEML/lZ fH33E+QDCK2/DYSw5ChzA2ex7xyJZlKlvU4GuokXcfjzOreEBHuF4bRVadNuaT+i8u73x08PSXB Gxr0HypaXazw4aJU8abkJ1J4GRmTt6dsHI3CKtholSYTegrRVio7GFPKIQfvS2/BCKLIPOP2sTV 3y1NK71W6iLg3L+g2j6DllnjYAMFZ+5SgPSu88aZ5G9j52Uiaim5tCWNk2VM0izgszJEEqnqobx YYJCYCuCpoyEq9jO1Roe+dmcIHfBoWBPWdFlm35r1cj6ZG2N0HIwJc9bIvy0IlSGbeNvQEZvipH YkYSNmB6R0WtRj+xPuoRvnG60hmkAVP8ddY0Qgi348JsQb2ZCHK88mes327Aaaqd23DqFJ+83Kw BQ0s4VJBjyRqnGs44OUVyZTzS6J9bq4j/Ua4QOcsi82zWKmXxR1NgH4foXhwueCGivrPK8EVSnx b+j8TkQrmQW1wMGxq39MSmbQsEXBTyDfalRTNMsZTF6PlUU3jwaNbnnRLNpPE7M7g+h7mrGjaC+ Y4jl3QxnoEWCYBU3YugLhZGM2lEfdDpqZOFNaFgfFsAf4yAQ/lmdeYFo6XMLWzndY6yOg+tTv6M 6qzoxKNw0n5UmYQ==
 X-Developer-Key: i=matttbe@kernel.org; a=openpgp; fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
 Content-Transfer-Encoding: 8bit
 
@@ -59,9 +59,11 @@ initialize the sock lock again with its own lockdep keys.
 
 This patch does not fix any real deadlock, it only makes lockdep happy.
 
+#syz test
+
 Fixes: 58b09919626b ("mptcp: create msk early")
 Reported-by: syzbot+f4aacdfef2c6a6529c3e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f4aacdfef2c6a6529c3e
+Closes: https://syzkaller.appspot.com/bug\?extid\=f4aacdfef2c6a6529c3e
 Cc: Matthieu Baerts <matttbe@kernel.org>
 Cc: Mat Martineau <martineau@kernel.org>
 Cc: Geliang Tang <geliang@kernel.org>
