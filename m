@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381FE2F860;
-	Wed, 11 Sep 2024 13:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E87D18EFC6;
+	Wed, 11 Sep 2024 13:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726059806; cv=none; b=JDyQihsyx8SFHyxRGLicbnBgbuyDHBHfbGSE/bdejO+LFx4N6VAKqlJmafS+klmZoea2NXZir0ePe8rq/4YYVzPooXfS4MbbcEr7V/i6iuDzJoPzBD13/thPf4O7fkP0eSih8H95FICoUd77dXevdGSkpL2EmE9rBcu+ECUnCDw=
+	t=1726059823; cv=none; b=mhbctEnmBPNe9ogE9u7rHEIdSRzrUSXZumX2E3CVXpxsvA6EFQ1Sn64Avb7vPL9bRp4cWjQwMmzS5IDfu8tr5e/pviZOxkJtRqMEchykpZ7ItrwHcrCfLM+z9vo9VRroDqOoyuI09ta2hbs9I51gDdEFp7MPbZoLnZdSyP1RXhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726059806; c=relaxed/simple;
-	bh=2pCs1t6UJrwp6f9PYdU/Sx+jCvACRP7QBjm89RH4+ac=;
+	s=arc-20240116; t=1726059823; c=relaxed/simple;
+	bh=SA5WFFJN4ZIHVycL4iLocpXz1s6IKE1wCxyUUg5Dx50=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oo5ng2+GI7VeJE+irfhNrr4XrKh6fMv20FFBPLjM0jvfEliQETsHgqAXJy7c8jGzg5HWEosRh5E+kKgacD3qfn7YIheinHKmDQz0fvDDgrc3ohgtRkapC/UOxu/YThUsWpQei2Pn60lBoSW64LvX5iJOrZS1IWshdBxt4N6Op/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2ruDyVu; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=smdI2QjtZo6Gv47tZjK22bZj36O/YU/ra3lHMf1fZ+geke3THhv6X6YQmGWYlVszg9Gv3wnkDTkmZhyEcBQQTy9VmTrJbyPL7MAcQVGZY1g4uBKYPlDasf7IIP68JGE/1OV8FG/YTXJqBpIwI6JqhKNn1WaxBiBwVg3X622mTAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN4yr0/1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2ruDyVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658AEC4CEC5;
-	Wed, 11 Sep 2024 13:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN4yr0/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699BAC4CEC7;
+	Wed, 11 Sep 2024 13:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726059806;
-	bh=2pCs1t6UJrwp6f9PYdU/Sx+jCvACRP7QBjm89RH4+ac=;
+	s=korg; t=1726059822;
+	bh=SA5WFFJN4ZIHVycL4iLocpXz1s6IKE1wCxyUUg5Dx50=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=J2ruDyVu1GUpuyOMUMAgWqaEM6YQN2wn5w/tDqF3SWoQjjZQnun0b5WT4KMzbmc4p
-	 qdwp+n766msXhmWZxunu7LpC1kGLR0xzPXTVKrGY+lB+X7qhUhP/T5wLLX6t02o9t3
-	 d8x6inRDWHrJCEe5IM3WksvsMXHMaSXl6HHgZvSM=
-Date: Wed, 11 Sep 2024 15:03:23 +0200
+	b=wN4yr0/1YXa0VfPj9Belo9K7wOtKlma5gM1Od/VOoPZ4v95CHbgq/lgep1c6hJIq7
+	 987SZn0V0aFyyM0ieUOOKGDUQ97oL3GU74s62g56Fn4Ro7TcVk94mMSbewJDVQGA3i
+	 XLmOCCw6pSrFKUdFAiEsIoJlzO93O2m+2grq22Jw=
+Date: Wed, 11 Sep 2024 15:03:40 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
+To: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org,
-	Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH 5.4 000/134] 5.4.283-rc1 review
-Message-ID: <2024091116-anemia-tweezers-2fab@gregkh>
-References: <20240901160809.752718937@linuxfoundation.org>
- <092aa55c-0538-41e5-8ed0-d0a96b06f32e@roeck-us.net>
+	linux-kernel@vger.kernel.org, linux@roeck-us.net
+Subject: Re: [PATCH 5.4 000/121] 5.4.284-rc1 review
+Message-ID: <2024091134-fanfare-nail-dce8@gregkh>
+References: <20240910092545.737864202@linuxfoundation.org>
+ <72b133a6-c221-4906-9184-30b4e6ee4260@gmx.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,39 +40,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <092aa55c-0538-41e5-8ed0-d0a96b06f32e@roeck-us.net>
+In-Reply-To: <72b133a6-c221-4906-9184-30b4e6ee4260@gmx.de>
 
-On Thu, Sep 05, 2024 at 10:52:05AM -0700, Guenter Roeck wrote:
-> On 9/1/24 09:15, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.4.283 release.
-> > There are 134 patches in this series, all will be posted as a response
+On Tue, Sep 10, 2024 at 12:33:51PM +0200, Helge Deller wrote:
+> Hi Greg,
+> 
+> On 9/10/24 11:31, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.4.284 release.
+> > There are 121 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
-> > 
-> > Responses should be made by Tue, 03 Sep 2024 16:07:34 +0000.
-> > Anything received after that time might be too late.
-> > 
-> [ ... ]
 > 
-> > Helge Deller <deller@gmx.de>
-> >      parisc: Use irq_enter_rcu() to fix warning at kernel/context_tracking.c:367
-> > 
+> The upstream commit 73cb4a2d8d7e0259f94046116727084f21e4599f
+> ("parisc: Use irq_enter_rcu() to fix warning at kernel/context_tracking.c:367")
+> was added in the last stable series to 5.4.283 and v4.19.321.
 > 
-> irq_enter_rcu() does not exist in v5.4.y and v4.19.y, resulting in the following
-> build errors in v4.19.y and v5.4.y.
+> Since it breaks the build on parisc [1], could please you add a revert of that
+> patch to the current v5.4 and v4.19 series?
 > 
-> Building parisc:allnoconfig ... failed
-> --------------
-> Error log:
-> arch/parisc/kernel/irq.c: In function 'do_cpu_irq_mask':
-> arch/parisc/kernel/irq.c:523:9: error: implicit declaration of function 'irq_enter_rcu'; did you mean 'irq_enter'? [-Werror=implicit-function-declaration]
->   523 |         irq_enter_rcu();
->       |         ^~~~~~~~~~~~~
->       |         irq_enter
-> arch/parisc/kernel/irq.c:558:9: error: implicit declaration of function 'irq_exit_rcu'; did you mean 'irq_exit'? [-Werror=implicit-function-declaration]
->   558 |         irq_exit_rcu();
->       |         ^~~~~~~~~~~~
->       |         irq_exit
+> Thanks!
+> Helge
+> [1] https://lore.kernel.org/lkml/092aa55c-0538-41e5-8ed0-d0a96b06f32e@roeck-us.net/T/#m8657a387ec86f9a2af62380743718f72ef7619b5
 > 
 
 Now fixed, sorry for the delay.
