@@ -1,101 +1,100 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3AF188A3A
-	for <patches@lists.linux.dev>; Tue, 10 Sep 2024 23:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2222E3A1C9
+	for <patches@lists.linux.dev>; Wed, 11 Sep 2024 04:03:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726011029; cv=none; b=aYyx5GHK47oQMZQcz4pyv64Ip5y6Ro8dEaqSW9BkylKXibSN1ZFJAf2oQysYn35lwsMfgClHRnRq7gjQnrgqR6dswHmYFm41zMZDzgwx/UT7QsVYu71zWJ2mIWuIPsRicLpN2qoK1N2/0AlUKgZVaXyeI+uyCVnqWlD9EF4Hc6A=
+	t=1726027385; cv=none; b=l567xmDHZKPbjSfQTYLj27X7GVgflTLFsDaiLmDsarTQKGb+yy9YlYOzN8JvqB6zHZmyDfCOfBQBWswMk5Cy65RYADNjI170BlKtpkNks1khLx1Q4xeMu2ob6uPxm9Mx8YAQGSrcSPcwVcvMcneK3miUBbgi0cznGKmCvQ7dcBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726011029; c=relaxed/simple;
-	bh=4TVxpoRFLyRhTv/wGa6Zm40S7JkSsaAPbOW9P3O2zqQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gvLc/WCFL/6ZR8j6/wtf76oV5/hyhhYtRctlw8F1spi+fnQUaozZKYmgPtmk3qFiQB9ErljbYx1eMXi3JVZERpe6LvzR3UN2p1vmXl2nXuUHEZC5SJ26xEbAltGZOhqUsOX9B8wsnvGqxLIaNRsu0copTaUPQDy+5S2BNG7A128=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f92SpnZq; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1726027385; c=relaxed/simple;
+	bh=7jRIESI28vc2IwuINcmvQcRSKoOwYYNre2FNHnHRBb4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jKJ+6qujWU4LNtqGrXswOgbmf6/fElihQ1QvkqebdlrMh+ajS6DnF7TOPId2PeqcZaMACjNkOYUqc8ig+dzIitW7oBlbzq7oBQcnYTD2ikVInS71meF2LSbEB86lsk2+qSBDXfdIFKE1dLk6QX2DBbr6De4+7qyIi4DTbs6oS8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=DDUXBgxh; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f92SpnZq"
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-82aa93774ceso236770139f.0
-        for <patches@lists.linux.dev>; Tue, 10 Sep 2024 16:30:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1726011027; x=1726615827; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Iffj2BsuxCNv0UMNZmAM2WMYEZZUMVSrxQLbOKgNCQI=;
-        b=f92SpnZqDwuFihgISLl6Aui53zxh9ytPne3ZufPA1WA9pNu+9F/fpDHmTfPBm9oFjx
-         7I9OOt7Q+xmJBsDL4IimmEbhCGh2GkVzLE4d5MQ8KjT0f/zRAYTbUqzZgqT3W2t2RYRk
-         vZPCiyvM/f22zSmBVSZzjtvlVYMP+B0VQYOL8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726011027; x=1726615827;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Iffj2BsuxCNv0UMNZmAM2WMYEZZUMVSrxQLbOKgNCQI=;
-        b=LTq6lWm+0Boy8KskdMLyJ3l5OsllVIGytRqmyGZ1ArW5VUwZZ425CTANwEN7AjXfB9
-         jsnkUc8YTXzKgY/iUBlNCEf4tNS0IswFpnouioq6/eGlkVBhjKIjceHJgyXFxqGwrxdX
-         gxZ+D8GHweep5DZhGLAXxEw8KaLgyqu/SsTNWHR5iqWTs6C5XDp5c/3SPwuPdOKkSxO7
-         dDxth2HXCCI2TTaQ6zSEa/dC7LjGt3cs/SRtLWQo6bd0ZwgRJ5VB5d3xZQEXR+OaW5sv
-         FwYPwdWSLRAK9NfauSe4e9JOn91jeWb8ndhIRPoQ4xa679wgq8q0qA/Pj7t8CcBaF+oy
-         9lTg==
-X-Gm-Message-State: AOJu0YxIHIm0fe/5VEDzCxYYNHRaSKPg4gsU4vpVRPc1hRPLgykrT3b+
-	lNBwAZJOwt7ryRdyJ1DnzH5/Gu0sKChcWsyMG24IW6MUu/rN818X40GiOvu6xb8=
-X-Google-Smtp-Source: AGHT+IGbJ2XZTYauikJ4CJjr15uK3rTfbH5hnk3HNUgenOsWQ7PsaMxBzNJScp82iwzt4tQzDHQOWg==
-X-Received: by 2002:a05:6e02:1a45:b0:39d:2507:6abd with SMTP id e9e14a558f8ab-3a052254035mr152504595ab.13.1726011027160;
-        Tue, 10 Sep 2024 16:30:27 -0700 (PDT)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d09451dc5dsm1852226173.14.2024.09.10.16.30.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Sep 2024 16:30:26 -0700 (PDT)
-Message-ID: <3a7c5032-732c-4f59-ad2c-64042daf1555@linuxfoundation.org>
-Date: Tue, 10 Sep 2024 17:30:25 -0600
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="DDUXBgxh"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 298C514C1E1;
+	Wed, 11 Sep 2024 06:02:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1726027375;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+7R/umzBoSPkJzUQofCvf7cDhPwvj1bDwUnnPr1rnd8=;
+	b=DDUXBgxhcOrKNBwuEKAk1Ro/1pHlwg3BDnfFMQ4vgOPiKoqOZixd1Vi3V5OUZnA3+/6Hbx
+	kjpTKI/TOhOzR7y7Vd4gyW/ghurbbnrjzP38CIQLrJUs/7ddSbx+kLc9KY0OMdz9FUQEzu
+	bpBJ5E5lQwwyswhB2V+cdWOcAmu42AEFcHDAHyBKzPNnKhHLD3OQS+lkbErWw4jT87STze
+	XbC/HPJIGpX8BDGzOHLIZ+hO28xa1I7x7SdCKFTSzcFNsPFPkgadkOb4J8Pe+t5EW5KQqE
+	E1YY9q/khg6nq6X4Pom8yx7J8v1cAvDwuQNLKe49h15pIaBncDyMJ08laYxoIw==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id ac6668da;
+	Wed, 11 Sep 2024 04:02:51 +0000 (UTC)
+Date: Wed, 11 Sep 2024 13:02:36 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 064/151] btrfs: change BUG_ON to assertion when
+ checking for delayed_node root
+Message-ID: <ZuEWXHMn09_17Nxr@codewreck.org>
+References: <20240901160814.090297276@linuxfoundation.org>
+ <20240901160816.526197570@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/192] 6.1.110-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20240910092557.876094467@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20240910092557.876094467@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240901160816.526197570@linuxfoundation.org>
 
-On 9/10/24 03:30, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.110 release.
-> There are 192 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 12 Sep 2024 09:25:22 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.110-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+(this patch was already merged to stable last window, I was late on
+review -- this is more feedback for master that has the same code)
 
-Compiled and booted on my test system. No dmesg regressions.
+Greg Kroah-Hartman wrote on Sun, Sep 01, 2024 at 06:17:04PM +0200:
+> From: David Sterba <dsterba@suse.com>
+> 
+> [ Upstream commit be73f4448b607e6b7ce41cd8ef2214fdf6e7986f ]
+> 
+> The pointer to root is initialized in btrfs_init_delayed_node(), no need
+> to check for it again. Change the BUG_ON to assertion.
+> 
+> Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+> Reviewed-by: Anand Jain <anand.jain@oracle.com>
+> Signed-off-by: David Sterba <dsterba@suse.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/btrfs/delayed-inode.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+> index cdfc791b3c405..e2afaa70ae5e5 100644
+> --- a/fs/btrfs/delayed-inode.c
+> +++ b/fs/btrfs/delayed-inode.c
+> @@ -986,7 +986,7 @@ static void btrfs_release_delayed_inode(struct btrfs_delayed_node *delayed_node)
+>  
+>  	if (delayed_node &&
+>  	    test_bit(BTRFS_DELAYED_NODE_INODE_DIRTY, &delayed_node->flags)) {
+> -		BUG_ON(!delayed_node->root);
+> +		ASSERT(delayed_node->root);
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Note that if !delayed_node->root we will bug on a null deref immediately anyway.
 
-thanks,
--- Shuah
+This patch was missing just one line of context, I've added it below:
+>  		clear_bit(BTRFS_DELAYED_NODE_INODE_DIRTY, &delayed_node->flags);
+>  		delayed_node->count--;
+>  
+> 		delayed_root = delayed_node->root->fs_info->delayed_root;
+
+So, ASSERT doesn't feel appropriate -- if you want to protect
+non-developers from BUGs then the check needs to be spelled out and
+return early or not enter the if; or it really cannot happen (it used to
+be a BUG...) and the check can be removed altogether.
+
+-- 
+Dominique Martinet | Asmadeus
