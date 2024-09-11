@@ -1,59 +1,55 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913041B1414
-	for <patches@lists.linux.dev>; Wed, 11 Sep 2024 17:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37FD2B9A2
+	for <patches@lists.linux.dev>; Wed, 11 Sep 2024 17:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726075505; cv=none; b=SVVNPW5M/H8Cp+R1bMBAmmx4EkmOIUYzqTXEKBfopnkjR6eqQr8//w1Y8DuE75sLU6SHQxNLF8QG3jlOmtr9F9XuG0K3k4coQAXq+VFl+FJF1t4BHouGOpSOqN6hdJ3EQeffwtH4SPlflPvMkHpvtmj/68kvZn84gF91a9e6lAs=
+	t=1726075536; cv=none; b=SdPr8FNuqnFyMTtkWKhptIOx1duIL2mzbO+53HddURHUnHlYu+mlr8Zg9jgbVtg2Wz/AO9X23ApU2R97lyMc4SjEnAl3CEDmNMZ5qmZtziiHNfIuOBpCqeuc9FCPmzd2EL24KxM/k1VqT2u5GUJdAeJQ4sUQ0hSYbvsRT8Jnm+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726075505; c=relaxed/simple;
-	bh=g/GZcNFxVrERPcSgLVpMA9IrnzcUv0sC5FWcRgpdTTw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RMdVOJqr9X1qPHbSX+LtTP4ZwCS1fWCP3rP2UY/7IiL/uDlh0TL5G930NWoGD8Y3laIqq8jKSi0MkwvoQBY7NVserX3bSl25YPnvA1Kt9oOglgEjgYBXwEU1xVFSq6WDS5OQ1aMPqzn+bbLvwbCqtRvam3AL1lRS6/uRYzO1Kyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bdLVoeje; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726075536; c=relaxed/simple;
+	bh=1DE5fZyEHazBhk4YSxji28x2nF2X7K9v2+xK+H0heYo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pIxKOCEdaVkNtuVzIPPzZkv6njpjWN4IF9xH/xDoWAXCGD8R5DXL1uWCi96rCQFHUWUnR7jib/YdR1FC/HKChlLp2c4B/umjN/FzDUK9vaOANYlV4qGLbofosSS1UzYNRiP7GOYVmC88U2ay0fpMRJRJIfitpBfPKA+FJiFzzqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUJ4K3lU; arc=none smtp.client-ip=209.85.166.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bdLVoeje"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7a9aec89347so5943085a.0
-        for <patches@lists.linux.dev>; Wed, 11 Sep 2024 10:25:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUJ4K3lU"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-82ab349320fso1693339f.1
+        for <patches@lists.linux.dev>; Wed, 11 Sep 2024 10:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726075502; x=1726680302; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+81RryMeU1R7h21IPnzshy3ojIYLGiHMY764KPeMaFA=;
-        b=bdLVoeje7tcwnQRMZlCH3+NWF5p2VRDfCqqAQaT4h2qPTgPZvlm87avpIzLNd5WySO
-         HcX2yQc0cg8b0+F2wMcDsD3bZ3oyVMBwXvLW/Yd7dggDK6be1nQporW/egaeAPLfCdAx
-         WeoEwxu5AfrVC5HlYuTV54HXOlC+eY84hEHhKg3cYFWN74m6nxgLJlM7iiQCxsu5nZMV
-         9B5S0+TMxkGWt7jPntOL8lhqtFNs8fWhsWG9zTWlqFZbnhc8MjvITrvvi/Jb8kKmo8Yz
-         LBcH0Avh70zCmEeYyu0dRAk/X2gBVaqpiYBNfHLFYPXnSxVf+Qz5fSfXSd/AbpVZDtCo
-         0gkw==
+        d=linuxfoundation.org; s=google; t=1726075534; x=1726680334; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BtdVX8O4R5RlEn6XgHHpJbfm7Z1QBa4ZYeeQfbViS0w=;
+        b=dUJ4K3lUHAT1pE/LvQ3KCDQXB2s613WevcgNhzNNzejRxEu3zJHEKglXI6H1wdriFq
+         EzbU2CLaWTd+jZ+6+LDp7Zsh3ujYy9wYVFcznMzm6BnQTFQ4RE6lWbn5HVcmNHUAnv5E
+         +mGa3hZHp/2RskRF+YpLj2qYUp/pNFZ8dcYdQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726075502; x=1726680302;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+81RryMeU1R7h21IPnzshy3ojIYLGiHMY764KPeMaFA=;
-        b=AOwN6/lKgByOAaagrB+vFoOLHfZy7UJtHnok4frpysxrPNubUwioHk+VoePNn09QRM
-         jZC0ynaFpZV4qO4n0w0gjuhbcC5X8jbmcRkxisbZ0+JWuBUDoq4nQpWbTvNnb5lzDW6x
-         Y43kLAkIeuz7rRZ7d5hXu91xN+8Rq/xweQY610tKStZ67juFH3P+Wo4tl3KR6gNOHnc9
-         vNkBw+6lVqA2hfd/6drKTvOk8l41SzLa/gM/b7jbByYpDoLeei+rlDfuC0LiL/QAnP55
-         Q5a9G759RhsRepcU4DQxjv8lPTwtP9bKrkHuLgZbwo7LIxRo131zjkql9W2iJbak+avx
-         qLew==
-X-Gm-Message-State: AOJu0YxwN6TNIdvGPtU7qelas03Vux9UAnlmKqpESpAB4G/3QgWkJ3zm
-	y+izHvrs1fh7V9bbO7k0vcHPkJ51aFPzgb8/MzRJzAOS3zNbcpyR
-X-Google-Smtp-Source: AGHT+IHzq8+GtQIDRvYD6mRGvVTAuBUhIOsjR/8jUtAWcU5shNqGPdCbNYAsHlb2on+bMXgtANhDhA==
-X-Received: by 2002:a05:620a:2945:b0:7a9:9f44:404 with SMTP id af79cd13be357-7a9e5f9f507mr15807485a.63.1726075502180;
-        Wed, 11 Sep 2024 10:25:02 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a9a79475d5sm442444185a.12.2024.09.11.10.24.59
+        d=1e100.net; s=20230601; t=1726075534; x=1726680334;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BtdVX8O4R5RlEn6XgHHpJbfm7Z1QBa4ZYeeQfbViS0w=;
+        b=CQuUYcDNGhTlP4ySLQmfRIKzmjF2VFjBRTSNORnFdzFc0hg/GY5fqyeLEb0o7FAnrE
+         tjksH5O06/68COyGqn3xnhN8ksnTWXm0UG2k4kMq9Z97Vk3AO/Spm8NKC/8Bc72ZSflN
+         noAZgx3UAPb/ch9K1RSha7ts63hkxg4c860fXEpOPMy/eOGQ/wm25cViceDJWP/D4mUl
+         CBu57rU0Mq+CtDpuOF8TOT64kxORECfZ06JOFMBL/RmJvaK4dZ/SW8WP6aqAXSNA1G2Z
+         1sxBfxGLRfNq3EqmeYL2vxFGaxf0SH/TQwn/R+LD5YndxIG32+OmFloOO6nKNHFfTklR
+         anSQ==
+X-Gm-Message-State: AOJu0YwEIbdS/i5kkuyRoDD0Az4nzoqvW6vat7oW2ju2qZKdmvdYaToT
+	G4P+hiwyz2e9f4FozwLt6PYZyTvr4LytcH5WePaoVB6ICF9A2C6EsJ+k/eedzno=
+X-Google-Smtp-Source: AGHT+IEzkYDwTXtn8Y+11mQQfMaw9Yt24MtITkri4cToPizDt4VvR3VXvFo4NwxfHzWwKFn8OVgcXA==
+X-Received: by 2002:a05:6602:6087:b0:82b:c70f:5061 with SMTP id ca18e2360f4ac-82d1f8de413mr37458539f.7.1726075533508;
+        Wed, 11 Sep 2024 10:25:33 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d35f954537sm91790173.171.2024.09.11.10.25.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Sep 2024 10:25:01 -0700 (PDT)
-Message-ID: <67eef894-2fa9-4d47-85b4-dde327cf7034@gmail.com>
-Date: Wed, 11 Sep 2024 10:24:58 -0700
+        Wed, 11 Sep 2024 10:25:32 -0700 (PDT)
+Message-ID: <9bbb8370-758a-46bf-a01d-7e4d4f3c3a68@linuxfoundation.org>
+Date: Wed, 11 Sep 2024 11:25:32 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,57 +57,23 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Florian Fainelli <f.fainelli@gmail.com>
 Subject: Re: [PATCH 5.15 000/212] 5.15.167-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
 References: <20240911130535.165892968@linuxfoundation.org>
 Content-Language: en-US
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- HGuUuzv+GKZ6nsysJw==
+From: Shuah Khan <skhan@linuxfoundation.org>
 In-Reply-To: <20240911130535.165892968@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 9/11/2024 6:07 AM, Greg Kroah-Hartman wrote:
+On 9/11/24 07:07, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 5.15.167 release.
 > There are 212 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -129,12 +91,14 @@ On 9/11/2024 6:07 AM, Greg Kroah-Hartman wrote:
 > thanks,
 > 
 > greg k-h
+> 
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+All good without the iio/adc/ad7606 commit
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Compiled and booted on my test system. No dmesg regressions.
 
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+
+thanks,
+-- Shuah
 
