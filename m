@@ -1,115 +1,145 @@
-Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1BC1D69E
-	for <patches@lists.linux.dev>; Thu, 12 Sep 2024 00:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A341E2F860
+	for <patches@lists.linux.dev>; Thu, 12 Sep 2024 03:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726101293; cv=none; b=aRBrhXjSp/CzvIAW6SG/5dTthC7dqJ/yGeBhYGn2krBRnLtGnc6s0j2ncNg/kjEdQf0K9q46lTOfffRuxY/d5EWIfr60mWhkEQrpBcoqpR6yr6EqKTLXXa0e1HBjj0EwQ38R35VbXqSOoj6wRmyzMc8dDyyD2ZoAswwI4Mr/9Zw=
+	t=1726110681; cv=none; b=VaqhOrJf4V91l/Kr9qvbFGvBknLeRODtRPxa5SnDzUWYvTUYiPiy/k9i/3npXD20uFsstm0rQ5nOLe5d86vqKwS5q9YM9F0aaoxR4xlgGYyItg+b6hdxMo7CD0aB2eaFYUk0etjf/kVRzE+F/HC3SXQO+AafuCnoTII2piSjvkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726101293; c=relaxed/simple;
-	bh=XfUOfMV5igzSU5sun/scqEAqRQy+RsiSxYiFuj8SKSI=;
-	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
-	 MIME-Version:Content-Type; b=rwP/gtH2a+PNIB1LL0lV6dJCD/GPfI2o/oJGuVIV05f9NCwuUDFMMaZMuFHsjy9AVayxhQhQhlJOVYugM4gPB4yaAdr3LbFk/cFf6F5DjFP0ksvd8LVn0ihOnL9WDKLxUvYz+EnrIDTkQ6+e/W0NHO7CwWfG6tO5NQfoJcb91Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=G0A9MBNf; arc=none smtp.client-ip=35.89.44.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="G0A9MBNf"
-Received: from eig-obgw-6009a.ext.cloudfilter.net ([10.0.30.184])
-	by cmsmtp with ESMTPS
-	id oUdBsACMlvH7loXnOsiC6B; Thu, 12 Sep 2024 00:34:50 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id oXnNsJnKqP7VfoXnOshMgr; Thu, 12 Sep 2024 00:34:50 +0000
-X-Authority-Analysis: v=2.4 cv=XpL8O0F9 c=1 sm=1 tr=0 ts=66e2372a
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=YArTxWWgIjO1YVvZgRQA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=cYvbNQI+gpCYqzJpgX7nuTA/hukRC+DHzSBUzBcEdYQ=; b=G0A9MBNf4fdYDTrE5swOuV181J
-	Kv5IQSjMWb8d2cuu/oPwrebCq3j35WxDx2AqfXY0x/z2OpMP3nqCVQjltSvZKuyOYgvmFmEAm50lu
-	LLwk7/xy8XNitOL0RAlfACgpNZHQLaCw9tOMCHZJQq2yfSfOqj4akqIYcO2k6yzYjL88PyRBl2wYz
-	qTqtQJVuXjjzQF2zLBFicuHJXSa6Ye0C2itv/tL778va8NU7DpLWGN2Tg9ajOA0YY68EFmMb+RmRF
-	h3uctcHdZ4V8y4HsM+6rjOSdzGQ0qNOELHcwEpimUQUjCtya6Nj+pJd7zsWiTa9tY3pyJJZWiULfv
-	hVcqx37Q==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:39894 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1soXnL-0035UP-33;
-	Wed, 11 Sep 2024 18:34:47 -0600
-Subject: Re: [PATCH 5.15 000/212] 5.15.167-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240911130535.165892968@linuxfoundation.org>
-In-Reply-To: <20240911130535.165892968@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <bf463a26-4bcb-2709-fb06-cece37b09688@w6rz.net>
-Date: Wed, 11 Sep 2024 17:34:45 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	s=arc-20240116; t=1726110681; c=relaxed/simple;
+	bh=OArDEyqgWVPGjdCXCoJCy+3m3bqqS/ssLLVmDdflos8=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=ifey2gX5mDl0hZmUwTAhaqi8XDTl0B3/CZ/d6WDR2xE/3xlYatuY6NWkut6BtUBnRZCy3FqNtg8aNsqrZV1hrTvoKxYaAWKRaNtaI9BV6SwiD+4VVwdVrTnt/+ttHG7igCaAkZKUZDKS4rqV3vZQxaXghNXKelG151BpA5Y+uMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.88.105])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4X42Wx13Pxz69NK;
+	Thu, 12 Sep 2024 11:11:09 +0800 (CST)
+Received: from kwepemd200019.china.huawei.com (unknown [7.221.188.193])
+	by mail.maildlp.com (Postfix) with ESMTPS id 122AA140453;
+	Thu, 12 Sep 2024 11:11:16 +0800 (CST)
+Received: from [10.173.127.72] (10.173.127.72) by
+ kwepemd200019.china.huawei.com (7.221.188.193) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 12 Sep 2024 11:11:12 +0800
+Subject: Re: [PATCH v23 1/4] mm: add MAP_DROPPABLE for designating always
+ lazily freeable mappings
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>, <tglx@linutronix.de>
+CC: <linux-crypto@vger.kernel.org>, <linux-api@vger.kernel.org>,
+	<x86@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
+	<adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>, Florian
+ Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn
+	<jannh@google.com>, Christian Brauner <brauner@kernel.org>, David Hildenbrand
+	<dhildenb@redhat.com>, <linux-mm@kvack.org>, David Hildenbrand
+	<david@redhat.com>
+References: <20240712014009.281406-1-Jason@zx2c4.com>
+ <20240712014009.281406-2-Jason@zx2c4.com>
+From: Miaohe Lin <linmiaohe@huawei.com>
+Message-ID: <ee5d3e39-572c-7ec6-f329-1275d7138220@huawei.com>
+Date: Thu, 12 Sep 2024 11:11:11 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20240712014009.281406-2-Jason@zx2c4.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1soXnL-0035UP-33
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:39894
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 60
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfDREn8/GpDK75zWHF4TPAY+gGKQxRwsMSDifs+jSI1Ttua6zMpa0RsdGYRsWXcONgZhboFJHuHsyQa0c5TghJoSoGOV1wCiacjXBP5UfAgS/Yl2aN55D
- ucKj6wtxI/zKvkTiydm3rUryTn28E6KTnHnR0vl8WlaOlwkR3PXMuDBKNPXMlzNuBerflqI6kRCZEw==
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemd200019.china.huawei.com (7.221.188.193)
 
-On 9/11/24 6:07 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.167 release.
-> There are 212 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 13 Sep 2024 13:05:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.167-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 2024/7/12 9:40, Jason A. Donenfeld wrote:
+> The vDSO getrandom() implementation works with a buffer allocated with a
+> new system call that has certain requirements:
+> 
+> - It shouldn't be written to core dumps.
+>   * Easy: VM_DONTDUMP.
+> - It should be zeroed on fork.
+>   * Easy: VM_WIPEONFORK.
+> 
+> - It shouldn't be written to swap.
+>   * Uh-oh: mlock is rlimited.
+>   * Uh-oh: mlock isn't inherited by forks.
+> 
+> - It shouldn't reserve actual memory, but it also shouldn't crash when
+>   page faulting in memory if none is available
+>   * Uh-oh: VM_NORESERVE means segfaults.
+> 
+> It turns out that the vDSO getrandom() function has three really nice
+> characteristics that we can exploit to solve this problem:
+> 
+> 1) Due to being wiped during fork(), the vDSO code is already robust to
+>    having the contents of the pages it reads zeroed out midway through
+>    the function's execution.
+> 
+> 2) In the absolute worst case of whatever contingency we're coding for,
+>    we have the option to fallback to the getrandom() syscall, and
+>    everything is fine.
+> 
+> 3) The buffers the function uses are only ever useful for a maximum of
+>    60 seconds -- a sort of cache, rather than a long term allocation.
+> 
+> These characteristics mean that we can introduce VM_DROPPABLE, which
+> has the following semantics:
+> 
+> a) It never is written out to swap.
+> b) Under memory pressure, mm can just drop the pages (so that they're
+>    zero when read back again).
+> c) It is inherited by fork.
+> d) It doesn't count against the mlock budget, since nothing is locked.
+> e) If there's not enough memory to service a page fault, it's not fatal,
+>    and no signal is sent.
+> 
+> This way, allocations used by vDSO getrandom() can use:
+> 
+>     VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
+> 
+> And there will be no problem with OOMing, crashing on overcommitment,
+> using memory when not in use, not wiping on fork(), coredumps, or
+> writing out to swap.
+> 
+> In order to let vDSO getrandom() use this, expose these via mmap(2) as
+> MAP_DROPPABLE.
+> 
+> Note that this involves removing the MADV_FREE special case from
+> sort_folio(), which according to Yu Zhao is unnecessary and will simply
+> result in an extra call to shrink_folio_list() in the worst case. The
+> chunk removed reenables the swapbacked flag, which we don't want for
+> VM_DROPPABLE, and we can't conditionalize it here because there isn't a
+> vma reference available.
+> 
+> Finally, the provided self test ensures that this is working as desired.
+> 
+> Cc: linux-mm@kvack.org
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+...
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+> diff --git a/mm/memory.c b/mm/memory.c
+> index d10e616d7389..18fe893ce96d 100644
+> --- a/mm/memory.c
+> +++ b/mm/memory.c
+> @@ -5690,6 +5690,10 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
+>  
+>  	lru_gen_exit_fault();
+>  
+> +	/* If the mapping is droppable, then errors due to OOM aren't fatal. */
+> +	if (vma->vm_flags & VM_DROPPABLE)
+> +		ret &= ~VM_FAULT_OOM;
+> +
+I'm sorry for jumping in here. I am confused about the code in handle_mm_fault(). Since VM_FAULT_OOM is simply
+dropped, page fault will be re-triggered soon? If so, when oom is disabled or fails to move forward, page fault
+will re-trigger again and again as no memory is available? I might be miss something.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thanks.
+.
 
