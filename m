@@ -1,169 +1,137 @@
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8182F860
-	for <patches@lists.linux.dev>; Fri, 13 Sep 2024 19:32:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FB08C11;
+	Fri, 13 Sep 2024 19:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726255948; cv=none; b=SQojQT/UsAS/ahFQYvxo9hVC1uYY75NHhYSZKP6bX5xkXU95dDCb90wrbEW4cHgeKzQPyk6NGLcNtObWKzRCbVvZF/xZgJJks1FjOA23YIwe1ihUztEILzsrLJPr5xO4sh9GBPqqvXXObIOH0sHYmwqlMR85tjnz7zFlZR4cHXY=
+	t=1726256518; cv=none; b=SeIWtJv2x9hN+UHkSukDG+eXaAVR5Gf1CqZSieR7CMz+YNkWhPJ/Kop0RzZ/7zEcXv0cWE2dGgYDnA46qOtv5wKFoBs5J4WPpVKZ/cWZQ3TDmQmMhWwb7X6RMRvBJ3OUiKqf8i3bGKTrBdxacGW4VyA73LjUFt0eJadPAvOMEbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726255948; c=relaxed/simple;
-	bh=CAh7OJCKr+ZZWcKaCK8a8dneJu3h6r5pEUsUumEe//Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JAAaJqYnxzBmi6OSrpqic4e+mrw7JUxrxG08Bn4hp7o9fATE6Acmbj70yRNUkv09DxblRXGUl/a2flsIxJDyuM4OMvW3B6N8kUOU66P/066xWTMqwvhXG41VriL3sC2S/b/v3JZf09qJ9d40SFwxskeaIV+6BMRQVheMiUty2YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Yednq30N; arc=none smtp.client-ip=217.70.183.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1726256518; c=relaxed/simple;
+	bh=X+xZJ2B1YUnFcRBHyymTV8kCYmdbI++oeoXCPuXzbE0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H6/IWM+9Y4wncLU/N1Yvr7apFzuiz6BeNV1qpHXBM0Z6zF3pOYbuRmh3LExUclMJ0eI5QIsK9bmTq2KAi2i67BhcWVNHXAyhR0UTKLr6tO177D/CLDvhz57SotDZ35dHwEOr+Yh6mJZVvUHeUehKCXdKnzHX2Ozv8Q7W3s1ymDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CigS4wlK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Yednq30N"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E834F60002;
-	Fri, 13 Sep 2024 19:32:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1726255942;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=x2of1BdHGwZAspl/pHlPclrXtKEUjMefV4+slP9HEaE=;
-	b=Yednq30NTIRFFSqwaFEEiemih/JhA8Y5QpUO/NJaO7jdAS8ykd/LaJYepppl1vRMGh5Bu3
-	5KglUphzYAwMjRSJQoH+XEV6DIJ2Da+phyzUur5iMSwAYes2nj4VNsfsMmjF8Gl/HckJml
-	4DXajWu5uj5Q7VU9IkbYsigpcGBPxafH4Ds/RMHYuP0RYYsSNIaZntl4TYBgI+QTxfiN+I
-	jZGeTI4aD/dxORLSNAD0gP+9GaYgpk3yNBMWY+Ape+coSlLrilqrzBP3ZsyKCKyxqPIQKD
-	0KV3dJBNVEk8f5rUcpOiAGgZVV6iQLNL1fBSq4uuHfNd/Glll+yAyNdQEze0TA==
-Date: Fri, 13 Sep 2024 21:32:19 +0200
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Douglas Anderson
- <dianders@chromium.org>, Krzysztof Kozlowski <krzk@kernel.org>, Marek
- Szyprowski <m.szyprowski@samsung.com>, Taniya Das <quic_tdas@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>
-Subject: Re: [PATCH 0/5] Fix a deadlock with clk_pm_runtime_get()
-Message-ID: <20240913213219.2d5efa2c@xps-13>
-In-Reply-To: <20240325054403.592298-1-sboyd@kernel.org>
-References: <20240325054403.592298-1-sboyd@kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CigS4wlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C925FC4CEC0;
+	Fri, 13 Sep 2024 19:41:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726256517;
+	bh=X+xZJ2B1YUnFcRBHyymTV8kCYmdbI++oeoXCPuXzbE0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CigS4wlK3LvsDZEyxmTriGbXUjclLDRPo5W5zGCErZrbxK+KrgH2d2VYHjnKtUtFg
+	 oNhPsilD2qVU0XIlEUi10mIXwPJ7bbJup1RalMOVRP5xag/sd9sq3jPIodN5pFWp1d
+	 YFsOahGiYhlCh2/uTCWbl43E1T7y5uO1CGmlgIDwuyrYjOxI8nfED6rP5ABGGIvMq5
+	 eQXcytyQ2C0DN6S87zR5aZw3EKwJixeCHjb1Un8PNPTuGsOZNySAvLQkKUyTmRUbac
+	 47F49x2Vet8SZ17H3ATPfzE8OQcU4PcAjuCPBGe3ow8cqwYyWRO4aMroeOu29ODsW6
+	 aSi/kmZ3NOnJQ==
+Date: Fri, 13 Sep 2024 12:41:55 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>, x86@kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] x86/resctrl: Annotate __get_mem_config_intel() as __init
+Message-ID: <20240913194155.GA4188687@thelio-3990X>
+References: <20240822-x86-restctrl-get_mem_config_intel-init-v1-1-8b0a68a8731a@kernel.org>
+ <fc49e252-6283-4a37-b4e8-bd329f326e68@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fc49e252-6283-4a37-b4e8-bd329f326e68@intel.com>
 
-Hi Stephen,
+Hi Reinette,
 
-I only discover this thread today, interesting read!
+On Thu, Sep 12, 2024 at 03:33:09PM -0700, Reinette Chatre wrote:
+> Apologies for the delay.
 
-sboyd@kernel.org wrote on Sun, 24 Mar 2024 22:43:57 -0700:
+No worries, this is not super high priority (except when the section
+mismatch warning is elevated to an error but that does not happen in too
+many real world configurations).
 
-> This patch series fixes a deadlock reported[1] on ChromeOS devices
-> (Qualcomm sc7180 Trogdor). To get there, we allow __clk_release() to run
+> On 8/22/24 5:12 PM, Nathan Chancellor wrote:
+> > After a recent LLVM change [1] that deduces __cold on functions that
+> > only call cold code (such as __init functions), there is a section
+> > mismatch warning from __get_mem_config_intel(), which got moved to
+> > .text.unlikely. as a result of that optimization:
+> > 
+> >    WARNING: modpost: vmlinux: section mismatch in reference: __get_mem_config_intel+0x77 (section: .text.unlikely.) -> thread_throttle_mode_init (section: .init.text)
+> > 
+> > Mark __get_mem_config_intel() as __init as well since it is only called
+> > from __init code, which clears up the warning.
+> 
+> It looks to me as though __rdt_get_mem_config_amd() may need the same __init
+> treatment
 
-Not only ChromeOS devices are affected, there have been several reports
-with similar issues on the mailing list, especially on i.MX8MP, where
-the clock and power management domains are tightly connected.
+It certainly looks like __init would be appropriate for
+__rdt_get_mem_config_amd(), although there is no current risk of a
+modpost warning like __get_mem_config_intel() because it does not call
+any __init functions, which is really what triggered this warning.
 
-> without the prepare_lock held. Then we add runtime PM enabled clk_core
-> structs to a list that we iterate and enable runtime PM for each entry
-> before grabbing the prepare_lock to walk the clk tree. The details are
-> in patch #4.
+> it is not clear to me why __get_mem_config_intel() would trigger
+> such warning, but not __rdt_get_mem_config_amd()?
 
-I am happy we ended-up leaning to the same solution: runtime PM calls
-should no longer happen after acquiring the prepare lock.
+Based on my understanding of the LLVM change linked below my comment
+here, __get_mem_config_intel() gets implicitly marked as __cold because
+it unconditionally calls thread_throttle_mode_init(), which is __cold
+through __init. If __get_mem_config_intel() does not get inlined into
+its caller (which could happen if a compiler decides not to optimize
+__cold code), that call to thread_throttle_mode_init() will appear to
+come from the .text section, even though it will really be from
+.init.text because __get_mem_config_intel() is only called from __init
+functions.
 
-> The patch after that is based on the analysis in the disable unused
-> patch. We similarly resume devices from runtime suspend when walking the
-> clk tree for the debugfs clk_summary.
->=20
-> Unfortunately this doesn't fix all problems with the usage of runtime PM
-> in the clk framework. We still have a problem if preparing a clk happens
-> in parallel to the device providing that clk runtime resuming or
-> suspending. In that case, the task will go to sleep waiting for the
-> runtime PM state to change, and we'll deadlock. This is primarily a
-> problem with the global prepare_lock. I suspect we'll be able to fix
-> this by implementing per-clk locking, because then we will be able to
-> split up the big prepare_lock into smaller locks that don't deadlock on
-> some device runtime PM transitions.
+__rdt_get_mem_config_amd() does not call any cold functions so it avoids
+this problem altogether.
 
-I fear splitting the locks will actually not solve the problems we
-encounter on i.MX8.
+I can send a v2 with __init added to __rdt_get_mem_config_amd() if you
+want, along with the style update you mention below. Just let me know
+what you prefer based on my comments above.
 
-Let me quote some parts of your commit log in patch 4/5:
+Cheers,
+Nathan
 
----8<---
-> This is a classic ABBA deadlock. To properly fix the deadlock, we
-> must never runtime PM resume or suspend a device with the clk
-> prepare_lock held. Actually doing that is near impossible today
-> because the global prepare_lock would have to be dropped in the
-> middle of the tree, the device runtime PM resumed/suspended, and then
-> the prepare_lock grabbed again to ensure consistency of the clk tree
-> topology. If anything changes with the clk tree in the meantime,
-> we've lost and will need to start the operation all over again.
->
-> Luckily, most of the time we're simply incrementing or decrementing
-> the runtime PM count on an active device, so we don't have the chance
-> to schedule away with the prepare_lock held. Let's fix this immediate
-> problem that can be triggered more easily by simply booting on
-> Qualcomm sc7180.
---->8---
-
-Regarding your former statement, I don't think it is impossible, this
-is what I've been trying to do recently. It is really impacting, and
-must be handled specifically for each situation: I am counting three of
-them depending on the action, where either the parents, or the
-children or both sides of the tree should be resumed before
-continuing (with optionally the new parent, when reparenting explicitly
-or doing some rate changes which also involve reparenting). I don't yet
-have a working proof-of-concept -I would have loved to before LPC- but
-this is promising and I believe doable.
-
-About your second paragraph however, I am asking whether being "most of
-the time" incrementing or decrementing the runtime PM count is
-acceptable, because if we ever perform a real state change within the
-right conditions, we will just deadlock the platform. This is
-theoretical and is unlikely to happen in general, I agree. But shall we
-consider this situation too unlikely from happening for just ignoring
-it? Shall we instead fix it properly and prepare ourselves for future
-power-optimized architecture with a lot of dependencies between clocks
-and other power-related subsystems? This is an open question.
-
-> I'll start working on that problem in earnest now because I'm worried
-> we're going to run into that problem very soon.
-
-Is there any public branch I could look into?
-
-On my side I tried to warn about this but got no feedback. I'd have
-loved to be pointed towards this patchset at that time :) Here is the
-report if you want to check it out. FYI, I was asking for feedback on
-very specific questions, which I consider now solved:
-https://lore.kernel.org/all/20240527181928.4fc6b5f0@xps-13/
-
-> Stephen Boyd (5):
->   clk: Remove prepare_lock hold assertion in __clk_release()
->   clk: Don't hold prepare_lock when calling kref_put()
->   clk: Initialize struct clk_core kref earlier
->   clk: Get runtime PM before walking tree during disable_unused
->   clk: Get runtime PM before walking tree for clk_summary
->=20
->  drivers/clk/clk.c | 142 +++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 115 insertions(+), 27 deletions(-)
->=20
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
->=20
-> [1] https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962=
-f004beb3dafee6a12dfbb@changeid/
->=20
-> base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
-
-Thanks,
-Miqu=C3=A8l
+> > Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >   arch/x86/kernel/cpu/resctrl/core.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> > index 1930fce9dfe9..b28646f1d9d6 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/core.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> > @@ -199,7 +199,7 @@ static inline bool rdt_get_mb_table(struct rdt_resource *r)
+> >   	return false;
+> >   }
+> > -static bool __get_mem_config_intel(struct rdt_resource *r)
+> > +static bool __init __get_mem_config_intel(struct rdt_resource *r)
+> 
+> Surely resctrl is not consistent in this regard but I understand from the coding style
+> doc that storage class should precede the return type, so perhaps:
+> 	static __init bool __get_mem_config_intel(struct rdt_resource *r)
+> 
+> We may need to follow this recommended style for this to be included.
+> 
+> >   {
+> >   	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+> >   	union cpuid_0x10_3_eax eax;
+> > 
+> > ---
+> > base-commit: 7424fc6b86c8980a87169e005f5cd4438d18efe6
+> > change-id: 20240822-x86-restctrl-get_mem_config_intel-init-3af02a5130ba
+> > 
+> > Best regards,
+> 
+> Thank you very much.
+> 
+> Reinette
