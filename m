@@ -1,69 +1,66 @@
-Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020084.outbound.protection.outlook.com [52.101.195.84])
+Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021113.outbound.protection.outlook.com [52.101.100.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154DC12C465
-	for <patches@lists.linux.dev>; Sat, 14 Sep 2024 23:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF55823D1
+	for <patches@lists.linux.dev>; Sat, 14 Sep 2024 23:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.113
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726355444; cv=fail; b=jH/B9UXYi11LPz0zCESW6sPPjGQrCmhrOGGoXuUwQ9G5M2hJCEBTTdO9e9q2WqW7/nNAIUzTPsdX468i5W70BQs34xsD42ruPhb2gtetm2tFCBmVpl/RQHBB/b1IVEA0TzusNCvlpmgV+3/mfNbn/uutP+nyOq9IU9wjpgT7Suw=
+	t=1726355995; cv=fail; b=T731e592P9Z0hFSa1rRF0e6tJHOrPREvA/EjX20suk++YBdvTwT+h8m12NTcIXwClzNWdgJlQ/pI58Yz5XEEPGTSkPhyWEVEABbr2BaM9NgtNEBUX/qwGrv0lElDApZ5Lm3K22lDdqAjVCYfvuYn0pwZ7jEB+KBWsq78nSoVBeg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726355444; c=relaxed/simple;
-	bh=pM7JhtR++M/6RZedHK+OJ8DlLqCo+1zYBFvs+Tx2Gdg=;
+	s=arc-20240116; t=1726355995; c=relaxed/simple;
+	bh=VvpRFAPecFCQA5Q+A6XX3CNUld3+eQFfNE7yutYwxgA=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=m1Px3sRRt0xkUjVow1Fzurx6YHlbgX3eNDNF38lhrMohUd9HSfPB8VSNrUYjxOGSZS1M2l9ewWCPl4Xxh2dW+1GbQEIVqzKjgOeA++XYuq+qRnuJxATtOmJ2K8gUKLJIddowdml2F3RlBqSAJMV3aJpvfBfcLO6n3Dv8sIXqc0A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=PkJNCryG; arc=fail smtp.client-ip=52.101.195.84
+	 Content-Type:MIME-Version; b=C1d1/kS1sl4hfUFEfdnVkM9yUjg8EX7rr3fY+9UweCXiXFIXvEynh/3Bhcztof/J+oVchy1MnsUaxkVrUGwfBcj1BPLOcnC9Z1iYodwp4d2JlC5mPA88h+ezRwSXFMbQtxK0wST4NyK0YWnzcpVZAWBPMYBp+dQQyQ+c5Om0igo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=LaP7xsDn; arc=fail smtp.client-ip=52.101.100.113
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=garyguo.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="PkJNCryG"
+	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="LaP7xsDn"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PjWOVFgED1Sb/RRz1wnGQMwcCU7IM2RFDIaO4gFWC2lXYXoghcAeTdt50lx+qLBQhWdPhN8hJlpfRC4n/hwdhJZvOSY4M+Amz5k4saoIs/YsZO0u2WSflGxbYJJ3UHNhPhacWfoFYxeoVh5wHvcdypkmvGiSYNeCiPMmsDbhGJwcgDYlblhkVnWnoicm75nEBCehEFPT09CTJg3UzdAcHQSlRWZ6BExhpA/Vh2su3R+lWJ/Te/2LL4xGCxCFKAQunZnVOwBZSJ0Dp382D4Ghvt0lUbsF35EJHW5y1gCot7/s2yk5KCMZ5Zb4TAbFRCw119h7ftWU2KIMpOoVjdy3Iw==
+ b=Xue9ct/8x/q1tNy3oKtcKNhSLbNwikNxqF84dl3oeTE6ZAnTgo58KhK4YW28GUMQbQ/Em9quxqCnX+jbfBw/CCxtOecW0ZESxeGYut6EwAhc+BeW2Cx8edOn3LOcPBNnBu7r3M8/PkXySRO1nvXK9YyxBKf+tRQGfg7cGTBPchZsvpEC3RgD50JsrqRkh3+Nt5E17lkSAZ4tsOl+FMYlU6YLHLIWM5sCgtyEudLuJzI5OFlSs6ku80WzTwT3Ac/IW1ETn1aRJj4iS3Z4p6La7iDakUg/Rl4koRymxwQ09SQUzktMm6u6qLxGuN6cTw5QvIEbO58rxuUrUIETedC6kw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4x4twgSz8hB3x0n4r5G/vJFy/zZuJCSSzwNu6Z3MHqc=;
- b=i3W+FcGb2tlJ0w00d6EYMd2EnxtOPfv4x7bb0SRNSSWDhLyr8m8vLoZvRcROeA+2H/SQBrZEddUDgl9F9976qJ4+ih2OCSDgXLOA5iXgagotifFkpYpogWKr39Z2JTvMDwDyvS7ByubbJ2dwcJBQxwuQ06N5IDqup4aXXhJGi9TL4sWH/RMNPoWz/qWZFgFwnPvTa30aBOBP6tSRWCjWg5rOWqAsOpuBBgzRedr/17nozUjmsOgPQ/RFM4e8qCA03HzKEw38xRKearUjsFNAye8/RRMFD7QtAT5eQyfoFsdLnsc+OElJpDpD0Az7/Zoh/1DWD3yzYlfWFCZej8fpfQ==
+ bh=Env7/7i0CW6h5lSuMNL9vRJh/CPv2YtIko/pljOtXGA=;
+ b=TSRC/bsUj/rAQtiTbB0HkKrKMJMOllb3YNc5BkkAUQ13n3WqKvjcMrL3ir9YiDuN2zRNXLZQa2Sibjd9TBhSvbi0d7WLBKoTF84n5zXqinQfdSgoOXxL6EiXO2KLjDt0BrlU1iLfD0eowgIoOmI+eVn+i8CfYSP1dvyrf+ygo++D9bimX9LYlPbxzo/i+aeMg+2bY+PDL3nKb61mz5xtgzgH8mU9Ex99TLtiI65Bk3svvVGO51jb6eNN6YeMhYSpPrVq4RQHU6XvJ2MPzSZ5HTrdaO3AAwK3RdIQj/C6rRMNCBM7/xNLwd/GPPCfGVyslb8dDWOw8lFfhczaHeqTMw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4x4twgSz8hB3x0n4r5G/vJFy/zZuJCSSzwNu6Z3MHqc=;
- b=PkJNCryGAghOyEb6j668eLdmRk71kc8XzK7/+XG6MMSUX4EkWOEO87gLF4XWKKA7EaAbrNLlbhM5WjxA2kUJZVwTw7aVQK30ohsN5Ts5ICjKQic/1xehSRp4IoFY++JW505ZgDQNMuLvPdEwrjSL52ZuGhzljcKpWK4qyeA5lVI=
+ bh=Env7/7i0CW6h5lSuMNL9vRJh/CPv2YtIko/pljOtXGA=;
+ b=LaP7xsDnmX0DC9/YmbFNCzkvDgCcZJ62+ovDYlmDAirgU7Eq5OluAv6b3oht7iu1alAnjxlQ3IN4GJdvOHsoCgLRt8EJWMPTz/w5oL9TabpabUeYPTLymtVz1CkGdIcSN2zf9tk08Bsp1G1eQdmY2My6AZlxYMQtT/UqRNmkjHk=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by LO2P265MB5629.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:25d::5) with
+ by LO6P265MB6720.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2fa::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.22; Sat, 14 Sep
- 2024 23:10:37 +0000
+ 2024 23:19:49 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::1818:a2bf:38a7:a1e7]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::1818:a2bf:38a7:a1e7%3]) with mapi id 15.20.7962.022; Sat, 14 Sep 2024
- 23:10:37 +0000
-Date: Sun, 15 Sep 2024 00:10:35 +0100
+ 23:19:48 +0000
+Date: Sun, 15 Sep 2024 00:19:46 +0100
 From: Gary Guo <gary@garyguo.net>
-To: Geert Stappers <stappers@stappers.nl>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Andreas
- Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 12/19] rust: replace `clippy::dbg_macro` with
- `disallowed_macros`
-Message-ID: <20240915001035.5fc4d4a6.gary@garyguo.net>
-In-Reply-To: <Ztk/rn+wztXYVTtd@gpm.stappers.nl>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?B?Qmo=?=
+ =?UTF-8?B?w7Zybg==?= Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin
+ <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, Alice
+ Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Subject: Re: [PATCH 00/19] rust: lint improvements
+Message-ID: <20240915001946.2cf237cc.gary@garyguo.net>
+In-Reply-To: <20240904204347.168520-1-ojeda@kernel.org>
 References: <20240904204347.168520-1-ojeda@kernel.org>
-	<20240904204347.168520-13-ojeda@kernel.org>
-	<Ztk/rn+wztXYVTtd@gpm.stappers.nl>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO6P265CA0001.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:339::9) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO2P265CA0029.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:61::17) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -72,140 +69,186 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO2P265MB5629:EE_
-X-MS-Office365-Filtering-Correlation-Id: a96efd0d-37a4-4821-6877-08dcd5127198
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO6P265MB6720:EE_
+X-MS-Office365-Filtering-Correlation-Id: 45711d0d-5e3e-42d5-1b2b-08dcd513ba46
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?C2nBzHeHIBsfOPdFvJlSuNkM7OeTcqqfa5+D2ZuCyrPWI9TkQqvuIS8enOzH?=
- =?us-ascii?Q?Ag0iKBCf/vr5Ee5kJok4ZCRDZbUxA/kcxaIUCCIK0OFsI4wFOOQT7CJhYk5t?=
- =?us-ascii?Q?MDVIPNeN53Gb7k2gShUfbYDO/ustF1QwqLMIurkm61TLemc7VapGEPwS6elN?=
- =?us-ascii?Q?FP/GlMGJGNJZcssJxt1w4Dd68reRaXXzOlNCIcc8ZsHXuthxL1rR/oUicIfX?=
- =?us-ascii?Q?52wOyrKme5W5tCtrJNibDEYuYLZsr/vNbT9KApsd1uXsBffEig4zMGvL5jSI?=
- =?us-ascii?Q?BcxK+LFyfTdWAIl3C/p3xq/dCh7g1a25MsAzGm/7BZvVvxN5V/tDu5JPgcx0?=
- =?us-ascii?Q?CP2g/Rhk38OuBTRQpJ6nsEO92K0m2Gr2zTfCE3wD6bpC39IHPJHWbd4cb2Xt?=
- =?us-ascii?Q?/AJf6Y5Ts+WAMiXZBhcCrzGmok2TUngcaWWZhqwz4bSFZq7jyTX3vx4wkBPa?=
- =?us-ascii?Q?dtuvDJj3cgZIZmwNwvk6lcwOh9vUoaL/SMPK/dvJe5yLOKz+fenzroi+C171?=
- =?us-ascii?Q?8h6R4LcqzOFwpMPCARuT3anznHhz0V2W+3Yk0h6sdsGOJFLTlxV8UQpN3Jrg?=
- =?us-ascii?Q?6s0mjzdwW5GI5NuSHVGrU2yYydEoB0rtzdmbaoFvpgxQKhtNBg97JoQeth41?=
- =?us-ascii?Q?G8GeFCV8qMWES9VeoNiaiRkKiq8ULSbmQ0DXbCZwRdcGDHYHMOhJxJBGS7b4?=
- =?us-ascii?Q?Ua+UjFXOYR1NLWsmmAKFfrtEsnxu4NcfwyEWWNIJoi6ZYB1l1/74ijPKmjVC?=
- =?us-ascii?Q?SUJonrQCcAN+DTnLY+rc43bpSQ8PyypC2JlAxHVRnhsCQ2XpW4LNlra+H1PF?=
- =?us-ascii?Q?/djM2pCHGLk9MaacwxXYz/eHxnhhVWCB62wuB14nKU/2f4Qdv8REZPuhD7AO?=
- =?us-ascii?Q?VG6SflFdNQOEF8Wei/HTo9B+jY0Hyq4PAEeg74GFrlJlyhkOVsSfc8COwJ9h?=
- =?us-ascii?Q?TTh0Ud3gt/7JldKKrljjhnDl84EF29i3zFCkAl0s7zwvl+qMJy1Gps0xxZqM?=
- =?us-ascii?Q?EMdEBScjIOZ6jjuodE5BEm+x3f+zEahaUgdpXQJUxuJBRg+qwTYwRYZi0x75?=
- =?us-ascii?Q?fojpm56lHATgY57j+fCXmRZLKRM28jnjaXZViMNKcmHxX0Eri8nXv61Ak8Tt?=
- =?us-ascii?Q?+K0gzU8b99uRZRWRrUqlfW20KKWcvM/RZRtQPLM8emNJFkKOLI466oAve6Fa?=
- =?us-ascii?Q?halWBhN7t74chwLKzzkp2HZSbxLeXm/rI79klauuIT8I0EmnBAm8CouBu5Ca?=
- =?us-ascii?Q?YAsRhxW6lP+JOfQFB0f9/VIg+m3cFhbhiIHBzT+j8nVD2mx9tbM3E22myNtf?=
- =?us-ascii?Q?iaw03vTkaLj6TOB9GAzKrl4/pnPgxE16pMFzd6z/g9G1wA=3D=3D?=
+	=?us-ascii?Q?UeVBUnBkz0NXsH/4osDQSbCuuSjolpuHCRJiUC0ZKAcTGI9Nx5QmBKH78cef?=
+ =?us-ascii?Q?8fKEtEa+FzXE14hYnFxZj1AEmxDmWOAZg55+kfS+2cwMjNTBiWKHrfJUBziJ?=
+ =?us-ascii?Q?G2KiGeoxfH0D9AeylnEgeibS6KAjVjDibOIzx6TLjlvoNZQli48ykfwg+GXV?=
+ =?us-ascii?Q?pH24VXAEb4ylNVC6+ZZIbVHhua5tBqxlyoawbcSgBQNor3sBi+Vpzm4qwNDn?=
+ =?us-ascii?Q?PmH+iUgIrEnqrn+sFqp5utdfAkmKWh4wurQ87+EdXo+ir3wEVhXKu+T1IcXj?=
+ =?us-ascii?Q?Ymdniv89EkrWxLW7j8YFk1/udxYE14VlowF2JIJ5wH9kSwsp0Ez5bN7TRyBf?=
+ =?us-ascii?Q?Si1yUIeXSaHyvf9KhGmDW/KBxt5R/1oKoLIWHITRMcvgxGDy+nB905eOiJ8H?=
+ =?us-ascii?Q?FKsq0oRneRQKF4+hDGocD3QKTP963MI1mw7wnQypZM/8wuQz7DkuGBxdsdTN?=
+ =?us-ascii?Q?kvy9USDGU9Itn063tc10Hux0WLaYpv0t84I3UpBp9IBf5rWgqzRRCUHQI66f?=
+ =?us-ascii?Q?qrqwpJlFpC4qb8WqJYJ2QOBrR5UeUpIvgjwuG+NsAW2MFuj+P8ESuE03h4F5?=
+ =?us-ascii?Q?zdLlisIDXrxwgLXpMYgDDNCiBPPbruG1xWLsd5inR/CGjch6opfnwhakw4wH?=
+ =?us-ascii?Q?wsLwkxqoDgHnxvBnpT9kA9IFQaqnIFQ8h91IZx4NecxjFh/33w0wHAzPmpmt?=
+ =?us-ascii?Q?iLk90CGBP8UJhiYFXalinbwysCgo6o7J4ZL6SYqo7ADbJhj6iBOXXCWw4Tg1?=
+ =?us-ascii?Q?2//EIgwLjFbzxAiEDxkI+lZuvM7dnIErf0Ix6aPmx8/3kCPG53P9yeZMc/P1?=
+ =?us-ascii?Q?RlR/4s8gbB4oS7pYWPnPKsXOPi5bEe9LOx8est4MVD8w6WB9uEcO4H6Fee7n?=
+ =?us-ascii?Q?XgaYySFHAZSUJDmKyVV0HFRcnfiGneBjof7vqrBqt04RMUzj845YHBFx/ll/?=
+ =?us-ascii?Q?Nk43LLt1vDdGp9oIhcYkNNmCeOMDLCG1qn2jUhY6fOdi0S/W8l24rh/8y+6p?=
+ =?us-ascii?Q?s6zlR1J+pZDnjwg0Ssjf2saAnTO7ExDHZ8HUlbUBLS2gbw02zq5nhbaFD4BZ?=
+ =?us-ascii?Q?838XXuPoihAlk41zOmngNyWQQkKsxeDt0gG7YnvkO6A7Vuo18UjytYPgBQJ9?=
+ =?us-ascii?Q?pvqrGIUgEzk3kFEWkK69V4EJo49FhLn17pNvlX656v0YgUUjXACGnuLjzVU3?=
+ =?us-ascii?Q?2sEu6RJu/DTPpmkVPH7np/kkbn66OxBxW/T7EdX1vWBJcWd2tagxaPo81Ywe?=
+ =?us-ascii?Q?CpXFkrt9dckmjB/jtDW+cRy0wyB27GyGOPZ5upHtubop6nhvsr+fwdf5JgX6?=
+ =?us-ascii?Q?FBzkrRSk+Emuts1CWA4XPNZDOY9r7rtEMQxot8vs80zxFg=3D=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?YEzzDS/d/sq6csTFaRNA3P9rHHTEcS1rv2zyvOtwncZ9Ng6+Nlnry6nqWYJo?=
- =?us-ascii?Q?jp7K7ggb2PyHAqHyqJ+Je1HtJSmuLYqgdukW9qF9fRFf8sNhaL4uIMTVO+Qd?=
- =?us-ascii?Q?TVqVeIoGpDo+NglR8li9UdZgxJvYReBkT8Sis2/N7bVmVijXLEp3Fj/0Z9yc?=
- =?us-ascii?Q?ArgUfb+TO3/CWq5kSTxzgkXLIHNlONf88LKn8j21i7V666gqzmTgROMNQDJ1?=
- =?us-ascii?Q?L2NdS9l0UozEkLkKvfZj0tHAlMs8Wc0WSfL8mwh1OD0b86wIHL4po6wbS3jq?=
- =?us-ascii?Q?FeguwNlQBs0GdZnF5+HEp5LPg4Vyvwjo7ZDByWNX51gdl1/ntg2abiWhZ8vS?=
- =?us-ascii?Q?B4gTmYXULGpaQkdQWHeUro/JJsFi/H1CI2+pYtI7y8DjAJjt9Ax+o7ZcY8Hs?=
- =?us-ascii?Q?3Vs0bdiLmB44+E+6P5hAN5snmMH6/dDvtPo8SqjBJ0rIG9lUe4k2KZLpaS2u?=
- =?us-ascii?Q?mPlX/bHimZ+TpsWDtpGbS8/drtYrCOmzaa0BC/x9hU0hwXqOWQ5nC4BDm7lo?=
- =?us-ascii?Q?D/+nbQpxtHU23H8dtVQSdkQr5Ft0z4wLFXjo3GXTLbAEG0znP7lOE0vQUYSu?=
- =?us-ascii?Q?Ngz/XsXqUZXny5lNh3FnnHGbYERr25uwMjZKJHizTUpOUyFHyJS0KZcOzSis?=
- =?us-ascii?Q?XVEjbJXSpamRbrz1i3qtZEMgWUkHhNUtFJhJI6z81Vax1tSzyt8mQetWNALG?=
- =?us-ascii?Q?6P3XYu03QUCv3pVdooWbunYA0X6SVZg8wODZLo12BcrquxxYb9G39fN8uqOX?=
- =?us-ascii?Q?YPKrsSBGGA1apoz+En7jhPG3Bh8JuqHZhalQipaHys6YFx5Mtf2cr/IwjhFA?=
- =?us-ascii?Q?AKmV2aNhxk88kAjUTE48+usZtWFQhIYSUxPVOtuHZF7cwzLpFXH/mL4d8yIz?=
- =?us-ascii?Q?cmhTZ36Eyz997yqj5NWIYWz8kqPR1VNLIxkU0VaoJrIfNUUFkHI6Ey1NE+wf?=
- =?us-ascii?Q?p/AM27rIJdIHcLbyNF5w3HJqrJOw5Fj8hMzx03SvfkWoJTUk8xaqORBhJSLU?=
- =?us-ascii?Q?86QG3hM5Y7PG7SHhr7nh2omQPl+BdxosRhaIi+gEExNLh8YF9XMldxuaITT9?=
- =?us-ascii?Q?w61SU2VR9uKijNoZQ5wo4ZfgGpZIn3Q4py1GAvMi7+HAo0svXMinYRmblQv+?=
- =?us-ascii?Q?qcOTlA/EZGf5vDiJ5DhzRGB73pWtybrhjy3yVReW2++Wa3E6tr4HsnRIcwb4?=
- =?us-ascii?Q?SOSaRr5wNOcwzdMM1SlsNWDVdeQ2zqRaxFXfJA69new+BD5cOTHg3D7Re66U?=
- =?us-ascii?Q?NVjxsTS+m1KJvIQH5bg0wKxFjk7+GNTOFP69Klddb9Pbn5J3uIyguOBJOdNQ?=
- =?us-ascii?Q?iA2EVtiXzeoVwM2SEDcGDrpSRdTjjcBHk2JfhQp2KIZXbu4cGbuYBL+zZ12k?=
- =?us-ascii?Q?woP+xngspFXFJfRvi33V0sbA983frOYZ4lDUSj4x2if8YFjZnYUw5YXiTYEn?=
- =?us-ascii?Q?TvOC+QK8fBRjx3GtHxdGm++vVDuJcF7bD5yu6ugjjp3dbTAWTEXSJW+koyFD?=
- =?us-ascii?Q?RAJyDZzGhy+OjcIDXPvzmOXLmAZcvx6H36PdLpGRYVAgpff9iw0wuq4CiSKV?=
- =?us-ascii?Q?xijE82Yv9aK+pRk87JT5YLWAwlFN3Dw3tBItn3Uv?=
+	=?us-ascii?Q?TQVqdjpzt/1xnnqS5pgo+YYBKemQWYMd6EjBKmUtTAEeelWKj0Y8O3azT7g6?=
+ =?us-ascii?Q?FHf2ySfmD7CUdnKpeU6vLfhdYveY1zEXgo8Ha/+j5KP9xvnSvd6kZtgNNibH?=
+ =?us-ascii?Q?HjVhhcdVcJ7ns6dKfxQJINqd2cCeWmDgEgn07Xvwp8oS8+aY6YJo11mWmdKB?=
+ =?us-ascii?Q?MKUwWVa+lHh9GJwCI/1bPZi+uvU6KmqnzwpF8xDOAEW0rA9B8vwm6L13yjdB?=
+ =?us-ascii?Q?cpT9cRylR6zr5I4C2qBDr108gdoALRvuiSkhR6vWXx/kW5c66yJTqzLQKrIk?=
+ =?us-ascii?Q?bO8CLvhuz0nBPEVJercq4IEgmoch7Wo2VDlwqyBoVs8IBt5uKQotIGkVgLIx?=
+ =?us-ascii?Q?ALyClGOBoN0EpHXUnjVONaFPVe4+vjFqZkkr527Ajlbmp8BJN5F+HprNDVdc?=
+ =?us-ascii?Q?Nh/R1QTXVLdwEBKqfbF+Oae63QdoXFIlJnc5tkrCcQr/eRLgfj9xkxD8xrzn?=
+ =?us-ascii?Q?4GE1wHB/yzcy62Hs4KX1XGdbqE4akNDr5p2ry4sGlzU/FQXOWFL2vS4IFTVG?=
+ =?us-ascii?Q?hF0BG92ePT0guFmDt/F8HQVyiqdrOQm60rGF9cEo8GLSeWglNDOgb64mnFjS?=
+ =?us-ascii?Q?QXgj19cdG8+1d3ASu8rdnp6hWU/tG9ATYdttRQ4zmv3stL+e4OVD9JsfuK9T?=
+ =?us-ascii?Q?9YFv5EFw19h/6xMGcGJ8YkkxRD2DStkfh7aFPCN5NgyDmw/AWTAAqTepX5CI?=
+ =?us-ascii?Q?O/oBs575pspWirLY2iqZZctQSVjEzDxuKrHKZIXuyMQ02YedtLt4zb+851dE?=
+ =?us-ascii?Q?fPriXYg8ExTV1DjPn5pgKF5WdKQ8O859W/iT1oaAL2xX5dr9JBJJtTBBtgxC?=
+ =?us-ascii?Q?MHPtZlNZZfVK3ctrz/BfAI4USSog5phokUj1roHmdqFwGoCy+IhePggYa2RY?=
+ =?us-ascii?Q?C1oalyJsRUKQoO9ehiSdSs1bnPD5QdBN9rrBXoh6z2Cvs517aRntolVGw+HY?=
+ =?us-ascii?Q?opn47g0JbaTuVz0zlFoQmhg1s85/58BOHv5vPQi4jhPlD0WRWYDXS4w+wcmN?=
+ =?us-ascii?Q?Pb8AY8EEhapSSHXmrB4TO4e+s5cxE2MsGDq3VyrCrLFa1FXduEHJR9ZznxaS?=
+ =?us-ascii?Q?x5bUpzthVR5cid5Nuo7Uv3cQQGtPFfPCSGrtTnxm6ptu0Gditul218aUYIwa?=
+ =?us-ascii?Q?HrGpIgN0VSzEuCV1APiGAzN0Eb1HoPhbPvg9G5l4m65V050rAiuoa+EDp36s?=
+ =?us-ascii?Q?nfOBPTrSUpb+StCotcDcPJdaJww3C8sSV4qc9sRB2ZaqitelwFv5yTSeMou1?=
+ =?us-ascii?Q?ai+HaRztRCLYQumt1A8cRp10BijRxBzm6uhexBdJDyAzeMOQ78GaMEwP9YAB?=
+ =?us-ascii?Q?aXYDtF3aNohukFCQPGcumh9EA+7Vqezs8JhCz+yS4nw4jF8XIW7Tl9ykK5dx?=
+ =?us-ascii?Q?ik8PRG9dCDdysTGGOztx4AdLc9aYK1VeyOshu4ZM1BUE2U3mrdovD0cSq/Vk?=
+ =?us-ascii?Q?jdp1QbzH4z2JqNXtbm31s2hwZZZhYv+3IbYxicgZ33w8XDoHIhqvqqxX0B4G?=
+ =?us-ascii?Q?cLIXZ2ja1cV+IweLGV3V9UObZP4zeiZPQ7wqTuJJrgNA3XC8MCtukWVYK2cr?=
+ =?us-ascii?Q?5PAdhFQl6zwxOHYwRAvve3XfGcI3HZC8pwTQbe3qZTqk8jtrCHwCr+rIebym?=
+ =?us-ascii?Q?KQ=3D=3D?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: a96efd0d-37a4-4821-6877-08dcd5127198
+X-MS-Exchange-CrossTenant-Network-Message-Id: 45711d0d-5e3e-42d5-1b2b-08dcd513ba46
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2024 23:10:37.2950
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2024 23:19:48.7411
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5rdnUlXKZooqU4ySXLDYy3G+382RR/IE/0k2F9SsPMCzDLGUVdP3kGP2kOhTBDcHTM2DMNkxkC5Nuvc92ozxbA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO2P265MB5629
+X-MS-Exchange-CrossTenant-UserPrincipalName: 673dELZo/C3fzY/iPfo99RAoDM8PmO6IDz3x4bjzI2Yr50As2h24zUHMzI82sbm5YbMsGZIaiiN0IXrL2GWZ4w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO6P265MB6720
 
-On Thu, 5 Sep 2024 07:20:46 +0200
-Geert Stappers <stappers@stappers.nl> wrote:
+On Wed,  4 Sep 2024 22:43:28 +0200
+Miguel Ojeda <ojeda@kernel.org> wrote:
 
-> On Wed, Sep 04, 2024 at 10:43:40PM +0200, Miguel Ojeda wrote:
-> > diff --git a/.clippy.toml b/.clippy.toml
-> > index f66554cd5c45..ad9f804fb677 100644
-> > --- a/.clippy.toml
-> > +++ b/.clippy.toml
-> > @@ -1 +1,7 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> > +
-> > +disallowed-macros = [
-> > +    # The `clippy::dbg_macro` lint only works with `std::dbg!`, thus we simulate
-> > +    # it here, see: https://github.com/rust-lang/rust-clippy/issues/11303.
-> > +    { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool" },
-> > +]
-> > diff --git a/rust/kernel/std_vendor.rs b/rust/kernel/std_vendor.rs
-> > index 67bf9d37ddb5..085b23312c65 100644
-> > --- a/rust/kernel/std_vendor.rs
-> > +++ b/rust/kernel/std_vendor.rs
-> > @@ -14,7 +14,7 @@
-> > -/// # #[allow(clippy::dbg_macro)]
-> > +/// # #[allow(clippy::disallowed_macros)]
-> > @@ -52,7 +52,7 @@
-> > -/// # #[allow(clippy::dbg_macro)]
-> > +/// # #[allow(clippy::disallowed_macros)]
-> > @@ -71,7 +71,7 @@
-> > -/// # #[allow(clippy::dbg_macro)]
-> > +/// # #[allow(clippy::disallowed_macros)]
-> > @@ -118,7 +118,7 @@
-> >  /// a tuple (and return it, too):
-> >  ///
-> >  /// ```
-> > -/// # #[allow(clippy::dbg_macro)]
-> > +/// # #![allow(clippy::disallowed_macros)]
-> >  /// assert_eq!(dbg!(1usize, 2u32), (1, 2));
-> >  /// ```
-> >  ///  
+> Hi all,
 > 
-> For what it is worth, the exclamation mark did surprise me.
+> This is a series that contains a series of lint-related things:
+> 
+>   - Cleanups and other improvements and fixes, including removing `allow`s that
+>     are not needed anymore for different reasons and a workaround for
+>     `dbg_macro` detection.
+> 
+>   - The enablement of some safety lints so that the toolchain enforces that we
+>     write `// SAFETY` comments and `# Safety` sections properly.
+> 
+>   - The addition of `.clippy.toml`, which allows us to take advantage of a few
+>     configuration options.
+> 
+>   - Start using the new `#[expect(...)]` feature and add documentation on it as
+>     well as lints in general.
+> 
+> Overall, this should improve the quality of the code and documentation as well
+> as reduce the time needed in reviews.
+> 
+> I want to mention Trevor's nice work on lints from a while ago [1]. I think we
+> should still do something like that: discuss which lints we would like to have
+> one-by-one and start enabling them (and perhaps have a file like Trevor proposed
+> etc.).
+> 
+> For the moment, though, I am sending these, since we would like to have at least
+> the safety-related ones enabled soon [2]: now that more code and developers
+> are joining, it sounds like a good time to start enforcing it -- it should make
+> new Rust kernel developers aware of the need of writing them, which has proven
+> to be a common request from reviewers.
+> 
+> If needed, the series can be applied partially or split, but most of it should
+> be fairly uncontroversial.
+> 
+> Link: https://github.com/Rust-for-Linux/linux/pull/1025 [1]
+> Link: https://lore.kernel.org/rust-for-linux/CD29DF8F-7FF3-466F-9724-BC92C14A68BD@collabora.com/ [2]
 
-`#[]` would apply to the next item/statement, and `#![]` would apply to
-the surrouding scope. In this case there's just a single statement so
-they should be equivalent.
+Built with clippy locally and it's all clean.
 
-Miguel, is this change from `#[]` to `#![]` intentional?
+Tested-by: Gary Guo <gary@garyguo.net>
 
-Best,
-Gary
+Apart from one `#[]`/`#![]` modification - which I think is fine as
+long as it's intentional, everything LGTM.
+
+Reviewed-by: Gary Guo <gary@garyguo.net>
+
 
 > 
+> Miguel Ojeda (19):
+>   rust: workqueue: remove unneeded ``#[allow(clippy::new_ret_no_self)]`
+>   rust: sort global Rust flags
+>   rust: types: avoid repetition in `{As,From}Bytes` impls
+>   rust: enable `clippy::undocumented_unsafe_blocks` lint
+>   rust: enable `clippy::unnecessary_safety_comment` lint
+>   rust: enable `clippy::unnecessary_safety_doc` lint
+>   rust: enable `clippy::ignored_unit_patterns` lint
+>   rust: enable `rustdoc::unescaped_backticks` lint
+>   rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`
+>   rust: sync: remove unneeded
+>     `#[allow(clippy::non_send_fields_in_send_ty)]`
+>   rust: introduce `.clippy.toml`
+>   rust: replace `clippy::dbg_macro` with `disallowed_macros`
+>   rust: rbtree: fix `SAFETY` comments that should be `# Safety` sections
+>   rust: provide proper code documentation titles
+>   rust: enable Clippy's `check-private-items`
+>   Documentation: rust: add coding guidelines on lints
+>   rust: start using the `#[expect(...)]` attribute
+>   Documentation: rust: discuss `#[expect(...)]` in the guidelines
+>   rust: std_vendor: simplify `{ .. macro! .. }` with inner attributes
 > 
-> > @@ -127,7 +127,7 @@
-> >  ///
-> >  /// ```
-> > -/// # #[allow(clippy::dbg_macro)]
-> > +/// # #[allow(clippy::disallowed_macros)]
-> >  /// # {
-> >  /// assert_eq!(1, dbg!(1u32,)); // trailing comma ignored
-> >  /// assert_eq!((1,), dbg!((1u32,))); // 1-tuple  
+>  .clippy.toml                             |   9 ++
+>  .gitignore                               |   1 +
+>  Documentation/rust/coding-guidelines.rst | 139 +++++++++++++++++++++++
+>  MAINTAINERS                              |   1 +
+>  Makefile                                 |  15 ++-
+>  rust/Makefile                            |   5 +-
+>  rust/bindings/lib.rs                     |   1 +
+>  rust/kernel/alloc/allocator.rs           |   2 +
+>  rust/kernel/error.rs                     |  11 +-
+>  rust/kernel/init.rs                      |  30 ++---
+>  rust/kernel/init/__internal.rs           |  11 +-
+>  rust/kernel/init/macros.rs               |  18 ++-
+>  rust/kernel/ioctl.rs                     |   2 +-
+>  rust/kernel/lib.rs                       |   1 +
+>  rust/kernel/list.rs                      |   1 +
+>  rust/kernel/list/arc_field.rs            |   2 +-
+>  rust/kernel/print.rs                     |   5 +-
+>  rust/kernel/rbtree.rs                    |   9 +-
+>  rust/kernel/std_vendor.rs                |  16 ++-
+>  rust/kernel/str.rs                       |   7 +-
+>  rust/kernel/sync/arc.rs                  |   2 +-
+>  rust/kernel/sync/arc/std_vendor.rs       |   2 +
+>  rust/kernel/sync/condvar.rs              |   1 -
+>  rust/kernel/sync/lock.rs                 |   6 +-
+>  rust/kernel/types.rs                     |  74 ++++++------
+>  rust/kernel/workqueue.rs                 |   9 +-
+>  rust/uapi/lib.rs                         |   1 +
+>  samples/rust/rust_print.rs               |   1 +
+>  scripts/Makefile.build                   |   2 +-
+>  29 files changed, 293 insertions(+), 91 deletions(-)
+>  create mode 100644 .clippy.toml
 > 
 > 
-> Groeten
-> Geert Stappers
+> base-commit: 68d3b6aa08708bb3907c2c13eaf4b3ccf4805160
+> --
+> 2.46.0
 
