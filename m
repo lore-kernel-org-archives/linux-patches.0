@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3614210E9;
-	Sat, 14 Sep 2024 14:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBD81474A4;
+	Sat, 14 Sep 2024 14:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726323068; cv=none; b=ms8Y42tdtiOukbXgSRWBCacpD63zmM3u66WG8qIRJJglu16g2/GUPc4AJvShH0XDz1rEDRqprg+K4LkzBUl5WMFLdPyLaN0itTIF+fADStv9Hu6Ibs+DGidrDTW6rrp+4mm2up0qnlEoA+yDa8CU4CJAWKthRQqh040hqOKOUfg=
+	t=1726323636; cv=none; b=gQJcTuU0RzQoWbxTy2YfvpmgW4q1ZG+nAnNf2oVij0iPtRpQeZQ9mLhpt1CDPk0vYApASIfXwi2So8JzpqDLZQNPYxrHHx4pI8Trfm1fPnU1webIvKI/YWiY8mMQ0Aw7CJzA/7OcsNapUDyLHULWIg7+NCrqOZZVgfmhMiM+RAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726323068; c=relaxed/simple;
-	bh=3nOXJXRyNZq2q0yoxkZo3eiyZlaYT59oNxT1os9EwV0=;
+	s=arc-20240116; t=1726323636; c=relaxed/simple;
+	bh=Toc8h9doacic5ht8ArXiOOW3fp9RjuntcnupIXZq8UI=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k7mY0So6djlUMe6l0veC/Z02rg6h2ReXS7QV0YlG8Fs7p8ombT2U7sQLx+4D8gj18e0MQLl+Psbzf70Lc2Uzgs9H3+texMEJv5rdKffY4UsQybMTDXPdtIncCnmCqHWiU++yun+VlwPAbP9YzdeKYkbcz43OqctFVmkfhSCe7FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FmYPP3sU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=izPaUCRtUib1iEeLPNrEsvaNUQyRKnaeZtqHwex1LT8+yJV7dRd8NNN7sG4ubolbfPs39H2xap6liAvGvTDrlSlbQi0IyRX7bzuGdUVnrn+u4o90DpkqwgBPvjsmtpuF3tO1ieXyjDX9ozo/xFqBLgehC4HR2bD9e+XsR11/dOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XXjRP3Sw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FmYPP3sU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76308C4CEC0;
-	Sat, 14 Sep 2024 14:11:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XXjRP3Sw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316DCC4CEC6;
+	Sat, 14 Sep 2024 14:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726323068;
-	bh=3nOXJXRyNZq2q0yoxkZo3eiyZlaYT59oNxT1os9EwV0=;
+	s=k20201202; t=1726323636;
+	bh=Toc8h9doacic5ht8ArXiOOW3fp9RjuntcnupIXZq8UI=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=FmYPP3sUacmEnrerDP8lpZ+05hF17xrftJhViMevKXCwZjMRnG0vsvPb5WOfdblxK
-	 81tFdnQClrggS+cWw2CFAs7Qf+KAztvaGpcViFxP4CkljSAu7DVUs5Pc3bLxIMvaY1
-	 s1eIeE6qdsIQQDLq8sohIAPT8r9OmKKqi+91KcEa004rrhE/kXwNcWvZHOo+P5m3/J
-	 evZnNzUJch1CXeQiqh4u7pK3fiMv8eUtsurNiHKXyCeYaGHxME3ljY4L6wUwsvFB+B
-	 Ro6c37Iv8O3gOAWQtB6IKplawiDemtUMPKwj9v6Pb2uZR6thgSrU97rotkguzj/fQa
-	 oGuCcFakZmDcQ==
-Date: Sat, 14 Sep 2024 15:10:59 +0100
+	b=XXjRP3Swj9b6HTRf2bPrAStED8VqjT0a9U9FIGE+wEIrQGWe/N67NIMVQ4gEuKYMX
+	 VsHuvwIPw3XRX9jt0i8TH81sHOX/laulNBjv6bR8LwUdJIBV3ALw4o6N0AaKU1aqor
+	 wqHwHtFXrpkPHwuMoC3WfnSYsWPUkdYQcESjhkRkGXKnVK9sT5E6G0Q2TxvNRsZcUY
+	 qfSthgVWDd6dt0N4OkHqf6dPFbcv2kMVFPn+09hR9en1M1+TKJslAGdDeIBqc8NCFP
+	 SBXlnFnMLrhuCdpzKlI84F1dwqfeGgw2Fi5RJotJ11c6boO078imLOXQlCi0zmVfJJ
+	 8FbDjMfHXL+/g==
+Date: Sat, 14 Sep 2024 15:20:29 +0100
 From: Jonathan Cameron <jic23@kernel.org>
 To: Denis Benato <benato.denis96@gmail.com>
 Cc: Nathan Chancellor <nathan@kernel.org>, Jagath Jog J
@@ -34,7 +34,7 @@ Cc: Nathan Chancellor <nathan@kernel.org>, Jagath Jog J
  linux-iio@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
 Subject: Re: [PATCH] iio: bmi323: Fix array reference in
  bmi323_core_runtime_suspend()
-Message-ID: <20240914151059.3c2ba321@jic23-huawei>
+Message-ID: <20240914152029.366ef9f0@jic23-huawei>
 In-Reply-To: <76068b7e-af53-4422-ad97-cf3070182ec4@gmail.com>
 References: <20240909-iio-bmi323-fix-array-ref-v1-1-51c220f22229@kernel.org>
 	<76068b7e-af53-4422-ad97-cf3070182ec4@gmail.com>
@@ -82,6 +82,13 @@ Denis Benato <benato.denis96@gmail.com> wrote:
 > > -		ret = bmi323_read_ext_reg(data, bmi323_reg_savestate[i],
 > > +		ret = bmi323_read_ext_reg(data, bmi323_ext_reg_savestate[i],
 > >  					  &savestate->reg_settings[i]);
+This is saving it in the wrong place.
+Noticed as Dan sent out another patch for this that was different.
+
+So I'll pick up his instead.  Note that similar bug exists in resume.
+
+Jonathan
+
 > >  		if (ret) {
 > >  			dev_err(data->dev,
 > > 
@@ -96,18 +103,6 @@ Denis Benato <benato.denis96@gmail.com> wrote:
 > 
 > Regrettably while integrating suggestions I received I also changed the patch semantic and due to my hardware not having the irq pin connected to the cpu this went unnoticed.
 > 
-Slight delay on these due to the likely opening of the merge window
-meaning I probably won't get another pull request in.  That's fine
-as these are fixes and can go in during rc1, but until rc1 is released
-I won't have the driver in my fixes tree upstream.
-
-Anyhow upshot is that I'll sit on this and the CONFIG_PM one until
-after RC1.
-
-Thanks,
-
-Jonathan
-
 > Best regards,
 > Denis Benato
 
