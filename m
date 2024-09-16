@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97401155335;
-	Mon, 16 Sep 2024 12:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8796B146A79;
+	Mon, 16 Sep 2024 12:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488590; cv=none; b=h0Ei9RucYrVmhOmpPU6y+lVwOaQZAoVM5tyG2upRfFKc0VOP6x0xA+ROTypYtFpQle4/+12jm1/nfg71vSwBTF1Dz9Frq/6ekGHAGm1NVsM9EFgTHvj7i/yl+rgVRP0t3CMUkTG9FdES9qHrJUGUC/o/Cg9nojEtmJuHIGOfTmc=
+	t=1726488594; cv=none; b=Iveg1ChNdq6oNt+D7YY8QSAXEmAGTYiSa2bo0TAtjKdNgloFDB3Fe6WXUXNpMouWlSE85R0eCntjr4hUnirh76FzzlygvbRzasv3TborOqQh6JKxNZLdxXEYi/CbG7CBefyCNQFm/j/CiIVPpG+8OIvA+eEvLKRhytoU6hu0KlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488590; c=relaxed/simple;
-	bh=pnu3Vpmj0uhMDx0UmZg6GpEtxWf1dUGFCqULjyKwlxY=;
+	s=arc-20240116; t=1726488594; c=relaxed/simple;
+	bh=Jgnahe5DAJGyCHW8g28uUE2HTtMpqII0WMp8tq7VOnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNtmMM2yfU2k+QM8wkf7gx0xvIK5cr7gqp6HsGLUG7zPz6a8xe35TYt88P+pzesOsUCbjsq8YIubt8iff5GAstR4pdGY0lji7TNEpQsMX01BYa+TyMmYpksNa2rekP9kVpJSr6hBTwAHuHaKV288iX/LUqpOn3kF0IDAe9ear1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpBwB5u9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OcTkxlWvHH3XiJQ08DeXxTZT0TA82OeWud8NwGZzP5fM8rz2drbdSflXlzaVqcKWMha49e8aUv3cdJXzFcHouWwWLm1cnrErihCUgc2VOnqo7YD8Cz8ll+721OxvVvLBuD8oQT+kaRitV7SKQzRJUK/9rBm1QJcNWwYYIJUHJFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cODtbPpE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpBwB5u9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6F7C4CEC4;
-	Mon, 16 Sep 2024 12:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cODtbPpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FFDC4CEC4;
+	Mon, 16 Sep 2024 12:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488590;
-	bh=pnu3Vpmj0uhMDx0UmZg6GpEtxWf1dUGFCqULjyKwlxY=;
+	s=korg; t=1726488593;
+	bh=Jgnahe5DAJGyCHW8g28uUE2HTtMpqII0WMp8tq7VOnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpBwB5u9+MxE69OsFl0JxraaZXo59vxteCU/as6lQN2Z8sx7e2WiZ7zexQ522k3ov
-	 n3Jyx8MJmot/wXBMCa7/DI43pMHi/z+byW57rrnLpTTnsxQhEA3/hzNPQw65ROFBEL
-	 oKsuM1C68eijUl3rxoO1K2RWAGLCmjaI8FIKCVxE=
+	b=cODtbPpEd9jcI5DxwC/MNgHCcOtIhGJRVGdC6MD9JJrSUY+GHaWN52wLUjD36i/lm
+	 fmEALwWfV2sHuixhqZJD+mo4aOtGgoyZeLZvgAMdkPFKXXmd/dyjAeo8H5sm6m2loZ
+	 Zn9oNVgBUtI3x7++7r8lDDj3WjbOS5Jw6uQg/aMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 44/91] dm-integrity: fix a race condition when accessing recalc_sector
-Date: Mon, 16 Sep 2024 13:44:20 +0200
-Message-ID: <20240916114225.957184600@linuxfoundation.org>
+	Bouke Sybren Haarsma <boukehaarsma23@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 18/91] drm: panel-orientation-quirks: Add quirk for Ayn Loki Max
+Date: Mon, 16 Sep 2024 13:43:54 +0200
+Message-ID: <20240916114225.125609369@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -49,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Bouke Sybren Haarsma <boukehaarsma23@gmail.com>
 
-commit f8e1ca92e35e9041cc0a1bc226ef07a853a22de4 upstream.
+[ Upstream commit 2c71c8459c8ca66bd8f597effaac892ee8448a9f ]
 
-There's a race condition when accessing the variable
-ic->sb->recalc_sector. The function integrity_recalc writes to this
-variable when it makes some progress and the function
-dm_integrity_map_continue may read this variable concurrently.
+Add quirk orientation for Ayn Loki Max model.
 
-One problem is that on 32-bit architectures the 64-bit variable is not
-read and written atomically - it may be possible to read garbage if read
-races with write.
+This has been tested by JELOS team that uses their
+own patched kernel for a while now and confirmed by
+users in the ChimeraOS discord servers.
 
-Another problem is that memory accesses to this variable are not guarded
-with memory barriers.
-
-This commit fixes the race - it moves reading ic->sb->recalc_sector to an
-earlier place where we hold &ic->endio_wait.lock.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bouke Sybren Haarsma <boukehaarsma23@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240728124731.168452-3-boukehaarsma23@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -2183,6 +2183,7 @@ static void dm_integrity_map_continue(st
- 	struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
- 	unsigned int journal_section, journal_entry;
- 	unsigned int journal_read_pos;
-+	sector_t recalc_sector;
- 	struct completion read_comp;
- 	bool discard_retried = false;
- 	bool need_sync_io = ic->internal_hash && dio->op == REQ_OP_READ;
-@@ -2323,6 +2324,7 @@ offload_to_thread:
- 			goto lock_retry;
- 		}
- 	}
-+	recalc_sector = le64_to_cpu(ic->sb->recalc_sector);
- 	spin_unlock_irq(&ic->endio_wait.lock);
- 
- 	if (unlikely(journal_read_pos != NOT_FOUND)) {
-@@ -2377,7 +2379,7 @@ offload_to_thread:
- 	if (need_sync_io) {
- 		wait_for_completion_io(&read_comp);
- 		if (ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING) &&
--		    dio->range.logical_sector + dio->range.n_sectors > le64_to_cpu(ic->sb->recalc_sector))
-+		    dio->range.logical_sector + dio->range.n_sectors > recalc_sector)
- 			goto skip_check;
- 		if (ic->mode == 'B') {
- 			if (!block_bitmap_op(ic, ic->recalc_bitmap, dio->range.logical_sector,
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 79ccf4959df4..5b2506c65e95 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -208,6 +208,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_MATCH(DMI_BOARD_NAME, "KUN"),
+ 		},
+ 		.driver_data = (void *)&lcd1600x2560_rightside_up,
++	}, {    /* AYN Loki Max */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Loki Max"),
++		},
++		.driver_data = (void *)&lcd1080x1920_leftside_up,
+ 	}, {	/* AYN Loki Zero */
+ 		.matches = {
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
+-- 
+2.43.0
+
 
 
