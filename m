@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21047142903;
-	Mon, 16 Sep 2024 12:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00754142903;
+	Mon, 16 Sep 2024 12:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488738; cv=none; b=TfvJqtg00nVYKNrNicIkWxhg2GlGEKTjRuy/Pzg5+7bsLZtpP3OTtSytajAb4QmSDx68pC9hYJ0tyi4d6733E7JkR/eluagZ+3d2piZdDrQULf8SIXC+scPTlWv350z7DCV0i6gj93F/W4JOaW5ZfF4i6WeYZX4S+/oDAfjdzd4=
+	t=1726488741; cv=none; b=JzUG2/1UReupN9IK9THLdPCkonGZn5mz3XJvmKqvCU33GnGXJk1O60T2ZS/CL/a52aReYiNiTITsNBRAyhRuUI4mPo5yA7jYS5aN/iVCbdoKDbJIlogQzetV/tiMCA+0zpzDgBZ3c1EBcvN5vrM4IIqfyLxKWCAg3cqALvpb9o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488738; c=relaxed/simple;
-	bh=FrxdF5Cg1kAzjLx9r7IJlphiN1Tihbuc4Nq82eNcMCI=;
+	s=arc-20240116; t=1726488741; c=relaxed/simple;
+	bh=sCS/tDuK8kMCSF9284n951rYFqiJL3CUa+EU/wT5Dd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFqP7OdYzcO5967zfEpya7nC6Ac4dX9SYUubWwd6J9UOniLe0S71W7MbMr6Ku7fA4B+aiwr0G0UcJJLx1t9dccrVNrpFT7GfxGbLZDfPfssaKHUTBn4jO/fXxmD4NHjWwEsGH8wkHug+I1oszR2waluj7geKZkG5aoD0QYCYoeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGwK1Tga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBhTyJTOekNVpp2YgFOOgndVZMGG6nJf6pLgxZ7hGhwyrIdPJvWVyP8X4PQWmoq1XetcjDbveG60lWm6ypVSqGpN5wirVKNP1psdKF/pzOVA5yTo6m95ICTm8eEPa8v1GNEVymNVSslrxw8ewx2ZLBvdcC1NZKG2dTp+PwSYvFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ju5Hb0bf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGwK1Tga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01B3C4CEC4;
-	Mon, 16 Sep 2024 12:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ju5Hb0bf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA70C4CEC4;
+	Mon, 16 Sep 2024 12:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488738;
-	bh=FrxdF5Cg1kAzjLx9r7IJlphiN1Tihbuc4Nq82eNcMCI=;
+	s=korg; t=1726488740;
+	bh=sCS/tDuK8kMCSF9284n951rYFqiJL3CUa+EU/wT5Dd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGwK1TgahnkIJhQrTE3i33jlUVRvok+f3OGMv6Oi8541lF+1uHrm2O0pjF5pC7t6h
-	 LK7kmHKqLJbUBCrnNWZm5KgYz/WlCHVdzPS7PGo7nL/JEB6wQDqedv0LNg6FR/MFRI
-	 p8YTy/Q59sFEh4nOdr508NhcZq4LTiExfjyTOgVo=
+	b=Ju5Hb0bfpBLUeNQk+8usEmnrgbh1uzHAllxpivNM9bTMscb6/5qAkzwNuSNWMkUOA
+	 9Ks93sFVqOA3hKeGnCQ62gD0m+N0FKCFaRzBdS0jXqwbaE3T+7fH/VXQBCkQa34n8a
+	 YwpyKO6s8GN1VhRLz0UMASD/zamMkjYIFTpt3VN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 82/91] drm/amdgpu/atomfirmware: Silence UBSAN warning
-Date: Mon, 16 Sep 2024 13:44:58 +0200
-Message-ID: <20240916114227.158237477@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>
+Subject: [PATCH 6.6 83/91] drm/amd/amdgpu: apply command submission parser for JPEG v1
+Date: Mon, 16 Sep 2024 13:44:59 +0200
+Message-ID: <20240916114227.189409750@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -50,41 +50,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-commit 17ea4383649fdeaff3181ddcf1ff03350d42e591 upstream.
+commit 8409fb50ce48d66cf9dc5391f03f05c56c430605 upstream.
 
-Per the comments, these are variable sized arrays.
+Similar to jpeg_v2_dec_ring_parse_cs() but it has different
+register ranges and a few other registers access.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3613
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 81f7804ba84ee617ed594de934ed87bcc4f83531)
+(cherry picked from commit 3d5adbdf1d01708777f2eda375227cbf7a98b9fe)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/include/atomfirmware.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c |   76 ++++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.h |   11 ++++
+ 2 files changed, 86 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/include/atomfirmware.h
-+++ b/drivers/gpu/drm/amd/include/atomfirmware.h
-@@ -1006,7 +1006,7 @@ struct display_object_info_table_v1_4
-   uint16_t  supporteddevices;
-   uint8_t   number_of_path;
-   uint8_t   reserved;
--  struct    atom_display_object_path_v2 display_path[8];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
-+  struct    atom_display_object_path_v2 display_path[];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
- };
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c
+@@ -23,6 +23,7 @@
  
- struct display_object_info_table_v1_5 {
-@@ -1016,7 +1016,7 @@ struct display_object_info_table_v1_5 {
- 	uint8_t reserved;
- 	// the real number of this included in the structure is calculated by using the
- 	// (whole structure size - the header size- number_of_path)/size of atom_display_object_path
--	struct atom_display_object_path_v3 display_path[8];
-+	struct atom_display_object_path_v3 display_path[];
- };
+ #include "amdgpu.h"
+ #include "amdgpu_jpeg.h"
++#include "amdgpu_cs.h"
+ #include "soc15.h"
+ #include "soc15d.h"
+ #include "vcn_v1_0.h"
+@@ -34,6 +35,9 @@
+ static void jpeg_v1_0_set_dec_ring_funcs(struct amdgpu_device *adev);
+ static void jpeg_v1_0_set_irq_funcs(struct amdgpu_device *adev);
+ static void jpeg_v1_0_ring_begin_use(struct amdgpu_ring *ring);
++static int jpeg_v1_dec_ring_parse_cs(struct amdgpu_cs_parser *parser,
++				     struct amdgpu_job *job,
++				     struct amdgpu_ib *ib);
  
- /* 
+ static void jpeg_v1_0_decode_ring_patch_wreg(struct amdgpu_ring *ring, uint32_t *ptr, uint32_t reg_offset, uint32_t val)
+ {
+@@ -300,7 +304,10 @@ static void jpeg_v1_0_decode_ring_emit_i
+ 
+ 	amdgpu_ring_write(ring,
+ 		PACKETJ(SOC15_REG_OFFSET(JPEG, 0, mmUVD_LMI_JRBC_IB_VMID), 0, 0, PACKETJ_TYPE0));
+-	amdgpu_ring_write(ring, (vmid | (vmid << 4)));
++	if (ring->funcs->parse_cs)
++		amdgpu_ring_write(ring, 0);
++	else
++		amdgpu_ring_write(ring, (vmid | (vmid << 4)));
+ 
+ 	amdgpu_ring_write(ring,
+ 		PACKETJ(SOC15_REG_OFFSET(JPEG, 0, mmUVD_LMI_JPEG_VMID), 0, 0, PACKETJ_TYPE0));
+@@ -554,6 +561,7 @@ static const struct amdgpu_ring_funcs jp
+ 	.get_rptr = jpeg_v1_0_decode_ring_get_rptr,
+ 	.get_wptr = jpeg_v1_0_decode_ring_get_wptr,
+ 	.set_wptr = jpeg_v1_0_decode_ring_set_wptr,
++	.parse_cs = jpeg_v1_dec_ring_parse_cs,
+ 	.emit_frame_size =
+ 		6 + 6 + /* hdp invalidate / flush */
+ 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
+@@ -612,3 +620,69 @@ static void jpeg_v1_0_ring_begin_use(str
+ 
+ 	vcn_v1_0_set_pg_for_begin_use(ring, set_clocks);
+ }
++
++/**
++ * jpeg_v1_dec_ring_parse_cs - command submission parser
++ *
++ * @parser: Command submission parser context
++ * @job: the job to parse
++ * @ib: the IB to parse
++ *
++ * Parse the command stream, return -EINVAL for invalid packet,
++ * 0 otherwise
++ */
++static int jpeg_v1_dec_ring_parse_cs(struct amdgpu_cs_parser *parser,
++				     struct amdgpu_job *job,
++				     struct amdgpu_ib *ib)
++{
++	u32 i, reg, res, cond, type;
++	int ret = 0;
++	struct amdgpu_device *adev = parser->adev;
++
++	for (i = 0; i < ib->length_dw ; i += 2) {
++		reg  = CP_PACKETJ_GET_REG(ib->ptr[i]);
++		res  = CP_PACKETJ_GET_RES(ib->ptr[i]);
++		cond = CP_PACKETJ_GET_COND(ib->ptr[i]);
++		type = CP_PACKETJ_GET_TYPE(ib->ptr[i]);
++
++		if (res || cond != PACKETJ_CONDITION_CHECK0) /* only allow 0 for now */
++			return -EINVAL;
++
++		if (reg >= JPEG_V1_REG_RANGE_START && reg <= JPEG_V1_REG_RANGE_END)
++			continue;
++
++		switch (type) {
++		case PACKETJ_TYPE0:
++			if (reg != JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_HIGH &&
++			    reg != JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_LOW &&
++			    reg != JPEG_V1_LMI_JPEG_READ_64BIT_BAR_HIGH &&
++			    reg != JPEG_V1_LMI_JPEG_READ_64BIT_BAR_LOW &&
++			    reg != JPEG_V1_REG_CTX_INDEX &&
++			    reg != JPEG_V1_REG_CTX_DATA) {
++				ret = -EINVAL;
++			}
++			break;
++		case PACKETJ_TYPE1:
++			if (reg != JPEG_V1_REG_CTX_DATA)
++				ret = -EINVAL;
++			break;
++		case PACKETJ_TYPE3:
++			if (reg != JPEG_V1_REG_SOFT_RESET)
++				ret = -EINVAL;
++			break;
++		case PACKETJ_TYPE6:
++			if (ib->ptr[i] != CP_PACKETJ_NOP)
++				ret = -EINVAL;
++			break;
++		default:
++			ret = -EINVAL;
++		}
++
++		if (ret) {
++			dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
++			break;
++		}
++	}
++
++	return ret;
++}
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.h
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.h
+@@ -29,4 +29,15 @@ int jpeg_v1_0_sw_init(void *handle);
+ void jpeg_v1_0_sw_fini(void *handle);
+ void jpeg_v1_0_start(struct amdgpu_device *adev, int mode);
+ 
++#define JPEG_V1_REG_RANGE_START	0x8000
++#define JPEG_V1_REG_RANGE_END	0x803f
++
++#define JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_HIGH	0x8238
++#define JPEG_V1_LMI_JPEG_WRITE_64BIT_BAR_LOW	0x8239
++#define JPEG_V1_LMI_JPEG_READ_64BIT_BAR_HIGH	0x825a
++#define JPEG_V1_LMI_JPEG_READ_64BIT_BAR_LOW	0x825b
++#define JPEG_V1_REG_CTX_INDEX			0x8328
++#define JPEG_V1_REG_CTX_DATA			0x8329
++#define JPEG_V1_REG_SOFT_RESET			0x83a0
++
+ #endif /*__JPEG_V1_0_H__*/
 
 
