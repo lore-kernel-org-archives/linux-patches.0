@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664CF146A79;
-	Mon, 16 Sep 2024 12:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B0B155359;
+	Mon, 16 Sep 2024 12:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488701; cv=none; b=dW6pUJJRrC4DIATHPUYahVeyXYN5QrttjDGotf2rciMASVQcCAdXf9O+w3xokeqqW/XYifhzkOYa+JqAcefcebHKo5VfMyP9mN3qoeKJo7Kz04jnQ/QCoLU/5R5Z6ADuW67XMfsbaqBpAAtnoKN/OnLE4kXyadlGlxyVXLSFTcs=
+	t=1726488704; cv=none; b=qXVjgpdgecB1DzbtiHfxL1eEdgm4g0TWCJJ1b4BIJ0p4cEyOIQ6FvJvcuOwdlnMdzjm08DfGGaTfXFyePtIPldaOletl29I9jJ/i/0gKYUN5NL0DnK52scPykpEVWOv8sKsrQBfZi0aN0y7Yi+IptDA0CAP3J+6R6jVZsK+ZPis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488701; c=relaxed/simple;
-	bh=MRPZvCFTQYxZBQQHQjPCATzYs19vvjWS47MhC+AF5Nk=;
+	s=arc-20240116; t=1726488704; c=relaxed/simple;
+	bh=qFJnaXZRMIhzOGG1tAGaHUtpBBLqT8yxTrcj2qcUCXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4DTMJLD0sAqgqfrM9rgkMAKibGVDXGTSMuEDxmTlqYREM2B85hB/XOjDF2Lr4U+jPegsNygeqlPqfLEYlhPLOHwi8bvhOzNFN6J2EBr8ZrQrCPiis9bYxjH4nyEgWzip8PUZ2ki/QVSI80O5FD8r93RsuQ///IXrUGQeCPWD5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSkGBfuh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEH0DzoHp/saa8YC5lOeZlFb0E4FKcgWoRftRkKWibSCNW06aAijSzeKsW4HqACP7gnU4tICd3W5jWBm/NrV5XcjrORNcuxcRPkQFvVwgT9+uPrsAkPCX6UTJaSC88209lIhFygI5tdw7hXGmw98d+BrjkTdaQmw6S3Xhs6WomU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvzLaVI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSkGBfuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CA2C4CEC4;
-	Mon, 16 Sep 2024 12:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvzLaVI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87CAC4CEC4;
+	Mon, 16 Sep 2024 12:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488701;
-	bh=MRPZvCFTQYxZBQQHQjPCATzYs19vvjWS47MhC+AF5Nk=;
+	s=korg; t=1726488704;
+	bh=qFJnaXZRMIhzOGG1tAGaHUtpBBLqT8yxTrcj2qcUCXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSkGBfuhYYaqrEBqm53QarSRWku6Tk0zvCVsrnFOqXDGRvAK1rlUc6GArU8Ff9tXe
-	 uhPd3JtHbpipLGT7HqPbz/25fP4xSMtD3m9v0IblUQCrbRykeogRKvgFEJr3T5vFn0
-	 TzgdOckHKIJeqZDYpkyI2m+T57ecp/aZVao+Sfmk=
+	b=QvzLaVI1eJChmhOyOu0cU4QkBRWbAq6p5wfpojXIhvNTt7U9+088l5UzNbbjl2moD
+	 SkiRQd2zTTaCMDzuNfUyPXFmnTVDebi9JebISs3ZnWBjflpHhl4PlKZVO/rdpBAP5X
+	 3TFbyaTn3aiEXHuRbMJmkmJ8WnX5jJ0rrsuQkDkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Helena Anna" <helena.anna.dubel@intel.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
-	"Bityutskiy, Artem" <artem.bityutskiy@intel.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 76/91] tracing/osnoise: Fix build when timerlat is not enabled
-Date: Mon, 16 Sep 2024 13:44:52 +0200
-Message-ID: <20240916114226.980226511@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 85/91] spi: geni-qcom: Fix incorrect free_irq() sequence
+Date: Mon, 16 Sep 2024 13:45:01 +0200
+Message-ID: <20240916114227.248223927@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -55,62 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit af178143343028fdec9d5960a22d17f5587fd3f5 upstream.
+[ Upstream commit b787a33864121a565aeb0e88561bf6062a19f99c ]
 
-To fix some critical section races, the interface_lock was added to a few
-locations. One of those locations was above where the interface_lock was
-declared, so the declaration was moved up before that usage.
-Unfortunately, where it was placed was inside a CONFIG_TIMERLAT_TRACER
-ifdef block. As the interface_lock is used outside that config, this broke
-the build when CONFIG_OSNOISE_TRACER was enabled but
-CONFIG_TIMERLAT_TRACER was not.
+In spi_geni_remove(), the free_irq() sequence is different from that
+on the probe error path. And the IRQ will still remain and it's interrupt
+handler may use the dma channel after release dma channel and before free
+irq, which is not secure, fix it.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: "Helena Anna" <helena.anna.dubel@intel.com>
-Cc: "Luis Claudio R. Goncalves" <lgoncalv@redhat.com>
-Cc: Tomas Glozar <tglozar@redhat.com>
-Link: https://lore.kernel.org/20240909103231.23a289e2@gandalf.local.home
-Fixes: e6a53481da29 ("tracing/timerlat: Only clear timer if a kthread exists")
-Reported-by: "Bityutskiy, Artem" <artem.bityutskiy@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patch.msgid.link/20240909073141.951494-3-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_osnoise.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/spi/spi-geni-qcom.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
-index bbe47781617e..7e75c1214b36 100644
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -228,6 +228,11 @@ static inline struct osnoise_variables *this_cpu_osn_var(void)
- 	return this_cpu_ptr(&per_cpu_osnoise_var);
- }
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 983c4896c8cf..7401ed3b9acd 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -1170,9 +1170,9 @@ static void spi_geni_remove(struct platform_device *pdev)
+ 	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
+ 	spi_unregister_master(spi);
  
-+/*
-+ * Protect the interface.
-+ */
-+static struct mutex interface_lock;
-+
- #ifdef CONFIG_TIMERLAT_TRACER
- /*
-  * Runtime information for the timer mode.
-@@ -252,11 +257,6 @@ static inline struct timerlat_variables *this_cpu_tmr_var(void)
- 	return this_cpu_ptr(&per_cpu_timerlat_var);
- }
- 
--/*
-- * Protect the interface.
-- */
--static struct mutex interface_lock;
+-	spi_geni_release_dma_chan(mas);
 -
- /*
-  * tlat_var_reset - Reset the values of the given timerlat_variables
-  */
+ 	free_irq(mas->irq, spi);
++
++	spi_geni_release_dma_chan(mas);
+ }
+ 
+ static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
 -- 
-2.46.0
+2.43.0
 
 
 
