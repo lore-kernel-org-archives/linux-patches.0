@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2448155CA5;
-	Mon, 16 Sep 2024 12:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B92155CA5;
+	Mon, 16 Sep 2024 12:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488274; cv=none; b=gVmNestrjMXVwWI7aUCJ/w8f5R8RUoEBQhgSxuboGNjoA4hgWL2XEdTBotXzU+T98DC8BwUde2N+DEMi4eUkr3gpir4y/tsurZfJR94KteTC+E9ctkd3XwgZ8tYR91qkFEMgKGIQOray69Xh6/gUPDCwkoZdWh+VdGY2ZMh0tGM=
+	t=1726488276; cv=none; b=ulGdAw/pRy7x0m8nT65/5Hi4WG2I4pagBusS/ig16sruYzF042Nsv9jI3Quo67beQ+a92lJoqMW1DfJGaYoPW+vr5tcH00RDCeCwEc8Os2KlmjqaxDlsXg9GGrT5h1m5f74AuMEk3ET9kfHhq/CYrIgYfCl9dyHCf7V08TqKGG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488274; c=relaxed/simple;
-	bh=irQzuFiTspjxNqzGisvvkxxFf8/pbRUxVsFkdBfAwGg=;
+	s=arc-20240116; t=1726488276; c=relaxed/simple;
+	bh=mHO1IkWQ9vkKz1NQCYocYQOiBoz3Am07kyPggsSZwpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGtzPt4YhEM4Dtku3HKKDk9LJQj0omGgI1VzZadOQAa/ts56UqroTUFN4/nKtZ6ZcCRe8/XQSbAInLpmh6piDPSZw82d7jzYN/E6iefpT0QY/MG8OBs9OjzlHcSe6iNn8JTNazzDbeUZ25azvoevnHXKl6ozRyfEOzloCdH/Dz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/vEAWtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRLmYaFEr3ds/+Ff1m2i9Mo+5iucFFpPmhT8hLVK8tHTEYf9LDmB5nD4qm4zTcmERtMF85HxE1a9wXIe4OtxfMxR9DhAmW0h3jX1uH3Vxx6bMPJ1xiKt7r6TAJgkpCKvQp2VqpoAwW6amOzc1cLO3V1FB5hFgd/StutA+iY8oc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/p48qoc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/vEAWtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245D2C4CEC4;
-	Mon, 16 Sep 2024 12:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/p48qoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B71C4CEC4;
+	Mon, 16 Sep 2024 12:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488273;
-	bh=irQzuFiTspjxNqzGisvvkxxFf8/pbRUxVsFkdBfAwGg=;
+	s=korg; t=1726488276;
+	bh=mHO1IkWQ9vkKz1NQCYocYQOiBoz3Am07kyPggsSZwpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/vEAWtuugbCfl6PM5bQoeKCK4WQanJkoT1CdCjHnbmOUBpbcG8+cL+/QCg7dY66L
-	 bsoSFA9EIenx0thlF86wuE134pH+rtKR2b6Pd5CJu2oFSVI3Az2oCkO7mJ0RA0x1jN
-	 JyeOFpjx1ptKDgJIXeGBeBNeigqVRfVbk0Kvums0=
+	b=a/p48qocjp4zIbnmSfhql8/vzzgxRD/qeBwa9yo48Xy/tlWVVxEY5MvzLD/WlPmdc
+	 Vf7plQJ5hG4Y5gNQ+lM3UktP8m564zhvt6ORMwxKcQQqn+5pOgYxbHgjFs4BsLpZeD
+	 9fu9VJycV8bBMqxq9GX7V/ecZBJ4WNS9GR51SZlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.10 055/121] mm: avoid leaving partial pfn mappings around in error case
-Date: Mon, 16 Sep 2024 13:43:49 +0200
-Message-ID: <20240916114230.971579306@linuxfoundation.org>
+	Kent Overstreet <kent.overstreet@linux.dev>
+Subject: [PATCH 6.10 056/121] bcachefs: Fix bch2_extents_match() false positive
+Date: Mon, 16 Sep 2024 13:43:50 +0200
+Message-ID: <20240916114231.002644946@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -53,80 +49,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Kent Overstreet <kent.overstreet@linux.dev>
 
-commit 79a61cc3fc0466ad2b7b89618a6157785f0293b3 upstream.
+[ Upstream commit  d26935690c03fe8159d42358bed1c56252700cd1 ]
 
-As Jann points out, PFN mappings are special, because unlike normal
-memory mappings, there is no lifetime information associated with the
-mapping - it is just a raw mapping of PFNs with no reference counting of
-a 'struct page'.
+This was caught as a very rare nonce inconsistency, on systems with
+encryption and replication (and tiering, or some form of rebalance
+operation running):
 
-That's all very much intentional, but it does mean that it's easy to
-mess up the cleanup in case of errors.  Yes, a failed mmap() will always
-eventually clean up any partial mappings, but without any explicit
-lifetime in the page table mapping itself, it's very easy to do the
-error handling in the wrong order.
+[Wed Jul 17 13:30:03 2024] about to insert invalid key in data update path
+[Wed Jul 17 13:30:03 2024] old: u64s 10 type extent 671283510:6392:U32_MAX len 16 ver 106595503: durability: 2 crc: c_size 8 size 16 offset 0 nonce 0 csum chacha20_poly1305_80 compress zstd ptr: 3:355968:104 gen 7 ptr: 4:513244:48 gen 6 rebalance: target hdd compression zstd
+[Wed Jul 17 13:30:03 2024] k:   u64s 10 type extent 671283510:6400:U32_MAX len 16 ver 106595508: durability: 2 crc: c_size 8 size 16 offset 0 nonce 0 csum chacha20_poly1305_80 compress zstd ptr: 3:355968:112 gen 7 ptr: 4:513244:56 gen 6 rebalance: target hdd compression zstd
+[Wed Jul 17 13:30:03 2024] new: u64s 14 type extent 671283510:6392:U32_MAX len 8 ver 106595508: durability: 2 crc: c_size 8 size 16 offset 0 nonce 0 csum chacha20_poly1305_80 compress zstd ptr: 3:355968:112 gen 7 cached ptr: 4:513244:56 gen 6 cached rebalance: target hdd compression zstd crc: c_size 8 size 16 offset 8 nonce 0 csum chacha20_poly1305_80 compress zstd ptr: 1:10860085:32 gen 0 ptr: 0:17285918:408 gen 0
+[Wed Jul 17 13:30:03 2024] bcachefs (cca5bc65-fe77-409d-a9fa-465a6e7f4eae): fatal error - emergency read only
 
-In particular, it's easy to mistakenly free the physical backing store
-before the page tables are actually cleaned up and (temporarily) have
-stale dangling PTE entries.
+bch2_extents_match() was reporting true for extents that did not
+actually point to the same data.
 
-To make this situation less error-prone, just make sure that any partial
-pfn mapping is torn down early, before any other error handling.
+bch2_extent_match() iterates over pairs of pointers, looking for
+pointers that point to the same location on disk (with matching
+generation numbers). However one or both extents may have been trimmed
+(or merged) and they might not have the same disk offset: it corrects
+for this by subtracting the key offset and the checksum entry offset.
 
-Reported-and-tested-by: Jann Horn <jannh@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+However, this failed when an extent was immediately partially
+overwritten, and the new overwrite was allocated the next adjacent disk
+space.
+
+Normally, with compression off, this would never cause a bug, since the
+new extent would have to be immediately after the old extent for the
+pointer offsets to match, and the rebalance index update path is not
+looking for an extent outside the range of the extent it moved.
+
+However with compression enabled, extents take up less space on disk
+than they do in the btree index space - and spuriously matching after
+partial overwrite is possible.
+
+To fix this, add a secondary check, that strictly checks that the
+regions pointed to on disk overlap.
+
+https://github.com/koverstreet/bcachefs/issues/717
+
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ fs/bcachefs/extents.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2581,11 +2581,7 @@ static inline int remap_p4d_range(struct
- 	return 0;
- }
+--- a/fs/bcachefs/extents.c
++++ b/fs/bcachefs/extents.c
+@@ -932,8 +932,29 @@ bool bch2_extents_match(struct bkey_s_c
+ 			bkey_for_each_ptr_decode(k2.k, ptrs2, p2, entry2)
+ 				if (p1.ptr.dev		== p2.ptr.dev &&
+ 				    p1.ptr.gen		== p2.ptr.gen &&
++
++				    /*
++				     * This checks that the two pointers point
++				     * to the same region on disk - adjusting
++				     * for the difference in where the extents
++				     * start, since one may have been trimmed:
++				     */
+ 				    (s64) p1.ptr.offset + p1.crc.offset - bkey_start_offset(k1.k) ==
+-				    (s64) p2.ptr.offset + p2.crc.offset - bkey_start_offset(k2.k))
++				    (s64) p2.ptr.offset + p2.crc.offset - bkey_start_offset(k2.k) &&
++
++				    /*
++				     * This additionally checks that the
++				     * extents overlap on disk, since the
++				     * previous check may trigger spuriously
++				     * when one extent is immediately partially
++				     * overwritten with another extent (so that
++				     * on disk they are adjacent) and
++				     * compression is in use:
++				     */
++				    ((p1.ptr.offset >= p2.ptr.offset &&
++				      p1.ptr.offset  < p2.ptr.offset + p2.crc.compressed_size) ||
++				     (p2.ptr.offset >= p1.ptr.offset &&
++				      p2.ptr.offset  < p1.ptr.offset + p1.crc.compressed_size)))
+ 					return true;
  
--/*
-- * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
-- * must have pre-validated the caching bits of the pgprot_t.
-- */
--int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
-+static int remap_pfn_range_internal(struct vm_area_struct *vma, unsigned long addr,
- 		unsigned long pfn, unsigned long size, pgprot_t prot)
- {
- 	pgd_t *pgd;
-@@ -2638,6 +2634,27 @@ int remap_pfn_range_notrack(struct vm_ar
- 	return 0;
- }
- 
-+/*
-+ * Variant of remap_pfn_range that does not call track_pfn_remap.  The caller
-+ * must have pre-validated the caching bits of the pgprot_t.
-+ */
-+int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
-+		unsigned long pfn, unsigned long size, pgprot_t prot)
-+{
-+	int error = remap_pfn_range_internal(vma, addr, pfn, size, prot);
-+
-+	if (!error)
-+		return 0;
-+
-+	/*
-+	 * A partial pfn range mapping is dangerous: it does not
-+	 * maintain page reference counts, and callers may free
-+	 * pages due to the error. So zap it early.
-+	 */
-+	zap_page_range_single(vma, addr, size, NULL);
-+	return error;
-+}
-+
- /**
-  * remap_pfn_range - remap kernel memory to userspace
-  * @vma: user vma to map to
+ 		return false;
 
 
