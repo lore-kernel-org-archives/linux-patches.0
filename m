@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35992156238;
-	Mon, 16 Sep 2024 11:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1739B15667B;
+	Mon, 16 Sep 2024 11:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487974; cv=none; b=HZAd6510h+87Ok0rqJDYV6BKPhc++m4IQ/mTeeQwKkAJBwTHx4/McE3L/9VD0q64HnBXnpKQh2i8bNLrvRAPx7WmT7kFe38Vak79kqeHSovqu8rVecwnmCtiIW6HDAmguGlcMt2VQxUn+cHyRJlDpq3LT+hKC+q3kaJJdwm/ZP8=
+	t=1726487977; cv=none; b=FmTDwqC++kSBbyk/oxkp6KrJvrUm0A2Rcmv+lVs2K2IC662hv8Dvn+6i4j4p2rwkfXVsUx+W3ZiLxbo8r9uSXJdCB9EX3XuRCLG2hhig7tsvkUKFarMdvhF6gMCUSgTzBHX6eYVE90Akiu0M4KA7p491916Z2fdBJx8HDrpQ9S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487974; c=relaxed/simple;
-	bh=hdL0XPgz5jPybJkanMYinBW1ZeARLcdPCrhXoMIF32U=;
+	s=arc-20240116; t=1726487977; c=relaxed/simple;
+	bh=D4b12ri3fL92PS4sU914RT1bwqZLE1GPnqCtDsn1/sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gzn4MB9uTK8i4bNHEjjNSpZwOaN5YCeVTDsLTY3IegBZaxlPEdIN/3u6YqvYvCqRY2eimgyzGIHE4Mp5MyTW/fILXDfHELTztyP1SPp9oQMTAvqtB5x1eB3XnTUGTjmYrSlg6yR1c6AjjM2MpGX2NYiJeTzvegO+jcxt4Ki/Taw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZddRkID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QbbtCrJtpCE2sc4USWFVpTLUOuy4Cou1oTpaHMPCNVjwcAhVd5JXkqyi/A0SxIEnifPVf9xaUQg963O8RqROG/GHZDMldT1ILc4UFBqjlTcYWSsGhpJZRoGhR/TeiTA9Dz4PttZIgj+GwvWdrsG5dPj6k84WVjI2/8dgMJIgEr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tt59O5Tk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZddRkID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B269C4CECC;
-	Mon, 16 Sep 2024 11:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tt59O5Tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7124BC4CECE;
+	Mon, 16 Sep 2024 11:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726487974;
-	bh=hdL0XPgz5jPybJkanMYinBW1ZeARLcdPCrhXoMIF32U=;
+	s=korg; t=1726487976;
+	bh=D4b12ri3fL92PS4sU914RT1bwqZLE1GPnqCtDsn1/sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZddRkIDLNZTjCxlw07udG2yIRQwWcVXkQSz7UCd2rHNFUXi3ZTNwdhaNxXuVh2t1
-	 yM+bZtJoETG6AUjcqtQwqCWyB/3fUwPOJH6aGFTSPyAd0ZBGaS0kzzm9Ki2WA614Jc
-	 +nM4KrfT7kUj0JpW8/gIUXacQGxwdG0QN/aLzVK0=
+	b=tt59O5TkTePh2F98z2fqZGUZ1xVTEC+kax3rsH1dAAbr9U1BbOY95cD+GWOXYzlFg
+	 dTMycptPT0WMIVRT+OWGoRqpzJT3OLj4h1BWGe9YoxCIiHFZJhfUu2lkKXD7bxJ6rb
+	 oRF2D/yeeIEHeOhhZAcgGck+vMqWlEVExuldK7vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Pawel Dembicki <paweldembicki@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/63] net: phy: vitesse: repair vsc73xx autonegotiation
-Date: Mon, 16 Sep 2024 13:43:46 +0200
-Message-ID: <20240916114221.295621750@linuxfoundation.org>
+Subject: [PATCH 6.1 16/63] drm/msm/adreno: Fix error return if missing firmware-name
+Date: Mon, 16 Sep 2024 13:43:55 +0200
+Message-ID: <20240916114221.633148975@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114221.021192667@linuxfoundation.org>
 References: <20240916114221.021192667@linuxfoundation.org>
@@ -52,74 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Dembicki <paweldembicki@gmail.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit de7a670f8defe4ed2115552ad23dea0f432f7be4 ]
+[ Upstream commit 624ab9cde26a9f150b4fd268b0f3dae3184dc40c ]
 
-When the vsc73xx mdio bus work properly, the generic autonegotiation
-configuration works well.
+-ENODEV is used to signify that there is no zap shader for the platform,
+and the CPU can directly take the GPU out of secure mode.  We want to
+use this return code when there is no zap-shader node.  But not when
+there is, but without a firmware-name property.  This case we want to
+treat as-if the needed fw is not found.
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/604564/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/vitesse.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/vitesse.c b/drivers/net/phy/vitesse.c
-index 897b979ec03c..3b5fcaf0dd36 100644
---- a/drivers/net/phy/vitesse.c
-+++ b/drivers/net/phy/vitesse.c
-@@ -237,16 +237,6 @@ static int vsc739x_config_init(struct phy_device *phydev)
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index dfd4eec21785..c4ad70eb1d92 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -99,7 +99,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 		 * was a bad idea, and is only provided for backwards
+ 		 * compatibility for older targets.
+ 		 */
+-		return -ENODEV;
++		return -ENOENT;
+ 	}
  
--static int vsc73xx_config_aneg(struct phy_device *phydev)
--{
--	/* The VSC73xx switches does not like to be instructed to
--	 * do autonegotiation in any way, it prefers that you just go
--	 * with the power-on/reset defaults. Writing some registers will
--	 * just make autonegotiation permanently fail.
--	 */
--	return 0;
--}
--
- /* This adds a skew for both TX and RX clocks, so the skew should only be
-  * applied to "rgmii-id" interfaces. It may not work as expected
-  * on "rgmii-txid", "rgmii-rxid" or "rgmii" interfaces.
-@@ -444,7 +434,6 @@ static struct phy_driver vsc82xx_driver[] = {
- 	.phy_id_mask    = 0x000ffff0,
- 	/* PHY_GBIT_FEATURES */
- 	.config_init    = vsc738x_config_init,
--	.config_aneg    = vsc73xx_config_aneg,
- 	.read_page      = vsc73xx_read_page,
- 	.write_page     = vsc73xx_write_page,
- }, {
-@@ -453,7 +442,6 @@ static struct phy_driver vsc82xx_driver[] = {
- 	.phy_id_mask    = 0x000ffff0,
- 	/* PHY_GBIT_FEATURES */
- 	.config_init    = vsc738x_config_init,
--	.config_aneg    = vsc73xx_config_aneg,
- 	.read_page      = vsc73xx_read_page,
- 	.write_page     = vsc73xx_write_page,
- }, {
-@@ -462,7 +450,6 @@ static struct phy_driver vsc82xx_driver[] = {
- 	.phy_id_mask    = 0x000ffff0,
- 	/* PHY_GBIT_FEATURES */
- 	.config_init    = vsc739x_config_init,
--	.config_aneg    = vsc73xx_config_aneg,
- 	.read_page      = vsc73xx_read_page,
- 	.write_page     = vsc73xx_write_page,
- }, {
-@@ -471,7 +458,6 @@ static struct phy_driver vsc82xx_driver[] = {
- 	.phy_id_mask    = 0x000ffff0,
- 	/* PHY_GBIT_FEATURES */
- 	.config_init    = vsc739x_config_init,
--	.config_aneg    = vsc73xx_config_aneg,
- 	.read_page      = vsc73xx_read_page,
- 	.write_page     = vsc73xx_write_page,
- }, {
+ 	if (IS_ERR(fw)) {
 -- 
 2.43.0
 
