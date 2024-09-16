@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FC61514C6;
-	Mon, 16 Sep 2024 12:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376A1155391;
+	Mon, 16 Sep 2024 12:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488259; cv=none; b=LdYlFlshYKyVKzFChgOiX40Ewo7I4Zh+gIW54ODNnu+4WXH05sQd3LmTTuvxaaVUa+PrzfgzEaD8JTxnhUIqiLe4BoPo+GcPs+L0zZJXQpBOvQ7nOwHZ4e0p5mrZePu6aKmXtAVPY9efzqKwZ1/dlp9DuJxS9IEujyqKqA22TjU=
+	t=1726488262; cv=none; b=bzdTRVpUCvsXd78DeAWsC/Vx8+JlSHsU7SNgk/ABFKzFMaTDoc3S6URpZJJoVqkjk+ZZgfEbFItkEdeLPtf33s4dawzJG8rqI23DxSz26emYmN+K+UaqDqaq+l0WneI6AbvbHiC2DHh+7WFr2X2HdesILp6btPA5iPyg555UhPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488259; c=relaxed/simple;
-	bh=ByDeBhQ7aCPI48Y6kQlnZbAK9LGiz0TdoNRNOziwyh4=;
+	s=arc-20240116; t=1726488262; c=relaxed/simple;
+	bh=VXhcusqHPgzHrRY0AR3ASimGNYLgaEu0Yihy2D7v6G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvwfvkSMO4OiQ3hu9554O2X6ndXncVrc75PjSGhY5KydNLbBp1WuzyVWx4bULwGdJ00/iuKaiz449H/LpoAfaJNUznZbaZ6OYqJFi9hxJyFOJz2xFFcoeLL+jG4cn96YW2h4iN2tCtQkjgnCDcmZa6mDI+R6t2dX/i13hE0b+gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQ54uKfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YI5pswTJJemTt2X8cvWdgQkq732UAw2o4oojsIiPMzsxRcfq8q1XpC5QW4SgSK5SDJjZUJuRmgfcTePEmh/eFXpBSqiDl1tJ2jew7IBrarMImmHmiMNbipGmEfu3WQueDRwa+qvWgCuIn9dvP6RRJczkAj3U/gnVhQ/fXNzsAoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wu34RnaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQ54uKfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA561C4CEC4;
-	Mon, 16 Sep 2024 12:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wu34RnaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B286EC4CEC4;
+	Mon, 16 Sep 2024 12:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488259;
-	bh=ByDeBhQ7aCPI48Y6kQlnZbAK9LGiz0TdoNRNOziwyh4=;
+	s=korg; t=1726488262;
+	bh=VXhcusqHPgzHrRY0AR3ASimGNYLgaEu0Yihy2D7v6G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQ54uKfPC24HauD49b5TGoG/lT47T8ZfHuxQ0EeXDfHO5i4BxN6TQCSVmVrhEnP/j
-	 bcEnQzGzJTc9W+NajulFiG0QqNzKWXxeBkB/wYJACMR1qoELgWSQrEFt9ymC/tXC9F
-	 yEJL91GH7CtfRvkN0b6COUjQIiQN3j9GcyCAhP74=
+	b=Wu34RnaP6nbs7bN4LItur9TCH08NoHMeAdTTBt7bbLgSj0KSnCFbePDZ6waQA2tLV
+	 M4IgDpaiNLHtNH8gq3M+QJ4FEBFLAOLIRMBdYoATAlpLYJoA5uQcqVVFhpsRKP0hVp
+	 shbj5y8MExo9S3xFR/NZVwJm6yBQt7GhjtcyGnYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 051/121] net: libwx: fix number of Rx and Tx descriptors
-Date: Mon, 16 Sep 2024 13:43:45 +0200
-Message-ID: <20240916114230.822023135@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.10 052/121] dm-integrity: fix a race condition when accessing recalc_sector
+Date: Mon, 16 Sep 2024 13:43:46 +0200
+Message-ID: <20240916114230.859584662@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -51,39 +49,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 077ee7e6b13a2b6668196ed01a22023549e19381 upstream.
+commit f8e1ca92e35e9041cc0a1bc226ef07a853a22de4 upstream.
 
-The number of transmit and receive descriptors must be a multiple of 128
-due to the hardware limitation. If it is set to a multiple of 8 instead of
-a multiple 128, the queues will easily be hung.
+There's a race condition when accessing the variable
+ic->sb->recalc_sector. The function integrity_recalc writes to this
+variable when it makes some progress and the function
+dm_integrity_map_continue may read this variable concurrently.
 
+One problem is that on 32-bit architectures the 64-bit variable is not
+read and written atomically - it may be possible to read garbage if read
+races with write.
+
+Another problem is that memory accesses to this variable are not guarded
+with memory barriers.
+
+This commit fixes the race - it moves reading ic->sb->recalc_sector to an
+earlier place where we hold &ic->endio_wait.lock.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 883b5984a5d2 ("net: wangxun: add ethtool_ops for ring parameters")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240910095629.570674-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_type.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm-integrity.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-@@ -424,9 +424,9 @@ enum WX_MSCA_CMD_value {
- #define WX_MIN_RXD                   128
- #define WX_MIN_TXD                   128
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -2173,6 +2173,7 @@ static void dm_integrity_map_continue(st
+ 	struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
+ 	unsigned int journal_section, journal_entry;
+ 	unsigned int journal_read_pos;
++	sector_t recalc_sector;
+ 	struct completion read_comp;
+ 	bool discard_retried = false;
+ 	bool need_sync_io = ic->internal_hash && dio->op == REQ_OP_READ;
+@@ -2313,6 +2314,7 @@ offload_to_thread:
+ 			goto lock_retry;
+ 		}
+ 	}
++	recalc_sector = le64_to_cpu(ic->sb->recalc_sector);
+ 	spin_unlock_irq(&ic->endio_wait.lock);
  
--/* Number of Transmit and Receive Descriptors must be a multiple of 8 */
--#define WX_REQ_RX_DESCRIPTOR_MULTIPLE   8
--#define WX_REQ_TX_DESCRIPTOR_MULTIPLE   8
-+/* Number of Transmit and Receive Descriptors must be a multiple of 128 */
-+#define WX_REQ_RX_DESCRIPTOR_MULTIPLE   128
-+#define WX_REQ_TX_DESCRIPTOR_MULTIPLE   128
- 
- #define WX_MAX_JUMBO_FRAME_SIZE      9432 /* max payload 9414 */
- #define VMDQ_P(p)                    p
+ 	if (unlikely(journal_read_pos != NOT_FOUND)) {
+@@ -2367,7 +2369,7 @@ offload_to_thread:
+ 	if (need_sync_io) {
+ 		wait_for_completion_io(&read_comp);
+ 		if (ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING) &&
+-		    dio->range.logical_sector + dio->range.n_sectors > le64_to_cpu(ic->sb->recalc_sector))
++		    dio->range.logical_sector + dio->range.n_sectors > recalc_sector)
+ 			goto skip_check;
+ 		if (ic->mode == 'B') {
+ 			if (!block_bitmap_op(ic, ic->recalc_bitmap, dio->range.logical_sector,
 
 
