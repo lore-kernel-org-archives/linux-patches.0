@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4896154C04;
-	Mon, 16 Sep 2024 12:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC6F14D2B3;
+	Mon, 16 Sep 2024 12:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488492; cv=none; b=gYWYVswKCnKY4XuB7HXh0ChWJ4khE5ckmBb7qrYwHfOxahBvOT+FQLXquJjrMXrjaR4m9cgo5C9uKUSOrZbIZMYi5zF2ELxYi/2Ci3torHBeWfc/Ubri4MBnX7uFiOy0J5oPUYFOItB9Vi3HMb5clnVs5NmlZSyOoSt7MYbEw78=
+	t=1726488495; cv=none; b=MCogeZVdzD4Uvrsku56RxkWnKvLtirm8P9PaoaU2ZpPQUhAbE75dXxhwqxSmtIqvgKl49ZnbZM2IBQeBavnGJ76hAUgn7F5fqVE8p1O8tnIGc24cH8iw3WW0ofDeQP+qTSWKaTz17v9cwuabbnWaGlsEilAHu5OOZsm1ZgHRFFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488492; c=relaxed/simple;
-	bh=B3fdbKgdkOQ/yAjUzBb0DXybWRFfNE2VMcqQ5OciJEI=;
+	s=arc-20240116; t=1726488495; c=relaxed/simple;
+	bh=H4zSf22/RLPk/4OpP59lOFY3MyyprMdVzEW7Q0YDHy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyMja7GRlHi31c3fEwCdsV4H2oMs84OjNjHHF4kKosJWA/yr36WW1b49WcgQh5ZdQiVLrmJfPTYRgH8RmcOrs3qoIkEqURBIv4Vmzw4tTAYASLiom6CPVfiWlnTlL3dcpRb98/jgO72LEJAXZ3qOECaK1Qhr9gJC2j2EIkqHTtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFYl5TyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pab54ymO2iwmU5IdZXi57dZBGSHGrkVDLBz7JAHouU1101L/IqYj2C4nZQSw6AYzkn5v0LUxofd4p6Dzma2Bn3cYAC6zKD9XaEIwvVYq5a+Vq4DLjfnAzh7/fXXLIbWmugWJY+84HQcV+6X8FafA32mdHQObt7dnCWoCv7qokSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfTadYE9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFYl5TyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9FAC4CEC4;
-	Mon, 16 Sep 2024 12:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfTadYE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17111C4CEC4;
+	Mon, 16 Sep 2024 12:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488492;
-	bh=B3fdbKgdkOQ/yAjUzBb0DXybWRFfNE2VMcqQ5OciJEI=;
+	s=korg; t=1726488495;
+	bh=H4zSf22/RLPk/4OpP59lOFY3MyyprMdVzEW7Q0YDHy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFYl5TyY7+LZBC+aUNsIkT6yRDbSjU+scG8EeJ+qvA/rr6//ba4xdARC2HVpSY949
-	 BVLkbDeZw/EHAgufR64BwpV72KrcJjiA/GgN4p7LSM1XwsvUpHDm1E0XXkHAOsJsZP
-	 D1lUA2v3jGyJlVjK5f39KNZ31Qbq4Xm0LpG2cnrg=
+	b=ZfTadYE9hqeSI1yO2t636PLtWS7qx9RqlVbK4xAJUzYYTbBaE4OScdIz0bsf4YIXi
+	 +NFoxpDTYOvMhS4/VnGdvIAv1X54P3f3HsxMWQLvcVvLiqnBnI1/pzfFaVE5eLI/Zm
+	 6dD9HNLJcEc6KkMvIfsr/4wlIPan8r+9iX5O2UhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangsoo Lee <constant.lee@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Foster Snowhill <forst@pen.gy>,
+	Georgi Valkov <gvalkov@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 11/91] ksmbd: override fsids for smb2_query_info()
-Date: Mon, 16 Sep 2024 13:43:47 +0200
-Message-ID: <20240916114224.908360754@linuxfoundation.org>
+Subject: [PATCH 6.6 12/91] usbnet: ipheth: remove extraneous rx URB length check
+Date: Mon, 16 Sep 2024 13:43:48 +0200
+Message-ID: <20240916114224.938380819@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,54 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Foster Snowhill <forst@pen.gy>
 
-[ Upstream commit f6bd41280a44dcc2e0a25ed72617d25f586974a7 ]
+[ Upstream commit 655b46d7a39ac6f049698b27c1568c0f7ff85d1e ]
 
-Sangsoo reported that a DAC denial error occurred when accessing
-files through the ksmbd thread. This patch override fsids for
-smb2_query_info().
+Rx URB length was already checked in ipheth_rcvbulk_callback_legacy()
+and ipheth_rcvbulk_callback_ncm(), depending on the current mode.
+The check in ipheth_rcvbulk_callback() was thus mostly a duplicate.
 
-Reported-by: Sangsoo Lee <constant.lee@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The only place in ipheth_rcvbulk_callback() where we care about the URB
+length is for the initial control frame. These frames are always 4 bytes
+long. This has been checked as far back as iOS 4.2.1 on iPhone 3G.
+
+Remove the extraneous URB length check. For control frames, check for
+the specific 4-byte length instead.
+
+Signed-off-by: Foster Snowhill <forst@pen.gy>
+Tested-by: Georgi Valkov <gvalkov@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/usb/ipheth.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 4ac6068c50cc..c527050bc981 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5601,6 +5601,11 @@ int smb2_query_info(struct ksmbd_work *work)
- 
- 	ksmbd_debug(SMB, "GOT query info request\n");
- 
-+	if (ksmbd_override_fsids(work)) {
-+		rc = -ENOMEM;
-+		goto err_out;
-+	}
-+
- 	switch (req->InfoType) {
- 	case SMB2_O_INFO_FILE:
- 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_FILE\n");
-@@ -5619,6 +5624,7 @@ int smb2_query_info(struct ksmbd_work *work)
- 			    req->InfoType);
- 		rc = -EOPNOTSUPP;
- 	}
-+	ksmbd_revert_fsids(work);
- 
- 	if (!rc) {
- 		rsp->StructureSize = cpu_to_le16(9);
-@@ -5628,6 +5634,7 @@ int smb2_query_info(struct ksmbd_work *work)
- 					le32_to_cpu(rsp->OutputBufferLength));
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 6eeef10edada..017255615508 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -286,11 +286,6 @@ static void ipheth_rcvbulk_callback(struct urb *urb)
+ 		return;
  	}
  
-+err_out:
- 	if (rc < 0) {
- 		if (rc == -EACCES)
- 			rsp->hdr.Status = STATUS_ACCESS_DENIED;
+-	if (urb->actual_length <= IPHETH_IP_ALIGN) {
+-		dev->net->stats.rx_length_errors++;
+-		return;
+-	}
+-
+ 	/* RX URBs starting with 0x00 0x01 do not encapsulate Ethernet frames,
+ 	 * but rather are control frames. Their purpose is not documented, and
+ 	 * they don't affect driver functionality, okay to drop them.
+@@ -298,7 +293,8 @@ static void ipheth_rcvbulk_callback(struct urb *urb)
+ 	 * URB received from the bulk IN endpoint.
+ 	 */
+ 	if (unlikely
+-		(((char *)urb->transfer_buffer)[0] == 0 &&
++		(urb->actual_length == 4 &&
++		 ((char *)urb->transfer_buffer)[0] == 0 &&
+ 		 ((char *)urb->transfer_buffer)[1] == 1))
+ 		goto rx_submit;
+ 
 -- 
 2.43.0
 
