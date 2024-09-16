@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1BE15B108;
-	Mon, 16 Sep 2024 12:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4002C156676;
+	Mon, 16 Sep 2024 12:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488179; cv=none; b=ZP5Yj0tyjsTlsUxnSImmty2Zbsxh3egORBApmqKmiMF87l4JPU3VLf9VKp39vZMPTW4gwoPI7T0Ux/WVEnEhZY5luOc7n7lCFYiEXQy2UeQZh8LF0aWKMdlJfWtaQoxR6z5RHp07RCU5WFYgRnbY7TeSqDmNEfbnP+A8tsIS4jE=
+	t=1726488182; cv=none; b=PdiTIZfgkRP0b5NtgShTRAMJpHNBA886JFa/qow8NgHAHE6nhF7dqx/vCoxIx+7fFUXXzWRtCe5zJmRyOMkK7oMsgjA0Y1zHkfi0H0bqaJCZEAbIVea/LxjyIdqc5mIjaEHNEz4xAYsL4YwrrH6CmkYhZgRnYgJTCn8hKzYrQy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488179; c=relaxed/simple;
-	bh=UUeWXZPvtJ5G9Y/1gyUZ8S0YneO1MDi8+DQTWibnb6g=;
+	s=arc-20240116; t=1726488182; c=relaxed/simple;
+	bh=EgTnqhuYG7BE32cuNrVBMfVdIqkF6wCLuXPLtrzSwb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oM/gXQVS7woGYMocvY81v10ceiWjSGZzPxMtyeh/l9YNW4H9XEhvPcChSbNnUy70MLda1G3y4UYQVkfsbR2iQZ9c4fFHdTQvhrRblJiTrKiIrkE/aHVDYjGSR/+p8mxFgGLLOA1qI7G1ZPUUtPWPwp32sRzgOQeZcLr28uo88Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QJTj2Fa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A9d5OYX46anfbJhxJOZZym8V9OJLeGGO22IPT9UnV9vlAbPaFJ8f18uZBoCN8uqwMA9HfswaICf85PtHpRCbdyvZ9KQgbHh5FGNL2osAmhQrf9LW5Ic986luWxZ1dD6PGH4sPXyZWSZ6z21exubvwjHsDDd0Hd7hUl/abmRicTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5KFdAQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QJTj2Fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDCDC4CEC7;
-	Mon, 16 Sep 2024 12:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5KFdAQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB03C4CEC4;
+	Mon, 16 Sep 2024 12:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488179;
-	bh=UUeWXZPvtJ5G9Y/1gyUZ8S0YneO1MDi8+DQTWibnb6g=;
+	s=korg; t=1726488181;
+	bh=EgTnqhuYG7BE32cuNrVBMfVdIqkF6wCLuXPLtrzSwb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1QJTj2FaeiqwD+9hA4wou91of5Kax+Oq62SCHSxktuaGJ1/n1JIQ0GhBmf0Ybqaof
-	 kOuW2nYUOyDLeeP1v6/JDNi3chWMc8HEQFj//EOC4fJ+bnvRpJQQfo1VUt2m1W3VPk
-	 1mH+C+VhdcdvuPi6wsbw3djRf8CGHBTtzx5NNy6A=
+	b=y5KFdAQtmwRt5LpD3mZUpzfO+Sxw81rgz8cCo0jcahX+5162qN0BmuSllWqs0fl2h
+	 G4/qyUGQvl5g7Au3XkfCQveSUPtWDA2fuZAoSwpbY20fcfnAbDamflu3EpDQao3Q5E
+	 d/Iwve+A5uOqbTZLOoWRX0eZ3yE3HHoxFNqGPWdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kaechele <felix@kaechele.ca>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Foster Snowhill <forst@pen.gy>,
+	Georgi Valkov <gvalkov@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 023/121] Input: edt-ft5x06 - add support for FocalTech FT8201
-Date: Mon, 16 Sep 2024 13:43:17 +0200
-Message-ID: <20240916114229.764993384@linuxfoundation.org>
+Subject: [PATCH 6.10 006/121] usbnet: ipheth: remove extraneous rx URB length check
+Date: Mon, 16 Sep 2024 13:43:00 +0200
+Message-ID: <20240916114229.141578920@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -51,54 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Kaechele <felix@kaechele.ca>
+From: Foster Snowhill <forst@pen.gy>
 
-[ Upstream commit fc289d3e8698f9b11edad6d73f371ebf35944c57 ]
+[ Upstream commit 655b46d7a39ac6f049698b27c1568c0f7ff85d1e ]
 
-The driver supports the FT8201 chip as well. It registers up to 10 touch
-points.
+Rx URB length was already checked in ipheth_rcvbulk_callback_legacy()
+and ipheth_rcvbulk_callback_ncm(), depending on the current mode.
+The check in ipheth_rcvbulk_callback() was thus mostly a duplicate.
 
-Tested on: Lenovo ThinkSmart View (CD-18781Y), LCM: BOE TV080WXM-LL4
+The only place in ipheth_rcvbulk_callback() where we care about the URB
+length is for the initial control frame. These frames are always 4 bytes
+long. This has been checked as far back as iOS 4.2.1 on iPhone 3G.
 
-Signed-off-by: Felix Kaechele <felix@kaechele.ca>
-Link: https://lore.kernel.org/r/20240804031310.331871-3-felix@kaechele.ca
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Remove the extraneous URB length check. For control frames, check for
+the specific 4-byte length instead.
+
+Signed-off-by: Foster Snowhill <forst@pen.gy>
+Tested-by: Georgi Valkov <gvalkov@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/edt-ft5x06.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/usb/ipheth.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/input/touchscreen/edt-ft5x06.c b/drivers/input/touchscreen/edt-ft5x06.c
-index 06ec0f2e18ae..b0b5b6241b44 100644
---- a/drivers/input/touchscreen/edt-ft5x06.c
-+++ b/drivers/input/touchscreen/edt-ft5x06.c
-@@ -1474,6 +1474,10 @@ static const struct edt_i2c_chip_data edt_ft6236_data = {
- 	.max_support_points = 2,
- };
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 6eeef10edada..017255615508 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -286,11 +286,6 @@ static void ipheth_rcvbulk_callback(struct urb *urb)
+ 		return;
+ 	}
  
-+static const struct edt_i2c_chip_data edt_ft8201_data = {
-+	.max_support_points = 10,
-+};
-+
- static const struct edt_i2c_chip_data edt_ft8719_data = {
- 	.max_support_points = 10,
- };
-@@ -1485,6 +1489,7 @@ static const struct i2c_device_id edt_ft5x06_ts_id[] = {
- 	{ .name = "ft5452", .driver_data = (long)&edt_ft5452_data },
- 	/* Note no edt- prefix for compatibility with the ft6236.c driver */
- 	{ .name = "ft6236", .driver_data = (long)&edt_ft6236_data },
-+	{ .name = "ft8201", .driver_data = (long)&edt_ft8201_data },
- 	{ .name = "ft8719", .driver_data = (long)&edt_ft8719_data },
- 	{ /* sentinel */ }
- };
-@@ -1499,6 +1504,7 @@ static const struct of_device_id edt_ft5x06_of_match[] = {
- 	{ .compatible = "focaltech,ft5452", .data = &edt_ft5452_data },
- 	/* Note focaltech vendor prefix for compatibility with ft6236.c */
- 	{ .compatible = "focaltech,ft6236", .data = &edt_ft6236_data },
-+	{ .compatible = "focaltech,ft8201", .data = &edt_ft8201_data },
- 	{ .compatible = "focaltech,ft8719", .data = &edt_ft8719_data },
- 	{ /* sentinel */ }
- };
+-	if (urb->actual_length <= IPHETH_IP_ALIGN) {
+-		dev->net->stats.rx_length_errors++;
+-		return;
+-	}
+-
+ 	/* RX URBs starting with 0x00 0x01 do not encapsulate Ethernet frames,
+ 	 * but rather are control frames. Their purpose is not documented, and
+ 	 * they don't affect driver functionality, okay to drop them.
+@@ -298,7 +293,8 @@ static void ipheth_rcvbulk_callback(struct urb *urb)
+ 	 * URB received from the bulk IN endpoint.
+ 	 */
+ 	if (unlikely
+-		(((char *)urb->transfer_buffer)[0] == 0 &&
++		(urb->actual_length == 4 &&
++		 ((char *)urb->transfer_buffer)[0] == 0 &&
+ 		 ((char *)urb->transfer_buffer)[1] == 1))
+ 		goto rx_submit;
+ 
 -- 
 2.43.0
 
