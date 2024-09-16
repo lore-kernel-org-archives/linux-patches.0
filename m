@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6AD146A79;
-	Mon, 16 Sep 2024 12:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5C6142903;
+	Mon, 16 Sep 2024 12:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488689; cv=none; b=sjwXVQLZxCBKzjnP3TCq9qk6hy/4UA0omvsUzZuB98V3IWjYts80L/+jHCgzOVTSK0oafzI1Kd1ZvtVoxsQ0+BZu6OwTX6YkVKFby0yXz5Hn7kP3bYjP65or4gxoqL76kSxA46XX3NNW2fuQEjk+km6p3/4ydIV+xIioLv/kcyA=
+	t=1726488692; cv=none; b=AjlDJ5aWygapsb0ecZsvYOvi3tBkodmgbysWqRygA8InKHgk4Y7htmfwqRakIMyihrvsGoOGtYG3F2TFv4u57nLr12ioIA9iihk9isgOjKsV205yF9S56dTrPwn/F1Idq/mzw/qVqk+KZ426FjGksefzn0avah2OeztJ3SegKk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488689; c=relaxed/simple;
-	bh=4ymNFRocG1Kj7aE7+OCGKK2H6JbAeUtMbdvfs97718M=;
+	s=arc-20240116; t=1726488692; c=relaxed/simple;
+	bh=p0SWhdegiRX/cDvG4zJ2z5YmE+prU0MUMvExZNo7IKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOLVI6ye23FBtKOuhQEW4kXyZi+Y/horw/Dmr/gcYOdxa6EfTeoYJsz/qEWASnbKHCE+gStw8KOPeTQOK9PU/r5gclPsQOCeqXYG2Djs36f6K6TkgzrKTh2O/VbouT1WJbJXQaWbV6TdP/ukO4KqLA6gjFP+i/m1CnctLEkOnK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/uDQ4hH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i78te92hVxUFky0gAX3loyHmcBTDCYNZJfvs/hvz8nc/SId5aMrMUJKhE+/XOtdn6CdPEYaGSPZlJcWbfdMUj4SVGOTW6c1fncR5qYRU5wH4PkIZHAIilM6aUX5I/jFcyE3ugJTQ0zC9EUOfza5JBSqoWToAiWjhrCE0VHFg2Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4dWC7eK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/uDQ4hH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C5DC4CEC4;
-	Mon, 16 Sep 2024 12:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4dWC7eK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6BCC4CEC4;
+	Mon, 16 Sep 2024 12:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488689;
-	bh=4ymNFRocG1Kj7aE7+OCGKK2H6JbAeUtMbdvfs97718M=;
+	s=korg; t=1726488692;
+	bh=p0SWhdegiRX/cDvG4zJ2z5YmE+prU0MUMvExZNo7IKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/uDQ4hHFpGXRkrTnU3kl136iEszqhml8+wIxeqfAylnRJr3bLufb4ttrD/Aimcu2
-	 q+GBuYbjIe7Ou6IDzC9stAzD4pbZCq8L/OYtTOtXk+dUVTQIhYR5qvXh2zv+0aGrKN
-	 3yLLflngwSKIxJ5hyhfQtyPG2cHQ9DGTeBhXDYCA=
+	b=X4dWC7eKxJAhaibWWbc4yQjyR9U9o2cc8Ga+ze7RxT4CMyykFTWap1w3rO1N/5IuT
+	 cz31DTrltsgOEgCiM3vH96CTPzXaLrPnp1lY6JNsnad/BdoEF8tD2NYP+KfhmG3eq+
+	 6Kar3Z+xRwHtbiLkxmgbTlbQ5Q13qzn1v6pQnUoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	peng guo <engguopeng@buaa.edu.cn>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 52/91] cxl/core: Fix incorrect vendor debug UUID define
-Date: Mon, 16 Sep 2024 13:44:28 +0200
-Message-ID: <20240916114226.226372345@linuxfoundation.org>
+Subject: [PATCH 6.6 53/91] selftests/bpf: Support SOCK_STREAM in unix_inet_redir_to_connected()
+Date: Mon, 16 Sep 2024 13:44:29 +0200
+Message-ID: <20240916114226.260760291@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: peng guo <engguopeng@buaa.edu.cn>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 8ecef8e01a08c7e3e4ffc8f08d9f9663984f334b ]
+[ Upstream commit 1b0ad43177c097d38b967b99c2b71d8be28b0223 ]
 
-When user send a mbox command whose opcode is CXL_MBOX_OP_CLEAR_LOG and
-the in_payload is normal vendor debug log UUID according to
-the CXL specification cxl_payload_from_user_allowed() will return
-false unexpectedly, Sending mbox cmd operation fails and the kernel
-log will print:
-Clear Log: input payload not allowed.
+Function ignores the AF_UNIX socket type argument, SOCK_DGRAM is hardcoded.
+Fix to respect the argument provided.
 
-All CXL devices that support a debug log shall support the Vendor Debug
-Log to allow the log to be accessed through a common host driver, for any
-device, all versions of the CXL specification define the same value with
-Log Identifier of: 5e1819d9-11a9-400c-811f-d60719403d86
-
-Refer to CXL spec r3.1 Table 8-71
-
-Fix the definition value of DEFINE_CXL_VENDOR_DEBUG_UUID to match the
-CXL specification.
-
-Fixes: 472b1ce6e9d6 ("cxl/mem: Enable commands via CEL")
-Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20240710023112.8063-1-engguopeng@buaa.edu.cn
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 75e0e27db6cf ("selftest/bpf: Change udp to inet in some function names")
+Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20240713200218.2140950-3-mhal@rbox.co
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/cxlmem.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/sockmap_listen.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-index 59c7f88b915a..edb46123e3eb 100644
---- a/drivers/cxl/cxlmem.h
-+++ b/drivers/cxl/cxlmem.h
-@@ -538,7 +538,7 @@ enum cxl_opcode {
- 		  0x3b, 0x3f, 0x17)
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+index 8df8cbb447f1..84d59419e4eb 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+@@ -1841,7 +1841,7 @@ static void unix_inet_redir_to_connected(int family, int type, int sock_mapfd,
+ 	if (err)
+ 		return;
  
- #define DEFINE_CXL_VENDOR_DEBUG_UUID                                           \
--	UUID_INIT(0xe1819d9, 0x11a9, 0x400c, 0x81, 0x1f, 0xd6, 0x07, 0x19,     \
-+	UUID_INIT(0x5e1819d9, 0x11a9, 0x400c, 0x81, 0x1f, 0xd6, 0x07, 0x19,     \
- 		  0x40, 0x3d, 0x86)
+-	if (socketpair(AF_UNIX, SOCK_DGRAM | SOCK_NONBLOCK, 0, sfd))
++	if (socketpair(AF_UNIX, type | SOCK_NONBLOCK, 0, sfd))
+ 		goto close_cli0;
+ 	c1 = sfd[0], p1 = sfd[1];
  
- struct cxl_mbox_get_supported_logs {
+@@ -1876,7 +1876,6 @@ static void unix_inet_redir_to_connected(int family, int type, int sock_mapfd,
+ close_cli0:
+ 	xclose(c0);
+ 	xclose(p0);
+-
+ }
+ 
+ static void unix_inet_skb_redir_to_connected(struct test_sockmap_listen *skel,
 -- 
 2.43.0
 
