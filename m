@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34483156222;
-	Mon, 16 Sep 2024 12:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DCD156222;
+	Mon, 16 Sep 2024 12:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488562; cv=none; b=u7m3TsUQAIhyocW75JZNH0ROsY4ENZGeruiE/loSOHXQa1vnlF0niNiGWyKKBsffypFQe4JPlkMtvvRJZXOGFxMddR1oCIVnnF+Mrncb5d05qR5z7O3xA4mXlap0efcIQAjKmnVpvrYIjT+baZ/ONq5GFOMthbndi9FTUPbofLI=
+	t=1726488565; cv=none; b=hD1IEk14NqOdJatdHq3sJCIEVYb26iwRK7EE/qjSjxkU7QJ7QuBxbqcdC3ElROIfuvCf/ToE+euXvRbKFBIg4rB5OkqDIctEOIyVrW7lYdIlRHDFcQXCnzRTEY0lW1tshtUbqBTVbgE1Y79mEfAaZiWvPb+pA7D5TP7CcMHmq8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488562; c=relaxed/simple;
-	bh=RiXSV+mM7hJiwVUmy28ZIEWSgwMFXYUoQRasJoGeTYM=;
+	s=arc-20240116; t=1726488565; c=relaxed/simple;
+	bh=LA4aSc1ETp2YBSaTPFmIKP1u/BxazkwXNh/Nllc/nbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLfFkDXvfmYVrUopjgDqzKJqYtkW+7MnPM15tgUYIoLFEhhSiuH/vcamilMTXlbsHP+p8rVe674+iNmzbq3KRIls64uZIL9LP950WzzkvvZIjmalcoB8o/Sdrk4o7R0/EQ/gYlGRfqTORTLcIRg8VevR3Wrn5SyKoCVvKzAdMxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrtwlrW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ra7XZmf/RDtCO0mh0EkElDFCvz4nxrMDpIA9Y89SP03qodz4z9w+JhvMsGrMWyGwIreyWIleC6igFwjtDdiifnUKpc+UuyErA1F5oEEiFc9pDFj+6f/GVvHya8xaoy+48MwlfiYMBbh2eVJHRVr5y32dsr6n8GJ57P+8vCO+iec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEk/fL2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrtwlrW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D35C4CEC7;
-	Mon, 16 Sep 2024 12:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEk/fL2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC3DC4CEC4;
+	Mon, 16 Sep 2024 12:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488562;
-	bh=RiXSV+mM7hJiwVUmy28ZIEWSgwMFXYUoQRasJoGeTYM=;
+	s=korg; t=1726488564;
+	bh=LA4aSc1ETp2YBSaTPFmIKP1u/BxazkwXNh/Nllc/nbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrtwlrW1K0bFvtgZig44gFv4NPIeJS6HCnkg0ZqyoZuFsnr4C3jGatcFAmNGE/1zM
-	 IzFLL8Lo5o85Q3Em0eBuOdZhhTvEEjCfGHPU8r4HqFZZ9DJNDkHsXuhzZ01wbC+OES
-	 UhvcU9Ac3irrvJBF8mnLzEKA8CgWdiwGcL2YFlNs=
+	b=EEk/fL2mwysnuKzx3Lo9umzyPu9aVl3oKXZ9G+XvWXSQmGQwb7L0BKYWtunBzyCyx
+	 /VECxUenAcZ4CrhD84n/0ELq0ueGi1FfJNQfDFvuT1LoPdf8DKg2PFRluv6edC7z+g
+	 gM/yBFpMeN+jcAt0Ucyr+/YEwHTxlWNVNEtntZqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bouke Sybren Haarsma <boukehaarsma23@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 17/91] drm: panel-orientation-quirks: Add quirk for Ayn Loki Zero
-Date: Mon, 16 Sep 2024 13:43:53 +0200
-Message-ID: <20240916114225.093707714@linuxfoundation.org>
+Subject: [PATCH 6.6 35/91] NFS: Avoid unnecessary rescanning of the per-server delegation list
+Date: Mon, 16 Sep 2024 13:44:11 +0200
+Message-ID: <20240916114225.669660711@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -51,40 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bouke Sybren Haarsma <boukehaarsma23@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b86aa4140f6a8f01f35bfb05af60e01a55b48803 ]
+[ Upstream commit f92214e4c312f6ea9d78650cc6291d200f17abb6 ]
 
-Add quirk orientation for the Ayn Loki Zero.
+If the call to nfs_delegation_grab_inode() fails, we will not have
+dropped any locks that require us to rescan the list.
 
-This also has been tested/used by the JELOS team.
-
-Signed-off-by: Bouke Sybren Haarsma <boukehaarsma23@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240728124731.168452-2-boukehaarsma23@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nfs/delegation.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 039da0d1a613..79ccf4959df4 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -208,6 +208,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_BOARD_NAME, "KUN"),
- 		},
- 		.driver_data = (void *)&lcd1600x2560_rightside_up,
-+	}, {	/* AYN Loki Zero */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Loki Zero"),
-+		},
-+		.driver_data = (void *)&lcd1080x1920_leftside_up,
- 	}, {	/* Chuwi HiBook (CWI514) */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index cf7365581031..a2034511b631 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -627,6 +627,9 @@ static int nfs_server_return_marked_delegations(struct nfs_server *server,
+ 				prev = delegation;
+ 			continue;
+ 		}
++		inode = nfs_delegation_grab_inode(delegation);
++		if (inode == NULL)
++			continue;
+ 
+ 		if (prev) {
+ 			struct inode *tmp = nfs_delegation_grab_inode(prev);
+@@ -637,12 +640,6 @@ static int nfs_server_return_marked_delegations(struct nfs_server *server,
+ 			}
+ 		}
+ 
+-		inode = nfs_delegation_grab_inode(delegation);
+-		if (inode == NULL) {
+-			rcu_read_unlock();
+-			iput(to_put);
+-			goto restart;
+-		}
+ 		delegation = nfs_start_delegation_return_locked(NFS_I(inode));
+ 		rcu_read_unlock();
+ 
+@@ -1164,7 +1161,6 @@ static int nfs_server_reap_unclaimed_delegations(struct nfs_server *server,
+ 	struct inode *inode;
+ restart:
+ 	rcu_read_lock();
+-restart_locked:
+ 	list_for_each_entry_rcu(delegation, &server->delegations, super_list) {
+ 		if (test_bit(NFS_DELEGATION_INODE_FREEING,
+ 					&delegation->flags) ||
+@@ -1175,7 +1171,7 @@ static int nfs_server_reap_unclaimed_delegations(struct nfs_server *server,
+ 			continue;
+ 		inode = nfs_delegation_grab_inode(delegation);
+ 		if (inode == NULL)
+-			goto restart_locked;
++			continue;
+ 		delegation = nfs_start_delegation_return_locked(NFS_I(inode));
+ 		rcu_read_unlock();
+ 		if (delegation != NULL) {
+@@ -1296,7 +1292,6 @@ static int nfs_server_reap_expired_delegations(struct nfs_server *server,
+ 	nfs4_stateid stateid;
+ restart:
+ 	rcu_read_lock();
+-restart_locked:
+ 	list_for_each_entry_rcu(delegation, &server->delegations, super_list) {
+ 		if (test_bit(NFS_DELEGATION_INODE_FREEING,
+ 					&delegation->flags) ||
+@@ -1307,7 +1302,7 @@ static int nfs_server_reap_expired_delegations(struct nfs_server *server,
+ 			continue;
+ 		inode = nfs_delegation_grab_inode(delegation);
+ 		if (inode == NULL)
+-			goto restart_locked;
++			continue;
+ 		spin_lock(&delegation->lock);
+ 		cred = get_cred_rcu(delegation->cred);
+ 		nfs4_stateid_copy(&stateid, &delegation->stateid);
 -- 
 2.43.0
 
