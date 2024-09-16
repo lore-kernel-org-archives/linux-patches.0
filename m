@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7B14B094;
-	Mon, 16 Sep 2024 12:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEF4149C57;
+	Mon, 16 Sep 2024 12:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488633; cv=none; b=oR/uVnb8bTURuMx4YvQG/l/ES28ry5b3LFE8SdzJIefLzGDoqYqoovbb/RYWerL9kZeBzaxavB/tl1Eq51V0/F4D8LeUeC5e+BnxYbEMa4RCNANcDiA2twBloUGSwLpeTwViq2EupAujEyCdKU854dIkibJZG8zN1UJShTOROts=
+	t=1726488636; cv=none; b=gQkTZANalvaED/zLZPAgM9gqNZIahVfBcWYR3sOH7encnpjlqM6BSmqsYQXtSLvVTinV1kQrBAyKgo/ND2YhvBAlPAkCUdfQ0i6w5EG3PXOZ5la9J69f1UMGJtT49j/zpyCOwvV/qNcs/u9XAYF6C2FnopF4rGt/tiPXyzFf/ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488633; c=relaxed/simple;
-	bh=mwHDxBCTf+EckuUhpn4BTTTKGCAJ2QbaOQtZ7WAg2MM=;
+	s=arc-20240116; t=1726488636; c=relaxed/simple;
+	bh=rMKaxa4GK5zXMLyshZ4OlwxXPoacdlvHcsyd8P7YcLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBbLmV+VqlmJp0lFd/SincYt7vo/dRUd9KkGSjLTw2dICn1PVab/umf9lskqMamoHwDFKJZTs2CrpOI2hr7Y1CvH0cIFi0Gprm5B02JSKGszyab+DmuczajUmmouGfBXmhDSfS4BFws1FdYzZx5CnV6BKcPCkbyWp3yDqT5qTFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jX6rZwqO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJZKQR1sixcwrrHACe7A/PU+bqjP6QOEiDE5R9WKEZQKmphrsaxsjH/8r5BMQpvUqVImtEZavKXhlBEDVOMjgVo5rkVEopoRQLAvMJrljgO5/sVrQk9BDG9KORM/3by67qqRcACbOrgPT1anwPfgxr0YhaUKZ2x8XRVN8NzlC6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WkZR+p5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jX6rZwqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B488EC4CEC4;
-	Mon, 16 Sep 2024 12:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WkZR+p5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A15C4CEC4;
+	Mon, 16 Sep 2024 12:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488633;
-	bh=mwHDxBCTf+EckuUhpn4BTTTKGCAJ2QbaOQtZ7WAg2MM=;
+	s=korg; t=1726488635;
+	bh=rMKaxa4GK5zXMLyshZ4OlwxXPoacdlvHcsyd8P7YcLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jX6rZwqOAGvlIu0W0ryBIX+ua2WoGXzfoVarMfOogJs1HgAwGf0ksflsleZFEIGIV
-	 MMZ+fWIGuT6LwmbkEbmnAuhypxELx73bcJLQbv211xQ5JFcYy4jiH/LsSosVe34WWw
-	 ZCCRxBw2FqqWUhWbVb4pMhUlJk/IPigzMKG24guU=
+	b=0WkZR+p5Jqaan1zEqeNb6AAZlYMkk3IJ57pu4UYFji+ml0SoD4RBilBYld8t316/3
+	 T0ViQya4wc1tMSn6lhjIEp6B/4KRQElabtk2eFvQCVtYWiC0+BcmPxXZH5mAgCeLrU
+	 7vAccTV0FIoPRaQ25hNUJG42rMMj8DhR/u1DW2hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 60/91] net/mlx5e: Add missing link modes to ptys2ethtool_map
-Date: Mon, 16 Sep 2024 13:44:36 +0200
-Message-ID: <20240916114226.471118212@linuxfoundation.org>
+Subject: [PATCH 6.6 61/91] IB/mlx5: Rename 400G_8X speed to comply to naming convention
+Date: Mon, 16 Sep 2024 13:44:37 +0200
+Message-ID: <20240916114226.502307566@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -53,38 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 7617d62cba4a8a3ff3ed3fda0171c43f135c142e ]
+[ Upstream commit b28ad32442bec2f0d9cb660d7d698a1a53c13d08 ]
 
-Add MLX5E_1000BASE_T and MLX5E_100BASE_TX to the legacy
-modes in ptys2legacy_ethtool_table, since they were missing.
+Rename 400G_8X speed to comply to naming convention.
 
-Fixes: 665bc53969d7 ("net/mlx5e: Use new ethtool get/set link ksettings API")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/ac98447cac8379a43fbdb36d56e5fb2b741a97ff.1695204156.git.leon@kernel.org
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 80bf474242b2 ("net/mlx5e: Add missing link mode to ptys2ext_ethtool_map")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/hw/mlx5/main.c              | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/port.c | 2 +-
+ include/linux/mlx5/port.h                      | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 50db127e6371..f973314b1724 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -136,6 +136,10 @@ void mlx5e_build_ptys2ethtool_map(void)
- 				       ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100GBASE_LR4, legacy,
- 				       ETHTOOL_LINK_MODE_100000baseLR4_ER4_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100BASE_TX, legacy,
-+				       ETHTOOL_LINK_MODE_100baseT_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_1000BASE_T, legacy,
-+				       ETHTOOL_LINK_MODE_1000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_10GBASE_T, legacy,
- 				       ETHTOOL_LINK_MODE_10000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_25GBASE_CR, legacy,
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 45a497c0258b..2d179bc56ce6 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -444,7 +444,7 @@ static int translate_eth_ext_proto_oper(u32 eth_proto_oper, u16 *active_speed,
+ 		*active_width = IB_WIDTH_2X;
+ 		*active_speed = IB_SPEED_NDR;
+ 		break;
+-	case MLX5E_PROT_MASK(MLX5E_400GAUI_8):
++	case MLX5E_PROT_MASK(MLX5E_400GAUI_8_400GBASE_CR8):
+ 		*active_width = IB_WIDTH_8X;
+ 		*active_speed = IB_SPEED_HDR;
+ 		break;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+index be70d1f23a5d..749f0fc2c189 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+@@ -1098,7 +1098,7 @@ static const u32 mlx5e_ext_link_speed[MLX5E_EXT_LINK_MODES_NUMBER] = {
+ 	[MLX5E_CAUI_4_100GBASE_CR4_KR4] = 100000,
+ 	[MLX5E_100GAUI_2_100GBASE_CR2_KR2] = 100000,
+ 	[MLX5E_200GAUI_4_200GBASE_CR4_KR4] = 200000,
+-	[MLX5E_400GAUI_8] = 400000,
++	[MLX5E_400GAUI_8_400GBASE_CR8] = 400000,
+ 	[MLX5E_100GAUI_1_100GBASE_CR_KR] = 100000,
+ 	[MLX5E_200GAUI_2_200GBASE_CR2_KR2] = 200000,
+ 	[MLX5E_400GAUI_4_400GBASE_CR4_KR4] = 400000,
+diff --git a/include/linux/mlx5/port.h b/include/linux/mlx5/port.h
+index 98b2e1e149f9..5cc34216f23c 100644
+--- a/include/linux/mlx5/port.h
++++ b/include/linux/mlx5/port.h
+@@ -115,7 +115,7 @@ enum mlx5e_ext_link_mode {
+ 	MLX5E_100GAUI_1_100GBASE_CR_KR		= 11,
+ 	MLX5E_200GAUI_4_200GBASE_CR4_KR4	= 12,
+ 	MLX5E_200GAUI_2_200GBASE_CR2_KR2	= 13,
+-	MLX5E_400GAUI_8				= 15,
++	MLX5E_400GAUI_8_400GBASE_CR8		= 15,
+ 	MLX5E_400GAUI_4_400GBASE_CR4_KR4	= 16,
+ 	MLX5E_EXT_LINK_MODES_NUMBER,
+ };
 -- 
 2.43.0
 
