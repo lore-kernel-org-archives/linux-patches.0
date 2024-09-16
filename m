@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11118142903;
-	Mon, 16 Sep 2024 12:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB3B149C57;
+	Mon, 16 Sep 2024 12:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488707; cv=none; b=NRKnUq++M/KBBflWMwT4XVG+w0bLQSk2k7IPlgmcMApPU/dft03J5ToFuTu9FphqAMGxfGXRImUs/hA4AxfwarKww5dhWn6hFKWsikbT498REPIxEC0uNasnEIgs1Kf/fxYbZUDMJ28MI/VOZMR8OJPvQPO+g/PEwDtQA9iN7Ls=
+	t=1726488710; cv=none; b=eT2mHWn/CZjBdvrbwYhQjECdYl7p+WV5bVz2h9CZTHAkQyYYdgzD7MuVNe3onl+6y4Rr6O1Lw1XN69iJX4IhYwxy4CaYw4/mTV3EX5imiWuokhAdilX5hM8zZTjERWo/ghN0M6IsL5RnpLddpX+1v74tIFa2GO2M6RgQddQhNOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488707; c=relaxed/simple;
-	bh=F0dNitDRMLoZ1tuL2cmHjOWO90wMQZWaPL+EoSYTGio=;
+	s=arc-20240116; t=1726488710; c=relaxed/simple;
+	bh=K8hjQ1OsUhWU7+H1Uf7rXYAbknhjlIDonlUNfzyEFrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5XRrQ56Iop4ApSxtt2lZyekb0NYFnXOrn1ep//LWJknv7dbFa82P6uWQBKRphYftPnCD3ZsyEmwz1aY70iEpKYxGITLsZQI1YiNsL3wM27SUbbPuU1y1khs7eCArmTAslHDVMoUv8hb3Rrlc+UdL8NSkABoks5mOS6tsmJgAXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLkWDA27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRq8CdXz7g75jmcI8on4wltUAyOoVBgkopUJ4HRI3HXgkrgvv7/SF6DEULErA9WWs3HyT3AjOelcwdeULmh+J2efIgljOObNrVNvsX03DrCL8fx+ABKBzBLEJBlq4vHDasd+1mwDGGTisQBSq1HEmr0PWw8N4Omxzbcses8v6ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6riA+Zu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLkWDA27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906FBC4CEC4;
-	Mon, 16 Sep 2024 12:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6riA+Zu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B2FC4CEC7;
+	Mon, 16 Sep 2024 12:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488706;
-	bh=F0dNitDRMLoZ1tuL2cmHjOWO90wMQZWaPL+EoSYTGio=;
+	s=korg; t=1726488709;
+	bh=K8hjQ1OsUhWU7+H1Uf7rXYAbknhjlIDonlUNfzyEFrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLkWDA27NKsIPoVbzdW26puHglZ1MGzkzlhw/qjvWqogaxDGF7ou5kmMGDoj6uSU4
-	 ZnKYjijVJ00JRdT8/saFFBJHXobi5qcnrcgC+OZwXKaBR1i7TTee+5P5Rz6OtNhS1w
-	 V0CAfsepfdZDXN4xIAWe4LyTER6r51EPh5Av+MTM=
+	b=D6riA+ZuuzWl5HqcolaqXs+ed/np6Khbsle06xod3nbwI74s4UIC/tPikKuItHsZC
+	 GDM/mUSCuNkt8q1oXBL2/vrCy7zEpCmx9eDaMSKrLx94CzhA6YSc/J5ChdIdG/wxR7
+	 b+rH6If1oxFdTgn1ofjAjkpat9v1KeGtRI4V3TL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Su Hui <suhui@nfschina.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 86/91] drm/i915/guc: prevent a possible int overflow in wq offsets
-Date: Mon, 16 Sep 2024 13:45:02 +0200
-Message-ID: <20240916114227.281007330@linuxfoundation.org>
+Subject: [PATCH 6.6 87/91] ASoC: codecs: avoid possible garbage value in peb2466_reg_read()
+Date: Mon, 16 Sep 2024 13:45:03 +0200
+Message-ID: <20240916114227.316773581@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -54,51 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit d3d37f74683e2f16f2635ee265884f7ca69350ae ]
+[ Upstream commit 38cc0334baabc5baf08a1db753de521e016c0432 ]
 
-It may be possible for the sum of the values derived from
-i915_ggtt_offset() and __get_parent_scratch_offset()/
-i915_ggtt_offset() to go over the u32 limit before being assigned
-to wq offsets of u64 type.
+Clang static checker (scan-build) warning:
+sound/soc/codecs/peb2466.c:232:8:
+Assigned value is garbage or undefined [core.uninitialized.Assign]
+  232 |                 *val = tmp;
+      |                      ^ ~~~
 
-Mitigate these issues by expanding one of the right operands
-to u64 to avoid any overflow issues just in case.
+When peb2466_read_byte() fails, 'tmp' will have a garbage value.
+Add a judgemnet to avoid this problem.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: c2aa552ff09d ("drm/i915/guc: Add multi-lrc context registration")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240725155925.14707-1-n.zhandarovich@fintech.ru
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 1f1c1bd56620b80ae407c5790743e17caad69cec)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 227f609c7c0e ("ASoC: codecs: Add support for the Infineon PEB2466 codec")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://patch.msgid.link/20240911115448.277828-1-suhui@nfschina.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/peb2466.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index b5de5a9f5967..236dfff81fea 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -2695,9 +2695,9 @@ static void prepare_context_registration_info_v70(struct intel_context *ce,
- 		ce->parallel.guc.wqi_tail = 0;
- 		ce->parallel.guc.wqi_head = 0;
- 
--		wq_desc_offset = i915_ggtt_offset(ce->state) +
-+		wq_desc_offset = (u64)i915_ggtt_offset(ce->state) +
- 				 __get_parent_scratch_offset(ce);
--		wq_base_offset = i915_ggtt_offset(ce->state) +
-+		wq_base_offset = (u64)i915_ggtt_offset(ce->state) +
- 				 __get_wq_offset(ce);
- 		info->wq_desc_lo = lower_32_bits(wq_desc_offset);
- 		info->wq_desc_hi = upper_32_bits(wq_desc_offset);
+diff --git a/sound/soc/codecs/peb2466.c b/sound/soc/codecs/peb2466.c
+index 5dec69be0acb..06c83d2042f3 100644
+--- a/sound/soc/codecs/peb2466.c
++++ b/sound/soc/codecs/peb2466.c
+@@ -229,7 +229,8 @@ static int peb2466_reg_read(void *context, unsigned int reg, unsigned int *val)
+ 	case PEB2466_CMD_XOP:
+ 	case PEB2466_CMD_SOP:
+ 		ret = peb2466_read_byte(peb2466, reg, &tmp);
+-		*val = tmp;
++		if (!ret)
++			*val = tmp;
+ 		break;
+ 	default:
+ 		dev_err(&peb2466->spi->dev, "Not a XOP or SOP command\n");
 -- 
 2.43.0
 
