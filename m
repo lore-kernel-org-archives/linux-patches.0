@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B0B155359;
-	Mon, 16 Sep 2024 12:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11118142903;
+	Mon, 16 Sep 2024 12:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488704; cv=none; b=qXVjgpdgecB1DzbtiHfxL1eEdgm4g0TWCJJ1b4BIJ0p4cEyOIQ6FvJvcuOwdlnMdzjm08DfGGaTfXFyePtIPldaOletl29I9jJ/i/0gKYUN5NL0DnK52scPykpEVWOv8sKsrQBfZi0aN0y7Yi+IptDA0CAP3J+6R6jVZsK+ZPis=
+	t=1726488707; cv=none; b=NRKnUq++M/KBBflWMwT4XVG+w0bLQSk2k7IPlgmcMApPU/dft03J5ToFuTu9FphqAMGxfGXRImUs/hA4AxfwarKww5dhWn6hFKWsikbT498REPIxEC0uNasnEIgs1Kf/fxYbZUDMJ28MI/VOZMR8OJPvQPO+g/PEwDtQA9iN7Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488704; c=relaxed/simple;
-	bh=qFJnaXZRMIhzOGG1tAGaHUtpBBLqT8yxTrcj2qcUCXg=;
+	s=arc-20240116; t=1726488707; c=relaxed/simple;
+	bh=F0dNitDRMLoZ1tuL2cmHjOWO90wMQZWaPL+EoSYTGio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEH0DzoHp/saa8YC5lOeZlFb0E4FKcgWoRftRkKWibSCNW06aAijSzeKsW4HqACP7gnU4tICd3W5jWBm/NrV5XcjrORNcuxcRPkQFvVwgT9+uPrsAkPCX6UTJaSC88209lIhFygI5tdw7hXGmw98d+BrjkTdaQmw6S3Xhs6WomU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvzLaVI1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5XRrQ56Iop4ApSxtt2lZyekb0NYFnXOrn1ep//LWJknv7dbFa82P6uWQBKRphYftPnCD3ZsyEmwz1aY70iEpKYxGITLsZQI1YiNsL3wM27SUbbPuU1y1khs7eCArmTAslHDVMoUv8hb3Rrlc+UdL8NSkABoks5mOS6tsmJgAXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLkWDA27; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvzLaVI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87CAC4CEC4;
-	Mon, 16 Sep 2024 12:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLkWDA27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906FBC4CEC4;
+	Mon, 16 Sep 2024 12:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488704;
-	bh=qFJnaXZRMIhzOGG1tAGaHUtpBBLqT8yxTrcj2qcUCXg=;
+	s=korg; t=1726488706;
+	bh=F0dNitDRMLoZ1tuL2cmHjOWO90wMQZWaPL+EoSYTGio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QvzLaVI1eJChmhOyOu0cU4QkBRWbAq6p5wfpojXIhvNTt7U9+088l5UzNbbjl2moD
-	 SkiRQd2zTTaCMDzuNfUyPXFmnTVDebi9JebISs3ZnWBjflpHhl4PlKZVO/rdpBAP5X
-	 3TFbyaTn3aiEXHuRbMJmkmJ8WnX5jJ0rrsuQkDkQ=
+	b=PLkWDA27NKsIPoVbzdW26puHglZ1MGzkzlhw/qjvWqogaxDGF7ou5kmMGDoj6uSU4
+	 ZnKYjijVJ00JRdT8/saFFBJHXobi5qcnrcgC+OZwXKaBR1i7TTee+5P5Rz6OtNhS1w
+	 V0CAfsepfdZDXN4xIAWe4LyTER6r51EPh5Av+MTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 85/91] spi: geni-qcom: Fix incorrect free_irq() sequence
-Date: Mon, 16 Sep 2024 13:45:01 +0200
-Message-ID: <20240916114227.248223927@linuxfoundation.org>
+Subject: [PATCH 6.6 86/91] drm/i915/guc: prevent a possible int overflow in wq offsets
+Date: Mon, 16 Sep 2024 13:45:02 +0200
+Message-ID: <20240916114227.281007330@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,41 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit b787a33864121a565aeb0e88561bf6062a19f99c ]
+[ Upstream commit d3d37f74683e2f16f2635ee265884f7ca69350ae ]
 
-In spi_geni_remove(), the free_irq() sequence is different from that
-on the probe error path. And the IRQ will still remain and it's interrupt
-handler may use the dma channel after release dma channel and before free
-irq, which is not secure, fix it.
+It may be possible for the sum of the values derived from
+i915_ggtt_offset() and __get_parent_scratch_offset()/
+i915_ggtt_offset() to go over the u32 limit before being assigned
+to wq offsets of u64 type.
 
-Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patch.msgid.link/20240909073141.951494-3-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Mitigate these issues by expanding one of the right operands
+to u64 to avoid any overflow issues just in case.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: c2aa552ff09d ("drm/i915/guc: Add multi-lrc context registration")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240725155925.14707-1-n.zhandarovich@fintech.ru
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 1f1c1bd56620b80ae407c5790743e17caad69cec)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 4 ++--
+ drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 983c4896c8cf..7401ed3b9acd 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -1170,9 +1170,9 @@ static void spi_geni_remove(struct platform_device *pdev)
- 	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
- 	spi_unregister_master(spi);
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+index b5de5a9f5967..236dfff81fea 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -2695,9 +2695,9 @@ static void prepare_context_registration_info_v70(struct intel_context *ce,
+ 		ce->parallel.guc.wqi_tail = 0;
+ 		ce->parallel.guc.wqi_head = 0;
  
--	spi_geni_release_dma_chan(mas);
--
- 	free_irq(mas->irq, spi);
-+
-+	spi_geni_release_dma_chan(mas);
- }
- 
- static int __maybe_unused spi_geni_runtime_suspend(struct device *dev)
+-		wq_desc_offset = i915_ggtt_offset(ce->state) +
++		wq_desc_offset = (u64)i915_ggtt_offset(ce->state) +
+ 				 __get_parent_scratch_offset(ce);
+-		wq_base_offset = i915_ggtt_offset(ce->state) +
++		wq_base_offset = (u64)i915_ggtt_offset(ce->state) +
+ 				 __get_wq_offset(ce);
+ 		info->wq_desc_lo = lower_32_bits(wq_desc_offset);
+ 		info->wq_desc_hi = upper_32_bits(wq_desc_offset);
 -- 
 2.43.0
 
