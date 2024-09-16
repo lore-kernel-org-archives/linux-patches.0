@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A03146A79;
-	Mon, 16 Sep 2024 12:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21047142903;
+	Mon, 16 Sep 2024 12:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488735; cv=none; b=aeMSfAt9nIBoMTVPIh1M6DBIlOaLRP0IzIV1YnREhFvJqr5a8fL0M4ZdGrRut61tcOv0p6uAKdP7BYfKy+4QnLMPz9dhrN96CGQM3WmZ/8lGxGHZW2eXb4RoSFML0dPYcbVuNbhVDKIi9oNBAuVAuF4piahWZHmArSG/qAsYaXQ=
+	t=1726488738; cv=none; b=TfvJqtg00nVYKNrNicIkWxhg2GlGEKTjRuy/Pzg5+7bsLZtpP3OTtSytajAb4QmSDx68pC9hYJ0tyi4d6733E7JkR/eluagZ+3d2piZdDrQULf8SIXC+scPTlWv350z7DCV0i6gj93F/W4JOaW5ZfF4i6WeYZX4S+/oDAfjdzd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488735; c=relaxed/simple;
-	bh=qOtxUj/RJPBGE2fXUfxW6OMMzFEQAhyCILG7Abug9eI=;
+	s=arc-20240116; t=1726488738; c=relaxed/simple;
+	bh=FrxdF5Cg1kAzjLx9r7IJlphiN1Tihbuc4Nq82eNcMCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XaGJ2uX7GUBCi+q2W3ZSzeUsecSbI0LEnB8OSTmPB/P5BYXjaQiuugJ9TE6O51ttc49SOwJ6FwWIU912mRdxZI8VClwGqryRHuSt+uYE0fkC91KsFCRjogjfpduJlAPY6RPlAUx7z7wkp6aB1fhqvdbIMc+yi020YI1zAup9dTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYoMfFmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFqP7OdYzcO5967zfEpya7nC6Ac4dX9SYUubWwd6J9UOniLe0S71W7MbMr6Ku7fA4B+aiwr0G0UcJJLx1t9dccrVNrpFT7GfxGbLZDfPfssaKHUTBn4jO/fXxmD4NHjWwEsGH8wkHug+I1oszR2waluj7geKZkG5aoD0QYCYoeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGwK1Tga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYoMfFmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CC8C4CEC4;
-	Mon, 16 Sep 2024 12:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGwK1Tga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01B3C4CEC4;
+	Mon, 16 Sep 2024 12:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488735;
-	bh=qOtxUj/RJPBGE2fXUfxW6OMMzFEQAhyCILG7Abug9eI=;
+	s=korg; t=1726488738;
+	bh=FrxdF5Cg1kAzjLx9r7IJlphiN1Tihbuc4Nq82eNcMCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYoMfFmJ4Z71GteEx3en0j+L9x4CJ6CmzPCW2xtHrwnABdk4gtov8DdDKoz4B5P12
-	 cW4UMxCGjDhLINucOlWG1cuXdPqPXRRo69Z3l8qTZgG3UqssFAzzC0tcJlXKOyqbDf
-	 s6jYFfwLegINiCkjkzs6L7G3Yv9teolw3q4yWLXs=
+	b=yGwK1TgahnkIJhQrTE3i33jlUVRvok+f3OGMv6Oi8541lF+1uHrm2O0pjF5pC7t6h
+	 LK7kmHKqLJbUBCrnNWZm5KgYz/WlCHVdzPS7PGo7nL/JEB6wQDqedv0LNg6FR/MFRI
+	 p8YTy/Q59sFEh4nOdr508NhcZq4LTiExfjyTOgVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.6 81/91] drm/nouveau/fb: restore init() for ramgp102
-Date: Mon, 16 Sep 2024 13:44:57 +0200
-Message-ID: <20240916114227.128997770@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 82/91] drm/amdgpu/atomfirmware: Silence UBSAN warning
+Date: Mon, 16 Sep 2024 13:44:58 +0200
+Message-ID: <20240916114227.158237477@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -50,63 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Skeggs <bskeggs@nvidia.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 6db9df4f7055eb4ea339e7b83ca676edd9ec1277 upstream.
+commit 17ea4383649fdeaff3181ddcf1ff03350d42e591 upstream.
 
-init() was removed from ramgp102 when reworking the memory detection, as
-it was thought that the code was only necessary when the driver performs
-mclk changes, which nouveau doesn't support on pascal.
+Per the comments, these are variable sized arrays.
 
-However, it turns out that we still need to execute this on some GPUs to
-restore settings after DEVINIT, so revert to the original behaviour.
-
-v2: fix tags in commit message, cc stable
-
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/319
-Fixes: 2c0c15a22fa0 ("drm/nouveau/fb/gp102-ga100: switch to simpler vram size detection method")
-Cc: stable@vger.kernel.org # 6.6+
-Signed-off-by: Ben Skeggs <bskeggs@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240904232418.8590-1-bskeggs@nvidia.com
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3613
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 81f7804ba84ee617ed594de934ed87bcc4f83531)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h      |    2 ++
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c |    1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/include/atomfirmware.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ram.h
-@@ -46,6 +46,8 @@ u32 gm107_ram_probe_fbp(const struct nvk
- u32 gm200_ram_probe_fbp_amount(const struct nvkm_ram_func *, u32,
- 			       struct nvkm_device *, int, int *);
- 
-+int gp100_ram_init(struct nvkm_ram *);
-+
- /* RAM type-specific MR calculation routines */
- int nvkm_sddr2_calc(struct nvkm_ram *);
- int nvkm_sddr3_calc(struct nvkm_ram *);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp100.c
-@@ -27,7 +27,7 @@
- #include <subdev/bios/init.h>
- #include <subdev/bios/rammap.h>
- 
--static int
-+int
- gp100_ram_init(struct nvkm_ram *ram)
- {
- 	struct nvkm_subdev *subdev = &ram->fb->subdev;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramgp102.c
-@@ -5,6 +5,7 @@
- 
- static const struct nvkm_ram_func
- gp102_ram = {
-+	.init = gp100_ram_init,
+--- a/drivers/gpu/drm/amd/include/atomfirmware.h
++++ b/drivers/gpu/drm/amd/include/atomfirmware.h
+@@ -1006,7 +1006,7 @@ struct display_object_info_table_v1_4
+   uint16_t  supporteddevices;
+   uint8_t   number_of_path;
+   uint8_t   reserved;
+-  struct    atom_display_object_path_v2 display_path[8];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
++  struct    atom_display_object_path_v2 display_path[];   //the real number of this included in the structure is calculated by using the (whole structure size - the header size- number_of_path)/size of atom_display_object_path
  };
  
- int
+ struct display_object_info_table_v1_5 {
+@@ -1016,7 +1016,7 @@ struct display_object_info_table_v1_5 {
+ 	uint8_t reserved;
+ 	// the real number of this included in the structure is calculated by using the
+ 	// (whole structure size - the header size- number_of_path)/size of atom_display_object_path
+-	struct atom_display_object_path_v3 display_path[8];
++	struct atom_display_object_path_v3 display_path[];
+ };
+ 
+ /* 
 
 
