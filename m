@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93CD14D2B3;
-	Mon, 16 Sep 2024 12:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4E914D2B3;
+	Mon, 16 Sep 2024 12:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488521; cv=none; b=K0UMBZlpIP7gKVZxn7dlyH8cS7kRnBZOlI8xZfEZVdSVt4hZCrIkUx4ly2JPcpzaRTf2XaWAFsvcQrCg7MpHkapYb3WDw6wrADKNaD9xM3nrEt7TXZ8A1CfhzPY3DdEmz+gVarD+AtN0zzLXEycL7KqT/CafhnkkGETORMF1asA=
+	t=1726488524; cv=none; b=L6grINX4Ep7brrny2CHPI6o7aZET302YHSazYjwO531ickCqfJGjsofxIJkTL074E2MGtIubNCccGPhZwEQP7kPwod7TcUKqEmhb/5rZ8adxjt5OuiFbWmcMcBNEbALw6jgQitajfK/dubHXD3VAoYQ4JXA4Lb8to0j4qm7m9Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488521; c=relaxed/simple;
-	bh=26ZtwUFZ33rN8QVlJvoCr6L1gPNFAreIlmgS9WNpyH0=;
+	s=arc-20240116; t=1726488524; c=relaxed/simple;
+	bh=IARXPRX1eZmmOByUVqq0Z9IKJEg4x30b43Dwedn1ZcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CWjRM7g62jQuTOVx4RuNMVBY2ItXDPmNe4lh49ihBfcqBASIkICWa7l2SdlU9AePRjaB73Zl/VLtyeXlY+OjS6J2kFBPco1R8wPB+IB0q/ZOfZDrMoOi6h/JuLKVyj++mwNsjbvbiYhGuf2A4aga2P5XQeOZ0LbsRo/lOnMNokI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYVu8z0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vAtfl7LzireZvCeLYJTJysMVtuhFlFttySUDhSEZnCwZLq+hhUAGuSGBxUiBh/IKhPu/UCIDfhd7P3xyo9S5UQWtzogRUkbWfcDr8K+IBzJKxMivJO3znFjiYYlexhvloVEgSFs8Yu3reRzV9Q9xU8Q7wnVkE6Io8xy15gMrOFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+j1a54I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYVu8z0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17924C4CEC4;
-	Mon, 16 Sep 2024 12:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+j1a54I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A81C4CEC4;
+	Mon, 16 Sep 2024 12:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488521;
-	bh=26ZtwUFZ33rN8QVlJvoCr6L1gPNFAreIlmgS9WNpyH0=;
+	s=korg; t=1726488524;
+	bh=IARXPRX1eZmmOByUVqq0Z9IKJEg4x30b43Dwedn1ZcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYVu8z0bcJS+gMLLV6PYkwuuE6J5FbMCZyvibmqAzTNTrCuUS5f6YNkNW9R8Cz+Rm
-	 kRPYQSION/GGj/DQL+7uH7VOdjSJImihm18MwAmbWOtGA6zQFA8HxTCKex1BYz5xxg
-	 A8AlvXW6kHtWjnIcJAlTfOSNOUtTuICsz/0/EMbY=
+	b=n+j1a54Ilv/9YATGtXYzQaEawC9hR4LnGP2RA9v9NEgr9DfdvKVa8N36EqiuTAz8v
+	 XLj4EEi6wSYmSIK4H58IgznzBy1emHKdb0FvaZJaGCbAWAl2eHoCRZ0CHj6sgZn04v
+	 mzSrAzcWZtzRwXMSnO/FC0ySmmQQIhnm7tMtuN9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Thomson <git@johnthomson.fastmail.com.au>,
+	stable <stable@kernel.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 08/91] nvmem: u-boot-env: improve coding style
-Date: Mon, 16 Sep 2024 13:43:44 +0200
-Message-ID: <20240916114224.803151746@linuxfoundation.org>
+Subject: [PATCH 6.6 09/91] nvmem: u-boot-env: error if NVMEM device is too small
+Date: Mon, 16 Sep 2024 13:43:45 +0200
+Message-ID: <20240916114224.840689383@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114224.509743970@linuxfoundation.org>
 References: <20240916114224.509743970@linuxfoundation.org>
@@ -52,68 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: John Thomson <git@johnthomson.fastmail.com.au>
 
-[ Upstream commit 6bafe07c930676d6430be471310958070816a595 ]
+[ Upstream commit 8679e8b4a1ebdb40c4429e49368d29353e07b601 ]
 
-1. Prefer kzalloc() over kcalloc()
-   See memory-allocation.rst which says: "to be on the safe side it's
-   best to use routines that set memory to zero, like kzalloc()"
-2. Drop dev_err() for u_boot_env_add_cells() fail
-   It can fail only on -ENOMEM. We don't want to print error then.
-3. Add extra "crc32_addr" variable
-   It makes code reading header's crc32 easier to understand / review.
+Verify data size before trying to parse it to avoid reading out of
+buffer. This could happen in case of problems at MTD level or invalid DT
+bindings.
 
+Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
+Cc: stable <stable@kernel.org>
+Fixes: d5542923f200 ("nvmem: add driver handling U-Boot environment variables")
+[rmilecki: simplify commit description & rebase]
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20231221173421.13737-5-zajec5@gmail.com
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240902142510.71096-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 8679e8b4a1eb ("nvmem: u-boot-env: error if NVMEM device is too small")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/u-boot-env.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvmem/u-boot-env.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/nvmem/u-boot-env.c b/drivers/nvmem/u-boot-env.c
-index 111905189341..befbab156cda 100644
+index befbab156cda..adabbfdad6fb 100644
 --- a/drivers/nvmem/u-boot-env.c
 +++ b/drivers/nvmem/u-boot-env.c
-@@ -132,6 +132,7 @@ static int u_boot_env_parse(struct u_boot_env *priv)
- 	size_t crc32_data_offset;
- 	size_t crc32_data_len;
- 	size_t crc32_offset;
-+	__le32 *crc32_addr;
- 	size_t data_offset;
- 	size_t data_len;
- 	size_t dev_size;
-@@ -143,7 +144,7 @@ static int u_boot_env_parse(struct u_boot_env *priv)
- 
- 	dev_size = nvmem_dev_size(nvmem);
- 
--	buf = kcalloc(1, dev_size, GFP_KERNEL);
-+	buf = kzalloc(dev_size, GFP_KERNEL);
- 	if (!buf) {
- 		err = -ENOMEM;
- 		goto err_out;
-@@ -175,7 +176,8 @@ static int u_boot_env_parse(struct u_boot_env *priv)
+@@ -176,6 +176,13 @@ static int u_boot_env_parse(struct u_boot_env *priv)
  		data_offset = offsetof(struct u_boot_env_image_broadcom, data);
  		break;
  	}
--	crc32 = le32_to_cpu(*(__le32 *)(buf + crc32_offset));
-+	crc32_addr = (__le32 *)(buf + crc32_offset);
-+	crc32 = le32_to_cpu(*crc32_addr);
++
++	if (dev_size < data_offset) {
++		dev_err(dev, "Device too small for u-boot-env\n");
++		err = -EIO;
++		goto err_kfree;
++	}
++
+ 	crc32_addr = (__le32 *)(buf + crc32_offset);
+ 	crc32 = le32_to_cpu(*crc32_addr);
  	crc32_data_len = dev_size - crc32_data_offset;
- 	data_len = dev_size - data_offset;
- 
-@@ -188,8 +190,6 @@ static int u_boot_env_parse(struct u_boot_env *priv)
- 
- 	buf[dev_size - 1] = '\0';
- 	err = u_boot_env_add_cells(priv, buf, data_offset, data_len);
--	if (err)
--		dev_err(dev, "Failed to add cells: %d\n", err);
- 
- err_kfree:
- 	kfree(buf);
 -- 
 2.43.0
 
