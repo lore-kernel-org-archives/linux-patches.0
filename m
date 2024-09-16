@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C291534FB;
-	Mon, 16 Sep 2024 12:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713D81553AB;
+	Mon, 16 Sep 2024 12:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726488464; cv=none; b=ZR4ZMkmuxEgyCbRx0iOSlMmHwBpLAx2ioV+wmcJZYmUdNuF6bga3GpuQ3GFAPNsAXuINLYIj0pI8DZjkN9zqv43BMpAaI0BpNZrfkq75Uf+7+vrIoPluFwn4lBLqOcaXDlKKNwWMWTGwk9PRSZc9x8sCFzUGYToDt0b5o+Nc8gY=
+	t=1726488467; cv=none; b=Yp5dtUh9dvykudL3uVDyNRgvRf5/oHsaL7Jian10cE+LZUuboWAnvekVXWCJu9FK3Sg/hqB+/i9WqvjnPRV5qWVpmwU2ZWpvEpeybgEhjmKOhciU8eJ1ZL/Fz+sRLkq1h3auGZ5u458FycJOa5vnIbyh0zjt1Iby8ohhTKJqRd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726488464; c=relaxed/simple;
-	bh=WWpN15rnZvg/HzHcLYhvpG7uRvisTjnVGAiETzsZ+wQ=;
+	s=arc-20240116; t=1726488467; c=relaxed/simple;
+	bh=KiQ2/uUyuJUNM7kBJGnpRa74jGaUhbZMqT2hfaGjAmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dQbp4GW/A68Eamn12ZSvh9aMJmt34WtprDhumEUGBzsp6/SvxRopMzrBlMXzV7Ql2ODgvfftYKRBvFoo8efAPnQvsHO8z55dexPxUg/ecZIdlEb2rmdJgUC39VoWdenbfqthh1Jo1aR1vPUMIjSJJQNy4YuS4La+Xt+wP8lu7FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeQa/GQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRTXqdM+l5/HpV9amFAed0cfQIH4DcLfgjMJlaToFDvpAedo0V2LeeuvyrDGjbHnYgpefB+2LxOOCRKIuGtZAIi0moYD3ILrjMPhbqZeF+lxvSk+TCZJ4TKg7AXvVF4JLpGLhIuAmBKtAoYz8AuUBRzu+FsGJ3vsLzCFrRCir/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2H1Vcax7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeQa/GQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5058C4CEC4;
-	Mon, 16 Sep 2024 12:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2H1Vcax7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A150CC4CEC4;
+	Mon, 16 Sep 2024 12:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1726488464;
-	bh=WWpN15rnZvg/HzHcLYhvpG7uRvisTjnVGAiETzsZ+wQ=;
+	s=korg; t=1726488467;
+	bh=KiQ2/uUyuJUNM7kBJGnpRa74jGaUhbZMqT2hfaGjAmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CeQa/GQJlMygRgthpXgkzcpue79tsXyqYoM5cddrt66UB23ohOwLDAz8xLNJ3qL8T
-	 Kibx77YZMcMApzfK0V59RCD+guGRTYFdXkKHR/GzVBp6RAFGqminYUHcaWD7LCrkRL
-	 FH16bBbWCDHM+bGo1jq+Cpy/nYB7GjUD87hDomHY=
+	b=2H1Vcax7T4r7luyghmbeg99bdnSAo12PMDnHEMYDKyE0zQcRIlYv8jMLIfWd578WL
+	 fC9MNafQsXQ1WS6rK1FH/v/5PogC5Q+/t0w15tmqnANljPWZocrsjl+fWbJko+woiC
+	 mk9GVgKP819P546S/pvFv5G6O2bv874AxvPLS8Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Davide Caratti <dcaratti@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 096/121] netlink: specs: mptcp: fix port endianness
-Date: Mon, 16 Sep 2024 13:44:30 +0200
-Message-ID: <20240916114232.301341597@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Helena Anna" <helena.anna.dubel@intel.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Bityutskiy, Artem" <artem.bityutskiy@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.10 097/121] tracing/osnoise: Fix build when timerlat is not enabled
+Date: Mon, 16 Sep 2024 13:44:31 +0200
+Message-ID: <20240916114232.335520377@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240916114228.914815055@linuxfoundation.org>
 References: <20240916114228.914815055@linuxfoundation.org>
@@ -47,58 +49,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 09a45a5553792bbf20beba0a1ac90b4692324d06 ]
+commit af178143343028fdec9d5960a22d17f5587fd3f5 upstream.
 
-The MPTCP port attribute is in host endianness, but was documented
-as big-endian in the ynl specification.
+To fix some critical section races, the interface_lock was added to a few
+locations. One of those locations was above where the interface_lock was
+declared, so the declaration was moved up before that usage.
+Unfortunately, where it was placed was inside a CONFIG_TIMERLAT_TRACER
+ifdef block. As the interface_lock is used outside that config, this broke
+the build when CONFIG_OSNOISE_TRACER was enabled but
+CONFIG_TIMERLAT_TRACER was not.
 
-Below are two examples from net/mptcp/pm_netlink.c showing that the
-attribute is converted to/from host endianness for use with netlink.
-
-Import from netlink:
-  addr->port = htons(nla_get_u16(tb[MPTCP_PM_ADDR_ATTR_PORT]))
-
-Export to netlink:
-  nla_put_u16(skb, MPTCP_PM_ADDR_ATTR_PORT, ntohs(addr->port))
-
-Where addr->port is defined as __be16.
-
-No functional change intended.
-
-Fixes: bc8aeb2045e2 ("Documentation: netlink: add a YAML spec for mptcp")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240911091003.1112179-1-ast@fiberby.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: "Helena Anna" <helena.anna.dubel@intel.com>
+Cc: "Luis Claudio R. Goncalves" <lgoncalv@redhat.com>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Link: https://lore.kernel.org/20240909103231.23a289e2@gandalf.local.home
+Fixes: e6a53481da29 ("tracing/timerlat: Only clear timer if a kthread exists")
+Reported-by: "Bityutskiy, Artem" <artem.bityutskiy@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/netlink/specs/mptcp_pm.yaml | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/trace/trace_osnoise.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/netlink/specs/mptcp_pm.yaml b/Documentation/netlink/specs/mptcp_pm.yaml
-index af525ed29792..30d8342cacc8 100644
---- a/Documentation/netlink/specs/mptcp_pm.yaml
-+++ b/Documentation/netlink/specs/mptcp_pm.yaml
-@@ -109,7 +109,6 @@ attribute-sets:
-       -
-         name: port
-         type: u16
--        byte-order: big-endian
-       -
-         name: flags
-         type: u32
--- 
-2.43.0
-
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -228,6 +228,11 @@ static inline struct osnoise_variables *
+ 	return this_cpu_ptr(&per_cpu_osnoise_var);
+ }
+ 
++/*
++ * Protect the interface.
++ */
++static struct mutex interface_lock;
++
+ #ifdef CONFIG_TIMERLAT_TRACER
+ /*
+  * Runtime information for the timer mode.
+@@ -253,11 +258,6 @@ static inline struct timerlat_variables
+ }
+ 
+ /*
+- * Protect the interface.
+- */
+-static struct mutex interface_lock;
+-
+-/*
+  * tlat_var_reset - Reset the values of the given timerlat_variables
+  */
+ static inline void tlat_var_reset(void)
 
 
